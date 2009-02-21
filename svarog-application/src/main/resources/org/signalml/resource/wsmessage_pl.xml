@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="error.ws.noSuchUid">No such task uid [{0}]</entry>
+	<entry key="error.ws.queueFull">Processing queue is full. Please try again later</entry>
+	<entry key="error.ws.timeout">Processing timeout</entry>
+	<entry key="error.ws.userNameEmpty">User name empty</entry>
+	<entry key="error.ws.passwordEmpty">Password empty</entry>
+	<entry key="error.ws.tokenEmpty">Token empty</entry>
+	<entry key="error.ws.loginTimeEmpty">Login time empty</entry>
+	<entry key="error.ws.authenticationFailed">MP5 server authentication failed. You may need to log in to access this feature.</entry>
+	<entry key="error.ws.authenticationFailedTooOld">Authentication failed - session is too old. Please login again.</entry>
+
+</properties>

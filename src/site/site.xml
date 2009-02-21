@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="signalml">
+
+	<!-- 
+	<bannerLeft>
+		<name>signalml</name>
+		<href>http://www.fuw.edu.pl/</href>		
+	</bannerLeft>
+	-->
+
+	<bannerRight>
+		<name>Warsaw University</name>
+		<src>images/orzelekUWsm.gif</src>
+		<href>http://www.fuw.edu.pl/</href>
+	</bannerRight>
+
+	<skin>
+		<groupId>org.apache.maven.skins</groupId>
+		<artifactId>maven-stylus-skin</artifactId>
+	</skin>
+
+	<breadcrumbs>
+		<item name="Signalml" />
+	</breadcrumbs>
+
+	<body>
+		<menu name="Signalml" collapse="false">
+			<item name="Overview" href="index.html" />
+			<item name="FAQ" href="faq.html" />
+			<item name="Wiki" href="wiki.html" />
+		</menu>
+		<menu ref="reports" collapse="false"/>
+	</body>
+
+	<publishDate position="right"/>
+	<version position="right" />
+
+</project>

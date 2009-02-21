@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:smlws="http://org.signalml/signalmlws" 
+	name="signalmlws"
+	targetNamespace="http://org.signalml/signalmlws" xmlns:p="http://www.w3.org/2001/XMLSchema"> 
+	<wsdl:types>
+			
+        <xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://org.signalml/signalmlws" xmlns:smlws="http://org.signalml/signalmlws">
+
+		    <xsd:complexType name="PasswordCredentials">
+		    	<xsd:sequence>
+		    		<xsd:element name="username" minOccurs="1" maxOccurs="1" type="smlws:usernameType">
+		    		</xsd:element>
+		    		<xsd:element name="password" minOccurs="1" maxOccurs="1" type="smlws:passwordType">
+		    		</xsd:element>
+		    	</xsd:sequence>
+		    </xsd:complexType>
+		
+		    <xsd:complexType name="SharedSecretCredentials">
+		    	<xsd:sequence>
+		    		<xsd:element name="username"
+		    			type="smlws:usernameType">
+		    		</xsd:element>
+                    <xsd:element name="login-time" type="xsd:dateTime"></xsd:element>
+                    <xsd:element name="token" type="smlws:tokenType"></xsd:element>
+		    	</xsd:sequence>
+		    </xsd:complexType>
+		
+		    <xsd:simpleType name="usernameType">
+		    	<xsd:restriction base="xsd:string">
+		    		<xsd:minLength value="1"></xsd:minLength>
+		    		<xsd:maxLength value="128"></xsd:maxLength>
+		    	</xsd:restriction>
+		    </xsd:simpleType>
+		
+		    <xsd:simpleType name="passwordType">
+		    	<xsd:restriction base="xsd:string">
+		    		<xsd:minLength value="1"></xsd:minLength>
+		    		<xsd:maxLength value="128"></xsd:maxLength>
+		    	</xsd:restriction>
+		    </xsd:simpleType>
+		
+		    <xsd:simpleType name="tokenType">
+		    	<xsd:restriction base="xsd:string"></xsd:restriction>
+		    </xsd:simpleType>
+				
+		    <xsd:complexType name="TestConnectionRequestType">
+		    	<xsd:sequence>
+		    		<xsd:element name="credentials" type="smlws:Credentials"></xsd:element>
+		    		<xsd:element name="hello-string" type="xsd:string"></xsd:element>
+		    	</xsd:sequence>
+		    </xsd:complexType>
+		
+		    <xsd:complexType name="Credentials">
+		    	<xsd:choice>
+		    		<xsd:element name="password" type="smlws:PasswordCredentials"></xsd:element>
+		    		<xsd:element name="shared-secret" type="smlws:SharedSecretCredentials"></xsd:element>
+		    	</xsd:choice>
+		    </xsd:complexType>
+		
+		    <xsd:complexType name="TestConnectionResponseType">
+		    	<xsd:sequence>
+		    		<xsd:element name="response-string" type="xsd:string"></xsd:element>
+		    	</xsd:sequence>
+		    </xsd:complexType>
+		
+		    <xsd:element name="TestConnectionRequest"
+		    	type="smlws:TestConnectionRequestType">
+		    </xsd:element>
+		    <xsd:element name="TestConnectionResponse"
+		    	type="smlws:TestConnectionResponseType">
+		    </xsd:element>
+		    <xsd:element name="DecompositionRequest" type="smlws:DecompositionRequestType">
+		    </xsd:element>
+		    <xsd:element name="DecompositionResponse" type="smlws:DecompositionResponseType">
+		    </xsd:element>
+		    <xsd:complexType name="DecompositionRequestType">
+		    	<xsd:sequence>
+		    		<xsd:element name="credentials"
+		    			type="smlws:Credentials">
+		    		</xsd:element>
+		    		<xsd:element name="uid" type="xsd:string"></xsd:element>
+		    		<xsd:element name="signal" type="xsd:string"></xsd:element>
+		    		<xsd:element name="config" type="xsd:string"></xsd:element>
+		    	</xsd:sequence>
+		    </xsd:complexType>
+		    <xsd:complexType name="DecompositionResponseType">
+		    	<xsd:sequence>
+		    		<xsd:element name="book" type="xsd:string"></xsd:element>
+		    	</xsd:sequence>
+		    </xsd:complexType>
+		    <xsd:element name="DecompositionProgressRequest" type="smlws:DecompositionProgressRequestType">
+		    </xsd:element>
+		    <xsd:element name="DecompositionProgressResponse" type="smlws:DecompositionProgressResponseType">
+		    </xsd:element>
+		    <xsd:complexType
+		    	name="DecompositionProgressRequestType">
+		    	<xsd:sequence>
+                    <xsd:element name="uid" type="xsd:string"></xsd:element>
+                </xsd:sequence>
+		    </xsd:complexType>
+		    <xsd:complexType
+		    	name="DecompositionProgressResponseType">
+		    	<xsd:sequence>
+		    		<xsd:element name="status"
+		    			type="xsd:string">
+		    		</xsd:element>
+		    		<xsd:element name="message-code"
+		    			type="xsd:string">
+		    		</xsd:element>
+		    		<xsd:element name="message-argument"
+		    			type="xsd:string" minOccurs="0" maxOccurs="unbounded">
+		    		</xsd:element>
+		    		<xsd:element name="ticker-limit" type="xsd:int"
+		    			minOccurs="0" maxOccurs="unbounded">
+		    		</xsd:element>
+		    		<xsd:element name="ticker" type="xsd:int" minOccurs="0" maxOccurs="unbounded"></xsd:element>
+		    	</xsd:sequence>
+		    </xsd:complexType>
+		    <xsd:element name="DecompositionAbortRequest" type="smlws:DecompositionAbortRequestType">
+		    </xsd:element>
+		    <xsd:element name="DecompositionAbortResponse" type="smlws:DecompositionAbortResponseType">
+		    </xsd:element>
+		    <xsd:complexType
+		    	name="DecompositionAbortRequestType">
+		    	<xsd:sequence>
+		    		<xsd:element name="uid" type="xsd:string"></xsd:element>
+		    	</xsd:sequence>
+		    </xsd:complexType>
+		    <xsd:complexType
+		    	name="DecompositionAbortResponseType">
+		    	<xsd:sequence>
+		    	</xsd:sequence>
+		    </xsd:complexType>
+		    <xsd:element name="ResolvableFault" type="smlws:ResolvableFaultType">
+		    </xsd:element>
+		    <xsd:complexType name="ResolvableFaultType">
+		    	<xsd:sequence>
+		    		<xsd:element name="message-code"
+		    			type="xsd:string">
+		    		</xsd:element>
+		    		<xsd:element name="message-argument" type="xsd:string" minOccurs="0" maxOccurs="unbounded"></xsd:element>
+		    	</xsd:sequence>
+		    </xsd:complexType>
+        </xsd:schema>
+    </wsdl:types>
+
+	<wsdl:message name="TestConnectionRequestMsg">
+		<wsdl:part name="parameters" element="smlws:TestConnectionRequest"></wsdl:part>
+	</wsdl:message>
+	
+	<wsdl:message name="TestConnectionResponseMsg">
+		<wsdl:part name="parameters" element="smlws:TestConnectionResponse"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="DecompositionRequestMsg">
+		<wsdl:part name="parameters" element="smlws:DecompositionRequest"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="DecompositionResponseMsg">
+		<wsdl:part name="parameters" element="smlws:DecompositionResponse"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="DecompositionProgressRequestMsg">
+		<wsdl:part name="parameters" element="smlws:DecompositionProgressRequest"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="DecompositionProgressResponseMsg">
+		<wsdl:part name="parameters" element="smlws:DecompositionProgressResponse"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="DecompositionAbortRequestMsg">
+		<wsdl:part name="parameters" element="smlws:DecompositionAbortRequest"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="DecompositionAbortResponseMsg">
+		<wsdl:part name="parameters" element="smlws:DecompositionAbortResponse"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="DecompositionFaultMsg">
+		<wsdl:part name="parameters" element="smlws:ResolvableFault"></wsdl:part>
+	</wsdl:message>
+	
+	<wsdl:portType name="signalmlwsport">
+        <wsdl:operation name="TestConnection">
+        	<wsdl:input message="smlws:TestConnectionRequestMsg"></wsdl:input>
+        	<wsdl:output message="smlws:TestConnectionResponseMsg"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Decomposition">
+        	<wsdl:input message="smlws:DecompositionRequestMsg"></wsdl:input>
+        	<wsdl:output message="smlws:DecompositionResponseMsg"></wsdl:output>
+            <wsdl:fault name="decompositionFault" message="smlws:DecompositionFaultMsg"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="DecompositionProgress">
+        	<wsdl:input message="smlws:DecompositionProgressRequestMsg"></wsdl:input>
+        	<wsdl:output message="smlws:DecompositionProgressResponseMsg"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="DecompositionAbort">
+        	<wsdl:input message="smlws:DecompositionAbortRequestMsg"></wsdl:input>
+        	<wsdl:output message="smlws:DecompositionAbortResponseMsg"></wsdl:output>
+        </wsdl:operation>
+	</wsdl:portType>
+	
+	<wsdl:binding name="signalmlwsbinding" type="smlws:signalmlwsport">
+	
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+			
+		<wsdl:operation name="TestConnection">
+			<soap:operation
+				soapAction="http://signalml.org/signalmlws/ws/testConnection" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+			
+		</wsdl:operation>
+
+		<wsdl:operation name="Decomposition">
+			<soap:operation
+				soapAction="http://signalml.org/signalmlws/ws/decomposition" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="decompositionFault">
+				<soap:fault name="decompositionFault" use="literal" />
+			</wsdl:fault>
+			
+		</wsdl:operation>
+
+		<wsdl:operation name="DecompositionProgress">
+			<soap:operation
+				soapAction="http://signalml.org/signalmlws/ws/decompositionProgress" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+			
+		</wsdl:operation>
+					
+		<wsdl:operation name="DecompositionAbort">
+			<soap:operation
+				soapAction="http://signalml.org/signalmlws/ws/decompositionAbort" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+			
+		</wsdl:operation>
+					
+	</wsdl:binding>
+	
+	<wsdl:service name="signalmlws">
+		<wsdl:port name="signalmlwsSOAP" binding="smlws:signalmlwsbinding">
+			<soap:address location="http://signalml.org/signalmlws/ws" />
+		</wsdl:port>
+	</wsdl:service>
+	
+</wsdl:definitions>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="locale">en_EN</entry>	
+
+	<entry key="mainframe.maximized">false</entry>	
+	<entry key="mainframe.xSize">800</entry>	
+	<entry key="mainframe.ySize">600</entry>	
+	<entry key="mainframe.documentMaximized">false</entry>	
+	<entry key="mainframe.hDividerLocation">200</entry>	
+	<entry key="mainframe.vDividerLocation">300</entry>	
+
+	<entry key="application.rightClickPagesForward">false</entry>	
+	<entry key="application.autoLoadDefaultMontage">false</entry>	
+	<entry key="application.precalculateSignalChecksums">true</entry>	
+	<entry key="application.saveConfigOnEveryChange">false</entry>	
+	<entry key="application.restoreWorkspace">true</entry>	
+	<entry key="application.antialiased">false</entry>	
+	<entry key="application.clamped">false</entry>	
+	<entry key="application.offscreenChannelsDrawn">false</entry>	
+	<entry key="application.tagToolTipsVisible">true</entry>	
+	<entry key="application.pageLinesVisible">true</entry>	
+	<entry key="application.blockLinesVisible">true</entry>	
+	<entry key="application.channelLinesVisible">true</entry>	
+	<entry key="application.tagPaintMode">OVERLAY</entry>	
+	<entry key="application.signalColor">BLACK</entry>	
+	<entry key="application.signalXOR">false</entry>	
+
+	<entry key="application.pageSize">20</entry>	
+	<entry key="application.blocksPerPage">5</entry>	
+	<entry key="application.saveFullMontageWithTag">true</entry>	
+
+	<entry key="application.viewModeHidesMainToolBar">true</entry>	
+	<entry key="application.viewModeHidesLeftPanel">true</entry>	
+	<entry key="application.viewModeHidesBottomPanel">true</entry>	
+	<entry key="application.viewModeCompactsPageTagBars">false</entry>	
+	<entry key="application.viewModeSnapsToPage">false</entry>	
+
+	<entry key="application.minChannelHeight">20</entry>	
+	<entry key="application.maxChannelHeight">600</entry>	
+	<entry key="application.minValueScale">20</entry>	
+	<entry key="application.maxValueScale">800</entry>	
+	<entry key="application.minTimeScale">0.1</entry>	
+	<entry key="application.maxTimeScale">1</entry>	
+
+	<entry key="application.palette">rainbow</entry>	
+	<entry key="application.scaleType">NORMAL</entry>	
+	<entry key="application.signalAntialiased">false</entry>	
+	<entry key="application.originalSignalVisible">true</entry>	
+	<entry key="application.fullReconstructionVisible">true</entry>	
+	<entry key="application.reconstructionVisible">true</entry>	
+	<entry key="application.legendVisible">true</entry>	
+	<entry key="application.scaleVisible">true</entry>	
+	<entry key="application.axesVisible">true</entry>	
+	<entry key="application.atomToolTipsVisible">false</entry>	
+	<entry key="application.mapAspectRatioUp">2</entry>	
+	<entry key="application.mapAspectRatioDown">1</entry>	
+	<entry key="application.reconstructionHeight">40</entry>	
+
+    <entry key="application.zoomSettings.zoomSize.width">200</entry>
+    <entry key="application.zoomSettings.zoomSize.height">200</entry>
+	<entry key="application.zoomSettings.factor">2.0</entry>
+    <entry key="application.zoomSettings.channelSwitching">true</entry>
+
+    <entry key="application.signalFFTSettings.plotSize.width">600</entry>
+    <entry key="application.signalFFTSettings.plotSize.height">200</entry>
+    <entry key="application.signalFFTSettings.windowWidth">256</entry>
+    <entry key="application.signalFFTSettings.windowType">RECTANGULAR</entry>
+    <entry key="application.signalFFTSettings.windowParameter">0.0</entry>
+    <entry key="application.signalFFTSettings.channelSwitching">false</entry>
+    <entry key="application.signalFFTSettings.logarithmic">false</entry>
+    <entry key="application.signalFFTSettings.antialias">true</entry>
+    <entry key="application.signalFFTSettings.spline">false</entry>
+    <entry key="application.signalFFTSettings.titleVisible">false</entry>
+    <entry key="application.signalFFTSettings.frequencyAxisLabelsVisible">true</entry>
+    <entry key="application.signalFFTSettings.powerAxisLabelsVisible">false</entry>
+
+	<entry key="stager.rules">RK</entry>	
+
+	<entry key="stager.deltaAmplitudeMin">65</entry>	
+	<entry key="stager.deltaAmplitudeMinUnlimited">false</entry>	
+	<entry key="stager.deltaAmplitudeMax">100</entry>	
+	<entry key="stager.deltaAmplitudeMaxUnlimited">true</entry>	
+
+	<entry key="stager.deltaFrequencyMin">0.2</entry>	
+	<entry key="stager.deltaFrequencyMinUnlimited">false</entry>	
+	<entry key="stager.deltaFrequencyMax">4</entry>	
+	<entry key="stager.deltaFrequencyMaxUnlimited">false</entry>	
+
+	<entry key="stager.deltaScaleMin">0.5</entry>	
+	<entry key="stager.deltaScaleMinUnlimited">false</entry>	
+	<entry key="stager.deltaScaleMax">6</entry>	
+	<entry key="stager.deltaScaleMaxUnlimited">false</entry>	
+
+	<entry key="stager.thetaAmplitudeMin">30</entry>	
+	<entry key="stager.thetaAmplitudeMinUnlimited">false</entry>	
+	<entry key="stager.thetaAmplitudeMax">100</entry>	
+	<entry key="stager.thetaAmplitudeMaxUnlimited">true</entry>	
+
+	<entry key="stager.thetaFrequencyMin">4</entry>	
+	<entry key="stager.thetaFrequencyMinUnlimited">false</entry>	
+	<entry key="stager.thetaFrequencyMax">8</entry>	
+	<entry key="stager.thetaFrequencyMaxUnlimited">false</entry>	
+
+	<entry key="stager.thetaScaleMin">0.1</entry>	
+	<entry key="stager.thetaScaleMinUnlimited">false</entry>	
+	<entry key="stager.thetaScaleMax">1</entry>	
+	<entry key="stager.thetaScaleMaxUnlimited">true</entry>	
+
+	<entry key="stager.alphaAmplitudeMin">5</entry>	
+	<entry key="stager.alphaAmplitudeMinUnlimited">false</entry>	
+	<entry key="stager.alphaAmplitudeMax">100</entry>	
+	<entry key="stager.alphaAmplitudeMaxUnlimited">true</entry>	
+
+	<entry key="stager.alphaFrequencyMin">8</entry>	
+	<entry key="stager.alphaFrequencyMinUnlimited">false</entry>	
+	<entry key="stager.alphaFrequencyMax">12</entry>	
+	<entry key="stager.alphaFrequencyMaxUnlimited">false</entry>	
+
+	<entry key="stager.alphaScaleMin">1.5</entry>	
+	<entry key="stager.alphaScaleMinUnlimited">false</entry>	
+	<entry key="stager.alphaScaleMax">100</entry>	
+	<entry key="stager.alphaScaleMaxUnlimited">true</entry>	
+
+	<entry key="stager.spindleAmplitudeMin">12</entry>	
+	<entry key="stager.spindleAmplitudeMinUnlimited">false</entry>	
+	<entry key="stager.spindleAmplitudeMax">100</entry>	
+	<entry key="stager.spindleAmplitudeMaxUnlimited">true</entry>	
+
+	<entry key="stager.spindleFrequencyMin">11</entry>	
+	<entry key="stager.spindleFrequencyMinUnlimited">false</entry>	
+	<entry key="stager.spindleFrequencyMax">15</entry>	
+	<entry key="stager.spindleFrequencyMaxUnlimited">false</entry>	
+
+	<entry key="stager.spindleScaleMin">0.4</entry>	
+	<entry key="stager.spindleScaleMinUnlimited">false</entry>	
+	<entry key="stager.spindleScaleMax">2.5</entry>	
+	<entry key="stager.spindleScaleMaxUnlimited">false</entry>	
+
+	<entry key="stager.kComplexAmplitudeMin">100</entry>	
+	<entry key="stager.kComplexAmplitudeMinUnlimited">false</entry>	
+	<entry key="stager.kComplexAmplitudeMax">200</entry>	
+	<entry key="stager.kComplexAmplitudeMaxUnlimited">true</entry>	
+
+	<entry key="stager.kComplexFrequencyMin">0.03</entry>	
+	<entry key="stager.kComplexFrequencyMinUnlimited">false</entry>	
+	<entry key="stager.kComplexFrequencyMax">2.5</entry>	
+	<entry key="stager.kComplexFrequencyMaxUnlimited">false</entry>	
+
+	<entry key="stager.kComplexScaleMin">0.3</entry>	
+	<entry key="stager.kComplexScaleMinUnlimited">false</entry>	
+	<entry key="stager.kComplexScaleMax">1.5</entry>	
+	<entry key="stager.kComplexScaleMaxUnlimited">false</entry>	
+
+	<entry key="stager.kComplexPhaseMin">-0.5</entry>	
+	<entry key="stager.kComplexPhaseMinUnlimited">false</entry>	
+	<entry key="stager.kComplexPhaseMax">0.5</entry>	
+	<entry key="stager.kComplexPhaseMaxUnlimited">false</entry>	
+
+	<entry key="stager.emgToneThreshold">-1111</entry>	
+	<entry key="stager.mtEegThreshold">40</entry>	
+	<entry key="stager.mtEegThresholdEnabled">true</entry>
+	<entry key="stager.mtArtifactsThresholdEnabled">true</entry>	
+	<entry key="stager.mtEmgThreshold">300</entry>	
+	<entry key="stager.mtToneEmgThreshold">50</entry>	
+	<entry key="stager.remEogDeflectionThreshold">100</entry>	
+	<entry key="stager.semEogDeflectionThreshold">20</entry>	
+
+	<entry key="stager.fixed.swaWidthCoeff">1</entry>	
+	<entry key="stager.fixed.alphaPerc1">0.75</entry>	
+	<entry key="stager.fixed.alphaPerc2">0.5</entry>	
+	<entry key="stager.fixed.corrCoeffRems">-0.85</entry>	
+	<entry key="stager.fixed.corrCoeffSems">-0.7</entry>	
+
+	<entry key="eeg.pl.registerUrl">http://www.eeg.pl/join_form</entry>
+	
+ 	<entry key="eeg.pl.signalmlwsUrl">http://signalml.eeg.pl:8080/signalmlws/ws</entry>  		
+<!--	<entry key="eeg.pl.signalmlwsUrl">http://localhost:8080/signalmlws/ws</entry> 	-->
+
+</properties>

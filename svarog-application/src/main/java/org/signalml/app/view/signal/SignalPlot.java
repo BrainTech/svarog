@@ -1,0 +1,2568 @@
+/* SignalPlot.java created 2007-09-21
+ * 
+ */
+
+package org.signalml.app.view.signal;
+
+import java.awt.AlphaComposite;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.RenderingHints;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Point2D;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Formatter;
+import java.util.List;
+import java.util.SortedSet;
+
+import javax.swing.DefaultBoundedRangeModel;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPopupMenu;
+import javax.swing.JViewport;
+import javax.swing.Scrollable;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
+import org.apache.log4j.Logger;
+import org.signalml.app.config.ApplicationConfiguration;
+import org.signalml.app.document.SignalDocument;
+import org.signalml.app.document.TagDocument;
+import org.signalml.app.view.dialog.ErrorsDialog;
+import org.signalml.app.view.tag.TagPaintMode;
+import org.signalml.app.view.tag.TagRenderer;
+import org.signalml.app.view.tag.comparison.TagDifferenceRenderer;
+import org.signalml.domain.montage.Montage;
+import org.signalml.domain.montage.MontageMismatchException;
+import org.signalml.domain.signal.MultichannelSampleSource;
+import org.signalml.domain.signal.OriginalMultichannelSampleSource;
+import org.signalml.domain.signal.SignalProcessingChain;
+import org.signalml.domain.signal.SignalSelection;
+import org.signalml.domain.signal.SignalSelectionType;
+import org.signalml.domain.tag.StyledTagSet;
+import org.signalml.domain.tag.Tag;
+import org.signalml.domain.tag.TagDifference;
+import org.signalml.domain.tag.TagDifferenceSet;
+import org.signalml.domain.tag.TagStyle;
+import org.signalml.exception.SanityCheckException;
+import org.signalml.exception.SignalMLException;
+import org.signalml.util.Util;
+import org.springframework.context.support.MessageSourceAccessor;
+
+/** SignalPlot
+ *
+ * 
+ * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
+ * 		based on code Copyright (C) 2003 Dobieslaw Ircha <dircha@eranet.pl> Artur Biesiadowski <abies@adres.pl> Piotr J. Durka     <Piotr-J.Durka@fuw.edu.pl>
+ */
+public class SignalPlot extends JComponent implements PropertyChangeListener, ChangeListener, Scrollable {
+
+	private static final long serialVersionUID = 1L;
+	
+	protected static final Logger logger = Logger.getLogger(SignalPlot.class);
+		
+	public static final int SCALE_TO_SIGNAL_GAP = 0;
+	public static final int COMPARISON_STRIP_HEIGHT = 14;
+	public static final int COMPARISON_STRIP_MARGIN = 3;
+	
+	public static final String TIME_ZOOM_FACTOR_PROPERTY = "timeZoomFactor";
+	public static final String VOLTAGE_ZOOM_FACTOR_PROPERTY = "voltageZoomFactor";
+	public static final String PIXEL_PER_CHANNEL_PROPERTY = "pixelPerChannel";
+
+	private static final Dimension MINIMUM_SIZE = new Dimension(0,0);
+	
+	private SignalProcessingChain signalChain;
+	
+	private SignalDocument document;
+	private Montage localMontage;
+	
+	private TagRenderer tagRenderer;
+	private TagDifferenceRenderer tagDifferenceRenderer;
+	
+	private float samplingFrequency;
+	
+	private double voltageZoomFactor;
+	private double voltageZoomFactorRatio;
+	private double timeZoomFactor; // equiv to "samplesPerPixel"
+	
+	private boolean antialiased;
+	private boolean clamped;
+	private boolean offscreenChannelsDrawn;
+	private boolean tagToolTipsVisible;
+	
+	private boolean pageLinesVisible;
+	private boolean blockLinesVisible;
+	private boolean channelLinesVisible;
+	
+	private double pixelPerSecond;		
+    private double pixelPerBlock;
+    private double pixelPerPage;
+	private int pixelPerChannel; 
+    private double pixelPerValue;
+        
+    private int[] sampleCount;
+    private int maxSampleCount;
+    private int channelCount;
+    
+    private double detectedMaxValue;
+    private double[] samples;
+
+    private int[] channelLevel;
+    private int clampLimit;
+
+    private int pageCount;
+	private int wholePageCount;
+    private float pageSize;
+    private int blockCount;
+	private float blockSize;
+	private float maxTime;
+	private int blocksPerPage;
+	
+	private GeneralPath generalPath = new GeneralPath(GeneralPath.WIND_EVEN_ODD,50000);
+    
+	private SignalPlotColumnHeader signalPlotColumnHeader = null;
+	private SignalPlotRowHeader signalPlotRowHeader = null;
+	private SignalPlotCorner signalPlotCorner = null;
+	
+	private JLabel signalPlotTitleLabel = null;
+	private JLabel signalPlotSynchronizationLabel = null;
+		
+	private DefaultBoundedRangeModel timeScaleRangeModel;
+	private DefaultBoundedRangeModel valueScaleRangeModel;
+	private DefaultBoundedRangeModel channelHeightRangeModel;
+				
+	// the plot must be aware of its own viewport to draw fixed-position elements properly
+	private JViewport viewport;
+		
+	private SignalPlotPopupProvider popupMenuProvider;
+	private SignalView view;
+	private SignalPlot masterPlot;
+	
+	private boolean horizontalLock;
+	private boolean verticalLock;
+
+	private float horizontalTimeLead;
+	private float verticalValueLead;
+	
+	private int horizontalPixelLead;
+	private int verticalPixelLead;
+	
+	private boolean compensationEnabled = true;
+	private boolean ignoreSliderEvents = false;
+	
+	private MessageSourceAccessor messageSource;
+	
+	private ArrayList<PositionedTag> tempTagList;
+	
+	private int tempTagCnt;
+	private boolean tempComparing;
+	private TagDocument[] tempComparedTags;
+	private Point tempViewportLocation;
+	private Dimension tempViewportSize;
+	private Dimension tempPlotSize;
+	private ArrayList<SortedSet<Tag>> tempTagsToDrawList = new ArrayList<SortedSet<Tag>>();
+	
+	private TagPaintMode tagPaintMode;
+	private SignalColor signalColor;
+	private boolean signalXOR;
+	
+	private Rectangle tempBounds = new Rectangle();
+		
+	/* ***************** ***************** ***************** */
+	/* ***************** ***************** ***************** */
+	/* ***************** ***************** ***************** */
+	/* ***************** ***************** ***************** */
+	/* ***************** ***************** ***************** */
+	
+	/* Initialization & setup */
+	
+    public SignalPlot(SignalDocument document, SignalView view, SignalPlot masterPlot) throws SignalMLException {
+		super();
+		this.document = document;
+		this.view = view;
+		this.masterPlot = masterPlot;
+		
+		messageSource = view.getMessageSource();
+		
+		setBackground(Color.WHITE);
+				
+		setFocusable(true);
+		
+		signalChain = SignalProcessingChain.createFilteredChain(document.getSampleSource(), document.getType());
+		signalChain.applyMontageDefinition(document.getMontage());
+						
+		signalChain.addPropertyChangeListener(this);
+		document.addPropertyChangeListener(this);
+		
+		ApplicationConfiguration config = view.getApplicationConfig();
+		
+		if( masterPlot == null ) {
+			
+			timeScaleRangeModel = new DefaultBoundedRangeModel();		
+			valueScaleRangeModel = new DefaultBoundedRangeModel();
+			channelHeightRangeModel = new DefaultBoundedRangeModel();
+			
+			pixelPerChannel = 80;
+			voltageZoomFactor = 0.95;
+			timeZoomFactor = 0.5;
+						
+			antialiased = config.isAntialiased();
+			clamped = config.isClamped();
+			offscreenChannelsDrawn = config.isOffscreenChannelsDrawn();
+			
+			pageLinesVisible = config.isPageLinesVisible();
+			blockLinesVisible = config.isBlockLinesVisible();
+			channelLinesVisible = config.isChannelLinesVisible();
+			
+			tagPaintMode = config.getTagPaintMode();
+			signalColor = config.getSignalColor();
+			signalXOR = config.isSignalXOR();
+			
+			signalPlotCorner = new MasterSignalPlotCorner(this);
+			
+		} else {
+
+			timeScaleRangeModel = masterPlot.getTimeScaleRangeModel();
+			valueScaleRangeModel = masterPlot.getValueScaleRangeModel();
+			channelHeightRangeModel = masterPlot.getChannelHeightRangeModel();
+			
+			pixelPerChannel = masterPlot.getPixelPerChannel();
+			voltageZoomFactor = masterPlot.getVoltageZoomFactor();
+			timeZoomFactor = masterPlot.getTimeZoomFactor();
+			
+			antialiased = masterPlot.isAntialiased();
+			clamped = masterPlot.isClamped();
+			offscreenChannelsDrawn = masterPlot.isOffscreenChannelsDrawn();
+			
+			pageLinesVisible = masterPlot.isPageLinesVisible();
+			blockLinesVisible = masterPlot.isBlockLinesVisible();
+			channelLinesVisible = masterPlot.isChannelLinesVisible();
+			
+			tagPaintMode = masterPlot.getTagPaintMode();
+			signalColor = masterPlot.getSignalColor();
+			signalXOR = masterPlot.isSignalXOR();
+			
+			SlaveSignalPlotCorner slaveSignalPlotCorner = new SlaveSignalPlotCorner(this);
+			slaveSignalPlotCorner.setSlavePlotSettingsPopupDialog(view.getSlavePlotSettingsPopupDialog());
+			signalPlotCorner = slaveSignalPlotCorner;
+						
+		}
+		
+		signalPlotColumnHeader = new SignalPlotColumnHeader(this);
+		signalPlotRowHeader = new SignalPlotRowHeader(this);
+		
+		if( masterPlot == null ) {
+			
+			setTagToolTipsVisible( config.isTagToolTipsVisible() );
+			
+		} else {
+			
+			setTagToolTipsVisible( masterPlot.isTagToolTipsVisible() );
+			
+		}
+		
+		addMouseListener( new MouseAdapter() {
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if( SignalPlot.this.view.getApplicationConfig().isRightClickPagesForward() && SwingUtilities.isRightMouseButton(e) ) {
+					if( e.isShiftDown() ) {
+						maybeShowPopupMenu(e);
+					} else {
+						pageForward();
+					}
+				} else {
+					maybeShowPopupMenu(e);
+				}
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				if( !SignalPlot.this.view.getApplicationConfig().isRightClickPagesForward() || e.isShiftDown() ) {
+					maybeShowPopupMenu(e);
+				}
+			}
+			
+			private void maybeShowPopupMenu(MouseEvent e) {
+				if( e.isPopupTrigger() ) { 
+					JPopupMenu popupMenu = getPlotPopupMenu();
+					if( popupMenu != null ) {
+						popupMenu.show(e.getComponent(),e.getX(),e.getY());
+					}
+				}				
+			}
+			
+		});
+		
+	}
+    
+    public void initialize() throws SignalMLException {
+    	
+		calculateParameters();
+		
+		if( masterPlot == null ) {
+			
+			samples = new double[1024];
+			detectedMaxValue = 0.0;
+			
+			int channel, i;
+			int cnt;
+			for( channel=0; channel<channelCount; channel++ ) {
+				cnt = Math.min( samples.length, sampleCount[channel] );
+				signalChain.getSamples(channel, samples, 0, cnt, 0);
+				for( i=0; i<cnt; i++ ) {
+					samples[i] = Math.abs(samples[i]);
+					if( samples[i] > detectedMaxValue ) {
+						detectedMaxValue = samples[i];
+					}				
+				}
+			}
+			detectedMaxValue = Math.min( 2000F, detectedMaxValue );
+
+			voltageZoomFactor = ( 1.0 / (detectedMaxValue * 2) ) * 0.95; 			
+			
+			ApplicationConfiguration config = view.getApplicationConfig();
+			
+			// update models
+	        timeScaleRangeModel.setRangeProperties((int) (timeZoomFactor*1000), 0, (int) (config.getMinTimeScale()*1000), (int) (config.getMaxTimeScale()*1000), false);
+			valueScaleRangeModel.setRangeProperties((int) 100, 0, config.getMinValueScale(), config.getMaxValueScale(), false);
+			channelHeightRangeModel.setRangeProperties(pixelPerChannel, 0, config.getMinChannelHeight(), config.getMaxChannelHeight(), false);
+			
+			timeScaleRangeModel.addChangeListener(this);		
+			valueScaleRangeModel.addChangeListener(this);
+			channelHeightRangeModel.addChangeListener(this);		
+			
+		} else {
+
+			samples = new double[1024];
+			detectedMaxValue = masterPlot.getDetectedMaxValue();
+
+			masterPlot.addPropertyChangeListener(this);
+			
+		}
+		
+		voltageZoomFactorRatio = voltageZoomFactor / 100;
+						
+		calculateParameters();
+				
+    }
+
+    private void calculateParameters() {
+    	
+    	if( document == null ) {
+    		return;
+    	}
+    	
+    	samplingFrequency = signalChain.getSamplingFrequency();
+    	    	
+    	pageSize = document.getPageSize();
+    	blockSize = document.getBlockSize();
+    	blocksPerPage = document.getBlocksPerPage();
+    	    	
+    	pixelPerSecond = samplingFrequency * timeZoomFactor;
+    	pixelPerPage = pixelPerSecond * pageSize;
+    	pixelPerBlock = pixelPerPage / blocksPerPage;
+    	    	
+    	channelCount = signalChain.getChannelCount();
+    	sampleCount = new int[channelCount];
+    	int i;
+    	
+    	maxSampleCount = 0;
+    	for( i=0; i<channelCount; i++ ) {
+    		sampleCount[i] = signalChain.getSampleCount(i);
+    		if( maxSampleCount < sampleCount[i] ) {
+    			maxSampleCount = sampleCount[i];
+    		}
+    	}
+    	    	
+    	maxTime = maxSampleCount / samplingFrequency;
+    	
+    	pageCount = (int) Math.ceil( maxTime / pageSize );
+		blockCount = (int) Math.ceil( maxTime / blockSize );
+		
+		if( pageCount != ((int) Math.floor( maxTime / pageSize )) ) {
+			wholePageCount = pageCount-1;
+		} else {
+			wholePageCount = pageCount;
+		}
+		
+        pixelPerValue = pixelPerChannel * voltageZoomFactor;
+        clampLimit =  (pixelPerChannel / 2) - 2;     
+    	
+        channelLevel = new int[channelCount];
+
+        for( i=0; i<channelCount; i++ ) {
+        	channelLevel[i] = i * pixelPerChannel + pixelPerChannel / 2;
+        }
+                
+        if( signalPlotColumnHeader != null ) {
+        	signalPlotColumnHeader.reset();
+        }
+
+        if( signalPlotColumnHeader != null ) {
+        	signalPlotRowHeader.reset();
+        }
+                
+    }
+     
+	public void destroy() {
+		setVisible(false);
+		document.removePropertyChangeListener(this);
+		document = null;
+		signalChain.removePropertyChangeListener(this);
+		signalChain.destroy();
+		signalChain = null;
+		view = null;
+		signalPlotColumnHeader = null;
+		signalPlotRowHeader = null;
+		signalPlotCorner = null;
+		viewport = null;
+		timeScaleRangeModel = null;
+		valueScaleRangeModel = null;
+		channelHeightRangeModel = null;
+		if( masterPlot != null ) {
+			masterPlot.removePropertyChangeListener(this);
+			masterPlot = null;
+		}
+	}
+
+	/* ***************** ***************** ***************** */
+	/* ***************** ***************** ***************** */
+	/* ***************** ***************** ***************** */
+	/* ***************** ***************** ***************** */
+	/* ***************** ***************** ***************** */
+	
+	/* JComponent & Scrollable implementations */
+
+	private void prepareToPaintTags() {
+
+		List<TagDocument> tagDocuments = document.getTagDocuments();		
+		tempTagCnt = tagDocuments.size();
+		if( tempTagCnt == 0 ) {
+			return;
+		}
+
+		if( tagRenderer == null ) {
+			tagRenderer = new TagRenderer();
+		}
+		
+        tempViewportLocation = viewport.getViewPosition();
+        tempViewportSize = viewport.getExtentSize();
+		tempPlotSize = getSize();
+		
+		tempComparing = view.isComparingTags();
+		tempComparedTags = view.getComparedTags();
+		
+		if( tempComparing && tagDifferenceRenderer == null ) {
+			tagDifferenceRenderer = new TagDifferenceRenderer();
+		}
+		        
+	}
+	
+	private void useTagPaintMode(Graphics2D g) {
+		
+        switch( tagPaintMode ) {
+        
+        case XOR :
+        	
+        	g.setXORMode(Color.WHITE);
+        	break;
+        
+        case ALPHA_50 :
+        	
+        	g.setComposite(AlphaComposite.SrcOver.derive(0.5F));
+        	break;
+        	
+        case ALPHA_80 :
+
+        	g.setComposite(AlphaComposite.SrcOver.derive(0.8F));
+        	break;
+        	
+        case OVERLAY :
+        default :
+        	g.setComposite(AlphaComposite.SrcOver);
+        	break;
+        	
+        }
+		
+	}
+	
+	// note - this relies on class-local variables (optimization), see prepareToPaintTags	
+	private void paintTagOrTagSelection(Graphics2D g, Tag tag, int tagNumber, boolean active, boolean selected, boolean selectionOnly) {
+
+		SignalSelectionType type = tag.getType();
+		if( type == SignalSelectionType.PAGE ) {
+			return;
+		}
+		
+		TagStyle style = tag.getStyle();		
+		Component rendererComponent;
+		
+		if( selectionOnly ) {
+			rendererComponent = tagRenderer.getTagSelectionRendererComponent();
+		} else {
+			rendererComponent = tagRenderer.getTagRendererComponent(style, active, selected);			
+		}
+		
+		if( type == SignalSelectionType.BLOCK ) {
+			Rectangle tagBounds = getPixelBlockTagBounds(tag, tempTagCnt, tagNumber, tempViewportLocation, tempViewportSize, tempPlotSize, tempComparing, tempBounds);
+			rendererComponent.setBounds(tagBounds);
+			rendererComponent.paint(g.create(tagBounds.x, tagBounds.y, tagBounds.width, tagBounds.height));					
+		} 
+		else if( type == SignalSelectionType.CHANNEL ) {
+			Rectangle[] tagBoundsArr = getPixelChannelTagBounds(tag, tag.isMarker(), tempTagCnt, tagNumber, tempComparing);			
+			for( int i=0; i<tagBoundsArr.length; i++ ) {
+				if( tagBoundsArr[i].intersects(g.getClipBounds()) ) {
+					rendererComponent.setBounds(tagBoundsArr[i]);
+					rendererComponent.paint(g.create(tagBoundsArr[i].x, tagBoundsArr[i].y, tagBoundsArr[i].width, tagBoundsArr[i].height));
+				}
+			}
+		}
+		else {
+			throw new SanityCheckException("Bad tag type");
+		}
+				
+	}
+
+	// note - this relies on class-local variables (optimization), see prepareToPaintTags	
+	private void paintTagDifference(Graphics2D g, TagDifference tagDifference ) {
+
+		if( !tempComparing ) {
+			return;
+		}
+		
+		SignalSelectionType type = tagDifference.getType();
+		if( type == SignalSelectionType.PAGE ) {
+			return;
+		}
+		
+		Component rendererComponent = tagDifferenceRenderer.getTagDifferenceRendererComponent(tagDifference.getDifferenceType());
+		
+		if( type == SignalSelectionType.BLOCK ) {
+			Rectangle tagBounds = getPixelBlockTagBounds(tagDifference, tempTagCnt, 2, tempViewportLocation, tempViewportSize, tempPlotSize, true, tempBounds);
+			rendererComponent.setBounds(tagBounds);
+			rendererComponent.paint(g.create(tagBounds.x, tagBounds.y, tagBounds.width, tagBounds.height));					
+		} 
+		else if( type == SignalSelectionType.CHANNEL ) {
+			Rectangle[] tagBoundsArr = getPixelChannelTagBounds(tagDifference, false, tempTagCnt, 2, true);			
+			for( int i=0; i<tagBoundsArr.length; i++ ) {
+				if( tagBoundsArr[i].intersects(g.getClipBounds()) ) {
+					rendererComponent.setBounds(tagBoundsArr[i]);
+					rendererComponent.paint(g.create(tagBoundsArr[i].x, tagBoundsArr[i].y, tagBoundsArr[i].width, tagBoundsArr[i].height));
+				}
+			}
+		}
+		else {
+			throw new SanityCheckException("Bad tag difference type");
+		}
+				
+	}
+	
+	// note - this relies on class-local variables (optimization), see prepareToPaintTags		
+	private void paintBlockAndChannelTags(Graphics2D g, PositionedTag tagSelection) {
+				
+		// note - this doesn't paint the selected tag, see paintSelectedBlockOrChannelTag
+		
+		List<TagDocument> tagDocuments = document.getTagDocuments();		
+		        		
+		StyledTagSet tagSet;
+		SortedSet<Tag> tagsToDraw;	
+		
+		Tag highlightedTag = (tagSelection != null ? tagSelection.tag : null);
+		
+        Rectangle clip = g.getClipBounds();
+        float start = (float) (clip.x / pixelPerSecond);
+        float end = (float) ((clip.x+clip.width) / pixelPerSecond);
+		
+        boolean active;
+        boolean showActivity = ( tempTagCnt > 1 );
+
+        
+        useTagPaintMode(g);
+        tempTagsToDrawList.clear();
+                
+		// draw block tags first        
+		int cnt = 0;
+		for( TagDocument tagDocument : tagDocuments ) {
+			
+			if( tempComparing && tagDocument != tempComparedTags[0] && tagDocument != tempComparedTags[1] ) {
+				// in comparing mode paint only the compared tags
+				continue;
+			}
+			
+			active = showActivity && ( tagDocument == document.getActiveTag() );
+			tagSet = tagDocument.getTagSet();			
+			tagsToDraw = tagSet.getTagsBetween(start, end);
+			tempTagsToDrawList.add( tagsToDraw );
+			
+			for( Tag tag : tagsToDraw ) {
+				if( tag == highlightedTag ) {
+					continue;
+				}
+				if( tag.getType() == SignalSelectionType.BLOCK ) {
+					paintTagOrTagSelection(g, tag, cnt, active, false, false);
+				}
+			}
+
+			cnt++;
+			
+		}
+
+		// draw channel tags second		
+		cnt = 0;
+		for( TagDocument tagDocument : tagDocuments ) {
+			
+			if( tempComparing && tagDocument != tempComparedTags[0] && tagDocument != tempComparedTags[1] ) {
+				// in comparing mode paint only the compared tags
+				continue;
+			}
+			
+			active = showActivity && ( tagDocument == document.getActiveTag() );
+			tagsToDraw = tempTagsToDrawList.get(cnt);
+
+			for( Tag tag : tagsToDraw ) {
+				if( tag == highlightedTag ) {
+					continue;
+				}				
+				if( tag.getType() == SignalSelectionType.CHANNEL ) {
+					paintTagOrTagSelection(g, tag, cnt, active, false, false);
+				} else {
+					continue;
+				}
+				
+			}
+
+			cnt++;
+			
+		}
+		
+		// page tags are drawn in the column header
+		
+		g.setComposite(AlphaComposite.SrcOver);
+		
+		// differences go here
+		if( tempComparing ) {
+			
+			TagDifferenceSet differenceSet = view.getDifferenceSet();
+			if( differenceSet != null ) {
+				SortedSet<TagDifference> differencesToDraw = differenceSet.getDifferencesBetween(start,end);
+				for( TagDifference difference : differencesToDraw ) {
+					paintTagDifference(g, difference);
+				}
+			}
+						
+		}
+						
+	}
+
+	// note - this relies on class-local variables (optimization), see prepareToPaintTags	
+	private void paintSelectedBlockOrChannelTag(Graphics2D g, PositionedTag tagSelection, boolean selectionOnly ) {
+		
+		if( tagSelection == null ) {
+			return;
+		}
+		TagDocument tagDocument = document.getTagDocuments().get(tagSelection.tagPositionIndex);
+		if( tempComparing && tagDocument != tempComparedTags[0] && tagDocument != tempComparedTags[1] ) {
+			// in comparing mode paint only the compared tags
+			return;
+		}
+		
+		SignalSelectionType type = tagSelection.tag.getType();
+		if( type == SignalSelectionType.BLOCK || type == SignalSelectionType.CHANNEL ) {
+	        
+	        boolean active = ( tempTagCnt > 1 ) && ( document.getTagDocuments().get(tagSelection.tagPositionIndex) == document.getActiveTag() );
+	        
+	        useTagPaintMode(g);
+			
+	        paintTagOrTagSelection(g, tagSelection.tag, tagSelection.tagPositionIndex, active, false, selectionOnly);
+			
+	        g.setComposite(AlphaComposite.SrcOver);
+			
+		}		
+					
+	}
+	
+	@Override
+	protected void paintComponent(Graphics gOrig) {
+		
+		int i;
+				
+        Graphics2D g = (Graphics2D)gOrig;
+        Rectangle clip = g.getClipBounds();
+                                   
+        g.setColor(getBackground());
+        g.fillRect(clip.x,clip.y,clip.width,clip.height);
+        
+        int clipEndX = clip.x + clip.width - 1;
+        int clipEndY = clip.y + clip.height - 1;
+               
+        prepareToPaintTags();
+        
+        PositionedTag tagSelection = view.getTagSelection(this);
+        
+        if( tempTagCnt > 0 ) {
+        	paintBlockAndChannelTags(g, tagSelection);
+        }
+        
+        if( blockLinesVisible && pixelPerBlock > 4 ) {
+	        // this draws block boundaries
+	        int startBlock = (int) Math.floor( clip.x / pixelPerBlock );
+	        if( startBlock == 0 ) {
+	        	startBlock++;
+	        }
+	        int endBlock = (int) Math.ceil( clipEndX / pixelPerBlock );
+	        
+            g.setColor(Color.GRAY);
+	        for( i=startBlock; i <= endBlock; i++) {
+	            g.drawLine((int)(i * pixelPerBlock), clip.y, (int)(i * pixelPerBlock), clipEndY);        
+	        }
+        }
+        
+        if( pageLinesVisible && pixelPerPage > 4 ) {
+	        // this draws page boundaries
+	        int startPage = (int) Math.floor( clip.x / pixelPerPage );
+	        if( startPage == 0 ) {
+	        	startPage++;
+	        }
+	        int endPage = (int) Math.ceil( clipEndX / pixelPerPage );
+	        	        
+            g.setColor(Color.RED);
+            for( i=startPage; i <= endPage; i++) {
+                g.drawLine((int)(i * pixelPerPage), clip.y, (int)(i * pixelPerPage), clipEndY);
+            }
+        }
+        
+        int channel;
+                        
+    	int startChannel = (int) Math.max( 0, Math.floor( ((double) clip.y) / pixelPerChannel ) );
+    	int endChannel = (int) Math.min( channelCount-1, Math.ceil( ((double) clipEndY) / pixelPerChannel ) );
+        
+        if( channelLinesVisible && pixelPerChannel > 10 ) {
+	        g.setColor(Color.BLUE);
+	        for( channel=startChannel; channel<=endChannel; channel++ ) {
+            	g.drawLine(clip.x, channelLevel[channel], clipEndX, channelLevel[channel]);
+            }
+        }
+        
+		// draw the highlighted tag as is        
+		if( tempTagCnt > 0 && tagSelection != null ) {
+			paintSelectedBlockOrChannelTag(g, tagSelection, false);
+		}
+        
+        if( !clamped ) {
+        	if( offscreenChannelsDrawn ) {
+        		// draw all
+        		startChannel = 0;
+        		endChannel = channelCount-1;
+        	} else {
+            	// determine on screen channels 
+        		// NOTE: not the channels within the clip, the channels within the viewport
+        		Point viewportPoint = viewport.getViewPosition();
+        		Dimension viewportSize = viewport.getExtentSize();
+        		
+        		startChannel = (int) Math.max( 0, Math.floor( ((double) viewportPoint.y) / pixelPerChannel ) );
+        		endChannel = (int) Math.min( channelCount-1, Math.ceil( ((double) (viewportPoint.y + viewportSize.height)) / pixelPerChannel ) );        		
+        	}        	
+        }        	
+        
+        if ( antialiased ) {       
+            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+        }
+                
+        g.setColor(signalColor.getColor());
+        if( signalXOR ) {
+        	g.setXORMode(Color.WHITE);
+        } else {
+        	g.setComposite(AlphaComposite.SrcOver);
+        }
+
+        int firstSample, lastSample, length;
+        double realX, x, y;
+        double lastX = 0;
+        double lastY = 0;
+        
+        for( channel=startChannel; channel<=endChannel; channel++ ) {
+        	
+            // those must be offset by one to get correct partial redraw
+        	// offset again by one, this time in terms of samples
+        	firstSample = (int) Math.max( 0, Math.floor( ((double) (clip.x-1)) / timeZoomFactor ) - 1 );
+        	lastSample = (int) Math.min( sampleCount[channel] - 1, Math.ceil( ((double) (clipEndX+1)) / timeZoomFactor ) + 1 );
+        	if( lastSample < firstSample ) {
+        		continue;
+        	}
+        	length = 1 + lastSample - firstSample;
+        	if( samples == null || samples.length < length ) {
+        		samples = new double[length];
+        	}
+        	
+        	try {
+        		signalChain.getSamples(channel, samples, firstSample, length, 0);
+        	} catch( RuntimeException ex ) {
+        		setVisible(false);
+        		throw ex;
+        	}
+        	
+        	realX = firstSample * timeZoomFactor;
+        	y = samples[0] * pixelPerValue;
+        	
+            if ( clamped )
+            {
+            	if( y > clampLimit ) {
+            		y = channelLevel[channel] - clampLimit;
+            	} else if ( y < -clampLimit ) {
+            		y = channelLevel[channel] + clampLimit;            		
+            	} else {
+            		y = channelLevel[channel] - y;
+            	}
+            } else {
+            	y = channelLevel[channel] - y;
+            }
+        	
+            generalPath.reset();
+
+            if( !antialiased ) {
+            
+            	x = StrictMath.floor( realX + 0.5 );
+            	y = StrictMath.floor( y + 0.5 );
+
+                generalPath.moveTo( x, y );
+            	
+                lastX = x;
+                lastY = y;
+                            
+            } else {
+            	
+                generalPath.moveTo( realX, y );
+            	
+            }
+                    	              
+            for( i=1; i<length; i++ ) {
+            	
+            	y = samples[i] * pixelPerValue;
+                
+            	if ( clamped )
+                {
+                	if( y > clampLimit ) {
+                		y = channelLevel[channel] - clampLimit;
+                	} else if ( y < -clampLimit ) {
+                		y = channelLevel[channel] + clampLimit;            		
+                	} else {
+                		y = channelLevel[channel] - y;
+                	}
+                } else {
+                	y = channelLevel[channel] - y;
+                }
+                
+            	realX = ((firstSample+i) * timeZoomFactor);
+            	
+                if( antialiased ) {
+                	
+            		generalPath.lineTo( realX, y );
+            		
+                } else {
+
+                	// if not antialiased then round to integer in order to prevent aliasing affects
+                	// (which cause slave plots to display the signal slightly differently)
+                	// expand Math.round for performance, StrictMath.floor is native
+                	x = StrictMath.floor( realX + 0.5 );
+                	y = StrictMath.floor( y + 0.5 );
+
+                	if( x != lastX || y != lastY ) {
+                		generalPath.lineTo( x, y );
+                	}
+                    
+                    lastX = x;
+                    lastY = y;
+                	
+                }
+            	
+                            	
+            }
+            
+            g.draw(generalPath);
+        	
+        }
+             
+        if( signalXOR ) {
+        	g.setComposite(AlphaComposite.SrcOver);        	
+        }
+        
+		// finally draw the highlighted tags selection outline        
+		if( tempTagCnt > 0 && tagSelection != null ) {
+			paintSelectedBlockOrChannelTag(g, tagSelection, true);
+		}
+        
+		SignalSelection signalSelection = view.getSignalSelection(this);
+		
+        if( signalSelection != null ) {
+        	
+        	g.setColor(Color.BLUE);
+        	g.setStroke(new BasicStroke(3.0F,BasicStroke.CAP_BUTT,BasicStroke.JOIN_MITER, 10F, new float[] {5,5}, 0F));
+        	
+        	Rectangle r = getPixelSelectionBounds(signalSelection, tempBounds);
+        	r = r.intersection(new Rectangle(new Point(0,0), getSize()));
+        	
+        	g.drawRect(r.x+1,r.y+1,r.width-2,r.height-2); // draw the selection completely _inside_ the selected area (pen width of 3 must be compenstated)   	
+        
+        }
+
+	}
+    
+	@Override
+	public Dimension getPreferredSize() {
+        return new Dimension((int)(maxSampleCount*timeZoomFactor),channelCount*pixelPerChannel);		
+	}
+
+	@Override
+	public Dimension getMinimumSize() {
+		if( masterPlot == null ) {
+			return new Dimension((int)(maxSampleCount*timeZoomFactor),pixelPerChannel);
+		} else {
+			return MINIMUM_SIZE;
+		}
+	}
+	
+	@Override
+	public Dimension getMaximumSize() {
+		return getPreferredSize();
+	}
+
+	public JPopupMenu getPlotPopupMenu() {
+		if( view.isToolEngaged() ) {
+			return null;
+		}
+		if( popupMenuProvider == null ) {
+			return null;
+		}
+		return popupMenuProvider.getPlotPopupMenu();
+	}
+
+    @Override
+    public boolean isDoubleBuffered() {
+    	return true;
+    }	
+	
+	@Override
+	public Dimension getPreferredScrollableViewportSize() {
+		return getPreferredSize();
+	}
+
+	@Override
+	public boolean getScrollableTracksViewportHeight() {
+		return false;
+	}
+
+	@Override
+	public boolean getScrollableTracksViewportWidth() {
+		return false;
+	}
+	
+	@Override
+	public int getScrollableBlockIncrement(Rectangle visibleRect, int orientation, int direction) {
+		switch( orientation ) {
+			
+		case SwingConstants.VERTICAL :
+			
+			return pixelPerChannel;
+						
+		case SwingConstants.HORIZONTAL :
+		default :
+
+			if( direction > 0 ) {
+				return getPageForwardSkip(viewport.getViewPosition());
+			} else {
+				return -getPageBackwardSkip(viewport.getViewPosition());
+			}
+			
+		}
+	}
+
+	@Override
+	public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction) {
+		switch( orientation ) {
+		
+		case SwingConstants.VERTICAL :
+			
+			return pixelPerChannel/8;
+						
+		case SwingConstants.HORIZONTAL :
+		default :
+
+			if( direction > 0 ) {
+				return getBlockForwardSkip(viewport.getViewPosition());
+			} else {
+				return -getBlockBackwardSkip(viewport.getViewPosition());
+			}
+		}
+	}
+		
+	public int getPageForwardSkip(Point position) {
+		int currentPage = (int) Math.floor( position.x / pixelPerPage );
+		int pageOffset = position.x - ((int) (currentPage*pixelPerPage));
+		if( pageOffset > pixelPerPage / 2 ) {
+			// this trick prevent innacuracies caused by rounding
+			currentPage++;
+			pageOffset = position.x - ((int) (currentPage*pixelPerPage));
+		}
+		currentPage++;
+		return (pageOffset + ((int) (currentPage*pixelPerPage))) - position.x;		
+	}
+
+	public int getPageBackwardSkip(Point position) {
+		int currentPage = (int) Math.floor( position.x / pixelPerPage );
+		int pageOffset = position.x - ((int) (currentPage*pixelPerPage));
+		if( pageOffset < pixelPerPage / 2 ) {
+			// this trick prevent innacuracies caused by rounding
+			currentPage--;
+			pageOffset = position.x - ((int) (currentPage*pixelPerPage));
+		}
+		currentPage--;
+		return (pageOffset + ((int) (currentPage*pixelPerPage))) - position.x;		
+	}
+
+	public int getBlockForwardSkip(Point position) {
+		int currentBlock = (int) Math.floor( position.x / pixelPerBlock );
+		int blockOffset = position.x - ((int) (currentBlock*pixelPerBlock));
+		if( blockOffset > pixelPerBlock / 2 ) {
+			// this trick prevent innacuracies caused by rounding
+			currentBlock++;
+			blockOffset = position.x - ((int) (currentBlock*pixelPerBlock));
+		}
+		currentBlock++;
+		return (blockOffset + ((int) (currentBlock*pixelPerBlock))) - position.x;		
+	}
+
+	public int getBlockBackwardSkip(Point position) {
+		int currentBlock = (int) Math.floor( position.x / pixelPerBlock );
+		int blockOffset = position.x - ((int) (currentBlock*pixelPerBlock));
+		if( blockOffset < pixelPerBlock / 2 ) {
+			// this trick prevent innacuracies caused by rounding
+			currentBlock--;
+			blockOffset = position.x - ((int) (currentBlock*pixelPerBlock));
+		}
+		currentBlock--;
+		return (blockOffset + ((int) (currentBlock*pixelPerBlock))) - position.x;		
+	}
+	
+	public void pageForward() {
+		Point position = viewport.getViewPosition();
+		position.x += getPageForwardSkip(position);
+		position.x = Math.max( 0, Math.min( getSize().width - viewport.getExtentSize().width, position.x ) ); 
+		viewport.setViewPosition(position);
+	}
+
+	public void pageBackward() {
+		Point position = viewport.getViewPosition();
+		position.x += getPageBackwardSkip(position);
+		position.x = Math.max( 0, Math.min( getSize().width - viewport.getExtentSize().width, position.x ) ); 
+		viewport.setViewPosition(position);
+	}
+	
+	public void snapPageToView() {
+				
+		Dimension extent = viewport.getExtentSize();		
+		Point position = viewport.getViewPosition();
+
+		int currentPage = (int) Math.floor( position.x / pixelPerPage );
+		
+		if( masterPlot == null ) {
+			double timeZoomFactor = ((double) extent.width) / (samplingFrequency*pageSize);
+			setTimeZoomFactor(timeZoomFactor);
+		}
+		
+		// viewport needs to be validated after change, so that getSize returns a valid value
+		viewport.validate();
+		Dimension size = getSize();
+		
+		position.x = (int) (currentPage * pixelPerPage);
+		position.x = Math.min( size.width-extent.width, position.x );
+		
+		boolean oldHorizontalLock = horizontalLock;
+		boolean oldVerticalLock = verticalLock;		
+		
+		try {
+
+			// prevent re-synchronization
+			horizontalLock = false;
+			verticalLock = false;
+			viewport.setViewPosition(position);			
+			
+		} finally {
+			horizontalLock = oldHorizontalLock;
+			verticalLock = oldVerticalLock;
+		}
+
+		if( horizontalLock && masterPlot != null ) {
+			// reset alignment
+			Point masterPosition = masterPlot.getViewport().getViewPosition();
+			horizontalTimeLead = toTimeSpace(position) - masterPlot.toTimeSpace(masterPosition);
+			horizontalPixelLead = position.x - masterPosition.x;
+		}
+		
+	}
+		
+	@Override
+	public String getToolTipText(MouseEvent event) {
+
+		if( !tagToolTipsVisible ) {
+			return null;
+		}
+		
+		Point p = event.getPoint();
+		
+		tempTagList = getTagsAtPoint(p, tempTagList);
+		if( tempTagList.isEmpty() ) {
+			return null;
+		}
+		
+		String locationMessage = messageSource.getMessage("signalView.plotToolTipSignal", new Object[] {
+				toTimeSpace(p),
+				toValueSpace(p),
+				toPageSpace(p),
+				toBlockSpace(p),
+				signalChain.getLabel(toChannelSpace(p))
+		});
+		return getTagListToolTip(locationMessage, tempTagList);
+		
+	}
+	
+	/* ***************** ***************** ***************** */
+	/* ***************** ***************** ***************** */
+	/* ***************** ***************** ***************** */
+	/* ***************** ***************** ***************** */
+	/* ***************** ***************** ***************** */
+	
+	/* Listener implementations */
+	
+	public void reset() {
+		calculateParameters();
+		revalidateAndRepaintAll();
+	}
+
+	public void revalidateAndRepaintAll() {
+		if( signalPlotColumnHeader != null ) {
+			signalPlotColumnHeader.revalidate();
+			signalPlotColumnHeader.repaint();
+		}
+		if( signalPlotRowHeader != null ) {
+			signalPlotRowHeader.revalidate();
+			signalPlotRowHeader.repaint();
+		}
+		revalidate();
+		repaint();		
+	}
+	
+	public void updateScales( double timeZoomFactor, double voltageZoomFactor, int pixelPerChannel, boolean compensate ) {
+		
+		Point viewportPoint = null;
+		Dimension viewportSize = null;
+		Point p = null; 
+		Dimension plotSize = null;
+		Point2D.Float p2 = null;
+		
+		if( compensate ) {
+			viewportPoint = viewport.getViewPosition();
+			viewportSize = viewport.getExtentSize();
+			p = new Point( viewportPoint.x + viewportSize.width/2, viewportPoint.y + viewportSize.height/2 );
+			p2 = toSignalSpace(p);
+		}
+		
+		if( timeZoomFactor >= 0 ) {
+			setTimeZoomFactor( timeZoomFactor );
+		}
+		if( voltageZoomFactor >= 0 ) {
+			setVoltageZoomFactor( voltageZoomFactor );			
+		}
+		if( pixelPerChannel >= 0 ) {
+			setPixelPerChannel( pixelPerChannel );
+		}
+		
+		if( compensate ) {
+
+			// viewport needs to be validated after change, so that getSize returns a valid value			
+			viewport.validate();
+			plotSize = getSize();
+
+			Point newP = toPixelSpace(p2);
+			newP.x = newP.x - viewportSize.width/2;
+			newP.y = newP.y - viewportSize.height/2;
+
+			newP.x = Math.max( 0, Math.min( plotSize.width - viewportSize.width, newP.x));
+			newP.y = Math.max( 0, Math.min( plotSize.height - viewportSize.height, newP.y));
+
+			viewport.setViewPosition(newP);
+			
+		}
+		
+	}
+	
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		Object source = evt.getSource();
+		if( source == document ) {
+			if( evt.getPropertyName().equals(SignalDocument.MONTAGE_PROPERTY) ) {
+				try {
+					if( localMontage == null ) {
+						signalChain.applyMontageDefinition((Montage) evt.getNewValue());
+						if( view.getSignalSelection(this) != null ) {
+							view.clearSignalSelection();
+						}						
+						if( view.getTagSelection(this) != null ) {
+							view.clearTagSelection();
+						}						
+					}
+				} catch (MontageMismatchException ex) {
+					logger.error("Failed to set montage", ex);
+					ErrorsDialog.showImmediateExceptionDialog(this, ex);
+					return;
+				}
+			}
+			reset();
+		}
+		else if( masterPlot != null && source == masterPlot ) {
+			String name = evt.getPropertyName();
+			if( TIME_ZOOM_FACTOR_PROPERTY.equals( name ) ) {
+				updateScales( masterPlot.getTimeZoomFactor(), -1, -1, compensationEnabled );
+			}
+			else if( VOLTAGE_ZOOM_FACTOR_PROPERTY.equals( name ) ) {
+				updateScales( -1, masterPlot.getVoltageZoomFactor(), -1, false );
+			}
+			else if( PIXEL_PER_CHANNEL_PROPERTY.equals( name) ) {
+				updateScales( -1, -1, masterPlot.getPixelPerChannel(), compensationEnabled );
+			}
+		}
+	}
+	
+	@Override
+	public void stateChanged(ChangeEvent e) {
+		
+		Object source = e.getSource();
+		
+		if( source == viewport ) {		
+			PositionedTag pTag = view.getTagSelection(this);
+			if( pTag != null ) {
+				if( !isTagOnScreen( pTag ) ) {
+					view.clearTagSelection();
+				}
+			}
+			SignalSelection selection = view.getSignalSelection(this);
+			if( selection != null ) {
+				if( !isSelectionOnScreen(selection) ) {
+					view.clearSignalSelection();
+				}
+			}			
+		}
+		else if( !ignoreSliderEvents ) {
+			if( source == timeScaleRangeModel ) {
+				double timeZoomFactor = ((double) timeScaleRangeModel.getValue()) / 1000F; 
+				updateScales( timeZoomFactor, -1, -1, compensationEnabled );
+			} 
+			else if( source == valueScaleRangeModel ) {
+				double voltageZoomFactor = ((double) valueScaleRangeModel.getValue()) * voltageZoomFactorRatio; 
+				updateScales( -1, voltageZoomFactor, -1, false );
+			} 
+			else if( source == channelHeightRangeModel ) {
+				updateScales( -1, -1, channelHeightRangeModel.getValue(), compensationEnabled );
+			}
+		}
+						
+	}	
+
+	/* ***************** ***************** ***************** */
+	/* ***************** ***************** ***************** */
+	/* ***************** ***************** ***************** */
+	/* ***************** ***************** ***************** */
+	/* ***************** ***************** ***************** */
+	
+	/* Conversions */
+	
+	public Point2D.Float toSignalSpace( Point p ) {
+		float time = (float) (((double) p.x) / pixelPerSecond);
+		float value = (float) (((double) p.y) / pixelPerValue);
+		
+		return new Point2D.Float(time,value);
+	}
+	
+	public Point toPixelSpace( Point2D.Float p ) {
+		int x = (int) Math.round( p.getX() * pixelPerSecond );
+		int y = (int) Math.round( p.getY() * pixelPerValue );
+		
+		return new Point(x,y);
+	}
+	
+	public int toPageSpace( Point p ) {
+		return (int) Math.max( 0, Math.min( pageCount-1, Math.floor( p.x / pixelPerPage ) ) );
+	}
+
+	public int toBlockSpace( Point p ) {
+		return (int) Math.max( 0, Math.min( blockCount-1, Math.floor( p.x / pixelPerBlock ) ) );
+	}
+
+	public float toTimeSpace( Point p ) {
+		return Math.max( 0, Math.min( maxTime, (float) (((double) p.x) / pixelPerSecond )) );
+	}
+
+	public int toSampleSpace(Point p) {
+		return Math.max( 0, Math.min( maxSampleCount-1, (int) (((double) p.x) / timeZoomFactor )) );
+	}
+	
+	public float toValueSpace(Point p) {
+		int channel = toChannelSpace(p);
+		int y = channelLevel[channel] - p.y;
+		return (float) Math.round( ((double) y) / pixelPerValue );
+	}
+	
+	public int timeToPixel( float time ) {
+		return (int) Math.round( ((double) time) * pixelPerSecond );
+	}
+	
+	public int channelToPixel( int channel ) {
+		return ( channel * pixelPerChannel ); 
+	}
+	
+	public int toChannelSpace( Point p ) {
+		return (int) Math.max( 0, Math.min( channelCount-1, Math.floor( p.y / pixelPerChannel ) ) );
+	}
+		
+	public Rectangle getPixelSelectionBounds( SignalSelection selection, Rectangle useRect ) {
+		
+		float position = selection.getPosition();
+		float length = selection.getLength();
+		SignalSelectionType type = selection.getType();
+		
+    	int selLeft = (int) Math.floor( selection.getPosition() * pixelPerSecond );
+    	int selRight = (int) Math.ceil( selection.getLength() * pixelPerSecond );
+    	int selTop;
+    	int selBottom;
+    	
+    	if( type == SignalSelectionType.PAGE ) {
+    		selLeft = (int) ( ( position / pageSize ) * pixelPerPage );
+    		selRight = (int) ( ( (position + length) / pageSize ) * pixelPerPage );
+    	} else if( type == SignalSelectionType.BLOCK ) {
+    		selLeft = (int) ( ( position / blockSize ) * pixelPerBlock );
+    		selRight = (int) ( ( (position + length) / blockSize ) * pixelPerBlock );
+    	} else {
+    		selLeft = (int) Math.round( position * pixelPerSecond );
+    		selRight = (int) Math.round( (position+length) * pixelPerSecond ) - 1;
+    	}
+    	
+    	int selChannel = selection.getChannel();
+    	if( selChannel == SignalSelection.CHANNEL_NULL ) {
+    		selTop = 0;
+    		selBottom = getSize().height - 1;
+    	} else {
+    		selTop = selChannel*pixelPerChannel;
+    		selBottom = selTop + pixelPerChannel - 1;
+    	}
+    	
+    	Rectangle rect;
+    	if( useRect == null ) {
+    		rect = new Rectangle();
+    	} else {
+    		rect = useRect;
+    	}
+		
+    	rect.x = selLeft;
+    	rect.y = selTop;
+    	rect.width = selRight-selLeft;
+    	rect.height = selBottom-selTop;
+    	
+    	return rect;
+    	
+	}
+	
+	private boolean isSelectionOnScreen( SignalSelection selection ) {				
+		return viewport.getViewRect().intersects( getPixelSelectionBounds(selection, tempBounds) );		
+	}
+	
+	public Rectangle getPixelBlockTagBounds( SignalSelection tag, int tagCnt, int tagNumber, Point viewportPoint, Dimension viewportSize, Dimension plotSize, boolean comparing, Rectangle useRect ) {
+
+		Rectangle rect;
+		if( useRect == null ) {
+			rect = new Rectangle();
+		} else {
+			rect = useRect;
+		}
+		
+		int endX;
+		int endY;
+		
+		float position = tag.getPosition();
+		rect.x = (int) (position * pixelPerSecond);
+		if( rect.x > 0 && blockLinesVisible && pixelPerBlock > 4 ) {
+			int linePosition = (int) ((int) ((position / blockSize)) * pixelPerBlock);
+			if( linePosition == rect.x ) { 			
+				rect.x++; // block tags are drawn only inside the block
+			}
+		}
+		endX = (int) ((position+tag.getLength()) * pixelPerSecond);
+		rect.width = endX-rect.x;
+		
+		if( tagCnt > 1 ) {
+						
+			int height = ( plotSize.height <= viewportSize.height ? plotSize.height : viewportSize.height );
+			
+			if( comparing ) {
+
+				// 0 - top, 1 - bottom, 2 - comparison
+				int tagHeight = (height-COMPARISON_STRIP_HEIGHT) / 2; 
+				if( tagNumber == 0 ) {
+					rect.y = viewportPoint.y;
+					rect.height = tagHeight;
+				} else if( tagNumber == 1 ) {
+					rect.y = viewportPoint.y + COMPARISON_STRIP_HEIGHT + tagHeight;
+					rect.height = tagHeight;
+				} else {
+					rect.y = viewportPoint.y + tagHeight + COMPARISON_STRIP_MARGIN;
+					rect.height = COMPARISON_STRIP_HEIGHT - ( 2 * COMPARISON_STRIP_MARGIN );
+				}
+				
+				
+			} else {
+				float pixerPerTag = ((float) height) / tagCnt;						
+				rect.y = viewportPoint.y + (int) (((float) tagNumber) * pixerPerTag);
+				endY = viewportPoint.y + (int) (((float) (tagNumber+1)) * pixerPerTag);
+				rect.height = endY - rect.y;
+			}
+			
+		} else {
+			rect.y = 0;
+			rect.height = plotSize.height;
+		}
+		
+		return rect;
+		
+	}
+
+	public Rectangle getPixelChannelTagBoundsInChannel( SignalSelection tag, boolean marker, int tagCnt, int tagNumber, int channel, boolean comparing, Rectangle useRect ) {
+		
+		Rectangle rect;
+		if( useRect == null ) {
+			rect = new Rectangle();
+		} else {
+			rect = useRect;
+		}
+
+		if( marker ) {
+
+			int center = (int) Math.round( tag.getCenterPosition() * pixelPerSecond );
+			int rWidth = pixelPerChannel / (3 * tagCnt); // 1/3 of the height for this tag
+			if( rWidth > 50 ) {
+				rWidth = 50;
+			} else if( rWidth < 5 ) {
+				rWidth = 5;
+			}
+			
+			rect.x = center - (rWidth / 2);
+			rect.width = rWidth;
+			
+		} else {
+			
+			rect.x = (int) (tag.getPosition() * pixelPerSecond);
+			rect.width = (int) (tag.getLength() * pixelPerSecond);
+
+		}
+			
+		int channelOffset = channel * pixelPerChannel; 
+		
+		if( comparing ) {
+		
+			// 0 - top, 1 - bottom, 2 - comparison
+			int tagHeight = (pixelPerChannel-COMPARISON_STRIP_HEIGHT) / 2; 
+			if( tagNumber == 0 ) {
+				rect.y = channelOffset;
+				rect.height = tagHeight;
+			} else if( tagNumber == 1 ) {
+				rect.y = channelOffset + COMPARISON_STRIP_HEIGHT + tagHeight;
+				rect.height = tagHeight;
+			} else {
+				rect.y = channelOffset + tagHeight + COMPARISON_STRIP_MARGIN;
+				rect.height = COMPARISON_STRIP_HEIGHT - ( 2 * COMPARISON_STRIP_MARGIN );
+			}
+			
+		} else {
+			
+			float pixelPerTag = ((float) pixelPerChannel) / tagCnt;
+			
+			rect.y = channelOffset + (int) (((float) tagNumber) * pixelPerTag);
+			if( channelLinesVisible && (tagCnt % 2 == 0) && (tagNumber == (tagCnt/2)) ) { // avoid obscuring channel line
+				rect.y++;
+			}
+			int endY = channelOffset + (int) (((float) (tagNumber+1)) * pixelPerTag);
+			rect.height = endY - rect.y;
+			
+		}
+		
+		return rect;
+		
+	}
+	
+	public Rectangle[] getPixelChannelTagBounds( SignalSelection tag, boolean marker, int tagCnt, int tagNumber, boolean comparing ) {
+
+		int[] channels = signalChain.getDependantChannelIndices( tag.getChannel() );
+		
+		Rectangle[] rects = new Rectangle[channels.length];
+		
+		for( int i=0; i<channels.length; i++ ) {			
+			rects[i] = getPixelChannelTagBoundsInChannel(tag, marker, tagCnt, tagNumber, channels[i], comparing, null);
+		}
+		
+		return rects;
+		
+	}
+	
+	private boolean isTagOnScreen( PositionedTag pTag ) {
+		
+		Rectangle viewRect = viewport.getViewRect();
+		SignalSelectionType type = pTag.tag.getType();
+		if( type.isBlock() ) {
+			return getPixelBlockTagBounds(pTag.tag, document.getTagDocuments().size(), pTag.tagPositionIndex, viewRect.getLocation(), viewRect.getSize(), getSize(), view.isComparingTags(), tempBounds).intersects(viewRect);
+		}
+		else if( type.isChannel() ) {
+			Rectangle[] bounds = getPixelChannelTagBounds(pTag.tag, pTag.tag.isMarker(), document.getTagDocuments().size(), pTag.tagPositionIndex, view.isComparingTags());
+			for( int i=0; i<bounds.length; i++ ) {
+				if( viewRect.intersects(bounds[i]) ) {
+					return true;
+				}
+			}
+			return false;
+		}
+		else if( type.isPage() ) {
+			Rectangle bounds = signalPlotColumnHeader.getPixelPageTagBounds(pTag.tag, document.getTagDocuments().size(), pTag.tagPositionIndex, view.isComparingTags(), tempBounds);
+			// we assume the selected page tag to be always visible in vertical direction, only horizontal is checked
+			bounds.y = viewRect.y;
+			bounds.height = 1;
+			return bounds.intersects(viewRect); 
+		}
+		else {
+			throw new SanityCheckException("Bad tag type");
+		}
+				
+	}
+	
+	/* ***************** ***************** ***************** */
+	/* ***************** ***************** ***************** */
+	/* ***************** ***************** ***************** */
+	/* ***************** ***************** ***************** */
+	/* ***************** ***************** ***************** */
+	
+	/* Local montage support */
+	
+	public Montage getLocalMontage() {
+		return localMontage;
+	}
+
+	public void setLocalMontage(Montage localMontage) {
+		if( this.localMontage != localMontage ) {
+			this.localMontage = localMontage;
+			updateSignalPlotTitleLabel();
+			try {
+				if( localMontage == null ) {
+					signalChain.applyMontageDefinition(document.getMontage());
+				} else {
+					signalChain.applyMontageDefinition(localMontage);
+				}
+			} catch (MontageMismatchException ex) {
+				logger.error("Failed to set montage", ex);
+				ErrorsDialog.showImmediateExceptionDialog(this, ex);
+				return;
+			}
+			if( view.getSignalSelection(this) != null ) {
+				view.clearSignalSelection();
+			}
+			if( view.getTagSelection(this) != null ) {
+				view.clearTagSelection();
+			}			
+			reset();
+			// clone plots must revalidate to compensate for possible label length chnage
+			// which might have resized the row header
+			for( SignalPlot plot : view.getPlots() ) {
+				if( plot != this ) {
+					plot.revalidateAndRepaintAll();
+				}
+			}
+		}
+	}
+				
+	/* ***************** ***************** ***************** */
+	/* ***************** ***************** ***************** */
+	/* ***************** ***************** ***************** */
+	/* ***************** ***************** ***************** */
+	/* ***************** ***************** ***************** */
+	
+	/* Selection support */
+		
+	public void repaintSelectionBounds( SignalSelection signalSelection ) {
+		Rectangle selectionBounds = getPixelSelectionBounds(signalSelection, tempBounds);
+		selectionBounds.grow(3,3);
+		repaint(selectionBounds);		
+	}
+
+	public SignalSelection getPageSelection( int fromPage, int toPage ) {
+		if( fromPage > toPage ) {
+			int temp = toPage;
+			toPage = fromPage;
+			fromPage = temp;
+		}
+		SignalSelection selection = new SignalSelection(
+				SignalSelectionType.PAGE,
+				fromPage * pageSize,
+				((toPage+1)-fromPage) * pageSize
+		);
+		return selection;
+	}
+
+	public SignalSelection getBlockSelection( int fromBlock, int toBlock ) {
+		if( fromBlock > toBlock ) {
+			int temp = toBlock;
+			toBlock = fromBlock;
+			fromBlock = temp;
+		}
+		SignalSelection selection = new SignalSelection(
+				SignalSelectionType.BLOCK,
+				fromBlock * blockSize,
+				((toBlock+1)-fromBlock) * blockSize
+		);
+		return selection;
+	}
+	
+	public SignalSelection getChannelSelection( float fromPosition, float toPosition, int channel ) {
+		if( fromPosition > toPosition ) {
+			float temp = toPosition;
+			toPosition = fromPosition;
+			fromPosition = temp;
+		}
+		return new SignalSelection( SignalSelectionType.CHANNEL, fromPosition, toPosition-fromPosition, channel );
+	}
+
+	/* ***************** ***************** ***************** */
+	/* ***************** ***************** ***************** */
+	/* ***************** ***************** ***************** */
+	/* ***************** ***************** ***************** */
+	/* ***************** ***************** ***************** */
+	
+	/* Tagging support */
+	
+	public void repaintTagBounds( PositionedTag tag, int tagCnt ) {
+		SignalSelectionType type = tag.tag.getStyle().getType();
+		if( type == SignalSelectionType.PAGE ) {
+			Rectangle tagBounds;
+			tagBounds = signalPlotColumnHeader.getPixelPageTagBounds(tag.tag, tagCnt, tag.tagPositionIndex, view.isComparingTags(), tempBounds );
+			tagBounds.grow(3,3);
+			signalPlotColumnHeader.repaint(tagBounds);
+		}
+		else if( type == SignalSelectionType.BLOCK ) {
+			Rectangle tagBounds;
+			tagBounds = getPixelBlockTagBounds(tag.tag, tagCnt, tag.tagPositionIndex, viewport.getViewPosition(), viewport.getExtentSize(), getSize(), view.isComparingTags(), tempBounds);
+			tagBounds.grow(3,3);
+			repaint(tagBounds);
+		}
+		else if( type == SignalSelectionType.CHANNEL ) {
+			Rectangle[] tagBounds;
+			tagBounds = getPixelChannelTagBounds(tag.tag, tag.tag.isMarker(), tagCnt, tag.tagPositionIndex, view.isComparingTags());
+			for( int i=0; i<tagBounds.length; i++ ) {
+				tagBounds[i].grow(3,3);
+				repaint(tagBounds[i]);
+			}
+		}
+	}
+	
+	public void tagSelection( TagDocument tagDocument, TagStyle style, SignalSelection selection, boolean selectNew ) {
+		SignalSelectionType type = selection.getType();
+		if( type == SignalSelectionType.PAGE ) {
+			tagPageSelection( tagDocument, style, selection, selectNew );
+		}
+		else if( type == SignalSelectionType.BLOCK ) {
+			tagBlockSelection( tagDocument, style, selection, selectNew );			
+		} 
+		else {
+			tagChannelSelection( tagDocument, style, selection, selectNew );
+		}
+	}
+	
+	public void eraseTagsFromSelection(TagDocument tagDocument, SignalSelection selection) {
+		logger.debug("Erasing tags from [" + selection.toString() + "]" );
+		
+		if( selection.getType().isChannel() ) {
+			// channel must be converted to source channel
+			SignalSelection corrSelection;
+			corrSelection = new SignalSelection( SignalSelectionType.CHANNEL, selection.getPosition(), selection.getLength(), signalChain.getDocumentChannelIndex(selection.getChannel()) );
+			tagDocument.getTagSet().eraseTags(corrSelection);						
+		} else {
+			tagDocument.getTagSet().eraseTags(selection);						
+		}
+		
+		tagDocument.invalidate();
+		
+	}
+	
+	public void tagPageSelection(TagDocument tagDocument, TagStyle style, SignalSelection selection, boolean selectNew) {
+
+		if( !style.getType().isPage() ) {
+			throw new SanityCheckException( "Not a page style" );
+		}
+		if( !selection.getType().isPage() ) {
+			throw new SanityCheckException( "Not a page selection" );
+		}
+		
+		Tag tag = null;
+		int startPage = selection.getStartSegment(pageSize);
+		int endPage = selection.getEndSegment(pageSize);
+		for( int page=startPage; page<endPage; page++ ) {
+			
+			tag = new Tag(style, page*pageSize, pageSize, SignalSelection.CHANNEL_NULL, null);
+			logger.debug("Adding page tag [" + tag.toString() + "]" );
+		
+			tagDocument.getTagSet().replaceSameTypeTags(tag);			
+		}
+		tagDocument.invalidate();
+		
+		if( selectNew && tag != null ) {
+			view.setTagSelection(this, new PositionedTag( tag, document.getTagDocuments().indexOf(tagDocument) ) );
+		}
+		
+	}
+		
+	public void tagBlockSelection(TagDocument tagDocument, TagStyle style, SignalSelection selection, boolean selectNew) {
+
+		if( !style.getType().isBlock() ) {
+			throw new SanityCheckException( "Not a block style" );
+		}
+		if( !selection.getType().isBlock() ) {
+			throw new SanityCheckException( "Not a block selection" );
+		}
+		
+		Tag tag = null;
+		int startBlock = selection.getStartSegment(blockSize);
+		int endBlock = selection.getEndSegment(blockSize);
+		for( int block=startBlock; block<endBlock; block++ ) {
+			
+			tag = new Tag(style, block*blockSize, blockSize, SignalSelection.CHANNEL_NULL, null);
+			logger.debug("Adding block tag [" + tag.toString() + "]" );
+			
+			tagDocument.getTagSet().replaceSameTypeTags(tag);			
+		}
+		tagDocument.invalidate();
+		
+		if( selectNew && tag != null ) {
+			view.setTagSelection(this, new PositionedTag( tag, document.getTagDocuments().indexOf(tagDocument) ) );
+		}
+		
+	}
+
+	public void tagChannelSelection(TagDocument tagDocument, TagStyle style, SignalSelection selection, boolean selectNew) {
+
+		if( !style.getType().isChannel() ) {
+			throw new SanityCheckException( "Not a channel style" );
+		}
+		if( !selection.getType().isChannel() ) {
+			throw new SanityCheckException( "Not a channel selection" );
+		}
+		
+		Tag tag = new Tag(style,selection.getPosition(), selection.getLength(), signalChain.getDocumentChannelIndex(selection.getChannel()), null);
+		logger.debug("Adding channel tag [" + tag.toString() + "]" );			
+		tagDocument.getTagSet().mergeSameTypeChannelTags(tag);
+		tagDocument.invalidate();
+		
+		if( selectNew ) {
+			view.setTagSelection(this, new PositionedTag( tag, document.getTagDocuments().indexOf(tagDocument) ) );
+		}
+		
+	}
+		
+	public void selectTagAtPoint( Point point ) {
+		
+		tempTagList = getTagsAtPoint(point, tempTagList);
+		if( tempTagList.isEmpty() ) {
+			view.clearTagSelection();
+			return;
+		}
+		Collections.sort(tempTagList);
+		
+		PositionedTag oldSelection = view.getTagSelection(this);		
+		if( oldSelection == null ) {
+			view.setTagSelection(this,tempTagList.get(0));			
+		} else {
+			int index = -1;
+			int cnt = tempTagList.size();
+			for( int i=0; i<cnt; i++ ) {
+				// this must check reference equality
+				if( tempTagList.get(i).getTag() == oldSelection.getTag() ) {
+					index = i;
+					break;
+				}
+			}
+			index = (index + 1) % tempTagList.size();
+			view.setTagSelection(this,tempTagList.get(index));
+		}
+		
+	}
+		
+	public ArrayList<PositionedTag> getTagsAtPoint( Point point, ArrayList<PositionedTag> list ) {
+		
+		List<TagDocument> tagDocuments = document.getTagDocuments();
+		
+		int tagCnt = tagDocuments.size();
+		if( list == null ) {
+			list = new ArrayList<PositionedTag>();
+		} else {
+			list.clear();
+		}
+		if( tagCnt == 0 ) {
+			return list;
+		}
+
+		int tagIndex;
+		SortedSet<Tag> tagSet = null;
+
+		float time = toTimeSpace(point);
+		int viewChannel = toChannelSpace(point);
+		int channel = signalChain.getDocumentChannelIndex( viewChannel );
+		
+		boolean comparing = view.isComparingTags();
+		TagDocument[] comparedTags = null;
+		if( comparing ) {
+			comparedTags = view.getComparedTags();
+		}
+		
+		int cnt = 0;
+		Rectangle tagBounds;
+		
+		Point viewportPoint = viewport.getViewPosition();
+		Dimension viewportSize = viewport.getExtentSize();
+		Dimension plotSize = getSize();
+        
+		for( TagDocument tagDocument : tagDocuments ) {
+
+			if( comparing && tagDocument != comparedTags[0] && tagDocument != comparedTags[1] ) {
+				// in comparing mode scan only the compared tags
+				continue;
+			}
+        
+			tagIndex = tagDocuments.indexOf(tagDocument);
+			
+			// use a 1 s margin to capture any marker tags
+			tagSet = tagDocument.getTagSet().getTagsBetween(time-1, time+1);
+			for( Tag tag : tagSet ) {
+				
+				if( tag.getStyle().getType() == SignalSelectionType.BLOCK ) {
+					if( time >= tag.getPosition() && time < (tag.getPosition()+tag.getLength()) ) {
+						tagBounds = getPixelBlockTagBounds(tag, tagCnt, cnt, viewportPoint, viewportSize, plotSize, comparing, tempBounds );
+						if( tagBounds.contains(point) ) {
+							list.add(new PositionedTag(tag,tagIndex));
+						}
+					}
+				}
+				else if( tag.getStyle().getType() == SignalSelectionType.CHANNEL ) {
+					if( tag.getChannel() == channel ) {
+						if( tag.isMarker() || (time >= tag.getPosition() && time < tag.getEndPosition()) ) {
+							tagBounds = getPixelChannelTagBoundsInChannel(tag, tag.isMarker(), tagCnt, cnt, viewChannel, comparing, tempBounds);
+							if( tagBounds.contains(point) ) {
+								list.add(new PositionedTag(tag,tagIndex));
+							}
+						}
+					}
+				}				
+
+			}
+			
+			
+			cnt++;
+		}
+        				
+		return list;
+		
+	}
+		
+	public String getTagMessage( Tag tag ) {
+		SignalSelectionType type = tag.getType();
+		if( type == SignalSelectionType.PAGE || type == SignalSelectionType.BLOCK ) {
+			return messageSource.getMessage("tagWithoutChannel", new Object[] {
+					tag.getStyle().getDescriptionOrName(),
+					tag.getPosition(),
+					tag.getLength(),
+					tag.getPosition()+tag.getLength()
+			});
+		}
+		else {
+			if( tag.isMarker() ) {
+				return messageSource.getMessage("markerWithChannel", new Object[] {
+						tag.getStyle().getDescriptionOrName(),
+						tag.getCenterPosition(),
+						signalChain.getPrimaryLabel( tag.getChannel() )
+				});				
+			} else {
+				return messageSource.getMessage("tagWithChannel", new Object[] {
+						tag.getStyle().getDescriptionOrName(),
+						tag.getPosition(),
+						tag.getLength(),
+						tag.getPosition()+tag.getLength(),
+						signalChain.getPrimaryLabel( tag.getChannel() )
+				});
+			}
+		}		
+	}
+	
+	public String getTagToolTip( String title, PositionedTag tag ) {
+		if( tempTagList != null ) {
+			tempTagList.clear();
+		} else {
+			tempTagList = new ArrayList<PositionedTag>();
+		}
+		tempTagList.add(tag);
+		return getTagListToolTip(title, tempTagList);
+	}
+
+	public String getTagListToolTip( String title, ArrayList<PositionedTag> tags ) {
+				
+		StringBuilder buffer = new StringBuilder("<html><head></head><body>");
+		buffer.append(title).append("<br />&nbsp;<br />");
+		String annotation;
+		
+		PositionedTag tagSelection = view.getTagSelection(this);
+		
+		if( tagSelection != null && tags.contains(tagSelection) ) {
+			buffer.append( "<b>" );
+			buffer.append( getTagMessage(tagSelection.tag) ).append( "</b><br />" );
+			annotation = tagSelection.tag.getAnnotation();
+			if( annotation != null && !annotation.isEmpty() ) {
+				buffer.append("<div style=\"padding-left: 20px; width: 300px; font-style: italic;\">").append(annotation).append( "</div>" );
+			}
+		}
+		for( PositionedTag tag : tags ) {
+			if( tagSelection != null && tag.tag == tagSelection.tag ) {
+				continue;
+			}
+			buffer.append( getTagMessage(tag.tag) ).append( "<br />" );
+			annotation = tag.tag.getAnnotation();
+			if( annotation != null && !annotation.isEmpty() ) {
+				buffer.append("<div style=\"padding-left: 20px; width: 300px; font-style: italic;\">").append(annotation).append( "</div>" );
+			}
+		}
+		buffer.append("</body></html>");
+		
+		return buffer.toString();		
+		
+	}	
+			
+	/* ***************** ***************** ***************** */
+	/* ***************** ***************** ***************** */
+	/* ***************** ***************** ***************** */
+	/* ***************** ***************** ***************** */
+	/* ***************** ***************** ***************** */
+	
+	/* Other getters and setters */
+	
+	public SignalProcessingChain getSignalChain() {
+		return signalChain;
+	}	
+	
+	public OriginalMultichannelSampleSource getSignalSource() {
+		return signalChain.getSource();
+	}
+
+	public MultichannelSampleSource getSignalOutput() {
+		return signalChain.getOutput();
+	}
+		
+	public DefaultBoundedRangeModel getTimeScaleRangeModel() {
+		return timeScaleRangeModel;
+	}
+
+	public DefaultBoundedRangeModel getValueScaleRangeModel() {
+		return valueScaleRangeModel;
+	}
+
+	public DefaultBoundedRangeModel getChannelHeightRangeModel() {
+		return channelHeightRangeModel;
+	}
+	
+	public boolean isHorizontalLock() {
+		return horizontalLock;
+	}
+
+	public void setHorizontalLock(boolean horizontalLock) {
+		if( this.horizontalLock != horizontalLock ) {
+			this.horizontalLock = horizontalLock;
+			if( horizontalLock && masterPlot != null ) {
+				Point viewportPosition = viewport.getViewPosition();
+				Point masterViewportPosition = masterPlot.getViewport().getViewPosition();
+				horizontalTimeLead = toTimeSpace(viewportPosition) - masterPlot.toTimeSpace( masterViewportPosition );
+				horizontalPixelLead = viewportPosition.x - masterViewportPosition.x;
+			}
+			updateSignalPlotTitleLabel();
+		}
+	}
+
+	public boolean isVerticalLock() {
+		return verticalLock;
+	}
+
+	public void setVerticalLock(boolean verticalLock) {
+		if( this.verticalLock != verticalLock ) {
+			this.verticalLock = verticalLock;
+			if( verticalLock && masterPlot != null ) {
+				Point viewportPosition = viewport.getViewPosition();
+				Point masterViewportPosition = masterPlot.getViewport().getViewPosition();
+				verticalValueLead = toValueSpace(viewportPosition) - masterPlot.toValueSpace( masterViewportPosition );
+				verticalPixelLead = viewportPosition.y - masterViewportPosition.y;				
+			}
+			updateSignalPlotTitleLabel();
+		}
+	}
+	
+	public float getHorizontalTimeLead() {
+		return horizontalTimeLead;
+	}
+
+	public float getVerticalValueLead() {
+		return verticalValueLead;
+	}
+		
+	public void setHorizontalTimeLead(float horizontalTimeLead) {
+		if( this.horizontalTimeLead != horizontalTimeLead ) {
+			if( masterPlot != null ) {
+
+				this.horizontalTimeLead = horizontalTimeLead;
+
+				boolean oldHorizontalLock = horizontalLock;
+				boolean oldVerticalLock = verticalLock;
+				
+				try {
+					horizontalLock = false;
+					verticalLock = false;
+					horizontalPixelLead = (int) Math.round( horizontalTimeLead * pixelPerSecond );
+					Point masterPosition = masterPlot.getViewport().getViewPosition();
+					Point newPosition = new Point( masterPosition.x + horizontalPixelLead, masterPosition.y );
+					newPosition.x = Math.max( 0, Math.min( getSize().width - viewport.getExtentSize().width, newPosition.x ) );
+					viewport.setViewPosition(newPosition);
+				} finally {
+					horizontalLock = oldHorizontalLock;
+					verticalLock = oldVerticalLock;
+				}
+				
+			}
+		}
+	}
+
+	public void setVerticalValueLead(float verticalValueLead) {
+		if( this.verticalValueLead != verticalValueLead ) {
+			if( masterPlot != null ) {
+
+				this.verticalValueLead = verticalValueLead;
+
+				boolean oldHorizontalLock = horizontalLock;
+				boolean oldVerticalLock = verticalLock;
+				
+				try {
+					horizontalLock = false;
+					verticalLock = false;
+					verticalPixelLead = (int) Math.round( verticalValueLead * pixelPerValue );
+					Point masterPosition = masterPlot.getViewport().getViewPosition();
+					Point newPosition = new Point( masterPosition.x, masterPosition.y + verticalPixelLead );
+					newPosition.y = Math.max( 0, Math.min( getSize().height - viewport.getExtentSize().height, newPosition.y ) );
+					viewport.setViewPosition(newPosition);
+				} finally {
+					horizontalLock = oldHorizontalLock;
+					verticalLock = oldVerticalLock;
+				}
+				
+			}
+		}
+	}
+
+	public int getHorizontalPixelLead() {
+		return horizontalPixelLead;
+	}
+
+	public int getVerticalPixelLead() {
+		return verticalPixelLead;
+	}
+		
+	public TagPaintMode getTagPaintMode() {
+		return tagPaintMode;
+	}
+
+	public void setTagPaintMode(TagPaintMode tagPaintMode) {
+		if( this.tagPaintMode != tagPaintMode ) {
+			this.tagPaintMode = tagPaintMode;
+			repaint();
+		}
+	}
+
+	public SignalColor getSignalColor() {
+		return signalColor;
+	}
+
+	public void setSignalColor(SignalColor signalColor) {
+		if( !Util.equalsWithNulls(this.signalColor, signalColor) ) {
+			this.signalColor = signalColor;
+			repaint();
+		}
+	}
+
+	public boolean isSignalXOR() {
+		return signalXOR;
+	}
+
+	public void setSignalXOR(boolean signalXOR) {
+		if( this.signalXOR != signalXOR ) {
+			this.signalXOR = signalXOR;
+			repaint();
+		}
+	}
+
+	public boolean isPageLinesVisible() {
+		return pageLinesVisible;
+	}
+
+	public void setPageLinesVisible(boolean pageLinesVisible) {
+		if( this.pageLinesVisible != pageLinesVisible ) {
+			this.pageLinesVisible = pageLinesVisible;
+			if( signalPlotColumnHeader != null ) {
+				signalPlotColumnHeader.reset();
+				signalPlotColumnHeader.repaint();
+			}
+			repaint();
+			
+		}
+	}
+
+	public boolean isBlockLinesVisible() {
+		return blockLinesVisible;
+	}
+
+	public void setBlockLinesVisible(boolean blockLinesVisible) {
+		if( this.blockLinesVisible != blockLinesVisible ) {
+			this.blockLinesVisible = blockLinesVisible;
+			repaint();			
+		}
+	}
+
+	public boolean isChannelLinesVisible() {
+		return channelLinesVisible;
+	}
+
+	public void setChannelLinesVisible(boolean channelLinesVisible) {
+		if( this.channelLinesVisible != channelLinesVisible ) {
+			this.channelLinesVisible = channelLinesVisible;
+			repaint();
+		}
+	}
+
+	public double getVoltageZoomFactor() {
+		return voltageZoomFactor;
+	}
+
+	public void setVoltageZoomFactor(double voltageZoomFactor) {
+		if( this.voltageZoomFactor != voltageZoomFactor ) {
+			double oldValue = this.voltageZoomFactor;
+			this.voltageZoomFactor = voltageZoomFactor;
+			calculateParameters();
+			if( masterPlot == null ) {
+				try {
+					ignoreSliderEvents = true;
+					int rangeModelValue = (int) (voltageZoomFactor / voltageZoomFactorRatio);
+					if( rangeModelValue > valueScaleRangeModel.getMaximum() ) {
+						valueScaleRangeModel.setMaximum(rangeModelValue);
+					}
+					if( rangeModelValue < valueScaleRangeModel.getMinimum() ) {
+						valueScaleRangeModel.setMinimum(rangeModelValue);
+					}
+					valueScaleRangeModel.setValue(rangeModelValue);					
+				} finally {
+					ignoreSliderEvents = false;
+				}
+			}
+			if( signalPlotRowHeader != null ) {
+				signalPlotRowHeader.repaint();
+			}
+			repaint();
+			firePropertyChange(VOLTAGE_ZOOM_FACTOR_PROPERTY, oldValue, voltageZoomFactor);
+		}
+	}
+	
+	public double getTimeZoomFactor() {
+		return timeZoomFactor;
+	}
+
+	public void setTimeZoomFactor(double timeZoomFactor) {
+		if( this.timeZoomFactor != timeZoomFactor ) {
+			double oldValue = this.timeZoomFactor;
+			this.timeZoomFactor = timeZoomFactor;
+			calculateParameters();
+			if( horizontalLock ) {
+				horizontalPixelLead = (int) Math.round( horizontalTimeLead * pixelPerSecond );
+			}
+			if( masterPlot == null ) {
+				try {
+					ignoreSliderEvents = true;
+					int rangeModelValue = (int) (timeZoomFactor*1000);
+					if( rangeModelValue > timeScaleRangeModel.getMaximum() ) {
+						timeScaleRangeModel.setMaximum(rangeModelValue);
+					}
+					if( rangeModelValue < timeScaleRangeModel.getMinimum() ) {
+						timeScaleRangeModel.setMinimum(rangeModelValue);
+					}
+					timeScaleRangeModel.setValue(rangeModelValue);					
+				} finally {
+					ignoreSliderEvents = false;
+				}
+			}
+			if( signalPlotColumnHeader != null ) {
+				signalPlotColumnHeader.revalidate();
+				signalPlotColumnHeader.repaint();
+			}
+			revalidate();
+			repaint();
+			firePropertyChange(TIME_ZOOM_FACTOR_PROPERTY, oldValue, timeZoomFactor);
+		}
+	}
+
+	public int getPixelPerChannel() {
+		return pixelPerChannel;
+	}
+
+	public void setPixelPerChannel(int pixelPerChannel) {
+		if( this.pixelPerChannel != pixelPerChannel ) {
+			if( verticalLock ) {
+				verticalPixelLead = (int) Math.round( verticalValueLead * pixelPerValue );
+			}
+			int oldValue = this.pixelPerChannel;
+			this.pixelPerChannel = pixelPerChannel;
+			calculateParameters();
+			if( masterPlot == null ) {
+				try {
+					ignoreSliderEvents = true;
+					if( pixelPerChannel > channelHeightRangeModel.getMaximum() ) {
+						channelHeightRangeModel.setMaximum(pixelPerChannel);
+					}
+					if( pixelPerChannel < channelHeightRangeModel.getMinimum() ) {
+						channelHeightRangeModel.setMinimum(pixelPerChannel);
+					}
+					channelHeightRangeModel.setValue(pixelPerChannel);
+				} finally {
+					ignoreSliderEvents = false;
+				}				
+			}
+			if( signalPlotRowHeader != null ) {
+				signalPlotRowHeader.revalidate();
+				signalPlotRowHeader.repaint();
+			}
+			revalidate();
+			repaint();
+			firePropertyChange(PIXEL_PER_CHANNEL_PROPERTY, oldValue, pixelPerChannel);
+		}
+		
+	}
+	
+	public boolean isAntialiased() {
+		return antialiased;
+	}
+
+	public void setAntialiased(boolean antialiased) {
+		this.antialiased = antialiased;
+		repaint();
+	}
+	
+	public boolean isCompensationEnabled() {
+		return compensationEnabled;
+	}
+
+	public void setCompensationEnabled(boolean compensationEnabled) {
+		this.compensationEnabled = compensationEnabled;
+	}
+
+	public boolean isClamped() {
+		return clamped;
+	}
+
+	public void setClamped(boolean clamped) {
+		this.clamped = clamped;
+		repaint();
+	}
+	
+	public boolean isOffscreenChannelsDrawn() {
+		return offscreenChannelsDrawn;
+	}
+
+	public void setOffscreenChannelsDrawn(boolean offscreenChannelsDrawn) {
+		this.offscreenChannelsDrawn = offscreenChannelsDrawn;
+		repaint();
+	}
+	
+	public boolean isTagToolTipsVisible() {
+		return tagToolTipsVisible;
+	}
+
+	public void setTagToolTipsVisible(boolean tagToolTipsVisible) {
+		if( this.tagToolTipsVisible != tagToolTipsVisible ) {
+			this.tagToolTipsVisible = tagToolTipsVisible;
+			if( tagToolTipsVisible ) {
+				setToolTipText("");
+				signalPlotColumnHeader.setToolTipText("");
+			} else {
+				setToolTipText(null);
+				signalPlotColumnHeader.setToolTipText(null);
+			}
+		}
+	}
+
+	public double getPixelPerSecond() {
+		return pixelPerSecond;
+	}
+
+	public double getPixelPerBlock() {
+		return pixelPerBlock;
+	}
+
+	public double getPixelPerPage() {
+		return pixelPerPage;
+	}
+
+	public double getPixelPerValue() {
+		return pixelPerValue;
+	} 		
+	
+	public double getDetectedMaxValue() {
+		return detectedMaxValue;
+	}
+
+	public int getChannelCount() {
+		return channelCount;
+	}
+
+	public int getPageCount() {
+		return pageCount;
+	}
+	
+	public int getWholePageCount() {
+		return wholePageCount;
+	}
+
+	public int getBlockCount() {
+		return blockCount;
+	}
+
+	public float getMaxTime() {
+		return maxTime;
+	}
+		
+	public int getBlocksPerPage() {
+		return blocksPerPage;
+	}
+
+	public float getPageSize() {
+		return pageSize;
+	}
+		
+	public float getBlockSize() {
+		return blockSize;
+	}
+
+	public float getSamplingFrequency() {
+		return signalChain.getSamplingFrequency();
+	}
+	
+	public SignalPlotColumnHeader getSignalPlotColumnHeader() {
+		return signalPlotColumnHeader;
+	}
+
+	public SignalPlotRowHeader getSignalPlotRowHeader() {
+		return signalPlotRowHeader;
+	}
+	
+	public SignalPlotCorner getSignalPlotCorner() {
+		return signalPlotCorner;
+	}	
+		
+	public JLabel getSignalPlotTitleLabel() {
+		if( signalPlotTitleLabel == null ) {
+			signalPlotTitleLabel = new JLabel();
+			signalPlotTitleLabel.setFont( signalPlotTitleLabel.getFont().deriveFont(Font.PLAIN, 10F) );
+			updateSignalPlotTitleLabel();
+		}
+		return signalPlotTitleLabel;
+	}
+	
+	public void updateSignalPlotTitleLabel() {
+		
+		if( signalPlotTitleLabel != null ) {
+
+			String title;
+			
+			if( masterPlot == null ) {
+				
+				title = "";
+				
+			} else {
+						
+				String montageString;		
+				if( localMontage == null ) {
+					montageString = messageSource.getMessage("signalView.montageInherited");
+				} else {
+					montageString = messageSource.getMessage("signalView.montageLocal");
+				}
+				
+				String hSynchroString = horizontalLock ? messageSource.getMessage("signalView.on") : messageSource.getMessage("signalView.off");
+				String vSynchroString = verticalLock ? messageSource.getMessage("signalView.on") : messageSource.getMessage("signalView.off");		
+				
+				title = messageSource.getMessage( "signalView.slavePlot.title", new Object[] { montageString, hSynchroString, vSynchroString } );
+				
+			}
+			
+			signalPlotTitleLabel.setText( title );
+			
+		}
+		
+	}
+	
+	public JLabel getSignalPlotSynchronizationLabel() {
+		if( signalPlotSynchronizationLabel == null ) {
+			signalPlotSynchronizationLabel = new JLabel();
+			signalPlotSynchronizationLabel.setFont( signalPlotSynchronizationLabel.getFont().deriveFont(Font.PLAIN, 10F) );
+			signalPlotSynchronizationLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+			updateSignalPlotSynchronizationLabel();
+		}
+		return signalPlotSynchronizationLabel;
+	}
+
+	public void updateSignalPlotSynchronizationLabel() {		
+		if( signalPlotSynchronizationLabel != null ) {
+
+			String text;
+			Color color;
+			
+			if( masterPlot == null ) {
+				
+				text = "";
+				color = Color.BLACK;
+				
+			} else {
+
+				Point viewportPosition = viewport.getViewPosition();
+				Point masterViewportPosition = masterPlot.getViewport().getViewPosition();
+
+				int pixelDiff = viewportPosition.x - masterViewportPosition.x;
+				if( horizontalLock && pixelDiff != horizontalPixelLead ) {
+					color = Color.RED;
+				} else {
+					color = Color.BLACK;
+				}
+				
+				if( viewportPosition.x == masterViewportPosition.x ) {
+					text = messageSource.getMessage("signalView.slavePlot.synchronized");
+				} else {
+					float timeDiff = toTimeSpace(viewportPosition) - masterPlot.toTimeSpace(masterViewportPosition);			
+					Formatter formatter = new Formatter();
+					if( timeDiff < 0 ) {
+						formatter.format( "%.2f", -timeDiff );
+						text = messageSource.getMessage("signalView.slavePlot.trailing", new Object[] { formatter.toString() } );
+					} else {
+						formatter.format( "%.2f", timeDiff );
+						text = messageSource.getMessage("signalView.slavePlot.leading", new Object[] { formatter.toString() } );
+					}
+				}
+				
+			}
+			
+			signalPlotSynchronizationLabel.setForeground(color);
+			signalPlotSynchronizationLabel.setText( text );
+			
+		}
+	}
+	
+	public void synchronizeToMaster() {
+		if( masterPlot != null ) {
+			
+			boolean oldHorizontalLock = horizontalLock;
+			boolean oldVerticalLock = verticalLock;
+			
+			try {
+				horizontalLock = false;
+				verticalLock = false;
+				viewport.setViewPosition(masterPlot.getViewport().getViewPosition());
+				horizontalTimeLead = 0;				
+				horizontalPixelLead = 0;
+				verticalValueLead = 0;
+				verticalPixelLead = 0;
+			} finally {
+				horizontalLock = oldHorizontalLock;
+				verticalLock = oldVerticalLock;
+			}
+			
+		}
+	}
+	
+	public JViewport getViewport() {
+		return viewport;
+	}
+
+	public void setViewport(JViewport viewport) {
+		if( viewport == null ) {
+			throw new NullPointerException( "No viewport" );
+		}
+		if( this.viewport != viewport ) {
+			if( this.viewport != null ) {
+				this.viewport.removeChangeListener(this);
+			}
+			this.viewport = viewport;
+			if( viewport != null ) {
+				viewport.addChangeListener(this);
+			}
+			synchronizeToMaster();
+		}
+	}
+		
+	public int getMaxSampleCount() {
+		return maxSampleCount;
+	}
+
+	public SignalDocument getDocument() {
+		return document;
+	}
+
+	public int[] getChannelLevel() {
+		return channelLevel;
+	}
+
+	public SignalView getView() {
+		return view;
+	}
+
+	public SignalPlotPopupProvider getPopupMenuProvider() {
+		return popupMenuProvider;
+	}
+
+	public void setPopupMenuProvider(SignalPlotPopupProvider popupMenuProvider) {
+		this.popupMenuProvider = popupMenuProvider;
+		signalPlotColumnHeader.setSignalViewPopupProvider(popupMenuProvider);
+	}
+
+	public MessageSourceAccessor getMessageSource() {
+		return messageSource;
+	}
+
+	public SignalPlot getMasterPlot() {
+		return masterPlot;
+	}
+	
+	public boolean isMaster() {
+		return( masterPlot == null );
+	}
+	
+}

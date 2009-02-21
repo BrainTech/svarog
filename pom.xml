@@ -1,0 +1,170 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.signalml</groupId>
+	<artifactId>svarog</artifactId>
+	<packaging>pom</packaging>
+	<name>Svarog</name>
+	<version>0.0.1-SNAPSHOT</version>
+	<description>The Svarog Application</description>
+
+	<modules>
+		<module>svarog-application</module>
+		<module>flanagan-math-fft</module>
+		<module>eega-bits</module>
+		<module>mpview-bits</module>
+	</modules>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<configuration>
+					<outputEncoding>UTF-8</outputEncoding>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.14</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.5</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	
+	<reporting>
+		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>summary</report>
+							<report>license</report>
+							<report>project-team</report>
+							<report>mailing-list</report>
+							<report>scm</report>
+							<report>dependencies</report>
+							<!-- <report>issue-tracking</report> -->
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-changes-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<xmlPath>${basedir}/src/site/changes.xml</xmlPath>
+				</configuration>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>changes-report</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+
+			<!--
+				<plugin> <artifactId>maven-javadoc-plugin</artifactId> </plugin>
+			-->
+		</plugins>
+	</reporting>
+	
+	<scm>
+		<connection>scm:git:http://escher.fuw.edu.pl/home/mdobacz/repos/svarog</connection>
+		<developerConnection>scm:git:ssh://escher.fuw.edu.pl/home/mdobacz/repos/svarog</developerConnection>
+		<url>http://escher.fuw.edu.pl/home/mdobacz/repos/svarog</url>
+	</scm>
+
+	<mailingLists>
+		<mailingList>
+			<name>signalml</name>
+			<post>signalml@googlegroups.com</post>
+			<archive>http://groups.google.com/group/signalml</archive>
+			<subscribe>signalml-subscribe@googlegroups.com</subscribe>
+			<unsubscribe>signalml-unsubscribe@googlegroups.com</unsubscribe>
+		</mailingList>
+	</mailingLists>
+
+	<licenses>
+		<license>
+			<name>General Public License, Version 3</name>
+			<distribution>repo</distribution>
+			<url>http://www.gnu.org/licenses/gpl.txt</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<id>mdobacz</id>
+			<name>Michał Dobaczewski</name>
+			<email>michal (dot) d08 (at) Google mai l</email>
+			<organization>unaffiliated</organization>
+			<roles>
+				<role>commiter</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>zbysz</id>
+			<name>Zbyszek Jędrzejewski-Szmek</name>
+			<email>???</email>
+			<organization>ZFB</organization>
+			<roles>
+				<role>commiter</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>dobi</id>
+			<name>Dobiesław Ircha</name>
+			<email>???</email>
+			<organization>ZFB</organization>
+			<roles>
+				<role>commiter</role>
+			</roles>
+		</developer>
+	</developers>
+
+	<contributors>
+	</contributors>
+	
+</project>

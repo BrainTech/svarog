@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://signalml.org/rawsignal" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:rs="http://signalml.org/rawsignal">
+
+    <annotation>
+    	<documentation>Schema for raw signal descriptors</documentation>
+    </annotation>
+    <simpleType name="channelCount">
+    	<annotation>
+    		<documentation>
+    			Number of channels in the data
+    		</documentation>
+    	</annotation>
+    	<restriction base="int">
+    		<minExclusive value="0"></minExclusive>
+    	</restriction>
+    </simpleType>
+
+    <simpleType name="samplingFrequency">
+    	<annotation>
+    		<documentation>
+    			Sampling frequency of the signal
+    		</documentation>
+    	</annotation>
+    	<restriction base="float">
+    		<minExclusive value="0"></minExclusive>
+    	</restriction>
+    </simpleType>
+    
+    <simpleType name="sampleCount">
+        <annotation>
+        	<documentation>Number of samples in data.</documentation>
+        </annotation>
+        <restriction base="int">
+    		<minExclusive value="0"></minExclusive>
+    	</restriction>
+    </simpleType>
+
+    <simpleType name="sampleType">
+        <annotation>
+        	<documentation>Datatype of single sample.</documentation>
+        </annotation>
+        <restriction base="string">
+    		<enumeration value="DOUBLE"></enumeration>
+    		<enumeration value="FLOAT"></enumeration>
+    		<enumeration value="INT"></enumeration>
+    		<enumeration value="SHORT"></enumeration>
+    	</restriction>
+    </simpleType>
+
+    <simpleType name="byteOrder">
+    	<annotation>
+    		<documentation>Byte order of samples.</documentation>
+    	</annotation>
+    	<restriction base="string">
+    		<enumeration value="LITTLE_ENDIAN"></enumeration>
+    		<enumeration value="BIG_ENDIAN"></enumeration>
+    	</restriction>
+    </simpleType>
+
+    <simpleType name="calibration">
+    	<annotation>
+    		<documentation>Calibration constant.</documentation>
+    	</annotation>
+    	<restriction base="float">
+    		<minExclusive value="0"></minExclusive>
+    	</restriction>
+    </simpleType>
+    
+    <simpleType name="fileName">
+        <annotation>
+        	<documentation>
+        		File name. Use '/' as path delimiter.
+        	</documentation>
+        </annotation>
+        <restriction base="string">
+    		<minLength value="1"></minLength>
+    		<maxLength value="256"></maxLength>
+    	</restriction>
+    </simpleType>
+
+    <complexType name="signalFormat">
+    	<choice minOccurs="1" maxOccurs="1">
+    		<element name="rawSignalInfo" type="rs:rawSignalFormat"></element>
+    		<element name="signalmlSignalInfo"
+    			type="rs:signalmlSignalFormat">
+    		</element>
+    	</choice>
+    </complexType>
+    
+    <complexType name="rawSignalFormat">
+    	<annotation>
+    		<documentation>Raw source signal format info</documentation>
+    	</annotation>
+    	<sequence>
+    		<any minOccurs="0" maxOccurs="unbounded"></any>
+    	</sequence>
+    </complexType>
+
+    <simpleType name="signalFormatType">
+        <annotation>
+        	<documentation>Source signal format type.</documentation>
+        </annotation>
+        <restriction base="string">
+    		<enumeration value="raw"></enumeration>
+    		<enumeration value="signalml"></enumeration>
+    	</restriction>
+    </simpleType>
+
+    <complexType name="signalmlSignalFormat">
+    	<annotation>
+    		<documentation>SignalML source signal info.</documentation>
+    	</annotation>
+    	<sequence>
+    		<element name="format" type="rs:signalmlFormatName"></element>
+    		<element name="sourceUID" type="rs:signalmlSourceUID"></element>
+    		<any minOccurs="0" maxOccurs="unbounded"></any>
+    	</sequence>
+    </complexType>
+    
+    <simpleType name="signalmlFormatName">
+        <annotation>
+        	<documentation>SignalML codec format name</documentation>
+        </annotation>
+        <restriction base="string">
+    		<minLength value="1"></minLength>
+    		<maxLength value="256"></maxLength>
+    	</restriction>
+    </simpleType>
+
+    <simpleType name="signalmlSourceUID">
+    	<annotation>
+    		<documentation>SignalML format source UID.</documentation>
+    	</annotation>
+    	<restriction base="string">
+    		<length value="32"></length>
+    		<pattern value="[0-9a-fA-F]{32}"></pattern>
+    	</restriction>
+    </simpleType>
+
+    <simpleType name="channelLabel">
+    	<restriction base="string">
+    		<minLength value="1"></minLength>
+    	</restriction>
+    </simpleType>
+
+    <simpleType name="pageSize">
+        <annotation>
+        	<documentation>Page size.</documentation>
+        </annotation>
+        <restriction base="float">
+    		<minExclusive value="0"></minExclusive>
+    	</restriction>
+    </simpleType>
+
+    <simpleType name="blocksPerPage">
+    	<annotation>
+    		<documentation>Blocks per page.</documentation>
+    	</annotation>
+    	<restriction base="int">
+    		<minInclusive value="1"></minInclusive>
+    	</restriction>
+    </simpleType>
+
+    <simpleType name="markerOffset">
+    	<annotation>
+    		<documentation>Time offset into the signal.</documentation>
+    	</annotation>
+    	<restriction base="double">
+    		<minInclusive value="0"></minInclusive>
+    	</restriction>
+    </simpleType>
+
+
+
+    <complexType name="rawSignalInfo">
+    	<sequence minOccurs="1" maxOccurs="1">
+    		<element name="exportFileName" type="rs:fileName"
+    			maxOccurs="1" minOccurs="1">
+                <annotation>
+                	<documentation>
+                		Name of the binary file exported with this XML
+                		file - the file is assumed to be in the same
+                		directory as the XML file.
+                	</documentation>
+                </annotation>
+    		</element>
+    		<element name="sourceFileName" type="rs:fileName"
+    			maxOccurs="1" minOccurs="0">
+                <annotation>
+                	<documentation>
+                		The name of the source file from which the
+                		signal was obtained, if any
+                	</documentation>
+                </annotation>
+    		</element>
+    		<element name="sourceFileFormat" type="rs:signalFormat"
+    			maxOccurs="1" minOccurs="0">
+                <annotation>
+                	<documentation>
+                		The fortma of the source file, if any
+                	</documentation>
+                </annotation>
+    		</element>
+    		<element name="samplingFrequency"
+    			type="rs:samplingFrequency" maxOccurs="1" minOccurs="1">
+                <annotation>
+                	<documentation>
+                		Signal sampling frequency
+                	</documentation>
+                </annotation>
+    		</element>
+    		<element name="channelCount" type="rs:channelCount"
+    			maxOccurs="1" minOccurs="1">
+                <annotation>
+                	<documentation>
+                		The number of channels in the signal
+                	</documentation>
+                </annotation>
+    		</element>
+    		<element name="sampleCount" type="rs:sampleCount"
+    			maxOccurs="1" minOccurs="1">
+                <annotation>
+                	<documentation>
+                		The number of samples in this signal. The binary
+                		file size should equal exactly channelCount *
+                		sampleCount * sampleSize (size of sampleType)
+                	</documentation>
+                </annotation>
+    		</element>
+    		<element name="calibration" type="rs:calibration"
+    			maxOccurs="1" minOccurs="0">
+                <annotation>
+                	<documentation>
+                		Calibration constant - 1 is assumed if not
+                		supplied.
+                	</documentation>
+                </annotation>
+    		</element>
+    		<element name="sampleType" type="rs:sampleType"
+    			maxOccurs="1" minOccurs="1">
+                <annotation>
+                	<documentation>
+                		The data type of a single sample.
+                	</documentation>
+                </annotation>
+    		</element>
+    		<element name="byteOrder" type="rs:byteOrder" maxOccurs="1"
+    			minOccurs="1">
+                <annotation>
+                	<documentation>
+                		Byte order of a single sample
+                	</documentation>
+                </annotation>
+    		</element>
+    		<element name="pageSize" type="rs:pageSize" maxOccurs="1"
+    			minOccurs="0">
+                <annotation>
+                	<documentation>
+                		Page size used by this document - optional.
+                	</documentation>
+                </annotation>
+    		</element>
+    		<element name="blocksPerPage" type="rs:blocksPerPage"
+    			maxOccurs="1" minOccurs="0">
+                <annotation>
+                	<documentation>
+                		Blocks per page used by this document -
+                		optional.
+                	</documentation>
+                </annotation>
+    		</element>
+    		<element name="channelLabels" type="rs:channelLabelList"
+    			maxOccurs="1" minOccurs="0">
+                <annotation>
+                	<documentation>
+                		Channel labels for this document - optional. The
+                		number of "label" elements inside should match
+                		the declared channel number, but if it is
+                		smaller then following channels should be
+                		auto-named. If it is larger, then the extra
+                		labels are ignored.
+                	</documentation>
+                </annotation>
+    		</element>
+    		<element name="markerOffset" type="rs:markerOffset"
+    			maxOccurs="1" minOccurs="0">
+                <annotation>
+                	<documentation>
+                		Optional marker offset (in seconds)
+                	</documentation>
+                </annotation>
+    		</element>
+    		<element name="exportDate" type="dateTime" maxOccurs="1" minOccurs="0"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="channelLabelList">
+    	<sequence>
+    		<element name="label" type="rs:channelLabel" minOccurs="1" maxOccurs="unbounded"></element>
+    	</sequence>
+    </complexType>
+
+    <element name="rawSignal" type="rs:rawSignalInfo">
+    	<annotation>
+    		<documentation>Signal info</documentation>
+    	</annotation></element>
+</schema>

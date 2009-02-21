@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rs:rawSignal xmlns:rs="http://signalml.org/rawsignal" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://signalml.org/rawsignal rawsignal.xsd ">
+  <rs:exportFileName>exportFileName</rs:exportFileName>
+  <rs:sourceFileName>sourceFileName</rs:sourceFileName>
+  <rs:sourceFileFormat>
+    <rs:rawSignalInfo/>
+  </rs:sourceFileFormat>
+  <rs:samplingFrequency>128.0</rs:samplingFrequency>
+  <rs:channelCount>1</rs:channelCount>
+  <rs:sampleCount>128</rs:sampleCount>
+  <rs:calibration>1.0</rs:calibration>
+  <rs:sampleType>DOUBLE</rs:sampleType>
+  <rs:byteOrder>LITTLE_ENDIAN</rs:byteOrder>
+  <rs:pageSize>20.0</rs:pageSize>
+  <rs:blocksPerPage>5</rs:blocksPerPage>
+  <rs:channelLabels>
+    <rs:label>label1</rs:label>
+  </rs:channelLabels>
+  <rs:markerOffset>0.0</rs:markerOffset>
+  <rs:exportDate>2001-12-31T12:00:00</rs:exportDate>
+</rs:rawSignal>

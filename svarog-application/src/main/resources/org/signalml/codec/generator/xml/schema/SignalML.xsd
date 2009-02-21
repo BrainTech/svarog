@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"            
+            targetNamespace="http://signalml.org/SignalML"
+            xmlns:sml="http://signalml.org/SignalML"
+            elementFormDefault="qualified">
+    
+<xsd:element name="meta_format" type="sml:meta_formatType" />
+<xsd:element name="annotations" type="sml:annotationsType" />
+            
+<xsd:complexType name="meta_formatType">
+    <xsd:sequence>
+        <xsd:element name="header"      type="sml:headerType"/>
+        <xsd:element name="data_format" type="sml:data_formatType"/>
+        <xsd:element name="parameters"  type="sml:parametersType"/>
+    </xsd:sequence>
+</xsd:complexType>   
+
+<xsd:complexType name="headerType">
+    <xsd:sequence>
+        <xsd:element name="format"      type="sml:formatType" />
+        <xsd:element name="text_info"   type="xsd:string" minOccurs='0' maxOccurs="1" />
+        <xsd:element name="url"         type="xsd:string" minOccurs='0' maxOccurs="1" />
+    </xsd:sequence>
+</xsd:complexType>
+
+<xsd:complexType name="formatType">
+    <xsd:attribute name="id"          type="xsd:string" />
+</xsd:complexType>
+  
+<xsd:complexType name="data_formatType">
+    <xsd:attribute name="frame_type"  type="sml:frame_typeType" use="required" />
+    <xsd:attribute name="offset"      type="xsd:string" use="required" />
+    <xsd:attribute name="sample_type" type="sml:typeType" use="required" />
+    <xsd:attribute name="record_size" type="xsd:string" />
+    <xsd:attribute name="sample_size" type="xsd:string" />
+</xsd:complexType>
+
+<xsd:simpleType name="frame_typeType">
+    <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="multiplex"/>
+        <xsd:enumeration value="edf_frame"/>
+        <xsd:enumeration value="frames"/>
+    </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="typeType">
+    <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="int16"/>
+        <xsd:enumeration value="int32"/>
+        <xsd:enumeration value="float"/>
+        <xsd:enumeration value="double"/>
+        <xsd:enumeration value="bytes"/>
+        <xsd:enumeration value="byte"/>
+        <xsd:enumeration value="ascii"/>
+        <xsd:enumeration value="uchar"/>
+        <xsd:enumeration value="uint16"/>
+        <xsd:enumeration value="uint32"/>
+    </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:complexType name="parametersType">
+    <xsd:sequence>
+        <xsd:choice  minOccurs='1' maxOccurs="unbounded">
+            <xsd:element name="property" type="sml:propertyType" />
+            <xsd:element name="constraint" type="sml:constraintType" />            
+            <xsd:element name="code" type="sml:codeType" />
+            <xsd:element name="number_of_channels" minOccurs="1" maxOccurs="1" type="sml:number_of_channelsType" />
+            <xsd:element name="sampling_frequency" minOccurs="1" maxOccurs="1" type="sml:sampling_frequencyType" />     
+            <xsd:element name="calibration_gain" minOccurs='0' maxOccurs="1" type="sml:calibration_gainType" />    
+            <xsd:element name="calibration_offset" minOccurs='0' maxOccurs="1" type="sml:calibration_offsetType" /><!--added-->
+            <xsd:element name="channel_names" minOccurs='0' maxOccurs="1" type="sml:channel_namesType" /><!--added min max-->    
+        </xsd:choice>                        
+    </xsd:sequence>
+</xsd:complexType>
+
+<!--  Alternative implementation
+<xsd:complexType name="parametersType">
+    <xsd:sequence>
+        <xsd:group ref="propertyconstraintcodeGroup"  minOccurs='0' maxOccurs="unbounded" />        
+        <xsd:element name="number_of_channels" minOccurs="1" maxOccurs="1" type="number_of_channelsType" />        
+        <xsd:element name="sampling_frequency" minOccurs="1" maxOccurs="1" type="sampling_frequencyType" />                
+        <xsd:element name="calibration_gain" minOccurs='0' maxOccurs="1" type="calibration_gainType" />        
+        <xsd:element name="calibration_offset" minOccurs='0' maxOccurs="1" type="calibration_offsetType" />        
+        <xsd:element name="channel_names" minOccurs='0' maxOccurs="1" type="channel_namesType" />
+        <xsd:group ref="propertyconstraintcodeGroup"  minOccurs='0' maxOccurs="unbounded" />
+    </xsd:sequence>
+</xsd:complexType>
+
+<xsd:group name="propertyconstraintcodeGroup">
+    <xsd:choice>
+        <xsd:element name="property" type="propertyType" />
+        <xsd:element name="constraint" type="constraintType" />            
+        <xsd:element name="code" type="codeType" />
+    </xsd:choice>        
+</xsd:group>
+-->
+
+<xsd:complexType name="propertyType">
+    <xsd:attribute name="id"       type="xsd:string" />
+    <xsd:attribute name="type"     type="sml:typeType" />
+    <xsd:attribute name="width"    type="xsd:string" /> 
+    <xsd:attribute name="offset"   type="xsd:string" /> 
+    <xsd:attribute name="eval"     type="xsd:string" />
+    <xsd:attribute name="evaltype" type="sml:typeType" />
+    <xsd:attribute name="index"    type="xsd:string" /> <!--added-->
+</xsd:complexType>
+
+<xsd:complexType name="constraintType">
+    <xsd:attribute name="test"   type="xsd:string" />
+</xsd:complexType>
+
+<xsd:complexType name="number_of_channelsType">
+    <xsd:attribute name="type"     type="sml:typeType" />
+    <xsd:attribute name="offset"   type="xsd:string" />
+    <xsd:attribute name="eval"     type="xsd:string" />
+    <xsd:attribute name="evaltype" type="sml:typeType" />
+    <xsd:attribute name="width"    type="xsd:string" /> <!--added-->
+</xsd:complexType>
+
+<xsd:complexType name="sampling_frequencyType">
+    <xsd:attribute name="type"     type="sml:typeType" />
+    <xsd:attribute name="offset"   type="xsd:string" />
+    <xsd:attribute name="units"    type="xsd:string" />
+    <xsd:attribute name="eval"     type="xsd:string" />
+    <xsd:attribute name="evaltype" type="sml:typeType" />
+    <xsd:attribute name="index"    type="xsd:string" /> <!--added-->
+    <xsd:attribute name="width"    type="xsd:string" /> <!--added-->
+</xsd:complexType>
+
+<xsd:complexType name="calibration_gainType">
+    <xsd:attribute name="type"     type="sml:typeType" />
+    <xsd:attribute name="offset"   type="xsd:string" />
+    <xsd:attribute name="units"    type="xsd:string" />
+    <xsd:attribute name="eval"     type="xsd:string" />
+    <xsd:attribute name="evaltype" type="sml:typeType" />
+    <xsd:attribute name="index"    type="xsd:string" /> <!--added-->
+    <xsd:attribute name="width"    type="xsd:string" /> <!--added-->
+</xsd:complexType>
+
+<xsd:complexType name="calibration_offsetType"><!--added-->
+    <xsd:attribute name="type"     type="sml:typeType" />
+    <xsd:attribute name="offset"   type="xsd:string" />
+    <xsd:attribute name="units"    type="xsd:string" />
+    <xsd:attribute name="eval"     type="xsd:string" />
+    <xsd:attribute name="evaltype" type="sml:typeType" />
+    <xsd:attribute name="index"    type="xsd:string" /> <!--added-->
+    <xsd:attribute name="width"    type="xsd:string" /> <!--added-->
+</xsd:complexType>
+
+<xsd:complexType name="codeType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="language" type="sml:languageType" />
+      </xsd:extension>
+    </xsd:simpleContent>  
+</xsd:complexType>
+
+<xsd:simpleType name="languageType">
+    <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="java"/>
+    </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:complexType name="channel_namesType">
+    <xsd:attribute name="type"   type="sml:typeType" />
+    <xsd:attribute name="width"  type="xsd:int" />
+    <xsd:attribute name="offset" type="xsd:string" />
+    <xsd:attribute name="index"  type="xsd:string" />
+</xsd:complexType>
+
+  <xsd:complexType name="annotationsType">
+    <xsd:sequence>
+      <xsd:element name="datafile_identification" type="sml:datafile_identificationType" />
+      <xsd:element name="signal_transform" type="xsd:string" />
+      <xsd:element name="tag_definitions" type="sml:tag_definitionsType" />
+      <xsd:element name="tag_data" type="sml:tag_dataType" />
+    </xsd:sequence>
+  </xsd:complexType>
+    
+  <xsd:complexType name="datafile_identificationType">
+    <xsd:sequence>
+      <xsd:element name="format" type="sml:formatType" />
+      <xsd:element name="name" type="xsd:string" />
+      <xsd:element name="signature" type="sml:signatureType" />
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <xsd:complexType name="signatureType">
+    <xsd:attribute name="method" type="sml:methodType" />
+    <xsd:attribute name="offset" type="xsd:int" />
+    <xsd:attribute name="length" type="xsd:int" />
+    <xsd:attribute name="value"  type="xsd:string" />
+  </xsd:complexType>
+
+  <xsd:simpleType name="methodType">
+    <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="crc32"/>           
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <xsd:complexType name="tag_definitionsType">
+    <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" name="def_group" type="sml:def_groupType" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="def_groupType">
+    <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" name="tag_item" type="sml:tag_itemType" />
+    </xsd:sequence>
+    
+    <xsd:attribute name="name" type="xsd:string" />
+    <xsd:attribute name="fixed_length" type="xsd:int" />
+    <xsd:attribute name="offset_quant" type="xsd:int" />
+    <xsd:attribute name="channels" type="xsd:string" />
+    <xsd:attribute name="ref_channel_number" type="xsd:int" />
+  </xsd:complexType>
+
+  <xsd:complexType name="tag_itemType">
+    <xsd:attribute name="name" type="xsd:string" />
+    <xsd:attribute name="description" type="xsd:string" />
+  </xsd:complexType>
+
+  <xsd:complexType name="tag_dataType">
+    <xsd:sequence>
+      <xsd:element name="text_info" type="xsd:string" />
+      <xsd:element name="tags" type="sml:tagsType" />
+    </xsd:sequence>
+  </xsd:complexType>
+      
+  <xsd:complexType name="tagsType">
+    <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" name="tag" type="sml:tagType" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="tagType">
+    <xsd:sequence>        
+            <xsd:element name="channels" minOccurs="0" maxOccurs="1" type="sml:channelsType" />
+            <xsd:element name="annotation" minOccurs="0" maxOccurs="1" type="sml:annotationType" />                
+    </xsd:sequence>            
+    
+    <xsd:attribute name="name" type="xsd:string" />
+    <xsd:attribute name="quantized_offset" type="xsd:int" />
+    <xsd:attribute name="position" type="xsd:int" />
+    <xsd:attribute name="length" type="xsd:int" />  
+    <xsd:attribute name="ref_channel_number" type="xsd:int" />  
+  </xsd:complexType>  
+    
+  <xsd:complexType name="annotationType">
+    <xsd:simpleContent>
+        <xsd:extension base="xsd:string">            
+        </xsd:extension>
+    </xsd:simpleContent>  
+  </xsd:complexType>
+  
+  <xsd:complexType name="channelsType">
+        <xsd:attribute name="number" type="xsd:string"/>
+  </xsd:complexType>
+  
+</xsd:schema>

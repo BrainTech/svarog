@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<document xmlns="http://maven.apache.org/changes/1.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/plugins/maven-changes-plugin/xsd/changes-1.0.0.xsd">
+
+	<properties>
+		<title>Singnalml Changelog</title>
+		<!-- <author>mdobacz</author> -->
+	</properties>
+
+	<body>
+		<release version="0.4.7" date="2009-01-01"
+			description="The first version (developped commercially by CC Otwarte Systemy Komputerowe Sp. z o.o.)">
+		</release>
+	</body>
+
+</document>

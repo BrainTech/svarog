@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<faqs title="Frequently Asked Questions" toplink="false">
+
+	<part id="general">
+
+		<title>General</title>
+
+		<faq id="whats-signalml">
+			<question>
+				What is Signalml?
+			</question>
+			<answer>
+				<p>Signalml is an open viewer and annotator for multivariate time series, commonly known as "signals".</p>
+			</answer>
+		</faq>
+	</part>
+
+	<part id="install">
+
+		<title>Installation</title>
+
+		<faq id="how-install">
+			<question>
+				How do I install Signalml?
+      		</question>
+			<answer>
+				<p>An installer is provided ...</p>
+			</answer>
+		</faq>
+
+	</part>
+
+</faqs>

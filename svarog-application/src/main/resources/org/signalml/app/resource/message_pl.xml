@@ -1,0 +1,1983 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+  <entry key="yesCapital">Yes</entry>
+  <entry key="noCapital">No</entry>
+  <entry key="ok">Ok</entry>
+  <entry key="apply">Apply</entry>
+  <entry key="cancel">Cancel</entry>
+  <entry key="name">Name</entry>
+  <entry key="error">Error!</entry>
+  <entry key="warning">Warning!</entry>
+  <entry key="message">Message</entry>
+  <entry key="open">Open</entry>
+  <entry key="import">Import</entry>
+  <entry key="read">Read</entry>
+  <entry key="export">Export</entry>
+  <entry key="choose">Choose</entry>
+  <entry key="save">Save</entry>
+  <entry key="load">Load</entry>
+  <entry key="discard">Discard</entry>
+  <entry key="next">Next</entry>
+  <entry key="back">Back</entry>
+  <entry key="finish">Finish</entry>
+  <entry key="reload">Reload</entry>
+  <entry key="abort">Abort</entry>
+  <entry key="overwrite">Overwrite</entry>
+  <entry key="close">Close</entry>
+  <entry key="create">Create</entry>
+  <entry key="new">New</entry>
+  <entry key="normalize">Normalize</entry>
+  <entry key="proceed">Proceed</entry>
+  <entry key="reuse">Reuse</entry>
+  <entry key="replace">Replace</entry>
+
+  <entry key="splash.loading">Loading signalml v. {0}</entry>
+  <entry key="splash.url">http://signalml.org/</entry>
+  <entry key="splash.comment">Financed from Polish funds for science</entry>
+
+  <entry key="messageDialog.dontShowAgain">Don't show this message again</entry>
+
+  <entry key="dynamicCompilationWarning.title">Dynamic compilation warning</entry>
+  <entry key="dynamicCompilationWarning.frameTitle">Word of caution</entry>
+  <entry key="dynamicCompilationWarning.text">&lt;b&gt;WARNING!&lt;/b&gt; You are about to compile code at runtime. It is possible, however unlikely, for an attacker to exploit this in order to inject malicious code into your Java Virtual Machine. You should avoid compiling code obtained from untrustworthy sources.</entry>
+
+  <entry key="tagStyle.none">(none)</entry>
+
+  <entry key="sampleAbbrevString">S</entry>
+  <entry key="pageAbbrevString">P</entry>
+  <entry key="blockAbbrevString">B</entry>
+
+  <entry key="pleaseWait">Please wait...</entry>
+  <entry key="pressAnyKey">Press a key...</entry>
+  
+  <entry key="document">Document [{0}]</entry>
+  <entry key="signalDocument">{0}</entry>
+  <entry key="bookDocument">{0}</entry>
+  <entry key="tagDocument">{0} [on {1}]</entry>
+  <entry key="newTagDocument">New tag {0} [on {1}]</entry>
+
+  <entry key="signal">Signal</entry>
+  <entry key="book">Book</entry>
+  <entry key="tag">Tag</entry>
+
+  <entry key="signalType.OTHER">Other</entry>
+  <entry key="signalType.EEG_10_20">Standard 10-20 EEG</entry>
+
+  <entry key="sampleFilterType.TIME_DOMAIN">Time domain filter</entry>
+  <entry key="sampleFilterType.FFT">FFT filter</entry>
+
+  <entry key="fftFilter">FFT filter</entry>
+  <entry key="fftFilter.effect">{0}</entry>
+
+  <entry key="sampleFilter.td.lowPass">Low pass filter (6th order 0-20 Hz)</entry>
+  <entry key="sampleFilter.td.bandPass">Band pass filter (6th order 10-30 Hz)</entry>
+  <entry key="sampleFilter.td.highPass">High pass filter (6th order 20-4000 Hz)</entry>
+
+  <entry key="sampleFilter.td.lowPassEffect">Low pass filter ({0} pass 6th order 0-20 Hz)</entry>
+  <entry key="sampleFilter.td.bandPassEffect">Band pass filter ({0} pass 6th order 10-30 Hz)</entry>
+  <entry key="sampleFilter.td.highPassEffect">High pass filter ({0} pass 6th order 20-4000 Hz)</entry>
+
+  <entry key="signalSelectionType.page">Page</entry>
+  <entry key="signalSelectionType.block">Block</entry>
+  <entry key="signalSelectionType.channel">Channel</entry>
+
+  <entry key="signalSelection.PAGE">Page selection from {0} s to {2} s</entry>
+  <entry key="signalSelection.BLOCK">Block selection from {0} s to {2} s</entry>
+  <entry key="signalSelection.CHANNEL">Channel selection on {3} from {0} s to {2} s</entry>
+
+  <entry key="taskStatus.NEW">New</entry>
+  <entry key="taskStatus.ACTIVE">Active</entry>
+  <entry key="taskStatus.ACTIVE_WAITING">Waiting</entry>
+  <entry key="taskStatus.REQUESTING_SUSPEND">Requesting suspend</entry>
+  <entry key="taskStatus.SUSPENDED">Suspended</entry>
+  <entry key="taskStatus.REQUESTING_ABORT">Requesting abort</entry>
+  <entry key="taskStatus.ABORTED">Aborted</entry>
+  <entry key="taskStatus.ERROR">Error</entry>
+  <entry key="taskStatus.FINISHED">Finished</entry>
+
+  <entry key="taskStatusLong.NEW">New task</entry>
+  <entry key="taskStatusLong.ACTIVE">Task is running</entry>
+  <entry key="taskStatusLong.ACTIVE_WAITING">Task is waiting to run</entry>
+  <entry key="taskStatusLong.REQUESTING_SUSPEND">Task is requesting suspend</entry>
+  <entry key="taskStatusLong.SUSPENDED">Task has been suspended</entry>
+  <entry key="taskStatusLong.REQUESTING_ABORT">Task is requesting abort</entry>
+  <entry key="taskStatusLong.ABORTED">Task has been aborted</entry>
+  <entry key="taskStatusLong.ERROR">Task encountered an error</entry>
+  <entry key="taskStatusLong.FINISHED">Task has finished</entry>
+
+  <entry key="fft.chartTitle">FFT over {0} points {1} - {2} ({3})</entry>
+  <entry key="fft.notEnoughSignalPoints">Not enough signal points</entry>
+
+  <entry key="fft.windowType.RECTANGULAR">None (rectangular, box-car)</entry>
+  <entry key="fft.windowType.BARTLETT">Bartlett (triangular)</entry>
+  <entry key="fft.windowType.WELCH">Welch</entry>
+  <entry key="fft.windowType.HANN">Hann (Hanning)</entry>
+  <entry key="fft.windowType.HAMMING">Hamming</entry>
+  <entry key="fft.windowType.KAISER">Kaiser</entry>
+  <entry key="fft.windowType.GAUSSIAN">Gaussian</entry>
+
+  <entry key="sampleType.DOUBLE">Double (64-bit IEEE 754)</entry>
+  <entry key="sampleType.FLOAT">Float (32-bit IEEE 754)</entry>
+  <entry key="sampleType.INT">Integer (32-bit)</entry>
+  <entry key="sampleType.SHORT">Short (16-bit)</entry>
+  
+  <entry key="byteOrder.LITTLE_ENDIAN">Little endian</entry>
+  <entry key="byteOrder.BIG_ENDIAN">Big endian</entry>
+
+  <entry key="wignerMapPalette.rainbow">Rainbow</entry>
+  <entry key="wignerMapPalette.grayscale">Grayscale</entry>
+
+  <entry key="wignerMapScaleType.NORMAL">Linear</entry>
+  <entry key="wignerMapScaleType.LOG">Logarythmic</entry>
+  <entry key="wignerMapScaleType.SQRT">Square root</entry>
+
+  <entry key="parameterRangeAtomFilter">Parameter range</entry>
+  <entry key="tagBasedAtomFilter">Tag based</entry>
+  <entry key="delegatingAtomFilter">Custom class [{0}]</entry>
+
+  <entry key="startup.initializing">Initializing</entry>
+  <entry key="startup.initializingCodecs">Initializing codecs</entry>
+  <entry key="startup.restoringConfiguration">Restoring configuration</entry>
+  <entry key="startup.initializingDocumentManagement">Initializing document manager</entry>
+  <entry key="startup.initializingServices">Initializing services</entry>
+  <entry key="startup.initializingPresets">Initializing presets</entry>
+  <entry key="startup.creatingMainFrame">Creating main window</entry>
+  <entry key="startup.initializingMainFrame">Initializing main window</entry>
+  <entry key="startup.creatingModels">Creating models</entry>
+  <entry key="startup.creatingDialogs">Creating dialogs</entry>
+  <entry key="startup.creatingDocumentFlow">Creating document flow</entry>
+  <entry key="startup.creatingInterface">Creating interface</entry>
+  <entry key="startup.creatingActions">Creating actions</entry>
+  <entry key="startup.creatingMenus">Creating menus</entry>
+  <entry key="startup.creatingToolBars">Creating toolbars</entry>
+  <entry key="startup.restoringTasks">Restoring tasks</entry>
+  <entry key="startup.finishingMainFrameInitialization">Finishing</entry>
+  <entry key="startup.restoringWorkspace">Restoring workspace</entry>
+
+  <entry key="viewer.title">signalml viewer {0}</entry>
+  <entry key="viewer.welcomeStatus">signalml viewer version {0} ready</entry>
+
+  <entry key="viewer.statusBar.pageSelection">Page selection</entry>
+  <entry key="viewer.statusBar.blockSelection">Block selection</entry>
+  <entry key="viewer.statusBar.channelSelection">Channel selection</entry>
+
+  <entry key="viewer.statusBar.pageTag">Page tag</entry>
+  <entry key="viewer.statusBar.blockTag">Block tag</entry>
+  <entry key="viewer.statusBar.channelTag">Channel tag</entry>
+
+  <entry key="viewer.statusBar.filterOn">ON</entry>
+  <entry key="viewer.statusBar.filterOff">OFF</entry>
+  <entry key="viewer.statusBar.filterOnToolTip">Filtering is enabled for the master plot</entry>
+  <entry key="viewer.statusBar.filterOffToolTip">Filtering is disbled for the master plot</entry>
+
+  <entry key="viewer.workspaceTabTitle">Workspace</entry>
+  <entry key="viewer.bookTabTitle">Books</entry>
+  <entry key="viewer.signalTabTitle">Signals</entry>
+  <entry key="viewer.tagTabTitle">Tags</entry>
+  <entry key="viewer.workspaceTabToolTip">Shows workspace</entry>
+  <entry key="viewer.bookTabToolTip">Shows open books</entry>
+  <entry key="viewer.signalTabToolTip">Shows open signals</entry>
+  <entry key="viewer.tagTabToolTip">Shows open tags</entry>
+
+  <entry key="viewer.consoleTabTitle">Console</entry>
+  <entry key="viewer.consoleTabToolTip">Application message console</entry>
+  <entry key="viewer.taskTableTabTitle">Tasks</entry>
+  <entry key="viewer.taskTableTabToolTip">Lists active tasks that run in the background or on the server</entry>
+  <entry key="viewer.propertySheetTabTitle">Properties</entry>
+  <entry key="viewer.propertySheetTabToolTip">Shows properties of selected objects</entry>
+
+  <entry key="viewer.console.scrollLock">Lock scroll</entry>
+  <entry key="viewer.console.scrollLockToolTip">Prevent the console from scrolling when new text is appended</entry>
+  <entry key="viewer.console.clear">Clear</entry>
+  <entry key="viewer.console.clearToolTip">Clear the console</entry>
+  <entry key="viewer.console.saveAsText">Save as text</entry>
+  <entry key="viewer.console.saveAsTextToolTip">Save the contents of the console to a text file</entry>
+
+  <entry key="viewer.console.noLogDivertToolTip">Do not show log messages in the console</entry>
+  <entry key="viewer.console.errorLogDivertToolTip">Show only warning and error log messages in the console</entry>
+  <entry key="viewer.console.debugLogDivertToolTip">Show all log messages in the console, including debug messages</entry>
+
+  <entry key="viewer.propertySheet.name">Property name</entry>
+  <entry key="viewer.propertySheet.value">Value</entry>
+
+  <entry key="viewer.taskTable.number">No</entry>
+  <entry key="viewer.taskTable.methodName">Method</entry>
+  <entry key="viewer.taskTable.createTime">Created</entry>
+  <entry key="viewer.taskTable.status">Status</entry>
+  <entry key="viewer.taskTable.progress">Progress</entry>
+  <entry key="viewer.taskTable.message">Message</entry>
+  
+  <entry key="viewer.taskTable.allTasks">All tasks</entry>
+  
+  <entry key="toolTipText.displayFieldHelp">Display context help for this field</entry> 
+
+  <entry key="filechooser.consoleSaveAsText.title">Choose text file to save</entry>
+  <entry key="filechooser.tableSaveAsText.title">Choose text file to save</entry>
+  <entry key="filechooser.samplesSaveAsText.title">Choose text file to save</entry>
+  <entry key="filechooser.samplesSaveAsFloat.title">Choose binary file to save</entry>
+  <entry key="filechooser.chartSaveAsPng.title">Choose png file to save</entry>
+  <entry key="filechooser.saveMP5Config.title">Choose MP5 config file to save</entry>
+  <entry key="filechooser.saveMP5Signal.title">Choose MP5 signal file to save</entry>
+  <entry key="filechooser.saveDocument.title">Save document</entry>
+  <entry key="filechooser.openTag.title">Open tag</entry>
+  <entry key="filechooser.expertTag.title">Choose expert tag</entry>
+  <entry key="filechooser.saveTag.title">Save tag</entry>
+  <entry key="filechooser.importTag.title">Import legacy tag</entry>
+  <entry key="filechooser.readXMLManifest.title">Read XML manifest</entry>
+  <entry key="filechooser.exportTag.title">Export legacy tag</entry>
+  <entry key="filechooser.exportSignal.title">Export binary signal</entry>
+  <entry key="filechooser.exportBook.title">Export book</entry>
+  <entry key="filechooser.savePreset.title">Save preset to file</entry>
+  <entry key="filechooser.loadPreset.title">Load preset from file</entry>
+  <entry key="filechooser.executablePreset.title">Choose executable</entry>
+  <entry key="filechooser.bookFilePreset.title">Choose a book file</entry>
+  <entry key="filechooser.bookSavePreset.title">Choose a book file to save</entry>
+  <entry key="filechooser.artifactProjectPreset.title">Choose artifact project (or an empty directory)</entry>
+  <entry key="filechooser.workingDirectoryPreset.title">Choose working directory</entry>
+  <entry key="filechooser.classPathDirectoryPreset.title">Choose class path directories</entry>
+  <entry key="filechooser.jarFilePreset.title">Choose jar files</entry>
+  <entry key="filechooser.codeFilePreset.title">Choose code file</entry>
+
+  <entry key="filechooser.filter.textFiles">Text files (*.txt)</entry>
+  <entry key="filechooser.filter.binaryFiles">Binary files (*.bin)</entry>
+  <entry key="filechooser.filter.xmlFiles">XML files (*.xml)</entry>
+  <entry key="filechooser.filter.pngFiles">PNG graphic files (*.png)</entry>
+  <entry key="filechooser.filter.exeFiles">Executable files (*.exe)</entry>
+  <entry key="filechooser.filter.tagFiles">Tag files (*.xml, *.tag)</entry>
+  <entry key="filechooser.filter.bookFiles">Book files (*.b)</entry>
+  <entry key="filechooser.filter.commonSignalFiles">Common signal files (*.d, *.edf, *.raw, *.bin)</entry>
+  <entry key="filechooser.filter.configFiles">Config files (*.cfg)</entry>
+  <entry key="filechooser.filter.jarFiles">Jar files (*.jar)</entry>
+  <entry key="filechooser.filter.codeFiles">Code files (*.java, *.class)</entry>
+  
+  <entry key="workspaceTree.root">Workspace</entry>
+  <entry key="workspaceTree.openDocuments">Open documents</entry>
+  <entry key="workspaceTree.recentDocuments">Recent documents</entry>
+  <entry key="workspaceTree.openSignals">Signals</entry>
+  <entry key="workspaceTree.openBooks">Books</entry>
+  <entry key="workspaceTree.openTags">Tags</entry>
+  <entry key="workspaceTree.recentSignals">Signals</entry>
+  <entry key="workspaceTree.recentBooks">Books</entry>
+  <entry key="workspaceTree.recentTags">Tags</entry>
+
+  <entry key="signalTree.root">Signals</entry>
+  <entry key="signalTree.page">Page {0} [{2} -> {3}]</entry>
+
+  <entry key="tagTree.root">Tags</entry>
+  <entry key="tagTree.styles">Styles</entry>
+  <entry key="tagStyle">{1} [{0}]</entry>
+  <entry key="tagWithoutChannel">{0} [{1}->{3}]</entry>
+  <entry key="tagWithChannel">{0} [{1}->{3} in channel {4}]</entry>
+  <entry key="markerWithChannel">{0} [{1} in channel {2}]</entry>
+
+  <entry key="tagStyleTree.root">Tags</entry>
+  
+  <entry key="bookTree.root">Books</entry>
+
+  <entry key="bookTree.segment">Segment {0} [{2} -> {3}]</entry>
+  <entry key="bookTree.channel">Channel {0} [{1}]</entry>
+  <entry key="bookTree.atom">Atom {0} @ ({1}/{2}) [mod: {3}]</entry>
+  
+  <entry key="action.closeWindow">Exit</entry>
+  <entry key="action.closeWindowToolTip">Close the window and exit the aplication</entry>
+  <entry key="action.helpContents">Contents...</entry>
+  <entry key="action.helpContentsToolTip">Display help contents</entry>
+  <entry key="action.openDocument">Open...</entry>
+  <entry key="action.openDocumentToolTip">Open a document from file</entry>
+  <entry key="action.saveDocument">Save</entry>
+  <entry key="action.saveDocumentToolTip">Save the active document</entry>
+  <entry key="action.saveDocumentAs">Save As...</entry>
+  <entry key="action.saveDocumentAsToolTip">Save the active document to another file</entry>
+  <entry key="action.saveAllDocuments">Save All</entry>
+  <entry key="action.saveAllDocumentsToolTip">Save all unsaved documents</entry>
+  <entry key="action.closeDocument">Close</entry>
+  <entry key="action.closeDocumentToolTip">Close the active document</entry>
+  <entry key="action.editPreferences">Preferences...</entry>
+  <entry key="action.editPreferencesToolTip">Edit preferences</entry>
+  <entry key="action.viewMode">View mode</entry>
+  <entry key="action.viewModeToolTip">Maximize the document view (see preferences for settings)</entry>
+  <entry key="action.registerCodec">Register new codec</entry>
+  <entry key="action.registerAllCodecs">Register all codecs</entry>
+  <entry key="action.removeCodec">Remove codec</entry>
+  <entry key="action.newTag">New Tag</entry>
+  <entry key="action.newTagToolTip">Create a new tag for this signal</entry>
+  <entry key="action.openTag">Open Tag...</entry>
+  <entry key="action.openTagToolTip">Open a tag file for this signal</entry>
+  <entry key="action.saveTag">Save Tag</entry>
+  <entry key="action.saveTagToolTip">Save active tag</entry>
+  <entry key="action.saveTagAs">Save Tag As...</entry>
+  <entry key="action.saveTagAsToolTip">Save active tag to another file</entry>
+  <entry key="action.importTag">Import Legacy Tag...</entry>
+  <entry key="action.importTagToolTip">Import a tag in legacy format</entry>
+  <entry key="action.exportTag">Export Legacy Tag...</entry>
+  <entry key="action.exportTagToolTip">Export a tag in legacy format</entry>
+  <entry key="action.closeTag">Close Tag</entry>
+  <entry key="action.closeTagToolTip">Close active tag</entry>
+  <entry key="action.removeTag">Remove tag</entry>
+  <entry key="action.removeTagToolTip">Remove selected tag</entry>
+  <entry key="action.openMRUD">Open</entry>
+  <entry key="action.openMRUDToolTip">Open recently used document</entry>
+  <entry key="action.activateDocument">Show</entry>
+  <entry key="action.activateDocumentToolTip">Show document</entry>
+  <entry key="action.activateSignalPage">Show page</entry>
+  <entry key="action.activateSignalPageToolTip">Show signal page in viewer</entry>
+  <entry key="action.activateTag">Show tag</entry>
+  <entry key="action.activateTagToolTip">Show tag in viewer</entry>
+  <entry key="action.showMainToolBar">Show main toolbar</entry>
+  <entry key="action.showMainToolBarToolTip">Show main toolbar</entry>
+  <entry key="action.showStatusBar">Show status bar</entry>
+  <entry key="action.showStatusBarToolTip">Show status bar</entry>
+  <entry key="action.showLeftPanel">Show left panel</entry>
+  <entry key="action.showLeftPanelToolTip">Show left panel</entry>
+  <entry key="action.showBottomPanel">Show bottom panel</entry>
+  <entry key="action.showBottomPanelToolTip">Show bottom panel</entry>
+  <entry key="action.exportSignal">Export Signal...</entry>
+  <entry key="action.exportSignalToolTip">Export signal to simple binary format</entry>
+  <entry key="action.exportBook">Export Book...</entry>
+  <entry key="action.exportBookToolTip">Export book to file</entry>
+
+  <entry key="action.signalParameters">Signal parameters</entry>
+  <entry key="action.signalParametersToolTip">Change signal parameters</entry>
+  <entry key="action.signalMontage">Signal montage</entry>
+  <entry key="action.signalMontageToolTip">Change signal montage</entry>
+  <entry key="action.storedMontages">Stored montages...</entry>
+  <entry key="action.storedMontagesToolTip">Edit stored montages</entry>
+  <entry key="action.applyDefaultMontage">Default montage</entry>
+  <entry key="action.applyDefaultMontageToolTip">Apply default montage</entry>
+  <entry key="action.preciseSelection">Select precisely</entry>
+  <entry key="action.preciseSelectionToolTip">Select signal fragments using selection dialog</entry>
+  <entry key="action.tagSelection">Tag selection</entry>
+  <entry key="action.tagSelectionToolTip">Tag the selected signal fragment</entry>
+  <entry key="action.editTagAnnotation">Annotate tag</entry>
+  <entry key="action.editTagAnnotationToolTip">Edit tag annotation (Ctrl-A)</entry>
+  <entry key="action.editTagDescription">Edit tag description</entry>
+  <entry key="action.editTagDescriptionToolTip">Edit tag description</entry>
+
+  <entry key="action.editTagStyles">Tag styles</entry>
+  <entry key="action.editTagStylesToolTip">Edit tag styles</entry>
+
+  <entry key="action.showAllTagStyles">Show all</entry>
+  <entry key="action.showAllTagStylesToolTip">Show all styles</entry>
+
+  <entry key="action.abortTask">Abort</entry>
+  <entry key="action.abortTaskToolTip">Abort this task (the task might not terminate immediately)</entry>
+  <entry key="action.suspendTask">Suspend</entry>
+  <entry key="action.suspendTaskToolTip">Suspend this task (the task might not suspend immediately)</entry>
+  <entry key="action.resumeTask">Resume</entry>
+  <entry key="action.resumeTaskToolTip">Resume this task</entry>
+  <entry key="action.getTaskResult">Get result</entry>
+  <entry key="action.getTaskResultToolTip">Get the results of this task</entry>
+  <entry key="action.getTaskError">Get error</entry>
+  <entry key="action.getTaskErrorToolTip">Get the errors from this task</entry>
+  <entry key="action.showTaskDialog">Show dialog</entry>
+  <entry key="action.showTaskDialogToolTip">Show the status dialog</entry>
+  <entry key="action.removeTask">Remove task</entry>
+  <entry key="action.removeTaskToolTip">Remove this task</entry>
+  <entry key="action.abortAllTasks">Abort all tasks</entry>
+  <entry key="action.abortAllTasksToolTip">Abort all abortable tasks</entry>
+  <entry key="action.suspendAllTasks">Suspend all tasks</entry>
+  <entry key="action.suspendAllTasksToolTip">Suspend all suspendable tasks</entry>
+  <entry key="action.resumeAllTasks">Resume all tasks</entry>
+  <entry key="action.resumeAllTasksToolTip">Resume all suspended tasks</entry>
+  <entry key="action.removeAllTasks">Remove all tasks</entry>
+  <entry key="action.removeAllTasksToolTip">Remove all non-running tasks</entry>
+  <entry key="action.removeAllFinishedTasks">Remove all finished tasks</entry>
+  <entry key="action.removeAllFinishedTasksToolTip">Remove all finished tasks</entry>
+  <entry key="action.removeAllAbortedTasks">Remove all aborted tasks</entry>
+  <entry key="action.removeAllAbortedTasksToolTip">Remove all aborted tasks</entry>
+  <entry key="action.removeAllFailedTasks">Remove all failed tasks</entry>
+  <entry key="action.removeAllFailedTasksToolTip">Remove all failed tasks</entry>
+    
+  <entry key="action.exportTableToClipboard">Copy to clipboard</entry>
+  <entry key="action.exportTableToClipboardToolTip">Copy contents to clipboard</entry>
+  <entry key="action.exportTableToFile">Save to file</entry>
+  <entry key="action.exportTableToFileToolTip">Save contents to file</entry>
+
+  <entry key="action.exportChartToClipboard">Copy chart to clipboard</entry>
+  <entry key="action.exportChartToClipboardToolTip">Copy chart to clipboard</entry>
+  <entry key="action.exportChartToFile">Save chart as PNG file</entry>
+  <entry key="action.exportChartToFileToolTip">Save chart as a PNG file</entry>
+
+  <entry key="action.exportAllChartsToClipboard">Copy all charts to clipboard</entry>
+  <entry key="action.exportAllChartsToClipboardToolTip">Copy all charts to clipboard</entry>
+  <entry key="action.exportAllChartsToFile">Save all charts as one PNG file</entry>
+  <entry key="action.exportAllChartsToFileToolTip">Save all charts as one PNG file</entry>
+
+  <entry key="action.exportSamplesToClipboard">Copy samples to clipboard</entry>
+  <entry key="action.exportSamplesToClipboardToolTip">Copy samples to clipboard</entry>
+  <entry key="action.exportSamplesToFile">Save samples as txt file</entry>
+  <entry key="action.exportSamplesToFileToolTip">Save samples as a txt file</entry>
+
+  <entry key="action.exportAllSamplesToClipboard">Copy all samples to clipboard</entry>
+  <entry key="action.exportAllSamplesToClipboardToolTip">Copy all samples to clipboard</entry>
+  <entry key="action.exportAllSamplesToFile">Save all samples as txt file</entry>
+  <entry key="action.exportAllSamplesToFileToolTip">Save all samples as one txt file</entry>
+
+  <entry key="action.exportSamplesToFloatFile">Save all samples as float file</entry>
+  <entry key="action.exportSamplesToFloatFileToolTip">Save all samples as a float file</entry>
+    
+  <entry key="action.unavailableMethod">Unavailable method</entry>
+  <entry key="action.runMethod">Run method {0}</entry>
+  <entry key="action.iterateMethod">Iterate method {0}</entry>
+
+  <entry key="action.showAtomTable">Show atom table</entry>
+  <entry key="action.showAtomTableToolTip">Show segment's atoms in a table</entry>
+  <entry key="action.bookFilter">Edit book filter</entry>
+  <entry key="action.bookFilterToolTip">Edit book filter chain</entry>
+  <entry key="action.showPreviousBookSegment">Previous segment</entry>
+  <entry key="action.showPreviousBookSegmentToolTip">Navigate to previous segment</entry>
+  <entry key="action.showNextBookSegment">Next segment</entry>
+  <entry key="action.showNextBookSegmentToolTip">Navigate to next segment</entry>
+  <entry key="action.showPreviousBookChannel">Previous channel</entry>
+  <entry key="action.showPreviousBookChannelToolTip">Navigate to previous channel</entry>
+  <entry key="action.showNextBookChannel">Next channel</entry>
+  <entry key="action.showNextBookChannelToolTip">Navigate to next channel</entry>
+
+  <entry key="action.util.selectAll">Select all</entry>
+  <entry key="action.util.selectNone">Select none</entry>
+  <entry key="action.util.selectInvert">Invert</entry>
+
+  <entry key="menu.file">File</entry> 
+  <entry key="menu.import">Import</entry> 
+  <entry key="menu.export">Export</entry> 
+  <entry key="menu.help">Help</entry>
+  <entry key="menu.edit">Edit</entry>
+  <entry key="menu.tools">Tools</entry>
+  <entry key="menu.tools.iterate">Iterate</entry>
+  <entry key="menu.view">View</entry>
+
+  <entry key="seriousWarning.title">WARNING! Are you sure?</entry>      
+  <entry key="seriousWarning.warning">WARNING! You are about to perform an irreversible operation.</entry>      
+  <entry key="seriousWarning.doItTimeout">Please reconsider... ({0})</entry>      
+  <entry key="seriousWarning.doIt">I am completely sure! Do it!</entry>     
+      
+  <entry key="presetDialog.title">Presets</entry>     
+  <entry key="presetDialog.presetNameTitle">Set preset name</entry>     
+  <entry key="presetDialog.savePreset">Save</entry>     
+  <entry key="presetDialog.loadPreset">Load</entry>     
+  <entry key="presetDialog.removePreset">Remove</entry>     
+  <entry key="presetDialog.saveDefaultPreset">Make default</entry>      
+  <entry key="presetDialog.loadDefaultPreset">Load default</entry>      
+  <entry key="presetDialog.removeDefaultPreset">Remove default</entry>      
+  <entry key="presetDialog.saveFile">Export preset to file...</entry>     
+  <entry key="presetDialog.loadFile">Import preset from file...</entry>     
+
+  <entry key="presetDialog.selectToLoad">&lt;&lt; select to load preset &gt;&gt;</entry>      
+  <entry key="presetDialog.selectToChoose">&lt;&lt; select to choose preset &gt;&gt;</entry>      
+  <entry key="presetDialog.selectPreset">Select preset</entry>      
+  <entry key="presetDialog.selectPresetName">Select preset name</entry>     
+
+  <entry key="presetDialog.onRemovePreset">Selected preset named ''&lt;b&gt;{0}&lt;/b&gt;'' will be permanently removed.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;permanently remove&lt;/b&gt; this preset?</entry>      
+  <entry key="presetDialog.onReplacePreset">Preset named ''&lt;b&gt;{0}&lt;/b&gt;'' will be permanently overwritten.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;permanently overwrite&lt;/b&gt; this preset?</entry>     
+  <entry key="presetDialog.onLoadPreset">The settings currently on the dialog will be permanently overwritten with preset named ''&lt;b&gt;{0}&lt;/b&gt;''.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;permanently overwrite&lt;/b&gt; current settings?</entry>     
+
+  <entry key="presetDialog.onRemoveDefaultPreset">The default preset will be permanently removed.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;permanently remove&lt;/b&gt; the default?</entry>     
+  <entry key="presetDialog.onReplaceDefaultPreset">The default preset will be permanently overwritten.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;permanently overwrite&lt;/b&gt; the default?</entry>     
+  <entry key="presetDialog.onLoadDefaultPreset">The settings currently on the dialog will be permanently overwritten with the default preset.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;permanently overwrite&lt;/b&gt; current settings?</entry>     
+      
+  <entry key="spacePresetDialog.includeSpace">Load signal selection from loaded preset</entry>            
+      
+  <entry key="exportSignalDialog.title">Export signal</entry>           
+  <entry key="exportSignalDialog.options.title">Export options</entry>            
+  <entry key="exportSignalDialog.options.sampleType">Sample type</entry>            
+  <entry key="exportSignalDialog.options.byteOrder">Byte order</entry>            
+  <entry key="exportSignalDialog.options.saveXML">Save XML manifest</entry>           
+  <entry key="exportSignalDialog.options.normalize">Normalize samples</entry>           
+      
+  <entry key="profilePath.title">Choose profile path</entry>
+  <entry key="profilePath.welcome">Welcome to signalml viewer</entry>
+  <entry key="profilePath.info">The signalml viewer needs a directory to store its configuration and files. This directory may reside inside the default user's home directory (system dependent), or you can select any directory on disk (remember that you need to select a concrete directory for SignalML files, not the directory in which you would like the later to be created - create the directory if necessary).</entry>
+  <entry key="profilePath.defaultRadio">signalml directory inside default home</entry>
+  <entry key="profilePath.customRadio">custom location</entry>
+  <entry key="profilePath.directoryFilter">Directories</entry>
+  
+  <entry key="errors.title">Errors in data</entry>
+  
+  <entry key="preferences.title">Preferences</entry>
+  
+  <entry key="preferences.codecs">SignalML Codecs</entry>
+  <entry key="preferences.codecs.installedCodecs">Installed codecs</entry>
+  
+  <entry key="preferences.signalViewing">Signal viewing</entry>
+  <entry key="preferences.signalViewing.general">General</entry>
+  <entry key="preferences.signalViewing.plotOptions">Plot options</entry>
+  <entry key="preferences.signalViewing.scales">Scale limits (changes do not affect signals already open)</entry>
+  <entry key="preferences.signalViewing.rightClickPagesForward">Right click signal to shift page (hold down SHIFT for popup menu)</entry>
+  <entry key="preferences.signalViewing.autoLoadDefaultMontage">Automatically load default montage when opening signals (if defined)</entry>
+  <entry key="preferences.signalViewing.precalculateSignalChecksums">Pre-calculate checksums for opened signals</entry>
+  <entry key="preferences.signalViewing.tagPaintMode">Default tag paint mode</entry>
+  <entry key="preferences.signalViewing.signalColor">Default signal color</entry>
+  <entry key="preferences.signalViewing.signalXOR">Default signal XOR</entry>
+  <entry key="preferences.signalViewing.antialias">Default antialiasing</entry>
+  <entry key="preferences.signalViewing.clamp">Default clamp values</entry>
+  <entry key="preferences.signalViewing.offscreenChannelsDrawn">Default draw offscreen channels</entry>
+  <entry key="preferences.signalViewing.tagToolTipsVisible">Default tag tool tips</entry>
+  <entry key="preferences.signalViewing.pageLinesVisible">Default page lines</entry>
+  <entry key="preferences.signalViewing.blockLinesVisible">Default block lines</entry>
+  <entry key="preferences.signalViewing.channelLinesVisible">Default channel lines</entry>
+  <entry key="preferences.signalViewing.channelHeight">Channel height [px]</entry>
+  <entry key="preferences.signalViewing.valueScale">Value scale [%]</entry>
+  <entry key="preferences.signalViewing.timeScale">Time scale [px/sample]</entry>
+  <entry key="preferences.signalViewing.min">min</entry>
+  <entry key="preferences.signalViewing.max">max</entry>
+
+  <entry key="preferences.zoomSettings">Signal zooming</entry>
+  <entry key="preferences.signalFFTSettings">Signal FFT</entry>
+
+  <entry key="preferences.tagging">Tagging</entry>
+  <entry key="preferences.tagging.general">General</entry>
+  <entry key="preferences.tagging.saveFullMontageWithTag">Save full montage with tag file</entry>
+
+  <entry key="preferences.miscellaneous">Miscellaneous</entry>
+  <entry key="preferences.miscellaneous.general">General</entry>
+  <entry key="preferences.miscellaneous.saveConfigOnEveryChange">Save config files on every change (otherwise on exit)</entry>
+  <entry key="preferences.miscellaneous.restoreWorkspace">Restore the workspace when the application loads</entry>
+  <entry key="preferences.miscellaneous.viewMode">View mode</entry>
+  <entry key="preferences.miscellaneous.viewModeHidesMainToolBar">Hide main toolbar</entry>
+  <entry key="preferences.miscellaneous.viewModeHidesLeftPanel">Hide left panel</entry>
+  <entry key="preferences.miscellaneous.viewModeHidesBottomPanel">Hide bottom panel</entry>
+  <entry key="preferences.miscellaneous.viewModeCompactsPageTagBars">Compact page tags</entry>
+  <entry key="preferences.miscellaneous.viewModeSnapsToPage">Snap to page</entry>
+  <entry key="preferences.miscellaneous.toolTip">Tool tip settings</entry>
+  <entry key="preferences.miscellaneous.toolTipInitial">To show</entry>
+  <entry key="preferences.miscellaneous.toolTipDismiss">To hide</entry>
+  <entry key="preferences.miscellaneous.toolTipMS">[ms]</entry>
+  <entry key="preferences.miscellaneous.disableSeriousWarnings">Disable serious warning dialogs for preset operations</entry>
+  <entry key="preferences.miscellaneous.dontShowCompilationWarning">Do not show dynamic compilation warnings</entry>
+
+  <entry key="preferences.tools">Tools</entry>
+  <entry key="preferences.tools.artifact">Artifact working directory</entry>
+    
+  <entry key="openDocument.title">Open document</entry>
+  <entry key="openDocument.chooseFile">Choose file</entry>
+  <entry key="openDocument.chooseFileType">Choose file type</entry>
+  <entry key="openDocument.fileType.autodetect">Attempt to autodetect file type</entry>
+  <entry key="openDocument.fileType.choose">Select manually from a list</entry>
+  <entry key="openDocument.fileType.signal">Signal</entry>
+  <entry key="openDocument.fileType.book">Book</entry>
+  <entry key="openDocument.fileType.tag">Tag</entry>
+  <entry key="openDocument.signalAutodetected">Signal document autodetected</entry>
+  <entry key="openDocument.bookAutodetected">Book document autodetected</entry>
+  <entry key="openDocument.tagAutodetected">Tag document autodetected</entry>
+  <entry key="openDocument.signalChosen">Signal document chosen</entry>
+  <entry key="openDocument.bookChosen">Book document chosen</entry>
+  <entry key="openDocument.tagChosen">Tag document chosen</entry>
+  
+  <entry key="openSignal.options.title">Choose options for signal</entry>
+  <entry key="openSignal.options.methodTitle">Choose signal loading method</entry>
+  <entry key="openSignal.options.methodSignalML">Load using SignalML codec</entry>
+  <entry key="openSignal.options.methodRaw">Load raw signal</entry>
+
+  <entry key="openSignal.options.signalml.title">SignalML codec options</entry>
+  <entry key="openSignal.options.signalml.driver">Select codec</entry>
+
+  <entry key="openSignal.options.raw.title">Raw signal options</entry>
+
+  <entry key="openSignal.options.raw.samplingFrequency">Sampling Frequency (Hz)</entry>
+  <entry key="openSignal.options.raw.channelCount">Number of channels</entry>
+  <entry key="openSignal.options.raw.sampleType">Sample type</entry>
+  <entry key="openSignal.options.raw.byteOrder">Byte order</entry>
+  <entry key="openSignal.options.raw.calibration">Calibration</entry>
+
+  <entry key="openSignal.options.raw.readXMLManifest">Read manifest...</entry>
+  <entry key="openSignal.options.raw.readXMLManifestToolTip">Read signal parameters from XML manifest</entry>
+
+  <entry key="newTag.title">Choose new tag type</entry>
+  <entry key="newTag.emptyRadio">An empty tag with no styles</entry>
+  <entry key="newTag.defaultSleepRadio">Use standard sleep staging styles</entry>
+  <entry key="newTag.fromFileRadio">Use styles from selected file</entry>
+
+  <entry key="openTag.options.title">Choose options for tag</entry>
+  <entry key="openTag.options.signalDocument">Select signal document</entry>
+
+  <entry key="openBook.options.title">Choose options for book</entry>
+
+  <entry key="registerCodec.title">Register a new SignalML codec</entry>
+  <entry key="registerCodec.chooseFile">Choose XML definition file</entry>
+  <entry key="registerCodec.chooseFormatName">Choose the name of the format</entry>
+  <entry key="registerCodec.formatName">Format name</entry>
+  <entry key="registerCodec.nameExistsWarning">Name exists. Current codec will be replaced!</entry>
+
+  <entry key="pagingParameters.pageSize">Page size (s)</entry>
+  <entry key="pagingParameters.blocksPerPage">Number of blocks per page</entry> 
+
+  <entry key="signalParameters.title">Signal parameters</entry>
+  <entry key="signalParameters.requiredSignalParameters">Required signal parameters</entry>
+  <entry key="signalParameters.samplingFrequency">Sampling Frequency (Hz)</entry>
+  <entry key="signalParameters.channelCount">Number of channels</entry>
+  <entry key="signalParameters.calibration">Calibration</entry>
+  <entry key="signalParameters.pagingSignalParameters">Page &amp; block parameters</entry>
+
+  <entry key="signalParameters.requiredNotEditable">This parameter may not be changed for this signal file</entry>
+  <entry key="signalParameters.pagingNotEditable">This parameter is inherited from the active tag and may not be changed as long as any tags are open</entry>
+
+  <entry key="signalMontage.title">Signal montage</entry>
+
+  <entry key="signalMontage.channelsTabTitle">Channels</entry>
+  <entry key="signalMontage.visualTabTitle">Reference editor</entry>
+  <entry key="signalMontage.matrixTabTitle">Reference matrix</entry>
+  <entry key="signalMontage.filtersTabTitle">Filters</entry>
+  <entry key="signalMontage.miscellaneousTabTitle">Miscellaneous</entry>
+
+  <entry key="signalMontage.editDescription">Edit description</entry>
+  <entry key="signalMontage.chooseGenerator">Choose generator</entry>
+  <entry key="signalMontage.generator">Generator</entry>
+  <entry key="signalMontage.generatorErrorLabelToolTip">Click to see errors</entry>
+  <entry key="signalMontage.reloadToolTip">Generate again</entry>
+
+  <entry key="matrixReferenceEditor.editReference">Edit reference</entry>
+
+  <entry key="visualReferenceEditor.targetMontage">Target montage</entry>
+  <entry key="visualReferenceEditor.editReference">Edit reference</entry>
+  <entry key="visualReferenceEditor.bipolarMode">Bipolar mode</entry>
+  <entry key="visualReferenceEditor.previousChannel">Previous</entry>
+  <entry key="visualReferenceEditor.previousChannelToolTip">Previous channel (Shift-Space)</entry>
+  <entry key="visualReferenceEditor.nextChannel">Next</entry>
+  <entry key="visualReferenceEditor.nextChannelToolTip">Next channel (Space)</entry>
+  <entry key="visualReferenceEditor.acceptWeightToolTip">Accept edit</entry>
+  <entry key="visualReferenceEditor.rejectWeightToolTip">Discard edit</entry>
+  <entry key="visualReferenceEditor.removeReference">Remove</entry>
+  <entry key="visualReferenceEditor.removeReferenceToolTip">Remove this reference (Delete)</entry>
+  <entry key="visualReferenceEditor.weight">Weight</entry>
+
+  <entry key="visualReferenceEditor.bin.others">Others</entry>
+  <entry key="visualReferenceEditor.bin.references">Refs</entry>
+  <entry key="visualReferenceEditor.bin.primaries">Prims</entry>
+  <entry key="visualReferenceEditor.bin.positioned">Positioned</entry>
+
+  <entry key="montageDialog.onIncompatible">The selected montage is not compatible with the current signal. It will have to be adapted.&lt;br&gt;&amp;nbsp;&lt;br&gt;This may result in a serious modification of montage structure.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;apply&lt;/b&gt; the montage?</entry>
+
+  <entry key="sourceMontageTable.title">Source montage</entry>
+  <entry key="sourceMontageTable.index">Index</entry>
+  <entry key="sourceMontageTable.label">Label</entry>
+  <entry key="sourceMontageTable.function">Function</entry>
+  <entry key="sourceMontageTable.addChannel">More channels</entry>
+  <entry key="sourceMontageTable.removeChannel">Less channels</entry>
+
+  <entry key="montageTable.title">Target montage</entry>
+  <entry key="montageTable.index">Index</entry>
+  <entry key="montageTable.primaryLabel">Primary label</entry>
+  <entry key="montageTable.label">Label</entry>
+  <entry key="montageTable.clear">Clear montage</entry>
+  <entry key="montageTable.addChannels">Add channels</entry>
+  <entry key="montageTable.removeChannels">Remove channels</entry>
+  <entry key="montageTable.moveUp">Move up</entry>
+  <entry key="montageTable.moveDown">Move down</entry>
+
+  <entry key="montageTable.onClear">The montage will be irreversibly lost.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;clear&lt;/b&gt; the montage?</entry>     
+  <entry key="montageTable.onDeleteUsed">The removed source channel is used either as a primary channel or as a reference. Montage will be altered.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;remove&lt;/b&gt; a source channel?</entry>      
+  <entry key="montageTable.onGenerate">The montage will be permanently replaced with the generated montage.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;generate&lt;/b&gt; the montage?</entry>     
+
+  <entry key="montageTable.wasteBasketToolTip">Drop target channels here to delete them</entry>
+
+  <entry key="montageFilters.masterSwitchTitle">Filtering master switch</entry>
+  <entry key="montageFilters.filteringEnabled">Enable signal filtering</entry>
+
+  <entry key="montageFilters.filtersTableTitle">Filters</entry>
+  <entry key="montageFilters.newFFT">New FFT filter</entry>
+
+  <entry key="montageFiltersTable.index">Index</entry>
+  <entry key="montageFiltersTable.description">Description</entry>
+  <entry key="montageFiltersTable.effect">Effect</entry>
+
+  <entry key="filterExclusionTable.allFilters">All filters</entry>
+  <entry key="filterExclusionTable.allChannels">All channels</entry>
+
+  <entry key="montageFilters.addTimeDomainFilter">Add filter</entry>
+  <entry key="montageFilters.addTimeDomainFilterToolTip">Add selected time domain filter</entry>
+  <entry key="montageFilters.addFFTFilter">Add filter</entry>
+  <entry key="montageFilters.addFFTFilterToolTip">Add new filter</entry>
+  <entry key="montageFilters.editFilter">Edit filter</entry>
+  <entry key="montageFilters.removeFilter">Remove filter</entry>
+  <entry key="montageFilters.clearFilterExclusion">Clear exclusion</entry>
+
+  <entry key="montageFilters.addTimeDomainFilterTitle">Add time domain filter</entry>
+
+  <entry key="montageFilters.addFFTFilterTitle">Add filter</entry>
+
+  <entry key="montageFilters.passingFFTFilter">Initially passing filter</entry>
+  <entry key="montageFilters.stoppingFFTFilter">Initially stopping filter</entry>
+
+  <entry key="montageFilters.filterChannelExclusionTitle">Filter channel exclusion</entry>
+
+  <entry key="editFFTSampleFilter.title">Edit FFT sample filter</entry>
+  <entry key="editFFTSampleFilter.tableToolTip">Double click a row to copy parameters to new range parameters panel</entry>
+
+  <entry key="editFFTSampleFilter.descriptionTitle">Filter description</entry>
+  <entry key="editFFTSampleFilter.graphPanelTitle">FFT filter design graph</entry>
+  <entry key="editFFTSampleFilter.addNewRangeTitle">New range parameters</entry>
+  <entry key="editFFTSampleFilter.rangesTitle">Ranges</entry>
+
+  <entry key="editFFTSampleFilter.graphTitle">FFT coefficients</entry>
+  <entry key="editFFTSampleFilter.graphSpinnerLabel">Maximum graph frequency [Hz]</entry>
+  <entry key="editFFTSampleFilter.graphFrequencyLabel">Frequency [Hz]</entry>
+  <entry key="editFFTSampleFilter.graphCoefficientLabel">Coefficient</entry>
+
+  <entry key="editFFTSampleFilter.fromFrequency">From (incl.) [Hz]</entry>
+  <entry key="editFFTSampleFilter.toFrequency">To (excl.) [Hz]</entry>
+  <entry key="editFFTSampleFilter.coefficient">Coefficient</entry>
+  <entry key="editFFTSampleFilter.unlimited">Up to Fn</entry>
+  <entry key="editFFTSampleFilter.multiply">Multiply</entry>
+
+  <entry key="editFFTSampleFilter.addNewRange">Add or replace range</entry>
+  <entry key="editFFTSampleFilter.removeRange">Remove range</entry>
+
+  <entry key="editFFTSampleFilter.table.frequencyRange">Frequency range [Hz]</entry>
+  <entry key="editFFTSampleFilter.table.coefficient">Coefficient</entry>
+
+  <entry key="error.editFFTSampleFilter.descriptionEmpty">A filter must have a description</entry>
+  <entry key="error.editFFTSampleFilter.descriptionBadChars">Filter description must not contain control characters</entry>
+
+  <entry key="signalSpace.signalLevelType.title">Signal source level</entry>
+  <entry key="signalSpace.signalLevelType.rawSignal">Raw signal</entry>
+  <entry key="signalSpace.signalLevelType.assembledSignal">Assembled signal</entry>
+  <entry key="signalSpace.signalLevelType.filteredSignal">Filtered signal</entry>
+
+  <entry key="signalSpace.channelSpace.title">Channel selection</entry>
+
+  <entry key="signalSpace.timeSpace.title">Time fragment selection</entry>
+
+  <entry key="signalSpace.timeSpace.wholeSignal">Whole signal</entry>
+  <entry key="signalSpace.timeSpace.selectedSignal">Selected</entry>
+  <entry key="signalSpace.timeSpace.markedSignal">Marked</entry>
+
+  <entry key="signalSpace.wholeTimeSpace.frameTitle">Signal parameters</entry>
+  <entry key="signalSpace.wholeTimeSpace.signalLength">Signal length [s]</entry>
+  <entry key="signalSpace.wholeTimeSpace.pageSize">Page size [s]</entry>
+  <entry key="signalSpace.wholeTimeSpace.pageCount">Number of whole pages</entry>
+  <entry key="signalSpace.wholeTimeSpace.completePages">Complete pages only</entry>
+
+  <entry key="signalSpace.markedTimeSpace.markerPanel.title">Marker channel &amp; style</entry>
+  <entry key="signalSpace.markedTimeSpace.channelPanel.title">Averaged channels</entry>
+  <entry key="signalSpace.markedTimeSpace.settingsPanel.title">Settings</entry>
+
+  <entry key="signalSpace.markedTimeSpace.markerChannel">Marker channel</entry>
+  <entry key="signalSpace.markedTimeSpace.markerStyle">Marker style</entry>
+
+  <entry key="signalSpace.markedTimeSpace.secondsBefore">Seconds before</entry>
+  <entry key="signalSpace.markedTimeSpace.secondsAfter">Seconds after</entry>
+
+  <entry key="signalSelection.title">Signal selection</entry>
+  <entry key="signalSelection.selectionParameters">Selection parameters</entry>
+  <entry key="signalSelection.selectionType">Selection type</entry>
+  <entry key="signalSelection.pageSelection">Page selection</entry>
+  <entry key="signalSelection.blockSelection">Block selection</entry>
+  <entry key="signalSelection.channelSelection">Free (channel) selection</entry>
+  <entry key="signalSelection.startPage">Start page</entry>
+  <entry key="signalSelection.startBlock">Start block</entry>
+  <entry key="signalSelection.startTime">Start time</entry>
+  <entry key="signalSelection.lengthPages">Length (pages)</entry>
+  <entry key="signalSelection.lengthBlocks">Length (blocks)</entry>
+  <entry key="signalSelection.lengthSeconds">Length (seconds)</entry>
+  <entry key="signalSelection.channel">Channel</entry>
+
+  <entry key="tagStylePalette.title">Tag style palette</entry>
+  <entry key="tagStylePalette.treeTitle">Current styles</entry>
+  <entry key="tagStylePalette.outlineTitle">Outline style</entry>
+  <entry key="tagStylePalette.fillTitle">Fill style</entry>
+  <entry key="tagStylePalette.propertiesTitle">Properties</entry>
+  <entry key="tagStylePalette.width">Outline width</entry>
+  <entry key="tagStylePalette.style">Outline dash style</entry>
+  <entry key="tagStylePalette.name">Name</entry>
+  <entry key="tagStylePalette.description">Description</entry>
+  <entry key="tagStylePalette.key">Key</entry>
+  <entry key="tagStylePalette.marker">Marker style</entry>
+  <entry key="tagStylePalette.previewTitle">Preview</entry>
+  <entry key="tagStylePalette.apply">Apply changes</entry>
+
+  <entry key="tagStylePalette.newPageStyle">New page style</entry>
+  <entry key="tagStylePalette.newPageStyleToolTip">Add new page style</entry>
+  <entry key="tagStylePalette.newBlockStyle">New block style</entry>
+  <entry key="tagStylePalette.newBlockStyleToolTip">Add new block style</entry>
+  <entry key="tagStylePalette.newChannelStyle">New channel style</entry>
+  <entry key="tagStylePalette.newChannelStyleToolTip">Add new channel style</entry>
+  <entry key="tagStylePalette.removeStyle">Remove style</entry>
+  <entry key="tagStylePalette.removeStyleToolTip">Remove selected style</entry>
+  <entry key="tagStylePalette.applyChanges">Apply changes</entry>
+  <entry key="tagStylePalette.applyChangesToolTip">Apply changes to the tag style</entry>
+  <entry key="tagStylePalette.captureKeyStroke">Capture key</entry>
+  <entry key="tagStylePalette.captureKeyStrokeToolTip">Change the key stroke associated with this style</entry>
+
+  <entry key="tagStylePalette.noStyle">Select or add a style</entry>
+
+  <entry key="compareTags.graphicalCompareTitle">Graphical comparison</entry>
+  <entry key="compareTags.chooseTagsTitle">Choose tag documents (2 required)</entry>  
+  <entry key="compareTags.graphicalCompareOn">Comparison mode enabled</entry> 
+  <entry key="compareTags.graphicalCompareOff">Comparison mode disabled</entry>
+  <entry key="compareTags.analyze">Analyze tag differences</entry>    
+  <entry key="compareTags.analyzeToolTip">Show analytical comparison summary</entry>    
+  <entry key="compareTags.tag">{0}</entry>    
+
+  <entry key="averageBooks.averageTitle">Book averaging</entry>
+  <entry key="averageBooks.averageOn">Book averaging on</entry>
+  <entry key="averageBooks.averageOff">Book averaging off</entry>
+
+  <entry key="averageBooks.settingsTitle">Settings</entry>
+  <entry key="averageBooks.minSegment">From segment</entry>
+  <entry key="averageBooks.maxSegment">To segment</entry>
+  <entry key="averageBooks.allChannels">All channels together</entry>
+
+  <entry key="roc.title">Roc result</entry>   
+  <entry key="roc.chartTitle">Roc curve chart</entry>   
+  <entry key="roc.tableTitle">Roc parameters</entry>
+  <entry key="roc.rocDataProperties">Roc properties</entry>
+  <entry key="roc.rocDataPointProperties">Roc point properties</entry>
+      
+  <entry key="roc.falsePositiveRate">False positive rate</entry>    
+  <entry key="roc.truePositiveRate">True positive rate</entry>    
+  <entry key="roc.tablePointIndex">Index</entry>    
+  <entry key="roc.tableFPRate">FP rate</entry>    
+  <entry key="roc.tableTPRate">TP rate</entry>    
+  <entry key="roc.tableTP">TP</entry>   
+  <entry key="roc.tableFP">FP</entry>   
+  <entry key="roc.tableTN">TN</entry>   
+  <entry key="roc.tableFN">FN</entry>   
+
+  <entry key="atomTable.title">Atom table</entry>
+  <entry key="atomTable.tableTitle">Atoms in the current segment (may exclude filtered atoms)</entry>
+
+  <entry key="bookFilter.title">Edit book filter</entry>
+
+  <entry key="bookFilter.masterSwitchTitle">Filtering master switch</entry>
+  <entry key="bookFilter.filteringEnabled">Enable book filtering</entry>
+
+  <entry key="bookFilter.filterListTitle">Filter list</entry>
+
+  <entry key="bookFilter.filterList.index">Index</entry>
+  <entry key="bookFilter.filterList.name">Name</entry>
+  <entry key="bookFilter.filterList.type">Type</entry>
+  <entry key="bookFilter.filterList.blocking">Blocking</entry>
+  <entry key="bookFilter.filterList.enabled">Enabled</entry>
+
+  <entry key="bookFilter.editFilter">Configure</entry>
+  <entry key="bookFilter.removeFilter">Remove</entry>
+
+  <entry key="bookFilter.addParameterFilter">Add parameter filter</entry>
+  <entry key="bookFilter.addParameterFilterToolTip">Add a filter that filters based on parameter ranges</entry>
+  
+  <entry key="bookFilter.addTagBasedFilter">Add tag based filter</entry>
+  <entry key="bookFilter.addTagBasedFilterToolTip">Add a filter that filters based on a signal tag</entry>
+
+  <entry key="bookFilter.addDelegatingFilter">Add custom filter</entry>
+  <entry key="bookFilter.addDelegatingFilterToolTip">Add a filter that uses a custom class to determine matching atoms</entry>
+
+  <entry key="bookFilter.conditionTypeTitle">Condition type</entry>
+  <entry key="bookFilter.conjunction">Satisfy all (AND)</entry>
+  <entry key="bookFilter.alternative">Satisfy any (OR)</entry>
+
+  <entry key="atomFilter.nameTitle">Filter name</entry>
+  <entry key="error.atomFilter.nameEmpty">Empty filter name</entry>
+  <entry key="error.atomFilter.nameBadChars">Filter name must not contain control characters</entry>
+
+  <entry key="paramerterRangeFilter.title">Parameter range atom filter</entry>
+  <entry key="paramerterRangeFilter.frameTitle">Choose limits</entry>
+  <entry key="paramerterRangeFilter.new">New parameter range filter</entry>
+
+  <entry key="paramerterRangeFilter.iteration">Iteration</entry>
+  <entry key="paramerterRangeFilter.modulus">Modulus</entry>
+  <entry key="paramerterRangeFilter.amplitude">Amplitude</entry>
+  <entry key="paramerterRangeFilter.position">Position</entry>
+  <entry key="paramerterRangeFilter.scale">Scale</entry>
+  <entry key="paramerterRangeFilter.frequency">Frequency</entry>
+  <entry key="paramerterRangeFilter.phase">Phase</entry>
+
+  <entry key="paramerterRangeFilter.min">from</entry>
+  <entry key="paramerterRangeFilter.max">to</entry>
+
+  <entry key="paramerterRangeFilter.clearFilter">Clear filter</entry>
+  <entry key="paramerterRangeFilter.clearFilterToolTip">Clear filter</entry>
+
+  <entry key="tagBasedFilter.title">Tag based atom filter</entry>
+  <entry key="tagBasedFilter.new">New tag based filter</entry>
+  
+  <entry key="tagBasedFilter.chooseTagFileTitle">Choose tag file</entry>
+  <entry key="tagBasedFilter.tagFile">Tag file</entry>
+  <entry key="tagBasedFilter.chooseTagFile">Choose...</entry>
+  <entry key="tagBasedFilter.chooseTagFileToolTip">Choose the tag file to filter by</entry>
+
+  <entry key="tagBasedFilter.styleTitle">Choose styles</entry>
+
+  <entry key="error.tagBasedAtomFilter.initializationFailed">Failed to initialize filter. See log file for details.</entry>
+
+  <entry key="tagBasedFilter.error.badTagFile">Tag file not chosen</entry>
+  <entry key="tagBasedFilter.error.tagFileNotReadable">Tag file doesn't exist or is unreadable</entry>
+
+  <entry key="delegatingFilter.title">Custom atom filter</entry>
+  <entry key="delegatingFilter.classPathTitle">Choose class path</entry>
+  <entry key="delegatingFilter.fqClassNameTitle">Choose fully qualified filter class name</entry> 
+  <entry key="delegatingFilter.new">New custom filter</entry>
+
+  <entry key="delegatingFilter.addDirectoryEntry">Add directories</entry>
+  <entry key="delegatingFilter.addJarEntry">Add jar files</entry>
+  <entry key="delegatingFilter.removeEntry">Remove</entry>
+  <entry key="delegatingFilter.quickFile">Quick file</entry>
+  <entry key="delegatingFilter.quickFileToolTip">Select a single java or class file. Contained class must be in default package</entry>
+
+  <entry key="error.delegatingAtomFilter.initializationFailed">Failed to initialize filter</entry>
+  <entry key="error.delegatingAtomFilter.noClassPath">At least one class path entry is required</entry>
+  <entry key="error.delegatingAtomFilter.noFqClassName">Fully qualified class name is required</entry>
+  <entry key="error.delegatingAtomFilter.badFqClassName">Invalid fully qualified class name</entry>
+  <entry key="error.delegatingAtomFilter.failedToInitialize">Failed to initialize filter. See log file for details.</entry>
+
+  <entry key="bookZoomSettings.rangeTitle">Range</entry>
+  <entry key="bookZoomSettings.position">Position</entry>
+  <entry key="bookZoomSettings.frequency">Frequency</entry>
+  <entry key="bookZoomSettings.min">min</entry>
+  <entry key="bookZoomSettings.max">max</entry>
+
+  <entry key="bookZoomSettings.preserveTitle">Ratio preservation</entry>
+  <entry key="bookZoomSettings.preserveRatio">Preserve scale ratio on drag</entry>
+
+  <entry key="property.rocData.areaUnderCurve">Area under curve (AUC)</entry>
+  <entry key="property.rocData.maxAccuracyIteration">Max accuracy occurs at point</entry>
+  <entry key="property.rocData.maxAccuracy">Max accuracy</entry>
+  <entry key="property.rocData.pointAboveOSSIteration">Max OSS above OSS line accurs at point</entry>
+  <entry key="property.rocData.pointAboveOSSDistance">Max OSS above distance</entry>
+  <entry key="property.rocData.pointBelowOSSIteration">Max OSS below OSS line accurs at point</entry>
+  <entry key="property.rocData.pointBelowOSSDistance">Max OSS below distance</entry>
+  <entry key="property.rocData.ossIntersectionTP">Interpolated TP at OSS line between points</entry>
+  
+  <entry key="property.rocDataPoint.truePositiveCount">True positive count (TP)</entry>
+  <entry key="property.rocDataPoint.falsePositiveCount">False positive count (FP)</entry>
+  <entry key="property.rocDataPoint.trueNegativeCount">True negative count (TN)</entry>
+  <entry key="property.rocDataPoint.falseNegativeCount">False negative count (FN)</entry>
+  <entry key="property.rocDataPoint.falseRate">False positive rate (FP rate)</entry>
+  <entry key="property.rocDataPoint.trueRate">True positive rate (TP rate)</entry>      
+  <entry key="property.rocDataPoint.sensitivity">Sensitivity (TP rate)</entry>
+  <entry key="property.rocDataPoint.specifity">Specifity (1 - FP rate)</entry>
+  <entry key="property.rocDataPoint.accuracy">Accuracy ( (TP+TN)/(TP+FP+TN+FN) )</entry>
+  <entry key="property.rocDataPoint.positivePredictiveValue">Positive predictive value ( TP/(TP+FP) )</entry>
+  <entry key="property.rocDataPoint.negativePredictiveValue">Negative predictive value ( TN/(TN+FN) )</entry>
+  <entry key="property.rocDataPoint.falseDiscoveryRate">False discovery rate ( FP/(FP+TP) )</entry>
+
+  <entry key="property.sleepStatistic.eegRecordingTime">EEG Recording Time</entry>
+  <entry key="property.sleepStatistic.sleepPeriodTime">Sleep Period Time</entry>
+  <entry key="property.sleepStatistic.totalSleepTime">Total Sleep Time</entry>
+  <entry key="property.sleepStatistic.sleepEfficiencyIndex">Sleep Efficiency Index [%]</entry>
+  <entry key="property.sleepStatistic.sleepOnsetLatency">Sleep onset latency</entry>
+  <entry key="property.sleepStatistic.sleepOnsetToSWS">Sleep onset to SWS</entry>
+  <entry key="property.sleepStatistic.sleepOnsetToREM">Sleep onset to REM</entry>
+  <entry key="property.sleepStatistic.wakePeriodsAfterSleepOnset">Wake periods after sleep onset</entry>
+
+  <entry key="property.sleepStatistic.deltaThr">Delta Threshold</entry>
+  <entry key="property.sleepStatistic.alphaThr">Alpha Threshold</entry>
+  <entry key="property.sleepStatistic.spindleThr">Spindle Threshold</entry>
+  <entry key="property.sleepStatistic.emgTone">EMG Tone</entry>
+
+  <entry key="taskStatus.title">signalml task [{0}]</entry>
+  <entry key="taskStatus.taskStatus">Task status</entry>
+  <entry key="taskStatus.noProgressInfo">No detailed progress info</entry>
+
+  <entry key="taskStatus.ETAUnknown">Expected to end in --:-- minutes</entry>
+  <entry key="taskStatus.ETAKnown">Expected to end in {0}:{1} minutes</entry>
+  <entry key="taskStatus.ETASuspended">Task suspended</entry>
+  <entry key="taskStatus.ETAAborted">Task aborted</entry>
+  <entry key="taskStatus.ETAFinished">Task finished</entry>
+
+  <entry key="activeTag.title">Choose active tag</entry>
+  <entry key="activeTag.tag">{0}</entry>
+  <entry key="activeTag.newTag">New tag {0}</entry>
+
+  <entry key="help.title">Help for signalml</entry>
+  <entry key="help.reloadToolTip">Reload current page</entry>
+  <entry key="help.homeToolTip">Help contents</entry>
+  <entry key="help.backToolTip">Previous topic</entry>
+  <entry key="help.forwardToolTip">Next topic</entry>
+  <entry key="help.contextHelpToolTip">Display context help for this dialog</entry>
+
+  <entry key="zoomSettings.factorTitle">Zoom factor</entry>
+  <entry key="zoomSettings.sizeTitle">Zoom window size</entry>
+  <entry key="zoomSettings.switchingTitle">Channel switching</entry>
+  <entry key="zoomSettings.channelSwitching">Switch channels as mouse moves</entry>
+
+  <entry key="signalFFTSettings.windowWidthTitle">FFT window width</entry>
+  <entry key="signalFFTSettings.customWindowWidth">Custom</entry>
+  <entry key="signalFFTSettings.plotWidthTitle">Plot window width</entry>
+  <entry key="signalFFTSettings.plotHeightTitle">Plot window height</entry>
+  <entry key="signalFFTSettings.fftViewTitle">FFT view</entry>
+  <entry key="signalFFTSettings.fftViewRange">Show fq range [Hz]</entry>
+  <entry key="signalFFTSettings.fftViewLabelCountTitle">X-axis label count</entry>
+  <entry key="signalFFTSettings.fftPositiveIntegerRequired">Positive integer required</entry>
+  <entry key="signalFFTSettings.fftAutoScaleToView">Scale Y-axis to view</entry>
+  
+    
+  <entry key="signalFFTSettings.optionsTitle">Options</entry>
+  <entry key="signalFFTSettings.channelSwitching">Sticky channel</entry>
+  <entry key="signalFFTSettings.logarithmic">Logarithmic</entry>
+  <entry key="signalFFTSettings.antialias">Antialias</entry>
+  <entry key="signalFFTSettings.spline">Use splines (experimental)</entry>
+  <entry key="signalFFTSettings.titleVisible">Title</entry>
+  <entry key="signalFFTSettings.frequencyAxisLabelsVisible">Freq. lables</entry>
+  <entry key="signalFFTSettings.powerAxisLabelsVisible">Power labels</entry>
+
+  <entry key="signalFFTSettings.error.badWindowWidth">Bad window width. Must be an integer greater than 7</entry>
+  
+  <entry key="fftWindowTypeSettings.windowTypeTitle">Window type</entry>
+  <entry key="fftWindowTypeSettings.windowParameter">Window parameter</entry>
+
+  <entry key="fftWindowTypeSettings.error.badWindowParameter">Bad window parameter. Must be a double precision value</entry>
+  <entry key="fftWindowTypeSettings.error.windowParameterOutOfRange">Bad window parameter. Allowed range {0}-{1}</entry>
+  
+  <entry key="tagAnnotation.title">Set tag annotation</entry>
+
+  <entry key="tagDescription.title">Set tag document description</entry>
+  <entry key="tagDescription.info">Tag document description</entry>
+  <entry key="tagDescription.montageInfo">Montage description</entry>
+  
+  <entry key="tagComparison.title">Tag comparison</entry>
+  <entry key="tagComparison.topDocument">First document</entry>
+  <entry key="tagComparison.bottomDocument">Second document</entry>
+  <entry key="tagComparison.showPercent">Show as percent</entry>
+  <entry key="tagComparison.comparisonResult">Comparison result</entry>
+  <entry key="tagComparison.pageStatistic">Page statistic</entry>
+  <entry key="tagComparison.blockStatistic">Block statistic</entry>
+  <entry key="tagComparison.channelStatistic">Channel statistic</entry>
+  <entry key="tagComparison.pageComparison">Page comparison</entry>
+  <entry key="tagComparison.blockComparison">Block comparison</entry>
+  <entry key="tagComparison.channelComparison">Channel comparison</entry>
+  <entry key="tagComparison.none">(none)</entry>
+
+  <entry key="tagComparison.cornerPanelSeconds">[s]</entry>
+  <entry key="tagComparison.cornerPanelPercent">[%]</entry>
+
+  <entry key="iterationSetup.title">Method iteration</entry>
+  <entry key="iterationSetup.configure">Edit...</entry>
+  <entry key="iterationSetup.configureToolTip">Reconfigure basic method parameters</entry>
+  <entry key="iterationSetup.baseConfiguration">Edit base configuration</entry>
+  <entry key="iterationSetup.baseConfigurationTitle">Base method configuration</entry>
+  <entry key="iterationSetup.iterationConfigurationTitle">Iteration configuration</entry>
+  <entry key="iterationSetup.iterationCount">Iteration count</entry>
+  <entry key="iterationSetup.parameter">Parameter</entry>
+  <entry key="iterationSetup.iterate">Iterate this parameter</entry>
+  <entry key="iterationSetup.iterationStart">Iteration start value</entry>
+  <entry key="iterationSetup.iterationEnd">Iteration end value</entry>
+
+  <entry key="activity.checksummingSignalFile">calculating checksum</entry>
+  <entry key="activity.verifyingTagCompatibility">verifying tag with signal</entry>
+  <entry key="activity.openingBookFile">opening book</entry>
+  <entry key="activity.openingTagFile">opening tag</entry>
+  <entry key="activity.openingSignalFile">opening signal</entry>
+  <entry key="activity.creatingCodecReader">creating codec reader</entry>
+  <entry key="activity.savingFile">saving document</entry>
+  <entry key="activity.exportingSignal">exporting signal</entry>
+  <entry key="activity.exportingBook">exporting book</entry>
+  <entry key="activity.scanningSignal">scanning signal</entry>
+  <entry key="activity.waitingForTaskToStop">waiting for task</entry>
+  <entry key="activity.testingConnection">testing connection</entry>
+  <entry key="activity.averagingBooks">averaging books</entry>
+  <entry key="activity.averagingSignals">averaging signals</entry>
+  <entry key="activity.averagingReconstructions">averaging reconstrs</entry>
+  <entry key="activity.analyzing">analyzing</entry>
+
+  <entry key="situation.fileNotFound">Selected file not found or inaccessible.</entry>
+  <entry key="situation.fileNotFoundWithName">File [{0}] not found or inaccessible.</entry>
+  <entry key="situation.directoryNotFound">Selected directory not found or inaccessible.</entry>
+  <entry key="situation.directoryNotFoundWithName">Directory [{0}] not found or inaccessible.</entry>
+  <entry key="situation.directoryNotFoundWithNameCreate">Directory [{0}] not found. Create?</entry>
+  <entry key="situation.directoryNotAccessible">Directory not accessible.</entry>
+  <entry key="situation.directoryNotAccessibleWithName">Directory [{0}] not accessible.</entry>
+  <entry key="situation.directoryNotCreated">Failed to create directory.</entry>
+  <entry key="situation.directoryNotCreatedWithName">Failed to create directory [{0}].</entry>
+  <entry key="situation.documentAlreadyOpen">This document is already open. Reload?</entry>
+  <entry key="situation.defaultMontageNotCompatible">The default montage is not compatible with this signal and cannot be loaded. Please use the montage editor.</entry>
+  <entry key="situation.presetNotCompatible">This preset is not compatible with current signal and had to be altered accordingly. Please review settings.</entry>
+  <entry key="situation.fileAlreadyExists">This file already exists. Overwrite?</entry>
+  <entry key="situation.fileAlreadyExistsWithName">File {0} already exists. Overwrite?</entry>
+  <entry key="situation.documentUnsaved">{0} has been modified. Save?</entry>
+  <entry key="situation.newDocumentUnsaved">A new document has been created. Save?</entry>
+  <entry key="situation.otherDocumentsDepend">Other documents depend on this one. Close all?</entry>
+  <entry key="situation.saveAsPathOpen">This path is used by another open document. Choose another.</entry>
+  <entry key="situation.noActiveSignal">No active signal. Choose a signal tab first.</entry>
+  <entry key="situation.noActiveBook">No active book. Choose a book tab first.</entry>
+  <entry key="situation.noActiveTag">No active tag. Open a tag document first.</entry>
+  <entry key="situation.noSignalSelection">No signal selection. Choose a signal fragment first.</entry>
+  <entry key="situation.tagNotCompatible">The signal and the tag are not compatible in terms of page and block size. Are you sure?</entry>
+  <entry key="situation.tagChecksumBad">This tag's signature does not match the signature of the signal. Are you sure?</entry>
+  <entry key="situation.referenceChanged">Reference matrix was modified, changes will be lost. Overwrite?</entry>
+  <entry key="situation.tasksWillBeAborted">Some running tasks will have to be aborted.</entry>
+  <entry key="situation.serializableTasksRunning">Some running tasks can be suspended and saved.</entry>
+  <entry key="situation.serializableTasksRunningSuspend">Suspend &amp; save</entry>
+  <entry key="situation.serializableTasksRunningAbort">Abort (will be lost)</entry>
+  <entry key="situation.tagStyleInUse">This tag style is in use and cannot be removed.</entry>
+  <entry key="situation.tagStyleModified">Tag style has been modified. Apply changes?</entry>
+  <entry key="situation.montageDifferentOnTagSave">This tag document's montage is different from current montage</entry>
+  <entry key="situation.montageDifferentOnTagSave.title">Choose montage to save</entry>
+  <entry key="situation.montageDifferentOnTagSave.saveOriginal">Keep original</entry>
+  <entry key="situation.montageDifferentOnTagSave.saveCurrent">Replace with current</entry>
+  <entry key="situation.montageDifferentOnTagLoad">This tag document's montage is different from current montage</entry>
+  <entry key="situation.montageDifferentOnTagLoad.title">Choose montage</entry>
+  <entry key="situation.montageDifferentOnTagLoad.loadFromTag">Load montage from tag</entry>
+  <entry key="situation.montageDifferentOnTagLoad.keepCurrent">Keep current</entry>
+  <entry key="situation.normalizationUnavoidable">Signal values exceed type capacity. Normalization is necessary. Normalize?</entry>
+  <entry key="situation.rawConfigWillBeLost">Changes to the raw config will be lost. Are you sure?</entry>
+  <entry key="situation.abortAllTasks">All running tasks will be aborted. Are you sure?</entry>
+  <entry key="situation.suspendAllTasks">All running suspendable tasks will be suspended. Are you sure?</entry>
+  <entry key="situation.resumeAllTasks">All suspended tasks will be resumed. Are you sure?</entry>
+  <entry key="situation.removeAllTasks">All non running tasks will be removed. Are you sure?</entry>
+  <entry key="situation.removeAllFinishedTasks">All finished tasks will be removed. Are you sure?</entry>
+  <entry key="situation.removeAllAbortedTasks">All aborted tasks will be removed. Are you sure?</entry>
+  <entry key="situation.removeAllFailedTasks">All failed tasks will be removed. Are you sure?</entry>
+  <entry key="situation.resumeRestoredTasks">Suspended tasks had been restored. Do you wish to resume them?</entry>
+  <entry key="situation.resumeRestoredTasksResume">Resume</entry>
+  <entry key="situation.resumeRestoredTasksDontResume">Don't resume</entry>
+
+  <entry key="tagPaintMode.OVERLAY">Overlay</entry>
+  <entry key="tagPaintMode.XOR">XOR</entry>
+  <entry key="tagPaintMode.ALPHA_50">Alpha 50%</entry>
+  <entry key="tagPaintMode.ALPHA_80">Alpha 80%</entry>
+
+  <entry key="signalColor.BLACK">Black</entry>
+  <entry key="signalColor.RED">Red</entry>
+  <entry key="signalColor.GREEN">Green</entry>
+  <entry key="signalColor.BLUE">Blue</entry>
+  
+  <entry key="signalView.timeScale">Time scale</entry>
+  <entry key="signalView.timeScaleToolTip">{0} pixels/sample</entry>
+  <entry key="signalView.valueScale">Value scale</entry>
+  <entry key="signalView.valueScaleToolTip">{0} %</entry>
+  <entry key="signalView.channelHeight">Channel height</entry>
+  <entry key="signalView.channelHeightToolTip">{0} px</entry>
+  <entry key="signalView.antialias">Antialiasing</entry>
+  <entry key="signalView.antialiasToolTip">Toggle plot antialiasing</entry>
+  <entry key="signalView.clamp">Clamp values</entry>
+  <entry key="signalView.clampToolTip">Toggle value clamping (causes faster drawing)</entry>
+  <entry key="signalView.offscreenChannelsDrawn">Draw offscreen channels</entry>
+  <entry key="signalView.offscreenChannelsDrawnToolTip">Toggle drawing of channels whose normal drawing area is completely outside the window (causes slower drawing)</entry>
+  <entry key="signalView.pageLinesVisible">Page lines</entry>
+  <entry key="signalView.pageLinesVisibleToolTip">Show page boundaries (only if not too dense)</entry>
+  <entry key="signalView.blockLinesVisible">Block lines</entry>
+  <entry key="signalView.blockLinesVisibleToolTip">Show block boundaries (only if not too dense)</entry>
+  <entry key="signalView.channelLinesVisible">Channel lines</entry>
+  <entry key="signalView.channelLinesVisibleToolTip">Show channel center zero levels (only if not too dense)</entry>
+  <entry key="signalView.tagToolTipsVisible">Tag tool tips</entry>
+  <entry key="signalView.tagToolTipsVisibleToolTip">Show tool tips when mouse hovers over a tag</entry>
+  <entry key="signalView.snapPageToView">Snap page to view</entry>
+  <entry key="signalView.snapPageToViewToolTip">Resize time scale so that exactly one page fits in the view &amp; align view on page boundary</entry>
+  <entry key="signalView.filterSwitch">Filtering</entry>
+  <entry key="signalView.filterSwitchToolTip">Switch fitering on/off</entry>
+  <entry key="signalView.tagPaintMode">Tag mode</entry>
+  <entry key="signalView.signalColor">Signal color</entry>
+  <entry key="signalView.signalXOR">XOR</entry>
+
+  <entry key="signalView.columnHeaderCompact">Compact mode</entry>
+  <entry key="signalView.eraser">Erase tags</entry>
+  <entry key="signalView.eraserToolTip">Erase tags</entry>
+    
+  <entry key="signalView.moveToolToolTip">Move signal with the mouse</entry>
+  <entry key="signalView.selectToolToolTip">Select tags</entry>
+  <entry key="signalView.selectPageToolToolTip">Select signal pages</entry>
+  <entry key="signalView.selectBlockToolToolTip">Select signal blocks</entry>
+  <entry key="signalView.selectChannelToolToolTip">Select single channel signal fragments</entry>
+  <entry key="signalView.zoomSignalToolToolTip">Magnify the signal (for settings press and hold the mouse button here)</entry>
+  <entry key="signalView.signalFFTToolToolTip">Signal FFT (for settings press and hold the mouse button here)</entry>
+  <entry key="signalView.rulerToolToolTip">Measure the signal</entry>
+  <entry key="signalView.plotOptionsToolTip">Change plot options</entry>
+  <entry key="signalView.tagPageToolToolTip">Tag signal pages</entry>
+  <entry key="signalView.tagBlockToolToolTip">Tag signal blocks</entry>
+  <entry key="signalView.tagChannelToolToolTip">Tag single channel signal fragments</entry>
+  <entry key="signalView.activeTagToolTip">Change active tag (the tag that is being edited)</entry>
+  <entry key="signalView.compareTagsToolTip">Compare tags (2 or more must be open)</entry>
+
+  <entry key="signalView.plotOptions">Plot options</entry>
+  <entry key="signalView.plotToolTipSignal">T: {0}, V:{1} [P: {2}, B: {3}, C: {4}]</entry>
+  <entry key="signalView.columnHeaderToolTipSignal">T: {0} [P: {1}, B: {2}]</entry>
+
+  <entry key="signalView.addSlavePlotToolTip">Create new signal plot</entry>
+  <entry key="signalView.removeSlavePlotToolTip">Remove signal plot</entry>
+  <entry key="signalView.configureSlavePlotToolTip">Configure signal plot</entry>
+
+  <entry key="signalView.slavePlot.synchronization">Synchronization</entry>
+  <entry key="signalView.slavePlot.montage">Montage</entry>
+  <entry key="signalView.slavePlot.inheritedMontage">Inherited from document</entry>
+  <entry key="signalView.slavePlot.localMontage">Modified</entry>
+  <entry key="signalView.slavePlot.horizontalLock">Horizontal scroll lock</entry>
+  <entry key="signalView.slavePlot.verticalLock">Vertical scroll lock</entry>
+  <entry key="signalView.slavePlot.editLocalMontage">Edit modified montage</entry>
+  <entry key="signalView.slavePlot.editLocalMontageToolTip">Edit montage for this plot</entry>
+  <entry key="signalView.slavePlot.synchronizeNow">Synchronize now</entry>
+  <entry key="signalView.slavePlot.synchronizeNowToolTip">Synchronize plot with master plot</entry>
+
+  <entry key="signalView.montageInherited">montage from document</entry>
+  <entry key="signalView.montageLocal">modified montage</entry>
+  <entry key="signalView.on">on</entry>
+  <entry key="signalView.off">off</entry>
+
+  <entry key="signalView.slavePlot.title">Auxiliary signal plot ({0}, horizontal synchro {1}, vertical synchro {2})</entry>
+  <entry key="signalView.slavePlot.synchronized">synchronized</entry>
+  <entry key="signalView.slavePlot.leading">leading by {0} s</entry>
+  <entry key="signalView.slavePlot.trailing">trailing by {0} s</entry>
+
+  <entry key="hypnogram.noTags">(no tags to display in the hypnogram)</entry>
+  <entry key="hypnogram.hypnogram">Hypnogram</entry>
+  <entry key="hypnogram.hypnogramForTag">Hypnogram for {0}</entry>
+  <entry key="hypnogram.hypnogramForNewTag">Hypnogram for new tag {0}</entry>
+  <entry key="hypnogram.paintForActiveTag">For active tag only</entry>
+  <entry key="hypnogram.paintForAllTags">For all tags</entry>
+
+  <entry key="bookView.plotOptionsToolTip">Change plot options</entry>
+
+  <entry key="bookView.atomList.iteration">Iteration</entry>
+  <entry key="bookView.atomList.modulus">Modulus</entry>
+  <entry key="bookView.atomList.amplitude">Amplitude</entry>
+  <entry key="bookView.atomList.position">Position</entry>
+  <entry key="bookView.atomList.scale">Scale</entry>
+  <entry key="bookView.atomList.frequency">Frequency</entry>
+  <entry key="bookView.atomList.phase">Phase</entry>
+  <entry key="bookView.atomList.inReconstruction">Reconstruct</entry>
+
+  <entry key="bookView.selectToolToolTip">Selects atoms for reconstruction</entry>
+  <entry key="bookView.zoomToolToolTip">Zooms the map (hold down Ctrl to zoom out; hold down mouse button for options)</entry>
+  <entry key="bookView.resetZoomToolToolTip">Resets map to default view</entry>
+
+  <entry key="bookView.filterSwitch">Filtering</entry>
+  <entry key="bookView.filterSwitchToolTip">Switch fitering on/off</entry>
+
+  <entry key="bookView.currentSegmentToolTip">Current segment</entry>
+  <entry key="bookView.currentChannelToolTip">Current channel</entry>
+
+  <entry key="bookView.toolTip.noNearbyAtom">No nearby atom</entry>
+  <entry key="bookView.toolTip.atom">Atom {0}</entry>
+  <entry key="bookView.toolTip.position">Position</entry>
+  <entry key="bookView.toolTip.frequency">Frequency</entry>
+  <entry key="bookView.toolTip.modulus">Modulus</entry>
+  <entry key="bookView.toolTip.amplitude">Amplitude</entry>
+  <entry key="bookView.toolTip.scale">Scale</entry>
+  <entry key="bookView.toolTip.phase">Phase</entry>
+
+  <entry key="bookView.originalSignal">Original</entry>
+  <entry key="bookView.reconstructionSignal">Reconstruction</entry>
+  <entry key="bookView.chosenSignal">Chosen</entry>
+
+  <entry key="bookView.reconstructionHeight">Reconstruction height</entry>
+  <entry key="bookView.reconstructionHeightToolTip">{0} px</entry>
+
+  <entry key="bookView.plotOptions">Plot options</entry>
+  <entry key="bookView.plotOptionsToolTip">Change plot options</entry>
+  <entry key="bookView.signalAntialias">Signal antialiasing</entry>
+  <entry key="bookView.signalAntialiasToolTip">Toggle reconstruction antialiasing</entry>
+  <entry key="bookView.originalSignalVisible">Show original signal</entry>
+  <entry key="bookView.originalSignalVisibleToolTip">Toggle showing original signal graph</entry>
+  <entry key="bookView.fullReconstructionVisible">Show full reconstruction</entry>
+  <entry key="bookView.fullReconstructionVisibleToolTip">Toggle showing full reconstruction graph</entry>
+  <entry key="bookView.reconstructionVisible">Show reconstruction</entry>
+  <entry key="bookView.reconstructionVisibleToolTip">Toggle showing reconstruction graph</entry>
+  <entry key="bookView.legendVisible">Show legend</entry>
+  <entry key="bookView.legendVisibleToolTip">Toggle showing reconstruction legend</entry>
+  <entry key="bookView.scaleVisible">Show scale</entry>
+  <entry key="bookView.scaleVisibleToolTip">Toggle showing map scale</entry>
+  <entry key="bookView.axesVisible">Show axes</entry>
+  <entry key="bookView.axesVisibleToolTip">Toggle showing map axes</entry>
+
+  <entry key="bookView.atomToolTipsVisible">Show atom tool tips</entry>
+  <entry key="bookView.atomToolTipsVisibleToolTip">Show tool tips when mouse hovers over an atom</entry>
+
+  <entry key="bookView.aspectRatio">Map aspect ratio</entry>
+
+  <entry key="bookView.averageBooksToolTip">Averaging configuration</entry>
+  <entry key="bookView.noSignalToPaint">(no signal to paint)</entry>
+
+  <entry key="property.mrud.path">File path</entry>
+  <entry key="property.mrud.lastTimeOpened">Last time opened</entry>
+  <entry key="property.mrud.documentType">Document type</entry>
+  <entry key="property.signalmlmrud.formatName">SignalML format name</entry>
+      
+  <entry key="property.document.backingFile">File path</entry>
+  <entry key="property.signalmldocument.formatName">SignalML format name</entry>
+  <entry key="property.signaldocument.samplingFrequency">Sampling frequency [Hz]</entry>        
+  <entry key="property.signaldocument.channelCount">Channel count</entry>       
+  <entry key="property.signaldocument.calibrationCapable">Is calibration capable</entry>        
+  <entry key="property.signaldocument.calibration">Calibration</entry>        
+  <entry key="property.signaldocument.pageSize">Page size [s]</entry>       
+  <entry key="property.signaldocument.blocksPerPage">Blocks per page</entry>        
+  <entry key="property.signaldocument.blockSize">Block size [s]</entry>       
+  <entry key="property.signaldocument.minSignalLength">Min signal length [s]</entry>        
+  <entry key="property.signaldocument.maxSignalLength">Max signal length [s]</entry>        
+  <entry key="property.signaldocument.pageCount">Number of pages</entry>        
+  <entry key="property.signaldocument.blockCount">Number of blocks</entry>        
+
+  <entry key="property.signalPage.page">Page number</entry>
+  <entry key="property.signalPage.size">Page size</entry>
+  <entry key="property.signalPage.startTime">Page start time [s]</entry>
+  <entry key="property.signalPage.endTime">Page end time [s]</entry>
+
+  <entry key="property.rawSignal.sampleType">Sample type</entry>        
+  <entry key="property.rawSignal.byteOrder">Byte order</entry>        
+
+  <entry key="property.bookDocument.version">Book file version</entry>
+  <entry key="property.bookDocument.channelCount">Book channel count</entry>
+  <entry key="property.bookDocument.segmentCount">Book segment count</entry>
+  <entry key="property.bookDocument.samplingFrequency">Sampling frequency</entry>
+  <entry key="property.bookDocument.calibration">Calibration</entry>
+  <entry key="property.bookDocument.bookComment">Book comment</entry>
+  <entry key="property.bookDocument.date">Book creation date</entry>
+  <entry key="property.bookDocument.energyPercent">Energy percent</entry>
+  <entry key="property.bookDocument.maxIterationCount">Max iteration count</entry>
+  <entry key="property.bookDocument.dictionarySize">Dictionary size</entry>
+  <entry key="property.bookDocument.dictionaryType">Dictionary type</entry>
+  <entry key="property.bookDocument.signalChannelCount">Signal channel count</entry>
+  <entry key="property.bookDocument.textInfo">Text info</entry>
+  <entry key="property.bookDocument.webSiteInfo">Web site into</entry>
+      
+  <entry key="property.bookChannel.channelIndex">Channel number</entry>
+  <entry key="property.bookChannel.label">label</entry>
+      
+  <entry key="property.bookSegment.channelIndex">Channel number</entry>     
+  <entry key="property.bookSegment.segmentIndex">Segment number</entry>
+  <entry key="property.bookSegment.size">Segment size</entry>
+  <entry key="property.bookSegment.startTime">Segment start time [s]</entry>
+  <entry key="property.bookSegment.endTime">Segment end time [s]</entry>
+  <entry key="property.bookSegment.atomCount">Atom count</entry>
+  <entry key="property.bookSegment.hasSignal">Has original signal?</entry>
+  <entry key="property.bookSegment.signalLength">Original signal length [samples]</entry>
+  <entry key="property.bookSegment.signalEnergy">Signal energy</entry>
+  <entry key="property.bookSegment.decompositionEnergy">Decomposition energy</entry>
+
+  <entry key="property.bookAtom.iteration">Iteration</entry>
+  <entry key="property.bookAtom.type">Type</entry>
+  <entry key="property.bookAtom.modulus">Modulus</entry>
+  <entry key="property.bookAtom.amplitude">Amplitude</entry>
+  <entry key="property.bookAtom.position">Position</entry>
+  <entry key="property.bookAtom.scale">Scale</entry>
+  <entry key="property.bookAtom.frequency">Frequency</entry>
+  <entry key="property.bookAtom.phase">Phase</entry>
+
+  <entry key="bookAtomType.DIRACDELTA">Dirac delta</entry>
+  <entry key="bookAtomType.GAUSSFUNCTION">Gauss function</entry>
+  <entry key="bookAtomType.SINCOSWAVE">Sinus-cosinus wave</entry>
+  <entry key="bookAtomType.GABORWAVE">Gabor wave</entry>
+
+  <entry key="property.tagDocument.tagStyleCount">Tag style count</entry>
+  <entry key="property.tagDocument.tagCount">Tag count</entry>
+
+  <entry key="property.tagStyle.type">Type</entry>
+  <entry key="property.tagStyle.name">Name</entry>
+  <entry key="property.tagStyle.description">Description</entry>
+  <entry key="property.tagStyle.fillColor">Fill color</entry>
+  <entry key="property.tagStyle.outlineColor">Outline color</entry>
+  <entry key="property.tagStyle.outlineWidth">Outline width</entry>
+  <entry key="property.tagStyle.outlineDash">Outline dash</entry>
+  <entry key="property.tagStyle.keyStroke">Shortcut key</entry>
+  <entry key="property.tagStyle.marker">Marker style</entry>
+
+  <entry key="property.tag.style">Style</entry>
+  <entry key="property.tag.position">Position</entry>
+  <entry key="property.tag.length">Length</entry>
+  <entry key="property.tag.channel">Channel</entry>
+  <entry key="property.tag.annotation">Annotation</entry>
+      
+  <entry key="error.exception">Exception occured</entry>
+  <entry key="error.compilationRejected">User refused to allow code compilation</entry>
+  <entry key="error.classNotFilter">Class doesn't implement any filter</entry>
+  <entry key="error.computationException">Computation exception occured</entry>
+  <entry key="error.invalidValue">Invalid value encountered (application bug)</entry>
+  <entry key="error.exceptionOccured">Exception [{0}] with message [{1}]</entry>
+  <entry key="error.invalidData">Invalid data entered</entry>
+  <entry key="error.profilePathMustBeSet">A profile path must be chosen</entry>
+  <entry key="error.profilePathNotFound">The chosen profile path does not exist</entry>
+  <entry key="error.profilePathMustBeADirectory">The chosen profile path is not a directory</entry>
+  <entry key="error.failedToReadSignalMLFile">Failed to read file</entry>
+  <entry key="error.formatNameMustBeSet">Format name must be set</entry>
+  <entry key="error.badCharactersInFormatName">Format name must not contain control characters</entry>
+  <entry key="error.fileMustBeChosen">A file must be chosen</entry>
+  <entry key="error.fileNotFound">File not found</entry>
+  <entry key="error.fileNotFile">File is not a regular file</entry>
+  <entry key="error.fileNotReadable">File is not readable</entry>
+  <entry key="error.fileNotWritable">File is not writable</entry>
+  <entry key="error.failedToGetSignalMLReader">Failed to create SignalML reader</entry>
+  <entry key="error.codecMustBeSet">A codec must be chosen</entry>
+  <entry key="error.codecCompilationFailed">Failed to compile the codec</entry>
+  <entry key="error.mrudMissingCodecException">The codec previously used to open this file is no longer available</entry>
+  <entry key="error.invalidNumber">Invalid numeric value</entry>
+  <entry key="error.pageSizeNegative">Page size must be positive</entry>
+  <entry key="error.blocksPerPageNegative">Block count must be positive</entry>
+  <entry key="error.samplingFrequencyNegative">Sampling frequency must be positive</entry>
+  <entry key="error.channelCountNegative">Channel count must be positive</entry>
+  <entry key="error.calibrationNegative">Calibration must be positive</entry>
+  <entry key="error.signalDocumentMustBeSet">Signal document must be chosen</entry>
+  <entry key="error.noSuchChecksumType">Invalid checksum method</entry>
+  <entry key="error.tagExport.secPPNotInteger">This tag cannot be exported - seconds per page is not integer</entry>
+  <entry key="error.filterFailedToInitialize">Filter [{0}] failed to initialize with message [{1}] and has been disabled.</entry>
+
+  <entry key="error.taskStateMustBeFinishedOrError">Task state must be finished or error</entry>  
+  <entry key="error.taskStateMustBeNew">Task state must be new</entry>
+  <entry key="error.taskNotAbortable">Task method not abortable or bad task state</entry>
+  <entry key="error.taskNotSuspendable">Task method not suspendable or bad task state</entry>
+  <entry key="error.noResult">Task method produced no result</entry>
+  <entry key="error.iterationError">Iteration failed</entry>
+  <entry key="error.setIteratedValueFailed">Failed to set iterated value [{0}]</entry>
+  <entry key="error.nothingIterated">You must choose at least one parameter to iterate over</entry>
+
+  <entry key="error.badChannelCount">Bad channel count</entry>
+
+  <entry key="error.method.badDataClass">Bad data class</entry>
+
+  <entry key="error.badPresetClass">File does not contain a preset of required type</entry>
+
+  <entry key="error.nameBadCharacters">Name must not contain control characters</entry>
+  <entry key="error.badUrl">Invalid URL</entry>
+  <entry key="error.userNameBadCharacters">User name must not contain control characters</entry>
+  <entry key="error.passwordBadCharacters">Password must not contain control characters</entry>
+  <entry key="error.passwordRequired">You must provide a password</entry>
+  <entry key="error.passwordsDifferent">Passwords are different, try again</entry>
+
+  <entry key="error.sourceChannelLabelEmpty">Source channel label empty</entry>
+  <entry key="error.sourceChannelLabelBadChars">Source channel label must not contain control characters</entry>
+  <entry key="error.sourceChannelLabelDuplicate">Source channel label duplicate</entry>
+  <entry key="error.sourceChannelFunctionDuplicate">This channel function is declared as unique and is already marked in the source</entry>
+  <entry key="error.montageChannelLabelEmpty">Target channel label empty</entry>
+  <entry key="error.montageChannelLabelBadChars">Target channel label must not contain control characters</entry>
+  <entry key="error.montageChannelLabelDuplicate">Target channel label duplicate</entry>
+  <entry key="error.noChannelInMontage">The montage is empty. Please add some target channels</entry>
+  <entry key="error.badReferenceValue">Unable to parse reference value</entry>
+
+  <entry key="error.style.nameEmpty">Tag style name cannot be empty</entry>
+  <entry key="error.style.nameBadCharacters">Tag style name must not contain control characters</entry>
+  <entry key="error.style.nameDuplicate">Tag style name already used. Choose another.</entry>
+  <entry key="error.style.descriptionBadCharacters">Tag style description must not contain control characters</entry>
+  <entry key="error.style.keyStrokeDuplicate">Key already used on another style. Choose another.</entry>
+
+  <entry key="error.annotationBadChars">Annotation must not contain control characters</entry>
+  <entry key="error.descriptionBadChars">Description must not contain control characters</entry>
+
+  <entry key="error.descriptionBadChars">Description must not contain control characters</entry>
+
+  <entry key="error.invalidRawSignalXML">Invalid raw signal XML description</entry>
+
+  <entry key="evokedPotentialMethod.runMethodString">Average evoked potentials</entry>
+
+  <entry key="evokedPotentialMethod.message.preparing">Preparing</entry>
+  <entry key="evokedPotentialMethod.message.summing">Summing</entry>
+  <entry key="evokedPotentialMethod.message.averaging">Averaging</entry>
+  <entry key="evokedPotentialMethod.message.finished">Finished</entry>
+
+  <entry key="evokedPotentialMethod.markerTicker">Processing markers</entry>
+  
+  <entry key="error.evokedPotential.noSampleSource">No sample source</entry>  
+  <entry key="error.evokedPotential.noTagSet">No tag set</entry>
+  <entry key="error.evokedPotential.noSuchMarkerStyle">No such marker style in the tag</entry>
+  <entry key="error.evokedPotential.markerChannelDoesntExist">Marker channel doesn't exist in sample source</entry>
+  <entry key="error.evokedPotential.badAveragedChannelsLength">Bad averaged channels length</entry>
+
+  <entry key="error.signalSpace.noChannels">At least one channel must be selected</entry>
+  <entry key="error.signalSpace.noSeconds">Either seconds after or seconds before must be > 0</entry>
+  
+  <entry key="error.mp5.badChannelCount">Bad channel count</entry>
+  <entry key="error.mp5.badSampleCount">Bad sample count</entry>
+  <entry key="error.mp5.badSamplingFrequency">Bad sampling frequency</entry>
+  <entry key="error.mp5.badMp5Executable">MP5 executable not found or not accessible</entry>
+  <entry key="error.mp5.exitedWithErrorCode">MP5 execution failed with code [{0}]</entry>
+  <entry key="error.mp5.exitedWithNoResult">MP5 execution failed to produce result</entry>
+  <entry key="error.mp5.noSampleSource">No sample source</entry>
+  <entry key="error.mp5.badSampleSourceChannelCount">Bad sample source channel count</entry>
+  <entry key="error.mp5.badSampleSourceSignalLength">Bad sample source signal length</entry>
+  <entry key="error.mp5.badHeaderSize">Bad signal header size</entry>
+  <entry key="error.mp5.badFooterSize">Bad signal footer size</entry>
+  <entry key="error.mp5.badChosenChannels">Bad chosen channels</entry>
+  <entry key="error.mp5.badScaleToPeriodFactor">Bad scale to period factor</entry>
+  <entry key="error.mp5.badDilationFactor">Bad dilation factor</entry>
+  <entry key="error.mp5.badPerionDensity">Bad period density</entry>
+  <entry key="error.mp5.badMaxIterationCount">Bad max iteration count</entry>
+  <entry key="error.mp5.badEnergyPercent">Bad energy percent</entry>
+  <entry key="error.mp5.badPointsPerMicrovolt">Bad points per microvolt</entry>
+  <entry key="error.mp5.noExecutor">No executor</entry>
+  <entry key="error.mp5.executorNotFound">Executor {0} not found</entry>
+  <entry key="error.mp5.noPassword">Password not given</entry>
+  <entry key="error.mp5.resultRenameFailed">Failed to rename result file</entry>
+  <entry key="error.mp5.executorRequired">You must configure at least one executor</entry>
+  
+  <entry key="mp5Method.runMethodString">MP decomposition</entry>
+    
+  <entry key="mp5Method.sectionTicker">Segment progress</entry>
+  <entry key="mp5Method.channelTicker">Channel progress</entry>
+  <entry key="mp5Method.atomTicker">Atom (non-linear progress)</entry>
+  <entry key="mp5Method.dictionaryTicker">Current atom matching progress</entry>
+
+  <entry key="mp5Method.dialog.title">MP Decomposition configuration</entry>
+
+  <entry key="mp5Method.dialog.saveForLaterUse">Save for later use</entry>
+  <entry key="mp5Method.dialog.saveForLaterUseToolTip">Save mp5 configuration and signal for later use</entry>
+
+  <entry key="mp5Method.dialog.signalSelectionTab">Signal selection</entry>
+  <entry key="mp5Method.dialog.basicTab">Basic settings</entry>
+  <entry key="mp5Method.dialog.advancedTab">Advanced settings</entry>
+  <entry key="mp5Method.dialog.expertTab">Expert settings</entry>
+  <entry key="mp5Method.dialog.rawTab">Edit raw config</entry>
+
+  <entry key="mp5Method.dialog.inputData">Input data</entry>
+
+  <entry key="mp5Method.dialog.bookComment">Book comment</entry>
+
+  <entry key="mp5Method.dialog.algorithmTitle">Selection of the algorithm</entry>
+  <entry key="mp5Method.dialog.algorithm">MP version</entry>
+
+  <entry key="mp5Method.dialog.stoppingCriteriaTitle">Stopping criteria</entry>
+  <entry key="mp5Method.dialog.maxIterationCount">Max iterations</entry>
+  <entry key="mp5Method.dialog.energyPercent">Energy percent</entry>
+
+  <entry key="mp5Method.dialog.dictionaryDensityTitle">Dictionary density and size</entry>
+  <entry key="mp5Method.dialog.dilationFactor">Dilation factor &quot;a&quot;</entry>
+  <entry key="mp5Method.dialog.atomCount">Atoms in dictionary</entry>
+  <entry key="mp5Method.dialog.ramUsage">Approximate RAM usage</entry>
+
+  <entry key="mp5Method.dialog.advancedDecompositionTitle">Advanced decomposition settings</entry>
+  <entry key="mp5Method.dialog.dictionaryType">Dictionary type</entry>
+  <entry key="mp5Method.dialog.dictionaryReinitType">Reinit dictionary</entry>
+  <entry key="mp5Method.dialog.scaleToPeriodFactor">Max scale / period</entry>
+  <entry key="mp5Method.dialog.periodDensity">Period density</entry>
+
+  <entry key="mp5Method.dialog.chooseExecutableTitle">MP5 executable</entry>
+  <entry key="mp5Method.dialog.executable">Path to binary</entry>
+  <entry key="mp5Method.dialog.chooseExecutable">Choose...</entry>
+  <entry key="mp5Method.dialog.chooseExecutableToolTip">Choose MP5 executable file</entry>
+
+  <entry key="mp5Method.dialog.chooseExecutorTitle">MP5 executor</entry>
+
+  <entry key="mp5Method.dialog.outputTitle">Output</entry>
+  <entry key="mp5Method.dialog.bookWithSignal">Include original signal</entry>
+
+  <entry key="mp5Method.dialog.additionalConfig">Additional config (will be appended to config file as is)</entry>
+
+  <entry key="mp5Method.dialog.rawConfig">Raw config (signal input/output/range directives will be added/replaced)</entry>
+
+  <entry key="mp5Method.dialog.switchToRawMode">To raw mode</entry>
+  <entry key="mp5Method.dialog.switchToRawModeToolTip">Edit MP5 configuration as text</entry>
+  <entry key="mp5Method.dialog.switchFromRawMode">To friendly mode</entry>
+  <entry key="mp5Method.dialog.switchFromRawModeToolTip">Edit MP5 configuration with a user friendly editor</entry>
+
+  <entry key="mp5Method.saveForLaterUseDialog.title">Save for later use</entry>
+  <entry key="mp5Method.saveForLaterUseDialog.frameTitle">Choose what to save</entry>
+  <entry key="mp5Method.saveForLaterUseDialog.saveConfig">Save MP configuration</entry>
+  <entry key="mp5Method.saveForLaterUseDialog.saveSignal">Save signal for MP computation</entry>
+  
+  <entry key="mp5Method.dictionaryReinitType.NO_REINIT_AT_ALL">No reinit at all</entry>
+  <entry key="mp5Method.dictionaryReinitType.REINIT_IN_CHANNEL_DOMAIN">Reinit in channel domain</entry>
+  <entry key="mp5Method.dictionaryReinitType.REINIT_IN_OFFSET_DOMAIN">Reinit in offset domain</entry>
+  <entry key="mp5Method.dictionaryReinitType.REINIT_AT_ALL">Reinit all</entry>
+
+  <entry key="mp5Method.dictionaryType.OCTAVE_FIXED">Octave fixed</entry>
+  <entry key="mp5Method.dictionaryType.OCTAVE_STOCH">Octave stochastic</entry>
+
+  <entry key="mp5Method.algorithm.SMP">SMP</entry>
+  <entry key="mp5Method.algorithm.MMP1">MMP 1</entry>
+  <entry key="mp5Method.algorithm.MMP2">MMP 2</entry>
+  <entry key="mp5Method.algorithm.MMP3">MMP 3</entry>
+
+  <entry key="mp5Method.dialog.result.title">MP Decomposition results</entry>
+
+  <entry key="mp5Method.dialog.result.actionTitle">Choose result targets</entry>
+  <entry key="mp5Method.dialog.result.openInWindow">Open in the viewer</entry>
+  <entry key="mp5Method.dialog.result.saveToFile">Save to file</entry>
+
+  <entry key="mp5Method.dialog.result.chooseBookTitle">Choose book file</entry>
+  <entry key="mp5Method.dialog.result.bookFile">Book file</entry>
+  <entry key="mp5Method.dialog.result.chooseBookFile">Choose...</entry>
+  <entry key="mp5Method.dialog.result.chooseBookFileToolTip">Choose a book file to save</entry>
+
+  <entry key="error.mp5.result.badBookFile">Book file not chosen</entry>
+  <entry key="error.mp5.result.bookFileNotWritable">Book file parent directory doesn't exist or not writable</entry>
+
+  <entry key="mp5Method.message.initializing">Initializing</entry>
+  <entry key="mp5Method.message.processingSegment">Processing segment {0}</entry>
+  <entry key="mp5Method.message.writingSignalFile">Writing signal file</entry>
+  <entry key="mp5Method.message.startingExecutable">Starting executable</entry>
+  <entry key="mp5Method.message.calculating">Calculating</entry>
+  <entry key="mp5Method.message.finishing">Finishing</entry>
+  <entry key="mp5Method.message.collectingResults">Collecting results</entry>
+  <entry key="mp5Method.message.finished">Finished</entry>
+
+  <entry key="mp5Method.executor.localProcess">{0} (local)</entry>
+  <entry key="mp5Method.executor.remote">{0} (remote)</entry>
+
+  <entry key="mp5Method.config.executorTitle">MP5 executors</entry>
+
+  <entry key="mp5Method.config.addLocalExecutor">Add local</entry>
+  <entry key="mp5Method.config.addLocalExecutorToolTip">Add local process MP5 executor</entry>
+  <entry key="mp5Method.config.addRemoteExecutor">Add remote</entry>
+  <entry key="mp5Method.config.addRemoteExecutorToolTip">Add remote server MP5 executor</entry>
+  <entry key="mp5Method.config.removeExecutor">Remove</entry>
+  <entry key="mp5Method.config.removeExecutorToolTip">Remove selected MP5 executor</entry>
+  <entry key="mp5Method.config.configureExecutor">Configure</entry>
+  <entry key="mp5Method.config.configureExecutorToolTip">Configure selected MP5 executor</entry>
+  <entry key="mp5Method.config.makeDefault">Make default</entry>
+  <entry key="mp5Method.config.makeDefaultToolTip">Make selecte executor default</entry>
+
+  <entry key="mp5Method.config.defaultExecutor">(default)</entry>
+
+  <entry key="mp5Method.config.title">MP5 configuration</entry>
+
+  <entry key="mp5Method.config.local.title">Configure local executor</entry>
+  <entry key="mp5Method.config.local.nameTitle">Executor name</entry>
+  <entry key="mp5Method.config.local.newNameSuggestion">New local executor</entry>
+
+  <entry key="mp5Method.config.remote.title">Configure remote executor</entry>
+  <entry key="mp5Method.config.remote.nameTitle">Executor name</entry>
+  <entry key="mp5Method.config.remote.newNameSuggestion">New remote executor</entry>
+  <entry key="mp5Method.config.remoteApplet.name">Default remote executor for applets</entry>
+
+  <entry key="mp5Method.config.remote.settingsTitle">Settings</entry>
+  <entry key="mp5Method.config.remote.typeEegPl">Public server (eeg.pl)</entry>
+  <entry key="mp5Method.config.remote.typeOther">Other</entry>
+
+  <entry key="mp5Method.config.remote.type">Preset</entry>
+  <entry key="mp5Method.config.remote.url">Service url (http://host:port/path/signalml)</entry>
+  <entry key="mp5Method.config.remote.userName">User name</entry>
+  <entry key="mp5Method.config.remote.password">Password</entry>
+  <entry key="mp5Method.config.remote.passwordAgain">Repeat password</entry>
+  <entry key="mp5Method.config.remote.savePassword">Save password (unencrypted)</entry>
+
+  <entry key="mp5Method.config.remote.testConnection">Test connection</entry>
+  <entry key="mp5Method.config.remote.testConnectionToolTip">Try to connect to server</entry>
+
+  <entry key="mp5Method.config.remote.testConnectionSuccess">Server successfully contacted</entry>
+  
+  <entry key="mp5Method.config.remote.makeEegPlAccount">No account at eeg.pl? Click here to register now.</entry>
+
+  <entry key="evokedPotentialMethod.dialog.title">Evoked potential averaging configuration</entry>
+
+
+  <entry key="evokedPotentialResult.dialog.title">Evoked potential averaging result</entry>
+
+  <entry key="evokedPotentialResult.dialog.allChannels">All channels</entry>
+
+  <entry key="evokedPotentialResult.skippedMarkers">Number of unusable segments</entry>
+  <entry key="evokedPotentialResult.timeAxis">Time [s]</entry>
+
+  <entry key="property.evokedPotentialResult.totalCount">Total segment count</entry>
+  <entry key="property.evokedPotentialResult.averagedCount">Averaged segment count</entry>
+  <entry key="property.evokedPotentialResult.skippedCount">Unusable segment count</entry>
+
+  <entry key="property.evokedPotentialResult.channelCount">Averaged channel count</entry>
+  <entry key="property.evokedPotentialResult.sampleCount">Averaged sample count</entry>
+  <entry key="property.evokedPotentialResult.samplingFrequency">Sampling frequency (Hz)</entry>
+  <entry key="property.evokedPotentialResult.segmentLength">Segment length [s]</entry>
+  <entry key="property.evokedPotentialResult.secondsBefore">Seconds before marker [s]</entry>
+  <entry key="property.evokedPotentialResult.secondsAfter">Seconds after marker [s]</entry>
+
+  <entry key="method.dialog.inputData">Input data</entry>
+
+  <entry key="artifactMethod.runMethodString">Artifact detection</entry>
+  <entry key="artifactMethod.iterateMethodString">Iterate artifact detection</entry>
+
+  <entry key="artifactMethod.dialog.title">Artifact detection configuration</entry>
+
+  <entry key="artifactMethod.stepTicker">Processing step</entry>
+  <entry key="artifactMethod.progressTicker">Step progress</entry>
+
+  <entry key="artifactMethod.signalFormat.FLOAT">Float</entry>
+
+  <entry key="artifactMethod.artifactType.BREATHING">Breathing</entry>
+  <entry key="artifactMethod.artifactType.EYE_MOVEMENT">Eye movement</entry>
+  <entry key="artifactMethod.artifactType.MUSCLE_ACTIVITY">Muscle activity</entry>
+  <entry key="artifactMethod.artifactType.EYEBLINKS">Eyeblinks</entry>
+  <entry key="artifactMethod.artifactType.TECHNICAL">Technical</entry>
+  <entry key="artifactMethod.artifactType.POWER_SUPPLY">Power supply</entry>
+  <entry key="artifactMethod.artifactType.ECG">ECG</entry>
+  <entry key="artifactMethod.artifactType.UNKNOWN">Unknown</entry>
+
+  <entry key="artifactMethod.iterableSensitivity.BREATHING">Sensitivity for breathing artifacts</entry>
+  <entry key="artifactMethod.iterableSensitivity.EYE_MOVEMENT">Sensitivity for eye movement artifacts</entry>
+  <entry key="artifactMethod.iterableSensitivity.MUSCLE_ACTIVITY">Sensitivity for muscle activity artifacts</entry>
+  <entry key="artifactMethod.iterableSensitivity.EYEBLINKS">Sensitivity for eyeblinks artifacts</entry>
+  <entry key="artifactMethod.iterableSensitivity.TECHNICAL">Sensitivity for technical artifacts</entry>
+  <entry key="artifactMethod.iterableSensitivity.POWER_SUPPLY">Sensitivity for power supply artifacts</entry>
+  <entry key="artifactMethod.iterableSensitivity.ECG">Sensitivity for ECG artifacts</entry>
+  <entry key="artifactMethod.iterableSensitivity.UNKNOWN">Sensitivity for unknown artifacts</entry>
+
+  <entry key="artifactMethod.powerGridFrequency.EUROPE">50 Hz (Europe)</entry>
+  <entry key="artifactMethod.powerGridFrequency.USA">60 Hz (United States)</entry>
+
+  <entry key="artifactMethod.dialog.chooseArtifactTypes">Artifact types &amp; sensitivity</entry>
+  <entry key="artifactMethod.dialog.options">Options</entry>
+  <entry key="artifactMethod.dialog.excludeSomeDerivations">Exclude some derivations</entry>
+  <entry key="artifactMethod.dialog.powerFrequency">Power frequency</entry>
+  <entry key="artifactMethod.dialog.editMontage">Edit montage</entry>
+  <entry key="artifactMethod.dialog.editMontageToolTip">Edit channel labels and functions</entry>
+  <entry key="artifactMethod.dialog.editExclusion">Select excluded derivations</entry>
+  <entry key="artifactMethod.dialog.editExclusionToolTip">Select excluded derivations</entry>
+
+  <entry key="artifactMethod.dialog.exclusionTable">Exclusion</entry>
+
+  <entry key="artifactMethod.situation.artifactProjectExists">Project [{0}] exists. Reuse or replace?</entry>
+
+  <entry key="artifactMethod.message.creatingFiles">Creating files</entry>
+  <entry key="artifactMethod.message.writingSignalFile">Writing signal file</entry>
+  <entry key="artifactMethod.message.processing">Processing</entry>
+  <entry key="artifactMethod.message.tagging">Tagging</entry>
+  <entry key="artifactMethod.message.finishing">Finishing</entry>
+  <entry key="artifactMethod.message.finished">Finished</entry>
+
+  <entry key="error.artifact.failedToCreateProjectDirectory">Failed to create directory</entry>
+  <entry key="error.artifact.failedToClearProjectDirectory">Failed to clear project directory of old files</entry>
+  <entry key="error.artifact.noWorkingDirectory">Working directory not set or unusable</entry>
+  <entry key="error.artifact.projectDirectoryLocked">A lockfile exists in [{0}] directory. Wait for current processing to complete.</entry>
+
+  <entry key="artifactMethod.config.title">Artifact configuration</entry>
+
+  <entry key="artifactMethod.config.workingDirectoryTitle">Artifact working directory</entry>
+  <entry key="artifactMethod.config.workingDirectory">Working directory</entry>
+  <entry key="artifactMethod.config.chooseWorkingDirectory">Choose...</entry>
+  <entry key="artifactMethod.config.chooseWorkingDirectoryToolTip">Choose a directory for artifact projects</entry>
+
+  <entry key="artifactMethod.dialog.result.title">Artifact result</entry>
+  
+  <entry key="artifactMethod.dialog.result.actionTitle">Choose primary result targets</entry>
+  <entry key="artifactMethod.dialog.result.openInWindow">Open in the viewer</entry>
+  <entry key="artifactMethod.dialog.result.saveToFile">Save to file</entry>
+
+  <entry key="artifactMethod.dialog.result.choosePrimaryTagTitle">Choose primary result tag file</entry>
+  <entry key="artifactMethod.dialog.result.primaryTagFile">Primary tag file</entry>
+  <entry key="artifactMethod.dialog.result.choosePrimaryTagFile">Choose...</entry>
+  <entry key="artifactMethod.dialog.result.choosePrimaryTagFileToolTip">Choose a tag file to save</entry>
+
+  <entry key="artifactMethod.dialog.result.additionalTitle">Additional result tags</entry>
+  <entry key="artifactMethod.dialog.result.additionalOpenInWindow">Open selected additional tags in the viewer</entry>
+  <entry key="artifactMethod.dialog.result.additionalSaveToFile">Save selected additional tag to files</entry>
+
+  <entry key="artifactMethod.dialog.result.choosePrimaryTagTitle">Choose primary result tag file</entry>
+  <entry key="artifactMethod.dialog.result.primaryTagFile">Primary tag file</entry>
+  <entry key="artifactMethod.dialog.result.choosePrimaryTagFile">Choose...</entry>
+  <entry key="artifactMethod.dialog.result.choosePrimaryTagFileToolTip">Choose a tag file to save</entry>
+
+  <entry key="error.artifact.result.badTagFile">Tag file not chosen</entry>
+  <entry key="error.artifact.result.tagFileNotWritable">Tag file parent directory doesn't exist or not writable</entry>
+
+  <entry key="artifactMethod.dialog.iteration.title">Iteration result</entry>
+  <entry key="error.artifact.badTagFilePath">You must select a tag file</entry>
+
+  <entry key="artifactMethod.dialog.iteration.expertTagTitle">Compare with expert tag</entry>
+  <entry key="artifactMethod.dialog.iteration.expertTag">Expert artifact tag</entry>
+  <entry key="artifactMethod.dialog.iteration.choose">Choose...</entry>
+  <entry key="artifactMethod.dialog.iteration.expertTagToolTip">Choose refrerence tag with artifacts</entry>
+
+  <entry key="unlimitedSpinnerPanel.unlimited">unlimited</entry>
+  <entry key="unlimitedSpinnerPanel.auto">auto</entry>
+  <entry key="unlimitedSpinnerPanel.unlimitedCompact">un.</entry>
+
+  <entry key="stagerMethod.runMethodString">Automatic sleep staging</entry>
+
+  <entry key="stagerMethod.dialog.title">Stager configuration</entry>
+
+  <entry key="stagerMethod.dialog.basicTab">Basic config</entry>
+  <entry key="stagerMethod.dialog.advancedTab">Advanced config</entry>
+  <entry key="stagerMethod.dialog.thresholdTab">Threshold config</entry>
+
+  <entry key="stagerMethod.dialog.editMontage">Edit montage</entry>
+  <entry key="stagerMethod.dialog.editMontageToolTip">Edit channel labels and functions</entry>
+  <entry key="stagerMethod.dialog.restoreDefaults">Restore defaults</entry>
+  <entry key="stagerMethod.dialog.restoreDefaultsToolTip">Restore default method configuration</entry>
+
+  <entry key="stagerMethod.dialog.chooseBookTitle">Choose book file</entry>
+  <entry key="stagerMethod.dialog.bookFile">Book file</entry>
+  <entry key="stagerMethod.dialog.chooseBookFile">Choose...</entry>
+  <entry key="stagerMethod.dialog.chooseBookFileToolTip">Choose a book file for this signal</entry>
+
+  <entry key="stagerMethod.dialog.enableAdvancedConfigTitle">Advanced config</entry>
+  <entry key="stagerMethod.dialog.enableAdvancedConfig">Enable advanced config</entry>
+
+  <entry key="stagerMethod.dialog.basicParametersTitle">Key parameters</entry>
+  <entry key="stagerMethod.dialog.rules">Scoring criteria</entry>
+  <entry key="stagerMethod.dialog.deltaMinAmplitude">Amplitude threshold  for delta waves [uV]</entry>
+  <entry key="stagerMethod.dialog.alphaMinAmplitude">Amplitude threshold  for alpha waves [uV]</entry>
+  <entry key="stagerMethod.dialog.spindleMinAmplitude">Amplitude threshold  for sleep spindles [uV]</entry>
+  <entry key="stagerMethod.dialog.primaryHypnogram">Show primary hypnogram and markers of waveforms  in result</entry>
+
+  <entry key="stagerMethod.dialog.advancedParametersTitle">Parameters</entry>
+  <entry key="stagerMethod.dialog.delta">Delta waves</entry>
+  <entry key="stagerMethod.dialog.theta">Theta waves</entry>
+  <entry key="stagerMethod.dialog.alpha">Alpha waves</entry>
+  <entry key="stagerMethod.dialog.spindle">Sleep spindles</entry>
+  <entry key="stagerMethod.dialog.kComplex">K-Compl</entry>
+  
+  <entry key="stagerMethod.dialog.amplitude">Amplitude [uv]&lt;br /&gt;min/max</entry>
+  <entry key="stagerMethod.dialog.frequency">Frequency [Hz]&lt;br /&gt;min/max</entry>
+  <entry key="stagerMethod.dialog.scale">Scale [s]&lt;br /&gt;min/max</entry>
+  <entry key="stagerMethod.dialog.phase">Phase&lt;br /&gt;min/max</entry>
+  
+  <entry key="stagerMethod.dialog.thresholdsTitle">Thresholds</entry>
+  <entry key="stagerMethod.dialog.emgToneThreshold">EMG tone</entry>
+  <entry key="stagerMethod.dialog.mtEegThreshold">MT artifacts in EEG</entry>
+  <entry key="stagerMethod.dialog.mtEmgThreshold">MT artifacts in EMG</entry>
+  <entry key="stagerMethod.dialog.mtToneEmgThreshold">MT artifacts in tone EMG</entry>
+  <entry key="stagerMethod.dialog.remEogDeflectionThreshold">EOG deflection for rapid eye movement [%]</entry>
+  <entry key="stagerMethod.dialog.semEogDeflectionThreshold">EOG deflection for slow eye movement [%]</entry>
+  
+  <entry key="stagerMethod.dialog.result.title">Stager result</entry>
+  
+  <entry key="stagerMethod.dialog.result.actionTitle">Choose primary result targets</entry>
+  <entry key="stagerMethod.dialog.result.openInWindow">Open in the viewer</entry>
+  <entry key="stagerMethod.dialog.result.saveToFile">Save to file</entry>
+
+  <entry key="stagerMethod.dialog.result.choosePrimaryTagTitle">Choose primary result tag file</entry>
+  <entry key="stagerMethod.dialog.result.primaryTagFile">Primary tag file</entry>
+  <entry key="stagerMethod.dialog.result.choosePrimaryTagFile">Choose...</entry>
+  <entry key="stagerMethod.dialog.result.choosePrimaryTagFileToolTip">Choose a tag file to save</entry>
+
+  <entry key="stagerMethod.dialog.result.additionalTitle">Additional result tags</entry>
+  <entry key="stagerMethod.dialog.result.additionalOpenInWindow">Open selected additional tags in the viewer</entry>
+  <entry key="stagerMethod.dialog.result.additionalSaveToFile">Save selected additional tag to files</entry>
+
+  <entry key="stagerMethod.dialog.result.reviewResult">Review staging result</entry>
+  <entry key="stagerMethod.dialog.result.reviewResultToolTip">Inspect the results</entry>
+
+  <entry key="stagerMethod.dialog.resultReview.title">Stager result review</entry>
+
+  <entry key="stagerMethod.dialog.resultReview.expertTitle">Compare with expert tag</entry>
+  <entry key="stagerMethod.dialog.resultReview.chooseExpertTagFile">Choose...</entry>
+
+  <entry key="stagerMethod.dialog.resultReview.expertStageTag">Expert stages tag</entry>
+  <entry key="stagerMethod.dialog.resultReview.expertStageTagToolTip">Choose refrerence tag with stages</entry>
+  <entry key="stagerMethod.dialog.resultReview.expertArtifactTag">Expert artifacts tag</entry>
+  <entry key="stagerMethod.dialog.resultReview.expertArtifactTagToolTip">Choose refrerence tag with artifacts</entry>
+
+  <entry key="stagerMethod.dialog.resultReview.compare">Compare</entry>
+  <entry key="stagerMethod.dialog.resultReview.compareToolTip">Compare staging result with expert tag</entry>
+  <entry key="stagerMethod.dialog.resultReview.compareExcludingArtifacts">Compare no artifacts</entry>
+  <entry key="stagerMethod.dialog.resultReview.compareExcludingArtifactsToolTip">Compare staging result with expert tag (pages without artifacts only)</entry>
+
+  <entry key="stagerMethod.dialog.resultReview.statisticsTitle">Result statistics</entry>
+
+  <entry key="stagerMethod.dialog.resultReview.totalTab">Totals</entry>
+  <entry key="stagerMethod.dialog.resultReview.stageTab">Stages</entry>
+
+  <entry key="stagerMethod.dialog.resultReview.stageTable.stage">Stage</entry>
+  <entry key="stagerMethod.dialog.resultReview.stageTable.epochs">Epochs</entry>
+  <entry key="stagerMethod.dialog.resultReview.stageTable.minutes">Minutes</entry>
+  <entry key="stagerMethod.dialog.resultReview.stageTable.tst">%TST</entry>
+  <entry key="stagerMethod.dialog.resultReview.stageTable.spt">%SPT</entry>
+
+  <entry key="stagerMethod.dialog.resultReview.stageTable.sws">SWS</entry>
+  <entry key="stagerMethod.dialog.resultReview.otherStyle">Other</entry>
+
+  <entry key="stagerMethod.dialog.sleepComparison.title">Sleep staging comparison</entry>
+  <entry key="stagerMethod.dialog.sleepComparison.frameTitle">Comparison data</entry>
+
+  <entry key="stagerMethod.dialog.sleepComparison.comparisonTab">Comparison</entry>
+  <entry key="stagerMethod.dialog.sleepComparison.comparisonFrameTitle">Stager (row) vs. expert (column) comparison</entry>
+
+  <entry key="stagerMethod.dialog.sleepComparison.statisticsTab">Statistics</entry>
+  <entry key="stagerMethod.dialog.sleepComparison.stageFrameTitle">Stages</entry>
+  <entry key="stagerMethod.dialog.sleepComparison.propertyFrameTitle">Other</entry>
+
+  <entry key="stagerMethod.dialog.resultReview.comparison.stage">Stage</entry>
+  <entry key="stagerMethod.dialog.resultReview.comparison.concordance">Concordance %</entry>
+  <entry key="stagerMethod.dialog.resultReview.comparison.sensitivity">Sensitivity %</entry>
+  <entry key="stagerMethod.dialog.resultReview.comparison.selectivity">Selectivity %</entry>
+  
+  <entry key="stagerMethod.stepTicker">Processing step</entry>
+  <entry key="stagerMethod.progressTicker">Step progress</entry>
+  <entry key="stagerMethod.message.processing">Processing</entry>
+  
+  <entry key="property.sleepComparison.totalConcordance">Total concordance %</entry>
+  <entry key="property.sleepComparison.cohensKappa">Cohen's Kappa</entry>
+  
+  <entry key="error.stager.result.badTagFile">Tag file not chosen</entry>
+  <entry key="error.stager.result.tagFileNotWritable">Tag file parent directory doesn't exist or not writable</entry>
+  <entry key="error.stager.result.resultTagUnknownRules">The resulting tag uses unknown staging rules</entry>
+  <entry key="error.stager.result.expertTagNotCompatibleRK">The expert tag doesn't use the R&amp;K system or has misnamed tags. Tag names w, 1, 2, 3, 4, r and m are required.</entry>
+  <entry key="error.stager.result.expertTagNotCompatibleAASM">The expert tag doesn't use the AASM system or has misnamed tags. Tag names nw, n1, n2, n3 and nr are required.</entry>
+  
+  <entry key="stagerMethod.situation.stagerProjectExists">Project [{0}] exists. Reuse or replace?</entry>
+
+  <entry key="stagerMethod.message.staging">Detecting sleep stages</entry>
+
+  <entry key="error.stager.failedToCreateProjectDirectory">Failed to create directory</entry>
+  <entry key="error.stager.failedToClearProjectDirectory">Failed to clear project directory of old files</entry>
+  <entry key="error.stager.badBookFilePath">Book file not chosen, doesn't exist or unreadable</entry>
+  <entry key="error.stager.noWorkingDirectory">Working directory not set or unusable</entry>
+
+  <entry key="stagerMethod.config.title">Artifact configuration</entry>
+
+  <entry key="stagerMethod.config.workingDirectoryTitle">Stager working directory</entry>
+  <entry key="stagerMethod.config.workingDirectory">Working directory</entry>
+  <entry key="stagerMethod.config.chooseWorkingDirectory">Choose...</entry>
+  <entry key="stagerMethod.config.chooseWorkingDirectoryToolTip">Choose a directory for stager projects</entry>
+
+  <entry key="sleepStagingRules.RK">Rechtshaffen and Kales (R&amp;K 1967) rules</entry>
+  <entry key="sleepStagingRules.AASM">AASM (2007) rules</entry>
+  
+  <entry key="iterableNumericProperty">Property [{0}]</entry>
+
+  <entry key="eegChannel.Reference">Reference</entry>
+  <entry key="eegChannel.Unknown">Unknown</entry>
+  <entry key="eegChannel.Other">Other</entry>
+
+  <entry key="genericChannel.Signal">Signal</entry>
+  <entry key="genericChannel.Reference">Reference</entry>
+  <entry key="genericChannel.Unknown">Unknown</entry>
+  <entry key="genericChannel.Other">Other</entry>
+
+  <entry key="montageGenerator.none">Custom user defined</entry>
+  <entry key="montageGenerator.raw">Raw signal</entry>
+  <entry key="montageGenerator.leftEar">Left ear montage</entry>
+  <entry key="montageGenerator.rightEar">Right ear montage</entry>
+  <entry key="montageGenerator.linkedEars">Linked ears montage</entry>
+  <entry key="montageGenerator.longitudinalI">Longitudinal I</entry>
+  <entry key="montageGenerator.longitudinalII">Longitudinal II</entry>
+  <entry key="montageGenerator.transverseI">Transverse I</entry>
+
+  <entry key="montageGenerator.error.badChannelNumber">Bad number of channels</entry>
+  <entry key="montageGenerator.error.noLeftEarChannel">Left ear channel not identified</entry>
+  <entry key="montageGenerator.error.duplicateLeftEarChannel">Left ear channel identified more than one time</entry>
+  <entry key="montageGenerator.error.noRightEarChannel">Right ear channel not identified</entry>
+  <entry key="montageGenerator.error.duplicateRightEarChannel">Right ear channel identified more than one time</entry>
+  <entry key="montageGenerator.error.missingEarChannel">One of ear channels not identified [{0}]</entry>
+  <entry key="montageGenerator.error.duplicateEarChannel">Ear channel identified more than one time [{0}]</entry>
+  <entry key="montageGenerator.error.missingChannel">One of required channels not identified [{0}]</entry>
+  <entry key="montageGenerator.error.duplicateChannel">Required channel identified more than one time [{0}]</entry>
+
+  <entry key="methodIteratorMethod.iterationTicker">Iteration progress</entry>
+
+  <entry key="bookAverageMethod.runMethodString">Average books</entry>
+
+  <entry key="bookAverageMethod.configure">Configure book averaging</entry>
+
+  <entry key="bookAverageMethod.ticker">Segments processed</entry>
+
+
+  <entry key="bookToTagMethod.runMethodString">Tag book atoms</entry>
+
+  <entry key="bookToTagMethod.configure">Configure book to tag</entry>
+
+  <entry key="bookToTagMethod.channelsTitle">Choose channels to include</entry>
+
+  <entry key="bookToTagMethod.tagTypesTitle">Choose tag types</entry>
+  <entry key="bookToTagMethod.makePageTags">Create page tags</entry>
+  <entry key="bookToTagMethod.makeBlockTags">Create block tags</entry>
+  <entry key="bookToTagMethod.makeChannelTags">Create channel tags</entry>
+
+  <entry key="bookToTagMethod.ticker">Segments processed</entry>  
+
+  <entry key="error.bookToTagMethod.noChannels">Select at least one channel</entry>
+  <entry key="error.bookToTagMethod.noTypesSelected">Select at least one tag type</entry>
+  
+  <!-- legacy code errors -->
+  <entry key="eega.unexpEndOfFile">Unexpected end of file</entry>
+  <entry key="eega.errReadFile">Failed to read file</entry>
+  <entry key="eega.errWriteFile">Failed to write file</entry>
+  <entry key="eega.tooManyStyles">Too many styles in tag. Only 256 styles are allowed per type.</entry>
+  
+  <!-- test code strings - need not be translated -->
+  <entry key="exampleMethod.runMethodString">Find the meaning of life</entry>
+  <entry key="exampleMethod.iterateMethodString">Iterate finding the meaning of life</entry>
+
+  <entry key="exampleMethod.count">Useless deliberation count</entry>
+  <entry key="exampleMethod.noWait">Hurry up</entry>
+  <entry key="exampleMethod.configure">Configure search</entry>
+    
+  <entry key="exampleMethod.start">Let's find the meaning of life</entry>
+  <entry key="exampleMethod.processed0">Life is generally pointless</entry>
+  <entry key="exampleMethod.processed1">Life sucks</entry>
+  <entry key="exampleMethod.processed2">I don't know what I'm doing here</entry>
+  <entry key="exampleMethod.processed3">Why should I even care?</entry>
+  <entry key="exampleMethod.processed4">I'll just sit here for a while</entry>
+
+  <entry key="exampleMethod.ticker0">Pondering</entry>
+  <entry key="exampleMethod.ticker1">Deliberating</entry>
+  
+  <entry key="exampleMethod.error.badCount">Bad count</entry>
+
+  <entry key="exampleMethod.result">The meaning of life turns out to be {0}</entry>
+
+</properties>
