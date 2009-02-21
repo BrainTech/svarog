@@ -136,22 +136,22 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.signalml</groupId>
+			<artifactId>eega-tag-library</artifactId>
+			<version>0.5.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>flanagan.uk.ac.ucl.ee</groupId>
+			<artifactId>flanagan-math-fft</artifactId>
+			<version>0.5.0</version>
+			<scope>compile</scope>
+		</dependency>
 		<!--
 		<dependency>
 			<groupId>org.signalml</groupId>
-			<artifactId>eega-bits</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.signalml</groupId>
 			<artifactId>mpview-bits</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>www.ee.ucl.ac.uk</groupId>
-			<artifactId>flanagan-math-fft</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
@@ -159,9 +159,9 @@
 	</dependencies>
 	
 	<scm>
-		<connection>scm:git:http://escher.fuw.edu.pl/home/mdobacz/repos/svarog</connection>
-		<developerConnection>scm:git:ssh://escher.fuw.edu.pl/home/mdobacz/repos/svarog</developerConnection>
-		<url>http://escher.fuw.edu.pl/home/mdobacz/repos/svarog</url>
+		<connection>scm:git:http://escher.fuw.edu.pl/git/repos/svarog</connection>
+		<developerConnection>scm:git:ssh://escher.fuw.edu.pl/git/repos/svarog</developerConnection>
+		<url>http://escher.fuw.edu.pl/git/repos/svarog</url>
 	</scm>
 	
 	<reporting>
