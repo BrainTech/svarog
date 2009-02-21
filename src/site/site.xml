@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="signalml">
+<project name="Svarog">
 
 	<!-- 
 	<bannerLeft>
@@ -20,16 +20,18 @@
 	</skin>
 
 	<breadcrumbs>
-		<item name="Signalml" />
+		<item href="http://brain.fuw.edu.pl/" name="ZFB" />
+		<item name="Svarog" />
 	</breadcrumbs>
 
 	<body>
-		<menu name="Signalml" collapse="false">
+		<menu name="Svarog" collapse="false">
 			<item name="Overview" href="index.html" />
 			<item name="FAQ" href="faq.html" />
 			<item name="Wiki" href="wiki.html" />
 		</menu>
-		<menu ref="reports" collapse="false"/>
+		
+		<menu ref="reports" collapse="false" />
 	</body>
 
 	<publishDate position="right"/>
