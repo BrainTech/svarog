@@ -4,13 +4,12 @@
 	xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/plugins/maven-changes-plugin/xsd/changes-1.0.0.xsd">
 
 	<properties>
-		<title>Singnalml Changelog</title>
-		<!-- <author>mdobacz</author> -->
+		<title>Svarog Changelog</title>
 	</properties>
 
 	<body>
 		<release version="0.4.7" date="2009-01-01"
-			description="The first version (developped commercially by CC Otwarte Systemy Komputerowe Sp. z o.o.)">
+			description="The first version after the project was taken over from CC">
 		</release>
 	</body>
 

@@ -8,10 +8,10 @@
 
 		<faq id="whats-signalml">
 			<question>
-				What is Signalml?
+				What is Svarog?
 			</question>
 			<answer>
-				<p>Signalml is an open viewer and annotator for multivariate time series, commonly known as "signals".</p>
+				<p>Svarog is an open viewer and annotator for multivariate time series, commonly known as "signals".</p>
 			</answer>
 		</faq>
 	</part>
@@ -22,7 +22,7 @@
 
 		<faq id="how-install">
 			<question>
-				How do I install Signalml?
+				How do I install Svarog?
       		</question>
 			<answer>
 				<p>An installer is provided ...</p>

@@ -1,7 +1,0 @@
-mvn install:install-file -Dfile=jta.jar -Dpackaging=jar -DgeneratePom=true -DgroupId=javax.transaction -DartifactId=jta -Dversion=1.0.1B
-
-mvn install:install-file -Dfile=javabuilder.jar -Dpackaging=jar -DgeneratePom=true -DgroupId=org.signalml -DartifactId=javabuilder -Dversion=1.0.0
-
-mvn install:install-file -Dfile=stager_mbfj.jar -Dpackaging=jar -DgeneratePom=true -DgroupId=org.signalml -DartifactId=stager-mbfj -Dversion=1.0.0
-
-mvn install:install-file -Dfile=artifact_mbfj.jar -Dpackaging=jar -DgeneratePom=true -DgroupId=org.signalml -DartifactId=artifact-mbfj -Dversion=1.0.0

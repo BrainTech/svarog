@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Svarog">
 
-	<!-- 
 	<bannerLeft>
-		<name>signalml</name>
-		<href>http://www.fuw.edu.pl/</href>		
+		<name>Svarog</name>
+		<src>images/svarog.png</src>
+		<href>http://signalml.org/svarog/</href>		
 	</bannerLeft>
-	-->
 
 	<bannerRight>
 		<name>Warsaw University</name>
@@ -19,19 +18,29 @@
 		<artifactId>maven-stylus-skin</artifactId>
 	</skin>
 
-	<breadcrumbs>
-		<item href="http://brain.fuw.edu.pl/" name="ZFB" />
-		<item name="Svarog" />
-	</breadcrumbs>
-
 	<body>
-		<menu name="Svarog" collapse="false">
+	
+		<breadcrumbs>
+			<item href="http://signalml.org/" name="SignalML" />
+			<item name="${project.name}" />
+		</breadcrumbs>
+	
+		<links>
+      		<item name="ZFB" href="http://brain.fuw.edu.pl/"/>
+	    </links>
+	
+		<menu name="${project.name}" collapse="false">
 			<item name="Overview" href="index.html" />
 			<item name="FAQ" href="faq.html" />
 			<item name="Wiki" href="wiki.html" />
 		</menu>
+
+		<menu name="Information" collapse="false">
+			<item name="History" href="history.html" />
+		</menu>
 		
 		<menu ref="reports" collapse="false" />
+		
 	</body>
 
 	<publishDate position="right"/>
