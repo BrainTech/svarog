@@ -134,7 +134,8 @@ public class BookLibrary implements BookLibraryInterface {
             try {
                file=new RandomAccessFile(fileString, "r");
             } catch(IOException e) {
-                try { file.close(); } catch(Exception ee) { ; }
+                // [MD] automatic NPE
+            	// try { file.close(); } catch(Exception ee) { ; }
                 return 0;
             }
 
