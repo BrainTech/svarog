@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
- 
+
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.signalml</groupId>
 	<artifactId>svarog</artifactId>
@@ -13,9 +13,12 @@
 		<url>http://brain.fuw.edu.pl/</url>
 	</organization>
 	<url>http://signalml.org/svarog/</url>
+	<inceptionYear>2007</inceptionYear>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.test.skip>true</maven.test.skip>
+		<org.signalml.mbfj.platform>win32</org.signalml.mbfj.platform>
 	</properties>
 
 	<build>
@@ -42,6 +45,14 @@
 				</executions>
 			</plugin>
 			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptors>
+						<descriptor>src/main/assembly/full.xml</descriptor>
+					</descriptors>
+				</configuration>
+			</plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
 				<configuration>
@@ -50,7 +61,7 @@
 			</plugin>
 		</plugins>
 	</build>
-		
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -113,60 +124,48 @@
 			<artifactId>castor</artifactId>
 			<version>1.1.1</version>
 			<type>jar</type>
-		</dependency>		
+			<exclusions>
+				<exclusion>
+					<groupId>javax.transaction</groupId>
+					<artifactId>jta</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 		<dependency>
-			<groupId>org.signalml</groupId>
+			<groupId>com.mathworks</groupId>
 			<artifactId>javabuilder</artifactId>
 			<version>1.0.0</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/private-libs/javabuilder.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>org.signalml</groupId>
 			<artifactId>artifact-mbfj</artifactId>
 			<version>1.0.0</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/private-libs/artifact_mbfj.jar</systemPath>
+			<classifier>${org.signalml.mbfj.platform}</classifier>
 		</dependency>
 		<dependency>
 			<groupId>org.signalml</groupId>
 			<artifactId>stager-mbfj</artifactId>
 			<version>1.0.0</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/private-libs/stager_mbfj.jar</systemPath>
+			<classifier>${org.signalml.mbfj.platform}</classifier>
 		</dependency>
 		<dependency>
 			<groupId>org.signalml</groupId>
 			<artifactId>eega-tag-library</artifactId>
-			<version>0.5.0</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/private-libs/eega-tag-library-0.5.0.jar</systemPath>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>flanagan.uk.ac.ucl.ee</groupId>
 			<artifactId>flanagan-math-fft</artifactId>
-			<version>0.5.0</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/private-libs/flanagan-math-fft-0.5.0.jar</systemPath>
+			<version>1.0.0</version>
 		</dependency>
-		<!--
-		<dependency>
-			<groupId>org.signalml</groupId>
-			<artifactId>mpview-book-library</artifactId>
-			<version>0.5.0</version>
-			<scope>compile</scope>
-			<scope>system</scope>
-			<systemPath>${basedir}/private-libs/mpview-book-library-0.5.0.jar</systemPath>
-		</dependency>
-		 -->
 	</dependencies>
-	
+
 	<scm>
 		<connection>scm:git:http://escher.fuw.edu.pl/git/repos/svarog</connection>
 		<developerConnection>scm:git:ssh://escher.fuw.edu.pl/git/repos/svarog</developerConnection>
 		<url>http://escher.fuw.edu.pl/git/repos/svarog</url>
 	</scm>
-	
+
 	<reporting>
 		<plugins>
 
@@ -208,6 +207,7 @@
 			<!--
 				<plugin> <artifactId>maven-javadoc-plugin</artifactId> </plugin>
 			-->
+
 		</plugins>
 	</reporting>
 
@@ -245,7 +245,7 @@
 			</roles>
 		</developer>
 		<developer>
-			<id>zbysz</id>
+			<id>zbyszek</id>
 			<name>Zbyszek Jędrzejewski-Szmek</name>
 			<email>???</email>
 			<organization>ZFB</organization>
@@ -274,6 +274,6 @@
 	</developers>
 
 	<contributors>
-	</contributors>
-	
+	</contributors>	
+		
 </project>
