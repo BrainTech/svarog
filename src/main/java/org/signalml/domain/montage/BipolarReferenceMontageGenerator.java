@@ -15,6 +15,8 @@ import org.springframework.validation.Errors;
  */
 public abstract class BipolarReferenceMontageGenerator implements MontageGenerator {
 
+	private static final long serialVersionUID = 1L;
+
 	protected transient Channel[][] definition;
 	
 	protected BipolarReferenceMontageGenerator( Channel[][] definition ) {

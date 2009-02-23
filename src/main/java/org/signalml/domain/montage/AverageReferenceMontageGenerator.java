@@ -13,6 +13,8 @@ import org.springframework.validation.Errors;
  */
 public abstract class AverageReferenceMontageGenerator implements MontageGenerator {
 
+	private static final long serialVersionUID = 1L;
+
 	protected transient Channel[] refChannels;
 	
 	protected AverageReferenceMontageGenerator( Channel[] refChannels ) {

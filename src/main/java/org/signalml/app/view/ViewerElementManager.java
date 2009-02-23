@@ -37,7 +37,6 @@ import org.signalml.app.action.ExportBookAction;
 import org.signalml.app.action.ExportSignalAction;
 import org.signalml.app.action.ExportTagAction;
 import org.signalml.app.action.HelpContentsAction;
-import org.signalml.app.action.ImportTagAction;
 import org.signalml.app.action.IterateMethodAction;
 import org.signalml.app.action.NewTagAction;
 import org.signalml.app.action.OpenDocumentAction;

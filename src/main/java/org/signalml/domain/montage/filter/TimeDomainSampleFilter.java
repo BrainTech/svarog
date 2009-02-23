@@ -14,6 +14,8 @@ import org.springframework.context.MessageSourceResolvable;
  */
 public abstract class TimeDomainSampleFilter extends SampleFilterDefinition {
 
+	private static final long serialVersionUID = 1L;
+
 	private final static Object[] ARGUMENTS = new Object[0];
 	
 	// these must be built by the constructor

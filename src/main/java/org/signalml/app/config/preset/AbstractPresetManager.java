@@ -23,6 +23,8 @@ import org.signalml.app.util.XMLUtils;
  */
 public abstract class AbstractPresetManager extends AbstractXMLConfiguration implements PresetManager, Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	protected static final Logger logger = Logger.getLogger(AbstractPresetManager.class);
 	
 	protected ArrayList<Preset> presets = new ArrayList<Preset>();

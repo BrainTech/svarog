@@ -60,7 +60,6 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 
 	private XStream streamer;
 
-	@SuppressWarnings("unused")
 	public MP5Method() throws SignalMLException {
 		super();
 	}

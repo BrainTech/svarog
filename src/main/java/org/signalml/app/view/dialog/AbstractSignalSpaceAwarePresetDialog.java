@@ -23,6 +23,8 @@ import org.springframework.context.support.MessageSourceAccessor;
  */
 public abstract class AbstractSignalSpaceAwarePresetDialog extends AbstractPresetDialog {
 
+	private static final long serialVersionUID = 1L;
+
 	private JCheckBox includeSpaceCheckBox;
 	
 	public AbstractSignalSpaceAwarePresetDialog(MessageSourceAccessor messageSource, PresetManager presetManager, Window w, boolean isModal) {

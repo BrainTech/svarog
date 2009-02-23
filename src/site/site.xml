@@ -26,17 +26,18 @@
 		</breadcrumbs>
 	
 		<links>
-      		<item name="ZFB" href="http://brain.fuw.edu.pl/"/>
+			<item name="ZFB" href="http://brain.fuw.edu.pl/"/>
 	    </links>
 	
 		<menu name="${project.name}" collapse="false">
 			<item name="Overview" href="index.html" />
+			<item name="Screenshots" href="screenshots.html" />
 			<item name="FAQ" href="faq.html" />
 			<item name="Wiki" href="wiki.html" />
 		</menu>
 
 		<menu name="Information" collapse="false">
-			<item name="History" href="history.html" />
+			<item name="Documentation" href="documentation.html" />
 		</menu>
 		
 		<menu ref="reports" collapse="false" />

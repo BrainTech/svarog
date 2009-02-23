@@ -1,0 +1,5 @@
+mvn install:install-file -Dfile=javabuilder.jar -DgeneratePom=true -DgroupId=com.mathworks -DartifactId=javabuilder -Dversion=1.0.0 -Dpackaging=jar
+
+mvn install:install-file -Dfile=win32/artifact_mbfj.jar -DgeneratePom=true -DgroupId=org.signalml -DartifactId=artifact-mbfj -Dversion=1.0.0 -Dclassifier=win32 -Dpackaging=jar
+
+mvn install:install-file -Dfile=win32/stager_mbfj.jar -DgeneratePom=true -DgroupId=org.signalml -DartifactId=stager-mbfj -Dversion=1.0.0 -Dclassifier=win32 -Dpackaging=jar

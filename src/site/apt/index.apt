@@ -1,22 +1,37 @@
+	-----
+	Home
+	-----
+	Micha³ Dobaczewski
+	-----
+	2009-02-22
+	-----
+
 Welcome to Svarog
   
 	Thanks for visiting Svarog's site. We hope you will find the software
 	usefull and the information provided sufficient. If you have any questions
 	do not hesitate to ask someone from the team.
 
-What is Svarog
+* What is Svarog?
 
-  	Blah blah blah.
-  
-	Please keep in mind that Svarog is still under development
-	and not a finished product (as indicated by the 0.x version number ;) ).
-	Feedback is very much appreciated.
-  
-What is avaliable
+	Svarog is a <multivariate time series> viewer, annotator, analyzer and recorder. 
+	Unless you want to impress your friends with funny incomprehensible names, 
+	you usually call it a <(multichannel) signal> viewer. The 
+	simplest example of a signal is a 
+	sound signal, for example a <wav> file, and there are quite a few applications
+	allowing you to view sound files. Svarog aims to handle far more complex
+	signals which are common in neuroscience. These include EEG and MEG signals which
+	can contain dozens of channels and be up to many hours in length. See the 
+	{{{screenshots.html}screenshot}} section for a better idea.
 
-	* a signal viewer with an abbility to "annotate" (mark) parts of the signal  
+	Svarog stands for <<S>>ignal <<V>>iever, <<A>>nalyzer and <<R>>ecorder 
+	<<o>>n <<G>>PL. This is also the name of a god (or deity) of the Sun, fire (and
+	of the smithy) in the religion of the ancient Slavic peoples. 
+	Svarog used to be a prominent deity in central and eastern Europe prior to 
+	christianization in the VIII-X'th century. 
 
-	* dasdas  
-  	
-	* dadsads
-
+	Svarog is still under development and not a finished product 
+	(as indicated by the 0.x version number). Feedback is very much appreciated.
+	Some areas of what Svarog intends to be are still left untouched, for example the
+	whole aspect of recording signals. In short: if you want to participate, there's
+	a lot of things that you could do.

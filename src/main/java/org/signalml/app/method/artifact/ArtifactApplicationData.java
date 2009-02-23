@@ -34,6 +34,8 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
 @XStreamAlias("artifactdata")
 public class ArtifactApplicationData extends ArtifactData {
 
+	private static final long serialVersionUID = 1L;
+
 	@XStreamOmitField
 	private SignalDocument signalDocument;
 

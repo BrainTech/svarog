@@ -8,9 +8,6 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 
 import org.apache.log4j.Logger;
-import org.signalml.codec.generator.xml.XMLCodecException;
-import org.signalml.codec.precompiled.EASYS;
-import org.signalml.codec.precompiled.RAW;
 
 /** SignalMLCodecReader
  *

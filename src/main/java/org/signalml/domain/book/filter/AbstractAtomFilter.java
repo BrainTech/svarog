@@ -19,6 +19,8 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("bookfilter")
 public abstract class AbstractAtomFilter implements AtomFilter, Serializable, MessageSourceResolvable {
 
+	private static final long serialVersionUID = 1L;
+
 	private String name;
 	
 	private boolean enabled;
@@ -71,7 +73,6 @@ public abstract class AbstractAtomFilter implements AtomFilter, Serializable, Me
 		this.blocking = blocking;
 	}
 	
-	@SuppressWarnings("unused")
 	public void initialize() throws SignalMLException {
 		// do nothing, subclasses may override
 	}

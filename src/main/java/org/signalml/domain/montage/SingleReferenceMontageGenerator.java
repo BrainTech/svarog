@@ -13,6 +13,8 @@ import org.springframework.validation.Errors;
  */
 public abstract class SingleReferenceMontageGenerator implements MontageGenerator {
 
+	private static final long serialVersionUID = 1L;
+
 	protected transient Channel refChannel;
 	
 	protected SingleReferenceMontageGenerator( Channel refChannel ) {

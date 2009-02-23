@@ -92,7 +92,7 @@ public class StyledTagSetConverterTest {
 		assertEquals("Stage 1", style.getDescription());
 		assertEquals(new Color(0x00, 0xCC, 0xCC), style.getOutlineColor());
 		assertEquals(new Color(0x00, 0xCC, 0xCC), style.getFillColor());
-		assertEquals(1.0F, style.getOutlineWidth());
+		assertEquals(1.0F, style.getOutlineWidth(), 0);
 		assertNull(style.getOutlineDash());
 		assertEquals(KeyStroke.getKeyStroke("pressed 1"), style.getKeyStroke());		
 	}
@@ -159,15 +159,15 @@ public class StyledTagSetConverterTest {
 		
 		Tag tag = tags.first();
 		assertEquals("1", tag.getStyle().getName());
-		assertEquals(120F, tag.getPosition());
-		assertEquals(20F, tag.getLength());
+		assertEquals(120F, tag.getPosition(), 0);
+		assertEquals(20F, tag.getLength(), 0);
 		assertEquals(Tag.CHANNEL_NULL, tag.getChannel());
 		assertNull(tag.getAnnotation());
 		
 		tag = tags.last();
 		assertEquals("Y", tag.getStyle().getName());
-		assertEquals(300F, tag.getPosition());
-		assertEquals(400F, tag.getLength());
+		assertEquals(300F, tag.getPosition(), 0);
+		assertEquals(400F, tag.getLength(), 0);
 		assertEquals(5, tag.getChannel());
 		assertEquals("test", tag.getAnnotation());
 		

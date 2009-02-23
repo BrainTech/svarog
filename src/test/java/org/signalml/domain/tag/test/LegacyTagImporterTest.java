@@ -65,14 +65,14 @@ public class LegacyTagImporterTest {
 		
 		Tag tag = sts.getPageTagAt(0);
 		assertEquals("w", tag.getStyle().getName());
-		assertEquals(0F, tag.getPosition());
-		assertEquals(20F, tag.getLength());
+		assertEquals(0F, tag.getPosition(), 0);
+		assertEquals(20F, tag.getLength(), 0);
 		assertEquals(Tag.CHANNEL_NULL, tag.getChannel());
 				
 		tag = sts.getPageTagAt(724);
 		assertEquals("r", tag.getStyle().getName());
-		assertEquals(724*20F, tag.getPosition());
-		assertEquals(20F, tag.getLength());
+		assertEquals(724*20F, tag.getPosition(), 0);
+		assertEquals(20F, tag.getLength(), 0);
 		assertEquals(Tag.CHANNEL_NULL, tag.getChannel());
 		
 		style = sts.getStyle("r");

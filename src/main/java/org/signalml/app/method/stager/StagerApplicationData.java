@@ -30,6 +30,8 @@ import org.signalml.method.stager.StagerData;
  */
 public class StagerApplicationData extends StagerData {
 
+	private static final long serialVersionUID = 1L;
+
 	private SignalDocument signalDocument;
 	private float pageSize;
 	

@@ -26,6 +26,8 @@ import org.springframework.context.support.MessageSourceAccessor;
  */
 public abstract class AbstractMessageDialog extends AbstractDialog {
 	
+	private static final long serialVersionUID = 1L;
+
 	private JCheckBox dontShowAgainCheckBox;
 	private JPanel messagePanel;
 	private JLabel messageLabel;

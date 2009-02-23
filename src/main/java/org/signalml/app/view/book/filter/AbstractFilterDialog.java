@@ -28,6 +28,8 @@ import org.springframework.validation.Errors;
  */
 public abstract class AbstractFilterDialog extends AbstractDialog {
 	
+	private static final long serialVersionUID = 1L;
+
 	private JTextField nameTextField;
 	
 	private JPanel namePanel;

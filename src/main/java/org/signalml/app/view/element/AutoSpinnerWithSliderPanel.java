@@ -11,6 +11,8 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 public class AutoSpinnerWithSliderPanel extends AutoSpinnerPanel {
 		
+	private static final long serialVersionUID = 1L;
+
 	private JSlider slider;
 	
 	private boolean lock = false;

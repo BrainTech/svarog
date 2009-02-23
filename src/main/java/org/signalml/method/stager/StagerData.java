@@ -15,6 +15,8 @@ import org.springframework.validation.Errors;
  */
 public class StagerData extends AbstractData {
 
+	private static final long serialVersionUID = 1L;
+
 	private String projectPath;
 	private String patientName;
 	private String signalPath;	

@@ -15,6 +15,8 @@ import org.springframework.context.MessageSourceResolvable;
  */
 public abstract class SampleFilterDefinition implements MessageSourceResolvable, Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	protected String description;
 		
 	public String getDescription() {

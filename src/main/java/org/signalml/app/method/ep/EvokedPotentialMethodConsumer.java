@@ -4,8 +4,6 @@
 
 package org.signalml.app.method.ep;
 
-import javax.swing.JOptionPane;
-
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.InitializingMethodResultConsumer;
 import org.signalml.exception.SignalMLException;

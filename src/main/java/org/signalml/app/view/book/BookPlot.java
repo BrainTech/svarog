@@ -1,7 +1,3 @@
-/* BookPlot.java created 2008-02-23
- * 
- */
-
 package org.signalml.app.view.book;
 
 import java.awt.BasicStroke;
@@ -1035,7 +1031,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
         }        		
 		
 		int relX = areaToRepaint.x - area.x;
-		int relEndX = relX + areaToRepaint.width - 1;
+//		int relEndX = relX + areaToRepaint.width - 1;
 		int level = area.y + area.height / 2;
 		
 		g.setColor( Color.BLUE );

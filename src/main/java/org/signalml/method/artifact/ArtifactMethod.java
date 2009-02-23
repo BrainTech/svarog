@@ -77,7 +77,6 @@ public class ArtifactMethod extends AbstractMethod implements TrackableMethod, I
 		}
 	}	
 
-	@SuppressWarnings("unused")
 	@Override
 	public final void dispose() throws SignalMLException {
 		if( solver != null ) {
@@ -263,7 +262,7 @@ public class ArtifactMethod extends AbstractMethod implements TrackableMethod, I
 				String optimizationType = "";
 
 				
-				solver.taguj_wrapper(eegd, wylKanTab, wektorProc, wekAnal, ".tag", projectPath, pacjent, referenceTag, optimizationType);
+				solver.taguj_wrapper(1, eegd, wylKanTab, wektorProc, wekAnal, ".tag", projectPath, pacjent, referenceTag, optimizationType);
 			} catch (MWException e) {
 				throw new ComputationException("Taguj failed",e);
 			}
