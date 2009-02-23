@@ -228,10 +228,12 @@
 				</reportSets>
 			</plugin>
 
+			<!--
 			<plugin> 
 				<artifactId>maven-javadoc-plugin</artifactId>
 			</plugin>
-
+			-->
+			 
 		</plugins>
 	</reporting>
 
@@ -264,8 +266,8 @@
 			<name>Michał Dobaczewski</name>
 			<email>michal (dot) d08 (at) "Google mail"</email>
 			<roles>
+				<role>Developer</role>
 				<role>Coordinator</role>
-				<role>Committer</role>
 			</roles>
 			<timezone>+1</timezone>
 		</developer>
@@ -274,8 +276,8 @@
 			<name>Dobiesław Ircha</name>
 			<organization>ZFB</organization>
 			<roles>
-				<role>Committer</role>
-				<role>Mp5 author</role>
+				<role>Developer</role>
+				<role>Mp5 developer</role>
 			</roles>
 			<timezone>+1</timezone>
 		</developer>
@@ -285,9 +287,9 @@
 			<url>http://durka.info/</url>
 			<organization>ZFB</organization>
 			<roles>
-				<role>Ideas</role>
-				<role>Coordination</role>
-			</roles>		
+				<role>Member</role>
+				<role>ZFB Contact Person</role>
+			</roles>
 			<timezone>+1</timezone>
 		</developer>
 		<developer>
@@ -295,6 +297,7 @@
 			<name>Zbyszek Jędrzejewski-Szmek</name>
 			<organization>ZFB</organization>
 			<roles>
+				<role>Member</role>
 				<role>Infrastructure admin</role>
 			</roles>
 			<timezone>+1</timezone>
@@ -304,9 +307,9 @@
 			<name>Hubert Klekowicz</name>
 			<organization>ZFB</organization>
 			<roles>
-				<role>Testing</role>
+				<role>Member</role>
 				<role>Matlab integration</role>
-				<role>Artifact author</role>
+				<role>Artifact developer</role>
 			</roles>
 			<timezone>+1</timezone>
 		</developer>
@@ -315,7 +318,8 @@
 			<name>Rafał Kuś</name>
 			<organization>ZFB</organization>
 			<roles>
-				<role>Mp5 author</role>
+				<role>Member</role>
+				<role>Mp5 developer</role>
 			</roles>
 			<timezone>+1</timezone>
 		</developer>
@@ -324,7 +328,8 @@
 			<name>Ula Malinowska</name>
 			<organization>ZFB</organization>
 			<roles>
-				<role>Stager author</role>
+				<role>Member</role>
+				<role>Stager developer</role>
 			</roles>
 			<timezone>+1</timezone>
 		</developer>

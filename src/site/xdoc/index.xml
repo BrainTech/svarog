@@ -169,7 +169,7 @@
 					be used at all;
 				</li>
 				<li>
-					to work towards changing Svarog from a monolithinc application it is
+					to work towards changing Svarog from a monolithic application it is
 					now to a more modular application. As a result of this a lot of
 					code is going to be moved out of Svarog into modules;
 				</li>
@@ -178,7 +178,7 @@
 					to start participating in the project;
 				</li>
 				<li>
-					to upgrade testability and increase the number of tests, which at this point
+					to improve testability and increase the number of tests, which at this point
 					are very few;
 				</li>
 			</ul>
@@ -202,7 +202,7 @@
 				by great many people. This is a professional software targeted for a relatively
 				narrow group of specialists: clinicists, physicians and scientists. On the other
 				hand Svarog addresses concerns which directly relate to people's health and
-				wellbeing. It has potential to improve the life of some people, somewhere and
+				wellbeing. It has potential to improve the life of some people, somewhere, and
 				as such is an important project, which can bring you a lot of personal satisfaction
 				if you participate. 
 			</p>
