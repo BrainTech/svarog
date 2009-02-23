@@ -4,26 +4,15 @@
   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
 
   <properties>
-    <title>Wiki</title>
+    <title>Privacy policy</title>
     <author email="michal.d08@gmail.com">Michał Dobaczewski</author>
   </properties>
 
   <body>
 
-    <section name="Wiki">
+    <section name="Privacy policy">
 
-		<p>
-			For now, Svarog wiki is located at the same place where the SignalML wiki is located.
-		</p>	
-	
-		<p>
-			<a href="http://signalml.org/wiki/">Signalml wiki</a>
-		</p>
 		
-		<p>
-			<a href="http://signalml.org/wiki/Svarog">The main article on Svarog</a>
-		</p>
-			
     </section>
 
   </body>

@@ -16,10 +16,11 @@
 			Stable versions of Svarog are available as packages below.
 		</p>
 
-		<subsection name="Stable versions">
+		<subsection name="Latest stable version">
 
+			<a name="0.5.0" />
 			<h4>Svarog 0.5.0 <span style="font-size: 10px;">(<a href="changes-report.html#a0.5.0">release notes</a>)</span></h4>
-
+			
 			<table><tbody>
 				<tr>
 					<th>
@@ -38,60 +39,66 @@
 					<td><a href="http://signalml.eeg.pl:8080/svarog/downloads/0.5.0/svarog-0.5.0-installer.jar">svarog-0.5.0-installer.jar</a></td>
 				</tr>
 				<tr>
-					<td>Multiplatform package ZIP (* see notes)</td>
+					<td>Multiplatform package ZIP (see below)</td>
 					<td><a href="http://signalml.eeg.pl:8080/svarog/downloads/0.5.0/svarog-0.5.0.zip">svarog-0.5.0.zip</a></td>
 				</tr>
 				<tr>
-					<td>Multiplatform package TAR.GZ (* see notes)</td>
+					<td>Multiplatform package TAR.GZ (see below)</td>
 					<td><a href="http://signalml.eeg.pl:8080/svarog/downloads/0.5.0/svarog-0.5.0.tar.gz">svarog-0.5.0.tar.gz</a></td>
 				</tr>
 				<tr>
-					<td>Multiplatform package TAR.BZ2 (* see notes)</td>
+					<td>Multiplatform package TAR.BZ2 (see below)</td>
 					<td><a href="http://signalml.eeg.pl:8080/svarog/downloads/0.5.0/svarog-0.5.0.tar.bz2">svarog-0.5.0.tar.bz2</a></td>
 				</tr>
 			</tbody></table>
-			
-			<p>
-				* if you download the packaged versions you will have to have the Matlab Component
-				Runtime (or Matlab itself) installed in oreder to be able to run signal analysis
-				methods which use Matlab. Lack of MCR doesn't affect remaining functionality and
-				may be ignored otherwise.
-			</p>
-			
+						
 		</subsection>		
 		
-		<subsection name="Old signalml versions">
-		
+		<subsection name="Matlab Component Runtime redistributables">
+
 			<p>
-				See the <a href="history.html">history page</a> for details.
+				If you downloaded the packaged versions and intend to use signal analysis
+				methods which use Matlab, you will have to have the Matlab Component
+				Runtime (or Matlab itself) installed. 
 			</p>
 			
 			<p>
-				The final packaged version of <i>signalml</i> is available below, but
-				using it is not encouraged.							
+				Lack of MCR doesn't affect remaining functionality and may be ignored if not
+				needed.			
 			</p>
 			
-			<h4>signalml 0.4.6</h4>
-			
+			<p>
+				For details about the Matlab Component Runtime see the
+				<a href="http://www.mathworks.com/products/javabuilder/">Mathworks site</a>.
+			</p>
+				
 			<table><tbody>
 				<tr>
 					<th>
-						Platform
+						Platform/format
 					</th>
 					<th>
 						URL
 					</th>
 				</tr>
 				<tr>
-					<td>Microsoft Windows</td>
-					<td><a href="http://signalml.eeg.pl:8080/installer/0.4.6/signalml_installer.exe">signalml_installer.exe</a></td>
+					<td>MCR for Microsoft Windows (installer)</td>
+					<td><span style="color: red;">add files</span></td>
 				</tr>
 				<tr>
-					<td>Other (multiplatform, run with Java)</td>
-					<td><a href="http://signalml.eeg.pl:8080/installer/0.4.6/signalml_installer.jar">signalml_installer.jar</a></td>
+					<td>MCR for GNU/Linux (installer)</td>
+					<td><span style="color: red;">add files</span></td>
 				</tr>
 			</tbody></table>
-			
+
+		</subsection>
+							
+		<subsection name="Old versions">
+		
+			<p>
+				See the <a href="archive.html">archives</a>.
+			</p>
+						
 		</subsection>
 						
     </section>

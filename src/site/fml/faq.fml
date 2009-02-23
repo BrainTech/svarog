@@ -11,7 +11,13 @@
 				What is Svarog?
 			</question>
 			<answer>
-				<p>Svarog is an open viewer and annotator for multivariate time series, commonly known as "signals".</p>
+				<p>
+					Svarog is an open viewer and annotator for multivariate time series, 
+					commonly known as "signals".
+				</p>
+				<p>
+					...
+				</p>				
 			</answer>
 		</faq>
 	</part>
@@ -20,15 +26,142 @@
 
 		<title>Installation</title>
 
-		<faq id="how-install">
+		<faq id="has-installer">
 			<question>
-				How do I install Svarog?
-      		</question>
+				Does Svarog have an installer?
+			</question>
 			<answer>
-				<p>An installer is provided ...</p>
+				<p>
+					Yes ...
+				</p>
 			</answer>
 		</faq>
 
+		<faq id="other-way-to-install">
+			<question>
+				Is there any other way to install and use the software?
+			</question>
+			<answer>
+				<p>
+					Yes ...
+				</p>
+			</answer>
+		</faq>
+
+		<faq id="source-install">
+			<question>
+				Can I build Svarog from the source?
+			</question>
+			<answer>
+				<p>
+					Yes, you can build the project from source using maven.
+				</p>
+				<p>
+					...
+				</p>
+			</answer>
+		</faq>
+
+	</part>
+
+	<part id="contribute">
+
+		<title>Ways to get involved</title>
+		
+		<faq id="contribute-programmer-java">
+			<question>
+				I am a Java programmer, how can I get involved in developing Svarog?
+			</question>
+			<answer>
+				<p>
+					...
+				</p>
+			</answer>
+		</faq>
+
+		<faq id="contribute-programmer-other">
+			<question>
+				I am a Python or C/C++ programmer, how can I get involved in developing Svarog?
+			</question>
+			<answer>
+				<p>
+					Svarog is written in Java, and at this time does not have any
+					code in Python or C/C++. The SingalML (or other....) projects
+					may need your help.
+				</p>
+			</answer>
+		</faq>
+
+		<faq id="contribute-designer">
+			<question>
+				I am a graphic designer, how can I get involved in developing Svarog?
+			</question>
+			<answer>
+				<p>
+					We often need icons and other small artwork. Contact the team
+					or check the issue tracking system for potential needs.
+				</p> 
+				<p>
+					We also need proper banners for the sites.
+				</p>
+			</answer>
+		</faq>
+
+		<faq id="contribute-html">
+			<question>
+				I am a website designer, how can I help Svarog?
+			</question>
+			<answer>
+				<p>
+					You can design a layout for Svarog's documentation.
+				</p>
+				<p>
+					We could also use a custom maven template for our sites.
+				</p>  
+			</answer>
+		</faq>
+		
+		<faq id="contribute-neuroscientist">
+			<question>
+				I am a neuroscientist, how can I help Svarog?
+			</question>
+			<answer>
+				<p>
+					We would be interested in anything you could tell us about the methods
+					you or your colleagues at the lab develop and use? What do they do?
+					How are they implemented? What does configuration look like? Send
+					any stories to the mailing list. .....
+				</p>
+			</answer>
+		</faq>
+
+		<faq id="contribute-documenation">
+			<question>
+				I have a knack for writing understandable documentation and love to do it.
+				Can I help?
+			</question>
+			<answer>
+				<p>
+					Well, we <i>don't</i> love to do this, so yes, you can help a lot ;).
+					Svarog is intended for ordinary users so a clear and friendly documentation
+					is very important. Contact the team if this is something you would feel
+					like doing.
+				</p>
+			</answer>
+		</faq>
+
+		<faq id="contribute-other">
+			<question>
+				Anything else I can do?
+			</question>
+			<answer>
+				<p>
+					Sure! You can always just download the software and test it. If you
+					find any bugs, submit them to the bug tracking system.
+				</p>
+			</answer>
+		</faq>
+		
 	</part>
 
 </faqs>

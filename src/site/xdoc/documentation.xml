@@ -10,7 +10,6 @@
 
   <body>
 
-    <!-- The body of the document contains a number of sections -->
     <section name="Documentation">
 
 		<p>
@@ -34,7 +33,7 @@
 		
 			<p>
 				<a href="apidocs/index.html">API docs</a> 
-				are available, but actual documentation inside is rather scarse.
+				are available, but actual documentation inside is rather scarce.
 			</p>
 
 		</subsection>

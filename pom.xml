@@ -9,7 +9,7 @@
 	<name>Svarog</name>
 	<description>Signal Viewer, Analyzer and Recorder on GPL</description>
 	<organization>
-		<name>Warsaw University, Zakład Fizyki Biomedycznej IFD and The Svarog Team</name>
+		<name>Warsaw University, Zakład Fizyki Biomedycznej IFD</name>
 		<url>http://brain.fuw.edu.pl/</url>
 	</organization>
 	<url>http://signalml.org/svarog/</url>
@@ -68,7 +68,7 @@
 				<executions>
 					<execution>
 						<id>assemble-packages</id>
-						<phase>install</phase>
+						<phase>package</phase>
 						<goals>
 							<goal>single</goal>
 						</goals>

@@ -10,7 +10,6 @@
 
   <body>
 
-    <!-- The body of the document contains a number of sections -->
     <section name="Screenshots">
 
 		<p>
@@ -64,6 +63,38 @@
 			<span style="display: block; clear: both" />					
 		
 		</subsection>
+				
+		<subsection name="Filter configuration">
+			
+			<p>
+				<span style="float: left; margin-right: 10px;"><img alt="Filter configuration" src="images/app_screen_filter.png" /></span>
+				<small>
+					The configuration of an FFT filter. Svarog supports fast online signal
+					filtering which can be fine-tuned to achieve many different goals.
+				</small>
+			</p>
+			
+			<span style="display: block; clear: both" />					
+		
+		</subsection>
+		
+		<subsection name="Annotating the signal">
+			
+			<p>
+				<span style="float: left; margin-right: 10px;"><img alt="Annotating the signal" src="images/app_screen_tags.png" /></span>
+				<small>
+					Svarog allows the user to easily annotate signals (in several modes)
+					using color tags. Colors are configurable. Annotation files can
+					be saved in an XML format. There's also a support for markers
+					(tags that have no width) and for averaging marked signal
+					fragments. 
+				</small>
+			</p>
+			
+			<span style="display: block; clear: both" />					
+		
+		</subsection>
+		
 					
     </section>
 
