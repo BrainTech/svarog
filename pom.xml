@@ -196,7 +196,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-project-info-reports-plugin</artifactId>
-				<version>2.0.1</version>
+				<version>2.1</version>
 				<reportSets>
 					<reportSet>
 						<reports>
@@ -228,9 +228,9 @@
 				</reportSets>
 			</plugin>
 
-			<!--
-				<plugin> <artifactId>maven-javadoc-plugin</artifactId> </plugin>
-			-->
+			<plugin> 
+				<artifactId>maven-javadoc-plugin</artifactId>
+			</plugin>
 
 		</plugins>
 	</reporting>
@@ -262,37 +262,71 @@
 		<developer>
 			<id>mdobacz</id>
 			<name>Michał Dobaczewski</name>
-			<email>michal (dot) d08 (at) Google mai l</email>
+			<email>michal (dot) d08 (at) "Google mail"</email>
 			<roles>
+				<role>Coordinator</role>
 				<role>Committer</role>
 			</roles>
-		</developer>
-		<developer>
-			<id>zbyszek</id>
-			<name>Zbyszek Jędrzejewski-Szmek</name>
-			<email>???</email>
-			<organization>ZFB</organization>
-			<roles>
-				<role>Committer</role>
-			</roles>
+			<timezone>+1</timezone>
 		</developer>
 		<developer>
 			<id>dobi</id>
 			<name>Dobiesław Ircha</name>
-			<email>???</email>
 			<organization>ZFB</organization>
 			<roles>
 				<role>Committer</role>
+				<role>Mp5 author</role>
 			</roles>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
+			<id>piotr</id>
+			<name>Piotr Durka</name>
+			<url>http://durka.info/</url>
+			<organization>ZFB</organization>
+			<roles>
+				<role>Ideas</role>
+				<role>Coordination</role>
+			</roles>		
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
+			<id>zbyszek</id>
+			<name>Zbyszek Jędrzejewski-Szmek</name>
+			<organization>ZFB</organization>
+			<roles>
+				<role>Infrastructure admin</role>
+			</roles>
+			<timezone>+1</timezone>
 		</developer>
 		<developer>
 			<id>hubert</id>
 			<name>Hubert Klekowicz</name>
-			<email>???</email>
 			<organization>ZFB</organization>
 			<roles>
-				<role>Committer</role>
+				<role>Testing</role>
+				<role>Matlab integration</role>
+				<role>Artifact author</role>
 			</roles>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
+			<id>rafal</id>
+			<name>Rafał Kuś</name>
+			<organization>ZFB</organization>
+			<roles>
+				<role>Mp5 author</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
+			<id>ula</id>
+			<name>Ula Malinowska</name>
+			<organization>ZFB</organization>
+			<roles>
+				<role>Stager author</role>
+			</roles>
+			<timezone>+1</timezone>
 		</developer>
 	</developers>
 
