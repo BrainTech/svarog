@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+  <properties>
+    <title>Documentation</title>
+    <author email="michal.d08@gmail.com">Michał Dobaczewski</author>
+  </properties>
+
+  <body>
+
+    <!-- The body of the document contains a number of sections -->
+    <section name="Documentation">
+
+		<p>
+			Unfortunately not much documentation is available at this moment.
+		</p>
+
+		<subsection name="Application documentation">
+
+			<p>
+				The application itself should be reasonably easy to use without documentation.
+			</p>
+			
+			<p>
+				There is some information in <a href="http://signalml.org/wiki/">the wiki</a>, but 
+				it's not much at this moment.
+			</p>
+
+		</subsection>		
+		
+		<subsection name="Code documentation">
+		
+			<p>
+				<a href="apidocs/index.html">API docs</a> 
+				are available, but actual documentation inside is rather scarse.
+			</p>
+
+		</subsection>
+			
+    </section>
+
+  </body>
+
+</document>

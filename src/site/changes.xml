@@ -8,8 +8,7 @@
 	</properties>
 
 	<body>
-		<release version="0.4.7" date="2009-01-01"
-			description="The first version after the project was taken over from CC">
+		<release version="0.5.0" date="2009-01-01" description="The first version of Svarog">
 		</release>
 	</body>
 

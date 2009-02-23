@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+  <properties>
+    <title>Screenshots</title>
+    <author email="michal.d08@gmail.com">Michał Dobaczewski</author>
+  </properties>
+
+  <body>
+
+    <!-- The body of the document contains a number of sections -->
+    <section name="Screenshots">
+
+		<p>
+			Below you will find a few screenshots from the current version of Svarog.
+		</p>
+
+		<subsection name="The main window">
+			
+			<p>
+				<span style="float: left; margin-right: 10px;"><img alt="The main window" src="images/app_screen_full.png" /></span>
+				<small>
+					This is the main window of Svarog. The central portion of the window is
+					taken up by the display of a signal (in this case EEG). The left portion
+					displays several tree views (in tabs) which aid in navigation over the
+					signal, files, etc. The bottom pane contains property sheets, the console
+					and a task list. Above the signal you can see a tag based hypnogram.
+					The gray block in the signal is an annotation.
+				</small>
+			</p>
+			
+			<span style="display: block; clear: both" />					
+		
+		</subsection>
+
+		<subsection name="The montage editor">
+			
+			<p>
+				<span style="float: left; margin-right: 10px;"><img alt="The montage editor" src="images/app_screen_montage.png" /></span>
+				<span style="text-align: justify;"><small>
+					This is the montage editor of Svarog. Montages can be edited by dragging
+					channel symbols with the mouse.
+				</small></span>
+				
+			</p>			
+		
+			<span style="display: block; clear: both" />					
+		
+		</subsection>
+
+		<subsection name="Overlaid FFT">
+			
+			<p>
+				<span style="float: left; margin-right: 10px;"><img alt="Overlaid FFT" src="images/app_screen_fft.png" /></span>
+				<span style="text-align: justify;"><small>
+					The overlaid FFT view of Svarog. When holding the mouse button down,
+					the FFT of the selected signal fragment is shown.
+				</small></span>
+				
+			</p>		
+		
+			<span style="display: block; clear: both" />					
+		
+		</subsection>
+					
+    </section>
+
+  </body>
+
+</document>

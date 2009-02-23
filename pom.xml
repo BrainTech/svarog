@@ -9,7 +9,7 @@
 	<name>Svarog</name>
 	<description>Signal Viewer, Analyzer and Recorder on GPL</description>
 	<organization>
-		<name>Warsaw University, Zakład Fizyki Biomedycznej IFD</name>
+		<name>Warsaw University, Zakład Fizyki Biomedycznej IFD and The Svarog Team</name>
 		<url>http://brain.fuw.edu.pl/</url>
 	</organization>
 	<url>http://signalml.org/svarog/</url>
@@ -45,16 +45,40 @@
 				</executions>
 			</plugin>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>org.signalml.app.SignalMLApplication</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>        		
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.2-beta-3</version>
 				<configuration>
 					<descriptors>
 						<descriptor>src/main/assembly/full.xml</descriptor>
 					</descriptors>
 				</configuration>
+				<executions>
+					<execution>
+						<id>assemble-packages</id>
+						<phase>install</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
+				<version>2.0-beta-7</version>
 				<configuration>
 					<outputEncoding>UTF-8</outputEncoding>
 				</configuration>
@@ -161,9 +185,9 @@
 	</dependencies>
 
 	<scm>
-		<connection>scm:git:http://escher.fuw.edu.pl/git/repos/svarog</connection>
-		<developerConnection>scm:git:ssh://escher.fuw.edu.pl/git/repos/svarog</developerConnection>
-		<url>http://escher.fuw.edu.pl/git/repos/svarog</url>
+		<connection>scm:git:git://escher.fuw.edu.pl/git/svarog</connection>
+		<developerConnection>scm:git:ssh://escher.fuw.edu.pl/git/svarog</developerConnection>
+		<url>http://escher.fuw.edu.pl/git/svarog</url>
 	</scm>
 
 	<reporting>
@@ -239,9 +263,8 @@
 			<id>mdobacz</id>
 			<name>Michał Dobaczewski</name>
 			<email>michal (dot) d08 (at) Google mai l</email>
-			<organization>unaffiliated</organization>
 			<roles>
-				<role>commiter</role>
+				<role>Committer</role>
 			</roles>
 		</developer>
 		<developer>
@@ -250,7 +273,7 @@
 			<email>???</email>
 			<organization>ZFB</organization>
 			<roles>
-				<role>commiter</role>
+				<role>Committer</role>
 			</roles>
 		</developer>
 		<developer>
@@ -259,7 +282,7 @@
 			<email>???</email>
 			<organization>ZFB</organization>
 			<roles>
-				<role>commiter</role>
+				<role>Committer</role>
 			</roles>
 		</developer>
 		<developer>
@@ -268,7 +291,7 @@
 			<email>???</email>
 			<organization>ZFB</organization>
 			<roles>
-				<role>commiter</role>
+				<role>Committer</role>
 			</roles>
 		</developer>
 	</developers>

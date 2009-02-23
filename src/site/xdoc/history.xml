@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+  <properties>
+    <title>History</title>
+    <author email="michal.d08@gmail.com">Michał Dobaczewski</author>
+  </properties>
+
+  <body>
+
+    <!-- The body of the document contains a number of sections -->
+    <section name="History">
+
+		<p>
+			Svarog is based on the now defunct "signalml" (uncapitalized, as opposed to
+			SignalML) project, which was begun in 2007 under supervision of
+			<a href="http://brain.fuw.edu.pl/">Zakład Fizyki Biomedycznej, IFD UW</a>. 
+			The development of <i>signalml</i>
+			was being funded with a Polish science grant. A software company,
+			<a href="http://www.cc.com.pl/">CC Otwarte Systemy Komputerowe Sp. z o.o.</a>,
+			was contracted to develop the initial version. The following people were
+			significantly involved in development (or management) led by CC:
+		</p>
+		
+		<ul>
+			<li><a href="team-list.html">Michał Dobaczewski (2007-March 2008)</a></li>
+			<li>Oskar Kapala</li>
+			<li>Grzegorz Kaczor</li>
+			<li>Grzegorz Blinowski</li>
+		</ul>
+		
+		<p>
+			(links to the current team list are provided for people who are still 
+			involved in	the development of Svarog) 
+		</p>
+		
+		<p>
+			In February 2009 the Svarog project was started as an effort led by
+			enthusiasts. The code of <i>signalml</i>, which had been released 
+			on terms of the	GNU GPLv3 license, was chosen as a starting point. 
+			The two projects are formally separate in order to disassociate Svarog
+			from any remaining issues related to the contract between ZFB and CC.
+			As far as we (the Svarog team) know, the <i>signalml</i> project is now
+			effectively dead, unmaintained, unsupported and will not be
+			continued (other than as Svarog).
+		</p>
+		
+		<p>
+			The old signalml repository (import from CVS) can be viewed 
+			<a href="http://escher.fuw.edu.pl/git/signalml-cvs.git">here</a>, but
+			using this code for any purpose is highly discouraged (use Svarog instead),
+			and no commit priviledges will be granted to anyone other than the employees of
+			CC.
+		</p>
+									
+    </section>
+
+  </body>
+
+</document>

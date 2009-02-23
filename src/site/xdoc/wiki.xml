@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+  <properties>
+    <title>Wiki</title>
+    <author email="michal.d08@gmail.com">Michał Dobaczewski</author>
+  </properties>
+
+  <body>
+
+    <!-- The body of the document contains a number of sections -->
+    <section name="Wiki">
+
+		<p>
+			For now, Svarog wiki is located at the same place where the SignalML wiki is located.
+		</p>	
+	
+		<p>
+			<a href="http://signalml.org/wiki/">Signalml wiki</a>
+		</p>
+		
+		<p>
+			<a href="http://signalml.org/wiki/Svarog">The main article on Svarog</a>
+		</p>
+			
+    </section>
+
+  </body>
+
+</document>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+  <properties>
+    <title>Overview</title>
+    <author email="michal.d08@gmail.com">Michał Dobaczewski</author>
+  </properties>
+
+  <body>
+
+    <!-- The body of the document contains a number of sections -->
+    <section name="Welcome to Svarog">
+
+		<p>
+			Thanks for visiting Svarog's site. We hope you will find the software
+			usefull and the information provided sufficient. If you have any questions
+			do not hesitate to ask someone from the team.
+		</p>
+
+		<subsection name="What is Svarog?">
+		
+			<p>
+				Svarog is intended to be a signal viewer, annotator, analyzer and recorder.
+				Support for recording is not yet implemented in any form, and exists only
+				in plans for the future. Support for signal analysis methods is preliminary. 
+			</p>
+			
+			<p>			
+				Svarog stands for <b>S</b>ignal <b>V</b>iever, <b>A</b>nalyzer 
+				and <b>R</b>ecorder <b>o</b>n <b>G</b>PL. It's a rather loose acronym. 
+				Svarog is also the name of a god (or deity) of the Sun, fire (and 
+				of the smiths) in the religion of the ancient Slavic peoples. 
+				Svarog used to be a prominent deity in central and eastern Europe prior to 
+				christianization in the Middle Ages. 				
+			</p>
+		
+		</subsection>
+
+		<subsection name="The signals">
+
+			<p>
+				Svarog is not intended to handle very simple signals (for example stereo
+				sound files). It was designed with more complex signals in mind,
+				epecially biosignals, such as EEG or MEG, where the signal has
+				few dozens of channels and is often up to 10 hours in length.
+			</p>
+
+		</subsection>
+
+		<subsection name="Relation to SignalML">
+		
+			<p>
+				Svarog uses SignalML to load signal files. Currently only SignalML 1.0 is supported
+				but including SignalML 2.0 support is on the roadmap.
+			</p> 
+		
+		</subsection>
+		
+    </section>
+
+  </body>
+
+</document>
