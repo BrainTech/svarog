@@ -32,20 +32,20 @@
 		</breadcrumbs>
 		
 		<menu name="${project.name}">
-			<item name="Overview" href="index.html" />
-			<item name="Downloads" href="downloads.html" />
-			<item name="Screenshots" href="screenshots.html" />
-			<item name="FAQ" href="faq.html" />
+			<item name="Overview" href="/index.html" />
+			<item name="Downloads" href="/downloads.html" />
+			<item name="Screenshots" href="/screenshots.html" />
+			<item name="FAQ" href="/faq.html" />
 		</menu>
 
 		<menu name="Information">
-			<item name="Documentation" href="documentation.html" />
-			<item name="Wiki" href="wiki.html" />
-			<item name="Mailing list" href="mail-lists.html" />
-			<item name="Issue tracking" href="issue-tracking.html" />
-			<item name="Source code" href="source-repository.html" />
-			<item name="License" href="license.html" />
-			<item name="History" href="history.html" />
+			<item name="Documentation" href="/documentation.html" />
+			<item name="Wiki" href="/wiki.html" />
+			<item name="Mailing list" href="/mail-lists.html" />
+			<item name="Issue tracking" href="/issue-tracking.html" />
+			<item name="Source code" href="/source-repository.html" />
+			<item name="License" href="/license.html" />
+			<item name="History" href="/history.html" />
 		</menu>
 		
 		<menu ref="reports"/>

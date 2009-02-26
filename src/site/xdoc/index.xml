@@ -19,8 +19,10 @@
 				</p>
 				<p>
 					You can 
-					<a href="downloads.html"><span style="white-space: nowrap;">download and use</span></a> the software for free as well as
-					<a href="source-repository.html"><span style="white-space: nowrap;">modify it</span></a> according to the terms of the
+					<a href="downloads.html"><span style="white-space: nowrap;">download and use</span></a>
+					the software for free as well as
+					<a href="source-repository.html"><span style="white-space: nowrap;">modify it</span></a>
+					according to the terms of the
 					<a href="license.html"><span style="white-space: nowrap;">GNU General Public License, Version 3</span></a>. 
 				</p>
 				<p>
@@ -31,7 +33,7 @@
 		</div>
 
 		<p>
-			Thanks for visiting Svarog's site. We hope you will find the software
+			Thanks for visiting Svarog's site. We hope you find the software
 			usefull and the information provided sufficient. If you have any questions
 			do not hesitate to ask someone from <a href="team-list.html">the team</a>.
 		</p>
@@ -203,15 +205,9 @@
 				narrow group of specialists: clinicists, physicians and scientists. On the other
 				hand Svarog addresses concerns which directly relate to people's health and
 				wellbeing. It has potential to improve the life of some people, somewhere, and
-				as such is an important project, which can bring you a lot of personal satisfaction
-				if you participate. 
+				as such is an important project. 
 			</p>
-			
-			<p>
-				Svarog is also quite advanced in several areas (and will probably become
-				even more advanced), so working on it can provide you with valuable experience.
-			</p>
-		
+					
 		</subsection>
 		
     </section>
