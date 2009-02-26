@@ -15,6 +15,16 @@
 	<url>http://signalml.org/svarog/</url>
 	<inceptionYear>2007</inceptionYear>
 
+	<repositories>
+		<repository>
+			<id>signalml.org</id>
+			<url>http://escher.fuw.edu.pl/~mdobacz/repository</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+	</repositories>
+
 	<profiles>
 		<profile>
 			<id>win32</id>
@@ -58,7 +68,7 @@
 			</properties>			
 		</profile>
 		<profile>
-			<id>linux</id>
+			<id>linux64</id>
 			<activation>
 				<os>
 					<name>linux</name>
@@ -75,8 +85,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>		
-		<maven.test.skip>true</maven.test.skip>
-		
+		<maven.test.skip>true</maven.test.skip>		
 	</properties>
 
 	<build>
