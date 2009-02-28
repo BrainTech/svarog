@@ -61,7 +61,7 @@
 				<os>
 					<name>linux</name>
 					<family>unix</family>
-					<arch>x86</arch>
+					<arch>i386</arch>
 				</os>
 			</activation>
 			<properties>
