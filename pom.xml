@@ -18,10 +18,11 @@
 	<repositories>
 		<repository>
 			<id>signalml.org</id>
+			<name>SignalML Maven Repository</name>
 			<url>http://escher.fuw.edu.pl/~mdobacz/repository</url>
 			<releases>
 				<enabled>true</enabled>
-			</releases>
+			</releases>			
 		</repository>
 	</repositories>
 
