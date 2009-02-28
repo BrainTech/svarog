@@ -40,6 +40,19 @@
 				<org.signalml.mbfj.platform>win32</org.signalml.mbfj.platform>	
 			</properties>			
 		</profile>
+		<profile>
+			<id>linux</id>
+			<activation>
+				<os>
+					<name>linux</name>
+					<family>unix</family>
+					<arch>i386</arch>
+				</os>
+			</activation>
+			<properties>
+				<org.signalml.mbfj.platform>x86</org.signalml.mbfj.platform>	
+			</properties>			
+		</profile>
 		
 		<!-- profiles below this line have not been tested -->
 		
@@ -53,19 +66,6 @@
 			</activation>
 			<properties>
 				<org.signalml.mbfj.platform>win64</org.signalml.mbfj.platform>	
-			</properties>			
-		</profile>
-		<profile>
-			<id>linux</id>
-			<activation>
-				<os>
-					<name>linux</name>
-					<family>unix</family>
-					<arch>i386</arch>
-				</os>
-			</activation>
-			<properties>
-				<org.signalml.mbfj.platform>x86</org.signalml.mbfj.platform>	
 			</properties>			
 		</profile>
 		<profile>
