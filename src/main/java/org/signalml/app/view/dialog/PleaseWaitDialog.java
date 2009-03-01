@@ -213,6 +213,7 @@ public class PleaseWaitDialog extends AbstractDialog {
 
 		logger.debug("Start waitAndShowDialogIn for [" + worker + "] timeout [" + noDialogTimeout + "]" );
 		
+		// FIXME [MD] probably should be cleared if dialog not shown after all
 		currentOwner = worker;
 		
 		if( noDialogTimeout > 0 ) {

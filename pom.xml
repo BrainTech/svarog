@@ -74,7 +74,7 @@
 				<os>
 					<name>linux</name>
 					<family>unix</family>
-					<arch>x86_64</arch>
+					<arch>amd64</arch>
 				</os>
 			</activation>
 			<properties>
