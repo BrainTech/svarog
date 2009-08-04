@@ -1,4 +1,4 @@
-/* SignalMLConstants.java created 2008-01-17
+/* SvarogConstants.java created 2008-01-17
  * 
  */
 
@@ -7,12 +7,14 @@ package org.signalml.util;
 import java.awt.Dimension;
 import java.util.Locale;
 
-/** SignalMLConstants
+/** SvarogConstants
  *
  * 
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public abstract class SignalMLConstants {
+public abstract class SvarogConstants {
+
+	public static final String NAME = "Svarog";
 
 	public static final String VERSION = "0.4.7";
 	

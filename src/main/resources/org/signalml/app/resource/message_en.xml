@@ -33,7 +33,7 @@
 	<entry key="reuse">Reuse</entry>
 	<entry key="replace">Replace</entry>
 
-	<entry key="splash.loading">Loading signalml v. {0}</entry>
+	<entry key="splash.loading">Loading Svarog v.{0}</entry>
 	<entry key="splash.url">http://signalml.org/</entry>
 	<entry key="splash.comment">Financed from Polish funds for science</entry>
 
@@ -156,8 +156,8 @@
 	<entry key="startup.finishingMainFrameInitialization">Finishing</entry>
 	<entry key="startup.restoringWorkspace">Restoring workspace</entry>
 
-	<entry key="viewer.title">signalml viewer {0}</entry>
-	<entry key="viewer.welcomeStatus">signalml viewer version {0} ready</entry>
+	<entry key="viewer.title">Svarog v.{0}</entry>
+	<entry key="viewer.welcomeStatus">Svarog v.{0} ready</entry>
 
 	<entry key="viewer.statusBar.pageSelection">Page selection</entry>
 	<entry key="viewer.statusBar.blockSelection">Block selection</entry>

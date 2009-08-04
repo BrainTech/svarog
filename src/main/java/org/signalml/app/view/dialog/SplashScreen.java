@@ -29,10 +29,10 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.SignalMLApplication;
+import org.signalml.app.SvarogApplication;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.ViewerMainFrame;
-import org.signalml.util.SignalMLConstants;
+import org.signalml.util.SvarogConstants;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** SplashScreen
@@ -80,7 +80,7 @@ public class SplashScreen extends JDialog {
 
 	public JProgressBar getProgressBar() {
 		if( progressBar == null ) {
-			progressBar = new JProgressBar(SwingConstants.HORIZONTAL,0,SignalMLApplication.INITIALIZATION_STEP_COUNT+ViewerMainFrame.INITIALIZATION_STEP_COUNT);
+			progressBar = new JProgressBar(SwingConstants.HORIZONTAL,0,SvarogApplication.INITIALIZATION_STEP_COUNT+ViewerMainFrame.INITIALIZATION_STEP_COUNT);
 			progressBar.setStringPainted(true);
 			progressBar.setString( messageSource.getMessage("startup.initializing") );
 			progressBar.setPreferredSize(new Dimension(400,20));
@@ -205,7 +205,7 @@ public class SplashScreen extends JDialog {
 			fontMetrics = g.getFontMetrics(font);
 			g.setFont(font);
 						
-			String title = messageSource.getMessage("splash.loading",  new Object[] { SignalMLConstants.VERSION } );
+			String title = messageSource.getMessage("splash.loading", new Object[] {SvarogConstants.VERSION } );
 			
 			Rectangle2D stringBounds = fontMetrics.getStringBounds(title, g);			
 			int width = (int) stringBounds.getWidth();

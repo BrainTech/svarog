@@ -27,7 +27,7 @@ import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.signal.SignalType;
 import org.signalml.exception.SignalMLException;
-import org.signalml.util.SignalMLConstants;
+import org.signalml.util.SvarogConstants;
 import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.core.io.ClassPathResource;
@@ -69,7 +69,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	protected void initialize() {
 		setTitle(messageSource.getMessage("signalMontage.title"));
 		setIconImage( IconUtils.loadClassPathImage("org/signalml/app/icon/montage.png"));		
-		setPreferredSize(SignalMLConstants.MIN_ASSUMED_DESKTOP_SIZE);
+		setPreferredSize(SvarogConstants.MIN_ASSUMED_DESKTOP_SIZE);
 		super.initialize();
 		setMinimumSize(new Dimension(800,600));
 	}

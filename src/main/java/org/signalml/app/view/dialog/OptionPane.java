@@ -14,7 +14,7 @@ import org.signalml.app.document.FileBackedDocument;
 import org.signalml.app.document.MutableDocument;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.PrettyStringLocaleWrapper;
-import org.signalml.util.SignalMLConstants;
+import org.signalml.util.SvarogConstants;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** OptionPane
@@ -997,7 +997,7 @@ public class OptionPane extends JOptionPane {
 
 	public static Locale showLanguageOption() {
 
-		Locale[] locales = SignalMLConstants.AVAILABLE_LOCALES;
+		Locale[] locales = SvarogConstants.AVAILABLE_LOCALES;
 		PrettyStringLocaleWrapper[] possibilities = new PrettyStringLocaleWrapper[locales.length]; 
 		Locale defaultLocale = Locale.getDefault();
 		PrettyStringLocaleWrapper defaultPossibility = new PrettyStringLocaleWrapper(defaultLocale);
@@ -1018,8 +1018,7 @@ public class OptionPane extends JOptionPane {
 		PrettyStringLocaleWrapper s = (PrettyStringLocaleWrapper) showInputDialog(
                 null,
                 "",
-                // XXX signalml
-                "signalml viewer",
+                SvarogConstants.NAME,
                 JOptionPane.QUESTION_MESSAGE,
                 IconUtils.getQuestionIcon(),
                 possibilities,

@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.SignalMLApplication;
+import org.signalml.app.SvarogApplication;
 import org.signalml.app.document.MRUDEntry;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.RawSignalDocument;
@@ -68,7 +68,7 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 		if(mrud instanceof SignalMLMRUDEntry) {
 			
 			SignalMLMRUDEntry smlEntry = (SignalMLMRUDEntry) mrud;
-			SignalMLCodec codec = SignalMLApplication.getSignalMLCodecManager().getCodecByUID(smlEntry.getCodecUID());
+			SignalMLCodec codec = SvarogApplication.getSignalMLCodecManager().getCodecByUID(smlEntry.getCodecUID());
 			if (codec == null) {
 				logger.warn("Mrud codec not found for uid [" + smlEntry.getCodecUID() + "]");
 				throw new MissingCodecException("error.mrudMissingCodecException");

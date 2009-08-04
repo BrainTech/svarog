@@ -117,7 +117,7 @@ import org.signalml.compilation.DynamicCompilationContext;
 import org.signalml.exception.SignalMLException;
 import org.signalml.method.Method;
 import org.signalml.method.iterator.IterableMethod;
-import org.signalml.util.SignalMLConstants;
+import org.signalml.util.SvarogConstants;
 import org.springframework.context.support.MessageSourceAccessor;
 
 import com.thoughtworks.xstream.XStream;
@@ -527,7 +527,8 @@ public class ViewerElementManager {
 			statusBar.setMaximizeDocumentsAction(getViewModeAction());
 			statusBar.setActionFocusManager(getActionFocusManager());
 			statusBar.initialize();
-			statusBar.setStatus(messageSource.getMessage("viewer.welcomeStatus", new Object[] {SignalMLConstants.VERSION}));
+			statusBar.setStatus(messageSource.getMessage("viewer.welcomeStatus",
+								     new Object[] {SvarogConstants.VERSION}));
 			getActionFocusManager().addActionFocusListener(statusBar);			
 		}
 		return statusBar;

@@ -29,7 +29,7 @@ import javax.swing.border.EmptyBorder;
 import org.apache.log4j.Logger;
 import org.signalml.app.util.IconUtils;
 import org.signalml.exception.SignalMLException;
-import org.signalml.util.SignalMLConstants;
+import org.signalml.util.SvarogConstants;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
@@ -88,7 +88,7 @@ public abstract class AbstractDialog extends JDialog {
 	protected void initialize() {
 		
 		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-		setMaximumSize(SignalMLConstants.MIN_ASSUMED_DESKTOP_SIZE);
+		setMaximumSize(SvarogConstants.MIN_ASSUMED_DESKTOP_SIZE);
 		
 		addWindowListener(new WindowAdapter() {
 			@Override

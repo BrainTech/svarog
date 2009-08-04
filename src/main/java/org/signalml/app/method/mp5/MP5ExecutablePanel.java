@@ -18,7 +18,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-import org.signalml.app.SignalMLApplication;
+import org.signalml.app.SvarogApplication;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.method.mp5.MP5LocalProcessExecutor;
@@ -124,7 +124,7 @@ public class MP5ExecutablePanel extends JPanel {
 			String osName = System.getProperty("os.name");
 			if( Util.WINDOWS_OS_PATTERN.matcher(osName).matches() ) {
 				
-				File executable = new File( SignalMLApplication.getStartupDir(), "native/windows/bin/mp5.exe" );
+				File executable = new File( SvarogApplication.getStartupDir(), "native/windows/bin/mp5.exe" );
 				if( executable.exists() ) {
 					if( executable.canExecute() ) {
 						mp5Executable = executable;			
@@ -134,7 +134,7 @@ public class MP5ExecutablePanel extends JPanel {
 			}
 			else if( Util.LINUX_OS_PATTERN.matcher(osName).matches() ) {
 				
-				File executable = new File( SignalMLApplication.getStartupDir(), "native/linux/bin/mp5" );
+				File executable = new File( SvarogApplication.getStartupDir(), "native/linux/bin/mp5" );
 				if( executable.exists() ) {
 					if( !executable.canExecute() ) {
 						executable.setExecutable(true, true);
@@ -147,7 +147,7 @@ public class MP5ExecutablePanel extends JPanel {
 			}
 			else if( Util.MAC_OS_PATTERN.matcher(osName).matches() ) {
 				
-				File executable = new File( SignalMLApplication.getStartupDir(), "native/mac/bin/mp5" );
+				File executable = new File( SvarogApplication.getStartupDir(), "native/mac/bin/mp5" );
 				if( executable.exists() ) {
 					if( !executable.canExecute() ) {
 						executable.setExecutable(true, true);

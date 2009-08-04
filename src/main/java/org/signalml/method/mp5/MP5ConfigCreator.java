@@ -18,7 +18,7 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.signalml.util.SignalMLConstants;
+import org.signalml.util.SvarogConstants;
 import org.signalml.util.Util;
 
 /** MP5ConfigWriter
@@ -97,7 +97,7 @@ public class MP5ConfigCreator {
 		
 		if( addHeader ) {
 			formatter.format( "# signalml mp5 configuration%n" );
-			formatter.format( "# auto created by SignalML version [%s] on [%s]%n", SignalMLConstants.VERSION, (new Date()).toString() );
+			formatter.format( "# auto created by SignalML version [%s] on [%s]%n", SvarogConstants.VERSION, (new Date()).toString() );
 			formatter.format( "%n" );
 		}
 		

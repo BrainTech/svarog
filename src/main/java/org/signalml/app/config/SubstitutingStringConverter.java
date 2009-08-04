@@ -7,7 +7,7 @@ package org.signalml.app.config;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.signalml.app.SignalMLApplication;
+import org.signalml.app.SvarogApplication;
 import org.signalml.util.Util;
 
 import com.thoughtworks.xstream.converters.Converter;
@@ -28,7 +28,7 @@ public class SubstitutingStringConverter implements Converter {
 	
 	public SubstitutingStringConverter() {
 		tokens = new HashMap<String,String>();
-		tokens.put( "profile", SignalMLApplication.getProfileDir().getAbsolutePath() );
+		tokens.put( "profile", SvarogApplication.getProfileDir().getAbsolutePath() );
 		
 		invTokens = Util.invertStringMap(tokens);
 	}

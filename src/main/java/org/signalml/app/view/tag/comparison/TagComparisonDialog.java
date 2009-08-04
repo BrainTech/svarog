@@ -29,7 +29,7 @@ import org.signalml.domain.tag.TagComparisonResults;
 import org.signalml.domain.tag.TagDifferenceDetector;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.exception.SignalMLException;
-import org.signalml.util.SignalMLConstants;
+import org.signalml.util.SvarogConstants;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** TagComparisonDialog
@@ -69,7 +69,7 @@ public class TagComparisonDialog extends AbstractDialog {
 	protected void initialize() {
 		setTitle(messageSource.getMessage("tagComparison.title"));
 		setIconImage( IconUtils.loadClassPathImage("org/signalml/app/icon/comparetags.png") );		
-		setPreferredSize(SignalMLConstants.MIN_ASSUMED_DESKTOP_SIZE);
+		setPreferredSize(SvarogConstants.MIN_ASSUMED_DESKTOP_SIZE);
 		super.initialize();
 		
 		topDocumentComboBox.addActionListener( new ActionListener() {

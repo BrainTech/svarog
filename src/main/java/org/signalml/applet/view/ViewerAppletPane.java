@@ -25,7 +25,7 @@ import org.signalml.app.view.ViewerDocumentTabbedPane;
 import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
-import org.signalml.applet.SignalMLApplet;
+import org.signalml.applet.SvarogApplet;
 import org.signalml.exception.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 
@@ -38,7 +38,7 @@ public class ViewerAppletPane extends JPanel implements View, DocumentManagerLis
 
 	private static final long serialVersionUID = 1L;
 	
-	private SignalMLApplet applet;
+	private SvarogApplet applet;
 	
 	private ViewerElementManager elementManager;
 
@@ -48,7 +48,7 @@ public class ViewerAppletPane extends JPanel implements View, DocumentManagerLis
 	private boolean mainToolBarVisible = true;
 	private boolean statusBarVisible = true;
 	
-	public ViewerAppletPane(SignalMLApplet applet) {
+	public ViewerAppletPane(SvarogApplet applet) {
 		super();
 		this.applet = applet;
 	}

@@ -1,4 +1,4 @@
-/* SignalMLApplication.java created 2007-09-10
+/* SvarogApplication.java created 2007-09-10
  * 
  */
 package org.signalml.app;
@@ -96,19 +96,19 @@ import org.springframework.util.Log4jConfigurer;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.Annotations;
 
-/** SignalMLApplication
+/** SvarogApplication
  *
  * 
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class SignalMLApplication {
+public class SvarogApplication {
 
 	private static Preferences preferences = null;
 	private static Locale locale = null;
 	
 	private static MessageSourceAccessor messageSource = null;
 		
-	protected static final Logger logger = Logger.getLogger(SignalMLApplication.class);
+	protected static final Logger logger = Logger.getLogger(SvarogApplication.class);
 	
 	public static final int INITIALIZATION_STEP_COUNT = 5;
 	
@@ -400,9 +400,9 @@ public class SignalMLApplication {
 				"classpath:org/signalml/resource/wsmessage"
 		});
 
-		SignalMLApplication.messageSource = new MessageSourceAccessor(messageSource, locale);
-		OptionPane.setMessageSource(SignalMLApplication.messageSource);
-		ErrorsDialog.setStaticMessageSource(SignalMLApplication.messageSource);
+		SvarogApplication.messageSource = new MessageSourceAccessor(messageSource, locale);
+		OptionPane.setMessageSource(SvarogApplication.messageSource);
+		ErrorsDialog.setStaticMessageSource(SvarogApplication.messageSource);
 	}
 	
 	private static boolean setProfileDir(GeneralConfiguration config, boolean firstTime) {

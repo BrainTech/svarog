@@ -1,4 +1,4 @@
-/* SignalMLApplet.java created 2008-01-17
+/* SvarogApplet.java created 2008-01-17
  * 
  */
 
@@ -79,16 +79,16 @@ import org.springframework.util.Log4jConfigurer;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.Annotations;
 
-/** SignalMLApplet
+/** SvarogApplet
  *
  * 
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class SignalMLApplet extends JApplet implements ViewFocusSelector {
+public class SvarogApplet extends JApplet implements ViewFocusSelector {
 
 	private static final long serialVersionUID = 1L;
 	
-	protected static final Logger logger = Logger.getLogger(SignalMLApplet.class);
+	protected static final Logger logger = Logger.getLogger(SvarogApplet.class);
 
 	private Locale locale;
 	private Preferences preferences;
@@ -385,11 +385,11 @@ public class SignalMLApplet extends JApplet implements ViewFocusSelector {
 					
 				} catch (Exception ex) {
 					logger.error( "Failed", ex );
-					OptionPane.showMessageDialog(SignalMLApplet.this, ex.getMessage(), "Failed, see console for details", OptionPane.ERROR_MESSAGE);
+					OptionPane.showMessageDialog(SvarogApplet.this, ex.getMessage(), "Failed, see console for details", OptionPane.ERROR_MESSAGE);
 					return;
 				}
 				
-				OptionPane.showMessage(SignalMLApplet.this, "mp5Method.config.remote.testConnectionSuccess");
+				OptionPane.showMessage(SvarogApplet.this, "mp5Method.config.remote.testConnectionSuccess");
 				
 			}
 			
