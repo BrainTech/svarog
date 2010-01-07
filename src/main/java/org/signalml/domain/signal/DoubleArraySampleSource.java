@@ -11,9 +11,9 @@ package org.signalml.domain.signal;
  */
 public class DoubleArraySampleSource extends AbstractMultichannelSampleSource implements MultichannelSampleSource {
 
-	private double[][] samples;
-	private int channelCount;
-	private int sampleCount;
+	protected double[][] samples;
+	protected int channelCount;
+	protected int sampleCount;
 
 	public DoubleArraySampleSource(double[][] samples, int channelCount, int sampleCount) {
 		super();

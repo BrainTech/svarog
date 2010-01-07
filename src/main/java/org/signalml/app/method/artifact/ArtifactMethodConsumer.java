@@ -10,6 +10,8 @@ import java.io.FileFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import multiplexer.jmx.client.ConnectException;
+
 import org.apache.log4j.Logger;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.ManagedDocumentType;
@@ -167,7 +169,11 @@ public class ArtifactMethodConsumer implements InitializingMethodResultConsumer 
 				logger.error("Failed to open document - i/o exception", ex);
 				ErrorsDialog.showImmediateExceptionDialog(dialogParent, ex);
 				return false;			
-			}
+			} catch (ConnectException ex) {
+                logger.error("Failed to open document - connection exception", ex);
+                ErrorsDialog.showImmediateExceptionDialog(dialogParent, ex);
+                return false;           
+            }
 			
 		}
 		
@@ -257,7 +263,11 @@ public class ArtifactMethodConsumer implements InitializingMethodResultConsumer 
 							logger.error("Failed to open document - i/o exception", ex);
 							ErrorsDialog.showImmediateExceptionDialog(dialogParent, ex);
 							return false;			
-						}
+						} catch (ConnectException ex) {
+                            logger.error("Failed to open document - connection exception", ex);
+                            ErrorsDialog.showImmediateExceptionDialog(dialogParent, ex);
+                            return false;           
+                        }
 												
 					}
 											

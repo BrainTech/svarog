@@ -13,6 +13,7 @@ import org.signalml.app.document.DocumentManager;
 import org.signalml.app.document.DocumentManagerEvent;
 import org.signalml.app.document.DocumentManagerListener;
 import org.signalml.app.document.ManagedDocumentType;
+import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.view.tag.TagIconProducer;
@@ -154,7 +155,7 @@ public class TagTreeModel extends AbstractTreeModel implements DocumentManagerLi
 	public void documentAdded(DocumentManagerEvent e) {
 		
 		Document document = e.getDocument();
-		if( document instanceof SignalDocument ) {
+		if( document instanceof SignalDocument && ! ( document instanceof MonitorSignalDocument ) ) {
 			SignalDocument signalDocument = (SignalDocument) document;
 			signalDocument.addPropertyChangeListener(this);
 		
@@ -186,7 +187,7 @@ public class TagTreeModel extends AbstractTreeModel implements DocumentManagerLi
 	public void documentRemoved(DocumentManagerEvent e) {
 
 		Document document = e.getDocument();
-		if( document instanceof SignalDocument ) {
+		if( document instanceof SignalDocument && !( document instanceof MonitorSignalDocument ) ) {
 			SignalDocument signalDocument = (SignalDocument) document;
 			signalDocument.removePropertyChangeListener(this);
 		

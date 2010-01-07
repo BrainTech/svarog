@@ -203,7 +203,9 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		setFocusable(true);
 		
 		signalChain = SignalProcessingChain.createFilteredChain(document.getSampleSource(), document.getType());
-		signalChain.applyMontageDefinition(document.getMontage());
+		Montage montage = document.getMontage();
+		if (montage != null)
+		    signalChain.applyMontageDefinition( montage);
 						
 		signalChain.addPropertyChangeListener(this);
 		document.addPropertyChangeListener(this);
@@ -331,7 +333,9 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 					}				
 				}
 			}
-			detectedMaxValue = Math.min( 2000F, detectedMaxValue );
+			detectedMaxValue = Math.min( 2000.0, detectedMaxValue );
+			if (Math.abs( detectedMaxValue) < 0.000001)
+			    detectedMaxValue = 2000.0;
 
 			voltageZoomFactor = ( 1.0 / (detectedMaxValue * 2) ) * 0.95; 			
 			
@@ -1971,7 +1975,11 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		return signalChain;
 	}	
 	
-	public OriginalMultichannelSampleSource getSignalSource() {
+	public void setSignalChain(SignalProcessingChain signalChain) {
+        this.signalChain = signalChain;
+    }
+
+    public OriginalMultichannelSampleSource getSignalSource() {
 		return signalChain.getSource();
 	}
 

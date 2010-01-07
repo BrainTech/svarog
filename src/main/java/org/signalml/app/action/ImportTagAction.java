@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 
+import multiplexer.jmx.client.ConnectException;
+
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.DocumentFlowIntegrator;
@@ -98,7 +100,11 @@ public class ImportTagAction extends AbstractFocusableSignalMLAction<SignalDocum
 			logger.error("Failed to open document - i/o exception", ex);
 			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
 			return;			
-		}
+		} catch (ConnectException ex) {
+            logger.error("Failed to open document - connection exception", ex);
+            ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+            return;           
+        }
 		
 		// imported docuements are imported as unsaved for a variety of reasons
 		// one of them being that this makes them fit in more nicely in workspace saving

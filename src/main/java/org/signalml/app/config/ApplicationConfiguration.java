@@ -111,14 +111,22 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration {
 	
 	private int reconstructionHeight;
 	
+	private String multiplexerAddress;
+	private int multiplexerPort;
+
+	private float monitorSamplingFrequency;
+	private float monitorPageSize;
+	private float monitorCalibrationGain;
+	private float monitorCalibrationOffset;
+
 	public void applySystemSettings() {
 
 		// apply tooltip settings
 		ToolTipManager toolTipManager = ToolTipManager.sharedInstance();
 		toolTipManager.setInitialDelay(toolTipInitialDelay);
 		toolTipManager.setDismissDelay(toolTipDismissDelay);
-		
-	}	
+
+	}
 	
 	@Override
 	public String getStandardFilename() {
@@ -675,6 +683,54 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration {
 
 	public void setLastExportBookPath(String lastExportBookPath) {
 		this.lastExportBookPath = lastExportBookPath;
-	}		
+	}
+
+    public void setMultiplexerAddress(String multiplexerAddress) {
+        this.multiplexerAddress = multiplexerAddress;
+    }
+
+    public String getMultiplexerAddress() {
+        return multiplexerAddress;
+    }
+
+    public void setMultiplexerPort(int multiplexerPort) {
+        this.multiplexerPort = multiplexerPort;
+    }
+
+    public int getMultiplexerPort() {
+        return multiplexerPort;
+    }
+
+    public float getMonitorSamplingFrequency() {
+        return monitorSamplingFrequency;
+    }
+
+    public void setMonitorSamplingFrequency(float monitorSamplingFrequency) {
+        this.monitorSamplingFrequency = monitorSamplingFrequency;
+    }
+
+    public float getMonitorPageSize() {
+        return monitorPageSize;
+    }
+
+    public void setMonitorPageSize(float monitorPageSize) {
+        this.monitorPageSize = monitorPageSize;
+    }
+
+    public float getMonitorCalibrationGain() {
+        return monitorCalibrationGain;
+    }
+
+    public void setMonitorCalibrationGain(float monitorCalibrationGain) {
+        this.monitorCalibrationGain = monitorCalibrationGain;
+    }
+
+    public float getMonitorCalibrationOffset() {
+        return monitorCalibrationOffset;
+    }
+
+    public void setMonitorCalibrationOffset(float monitorCalibrationOffset) {
+        this.monitorCalibrationOffset = monitorCalibrationOffset;
+    }
 		
 }

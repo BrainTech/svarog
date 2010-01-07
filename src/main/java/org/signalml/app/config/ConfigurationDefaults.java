@@ -140,6 +140,8 @@ public class ConfigurationDefaults {
 		config.setMapAspectRatioDown( Integer.parseInt(properties.getProperty("application.mapAspectRatioDown")) );
 		config.setReconstructionHeight( Integer.parseInt(properties.getProperty("application.reconstructionHeight")) );
 		
+		setMultiplexerDefaultParameters( config);
+		setMonitorDefaultParameters( config);
 	}
 
 	public static void setZoomSignalSettingsDefaults( ZoomSignalSettings settings ) {
@@ -295,6 +297,23 @@ public class ConfigurationDefaults {
 		parameters.setCorrCoeffSems( Double.parseDouble( properties.getProperty("stager.fixed.corrCoeffSems") ) );
 		
 	}
+    
+    public static void setMultiplexerDefaultParameters( ApplicationConfiguration config ) {
+
+        config.setMultiplexerAddress( properties.getProperty("multiplexer.address"));
+        int port = Integer.parseInt(properties.getProperty("multiplexer.port"));
+        config.setMultiplexerPort( port);
+        
+    }
+    
+    public static void setMonitorDefaultParameters( ApplicationConfiguration config ) {
+
+        config.setMonitorSamplingFrequency( Float.parseFloat( properties.getProperty( "monitor.samplingFrequency")));
+        config.setMonitorPageSize( Float.parseFloat( properties.getProperty( "monitor.pageSize")));
+        config.setMonitorCalibrationGain( Float.parseFloat( properties.getProperty( "monitor.calibrationGain")));
+        config.setMonitorCalibrationOffset( Float.parseFloat( properties.getProperty( "monitor.calibrationOffset")));
+
+    }
 	
 	public static String getDefaultEegPlRegisterURL() {
 		return properties.getProperty( "eeg.pl.registerUrl" );

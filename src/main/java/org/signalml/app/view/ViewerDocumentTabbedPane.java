@@ -22,6 +22,7 @@ import org.signalml.app.document.Document;
 import org.signalml.app.document.DocumentManagerEvent;
 import org.signalml.app.document.DocumentManagerListener;
 import org.signalml.app.document.ManagedDocumentType;
+import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.exception.SignalMLException;
@@ -63,7 +64,9 @@ public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentMan
 	@Override
 	public void documentAdded(DocumentManagerEvent e) {
 		Document document = e.getDocument();
-		if( (document instanceof SignalDocument) || (document instanceof BookDocument) ) {
+		if( (document instanceof SignalDocument) 
+		        || (document instanceof BookDocument) 
+		        || (document instanceof MonitorSignalDocument)) {
 			addDocumentTab(document);
 		}
 	}

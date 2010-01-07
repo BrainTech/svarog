@@ -13,6 +13,8 @@ import java.util.List;
 
 import javax.swing.SwingUtilities;
 
+import multiplexer.jmx.client.ConnectException;
+
 import org.apache.log4j.Logger;
 import org.signalml.app.document.Document;
 import org.signalml.app.document.DocumentFlowIntegrator;
@@ -179,7 +181,7 @@ public class WorkspaceSignal extends WorkspaceDocument {
 		
 	}
 
-	public void configureSignal(SignalDocument document, DocumentFlowIntegrator integrator) throws IOException, SignalMLException {
+	public void configureSignal(SignalDocument document, DocumentFlowIntegrator integrator) throws IOException, SignalMLException, ConnectException {
 
 		SignalView view = (SignalView) document.getDocumentView();
 		SignalPlot masterSignalPlot = view.getMasterPlot();

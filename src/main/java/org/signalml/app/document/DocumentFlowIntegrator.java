@@ -17,10 +17,13 @@ import java.util.concurrent.ExecutionException;
 
 import javax.swing.filechooser.FileFilter;
 
+import multiplexer.jmx.client.ConnectException;
+
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.model.OpenDocumentDescriptor;
+import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.app.model.OpenSignalDescriptor;
 import org.signalml.app.model.OpenTagDescriptor;
 import org.signalml.app.model.SignalParameterDescriptor;
@@ -40,6 +43,7 @@ import org.signalml.app.worker.SignalChecksumWorker;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.domain.montage.Montage;
+import org.signalml.domain.signal.RoundBufferSampleSource;
 import org.signalml.domain.signal.SignalChecksum;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.tag.StyledTagSet;
@@ -73,12 +77,14 @@ public class DocumentFlowIntegrator {
 	
 	private PleaseWaitDialog pleaseWaitDialog;
 		
-	public Document openDocument(OpenDocumentDescriptor descriptor) throws IOException, SignalMLException {
+	public Document openDocument(OpenDocumentDescriptor descriptor) throws IOException, SignalMLException, ConnectException {
 		
 		ManagedDocumentType type = descriptor.getType();
 		if( type.equals(ManagedDocumentType.SIGNAL) ) {
 			return openSignalDocument(descriptor);
-		} else if( type.equals(ManagedDocumentType.BOOK) ) {
+		} if( type.equals(ManagedDocumentType.MONITOR) ) {
+            return openMonitorDocument(descriptor);
+        } else if( type.equals(ManagedDocumentType.BOOK) ) {
 			return openBookDocument(descriptor);
 		} else if( type.equals(ManagedDocumentType.TAG) ) {
 			return openTagDocument(descriptor);
@@ -317,7 +323,7 @@ public class DocumentFlowIntegrator {
 		
 	}
 		
-	public Document openMRUDEntry(MRUDEntry mrud) throws IOException, SignalMLException {
+	public Document openMRUDEntry(MRUDEntry mrud) throws IOException, SignalMLException, ConnectException {
 
 		ManagedDocumentType type = mrud.getDocumentType();
 		
@@ -521,6 +527,38 @@ public class DocumentFlowIntegrator {
 		}
 					
 	}
+
+    private SignalDocument openMonitorDocument(final OpenDocumentDescriptor descriptor) throws IOException, SignalMLException, ConnectException {
+
+        OpenMonitorDescriptor monitorOptions = descriptor.getMonitorOptions();
+
+        MonitorSignalDocument monitorSignalDocument = new MonitorSignalDocument( monitorOptions.getType());
+        monitorSignalDocument.setJmxClient( monitorOptions.getJmxClient());
+
+        monitorSignalDocument.setPageSize( monitorOptions.getPageSize());
+        
+        // wyliczenie maksymalnej liczb próbek na podstawie częstotliwośc i rozmiaru strony
+        float freq = monitorOptions.getSamplingFrequency();
+        float ps = monitorOptions.getPageSize();
+        int sampleCount = Math.round( ps * freq);
+        RoundBufferSampleSource sampleSource = new RoundBufferSampleSource( monitorOptions.getChannelCount(), sampleCount);
+
+        monitorSignalDocument.setSamplmeSource( sampleSource);
+
+        monitorSignalDocument.openDocument();
+        
+        onSignalDocumentAdded( monitorSignalDocument, descriptor.isMakeActive());
+        onCommonDocumentAdded( monitorSignalDocument);
+
+//        if( descriptor.isMakeActive() ) { 
+            actionFocusManager.setActiveDocument( monitorSignalDocument);
+//        }       
+
+        logger.debug("monitor openned");
+        
+        return monitorSignalDocument;
+                    
+    }
 
 	private BookDocument openBookDocument(final OpenDocumentDescriptor descriptor) throws IOException, SignalMLException {
 		

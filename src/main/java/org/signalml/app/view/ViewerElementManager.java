@@ -20,6 +20,8 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
 
+import multiplexer.jmx.client.JmxClient;
+
 import org.signalml.SignalMLOperationMode;
 import org.signalml.app.action.AbortAllTasksAction;
 import org.signalml.app.action.AbstractSignalMLAction;
@@ -40,6 +42,7 @@ import org.signalml.app.action.HelpContentsAction;
 import org.signalml.app.action.IterateMethodAction;
 import org.signalml.app.action.NewTagAction;
 import org.signalml.app.action.OpenDocumentAction;
+import org.signalml.app.action.OpenMonitorAction;
 import org.signalml.app.action.OpenTagAction;
 import org.signalml.app.action.PreciseSelectionAction;
 import org.signalml.app.action.RemoveAllAbortedTasksAction;
@@ -71,6 +74,7 @@ import org.signalml.app.document.DocumentDetector;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.DocumentManager;
 import org.signalml.app.document.MRUDRegistry;
+import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.iterate.IterationSetupDialog;
@@ -79,6 +83,7 @@ import org.signalml.app.method.mp5.MP5ExecutorManager;
 import org.signalml.app.method.mp5.MP5LocalExecutorDialog;
 import org.signalml.app.method.mp5.MP5RemoteExecutorDialog;
 import org.signalml.app.model.BookTreeModel;
+import org.signalml.app.model.MonitorTreeModel;
 import org.signalml.app.model.PropertySheetModel;
 import org.signalml.app.model.SignalTreeModel;
 import org.signalml.app.model.TableToTextExporter;
@@ -100,6 +105,7 @@ import org.signalml.app.view.dialog.ExportSignalDialog;
 import org.signalml.app.view.dialog.HelpDialog;
 import org.signalml.app.view.dialog.NewTagDialog;
 import org.signalml.app.view.dialog.OpenDocumentDialog;
+import org.signalml.app.view.dialog.OpenMonitorDialog;
 import org.signalml.app.view.dialog.PleaseWaitDialog;
 import org.signalml.app.view.dialog.RegisterCodecDialog;
 import org.signalml.app.view.dialog.SeriousWarningDialog;
@@ -165,6 +171,7 @@ public class ViewerElementManager {
 	private WorkspaceTreeModel workspaceTreeModel;
 	private BookTreeModel bookTreeModel;
 	private SignalTreeModel signalTreeModel;
+    private MonitorTreeModel monitorTreeModel;
 	private TagTreeModel tagTreeModel;
 	private TaskTableModel taskTableModel;
 	private PropertySheetModel propertySheetModel;
@@ -188,10 +195,12 @@ public class ViewerElementManager {
 	private ViewerTreePane workspaceTreePane;
 	private ViewerTreePane bookTreePane;
 	private ViewerTreePane signalTreePane;
+    private ViewerTreePane monitorTreePane;
 	private ViewerTreePane tagTreePane;
 		
 	private ViewerWorkspaceTree workspaceTree;
 	private ViewerSignalTree signalTree;
+    private ViewerMonitorTree monitorTree;
 	private ViewerBookTree bookTree;
 	private ViewerTagTree tagTree;
 	
@@ -211,6 +220,7 @@ public class ViewerElementManager {
 	private SeriousWarningDialog seriousWarningDialog;
 	private ApplicationPreferencesDialog applicationPreferencesDialog;
 	private OpenDocumentDialog openDocumentDialog;
+    private OpenMonitorDialog openMonitorDialog;
 	private RegisterCodecDialog registerCodecDialog;
 	private SignalParametersDialog signalParametersDialog;
 	private SignalMontageDialog signalMontageDialog;
@@ -241,6 +251,10 @@ public class ViewerElementManager {
 	private ShowLeftPanelAction showLeftPanelAction;
 	private ShowBottomPanelAction showBottomPanelAction;
 	private OpenDocumentAction openDocumentAction;
+    private OpenMonitorAction openMonitorAction;
+//    private ConnectMultiplexerAction connectMultiplexerAction;
+//    private DisconnectMultiplexerAction disconnectMultiplexerAction;
+//    private JMXConnectionTestAction jmxConnectionTestAction;
 	private CloseDocumentAction closeActiveDocumentAction;
 	private SaveAllDocumentsAction saveAllDocumentsAction;
 	private SaveDocumentAction saveActiveDocumentAction;
@@ -284,10 +298,11 @@ public class ViewerElementManager {
 	private JMenu viewMenu;
 	private JMenu toolsMenu;
 	private JMenu helpMenu;
-		
+	
 	/* Other */
 	private TableToTextExporter tableToTextExporter;
 	private MP5ApplicationExecutorConfigurer mp5ExecutorConfigurer;
+    private JmxClient jmxClient;
 
 	public SignalMLOperationMode getMode() {
 		return mode;
@@ -495,6 +510,14 @@ public class ViewerElementManager {
 		}
 		return signalTreeModel;
 	}
+    
+    public MonitorTreeModel getMonitorTreeModel() {
+        if( monitorTreeModel == null ) {
+            monitorTreeModel = new MonitorTreeModel();
+            monitorTreeModel.setDocumentManager(getDocumentManager());
+        }
+        return monitorTreeModel;
+    }
 	
 	public TagTreeModel getTagTreeModel() {
 		if( tagTreeModel == null ) {
@@ -552,6 +575,8 @@ public class ViewerElementManager {
 			fileMenu.add(getSaveAllDocumentsAction());
 			fileMenu.add(getCloseActiveDocumentAction());
 			fileMenu.addSeparator();
+            fileMenu.add(getOpenMonitorAction());
+            fileMenu.addSeparator();
 			fileMenu.add(getNewTagAction());
 			fileMenu.add(getOpenTagAction());
 			fileMenu.add(getSaveTagAction());
@@ -712,6 +737,7 @@ public class ViewerElementManager {
 
 			treeTabbedPane.addTab("viewer.tagTabTitle", null, getTagTreePane(), "viewer.tagTabToolTip", messageSource);
 			treeTabbedPane.addTab("viewer.signalTabTitle", null, getSignalTreePane(), "viewer.signalTabToolTip", messageSource);
+            treeTabbedPane.addTab("viewer.monitorTabTitle", null, getMonitorTreePane(), "viewer.monitorTabToolTip", messageSource);
 			treeTabbedPane.addTab("viewer.bookTabTitle", null, getBookTreePane(), "viewer.bookTabToolTip", messageSource);
 			treeTabbedPane.addTab("viewer.workspaceTabTitle", null, getWorkspaceTreePane(), "viewer.workspaceTabToolTip", messageSource);		
 			
@@ -773,6 +799,13 @@ public class ViewerElementManager {
 		}
 		return signalTreePane;
 	}
+    
+    public ViewerTreePane getMonitorTreePane() {
+        if( monitorTreePane == null ) {
+            monitorTreePane = new ViewerTreePane(getSignalTree());           
+        }
+        return monitorTreePane;
+    }
 	
 	public ViewerTreePane getTagTreePane() {
 		if( tagTreePane == null ) {
@@ -801,6 +834,16 @@ public class ViewerElementManager {
 		}
 		return signalTree;
 	}
+    
+    public ViewerMonitorTree getMonitorTree() {
+        if( monitorTree == null ) {
+            monitorTree = new ViewerMonitorTree( getMonitorTreeModel(), messageSource);
+            monitorTree.setActionFocusManager(getActionFocusManager());
+            monitorTree.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
+            monitorTree.addTreeSelectionListener(getPropertySheetModel());           
+        }
+        return monitorTree;
+    }
 	
 	public ViewerBookTree getBookTree() {
 		if( bookTree == null ) {
@@ -929,6 +972,14 @@ public class ViewerElementManager {
 		}
 		return openDocumentDialog;
 	}
+    
+    public OpenMonitorDialog getOpenMonitorDialog() {
+        if( openMonitorDialog == null ) {
+            openMonitorDialog = new OpenMonitorDialog( messageSource, this, getDialogParent(),true);
+            openMonitorDialog.setApplicationConfig(getApplicationConfig());
+        }
+        return openMonitorDialog;
+    }
 	
 	public RegisterCodecDialog getRegisterCodecDialog() {
 		if( registerCodecDialog == null ) {
@@ -1164,8 +1215,37 @@ public class ViewerElementManager {
 		}
 		return openDocumentAction;
 	}
-	
-	public CloseDocumentAction getCloseActiveDocumentAction() {
+
+    public OpenMonitorAction getOpenMonitorAction() {
+        if( openMonitorAction == null ) {
+            openMonitorAction = new OpenMonitorAction( this);
+            openMonitorAction.setOpenMonitorDialog( getOpenMonitorDialog());
+        }
+        return openMonitorAction;
+    }
+
+//    public ConnectMultiplexerAction getConnectMultiplexerAction() {
+//        if( connectMultiplexerAction == null ) {
+//            connectMultiplexerAction = new ConnectMultiplexerAction( this);
+//        }
+//        return connectMultiplexerAction;
+//    }
+//
+//    public DisconnectMultiplexerAction getDisconnectMultiplexerAction() {
+//        if( disconnectMultiplexerAction == null ) {
+//            disconnectMultiplexerAction = new DisconnectMultiplexerAction( this);
+//        }
+//        return disconnectMultiplexerAction;
+//    }
+//
+//    public JMXConnectionTestAction getJMXConnectionTestAction() {
+//        if( jmxConnectionTestAction == null ) {
+//            jmxConnectionTestAction = new JMXConnectionTestAction( messageSource, this);
+//        }
+//        return jmxConnectionTestAction;
+//    }
+
+    public CloseDocumentAction getCloseActiveDocumentAction() {
 		if( closeActiveDocumentAction == null ) {
 			closeActiveDocumentAction = new CloseDocumentAction(messageSource,getActionFocusManager());
 			closeActiveDocumentAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());			
@@ -1459,7 +1539,15 @@ public class ViewerElementManager {
 		return mp5ExecutorConfigurer;
 	}
 
-	public DocumentView createDocumentViewPanel(Document document) throws SignalMLException {
+	public JmxClient getJmxClient() {
+        return jmxClient;
+    }
+
+    public void setJmxClient(JmxClient jmxClient) {
+        this.jmxClient = jmxClient;
+    }
+
+    public DocumentView createDocumentViewPanel(Document document) throws SignalMLException {
 		
 		DocumentView documentView = null;
 		
@@ -1487,7 +1575,24 @@ public class ViewerElementManager {
 			signalView.initialize();
 
 			documentView = signalView;
-			
+
+        } else if( document instanceof MonitorSignalDocument ) {
+            
+            SignalView signalView; 
+            signalView = new SignalView((SignalDocument) document);
+            
+            signalView.setMessageSource(messageSource);
+            signalView.setActionFocusManager(getActionFocusManager());
+            signalView.setSlavePlotSettingsPopupDialog(getSlavePlotSettingsPopupDialog());
+            signalView.setErrorsDialog(getErrorsDialog());
+            signalView.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
+            signalView.setSignalParametersDialog(getSignalParametersDialog());
+            signalView.setSignalSelectionDialog(getSignalSelectionDialog());
+            signalView.setApplicationConfig(getApplicationConfig());
+            signalView.initialize();
+
+            documentView = signalView;
+
 		} else if( document instanceof BookDocument ) {
 			
 			BookView bookView;

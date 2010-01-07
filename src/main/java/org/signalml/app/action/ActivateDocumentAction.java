@@ -10,6 +10,7 @@ import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.action.selector.DocumentFocusSelector;
 import org.signalml.app.document.BookDocument;
 import org.signalml.app.document.Document;
+import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -49,7 +50,9 @@ public class ActivateDocumentAction extends AbstractFocusableSignalMLAction<Docu
 			return;
 		}
 		
-		if( (document instanceof SignalDocument) || (document instanceof BookDocument) ) {
+		if( (document instanceof SignalDocument) 
+		        || (document instanceof MonitorSignalDocument) 
+		        || (document instanceof BookDocument) ) {
 			actionFocusManager.setActiveDocument(document);
 		} else if( document instanceof TagDocument ) {
 			actionFocusManager.setActiveDocument(((TagDocument) document).getParent());

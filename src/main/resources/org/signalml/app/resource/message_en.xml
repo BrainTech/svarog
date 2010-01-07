@@ -175,10 +175,12 @@
 	<entry key="viewer.workspaceTabTitle">Workspace</entry>
 	<entry key="viewer.bookTabTitle">Books</entry>
 	<entry key="viewer.signalTabTitle">Signals</entry>
+	<entry key="viewer.monitorTabTitle">Monitors</entry>
 	<entry key="viewer.tagTabTitle">Tags</entry>
 	<entry key="viewer.workspaceTabToolTip">Shows workspace</entry>
 	<entry key="viewer.bookTabToolTip">Shows open books</entry>
 	<entry key="viewer.signalTabToolTip">Shows open signals</entry>
+	<entry key="viewer.monitorTabToolTip">Shows open monitors</entry>
 	<entry key="viewer.tagTabToolTip">Shows open tags</entry>
 
 	<entry key="viewer.consoleTabTitle">Console</entry>
@@ -256,9 +258,11 @@
 	<entry key="workspaceTree.openDocuments">Open documents</entry>
 	<entry key="workspaceTree.recentDocuments">Recent documents</entry>
 	<entry key="workspaceTree.openSignals">Signals</entry>
+	<entry key="workspaceTree.openMonitors">Monitors</entry>
 	<entry key="workspaceTree.openBooks">Books</entry>
 	<entry key="workspaceTree.openTags">Tags</entry>
 	<entry key="workspaceTree.recentSignals">Signals</entry>
+	<entry key="workspaceTree.recentMonitors">Monitors</entry>
 	<entry key="workspaceTree.recentBooks">Books</entry>
 	<entry key="workspaceTree.recentTags">Tags</entry>
 
@@ -294,12 +298,30 @@
 	<entry key="action.saveAllDocumentsToolTip">Save all unsaved documents</entry>
 	<entry key="action.closeDocument">Close</entry>
 	<entry key="action.closeDocumentToolTip">Close the active document</entry>
+	<entry key="action.openMonitorLabel">Open monitor...</entry>
+	<entry key="action.openMonitorToolTip">Open monitor and connect to multiplexer</entry>
+	<entry key="action.connectMultiplexer.actionName">Connect</entry>
+	<entry key="action.cancelConnectMultiplexer.actionName">Cancel</entry>
+	<entry key="action.disconnectMultiplexer.actionName">Disconnect</entry>
+	<entry key="action.connectingMultiplexer.badPortNumberMsg">Bad address!</entry>
+	<entry key="action.connectingMultiplexer.badAddressMsg">Bad port number!</entry>
+	<entry key="action.connectingMultiplexer.connectionFailedMsg">Connection failed!</entry>
+	<entry key="action.connectingMultiplexer.connectionTimeoutMsg">Connection timeout!</entry>
+	<entry key="action.connectingMultiplexer.connectionOkMsg">Connection OK!</entry>
+	<entry key="action.openMonitor.testMultiplexerConnectionLabel">Test connection</entry>
+	<entry key="action.openMonitor.testMultiplexerConnectionToolTip">Test connection to multiplexer</entry>
+	<entry key="action.openMonitor.testMultiplexerConnectionAccelerator">T</entry>
+	<entry key="action.openMonitor.testMultiplexerConnection.sendingFailedMsg">Sending failed!</entry>
+	<entry key="action.openMonitor.testMultiplexerConnection.receiveTimedout">Receive timed out!</entry>
+	<entry key="action.openMonitor.testMultiplexerConnection.receivedBadReplyMsg">Received bad reply!</entry>
+	<entry key="action.openMonitor.testMultiplexerConnection.receivingFailedMsg">Receiving failed</entry>
+	<entry key="action.openMonitor.testMultiplexerConnection.connectionOkMsg">Connection ok!</entry>
 	<entry key="action.editPreferences">Preferences...</entry>
 	<entry key="action.editPreferencesToolTip">Edit preferences</entry>
 	<entry key="action.viewMode">View mode</entry>
 	<entry key="action.viewModeToolTip">Maximize the document view (see preferences for settings)</entry>
-  <entry key="action.registerCodec">Register new codec</entry>
-  <entry key="action.registerAllCodecs">Register all codecs</entry>
+    <entry key="action.registerCodec">Register new codec</entry>
+    <entry key="action.registerAllCodecs">Register all codecs</entry>
 	<entry key="action.removeCodec">Remove codec</entry>
 	<entry key="action.newTag">New Tag</entry>
 	<entry key="action.newTagToolTip">Create a new tag for this signal</entry>
@@ -564,6 +586,25 @@
 	<entry key="openDocument.signalChosen">Signal document chosen</entry>
 	<entry key="openDocument.bookChosen">Book document chosen</entry>
 	<entry key="openDocument.tagChosen">Tag document chosen</entry>
+
+<!-- ============================ -->
+
+	<entry key="openMonitor.title">Open monitor</entry>
+	<entry key="openMonitor.multiplexerAddressLabel">Multiplexer address</entry>
+	<entry key="openMonitor.multiplexerPortLabel">Multiplexer port</entry>
+	<entry key="openMonitor.samplingLabel">Sampling</entry>
+	<entry key="openMonitor.channelCountLabel">Channel count</entry>
+	<entry key="openMonitor.calibrationGainLabel">Calibration gain</entry>
+	<entry key="openMonitor.calibrationOffsetLabel">Calibration offset</entry>
+	<entry key="openMonitor.pageSizeLabel">Page size</entry>
+	<entry key="openDocument.signalAutodetected">Signal document autodetected</entry>
+	<entry key="openDocument.bookAutodetected">Book document autodetected</entry>
+	<entry key="openDocument.tagAutodetected">Tag document autodetected</entry>
+	<entry key="openDocument.signalChosen">Signal document chosen</entry>
+	<entry key="openDocument.bookChosen">Book document chosen</entry>
+	<entry key="openDocument.tagChosen">Tag document chosen</entry>
+	
+<!-- ================================= -->
 	
 	<entry key="openSignal.options.title">Choose options for signal</entry>
 	<entry key="openSignal.options.methodTitle">Choose signal loading method</entry>
