@@ -40,6 +40,7 @@ import javax.swing.event.ChangeListener;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.config.ApplicationConfiguration;
+import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.view.dialog.ErrorsDialog;
@@ -118,6 +119,8 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
     private int maxSampleCount;
     private int channelCount;
     
+    private Double minValue;
+    private Double maxValue;
     private double detectedMaxValue;
     private double[] samples;
 
@@ -214,6 +217,11 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		
 		if( masterPlot == null ) {
 			
+		    if (document instanceof MonitorSignalDocument) {
+		        minValue = new Double( ((MonitorSignalDocument) document).getMinValue());
+		        maxValue = new Double( ((MonitorSignalDocument) document).getMaxValue());
+		    }
+		    
 			timeScaleRangeModel = new DefaultBoundedRangeModel();		
 			valueScaleRangeModel = new DefaultBoundedRangeModel();
 			channelHeightRangeModel = new DefaultBoundedRangeModel();
@@ -311,31 +319,60 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		});
 		
 	}
+
+    private double condMaxValue( double mv) {
+        double result = Math.min( 2000.0, mv);
+        if (Math.abs( result) < 0.000001)
+            result = 2000.0;
+        return result;
+    }
+
+    private double detectMaxValue() {
+        double[] samples = new double[1024];
+        double result = 0.0;
+        
+        int channel, i;
+        int cnt;
+        for( channel=0; channel<channelCount; channel++ ) {
+            cnt = Math.min( samples.length, sampleCount[channel] );
+            signalChain.getSamples(channel, samples, 0, cnt, 0);
+            for( i=0; i<cnt; i++ ) {
+                samples[i] = Math.abs(samples[i]);
+                if( samples[i] > result ) {
+                    result = samples[i];
+                }               
+            }
+        }
+//        result = Math.min( 2000.0, result );
+//        if (Math.abs( result) < 0.000001)
+//            result = 2000.0;
+        return condMaxValue( result);
+    }
+
+    private double calcMaxValueDelta() {
+        double result = 0.0;
+        if (maxValue != null && minValue != null) {
+            result = Math.max( Math.abs( maxValue.doubleValue()), Math.abs( minValue.doubleValue()));
+        }
+        else if (maxValue != null) {
+            result =  Math.abs( maxValue.doubleValue());
+        }
+        else if (minValue != null) {
+            result =  Math.abs( minValue.doubleValue());
+        }
+        return result;
+    }
     
     public void initialize() throws SignalMLException {
     	
 		calculateParameters();
 		
 		if( masterPlot == null ) {
-			
-			samples = new double[1024];
-			detectedMaxValue = 0.0;
-			
-			int channel, i;
-			int cnt;
-			for( channel=0; channel<channelCount; channel++ ) {
-				cnt = Math.min( samples.length, sampleCount[channel] );
-				signalChain.getSamples(channel, samples, 0, cnt, 0);
-				for( i=0; i<cnt; i++ ) {
-					samples[i] = Math.abs(samples[i]);
-					if( samples[i] > detectedMaxValue ) {
-						detectedMaxValue = samples[i];
-					}				
-				}
-			}
-			detectedMaxValue = Math.min( 2000.0, detectedMaxValue );
-			if (Math.abs( detectedMaxValue) < 0.000001)
-			    detectedMaxValue = 2000.0;
+
+		    if (maxValue != null || minValue != null)
+		        detectedMaxValue = calcMaxValueDelta();
+		    else
+		        detectedMaxValue = detectMaxValue();
 
 			voltageZoomFactor = ( 1.0 / (detectedMaxValue * 2) ) * 0.95; 			
 			
@@ -2346,7 +2383,23 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		return pixelPerValue;
 	} 		
 	
-	public double getDetectedMaxValue() {
+	public Double getMinValue() {
+        return minValue;
+    }
+
+    public void setMinValue(Double minValue) {
+        this.minValue = minValue;
+    }
+
+    public Double getMaxValue() {
+        return maxValue;
+    }
+
+    public void setMaxValue(Double maxValue) {
+        this.maxValue = maxValue;
+    }
+
+    public double getDetectedMaxValue() {
 		return detectedMaxValue;
 	}
 

@@ -1,6 +1,9 @@
 package org.signalml.app.worker;
 
+import java.io.File;
+import java.io.PrintWriter;
 import java.util.List;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.SwingWorker;
@@ -9,14 +12,15 @@ import multiplexer.jmx.client.IncomingMessageData;
 import multiplexer.jmx.client.JmxClient;
 import multiplexer.jmx.client.SendingMethod;
 import multiplexer.jmx.exceptions.NoPeerForTypeException;
-import multiplexer.protocol.Constants;
 import multiplexer.protocol.Protocol.MultiplexerMessage;
-import multiplexer.protocol.Protocol.Sample;
-import multiplexer.protocol.Protocol.SampleVector;
 
 import org.apache.log4j.Logger;
 import org.jboss.netty.channel.ChannelFuture;
+import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.domain.signal.RoundBufferSampleSource;
+import org.signalml.multiplexer.protocol.SvarogConstants;
+import org.signalml.multiplexer.protocol.SvarogProtocol.Sample;
+import org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector;
 
 import com.google.protobuf.ByteString;
 
@@ -26,28 +30,37 @@ import com.google.protobuf.ByteString;
 public class MonitorWorker extends SwingWorker< Void, double[]> {
 
     protected static final Logger logger = Logger.getLogger( MonitorWorker.class);
-    
+
     public static final int TIMEOUT_MILIS = 50;
 
 	private JmxClient jmxClient;
+	private OpenMonitorDescriptor monitorDescriptor;
+	private LinkedBlockingQueue< double[]> sampleQueue;
 	private RoundBufferSampleSource sampleSource;
-	
-	public MonitorWorker( JmxClient jmxClient, RoundBufferSampleSource sampleSource) {
+
+	public MonitorWorker( JmxClient jmxClient, OpenMonitorDescriptor monitorDescriptor, RoundBufferSampleSource sampleSource) {
 	    this.jmxClient = jmxClient;
+	    this.monitorDescriptor = monitorDescriptor;
 		this.sampleSource = sampleSource;
 	}
 
-	@Override
+	public LinkedBlockingQueue<double[]> getSampleQueue() {
+        return sampleQueue;
+    }
+
+    public void setSampleQueue(LinkedBlockingQueue<double[]> sampleQueue) {
+        this.sampleQueue = sampleQueue;
+    }
+
+    @Override
 	protected Void doInBackground() throws Exception {
 
-	    System.out.println( "Worker: start...");
+	    logger.debug( "Worker: start...");
 
 
         MultiplexerMessage.Builder builder = MultiplexerMessage.newBuilder();
-        builder.setType( Constants.MessageTypes.SIGNAL_STREAMER_START);
-        ByteString msgBody = ByteString.copyFromUtf8("1 2 3 4 5");
+        builder.setType( SvarogConstants.MessageTypes.SIGNAL_STREAMER_START);
 
-        builder.setMessage( msgBody);
         MultiplexerMessage msg = jmxClient.createMessage(builder);
 
         // send message
@@ -55,24 +68,32 @@ public class MonitorWorker extends SwingWorker< Void, double[]> {
             ChannelFuture sendingOperation = jmxClient.send( msg, SendingMethod.THROUGH_ONE);
             sendingOperation.await(1, TimeUnit.SECONDS);
             if (!sendingOperation.isSuccess()) {
-                logger.debug("sending failed!");
+                logger.error("sending failed!");
                 return null;
             }
         }
         catch (NoPeerForTypeException e) {
-            logger.debug("sending failed! " + e.getMessage());
+            logger.error("sending failed! " + e.getMessage());
             return null;
         }
         catch (InterruptedException e) {
-            logger.debug("sending failed! " + e.getMessage());
+            logger.error("sending failed! " + e.getMessage());
             return null;
         }
 
-        System.out.println( "Worker: sent streaming request!");
+        logger.debug( "Worker: sent streaming request!");
+
+        int channelCount = monitorDescriptor.getChannelCount();
+        int plotCount = monitorDescriptor.getSelectedChannelList().length;
+        int[] selectedChannels = monitorDescriptor.getSelectedChannelsIndecies();
+        double[] gain = monitorDescriptor.getGain();
+        double[] offset = monitorDescriptor.getOffset();
+
+        PrintWriter out = new PrintWriter( new File( "recv_data.tsv"));
 
         while (!isCancelled()) {
 
-            System.out.println( "Worker: receiving!");
+            logger.debug( "Worker: receiving!");
             // receive message
             IncomingMessageData msgData = null;
             try {
@@ -81,16 +102,16 @@ public class MonitorWorker extends SwingWorker< Void, double[]> {
                     continue;
                 MultiplexerMessage sampleMsg = msgData.getMessage();
                 int type = sampleMsg.getType();
-                System.out.println( "Worker: received message type: " + type);
-                if (!(sampleMsg.getType() == Constants.MessageTypes.STREAMED_SIGNAL_MESSAGE)) {
-                    logger.debug( "received bad reply! " + sampleMsg.getMessage());
+                logger.debug( "Worker: received message type: " + type);
+                if (!(sampleMsg.getType() == SvarogConstants.MessageTypes.STREAMED_SIGNAL_MESSAGE)) {
+                    logger.error( "received bad reply! " + sampleMsg.getMessage());
 
-                    System.out.println( "Worker: receive failed!");
+                    logger.debug( "Worker: receive failed!");
 
                     return null;
                 }
 
-                System.out.println( "Worker: reading chunk!");
+                logger.debug( "Worker: reading chunk!");
 
                 ByteString msgString = sampleMsg.getMessage();
                 SampleVector sampleVector = null;
@@ -102,22 +123,44 @@ public class MonitorWorker extends SwingWorker< Void, double[]> {
                 }
                 List<Sample> samples = sampleVector.getSamplesList();
 
-                double[] chunk = new double[sampleSource.getChannelCount()];
-                for (int i=0; i<sampleSource.getChannelCount(); i++) {
+                String s = Double.toString( samples.get(0).getTimestamp());
+                s = s.replace( '.', ',');
+                out.print( s);
+
+                // wyciągnięcie chunka do tablicy double z sampli
+                double[] chunk = new double[channelCount];
+                for (int i=0; i<channelCount; i++) {
                     chunk[i] = samples.get(i).getValue();
                 }
-                publish( chunk);
+
+                // przesłanie chunka do recordera
+                if (sampleQueue != null)
+                    sampleQueue.offer( chunk.clone());
+
+                // kondycjonowanie chunka z danymi do wyświetlenia
+                double[] condChunk = new double[plotCount];
+                for (int i=0; i<plotCount; i++) {
+                    int n = selectedChannels[i];
+                    condChunk[i] = gain[n] * chunk[n] + offset[n];
+                    out.print( "\t");
+                    s = Double.toString( condChunk[i]);
+                    s = s.replace( '.', ',');
+                    out.print( s);
+                }
+                out.println();
+
+                publish( condChunk);
             }
             catch (InterruptedException e) {
-                logger.debug("receiveing failed! " + e.getMessage());
+                logger.error("receiveing failed! " + e.getMessage());
                 return null;
             }
         }
 
-        System.out.println( "Worker: stopping serwer...");
+        logger.debug( "Worker: stopping serwer...");
 
         builder = MultiplexerMessage.newBuilder();
-        builder.setType( Constants.MessageTypes.SIGNAL_STREAMER_STOP);
+        builder.setType( SvarogConstants.MessageTypes.SIGNAL_STREAMER_STOP);
         msg = jmxClient.createMessage(builder);
 
         // send message
@@ -125,16 +168,16 @@ public class MonitorWorker extends SwingWorker< Void, double[]> {
             ChannelFuture sendingOperation = jmxClient.send( msg, SendingMethod.THROUGH_ONE);
             sendingOperation.await(1, TimeUnit.SECONDS);
             if (!sendingOperation.isSuccess()) {
-                logger.debug("sending failed!");
+                logger.error("sending failed!");
                 return null;
             }
         } 
         catch (NoPeerForTypeException e) {
-            logger.debug("sending failed! " + e.getMessage());
+            logger.error("sending failed! " + e.getMessage());
             return null;
         } 
         catch (InterruptedException e) {
-            logger.debug("sending failed! " + e.getMessage());
+            logger.error("sending failed! " + e.getMessage());
             return null;
         }
 

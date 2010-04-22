@@ -8,7 +8,9 @@ import java.awt.Component;
 import java.awt.Window;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -43,7 +45,6 @@ import org.signalml.app.worker.SignalChecksumWorker;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.domain.montage.Montage;
-import org.signalml.domain.signal.RoundBufferSampleSource;
 import org.signalml.domain.signal.SignalChecksum;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.tag.StyledTagSet;
@@ -531,22 +532,19 @@ public class DocumentFlowIntegrator {
     private SignalDocument openMonitorDocument(final OpenDocumentDescriptor descriptor) throws IOException, SignalMLException, ConnectException {
 
         OpenMonitorDescriptor monitorOptions = descriptor.getMonitorOptions();
-
-        MonitorSignalDocument monitorSignalDocument = new MonitorSignalDocument( monitorOptions.getType());
+        
+        MonitorSignalDocument monitorSignalDocument = new MonitorSignalDocument( monitorOptions);
         monitorSignalDocument.setJmxClient( monitorOptions.getJmxClient());
 
-        monitorSignalDocument.setPageSize( monitorOptions.getPageSize());
-        
-        // wyliczenie maksymalnej liczb próbek na podstawie częstotliwośc i rozmiaru strony
-        float freq = monitorOptions.getSamplingFrequency();
-        float ps = monitorOptions.getPageSize();
-        int sampleCount = Math.round( ps * freq);
-        RoundBufferSampleSource sampleSource = new RoundBufferSampleSource( monitorOptions.getChannelCount(), sampleCount);
-
-        monitorSignalDocument.setSamplmeSource( sampleSource);
+        String fileName = monitorOptions.getFileName();
+        if (fileName != null && !"".equals( fileName)) {
+            saveMetaFile( monitorOptions);
+            FileOutputStream recorderOutput = new FileOutputStream( new File( fileName + ".raw"));
+            monitorSignalDocument.setRecorderOutput( recorderOutput);
+        }
 
         monitorSignalDocument.openDocument();
-        
+
         onSignalDocumentAdded( monitorSignalDocument, descriptor.isMakeActive());
         onCommonDocumentAdded( monitorSignalDocument);
 
@@ -557,7 +555,105 @@ public class DocumentFlowIntegrator {
         logger.debug("monitor openned");
         
         return monitorSignalDocument;
-                    
+
+    }
+
+    static void saveMetaFile( OpenMonitorDescriptor monitorDescriptor) {
+        try {
+            PrintStream out = new PrintStream( new File( monitorDescriptor.getFileName() + ".xml"));
+            out.println( "<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+            out.println( "<metadata>");
+
+            out.print( "\t<signalType>");
+            out.print( monitorDescriptor.getType().name());
+            out.println( "</signalType>");
+
+            out.print( "\t<sampleType>");
+            out.print( monitorDescriptor.getSampleType().name());
+            out.println( "</sampleType>");
+
+            out.print( "\t<byteOrder>");
+            out.print( monitorDescriptor.getByteOrder().name());
+            out.println( "</byteOrder>");
+
+            out.print( "\t<channelCount>");
+            out.print( monitorDescriptor.getChannelCount());
+            out.println( "</channelCount>");
+
+            out.print( "\t<amplifierChannelsToRecord>");
+            int[] amplifierChannels = monitorDescriptor.getAmplifierChannels();
+            if (amplifierChannels != null) {
+                boolean semicolon = false;
+                for (int i=0; i<amplifierChannels.length; i++) {
+                    if (semicolon)
+                        out.print( ' ');
+                    out.print( amplifierChannels[i]);
+                    semicolon = true;
+                }
+            }
+            out.println( "</amplifierChannelsToRecord>");
+
+            out.print( "\t<channelLabels>");
+            String[] channelLabels = monitorDescriptor.getChannelLabels();
+            if (channelLabels != null) {
+                boolean semicolon = false;
+                for (int i=0; i<channelLabels.length; i++) {
+                    if (semicolon)
+                        out.print( ';');
+                    out.print( channelLabels[i]);
+                    semicolon = true;
+                }
+            }
+            out.println( "</channelLabels>");
+
+            out.print( "\t<pageSize>");
+            out.print( monitorDescriptor.getPageSize());
+            out.println( "</pageSize>");
+
+            out.print( "\t<samplingFrequency>");
+            out.print( monitorDescriptor.getSamplingFrequency());
+            out.println( "</samplingFrequency>");
+
+            out.print( "\t<calibrationGain>");
+            float[] gain = monitorDescriptor.getCalibrationGain();
+            if (gain != null) {
+                boolean space = false;
+                for (int i=0; i<gain.length; i++) {
+                    if (space)
+                        out.print( ' ');
+                    out.print( gain[i]);
+                    space = true;
+                }
+            }
+            out.println( "</calibrationGain>");
+
+            out.print( "\t<calibrationOffset>");
+            float[] offset = monitorDescriptor.getCalibrationOffset();
+            if (offset != null) {
+                boolean space = false;
+                for (int i=0; i<offset.length; i++) {
+                    if (space)
+                        out.print( ' ');
+                    out.print( offset[i]);
+                    space = true;
+                }
+            }
+            out.println( "</calibrationOffset>");
+
+            out.print( "\t<minData>");
+            out.print( monitorDescriptor.getMinimumValue());
+            out.println( "</minData>");
+
+            out.print( "\t<maxData>");
+            out.print( monitorDescriptor.getMaximumValue());
+            out.println( "</maxData>");
+
+            out.println( "</metadata>");
+            out.close();
+        } 
+        catch (IOException e) {
+            return; // TODO dodać obsługę błędów i/o
+        }
     }
 
 	private BookDocument openBookDocument(final OpenDocumentDescriptor descriptor) throws IOException, SignalMLException {

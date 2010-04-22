@@ -11,7 +11,9 @@ import javax.swing.JTextField;
 import multiplexer.jmx.client.JmxClient;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.app.view.ViewerElementManager;
+import org.signalml.app.worker.BCIMetadataWorker;
 import org.signalml.app.worker.MultiplexerConnectionTestWorker;
 import org.signalml.app.worker.MultiplexerConnectWorker;
 import org.signalml.app.worker.WorkerResult;
@@ -23,6 +25,7 @@ public class ConnectMultiplexerAction extends AbstractAction implements Property
 
 	private static final long serialVersionUID = 1L;
 	private ViewerElementManager elementManager;
+	private OpenMonitorDescriptor openMonitorDescriptor;
     private JTextField multiplexerAddressField;
     private JTextField multiplexerPortField;
     private Integer timeoutMilis;
@@ -30,6 +33,7 @@ public class ConnectMultiplexerAction extends AbstractAction implements Property
     private DisconnectMultiplexerAction  disconnectAction;
     private MultiplexerConnectWorker connectWorker;
     private MultiplexerConnectionTestWorker testWorker;
+    private BCIMetadataWorker metadataWorker;
     private InetSocketAddress multiplexerSocket;
     private int mode = CONNECT;
 
@@ -42,7 +46,15 @@ public class ConnectMultiplexerAction extends AbstractAction implements Property
 		                       "action.connectMultiplexer.actionName"));
 	}
 
-	public JTextField getMultiplexerAddressField() {
+	public OpenMonitorDescriptor getOpenMonitorDescriptor() {
+        return openMonitorDescriptor;
+    }
+
+    public void setOpenMonitorDescriptor(OpenMonitorDescriptor openMonitorDescriptor) {
+        this.openMonitorDescriptor = openMonitorDescriptor;
+    }
+
+    public JTextField getMultiplexerAddressField() {
         return multiplexerAddressField;
     }
 
@@ -172,7 +184,20 @@ public class ConnectMultiplexerAction extends AbstractAction implements Property
         testWorker.execute();
     }
 
+    protected synchronized void executeMetadata() {
+        metadataWorker = new BCIMetadataWorker( 
+                elementManager.getMessageSource(), 
+                elementManager.getJmxClient(), 
+                openMonitorDescriptor,
+                timeoutMilis * tryoutCount);
+        metadataWorker.addPropertyChangeListener( this);
+        metadataWorker.execute();
+    }
+
     protected synchronized void cancel() {
+        if (metadataWorker != null) {
+            metadataWorker.cancel( false);
+        }
         if (testWorker != null) {
             testWorker.cancel( false);
         }
@@ -196,8 +221,15 @@ public class ConnectMultiplexerAction extends AbstractAction implements Property
             if (res.success)
                 executeTest();
         }
-        else if ("connectionTestResult".equals( evt.getPropertyName())) {
-            disconnectAction.setEnabled( true);
+        if ("connectionTestResult".equals( evt.getPropertyName())) {
+            WorkerResult res = (WorkerResult) evt.getNewValue();
+            if (res.success)
+                executeMetadata();
+        }
+        else if ("metadataRetrieved".equals( evt.getPropertyName())) {
+            OpenMonitorDescriptor omd = (OpenMonitorDescriptor) evt.getNewValue();
+            if (omd.isMetadataReceived())
+                disconnectAction.setEnabled( true);
         }
     }
 

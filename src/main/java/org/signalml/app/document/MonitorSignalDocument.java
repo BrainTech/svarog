@@ -1,21 +1,24 @@
 package org.signalml.app.document;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import multiplexer.jmx.client.JmxClient;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.app.view.DocumentView;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.worker.MonitorWorker;
+import org.signalml.app.worker.SignalRecorderWorker;
 import org.signalml.domain.signal.RoundBufferSampleSource;
 import org.signalml.domain.signal.SignalChecksum;
 import org.signalml.domain.signal.SignalProcessingChain;
-import org.signalml.domain.signal.SignalType;
 import org.signalml.exception.SignalMLException;
 
 /**
@@ -27,20 +30,50 @@ public class MonitorSignalDocument extends AbstractSignal {
     protected static final Logger logger = Logger.getLogger(MonitorSignalDocument.class);
 
     private JmxClient jmxClient;
+    private OpenMonitorDescriptor monitorOptions;
+    private OutputStream recorderOutput;
     private MonitorWorker monitorWorker;
+    private SignalRecorderWorker recorderWorker;
     private String name;
 
-    public MonitorSignalDocument( SignalType type) {
-        super(type);
+    public MonitorSignalDocument( OpenMonitorDescriptor monitorOptions) {
+        super( monitorOptions.getType());
+        this.monitorOptions = monitorOptions;
+        double freq = monitorOptions.getSamplingFrequency();
+        double ps = monitorOptions.getPageSize();
+        int sampleCount = (int) Math.ceil( ps * freq);
+        sampleSource = new RoundBufferSampleSource( monitorOptions.getSelectedChannelList().length, sampleCount);
+        ((RoundBufferSampleSource) sampleSource).setLabels( monitorOptions.getSelectedChannelList());
+        ((RoundBufferSampleSource) sampleSource).setDocumentView( getDocumentView());
     }
 
-    public void setSamplmeSource( RoundBufferSampleSource sampleSource) {
-        this.sampleSource = sampleSource;
-        sampleSource.setDocumentView( getDocumentView());
-    }
 
     public void setName( String name) {
         this.name = name;
+    }
+
+    public float getMinValue() {
+        return monitorOptions.getMinimumValue();
+    }
+
+    public float getMaxValue() {
+        return monitorOptions.getMaximumValue();
+    }
+
+    public double[] getGain() {
+        double[] result = new double[monitorOptions.getChannelCount()];
+        float[] fg = monitorOptions.getCalibrationGain();
+        for (int i=0; i<monitorOptions.getChannelCount(); i++)
+            result[i] = fg[i];
+        return result;
+    }
+
+    public double[] getOffset() {
+        double[] result = new double[monitorOptions.getChannelCount()];
+        float[] fg = monitorOptions.getCalibrationOffset();
+        for (int i=0; i<monitorOptions.getChannelCount(); i++)
+            result[i] = fg[i];
+        return result;
     }
 
     @Override
@@ -58,22 +91,6 @@ public class MonitorSignalDocument extends AbstractSignal {
         }
     }
 
-//    public String getMultiplexerAddress() {
-//        return multiplexerAddress;
-//    }
-//
-//    public void setMultiplexerAddress( String multiplexerAddress) {
-//        this.multiplexerAddress = multiplexerAddress;
-//    }
-//
-//    public int getMultiplexerPort() {
-//        return multiplexerPort;
-//    }
-//
-//    public void setMultiplexerPort( int multiplexerPort) {
-//        this.multiplexerPort = new Integer( multiplexerPort);
-//    }
-
     public JmxClient getJmxClient() {
         return jmxClient;
     }
@@ -82,16 +99,31 @@ public class MonitorSignalDocument extends AbstractSignal {
         this.jmxClient = jmxClient;
     }
 
+    public OutputStream getRecorderOutput() {
+        return recorderOutput;
+    }
+
+    public void setRecorderOutput(OutputStream recorderOutput) {
+        this.recorderOutput = recorderOutput;
+    }
+
     @Override
     public void openDocument() throws SignalMLException, IOException {
-
-        System.out.println( "opening document!");
 
         if (jmxClient == null) {
             throw new IOException(); //TODO
         }
 
-        monitorWorker = new MonitorWorker( jmxClient, (RoundBufferSampleSource) sampleSource);
+        LinkedBlockingQueue< double[]> sampleQueue = null;
+        if (recorderOutput != null) {
+            sampleQueue = new LinkedBlockingQueue< double[]>();
+            recorderWorker = new SignalRecorderWorker( sampleQueue, recorderOutput, monitorOptions, 50L); // TODO sparametryzować pollingInterval
+            recorderWorker.execute();
+        }
+
+        monitorWorker = new MonitorWorker( jmxClient, monitorOptions, (RoundBufferSampleSource) sampleSource);
+        if (sampleQueue != null)
+            monitorWorker.setSampleQueue( sampleQueue);
         monitorWorker.execute();
 
     }
@@ -101,6 +133,10 @@ public class MonitorSignalDocument extends AbstractSignal {
         if (monitorWorker != null && !monitorWorker.isCancelled()) {
             monitorWorker.cancel( false);
             monitorWorker = null;
+        }
+        if (recorderWorker != null && !recorderWorker.isCancelled()) {
+            recorderWorker.cancel( false);
+            recorderWorker = null;
         }
         super.closeDocument();
     }
@@ -205,7 +241,7 @@ public class MonitorSignalDocument extends AbstractSignal {
 
     @Override
     public TagDocument getActiveTag() {
-        // dla monitora tagi nie są obsługiwane
+        // dla monitora tagi nie są obsługiwane - na razie
         return null;
     }
 

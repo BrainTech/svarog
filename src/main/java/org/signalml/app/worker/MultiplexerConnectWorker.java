@@ -7,12 +7,12 @@ import java.util.concurrent.ExecutionException;
 import javax.swing.SwingWorker;
 
 import multiplexer.jmx.client.JmxClient;
-import multiplexer.protocol.Constants;
 
 import org.apache.log4j.Logger;
 import org.jboss.netty.channel.ChannelFuture;
 import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.dialog.OpenMonitorDialog;
+import org.signalml.multiplexer.protocol.SvarogConstants;
 
 /**
  *
@@ -47,7 +47,7 @@ public class MultiplexerConnectWorker extends SwingWorker< WorkerResult, Integer
 
 	    logger.info( "Worker: start...");
 
-        client = new JmxClient( Constants.PeerTypes.STREAM_RECEIVER);
+        client = new JmxClient( SvarogConstants.PeerTypes.STREAM_RECEIVER);
         ChannelFuture connectFuture = client.asyncConnect( multiplexerSocket);
 
         int i = 0;
@@ -75,7 +75,6 @@ public class MultiplexerConnectWorker extends SwingWorker< WorkerResult, Integer
             }
             else {
                 logger.error("connection failed!");
-//                String msg = ;
                 Throwable cause = connectFuture.getCause();
                 return new WorkerResult( Boolean.FALSE, 
                         elementManager.getMessageSource().getMessage( "action.connectingMultiplexer.connectionFailedMsg") + 

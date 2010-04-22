@@ -114,10 +114,9 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration {
 	private String multiplexerAddress;
 	private int multiplexerPort;
 
-	private float monitorSamplingFrequency;
-	private float monitorPageSize;
-	private float monitorCalibrationGain;
-	private float monitorCalibrationOffset;
+	private float  monitorPageSize;
+	
+	private String signalRecorderFileName;
 
 	public void applySystemSettings() {
 
@@ -701,15 +700,7 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration {
         return multiplexerPort;
     }
 
-    public float getMonitorSamplingFrequency() {
-        return monitorSamplingFrequency;
-    }
-
-    public void setMonitorSamplingFrequency(float monitorSamplingFrequency) {
-        this.monitorSamplingFrequency = monitorSamplingFrequency;
-    }
-
-    public float getMonitorPageSize() {
+    public double getMonitorPageSize() {
         return monitorPageSize;
     }
 
@@ -717,20 +708,12 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration {
         this.monitorPageSize = monitorPageSize;
     }
 
-    public float getMonitorCalibrationGain() {
-        return monitorCalibrationGain;
+    public String getSignalRecorderFileName() {
+        return signalRecorderFileName;
     }
 
-    public void setMonitorCalibrationGain(float monitorCalibrationGain) {
-        this.monitorCalibrationGain = monitorCalibrationGain;
+    public void setSignalRecorderFileName(String signalRecorderFileName) {
+        this.signalRecorderFileName = signalRecorderFileName;
     }
 
-    public float getMonitorCalibrationOffset() {
-        return monitorCalibrationOffset;
-    }
-
-    public void setMonitorCalibrationOffset(float monitorCalibrationOffset) {
-        this.monitorCalibrationOffset = monitorCalibrationOffset;
-    }
-		
 }

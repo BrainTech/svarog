@@ -298,8 +298,10 @@
 	<entry key="action.saveAllDocumentsToolTip">Save all unsaved documents</entry>
 	<entry key="action.closeDocument">Close</entry>
 	<entry key="action.closeDocumentToolTip">Close the active document</entry>
+
 	<entry key="action.openMonitorLabel">Open monitor...</entry>
 	<entry key="action.openMonitorToolTip">Open monitor and connect to multiplexer</entry>
+
 	<entry key="action.connectMultiplexer.actionName">Connect</entry>
 	<entry key="action.cancelConnectMultiplexer.actionName">Cancel</entry>
 	<entry key="action.disconnectMultiplexer.actionName">Disconnect</entry>
@@ -308,14 +310,58 @@
 	<entry key="action.connectingMultiplexer.connectionFailedMsg">Connection failed!</entry>
 	<entry key="action.connectingMultiplexer.connectionTimeoutMsg">Connection timeout!</entry>
 	<entry key="action.connectingMultiplexer.connectionOkMsg">Connection OK!</entry>
+
 	<entry key="action.openMonitor.testMultiplexerConnectionLabel">Test connection</entry>
 	<entry key="action.openMonitor.testMultiplexerConnectionToolTip">Test connection to multiplexer</entry>
 	<entry key="action.openMonitor.testMultiplexerConnectionAccelerator">T</entry>
 	<entry key="action.openMonitor.testMultiplexerConnection.sendingFailedMsg">Sending failed!</entry>
 	<entry key="action.openMonitor.testMultiplexerConnection.receiveTimedout">Receive timed out!</entry>
 	<entry key="action.openMonitor.testMultiplexerConnection.receivedBadReplyMsg">Received bad reply!</entry>
-	<entry key="action.openMonitor.testMultiplexerConnection.receivingFailedMsg">Receiving failed</entry>
+	<entry key="action.openMonitor.testMultiplexerConnection.receivingFailedMsg">Receiving failed!</entry>
 	<entry key="action.openMonitor.testMultiplexerConnection.connectionOkMsg">Connection ok!</entry>
+
+	<entry key="action.openMonitor.metadataWorker.samplingRate.sendingFailedMsg">Sending failed!</entry>
+	<entry key="action.openMonitor.metadataWorker.samplingRate.receivedBadReplyMsg">Received bad reply!</entry>
+	<entry key="action.openMonitor.metadataWorker.samplingRate.receiveTimedout">Receive timed out!</entry>
+	<entry key="action.openMonitor.metadataWorker.samplingRate.receivingFailedMsg">Receiving failed!</entry>
+
+	<entry key="action.openMonitor.metadataWorker.channelCount.sendingFailedMsg">Sending failed!</entry>
+	<entry key="action.openMonitor.metadataWorker.channelCount.receivedBadReplyMsg">Received bad reply!</entry>
+	<entry key="action.openMonitor.metadataWorker.channelCount.receiveTimedout">Receive timed out!</entry>
+	<entry key="action.openMonitor.metadataWorker.channelCount.receivingFailedMsg">Receiving failed!</entry>
+
+	<entry key="action.openMonitor.metadataWorker.amplifierChannels.sendingFailedMsg">Sending failed!</entry>
+	<entry key="action.openMonitor.metadataWorker.amplifierChannels.receivedBadReplyMsg">Received bad reply!</entry>
+	<entry key="action.openMonitor.metadataWorker.amplifierChannels.receiveTimedout">Receive timed out!</entry>
+	<entry key="action.openMonitor.metadataWorker.amplifierChannels.receivingFailedMsg">Receiving failed!</entry>
+
+	<entry key="action.openMonitor.metadataWorker.channelNames.sendingFailedMsg">Sending failed!</entry>
+	<entry key="action.openMonitor.metadataWorker.channelNames.receivedBadReplyMsg">Received bad reply!</entry>
+	<entry key="action.openMonitor.metadataWorker.channelNames.receiveTimedout">Receive timed out!</entry>
+	<entry key="action.openMonitor.metadataWorker.channelNames.receivingFailedMsg">Receiving failed!</entry>
+
+	<entry key="action.openMonitor.metadataWorker.calibrationGain.sendingFailedMsg">Sending failed!</entry>
+	<entry key="action.openMonitor.metadataWorker.calibrationGain.receivedBadReplyMsg">Received bad reply!</entry>
+	<entry key="action.openMonitor.metadataWorker.calibrationGain.receiveTimedout">Receive timed out!</entry>
+	<entry key="action.openMonitor.metadataWorker.calibrationGain.receivingFailedMsg">Receiving failed!</entry>
+
+	<entry key="action.openMonitor.metadataWorker.calibrationOffset.sendingFailedMsg">Sending failed!</entry>
+	<entry key="action.openMonitor.metadataWorker.calibrationOffset.receivedBadReplyMsg">Received bad reply!</entry>
+	<entry key="action.openMonitor.metadataWorker.calibrationOffset.receiveTimedout">Receive timed out!</entry>
+	<entry key="action.openMonitor.metadataWorker.calibrationOffset.receivingFailedMsg">Receiving failed!</entry>
+
+	<entry key="action.openMonitor.metadataWorker.minimumValue.sendingFailedMsg">Sending failed!</entry>
+	<entry key="action.openMonitor.metadataWorker.minimumValue.receivedBadReplyMsg">Received bad reply!</entry>
+	<entry key="action.openMonitor.metadataWorker.minimumValue.receiveTimedout">Receive timed out!</entry>
+	<entry key="action.openMonitor.metadataWorker.minimumValue.receivingFailedMsg">Receiving failed!</entry>
+
+	<entry key="action.openMonitor.metadataWorker.maximumValue.sendingFailedMsg">Sending failed!</entry>
+	<entry key="action.openMonitor.metadataWorker.maximumValue.receivedBadReplyMsg">Received bad reply!</entry>
+	<entry key="action.openMonitor.metadataWorker.maximumValue.receiveTimedout">Receive timed out!</entry>
+	<entry key="action.openMonitor.metadataWorker.maximumValue.receivingFailedMsg">Receiving failed!</entry>
+
+	<entry key="action.openMonitor.metadataWorker.receivedMetadata">Metadata retrieved!</entry>
+
 	<entry key="action.editPreferences">Preferences...</entry>
 	<entry key="action.editPreferencesToolTip">Edit preferences</entry>
 	<entry key="action.viewMode">View mode</entry>
@@ -597,6 +643,9 @@
 	<entry key="openMonitor.calibrationGainLabel">Calibration gain</entry>
 	<entry key="openMonitor.calibrationOffsetLabel">Calibration offset</entry>
 	<entry key="openMonitor.pageSizeLabel">Page size</entry>
+	<entry key="openMonitor.channelsListLabel">Channels</entry>
+	<entry key="openMonitor.saveDataLabel">Select file</entry>
+	<entry key="openMonitor.browseButtonLabel">Browse</entry>
 	<entry key="openDocument.signalAutodetected">Signal document autodetected</entry>
 	<entry key="openDocument.bookAutodetected">Book document autodetected</entry>
 	<entry key="openDocument.tagAutodetected">Tag document autodetected</entry>

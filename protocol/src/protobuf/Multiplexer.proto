@@ -1,0 +1,240 @@
+//
+// Azouk Libraries -- Libraries and goodies created for www.azouk.com.
+// Copyright (C) 2008-2009 Azouk Network Ltd.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
+// Author:
+//      Piotr Findeisen <piotr.findeisen at gmail.com>
+//
+
+
+package multiplexer;
+option optimize_for = SPEED;
+
+// Note that this options correspond to properties set in build.xml.
+option java_package = "multiplexer.protocol";
+option java_outer_classname = "Protocol";
+
+message MultiplexerPeerDescription {
+
+    // ID of this type
+    required uint32 type = 1;
+
+    // name of this type for use in text-based config files
+    required string name = 2;
+
+    optional string comment = 3;
+
+    // how many pending messages this peer can have
+    optional uint32 queue_size = 4 [default = 1024]; // how big a queue can be
+
+    // some clients are fully passive (never run io_service.run() without timeouts),
+    // so e.g. we should not require heartbits from them
+    optional bool is_passive = 5 [default = false];
+}
+
+
+message MultiplexerMessageDescription {
+
+    message RoutingRule {
+	enum Whom {
+	    ALL = 1;
+	    ANY = 2;
+	}
+
+	// peer name, e.g. "SEARCH"
+	// required in configuration files
+	optional string peer = 20;
+
+	// peer type, e.g. types::SEARCH
+	// required in inary format
+	optional uint32 peer_type = 1;
+
+	// forward to how many peers? defaults to ANY
+	optional Whom whom = 2 [default = ANY];
+
+	// is a peer presence required?
+	optional bool delivery_error_is_error = 3 [default = true];
+
+	// inform the sender about delivery error?
+	optional bool report_delivery_error = 4 [default = true];
+	optional bool include_original_packet_in_report = 5 [default = false];
+    }
+
+    required uint32 type = 1;
+    required string name = 2;
+    optional string comment = 3;
+
+    // defines routing rules for given packet
+    // the first entry here will be used in processing BackendForPackerSearch
+    repeated RoutingRule to = 4;
+}
+
+message LoggingMethod {
+    // this message is only a namespace for the following
+    enum Values {
+	// this are bit-flags
+	CONSOLE = 1;
+	FILE = 2;
+	BOTH = 3;
+    }
+}
+
+message Compression {
+    enum Values {
+	NO_COMPRESSION = 0;
+	GZIP = 1;
+    };
+};
+
+message MultiplexerMessage {
+    // packet ID
+    // generally required but see http://code.google.com/apis/protocolbuffers/docs/proto.html#simple
+    optional uint64 id = 1;
+
+    // ID of the sender
+    // generally required
+    optional uint64 from = 2;
+
+    // send a message directly to a peer with ID `to'; overrides all rules, also `override_rrules'
+    optional uint64 to = 3;
+
+    // report error delivery when routing via MultiplexerMessage.to
+    optional bool report_delivery_error = 21 [default = false];
+    optional bool include_original_packet_in_report = 22 [default = false];
+
+    // packet type
+    required uint32 type = 4;
+
+    // generally required; the actual message we want to send
+    optional bytes message = 5;
+    optional Compression.Values compression = 24 [default = NO_COMPRESSION];
+
+    // when the packet was sent
+    optional uint64 timestamp = 6;
+
+    // packet ID to which we reply
+    // this may be change to repeated field in the future
+    optional uint64 references = 7;
+
+    // work flow ID
+    optional bytes workflow = 8;
+
+    // support for generally overriding the default routing rules
+    repeated MultiplexerMessageDescription.RoutingRule override_rrules = 20;
+
+    // request disabling logging to file or stream
+    optional LoggingMethod.Values logging_method = 23 [default = BOTH];
+}
+
+// a message to be used in initial handshake
+message WelcomeMessage {
+    required uint32 type = 1;
+    required uint64 id = 2;
+    optional bytes multiplexer_password = 3;
+}
+
+// a message to be used when searching for working backend
+message BackendForPacketSearch {
+    required uint32 packet_type = 1;
+}
+
+message DeliveryError {
+    // ID of the packet which couldn't be delvered
+    required uint64 packet_id = 1;
+
+    // list of peer types (from MultiplexerMessageDescription.to rules or from MultiplexerMessage.override_rrules)
+    // to which delivery failed;
+    // will be empty if delivery failed and message was routed via MultiplexerMessage.to
+    repeated uint32 failed_type = 2;
+
+    // ID of the requested recipient if message was routed via MultiplexerMessage.to
+    optional uint64 failed_to = 3;
+
+    // was the packet type known to the Multiplexer
+    //(set only if no MultiplexerMessage.to() nor MultiplexerMessage.override_rrules() provided)
+    optional bool is_known_type = 4;
+
+    // MultiplexerMessage that caused the error
+    optional MultiplexerMessage original_message = 20;
+}
+
+// type used for reading configuration file multiplexer.rules
+message MultiplexerRules {
+    repeated MultiplexerMessageDescription type = 1;
+    repeated MultiplexerPeerDescription peer = 2;
+}
+
+message SearchCollectedLogs {
+    // select by workflow
+    optional bytes workflow = 1;
+
+    // select range of results; results returned will be from oldest-newset,
+    // limited to `limit' newest, counting from `offset`'th newest
+    // (slicing is done on reversed list)
+    optional uint32 limit = 2 [default = 100];
+    optional uint32 offset = 3 [default = 0];
+
+    // search in some LogEntry fields
+    optional bytes query = 4;
+}
+
+message ReplayCollectedEvents {
+    // replay events received between from_timestamp ...
+    optional uint64 from_timestamp = 1 [default = 0];
+
+    // ... and to_timestamp
+    optional uint64 to_timestamp = 2;
+
+    // replay events of type event_type (repeated)
+    // if no event_type provided, replay events of all types
+    repeated uint32 event_type = 3;
+}
+
+// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+message Variable {
+    required string key = 1;
+    required string value = 2;
+}
+message Blink {
+    required int32 index = 1;
+    required float timestamp = 2;
+}
+
+message BlinkVector {
+    repeated Blink blinks = 1;
+    
+}
+message Sample {
+    required double value = 1;
+    required double timestamp = 2;
+}
+
+message SampleVector {
+    repeated Sample samples = 1;
+}
+message Decision {
+    required int32 decision = 1;
+    optional int32 type = 2;
+}
+
+message SamplingFrequency {
+	required double frequency = 1;
+}
+message Calibration {
+	required double bias = 1;
+	required double offset = 2;
+}

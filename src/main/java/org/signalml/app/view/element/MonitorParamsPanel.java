@@ -13,17 +13,15 @@ import org.springframework.context.support.MessageSourceAccessor;
  *
  */
 public class MonitorParamsPanel extends JPanel {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	protected static final Logger logger = Logger.getLogger(MonitorParamsPanel.class);
-	
+
 	private MessageSourceAccessor messageSource;
 
     private JTextField samplingField;
     private JTextField channelCountField;
-    private JTextField calibrationGainField;
-    private JTextField calibrationOffsetField;
 
     private JTextField pageSizeField;
 
@@ -33,7 +31,6 @@ public class MonitorParamsPanel extends JPanel {
 	public MonitorParamsPanel( MessageSourceAccessor messageSource) {
 		super();
 		this.messageSource = messageSource;
-//		this.appConfig = appConfig;
 		initialize();
 	}
 
@@ -46,8 +43,6 @@ public class MonitorParamsPanel extends JPanel {
 
         JLabel samplingLabel = new JLabel( messageSource.getMessage( "openMonitor.samplingLabel"));
         JLabel channelCountLabel = new JLabel( messageSource.getMessage("openMonitor.channelCountLabel"));
-        JLabel calibrationGainLabel = new JLabel( messageSource.getMessage("openMonitor.calibrationGainLabel"));
-        JLabel calibrationOffsetLabel = new JLabel( messageSource.getMessage("openMonitor.calibrationOffsetLabel"));
 
         JLabel pageSizeLabel = new JLabel( messageSource.getMessage("openMonitor.pageSizeLabel"));
 
@@ -63,14 +58,10 @@ public class MonitorParamsPanel extends JPanel {
         hGroup.addGroup(layout.createParallelGroup()
                  .addComponent( samplingLabel)
                  .addComponent( channelCountLabel)
-                 .addComponent( calibrationGainLabel)
-                 .addComponent( calibrationOffsetLabel)
                  .addComponent( pageSizeLabel));
         hGroup.addGroup(layout.createParallelGroup()
                  .addComponent( getSamplingField())
                  .addComponent( getChannelCountField())
-                 .addComponent( getCalibrationGainField())
-                 .addComponent( getCalibrationOffsetField())
                  .addComponent( getPageSizeField()));
 
         layout.setHorizontalGroup( hGroup);
@@ -81,10 +72,6 @@ public class MonitorParamsPanel extends JPanel {
                 addComponent( samplingLabel).addComponent( getSamplingField()));
         vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).
                 addComponent( channelCountLabel).addComponent( getChannelCountField()));
-        vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).
-                addComponent( calibrationGainLabel).addComponent( getCalibrationGainField()));
-        vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).
-                addComponent( calibrationOffsetLabel).addComponent( getCalibrationOffsetField()));
         vGroup.addGap(50);
         vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).
                 addComponent( pageSizeLabel).addComponent( getPageSizeField()));
@@ -96,6 +83,7 @@ public class MonitorParamsPanel extends JPanel {
     public JTextField getSamplingField() {
         if (samplingField == null) {
             samplingField = new JTextField();
+            samplingField.setEditable( false);
         }
         return samplingField;
     }
@@ -103,22 +91,9 @@ public class MonitorParamsPanel extends JPanel {
     public JTextField getChannelCountField() {
         if (channelCountField == null) {
             channelCountField = new JTextField();
+            channelCountField.setEditable( false);
         }
         return channelCountField;
-    }
-
-    public JTextField getCalibrationGainField() {
-        if (calibrationGainField == null) {
-            calibrationGainField = new JTextField();
-        }
-        return calibrationGainField;
-    }
-
-    public JTextField getCalibrationOffsetField() {
-        if (calibrationOffsetField == null) {
-            calibrationOffsetField = new JTextField();
-        }
-        return calibrationOffsetField;
     }
 
     public JTextField getPageSizeField() {

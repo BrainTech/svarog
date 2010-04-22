@@ -26,6 +26,13 @@
 		</repository>
 	</repositories>
 
+    <pluginRepositories>
+        <pluginRepository>
+            <id>onejar-maven-plugin.googlecode.com</id>
+            <url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>
+        </pluginRepository>
+    </pluginRepositories>
+
 	<profiles>
 		<profile>
 			<id>win32</id>
@@ -167,6 +174,22 @@
 					<mainClass>org.signalml.app.SvarogApplication</mainClass>
 				</configuration>
 			</plugin>
+			<plugin>
+            <groupId>org.dstovall</groupId>
+                <artifactId>onejar-maven-plugin</artifactId>
+                <version>1.4.1</version>
+                <executions>
+                    <execution>
+                        <configuration>
+                            <!-- Optional, default is false -->
+                            <attachToBuild>true</attachToBuild>
+                        </configuration>
+                        <goals>
+                            <goal>one-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 	</build>
 
@@ -331,6 +354,46 @@
 			<groupId>org.signalml</groupId>
 			<artifactId>svarog-launcher</artifactId>
 			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.netty</groupId>
+			<artifactId>netty</artifactId>
+			<version>3.1.0.GA</version>
+		</dependency>
+		<dependency>
+			 <groupId>org.freemarker</groupId>
+			 <artifactId>freemarker</artifactId>
+			 <version>2.3.15</version>
+		</dependency>
+		<dependency>
+				<groupId>com.google.collections</groupId>
+				<artifactId>google-collections</artifactId>
+				<version>1.0-rc2</version>
+		</dependency>
+		<dependency>
+				<groupId>com.google.protobuf</groupId>
+				<artifactId>protobuf-java</artifactId>
+				<version>2.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.5.8</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-jdk14</artifactId>
+			<version>1.5.8</version>
+		</dependency>
+		<dependency>
+			<groupId>trove</groupId>
+			<artifactId>trove</artifactId>
+			<version>2.0.4</version>
+		</dependency>
+		<dependency>
+			<groupId>multiplexer</groupId>
+			<artifactId>jmx</artifactId>
+			<version>0.9</version>
 		</dependency>
 	</dependencies>
 

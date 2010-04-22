@@ -13,6 +13,7 @@ public class RoundBufferSampleSource extends DoubleArraySampleSource implements 
     protected int nextInsertPos;
     protected boolean full;
     protected DocumentView documentView;
+    protected Object[] labels;
 
     public RoundBufferSampleSource( int channelCount, int sampleCount) {
         super( null, channelCount, sampleCount);
@@ -162,6 +163,22 @@ public class RoundBufferSampleSource extends DoubleArraySampleSource implements 
     public void setSamplingFrequency(float samplingFrequency) {
         // TODO Auto-generated method stub
         
+    }
+
+    @Override
+    public String getLabel(int channel) {
+        if (labels != null)
+            return labels[channel].toString();
+        else
+            return super.getLabel(channel);
+    }
+
+    public Object[] getLabels() {
+        return labels;
+    }
+
+    public void setLabels( Object[] labels) {
+        this.labels = labels;
     }
 
 }

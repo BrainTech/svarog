@@ -174,12 +174,11 @@
 	<entry key="stager.fixed.corrCoeffSems">-0.7</entry>	
 
 	<entry key="multiplexer.address">127.0.0.1</entry>
-	<entry key="multiplexer.port">38999</entry>
+	<entry key="multiplexer.port">31889</entry>
 
-	<entry key="monitor.samplingFrequency">128.0</entry>
 	<entry key="monitor.pageSize">20.0</entry>
-	<entry key="monitor.calibrationGain">1.0</entry>
-	<entry key="monitor.calibrationOffset">0.0</entry>
+
+	<entry key="signalRecorder.fileName">signal</entry>
 
 	<entry key="eeg.pl.registerUrl">http://www.eeg.pl/join_form</entry>
 	

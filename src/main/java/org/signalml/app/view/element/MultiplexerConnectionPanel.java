@@ -25,6 +25,7 @@ import javax.swing.GroupLayout.Alignment;
 import org.apache.log4j.Logger;
 import org.signalml.app.action.ConnectMultiplexerAction;
 import org.signalml.app.action.DisconnectMultiplexerAction;
+import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.dialog.OpenMonitorDialog;
 import org.signalml.app.worker.WorkerResult;
@@ -40,6 +41,7 @@ public class MultiplexerConnectionPanel extends JPanel {
 	protected static final Logger logger = Logger.getLogger(MultiplexerConnectionPanel.class);
 	
     private ViewerElementManager elementManager;
+    private OpenMonitorDescriptor openMonitorDescriptor;
 
     private JTextField multiplexerAddressField;
     private JTextField multiplexerPortField;
@@ -186,6 +188,16 @@ public class MultiplexerConnectionPanel extends JPanel {
         add( connectionPanel, BorderLayout.SOUTH);
 
 	}
+
+    public OpenMonitorDescriptor getOpenMonitorDescriptor() {
+        return openMonitorDescriptor;
+    }
+
+    public void setOpenMonitorDescriptor(OpenMonitorDescriptor openMonitorDescriptor) {
+        this.openMonitorDescriptor = openMonitorDescriptor;
+        if (connectAction != null)
+            connectAction.setOpenMonitorDescriptor( openMonitorDescriptor);
+    }
 
     public JTextField getMultiplexerAddressField() {
         if (multiplexerAddressField == null) {

@@ -3,7 +3,7 @@ package org.signalml.app.worker;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
-import java.nio.IntBuffer;
+import java.nio.DoubleBuffer;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -11,30 +11,30 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.SwingWorker;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.model.SignalExportDescriptor;
+import org.signalml.app.model.OpenMonitorDescriptor;
 
 /** 
- * SignalSaverWorker
+ * SignalRecorderWorker
  */
-public class SignalSaverWorker extends SwingWorker< Integer, Integer> {
+public class SignalRecorderWorker extends SwingWorker< Integer, Integer> {
 
-    protected static final Logger logger = Logger.getLogger( SignalSaverWorker.class);
+    protected static final Logger logger = Logger.getLogger( SignalRecorderWorker.class);
 
-    private LinkedBlockingQueue< int[]> sampleQueue;
+    private LinkedBlockingQueue< double[]> sampleQueue;
     private OutputStream outputStream;
-    private SignalExportDescriptor signalDescriptor;
-    private Integer pollingInterval;
+    private OpenMonitorDescriptor monitorDescriptor;
+    private long pollingInterval;
 
     private volatile boolean pendingAbort;
     private volatile int savedSampleCount;
 
-	public SignalSaverWorker( LinkedBlockingQueue< int[]> sampleQueue, 
-	                          OutputStream outputStream, 
-	                          SignalExportDescriptor signalDescriptor,
-	                          Integer pollingInterval) {
+	public SignalRecorderWorker( LinkedBlockingQueue< double[]> sampleQueue, 
+	                             OutputStream outputStream,
+	                             OpenMonitorDescriptor monitorDescriptor,
+	                             long pollingInterval) {
 	    this.sampleQueue = sampleQueue;
 	    this.outputStream = outputStream;
-	    this.signalDescriptor = signalDescriptor;
+	    this.monitorDescriptor = monitorDescriptor;
 	    this.pollingInterval = pollingInterval;
 	    pendingAbort = false;
 	    savedSampleCount = 0;
@@ -44,7 +44,7 @@ public class SignalSaverWorker extends SwingWorker< Integer, Integer> {
 	protected Integer doInBackground() throws Exception {
 
 	    while (!pendingAbort) {
-	        int[] chunk  = null;
+	        double[] chunk  = null;
 	        try {
 	            chunk = sampleQueue.poll( pollingInterval, TimeUnit.MILLISECONDS);
 	        }
@@ -52,6 +52,7 @@ public class SignalSaverWorker extends SwingWorker< Integer, Integer> {
                 return new Integer( getSavedSampleCount());
             }
 	        if (chunk != null) {
+                logger.debug( "saving chunk...");
 	            saveChunk( chunk);
 	        }
             if( pendingAbort() ) {
@@ -62,19 +63,17 @@ public class SignalSaverWorker extends SwingWorker< Integer, Integer> {
 		return null;
 	}
 
-	private void saveChunk( int[] chunk) throws IOException {
+	private void saveChunk( double[] chunk) throws IOException {
 
-        int sampleByteSize = signalDescriptor.getSampleType().getByteWidth();
+        byte[] byteBuffer = new byte[ chunk.length * monitorDescriptor.getSampleType().getByteWidth()];
 
-        byte[] byteBuffer = new byte[ chunk.length * sampleByteSize];
-
-        ByteBuffer bBuffer = ByteBuffer.wrap(byteBuffer).order( signalDescriptor.getByteOrder().getByteOrder());
+        ByteBuffer bBuffer = ByteBuffer.wrap(byteBuffer).order( monitorDescriptor.getByteOrder().getByteOrder());
         
-        IntBuffer iBuffer = bBuffer.asIntBuffer();
+        DoubleBuffer buf = bBuffer.asDoubleBuffer();
         // enforce byte order
-        iBuffer.clear();
-        iBuffer.put( chunk, 0, chunk.length);
-        outputStream.write( byteBuffer, 0, chunk.length);
+        buf.clear();
+        buf.put( chunk, 0, chunk.length);
+        outputStream.write( byteBuffer, 0, byteBuffer.length);
 	}
 
     @Override

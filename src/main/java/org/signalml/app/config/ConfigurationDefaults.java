@@ -142,6 +142,7 @@ public class ConfigurationDefaults {
 		
 		setMultiplexerDefaultParameters( config);
 		setMonitorDefaultParameters( config);
+		setSignalRecorderDefaultParameters( config);
 	}
 
 	public static void setZoomSignalSettingsDefaults( ZoomSignalSettings settings ) {
@@ -308,13 +309,16 @@ public class ConfigurationDefaults {
     
     public static void setMonitorDefaultParameters( ApplicationConfiguration config ) {
 
-        config.setMonitorSamplingFrequency( Float.parseFloat( properties.getProperty( "monitor.samplingFrequency")));
         config.setMonitorPageSize( Float.parseFloat( properties.getProperty( "monitor.pageSize")));
-        config.setMonitorCalibrationGain( Float.parseFloat( properties.getProperty( "monitor.calibrationGain")));
-        config.setMonitorCalibrationOffset( Float.parseFloat( properties.getProperty( "monitor.calibrationOffset")));
 
     }
-	
+    
+    public static void setSignalRecorderDefaultParameters( ApplicationConfiguration config ) {
+
+        config.setSignalRecorderFileName( properties.getProperty( "signalRecorder.fileName"));
+
+    }
+
 	public static String getDefaultEegPlRegisterURL() {
 		return properties.getProperty( "eeg.pl.registerUrl" );
 	}
