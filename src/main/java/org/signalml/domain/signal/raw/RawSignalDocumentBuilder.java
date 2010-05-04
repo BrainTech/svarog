@@ -51,6 +51,9 @@ public class RawSignalDocumentBuilder {
 	public static final String SOURCE_FILE_NAME = "rs:sourceFileName";
 	public static final String EXPORT_FILE_NAME = "rs:exportFileName";
 	public static final String RAW_SIGNAL = "rs:rawSignal";
+    public static final String CALIBRATION_PARAM = "rs:calibrationParam";
+    public static final String CALIBRATION_GAIN = "rs:calibrationGain";
+    public static final String CALIBRATION_OFFSET = "rs:calibrationOffset";
 	
 	static final String JAXP_SCHEMA_LANGUAGE = "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
 

@@ -118,7 +118,6 @@ public class MultiplexerConnectionPanel extends JPanel {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 if ("disconnected".equals( evt.getPropertyName())) {
-                    connectAction.setMode( ConnectMultiplexerAction.CONNECT);
                     getConnectButton().setEnabled( true);
                     getProgressBar().setValue( 0);
                     getStatusArea().setText( null);
@@ -139,7 +138,6 @@ public class MultiplexerConnectionPanel extends JPanel {
                     if (!res.success) {
                         getStatusArea().setForeground( OpenMonitorDialog.FAILURE_COLOR);
                         getStatusArea().setText( res.message);
-                        connectAction.setMode( ConnectMultiplexerAction.CONNECT);
                     }
                 }
                 else if ("testState".equals( evt.getPropertyName())) {
@@ -243,4 +241,13 @@ public class MultiplexerConnectionPanel extends JPanel {
         return disonnectButton;
     }
 
+    public void cancel() {
+        if (connectAction != null) {
+            connectAction.cancel();
+        }
+        getConnectButton().setEnabled( true);
+        getDisconnectButton().setEnabled( false);
+        getProgressBar().setValue( 0);
+        getStatusArea().setText( "");
+    }
 }

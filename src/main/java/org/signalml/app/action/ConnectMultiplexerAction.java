@@ -20,9 +20,6 @@ import org.signalml.app.worker.WorkerResult;
 
 public class ConnectMultiplexerAction extends AbstractAction implements PropertyChangeListener {
 
-    public static final int CONNECT = 0;
-    public static final int CANCEL  = 1;
-
 	private static final long serialVersionUID = 1L;
 	private ViewerElementManager elementManager;
 	private OpenMonitorDescriptor openMonitorDescriptor;
@@ -35,7 +32,6 @@ public class ConnectMultiplexerAction extends AbstractAction implements Property
     private MultiplexerConnectionTestWorker testWorker;
     private BCIMetadataWorker metadataWorker;
     private InetSocketAddress multiplexerSocket;
-    private int mode = CONNECT;
 
 	protected static final Logger logger = Logger.getLogger(ConnectMultiplexerAction.class);
 
@@ -97,44 +93,11 @@ public class ConnectMultiplexerAction extends AbstractAction implements Property
     @Override
 	public synchronized void actionPerformed(ActionEvent ev) {
 
-        if (mode == CONNECT) {
-
-            logger.info("Connecting multiplexer...");
-
-            setMode( CANCEL);
-            
-            createSocket();
-            executeConnect( multiplexerSocket);
-        }
-        else {
-
-            logger.info("Canceling multiplexer connection...");
-
-            setEnabled( false);
-
-            cancel();
-
-            setMode( CONNECT);
-            
-            setEnabled( true);
-        }
+        logger.info("Connecting multiplexer...");
+        
+        createSocket();
+        executeConnect( multiplexerSocket);
 	}
-
-    public void setMode( int mode) {
-        if (this.mode != mode) {
-            this.mode = mode;
-            if (mode == CONNECT) {
-                this.putValue( NAME, 
-                        elementManager.getMessageSource().getMessage(
-                                "action.connectMultiplexer.actionName"));
-            }
-            else {
-                this.putValue( NAME, 
-                        elementManager.getMessageSource().getMessage(
-                                "action.cancelConnectMultiplexer.actionName"));
-            }
-        }
-    }
 
     protected synchronized void createSocket() {
 
@@ -194,7 +157,7 @@ public class ConnectMultiplexerAction extends AbstractAction implements Property
         metadataWorker.execute();
     }
 
-    protected synchronized void cancel() {
+    public synchronized void cancel() {
         if (metadataWorker != null) {
             metadataWorker.cancel( false);
         }
@@ -208,6 +171,7 @@ public class ConnectMultiplexerAction extends AbstractAction implements Property
         if (jmxClient != null) {
             try {
                 jmxClient.shutdown();
+                elementManager.setJmxClient( null);
             }
             catch (Exception e) {}
         }

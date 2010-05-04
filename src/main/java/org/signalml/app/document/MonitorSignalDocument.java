@@ -1,11 +1,16 @@
 package org.signalml.app.document;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import javax.swing.JFileChooser;
 
 import multiplexer.jmx.client.JmxClient;
 
@@ -19,22 +24,33 @@ import org.signalml.app.worker.SignalRecorderWorker;
 import org.signalml.domain.signal.RoundBufferSampleSource;
 import org.signalml.domain.signal.SignalChecksum;
 import org.signalml.domain.signal.SignalProcessingChain;
+import org.signalml.domain.signal.raw.RawSignalDescriptor;
+import org.signalml.domain.signal.raw.RawSignalDescriptorWriter;
+import org.signalml.domain.signal.raw.RawSignalDescriptor.SourceSignalType;
 import org.signalml.exception.SignalMLException;
+import org.signalml.util.FileUtils;
 
 /**
  * @author mario
  *
  */
-public class MonitorSignalDocument extends AbstractSignal {
+public class MonitorSignalDocument extends AbstractSignal implements MutableDocument, FileBackedDocument {
+
+    public static final String BACKING_FILE_PROPERTY = "backingFile";
 
     protected static final Logger logger = Logger.getLogger(MonitorSignalDocument.class);
 
     private JmxClient jmxClient;
     private OpenMonitorDescriptor monitorOptions;
+    private File recorderOutputFile;
     private OutputStream recorderOutput;
     private MonitorWorker monitorWorker;
     private SignalRecorderWorker recorderWorker;
     private String name;
+
+    private File backingFile = null;
+
+    private boolean saved = true;
 
     public MonitorSignalDocument( OpenMonitorDescriptor monitorOptions) {
         super( monitorOptions.getType());
@@ -45,6 +61,13 @@ public class MonitorSignalDocument extends AbstractSignal {
         sampleSource = new RoundBufferSampleSource( monitorOptions.getSelectedChannelList().length, sampleCount);
         ((RoundBufferSampleSource) sampleSource).setLabels( monitorOptions.getSelectedChannelList());
         ((RoundBufferSampleSource) sampleSource).setDocumentView( getDocumentView());
+
+        recorderOutputFile = new File( "signal.buf"); // TODO ddoać konfiguracje tego parametru w opcjach aplikacji
+        try {
+            recorderOutput = new FileOutputStream( recorderOutputFile);
+        }
+        catch (FileNotFoundException e) {
+        }
     }
 
 
@@ -110,6 +133,8 @@ public class MonitorSignalDocument extends AbstractSignal {
     @Override
     public void openDocument() throws SignalMLException, IOException {
 
+        setSaved( true );
+
         if (jmxClient == null) {
             throw new IOException(); //TODO
         }
@@ -117,7 +142,7 @@ public class MonitorSignalDocument extends AbstractSignal {
         LinkedBlockingQueue< double[]> sampleQueue = null;
         if (recorderOutput != null) {
             sampleQueue = new LinkedBlockingQueue< double[]>();
-            recorderWorker = new SignalRecorderWorker( sampleQueue, recorderOutput, monitorOptions, 50L); // TODO sparametryzować pollingInterval
+            recorderWorker = new SignalRecorderWorker( sampleQueue, recorderOutputFile, monitorOptions, 50L); // TODO sparametryzować pollingInterval
             recorderWorker.execute();
         }
 
@@ -130,14 +155,91 @@ public class MonitorSignalDocument extends AbstractSignal {
 
     @Override
     public void closeDocument() throws SignalMLException {
+        int sampleCount = 0;
         if (monitorWorker != null && !monitorWorker.isCancelled()) {
             monitorWorker.cancel( false);
             monitorWorker = null;
         }
         if (recorderWorker != null && !recorderWorker.isCancelled()) {
             recorderWorker.cancel( false);
+            do {
+                try {
+                    Thread.sleep( 1);
+                }
+                catch (InterruptedException e) {}
+            } while (!recorderWorker.isFinished());
+            sampleCount = recorderWorker.getSavedSampleCount();
             recorderWorker = null;
         }
+
+        String path = null;
+        if (backingFile != null) {
+            try {
+                path = backingFile.getCanonicalPath();
+            }
+            catch (IOException e) {}
+        }
+        if (path == null && monitorOptions.getFileName() != null) {
+            File f = null;
+            f = new File( monitorOptions.getFileName());
+            try {
+                path = f.getCanonicalPath();
+            }
+            catch (IOException e) {}
+        }
+
+        if (path != null) {
+
+            String metadataPath = null;
+            File metadataFile = null;
+            String dataPath = null;
+            File dataFile = null;
+
+            if (path.endsWith( ".xml")) {
+                metadataPath = path;
+                dataPath = path.substring( 0, path.length() - 4) + ".raw";
+            }
+            else if (path.endsWith( "raw")) {
+                dataPath = path;
+                metadataPath = path.substring( 0, path.length() - 4) + ".xml";
+            }
+            else {
+                metadataPath = path + ".xml";
+                dataPath = path + ".raw";
+            }
+            metadataFile = new File( metadataPath);
+            dataFile = new File( dataPath);
+
+            RawSignalDescriptor rsd = new RawSignalDescriptor();
+            rsd.setExportFileName( dataPath);
+            rsd.setBlocksPerPage( 1);
+            rsd.setByteOrder( monitorOptions.getByteOrder());
+            rsd.setCalibrationGain( monitorOptions.getCalibrationGain());
+            rsd.setCalibrationOffset( monitorOptions.getCalibrationOffset());
+            rsd.setChannelCount( monitorOptions.getChannelCount());
+            rsd.setChannelLabels( monitorOptions.getChannelLabels());
+            rsd.setPageSize( monitorOptions.getPageSize().floatValue());
+            rsd.setSampleCount( sampleCount);
+            rsd.setSampleType( monitorOptions.getSampleType());
+            rsd.setSamplingFrequency( monitorOptions.getSamplingFrequency());
+            rsd.setSourceSignalType( SourceSignalType.RAW);
+            RawSignalDescriptorWriter descrWriter = new RawSignalDescriptorWriter();
+            try {
+                descrWriter.writeDocument( rsd, metadataFile);
+            }
+            catch (IOException e) {
+                throw new SignalMLException( e);
+            }
+
+            try {
+                FileUtils.copyFile( recorderOutputFile, dataFile);
+            }
+            catch (IOException e) {
+                throw new SignalMLException( e);
+            }
+
+        }
+
         super.closeDocument();
     }
 
@@ -244,5 +346,71 @@ public class MonitorSignalDocument extends AbstractSignal {
         // dla monitora tagi nie są obsługiwane - na razie
         return null;
     }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    @Override
+    public boolean isSaved() {
+        return saved;
+    }
+
+    @Override
+    public void setSaved(boolean saved) {
+        if( this.saved != saved ) {
+            this.saved = saved;
+            pcSupport.firePropertyChange( AbstractMutableFileDocument.SAVED_PROPERTY, !saved, saved);
+        }
+    }
+
+    public void invalidate() {
+        setSaved( false );
+    }
+
+    @Override
+    public final void saveDocument() throws SignalMLException, IOException {
+        
+        
+        if( backingFile == null ) {
+            
+            String fileName = monitorOptions.getFileName();
+            if (fileName != null && !"".equals( fileName)) {
+                backingFile = new File( monitorOptions.getFileName());
+            }
+            else {
+                JFileChooser fileChooser = new JFileChooser();
+                int res = fileChooser.showSaveDialog( null);
+                if (res == JFileChooser.APPROVE_OPTION) {
+                    backingFile = fileChooser.getSelectedFile();
+                }
+    
+                if (backingFile != null) {
+                    setSaved( false);
+                }
+            }
+            
+        }
+        
+        setSaved( true );
+        
+    }
+
+    @Override
+    public void newDocument() throws SignalMLException {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    @Override
+    public File getBackingFile() {
+        return backingFile;
+    }
+
+
+    @Override
+    public void setBackingFile(File file) {
+        this.backingFile = file;
+    }
+
 
 }

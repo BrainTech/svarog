@@ -46,6 +46,7 @@ public class OpenMonitorAction extends AbstractSignalMLAction {
 
 		OpenMonitorDescriptor model = ofd.getMonitorOptions();
 		
+		openMonitorDialog.cancelConnection();
 		boolean ok = openMonitorDialog.showDialog( model, true);		
 		if( !ok ) {
 			return;

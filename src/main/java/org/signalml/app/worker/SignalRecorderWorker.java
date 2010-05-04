@@ -1,5 +1,8 @@
 package org.signalml.app.worker;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
@@ -21,23 +24,27 @@ public class SignalRecorderWorker extends SwingWorker< Integer, Integer> {
     protected static final Logger logger = Logger.getLogger( SignalRecorderWorker.class);
 
     private LinkedBlockingQueue< double[]> sampleQueue;
+    private File file;
     private OutputStream outputStream;
     private OpenMonitorDescriptor monitorDescriptor;
     private long pollingInterval;
 
     private volatile boolean pendingAbort;
     private volatile int savedSampleCount;
+    private volatile boolean finished;
 
 	public SignalRecorderWorker( LinkedBlockingQueue< double[]> sampleQueue, 
-	                             OutputStream outputStream,
+	                             File file,
 	                             OpenMonitorDescriptor monitorDescriptor,
-	                             long pollingInterval) {
+	                             long pollingInterval) throws FileNotFoundException {
 	    this.sampleQueue = sampleQueue;
-	    this.outputStream = outputStream;
+	    this.file = file;
+	    this.outputStream = new FileOutputStream( file);
 	    this.monitorDescriptor = monitorDescriptor;
 	    this.pollingInterval = pollingInterval;
 	    pendingAbort = false;
 	    savedSampleCount = 0;
+	    finished = false;
 	}
 
 	@Override
@@ -74,10 +81,14 @@ public class SignalRecorderWorker extends SwingWorker< Integer, Integer> {
         buf.clear();
         buf.put( chunk, 0, chunk.length);
         outputStream.write( byteBuffer, 0, byteBuffer.length);
+        outputStream.flush();
+        savedSampleCount++;
+        publish( savedSampleCount);
 	}
 
     @Override
     protected void done() {
+        finished = true;
         firePropertyChange( "savedSamplesCount", null, getSavedSampleCount());
     }
 
@@ -96,6 +107,10 @@ public class SignalRecorderWorker extends SwingWorker< Integer, Integer> {
 
     public boolean pendingAbort() {
         return pendingAbort;
+    }
+
+    public boolean isFinished() {
+        return finished;
     }
 
 }

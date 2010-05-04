@@ -150,6 +150,16 @@ public class OpenMonitorDialog extends AbstractWizardDialog {
         return super.onStepChange(toStep, fromStep, model);
     }
 
+	public void cancelConnection() {
+        getMultiplexerConnectionPanel().cancel();
+	}
+
+    @Override
+    protected boolean onCancel() {
+        cancelConnection();
+        return super.onCancel();
+    }
+
     @Override
 	protected void initialize() {
 		

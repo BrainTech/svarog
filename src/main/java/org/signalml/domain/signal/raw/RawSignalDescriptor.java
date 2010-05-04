@@ -34,7 +34,12 @@ public class RawSignalDescriptor {
 	private int channelCount;
 	private int sampleCount;
 	private float calibration;
-	
+
+    private float[] calibrationGain;
+    private float[] calibrationOffset;
+    private Float minimumValue;
+    private Float maximumValue;
+
 	private RawSignalSampleType sampleType;
 	private RawSignalByteOrder byteOrder;
 	
@@ -120,8 +125,41 @@ public class RawSignalDescriptor {
 	public void setCalibration(float calibration) {
 		this.calibration = calibration;
 	}
+
 	
-	public RawSignalSampleType getSampleType() {
+	public float[] getCalibrationGain() {
+        return calibrationGain;
+    }
+
+    public void setCalibrationGain(float[] calibrationGain) {
+        this.calibrationGain = calibrationGain;
+    }
+
+    public float[] getCalibrationOffset() {
+        return calibrationOffset;
+    }
+
+    public void setCalibrationOffset(float[] calibrationOffset) {
+        this.calibrationOffset = calibrationOffset;
+    }
+
+    public Float getMinimumValue() {
+        return minimumValue;
+    }
+
+    public void setMinimumValue(Float minimumValue) {
+        this.minimumValue = minimumValue;
+    }
+
+    public Float getMaximumValue() {
+        return maximumValue;
+    }
+
+    public void setMaximumValue(Float maximumValue) {
+        this.maximumValue = maximumValue;
+    }
+
+    public RawSignalSampleType getSampleType() {
 		return sampleType;
 	}
 	

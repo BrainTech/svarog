@@ -72,8 +72,10 @@ public class RoundBufferSampleSource extends DoubleArraySampleSource implements 
     public synchronized void addSamples( List<double[]> newSamples) {
         for (Iterator< double[]> i=newSamples.iterator(); i.hasNext(); )
             addSamples( i.next());
-        for (Iterator<SignalPlot> i=((SignalView) documentView).getPlots().iterator(); i.hasNext(); )
-            i.next().repaint();
+        if (documentView != null && ((SignalView) documentView).getPlots() != null) {
+            for (Iterator<SignalPlot> i=((SignalView) documentView).getPlots().iterator(); i.hasNext(); )
+                i.next().repaint();
+        }
     }
 
 //    public synchronized void addSamples( List<Float> newSamples) {

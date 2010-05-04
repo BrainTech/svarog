@@ -41,7 +41,7 @@ public class RawSignalSampleSource extends AbstractMultichannelSampleSource impl
 	private float calibration = 1F;
 	
 	private String[] labels;
-			
+
 	private byte[] byteBuffer;
 	private int minBufferedSample;
 	private int maxBufferedSample;
