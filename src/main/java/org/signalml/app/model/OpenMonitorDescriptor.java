@@ -16,6 +16,7 @@ public class OpenMonitorDescriptor {
 	private String multiplexerAddress;
 	private int multiplexerPort = -1;
 	private JmxClient jmxClient;
+    private JmxClient tagClient;
     private boolean metadataReceived = false;
     private String metadataInfo;
 	
@@ -66,6 +67,14 @@ public class OpenMonitorDescriptor {
 
     public void setJmxClient(JmxClient jmxClient) {
         this.jmxClient = jmxClient;
+    }
+
+    public JmxClient getTagClient() {
+        return tagClient;
+    }
+
+    public void setTagClient(JmxClient tagClient) {
+        this.tagClient = tagClient;
     }
 
     public boolean isMetadataReceived() {

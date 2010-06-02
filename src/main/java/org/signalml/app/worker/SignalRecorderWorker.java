@@ -24,7 +24,6 @@ public class SignalRecorderWorker extends SwingWorker< Integer, Integer> {
     protected static final Logger logger = Logger.getLogger( SignalRecorderWorker.class);
 
     private LinkedBlockingQueue< double[]> sampleQueue;
-    private File file;
     private OutputStream outputStream;
     private OpenMonitorDescriptor monitorDescriptor;
     private long pollingInterval;
@@ -38,7 +37,6 @@ public class SignalRecorderWorker extends SwingWorker< Integer, Integer> {
 	                             OpenMonitorDescriptor monitorDescriptor,
 	                             long pollingInterval) throws FileNotFoundException {
 	    this.sampleQueue = sampleQueue;
-	    this.file = file;
 	    this.outputStream = new FileOutputStream( file);
 	    this.monitorDescriptor = monitorDescriptor;
 	    this.pollingInterval = pollingInterval;

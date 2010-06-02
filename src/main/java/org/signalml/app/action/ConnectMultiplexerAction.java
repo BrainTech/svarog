@@ -16,6 +16,7 @@ import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.worker.BCIMetadataWorker;
 import org.signalml.app.worker.MultiplexerConnectionTestWorker;
 import org.signalml.app.worker.MultiplexerConnectWorker;
+import org.signalml.app.worker.MultiplexerTagConnectWorker;
 import org.signalml.app.worker.WorkerResult;
 
 public class ConnectMultiplexerAction extends AbstractAction implements PropertyChangeListener {
@@ -29,6 +30,7 @@ public class ConnectMultiplexerAction extends AbstractAction implements Property
     private Integer tryoutCount;
     private DisconnectMultiplexerAction  disconnectAction;
     private MultiplexerConnectWorker connectWorker;
+    private MultiplexerTagConnectWorker tagConnectWorker;
     private MultiplexerConnectionTestWorker testWorker;
     private BCIMetadataWorker metadataWorker;
     private InetSocketAddress multiplexerSocket;
@@ -147,6 +149,16 @@ public class ConnectMultiplexerAction extends AbstractAction implements Property
         testWorker.execute();
     }
 
+    protected synchronized void executeTagConnect( InetSocketAddress multiplexerSocket) {
+        tagConnectWorker = new MultiplexerTagConnectWorker( 
+                elementManager, 
+                multiplexerSocket, 
+                timeoutMilis, 
+                tryoutCount);
+        tagConnectWorker.addPropertyChangeListener( this);
+        tagConnectWorker.execute();
+    }
+
     protected synchronized void executeMetadata() {
         metadataWorker = new BCIMetadataWorker( 
                 elementManager.getMessageSource(), 
@@ -190,6 +202,16 @@ public class ConnectMultiplexerAction extends AbstractAction implements Property
             if (res.success)
                 executeMetadata();
         }
+//        if ("connectionTestResult".equals( evt.getPropertyName())) {
+//            WorkerResult res = (WorkerResult) evt.getNewValue();
+//            if (res.success)
+//                executeTagConnect( multiplexerSocket);
+//        }
+//        if ("tagConnection".equals( evt.getPropertyName())) {
+//            WorkerResult res = (WorkerResult) evt.getNewValue();
+//            if (res.success)
+//                executeMetadata();
+//        }
         else if ("metadataRetrieved".equals( evt.getPropertyName())) {
             OpenMonitorDescriptor omd = (OpenMonitorDescriptor) evt.getNewValue();
             if (omd.isMetadataReceived())

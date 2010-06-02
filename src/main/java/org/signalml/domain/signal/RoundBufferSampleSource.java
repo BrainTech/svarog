@@ -62,16 +62,24 @@ public class RoundBufferSampleSource extends DoubleArraySampleSource implements 
         }
     }
 
-    public synchronized void addSamples( double[] newSamples) {
+    public synchronized void addSampleChunk( double[] newSamples) {
         for (int i=0; i<channelCount; i++) {
             samples[i][nextInsertPos] = newSamples[i];
         }
         incrNextInsertPos();
     }
 
+    public synchronized void addSamples( double[] newSamples) {
+        addSampleChunk( newSamples);
+        if (documentView != null && ((SignalView) documentView).getPlots() != null) {
+            for (Iterator<SignalPlot> i=((SignalView) documentView).getPlots().iterator(); i.hasNext(); )
+                i.next().repaint();
+        }
+    }
+
     public synchronized void addSamples( List<double[]> newSamples) {
         for (Iterator< double[]> i=newSamples.iterator(); i.hasNext(); )
-            addSamples( i.next());
+            addSampleChunk( i.next());
         if (documentView != null && ((SignalView) documentView).getPlots() != null) {
             for (Iterator<SignalPlot> i=((SignalView) documentView).getPlots().iterator(); i.hasNext(); )
                 i.next().repaint();

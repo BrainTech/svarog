@@ -197,7 +197,6 @@ public final class SvarogProtocol {
 
     @Override
     public com.google.protobuf.Message.Builder toBuilder() {
-        // TODO Auto-generated method stub
         return null;
     }
   }
@@ -404,7 +403,6 @@ public final class SvarogProtocol {
 
     @Override
     public com.google.protobuf.Message.Builder toBuilder() {
-        // TODO Auto-generated method stub
         return null;
     }
   }
@@ -599,7 +597,6 @@ public final class SvarogProtocol {
 
     @Override
     public com.google.protobuf.Message.Builder toBuilder() {
-        // TODO Auto-generated method stub
         return null;
     }
   }
@@ -806,7 +803,6 @@ public final class SvarogProtocol {
 
     @Override
     public com.google.protobuf.Message.Builder toBuilder() {
-        // TODO Auto-generated method stub
         return null;
     }
   }
@@ -1001,7 +997,6 @@ public final class SvarogProtocol {
 
     @Override
     public com.google.protobuf.Message.Builder toBuilder() {
-        // TODO Auto-generated method stub
         return null;
     }
   }
@@ -1208,7 +1203,6 @@ public final class SvarogProtocol {
 
     @Override
     public com.google.protobuf.Message.Builder toBuilder() {
-        // TODO Auto-generated method stub
         return null;
     }
   }
@@ -1403,7 +1397,6 @@ public final class SvarogProtocol {
 
     @Override
     public com.google.protobuf.Message.Builder toBuilder() {
-        // TODO Auto-generated method stub
         return null;
     }
   }
@@ -1598,7 +1591,6 @@ public final class SvarogProtocol {
 
     @Override
     public com.google.protobuf.Message.Builder toBuilder() {
-        // TODO Auto-generated method stub
         return null;
     }
   }
@@ -1646,7 +1638,13 @@ public final class SvarogProtocol {
     public boolean hasName() { return hasName; }
     public java.lang.String getName() { return name_; }
     
-    // required .variables.VariableVector desc = 4;
+    // required string channels = 4;
+    private boolean hasChannels;
+    private java.lang.String channels_ = "";
+    public boolean hasChannels() { return hasChannels; }
+    public java.lang.String getChannels() { return channels_; }
+    
+    // required .variables.VariableVector desc = 5;
     private boolean hasDesc;
     private org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector desc_ = org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector.getDefaultInstance();
     public boolean hasDesc() { return hasDesc; }
@@ -1816,7 +1814,25 @@ public final class SvarogProtocol {
         return this;
       }
       
-      // required .variables.VariableVector desc = 4;
+      // required string channels = 4;
+      public boolean hasChannels() {
+        return result.hasChannels();
+      }
+      public java.lang.String getChannels() {
+        return result.getChannels();
+      }
+      public Builder setChannels(java.lang.String value) {
+        result.hasChannels = true;
+        result.channels_ = value;
+        return this;
+      }
+      public Builder clearChannels() {
+        result.hasChannels = false;
+        result.channels_ = "";
+        return this;
+      }
+      
+      // required .variables.VariableVector desc = 5;
       public boolean hasDesc() {
         return result.hasDesc();
       }
@@ -1857,7 +1873,6 @@ public final class SvarogProtocol {
 
     @Override
     public com.google.protobuf.Message.Builder toBuilder() {
-        // TODO Auto-generated method stub
         return null;
     }
   }
@@ -2064,7 +2079,6 @@ public final class SvarogProtocol {
 
     @Override
     public com.google.protobuf.Message.Builder toBuilder() {
-        // TODO Auto-generated method stub
         return null;
     }
   }
@@ -2138,12 +2152,13 @@ public final class SvarogProtocol {
       "\001\"2\n\014SampleVector\022\"\n\007samples\030\001 \003(\0132\021.var" +
       "iables.Sample\"*\n\010Decision\022\020\n\010decision\030\001 " +
       "\002(\005\022\014\n\004type\030\002 \001(\005\"(\n\tUgmUpdate\022\014\n\004type\030\001" +
-      " \002(\005\022\r\n\005value\030\002 \002(\t\"l\n\003Tag\022\027\n\017start_time" +
+      " \002(\005\022\r\n\005value\030\002 \002(\t\"~\n\003Tag\022\027\n\017start_time" +
       "stamp\030\001 \002(\001\022\025\n\rend_timestamp\030\002 \002(\001\022\014\n\004na" +
-      "me\030\003 \002(\t\022\'\n\004desc\030\004 \002(\0132\031.variables.Varia" +
-      "bleVector\")\n\tTagVector\022\034\n\004tags\030\001 \003(\0132\016.v" +
-      "ariables.TagB3\n!org.signalml.multiplexer" +
-      ".protocolB\016SvarogProtocol";
+      "me\030\003 \002(\t\022\020\n\010channels\030\004 \002(\t\022\'\n\004desc\030\005 \002(\013" +
+      "2\031.variables.VariableVector\")\n\tTagVector" +
+      "\022\034\n\004tags\030\001 \003(\0132\016.variables.TagB3\n!org.si" +
+      "gnalml.multiplexer.protocolB\016SvarogProto" +
+      "col";
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
         public com.google.protobuf.ExtensionRegistry assignDescriptors(
@@ -2218,7 +2233,7 @@ public final class SvarogProtocol {
           internal_static_variables_Tag_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_variables_Tag_descriptor,
-              new java.lang.String[] { "StartTimestamp", "EndTimestamp", "Name", "Desc", },
+              new java.lang.String[] { "StartTimestamp", "EndTimestamp", "Name", "Channels", "Desc", },
               org.signalml.multiplexer.protocol.SvarogProtocol.Tag.class,
               org.signalml.multiplexer.protocol.SvarogProtocol.Tag.Builder.class);
           internal_static_variables_TagVector_descriptor =

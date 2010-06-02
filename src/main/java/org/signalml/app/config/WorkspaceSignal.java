@@ -103,7 +103,9 @@ public class WorkspaceSignal extends WorkspaceDocument {
 		} 
 		else {
 			
-			mrudEntry = new MRUDEntry( ManagedDocumentType.SIGNAL, document.getClass(), ((FileBackedDocument) document).getBackingFile().getAbsolutePath() );
+		    File backingFile = ((FileBackedDocument) document).getBackingFile();
+		    if (backingFile != null)
+		        mrudEntry = new MRUDEntry( ManagedDocumentType.SIGNAL, document.getClass(), backingFile.getAbsolutePath() );
 			
 		}
 		

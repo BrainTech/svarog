@@ -537,7 +537,6 @@ public class DocumentFlowIntegrator {
         OpenMonitorDescriptor monitorOptions = descriptor.getMonitorOptions();
         
         MonitorSignalDocument monitorSignalDocument = new MonitorSignalDocument( monitorOptions);
-        monitorSignalDocument.setJmxClient( monitorOptions.getJmxClient());
 
         String fileName = monitorOptions.getFileName();
         if (fileName != null && !"".equals( fileName)) {

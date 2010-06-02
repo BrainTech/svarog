@@ -1,8 +1,8 @@
 package org.signalml.app.worker;
 
-import java.io.File;
-import java.io.PrintWriter;
+import java.awt.Color;
 import java.util.List;
+import java.util.StringTokenizer;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
@@ -18,7 +18,12 @@ import org.apache.log4j.Logger;
 import org.jboss.netty.channel.ChannelFuture;
 import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.domain.signal.RoundBufferSampleSource;
+import org.signalml.domain.signal.SignalSelectionType;
+import org.signalml.domain.tag.StyledTagSet;
+import org.signalml.domain.tag.Tag;
+import org.signalml.domain.tag.TagStyle;
 import org.signalml.multiplexer.protocol.SvarogConstants;
+import org.signalml.multiplexer.protocol.SvarogProtocol;
 import org.signalml.multiplexer.protocol.SvarogProtocol.Sample;
 import org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector;
 
@@ -27,7 +32,7 @@ import com.google.protobuf.ByteString;
 /** MonitorWorker
  *
  */
-public class MonitorWorker extends SwingWorker< Void, double[]> {
+public class MonitorWorker extends SwingWorker< Void, Object> {
 
     protected static final Logger logger = Logger.getLogger( MonitorWorker.class);
 
@@ -37,6 +42,8 @@ public class MonitorWorker extends SwingWorker< Void, double[]> {
 	private OpenMonitorDescriptor monitorDescriptor;
 	private LinkedBlockingQueue< double[]> sampleQueue;
 	private RoundBufferSampleSource sampleSource;
+    private StyledTagSet tagSet = new StyledTagSet();
+    private volatile boolean finished;
 
 	public MonitorWorker( JmxClient jmxClient, OpenMonitorDescriptor monitorDescriptor, RoundBufferSampleSource sampleSource) {
 	    this.jmxClient = jmxClient;
@@ -89,7 +96,7 @@ public class MonitorWorker extends SwingWorker< Void, double[]> {
         double[] gain = monitorDescriptor.getGain();
         double[] offset = monitorDescriptor.getOffset();
 
-        PrintWriter out = new PrintWriter( new File( "recv_data.tsv"));
+//        PrintWriter out = new PrintWriter( new File( "recv_data.tsv"));
 
         while (!isCancelled()) {
 
@@ -103,7 +110,77 @@ public class MonitorWorker extends SwingWorker< Void, double[]> {
                 MultiplexerMessage sampleMsg = msgData.getMessage();
                 int type = sampleMsg.getType();
                 logger.debug( "Worker: received message type: " + type);
-                if (!(sampleMsg.getType() == SvarogConstants.MessageTypes.STREAMED_SIGNAL_MESSAGE)) {
+                
+                if (sampleMsg.getType() == SvarogConstants.MessageTypes.STREAMED_SIGNAL_MESSAGE) {
+                    logger.debug( "Worker: reading chunk!");
+
+                    ByteString msgString = sampleMsg.getMessage();
+                    SampleVector sampleVector = null;
+                    try {
+                        sampleVector = SampleVector.parseFrom( msgString);
+                    } 
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    List<Sample> samples = sampleVector.getSamplesList();
+
+//                    String s = Double.toString( samples.get(0).getTimestamp());
+//                    s = s.replace( '.', ',');
+//                    out.print( s);
+
+                    // wyciągnięcie chunka do tablicy double z sampli
+                    double[] chunk = new double[channelCount];
+                    for (int i=0; i<channelCount; i++) {
+                        chunk[i] = samples.get(i).getValue();
+                    }
+
+                    // przesłanie chunka do recordera
+                    if (sampleQueue != null)
+                        sampleQueue.offer( chunk.clone());
+
+                    // kondycjonowanie chunka z danymi do wyświetlenia
+                    double[] condChunk = new double[plotCount];
+                    for (int i=0; i<plotCount; i++) {
+                        int n = selectedChannels[i];
+                        condChunk[i] = gain[n] * chunk[n] + offset[n];
+//                        out.print( "\t");
+//                        s = Double.toString( condChunk[i]);
+//                        s = s.replace( '.', ',');
+//                        out.print( s);
+                    }
+//                    out.println();
+
+                    publish( condChunk);
+                }
+                else if (sampleMsg.getType() == SvarogConstants.MessageTypes.TAG) {
+
+                    logger.debug( "Tag recorder: got a tag!");
+
+                    ByteString msgString = sampleMsg.getMessage();
+                    SvarogProtocol.Tag tagMsg = null;
+                    try {
+                        tagMsg = SvarogProtocol.Tag.parseFrom( msgString);
+                    } 
+                    catch (Exception e) {
+                        e.printStackTrace();
+                        continue;
+                    }
+                    // TODO dodać obsługę stylów - może wybór z kakiejś palety dla poszczególnych nazw i kanałów
+                    TagStyle style = new TagStyle( SignalSelectionType.CHANNEL, tagMsg.getName(), tagMsg.getName(), Color.RED, Color.BLUE, 2);
+                    String channels = tagMsg.getChannels();
+                    StringTokenizer st = new StringTokenizer( channels, " ");
+                    int n = st.countTokens();
+                    for (int i=0; i<n; i++) {
+                        String s = st.nextToken();
+                        int channel = Integer.parseInt( s);
+                        Tag tag = new Tag( style, 
+                                (float) tagMsg.getStartTimestamp(), 
+                                (float) tagMsg.getEndTimestamp(), 
+                                channel);
+                        publish( tag);
+                    }
+                }
+                else {
                     logger.error( "received bad reply! " + sampleMsg.getMessage());
 
                     logger.debug( "Worker: receive failed!");
@@ -111,45 +188,6 @@ public class MonitorWorker extends SwingWorker< Void, double[]> {
                     return null;
                 }
 
-                logger.debug( "Worker: reading chunk!");
-
-                ByteString msgString = sampleMsg.getMessage();
-                SampleVector sampleVector = null;
-                try {
-                    sampleVector = SampleVector.parseFrom( msgString);
-                } 
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
-                List<Sample> samples = sampleVector.getSamplesList();
-
-                String s = Double.toString( samples.get(0).getTimestamp());
-                s = s.replace( '.', ',');
-                out.print( s);
-
-                // wyciągnięcie chunka do tablicy double z sampli
-                double[] chunk = new double[channelCount];
-                for (int i=0; i<channelCount; i++) {
-                    chunk[i] = samples.get(i).getValue();
-                }
-
-                // przesłanie chunka do recordera
-                if (sampleQueue != null)
-                    sampleQueue.offer( chunk.clone());
-
-                // kondycjonowanie chunka z danymi do wyświetlenia
-                double[] condChunk = new double[plotCount];
-                for (int i=0; i<plotCount; i++) {
-                    int n = selectedChannels[i];
-                    condChunk[i] = gain[n] * chunk[n] + offset[n];
-                    out.print( "\t");
-                    s = Double.toString( condChunk[i]);
-                    s = s.replace( '.', ',');
-                    out.print( s);
-                }
-                out.println();
-
-                publish( condChunk);
             }
             catch (InterruptedException e) {
                 logger.error("receiveing failed! " + e.getMessage());
@@ -185,8 +223,30 @@ public class MonitorWorker extends SwingWorker< Void, double[]> {
 	}
 
     @Override
-    protected void process( List<double[]> chunks) {
-        sampleSource.addSamples( chunks);
+    protected void process( List< Object> objs) {
+        for (Object o : objs) {
+            if (o instanceof double[]) {
+                sampleSource.addSamples( (double[]) o);
+            }
+            else {
+                tagSet.addTag( (Tag) o);
+                firePropertyChange( "newTag", null, (Tag) o);
+            }
+        }
+    }
+
+    @Override
+    protected void done() {
+        finished = true;
+        firePropertyChange( "tagsRead", null, tagSet);
+    }
+
+    public StyledTagSet getTagSet() {
+        return tagSet;
+    }
+
+    public boolean isFinished() {
+        return finished;
     }
 
 }

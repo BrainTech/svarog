@@ -303,6 +303,7 @@ public class ViewerElementManager {
 	private TableToTextExporter tableToTextExporter;
 	private MP5ApplicationExecutorConfigurer mp5ExecutorConfigurer;
     private JmxClient jmxClient;
+    private JmxClient tagClient;
 
 	public SignalMLOperationMode getMode() {
 		return mode;
@@ -1545,6 +1546,14 @@ public class ViewerElementManager {
 
     public void setJmxClient(JmxClient jmxClient) {
         this.jmxClient = jmxClient;
+    }
+
+    public JmxClient getTagClient() {
+        return tagClient;
+    }
+
+    public void setTagClient(JmxClient tagClient) {
+        this.tagClient = tagClient;
     }
 
     public DocumentView createDocumentViewPanel(Document document) throws SignalMLException {

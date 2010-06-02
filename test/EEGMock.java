@@ -1,5 +1,4 @@
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.InetSocketAddress;
@@ -37,11 +36,8 @@ public class EEGMock {
     
     public class MockWorker extends SwingWorker<Void, Void> {
 
-//        int samplePeriod;
-
         public MockWorker() {
             super();
-//            samplePeriod = period;
         }
 
         @Override
@@ -50,7 +46,6 @@ public class EEGMock {
             float time = 0f;
             PrintWriter out = new PrintWriter( new File( "gen_data.tsv"));
 
-//            System.out.println( " worker start...");
             Thread.sleep( PERIOD_MILIS, PERIOD_NANOS);
             while (!isCancelled()) {
                 time += TIME_DELTA;
@@ -69,9 +64,7 @@ public class EEGMock {
                 }
                 out.println();
                 MultiplexerMessage mm = connection.createMessage( sampleVectorBuilder.build().toByteString(), SvarogConstants.MessageTypes.STREAMED_SIGNAL_MESSAGE);
-//                System.out.println( "sending...");
                 connection.send( mm, SendingMethod.THROUGH_ONE);
-//                System.out.println( "sent!");
                 Thread.sleep( PERIOD_MILIS, PERIOD_NANOS);
             }
             out.close();
@@ -80,93 +73,11 @@ public class EEGMock {
 
     }
 
-//    public class ParamsWorker extends SwingWorker<Void, Void> {
-//
-//        int channelCount;
-//        int samplePeriod;
-//
-//        public ParamsWorker( int n, int period) {
-//            super();
-//            channelCount = n;
-//            samplePeriod = period;
-//        }
-//
-//        @Override
-//        protected Void doInBackground() throws Exception {
-//
-////            System.out.println( " worker start...");
-//            Thread.sleep( samplePeriod);
-//            while (!isCancelled()) {
-//                SampleVector.Builder sampleVectorBuilder = SampleVector.newBuilder();
-//                for (int i=0; i<channelCount; i++) {
-//                    Sample.Builder sampleBuilder = Sample.newBuilder();
-//                    sampleBuilder.setTimestamp( (i * samplePeriod) / 1000.0);
-//                    sampleBuilder.setValue( Math.random() * 4000.0 - 2000.0);
-//                    sampleVectorBuilder.addSamples( sampleBuilder);
-//                }
-//                MultiplexerMessage mm = connection.createMessage( sampleVectorBuilder.build().toByteString(), SvarogConstants.MessageTypes.STREAMED_SIGNAL_MESSAGE);
-////                System.out.println( "sending...");
-//                connection.send( mm, SendingMethod.THROUGH_ONE);
-////                System.out.println( "sent!");
-//                Thread.sleep( samplePeriod);
-//            }
-//            return null;
-//        }
-//
-//    }
-
     @Override
     protected void finalize() throws Throwable {
         connection.shutdown();
         super.finalize();
     }
-
-//    public class MockRequestHandler implements MessageHandler {
-//
-//        public void handleMessage( MultiplexerMessage message, MessageContext ctx) {
-//            if (message.getType() == Constants.MessageTypes.SIGNAL_STREAMER_START) {
-//                ByteString bstr = message.getMessage();
-//                String s = bstr.toStringUtf8();
-//                StringTokenizer st = new StringTokenizer( s, " ");
-//                
-//                int n = st.countTokens();
-//                if (n != 3)
-//                    System.out.println( "Bad channel count");
-//                SampleVector.Builder sampleVectorBuilder = SampleVector.newBuilder();
-//                Sample.Builder sampleBuilder = Sample.newBuilder();
-//                sampleBuilder.setTimestamp( 1.0);
-//                sampleBuilder.setValue(100.0);
-//                sampleVectorBuilder.addSamples( sampleBuilder);
-//                sampleBuilder = Sample.newBuilder();
-//                sampleBuilder.setTimestamp( 1.0);
-//                sampleBuilder.setValue(200.0);
-//                sampleVectorBuilder.addSamples( sampleBuilder);
-//                sampleBuilder = Sample.newBuilder();
-//                sampleBuilder.setTimestamp( 1.0);
-//                sampleBuilder.setValue(300.0);
-//                sampleVectorBuilder.addSamples( sampleBuilder);
-//                MultiplexerMessage mm = connection.createMessage( sampleVectorBuilder.build().toByteString(), Constants.MessageTypes.STREAMED_SIGNAL_MESSAGE);
-////                System.out.println( "sending first ...");
-//                try {
-//                    connection.send( mm, SendingMethod.THROUGH_ONE);
-//                }
-//                catch (NoPeerForTypeException e) {
-//                    e.printStackTrace();
-//                }
-////                System.out.println( "first sent!");
-//                worker = new MockWorker( n, 100);
-//                worker.execute();
-//            }
-//            else if (message.getType() == Constants.MessageTypes.SIGNAL_STREAMER_STOP) {
-//                System.out.println( "strem closed!");
-//                worker.cancel( false);
-//            }
-//            else
-//                System.out.println( "Bad message!");
-//        }
-//    }
-
-
 
     /**
      * @param args
@@ -199,17 +110,12 @@ public class EEGMock {
             System.out.println( type);
     
             if (type == SvarogConstants.MessageTypes.SIGNAL_STREAMER_START) {
-//                ByteString bstr = mmsg.getMessage();
-//                String s = bstr.toStringUtf8();
-//                StringTokenizer st = new StringTokenizer( s, " ");
-//                int n = st.countTokens();
                 mock.worker = mock.new MockWorker();
                 mock.worker.execute();
             }
             else if (type == SvarogConstants.MessageTypes.SIGNAL_STREAMER_STOP) {
                 System.out.println( "stream closed!");
                 mock.worker.cancel( false);
-//                mock.connection.shutdown();
             }
             else
                 System.out.println( "Bad message!");

@@ -9,6 +9,7 @@ import multiplexer.jmx.client.JmxClient;
 import org.apache.log4j.Logger;
 import org.signalml.app.view.ViewerElementManager;
 
+// TODO dodać rozłączanie tag recordera
 public class DisconnectMultiplexerAction extends AbstractAction {
 
 	private static final long serialVersionUID = 1L;

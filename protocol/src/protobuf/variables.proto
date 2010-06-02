@@ -43,7 +43,8 @@ message Tag {
 	required double start_timestamp = 1;
 	required double end_timestamp = 2;
 	required string name = 3;
-	required VariableVector desc = 4;
+    required string channels = 4;
+	required VariableVector desc = 5;
 }
 
 message TagVector {

@@ -238,6 +238,7 @@ public class OpenMonitorDialog extends AbstractWizardDialog {
 		m.setMultiplexerPort( port);
 		applicationConfig.setMultiplexerPort( port);
 		m.setJmxClient( elementManager.getJmxClient());
+        m.setTagClient( elementManager.getTagClient());
 
 		m.setPageSize( Double.parseDouble( getMonitorParamsPanel().getPageSizeField().getText()));
 

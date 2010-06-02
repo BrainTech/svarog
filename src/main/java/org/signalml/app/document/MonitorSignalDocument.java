@@ -1,5 +1,7 @@
 package org.signalml.app.document;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -11,8 +13,6 @@ import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import javax.swing.JFileChooser;
-
-import multiplexer.jmx.client.JmxClient;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.model.OpenMonitorDescriptor;
@@ -27,6 +27,7 @@ import org.signalml.domain.signal.SignalProcessingChain;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalDescriptorWriter;
 import org.signalml.domain.signal.raw.RawSignalDescriptor.SourceSignalType;
+import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.exception.SignalMLException;
 import org.signalml.util.FileUtils;
 
@@ -40,12 +41,12 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 
     protected static final Logger logger = Logger.getLogger(MonitorSignalDocument.class);
 
-    private JmxClient jmxClient;
     private OpenMonitorDescriptor monitorOptions;
     private File recorderOutputFile;
     private OutputStream recorderOutput;
     private MonitorWorker monitorWorker;
     private SignalRecorderWorker recorderWorker;
+//    private TagRecorderWorker tagRecorderWorker;
     private String name;
 
     private File backingFile = null;
@@ -114,14 +115,6 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
         }
     }
 
-    public JmxClient getJmxClient() {
-        return jmxClient;
-    }
-
-    public void setJmxClient(JmxClient jmxClient) {
-        this.jmxClient = jmxClient;
-    }
-
     public OutputStream getRecorderOutput() {
         return recorderOutput;
     }
@@ -135,7 +128,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 
         setSaved( true );
 
-        if (jmxClient == null) {
+        if (monitorOptions.getJmxClient() == null) {
             throw new IOException(); //TODO
         }
 
@@ -146,20 +139,42 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
             recorderWorker.execute();
         }
 
-        monitorWorker = new MonitorWorker( jmxClient, monitorOptions, (RoundBufferSampleSource) sampleSource);
+        // TODO dodać w dialogach obsługę tagRecordera
+//        tagRecorderWorker = new TagRecorderWorker( monitorOptions.getTagClient());
+//        tagRecorderWorker.execute();
+
+        monitorWorker = new MonitorWorker( monitorOptions.getJmxClient(), monitorOptions, (RoundBufferSampleSource) sampleSource);
         if (sampleQueue != null)
             monitorWorker.setSampleQueue( sampleQueue);
+        monitorWorker.addPropertyChangeListener( new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if (evt.getPropertyName().equals( "tagsRead")) {
+                    // XXX
+                }
+            }
+        });
         monitorWorker.execute();
 
     }
 
     @Override
     public void closeDocument() throws SignalMLException {
+
         int sampleCount = 0;
+        StyledTagSet tagSet = null;
         if (monitorWorker != null && !monitorWorker.isCancelled()) {
             monitorWorker.cancel( false);
+            do {
+                try {
+                    Thread.sleep( 1);
+                }
+                catch (InterruptedException e) {}
+            } while (!monitorWorker.isFinished());
+            tagSet = monitorWorker.getTagSet();
             monitorWorker = null;
         }
+
         if (recorderWorker != null && !recorderWorker.isCancelled()) {
             recorderWorker.cancel( false);
             do {
@@ -171,6 +186,19 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
             sampleCount = recorderWorker.getSavedSampleCount();
             recorderWorker = null;
         }
+        
+//        StyledTagSet tagSet = null;
+//        if (tagRecorderWorker != null && !tagRecorderWorker.isCancelled()) {
+//            tagRecorderWorker.cancel( false);
+//            do {
+//                try {
+//                    Thread.sleep( 1);
+//                }
+//                catch (InterruptedException e) {}
+//            } while (!tagRecorderWorker.isFinished());
+//            tagSet = tagRecorderWorker.getTagSet();
+//            tagRecorderWorker = null;
+//        }
 
         String path = null;
         if (backingFile != null) {
@@ -191,24 +219,30 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
         if (path != null) {
 
             String metadataPath = null;
-            File metadataFile = null;
-            String dataPath = null;
-            File dataFile = null;
+            File metadataFile   = null;
+            String dataPath     = null;
+            File dataFile       = null;
+            String tagPath      = null;
+            File tagFile        = null;
 
             if (path.endsWith( ".xml")) {
                 metadataPath = path;
                 dataPath = path.substring( 0, path.length() - 4) + ".raw";
+                tagPath = path.substring( 0, path.length() - 4) + ".tag";
             }
             else if (path.endsWith( "raw")) {
                 dataPath = path;
                 metadataPath = path.substring( 0, path.length() - 4) + ".xml";
+                tagPath = path.substring( 0, path.length() - 4) + ".tag";
             }
             else {
                 metadataPath = path + ".xml";
                 dataPath = path + ".raw";
+                tagPath = path + ".tag";
             }
             metadataFile = new File( metadataPath);
             dataFile = new File( dataPath);
+            tagFile = new File( tagPath);
 
             RawSignalDescriptor rsd = new RawSignalDescriptor();
             rsd.setExportFileName( dataPath);
@@ -236,6 +270,17 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
             }
             catch (IOException e) {
                 throw new SignalMLException( e);
+            }
+
+            if (tagSet != null && tagSet.getTagCount() > 0) {
+                TagDocument tagDoc = new TagDocument( tagSet);
+                tagDoc.setBackingFile( tagFile);
+                try {
+                    tagDoc.saveDocument();
+                }
+                catch (IOException e) {
+                    throw new SignalMLException( e);
+                }
             }
 
         }
