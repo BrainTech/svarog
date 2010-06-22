@@ -32,7 +32,7 @@ import org.signalml.exception.SignalMLException;
 import org.signalml.util.FileUtils;
 
 /**
- * @author mario
+ * @author Mariusz Podsiadło
  *
  */
 public class MonitorSignalDocument extends AbstractSignal implements MutableDocument, FileBackedDocument {

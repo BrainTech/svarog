@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.signalml.domain.signal.RoundBufferSampleSource;
 
 /**
- * @author mario
+ * @author Mariusz Podsiadło
  *
  */
 public class RoundBufferSampleSourceTest {
