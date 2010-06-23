@@ -40,23 +40,6 @@ public class HashtableMock {
 	public static double min = -200.0;
 	public static double max = 300.0;
 
-/*
-	private static MultiplexerMessage createResponse( MessageContext context, SvarogProtocol.Variable variable) {
-		MultiplexerMessage.Builder responseBuilder = null;
-		responseBuilder = context.createResponse( 
-				SvarogConstants.MessageTypes.DICT_GET_RESPONSE_MESSAGE, 
-				variable.toByteString());
-		return responseBuilder.build();
-	}
-
-	private static MultiplexerMessage createResponse( MessageContext context, String key, String value) {
-		SvarogProtocol.Variable.Builder variableBuilder = SvarogProtocol.Variable.newBuilder();
-		variableBuilder.setKey( key);
-		variableBuilder.setValue( value);
-		SvarogProtocol.Variable variable = variableBuilder.build();
-		return createResponse( context, variable);
-	}
-*/
 	private static MultiplexerMessage createResponse( MessageContext context, String val) {
 		MultiplexerMessage.Builder responseBuilder = null;
 		responseBuilder = context.createResponse( 

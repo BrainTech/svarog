@@ -69,10 +69,6 @@ public class TestClient {
 		client.send( mm, SendingMethod.THROUGH_ONE);
 		System.out.println( "Sent!");
 
-		/*
-		 * JmxClient creates worker threads, we have to explicitly shut them
-		 * down.
-		 */
 		client.shutdown();
 	}
 
