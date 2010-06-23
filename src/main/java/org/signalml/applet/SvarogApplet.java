@@ -159,21 +159,21 @@ public class SvarogApplet extends JApplet implements ViewFocusSelector {
 				
 		// TODO maybe react to exceptions in the same way?
 //		setupGUIExceptionHandler();
-	    	
+			
 		createMainStreamer();
 		
 		createApplet();
 
-	    try {
-	        javax.swing.SwingUtilities.invokeAndWait(new Runnable() {
-	            public void run() {
-	                createGUI();
-	            }
-	        });
-	    } catch (Exception e) {
-	    	e.printStackTrace();
-	        System.err.println("createGUI didn't successfully complete");
-	    }	
+		try {
+			javax.swing.SwingUtilities.invokeAndWait(new Runnable() {
+				public void run() {
+					createGUI();
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("createGUI didn't successfully complete");
+		}	
 		
 		logger.debug("Applet successfully created");
 		

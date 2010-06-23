@@ -51,13 +51,13 @@ public class ProgressTableCellRenderer extends JPanel implements TableCellRender
 		
 		if( hasFocus ) {
 			if( focusBorder == null ) {
-	            Border border = null;
-	            if (isSelected) {
-	                border = UIManager.getBorder("Table.focusSelectedCellHighlightBorder");
-	            }
-	            if (border == null) {
-	                border = UIManager.getBorder("Table.focusCellHighlightBorder");
-	            }
+				Border border = null;
+				if (isSelected) {
+					border = UIManager.getBorder("Table.focusSelectedCellHighlightBorder");
+				}
+				if (border == null) {
+					border = UIManager.getBorder("Table.focusCellHighlightBorder");
+				}
 				Insets ins = border.getBorderInsets(this); 
 				focusBorder = new CompoundBorder(
 						border,

@@ -242,39 +242,39 @@ public class DefaultSignalMLCodecManager implements SignalMLCodecManager {
 		Object[] listeners = listenerList.getListenerList();
 		SignalMLCodecManagerEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==SignalMLCodecManagerListener.class) {
-	        	 if( e == null ) { 
-	        		 e = new SignalMLCodecManagerEvent(this,codec,index);
-	        	 }
-	             ((SignalMLCodecManagerListener)listeners[i+1]).codecAdded(e);
-	         }
-	     }
+			 if (listeners[i]==SignalMLCodecManagerListener.class) {
+				 if( e == null ) { 
+					 e = new SignalMLCodecManagerEvent(this,codec,index);
+				 }
+				 ((SignalMLCodecManagerListener)listeners[i+1]).codecAdded(e);
+			 }
+		 }
 	}
 	
 	protected void fireCodecRemoved(SignalMLCodec codec, int index) {
 		Object[] listeners = listenerList.getListenerList();
 		SignalMLCodecManagerEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==SignalMLCodecManagerListener.class) {
-	        	 if( e == null ) { 
-	        		 e = new SignalMLCodecManagerEvent(this,codec,index);
-	        	 }
-	             ((SignalMLCodecManagerListener)listeners[i+1]).codecRemoved(e);
-	         }
-	     }
+			 if (listeners[i]==SignalMLCodecManagerListener.class) {
+				 if( e == null ) { 
+					 e = new SignalMLCodecManagerEvent(this,codec,index);
+				 }
+				 ((SignalMLCodecManagerListener)listeners[i+1]).codecRemoved(e);
+			 }
+		 }
 	}
 	
 	protected void fireCodecsChanged() {
 		Object[] listeners = listenerList.getListenerList();
 		SignalMLCodecManagerEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==SignalMLCodecManagerListener.class) {
-	        	 if( e == null ) { 
-	        		 e = new SignalMLCodecManagerEvent(this);
-	        	 }
-	             ((SignalMLCodecManagerListener)listeners[i+1]).codecsChanged(e);
-	         }
-	     }
+			 if (listeners[i]==SignalMLCodecManagerListener.class) {
+				 if( e == null ) { 
+					 e = new SignalMLCodecManagerEvent(this);
+				 }
+				 ((SignalMLCodecManagerListener)listeners[i+1]).codecsChanged(e);
+			 }
+		 }
 	}
 	
 	public void addSignalMLCodecManagerListener(SignalMLCodecManagerListener listener) {

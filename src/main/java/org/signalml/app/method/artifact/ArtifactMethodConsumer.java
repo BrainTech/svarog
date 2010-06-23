@@ -170,10 +170,10 @@ public class ArtifactMethodConsumer implements InitializingMethodResultConsumer 
 				ErrorsDialog.showImmediateExceptionDialog(dialogParent, ex);
 				return false;			
 			} catch (ConnectException ex) {
-                logger.error("Failed to open document - connection exception", ex);
-                ErrorsDialog.showImmediateExceptionDialog(dialogParent, ex);
-                return false;           
-            }
+				logger.error("Failed to open document - connection exception", ex);
+				ErrorsDialog.showImmediateExceptionDialog(dialogParent, ex);
+				return false;		   
+			}
 			
 		}
 		
@@ -264,10 +264,10 @@ public class ArtifactMethodConsumer implements InitializingMethodResultConsumer 
 							ErrorsDialog.showImmediateExceptionDialog(dialogParent, ex);
 							return false;			
 						} catch (ConnectException ex) {
-                            logger.error("Failed to open document - connection exception", ex);
-                            ErrorsDialog.showImmediateExceptionDialog(dialogParent, ex);
-                            return false;           
-                        }
+							logger.error("Failed to open document - connection exception", ex);
+							ErrorsDialog.showImmediateExceptionDialog(dialogParent, ex);
+							return false;		   
+						}
 												
 					}
 											

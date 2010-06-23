@@ -10,39 +10,39 @@ import multiplexer.protocol.Protocol.MultiplexerMessage;
 
 public class MultiplexerMessageFactory {
 
-    private MultiplexerMessageFactory() {}
+	private MultiplexerMessageFactory() {}
 
-//    public static MultiplexerMessage createSamplingFrequencyMessage( 
-//            JmxClient jmxClient, double samplingFrequency) {
+//	public static MultiplexerMessage createSamplingFrequencyMessage( 
+//			JmxClient jmxClient, double samplingFrequency) {
 //
-//        MultiplexerMessage result = null;
-//        MultiplexerMessage.Builder multiplexerMessageBuilder = MultiplexerMessage.newBuilder();
-//        multiplexerMessageBuilder.setType( SvarogConstants.MessageTypes.SAMPLING_FREQUENCY);
+//		MultiplexerMessage result = null;
+//		MultiplexerMessage.Builder multiplexerMessageBuilder = MultiplexerMessage.newBuilder();
+//		multiplexerMessageBuilder.setType( SvarogConstants.MessageTypes.SAMPLING_FREQUENCY);
 //
-//        SamplingFrequency.Builder samplingFrequencyBuilder = SamplingFrequency.newBuilder();
-//        samplingFrequencyBuilder.setFrequency( samplingFrequency);
-//        SamplingFrequency samplingFrequencyMsg = samplingFrequencyBuilder.build();
+//		SamplingFrequency.Builder samplingFrequencyBuilder = SamplingFrequency.newBuilder();
+//		samplingFrequencyBuilder.setFrequency( samplingFrequency);
+//		SamplingFrequency samplingFrequencyMsg = samplingFrequencyBuilder.build();
 //
-//        multiplexerMessageBuilder.setMessage( samplingFrequencyMsg.toByteString());
-//        result = jmxClient.createMessage( multiplexerMessageBuilder);
-//        return result;
-//    }
+//		multiplexerMessageBuilder.setMessage( samplingFrequencyMsg.toByteString());
+//		result = jmxClient.createMessage( multiplexerMessageBuilder);
+//		return result;
+//	}
 
-//    public static MultiplexerMessage createCalibrationMessage( 
-//            JmxClient jmxClient, double bias, double offset) {
+//	public static MultiplexerMessage createCalibrationMessage( 
+//			JmxClient jmxClient, double bias, double offset) {
 //
-//        MultiplexerMessage result = null;
-//        MultiplexerMessage.Builder multiplexerMessageBuilder = MultiplexerMessage.newBuilder();
-//        multiplexerMessageBuilder.setType( SvarogConstants.MessageTypes.CALIBRATION);
+//		MultiplexerMessage result = null;
+//		MultiplexerMessage.Builder multiplexerMessageBuilder = MultiplexerMessage.newBuilder();
+//		multiplexerMessageBuilder.setType( SvarogConstants.MessageTypes.CALIBRATION);
 //
-//        CalibrationParams.Builder calibrationBuilder = CalibrationParams.newBuilder();
-//        calibrationBuilder.setGain( bias);
-//        calibrationBuilder.setOffset( offset);
-//        CalibrationParams calibrationMsg = calibrationBuilder.build();
+//		CalibrationParams.Builder calibrationBuilder = CalibrationParams.newBuilder();
+//		calibrationBuilder.setGain( bias);
+//		calibrationBuilder.setOffset( offset);
+//		CalibrationParams calibrationMsg = calibrationBuilder.build();
 //
-//        multiplexerMessageBuilder.setMessage( calibrationMsg.toByteString());
-//        result = jmxClient.createMessage( multiplexerMessageBuilder);
-//        return result;
-//    }
+//		multiplexerMessageBuilder.setMessage( calibrationMsg.toByteString());
+//		result = jmxClient.createMessage( multiplexerMessageBuilder);
+//		return result;
+//	}
 
 }

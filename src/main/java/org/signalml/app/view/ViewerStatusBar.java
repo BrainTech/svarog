@@ -380,62 +380,62 @@ public class ViewerStatusBar extends JPanel implements ActionFocusListener, Prop
 		double timeZoomFactor = plot.getTimeZoomFactor();
 		
 		int minSample = (int) Math.max( 0, Math.floor( ((double) (position.x)) / timeZoomFactor ) ) + 1;
-    	int maxSample = (int) Math.max( 0, Math.ceil( ((double) (endPosition.x)) / timeZoomFactor ) ) + 1;
+		int maxSample = (int) Math.max( 0, Math.ceil( ((double) (endPosition.x)) / timeZoomFactor ) ) + 1;
 		
-    	float minTime = plot.toTimeSpace(position);
-    	float maxTime = plot.toTimeSpace(endPosition);
-    	
-    	int minPage = plot.toPageSpace(position) + 1;
-    	int maxPage = plot.toPageSpace(endPosition) + 1;
-    	
-    	int minBlock = plot.toBlockSpace(position) + 1;
-    	int maxBlock = plot.toBlockSpace(endPosition) + 1;
-    	
-    	StringBuilder sb = new StringBuilder();
-    	
-    	Util.addTime( minTime, sb );    	    	
-    	sb.append(" - ");
-    	Util.addTime( maxTime, sb );
-    	    	
-    	sb.append(" (").append(sampleAbbrevString).append(": ").append(minSample).append('-').append(maxSample).append(')');
-    	sb.append(" (").append(pageAbbrevString).append(": ").append(minPage).append('-').append(maxPage).append(')');
-    	sb.append(" (").append(blockAbbrevString).append(": ").append(minBlock).append('-').append(maxBlock).append(')');
-    	
-    	setPosition(sb.toString());
-    	
-    	sb = new StringBuilder();
-    	
-    	SignalSelection signalSelection = view.getSignalSelection();
-    	if( signalSelection != null ) {
-    		addSignalSelection( document, view.getSignalSelectionPlot(), signalSelection, sb );
-    	}
-    	else {
-    		PositionedTag tagSelection = view.getTagSelection();
-    		if( tagSelection != null ) {
-    			addTag( document, view.getTagSelectionPlot(), tagSelection.getTag(), sb );
-    		}
-    	}
+		float minTime = plot.toTimeSpace(position);
+		float maxTime = plot.toTimeSpace(endPosition);
 		
-    	setSelection(sb.toString());
-    	
-    	setFiltered( document.getMontage().isFiltered() );
-    	
+		int minPage = plot.toPageSpace(position) + 1;
+		int maxPage = plot.toPageSpace(endPosition) + 1;
+		
+		int minBlock = plot.toBlockSpace(position) + 1;
+		int maxBlock = plot.toBlockSpace(endPosition) + 1;
+		
+		StringBuilder sb = new StringBuilder();
+		
+		Util.addTime( minTime, sb );				
+		sb.append(" - ");
+		Util.addTime( maxTime, sb );
+				
+		sb.append(" (").append(sampleAbbrevString).append(": ").append(minSample).append('-').append(maxSample).append(')');
+		sb.append(" (").append(pageAbbrevString).append(": ").append(minPage).append('-').append(maxPage).append(')');
+		sb.append(" (").append(blockAbbrevString).append(": ").append(minBlock).append('-').append(maxBlock).append(')');
+		
+		setPosition(sb.toString());
+		
+		sb = new StringBuilder();
+		
+		SignalSelection signalSelection = view.getSignalSelection();
+		if( signalSelection != null ) {
+			addSignalSelection( document, view.getSignalSelectionPlot(), signalSelection, sb );
+		}
+		else {
+			PositionedTag tagSelection = view.getTagSelection();
+			if( tagSelection != null ) {
+				addTag( document, view.getTagSelectionPlot(), tagSelection.getTag(), sb );
+			}
+		}
+		
+		setSelection(sb.toString());
+		
+		setFiltered( document.getMontage().isFiltered() );
+		
 	}
 	
 	private void setFiltered( boolean filtered ) {
 		
-    	JLabel label = getFilteringLabel();
-    	if( filtered ) {
-    		label.setIcon( FILTER_ON_ICON );
-    		label.setForeground( Color.BLUE );
-    		label.setText( filterOnString );
-    		label.setToolTipText( filterOnToolTipString );
-    	} else {
-    		label.setIcon( FILTER_OFF_ICON );
-    		label.setForeground( Color.LIGHT_GRAY );
-    		label.setText( filterOffString );
-    		label.setToolTipText( filterOffToolTipString );
-    	}
+		JLabel label = getFilteringLabel();
+		if( filtered ) {
+			label.setIcon( FILTER_ON_ICON );
+			label.setForeground( Color.BLUE );
+			label.setText( filterOnString );
+			label.setToolTipText( filterOnToolTipString );
+		} else {
+			label.setIcon( FILTER_OFF_ICON );
+			label.setForeground( Color.LIGHT_GRAY );
+			label.setText( filterOffString );
+			label.setToolTipText( filterOffToolTipString );
+		}
 		
 	}
 

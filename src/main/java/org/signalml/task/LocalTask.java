@@ -658,104 +658,104 @@ public class LocalTask implements Task, MethodExecutionTracker, Runnable {
 		Object[] listeners = listenerList.getListenerList();
 		TaskEvent taskEvent = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==TaskEventListener.class) {
-	             if (taskEvent == null) {
-	            	 taskEvent = new TaskEvent(this, TaskEventType.TASK_STARTED, getStatus());
-	             }
-	             ((TaskEventListener)listeners[i+1]).taskStarted(taskEvent);
-	         }
-	     }
+			 if (listeners[i]==TaskEventListener.class) {
+				 if (taskEvent == null) {
+					 taskEvent = new TaskEvent(this, TaskEventType.TASK_STARTED, getStatus());
+				 }
+				 ((TaskEventListener)listeners[i+1]).taskStarted(taskEvent);
+			 }
+		 }
 	}
 
 	protected void fireTaskSuspended() {
 		Object[] listeners = listenerList.getListenerList();
 		TaskEvent taskEvent = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==TaskEventListener.class) {
-	             if (taskEvent == null) {
-	            	 taskEvent = new TaskEvent(this, TaskEventType.TASK_SUSPENDED, getStatus());
-	             }
-	             ((TaskEventListener)listeners[i+1]).taskSuspended(taskEvent);
-	         }
-	     }
+			 if (listeners[i]==TaskEventListener.class) {
+				 if (taskEvent == null) {
+					 taskEvent = new TaskEvent(this, TaskEventType.TASK_SUSPENDED, getStatus());
+				 }
+				 ((TaskEventListener)listeners[i+1]).taskSuspended(taskEvent);
+			 }
+		 }
 	}
 
 	protected void fireTaskRequestChanged() {
 		Object[] listeners = listenerList.getListenerList();
 		TaskEvent taskEvent = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==TaskEventListener.class) {
-	             if (taskEvent == null) {
-	            	 taskEvent = new TaskEvent(this, TaskEventType.TASK_REQUEST_CHANGED, getStatus());
-	             }
-	             ((TaskEventListener)listeners[i+1]).taskRequestChanged(taskEvent);
-	         }
-	     }
+			 if (listeners[i]==TaskEventListener.class) {
+				 if (taskEvent == null) {
+					 taskEvent = new TaskEvent(this, TaskEventType.TASK_REQUEST_CHANGED, getStatus());
+				 }
+				 ((TaskEventListener)listeners[i+1]).taskRequestChanged(taskEvent);
+			 }
+		 }
 	}
 	
 	protected void fireTaskResumed() {
 		Object[] listeners = listenerList.getListenerList();
 		TaskEvent taskEvent = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==TaskEventListener.class) {
-	             if (taskEvent == null) {
-	            	 taskEvent = new TaskEvent(this, TaskEventType.TASK_RESUMED, getStatus());
-	             }
-	             ((TaskEventListener)listeners[i+1]).taskResumed(taskEvent);
-	         }
-	     }
+			 if (listeners[i]==TaskEventListener.class) {
+				 if (taskEvent == null) {
+					 taskEvent = new TaskEvent(this, TaskEventType.TASK_RESUMED, getStatus());
+				 }
+				 ((TaskEventListener)listeners[i+1]).taskResumed(taskEvent);
+			 }
+		 }
 	}
 	
 	protected void fireTaskAborted() {
 		Object[] listeners = listenerList.getListenerList();
 		TaskEvent taskEvent = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==TaskEventListener.class) {
-	             if (taskEvent == null) {
-	            	 taskEvent = new TaskEvent(this, TaskEventType.TASK_ABORTED, getStatus());
-	             }
-	             ((TaskEventListener)listeners[i+1]).taskAborted(taskEvent);
-	         }
-	     }
+			 if (listeners[i]==TaskEventListener.class) {
+				 if (taskEvent == null) {
+					 taskEvent = new TaskEvent(this, TaskEventType.TASK_ABORTED, getStatus());
+				 }
+				 ((TaskEventListener)listeners[i+1]).taskAborted(taskEvent);
+			 }
+		 }
 	}
 	
 	protected void fireTaskFinished() {
 		Object[] listeners = listenerList.getListenerList();
 		TaskEvent taskEvent = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==TaskEventListener.class) {
-	             if (taskEvent == null) {
-	            	 taskEvent = new TaskEvent(this, TaskEventType.TASK_FINISHED, getStatus(), getResult() );
-	             }
-	             ((TaskEventListener)listeners[i+1]).taskFinished(taskEvent);
-	         }
-	     }
+			 if (listeners[i]==TaskEventListener.class) {
+				 if (taskEvent == null) {
+					 taskEvent = new TaskEvent(this, TaskEventType.TASK_FINISHED, getStatus(), getResult() );
+				 }
+				 ((TaskEventListener)listeners[i+1]).taskFinished(taskEvent);
+			 }
+		 }
 	}
 
 	protected void fireTaskMessageSet() {
 		Object[] listeners = listenerList.getListenerList();
 		TaskEvent taskEvent = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==TaskEventListener.class) {
-	             if (taskEvent == null) {
-	            	 taskEvent = new TaskEvent(this, TaskEventType.TASK_MESSAGE_SET, getStatus(), getMessage() );
-	             }
-	             ((TaskEventListener)listeners[i+1]).taskMessageSet(taskEvent);
-	         }
-	     }
+			 if (listeners[i]==TaskEventListener.class) {
+				 if (taskEvent == null) {
+					 taskEvent = new TaskEvent(this, TaskEventType.TASK_MESSAGE_SET, getStatus(), getMessage() );
+				 }
+				 ((TaskEventListener)listeners[i+1]).taskMessageSet(taskEvent);
+			 }
+		 }
 	}
 	
 	protected void fireTaskTickerUpdated() {
 		Object[] listeners = listenerList.getListenerList();
 		TaskEvent taskEvent = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==TaskEventListener.class) {
-	             if (taskEvent == null) {
-	            	 taskEvent = new TaskEvent(this, TaskEventType.TASK_TICKER_UPDATED, getStatus(), getTickerLimits(), getTickers());
-	             }
-	             ((TaskEventListener)listeners[i+1]).taskTickerUpdated(taskEvent);
-	         }
-	     }
+			 if (listeners[i]==TaskEventListener.class) {
+				 if (taskEvent == null) {
+					 taskEvent = new TaskEvent(this, TaskEventType.TASK_TICKER_UPDATED, getStatus(), getTickerLimits(), getTickers());
+				 }
+				 ((TaskEventListener)listeners[i+1]).taskTickerUpdated(taskEvent);
+			 }
+		 }
 	}
 		
 }

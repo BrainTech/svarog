@@ -99,19 +99,19 @@ public class ExportSignalOptionsPanel extends JPanel {
 		
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(sampleTypeLabel)
-	            .addComponent(getSampleTypeComboBox())
-	            .addComponent(byteOrderLabel)
-	            .addComponent(getByteOrderComboBox())
+				.addComponent(sampleTypeLabel)
+				.addComponent(getSampleTypeComboBox())
+				.addComponent(byteOrderLabel)
+				.addComponent(getByteOrderComboBox())
 			);
 		
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(normalizeLabel)
-	            .addComponent(getNormalizeCheckBox())
-	            .addComponent(saveXMLLabel)
-	            .addComponent(getSaveXMLCheckBox())
-	    	);
+				.addComponent(normalizeLabel)
+				.addComponent(getNormalizeCheckBox())
+				.addComponent(saveXMLLabel)
+				.addComponent(getSaveXMLCheckBox())
+			);
 		
 		layout.setVerticalGroup(vGroup);		
 		

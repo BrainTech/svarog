@@ -26,13 +26,13 @@ public class GrayscaleMapPalette implements WignerMapPalette {
 	private GrayscaleMapPalette() {
 	
 		int i;	   	   
-    	palette = new int[256];
+		palette = new int[256];
 
-	    int itmp;
+		int itmp;
 		for (i = 0; i<256; i++) {
 			
-		    itmp=255-i;
-		    palette[i] = Util.RGBToInteger(itmp,itmp,itmp);
+			itmp=255-i;
+			palette[i] = Util.RGBToInteger(itmp,itmp,itmp);
 			
 		}
 

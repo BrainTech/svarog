@@ -119,24 +119,24 @@ public class AverageBooksPopupDialog extends AbstractPopupDialog {
 		
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(minSegmentLabel)
-	            .addComponent(minSegmentGlue)
-	            .addComponent(getMinSegmentSpinner())
+				.addComponent(minSegmentLabel)
+				.addComponent(minSegmentGlue)
+				.addComponent(getMinSegmentSpinner())
 			);
 		
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(maxSegmentLabel)
-	            .addComponent(maxSegmentGlue)
-	            .addComponent(getMaxSegmentSpinner())
-	    	);
+				.addComponent(maxSegmentLabel)
+				.addComponent(maxSegmentGlue)
+				.addComponent(getMaxSegmentSpinner())
+			);
 		
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(allChannelsLabel)
-	            .addComponent(allChannelsGlue)
-	            .addComponent(getAllChannelsCheckBox())
-	    	);
+				.addComponent(allChannelsLabel)
+				.addComponent(allChannelsGlue)
+				.addComponent(getAllChannelsCheckBox())
+			);
 		
 		layout.setVerticalGroup(vGroup);		
 				

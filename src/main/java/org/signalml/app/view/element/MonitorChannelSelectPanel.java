@@ -22,7 +22,7 @@ public class MonitorChannelSelectPanel extends JPanel {
 	
 	private MessageSourceAccessor messageSource;
 
-    private JList channelList;
+	private JList channelList;
 
 	/**
 	 * This is the default constructor
@@ -39,18 +39,18 @@ public class MonitorChannelSelectPanel extends JPanel {
 	 * @return void
 	 */
 	private void initialize() {
-        JLabel label = new JLabel( messageSource.getMessage( "openMonitor.channelsListLabel"));
-        setLayout( new BorderLayout());
-        add( label, BorderLayout.NORTH);
-        add( new JScrollPane( getChannelList()), BorderLayout.CENTER);
+		JLabel label = new JLabel( messageSource.getMessage( "openMonitor.channelsListLabel"));
+		setLayout( new BorderLayout());
+		add( label, BorderLayout.NORTH);
+		add( new JScrollPane( getChannelList()), BorderLayout.CENTER);
 	}
 
-    public JList getChannelList() {
-        if (channelList == null) {
-            channelList = new JList();
-            channelList.setSelectionMode( ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        }
-        return channelList;
-    }
+	public JList getChannelList() {
+		if (channelList == null) {
+			channelList = new JList();
+			channelList.setSelectionMode( ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		}
+		return channelList;
+	}
 
 }

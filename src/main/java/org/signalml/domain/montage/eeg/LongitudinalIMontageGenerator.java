@@ -47,7 +47,7 @@ public class LongitudinalIMontageGenerator extends BipolarReferenceMontageGenera
 		{ EegChannel.T6, EegChannel.O2 }
 				
 	};
-	                                                       
+														   
 	
 	public LongitudinalIMontageGenerator() {
 		super( MATRIX );

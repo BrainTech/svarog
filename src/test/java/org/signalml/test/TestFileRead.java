@@ -46,7 +46,7 @@ public class TestFileRead {
 				
 				long fileLength = f.length();
 				
-		        if( fileLength > filePointer ) { 				
+				if( fileLength > filePointer ) { 				
 				
 					do {
 						
@@ -61,9 +61,9 @@ public class TestFileRead {
 					} while( line != null );
 				
 					filePointer = rf.getFilePointer();					
-		        }
-		        
-		        try {
+				}
+				
+				try {
 					Thread.sleep(100);
 				} catch (InterruptedException ex) {
 					ex.printStackTrace();

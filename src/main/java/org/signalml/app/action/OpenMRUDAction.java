@@ -58,10 +58,10 @@ public class OpenMRUDAction extends AbstractFocusableSignalMLAction<MRUDFocusSel
 			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
 			return;			
 		} catch (ConnectException ex) {
-            logger.error("Failed to open mrud - connection exception", ex);
-            ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-            return;         
-        }
+			logger.error("Failed to open mrud - connection exception", ex);
+			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+			return;		 
+		}
 		
 	}
 		

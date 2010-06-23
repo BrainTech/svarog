@@ -86,9 +86,9 @@ public class StagerToolWorkingDirectoryConfigPanel extends JPanel {
 
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(directoryLabel)
-	            .addComponent(getDirectoryTextField())
-	            .addComponent(getChooseDirectoryButton())
+				.addComponent(directoryLabel)
+				.addComponent(getDirectoryTextField())
+				.addComponent(getChooseDirectoryButton())
 			);
 				
 		layout.setVerticalGroup(vGroup);		

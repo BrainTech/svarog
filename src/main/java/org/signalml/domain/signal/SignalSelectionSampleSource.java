@@ -18,7 +18,7 @@ public class SignalSelectionSampleSource extends SignalFragmentSampleSource {
 
 		float samplingFrequency = source.getSamplingFrequency();
 		
-    	int maxSampleCount = SampleSourceUtils.getMaxSampleCount(source);
+		int maxSampleCount = SampleSourceUtils.getMaxSampleCount(source);
 		
 		minSample = (int) Math.floor( signalSelection.getPosition()*samplingFrequency );
 		minSample = Math.max( 0, Math.min( maxSampleCount, minSample ) );

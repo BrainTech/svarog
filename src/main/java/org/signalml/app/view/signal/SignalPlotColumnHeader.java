@@ -55,13 +55,13 @@ public class SignalPlotColumnHeader extends JComponent {
 	private double pixelPerColumnUnit;
 	
 	private double pixelPerSecond;
-    private int maxSampleCount;
+	private int maxSampleCount;
 	private double timeZoomFactor;
 	private float pageSize;
 	private double pixelPerPage;
 	private float samplingFrequency;
 	private boolean pageLinesVisible;
-    int timeScaleY;
+	int timeScaleY;
 
 	private TagRenderer tagRenderer;
 	private TagDifferenceRenderer tagDifferenceRenderer;
@@ -103,43 +103,43 @@ public class SignalPlotColumnHeader extends JComponent {
 		pixelPerSecond = plot.getPixelPerSecond();
 		pageSize = plot.getPageSize();
 		pixelPerPage = plot.getPixelPerPage();
-    	timeZoomFactor = plot.getTimeZoomFactor();
-    	maxSampleCount = plot.getMaxSampleCount();
-    	pageLinesVisible = plot.isPageLinesVisible();
+		timeZoomFactor = plot.getTimeZoomFactor();
+		maxSampleCount = plot.getMaxSampleCount();
+		pageLinesVisible = plot.isPageLinesVisible();
 
-        if( pixelPerSecond > 6 ) {
-        	pixelPerColumnUnit = pixelPerSecond;
-        	columnUnitLabel = "1 s";
-        } else if( pixelPerSecond > (6F / 60F) ) {
-        	pixelPerColumnUnit = pixelPerSecond * 60F;
-        	columnUnitLabel = "1 min";
-        } else {
-        	pixelPerColumnUnit = pixelPerSecond * 3600F;
-        	columnUnitLabel = "1 h";	        	
-        }
+		if( pixelPerSecond > 6 ) {
+			pixelPerColumnUnit = pixelPerSecond;
+			columnUnitLabel = "1 s";
+		} else if( pixelPerSecond > (6F / 60F) ) {
+			pixelPerColumnUnit = pixelPerSecond * 60F;
+			columnUnitLabel = "1 min";
+		} else {
+			pixelPerColumnUnit = pixelPerSecond * 3600F;
+			columnUnitLabel = "1 h";				
+		}
 		
-    	if( compact ) {
-    		pageTagAreaHeight = 2 * fontMetrics.getAscent() + 2;
-    	} else {
-	    	if( plot.getView().isComparingTags() ) {
-	    		pageTagAreaHeight = 40;
-	    	} else {
-	    		pageTagAreaHeight = Math.min( 100, Math.max( 40, plot.getDocument().getTagDocuments().size() * 20 ) );
-	    	}
-    	}
-    	
-    	componentHeight = TOP_OFFSET + pageTagAreaHeight + 2 + 3 + SignalPlot.SCALE_TO_SIGNAL_GAP;
-    	
-    	if( !compact ) {
-    		componentHeight += (2 + fontMetrics.getAscent());    		
-    	}
-    	
-        if( compact ) {
-        	timeScaleY = TOP_OFFSET;
-        } else {
-        	timeScaleY = TOP_OFFSET + pageTagAreaHeight / 2;
-        }
-    	
+		if( compact ) {
+			pageTagAreaHeight = 2 * fontMetrics.getAscent() + 2;
+		} else {
+			if( plot.getView().isComparingTags() ) {
+				pageTagAreaHeight = 40;
+			} else {
+				pageTagAreaHeight = Math.min( 100, Math.max( 40, plot.getDocument().getTagDocuments().size() * 20 ) );
+			}
+		}
+		
+		componentHeight = TOP_OFFSET + pageTagAreaHeight + 2 + 3 + SignalPlot.SCALE_TO_SIGNAL_GAP;
+		
+		if( !compact ) {
+			componentHeight += (2 + fontMetrics.getAscent());			
+		}
+		
+		if( compact ) {
+			timeScaleY = TOP_OFFSET;
+		} else {
+			timeScaleY = TOP_OFFSET + pageTagAreaHeight / 2;
+		}
+		
 		calculated = true;
 	
 	}
@@ -213,8 +213,8 @@ public class SignalPlotColumnHeader extends JComponent {
 			tagRenderer = new TagRenderer();
 		}
 
-        Rectangle clip = g.getClipBounds();
-		        		
+		Rectangle clip = g.getClipBounds();
+						
 		StyledTagSet tagSet;
 		SortedSet<Tag> tagsToDraw;
 		SortedSet<Tag> activeTags = null;
@@ -225,18 +225,18 @@ public class SignalPlotColumnHeader extends JComponent {
 		Rectangle tagBounds;
 		
 		int cnt = 0;
-        float start = (float) (clip.x / pixelPerSecond);
-        float end = (float) ((clip.x+clip.width) / pixelPerSecond);
+		float start = (float) (clip.x / pixelPerSecond);
+		float end = (float) ((clip.x+clip.width) / pixelPerSecond);
 
-        boolean active;
-        boolean showActivity = ( tagDocuments.size() > 1 );
-        boolean comparing = plot.getView().isComparingTags();
-        TagDocument[] comparedTags = null;
-        
-        if( comparing ) {
-        	comparedTags = plot.getView().getComparedTags();
-        }
-        
+		boolean active;
+		boolean showActivity = ( tagDocuments.size() > 1 );
+		boolean comparing = plot.getView().isComparingTags();
+		TagDocument[] comparedTags = null;
+		
+		if( comparing ) {
+			comparedTags = plot.getView().getComparedTags();
+		}
+		
 		for( TagDocument tagDocument : tagDocuments ) {
 			active = ( tagDocument == plot.getDocument().getActiveTag() );
 			if( compact && !active ) {
@@ -295,11 +295,11 @@ public class SignalPlotColumnHeader extends JComponent {
 
 		// draw page tag names
 		if( activeTags != null ) {
-	        
+			
 			g.setColor(Color.GRAY);
-	        g.setFont(font);
+			g.setFont(font);
 
-	        for( Tag tag : activeTags ) {
+			for( Tag tag : activeTags ) {
 				style = tag.getStyle();
 				type = style.getType();
 				if( type == SignalSelectionType.PAGE ) {
@@ -313,13 +313,13 @@ public class SignalPlotColumnHeader extends JComponent {
 					
 					if( compact ) {
 
-	    				g.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
+						g.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
 						g.drawString(text, x + 2, timeScaleY + (2 * fontMetrics.getAscent() ) );
-	    				g.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF );
+						g.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF );
 						
 					} else {
 					
-		    			g.drawString(text, x + 2, timeScaleY - (fontMetrics.getDescent() + 1) );
+						g.drawString(text, x + 2, timeScaleY - (fontMetrics.getDescent() + 1) );
 						
 					}
 										
@@ -338,9 +338,9 @@ public class SignalPlotColumnHeader extends JComponent {
 		Component tagRendererComponent;
 		
 		Rectangle tagBounds;
-				                		
-        int cnt = tagSelection.tagPositionIndex;
-        TagDocument tagDocument = plot.getDocument().getTagDocuments().get(cnt);
+										
+		int cnt = tagSelection.tagPositionIndex;
+		TagDocument tagDocument = plot.getDocument().getTagDocuments().get(cnt);
 		boolean active = ( tagDocument == plot.getDocument().getActiveTag() );
 		if( compact && !active ) {
 			return;
@@ -364,110 +364,110 @@ public class SignalPlotColumnHeader extends JComponent {
 	@Override
 	protected void paintComponent(Graphics gOrig) {
 
-        Graphics2D g = (Graphics2D)gOrig;
+		Graphics2D g = (Graphics2D)gOrig;
 		calculate(g);
 
-        Point viewportPoint = plot.getViewport().getViewPosition();
-        Dimension viewportSize = plot.getViewport().getExtentSize();
-        Dimension size = getSize();
+		Point viewportPoint = plot.getViewport().getViewPosition();
+		Dimension viewportSize = plot.getViewport().getExtentSize();
+		Dimension size = getSize();
 		
-        Rectangle clip = g.getClipBounds();
-        	        
-        g.setColor(getBackground());
-        g.fillRect(clip.x,clip.y,clip.width,clip.height);
-        	        
-        g.setColor(Color.WHITE);
-        g.fillRect(clip.x, TOP_OFFSET, clip.width, pageTagAreaHeight);
+		Rectangle clip = g.getClipBounds();
+					
+		g.setColor(getBackground());
+		g.fillRect(clip.x,clip.y,clip.width,clip.height);
+					
+		g.setColor(Color.WHITE);
+		g.fillRect(clip.x, TOP_OFFSET, clip.width, pageTagAreaHeight);
 
 		paintPageTags(g);
-        
-        int clipEndX = clip.x + clip.width - 1;
-        	
-        size.height -= SignalPlot.SCALE_TO_SIGNAL_GAP;
-        
-        int i;
-        int x;
-        
-        // this draws second ticks	        
-        g.setColor(Color.GRAY);
-        g.drawLine(viewportPoint.x, size.height-4, viewportPoint.x+viewportSize.width, size.height-4);
-        int tickCnt = 1 + ((int) ( ((float) (viewportSize.width+1))  / pixelPerColumnUnit ) );
-        for( i=0; i<tickCnt; i++ ) {
-        	x = viewportPoint.x + ((int) (i*pixelPerColumnUnit));
-            g.drawLine(x, size.height-3, x , size.height-1);        
-        }
-        	        
-        if( pageLinesVisible && pixelPerPage > 4 ) {
-	        // this draws page boundaries	        
-	        int startPage = (int) Math.floor( clip.x / pixelPerPage );
-	        if( startPage == 0 ) {
-	        	startPage++;
-	        }
-	        int endPage = (int) Math.ceil( clipEndX / pixelPerPage );
-        	
-            g.setColor(Color.RED);
-            for( i=startPage; i <= endPage; i++) {
-            	x = (int)(i * pixelPerPage);
-                g.drawLine(x, TOP_OFFSET, x, TOP_OFFSET + pageTagAreaHeight - 1 );
-            }
-        }
+		
+		int clipEndX = clip.x + clip.width - 1;
+			
+		size.height -= SignalPlot.SCALE_TO_SIGNAL_GAP;
+		
+		int i;
+		int x;
+		
+		// this draws second ticks			
+		g.setColor(Color.GRAY);
+		g.drawLine(viewportPoint.x, size.height-4, viewportPoint.x+viewportSize.width, size.height-4);
+		int tickCnt = 1 + ((int) ( ((float) (viewportSize.width+1))  / pixelPerColumnUnit ) );
+		for( i=0; i<tickCnt; i++ ) {
+			x = viewportPoint.x + ((int) (i*pixelPerColumnUnit));
+			g.drawLine(x, size.height-3, x , size.height-1);		
+		}
+					
+		if( pageLinesVisible && pixelPerPage > 4 ) {
+			// this draws page boundaries			
+			int startPage = (int) Math.floor( clip.x / pixelPerPage );
+			if( startPage == 0 ) {
+				startPage++;
+			}
+			int endPage = (int) Math.ceil( clipEndX / pixelPerPage );
+			
+			g.setColor(Color.RED);
+			for( i=startPage; i <= endPage; i++) {
+				x = (int)(i * pixelPerPage);
+				g.drawLine(x, TOP_OFFSET, x, TOP_OFFSET + pageTagAreaHeight - 1 );
+			}
+		}
 
-        // this draws time axis
-        g.setColor(Color.GRAY);
-        g.setFont( font );
-        g.drawLine(clip.x, timeScaleY, clipEndX, timeScaleY);	        
-        
-        // XXX this must be offset to prevent parts of labels from disappearing
-        // The offset of "5" is arbitrary
-        // It could be recoded into a clener and well calculated offset
-        int startUnit = (int) Math.max( 0, Math.floor( clip.x / pixelPerColumnUnit ) - 5 );
-        int endUnit = (int) Math.ceil( clipEndX / pixelPerColumnUnit ) + 1;
-        int second, minute, hour;
-        Formatter formatter;
-        String label;
-                       
-        for( i=startUnit; i <= endUnit; i++) {
-        	x = (int)(i * pixelPerColumnUnit);
-        	if( (i % 10) != 0 ) {
-        		g.drawLine(x, (compact ? timeScaleY : timeScaleY-1), x, timeScaleY+1);
-        	} else {
-        		g.drawLine(x, (compact ? timeScaleY : timeScaleY-2), x, timeScaleY+2);
-        		second = (int) Math.round((i * pixelPerColumnUnit) / pixelPerSecond);
-        		hour = second / 3600;
-        		minute = (second % 3600) / 60;
-        		second = second % 60;
-        		formatter = new Formatter();
-        		if( maxSampleCount / samplingFrequency > 3600 ) {
-        			formatter.format("%02d:", hour);
-        		}
-    			formatter.format("%02d:%02d", minute, second);
-    			label = formatter.toString();
-    			if( compact ) {
-    				g.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
-    			}
-    			g.drawString(label, x + 3, timeScaleY + fontMetrics.getAscent() + 1 );
-    			if( compact ) {
-    				g.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF );
-    			}
-        	}
-        }	        	        
-        
-        if( !compact ) {
-	        g.setColor(Color.GRAY);
-	        g.drawString(columnUnitLabel, viewportPoint.x+3, size.height-6);
-        }
-        
+		// this draws time axis
+		g.setColor(Color.GRAY);
+		g.setFont( font );
+		g.drawLine(clip.x, timeScaleY, clipEndX, timeScaleY);			
+		
+		// XXX this must be offset to prevent parts of labels from disappearing
+		// The offset of "5" is arbitrary
+		// It could be recoded into a clener and well calculated offset
+		int startUnit = (int) Math.max( 0, Math.floor( clip.x / pixelPerColumnUnit ) - 5 );
+		int endUnit = (int) Math.ceil( clipEndX / pixelPerColumnUnit ) + 1;
+		int second, minute, hour;
+		Formatter formatter;
+		String label;
+					   
+		for( i=startUnit; i <= endUnit; i++) {
+			x = (int)(i * pixelPerColumnUnit);
+			if( (i % 10) != 0 ) {
+				g.drawLine(x, (compact ? timeScaleY : timeScaleY-1), x, timeScaleY+1);
+			} else {
+				g.drawLine(x, (compact ? timeScaleY : timeScaleY-2), x, timeScaleY+2);
+				second = (int) Math.round((i * pixelPerColumnUnit) / pixelPerSecond);
+				hour = second / 3600;
+				minute = (second % 3600) / 60;
+				second = second % 60;
+				formatter = new Formatter();
+				if( maxSampleCount / samplingFrequency > 3600 ) {
+					formatter.format("%02d:", hour);
+				}
+				formatter.format("%02d:%02d", minute, second);
+				label = formatter.toString();
+				if( compact ) {
+					g.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
+				}
+				g.drawString(label, x + 3, timeScaleY + fontMetrics.getAscent() + 1 );
+				if( compact ) {
+					g.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF );
+				}
+			}
+		}						
+		
+		if( !compact ) {
+			g.setColor(Color.GRAY);
+			g.drawString(columnUnitLabel, viewportPoint.x+3, size.height-6);
+		}
+		
 		PositionedTag tagSelection = plot.getView().getTagSelection(plot);
 		if( tagSelection != null ) {
 			paintSelectedTagSelectionBox(g, tagSelection);
 		}
-        
+		
 	}
 				
 	@Override
 	public Dimension getPreferredSize() {
 		calculate((Graphics2D) getGraphics());
-        return new Dimension((int)(maxSampleCount*timeZoomFactor),componentHeight);
+		return new Dimension((int)(maxSampleCount*timeZoomFactor),componentHeight);
 	}
 
 	@Override
@@ -545,7 +545,7 @@ public class SignalPlotColumnHeader extends JComponent {
 			comparedTags = plot.getView().getComparedTags();
 		}
 		int cnt = 0;
-        Rectangle tagBounds;
+		Rectangle tagBounds;
 		
 		for( TagDocument tagDocument : tagDocuments ) {
 			if( compact && ( tagDocument != plot.getDocument().getActiveTag() ) ) {

@@ -171,7 +171,7 @@ public class ViewerElementManager {
 	private WorkspaceTreeModel workspaceTreeModel;
 	private BookTreeModel bookTreeModel;
 	private SignalTreeModel signalTreeModel;
-    private MonitorTreeModel monitorTreeModel;
+	private MonitorTreeModel monitorTreeModel;
 	private TagTreeModel tagTreeModel;
 	private TaskTableModel taskTableModel;
 	private PropertySheetModel propertySheetModel;
@@ -195,12 +195,12 @@ public class ViewerElementManager {
 	private ViewerTreePane workspaceTreePane;
 	private ViewerTreePane bookTreePane;
 	private ViewerTreePane signalTreePane;
-    private ViewerTreePane monitorTreePane;
+	private ViewerTreePane monitorTreePane;
 	private ViewerTreePane tagTreePane;
 		
 	private ViewerWorkspaceTree workspaceTree;
 	private ViewerSignalTree signalTree;
-    private ViewerMonitorTree monitorTree;
+	private ViewerMonitorTree monitorTree;
 	private ViewerBookTree bookTree;
 	private ViewerTagTree tagTree;
 	
@@ -220,7 +220,7 @@ public class ViewerElementManager {
 	private SeriousWarningDialog seriousWarningDialog;
 	private ApplicationPreferencesDialog applicationPreferencesDialog;
 	private OpenDocumentDialog openDocumentDialog;
-    private OpenMonitorDialog openMonitorDialog;
+	private OpenMonitorDialog openMonitorDialog;
 	private RegisterCodecDialog registerCodecDialog;
 	private SignalParametersDialog signalParametersDialog;
 	private SignalMontageDialog signalMontageDialog;
@@ -251,10 +251,10 @@ public class ViewerElementManager {
 	private ShowLeftPanelAction showLeftPanelAction;
 	private ShowBottomPanelAction showBottomPanelAction;
 	private OpenDocumentAction openDocumentAction;
-    private OpenMonitorAction openMonitorAction;
-//    private ConnectMultiplexerAction connectMultiplexerAction;
-//    private DisconnectMultiplexerAction disconnectMultiplexerAction;
-//    private JMXConnectionTestAction jmxConnectionTestAction;
+	private OpenMonitorAction openMonitorAction;
+//	private ConnectMultiplexerAction connectMultiplexerAction;
+//	private DisconnectMultiplexerAction disconnectMultiplexerAction;
+//	private JMXConnectionTestAction jmxConnectionTestAction;
 	private CloseDocumentAction closeActiveDocumentAction;
 	private SaveAllDocumentsAction saveAllDocumentsAction;
 	private SaveDocumentAction saveActiveDocumentAction;
@@ -302,8 +302,8 @@ public class ViewerElementManager {
 	/* Other */
 	private TableToTextExporter tableToTextExporter;
 	private MP5ApplicationExecutorConfigurer mp5ExecutorConfigurer;
-    private JmxClient jmxClient;
-    private JmxClient tagClient;
+	private JmxClient jmxClient;
+	private JmxClient tagClient;
 
 	public SignalMLOperationMode getMode() {
 		return mode;
@@ -511,14 +511,14 @@ public class ViewerElementManager {
 		}
 		return signalTreeModel;
 	}
-    
-    public MonitorTreeModel getMonitorTreeModel() {
-        if( monitorTreeModel == null ) {
-            monitorTreeModel = new MonitorTreeModel();
-            monitorTreeModel.setDocumentManager(getDocumentManager());
-        }
-        return monitorTreeModel;
-    }
+	
+	public MonitorTreeModel getMonitorTreeModel() {
+		if( monitorTreeModel == null ) {
+			monitorTreeModel = new MonitorTreeModel();
+			monitorTreeModel.setDocumentManager(getDocumentManager());
+		}
+		return monitorTreeModel;
+	}
 	
 	public TagTreeModel getTagTreeModel() {
 		if( tagTreeModel == null ) {
@@ -552,7 +552,7 @@ public class ViewerElementManager {
 			statusBar.setActionFocusManager(getActionFocusManager());
 			statusBar.initialize();
 			statusBar.setStatus(messageSource.getMessage("viewer.welcomeStatus",
-								     new Object[] {SvarogConstants.VERSION}));
+									 new Object[] {SvarogConstants.VERSION}));
 			getActionFocusManager().addActionFocusListener(statusBar);			
 		}
 		return statusBar;
@@ -576,8 +576,8 @@ public class ViewerElementManager {
 			fileMenu.add(getSaveAllDocumentsAction());
 			fileMenu.add(getCloseActiveDocumentAction());
 			fileMenu.addSeparator();
-            fileMenu.add(getOpenMonitorAction());
-            fileMenu.addSeparator();
+			fileMenu.add(getOpenMonitorAction());
+			fileMenu.addSeparator();
 			fileMenu.add(getNewTagAction());
 			fileMenu.add(getOpenTagAction());
 			fileMenu.add(getSaveTagAction());
@@ -738,7 +738,7 @@ public class ViewerElementManager {
 
 			treeTabbedPane.addTab("viewer.tagTabTitle", null, getTagTreePane(), "viewer.tagTabToolTip", messageSource);
 			treeTabbedPane.addTab("viewer.signalTabTitle", null, getSignalTreePane(), "viewer.signalTabToolTip", messageSource);
-            treeTabbedPane.addTab("viewer.monitorTabTitle", null, getMonitorTreePane(), "viewer.monitorTabToolTip", messageSource);
+			treeTabbedPane.addTab("viewer.monitorTabTitle", null, getMonitorTreePane(), "viewer.monitorTabToolTip", messageSource);
 			treeTabbedPane.addTab("viewer.bookTabTitle", null, getBookTreePane(), "viewer.bookTabToolTip", messageSource);
 			treeTabbedPane.addTab("viewer.workspaceTabTitle", null, getWorkspaceTreePane(), "viewer.workspaceTabToolTip", messageSource);		
 			
@@ -800,13 +800,13 @@ public class ViewerElementManager {
 		}
 		return signalTreePane;
 	}
-    
-    public ViewerTreePane getMonitorTreePane() {
-        if( monitorTreePane == null ) {
-            monitorTreePane = new ViewerTreePane(getSignalTree());           
-        }
-        return monitorTreePane;
-    }
+	
+	public ViewerTreePane getMonitorTreePane() {
+		if( monitorTreePane == null ) {
+			monitorTreePane = new ViewerTreePane(getSignalTree());		   
+		}
+		return monitorTreePane;
+	}
 	
 	public ViewerTreePane getTagTreePane() {
 		if( tagTreePane == null ) {
@@ -835,16 +835,16 @@ public class ViewerElementManager {
 		}
 		return signalTree;
 	}
-    
-    public ViewerMonitorTree getMonitorTree() {
-        if( monitorTree == null ) {
-            monitorTree = new ViewerMonitorTree( getMonitorTreeModel(), messageSource);
-            monitorTree.setActionFocusManager(getActionFocusManager());
-            monitorTree.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
-            monitorTree.addTreeSelectionListener(getPropertySheetModel());           
-        }
-        return monitorTree;
-    }
+	
+	public ViewerMonitorTree getMonitorTree() {
+		if( monitorTree == null ) {
+			monitorTree = new ViewerMonitorTree( getMonitorTreeModel(), messageSource);
+			monitorTree.setActionFocusManager(getActionFocusManager());
+			monitorTree.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
+			monitorTree.addTreeSelectionListener(getPropertySheetModel());		   
+		}
+		return monitorTree;
+	}
 	
 	public ViewerBookTree getBookTree() {
 		if( bookTree == null ) {
@@ -973,14 +973,14 @@ public class ViewerElementManager {
 		}
 		return openDocumentDialog;
 	}
-    
-    public OpenMonitorDialog getOpenMonitorDialog() {
-        if( openMonitorDialog == null ) {
-            openMonitorDialog = new OpenMonitorDialog( messageSource, this, getDialogParent(),true);
-            openMonitorDialog.setApplicationConfig(getApplicationConfig());
-        }
-        return openMonitorDialog;
-    }
+	
+	public OpenMonitorDialog getOpenMonitorDialog() {
+		if( openMonitorDialog == null ) {
+			openMonitorDialog = new OpenMonitorDialog( messageSource, this, getDialogParent(),true);
+			openMonitorDialog.setApplicationConfig(getApplicationConfig());
+		}
+		return openMonitorDialog;
+	}
 	
 	public RegisterCodecDialog getRegisterCodecDialog() {
 		if( registerCodecDialog == null ) {
@@ -1217,36 +1217,36 @@ public class ViewerElementManager {
 		return openDocumentAction;
 	}
 
-    public OpenMonitorAction getOpenMonitorAction() {
-        if( openMonitorAction == null ) {
-            openMonitorAction = new OpenMonitorAction( this);
-            openMonitorAction.setOpenMonitorDialog( getOpenMonitorDialog());
-        }
-        return openMonitorAction;
-    }
+	public OpenMonitorAction getOpenMonitorAction() {
+		if( openMonitorAction == null ) {
+			openMonitorAction = new OpenMonitorAction( this);
+			openMonitorAction.setOpenMonitorDialog( getOpenMonitorDialog());
+		}
+		return openMonitorAction;
+	}
 
-//    public ConnectMultiplexerAction getConnectMultiplexerAction() {
-//        if( connectMultiplexerAction == null ) {
-//            connectMultiplexerAction = new ConnectMultiplexerAction( this);
-//        }
-//        return connectMultiplexerAction;
-//    }
+//	public ConnectMultiplexerAction getConnectMultiplexerAction() {
+//		if( connectMultiplexerAction == null ) {
+//			connectMultiplexerAction = new ConnectMultiplexerAction( this);
+//		}
+//		return connectMultiplexerAction;
+//	}
 //
-//    public DisconnectMultiplexerAction getDisconnectMultiplexerAction() {
-//        if( disconnectMultiplexerAction == null ) {
-//            disconnectMultiplexerAction = new DisconnectMultiplexerAction( this);
-//        }
-//        return disconnectMultiplexerAction;
-//    }
+//	public DisconnectMultiplexerAction getDisconnectMultiplexerAction() {
+//		if( disconnectMultiplexerAction == null ) {
+//			disconnectMultiplexerAction = new DisconnectMultiplexerAction( this);
+//		}
+//		return disconnectMultiplexerAction;
+//	}
 //
-//    public JMXConnectionTestAction getJMXConnectionTestAction() {
-//        if( jmxConnectionTestAction == null ) {
-//            jmxConnectionTestAction = new JMXConnectionTestAction( messageSource, this);
-//        }
-//        return jmxConnectionTestAction;
-//    }
+//	public JMXConnectionTestAction getJMXConnectionTestAction() {
+//		if( jmxConnectionTestAction == null ) {
+//			jmxConnectionTestAction = new JMXConnectionTestAction( messageSource, this);
+//		}
+//		return jmxConnectionTestAction;
+//	}
 
-    public CloseDocumentAction getCloseActiveDocumentAction() {
+	public CloseDocumentAction getCloseActiveDocumentAction() {
 		if( closeActiveDocumentAction == null ) {
 			closeActiveDocumentAction = new CloseDocumentAction(messageSource,getActionFocusManager());
 			closeActiveDocumentAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());			
@@ -1541,22 +1541,22 @@ public class ViewerElementManager {
 	}
 
 	public JmxClient getJmxClient() {
-        return jmxClient;
-    }
+		return jmxClient;
+	}
 
-    public void setJmxClient(JmxClient jmxClient) {
-        this.jmxClient = jmxClient;
-    }
+	public void setJmxClient(JmxClient jmxClient) {
+		this.jmxClient = jmxClient;
+	}
 
-    public JmxClient getTagClient() {
-        return tagClient;
-    }
+	public JmxClient getTagClient() {
+		return tagClient;
+	}
 
-    public void setTagClient(JmxClient tagClient) {
-        this.tagClient = tagClient;
-    }
+	public void setTagClient(JmxClient tagClient) {
+		this.tagClient = tagClient;
+	}
 
-    public DocumentView createDocumentViewPanel(Document document) throws SignalMLException {
+	public DocumentView createDocumentViewPanel(Document document) throws SignalMLException {
 		
 		DocumentView documentView = null;
 		
@@ -1585,22 +1585,22 @@ public class ViewerElementManager {
 
 			documentView = signalView;
 
-        } else if( document instanceof MonitorSignalDocument ) {
-            
-            SignalView signalView; 
-            signalView = new SignalView((SignalDocument) document);
-            
-            signalView.setMessageSource(messageSource);
-            signalView.setActionFocusManager(getActionFocusManager());
-            signalView.setSlavePlotSettingsPopupDialog(getSlavePlotSettingsPopupDialog());
-            signalView.setErrorsDialog(getErrorsDialog());
-            signalView.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
-            signalView.setSignalParametersDialog(getSignalParametersDialog());
-            signalView.setSignalSelectionDialog(getSignalSelectionDialog());
-            signalView.setApplicationConfig(getApplicationConfig());
-            signalView.initialize();
+		} else if( document instanceof MonitorSignalDocument ) {
+			
+			SignalView signalView; 
+			signalView = new SignalView((SignalDocument) document);
+			
+			signalView.setMessageSource(messageSource);
+			signalView.setActionFocusManager(getActionFocusManager());
+			signalView.setSlavePlotSettingsPopupDialog(getSlavePlotSettingsPopupDialog());
+			signalView.setErrorsDialog(getErrorsDialog());
+			signalView.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
+			signalView.setSignalParametersDialog(getSignalParametersDialog());
+			signalView.setSignalSelectionDialog(getSignalSelectionDialog());
+			signalView.setApplicationConfig(getApplicationConfig());
+			signalView.initialize();
 
-            documentView = signalView;
+			documentView = signalView;
 
 		} else if( document instanceof BookDocument ) {
 			

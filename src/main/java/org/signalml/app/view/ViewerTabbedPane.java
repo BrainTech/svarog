@@ -26,7 +26,7 @@ public class ViewerTabbedPane extends JTabbedPane {
 
 	public ViewerTabbedPane(int tabLocation, int tabLayout) {
 		super(tabLocation, tabLayout);		
-	    setBorder(new EmptyBorder(3,3,3,3));	    
+		setBorder(new EmptyBorder(3,3,3,3));		
 	}
 	
 	public ViewerTabbedPane() {

@@ -42,7 +42,7 @@ import org.signalml.exception.SignalMLException;
  *
  * 
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
- * 		parts based on code Copyright (C) 2003 Dobieslaw Ircha <dircha@eranet.pl> Artur Biesiadowski <abies@adres.pl> Piotr J. Durka     <Piotr-J.Durka@fuw.edu.pl>
+ * 		parts based on code Copyright (C) 2003 Dobieslaw Ircha <dircha@eranet.pl> Artur Biesiadowski <abies@adres.pl> Piotr J. Durka	 <Piotr-J.Durka@fuw.edu.pl>
  */
 public abstract class Util {
 
@@ -69,16 +69,16 @@ public abstract class Util {
 		return o1.equals(o2);
 	}
 	
-    public static SignalChecksum[] getSignalChecksums(File file, String[] checksumTypes, SignalChecksumProgressMonitor monitor) throws SignalMLException { 
-        return getSignalChecksums(file, checksumTypes, 0, (int) file.length(), monitor);
-    }
-	    
-    public static SignalChecksum[] getSignalChecksums(File file, String[] checksumTypes, int offset, int length, SignalChecksumProgressMonitor monitor) throws SignalMLException {
+	public static SignalChecksum[] getSignalChecksums(File file, String[] checksumTypes, SignalChecksumProgressMonitor monitor) throws SignalMLException { 
+		return getSignalChecksums(file, checksumTypes, 0, (int) file.length(), monitor);
+	}
+		
+	public static SignalChecksum[] getSignalChecksums(File file, String[] checksumTypes, int offset, int length, SignalChecksumProgressMonitor monitor) throws SignalMLException {
 
-    	if( checksumTypes.length == 0 ) {
-    		return new SignalChecksum[0];
-    	}
-    	
+		if( checksumTypes.length == 0 ) {
+			return new SignalChecksum[0];
+		}
+		
 		Checksum[] checksums = new Checksum[checksumTypes.length];
 		int i;
 		
@@ -158,7 +158,7 @@ public abstract class Util {
 			
 		return results;
 		
-    }
+	}
 	
 	public static String getFileSignature(File file) throws IOException {
 		long len = file.length();
@@ -177,7 +177,7 @@ public abstract class Util {
 		return hexString.toString();
 	}
 	
-    public static String toMD5String(String s) {
+	public static String toMD5String(String s) {
 		if (s == null) {
 			throw new NullPointerException();
 		}
@@ -194,43 +194,43 @@ public abstract class Util {
 
 		return toHexString(bytes);
 	}
-    
-    public static String getRandomHexString(int byteCount) {
-    	byte[] bytes = new byte[byteCount];
-    	(new Random()).nextBytes(bytes);    	
-		return toHexString(bytes);    	
-    }
-    
-    public static String getFileExtension(File file, boolean withDot) {
-    	if( file == null ) {
-    		return null;
-    	}
-    	String path = file.getAbsolutePath();
-    	int dotAt = path.lastIndexOf('.');
-    	if( dotAt < 0 ) {
-    		return null;
-    	}
-    	if( !withDot ) {
-    		dotAt++;
-    	}
-    	return path.substring(dotAt);
-    }
+	
+	public static String getRandomHexString(int byteCount) {
+		byte[] bytes = new byte[byteCount];
+		(new Random()).nextBytes(bytes);		
+		return toHexString(bytes);		
+	}
+	
+	public static String getFileExtension(File file, boolean withDot) {
+		if( file == null ) {
+			return null;
+		}
+		String path = file.getAbsolutePath();
+		int dotAt = path.lastIndexOf('.');
+		if( dotAt < 0 ) {
+			return null;
+		}
+		if( !withDot ) {
+			dotAt++;
+		}
+		return path.substring(dotAt);
+	}
 
-    public static String getFileNameWithoutExtension(File file) {
-    	if( file == null ) {
-    		return null;
-    	}
-    	
-    	String path = file.getName();
-    	int dotAt = path.lastIndexOf('.');
-    	if( dotAt < 0 ) {
-    		return null;
-    	}
+	public static String getFileNameWithoutExtension(File file) {
+		if( file == null ) {
+			return null;
+		}
+		
+		String path = file.getName();
+		int dotAt = path.lastIndexOf('.');
+		if( dotAt < 0 ) {
+			return null;
+		}
 
-    	return path.substring(0,dotAt);
-    }
-    
-    
+		return path.substring(0,dotAt);
+	}
+	
+	
 	public static File changeOrAddFileExtension(File file, String extension) {
 
 		String name = file.getName();
@@ -246,78 +246,78 @@ public abstract class Util {
 		return new File( parent, name );
 		
 	}
-        
-    public static HashMap<String,String> invertStringMap(Map<String,String> input) {
-    	
-    	HashMap<String,String> output = new HashMap<String, String>(input.size());
-    	
-    	Set<Map.Entry<String,String>> entries = input.entrySet();
-    	for( Map.Entry<String, String> entry : entries ) {
-    		output.put(entry.getValue(), entry.getKey());
-    	}
-    	
-    	return output;
-    	
-    }
-    
-    public static String substituteForTokens(String input, Map<String,String> tokenMap, boolean invertMap) {
-    	
-    	if( invertMap ) {
-    		tokenMap = invertStringMap(tokenMap);
-    	}
-    	
-    	input = input.replaceAll("\\$", "\\$\\$");
-    	
-    	Set<String> keySet = tokenMap.keySet();
-    	boolean somethingDone = false;
-    	int index;
-    	do {
-    		somethingDone = false;
-    		for( String key : keySet ) {
-    			index = input.indexOf(key);
-    			if( index >= 0 ) {
-    				input = input.substring(0,index) + "${" + tokenMap.get(key) + "}" + input.substring(index+key.length());
-    				somethingDone = true;
-    				break;
-    			}    		
-    		}    		
-    	} while( somethingDone );
-    	
-    	return input;
-    
-    }
-    
-    public static String expandTokens(String input,  Map<String,String> tokenMap) {
-    	
-    	Set<String> keySet = tokenMap.keySet();
-    	boolean somethingDone = false;
-    	int index;
-    	do {
-    		somethingDone = false;
-    		for( String key : keySet ) {
-    			String skey = "${" + key + "}";
-    			index = input.indexOf(skey);
-    			if( index >= 0 ) {
-    				input = input.substring(0,index) + tokenMap.get(key) + input.substring(index+skey.length());
-    				somethingDone = true;
-    				break;
-    			}    		
-    		}    		
-    	} while( somethingDone );    	
-    	
-    	return input.replaceAll("\\$\\$", "\\$");
-    	
-    }
-        
+		
+	public static HashMap<String,String> invertStringMap(Map<String,String> input) {
+		
+		HashMap<String,String> output = new HashMap<String, String>(input.size());
+		
+		Set<Map.Entry<String,String>> entries = input.entrySet();
+		for( Map.Entry<String, String> entry : entries ) {
+			output.put(entry.getValue(), entry.getKey());
+		}
+		
+		return output;
+		
+	}
+	
+	public static String substituteForTokens(String input, Map<String,String> tokenMap, boolean invertMap) {
+		
+		if( invertMap ) {
+			tokenMap = invertStringMap(tokenMap);
+		}
+		
+		input = input.replaceAll("\\$", "\\$\\$");
+		
+		Set<String> keySet = tokenMap.keySet();
+		boolean somethingDone = false;
+		int index;
+		do {
+			somethingDone = false;
+			for( String key : keySet ) {
+				index = input.indexOf(key);
+				if( index >= 0 ) {
+					input = input.substring(0,index) + "${" + tokenMap.get(key) + "}" + input.substring(index+key.length());
+					somethingDone = true;
+					break;
+				}			
+			}			
+		} while( somethingDone );
+		
+		return input;
+	
+	}
+	
+	public static String expandTokens(String input,  Map<String,String> tokenMap) {
+		
+		Set<String> keySet = tokenMap.keySet();
+		boolean somethingDone = false;
+		int index;
+		do {
+			somethingDone = false;
+			for( String key : keySet ) {
+				String skey = "${" + key + "}";
+				index = input.indexOf(skey);
+				if( index >= 0 ) {
+					input = input.substring(0,index) + tokenMap.get(key) + input.substring(index+skey.length());
+					somethingDone = true;
+					break;
+				}			
+			}			
+		} while( somethingDone );		
+		
+		return input.replaceAll("\\$\\$", "\\$");
+		
+	}
+		
 	public static void addTime(float time, StringBuilder sb) {
-    	int intTime = (int) Math.floor( time );
-    	int remainder = (int) Math.round( (time - intTime)*100 );
-    	sb.append(twoPlaceFormat.format(intTime/3600)).append(':');
-    	sb.append(twoPlaceFormat.format((intTime % 3600) / 60)).append(':');
-    	sb.append(twoPlaceFormat.format(intTime % 60));
-    	if( remainder > 0 ) {
-    		sb.append('.').append(twoPlaceFormat.format(remainder));
-    	}		
+		int intTime = (int) Math.floor( time );
+		int remainder = (int) Math.round( (time - intTime)*100 );
+		sb.append(twoPlaceFormat.format(intTime/3600)).append(':');
+		sb.append(twoPlaceFormat.format((intTime % 3600) / 60)).append(':');
+		sb.append(twoPlaceFormat.format(intTime % 60));
+		if( remainder > 0 ) {
+			sb.append('.').append(twoPlaceFormat.format(remainder));
+		}		
 	}
 	
 	public static boolean validateString( String s ) {

@@ -109,10 +109,10 @@ public class MP5MethodConsumer implements InitializingMethodResultConsumer {
 				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
 				return false;			
 			} catch (ConnectException ex) {
-                logger.error("Failed to open document - connection exception", ex);
-                ErrorsDialog.showImmediateExceptionDialog(dialogParent, ex);
-                return false;           
-            }
+				logger.error("Failed to open document - connection exception", ex);
+				ErrorsDialog.showImmediateExceptionDialog(dialogParent, ex);
+				return false;		   
+			}
 			
 		}
 		

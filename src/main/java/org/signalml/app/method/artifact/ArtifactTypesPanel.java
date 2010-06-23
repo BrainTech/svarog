@@ -88,9 +88,9 @@ public class ArtifactTypesPanel extends JPanel {
 			
 			vGroup.addGroup(
 					layout.createParallelGroup(Alignment.CENTER)
-		            .addComponent(checkBoxes[i])
-		            .addComponent(textFields[i])
-		            .addComponent(scrollBars[i])
+					.addComponent(checkBoxes[i])
+					.addComponent(textFields[i])
+					.addComponent(scrollBars[i])
 			);
 			
 			checkBoxParallelGroup.addComponent(checkBoxes[i]);

@@ -141,22 +141,22 @@ public class BookZoomSettingsPanel extends JPanel {
 				
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(positionLabel)
-	            .addComponent(minPositionLabel)
-	            .addComponent(getMinPositionSpinner())
-	            .addComponent(positionGlue)
-	            .addComponent(maxPositionLabel)
-	            .addComponent(getMaxPositionSpinner())
+				.addComponent(positionLabel)
+				.addComponent(minPositionLabel)
+				.addComponent(getMinPositionSpinner())
+				.addComponent(positionGlue)
+				.addComponent(maxPositionLabel)
+				.addComponent(getMaxPositionSpinner())
 			);
 		
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(frequencyLabel)
-	            .addComponent(minFrequencyLabel)
-	            .addComponent(getMinFrequencySpinner())
-	            .addComponent(frequencyGlue)
-	            .addComponent(maxFrequencyLabel)
-	            .addComponent(getMaxFrequencySpinner())
+				.addComponent(frequencyLabel)
+				.addComponent(minFrequencyLabel)
+				.addComponent(getMinFrequencySpinner())
+				.addComponent(frequencyGlue)
+				.addComponent(maxFrequencyLabel)
+				.addComponent(getMaxFrequencySpinner())
 			);
 				
 		layout.setVerticalGroup(vGroup);		

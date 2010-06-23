@@ -26,15 +26,15 @@ public class DoublePrecisionTest {
 		
 		double pixelPerSecond = samplingFrequency * timeZoomFactor;
 
-        double startTime = clipLeft / pixelPerSecond;
-        double endTime = clipRight / pixelPerSecond;
+		double startTime = clipLeft / pixelPerSecond;
+		double endTime = clipRight / pixelPerSecond;
 		
-    	int firstSample = (int) Math.floor( clipLeft / timeZoomFactor ) - 1;
-    	int lastSample = (int) Math.ceil( clipRight / timeZoomFactor ) + 1;
+		int firstSample = (int) Math.floor( clipLeft / timeZoomFactor ) - 1;
+		int lastSample = (int) Math.ceil( clipRight / timeZoomFactor ) + 1;
 
-    	double firstRealX = firstSample * timeZoomFactor;
-    	double lastRealX = lastSample * timeZoomFactor;
-    	
+		double firstRealX = firstSample * timeZoomFactor;
+		double lastRealX = lastSample * timeZoomFactor;
+		
 		System.out.println( "Sample count: " + sampleCount );
 		System.out.println( "SF: " + samplingFrequency );
 		System.out.println( "Clip left: " + clipLeft );

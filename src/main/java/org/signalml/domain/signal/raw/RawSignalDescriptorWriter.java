@@ -181,39 +181,39 @@ public class RawSignalDescriptorWriter {
 			
 		}
 
-        float[] gain = descriptor.getCalibrationGain();
-        if( gain != null && gain.length > 0 ) {
+		float[] gain = descriptor.getCalibrationGain();
+		if( gain != null && gain.length > 0 ) {
 
-            Element gainElems = document.createElement( RawSignalDocumentBuilder.CALIBRATION_GAIN);
+			Element gainElems = document.createElement( RawSignalDocumentBuilder.CALIBRATION_GAIN);
 
-            for( int i=0; i<gain.length; i++ ) {
+			for( int i=0; i<gain.length; i++ ) {
 
-                element = document.createElement( RawSignalDocumentBuilder.CALIBRATION_PARAM);
-                element.setTextContent( Float.toString( gain[i] ) );
-                gainElems.appendChild( element);
+				element = document.createElement( RawSignalDocumentBuilder.CALIBRATION_PARAM);
+				element.setTextContent( Float.toString( gain[i] ) );
+				gainElems.appendChild( element);
 
-            }
+			}
 
-            root.appendChild( gainElems);
+			root.appendChild( gainElems);
 
-        }
+		}
 
-        float[] offset = descriptor.getCalibrationOffset();
-        if ( offset != null && offset.length > 0 ) {
+		float[] offset = descriptor.getCalibrationOffset();
+		if ( offset != null && offset.length > 0 ) {
 
-            Element offsetElems = document.createElement( RawSignalDocumentBuilder.CALIBRATION_OFFSET);
+			Element offsetElems = document.createElement( RawSignalDocumentBuilder.CALIBRATION_OFFSET);
 
-            for( int i=0; i<offset.length; i++ ) {
+			for( int i=0; i<offset.length; i++ ) {
 
-                element = document.createElement( RawSignalDocumentBuilder.CALIBRATION_PARAM);
-                element.setTextContent( Float.toString( offset[i] ) );
-                offsetElems.appendChild( element);
+				element = document.createElement( RawSignalDocumentBuilder.CALIBRATION_PARAM);
+				element.setTextContent( Float.toString( offset[i] ) );
+				offsetElems.appendChild( element);
 
-            }
+			}
 
-            root.appendChild( offsetElems);
+			root.appendChild( offsetElems);
 
-        }
+		}
 
 		return document;
 
@@ -224,31 +224,31 @@ public class RawSignalDescriptorWriter {
 		Document document = getDocument(descriptor);
 		
 		FileOutputStream fileOutputStream = null;
-        try {
+		try {
 
-        	Source source = new DOMSource(document);    
-            fileOutputStream = new FileOutputStream(file);
+			Source source = new DOMSource(document);	
+			fileOutputStream = new FileOutputStream(file);
 			Result result = new StreamResult(new OutputStreamWriter(fileOutputStream, "utf-8"));
-            TransformerFactory factory = TransformerFactory.newInstance();
-            factory.setAttribute("indent-number", new Integer(2));
+			TransformerFactory factory = TransformerFactory.newInstance();
+			factory.setAttribute("indent-number", new Integer(2));
 			Transformer xformer = factory.newTransformer();
 			xformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            xformer.transform(source, result);
-            
-        } catch (TransformerConfigurationException ex) {
-        	throw new IOException( "Failed to write xml", ex );
-        } catch (TransformerException ex) {
-        	throw new IOException( "Failed to write xml", ex );
-        } finally {
-        	if( fileOutputStream != null ) {
-        		try {
-        			fileOutputStream.close();
-        		} catch( IOException ex ) {
-        			// ignore
-        		}
-        	}
-        }
-	        
+			xformer.transform(source, result);
+			
+		} catch (TransformerConfigurationException ex) {
+			throw new IOException( "Failed to write xml", ex );
+		} catch (TransformerException ex) {
+			throw new IOException( "Failed to write xml", ex );
+		} finally {
+			if( fileOutputStream != null ) {
+				try {
+					fileOutputStream.close();
+				} catch( IOException ex ) {
+					// ignore
+				}
+			}
+		}
+			
 	}
 	
 }

@@ -115,104 +115,104 @@ public abstract class AbstractMutableBook implements MutableBook, EventProducerB
 		Object[] listeners = listenerList.getListenerList();
 		BookEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==BookListener.class) {
-	        	 if( e == null ) { 
-	        		 e = new BookEvent(this);
-	        	 }
-	             ((BookListener)listeners[i+1]).bookStructureChanged(e);
-	         }
-	     }
+			 if (listeners[i]==BookListener.class) {
+				 if( e == null ) { 
+					 e = new BookEvent(this);
+				 }
+				 ((BookListener)listeners[i+1]).bookStructureChanged(e);
+			 }
+		 }
 	}
 	
 	protected void fireSegmentAdded(int segmentIndex) {
 		Object[] listeners = listenerList.getListenerList();
 		BookEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==BookListener.class) {
-	        	 if( e == null ) { 
-	        		 e = new BookEvent(this, segmentIndex);
-	        	 }
-	             ((BookListener)listeners[i+1]).segmentAdded(e);
-	         }
-	     }
+			 if (listeners[i]==BookListener.class) {
+				 if( e == null ) { 
+					 e = new BookEvent(this, segmentIndex);
+				 }
+				 ((BookListener)listeners[i+1]).segmentAdded(e);
+			 }
+		 }
 	}
 
 	protected void fireSegmentChanged(int segmentIndex) {
 		Object[] listeners = listenerList.getListenerList();
 		BookEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==BookListener.class) {
-	        	 if( e == null ) { 
-	        		 e = new BookEvent(this, segmentIndex);
-	        	 }
-	             ((BookListener)listeners[i+1]).segmentChanged(e);
-	         }
-	     }
+			 if (listeners[i]==BookListener.class) {
+				 if( e == null ) { 
+					 e = new BookEvent(this, segmentIndex);
+				 }
+				 ((BookListener)listeners[i+1]).segmentChanged(e);
+			 }
+		 }
 	}
 
 	protected void fireSegmentRemoved(int segmentIndex) {
 		Object[] listeners = listenerList.getListenerList();
 		BookEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==BookListener.class) {
-	        	 if( e == null ) { 
-	        		 e = new BookEvent(this, segmentIndex);
-	        	 }
-	             ((BookListener)listeners[i+1]).segmentRemoved(e);
-	         }
-	     }
+			 if (listeners[i]==BookListener.class) {
+				 if( e == null ) { 
+					 e = new BookEvent(this, segmentIndex);
+				 }
+				 ((BookListener)listeners[i+1]).segmentRemoved(e);
+			 }
+		 }
 	}
 
 	protected void fireSegmentAtomsChanged(int channelIndex, int segmentIndex) {
 		Object[] listeners = listenerList.getListenerList();
 		BookEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==BookListener.class) {
-	        	 if( e == null ) { 
-	        		 e = new BookEvent(this, channelIndex, segmentIndex);
-	        	 }
-	             ((BookListener)listeners[i+1]).segmentAtomsChanged(e);
-	         }
-	     }
+			 if (listeners[i]==BookListener.class) {
+				 if( e == null ) { 
+					 e = new BookEvent(this, channelIndex, segmentIndex);
+				 }
+				 ((BookListener)listeners[i+1]).segmentAtomsChanged(e);
+			 }
+		 }
 	}
 
 	protected void fireAtomAdded(int channelIndex, int segmentIndex, int atomIndex) {
 		Object[] listeners = listenerList.getListenerList();
 		BookEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==BookListener.class) {
-	        	 if( e == null ) { 
-	        		 e = new BookEvent(this, channelIndex, segmentIndex, atomIndex);
-	        	 }
-	             ((BookListener)listeners[i+1]).atomAdded(e);
-	         }
-	     }
+			 if (listeners[i]==BookListener.class) {
+				 if( e == null ) { 
+					 e = new BookEvent(this, channelIndex, segmentIndex, atomIndex);
+				 }
+				 ((BookListener)listeners[i+1]).atomAdded(e);
+			 }
+		 }
 	}
 
 	protected void fireAtomChanged(int channelIndex, int segmentIndex, int atomIndex) {
 		Object[] listeners = listenerList.getListenerList();
 		BookEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==BookListener.class) {
-	        	 if( e == null ) { 
-	        		 e = new BookEvent(this, channelIndex, segmentIndex, atomIndex);
-	        	 }
-	             ((BookListener)listeners[i+1]).atomChanged(e);
-	         }
-	     }
+			 if (listeners[i]==BookListener.class) {
+				 if( e == null ) { 
+					 e = new BookEvent(this, channelIndex, segmentIndex, atomIndex);
+				 }
+				 ((BookListener)listeners[i+1]).atomChanged(e);
+			 }
+		 }
 	}
 	
 	protected void fireAtomRemoved(int channelIndex, int segmentIndex, int atomIndex) {
 		Object[] listeners = listenerList.getListenerList();
 		BookEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==BookListener.class) {
-	        	 if( e == null ) { 
-	        		 e = new BookEvent(this, channelIndex, segmentIndex, atomIndex);
-	        	 }
-	             ((BookListener)listeners[i+1]).atomRemoved(e);
-	         }
-	     }
+			 if (listeners[i]==BookListener.class) {
+				 if( e == null ) { 
+					 e = new BookEvent(this, channelIndex, segmentIndex, atomIndex);
+				 }
+				 ((BookListener)listeners[i+1]).atomRemoved(e);
+			 }
+		 }
 	}
 	
 }

@@ -76,8 +76,8 @@ public class OpenTagOptionsPanel extends JPanel {
 		
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(signalDocumentLabel)
-	            .addComponent(getSignalDocumentComboBox())
+				.addComponent(signalDocumentLabel)
+				.addComponent(getSignalDocumentComboBox())
 			);
 		
 		layout.setVerticalGroup(vGroup);		

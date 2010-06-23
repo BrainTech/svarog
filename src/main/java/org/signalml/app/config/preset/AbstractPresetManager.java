@@ -32,7 +32,7 @@ public abstract class AbstractPresetManager extends AbstractXMLConfiguration imp
 	
 	protected transient HashMap<String, Integer> presetsByName;
 	
-    protected transient EventListenerList listenerList = new EventListenerList();		
+	protected transient EventListenerList listenerList = new EventListenerList();		
 	
 	@Override
 	public Preset getPresetAt(int index) {
@@ -143,65 +143,65 @@ public abstract class AbstractPresetManager extends AbstractXMLConfiguration imp
 		
 	}
 			
-    public void addPresetManagerListener(PresetManagerListener l) {
-        listenerList.add(PresetManagerListener.class, l);
-    }
+	public void addPresetManagerListener(PresetManagerListener l) {
+		listenerList.add(PresetManagerListener.class, l);
+	}
 
-    public void removePresetManagerListener(PresetManagerListener l) {
-        listenerList.remove(PresetManagerListener.class, l);
-    }
-	    
-    protected void firePresetAdded(Object source, Preset newPreset) {
-        Object[] listeners = listenerList.getListenerList();
-        PresetManagerEvent e = null;
-        for (int i = listeners.length-2; i>=0; i-=2) {
-            if (listeners[i]==PresetManagerListener.class) {
-                if (e == null) {
-                    e = new PresetManagerEvent(source, null, newPreset);
-                }
-                ((PresetManagerListener)listeners[i+1]).presetAdded(e);
-            }          
-        }
-    }
+	public void removePresetManagerListener(PresetManagerListener l) {
+		listenerList.remove(PresetManagerListener.class, l);
+	}
+		
+	protected void firePresetAdded(Object source, Preset newPreset) {
+		Object[] listeners = listenerList.getListenerList();
+		PresetManagerEvent e = null;
+		for (int i = listeners.length-2; i>=0; i-=2) {
+			if (listeners[i]==PresetManagerListener.class) {
+				if (e == null) {
+					e = new PresetManagerEvent(source, null, newPreset);
+				}
+				((PresetManagerListener)listeners[i+1]).presetAdded(e);
+			}		  
+		}
+	}
 	
-    protected void firePresetRemoved(Object source, Preset oldPreset) {
-        Object[] listeners = listenerList.getListenerList();
-        PresetManagerEvent e = null;
-        for (int i = listeners.length-2; i>=0; i-=2) {
-            if (listeners[i]==PresetManagerListener.class) {
-                if (e == null) {
-                    e = new PresetManagerEvent(source, oldPreset, null);
-                }
-                ((PresetManagerListener)listeners[i+1]).presetRemoved(e);
-            }          
-        }
-    }
-    
-    protected void firePresetReplaced(Object source, Preset oldPreset, Preset newPreset) {
-        Object[] listeners = listenerList.getListenerList();
-        PresetManagerEvent e = null;
-        for (int i = listeners.length-2; i>=0; i-=2) {
-            if (listeners[i]==PresetManagerListener.class) {
-                if (e == null) {
-                    e = new PresetManagerEvent(source, oldPreset, newPreset);
-                }
-                ((PresetManagerListener)listeners[i+1]).presetReplaced(e);
-            }          
-        }
-    }
+	protected void firePresetRemoved(Object source, Preset oldPreset) {
+		Object[] listeners = listenerList.getListenerList();
+		PresetManagerEvent e = null;
+		for (int i = listeners.length-2; i>=0; i-=2) {
+			if (listeners[i]==PresetManagerListener.class) {
+				if (e == null) {
+					e = new PresetManagerEvent(source, oldPreset, null);
+				}
+				((PresetManagerListener)listeners[i+1]).presetRemoved(e);
+			}		  
+		}
+	}
+	
+	protected void firePresetReplaced(Object source, Preset oldPreset, Preset newPreset) {
+		Object[] listeners = listenerList.getListenerList();
+		PresetManagerEvent e = null;
+		for (int i = listeners.length-2; i>=0; i-=2) {
+			if (listeners[i]==PresetManagerListener.class) {
+				if (e == null) {
+					e = new PresetManagerEvent(source, oldPreset, newPreset);
+				}
+				((PresetManagerListener)listeners[i+1]).presetReplaced(e);
+			}		  
+		}
+	}
 
-    protected void fireDefaultPresetChanged(Object source, Preset oldPreset, Preset newPreset) {
-        Object[] listeners = listenerList.getListenerList();
-        PresetManagerEvent e = null;
-        for (int i = listeners.length-2; i>=0; i-=2) {
-            if (listeners[i]==PresetManagerListener.class) {
-                if (e == null) {
-                    e = new PresetManagerEvent(source, oldPreset, newPreset);
-                }
-                ((PresetManagerListener)listeners[i+1]).defaultPresetChanged(e);
-            }          
-        }
-    }
-    
+	protected void fireDefaultPresetChanged(Object source, Preset oldPreset, Preset newPreset) {
+		Object[] listeners = listenerList.getListenerList();
+		PresetManagerEvent e = null;
+		for (int i = listeners.length-2; i>=0; i-=2) {
+			if (listeners[i]==PresetManagerListener.class) {
+				if (e == null) {
+					e = new PresetManagerEvent(source, oldPreset, newPreset);
+				}
+				((PresetManagerListener)listeners[i+1]).defaultPresetChanged(e);
+			}		  
+		}
+	}
+	
 
 }

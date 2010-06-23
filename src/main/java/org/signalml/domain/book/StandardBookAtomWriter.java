@@ -3,7 +3,7 @@ package org.signalml.domain.book;
 public interface StandardBookAtomWriter {
 	 void set(StandardBookAtom atom);
 	
-     void setType(int type);
+	 void setType(int type);
 	
 	/** Modulus.
 	 * 

@@ -11,7 +11,7 @@ import org.signalml.domain.book.StandardBookWriter;
 
 public class BookLibraryV5Writer implements StandardBookWriter, IncrementalBookWriter {
 	private String comment="";
-    private FormatComponentV5 fields[];
+	private FormatComponentV5 fields[];
 	private int fieldsCount;
 	private DataOutputStream out=null;
 	
@@ -21,11 +21,11 @@ public class BookLibraryV5Writer implements StandardBookWriter, IncrementalBookW
 	
 	public BookLibraryV5Writer() {
 		  fields=new FormatComponentV5[256];
-	      fieldsCount=0;
-	      
-	      for(int i=0 ; i<256 ; i++) {
-	          fields[i]=null;
-	      }
+		  fieldsCount=0;
+		  
+		  for(int i=0 ; i<256 ; i++) {
+			  fields[i]=null;
+		  }
 	}
 	
 	public void setBookComment(String comment) {
@@ -35,8 +35,8 @@ public class BookLibraryV5Writer implements StandardBookWriter, IncrementalBookW
 	public void setCalibration(float conv) {
 		for(int i=0 ; i<fields.length ; i++) {
 			if(fields[i]!=null && fields[i].type==FormatComponentV5.SIGNAL_INFO) {
-	            ((SignalInfoV5)fields[i]).points_per_microvolt=conv;
-	            return;
+				((SignalInfoV5)fields[i]).points_per_microvolt=conv;
+				return;
 			}
 		}
 		
@@ -48,8 +48,8 @@ public class BookLibraryV5Writer implements StandardBookWriter, IncrementalBookW
 	public void setDate(String text) {
 		for(int i=0 ; i<fields.length ; i++) {
 			if(fields[i]!=null && fields[i].type==FormatComponentV5.DATE_INFO) {
-	            ((DateInfoV5)fields[i]).date=text;
-	            return;
+				((DateInfoV5)fields[i]).date=text;
+				return;
 			}
 		}
 		
@@ -61,8 +61,8 @@ public class BookLibraryV5Writer implements StandardBookWriter, IncrementalBookW
 	public void setDictionarySize(int size) {
 		for(int i=0 ; i<fields.length ; i++) {
 			if(fields[i]!=null && fields[i].type==FormatComponentV5.DECOMP_INFO) {
-	            ((DecompositionInfoV5)fields[i]).dictionary_size=size;
-	            return;
+				((DecompositionInfoV5)fields[i]).dictionary_size=size;
+				return;
 			}
 		}
 		
@@ -74,8 +74,8 @@ public class BookLibraryV5Writer implements StandardBookWriter, IncrementalBookW
 	public void setDictionaryType(char type) {
 		for(int i=0 ; i<fields.length ; i++) {
 			if(fields[i]!=null && fields[i].type==FormatComponentV5.DECOMP_INFO) {
-	            ((DecompositionInfoV5)fields[i]).dictionary_type=(byte)type;
-	            return;
+				((DecompositionInfoV5)fields[i]).dictionary_type=(byte)type;
+				return;
 			}
 		}
 		
@@ -87,8 +87,8 @@ public class BookLibraryV5Writer implements StandardBookWriter, IncrementalBookW
 	public void setEnergyPercent(float eps) {
 		for(int i=0 ; i<fields.length ; i++) {
 			if(fields[i]!=null && fields[i].type==FormatComponentV5.DECOMP_INFO) {
-	            ((DecompositionInfoV5)fields[i]).energy_percent=eps;
-	            return;
+				((DecompositionInfoV5)fields[i]).energy_percent=eps;
+				return;
 			}
 		}
 		
@@ -100,8 +100,8 @@ public class BookLibraryV5Writer implements StandardBookWriter, IncrementalBookW
 	public void setMaxIterationCount(int max) {
 		for(int i=0 ; i<fields.length ; i++) {
 			if(fields[i]!=null && fields[i].type==FormatComponentV5.DECOMP_INFO) {
-	            ((DecompositionInfoV5)fields[i]).max_number_of_iterations=max;
-	            return;
+				((DecompositionInfoV5)fields[i]).max_number_of_iterations=max;
+				return;
 			}
 		}
 		
@@ -113,8 +113,8 @@ public class BookLibraryV5Writer implements StandardBookWriter, IncrementalBookW
 	public void setSamplingFrequency(float freq) {
 		for(int i=0 ; i<fields.length ; i++) {
 			if(fields[i]!=null && fields[i].type==FormatComponentV5.SIGNAL_INFO) {
-	            ((SignalInfoV5)fields[i]).sampling_freq=freq;
-	            return;
+				((SignalInfoV5)fields[i]).sampling_freq=freq;
+				return;
 			}
 		}
 		
@@ -125,27 +125,27 @@ public class BookLibraryV5Writer implements StandardBookWriter, IncrementalBookW
 
 	public void setTextInfo(String text) {
 		 for(int i=0 ; i<fields.length ; i++) {
-		    	if(fields[i]!=null && fields[i].type==FormatComponentV5.TEXT_INFO) {
-		    	  ((TextInfoV5)fields[i]).text=comment;
-		    	   return;	
-		    	}
-		    }
+				if(fields[i]!=null && fields[i].type==FormatComponentV5.TEXT_INFO) {
+				  ((TextInfoV5)fields[i]).text=comment;
+				   return;	
+				}
+			}
 			
 		 TextInfoV5 f=new TextInfoV5();
-         f.text=comment;
+		 f.text=comment;
 		 fields[fieldsCount++]=f;
 	}
 
 	public void setWebSiteInfo(String text) {
 		 for(int i=0 ; i<fields.length ; i++) {
-		    	if(fields[i]!=null && fields[i].type==FormatComponentV5.WEB_SITE_INFO) {
-		    	  ((WebSiteInfoV5)fields[i]).www=text;
-		    	   return;	
-		    	}
-		    }
+				if(fields[i]!=null && fields[i].type==FormatComponentV5.WEB_SITE_INFO) {
+				  ((WebSiteInfoV5)fields[i]).www=text;
+				   return;	
+				}
+			}
 			
 		 WebSiteInfoV5 f=new WebSiteInfoV5();
-         f.www=text;
+		 f.www=text;
 		 fields[fieldsCount++]=f;
 		
 	}
@@ -195,12 +195,12 @@ public class BookLibraryV5Writer implements StandardBookWriter, IncrementalBookW
 
 	public void writeSegment(StandardBookSegment[] segments) throws IOException {
 		if(segments!=null) {
-	       for(int i=0 ; i<segments.length ; i++) {
-	    	   if(segments[i]!=null) {
-	    		   ((SegmentHeaderV5)segments[i]).Write(out);
-	    	   }
-	       }
-	       out.flush();
+		   for(int i=0 ; i<segments.length ; i++) {
+			   if(segments[i]!=null) {
+				   ((SegmentHeaderV5)segments[i]).Write(out);
+			   }
+		   }
+		   out.flush();
 		}
 	}
 

@@ -155,19 +155,19 @@ public class RocDialog extends AbstractDialog {
 		
 	public XYShapeHighlightingRenderer getPlotRenderer() {
 		if( plotRenderer == null ) {
-    		plotRenderer = new XYShapeHighlightingRenderer(true, true, 1);
+			plotRenderer = new XYShapeHighlightingRenderer(true, true, 1);
 
-    		plotRenderer.setSeriesPaint(0, Color.LIGHT_GRAY);
-    		plotRenderer.setSeriesStroke(0, new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10F, new float[] { 10, 10 }, 0F ) );
-    		
-    		plotRenderer.setSeriesPaint(1, Color.RED);
-    		
-    		plotRenderer.setSeriesPaint(2, Color.RED);
-    		plotRenderer.setSeriesStroke(2, new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10F, new float[] { 1, 3 }, 0F ) );
+			plotRenderer.setSeriesPaint(0, Color.LIGHT_GRAY);
+			plotRenderer.setSeriesStroke(0, new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10F, new float[] { 10, 10 }, 0F ) );
+			
+			plotRenderer.setSeriesPaint(1, Color.RED);
+			
+			plotRenderer.setSeriesPaint(2, Color.RED);
+			plotRenderer.setSeriesStroke(2, new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10F, new float[] { 1, 3 }, 0F ) );
 
-    		plotRenderer.setSeriesPaint(3, Color.RED);
-    		plotRenderer.setSeriesStroke(3, new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10F, new float[] { 1, 3 }, 0F ) );
-    		
+			plotRenderer.setSeriesPaint(3, Color.RED);
+			plotRenderer.setSeriesStroke(3, new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10F, new float[] { 1, 3 }, 0F ) );
+			
 		}
 		return plotRenderer;
 	}
@@ -176,53 +176,53 @@ public class RocDialog extends AbstractDialog {
 		if( rocPlot == null ) {
 			
 			NumberAxis xAxis = new NumberAxis();
-    		xAxis.setAutoRange(false);
-    		xAxis.setRange(0,1);
-    		xAxis.setTickUnit(new NumberTickUnit(0.2));
-    		xAxis.setLabel( messageSource.getMessage("roc.falsePositiveRate") );
-    		
-    		NumberAxis yAxis = new NumberAxis();
-    		yAxis.setAutoRange(false);
-    		yAxis.setRange(0,1);
-    		yAxis.setTickUnit(new NumberTickUnit(0.2));
-    		yAxis.setLabel( messageSource.getMessage("roc.truePositiveRate") );
-    		    		    	    		
-    		rocPlot = new XYPlot( null, xAxis, yAxis, getPlotRenderer() );
-    		AxisSpace axisSpace = new AxisSpace();
-    		axisSpace.setBottom(AXIS_SPACE_SIZE);
-    		axisSpace.setLeft(AXIS_SPACE_SIZE);
-    		rocPlot.setFixedDomainAxisSpace(axisSpace);
-    		rocPlot.setFixedRangeAxisSpace(axisSpace);
+			xAxis.setAutoRange(false);
+			xAxis.setRange(0,1);
+			xAxis.setTickUnit(new NumberTickUnit(0.2));
+			xAxis.setLabel( messageSource.getMessage("roc.falsePositiveRate") );
+			
+			NumberAxis yAxis = new NumberAxis();
+			yAxis.setAutoRange(false);
+			yAxis.setRange(0,1);
+			yAxis.setTickUnit(new NumberTickUnit(0.2));
+			yAxis.setLabel( messageSource.getMessage("roc.truePositiveRate") );
+											
+			rocPlot = new XYPlot( null, xAxis, yAxis, getPlotRenderer() );
+			AxisSpace axisSpace = new AxisSpace();
+			axisSpace.setBottom(AXIS_SPACE_SIZE);
+			axisSpace.setLeft(AXIS_SPACE_SIZE);
+			rocPlot.setFixedDomainAxisSpace(axisSpace);
+			rocPlot.setFixedRangeAxisSpace(axisSpace);
 
-    		    		    		
+									
 		}
 		return rocPlot;
 	}
 
 	public JFreeChart getRocChart() {
 		if( rocChart == null ) {
-    		rocChart = new JFreeChart(null, null, getRocPlot(), false);
+			rocChart = new JFreeChart(null, null, getRocPlot(), false);
 			rocChart.setBorderVisible(true);
-    		rocChart.setBackgroundPaint(Color.WHITE);    		
-    		rocChart.setPadding( new RectangleInsets(5,3,3,5) );
+			rocChart.setBackgroundPaint(Color.WHITE);			
+			rocChart.setPadding( new RectangleInsets(5,3,3,5) );
 		}
 		return rocChart;
 	}
 
 	public ChartPanel getChartPanel() {
 		if( chartPanel == null ) {
-			    	
-    		chartPanel = new ChartPanel(getRocChart());
-    		chartPanel.setDomainZoomable(false);
-    		chartPanel.setRangeZoomable(false);
-    		chartPanel.setMouseZoomable(false);
-    		chartPanel.setPopupMenu(getChartPopupMenu());
-    		chartPanel.setBackground(Color.WHITE);
-    		chartPanel.setPreferredSize(new Dimension(ROC_PLOT_SIZE, ROC_PLOT_SIZE));
-    		chartPanel.setMinimumSize(new Dimension(ROC_PLOT_SIZE, ROC_PLOT_SIZE));
-    		chartPanel.setMaximumSize(new Dimension(ROC_PLOT_SIZE, ROC_PLOT_SIZE));
-    		    		
-    	}    	
+					
+			chartPanel = new ChartPanel(getRocChart());
+			chartPanel.setDomainZoomable(false);
+			chartPanel.setRangeZoomable(false);
+			chartPanel.setMouseZoomable(false);
+			chartPanel.setPopupMenu(getChartPopupMenu());
+			chartPanel.setBackground(Color.WHITE);
+			chartPanel.setPreferredSize(new Dimension(ROC_PLOT_SIZE, ROC_PLOT_SIZE));
+			chartPanel.setMinimumSize(new Dimension(ROC_PLOT_SIZE, ROC_PLOT_SIZE));
+			chartPanel.setMaximumSize(new Dimension(ROC_PLOT_SIZE, ROC_PLOT_SIZE));
+						
+		}		
 		return chartPanel;
 	}
 	

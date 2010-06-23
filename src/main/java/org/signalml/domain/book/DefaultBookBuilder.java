@@ -34,7 +34,7 @@ public class DefaultBookBuilder implements BookBuilder {
 		MPBookStore book = new MPBookStore();
 		
 		if(!book.Open(file.getAbsolutePath())) {
-		    return null;	
+			return null;	
 		}
 		return book;
 	}

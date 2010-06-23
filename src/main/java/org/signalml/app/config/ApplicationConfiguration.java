@@ -684,36 +684,36 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration {
 		this.lastExportBookPath = lastExportBookPath;
 	}
 
-    public void setMultiplexerAddress(String multiplexerAddress) {
-        this.multiplexerAddress = multiplexerAddress;
-    }
+	public void setMultiplexerAddress(String multiplexerAddress) {
+		this.multiplexerAddress = multiplexerAddress;
+	}
 
-    public String getMultiplexerAddress() {
-        return multiplexerAddress;
-    }
+	public String getMultiplexerAddress() {
+		return multiplexerAddress;
+	}
 
-    public void setMultiplexerPort(int multiplexerPort) {
-        this.multiplexerPort = multiplexerPort;
-    }
+	public void setMultiplexerPort(int multiplexerPort) {
+		this.multiplexerPort = multiplexerPort;
+	}
 
-    public int getMultiplexerPort() {
-        return multiplexerPort;
-    }
+	public int getMultiplexerPort() {
+		return multiplexerPort;
+	}
 
-    public double getMonitorPageSize() {
-        return monitorPageSize;
-    }
+	public double getMonitorPageSize() {
+		return monitorPageSize;
+	}
 
-    public void setMonitorPageSize(float monitorPageSize) {
-        this.monitorPageSize = monitorPageSize;
-    }
+	public void setMonitorPageSize(float monitorPageSize) {
+		this.monitorPageSize = monitorPageSize;
+	}
 
-    public String getSignalRecorderFileName() {
-        return signalRecorderFileName;
-    }
+	public String getSignalRecorderFileName() {
+		return signalRecorderFileName;
+	}
 
-    public void setSignalRecorderFileName(String signalRecorderFileName) {
-        this.signalRecorderFileName = signalRecorderFileName;
-    }
+	public void setSignalRecorderFileName(String signalRecorderFileName) {
+		this.signalRecorderFileName = signalRecorderFileName;
+	}
 
 }

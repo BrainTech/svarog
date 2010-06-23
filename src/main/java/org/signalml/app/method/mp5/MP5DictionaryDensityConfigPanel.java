@@ -109,26 +109,26 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.CENTER)
-	            .addComponent(dilationFactorLabel)
-	            .addComponent(glue1)
-	            .addComponent(getDilationFactorSpinner())
-	            .addComponent(dilationFactorHelpButton)
+				.addComponent(dilationFactorLabel)
+				.addComponent(glue1)
+				.addComponent(getDilationFactorSpinner())
+				.addComponent(dilationFactorHelpButton)
 			);
 
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.CENTER)
-	            .addComponent(atomCountLabel)
-	            .addComponent(glue2)
-	            .addComponent(getAtomCountTextField())
-	            .addComponent(atomCountHelpButton)
+				.addComponent(atomCountLabel)
+				.addComponent(glue2)
+				.addComponent(getAtomCountTextField())
+				.addComponent(atomCountHelpButton)
 			);
 
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.CENTER)
-	            .addComponent(ramUsageLabel)
-	            .addComponent(glue3)
-	            .addComponent(getRamUsageTextField())
-	            .addComponent(ramUsageHelpButton)
+				.addComponent(ramUsageLabel)
+				.addComponent(glue3)
+				.addComponent(getRamUsageTextField())
+				.addComponent(ramUsageHelpButton)
 			);
 		
 		layout.setVerticalGroup(vGroup);				

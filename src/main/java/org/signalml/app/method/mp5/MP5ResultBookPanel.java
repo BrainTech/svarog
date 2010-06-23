@@ -86,9 +86,9 @@ public class MP5ResultBookPanel extends JPanel {
 
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(bookFileLabel)
-	            .addComponent(getBookTextField())
-	            .addComponent(getChooseBookButton())
+				.addComponent(bookFileLabel)
+				.addComponent(getBookTextField())
+				.addComponent(getChooseBookButton())
 			);
 				
 		layout.setVerticalGroup(vGroup);		

@@ -20,9 +20,9 @@ public class ColorConverter implements SingleValueConverter {
 	public Object fromString(String s) {
 		return new Color(
 				Integer.parseInt(s.substring(0, 2), 16),
-                Integer.parseInt(s.substring(2, 4), 16),
-                Integer.parseInt(s.substring(4, 6), 16)
-        );
+				Integer.parseInt(s.substring(2, 4), 16),
+				Integer.parseInt(s.substring(4, 6), 16)
+		);
 	}
 
 	@Override

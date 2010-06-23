@@ -28,8 +28,8 @@ public class LeftEarMontageGenerator extends SingleReferenceMontageGenerator {
 		
 	/*
 	private Object readResolve() {
-	    refChannel = EegChannel.A1;
-	    return this;
+		refChannel = EegChannel.A1;
+		return this;
 	}
 	*/
 	

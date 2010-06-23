@@ -121,13 +121,13 @@ public class SegmentReconstructionProvider {
 			} else {
 				int atomCount = segment.getAtomCount();
 				atomReconstructions = new double[atomCount][width];
-			    double  ptr[] = new double[atomCount * width];
-			    int i,itmp;
-			    int DimBase = segment.getSegmentLength();
-			    double tmpsig[]=new double[DimBase+1],sum;
-			    double Exp[]=new double[DimBase],Cos[]=new double[DimBase];
+				double  ptr[] = new double[atomCount * width];
+				int i,itmp;
+				int DimBase = segment.getSegmentLength();
+				double tmpsig[]=new double[DimBase+1],sum;
+				double Exp[]=new double[DimBase],Cos[]=new double[DimBase];
 
-			    for (int kk = 0; kk < atomCount; kk++) {
+				for (int kk = 0; kk < atomCount; kk++) {
 					StandardBookAtom atom = segment.getAtomAt(kk);
 
 					ptr = atomReconstructions[kk];

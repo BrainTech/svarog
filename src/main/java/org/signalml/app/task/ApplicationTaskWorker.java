@@ -147,41 +147,41 @@ public class ApplicationTaskWorker extends SwingWorker<TaskResult, TaskEvent> im
 	protected void fireTaskEvent(TaskEvent ev) {
 		Object[] listeners = listenerList.getListenerList();
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==TaskEventListener.class) {
-	        	 switch( ev.getType() ) {
-	        	 
-	        	 	case TASK_STARTED :
-	        	 		((TaskEventListener)listeners[i+1]).taskStarted(ev);
-	        	 		break;
-	        	 	case TASK_SUSPENDED :
-	        	 		((TaskEventListener)listeners[i+1]).taskSuspended(ev);
-	        	 		break;
-	        	 	case TASK_RESUMED :
-	        	 		((TaskEventListener)listeners[i+1]).taskResumed(ev);
-	        	 		break;
-	        	 	case TASK_ABORTED :
-	        	 		((TaskEventListener)listeners[i+1]).taskAborted(ev);
-	        	 		break;
-	        	 	case TASK_FINISHED :
-	        	 		((TaskEventListener)listeners[i+1]).taskFinished(ev);
-	        	 		break;
-	        	 	case TASK_REQUEST_CHANGED :
-	        	 		((TaskEventListener)listeners[i+1]).taskRequestChanged(ev);
-	        	 		break;
-	        	 	case TASK_MESSAGE_SET :
-	        	 		((TaskEventListener)listeners[i+1]).taskMessageSet(ev);
-	        	 		break;
-	        	 	case TASK_TICKER_UPDATED :
-	        	 		((TaskEventListener)listeners[i+1]).taskTickerUpdated(ev);
-	        	 		break;
-	        	 	default :
-	        	 		logger.error( "Unsupported event type [" + ev.getType() + "]" );	        	 	
-	        	 		break;
-	        	 		
-	        	 }
-	             
-	         }
-	     }
+			 if (listeners[i]==TaskEventListener.class) {
+				 switch( ev.getType() ) {
+				 
+				 	case TASK_STARTED :
+				 		((TaskEventListener)listeners[i+1]).taskStarted(ev);
+				 		break;
+				 	case TASK_SUSPENDED :
+				 		((TaskEventListener)listeners[i+1]).taskSuspended(ev);
+				 		break;
+				 	case TASK_RESUMED :
+				 		((TaskEventListener)listeners[i+1]).taskResumed(ev);
+				 		break;
+				 	case TASK_ABORTED :
+				 		((TaskEventListener)listeners[i+1]).taskAborted(ev);
+				 		break;
+				 	case TASK_FINISHED :
+				 		((TaskEventListener)listeners[i+1]).taskFinished(ev);
+				 		break;
+				 	case TASK_REQUEST_CHANGED :
+				 		((TaskEventListener)listeners[i+1]).taskRequestChanged(ev);
+				 		break;
+				 	case TASK_MESSAGE_SET :
+				 		((TaskEventListener)listeners[i+1]).taskMessageSet(ev);
+				 		break;
+				 	case TASK_TICKER_UPDATED :
+				 		((TaskEventListener)listeners[i+1]).taskTickerUpdated(ev);
+				 		break;
+				 	default :
+				 		logger.error( "Unsupported event type [" + ev.getType() + "]" );				 	
+				 		break;
+				 		
+				 }
+				 
+			 }
+		 }
 		
 	}
 

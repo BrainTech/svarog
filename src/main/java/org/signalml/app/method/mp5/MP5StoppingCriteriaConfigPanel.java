@@ -100,18 +100,18 @@ public class MP5StoppingCriteriaConfigPanel extends JPanel {
 
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.CENTER)
-	            .addComponent(maxIterationCountLabel)
-	            .addComponent(glue1)
-	            .addComponent(getMaxIterationCountSpinner())
-	            .addComponent(maxIterationCountHelpButton)
+				.addComponent(maxIterationCountLabel)
+				.addComponent(glue1)
+				.addComponent(getMaxIterationCountSpinner())
+				.addComponent(maxIterationCountHelpButton)
 			);
 
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.CENTER)
-	            .addComponent(energyPercentLabel)
-	            .addComponent(glue2)
-	            .addComponent(getEnergyPercentSpinner())
-	            .addComponent(energyPercentHelpButton)
+				.addComponent(energyPercentLabel)
+				.addComponent(glue2)
+				.addComponent(getEnergyPercentSpinner())
+				.addComponent(energyPercentHelpButton)
 			);
 		
 		layout.setVerticalGroup(vGroup);				

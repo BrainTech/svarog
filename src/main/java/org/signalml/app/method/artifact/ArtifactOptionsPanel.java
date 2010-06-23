@@ -78,14 +78,14 @@ public class ArtifactOptionsPanel extends JPanel {
 
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(powerLabel)
-	            .addComponent(getPowerComboBox())
+				.addComponent(powerLabel)
+				.addComponent(getPowerComboBox())
 			);
 
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(getExclusionCheckBox())
-	            .addComponent(getExclusionButton())
+				.addComponent(getExclusionCheckBox())
+				.addComponent(getExclusionButton())
 			);
 		
 		layout.setVerticalGroup(vGroup);		

@@ -28,17 +28,17 @@ public class DashListCellRenderer extends JComponent implements ListCellRenderer
 
 	private static final long serialVersionUID = 1L;
 
-    private static final Border NO_FOCUS_BORDER = new EmptyBorder(1, 1, 1, 1);
-    private static final Dimension PREFERRED_SIZE = new Dimension(100,18);
+	private static final Border NO_FOCUS_BORDER = new EmptyBorder(1, 1, 1, 1);
+	private static final Dimension PREFERRED_SIZE = new Dimension(100,18);
 	
-    private float[] dash;
-    
+	private float[] dash;
+	
 	@Override
 	public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 
 		if (isSelected) {
-            setBackground(list.getSelectionBackground());
-            setForeground(list.getSelectionForeground());
+			setBackground(list.getSelectionBackground());
+			setForeground(list.getSelectionForeground());
 		} else {
 			setBackground(list.getBackground());
 			setForeground(list.getForeground());
@@ -47,23 +47,23 @@ public class DashListCellRenderer extends JComponent implements ListCellRenderer
 		setEnabled(list.isEnabled());
 		setFont(list.getFont());
 
-        Border border = null;
-        if (cellHasFocus) {
-            if (isSelected) {
-                border = UIManager.getBorder("List.focusSelectedCellHighlightBorder");
-            }
-            if (border == null) {
-                border = UIManager.getBorder("List.focusCellHighlightBorder");
-            }
-        } else {
-            border = NO_FOCUS_BORDER;
-        }
+		Border border = null;
+		if (cellHasFocus) {
+			if (isSelected) {
+				border = UIManager.getBorder("List.focusSelectedCellHighlightBorder");
+			}
+			if (border == null) {
+				border = UIManager.getBorder("List.focusCellHighlightBorder");
+			}
+		} else {
+			border = NO_FOCUS_BORDER;
+		}
 
-        setBorder(border);
+		setBorder(border);
 		
-        TagStylePropertiesPanel.Dash dashObj = (TagStylePropertiesPanel.Dash) value;
-        dash = ( dashObj != null ? dashObj.dash : null );
-        
+		TagStylePropertiesPanel.Dash dashObj = (TagStylePropertiesPanel.Dash) value;
+		dash = ( dashObj != null ? dashObj.dash : null );
+		
 		return this;
 		
 	}

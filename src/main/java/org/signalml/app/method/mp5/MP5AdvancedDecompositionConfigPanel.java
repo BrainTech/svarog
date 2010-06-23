@@ -120,34 +120,34 @@ public class MP5AdvancedDecompositionConfigPanel extends JPanel {
 
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.CENTER)
-	            .addComponent(dictionaryTypeLabel)
-	            .addComponent(glue1)
-	            .addComponent(getDictionaryTypeComboBox())
-	            .addComponent(dictionaryTypeHelpButton)
+				.addComponent(dictionaryTypeLabel)
+				.addComponent(glue1)
+				.addComponent(getDictionaryTypeComboBox())
+				.addComponent(dictionaryTypeHelpButton)
 			);
 
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.CENTER)
-	            .addComponent(dictionaryReinitTypeLabel)
-	            .addComponent(glue2)
-	            .addComponent(getDictionaryReinitTypeComboBox())
-	            .addComponent(dictionaryReinitTypeHelpButton)
+				.addComponent(dictionaryReinitTypeLabel)
+				.addComponent(glue2)
+				.addComponent(getDictionaryReinitTypeComboBox())
+				.addComponent(dictionaryReinitTypeHelpButton)
 			);
 
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.CENTER)
-	            .addComponent(scaleToPeriodFactorLabel)
-	            .addComponent(glue3)
-	            .addComponent(getScaleToPeriodFactorSpinner())
-	            .addComponent(scaleToPeriodFactorHelpButton)
+				.addComponent(scaleToPeriodFactorLabel)
+				.addComponent(glue3)
+				.addComponent(getScaleToPeriodFactorSpinner())
+				.addComponent(scaleToPeriodFactorHelpButton)
 			);
 
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.CENTER)
-	            .addComponent(periodDensityLabel)
-	            .addComponent(glue4)
-	            .addComponent(getPeriodDensitySpinner())
-	            .addComponent(periodDensityHelpButton)
+				.addComponent(periodDensityLabel)
+				.addComponent(glue4)
+				.addComponent(getPeriodDensitySpinner())
+				.addComponent(periodDensityHelpButton)
 			);
 		
 		layout.setVerticalGroup(vGroup);				

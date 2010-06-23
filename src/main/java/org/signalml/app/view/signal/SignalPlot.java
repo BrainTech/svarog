@@ -110,33 +110,33 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	private boolean channelLinesVisible;
 	
 	private double pixelPerSecond;		
-    private double pixelPerBlock;
-    private double pixelPerPage;
+	private double pixelPerBlock;
+	private double pixelPerPage;
 	private int pixelPerChannel; 
-    private double pixelPerValue;
-        
-    private int[] sampleCount;
-    private int maxSampleCount;
-    private int channelCount;
-    
-    private Double minValue;
-    private Double maxValue;
-    private double detectedMaxValue;
-    private double[] samples;
+	private double pixelPerValue;
+		
+	private int[] sampleCount;
+	private int maxSampleCount;
+	private int channelCount;
+	
+	private Double minValue;
+	private Double maxValue;
+	private double detectedMaxValue;
+	private double[] samples;
 
-    private int[] channelLevel;
-    private int clampLimit;
+	private int[] channelLevel;
+	private int clampLimit;
 
-    private int pageCount;
+	private int pageCount;
 	private int wholePageCount;
-    private float pageSize;
-    private int blockCount;
+	private float pageSize;
+	private int blockCount;
 	private float blockSize;
 	private float maxTime;
 	private int blocksPerPage;
 	
 	private GeneralPath generalPath = new GeneralPath(GeneralPath.WIND_EVEN_ODD,50000);
-    
+	
 	private SignalPlotColumnHeader signalPlotColumnHeader = null;
 	private SignalPlotRowHeader signalPlotRowHeader = null;
 	private SignalPlotCorner signalPlotCorner = null;
@@ -193,7 +193,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	
 	/* Initialization & setup */
 	
-    public SignalPlot(SignalDocument document, SignalView view, SignalPlot masterPlot) throws SignalMLException {
+	public SignalPlot(SignalDocument document, SignalView view, SignalPlot masterPlot) throws SignalMLException {
 		super();
 		this.document = document;
 		this.view = view;
@@ -208,7 +208,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		signalChain = SignalProcessingChain.createFilteredChain(document.getSampleSource(), document.getType());
 		Montage montage = document.getMontage();
 		if (montage != null)
-		    signalChain.applyMontageDefinition( montage);
+			signalChain.applyMontageDefinition( montage);
 						
 		signalChain.addPropertyChangeListener(this);
 		document.addPropertyChangeListener(this);
@@ -217,11 +217,11 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		
 		if( masterPlot == null ) {
 			
-		    if (document instanceof MonitorSignalDocument) {
-		        minValue = new Double( ((MonitorSignalDocument) document).getMinValue());
-		        maxValue = new Double( ((MonitorSignalDocument) document).getMaxValue());
-		    }
-		    
+			if (document instanceof MonitorSignalDocument) {
+				minValue = new Double( ((MonitorSignalDocument) document).getMinValue());
+				maxValue = new Double( ((MonitorSignalDocument) document).getMaxValue());
+			}
+			
 			timeScaleRangeModel = new DefaultBoundedRangeModel();		
 			valueScaleRangeModel = new DefaultBoundedRangeModel();
 			channelHeightRangeModel = new DefaultBoundedRangeModel();
@@ -320,66 +320,66 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		
 	}
 
-    private double condMaxValue( double mv) {
-        double result = Math.min( 2000.0, mv);
-        if (Math.abs( result) < 0.000001)
-            result = 2000.0;
-        return result;
-    }
+	private double condMaxValue( double mv) {
+		double result = Math.min( 2000.0, mv);
+		if (Math.abs( result) < 0.000001)
+			result = 2000.0;
+		return result;
+	}
 
-    private double detectMaxValue() {
-        double[] samples = new double[1024];
-        double result = 0.0;
-        
-        int channel, i;
-        int cnt;
-        for( channel=0; channel<channelCount; channel++ ) {
-            cnt = Math.min( samples.length, sampleCount[channel] );
-            signalChain.getSamples(channel, samples, 0, cnt, 0);
-            for( i=0; i<cnt; i++ ) {
-                samples[i] = Math.abs(samples[i]);
-                if( samples[i] > result ) {
-                    result = samples[i];
-                }               
-            }
-        }
-//        result = Math.min( 2000.0, result );
-//        if (Math.abs( result) < 0.000001)
-//            result = 2000.0;
-        return condMaxValue( result);
-    }
+	private double detectMaxValue() {
+		double[] samples = new double[1024];
+		double result = 0.0;
+		
+		int channel, i;
+		int cnt;
+		for( channel=0; channel<channelCount; channel++ ) {
+			cnt = Math.min( samples.length, sampleCount[channel] );
+			signalChain.getSamples(channel, samples, 0, cnt, 0);
+			for( i=0; i<cnt; i++ ) {
+				samples[i] = Math.abs(samples[i]);
+				if( samples[i] > result ) {
+					result = samples[i];
+				}			   
+			}
+		}
+//		result = Math.min( 2000.0, result );
+//		if (Math.abs( result) < 0.000001)
+//			result = 2000.0;
+		return condMaxValue( result);
+	}
 
-    private double calcMaxValueDelta() {
-        double result = 0.0;
-        if (maxValue != null && minValue != null) {
-            result = Math.max( Math.abs( maxValue.doubleValue()), Math.abs( minValue.doubleValue()));
-        }
-        else if (maxValue != null) {
-            result =  Math.abs( maxValue.doubleValue());
-        }
-        else if (minValue != null) {
-            result =  Math.abs( minValue.doubleValue());
-        }
-        return result;
-    }
-    
-    public void initialize() throws SignalMLException {
-    	
+	private double calcMaxValueDelta() {
+		double result = 0.0;
+		if (maxValue != null && minValue != null) {
+			result = Math.max( Math.abs( maxValue.doubleValue()), Math.abs( minValue.doubleValue()));
+		}
+		else if (maxValue != null) {
+			result =  Math.abs( maxValue.doubleValue());
+		}
+		else if (minValue != null) {
+			result =  Math.abs( minValue.doubleValue());
+		}
+		return result;
+	}
+	
+	public void initialize() throws SignalMLException {
+		
 		calculateParameters();
 		
 		if( masterPlot == null ) {
 
-		    if (maxValue != null || minValue != null)
-		        detectedMaxValue = calcMaxValueDelta();
-		    else
-		        detectedMaxValue = detectMaxValue();
+			if (maxValue != null || minValue != null)
+				detectedMaxValue = calcMaxValueDelta();
+			else
+				detectedMaxValue = detectMaxValue();
 
 			voltageZoomFactor = ( 1.0 / (detectedMaxValue * 2) ) * 0.95; 			
 			
 			ApplicationConfiguration config = view.getApplicationConfig();
 			
 			// update models
-	        timeScaleRangeModel.setRangeProperties((int) (timeZoomFactor*1000), 0, (int) (config.getMinTimeScale()*1000), (int) (config.getMaxTimeScale()*1000), false);
+			timeScaleRangeModel.setRangeProperties((int) (timeZoomFactor*1000), 0, (int) (config.getMinTimeScale()*1000), (int) (config.getMaxTimeScale()*1000), false);
 			valueScaleRangeModel.setRangeProperties((int) 100, 0, config.getMinValueScale(), config.getMaxValueScale(), false);
 			channelHeightRangeModel.setRangeProperties(pixelPerChannel, 0, config.getMinChannelHeight(), config.getMaxChannelHeight(), false);
 			
@@ -400,39 +400,39 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 						
 		calculateParameters();
 				
-    }
+	}
 
-    private void calculateParameters() {
-    	
-    	if( document == null ) {
-    		return;
-    	}
-    	
-    	samplingFrequency = signalChain.getSamplingFrequency();
-    	    	
-    	pageSize = document.getPageSize();
-    	blockSize = document.getBlockSize();
-    	blocksPerPage = document.getBlocksPerPage();
-    	    	
-    	pixelPerSecond = samplingFrequency * timeZoomFactor;
-    	pixelPerPage = pixelPerSecond * pageSize;
-    	pixelPerBlock = pixelPerPage / blocksPerPage;
-    	    	
-    	channelCount = signalChain.getChannelCount();
-    	sampleCount = new int[channelCount];
-    	int i;
-    	
-    	maxSampleCount = 0;
-    	for( i=0; i<channelCount; i++ ) {
-    		sampleCount[i] = signalChain.getSampleCount(i);
-    		if( maxSampleCount < sampleCount[i] ) {
-    			maxSampleCount = sampleCount[i];
-    		}
-    	}
-    	    	
-    	maxTime = maxSampleCount / samplingFrequency;
-    	
-    	pageCount = (int) Math.ceil( maxTime / pageSize );
+	private void calculateParameters() {
+		
+		if( document == null ) {
+			return;
+		}
+		
+		samplingFrequency = signalChain.getSamplingFrequency();
+				
+		pageSize = document.getPageSize();
+		blockSize = document.getBlockSize();
+		blocksPerPage = document.getBlocksPerPage();
+				
+		pixelPerSecond = samplingFrequency * timeZoomFactor;
+		pixelPerPage = pixelPerSecond * pageSize;
+		pixelPerBlock = pixelPerPage / blocksPerPage;
+				
+		channelCount = signalChain.getChannelCount();
+		sampleCount = new int[channelCount];
+		int i;
+		
+		maxSampleCount = 0;
+		for( i=0; i<channelCount; i++ ) {
+			sampleCount[i] = signalChain.getSampleCount(i);
+			if( maxSampleCount < sampleCount[i] ) {
+				maxSampleCount = sampleCount[i];
+			}
+		}
+				
+		maxTime = maxSampleCount / samplingFrequency;
+		
+		pageCount = (int) Math.ceil( maxTime / pageSize );
 		blockCount = (int) Math.ceil( maxTime / blockSize );
 		
 		if( pageCount != ((int) Math.floor( maxTime / pageSize )) ) {
@@ -441,25 +441,25 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			wholePageCount = pageCount;
 		}
 		
-        pixelPerValue = pixelPerChannel * voltageZoomFactor;
-        clampLimit =  (pixelPerChannel / 2) - 2;     
-    	
-        channelLevel = new int[channelCount];
+		pixelPerValue = pixelPerChannel * voltageZoomFactor;
+		clampLimit =  (pixelPerChannel / 2) - 2;	 
+		
+		channelLevel = new int[channelCount];
 
-        for( i=0; i<channelCount; i++ ) {
-        	channelLevel[i] = i * pixelPerChannel + pixelPerChannel / 2;
-        }
-                
-        if( signalPlotColumnHeader != null ) {
-        	signalPlotColumnHeader.reset();
-        }
+		for( i=0; i<channelCount; i++ ) {
+			channelLevel[i] = i * pixelPerChannel + pixelPerChannel / 2;
+		}
+				
+		if( signalPlotColumnHeader != null ) {
+			signalPlotColumnHeader.reset();
+		}
 
-        if( signalPlotColumnHeader != null ) {
-        	signalPlotRowHeader.reset();
-        }
-                
-    }
-     
+		if( signalPlotColumnHeader != null ) {
+			signalPlotRowHeader.reset();
+		}
+				
+	}
+	 
 	public void destroy() {
 		setVisible(false);
 		document.removePropertyChangeListener(this);
@@ -501,8 +501,8 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			tagRenderer = new TagRenderer();
 		}
 		
-        tempViewportLocation = viewport.getViewPosition();
-        tempViewportSize = viewport.getExtentSize();
+		tempViewportLocation = viewport.getViewPosition();
+		tempViewportSize = viewport.getExtentSize();
 		tempPlotSize = getSize();
 		
 		tempComparing = view.isComparingTags();
@@ -511,34 +511,34 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		if( tempComparing && tagDifferenceRenderer == null ) {
 			tagDifferenceRenderer = new TagDifferenceRenderer();
 		}
-		        
+				
 	}
 	
 	private void useTagPaintMode(Graphics2D g) {
 		
-        switch( tagPaintMode ) {
-        
-        case XOR :
-        	
-        	g.setXORMode(Color.WHITE);
-        	break;
-        
-        case ALPHA_50 :
-        	
-        	g.setComposite(AlphaComposite.SrcOver.derive(0.5F));
-        	break;
-        	
-        case ALPHA_80 :
+		switch( tagPaintMode ) {
+		
+		case XOR :
+			
+			g.setXORMode(Color.WHITE);
+			break;
+		
+		case ALPHA_50 :
+			
+			g.setComposite(AlphaComposite.SrcOver.derive(0.5F));
+			break;
+			
+		case ALPHA_80 :
 
-        	g.setComposite(AlphaComposite.SrcOver.derive(0.8F));
-        	break;
-        	
-        case OVERLAY :
-        default :
-        	g.setComposite(AlphaComposite.SrcOver);
-        	break;
-        	
-        }
+			g.setComposite(AlphaComposite.SrcOver.derive(0.8F));
+			break;
+			
+		case OVERLAY :
+		default :
+			g.setComposite(AlphaComposite.SrcOver);
+			break;
+			
+		}
 		
 	}
 	
@@ -619,24 +619,24 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		// note - this doesn't paint the selected tag, see paintSelectedBlockOrChannelTag
 		
 		List<TagDocument> tagDocuments = document.getTagDocuments();		
-		        		
+						
 		StyledTagSet tagSet;
 		SortedSet<Tag> tagsToDraw;	
 		
 		Tag highlightedTag = (tagSelection != null ? tagSelection.tag : null);
 		
-        Rectangle clip = g.getClipBounds();
-        float start = (float) (clip.x / pixelPerSecond);
-        float end = (float) ((clip.x+clip.width) / pixelPerSecond);
+		Rectangle clip = g.getClipBounds();
+		float start = (float) (clip.x / pixelPerSecond);
+		float end = (float) ((clip.x+clip.width) / pixelPerSecond);
 		
-        boolean active;
-        boolean showActivity = ( tempTagCnt > 1 );
+		boolean active;
+		boolean showActivity = ( tempTagCnt > 1 );
 
-        
-        useTagPaintMode(g);
-        tempTagsToDrawList.clear();
-                
-		// draw block tags first        
+		
+		useTagPaintMode(g);
+		tempTagsToDrawList.clear();
+				
+		// draw block tags first		
 		int cnt = 0;
 		for( TagDocument tagDocument : tagDocuments ) {
 			
@@ -724,14 +724,14 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		
 		SignalSelectionType type = tagSelection.tag.getType();
 		if( type == SignalSelectionType.BLOCK || type == SignalSelectionType.CHANNEL ) {
-	        
-	        boolean active = ( tempTagCnt > 1 ) && ( document.getTagDocuments().get(tagSelection.tagPositionIndex) == document.getActiveTag() );
-	        
-	        useTagPaintMode(g);
 			
-	        paintTagOrTagSelection(g, tagSelection.tag, tagSelection.tagPositionIndex, active, false, selectionOnly);
+			boolean active = ( tempTagCnt > 1 ) && ( document.getTagDocuments().get(tagSelection.tagPositionIndex) == document.getActiveTag() );
 			
-	        g.setComposite(AlphaComposite.SrcOver);
+			useTagPaintMode(g);
+			
+			paintTagOrTagSelection(g, tagSelection.tag, tagSelection.tagPositionIndex, active, false, selectionOnly);
+			
+			g.setComposite(AlphaComposite.SrcOver);
 			
 		}		
 					
@@ -742,230 +742,230 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		
 		int i;
 				
-        Graphics2D g = (Graphics2D)gOrig;
-        Rectangle clip = g.getClipBounds();
-                                   
-        g.setColor(getBackground());
-        g.fillRect(clip.x,clip.y,clip.width,clip.height);
-        
-        int clipEndX = clip.x + clip.width - 1;
-        int clipEndY = clip.y + clip.height - 1;
-               
-        prepareToPaintTags();
-        
-        PositionedTag tagSelection = view.getTagSelection(this);
-        
-        if( tempTagCnt > 0 ) {
-        	paintBlockAndChannelTags(g, tagSelection);
-        }
-        
-        if( blockLinesVisible && pixelPerBlock > 4 ) {
-	        // this draws block boundaries
-	        int startBlock = (int) Math.floor( clip.x / pixelPerBlock );
-	        if( startBlock == 0 ) {
-	        	startBlock++;
-	        }
-	        int endBlock = (int) Math.ceil( clipEndX / pixelPerBlock );
-	        
-            g.setColor(Color.GRAY);
-	        for( i=startBlock; i <= endBlock; i++) {
-	            g.drawLine((int)(i * pixelPerBlock), clip.y, (int)(i * pixelPerBlock), clipEndY);        
-	        }
-        }
-        
-        if( pageLinesVisible && pixelPerPage > 4 ) {
-	        // this draws page boundaries
-	        int startPage = (int) Math.floor( clip.x / pixelPerPage );
-	        if( startPage == 0 ) {
-	        	startPage++;
-	        }
-	        int endPage = (int) Math.ceil( clipEndX / pixelPerPage );
-	        	        
-            g.setColor(Color.RED);
-            for( i=startPage; i <= endPage; i++) {
-                g.drawLine((int)(i * pixelPerPage), clip.y, (int)(i * pixelPerPage), clipEndY);
-            }
-        }
-        
-        int channel;
-                        
-    	int startChannel = (int) Math.max( 0, Math.floor( ((double) clip.y) / pixelPerChannel ) );
-    	int endChannel = (int) Math.min( channelCount-1, Math.ceil( ((double) clipEndY) / pixelPerChannel ) );
-        
-        if( channelLinesVisible && pixelPerChannel > 10 ) {
-	        g.setColor(Color.BLUE);
-	        for( channel=startChannel; channel<=endChannel; channel++ ) {
-            	g.drawLine(clip.x, channelLevel[channel], clipEndX, channelLevel[channel]);
-            }
-        }
-        
-		// draw the highlighted tag as is        
+		Graphics2D g = (Graphics2D)gOrig;
+		Rectangle clip = g.getClipBounds();
+								   
+		g.setColor(getBackground());
+		g.fillRect(clip.x,clip.y,clip.width,clip.height);
+		
+		int clipEndX = clip.x + clip.width - 1;
+		int clipEndY = clip.y + clip.height - 1;
+			   
+		prepareToPaintTags();
+		
+		PositionedTag tagSelection = view.getTagSelection(this);
+		
+		if( tempTagCnt > 0 ) {
+			paintBlockAndChannelTags(g, tagSelection);
+		}
+		
+		if( blockLinesVisible && pixelPerBlock > 4 ) {
+			// this draws block boundaries
+			int startBlock = (int) Math.floor( clip.x / pixelPerBlock );
+			if( startBlock == 0 ) {
+				startBlock++;
+			}
+			int endBlock = (int) Math.ceil( clipEndX / pixelPerBlock );
+			
+			g.setColor(Color.GRAY);
+			for( i=startBlock; i <= endBlock; i++) {
+				g.drawLine((int)(i * pixelPerBlock), clip.y, (int)(i * pixelPerBlock), clipEndY);		
+			}
+		}
+		
+		if( pageLinesVisible && pixelPerPage > 4 ) {
+			// this draws page boundaries
+			int startPage = (int) Math.floor( clip.x / pixelPerPage );
+			if( startPage == 0 ) {
+				startPage++;
+			}
+			int endPage = (int) Math.ceil( clipEndX / pixelPerPage );
+						
+			g.setColor(Color.RED);
+			for( i=startPage; i <= endPage; i++) {
+				g.drawLine((int)(i * pixelPerPage), clip.y, (int)(i * pixelPerPage), clipEndY);
+			}
+		}
+		
+		int channel;
+						
+		int startChannel = (int) Math.max( 0, Math.floor( ((double) clip.y) / pixelPerChannel ) );
+		int endChannel = (int) Math.min( channelCount-1, Math.ceil( ((double) clipEndY) / pixelPerChannel ) );
+		
+		if( channelLinesVisible && pixelPerChannel > 10 ) {
+			g.setColor(Color.BLUE);
+			for( channel=startChannel; channel<=endChannel; channel++ ) {
+				g.drawLine(clip.x, channelLevel[channel], clipEndX, channelLevel[channel]);
+			}
+		}
+		
+		// draw the highlighted tag as is		
 		if( tempTagCnt > 0 && tagSelection != null ) {
 			paintSelectedBlockOrChannelTag(g, tagSelection, false);
 		}
-        
-        if( !clamped ) {
-        	if( offscreenChannelsDrawn ) {
-        		// draw all
-        		startChannel = 0;
-        		endChannel = channelCount-1;
-        	} else {
-            	// determine on screen channels 
-        		// NOTE: not the channels within the clip, the channels within the viewport
-        		Point viewportPoint = viewport.getViewPosition();
-        		Dimension viewportSize = viewport.getExtentSize();
-        		
-        		startChannel = (int) Math.max( 0, Math.floor( ((double) viewportPoint.y) / pixelPerChannel ) );
-        		endChannel = (int) Math.min( channelCount-1, Math.ceil( ((double) (viewportPoint.y + viewportSize.height)) / pixelPerChannel ) );        		
-        	}        	
-        }        	
-        
-        if ( antialiased ) {       
-            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-        }
-                
-        g.setColor(signalColor.getColor());
-        if( signalXOR ) {
-        	g.setXORMode(Color.WHITE);
-        } else {
-        	g.setComposite(AlphaComposite.SrcOver);
-        }
+		
+		if( !clamped ) {
+			if( offscreenChannelsDrawn ) {
+				// draw all
+				startChannel = 0;
+				endChannel = channelCount-1;
+			} else {
+				// determine on screen channels 
+				// NOTE: not the channels within the clip, the channels within the viewport
+				Point viewportPoint = viewport.getViewPosition();
+				Dimension viewportSize = viewport.getExtentSize();
+				
+				startChannel = (int) Math.max( 0, Math.floor( ((double) viewportPoint.y) / pixelPerChannel ) );
+				endChannel = (int) Math.min( channelCount-1, Math.ceil( ((double) (viewportPoint.y + viewportSize.height)) / pixelPerChannel ) );				
+			}			
+		}			
+		
+		if ( antialiased ) {	   
+			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+		}
+				
+		g.setColor(signalColor.getColor());
+		if( signalXOR ) {
+			g.setXORMode(Color.WHITE);
+		} else {
+			g.setComposite(AlphaComposite.SrcOver);
+		}
 
-        int firstSample, lastSample, length;
-        double realX, x, y;
-        double lastX = 0;
-        double lastY = 0;
-        
-        for( channel=startChannel; channel<=endChannel; channel++ ) {
-        	
-            // those must be offset by one to get correct partial redraw
-        	// offset again by one, this time in terms of samples
-        	firstSample = (int) Math.max( 0, Math.floor( ((double) (clip.x-1)) / timeZoomFactor ) - 1 );
-        	lastSample = (int) Math.min( sampleCount[channel] - 1, Math.ceil( ((double) (clipEndX+1)) / timeZoomFactor ) + 1 );
-        	if( lastSample < firstSample ) {
-        		continue;
-        	}
-        	length = 1 + lastSample - firstSample;
-        	if( samples == null || samples.length < length ) {
-        		samples = new double[length];
-        	}
-        	
-        	try {
-        		signalChain.getSamples(channel, samples, firstSample, length, 0);
-        	} catch( RuntimeException ex ) {
-        		setVisible(false);
-        		throw ex;
-        	}
-        	
-        	realX = firstSample * timeZoomFactor;
-        	y = samples[0] * pixelPerValue;
-        	
-            if ( clamped )
-            {
-            	if( y > clampLimit ) {
-            		y = channelLevel[channel] - clampLimit;
-            	} else if ( y < -clampLimit ) {
-            		y = channelLevel[channel] + clampLimit;            		
-            	} else {
-            		y = channelLevel[channel] - y;
-            	}
-            } else {
-            	y = channelLevel[channel] - y;
-            }
-        	
-            generalPath.reset();
+		int firstSample, lastSample, length;
+		double realX, x, y;
+		double lastX = 0;
+		double lastY = 0;
+		
+		for( channel=startChannel; channel<=endChannel; channel++ ) {
+			
+			// those must be offset by one to get correct partial redraw
+			// offset again by one, this time in terms of samples
+			firstSample = (int) Math.max( 0, Math.floor( ((double) (clip.x-1)) / timeZoomFactor ) - 1 );
+			lastSample = (int) Math.min( sampleCount[channel] - 1, Math.ceil( ((double) (clipEndX+1)) / timeZoomFactor ) + 1 );
+			if( lastSample < firstSample ) {
+				continue;
+			}
+			length = 1 + lastSample - firstSample;
+			if( samples == null || samples.length < length ) {
+				samples = new double[length];
+			}
+			
+			try {
+				signalChain.getSamples(channel, samples, firstSample, length, 0);
+			} catch( RuntimeException ex ) {
+				setVisible(false);
+				throw ex;
+			}
+			
+			realX = firstSample * timeZoomFactor;
+			y = samples[0] * pixelPerValue;
+			
+			if ( clamped )
+			{
+				if( y > clampLimit ) {
+					y = channelLevel[channel] - clampLimit;
+				} else if ( y < -clampLimit ) {
+					y = channelLevel[channel] + clampLimit;					
+				} else {
+					y = channelLevel[channel] - y;
+				}
+			} else {
+				y = channelLevel[channel] - y;
+			}
+			
+			generalPath.reset();
 
-            if( !antialiased ) {
-            
-            	x = StrictMath.floor( realX + 0.5 );
-            	y = StrictMath.floor( y + 0.5 );
+			if( !antialiased ) {
+			
+				x = StrictMath.floor( realX + 0.5 );
+				y = StrictMath.floor( y + 0.5 );
 
-                generalPath.moveTo( x, y );
-            	
-                lastX = x;
-                lastY = y;
-                            
-            } else {
-            	
-                generalPath.moveTo( realX, y );
-            	
-            }
-                    	              
-            for( i=1; i<length; i++ ) {
-            	
-            	y = samples[i] * pixelPerValue;
-                
-            	if ( clamped )
-                {
-                	if( y > clampLimit ) {
-                		y = channelLevel[channel] - clampLimit;
-                	} else if ( y < -clampLimit ) {
-                		y = channelLevel[channel] + clampLimit;            		
-                	} else {
-                		y = channelLevel[channel] - y;
-                	}
-                } else {
-                	y = channelLevel[channel] - y;
-                }
-                
-            	realX = ((firstSample+i) * timeZoomFactor);
-            	
-                if( antialiased ) {
-                	
-            		generalPath.lineTo( realX, y );
-            		
-                } else {
+				generalPath.moveTo( x, y );
+				
+				lastX = x;
+				lastY = y;
+							
+			} else {
+				
+				generalPath.moveTo( realX, y );
+				
+			}
+									  
+			for( i=1; i<length; i++ ) {
+				
+				y = samples[i] * pixelPerValue;
+				
+				if ( clamped )
+				{
+					if( y > clampLimit ) {
+						y = channelLevel[channel] - clampLimit;
+					} else if ( y < -clampLimit ) {
+						y = channelLevel[channel] + clampLimit;					
+					} else {
+						y = channelLevel[channel] - y;
+					}
+				} else {
+					y = channelLevel[channel] - y;
+				}
+				
+				realX = ((firstSample+i) * timeZoomFactor);
+				
+				if( antialiased ) {
+					
+					generalPath.lineTo( realX, y );
+					
+				} else {
 
-                	// if not antialiased then round to integer in order to prevent aliasing affects
-                	// (which cause slave plots to display the signal slightly differently)
-                	// expand Math.round for performance, StrictMath.floor is native
-                	x = StrictMath.floor( realX + 0.5 );
-                	y = StrictMath.floor( y + 0.5 );
+					// if not antialiased then round to integer in order to prevent aliasing affects
+					// (which cause slave plots to display the signal slightly differently)
+					// expand Math.round for performance, StrictMath.floor is native
+					x = StrictMath.floor( realX + 0.5 );
+					y = StrictMath.floor( y + 0.5 );
 
-                	if( x != lastX || y != lastY ) {
-                		generalPath.lineTo( x, y );
-                	}
-                    
-                    lastX = x;
-                    lastY = y;
-                	
-                }
-            	
-                            	
-            }
-            
-            g.draw(generalPath);
-        	
-        }
-             
-        if( signalXOR ) {
-        	g.setComposite(AlphaComposite.SrcOver);        	
-        }
-        
-		// finally draw the highlighted tags selection outline        
+					if( x != lastX || y != lastY ) {
+						generalPath.lineTo( x, y );
+					}
+					
+					lastX = x;
+					lastY = y;
+					
+				}
+				
+								
+			}
+			
+			g.draw(generalPath);
+			
+		}
+			 
+		if( signalXOR ) {
+			g.setComposite(AlphaComposite.SrcOver);			
+		}
+		
+		// finally draw the highlighted tags selection outline		
 		if( tempTagCnt > 0 && tagSelection != null ) {
 			paintSelectedBlockOrChannelTag(g, tagSelection, true);
 		}
-        
+		
 		SignalSelection signalSelection = view.getSignalSelection(this);
 		
-        if( signalSelection != null ) {
-        	
-        	g.setColor(Color.BLUE);
-        	g.setStroke(new BasicStroke(3.0F,BasicStroke.CAP_BUTT,BasicStroke.JOIN_MITER, 10F, new float[] {5,5}, 0F));
-        	
-        	Rectangle r = getPixelSelectionBounds(signalSelection, tempBounds);
-        	r = r.intersection(new Rectangle(new Point(0,0), getSize()));
-        	
-        	g.drawRect(r.x+1,r.y+1,r.width-2,r.height-2); // draw the selection completely _inside_ the selected area (pen width of 3 must be compenstated)   	
-        
-        }
+		if( signalSelection != null ) {
+			
+			g.setColor(Color.BLUE);
+			g.setStroke(new BasicStroke(3.0F,BasicStroke.CAP_BUTT,BasicStroke.JOIN_MITER, 10F, new float[] {5,5}, 0F));
+			
+			Rectangle r = getPixelSelectionBounds(signalSelection, tempBounds);
+			r = r.intersection(new Rectangle(new Point(0,0), getSize()));
+			
+			g.drawRect(r.x+1,r.y+1,r.width-2,r.height-2); // draw the selection completely _inside_ the selected area (pen width of 3 must be compenstated)   	
+		
+		}
 
 	}
-    
+	
 	@Override
 	public Dimension getPreferredSize() {
-        return new Dimension((int)(maxSampleCount*timeZoomFactor),channelCount*pixelPerChannel);		
+		return new Dimension((int)(maxSampleCount*timeZoomFactor),channelCount*pixelPerChannel);		
 	}
 
 	@Override
@@ -992,10 +992,10 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		return popupMenuProvider.getPlotPopupMenu();
 	}
 
-    @Override
-    public boolean isDoubleBuffered() {
-    	return true;
-    }	
+	@Override
+	public boolean isDoubleBuffered() {
+		return true;
+	}	
 	
 	@Override
 	public Dimension getPreferredScrollableViewportSize() {
@@ -1385,45 +1385,45 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		float length = selection.getLength();
 		SignalSelectionType type = selection.getType();
 		
-    	int selLeft = (int) Math.floor( selection.getPosition() * pixelPerSecond );
-    	int selRight = (int) Math.ceil( selection.getLength() * pixelPerSecond );
-    	int selTop;
-    	int selBottom;
-    	
-    	if( type == SignalSelectionType.PAGE ) {
-    		selLeft = (int) ( ( position / pageSize ) * pixelPerPage );
-    		selRight = (int) ( ( (position + length) / pageSize ) * pixelPerPage );
-    	} else if( type == SignalSelectionType.BLOCK ) {
-    		selLeft = (int) ( ( position / blockSize ) * pixelPerBlock );
-    		selRight = (int) ( ( (position + length) / blockSize ) * pixelPerBlock );
-    	} else {
-    		selLeft = (int) Math.round( position * pixelPerSecond );
-    		selRight = (int) Math.round( (position+length) * pixelPerSecond ) - 1;
-    	}
-    	
-    	int selChannel = selection.getChannel();
-    	if( selChannel == SignalSelection.CHANNEL_NULL ) {
-    		selTop = 0;
-    		selBottom = getSize().height - 1;
-    	} else {
-    		selTop = selChannel*pixelPerChannel;
-    		selBottom = selTop + pixelPerChannel - 1;
-    	}
-    	
-    	Rectangle rect;
-    	if( useRect == null ) {
-    		rect = new Rectangle();
-    	} else {
-    		rect = useRect;
-    	}
+		int selLeft = (int) Math.floor( selection.getPosition() * pixelPerSecond );
+		int selRight = (int) Math.ceil( selection.getLength() * pixelPerSecond );
+		int selTop;
+		int selBottom;
 		
-    	rect.x = selLeft;
-    	rect.y = selTop;
-    	rect.width = selRight-selLeft;
-    	rect.height = selBottom-selTop;
-    	
-    	return rect;
-    	
+		if( type == SignalSelectionType.PAGE ) {
+			selLeft = (int) ( ( position / pageSize ) * pixelPerPage );
+			selRight = (int) ( ( (position + length) / pageSize ) * pixelPerPage );
+		} else if( type == SignalSelectionType.BLOCK ) {
+			selLeft = (int) ( ( position / blockSize ) * pixelPerBlock );
+			selRight = (int) ( ( (position + length) / blockSize ) * pixelPerBlock );
+		} else {
+			selLeft = (int) Math.round( position * pixelPerSecond );
+			selRight = (int) Math.round( (position+length) * pixelPerSecond ) - 1;
+		}
+		
+		int selChannel = selection.getChannel();
+		if( selChannel == SignalSelection.CHANNEL_NULL ) {
+			selTop = 0;
+			selBottom = getSize().height - 1;
+		} else {
+			selTop = selChannel*pixelPerChannel;
+			selBottom = selTop + pixelPerChannel - 1;
+		}
+		
+		Rectangle rect;
+		if( useRect == null ) {
+			rect = new Rectangle();
+		} else {
+			rect = useRect;
+		}
+		
+		rect.x = selLeft;
+		rect.y = selTop;
+		rect.width = selRight-selLeft;
+		rect.height = selBottom-selTop;
+		
+		return rect;
+		
 	}
 	
 	private boolean isSelectionOnScreen( SignalSelection selection ) {				
@@ -1886,14 +1886,14 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		Point viewportPoint = viewport.getViewPosition();
 		Dimension viewportSize = viewport.getExtentSize();
 		Dimension plotSize = getSize();
-        
+		
 		for( TagDocument tagDocument : tagDocuments ) {
 
 			if( comparing && tagDocument != comparedTags[0] && tagDocument != comparedTags[1] ) {
 				// in comparing mode scan only the compared tags
 				continue;
 			}
-        
+		
 			tagIndex = tagDocuments.indexOf(tagDocument);
 			
 			// use a 1 s margin to capture any marker tags
@@ -1924,7 +1924,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			
 			cnt++;
 		}
-        				
+						
 		return list;
 		
 	}
@@ -2013,10 +2013,10 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	}	
 	
 	public void setSignalChain(SignalProcessingChain signalChain) {
-        this.signalChain = signalChain;
-    }
+		this.signalChain = signalChain;
+	}
 
-    public OriginalMultichannelSampleSource getSignalSource() {
+	public OriginalMultichannelSampleSource getSignalSource() {
 		return signalChain.getSource();
 	}
 
@@ -2384,22 +2384,22 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	} 		
 	
 	public Double getMinValue() {
-        return minValue;
-    }
+		return minValue;
+	}
 
-    public void setMinValue(Double minValue) {
-        this.minValue = minValue;
-    }
+	public void setMinValue(Double minValue) {
+		this.minValue = minValue;
+	}
 
-    public Double getMaxValue() {
-        return maxValue;
-    }
+	public Double getMaxValue() {
+		return maxValue;
+	}
 
-    public void setMaxValue(Double maxValue) {
-        this.maxValue = maxValue;
-    }
+	public void setMaxValue(Double maxValue) {
+		this.maxValue = maxValue;
+	}
 
-    public double getDetectedMaxValue() {
+	public double getDetectedMaxValue() {
 		return detectedMaxValue;
 	}
 

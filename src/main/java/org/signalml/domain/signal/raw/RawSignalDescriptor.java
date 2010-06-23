@@ -35,10 +35,10 @@ public class RawSignalDescriptor {
 	private int sampleCount;
 	private float calibration;
 
-    private float[] calibrationGain;
-    private float[] calibrationOffset;
-    private Float minimumValue;
-    private Float maximumValue;
+	private float[] calibrationGain;
+	private float[] calibrationOffset;
+	private Float minimumValue;
+	private Float maximumValue;
 
 	private RawSignalSampleType sampleType;
 	private RawSignalByteOrder byteOrder;
@@ -128,38 +128,38 @@ public class RawSignalDescriptor {
 
 	
 	public float[] getCalibrationGain() {
-        return calibrationGain;
-    }
+		return calibrationGain;
+	}
 
-    public void setCalibrationGain(float[] calibrationGain) {
-        this.calibrationGain = calibrationGain;
-    }
+	public void setCalibrationGain(float[] calibrationGain) {
+		this.calibrationGain = calibrationGain;
+	}
 
-    public float[] getCalibrationOffset() {
-        return calibrationOffset;
-    }
+	public float[] getCalibrationOffset() {
+		return calibrationOffset;
+	}
 
-    public void setCalibrationOffset(float[] calibrationOffset) {
-        this.calibrationOffset = calibrationOffset;
-    }
+	public void setCalibrationOffset(float[] calibrationOffset) {
+		this.calibrationOffset = calibrationOffset;
+	}
 
-    public Float getMinimumValue() {
-        return minimumValue;
-    }
+	public Float getMinimumValue() {
+		return minimumValue;
+	}
 
-    public void setMinimumValue(Float minimumValue) {
-        this.minimumValue = minimumValue;
-    }
+	public void setMinimumValue(Float minimumValue) {
+		this.minimumValue = minimumValue;
+	}
 
-    public Float getMaximumValue() {
-        return maximumValue;
-    }
+	public Float getMaximumValue() {
+		return maximumValue;
+	}
 
-    public void setMaximumValue(Float maximumValue) {
-        this.maximumValue = maximumValue;
-    }
+	public void setMaximumValue(Float maximumValue) {
+		this.maximumValue = maximumValue;
+	}
 
-    public RawSignalSampleType getSampleType() {
+	public RawSignalSampleType getSampleType() {
 		return sampleType;
 	}
 	

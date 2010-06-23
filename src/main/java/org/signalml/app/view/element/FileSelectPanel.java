@@ -43,48 +43,48 @@ public class FileSelectPanel extends JPanel {
 	 * @return void
 	 */
 	private void initialize() {
-        JLabel label = new JLabel( messageSource.getMessage( "openMonitor.saveDataLabel"));
-        setLayout( new FlowLayout());
-        add( label);
-        add( getFileNameField());
-        add( getChangeButton());
+		JLabel label = new JLabel( messageSource.getMessage( "openMonitor.saveDataLabel"));
+		setLayout( new FlowLayout());
+		add( label);
+		add( getFileNameField());
+		add( getChangeButton());
 	}
 
-    public JTextField getFileNameField() {
-        if (fileNameField == null) {
-            fileNameField = new JTextField( 20);
-        }
-        return fileNameField;
-    }
+	public JTextField getFileNameField() {
+		if (fileNameField == null) {
+			fileNameField = new JTextField( 20);
+		}
+		return fileNameField;
+	}
 
-    public JButton getChangeButton() {
-        if (changeButton == null) {
-            changeButton = new JButton( messageSource.getMessage( "openMonitor.browseButtonLabel"));
-            changeButton.addActionListener( new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    JFileChooser chooser = new JFileChooser();
-                    int returnVal = chooser.showOpenDialog( FileSelectPanel.this);
-                    if (returnVal == JFileChooser.APPROVE_OPTION) {
-                        try {
-                            getFileNameField().setText( chooser.getSelectedFile().getCanonicalPath());
-                        }
-                        catch (IOException e1) {
-                            getFileNameField().setText( "");
-                        }
-                    }
-                }
-            });
-        }
-        return changeButton;
-    }
+	public JButton getChangeButton() {
+		if (changeButton == null) {
+			changeButton = new JButton( messageSource.getMessage( "openMonitor.browseButtonLabel"));
+			changeButton.addActionListener( new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					JFileChooser chooser = new JFileChooser();
+					int returnVal = chooser.showOpenDialog( FileSelectPanel.this);
+					if (returnVal == JFileChooser.APPROVE_OPTION) {
+						try {
+							getFileNameField().setText( chooser.getSelectedFile().getCanonicalPath());
+						}
+						catch (IOException e1) {
+							getFileNameField().setText( "");
+						}
+					}
+				}
+			});
+		}
+		return changeButton;
+	}
 
-    public boolean isFileSelected() {
-        String t = getFileNameField().getText();
-        if (t != null && !"".equals( t))
-            return true;
-        else
-            return false;
-    }
+	public boolean isFileSelected() {
+		String t = getFileNameField().getText();
+		if (t != null && !"".equals( t))
+			return true;
+		else
+			return false;
+	}
 
 }

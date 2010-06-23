@@ -229,8 +229,8 @@ public class HelpDialog extends AbstractDialog {
 	
 		// this forces reload
 		Document doc = getHelpPane().getDocument();
-	    doc.putProperty(Document.StreamDescriptionProperty, null);
-	    
+		doc.putProperty(Document.StreamDescriptionProperty, null);
+		
 		setPageInternal(currentURL);
 		
 	}

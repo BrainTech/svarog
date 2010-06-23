@@ -165,7 +165,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 	
 	/* Initialization & setup */
 	
-    public BookPlot(BookView view) throws SignalMLException {
+	public BookPlot(BookView view) throws SignalMLException {
 		super();
 		this.view = view;
 		
@@ -194,20 +194,20 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 		ApplicationConfiguration config = view.getApplicationConfig();
 
 		signalAntialiased = config.isSignalAntialiased();
-    	reconstructionVisible = config.isReconstructionVisible();
-    	fullReconstructionVisible = config.isFullReconstructionVisible();
-    	originalSignalVisible = config.isSignalAntialiased();
-    	legendVisible = config.isLegendVisible();
-    	scaleVisible = config.isScaleVisible();
-    	axesVisible = config.isAxesVisible();
-    	
-    	mapAspectRatioUp = config.getMapAspectRatioUp();
-    	mapAspectRatioDown = config.getMapAspectRatioDown();
-    	
-    	mapAspectRatio = ((double) mapAspectRatioUp) / ((double) mapAspectRatioDown);
-    			
-    	reconstructionHeight = config.getReconstructionHeight();
-    			
+		reconstructionVisible = config.isReconstructionVisible();
+		fullReconstructionVisible = config.isFullReconstructionVisible();
+		originalSignalVisible = config.isSignalAntialiased();
+		legendVisible = config.isLegendVisible();
+		scaleVisible = config.isScaleVisible();
+		axesVisible = config.isAxesVisible();
+		
+		mapAspectRatioUp = config.getMapAspectRatioUp();
+		mapAspectRatioDown = config.getMapAspectRatioDown();
+		
+		mapAspectRatio = ((double) mapAspectRatioUp) / ((double) mapAspectRatioDown);
+				
+		reconstructionHeight = config.getReconstructionHeight();
+				
 		palette = config.getPalette();
 		setScaleType(config.getScaleType());
 		imageProvider = new WignerMapImageProvider();
@@ -270,264 +270,264 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 				
 	}
 
-    @Override
-    public void setBounds(int x, int y, int width, int height) {
-    	super.setBounds(x, y, width, height);
-    	calculated = false;
-    }
-    
-    @Override
-    public void setSize(Dimension d) {
-    	super.setSize(d);
-    	calculated = false;
-    }
-    
-    @Override
-    public void setSize(int width, int height) {
-    	super.setSize(width, height);
-    	calculated = false;
-    }
-    
-        
-    public void initialize() throws SignalMLException {
-    	reset();
-    }
+	@Override
+	public void setBounds(int x, int y, int width, int height) {
+		super.setBounds(x, y, width, height);
+		calculated = false;
+	}
+	
+	@Override
+	public void setSize(Dimension d) {
+		super.setSize(d);
+		calculated = false;
+	}
+	
+	@Override
+	public void setSize(int width, int height) {
+		super.setSize(width, height);
+		calculated = false;
+	}
+	
+		
+	public void initialize() throws SignalMLException {
+		reset();
+	}
 
-    private void calculateParameters() {
-    	
-    	if( calculated ) {
-    		return;
-    	}
-    	
-    	if( segment == null ) {
-    		return;
-    	}
-    	
-    	Graphics2D g = (Graphics2D) getGraphics();
-    	FontRenderContext fontRenderContext = g.getFontRenderContext();
-    	Font font = getFont();
-    	FontMetrics fontMetrics = g.getFontMetrics(font);
-    	int ascent = fontMetrics.getAscent();
-    	
-    	Dimension size = getSize();
-    	if( size == null || size.height == 0 || size.width == 0 ) {
-    		return;
-    	}
-    	
-    	float segmentTimeLength = segment.getSegmentTimeLength();
-    	maxPosition = wignerMapProvider.getMaxPosition();
-    	minPosition = wignerMapProvider.getMinPosition();
+	private void calculateParameters() {
+		
+		if( calculated ) {
+			return;
+		}
+		
+		if( segment == null ) {
+			return;
+		}
+		
+		Graphics2D g = (Graphics2D) getGraphics();
+		FontRenderContext fontRenderContext = g.getFontRenderContext();
+		Font font = getFont();
+		FontMetrics fontMetrics = g.getFontMetrics(font);
+		int ascent = fontMetrics.getAscent();
+		
+		Dimension size = getSize();
+		if( size == null || size.height == 0 || size.width == 0 ) {
+			return;
+		}
+		
+		float segmentTimeLength = segment.getSegmentTimeLength();
+		maxPosition = wignerMapProvider.getMaxPosition();
+		minPosition = wignerMapProvider.getMinPosition();
 		minFrequency = wignerMapProvider.getMinFrequency();
 		maxFrequency = wignerMapProvider.getMaxFrequency();
 		if( maxPosition > segmentTimeLength ) {
 			maxPosition = segmentTimeLength;
-    		wignerMapProvider.setMaxPosition(segmentTimeLength);
-    	}
-    	
-    	Insets insets = getInsets();
-    	size = new Dimension( size.width-(insets.left+insets.right), size.height-(insets.top+insets.bottom) );
-    	
-    	int availableWidth = size.width;
-    	int availableHeight = size.height;
-    	
-    	int axesWidth = 0;
-    	int axesHeight = 0;
-    	
-    	if( axesVisible ) {
-    		    		
-    		// setup y axis;
-    		axesWidth = Y_AXIS_WIDTH; // for the axis itself;
-    		
-    		int maxLabelWidth = 0;
-    		    		
-    		double span = maxFrequency - minFrequency;
-    		double tick = span / (Y_TICK_COUNT-1);
-    		
-    		int i;
-    		Rectangle2D stringBounds;
+			wignerMapProvider.setMaxPosition(segmentTimeLength);
+		}
+		
+		Insets insets = getInsets();
+		size = new Dimension( size.width-(insets.left+insets.right), size.height-(insets.top+insets.bottom) );
+		
+		int availableWidth = size.width;
+		int availableHeight = size.height;
+		
+		int axesWidth = 0;
+		int axesHeight = 0;
+		
+		if( axesVisible ) {
+						
+			// setup y axis;
+			axesWidth = Y_AXIS_WIDTH; // for the axis itself;
+			
+			int maxLabelWidth = 0;
+						
+			double span = maxFrequency - minFrequency;
+			double tick = span / (Y_TICK_COUNT-1);
+			
+			int i;
+			Rectangle2D stringBounds;
 
-    		yLabels = new String[Y_TICK_COUNT];
-    		yLabelRectangles = new Rectangle[Y_TICK_COUNT];
-    		
-    		for( i=0; i<Y_TICK_COUNT; i++ ) {
-    			yLabels[i] = axisFormat.format(minFrequency+tick*i);
-    			stringBounds = font.getStringBounds(yLabels[i], fontRenderContext);
-    			yLabelRectangles[i] = new Rectangle();
-    			yLabelRectangles[i].width = (int) stringBounds.getWidth();
-    			yLabelRectangles[i].height = (int) stringBounds.getHeight();
-    			if( maxLabelWidth < yLabelRectangles[i].width ) {
-    				maxLabelWidth = yLabelRectangles[i].width;
-    			}
-    		}
-    		
-    		axesWidth += maxLabelWidth;
-    		
-    		// setup x axis
-    		
-    		axesHeight = X_AXIS_HEIGHT;
-    		
-    		int maxLabelHeight = 0;
-    		
-    		span = maxPosition - minPosition;
-    		tick = span / (X_TICK_COUNT-1);
-    		
-    		xLabels = new String[X_TICK_COUNT];
-    		xLabelRectangles = new Rectangle[X_TICK_COUNT];
-    		
-    		for( i=0; i<X_TICK_COUNT; i++ ) {
-    			xLabels[i] = axisFormat.format(minPosition+tick*i);
-    			stringBounds = font.getStringBounds(xLabels[i], fontRenderContext);
-    			xLabelRectangles[i] = new Rectangle();
-    			xLabelRectangles[i].width = (int) stringBounds.getWidth();
-    			xLabelRectangles[i].height = (int) stringBounds.getHeight();
-    			if( maxLabelHeight < xLabelRectangles[i].height ) {
-    				maxLabelHeight = xLabelRectangles[i].height;
-    			}
-    		}
-    		
-    		axesHeight += maxLabelHeight;    		    		
-    		
-    	}
-    	
-    	availableHeight -= axesHeight;
-    	
-    	int legendWidth = 0;
-    	
-    	if( legendVisible ) {
-    		legendWidth = LEGEND_WIDTH;
-    	}
-    	
-    	int reservedLeftWidth = Math.max( axesWidth, legendWidth );
-    	if( axesVisible ) {
-    		if( reservedLeftWidth < xLabelRectangles[0].width/2 ) {
-    			reservedLeftWidth = xLabelRectangles[0].width/2;
-    		}
-    	}
-    	
-    	availableWidth -= reservedLeftWidth;
-    	
-    	int scaleWidth = 0;
-    	
-    	if( scaleVisible ) {
-    		scaleWidth = SCALE_WIDTH;
-    	}
-    	
-    	int reservedRightWidth = scaleWidth;
-    	if( axesVisible ) {
-    		if( reservedRightWidth < xLabelRectangles[X_TICK_COUNT-1].width/2 ) {
-    			reservedRightWidth = xLabelRectangles[X_TICK_COUNT-1].width/2;
-    		}
-    	}
-    	
-    	availableWidth -= reservedRightWidth;
-    	
-    	int reconstructionTop = -1;
-    	int usedReconstructionHeight = 0;
-    	
-    	if( reconstructionVisible ) {
-    		
-    		reconstructionRectangle = new Rectangle();
+			yLabels = new String[Y_TICK_COUNT];
+			yLabelRectangles = new Rectangle[Y_TICK_COUNT];
+			
+			for( i=0; i<Y_TICK_COUNT; i++ ) {
+				yLabels[i] = axisFormat.format(minFrequency+tick*i);
+				stringBounds = font.getStringBounds(yLabels[i], fontRenderContext);
+				yLabelRectangles[i] = new Rectangle();
+				yLabelRectangles[i].width = (int) stringBounds.getWidth();
+				yLabelRectangles[i].height = (int) stringBounds.getHeight();
+				if( maxLabelWidth < yLabelRectangles[i].width ) {
+					maxLabelWidth = yLabelRectangles[i].width;
+				}
+			}
+			
+			axesWidth += maxLabelWidth;
+			
+			// setup x axis
+			
+			axesHeight = X_AXIS_HEIGHT;
+			
+			int maxLabelHeight = 0;
+			
+			span = maxPosition - minPosition;
+			tick = span / (X_TICK_COUNT-1);
+			
+			xLabels = new String[X_TICK_COUNT];
+			xLabelRectangles = new Rectangle[X_TICK_COUNT];
+			
+			for( i=0; i<X_TICK_COUNT; i++ ) {
+				xLabels[i] = axisFormat.format(minPosition+tick*i);
+				stringBounds = font.getStringBounds(xLabels[i], fontRenderContext);
+				xLabelRectangles[i] = new Rectangle();
+				xLabelRectangles[i].width = (int) stringBounds.getWidth();
+				xLabelRectangles[i].height = (int) stringBounds.getHeight();
+				if( maxLabelHeight < xLabelRectangles[i].height ) {
+					maxLabelHeight = xLabelRectangles[i].height;
+				}
+			}
+			
+			axesHeight += maxLabelHeight;						
+			
+		}
+		
+		availableHeight -= axesHeight;
+		
+		int legendWidth = 0;
+		
+		if( legendVisible ) {
+			legendWidth = LEGEND_WIDTH;
+		}
+		
+		int reservedLeftWidth = Math.max( axesWidth, legendWidth );
+		if( axesVisible ) {
+			if( reservedLeftWidth < xLabelRectangles[0].width/2 ) {
+				reservedLeftWidth = xLabelRectangles[0].width/2;
+			}
+		}
+		
+		availableWidth -= reservedLeftWidth;
+		
+		int scaleWidth = 0;
+		
+		if( scaleVisible ) {
+			scaleWidth = SCALE_WIDTH;
+		}
+		
+		int reservedRightWidth = scaleWidth;
+		if( axesVisible ) {
+			if( reservedRightWidth < xLabelRectangles[X_TICK_COUNT-1].width/2 ) {
+				reservedRightWidth = xLabelRectangles[X_TICK_COUNT-1].width/2;
+			}
+		}
+		
+		availableWidth -= reservedRightWidth;
+		
+		int reconstructionTop = -1;
+		int usedReconstructionHeight = 0;
+		
+		if( reconstructionVisible ) {
+			
+			reconstructionRectangle = new Rectangle();
 
-    		reconstructionRectangle.x = insets.left + reservedLeftWidth;
-    		reconstructionRectangle.width = availableWidth;
-    		
-    		reconstructionRectangle.y = insets.top + availableHeight-reconstructionHeight;
-    		reconstructionRectangle.height = reconstructionHeight;
-    		
-    		availableHeight -= (reconstructionHeight + RECONSTRUCTION_GAP);
-    		
-    		reconstructionTop = reconstructionRectangle.y;
-    		usedReconstructionHeight += (reconstructionHeight + RECONSTRUCTION_GAP);
-    		
-    	} else {
-    		reconstructionRectangle = null;
-    	}
-    	
-    	if( fullReconstructionVisible ) {
-    		
-    		fullReconstructionRectangle = new Rectangle();
-    		
-    		fullReconstructionRectangle.x = insets.left + reservedLeftWidth;
-    		fullReconstructionRectangle.width = availableWidth;
-    		
-    		fullReconstructionRectangle.y = insets.top + availableHeight-reconstructionHeight;
-    		fullReconstructionRectangle.height = reconstructionHeight;
-    		
-    		availableHeight -= (reconstructionHeight + RECONSTRUCTION_GAP);
-    		    	
-    		reconstructionTop = fullReconstructionRectangle.y;
-    		usedReconstructionHeight += (reconstructionHeight + RECONSTRUCTION_GAP);
-    		
-    	} else {
-    		fullReconstructionRectangle = null;
-    	}
-    	
-    	if( originalSignalVisible ) {
-    		
-    		originalSignalRectangle = new Rectangle();
-    		
-    		originalSignalRectangle.x = insets.left + reservedLeftWidth;
-    		originalSignalRectangle.width = availableWidth;
-    		
-    		originalSignalRectangle.y = insets.top + availableHeight-reconstructionHeight;
-    		originalSignalRectangle.height = reconstructionHeight;
-    		
-    		availableHeight -= (reconstructionHeight + RECONSTRUCTION_GAP);    		    		
-    		
-    		reconstructionTop = originalSignalRectangle.y;
-    		usedReconstructionHeight += (reconstructionHeight + RECONSTRUCTION_GAP);
-    		
-    	} else {
-    		originalSignalRectangle = null;
-    	}
-    	
-    	// the map must vertically fit into availableHeight
-    	int width = (int) Math.round( ((double) availableHeight) * mapAspectRatio );
-    	int height = availableHeight;
-    	int paddingY = 0;
-    	int paddingX = 0;
-    	
-    	if( width > availableWidth ) {
-    		width = availableWidth;
-    		height = (int) Math.round( ((double) width) / mapAspectRatio );
-    		paddingY = (availableHeight-height) / 2;
-    	} else if( width < size.width ) {
-    		paddingX = (availableWidth-width) / 2;
-    	}
-    	
-    	int paddingXLeft;
-    	
-    	if( reservedLeftWidth > reservedRightWidth ) {
-    		paddingXLeft = paddingX - Math.max( 0, paddingX - reservedLeftWidth );
-    	} else if( reservedLeftWidth < reservedRightWidth ) {
-    		paddingXLeft = paddingX + Math.max( 0, paddingX - reservedRightWidth );
-    	} else {
-    		paddingXLeft = paddingX;
-    	}
-    	
-    	mapRectangle = new Rectangle( insets.left+reservedLeftWidth+paddingXLeft, insets.top+paddingY, width, height );
+			reconstructionRectangle.x = insets.left + reservedLeftWidth;
+			reconstructionRectangle.width = availableWidth;
+			
+			reconstructionRectangle.y = insets.top + availableHeight-reconstructionHeight;
+			reconstructionRectangle.height = reconstructionHeight;
+			
+			availableHeight -= (reconstructionHeight + RECONSTRUCTION_GAP);
+			
+			reconstructionTop = reconstructionRectangle.y;
+			usedReconstructionHeight += (reconstructionHeight + RECONSTRUCTION_GAP);
+			
+		} else {
+			reconstructionRectangle = null;
+		}
+		
+		if( fullReconstructionVisible ) {
+			
+			fullReconstructionRectangle = new Rectangle();
+			
+			fullReconstructionRectangle.x = insets.left + reservedLeftWidth;
+			fullReconstructionRectangle.width = availableWidth;
+			
+			fullReconstructionRectangle.y = insets.top + availableHeight-reconstructionHeight;
+			fullReconstructionRectangle.height = reconstructionHeight;
+			
+			availableHeight -= (reconstructionHeight + RECONSTRUCTION_GAP);
+					
+			reconstructionTop = fullReconstructionRectangle.y;
+			usedReconstructionHeight += (reconstructionHeight + RECONSTRUCTION_GAP);
+			
+		} else {
+			fullReconstructionRectangle = null;
+		}
+		
+		if( originalSignalVisible ) {
+			
+			originalSignalRectangle = new Rectangle();
+			
+			originalSignalRectangle.x = insets.left + reservedLeftWidth;
+			originalSignalRectangle.width = availableWidth;
+			
+			originalSignalRectangle.y = insets.top + availableHeight-reconstructionHeight;
+			originalSignalRectangle.height = reconstructionHeight;
+			
+			availableHeight -= (reconstructionHeight + RECONSTRUCTION_GAP);						
+			
+			reconstructionTop = originalSignalRectangle.y;
+			usedReconstructionHeight += (reconstructionHeight + RECONSTRUCTION_GAP);
+			
+		} else {
+			originalSignalRectangle = null;
+		}
+		
+		// the map must vertically fit into availableHeight
+		int width = (int) Math.round( ((double) availableHeight) * mapAspectRatio );
+		int height = availableHeight;
+		int paddingY = 0;
+		int paddingX = 0;
+		
+		if( width > availableWidth ) {
+			width = availableWidth;
+			height = (int) Math.round( ((double) width) / mapAspectRatio );
+			paddingY = (availableHeight-height) / 2;
+		} else if( width < size.width ) {
+			paddingX = (availableWidth-width) / 2;
+		}
+		
+		int paddingXLeft;
+		
+		if( reservedLeftWidth > reservedRightWidth ) {
+			paddingXLeft = paddingX - Math.max( 0, paddingX - reservedLeftWidth );
+		} else if( reservedLeftWidth < reservedRightWidth ) {
+			paddingXLeft = paddingX + Math.max( 0, paddingX - reservedRightWidth );
+		} else {
+			paddingXLeft = paddingX;
+		}
+		
+		mapRectangle = new Rectangle( insets.left+reservedLeftWidth+paddingXLeft, insets.top+paddingY, width, height );
 
-    	if( legendVisible && reconstructionTop >= 0 ) {
-    		legendRectangle = new Rectangle( insets.left + paddingXLeft, reconstructionTop, reservedLeftWidth, usedReconstructionHeight );
-    	} else {
-    		legendRectangle = null;
-    	}
-    	
-    	if( scaleVisible ) {
-    		scaleRectangle = new Rectangle( mapRectangle.x + mapRectangle.width, mapRectangle.y, scaleWidth, mapRectangle.height );
-    	} else {
-    		scaleRectangle = null;
-    	}
-    	
-    	if( axesVisible ) {
-    		xAxisRectangle = new Rectangle( mapRectangle.x, mapRectangle.y+mapRectangle.height, mapRectangle.width, axesHeight );
-    		yAxisRectangle = new Rectangle( mapRectangle.x - axesWidth, mapRectangle.y, axesWidth, mapRectangle.height );
-    	} else {
-    		xAxisRectangle = null;
-    		yAxisRectangle = null;
-    	}
-    	
-    	if( reconstructionRectangle != null ) {
+		if( legendVisible && reconstructionTop >= 0 ) {
+			legendRectangle = new Rectangle( insets.left + paddingXLeft, reconstructionTop, reservedLeftWidth, usedReconstructionHeight );
+		} else {
+			legendRectangle = null;
+		}
+		
+		if( scaleVisible ) {
+			scaleRectangle = new Rectangle( mapRectangle.x + mapRectangle.width, mapRectangle.y, scaleWidth, mapRectangle.height );
+		} else {
+			scaleRectangle = null;
+		}
+		
+		if( axesVisible ) {
+			xAxisRectangle = new Rectangle( mapRectangle.x, mapRectangle.y+mapRectangle.height, mapRectangle.width, axesHeight );
+			yAxisRectangle = new Rectangle( mapRectangle.x - axesWidth, mapRectangle.y, axesWidth, mapRectangle.height );
+		} else {
+			xAxisRectangle = null;
+			yAxisRectangle = null;
+		}
+		
+		if( reconstructionRectangle != null ) {
 			reconstructionRectangle.x += paddingXLeft;
 			reconstructionRectangle.width -= ( 2 * paddingX );
 			reconstructionRectangle.y += (axesHeight-paddingY);
@@ -535,13 +535,13 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 		
 		if( fullReconstructionRectangle != null ) {
 			fullReconstructionRectangle.x += paddingXLeft;
-			fullReconstructionRectangle.width -= ( 2 * paddingX );    			
+			fullReconstructionRectangle.width -= ( 2 * paddingX );				
 			fullReconstructionRectangle.y += (axesHeight-paddingY);
 		}
 		
 		if( originalSignalRectangle != null ) {
 			originalSignalRectangle.x += paddingXLeft;
-			originalSignalRectangle.width -= ( 2 * paddingX );    						
+			originalSignalRectangle.width -= ( 2 * paddingX );							
 			originalSignalRectangle.y += (axesHeight-paddingY);
 		}
 		
@@ -620,8 +620,8 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 		
 		calculated = true;
 		
-    }
-    
+	}
+	
 	public StandardBookSegment getSegment() {
 		return segment;
 	}
@@ -854,85 +854,85 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 	@Override
 	protected void paintComponent(Graphics gOrig) {
 		
-        Graphics2D g = (Graphics2D)gOrig;
-        Rectangle clip = g.getClipBounds();
-                                   
-        g.setColor(getBackground());
-        g.fillRect(clip.x,clip.y,clip.width,clip.height);
-        
-        if( !calculated ) {
-        	calculateParameters();
-        }
-        
-        if( segment == null ) {
-        	return;
-        }
-        
-        if( mapRectangle != null ) {
-	        Rectangle mapToRepaint = clip.intersection(mapRectangle);         
-	        if( !mapToRepaint.isEmpty() ) {        	
-	        	paintWignerMap(g, mapToRepaint);        	
-	        }
-        }
-        
-        if( legendRectangle != null ) {
-        	if( legendRectangle.intersects(clip) ) {
-        		paintLegend(g);
-        	}
-        }
-        
-        if( scaleRectangle != null ) {
-        	if( scaleRectangle.intersects(clip) ) {
-        		paintScale(g);
-        	}
-        }
-        
-        if( xAxisRectangle != null ) {
-        	if( xAxisRectangle.intersects(clip) ) {
-        		paintXAxis(g);
-        	}
-        }
-        
-        if( yAxisRectangle != null ) {
-        	if( yAxisRectangle.intersects(clip) ) {
-        		paintYAxis(g);
-        	}
-        }
-        
-    	if( reconstructionRectangle != null ) {
-        	Rectangle reconstructionToRepaint = clip.intersection(reconstructionRectangle);
-        	if( !reconstructionToRepaint.isEmpty() ) {
-        		double[] selectiveReconstruction = reconstructionProvider.getSelectiveReconstruction();
-        		paintReconstruction(g, selectiveReconstruction, reconstructionRectangle, reconstructionToRepaint );
-        	}        
-        }
-        
-        if( fullReconstructionRectangle != null ) {
-        	Rectangle fullReconstructionToRepaint = clip.intersection(fullReconstructionRectangle);
-        	if( !fullReconstructionToRepaint.isEmpty() ) {
-        		double[] reconstruction = reconstructionProvider.getFullReconstruction();
-        		paintReconstruction(g, reconstruction, fullReconstructionRectangle, fullReconstructionToRepaint);
-        	}
-        }
-        
-        if( originalSignalRectangle != null ) {
-        	Rectangle originalSignalToRepaint = clip.intersection(originalSignalRectangle);
-        	if( !originalSignalToRepaint.isEmpty() ) {
-        		float[] signal = segment.getSignalSamples();
-        		// XXX not optimal
-        		double[] signalD = null;
-        		if( signal != null ) {
-        			signalD = new double[signal.length];
-        			for( int i=0; i<signal.length; i++ ) {
-        				signalD[i] = signal[i];
-        			}
-        		}
-        		paintReconstruction(g, signalD, originalSignalRectangle, originalSignalToRepaint);
-        	}        	
-        }
+		Graphics2D g = (Graphics2D)gOrig;
+		Rectangle clip = g.getClipBounds();
+								   
+		g.setColor(getBackground());
+		g.fillRect(clip.x,clip.y,clip.width,clip.height);
+		
+		if( !calculated ) {
+			calculateParameters();
+		}
+		
+		if( segment == null ) {
+			return;
+		}
+		
+		if( mapRectangle != null ) {
+			Rectangle mapToRepaint = clip.intersection(mapRectangle);		 
+			if( !mapToRepaint.isEmpty() ) {			
+				paintWignerMap(g, mapToRepaint);			
+			}
+		}
+		
+		if( legendRectangle != null ) {
+			if( legendRectangle.intersects(clip) ) {
+				paintLegend(g);
+			}
+		}
+		
+		if( scaleRectangle != null ) {
+			if( scaleRectangle.intersects(clip) ) {
+				paintScale(g);
+			}
+		}
+		
+		if( xAxisRectangle != null ) {
+			if( xAxisRectangle.intersects(clip) ) {
+				paintXAxis(g);
+			}
+		}
+		
+		if( yAxisRectangle != null ) {
+			if( yAxisRectangle.intersects(clip) ) {
+				paintYAxis(g);
+			}
+		}
+		
+		if( reconstructionRectangle != null ) {
+			Rectangle reconstructionToRepaint = clip.intersection(reconstructionRectangle);
+			if( !reconstructionToRepaint.isEmpty() ) {
+				double[] selectiveReconstruction = reconstructionProvider.getSelectiveReconstruction();
+				paintReconstruction(g, selectiveReconstruction, reconstructionRectangle, reconstructionToRepaint );
+			}		
+		}
+		
+		if( fullReconstructionRectangle != null ) {
+			Rectangle fullReconstructionToRepaint = clip.intersection(fullReconstructionRectangle);
+			if( !fullReconstructionToRepaint.isEmpty() ) {
+				double[] reconstruction = reconstructionProvider.getFullReconstruction();
+				paintReconstruction(g, reconstruction, fullReconstructionRectangle, fullReconstructionToRepaint);
+			}
+		}
+		
+		if( originalSignalRectangle != null ) {
+			Rectangle originalSignalToRepaint = clip.intersection(originalSignalRectangle);
+			if( !originalSignalToRepaint.isEmpty() ) {
+				float[] signal = segment.getSignalSamples();
+				// XXX not optimal
+				double[] signalD = null;
+				if( signal != null ) {
+					signalD = new double[signal.length];
+					for( int i=0; i<signal.length; i++ ) {
+						signalD[i] = signal[i];
+					}
+				}
+				paintReconstruction(g, signalD, originalSignalRectangle, originalSignalToRepaint);
+			}			
+		}
 
 	}
-    
+	
 	private void paintYAxis(Graphics2D g) {
 
 		g.setColor( Color.BLACK );
@@ -1026,9 +1026,9 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 			
 		}
 		
-    	if ( signalAntialiased ) {       
-            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-        }        		
+		if ( signalAntialiased ) {	   
+			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+		}				
 		
 		int relX = areaToRepaint.x - area.x;
 //		int relEndX = relX + areaToRepaint.width - 1;
@@ -1039,71 +1039,71 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 		
 		g.setColor( Color.BLACK );
 		
-    	//int firstSample = (int) Math.max( 0, Math.floor( ((double) (relX-1)) / reconstructionPixelPerSample ) - 1 );
+		//int firstSample = (int) Math.max( 0, Math.floor( ((double) (relX-1)) / reconstructionPixelPerSample ) - 1 );
 		int firstSample = (int) ((minPosition / segment.getSegmentLength()) * samples.length);
-    	int lastSample = (int) Math.min( samples.length - 1, (maxPosition / segment.getSegmentLength()) * samples.length );
-    	if( lastSample < firstSample ) {
-    		return;
-    	}
-    	int length = 1 + lastSample - firstSample;
-    	
-    	double realX = area.x + relX * reconstructionPixelPerSample;
-    	double y = level - (samples[firstSample] * reconstructionPixelPerValue);
-    	    	
-        generalPath.reset();
+		int lastSample = (int) Math.min( samples.length - 1, (maxPosition / segment.getSegmentLength()) * samples.length );
+		if( lastSample < firstSample ) {
+			return;
+		}
+		int length = 1 + lastSample - firstSample;
+		
+		double realX = area.x + relX * reconstructionPixelPerSample;
+		double y = level - (samples[firstSample] * reconstructionPixelPerValue);
+				
+		generalPath.reset();
 
-        double x;
-        double lastX = 0;
-        double lastY = 0;
-        
-        if( !signalAntialiased ) {
-        
-        	x = StrictMath.floor( realX + 0.5 );
-        	y = StrictMath.floor( y + 0.5 );
+		double x;
+		double lastX = 0;
+		double lastY = 0;
+		
+		if( !signalAntialiased ) {
+		
+			x = StrictMath.floor( realX + 0.5 );
+			y = StrictMath.floor( y + 0.5 );
 
-            generalPath.moveTo( x, y );
-        	
-            lastX = x;
-            lastY = y;
-                        
-        } else {
-        	
-            generalPath.moveTo( realX, y );
-        	
-        }
-        
-        for( int i=0; i<length; i++ ) {
-        	
-        	y = level - (samples[firstSample+i] * reconstructionPixelPerValue);
-            
-            
-        	realX += reconstructionPixelPerSample;
-        	
-        	
-            if( signalAntialiased ) {
-            	
-        		generalPath.lineTo( realX, y );
-        		
-            } else {
+			generalPath.moveTo( x, y );
+			
+			lastX = x;
+			lastY = y;
+						
+		} else {
+			
+			generalPath.moveTo( realX, y );
+			
+		}
+		
+		for( int i=0; i<length; i++ ) {
+			
+			y = level - (samples[firstSample+i] * reconstructionPixelPerValue);
+			
+			
+			realX += reconstructionPixelPerSample;
+			
+			
+			if( signalAntialiased ) {
+				
+				generalPath.lineTo( realX, y );
+				
+			} else {
 
-            	// if not antialiased then round to integer in order to prevent aliasing affects
-            	// (which cause slave plots to display the signal slightly differently)
-            	// expand Math.round for performance, StrictMath.floor is native
-            	x = StrictMath.floor( realX + 0.5 );
-            	y = StrictMath.floor( y + 0.5 );
+				// if not antialiased then round to integer in order to prevent aliasing affects
+				// (which cause slave plots to display the signal slightly differently)
+				// expand Math.round for performance, StrictMath.floor is native
+				x = StrictMath.floor( realX + 0.5 );
+				y = StrictMath.floor( y + 0.5 );
 
-            	if( x != lastX || y != lastY ) {
-            		generalPath.lineTo( x, y );
-            	}
-                
-                lastX = x;
-                lastY = y;
-            	
-            }        	
-                        	
-        }
-        
-        g.draw(generalPath);
+				if( x != lastX || y != lastY ) {
+					generalPath.lineTo( x, y );
+				}
+				
+				lastX = x;
+				lastY = y;
+				
+			}			
+							
+		}
+		
+		g.draw(generalPath);
 		
 	}
 
@@ -1260,10 +1260,10 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 		return popupMenuProvider.getPlotPopupMenu();
 	}
 
-    @Override
-    public boolean isDoubleBuffered() {
-    	return true;
-    }	
+	@Override
+	public boolean isDoubleBuffered() {
+		return true;
+	}	
 			
 	@Override
 	public String getToolTipText(MouseEvent event) {

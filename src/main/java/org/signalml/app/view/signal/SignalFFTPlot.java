@@ -124,96 +124,96 @@ public class SignalFFTPlot extends JComponent {
 			throw new SanityCheckException( "Sanity failed - sample count different than window size" );
 		}
 				
-    	if( samples == null || samples.length != sampleCnt ) {
-    		samples = new double[sampleCnt];
-    	}
+		if( samples == null || samples.length != sampleCnt ) {
+			samples = new double[sampleCnt];
+		}
 		
-    	try {
-    		sampleSource.getSamples(channel, samples, firstSample, sampleCnt, 0);
-    	} catch( RuntimeException ex ) {
-    		setVisible(false);
-    		throw ex;    		
-    	}
-    	
-    	try {
-    	
-    		logger.debug( "Samples requested [" + sampleCnt + "] array size [" + samples.length + "]" );
-    		
-	    	FourierTransform fourierTransform = new FourierTransform(samples);
-	    	fourierTransform.setDeltaT( 1 / plot.getSamplingFrequency() );
-	    	windowType.apply( fourierTransform, windowParameter );
-	    		    		    	
-	    	powerSpectrum = fourierTransform.powerSpectrum();
-	    	if( powerSpectrum == null ) {
-	    		throw new NullPointerException( "Null spectrum returned" );
-	    	}
-	    	
-	    	logger.debug( "PS[0] size [" + powerSpectrum[0].length + "] PS[1] size [" + powerSpectrum[1].length + "]" );
-	    	
-    	} catch( RuntimeException ex ) {
-    		setVisible(false);
-    		throw ex;    		
-    	}
-    	
-    	if( powerSpectrumPlot == null ) {
-    		
-    		xAxis = new NumberAxis();
-    		xAxis.setAutoRange(false);
-    		/*xAxis.setTickUnit(new NumberTickUnit(4));*/
-    		    		    	    	
-    		normalRenderer = new XYLineAndShapeRenderer(true, false);
-    		
-    		splineRenderer = new XYSplineRenderer();
-    		splineRenderer.setSeriesShapesVisible(0, false);
-    		splineRenderer.setPrecision(10);    		
-    		
-    		powerSpectrumPlot = new XYPlot( null, xAxis, null, null );
-    		
-    		normalYAxis = new NumberAxis();
-    		normalYAxis.setAutoRange(false);
-    		
-    		logYAxis = new LogAxis();
-    		logYAxis.setAutoRange(false);
+		try {
+			sampleSource.getSamples(channel, samples, firstSample, sampleCnt, 0);
+		} catch( RuntimeException ex ) {
+			setVisible(false);
+			throw ex;			
+		}
+		
+		try {
+		
+			logger.debug( "Samples requested [" + sampleCnt + "] array size [" + samples.length + "]" );
+			
+			FourierTransform fourierTransform = new FourierTransform(samples);
+			fourierTransform.setDeltaT( 1 / plot.getSamplingFrequency() );
+			windowType.apply( fourierTransform, windowParameter );
+									
+			powerSpectrum = fourierTransform.powerSpectrum();
+			if( powerSpectrum == null ) {
+				throw new NullPointerException( "Null spectrum returned" );
+			}
+			
+			logger.debug( "PS[0] size [" + powerSpectrum[0].length + "] PS[1] size [" + powerSpectrum[1].length + "]" );
+			
+		} catch( RuntimeException ex ) {
+			setVisible(false);
+			throw ex;			
+		}
+		
+		if( powerSpectrumPlot == null ) {
+			
+			xAxis = new NumberAxis();
+			xAxis.setAutoRange(false);
+			/*xAxis.setTickUnit(new NumberTickUnit(4));*/
+										
+			normalRenderer = new XYLineAndShapeRenderer(true, false);
+			
+			splineRenderer = new XYSplineRenderer();
+			splineRenderer.setSeriesShapesVisible(0, false);
+			splineRenderer.setPrecision(10);			
+			
+			powerSpectrumPlot = new XYPlot( null, xAxis, null, null );
+			
+			normalYAxis = new NumberAxis();
+			normalYAxis.setAutoRange(false);
+			
+			logYAxis = new LogAxis();
+			logYAxis.setAutoRange(false);
 
-    	}
-    	
-    	if( powerSpectrumChart == null ) {
-    		
-    		powerSpectrumChart = new JFreeChart(null, titleFont, powerSpectrumPlot, false);
-    		powerSpectrumChart.setBorderVisible(false);
-    		powerSpectrumChart.setBackgroundPaint(Color.WHITE);
-    		
-    	}
-    	
-    	double pixelPerSecond = plot.getPixelPerSecond();
-    	float minTime = (float) ((firstSample * timeZoomFactor) / pixelPerSecond); 
-    	float maxTime = (float) ((lastSample * timeZoomFactor) / pixelPerSecond); 
-    	
-    	StringBuilder minTimeSb = new StringBuilder(20);
-    	Util.addTime( minTime, minTimeSb );
-    	
-    	StringBuilder maxTimeSb = new StringBuilder(20);
-    	Util.addTime( maxTime, maxTimeSb );
-    	    	
-    	String title = messageSource.getMessage(
-    			"fft.chartTitle",
-    			new Object[] {
-    					new Integer(windowWidth),
-    					minTimeSb.toString(),
-    					maxTimeSb.toString(),
-    					sampleSource.getLabel(channel)
-    			}
-    	);
-    	
-    	if( titleVisible ) {
-    		powerSpectrumChart.setTitle(new TextTitle(title, titleFont));
-    	} else {
-    		powerSpectrumChart.setTitle((String) null);
-    	}
+		}
+		
+		if( powerSpectrumChart == null ) {
+			
+			powerSpectrumChart = new JFreeChart(null, titleFont, powerSpectrumPlot, false);
+			powerSpectrumChart.setBorderVisible(false);
+			powerSpectrumChart.setBackgroundPaint(Color.WHITE);
+			
+		}
+		
+		double pixelPerSecond = plot.getPixelPerSecond();
+		float minTime = (float) ((firstSample * timeZoomFactor) / pixelPerSecond); 
+		float maxTime = (float) ((lastSample * timeZoomFactor) / pixelPerSecond); 
+		
+		StringBuilder minTimeSb = new StringBuilder(20);
+		Util.addTime( minTime, minTimeSb );
+		
+		StringBuilder maxTimeSb = new StringBuilder(20);
+		Util.addTime( maxTime, maxTimeSb );
+				
+		String title = messageSource.getMessage(
+				"fft.chartTitle",
+				new Object[] {
+						new Integer(windowWidth),
+						minTimeSb.toString(),
+						maxTimeSb.toString(),
+						sampleSource.getLabel(channel)
+				}
+		);
+		
+		if( titleVisible ) {
+			powerSpectrumChart.setTitle(new TextTitle(title, titleFont));
+		} else {
+			powerSpectrumChart.setTitle((String) null);
+		}
 		powerSpectrumChart.setAntiAlias(antialias);
 
-    	int startIndex = LEFT_CUTOFF;
-    	int endIndex = powerSpectrum[1].length;
+		int startIndex = LEFT_CUTOFF;
+		int endIndex = powerSpectrum[1].length;
 		
 		{
 			//FIXME: check
@@ -241,62 +241,62 @@ public class SignalFFTPlot extends JComponent {
 				rangeEnd = rangeStart + 1;
 			}
 			
-	    	if (fftSettings.isScaleToView()) {
-	    		
-	    		double sampleDist = endIndex-startIndex;
-	    		
-	    		int shift = (int) (((rangeEnd - oldRangeStart) / rangeSize) * sampleDist);	    		
-	    		endIndex = startIndex + shift;
-	    		
-	    		shift = (int) (((rangeStart - oldRangeStart) / rangeSize) * sampleDist);
-	    		startIndex += shift;
+			if (fftSettings.isScaleToView()) {
+				
+				double sampleDist = endIndex-startIndex;
+				
+				int shift = (int) (((rangeEnd - oldRangeStart) / rangeSize) * sampleDist);				
+				endIndex = startIndex + shift;
+				
+				shift = (int) (((rangeStart - oldRangeStart) / rangeSize) * sampleDist);
+				startIndex += shift;
 
-	    	}
+			}
 
 			
 			xAxis.setRange( rangeStart, rangeEnd );			
 		}
 		
-    	
-    	
-    	double max = 0;
-    	double min = Double.MAX_VALUE;
-    	    	
-    	for( int i=startIndex; i<endIndex; i++ ) {
-    		if( max < powerSpectrum[1][i] ) {
-    			max = powerSpectrum[1][i];
-    		}
-    		if( min > powerSpectrum[1][i] ) {
-    			min = powerSpectrum[1][i];
-    		}
-    	}
-    	
-    	max *= 1.15 ; // scale up by 15% as per ZFB request (related to spline overshooting points). 
-    	
-    	if( logarithmic ) {
-    		logYAxis.setTickLabelsVisible(powerAxisLabelsVisible);
-    		logYAxis.setRange( min, max );
-    		powerSpectrumPlot.setRangeAxis(logYAxis);
-    	} else {
-    		normalYAxis.setTickLabelsVisible(powerAxisLabelsVisible);
-    		normalYAxis.setRange( 0, max );
-    		powerSpectrumPlot.setRangeAxis(normalYAxis);
-    	}
+		
+		
+		double max = 0;
+		double min = Double.MAX_VALUE;
+				
+		for( int i=startIndex; i<endIndex; i++ ) {
+			if( max < powerSpectrum[1][i] ) {
+				max = powerSpectrum[1][i];
+			}
+			if( min > powerSpectrum[1][i] ) {
+				min = powerSpectrum[1][i];
+			}
+		}
+		
+		max *= 1.15 ; // scale up by 15% as per ZFB request (related to spline overshooting points). 
+		
+		if( logarithmic ) {
+			logYAxis.setTickLabelsVisible(powerAxisLabelsVisible);
+			logYAxis.setRange( min, max );
+			powerSpectrumPlot.setRangeAxis(logYAxis);
+		} else {
+			normalYAxis.setTickLabelsVisible(powerAxisLabelsVisible);
+			normalYAxis.setRange( 0, max );
+			powerSpectrumPlot.setRangeAxis(normalYAxis);
+		}
 
-    	xAxis.setTickLabelsVisible(frequencyAxisLabelsVisible);
-    	
-    	if( spline ) {
-    		splineRenderer.setSeriesPaint(0, Color.RED);
-    		powerSpectrumPlot.setRenderer(splineRenderer);
-    	} else {
-    		normalRenderer.setSeriesPaint(0, Color.RED);
-    		powerSpectrumPlot.setRenderer(normalRenderer);
-    	}
-    	
-    	DefaultXYDataset dataset = new DefaultXYDataset();
-    	dataset.addSeries("data", powerSpectrum);
-    	powerSpectrumPlot.setDataset( dataset );
-    	        			
+		xAxis.setTickLabelsVisible(frequencyAxisLabelsVisible);
+		
+		if( spline ) {
+			splineRenderer.setSeriesPaint(0, Color.RED);
+			powerSpectrumPlot.setRenderer(splineRenderer);
+		} else {
+			normalRenderer.setSeriesPaint(0, Color.RED);
+			powerSpectrumPlot.setRenderer(normalRenderer);
+		}
+		
+		DefaultXYDataset dataset = new DefaultXYDataset();
+		dataset.addSeries("data", powerSpectrum);
+		powerSpectrumPlot.setDataset( dataset );
+							
 	}
 	
 	@Override

@@ -89,93 +89,93 @@ public class ViewerMonitorTree extends AbstractViewerTree implements SignalPageF
 		activeSignalDocument = null;
 		activePage = -1;
 
-	    if( path != null ) {
-            Object last = path.getLastPathComponent();
-            if( last instanceof SignalDocument ) {
-                activeSignalDocument = (SignalDocument) last;
-                popupMenu = getDocumentPopupMenu();                
-            }
-        }
+		if( path != null ) {
+			Object last = path.getLastPathComponent();
+			if( last instanceof SignalDocument ) {
+				activeSignalDocument = (SignalDocument) last;
+				popupMenu = getDocumentPopupMenu();				
+			}
+		}
 
-        afSupport.fireActionFocusChanged();
-        
-        return popupMenu;
-        
-    }
-    
-    private JPopupMenu getDocumentPopupMenu() {
-        
-        if( documentPopupMenu == null ) {
-            documentPopupMenu = new JPopupMenu();
-            
-            documentPopupMenu.add(getActivateDocumentAction());
-            documentPopupMenu.addSeparator();
-            documentPopupMenu.add(getCloseDocumentAction());
-        }
-                
-        return documentPopupMenu;
+		afSupport.fireActionFocusChanged();
+		
+		return popupMenu;
+		
+	}
+	
+	private JPopupMenu getDocumentPopupMenu() {
+		
+		if( documentPopupMenu == null ) {
+			documentPopupMenu = new JPopupMenu();
+			
+			documentPopupMenu.add(getActivateDocumentAction());
+			documentPopupMenu.addSeparator();
+			documentPopupMenu.add(getCloseDocumentAction());
+		}
+				
+		return documentPopupMenu;
 
-    }
+	}
 
-    public ActionFocusManager getActionFocusManager() {
-        return actionFocusManager;
-    }
+	public ActionFocusManager getActionFocusManager() {
+		return actionFocusManager;
+	}
 
-    public void setActionFocusManager(ActionFocusManager actionFocusManager) {
-        this.actionFocusManager = actionFocusManager;
-    }
-    
-    public DocumentFlowIntegrator getDocumentFlowIntegrator() {
-        return documentFlowIntegrator;
-    }
+	public void setActionFocusManager(ActionFocusManager actionFocusManager) {
+		this.actionFocusManager = actionFocusManager;
+	}
+	
+	public DocumentFlowIntegrator getDocumentFlowIntegrator() {
+		return documentFlowIntegrator;
+	}
 
-    public void setDocumentFlowIntegrator(DocumentFlowIntegrator documentFlowIntegrator) {
-        this.documentFlowIntegrator = documentFlowIntegrator;
-    }
+	public void setDocumentFlowIntegrator(DocumentFlowIntegrator documentFlowIntegrator) {
+		this.documentFlowIntegrator = documentFlowIntegrator;
+	}
 
-    public ActivateDocumentAction getActivateDocumentAction() {
-        if( activateDocumentAction == null ) {
-            activateDocumentAction = new ActivateDocumentAction(messageSource,actionFocusManager,this);
-        }
-        return activateDocumentAction;
-    }
+	public ActivateDocumentAction getActivateDocumentAction() {
+		if( activateDocumentAction == null ) {
+			activateDocumentAction = new ActivateDocumentAction(messageSource,actionFocusManager,this);
+		}
+		return activateDocumentAction;
+	}
 
-    public CloseDocumentAction getCloseDocumentAction() {
-        if( closeDocumentAction == null ) {
-            closeDocumentAction = new CloseDocumentAction(messageSource,this);
-            closeDocumentAction.setDocumentFlowIntegrator(documentFlowIntegrator);
-        }
-        return closeDocumentAction;
-    }
-    
-    private class MouseEventHandler extends MouseAdapter {
+	public CloseDocumentAction getCloseDocumentAction() {
+		if( closeDocumentAction == null ) {
+			closeDocumentAction = new CloseDocumentAction(messageSource,this);
+			closeDocumentAction.setDocumentFlowIntegrator(documentFlowIntegrator);
+		}
+		return closeDocumentAction;
+	}
+	
+	private class MouseEventHandler extends MouseAdapter {
 
-        @Override
-        public void mousePressed(MouseEvent e) {
-            ViewerMonitorTree tree = (ViewerMonitorTree) e.getSource();
-            if( SwingUtilities.isRightMouseButton(e) && (e.getClickCount() == 1) ) {
-                TreePath selPath = tree.getPathForLocation(e.getX(), e.getY());
-                tree.setSelectionPath(selPath);
-            }
-        }
+		@Override
+		public void mousePressed(MouseEvent e) {
+			ViewerMonitorTree tree = (ViewerMonitorTree) e.getSource();
+			if( SwingUtilities.isRightMouseButton(e) && (e.getClickCount() == 1) ) {
+				TreePath selPath = tree.getPathForLocation(e.getX(), e.getY());
+				tree.setSelectionPath(selPath);
+			}
+		}
 
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            ViewerMonitorTree tree = (ViewerMonitorTree) e.getSource();
-            if( SwingUtilities.isLeftMouseButton(e) && (e.getClickCount() % 2) == 0 ) {
-                int selRow = tree.getRowForLocation(e.getX(), e.getY());
-                TreePath selPath = tree.getPathForLocation(e.getX(), e.getY());
-                focus(selPath);
-                if( selRow >= 0 ) {
-                    Object target = selPath.getLastPathComponent();
-                    if( target instanceof Document ) {
-                        getActivateDocumentAction().actionPerformed(new ActionEvent(tree,0,"activate"));
-                    }
-                    // ignore dbl clicks on other tree nodes 
-                }
-            }
-        }
-                
-    }
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			ViewerMonitorTree tree = (ViewerMonitorTree) e.getSource();
+			if( SwingUtilities.isLeftMouseButton(e) && (e.getClickCount() % 2) == 0 ) {
+				int selRow = tree.getRowForLocation(e.getX(), e.getY());
+				TreePath selPath = tree.getPathForLocation(e.getX(), e.getY());
+				focus(selPath);
+				if( selRow >= 0 ) {
+					Object target = selPath.getLastPathComponent();
+					if( target instanceof Document ) {
+						getActivateDocumentAction().actionPerformed(new ActionEvent(tree,0,"activate"));
+					}
+					// ignore dbl clicks on other tree nodes 
+				}
+			}
+		}
+				
+	}
 
 }

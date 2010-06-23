@@ -25,177 +25,177 @@ public class WignerMap {
   }
 
   public double getSignalValue(int k) {
-      if(signal==null || k>=DimBase) {
-	     return 0.0;
+	  if(signal==null || k>=DimBase) {
+		 return 0.0;
 	  }
-      return signal[k];
+	  return signal[k];
   }
   
   public double getReconstValue(int k) {
-      if(ReconstSignal==null || k>=DimBase) {
-	     return 0.0;
+	  if(ReconstSignal==null || k>=DimBase) {
+		 return 0.0;
 	  }
-      return ReconstSignal[k];
+	  return ReconstSignal[k];
   }
 
   public double getValue(int x,int y) {
-    if(Map==null) {
+	if(Map==null) {
 		return 0.0F;
 	}
-    if(x>=0 && x<SizeX && y>=0 && y<SizeY) {
-      if(Math.abs(minVal-maxVal)<=EPS) {
-	     return 0.0F;
+	if(x>=0 && x<SizeX && y>=0 && y<SizeY) {
+	  if(Math.abs(minVal-maxVal)<=EPS) {
+		 return 0.0F;
 	  }
-      return (double)(100.0*(Map[x][y]-minVal)/(maxVal-minVal));
-    }
-    return 0.0F;
+	  return (double)(100.0*(Map[x][y]-minVal)/(maxVal-minVal));
+	}
+	return 0.0F;
   }
 
   public static void makeCosTable(double Cos[],int start,int stop,
-			    double freq,double phase) {
-    double sinFreq,cosFreq,sinPhase,cosPhase,newCos,oldSin,oldCos;
+				double freq,double phase) {
+	double sinFreq,cosFreq,sinPhase,cosPhase,newCos,oldSin,oldCos;
 
-    sinFreq=Math.sin(freq);
-    cosFreq=Math.cos(freq);
+	sinFreq=Math.sin(freq);
+	cosFreq=Math.cos(freq);
 
-    phase-=freq*start;
-    sinPhase=Math.sin(phase);
-    cosPhase=Math.cos(phase);
+	phase-=freq*start;
+	sinPhase=Math.sin(phase);
+	cosPhase=Math.cos(phase);
 
-    oldSin=0.0;
-    oldCos=1.0;
+	oldSin=0.0;
+	oldCos=1.0;
 
-    Cos[start]=cosPhase;
-    for(int i=start+1 ; i<=stop ; i++) {
-      newCos=oldCos*cosFreq-oldSin*sinFreq;
-      oldSin=oldSin*cosFreq+oldCos*sinFreq;
-      oldCos=newCos;
-      Cos[i]=oldCos*cosPhase-oldSin*sinPhase;
-    }
+	Cos[start]=cosPhase;
+	for(int i=start+1 ; i<=stop ; i++) {
+	  newCos=oldCos*cosFreq-oldSin*sinFreq;
+	  oldSin=oldSin*cosFreq+oldCos*sinFreq;
+	  oldCos=newCos;
+	  Cos[i]=oldCos*cosPhase-oldSin*sinPhase;
+	}
   }
 
   private void RSignal(StandardBookSegment book,double signal[]) {
-    double tmpsig[]=new double[DimBase+1],sum,maxSig,minSig;
-    int i,k,itmp;
-    double Exp[]=new double[DimBase],Cos[]=new double[DimBase];
-    double dtmp;
-    double  ptr[];
+	double tmpsig[]=new double[DimBase+1],sum,maxSig,minSig;
+	int i,k,itmp;
+	double Exp[]=new double[DimBase],Cos[]=new double[DimBase];
+	double dtmp;
+	double  ptr[];
 
-    Count=0;
+	Count=0;
 
-    for(i=0 ; i<DimBase ; i++) {
-      signal[i]=0.0;
-    }
+	for(i=0 ; i<DimBase ; i++) {
+	  signal[i]=0.0;
+	}
 
-    int BookLen=book.getAtomCount();
-    mask=new boolean[ BookLen ];
-    reconst=null;
-    System.gc();
-    reconst=new double[BookLen][DimBase];
+	int BookLen=book.getAtomCount();
+	mask=new boolean[ BookLen ];
+	reconst=null;
+	System.gc();
+	reconst=new double[BookLen][DimBase];
 
-    for(k=0 ; k<BookLen ; k++) {
-    mask[k]=false;
+	for(k=0 ; k<BookLen ; k++) {
+	mask[k]=false;
 	ptr=reconst[k];
 	for(i=0 ; i<DimBase ; i++)
-	    ptr[i]=0.0F;
-    }
+		ptr[i]=0.0F;
+	}
 
-    for(int kk=0 ; kk<BookLen ; kk++) {
-    	StandardBookAtom atom=book.getAtomAt(kk);																																				
-	    ptr=reconst[kk];
-	    if(atom.getType()==StandardBookAtom.DIRACDELTA_IDENTITY) {
-	        signal[itmp=(int)atom.getPosition()]+=/*(dtmp=((atom.getPhase())>=0.5F) ?
+	for(int kk=0 ; kk<BookLen ; kk++) {
+		StandardBookAtom atom=book.getAtomAt(kk);																																				
+		ptr=reconst[kk];
+		if(atom.getType()==StandardBookAtom.DIRACDELTA_IDENTITY) {
+			signal[itmp=(int)atom.getPosition()]+=/*(dtmp=((atom.getPhase())>=0.5F) ?
 						  -1.0 : 1.0)*/ (dtmp=atom.getModulus());
-	        ptr[itmp]=(double)dtmp;
+			ptr[itmp]=(double)dtmp;
 	   } else if(atom.getType()==StandardBookAtom.SINCOSWAVE_IDENTITY) {
-	       double freq=Math.PI*2*atom.getFrequency()/atom.getBaseLength(),
-		          phase=atom.getPhase()-freq*atom.getPosition();
+		   double freq=Math.PI*2*atom.getFrequency()/atom.getBaseLength(),
+				  phase=atom.getPhase()-freq*atom.getPosition();
 
-	       for(i=0,sum=0.0 ; i<DimBase ; i++) {
-		       sum+=SQR(tmpsig[i]=Math.cos(freq*i+phase));
-	       }
-	       
-	       sum=atom.getModulus()/Math.sqrt(sum);
-	       for(i=0 ; i<DimBase ; i++) {
-		      signal[i]+=(dtmp=tmpsig[i]*sum);
-		      ptr[i]=(double)dtmp;
-	       }
+		   for(i=0,sum=0.0 ; i<DimBase ; i++) {
+			   sum+=SQR(tmpsig[i]=Math.cos(freq*i+phase));
+		   }
+		   
+		   sum=atom.getModulus()/Math.sqrt(sum);
+		   for(i=0 ; i<DimBase ; i++) {
+			  signal[i]+=(dtmp=tmpsig[i]*sum);
+			  ptr[i]=(double)dtmp;
+		   }
 	} else {
-	    double freq=Math.PI*2*atom.getFrequency()/atom.getBaseLength(),
-		       phase=atom.getPhase()-freq*atom.getPosition();
-	    int start=0,stop=DimBase-1;
+		double freq=Math.PI*2*atom.getFrequency()/atom.getBaseLength(),
+			   phase=atom.getPhase()-freq*atom.getPosition();
+		int start=0,stop=DimBase-1;
 
-	    MakeExpTable(Exp,Math.PI/SQR(atom.getScale()),
+		MakeExpTable(Exp,Math.PI/SQR(atom.getScale()),
 			 (int)atom.getPosition(),
 			 start,stop);
 
-	    makeCosTable(Cos,start,stop,freq,phase);
+		makeCosTable(Cos,start,stop,freq,phase);
 
-	    for(i=start,sum=0.0 ; i<=stop ; i++)
-	      sum+=SQR(tmpsig[i]=Exp[i]*Cos[i]);
-	    /*Math.cos(freq*i+phase)*/
-  	      sum=atom.getModulus()/Math.sqrt(sum);
-	      for(i=start ; i<=stop ; i++) {
-		    signal[i]+=(dtmp=tmpsig[i]*sum);
-	    	ptr[i]=(double)dtmp;
-	    }
+		for(i=start,sum=0.0 ; i<=stop ; i++)
+		  sum+=SQR(tmpsig[i]=Exp[i]*Cos[i]);
+		/*Math.cos(freq*i+phase)*/
+  		  sum=atom.getModulus()/Math.sqrt(sum);
+		  for(i=start ; i<=stop ; i++) {
+			signal[i]+=(dtmp=tmpsig[i]*sum);
+			ptr[i]=(double)dtmp;
+		}
 	  }
-    }
+	}
 
-    minSig=maxSig=signal[0];
-    for(i=1 ; i<DimBase ; i++) {
+	minSig=maxSig=signal[0];
+	for(i=1 ; i<DimBase ; i++) {
 	   if(signal[i]<minSig) {
-	      minSig=signal[i];
+		  minSig=signal[i];
 	   }
 	   if(signal[i]>maxSig) {
-	      maxSig=signal[i];
+		  maxSig=signal[i];
 	   }
-    }
+	}
 
  //   double Yscale=((minSig==maxSig) ? 1.0 : 1.0/(maxSig-minSig));
  //   RBot=-Yscale*minSig;
 
-    ReconstSignal=new double[DimBase];
-    for(i=0 ; i<DimBase ; i++) {
+	ReconstSignal=new double[DimBase];
+	for(i=0 ; i<DimBase ; i++) {
 	//  signal[i]=Yscale*(signal[i]-minSig);
 	  ReconstSignal[i]=0.0; //RBot;
-    }
+	}
 
-    /*
-    for(k=0 ; k<BookLen ; k++) {
-    	ptr=reconst[k];
-	    for(i=0 ; i<DimBase ; i++) {
-	       ptr[i]=(double)(Yscale*ptr[i]);
-	    }
-    }
-    */
+	/*
+	for(k=0 ; k<BookLen ; k++) {
+		ptr=reconst[k];
+		for(i=0 ; i<DimBase ; i++) {
+		   ptr[i]=(double)(Yscale*ptr[i]);
+		}
+	}
+	*/
   }
 
   public void atomToReconst(int k) {
  	if(mask==null) {
  	   return;
-    }
+	}
 
  	if(k>=0 && k<mask.length) {
- 	    double ptr[]=reconst[k];
- 	    int i;
+ 		double ptr[]=reconst[k];
+ 		int i;
 
- 	    if(mask[k]) {
+ 		if(mask[k]) {
  		   Count--;
  	   	   for(i=0 ; i<DimBase ; i++) {
- 		       ReconstSignal[i]-=ptr[i];
+ 			   ReconstSignal[i]-=ptr[i];
 		   }
- 	    } else {
+ 		} else {
  		   Count++;
  	  	   for(i=0 ; i<DimBase ; i++) {
- 		      ReconstSignal[i]+=ptr[i];
+ 			  ReconstSignal[i]+=ptr[i];
 		   }
- 	    }
+ 		}
 
- 	    mask[k]=!mask[k];
- 	    if(Count==0) {
+ 		mask[k]=!mask[k];
+ 		if(Count==0) {
  		   for(i=0 ; i<DimBase ; i++) {
- 		      ReconstSignal[i]=0.0;
+ 			  ReconstSignal[i]=0.0;
 		  }
 	   }
  	}
@@ -203,62 +203,62 @@ public class WignerMap {
 
   public final void setBook(StandardBookSegment book) {
 	boolean rec=true;
-    double ref[];
-    int i,j,k;
+	double ref[];
+	int i,j,k;
 
-    DimBase=book.getSegmentLength();
-    for(i=0 ; i<SizeX ; i++) {
-      for(j=0,ref=Map[i] ; j<SizeY ; j++) {
-	     ref[j]=0.0F;
+	DimBase=book.getSegmentLength();
+	for(i=0 ; i<SizeX ; i++) {
+	  for(j=0,ref=Map[i] ; j<SizeY ; j++) {
+		 ref[j]=0.0F;
 	  }
-    }
-
-    minVal=maxVal=0.0;
-    SamplingFreq=book.getSamplingFrequency();
-    int BookSize=book.getAtomCount();
-
-    SetWignerParameters();
-    for(k=0 ; k<BookSize ; k++) {
-    	StandardBookAtom atom=book.getAtomAt(k);
-	    AddAtom(atom.getModulus(), (int)atom.getScale(), (int)atom.getPosition(), atom.getFrequency());
 	}
 
-    signal=new double[DimBase];
-    if(rec) {
-      RSignal(book, signal);
-    } else {
-      for(i=0 ; i<DimBase ; i++) {
-	     signal[i]=0.0F;
+	minVal=maxVal=0.0;
+	SamplingFreq=book.getSamplingFrequency();
+	int BookSize=book.getAtomCount();
+
+	SetWignerParameters();
+	for(k=0 ; k<BookSize ; k++) {
+		StandardBookAtom atom=book.getAtomAt(k);
+		AddAtom(atom.getModulus(), (int)atom.getScale(), (int)atom.getPosition(), atom.getFrequency());
+	}
+
+	signal=new double[DimBase];
+	if(rec) {
+	  RSignal(book, signal);
+	} else {
+	  for(i=0 ; i<DimBase ; i++) {
+		 signal[i]=0.0F;
 	 }
-    }
-    SetMinMax();
+	}
+	SetMinMax();
   }
 
   public double []getSignal() {
-    return signal;
+	return signal;
   }
 
   public double []getReconstruction() {
-      return ReconstSignal;
+	  return ReconstSignal;
   }
 
   private void SetWignerParameters() {
-    //minT=0; maxT=DimBase-1;
-    minF=(int)(0.5+FreqMin*(DimBase-1)/SamplingFreq);
-    maxF=(int)(0.5+FreqMax*(DimBase-1)/SamplingFreq);
-    ATime=(maxT-minT)/(SizeX-1); BTime=minT;
-    AFreq=(maxF-minF)/(SizeY-1); BFreq=minF;
+	//minT=0; maxT=DimBase-1;
+	minF=(int)(0.5+FreqMin*(DimBase-1)/SamplingFreq);
+	maxF=(int)(0.5+FreqMax*(DimBase-1)/SamplingFreq);
+	ATime=(maxT-minT)/(SizeX-1); BTime=minT;
+	AFreq=(maxF-minF)/(SizeY-1); BFreq=minF;
   }
 
   public void SetTrueSize(double StartFreq,double StopFreq) {
-    if(StartFreq>=StopFreq) {
+	if(StartFreq>=StopFreq) {
 		return;
 	}
-    FreqMin=StartFreq; FreqMax=StopFreq;
+	FreqMin=StartFreq; FreqMax=StopFreq;
   }
 
   public WignerMap(int Sx,int Sy,int minTT,int maxTT,int minFF,int maxFF) {
-    SizeX=Sx; SizeY=Sy; minT=minTT; maxT=maxTT; minF=minFF; maxF=maxFF;
+	SizeX=Sx; SizeY=Sy; minT=minTT; maxT=maxTT; minF=minFF; maxF=maxFF;
 
 	Map=null; NormMap=null; TimeAxis=null; FreqAxis=null;
   	System.gc();
@@ -267,209 +267,209 @@ public class WignerMap {
 	TimeAxis=new double[SizeX];
 	FreqAxis=new double[SizeY];
 
-    ATime=(maxT-minT)/(SizeX-1); BTime=minT;
-    AFreq=(maxF-minF)/(SizeY-1); BFreq=minF;
+	ATime=(maxT-minT)/(SizeX-1); BTime=minT;
+	AFreq=(maxF-minF)/(SizeY-1); BFreq=minF;
   }
 
   public final void setSigmaScale(double Dyst[]) {
-    double Scale=(Dyst.length-1)/(maxVal-minVal),OldMinVal=minVal;
-    double ftmp,ref[];
-    int i,j;
+	double Scale=(Dyst.length-1)/(maxVal-minVal),OldMinVal=minVal;
+	double ftmp,ref[];
+	int i,j;
 
-    maxVal=minVal=Map[0][0]*Dyst[(int)(Scale*(Map[0][0]-minVal))];
-    for(i=0 ; i<SizeX ; i++)
-      for(j=0,ref=Map[i] ; j<SizeY ; j++) {
-	    ftmp=(ref[j]*=Dyst[(int)(Scale*(ref[j]-OldMinVal))]);
-    	if(maxVal<ftmp) maxVal=ftmp;
-    	if(minVal>ftmp) minVal=ftmp;
-      }
+	maxVal=minVal=Map[0][0]*Dyst[(int)(Scale*(Map[0][0]-minVal))];
+	for(i=0 ; i<SizeX ; i++)
+	  for(j=0,ref=Map[i] ; j<SizeY ; j++) {
+		ftmp=(ref[j]*=Dyst[(int)(Scale*(ref[j]-OldMinVal))]);
+		if(maxVal<ftmp) maxVal=ftmp;
+		if(minVal>ftmp) minVal=ftmp;
+	  }
   }
 
   public final void setSigmaScale(double alpha, double trans) {
-    if(Map==null) return;
-    double Scale=(double)(1.0/(maxVal-minVal));
-    alpha*=Scale;
-    trans=(double)(alpha*minVal-trans);
-    maxVal=minVal=(double)(1.0/(1.0+Math.exp(-alpha*Map[0][0]+trans)));
-    double ftmp,ref[];
-    int i,j;
+	if(Map==null) return;
+	double Scale=(double)(1.0/(maxVal-minVal));
+	alpha*=Scale;
+	trans=(double)(alpha*minVal-trans);
+	maxVal=minVal=(double)(1.0/(1.0+Math.exp(-alpha*Map[0][0]+trans)));
+	double ftmp,ref[];
+	int i,j;
 
-    for(i=0 ; i<SizeX ; i++)
-      for(j=0,ref=Map[i] ; j<SizeY ; j++) {
-     	ftmp=ref[j]=(double)(1.0/(1.0+Math.exp(-alpha*ref[j]+trans)));
-    	if(maxVal<ftmp) maxVal=ftmp;
-    	if(minVal>ftmp) minVal=ftmp;
-      }
+	for(i=0 ; i<SizeX ; i++)
+	  for(j=0,ref=Map[i] ; j<SizeY ; j++) {
+	 	ftmp=ref[j]=(double)(1.0/(1.0+Math.exp(-alpha*ref[j]+trans)));
+		if(maxVal<ftmp) maxVal=ftmp;
+		if(minVal>ftmp) minVal=ftmp;
+	  }
   }
 
   public final void setSqrtScale() {
-      if(Map==null)
+	  if(Map==null)
 	  return;
-      maxVal=minVal=(double)Math.sqrt(Map[0][0]);
-      double ftmp,ref[];
-      int i,j;
+	  maxVal=minVal=(double)Math.sqrt(Map[0][0]);
+	  double ftmp,ref[];
+	  int i,j;
 
-      for(i=0 ; i<SizeX ; i++)
+	  for(i=0 ; i<SizeX ; i++)
 	  for(j=0,ref=Map[i] ; j<SizeY ; j++) {
-	      ftmp=ref[j]=(double)Math.sqrt(ref[j]);
-	      if(maxVal<ftmp) maxVal=ftmp;
-	      if(minVal>ftmp) minVal=ftmp;
+		  ftmp=ref[j]=(double)Math.sqrt(ref[j]);
+		  if(maxVal<ftmp) maxVal=ftmp;
+		  if(minVal>ftmp) minVal=ftmp;
 	  }
  }
 
   public final void setLogScale() {
-    if(Map==null) return;
-    maxVal=minVal=(double)Math.log(1.0F+Map[0][0]);
-    double ftmp,ref[];
-    int i,j;
+	if(Map==null) return;
+	maxVal=minVal=(double)Math.log(1.0F+Map[0][0]);
+	double ftmp,ref[];
+	int i,j;
 
-    for(i=0 ; i<SizeX ; i++)
-      for(j=0,ref=Map[i] ; j<SizeY ; j++) {
-	    ftmp=ref[j]=(double)Math.log(1.0F+ref[j]);
-	    if(maxVal<ftmp) maxVal=ftmp;
-    	if(minVal>ftmp) minVal=ftmp;
-      }
+	for(i=0 ; i<SizeX ; i++)
+	  for(j=0,ref=Map[i] ; j<SizeY ; j++) {
+		ftmp=ref[j]=(double)Math.log(1.0F+ref[j]);
+		if(maxVal<ftmp) maxVal=ftmp;
+		if(minVal>ftmp) minVal=ftmp;
+	  }
   }
 
   public final void NormScale() {
-    if(Map==null || NormMap==null) return;
-    double ftmp,ref1[],ref2[];
-    int i,j;
+	if(Map==null || NormMap==null) return;
+	double ftmp,ref1[],ref2[];
+	int i,j;
 
-    for(i=0 ; i<SizeX ; i++)
-      for(j=0,ref1=Map[i],ref2=NormMap[i] ; j<SizeY ; j++) {
-	     ftmp=ref1[j]=ref2[j];
-	     if(maxVal<ftmp) maxVal=ftmp;
-	     if(minVal>ftmp) minVal=ftmp;
-      }
+	for(i=0 ; i<SizeX ; i++)
+	  for(j=0,ref1=Map[i],ref2=NormMap[i] ; j<SizeY ; j++) {
+		 ftmp=ref1[j]=ref2[j];
+		 if(maxVal<ftmp) maxVal=ftmp;
+		 if(minVal>ftmp) minVal=ftmp;
+	  }
   }
 
   public double getMinVal() {
-    return minVal;
+	return minVal;
   }
 
   public double getMaxVal() {
-    return maxVal;
+	return maxVal;
   }
 
   private void SetMinMax() {
-    if(Map==null) return;
-    double ftmp,ref1[],ref2[];
-    int i,j;
+	if(Map==null) return;
+	double ftmp,ref1[],ref2[];
+	int i,j;
 
-    for(i=0 ; i<SizeX ; i++)
-      for(j=0,ref1=NormMap[i],ref2=Map[i] ; j<SizeY ; j++) {
+	for(i=0 ; i<SizeX ; i++)
+	  for(j=0,ref1=NormMap[i],ref2=Map[i] ; j<SizeY ; j++) {
 	   ftmp=ref1[j]=ref2[j];
 	   if(ftmp>maxVal) maxVal=ftmp;
 	   if(ftmp<minVal) minVal=ftmp;
-      }
+	  }
   }
 
   private void SetExp(double sig[],double alpha,int trans,
-		      double modulus,int Max)
-    {
-      double Const=1.65*Math.sqrt(Math.log(modulus/(2.0*EPS))/(PI2M*alpha));
+			  double modulus,int Max)
+	{
+	  double Const=1.65*Math.sqrt(Math.log(modulus/(2.0*EPS))/(PI2M*alpha));
 
-      Start=(int)(trans-Const)-1; 
-      Stop=(int)(trans+Const)+1;
-      if(Start<0)  Start=0;
-      if(Stop>Max) Stop=Max;
-      if(Start>=Stop) return;
-      MakeExpTable(sig,alpha,trans,Start,Stop);
-      for(int i=Start ; i<=Stop ; i++) {
-	      sig[i]*=modulus;
-      }
+	  Start=(int)(trans-Const)-1; 
+	  Stop=(int)(trans+Const)+1;
+	  if(Start<0)  Start=0;
+	  if(Stop>Max) Stop=Max;
+	  if(Start>=Stop) return;
+	  MakeExpTable(sig,alpha,trans,Start,Stop);
+	  for(int i=Start ; i<=Stop ; i++) {
+		  sig[i]*=modulus;
+	  }
   }
 
   public void AddAtom(double modulus,int scale,int trans,double ffreq) {
-    int i,j,freq;
-    double ref[];
+	int i,j,freq;
+	double ref[];
 
-    if(scale!=0) {
-      double dy=Math.PI/DimBase;
-      double alphaTime=4.0*Math.PI/SQR(scale),
-	         alphaFreq=4.0*Math.PI*SQR(dy*scale/PI2M);
+	if(scale!=0) {
+	  double dy=Math.PI/DimBase;
+	  double alphaTime=4.0*Math.PI/SQR(scale),
+			 alphaFreq=4.0*Math.PI*SQR(dy*scale/PI2M);
 
-      alphaTime*=(ATime*ATime);
-      trans=(int) Math.round(((((double)trans)-BTime)/ATime));
-      alphaFreq*=(AFreq*AFreq);
-      freq=(int) Math.round(((((double)ffreq)-BFreq)/AFreq));
-      
-      if(scale==DimBase) {
-	     if(freq<0 || freq>=SizeY) {
+	  alphaTime*=(ATime*ATime);
+	  trans=(int) Math.round(((((double)trans)-BTime)/ATime));
+	  alphaFreq*=(AFreq*AFreq);
+	  freq=(int) Math.round(((((double)ffreq)-BFreq)/AFreq));
+	  
+	  if(scale==DimBase) {
+		 if(freq<0 || freq>=SizeY) {
 			 return;
 		 }
-	     modulus=SQR(modulus);
-	     for(i=0 ; i<SizeX ; i++) {
-	         Map[i][freq]+=modulus;
-	     }
-	     return;
-      }
-
-      SetExp(TimeAxis,alphaTime,trans,modulus,SizeX-1);
-      int TimeStart=Start,TimeStop=Stop;
-      SetExp(FreqAxis,alphaFreq,freq,modulus,SizeY-1);
-      int FreqStart=Start,FreqStop=Stop;
-      double dtmp;
-
-      if(TimeStart<TimeStop && FreqStart<FreqStop)
-	  for(i=TimeStart ; i<=TimeStop ; i++) {
-	      dtmp=TimeAxis[i];
-	      for(j=FreqStart,ref=Map[i] ; j<=FreqStop ; j++) {
-		      ref[j]+=dtmp*FreqAxis[j];
-	      }
+		 modulus=SQR(modulus);
+		 for(i=0 ; i<SizeX ; i++) {
+			 Map[i][freq]+=modulus;
+		 }
+		 return;
 	  }
-    } else {
-      trans=(int)((trans-BTime)/ATime);
-      if(trans<0 || trans>=SizeX) { 
-    	 return;
-      }
-      modulus=SQR(modulus);
-      for(i=0,ref=Map[trans] ; i<SizeY ; i++) {
-	     ref[i]+=modulus;
-      }
-    }
+
+	  SetExp(TimeAxis,alphaTime,trans,modulus,SizeX-1);
+	  int TimeStart=Start,TimeStop=Stop;
+	  SetExp(FreqAxis,alphaFreq,freq,modulus,SizeY-1);
+	  int FreqStart=Start,FreqStop=Stop;
+	  double dtmp;
+
+	  if(TimeStart<TimeStop && FreqStart<FreqStop)
+	  for(i=TimeStart ; i<=TimeStop ; i++) {
+		  dtmp=TimeAxis[i];
+		  for(j=FreqStart,ref=Map[i] ; j<=FreqStop ; j++) {
+			  ref[j]+=dtmp*FreqAxis[j];
+		  }
+	  }
+	} else {
+	  trans=(int)((trans-BTime)/ATime);
+	  if(trans<0 || trans>=SizeX) { 
+		 return;
+	  }
+	  modulus=SQR(modulus);
+	  for(i=0,ref=Map[trans] ; i<SizeY ; i++) {
+		 ref[i]+=modulus;
+	  }
+	}
   }
 
   private static double SQR(double x) {
-    return x*x;
+	return x*x;
   }
 
   public static void MakeExpTable(double ExpTab[],double alpha,int trans,
 				   int start,int stop)
-    {
-      int left,right,itmp;
-      double Factor,OldExp,ConstStep;
+	{
+	  int left,right,itmp;
+	  double Factor,OldExp,ConstStep;
 
-      if(start<trans && trans<stop) {
+	  if(start<trans && trans<stop) {
 	ExpTab[trans]=OldExp=1.0;
 	Factor=Math.exp(-alpha);
 	ConstStep=SQR(Factor);
 
 	for(left=trans-1,right=trans+1 ;
-	    start<=left && right<=stop ;
-	    left--,right++)
+		start<=left && right<=stop ;
+		left--,right++)
 	  {
-	    OldExp*=Factor;
-	    ExpTab[left]=ExpTab[right]=OldExp;
-	    Factor*=ConstStep;
+		OldExp*=Factor;
+		ExpTab[left]=ExpTab[right]=OldExp;
+		Factor*=ConstStep;
 	  }
 
 	if(left>=start)
 	  for( ; start<=left ; left--) {
-	    ExpTab[left]=OldExp*=Factor;
-	    Factor*=ConstStep;
+		ExpTab[left]=OldExp*=Factor;
+		Factor*=ConstStep;
 	  }
 	else
 	  for( ; right<=stop; right++) {
-	    ExpTab[right]=OldExp*=Factor;
-	    Factor*=ConstStep;
+		ExpTab[right]=OldExp*=Factor;
+		Factor*=ConstStep;
 	  }
-     return;
+	 return;
    }
 
-      ConstStep=Math.exp(-2.0*alpha);
-      if(trans>=stop) {
+	  ConstStep=Math.exp(-2.0*alpha);
+	  if(trans>=stop) {
 	itmp=trans-stop;
 	ExpTab[stop]=OldExp=Math.exp(-alpha*SQR(itmp));
 	Factor=Math.exp(-alpha*(double)((itmp << 1)+1));
@@ -478,7 +478,7 @@ public class WignerMap {
 	  ExpTab[left]=OldExp*=Factor;
 	  Factor*=ConstStep;
 	}
-      } else {
+	  } else {
 	itmp=start-trans;
 	ExpTab[start]=OldExp=Math.exp(-alpha*SQR(itmp));
 	Factor=Math.exp(-alpha*(double)((itmp << 1)+1));
@@ -487,6 +487,6 @@ public class WignerMap {
 	  ExpTab[right]=OldExp*=Factor;
 	  Factor*=ConstStep;
 	}
-      }
-    }
+	  }
+	}
 }

@@ -41,7 +41,7 @@ public class ExternalLinkLabel extends JLabel {
 		setForeground( Color.BLUE );
 		Font f = getFont().deriveFont( Font.PLAIN, 10 );
 		Map map = f.getAttributes();
-	    map.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);		
+		map.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);		
 		setFont( new Font(map) );
 		
 		setCursor( Cursor.getPredefinedCursor( Cursor.HAND_CURSOR ) );

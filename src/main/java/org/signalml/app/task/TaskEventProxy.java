@@ -50,80 +50,80 @@ public class TaskEventProxy implements TaskEventListener {
 	public void taskAborted(TaskEvent ev) {
 		Object[] listeners = listenerList.getListenerList();
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==TaskEventListener.class) {
-	             ((TaskEventListener)listeners[i+1]).taskAborted(ev);
-	         }
-	     }	        	 
+			 if (listeners[i]==TaskEventListener.class) {
+				 ((TaskEventListener)listeners[i+1]).taskAborted(ev);
+			 }
+		 }				 
 	}
 
 	@Override
 	public void taskFinished(TaskEvent ev) {
 		Object[] listeners = listenerList.getListenerList();
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==TaskEventListener.class) {
-	             ((TaskEventListener)listeners[i+1]).taskFinished(ev);
-	         }
-	     }
+			 if (listeners[i]==TaskEventListener.class) {
+				 ((TaskEventListener)listeners[i+1]).taskFinished(ev);
+			 }
+		 }
 	}
 
 	@Override
 	public void taskMessageSet(TaskEvent ev) {
 		Object[] listeners = listenerList.getListenerList();
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==TaskEventListener.class) {
-	             ((TaskEventListener)listeners[i+1]).taskMessageSet(ev);
-	         }
-	     }
+			 if (listeners[i]==TaskEventListener.class) {
+				 ((TaskEventListener)listeners[i+1]).taskMessageSet(ev);
+			 }
+		 }
 	}
 
 	@Override
 	public void taskRequestChanged(TaskEvent ev) {
 		Object[] listeners = listenerList.getListenerList();
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==TaskEventListener.class) {
-	             ((TaskEventListener)listeners[i+1]).taskRequestChanged(ev);
-	         }
-	     }
+			 if (listeners[i]==TaskEventListener.class) {
+				 ((TaskEventListener)listeners[i+1]).taskRequestChanged(ev);
+			 }
+		 }
 	}
 
 	@Override
 	public void taskResumed(TaskEvent ev) {
 		Object[] listeners = listenerList.getListenerList();
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==TaskEventListener.class) {
-	             ((TaskEventListener)listeners[i+1]).taskResumed(ev);
-	         }
-	     }
+			 if (listeners[i]==TaskEventListener.class) {
+				 ((TaskEventListener)listeners[i+1]).taskResumed(ev);
+			 }
+		 }
 	}
 
 	@Override
 	public void taskStarted(TaskEvent ev) {
 		Object[] listeners = listenerList.getListenerList();
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==TaskEventListener.class) {
-	             ((TaskEventListener)listeners[i+1]).taskStarted(ev);
-	         }
-	     }
+			 if (listeners[i]==TaskEventListener.class) {
+				 ((TaskEventListener)listeners[i+1]).taskStarted(ev);
+			 }
+		 }
 	}
 
 	@Override
 	public void taskSuspended(TaskEvent ev) {
 		Object[] listeners = listenerList.getListenerList();
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==TaskEventListener.class) {
-	             ((TaskEventListener)listeners[i+1]).taskSuspended(ev);
-	         }
-	     }
+			 if (listeners[i]==TaskEventListener.class) {
+				 ((TaskEventListener)listeners[i+1]).taskSuspended(ev);
+			 }
+		 }
 	}
 
 	@Override
 	public void taskTickerUpdated(TaskEvent ev) {
 		Object[] listeners = listenerList.getListenerList();
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==TaskEventListener.class) {
-	             ((TaskEventListener)listeners[i+1]).taskTickerUpdated(ev);
-	         }
-	     }
+			 if (listeners[i]==TaskEventListener.class) {
+				 ((TaskEventListener)listeners[i+1]).taskTickerUpdated(ev);
+			 }
+		 }
 	}
 
 }

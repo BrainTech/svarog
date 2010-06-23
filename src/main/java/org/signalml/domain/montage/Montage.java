@@ -942,61 +942,61 @@ public class Montage extends SourceMontage implements Preset {
 	}
 	
 	public void addMontageListener(MontageListener l) {
-        listenerList.add(MontageListener.class, l);
-    }
+		listenerList.add(MontageListener.class, l);
+	}
 
-    public void removeMontageListener(MontageListener l) {
-        listenerList.remove(MontageListener.class, l);
-    }
+	public void removeMontageListener(MontageListener l) {
+		listenerList.remove(MontageListener.class, l);
+	}
 
 	public void addMontageSampleFilterListener(MontageSampleFilterListener l) {
-        listenerList.add(MontageSampleFilterListener.class, l);
-    }
+		listenerList.add(MontageSampleFilterListener.class, l);
+	}
 
-    public void removeMontageSampleFilterListener(MontageSampleFilterListener l) {
-        listenerList.remove(MontageSampleFilterListener.class, l);
-    }
-    
-    protected void fireMontageStructureChanged(Object source) {
-        Object[] listeners = listenerList.getListenerList();
-        MontageEvent e = null;
-        for (int i = listeners.length-2; i>=0; i-=2) {
-            if (listeners[i]==MontageListener.class) {
-                if (e == null) {
-                    e = new MontageEvent(source, null, null);
-                }
-                ((MontageListener)listeners[i+1]).montageStructureChanged(e);
-            }          
-        }
-    }
-    
-    protected void fireMontageChannelsAdded(Object source, int[] channels, int[] primaryChannels) {
-        Object[] listeners = listenerList.getListenerList();
-        MontageEvent e = null;
-        for (int i = listeners.length-2; i>=0; i-=2) {
-            if (listeners[i]==MontageListener.class) {
-                if (e == null) {
-                    e = new MontageEvent(source, channels, primaryChannels);
-                }
-                ((MontageListener)listeners[i+1]).montageChannelsAdded(e);
-            }          
-        }
-    }
+	public void removeMontageSampleFilterListener(MontageSampleFilterListener l) {
+		listenerList.remove(MontageSampleFilterListener.class, l);
+	}
+	
+	protected void fireMontageStructureChanged(Object source) {
+		Object[] listeners = listenerList.getListenerList();
+		MontageEvent e = null;
+		for (int i = listeners.length-2; i>=0; i-=2) {
+			if (listeners[i]==MontageListener.class) {
+				if (e == null) {
+					e = new MontageEvent(source, null, null);
+				}
+				((MontageListener)listeners[i+1]).montageStructureChanged(e);
+			}		  
+		}
+	}
+	
+	protected void fireMontageChannelsAdded(Object source, int[] channels, int[] primaryChannels) {
+		Object[] listeners = listenerList.getListenerList();
+		MontageEvent e = null;
+		for (int i = listeners.length-2; i>=0; i-=2) {
+			if (listeners[i]==MontageListener.class) {
+				if (e == null) {
+					e = new MontageEvent(source, channels, primaryChannels);
+				}
+				((MontageListener)listeners[i+1]).montageChannelsAdded(e);
+			}		  
+		}
+	}
 
-    protected void fireMontageChannelsRemoved(Object source, int[] channels, int[] primaryChannels) {
-        Object[] listeners = listenerList.getListenerList();
-        MontageEvent e = null;
-        for (int i = listeners.length-2; i>=0; i-=2) {
-            if (listeners[i]==MontageListener.class) {
-                if (e == null) {
-                    e = new MontageEvent(source, channels, primaryChannels);
-                }
-                ((MontageListener)listeners[i+1]).montageChannelsRemoved(e);
-            }          
-        }
-    }
+	protected void fireMontageChannelsRemoved(Object source, int[] channels, int[] primaryChannels) {
+		Object[] listeners = listenerList.getListenerList();
+		MontageEvent e = null;
+		for (int i = listeners.length-2; i>=0; i-=2) {
+			if (listeners[i]==MontageListener.class) {
+				if (e == null) {
+					e = new MontageEvent(source, channels, primaryChannels);
+				}
+				((MontageListener)listeners[i+1]).montageChannelsRemoved(e);
+			}		  
+		}
+	}
 
-    private int[] toArray( LinkedList<Integer> list ) {
+	private int[] toArray( LinkedList<Integer> list ) {
 		int i = 0;
 		int[] indices = new int[list.size()];
 		Iterator<Integer> it = list.iterator();
@@ -1005,110 +1005,110 @@ public class Montage extends SourceMontage implements Preset {
 			i++;
 		}
 		return indices;
-    }
-    
+	}
+	
 	protected void fireMontageChannelsChanged( Object source, LinkedList<Integer> indexList, LinkedList<Integer> primaryIndexList ) {
 		fireMontageChannelsChanged(source, toArray(indexList), toArray(primaryIndexList));		
 	}
-    
-    protected void fireMontageChannelsChanged(Object source, int[] channels, int[] primaryChannels) {
-        Object[] listeners = listenerList.getListenerList();
-        MontageEvent e = null;
-        for (int i = listeners.length-2; i>=0; i-=2) {
-            if (listeners[i]==MontageListener.class) {
-                if (e == null) {
-                    e = new MontageEvent(source, channels, primaryChannels);
-                }
-                ((MontageListener)listeners[i+1]).montageChannelsChanged(e);
-            }          
-        }
-    }
-    
+	
+	protected void fireMontageChannelsChanged(Object source, int[] channels, int[] primaryChannels) {
+		Object[] listeners = listenerList.getListenerList();
+		MontageEvent e = null;
+		for (int i = listeners.length-2; i>=0; i-=2) {
+			if (listeners[i]==MontageListener.class) {
+				if (e == null) {
+					e = new MontageEvent(source, channels, primaryChannels);
+				}
+				((MontageListener)listeners[i+1]).montageChannelsChanged(e);
+			}		  
+		}
+	}
+	
 	protected void fireMontageReferenceChanged(Object source, LinkedList<Integer> indexList, LinkedList<Integer> primaryIndexList) {
 		fireMontageReferenceChanged(source, toArray(indexList), toArray(primaryIndexList));		
 	}
-    
-    protected void fireMontageReferenceChanged(Object source, int[] channels, int[] primaryChannels) {
-        Object[] listeners = listenerList.getListenerList();
-        MontageEvent e = null;
-        for (int i = listeners.length-2; i>=0; i-=2) {
-            if (listeners[i]==MontageListener.class) {
-                if (e == null) {
-                    e = new MontageEvent(source, channels, primaryChannels);
-                }
-                ((MontageListener)listeners[i+1]).montageReferenceChanged(e);
-            }          
-        }
-    }
+	
+	protected void fireMontageReferenceChanged(Object source, int[] channels, int[] primaryChannels) {
+		Object[] listeners = listenerList.getListenerList();
+		MontageEvent e = null;
+		for (int i = listeners.length-2; i>=0; i-=2) {
+			if (listeners[i]==MontageListener.class) {
+				if (e == null) {
+					e = new MontageEvent(source, channels, primaryChannels);
+				}
+				((MontageListener)listeners[i+1]).montageReferenceChanged(e);
+			}		  
+		}
+	}
 
-    protected void fireMontageSampleFilterAdded(Object source, int[] indices) {
-        Object[] listeners = listenerList.getListenerList();
-        MontageSampleFilterEvent e = null;
-        for (int i = listeners.length-2; i>=0; i-=2) {
-            if (listeners[i]==MontageSampleFilterListener.class) {
-                if (e == null) {
-                    e = new MontageSampleFilterEvent(source, indices);
-                }
-                ((MontageSampleFilterListener)listeners[i+1]).filterAdded(e);
-            }          
-        }
-    }
+	protected void fireMontageSampleFilterAdded(Object source, int[] indices) {
+		Object[] listeners = listenerList.getListenerList();
+		MontageSampleFilterEvent e = null;
+		for (int i = listeners.length-2; i>=0; i-=2) {
+			if (listeners[i]==MontageSampleFilterListener.class) {
+				if (e == null) {
+					e = new MontageSampleFilterEvent(source, indices);
+				}
+				((MontageSampleFilterListener)listeners[i+1]).filterAdded(e);
+			}		  
+		}
+	}
 
-    protected void fireMontageSampleFilterChanged(Object source, int[] indices) {
-        Object[] listeners = listenerList.getListenerList();
-        MontageSampleFilterEvent e = null;
-        for (int i = listeners.length-2; i>=0; i-=2) {
-            if (listeners[i]==MontageSampleFilterListener.class) {
-                if (e == null) {
-                    e = new MontageSampleFilterEvent(source, indices);
-                }
-                ((MontageSampleFilterListener)listeners[i+1]).filterChanged(e);
-            }          
-        }
-    }
-    
-    protected void fireMontageSampleFilterRemoved(Object source, int[] indices) {
-        Object[] listeners = listenerList.getListenerList();
-        MontageSampleFilterEvent e = null;
-        for (int i = listeners.length-2; i>=0; i-=2) {
-            if (listeners[i]==MontageSampleFilterListener.class) {
-                if (e == null) {
-                    e = new MontageSampleFilterEvent(source, indices);
-                }
-                ((MontageSampleFilterListener)listeners[i+1]).filterRemoved(e);
-            }          
-        }
-    }
+	protected void fireMontageSampleFilterChanged(Object source, int[] indices) {
+		Object[] listeners = listenerList.getListenerList();
+		MontageSampleFilterEvent e = null;
+		for (int i = listeners.length-2; i>=0; i-=2) {
+			if (listeners[i]==MontageSampleFilterListener.class) {
+				if (e == null) {
+					e = new MontageSampleFilterEvent(source, indices);
+				}
+				((MontageSampleFilterListener)listeners[i+1]).filterChanged(e);
+			}		  
+		}
+	}
+	
+	protected void fireMontageSampleFilterRemoved(Object source, int[] indices) {
+		Object[] listeners = listenerList.getListenerList();
+		MontageSampleFilterEvent e = null;
+		for (int i = listeners.length-2; i>=0; i-=2) {
+			if (listeners[i]==MontageSampleFilterListener.class) {
+				if (e == null) {
+					e = new MontageSampleFilterEvent(source, indices);
+				}
+				((MontageSampleFilterListener)listeners[i+1]).filterRemoved(e);
+			}		  
+		}
+	}
 
 	protected void fireMontageSampleFilterExclusionChanged(Object source, LinkedList<Integer> indexList) {
 		fireMontageSampleFilterExclusionChanged(source, toArray(indexList));		
 	}
-    
-    protected void fireMontageSampleFilterExclusionChanged(Object source, int[] indices) {
-        Object[] listeners = listenerList.getListenerList();
-        MontageSampleFilterEvent e = null;
-        for (int i = listeners.length-2; i>=0; i-=2) {
-            if (listeners[i]==MontageSampleFilterListener.class) {
-                if (e == null) {
-                    e = new MontageSampleFilterEvent(source, indices);
-                }
-                ((MontageSampleFilterListener)listeners[i+1]).filterExclusionChanged(e);
-            }          
-        }
-    }
-    
-    protected void fireMontageSampleFiltersChanged(Object source) {
-        Object[] listeners = listenerList.getListenerList();
-        MontageSampleFilterEvent e = null;
-        for (int i = listeners.length-2; i>=0; i-=2) {
-            if (listeners[i]==MontageSampleFilterListener.class) {
-                if (e == null) {
-                    e = new MontageSampleFilterEvent(source);
-                }
-                ((MontageSampleFilterListener)listeners[i+1]).filtersChanged(e);
-            }          
-        }
-    }
-    
-    
+	
+	protected void fireMontageSampleFilterExclusionChanged(Object source, int[] indices) {
+		Object[] listeners = listenerList.getListenerList();
+		MontageSampleFilterEvent e = null;
+		for (int i = listeners.length-2; i>=0; i-=2) {
+			if (listeners[i]==MontageSampleFilterListener.class) {
+				if (e == null) {
+					e = new MontageSampleFilterEvent(source, indices);
+				}
+				((MontageSampleFilterListener)listeners[i+1]).filterExclusionChanged(e);
+			}		  
+		}
+	}
+	
+	protected void fireMontageSampleFiltersChanged(Object source) {
+		Object[] listeners = listenerList.getListenerList();
+		MontageSampleFilterEvent e = null;
+		for (int i = listeners.length-2; i>=0; i-=2) {
+			if (listeners[i]==MontageSampleFilterListener.class) {
+				if (e == null) {
+					e = new MontageSampleFilterEvent(source);
+				}
+				((MontageSampleFilterListener)listeners[i+1]).filtersChanged(e);
+			}		  
+		}
+	}
+	
+	
 }

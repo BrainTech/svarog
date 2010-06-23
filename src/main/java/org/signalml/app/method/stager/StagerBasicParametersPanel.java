@@ -143,42 +143,42 @@ public class StagerBasicParametersPanel extends JPanel {
 
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.CENTER)
-	            .addComponent(rulesLabel)
-	            .addComponent(glue1)
-	            .addComponent(getRulesComboBox())
-	            .addComponent(rulesHelpButton)
+				.addComponent(rulesLabel)
+				.addComponent(glue1)
+				.addComponent(getRulesComboBox())
+				.addComponent(rulesHelpButton)
 			);
 
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.CENTER)
-	            .addComponent(deltaMinAmplitudeLabel)
-	            .addComponent(glue2)
-	            .addComponent(getDeltaMinAmplitudePanel())
-	            .addComponent(deltaMinAmplitudeHelpButton)
+				.addComponent(deltaMinAmplitudeLabel)
+				.addComponent(glue2)
+				.addComponent(getDeltaMinAmplitudePanel())
+				.addComponent(deltaMinAmplitudeHelpButton)
 			);
 
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.CENTER)
-	            .addComponent(alphaMinAmplitudeLabel)
-	            .addComponent(glue3)
-	            .addComponent(getAlphaMinAmplitudePanel())
-	            .addComponent(alphaMinAmplitudeHelpButton)
+				.addComponent(alphaMinAmplitudeLabel)
+				.addComponent(glue3)
+				.addComponent(getAlphaMinAmplitudePanel())
+				.addComponent(alphaMinAmplitudeHelpButton)
 			);
 
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.CENTER)
-	            .addComponent(spindleMinAmplitudeLabel)
-	            .addComponent(glue4)
-	            .addComponent(getSpindleMinAmplitudePanel())
-	            .addComponent(spindleMinAmplitudeHelpButton)
+				.addComponent(spindleMinAmplitudeLabel)
+				.addComponent(glue4)
+				.addComponent(getSpindleMinAmplitudePanel())
+				.addComponent(spindleMinAmplitudeHelpButton)
 			);
 		
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.CENTER)
-	            .addComponent(primaryHypnogramLabel)
-	            .addComponent(glue5)
-	            .addComponent(getPrimaryHypnogramCheckBox())
-	            .addComponent(primaryHypnogramHelpButton)
+				.addComponent(primaryHypnogramLabel)
+				.addComponent(glue5)
+				.addComponent(getPrimaryHypnogramCheckBox())
+				.addComponent(primaryHypnogramHelpButton)
 			);
 		
 		layout.setVerticalGroup(vGroup);

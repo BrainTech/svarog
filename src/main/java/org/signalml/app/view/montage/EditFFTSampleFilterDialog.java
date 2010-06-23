@@ -140,8 +140,8 @@ public class EditFFTSampleFilterDialog extends AbstractPresetDialog {
 			
 			@Override
 			public void componentShown(ComponentEvent e) {
-	    		getCoefficientChartPanel().setSelectionHighlightStart(((Number) getFromFrequencySpinner().getValue()).doubleValue());
-	    		getCoefficientChartPanel().setSelectionHighlightEnd(((Number) getToFrequencySpinner().getValue()).doubleValue());
+				getCoefficientChartPanel().setSelectionHighlightStart(((Number) getFromFrequencySpinner().getValue()).doubleValue());
+				getCoefficientChartPanel().setSelectionHighlightEnd(((Number) getToFrequencySpinner().getValue()).doubleValue());
 			}
 			
 		});
@@ -367,23 +367,23 @@ public class EditFFTSampleFilterDialog extends AbstractPresetDialog {
 			
 			vGroup.addGroup(
 					layout.createParallelGroup(Alignment.BASELINE)
-		            .addComponent(fromFrequencyLabel)
-		            .addComponent(getFromFrequencySpinner())
-		            .addComponent(toFrequencyLabel)
-		            .addComponent(getToFrequencySpinner())
-		            .addComponent(unlimitedLabel)
-		            .addComponent(getUnlimitedCheckBox())
+					.addComponent(fromFrequencyLabel)
+					.addComponent(getFromFrequencySpinner())
+					.addComponent(toFrequencyLabel)
+					.addComponent(getToFrequencySpinner())
+					.addComponent(unlimitedLabel)
+					.addComponent(getUnlimitedCheckBox())
 				);
 			
 			vGroup.addGroup(
 					layout.createParallelGroup(Alignment.BASELINE)
-		            .addComponent(coefficientLabel)
-		            .addComponent(getCoefficientSpinner())
+					.addComponent(coefficientLabel)
+					.addComponent(getCoefficientSpinner())
 					.addComponent(filler1)
 					.addComponent(filler2)
-		            .addComponent(multiplyLabel)
-		            .addComponent(getMultiplyCheckBox())
-		    	);
+					.addComponent(multiplyLabel)
+					.addComponent(getMultiplyCheckBox())
+				);
 			
 			layout.setVerticalGroup(vGroup);		
 			
@@ -487,7 +487,7 @@ public class EditFFTSampleFilterDialog extends AbstractPresetDialog {
 		if( frequencyAxis == null ) {
 			frequencyAxis = new NumberAxis();
 			frequencyAxis.setAutoRange(false);
-    		frequencyAxis.setLabel( messageSource.getMessage("editFFTSampleFilter.graphFrequencyLabel") );
+			frequencyAxis.setLabel( messageSource.getMessage("editFFTSampleFilter.graphFrequencyLabel") );
 		}
 		return frequencyAxis;
 	}
@@ -504,10 +504,10 @@ public class EditFFTSampleFilterDialog extends AbstractPresetDialog {
 	public XYPlot getCoefficientPlot() {
 		if( coefficientPlot == null ) {
 						
-    		XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer(true, false);
+			XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer(true, false);
 
-    		coefficientPlot = new XYPlot( null, getFrequencyAxis(), getCoefficientAxis(), renderer );			
-    		
+			coefficientPlot = new XYPlot( null, getFrequencyAxis(), getCoefficientAxis(), renderer );			
+			
 		}
 		return coefficientPlot;
 	}
@@ -524,12 +524,12 @@ public class EditFFTSampleFilterDialog extends AbstractPresetDialog {
 	
 	public CoefficientChartPanel getCoefficientChartPanel() {
 		if( coefficientChartPanel == null ) {
-			    	
-    		coefficientChartPanel = new CoefficientChartPanel(getCoefficientChart());
-    		coefficientChartPanel.setBackground(Color.WHITE);
-    		coefficientChartPanel.setPreferredSize(new Dimension(500, 150));
-    		    		    		
-    	}    	
+					
+			coefficientChartPanel = new CoefficientChartPanel(getCoefficientChart());
+			coefficientChartPanel.setBackground(Color.WHITE);
+			coefficientChartPanel.setPreferredSize(new Dimension(500, 150));
+									
+		}		
 		return coefficientChartPanel;
 	}
 	
@@ -695,9 +695,9 @@ public class EditFFTSampleFilterDialog extends AbstractPresetDialog {
 		
 		getCoefficientAxis().setRange( 0, maxCoefficient );
 		
-    	DefaultXYDataset dataset = new DefaultXYDataset();
-    	dataset.addSeries("data", new double[][] { frequencies, coefficients } );
-    	getCoefficientPlot().setDataset( dataset );
+		DefaultXYDataset dataset = new DefaultXYDataset();
+		dataset.addSeries("data", new double[][] { frequencies, coefficients } );
+		getCoefficientPlot().setDataset( dataset );
 				
 	}
 	
@@ -778,22 +778,22 @@ public class EditFFTSampleFilterDialog extends AbstractPresetDialog {
 			try {
 				coefficientSpinner.commitEdit();
 			} catch (ParseException pe) {
-                UIManager.getLookAndFeel().provideErrorFeedback(coefficientSpinner);
-            }
+				UIManager.getLookAndFeel().provideErrorFeedback(coefficientSpinner);
+			}
 
 			JSpinner fromFrequencySpinner = getFromFrequencySpinner();
 			try {
 				fromFrequencySpinner.commitEdit();
 			} catch (ParseException pe) {
-                UIManager.getLookAndFeel().provideErrorFeedback(fromFrequencySpinner);
-            }
+				UIManager.getLookAndFeel().provideErrorFeedback(fromFrequencySpinner);
+			}
 			
 			JSpinner toFrequencySpinner = getToFrequencySpinner();
 			try {
 				toFrequencySpinner.commitEdit();
 			} catch (ParseException pe) {
-                UIManager.getLookAndFeel().provideErrorFeedback(toFrequencySpinner);
-            }
+				UIManager.getLookAndFeel().provideErrorFeedback(toFrequencySpinner);
+			}
 			
 			float fromFrequency = ((Number) fromFrequencySpinner.getValue()).floatValue();
 			boolean unlimited = getUnlimitedCheckBox().isSelected();
@@ -926,10 +926,10 @@ public class EditFFTSampleFilterDialog extends AbstractPresetDialog {
 		public CoefficientChartPanel(JFreeChart chart) {
 			super(chart);
 			
-    		setDomainZoomable(false);
-    		setRangeZoomable(false);
-    		setMouseZoomable(false);
-    		setPopupMenu(null);
+			setDomainZoomable(false);
+			setRangeZoomable(false);
+			setMouseZoomable(false);
+			setPopupMenu(null);
 			
 		}
 		

@@ -40,9 +40,9 @@ public class OpenMonitorAction extends AbstractSignalMLAction {
 	
 		logger.debug("Open monitor");
 
-        OpenDocumentDescriptor ofd = new OpenDocumentDescriptor();
-        ofd.setType( ManagedDocumentType.MONITOR);
-        ofd.setMakeActive(true);
+		OpenDocumentDescriptor ofd = new OpenDocumentDescriptor();
+		ofd.setType( ManagedDocumentType.MONITOR);
+		ofd.setMakeActive(true);
 
 		OpenMonitorDescriptor model = ofd.getMonitorOptions();
 		
@@ -63,10 +63,10 @@ public class OpenMonitorAction extends AbstractSignalMLAction {
 			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
 			return;			
 		} catch (ConnectException ex) {
-            logger.error("Failed to open document - connection exception", ex);
-            ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-            return;         
-        }
+			logger.error("Failed to open document - connection exception", ex);
+			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+			return;		 
+		}
 										
 	}
 	

@@ -195,72 +195,72 @@ public class ParameterRangeFilterDialog extends AbstractFilterDialog {
 		
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(iterationLabel)
-	            .addComponent(minIterationLabel)
-	            .addComponent(getMinIterationPanel())
-	            .addComponent(iterationGlue)
-	            .addComponent(maxIterationLabel)
-	            .addComponent(getMaxIterationPanel())
+				.addComponent(iterationLabel)
+				.addComponent(minIterationLabel)
+				.addComponent(getMinIterationPanel())
+				.addComponent(iterationGlue)
+				.addComponent(maxIterationLabel)
+				.addComponent(getMaxIterationPanel())
 			);
 		
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(modulusLabel)
-	            .addComponent(minModulusLabel)
-	            .addComponent(getMinModulusPanel())
-	            .addComponent(modulusGlue)
-	            .addComponent(maxModulusLabel)
-	            .addComponent(getMaxModulusPanel())
+				.addComponent(modulusLabel)
+				.addComponent(minModulusLabel)
+				.addComponent(getMinModulusPanel())
+				.addComponent(modulusGlue)
+				.addComponent(maxModulusLabel)
+				.addComponent(getMaxModulusPanel())
 			);
 		
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(amplitudeLabel)
-	            .addComponent(minAmplitudeLabel)
-	            .addComponent(getMinAmplitudePanel())
-	            .addComponent(amplitudeGlue)
-	            .addComponent(maxAmplitudeLabel)
-	            .addComponent(getMaxAmplitudePanel())
+				.addComponent(amplitudeLabel)
+				.addComponent(minAmplitudeLabel)
+				.addComponent(getMinAmplitudePanel())
+				.addComponent(amplitudeGlue)
+				.addComponent(maxAmplitudeLabel)
+				.addComponent(getMaxAmplitudePanel())
 			);
 		
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(positionLabel)
-	            .addComponent(minPositionLabel)
-	            .addComponent(getMinPositionPanel())
-	            .addComponent(positionGlue)
-	            .addComponent(maxPositionLabel)
-	            .addComponent(getMaxPositionPanel())
+				.addComponent(positionLabel)
+				.addComponent(minPositionLabel)
+				.addComponent(getMinPositionPanel())
+				.addComponent(positionGlue)
+				.addComponent(maxPositionLabel)
+				.addComponent(getMaxPositionPanel())
 			);
 		
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(scaleLabel)
-	            .addComponent(minScaleLabel)
-	            .addComponent(getMinScalePanel())
-	            .addComponent(scaleGlue)
-	            .addComponent(maxScaleLabel)
-	            .addComponent(getMaxScalePanel())
+				.addComponent(scaleLabel)
+				.addComponent(minScaleLabel)
+				.addComponent(getMinScalePanel())
+				.addComponent(scaleGlue)
+				.addComponent(maxScaleLabel)
+				.addComponent(getMaxScalePanel())
 			);
 		
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(frequencyLabel)
-	            .addComponent(minFrequencyLabel)
-	            .addComponent(getMinFrequencyPanel())
-	            .addComponent(frequencyGlue)
-	            .addComponent(maxFrequencyLabel)
-	            .addComponent(getMaxFrequencyPanel())
+				.addComponent(frequencyLabel)
+				.addComponent(minFrequencyLabel)
+				.addComponent(getMinFrequencyPanel())
+				.addComponent(frequencyGlue)
+				.addComponent(maxFrequencyLabel)
+				.addComponent(getMaxFrequencyPanel())
 			);
 		
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(phaseLabel)
-	            .addComponent(minPhaseLabel)
-	            .addComponent(getMinPhasePanel())
-	            .addComponent(phaseGlue)
-	            .addComponent(maxPhaseLabel)
-	            .addComponent(getMaxPhasePanel())
+				.addComponent(phaseLabel)
+				.addComponent(minPhaseLabel)
+				.addComponent(getMinPhasePanel())
+				.addComponent(phaseGlue)
+				.addComponent(maxPhaseLabel)
+				.addComponent(getMaxPhasePanel())
 			);		
 		
 		layout.setVerticalGroup(vGroup);		

@@ -88,10 +88,10 @@ public class StagerExpertTagPanel extends JPanel {
 
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(tagFileLabel)
-	            .addComponent(glue)
-	            .addComponent(getTagTextField())
-	            .addComponent(getChooseTagButton())
+				.addComponent(tagFileLabel)
+				.addComponent(glue)
+				.addComponent(getTagTextField())
+				.addComponent(getChooseTagButton())
 			);
 				
 		layout.setVerticalGroup(vGroup);		

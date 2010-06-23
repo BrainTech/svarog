@@ -91,10 +91,10 @@ public class MP5OutputConfigPanel extends JPanel {
 
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.CENTER)
-	            .addComponent(bookWithSignalLabel)
-	            .addComponent(glue1)
-	            .addComponent(getBookWithSignalCheckBox())
-	            .addComponent(bookWithSignalHelpButton)
+				.addComponent(bookWithSignalLabel)
+				.addComponent(glue1)
+				.addComponent(getBookWithSignalCheckBox())
+				.addComponent(bookWithSignalHelpButton)
 			);
 	
 		layout.setVerticalGroup(vGroup);				

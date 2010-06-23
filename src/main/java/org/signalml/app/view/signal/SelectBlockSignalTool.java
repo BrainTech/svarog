@@ -74,7 +74,7 @@ public class SelectBlockSignalTool extends SignalTool implements SelectionSignal
 			Point point = e.getPoint();
 			selectTo(point);
 			Rectangle r = new Rectangle(point.x, point.y, 1, 1);
-	        ((SignalPlot)e.getSource()).scrollRectToVisible(r);
+			((SignalPlot)e.getSource()).scrollRectToVisible(r);
 		}
 	}
 

@@ -29,8 +29,8 @@ public class LinkedEarsMontageGenerator extends AverageReferenceMontageGenerator
 		
 	/*
 	private Object readResolve() {
-	    refChannels = new Channel[] { EegChannel.A1, EegChannel.A2 };
-	    return this;
+		refChannels = new Channel[] { EegChannel.A1, EegChannel.A2 };
+		return this;
 	}
 	*/
 	

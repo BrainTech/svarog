@@ -175,9 +175,9 @@ public class BookProcessor implements StandardBook, EventProducerBook, PropertyC
 		onAnyBookEvent(ev);
 		Object[] listeners = listenerList.getListenerList();
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==BookListener.class) {
-	             ((BookListener)listeners[i+1]).atomAdded(ev);
-	         }
+			 if (listeners[i]==BookListener.class) {
+				 ((BookListener)listeners[i+1]).atomAdded(ev);
+			 }
 		}
 	}
 
@@ -186,9 +186,9 @@ public class BookProcessor implements StandardBook, EventProducerBook, PropertyC
 		onAnyBookEvent(ev);
 		Object[] listeners = listenerList.getListenerList();
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==BookListener.class) {
-	             ((BookListener)listeners[i+1]).atomChanged(ev);
-	         }
+			 if (listeners[i]==BookListener.class) {
+				 ((BookListener)listeners[i+1]).atomChanged(ev);
+			 }
 		}		
 	}
 
@@ -197,9 +197,9 @@ public class BookProcessor implements StandardBook, EventProducerBook, PropertyC
 		onAnyBookEvent(ev);
 		Object[] listeners = listenerList.getListenerList();
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==BookListener.class) {
-	             ((BookListener)listeners[i+1]).atomRemoved(ev);
-	         }
+			 if (listeners[i]==BookListener.class) {
+				 ((BookListener)listeners[i+1]).atomRemoved(ev);
+			 }
 		}
 	}
 
@@ -208,9 +208,9 @@ public class BookProcessor implements StandardBook, EventProducerBook, PropertyC
 		onAnyBookEvent(ev);
 		Object[] listeners = listenerList.getListenerList();
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==BookListener.class) {
-	             ((BookListener)listeners[i+1]).bookStructureChanged(ev);
-	         }
+			 if (listeners[i]==BookListener.class) {
+				 ((BookListener)listeners[i+1]).bookStructureChanged(ev);
+			 }
 		}
 	}
 
@@ -219,9 +219,9 @@ public class BookProcessor implements StandardBook, EventProducerBook, PropertyC
 		onAnyBookEvent(ev);
 		Object[] listeners = listenerList.getListenerList();
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==BookListener.class) {
-	             ((BookListener)listeners[i+1]).segmentAdded(ev);
-	         }
+			 if (listeners[i]==BookListener.class) {
+				 ((BookListener)listeners[i+1]).segmentAdded(ev);
+			 }
 		}		
 	}
 
@@ -230,9 +230,9 @@ public class BookProcessor implements StandardBook, EventProducerBook, PropertyC
 		onAnyBookEvent(ev);
 		Object[] listeners = listenerList.getListenerList();
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==BookListener.class) {
-	             ((BookListener)listeners[i+1]).segmentAtomsChanged(ev);
-	         }
+			 if (listeners[i]==BookListener.class) {
+				 ((BookListener)listeners[i+1]).segmentAtomsChanged(ev);
+			 }
 		}		
 	}
 
@@ -241,9 +241,9 @@ public class BookProcessor implements StandardBook, EventProducerBook, PropertyC
 		onAnyBookEvent(ev);
 		Object[] listeners = listenerList.getListenerList();
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==BookListener.class) {
-	             ((BookListener)listeners[i+1]).segmentChanged(ev);
-	         }
+			 if (listeners[i]==BookListener.class) {
+				 ((BookListener)listeners[i+1]).segmentChanged(ev);
+			 }
 		}		
 	}
 
@@ -252,9 +252,9 @@ public class BookProcessor implements StandardBook, EventProducerBook, PropertyC
 		onAnyBookEvent(ev);
 		Object[] listeners = listenerList.getListenerList();
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==BookListener.class) {
-	             ((BookListener)listeners[i+1]).segmentRemoved(ev);
-	         }
+			 if (listeners[i]==BookListener.class) {
+				 ((BookListener)listeners[i+1]).segmentRemoved(ev);
+			 }
 		}		
 	}
 

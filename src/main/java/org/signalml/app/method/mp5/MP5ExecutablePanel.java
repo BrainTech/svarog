@@ -89,9 +89,9 @@ public class MP5ExecutablePanel extends JPanel {
 
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(executableLabel)
-	            .addComponent(getExecutableTextField())
-	            .addComponent(getChooseExecutableButton())
+				.addComponent(executableLabel)
+				.addComponent(getExecutableTextField())
+				.addComponent(getChooseExecutableButton())
 			);
 				
 		layout.setVerticalGroup(vGroup);		

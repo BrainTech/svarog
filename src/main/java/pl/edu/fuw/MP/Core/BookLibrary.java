@@ -24,18 +24,18 @@ public class BookLibrary implements BookLibraryInterface {
   private   String           fileString;
   protected int              MaxBookNumber;
 
-    private void convertPhase() {
-        float df=(float)(2.0*Math.PI/head.signal_size);
-        for(int i=0 ; i<atoms.length ; i++)
-            if(atoms[i].scale!=0) {
-                float freq=df*atoms[i].frequency;
-                atoms[i].phase=Utils.HmppPhase(freq,atoms[i].position,
-                                               atoms[i].phase);
-                atoms[i].truePhase=Utils.RawPhase(freq,atoms[i].position,
-                                                  atoms[i].phase);
+	private void convertPhase() {
+		float df=(float)(2.0*Math.PI/head.signal_size);
+		for(int i=0 ; i<atoms.length ; i++)
+			if(atoms[i].scale!=0) {
+				float freq=df*atoms[i].frequency;
+				atoms[i].phase=Utils.HmppPhase(freq,atoms[i].position,
+											   atoms[i].phase);
+				atoms[i].truePhase=Utils.RawPhase(freq,atoms[i].position,
+												  atoms[i].phase);
 
-            }
-    }
+			}
+	}
 
   public String getDate() {
 	  return isNewMode ? newLib.getDate() : null;
@@ -44,7 +44,7 @@ public class BookLibrary implements BookLibraryInterface {
   public int getDictionarySize() {
 	  return isNewMode ? newLib.getDictionarySize() : -1;
   }
-    
+	
   public int getSignalSize() {
 	  return isNewMode ? newLib.getDimBase() : head.signal_size;
   }
@@ -62,7 +62,7 @@ public class BookLibrary implements BookLibraryInterface {
   }
 
   public int getMaxBookNumber() {
-      return isNewMode ? newLib.getMaxBookNumber() : MaxBookNumber;
+	  return isNewMode ? newLib.getMaxBookNumber() : MaxBookNumber;
   }
 
   public char getDictionaryType() {
@@ -82,228 +82,228 @@ public class BookLibrary implements BookLibraryInterface {
   }
   
   public int getNumOfAtoms() {
-     return getMaxBookNumber();
+	 return getMaxBookNumber();
   }
 
   public BookAtom []getAtoms() {
-      return atoms;
+	  return atoms;
   }
 
  public int getChannel() {
-     return 1;
+	 return 1;
  }
 
  private void importAtoms() {
-      newLib.export(head);
-      float df=(float)(2.0*Math.PI/head.signal_size);
-      int size;
+	  newLib.export(head);
+	  float df=(float)(2.0*Math.PI/head.signal_size);
+	  int size;
 
-      atoms=new BookAtom[size=newLib.getNumOfAtoms()];
-      for(int i=0 ; i<size ; i++) {
-          atoms[i]=new BookAtom();
-          newLib.export(atoms[i],i);
-          atoms[i].truePhase=Utils.MppPhase(df*atoms[i].frequency,
-                                            atoms[i].position,
-                                            atoms[i].phase);
-          atoms[i].number_of_atom_in_book=(short)(i+1);
-      }
+	  atoms=new BookAtom[size=newLib.getNumOfAtoms()];
+	  for(int i=0 ; i<size ; i++) {
+		  atoms[i]=new BookAtom();
+		  newLib.export(atoms[i],i);
+		  atoms[i].truePhase=Utils.MppPhase(df*atoms[i].frequency,
+											atoms[i].position,
+											atoms[i].phase);
+		  atoms[i].number_of_atom_in_book=(short)(i+1);
+	  }
   }
 
   private boolean SetOffset(int Offset) {
-      if(Offset==BookNo)
-          return true;
+	  if(Offset==BookNo)
+		  return true;
 
-      if(isNewMode) {
-         if(!newLib.SetOffset(fileString,Offset)) {
-            return false;
-         }
-      } else {
-          return SetOldOffset(Offset);
-      }
-      BookNo=Offset;
-      return true;
+	  if(isNewMode) {
+		 if(!newLib.SetOffset(fileString,Offset)) {
+			return false;
+		 }
+	  } else {
+		  return SetOldOffset(Offset);
+	  }
+	  BookNo=Offset;
+	  return true;
   }
 
-    private int countBook() {
-        if(isNewMode) { 
-           return newLib.countBook(fileString);
-        } else {
-            RandomAccessFile file=null;
-            int k=0;
+	private int countBook() {
+		if(isNewMode) { 
+		   return newLib.countBook(fileString);
+		} else {
+			RandomAccessFile file=null;
+			int k=0;
 
-            try {
-               file=new RandomAccessFile(fileString, "r");
-            } catch(IOException e) {
-                // [MD] automatic NPE
-            	// try { file.close(); } catch(Exception ee) { ; }
-                return 0;
-            }
+			try {
+			   file=new RandomAccessFile(fileString, "r");
+			} catch(IOException e) {
+				// [MD] automatic NPE
+				// try { file.close(); } catch(Exception ee) { ; }
+				return 0;
+			}
 
-            try {
-                for(k=0 ; ; k++) {
-                    head.Read(file);
-                    file.skipBytes(head.book_size*20);
-                }
-            } catch(IOException e) {
-                try { file.close(); } catch(Exception ee) { ; }
-                return k;
-            }
-        }
-    }
+			try {
+				for(k=0 ; ; k++) {
+					head.Read(file);
+					file.skipBytes(head.book_size*20);
+				}
+			} catch(IOException e) {
+				try { file.close(); } catch(Exception ee) { ; }
+				return k;
+			}
+		}
+	}
 
   private boolean SetOldOffset(int Offset) {
-    try {
-      Close();
-      file=new RandomAccessFile(fileString, "r");
-      for(int i=0 ; i<Offset ; i++) {
-        head.Read(file);
-        file.skipBytes(head.book_size*20);
-      }
-    }
-    catch(IOException e) { return false; }
-    BookNo=Offset;
-    return true;
+	try {
+	  Close();
+	  file=new RandomAccessFile(fileString, "r");
+	  for(int i=0 ; i<Offset ; i++) {
+		head.Read(file);
+		file.skipBytes(head.book_size*20);
+	  }
+	}
+	catch(IOException e) { return false; }
+	BookNo=Offset;
+	return true;
   }
 
   public boolean GoTo(int Offset) {
-      if(Offset==BookNo) {
-          return true;
-      }
+	  if(Offset==BookNo) {
+		  return true;
+	  }
 
-      if(isNewMode) {
-          if(!newLib.loadBook(fileString,Offset)) {
-              return false;
-          }
-      } else {
-          return OldGoTo(Offset);
-      }
+	  if(isNewMode) {
+		  if(!newLib.loadBook(fileString,Offset)) {
+			  return false;
+		  }
+	  } else {
+		  return OldGoTo(Offset);
+	  }
 
-      importAtoms();
-      BookNo=Offset;
-      return true;
+	  importAtoms();
+	  BookNo=Offset;
+	  return true;
   }
 
   public boolean OldGoTo(int Offset) {
-    if(!SetOffset(Offset)) {
-      return false;
-    }
-    try {
-        head.Read(file);
-        atoms=new BookAtom[head.book_size];
-        byte buffor[]=new byte[head.book_size*20];
-        DataArrayInputStream bfile=new DataArrayInputStream(file,buffor);
+	if(!SetOffset(Offset)) {
+	  return false;
+	}
+	try {
+		head.Read(file);
+		atoms=new BookAtom[head.book_size];
+		byte buffor[]=new byte[head.book_size*20];
+		DataArrayInputStream bfile=new DataArrayInputStream(file,buffor);
 
-        for(int i=0 ; i<head.book_size ; i++) {
-            (atoms[i]=new BookAtom()).Read(bfile);
-            atoms[i].index=i;
-        }
-        convertPhase();
-      } catch(IOException e) {
-          return false;
-      }
-    return true;
+		for(int i=0 ; i<head.book_size ; i++) {
+			(atoms[i]=new BookAtom()).Read(bfile);
+			atoms[i].index=i;
+		}
+		convertPhase();
+	  } catch(IOException e) {
+		  return false;
+	  }
+	return true;
   }
 
   public void SetSecPP(float secPP_) {
-    SecPP=secPP_;
+	SecPP=secPP_;
   }
 
   public boolean NextBook() {
-      if(isNewMode) {
-          if(!newLib.readNextBook())
-              return false;
-      } else {
-          return OldNextBook();
-      }
+	  if(isNewMode) {
+		  if(!newLib.readNextBook())
+			  return false;
+	  } else {
+		  return OldNextBook();
+	  }
 
-      importAtoms();
-      BookNo++;
-      return true;
+	  importAtoms();
+	  BookNo++;
+	  return true;
   }
 
   public boolean OldNextBook() {
-    try {
-        head.Read(file);
-        atoms=new BookAtom[head.book_size];
-        byte buffor[]=new byte[head.book_size*20];
-        DataArrayInputStream bfile=new DataArrayInputStream(file,buffor);
+	try {
+		head.Read(file);
+		atoms=new BookAtom[head.book_size];
+		byte buffor[]=new byte[head.book_size*20];
+		DataArrayInputStream bfile=new DataArrayInputStream(file,buffor);
 
-        head.reset();
-        for(int i=0 ; i<head.book_size ; i++) {
-            (atoms[i]=new BookAtom()).Read(bfile);
-            atoms[i].index=i;
-            head.addAtom(atoms[i]);
-        }
-        convertPhase();
-        BookNo++;
-    }
-    catch(IOException e) { return false; }
-    return true;
+		head.reset();
+		for(int i=0 ; i<head.book_size ; i++) {
+			(atoms[i]=new BookAtom()).Read(bfile);
+			atoms[i].index=i;
+			head.addAtom(atoms[i]);
+		}
+		convertPhase();
+		BookNo++;
+	}
+	catch(IOException e) { return false; }
+	return true;
   }
 
   private void readFirst() throws IOException {
-      head.Read(file);
-      atoms=new BookAtom[head.book_size];
-      byte buffor[]=new byte[head.book_size*20];
-      DataArrayInputStream bfile=new DataArrayInputStream(file,buffor);
+	  head.Read(file);
+	  atoms=new BookAtom[head.book_size];
+	  byte buffor[]=new byte[head.book_size*20];
+	  DataArrayInputStream bfile=new DataArrayInputStream(file,buffor);
 
-      head.reset();
-      for(int i=0 ; i<head.book_size ; i++) {
-          (atoms[i]=new BookAtom()).Read(bfile);
-          atoms[i].index=i;
-          atoms[i].number_of_atom_in_book=(short)(i+1);
-          head.addAtom(atoms[i]);
-      }
-      convertPhase();
+	  head.reset();
+	  for(int i=0 ; i<head.book_size ; i++) {
+		  (atoms[i]=new BookAtom()).Read(bfile);
+		  atoms[i].index=i;
+		  atoms[i].number_of_atom_in_book=(short)(i+1);
+		  head.addAtom(atoms[i]);
+	  }
+	  convertPhase();
   }
 
   public boolean Open(String filename,int Offset) {
 	  int rc;
-      if((rc=NewBookLibrary.checkFormat(filename))!=NewBookLibrary.VERSION_NONE) {
+	  if((rc=NewBookLibrary.checkFormat(filename))!=NewBookLibrary.VERSION_NONE) {
 		  Utils.log("VERSION: "+rc);
-          isNewMode=true;
-          fileString=filename;
-          if(newLib.Open(filename,Offset)) {
-              importAtoms();
-              return true;
-          }
-      } else {
-          isNewMode=false;
-          return OldOpen(filename,Offset);
-      }
-      return false;
+		  isNewMode=true;
+		  fileString=filename;
+		  if(newLib.Open(filename,Offset)) {
+			  importAtoms();
+			  return true;
+		  }
+	  } else {
+		  isNewMode=false;
+		  return OldOpen(filename,Offset);
+	  }
+	  return false;
   }
 
   public boolean OldOpen(String filename,int Offset) {
-    try {
-      fileString=filename;
+	try {
+	  fileString=filename;
 
-      Utils.log("OldOpen");
-      file=new RandomAccessFile(filename, "r");
+	  Utils.log("OldOpen");
+	  file=new RandomAccessFile(filename, "r");
 
-      if(!SetOffset(Offset)) {
-        file.close(); file=null;
-        Utils.log("SetOffset failed!");
-        return false;
-      }
+	  if(!SetOffset(Offset)) {
+		file.close(); file=null;
+		Utils.log("SetOffset failed!");
+		return false;
+	  }
 
-      readFirst();
-      MaxBookNumber=countBook();
-    } catch(IOException e) {
+	  readFirst();
+	  MaxBookNumber=countBook();
+	} catch(IOException e) {
 		Utils.log(e.toString());
-        return false;
-    }
-    return true;
+		return false;
+	}
+	return true;
   }
 
   public void Close() {
-    try {
+	try {
 		 if(file!=null) {
 			file.close();
 		 }
-    } catch(IOException e) {
-        ;
-    }
+	} catch(IOException e) {
+		;
+	}
   }
 
    /** Nie wspierane (zachowane ze wzgledu na interface) */
@@ -313,9 +313,9 @@ public class BookLibrary implements BookLibraryInterface {
 
   public StandardBookSegment[] getCurrentSegment(int segmentIndex) {
 	  if(GoTo(segmentIndex)) {
-	     StandardBookSegment arr[]=new StandardBookSegment[1];
-	     arr[0]=head;
-         return arr;
+		 StandardBookSegment arr[]=new StandardBookSegment[1];
+		 arr[0]=head;
+		 return arr;
 	  } else {
 		 return null;
 	  }

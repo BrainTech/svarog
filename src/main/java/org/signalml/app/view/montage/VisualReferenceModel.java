@@ -40,7 +40,7 @@ public class VisualReferenceModel implements SourceMontageListener, MontageListe
 	private Montage montage;
 	
 	private transient PropertyChangeSupport pcSupport;
-    private transient EventListenerList listenerList = new EventListenerList();	
+	private transient EventListenerList listenerList = new EventListenerList();	
 		
 	private boolean bipolarMode;
 	private boolean bipolarCompatible;
@@ -658,64 +658,64 @@ public class VisualReferenceModel implements SourceMontageListener, MontageListe
 		pcSupport.removePropertyChangeListener(propertyName, listener);
 	}
 
-    public void addVisualReferenceListener(VisualReferenceListener l) {
-        listenerList.add(VisualReferenceListener.class, l);
-    }
+	public void addVisualReferenceListener(VisualReferenceListener l) {
+		listenerList.add(VisualReferenceListener.class, l);
+	}
 
-    public void removeVisualReferenceListener(VisualReferenceListener l) {
-        listenerList.remove(VisualReferenceListener.class, l);
-    }
-	    
-    protected void fireSourceChannelsChanged(Object source, SourceMontageEvent sourceMontageEvent) {
-        Object[] listeners = listenerList.getListenerList();
-        VisualReferenceEvent e = null;
-        for (int i = listeners.length-2; i>=0; i-=2) {
-            if (listeners[i]==VisualReferenceListener.class) {
-                if (e == null) {
-                    e = new VisualReferenceEvent(source, sourceMontageEvent);
-                }
-                ((VisualReferenceListener)listeners[i+1]).sourceChannelsChanged(e);
-            }          
-        }
-    }
+	public void removeVisualReferenceListener(VisualReferenceListener l) {
+		listenerList.remove(VisualReferenceListener.class, l);
+	}
+		
+	protected void fireSourceChannelsChanged(Object source, SourceMontageEvent sourceMontageEvent) {
+		Object[] listeners = listenerList.getListenerList();
+		VisualReferenceEvent e = null;
+		for (int i = listeners.length-2; i>=0; i-=2) {
+			if (listeners[i]==VisualReferenceListener.class) {
+				if (e == null) {
+					e = new VisualReferenceEvent(source, sourceMontageEvent);
+				}
+				((VisualReferenceListener)listeners[i+1]).sourceChannelsChanged(e);
+			}		  
+		}
+	}
 	
-    protected void fireMontageChannelsChanged(Object source, MontageEvent montageEvent) {
-        Object[] listeners = listenerList.getListenerList();
-        VisualReferenceEvent e = null;
-        for (int i = listeners.length-2; i>=0; i-=2) {
-            if (listeners[i]==VisualReferenceListener.class) {
-                if (e == null) {
-                    e = new VisualReferenceEvent(source, montageEvent);
-                }
-                ((VisualReferenceListener)listeners[i+1]).montageChannelsChanged(e);
-            }          
-        }
-    }
+	protected void fireMontageChannelsChanged(Object source, MontageEvent montageEvent) {
+		Object[] listeners = listenerList.getListenerList();
+		VisualReferenceEvent e = null;
+		for (int i = listeners.length-2; i>=0; i-=2) {
+			if (listeners[i]==VisualReferenceListener.class) {
+				if (e == null) {
+					e = new VisualReferenceEvent(source, montageEvent);
+				}
+				((VisualReferenceListener)listeners[i+1]).montageChannelsChanged(e);
+			}		  
+		}
+	}
 
-    protected void fireReferenceChanged(Object source, MontageEvent montageEvent) {
-        Object[] listeners = listenerList.getListenerList();
-        VisualReferenceEvent e = null;
-        for (int i = listeners.length-2; i>=0; i-=2) {
-            if (listeners[i]==VisualReferenceListener.class) {
-                if (e == null) {
-                    e = new VisualReferenceEvent(source, montageEvent);
-                }
-                ((VisualReferenceListener)listeners[i+1]).referenceChanged(e);
-            }          
-        }
-    }
-    
-    protected void fireMontageStructureChanged(Object source) {
-        Object[] listeners = listenerList.getListenerList();
-        VisualReferenceEvent e = null;
-        for (int i = listeners.length-2; i>=0; i-=2) {
-            if (listeners[i]==VisualReferenceListener.class) {
-                if (e == null) {
-                    e = new VisualReferenceEvent(source);
-                }
-                ((VisualReferenceListener)listeners[i+1]).montageStructureChanged(e);
-            }          
-        }
-    }    
-    
+	protected void fireReferenceChanged(Object source, MontageEvent montageEvent) {
+		Object[] listeners = listenerList.getListenerList();
+		VisualReferenceEvent e = null;
+		for (int i = listeners.length-2; i>=0; i-=2) {
+			if (listeners[i]==VisualReferenceListener.class) {
+				if (e == null) {
+					e = new VisualReferenceEvent(source, montageEvent);
+				}
+				((VisualReferenceListener)listeners[i+1]).referenceChanged(e);
+			}		  
+		}
+	}
+	
+	protected void fireMontageStructureChanged(Object source) {
+		Object[] listeners = listenerList.getListenerList();
+		VisualReferenceEvent e = null;
+		for (int i = listeners.length-2; i>=0; i-=2) {
+			if (listeners[i]==VisualReferenceListener.class) {
+				if (e == null) {
+					e = new VisualReferenceEvent(source);
+				}
+				((VisualReferenceListener)listeners[i+1]).montageStructureChanged(e);
+			}		  
+		}
+	}	
+	
 }

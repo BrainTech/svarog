@@ -4,21 +4,21 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 public class SignalInfoV5 extends FormatComponentV5 {
-    public float sampling_freq;
-    public float points_per_microvolt;
-    public int   number_of_chanels_in_file;
+	public float sampling_freq;
+	public float points_per_microvolt;
+	public int   number_of_chanels_in_file;
 
-    public SignalInfoV5() {
+	public SignalInfoV5() {
 		type=SIGNAL_INFO;
 	}
 
-    public void Read(DataArrayInputStream stream) throws IOException {
-        sampling_freq=stream.readFloat();
-        points_per_microvolt=stream.readFloat();
-        number_of_chanels_in_file=stream.readShort();
-    }
+	public void Read(DataArrayInputStream stream) throws IOException {
+		sampling_freq=stream.readFloat();
+		points_per_microvolt=stream.readFloat();
+		number_of_chanels_in_file=stream.readShort();
+	}
 
-     public String toString() {
+	 public String toString() {
 		 return "SignalInfoV5: "+sampling_freq+" "+points_per_microvolt+" "+number_of_chanels_in_file;
 	 }
 

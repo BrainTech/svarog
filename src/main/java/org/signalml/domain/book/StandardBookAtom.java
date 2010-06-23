@@ -12,10 +12,10 @@ import java.util.Enumeration;
  */
 public interface StandardBookAtom {
 
-    public static final int DIRACDELTA_IDENTITY=10;
+	public static final int DIRACDELTA_IDENTITY=10;
 	public static final int GAUSSFUNCTION_IDENTITY=11;
 	public static final int SINCOSWAVE_IDENTITY=12;
-    public static final int GABORWAVE_IDENTITY=13;
+	public static final int GABORWAVE_IDENTITY=13;
 	
 	/** Atom type.
 	 * 

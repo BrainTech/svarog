@@ -88,7 +88,7 @@ public class SignalFFTTool extends SignalTool {
 			if( SwingUtilities.isLeftMouseButton(e) ) {
 				Point point = e.getPoint();
 				Rectangle r = new Rectangle(point.x, point.y, 1, 1);
-		        ((SignalPlot)e.getSource()).scrollRectToVisible(r);
+				((SignalPlot)e.getSource()).scrollRectToVisible(r);
 				if( settings.isChannelSwitching() ) {
 					int channel = plot.toChannelSpace(point);
 					fftPlot.setParameters(point, channel);				

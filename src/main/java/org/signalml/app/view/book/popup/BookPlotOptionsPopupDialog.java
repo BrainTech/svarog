@@ -131,8 +131,8 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 		
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(aspectRatioLabel)
-	            .addComponent(getAspectRatioPanel())
+				.addComponent(aspectRatioLabel)
+				.addComponent(getAspectRatioPanel())
 			);
 				
 		layout.setVerticalGroup(vGroup);		

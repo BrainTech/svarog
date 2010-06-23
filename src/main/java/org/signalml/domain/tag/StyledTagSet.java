@@ -879,87 +879,87 @@ public class StyledTagSet implements Serializable {
 		Object[] listeners = listenerList.getListenerList();
 		TagStyleEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==TagStyleListener.class) {
-	        	 if( e == null ) { 
-	        		 e = new TagStyleEvent(this,tagStyle,inTypeIndex);
-	        	 }
-	             ((TagStyleListener)listeners[i+1]).tagStyleAdded(e);
-	         }
-	     }
+			 if (listeners[i]==TagStyleListener.class) {
+				 if( e == null ) { 
+					 e = new TagStyleEvent(this,tagStyle,inTypeIndex);
+				 }
+				 ((TagStyleListener)listeners[i+1]).tagStyleAdded(e);
+			 }
+		 }
 	}
 	
 	protected void fireTagStyleRemoved(TagStyle tagStyle, int inTypeIndex) {
 		Object[] listeners = listenerList.getListenerList();
 		TagStyleEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==TagStyleListener.class) {
-	        	 if( e == null ) { 
-	        		 e = new TagStyleEvent(this,tagStyle,inTypeIndex);
-	        	 }
-	             ((TagStyleListener)listeners[i+1]).tagStyleRemoved(e);
-	         }
-	     }
+			 if (listeners[i]==TagStyleListener.class) {
+				 if( e == null ) { 
+					 e = new TagStyleEvent(this,tagStyle,inTypeIndex);
+				 }
+				 ((TagStyleListener)listeners[i+1]).tagStyleRemoved(e);
+			 }
+		 }
 	}
 	
 	protected void fireTagStyleChanged(TagStyle tagStyle,int inTypeIndex) {
 		Object[] listeners = listenerList.getListenerList();
 		TagStyleEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==TagStyleListener.class) {
-	        	 if( e == null ) { 
-	        		 e = new TagStyleEvent(this,tagStyle,inTypeIndex);
-	        	 }
-	             ((TagStyleListener)listeners[i+1]).tagStyleChanged(e);
-	         }
-	     }
+			 if (listeners[i]==TagStyleListener.class) {
+				 if( e == null ) { 
+					 e = new TagStyleEvent(this,tagStyle,inTypeIndex);
+				 }
+				 ((TagStyleListener)listeners[i+1]).tagStyleChanged(e);
+			 }
+		 }
 	}
 	
 	protected void fireTagAdded(Tag tag) {
 		Object[] listeners = listenerList.getListenerList();
 		TagEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==TagListener.class) {
-	        	 if( e == null ) { 
-	        		 e = new TagEvent(this,tag,tag.getPosition(),tag.getPosition()+tag.getLength());
-	        	 }
-	             ((TagListener)listeners[i+1]).tagAdded(e);
-	         }
-	     }
+			 if (listeners[i]==TagListener.class) {
+				 if( e == null ) { 
+					 e = new TagEvent(this,tag,tag.getPosition(),tag.getPosition()+tag.getLength());
+				 }
+				 ((TagListener)listeners[i+1]).tagAdded(e);
+			 }
+		 }
 	}
 
 	protected void fireTagRemoved(Tag tag) {
 		Object[] listeners = listenerList.getListenerList();
 		TagEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==TagListener.class) {
-	        	 if( e == null ) { 
-	        		 e = new TagEvent(this,tag,tag.getPosition(),tag.getPosition()+tag.getLength());
-	        	 }
-	             ((TagListener)listeners[i+1]).tagRemoved(e);
-	         }
-	     }
+			 if (listeners[i]==TagListener.class) {
+				 if( e == null ) { 
+					 e = new TagEvent(this,tag,tag.getPosition(),tag.getPosition()+tag.getLength());
+				 }
+				 ((TagListener)listeners[i+1]).tagRemoved(e);
+			 }
+		 }
 	}
 	
 	protected void fireTagChanged(Tag tag, Tag oldTag) {
 		Object[] listeners = listenerList.getListenerList();
 		TagEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==TagListener.class) {
-	        	 if( e == null ) {
-	        		 float start;
-	        		 float end;
-	        		 if( oldTag != null ) {
-	        			 start = Math.min( tag.getPosition(), oldTag.getPosition() );
-	        			 end = Math.max( tag.getPosition()+tag.getLength(), oldTag.getPosition()+oldTag.getLength());
-	        		 } else {
-	        			 start = tag.getPosition();
-	        			 end = tag.getPosition() + tag.getLength();
-	        		 }
-	        		 e = new TagEvent(this,tag,start,end);
-	        	 }
-	             ((TagListener)listeners[i+1]).tagChanged(e);
-	         }
-	     }
+			 if (listeners[i]==TagListener.class) {
+				 if( e == null ) {
+					 float start;
+					 float end;
+					 if( oldTag != null ) {
+						 start = Math.min( tag.getPosition(), oldTag.getPosition() );
+						 end = Math.max( tag.getPosition()+tag.getLength(), oldTag.getPosition()+oldTag.getLength());
+					 } else {
+						 start = tag.getPosition();
+						 end = tag.getPosition() + tag.getLength();
+					 }
+					 e = new TagEvent(this,tag,start,end);
+				 }
+				 ((TagListener)listeners[i+1]).tagChanged(e);
+			 }
+		 }
 	}
 	
 	

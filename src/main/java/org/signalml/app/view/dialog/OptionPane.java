@@ -1016,14 +1016,14 @@ public class OptionPane extends JOptionPane {
 			defaultPossibility = possibilities[0];
 		}
 		PrettyStringLocaleWrapper s = (PrettyStringLocaleWrapper) showInputDialog(
-                null,
-                "",
-                SvarogConstants.NAME,
-                JOptionPane.QUESTION_MESSAGE,
-                IconUtils.getQuestionIcon(),
-                possibilities,
-                defaultPossibility
-             );
+				null,
+				"",
+				SvarogConstants.NAME,
+				JOptionPane.QUESTION_MESSAGE,
+				IconUtils.getQuestionIcon(),
+				possibilities,
+				defaultPossibility
+			 );
 		if( s == null ) {
 			return null;
 		}
@@ -1036,14 +1036,14 @@ public class OptionPane extends JOptionPane {
 		}
 
 		String s = (String) showInputDialog(
-                parent,
-                messageSource.getMessage("name"),
-                messageSource.getMessage("presetDialog.presetNameTitle"),
-                JOptionPane.QUESTION_MESSAGE,
-                IconUtils.getQuestionIcon(),
-                null,
-                name
-        );
+				parent,
+				messageSource.getMessage("name"),
+				messageSource.getMessage("presetDialog.presetNameTitle"),
+				JOptionPane.QUESTION_MESSAGE,
+				IconUtils.getQuestionIcon(),
+				null,
+				name
+		);
 				
 		return s;
 		

@@ -95,10 +95,10 @@ public class MP5AlgorithmConfigPanel extends JPanel {
 
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.CENTER)
-	            .addComponent(algorithmLabel)
-	            .addComponent(glue1)
-	            .addComponent(getAlgorithmComboBox())
-	            .addComponent(algorithmHelpButton)
+				.addComponent(algorithmLabel)
+				.addComponent(glue1)
+				.addComponent(getAlgorithmComboBox())
+				.addComponent(algorithmHelpButton)
 			);
 					
 		layout.setVerticalGroup(vGroup);				

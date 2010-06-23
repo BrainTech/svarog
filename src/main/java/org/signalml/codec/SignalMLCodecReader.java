@@ -41,7 +41,7 @@ public class SignalMLCodecReader {
 			throw new SignalMLCodecException("Bad codec class");			
 		}
 		
-        try {
+		try {
 			delegate = (SMLCodec) cobj.newInstance();
 //			try {
 //				delegate = new EASYS();

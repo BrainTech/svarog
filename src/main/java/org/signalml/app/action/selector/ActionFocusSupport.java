@@ -36,13 +36,13 @@ public class ActionFocusSupport {
 		Object[] listeners = listenerList.getListenerList();
 		ActionFocusEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==ActionFocusListener.class) {
-	        	 if( e == null ) { 
-	        		 e = new ActionFocusEvent(source);
-	        	 }
-	             ((ActionFocusListener)listeners[i+1]).actionFocusChanged(e);
-	         }
-	     }
+			 if (listeners[i]==ActionFocusListener.class) {
+				 if( e == null ) { 
+					 e = new ActionFocusEvent(source);
+				 }
+				 ((ActionFocusListener)listeners[i+1]).actionFocusChanged(e);
+			 }
+		 }
 	}	
 		
 }

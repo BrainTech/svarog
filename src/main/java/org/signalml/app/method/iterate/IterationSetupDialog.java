@@ -159,33 +159,33 @@ public class IterationSetupDialog extends AbstractDialog {
 		
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(iterationCountLabel)
-	            .addComponent(getIterationCountSpinner())
+				.addComponent(iterationCountLabel)
+				.addComponent(getIterationCountSpinner())
 			);
 		
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(parameterLabel)
-	            .addComponent(getParameterComboBox())
-	    	);
+				.addComponent(parameterLabel)
+				.addComponent(getParameterComboBox())
+			);
 
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(iterateLabel)
-	            .addComponent(getIterateCheckBox())
-	    	);
+				.addComponent(iterateLabel)
+				.addComponent(getIterateCheckBox())
+			);
 
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(iterationStartLabel)
-	            .addComponent(getStartSpinner())
-	    	);
+				.addComponent(iterationStartLabel)
+				.addComponent(getStartSpinner())
+			);
 
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(iterationEndLabel)
-	            .addComponent(getEndSpinner())
-	    	);
+				.addComponent(iterationEndLabel)
+				.addComponent(getEndSpinner())
+			);
 		
 		layout.setVerticalGroup(vGroup);		
 		

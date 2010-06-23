@@ -68,39 +68,39 @@ public class MontageFilterExclusionTable extends JTable {
 		}
 		MontageFilterExclusionTableModel tableModel = (MontageFilterExclusionTableModel) model;
 		
-        Container p = getParent();
-        if (p instanceof JViewport) {
-            Container gp = p.getParent();
-            if (gp instanceof JScrollPane) {
-                JScrollPane scrollPane = (JScrollPane)gp;
-                JViewport viewport = scrollPane.getViewport();
-                if (viewport == null || viewport.getView() != this) {
-                    return;
-                }
-                scrollPane.setColumnHeaderView(new ColumnHeaderTable(tableModel.getColumnTableModel()));
-                scrollPane.setRowHeaderView(new RowHeaderTable(tableModel.getRowTableModel()));
-                scrollPane.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, new CornerPanel());
-            }
-        }
+		Container p = getParent();
+		if (p instanceof JViewport) {
+			Container gp = p.getParent();
+			if (gp instanceof JScrollPane) {
+				JScrollPane scrollPane = (JScrollPane)gp;
+				JViewport viewport = scrollPane.getViewport();
+				if (viewport == null || viewport.getView() != this) {
+					return;
+				}
+				scrollPane.setColumnHeaderView(new ColumnHeaderTable(tableModel.getColumnTableModel()));
+				scrollPane.setRowHeaderView(new RowHeaderTable(tableModel.getRowTableModel()));
+				scrollPane.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, new CornerPanel());
+			}
+		}
 	}
 	
 	@Override
 	protected void unconfigureEnclosingScrollPane() {
 		super.unconfigureEnclosingScrollPane();
-        Container p = getParent();
-        if (p instanceof JViewport) {
-            Container gp = p.getParent();
-            if (gp instanceof JScrollPane) {
-                JScrollPane scrollPane = (JScrollPane)gp;
-                JViewport viewport = scrollPane.getViewport();
-                if (viewport == null || viewport.getView() != this) {
-                    return;
-                }
-                scrollPane.setColumnHeaderView(null);
-                scrollPane.setRowHeaderView(null);
-                scrollPane.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, null);
-            }
-        }
+		Container p = getParent();
+		if (p instanceof JViewport) {
+			Container gp = p.getParent();
+			if (gp instanceof JScrollPane) {
+				JScrollPane scrollPane = (JScrollPane)gp;
+				JViewport viewport = scrollPane.getViewport();
+				if (viewport == null || viewport.getView() != this) {
+					return;
+				}
+				scrollPane.setColumnHeaderView(null);
+				scrollPane.setRowHeaderView(null);
+				scrollPane.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, null);
+			}
+		}
 	}
 	
 	@Override

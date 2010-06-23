@@ -213,7 +213,7 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 		documentManager.addDocumentManagerListener(workspaceTreeModel);
 		
 		documentManager.addDocumentManagerListener(elementManager.getSignalTreeModel());
-        documentManager.addDocumentManagerListener(elementManager.getMonitorTreeModel());
+		documentManager.addDocumentManagerListener(elementManager.getMonitorTreeModel());
 		documentManager.addDocumentManagerListener(elementManager.getTagTreeModel());
 		documentManager.addDocumentManagerListener(elementManager.getBookTreeModel());
 		

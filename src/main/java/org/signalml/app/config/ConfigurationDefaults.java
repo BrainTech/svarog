@@ -298,26 +298,26 @@ public class ConfigurationDefaults {
 		parameters.setCorrCoeffSems( Double.parseDouble( properties.getProperty("stager.fixed.corrCoeffSems") ) );
 		
 	}
-    
-    public static void setMultiplexerDefaultParameters( ApplicationConfiguration config ) {
+	
+	public static void setMultiplexerDefaultParameters( ApplicationConfiguration config ) {
 
-        config.setMultiplexerAddress( properties.getProperty("multiplexer.address"));
-        int port = Integer.parseInt(properties.getProperty("multiplexer.port"));
-        config.setMultiplexerPort( port);
-        
-    }
-    
-    public static void setMonitorDefaultParameters( ApplicationConfiguration config ) {
+		config.setMultiplexerAddress( properties.getProperty("multiplexer.address"));
+		int port = Integer.parseInt(properties.getProperty("multiplexer.port"));
+		config.setMultiplexerPort( port);
+		
+	}
+	
+	public static void setMonitorDefaultParameters( ApplicationConfiguration config ) {
 
-        config.setMonitorPageSize( Float.parseFloat( properties.getProperty( "monitor.pageSize")));
+		config.setMonitorPageSize( Float.parseFloat( properties.getProperty( "monitor.pageSize")));
 
-    }
-    
-    public static void setSignalRecorderDefaultParameters( ApplicationConfiguration config ) {
+	}
+	
+	public static void setSignalRecorderDefaultParameters( ApplicationConfiguration config ) {
 
-        config.setSignalRecorderFileName( properties.getProperty( "signalRecorder.fileName"));
+		config.setSignalRecorderFileName( properties.getProperty( "signalRecorder.fileName"));
 
-    }
+	}
 
 	public static String getDefaultEegPlRegisterURL() {
 		return properties.getProperty( "eeg.pl.registerUrl" );

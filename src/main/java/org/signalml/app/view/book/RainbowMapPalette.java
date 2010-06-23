@@ -29,14 +29,14 @@ public class RainbowMapPalette implements WignerMapPalette {
 	private RainbowMapPalette() {
 
 		double hh=255.0;
-	    double ww=1.0F/(74.0*75.0);
-	    int i;
-	    
-    	palette = new int[256];
+		double ww=1.0F/(74.0*75.0);
+		int i;
+		
+		palette = new int[256];
 
-	    int r;
-	    int g;
-	    int b;
+		int r;
+		int g;
+		int b;
 		for (i = 0; i<256; i++) {
 			
 			r = (int) (hh * Math.exp(-ww * Util.sqr(i - 64.0)));

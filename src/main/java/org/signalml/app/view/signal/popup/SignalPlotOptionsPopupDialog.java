@@ -134,21 +134,21 @@ public class SignalPlotOptionsPopupDialog extends AbstractPopupDialog {
 		
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(tagPaintModeLabel)
-	            .addComponent(getTagPaintModeComboBox())
+				.addComponent(tagPaintModeLabel)
+				.addComponent(getTagPaintModeComboBox())
 			);
 		
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(signalColorLabel)
-	            .addComponent(getSignalColorComboBox())
-	    	);
+				.addComponent(signalColorLabel)
+				.addComponent(getSignalColorComboBox())
+			);
 
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(signalXORLabel)
-	            .addComponent(getSignalXORCheckBox())
-	    	);
+				.addComponent(signalXORLabel)
+				.addComponent(getSignalXORCheckBox())
+			);
 		
 		layout.setVerticalGroup(vGroup);		
 		

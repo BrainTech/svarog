@@ -33,7 +33,7 @@ public class SourceMontage {
 	public static final String CHANGED_PROPERTY = "changed";
 
 	protected static final Logger logger = Logger.getLogger(SourceMontage.class);
-	    
+		
 	protected SignalType signalType;	
 	protected ArrayList<SourceChannel> sourceChannels;
 	
@@ -42,7 +42,7 @@ public class SourceMontage {
 	private transient HashMap<Channel,LinkedList<SourceChannel>> sourceChannelsByFunction;
 	private transient HashMap<String,SourceChannel> sourceChannelsByLabel;
 
-    protected transient EventListenerList listenerList = new EventListenerList();	
+	protected transient EventListenerList listenerList = new EventListenerList();	
 	protected transient PropertyChangeSupport pcSupport = new PropertyChangeSupport(this);
 	
 	private transient boolean changed = false;
@@ -386,7 +386,7 @@ public class SourceMontage {
 		
 	}
 	
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
 		pcSupport.addPropertyChangeListener(listener);
 	}
 
@@ -402,51 +402,51 @@ public class SourceMontage {
 		pcSupport.removePropertyChangeListener(propertyName, listener);
 	}
 	
-    public void addSourceMontageListener(SourceMontageListener l) {
-        listenerList.add(SourceMontageListener.class, l);
-    }
+	public void addSourceMontageListener(SourceMontageListener l) {
+		listenerList.add(SourceMontageListener.class, l);
+	}
 
-    public void removeSourceMontageListener(SourceMontageListener l) {
-        listenerList.remove(SourceMontageListener.class, l);
-    }
-	    
-    protected void fireSourceMontageChannelAdded(Object source, int channel) {
-        Object[] listeners = listenerList.getListenerList();
-        SourceMontageEvent e = null;
-        for (int i = listeners.length-2; i>=0; i-=2) {
-            if (listeners[i]==SourceMontageListener.class) {
-                if (e == null) {
-                    e = new SourceMontageEvent(source, channel);
-                }
-                ((SourceMontageListener)listeners[i+1]).sourceMontageChannelAdded(e);
-            }          
-        }
-    }
+	public void removeSourceMontageListener(SourceMontageListener l) {
+		listenerList.remove(SourceMontageListener.class, l);
+	}
+		
+	protected void fireSourceMontageChannelAdded(Object source, int channel) {
+		Object[] listeners = listenerList.getListenerList();
+		SourceMontageEvent e = null;
+		for (int i = listeners.length-2; i>=0; i-=2) {
+			if (listeners[i]==SourceMontageListener.class) {
+				if (e == null) {
+					e = new SourceMontageEvent(source, channel);
+				}
+				((SourceMontageListener)listeners[i+1]).sourceMontageChannelAdded(e);
+			}		  
+		}
+	}
 
-    protected void fireSourceMontageChannelRemoved(Object source, int channel) {
-        Object[] listeners = listenerList.getListenerList();
-        SourceMontageEvent e = null;
-        for (int i = listeners.length-2; i>=0; i-=2) {
-            if (listeners[i]==SourceMontageListener.class) {
-                if (e == null) {
-                    e = new SourceMontageEvent(source, channel);
-                }
-                ((SourceMontageListener)listeners[i+1]).sourceMontageChannelRemoved(e);
-            }          
-        }
-    }
+	protected void fireSourceMontageChannelRemoved(Object source, int channel) {
+		Object[] listeners = listenerList.getListenerList();
+		SourceMontageEvent e = null;
+		for (int i = listeners.length-2; i>=0; i-=2) {
+			if (listeners[i]==SourceMontageListener.class) {
+				if (e == null) {
+					e = new SourceMontageEvent(source, channel);
+				}
+				((SourceMontageListener)listeners[i+1]).sourceMontageChannelRemoved(e);
+			}		  
+		}
+	}
 
-    protected void fireSourceMontageChannelChanged(Object source, int channel) {
-        Object[] listeners = listenerList.getListenerList();
-        SourceMontageEvent e = null;
-        for (int i = listeners.length-2; i>=0; i-=2) {
-            if (listeners[i]==SourceMontageListener.class) {
-                if (e == null) {
-                    e = new SourceMontageEvent(source, channel);
-                }
-                ((SourceMontageListener)listeners[i+1]).sourceMontageChannelChanged(e);
-            }          
-        }
-    }
-    
+	protected void fireSourceMontageChannelChanged(Object source, int channel) {
+		Object[] listeners = listenerList.getListenerList();
+		SourceMontageEvent e = null;
+		for (int i = listeners.length-2; i>=0; i-=2) {
+			if (listeners[i]==SourceMontageListener.class) {
+				if (e == null) {
+					e = new SourceMontageEvent(source, channel);
+				}
+				((SourceMontageListener)listeners[i+1]).sourceMontageChannelChanged(e);
+			}		  
+		}
+	}
+	
 }

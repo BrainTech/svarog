@@ -71,7 +71,7 @@ public class HypnogramPlot extends JComponent implements PropertyChangeListener,
 	private int focusWidth;
 	private int focusCenter;
 		
-    private int factorStep;
+	private int factorStep;
 	
 	private String noTagsMessage = null;
 	
@@ -101,23 +101,23 @@ public class HypnogramPlot extends JComponent implements PropertyChangeListener,
 				
 	}
 	
-    @Override
-    public void setBounds(int x, int y, int width, int height) {
-    	super.setBounds(x, y, width, height);
-    	reset();
-    }
-    
-    @Override
-    public void setSize(Dimension d) {
-    	super.setSize(d);
-    	reset();
-    }
-    
-    @Override
-    public void setSize(int width, int height) {
-    	super.setSize(width, height);
-    	reset();
-    }
+	@Override
+	public void setBounds(int x, int y, int width, int height) {
+		super.setBounds(x, y, width, height);
+		reset();
+	}
+	
+	@Override
+	public void setSize(Dimension d) {
+		super.setSize(d);
+		reset();
+	}
+	
+	@Override
+	public void setSize(int width, int height) {
+		super.setSize(width, height);
+		reset();
+	}
 
 	public void revalidateAndReset() {		
 		resetAllLines();
@@ -125,7 +125,7 @@ public class HypnogramPlot extends JComponent implements PropertyChangeListener,
 		revalidate();
 		repaint();
 	}
-    
+	
 	public void reset() {		
 		resetAllLines();
 		focusCalculated = false;
@@ -445,18 +445,18 @@ public class HypnogramPlot extends JComponent implements PropertyChangeListener,
 
 		String type = tag.getStyle().getName().toLowerCase();
 		
-        int linePosition;
-        Color color = null;
+		int linePosition;
+		Color color = null;
 
-        linePosition = SleepTagName.getLevel(type) * factorStep;
-        color = SleepTagName.getColor(type);
-        if( color == null ) {
-        	 color = Color.BLACK;
-        }
+		linePosition = SleepTagName.getLevel(type) * factorStep;
+		color = SleepTagName.getColor(type);
+		if( color == null ) {
+			 color = Color.BLACK;
+		}
 
-        int start = (int) Math.round( tag.getPosition()*pixelPerSecond );
-        int end = (int) Math.round( (tag.getPosition()+tag.getLength()) *pixelPerSecond );
-                
+		int start = (int) Math.round( tag.getPosition()*pixelPerSecond );
+		int end = (int) Math.round( (tag.getPosition()+tag.getLength()) *pixelPerSecond );
+				
 		return new HypnogramLine(color,linePosition, start, end);
 		
 	}

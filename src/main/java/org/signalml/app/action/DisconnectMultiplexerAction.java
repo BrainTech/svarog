@@ -21,31 +21,31 @@ public class DisconnectMultiplexerAction extends AbstractAction {
 	public DisconnectMultiplexerAction( ViewerElementManager elementManager) {
 		this.elementManager = elementManager;
 		this.putValue( NAME, elementManager.getMessageSource().getMessage( 
-		        "action.disconnectMultiplexer.actionName"));
+				"action.disconnectMultiplexer.actionName"));
 		setEnabled( false);
 	}
 
-    @Override
+	@Override
 	public void actionPerformed(ActionEvent ev) {
-        
-        setEnabled( false);
+		
+		setEnabled( false);
 
 		logger.info("Disconnecting multiplexer...");
 
-        try {
-            JmxClient jmxClient = elementManager.getJmxClient();
-            if (jmxClient != null)
-                jmxClient.shutdown();
-            elementManager.setJmxClient( null);
-        }
-        catch (InterruptedException e) {
-            logger.error("shutdown failed! " + e.getMessage());
-            e.printStackTrace();
-        }
+		try {
+			JmxClient jmxClient = elementManager.getJmxClient();
+			if (jmxClient != null)
+				jmxClient.shutdown();
+			elementManager.setJmxClient( null);
+		}
+		catch (InterruptedException e) {
+			logger.error("shutdown failed! " + e.getMessage());
+			e.printStackTrace();
+		}
 
-        logger.info("Multiplexer disconnected!");
+		logger.info("Multiplexer disconnected!");
 
-        firePropertyChange( "disconnected", Boolean.FALSE, Boolean.TRUE);
+		firePropertyChange( "disconnected", Boolean.FALSE, Boolean.TRUE);
 	}
 
 }

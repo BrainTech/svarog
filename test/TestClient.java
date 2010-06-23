@@ -34,7 +34,7 @@ public class TestClient {
 	public static void main(String[] args) throws OperationFailedException,
 		NoPeerForTypeException, InterruptedException, ConnectException, InvalidProtocolBufferException {
 
-	    System.out.println( "Connecting ...");
+		System.out.println( "Connecting ...");
 		JmxClient client = new JmxClient( SvarogConstants.PeerTypes.STREAM_RECEIVER);
 		SocketAddress socketAddress = new InetSocketAddress( "127.0.0.1", 31889);
 		client.connect( socketAddress);
@@ -42,32 +42,32 @@ public class TestClient {
 
 		System.out.println( "Sending ...");
 		ByteString message = ByteString.copyFromUtf8("1 2 3");
-        MultiplexerMessage mm = client.createMessage( message, SvarogConstants.MessageTypes.SIGNAL_STREAMER_START);
+		MultiplexerMessage mm = client.createMessage( message, SvarogConstants.MessageTypes.SIGNAL_STREAMER_START);
 		client.send( mm, SendingMethod.THROUGH_ONE);
 		System.out.println( "Sent!");
  
 		System.out.println( "Receiving ...");
 		IncomingMessageData imsg = client.receive();
 		MultiplexerMessage mmsg = imsg.getMessage();
-        System.out.println( "Received!");
+		System.out.println( "Received!");
 		int type = mmsg.getType();
 		System.out.println( type);
 		if (type != SvarogConstants.MessageTypes.STREAMED_SIGNAL_MESSAGE)
-		    System.out.println( "Bad response!");
+			System.out.println( "Bad response!");
 		ByteString bstr = mmsg.getMessage();
 		System.out.println( "stream size: " + bstr.size());
 		SampleVector sv = SampleVector.parseFrom( bstr);
 		for (int i=0; i<sv.getSamplesCount(); i++) {
-		    Sample s = sv.getSamples( i);
-		    double t = s.getTimestamp();
-		    double v = s.getValue();
-		    System.out.println( "sample: " + t + ":" + v);
+			Sample s = sv.getSamples( i);
+			double t = s.getTimestamp();
+			double v = s.getValue();
+			System.out.println( "sample: " + t + ":" + v);
 		}
 
-        System.out.println( "Sending ...");
-        mm = client.createMessage( message, SvarogConstants.MessageTypes.SIGNAL_STREAMER_STOP);
-        client.send( mm, SendingMethod.THROUGH_ONE);
-        System.out.println( "Sent!");
+		System.out.println( "Sending ...");
+		mm = client.createMessage( message, SvarogConstants.MessageTypes.SIGNAL_STREAMER_STOP);
+		client.send( mm, SendingMethod.THROUGH_ONE);
+		System.out.println( "Sent!");
 
 		/*
 		 * JmxClient creates worker threads, we have to explicitly shut them

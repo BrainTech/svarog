@@ -90,22 +90,22 @@ public class ChannelSignalSelectionPanel extends JPanel {
 		if( withChannelSelection ) {
 			vGroup.addGroup(
 					layout.createParallelGroup(Alignment.BASELINE)
-		            .addComponent(channelLabel)
-		            .addComponent(getChannelComboBox())
+					.addComponent(channelLabel)
+					.addComponent(getChannelComboBox())
 				);
 		}
 		
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(startTimeLabel)
-	            .addComponent(getStartTimeSpinner())
+				.addComponent(startTimeLabel)
+				.addComponent(getStartTimeSpinner())
 			);
 		
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(lengthLabel)
-	            .addComponent(getLengthSpinner())
-	    	);
+				.addComponent(lengthLabel)
+				.addComponent(getLengthSpinner())
+			);
 		
 		layout.setVerticalGroup(vGroup);		
 		

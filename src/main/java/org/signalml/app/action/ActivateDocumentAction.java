@@ -51,8 +51,8 @@ public class ActivateDocumentAction extends AbstractFocusableSignalMLAction<Docu
 		}
 		
 		if( (document instanceof SignalDocument) 
-		        || (document instanceof MonitorSignalDocument) 
-		        || (document instanceof BookDocument) ) {
+				|| (document instanceof MonitorSignalDocument) 
+				|| (document instanceof BookDocument) ) {
 			actionFocusManager.setActiveDocument(document);
 		} else if( document instanceof TagDocument ) {
 			actionFocusManager.setActiveDocument(((TagDocument) document).getParent());

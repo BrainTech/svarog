@@ -157,24 +157,24 @@ public class SvarogApplication {
 		
 		CommandLineParser parser = new GnuParser();
 		CommandLine line = null;
-	    try {
-	        line = parser.parse( options, args );
-	    }
-	    catch( ParseException exp ) {
-	        System.err.println( "Parsing failed. Reason: " + exp.getMessage() );
-	        System.exit(1);
-	    }
-	    
-	    if( line.hasOption("help") ) {
-	    	HelpFormatter hf = new HelpFormatter();
-	    	hf.printHelp("java -jar singnalml.jar <options>", options);
-	    	System.exit(0);
-	    }
-	    
-	    if( line.hasOption("moltest") ) {
-	    	molTest = true;
-	    }
-	    
+		try {
+			line = parser.parse( options, args );
+		}
+		catch( ParseException exp ) {
+			System.err.println( "Parsing failed. Reason: " + exp.getMessage() );
+			System.exit(1);
+		}
+		
+		if( line.hasOption("help") ) {
+			HelpFormatter hf = new HelpFormatter();
+			hf.printHelp("java -jar singnalml.jar <options>", options);
+			System.exit(0);
+		}
+		
+		if( line.hasOption("moltest") ) {
+			molTest = true;
+		}
+		
 		Log4jConfigurer.setWorkingDirSystemProperty("signalml.root");
 		
 		// allow for local file config		
@@ -228,7 +228,7 @@ public class SvarogApplication {
 		// TODO check nested modal dialogs
 		setupGUIExceptionHandler();
 		
-	    if( !line.hasOption("nosplash") ) {
+		if( !line.hasOption("nosplash") ) {
 			try {
 				SwingUtilities.invokeAndWait(new Runnable() {
 					@Override
@@ -244,8 +244,8 @@ public class SvarogApplication {
 				logger.error("Failed to create splash screen", ex );
 				System.exit(1);
 			}
-	    }
-	    	
+		}
+			
 		createApplication();
 						
 		try {
@@ -281,7 +281,7 @@ public class SvarogApplication {
 	}
 	
 	private static void initializeFirstTime( final GeneralConfiguration suggested ) {
-			    
+				
 		if( locale == null ) {
 			try {
 				SwingUtilities.invokeAndWait( new Runnable() {
@@ -345,7 +345,7 @@ public class SvarogApplication {
 	}
 	
 	private static void initialize() {
-			    
+				
 		GeneralConfiguration config = new GeneralConfiguration();
 		ConfigurationDefaults.setGeneralConfigurationDefaults(config);
 		

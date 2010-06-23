@@ -241,26 +241,26 @@ public class DefaultMRUDRegistry implements MRUDRegistry {
 		Object[] listeners = listenerList.getListenerList();
 		MRUDRegistryEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==MRUDRegistryListener.class) {
-	        	 if( e == null ) {
-	        		 e = new MRUDRegistryEvent(this,entry,index,inTypeIndex);
-	        	 }
-	             ((MRUDRegistryListener)listeners[i+1]).mrudEntryRegistered(e);
-	         }
-	     }
+			 if (listeners[i]==MRUDRegistryListener.class) {
+				 if( e == null ) {
+					 e = new MRUDRegistryEvent(this,entry,index,inTypeIndex);
+				 }
+				 ((MRUDRegistryListener)listeners[i+1]).mrudEntryRegistered(e);
+			 }
+		 }
 	}
 
 	protected void fireMrudEntryRemoved(MRUDEntry entry, int index, int inTypeIndex) {
 		Object[] listeners = listenerList.getListenerList();
 		MRUDRegistryEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==MRUDRegistryListener.class) {
-	        	 if( e == null ) {
-	        		 e = new MRUDRegistryEvent(this,entry,index,inTypeIndex);
-	        	 }
-	             ((MRUDRegistryListener)listeners[i+1]).mrudEntryRemoved(e);
-	         }
-	     }
+			 if (listeners[i]==MRUDRegistryListener.class) {
+				 if( e == null ) {
+					 e = new MRUDRegistryEvent(this,entry,index,inTypeIndex);
+				 }
+				 ((MRUDRegistryListener)listeners[i+1]).mrudEntryRemoved(e);
+			 }
+		 }
 	}
 	
 	public void addMRUDRegistryListener(MRUDRegistryListener listener) {

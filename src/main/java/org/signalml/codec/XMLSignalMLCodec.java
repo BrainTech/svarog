@@ -110,7 +110,7 @@ public class XMLSignalMLCodec extends AbstractSignalMLCodec {
 					boolean ok = srcDir.mkdirs();
 					if( !ok ) {
 						logger.error("Compilation failed - failed to create cache dir");
-		            	throw new SignalMLCodecException("error.codecCompilationFailed");										
+						throw new SignalMLCodecException("error.codecCompilationFailed");										
 					}
 				}
 				
@@ -123,13 +123,13 @@ public class XMLSignalMLCodec extends AbstractSignalMLCodec {
 							new JavaCodeProvider() {
 								@Override
 								public String getCode() throws CompilationException {
-						            String code;
+									String code;
 									try {
-						            	code = Codec.compile(codec);
-						            } catch( XMLCodecException ex ) {
-						            	logger.error("Code generation failed", ex);	            	
-						            	throw new CompilationException("error.codecCompilationFailed",ex);
-						            }
+										code = Codec.compile(codec);
+									} catch( XMLCodecException ex ) {
+										logger.error("Code generation failed", ex);					
+										throw new CompilationException("error.codecCompilationFailed",ex);
+									}
 									return code;
 								}
 								
@@ -140,7 +140,7 @@ public class XMLSignalMLCodec extends AbstractSignalMLCodec {
 					throw new SignalMLCodecException(ex.getMessage());
 				} catch (CompilationException ex) {
 					logger.error("Compilation failed", ex);
-	            	throw new SignalMLCodecException("error.codecCompilationFailed",ex);
+					throw new SignalMLCodecException("error.codecCompilationFailed",ex);
 				}
 				
 			}

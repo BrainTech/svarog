@@ -98,26 +98,26 @@ public class DefaultTaskManager implements TaskManager {
 		Object[] listeners = listenerList.getListenerList();
 		TaskManagerEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==TaskManagerListener.class) {
-	        	 if( e == null ) { 
-	        		 e = new TaskManagerEvent(this,task,index);
-	        	 }
-	             ((TaskManagerListener)listeners[i+1]).taskAdded(e);
-	         }
-	     }
+			 if (listeners[i]==TaskManagerListener.class) {
+				 if( e == null ) { 
+					 e = new TaskManagerEvent(this,task,index);
+				 }
+				 ((TaskManagerListener)listeners[i+1]).taskAdded(e);
+			 }
+		 }
 	}
 	
 	protected void fireTaskRemoved(Task task, int index) {
 		Object[] listeners = listenerList.getListenerList();
 		TaskManagerEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==TaskManagerListener.class) {
-	        	 if( e == null ) { 
-	        		 e = new TaskManagerEvent(this,task,index);
-	        	 }
-	             ((TaskManagerListener)listeners[i+1]).taskRemoved(e);
-	         }
-	     }
+			 if (listeners[i]==TaskManagerListener.class) {
+				 if( e == null ) { 
+					 e = new TaskManagerEvent(this,task,index);
+				 }
+				 ((TaskManagerListener)listeners[i+1]).taskRemoved(e);
+			 }
+		 }
 	}
 	
 	public void addTaskManagerListener(TaskManagerListener listener) {

@@ -86,27 +86,27 @@ public class WholeTimeSpacePanel extends JPanel {
 		
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(signalLengthLabel)
-	            .addComponent(getSignalLengthTextField())
+				.addComponent(signalLengthLabel)
+				.addComponent(getSignalLengthTextField())
 			);
 
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(pageSizeLabel)
-	            .addComponent(getPageSizeTextField())
+				.addComponent(pageSizeLabel)
+				.addComponent(getPageSizeTextField())
 			);
 		
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(pageCountLabel)
-	            .addComponent(getPageCountTextField())
-	    	);
+				.addComponent(pageCountLabel)
+				.addComponent(getPageCountTextField())
+			);
 
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(completePagesLabel)
-	            .addComponent(getCompletePagesCheckBox())
-	    	);
+				.addComponent(completePagesLabel)
+				.addComponent(getCompletePagesCheckBox())
+			);
 		
 		layout.setVerticalGroup(vGroup);		
 		

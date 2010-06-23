@@ -7,50 +7,50 @@ import java.util.Vector;
 import org.signalml.domain.book.StandardBookAtom;
 
 public class NewAtom implements StandardBookAtom {
-    public float scale;
-    public float frequency;
-    public int   position;
-    public float modulus;
-    public float amplitude;
-    public float phase;
-    public int   index;
-    private boolean versionIV;
+	public float scale;
+	public float frequency;
+	public int   position;
+	public float modulus;
+	public float amplitude;
+	public float phase;
+	public int   index;
+	private boolean versionIV;
 
-    public NewAtom() {
-        versionIV=false;
-    }
+	public NewAtom() {
+		versionIV=false;
+	}
 
-    public NewAtom(int v) {
-        if(v==NewBookLibrary.VERSION_IV) {
-           versionIV=true;
-        } else {
-           versionIV=false;
-        }
-    }
+	public NewAtom(int v) {
+		if(v==NewBookLibrary.VERSION_IV) {
+		   versionIV=true;
+		} else {
+		   versionIV=false;
+		}
+	}
 
-    public final void export(BookAtom atom) {
-        atom.frequency=frequency;
-        atom.position=(short)position;
-        atom.modulus=modulus;
-        atom.amplitude=amplitude;
-        atom.phase=phase;
-        atom.scale=(int)(0.5+scale);
-        atom.index=index;
-    }
+	public final void export(BookAtom atom) {
+		atom.frequency=frequency;
+		atom.position=(short)position;
+		atom.modulus=modulus;
+		atom.amplitude=amplitude;
+		atom.phase=phase;
+		atom.scale=(int)(0.5+scale);
+		atom.index=index;
+	}
 
-    public final static int sizeOf() {
-        return 6*4;
-    }
+	public final static int sizeOf() {
+		return 6*4;
+	}
 
-    public void Read(DataArrayInputStream stream) throws IOException {
-        scale=versionIV ? stream.readFloat() : (float)stream.readInt();
-        frequency=versionIV ? stream.readFloat() : (float)stream.readInt();
-        position=(int)(0.5F+(versionIV ? stream.readFloat()
-                                       : (float)stream.readInt()));
-        modulus=stream.readFloat();
-        amplitude=stream.readFloat();
-        phase=stream.readFloat();
-    }
+	public void Read(DataArrayInputStream stream) throws IOException {
+		scale=versionIV ? stream.readFloat() : (float)stream.readInt();
+		frequency=versionIV ? stream.readFloat() : (float)stream.readInt();
+		position=(int)(0.5F+(versionIV ? stream.readFloat()
+									   : (float)stream.readInt()));
+		modulus=stream.readFloat();
+		amplitude=stream.readFloat();
+		phase=stream.readFloat();
+	}
 
 	public float getAmplitude() {
 		return this.amplitude;
@@ -78,7 +78,7 @@ public class NewAtom implements StandardBookAtom {
 
 	public Enumeration<String> getPropertyNames() {
 		Vector<String> names = new Vector<String>();
-        return names.elements(); 
+		return names.elements(); 
 	}
 
 	public int getScale() {

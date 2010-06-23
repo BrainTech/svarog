@@ -109,15 +109,15 @@ public class MarkedTimeSpacePanel extends JPanel {
 			
 			vGroup.addGroup(
 					layout.createParallelGroup(Alignment.BASELINE)
-		            .addComponent(markerChannelLabel)
-		            .addComponent(getMarkerChannelComboBox())
+					.addComponent(markerChannelLabel)
+					.addComponent(getMarkerChannelComboBox())
 				);
 			
 			vGroup.addGroup(
 					layout.createParallelGroup(Alignment.BASELINE)
-		            .addComponent(markerStyleLabel)
-		            .addComponent(getMarkerStyleComboBox())
-		    	);
+					.addComponent(markerStyleLabel)
+					.addComponent(getMarkerStyleComboBox())
+				);
 			
 			layout.setVerticalGroup(vGroup);		
 						
@@ -188,15 +188,15 @@ public class MarkedTimeSpacePanel extends JPanel {
 			
 			vGroup.addGroup(
 					layout.createParallelGroup(Alignment.BASELINE)
-		            .addComponent(secondsBeforeLabel)
-		            .addComponent(getSecondsBeforeSpinner())
+					.addComponent(secondsBeforeLabel)
+					.addComponent(getSecondsBeforeSpinner())
 				);
 			
 			vGroup.addGroup(
 					layout.createParallelGroup(Alignment.BASELINE)
-		            .addComponent(secondsAfterLabel)
-		            .addComponent(getSecondsAfterSpinner())
-		    	);
+					.addComponent(secondsAfterLabel)
+					.addComponent(getSecondsAfterSpinner())
+				);
 			
 			layout.setVerticalGroup(vGroup);		
 						

@@ -104,10 +104,10 @@ public class OpenTagAction extends AbstractFocusableSignalMLAction<SignalDocumen
 			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
 			return;			
 		} catch (ConnectException ex) {
-            logger.error("Failed to open document - connection exception", ex);
-            ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-            return;         
-        }
+			logger.error("Failed to open document - connection exception", ex);
+			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+			return;		 
+		}
 				
 	}
 
