@@ -86,14 +86,7 @@ public class RoundBufferSampleSource extends DoubleArraySampleSource implements 
 		}
 	}
 
-//	public synchronized void addSamples( List<Float> newSamples) {
-//		for (int i=0; i<channelCount; i++) {
-//			samples[i][nextInsertPos] = newSamples.get(i);
-//		}
-//		incrNextInsertPos();
-//	}
-
-	// TODO przy zwykłych źródłach sygnału sampleCount jest znany z góry, a tu nie;
+	// przy zwykłych źródłach sygnału sampleCount jest znany z góry, a tu nie;
 	// tutaj sampleCount oznacza maksymalną ilość próbek w stanie gdy cały bufor już jest wypełniony
 	// offset powinien być w ramach przedziału od zera do sampleCount-1 - count
 	// jeśli bufor jest pusty to wszystkie próbki od zera do sampleCount - 1 są równe zero
@@ -102,7 +95,6 @@ public class RoundBufferSampleSource extends DoubleArraySampleSource implements 
 	// to offset trzeba przesunąć odpowiednio względem bieżącego punktu wstawiania
 	@Override
 	public synchronized void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
-		// TODO dorobić implementację bez tablicy tymczasowej
 		double[] tmp = new double[sampleCount];
 		if (full) {
 			for( int i=0; i<sampleCount; i++ ) {
@@ -127,52 +119,24 @@ public class RoundBufferSampleSource extends DoubleArraySampleSource implements 
 		for( int i=0; i<count; i++ ) {
 			target[arrayOffset+i] = tmp[signalOffset+i];
 		}
-		
-//		if (full) {
-//			// TODO dorobić przeliczanie indeksu
-//			for( int i=0; i<count; i++ ) {
-//				target[arrayOffset+i] = samples[channel][signalOffset+i];
-//			}
-//		}
-//		else {
-//			if (nextInsertPos == 0) {
-//				for (int i=0; i<count; i++) {
-//					target[i] = 0.0;
-//				}
-//			}
-//			else {
-//				for (int i=0; i<nextInsertPos; i++)
-//					target[i] = 0.0;
-//				for (int i=0; i<count; i++) {
-//					target[arrayOffset+i] = samples[channel][signalOffset+i];
-//				}
-//			}
-//		}
 	}
 
 	@Override
 	public OriginalMultichannelSampleSource duplicate()
 			throws SignalMLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void setCalibration(float calibration) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void setChannelCount(int channelCount) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void setSamplingFrequency(float samplingFrequency) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

@@ -32,13 +32,11 @@ public class TagRecorderWorker extends SwingWorker< Void, Tag> {
 
 	private StyledTagSet tagSet = new StyledTagSet();
 	private JmxClient jmxClient;
-//	private OpenMonitorDescriptor monitorDescriptor;
 	private volatile boolean finished;
 
 
-	public TagRecorderWorker( JmxClient jmxClient) {// , OpenMonitorDescriptor monitorDescriptor
+	public TagRecorderWorker( JmxClient jmxClient) {
 		this.jmxClient = jmxClient;
-//		this.monitorDescriptor = monitorDescriptor;
 	}
 
 	@Override
@@ -93,7 +91,6 @@ public class TagRecorderWorker extends SwingWorker< Void, Tag> {
 				return null;
 			}
 		}
-		// TODO dorobić nawiązywanie połączenia dla tagów i rozłączanie razem z nawiązywaniem połączenia sygnałowego
 		return null;
 	}
 

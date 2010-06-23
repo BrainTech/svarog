@@ -48,7 +48,6 @@ public class RawSignalDescriptorTest {
 		d.setSampleCount( 100);
 		d.setSampleType( RawSignalSampleType.DOUBLE);
 		d.setSamplingFrequency( 11f);
-//		d.setSourceFileName( "aaa.eee");
 		d.setSourceSignalType( RawSignalDescriptor.SourceSignalType.RAW);
 		RawSignalDescriptorWriter writer = new RawSignalDescriptorWriter();
 		writer.writeDocument( d, testFile);
@@ -56,7 +55,6 @@ public class RawSignalDescriptorTest {
 		RawSignalDescriptor rd = reader.readDocument( testFile);
 		assertEquals( d.getBlocksPerPage(), rd.getBlocksPerPage());
 		assertEquals( d.getByteOrder(), rd.getByteOrder());
-//		assertEquals( d.getCalibration(), rd.getCalibration(), 0.0000001);
 		for (int i=0; i<gain.length; i++)
 			assertEquals( d.getCalibrationGain()[i], rd.getCalibrationGain()[i], 0.0000001);
 		for (int i=0; i<offset.length; i++)
@@ -64,11 +62,8 @@ public class RawSignalDescriptorTest {
 		assertEquals( d.getChannelCount(), rd.getChannelCount());
 		for (int i=0; i<labels.length; i++)
 			assertEquals( d.getChannelLabels()[i], rd.getChannelLabels()[i]);
-//		assertEquals( d.getExportDate(), rd.getExportDate());
 		assertEquals( d.getExportFileName(), rd.getExportFileName());
 		assertEquals( d.getMarkerOffset(), rd.getMarkerOffset(), 0.000001);
-//		assertEquals( d.getMaximumValue().floatValue(), rd.getMaximumValue().floatValue(), 0.0000001);
-//		assertEquals( d.getMinimumValue().floatValue(), rd.getMinimumValue().floatValue(), 0.0000001);
 		assertEquals( d.getPageSize(), rd.getPageSize(), 0.0000001);
 		assertEquals( d.getSampleCount(), rd.getSampleCount());
 		assertEquals( d.getSampleType(), rd.getSampleType());

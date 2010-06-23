@@ -144,9 +144,6 @@ public class RoundBufferSampleSourceTest {
 	@Test
 	public void testGetSamples() {
 		
-//		double[][] theSamples = null;
-//			new double[TEST_CHANNEL_COUNT][TEST_SAMPLE_COUNT];
-
 		double[] target = new double[TEST_SAMPLE_COUNT];
 		theSource.getSamples( 0 , target, 0, TEST_SAMPLE_COUNT, 0);
 		for (int i=0; i<TEST_SAMPLE_COUNT; i++) {

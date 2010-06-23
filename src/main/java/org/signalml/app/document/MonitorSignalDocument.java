@@ -1,7 +1,5 @@
 package org.signalml.app.document;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -46,7 +44,6 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	private OutputStream recorderOutput;
 	private MonitorWorker monitorWorker;
 	private SignalRecorderWorker recorderWorker;
-//	private TagRecorderWorker tagRecorderWorker;
 	private String name;
 
 	private File backingFile = null;
@@ -63,14 +60,13 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		((RoundBufferSampleSource) sampleSource).setLabels( monitorOptions.getSelectedChannelList());
 		((RoundBufferSampleSource) sampleSource).setDocumentView( getDocumentView());
 
-		recorderOutputFile = new File( "signal.buf"); // TODO ddoać konfiguracje tego parametru w opcjach aplikacji
+		recorderOutputFile = new File( "signal.buf");
 		try {
 			recorderOutput = new FileOutputStream( recorderOutputFile);
 		}
 		catch (FileNotFoundException e) {
 		}
 	}
-
 
 	public void setName( String name) {
 		this.name = name;
@@ -129,31 +125,19 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		setSaved( true );
 
 		if (monitorOptions.getJmxClient() == null) {
-			throw new IOException(); //TODO
+			throw new IOException();
 		}
 
 		LinkedBlockingQueue< double[]> sampleQueue = null;
 		if (recorderOutput != null) {
 			sampleQueue = new LinkedBlockingQueue< double[]>();
-			recorderWorker = new SignalRecorderWorker( sampleQueue, recorderOutputFile, monitorOptions, 50L); // TODO sparametryzować pollingInterval
+			recorderWorker = new SignalRecorderWorker( sampleQueue, recorderOutputFile, monitorOptions, 50L);
 			recorderWorker.execute();
 		}
-
-		// TODO dodać w dialogach obsługę tagRecordera
-//		tagRecorderWorker = new TagRecorderWorker( monitorOptions.getTagClient());
-//		tagRecorderWorker.execute();
 
 		monitorWorker = new MonitorWorker( monitorOptions.getJmxClient(), monitorOptions, (RoundBufferSampleSource) sampleSource);
 		if (sampleQueue != null)
 			monitorWorker.setSampleQueue( sampleQueue);
-		monitorWorker.addPropertyChangeListener( new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				if (evt.getPropertyName().equals( "tagsRead")) {
-					// XXX
-				}
-			}
-		});
 		monitorWorker.execute();
 
 	}
@@ -186,19 +170,6 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 			sampleCount = recorderWorker.getSavedSampleCount();
 			recorderWorker = null;
 		}
-		
-//		StyledTagSet tagSet = null;
-//		if (tagRecorderWorker != null && !tagRecorderWorker.isCancelled()) {
-//			tagRecorderWorker.cancel( false);
-//			do {
-//				try {
-//					Thread.sleep( 1);
-//				}
-//				catch (InterruptedException e) {}
-//			} while (!tagRecorderWorker.isFinished());
-//			tagSet = tagRecorderWorker.getTagSet();
-//			tagRecorderWorker = null;
-//		}
 
 		String path = null;
 		if (backingFile != null) {
@@ -441,7 +412,6 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 
 	@Override
 	public void newDocument() throws SignalMLException {
-		// TODO Auto-generated method stub
 		
 	}
 
