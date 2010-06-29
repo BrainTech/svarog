@@ -236,8 +236,7 @@ public class LocalTask implements Task, MethodExecutionTracker, Runnable {
 			}
 			if (status.isSuspended()) {
 				onAbort(); // abort immediately
-			}
-			else {
+			} else {
 				status = TaskStatus.REQUESTING_ABORT;
 				fireTaskRequestChanged();
 				notifyAll();

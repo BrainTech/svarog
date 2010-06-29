@@ -195,8 +195,7 @@ public class MontageChannel implements Serializable {
 			}
 			else if (!referenceMap.entrySet().iterator().next().getValue().equals("-1")) {
 				bipolarCache = false;
-			}
-			else {
+			} else {
 				bipolarCache = true;
 			}
 		}

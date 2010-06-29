@@ -65,8 +65,7 @@ public class SignalSpacePanel extends JPanel {
 					}
 					else if (sourceLevelPanel.getAssembledRadioButton().isSelected()) {
 						getChannelSpacePanel().setCurrentLevel(SignalSourceLevel.ASSEMBLED);
-					}
-					else {
+					} else {
 						getChannelSpacePanel().setCurrentLevel(SignalSourceLevel.RAW);
 					}
 

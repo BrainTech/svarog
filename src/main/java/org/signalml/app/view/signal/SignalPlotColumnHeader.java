@@ -183,8 +183,7 @@ public class SignalPlotColumnHeader extends JComponent {
 				rect.height = SignalPlot.COMPARISON_STRIP_HEIGHT - (2 * SignalPlot.COMPARISON_STRIP_MARGIN);
 			}
 
-		}
-		else {
+		} else {
 
 			float pixerPerTag = ((float) pageTagAreaHeight) / tagCnt;
 
@@ -348,8 +347,7 @@ public class SignalPlotColumnHeader extends JComponent {
 		type = tagSelection.tag.getType();
 		if (type == SignalSelectionType.PAGE) {
 			tagBounds = getPixelPageTagBounds(tagSelection.tag, plot.getDocument().getTagDocuments().size(), cnt, plot.getView().isComparingTags(), tempBounds);
-		}
-		else {
+		} else {
 			tagBounds = null;
 		}
 

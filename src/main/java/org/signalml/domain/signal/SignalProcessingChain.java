@@ -98,8 +98,7 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 			source = new RawSignalSampleSource(rawEntry.getFile(), rawDescriptor.getChannelCount(), rawDescriptor.getSamplingFrequency(), rawDescriptor.getSampleType(), rawDescriptor.getByteOrder());
 			source.setCalibration(rawDescriptor.getCalibration());
 
-		}
-		else {
+		} else {
 			throw new SanityCheckException("Don't know how to open this kind of mrud [" + mrud.getClass().getName() + "]");
 		}
 
@@ -410,8 +409,7 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 
 			descriptor.setDocument(mrud);
 
-		}
-		else {
+		} else {
 
 			throw new SanityCheckException("Unsupported sample source type: " + source.getClass().getName());
 

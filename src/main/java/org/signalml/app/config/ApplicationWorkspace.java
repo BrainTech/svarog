@@ -130,8 +130,7 @@ public class ApplicationWorkspace extends AbstractXMLConfiguration {
 
 				return book;
 
-			}
-			else {
+			} else {
 				throw new SanityCheckException("Bad document type [" + type + "]");
 			}
 
@@ -177,8 +176,7 @@ public class ApplicationWorkspace extends AbstractXMLConfiguration {
 		else if (workspaceDocument instanceof WorkspaceTag) {
 			return null;
 			// do nothing - tags restored inside signals
-		}
-		else {
+		} else {
 			throw new SanityCheckException("Bad workspace document class [" + workspaceDocument.getClass() + "]");
 		}
 

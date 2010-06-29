@@ -78,8 +78,7 @@ public class NewTagAction extends AbstractFocusableSignalMLAction<SignalDocument
 			}
 			else if (mode == NewTagTypeMode.FROM_FILE) {
 				tagDocument = TagDocument.getStylesFromFileDocument(descriptor.getFile(), descriptor.getPageSize(), descriptor.getBlocksPerPage());
-			}
-			else {
+			} else {
 				throw new SanityCheckException("Unknown mode [" + mode + "]");
 			}
 		} catch (SignalMLException ex) {

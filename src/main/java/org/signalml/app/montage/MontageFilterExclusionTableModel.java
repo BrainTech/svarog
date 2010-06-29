@@ -186,8 +186,7 @@ public class MontageFilterExclusionTableModel extends AbstractTableModel impleme
 		}
 		else if (rowIndex == 0) {
 			return !montage.isFilterEnabled(columnIndex-1);
-		}
-		else {
+		} else {
 			return montage.isFilteringExcluded(columnIndex-1, rowIndex-1);
 		}
 	}
@@ -207,8 +206,7 @@ public class MontageFilterExclusionTableModel extends AbstractTableModel impleme
 
 			montage.setFilterEnabled(columnIndex-1, !((Boolean) value));
 
-		}
-		else {
+		} else {
 
 			boolean exclude = (Boolean) value;
 			if (!exclude) {
@@ -236,8 +234,7 @@ public class MontageFilterExclusionTableModel extends AbstractTableModel impleme
 		}
 		if (columnIndex == 0) {
 			return true;
-		}
-		else {
+		} else {
 			return (!montage.isExcludeAllFilters(rowIndex-1) && montage.isFilterEnabled(columnIndex-1));
 		}
 	}

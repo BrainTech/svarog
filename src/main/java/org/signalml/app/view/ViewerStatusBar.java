@@ -408,8 +408,7 @@ public class ViewerStatusBar extends JPanel implements ActionFocusListener, Prop
 		SignalSelection signalSelection = view.getSignalSelection();
 		if (signalSelection != null) {
 			addSignalSelection(document, view.getSignalSelectionPlot(), signalSelection, sb);
-		}
-		else {
+		} else {
 			PositionedTag tagSelection = view.getTagSelection();
 			if (tagSelection != null) {
 				addTag(document, view.getTagSelectionPlot(), tagSelection.getTag(), sb);
@@ -459,8 +458,7 @@ public class ViewerStatusBar extends JPanel implements ActionFocusListener, Prop
 			sb.append(channelTagString).append(" \"").append(tag.getStyle().getDescriptionOrName()).append("\" ");
 			addChannelTagInfo(document, plot, tag, sb);
 
-		}
-		else {
+		} else {
 			throw new SanityCheckException("Bad type [" + type + "]");
 		}
 
@@ -486,8 +484,7 @@ public class ViewerStatusBar extends JPanel implements ActionFocusListener, Prop
 			sb.append(channelSelectionString).append(' ');
 			addChannelSelectionInfo(document, plot, signalSelection, sb);
 
-		}
-		else {
+		} else {
 			throw new SanityCheckException("Bad type [" + type + "]");
 		}
 

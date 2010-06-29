@@ -60,8 +60,7 @@ public class SignalToolForwardingMouseAdapter extends MouseAdapter {
 	public void mousePressed(MouseEvent e) {
 		if (!signalTool.isSignalSelectionTool() && (SwingUtilities.isMiddleMouseButton(e) || (SwingUtilities.isLeftMouseButton(e) && e.isShiftDown()))) {
 			selectTagSignalTool.mousePressed(e);
-		}
-		else {
+		} else {
 			if (signalTool != null) {
 				if (mustSupportColumnHeader && !signalTool.supportsColumnHeader()) {
 					return;

@@ -74,8 +74,7 @@ public class LegacyTagExporter {
 			}
 			else if (type.isChannel()) {
 				tds.addChannelRec(hdrRec);
-			}
-			else {
+			} else {
 				throw new SanityCheckException("Bad selection type [" + type + "]");
 			}
 		}
@@ -111,8 +110,7 @@ public class LegacyTagExporter {
 				        (int)(tag.getLength() * samplingFrequency)
 				);
 
-			}
-			else {
+			} else {
 				throw new SanityCheckException("Bad selection type [" + type + "]");
 			}
 		}
@@ -154,8 +152,7 @@ public class LegacyTagExporter {
 			}
 			else if (dash.length == 4 || dash.length == 5) {
 				return LegacyTagConstants.OUTLINE_MODE_DASHDOT;
-			}
-			else {
+			} else {
 				return LegacyTagConstants.OUTLINE_MODE_DASHDOTDOT;
 			}
 		}

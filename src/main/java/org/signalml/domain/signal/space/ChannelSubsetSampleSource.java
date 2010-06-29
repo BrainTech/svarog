@@ -26,8 +26,7 @@ public class ChannelSubsetSampleSource extends MultichannelSampleProcessor {
 			channelCount = channelSpace.size();
 			channelIndices = channelSpace.getSelectedChannels();
 
-		}
-		else { // all channels
+		} else { // all channels
 
 			channelCount = source.getChannelCount();
 			channelIndices = new int[channelCount];

@@ -156,8 +156,7 @@ public class MP5ExecutablePanel extends JPanel {
 						mp5Executable = executable;
 					}
 				}
-			}
-			else {
+			} else {
 				// other os - do nothing
 			}
 

@@ -120,8 +120,7 @@ public class ConfigurationDefaults {
 		String paletteString = properties.getProperty("application.palette");
 		if (GREYSCALE_PALETTE.equalsIgnoreCase(paletteString)) {
 			config.setPalette(GrayscaleMapPalette.getInstance());
-		}
-		else {
+		} else {
 			config.setPalette(RainbowMapPalette.getInstance());
 		}
 

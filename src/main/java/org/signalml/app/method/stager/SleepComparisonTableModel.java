@@ -119,8 +119,7 @@ public class SleepComparisonTableModel extends AbstractTableModel {
 		public Object getValueAt(int rowIndex, int columnIndex) {
 			if (columnIndex < result.getStyleCount()) {
 				return result.getStyleAt(columnIndex).getDescriptionOrName();
-			}
-			else {
+			} else {
 				return messageSource.getMessage("stagerMethod.dialog.resultReview.otherStyle");
 			}
 		}

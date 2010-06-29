@@ -50,8 +50,7 @@ public class WignerMapScaleComboBoxCellRenderer extends DefaultListCellRenderer 
 			}
 			else if (scale == WignerMapScaleType.SQRT) {
 				renderer.setIcon(sqrtIcon);
-			}
-			else {
+			} else {
 				// else no icon
 				renderer.setIcon(null);
 			}

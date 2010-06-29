@@ -353,8 +353,7 @@ public class DocumentFlowIntegrator {
 				signalOptions.setMethod(OpenSignalMethod.RAW);
 				signalOptions.setRawSignalDescriptor(rawEntry.getDescriptor());
 
-			}
-			else {
+			} else {
 				logger.error("Don't know how to open this kind of mrud [" + mrud.getClass().getName() + "]");
 				return null;
 			}
@@ -842,8 +841,7 @@ public class DocumentFlowIntegrator {
 					return false;
 
 				}
-			}
-			else {
+			} else {
 				// compatible montage - silently freshen it to include any reordering, label changes etc.
 				tagSet.setMontage(parentMontage);
 			}

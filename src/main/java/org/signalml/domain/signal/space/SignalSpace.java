@@ -114,8 +114,7 @@ public class SignalSpace implements Serializable {
 				setChannelSpace(null);
 			}
 
-		}
-		else {
+		} else {
 
 			if (tagSelection != null) {
 				if (tagSelection.isMarker() && tagSelection.getType().isChannel()) {

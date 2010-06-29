@@ -44,8 +44,7 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 			channelCount = channelSpace.size();
 			channelIndices = channelSpace.getSelectedChannels();
 
-		}
-		else { // all channels
+		} else { // all channels
 
 			channelCount = source.getChannelCount();
 			channelIndices = new int[channelCount];

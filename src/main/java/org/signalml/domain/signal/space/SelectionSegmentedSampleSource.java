@@ -51,8 +51,7 @@ public class SelectionSegmentedSampleSource extends MultichannelSampleProcessor 
 			channelCount = 1;
 			channelIndices = new int[] { selection.getChannel() };
 
-		}
-		else { // all channels
+		} else { // all channels
 
 			channelCount = source.getChannelCount();
 			channelIndices = new int[channelCount];

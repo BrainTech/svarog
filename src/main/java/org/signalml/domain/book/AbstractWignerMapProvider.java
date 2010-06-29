@@ -296,8 +296,7 @@ public abstract class AbstractWignerMapProvider {
 					}
 				}
 			}
-		}
-		else {
+		} else {
 			throw new SanityCheckException("Unsupported scale type [" + scaleType.name() + "]");
 		}
 

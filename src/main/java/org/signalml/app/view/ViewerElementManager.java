@@ -1507,8 +1507,7 @@ public class ViewerElementManager {
 
 			documentView = bookView;
 
-		}
-		else {
+		} else {
 			throw new ClassCastException("Unsuported document class [" + document.getClass().toString() + "]");
 		}
 

@@ -74,8 +74,7 @@ public class NewTagDialog extends AbstractDialog {
 		}
 		else if (mode == NewTagTypeMode.FROM_FILE) {
 			newTagPanel.getFromFileRadio().setSelected(true);
-		}
-		else {
+		} else {
 			throw new SanityCheckException("Unknown mode [" + mode + "]");
 		}
 

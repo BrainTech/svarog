@@ -196,8 +196,7 @@ public class VisualReferenceEditorMouseHandler extends MouseAdapter {
 				}
 				else if (oldActiveChannel.getPrimaryChannel() != index) {
 					newActiveChannel = model.getChannelPerPrimary(index, 0);
-				}
-				else {
+				} else {
 					int oldActiveIndex = model.indexOfChannelPerPrimary(index, oldActiveChannel);
 					int newActiveIndex = (oldActiveIndex + 1) % model.channelsPerPrimarySize(index);
 					newActiveChannel = model.getChannelPerPrimary(index, newActiveIndex);

@@ -531,8 +531,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 					rendererComponent.paint(g.create(tagBoundsArr[i].x, tagBoundsArr[i].y, tagBoundsArr[i].width, tagBoundsArr[i].height));
 				}
 			}
-		}
-		else {
+		} else {
 			throw new SanityCheckException("Bad tag type");
 		}
 
@@ -565,8 +564,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 					rendererComponent.paint(g.create(tagBoundsArr[i].x, tagBoundsArr[i].y, tagBoundsArr[i].width, tagBoundsArr[i].height));
 				}
 			}
-		}
-		else {
+		} else {
 			throw new SanityCheckException("Bad tag difference type");
 		}
 
@@ -1547,8 +1545,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			bounds.y = viewRect.y;
 			bounds.height = 1;
 			return bounds.intersects(viewRect);
-		}
-		else {
+		} else {
 			throw new SanityCheckException("Bad tag type");
 		}
 
@@ -1688,8 +1685,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		}
 		else if (type == SignalSelectionType.BLOCK) {
 			tagBlockSelection(tagDocument, style, selection, selectNew);
-		}
-		else {
+		} else {
 			tagChannelSelection(tagDocument, style, selection, selectNew);
 		}
 	}
@@ -1897,8 +1893,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			                                        tag.getLength(),
 			                                        tag.getPosition()+tag.getLength()
 			                                });
-		}
-		else {
+		} else {
 			if (tag.isMarker()) {
 				return messageSource.getMessage("markerWithChannel", new Object[] {
 				                                        tag.getStyle().getDescriptionOrName(),

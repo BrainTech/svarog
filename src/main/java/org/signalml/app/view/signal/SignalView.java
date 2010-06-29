@@ -2228,8 +2228,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 					}
 					else if (desiredTagType.isChannel()) {
 						tagChannelToolButton.doClick();
-					}
-					else {
+					} else {
 						throw new SanityCheckException("Bad selection type");
 					}
 				}

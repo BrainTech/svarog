@@ -125,8 +125,7 @@ public class ChannelSpacePanel extends JPanel {
 		JList list = getChannelList();
 		if (channelSpaceType == ChannelSpaceType.WHOLE_SIGNAL) {
 			list.setSelectionInterval(0, list.getModel().getSize()-1);
-		}
-		else {
+		} else {
 
 			ChannelSpace channelSpace = space.getChannelSpace();
 			list.clearSelection();
@@ -163,8 +162,7 @@ public class ChannelSpacePanel extends JPanel {
 
 				if (list.isSelectedIndex(i)) {
 					channelSpace.addChannel(i);
-				}
-				else {
+				} else {
 					all = false;
 				}
 
@@ -175,8 +173,7 @@ public class ChannelSpacePanel extends JPanel {
 		if (all) {
 			space.setChannelSpaceType(ChannelSpaceType.WHOLE_SIGNAL);
 			space.setChannelSpace(null);
-		}
-		else {
+		} else {
 			space.setChannelSpaceType(ChannelSpaceType.SELECTED);
 			space.setChannelSpace(channelSpace);
 		}

@@ -407,8 +407,7 @@ public class StagerResultReviewDialog extends AbstractDialog {
 					return;
 				}
 
-			}
-			else {
+			} else {
 				logger.error("Primary tag is neither RK nor AASM");
 				getErrorsDialog().showException(new SignalMLException("error.stager.result.resultTagUnknownRules"));
 				return;

@@ -53,8 +53,7 @@ public class RocTableModel extends AbstractTableModel {
 		}
 		else if (columnIndex < getColumnCount()-6) {
 			return Object.class;
-		}
-		else {
+		} else {
 			return Double.class;
 		}
 	}
@@ -83,8 +82,7 @@ public class RocTableModel extends AbstractTableModel {
 		}
 		else if (column == cnt-1) {
 			return messageSource.getMessage("roc.tableTPRate");
-		}
-		else {
+		} else {
 			return messageSource.getMessage(rocData.getParameterAt(column-1));
 		}
 
@@ -128,8 +126,7 @@ public class RocTableModel extends AbstractTableModel {
 		}
 		else if (columnIndex == cnt-1) {
 			return new Double(rocData.getTrueRateAt(rowIndex));
-		}
-		else {
+		} else {
 			return rocData.getParameterValueAt(columnIndex-1, rowIndex);
 		}
 

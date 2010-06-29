@@ -298,8 +298,7 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 			}
 			else if (i == 0 && channelCount != 1) {
 				charts[i] = createChart(new double[][] { timeValues, samples[i] }, globalMin, globalMax, result.getLabels()[i], ChartType.TOP);
-			}
-			else {
+			} else {
 				charts[i] = createChart(new double[][] { timeValues, samples[i] }, globalMin, globalMax, result.getLabels()[i], ChartType.STRIPPED);
 			}
 

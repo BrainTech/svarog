@@ -87,8 +87,7 @@ public class SleepComparison implements PropertyProvider {
 			styles.add(tagSet.getStyle(SleepTagName.AASM_N3));
 			styles.add(tagSet.getStyle(SleepTagName.AASM_REM));
 
-		}
-		else {
+		} else {
 			throw new SanityCheckException("Unsupported stage tag type");
 		}
 
@@ -147,8 +146,7 @@ public class SleepComparison implements PropertyProvider {
 				else if (tag.getLength() != segmentLength) {
 					logger.warn("Bad tag length [" + tag.getLength() + "]");
 					tag = null;
-				}
-				else {
+				} else {
 					index = styles.indexOf(style);
 					if (index < 0) {
 						logger.warn("Unknown page style [" + style.getName() + "]");

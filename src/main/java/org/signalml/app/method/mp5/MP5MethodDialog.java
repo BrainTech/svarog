@@ -575,8 +575,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 		else if (dictionarySize < MEMORY_TB) {
 			unitedSize = ((double) dictionarySize) / MEMORY_GB;
 			units = "GB";
-		}
-		else {
+		} else {
 			unitedSize = ((double) dictionarySize) / MEMORY_TB;
 			units = "TB";
 		}

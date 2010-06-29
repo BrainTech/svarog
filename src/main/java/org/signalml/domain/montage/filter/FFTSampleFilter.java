@@ -97,8 +97,7 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
 			// last range being removed
 			Range previousRange = ranges.get(index-1);
 			previousRange.highFrequency = 0;
-		}
-		else {
+		} else {
 			// not first, not last, and size > 1 - must be at least 3
 			Range previousRange = ranges.get(index-1);
 			Range nextRange = ranges.get(index+1);

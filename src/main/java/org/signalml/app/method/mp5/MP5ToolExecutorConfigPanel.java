@@ -336,8 +336,7 @@ public class MP5ToolExecutorConfigPanel extends JPanel {
 			}
 			else if (executor instanceof MP5RemoteExecutor) {
 				ok = remoteExecutorDialog.showDialog(executor, true);
-			}
-			else {
+			} else {
 				throw new SanityCheckException("Unsupported executor type [" + executor.getClass() + "]");
 			}
 

@@ -337,8 +337,7 @@ public class VisualReferenceModel implements SourceMontageListener, MontageListe
 		}
 		else if (cnt == 1) {
 			token = "-1";
-		}
-		else {
+		} else {
 			token = "-1/" + cnt;
 		}
 

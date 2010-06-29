@@ -180,8 +180,7 @@ public class SignalMLCodecReader {
 				}
 			}
 			return max;
-		}
-		else {
+		} else {
 			throw new SignalMLCodecException("Unable to interpret float value of class [" + o.getClass().getName() + "]");
 		}
 	}
@@ -211,8 +210,7 @@ public class SignalMLCodecReader {
 			} catch (IndexOutOfBoundsException ex) {
 				throw new SignalMLCodecException(ex);
 			}
-		}
-		else {
+		} else {
 			throw new SignalMLCodecException("Unable to interpret float value of class [" + o.getClass().getName() + "]");
 		}
 	}

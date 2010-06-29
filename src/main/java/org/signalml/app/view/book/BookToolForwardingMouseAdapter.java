@@ -43,8 +43,7 @@ public class BookToolForwardingMouseAdapter extends MouseAdapter {
 	public void mousePressed(MouseEvent e) {
 		if (!bookTool.isBookSelectionTool() && (SwingUtilities.isMiddleMouseButton(e) || (SwingUtilities.isLeftMouseButton(e) && e.isShiftDown()))) {
 			selectAtomBookTool.mousePressed(e);
-		}
-		else {
+		} else {
 			if (bookTool != null) {
 				bookTool.mousePressed(e);
 			}

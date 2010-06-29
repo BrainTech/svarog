@@ -93,8 +93,7 @@ public class SleepStatisticTableModel extends AbstractTableModel {
 				}
 				else if (SleepTagName.RK_MT.equals(name)) {
 					index = 7;
-				}
-				else {
+				} else {
 					index = 8 + addCnt;
 					addCnt++;
 				}
