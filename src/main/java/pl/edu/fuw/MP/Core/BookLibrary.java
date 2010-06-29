@@ -147,8 +147,7 @@ public class BookLibrary implements BookLibraryInterface {
 			} catch (IOException e) {
 				try {
 					file.close();
-				}
-				catch (Exception ee) {
+				} catch (Exception ee) {
 					;
 				}
 				return k;
@@ -164,8 +163,7 @@ public class BookLibrary implements BookLibraryInterface {
 				head.Read(file);
 				file.skipBytes(head.book_size*20);
 			}
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			return false;
 		}
 		BookNo=Offset;
@@ -243,8 +241,7 @@ public class BookLibrary implements BookLibraryInterface {
 			}
 			convertPhase();
 			BookNo++;
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			return false;
 		}
 		return true;

@@ -159,8 +159,7 @@ public class SvarogApplication {
 		CommandLine line = null;
 		try {
 			line = parser.parse(options, args);
-		}
-		catch (ParseException exp) {
+		} catch (ParseException exp) {
 			System.err.println("Parsing failed. Reason: " + exp.getMessage());
 			System.exit(1);
 		}

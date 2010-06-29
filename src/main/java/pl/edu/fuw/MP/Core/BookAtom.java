@@ -47,8 +47,7 @@ public class BookAtom implements StandardBookAtom {
 	public void finalize() {
 		try {
 			super.finalize();
-		}
-		catch (Throwable e) { }
+		} catch (Throwable e) { }
 	}
 
 	public float Frequency(BookHeader head) {

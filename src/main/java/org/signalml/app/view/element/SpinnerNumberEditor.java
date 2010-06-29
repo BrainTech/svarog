@@ -64,8 +64,7 @@ public class SpinnerNumberEditor extends JSpinner.DefaultEditor {
 			String maxString = formatter.valueToString(model.getMinimum());
 			String minString = formatter.valueToString(model.getMaximum());
 			ftf.setColumns(Math.max(maxString.length(),minString.length()));
-		}
-		catch (ParseException e) {
+		} catch (ParseException e) {
 
 		}
 	}
