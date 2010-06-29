@@ -94,18 +94,7 @@ public class NewTagAction extends AbstractFocusableSignalMLAction<SignalDocument
 		ofd.getTagOptions().setParent(signalDocument);
 		ofd.getTagOptions().setExistingDocument(tagDocument);
 
-		try {
-			documentFlowIntegrator.openDocument(ofd);
-		} catch (SignalMLException ex) {
-			logger.error("Failed to open document", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-			return;
-		} catch (IOException ex) {
-			logger.error("Failed to open document - i/o exception", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-			return;
-		}
-
+		documentFlowIntegrator.maybeOpenDocument(ofd);
 	}
 
 	@Override

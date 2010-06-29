@@ -3,7 +3,6 @@
  */
 package org.signalml.app.action;
 
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 
@@ -38,7 +37,6 @@ public class OpenDocumentAction extends AbstractSignalMLAction {
 
 	@Override
 	public void actionPerformed(ActionEvent ev) {
-
 		logger.debug("Open document");
 
 		OpenDocumentDescriptor ofd = new OpenDocumentDescriptor();
@@ -49,20 +47,8 @@ public class OpenDocumentAction extends AbstractSignalMLAction {
 			return;
 		}
 
-		try {
-			documentFlowIntegrator.openDocument(ofd);
-		} catch (SignalMLException ex) {
-			logger.error("Failed to open document", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-			return;
-		} catch (IOException ex) {
-			logger.error("Failed to open document - i/o exception", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-			return;
-		}
-
+		documentFlowIntegrator.maybeOpenDocument(ofd);
 	}
-
 
 	@Override
 	public void setEnabledAsNeeded() {

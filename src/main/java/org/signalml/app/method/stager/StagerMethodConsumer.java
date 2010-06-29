@@ -161,7 +161,6 @@ public class StagerMethodConsumer implements InitializingMethodResultConsumer {
 		}
 
 		if (signalAvailable && descriptor.isPrimaryOpenInWindow()) {
-
 			OpenDocumentDescriptor odd = new OpenDocumentDescriptor();
 			odd.setFile(primaryTag.getBackingFile());
 			odd.setMakeActive(true);
@@ -169,18 +168,8 @@ public class StagerMethodConsumer implements InitializingMethodResultConsumer {
 			odd.getTagOptions().setParent(signalDocument);
 			odd.getTagOptions().setExistingDocument(primaryTag);
 
-			try {
-				documentFlowIntegrator.openDocument(odd);
-			} catch (SignalMLException ex) {
-				logger.error("Failed to open document", ex);
-				ErrorsDialog.showImmediateExceptionDialog(dialogParent, ex);
+			if (!documentFlowIntegrator.maybeOpenDocument(odd, dialogParent))
 				return false;
-			} catch (IOException ex) {
-				logger.error("Failed to open document - i/o exception", ex);
-				ErrorsDialog.showImmediateExceptionDialog(dialogParent, ex);
-				return false;
-			}
-
 		}
 
 		ArrayList<File> chosenAdditionalTags = descriptor.getChosenAdditionalTags();
@@ -251,7 +240,6 @@ public class StagerMethodConsumer implements InitializingMethodResultConsumer {
 					}
 
 					if (additionalOpenInWindow) {
-
 						OpenDocumentDescriptor odd = new OpenDocumentDescriptor();
 						odd.setFile(additionalTag.getBackingFile());
 						odd.setMakeActive(false);
@@ -259,18 +247,8 @@ public class StagerMethodConsumer implements InitializingMethodResultConsumer {
 						odd.getTagOptions().setParent(signalDocument);
 						odd.getTagOptions().setExistingDocument(additionalTag);
 
-						try {
-							documentFlowIntegrator.openDocument(odd);
-						} catch (SignalMLException ex) {
-							logger.error("Failed to open document", ex);
-							ErrorsDialog.showImmediateExceptionDialog(dialogParent, ex);
+						if (!documentFlowIntegrator.maybeOpenDocument(odd))
 							return false;
-						} catch (IOException ex) {
-							logger.error("Failed to open document - i/o exception", ex);
-							ErrorsDialog.showImmediateExceptionDialog(dialogParent, ex);
-							return false;
-						}
-
 					}
 
 				}
