@@ -1,5 +1,5 @@
 /* TagSignalIdentification.java created 2007-09-28
- * 
+ *
  */
 
 package org.signalml.domain.tag;
@@ -10,17 +10,17 @@ import org.signalml.domain.signal.SignalChecksum;
 
 /** TagSignalIdentification
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class TagSignalIdentification implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private String formatId;	
-	private String fileName; 	
+	private String formatId;
+	private String fileName;
 	private SignalChecksum checksum;
-	
+
 	public TagSignalIdentification() {
 	}
 
@@ -47,5 +47,5 @@ public class TagSignalIdentification implements Serializable {
 	public void setChecksum(SignalChecksum checksum) {
 		this.checksum = checksum;
 	}
-		
+
 }

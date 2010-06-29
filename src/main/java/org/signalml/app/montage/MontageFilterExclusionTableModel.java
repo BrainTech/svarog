@@ -1,5 +1,5 @@
 /* MontageFilterExclusionTableModel.java created 2008-02-03
- * 
+ *
  */
 
 package org.signalml.app.montage;
@@ -16,7 +16,7 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** MontageFilterExclusionTableModel
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class MontageFilterExclusionTableModel extends AbstractTableModel implements MontageListener, MontageSampleFilterListener {
@@ -24,31 +24,31 @@ public class MontageFilterExclusionTableModel extends AbstractTableModel impleme
 	private static final long serialVersionUID = 1L;
 
 	protected static final Logger logger = Logger.getLogger(MontageFilterExclusionTableModel.class);
-	
-	private MessageSourceAccessor messageSource;	
-	
-	private Montage montage; 
-		
+
+	private MessageSourceAccessor messageSource;
+
+	private Montage montage;
+
 	private ColumnTableModel columnTableModel;
 	private RowTableModel rowTableModel;
-		
+
 	public MontageFilterExclusionTableModel(MessageSourceAccessor messageSource) {
 		this.messageSource = messageSource;
 	}
-	
+
 	public MessageSourceAccessor getMessageSource() {
 		return messageSource;
 	}
-		
+
 	public ColumnTableModel getColumnTableModel() {
-		if( columnTableModel == null ) {
+		if (columnTableModel == null) {
 			columnTableModel = new ColumnTableModel();
 		}
 		return columnTableModel;
 	}
 
 	public RowTableModel getRowTableModel() {
-		if( rowTableModel == null ) {
+		if (rowTableModel == null) {
 			rowTableModel = new RowTableModel();
 		}
 		return rowTableModel;
@@ -56,44 +56,44 @@ public class MontageFilterExclusionTableModel extends AbstractTableModel impleme
 
 	private void reset() {
 		fireTableStructureChanged();
-		if( columnTableModel != null ) {
+		if (columnTableModel != null) {
 			columnTableModel.fireTableStructureChanged();
 		}
-		if( rowTableModel != null ) {
+		if (rowTableModel != null) {
 			rowTableModel.fireTableStructureChanged();
-		}		
+		}
 	}
-	
+
 	public Montage getMontage() {
 		return montage;
 	}
 
 	public void setMontage(Montage montage) {
-		if( this.montage != montage ) {
-			if( this.montage != null ) {
+		if (this.montage != montage) {
+			if (this.montage != null) {
 				this.montage.removeMontageListener(this);
 				this.montage.removeMontageSampleFilterListener(this);
 			}
 			this.montage = montage;
-			if( montage != null ) {
+			if (montage != null) {
 				montage.addMontageListener(this);
 				montage.addMontageSampleFilterListener(this);
 			}
 			reset();
 		}
 	}
-	
+
 	@Override
 	public void montageChannelsAdded(MontageEvent ev) {
 		fireTableDataChanged();
-		if( rowTableModel != null ) {
+		if (rowTableModel != null) {
 			rowTableModel.fireTableDataChanged();
 		}
 	}
 
 	@Override
 	public void montageChannelsChanged(MontageEvent ev) {
-		if( rowTableModel != null ) {
+		if (rowTableModel != null) {
 			rowTableModel.fireTableDataChanged();
 		}
 	}
@@ -101,7 +101,7 @@ public class MontageFilterExclusionTableModel extends AbstractTableModel impleme
 	@Override
 	public void montageChannelsRemoved(MontageEvent ev) {
 		fireTableDataChanged();
-		if( rowTableModel != null ) {
+		if (rowTableModel != null) {
 			rowTableModel.fireTableDataChanged();
 		}
 	}
@@ -114,22 +114,22 @@ public class MontageFilterExclusionTableModel extends AbstractTableModel impleme
 	@Override
 	public void montageStructureChanged(MontageEvent ev) {
 		fireTableDataChanged();
-		if( rowTableModel != null ) {
+		if (rowTableModel != null) {
 			rowTableModel.fireTableDataChanged();
 		}
 	}
-	
+
 	@Override
 	public void filterAdded(MontageSampleFilterEvent ev) {
 		fireTableStructureChanged();
-		if( columnTableModel != null ) {
+		if (columnTableModel != null) {
 			columnTableModel.fireTableStructureChanged();
 		}
 	}
-	
+
 	@Override
 	public void filterChanged(MontageSampleFilterEvent ev) {
-		if( columnTableModel != null ) {
+		if (columnTableModel != null) {
 			columnTableModel.fireTableDataChanged();
 		}
 	}
@@ -137,12 +137,12 @@ public class MontageFilterExclusionTableModel extends AbstractTableModel impleme
 	@Override
 	public void filterExclusionChanged(MontageSampleFilterEvent ev) {
 		fireTableDataChanged();
-	}	
+	}
 
 	@Override
 	public void filterRemoved(MontageSampleFilterEvent ev) {
 		fireTableStructureChanged();
-		if( columnTableModel != null ) {
+		if (columnTableModel != null) {
 			columnTableModel.fireTableStructureChanged();
 		}
 	}
@@ -150,7 +150,7 @@ public class MontageFilterExclusionTableModel extends AbstractTableModel impleme
 	@Override
 	public void filtersChanged(MontageSampleFilterEvent ev) {
 		fireTableStructureChanged();
-		if( columnTableModel != null ) {
+		if (columnTableModel != null) {
 			columnTableModel.fireTableStructureChanged();
 		}
 	}
@@ -159,10 +159,10 @@ public class MontageFilterExclusionTableModel extends AbstractTableModel impleme
 	public Class<?> getColumnClass(int columnIndex) {
 		return Boolean.class;
 	}
-	
+
 	@Override
 	public int getColumnCount() {
-		if( montage == null ) {
+		if (montage == null) {
 			return 0;
 		}
 		return montage.getSampleFilterCount()+1;
@@ -170,7 +170,7 @@ public class MontageFilterExclusionTableModel extends AbstractTableModel impleme
 
 	@Override
 	public int getRowCount() {
-		if( montage == null ) {
+		if (montage == null) {
 			return 0;
 		}
 		return montage.getMontageChannelCount()+1;
@@ -178,77 +178,77 @@ public class MontageFilterExclusionTableModel extends AbstractTableModel impleme
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		if( columnIndex == 0 ) {
-			if( rowIndex == 0 ) {
+		if (columnIndex == 0) {
+			if (rowIndex == 0) {
 				return null;
 			}
 			return montage.isExcludeAllFilters(rowIndex-1);
 		}
-		else if( rowIndex == 0 ) {
+		else if (rowIndex == 0) {
 			return !montage.isFilterEnabled(columnIndex-1);
 		}
 		else {
 			return montage.isFilteringExcluded(columnIndex-1, rowIndex-1);
 		}
 	}
-		
+
 	@Override
 	public void setValueAt(Object value, int rowIndex, int columnIndex) {
-		
-		if( columnIndex == 0 ) {
-			
-			if( rowIndex == 0 ) {
+
+		if (columnIndex == 0) {
+
+			if (rowIndex == 0) {
 				return;
-			}		
+			}
 			montage.setExcludeAllFilters(rowIndex-1, (Boolean) value);
-						
-		} 
-		else if( rowIndex == 0 ) {
-			
+
+		}
+		else if (rowIndex == 0) {
+
 			montage.setFilterEnabled(columnIndex-1, !((Boolean) value));
-			
+
 		}
 		else {
-		
+
 			boolean exclude = (Boolean) value;
-			if( !exclude ) {
-				if( montage.isExcludeAllFilters(rowIndex-1) ) {
+			if (!exclude) {
+				if (montage.isExcludeAllFilters(rowIndex-1)) {
 					montage.setExcludeAllFilters(rowIndex-1, false);
 				}
-				if( !montage.isFilterEnabled(columnIndex-1) ) {
+				if (!montage.isFilterEnabled(columnIndex-1)) {
 					montage.setFilterEnabled(columnIndex-1, true);
 				}
 			}
-			
+
 			montage.setFilterChannelExcluded(columnIndex-1, rowIndex-1, exclude);
 
 		}
-		
+
 	}
-	
+
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		if( rowIndex == 0 ) {
-			if( columnIndex == 0 ) {
+		if (rowIndex == 0) {
+			if (columnIndex == 0) {
 				return false;
 			}
 			return true;
 		}
-		if( columnIndex == 0 ) {
+		if (columnIndex == 0) {
 			return true;
 		}
 		else {
-			return ( !montage.isExcludeAllFilters(rowIndex-1) && montage.isFilterEnabled(columnIndex-1) );
+			return (!montage.isExcludeAllFilters(rowIndex-1) && montage.isFilterEnabled(columnIndex-1));
 		}
 	}
-	
+
 	public class ColumnTableModel extends AbstractTableModel {
 
 		private static final long serialVersionUID = 1L;
 
 		@Override
 		public int getColumnCount() {
-			if( montage == null ) {
+			if (montage == null) {
 				return 0;
 			}
 			return montage.getSampleFilterCount()+1;
@@ -256,16 +256,16 @@ public class MontageFilterExclusionTableModel extends AbstractTableModel impleme
 
 		@Override
 		public int getRowCount() {
-			if( montage == null ) {
+			if (montage == null) {
 				return 0;
 			}
 			return 1;
 		}
-		
+
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
-			if( columnIndex == 0 ) {
-				return messageSource.getMessage( "filterExclusionTable.allFilters" );
+			if (columnIndex == 0) {
+				return messageSource.getMessage("filterExclusionTable.allFilters");
 			} else {
 				return columnIndex + ". " + montage.getSampleFilterAt(columnIndex-1).getDescription();
 			}
@@ -275,16 +275,16 @@ public class MontageFilterExclusionTableModel extends AbstractTableModel impleme
 		public Class<?> getColumnClass(int columnIndex) {
 			return String.class;
 		}
-		
+
 	}
-	
+
 	public class RowTableModel extends AbstractTableModel {
 
 		private static final long serialVersionUID = 1L;
 
 		@Override
 		public int getColumnCount() {
-			if( montage == null ) {
+			if (montage == null) {
 				return 0;
 			}
 			return 1;
@@ -292,7 +292,7 @@ public class MontageFilterExclusionTableModel extends AbstractTableModel impleme
 
 		@Override
 		public int getRowCount() {
-			if( montage == null ) {
+			if (montage == null) {
 				return 0;
 			}
 			return montage.getMontageChannelCount()+1;
@@ -300,8 +300,8 @@ public class MontageFilterExclusionTableModel extends AbstractTableModel impleme
 
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
-			if( rowIndex == 0 ) {
-				return messageSource.getMessage( "filterExclusionTable.allChannels" );
+			if (rowIndex == 0) {
+				return messageSource.getMessage("filterExclusionTable.allChannels");
 			} else {
 				return montage.getMontageChannelLabelAt(rowIndex-1);
 			}
@@ -311,7 +311,7 @@ public class MontageFilterExclusionTableModel extends AbstractTableModel impleme
 		public Class<?> getColumnClass(int columnIndex) {
 			return String.class;
 		}
-		
+
 	}
 
 }

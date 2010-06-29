@@ -1,5 +1,5 @@
 /* TagStylesTreeNode.java created 2007-10-13
- * 
+ *
  */
 
 package org.signalml.app.model;
@@ -11,7 +11,7 @@ import org.springframework.context.MessageSourceResolvable;
 
 /** TagStylesTreeNode
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class TagStylesTreeNode implements MessageSourceResolvable {
@@ -23,23 +23,23 @@ public class TagStylesTreeNode implements MessageSourceResolvable {
 		this.tagSet = tagSet;
 		this.type = type;
 	}
-	
+
 	public StyledTagSet getTagSet() {
 		return tagSet;
 	}
-	
+
 	public SignalSelectionType getType() {
 		return type;
 	}
-	
+
 	public int getSize() {
 		return tagSet.getTagStyleCount(type);
 	}
-	
+
 	public TagStyle getStyle(int index) {
 		return tagSet.getStyleAt(type, index);
 	}
-	
+
 	public int indexOfStyle(TagStyle style) {
 		return tagSet.indexOfStyle(style);
 	}
@@ -59,6 +59,6 @@ public class TagStylesTreeNode implements MessageSourceResolvable {
 		return "Styles???";
 	}
 
-	
-	
+
+
 }

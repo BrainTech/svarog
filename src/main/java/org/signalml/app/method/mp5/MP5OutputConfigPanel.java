@@ -1,5 +1,5 @@
 /* MP5OutputConfigPanel.java created 2008-01-31
- * 
+ *
  */
 package org.signalml.app.method.mp5;
 
@@ -24,18 +24,18 @@ import org.springframework.validation.Errors;
 
 /** MP5OutputConfigPanel
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class MP5OutputConfigPanel extends JPanel {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private MessageSourceAccessor messageSource;
-	private AbstractDialog owner;		
-			
+	private AbstractDialog owner;
+
 	private JCheckBox bookWithSignalCheckBox;
-	
+
 	public MP5OutputConfigPanel(MessageSourceAccessor messageSource, AbstractDialog owner) {
 		super();
 		this.messageSource = messageSource;
@@ -44,86 +44,86 @@ public class MP5OutputConfigPanel extends JPanel {
 	}
 
 	private void initialize() {
-		
+
 		CompoundBorder border = new CompoundBorder(
-				new TitledBorder( messageSource.getMessage("mp5Method.dialog.outputTitle") ),
-				new EmptyBorder(3,3,3,3)
-			);
-		
+		        new TitledBorder(messageSource.getMessage("mp5Method.dialog.outputTitle")),
+		        new EmptyBorder(3,3,3,3)
+		);
+
 		setBorder(border);
-		
+
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
 		JLabel bookWithSignalLabel = new JLabel(messageSource.getMessage("mp5Method.dialog.bookWithSignal"));
-		
+
 		CompactButton bookWithSignalHelpButton = SwingUtils.createFieldHelpButton(messageSource, owner, MP5MethodDialog.HELP_BOOK_WITH_SIGNAL);
 
 		Component glue1 = Box.createHorizontalGlue();
-		
+
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
-				layout.createParallelGroup()
-				.addComponent(bookWithSignalLabel)
-			);
+		        layout.createParallelGroup()
+		        .addComponent(bookWithSignalLabel)
+		);
 
 		hGroup.addGroup(
-				layout.createParallelGroup()
-				.addComponent(glue1)
-			);
-		
-		hGroup.addGroup(
-				layout.createParallelGroup()
-				.addComponent(getBookWithSignalCheckBox())
-			);
+		        layout.createParallelGroup()
+		        .addComponent(glue1)
+		);
 
 		hGroup.addGroup(
-				layout.createParallelGroup()
-				.addComponent(bookWithSignalHelpButton)
-			);
-		
+		        layout.createParallelGroup()
+		        .addComponent(getBookWithSignalCheckBox())
+		);
+
+		hGroup.addGroup(
+		        layout.createParallelGroup()
+		        .addComponent(bookWithSignalHelpButton)
+		);
+
 		layout.setHorizontalGroup(hGroup);
-		
+
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.CENTER)
-	            .addComponent(bookWithSignalLabel)
-	            .addComponent(glue1)
-	            .addComponent(getBookWithSignalCheckBox())
-	            .addComponent(bookWithSignalHelpButton)
-			);
-	
-		layout.setVerticalGroup(vGroup);				
-								
+		        layout.createParallelGroup(Alignment.CENTER)
+		        .addComponent(bookWithSignalLabel)
+		        .addComponent(glue1)
+		        .addComponent(getBookWithSignalCheckBox())
+		        .addComponent(bookWithSignalHelpButton)
+		);
+
+		layout.setVerticalGroup(vGroup);
+
 	}
-	
+
 	public JCheckBox getBookWithSignalCheckBox() {
-		if( bookWithSignalCheckBox == null ) {
+		if (bookWithSignalCheckBox == null) {
 			bookWithSignalCheckBox = new JCheckBox();
 		}
 		return bookWithSignalCheckBox;
 	}
-	
+
 	public void fillPanelFromParameters(MP5Parameters parameters) {
-		
-		getBookWithSignalCheckBox().setSelected( parameters.isBookWithSignal() );
-		
+
+		getBookWithSignalCheckBox().setSelected(parameters.isBookWithSignal());
+
 	}
-	
+
 	public void fillParametersFromPanel(MP5Parameters parameters) {
-		
-		parameters.setBookWithSignal( getBookWithSignalCheckBox().isSelected() );
-		
+
+		parameters.setBookWithSignal(getBookWithSignalCheckBox().isSelected());
+
 	}
-	
-	public void validatePanel( Errors errors ) {
-				
+
+	public void validatePanel(Errors errors) {
+
 		// nothing to do
-		
+
 	}
-	
+
 }

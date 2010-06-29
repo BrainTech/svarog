@@ -1,5 +1,5 @@
 /* RawSignalDocument.java created 2008-01-28
- * 
+ *
  */
 
 package org.signalml.app.document;
@@ -18,21 +18,21 @@ import org.signalml.exception.SignalMLException;
 
 /** RawSignalDocument
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class RawSignalDocument extends AbstractFileSignal {
 
 	private RawSignalDescriptor descriptor;
-		
+
 	public RawSignalDocument(SignalType type, RawSignalDescriptor descriptor) {
 		super(type);
 		this.descriptor = descriptor;
 	}
-				
+
 	@Override
-	public void closeDocument() throws SignalMLException {		
-		if( sampleSource != null ) {
+	public void closeDocument() throws SignalMLException {
+		if (sampleSource != null) {
 			((RawSignalSampleSource) sampleSource).close();
 			sampleSource = null;
 		}
@@ -41,20 +41,20 @@ public class RawSignalDocument extends AbstractFileSignal {
 
 	@Override
 	public void openDocument() throws SignalMLException, IOException {
-		if( backingFile == null ) {
-			throw new SignalMLException("error.noBackingFile");	
+		if (backingFile == null) {
+			throw new SignalMLException("error.noBackingFile");
 		}
 		RawSignalSampleSource sampleSource = new RawSignalSampleSource(backingFile.getAbsoluteFile(), descriptor.getChannelCount(), descriptor.getSamplingFrequency(), descriptor.getSampleType(), descriptor.getByteOrder());
 		sampleSource.setCalibration(descriptor.getCalibration());
 		sampleSource.setLabels(descriptor.getChannelLabels());
-		
+
 		this.sampleSource = sampleSource;
 	}
-		
+
 	public float getCalibration() {
 		return sampleSource.getCalibration();
 	}
-	
+
 	public boolean isCalibrationCapable() {
 		return sampleSource.isCalibrationCapable();
 	}
@@ -74,7 +74,7 @@ public class RawSignalDocument extends AbstractFileSignal {
 	public void setSamplingFrequency(float samplingFrequency) {
 		sampleSource.setSamplingFrequency(samplingFrequency);
 	}
-	
+
 	public String[] getLabels() {
 		return descriptor.getChannelLabels();
 	}
@@ -86,7 +86,7 @@ public class RawSignalDocument extends AbstractFileSignal {
 	public RawSignalByteOrder getByteOrder() {
 		return descriptor.getByteOrder();
 	}
-	
+
 	public RawSignalDescriptor getDescriptor() {
 		return descriptor;
 	}
@@ -95,19 +95,19 @@ public class RawSignalDocument extends AbstractFileSignal {
 	public String getFormatName() {
 		return "InternalInterleavedRAW";
 	}
-		
+
 	@Override
 	public List<LabelledPropertyDescriptor> getPropertyList() throws IntrospectionException {
-		
+
 		List<LabelledPropertyDescriptor> list = super.getPropertyList();
-		
-		list.add( new LabelledPropertyDescriptor("property.signaldocument.calibration", "calibration", RawSignalDocument.class) );
-		list.add( new LabelledPropertyDescriptor("property.rawSignal.sampleType", "sampleType", RawSignalDocument.class, "getSampleType", null) );
-		list.add( new LabelledPropertyDescriptor("property.rawSignal.byteOrder", "byteOrder", RawSignalDocument.class, "getByteOrder", null) );
-				
+
+		list.add(new LabelledPropertyDescriptor("property.signaldocument.calibration", "calibration", RawSignalDocument.class));
+		list.add(new LabelledPropertyDescriptor("property.rawSignal.sampleType", "sampleType", RawSignalDocument.class, "getSampleType", null));
+		list.add(new LabelledPropertyDescriptor("property.rawSignal.byteOrder", "byteOrder", RawSignalDocument.class, "getByteOrder", null));
+
 		return list;
-		
+
 	}
-				
+
 }
 

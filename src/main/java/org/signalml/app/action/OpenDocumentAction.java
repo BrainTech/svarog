@@ -1,5 +1,5 @@
 /* OpenDocumentAction.java created 2007-09-10
- * 
+ *
  */
 package org.signalml.app.action;
 
@@ -17,18 +17,18 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** OpenDocumentAction
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class OpenDocumentAction extends AbstractSignalMLAction {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	protected static final Logger logger = Logger.getLogger(OpenDocumentAction.class);
-			
+
 	private OpenDocumentDialog openDocumentDialog;
 	private DocumentFlowIntegrator documentFlowIntegrator;
-	
+
 	public OpenDocumentAction(MessageSourceAccessor messageSource) {
 		super(messageSource);
 		setText("action.openDocument");
@@ -38,32 +38,32 @@ public class OpenDocumentAction extends AbstractSignalMLAction {
 
 	@Override
 	public void actionPerformed(ActionEvent ev) {
-		
+
 		logger.debug("Open document");
 
 		OpenDocumentDescriptor ofd = new OpenDocumentDescriptor();
 		ofd.setMakeActive(true);
-		
-		boolean ok = openDocumentDialog.showDialog(ofd, true);		
-		if( !ok ) {
+
+		boolean ok = openDocumentDialog.showDialog(ofd, true);
+		if (!ok) {
 			return;
 		}
 
 		try {
 			documentFlowIntegrator.openDocument(ofd);
-		} catch(SignalMLException ex) {
+		} catch (SignalMLException ex) {
 			logger.error("Failed to open document", ex);
 			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-			return;			
-		} catch(IOException ex) {
+			return;
+		} catch (IOException ex) {
 			logger.error("Failed to open document - i/o exception", ex);
 			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-			return;			
+			return;
 		}
-										
+
 	}
-	
-	
+
+
 	@Override
 	public void setEnabledAsNeeded() {
 		setEnabled(true);
@@ -74,7 +74,7 @@ public class OpenDocumentAction extends AbstractSignalMLAction {
 	}
 
 	public void setOpenDocumentDialog(OpenDocumentDialog openDocumentDialog) {
-		if( openDocumentDialog == null ) {
+		if (openDocumentDialog == null) {
 			throw new NullPointerException();
 		}
 		this.openDocumentDialog = openDocumentDialog;
@@ -85,10 +85,10 @@ public class OpenDocumentAction extends AbstractSignalMLAction {
 	}
 
 	public void setDocumentFlowIntegrator(DocumentFlowIntegrator documentFlowIntegrator) {
-		if( documentFlowIntegrator == null ) {
+		if (documentFlowIntegrator == null) {
 			throw new NullPointerException();
 		}
 		this.documentFlowIntegrator = documentFlowIntegrator;
 	}
-		
+
 }

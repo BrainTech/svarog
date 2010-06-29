@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.util;
 
@@ -11,7 +11,7 @@ import java.nio.channels.FileChannel;
 
 /**
  * @author Oskar Kapala &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
- * 
+ *
  */
 public class FileUtils {
 

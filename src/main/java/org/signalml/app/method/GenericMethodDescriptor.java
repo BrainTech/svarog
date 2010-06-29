@@ -1,5 +1,5 @@
 /* GenericMethodDescriptor.java created 2007-10-22
- * 
+ *
  */
 
 package org.signalml.app.method;
@@ -8,19 +8,19 @@ import org.signalml.method.Method;
 
 /** GenericMethodDescriptor
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class GenericMethodDescriptor {
 
 	private Method method;
-	
+
 	private String nameCode;
 	private String iconPath;
-	
+
 	private MethodConfigurer configurer;
 	private MethodResultConsumer consumer;
-	
+
 	private GenericMethodDescriptor(Method method) {
 		this.method = method;
 	}
@@ -60,5 +60,5 @@ public class GenericMethodDescriptor {
 	public void setConsumer(MethodResultConsumer consumer) {
 		this.consumer = consumer;
 	}
-		
+
 }

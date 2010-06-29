@@ -1,5 +1,5 @@
 /* ZoomSignalSettings.java created 2007-12-17
- * 
+ *
  */
 
 package org.signalml.app.config;
@@ -10,13 +10,13 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /** ZoomSignalSettings
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 @XStreamAlias("zoomsettings")
 public class ZoomSignalSettings {
 
-	private boolean channelSwitching;	
+	private boolean channelSwitching;
 	private Dimension zoomSize;
 	private float factor;
 
@@ -49,5 +49,5 @@ public class ZoomSignalSettings {
 	public void setFactor(float factor) {
 		this.factor = factor;
 	}
-	
+
 }

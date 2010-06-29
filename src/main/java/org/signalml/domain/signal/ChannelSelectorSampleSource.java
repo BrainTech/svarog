@@ -1,12 +1,12 @@
 /* ChannelSelectorSampleSource.java created 2007-09-24
- * 
+ *
  */
 
 package org.signalml.domain.signal;
 
 /** ChannelSelectorSampleSource
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ChannelSelectorSampleSource implements SampleSource {
@@ -67,5 +67,5 @@ public class ChannelSelectorSampleSource implements SampleSource {
 	public boolean isSamplingFrequencyCapable() {
 		return source.isSamplingFrequencyCapable();
 	}
-		
+
 }

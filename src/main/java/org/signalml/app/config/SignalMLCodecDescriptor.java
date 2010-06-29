@@ -1,5 +1,5 @@
 /* SignalMLCodecDescriptor.java created 2007-09-18
- * 
+ *
  */
 
 package org.signalml.app.config;
@@ -15,7 +15,7 @@ import com.thoughtworks.xstream.annotations.XStreamConverter;
 
 /** SignalMLCodecDescriptor
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 @XStreamAlias("codec")
@@ -23,26 +23,26 @@ public class SignalMLCodecDescriptor {
 
 	@XStreamAlias("class")
 	private Class<?> clazz;
-	
+
 	private String formatName;
 	private String sourceUID;
 	private String description;
 	private String sourceFilePath;
 	private String cacheDirName;
 	private String sourceSignature;
-	
+
 	@XStreamConverter(SubstitutingStringConverter.class)
 	private String repositoryDirPath;
 
 	public SignalMLCodecDescriptor() {
 	}
-	
+
 	public SignalMLCodecDescriptor(SignalMLCodec codec) {
 		this.clazz = codec.getClass();
 		this.formatName = codec.getFormatName();
 		this.sourceUID = codec.getSourceUID();
-		
-		if( codec instanceof XMLSignalMLCodec ) {
+
+		if (codec instanceof XMLSignalMLCodec) {
 			XMLSignalMLCodec xmlCodec = (XMLSignalMLCodec) codec;
 			this.description = xmlCodec.getDescription();
 			this.sourceFilePath = xmlCodec.getSourceFile().getAbsolutePath();
@@ -51,10 +51,10 @@ public class SignalMLCodecDescriptor {
 			this.repositoryDirPath = xmlCodec.getRepositoryDir().getAbsolutePath();
 		}
 	}
-	
+
 	public SignalMLCodec getCodec() throws CodecException {
-		if( clazz.equals(XMLSignalMLCodec.class) ) {
-			XMLSignalMLCodec codec = new XMLSignalMLCodec(formatName, cacheDirName, new File(repositoryDirPath), sourceSignature, new File(sourceFilePath)); 
+		if (clazz.equals(XMLSignalMLCodec.class)) {
+			XMLSignalMLCodec codec = new XMLSignalMLCodec(formatName, cacheDirName, new File(repositoryDirPath), sourceSignature, new File(sourceFilePath));
 			codec.setDescription(description);
 			return codec;
 		} else {
@@ -124,6 +124,6 @@ public class SignalMLCodecDescriptor {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}	
-		
+	}
+
 }

@@ -172,7 +172,7 @@ public class Base64 {
 	 *
 	 * @since ostermillerutils 1.00.00
 	 */
-	private Base64(){
+	private Base64() {
 	}
 
 	/**
@@ -202,12 +202,12 @@ public class Base64 {
 	protected static final byte[] reverseBase64Chars = new byte[0x100];
 	static {
 		// Fill in NON_BASE_64 for all characters to start with
-		for (int i=0; i<reverseBase64Chars.length; i++){
+		for (int i=0; i<reverseBase64Chars.length; i++) {
 			reverseBase64Chars[i] = NON_BASE_64;
 		}
 		// For characters that are base64Chars, adjust
 		// the reverse lookup table.
-		for (byte i=0; i < base64Chars.length; i++){
+		for (byte i=0; i < base64Chars.length; i++) {
 			reverseBase64Chars[base64Chars[i]] = i;
 		}
 		reverseBase64Chars[' '] = NON_BASE_64_WHITESPACE;
@@ -236,7 +236,7 @@ public class Base64 {
 	 *
 	 * @since ostermillerutils 1.00.00
 	 */
-	public static String encode(String string){
+	public static String encode(String string) {
 		return new String(encode(string.getBytes()));
 	}
 
@@ -264,7 +264,7 @@ public class Base64 {
 	 *
 	 * @since ostermillerutils 1.04.00
 	 */
-	public static String encodeToString(byte[] bytes){
+	public static String encodeToString(byte[] bytes) {
 		return encodeToString(bytes, false);
 	}
 
@@ -277,10 +277,10 @@ public class Base64 {
 	 *
 	 * @since ostermillerutils 1.04.00
 	 */
-	public static String encodeToString(byte[] bytes, boolean lineBreaks){
+	public static String encodeToString(byte[] bytes, boolean lineBreaks) {
 		try {
 			return new String(encode(bytes, lineBreaks), "ASCII");
-		} catch (UnsupportedEncodingException iex){
+		} catch (UnsupportedEncodingException iex) {
 			// ASCII should be supported
 			throw new RuntimeException(iex);
 		}
@@ -295,7 +295,7 @@ public class Base64 {
 	 *
 	 * @since ostermillerutils 1.00.00
 	 */
-	public static byte[] encode(byte[] bytes){
+	public static byte[] encode(byte[] bytes) {
 		return encode(bytes, false);
 	}
 
@@ -308,7 +308,7 @@ public class Base64 {
 	 *
 	 * @since ostermillerutils 1.04.00
 	 */
-	public static byte[] encode(byte[] bytes, boolean lineBreaks){
+	public static byte[] encode(byte[] bytes, boolean lineBreaks) {
 		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
 		// calculate the length of the resulting output.
 		// in general it will be 4/3 the size of the input
@@ -317,14 +317,14 @@ public class Base64 {
 		// by three is used.
 		int mod;
 		int length = bytes.length;
-		if ((mod = length % 3) != 0){
+		if ((mod = length % 3) != 0) {
 			length += 3 - mod;
 		}
 		length = length * 4 / 3;
 		ByteArrayOutputStream out = new ByteArrayOutputStream(length);
 		try {
 			encode(in, out, lineBreaks);
-		} catch (IOException x){
+		} catch (IOException x) {
 			// This can't happen.
 			// The input and output streams were constructed
 			// on memory structures that don't actually use IO.
@@ -364,7 +364,7 @@ public class Base64 {
 		int lineCount = 0;
 
 		boolean done = false;
-		while (!done && (inBuffer[0] = in.read()) != END_OF_INPUT){
+		while (!done && (inBuffer[0] = in.read()) != END_OF_INPUT) {
 			// Fill the buffer
 			inBuffer[1] = in.read();
 			inBuffer[2] = in.read();
@@ -382,12 +382,12 @@ public class Base64 {
 
 			// A's: first six bits of first byte
 			out.write(base64Chars[ inBuffer[0] >> 2 ]);
-			if (inBuffer[1] != END_OF_INPUT){
+			if (inBuffer[1] != END_OF_INPUT) {
 				// B's: last two bits of first byte, first four bits of second byte
-				out.write(base64Chars [(( inBuffer[0] << 4 ) & 0x30) | (inBuffer[1] >> 4) ]);
-				if (inBuffer[2] != END_OF_INPUT){
+				out.write(base64Chars [((inBuffer[0] << 4) & 0x30) | (inBuffer[1] >> 4)]);
+				if (inBuffer[2] != END_OF_INPUT) {
 					// C's: last four bits of second byte, first two bits of third byte
-					out.write(base64Chars [((inBuffer[1] << 2) & 0x3c) | (inBuffer[2] >> 6) ]);
+					out.write(base64Chars [((inBuffer[1] << 2) & 0x3c) | (inBuffer[2] >> 6)]);
 					// D's: last six bits of third byte
 					out.write(base64Chars [inBuffer[2] & 0x3F]);
 				} else {
@@ -399,19 +399,19 @@ public class Base64 {
 				}
 			} else {
 				// B's: last two bits of first byte
-				out.write(base64Chars [(( inBuffer[0] << 4 ) & 0x30)]);
+				out.write(base64Chars [((inBuffer[0] << 4) & 0x30)]);
 				// an equal signs for characters that is not a Base64 characters
 				out.write('=');
 				out.write('=');
 				done = true;
 			}
 			lineCount += 4;
-			if (lineBreaks && lineCount >= 76){
+			if (lineBreaks && lineCount >= 76) {
 				out.write('\n');
 				lineCount = 0;
 			}
 		}
-		if (lineBreaks && lineCount >= 1){
+		if (lineBreaks && lineCount >= 1) {
 			out.write('\n');
 			lineCount = 0;
 		}
@@ -430,7 +430,7 @@ public class Base64 {
 	 *
 	 * @since ostermillerutils 1.00.00
 	 */
-	public static String decode(String string){
+	public static String decode(String string) {
 		return new String(decode(string.getBytes()));
 	}
 
@@ -479,7 +479,7 @@ public class Base64 {
 	 *
 	 * @since ostermillerutils 1.02.16
 	 */
-	public static String decodeToString(String string){
+	public static String decodeToString(String string) {
 		return new String(decode(string.getBytes()));
 	}
 
@@ -562,7 +562,7 @@ public class Base64 {
 	 *
 	 * @since ostermillerutils 1.02.16
 	 */
-	public static byte[] decodeToBytes(String string){
+	public static byte[] decodeToBytes(String string) {
 		return decode(string.getBytes());
 	}
 
@@ -594,7 +594,7 @@ public class Base64 {
 	 *
 	 * @since ostermillerutils 1.02.16
 	 */
-	public static String decodeToString(byte[] bytes){
+	public static String decodeToString(byte[] bytes) {
 		return new String(decode(bytes));
 	}
 
@@ -624,7 +624,7 @@ public class Base64 {
 	 *
 	 * @since ostermillerutils 1.02.16
 	 */
-	public static byte[] decodeToBytes(byte[] bytes){
+	public static byte[] decodeToBytes(byte[] bytes) {
 		return decode(bytes);
 	}
 
@@ -638,7 +638,7 @@ public class Base64 {
 	 *
 	 * @since ostermillerutils 1.00.00
 	 */
-	public static byte[] decode(byte[] bytes){
+	public static byte[] decode(byte[] bytes) {
 		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
 		// calculate the length of the resulting output.
 		// in general it will be at most 3/4 the size of the input
@@ -647,18 +647,18 @@ public class Base64 {
 		// by four is used.
 		int mod;
 		int length = bytes.length;
-		if ((mod = length % 4) != 0){
+		if ((mod = length % 4) != 0) {
 			length += 4 - mod;
 		}
 		length = length * 3 / 4;
 		ByteArrayOutputStream out = new ByteArrayOutputStream(length);
 		try {
 			decode(in, out, false);
-		} catch (IOException x){
+		} catch (IOException x) {
 			// This can't happen.
 			// The input and output streams were constructed
 			// on memory structures that don't actually use IO.
-			 throw new RuntimeException(x);
+			throw new RuntimeException(x);
 		}
 		return out.toByteArray();
 	}
@@ -714,18 +714,18 @@ public class Base64 {
 			read = in.read();
 			if (read == END_OF_INPUT) return END_OF_INPUT;
 			read = reverseBase64Chars[(byte)read];
-			if (throwExceptions && (read == NON_BASE_64 || (numPadding > 0 && read > NON_BASE_64))){
-				throw new Base64DecodingException (
-					MessageFormat.format(
-						"unexpectedchar",
-						(Object[])new String[] {
-							"'" + (char)read + "' (0x" + Integer.toHexString(read) + ")"
-						}
-					),
-					(char)read
+			if (throwExceptions && (read == NON_BASE_64 || (numPadding > 0 && read > NON_BASE_64))) {
+				throw new Base64DecodingException(
+				        MessageFormat.format(
+				                "unexpectedchar",
+				                (Object[])new String[] {
+				                        "'" + (char)read + "' (0x" + Integer.toHexString(read) + ")"
+				                }
+				        ),
+				        (char)read
 				);
 			}
-			if (read == NON_BASE_64_PADDING){
+			if (read == NON_BASE_64_PADDING) {
 				numPadding++;
 			}
 		} while (read <= NON_BASE_64);
@@ -822,7 +822,7 @@ public class Base64 {
 		// we must read at least two bytes to be able to output anything
 		boolean done = false;
 		while (!done && (inBuffer[0] = readBase64(in, throwExceptions)) != END_OF_INPUT
-			&& (inBuffer[1] = readBase64(in, throwExceptions)) != END_OF_INPUT){
+		                && (inBuffer[1] = readBase64(in, throwExceptions)) != END_OF_INPUT) {
 			// Fill the buffer
 			inBuffer[2] = readBase64(in, throwExceptions);
 			inBuffer[3] = readBase64(in, throwExceptions);
@@ -839,10 +839,10 @@ public class Base64 {
 
 			// six A and two B
 			out.write(inBuffer[0] << 2 | inBuffer[1] >> 4);
-			if (inBuffer[2] != END_OF_INPUT){
+			if (inBuffer[2] != END_OF_INPUT) {
 				// four B and four C
 				out.write(inBuffer[1] << 4 | inBuffer[2] >> 2);
-				if (inBuffer[3] != END_OF_INPUT){
+				if (inBuffer[3] != END_OF_INPUT) {
 					// two C and six D
 					out.write(inBuffer[2] << 6 | inBuffer[3]);
 				} else {
@@ -877,10 +877,10 @@ public class Base64 {
 	 *
 	 * @since ostermillerutils 1.00.00
 	 */
-	public static boolean isBase64(byte[] bytes){
+	public static boolean isBase64(byte[] bytes) {
 		try {
 			return isBase64(new ByteArrayInputStream(bytes));
-		} catch (IOException x){
+		} catch (IOException x) {
 			// This can't happen.
 			// The input and output streams were constructed
 			// on memory structures that don't actually use IO.
@@ -913,7 +913,7 @@ public class Base64 {
 	 *
 	 * @since ostermillerutils 1.00.00
 	 */
-	public static boolean isBase64(String string){
+	public static boolean isBase64(String string) {
 		return isBase64(string.getBytes());
 	}
 
@@ -1002,15 +1002,15 @@ public class Base64 {
 		int numPadding = 0;
 		int read;
 
-		while ((read = in.read()) != -1){
+		while ((read = in.read()) != -1) {
 			read = reverseBase64Chars[read];
-			if (read == NON_BASE_64){
+			if (read == NON_BASE_64) {
 				return false;
-			} else if (read == NON_BASE_64_WHITESPACE){
-			} else if (read == NON_BASE_64_PADDING){
+			} else if (read == NON_BASE_64_WHITESPACE) {
+			} else if (read == NON_BASE_64_PADDING) {
 				numPadding++;
 				numBase64Chars++;
-			} else if (numPadding > 0){
+			} else if (numPadding > 0) {
 				return false;
 			} else {
 				numBase64Chars++;

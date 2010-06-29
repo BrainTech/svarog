@@ -1,5 +1,5 @@
 /* ProfilePathTypePanel.java created 2007-09-14
- * 
+ *
  */
 package org.signalml.app.view.element;
 
@@ -24,11 +24,11 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** ProfilePathTypePanel
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ProfilePathTypePanel extends JPanel {
-	
+
 	private static final long serialVersionUID = 1L;
 	private JLabel welcomeLabel = null;
 
@@ -36,10 +36,10 @@ public class ProfilePathTypePanel extends JPanel {
 	private JRadioButton defaultRadio = null;
 	private JRadioButton customRadio = null;
 	private JLabel infoLabel = null;
-	
+
 	private ButtonGroup radioGroup;
 	private EmbeddedFileChooser fileChooser = null;
-	
+
 	/**
 	 * This is the default constructor
 	 */
@@ -51,39 +51,39 @@ public class ProfilePathTypePanel extends JPanel {
 
 	/**
 	 * This method initializes this
-	 * 
+	 *
 	 * @return void
 	 */
 	private void initialize() {
-		
+
 		setBorder(BorderFactory.createTitledBorder(messageSource.getMessage("profilePath.title")));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		welcomeLabel = new JLabel();
 		welcomeLabel.setText(messageSource.getMessage("profilePath.welcome"));
 		welcomeLabel.setFont(new Font("Dialog", Font.BOLD, 14));
-		welcomeLabel.setAlignmentX(Component.LEFT_ALIGNMENT);		
+		welcomeLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		add(welcomeLabel);
 		add(Box.createVerticalStrut(5));
 		add(getInfoLabel());
 		add(Box.createVerticalStrut(5));
-		
+
 		radioGroup = new ButtonGroup();
-		
+
 		add(getDefaultRadio());
 		add(getCustomRadio());
-		
+
 		getDefaultRadio().setSelected(true);
-		
-		getFileChooser().setVisible(false);					
+
+		getFileChooser().setVisible(false);
 		add(getFileChooser());
 
 	}
 
 	/**
-	 * This method initializes defaultRadio	
-	 * 	
-	 * @return javax.swing.JRadioButton	
+	 * This method initializes defaultRadio
+	 *
+	 * @return javax.swing.JRadioButton
 	 */
 	public JRadioButton getDefaultRadio() {
 		if (defaultRadio == null) {
@@ -96,9 +96,9 @@ public class ProfilePathTypePanel extends JPanel {
 	}
 
 	/**
-	 * This method initializes customRadio	
-	 * 	
-	 * @return javax.swing.JRadioButton	
+	 * This method initializes customRadio
+	 *
+	 * @return javax.swing.JRadioButton
 	 */
 	public JRadioButton getCustomRadio() {
 		if (customRadio == null) {
@@ -110,13 +110,13 @@ public class ProfilePathTypePanel extends JPanel {
 
 				public void itemStateChanged(ItemEvent e) {
 					getFileChooser().setVisible(e.getStateChange() == ItemEvent.SELECTED);
-					
+
 					ProfilePathTypePanel.this.revalidate();
 					Dimension d = ProfilePathTypePanel.this.getTopLevelAncestor().getPreferredSize();
 					ProfilePathTypePanel.this.getTopLevelAncestor().setSize(d);
 					ProfilePathTypePanel.this.repaint();
 				}
-				
+
 			});
 		}
 		return customRadio;
@@ -126,7 +126,7 @@ public class ProfilePathTypePanel extends JPanel {
 		if (infoLabel == null) {
 			infoLabel = new JLabel();
 			infoLabel.setFont(infoLabel.getFont().deriveFont(Font.PLAIN, 12));
-			infoLabel.setText( "<html><body><div style=\"width: 400px; text-align: justify;\">" + messageSource.getMessage("profilePath.info") + "</div></body></html>" );
+			infoLabel.setText("<html><body><div style=\"width: 400px; text-align: justify;\">" + messageSource.getMessage("profilePath.info") + "</div></body></html>");
 			infoLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 //			infoLabel.setPreferredSize(new Dimension(500,90));
 			infoLabel.setBorder(new EmptyBorder(3,0,3,0));
@@ -146,11 +146,11 @@ public class ProfilePathTypePanel extends JPanel {
 			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			fileChooser.setFileFilter(new DirectoryFileFilter(messageSource.getMessage("profilePath.directoryFilter")));
 			fileChooser.setPreferredSize(new Dimension(500,350));
-			
+
 			fileChooser.setInvokeDefaultButtonOnApprove(true);
-			
+
 		}
 		return fileChooser;
 	}
-	
+
 }

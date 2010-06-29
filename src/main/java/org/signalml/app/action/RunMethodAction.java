@@ -1,5 +1,5 @@
 /* RunMethodAction.java created 2007-10-06
- * 
+ *
  */
 package org.signalml.app.action;
 
@@ -22,19 +22,19 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** RunMethodAction
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class RunMethodAction extends AbstractSignalMLAction {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	protected static final Logger logger = Logger.getLogger(RunMethodAction.class);
-		
+
 	private ApplicationTaskManager taskManager;
 	private ApplicationMethodManager methodManager;
 	private Method method;
-	
+
 	public RunMethodAction(MessageSourceAccessor messageSource, Method method, ApplicationMethodManager methodManager) {
 		this.messageSource = messageSource;
 		this.method = method;
@@ -42,67 +42,67 @@ public class RunMethodAction extends AbstractSignalMLAction {
 		String nameCode = null;
 		String iconPath = null;
 		ApplicationMethodDescriptor descriptor = methodManager.getMethodData(method);
-		if( descriptor != null ) {
+		if (descriptor != null) {
 			nameCode = descriptor.getNameCode();
 			iconPath = descriptor.getIconPath();
 		}
-		if( nameCode != null && !nameCode.isEmpty() ) {
+		if (nameCode != null && !nameCode.isEmpty()) {
 			setText(nameCode);
 		} else {
 			setText("action.runMethod");
 		}
-		if( iconPath != null && !iconPath.isEmpty() ) {
+		if (iconPath != null && !iconPath.isEmpty()) {
 			setIconPath(iconPath);
 		} else {
 			setIconPath("org/signalml/app/icon/runmethod.png");
 		}
 	}
-				
+
 	@Override
 	public void actionPerformed(ActionEvent ev) {
-		
-		logger.debug("Run method [" + method.getName() + "]" );
-		
-		ApplicationMethodDescriptor descriptor = methodManager.getMethodData(method);		
+
+		logger.debug("Run method [" + method.getName() + "]");
+
+		ApplicationMethodDescriptor descriptor = methodManager.getMethodData(method);
 		MethodConfigurer configurer = null;
 		Object data = null;
-		
-		if( descriptor != null ) {
-			configurer = descriptor.getConfigurer( methodManager );
-			data = descriptor.createData( methodManager );
-			if( data == null ) {
-				logger.debug( "Data creation aborted" );
+
+		if (descriptor != null) {
+			configurer = descriptor.getConfigurer(methodManager);
+			data = descriptor.createData(methodManager);
+			if (data == null) {
+				logger.debug("Data creation aborted");
 				return;
 			}
 		}
-		
-		if( data == null ) {
+
+		if (data == null) {
 			data = method.createData();
 		}
-		
-		if( configurer != null ) {
+
+		if (configurer != null) {
 			try {
 				boolean configurationOk = configurer.configure(method, data);
-				if( !configurationOk ) {
+				if (!configurationOk) {
 					return;
 				}
-			} catch( SignalMLException ex ) {
+			} catch (SignalMLException ex) {
 				logger.error("Failed to configure method", ex);
 				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-				return;							
+				return;
 			}
 		}
-		
+
 		Task task = new LocalTask(method, data, (method instanceof TrackableMethod));
 		taskManager.addTask(task);
-		
+
 		taskManager.startTask(task);
-		
+
 		TaskStatusDialog dialog = taskManager.getStatusDialogForTask(task);
 		dialog.showDialog(true);
-						
+
 	}
-		
+
 	public Method getMethod() {
 		return method;
 	}
@@ -119,5 +119,5 @@ public class RunMethodAction extends AbstractSignalMLAction {
 		return methodManager;
 	}
 
-	
+
 }

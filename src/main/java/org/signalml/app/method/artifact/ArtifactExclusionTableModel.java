@@ -1,5 +1,5 @@
 /* ArtifactExclusionTableModel.java created 2007-11-02
- * 
+ *
  */
 
 package org.signalml.app.method.artifact;
@@ -13,40 +13,40 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** ArtifactExclusionTableModel
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ArtifactExclusionTableModel extends AbstractTableModel {
 
 	public static final String CHANGED_PROPERTY = "changed";
-	
+
 	private static final long serialVersionUID = 1L;
 
 	protected static final Logger logger = Logger.getLogger(ArtifactExclusionTableModel.class);
-	
+
 	private MessageSourceAccessor messageSource;
-	
-	private int[][] excludedChannels;	
+
+	private int[][] excludedChannels;
 	private SourceMontage montage;
-	
+
 	private ArtifactType[] artifactTypes = ArtifactType.values();
-	
+
 	private ColumnTableModel columnTableModel;
 	private RowTableModel rowTableModel;
-		
+
 	public ArtifactExclusionTableModel(MessageSourceAccessor messageSource) {
 		this.messageSource = messageSource;
 	}
-		
+
 	public ColumnTableModel getColumnTableModel() {
-		if( columnTableModel == null ) {
+		if (columnTableModel == null) {
 			columnTableModel = new ColumnTableModel();
 		}
 		return columnTableModel;
 	}
 
 	public RowTableModel getRowTableModel() {
-		if( rowTableModel == null ) {
+		if (rowTableModel == null) {
 			rowTableModel = new RowTableModel();
 		}
 		return rowTableModel;
@@ -54,52 +54,52 @@ public class ArtifactExclusionTableModel extends AbstractTableModel {
 
 	private void reset() {
 		fireTableStructureChanged();
-		if( columnTableModel != null ) {
+		if (columnTableModel != null) {
 			columnTableModel.fireTableStructureChanged();
 		}
-		if( rowTableModel != null ) {
+		if (rowTableModel != null) {
 			rowTableModel.fireTableStructureChanged();
-		}		
+		}
 	}
-	
+
 	public int[][] getExcludedChannels() {
 		return excludedChannels;
-	}	
-	
+	}
+
 	public void setExcludedChannels(int[][] excludedChannels) {
-		if( this.excludedChannels != excludedChannels ) {
+		if (this.excludedChannels != excludedChannels) {
 			this.excludedChannels = excludedChannels;
 			reset();
 		}
 	}
-	
+
 	public SourceMontage getMontage() {
 		return montage;
 	}
 
 	public void setMontage(SourceMontage montage) {
-		if( this.montage != montage ) {
+		if (this.montage != montage) {
 			this.montage = montage;
 			reset();
 		}
 	}
-	
+
 	public void setExcludedChannelsAndMontage(int[][] excludedChannels, SourceMontage montage) {
-		if( this.excludedChannels != excludedChannels || this.montage != montage ) {
+		if (this.excludedChannels != excludedChannels || this.montage != montage) {
 			this.excludedChannels = excludedChannels;
-			this.montage = montage;		
+			this.montage = montage;
 			reset();
 		}
 	}
-	
+
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 		return Boolean.class;
 	}
-	
+
 	@Override
 	public int getColumnCount() {
-		if( montage == null ) {
+		if (montage == null) {
 			return 0;
 		}
 		return montage.getSourceChannelCount();
@@ -107,7 +107,7 @@ public class ArtifactExclusionTableModel extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		if( montage == null ) {
+		if (montage == null) {
 			return 0;
 		}
 		return artifactTypes.length;
@@ -115,30 +115,30 @@ public class ArtifactExclusionTableModel extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		return new Boolean( excludedChannels[rowIndex][columnIndex] != 0 );
+		return new Boolean(excludedChannels[rowIndex][columnIndex] != 0);
 	}
-		
+
 	@Override
 	public void setValueAt(Object value, int rowIndex, int columnIndex) {
-		excludedChannels[rowIndex][columnIndex] = ( ((Boolean) value) ? 1 : 0 );
+		excludedChannels[rowIndex][columnIndex] = (((Boolean) value) ? 1 : 0);
 	}
-	
+
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
 		return true;
 	}
-	
+
 	private String getLabel(int channel) {
 		return montage.getSourceChannelLabelAt(channel);
 	}
-	
+
 	public class ColumnTableModel extends AbstractTableModel {
 
 		private static final long serialVersionUID = 1L;
 
 		@Override
 		public int getColumnCount() {
-			if( montage == null ) {
+			if (montage == null) {
 				return 0;
 			}
 			return montage.getSourceChannelCount();
@@ -146,12 +146,12 @@ public class ArtifactExclusionTableModel extends AbstractTableModel {
 
 		@Override
 		public int getRowCount() {
-			if( montage == null ) {
+			if (montage == null) {
 				return 0;
 			}
 			return 1;
 		}
-		
+
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
 			return getLabel(columnIndex);
@@ -161,16 +161,16 @@ public class ArtifactExclusionTableModel extends AbstractTableModel {
 		public Class<?> getColumnClass(int columnIndex) {
 			return String.class;
 		}
-		
+
 	}
-	
+
 	public class RowTableModel extends AbstractTableModel {
 
 		private static final long serialVersionUID = 1L;
 
 		@Override
 		public int getColumnCount() {
-			if( montage == null ) {
+			if (montage == null) {
 				return 0;
 			}
 			return 1;
@@ -178,7 +178,7 @@ public class ArtifactExclusionTableModel extends AbstractTableModel {
 
 		@Override
 		public int getRowCount() {
-			if( montage == null ) {
+			if (montage == null) {
 				return 0;
 			}
 			return artifactTypes.length;
@@ -193,7 +193,7 @@ public class ArtifactExclusionTableModel extends AbstractTableModel {
 		public Class<?> getColumnClass(int columnIndex) {
 			return String.class;
 		}
-		
+
 	}
 
 }

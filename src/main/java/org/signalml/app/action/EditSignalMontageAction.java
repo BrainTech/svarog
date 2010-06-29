@@ -1,5 +1,5 @@
 /* EditSignalMontageAction.java created 2007-09-28
- * 
+ *
  */
 
 package org.signalml.app.action;
@@ -15,50 +15,50 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** EditSignalMontageAction
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class EditSignalMontageAction extends AbstractFocusableSignalMLAction<SignalDocumentFocusSelector> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	protected static final Logger logger = Logger.getLogger(EditSignalMontageAction.class);
-		
+
 	private SignalMontageDialog signalMontageDialog;
-		
+
 	public EditSignalMontageAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
 		super(messageSource, signalDocumentFocusSelector);
 		setText("action.signalMontage");
 		setIconPath("org/signalml/app/icon/montage.png");
 		setToolTip("action.signalMontageToolTip");
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
 		logger.debug("Signal montage");
 
 		SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
-		if( signalDocument == null ) {
+		if (signalDocument == null) {
 			logger.warn("Target document doesn't exist or is not a signal");
 			return;
 		}
-				
+
 		MontageDescriptor descriptor = new MontageDescriptor(signalDocument.getMontage(), signalDocument);
-				
+
 		boolean ok = signalMontageDialog.showDialog(descriptor, true);
-		if( !ok ) {
+		if (!ok) {
 			return;
 		}
-		
+
 		signalDocument.setMontage(descriptor.getMontage());
-							
+
 	}
 
-	
+
 	@Override
 	public void setEnabledAsNeeded() {
-		setEnabled( getActionFocusSelector().getActiveSignalDocument() != null ); 
+		setEnabled(getActionFocusSelector().getActiveSignalDocument() != null);
 	}
 
 	public SignalMontageDialog getSignalMontageDialog() {

@@ -1,5 +1,5 @@
 /* EditPreferencesAction.java created 2007-09-10
- * 
+ *
  */
 package org.signalml.app.action;
 
@@ -12,15 +12,15 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** EditPreferencesAction
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class EditPreferencesAction extends AbstractSignalMLAction {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	protected static final Logger logger = Logger.getLogger(EditPreferencesAction.class);
-		
+
 	private AbstractDialog preferencesDialog;
 	private ApplicationConfiguration config;
 
@@ -29,19 +29,19 @@ public class EditPreferencesAction extends AbstractSignalMLAction {
 		setText("action.editPreferences");
 		setToolTip("action.editPreferencesToolTip");
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent ev) {
-		
+
 		logger.debug("Edit preferences");
-		
+
 		boolean ok = preferencesDialog.showDialog(config, true);
-		if( !ok ) {
+		if (!ok) {
 			return;
 		}
-			
+
 	}
-	
+
 	public AbstractDialog getPreferencesDialog() {
 		return preferencesDialog;
 	}
@@ -57,5 +57,5 @@ public class EditPreferencesAction extends AbstractSignalMLAction {
 	public void setConfig(ApplicationConfiguration config) {
 		this.config = config;
 	}
-	
+
 }

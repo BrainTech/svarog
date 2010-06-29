@@ -1,5 +1,5 @@
 /* MP5ExecutablePanel.java created 2007-10-31
- * 
+ *
  */
 package org.signalml.app.method.mp5;
 
@@ -28,22 +28,22 @@ import org.springframework.validation.Errors;
 
 /** MP5ExecutablePanel
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class MP5ExecutablePanel extends JPanel {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private MessageSourceAccessor messageSource;
-	
+
 	private JTextField executableTextField;
 	private JButton chooseExecutableButton;
 
 	private ViewerFileChooser fileChooser;
-	
+
 	private File mp5Executable;
-	
+
 	public MP5ExecutablePanel(MessageSourceAccessor messageSource, ViewerFileChooser fileChooser) {
 		super();
 		this.messageSource = messageSource;
@@ -52,10 +52,10 @@ public class MP5ExecutablePanel extends JPanel {
 	}
 
 	private void initialize() {
-		
+
 		CompoundBorder border = new CompoundBorder(
-			new TitledBorder( messageSource.getMessage("mp5Method.dialog.chooseExecutableTitle") ),
-			new EmptyBorder(3,3,3,3)
+		        new TitledBorder(messageSource.getMessage("mp5Method.dialog.chooseExecutableTitle")),
+		        new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);
 
@@ -65,155 +65,155 @@ public class MP5ExecutablePanel extends JPanel {
 		layout.setAutoCreateGaps(true);
 
 		JLabel executableLabel = new JLabel(messageSource.getMessage("mp5Method.dialog.executable"));
-		
+
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
-		
-		hGroup.addGroup(
-				layout.createParallelGroup()
-				.addComponent(executableLabel)
-			);
-		
-		hGroup.addGroup(
-				layout.createParallelGroup()
-				.addComponent(getExecutableTextField())
-			);
 
 		hGroup.addGroup(
-				layout.createParallelGroup()
-				.addComponent(getChooseExecutableButton())
-			);
-		
+		        layout.createParallelGroup()
+		        .addComponent(executableLabel)
+		);
+
+		hGroup.addGroup(
+		        layout.createParallelGroup()
+		        .addComponent(getExecutableTextField())
+		);
+
+		hGroup.addGroup(
+		        layout.createParallelGroup()
+		        .addComponent(getChooseExecutableButton())
+		);
+
 		layout.setHorizontalGroup(hGroup);
-		
+
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(executableLabel)
-	            .addComponent(getExecutableTextField())
-	            .addComponent(getChooseExecutableButton())
-			);
-				
-		layout.setVerticalGroup(vGroup);		
-						
+		        layout.createParallelGroup(Alignment.BASELINE)
+		        .addComponent(executableLabel)
+		        .addComponent(getExecutableTextField())
+		        .addComponent(getChooseExecutableButton())
+		);
+
+		layout.setVerticalGroup(vGroup);
+
 	}
-	
+
 	public JTextField getExecutableTextField() {
-		if( executableTextField == null ) {
+		if (executableTextField == null) {
 			executableTextField = new JTextField();
-			executableTextField.setPreferredSize( new Dimension( 300,25 ) );
+			executableTextField.setPreferredSize(new Dimension(300,25));
 			executableTextField.setEditable(false);
 		}
 		return executableTextField;
 	}
 
 	public JButton getChooseExecutableButton() {
-		if( chooseExecutableButton == null ) {
-			chooseExecutableButton = new JButton( new ChooseExecutableAction() );
+		if (chooseExecutableButton == null) {
+			chooseExecutableButton = new JButton(new ChooseExecutableAction());
 		}
 		return chooseExecutableButton;
 	}
-	
+
 	public void fillPanelFromModel(MP5LocalProcessExecutor executor) {
-		
+
 		String path = executor.getMp5ExecutablePath();
-		if( path == null ) {
-			
+		if (path == null) {
+
 			mp5Executable = null;
-			
+
 			String osName = System.getProperty("os.name");
-			if( Util.WINDOWS_OS_PATTERN.matcher(osName).matches() ) {
-				
-				File executable = new File( SvarogApplication.getStartupDir(), "native/windows/bin/mp5.exe" );
-				if( executable.exists() ) {
-					if( executable.canExecute() ) {
-						mp5Executable = executable;			
+			if (Util.WINDOWS_OS_PATTERN.matcher(osName).matches()) {
+
+				File executable = new File(SvarogApplication.getStartupDir(), "native/windows/bin/mp5.exe");
+				if (executable.exists()) {
+					if (executable.canExecute()) {
+						mp5Executable = executable;
 					}
 				}
-				
+
 			}
-			else if( Util.LINUX_OS_PATTERN.matcher(osName).matches() ) {
-				
-				File executable = new File( SvarogApplication.getStartupDir(), "native/linux/bin/mp5" );
-				if( executable.exists() ) {
-					if( !executable.canExecute() ) {
+			else if (Util.LINUX_OS_PATTERN.matcher(osName).matches()) {
+
+				File executable = new File(SvarogApplication.getStartupDir(), "native/linux/bin/mp5");
+				if (executable.exists()) {
+					if (!executable.canExecute()) {
 						executable.setExecutable(true, true);
 					}
-					if( executable.canExecute() ) {
-						mp5Executable = executable;			
+					if (executable.canExecute()) {
+						mp5Executable = executable;
 					}
 				}
-								
+
 			}
-			else if( Util.MAC_OS_PATTERN.matcher(osName).matches() ) {
-				
-				File executable = new File( SvarogApplication.getStartupDir(), "native/mac/bin/mp5" );
-				if( executable.exists() ) {
-					if( !executable.canExecute() ) {
+			else if (Util.MAC_OS_PATTERN.matcher(osName).matches()) {
+
+				File executable = new File(SvarogApplication.getStartupDir(), "native/mac/bin/mp5");
+				if (executable.exists()) {
+					if (!executable.canExecute()) {
 						executable.setExecutable(true, true);
 					}
-					if( executable.canExecute() ) {
-						mp5Executable = executable;			
+					if (executable.canExecute()) {
+						mp5Executable = executable;
 					}
 				}
 			}
 			else {
-				// other os - do nothing			
+				// other os - do nothing
 			}
-			
-			if( mp5Executable == null ) {			
-				getExecutableTextField().setText( "" );
+
+			if (mp5Executable == null) {
+				getExecutableTextField().setText("");
 			} else {
-				getExecutableTextField().setText( mp5Executable.getAbsolutePath() );
+				getExecutableTextField().setText(mp5Executable.getAbsolutePath());
 			}
 		} else {
-			mp5Executable = new File( path );
-			getExecutableTextField().setText( path );
+			mp5Executable = new File(path);
+			getExecutableTextField().setText(path);
 		}
-		
+
 	}
-	
+
 	public void fillModelFromPanel(MP5LocalProcessExecutor executor) {
-		
-		if( mp5Executable == null ) {
+
+		if (mp5Executable == null) {
 			executor.setMp5ExecutablePath(null);
 		} else {
 			executor.setMp5ExecutablePath(mp5Executable.getAbsolutePath());
 		}
-		
+
 	}
-	
-	public void validatePanel( Errors errors ) {
-				
-		if( mp5Executable == null || !mp5Executable.exists() || !mp5Executable.canExecute() ) {
+
+	public void validatePanel(Errors errors) {
+
+		if (mp5Executable == null || !mp5Executable.exists() || !mp5Executable.canExecute()) {
 			errors.rejectValue("mp5Executable", "error.mp5.badMp5Executable");
 		}
-		
+
 	}
-	
+
 	protected class ChooseExecutableAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 
 		public ChooseExecutableAction() {
 			super(messageSource.getMessage("mp5Method.dialog.chooseExecutable"));
-			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/find.png") );
+			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/find.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("mp5Method.dialog.chooseExecutableToolTip"));
 		}
-		
-		public void actionPerformed(ActionEvent ev) {			
-			
+
+		public void actionPerformed(ActionEvent ev) {
+
 			File file = fileChooser.chooseExecutableFile(MP5ExecutablePanel.this.getTopLevelAncestor());
-			if( file == null ) {
+			if (file == null) {
 				return;
 			}
-			
-			mp5Executable = file;			
+
+			mp5Executable = file;
 
 			getExecutableTextField().setText(mp5Executable.getAbsolutePath());
-			
+
 		}
-		
-	}	
-	
+
+	}
+
 }

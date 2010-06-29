@@ -1,5 +1,5 @@
 /* RawSignalSampleSource.java created 2008-01-29
- * 
+ *
  */
 
 package org.signalml.domain.signal.raw;
@@ -22,49 +22,49 @@ import org.signalml.exception.SignalMLException;
 
 /** RawSignalSampleSource
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class RawSignalSampleSource extends AbstractMultichannelSampleSource implements OriginalMultichannelSampleSource {
 
 	protected static final Logger logger = Logger.getLogger(RawSignalSampleSource.class);
-	
+
 	private File file;
 	private RandomAccessFile randomAccessFile;
-	
+
 	private int channelCount;
 	private float samplingFrequency;
-	
+
 	private RawSignalSampleType sampleType;
 	private RawSignalByteOrder byteOrder;
-	
+
 	private float calibration = 1F;
-	
+
 	private String[] labels;
-			
+
 	private byte[] byteBuffer;
 	private int minBufferedSample;
 	private int maxBufferedSample;
 	private ByteBuffer bBuffer;
-	
+
 	private int sampleByteWidth;
 	private int sampleCount;
-		
+
 	public RawSignalSampleSource(File file, int channelCount, float samplingFrequency, RawSignalSampleType sampleType, RawSignalByteOrder byteOrder) throws IOException {
 		this.file = file;
 		this.channelCount = channelCount;
 		this.samplingFrequency = samplingFrequency;
 		this.sampleType = sampleType;
 		this.byteOrder = byteOrder;
-		
+
 		randomAccessFile = new RandomAccessFile(file, "r");
 		sampleByteWidth = sampleType.getByteWidth();
-		
-		sampleCount = (int) (file.length() / ( channelCount * sampleByteWidth ));		
+
+		sampleCount = (int)(file.length() / (channelCount * sampleByteWidth));
 	}
-	
+
 	public void close() {
-		if( randomAccessFile != null ) {
+		if (randomAccessFile != null) {
 			try {
 				randomAccessFile.close();
 			} catch (IOException ex) {
@@ -84,20 +84,20 @@ public class RawSignalSampleSource extends AbstractMultichannelSampleSource impl
 		} catch (IOException ex) {
 			throw new SignalMLException(ex);
 		}
-		
+
 		newSource.calibration = calibration;
-		if( labels != null ) {
+		if (labels != null) {
 			newSource.labels = Arrays.copyOf(labels, labels.length);
 		}
-		
+
 		return newSource;
-		
+
 	}
-	
+
 	public File getFile() {
 		return file;
 	}
-	
+
 	public int getSampleCount() {
 		return sampleCount;
 	}
@@ -129,51 +129,51 @@ public class RawSignalSampleSource extends AbstractMultichannelSampleSource impl
 	public float getCalibration() {
 		return calibration;
 	}
-	
+
 	@Override
 	public void setCalibration(float calibration) {
-		if( this.calibration != calibration ) {
+		if (this.calibration != calibration) {
 			float oldCalibration = this.calibration;
 			this.calibration = calibration;
-			
+
 			pcSupport.firePropertyChange(CALIBRATION_PROPERTY, oldCalibration, calibration);
-		}		
+		}
 	}
 
 	@Override
 	public int getChannelCount() {
 		return channelCount;
 	}
-	
+
 	@Override
 	public void setChannelCount(int channelCount) {
-		throw new SanityCheckException( "Changing channel count not allowed" );
+		throw new SanityCheckException("Changing channel count not allowed");
 	}
 
 	@Override
 	public float getSamplingFrequency() {
 		return samplingFrequency;
 	}
-	
+
 	@Override
 	public void setSamplingFrequency(float samplingFrequency) {
-		if( this.samplingFrequency != samplingFrequency ) {
+		if (this.samplingFrequency != samplingFrequency) {
 			float oldSamplingFrequency = this.samplingFrequency;
 			this.samplingFrequency = samplingFrequency;
-			
+
 			pcSupport.firePropertyChange(SAMPLING_FREQUENCY_PROPERTY, oldSamplingFrequency, samplingFrequency);
 		}
 	}
-	
+
 	public String[] getLabels() {
 		return labels;
 	}
-	
-	public void setLabels( String[] labels ) {
-		if( this.labels != labels ) {
+
+	public void setLabels(String[] labels) {
+		if (this.labels != labels) {
 			String[] oldLabels = this.labels;
 			this.labels = labels;
-			
+
 			pcSupport.firePropertyChange(LABEL_PROPERTY, oldLabels, labels);
 		}
 	}
@@ -185,7 +185,7 @@ public class RawSignalSampleSource extends AbstractMultichannelSampleSource impl
 
 	@Override
 	public String getLabel(int channel) {
-		if( labels != null && channel < labels.length ) {
+		if (labels != null && channel < labels.length) {
 			return labels[channel];
 		}
 		return "L" + (channel+1);
@@ -198,96 +198,96 @@ public class RawSignalSampleSource extends AbstractMultichannelSampleSource impl
 
 	@Override
 	public void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
-		synchronized( this ) {
-			
-			if( channel < 0 || channel >= channelCount ) {
+		synchronized (this) {
+
+			if (channel < 0 || channel >= channelCount) {
 				throw new IndexOutOfBoundsException("Bad channel number [" + channel + "]");
 			}
-			if( (signalOffset < 0) || ((signalOffset + count) > sampleCount) ) {
-				throw new IndexOutOfBoundsException("Signal range [" + signalOffset + ":" + count + "] doesn't fit in the signal");			
+			if ((signalOffset < 0) || ((signalOffset + count) > sampleCount)) {
+				throw new IndexOutOfBoundsException("Signal range [" + signalOffset + ":" + count + "] doesn't fit in the signal");
 			}
-			if( (arrayOffset < 0) || ((arrayOffset + count) > target.length) ) {
+			if ((arrayOffset < 0) || ((arrayOffset + count) > target.length)) {
 				throw new IndexOutOfBoundsException("Target range [" + arrayOffset + ":" + count + "] doesn't fit in the target array");
 			}
-			
+
 			int targetOffset;
 			int sampleSize = channelCount * sampleByteWidth;
-			
+
 			// try to use existing mutiplexing buffer
-			if( byteBuffer != null && minBufferedSample <= signalOffset && maxBufferedSample >= (signalOffset+count-1) ) {
-				
+			if (byteBuffer != null && minBufferedSample <= signalOffset && maxBufferedSample >= (signalOffset+count-1)) {
+
 				targetOffset = (signalOffset-minBufferedSample) * channelCount;
-				
+
 			} else {
-				
+
 				byteBuffer = new byte[count * sampleSize];
 				minBufferedSample = signalOffset;
 				maxBufferedSample = signalOffset + count - 1;
-				
+
 				try {
 					randomAccessFile.seek(signalOffset * sampleSize);
 					randomAccessFile.readFully(byteBuffer);
 				} catch (IOException ex) {
 					byteBuffer = null;
 					logger.error("Failed to read samples, filling the array with zero and exiting", ex);
-					for( int i=0; i<count; i++ ) {
+					for (int i=0; i<count; i++) {
 						target[arrayOffset+i] = 0.0F;
 					}
 					return;
 				}
-			
+
 				bBuffer = ByteBuffer.wrap(byteBuffer).order(byteOrder.getByteOrder());
-				
+
 				targetOffset = 0;
-								
+
 			}
-			
+
 			int sample = channel;
 			int i;
-			
-			switch( sampleType ) {
-			
+
+			switch (sampleType) {
+
 			case DOUBLE :
 				DoubleBuffer doubleBuffer = bBuffer.asDoubleBuffer();
-				for( i=0; i<count; i++ ) {
-					target[arrayOffset+i] = ( doubleBuffer.get(targetOffset+sample) * calibration );					
+				for (i=0; i<count; i++) {
+					target[arrayOffset+i] = (doubleBuffer.get(targetOffset+sample) * calibration);
 					sample += channelCount;
 				}
 				break;
-				
+
 			case FLOAT :
 				FloatBuffer floatBuffer = bBuffer.asFloatBuffer();
-				for( i=0; i<count; i++ ) {
-					target[arrayOffset+i] = ( floatBuffer.get(targetOffset+sample) * calibration );					
+				for (i=0; i<count; i++) {
+					target[arrayOffset+i] = (floatBuffer.get(targetOffset+sample) * calibration);
 					sample += channelCount;
 				}
 				break;
-				
+
 			case INT :
 				IntBuffer intBuffer = bBuffer.asIntBuffer();
-				for( i=0; i<count; i++ ) {
-					target[arrayOffset+i] = ( intBuffer.get(targetOffset+sample) * calibration );					
+				for (i=0; i<count; i++) {
+					target[arrayOffset+i] = (intBuffer.get(targetOffset+sample) * calibration);
 					sample += channelCount;
 				}
 				break;
 
 			case SHORT :
 				ShortBuffer shortBuffer = bBuffer.asShortBuffer();
-				for( i=0; i<count; i++ ) {
-					target[arrayOffset+i] = ( shortBuffer.get(targetOffset+sample) * calibration );					
+				for (i=0; i<count; i++) {
+					target[arrayOffset+i] = (shortBuffer.get(targetOffset+sample) * calibration);
 					sample += channelCount;
 				}
 				break;
-				
+
 			}
-									
+
 		}
-		
+
 	}
 
 	@Override
 	public void destroy() {
 		close();
 	}
-	
+
 }

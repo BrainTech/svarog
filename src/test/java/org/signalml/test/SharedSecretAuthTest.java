@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.test;
 
@@ -19,10 +19,10 @@ import org.signalml.util.Util;
  */
 public class SharedSecretAuthTest {
 
-	
+
 	private static final char[] HEX_CHARS = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 
-	
+
 	private static String toHexString(byte[] bytes) {
 		StringBuilder hexString = new StringBuilder();
 		for (int i = 0; i < bytes.length; i++) {
@@ -30,22 +30,22 @@ public class SharedSecretAuthTest {
 		}
 		return hexString.toString();
 	}
-	
+
 	private static String createSharedSecretToken(String userName, Date loginTime, String sharedSecret) {
-		
+
 		MessageDigest digest;
 		try {
 			digest = MessageDigest.getInstance("md5");
 		} catch (NoSuchAlgorithmException ex) {
 			throw new SanityCheckException("Md5 not supported", ex);
 		}
-				
+
 		String input = userName + "!" + Util.formatTime(loginTime) + "!" + sharedSecret;
 		byte[] digestBytes = digest.digest(input.getBytes());
-				
+
 		return toHexString(digestBytes);
 	}
-	
+
 	/**
 	 * @param args
 	 */
@@ -68,8 +68,8 @@ public class SharedSecretAuthTest {
 //		loginTimeStringArray.add("2008-08-24 16:11:34");
 //		loginTimeStringArray.add("2008-07-24 12:14:48");
 		loginTimeStringArray.add("2008-07-24 13:47:43");
-		
-		
+
+
 
 		System.out.println("userName , loginTimeString, propperToken, sharedSecret = " + sharedSecret);
 
@@ -84,7 +84,7 @@ public class SharedSecretAuthTest {
 				e.printStackTrace();
 			}
 
-			String propperToken = createSharedSecretToken( userName, loginTime, sharedSecret );		
+			String propperToken = createSharedSecretToken(userName, loginTime, sharedSecret);
 
 
 			System.out.println("" + userName + ", " + loginTimeString + ", " + propperToken);

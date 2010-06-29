@@ -1,5 +1,5 @@
 /* SignalPlotScrollPane.java created 2007-10-17
- * 
+ *
  */
 
 package org.signalml.app.view.signal;
@@ -11,15 +11,15 @@ import javax.swing.JScrollPane;
 
 /** SignalPlotScrollPane
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class SignalPlotScrollPane extends JScrollPane {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private static final Dimension MINIMUM_SIZE = new Dimension(0,0);
-	
+
 	public SignalPlotScrollPane() {
 		super();
 	}
@@ -35,17 +35,17 @@ public class SignalPlotScrollPane extends JScrollPane {
 	public SignalPlotScrollPane(int vsbPolicy, int hsbPolicy) {
 		super(vsbPolicy, hsbPolicy);
 	}
-	
+
 	@Override
 	public Dimension getMinimumSize() {
 		return MINIMUM_SIZE;
 	}
-	
+
 	/*
 	@Override
 	public String getToolTipText() {
 		return "???";
 	}
 	*/
-	
+
 }

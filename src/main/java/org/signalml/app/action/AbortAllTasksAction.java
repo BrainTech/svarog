@@ -1,5 +1,5 @@
 /* AbortAllTasksAction.java created 2008-02-07
- * 
+ *
  */
 package org.signalml.app.action;
 
@@ -14,54 +14,54 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** AbortAllTasksAction
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class AbortAllTasksAction extends AbstractSignalMLAction {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	protected static final Logger logger = Logger.getLogger(AbortAllTasksAction.class);
-		
+
 	private ApplicationTaskManager taskManager;
 	private Component optionPaneParent;
-	
+
 	public AbortAllTasksAction(MessageSourceAccessor messageSource) {
 		super(messageSource);
 		setText("action.abortAllTasks");
 		setIconPath("org/signalml/app/icon/abortall.png");
 		setToolTip("action.abortAllTasksToolTip");
 	}
-			
+
 	@Override
 	public void actionPerformed(ActionEvent ev) {
 
 		int ans = OptionPane.showAbortAllTasks(optionPaneParent);
-		if( ans != OptionPane.OK_OPTION ) {
+		if (ans != OptionPane.OK_OPTION) {
 			return;
 		}
-		
-		synchronized( taskManager ) {
+
+		synchronized (taskManager) {
 
 			int count = taskManager.getTaskCount();
 			Task task;
-			
-			for( int i=0; i<count; i++ ) {
+
+			for (int i=0; i<count; i++) {
 				task = taskManager.getTaskAt(i);
-				synchronized( task ) {
-					if( task.getStatus().isAbortable() ) {
+				synchronized (task) {
+					if (task.getStatus().isAbortable()) {
 						task.abort(false);
 					}
 				}
 			}
-		}		
-		
+		}
+
 	}
-	
+
 	public void setEnabledAsNeeded() {
-		setEnabled( true );
+		setEnabled(true);
 	}
-	
+
 	public Component getOptionPaneParent() {
 		return optionPaneParent;
 	}

@@ -1,5 +1,5 @@
 /* ArtifactToolConfigDialog.java created 2008-02-08
- * 
+ *
  */
 
 package org.signalml.app.method.artifact;
@@ -18,17 +18,17 @@ import org.springframework.validation.Errors;
 
 /** ArtifactToolConfigDialog
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ArtifactToolConfigDialog extends AbstractDialog {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private ViewerFileChooser fileChooser;
-	
+
 	private ArtifactToolConfigPanel configPanel;
-	
+
 	public ArtifactToolConfigDialog(MessageSourceAccessor messageSource) {
 		super(messageSource);
 	}
@@ -39,51 +39,51 @@ public class ArtifactToolConfigDialog extends AbstractDialog {
 
 	@Override
 	protected void initialize() {
-		setTitle( messageSource.getMessage( "artifactMethod.config.title" ) );
-		setIconImage( IconUtils.loadClassPathImage( ArtifactMethodDescriptor.ICON_PATH ) );
+		setTitle(messageSource.getMessage("artifactMethod.config.title"));
+		setIconImage(IconUtils.loadClassPathImage(ArtifactMethodDescriptor.ICON_PATH));
 		setResizable(false);
 		super.initialize();
 	}
-	
+
 	@Override
 	public JComponent createInterface() {
 		return getConfigPanel();
 	}
-	
+
 	public ArtifactToolConfigPanel getConfigPanel() {
-		if( configPanel == null ) {
+		if (configPanel == null) {
 			configPanel = new ArtifactToolConfigPanel(messageSource,fileChooser);
 		}
 		return configPanel;
 	}
-	
+
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
-		
+
 		getConfigPanel().fillPanelFromModel((ArtifactConfiguration) model);
-	
+
 	}
 
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
-		
+
 		getConfigPanel().fillModelFromPanel((ArtifactConfiguration) model);
-		
+
 	}
-	
+
 	@Override
 	public void validateDialog(Object model, Errors errors) throws SignalMLException {
 		super.validateDialog(model, errors);
-		
+
 		getConfigPanel().validatePanel(errors);
-		
-		if( !errors.hasErrors() ) {
+
+		if (!errors.hasErrors()) {
 			File file = getConfigPanel().getWorkingDirectoryPanel().getDirectory();
-			if( file == null || !file.exists() || !file.canWrite() ) {
-				errors.rejectValue( "workingDirectoryPath", "error.artifact.noWorkingDirectory");
+			if (file == null || !file.exists() || !file.canWrite()) {
+				errors.rejectValue("workingDirectoryPath", "error.artifact.noWorkingDirectory");
 			}
 		}
-		
+
 	}
 
 	@Override
@@ -98,5 +98,5 @@ public class ArtifactToolConfigDialog extends AbstractDialog {
 	public void setFileChooser(ViewerFileChooser fileChooser) {
 		this.fileChooser = fileChooser;
 	}
-	
+
 }

@@ -1,5 +1,5 @@
 /* BookZoomPopupDialog.java created 2007-10-14
- * 
+ *
  */
 
 package org.signalml.app.view.book.popup;
@@ -16,15 +16,15 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** BookZoomPopupDialog
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class BookZoomPopupDialog extends AbstractPopupDialog {
 
 	private static final long serialVersionUID = 1L;
-			
+
 	private BookZoomSettingsPanel bookZoomSettingsPanel;
-	
+
 	public BookZoomPopupDialog(MessageSourceAccessor messageSource) {
 		super(messageSource);
 	}
@@ -32,49 +32,49 @@ public class BookZoomPopupDialog extends AbstractPopupDialog {
 	public BookZoomPopupDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
 		super(messageSource, w, isModal);
 	}
-	
+
 	@Override
 	public JComponent createInterface() {
-		
+
 		bookZoomSettingsPanel = new BookZoomSettingsPanel(messageSource, true);
-		
+
 		return bookZoomSettingsPanel;
-				
+
 	}
-	
+
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 		BookView view = (BookView) model;
-		
-		bookZoomSettingsPanel.fillPanelFromModel( view );
-		
+
+		bookZoomSettingsPanel.fillPanelFromModel(view);
+
 	}
 
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
 		BookView view = (BookView) model;
-		
-		bookZoomSettingsPanel.fillModelFromPanel( view );
+
+		bookZoomSettingsPanel.fillModelFromPanel(view);
 	}
-	
+
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
 		return BookView.class.isAssignableFrom(clazz);
 	}
-	
+
 	@Override
 	public boolean isControlPanelEquipped() {
 		return false;
-	}		
+	}
 
 	@Override
 	public boolean isCancellable() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean isFormClickApproving() {
 		return true;
 	}
-	
+
 }

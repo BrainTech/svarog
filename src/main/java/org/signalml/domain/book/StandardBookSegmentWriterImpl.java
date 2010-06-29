@@ -17,5 +17,5 @@ public class StandardBookSegmentWriterImpl extends SegmentHeaderV5 {
 		lib.setFields(((BookLibraryV5Writer)book).getFields());
 		this.parent=lib;
 	}
-	
+
 }

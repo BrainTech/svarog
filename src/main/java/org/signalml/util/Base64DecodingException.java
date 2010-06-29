@@ -32,10 +32,10 @@ import java.io.*;
 public class Base64DecodingException extends IOException {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -5859826389865808391L;
-	
+
 	private char c;
 
 	/**
@@ -46,7 +46,7 @@ public class Base64DecodingException extends IOException {
 	 *
 	 * @since ostermillerutils 1.00.00
 	 */
-	public Base64DecodingException(String message, char c){
+	public Base64DecodingException(String message, char c) {
 		super(message);
 		this.c = c;
 	}
@@ -58,7 +58,7 @@ public class Base64DecodingException extends IOException {
 	 *
 	 * @since ostermillerutils 1.00.00
 	 */
-	public char getChar(){
+	public char getChar() {
 		return c;
 	}
 }

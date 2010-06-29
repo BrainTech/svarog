@@ -1,5 +1,5 @@
 /* BookToTagData.java created 2008-03-26
- * 
+ *
  */
 
 package org.signalml.method.booktotag;
@@ -10,7 +10,7 @@ import org.signalml.domain.book.StandardBook;
 
 /** BookToTagData
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class BookToTagData {
@@ -22,14 +22,14 @@ public class BookToTagData {
 	private boolean makePageTags;
 	private boolean makeBlockTags;
 	private boolean makeChannelTags;
-	
+
 	public BookToTagData() {
 		channels = new LinkedHashSet<Integer>();
 		makePageTags = true;
 		makeBlockTags = true;
 		makeChannelTags = true;
 	}
-	
+
 	public StandardBook getBook() {
 		return book;
 	}
@@ -45,20 +45,20 @@ public class BookToTagData {
 	public void setChannels(LinkedHashSet<Integer> channels) {
 		this.channels = channels;
 	}
-	
-	public void replaceChannels( int[] array ) {
+
+	public void replaceChannels(int[] array) {
 		channels.clear();
-		for( int i=0; i<array.length; i++ ) {
-			channels.add( array[i] );
+		for (int i=0; i<array.length; i++) {
+			channels.add(array[i]);
 		}
 	}
-	
-	public void addChannel( int channel ) {
-		channels.add( channel );
+
+	public void addChannel(int channel) {
+		channels.add(channel);
 	}
-	
-	public void removeChannel( int channel ) {
-		channels.remove( new Integer( channel ) );
+
+	public void removeChannel(int channel) {
+		channels.remove(new Integer(channel));
 	}
 
 	public boolean isMakePageTags() {
@@ -84,5 +84,5 @@ public class BookToTagData {
 	public void setMakeChannelTags(boolean makeChannelTags) {
 		this.makeChannelTags = makeChannelTags;
 	}
-		
+
 }

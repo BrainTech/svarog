@@ -1,5 +1,5 @@
 /* SignalFFTSettings.java created 2007-12-17
- * 
+ *
  */
 
 package org.signalml.app.config;
@@ -12,13 +12,13 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /** SignalFFTSettings
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 @XStreamAlias("fftsettings")
 public class SignalFFTSettings implements FFTWindowTypeSettings {
 
-	private boolean channelSwitching;	
+	private boolean channelSwitching;
 	private Dimension plotSize;
 	private int windowWidth;
 	private WindowType windowType;
@@ -29,12 +29,12 @@ public class SignalFFTSettings implements FFTWindowTypeSettings {
 	private boolean titleVisible;
 	private boolean frequencyAxisLabelsVisible;
 	private boolean powerAxisLabelsVisible;
-	
+
 	private int visibleRangeStart = Integer.MIN_VALUE;
 	private int visibleRangeEnd = Integer.MAX_VALUE;
-	private int maxLabelCount = Integer.MAX_VALUE;		
+	private int maxLabelCount = Integer.MAX_VALUE;
 	private boolean scaleToView = false;
-	
+
 	public SignalFFTSettings() {
 		channelSwitching = false;
 		plotSize = new Dimension(600,200);
@@ -43,20 +43,20 @@ public class SignalFFTSettings implements FFTWindowTypeSettings {
 		windowParameter = 0;
 		logarithmic = false;
 		spline = true;
-		antialias = true;		
+		antialias = true;
 	}
-	
+
 	public Dimension getPlotSize() {
 		return plotSize;
 	}
-	
+
 	public void setPlotSize(Dimension size) {
-		if( size == null ) {
+		if (size == null) {
 			throw new NullPointerException("No size");
 		}
 		plotSize = size;
 	}
-			
+
 	public boolean isChannelSwitching() {
 		return channelSwitching;
 	}
@@ -64,7 +64,7 @@ public class SignalFFTSettings implements FFTWindowTypeSettings {
 	public void setChannelSwitching(boolean channelSwitching) {
 		this.channelSwitching = channelSwitching;
 	}
-	
+
 	public int getWindowWidth() {
 		return windowWidth;
 	}
@@ -80,12 +80,12 @@ public class SignalFFTSettings implements FFTWindowTypeSettings {
 
 	@Override
 	public void setWindowType(WindowType windowType) {
-		if( windowType == null ) {
-			throw new NullPointerException( "No window type" );
+		if (windowType == null) {
+			throw new NullPointerException("No window type");
 		}
 		this.windowType = windowType;
 	}
-		
+
 	@Override
 	public double getWindowParameter() {
 		return windowParameter;
@@ -102,15 +102,15 @@ public class SignalFFTSettings implements FFTWindowTypeSettings {
 
 	public void setLogarithmic(boolean logarithmic) {
 		this.logarithmic = logarithmic;
-	}	
+	}
 
 	public boolean isSpline() {
 		return spline;
-	}	
+	}
 
 	public void setSpline(boolean spline) {
 		this.spline = spline;
-	}	
+	}
 
 	public boolean isAntialias() {
 		return antialias;
@@ -199,5 +199,5 @@ public class SignalFFTSettings implements FFTWindowTypeSettings {
 	public void setScaleToView(boolean scaleToView) {
 		this.scaleToView = scaleToView;
 	}
-		
+
 }

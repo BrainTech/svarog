@@ -1,5 +1,5 @@
 /* MontagePresetManager.java created 2007-10-24
- * 
+ *
  */
 
 package org.signalml.app.montage;
@@ -13,14 +13,14 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /** MontagePresetManager
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 @XStreamAlias("montages")
 public class MontagePresetManager extends AbstractPresetManager {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Override
 	public String getStandardFilename() {
 		return "montages.xml";
@@ -30,10 +30,10 @@ public class MontagePresetManager extends AbstractPresetManager {
 	public Class<?> getPresetClass() {
 		return Montage.class;
 	}
-	
+
 	@Override
 	public XStream getStreamer() {
-		if( streamer == null ) {
+		if (streamer == null) {
 			streamer = createMontagePresetStreamer();
 		}
 		return streamer;
@@ -43,8 +43,8 @@ public class MontagePresetManager extends AbstractPresetManager {
 		XStream streamer = XMLUtils.getDefaultStreamer();
 		XMLUtils.configureStreamerForMontage(streamer);
 		streamer.setMode(XStream.ID_REFERENCES);
-				
+
 		return streamer;
 	}
-		
+
 }

@@ -1,5 +1,5 @@
 /* MP5BookWriter.java created 2008-02-24
- * 
+ *
  */
 
 package org.signalml.domain.book;
@@ -15,7 +15,7 @@ import pl.edu.fuw.MP.Core.SegmentHeaderV5;
 
 /** MP5BookWriter
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  * 			based on code by Dobieslaw Ircha
  */
@@ -32,20 +32,20 @@ public class MPv5BookWriter implements IncrementalBookWriter {
 
 	private int segmentCount = 0;
 
-	public MPv5BookWriter( StandardBook book, File file ) throws IOException {
+	public MPv5BookWriter(StandardBook book, File file) throws IOException {
 
 		bookWriter = new BookLibraryV5Writer();
 
-		bookWriter.setBookComment( book.getBookComment() );
-		bookWriter.setCalibration( book.getCalibration() );
-		bookWriter.setDate( book.getDate() );
-		bookWriter.setDictionarySize( book.getDictionarySize() );
-		bookWriter.setDictionaryType( book.getDictionaryType() );
-		bookWriter.setEnergyPercent( book.getEnergyPercent() );
-		bookWriter.setMaxIterationCount( book.getMaxIterationCount() );
-		bookWriter.setSamplingFrequency( book.getSamplingFrequency() );
-		bookWriter.setTextInfo( book.getTextInfo() );
-		bookWriter.setWebSiteInfo( book.getWebSiteInfo() );
+		bookWriter.setBookComment(book.getBookComment());
+		bookWriter.setCalibration(book.getCalibration());
+		bookWriter.setDate(book.getDate());
+		bookWriter.setDictionarySize(book.getDictionarySize());
+		bookWriter.setDictionaryType(book.getDictionaryType());
+		bookWriter.setEnergyPercent(book.getEnergyPercent());
+		bookWriter.setMaxIterationCount(book.getMaxIterationCount());
+		bookWriter.setSamplingFrequency(book.getSamplingFrequency());
+		bookWriter.setTextInfo(book.getTextInfo());
+		bookWriter.setWebSiteInfo(book.getWebSiteInfo());
 
 		bookWriter.Open(file.getAbsolutePath());
 
@@ -53,7 +53,7 @@ public class MPv5BookWriter implements IncrementalBookWriter {
 
 	@Override
 	public void close() throws IOException {
-		if( bookWriter != null ) {
+		if (bookWriter != null) {
 			bookWriter.close();
 			bookWriter = null;
 		}
@@ -67,12 +67,12 @@ public class MPv5BookWriter implements IncrementalBookWriter {
 		StandardBookAtomWriter atomWriter;
 		StandardBookAtom atom;
 
-		for( int i=0; i<segments.length; i++ ) {
+		for (int i=0; i<segments.length; i++) {
 
 			segmentWriter.setChannelNumber(i+1);
 			segmentWriter.setSegmentNumber(segmentCount+1);
-			if( segments[i].hasSignal() ) {
-				segmentWriter.setSignalSamples( segments[i].getSignalSamples() );
+			if (segments[i].hasSignal()) {
+				segmentWriter.setSignalSamples(segments[i].getSignalSamples());
 			} else {
 				segmentWriter.setSignalSamples(null);
 			}
@@ -85,7 +85,7 @@ public class MPv5BookWriter implements IncrementalBookWriter {
 
 			atomCount = segments[i].getAtomCount();
 
-			for(int k=1 ; k<atomCount ; k++) {
+			for (int k=1 ; k<atomCount ; k++) {
 
 				atomWriter = new StandardBookAtomWriterImpl();
 				atom = segments[i].getAtomAt(k);

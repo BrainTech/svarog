@@ -1,5 +1,5 @@
 /* ViewerTagTree.java created 2007-09-11
- * 
+ *
  */
 package org.signalml.app.view;
 
@@ -38,7 +38,7 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** ViewerTagTree
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ViewerTagTree extends AbstractViewerTree implements TagFocusSelector, TagStyleFocusSelector {
@@ -46,7 +46,7 @@ public class ViewerTagTree extends AbstractViewerTree implements TagFocusSelecto
 	private static final long serialVersionUID = 1L;
 
 	private ActionFocusSupport afSupport = new ActionFocusSupport(this);
-	
+
 	private JPopupMenu signalDocumentPopupMenu;
 	private JPopupMenu tagDocumentPopupMenu;
 	private JPopupMenu tagStylePopupMenu;
@@ -57,7 +57,7 @@ public class ViewerTagTree extends AbstractViewerTree implements TagFocusSelecto
 	private TagStylePaletteDialog tagStylePaletteDialog;
 	private EditTagAnnotationDialog editTagAnnotationDialog;
 	private EditTagDescriptionDialog editTagDescriptionDialog;
-	
+
 	private ActivateDocumentAction activateDocumentAction;
 	private ActivateTagAction activateTagAction;
 	private CloseDocumentAction closeDocumentAction;
@@ -65,16 +65,16 @@ public class ViewerTagTree extends AbstractViewerTree implements TagFocusSelecto
 	private EditTagAnnotationAction editTagAnnotationAction;
 	private EditTagStylesAction editTagStylesAction;
 	private EditTagDescriptionAction editTagDescriptionAction;
-	
+
 	private SignalDocument activeSignalDocument;
 	private TagDocument activeTagDocument;
 	private PositionedTag activeTag;
 	private TagStyle activeTagStyle;
-	
+
 	public ViewerTagTree(TagTreeModel model, MessageSourceAccessor messageSource) {
 		super(model,messageSource);
 		setCellRenderer(new TagTreeCellRenderer(model.getIconProducer()));
-		expandPath( new TreePath(new Object[] {model.getRoot()}) );
+		expandPath(new TreePath(new Object[] {model.getRoot()}));
 		addMouseListener(new MouseEventHandler());
 	}
 
@@ -82,7 +82,7 @@ public class ViewerTagTree extends AbstractViewerTree implements TagFocusSelecto
 	public TagTreeModel getModel() {
 		return (TagTreeModel) super.getModel();
 	}
-	
+
 	@Override
 	public PositionedTag getActiveTag() {
 		return activeTag;
@@ -95,7 +95,7 @@ public class ViewerTagTree extends AbstractViewerTree implements TagFocusSelecto
 
 	@Override
 	public Document getActiveDocument() {
-		return ( activeTagDocument != null ? activeTagDocument : activeSignalDocument );
+		return (activeTagDocument != null ? activeTagDocument : activeSignalDocument);
 	}
 
 	@Override
@@ -122,67 +122,67 @@ public class ViewerTagTree extends AbstractViewerTree implements TagFocusSelecto
 	public JPopupMenu getComponentPopupMenu() {
 		return focus(getSelectionPath());
 	}
-	
+
 	private JPopupMenu focus(TreePath path) {
 
 		JPopupMenu popupMenu = null;
-		
+
 		activeSignalDocument = null;
 		activeTagDocument = null;
 		activeTag = null;
 		activeTagStyle = null;
-		
-		if( path != null ) {
+
+		if (path != null) {
 			Object last = path.getLastPathComponent();
-			if( last instanceof SignalDocument ) {
+			if (last instanceof SignalDocument) {
 				activeSignalDocument = (SignalDocument) last;
 				popupMenu = getSignalDocumentPopupMenu();
 			}
-			else if( last instanceof TagDocument ) {
+			else if (last instanceof TagDocument) {
 				activeSignalDocument = (SignalDocument) path.getPathComponent(1);
-				activeTagDocument = (TagDocument) last;				
+				activeTagDocument = (TagDocument) last;
 				popupMenu = getTagDocumentPopupMenu();
 			}
-			else if( last instanceof TagStyle ) {
+			else if (last instanceof TagStyle) {
 				activeTagStyle = (TagStyle) last;
 				activeTagDocument = (TagDocument) path.getPathComponent(2);
 				activeSignalDocument = (SignalDocument) path.getPathComponent(1);
 				popupMenu = getTagStylePopupMenu();
 			}
-			else if( last instanceof Tag ) {
+			else if (last instanceof Tag) {
 				activeTagDocument = (TagDocument) path.getPathComponent(2);
 				activeSignalDocument = (SignalDocument) path.getPathComponent(1);
 				int index = activeSignalDocument.getTagDocuments().indexOf(activeTagDocument);
-				activeTag = new PositionedTag((Tag) last,index);				
+				activeTag = new PositionedTag((Tag) last,index);
 				popupMenu = getTagPopupMenu();
 			}
 		}
-		
+
 		afSupport.fireActionFocusChanged();
-		
+
 		return popupMenu;
-		
+
 	}
-	
+
 	private JPopupMenu getSignalDocumentPopupMenu() {
-		
-		if( signalDocumentPopupMenu == null ) {
+
+		if (signalDocumentPopupMenu == null) {
 			signalDocumentPopupMenu = new JPopupMenu();
-			
+
 			signalDocumentPopupMenu.add(getActivateDocumentAction());
 			signalDocumentPopupMenu.addSeparator();
 			signalDocumentPopupMenu.add(getCloseDocumentAction());
 		}
-				
+
 		return signalDocumentPopupMenu;
-		
+
 	}
 
 	private JPopupMenu getTagDocumentPopupMenu() {
-		
-		if( tagDocumentPopupMenu == null ) {
+
+		if (tagDocumentPopupMenu == null) {
 			tagDocumentPopupMenu = new JPopupMenu();
-			
+
 			tagDocumentPopupMenu.add(getActivateDocumentAction());
 			tagDocumentPopupMenu.addSeparator();
 			tagDocumentPopupMenu.add(getEditTagStylesAction());
@@ -190,46 +190,46 @@ public class ViewerTagTree extends AbstractViewerTree implements TagFocusSelecto
 			tagDocumentPopupMenu.addSeparator();
 			tagDocumentPopupMenu.add(getCloseDocumentAction());
 		}
-				
+
 		return tagDocumentPopupMenu;
-		
+
 	}
 
 	private JPopupMenu getTagStylePopupMenu() {
-		
-		if( tagStylePopupMenu == null ) {
+
+		if (tagStylePopupMenu == null) {
 			tagStylePopupMenu = new JPopupMenu();
-			
+
 			tagStylePopupMenu.add(getEditTagStylesAction());
 		}
-				
+
 		return tagStylePopupMenu;
-		
+
 	}
 
 	private JPopupMenu getTagPopupMenu() {
-		
-		if( tagPopupMenu == null ) {
+
+		if (tagPopupMenu == null) {
 			tagPopupMenu = new JPopupMenu();
-			
+
 			tagPopupMenu.add(getActivateTagAction());
 			tagPopupMenu.addSeparator();
 			tagPopupMenu.add(getEditTagAnnotationAction());
 			tagPopupMenu.addSeparator();
 			tagPopupMenu.add(getRemoveTagAction());
 		}
-				
+
 		return tagPopupMenu;
-		
+
 	}
-	
+
 	public ActionFocusManager getActionFocusManager() {
 		return actionFocusManager;
 	}
 
 	public void setActionFocusManager(ActionFocusManager actionFocusManager) {
 		this.actionFocusManager = actionFocusManager;
-	}	
+	}
 
 	public DocumentFlowIntegrator getDocumentFlowIntegrator() {
 		return documentFlowIntegrator;
@@ -238,7 +238,7 @@ public class ViewerTagTree extends AbstractViewerTree implements TagFocusSelecto
 	public void setDocumentFlowIntegrator(DocumentFlowIntegrator documentFlowIntegrator) {
 		this.documentFlowIntegrator = documentFlowIntegrator;
 	}
-	
+
 	public TagStylePaletteDialog getTagStylePaletteDialog() {
 		return tagStylePaletteDialog;
 	}
@@ -254,7 +254,7 @@ public class ViewerTagTree extends AbstractViewerTree implements TagFocusSelecto
 	public void setEditTagAnnotationDialog(EditTagAnnotationDialog editTagAnnotationDialog) {
 		this.editTagAnnotationDialog = editTagAnnotationDialog;
 	}
-	
+
 	public EditTagDescriptionDialog getEditTagDescriptionDialog() {
 		return editTagDescriptionDialog;
 	}
@@ -264,21 +264,21 @@ public class ViewerTagTree extends AbstractViewerTree implements TagFocusSelecto
 	}
 
 	public ActivateDocumentAction getActivateDocumentAction() {
-		if( activateDocumentAction == null ) {
+		if (activateDocumentAction == null) {
 			activateDocumentAction = new ActivateDocumentAction(messageSource,actionFocusManager,this);
 		}
 		return activateDocumentAction;
 	}
 
 	public ActivateTagAction getActivateTagAction() {
-		if( activateTagAction == null ) {
+		if (activateTagAction == null) {
 			activateTagAction = new ActivateTagAction(messageSource,actionFocusManager,this);
 		}
 		return activateTagAction;
 	}
 
 	public CloseDocumentAction getCloseDocumentAction() {
-		if( closeDocumentAction == null ) {
+		if (closeDocumentAction == null) {
 			closeDocumentAction = new CloseDocumentAction(messageSource,this);
 			closeDocumentAction.setDocumentFlowIntegrator(documentFlowIntegrator);
 		}
@@ -286,22 +286,22 @@ public class ViewerTagTree extends AbstractViewerTree implements TagFocusSelecto
 	}
 
 	public RemoveTagAction getRemoveTagAction() {
-		if( removeTagAction == null ) {
+		if (removeTagAction == null) {
 			removeTagAction = new RemoveTagAction(messageSource,this);
 		}
 		return removeTagAction;
 	}
 
 	public EditTagAnnotationAction getEditTagAnnotationAction() {
-		if( editTagAnnotationAction == null ) {
+		if (editTagAnnotationAction == null) {
 			editTagAnnotationAction = new EditTagAnnotationAction(messageSource,this);
 			editTagAnnotationAction.setEditTagAnnotationDialog(editTagAnnotationDialog);
 		}
 		return editTagAnnotationAction;
 	}
-	
+
 	public EditTagStylesAction getEditTagStylesAction() {
-		if( editTagStylesAction == null ) {
+		if (editTagStylesAction == null) {
 			editTagStylesAction = new EditTagStylesAction(messageSource,this);
 			editTagStylesAction.setTagStylePaletteDialog(tagStylePaletteDialog);
 		}
@@ -309,19 +309,19 @@ public class ViewerTagTree extends AbstractViewerTree implements TagFocusSelecto
 	}
 
 	public EditTagDescriptionAction getEditTagDescriptionAction() {
-		if( editTagDescriptionAction == null ) {
+		if (editTagDescriptionAction == null) {
 			editTagDescriptionAction = new EditTagDescriptionAction(messageSource,this);
 			editTagDescriptionAction.setEditTagDescriptionDialog(editTagDescriptionDialog);
 		}
 		return editTagDescriptionAction;
 	}
-	
+
 	private class MouseEventHandler extends MouseAdapter {
 
 		@Override
 		public void mousePressed(MouseEvent e) {
 			ViewerTagTree tree = (ViewerTagTree) e.getSource();
-			if( SwingUtilities.isRightMouseButton(e) && (e.getClickCount() == 1) ) {
+			if (SwingUtilities.isRightMouseButton(e) && (e.getClickCount() == 1)) {
 				TreePath selPath = tree.getPathForLocation(e.getX(), e.getY());
 				tree.setSelectionPath(selPath);
 			}
@@ -330,28 +330,28 @@ public class ViewerTagTree extends AbstractViewerTree implements TagFocusSelecto
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			ViewerTagTree tree = (ViewerTagTree) e.getSource();
-			if( SwingUtilities.isLeftMouseButton(e) && (e.getClickCount() % 2) == 0 ) {
+			if (SwingUtilities.isLeftMouseButton(e) && (e.getClickCount() % 2) == 0) {
 				int selRow = tree.getRowForLocation(e.getX(), e.getY());
 				TreePath selPath = tree.getPathForLocation(e.getX(), e.getY());
 				focus(selPath);
-				if( selRow >= 0 ) {
+				if (selRow >= 0) {
 					Object target = selPath.getLastPathComponent();
-					if( target instanceof Document ) {
+					if (target instanceof Document) {
 						getActivateDocumentAction().actionPerformed(new ActionEvent(tree,0,"activate"));
-					} 
-					else if( target instanceof TagStyle ) {
+					}
+					else if (target instanceof TagStyle) {
 						getEditTagStylesAction().actionPerformed(new ActionEvent(tree,0,"edit"));
-					} 
-					else if( target instanceof Tag ) {
+					}
+					else if (target instanceof Tag) {
 						getActivateTagAction().actionPerformed(new ActionEvent(tree,0,"activate"));
 					}
-					// ignore dbl clicks on other tree nodes 
+					// ignore dbl clicks on other tree nodes
 				}
 			}
 		}
-				
+
 	}
 
-	
+
 }
 

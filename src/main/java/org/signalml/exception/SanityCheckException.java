@@ -1,12 +1,12 @@
 /* SanityCheckException.java created 2007-09-21
- * 
+ *
  */
 
 package org.signalml.exception;
 
 /** SanityCheckException
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class SanityCheckException extends RuntimeException {
@@ -28,5 +28,5 @@ public class SanityCheckException extends RuntimeException {
 	public SanityCheckException(Throwable cause) {
 		super(cause);
 	}
-	
+
 }

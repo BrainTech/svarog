@@ -1,5 +1,5 @@
 /* WignerMapPaletteComboBoxCellRenderer.java created 2008-03-06
- * 
+ *
  */
 
 package org.signalml.app.view.book;
@@ -13,7 +13,7 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** WignerMapPaletteComboBoxCellRenderer
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class WignerMapPaletteComboBoxCellRenderer extends DefaultListCellRenderer {
@@ -29,13 +29,13 @@ public class WignerMapPaletteComboBoxCellRenderer extends DefaultListCellRendere
 	@Override
 	public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 		DefaultListCellRenderer renderer = (DefaultListCellRenderer) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-		if( value instanceof WignerMapPalette ) {
+		if (value instanceof WignerMapPalette) {
 			WignerMapPalette palette = (WignerMapPalette) value;
-			renderer.setText( messageSource.getMessage(palette) );
-			renderer.setIcon( palette.getIcon() );
+			renderer.setText(messageSource.getMessage(palette));
+			renderer.setIcon(palette.getIcon());
 		}
 		// else leave text put by superclass
-		return renderer; 
+		return renderer;
 	}
-	
+
 }

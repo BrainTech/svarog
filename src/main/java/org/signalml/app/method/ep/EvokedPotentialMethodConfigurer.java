@@ -1,5 +1,5 @@
 /* EvokedPotentialMethodConfigurer.java created 2008-01-12
- * 
+ *
  */
 
 package org.signalml.app.method.ep;
@@ -16,17 +16,17 @@ import org.signalml.method.Method;
 
 /** EvokedPotentialMethodConfigurer
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class EvokedPotentialMethodConfigurer implements InitializingMethodConfigurer, PresetEquippedMethodConfigurer {
 
 	protected static final Logger logger = Logger.getLogger(EvokedPotentialMethodConfigurer.class);
-	
+
 	private EvokedPotentialMethodDialog dialog;
 	private PresetManager presetManager;
 	private Window dialogParent;
-		
+
 	@Override
 	public void initialize(ApplicationMethodManager manager) {
 		dialogParent = manager.getDialogParent();
@@ -38,14 +38,14 @@ public class EvokedPotentialMethodConfigurer implements InitializingMethodConfig
 	public boolean configure(Method method, Object methodDataObj) throws SignalMLException {
 
 		EvokedPotentialApplicationData data = (EvokedPotentialApplicationData) methodDataObj;
-		
+
 		boolean dialogOk = dialog.showDialog(data, true);
-		if( !dialogOk ) {
+		if (!dialogOk) {
 			return false;
 		}
-								
+
 		return true;
-		
+
 	}
 
 	@Override

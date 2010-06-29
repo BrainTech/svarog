@@ -1,5 +1,5 @@
 /* SignalPlotPopupProvider.java created 2007-10-16
- * 
+ *
  */
 
 package org.signalml.app.view.signal;
@@ -19,33 +19,33 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** SignalPlotPopupProvider
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class SignalPlotPopupProvider {
-	
+
 	private RemoveTagAction removeTagAction;
 	private PreciseSelectionAction preciseSelectionAction;
 	private TagSelectionAction tagSelectionAction;
 	private EditTagAnnotationAction editTagAnnotationAction;
-	
+
 	private TagIconProducer tagIconProducer;
-	
+
 	private SignalPlot plot;
 	private JPopupMenu plotPopupMenu;
 	private JPopupMenu columnHeaderPopupMenu;
-			
+
 	private TagStyleMenu tagStyleMenu;
-	
-	private MessageSourceAccessor messageSource;	
-	
+
+	private MessageSourceAccessor messageSource;
+
 	public SignalPlotPopupProvider(SignalPlot plot) {
 		this.plot = plot;
 	}
 
 	public JPopupMenu getPlotPopupMenu() {
-				
-		if( plotPopupMenu == null ) {
+
+		if (plotPopupMenu == null) {
 			plotPopupMenu = new JPopupMenu();
 			tagStyleMenu = new TagStyleMenu(tagSelectionAction, tagIconProducer);
 			tagStyleMenu.setMessageSource(messageSource);
@@ -56,12 +56,12 @@ public class SignalPlotPopupProvider {
 			plotPopupMenu.addSeparator();
 			plotPopupMenu.add(preciseSelectionAction);
 		}
-		
-		boolean tagStyleMenuEnabled = false; 
+
+		boolean tagStyleMenuEnabled = false;
 		TagDocument tagDocument = plot.getDocument().getActiveTag();
-		if( tagDocument != null ) {
+		if (tagDocument != null) {
 			SignalSelection selection = plot.getView().getSignalSelection(plot);
-			if( selection != null ) {
+			if (selection != null) {
 				tagStyleMenu.setTagSet(tagDocument.getTagSet());
 				tagStyleMenu.setType(selection.getType());
 				tagStyleMenuEnabled = true;
@@ -71,7 +71,7 @@ public class SignalPlotPopupProvider {
 
 		return plotPopupMenu;
 	}
-	
+
 	public MessageSourceAccessor getMessageSource() {
 		return messageSource;
 	}
@@ -81,19 +81,19 @@ public class SignalPlotPopupProvider {
 	}
 
 	public JPopupMenu getColumnHeaderPopupMenu() {
-				
-		if( columnHeaderPopupMenu == null ) {
+
+		if (columnHeaderPopupMenu == null) {
 			columnHeaderPopupMenu = new JPopupMenu();
 			columnHeaderPopupMenu.add(editTagAnnotationAction);
-			columnHeaderPopupMenu.add(removeTagAction);	
+			columnHeaderPopupMenu.add(removeTagAction);
 			columnHeaderPopupMenu.addSeparator();
-			JCheckBoxMenuItem compactMenuItem = new JCheckBoxMenuItem( plot.getSignalPlotColumnHeader().getSetCompactAction() );
+			JCheckBoxMenuItem compactMenuItem = new JCheckBoxMenuItem(plot.getSignalPlotColumnHeader().getSetCompactAction());
 			columnHeaderPopupMenu.add(compactMenuItem);
 		}
 
 		return columnHeaderPopupMenu;
 	}
-	
+
 	public TagIconProducer getTagIconProducer() {
 		return tagIconProducer;
 	}
@@ -132,6 +132,6 @@ public class SignalPlotPopupProvider {
 
 	public void setEditTagAnnotationAction(EditTagAnnotationAction editTagAnnotationAction) {
 		this.editTagAnnotationAction = editTagAnnotationAction;
-	}		
-	
+	}
+
 }

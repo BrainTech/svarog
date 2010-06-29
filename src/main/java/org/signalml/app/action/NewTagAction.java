@@ -1,5 +1,5 @@
 /* NewTagAction.java created 2007-10-14
- * 
+ *
  */
 package org.signalml.app.action;
 
@@ -24,96 +24,96 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** NewTagAction
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class NewTagAction extends AbstractFocusableSignalMLAction<SignalDocumentFocusSelector> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	protected static final Logger logger = Logger.getLogger(NewTagAction.class);
-		
+
 	private DocumentFlowIntegrator documentFlowIntegrator;
 	private NewTagDialog newTagDialog;
-		
+
 	public NewTagAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
 		super(messageSource, signalDocumentFocusSelector);
 		setText("action.newTag");
 		setIconPath("org/signalml/app/icon/filenew.png");
 		setToolTip("action.newTagToolTip");
 	}
-		
+
 	@Override
 	public void actionPerformed(ActionEvent ev) {
-		
+
 		logger.debug("New tag");
-		
+
 		SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
-		if( signalDocument == null ) {
+		if (signalDocument == null) {
 			logger.warn("Target document doesn't exist or is not a signal");
 			return;
 		}
-		
+
 		OpenDocumentDescriptor ofd = new OpenDocumentDescriptor();
 		ofd.setType(ManagedDocumentType.TAG);
 		ofd.setMakeActive(true);
-				
+
 		NewTagDescriptor descriptor = new NewTagDescriptor();
-		descriptor.setPageSize( signalDocument.getPageSize() );
-		descriptor.setBlocksPerPage( signalDocument.getBlocksPerPage() );
+		descriptor.setPageSize(signalDocument.getPageSize());
+		descriptor.setBlocksPerPage(signalDocument.getBlocksPerPage());
 		boolean ok = newTagDialog.showDialog(descriptor, 0.5, 0.2);
-		if( !ok ) {
+		if (!ok) {
 			return;
 		}
-		
+
 		TagDocument tagDocument = null;
-				
+
 		try {
 			NewTagTypeMode mode = descriptor.getMode();
-			if( mode == NewTagTypeMode.EMPTY ) {
-				tagDocument = new TagDocument(descriptor.getPageSize(), descriptor.getBlocksPerPage());				
+			if (mode == NewTagTypeMode.EMPTY) {
+				tagDocument = new TagDocument(descriptor.getPageSize(), descriptor.getBlocksPerPage());
 			}
-			else if( mode == NewTagTypeMode.DEFAULT_SLEEP ) {
+			else if (mode == NewTagTypeMode.DEFAULT_SLEEP) {
 				tagDocument = TagDocument.getNewSleepDefaultDocument(descriptor.getPageSize(), descriptor.getBlocksPerPage());
 			}
-			else if( mode == NewTagTypeMode.FROM_FILE ) {
-				tagDocument = TagDocument.getStylesFromFileDocument(descriptor.getFile(), descriptor.getPageSize(), descriptor.getBlocksPerPage());		
+			else if (mode == NewTagTypeMode.FROM_FILE) {
+				tagDocument = TagDocument.getStylesFromFileDocument(descriptor.getFile(), descriptor.getPageSize(), descriptor.getBlocksPerPage());
 			}
 			else {
-				throw new SanityCheckException( "Unknown mode [" + mode + "]" );
+				throw new SanityCheckException("Unknown mode [" + mode + "]");
 			}
 		} catch (SignalMLException ex) {
 			logger.error("Failed to create document", ex);
 			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
 			return;
-		} catch(IOException ex) {
+		} catch (IOException ex) {
 			logger.error("Failed to create document - i/o exception", ex);
 			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-			return;			
+			return;
 		}
-		
+
 		ofd.getTagOptions().setParent(signalDocument);
 		ofd.getTagOptions().setExistingDocument(tagDocument);
 
 		try {
 			documentFlowIntegrator.openDocument(ofd);
-		} catch(SignalMLException ex) {
+		} catch (SignalMLException ex) {
 			logger.error("Failed to open document", ex);
 			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-			return;			
-		} catch(IOException ex) {
+			return;
+		} catch (IOException ex) {
 			logger.error("Failed to open document - i/o exception", ex);
 			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-			return;			
+			return;
 		}
-				
+
 	}
 
 	@Override
 	public void setEnabledAsNeeded() {
-		setEnabled( getActionFocusSelector().getActiveSignalDocument() != null ); 
+		setEnabled(getActionFocusSelector().getActiveSignalDocument() != null);
 	}
-	
+
 	public DocumentFlowIntegrator getDocumentFlowIntegrator() {
 		return documentFlowIntegrator;
 	}
@@ -129,5 +129,5 @@ public class NewTagAction extends AbstractFocusableSignalMLAction<SignalDocument
 	public void setNewTagDialog(NewTagDialog newTagDialog) {
 		this.newTagDialog = newTagDialog;
 	}
-			
+
 }

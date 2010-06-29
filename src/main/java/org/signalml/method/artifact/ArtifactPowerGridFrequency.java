@@ -1,5 +1,5 @@
 /* ArtifactPowerGridFrequency.java created 2007-11-02
- * 
+ *
  */
 
 package org.signalml.method.artifact;
@@ -8,16 +8,16 @@ import org.springframework.context.MessageSourceResolvable;
 
 /** ArtifactPowerGridFrequency
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public enum ArtifactPowerGridFrequency implements MessageSourceResolvable {
 
-	EUROPE( 50F ),
-	USA( 60F )
-	
+	EUROPE(50F),
+	USA(60F)
+
 	;
-	
+
 	private float frequency;
 
 	private ArtifactPowerGridFrequency(float frequency) {
@@ -30,14 +30,14 @@ public enum ArtifactPowerGridFrequency implements MessageSourceResolvable {
 
 	public static ArtifactPowerGridFrequency forFloat(float powerGridFrequency) {
 		ArtifactPowerGridFrequency[] all = values();
-		for( int i=0; i<all.length; i++ ) {
-			if( all[i].frequency == powerGridFrequency ) {
+		for (int i=0; i<all.length; i++) {
+			if (all[i].frequency == powerGridFrequency) {
 				return all[i];
 			}
 		}
 		return null;
-	}		
-	
+	}
+
 	@Override
 	public Object[] getArguments() {
 		return new Object[0];
@@ -52,5 +52,5 @@ public enum ArtifactPowerGridFrequency implements MessageSourceResolvable {
 	public String getDefaultMessage() {
 		return toString();
 	}
-	
+
 }

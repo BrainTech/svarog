@@ -1,5 +1,5 @@
 /* DelegatingFilterDialog.java created 2008-03-04
- * 
+ *
  */
 
 package org.signalml.app.view.book.filter;
@@ -41,185 +41,185 @@ import org.springframework.validation.Errors;
 
 /** DelegatingFilterDialog
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class DelegatingFilterDialog extends AbstractFilterDialog {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private ViewerFileChooser fileChooser;
-	
+
 	private DefaultListModel classPathListModel;
 	private JList classPathList;
 	private JScrollPane classPathScrollPane;
-	
+
 	private JTextField fqClassNameTextField;
-	
+
 	private QuickFileAction quickFileAction;
 	private AddDirectoryEntryAction addDirectoryEntryAction;
 	private AddJarEntryAction addJarEntryAction;
 	private RemoveEntryAction removeEntryAction;
-	
+
 	private JButton quickFileButton;
 	private JButton addDirectoryEntryButton;
 	private JButton addJarEntryButton;
 	private JButton removeEntryButton;
-		
+
 	public DelegatingFilterDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
 		super(messageSource, w, isModal);
 	}
 
 	@Override
 	protected void initialize() {
-		
-		setTitle( messageSource.getMessage("delegatingFilter.title") );
-		setIconImage( IconUtils.loadClassPathImage("org/signalml/app/icon/filter.png"));
-		
+
+		setTitle(messageSource.getMessage("delegatingFilter.title"));
+		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/filter.png"));
+
 		quickFileAction = new QuickFileAction();
 		addDirectoryEntryAction = new AddDirectoryEntryAction();
 		addJarEntryAction = new AddJarEntryAction();
 		removeEntryAction = new RemoveEntryAction();
-		
+
 		super.initialize();
 		setResizable(false);
-				
+
 	}
-			
+
 	@Override
 	public JComponent createInterface() {
-								
-		JPanel classPathPanel = new JPanel( new BorderLayout(5,5) );
-		
-		classPathPanel.setBorder( new CompoundBorder(
-				new TitledBorder( messageSource.getMessage("delegatingFilter.classPathTitle") ),
-				new EmptyBorder( 3,3,3,3 )					
-		) );
-		
-		JPanel rightPanel = new JPanel( new BorderLayout() );
-		
-		JPanel buttonPanel = new JPanel( new GridLayout(3,1,3,3) );
-		
-		SwingUtils.makeButtonsSameSize( new JButton[] { getQuickFileButton(), getAddDirectoryEntryButton(), getAddJarEntryButton(), getRemoveEntryButton() } );
-		
-		buttonPanel.add( getAddDirectoryEntryButton() );
-		buttonPanel.add( getAddJarEntryButton() );
-		buttonPanel.add( getRemoveEntryButton() );
-		
-		rightPanel.add( buttonPanel, BorderLayout.NORTH );
-		rightPanel.add( Box.createVerticalGlue(), BorderLayout.CENTER );
-		
-		classPathPanel.add( getClassPathScrollPane(), BorderLayout.CENTER );
-		classPathPanel.add( rightPanel, BorderLayout.EAST );
 
-		JPanel fqClassNamePanel = new JPanel( new BorderLayout(5,5) );
-		fqClassNamePanel.setBorder( new CompoundBorder(
-				new TitledBorder( messageSource.getMessage("delegatingFilter.fqClassNameTitle") ),
-				new EmptyBorder( 3,3,3,3 )					
-		) );
-		
-		fqClassNamePanel.add( getFqClassNameTextField(), BorderLayout.CENTER );
-		fqClassNamePanel.add( getQuickFileButton(), BorderLayout.EAST );
-		
-		JPanel interfacePanel = new JPanel( new BorderLayout() );
-		
-		interfacePanel.add( getNamePanel(), BorderLayout.NORTH );
-		interfacePanel.add( classPathPanel, BorderLayout.CENTER );
-		interfacePanel.add( fqClassNamePanel, BorderLayout.SOUTH );
-		
+		JPanel classPathPanel = new JPanel(new BorderLayout(5,5));
+
+		classPathPanel.setBorder(new CompoundBorder(
+		                                 new TitledBorder(messageSource.getMessage("delegatingFilter.classPathTitle")),
+		                                 new EmptyBorder(3,3,3,3)
+		                         ));
+
+		JPanel rightPanel = new JPanel(new BorderLayout());
+
+		JPanel buttonPanel = new JPanel(new GridLayout(3,1,3,3));
+
+		SwingUtils.makeButtonsSameSize(new JButton[] { getQuickFileButton(), getAddDirectoryEntryButton(), getAddJarEntryButton(), getRemoveEntryButton() });
+
+		buttonPanel.add(getAddDirectoryEntryButton());
+		buttonPanel.add(getAddJarEntryButton());
+		buttonPanel.add(getRemoveEntryButton());
+
+		rightPanel.add(buttonPanel, BorderLayout.NORTH);
+		rightPanel.add(Box.createVerticalGlue(), BorderLayout.CENTER);
+
+		classPathPanel.add(getClassPathScrollPane(), BorderLayout.CENTER);
+		classPathPanel.add(rightPanel, BorderLayout.EAST);
+
+		JPanel fqClassNamePanel = new JPanel(new BorderLayout(5,5));
+		fqClassNamePanel.setBorder(new CompoundBorder(
+		                                   new TitledBorder(messageSource.getMessage("delegatingFilter.fqClassNameTitle")),
+		                                   new EmptyBorder(3,3,3,3)
+		                           ));
+
+		fqClassNamePanel.add(getFqClassNameTextField(), BorderLayout.CENTER);
+		fqClassNamePanel.add(getQuickFileButton(), BorderLayout.EAST);
+
+		JPanel interfacePanel = new JPanel(new BorderLayout());
+
+		interfacePanel.add(getNamePanel(), BorderLayout.NORTH);
+		interfacePanel.add(classPathPanel, BorderLayout.CENTER);
+		interfacePanel.add(fqClassNamePanel, BorderLayout.SOUTH);
+
 		return interfacePanel;
-		
+
 	}
-	
+
 	public DefaultListModel getClassPathListModel() {
-		if( classPathListModel == null ) {
+		if (classPathListModel == null) {
 			classPathListModel = new DefaultListModel();
 		}
 		return classPathListModel;
 	}
-		
+
 	public JList getClassPathList() {
-		if( classPathList == null ) {
-			classPathList = new JList( getClassPathListModel() );
-			classPathList.setCellRenderer( new FileListCellRenderer() );
-			classPathList.setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
-			classPathList.setFont( classPathList.getFont().deriveFont(Font.PLAIN, 12) );
-			
-			classPathList.getSelectionModel().addListSelectionListener( new ListSelectionListener() {
+		if (classPathList == null) {
+			classPathList = new JList(getClassPathListModel());
+			classPathList.setCellRenderer(new FileListCellRenderer());
+			classPathList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			classPathList.setFont(classPathList.getFont().deriveFont(Font.PLAIN, 12));
+
+			classPathList.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
 				@Override
 				public void valueChanged(ListSelectionEvent e) {
 
-					removeEntryAction.setEnabled( classPathList.getSelectedIndex() >= 0 );
-					
+					removeEntryAction.setEnabled(classPathList.getSelectedIndex() >= 0);
+
 				}
-				
+
 			});
 		}
 		return classPathList;
 	}
-	
+
 	public JScrollPane getClassPathScrollPane() {
-		if( classPathScrollPane == null ) {
-			classPathScrollPane = new JScrollPane( getClassPathList() );
-			classPathScrollPane.setPreferredSize( new Dimension(400,300 ) );
+		if (classPathScrollPane == null) {
+			classPathScrollPane = new JScrollPane(getClassPathList());
+			classPathScrollPane.setPreferredSize(new Dimension(400,300));
 		}
 		return classPathScrollPane;
 	}
-	
+
 	public JTextField getFqClassNameTextField() {
-		if( fqClassNameTextField == null ) {
+		if (fqClassNameTextField == null) {
 			fqClassNameTextField = new JTextField();
-			fqClassNameTextField.setPreferredSize( new Dimension(400,25) );
+			fqClassNameTextField.setPreferredSize(new Dimension(400,25));
 		}
 		return fqClassNameTextField;
 	}
-	
+
 	public JButton getQuickFileButton() {
-		if( quickFileButton == null ) {
-			quickFileButton = new JButton( quickFileAction );
+		if (quickFileButton == null) {
+			quickFileButton = new JButton(quickFileAction);
 		}
 		return quickFileButton;
 	}
-	
+
 	public JButton getAddDirectoryEntryButton() {
-		if( addDirectoryEntryButton == null ) {
-			addDirectoryEntryButton = new JButton( addDirectoryEntryAction );
+		if (addDirectoryEntryButton == null) {
+			addDirectoryEntryButton = new JButton(addDirectoryEntryAction);
 		}
 		return addDirectoryEntryButton;
 	}
-	
+
 	public JButton getAddJarEntryButton() {
-		if( addJarEntryButton == null ) {
-			addJarEntryButton = new JButton( addJarEntryAction );
+		if (addJarEntryButton == null) {
+			addJarEntryButton = new JButton(addJarEntryAction);
 		}
 		return addJarEntryButton;
 	}
-	
+
 	public JButton getRemoveEntryButton() {
-		if( removeEntryButton == null ) {
-			removeEntryButton = new JButton( removeEntryAction );
+		if (removeEntryButton == null) {
+			removeEntryButton = new JButton(removeEntryAction);
 		}
 		return removeEntryButton;
 	}
-	
+
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 
 		DelegatingAtomFilter filter = (DelegatingAtomFilter) model;
-		
+
 		super.fillDialogFromFilter(filter);
-		
+
 		ArrayList<File> classPath = filter.getClassPath();
 		DefaultListModel listModel = getClassPathListModel();
-		
+
 		listModel.clear();
-		for( File file : classPath ) {
-			listModel.addElement( file );
+		for (File file : classPath) {
+			listModel.addElement(file);
 		}
-		
-		getFqClassNameTextField().setText( filter.getFqClassName() );
-		
+
+		getFqClassNameTextField().setText(filter.getFqClassName());
+
 	}
 
 	@Override
@@ -228,60 +228,60 @@ public class DelegatingFilterDialog extends AbstractFilterDialog {
 		DelegatingAtomFilter filter = (DelegatingAtomFilter) model;
 
 		super.fillFilterFromDialog(filter);
-		
+
 		fillFilterFromDialog(filter);
-		
+
 		filter.initialize();
-				
+
 	}
-	
+
 	protected void fillFilterFromDialog(DelegatingAtomFilter filter) {
 
 		DefaultListModel listModel = getClassPathListModel();
 		int cnt = listModel.size();
-		
+
 		ArrayList<File> classPath = new ArrayList<File>(cnt);
-		for( int i=0; i<cnt; i++ ) {
-			classPath.add( (File) listModel.getElementAt(i) );
+		for (int i=0; i<cnt; i++) {
+			classPath.add((File) listModel.getElementAt(i));
 		}
-		
+
 		filter.setClassPath(classPath);
-		filter.setFqClassName( getFqClassNameTextField().getText() );
-		
+		filter.setFqClassName(getFqClassNameTextField().getText());
+
 	}
-	
+
 	@Override
 	public void validateDialog(Object model, Errors errors) throws SignalMLException {
-		
+
 		super.validateDialog(model, errors);
-				
-		if( getClassPathListModel().size() == 0 ) {
+
+		if (getClassPathListModel().size() == 0) {
 			errors.rejectValue("classPath", "error.delegatingAtomFilter.noClassPath");
 		}
-		
+
 		String fqClassName = getFqClassNameTextField().getText();
-		if( fqClassName == null || fqClassName.isEmpty() ) {
+		if (fqClassName == null || fqClassName.isEmpty()) {
 			errors.rejectValue("fqClassName", "error.delegatingAtomFilter.noFqClassName");
 		} else {
 			fqClassName.trim();
-			getFqClassNameTextField().setText( fqClassName );
-			if( !Util.validateFqClassName( fqClassName ) ) {
+			getFqClassNameTextField().setText(fqClassName);
+			if (!Util.validateFqClassName(fqClassName)) {
 				errors.rejectValue("fqClassName", "error.delegatingAtomFilter.badFqClassName");
 			}
 		}
-		
-		if( !errors.hasErrors() ) {
+
+		if (!errors.hasErrors()) {
 			DelegatingAtomFilter filter = new DelegatingAtomFilter();
 			fillFilterFromDialog(filter);
-		
+
 			try {
 				filter.initialize();
-			} catch( Throwable t ) {
-				logger.error( "Filter failed to initialize", t );
+			} catch (Throwable t) {
+				logger.error("Filter failed to initialize", t);
 				errors.reject("error.delegatingAtomFilter.failedToInitialize");
 			}
 		}
-		
+
 	}
 
 	@Override
@@ -296,124 +296,124 @@ public class DelegatingFilterDialog extends AbstractFilterDialog {
 	public void setFileChooser(ViewerFileChooser fileChooser) {
 		this.fileChooser = fileChooser;
 	}
-	
+
 	protected class QuickFileAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 
 		public QuickFileAction() {
 			super(messageSource.getMessage("delegatingFilter.quickFile"));
-			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/find.png") );
+			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/find.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION, messageSource.getMessage("delegatingFilter.quickFileToolTip"));
 		}
-		
-		public void actionPerformed(ActionEvent ev) {			
+
+		public void actionPerformed(ActionEvent ev) {
 
 			File file = fileChooser.chooseCodeFile(DelegatingFilterDialog.this.getRootPane());
-			if( file == null ) {
+			if (file == null) {
 				return;
 			}
-			
+
 			String name = file.getName();
 			int lastDot = name.lastIndexOf('.');
-			if( lastDot >= 0 ) {
+			if (lastDot >= 0) {
 				name = name.substring(0, lastDot);
 			}
-			getFqClassNameTextField().setText( name );
-			
+			getFqClassNameTextField().setText(name);
+
 			DefaultListModel listModel = getClassPathListModel();
 			listModel.clear();
 			File parent = file.getParentFile();
-			if( parent != null ) {
+			if (parent != null) {
 				listModel.addElement(parent);
-			}			
-			
+			}
+
 		}
-	
+
 	}
-	
+
 	protected class AddDirectoryEntryAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 
 		public AddDirectoryEntryAction() {
 			super(messageSource.getMessage("delegatingFilter.addDirectoryEntry"));
-			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/adddirectoryentry.png") );
+			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/adddirectoryentry.png"));
 		}
-		
-		public void actionPerformed(ActionEvent ev) {			
+
+		public void actionPerformed(ActionEvent ev) {
 
 			File[] files = fileChooser.chooseClassPathDirectories(DelegatingFilterDialog.this.getRootPane());
-			if( files == null ) {
+			if (files == null) {
 				return;
 			}
-			
+
 			DefaultListModel listModel = getClassPathListModel();
-			for( File file : files ) {
-				listModel.addElement( file );
+			for (File file : files) {
+				listModel.addElement(file);
 			}
-						
+
 		}
-	
+
 	}
-	
+
 	protected class AddJarEntryAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 
 		public AddJarEntryAction() {
 			super(messageSource.getMessage("delegatingFilter.addJarEntry"));
-			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/addjarentry.png") );
+			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/addjarentry.png"));
 		}
-		
-		public void actionPerformed(ActionEvent ev) {			
+
+		public void actionPerformed(ActionEvent ev) {
 
 			File[] files = fileChooser.chooseJarFiles(DelegatingFilterDialog.this.getRootPane());
-			if( files == null ) {
+			if (files == null) {
 				return;
 			}
-			
+
 			DefaultListModel listModel = getClassPathListModel();
-			for( File file : files ) {
-				listModel.addElement( file );
+			for (File file : files) {
+				listModel.addElement(file);
 			}
-			
+
 		}
-	
+
 	}
-	
+
 	protected class RemoveEntryAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 
 		public RemoveEntryAction() {
 			super(messageSource.getMessage("delegatingFilter.removeEntry"));
-			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/removeentry.png") );
+			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/removeentry.png"));
 			setEnabled(false);
 		}
-		
-		public void actionPerformed(ActionEvent ev) {			
+
+		public void actionPerformed(ActionEvent ev) {
 
 			JList list = getClassPathList();
 			int selectedIndex = list.getSelectedIndex();
-			
-			if( selectedIndex < 0 ) {
+
+			if (selectedIndex < 0) {
 				return;
 			}
 
 			DefaultListModel listModel = getClassPathListModel();
 			listModel.remove(selectedIndex);
-			
+
 			int size = listModel.size();
-			if( size > 0 ) {
-				if( selectedIndex >= size ) {
+			if (size > 0) {
+				if (selectedIndex >= size) {
 					selectedIndex--;
 				}
 				list.setSelectedIndex(selectedIndex);
 			}
-			
+
 		}
-	
+
 	}
-		
+
 }

@@ -1,5 +1,5 @@
 /* ArtifactToolWorkingDirectoryConfigPanel.java created 2008-02-08
- * 
+ *
  */
 package org.signalml.app.method.mp5;
 
@@ -35,55 +35,55 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** ArtifactToolWorkingDirectoryConfigPanel
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class MP5ToolExecutorConfigPanel extends JPanel {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private MessageSourceAccessor messageSource;
 
 	private MP5ExecutorManager executorManager;
-	
+
 	private MP5LocalExecutorDialog localExecutorDialog;
 	private MP5RemoteExecutorDialog remoteExecutorDialog;
-	
+
 	private AddLocalExecutorAction addLocalExecutorAction;
 	private AddRemoteExecutorAction addRemoteExecutorAction;
 	private ConfigureExecutorAction configureExecutorAction;
 	private RemoveExecutorAction removeExecutorAction;
 	private MakeDefaultAction makeDefaultAction;
-	
+
 	private JButton addLocalExecutorButton;
 	private JButton addRemoteExecutorButton;
 	private JButton configureExecutorButton;
 	private JButton removeExecutorButton;
 	private JButton makeDefaultButton;
-	
+
 	private MP5ExecutorListCellRenderer executorListCellRenderer;
 	private JList executorList;
 	private JScrollPane executorScrollPane;
-		
-	public MP5ToolExecutorConfigPanel( MessageSourceAccessor messageSource, MP5ExecutorManager executorManager ) {
+
+	public MP5ToolExecutorConfigPanel(MessageSourceAccessor messageSource, MP5ExecutorManager executorManager) {
 		super();
 		this.messageSource = messageSource;
 		this.executorManager = executorManager;
-		
-		getExecutorListCellRenderer().setDefaultExecutor( executorManager.getDefaultExecutor() );
-		
-		executorManager.addMP5ExecutorManagerListener( new MP5ExecutorManagerAdapter() {
-			
+
+		getExecutorListCellRenderer().setDefaultExecutor(executorManager.getDefaultExecutor());
+
+		executorManager.addMP5ExecutorManagerListener(new MP5ExecutorManagerAdapter() {
+
 			@Override
 			public void defaultExecutorChanged(MP5ExecutorManagerEvent ev) {
 				getExecutorListCellRenderer().setDefaultExecutor(MP5ToolExecutorConfigPanel.this.executorManager.getDefaultExecutor());
 				getExecutorList().repaint();
 			}
-			
+
 		});
-		
+
 		initialize();
-			
+
 	}
 
 	private void initialize() {
@@ -93,130 +93,130 @@ public class MP5ToolExecutorConfigPanel extends JPanel {
 		configureExecutorAction = new ConfigureExecutorAction();
 		removeExecutorAction = new RemoveExecutorAction();
 		makeDefaultAction = new MakeDefaultAction();
-		
-		setLayout( new BorderLayout(3,3) );
-		
+
+		setLayout(new BorderLayout(3,3));
+
 		CompoundBorder border = new CompoundBorder(
-			new TitledBorder( messageSource.getMessage("mp5Method.config.executorTitle") ),
-			new EmptyBorder(3,3,3,3)
+		        new TitledBorder(messageSource.getMessage("mp5Method.config.executorTitle")),
+		        new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);
-		
+
 		JPanel buttonPanel = new JPanel();
-		buttonPanel.setLayout( new BoxLayout( buttonPanel, BoxLayout.Y_AXIS ) );
-		
-		SwingUtils.makeButtonsSameSize( new JButton[] { getMakeDefaultButton(), getConfigureExecutorButton(), getRemoveExecutorButton(), getAddLocalExecutorButton(), getAddRemoteExecutorButton() } );
-		
-		buttonPanel.add( getMakeDefaultButton() );
-		buttonPanel.add( Box.createVerticalStrut(3) );
-		buttonPanel.add( getConfigureExecutorButton() );
-		buttonPanel.add( Box.createVerticalStrut(3) );
-		buttonPanel.add( getRemoveExecutorButton() );
-		buttonPanel.add( Box.createVerticalStrut(10) );
-		buttonPanel.add( Box.createVerticalGlue() );
-		buttonPanel.add( getAddLocalExecutorButton() );
-		buttonPanel.add( Box.createVerticalStrut(3) );
-		buttonPanel.add( getAddRemoteExecutorButton() );
-		
-		add( getExecutorScrollPane(), BorderLayout.CENTER );
-		add( buttonPanel, BorderLayout.EAST );
-						
+		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+
+		SwingUtils.makeButtonsSameSize(new JButton[] { getMakeDefaultButton(), getConfigureExecutorButton(), getRemoveExecutorButton(), getAddLocalExecutorButton(), getAddRemoteExecutorButton() });
+
+		buttonPanel.add(getMakeDefaultButton());
+		buttonPanel.add(Box.createVerticalStrut(3));
+		buttonPanel.add(getConfigureExecutorButton());
+		buttonPanel.add(Box.createVerticalStrut(3));
+		buttonPanel.add(getRemoveExecutorButton());
+		buttonPanel.add(Box.createVerticalStrut(10));
+		buttonPanel.add(Box.createVerticalGlue());
+		buttonPanel.add(getAddLocalExecutorButton());
+		buttonPanel.add(Box.createVerticalStrut(3));
+		buttonPanel.add(getAddRemoteExecutorButton());
+
+		add(getExecutorScrollPane(), BorderLayout.CENTER);
+		add(buttonPanel, BorderLayout.EAST);
+
 	}
-	
+
 	public MP5ExecutorListCellRenderer getExecutorListCellRenderer() {
-		if( executorListCellRenderer == null ) {
+		if (executorListCellRenderer == null) {
 			executorListCellRenderer = new MP5ExecutorListCellRenderer(messageSource);
 		}
 		return executorListCellRenderer;
 	}
-	
+
 	public JList getExecutorList() {
-		if( executorList == null ) {
-			executorList = new JList( new MP5ExecutorListModel( executorManager ) );
+		if (executorList == null) {
+			executorList = new JList(new MP5ExecutorListModel(executorManager));
 			executorList.setCellRenderer(getExecutorListCellRenderer());
-			executorList.setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
-			
-			executorList.addListSelectionListener( new ListSelectionListener() {
+			executorList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+			executorList.addListSelectionListener(new ListSelectionListener() {
 
 				@Override
 				public void valueChanged(ListSelectionEvent e) {
 
 					boolean selected = !executorList.isSelectionEmpty();
-					
-					makeDefaultAction.setEnabled( selected );
-					configureExecutorAction.setEnabled( selected );
-					removeExecutorAction.setEnabled( selected );
-					
+
+					makeDefaultAction.setEnabled(selected);
+					configureExecutorAction.setEnabled(selected);
+					removeExecutorAction.setEnabled(selected);
+
 				}
-				
+
 			});
-			
-			executorList.addMouseListener( new MouseAdapter() {
-				
+
+			executorList.addMouseListener(new MouseAdapter() {
+
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					if( SwingUtilities.isLeftMouseButton(e) && (e.getClickCount() % 2) == 0 ) {
+					if (SwingUtilities.isLeftMouseButton(e) && (e.getClickCount() % 2) == 0) {
 
 						int index = executorList.getSelectedIndex();
-						if( index < 0 ) {
+						if (index < 0) {
 							return;
 						}
-						
-						configureExecutorAction.actionPerformed( new ActionEvent(this, 0, "configure") );
-						
+
+						configureExecutorAction.actionPerformed(new ActionEvent(this, 0, "configure"));
+
 					}
 				}
-						
+
 			});
-			
+
 		}
 		return executorList;
 	}
-	
+
 	public JScrollPane getExecutorScrollPane() {
-		if( executorScrollPane == null ) {
+		if (executorScrollPane == null) {
 			executorScrollPane = new JScrollPane(getExecutorList());
-			executorScrollPane.setPreferredSize( new Dimension(300,200) );
+			executorScrollPane.setPreferredSize(new Dimension(300,200));
 		}
 		return executorScrollPane;
 	}
-	
+
 	public JButton getAddLocalExecutorButton() {
-		if( addLocalExecutorButton == null ) {
-			addLocalExecutorButton = new JButton( addLocalExecutorAction );
+		if (addLocalExecutorButton == null) {
+			addLocalExecutorButton = new JButton(addLocalExecutorAction);
 		}
 		return addLocalExecutorButton;
 	}
 
 	public JButton getConfigureExecutorButton() {
-		if( configureExecutorButton == null ) {
-			configureExecutorButton = new JButton( configureExecutorAction );
+		if (configureExecutorButton == null) {
+			configureExecutorButton = new JButton(configureExecutorAction);
 		}
 		return configureExecutorButton;
 	}
-	
+
 	public JButton getAddRemoteExecutorButton() {
-		if( addRemoteExecutorButton == null ) {
-			addRemoteExecutorButton = new JButton( addRemoteExecutorAction );
+		if (addRemoteExecutorButton == null) {
+			addRemoteExecutorButton = new JButton(addRemoteExecutorAction);
 		}
 		return addRemoteExecutorButton;
 	}
-	
+
 	public JButton getRemoveExecutorButton() {
-		if( removeExecutorButton == null ) {
-			removeExecutorButton = new JButton( removeExecutorAction );
+		if (removeExecutorButton == null) {
+			removeExecutorButton = new JButton(removeExecutorAction);
 		}
 		return removeExecutorButton;
 	}
-	
-	
+
+
 	public JButton getMakeDefaultButton() {
-		if( makeDefaultButton == null ) {
-			makeDefaultButton = new JButton( makeDefaultAction );
+		if (makeDefaultButton == null) {
+			makeDefaultButton = new JButton(makeDefaultAction);
 		}
 		return makeDefaultButton;
 	}
-		
+
 	public MP5LocalExecutorDialog getLocalExecutorDialog() {
 		return localExecutorDialog;
 	}
@@ -224,7 +224,7 @@ public class MP5ToolExecutorConfigPanel extends JPanel {
 	public void setLocalExecutorDialog(MP5LocalExecutorDialog localExecutorDialog) {
 		this.localExecutorDialog = localExecutorDialog;
 	}
-		
+
 	public MP5RemoteExecutorDialog getRemoteExecutorDialog() {
 		return remoteExecutorDialog;
 	}
@@ -232,31 +232,31 @@ public class MP5ToolExecutorConfigPanel extends JPanel {
 	public void setRemoteExecutorDialog(MP5RemoteExecutorDialog remoteExecutorDialog) {
 		this.remoteExecutorDialog = remoteExecutorDialog;
 	}
-	
+
 	protected class AddLocalExecutorAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 
 		public AddLocalExecutorAction() {
 			super(messageSource.getMessage("mp5Method.config.addLocalExecutor"));
-			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/addlocal.png") );
+			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/addlocal.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("mp5Method.config.addLocalExecutorToolTip"));
 		}
-		
-		public void actionPerformed(ActionEvent ev) {			
-		
+
+		public void actionPerformed(ActionEvent ev) {
+
 			MP5LocalProcessExecutor executor = new MP5LocalProcessExecutor();
-			
+
 			boolean ok = localExecutorDialog.showDialog(executor, true);
-			if( !ok ) {
+			if (!ok) {
 				return;
 			}
-			
+
 			executorManager.addExecutor(executor);
-			
+
 		}
-		
-	}	
+
+	}
 
 	protected class AddRemoteExecutorAction extends AbstractAction {
 
@@ -264,24 +264,24 @@ public class MP5ToolExecutorConfigPanel extends JPanel {
 
 		public AddRemoteExecutorAction() {
 			super(messageSource.getMessage("mp5Method.config.addRemoteExecutor"));
-			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/addremote.png") );
+			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/addremote.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("mp5Method.config.addRemoteExecutorToolTip"));
 		}
-		
-		public void actionPerformed(ActionEvent ev) {			
-			
+
+		public void actionPerformed(ActionEvent ev) {
+
 			MP5RemotePasswordExecutor executor = new MP5RemotePasswordExecutor();
-			
+
 			boolean ok = remoteExecutorDialog.showDialog(executor, true);
-			if( !ok ) {
+			if (!ok) {
 				return;
 			}
-			
-			executorManager.addExecutor(executor);			
-			
+
+			executorManager.addExecutor(executor);
+
 		}
-		
-	}	
+
+	}
 
 	protected class RemoveExecutorAction extends AbstractAction {
 
@@ -289,23 +289,23 @@ public class MP5ToolExecutorConfigPanel extends JPanel {
 
 		public RemoveExecutorAction() {
 			super(messageSource.getMessage("mp5Method.config.removeExecutor"));
-			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/remove.png") );
+			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/remove.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("mp5Method.config.removeExecutorToolTip"));
 			setEnabled(false);
 		}
-		
-		public void actionPerformed(ActionEvent ev) {			
-			
+
+		public void actionPerformed(ActionEvent ev) {
+
 			int index = getExecutorList().getSelectedIndex();
-			if( index < 0 ) {
+			if (index < 0) {
 				return;
 			}
-			
+
 			executorManager.removeExecutor(index);
-			
+
 		}
-		
-	}	
+
+	}
 
 	protected class ConfigureExecutorAction extends AbstractAction {
 
@@ -313,71 +313,71 @@ public class MP5ToolExecutorConfigPanel extends JPanel {
 
 		public ConfigureExecutorAction() {
 			super(messageSource.getMessage("mp5Method.config.configureExecutor"));
-			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/configure.png") );
+			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/configure.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("mp5Method.config.configureExecutorToolTip"));
 			setEnabled(false);
 		}
-		
-		public void actionPerformed(ActionEvent ev) {			
-			
+
+		public void actionPerformed(ActionEvent ev) {
+
 			int index = getExecutorList().getSelectedIndex();
-			if( index < 0 ) {
+			if (index < 0) {
 				return;
 			}
 
 			MP5Executor executor = executorManager.getExecutorAt(index);
-			if( executor == null ) {
+			if (executor == null) {
 				return;
 			}
-			
+
 			boolean ok;
-			if( executor instanceof MP5LocalProcessExecutor ) {
+			if (executor instanceof MP5LocalProcessExecutor) {
 				ok = localExecutorDialog.showDialog(executor, true);
-			} 
-			else if( executor instanceof MP5RemoteExecutor ) {
+			}
+			else if (executor instanceof MP5RemoteExecutor) {
 				ok = remoteExecutorDialog.showDialog(executor, true);
 			}
 			else {
-				throw new SanityCheckException( "Unsupported executor type [" + executor.getClass() + "]" );
+				throw new SanityCheckException("Unsupported executor type [" + executor.getClass() + "]");
 			}
-			
-			if( !ok ) {
+
+			if (!ok) {
 				return;
 			}
-			
+
 			executorManager.setExecutorAt(index, executor);
-			
+
 		}
-		
-	}	
-	
+
+	}
+
 	protected class MakeDefaultAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 
 		public MakeDefaultAction() {
 			super(messageSource.getMessage("mp5Method.config.makeDefault"));
-			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/makedefault.png") );
+			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/makedefault.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("mp5Method.config.makeDefaultToolTip"));
 			setEnabled(false);
 		}
-		
-		public void actionPerformed(ActionEvent ev) {			
-			
+
+		public void actionPerformed(ActionEvent ev) {
+
 			int index = getExecutorList().getSelectedIndex();
-			if( index < 0 ) {
+			if (index < 0) {
 				return;
 			}
 
 			MP5Executor executor = executorManager.getExecutorAt(index);
-			if( executor == null ) {
+			if (executor == null) {
 				return;
 			}
 
 			executorManager.setDefaultExecutor(executor);
-			
+
 		}
-		
-	}	
-	
+
+	}
+
 }

@@ -1,5 +1,5 @@
 /* SelectionSegmentedSampleSourceDescriptor.java created 2008-02-15
- * 
+ *
  */
 
 package org.signalml.domain.signal.space;
@@ -11,7 +11,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /** SelectionSegmentedSampleSourceDescriptor
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 @XStreamAlias("selectionsegsource")
@@ -22,15 +22,15 @@ public class SelectionSegmentedSampleSourceDescriptor implements SegmentedSample
 	private int firstSample;
 	private int segmentLength;
 	private int segmentCount;
-	
+
 	private int channelCount;
 	private int[] channelIndices;
-	
+
 	private int unusableSegmentCount;
 
 	public SelectionSegmentedSampleSourceDescriptor() {
 	}
-	
+
 	@Override
 	public MultichannelSegmentedSampleSource createSegmentedSource(MultichannelSampleSource source) {
 		return new SelectionSegmentedSampleSource(source,this);
@@ -82,6 +82,6 @@ public class SelectionSegmentedSampleSourceDescriptor implements SegmentedSample
 
 	public void setUnusableSegmentCount(int unusableSegmentCount) {
 		this.unusableSegmentCount = unusableSegmentCount;
-	}	
+	}
 
 }

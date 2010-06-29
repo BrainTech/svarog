@@ -1,5 +1,5 @@
 /* ArtifactResultTargetDescriptor.java created 2008-02-21
- * 
+ *
  */
 
 package org.signalml.app.method.artifact;
@@ -11,25 +11,25 @@ import org.signalml.app.document.TagDocument;
 
 /** ArtifactResultTargetDescriptor
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ArtifactResultTargetDescriptor {
 
 	private boolean signalAvailable;
-	
+
 	private TagDocument primaryTag;
 
 	private boolean primaryOpenInWindow;
 	private boolean primarySaveToFile;
-	
+
 	private File primaryTagFile;
-	
+
 	private ArrayList<File> additionalTags;
 	private ArrayList<File> chosenAdditionalTags;
 	private boolean additionalOpenInWindow;
 	private boolean additionalSaveToFile;
-		
+
 	public boolean isSignalAvailable() {
 		return signalAvailable;
 	}
@@ -40,8 +40,8 @@ public class ArtifactResultTargetDescriptor {
 
 	public TagDocument getPrimaryTag() {
 		return primaryTag;
-	}	
-	
+	}
+
 	public void setPrimaryTag(TagDocument primaryTag) {
 		this.primaryTag = primaryTag;
 	}
@@ -101,5 +101,5 @@ public class ArtifactResultTargetDescriptor {
 	public void setAdditionalSaveToFile(boolean additionalSaveToFile) {
 		this.additionalSaveToFile = additionalSaveToFile;
 	}
-	
+
 }

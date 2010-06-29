@@ -1,5 +1,5 @@
 /* AbstractViewerTree.java created 2007-10-15
- * 
+ *
  */
 
 package org.signalml.app.view;
@@ -12,7 +12,7 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** AbstractViewerTree
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public abstract class AbstractViewerTree extends JTree {
@@ -33,16 +33,16 @@ public abstract class AbstractViewerTree extends JTree {
 
 	@Override
 	public String convertValueToText(Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
-		if( messageSource != null ) {
-			if( value instanceof MessageSourceResolvable ) {
+		if (messageSource != null) {
+			if (value instanceof MessageSourceResolvable) {
 				return messageSource.getMessage((MessageSourceResolvable) value);
 			}
 			String s = value.toString();
-			if( s != null && s.length() > 0 ) {
+			if (s != null && s.length() > 0) {
 				return messageSource.getMessage(s);
 			}
 		}
 		return super.convertValueToText(value, selected, expanded, leaf, row, hasFocus);
 	}
-				
+
 }

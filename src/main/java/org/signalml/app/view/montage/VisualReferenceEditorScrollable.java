@@ -1,5 +1,5 @@
 /* VisualReferenceEditorScrollable.java created 2007-12-02
- * 
+ *
  */
 
 package org.signalml.app.view.montage;
@@ -14,15 +14,15 @@ import javax.swing.Scrollable;
 
 /** VisualReferenceEditorScrollable
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class VisualReferenceEditorScrollable extends JPanel implements Scrollable {
 
 	// XXX currently not used
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private VisualReferenceEditor editor;
 
 	public VisualReferenceEditorScrollable(VisualReferenceEditor editor) {
@@ -40,14 +40,14 @@ public class VisualReferenceEditorScrollable extends JPanel implements Scrollabl
 	public Dimension getPreferredSize() {
 		Dimension editorSize = editor.getPreferredSize();
 		JViewport viewport = editor.getViewport();
-		if( viewport == null ) {
+		if (viewport == null) {
 			return super.getPreferredSize();
 		}
 		Dimension viewportSize = viewport.getExtentSize();
-		Dimension size = new Dimension( Math.max( editorSize.width, viewportSize.width ), Math.max( editorSize.height, viewportSize.height ) );
+		Dimension size = new Dimension(Math.max(editorSize.width, viewportSize.width), Math.max(editorSize.height, viewportSize.height));
 		return size;
 	}
-	
+
 	@Override
 	public Dimension getPreferredScrollableViewportSize() {
 		return getPreferredSize();
@@ -71,6 +71,6 @@ public class VisualReferenceEditorScrollable extends JPanel implements Scrollabl
 	@Override
 	public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction) {
 		return 10;
-	}	
+	}
 
 }

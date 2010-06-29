@@ -1,5 +1,5 @@
 /* NewTagPanel.java created 2007-10-14
- * 
+ *
  */
 package org.signalml.app.view.element;
 
@@ -21,21 +21,21 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** NewTagPanel
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class NewTagPanel extends JPanel {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private MessageSourceAccessor messageSource;
 	private JRadioButton emptyRadio = null;
 	private JRadioButton defaultSleepRadio = null;
 	private JRadioButton fromFileRadio = null;
-	
+
 	private ButtonGroup radioGroup;
 	private EmbeddedFileChooser fileChooser = null;
-	
+
 	/**
 	 * This is the default constructor
 	 */
@@ -47,23 +47,23 @@ public class NewTagPanel extends JPanel {
 
 	/**
 	 * This method initializes this
-	 * 
+	 *
 	 * @return void
 	 */
 	private void initialize() {
-		
+
 		setBorder(BorderFactory.createTitledBorder(messageSource.getMessage("newTag.title")));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-				
+
 		radioGroup = new ButtonGroup();
-		
+
 		add(getEmptyRadio());
 		add(getDefaultSleepRadio());
 		add(getFromFileRadio());
-		
+
 		getDefaultSleepRadio().setSelected(true);
-		
-		getFileChooser().setVisible(false);					
+
+		getFileChooser().setVisible(false);
 		add(getFileChooser());
 
 	}
@@ -77,7 +77,7 @@ public class NewTagPanel extends JPanel {
 		}
 		return emptyRadio;
 	}
-	
+
 	public JRadioButton getDefaultSleepRadio() {
 		if (defaultSleepRadio == null) {
 			defaultSleepRadio = new JRadioButton();
@@ -98,13 +98,13 @@ public class NewTagPanel extends JPanel {
 
 				public void itemStateChanged(ItemEvent e) {
 					getFileChooser().setVisible(e.getStateChange() == ItemEvent.SELECTED);
-					
+
 					NewTagPanel.this.revalidate();
 					Dimension d = NewTagPanel.this.getTopLevelAncestor().getPreferredSize();
 					NewTagPanel.this.getTopLevelAncestor().setSize(d);
 					NewTagPanel.this.repaint();
 				}
-				
+
 			});
 		}
 		return fromFileRadio;
@@ -118,19 +118,19 @@ public class NewTagPanel extends JPanel {
 			fileChooser.setMultiSelectionEnabled(false);
 			fileChooser.setAcceptAllFileFilterUsed(true);
 			fileChooser.resetChoosableFileFilters();
-			fileChooser.setAlignmentX(Component.LEFT_ALIGNMENT);			
+			fileChooser.setAlignmentX(Component.LEFT_ALIGNMENT);
 			fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 			fileChooser.resetChoosableFileFilters();
 			FileFilter[] filters = ManagedDocumentType.TAG.getFileFilters(messageSource);
-			for( FileFilter f : filters ) {
+			for (FileFilter f : filters) {
 				fileChooser.addChoosableFileFilter(f);
 			}
 			fileChooser.setPreferredSize(new Dimension(500,350));
-			
+
 			fileChooser.setInvokeDefaultButtonOnApprove(true);
-			
+
 		}
 		return fileChooser;
 	}
-	
+
 }

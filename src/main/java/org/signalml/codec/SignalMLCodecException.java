@@ -1,5 +1,5 @@
 /* SignalMLCodecException.java created 2007-09-18
- * 
+ *
  */
 
 package org.signalml.codec;
@@ -8,7 +8,7 @@ import org.signalml.exception.SignalMLException;
 
 /** SignalMLCodecException
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class SignalMLCodecException extends SignalMLException {
@@ -31,5 +31,5 @@ public class SignalMLCodecException extends SignalMLException {
 		super(cause);
 	}
 
-	
+
 }

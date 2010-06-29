@@ -1,5 +1,5 @@
 /* SourceMontageTable.java created 2007-11-24
- * 
+ *
  */
 package org.signalml.app.view.montage;
 
@@ -24,7 +24,7 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** SourceMontageTable
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class SourceMontageTable extends JTable {
@@ -32,65 +32,65 @@ public class SourceMontageTable extends JTable {
 	private static final long serialVersionUID = 1L;
 
 	private TablePopupMenuProvider popupMenuProvider;
-		
+
 	public SourceMontageTable(SourceMontageTableModel model, MessageSourceAccessor messageSource) {
 		super(model, (TableColumnModel) null);
-		
-		DefaultTableColumnModel columnModel = new DefaultTableColumnModel();		
+
+		DefaultTableColumnModel columnModel = new DefaultTableColumnModel();
 		columnModel.setColumnSelectionAllowed(false);
-		
+
 		TableColumn tc;
-		
+
 		GrayTableCellRenderer grayIneditableTableCellRenderer = new GrayTableCellRenderer();
 		ChannelTableCellRenderer channelTableCellRenderer = new ChannelTableCellRenderer();
 		channelTableCellRenderer.setMessageSource(messageSource);
-		
+
 		tc = new TableColumn(SourceMontageTableModel.INDEX_COLUMN, 100);
 		tc.setHeaderValue(model.getColumnName(tc.getModelIndex()));
 		tc.setCellRenderer(grayIneditableTableCellRenderer);
 		columnModel.addColumn(tc);
-				
+
 		tc = new TableColumn(SourceMontageTableModel.LABEL_COLUMN, 200);
 		tc.setHeaderValue(model.getColumnName(tc.getModelIndex()));
 		columnModel.addColumn(tc);
-		
-		tc = new TableColumn(SourceMontageTableModel.FUNCTION_COLUMN, 200);		
+
+		tc = new TableColumn(SourceMontageTableModel.FUNCTION_COLUMN, 200);
 		tc.setHeaderValue(model.getColumnName(tc.getModelIndex()));
 		tc.setCellRenderer(channelTableCellRenderer);
 		ChannelComboBox channelComboBox = new ChannelComboBox(messageSource);
-		channelComboBox.setModel( model.getChannelListModel() );
+		channelComboBox.setModel(model.getChannelListModel());
 		DefaultCellEditor channelCellEditor = new DefaultCellEditor(channelComboBox);
 		channelCellEditor.setClickCountToStart(2);
 		tc.setCellEditor(channelCellEditor);
 		columnModel.addColumn(tc);
-		
-		setColumnModel(columnModel);		
-		
+
+		setColumnModel(columnModel);
+
 		setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
-		addMouseListener( new MouseAdapter() {
-			
+		addMouseListener(new MouseAdapter() {
+
 			@Override
 			public void mousePressed(MouseEvent e) {
-				if( SwingUtilities.isRightMouseButton(e) && (e.getClickCount() == 1) ) {
+				if (SwingUtilities.isRightMouseButton(e) && (e.getClickCount() == 1)) {
 					int index = rowAtPoint(e.getPoint());
 					ListSelectionModel selectionModel = getSelectionModel();
-					if( !selectionModel.isSelectedIndex(index) ) {
+					if (!selectionModel.isSelectedIndex(index)) {
 						selectionModel.setSelectionInterval(index, index);
 					}
 				}
-			}			
-			
+			}
+
 		});
-		
+
 		getTableHeader().setReorderingAllowed(false);
-				
-		setTransferHandler( new SourceMontageTableTransferHandler() );
+
+		setTransferHandler(new SourceMontageTableTransferHandler());
 		setDragEnabled(true);
 		setFillsViewportHeight(true);
-		
+
 	}
-		
+
 	@Override
 	public SourceMontageTableModel getModel() {
 		return (SourceMontageTableModel) super.getModel();
@@ -98,12 +98,12 @@ public class SourceMontageTable extends JTable {
 
 	@Override
 	public JPopupMenu getComponentPopupMenu() {
-		if( popupMenuProvider == null ) {
+		if (popupMenuProvider == null) {
 			return null;
-		}		
+		}
 		return popupMenuProvider.getPopupMenu(-1, getSelectedRow());
 	}
-	
+
 	public TablePopupMenuProvider getPopupMenuProvider() {
 		return popupMenuProvider;
 	}
@@ -111,5 +111,5 @@ public class SourceMontageTable extends JTable {
 	public void setPopupMenuProvider(TablePopupMenuProvider popupMenuProvider) {
 		this.popupMenuProvider = popupMenuProvider;
 	}
-		
+
 }

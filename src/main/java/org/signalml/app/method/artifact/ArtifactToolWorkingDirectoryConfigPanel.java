@@ -1,5 +1,5 @@
 /* ArtifactToolWorkingDirectoryConfigPanel.java created 2008-02-08
- * 
+ *
  */
 package org.signalml.app.method.artifact;
 
@@ -25,22 +25,22 @@ import org.springframework.validation.Errors;
 
 /** ArtifactToolWorkingDirectoryConfigPanel
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ArtifactToolWorkingDirectoryConfigPanel extends JPanel {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private MessageSourceAccessor messageSource;
-	
+
 	private JTextField directoryTextField;
 	private JButton chooseDirectoryButton;
 
 	private ViewerFileChooser fileChooser;
-	
+
 	private File directory;
-	
+
 	public ArtifactToolWorkingDirectoryConfigPanel(MessageSourceAccessor messageSource, ViewerFileChooser fileChooser) {
 		super();
 		this.messageSource = messageSource;
@@ -49,10 +49,10 @@ public class ArtifactToolWorkingDirectoryConfigPanel extends JPanel {
 	}
 
 	private void initialize() {
-		
+
 		CompoundBorder border = new CompoundBorder(
-			new TitledBorder( messageSource.getMessage("artifactMethod.config.workingDirectoryTitle") ),
-			new EmptyBorder(3,3,3,3)
+		        new TitledBorder(messageSource.getMessage("artifactMethod.config.workingDirectoryTitle")),
+		        new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);
 
@@ -62,111 +62,111 @@ public class ArtifactToolWorkingDirectoryConfigPanel extends JPanel {
 		layout.setAutoCreateGaps(true);
 
 		JLabel directoryLabel = new JLabel(messageSource.getMessage("artifactMethod.config.workingDirectory"));
-		
+
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
-		
-		hGroup.addGroup(
-				layout.createParallelGroup()
-				.addComponent(directoryLabel)
-			);
-		
-		hGroup.addGroup(
-				layout.createParallelGroup()
-				.addComponent(getDirectoryTextField())
-			);
 
 		hGroup.addGroup(
-				layout.createParallelGroup()
-				.addComponent(getChooseDirectoryButton())
-			);
-		
+		        layout.createParallelGroup()
+		        .addComponent(directoryLabel)
+		);
+
+		hGroup.addGroup(
+		        layout.createParallelGroup()
+		        .addComponent(getDirectoryTextField())
+		);
+
+		hGroup.addGroup(
+		        layout.createParallelGroup()
+		        .addComponent(getChooseDirectoryButton())
+		);
+
 		layout.setHorizontalGroup(hGroup);
-		
+
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(directoryLabel)
-	            .addComponent(getDirectoryTextField())
-	            .addComponent(getChooseDirectoryButton())
-			);
-				
-		layout.setVerticalGroup(vGroup);		
-						
+		        layout.createParallelGroup(Alignment.BASELINE)
+		        .addComponent(directoryLabel)
+		        .addComponent(getDirectoryTextField())
+		        .addComponent(getChooseDirectoryButton())
+		);
+
+		layout.setVerticalGroup(vGroup);
+
 	}
-	
+
 	public JTextField getDirectoryTextField() {
-		if( directoryTextField == null ) {
+		if (directoryTextField == null) {
 			directoryTextField = new JTextField();
-			directoryTextField.setPreferredSize( new Dimension( 150,25 ) );
+			directoryTextField.setPreferredSize(new Dimension(150,25));
 			directoryTextField.setEditable(false);
 		}
 		return directoryTextField;
 	}
 
 	public JButton getChooseDirectoryButton() {
-		if( chooseDirectoryButton == null ) {
-			chooseDirectoryButton = new JButton( new ChooseDirectoryAction() );
+		if (chooseDirectoryButton == null) {
+			chooseDirectoryButton = new JButton(new ChooseDirectoryAction());
 		}
 		return chooseDirectoryButton;
 	}
-		
+
 	public File getDirectory() {
 		return directory;
 	}
 
 	public void fillPanelFromModel(ArtifactConfiguration config) {
-		
+
 		String directoryPath = config.getWorkingDirectoryPath();
-		if( directoryPath != null ) {
-			directory = new File( directoryPath );
-			getDirectoryTextField().setText( directory.getAbsolutePath() );
+		if (directoryPath != null) {
+			directory = new File(directoryPath);
+			getDirectoryTextField().setText(directory.getAbsolutePath());
 		} else {
 			directory = null;
-			getDirectoryTextField().setText( "" );
+			getDirectoryTextField().setText("");
 		}
-		
+
 	}
-	
+
 	public void fillModelFromPanel(ArtifactConfiguration config) {
-		
-		if( directory != null ) {
+
+		if (directory != null) {
 			config.setWorkingDirectoryPath(directory.getAbsolutePath());
 		} else {
 			config.setWorkingDirectoryPath(null);
 		}
-		
+
 	}
-	
-	public void validatePanel( Errors errors ) {
-				
+
+	public void validatePanel(Errors errors) {
+
 		// no validation
-		
+
 	}
-	
+
 	protected class ChooseDirectoryAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 
 		public ChooseDirectoryAction() {
 			super(messageSource.getMessage("artifactMethod.config.chooseWorkingDirectory"));
-			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/find.png") );
+			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/find.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("artifactMethod.config.chooseWorkingDirectoryToolTip"));
 		}
-		
-		public void actionPerformed(ActionEvent ev) {			
-			
+
+		public void actionPerformed(ActionEvent ev) {
+
 			File file = fileChooser.chooseWorkingDirectory(ArtifactToolWorkingDirectoryConfigPanel.this.getTopLevelAncestor(), directory);
-			if( file == null ) {
+			if (file == null) {
 				return;
 			}
-			
-			directory = file;			
+
+			directory = file;
 
 			getDirectoryTextField().setText(directory.getAbsolutePath());
-			
+
 		}
-		
-	}	
-	
+
+	}
+
 }

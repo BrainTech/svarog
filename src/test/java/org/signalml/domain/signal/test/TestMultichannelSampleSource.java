@@ -1,5 +1,5 @@
 /* TestMultichannelSampleSource.java created 2007-09-24
- * 
+ *
  */
 
 package org.signalml.domain.signal.test;
@@ -10,27 +10,27 @@ import org.signalml.domain.signal.MultichannelSampleSource;
 
 /** TestMultichannelSampleSource
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class TestMultichannelSampleSource implements MultichannelSampleSource {
 
 	private int channelCount;
 	private int sampleCount;
-			
+
 	public TestMultichannelSampleSource(int channelCount, int sampleCount) {
 		super();
 		this.channelCount = channelCount;
 		this.sampleCount = sampleCount;
 	}
-	
+
 	@Override
 	public void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
-		for( int i=0; i<count; i++ ) {
+		for (int i=0; i<count; i++) {
 			target[arrayOffset+i] = Math.sin(2*Math.PI*((double) signalOffset+i)/128 + 2*Math.PI*channel/((double) channelCount));
 		}
 	}
-	
+
 
 	@Override
 	public float getCalibration() {
@@ -84,10 +84,10 @@ public class TestMultichannelSampleSource implements MultichannelSampleSource {
 	@Override
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
 	}
-	
+
 	@Override
 	public void destroy() {
 		// do nothing
 	}
-	
+
 }

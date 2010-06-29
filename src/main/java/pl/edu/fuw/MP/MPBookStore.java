@@ -13,12 +13,12 @@ public class MPBookStore implements StandardBook {
 	private BookLibraryInterface library=null;
 
 	public boolean Open(String filename) throws BookFormatException {
-		if(library!=null) {
+		if (library!=null) {
 			library.Close();
 			library=null;
 		}
 
-		switch(NewBookLibrary.checkFormat(filename)) {
+		switch (NewBookLibrary.checkFormat(filename)) {
 		case NewBookLibrary.VERSION_III:
 			Utils.log("Book version: III");
 			library=new BookLibrary();
@@ -33,8 +33,8 @@ public class MPBookStore implements StandardBook {
 			break;
 		default:
 			Utils.log("Book version: II");
-		library=new BookLibrary();
-		break;
+			library=new BookLibrary();
+			break;
 		}
 
 		return library.Open(filename, 0);
@@ -49,9 +49,9 @@ public class MPBookStore implements StandardBook {
 	}
 
 	/*
-    public BookAtom []getAtoms() {
-        return library.getAtoms();
-    }
+	    public BookAtom []getAtoms() {
+	return library.getAtoms();
+	    }
 	 */
 
 
@@ -67,7 +67,7 @@ public class MPBookStore implements StandardBook {
 		return library.getSamplingFreq();
 	}
 
-	public float getCalibration(){
+	public float getCalibration() {
 		return library.getConvFactor();
 	}
 
@@ -76,14 +76,14 @@ public class MPBookStore implements StandardBook {
 	}
 
 	public String getBookComment() {
-		if(library instanceof BookLibraryV5) {
+		if (library instanceof BookLibraryV5) {
 			return ((BookLibraryV5)library).getString();
 		}
 		return null;
 	}
 
 	public int getChannelCount() {
-		if(library instanceof BookLibraryV5) {
+		if (library instanceof BookLibraryV5) {
 			return ((BookLibraryV5)library).getMaxChannel();
 		}
 		return 0;
@@ -94,116 +94,116 @@ public class MPBookStore implements StandardBook {
 	}
 
 	public String getDate() {
-		if(library instanceof BookLibraryV5) {
+		if (library instanceof BookLibraryV5) {
 			return ((BookLibraryV5)library).getDate();
-		} else if(library instanceof BookLibrary) {
+		} else if (library instanceof BookLibrary) {
 			return ((BookLibrary)library).getDate();
 		}
 		return null;
 	}
 
 	public int getDictionarySize() {
-		if(library instanceof BookLibraryV5) {
+		if (library instanceof BookLibraryV5) {
 			return ((BookLibraryV5)library).getDictionarySize();
-		} else if(library instanceof BookLibrary) {
+		} else if (library instanceof BookLibrary) {
 			return ((BookLibrary)library).getDictionarySize();
 		}
 		return 0;
 	}
 
 	public char getDictionaryType() {
-		if(library instanceof BookLibraryV5) {
+		if (library instanceof BookLibraryV5) {
 			return ((BookLibraryV5)library).getDictionaryType();
-		} else if(library instanceof BookLibrary) {
+		} else if (library instanceof BookLibrary) {
 			return ((BookLibrary)library).getDictionaryType();
 		}
 		return '\0';
 	}
 
 	public float getEnergyPercent() {
-		if(library instanceof BookLibraryV5) {
+		if (library instanceof BookLibraryV5) {
 			return ((BookLibraryV5)library).getEnergyPercent();
-		} else if(library instanceof BookLibrary) {
+		} else if (library instanceof BookLibrary) {
 			return ((BookLibrary)library).getEnergyPercent();
 		}
 		return 0;
 	}
 
 	public int getMaxIterationCount() {
-		if(library instanceof BookLibraryV5) {
+		if (library instanceof BookLibraryV5) {
 			return ((BookLibraryV5)library).getMaxNumberOfIteration();
-		} else if(library instanceof BookLibrary) {
+		} else if (library instanceof BookLibrary) {
 			return ((BookLibrary)library).getMaxNumberOfIteration();
 		}
 		return 0;
 	}
 
 	public Object getProperty(String name) throws IllegalArgumentException {
-		throw new IllegalArgumentException("No properties"); 
+		throw new IllegalArgumentException("No properties");
 	}
 
 	public Enumeration<String> getPropertyNames() {
 		Vector<String> names = new Vector<String>();
-		return names.elements(); 
+		return names.elements();
 	}
 
 	public StandardBookSegment[] getSegmentAt(int segmentIndex) {
-		if(library instanceof BookLibraryV5) {
+		if (library instanceof BookLibraryV5) {
 			return ((BookLibraryV5)library).getCurrentSegment(segmentIndex+1);
-		} else if(library instanceof  BookLibrary) {
+		} else if (library instanceof  BookLibrary) {
 			return ((BookLibrary)library).getCurrentSegment(segmentIndex+1);
 		}
 		return null;
 	}
 
 	public StandardBookSegment getSegmentAt(int segmentIndex, int channelIndex) {
-		if(library instanceof BookLibraryV5) {
+		if (library instanceof BookLibraryV5) {
 			return ((BookLibraryV5)library).getCurrentSegment(segmentIndex+1, channelIndex+1);
 		}
 		return null;
 	}
 
 	public int getSegmentCount() {
-		if(library instanceof BookLibraryV5) {
+		if (library instanceof BookLibraryV5) {
 			return ((BookLibraryV5)library).getSegmentCount();
 		}
 		return 0;
 	}
 
 	public int getSignalChannelCount() {
-		if(library instanceof BookLibraryV5) {
+		if (library instanceof BookLibraryV5) {
 			return ((BookLibraryV5)library).getMaxChannel();
 		}
 		return 0;
 	}
 
 	public String getTextInfo() {
-		if(library instanceof BookLibraryV5) {
+		if (library instanceof BookLibraryV5) {
 			return ((BookLibraryV5)library).getText();
-		} else if(library instanceof BookLibrary) {
+		} else if (library instanceof BookLibrary) {
 			return ((BookLibrary)library).getText();
 		}
 		return null;
 	}
 
 	public String getVersion() {
-		if(library instanceof BookLibraryV5) {
+		if (library instanceof BookLibraryV5) {
 			return ((BookLibraryV5)library).getVersion();
-		} 
+		}
 		return null;
 	}
 
 	public String getWebSiteInfo() {
-		if(library instanceof BookLibraryV5) {
+		if (library instanceof BookLibraryV5) {
 			return ((BookLibraryV5)library).getWebSize();
 		}
 		return null;
 	}
 
 	public Integer getDimBase() {
-		if(library instanceof BookLibraryV5) {
+		if (library instanceof BookLibraryV5) {
 			return ((BookLibraryV5)library).getDimBase();
-		} else if(library instanceof BookLibrary) {
+		} else if (library instanceof BookLibrary) {
 			return null;
 		}
 		return null;

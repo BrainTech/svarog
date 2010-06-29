@@ -1,27 +1,27 @@
 /* ExampleData.java created 2007-09-12
- * 
+ *
  */
 package org.signalml.method.example;
 
 /** ExampleData - an example data object.
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ExampleData {
 
 	private Integer count;
 	private boolean noWait;
-	
+
 	private boolean suspended;
-	
+
 	private int[] suspendedCounters;
 	private int suspendedProduct;
 
 	public ExampleData() {
 		this(100, true);
 	}
-	
+
 	public ExampleData(Integer count, boolean noWait) {
 		this.count = count;
 		this.noWait = noWait;
@@ -34,7 +34,7 @@ public class ExampleData {
 	public void setCount(Integer count) {
 		this.count = count;
 	}
-	
+
 	public boolean isNoWait() {
 		return noWait;
 	}
@@ -66,5 +66,5 @@ public class ExampleData {
 	public void setSuspendedProduct(int suspendedProduct) {
 		this.suspendedProduct = suspendedProduct;
 	}
-			
+
 }

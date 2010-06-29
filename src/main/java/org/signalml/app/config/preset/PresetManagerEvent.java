@@ -1,5 +1,5 @@
 /* PresetManagerEvent.java created 2007-11-24
- * 
+ *
  */
 
 package org.signalml.app.config.preset;
@@ -8,7 +8,7 @@ import java.util.EventObject;
 
 /** PresetManagerEvent
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class PresetManagerEvent extends EventObject {
@@ -30,6 +30,6 @@ public class PresetManagerEvent extends EventObject {
 
 	public Preset getOldPreset() {
 		return oldPreset;
-	}	
-	
+	}
+
 }

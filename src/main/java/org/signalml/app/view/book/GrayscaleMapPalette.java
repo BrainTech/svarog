@@ -1,5 +1,5 @@
 /* GrayscaleMapPalette.java created 2008-03-03
- * 
+ *
  */
 
 package org.signalml.app.view.book;
@@ -11,7 +11,7 @@ import org.signalml.util.Util;
 
 /** GrayscaleMapPalette
  *
- * 
+ *
  * @author Dobieslaw Ircha
  */
 public class GrayscaleMapPalette implements WignerMapPalette {
@@ -20,31 +20,31 @@ public class GrayscaleMapPalette implements WignerMapPalette {
 	private static Object[] ARGUMENTS = new Object[0];
 
 	private static GrayscaleMapPalette sharedInstance = null;
-	
-	private transient int[] palette;
-	
-	private GrayscaleMapPalette() {
-	
-		int i;	   	   
-    	palette = new int[256];
 
-	    int itmp;
+	private transient int[] palette;
+
+	private GrayscaleMapPalette() {
+
+		int i;
+		palette = new int[256];
+
+		int itmp;
 		for (i = 0; i<256; i++) {
-			
-		    itmp=255-i;
-		    palette[i] = Util.RGBToInteger(itmp,itmp,itmp);
-			
+
+			itmp=255-i;
+			palette[i] = Util.RGBToInteger(itmp,itmp,itmp);
+
 		}
 
 	}
-	
+
 	public static GrayscaleMapPalette getInstance() {
-		if( sharedInstance == null ) {
-			sharedInstance = new GrayscaleMapPalette();			
+		if (sharedInstance == null) {
+			sharedInstance = new GrayscaleMapPalette();
 		}
 		return sharedInstance;
 	}
-	
+
 	@Override
 	public Icon getIcon() {
 		return IconUtils.loadClassPathIcon("org/signalml/app/icon/grayscale.png");

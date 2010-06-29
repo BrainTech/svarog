@@ -1,5 +1,5 @@
 /* RegisterCodecStepTwoPanel.java created 2007-09-18
- * 
+ *
  */
 package org.signalml.app.view.element;
 
@@ -17,19 +17,19 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** RegisterCodecStepTwoPanel
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class RegisterCodecStepTwoPanel extends JPanel {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private MessageSourceAccessor messageSource;
-			
+
 	private JPanel formatNamePanel = null;
 	private JTextField nameField = null;
 	private JLabel warningLabel = null;
-	
+
 	/**
 	 * This is the default constructor
 	 */
@@ -41,17 +41,17 @@ public class RegisterCodecStepTwoPanel extends JPanel {
 
 	/**
 	 * This method initializes this
-	 * 
+	 *
 	 * @return void
 	 */
 	private void initialize() {
-		
+
 		setLayout(new BorderLayout());
-		
+
 		add(getFormatNamePanel(), BorderLayout.CENTER);
 
 	}
-	
+
 	private JPanel getFormatNamePanel() {
 		if (formatNamePanel == null) {
 			formatNamePanel = new JPanel();
@@ -65,17 +65,17 @@ public class RegisterCodecStepTwoPanel extends JPanel {
 
 		return formatNamePanel;
 	}
-	
+
 	public JTextField getNameField() {
-		if( nameField == null ) {
+		if (nameField == null) {
 			nameField = new JTextField();
 			nameField.setPreferredSize(new Dimension(200,25));
 		}
 		return nameField;
 	}
-	
+
 	public JLabel getWarningLabel() {
-		if( warningLabel == null ) {
+		if (warningLabel == null) {
 			warningLabel = new JLabel(messageSource.getMessage("registerCodec.nameExistsWarning"));
 			warningLabel.setIcon(IconUtils.getWarningIcon());
 			warningLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -83,5 +83,5 @@ public class RegisterCodecStepTwoPanel extends JPanel {
 		}
 		return warningLabel;
 	}
-	
+
 }

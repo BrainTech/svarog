@@ -1,5 +1,5 @@
 /* StagerToolConfigPanel.java created 2008-02-08
- * 
+ *
  */
 package org.signalml.app.method.stager;
 
@@ -13,18 +13,18 @@ import org.springframework.validation.Errors;
 
 /** StagerToolConfigPanel
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class StagerToolConfigPanel extends JPanel {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private MessageSourceAccessor messageSource;
 	private ViewerFileChooser fileChooser;
-	
+
 	private StagerToolWorkingDirectoryConfigPanel workingDirectoryPanel;
-	
+
 	public StagerToolConfigPanel(MessageSourceAccessor messageSource, ViewerFileChooser fileChooser) {
 		super();
 		this.messageSource = messageSource;
@@ -33,38 +33,38 @@ public class StagerToolConfigPanel extends JPanel {
 	}
 
 	private void initialize() {
-		
+
 		setLayout(new BorderLayout());
 
-		add( getWorkingDirectoryPanel(), BorderLayout.CENTER );
-		
+		add(getWorkingDirectoryPanel(), BorderLayout.CENTER);
+
 	}
-	
+
 	public StagerToolWorkingDirectoryConfigPanel getWorkingDirectoryPanel() {
-		if( workingDirectoryPanel == null ) {
+		if (workingDirectoryPanel == null) {
 			workingDirectoryPanel = new StagerToolWorkingDirectoryConfigPanel(messageSource,fileChooser);
 		}
 		return workingDirectoryPanel;
 	}
 
 
-	public void fillPanelFromModel( StagerConfiguration applicationConfig ) {
-		
+	public void fillPanelFromModel(StagerConfiguration applicationConfig) {
+
 		getWorkingDirectoryPanel().fillPanelFromModel(applicationConfig);
-		
+
 	}
-	
-	public void fillModelFromPanel( StagerConfiguration applicationConfig ) {
-		
-		
+
+	public void fillModelFromPanel(StagerConfiguration applicationConfig) {
+
+
 		getWorkingDirectoryPanel().fillModelFromPanel(applicationConfig);
-				
+
 	}
-	
+
 	public void validatePanel(Errors errors) {
 
 		getWorkingDirectoryPanel().validatePanel(errors);
-		
+
 	}
-		
+
 }

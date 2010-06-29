@@ -1,5 +1,5 @@
 /* SignalMLDocument.java created 2007-09-18
- * 
+ *
  */
 
 package org.signalml.app.document;
@@ -16,41 +16,41 @@ import org.signalml.exception.SignalMLException;
 
 /** SignalMLDocument
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class SignalMLDocument extends AbstractFileSignal {
-		
+
 	private SignalMLCodecReader reader;
-		
+
 	public SignalMLDocument(SignalMLCodecReader reader, SignalType type) {
 		super(type);
 		this.reader = reader;
 	}
-	
+
 	public SignalMLCodecReader getReader() {
 		return reader;
 	}
-			
+
 	@Override
-	public void closeDocument() throws SignalMLException {		
+	public void closeDocument() throws SignalMLException {
 		reader.close();
 		super.closeDocument();
 	}
 
 	@Override
 	public void openDocument() throws SignalMLException, IOException {
-		if( backingFile == null ) {
+		if (backingFile == null) {
 			throw new SignalMLException("error.noBackingFile");
 		}
 		reader.open(backingFile.getAbsolutePath());
 		sampleSource = new SignalMLCodecSampleSource(reader);
 	}
-		
+
 	public float getCalibration() {
 		return sampleSource.getCalibration();
 	}
-	
+
 	public boolean isCalibrationCapable() {
 		return sampleSource.isCalibrationCapable();
 	}
@@ -79,23 +79,23 @@ public class SignalMLDocument extends AbstractFileSignal {
 	public String getFormatName() {
 		return reader.getCodec().getFormatName();
 	}
-	
+
 	public String getSourceUID() {
 		return reader.getCodec().getSourceUID();
 	}
-	
+
 	@Override
 	public List<LabelledPropertyDescriptor> getPropertyList() throws IntrospectionException {
-		
+
 		List<LabelledPropertyDescriptor> list = super.getPropertyList();
-		
-		list.add( new LabelledPropertyDescriptor("property.signalmldocument.formatName", "formatName", SignalMLDocument.class, "getFormatName", null) );
-		list.add( new LabelledPropertyDescriptor("property.signaldocument.calibrationCapable", "caligrationCapable", SignalMLDocument.class, "isCalibrationCapable", null) );
-		list.add( new LabelledPropertyDescriptor("property.signaldocument.calibration", "calibration", SignalMLDocument.class) );
-				
+
+		list.add(new LabelledPropertyDescriptor("property.signalmldocument.formatName", "formatName", SignalMLDocument.class, "getFormatName", null));
+		list.add(new LabelledPropertyDescriptor("property.signaldocument.calibrationCapable", "caligrationCapable", SignalMLDocument.class, "isCalibrationCapable", null));
+		list.add(new LabelledPropertyDescriptor("property.signaldocument.calibration", "calibration", SignalMLDocument.class));
+
 		return list;
-		
+
 	}
-				
+
 }
 

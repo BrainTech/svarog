@@ -1,5 +1,5 @@
 /* DelegatingAtomFilter.java created 2008-03-04
- * 
+ *
  */
 
 package org.signalml.domain.book.filter;
@@ -23,8 +23,8 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * DelegatingAtomFilter
- * 
- * 
+ *
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */

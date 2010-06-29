@@ -1,5 +1,5 @@
 /* AtomTableDialog.java created 2008-03-01
- * 
+ *
  */
 
 package org.signalml.app.view.book;
@@ -31,31 +31,31 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** AtomTableDialog
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class AtomTableDialog extends AbstractDialog implements PropertyChangeListener {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private AtomTableModel atomTableModel;
 	private AtomTable atomTable;
 	private JScrollPane atomTableScrollPane;
-		
+
 	private JToggleButton filterSwitchButton;
-	
+
 	private JButton previousSegmentButton;
 	private JButton nextSegmentButton;
 	private JButton previousChannelButton;
 	private JButton nextChannelButton;
-	
+
 	private SegmentTextField segmentTextField;
 	private ChannelTextField channelTextField;
-	
+
 	private JToolBar toolBar;
-	
+
 	private BookView currentView;
-	
+
 	public AtomTableDialog(MessageSourceAccessor messageSource) {
 		super(messageSource);
 	}
@@ -66,12 +66,12 @@ public class AtomTableDialog extends AbstractDialog implements PropertyChangeLis
 
 	@Override
 	protected void initialize() {
-		setTitle( messageSource.getMessage("atomTable.title") );
-		setIconImage( IconUtils.loadClassPathImage("org/signalml/app/icon/atomtable.png"));
+		setTitle(messageSource.getMessage("atomTable.title"));
+		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/atomtable.png"));
 		super.initialize();
 		setResizable(true);
 	}
-	
+
 	@Override
 	public boolean isCancellable() {
 		return false;
@@ -79,86 +79,86 @@ public class AtomTableDialog extends AbstractDialog implements PropertyChangeLis
 
 	@Override
 	public JComponent createInterface() {
-		
-		JPanel interfacePanel = new JPanel( new BorderLayout() );
-		
-		JPanel tablePanel = new JPanel( new BorderLayout() );
-		
-		CompoundBorder border = new CompoundBorder( 
-				new TitledBorder( messageSource.getMessage("atomTable.tableTitle") ),
-				new EmptyBorder( 3,3,3,3 )
+
+		JPanel interfacePanel = new JPanel(new BorderLayout());
+
+		JPanel tablePanel = new JPanel(new BorderLayout());
+
+		CompoundBorder border = new CompoundBorder(
+		        new TitledBorder(messageSource.getMessage("atomTable.tableTitle")),
+		        new EmptyBorder(3,3,3,3)
 		);
 		tablePanel.setBorder(border);
-		
-		tablePanel.add( getAtomTableScrollPane(), BorderLayout.CENTER );
-		
-		interfacePanel.add( getToolBar(), BorderLayout.NORTH );
-		interfacePanel.add( tablePanel, BorderLayout.CENTER );
-				
+
+		tablePanel.add(getAtomTableScrollPane(), BorderLayout.CENTER);
+
+		interfacePanel.add(getToolBar(), BorderLayout.NORTH);
+		interfacePanel.add(tablePanel, BorderLayout.CENTER);
+
 		return interfacePanel;
-		
+
 	}
-	
+
 	public AtomTableModel getAtomTableModel() {
-		if( atomTableModel == null ) {
+		if (atomTableModel == null) {
 			atomTableModel = new AtomTableModel(messageSource);
 		}
 		return atomTableModel;
 	}
-	
+
 	public AtomTable getAtomTable() {
-		if( atomTable == null ) {
-			atomTable = new AtomTable( getAtomTableModel(), messageSource );
+		if (atomTable == null) {
+			atomTable = new AtomTable(getAtomTableModel(), messageSource);
 		}
 		return atomTable;
 	}
-	
+
 	public JScrollPane getAtomTableScrollPane() {
-		if( atomTableScrollPane == null ) {
-			atomTableScrollPane = new JScrollPane( getAtomTable() );
-			atomTableScrollPane.setPreferredSize( new Dimension(800,600) );
+		if (atomTableScrollPane == null) {
+			atomTableScrollPane = new JScrollPane(getAtomTable());
+			atomTableScrollPane.setPreferredSize(new Dimension(800,600));
 		}
 		return atomTableScrollPane;
 	}
-	
+
 	public JToolBar getToolBar() {
-		if( toolBar == null ) {
-			toolBar = new JToolBar( JToolBar.HORIZONTAL );
+		if (toolBar == null) {
+			toolBar = new JToolBar(JToolBar.HORIZONTAL);
 			toolBar.setFloatable(false);
-			
-			toolBar.add( getPreviousSegmentButton() );
+
+			toolBar.add(getPreviousSegmentButton());
 			toolBar.addSeparator(new Dimension(2,2));
-			toolBar.add( getSegmentTextField() );
+			toolBar.add(getSegmentTextField());
 			toolBar.addSeparator(new Dimension(2,2));
-			toolBar.add( getNextSegmentButton() );
-			
+			toolBar.add(getNextSegmentButton());
+
 			toolBar.addSeparator();
-			
-			toolBar.add( getPreviousChannelButton() );
+
+			toolBar.add(getPreviousChannelButton());
 			toolBar.addSeparator(new Dimension(2,2));
-			toolBar.add( getChannelTextField() );
+			toolBar.add(getChannelTextField());
 			toolBar.addSeparator(new Dimension(2,2));
-			toolBar.add( getNextChannelButton() );
-			
+			toolBar.add(getNextChannelButton());
+
 			toolBar.addSeparator();
-			
-			toolBar.add( Box.createHorizontalGlue() );
-			toolBar.add( getFilterSwitchButton() );
+
+			toolBar.add(Box.createHorizontalGlue());
+			toolBar.add(getFilterSwitchButton());
 		}
 		return toolBar;
 	}
-	
+
 	public JToggleButton getFilterSwitchButton() {
-		if( filterSwitchButton == null ) {
+		if (filterSwitchButton == null) {
 			filterSwitchButton = new JToggleButton();
 			filterSwitchButton.setHideActionText(true);
-			filterSwitchButton.setSelectedIcon( IconUtils.loadClassPathIcon("org/signalml/app/icon/filteron.png") );
+			filterSwitchButton.setSelectedIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/filteron.png"));
 		}
 		return filterSwitchButton;
 	}
-	
+
 	public JButton getPreviousSegmentButton() {
-		if( previousSegmentButton == null ) {
+		if (previousSegmentButton == null) {
 			previousSegmentButton = new JButton();
 			previousSegmentButton.setHideActionText(true);
 		}
@@ -166,15 +166,15 @@ public class AtomTableDialog extends AbstractDialog implements PropertyChangeLis
 	}
 
 	public JButton getNextSegmentButton() {
-		if( nextSegmentButton == null ) {
+		if (nextSegmentButton == null) {
 			nextSegmentButton = new JButton();
 			nextSegmentButton.setHideActionText(true);
 		}
 		return nextSegmentButton;
 	}
-	
+
 	public JButton getPreviousChannelButton() {
-		if( previousChannelButton == null ) {
+		if (previousChannelButton == null) {
 			previousChannelButton = new JButton();
 			previousChannelButton.setHideActionText(true);
 		}
@@ -182,7 +182,7 @@ public class AtomTableDialog extends AbstractDialog implements PropertyChangeLis
 	}
 
 	public JButton getNextChannelButton() {
-		if( nextChannelButton == null ) {
+		if (nextChannelButton == null) {
 			nextChannelButton = new JButton();
 			nextChannelButton.setHideActionText(true);
 		}
@@ -190,30 +190,30 @@ public class AtomTableDialog extends AbstractDialog implements PropertyChangeLis
 	}
 
 	public SegmentTextField getSegmentTextField() {
-		if( segmentTextField == null ) {
+		if (segmentTextField == null) {
 			segmentTextField = new SegmentTextField();
-			
-			segmentTextField.setPreferredSize( new Dimension( 100, 25 ) );
+
+			segmentTextField.setPreferredSize(new Dimension(100, 25));
 		}
 		return segmentTextField;
 	}
-	
+
 	public ChannelTextField getChannelTextField() {
-		if( channelTextField == null ) {
+		if (channelTextField == null) {
 			channelTextField = new ChannelTextField();
-			
-			channelTextField.setPreferredSize( new Dimension(100,25) );
+
+			channelTextField.setPreferredSize(new Dimension(100,25));
 		}
 		return channelTextField;
 	}
-	
+
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 
-		setCurrentView( (BookView) model );
-				
+		setCurrentView((BookView) model);
+
 	}
-	
+
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
 		// do nothing
@@ -224,88 +224,88 @@ public class AtomTableDialog extends AbstractDialog implements PropertyChangeLis
 	}
 
 	protected void setCurrentView(BookView currentView) {
-		if( this.currentView != currentView ) {
-			if( this.currentView != null ) {
+		if (this.currentView != currentView) {
+			if (this.currentView != null) {
 				this.currentView.removePropertyChangeListener(this);
 				this.currentView.getDocument().removePropertyChangeListener(this);
 			}
 		}
 		this.currentView = currentView;
-		if( currentView != null ) {			
-			
-			getFilterSwitchButton().setAction( currentView.getFilterSwitchAction() );
-			getPreviousSegmentButton().setAction( currentView.getPreviousSegmentAction() );
-			getNextSegmentButton().setAction( currentView.getNextSegmentAction() );
-			getPreviousChannelButton().setAction( currentView.getPreviousChannelAction() );
-			getNextChannelButton().setAction( currentView.getNextChannelAction() );
+		if (currentView != null) {
+
+			getFilterSwitchButton().setAction(currentView.getFilterSwitchAction());
+			getPreviousSegmentButton().setAction(currentView.getPreviousSegmentAction());
+			getNextSegmentButton().setAction(currentView.getNextSegmentAction());
+			getPreviousChannelButton().setAction(currentView.getPreviousChannelAction());
+			getNextChannelButton().setAction(currentView.getNextChannelAction());
 			getSegmentTextField().setBookView(currentView);
 			getChannelTextField().setBookView(currentView);
-			
+
 			refreshAfterChange();
-			
+
 			currentView.getDocument().addPropertyChangeListener(this);
 			currentView.addPropertyChangeListener(this);
-			
+
 		} else {
-			
+
 			getFilterSwitchButton().setAction(null);
-			getPreviousSegmentButton().setAction( null );
-			getNextSegmentButton().setAction( null );
-			getPreviousChannelButton().setAction( null );
-			getNextChannelButton().setAction( null );
+			getPreviousSegmentButton().setAction(null);
+			getNextSegmentButton().setAction(null);
+			getPreviousChannelButton().setAction(null);
+			getNextChannelButton().setAction(null);
 			getSegmentTextField().setBookView(null);
 			getChannelTextField().setBookView(null);
-			
+
 			AtomTableModel atomModel = getAtomTableModel();
-			atomModel.setSegment( null );
-			atomModel.setReconstruction( null );
-			
+			atomModel.setSegment(null);
+			atomModel.setReconstruction(null);
+
 		}
 	}
-	
+
 	protected void refreshAfterChange() {
 
 		BookFilterProcessor filter = currentView.getFilter();
-		
+
 		int currentSegment = currentView.getCurrentSegment();
 		int currentChannel = currentView.getCurrentChannel();
-		
+
 		StandardBookSegment segment = filter.getSegmentAt(currentSegment, currentChannel);
-		
+
 		AtomTableModel atomModel = getAtomTableModel();
-		atomModel.setSegment( segment );
-		atomModel.setReconstruction( currentView.getPlot().getReconstructionProvider() );		
-		
+		atomModel.setSegment(segment);
+		atomModel.setReconstruction(currentView.getPlot().getReconstructionProvider());
+
 	}
-	
+
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		
-		if( currentView == null ) {
+
+		if (currentView == null) {
 			return;
 		}
-		
+
 		Object source = evt.getSource();
-		String propertyName = evt.getPropertyName();		
-		
-		if( source == currentView.getDocument() ) {
-			
-			if( BookDocument.FILTER_CHAIN_PROPERTY.equals( propertyName ) ) {
+		String propertyName = evt.getPropertyName();
+
+		if (source == currentView.getDocument()) {
+
+			if (BookDocument.FILTER_CHAIN_PROPERTY.equals(propertyName)) {
 				refreshAfterChange();
 			}
-			
+
 		}
-		else if( source == currentView ) {
-			
-			if( BookView.CURRENT_SEGMENT_PROPERTY.equals( propertyName ) ) {
+		else if (source == currentView) {
+
+			if (BookView.CURRENT_SEGMENT_PROPERTY.equals(propertyName)) {
 				refreshAfterChange();
 			}
-			else if( BookView.CURRENT_CHANNEL_PROPERTY.equals( propertyName ) ) {
+			else if (BookView.CURRENT_CHANNEL_PROPERTY.equals(propertyName)) {
 				refreshAfterChange();
 			}
-			
+
 		}
-		
+
 	}
 
 	@Override
@@ -313,10 +313,10 @@ public class AtomTableDialog extends AbstractDialog implements PropertyChangeLis
 		super.onDialogClose();
 		setCurrentView(null);
 	}
-	
+
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
 		return BookView.class.isAssignableFrom(clazz);
 	}
-	
+
 }

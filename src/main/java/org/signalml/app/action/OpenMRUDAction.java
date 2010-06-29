@@ -1,5 +1,5 @@
 /* OpenMRUDAction.java created 2007-10-15
- * 
+ *
  */
 package org.signalml.app.action;
 
@@ -17,55 +17,55 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** OpenMRUDAction
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class OpenMRUDAction extends AbstractFocusableSignalMLAction<MRUDFocusSelector> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	protected static final Logger logger = Logger.getLogger(OpenMRUDAction.class);
-		
+
 	private DocumentFlowIntegrator documentFlowIntegrator;
-		
+
 	public OpenMRUDAction(MessageSourceAccessor messageSource, MRUDFocusSelector mrudFocusSelector) {
 		super(messageSource, mrudFocusSelector);
 		setText("action.openMRUD");
-		setIconPath("org/signalml/app/icon/fileopen.png");		
+		setIconPath("org/signalml/app/icon/fileopen.png");
 		setToolTip("action.openMRUDToolTip");
 	}
-		
+
 	@Override
 	public void actionPerformed(ActionEvent ev) {
-		
+
 		logger.debug("Open focused MRUD");
-		
+
 		MRUDEntry entry = getActionFocusSelector().getActiveMRUDEntry();
-		if( entry == null ) {
+		if (entry == null) {
 			return;
 		}
-		
+
 		try {
 			documentFlowIntegrator.openMRUDEntry(entry);
-		} catch(SignalMLException ex) {
+		} catch (SignalMLException ex) {
 			logger.error("Failed to open mrud", ex);
 			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-			return;			
-		} catch(IOException ex) {
+			return;
+		} catch (IOException ex) {
 			logger.error("Failed to open mrud - i/o exception", ex);
 			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-			return;			
+			return;
 		}
-		
+
 	}
-		
-	
-	
+
+
+
 	@Override
 	public void setEnabledAsNeeded() {
-		setEnabled( getActionFocusSelector().getActiveMRUDEntry() != null );
+		setEnabled(getActionFocusSelector().getActiveMRUDEntry() != null);
 	}
-	
+
 	public DocumentFlowIntegrator getDocumentFlowIntegrator() {
 		return documentFlowIntegrator;
 	}
@@ -73,5 +73,5 @@ public class OpenMRUDAction extends AbstractFocusableSignalMLAction<MRUDFocusSel
 	public void setDocumentFlowIntegrator(DocumentFlowIntegrator documentFlowIntegrator) {
 		this.documentFlowIntegrator = documentFlowIntegrator;
 	}
-	
+
 }

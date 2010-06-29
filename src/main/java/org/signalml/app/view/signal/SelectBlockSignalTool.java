@@ -1,5 +1,5 @@
 /* SelectBlockSignalTool.java created 2007-10-04
- * 
+ *
  */
 
 package org.signalml.app.view.signal;
@@ -16,14 +16,14 @@ import org.signalml.domain.signal.SignalSelectionType;
 
 /** SelectBlockSignalTool
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class SelectBlockSignalTool extends SignalTool implements SelectionSignalTool {
 
 	private Integer startBlock;
 	private SignalPlot plot;
-		
+
 	public SelectBlockSignalTool(SignalView signalView) {
 		super(signalView);
 	}
@@ -32,7 +32,7 @@ public class SelectBlockSignalTool extends SignalTool implements SelectionSignal
 	public Cursor getDefaultCursor() {
 		return IconUtils.getCrosshairCursor();
 	}
-	
+
 	@Override
 	public SignalSelectionType getSelectionType() {
 		return SignalSelectionType.BLOCK;
@@ -41,50 +41,50 @@ public class SelectBlockSignalTool extends SignalTool implements SelectionSignal
 	@Override
 	public void mousePressed(MouseEvent e) {
 
-		if( SwingUtilities.isLeftMouseButton(e) ) {
+		if (SwingUtilities.isLeftMouseButton(e)) {
 
 			Object source = e.getSource();
-			if( !(source instanceof SignalPlot) ) {
+			if (!(source instanceof SignalPlot)) {
 				plot = null;
 				return;
 			}
 			plot = (SignalPlot) source;
-			
+
 			startBlock = plot.toBlockSpace(e.getPoint());
 			engaged = true;
 			e.consume();
-		
+
 		}
 	}
-	
+
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		if( SwingUtilities.isLeftMouseButton(e) ) {
-			selectTo( e.getPoint() );
+		if (SwingUtilities.isLeftMouseButton(e)) {
+			selectTo(e.getPoint());
 			startBlock = null;
 			engaged = false;
 			plot = null;
 			e.consume();
 		}
 	}
-	
+
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		if( SwingUtilities.isLeftMouseButton(e) ) {		
+		if (SwingUtilities.isLeftMouseButton(e)) {
 			Point point = e.getPoint();
 			selectTo(point);
 			Rectangle r = new Rectangle(point.x, point.y, 1, 1);
-	        ((SignalPlot)e.getSource()).scrollRectToVisible(r);
+			((SignalPlot)e.getSource()).scrollRectToVisible(r);
 		}
 	}
 
 	private void selectTo(Point point) {
-		if( startBlock != null ) {
+		if (startBlock != null) {
 			Integer endBlock = plot.toBlockSpace(point);
-			if( endBlock != null ) {
+			if (endBlock != null) {
 				signalView.setSignalSelection(plot,plot.getBlockSelection(startBlock, endBlock));
 			}
-		}		
+		}
 	}
-	
+
 }

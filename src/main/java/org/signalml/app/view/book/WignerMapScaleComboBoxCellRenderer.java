@@ -1,5 +1,5 @@
 /* WignerMapScaleComboBoxCellRenderer.java created 2008-03-06
- * 
+ *
  */
 
 package org.signalml.app.view.book;
@@ -16,7 +16,7 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** WignerMapScaleComboBoxCellRenderer
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class WignerMapScaleComboBoxCellRenderer extends DefaultListCellRenderer {
@@ -24,32 +24,32 @@ public class WignerMapScaleComboBoxCellRenderer extends DefaultListCellRenderer 
 	private static final long serialVersionUID = 1L;
 
 	private MessageSourceAccessor messageSource;
-	
+
 	private Icon linearIcon;
 	private Icon logIcon;
 	private Icon sqrtIcon;
 
 	public WignerMapScaleComboBoxCellRenderer(MessageSourceAccessor messageSource) {
 		this.messageSource = messageSource;
-		linearIcon = IconUtils.loadClassPathIcon( "org/signalml/app/icon/scalelinear.png" );
-		logIcon = IconUtils.loadClassPathIcon( "org/signalml/app/icon/scalelog.png" );
-		sqrtIcon = IconUtils.loadClassPathIcon( "org/signalml/app/icon/scalesqrt.png" );
+		linearIcon = IconUtils.loadClassPathIcon("org/signalml/app/icon/scalelinear.png");
+		logIcon = IconUtils.loadClassPathIcon("org/signalml/app/icon/scalelog.png");
+		sqrtIcon = IconUtils.loadClassPathIcon("org/signalml/app/icon/scalesqrt.png");
 	}
 
 	@Override
 	public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 		DefaultListCellRenderer renderer = (DefaultListCellRenderer) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-		if( value instanceof WignerMapScaleType ) {
+		if (value instanceof WignerMapScaleType) {
 			WignerMapScaleType scale = (WignerMapScaleType) value;
-			renderer.setText( messageSource.getMessage(scale) );
-			if( scale == WignerMapScaleType.NORMAL ) {
-				renderer.setIcon( linearIcon );				
+			renderer.setText(messageSource.getMessage(scale));
+			if (scale == WignerMapScaleType.NORMAL) {
+				renderer.setIcon(linearIcon);
 			}
-			else if( scale == WignerMapScaleType.LOG ) {
-				renderer.setIcon( logIcon );
+			else if (scale == WignerMapScaleType.LOG) {
+				renderer.setIcon(logIcon);
 			}
-			else if( scale == WignerMapScaleType.SQRT ) {
-				renderer.setIcon( sqrtIcon );
+			else if (scale == WignerMapScaleType.SQRT) {
+				renderer.setIcon(sqrtIcon);
 			}
 			else {
 				// else no icon
@@ -57,7 +57,7 @@ public class WignerMapScaleComboBoxCellRenderer extends DefaultListCellRenderer 
 			}
 		}
 		// else leave text put by superclass
-		return renderer; 
+		return renderer;
 	}
-	
+
 }

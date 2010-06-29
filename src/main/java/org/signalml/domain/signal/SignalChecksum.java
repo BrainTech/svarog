@@ -1,5 +1,5 @@
 /* SignalChecksum.java created 2007-09-28
- * 
+ *
  */
 
 package org.signalml.domain.signal;
@@ -11,7 +11,7 @@ import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 
 /** SignalChecksum
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 @XStreamAlias("signature")
@@ -20,14 +20,14 @@ public class SignalChecksum implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@XStreamAsAttribute
-	private String method; 
-	
+	private String method;
+
 	@XStreamAsAttribute
 	private int offset;
-	
+
 	@XStreamAsAttribute
 	private int length;
-	
+
 	@XStreamAsAttribute
 	private String value;
 
@@ -71,6 +71,6 @@ public class SignalChecksum implements Serializable {
 
 	public void setValue(String value) {
 		this.value = value;
-	}	
-	
+	}
+
 }

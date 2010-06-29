@@ -1,5 +1,5 @@
 /* SignalSelectionType.java created 2007-09-28
- * 
+ *
  */
 
 package org.signalml.domain.signal;
@@ -8,15 +8,15 @@ import org.springframework.context.MessageSourceResolvable;
 
 /** SignalSelectionType
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public enum SignalSelectionType implements MessageSourceResolvable {
 
-	PAGE( "page" ),
-	BLOCK( "block" ),
-	CHANNEL( "channel" );
-	
+	PAGE("page"),
+	BLOCK("block"),
+	CHANNEL("channel");
+
 	private String name;
 
 	private SignalSelectionType(String name) {
@@ -28,15 +28,15 @@ public enum SignalSelectionType implements MessageSourceResolvable {
 	}
 
 	public boolean isPage() {
-		return ( this == PAGE );
+		return (this == PAGE);
 	}
 
 	public boolean isBlock() {
-		return ( this == BLOCK );
+		return (this == BLOCK);
 	}
-	
+
 	public boolean isChannel() {
-		return ( this == CHANNEL );
+		return (this == CHANNEL);
 	}
 
 	@Override
@@ -52,6 +52,6 @@ public enum SignalSelectionType implements MessageSourceResolvable {
 	@Override
 	public String getDefaultMessage() {
 		return name;
-	}	
-	
+	}
+
 }

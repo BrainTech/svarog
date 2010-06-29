@@ -1,5 +1,5 @@
 /* ParameterRangeAtomFilter.java created 2008-02-25
- * 
+ *
  */
 
 package org.signalml.domain.book.filter;
@@ -14,7 +14,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /** ParameterRangeAtomFilter
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 @XStreamAlias("parameterbookfilter")
@@ -24,16 +24,16 @@ public class ParameterRangeAtomFilter extends AbstractAtomFilter {
 
 	private static final String[] CODES = new String[] { "parameterRangeAtomFilter" };
 	private static final Object[] ARGUMENTS = new Object[0];
-	
+
 	private MinMaxRangeFloat modulus;
 	private MinMaxRangeFloat amplitude;
 	private MinMaxRangeFloat position;
 	private MinMaxRangeFloat scale;
 	private MinMaxRangeFloat frequency;
 	private MinMaxRangeFloat phase;
-	
+
 	private MinMaxRangeInteger iteration;
-	
+
 	public ParameterRangeAtomFilter() {
 		super();
 		modulus = new MinMaxRangeFloat(MinMaxRange.UNLIMITED, true);
@@ -44,18 +44,18 @@ public class ParameterRangeAtomFilter extends AbstractAtomFilter {
 		phase = new MinMaxRangeFloat(MinMaxRange.UNLIMITED, true);
 		iteration = new MinMaxRangeInteger(MinMaxRange.UNLIMITED, 1,1,true,true);
 	}
-	
-	public ParameterRangeAtomFilter( ParameterRangeAtomFilter template ) {
-		super( template );
-		modulus = new MinMaxRangeFloat( template.modulus );
-		amplitude = new MinMaxRangeFloat( template.amplitude );
-		position = new MinMaxRangeFloat( template.position );
-		scale = new MinMaxRangeFloat( template.scale );
-		frequency = new MinMaxRangeFloat( template.frequency );
-		phase = new MinMaxRangeFloat( template.phase );
-		iteration = new MinMaxRangeInteger( template.iteration );		
+
+	public ParameterRangeAtomFilter(ParameterRangeAtomFilter template) {
+		super(template);
+		modulus = new MinMaxRangeFloat(template.modulus);
+		amplitude = new MinMaxRangeFloat(template.amplitude);
+		position = new MinMaxRangeFloat(template.position);
+		scale = new MinMaxRangeFloat(template.scale);
+		frequency = new MinMaxRangeFloat(template.frequency);
+		phase = new MinMaxRangeFloat(template.phase);
+		iteration = new MinMaxRangeInteger(template.iteration);
 	}
-		
+
 	@Override
 	public AbstractAtomFilter duplicate() {
 		return new ParameterRangeAtomFilter(this);
@@ -84,7 +84,7 @@ public class ParameterRangeAtomFilter extends AbstractAtomFilter {
 	public MinMaxRangeFloat getPhase() {
 		return phase;
 	}
-	
+
 	public MinMaxRangeInteger getIteration() {
 		return iteration;
 	}
@@ -93,31 +93,31 @@ public class ParameterRangeAtomFilter extends AbstractAtomFilter {
 	public boolean matches(StandardBookSegment segment, StandardBookAtom atom) {
 
 		// TODO what about types?
-		
-		if( !modulus.isInRangeInclusive( atom.getModulus() ) ) {
+
+		if (!modulus.isInRangeInclusive(atom.getModulus())) {
 			return false;
 		}
-		if( !amplitude.isInRangeInclusive( atom.getAmplitude() ) ) {
+		if (!amplitude.isInRangeInclusive(atom.getAmplitude())) {
 			return false;
 		}
-		if( !position.isInRangeInclusive( atom.getTimePosition() ) ) {
+		if (!position.isInRangeInclusive(atom.getTimePosition())) {
 			return false;
 		}
-		if( !scale.isInRangeInclusive( atom.getTimeScale() ) ) {
+		if (!scale.isInRangeInclusive(atom.getTimeScale())) {
 			return false;
 		}
-		if( !frequency.isInRangeInclusive( atom.getHzFrequency() ) ) {
+		if (!frequency.isInRangeInclusive(atom.getHzFrequency())) {
 			return false;
 		}
-		if( !phase.isInRangeInclusive( atom.getPhase() ) ) {
+		if (!phase.isInRangeInclusive(atom.getPhase())) {
 			return false;
 		}
-		if( !iteration.isInRangeInclusive( segment.indexOfAtom(atom)+1 ) ) {
+		if (!iteration.isInRangeInclusive(segment.indexOfAtom(atom)+1)) {
 			return false;
 		}
-		
+
 		return true;
-		
+
 	}
 
 	@Override
@@ -133,6 +133,6 @@ public class ParameterRangeAtomFilter extends AbstractAtomFilter {
 	@Override
 	public String getDefaultMessage() {
 		return "Parameter range atom filter";
-	}	
-	
+	}
+
 }

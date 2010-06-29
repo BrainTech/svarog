@@ -1,5 +1,5 @@
 /* MP5MethodConsumer.java created 2007-10-28
- * 
+ *
  */
 
 package org.signalml.app.method.mp5;
@@ -23,7 +23,7 @@ import org.signalml.util.FileUtils;
 
 /** MP5MethodConsumer
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class MP5MethodConsumer implements InitializingMethodResultConsumer {
@@ -31,87 +31,87 @@ public class MP5MethodConsumer implements InitializingMethodResultConsumer {
 	protected static final Logger logger = Logger.getLogger(MP5MethodConsumer.class);
 
 	private MP5ResultDialog resultDialog;
-	
+
 	private DocumentFlowIntegrator documentFlowIntegrator;
 	private Window dialogParent;
-		
+
 	@Override
 	public void initialize(ApplicationMethodManager manager) {
 
 		dialogParent = manager.getDialogParent();
-		documentFlowIntegrator = manager.getDocumentFlowIntegrator();	
-		
+		documentFlowIntegrator = manager.getDocumentFlowIntegrator();
+
 		resultDialog = new MP5ResultDialog(manager.getMessageSource(), dialogParent, true);
 		resultDialog.setFileChooser(manager.getFileChooser());
-		
+
 	}
 
 	@Override
 	public boolean consumeResult(Method method, Object methodData, Object methodResult) throws SignalMLException {
 
 		String bookFilePath = null;
-		
+
 		MP5Result result = (MP5Result) methodResult;
-		if( result != null ) {
+		if (result != null) {
 			bookFilePath = result.getBookFilePath();
 		}
-		
-		if( bookFilePath == null ) {
+
+		if (bookFilePath == null) {
 			// for deserialized tasks
 			MP5Data data = (MP5Data) methodData;
-			if( data != null ) {
+			if (data != null) {
 				bookFilePath = data.getBookFilePath();
 			}
 		}
-		
-		if( bookFilePath == null ) {
+
+		if (bookFilePath == null) {
 			throw new SignalMLException("No result book");
 		}
-		
+
 		MP5ResultTargetDescriptor descriptor = new MP5ResultTargetDescriptor();
 		descriptor.setOpenInWindow(true);
 		descriptor.setSaveToFile(true);
-		
+
 		boolean dialogOk = resultDialog.showDialog(descriptor, true);
-		if( !dialogOk ) {
+		if (!dialogOk) {
 			return false;
 		}
-		
-		if( descriptor.isSaveToFile() ) {
-			
+
+		if (descriptor.isSaveToFile()) {
+
 			try {
 				FileUtils.copyFile(new File(bookFilePath), descriptor.getBookFile());
 			} catch (IOException ex) {
-				logger.error( "Failed to copy file [" + bookFilePath + " to " + descriptor.getBookFile() + "] - i/o exception", ex );
+				logger.error("Failed to copy file [" + bookFilePath + " to " + descriptor.getBookFile() + "] - i/o exception", ex);
 				throw new SignalMLException(ex);
 			}
-			
+
 		}
-		
-		if( descriptor.isOpenInWindow() ) {
+
+		if (descriptor.isOpenInWindow()) {
 
 			OpenDocumentDescriptor odd = new OpenDocumentDescriptor();
 			odd.setMakeActive(true);
 			odd.setFile(new File(bookFilePath));
 			odd.setMakeActive(true);
 			odd.setType(ManagedDocumentType.BOOK);
-			
+
 			try {
 				documentFlowIntegrator.openDocument(odd);
-			} catch(SignalMLException ex) {
+			} catch (SignalMLException ex) {
 				logger.error("Failed to open document", ex);
 				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-				return false;			
-			} catch(IOException ex) {
+				return false;
+			} catch (IOException ex) {
 				logger.error("Failed to open document - i/o exception", ex);
 				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-				return false;			
+				return false;
 			}
-			
+
 		}
-		
+
 		return true;
-				
+
 	}
 
 }

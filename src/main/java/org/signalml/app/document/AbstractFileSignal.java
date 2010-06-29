@@ -1,5 +1,5 @@
 /* AbstractReaderDocument.java created 2007-09-20
- * 
+ *
  */
 
 package org.signalml.app.document;
@@ -19,7 +19,7 @@ import org.signalml.util.Util;
 
 /** AbstractReaderDocument
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public abstract class AbstractFileSignal extends AbstractSignal implements FileBackedDocument {
@@ -27,7 +27,7 @@ public abstract class AbstractFileSignal extends AbstractSignal implements FileB
 	protected File backingFile = null;
 	protected HashMap<String,SignalChecksum> checksums = new HashMap<String,SignalChecksum>();
 	protected volatile SignalChecksumWorker precalculatingWorker;
-	
+
 	public AbstractFileSignal(SignalType type) {
 		super(type);
 	}
@@ -35,14 +35,14 @@ public abstract class AbstractFileSignal extends AbstractSignal implements FileB
 	@Override
 	public void closeDocument() throws SignalMLException {
 		super.closeDocument();
-		if( precalculatingWorker != null ) {
-			if( !precalculatingWorker.isDone() ) {
+		if (precalculatingWorker != null) {
+			if (!precalculatingWorker.isDone()) {
 				precalculatingWorker.cancel(true);
 			}
 			precalculatingWorker = null;
-		}		
+		}
 	}
-	
+
 	@Override
 	public File getBackingFile() {
 		return backingFile;
@@ -52,7 +52,7 @@ public abstract class AbstractFileSignal extends AbstractSignal implements FileB
 	public void setBackingFile(File backingFile) {
 		this.backingFile = backingFile;
 	}
-	
+
 	public SignalChecksumWorker getPrecalculatingWorker() {
 		return precalculatingWorker;
 	}
@@ -63,22 +63,22 @@ public abstract class AbstractFileSignal extends AbstractSignal implements FileB
 
 	@Override
 	public String getName() {
-		return ( backingFile != null ? backingFile.getName() : "" );
+		return (backingFile != null ? backingFile.getName() : "");
 	}
-	
+
 	@Override
 	public SignalChecksum[] getChecksums(String[] types, SignalChecksumProgressMonitor monitor) throws SignalMLException {
 
-		synchronized( checksums ) {
+		synchronized (checksums) {
 			SignalChecksum[] checksumArr = new SignalChecksum[types.length];
 			int[] missingIdx = new int[types.length];
 			String[] missing = new String[types.length];
 			int missingCnt = 0;
 			SignalChecksum checksum;
 			int i;
-			for( i=0; i<types.length; i++ ) {
+			for (i=0; i<types.length; i++) {
 				checksum = checksums.get(types[i]);
-				if( checksum == null ) {
+				if (checksum == null) {
 					missing[missingCnt] = types[i];
 					missingIdx[missingCnt] = i;
 					missingCnt++;
@@ -86,31 +86,31 @@ public abstract class AbstractFileSignal extends AbstractSignal implements FileB
 					checksumArr[i] = checksum;
 				}
 			}
-			if( missingCnt == 0 ) {
+			if (missingCnt == 0) {
 				return checksumArr;
 			}
-			String[] missingTypes = Arrays.copyOf(missing, missingCnt);		
+			String[] missingTypes = Arrays.copyOf(missing, missingCnt);
 
 			SignalChecksum[] results = Util.getSignalChecksums(backingFile, missingTypes, monitor);
-			for( i=0; i<results.length; i++ ) {
+			for (i=0; i<results.length; i++) {
 				checksums.put(results[i].getMethod(), results[i]);
 				checksumArr[missingIdx[i]] = results[i];
 			}
-			
+
 			return checksumArr;
 		}
-		
+
 	}
-	
+
 	@Override
 	public List<LabelledPropertyDescriptor> getPropertyList() throws IntrospectionException {
-		
+
 		List<LabelledPropertyDescriptor> list = super.getPropertyList();
-		
-		list.add( new LabelledPropertyDescriptor("property.document.backingFile", "backingFile", AbstractFileSignal.class) );
-				
+
+		list.add(new LabelledPropertyDescriptor("property.document.backingFile", "backingFile", AbstractFileSignal.class));
+
 		return list;
-		
+
 	}
-			
+
 }

@@ -1,5 +1,5 @@
 /* DocumentFlowIntegrator.java created 2007-09-19
- * 
+ *
  */
 
 package org.signalml.app.document;
@@ -50,248 +50,248 @@ import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** DocumentFlowIntegrator
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class DocumentFlowIntegrator {
 
 	protected static final Logger logger = Logger.getLogger(DocumentFlowIntegrator.class);
-	
+
 	private MessageSourceAccessor messageSource;
-	
+
 	private DocumentManager documentManager;
 	private MRUDRegistry mrudRegistry;
 	private SignalMLCodecManager codecManager;
 	private Component optionPaneParent = null;
 	private ViewerFileChooser fileChooser;
-		
+
 	private SignalParametersDialog signalParametersDialog;
-	
+
 	private ActionFocusManager actionFocusManager;
 	private ApplicationConfiguration applicationConfig;
 	private MontagePresetManager montagePresetManager;
-	
+
 	private PleaseWaitDialog pleaseWaitDialog;
-		
+
 	public Document openDocument(OpenDocumentDescriptor descriptor) throws IOException, SignalMLException {
-		
+
 		ManagedDocumentType type = descriptor.getType();
-		if( type.equals(ManagedDocumentType.SIGNAL) ) {
+		if (type.equals(ManagedDocumentType.SIGNAL)) {
 			return openSignalDocument(descriptor);
-		} else if( type.equals(ManagedDocumentType.BOOK) ) {
+		} else if (type.equals(ManagedDocumentType.BOOK)) {
 			return openBookDocument(descriptor);
-		} else if( type.equals(ManagedDocumentType.TAG) ) {
+		} else if (type.equals(ManagedDocumentType.TAG)) {
 			return openTagDocument(descriptor);
 		} else {
-			logger.error("Unsupported type [" + type + "]" );
+			logger.error("Unsupported type [" + type + "]");
 			throw new ClassCastException();
 		}
-		
+
 	}
-			
+
 	public boolean closeDocument(Document document, boolean saveAsOnly, boolean force) throws IOException, SignalMLException {
 
-		synchronized(documentManager) {
-			synchronized(document) {
-				
-				if( !force ) {
+		synchronized (documentManager) {
+			synchronized (document) {
+
+				if (!force) {
 					boolean savedOk = assertDocumentIsSaved(document, saveAsOnly, false);
-					if( !savedOk ) {
+					if (!savedOk) {
 						// cancel parent operation
 						return false;
 					}
 				}
-	
+
 				boolean dependantsOk = assertDocumentDependantsClosed(document, force);
-				if( !dependantsOk ) {
+				if (!dependantsOk) {
 					// cancel parent operation
 					return false;
 				}
-				
+
 				closeDocumentInternal(document);
-				
+
 			}
 		}
-		
+
 		return true;
-				
+
 	}
 
-	
+
 	public boolean checkCloseAllDocuments() throws IOException, SignalMLException {
-	
+
 		// Note that this method doesn't check dependencies - either way all documents are closed
-		
+
 		int count;
 		Document[] documents;
 		int i;
 		boolean savedOk;
-		
-		synchronized( documentManager ) {
-		
+
+		synchronized (documentManager) {
+
 			count = documentManager.getDocumentCount();
 			documents = new Document[count];
-			for( i=0; i<count; i++ ) {
+			for (i=0; i<count; i++) {
 				documents[i] = documentManager.getDocumentAt(i);
 			}
-			
-			for( i=0; i<count; i++ ) {			
-				synchronized( documents[i] ) {
-					if( !documents[i].isClosed() ) {
+
+			for (i=0; i<count; i++) {
+				synchronized (documents[i]) {
+					if (!documents[i].isClosed()) {
 						savedOk = assertDocumentIsSaved(documents[i], false, true);
-						if( !savedOk ) {
+						if (!savedOk) {
 							return false;
 						}
 					}
 				}
 			}
-			
+
 		}
-		
+
 		return true;
-		
+
 	}
-		
+
 	public void closeAllDocuments() throws IOException, SignalMLException {
-		
+
 		// Note that this method doesn't check dependencies - either way all documents are closed
-		
+
 		int count;
 		Document[] documents;
 		int i;
-		
-		synchronized( documentManager ) {
-		
+
+		synchronized (documentManager) {
+
 			count = documentManager.getDocumentCount();
 			documents = new Document[count];
-			for( i=0; i<count; i++ ) {
+			for (i=0; i<count; i++) {
 				documents[i] = documentManager.getDocumentAt(i);
 			}
-			
+
 			// all documents have been saved or discarded
-			for( i=0; i<count; i++ ) {
-				synchronized( documents[i] ) {
+			for (i=0; i<count; i++) {
+				synchronized (documents[i]) {
 					// we ignore possible document modification from another thread
 					// because this modification happens after the user has undertaken
 					// to close all documents as they were
-					if( !documents[i].isClosed() ) {
-						closeDocument( documents[i], false, true );
+					if (!documents[i].isClosed()) {
+						closeDocument(documents[i], false, true);
 					}
 				}
 			}
-			
+
 		}
-				
+
 	}
-	
+
 	public boolean saveDocument(Document document, boolean saveAsOnly) throws IOException, SignalMLException {
-		
-		if( !(document instanceof MutableDocument) ) {
+
+		if (!(document instanceof MutableDocument)) {
 			return true;
 		}
 
-		synchronized( documentManager ) {
-		
-			synchronized(document) {
-			
+		synchronized (documentManager) {
+
+			synchronized (document) {
+
 				MutableDocument md = (MutableDocument) document;
-				
-				if( document instanceof FileBackedDocument ) {
+
+				if (document instanceof FileBackedDocument) {
 					FileBackedDocument fbd = (FileBackedDocument) document;
-					File oldFile = fbd.getBackingFile();								
-					if( saveAsOnly || oldFile == null ) {
-						
+					File oldFile = fbd.getBackingFile();
+					if (saveAsOnly || oldFile == null) {
+
 						ManagedDocumentType type = ManagedDocumentType.getForClass(document.getClass());
-						if( type == null ) {
-							logger.error("Unsupported class [" + document.getClass().getName() + "]" );
-							throw new ClassCastException();			
+						if (type == null) {
+							logger.error("Unsupported class [" + document.getClass().getName() + "]");
+							throw new ClassCastException();
 						}
 						FileFilter[] filters = type.getFileFilters(messageSource);
-						
+
 						boolean hasFile = false;
 						File file = null;
-						
+
 						do {
-							
+
 							file = fileChooser.chooseSaveDocument(optionPaneParent, filters);
-							if( file == null ) {
+							if (file == null) {
 								// file choice canceled
 								return false;
 							}
-							
+
 							hasFile = true;
-							
+
 							// what if new path is already in the manager?
 							Document openDocument = documentManager.getDocumentByFile(file.getAbsoluteFile());
-							if( openDocument != null && openDocument != document ) {
+							if (openDocument != null && openDocument != document) {
 								OptionPane.showDocumentAlreadyOpenError(optionPaneParent);
 								hasFile = false;
-							} else {							
+							} else {
 								// file exists warning
-								if( file.exists() ) {
+								if (file.exists()) {
 									int res = OptionPane.showFileAlreadyExists(optionPaneParent);
-									if( res != OptionPane.OK_OPTION ) {
+									if (res != OptionPane.OK_OPTION) {
 										hasFile = false;
-									}								
+									}
 								}
 							}
-							
-						} while( !hasFile );
-						
-						if( !Util.equalsWithNulls(oldFile, file) ) {
+
+						} while (!hasFile);
+
+						if (!Util.equalsWithNulls(oldFile, file)) {
 							fbd.setBackingFile(file);
 							documentManager.onDocumentPathChange(document, oldFile, file);
 						}
-						
+
 					}
 				}
-				
+
 				ManagedDocumentType type = ManagedDocumentType.getForClass(md.getClass());
 				boolean ok = false;
-				if( type != null ) {
-					if( type.equals(ManagedDocumentType.SIGNAL) ) {
+				if (type != null) {
+					if (type.equals(ManagedDocumentType.SIGNAL)) {
 						ok = true;
 						// do nothing
-					} else if( type.equals(ManagedDocumentType.BOOK) ) {
+					} else if (type.equals(ManagedDocumentType.BOOK)) {
 						ok = true;
 						// do nothing
-					} else if( type.equals(ManagedDocumentType.TAG) ) {
+					} else if (type.equals(ManagedDocumentType.TAG)) {
 						ok = onSaveTagDocument((TagDocument) md);
 					} else {
-						logger.error("Unsupported type [" + type + "]" );
+						logger.error("Unsupported type [" + type + "]");
 						throw new ClassCastException();
 					}
 				}
-				
-				if( !ok ) {
+
+				if (!ok) {
 					return false;
 				}
-				
+
 				SaveDocumentWorker worker = new SaveDocumentWorker(md, pleaseWaitDialog);
-				
+
 				worker.execute();
 
-				pleaseWaitDialog.setActivity(messageSource.getMessage("activity.savingFile"));			
+				pleaseWaitDialog.setActivity(messageSource.getMessage("activity.savingFile"));
 				pleaseWaitDialog.configureForIndeterminateSimulated();
 				pleaseWaitDialog.waitAndShowDialogIn(optionPaneParent, 500, worker);
-				
+
 				try {
 					worker.get();
 				} catch (InterruptedException ex) {
 					// ignore
 				} catch (ExecutionException ex) {
-					logger.error( "Worker failed to save", ex.getCause() );
+					logger.error("Worker failed to save", ex.getCause());
 					throw new SignalMLException(ex.getCause());
 				}
-				
+
 			}
-		
+
 		}
-			
+
 		return true;
-		
+
 	}
-	
+
 	public boolean saveAllDocuments() throws IOException, SignalMLException {
 
 		boolean allOk = true;
@@ -299,38 +299,38 @@ public class DocumentFlowIntegrator {
 		Document document;
 		int i;
 		boolean savedOk;
-		
-		synchronized( documentManager ) {
-								
+
+		synchronized (documentManager) {
+
 			count = documentManager.getDocumentCount();
-			for( i=0; i<count; i++ ) {
+			for (i=0; i<count; i++) {
 				document = documentManager.getDocumentAt(i);
-				synchronized( document ) {
+				synchronized (document) {
 					savedOk = saveDocument(document, false);
 				}
 				allOk &= savedOk;
 			}
-			
+
 		}
-				
+
 		return allOk;
-		
+
 	}
-		
+
 	public Document openMRUDEntry(MRUDEntry mrud) throws IOException, SignalMLException {
 
 		ManagedDocumentType type = mrud.getDocumentType();
-		
+
 		OpenDocumentDescriptor odd = new OpenDocumentDescriptor();
 		odd.setFile(mrud.getFile());
 		odd.setType(type);
 		odd.setMakeActive(true);
-		
-		if( type.equals(ManagedDocumentType.SIGNAL) ) {
-			 
+
+		if (type.equals(ManagedDocumentType.SIGNAL)) {
+
 			OpenSignalDescriptor signalOptions = odd.getSignalOptions();
-			if(mrud instanceof SignalMLMRUDEntry) {
-				
+			if (mrud instanceof SignalMLMRUDEntry) {
+
 				SignalMLMRUDEntry smlEntry = (SignalMLMRUDEntry) mrud;
 				signalOptions.setMethod(OpenSignalMethod.USE_SIGNALML);
 				SignalMLCodec codec = codecManager.getCodecByUID(smlEntry.getCodecUID());
@@ -347,108 +347,108 @@ public class DocumentFlowIntegrator {
 				spd.setCalibration(smlEntry.getCalibration());
 
 			}
-			else if( mrud instanceof RawSignalMRUDEntry ) {
-				
+			else if (mrud instanceof RawSignalMRUDEntry) {
+
 				RawSignalMRUDEntry rawEntry = (RawSignalMRUDEntry) mrud;
 				signalOptions.setMethod(OpenSignalMethod.RAW);
 				signalOptions.setRawSignalDescriptor(rawEntry.getDescriptor());
-				
+
 			}
 			else {
-				logger.error("Don't know how to open this kind of mrud [" + mrud.getClass().getName() + "]" );
+				logger.error("Don't know how to open this kind of mrud [" + mrud.getClass().getName() + "]");
 				return null;
 			}
 
-		} else if( type.equals(ManagedDocumentType.BOOK) ) {
-			
+		} else if (type.equals(ManagedDocumentType.BOOK)) {
+
 			// so far nothing special
-			
-		} else if( type.equals(ManagedDocumentType.TAG) ) {
+
+		} else if (type.equals(ManagedDocumentType.TAG)) {
 			OpenTagDescriptor tagOptions = odd.getTagOptions();
 			Document activeDocument = actionFocusManager.getActiveDocument();
-			if( activeDocument == null || !(activeDocument instanceof SignalDocument) ) {
+			if (activeDocument == null || !(activeDocument instanceof SignalDocument)) {
 				OptionPane.showNoActiveSignal(optionPaneParent);
 				return null;
 			}
 			tagOptions.setParent((SignalDocument) activeDocument);
 		}
-		
+
 		return openDocument(odd);
-		
+
 	}
-	
+
 	private SignalDocument openSignalDocument(final OpenDocumentDescriptor descriptor) throws IOException, SignalMLException {
-		
+
 		final File file = descriptor.getFile();
 		boolean fileOk = checkOpenedFile(file);
-		if( !fileOk ) {
+		if (!fileOk) {
 			return null;
 		}
-		
+
 		OpenSignalDescriptor signalOptions = descriptor.getSignalOptions();
-		OpenSignalMethod method = signalOptions.getMethod(); 
-		if( method == null ) {
+		OpenSignalMethod method = signalOptions.getMethod();
+		if (method == null) {
 			logger.error("No method");
 			throw new NullPointerException();
 		}
-			
-		if( method.equals(OpenSignalMethod.USE_SIGNALML) ) {
-		
+
+		if (method.equals(OpenSignalMethod.USE_SIGNALML)) {
+
 			logger.debug("Opening as signal with SignalML");
 			final SignalMLCodec codec = signalOptions.getCodec();
-			if( codec == null ) {
+			if (codec == null) {
 				logger.error("No codec");
 				throw new NullPointerException();
 			}
-			
-			OpenSignalMLDocumentWorker worker = new OpenSignalMLDocumentWorker(descriptor, pleaseWaitDialog);			
+
+			OpenSignalMLDocumentWorker worker = new OpenSignalMLDocumentWorker(descriptor, pleaseWaitDialog);
 
 			worker.execute();
-			
-			pleaseWaitDialog.setActivity(messageSource.getMessage("activity.openingSignalFile"));			
+
+			pleaseWaitDialog.setActivity(messageSource.getMessage("activity.openingSignalFile"));
 			pleaseWaitDialog.configureForIndeterminateSimulated();
 			pleaseWaitDialog.waitAndShowDialogIn(optionPaneParent, 500, worker);
-			
+
 			logger.debug("Ready to continue");
-			
+
 			SignalMLDocument signalMLDocument = null;
 			try {
 				signalMLDocument = worker.get();
-			} catch( InterruptedException ex ) {
+			} catch (InterruptedException ex) {
 				logger.info("OpenSignalMLDocumentWorker interrupted", ex);
 			} catch (ExecutionException ex) {
-				logger.error( "Exception during worker exectution", ex);
+				logger.error("Exception during worker exectution", ex);
 				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex.getCause());
 				return null;
 			}
-			
+
 			SignalParameterDescriptor spd = signalOptions.getParameters();
-			if( spd.getPageSize() != null ) {
+			if (spd.getPageSize() != null) {
 				signalMLDocument.setPageSize(spd.getPageSize());
 			}
-			if( spd.getBlocksPerPage() != null ) {
+			if (spd.getBlocksPerPage() != null) {
 				signalMLDocument.setBlocksPerPage(spd.getBlocksPerPage());
 			}
-			
+
 			boolean infoOk = collectRequiredSignalConfiguration(signalMLDocument, spd);
-			if( !infoOk ) {
+			if (!infoOk) {
 				try {
 					signalMLDocument.closeDocument();
 				} catch (SignalMLException ex) {
-					logger.error("Failed to cleanup document", ex );
+					logger.error("Failed to cleanup document", ex);
 				}
 				return null;
 			}
 
 			// start background checksum calculation
-			if( applicationConfig.isPrecalculateSignalChecksums() ) {
-				SignalChecksumWorker checksummer = new SignalChecksumWorker(signalMLDocument, null, new String[] { "crc32" } );
+			if (applicationConfig.isPrecalculateSignalChecksums()) {
+				SignalChecksumWorker checksummer = new SignalChecksumWorker(signalMLDocument, null, new String[] { "crc32" });
 				signalMLDocument.setPrecalculatingWorker(checksummer);
 				checksummer.lowerPriority();
-				checksummer.execute();			
+				checksummer.execute();
 			}
-					
-			if( mrudRegistry != null ) {
+
+			if (mrudRegistry != null) {
 				SignalMLMRUDEntry mrud = new SignalMLMRUDEntry(ManagedDocumentType.SIGNAL, signalMLDocument.getClass(), file.getAbsolutePath(), codec.getSourceUID(), codec.getFormatName());
 				mrud.setLastTimeOpened(new Date());
 				mrud.setPageSize(spd.getPageSize());
@@ -458,421 +458,421 @@ public class DocumentFlowIntegrator {
 				mrud.setCalibration(spd.getCalibration());
 				mrudRegistry.registerMRUDEntry(mrud);
 			}
-			
+
 			onSignalDocumentAdded(signalMLDocument, descriptor.isMakeActive());
 			onCommonDocumentAdded(signalMLDocument);
-					
-			if( descriptor.isMakeActive() ) {
+
+			if (descriptor.isMakeActive()) {
 				actionFocusManager.setActiveDocument(signalMLDocument);
-			}		
-				
+			}
+
 			logger.debug("open end");
-			
+
 			return signalMLDocument;
-			
-		} else if( method.equals(OpenSignalMethod.RAW) ) {
-			
+
+		} else if (method.equals(OpenSignalMethod.RAW)) {
+
 			logger.debug("Opening as raw signal");
-			
+
 			RawSignalDescriptor rawDescriptor = signalOptions.getRawSignalDescriptor();
-			if( rawDescriptor == null ) {
+			if (rawDescriptor == null) {
 				logger.error("No descriptor");
 				throw new NullPointerException();
 			}
-			
+
 			RawSignalDocument rawSignalDocument = new RawSignalDocument(
-					signalOptions.getType(), 
-					rawDescriptor
-				);
-			
-			rawSignalDocument.setBackingFile(descriptor.getFile());			
+			        signalOptions.getType(),
+			        rawDescriptor
+			);
+
+			rawSignalDocument.setBackingFile(descriptor.getFile());
 			rawSignalDocument.openDocument();
-						
-			rawSignalDocument.setPageSize( rawDescriptor.getPageSize() );
-			rawSignalDocument.setBlocksPerPage( rawDescriptor.getBlocksPerPage() );
-			
+
+			rawSignalDocument.setPageSize(rawDescriptor.getPageSize());
+			rawSignalDocument.setBlocksPerPage(rawDescriptor.getBlocksPerPage());
+
 			// start background checksum calculation
-			if( applicationConfig.isPrecalculateSignalChecksums() ) {
-				SignalChecksumWorker checksummer = new SignalChecksumWorker(rawSignalDocument, null, new String[] { "crc32" } );
+			if (applicationConfig.isPrecalculateSignalChecksums()) {
+				SignalChecksumWorker checksummer = new SignalChecksumWorker(rawSignalDocument, null, new String[] { "crc32" });
 				rawSignalDocument.setPrecalculatingWorker(checksummer);
 				checksummer.lowerPriority();
-				checksummer.execute();			
+				checksummer.execute();
 			}
-			
+
 			RawSignalMRUDEntry mrud = new RawSignalMRUDEntry(ManagedDocumentType.SIGNAL, rawSignalDocument.getClass(), file.getAbsolutePath(), rawDescriptor);
 			mrud.setLastTimeOpened(new Date());
 			mrudRegistry.registerMRUDEntry(mrud);
-						
+
 			onSignalDocumentAdded(rawSignalDocument, descriptor.isMakeActive());
 			onCommonDocumentAdded(rawSignalDocument);
-					
-			if( descriptor.isMakeActive() ) {
+
+			if (descriptor.isMakeActive()) {
 				actionFocusManager.setActiveDocument(rawSignalDocument);
-			}		
-				
+			}
+
 			logger.debug("open end");
-			
-			return rawSignalDocument;			
-			
+
+			return rawSignalDocument;
+
 		} else {
 			// other methods are not supported now
 			logger.error("Unsupported method [" + method + "]");
 			throw new SignalMLException("error.invalidValue");
 		}
-					
+
 	}
 
 	private BookDocument openBookDocument(final OpenDocumentDescriptor descriptor) throws IOException, SignalMLException {
-		
-		synchronized( documentManager ) {
-			
+
+		synchronized (documentManager) {
+
 			BookDocument bookDocument = descriptor.getBookOptions().getExistingDocument();
-			if( bookDocument == null ) {
-			
+			if (bookDocument == null) {
+
 				File file = descriptor.getFile();
 				boolean fileOk = checkOpenedFile(file);
-				if( !fileOk ) {
+				if (!fileOk) {
 					return null;
 				}
-							
+
 				logger.debug("Opening as book");
-							
+
 				OpenBookDocumentWorker worker = new OpenBookDocumentWorker(descriptor, pleaseWaitDialog);
-				
+
 				worker.execute();
 
-				pleaseWaitDialog.setActivity(messageSource.getMessage("activity.openingBookFile"));			
+				pleaseWaitDialog.setActivity(messageSource.getMessage("activity.openingBookFile"));
 				pleaseWaitDialog.configureForIndeterminateSimulated();
 				pleaseWaitDialog.waitAndShowDialogIn(optionPaneParent, 500, worker);
-				
+
 				try {
 					bookDocument = worker.get();
-				} catch( InterruptedException ex ) {
-					logger.info( "Worker interrupted", ex);
+				} catch (InterruptedException ex) {
+					logger.info("Worker interrupted", ex);
 				} catch (ExecutionException ex) {
-					logger.error( "Exception during worker exectution", ex);
+					logger.error("Exception during worker exectution", ex);
 					ErrorsDialog.showImmediateExceptionDialog((Window) null, ex.getCause());
 					return null;
 				}
-				
-				if( mrudRegistry != null ) {
+
+				if (mrudRegistry != null) {
 					MRUDEntry mrud = new MRUDEntry(ManagedDocumentType.BOOK, bookDocument.getClass(), file.getAbsolutePath());
 					mrud.setLastTimeOpened(new Date());
-					mrudRegistry.registerMRUDEntry(mrud);				
+					mrudRegistry.registerMRUDEntry(mrud);
 				}
-				
+
 			} else {
 				logger.debug("Opening given document");
-			}			
-								
+			}
+
 			onBookDocumentAdded(bookDocument, descriptor.isMakeActive());
 			onCommonDocumentAdded(bookDocument);
-					
-			if( descriptor.isMakeActive() ) {
+
+			if (descriptor.isMakeActive()) {
 				actionFocusManager.setActiveDocument(bookDocument);
-			}		
-				
+			}
+
 			logger.debug("open end");
-			
+
 			return bookDocument;
-			
+
 		}
-		
+
 	}
-	
+
 	private TagDocument openTagDocument(OpenDocumentDescriptor descriptor) throws IOException, SignalMLException {
-		
-		synchronized( documentManager ) {
-		
+
+		synchronized (documentManager) {
+
 			SignalDocument parent = descriptor.getTagOptions().getParent();
-			if( parent == null ) {
+			if (parent == null) {
 				throw new NullPointerException("No parent");
 			}
-			
+
 			TagDocument tagDocument = descriptor.getTagOptions().getExistingDocument();
-			if( tagDocument == null ) {
-			
+			if (tagDocument == null) {
+
 				File file = descriptor.getFile();
 				boolean fileOk = checkOpenedFile(file);
-				if( !fileOk ) {
+				if (!fileOk) {
 					return null;
 				}
-							
+
 				logger.debug("Opening as XML tag");
-							
+
 				OpenTagDocumentWorker worker = new OpenTagDocumentWorker(descriptor, pleaseWaitDialog);
-				
+
 				worker.execute();
 
-				pleaseWaitDialog.setActivity(messageSource.getMessage("activity.openingTagFile"));			
+				pleaseWaitDialog.setActivity(messageSource.getMessage("activity.openingTagFile"));
 				pleaseWaitDialog.configureForIndeterminateSimulated();
 				pleaseWaitDialog.waitAndShowDialogIn(optionPaneParent, 500, worker);
-				
+
 				try {
 					tagDocument = worker.get();
-				} catch( InterruptedException ex ) {
+				} catch (InterruptedException ex) {
 					// ignore
 				} catch (ExecutionException ex) {
-					logger.error( "Exception during worker exectution", ex);
+					logger.error("Exception during worker exectution", ex);
 					ErrorsDialog.showImmediateExceptionDialog((Window) null, ex.getCause());
 					return null;
 				}
-				
-				if( mrudRegistry != null ) {
+
+				if (mrudRegistry != null) {
 					MRUDEntry mrud = new MRUDEntry(ManagedDocumentType.TAG, tagDocument.getClass(), file.getAbsolutePath());
 					mrud.setLastTimeOpened(new Date());
-					mrudRegistry.registerMRUDEntry(mrud);				
+					mrudRegistry.registerMRUDEntry(mrud);
 				}
-				
+
 			} else {
 				logger.debug("Opening given document");
-			}			
-			
-			TagSignalIdentification tagSignalIdentification = tagDocument.getTagSet().getTagSignalIdentification();
-			SignalChecksum tagChecksum = ( tagSignalIdentification != null ? tagSignalIdentification.getChecksum() : null );
+			}
 
-			if( tagSignalIdentification == null ) {
-				
+			TagSignalIdentification tagSignalIdentification = tagDocument.getTagSet().getTagSignalIdentification();
+			SignalChecksum tagChecksum = (tagSignalIdentification != null ? tagSignalIdentification.getChecksum() : null);
+
+			if (tagSignalIdentification == null) {
+
 				logger.debug("Tag has no file identification");
-				
+
 			} else {
-				
-				logger.debug("Tag identifies as filename [" + tagSignalIdentification.getFileName() + "] format [" + tagSignalIdentification.getFormatId() + "]" );				
-			
-				if( tagChecksum != null ) {
-										
+
+				logger.debug("Tag identifies as filename [" + tagSignalIdentification.getFileName() + "] format [" + tagSignalIdentification.getFormatId() + "]");
+
+				if (tagChecksum != null) {
+
 					String checksumMethod = tagChecksum.getMethod();
 					SignalChecksum parentChecksum = getSignalCheckSum(parent, checksumMethod);
-					
+
 					String tagChecksumValue = tagChecksum.getValue();
 					String parentChecksumValue = parentChecksum.getValue();
-					logger.debug("Tag has checksum [" + checksumMethod + "] value [" + tagChecksumValue + "] signal checksum [" + parentChecksumValue + "]" );
-					if( !tagChecksumValue.equalsIgnoreCase(parentChecksumValue) ) {
-						logger.debug("Checksum different" );
+					logger.debug("Tag has checksum [" + checksumMethod + "] value [" + tagChecksumValue + "] signal checksum [" + parentChecksumValue + "]");
+					if (!tagChecksumValue.equalsIgnoreCase(parentChecksumValue)) {
+						logger.debug("Checksum different");
 						int res = OptionPane.showTagChecksumBad(optionPaneParent);
-						if( res != OptionPane.OK_OPTION ) {
+						if (res != OptionPane.OK_OPTION) {
 							return null;
-						}												
-						logger.debug("User elected to proceed" );
+						}
+						logger.debug("User elected to proceed");
 					}
-					
+
 				}
-			
+
 			}
-				
+
 			Montage tagMontage = tagDocument.getTagSet().getMontage();
-			if( tagMontage != null ) {
+			if (tagMontage != null) {
 				Montage parentMontage = parent.getMontage();
-				if( !tagMontage.isCompatible(parentMontage) ) {
-					
+				if (!tagMontage.isCompatible(parentMontage)) {
+
 					int ans = OptionPane.showMontageDifferentOnTagLoad(optionPaneParent);
 					// interpret ans as "whether to load montage from file"
-					switch( ans ) {
-					
+					switch (ans) {
+
 					case OptionPane.YES_OPTION :
 						parent.setMontage(tagMontage);
 						break;
-						
+
 					case OptionPane.NO_OPTION :
 						// nothing to do
 						break;
-						
+
 					default :
 						// cancel loading
 						return null;
-					
+
 					}
-										
+
 				}
-				
+
 			}
-			
+
 			// this adds to tag list
 			tagDocument.setParent(parent);
-															
+
 			onTagDocumentAdded(tagDocument, descriptor.isMakeActive());
 			onCommonDocumentAdded(tagDocument);
-			
+
 			return tagDocument;
-										
-		}		
+
+		}
 	}
-	
-	private void closeDocumentInternal( Document document ) throws IOException, SignalMLException {
-	
-		if( document instanceof SignalDocument ) {
+
+	private void closeDocumentInternal(Document document) throws IOException, SignalMLException {
+
+		if (document instanceof SignalDocument) {
 			closeSignalDocument((SignalDocument) document);
-		} else if( document instanceof BookDocument ) {
+		} else if (document instanceof BookDocument) {
 			closeBookDocument((BookDocument) document);
-		} else if( document instanceof TagDocument ) {
+		} else if (document instanceof TagDocument) {
 			closeTagDocument((TagDocument) document);
 		} else {
-			logger.error("Unsupported class [" + document.getClass().getName() + "]" );
-			throw new ClassCastException();			
+			logger.error("Unsupported class [" + document.getClass().getName() + "]");
+			throw new ClassCastException();
 		}
-	
-		document.closeDocument();		
-		
+
+		document.closeDocument();
+
 	}
-	
-	private boolean checkOpenedFile( File file ) throws IOException, SignalMLException {
-		
-		if( file == null ) {
+
+	private boolean checkOpenedFile(File file) throws IOException, SignalMLException {
+
+		if (file == null) {
 			logger.error("No file to open");
 			throw new NullPointerException();
 		}
-				
+
 		logger.debug("Request to open signal file [" + file.getAbsolutePath() + "]");
-		
+
 		Document alreadyOpenedDocument = documentManager.getDocumentByFile(file.getAbsoluteFile());
-		if( alreadyOpenedDocument != null ) {
+		if (alreadyOpenedDocument != null) {
 			// this document is already open, we should ask the user what to do
 			int res = OptionPane.showDocumentAlreadyOpened(optionPaneParent);
-			if( res == OptionPane.OK_OPTION ) {
+			if (res == OptionPane.OK_OPTION) {
 				boolean closedOk = closeDocument(alreadyOpenedDocument, true, false);
-				if( !closedOk ) {
+				if (!closedOk) {
 					return false;
 				}
 			} else {
 				return false;
-			}		
+			}
 		}
-		
-		if( !file.exists() || !file.canRead() ) {
+
+		if (!file.exists() || !file.canRead()) {
 			logger.error("File doesn't exist or is unreadable");
 			throw new FileNotFoundException();
-		}		
-		
+		}
+
 		return true;
-		
+
 	}
-	
+
 	private void onCommonDocumentAdded(Document document) {
-		
+
 		documentManager.addDocument(document);
-										
+
 	}
 
 	private void onSignalDocumentAdded(SignalDocument document, boolean makeActive) {
 
-		if( applicationConfig.isAutoLoadDefaultMontage() ) {
+		if (applicationConfig.isAutoLoadDefaultMontage()) {
 			Montage defaultMontage = (Montage) montagePresetManager.getDefaultPreset();
-			if( defaultMontage != null ) {
-				if( defaultMontage.isCompatible(document) ) {
+			if (defaultMontage != null) {
+				if (defaultMontage.isCompatible(document)) {
 					document.setMontage(defaultMontage);
 				} else {
 					OptionPane.showDefaultMontageNotCompatible(optionPaneParent);
 				}
 			}
 		}
-	
+
 	}
 
 	private void onBookDocumentAdded(BookDocument document, boolean makeActive) {
 
-	
+
 	}
-	
+
 	private void onTagDocumentAdded(TagDocument document, boolean makeActive) {
 
-		if( makeActive ) {
+		if (makeActive) {
 			SignalDocument parent = document.getParent();
 			SignalView signalView = (SignalView) parent.getDocumentView();
-			if( !signalView.isComparingTags() ) {
+			if (!signalView.isComparingTags()) {
 				parent.setActiveTag(document);
 			}
 		}
 
 	}
-	
-	private boolean onSaveTagDocument(TagDocument tagDocument) throws SignalMLException {
-		
-		SignalDocument parent = tagDocument.getParent();
-		
-		TagSignalIdentification tagSignalIdentification = tagDocument.getTagSet().getTagSignalIdentification();
-		SignalChecksum tagChecksum = ( tagSignalIdentification != null ? tagSignalIdentification.getChecksum() : null );
 
-		if( tagSignalIdentification == null ) {
+	private boolean onSaveTagDocument(TagDocument tagDocument) throws SignalMLException {
+
+		SignalDocument parent = tagDocument.getParent();
+
+		TagSignalIdentification tagSignalIdentification = tagDocument.getTagSet().getTagSignalIdentification();
+		SignalChecksum tagChecksum = (tagSignalIdentification != null ? tagSignalIdentification.getChecksum() : null);
+
+		if (tagSignalIdentification == null) {
 			logger.debug("Tag has no file identification");
 			tagSignalIdentification = new TagSignalIdentification();
 			tagSignalIdentification.setFormatId(parent.getFormatName());
-			if( parent instanceof FileBackedDocument ) {
+			if (parent instanceof FileBackedDocument) {
 				tagSignalIdentification.setFileName(((FileBackedDocument) parent).getBackingFile().getName());
 			}
 			tagDocument.getTagSet().setTagSignalIdentification(tagSignalIdentification);
 		} else {
-			logger.debug("Tag identifies as filename [" + tagSignalIdentification.getFileName() + "] format [" + tagSignalIdentification.getFormatId() + "]" );				
+			logger.debug("Tag identifies as filename [" + tagSignalIdentification.getFileName() + "] format [" + tagSignalIdentification.getFormatId() + "]");
 		}
 
-		if( tagChecksum == null ) {
+		if (tagChecksum == null) {
 
 			tagChecksum = getSignalCheckSum(parent, "crc32");
 			tagSignalIdentification.setChecksum(tagChecksum);
-			logger.debug("Tag had no checksum, set signal checksum of [" + tagChecksum.getValue() + "]" );
-			
+			logger.debug("Tag had no checksum, set signal checksum of [" + tagChecksum.getValue() + "]");
+
 		}
-		
+
 		// save montage or montage info with tag
 		StyledTagSet tagSet = tagDocument.getTagSet();
-		if( applicationConfig.isSaveFullMontageWithTag() ) {
-			
+		if (applicationConfig.isSaveFullMontageWithTag()) {
+
 			Montage existingMontage = tagSet.getMontage();
 			Montage parentMontage = parent.getMontage();
-			
+
 			tagSet.setMontageInfo(null);
-			
-			if( existingMontage == null ) {
+
+			if (existingMontage == null) {
 				tagSet.setMontage(parentMontage);
 			}
-			else if( !existingMontage.isCompatible( parentMontage ) ) {
+			else if (!existingMontage.isCompatible(parentMontage)) {
 				int ans = OptionPane.showMontageDifferentOnTagSave(optionPaneParent);
 				// interpret ans as "whether to keep original montage"
-				switch( ans ) {
-				
+				switch (ans) {
+
 				case OptionPane.YES_OPTION :
 					// nothing to do
 					break;
-				
+
 				case OptionPane.NO_OPTION :
 					tagSet.setMontage(parentMontage);
 					break;
-					
+
 				default :
 					// cancel saving
 					return false;
-				
+
 				}
 			}
 			else {
 				// compatible montage - silently freshen it to include any reordering, label changes etc.
 				tagSet.setMontage(parentMontage);
 			}
-			
+
 		} else {
 			tagSet.setMontage(null);
-			tagSet.setMontageInfo( parent.getMontageInfo() );
+			tagSet.setMontageInfo(parent.getMontageInfo());
 		}
-		
+
 		return true;
-							
+
 	}
 
 	private SignalChecksum getSignalCheckSum(SignalDocument parent, String string) throws SignalMLException {
-		
+
 		SignalChecksumWorker checksummer = null;
-		
+
 		// wait for the precalculating worker
-		if( parent instanceof AbstractFileSignal ) {
-			
+		if (parent instanceof AbstractFileSignal) {
+
 			checksummer = ((AbstractFileSignal) parent).getPrecalculatingWorker();
-			if( checksummer != null ) {
-				
-				if( !checksummer.isDone() ) {
-				
+			if (checksummer != null) {
+
+				if (!checksummer.isDone()) {
+
 					checksummer.setPleaseWaitDialog(pleaseWaitDialog);
-	
+
 					pleaseWaitDialog.setActivity(messageSource.getMessage("activity.checksummingSignalFile"));
-					if( parent instanceof FileBackedDocument ) {
+					if (parent instanceof FileBackedDocument) {
 						File file = ((FileBackedDocument) parent).getBackingFile();
 						pleaseWaitDialog.configureForDeterminate(0, (int) file.length(), (int) checksummer.getBytesProcessed());
 					} else {
@@ -880,100 +880,100 @@ public class DocumentFlowIntegrator {
 					}
 					checksummer.normalPriority();
 					pleaseWaitDialog.waitAndShowDialogIn(optionPaneParent, 0, checksummer);
-					
+
 				}
-				
+
 				((AbstractFileSignal) parent).setPrecalculatingWorker(null);
-				
+
 			}
-			
+
 		}
-		
-		checksummer = new SignalChecksumWorker(parent, pleaseWaitDialog, new String[] { "crc32" } );
-		checksummer.execute();			
-		
+
+		checksummer = new SignalChecksumWorker(parent, pleaseWaitDialog, new String[] { "crc32" });
+		checksummer.execute();
+
 		pleaseWaitDialog.setActivity(messageSource.getMessage("activity.checksummingSignalFile"));
-		if( parent instanceof FileBackedDocument ) {
+		if (parent instanceof FileBackedDocument) {
 			File file = ((FileBackedDocument) parent).getBackingFile();
 			pleaseWaitDialog.configureForDeterminate(0, (int) file.length(), (int) checksummer.getBytesProcessed());
 		} else {
 			pleaseWaitDialog.configureForIndeterminate();
 		}
 		pleaseWaitDialog.waitAndShowDialogIn(optionPaneParent, 500, checksummer);
-		
+
 		SignalChecksum[] checksums;
 		try {
 			checksums = checksummer.get();
 		} catch (InterruptedException ex) {
-			logger.error( "Worker interrupted" );
+			logger.error("Worker interrupted");
 			throw new SignalMLException(ex);
 		} catch (ExecutionException ex) {
-			logger.error( "Worker failed to calculate checksum", ex.getCause() );
+			logger.error("Worker failed to calculate checksum", ex.getCause());
 			throw new SignalMLException(ex.getCause());
 		}
 
 		return checksums[0];
-	
+
 	}
-	
+
 	private void closeSignalDocument(SignalDocument document) {
-		
+
 		onCommonDocumentRemoved(document);
 		onSignalDocumentRemoved(document);
-		
+
 	}
 
 	private void closeBookDocument(BookDocument document) {
-		
+
 		onCommonDocumentRemoved(document);
 		onBookDocumentRemoved(document);
-		
+
 	}
-	
+
 	private void closeTagDocument(TagDocument document) {
-		
+
 		onCommonDocumentRemoved(document);
 		onTagDocumentRemoved(document);
-		
+
 	}
-	
+
 	private void onCommonDocumentRemoved(Document document) {
-		
+
 		documentManager.removeDocument(document);
-										
+
 	}
 
 	private void onSignalDocumentRemoved(SignalDocument document) {
 		// nothing to do
-	}		
+	}
 
 	private void onBookDocumentRemoved(BookDocument document) {
 		// nothing to do
-	}		
-	
+	}
+
 	private void onTagDocumentRemoved(TagDocument document) {
 
 		// this removes from tag list
 		document.setParent(null);
 
-	}		
-	
+	}
+
 	private boolean assertDocumentIsSaved(Document document, boolean saveAsOnly, boolean closeOnDiscard) throws IOException, SignalMLException {
 
 		boolean ok;
-		
-		if( document instanceof MutableDocument ) {
+
+		if (document instanceof MutableDocument) {
 			MutableDocument md = (MutableDocument) document;
-			if( !md.isSaved() ) {
-				
+			if (!md.isSaved()) {
+
 				// display document modification query
 				int res = OptionPane.showDocumentUnsaved(optionPaneParent,md);
-				if( res == OptionPane.YES_OPTION ) {
+				if (res == OptionPane.YES_OPTION) {
 					// the user elected to save
 					ok = saveDocument(document, saveAsOnly);
-				} else if( res == OptionPane.NO_OPTION ) {
+				} else if (res == OptionPane.NO_OPTION) {
 					// the user elected to discard
-					if( closeOnDiscard ) {
+					if (closeOnDiscard) {
 						closeDocument(document, false, true);
 					}
 					ok = true;
@@ -981,7 +981,7 @@ public class DocumentFlowIntegrator {
 					// canceled etc. - abort
 					ok = false;
 				}
-				
+
 			} else {
 				// the document is saved
 				ok = true;
@@ -992,123 +992,123 @@ public class DocumentFlowIntegrator {
 		}
 
 		return ok;
-		
+
 	}
-	
+
 	private boolean assertDocumentDependantsClosed(Document document, boolean force) throws IOException, SignalMLException {
-		
+
 		List<Document> childDocuments;
 		Document childDocument;
-		
+
 		childDocuments = document.getDependentDocuments();
-		if( !childDocuments.isEmpty() ) {
-			
+		if (!childDocuments.isEmpty()) {
+
 			// inform the user that dependent documents must be closed
 			int res = 0;
-			if( !force ) {
+			if (!force) {
 				res = OptionPane.showOtherDocumentsDepend(optionPaneParent);
 			}
-			if( force || res == OptionPane.YES_OPTION ) {
-				
+			if (force || res == OptionPane.YES_OPTION) {
+
 				List<Document> toClose = new LinkedList<Document>();
 				Iterator<Document> it = childDocuments.iterator();
 				boolean savedOk;
 				boolean dependantsOk;
-				
+
 				// check them
-				while( it.hasNext() ) {
-					
+				while (it.hasNext()) {
+
 					childDocument = it.next();
-					
-					synchronized( childDocument ) {
-						if( !force ) {
+
+					synchronized (childDocument) {
+						if (!force) {
 							savedOk = assertDocumentIsSaved(childDocument, false, false);
-							if( !savedOk ) {
+							if (!savedOk) {
 								// cancel parent operation
 								return false;
 							}
 						}
-						
+
 						dependantsOk = assertDocumentDependantsClosed(childDocument, force);
-						if( !dependantsOk ) {
+						if (!dependantsOk) {
 							// cancel parent operation
 							return false;
 						}
 					}
-					
+
 					toClose.add(childDocument);
-					
+
 				}
-				
+
 				// close them
 				it = toClose.iterator();
-				while( it.hasNext() ) {					
-					childDocument = it.next();						
-					synchronized( childDocument ) {
+				while (it.hasNext()) {
+					childDocument = it.next();
+					synchronized (childDocument) {
 						closeDocumentInternal(childDocument);
 					}
 				}
-				
+
 			} else {
 				return false;
 			}
-			
+
 		}
-			
+
 		return true;
-		
+
 	}
-	
+
 	private boolean collectRequiredSignalConfiguration(SignalMLDocument signalMLDocument, SignalParameterDescriptor spd) {
-				
+
 		spd.setCalibration(null);
-		if( signalMLDocument.isCalibrationCapable() ) {
+		if (signalMLDocument.isCalibrationCapable()) {
 			spd.setCalibrationEditable(true);
 		} else {
 			spd.setCalibrationEditable(false);
 		}
-		
-		if( signalMLDocument.isChannelCountCapable() ) {
+
+		if (signalMLDocument.isChannelCountCapable()) {
 			spd.setChannelCount(signalMLDocument.getChannelCount());
 			spd.setChannelCountEditable(false);
 		} else {
 			spd.setChannelCount(null);
 			spd.setChannelCountEditable(true);
 		}
-		
-		if( signalMLDocument.isSamplingFrequencyCapable() ) {
+
+		if (signalMLDocument.isSamplingFrequencyCapable()) {
 			spd.setSamplingFrequency(signalMLDocument.getSamplingFrequency());
 			spd.setSamplingFrequencyEditable(false);
 		} else {
 			spd.setSamplingFrequency(null);
 			spd.setSamplingFrequencyEditable(true);
 		}
-		
-		if( signalMLDocument.isCalibrationCapable() || !signalMLDocument.isSamplingFrequencyCapable() || !signalMLDocument.isChannelCountCapable() ) {
-		
+
+		if (signalMLDocument.isCalibrationCapable() || !signalMLDocument.isSamplingFrequencyCapable() || !signalMLDocument.isChannelCountCapable()) {
+
 			// additional configuration required
 
 			boolean ok = signalParametersDialog.showDialog(spd, true);
-			if( !ok ) {
+			if (!ok) {
 				return false;
 			}
-			
-			if( spd.isSamplingFrequencyEditable() ) {
+
+			if (spd.isSamplingFrequencyEditable()) {
 				signalMLDocument.setSamplingFrequency(spd.getSamplingFrequency());
 			}
-			if( spd.isChannelCountEditable() ) {
+			if (spd.isChannelCountEditable()) {
 				signalMLDocument.setChannelCount(spd.getChannelCount());
 			}
-			if( spd.isCalibrationEditable() ) {
+			if (spd.isCalibrationEditable()) {
 				signalMLDocument.setCalibration(spd.getCalibration());
 			}
 
 		}
-		
+
 		return true;
-		
+
 	}
-		
+
 	public MessageSourceAccessor getMessageSource() {
 		return messageSource;
 	}
@@ -1132,7 +1132,7 @@ public class DocumentFlowIntegrator {
 	public void setMrudRegistry(MRUDRegistry mrudRegistry) {
 		this.mrudRegistry = mrudRegistry;
 	}
-	
+
 	public SignalMLCodecManager getCodecManager() {
 		return codecManager;
 	}
@@ -1140,7 +1140,7 @@ public class DocumentFlowIntegrator {
 	public void setCodecManager(SignalMLCodecManager codecManager) {
 		this.codecManager = codecManager;
 	}
-	
+
 	public Component getOptionPaneParent() {
 		return optionPaneParent;
 	}
@@ -1148,7 +1148,7 @@ public class DocumentFlowIntegrator {
 	public void setOptionPaneParent(Component optionPaneParent) {
 		this.optionPaneParent = optionPaneParent;
 	}
-	
+
 	public ViewerFileChooser getFileChooser() {
 		return fileChooser;
 	}
@@ -1156,7 +1156,7 @@ public class DocumentFlowIntegrator {
 	public void setFileChooser(ViewerFileChooser fileChooser) {
 		this.fileChooser = fileChooser;
 	}
-	
+
 	public SignalParametersDialog getSignalParametersDialog() {
 		return signalParametersDialog;
 	}
@@ -1164,7 +1164,7 @@ public class DocumentFlowIntegrator {
 	public void setSignalParametersDialog(SignalParametersDialog signalParametersDialog) {
 		this.signalParametersDialog = signalParametersDialog;
 	}
-	
+
 	public ActionFocusManager getActionFocusManager() {
 		return actionFocusManager;
 	}
@@ -1172,7 +1172,7 @@ public class DocumentFlowIntegrator {
 	public void setActionFocusManager(ActionFocusManager actionFocusManager) {
 		this.actionFocusManager = actionFocusManager;
 	}
-		
+
 	public ApplicationConfiguration getApplicationConfig() {
 		return applicationConfig;
 	}
@@ -1196,5 +1196,5 @@ public class DocumentFlowIntegrator {
 	public void setPleaseWaitDialog(PleaseWaitDialog pleaseWaitDialog) {
 		this.pleaseWaitDialog = pleaseWaitDialog;
 	}
-		
+
 }

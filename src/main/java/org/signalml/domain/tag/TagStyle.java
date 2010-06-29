@@ -1,5 +1,5 @@
 /* TagStyle.java created 2007-09-28
- * 
+ *
  */
 
 package org.signalml.domain.tag;
@@ -21,7 +21,7 @@ import org.springframework.context.MessageSourceResolvable;
 
 /** TagStyle
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSourceResolvable, PropertyProvider {
@@ -29,27 +29,27 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 	private static final long serialVersionUID = 1L;
 
 	private SignalSelectionType type;
-	
+
 	private String name;
-	
+
 	private String description;
-		
+
 	private Color fillColor;
-	
+
 	// composite not used, not written to XML, so not propagated
-	
+
 	private Color outlineColor;
-	
+
 	private float outlineWidth;
-	
+
 	private float[] outlineDash;
-	
+
 	private KeyStroke keyStroke;
 
 	private Stroke outlineStroke;
-	
+
 	private boolean marker = false;
-	
+
 	private static final TagStyle defaultPageStyle = new TagStyle(SignalSelectionType.PAGE, "?", "Unknown", Color.RED, Color.RED.darker(), 1F, null, null, false);
 	private static final TagStyle defaultBlockStyle = new TagStyle(SignalSelectionType.BLOCK, "?", "Unknown", Color.RED, Color.RED.darker(), 1F, null, null, false);
 	private static final TagStyle defaultChannelStyle = new TagStyle(SignalSelectionType.CHANNEL, "?", "Unknown", Color.RED, Color.RED.darker(), 1F, null, null, false);
@@ -57,7 +57,7 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 	public TagStyle(SignalSelectionType type) {
 		this.type = type;
 	}
-	
+
 	public TagStyle(TagStyle style) {
 		this.type = style.type;
 		this.name = style.name;
@@ -69,7 +69,7 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 		this.keyStroke = style.keyStroke;
 		this.marker = style.marker;
 	}
-	
+
 	public TagStyle(SignalSelectionType type, String name, String description, Color fillColor, Color outlineColor, float outlineWidth, float[] outlineDash, KeyStroke keyStroke, boolean marker) {
 		this.type = type;
 		this.name = name;
@@ -81,7 +81,7 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 		this.keyStroke = keyStroke;
 		this.marker = marker;
 	}
-	
+
 	public TagStyle(SignalSelectionType type, String name, String description, Color fillColor, Color outlineColor, float outlineWidth) {
 		this.type = type;
 		this.name = name;
@@ -90,7 +90,7 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 		this.outlineColor = outlineColor;
 		this.outlineWidth = outlineWidth;
 	}
-	
+
 	public void setParameters(String name, String description, Color fillColor, Color outlineColor, float outlineWidth, float[] outlineDash, KeyStroke keyStroke, boolean marker) {
 		this.name = name;
 		this.description = description;
@@ -100,10 +100,10 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 		this.outlineDash = outlineDash;
 		this.keyStroke = keyStroke;
 		this.marker = marker;
-		
-		outlineStroke = null;		
+
+		outlineStroke = null;
 	}
-	
+
 	public void copyFrom(TagStyle style) {
 		this.name = style.name;
 		this.description = style.description;
@@ -113,14 +113,14 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 		this.outlineDash = style.outlineDash;
 		this.keyStroke = style.keyStroke;
 		this.marker = style.marker;
-		
+
 		outlineStroke = null;
 	}
-	
+
 	public SignalSelectionType getType() {
 		return type;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -136,9 +136,9 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 	public String getDescriptionOrName() {
-		return ( (description != null && !description.isEmpty()) ? description : name );
+		return ((description != null && !description.isEmpty()) ? description : name);
 	}
 
 	public Color getFillColor() {
@@ -176,7 +176,7 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 	}
 
 	public Stroke getOutlineStroke() {
-		if( outlineStroke == null ) {
+		if (outlineStroke == null) {
 			outlineStroke = new BasicStroke(outlineWidth,BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 10.0f, outlineDash, 0.0f);
 		}
 		return outlineStroke;
@@ -189,7 +189,7 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 	public void setKeyStroke(KeyStroke keyStroke) {
 		this.keyStroke = keyStroke;
 	}
-		
+
 	public boolean isMarker() {
 		return marker;
 	}
@@ -213,7 +213,7 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 	public static TagStyle getDefaultChannel() {
 		return defaultChannelStyle;
 	}
-	
+
 	@Override
 	public Object[] getArguments() {
 		return new Object[] { name, (description != null ? description : name) };
@@ -231,24 +231,24 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 
 	@Override
 	public List<LabelledPropertyDescriptor> getPropertyList() throws IntrospectionException {
-		
+
 		List<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
-		
-		list.add( new LabelledPropertyDescriptor("property.tagStyle.type", "type", TagStyle.class, "getType", null) );
-		list.add( new LabelledPropertyDescriptor("property.tagStyle.name", "name", TagStyle.class) );
-		list.add( new LabelledPropertyDescriptor("property.tagStyle.description", "description", TagStyle.class) );
-		list.add( new LabelledPropertyDescriptor("property.tagStyle.fillColor", "fillColor", TagStyle.class) );
-		list.add( new LabelledPropertyDescriptor("property.tagStyle.outlineColor", "outlineColor", TagStyle.class) );
-		list.add( new LabelledPropertyDescriptor("property.tagStyle.outlineWidth", "outlineWidth", TagStyle.class) );
-		list.add( new LabelledPropertyDescriptor("property.tagStyle.outlineDash", "outlineDash", TagStyle.class) );
-		list.add( new LabelledPropertyDescriptor("property.tagStyle.keyStroke", "keyStroke", TagStyle.class) );
-		
-		if( getType() == SignalSelectionType.CHANNEL ) {
-		
-			list.add( new LabelledPropertyDescriptor("property.tagStyle.marker", "marker", TagStyle.class) );
-			
+
+		list.add(new LabelledPropertyDescriptor("property.tagStyle.type", "type", TagStyle.class, "getType", null));
+		list.add(new LabelledPropertyDescriptor("property.tagStyle.name", "name", TagStyle.class));
+		list.add(new LabelledPropertyDescriptor("property.tagStyle.description", "description", TagStyle.class));
+		list.add(new LabelledPropertyDescriptor("property.tagStyle.fillColor", "fillColor", TagStyle.class));
+		list.add(new LabelledPropertyDescriptor("property.tagStyle.outlineColor", "outlineColor", TagStyle.class));
+		list.add(new LabelledPropertyDescriptor("property.tagStyle.outlineWidth", "outlineWidth", TagStyle.class));
+		list.add(new LabelledPropertyDescriptor("property.tagStyle.outlineDash", "outlineDash", TagStyle.class));
+		list.add(new LabelledPropertyDescriptor("property.tagStyle.keyStroke", "keyStroke", TagStyle.class));
+
+		if (getType() == SignalSelectionType.CHANNEL) {
+
+			list.add(new LabelledPropertyDescriptor("property.tagStyle.marker", "marker", TagStyle.class));
+
 		}
-		
+
 		return list;
 
 	}
@@ -257,10 +257,10 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 	public int compareTo(TagStyle o) {
 		return name.compareTo(o.name);
 	}
-	
+
 	@Override
 	public String toString() {
 		return getName();
 	}
-	
+
 }

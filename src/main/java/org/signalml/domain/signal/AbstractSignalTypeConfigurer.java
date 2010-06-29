@@ -1,5 +1,5 @@
 /* AbstractSignalTypeConfigurer.java created 2008-02-01
- * 
+ *
  */
 
 package org.signalml.domain.signal;
@@ -16,7 +16,7 @@ import org.signalml.domain.montage.filter.predefined.LowPassSampleFilter;
 
 /** AbstractSignalTypeConfigurer
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public abstract class AbstractSignalTypeConfigurer implements SignalTypeConfigurer {
@@ -29,13 +29,13 @@ public abstract class AbstractSignalTypeConfigurer implements SignalTypeConfigur
 
 	private static List<SampleFilterDefinition> getAllPredefinedFilters() {
 		ArrayList<SampleFilterDefinition> filters = new ArrayList<SampleFilterDefinition>();
-		filters.add( lowPassSampleFilter );
-		filters.add( bandPassSampleFilter );
-		filters.add( highPassSampleFilter );
-				
+		filters.add(lowPassSampleFilter);
+		filters.add(bandPassSampleFilter);
+		filters.add(highPassSampleFilter);
+
 		return Collections.unmodifiableList(filters);
 	}
-	
+
 	@Override
 	public int getPredefinedFilterCount() {
 		return predefinedFilters.size();
@@ -45,10 +45,10 @@ public abstract class AbstractSignalTypeConfigurer implements SignalTypeConfigur
 	public Collection<SampleFilterDefinition> getPredefinedFilters() {
 		return predefinedFilters;
 	}
-	
+
 	@Override
 	public SampleFilterDefinition getPredefinedFilterAt(int index) {
 		return predefinedFilters.get(index);
 	}
-	
+
 }

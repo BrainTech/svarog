@@ -1,5 +1,5 @@
 /* ResolvableString.java created 2007-10-14
- * 
+ *
  */
 
 package org.signalml.util;
@@ -9,8 +9,8 @@ import java.io.Serializable;
 import org.springframework.context.MessageSourceResolvable;
 
 /** This class provides a simple localized text message in the form of a
- *  MessageSourceResolvable. 
- * 
+ *  MessageSourceResolvable.
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ResolvableString implements Serializable, MessageSourceResolvable {
@@ -20,9 +20,9 @@ public class ResolvableString implements Serializable, MessageSourceResolvable {
 	private String[] codes;
 	private Object[] arguments;
 	private String defaultMessage;
-	
+
 	/** Constructs a message with one code, no attributes and the default message equal to the code.
-	 * 
+	 *
 	 * @param code the code
 	 */
 	public ResolvableString(String code) {
@@ -32,7 +32,7 @@ public class ResolvableString implements Serializable, MessageSourceResolvable {
 	}
 
 	/** Constructs a message with one code, given attributes and the default message equal to the code.
-	 * 
+	 *
 	 * @param code the code
 	 * @param arguments the arguments
 	 */
@@ -41,9 +41,9 @@ public class ResolvableString implements Serializable, MessageSourceResolvable {
 		this.arguments = arguments;
 		this.defaultMessage = code;
 	}
-	
+
 	/** Constructs a message with one code, given attributes and given default message.
-	 * 
+	 *
 	 * @param code the code
 	 * @param arguments the arguments
 	 * @param defaultMessage the default message
@@ -55,7 +55,7 @@ public class ResolvableString implements Serializable, MessageSourceResolvable {
 	}
 
 	/** Constructs the message with multiple codes, given attributes and given default message.
-	 * 
+	 *
 	 * @param codes the codes
 	 * @param arguments the arguments
 	 * @param defaultMessage the default message
@@ -80,7 +80,7 @@ public class ResolvableString implements Serializable, MessageSourceResolvable {
 	public String getDefaultMessage() {
 		return defaultMessage;
 	}
-	
+
 	/** Returns default message.
 	 */
 	@Override

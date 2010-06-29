@@ -1,5 +1,5 @@
 /* NewTagDialog.java created 2007-10-14
- * 
+ *
  */
 package org.signalml.app.view.dialog;
 
@@ -23,115 +23,115 @@ import org.springframework.validation.Errors;
 
 /** NewTagDialog
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class NewTagDialog extends AbstractDialog {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private NewTagPanel newTagPanel;
-	private PagingParametersPanel pagingParametersPanel; 
+	private PagingParametersPanel pagingParametersPanel;
 	private ApplicationConfiguration applicationConfig;
 
 	public NewTagDialog(MessageSourceAccessor messageSource, Window f, boolean isModal) {
 		super(messageSource, f, isModal);
 	}
-	
+
 	@Override
 	protected void initialize() {
 		setTitle(messageSource.getMessage("newTag.title"));
 		setResizable(false);
 		super.initialize();
 	}
-	
+
 	@Override
 	public JComponent createInterface() {
-				
-		JPanel interfacePanel = new JPanel( new BorderLayout() );
-		
+
+		JPanel interfacePanel = new JPanel(new BorderLayout());
+
 		newTagPanel = new NewTagPanel(messageSource);
 		pagingParametersPanel = new PagingParametersPanel(messageSource);
-		
-		interfacePanel.add( newTagPanel, BorderLayout.CENTER );
-		interfacePanel.add( pagingParametersPanel, BorderLayout.SOUTH );
-		
+
+		interfacePanel.add(newTagPanel, BorderLayout.CENTER);
+		interfacePanel.add(pagingParametersPanel, BorderLayout.SOUTH);
+
 		return interfacePanel;
 
 	}
-	
+
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 
 		NewTagDescriptor descriptor = (NewTagDescriptor) model;
-		
+
 		NewTagTypeMode mode = descriptor.getMode();
-		if( mode == NewTagTypeMode.EMPTY ) {
+		if (mode == NewTagTypeMode.EMPTY) {
 			newTagPanel.getEmptyRadio().setSelected(true);
-		} 
-		else if( mode == NewTagTypeMode.DEFAULT_SLEEP ) {
+		}
+		else if (mode == NewTagTypeMode.DEFAULT_SLEEP) {
 			newTagPanel.getDefaultSleepRadio().setSelected(true);
 		}
-		else if( mode == NewTagTypeMode.FROM_FILE ) {
+		else if (mode == NewTagTypeMode.FROM_FILE) {
 			newTagPanel.getFromFileRadio().setSelected(true);
 		}
 		else {
-			throw new SanityCheckException( "Unknown mode [" + mode + "]" );
+			throw new SanityCheckException("Unknown mode [" + mode + "]");
 		}
-		
+
 		File file = descriptor.getFile();
-		if( file != null && file.exists() ) {
+		if (file != null && file.exists()) {
 			newTagPanel.getFileChooser().setSelectedFile(file);
 		} else {
 			String lastPath = applicationConfig.getLastOpenTagPath();
-			if( lastPath == null ) {
+			if (lastPath == null) {
 				lastPath = System.getProperty("user.dir");
 			}
 			newTagPanel.getFileChooser().setCurrentDirectory(new File(lastPath));
 		}
-		
+
 		pagingParametersPanel.fillPanelFromModel(descriptor);
-		
+
 	}
 
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
 
 		NewTagDescriptor descriptor = (NewTagDescriptor) model;
-		
-		if( newTagPanel.getEmptyRadio().isSelected() ) {
+
+		if (newTagPanel.getEmptyRadio().isSelected()) {
 			descriptor.setMode(NewTagTypeMode.EMPTY);
 			descriptor.setFile(null);
 		}
-		else if( newTagPanel.getDefaultSleepRadio().isSelected() ) {
+		else if (newTagPanel.getDefaultSleepRadio().isSelected()) {
 			descriptor.setMode(NewTagTypeMode.DEFAULT_SLEEP);
 			descriptor.setFile(null);
-		} 
-		else if( newTagPanel.getFromFileRadio().isSelected() ) {
+		}
+		else if (newTagPanel.getFromFileRadio().isSelected()) {
 			descriptor.setMode(NewTagTypeMode.FROM_FILE);
 			descriptor.setFile(newTagPanel.getFileChooser().getSelectedFile());
 		}
-						
+
 		pagingParametersPanel.fillModelFromPanel(descriptor);
-		
+
 	}
 
 	@Override
 	public void validateDialog(Object model, Errors errors) throws SignalMLException {
-				
-		if( newTagPanel.getFromFileRadio().isSelected() ) {
+
+		if (newTagPanel.getFromFileRadio().isSelected()) {
 
 			EmbeddedFileChooser fileChooser = newTagPanel.getFileChooser();
-			
+
 			fileChooser.forceApproveSelection();
 			fileChooser.validateFile(errors, "file", false, false, false, false, true);
-						
+
 		}
-		
+
 		pagingParametersPanel.validatePanel(errors);
-		
+
 	}
-	
+
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
 		return NewTagDescriptor.class.isAssignableFrom(clazz);
@@ -144,5 +144,5 @@ public class NewTagDialog extends AbstractDialog {
 	public void setApplicationConfig(ApplicationConfiguration applicationConfig) {
 		this.applicationConfig = applicationConfig;
 	}
-	
+
 }

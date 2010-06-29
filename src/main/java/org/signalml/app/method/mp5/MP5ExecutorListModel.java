@@ -1,5 +1,5 @@
 /* MP5ExecutorListModel.java created 2008-02-08
- * 
+ *
  */
 
 package org.signalml.app.method.mp5;
@@ -8,7 +8,7 @@ import javax.swing.AbstractListModel;
 
 /** MP5ExecutorListModel
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class MP5ExecutorListModel extends AbstractListModel implements MP5ExecutorManagerListener {
@@ -16,7 +16,7 @@ public class MP5ExecutorListModel extends AbstractListModel implements MP5Execut
 	private static final long serialVersionUID = 1L;
 
 	protected MP5ExecutorManager manager;
-	
+
 	public MP5ExecutorListModel(MP5ExecutorManager manager) {
 		this.manager = manager;
 		manager.addMP5ExecutorManagerListener(this);
@@ -54,5 +54,5 @@ public class MP5ExecutorListModel extends AbstractListModel implements MP5Execut
 		int index = ev.getIndex();
 		fireIntervalRemoved(this, index, index);
 	}
-	
+
 }

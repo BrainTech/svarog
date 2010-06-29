@@ -1,5 +1,5 @@
 /* ApplicationTaskManagerDescriptor.java created 2008-02-15
- * 
+ *
  */
 
 package org.signalml.app.task;
@@ -16,7 +16,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /** ApplicationTaskManagerDescriptor
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 @XStreamAlias("tasks")
@@ -25,11 +25,11 @@ public class ApplicationTaskManagerDescriptor extends AbstractXMLConfiguration i
 	private static final long serialVersionUID = 1L;
 
 	private ArrayList<ApplicationTaskDescriptor> tasks;
-		
+
 	public ApplicationTaskManagerDescriptor() {
 		tasks = new ArrayList<ApplicationTaskDescriptor>();
 	}
-	
+
 	public ApplicationTaskManagerDescriptor(ArrayList<ApplicationTaskDescriptor> tasks) {
 		this.tasks = tasks;
 	}
@@ -42,10 +42,10 @@ public class ApplicationTaskManagerDescriptor extends AbstractXMLConfiguration i
 	public String getStandardFilename() {
 		return "tasks.xml";
 	}
-	
+
 	@Override
 	public XStream getStreamer() {
-		if( streamer == null ) {
+		if (streamer == null) {
 			streamer = createTaskManagerStreamer();
 		}
 		return streamer;
@@ -54,13 +54,13 @@ public class ApplicationTaskManagerDescriptor extends AbstractXMLConfiguration i
 	private XStream createTaskManagerStreamer() {
 		XStream streamer = XMLUtils.getDefaultStreamer();
 		Annotations.configureAliases(
-				streamer,
-				ApplicationTaskManagerDescriptor.class,
-				ApplicationTaskDescriptor.class
+		        streamer,
+		        ApplicationTaskManagerDescriptor.class,
+		        ApplicationTaskDescriptor.class
 		);
 		streamer.setMode(XStream.NO_REFERENCES);
-				
+
 		return streamer;
-	}	
+	}
 
 }

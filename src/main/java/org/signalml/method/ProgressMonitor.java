@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.method;
 
@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 
 /**
  * @author Oskar Kapala &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
- * 
+ *
  */
 public class ProgressMonitor implements Runnable {
 
@@ -36,12 +36,12 @@ public class ProgressMonitor implements Runnable {
 		if (progressFile.exists()) {
 			progressFile.delete();
 		}
-		
+
 		if (stopFile.exists()) {
 			stopFile.delete();
-		} 
+		}
 	}
-	
+
 	public void shutdown() {
 		synchronized (this) {
 			this.shutdown = true;
@@ -74,10 +74,10 @@ public class ProgressMonitor implements Runnable {
 					return;
 				}
 			}
-			
-			
+
+
 			synchronized (tracker) {
-				if( tracker.isRequestingAbort() ) {
+				if (tracker.isRequestingAbort()) {
 
 					try {
 						stopFile.createNewFile();
@@ -97,7 +97,7 @@ public class ProgressMonitor implements Runnable {
 
 				} else {
 
-				Scanner scanner = new Scanner(progressFile);
+					Scanner scanner = new Scanner(progressFile);
 					Scanner lineScanner = null;
 
 					while (scanner.hasNextLine()) {
@@ -116,7 +116,7 @@ public class ProgressMonitor implements Runnable {
 						synchronized (tracker) {
 
 							if (tracker != null) {
-								synchronized( tracker ) {
+								synchronized (tracker) {
 									if (firstTime) {
 										tracker.setTickerLimit(1, todo);
 										firstTime = false;
@@ -132,14 +132,14 @@ public class ProgressMonitor implements Runnable {
 								tracker.setTicker(1, done);
 								logger.debug("ProgressMonitor fished");
 								return;
-							} 
+							}
 
 						}
-						
+
 						lineScanner.close();
 
-					} 
-					
+					}
+
 					scanner.close();
 
 				}

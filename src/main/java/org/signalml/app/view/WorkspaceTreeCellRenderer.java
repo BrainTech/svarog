@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.app.view;
 
@@ -16,7 +16,7 @@ import org.signalml.app.document.ManagedDocumentType;
 
 /** WorkspaceTreeCellRenderer
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class WorkspaceTreeCellRenderer extends DefaultTreeCellRenderer {
@@ -25,32 +25,32 @@ public class WorkspaceTreeCellRenderer extends DefaultTreeCellRenderer {
 
 	@Override
 	public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
-		
+
 		JLabel label = (JLabel) super.getTreeCellRendererComponent(tree, value, selected, expanded, leaf, row, hasFocus);
-		
-		if( value instanceof Document ) {
+
+		if (value instanceof Document) {
 			ManagedDocumentType type = ManagedDocumentType.getForClass(((Document) value).getClass());
 			Icon icon = null;
-			if( type != null ) {
+			if (type != null) {
 				icon = type.getIcon();
 			}
-			if( icon != null ) {
+			if (icon != null) {
 				label.setIcon(icon);
 			}
-		}		
-		else if( value instanceof MRUDEntry ) {
+		}
+		else if (value instanceof MRUDEntry) {
 			ManagedDocumentType type = ((MRUDEntry) value).getDocumentType();
 			Icon icon = null;
-			if( type != null ) {
+			if (type != null) {
 				icon = type.getIcon();
 			}
-			if( icon != null ) {
+			if (icon != null) {
 				label.setIcon(icon);
-			}			
+			}
 		}
-		
+
 		return label;
-		
+
 	}
-	
+
 }

@@ -1,5 +1,5 @@
 /* SvarogApplet.java created 2008-01-17
- * 
+ *
  */
 
 package org.signalml.applet;
@@ -81,28 +81,28 @@ import com.thoughtworks.xstream.annotations.Annotations;
 
 /** SvarogApplet
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class SvarogApplet extends JApplet implements ViewFocusSelector {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	protected static final Logger logger = Logger.getLogger(SvarogApplet.class);
 
 	private Locale locale;
 	private Preferences preferences;
-	
+
 	private MessageSourceAccessor messageSource;
-			
+
 //	@SuppressWarnings("unused")
 //	private static File profileDir = null;
-	
+
 //	@SuppressWarnings("unused")
 //	private static GeneralConfiguration config = null;
 
 	private ApplicationConfiguration applicationConfig;
-		
+
 	private DefaultSignalMLCodecManager signalMLCodecManager;
 	private DefaultDocumentManager documentManager;
 	private DocumentDetector documentDetector;
@@ -116,144 +116,144 @@ public class SvarogApplet extends JApplet implements ViewFocusSelector {
 	private MP5ExecutorManager mp5ExecutorManager;
 
 	private XStream streamer = null;
-	
+
 	private ViewerAppletPane appletPane;
 
 	private MP5RemoteTokenExecutor tokenExecutor;
-	
+
 	@Override
 	public void init() {
-		
+
 		Log4jConfigurer.setWorkingDirSystemProperty("signalml.root");
-		
+
 		try {
 			Log4jConfigurer.initLogging("classpath:org/signalml/applet/logging/log4j_applet.properties");
-		} catch( FileNotFoundException ex ) {
+		} catch (FileNotFoundException ex) {
 			System.err.println("Critical error: no logging configuration");
 			System.exit(1);
 		}
-		
+
 		Util.dumpDebuggingInfo();
-		
+
 		preferences = Preferences.userRoot().node("org/signalml");
 		String localeString = preferences.get("locale", "");
-		if( localeString.isEmpty() ) {
+		if (localeString.isEmpty()) {
 			initializeFirstTime();
 		} else {
-			locale = new Locale( localeString );
+			locale = new Locale(localeString);
 		}
-						
+
 		LocaleContextHolder.setLocale(locale);
 		Locale.setDefault(locale);
-				
-		logger.debug( "Locale set to [" + locale.toString() + "]" );
-		
+
+		logger.debug("Locale set to [" + locale.toString() + "]");
+
 		logger.debug("Applet starting");
-		
-		if( messageSource == null ) {
+
+		if (messageSource == null) {
 			createMessageSource();
 		}
-		
+
 		// XXX replace security manager to allow for dynamic code
-		System.setSecurityManager( new SignalMLSecurityManager() );
-				
+		System.setSecurityManager(new SignalMLSecurityManager());
+
 		// TODO maybe react to exceptions in the same way?
 //		setupGUIExceptionHandler();
-	    	
+
 		createMainStreamer();
-		
+
 		createApplet();
 
-	    try {
-	        javax.swing.SwingUtilities.invokeAndWait(new Runnable() {
-	            public void run() {
-	                createGUI();
-	            }
-	        });
-	    } catch (Exception e) {
-	    	e.printStackTrace();
-	        System.err.println("createGUI didn't successfully complete");
-	    }	
-		
+		try {
+			javax.swing.SwingUtilities.invokeAndWait(new Runnable() {
+				public void run() {
+					createGUI();
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("createGUI didn't successfully complete");
+		}
+
 		logger.debug("Applet successfully created");
-		
+
 	}
 
 	private void createMainStreamer() {
 
 		streamer = XMLUtils.getDefaultStreamer();
 		Annotations.configureAliases(
-				streamer,
-				ApplicationConfiguration.class,
-				ZoomSignalSettings.class,
-				SignalFFTSettings.class,
-				GeneralConfiguration.class,
-				MainFrameConfiguration.class,
-				SignalMLCodecConfiguration.class,
-				SignalMLCodecDescriptor.class,
-				MRUDConfiguration.class,
-				MRUDEntry.class,
-				SignalMLMRUDEntry.class,
-				RawSignalMRUDEntry.class,
-				RawSignalDescriptor.class,
-				EegChannel.class,
-				MethodPresetManager.class,
-				MP5Parameters.class
+		        streamer,
+		        ApplicationConfiguration.class,
+		        ZoomSignalSettings.class,
+		        SignalFFTSettings.class,
+		        GeneralConfiguration.class,
+		        MainFrameConfiguration.class,
+		        SignalMLCodecConfiguration.class,
+		        SignalMLCodecDescriptor.class,
+		        MRUDConfiguration.class,
+		        MRUDEntry.class,
+		        SignalMLMRUDEntry.class,
+		        RawSignalMRUDEntry.class,
+		        RawSignalDescriptor.class,
+		        EegChannel.class,
+		        MethodPresetManager.class,
+		        MP5Parameters.class
 		);
-		
-		streamer.setMode(XStream.NO_REFERENCES);		
-		
+
+		streamer.setMode(XStream.NO_REFERENCES);
+
 	}
 
 	private void createApplet() {
-		
+
 		applicationConfig = new ApplicationConfiguration();
 		ConfigurationDefaults.setApplicationConfigurationDefaults(applicationConfig);
-				
+
 		applicationConfig.applySystemSettings();
 		signalMLCodecManager = new DefaultSignalMLCodecManager();
 
 		documentManager = new DefaultDocumentManager();
-				
+
 		documentDetector = new ExtensionBasedDocumentDetector();
-		
+
 		actionFocusManager = new ActionFocusManager();
-		
+
 		mp5ExecutorManager = new MP5ExecutorManager();
-		
+
 		tokenExecutor = new MP5RemoteTokenExecutor();
-		tokenExecutor.setUrl( ConfigurationDefaults.getDefaultEegPlSignalmlWsURL() );
+		tokenExecutor.setUrl(ConfigurationDefaults.getDefaultEegPlSignalmlWsURL());
 		String userName = getParameter("userName");
-		if( userName == null ) {
-			logger.warn( "No userName paremeter" );
+		if (userName == null) {
+			logger.warn("No userName paremeter");
 			userName = "";
 		}
 		String loginTimeString = getParameter("loginTime");
-		
+
 		Date loginTime = null;
-		if( loginTimeString == null || loginTimeString.isEmpty() ) {
-			logger.warn( "No loginTime parameter" );
+		if (loginTimeString == null || loginTimeString.isEmpty()) {
+			logger.warn("No loginTime parameter");
 			loginTime = null;
 		} else {
 			try {
 				loginTime = Util.parseTime(loginTimeString);
-				logger.info( "Login time parsed as [" + loginTime + "]" );
+				logger.info("Login time parsed as [" + loginTime + "]");
 			} catch (ParseException ex) {
-				logger.warn( "Bad loginTime parameter [" + loginTimeString + "]", ex );
+				logger.warn("Bad loginTime parameter [" + loginTimeString + "]", ex);
 				loginTime = null;
 			}
 		}
 		String token = getParameter("token");
-		if( token == null ) {
-			logger.warn( "No token parameter" );
+		if (token == null) {
+			logger.warn("No token parameter");
 			token = "";
 		}
-		tokenExecutor.setUserName( userName );
-		tokenExecutor.setLoginTime( loginTime );
-		tokenExecutor.setToken( token );
+		tokenExecutor.setUserName(userName);
+		tokenExecutor.setLoginTime(loginTime);
+		tokenExecutor.setToken(token);
 
-		tokenExecutor.setName( messageSource.getMessage("mp5Method.config.remoteApplet.name") );
-		
+		tokenExecutor.setName(messageSource.getMessage("mp5Method.config.remoteApplet.name"));
+
 		mp5ExecutorManager.addExecutor(tokenExecutor);
 
 		methodManager = new ApplicationMethodManager();
@@ -263,68 +263,68 @@ public class SvarogApplet extends JApplet implements ViewFocusSelector {
 		methodManager.setApplicationConfig(applicationConfig);
 		methodManager.setMp5ExecutorManager(mp5ExecutorManager);
 		methodManager.setStreamer(streamer);
-		
+
 		createMethods();
-						
+
 		taskManager = new ApplicationTaskManager();
-		taskManager.setMode( SignalMLOperationMode.APPLET );
+		taskManager.setMode(SignalMLOperationMode.APPLET);
 		taskManager.setMessageSource(messageSource);
 		taskManager.setMethodManager(methodManager);
-				
+
 		montagePresetManager = new MontagePresetManager();
-		
+
 		bookFilterPresetManager = new BookFilterPresetManager();
 
 		actionFocusManager.setMontagePresetManager(montagePresetManager);
-		
+
 		signalExportPresetManager = new SignalExportPresetManager();
 
 		fftFilterPresetManager = new FFTSampleFilterPresetManager();
-				
+
 	}
 
 	private void createMethods() {
 
 		try {
-			
+
 			try {
 				MP5Method mp5Method = (MP5Method) methodManager.registerMethod(MP5Method.class);
-				File tempDir = new File( System.getProperty("java.io.tmpdir") );
-				if( !tempDir.exists() ) {
+				File tempDir = new File(System.getProperty("java.io.tmpdir"));
+				if (!tempDir.exists()) {
 					throw new SignalMLException("No temp directory");
 				}
-				File mp5TempDir = new File( tempDir, "mp5" );
-				if( !mp5TempDir.exists() ) {
+				File mp5TempDir = new File(tempDir, "mp5");
+				if (!mp5TempDir.exists()) {
 					boolean mkDirOk = mp5TempDir.mkdir();
-					if( !mkDirOk ) {
-						throw new SignalMLException( "Failed to create mp5 dir [" + mp5TempDir.getAbsolutePath() + "]" );
+					if (!mkDirOk) {
+						throw new SignalMLException("Failed to create mp5 dir [" + mp5TempDir.getAbsolutePath() + "]");
 					}
 				}
 				mp5Method.setTempDirectory(mp5TempDir);
 				mp5Method.setExecutorLocator(mp5ExecutorManager);
 				MP5MethodDescriptor mp5Descriptor = new MP5MethodDescriptor(mp5Method);
 				methodManager.setMethodData(mp5Method, mp5Descriptor);
-			} catch( SignalMLException ex ) {
-				logger.error( "Failed to create mp5 method", ex );
+			} catch (SignalMLException ex) {
+				logger.error("Failed to create mp5 method", ex);
 				throw ex;
-			} catch( Throwable t ) {
-				logger.error( "Serious error - failed to create mp5 method", t );
+			} catch (Throwable t) {
+				logger.error("Serious error - failed to create mp5 method", t);
 				throw t;
 			}
-						
-		} catch( Throwable t ) {
+
+		} catch (Throwable t) {
 			UnavailableMethodDescriptor descriptor = new UnavailableMethodDescriptor(MP5MethodDescriptor.RUN_METHOD_STRING, t);
 			methodManager.addUnavailableMethod(descriptor);
 		}
-		
+
 	}
-	
+
 	private void createGUI() {
-	
-		logger.debug( "Creating applet GUI" );
-		
-		setLayout( new BorderLayout() );
-		
+
+		logger.debug("Creating applet GUI");
+
+		setLayout(new BorderLayout());
+
 		ViewerElementManager elementManager = new ViewerElementManager(SignalMLOperationMode.APPLET);
 		elementManager.setMessageSource(messageSource);
 		elementManager.setDocumentManager(documentManager);
@@ -341,22 +341,22 @@ public class SvarogApplet extends JApplet implements ViewFocusSelector {
 		elementManager.setMp5ExecutorManager(mp5ExecutorManager);
 		elementManager.setPreferences(preferences);
 		elementManager.configureImportedElements();
-		
+
 		appletPane = new ViewerAppletPane(this);
 		appletPane.setMessageSource(messageSource);
 		appletPane.setElementManager(elementManager);
 		appletPane.initialize();
-		
-		getRootPane().setJMenuBar( elementManager.getMenuBar() );
-		
-		add( appletPane, BorderLayout.CENTER );
-				
-		logger.debug( "Successfully created applet GUI" );
-		
+
+		getRootPane().setJMenuBar(elementManager.getMenuBar());
+
+		add(appletPane, BorderLayout.CENTER);
+
+		logger.debug("Successfully created applet GUI");
+
 		// TODO remove this test (or convert to legitimate feature, maybe somewhere in file menu)
 		JMenuBar menuBar = elementManager.getMenuBar();
 		JMenu testMenu = new JMenu("Test");
-		
+
 		AbstractAction testAction = new AbstractAction("Test server") {
 
 			private static final long serialVersionUID = 1L;
@@ -365,91 +365,91 @@ public class SvarogApplet extends JApplet implements ViewFocusSelector {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					
+
 					MP5RemoteConnector connector = MP5RemoteConnector.getSharedInstance();
-					
+
 					Credentials credentials = new Credentials();
-					
+
 					SharedSecretCredentials sharedSecretCredentials = new SharedSecretCredentials();
 					sharedSecretCredentials.setUserName(tokenExecutor.getUserName());
 					sharedSecretCredentials.setLoginTime(tokenExecutor.getLoginTime());
 					sharedSecretCredentials.setToken(tokenExecutor.getToken());
-					
+
 					credentials.setSharedSecretCredentials(sharedSecretCredentials);
-					
+
 					TestConnectionRequest request = new TestConnectionRequest();
 					request.setCredentials(credentials);
 					request.setHelloString("hello");
-					
+
 					connector.testConnection(tokenExecutor.getUrl(), request);
-					
+
 				} catch (Exception ex) {
-					logger.error( "Failed", ex );
+					logger.error("Failed", ex);
 					OptionPane.showMessageDialog(SvarogApplet.this, ex.getMessage(), "Failed, see console for details", OptionPane.ERROR_MESSAGE);
 					return;
 				}
-				
+
 				OptionPane.showMessage(SvarogApplet.this, "mp5Method.config.remote.testConnectionSuccess");
-				
+
 			}
-			
+
 		};
-		
+
 		testMenu.add(testAction);
 		menuBar.add(testMenu);
-		
+
 	}
-	
+
 	@Override
 	public void start() {
-		logger.debug( "Applet started" );
-		super.start();		
+		logger.debug("Applet started");
+		super.start();
 	}
-	
+
 	@Override
 	public void stop() {
-		logger.debug( "Applet stopped" );
+		logger.debug("Applet stopped");
 		super.stop();
 	}
 
 	@Override
 	public void destroy() {
-		
+
 		Method[] methods = methodManager.getMethods();
-		for( Method method : methods ) {
-			if( method instanceof DisposableMethod ) {
+		for (Method method : methods) {
+			if (method instanceof DisposableMethod) {
 				try {
 					((DisposableMethod) method).dispose();
 				} catch (SignalMLException ex) {
-					logger.error( "Failed to dispose method [" + method.getName() + "]", ex );
+					logger.error("Failed to dispose method [" + method.getName() + "]", ex);
 				}
 			}
 		}
-				
+
 		super.destroy();
-		
-		logger.debug( "Applet destroyed" );
-		
+
+		logger.debug("Applet destroyed");
+
 	}
-	
+
 	@Override
 	public Locale getLocale() {
 		return locale;
 	}
-	
+
 	public MessageSourceAccessor getMessageSource() {
 		return messageSource;
 	}
-	
+
 	private void initializeFirstTime() {
-		
-		if( locale == null ) {
+
+		if (locale == null) {
 			try {
-				SwingUtilities.invokeAndWait( new Runnable() {
+				SwingUtilities.invokeAndWait(new Runnable() {
 					@Override
 					public void run() {
 						locale = OptionPane.showLanguageOption();
-					}				
+					}
 				});
 			} catch (InterruptedException ex) {
 				logger.error("Language choice error", ex);
@@ -459,11 +459,11 @@ public class SvarogApplet extends JApplet implements ViewFocusSelector {
 				throw new SanityCheckException(ex);
 			}
 		}
-		if( locale == null ) {
+		if (locale == null) {
 			logger.warn("Language choice canceled");
 			locale = Locale.getDefault();
 		}
-		
+
 		preferences.put("locale", locale.toString());
 
 	}
@@ -471,11 +471,11 @@ public class SvarogApplet extends JApplet implements ViewFocusSelector {
 	private void createMessageSource() {
 		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
 		messageSource.setCacheSeconds(-1);
-		messageSource.setBasenames( new String[] {
-				"classpath:org/signalml/app/resource/message",
-				"classpath:org/signalml/resource/mp5",
-				"classpath:org/signalml/resource/wsmessage"
-		});
+		messageSource.setBasenames(new String[] {
+		                                   "classpath:org/signalml/app/resource/message",
+		                                   "classpath:org/signalml/resource/mp5",
+		                                   "classpath:org/signalml/resource/wsmessage"
+		                           });
 
 		this.messageSource = new MessageSourceAccessor(messageSource, locale);
 		OptionPane.setMessageSource(this.messageSource);
@@ -496,5 +496,5 @@ public class SvarogApplet extends JApplet implements ViewFocusSelector {
 	public void removeActionFocusListener(ActionFocusListener listener) {
 		// ignored
 	}
-	
+
 }

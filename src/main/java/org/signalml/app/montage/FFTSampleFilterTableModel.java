@@ -1,5 +1,5 @@
 /* FFTSampleFilterTableModel.java created 2008-02-03
- * 
+ *
  */
 
 package org.signalml.app.montage;
@@ -13,25 +13,25 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** FFTSampleFilterTableModel
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class FFTSampleFilterTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	protected static final Logger logger = Logger.getLogger(FFTSampleFilterTableModel.class);
-	
+
 	public static final int FREQUENCY_COLUMN = 0;
 	public static final int COEFFICIENT_COLUMN = 1;
 
 	private FFTSampleFilter filter;
 	private MessageSourceAccessor messageSource;
-			
+
 	public FFTSampleFilterTableModel(MessageSourceAccessor messageSource) {
 		this.messageSource = messageSource;
 	}
-	
+
 	public MessageSourceAccessor getMessageSource() {
 		return messageSource;
 	}
@@ -39,9 +39,9 @@ public class FFTSampleFilterTableModel extends AbstractTableModel {
 	public FFTSampleFilter getFilter() {
 		return filter;
 	}
-	
-	public void setFilter( FFTSampleFilter filter ) {
-		if( this.filter != filter ) {
+
+	public void setFilter(FFTSampleFilter filter) {
+		if (this.filter != filter) {
 			this.filter = filter;
 			fireTableDataChanged();
 		}
@@ -54,7 +54,7 @@ public class FFTSampleFilterTableModel extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		if( filter == null ) {
+		if (filter == null) {
 			return 0;
 		}
 		return filter.getRangeCount();
@@ -64,70 +64,70 @@ public class FFTSampleFilterTableModel extends AbstractTableModel {
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
 		return false;
 	}
-	
+
 	@Override
 	public String getColumnName(int column) {
 
-		switch( column ) {
-		
+		switch (column) {
+
 		case FREQUENCY_COLUMN :
 			return messageSource.getMessage("editFFTSampleFilter.table.frequencyRange");
-					
+
 		case COEFFICIENT_COLUMN:
 			return messageSource.getMessage("editFFTSampleFilter.table.coefficient");
-						
+
 		default :
 			throw new IndexOutOfBoundsException();
-		
+
 		}
-		
+
 	}
-	
+
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 
-		switch( columnIndex ) {
-		
+		switch (columnIndex) {
+
 		case FREQUENCY_COLUMN :
-			return String.class;
-		
+				return String.class;
+
 		case COEFFICIENT_COLUMN :
 			return Double.class;
-									
+
 		default :
 			throw new IndexOutOfBoundsException();
-		
+
 		}
-	
+
 	}
-	
+
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		
-		switch( columnIndex ) {
-		
+
+		switch (columnIndex) {
+
 		case FREQUENCY_COLUMN :
 			Range range = filter.getRangeAt(rowIndex);
 			float lowFrequency = range.getLowFrequency();
 			float highFrequency = range.getHighFrequency();
-			if( lowFrequency < highFrequency ) {
+			if (lowFrequency < highFrequency) {
 				return lowFrequency + " - " + highFrequency;
 			} else {
 				return lowFrequency + " - Fn";
 			}
-					
+
 		case COEFFICIENT_COLUMN :
 			return filter.getRangeAt(rowIndex).getCoefficient();
-									
+
 		default :
 			throw new IndexOutOfBoundsException();
-		
+
 		}
 
 	}
-	
+
 	public void onUpdate() {
 		fireTableDataChanged();
 	}
-	
+
 }

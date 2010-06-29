@@ -24,8 +24,8 @@ public class SegmentHeaderV5 extends FormatComponentV5 implements StandardBookSe
 	public SegmentHeaderV5() {
 		;
 	}
-	
-    public SegmentHeaderV5(BookLibraryV5 bookLibraryV5) {
+
+	public SegmentHeaderV5(BookLibraryV5 bookLibraryV5) {
 		parent=bookLibraryV5;
 	}
 
@@ -33,156 +33,156 @@ public class SegmentHeaderV5 extends FormatComponentV5 implements StandardBookSe
 		type=(int)stream.readByte();
 		size=stream.readInt();
 
-        Utils.log("READ_SEG: "+type+" "+FormatComponentV5.toName(type)
-     		     +" SIZE: "+size+ " POS: "+stream.getFilePointer());
-		
-        switch(type) {
-			   default:
-			   case COMMENT_SEGMENT_IDENTITY:
-  				    stream.skipBytes(size);
-			        break;
-			   case OFFSET_SEGMENT_IDENTITY:
-			        {
-			            offsetNumber=stream.readShort();
-	                    offsetDimension=stream.readShort();
-	                    
-	                    parent.setDimBase(offsetDimension);
-	                    
-						int codeOfSecondarySegment=(int)stream.readByte();
-                        int sizeOfSecondaryDataSegment=stream.readInt();
+		Utils.log("READ_SEG: "+type+" "+FormatComponentV5.toName(type)
+		          +" SIZE: "+size+ " POS: "+stream.getFilePointer());
 
-                        type=codeOfSecondarySegment;
-                        switch(codeOfSecondarySegment) {
-							case SIGNAL_SEGMENT_IDENTITY:
-								 channelNumber=stream.readShort();
-                                 stream.skipBytes(sizeOfSecondaryDataSegment-2);
-                                 break;
-                            case ATOMS_SEGMENT_IDENTITY:
-                            	 channelNumber=stream.readShort();
-                                 stream.skipBytes(sizeOfSecondaryDataSegment);
-                                 break;
-					    }
-					}
-			        break;
+		switch (type) {
+		default:
+		case COMMENT_SEGMENT_IDENTITY:
+			stream.skipBytes(size);
+			break;
+		case OFFSET_SEGMENT_IDENTITY:
+		{
+			offsetNumber=stream.readShort();
+			offsetDimension=stream.readShort();
+
+			parent.setDimBase(offsetDimension);
+
+			int codeOfSecondarySegment=(int)stream.readByte();
+			int sizeOfSecondaryDataSegment=stream.readInt();
+
+			type=codeOfSecondarySegment;
+			switch (codeOfSecondarySegment) {
+			case SIGNAL_SEGMENT_IDENTITY:
+				channelNumber=stream.readShort();
+				stream.skipBytes(sizeOfSecondaryDataSegment-2);
+				break;
+			case ATOMS_SEGMENT_IDENTITY:
+				channelNumber=stream.readShort();
+				stream.skipBytes(sizeOfSecondaryDataSegment);
+				break;
+			}
+		}
+		break;
 		}
 	}
 
-    public void Read(RandomAccessFile stream) throws IOException {
-		   int len;
+	public void Read(RandomAccessFile stream) throws IOException {
+		int len;
 
-           type=(int)stream.readByte();
-           size=stream.readInt();
+		type=(int)stream.readByte();
+		size=stream.readInt();
 
-           Utils.log("READ_SEG: "+type+" "+FormatComponentV5.toName(type)
-        		     +" "+size+ " POS: "+stream.getFilePointer());
+		Utils.log("READ_SEG: "+type+" "+FormatComponentV5.toName(type)
+		          +" "+size+ " POS: "+stream.getFilePointer());
 
-           switch(type) {
-			   case ATOMS_SEGMENT_IDENTITY:
-			   {
-			   	  channelNumber=stream.readShort();
+		switch (type) {
+		case ATOMS_SEGMENT_IDENTITY:
+		{
+			channelNumber=stream.readShort();
 
-			   	 Utils.log("ATOMS_SEGMENT_IDENTITY: "+channelNumber);
+			Utils.log("ATOMS_SEGMENT_IDENTITY: "+channelNumber);
 
-			      atoms=new Vector<AtomV5>();
-			      int pos=2;
-			      
-			      while(pos<size) {
-			            AtomV5 atom=new AtomV5();
+			atoms=new Vector<AtomV5>();
+			int pos=2;
 
-			            atom.Read(stream);
-                        
-			            pos+=atom.Size();
-			            atoms.add(atom);
-			      }
-			      Utils.log("end: "+pos);
-			    }
-			    break;
+			while (pos<size) {
+				AtomV5 atom=new AtomV5();
 
-			   case COMMENT_SEGMENT_IDENTITY:
-			        {
-						StringBuffer buff=new StringBuffer();
-						for(int i=0 ; i<size ; i++) {
-							char c=(char)stream.readByte();
-							if(c!='\0') {
-						   	   buff.append(c);
-						    }
-						}
-						comment=buff.toString();
+				atom.Read(stream);
 
-						 Utils.log("COMMENT_SEGMENT_IDENTITY: "+comment);
-				    }
-			        break;
-			   case OFFSET_SEGMENT_IDENTITY:
-			        {
-                        offsetNumber=stream.readShort();
-                        offsetDimension=stream.readShort();
+				pos+=atom.Size();
+				atoms.add(atom);
+			}
+			Utils.log("end: "+pos);
+		}
+		break;
 
-	                    parent.setDimBase(offsetDimension);
+		case COMMENT_SEGMENT_IDENTITY:
+		{
+			StringBuffer buff=new StringBuffer();
+			for (int i=0 ; i<size ; i++) {
+				char c=(char)stream.readByte();
+				if (c!='\0') {
+					buff.append(c);
+				}
+			}
+			comment=buff.toString();
 
-	                    Utils.log("offsetNumber: "+offsetNumber+ " "+
-                        		"offsetDimension: "+offsetDimension);
-                        
-                        int codeOfSecondarySegment=(int)stream.readByte();
-                        int sizeOfSecondaryDataSegment=stream.readInt();
+			Utils.log("COMMENT_SEGMENT_IDENTITY: "+comment);
+		}
+		break;
+		case OFFSET_SEGMENT_IDENTITY:
+		{
+			offsetNumber=stream.readShort();
+			offsetDimension=stream.readShort();
 
-                        Utils.log("SEG:"+codeOfSecondarySegment+" "+
-                        		  FormatComponentV5.toName(codeOfSecondarySegment)
-                        		  +" "+sizeOfSecondaryDataSegment);
+			parent.setDimBase(offsetDimension);
 
-                        switch(codeOfSecondarySegment) {
-							case SIGNAL_SEGMENT_IDENTITY:
-							     type=codeOfSecondarySegment;
-							     channelNumber=stream.readShort();
+			Utils.log("offsetNumber: "+offsetNumber+ " "+
+			          "offsetDimension: "+offsetDimension);
 
-                                 len=(sizeOfSecondaryDataSegment-2)/4;
+			int codeOfSecondarySegment=(int)stream.readByte();
+			int sizeOfSecondaryDataSegment=stream.readInt();
 
-                                 Utils.log("SIGNAL_SEGMENT_IDENTITY: "+len);
+			Utils.log("SEG:"+codeOfSecondarySegment+" "+
+			          FormatComponentV5.toName(codeOfSecondarySegment)
+			          +" "+sizeOfSecondaryDataSegment);
 
-                                 signal=new float[len];
-                                 for(int i=0 ; i<len ; i++) {
-									 signal[i]=stream.readFloat();
-								 }
-							     break;
-							case ATOMS_SEGMENT_IDENTITY:
-							     {
-							       type=codeOfSecondarySegment;
-							       channelNumber=stream.readShort();
+			switch (codeOfSecondarySegment) {
+			case SIGNAL_SEGMENT_IDENTITY:
+				type=codeOfSecondarySegment;
+				channelNumber=stream.readShort();
 
-							       Utils.log("ATOMS_SEGMENT_IDENTITY: "+channelNumber);
+				len=(sizeOfSecondaryDataSegment-2)/4;
 
-                                   atoms=new Vector<AtomV5>();
-                                   int pos=2;
-                                 
-                                   while(pos<sizeOfSecondaryDataSegment) {
-                                       AtomV5 atom=new AtomV5();
+				Utils.log("SIGNAL_SEGMENT_IDENTITY: "+len);
 
-                                       atom.Read(stream);
-                                     
-                                       pos+=atom.Size();
-                                       atoms.add(atom);
-							       }
-                                   Utils.log("end: "+pos);
-							     }
-							     break;
-						}
-				    }
-			        break;
-		   }
-    }
+				signal=new float[len];
+				for (int i=0 ; i<len ; i++) {
+					signal[i]=stream.readFloat();
+				}
+				break;
+			case ATOMS_SEGMENT_IDENTITY:
+			{
+				type=codeOfSecondarySegment;
+				channelNumber=stream.readShort();
+
+				Utils.log("ATOMS_SEGMENT_IDENTITY: "+channelNumber);
+
+				atoms=new Vector<AtomV5>();
+				int pos=2;
+
+				while (pos<sizeOfSecondaryDataSegment) {
+					AtomV5 atom=new AtomV5();
+
+					atom.Read(stream);
+
+					pos+=atom.Size();
+					atoms.add(atom);
+				}
+				Utils.log("end: "+pos);
+			}
+			break;
+			}
+		}
+		break;
+		}
+	}
 
 	public StandardBookAtom getAtomAt(int index) {
-	    AtomV5 atom=atoms.elementAt(index);
-	    
-	    if(atom.conv==false) {
-	       atom.conv=true;  
-	       atom.iteration=index;
-	       atom.baseSize=parent.getDimBase();
-	       atom.samplingFreq=parent.getSamplingFreq();
-           atom.amplitude*=parent.getConvFactor();
-	    }
+		AtomV5 atom=atoms.elementAt(index);
+
+		if (atom.conv==false) {
+			atom.conv=true;
+			atom.iteration=index;
+			atom.baseSize=parent.getDimBase();
+			atom.samplingFreq=parent.getSamplingFreq();
+			atom.amplitude*=parent.getConvFactor();
+		}
 		return atom;
 	}
-	
+
 	public int getAtomCount() {
 		return atoms.size();
 	}
@@ -196,14 +196,14 @@ public class SegmentHeaderV5 extends FormatComponentV5 implements StandardBookSe
 	}
 
 	public Object getProperty(String name) throws IllegalArgumentException {
-		throw new IllegalArgumentException("No properties"); 
+		throw new IllegalArgumentException("No properties");
 	}
 
 	public Enumeration<String> getPropertyNames() {
 		Vector<String> names = new Vector<String>();
-        return names.elements(); 
+		return names.elements();
 	}
-	
+
 	public int getSegmentLength() {
 		return parent.getDimBase();
 	}
@@ -250,62 +250,62 @@ public class SegmentHeaderV5 extends FormatComponentV5 implements StandardBookSe
 
 	private int getSizeOfAtoms() {
 		int sum=0, len=atoms.size();
-		for(int i=0 ; i<len ; i++) {
+		for (int i=0 ; i<len ; i++) {
 			sum+=atoms.elementAt(i).SizeOfAtom();
 		}
 		return sum;
 	}
-	
+
 	private int getSizeOfSegment() {
 		int sum=0;
-		
-		if(signal!=null) {
-		   sum+=4*signal.length+1+2+4;
+
+		if (signal!=null) {
+			sum+=4*signal.length+1+2+4;
 		}
-		if(atoms.size()!=0) {
-		   sum+=getSizeOfAtoms()+1+2+4;
+		if (atoms.size()!=0) {
+			sum+=getSizeOfAtoms()+1+2+4;
 		}
 		return sum;
 	}
-	
+
 	public int getSize() {
 		return getSizeOfSegment();
 	}
-	
+
 	public void Write(DataOutputStream stream) throws IOException {
-		if(comment!=null) {
-		   stream.writeByte(COMMENT_SEGMENT_IDENTITY);
-		   stream.writeInt(comment.length());	
-		   stream.writeBytes(comment);
+		if (comment!=null) {
+			stream.writeByte(COMMENT_SEGMENT_IDENTITY);
+			stream.writeInt(comment.length());
+			stream.writeBytes(comment);
 		}
-		
-		if(signal!=null || atoms.size()!=0) {
-		   stream.writeByte(OFFSET_SEGMENT_IDENTITY);
-		   stream.writeInt(4+getSizeOfSegment());
-		   stream.writeShort(this.offsetNumber);
-		   stream.writeShort(this.offsetDimension);
+
+		if (signal!=null || atoms.size()!=0) {
+			stream.writeByte(OFFSET_SEGMENT_IDENTITY);
+			stream.writeInt(4+getSizeOfSegment());
+			stream.writeShort(this.offsetNumber);
+			stream.writeShort(this.offsetDimension);
 		}
-		
-		if(signal!=null) {
-			 stream.writeByte(SIGNAL_SEGMENT_IDENTITY);
-			 stream.writeInt(4*signal.length+2);
-			 stream.writeShort(channelNumber);
-			 
-			 for(int i=0 ; i<signal.length ; i++) {
-				 stream.writeFloat(signal[i]);
-			 }
+
+		if (signal!=null) {
+			stream.writeByte(SIGNAL_SEGMENT_IDENTITY);
+			stream.writeInt(4*signal.length+2);
+			stream.writeShort(channelNumber);
+
+			for (int i=0 ; i<signal.length ; i++) {
+				stream.writeFloat(signal[i]);
+			}
 		}
-		
+
 		int len=atoms.size();
-		if(len!=0) {
-		   stream.writeByte(ATOMS_SEGMENT_IDENTITY);
-		   stream.writeInt(getSizeOfAtoms());
-		   stream.writeShort(channelNumber);
-		   
-		   for(int i=0 ; i<len ; i++) {
-			   AtomV5 atom=atoms.elementAt(i);
-			   atom.Write(stream);
-		   }
+		if (len!=0) {
+			stream.writeByte(ATOMS_SEGMENT_IDENTITY);
+			stream.writeInt(getSizeOfAtoms());
+			stream.writeShort(channelNumber);
+
+			for (int i=0 ; i<len ; i++) {
+				AtomV5 atom=atoms.elementAt(i);
+				atom.Write(stream);
+			}
 		}
 	}
 

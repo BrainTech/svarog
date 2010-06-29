@@ -1,5 +1,5 @@
 /* MP5Method.java created 2007-10-03
- * 
+ *
  */
 
 package org.signalml.method.mp5;
@@ -43,7 +43,7 @@ import com.thoughtworks.xstream.annotations.Annotations;
 
 /** MP5Method
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class MP5Method extends AbstractMethod implements TrackableMethod, SerializableMethod, CleanupMethod {
@@ -95,7 +95,7 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 
 		MP5Data data = (MP5Data) dataObj;
 
-		tracker.setMessage( new ResolvableString("mp5Method.message.creatingFiles") );		
+		tracker.setMessage(new ResolvableString("mp5Method.message.creatingFiles"));
 		createWorkingDirectory(data);
 		File workingDirectory = data.getWorkingDirectory();
 
@@ -103,60 +103,60 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 
 		int totalSegmentCount = sampleSource.getSegmentCount();
 
-		int segment = 0;		
-		if( isDataSuspended(data) ) {
+		int segment = 0;
+		if (isDataSuspended(data)) {
 			segment = data.getCompletedSegments();
-			data.setSuspended(false);			
+			data.setSuspended(false);
 		}
 
-		synchronized( tracker) {
-			tracker.setTickerLimits(new int[] { totalSegmentCount, 1, 1, 1 } );
-			tracker.setTickers(new int[] { segment, 0, 0, 0 } );
+		synchronized (tracker) {
+			tracker.setTickerLimits(new int[] { totalSegmentCount, 1, 1, 1 });
+			tracker.setTickers(new int[] { segment, 0, 0, 0 });
 		}
 
-		MP5Executor executor = executorLocator.findExecutor( data.getExecutorUID() );
-		if( executor == null ) {
-			throw new ComputationException( "Executor not found [" + executor + "]" );
+		MP5Executor executor = executorLocator.findExecutor(data.getExecutorUID());
+		if (executor == null) {
+			throw new ComputationException("Executor not found [" + executor + "]");
 		}
-		if( executorConfigurer != null ) {
+		if (executorConfigurer != null) {
 			executorConfigurer.configure(executor);
 		}
 
-		logger.debug("Using mp5 executor [" + executor + "]" );
+		logger.debug("Using mp5 executor [" + executor + "]");
 
 		File segmentBookFile;
 		boolean segmentOk;
 
-		while( segment < totalSegmentCount ) {
+		while (segment < totalSegmentCount) {
 
-			if( testAbortSuspend(tracker,data,segment) ) {
+			if (testAbortSuspend(tracker,data,segment)) {
 				return null;
 			}
 
-			tracker.setMessage( new ResolvableString("mp5Method.message.processingSegment", new Object[] { segment+1 } ) );
+			tracker.setMessage(new ResolvableString("mp5Method.message.processingSegment", new Object[] { segment+1 }));
 
-			segmentBookFile = new File( workingDirectory, "result_" + Integer.toString(segment) + ".b" );
+			segmentBookFile = new File(workingDirectory, "result_" + Integer.toString(segment) + ".b");
 
 			segmentOk = executor.execute(data, segment, segmentBookFile, tracker);
-			if( !segmentOk ) {
+			if (!segmentOk) {
 				testAbortSuspend(tracker,data,segment);
 				return null;
 			}
 
 			segment++;
-			tracker.setTickers(new int[] { segment, 0, 0, 0 } );
+			tracker.setTickers(new int[] { segment, 0, 0, 0 });
 
 		}
 
-		tracker.setMessage( new ResolvableString("mp5Method.message.collectingResults") );
+		tracker.setMessage(new ResolvableString("mp5Method.message.collectingResults"));
 
-		
+
 		//
-		// Collect partial books from mp5 native code into one 
+		// Collect partial books from mp5 native code into one
 		//
-		
-		File collectedBookFile = new File( workingDirectory, "collected.b" );
-		if( collectedBookFile.exists() ) {
+
+		File collectedBookFile = new File(workingDirectory, "collected.b");
+		if (collectedBookFile.exists()) {
 			collectedBookFile.delete();
 		}
 
@@ -166,7 +166,7 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 		BookBuilder builder = new BookBuilderImpl();
 		StandardBookWriter book = builder.createBook();
 
-		book.setDate( Util.now("yy/MM/dd") );
+		book.setDate(Util.now("yy/MM/dd"));
 
 		IncrementalBookWriter bookWriter = null;
 
@@ -174,28 +174,28 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 		StandardBook partialBook = null;
 		StandardBookSegment[] segments;
 
-		for( i=0; i<totalSegmentCount; i++ ) {
+		for (i=0; i<totalSegmentCount; i++) {
 
-			bookFile = new File( workingDirectory, "result_" + i + ".b" );
-			if( !bookFile.exists() ) {
-				throw new ComputationException("Missing partial result file [" + bookFile.getAbsolutePath() + "]" );				
+			bookFile = new File(workingDirectory, "result_" + i + ".b");
+			if (!bookFile.exists()) {
+				throw new ComputationException("Missing partial result file [" + bookFile.getAbsolutePath() + "]");
 			}
 
 			try {
 				partialBook = bookBuilder.readBook(bookFile);
 			} catch (IOException ex) {
-				logger.error( "Failed to read partial book [" + bookFile.getAbsolutePath() + "] - i/o exception", ex );
+				logger.error("Failed to read partial book [" + bookFile.getAbsolutePath() + "] - i/o exception", ex);
 				throw new ComputationException(ex);
 			} catch (BookFormatException ex) {
-				logger.error( "Failed to read partial book [" + bookFile.getAbsolutePath() + "]", ex  );
+				logger.error("Failed to read partial book [" + bookFile.getAbsolutePath() + "]", ex);
 				throw new ComputationException(ex);
 			}
 
-			if( bookWriter == null ) {
+			if (bookWriter == null) {
 				try {
 					bookWriter = builder.writeBookIncremental(book, collectedBookFile.getAbsolutePath());
 				} catch (IOException ex) {
-					logger.error( "Failed to write book [" + collectedBookFile.getAbsolutePath() + "] - i/o exception", ex );
+					logger.error("Failed to write book [" + collectedBookFile.getAbsolutePath() + "] - i/o exception", ex);
 					throw new ComputationException(ex);
 				}
 			}
@@ -213,14 +213,14 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 			seg.setSegmentLength(segments[0].getSegmentLength());
 
 			for (int j = 0; j < segments[0].getAtomCount(); j++) {
-				StandardBookAtomWriterImpl bookAtomWriter = new StandardBookAtomWriterImpl(segments[0].getAtomAt(j)); 
-				seg.addAtom( bookAtomWriter );
+				StandardBookAtomWriterImpl bookAtomWriter = new StandardBookAtomWriterImpl(segments[0].getAtomAt(j));
+				seg.addAtom(bookAtomWriter);
 			}
 
 			try {
 				bookWriter.writeSegment(seg);
 			} catch (IOException ex) {
-				logger.error( "Failed to write segment to [" + collectedBookFile.getAbsolutePath() + "] - i/o exception", ex );
+				logger.error("Failed to write segment to [" + collectedBookFile.getAbsolutePath() + "] - i/o exception", ex);
 				throw new ComputationException(ex);
 			}
 
@@ -228,11 +228,11 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 
 		}
 
-		if( bookWriter != null ) {
+		if (bookWriter != null) {
 			try {
 				bookWriter.close();
 			} catch (IOException ex) {
-				logger.error( "Failed to close file [" + collectedBookFile.getAbsolutePath() + "] - i/o exception", ex );
+				logger.error("Failed to close file [" + collectedBookFile.getAbsolutePath() + "] - i/o exception", ex);
 				throw new ComputationException(ex);
 			}
 		}
@@ -243,7 +243,7 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 		// for result serialization
 		data.setBookFilePath(collectedBookFile.getAbsolutePath());
 
-		tracker.setMessage( new ResolvableString("mp5Method.message.finished") );
+		tracker.setMessage(new ResolvableString("mp5Method.message.finished"));
 
 		return result;
 
@@ -251,11 +251,11 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 
 	private boolean testAbortSuspend(MethodExecutionTracker tracker, MP5Data data, int segment) {
 
-		if( tracker.isRequestingAbort() ) {
+		if (tracker.isRequestingAbort()) {
 			logger.debug("Terminating execution");
 			return true;
 		}
-		if( tracker.isRequestingSuspend() ) {
+		if (tracker.isRequestingSuspend()) {
 			logger.debug("Suspending execution");
 			data.setCompletedSegments(segment);
 			data.setSuspended(true);
@@ -269,21 +269,21 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 	private void createWorkingDirectory(MP5Data data) throws ComputationException {
 
 		File workingDirectory = data.getWorkingDirectory();
-		if( workingDirectory == null ) {
-			workingDirectory = new File( tempDirectory, Util.getRandomHexString(8) );
+		if (workingDirectory == null) {
+			workingDirectory = new File(tempDirectory, Util.getRandomHexString(8));
 			data.setWorkingDirectory(workingDirectory);
 		}
 
-		if( !workingDirectory.exists() ) {
+		if (!workingDirectory.exists()) {
 			boolean ok = workingDirectory.mkdir();
-			if( !ok ) {
-				logger.error("Failed to create working directory");				
+			if (!ok) {
+				logger.error("Failed to create working directory");
 				throw new ComputationException(new IOException("Failed to create working dir"));
-			}			
+			}
 		} else {
-			if( !workingDirectory.canWrite() ) {
+			if (!workingDirectory.canWrite()) {
 				logger.error("Working directory not writeable");
-				throw new ComputationException(new IOException("Working directory not writeable"));				
+				throw new ComputationException(new IOException("Working directory not writeable"));
 			}
 		}
 
@@ -292,16 +292,16 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 	@Override
 	public void validate(Object dataObj, Errors errors) {
 		super.validate(dataObj, errors);
-		if( !errors.hasErrors() ) {
+		if (!errors.hasErrors()) {
 			MP5Data data = (MP5Data) dataObj;
 			data.validate(errors);
-			if( !errors.hasErrors() ) {
-				MP5Executor executor = executorLocator.findExecutor( data.getExecutorUID() );
-				if( executor == null ) {
-					errors.rejectValue("executorUID", "error.mp5.executorNotFound", new Object[] { data.getExecutorUID() }, "Executor not found" );
+			if (!errors.hasErrors()) {
+				MP5Executor executor = executorLocator.findExecutor(data.getExecutorUID());
+				if (executor == null) {
+					errors.rejectValue("executorUID", "error.mp5.executorNotFound", new Object[] { data.getExecutorUID() }, "Executor not found");
 				}
 			}
-		}		
+		}
 	}
 
 	@Override
@@ -312,7 +312,7 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 	@Override
 	public String getTickerLabel(MessageSourceAccessor messageSource, int ticker) {
 		String code;
-		switch( ticker ) {
+		switch (ticker) {
 
 		case 0 :
 			code = "mp5Method.sectionTicker";
@@ -346,7 +346,7 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 	@Override
 	public int[] getVersion() {
 		return VERSION;
-	}	
+	}
 
 	@Override
 	public Object createData() {
@@ -373,21 +373,21 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 
 		MP5Data data = (MP5Data) dataObj;
 
-		logger.debug( "Reading from file [" + file.getAbsolutePath() +"]" );
+		logger.debug("Reading from file [" + file.getAbsolutePath() +"]");
 		XMLUtils.objectFromFile(data, file, getStreamer());
 
 		SignalProcessingChainDescriptor chainDescriptor = data.getChainDescriptor();
-		if( chainDescriptor == null ) {
-			throw new NullPointerException( "No chain descriptor" );
+		if (chainDescriptor == null) {
+			throw new NullPointerException("No chain descriptor");
 		}
 
 		SegmentedSampleSourceDescriptor sourceDescriptor = data.getSourceDescriptor();
-		if( sourceDescriptor == null ) {
-			throw new NullPointerException( "No source descriptor" );
+		if (sourceDescriptor == null) {
+			throw new NullPointerException("No source descriptor");
 		}
 
 		SignalProcessingChain chain = new SignalProcessingChain(chainDescriptor);
-		data.setSampleSource( sourceDescriptor.createSegmentedSource(chain) );
+		data.setSampleSource(sourceDescriptor.createSegmentedSource(chain));
 
 	}
 
@@ -397,13 +397,13 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 		MP5Data data = (MP5Data) dataObj;
 
 		File workingDirectory = data.getWorkingDirectory();
-		if( workingDirectory == null ) {
+		if (workingDirectory == null) {
 			throw new SignalMLException("No working directory");
 		}
 
-		File file = new File( workingDirectory, "serialized.xml" );
+		File file = new File(workingDirectory, "serialized.xml");
 
-		logger.debug( "Writing to file [" + file.getAbsolutePath() +"]" );
+		logger.debug("Writing to file [" + file.getAbsolutePath() +"]");
 		XMLUtils.objectToFile(data, file, getStreamer());
 
 		return file;
@@ -411,7 +411,7 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 	}
 
 	public XStream getStreamer() {
-		if( streamer == null ) {
+		if (streamer == null) {
 			streamer = createMP5Streamer();
 		}
 		return streamer;
@@ -421,12 +421,12 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 		XStream streamer = XMLUtils.getDefaultStreamer();
 		XMLUtils.configureStreamerForMontage(streamer);
 		Annotations.configureAliases(
-				streamer,
-				SignalProcessingChainDescriptor.class,
-				SelectionSegmentedSampleSourceDescriptor.class,
-				MarkerSegmentedSampleSourceDescriptor.class,
-				MP5Data.class,
-				MP5Parameters.class
+		        streamer,
+		        SignalProcessingChainDescriptor.class,
+		        SelectionSegmentedSampleSourceDescriptor.class,
+		        MarkerSegmentedSampleSourceDescriptor.class,
+		        MP5Data.class,
+		        MP5Parameters.class
 		);
 		streamer.setMode(XStream.ID_REFERENCES);
 
@@ -439,20 +439,20 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 		MP5Data data = (MP5Data) dataObj;
 
 		File workingDirectory = data.getWorkingDirectory();
-		if( workingDirectory != null && workingDirectory.exists() ) {
-			logger.info( "Cleaning up directory [" + workingDirectory.getAbsolutePath() + "]" );
+		if (workingDirectory != null && workingDirectory.exists()) {
+			logger.info("Cleaning up directory [" + workingDirectory.getAbsolutePath() + "]");
 			File[] files = workingDirectory.listFiles();
 			boolean deleteOk;
-			for( File f : files ) {
-				logger.info( "Deleting file [" + f.getAbsolutePath() + "]" );
+			for (File f : files) {
+				logger.info("Deleting file [" + f.getAbsolutePath() + "]");
 				deleteOk = f.delete();
-				if( !deleteOk ) {
-					logger.error( "Failed to delete" );
+				if (!deleteOk) {
+					logger.error("Failed to delete");
 				}
 			}
 			deleteOk = workingDirectory.delete();
-			if( !deleteOk ) {
-				logger.error( "Failed to delete directory" );
+			if (!deleteOk) {
+				logger.error("Failed to delete directory");
 			}
 		}
 

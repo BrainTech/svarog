@@ -1,5 +1,5 @@
 /* OpenDocumentDialog.java created 2007-09-17
- * 
+ *
  */
 
 package org.signalml.app.view.dialog;
@@ -53,13 +53,13 @@ import org.springframework.validation.Errors;
 
 /** OpenDocumentDialog
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class OpenDocumentDialog extends AbstractWizardDialog {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private File profileDir;
 	private RegisterCodecDialog registerCodecDialog;
 	private SignalMLCodecManager codecManager;
@@ -68,13 +68,13 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 	private ApplicationConfiguration applicationConfig;
 	private PleaseWaitDialog pleaseWaitDialog;
 	ViewerFileChooser fileChooser;
-	
+
 	private ManagedDocumentType targetType = null;
-	
+
 	private URL contextHelpURL = null;
-	
+
 	RawSignalDescriptor currentRawSignalDescriptor;
-	
+
 	public OpenDocumentDialog(MessageSourceAccessor messageSource) {
 		super(messageSource);
 	}
@@ -85,15 +85,15 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 
 	@Override
 	protected void initialize() {
-		
+
 		setTitle(messageSource.getMessage("openDocument.title"));
-		setIconImage( IconUtils.loadClassPathImage("org/signalml/app/icon/fileopen.png") );
-		
+		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/fileopen.png"));
+
 		super.initialize();
 
 		SignalMLCodecListModel codecListModel = new SignalMLCodecListModel();
 		codecListModel.setCodecManager(codecManager);
-		
+
 		RegisterCodecAction registerCodecAction = new RegisterCodecAction(messageSource);
 		registerCodecAction.setCodecManager(codecManager);
 		registerCodecAction.setRegisterCodecDialog(getRegisterCodecDialog());
@@ -102,7 +102,7 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 		registerCodecAction.initializeAll();
 
 		final SignalMLOptionsPanel signalMLOptionsPanel = getStepTwoPanel().getSignalOptionsPanel().getSignalMLOptionsPanel();
-		
+
 		registerCodecAction.setSelector(new SignalMLCodecSelector() {
 
 			@Override
@@ -111,170 +111,170 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 			}
 
 			@Override
-			public void setSelectedCodec(SignalMLCodec codec) {				
+			public void setSelectedCodec(SignalMLCodec codec) {
 				signalMLOptionsPanel.getSignalMLDriverComboBox().setSelectedItem(codec);
 			}
-			
+
 		});
-		
+
 		signalMLOptionsPanel.getSignalMLDriverComboBox().setModel(codecListModel);
 		signalMLOptionsPanel.getRegisterCodecButton().setAction(registerCodecAction);
-		
+
 		ReadXMLManifestAction readXMLManifestAction = new ReadXMLManifestAction();
 		getStepTwoPanel().getSignalOptionsPanel().getRawSignalOptionsPanel().getReadXMLManifestButton().setAction(readXMLManifestAction);
-		
+
 	}
-	
+
 	@Override
 	public int getStepCount() {
 		return 2;
 	}
-	
+
 	@Override
 	protected boolean onStepChange(int toStep, int fromStep, Object model) {
-		if( fromStep == 0 ) {
+		if (fromStep == 0) {
 			JFileChooser fileChooser = getStepOnePanel().getFileChooser();
-						
+
 			boolean autodetect = getStepOnePanel().getAutodetectRadio().isSelected();
-			if( autodetect ) {
+			if (autodetect) {
 				File file = fileChooser.getSelectedFile();
 				try {
 					targetType = documentDetector.detectDocumentType(file);
-				} catch( IOException ex ) {
+				} catch (IOException ex) {
 					logger.error("Exception at detection", ex);
 					// assume signal
 					targetType = ManagedDocumentType.SIGNAL;
 				}
 			} else {
-				switch( getStepOnePanel().getFileTypeCombo().getSelectedIndex() ) {
-				
-					case 0 :
-						targetType = ManagedDocumentType.SIGNAL;
-						break;
-					case 1 :
-						targetType = ManagedDocumentType.BOOK;;
-						break;
-					case 2 :
-						targetType = ManagedDocumentType.TAG;
-						break;
-					default :
-						throw new IndexOutOfBoundsException();
-					
+				switch (getStepOnePanel().getFileTypeCombo().getSelectedIndex()) {
+
+				case 0 :
+					targetType = ManagedDocumentType.SIGNAL;
+					break;
+				case 1 :
+					targetType = ManagedDocumentType.BOOK;;
+					break;
+				case 2 :
+					targetType = ManagedDocumentType.TAG;
+					break;
+				default :
+					throw new IndexOutOfBoundsException();
+
 				}
 			}
-			
-			if( targetType == ManagedDocumentType.SIGNAL ) {
-				
+
+			if (targetType == ManagedDocumentType.SIGNAL) {
+
 				SignalMLOptionsPanel signalMLOptionsPanel = getStepTwoPanel().getSignalOptionsPanel().getSignalMLOptionsPanel();
-				
+
 				JComboBox signalMLDriverComboBox = signalMLOptionsPanel.getSignalMLDriverComboBox();
-				if( signalMLDriverComboBox.getItemCount() > 0 ) {
-					if( signalMLDriverComboBox.getSelectedIndex() < 0 ) {
+				if (signalMLDriverComboBox.getItemCount() > 0) {
+					if (signalMLDriverComboBox.getSelectedIndex() < 0) {
 						signalMLDriverComboBox.setSelectedIndex(0);
 					}
 				} else {
 					signalMLDriverComboBox.setSelectedIndex(-1);
 				}
 				PagingParametersPanel pagingPanel = getStepTwoPanel().getSignalOptionsPanel().getPagingSignalParamersPanel();
-				pagingPanel.getPageSizeField().setText( Float.toString( applicationConfig.getPageSize() ) );
-				pagingPanel.getBlocksPerPageField().setText( Integer.toString( applicationConfig.getBlocksPerPage() ) );
-				
-			} 
-			else if( targetType == ManagedDocumentType.TAG ) {
-				
+				pagingPanel.getPageSizeField().setText(Float.toString(applicationConfig.getPageSize()));
+				pagingPanel.getBlocksPerPageField().setText(Integer.toString(applicationConfig.getBlocksPerPage()));
+
+			}
+			else if (targetType == ManagedDocumentType.TAG) {
+
 				int cnt = documentManager.getDocumentCount(ManagedDocumentType.SIGNAL);
 				String[] labels = new String[cnt];
-				for( int i=0; i<cnt; i++ ) {
-					labels[i] = messageSource.getMessage((MessageSourceResolvable) documentManager.getDocumentAt(ManagedDocumentType.SIGNAL, i)); 
+				for (int i=0; i<cnt; i++) {
+					labels[i] = messageSource.getMessage((MessageSourceResolvable) documentManager.getDocumentAt(ManagedDocumentType.SIGNAL, i));
 				}
-							
+
 				DefaultComboBoxModel documentListModel = new DefaultComboBoxModel(labels);
-				
+
 				JComboBox signalDocumentComboBox = getStepTwoPanel().getTagOptionsPanel().getSignalDocumentComboBox();
 				signalDocumentComboBox.setModel(documentListModel);
-				if( documentListModel.getSize() > 0 ) {
-					if( signalDocumentComboBox.getSelectedIndex() < 0 ) {
+				if (documentListModel.getSize() > 0) {
+					if (signalDocumentComboBox.getSelectedIndex() < 0) {
 						signalDocumentComboBox.setSelectedIndex(0);
 					}
 				} else {
 					signalDocumentComboBox.setSelectedIndex(-1);
 				}
-				
+
 			}
-			
+
 			getStepTwoPanel().setExpectedType(targetType, autodetect);
-			
+
 		}
 		return true;
 	}
-	
+
 	@Override
 	public JComponent createInterfaceForStep(int step) {
-		switch( step ) {
-			case 0 :
-				return new OpenDocumentStepOnePanel(messageSource);
-			case 1 :
-				return new OpenDocumentStepTwoPanel(messageSource);
-			default :
-				throw new IndexOutOfBoundsException();
+		switch (step) {
+		case 0 :
+			return new OpenDocumentStepOnePanel(messageSource);
+		case 1 :
+			return new OpenDocumentStepTwoPanel(messageSource);
+		default :
+			throw new IndexOutOfBoundsException();
 		}
 	}
-	
+
 	@Override
 	public void validateDialogStep(int step, Object model, Errors errors) throws SignalMLException {
-		if( step == 0 ) {
-			
+		if (step == 0) {
+
 			EmbeddedFileChooser fileChooser = getStepOnePanel().getFileChooser();
-			
+
 			fileChooser.forceApproveSelection();
 			fileChooser.validateFile(errors, "file", false, false, false, true, true);
-			
-		} else if( step == 1 ) {
-			if( targetType == null ) {
+
+		} else if (step == 1) {
+			if (targetType == null) {
 				logger.error("Target type null");
 				throw new SignalMLException("error.invalidValue");
 			}
-			if( targetType.equals(ManagedDocumentType.SIGNAL) ) {
+			if (targetType.equals(ManagedDocumentType.SIGNAL)) {
 				validateSignalOptions(model, errors);
-			} else if( targetType.equals(ManagedDocumentType.BOOK) ) {
+			} else if (targetType.equals(ManagedDocumentType.BOOK)) {
 				validateBookOptions(model,errors);
-			} else if( targetType.equals(ManagedDocumentType.TAG) ) {
+			} else if (targetType.equals(ManagedDocumentType.TAG)) {
 				validateTagOptions(model,errors);
 			} else {
 				logger.error("Unsupported type [" + targetType + "]");
 				throw new SignalMLException("error.invalidValue");
 			}
-		} 
+		}
 	}
-	
+
 	private void validateTagOptions(Object model, Errors errors) {
 		int selectedIndex = getStepTwoPanel().getTagOptionsPanel().getSignalDocumentComboBox().getSelectedIndex();
-		if( selectedIndex < 0 ) {
+		if (selectedIndex < 0) {
 			errors.rejectValue("tagOptions.signalDocument", "error.signalDocumentMustBeSet");
-		}		
+		}
 	}
 
 	private void validateBookOptions(Object model, Errors errors) {
-		// nothing so far		
+		// nothing so far
 	}
 
 	private void validateSignalOptions(Object model, Errors errors) throws SignalMLException {
-		
+
 		OpenSignalOptionsPanel optionsPanel = getStepTwoPanel().getSignalOptionsPanel();
 		int method = optionsPanel.getMethodComboBox().getSelectedIndex();
-		if( method == 0 ) {
+		if (method == 0) {
 			SignalMLCodec codec = (SignalMLCodec) optionsPanel.getSignalMLOptionsPanel().getSignalMLDriverComboBox().getSelectedItem();
-			if( codec == null ) {
+			if (codec == null) {
 				errors.rejectValue("signalOptions.codec", "error.codecMustBeSet");
 			}
-		} else if( method == 1 ) {
+		} else if (method == 1) {
 			errors.pushNestedPath("signalOptions.rawSignalDescriptor");
 			optionsPanel.getRawSignalOptionsPanel().validatePanel(errors);
 			errors.popNestedPath();
 		} else {
-			throw new SignalMLException("error.invalidValue");			
+			throw new SignalMLException("error.invalidValue");
 		}
-				
+
 		getStepTwoPanel().getSignalOptionsPanel().getPagingSignalParamersPanel().validatePanel(errors);
 
 	}
@@ -287,93 +287,93 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 	public OpenDocumentStepOnePanel getStepOnePanel() {
 		return (OpenDocumentStepOnePanel) getInterfaceForStep(0);
 	}
-	
+
 	public OpenDocumentStepTwoPanel getStepTwoPanel() {
 		return (OpenDocumentStepTwoPanel) getInterfaceForStep(1);
 	}
-		
+
 	@Override
 	public void fillDialogFromModel(Object model) {
-		
+
 		String path = applicationConfig.getLastOpenDocumentPath();
-		if( path != null ) {
+		if (path != null) {
 			getStepOnePanel().getFileChooser().setCurrentDirectory(new File(path));
-		}		
-				
+		}
+
 		OpenDocumentDescriptor ofd = (OpenDocumentDescriptor) model;
 		File f = ofd.getFile();
-		if( f == null ) {
+		if (f == null) {
 			f = new File("");
 		}
 		getStepOnePanel().getFileChooser().setSelectedFile(f);
-		
+
 		OpenSignalDescriptor osd = ofd.getSignalOptions();
 		SignalParameterDescriptor spd = osd.getParameters();
-		
+
 		getStepTwoPanel().getSignalOptionsPanel().getPagingSignalParamersPanel().fillPanelFromModel(spd);
-		
+
 		RawSignalDescriptor rawSignalDescriptor = osd.getRawSignalDescriptor();
-		if( rawSignalDescriptor != null ) {
+		if (rawSignalDescriptor != null) {
 			getStepTwoPanel().getSignalOptionsPanel().getRawSignalOptionsPanel().fillPanelFromModel(rawSignalDescriptor);
 		}
-		
+
 	}
 
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
-		
+
 		OpenDocumentDescriptor ofd = (OpenDocumentDescriptor) model;
 		ofd.setFile(getStepOnePanel().getFileChooser().getSelectedFile());
-		if( targetType == null ) {
+		if (targetType == null) {
 			logger.error("Target type null");
-			throw new SignalMLException("error.invalidValue");			
+			throw new SignalMLException("error.invalidValue");
 		}
 		ofd.setType(targetType);
-		if( targetType.equals(ManagedDocumentType.SIGNAL) ) {
-			
+		if (targetType.equals(ManagedDocumentType.SIGNAL)) {
+
 			OpenSignalDescriptor osd = ofd.getSignalOptions();
-			
+
 			OpenSignalOptionsPanel signalOptionsPanel = getStepTwoPanel().getSignalOptionsPanel();
-			
+
 			int method = signalOptionsPanel.getMethodComboBox().getSelectedIndex();
-			if( method == 0 ) {
-				
+			if (method == 0) {
+
 				osd.setMethod(OpenSignalMethod.USE_SIGNALML);
-			
+
 				SignalParameterDescriptor spd = osd.getParameters();
-				
+
 				osd.setCodec((SignalMLCodec) signalOptionsPanel.getSignalMLOptionsPanel().getSignalMLDriverComboBox().getSelectedItem());
 				signalOptionsPanel.getPagingSignalParamersPanel().fillModelFromPanel(spd);
-				
-			} else if( method == 1 ) {
-				
+
+			} else if (method == 1) {
+
 				osd.setMethod(OpenSignalMethod.RAW);
-				
+
 				RawSignalDescriptor descriptor = currentRawSignalDescriptor;
-				if( descriptor == null ) {
+				if (descriptor == null) {
 					descriptor = new RawSignalDescriptor();
 				}
 				signalOptionsPanel.getRawSignalOptionsPanel().fillModelFromPanel(descriptor);
 				signalOptionsPanel.getPagingSignalParamersPanel().fillModelFromPanel(descriptor);
-				
+
 				osd.setRawSignalDescriptor(descriptor);
-				
+
 			} else {
-				throw new SignalMLException("error.invalidValue");			
+				throw new SignalMLException("error.invalidValue");
 			}
-									
-		} else if( targetType.equals(ManagedDocumentType.BOOK) ) {
+
+		} else if (targetType.equals(ManagedDocumentType.BOOK)) {
 
 			// nothing to do so far
-		
-		} else if( targetType.equals(ManagedDocumentType.TAG) ) {
-			
+
+		} else if (targetType.equals(ManagedDocumentType.TAG)) {
+
 			OpenTagDescriptor otd = ofd.getTagOptions();
 			int index = getStepTwoPanel().getTagOptionsPanel().getSignalDocumentComboBox().getSelectedIndex();
 
-			SignalDocument signalDocument =  (SignalDocument) documentManager.getDocumentAt(ManagedDocumentType.SIGNAL, index);
+			SignalDocument signalDocument = (SignalDocument) documentManager.getDocumentAt(ManagedDocumentType.SIGNAL, index);
 
-			otd.setParent(signalDocument);			
+			otd.setParent(signalDocument);
 
 			boolean legTag = true;
 			LegacyTagImporter importer = new LegacyTagImporter();
@@ -384,10 +384,10 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 				legTag = false;
 				logger.info("Failed to import tags, not a legacy tag");
 			}
-			
+
 			TagDocument tagDocument = null;
 			try {
-				 tagDocument = new TagDocument(tagSet);
+				tagDocument = new TagDocument(tagSet);
 			} catch (SignalMLException ex) {
 				legTag = false;
 				logger.info("Failed to create document, not a legacy tag");
@@ -397,12 +397,12 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 				ofd.getTagOptions().setExistingDocument(tagDocument);
 				ofd.setFile(null);
 			}
-			
+
 		} else {
 			logger.error("Unsupported type [" + targetType + "]");
 			throw new SignalMLException("error.invalidValue");
 		}
-		
+
 		applicationConfig.setLastOpenDocumentPath(getStepOnePanel().getFileChooser().getCurrentDirectory().getAbsolutePath());
 
 	}
@@ -411,20 +411,20 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 	public boolean supportsModelClass(Class<?> clazz) {
 		return OpenDocumentDescriptor.class.isAssignableFrom(clazz);
 	}
-	
+
 	@Override
 	protected URL getContextHelpURL() {
-		if( contextHelpURL == null ) {
-			 try {
-				 contextHelpURL = (new ClassPathResource("org/signalml/help/contents.html")).getURL();
-				 contextHelpURL = new URL( contextHelpURL.toExternalForm() + "#opendoc" );
+		if (contextHelpURL == null) {
+			try {
+				contextHelpURL = (new ClassPathResource("org/signalml/help/contents.html")).getURL();
+				contextHelpURL = new URL(contextHelpURL.toExternalForm() + "#opendoc");
 			} catch (IOException ex) {
 				logger.error("Failed to get help URL", ex);
-			}				
+			}
 		}
 		return contextHelpURL;
 	}
-	
+
 	public SignalMLCodecManager getCodecManager() {
 		return codecManager;
 	}
@@ -434,7 +434,7 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 	}
 
 	protected RegisterCodecDialog getRegisterCodecDialog() {
-		if( registerCodecDialog == null ) {
+		if (registerCodecDialog == null) {
 			registerCodecDialog = new RegisterCodecDialog(messageSource,this,true);
 			registerCodecDialog.setCodecManager(codecManager);
 			registerCodecDialog.setProfileDir(profileDir);
@@ -449,7 +449,7 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 	public void setDocumentDetector(DocumentDetector documentDetector) {
 		this.documentDetector = documentDetector;
 	}
-	
+
 	public DocumentManager getDocumentManager() {
 		return documentManager;
 	}
@@ -465,7 +465,7 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 	public void setApplicationConfig(ApplicationConfiguration applicationConfig) {
 		this.applicationConfig = applicationConfig;
 	}
-	
+
 	public File getProfileDir() {
 		return profileDir;
 	}
@@ -475,10 +475,10 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 	}
 
 	protected PleaseWaitDialog getPleaseWaitDialog() {
-		if( pleaseWaitDialog == null ) {
+		if (pleaseWaitDialog == null) {
 			pleaseWaitDialog = new PleaseWaitDialog(messageSource,this);
-			pleaseWaitDialog.initializeNow();			
-		}		
+			pleaseWaitDialog.initializeNow();
+		}
 		return pleaseWaitDialog;
 	}
 
@@ -489,63 +489,63 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 	public void setFileChooser(ViewerFileChooser fileChooser) {
 		this.fileChooser = fileChooser;
 	}
-	
+
 	protected class ReadXMLManifestAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 		private RawSignalDescriptorReader reader;
-		
+
 		public ReadXMLManifestAction() {
 			super(messageSource.getMessage("openSignal.options.raw.readXMLManifest"));
-			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/script_load.png") );
+			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/script_load.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("openSignal.options.raw.readXMLManifestToolTip"));
 			//putValue(AbstractAction.ACCELERATOR_KEY, KeyStroke.getKeyStroke("F1"));
 		}
-		
-		public void actionPerformed(ActionEvent ev) {						
-			
+
+		public void actionPerformed(ActionEvent ev) {
+
 			File selectedFile = getStepOnePanel().getFileChooser().getSelectedFile();
 			File directory = null;
 			File fileSuggestion = null;
-			if( selectedFile != null ) {
+			if (selectedFile != null) {
 				directory = selectedFile.getParentFile();
-				
+
 				fileSuggestion = Util.changeOrAddFileExtension(selectedFile, "xml");
-							
+
 			}
-			
-			if( directory == null ) {
-				directory = new File( System.getProperty("user.dir") );
+
+			if (directory == null) {
+				directory = new File(System.getProperty("user.dir"));
 			}
-						
+
 			File xmlFile = fileChooser.chooseReadXMLManifest(directory, fileSuggestion, OpenDocumentDialog.this);
-			if( xmlFile == null ) {
+			if (xmlFile == null) {
 				return;
-			} 
-			
-			if( reader == null ) {
+			}
+
+			if (reader == null) {
 				reader = new RawSignalDescriptorReader();
 			}
-			
+
 			try {
 				currentRawSignalDescriptor = reader.readDocument(xmlFile);
 			} catch (IOException ex) {
 				logger.error("Failed to read document", ex);
 				getErrorsDialog().showException(ex);
-				return;			
+				return;
 			} catch (SignalMLException ex) {
 				logger.error("Failed to read document", ex);
 				getErrorsDialog().showException(ex);
-				return;			
+				return;
 			}
-			
+
 			OpenSignalOptionsPanel signalOptionsPanel = getStepTwoPanel().getSignalOptionsPanel();
 			signalOptionsPanel.getRawSignalOptionsPanel().fillPanelFromModel(currentRawSignalDescriptor);
-			signalOptionsPanel.getPagingSignalParamersPanel().fillPanelFromModel(currentRawSignalDescriptor); 
-			
+			signalOptionsPanel.getPagingSignalParamersPanel().fillPanelFromModel(currentRawSignalDescriptor);
+
 		}
-				
+
 	}
-	
+
 }
 

@@ -1,5 +1,5 @@
 /* ArtifactParameters.java created 2007-11-02
- * 
+ *
  */
 
 package org.signalml.method.artifact;
@@ -13,7 +13,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /** ArtifactParameters
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 @XStreamAlias("artifactparameters")
@@ -22,22 +22,22 @@ public class ArtifactParameters implements Serializable, Preset {
 	private static final long serialVersionUID = 1L;
 
 	private String name;
-	
+
 	private float powerGridFrequency;
 
 	private int[] chosenArtifactTypes;
 	private float[] sensitivities;
-	
+
 	public ArtifactParameters() {
 		int cnt = ArtifactType.values().length;
 		chosenArtifactTypes = new int[cnt];
 		sensitivities = new float[cnt];
-		
-		Arrays.fill( chosenArtifactTypes, 1 );
-		Arrays.fill( sensitivities, 50F );
-		
+
+		Arrays.fill(chosenArtifactTypes, 1);
+		Arrays.fill(sensitivities, 50F);
+
 	}
-	
+
 	@Override
 	public String getName() {
 		return name;
@@ -51,7 +51,7 @@ public class ArtifactParameters implements Serializable, Preset {
 	public float getPowerGridFrequency() {
 		return powerGridFrequency;
 	}
-	
+
 	public void setPowerGridFrequency(float powerGridFrequency) {
 		this.powerGridFrequency = powerGridFrequency;
 	}
@@ -71,26 +71,26 @@ public class ArtifactParameters implements Serializable, Preset {
 	public void setSensitivities(float[] sensitivities) {
 		this.sensitivities = sensitivities;
 	}
-	
-	public float getSensitivity( int index ) {
+
+	public float getSensitivity(int index) {
 		return sensitivities[index];
 	}
-	
-	public void setSensitivity( int index, float value ) {
+
+	public void setSensitivity(int index, float value) {
 		sensitivities[index] = value;
 	}
-	
-	public float getSensitivity( ArtifactType artifactType ) {
+
+	public float getSensitivity(ArtifactType artifactType) {
 		return sensitivities[artifactType.ordinal()];
 	}
-	
-	public void setSensitivity( ArtifactType artifactType, float value ) {
+
+	public void setSensitivity(ArtifactType artifactType, float value) {
 		sensitivities[artifactType.ordinal()] = value;
 	}
-		
+
 	@Override
 	public String toString() {
 		return name;
 	}
-	
+
 }

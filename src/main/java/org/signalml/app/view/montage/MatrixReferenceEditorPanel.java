@@ -1,5 +1,5 @@
 /* EditMontageReferencePanel.java created 2007-10-24
- * 
+ *
  */
 package org.signalml.app.view.montage;
 
@@ -17,71 +17,71 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** EditMontageReferencePanel
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class MatrixReferenceEditorPanel extends JPanel {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private MessageSourceAccessor messageSource;
-	
+
 	private Montage montage;
-	
+
 	private ReferenceTableModel referenceTableModel;
 	private ReferenceTable referenceTable;
 	private JScrollPane scrollPane;
-			
+
 	public MatrixReferenceEditorPanel(MessageSourceAccessor messageSource) {
 		super();
 		this.messageSource = messageSource;
 		initialize();
 	}
-	
+
 	private void initialize() {
-		
+
 		setLayout(new BorderLayout());
-		
+
 		CompoundBorder border = new CompoundBorder(
-				new TitledBorder(  messageSource.getMessage("matrixReferenceEditor.editReference") ),
-				new EmptyBorder(3,3,3,3)
-		);		
-		setBorder( border );
-		
+		        new TitledBorder(messageSource.getMessage("matrixReferenceEditor.editReference")),
+		        new EmptyBorder(3,3,3,3)
+		);
+		setBorder(border);
+
 		add(getScrollPane(), BorderLayout.CENTER);
-						
+
 	}
-			
+
 	public Montage getMontage() {
 		return montage;
 	}
 
 	public void setMontage(Montage montage) {
-		if( this.montage != montage ) {
+		if (this.montage != montage) {
 			this.montage = montage;
 			getReferenceTableModel().setMontage(montage);
 		}
 	}
 
 	public ReferenceTable getReferenceTable() {
-		if( referenceTable == null ) {
+		if (referenceTable == null) {
 			referenceTable = new ReferenceTable(getReferenceTableModel());
 		}
 		return referenceTable;
 	}
-		
+
 	public ReferenceTableModel getReferenceTableModel() {
-		if( referenceTableModel == null ) {
+		if (referenceTableModel == null) {
 			referenceTableModel = new ReferenceTableModel();
 		}
 		return referenceTableModel;
 	}
 
 	public JScrollPane getScrollPane() {
-		if( scrollPane == null ) {
+		if (scrollPane == null) {
 			scrollPane = new JScrollPane(getReferenceTable());
 		}
 		return scrollPane;
 	}
-	
+
 }

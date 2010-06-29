@@ -1,5 +1,5 @@
 /* StagerResultTargetDescriptor.java created 2008-02-20
- * 
+ *
  */
 
 package org.signalml.app.method.stager;
@@ -12,33 +12,33 @@ import org.signalml.method.stager.StagerResult;
 
 /** StagerResultTargetDescriptor
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class StagerResultTargetDescriptor {
 
 	private boolean signalAvailable;
-	
+
 	private int segmentCount;
 	private float segmentLength;
-	
+
 	private TagDocument primaryTag;
-	
+
 	private StagerResult stagerResult;
 
 	private boolean primaryOpenInWindow;
 	private boolean primarySaveToFile;
-	
+
 	private File primaryTagFile;
-	
+
 	private ArrayList<File> additionalTags;
 	private ArrayList<File> chosenAdditionalTags;
 	private boolean additionalOpenInWindow;
 	private boolean additionalSaveToFile;
-	
+
 	private File expertStageTagFile;
-	private File expertArtifactTagFile;	
-	
+	private File expertArtifactTagFile;
+
 	public boolean isSignalAvailable() {
 		return signalAvailable;
 	}
@@ -46,7 +46,7 @@ public class StagerResultTargetDescriptor {
 	public void setSignalAvailable(boolean signalAvailable) {
 		this.signalAvailable = signalAvailable;
 	}
-	
+
 	public int getSegmentCount() {
 		return segmentCount;
 	}
@@ -65,8 +65,8 @@ public class StagerResultTargetDescriptor {
 
 	public TagDocument getPrimaryTag() {
 		return primaryTag;
-	}	
-	
+	}
+
 	public void setPrimaryTag(TagDocument primaryTag) {
 		this.primaryTag = primaryTag;
 	}
@@ -150,5 +150,5 @@ public class StagerResultTargetDescriptor {
 	public void setStagerResult(StagerResult stagerResult) {
 		this.stagerResult = stagerResult;
 	}
-	
+
 }

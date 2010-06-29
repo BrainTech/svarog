@@ -1,5 +1,5 @@
 /* AbstractMessageDialog.java created 2008-03-03
- * 
+ *
  */
 
 package org.signalml.app.view.dialog;
@@ -21,20 +21,20 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** AbstractMessageDialog
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public abstract class AbstractMessageDialog extends AbstractDialog {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private JCheckBox dontShowAgainCheckBox;
 	private JPanel messagePanel;
 	private JLabel messageLabel;
-	
+
 	private ApplicationConfiguration applicationConfig;
 	private Preferences preferences;
-	
+
 	public AbstractMessageDialog(MessageSourceAccessor messageSource) {
 		super(messageSource);
 	}
@@ -42,7 +42,7 @@ public abstract class AbstractMessageDialog extends AbstractDialog {
 	public AbstractMessageDialog(MessageSourceAccessor messageSource,Window w, boolean isModal) {
 		super(messageSource, w, isModal);
 	}
-	
+
 	@Override
 	protected void initialize() {
 		super.initialize();
@@ -52,61 +52,61 @@ public abstract class AbstractMessageDialog extends AbstractDialog {
 	@Override
 	protected JPanel createControlPane() {
 		JPanel controlPane = super.createControlPane();
-		controlPane.add( Box.createHorizontalStrut(10), 1 );
-		controlPane.add( getDontShowAgainCheckBox(), 0 );
+		controlPane.add(Box.createHorizontalStrut(10), 1);
+		controlPane.add(getDontShowAgainCheckBox(), 0);
 		return controlPane;
-	}	
-		
-	@Override
-	public JComponent createInterface() {		
-		return getMessagePanel();		
 	}
-	
+
+	@Override
+	public JComponent createInterface() {
+		return getMessagePanel();
+	}
+
 	public JCheckBox getDontShowAgainCheckBox() {
-		if( dontShowAgainCheckBox == null ) {
-			dontShowAgainCheckBox = new JCheckBox( messageSource.getMessage( "messageDialog.dontShowAgain" ) );
-			dontShowAgainCheckBox.setFont( dontShowAgainCheckBox.getFont().deriveFont(Font.PLAIN,10F) );
+		if (dontShowAgainCheckBox == null) {
+			dontShowAgainCheckBox = new JCheckBox(messageSource.getMessage("messageDialog.dontShowAgain"));
+			dontShowAgainCheckBox.setFont(dontShowAgainCheckBox.getFont().deriveFont(Font.PLAIN,10F));
 		}
 		return dontShowAgainCheckBox;
 	}
-	
+
 	public JPanel getMessagePanel() {
-		if( messagePanel == null ) {
-			messagePanel = new JPanel( new BorderLayout() );
-			messagePanel.add( getMessageLabel(), BorderLayout.CENTER );
+		if (messagePanel == null) {
+			messagePanel = new JPanel(new BorderLayout());
+			messagePanel.add(getMessageLabel(), BorderLayout.CENTER);
 		}
 		return messagePanel;
 	}
-		
+
 	public JLabel getMessageLabel() {
-		if( messageLabel == null ) {
+		if (messageLabel == null) {
 			messageLabel = new JLabel();
 			messageLabel.setFont(messageLabel.getFont().deriveFont(Font.PLAIN, 12));
 		}
 		return messageLabel;
 	}
-	
+
 	public abstract boolean getDontShowAgain();
-	
-	public abstract void setDontShowAgain( boolean dontShow );
-	
+
+	public abstract void setDontShowAgain(boolean dontShow);
+
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 
-		getDontShowAgainCheckBox().setSelected( getDontShowAgain() );
-		
+		getDontShowAgainCheckBox().setSelected(getDontShowAgain());
+
 	}
 
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
 
-		setDontShowAgain( getDontShowAgainCheckBox().isSelected() );
-		
+		setDontShowAgain(getDontShowAgainCheckBox().isSelected());
+
 	}
 
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
-		return ( clazz == null );
+		return (clazz == null);
 	}
 
 	public ApplicationConfiguration getApplicationConfig() {
@@ -124,5 +124,5 @@ public abstract class AbstractMessageDialog extends AbstractDialog {
 	public void setPreferences(Preferences preferences) {
 		this.preferences = preferences;
 	}
-	
+
 }

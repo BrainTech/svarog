@@ -1,12 +1,12 @@
 /* BoundedSignalSelection.java created 2007-10-04
- * 
+ *
  */
 
 package org.signalml.domain.signal;
 
 /** BoundedSignalSelection
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class BoundedSignalSelection {
@@ -14,16 +14,16 @@ public class BoundedSignalSelection {
 	private static final long serialVersionUID = 1L;
 
 	private int maxPage;
-	private int maxBlock;	
+	private int maxBlock;
 	private float maxTime;
-	
+
 	private float pageSize;
 	private int blocksPerPage;
-	
+
 	private float samplingFrequency;
-	
+
 	private String[] channels;
-	
+
 	private SignalSelection selection;
 
 	public BoundedSignalSelection() {
@@ -34,7 +34,7 @@ public class BoundedSignalSelection {
 		super();
 		this.selection = selection;
 	}
-	
+
 	public int getMaxPage() {
 		return maxPage;
 	}
@@ -82,7 +82,7 @@ public class BoundedSignalSelection {
 	public void setPageSize(float pageSize) {
 		this.pageSize = pageSize;
 	}
-	
+
 	public float getSamplingFrequency() {
 		return samplingFrequency;
 	}
@@ -97,6 +97,6 @@ public class BoundedSignalSelection {
 
 	public void setSelection(SignalSelection selection) {
 		this.selection = selection;
-	}		
-			
+	}
+
 }

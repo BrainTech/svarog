@@ -1,5 +1,5 @@
 /* RegisterCodecDialog.java created 2007-09-18
- * 
+ *
  */
 
 package org.signalml.app.view.dialog;
@@ -28,18 +28,18 @@ import org.springframework.validation.Errors;
 
 /** RegisterCodecDialog
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class RegisterCodecDialog extends AbstractWizardDialog {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private SignalMLCodecManager codecManager;
 	private XMLSignalMLCodec currentCodec;
-	
+
 	private File profileDir;
-	
+
 	public RegisterCodecDialog(MessageSourceAccessor messageSource) {
 		super(messageSource);
 	}
@@ -50,12 +50,12 @@ public class RegisterCodecDialog extends AbstractWizardDialog {
 
 	@Override
 	protected void initialize() {
-		
+
 		setTitle(messageSource.getMessage("registerCodec.title"));
-		setIconImage( IconUtils.loadClassPathImage("org/signalml/app/icon/fileopen.png") );
-		
+		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/fileopen.png"));
+
 		super.initialize();
-		
+
 		getStepTwoPanel().getNameField().getDocument().addDocumentListener(new DocumentListener() {
 
 			@Override
@@ -72,7 +72,7 @@ public class RegisterCodecDialog extends AbstractWizardDialog {
 			public void removeUpdate(DocumentEvent e) {
 				react(e);
 			}
-			
+
 			private void react(DocumentEvent e) {
 				try {
 					checkNameExists(e.getDocument().getText(0, e.getDocument().getLength()));
@@ -80,66 +80,66 @@ public class RegisterCodecDialog extends AbstractWizardDialog {
 					logger.error("Sanity exception", ex);
 				}
 			}
-			
+
 		});
-		
+
 	}
-	
+
 	@Override
 	public int getStepCount() {
 		return 2;
 	}
-	
+
 	@Override
 	protected boolean onStepChange(int toStep, int fromStep, Object model) {
-		if( fromStep == 0 ) {
+		if (fromStep == 0) {
 			String defaultFormatName = currentCodec.getFormatName();
 			getStepTwoPanel().getNameField().setText(defaultFormatName);
 			checkNameExists(defaultFormatName);
 		}
 		return true;
 	}
-	
+
 	@Override
 	public void validateDialogStep(int step, Object model, Errors errors) throws SignalMLException {
-		if( step == 0 ) {
-			
+		if (step == 0) {
+
 			EmbeddedFileChooser fileChooser = getStepOnePanel().getFileChooser();
-			
+
 			fileChooser.forceApproveSelection();
 			fileChooser.validateFile(errors, "sourceFile", false, false, false, false, true);
-			
-			if( !errors.hasErrors() ) {
+
+			if (!errors.hasErrors()) {
 				File file = fileChooser.getSelectedFile();
 				try {
 					currentCodec = new XMLSignalMLCodec(file, profileDir);
-				} catch(IOException ex) {
+				} catch (IOException ex) {
 					logger.debug("Failed to read codec file", ex);
 					errors.rejectValue("sourceFile", "error.failedToReadSignalMLFile");
-				} catch(XMLCodecException ex) {
+				} catch (XMLCodecException ex) {
 					logger.debug("Failed to compile codec file", ex);
-					errors.rejectValue("sourceFile", "error.codecCompilationFailed");					
+					errors.rejectValue("sourceFile", "error.codecCompilationFailed");
 				}
 			}
-		} else if( step == 1 ) {
+		} else if (step == 1) {
 			String name = getStepTwoPanel().getNameField().getText();
-			if( name == null || name.length() == 0 ) {
+			if (name == null || name.length() == 0) {
 				errors.rejectValue("formatName", "error.formatNameMustBeSet");
 			}
-			if( !Util.validateString(name) ) {
+			if (!Util.validateString(name)) {
 				errors.rejectValue("formatName", "error.badCharactersInFormatName");
 			}
 		}
 	}
-			
+
 	private void checkNameExists(String formatName) {
-		if( codecManager.getCodecForFormat(formatName) != null ) {
+		if (codecManager.getCodecForFormat(formatName) != null) {
 			getStepTwoPanel().getWarningLabel().setVisible(true);
 		} else {
 			getStepTwoPanel().getWarningLabel().setVisible(false);
-		}		
+		}
 	}
-	
+
 	@Override
 	protected void resetDialog() {
 		super.resetDialog();
@@ -148,16 +148,16 @@ public class RegisterCodecDialog extends AbstractWizardDialog {
 
 	@Override
 	public JComponent createInterfaceForStep(int step) {
-		switch( step ) {
-			case 0 :
-				return new RegisterCodecStepOnePanel(messageSource);
-			case 1 :
-				return new RegisterCodecStepTwoPanel(messageSource);
-			default :
-				throw new IndexOutOfBoundsException();
+		switch (step) {
+		case 0 :
+			return new RegisterCodecStepOnePanel(messageSource);
+		case 1 :
+			return new RegisterCodecStepTwoPanel(messageSource);
+		default :
+			throw new IndexOutOfBoundsException();
 		}
 	}
-	
+
 	@Override
 	public boolean isFinishAllowedOnStep(int step) {
 		return (step == (getStepCount() - 1));
@@ -166,7 +166,7 @@ public class RegisterCodecDialog extends AbstractWizardDialog {
 	public RegisterCodecStepOnePanel getStepOnePanel() {
 		return (RegisterCodecStepOnePanel) getInterfaceForStep(0);
 	}
-	
+
 	public RegisterCodecStepTwoPanel getStepTwoPanel() {
 		return (RegisterCodecStepTwoPanel) getInterfaceForStep(1);
 	}
@@ -175,7 +175,7 @@ public class RegisterCodecDialog extends AbstractWizardDialog {
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 		RegisterCodecDescriptor rcd = (RegisterCodecDescriptor) model;
 		File f = rcd.getSourceFile();
-		if( f == null ) {
+		if (f == null) {
 			f = new File("");
 		}
 		getStepOnePanel().getFileChooser().setSelectedFile(f);
@@ -208,6 +208,6 @@ public class RegisterCodecDialog extends AbstractWizardDialog {
 
 	public void setProfileDir(File profileDir) {
 		this.profileDir = profileDir;
-	}	
-	
+	}
+
 }

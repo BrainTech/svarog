@@ -1,5 +1,5 @@
 /* SignalExportPresetManager.java created 2008-01-26
- * 
+ *
  */
 
 package org.signalml.app.config.preset;
@@ -12,14 +12,14 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /** SignalExportPresetManager
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 @XStreamAlias("signalexports")
 public class SignalExportPresetManager extends AbstractPresetManager {
-		
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Override
 	public String getStandardFilename() {
 		return "signal-export.xml";
@@ -29,10 +29,10 @@ public class SignalExportPresetManager extends AbstractPresetManager {
 	public Class<?> getPresetClass() {
 		return SignalExportDescriptor.class;
 	}
-	
+
 	@Override
 	public XStream getStreamer() {
-		if( streamer == null ) {
+		if (streamer == null) {
 			streamer = createSignalExportPresetStreamer();
 		}
 		return streamer;
@@ -42,8 +42,8 @@ public class SignalExportPresetManager extends AbstractPresetManager {
 		XStream streamer = XMLUtils.getDefaultStreamer();
 		XMLUtils.configureStreamerForSignalExport(streamer);
 		streamer.setMode(XStream.XPATH_RELATIVE_REFERENCES);
-				
+
 		return streamer;
 	}
-		
+
 }

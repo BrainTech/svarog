@@ -1,5 +1,5 @@
 /* SignalExportDescriptor.java created 2008-01-27
- * 
+ *
  */
 
 package org.signalml.app.model;
@@ -14,32 +14,32 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /** SignalExportDescriptor
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 @XStreamAlias("signalexport")
 public class SignalExportDescriptor implements Preset {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
 	private String name;
-	
+
 	private transient StyledTagSet tagSet;
 	private transient float pageSize;
 	private transient float blockSize;
-	private transient double normalizationFactor; 
+	private transient double normalizationFactor;
 
 	private SignalSpace signalSpace;
-	
+
 	private RawSignalSampleType sampleType;
 	private RawSignalByteOrder byteOrder;
-		
+
 	private boolean saveXML;
 	private boolean normalize;
-	
+
 	public SignalExportDescriptor() {
 		signalSpace = new SignalSpace();
 		sampleType = RawSignalSampleType.FLOAT;
@@ -47,7 +47,7 @@ public class SignalExportDescriptor implements Preset {
 		saveXML = true;
 		normalize = false;
 	}
-	
+
 	@Override
 	public String getName() {
 		return name;
@@ -113,7 +113,7 @@ public class SignalExportDescriptor implements Preset {
 	public void setBlockSize(float blockSize) {
 		this.blockSize = blockSize;
 	}
-		
+
 	public boolean isNormalize() {
 		return normalize;
 	}
@@ -121,7 +121,7 @@ public class SignalExportDescriptor implements Preset {
 	public void setNormalize(boolean normalize) {
 		this.normalize = normalize;
 	}
-	
+
 	public double getNormalizationFactor() {
 		return normalizationFactor;
 	}
@@ -134,5 +134,5 @@ public class SignalExportDescriptor implements Preset {
 	public String toString() {
 		return name;
 	}
-	
+
 }

@@ -1,5 +1,5 @@
 /* MP5ResultDialog.java created 2008-02-20
- * 
+ *
  */
 
 package org.signalml.app.method.mp5;
@@ -26,20 +26,20 @@ import org.springframework.validation.Errors;
 
 /** MP5ResultDialog
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class MP5ResultDialog extends AbstractDialog {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private ViewerFileChooser fileChooser;
-	
+
 	private JCheckBox openInWindowCheckBox;
 	private JCheckBox saveToFileCheckBox;
-	
+
 	private MP5ResultBookPanel bookPanel;
-	
+
 	public MP5ResultDialog(MessageSourceAccessor messageSource) {
 		super(messageSource);
 	}
@@ -50,80 +50,80 @@ public class MP5ResultDialog extends AbstractDialog {
 
 	@Override
 	protected void initialize() {
-		setTitle( messageSource.getMessage( "mp5Method.dialog.result.title" ) );
-		setIconImage( IconUtils.loadClassPathImage( MP5MethodDescriptor.ICON_PATH ) );
+		setTitle(messageSource.getMessage("mp5Method.dialog.result.title"));
+		setIconImage(IconUtils.loadClassPathImage(MP5MethodDescriptor.ICON_PATH));
 		setResizable(false);
 		super.initialize();
 	}
-	
+
 	@Override
 	public JComponent createInterface() {
-		
-		JPanel interfacePanel = new JPanel( new BorderLayout() );
-		
+
+		JPanel interfacePanel = new JPanel(new BorderLayout());
+
 		JPanel checkBoxPanel = new JPanel();
-		checkBoxPanel.setLayout(new BoxLayout(checkBoxPanel, BoxLayout.Y_AXIS) );
-		
+		checkBoxPanel.setLayout(new BoxLayout(checkBoxPanel, BoxLayout.Y_AXIS));
+
 		CompoundBorder border = new CompoundBorder(
-				new TitledBorder( messageSource.getMessage("mp5Method.dialog.result.actionTitle") ),
-				new EmptyBorder(3,3,3,3)
+		        new TitledBorder(messageSource.getMessage("mp5Method.dialog.result.actionTitle")),
+		        new EmptyBorder(3,3,3,3)
 		);
 		checkBoxPanel.setBorder(border);
-		
-		checkBoxPanel.add( getOpenInWindowCheckBox() );
-		checkBoxPanel.add( getSaveToFileCheckBox() );
-		
-		interfacePanel.add( checkBoxPanel, BorderLayout.NORTH );
-		interfacePanel.add( getBookPanel(), BorderLayout.CENTER );
-		
+
+		checkBoxPanel.add(getOpenInWindowCheckBox());
+		checkBoxPanel.add(getSaveToFileCheckBox());
+
+		interfacePanel.add(checkBoxPanel, BorderLayout.NORTH);
+		interfacePanel.add(getBookPanel(), BorderLayout.CENTER);
+
 		return interfacePanel;
-		
+
 	}
-	
+
 	public JCheckBox getOpenInWindowCheckBox() {
-		if( openInWindowCheckBox == null ) {
-			openInWindowCheckBox = new JCheckBox( messageSource.getMessage("mp5Method.dialog.result.openInWindow") );
+		if (openInWindowCheckBox == null) {
+			openInWindowCheckBox = new JCheckBox(messageSource.getMessage("mp5Method.dialog.result.openInWindow"));
 		}
 		return openInWindowCheckBox;
 	}
 
 	public JCheckBox getSaveToFileCheckBox() {
-		if( saveToFileCheckBox == null ) {
-			saveToFileCheckBox = new JCheckBox( messageSource.getMessage("mp5Method.dialog.result.saveToFile"), true );
-			
-			saveToFileCheckBox.addItemListener( new ItemListener() {
+		if (saveToFileCheckBox == null) {
+			saveToFileCheckBox = new JCheckBox(messageSource.getMessage("mp5Method.dialog.result.saveToFile"), true);
+
+			saveToFileCheckBox.addItemListener(new ItemListener() {
 
 				@Override
 				public void itemStateChanged(ItemEvent e) {
 
-					boolean selected = ( e.getStateChange() == ItemEvent.SELECTED );
-					
-					getBookPanel().setEnabled( selected );
-					
+					boolean selected = (e.getStateChange() == ItemEvent.SELECTED);
+
+					getBookPanel().setEnabled(selected);
+
 				}
-				
+
 			});
-			
+
 		}
 		return saveToFileCheckBox;
 	}
-	
+
 	public MP5ResultBookPanel getBookPanel() {
-		if( bookPanel == null ) {
+		if (bookPanel == null) {
 			bookPanel = new MP5ResultBookPanel(messageSource, fileChooser);
 		}
 		return bookPanel;
 	}
-	
+
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 
 		MP5ResultTargetDescriptor descriptor = (MP5ResultTargetDescriptor) model;
-		
-		getOpenInWindowCheckBox().setSelected( descriptor.isOpenInWindow() );		
+
+		getOpenInWindowCheckBox().setSelected(descriptor.isOpenInWindow());
 		getSaveToFileCheckBox().setSelected(descriptor.isSaveToFile());
-		getBookPanel().fillPanelFromModel(descriptor);		
-		
+		getBookPanel().fillPanelFromModel(descriptor);
+
 	}
 
 	@Override
@@ -131,25 +131,25 @@ public class MP5ResultDialog extends AbstractDialog {
 
 		MP5ResultTargetDescriptor descriptor = (MP5ResultTargetDescriptor) model;
 
-		descriptor.setOpenInWindow( getOpenInWindowCheckBox().isSelected() );
+		descriptor.setOpenInWindow(getOpenInWindowCheckBox().isSelected());
 		boolean saveToFile = getSaveToFileCheckBox().isSelected();
 		descriptor.setSaveToFile(saveToFile);
-		if( saveToFile ) {
+		if (saveToFile) {
 			getBookPanel().fillModelFromPanel(descriptor);
 		} else {
 			descriptor.setBookFile(null);
 		}
-		
+
 	}
-	
+
 	@Override
 	public void validateDialog(Object model, Errors errors) throws SignalMLException {
 		super.validateDialog(model, errors);
-		
-		if( getSaveToFileCheckBox().isSelected() ) {
+
+		if (getSaveToFileCheckBox().isSelected()) {
 			getBookPanel().validatePanel(errors);
 		}
-		
+
 	}
 
 	@Override
@@ -163,6 +163,6 @@ public class MP5ResultDialog extends AbstractDialog {
 
 	public void setFileChooser(ViewerFileChooser fileChooser) {
 		this.fileChooser = fileChooser;
-	}	
-	
+	}
+
 }

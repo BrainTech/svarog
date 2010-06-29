@@ -1,5 +1,5 @@
 /* LabelledPropertyDescriptor.java created 2007-10-05
- * 
+ *
  */
 
 package org.signalml.app.model;
@@ -12,13 +12,13 @@ import org.springframework.context.MessageSourceResolvable;
 
 /** LabelledPropertyDescriptor
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class LabelledPropertyDescriptor extends PropertyDescriptor implements MessageSourceResolvable {
 
 	private String messageCode;
-	
+
 	public LabelledPropertyDescriptor(String messageCode, String propertyName, Class<?> beanClass, String readMethodName, String writeMethodName) throws IntrospectionException {
 		super(propertyName, beanClass, readMethodName, writeMethodName);
 		this.messageCode = messageCode;

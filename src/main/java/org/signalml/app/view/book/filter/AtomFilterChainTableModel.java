@@ -1,5 +1,5 @@
 /* AtomFilterChainTableModel.java created 2008-03-04
- * 
+ *
  */
 
 package org.signalml.app.view.book.filter;
@@ -13,7 +13,7 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** AtomFilterChainTableModel
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class AtomFilterChainTableModel extends AbstractTableModel {
@@ -25,26 +25,26 @@ public class AtomFilterChainTableModel extends AbstractTableModel {
 	public static final int TYPE_COLUMN = 2;
 	public static final int BLOCKING_COLUMN = 3;
 	public static final int ENABLED_COLUMN = 4;
-	
+
 	private MessageSourceAccessor messageSource;
-	
+
 	private AtomFilterChain chain;
-		
+
 	public AtomFilterChainTableModel(MessageSourceAccessor messageSource) {
 		this.messageSource = messageSource;
 	}
-	
+
 	public AtomFilterChain getChain() {
 		return chain;
 	}
 
 	public void setChain(AtomFilterChain chain) {
-		if( this.chain != chain ) {
+		if (this.chain != chain) {
 			this.chain = chain;
 			fireTableDataChanged();
 		}
 	}
-	
+
 	@Override
 	public int getColumnCount() {
 		return 5;
@@ -52,65 +52,65 @@ public class AtomFilterChainTableModel extends AbstractTableModel {
 
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
-		switch( columnIndex ) {
-		
+		switch (columnIndex) {
+
 		case INDEX_COLUMN :
-			return Integer.class;
-			
-		case NAME_COLUMN :		
+				return Integer.class;
+
+		case NAME_COLUMN :
 			return String.class;
 
-		case TYPE_COLUMN :		
+		case TYPE_COLUMN :
 			return MessageSourceResolvable.class;
 
-		case BLOCKING_COLUMN :		
+		case BLOCKING_COLUMN :
 			return Boolean.class;
 
-		case ENABLED_COLUMN :		
+		case ENABLED_COLUMN :
 			return Boolean.class;
-			
+
 		default :
-			throw new SanityCheckException( "Unsupported index [" + columnIndex + "]" );
-					
+			throw new SanityCheckException("Unsupported index [" + columnIndex + "]");
+
 		}
 	}
-	
+
 	@Override
 	public String getColumnName(int column) {
-		switch( column ) {
-		
+		switch (column) {
+
 		case INDEX_COLUMN :
 			return messageSource.getMessage("bookFilter.filterList.index");
-			
-		case NAME_COLUMN :		
+
+		case NAME_COLUMN :
 			return messageSource.getMessage("bookFilter.filterList.name");
 
-		case TYPE_COLUMN :		
+		case TYPE_COLUMN :
 			return messageSource.getMessage("bookFilter.filterList.type");
 
-		case BLOCKING_COLUMN :		
+		case BLOCKING_COLUMN :
 			return messageSource.getMessage("bookFilter.filterList.blocking");
 
-		case ENABLED_COLUMN :		
+		case ENABLED_COLUMN :
 			return messageSource.getMessage("bookFilter.filterList.enabled");
-			
+
 		default :
-			throw new SanityCheckException( "Unsupported index [" + column + "]" );
-					
+			throw new SanityCheckException("Unsupported index [" + column + "]");
+
 		}
-	}	
-	
+	}
+
 	@Override
 	public int getRowCount() {
-		if( chain == null ) {
+		if (chain == null) {
 			return 0;
 		}
 		return chain.getFilterCount();
 	}
-	
+
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		if( columnIndex == BLOCKING_COLUMN || columnIndex == ENABLED_COLUMN ) {
+		if (columnIndex == BLOCKING_COLUMN || columnIndex == ENABLED_COLUMN) {
 			return true;
 		}
 		return false;
@@ -118,61 +118,61 @@ public class AtomFilterChainTableModel extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		
-		switch( columnIndex ) {
-		
+
+		switch (columnIndex) {
+
 		case INDEX_COLUMN :
 			return new Integer(rowIndex+1);
-			
-		case NAME_COLUMN :		
+
+		case NAME_COLUMN :
 			return chain.getFilterAt(rowIndex).getName();
 
-		case TYPE_COLUMN :		
+		case TYPE_COLUMN :
 			return chain.getFilterAt(rowIndex);
 
-		case BLOCKING_COLUMN :		
-			return new Boolean( chain.getFilterAt(rowIndex).isBlocking() );
+		case BLOCKING_COLUMN :
+			return new Boolean(chain.getFilterAt(rowIndex).isBlocking());
 
-		case ENABLED_COLUMN :		
-			return new Boolean( chain.getFilterAt(rowIndex).isEnabled() );
-			
+		case ENABLED_COLUMN :
+			return new Boolean(chain.getFilterAt(rowIndex).isEnabled());
+
 		default :
-			throw new SanityCheckException( "Unsupported index [" + columnIndex + "]" );
-					
+			throw new SanityCheckException("Unsupported index [" + columnIndex + "]");
+
 		}
-		
+
 	}
-	
+
 	@Override
 	public void setValueAt(Object value, int rowIndex, int columnIndex) {
 
-		switch( columnIndex ) {
-		
-		case BLOCKING_COLUMN :		
-			chain.getFilterAt(rowIndex).setBlocking( (Boolean) value );
+		switch (columnIndex) {
+
+		case BLOCKING_COLUMN :
+			chain.getFilterAt(rowIndex).setBlocking((Boolean) value);
 			break;
 
-		case ENABLED_COLUMN :		
-			chain.getFilterAt(rowIndex).setEnabled( (Boolean) value );
+		case ENABLED_COLUMN :
+			chain.getFilterAt(rowIndex).setEnabled((Boolean) value);
 			break;
-			
+
 		default :
-			throw new SanityCheckException( "Unsupported index [" + columnIndex + "]" );
-					
+			throw new SanityCheckException("Unsupported index [" + columnIndex + "]");
+
 		}
-				
+
 	}
 
 	// TODO rework into an event driven model if ever have time
-	
+
 	public void onUpdate() {
 		fireTableDataChanged();
 	}
-	
+
 	public void onUpdate(int row) {
 		fireTableRowsUpdated(row, row);
 	}
-	
+
 	public void onInsert(int row) {
 		fireTableRowsInserted(row, row);
 	}
@@ -180,5 +180,5 @@ public class AtomFilterChainTableModel extends AbstractTableModel {
 	public void onDelete(int row) {
 		fireTableRowsDeleted(row, row);
 	}
-	
+
 }

@@ -1,5 +1,5 @@
 /* ArtifactType.java created 2007-11-02
- * 
+ *
  */
 
 package org.signalml.method.artifact;
@@ -8,7 +8,7 @@ import org.springframework.context.MessageSourceResolvable;
 
 /** ArtifactType
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public enum ArtifactType implements MessageSourceResolvable {
@@ -21,9 +21,9 @@ public enum ArtifactType implements MessageSourceResolvable {
 	POWER_SUPPLY,
 	ECG,
 	UNKNOWN
-	
+
 	;
-	
+
 	@Override
 	public Object[] getArguments() {
 		return new Object[0];
@@ -38,5 +38,5 @@ public enum ArtifactType implements MessageSourceResolvable {
 	public String getDefaultMessage() {
 		return toString();
 	}
-	
+
 }

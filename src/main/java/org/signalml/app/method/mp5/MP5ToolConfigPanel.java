@@ -1,5 +1,5 @@
 /* MP5ToolConfigPanel.java created 2008-02-08
- * 
+ *
  */
 package org.signalml.app.method.mp5;
 
@@ -11,20 +11,20 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** MP5ToolConfigPanel
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class MP5ToolConfigPanel extends JPanel {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private MessageSourceAccessor messageSource;
 	private MP5ExecutorManager mp5ExecutorManager;
 	private MP5LocalExecutorDialog localExecutorDialog;
 	private MP5RemoteExecutorDialog remoteExecutorDialog;
-	
+
 	private MP5ToolExecutorConfigPanel executorConfigPanel;
-	
+
 	public MP5ToolConfigPanel(MessageSourceAccessor messageSource, MP5ExecutorManager mp5ExecutorManager) {
 		super();
 		this.messageSource = messageSource;
@@ -33,15 +33,15 @@ public class MP5ToolConfigPanel extends JPanel {
 	}
 
 	private void initialize() {
-		
+
 		setLayout(new BorderLayout());
 
-		add( getExecutorConfigPanel(), BorderLayout.CENTER );
-		
+		add(getExecutorConfigPanel(), BorderLayout.CENTER);
+
 	}
-	
+
 	public MP5ToolExecutorConfigPanel getExecutorConfigPanel() {
-		if( executorConfigPanel == null ) {
+		if (executorConfigPanel == null) {
 			executorConfigPanel = new MP5ToolExecutorConfigPanel(messageSource,mp5ExecutorManager);
 			executorConfigPanel.setLocalExecutorDialog(localExecutorDialog);
 			executorConfigPanel.setRemoteExecutorDialog(remoteExecutorDialog);
@@ -66,5 +66,5 @@ public class MP5ToolConfigPanel extends JPanel {
 		this.remoteExecutorDialog = remoteExecutorDialog;
 		getExecutorConfigPanel().setRemoteExecutorDialog(remoteExecutorDialog);
 	}
-			
+
 }

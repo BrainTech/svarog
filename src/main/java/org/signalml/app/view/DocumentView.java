@@ -1,5 +1,5 @@
 /* DocumentViewComponent.java created 2007-10-16
- * 
+ *
  */
 
 package org.signalml.app.view;
@@ -12,7 +12,7 @@ import org.signalml.app.document.Document;
 
 /** DocumentViewComponent
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public abstract class DocumentView extends JPanel {
@@ -36,7 +36,7 @@ public abstract class DocumentView extends JPanel {
 	}
 
 	public abstract Document getDocument();
-	
+
 	public abstract void destroy();
 
 }

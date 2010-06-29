@@ -1,5 +1,5 @@
 /* ExportSignalWorker.java created 2008-01-27
- * 
+ *
  */
 
 package org.signalml.app.worker;
@@ -18,23 +18,23 @@ import org.signalml.domain.signal.raw.RawSignalWriter;
 
 /** ExportSignalWorker
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ExportSignalWorker extends SwingWorker<Void,Integer> implements SignalWriterMonitor {
 
 	protected static final Logger logger = Logger.getLogger(ExportSignalWorker.class);
-	
-	private MultichannelSampleSource sampleSource;	
+
+	private MultichannelSampleSource sampleSource;
 	private File signalFile;
 	private SignalExportDescriptor descriptor;
-	
+
 	private PleaseWaitDialog pleaseWaitDialog;
-	
+
 	private volatile boolean requestingAbort;
-	
+
 	private volatile int processedSampleCount;
-	
+
 	public ExportSignalWorker(MultichannelSampleSource sampleSource, File signalFile, SignalExportDescriptor descriptor, PleaseWaitDialog pleaseWaitDialog) {
 		this.sampleSource = sampleSource;
 		this.signalFile = signalFile;
@@ -44,61 +44,61 @@ public class ExportSignalWorker extends SwingWorker<Void,Integer> implements Sig
 
 	@Override
 	protected Void doInBackground() throws Exception {
-		
+
 		RawSignalWriter rawSignalWriter = new RawSignalWriter();
-				
+
 		rawSignalWriter.writeSignal(signalFile, sampleSource, descriptor, this);
-		
+
 		return null;
-		
-	}	
-			
-	
+
+	}
+
+
 	public int getProcessedSampleCount() {
 		return processedSampleCount;
 	}
 
 	@Override
 	public void setProcessedSampleCount(int processedSampleCount) {
-		if( this.processedSampleCount != processedSampleCount ) {
+		if (this.processedSampleCount != processedSampleCount) {
 			this.processedSampleCount = processedSampleCount;
-			publish( processedSampleCount );
+			publish(processedSampleCount);
 		}
-	}	
-	
+	}
+
 	public PleaseWaitDialog getPleaseWaitDialog() {
-		synchronized( pleaseWaitDialog ) {
+		synchronized (pleaseWaitDialog) {
 			return pleaseWaitDialog;
 		}
 	}
 
 	@Override
 	protected void done() {
-		if( pleaseWaitDialog != null ) {
+		if (pleaseWaitDialog != null) {
 			pleaseWaitDialog.releaseIfOwnedBy(this);
 		}
 	}
-	
+
 	@Override
 	protected void process(List<Integer> chunks) {
-		if( pleaseWaitDialog != null && !chunks.isEmpty() ) {
-			synchronized( pleaseWaitDialog ) {
-				pleaseWaitDialog.setProgress( (int) chunks.get(0) );
+		if (pleaseWaitDialog != null && !chunks.isEmpty()) {
+			synchronized (pleaseWaitDialog) {
+				pleaseWaitDialog.setProgress((int) chunks.get(0));
 			}
 		}
 	}
 
 	@Override
 	public void abort() {
-		synchronized( this ) {
+		synchronized (this) {
 			requestingAbort = true;
 		}
-		
+
 	}
 
 	@Override
 	public boolean isRequestingAbort() {
 		return requestingAbort;
 	}
-			
+
 }

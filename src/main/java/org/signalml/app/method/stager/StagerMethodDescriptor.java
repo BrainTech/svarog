@@ -1,5 +1,5 @@
 /* StagerMethodDescriptor.java created 2008-02-08
- * 
+ *
  */
 
 package org.signalml.app.method.stager;
@@ -22,21 +22,21 @@ import org.signalml.method.stager.StagerParameters;
 
 /** StagerMethodDescriptor
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class StagerMethodDescriptor implements ApplicationMethodDescriptor {
 
 	protected static final Logger logger = Logger.getLogger(StagerMethodDescriptor.class);
-	
+
 	public static final String ICON_PATH = "org/signalml/app/icon/runmethod.png";
 	public static final String RUN_METHOD_STRING = "stagerMethod.runMethodString";
-	
+
 	private StagerMethod method;
 	private StagerMethodConfigurer configurer;
 	private StagerMethodConsumer consumer;
 	private MethodPresetManager presetManager;
-		
+
 	public StagerMethodDescriptor(StagerMethod method) {
 		this.method = method;
 	}
@@ -50,36 +50,36 @@ public class StagerMethodDescriptor implements ApplicationMethodDescriptor {
 	public String getNameCode() {
 		return RUN_METHOD_STRING;
 	}
-		
+
 	@Override
 	public String getIconPath() {
 		return ICON_PATH;
 	}
-	
+
 	@Override
-	public MethodPresetManager getPresetManager(ApplicationMethodManager methodManager, boolean existingOnly ) {
-		if( presetManager == null && !existingOnly ) {
+	public MethodPresetManager getPresetManager(ApplicationMethodManager methodManager, boolean existingOnly) {
+		if (presetManager == null && !existingOnly) {
 			presetManager = new MethodPresetManager(method.getName(), StagerParameters.class);
 			presetManager.setProfileDir(methodManager.getProfileDir());
 			presetManager.setStreamer(methodManager.getStreamer());
 			try {
 				presetManager.readFromPersistence(null);
-			} catch( IOException ex ) {
-				if( ex instanceof FileNotFoundException ) {
+			} catch (IOException ex) {
+				if (ex instanceof FileNotFoundException) {
 					logger.debug("Seems like stager preset configuration doesn't exist");
 				} else {
-					logger.error("Failed to read stager presets - presets lost", ex);			
+					logger.error("Failed to read stager presets - presets lost", ex);
 				}
-			}			
+			}
 		}
 		return presetManager;
 	}
-	
+
 	@Override
 	public MethodConfigurer getConfigurer(ApplicationMethodManager methodManager) {
-		if( configurer == null ) {
+		if (configurer == null) {
 			configurer = new StagerMethodConfigurer();
-			configurer.setPresetManager( getPresetManager(methodManager, false) );
+			configurer.setPresetManager(getPresetManager(methodManager, false));
 			configurer.initialize(methodManager);
 		}
 		return configurer;
@@ -87,30 +87,30 @@ public class StagerMethodDescriptor implements ApplicationMethodDescriptor {
 
 	@Override
 	public MethodResultConsumer getConsumer(ApplicationMethodManager methodManager) {
-		if( consumer == null ) {
+		if (consumer == null) {
 			consumer = new StagerMethodConsumer();
 			consumer.initialize(methodManager);
 		}
 		return consumer;
 	}
-	
+
 	@Override
 	public Object createData(ApplicationMethodManager methodManager) {
-		
+
 		Document document = methodManager.getActionFocusManager().getActiveDocument();
-		if( !(document instanceof SignalDocument) ) {
+		if (!(document instanceof SignalDocument)) {
 			OptionPane.showNoActiveSignal(methodManager.getDialogParent());
 			return null;
 		}
 		SignalDocument signalDocument = (SignalDocument) document;
-				
+
 		StagerApplicationData data = new StagerApplicationData();
 		data.setSignalDocument(signalDocument);
-		
+
 		ConfigurationDefaults.setStagerParameters(data.getParameters());
-		
+
 		return data;
-		
+
 	}
-	
+
 }

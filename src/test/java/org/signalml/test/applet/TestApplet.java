@@ -1,5 +1,5 @@
 /* TestApplet.java created 2008-02-20
- * 
+ *
  */
 
 package org.signalml.test.applet;
@@ -8,7 +8,7 @@ import javax.swing.JApplet;
 
 /** TestApplet
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class TestApplet extends JApplet {
@@ -18,8 +18,8 @@ public class TestApplet extends JApplet {
 	@Override
 	public void init() {
 		super.init();
-		
-		System.out.println( "User dir: [" + System.getProperty("user.dir") + "]" );
+
+		System.out.println("User dir: [" + System.getProperty("user.dir") + "]");
 	}
-	
+
 }

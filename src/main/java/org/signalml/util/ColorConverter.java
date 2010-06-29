@@ -1,5 +1,5 @@
 /* ColorConverter.java created 2007-09-28
- * 
+ *
  */
 
 package org.signalml.util;
@@ -11,7 +11,7 @@ import com.thoughtworks.xstream.converters.SingleValueConverter;
 
 /** ColorConverter
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ColorConverter implements SingleValueConverter {
@@ -19,10 +19,10 @@ public class ColorConverter implements SingleValueConverter {
 	@Override
 	public Object fromString(String s) {
 		return new Color(
-				Integer.parseInt(s.substring(0, 2), 16),
-                Integer.parseInt(s.substring(2, 4), 16),
-                Integer.parseInt(s.substring(4, 6), 16)
-        );
+		               Integer.parseInt(s.substring(0, 2), 16),
+		               Integer.parseInt(s.substring(2, 4), 16),
+		               Integer.parseInt(s.substring(4, 6), 16)
+		       );
 	}
 
 	@Override

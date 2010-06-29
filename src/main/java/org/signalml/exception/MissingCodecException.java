@@ -1,12 +1,12 @@
 /* MissingCodecException.java created 2007-09-21
- * 
+ *
  */
 
 package org.signalml.exception;
 
 /** MissingCodecException
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class MissingCodecException extends SignalMLException {
@@ -28,5 +28,5 @@ public class MissingCodecException extends SignalMLException {
 	public MissingCodecException(Throwable cause) {
 		super(cause);
 	}
-	
+
 }

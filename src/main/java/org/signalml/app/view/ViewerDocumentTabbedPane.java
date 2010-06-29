@@ -1,5 +1,5 @@
 /* ViewerDocumentTabbedPane.java created 2007-09-17
- * 
+ *
  */
 
 package org.signalml.app.view;
@@ -30,7 +30,7 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** ViewerDocumentTabbedPane
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentManagerListener, ActionFocusListener {
@@ -38,18 +38,18 @@ public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentMan
 	private static final long serialVersionUID = 1L;
 
 	protected static final Logger logger = Logger.getLogger(ViewerDocumentTabbedPane.class);
-	
+
 	private MessageSourceAccessor messageSource;
 	private ActionFocusManager actionFocusManager;
-	
+
 	private View view;
-	
+
 	public ViewerDocumentTabbedPane() {
-		super( JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT );
+		super(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
 	}
-	
+
 	public void initialize() {
-		setBorder(new EmptyBorder(3,3,3,3));		
+		setBorder(new EmptyBorder(3,3,3,3));
 
 		KeyStroke ctrlTab = KeyStroke.getKeyStroke("ctrl TAB");
 		getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(ctrlTab, "nextDocument");
@@ -57,35 +57,35 @@ public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentMan
 
 		KeyStroke ctrlShiftTab = KeyStroke.getKeyStroke("ctrl shift TAB");
 		getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(ctrlShiftTab, "previousDocument");
-		getActionMap().put("previousDocument", new PreviousDocumentAction());		
+		getActionMap().put("previousDocument", new PreviousDocumentAction());
 	}
-	
+
 	@Override
 	public void documentAdded(DocumentManagerEvent e) {
 		Document document = e.getDocument();
-		if( (document instanceof SignalDocument) || (document instanceof BookDocument) ) {
+		if ((document instanceof SignalDocument) || (document instanceof BookDocument)) {
 			addDocumentTab(document);
 		}
 	}
 
 	@Override
 	public void documentPathChanged(DocumentManagerEvent e) {
-		
+
 		Document document = e.getDocument();
 		int index = indexOfComponent(document.getDocumentView());
-		if( index >= 0 ) {
-			
+		if (index >= 0) {
+
 			String title = null;
-			if( document instanceof MessageSourceResolvable ) {
+			if (document instanceof MessageSourceResolvable) {
 				title = messageSource.getMessage((MessageSourceResolvable) document);
 			} else {
 				title = document.toString();
 			}
-			
+
 			setTitleAt(index, title);
 
 		}
-		
+
 	}
 
 	@Override
@@ -93,15 +93,15 @@ public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentMan
 		removeDocumentTab(e.getDocument());
 	}
 
-	
+
 	@Override
 	public void actionFocusChanged(ActionFocusEvent e) {
 		Document document = actionFocusManager.getActiveDocument();
-		if( document != null ) {
+		if (document != null) {
 			showDocument(document);
 		}
 	}
-	
+
 	public void addDocumentTab(Document document) {
 
 		DocumentView documentViewPanel;
@@ -112,45 +112,45 @@ public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentMan
 			ErrorsDialog.showImmediateExceptionDialog(this, ex);
 			return;
 		}
-				
+
 		String title = null;
-		if( document instanceof MessageSourceResolvable ) {
+		if (document instanceof MessageSourceResolvable) {
 			title = messageSource.getMessage((MessageSourceResolvable) document);
 		} else {
 			title = document.toString();
 		}
-		
+
 		ManagedDocumentType type = ManagedDocumentType.getForClass(document.getClass());
 		Icon icon = null;
-		if( type != null ) {
+		if (type != null) {
 			icon = type.getIcon();
 		}
-		
+
 		document.setDocumentView(documentViewPanel);
 		addTab(title, icon, documentViewPanel);
-				
+
 	}
-		
+
 	public void removeDocumentTab(Document document) {
-		
+
 		DocumentView documentView = (DocumentView) document.getDocumentView();
-		if( documentView != null ) {
+		if (documentView != null) {
 			remove(documentView);
 			document.setDocumentView(null);
 			documentView.destroy();
 		}
-				
+
 	}
-	
-	public void showDocument(Document document) {		
-		setSelectedComponent(document.getDocumentView());		
+
+	public void showDocument(Document document) {
+		setSelectedComponent(document.getDocumentView());
 	}
-	
+
 	public Document getDocumentInTab(int index) {
 		DocumentView dv = (DocumentView) getComponentAt(index);
 		return dv.getDocument();
 	}
-		
+
 	public MessageSourceAccessor getMessageSource() {
 		return messageSource;
 	}
@@ -158,7 +158,7 @@ public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentMan
 	public void setMessageSource(MessageSourceAccessor messageSource) {
 		this.messageSource = messageSource;
 	}
-	
+
 	public ActionFocusManager getActionFocusManager() {
 		return actionFocusManager;
 	}
@@ -174,7 +174,7 @@ public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentMan
 	public void setView(View view) {
 		this.view = view;
 	}
-	
+
 	private class NextDocumentAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
@@ -185,11 +185,11 @@ public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentMan
 			int cnt = getTabCount();
 			int index = (getSelectedIndex() + 1) % cnt;
 			setSelectedIndex(index);
-			
+
 		}
-		
+
 	}
-	
+
 	private class PreviousDocumentAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
@@ -200,9 +200,9 @@ public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentMan
 			int cnt = getTabCount();
 			int index = (cnt + getSelectedIndex() - 1) % cnt;
 			setSelectedIndex(index);
-			
+
 		}
-		
+
 	}
-	
+
 }

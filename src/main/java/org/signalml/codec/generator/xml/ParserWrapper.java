@@ -1,6 +1,6 @@
-/* Signal Copyright (C) 2003 Dobieslaw Ircha    <dircha@eranet.pl> 
-                              Artur Biesiadowski <abies@adres.pl> 
-                              Piotr J. Durka     <Piotr-J.Durka@fuw.edu.pl> 
+/* Signal Copyright (C) 2003 Dobieslaw Ircha    <dircha@eranet.pl>
+                              Artur Biesiadowski <abies@adres.pl>
+                              Piotr J. Durka     <Piotr-J.Durka@fuw.edu.pl>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-    
+
     Linking Signal statically or dynamically with other modules is making a
     combined work based on Signal.  Thus, the terms and conditions of the GNU
     General Public License cover the whole combination.
@@ -46,15 +46,15 @@ import org.xml.sax.SAXNotRecognizedException;
 import org.xml.sax.SAXNotSupportedException;
 
 public interface ParserWrapper {
-    public Document parse(String uri) throws Exception;
+	public Document parse(String uri) throws Exception;
 
-    public void setFeature(String featureId, boolean state)
-        throws  SAXNotRecognizedException, SAXNotSupportedException; 
+	public void setFeature(String featureId, boolean state)
+	throws  SAXNotRecognizedException, SAXNotSupportedException;
 
-    public DocumentInfo getDocumentInfo();
-    
-    public interface DocumentInfo {
-        public boolean isIgnorableWhitespace(Text text);
+	public DocumentInfo getDocumentInfo();
 
-    }
-} 
+	public interface DocumentInfo {
+		public boolean isIgnorableWhitespace(Text text);
+
+	}
+}

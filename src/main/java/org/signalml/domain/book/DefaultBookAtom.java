@@ -1,5 +1,5 @@
 /* DefaultBookAtom.java created 2008-02-24
- * 
+ *
  */
 
 package org.signalml.domain.book;
@@ -9,14 +9,14 @@ import java.util.Vector;
 
 /** DefaultBookAtom
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class DefaultBookAtom implements StandardBookAtom {
 
 	private float samplingFrequency;
 	private int baseLength;
-	
+
 	private int type;
 	private int iteration;
 	private float modulus;
@@ -25,10 +25,10 @@ public class DefaultBookAtom implements StandardBookAtom {
 	private int scale;
 	private float amplitude;
 	private float phase;
-		
-	protected DefaultBookAtom() {		
+
+	protected DefaultBookAtom() {
 	}
-	
+
 	public DefaultBookAtom(float samplingFrequency, int baseLength, int type, int iteration, float modulus, int frequency, int position, int scale, float amplitude, float phase) {
 		this.samplingFrequency = samplingFrequency;
 		this.baseLength = baseLength;
@@ -41,8 +41,8 @@ public class DefaultBookAtom implements StandardBookAtom {
 		this.amplitude = amplitude;
 		this.phase = phase;
 	}
-	
-	public DefaultBookAtom( StandardBookAtom atom ) {
+
+	public DefaultBookAtom(StandardBookAtom atom) {
 		this.samplingFrequency = atom.getSamplingFrequency();
 		this.baseLength = atom.getBaseLength();
 		this.iteration = atom.getIteration();
@@ -59,7 +59,7 @@ public class DefaultBookAtom implements StandardBookAtom {
 	public int getIteration() {
 		return iteration;
 	}
-	
+
 	@Override
 	public int getBaseLength() {
 		return baseLength;
@@ -79,10 +79,10 @@ public class DefaultBookAtom implements StandardBookAtom {
 	public int getFrequency() {
 		return frequency;
 	}
-	
+
 	@Override
 	public float getHzFrequency() {
-		return (float) (( ((double) frequency) / baseLength ) * samplingFrequency);
+		return (float)((((double) frequency) / baseLength) * samplingFrequency);
 	}
 
 	@Override
@@ -99,27 +99,27 @@ public class DefaultBookAtom implements StandardBookAtom {
 	public int getPosition() {
 		return position;
 	}
-	
+
 	@Override
 	public float getTimePosition() {
-		return ( position / samplingFrequency );
+		return (position / samplingFrequency);
 	}
 
 	@Override
 	public int getScale() {
 		return scale;
 	}
-	
+
 	@Override
 	public float getTimeScale() {
-		return ( scale / samplingFrequency );
+		return (scale / samplingFrequency);
 	}
 
 	@Override
 	public int getType() {
 		return type;
 	}
-	
+
 	@Override
 	public Object getProperty(String name) throws IllegalArgumentException {
 		throw new IllegalArgumentException("No properties");

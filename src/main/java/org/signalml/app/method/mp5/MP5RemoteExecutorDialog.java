@@ -1,5 +1,5 @@
 /* MP5RemoteExecutorDialog.java created 2008-02-14
- * 
+ *
  */
 
 package org.signalml.app.method.mp5;
@@ -57,33 +57,33 @@ import org.springframework.validation.Errors;
 
 /** MP5RemoteExecutorDialog
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class MP5RemoteExecutorDialog extends AbstractDialog {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private PleaseWaitDialog pleaseWaitDialog;
-	
+
 	private URL contextHelpURL = null;
-	
+
 	private JTextField nameTextField;
-	
+
 	private JComboBox typeComboBox;
-	
+
 	private JTextField urlTextField;
-	
+
 	private JTextField userNameTextField;
 	private JPasswordField passwordField;
 	private JPasswordField passwordAgainField;
-	
+
 	private JCheckBox savePasswordCheckBox;
 
 	private ExternalLinkLabel linkLabel;
-	
+
 	private boolean passwordOnly;
-		
+
 	public MP5RemoteExecutorDialog(MessageSourceAccessor messageSource) {
 		super(messageSource);
 	}
@@ -95,68 +95,68 @@ public class MP5RemoteExecutorDialog extends AbstractDialog {
 	@Override
 	protected JPanel createControlPane() {
 		JPanel controlPane = super.createControlPane();
-		controlPane.add( Box.createHorizontalStrut(10), 1 );
-		controlPane.add( new JButton( new TestConnectionAction() ), 1 );
+		controlPane.add(Box.createHorizontalStrut(10), 1);
+		controlPane.add(new JButton(new TestConnectionAction()), 1);
 		return controlPane;
 	}
-	
+
 	@Override
 	protected void initialize() {
-		setTitle( messageSource.getMessage( "mp5Method.config.remote.title" ) );
-		setIconImage( IconUtils.loadClassPathImage( "org/signalml/app/icon/configure.png" ) );
+		setTitle(messageSource.getMessage("mp5Method.config.remote.title"));
+		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/configure.png"));
 		setResizable(false);
 		super.initialize();
 	}
 
 	@Override
 	protected URL getContextHelpURL() {
-		if( contextHelpURL == null ) {
-			 try {
-				 contextHelpURL = (new ClassPathResource("org/signalml/help/mp5Remote.html")).getURL();
+		if (contextHelpURL == null) {
+			try {
+				contextHelpURL = (new ClassPathResource("org/signalml/help/mp5Remote.html")).getURL();
 			} catch (IOException ex) {
 				logger.error("Failed to get help URL", ex);
-			}				
+			}
 		}
 		return contextHelpURL;
 	}
-	
+
 	@Override
 	public JComponent createInterface() {
 
-		JPanel interfacePanel = new JPanel( new BorderLayout() );
-		
-		JPanel namePanel = new JPanel( new BorderLayout() );
-		
+		JPanel interfacePanel = new JPanel(new BorderLayout());
+
+		JPanel namePanel = new JPanel(new BorderLayout());
+
 		CompoundBorder border = new CompoundBorder(
-				new TitledBorder( messageSource.getMessage("mp5Method.config.remote.nameTitle") ),
-				new EmptyBorder(3,3,3,3)
+		        new TitledBorder(messageSource.getMessage("mp5Method.config.remote.nameTitle")),
+		        new EmptyBorder(3,3,3,3)
 		);
 		namePanel.setBorder(border);
-		
-		namePanel.add( getNameTextField(), BorderLayout.CENTER );
-		
+
+		namePanel.add(getNameTextField(), BorderLayout.CENTER);
+
 		JPanel settingsPanel = new JPanel();
-		
+
 		border = new CompoundBorder(
-				new TitledBorder( messageSource.getMessage("mp5Method.config.remote.settingsTitle") ),
-				new EmptyBorder(3,3,3,3)
+		        new TitledBorder(messageSource.getMessage("mp5Method.config.remote.settingsTitle")),
+		        new EmptyBorder(3,3,3,3)
 		);
 		settingsPanel.setBorder(border);
-		
+
 		GroupLayout layout = new GroupLayout(settingsPanel);
 		settingsPanel.setLayout(layout);
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 		layout.setHonorsVisibility(false);
-		
+
 		JLabel typeLabel = new JLabel(messageSource.getMessage("mp5Method.config.remote.type"));
 		JLabel urlLabel = new JLabel(messageSource.getMessage("mp5Method.config.remote.url"));
 		JLabel userNameLabel = new JLabel(messageSource.getMessage("mp5Method.config.remote.userName"));
 		JLabel passwordLabel = new JLabel(messageSource.getMessage("mp5Method.config.remote.password"));
 		JLabel passwordAgainLabel = new JLabel(messageSource.getMessage("mp5Method.config.remote.passwordAgain"));
 		JLabel savePasswordLabel = new JLabel(messageSource.getMessage("mp5Method.config.remote.savePassword"));
-		savePasswordLabel.setMinimumSize( new Dimension(35,35) );
-		
+		savePasswordLabel.setMinimumSize(new Dimension(35,35));
+
 		Component glue1 = Box.createHorizontalGlue();
 		Component glue2 = Box.createHorizontalGlue();
 		Component glue3 = Box.createHorizontalGlue();
@@ -164,151 +164,151 @@ public class MP5RemoteExecutorDialog extends AbstractDialog {
 		Component glue5 = Box.createHorizontalGlue();
 		Component glue6 = Box.createHorizontalGlue();
 		Component glue7 = Box.createHorizontalGlue();
-				
-		Component filler1 = Box.createRigidArea( new Dimension(1,1) );
-		
+
+		Component filler1 = Box.createRigidArea(new Dimension(1,1));
+
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
-		
-		hGroup.addGroup(
-				layout.createParallelGroup()
-				.addComponent(typeLabel)
-				.addComponent(urlLabel)
-				.addComponent(userNameLabel)
-				.addComponent(passwordLabel)
-				.addComponent(passwordAgainLabel)
-				.addComponent(savePasswordLabel)
-				.addComponent(filler1)
-			);
 
 		hGroup.addGroup(
-				layout.createParallelGroup()
-				.addComponent(glue1)
-				.addComponent(glue2)
-				.addComponent(glue3)
-				.addComponent(glue4)
-				.addComponent(glue5)
-				.addComponent(glue6)
-				.addComponent(glue7)
-			);
-		
+		        layout.createParallelGroup()
+		        .addComponent(typeLabel)
+		        .addComponent(urlLabel)
+		        .addComponent(userNameLabel)
+		        .addComponent(passwordLabel)
+		        .addComponent(passwordAgainLabel)
+		        .addComponent(savePasswordLabel)
+		        .addComponent(filler1)
+		);
+
 		hGroup.addGroup(
-				layout.createParallelGroup(Alignment.TRAILING)
-				.addComponent(getTypeComboBox())
-				.addComponent(getUrlTextField())
-				.addComponent(getUserNameTextField())
-				.addComponent(getPasswordField())
-				.addComponent(getPasswordAgainField())
-				.addComponent(getSavePasswordCheckBox())
-				.addComponent(getLinkLabel())
-			);
-		
+		        layout.createParallelGroup()
+		        .addComponent(glue1)
+		        .addComponent(glue2)
+		        .addComponent(glue3)
+		        .addComponent(glue4)
+		        .addComponent(glue5)
+		        .addComponent(glue6)
+		        .addComponent(glue7)
+		);
+
+		hGroup.addGroup(
+		        layout.createParallelGroup(Alignment.TRAILING)
+		        .addComponent(getTypeComboBox())
+		        .addComponent(getUrlTextField())
+		        .addComponent(getUserNameTextField())
+		        .addComponent(getPasswordField())
+		        .addComponent(getPasswordAgainField())
+		        .addComponent(getSavePasswordCheckBox())
+		        .addComponent(getLinkLabel())
+		);
+
 		layout.setHorizontalGroup(hGroup);
-		
+
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.CENTER)
-	            .addComponent(typeLabel)
-	            .addComponent(glue1)
-	            .addComponent(getTypeComboBox())
-			);
+		        layout.createParallelGroup(Alignment.CENTER)
+		        .addComponent(typeLabel)
+		        .addComponent(glue1)
+		        .addComponent(getTypeComboBox())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.CENTER)
-	            .addComponent(urlLabel)
-	            .addComponent(glue2)
-	            .addComponent(getUrlTextField())
-			);
+		        layout.createParallelGroup(Alignment.CENTER)
+		        .addComponent(urlLabel)
+		        .addComponent(glue2)
+		        .addComponent(getUrlTextField())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.CENTER)
-	            .addComponent(userNameLabel)
-	            .addComponent(glue3)
-	            .addComponent(getUserNameTextField())
-			);
+		        layout.createParallelGroup(Alignment.CENTER)
+		        .addComponent(userNameLabel)
+		        .addComponent(glue3)
+		        .addComponent(getUserNameTextField())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.CENTER)
-	            .addComponent(passwordLabel)
-	            .addComponent(glue4)
-	            .addComponent(getPasswordField())
-			);
+		        layout.createParallelGroup(Alignment.CENTER)
+		        .addComponent(passwordLabel)
+		        .addComponent(glue4)
+		        .addComponent(getPasswordField())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.CENTER)
-	            .addComponent(passwordAgainLabel)
-	            .addComponent(glue5)
-	            .addComponent(getPasswordAgainField())
-			);
+		        layout.createParallelGroup(Alignment.CENTER)
+		        .addComponent(passwordAgainLabel)
+		        .addComponent(glue5)
+		        .addComponent(getPasswordAgainField())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.CENTER)
-	            .addComponent(savePasswordLabel)
-	            .addComponent(glue6)
-	            .addComponent(getSavePasswordCheckBox())
-			);
-		
+		        layout.createParallelGroup(Alignment.CENTER)
+		        .addComponent(savePasswordLabel)
+		        .addComponent(glue6)
+		        .addComponent(getSavePasswordCheckBox())
+		);
+
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(filler1)
-	            .addComponent(glue7)
-	            .addComponent(getLinkLabel())
-			);
-		
-		layout.setVerticalGroup(vGroup);						
-		
-		interfacePanel.add( namePanel, BorderLayout.NORTH );
-		interfacePanel.add( settingsPanel, BorderLayout.CENTER );
-		
+		        layout.createParallelGroup(Alignment.BASELINE)
+		        .addComponent(filler1)
+		        .addComponent(glue7)
+		        .addComponent(getLinkLabel())
+		);
+
+		layout.setVerticalGroup(vGroup);
+
+		interfacePanel.add(namePanel, BorderLayout.NORTH);
+		interfacePanel.add(settingsPanel, BorderLayout.CENTER);
+
 		return interfacePanel;
-		
+
 	}
-	
+
 	public JTextField getNameTextField() {
-		if( nameTextField == null ) {
+		if (nameTextField == null) {
 			nameTextField = new JTextField();
-			nameTextField.setPreferredSize(new Dimension(300,25) );
+			nameTextField.setPreferredSize(new Dimension(300,25));
 		}
 		return nameTextField;
 	}
-	
-	
-	
+
+
+
 	public JComboBox getTypeComboBox() {
-		if( typeComboBox == null ) {
-			DefaultComboBoxModel model = new DefaultComboBoxModel( new Object[] {
-					messageSource.getMessage("mp5Method.config.remote.typeEegPl"),
-					messageSource.getMessage("mp5Method.config.remote.typeOther")
-			});
-			
+		if (typeComboBox == null) {
+			DefaultComboBoxModel model = new DefaultComboBoxModel(new Object[] {
+			                        messageSource.getMessage("mp5Method.config.remote.typeEegPl"),
+			                        messageSource.getMessage("mp5Method.config.remote.typeOther")
+			                });
+
 			typeComboBox = new JComboBox(model);
-			typeComboBox.setPreferredSize( new Dimension(200,25) );
-			
+			typeComboBox.setPreferredSize(new Dimension(200,25));
+
 			configureForEegPl();
-			
-			typeComboBox.addItemListener( new ItemListener() {
+
+			typeComboBox.addItemListener(new ItemListener() {
 
 				@Override
 				public void itemStateChanged(ItemEvent e) {
-					if( e.getStateChange() == ItemEvent.SELECTED ) {
-						
+					if (e.getStateChange() == ItemEvent.SELECTED) {
+
 						int index = typeComboBox.getSelectedIndex();
-						if( index == 0 ) {
+						if (index == 0) {
 
 							configureForEegPl();
-														
+
 						}
-						else if( index == 1 ) {
+						else if (index == 1) {
 
 							configureForOther();
-							
+
 						}
-						
-					}					
+
+					}
 				}
-					
+
 			});
-			
+
 		}
 		return typeComboBox;
 	}
@@ -318,9 +318,9 @@ public class MP5RemoteExecutorDialog extends AbstractDialog {
 		JTextField field = getUrlTextField();
 		field.setText(ConfigurationDefaults.getDefaultEegPlSignalmlWsURL());
 		field.setEditable(false);
-		
+
 		getLinkLabel().setVisible(true);
-		
+
 	}
 
 	private void configureForOther() {
@@ -328,172 +328,172 @@ public class MP5RemoteExecutorDialog extends AbstractDialog {
 		JTextField field = getUrlTextField();
 		field.setText("");
 		field.setEditable(true);
-		
-		getLinkLabel().setVisible(false);							
-		
+
+		getLinkLabel().setVisible(false);
+
 	}
-	
+
 	public JTextField getUrlTextField() {
-		if( urlTextField == null ) {
+		if (urlTextField == null) {
 			urlTextField = new JTextField();
-			urlTextField.setPreferredSize( new Dimension(200,25) );
+			urlTextField.setPreferredSize(new Dimension(200,25));
 		}
 		return urlTextField;
 	}
-	
+
 	public JTextField getUserNameTextField() {
-		if( userNameTextField == null ) {
+		if (userNameTextField == null) {
 			userNameTextField = new JTextField();
-			userNameTextField.setPreferredSize( new Dimension(200,25) );
+			userNameTextField.setPreferredSize(new Dimension(200,25));
 		}
 		return userNameTextField;
 	}
-	
+
 	public JPasswordField getPasswordField() {
-		if( passwordField == null ) {
+		if (passwordField == null) {
 			passwordField = new JPasswordField();
-			passwordField.setPreferredSize( new Dimension(200,25) );
+			passwordField.setPreferredSize(new Dimension(200,25));
 		}
 		return passwordField;
 	}
-	
+
 	public JPasswordField getPasswordAgainField() {
-		if( passwordAgainField == null ) {
+		if (passwordAgainField == null) {
 			passwordAgainField = new JPasswordField();
-			passwordAgainField.setPreferredSize( new Dimension(200,25) );
+			passwordAgainField.setPreferredSize(new Dimension(200,25));
 		}
 		return passwordAgainField;
 	}
-	
+
 	public JCheckBox getSavePasswordCheckBox() {
-		if( savePasswordCheckBox == null ) {
+		if (savePasswordCheckBox == null) {
 			savePasswordCheckBox = new JCheckBox();
 		}
 		return savePasswordCheckBox;
 	}
-	
+
 	public ExternalLinkLabel getLinkLabel() {
-		if( linkLabel == null ) {
+		if (linkLabel == null) {
 			URI eegPlURI;
 			try {
 				eegPlURI = new URI(ConfigurationDefaults.getDefaultEegPlRegisterURL());
 			} catch (URISyntaxException ex) {
 				throw new SanityCheckException(ex);
 			}
-			
-			linkLabel = new ExternalLinkLabel( messageSource.getMessage("mp5Method.config.remote.makeEegPlAccount"), eegPlURI );
+
+			linkLabel = new ExternalLinkLabel(messageSource.getMessage("mp5Method.config.remote.makeEegPlAccount"), eegPlURI);
 		}
 		return linkLabel;
 	}
-	
+
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
-		
+
 		MP5RemotePasswordExecutor executor = (MP5RemotePasswordExecutor) model;
 
 		String name = executor.getName();
-		if( name == null ) {
-			name = messageSource.getMessage( "mp5Method.config.remote.newNameSuggestion" );
+		if (name == null) {
+			name = messageSource.getMessage("mp5Method.config.remote.newNameSuggestion");
 		}
-		
+
 		JTextField nameField = getNameTextField();
-		nameField.setText( name );
-		
+		nameField.setText(name);
+
 		String url = executor.getUrl();
 		boolean urlFieldEditable;
-		if( url == null || url.equals(ConfigurationDefaults.getDefaultEegPlSignalmlWsURL()) ) {
+		if (url == null || url.equals(ConfigurationDefaults.getDefaultEegPlSignalmlWsURL())) {
 			getTypeComboBox().setSelectedIndex(0);
 			urlFieldEditable = false;
 		} else {
 			getTypeComboBox().setSelectedIndex(1);
-			getUrlTextField().setText(url);			
+			getUrlTextField().setText(url);
 			urlFieldEditable = true;
 		}
 		getTypeComboBox().repaint();
-		
-		getUserNameTextField().setText( executor.getUserName() );
-		getPasswordField().setText( executor.getPassword() );
-		getPasswordAgainField().setText( executor.getPassword() );
-		
-		getSavePasswordCheckBox().setSelected( executor.isSavePassword() );
-		
-		if( passwordOnly ) {
-			
+
+		getUserNameTextField().setText(executor.getUserName());
+		getPasswordField().setText(executor.getPassword());
+		getPasswordAgainField().setText(executor.getPassword());
+
+		getSavePasswordCheckBox().setSelected(executor.isSavePassword());
+
+		if (passwordOnly) {
+
 			nameField.setEditable(false);
 			getTypeComboBox().setEnabled(false);
 			getUrlTextField().setEditable(false);
 			getUserNameTextField().setEditable(false);
 			getSavePasswordCheckBox().setEnabled(false);
-			
+
 			getPasswordField().requestFocusInWindow();
 
 		} else {
-		
+
 			nameField.setEditable(true);
 			getTypeComboBox().setEnabled(true);
 			getUrlTextField().setEditable(urlFieldEditable);
-			getUserNameTextField().setEditable(true);			
+			getUserNameTextField().setEditable(true);
 			getSavePasswordCheckBox().setEnabled(true);
-			
-			nameField.selectAll();		
+
+			nameField.selectAll();
 			nameField.requestFocusInWindow();
-			
+
 		}
-		
+
 	}
 
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
 
 		MP5RemotePasswordExecutor executor = (MP5RemotePasswordExecutor) model;
-		executor.setName( getNameTextField().getText() );
-		
-		executor.setUrl( getUrlTextField().getText() );
-		executor.setUserName( getUserNameTextField().getText() );
-		executor.setPassword( new String( getPasswordField().getPassword() ) );
-		executor.setSavePassword( getSavePasswordCheckBox().isSelected() );
-		
+		executor.setName(getNameTextField().getText());
+
+		executor.setUrl(getUrlTextField().getText());
+		executor.setUserName(getUserNameTextField().getText());
+		executor.setPassword(new String(getPasswordField().getPassword()));
+		executor.setSavePassword(getSavePasswordCheckBox().isSelected());
+
 	}
-	
+
 	@Override
 	public void validateDialog(Object model, Errors errors) throws SignalMLException {
 		super.validateDialog(model, errors);
-		
-		if( !Util.validateString( getNameTextField().getText() ) ) {
+
+		if (!Util.validateString(getNameTextField().getText())) {
 			errors.rejectValue("name", "error.nameBadCharacters");
 		}
 
 		try {
-			new URI( getUrlTextField().getText() );
+			new URI(getUrlTextField().getText());
 		} catch (URISyntaxException ex) {
 			errors.rejectValue("url", "error.badUrl");
 		}
-		
-		if( !Util.validateString( getUserNameTextField().getText() ) ) {
+
+		if (!Util.validateString(getUserNameTextField().getText())) {
 			errors.rejectValue("userName", "error.userNameBadCharacters");
 		}
-		
-		String password = new String( getPasswordField().getPassword() );
-		if( !Util.validateString(password) ) {
+
+		String password = new String(getPasswordField().getPassword());
+		if (!Util.validateString(password)) {
 			errors.rejectValue("password", "error.passwordBadCharacters");
 		}
-		if( passwordOnly && password.isEmpty() ) {
+		if (passwordOnly && password.isEmpty()) {
 			errors.rejectValue("password", "error.passwordRequired");
 		}
-		
-		if( !password.equals( new String( getPasswordAgainField().getPassword() ) ) ) {
+
+		if (!password.equals(new String(getPasswordAgainField().getPassword()))) {
 			errors.rejectValue("password", "error.passwordsDifferent");
 			getPasswordField().setText("");
 			getPasswordAgainField().setText("");
-		}		
-		
+		}
+
 	}
-	
+
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
 		return MP5RemotePasswordExecutor.class.isAssignableFrom(clazz);
 	}
-	
+
 	public boolean isPasswordOnly() {
 		return passwordOnly;
 	}
@@ -503,9 +503,9 @@ public class MP5RemoteExecutorDialog extends AbstractDialog {
 	}
 
 	protected PleaseWaitDialog getPleaseWaitDialog() {
-		if( pleaseWaitDialog == null ) {
+		if (pleaseWaitDialog == null) {
 			pleaseWaitDialog = new PleaseWaitDialog(messageSource, this);
-			pleaseWaitDialog.initializeNow();			
+			pleaseWaitDialog.initializeNow();
 		}
 		return pleaseWaitDialog;
 	}
@@ -517,75 +517,75 @@ public class MP5RemoteExecutorDialog extends AbstractDialog {
 
 		public TestConnectionAction() {
 			super(messageSource.getMessage("mp5Method.config.remote.testConnection"));
-			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/testconnection.png") );
+			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/testconnection.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("mp5Method.config.remote.testConnectionToolTip"));
 		}
-		
-		public void actionPerformed(ActionEvent ev) {			
-			
+
+		public void actionPerformed(ActionEvent ev) {
+
 			Object currentModel = getCurrentModel();
-			if( currentModel != null ) {
+			if (currentModel != null) {
 				Errors errors = new BindException(currentModel, "data");
 				try {
 					validateDialog(currentModel,errors);
-				} catch( SignalMLException ex ) {
-					logger.error("Dialog validation threw an exception", ex );
+				} catch (SignalMLException ex) {
+					logger.error("Dialog validation threw an exception", ex);
 					ErrorsDialog.showImmediateExceptionDialog(MP5RemoteExecutorDialog.this, ex);
 					setCurrentModel(null);
 					setClosedWithOk(false);
 					setVisible(false);
 					return;
 				}
-				
-				if( errors.hasErrors() ) {
+
+				if (errors.hasErrors()) {
 					showValidationErrors(errors);
 					return;
 				}
 			}
-			
+
 			TestConnectionRequest request = new TestConnectionRequest();
 			PasswordCredentials credentials = new PasswordCredentials();
-			
-			credentials.setUserName( getUserNameTextField().getText() );
-			credentials.setPassword( new String( getPasswordField().getPassword() ) );
-			
+
+			credentials.setUserName(getUserNameTextField().getText());
+			credentials.setPassword(new String(getPasswordField().getPassword()));
+
 			Credentials creds = new Credentials();
 			creds.setPasswordCredentials(credentials);
-			
+
 			request.setCredentials(creds);
 			request.setHelloString(HELLO_STRING);
-			
+
 			PleaseWaitDialog waitDialog = getPleaseWaitDialog();
 			TestConnectionWorker worker = new TestConnectionWorker(request, getUrlTextField().getText(), waitDialog);
-			
+
 			worker.execute();
 
-			waitDialog.setActivity(messageSource.getMessage("activity.testingConnection"));			
+			waitDialog.setActivity(messageSource.getMessage("activity.testingConnection"));
 			waitDialog.configureForIndeterminateSimulated();
 			waitDialog.waitAndShowDialogIn(MP5RemoteExecutorDialog.this.getRootPane(), 500, worker);
-			
+
 			TestConnectionResponse response = null;
 			try {
 				response = worker.get();
-			} catch( InterruptedException ex ) {
+			} catch (InterruptedException ex) {
 				// ignore
 			} catch (ExecutionException ex) {
-				logger.error( "Failed to connect to server", ex);
+				logger.error("Failed to connect to server", ex);
 				ErrorsDialog.showImmediateExceptionDialog(MP5RemoteExecutorDialog.this, ex.getCause());
 				return;
 			}
-						
+
 			String responseString = response.getResponseString();
-			if( responseString == null || !responseString.contains(HELLO_STRING) ) {
-				logger.error( "Server returned garbage [" + responseString + "]" );
+			if (responseString == null || !responseString.contains(HELLO_STRING)) {
+				logger.error("Server returned garbage [" + responseString + "]");
 				ErrorsDialog.showImmediateExceptionDialog(MP5RemoteExecutorDialog.this, new SanityCheckException("Server returned garbage"));
 				return;
 			}
-			
+
 			OptionPane.showMessage(MP5RemoteExecutorDialog.this, "mp5Method.config.remote.testConnectionSuccess");
-			
+
 		}
-		
+
 	}
-	
+
 }

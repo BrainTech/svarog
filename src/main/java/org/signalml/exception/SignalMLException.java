@@ -1,12 +1,12 @@
 /* SignalMLException.java created 2007-09-20
- * 
+ *
  */
 
 package org.signalml.exception;
 
 /** SignalMLException
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class SignalMLException extends Exception {

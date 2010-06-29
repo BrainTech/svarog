@@ -1,5 +1,5 @@
 /* ResumeAllTasksAction.java created 2008-02-07
- * 
+ *
  */
 package org.signalml.app.action;
 
@@ -15,54 +15,54 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** ResumeAllTasksAction
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ResumeAllTasksAction extends AbstractSignalMLAction {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	protected static final Logger logger = Logger.getLogger(ResumeAllTasksAction.class);
-		
+
 	private ApplicationTaskManager taskManager;
 	private Component optionPaneParent;
-	
+
 	public ResumeAllTasksAction(MessageSourceAccessor messageSource) {
 		super(messageSource);
 		setText("action.resumeAllTasks");
 		setIconPath("org/signalml/app/icon/resumeall.png");
 		setToolTip("action.resumeAllTasksToolTip");
 	}
-			
+
 	@Override
 	public void actionPerformed(ActionEvent ev) {
 
 		int ans = OptionPane.showResumeAllTasks(optionPaneParent);
-		if( ans != OptionPane.OK_OPTION ) {
+		if (ans != OptionPane.OK_OPTION) {
 			return;
 		}
-		
-		synchronized( taskManager ) {
+
+		synchronized (taskManager) {
 
 			int count = taskManager.getTaskCount();
 			Task task;
-			
-			for( int i=0; i<count; i++ ) {
+
+			for (int i=0; i<count; i++) {
 				task = taskManager.getTaskAt(i);
-				synchronized( task ) {
-					if( (task.getMethod() instanceof SuspendableMethod) && task.getStatus().isResumable() ) {
+				synchronized (task) {
+					if ((task.getMethod() instanceof SuspendableMethod) && task.getStatus().isResumable()) {
 						taskManager.resumeTask(task);
 					}
 				}
 			}
-		}		
-		
+		}
+
 	}
-	
+
 	public void setEnabledAsNeeded() {
-		setEnabled( true );
+		setEnabled(true);
 	}
-	
+
 	public Component getOptionPaneParent() {
 		return optionPaneParent;
 	}

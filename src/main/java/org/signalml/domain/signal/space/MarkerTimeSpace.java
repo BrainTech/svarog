@@ -1,19 +1,19 @@
 /* MarkerTimeSpace.java created 2008-01-18
- * 
+ *
  */
 
 package org.signalml.domain.signal.space;
 
 /** MarkerTimeSpace
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class MarkerTimeSpace {
 
 	private int markerChannel;
 	private String markerStyleName;
-	
+
 	private double secondsBefore;
 	private double secondsAfter;
 
@@ -48,5 +48,5 @@ public class MarkerTimeSpace {
 	public void setSecondsAfter(double secondsAfter) {
 		this.secondsAfter = secondsAfter;
 	}
-		
+
 }

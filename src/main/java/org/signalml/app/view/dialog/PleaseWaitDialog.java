@@ -1,5 +1,5 @@
 /* PleaseWaitDialog.java created 2007-10-06
- * 
+ *
  */
 
 package org.signalml.app.view.dialog;
@@ -35,21 +35,21 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** PleaseWaitDialog
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class PleaseWaitDialog extends AbstractDialog {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private JLabel activityLabel;
 	private JProgressBar progressBar;
-	
+
 	private Timer showTimer;
 	private ActionListener showListener;
-	
+
 	private Object currentOwner;
-		
+
 	public PleaseWaitDialog(MessageSourceAccessor messageSource) {
 		super(messageSource);
 	}
@@ -67,19 +67,19 @@ public class PleaseWaitDialog extends AbstractDialog {
 	public void fillModelFromDialog(Object model) throws SignalMLException {
 		// do nothing
 	}
-	
+
 	@Override
 	public JComponent createInterface() {
-		
+
 		JPanel p = new JPanel();
 		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
 		CompoundBorder border = new CompoundBorder(
-				new LineBorder(Color.LIGHT_GRAY),
-				new EmptyBorder(10,10,10,10)
+		        new LineBorder(Color.LIGHT_GRAY),
+		        new EmptyBorder(10,10,10,10)
 		);
 		p.setBorder(border);
-		
-		JLabel label = new JLabel(messageSource.getMessage("pleaseWait") );
+
+		JLabel label = new JLabel(messageSource.getMessage("pleaseWait"));
 		label.setIcon(IconUtils.getInfoIcon());
 		label.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -89,59 +89,59 @@ public class PleaseWaitDialog extends AbstractDialog {
 		progressBar.setPreferredSize(progressSize);
 		progressBar.setMinimumSize(progressSize);
 		progressBar.setMaximumSize(progressSize);
-		
+
 		activityLabel = new JLabel("activity");
 		activityLabel.setMinimumSize(new Dimension(250,1));
 		activityLabel.setFont(activityLabel.getFont().deriveFont(Font.PLAIN, 10F));
 		activityLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		
-		p.add( label );
-		p.add( progressBar );
-		p.add( activityLabel );
-		
+
+		p.add(label);
+		p.add(progressBar);
+		p.add(activityLabel);
+
 		p.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-		
+
 		return p;
-		
+
 	}
 
 	@Override
 	public boolean isControlPanelEquipped() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean isCancellable() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
-		return ( clazz == null );
+		return (clazz == null);
 	}
 
 	@Override
 	protected void initialize() {
 		setUndecorated(true);
 		super.initialize();
-		
+
 		addWindowListener(new WindowAdapter() {
-						
+
 			@Override
 			public void windowOpened(WindowEvent e) {
-				if( currentOwner != null ) {
-					if( currentOwner instanceof SwingWorker ) {
-						if( ((SwingWorker<?,?>) currentOwner).isDone() ) {
+				if (currentOwner != null) {
+					if (currentOwner instanceof SwingWorker) {
+						if (((SwingWorker<?,?>) currentOwner).isDone()) {
 							setVisible(false);
 						}
 					}
 				}
 			}
-			
+
 		});
-		
+
 	}
-	
+
 	public void configureForIndeterminate() {
 		progressBar.setValue(0);
 		progressBar.setIndeterminate(true);
@@ -149,13 +149,13 @@ public class PleaseWaitDialog extends AbstractDialog {
 	}
 
 	public void configureForIndeterminateSimulated() {
-		
+
 		progressBar.setValue(0);
 		progressBar.setIndeterminate(true);
 		progressBar.setStringPainted(false);
-				
+
 	}
-	
+
 	public void configureForDeterminate(int min, int max, int value) {
 		progressBar.setMinimum(min);
 		progressBar.setMaximum(max);
@@ -164,29 +164,29 @@ public class PleaseWaitDialog extends AbstractDialog {
 		progressBar.setStringPainted(true);
 	}
 
-	public void setMinimum( int min ) {
+	public void setMinimum(int min) {
 		progressBar.setMinimum(min);
 	}
-	
-	public void setMaximum( int max ) {
+
+	public void setMaximum(int max) {
 		progressBar.setMaximum(max);
 	}
-	
-	public void setProgress( int value ) {
+
+	public void setProgress(int value) {
 		progressBar.setValue(value);
 	}
 
-	public void setActivity( String activity ) {
+	public void setActivity(String activity) {
 		activityLabel.setText(activity);
 	}
-	
+
 	// this method waits for specified amout of time while allowing the application to continue
 	// THEN locks the application on a modal dialog
-	public void showDialogIn( final Component parent, int noDialogTimeout ) {
-		
+	public void showDialogIn(final Component parent, int noDialogTimeout) {
+
 		currentOwner = null;
-		
-		if( showListener == null ) {
+
+		if (showListener == null) {
 			showListener = new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -195,14 +195,14 @@ public class PleaseWaitDialog extends AbstractDialog {
 				}
 			};
 		}
-		
-		if( showTimer == null ) {
+
+		if (showTimer == null) {
 			showTimer = new Timer(0, showListener);
 			showTimer.setRepeats(false);
 		}
 		showTimer.setInitialDelay(noDialogTimeout);
 		showTimer.start();
-				
+
 	}
 
 	// this method locks the application on a modal dialog that cannot be closed
@@ -211,12 +211,12 @@ public class PleaseWaitDialog extends AbstractDialog {
 	@SuppressWarnings("unchecked")
 	public void waitAndShowDialogIn(Component parent, int noDialogTimeout, SwingWorker worker) {
 
-		logger.debug("Start waitAndShowDialogIn for [" + worker + "] timeout [" + noDialogTimeout + "]" );
-		
+		logger.debug("Start waitAndShowDialogIn for [" + worker + "] timeout [" + noDialogTimeout + "]");
+
 		// FIXME [MD] probably should be cleared if dialog not shown after all
 		currentOwner = worker;
-		
-		if( noDialogTimeout > 0 ) {
+
+		if (noDialogTimeout > 0) {
 			boolean repeat;
 			do {
 				repeat = false;
@@ -233,49 +233,49 @@ public class PleaseWaitDialog extends AbstractDialog {
 				} catch (TimeoutException ex) {
 					// exit and proceed to show dialog
 				}
-			} while( repeat );
-		}
-				
-		if( !worker.isDone() ) {
-			logger.debug("Showing dialog");
-			centerInComponent(parent, 0.5, 0.5);
-			showDialog(null, false);			
+			} while (repeat);
 		}
 
-		logger.debug("End waitAndShowDialogIn for [" + worker + "]" );
-		
+		if (!worker.isDone()) {
+			logger.debug("Showing dialog");
+			centerInComponent(parent, 0.5, 0.5);
+			showDialog(null, false);
+		}
+
+		logger.debug("End waitAndShowDialogIn for [" + worker + "]");
+
 	}
-	
-	// this method locks the application on a modal dialog that cannot be closed	
-	public void showDialogNow( Component parent ) {
-		
+
+	// this method locks the application on a modal dialog that cannot be closed
+	public void showDialogNow(Component parent) {
+
 		currentOwner = null;
-		
+
 		centerInComponent(parent, 0.5, 0.5);
 		showDialog(null, false);
-				
+
 	}
-	
+
 	// this cancels showDialogIn, not other ways of timed showing
 	public void cancelShowing() {
-		if( showTimer != null && showTimer.isRunning() ) {
+		if (showTimer != null && showTimer.isRunning()) {
 			showTimer.stop();
 		}
 		currentOwner = null;
 	}
-	
+
 	public void release() {
 		setVisible(false);
 		currentOwner = null;
 	}
-	
+
 	public void releaseIfOwnedBy(Object owner) {
-		logger.debug("releaseIfOwnedBy for [" + owner + "]" );
-		if( currentOwner == owner ) {
-			logger.debug("releasing for [" + owner + "]" );
-			setVisible(false);			
+		logger.debug("releaseIfOwnedBy for [" + owner + "]");
+		if (currentOwner == owner) {
+			logger.debug("releasing for [" + owner + "]");
+			setVisible(false);
 			currentOwner = null;
 		}
 	}
-	
+
 }

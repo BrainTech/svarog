@@ -1,5 +1,5 @@
 /* ApplicationPreferencesDialog.java created 2007-09-11
- * 
+ *
  */
 package org.signalml.app.view.dialog;
 
@@ -38,146 +38,146 @@ import org.springframework.validation.Errors;
 
 /** ApplicationPreferencesDialog
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ApplicationPreferencesDialog extends AbstractDialog {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private ViewerFileChooser fileChooser;
 	private MP5ExecutorManager mp5ExecutorManager;
 	private MP5LocalExecutorDialog mp5LocalExecutorDialog;
 	private MP5RemoteExecutorDialog mp5RemoteExecutorDialog;
-	
+
 	private CodecManagerConfigPanel codecManagerPanel;
 	private SignalViewingConfigPanel signalViewingConfigPanel;
 	private TaggingConfigPanel taggingConfigPanel;
 	private MiscellaneousConfigPanel miscellaneousConfigPanel;
 	private SignalZoomSettingsPanel signalZoomSettingsPanel;
 	private SignalFFTSettingsPanel signalFFTSettingsPanel;
-	
+
 	private ToolsConfigPanel toolsConfigPanel;
-	
+
 	private RegisterCodecDialog registerCodecDialog;
 	private SignalMLCodecManager codecManager;
 	private PleaseWaitDialog pleaseWaitDialog;
-	
+
 	private RegisterCodecAction registerCodecAction;
 	private RemoveCodecAction removeCodecAction;
-	
+
 	private SignalMLOperationMode mode;
 	private File profileDir;
-	
+
 	public ApplicationPreferencesDialog(MessageSourceAccessor messageSource, SignalMLOperationMode mode, Window f, boolean isModal) {
 		super(messageSource, f, isModal);
 		this.mode = mode;
 	}
-	
+
 	@Override
 	protected void initialize() {
-		
+
 		setTitle(messageSource.getMessage("preferences.title"));
-		
+
 		super.initialize();
-		
-		if( mode == SignalMLOperationMode.APPLICATION ) {
-		
+
+		if (mode == SignalMLOperationMode.APPLICATION) {
+
 			SignalMLCodecListModel codecListModel = new SignalMLCodecListModel();
 			codecListModel.setCodecManager(codecManager);
-			
+
 			SignalMLCodecSelector selector = new SignalMLCodecSelector() {
-	
+
 				@Override
 				public SignalMLCodec getSelectedCodec() {
 					return (SignalMLCodec) codecManagerPanel.getCodecList().getSelectedValue();
 				}
-	
+
 				@Override
 				public void setSelectedCodec(SignalMLCodec codec) {
 					codecManagerPanel.getCodecList().setSelectedValue(codec, true);
 				}
-				
+
 			};
-			
+
 			registerCodecAction = new RegisterCodecAction(messageSource);
 			registerCodecAction.setCodecManager(codecManager);
 			registerCodecAction.setRegisterCodecDialog(getRegisterCodecDialog());
 			registerCodecAction.setSelector(selector);
 			registerCodecAction.setPleaseWaitDialog(getPleaseWaitDialog());
 			registerCodecAction.initializeAll();
-			
+
 			removeCodecAction = new RemoveCodecAction(messageSource);
 			removeCodecAction.setCodecManager(codecManager);
 			removeCodecAction.setSelector(selector);
-			
+
 			codecManagerPanel.getCodecList().setModel(codecListModel);
 			codecManagerPanel.getRegisterCodecButton().setAction(registerCodecAction);
 			codecManagerPanel.getRemoveCodecButton().setAction(removeCodecAction);
 
 		}
-		
+
 	}
-	
+
 	@Override
 	public JComponent createInterface() {
-		
+
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
 		tabbedPane.setBorder(new EmptyBorder(3,3,3,3));
-				
+
 		signalViewingConfigPanel = new SignalViewingConfigPanel(messageSource);
 		taggingConfigPanel = new TaggingConfigPanel(messageSource);
 		miscellaneousConfigPanel = new MiscellaneousConfigPanel(messageSource, mode);
 		signalZoomSettingsPanel = new SignalZoomSettingsPanel(messageSource, false);
 		signalFFTSettingsPanel = new SignalFFTSettingsPanel(messageSource, false);
-		
+
 		JPanel signalViewingContainPanel = new JPanel(new BorderLayout());
-		signalViewingContainPanel.add( signalViewingConfigPanel, BorderLayout.NORTH );
-		signalViewingContainPanel.add( Box.createVerticalGlue(), BorderLayout.CENTER );
+		signalViewingContainPanel.add(signalViewingConfigPanel, BorderLayout.NORTH);
+		signalViewingContainPanel.add(Box.createVerticalGlue(), BorderLayout.CENTER);
 
 		JPanel taggingContainPanel = new JPanel(new BorderLayout());
-		taggingContainPanel.add( taggingConfigPanel, BorderLayout.NORTH );
-		taggingContainPanel.add( Box.createVerticalGlue(), BorderLayout.CENTER );
-		
+		taggingContainPanel.add(taggingConfigPanel, BorderLayout.NORTH);
+		taggingContainPanel.add(Box.createVerticalGlue(), BorderLayout.CENTER);
+
 		JPanel miscellaneousContainPanel = new JPanel(new BorderLayout());
-		miscellaneousContainPanel.add( miscellaneousConfigPanel, BorderLayout.NORTH );
-		miscellaneousContainPanel.add( Box.createVerticalGlue(), BorderLayout.CENTER );
-		
+		miscellaneousContainPanel.add(miscellaneousConfigPanel, BorderLayout.NORTH);
+		miscellaneousContainPanel.add(Box.createVerticalGlue(), BorderLayout.CENTER);
+
 		JPanel zoomSettingsContainPanel = new JPanel(new BorderLayout());
-		zoomSettingsContainPanel.add( signalZoomSettingsPanel, BorderLayout.NORTH );
-		zoomSettingsContainPanel.add( Box.createVerticalGlue(), BorderLayout.CENTER );
+		zoomSettingsContainPanel.add(signalZoomSettingsPanel, BorderLayout.NORTH);
+		zoomSettingsContainPanel.add(Box.createVerticalGlue(), BorderLayout.CENTER);
 
 		JPanel signalFFTSettingsContainPanel = new JPanel(new BorderLayout());
-		signalFFTSettingsContainPanel.add( signalFFTSettingsPanel, BorderLayout.NORTH );
-		signalFFTSettingsContainPanel.add( Box.createVerticalGlue(), BorderLayout.CENTER );
-		
+		signalFFTSettingsContainPanel.add(signalFFTSettingsPanel, BorderLayout.NORTH);
+		signalFFTSettingsContainPanel.add(Box.createVerticalGlue(), BorderLayout.CENTER);
+
 		tabbedPane.addTab(messageSource.getMessage("preferences.signalViewing"), signalViewingContainPanel);
 		tabbedPane.addTab(messageSource.getMessage("preferences.zoomSettings"), zoomSettingsContainPanel);
 		tabbedPane.addTab(messageSource.getMessage("preferences.signalFFTSettings"), signalFFTSettingsContainPanel);
 		tabbedPane.addTab(messageSource.getMessage("preferences.tagging"), taggingContainPanel);
 		tabbedPane.addTab(messageSource.getMessage("preferences.miscellaneous"), miscellaneousContainPanel);
-		
-		if( mode == SignalMLOperationMode.APPLICATION ) {
-			
+
+		if (mode == SignalMLOperationMode.APPLICATION) {
+
 			codecManagerPanel = new CodecManagerConfigPanel(messageSource);
-			
+
 			toolsConfigPanel = new ToolsConfigPanel(messageSource, fileChooser, mp5ExecutorManager);
 			toolsConfigPanel.setMp5LocalExecutorDialog(getMp5LocalExecutorDialog());
 			toolsConfigPanel.setMp5RemoteExecutorDialog(getMp5RemoteExecutorDialog());
-		
+
 			JPanel codecManagerContainPanel = new JPanel(new BorderLayout());
-			codecManagerContainPanel.add( codecManagerPanel, BorderLayout.NORTH );
-			codecManagerContainPanel.add( Box.createVerticalGlue(), BorderLayout.CENTER );
+			codecManagerContainPanel.add(codecManagerPanel, BorderLayout.NORTH);
+			codecManagerContainPanel.add(Box.createVerticalGlue(), BorderLayout.CENTER);
 
 			JPanel toolsContainPanel = new JPanel(new BorderLayout());
-			toolsContainPanel.add( toolsConfigPanel, BorderLayout.NORTH );
-			toolsContainPanel.add( Box.createVerticalGlue(), BorderLayout.CENTER );
+			toolsContainPanel.add(toolsConfigPanel, BorderLayout.NORTH);
+			toolsContainPanel.add(Box.createVerticalGlue(), BorderLayout.CENTER);
 
-			tabbedPane.insertTab(messageSource.getMessage("preferences.tools"), null, toolsContainPanel, null, 4 );
-			tabbedPane.insertTab(messageSource.getMessage("preferences.codecs"), null, codecManagerContainPanel, null, 6 );
-			
+			tabbedPane.insertTab(messageSource.getMessage("preferences.tools"), null, toolsContainPanel, null, 4);
+			tabbedPane.insertTab(messageSource.getMessage("preferences.codecs"), null, codecManagerContainPanel, null, 6);
+
 		}
-		
+
 		return tabbedPane;
 
 	}
@@ -186,21 +186,21 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 
 		ApplicationConfiguration config = (ApplicationConfiguration) model;
-		
-		// note the "save on every change" checkbox has no immediate effect on behaviour of codec manager		
-		if( mode == SignalMLOperationMode.APPLICATION ) {
+
+		// note the "save on every change" checkbox has no immediate effect on behaviour of codec manager
+		if (mode == SignalMLOperationMode.APPLICATION) {
 			registerCodecAction.setApplicationConfig(config);
 			removeCodecAction.setApplicationConfig(config);
-		
+
 			toolsConfigPanel.fillPanelFromModel(config);
 		}
-		
+
 		signalViewingConfigPanel.fillPanelFromModel(config);
 		taggingConfigPanel.fillPanelFromModel(config);
 		miscellaneousConfigPanel.fillPanelFromModel(config);
 		signalZoomSettingsPanel.fillPanelFromModel(config.getZoomSignalSettings());
 		signalFFTSettingsPanel.fillPanelFromModel(config.getSignalFFTSettings());
-		
+
 	}
 
 	@Override
@@ -215,59 +215,59 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 		signalFFTSettingsPanel.fillModelFromPanel(config.getSignalFFTSettings());
 
 		config.applySystemSettings();
-		
-		if( mode == SignalMLOperationMode.APPLICATION ) {
-		
+
+		if (mode == SignalMLOperationMode.APPLICATION) {
+
 			toolsConfigPanel.fillModelFromPanel(config);
-							
-			if( config.isSaveConfigOnEveryChange() ) {
+
+			if (config.isSaveConfigOnEveryChange()) {
 				try {
 					codecManager.writeToPersistence(null);
 				} catch (Exception ex) {
-					logger.error( "Failed to save codec configuration", ex );
+					logger.error("Failed to save codec configuration", ex);
 				}
 				try {
 					mp5ExecutorManager.writeToPersistence(null);
 				} catch (Exception ex) {
-					logger.error( "Failed to save mp5 executor configuration", ex );
+					logger.error("Failed to save mp5 executor configuration", ex);
 				}
 				try {
 					config.writeToPersistence(null);
 				} catch (Exception ex) {
-					logger.error( "Failed to save configuration", ex );
-				}			
+					logger.error("Failed to save configuration", ex);
+				}
 			}
 
 		}
 	}
-	
+
 	@Override
 	public void validateDialog(Object model, Errors errors) throws SignalMLException {
 		super.validateDialog(model, errors);
-		
+
 		signalViewingConfigPanel.validate(errors);
 		taggingConfigPanel.validate(errors);
 		miscellaneousConfigPanel.validate(errors);
-		
+
 		errors.pushNestedPath("zoomSignalSettings");
 		signalZoomSettingsPanel.validate(errors);
 		errors.popNestedPath();
-		
+
 		errors.pushNestedPath("signalFFTSettings");
 		signalFFTSettingsPanel.validatePanel(errors);
-		errors.popNestedPath();		
-		
-		if( mode == SignalMLOperationMode.APPLICATION ) {
+		errors.popNestedPath();
+
+		if (mode == SignalMLOperationMode.APPLICATION) {
 			toolsConfigPanel.validatePanel(errors);
 		}
 
 	}
-	
+
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
 		return ApplicationConfiguration.class.isAssignableFrom(clazz);
 	}
-	
+
 	public File getProfileDir() {
 		return profileDir;
 	}
@@ -277,7 +277,7 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 	}
 
 	protected RegisterCodecDialog getRegisterCodecDialog() {
-		if( registerCodecDialog == null ) {
+		if (registerCodecDialog == null) {
 			registerCodecDialog = new RegisterCodecDialog(messageSource,this,true);
 			registerCodecDialog.setCodecManager(codecManager);
 			registerCodecDialog.setProfileDir(profileDir);
@@ -294,9 +294,9 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 	}
 
 	protected PleaseWaitDialog getPleaseWaitDialog() {
-		if( pleaseWaitDialog == null ) {
+		if (pleaseWaitDialog == null) {
 			pleaseWaitDialog = new PleaseWaitDialog(messageSource,this);
-			pleaseWaitDialog.initializeNow();			
+			pleaseWaitDialog.initializeNow();
 		}
 		return pleaseWaitDialog;
 	}
@@ -318,18 +318,18 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 	}
 
 	protected MP5LocalExecutorDialog getMp5LocalExecutorDialog() {
-		if( mp5LocalExecutorDialog == null ) {
+		if (mp5LocalExecutorDialog == null) {
 			mp5LocalExecutorDialog = new MP5LocalExecutorDialog(messageSource,this,true);
-			mp5LocalExecutorDialog.setFileChooser(fileChooser);			
+			mp5LocalExecutorDialog.setFileChooser(fileChooser);
 		}
 		return mp5LocalExecutorDialog;
 	}
 
 	protected MP5RemoteExecutorDialog getMp5RemoteExecutorDialog() {
-		if( mp5RemoteExecutorDialog == null ) {
-			mp5RemoteExecutorDialog = new MP5RemoteExecutorDialog(messageSource,this,true);		
+		if (mp5RemoteExecutorDialog == null) {
+			mp5RemoteExecutorDialog = new MP5RemoteExecutorDialog(messageSource,this,true);
 		}
 		return mp5RemoteExecutorDialog;
 	}
-	
+
 }

@@ -1,5 +1,5 @@
 /* ViewerWorkspaceTree.java created 2007-09-11
- * 
+ *
  */
 package org.signalml.app.view;
 
@@ -32,7 +32,7 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** ViewerWorkspaceTree
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ViewerWorkspaceTree extends AbstractViewerTree implements ActionFocusListener, DocumentFocusSelector, MRUDFocusSelector {
@@ -40,33 +40,33 @@ public class ViewerWorkspaceTree extends AbstractViewerTree implements ActionFoc
 	private static final long serialVersionUID = 1L;
 
 	private ActionFocusSupport afSupport = new ActionFocusSupport(this);
-	
+
 	private ActionFocusManager actionFocusManager;
 	private DocumentFlowIntegrator documentFlowIntegrator;
 	private OpenDocumentDialog openDocumentDialog;
-	
+
 	private JPopupMenu documentPopupMenu;
 	private JPopupMenu mrudPopupMenu;
 	private JPopupMenu otherPopupMenu;
-	
+
 	private ActivateDocumentAction activateDocumentAction;
-	private OpenDocumentAction openDocumentAction;	
+	private OpenDocumentAction openDocumentAction;
 	private CloseDocumentAction closeDocumentAction;
 	private SaveDocumentAction saveDocumentAction;
 	private SaveDocumentAsAction saveDocumentAsAction;
 	private OpenMRUDAction openMRUDAction;
-	
+
 	private Document activeDocument;
 	private MRUDEntry activeMRUDEntry;
-	
+
 	public ViewerWorkspaceTree(WorkspaceTreeModel model, MessageSourceAccessor messageSource) {
 		super(model, messageSource);
 		setCellRenderer(new WorkspaceTreeCellRenderer());
-		expandPath( new TreePath(new Object[] {model.getRoot(), model.getChild(model.getRoot(), 0)}) );
-		expandPath( new TreePath(new Object[] {model.getRoot(), model.getChild(model.getRoot(), 1)}) );
+		expandPath(new TreePath(new Object[] {model.getRoot(), model.getChild(model.getRoot(), 0)}));
+		expandPath(new TreePath(new Object[] {model.getRoot(), model.getChild(model.getRoot(), 1)}));
 		addMouseListener(new MouseEventHandler());
 	}
-		
+
 	@Override
 	public WorkspaceTreeModel getModel() {
 		return (WorkspaceTreeModel) super.getModel();
@@ -96,40 +96,40 @@ public class ViewerWorkspaceTree extends AbstractViewerTree implements ActionFoc
 	public JPopupMenu getComponentPopupMenu() {
 		return focus(getSelectionPath());
 	}
-	
+
 	private JPopupMenu focus(TreePath path) {
-		
+
 		JPopupMenu popupMenu = null;
-		
+
 		activeDocument = null;
 		activeMRUDEntry = null;
-		
-		if( path != null ) {
+
+		if (path != null) {
 			Object last = path.getLastPathComponent();
-			if( last instanceof Document ) {
+			if (last instanceof Document) {
 				activeDocument = (Document) last;
-				popupMenu = getDocumentPopupMenu();				
+				popupMenu = getDocumentPopupMenu();
 			}
-			else if( last instanceof MRUDEntry ) {
+			else if (last instanceof MRUDEntry) {
 				activeMRUDEntry = (MRUDEntry) last;
-				popupMenu = getMRUDPopupMenu();				
+				popupMenu = getMRUDPopupMenu();
 			}
 		}
-		if( popupMenu == null ) {
+		if (popupMenu == null) {
 			popupMenu = getOtherPopupMenu();
 		}
-		
+
 		afSupport.fireActionFocusChanged();
-		
+
 		return popupMenu;
-		
+
 	}
-	
+
 	private JPopupMenu getDocumentPopupMenu() {
-	
-		if( documentPopupMenu == null ) {
+
+		if (documentPopupMenu == null) {
 			documentPopupMenu = new JPopupMenu();
-			
+
 			documentPopupMenu.add(getActivateDocumentAction());
 			documentPopupMenu.addSeparator();
 			documentPopupMenu.add(getSaveDocumentAction());
@@ -137,35 +137,35 @@ public class ViewerWorkspaceTree extends AbstractViewerTree implements ActionFoc
 			documentPopupMenu.addSeparator();
 			documentPopupMenu.add(getCloseDocumentAction());
 		}
-				
+
 		return documentPopupMenu;
-		
+
 	}
 
 	private JPopupMenu getMRUDPopupMenu() {
-		
-		if( mrudPopupMenu == null ) {
+
+		if (mrudPopupMenu == null) {
 			mrudPopupMenu = new JPopupMenu();
-			
+
 			mrudPopupMenu.add(getOpenMRUDAction());
 		}
-				
+
 		return mrudPopupMenu;
-		
+
 	}
-	
+
 	private JPopupMenu getOtherPopupMenu() {
-		
-		if( otherPopupMenu == null ) {
+
+		if (otherPopupMenu == null) {
 			otherPopupMenu = new JPopupMenu();
-			
+
 			otherPopupMenu.add(getOpenDocumentAction());
 		}
-				
+
 		return otherPopupMenu;
-		
+
 	}
-	
+
 	public ActionFocusManager getActionFocusManager() {
 		return actionFocusManager;
 	}
@@ -173,7 +173,7 @@ public class ViewerWorkspaceTree extends AbstractViewerTree implements ActionFoc
 	public void setActionFocusManager(ActionFocusManager actionFocusManager) {
 		this.actionFocusManager = actionFocusManager;
 	}
-	
+
 	public DocumentFlowIntegrator getDocumentFlowIntegrator() {
 		return documentFlowIntegrator;
 	}
@@ -181,7 +181,7 @@ public class ViewerWorkspaceTree extends AbstractViewerTree implements ActionFoc
 	public void setDocumentFlowIntegrator(DocumentFlowIntegrator documentFlowIntegrator) {
 		this.documentFlowIntegrator = documentFlowIntegrator;
 	}
-	
+
 	public OpenDocumentDialog getOpenDocumentDialog() {
 		return openDocumentDialog;
 	}
@@ -191,14 +191,14 @@ public class ViewerWorkspaceTree extends AbstractViewerTree implements ActionFoc
 	}
 
 	public ActivateDocumentAction getActivateDocumentAction() {
-		if( activateDocumentAction == null ) {
+		if (activateDocumentAction == null) {
 			activateDocumentAction = new ActivateDocumentAction(messageSource, actionFocusManager, this);
 		}
 		return activateDocumentAction;
 	}
 
 	public OpenDocumentAction getOpenDocumentAction() {
-		if( openDocumentAction == null ) {
+		if (openDocumentAction == null) {
 			openDocumentAction = new OpenDocumentAction(messageSource);
 			openDocumentAction.setDocumentFlowIntegrator(documentFlowIntegrator);
 			openDocumentAction.setOpenDocumentDialog(openDocumentDialog);
@@ -207,7 +207,7 @@ public class ViewerWorkspaceTree extends AbstractViewerTree implements ActionFoc
 	}
 
 	public CloseDocumentAction getCloseDocumentAction() {
-		if( closeDocumentAction == null ) {
+		if (closeDocumentAction == null) {
 			closeDocumentAction = new CloseDocumentAction(messageSource,this);
 			closeDocumentAction.setDocumentFlowIntegrator(documentFlowIntegrator);
 		}
@@ -215,7 +215,7 @@ public class ViewerWorkspaceTree extends AbstractViewerTree implements ActionFoc
 	}
 
 	public SaveDocumentAction getSaveDocumentAction() {
-		if( saveDocumentAction == null ) {
+		if (saveDocumentAction == null) {
 			saveDocumentAction = new SaveDocumentAction(messageSource,this);
 			saveDocumentAction.setDocumentFlowIntegrator(documentFlowIntegrator);
 		}
@@ -223,7 +223,7 @@ public class ViewerWorkspaceTree extends AbstractViewerTree implements ActionFoc
 	}
 
 	public SaveDocumentAsAction getSaveDocumentAsAction() {
-		if( saveDocumentAsAction == null ) {
+		if (saveDocumentAsAction == null) {
 			saveDocumentAsAction = new SaveDocumentAsAction(messageSource,this);
 			saveDocumentAsAction.setDocumentFlowIntegrator(documentFlowIntegrator);
 		}
@@ -231,51 +231,51 @@ public class ViewerWorkspaceTree extends AbstractViewerTree implements ActionFoc
 	}
 
 	public OpenMRUDAction getOpenMRUDAction() {
-		if( openMRUDAction == null ) {
+		if (openMRUDAction == null) {
 			openMRUDAction = new OpenMRUDAction(messageSource,this);
 			openMRUDAction.setDocumentFlowIntegrator(documentFlowIntegrator);
 		}
 		return openMRUDAction;
 	}
-	
+
 	@Override
 	public void actionFocusChanged(ActionFocusEvent e) {
 		Document document = actionFocusManager.getActiveDocument();
-		if( document != null ) {					
+		if (document != null) {
 			setSelectionPath(getModel().getTreePathToRoot(document));
 		}
 	}
-		
+
 	private class MouseEventHandler extends MouseAdapter {
-						
+
 		@Override
 		public void mousePressed(MouseEvent e) {
 			ViewerWorkspaceTree tree = (ViewerWorkspaceTree) e.getSource();
-			if( SwingUtilities.isRightMouseButton(e) && (e.getClickCount() == 1) ) {
+			if (SwingUtilities.isRightMouseButton(e) && (e.getClickCount() == 1)) {
 				TreePath selPath = tree.getPathForLocation(e.getX(), e.getY());
 				tree.setSelectionPath(selPath);
 			}
 		}
-		
+
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			ViewerWorkspaceTree tree = (ViewerWorkspaceTree) e.getSource();
-			if( SwingUtilities.isLeftMouseButton(e) && (e.getClickCount() % 2) == 0 ) {
+			if (SwingUtilities.isLeftMouseButton(e) && (e.getClickCount() % 2) == 0) {
 				int selRow = tree.getRowForLocation(e.getX(), e.getY());
 				TreePath selPath = tree.getPathForLocation(e.getX(), e.getY());
 				focus(selPath);
-				if( selRow >= 0 ) {
+				if (selRow >= 0) {
 					Object target = selPath.getLastPathComponent();
-					if( target instanceof Document ) {
+					if (target instanceof Document) {
 						getActivateDocumentAction().actionPerformed(new ActionEvent(tree,0,"activate"));
-					} else if( target instanceof MRUDEntry ) {
+					} else if (target instanceof MRUDEntry) {
 						getOpenMRUDAction().actionPerformed(new ActionEvent(tree,0,"open"));
 					}
-					// ignore dbl clicks on other tree nodes 
+					// ignore dbl clicks on other tree nodes
 				}
 			}
 		}
-					
+
 	}
-	
+
 }

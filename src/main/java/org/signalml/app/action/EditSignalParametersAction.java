@@ -1,5 +1,5 @@
 /* EditSignalParametersAction.java created 2007-09-28
- * 
+ *
  */
 
 package org.signalml.app.action;
@@ -19,118 +19,118 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** EditSignalParametersAction
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class EditSignalParametersAction extends AbstractFocusableSignalMLAction<SignalDocumentFocusSelector> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	protected static final Logger logger = Logger.getLogger(EditSignalParametersAction.class);
-		
-	private SignalParametersDialog signalParametersDialog; 
-	
+
+	private SignalParametersDialog signalParametersDialog;
+
 	public EditSignalParametersAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
 		super(messageSource, signalDocumentFocusSelector);
 		setText("action.signalParameters");
 		setIconPath("org/signalml/app/icon/signalparameters.png");
 		setToolTip("action.signalParametersToolTip");
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
 		SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
-		if( signalDocument == null ) {
+		if (signalDocument == null) {
 			logger.warn("Target document doesn't exist or is not a signal");
 			return;
 		}
 
 		SignalView signalView = (SignalView) signalDocument.getDocumentView();
-		
+
 		SignalParameterDescriptor spd = new SignalParameterDescriptor();
-				
+
 		spd.setPageSize(signalDocument.getPageSize());
 		spd.setBlocksPerPage(signalDocument.getBlocksPerPage());
-		
-		if( signalDocument.getTagDocuments().isEmpty() ) {
+
+		if (signalDocument.getTagDocuments().isEmpty()) {
 			spd.setPageSizeEditable(true);
 			spd.setBlocksPerPageEditable(true);
 		} else {
 			spd.setPageSizeEditable(false);
-			spd.setBlocksPerPageEditable(false);			
+			spd.setBlocksPerPageEditable(false);
 		}
-		
+
 		OriginalMultichannelSampleSource mss = signalDocument.getSampleSource();
-		
+
 		spd.setSamplingFrequency(mss.getSamplingFrequency());
-		if( mss.isSamplingFrequencyCapable() ) {
+		if (mss.isSamplingFrequencyCapable()) {
 			spd.setSamplingFrequency(mss.getSamplingFrequency());
 			spd.setSamplingFrequencyEditable(false);
 		} else {
 			spd.setSamplingFrequency(null);
 			spd.setSamplingFrequencyEditable(true);
 		}
-		
+
 		spd.setChannelCount(mss.getChannelCount());
-		if( mss.isChannelCountCapable() ) {
+		if (mss.isChannelCountCapable()) {
 			spd.setChannelCount(mss.getChannelCount());
 			spd.setChannelCountEditable(false);
 		} else {
 			spd.setChannelCount(null);
 			spd.setChannelCountEditable(true);
 		}
-		
-		if( mss.isCalibrationCapable() ) {
+
+		if (mss.isCalibrationCapable()) {
 			spd.setCalibration(mss.getCalibration());
 			spd.setCalibrationEditable(true);
 		} else {
 			spd.setCalibration(null);
 			spd.setCalibrationEditable(false);
 		}
-		
+
 		boolean ok = signalParametersDialog.showDialog(spd,true);
-		if( !ok ) {
+		if (!ok) {
 			return;
 		}
-		
-		if( signalDocument.getTagDocuments().isEmpty() ) {		
+
+		if (signalDocument.getTagDocuments().isEmpty()) {
 			signalDocument.setPageSize(spd.getPageSize());
 			signalDocument.setBlocksPerPage(spd.getBlocksPerPage());
 		}
-		
-		if( mss.isSamplingFrequencyCapable() ) {
+
+		if (mss.isSamplingFrequencyCapable()) {
 			mss.setSamplingFrequency(spd.getSamplingFrequency());
 		}
-		if( mss.isChannelCountCapable() ) {
+		if (mss.isChannelCountCapable()) {
 			mss.setChannelCount(spd.getChannelCount());
 		}
-		
-		if( mss.isCalibrationCapable() ) {
+
+		if (mss.isCalibrationCapable()) {
 			mss.setCalibration(spd.getCalibration());
 		}
 
 		signalView.clearSignalSelection();
 		LinkedList<SignalPlot> plots = signalView.getPlots();
-		for( SignalPlot plot : plots ) {
-			if( !plot.isVisible() ) {
+		for (SignalPlot plot : plots) {
+			if (!plot.isVisible()) {
 				plot.setVisible(true);
 			}
 		}
-		
+
 	}
 
 	@Override
 	public void setEnabledAsNeeded() {
-		setEnabled( getActionFocusSelector().getActiveSignalDocument() != null ); 
+		setEnabled(getActionFocusSelector().getActiveSignalDocument() != null);
 	}
-	
+
 	public SignalParametersDialog getSignalParametersDialog() {
 		return signalParametersDialog;
 	}
 
 	public void setSignalParametersDialog(SignalParametersDialog signalParametersDialog) {
 		this.signalParametersDialog = signalParametersDialog;
-	}	
+	}
 
 }

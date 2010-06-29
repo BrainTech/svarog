@@ -1,5 +1,5 @@
 /* MP5AdvancedDecompositionConfigPanel.java created 2008-01-31
- * 
+ *
  */
 package org.signalml.app.method.mp5;
 
@@ -29,21 +29,21 @@ import org.springframework.validation.Errors;
 
 /** MP5AdvancedDecompositionConfigPanel
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class MP5AdvancedDecompositionConfigPanel extends JPanel {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private MessageSourceAccessor messageSource;
-	private AbstractDialog owner;		
-			
+	private AbstractDialog owner;
+
 	private ResolvableComboBox dictionaryTypeComboBox;
 	private ResolvableComboBox dictionaryReinitTypeComboBox;
 	private JSpinner scaleToPeriodFactorSpinner;
 	private JSpinner periodDensitySpinner;
-	
+
 	public MP5AdvancedDecompositionConfigPanel(MessageSourceAccessor messageSource, AbstractDialog owner) {
 		super();
 		this.messageSource = messageSource;
@@ -52,14 +52,14 @@ public class MP5AdvancedDecompositionConfigPanel extends JPanel {
 	}
 
 	private void initialize() {
-		
+
 		CompoundBorder border = new CompoundBorder(
-				new TitledBorder( messageSource.getMessage("mp5Method.dialog.advancedDecompositionTitle") ),
-				new EmptyBorder(3,3,3,3)
-			);
-		
+		        new TitledBorder(messageSource.getMessage("mp5Method.dialog.advancedDecompositionTitle")),
+		        new EmptyBorder(3,3,3,3)
+		);
+
 		setBorder(border);
-		
+
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);
 		layout.setAutoCreateContainerGaps(false);
@@ -69,7 +69,7 @@ public class MP5AdvancedDecompositionConfigPanel extends JPanel {
 		JLabel dictionaryReinitTypeLabel = new JLabel(messageSource.getMessage("mp5Method.dialog.dictionaryReinitType"));
 		JLabel scaleToPeriodFactorLabel = new JLabel(messageSource.getMessage("mp5Method.dialog.scaleToPeriodFactor"));
 		JLabel periodDensityLabel = new JLabel(messageSource.getMessage("mp5Method.dialog.periodDensity"));
-		
+
 		CompactButton dictionaryTypeHelpButton = SwingUtils.createFieldHelpButton(messageSource, owner, MP5MethodDialog.HELP_DICTIONARY_TYPE);
 		CompactButton dictionaryReinitTypeHelpButton = SwingUtils.createFieldHelpButton(messageSource, owner, MP5MethodDialog.HELP_DICTIONARY_REINIT_TYPE);
 		CompactButton scaleToPeriodFactorHelpButton = SwingUtils.createFieldHelpButton(messageSource, owner, MP5MethodDialog.HELP_SCALE_TO_PERIOD_FACTOR);
@@ -79,160 +79,160 @@ public class MP5AdvancedDecompositionConfigPanel extends JPanel {
 		Component glue2 = Box.createHorizontalGlue();
 		Component glue3 = Box.createHorizontalGlue();
 		Component glue4 = Box.createHorizontalGlue();
-		
+
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
-				layout.createParallelGroup()
-				.addComponent(dictionaryTypeLabel)
-				.addComponent(dictionaryReinitTypeLabel)
-				.addComponent(scaleToPeriodFactorLabel)
-				.addComponent(periodDensityLabel)
-			);
+		        layout.createParallelGroup()
+		        .addComponent(dictionaryTypeLabel)
+		        .addComponent(dictionaryReinitTypeLabel)
+		        .addComponent(scaleToPeriodFactorLabel)
+		        .addComponent(periodDensityLabel)
+		);
 
 		hGroup.addGroup(
-				layout.createParallelGroup()
-				.addComponent(glue1)
-				.addComponent(glue2)
-				.addComponent(glue3)
-				.addComponent(glue4)
-			);
-		
-		hGroup.addGroup(
-				layout.createParallelGroup()
-				.addComponent(getDictionaryTypeComboBox())
-				.addComponent(getDictionaryReinitTypeComboBox())
-				.addComponent(getScaleToPeriodFactorSpinner())
-				.addComponent(getPeriodDensitySpinner())
-			);
+		        layout.createParallelGroup()
+		        .addComponent(glue1)
+		        .addComponent(glue2)
+		        .addComponent(glue3)
+		        .addComponent(glue4)
+		);
 
 		hGroup.addGroup(
-				layout.createParallelGroup()
-				.addComponent(dictionaryTypeHelpButton)
-				.addComponent(dictionaryReinitTypeHelpButton)
-				.addComponent(scaleToPeriodFactorHelpButton)
-				.addComponent(periodDensityHelpButton)
-			);
-		
+		        layout.createParallelGroup()
+		        .addComponent(getDictionaryTypeComboBox())
+		        .addComponent(getDictionaryReinitTypeComboBox())
+		        .addComponent(getScaleToPeriodFactorSpinner())
+		        .addComponent(getPeriodDensitySpinner())
+		);
+
+		hGroup.addGroup(
+		        layout.createParallelGroup()
+		        .addComponent(dictionaryTypeHelpButton)
+		        .addComponent(dictionaryReinitTypeHelpButton)
+		        .addComponent(scaleToPeriodFactorHelpButton)
+		        .addComponent(periodDensityHelpButton)
+		);
+
 		layout.setHorizontalGroup(hGroup);
-		
+
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.CENTER)
-	            .addComponent(dictionaryTypeLabel)
-	            .addComponent(glue1)
-	            .addComponent(getDictionaryTypeComboBox())
-	            .addComponent(dictionaryTypeHelpButton)
-			);
+		        layout.createParallelGroup(Alignment.CENTER)
+		        .addComponent(dictionaryTypeLabel)
+		        .addComponent(glue1)
+		        .addComponent(getDictionaryTypeComboBox())
+		        .addComponent(dictionaryTypeHelpButton)
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.CENTER)
-	            .addComponent(dictionaryReinitTypeLabel)
-	            .addComponent(glue2)
-	            .addComponent(getDictionaryReinitTypeComboBox())
-	            .addComponent(dictionaryReinitTypeHelpButton)
-			);
+		        layout.createParallelGroup(Alignment.CENTER)
+		        .addComponent(dictionaryReinitTypeLabel)
+		        .addComponent(glue2)
+		        .addComponent(getDictionaryReinitTypeComboBox())
+		        .addComponent(dictionaryReinitTypeHelpButton)
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.CENTER)
-	            .addComponent(scaleToPeriodFactorLabel)
-	            .addComponent(glue3)
-	            .addComponent(getScaleToPeriodFactorSpinner())
-	            .addComponent(scaleToPeriodFactorHelpButton)
-			);
+		        layout.createParallelGroup(Alignment.CENTER)
+		        .addComponent(scaleToPeriodFactorLabel)
+		        .addComponent(glue3)
+		        .addComponent(getScaleToPeriodFactorSpinner())
+		        .addComponent(scaleToPeriodFactorHelpButton)
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.CENTER)
-	            .addComponent(periodDensityLabel)
-	            .addComponent(glue4)
-	            .addComponent(getPeriodDensitySpinner())
-	            .addComponent(periodDensityHelpButton)
-			);
-		
-		layout.setVerticalGroup(vGroup);				
-								
+		        layout.createParallelGroup(Alignment.CENTER)
+		        .addComponent(periodDensityLabel)
+		        .addComponent(glue4)
+		        .addComponent(getPeriodDensitySpinner())
+		        .addComponent(periodDensityHelpButton)
+		);
+
+		layout.setVerticalGroup(vGroup);
+
 	}
-	
+
 	public ResolvableComboBox getDictionaryTypeComboBox() {
-		if( dictionaryTypeComboBox == null ) {
+		if (dictionaryTypeComboBox == null) {
 			dictionaryTypeComboBox = new ResolvableComboBox(messageSource);
-			dictionaryTypeComboBox.setModel( new DefaultComboBoxModel(MP5DictionaryType.values()));
-			dictionaryTypeComboBox.setPreferredSize( MP5MethodDialog.FIELD_SIZE );
-			dictionaryTypeComboBox.setMinimumSize( MP5MethodDialog.FIELD_SIZE );
-			dictionaryTypeComboBox.setMaximumSize( MP5MethodDialog.FIELD_SIZE );
+			dictionaryTypeComboBox.setModel(new DefaultComboBoxModel(MP5DictionaryType.values()));
+			dictionaryTypeComboBox.setPreferredSize(MP5MethodDialog.FIELD_SIZE);
+			dictionaryTypeComboBox.setMinimumSize(MP5MethodDialog.FIELD_SIZE);
+			dictionaryTypeComboBox.setMaximumSize(MP5MethodDialog.FIELD_SIZE);
 		}
 		return dictionaryTypeComboBox;
 	}
 
 	public ResolvableComboBox getDictionaryReinitTypeComboBox() {
-		if( dictionaryReinitTypeComboBox == null ) {
+		if (dictionaryReinitTypeComboBox == null) {
 			dictionaryReinitTypeComboBox = new ResolvableComboBox(messageSource);
-			dictionaryReinitTypeComboBox.setModel( new DefaultComboBoxModel(MP5DictionaryReinitType.values()));
-			dictionaryReinitTypeComboBox.setPreferredSize( MP5MethodDialog.FIELD_SIZE );
-			dictionaryReinitTypeComboBox.setMinimumSize( MP5MethodDialog.FIELD_SIZE );
-			dictionaryReinitTypeComboBox.setMaximumSize( MP5MethodDialog.FIELD_SIZE );
+			dictionaryReinitTypeComboBox.setModel(new DefaultComboBoxModel(MP5DictionaryReinitType.values()));
+			dictionaryReinitTypeComboBox.setPreferredSize(MP5MethodDialog.FIELD_SIZE);
+			dictionaryReinitTypeComboBox.setMinimumSize(MP5MethodDialog.FIELD_SIZE);
+			dictionaryReinitTypeComboBox.setMaximumSize(MP5MethodDialog.FIELD_SIZE);
 		}
 		return dictionaryReinitTypeComboBox;
 	}
-	
+
 	@SuppressWarnings("cast")
 	public JSpinner getScaleToPeriodFactorSpinner() {
-		if( scaleToPeriodFactorSpinner == null ) {
+		if (scaleToPeriodFactorSpinner == null) {
 			scaleToPeriodFactorSpinner = new JSpinner(
-					new SpinnerNumberModel(
-							((double) MP5Parameters.MIN_SCALE_TO_PERIOD_FACTOR),
-							((double) MP5Parameters.MIN_SCALE_TO_PERIOD_FACTOR),
-							((double) MP5Parameters.MAX_SCALE_TO_PERIOD_FACTOR),
-							0.1d
-					)	
+			        new SpinnerNumberModel(
+			                ((double) MP5Parameters.MIN_SCALE_TO_PERIOD_FACTOR),
+			                ((double) MP5Parameters.MIN_SCALE_TO_PERIOD_FACTOR),
+			                ((double) MP5Parameters.MAX_SCALE_TO_PERIOD_FACTOR),
+			                0.1d
+			        )
 			);
-			scaleToPeriodFactorSpinner.setPreferredSize( MP5MethodDialog.FIELD_SIZE );
-			scaleToPeriodFactorSpinner.setMinimumSize( MP5MethodDialog.FIELD_SIZE );
-			scaleToPeriodFactorSpinner.setMaximumSize( MP5MethodDialog.FIELD_SIZE );
+			scaleToPeriodFactorSpinner.setPreferredSize(MP5MethodDialog.FIELD_SIZE);
+			scaleToPeriodFactorSpinner.setMinimumSize(MP5MethodDialog.FIELD_SIZE);
+			scaleToPeriodFactorSpinner.setMaximumSize(MP5MethodDialog.FIELD_SIZE);
 		}
 		return scaleToPeriodFactorSpinner;
 	}
-	
+
 	public JSpinner getPeriodDensitySpinner() {
-		if( periodDensitySpinner == null ) {
+		if (periodDensitySpinner == null) {
 			periodDensitySpinner = new JSpinner(
-					new SpinnerNumberModel(
-							MP5Parameters.MIN_PERIOD_DENSITY,
-							MP5Parameters.MIN_PERIOD_DENSITY,
-							MP5Parameters.MAX_PERIOD_DENSITY,
-							1
-					)	
+			        new SpinnerNumberModel(
+			                MP5Parameters.MIN_PERIOD_DENSITY,
+			                MP5Parameters.MIN_PERIOD_DENSITY,
+			                MP5Parameters.MAX_PERIOD_DENSITY,
+			                1
+			        )
 			);
-			periodDensitySpinner.setPreferredSize( MP5MethodDialog.FIELD_SIZE );
-			periodDensitySpinner.setMinimumSize( MP5MethodDialog.FIELD_SIZE );
-			periodDensitySpinner.setMaximumSize( MP5MethodDialog.FIELD_SIZE );
+			periodDensitySpinner.setPreferredSize(MP5MethodDialog.FIELD_SIZE);
+			periodDensitySpinner.setMinimumSize(MP5MethodDialog.FIELD_SIZE);
+			periodDensitySpinner.setMaximumSize(MP5MethodDialog.FIELD_SIZE);
 		}
 		return periodDensitySpinner;
 	}
-	
+
 	public void fillPanelFromParameters(MP5Parameters parameters) {
-		
-		getDictionaryTypeComboBox().setSelectedItem( parameters.getDictionaryType() );
-		getDictionaryReinitTypeComboBox().setSelectedItem( parameters.getDictionaryReinitType() );
-		getScaleToPeriodFactorSpinner().setValue( new Double(parameters.getScaleToPeriodFactor()) );
-		getPeriodDensitySpinner().setValue( parameters.getPeriodDensity() );
-		
+
+		getDictionaryTypeComboBox().setSelectedItem(parameters.getDictionaryType());
+		getDictionaryReinitTypeComboBox().setSelectedItem(parameters.getDictionaryReinitType());
+		getScaleToPeriodFactorSpinner().setValue(new Double(parameters.getScaleToPeriodFactor()));
+		getPeriodDensitySpinner().setValue(parameters.getPeriodDensity());
+
 	}
-	
+
 	public void fillParametersFromPanel(MP5Parameters parameters) {
-		
-		parameters.setDictionaryType( (MP5DictionaryType) getDictionaryTypeComboBox().getSelectedItem() );
-		parameters.setDictionaryReinitType( (MP5DictionaryReinitType) getDictionaryReinitTypeComboBox().getSelectedItem() );
-		parameters.setScaleToPeriodFactor( ((Number) getScaleToPeriodFactorSpinner().getValue()).floatValue() );
-		parameters.setPeriodDensity( (Integer) getPeriodDensitySpinner().getValue() );
-				
+
+		parameters.setDictionaryType((MP5DictionaryType) getDictionaryTypeComboBox().getSelectedItem());
+		parameters.setDictionaryReinitType((MP5DictionaryReinitType) getDictionaryReinitTypeComboBox().getSelectedItem());
+		parameters.setScaleToPeriodFactor(((Number) getScaleToPeriodFactorSpinner().getValue()).floatValue());
+		parameters.setPeriodDensity((Integer) getPeriodDensitySpinner().getValue());
+
 	}
-	
-	public void validatePanel( Errors errors ) {
-				
+
+	public void validatePanel(Errors errors) {
+
 		// nothing to do
-		
+
 	}
-	
+
 }

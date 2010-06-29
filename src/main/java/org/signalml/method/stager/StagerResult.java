@@ -1,5 +1,5 @@
 /* StagerResult.java created 2008-02-08
- * 
+ *
  */
 
 package org.signalml.method.stager;
@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  * StagerResult
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class StagerResult implements Serializable {

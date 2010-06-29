@@ -1,5 +1,5 @@
 /* TagComparisonDescriptor.java created 2007-11-14
- * 
+ *
  */
 
 package org.signalml.app.model;
@@ -10,14 +10,14 @@ import org.signalml.app.view.tag.TagIconProducer;
 
 /** TagComparisonDescriptor
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class TagComparisonDescriptor {
 
 	private SignalDocument signalDocument;
 	private TagIconProducer tagIconProducer;
-	
+
 	private TagDocument topTagDocument;
 	private TagDocument bottomTagDocument;
 
@@ -57,6 +57,6 @@ public class TagComparisonDescriptor {
 
 	public void setTagIconProducer(TagIconProducer tagIconProducer) {
 		this.tagIconProducer = tagIconProducer;
-	}		
-		
+	}
+
 }

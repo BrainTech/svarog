@@ -1,5 +1,5 @@
 /* MontageTableModel.java created 2007-11-23
- * 
+ *
  */
 
 package org.signalml.app.montage;
@@ -20,25 +20,25 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** MontageTableModel
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class MontageTableModel extends AbstractTableModel implements SourceMontageListener, MontageListener {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	protected static final Logger logger = Logger.getLogger(MontageTableModel.class);
-	
+
 	public static final int INDEX_COLUMN = 0;
 	public static final int PRIMARY_LABEL_COLUMN = 1;
 	public static final int LABEL_COLUMN = 2;
 
 	private Montage montage;
 	private MessageSourceAccessor messageSource;
-			
+
 	public MontageTableModel() {
 	}
-	
+
 	public MessageSourceAccessor getMessageSource() {
 		return messageSource;
 	}
@@ -46,19 +46,19 @@ public class MontageTableModel extends AbstractTableModel implements SourceMonta
 	public void setMessageSource(MessageSourceAccessor messageSource) {
 		this.messageSource = messageSource;
 	}
-	
+
 	public Montage getMontage() {
 		return montage;
 	}
-	
-	public void setMontage( Montage montage ) {
-		if( this.montage != montage ) {
-			if( this.montage != null ) {
+
+	public void setMontage(Montage montage) {
+		if (this.montage != montage) {
+			if (this.montage != null) {
 				this.montage.removeSourceMontageListener(this);
 				this.montage.removeMontageListener(this);
 			}
 			this.montage = montage;
-			if( montage != null ) {
+			if (montage != null) {
 				montage.addSourceMontageListener(this);
 				montage.addMontageListener(this);
 			}
@@ -73,7 +73,7 @@ public class MontageTableModel extends AbstractTableModel implements SourceMonta
 
 	@Override
 	public int getRowCount() {
-		if( montage == null ) {
+		if (montage == null) {
 			return 0;
 		}
 		return montage.getMontageChannelCount();
@@ -81,86 +81,86 @@ public class MontageTableModel extends AbstractTableModel implements SourceMonta
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		if( columnIndex == INDEX_COLUMN || columnIndex == PRIMARY_LABEL_COLUMN ) {
+		if (columnIndex == INDEX_COLUMN || columnIndex == PRIMARY_LABEL_COLUMN) {
 			return false;
 		}
 		return true;
 	}
-	
+
 	@Override
 	public String getColumnName(int column) {
 
-		switch( column ) {
-		
+		switch (column) {
+
 		case INDEX_COLUMN :
 			return messageSource.getMessage("montageTable.index");
-			
+
 		case PRIMARY_LABEL_COLUMN :
 			return messageSource.getMessage("montageTable.primaryLabel");
-			
+
 		case LABEL_COLUMN :
 			return messageSource.getMessage("montageTable.label");
-						
+
 		default :
 			throw new IndexOutOfBoundsException();
-		
+
 		}
-		
+
 	}
-	
+
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 
-		switch( columnIndex ) {
-		
+		switch (columnIndex) {
+
 		case INDEX_COLUMN :
-			return Integer.class;
-		
+				return Integer.class;
+
 		case PRIMARY_LABEL_COLUMN :
 			return String.class;
-			
+
 		case LABEL_COLUMN :
 			return String.class;
-					
+
 		default :
 			throw new IndexOutOfBoundsException();
-		
+
 		}
-	
+
 	}
-	
+
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		
-		switch( columnIndex ) {
-		
+
+		switch (columnIndex) {
+
 		case INDEX_COLUMN :
 			return (rowIndex+1);
 
 		case PRIMARY_LABEL_COLUMN :
-			return montage.getSourceChannelLabelAt( montage.getMontagePrimaryChannelAt(rowIndex) );
-			
+			return montage.getSourceChannelLabelAt(montage.getMontagePrimaryChannelAt(rowIndex));
+
 		case LABEL_COLUMN :
 			return montage.getMontageChannelLabelAt(rowIndex);
-									
+
 		default :
 			throw new IndexOutOfBoundsException();
-		
+
 		}
 
 	}
 
 	@Override
 	public void setValueAt(Object value, int rowIndex, int columnIndex) {
-		
-		if( columnIndex == INDEX_COLUMN || columnIndex == PRIMARY_LABEL_COLUMN ) {
+
+		if (columnIndex == INDEX_COLUMN || columnIndex == PRIMARY_LABEL_COLUMN) {
 			return;
 		}
-				
+
 		if (columnIndex == LABEL_COLUMN) {
 			try {
 				montage.setMontageChannelLabelAt(rowIndex, (String) value);
-			} catch( MontageException ex ) {
+			} catch (MontageException ex) {
 				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
 				fireTableDataChanged();
 				return;
@@ -168,7 +168,7 @@ public class MontageTableModel extends AbstractTableModel implements SourceMonta
 		} else {
 			throw new IndexOutOfBoundsException();
 		}
-		
+
 	}
 
 	@Override
@@ -191,24 +191,24 @@ public class MontageTableModel extends AbstractTableModel implements SourceMonta
 	@Override
 	public void montageChannelsAdded(MontageEvent ev) {
 		int[] indices = ev.getChannels();
-		if( indices.length == 0 ) {
+		if (indices.length == 0) {
 			return;
 		}
-		for( int i=0; i<(indices.length-1); i++ ) {
-			if( indices[i] != (indices[i+1]-1) ) {
+		for (int i=0; i<(indices.length-1); i++) {
+			if (indices[i] != (indices[i+1]-1)) {
 				// if non-contiguous fire a total update
 				fireTableDataChanged();
 				return;
 			}
 		}
 		// if contiguous fire an insert
-		fireTableRowsInserted(indices[0], indices[indices.length-1]);		
+		fireTableRowsInserted(indices[0], indices[indices.length-1]);
 	}
 
 	@Override
 	public void montageChannelsChanged(MontageEvent ev) {
 		int[] indices = ev.getChannels();
-		for( int i=0; i<indices.length; i++ ) {
+		for (int i=0; i<indices.length; i++) {
 			fireTableRowsUpdated(indices[i], indices[i]);
 		}
 	}
@@ -216,11 +216,11 @@ public class MontageTableModel extends AbstractTableModel implements SourceMonta
 	@Override
 	public void montageChannelsRemoved(MontageEvent ev) {
 		int[] indices = ev.getChannels();
-		if( indices.length == 0 ) {
+		if (indices.length == 0) {
 			return;
 		}
-		for( int i=0; i<(indices.length-1); i++ ) {
-			if( indices[i] != (indices[i+1]-1) ) {
+		for (int i=0; i<(indices.length-1); i++) {
+			if (indices[i] != (indices[i+1]-1)) {
 				// if non-contiguous fire a total update
 				fireTableDataChanged();
 				return;
@@ -239,5 +239,5 @@ public class MontageTableModel extends AbstractTableModel implements SourceMonta
 	public void montageStructureChanged(MontageEvent ev) {
 		fireTableDataChanged();
 	}
-					
+
 }

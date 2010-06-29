@@ -1,5 +1,5 @@
 /* ChannelSubsetSampleSource.java created 2008-01-30
- * 
+ *
  */
 
 package org.signalml.domain.signal.space;
@@ -9,34 +9,34 @@ import org.signalml.domain.signal.MultichannelSampleSource;
 
 /** ChannelSubsetSampleSource
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ChannelSubsetSampleSource extends MultichannelSampleProcessor {
-		
+
 	private int channelCount;
 	private int[] channelIndices;
-		
-	public ChannelSubsetSampleSource(MultichannelSampleSource source, ChannelSpace channelSpace ) {
+
+	public ChannelSubsetSampleSource(MultichannelSampleSource source, ChannelSpace channelSpace) {
 		super(source);
-		
+
 		// determine channel count & indices
-		if( channelSpace != null ) {
-			
+		if (channelSpace != null) {
+
 			channelCount = channelSpace.size();
 			channelIndices = channelSpace.getSelectedChannels();
-			
+
 		}
 		else { // all channels
-			
+
 			channelCount = source.getChannelCount();
 			channelIndices = new int[channelCount];
-			for( int i=0; i<channelCount; i++ ) {
+			for (int i=0; i<channelCount; i++) {
 				channelIndices[i] = i;
 			}
-			
+
 		}
-						
+
 	}
 
 	@Override
@@ -48,12 +48,12 @@ public class ChannelSubsetSampleSource extends MultichannelSampleProcessor {
 	public int getDocumentChannelIndex(int channel) {
 		return source.getDocumentChannelIndex(channelIndices[channel]);
 	}
-	
+
 	@Override
 	public int getChannelCount() {
 		return channelCount;
 	}
-	
+
 	@Override
 	public int getSampleCount(int channel) {
 		return source.getSampleCount(channel);
@@ -63,5 +63,5 @@ public class ChannelSubsetSampleSource extends MultichannelSampleProcessor {
 	public String getLabel(int channel) {
 		return source.getLabel(channelIndices[channel]);
 	}
-	
+
 }

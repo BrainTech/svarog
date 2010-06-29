@@ -1,5 +1,5 @@
 /* TagBasedFilterDialog.java created 2008-03-04
- * 
+ *
  */
 
 package org.signalml.app.view.book.filter;
@@ -47,186 +47,186 @@ import org.springframework.validation.Errors;
 
 /** TagBasedFilterDialog
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class TagBasedFilterDialog extends AbstractFilterDialog {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private ViewerFileChooser fileChooser;
-	
+
 	private BookFilterChooseTagPanel chooseTagPanel;
-	
+
 	private DefaultListModel styleListModel;
 	private JList styleList;
 	private JScrollPane styleScrollPane;
-	
+
 	private JButton channelSelectAllButton;
 	private JButton channelSelectInvertButton;
 	private JButton channelSelectNoneButton;
-	
+
 	private JPanel settingsPanel;
 
 	private JSpinner secondsBeforeSpinner;
 	private JSpinner secondsAfterSpinner;
-	
+
 	private TagStyleListCellRenderer markerStyleCellRenderer;
-	
+
 	private TagDocument currentTagDocument;
-	
+
 	public TagBasedFilterDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
 		super(messageSource, w, isModal);
 	}
 
 	@Override
 	protected void initialize() {
-		
-		setTitle( messageSource.getMessage("tagBasedFilter.title") );
-		setIconImage( IconUtils.loadClassPathImage("org/signalml/app/icon/filter.png"));
+
+		setTitle(messageSource.getMessage("tagBasedFilter.title"));
+		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/filter.png"));
 		super.initialize();
 		setResizable(false);
-		
-		getChooseTagPanel().getTagTextField().getDocument().addDocumentListener( new AnyChangeDocumentAdapter() {
+
+		getChooseTagPanel().getTagTextField().getDocument().addDocumentListener(new AnyChangeDocumentAdapter() {
 
 			@Override
 			public void anyUpdate(DocumentEvent e) {
 
 				File tagFile = getChooseTagPanel().getTagFile();
-				if( tagFile == null  ) {
-					setCurrentTagDocument( null );
+				if (tagFile == null) {
+					setCurrentTagDocument(null);
 				} else {
-					if( currentTagDocument == null || !tagFile.equals( currentTagDocument.getBackingFile() ) ) {
-						
+					if (currentTagDocument == null || !tagFile.equals(currentTagDocument.getBackingFile())) {
+
 						// load tag
 						TagDocument document;
 						try {
-							document = new TagDocument( tagFile );
+							document = new TagDocument(tagFile);
 						} catch (SignalMLException ex) {
-							logger.error( "Failed to open tag file [" + tagFile.getAbsolutePath() + "]", ex );
+							logger.error("Failed to open tag file [" + tagFile.getAbsolutePath() + "]", ex);
 							getErrorsDialog().showException(ex);
-							setCurrentTagDocument( null );
+							setCurrentTagDocument(null);
 							return;
 						} catch (IOException ex) {
-							logger.error( "Failed to open tag file [" + tagFile.getAbsolutePath() + "]", ex );
+							logger.error("Failed to open tag file [" + tagFile.getAbsolutePath() + "]", ex);
 							getErrorsDialog().showException(ex);
-							setCurrentTagDocument( null );
+							setCurrentTagDocument(null);
 							return;
 						}
-						
-						setCurrentTagDocument( document );
-						
+
+						setCurrentTagDocument(document);
+
 					}
 				}
-				
+
 			}
-			
+
 		});
-		
+
 	}
-			
+
 	@Override
 	public JComponent createInterface() {
-							
-		JPanel stylePanel = new JPanel( new BorderLayout() );
-		stylePanel.setBorder( new CompoundBorder(
-				new TitledBorder( messageSource.getMessage("tagBasedFilter.styleTitle") ),
-				new EmptyBorder( 3,3,3,3 )					
-		) );
 
-		JPanel styleButtonPanel = new JPanel( new FlowLayout( FlowLayout.TRAILING, 3, 3 ) );
-		styleButtonPanel.add( getChannelSelectAllButton() );
-		styleButtonPanel.add( getChannelSelectNoneButton() );
-		styleButtonPanel.add( getChannelSelectInvertButton() );
-		
-		stylePanel.add( getStyleScrollPane(), BorderLayout.CENTER );
-		stylePanel.add( styleButtonPanel, BorderLayout.SOUTH );
-				
-		JPanel bottomPanel = new JPanel( new BorderLayout() );		
-		
-		bottomPanel.add( getChooseTagPanel(), BorderLayout.NORTH );
-		bottomPanel.add( stylePanel, BorderLayout.CENTER );
-		bottomPanel.add( getSettingsPanel(), BorderLayout.SOUTH );
-		
-		JPanel interfacePanel = new JPanel( new BorderLayout() );
-		
-		interfacePanel.add( getNamePanel(), BorderLayout.NORTH );
-		interfacePanel.add( bottomPanel, BorderLayout.SOUTH );
-		
+		JPanel stylePanel = new JPanel(new BorderLayout());
+		stylePanel.setBorder(new CompoundBorder(
+		                             new TitledBorder(messageSource.getMessage("tagBasedFilter.styleTitle")),
+		                             new EmptyBorder(3,3,3,3)
+		                     ));
+
+		JPanel styleButtonPanel = new JPanel(new FlowLayout(FlowLayout.TRAILING, 3, 3));
+		styleButtonPanel.add(getChannelSelectAllButton());
+		styleButtonPanel.add(getChannelSelectNoneButton());
+		styleButtonPanel.add(getChannelSelectInvertButton());
+
+		stylePanel.add(getStyleScrollPane(), BorderLayout.CENTER);
+		stylePanel.add(styleButtonPanel, BorderLayout.SOUTH);
+
+		JPanel bottomPanel = new JPanel(new BorderLayout());
+
+		bottomPanel.add(getChooseTagPanel(), BorderLayout.NORTH);
+		bottomPanel.add(stylePanel, BorderLayout.CENTER);
+		bottomPanel.add(getSettingsPanel(), BorderLayout.SOUTH);
+
+		JPanel interfacePanel = new JPanel(new BorderLayout());
+
+		interfacePanel.add(getNamePanel(), BorderLayout.NORTH);
+		interfacePanel.add(bottomPanel, BorderLayout.SOUTH);
+
 		return interfacePanel;
-		
+
 	}
-	
+
 	public BookFilterChooseTagPanel getChooseTagPanel() {
-		if( chooseTagPanel == null ) {
+		if (chooseTagPanel == null) {
 			chooseTagPanel = new BookFilterChooseTagPanel(messageSource, fileChooser);
 		}
 		return chooseTagPanel;
 	}
-	
+
 	public TagStyleListCellRenderer getMarkerStyleCellRenderer() {
-		if( markerStyleCellRenderer == null ) {
-			markerStyleCellRenderer = new TagStyleListCellRenderer(messageSource);			
+		if (markerStyleCellRenderer == null) {
+			markerStyleCellRenderer = new TagStyleListCellRenderer(messageSource);
 		}
 		return markerStyleCellRenderer;
 	}
-	
+
 	public DefaultListModel getStyleListModel() {
-		if( styleListModel == null ) {
+		if (styleListModel == null) {
 			styleListModel = new DefaultListModel();
 		}
 		return styleListModel;
 	}
-	
+
 	public JList getStyleList() {
-		if( styleList == null ) {
-			styleList = new JList( getStyleListModel() );
-			styleList.setSelectionMode( ListSelectionModel.MULTIPLE_INTERVAL_SELECTION );
-			styleList.setCellRenderer( getMarkerStyleCellRenderer() );			
+		if (styleList == null) {
+			styleList = new JList(getStyleListModel());
+			styleList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+			styleList.setCellRenderer(getMarkerStyleCellRenderer());
 		}
 		return styleList;
 	}
-	
+
 	public JScrollPane getStyleScrollPane() {
-		if( styleScrollPane == null ) {
-			styleScrollPane = new JScrollPane( getStyleList() );
-			
-			styleScrollPane.setPreferredSize( new Dimension(400,300) );
+		if (styleScrollPane == null) {
+			styleScrollPane = new JScrollPane(getStyleList());
+
+			styleScrollPane.setPreferredSize(new Dimension(400,300));
 		}
 		return styleScrollPane;
 	}
 
 	public JButton getChannelSelectAllButton() {
-		if( channelSelectAllButton == null ) {						
-			channelSelectAllButton = new JButton( new ListSelectAllAction(messageSource, getStyleList()) );
+		if (channelSelectAllButton == null) {
+			channelSelectAllButton = new JButton(new ListSelectAllAction(messageSource, getStyleList()));
 		}
 		return channelSelectAllButton;
 	}
 
 	public JButton getChannelSelectNoneButton() {
-		if( channelSelectNoneButton == null ) {
-			channelSelectNoneButton = new JButton( new ListSelectNoneAction(messageSource, getStyleList()) );
+		if (channelSelectNoneButton == null) {
+			channelSelectNoneButton = new JButton(new ListSelectNoneAction(messageSource, getStyleList()));
 		}
 		return channelSelectNoneButton;
 	}
-	
+
 	public JButton getChannelSelectInvertButton() {
-		if( channelSelectInvertButton == null ) {			
-			channelSelectInvertButton = new JButton( new ListSelectInvertAction(messageSource, getStyleList()) );
+		if (channelSelectInvertButton == null) {
+			channelSelectInvertButton = new JButton(new ListSelectInvertAction(messageSource, getStyleList()));
 		}
 		return channelSelectInvertButton;
 	}
-	
+
 	public JPanel getSettingsPanel() {
-		if( settingsPanel == null ) {
-			
+		if (settingsPanel == null) {
+
 			settingsPanel = new JPanel();
-			
-			settingsPanel.setBorder( new CompoundBorder( 
-					new TitledBorder( messageSource.getMessage( "signalSpace.markedTimeSpace.settingsPanel.title" ) ),
-					new EmptyBorder(3,3,3,3)
-			));
-			
+
+			settingsPanel.setBorder(new CompoundBorder(
+			                                new TitledBorder(messageSource.getMessage("signalSpace.markedTimeSpace.settingsPanel.title")),
+			                                new EmptyBorder(3,3,3,3)
+			                        ));
+
 			GroupLayout layout = new GroupLayout(settingsPanel);
 			settingsPanel.setLayout(layout);
 			layout.setAutoCreateContainerGaps(false);
@@ -234,46 +234,46 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 
 			JLabel secondsBeforeLabel = new JLabel(messageSource.getMessage("signalSpace.markedTimeSpace.secondsBefore"));
 			JLabel secondsAfterLabel = new JLabel(messageSource.getMessage("signalSpace.markedTimeSpace.secondsAfter"));
-			
+
 			GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
-			
+
 			hGroup.addGroup(
-					layout.createParallelGroup()
-					.addComponent(secondsBeforeLabel)
-					.addComponent(secondsAfterLabel)
-				);
-			
+			        layout.createParallelGroup()
+			        .addComponent(secondsBeforeLabel)
+			        .addComponent(secondsAfterLabel)
+			);
+
 			hGroup.addGroup(
-					layout.createParallelGroup(Alignment.TRAILING)
-					.addComponent(getSecondsBeforeSpinner())
-					.addComponent(getSecondsAfterSpinner())
-				);
-			
+			        layout.createParallelGroup(Alignment.TRAILING)
+			        .addComponent(getSecondsBeforeSpinner())
+			        .addComponent(getSecondsAfterSpinner())
+			);
+
 			layout.setHorizontalGroup(hGroup);
-			
+
 			GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
-			
+
 			vGroup.addGroup(
-					layout.createParallelGroup(Alignment.BASELINE)
-		            .addComponent(secondsBeforeLabel)
-		            .addComponent(getSecondsBeforeSpinner())
-				);
-			
+			        layout.createParallelGroup(Alignment.BASELINE)
+			        .addComponent(secondsBeforeLabel)
+			        .addComponent(getSecondsBeforeSpinner())
+			);
+
 			vGroup.addGroup(
-					layout.createParallelGroup(Alignment.BASELINE)
-		            .addComponent(secondsAfterLabel)
-		            .addComponent(getSecondsAfterSpinner())
-		    	);
-			
-			layout.setVerticalGroup(vGroup);		
-						
+			        layout.createParallelGroup(Alignment.BASELINE)
+			        .addComponent(secondsAfterLabel)
+			        .addComponent(getSecondsAfterSpinner())
+			);
+
+			layout.setVerticalGroup(vGroup);
+
 		}
 		return settingsPanel;
 	}
-	
+
 	public JSpinner getSecondsBeforeSpinner() {
-		if( secondsBeforeSpinner == null ) {
-			secondsBeforeSpinner = new JSpinner( new SpinnerNumberModel(1.0,0.0,3600,0.1) );
+		if (secondsBeforeSpinner == null) {
+			secondsBeforeSpinner = new JSpinner(new SpinnerNumberModel(1.0,0.0,3600,0.1));
 			Dimension fixedSize = new Dimension(200,25);
 			secondsBeforeSpinner.setPreferredSize(fixedSize);
 		}
@@ -281,50 +281,50 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 	}
 
 	public JSpinner getSecondsAfterSpinner() {
-		if( secondsAfterSpinner == null ) {
-			secondsAfterSpinner = new JSpinner( new SpinnerNumberModel(1.0,0.0,3600,0.1) );
+		if (secondsAfterSpinner == null) {
+			secondsAfterSpinner = new JSpinner(new SpinnerNumberModel(1.0,0.0,3600,0.1));
 			Dimension fixedSize = new Dimension(200,25);
 			secondsAfterSpinner.setPreferredSize(fixedSize);
 		}
 		return secondsAfterSpinner;
 	}
-	
-		
+
+
 	protected TagDocument getCurrentTagDocument() {
 		return currentTagDocument;
 	}
 
 	protected void setCurrentTagDocument(TagDocument currentTagDocument) {
-		if( this.currentTagDocument != currentTagDocument ) {
-			if( this.currentTagDocument != null ) {
+		if (this.currentTagDocument != currentTagDocument) {
+			if (this.currentTagDocument != null) {
 				try {
 					this.currentTagDocument.closeDocument();
 					this.currentTagDocument = null;
 				} catch (SignalMLException ex) {
-					logger.error( "Failed to close old tag document", ex );
+					logger.error("Failed to close old tag document", ex);
 					// ignore any exceptions
 				}
 			}
 			this.currentTagDocument = currentTagDocument;
-			
+
 			DefaultListModel listModel = getStyleListModel();
 			listModel.clear();
 			getStyleList().clearSelection();
-			setTagIconProducer( new TagIconProducer() );
-			
-			if( currentTagDocument != null ) {
-			
+			setTagIconProducer(new TagIconProducer());
+
+			if (currentTagDocument != null) {
+
 				StyledTagSet tagSet = currentTagDocument.getTagSet();
 				LinkedHashSet<TagStyle> styles = tagSet.getStyles();
-					
-				for( TagStyle style : styles ) {
+
+				for (TagStyle style : styles) {
 					listModel.addElement(style);
 				}
-								
-			}						
-			
+
+			}
+
 		}
-		
+
 	}
 
 	@Override
@@ -333,92 +333,92 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 		TagBasedAtomFilter filter = (TagBasedAtomFilter) model;
 
 		super.fillDialogFromFilter(filter);
-		
+
 		getChooseTagPanel().fillPanelFromModel(filter);
-		
+
 		LinkedHashSet<String> styleNames = filter.getStyleNames();
-		
+
 		JList list = getStyleList();
 		list.clearSelection();
-		
-		if( styleNames != null ) {
 
-			DefaultListModel listModel = getStyleListModel();		
+		if (styleNames != null) {
+
+			DefaultListModel listModel = getStyleListModel();
 			int size = listModel.getSize();
 			TagStyle style;
-			
-			for( int i=0; i<size; i++ ) {
+
+			for (int i=0; i<size; i++) {
 				style = (TagStyle) listModel.getElementAt(i);
-				if( styleNames.contains( style.getName() ) ) {
+				if (styleNames.contains(style.getName())) {
 					list.addSelectionInterval(i, i);
 				}
 			}
 
 		}
-		
-		getSecondsBeforeSpinner().setValue( filter.getSecondsBefore() );
-		getSecondsAfterSpinner().setValue( filter.getSecondsAfter() );
-				
+
+		getSecondsBeforeSpinner().setValue(filter.getSecondsBefore());
+		getSecondsAfterSpinner().setValue(filter.getSecondsAfter());
+
 	}
 
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
 
 		TagBasedAtomFilter filter = (TagBasedAtomFilter) model;
-		
+
 		super.fillFilterFromDialog(filter);
-		
+
 		fillFilterFromDialog(filter);
-		
+
 		filter.initialize();
-				
+
 	}
 
 	protected void fillFilterFromDialog(TagBasedAtomFilter filter) {
 
 		getChooseTagPanel().fillModelFromPanel(filter);
-		
-		DefaultListModel listModel = getStyleListModel();		
+
+		DefaultListModel listModel = getStyleListModel();
 		int size = listModel.getSize();
 
 		JList list = getStyleList();
 		LinkedHashSet<String> styleNames = new LinkedHashSet<String>();
-		
-		for( int i=0; i<size; i++ ) {
-			
-			if( list.isSelectedIndex(i) ) {
-				styleNames.add( ((TagStyle) listModel.getElementAt(i)).getName() ); 
+
+		for (int i=0; i<size; i++) {
+
+			if (list.isSelectedIndex(i)) {
+				styleNames.add(((TagStyle) listModel.getElementAt(i)).getName());
 			}
-			
+
 		}
-		
+
 		filter.setStyleNames(styleNames);
-		
-		filter.setSecondsBefore( ((Double) getSecondsBeforeSpinner().getValue()).doubleValue() );
-		filter.setSecondsAfter( ((Double) getSecondsAfterSpinner().getValue()).doubleValue() );
-		
+
+		filter.setSecondsBefore(((Double) getSecondsBeforeSpinner().getValue()).doubleValue());
+		filter.setSecondsAfter(((Double) getSecondsAfterSpinner().getValue()).doubleValue());
+
 	}
-	
+
 	@Override
 	public void validateDialog(Object model, Errors errors) throws SignalMLException {
-		
+
 		super.validateDialog(model, errors);
-		
+
 		getChooseTagPanel().validatePanel(errors);
-		
-		if( !errors.hasErrors() ) {
+
+		if (!errors.hasErrors()) {
 			TagBasedAtomFilter filter = new TagBasedAtomFilter();
 			fillFilterFromDialog(filter);
-		
+
 			try {
 				filter.initialize();
-			} catch( Throwable t ) {
-				logger.error( "Filter failed to initialize", t );
+			} catch (Throwable t) {
+				logger.error("Filter failed to initialize", t);
 				errors.reject("error.tagBasedAtomFilter.failedToInitialize");
 			}
 		}
-		
-		
+
+
 	}
 
 	@Override
@@ -429,7 +429,7 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 	public void setTagIconProducer(TagIconProducer tagIconProducer) {
 		getMarkerStyleCellRenderer().setTagIconProducer(tagIconProducer);
 	}
-	
+
 	public ViewerFileChooser getFileChooser() {
 		return fileChooser;
 	}
@@ -437,5 +437,5 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 	public void setFileChooser(ViewerFileChooser fileChooser) {
 		this.fileChooser = fileChooser;
 	}
-	
+
 }

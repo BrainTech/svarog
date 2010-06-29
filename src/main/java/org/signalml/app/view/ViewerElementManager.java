@@ -1,5 +1,5 @@
 /* ViewerElementManager.java created 2008-02-20
- * 
+ *
  */
 
 package org.signalml.app.view;
@@ -124,20 +124,20 @@ import com.thoughtworks.xstream.XStream;
 
 /** ViewerElementManager
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ViewerElementManager {
 
 	private SignalMLOperationMode mode;
-	
+
 	public ViewerElementManager(SignalMLOperationMode mode) {
 		this.mode = mode;
 	}
-	
+
 	/* Localization */
 	private MessageSourceAccessor messageSource;
-	
+
 	/* XML Streamer */
 	private XStream streamer;
 
@@ -157,7 +157,7 @@ public class ViewerElementManager {
 	private FFTSampleFilterPresetManager fftFilterPresetManager;
 	private MP5ExecutorManager mp5ExecutorManager;
 	private Preferences preferences;
-		
+
 	/* Main logic */
 	private DocumentFlowIntegrator documentFlowIntegrator;
 
@@ -168,39 +168,39 @@ public class ViewerElementManager {
 	private TagTreeModel tagTreeModel;
 	private TaskTableModel taskTableModel;
 	private PropertySheetModel propertySheetModel;
-	
+
 	/* Window interface elements */
 	private Component optionPaneParent;
 	private Window dialogParent;
 	private View view;
-	
-	private ViewerStatusBar statusBar;	
+
+	private ViewerStatusBar statusBar;
 	private JMenuBar menuBar;
 	private JToolBar mainToolBar;
-	
+
 	private LockableJSplitPane verticalSplitPane;
 	private LockableJSplitPane horizontalSplitPane;
-	
+
 	private JPanel leftPane;
 	private JPanel rightPane;
 	private JPanel bottomPane;
-	
+
 	private ViewerTreePane workspaceTreePane;
 	private ViewerTreePane bookTreePane;
 	private ViewerTreePane signalTreePane;
 	private ViewerTreePane tagTreePane;
-		
+
 	private ViewerWorkspaceTree workspaceTree;
 	private ViewerSignalTree signalTree;
 	private ViewerBookTree bookTree;
 	private ViewerTagTree tagTree;
-	
+
 	private ViewerTaskTable taskTable;
-	
+
 	private ViewerConsolePane console;
 	private ViewerTaskTablePane taskTablePane;
 	private ViewerPropertySheetPane propertySheetPane;
-		
+
 	private ViewerTabbedPane treeTabbedPane;
 	private ViewerDocumentTabbedPane documentTabbedPane;
 	private ViewerTabbedPane propertyTabbedPane;
@@ -230,7 +230,7 @@ public class ViewerElementManager {
 	private DynamicCompilationWarningDialog dynamicCompilationWarningDialog;
 	private AtomTableDialog atomTableDialog;
 	private BookFilterDialog bookFilterDialog;
-	
+
 	/* Actions */
 	private CloseWindowAction closeWindowAction;
 	private EditPreferencesAction editPreferencesAction;
@@ -269,22 +269,22 @@ public class ViewerElementManager {
 	private RemoveAllFinishedTasksAction removeAllFinishedTasksAction;
 	private RemoveAllAbortedTasksAction removeAllAbortedTasksAction;
 	private RemoveAllFailedTasksAction removeAllFailedTasksAction;
-	
-	private ArrayList<AbstractSignalMLAction> runMethodActions;	
-	private ArrayList<AbstractSignalMLAction> iterateMethodActions;	
-		
+
+	private ArrayList<AbstractSignalMLAction> runMethodActions;
+	private ArrayList<AbstractSignalMLAction> iterateMethodActions;
+
 	/* File chooser */
 	private ViewerFileChooser fileChooser;
-	
+
 	/* MP5 executors */
-	
+
 	/* Menu */
 	private JMenu fileMenu;
 	private JMenu editMenu;
 	private JMenu viewMenu;
 	private JMenu toolsMenu;
 	private JMenu helpMenu;
-		
+
 	/* Other */
 	private TableToTextExporter tableToTextExporter;
 	private MP5ApplicationExecutorConfigurer mp5ExecutorConfigurer;
@@ -292,23 +292,23 @@ public class ViewerElementManager {
 	public SignalMLOperationMode getMode() {
 		return mode;
 	}
-	
+
 	public MessageSourceAccessor getMessageSource() {
 		return messageSource;
 	}
-	
+
 	public void setMessageSource(MessageSourceAccessor messageSource) {
 		this.messageSource = messageSource;
 	}
-	
+
 	public Component getOptionPaneParent() {
 		return optionPaneParent;
 	}
-	
+
 	public void setOptionPaneParent(Component optionPaneParent) {
 		this.optionPaneParent = optionPaneParent;
 	}
-	
+
 	public Window getDialogParent() {
 		return dialogParent;
 	}
@@ -328,11 +328,11 @@ public class ViewerElementManager {
 	public XStream getStreamer() {
 		return streamer;
 	}
-	
+
 	public void setStreamer(XStream streamer) {
 		this.streamer = streamer;
 	}
-		
+
 	public File getProfileDir() {
 		return profileDir;
 	}
@@ -344,75 +344,75 @@ public class ViewerElementManager {
 	public DocumentManager getDocumentManager() {
 		return documentManager;
 	}
-	
+
 	public void setDocumentManager(DocumentManager documentManager) {
 		this.documentManager = documentManager;
 	}
-	
+
 	public MRUDRegistry getMrudRegistry() {
 		return mrudRegistry;
 	}
-	
+
 	public void setMrudRegistry(MRUDRegistry mrudRegistry) {
 		this.mrudRegistry = mrudRegistry;
 	}
-	
+
 	public SignalMLCodecManager getCodecManager() {
 		return codecManager;
 	}
-	
+
 	public void setCodecManager(SignalMLCodecManager codecManager) {
 		this.codecManager = codecManager;
 	}
-	
+
 	public ApplicationConfiguration getApplicationConfig() {
 		return applicationConfig;
 	}
-	
+
 	public void setApplicationConfig(ApplicationConfiguration applicationConfig) {
 		this.applicationConfig = applicationConfig;
 	}
-	
+
 	public DocumentDetector getDocumentDetector() {
 		return documentDetector;
 	}
-	
+
 	public void setDocumentDetector(DocumentDetector documentDetector) {
 		this.documentDetector = documentDetector;
 	}
-	
+
 	public ApplicationMethodManager getMethodManager() {
 		return methodManager;
 	}
-	
+
 	public void setMethodManager(ApplicationMethodManager methodManager) {
 		this.methodManager = methodManager;
 	}
-	
+
 	public ApplicationTaskManager getTaskManager() {
 		return taskManager;
 	}
-	
+
 	public void setTaskManager(ApplicationTaskManager taskManager) {
 		this.taskManager = taskManager;
 	}
-		
+
 	public ActionFocusManager getActionFocusManager() {
 		return actionFocusManager;
 	}
-	
+
 	public void setActionFocusManager(ActionFocusManager actionFocusManager) {
 		this.actionFocusManager = actionFocusManager;
 	}
-	
+
 	public MontagePresetManager getMontagePresetManager() {
 		return montagePresetManager;
 	}
-	
+
 	public void setMontagePresetManager(MontagePresetManager montagePresetManager) {
 		this.montagePresetManager = montagePresetManager;
 	}
-	
+
 	public BookFilterPresetManager getBookFilterPresetManager() {
 		return bookFilterPresetManager;
 	}
@@ -424,27 +424,27 @@ public class ViewerElementManager {
 	public SignalExportPresetManager getSignalExportPresetManager() {
 		return signalExportPresetManager;
 	}
-	
+
 	public void setSignalExportPresetManager(SignalExportPresetManager signalExportPresetManager) {
 		this.signalExportPresetManager = signalExportPresetManager;
 	}
-	
+
 	public FFTSampleFilterPresetManager getFftFilterPresetManager() {
 		return fftFilterPresetManager;
 	}
-	
+
 	public void setFftFilterPresetManager(FFTSampleFilterPresetManager fftFilterPresetManager) {
 		this.fftFilterPresetManager = fftFilterPresetManager;
 	}
-	
+
 	public MP5ExecutorManager getMp5ExecutorManager() {
 		return mp5ExecutorManager;
 	}
 
 	public void setMp5ExecutorManager(MP5ExecutorManager mp5ExecutorManager) {
 		this.mp5ExecutorManager = mp5ExecutorManager;
-	}	
-	
+	}
+
 	public Preferences getPreferences() {
 		return preferences;
 	}
@@ -454,7 +454,7 @@ public class ViewerElementManager {
 	}
 
 	public DocumentFlowIntegrator getDocumentFlowIntegrator() {
-		if( documentFlowIntegrator == null ) {
+		if (documentFlowIntegrator == null) {
 			documentFlowIntegrator = new DocumentFlowIntegrator();
 			documentFlowIntegrator.setMessageSource(messageSource);
 			documentFlowIntegrator.setDocumentManager(getDocumentManager());
@@ -466,86 +466,86 @@ public class ViewerElementManager {
 			documentFlowIntegrator.setOptionPaneParent(getOptionPaneParent());
 			documentFlowIntegrator.setFileChooser(getFileChooser());
 			documentFlowIntegrator.setSignalParametersDialog(getSignalParametersDialog());
-			documentFlowIntegrator.setPleaseWaitDialog(getPleaseWaitDialog());			
+			documentFlowIntegrator.setPleaseWaitDialog(getPleaseWaitDialog());
 		}
 		return documentFlowIntegrator;
 	}
-	
+
 	public WorkspaceTreeModel getWorkspaceTreeModel() {
-		if( workspaceTreeModel == null ) {
+		if (workspaceTreeModel == null) {
 			workspaceTreeModel = new WorkspaceTreeModel();
 			workspaceTreeModel.setDocumentManager(getDocumentManager());
 			workspaceTreeModel.setMrudRegistry(getMrudRegistry());
 		}
 		return workspaceTreeModel;
 	}
-	
+
 	public BookTreeModel getBookTreeModel() {
-		if( bookTreeModel == null ) {
+		if (bookTreeModel == null) {
 			bookTreeModel = new BookTreeModel();
-			bookTreeModel.setDocumentManager(getDocumentManager());			
+			bookTreeModel.setDocumentManager(getDocumentManager());
 		}
 		return bookTreeModel;
 	}
-	
+
 	public SignalTreeModel getSignalTreeModel() {
-		if( signalTreeModel == null ) {
+		if (signalTreeModel == null) {
 			signalTreeModel = new SignalTreeModel();
 			signalTreeModel.setDocumentManager(getDocumentManager());
 		}
 		return signalTreeModel;
 	}
-	
+
 	public TagTreeModel getTagTreeModel() {
-		if( tagTreeModel == null ) {
+		if (tagTreeModel == null) {
 			tagTreeModel = new TagTreeModel();
-			tagTreeModel.setDocumentManager(getDocumentManager());			
+			tagTreeModel.setDocumentManager(getDocumentManager());
 		}
 		return tagTreeModel;
 	}
-	
+
 	public TaskTableModel getTaskTableModel() {
-		if( taskTableModel == null ) {
+		if (taskTableModel == null) {
 			taskTableModel = new TaskTableModel();
 			taskTableModel.setMessageSource(messageSource);
 			taskTableModel.setTaskManager(getTaskManager());
 		}
 		return taskTableModel;
 	}
-	
+
 	public PropertySheetModel getPropertySheetModel() {
-		if( propertySheetModel == null ) {
+		if (propertySheetModel == null) {
 			propertySheetModel = new PropertySheetModel();
-			propertySheetModel.setMessageSource(messageSource);			
+			propertySheetModel.setMessageSource(messageSource);
 		}
 		return propertySheetModel;
 	}
-	
+
 	public ViewerStatusBar getStatusBar() {
-		if( statusBar == null ) {
+		if (statusBar == null) {
 			statusBar = new ViewerStatusBar(messageSource);
 			statusBar.setMaximizeDocumentsAction(getViewModeAction());
 			statusBar.setActionFocusManager(getActionFocusManager());
 			statusBar.initialize();
 			statusBar.setStatus(messageSource.getMessage("viewer.welcomeStatus",
-								     new Object[] {SvarogConstants.VERSION}));
-			getActionFocusManager().addActionFocusListener(statusBar);			
+			                    new Object[] {SvarogConstants.VERSION}));
+			getActionFocusManager().addActionFocusListener(statusBar);
 		}
 		return statusBar;
 	}
-	
+
 	public JMenu getFileMenu() {
-		if( fileMenu == null ) {
+		if (fileMenu == null) {
 			JMenu importSubmenu = new JMenu(messageSource.getMessage("menu.import"));
 			importSubmenu.add(getImportTagAction());
-			
+
 			JMenu exportSubmenu = new JMenu(messageSource.getMessage("menu.export"));
 			exportSubmenu.add(getExportTagAction());
 			exportSubmenu.add(getExportSignalAction());
 			exportSubmenu.add(getExportBookAction());
-			
+
 			fileMenu = new JMenu(messageSource.getMessage("menu.file"));
-			
+
 			fileMenu.add(getOpenDocumentAction());
 			fileMenu.add(getSaveActiveDocumentAction());
 			fileMenu.add(getSaveActiveDocumentAsAction());
@@ -557,22 +557,22 @@ public class ViewerElementManager {
 			fileMenu.add(getSaveTagAction());
 			fileMenu.add(getSaveTagAsAction());
 			fileMenu.add(getCloseTagAction());
-			fileMenu.addSeparator();		
-			fileMenu.add(importSubmenu);		
+			fileMenu.addSeparator();
+			fileMenu.add(importSubmenu);
 			fileMenu.add(exportSubmenu);
-			
-			if( mode == SignalMLOperationMode.APPLICATION ) {
+
+			if (mode == SignalMLOperationMode.APPLICATION) {
 				fileMenu.addSeparator();
 				fileMenu.add(getCloseWindowAction());
-			}			
+			}
 		}
 		return fileMenu;
 	}
-	
+
 	public JMenu getEditMenu() {
-		if( editMenu == null ) {
+		if (editMenu == null) {
 			editMenu = new JMenu(messageSource.getMessage("menu.edit"));
-			
+
 			editMenu.add(getPreciseSelectionAction());
 			editMenu.addSeparator();
 			editMenu.add(getEditSignalParametersAction());
@@ -582,21 +582,21 @@ public class ViewerElementManager {
 			editMenu.add(getEditTagStylesAction());
 			editMenu.add(getEditTagDescriptionAction());
 			editMenu.addSeparator();
-			if( mode == SignalMLOperationMode.APPLICATION ) {			
+			if (mode == SignalMLOperationMode.APPLICATION) {
 				editMenu.add(getEditStoredMontagesAction());
 			}
-			editMenu.add(getEditPreferencesAction());			
+			editMenu.add(getEditPreferencesAction());
 		}
 		return editMenu;
 	}
-	
+
 	public JMenu getViewMenu() {
-		if( viewMenu == null ) {
+		if (viewMenu == null) {
 			viewMenu = new JMenu(messageSource.getMessage("menu.view"));
-			
+
 			viewMenu.add(new JCheckBoxMenuItem(getShowMainToolBarAction()));
 			viewMenu.add(new JCheckBoxMenuItem(getShowStatusBarAction()));
-			if( mode == SignalMLOperationMode.APPLICATION ) {
+			if (mode == SignalMLOperationMode.APPLICATION) {
 				viewMenu.add(new JCheckBoxMenuItem(getShowLeftPanelAction()));
 				viewMenu.add(new JCheckBoxMenuItem(getShowBottomPanelAction()));
 			}
@@ -605,60 +605,60 @@ public class ViewerElementManager {
 		}
 		return viewMenu;
 	}
-	
+
 	public JMenu getToolsMenu() {
-		if( toolsMenu == null ) {
+		if (toolsMenu == null) {
 			toolsMenu = new JMenu(messageSource.getMessage("menu.tools"));
-			
-			for( AbstractSignalMLAction action : getRunMethodActions() ) {
+
+			for (AbstractSignalMLAction action : getRunMethodActions()) {
 				toolsMenu.add(action);
 			}
 
-			if( mode == SignalMLOperationMode.APPLICATION ) {
-			
+			if (mode == SignalMLOperationMode.APPLICATION) {
+
 				toolsMenu.addSeparator();
-				
-				JMenu iterationMenu = new JMenu( messageSource.getMessage( "menu.tools.iterate" ) );
-				iterationMenu.setIcon( IconUtils.loadClassPathIcon( "org/signalml/app/icon/iteratemethod.png" ) );
-				for( AbstractSignalMLAction action : getIterateMethodActions() ) {
+
+				JMenu iterationMenu = new JMenu(messageSource.getMessage("menu.tools.iterate"));
+				iterationMenu.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/iteratemethod.png"));
+				for (AbstractSignalMLAction action : getIterateMethodActions()) {
 					iterationMenu.add(action);
 				}
-				iterationMenu.setEnabled( !getIterateMethodActions().isEmpty() );
-				
+				iterationMenu.setEnabled(!getIterateMethodActions().isEmpty());
+
 				toolsMenu.add(iterationMenu);
-				
+
 			}
 		}
 		return toolsMenu;
 	}
-	
+
 	public JMenu getHelpMenu() {
-		if( helpMenu == null ) {
+		if (helpMenu == null) {
 			helpMenu = new JMenu(messageSource.getMessage("menu.help"));
-			helpMenu.add(getHelpContentsAction());			
+			helpMenu.add(getHelpContentsAction());
 		}
 		return helpMenu;
 	}
-	
+
 	public JMenuBar getMenuBar() {
-		if( menuBar == null ) {
-			menuBar = new JMenuBar();		
+		if (menuBar == null) {
+			menuBar = new JMenuBar();
 
 			menuBar.add(getFileMenu());
 			menuBar.add(getEditMenu());
 			menuBar.add(getViewMenu());
-			menuBar.add(getToolsMenu());						
-			menuBar.add(getHelpMenu());	
+			menuBar.add(getToolsMenu());
+			menuBar.add(getHelpMenu());
 		}
 		return menuBar;
 	}
-	
+
 	public JToolBar getMainToolBar() {
-		if( mainToolBar == null ) {
+		if (mainToolBar == null) {
 			mainToolBar = new JToolBar();
-			
+
 			mainToolBar.setFloatable(false);
-			
+
 			mainToolBar.add(getOpenDocumentAction());
 			mainToolBar.add(getSaveActiveDocumentAction());
 			mainToolBar.add(getSaveActiveDocumentAsAction());
@@ -666,167 +666,167 @@ public class ViewerElementManager {
 			mainToolBar.add(getCloseActiveDocumentAction());
 
 			mainToolBar.add(Box.createHorizontalGlue());
-			
-			if( mode == SignalMLOperationMode.APPLICATION ) {
+
+			if (mode == SignalMLOperationMode.APPLICATION) {
 				mainToolBar.add(getCloseWindowAction());
-			}			
+			}
 		}
 		return mainToolBar;
 	}
-	
+
 	public LockableJSplitPane getVerticalSplitPane() {
-		if( verticalSplitPane == null ) {
+		if (verticalSplitPane == null) {
 			verticalSplitPane = new LockableJSplitPane(JSplitPane.VERTICAL_SPLIT);
 			verticalSplitPane.setOneTouchExpandable(true);
 			verticalSplitPane.setTopComponent(getHorizontalSplitPane());
 			verticalSplitPane.setBottomComponent(getBottomPane());
-			verticalSplitPane.setResizeWeight(1);			
+			verticalSplitPane.setResizeWeight(1);
 		}
 		return verticalSplitPane;
 	}
-	
+
 	public LockableJSplitPane getHorizontalSplitPane() {
-		if( horizontalSplitPane == null ) {
+		if (horizontalSplitPane == null) {
 			horizontalSplitPane = new LockableJSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 			horizontalSplitPane.setOneTouchExpandable(true);
 			horizontalSplitPane.setLeftComponent(getLeftPane());
 			horizontalSplitPane.setRightComponent(getRightPane());
-			horizontalSplitPane.setResizeWeight(0);			
+			horizontalSplitPane.setResizeWeight(0);
 		}
 		return horizontalSplitPane;
 	}
-	
+
 	public JPanel getLeftPane() {
-		if( leftPane == null ) {
+		if (leftPane == null) {
 			leftPane = new JPanel();
 
 			leftPane.setLayout(new BorderLayout());
-			leftPane.add( getTreeTabbedPane(), BorderLayout.CENTER );
+			leftPane.add(getTreeTabbedPane(), BorderLayout.CENTER);
 		}
 		return leftPane;
 	}
-	
+
 	public ViewerTabbedPane getTreeTabbedPane() {
-		if( treeTabbedPane == null ) {
+		if (treeTabbedPane == null) {
 			treeTabbedPane = new ViewerTabbedPane(JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
 
 			treeTabbedPane.addTab("viewer.tagTabTitle", null, getTagTreePane(), "viewer.tagTabToolTip", messageSource);
 			treeTabbedPane.addTab("viewer.signalTabTitle", null, getSignalTreePane(), "viewer.signalTabToolTip", messageSource);
 			treeTabbedPane.addTab("viewer.bookTabTitle", null, getBookTreePane(), "viewer.bookTabToolTip", messageSource);
-			treeTabbedPane.addTab("viewer.workspaceTabTitle", null, getWorkspaceTreePane(), "viewer.workspaceTabToolTip", messageSource);		
-			
+			treeTabbedPane.addTab("viewer.workspaceTabTitle", null, getWorkspaceTreePane(), "viewer.workspaceTabToolTip", messageSource);
+
 			treeTabbedPane.setSelectedIndex(3);
-			
-			treeTabbedPane.addChangeListener(getPropertySheetModel());			
+
+			treeTabbedPane.addChangeListener(getPropertySheetModel());
 		}
 		return treeTabbedPane;
 	}
-	
+
 	public JPanel getRightPane() {
-		if( rightPane == null ) {
+		if (rightPane == null) {
 			rightPane = new JPanel();
-		
+
 			rightPane.setLayout(new BorderLayout());
-			rightPane.add(getDocumentTabbedPane(), BorderLayout.CENTER);			
+			rightPane.add(getDocumentTabbedPane(), BorderLayout.CENTER);
 		}
 		return rightPane;
 	}
-	
+
 	public JPanel getBottomPane() {
-		if( bottomPane == null ) {
+		if (bottomPane == null) {
 			bottomPane = new JPanel();
-			
+
 			bottomPane.setLayout(new BorderLayout());
-			bottomPane.add( getPropertyTabbedPane(), BorderLayout.CENTER );						
+			bottomPane.add(getPropertyTabbedPane(), BorderLayout.CENTER);
 		}
 		return bottomPane;
 	}
-	
+
 	public ViewerTabbedPane getPropertyTabbedPane() {
-		if( propertyTabbedPane == null ) {
+		if (propertyTabbedPane == null) {
 			propertyTabbedPane = new ViewerTabbedPane();
-			
+
 			propertyTabbedPane.addTab("viewer.consoleTabTitle", null, getConsole(), "viewer.consoleTabToolTip", messageSource);
-			propertyTabbedPane.addTab("viewer.taskTableTabTitle", null, getTaskTablePane(), "viewer.taskTableTabToolTip", messageSource);		
-			propertyTabbedPane.addTab("viewer.propertySheetTabTitle", null, getPropertySheetPane(), "viewer.propertySheetTabToolTip", messageSource);			
+			propertyTabbedPane.addTab("viewer.taskTableTabTitle", null, getTaskTablePane(), "viewer.taskTableTabToolTip", messageSource);
+			propertyTabbedPane.addTab("viewer.propertySheetTabTitle", null, getPropertySheetPane(), "viewer.propertySheetTabToolTip", messageSource);
 		}
 		return propertyTabbedPane;
 	}
-	
+
 	public ViewerTreePane getWorkspaceTreePane() {
-		if( workspaceTreePane == null ) {
-			workspaceTreePane = new ViewerTreePane(getWorkspaceTree());			
+		if (workspaceTreePane == null) {
+			workspaceTreePane = new ViewerTreePane(getWorkspaceTree());
 		}
 		return workspaceTreePane;
 	}
-	
+
 	public ViewerTreePane getBookTreePane() {
-		if( bookTreePane == null ) {
+		if (bookTreePane == null) {
 			bookTreePane = new ViewerTreePane(getBookTree());
 		}
 		return bookTreePane;
 	}
-	
+
 	public ViewerTreePane getSignalTreePane() {
-		if( signalTreePane == null ) {
-			signalTreePane = new ViewerTreePane(getSignalTree());			
+		if (signalTreePane == null) {
+			signalTreePane = new ViewerTreePane(getSignalTree());
 		}
 		return signalTreePane;
 	}
-	
+
 	public ViewerTreePane getTagTreePane() {
-		if( tagTreePane == null ) {
-			tagTreePane = new ViewerTreePane(getTagTree());			
-		}	
+		if (tagTreePane == null) {
+			tagTreePane = new ViewerTreePane(getTagTree());
+		}
 		return tagTreePane;
 	}
-	
+
 	public ViewerWorkspaceTree getWorkspaceTree() {
-		if( workspaceTree == null ) {
+		if (workspaceTree == null) {
 			workspaceTree = new ViewerWorkspaceTree(getWorkspaceTreeModel(),messageSource);
 			workspaceTree.setActionFocusManager(getActionFocusManager());
 			workspaceTree.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 			workspaceTree.setOpenDocumentDialog(getOpenDocumentDialog());
-			workspaceTree.addTreeSelectionListener(getPropertySheetModel());			
+			workspaceTree.addTreeSelectionListener(getPropertySheetModel());
 		}
 		return workspaceTree;
 	}
-	
+
 	public ViewerSignalTree getSignalTree() {
-		if( signalTree == null ) {
+		if (signalTree == null) {
 			signalTree = new ViewerSignalTree(getSignalTreeModel(),messageSource);
 			signalTree.setActionFocusManager(getActionFocusManager());
 			signalTree.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
-			signalTree.addTreeSelectionListener(getPropertySheetModel());			
+			signalTree.addTreeSelectionListener(getPropertySheetModel());
 		}
 		return signalTree;
 	}
-	
+
 	public ViewerBookTree getBookTree() {
-		if( bookTree == null ) {
+		if (bookTree == null) {
 			bookTree = new ViewerBookTree(getBookTreeModel(),messageSource);
 			bookTree.setActionFocusManager(getActionFocusManager());
 			bookTree.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
-			bookTree.addTreeSelectionListener(getPropertySheetModel());			
+			bookTree.addTreeSelectionListener(getPropertySheetModel());
 		}
 		return bookTree;
 	}
-	
+
 	public ViewerTagTree getTagTree() {
-		if( tagTree == null ) {
+		if (tagTree == null) {
 			tagTree = new ViewerTagTree(getTagTreeModel(),messageSource);
 			tagTree.setActionFocusManager(getActionFocusManager());
 			tagTree.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 			tagTree.setEditTagAnnotationDialog(getEditTagAnnotationDialog());
 			tagTree.setEditTagDescriptionDialog(getEditTagDescriptionDialog());
 			tagTree.setTagStylePaletteDialog(getTagStylePaletteDialog());
-			tagTree.addTreeSelectionListener(getPropertySheetModel());			
+			tagTree.addTreeSelectionListener(getPropertySheetModel());
 		}
 		return tagTree;
 	}
-	
+
 	public ViewerTaskTable getTaskTable() {
-		if( taskTable == null ) {
+		if (taskTable == null) {
 			taskTable = new ViewerTaskTable(getTaskTableModel(),messageSource);
 			taskTable.setActionFocusManager(getActionFocusManager());
 			taskTable.setTaskManager(getTaskManager());
@@ -839,87 +839,87 @@ public class ViewerElementManager {
 			taskTable.setRemoveAllTasksAction(getRemoveAllTasksAction());
 			taskTable.setRemoveAllFinishedTasksAction(getRemoveAllFinishedTasksAction());
 			taskTable.setRemoveAllAbortedTasksAction(getRemoveAllAbortedTasksAction());
-			taskTable.setRemoveAllFailedTasksAction(getRemoveAllFailedTasksAction());			
+			taskTable.setRemoveAllFailedTasksAction(getRemoveAllFailedTasksAction());
 		}
 		return taskTable;
 	}
-	
+
 	public ViewerConsolePane getConsole() {
-		if( console == null ) {
+		if (console == null) {
 			console = new ViewerConsolePane();
 			console.setMessageSource(messageSource);
 			console.setFileChooser(getFileChooser());
-			console.initialize();			
+			console.initialize();
 		}
 		return console;
 	}
-	
+
 	public ViewerTaskTablePane getTaskTablePane() {
-		if( taskTablePane == null ) {
-			taskTablePane = new ViewerTaskTablePane(getTaskTable());		
-			taskTablePane.initialize();			
+		if (taskTablePane == null) {
+			taskTablePane = new ViewerTaskTablePane(getTaskTable());
+			taskTablePane.initialize();
 		}
 		return taskTablePane;
 	}
-	
+
 	public ViewerPropertySheetPane getPropertySheetPane() {
-		if( propertySheetPane == null ) {
+		if (propertySheetPane == null) {
 			propertySheetPane = new ViewerPropertySheetPane();
 			propertySheetPane.setPropertySheetModel(getPropertySheetModel());
-			propertySheetPane.initialize();			
+			propertySheetPane.initialize();
 		}
 		return propertySheetPane;
 	}
-	
+
 	public ViewerDocumentTabbedPane getDocumentTabbedPane() {
-		if( documentTabbedPane == null ) {
+		if (documentTabbedPane == null) {
 			documentTabbedPane = new ViewerDocumentTabbedPane();
 			documentTabbedPane.setMessageSource(messageSource);
 			documentTabbedPane.setActionFocusManager(getActionFocusManager());
 			documentTabbedPane.setView(getView());
-			documentTabbedPane.initialize();			
+			documentTabbedPane.initialize();
 		}
 		return documentTabbedPane;
 	}
-	
+
 	public ErrorsDialog getErrorsDialog() {
-		if( errorsDialog == null ) {
+		if (errorsDialog == null) {
 			errorsDialog = new ErrorsDialog(messageSource, getDialogParent(),true);
 		}
 		return errorsDialog;
 	}
-	
+
 	public PleaseWaitDialog getPleaseWaitDialog() {
-		if( pleaseWaitDialog == null ) {
+		if (pleaseWaitDialog == null) {
 			pleaseWaitDialog = new PleaseWaitDialog(messageSource, getDialogParent());
-			pleaseWaitDialog.initializeNow();			
+			pleaseWaitDialog.initializeNow();
 		}
 		return pleaseWaitDialog;
 	}
-	
+
 	public SeriousWarningDialog getSeriousWarningDialog() {
-		if( seriousWarningDialog == null ) {
+		if (seriousWarningDialog == null) {
 			seriousWarningDialog = new SeriousWarningDialog(messageSource, getDialogParent(),true);
-			seriousWarningDialog.setApplicationConfig(getApplicationConfig());			
+			seriousWarningDialog.setApplicationConfig(getApplicationConfig());
 		}
 		return seriousWarningDialog;
 	}
-	
+
 	public ApplicationPreferencesDialog getApplicationPreferencesDialog() {
-		if( applicationPreferencesDialog == null ) {
+		if (applicationPreferencesDialog == null) {
 			applicationPreferencesDialog = new ApplicationPreferencesDialog(messageSource, mode, getDialogParent(),true);
 			applicationPreferencesDialog.setProfileDir(getProfileDir());
 			applicationPreferencesDialog.setFileChooser(getFileChooser());
-			if( mode == SignalMLOperationMode.APPLICATION ) {
+			if (mode == SignalMLOperationMode.APPLICATION) {
 				applicationPreferencesDialog.setCodecManager(getCodecManager());
 				applicationPreferencesDialog.setMp5ExecutorManager(getMp5ExecutorManager());
 			}
 		}
 		return applicationPreferencesDialog;
 	}
-	
+
 	public OpenDocumentDialog getOpenDocumentDialog() {
-		if( openDocumentDialog == null ) {
+		if (openDocumentDialog == null) {
 			openDocumentDialog = new OpenDocumentDialog(messageSource, getDialogParent(),true);
 			openDocumentDialog.setCodecManager(getCodecManager());
 			openDocumentDialog.setDocumentDetector(getDocumentDetector());
@@ -929,25 +929,25 @@ public class ViewerElementManager {
 		}
 		return openDocumentDialog;
 	}
-	
+
 	public RegisterCodecDialog getRegisterCodecDialog() {
-		if( registerCodecDialog == null ) {
+		if (registerCodecDialog == null) {
 			registerCodecDialog = new RegisterCodecDialog(messageSource, getDialogParent(),true);
 			registerCodecDialog.setCodecManager(getCodecManager());
 			registerCodecDialog.setProfileDir(getProfileDir());
 		}
 		return registerCodecDialog;
 	}
-	
+
 	public SignalParametersDialog getSignalParametersDialog() {
-		if( signalParametersDialog == null ) {
+		if (signalParametersDialog == null) {
 			signalParametersDialog = new SignalParametersDialog(messageSource, getDialogParent(),true);
 		}
 		return signalParametersDialog;
 	}
-	
+
 	public SignalMontageDialog getSignalMontageDialog() {
-		if( signalMontageDialog == null ) {
+		if (signalMontageDialog == null) {
 			signalMontageDialog = new SignalMontageDialog(messageSource, getMontagePresetManager(),getDialogParent(),true);
 			signalMontageDialog.setFileChooser(getFileChooser());
 			signalMontageDialog.setApplicationConfig(getApplicationConfig());
@@ -955,114 +955,114 @@ public class ViewerElementManager {
 		}
 		return signalMontageDialog;
 	}
-	
+
 	public SignalSelectionDialog getSignalSelectionDialog() {
-		if( signalSelectionDialog == null ) {
+		if (signalSelectionDialog == null) {
 			signalSelectionDialog = new SignalSelectionDialog(messageSource, getDialogParent(),true);
 		}
 		return signalSelectionDialog;
 	}
-	
+
 	public NewTagDialog getNewTagDialog() {
-		if( newTagDialog == null ) {
+		if (newTagDialog == null) {
 			newTagDialog = new NewTagDialog(messageSource, getDialogParent(),true);
-			newTagDialog.setApplicationConfig(getApplicationConfig());			
+			newTagDialog.setApplicationConfig(getApplicationConfig());
 		}
 		return newTagDialog;
 	}
-	
+
 	public EditTagAnnotationDialog getEditTagAnnotationDialog() {
-		if( editTagAnnotationDialog == null ) {
+		if (editTagAnnotationDialog == null) {
 			editTagAnnotationDialog = new EditTagAnnotationDialog(messageSource, getDialogParent(),true);
 		}
 		return editTagAnnotationDialog;
 	}
-	
+
 	public SlavePlotSettingsPopupDialog getSlavePlotSettingsPopupDialog() {
-		if( slavePlotSettingsPopupDialog == null ) {
+		if (slavePlotSettingsPopupDialog == null) {
 			slavePlotSettingsPopupDialog = new SlavePlotSettingsPopupDialog(messageSource,getDialogParent(),true);
 			// XXX this dialog reuses the main window's instance of the montage dialog
 			// this seems to work and since the dialog is very big we try to keep it
 			// like this if it works
-			slavePlotSettingsPopupDialog.setSignalMontageDialog(getSignalMontageDialog());			
+			slavePlotSettingsPopupDialog.setSignalMontageDialog(getSignalMontageDialog());
 		}
 		return slavePlotSettingsPopupDialog;
 	}
-	
+
 	public TagStylePaletteDialog getTagStylePaletteDialog() {
-		if( tagStylePaletteDialog == null ) {
+		if (tagStylePaletteDialog == null) {
 			tagStylePaletteDialog = new TagStylePaletteDialog(messageSource,getDialogParent(),true);
 		}
 		return tagStylePaletteDialog;
 	}
-	
+
 	public HelpDialog getHelpDialog() {
-		if( helpDialog == null ) {
+		if (helpDialog == null) {
 			helpDialog = new HelpDialog(messageSource, null, false);
 		}
 		return helpDialog;
 	}
-	
+
 	public TagComparisonDialog getTagComparisonDialog() {
-		if( tagComparisonDialog == null ) {
+		if (tagComparisonDialog == null) {
 			tagComparisonDialog = new TagComparisonDialog(messageSource,getDialogParent(),true);
 			tagComparisonDialog.setTableToTextExporter(getTableToTextExporter());
-			tagComparisonDialog.setFileChooser(getFileChooser());			
+			tagComparisonDialog.setFileChooser(getFileChooser());
 		}
 		return tagComparisonDialog;
 	}
-	
+
 	public EditTagDescriptionDialog getEditTagDescriptionDialog() {
-		if( editTagDescriptionDialog == null ) {
+		if (editTagDescriptionDialog == null) {
 			editTagDescriptionDialog = new EditTagDescriptionDialog(messageSource,getDialogParent(),true);
 		}
 		return editTagDescriptionDialog;
 	}
-	
+
 	public IterationSetupDialog getIterationSetupDialog() {
-		if( iterationSetupDialog == null ) {
+		if (iterationSetupDialog == null) {
 			iterationSetupDialog = new IterationSetupDialog(messageSource,getDialogParent(),true);
-			iterationSetupDialog.setMethodManager(getMethodManager());			
+			iterationSetupDialog.setMethodManager(getMethodManager());
 		}
 		return iterationSetupDialog;
 	}
-		
+
 	public ExportSignalDialog getExportSignalDialog() {
-		if( exportSignalDialog == null ) {
+		if (exportSignalDialog == null) {
 			exportSignalDialog = new ExportSignalDialog(messageSource,getSignalExportPresetManager(),getDialogParent(),true);
-			exportSignalDialog.setApplicationConfig(getApplicationConfig());						
+			exportSignalDialog.setApplicationConfig(getApplicationConfig());
 		}
 		return exportSignalDialog;
 	}
-	
+
 	public EditFFTSampleFilterDialog getEditFFTSampleFilterDialog() {
-		if( editFFTSampleFilterDialog == null ) {
+		if (editFFTSampleFilterDialog == null) {
 			editFFTSampleFilterDialog = new EditFFTSampleFilterDialog(messageSource, getFftFilterPresetManager(), getDialogParent(), true);
 			editFFTSampleFilterDialog.setApplicationConfig(getApplicationConfig());
 			editFFTSampleFilterDialog.setFileChooser(getFileChooser());
 		}
 		return editFFTSampleFilterDialog;
 	}
-	
+
 	public MP5LocalExecutorDialog getMp5LocalExecutorDialog() {
-		if( mp5LocalExecutorDialog == null ) {
+		if (mp5LocalExecutorDialog == null) {
 			mp5LocalExecutorDialog = new MP5LocalExecutorDialog(messageSource,getDialogParent(),true);
-			mp5LocalExecutorDialog.setFileChooser(getFileChooser());			
+			mp5LocalExecutorDialog.setFileChooser(getFileChooser());
 		}
 		return mp5LocalExecutorDialog;
 	}
-	
+
 	public MP5RemoteExecutorDialog getMp5RemoteExecutorDialog() {
-		if( mp5RemoteExecutorDialog == null ) {
-			mp5RemoteExecutorDialog = new MP5RemoteExecutorDialog(messageSource,getDialogParent(),true);		
+		if (mp5RemoteExecutorDialog == null) {
+			mp5RemoteExecutorDialog = new MP5RemoteExecutorDialog(messageSource,getDialogParent(),true);
 		}
 		return mp5RemoteExecutorDialog;
 	}
-	
+
 	public DynamicCompilationWarningDialog getDynamicCompilationWarningDialog() {
-		if( dynamicCompilationWarningDialog == null ) {
+		if (dynamicCompilationWarningDialog == null) {
 			dynamicCompilationWarningDialog = new DynamicCompilationWarningDialog(messageSource,getDialogParent(),true);
-			if( mode == SignalMLOperationMode.APPLICATION ) {
+			if (mode == SignalMLOperationMode.APPLICATION) {
 				dynamicCompilationWarningDialog.setApplicationConfig(getApplicationConfig());
 			} else {
 				dynamicCompilationWarningDialog.setPreferences(getPreferences());
@@ -1070,389 +1070,389 @@ public class ViewerElementManager {
 		}
 		return dynamicCompilationWarningDialog;
 	}
-	
+
 	public AtomTableDialog getAtomTableDialog() {
-		if( atomTableDialog == null ) {
+		if (atomTableDialog == null) {
 			atomTableDialog = new AtomTableDialog(messageSource,getDialogParent(),true);
 		}
 		return atomTableDialog;
-	}	
-		
+	}
+
 	public BookFilterDialog getBookFilterDialog() {
-		if( bookFilterDialog == null ) {
+		if (bookFilterDialog == null) {
 			bookFilterDialog = new BookFilterDialog(messageSource,getBookFilterPresetManager(),getDialogParent(),true);
 			bookFilterDialog.setApplicationConfig(getApplicationConfig());
 			bookFilterDialog.setFileChooser(getFileChooser());
 		}
 		return bookFilterDialog;
 	}
-	
+
 	public ViewerFileChooser getFileChooser() {
-		if( fileChooser == null ) {
+		if (fileChooser == null) {
 			fileChooser = new ViewerFileChooser();
 			fileChooser.setMessageSource(messageSource);
 			fileChooser.setApplicationConfig(getApplicationConfig());
-			fileChooser.initialize();			
+			fileChooser.initialize();
 		}
 		return fileChooser;
 	}
-	
+
 	public CloseWindowAction getCloseWindowAction() {
-		if( closeWindowAction == null ) {
-			closeWindowAction = new CloseWindowAction(messageSource);			
+		if (closeWindowAction == null) {
+			closeWindowAction = new CloseWindowAction(messageSource);
 		}
 		return closeWindowAction;
 	}
-	
+
 	public EditPreferencesAction getEditPreferencesAction() {
-		if( editPreferencesAction == null ) {
+		if (editPreferencesAction == null) {
 			editPreferencesAction = new EditPreferencesAction(messageSource);
 			editPreferencesAction.setPreferencesDialog(getApplicationPreferencesDialog());
-			editPreferencesAction.setConfig(getApplicationConfig());			
+			editPreferencesAction.setConfig(getApplicationConfig());
 		}
 		return editPreferencesAction;
 	}
-	
+
 	public HelpContentsAction getHelpContentsAction() {
-		if( helpContentsAction == null ) {
+		if (helpContentsAction == null) {
 			helpContentsAction = new HelpContentsAction(messageSource);
-			helpContentsAction.setHelpDialog(getHelpDialog());			
+			helpContentsAction.setHelpDialog(getHelpDialog());
 		}
 		return helpContentsAction;
 	}
-	
+
 	public ViewModeAction getViewModeAction() {
-		if( viewModeAction == null ) {
-			viewModeAction = new ViewModeAction(messageSource);			
+		if (viewModeAction == null) {
+			viewModeAction = new ViewModeAction(messageSource);
 		}
 		return viewModeAction;
 	}
-	
+
 	public ShowMainToolBarAction getShowMainToolBarAction() {
-		if( showMainToolBarAction == null ) {
-			showMainToolBarAction = new ShowMainToolBarAction(messageSource);			
+		if (showMainToolBarAction == null) {
+			showMainToolBarAction = new ShowMainToolBarAction(messageSource);
 		}
 		return showMainToolBarAction;
 	}
-	
+
 	public ShowStatusBarAction getShowStatusBarAction() {
-		if( showStatusBarAction == null ) {
-			showStatusBarAction = new ShowStatusBarAction(messageSource);			
+		if (showStatusBarAction == null) {
+			showStatusBarAction = new ShowStatusBarAction(messageSource);
 		}
 		return showStatusBarAction;
 	}
-	
+
 	public ShowLeftPanelAction getShowLeftPanelAction() {
-		if( showLeftPanelAction == null ) {
-			showLeftPanelAction = new ShowLeftPanelAction(messageSource);			
+		if (showLeftPanelAction == null) {
+			showLeftPanelAction = new ShowLeftPanelAction(messageSource);
 		}
 		return showLeftPanelAction;
 	}
-	
+
 	public ShowBottomPanelAction getShowBottomPanelAction() {
-		if( showBottomPanelAction == null ) {
-			showBottomPanelAction = new ShowBottomPanelAction(messageSource);			
+		if (showBottomPanelAction == null) {
+			showBottomPanelAction = new ShowBottomPanelAction(messageSource);
 		}
 		return showBottomPanelAction;
 	}
-	
+
 	public OpenDocumentAction getOpenDocumentAction() {
-		if( openDocumentAction == null ) {
+		if (openDocumentAction == null) {
 			openDocumentAction = new OpenDocumentAction(messageSource);
 			openDocumentAction.setOpenDocumentDialog(getOpenDocumentDialog());
-			openDocumentAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());			
+			openDocumentAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 		}
 		return openDocumentAction;
 	}
-	
+
 	public CloseDocumentAction getCloseActiveDocumentAction() {
-		if( closeActiveDocumentAction == null ) {
+		if (closeActiveDocumentAction == null) {
 			closeActiveDocumentAction = new CloseDocumentAction(messageSource,getActionFocusManager());
-			closeActiveDocumentAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());			
+			closeActiveDocumentAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 		}
 		return closeActiveDocumentAction;
 	}
-	
+
 	public SaveAllDocumentsAction getSaveAllDocumentsAction() {
-		if( saveAllDocumentsAction == null ) {
+		if (saveAllDocumentsAction == null) {
 			saveAllDocumentsAction = new SaveAllDocumentsAction(messageSource);
-			saveAllDocumentsAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());			
+			saveAllDocumentsAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 		}
 		return saveAllDocumentsAction;
 	}
-	
+
 	public SaveDocumentAction getSaveActiveDocumentAction() {
-		if( saveActiveDocumentAction == null ) {
+		if (saveActiveDocumentAction == null) {
 			saveActiveDocumentAction = new SaveDocumentAction(messageSource,getActionFocusManager());
-			saveActiveDocumentAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());			
+			saveActiveDocumentAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 		}
 		return saveActiveDocumentAction;
 	}
-	
+
 	public SaveDocumentAsAction getSaveActiveDocumentAsAction() {
-		if( saveActiveDocumentAsAction == null ) {
+		if (saveActiveDocumentAsAction == null) {
 			saveActiveDocumentAsAction = new SaveDocumentAsAction(messageSource,getActionFocusManager());
-			saveActiveDocumentAsAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());			
+			saveActiveDocumentAsAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 		}
 		return saveActiveDocumentAsAction;
 	}
-	
+
 	public NewTagAction getNewTagAction() {
-		if( newTagAction == null ) {
+		if (newTagAction == null) {
 			newTagAction = new NewTagAction(messageSource,getActionFocusManager());
 			newTagAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
-			newTagAction.setNewTagDialog(getNewTagDialog());			
+			newTagAction.setNewTagDialog(getNewTagDialog());
 		}
 		return newTagAction;
 	}
-	
+
 	public OpenTagAction getOpenTagAction() {
-		if( openTagAction == null ) {
+		if (openTagAction == null) {
 			openTagAction = new OpenTagAction(messageSource,getActionFocusManager());
 			openTagAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 			openTagAction.setFileChooser(getFileChooser());
-			openTagAction.setOptionPaneParent(getOptionPaneParent());					
+			openTagAction.setOptionPaneParent(getOptionPaneParent());
 		}
 		return openTagAction;
 	}
-	
+
 	public CloseTagAction getCloseTagAction() {
-		if( closeTagAction == null ) {
+		if (closeTagAction == null) {
 			closeTagAction = new CloseTagAction(messageSource,getActionFocusManager());
-			closeTagAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());			
+			closeTagAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 		}
 		return closeTagAction;
 	}
-	
+
 	public SaveTagAction getSaveTagAction() {
-		if( saveTagAction == null ) {
+		if (saveTagAction == null) {
 			saveTagAction = new SaveTagAction(messageSource,getActionFocusManager());
-			saveTagAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());			
+			saveTagAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 		}
 		return saveTagAction;
 	}
-	
+
 	public SaveTagAsAction getSaveTagAsAction() {
-		if( saveTagAsAction == null ) {
+		if (saveTagAsAction == null) {
 			saveTagAsAction = new SaveTagAsAction(messageSource,getActionFocusManager());
-			saveTagAsAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());							
+			saveTagAsAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 		}
 		return saveTagAsAction;
 	}
-	
+
 	public OpenTagAction getImportTagAction() {
-		if( importTagAction == null ) {
+		if (importTagAction == null) {
 			importTagAction = new OpenTagAction(messageSource,getActionFocusManager());
 			importTagAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 			importTagAction.setFileChooser(getFileChooser());
-			importTagAction.setOptionPaneParent(getOptionPaneParent());			
+			importTagAction.setOptionPaneParent(getOptionPaneParent());
 		}
 		return importTagAction;
 	}
-	
+
 	public ExportTagAction getExportTagAction() {
-		if( exportTagAction == null ) {
+		if (exportTagAction == null) {
 			exportTagAction = new ExportTagAction(messageSource,getActionFocusManager());
 			exportTagAction.setFileChooser(getFileChooser());
-			exportTagAction.setOptionPaneParent(getOptionPaneParent());			
+			exportTagAction.setOptionPaneParent(getOptionPaneParent());
 		}
 		return exportTagAction;
 	}
-	
+
 	public EditSignalParametersAction getEditSignalParametersAction() {
-		if( editSignalMontageAction == null ) {
+		if (editSignalMontageAction == null) {
 			editSignalParametersAction = new EditSignalParametersAction(messageSource,getActionFocusManager());
-			editSignalParametersAction.setSignalParametersDialog(getSignalParametersDialog());			
+			editSignalParametersAction.setSignalParametersDialog(getSignalParametersDialog());
 		}
 		return editSignalParametersAction;
 	}
-	
+
 	public EditSignalMontageAction getEditSignalMontageAction() {
-		if( editSignalMontageAction == null ) {
+		if (editSignalMontageAction == null) {
 			editSignalMontageAction = new EditSignalMontageAction(messageSource,getActionFocusManager());
-			editSignalMontageAction.setSignalMontageDialog(getSignalMontageDialog());			
+			editSignalMontageAction.setSignalMontageDialog(getSignalMontageDialog());
 		}
 		return editSignalMontageAction;
 	}
-	
+
 	public EditStoredMontagesAction getEditStoredMontagesAction() {
-		if( editStoredMontagesAction == null ) {
+		if (editStoredMontagesAction == null) {
 			editStoredMontagesAction = new EditStoredMontagesAction(messageSource);
-			editStoredMontagesAction.setSignalMontageDialog(getSignalMontageDialog());			
+			editStoredMontagesAction.setSignalMontageDialog(getSignalMontageDialog());
 		}
 		return editStoredMontagesAction;
 	}
-	
+
 	public ApplyDefaultMontageAction getApplyDefaultMontageAction() {
-		if( applyDefaultMontageAction == null ) {
-			applyDefaultMontageAction = new ApplyDefaultMontageAction(messageSource,getActionFocusManager());			
+		if (applyDefaultMontageAction == null) {
+			applyDefaultMontageAction = new ApplyDefaultMontageAction(messageSource,getActionFocusManager());
 		}
 		return applyDefaultMontageAction;
 	}
-	
+
 	public PreciseSelectionAction getPreciseSelectionAction() {
-		if( preciseSelectionAction == null ) {
+		if (preciseSelectionAction == null) {
 			preciseSelectionAction = new PreciseSelectionAction(messageSource,getActionFocusManager());
-			preciseSelectionAction.setSignalSelectionDialog(getSignalSelectionDialog());			
+			preciseSelectionAction.setSignalSelectionDialog(getSignalSelectionDialog());
 		}
 		return preciseSelectionAction;
 	}
-	
+
 	public EditTagStylesAction getEditTagStylesAction() {
-		if( editTagStylesAction == null ) {
+		if (editTagStylesAction == null) {
 			editTagStylesAction = new EditTagStylesAction(messageSource,getActionFocusManager());
-			editTagStylesAction.setTagStylePaletteDialog(getTagStylePaletteDialog());			
+			editTagStylesAction.setTagStylePaletteDialog(getTagStylePaletteDialog());
 		}
 		return editTagStylesAction;
 	}
-	
+
 	public EditTagDescriptionAction getEditTagDescriptionAction() {
-		if( editTagDescriptionAction == null ) {
+		if (editTagDescriptionAction == null) {
 			editTagDescriptionAction = new EditTagDescriptionAction(messageSource,getActionFocusManager());
-			editTagDescriptionAction.setEditTagDescriptionDialog(getEditTagDescriptionDialog());			
+			editTagDescriptionAction.setEditTagDescriptionDialog(getEditTagDescriptionDialog());
 		}
 		return editTagDescriptionAction;
 	}
-	
+
 	public ExportSignalAction getExportSignalAction() {
-		if( exportSignalAction == null ) {
+		if (exportSignalAction == null) {
 			exportSignalAction = new ExportSignalAction(messageSource,getActionFocusManager());
 			exportSignalAction.setExportSignalDialog(getExportSignalDialog());
 			exportSignalAction.setPleaseWaitDialog(getPleaseWaitDialog());
 			exportSignalAction.setFileChooser(getFileChooser());
-			exportSignalAction.setOptionPaneParent(getOptionPaneParent());			
+			exportSignalAction.setOptionPaneParent(getOptionPaneParent());
 		}
 		return exportSignalAction;
 	}
-	
+
 	public ExportBookAction getExportBookAction() {
-		if( exportBookAction == null ) {
+		if (exportBookAction == null) {
 			exportBookAction = new ExportBookAction(messageSource, getActionFocusManager());
 			exportBookAction.setPleaseWaitDialog(getPleaseWaitDialog());
 			exportBookAction.setFileChooser(getFileChooser());
-			exportBookAction.setOptionPaneParent(getOptionPaneParent());						
+			exportBookAction.setOptionPaneParent(getOptionPaneParent());
 		}
 		return exportBookAction;
 	}
-	
+
 	public AbortAllTasksAction getAbortAllTasksAction() {
-		if( abortAllTasksAction == null ) {
+		if (abortAllTasksAction == null) {
 			abortAllTasksAction = new AbortAllTasksAction(messageSource);
 			abortAllTasksAction.setTaskManager(getTaskManager());
-			abortAllTasksAction.setOptionPaneParent(getOptionPaneParent());			
+			abortAllTasksAction.setOptionPaneParent(getOptionPaneParent());
 		}
 		return abortAllTasksAction;
 	}
-	
+
 	public SuspendAllTasksAction getSuspendAllTasksAction() {
-		if( suspendAllTasksAction == null ) {
+		if (suspendAllTasksAction == null) {
 			suspendAllTasksAction = new SuspendAllTasksAction(messageSource);
 			suspendAllTasksAction.setTaskManager(getTaskManager());
-			suspendAllTasksAction.setOptionPaneParent(getOptionPaneParent());			
+			suspendAllTasksAction.setOptionPaneParent(getOptionPaneParent());
 		}
 		return suspendAllTasksAction;
 	}
-	
+
 	public ResumeAllTasksAction getResumeAllTasksAction() {
-		if( resumeAllTasksAction == null ) {
+		if (resumeAllTasksAction == null) {
 			resumeAllTasksAction = new ResumeAllTasksAction(messageSource);
 			resumeAllTasksAction.setTaskManager(getTaskManager());
-			resumeAllTasksAction.setOptionPaneParent(getOptionPaneParent());			
+			resumeAllTasksAction.setOptionPaneParent(getOptionPaneParent());
 		}
 		return resumeAllTasksAction;
 	}
-	
+
 	public RemoveAllTasksAction getRemoveAllTasksAction() {
-		if( removeAllTasksAction == null ) {
+		if (removeAllTasksAction == null) {
 			removeAllTasksAction = new RemoveAllTasksAction(messageSource);
 			removeAllTasksAction.setTaskManager(getTaskManager());
-			removeAllTasksAction.setOptionPaneParent(getOptionPaneParent());			
+			removeAllTasksAction.setOptionPaneParent(getOptionPaneParent());
 		}
 		return removeAllTasksAction;
 	}
-	
+
 	public RemoveAllFinishedTasksAction getRemoveAllFinishedTasksAction() {
-		if( removeAllFinishedTasksAction == null ) {
+		if (removeAllFinishedTasksAction == null) {
 			removeAllFinishedTasksAction = new RemoveAllFinishedTasksAction(messageSource);
 			removeAllFinishedTasksAction.setTaskManager(getTaskManager());
-			removeAllFinishedTasksAction.setOptionPaneParent(getOptionPaneParent());			
+			removeAllFinishedTasksAction.setOptionPaneParent(getOptionPaneParent());
 		}
 		return removeAllFinishedTasksAction;
 	}
-	
+
 	public RemoveAllAbortedTasksAction getRemoveAllAbortedTasksAction() {
-		if( removeAllAbortedTasksAction == null ) {
+		if (removeAllAbortedTasksAction == null) {
 			removeAllAbortedTasksAction = new RemoveAllAbortedTasksAction(messageSource);
 			removeAllAbortedTasksAction.setTaskManager(getTaskManager());
-			removeAllAbortedTasksAction.setOptionPaneParent(getOptionPaneParent());			
+			removeAllAbortedTasksAction.setOptionPaneParent(getOptionPaneParent());
 		}
 		return removeAllAbortedTasksAction;
 	}
-	
+
 	public RemoveAllFailedTasksAction getRemoveAllFailedTasksAction() {
-		if( removeAllFailedTasksAction == null ) {
+		if (removeAllFailedTasksAction == null) {
 			removeAllFailedTasksAction = new RemoveAllFailedTasksAction(messageSource);
 			removeAllFailedTasksAction.setTaskManager(getTaskManager());
-			removeAllFailedTasksAction.setOptionPaneParent(getOptionPaneParent());			
+			removeAllFailedTasksAction.setOptionPaneParent(getOptionPaneParent());
 		}
 		return removeAllFailedTasksAction;
 	}
-	
+
 	public ArrayList<AbstractSignalMLAction> getRunMethodActions() {
-		if( runMethodActions == null ) {
+		if (runMethodActions == null) {
 			Method[] methods = getMethodManager().getMethods();
 			runMethodActions = new ArrayList<AbstractSignalMLAction>(methods.length);
 			RunMethodAction runMethodAction;
-			for( Method method : methods ) {
-				
+			for (Method method : methods) {
+
 				runMethodAction = new RunMethodAction(messageSource, method, getMethodManager());
 				runMethodAction.setTaskManager(getTaskManager());
 				runMethodActions.add(runMethodAction);
-								
+
 			}
-			
+
 			int unavailableMethodCount = methodManager.getUnavailableMethodCount();
 			UnavailableMethodAction unavailableMethodAction;
-			for( int i=0; i<unavailableMethodCount; i++ ) {
-				
-				unavailableMethodAction = new UnavailableMethodAction( messageSource, methodManager.getUnavailableMethodAt(i) );
+			for (int i=0; i<unavailableMethodCount; i++) {
+
+				unavailableMethodAction = new UnavailableMethodAction(messageSource, methodManager.getUnavailableMethodAt(i));
 				unavailableMethodAction.setErrorsDialog(getErrorsDialog());
 				runMethodActions.add(unavailableMethodAction);
-				
+
 			}
-			
+
 		}
 		return runMethodActions;
 	}
-	
+
 	public ArrayList<AbstractSignalMLAction> getIterateMethodActions() {
-		if( iterateMethodActions == null ) {
+		if (iterateMethodActions == null) {
 			Method[] methods = getMethodManager().getMethods();
 			iterateMethodActions = new ArrayList<AbstractSignalMLAction>(methods.length);
 			IterateMethodAction iterateMethodAction;
-			for( Method method : methods ) {
-								
-				if( method instanceof IterableMethod ) {
-					iterateMethodAction = new IterateMethodAction( messageSource, (IterableMethod) method, getMethodManager() );
+			for (Method method : methods) {
+
+				if (method instanceof IterableMethod) {
+					iterateMethodAction = new IterateMethodAction(messageSource, (IterableMethod) method, getMethodManager());
 					iterateMethodAction.setTaskManager(getTaskManager());
 					iterateMethodAction.setIterationSetupDialog(getIterationSetupDialog());
-					iterateMethodActions.add(iterateMethodAction);				
+					iterateMethodActions.add(iterateMethodAction);
 				}
-				
-			}			
+
+			}
 		}
 		return iterateMethodActions;
 	}
-		
+
 	public TableToTextExporter getTableToTextExporter() {
-		if( tableToTextExporter == null ) {
+		if (tableToTextExporter == null) {
 			tableToTextExporter = new TableToTextExporter();
 		}
 		return tableToTextExporter;
 	}
-	
+
 	public MP5ApplicationExecutorConfigurer getMp5ExecutorConfigurer() {
-		if( mp5ExecutorConfigurer == null ) {
+		if (mp5ExecutorConfigurer == null) {
 			mp5ExecutorConfigurer = new MP5ApplicationExecutorConfigurer();
 			mp5ExecutorConfigurer.setRemoteExecutorDialog(getMp5RemoteExecutorDialog());
 		}
@@ -1460,14 +1460,14 @@ public class ViewerElementManager {
 	}
 
 	public DocumentView createDocumentViewPanel(Document document) throws SignalMLException {
-		
+
 		DocumentView documentView = null;
-		
-		if( document instanceof SignalDocument ) {
-			
-			SignalView signalView; 
+
+		if (document instanceof SignalDocument) {
+
+			SignalView signalView;
 			signalView = new SignalView((SignalDocument) document);
-			
+
 			signalView.setMessageSource(messageSource);
 			signalView.setActionFocusManager(getActionFocusManager());
 			signalView.setSlavePlotSettingsPopupDialog(getSlavePlotSettingsPopupDialog());
@@ -1487,12 +1487,12 @@ public class ViewerElementManager {
 			signalView.initialize();
 
 			documentView = signalView;
-			
-		} else if( document instanceof BookDocument ) {
-			
+
+		} else if (document instanceof BookDocument) {
+
 			BookView bookView;
 			bookView = new BookView((BookDocument) document);
-			
+
 			bookView.setMessageSource(messageSource);
 			bookView.setActionFocusManager(getActionFocusManager());
 			bookView.setErrorsDialog(getErrorsDialog());
@@ -1502,37 +1502,37 @@ public class ViewerElementManager {
 			bookView.setAtomTableDialog(getAtomTableDialog());
 			bookView.setBookFilterDialog(getBookFilterDialog());
 			bookView.setPleaseWaitDialog(getPleaseWaitDialog());
-			
+
 			bookView.initialize();
-			
+
 			documentView = bookView;
-			
+
 		}
 		else {
 			throw new ClassCastException("Unsuported document class [" + document.getClass().toString() + "]");
 		}
-		
+
 		return documentView;
 	}
-	
+
 	public void configureImportedElements() {
-		
+
 		ApplicationMethodManager localMethodManager = getMethodManager();
 		localMethodManager.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 		localMethodManager.setFileChooser(getFileChooser());
 		localMethodManager.setDialogParent(getDialogParent());
 		localMethodManager.setTableToTextExporter(getTableToTextExporter());
-		
+
 		ApplicationTaskManager localTaskManager = getTaskManager();
-		localTaskManager.setErrorsDialog(getErrorsDialog());		
+		localTaskManager.setErrorsDialog(getErrorsDialog());
 		localTaskManager.setPleaseWaitDialog(getPleaseWaitDialog());
-			
+
 		DynamicCompilationContext.getSharedInstance().getCompiler().setWarning(getDynamicCompilationWarningDialog());
-		
+
 	}
-	
+
 	public void configureAcceletators() {
-		
+
 		// configure accelerators
 		getCloseWindowAction().setAccelerator("ctrl X");
 		getHelpContentsAction().setAccelerator("F1");
@@ -1546,7 +1546,7 @@ public class ViewerElementManager {
 		getSaveAllDocumentsAction().setAccelerator("ctrl alt S");
 		getSaveTagAction().setAccelerator("alt S");
 		getSaveTagAsAction().setAccelerator("ctrl alt shift S");
-		
+
 	}
-	
+
 }

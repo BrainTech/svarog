@@ -1,5 +1,5 @@
 /* BookToTagMethodDialog.java created 2007-10-22
- * 
+ *
  */
 
 package org.signalml.app.method.booktotag;
@@ -36,111 +36,111 @@ import org.springframework.validation.Errors;
 
 /** BookToTagMethodDialog
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class BookToTagMethodDialog extends AbstractDialog {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private JList channelList;
 	private JScrollPane channelScrollPane;
-	
+
 	private JButton channelSelectAllButton;
 	private JButton channelSelectInvertButton;
 	private JButton channelSelectNoneButton;
-	
+
 	private String[] channels;
 
 	private JCheckBox makePageTagsCheckBox;
 	private JCheckBox makeBlockTagsCheckBox;
 	private JCheckBox makeChannelTagsCheckBox;
-	
+
 	public BookToTagMethodDialog(MessageSourceAccessor messageSource,Window window) {
 		super(messageSource, window,true);
-	}	
+	}
 
 	@Override
 	protected void initialize() {
 		setTitle(messageSource.getMessage("bookToTagMethod.configure"));
-		setIconImage( IconUtils.loadClassPathImage( BookToTagMethodDescriptor.ICON_PATH ) );
+		setIconImage(IconUtils.loadClassPathImage(BookToTagMethodDescriptor.ICON_PATH));
 		setResizable(false);
 		super.initialize();
 	}
-	
+
 	@Override
 	public JComponent createInterface() {
-		
-		JPanel interfacePanel = new JPanel( new BorderLayout() );
-		
-		JPanel channelPanel = new JPanel( new BorderLayout() );
-		channelPanel.setBorder( new CompoundBorder( 
-				new TitledBorder( messageSource.getMessage("bookToTagMethod.channelsTitle") ),
-				new EmptyBorder(3,3,3,3)
-		));
-		
-		JPanel channelButtonPanel = new JPanel( new FlowLayout( FlowLayout.TRAILING, 3, 3 ) );
-		channelButtonPanel.add( getChannelSelectAllButton() );
-		channelButtonPanel.add( getChannelSelectNoneButton() );
-		channelButtonPanel.add( getChannelSelectInvertButton() );
-		
-		channelPanel.add( getChannelScrollPane(), BorderLayout.CENTER );
-		channelPanel.add( channelButtonPanel, BorderLayout.SOUTH );
-		
+
+		JPanel interfacePanel = new JPanel(new BorderLayout());
+
+		JPanel channelPanel = new JPanel(new BorderLayout());
+		channelPanel.setBorder(new CompoundBorder(
+		                               new TitledBorder(messageSource.getMessage("bookToTagMethod.channelsTitle")),
+		                               new EmptyBorder(3,3,3,3)
+		                       ));
+
+		JPanel channelButtonPanel = new JPanel(new FlowLayout(FlowLayout.TRAILING, 3, 3));
+		channelButtonPanel.add(getChannelSelectAllButton());
+		channelButtonPanel.add(getChannelSelectNoneButton());
+		channelButtonPanel.add(getChannelSelectInvertButton());
+
+		channelPanel.add(getChannelScrollPane(), BorderLayout.CENTER);
+		channelPanel.add(channelButtonPanel, BorderLayout.SOUTH);
+
 		JPanel tagTypesPanel = new JPanel();
-		tagTypesPanel.setLayout( new BoxLayout( tagTypesPanel, BoxLayout.Y_AXIS ) );
-		tagTypesPanel.setBorder( new CompoundBorder( 
-				new TitledBorder( messageSource.getMessage("bookToTagMethod.tagTypesTitle") ),
-				new EmptyBorder(3,3,3,3)
-		));
-		
-		tagTypesPanel.add( getMakePageTagsCheckBox() );
-		tagTypesPanel.add( getMakeBlockTagsCheckBox() );
-		tagTypesPanel.add( getMakeChannelTagsCheckBox() );
-		
-		interfacePanel.add( channelPanel, BorderLayout.CENTER );
-		interfacePanel.add( tagTypesPanel, BorderLayout.SOUTH );
-		
+		tagTypesPanel.setLayout(new BoxLayout(tagTypesPanel, BoxLayout.Y_AXIS));
+		tagTypesPanel.setBorder(new CompoundBorder(
+		                                new TitledBorder(messageSource.getMessage("bookToTagMethod.tagTypesTitle")),
+		                                new EmptyBorder(3,3,3,3)
+		                        ));
+
+		tagTypesPanel.add(getMakePageTagsCheckBox());
+		tagTypesPanel.add(getMakeBlockTagsCheckBox());
+		tagTypesPanel.add(getMakeChannelTagsCheckBox());
+
+		interfacePanel.add(channelPanel, BorderLayout.CENTER);
+		interfacePanel.add(tagTypesPanel, BorderLayout.SOUTH);
+
 		return interfacePanel;
-		
+
 	}
-	
+
 	public JList getChannelList() {
-		if( channelList == null ) {
-			
+		if (channelList == null) {
+
 			channelList = new JList();
-			
-			channelList.setSelectionMode( ListSelectionModel.MULTIPLE_INTERVAL_SELECTION );			
-			
+
+			channelList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
 		}
 		return channelList;
 	}
 
 	public JScrollPane getChannelScrollPane() {
-		if( channelScrollPane == null ) {
-			channelScrollPane = new JScrollPane( getChannelList() );
-			channelScrollPane.setPreferredSize( new Dimension(300,200) );			
+		if (channelScrollPane == null) {
+			channelScrollPane = new JScrollPane(getChannelList());
+			channelScrollPane.setPreferredSize(new Dimension(300,200));
 		}
 		return channelScrollPane;
 	}
-	
+
 	public JButton getChannelSelectAllButton() {
-		if( channelSelectAllButton == null ) {						
-			channelSelectAllButton = new JButton( new ListSelectAllAction(messageSource, getChannelList()) );
+		if (channelSelectAllButton == null) {
+			channelSelectAllButton = new JButton(new ListSelectAllAction(messageSource, getChannelList()));
 		}
 		return channelSelectAllButton;
 	}
 
 	public JButton getChannelSelectNoneButton() {
-		if( channelSelectNoneButton == null ) {
-			channelSelectNoneButton = new JButton( new ListSelectNoneAction(messageSource, getChannelList()) );
+		if (channelSelectNoneButton == null) {
+			channelSelectNoneButton = new JButton(new ListSelectNoneAction(messageSource, getChannelList()));
 		}
 		return channelSelectNoneButton;
 	}
-	
+
 	public JButton getChannelSelectInvertButton() {
-		if( channelSelectInvertButton == null ) {			
-			channelSelectInvertButton = new JButton( new ListSelectInvertAction(messageSource, getChannelList()) );
+		if (channelSelectInvertButton == null) {
+			channelSelectInvertButton = new JButton(new ListSelectInvertAction(messageSource, getChannelList()));
 		}
 		return channelSelectInvertButton;
 	}
@@ -150,129 +150,129 @@ public class BookToTagMethodDialog extends AbstractDialog {
 	}
 
 	public void setChannels(String[] channels) {
-		if( this.channels != channels ) {
-			
+		if (this.channels != channels) {
+
 			this.channels = channels;
-			
+
 			DefaultListModel listModel = new DefaultListModel();
-			for( int i=0; i<channels.length; i++ ) {
-				listModel.addElement( channels[i] );
+			for (int i=0; i<channels.length; i++) {
+				listModel.addElement(channels[i]);
 			}
-			
+
 			JList list = getChannelList();
-			list.setModel( listModel );
+			list.setModel(listModel);
 			list.clearSelection();
-			
+
 		}
 	}
-	
+
 	public JCheckBox getMakePageTagsCheckBox() {
-		if( makePageTagsCheckBox == null ) {
-			makePageTagsCheckBox = new JCheckBox( messageSource.getMessage( "bookToTagMethod.makePageTags" ) );
+		if (makePageTagsCheckBox == null) {
+			makePageTagsCheckBox = new JCheckBox(messageSource.getMessage("bookToTagMethod.makePageTags"));
 		}
 		return makePageTagsCheckBox;
 	}
-	
+
 	public JCheckBox getMakeBlockTagsCheckBox() {
-		if( makeBlockTagsCheckBox == null ) {
-			makeBlockTagsCheckBox = new JCheckBox( messageSource.getMessage( "bookToTagMethod.makeBlockTags" ) );
+		if (makeBlockTagsCheckBox == null) {
+			makeBlockTagsCheckBox = new JCheckBox(messageSource.getMessage("bookToTagMethod.makeBlockTags"));
 		}
 		return makeBlockTagsCheckBox;
 	}
-	
+
 	public JCheckBox getMakeChannelTagsCheckBox() {
-		if( makeChannelTagsCheckBox == null ) {
-			makeChannelTagsCheckBox = new JCheckBox( messageSource.getMessage( "bookToTagMethod.makeChannelTags" ) );
+		if (makeChannelTagsCheckBox == null) {
+			makeChannelTagsCheckBox = new JCheckBox(messageSource.getMessage("bookToTagMethod.makeChannelTags"));
 		}
 		return makeChannelTagsCheckBox;
 	}
-		
+
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 
 		BookToTagData data = (BookToTagData) model;
-		
+
 		StandardBook book = data.getBook();
 		int channelCount = book.getChannelCount();
 		String[] labels = new String[channelCount];
 		int i;
 		String label;
-		for( i=0; i<channelCount; i++ ) {
-			label = book.getChannelLabel(i);			
-			if( label == null || label.isEmpty() ) {
+		for (i=0; i<channelCount; i++) {
+			label = book.getChannelLabel(i);
+			if (label == null || label.isEmpty()) {
 				label = "L" + (i+1);
 			}
 			labels[i] = label;
 		}
-		
+
 		setChannels(labels);
-		
+
 		JList list = getChannelList();
 		list.clearSelection();
-		
-		LinkedHashSet<Integer> channelSet = data.getChannels();		
-		
-		if( channelSet != null ) {
-			
-			for( i=0; i<channelCount; i++ ) {
-				if( channelSet.contains(i) ) {
+
+		LinkedHashSet<Integer> channelSet = data.getChannels();
+
+		if (channelSet != null) {
+
+			for (i=0; i<channelCount; i++) {
+				if (channelSet.contains(i)) {
 					list.addSelectionInterval(i, i);
 				}
 			}
-			
+
 		}
-				
-		getMakePageTagsCheckBox().setSelected( data.isMakePageTags() );
-		getMakeBlockTagsCheckBox().setSelected( data.isMakeBlockTags() );
-		getMakeChannelTagsCheckBox().setSelected( data.isMakeChannelTags() );
-		
+
+		getMakePageTagsCheckBox().setSelected(data.isMakePageTags());
+		getMakeBlockTagsCheckBox().setSelected(data.isMakeBlockTags());
+		getMakeChannelTagsCheckBox().setSelected(data.isMakeChannelTags());
+
 	}
 
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
-		
+
 		BookToTagData data = (BookToTagData) model;
 
 		JList list = getChannelList();
-		
+
 		LinkedHashSet<Integer> channelSet = data.getChannels();
-		if( channelSet != null ) {
+		if (channelSet != null) {
 			channelSet.clear();
 		} else {
 			channelSet = new LinkedHashSet<Integer>();
 		}
-		
-		for( int i=0; i<channels.length; i++ ) {
-			
-			if( list.isSelectedIndex(i) ) {
+
+		for (int i=0; i<channels.length; i++) {
+
+			if (list.isSelectedIndex(i)) {
 				channelSet.add(i);
 			}
-			
+
 		}
-				
-		data.setMakePageTags( getMakePageTagsCheckBox().isSelected() );
-		data.setMakeBlockTags( getMakeBlockTagsCheckBox().isSelected() );
-		data.setMakeChannelTags( getMakeChannelTagsCheckBox().isSelected() );
-		
+
+		data.setMakePageTags(getMakePageTagsCheckBox().isSelected());
+		data.setMakeBlockTags(getMakeBlockTagsCheckBox().isSelected());
+		data.setMakeChannelTags(getMakeChannelTagsCheckBox().isSelected());
+
 	}
-	
+
 	@Override
 	public void validateDialog(Object model, Errors errors) throws SignalMLException {
 		super.validateDialog(model, errors);
-		
-		if( getChannelList().isSelectionEmpty() ) {
-			errors.rejectValue( "channels", "error.bookToTagMethod.noChannels");
+
+		if (getChannelList().isSelectionEmpty()) {
+			errors.rejectValue("channels", "error.bookToTagMethod.noChannels");
 		}
-		
-		if( !getMakePageTagsCheckBox().isSelected() && !getMakeBlockTagsCheckBox().isSelected() && !getMakeChannelTagsCheckBox().isSelected() ) {
-			errors.reject( "error.bookToTagMethod.noTypesSelected" );
+
+		if (!getMakePageTagsCheckBox().isSelected() && !getMakeBlockTagsCheckBox().isSelected() && !getMakeChannelTagsCheckBox().isSelected()) {
+			errors.reject("error.bookToTagMethod.noTypesSelected");
 		}
-		
+
 	}
-		
+
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
 		return BookToTagData.class.isAssignableFrom(clazz);
 	}
-	
+
 }

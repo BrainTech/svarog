@@ -1,5 +1,5 @@
 /* GetTaskErrorAction.java created 2007-10-31
- * 
+ *
  */
 package org.signalml.app.action;
 
@@ -15,15 +15,15 @@ import org.springframework.validation.Errors;
 
 /** GetTaskErrorAction
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class GetTaskErrorAction extends AbstractFocusableSignalMLAction<TaskFocusSelector> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	protected static final Logger logger = Logger.getLogger(GetTaskErrorAction.class);
-		
+
 	private ErrorsDialog errorsDialog;
 
 	public GetTaskErrorAction(MessageSourceAccessor messageSource, TaskFocusSelector taskFocusSelector) {
@@ -32,49 +32,49 @@ public class GetTaskErrorAction extends AbstractFocusableSignalMLAction<TaskFocu
 		setIconPath("org/signalml/app/icon/geterror.png");
 		setToolTip("action.getTaskErrorToolTip");
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent ev) {
-		
+
 		Task targetTask = getActionFocusSelector().getActiveTask();
-		if( targetTask == null ) {
+		if (targetTask == null) {
 			return;
 		}
-		
+
 		TaskResult result = null;
-		synchronized( targetTask ) {
-			if( targetTask.getStatus().isError() ) {
+		synchronized (targetTask) {
+			if (targetTask.getStatus().isError()) {
 				result = targetTask.getResult();
 			}
 		}
-		if( result == null ) {
+		if (result == null) {
 			logger.warn("No error to get");
 			return;
 		}
 
 		Exception exception = result.getException();
-		if( exception == null ) {
+		if (exception == null) {
 			logger.warn("No exception to get");
 			return;
 		}
 
-		if( exception instanceof Errors ) {
+		if (exception instanceof Errors) {
 			errorsDialog.showErrors((Errors) exception);
-		} else {		
+		} else {
 			errorsDialog.showException(exception);
 		}
-		
+
 	}
-	
+
 	public void setEnabledAsNeeded() {
 		boolean enabled = false;
 		Task targetTask = getActionFocusSelector().getActiveTask();
-		if( targetTask != null ) {
+		if (targetTask != null) {
 			enabled = targetTask.getStatus().isError();
 		}
 		setEnabled(enabled);
 	}
-	
+
 	public ErrorsDialog getErrorsDialog() {
 		return errorsDialog;
 	}
@@ -82,5 +82,5 @@ public class GetTaskErrorAction extends AbstractFocusableSignalMLAction<TaskFocu
 	public void setErrorsDialog(ErrorsDialog errorsDialog) {
 		this.errorsDialog = errorsDialog;
 	}
-		
+
 }

@@ -1,5 +1,5 @@
 /* EditBookFilterAction.java created 2008-03-04
- * 
+ *
  */
 
 package org.signalml.app.action;
@@ -15,49 +15,49 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** EditBookFilterAction
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class EditBookFilterAction extends AbstractFocusableSignalMLAction<BookDocumentFocusSelector> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	protected static final Logger logger = Logger.getLogger(EditBookFilterAction.class);
-		
+
 	private BookFilterDialog bookFilterDialog;
-		
+
 	public EditBookFilterAction(MessageSourceAccessor messageSource, BookDocumentFocusSelector bookDocumentFocusSelector) {
 		super(messageSource, bookDocumentFocusSelector);
 		setText("action.bookFilter");
 		setIconPath("org/signalml/app/icon/editbookfilter.png");
 		setToolTip("action.bookFilterToolTip");
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
 		logger.debug("Book filter");
 
-		BookDocument bookDocument = getActionFocusSelector().getActiveBookDocument();		
-		if( bookDocument == null ) {
+		BookDocument bookDocument = getActionFocusSelector().getActiveBookDocument();
+		if (bookDocument == null) {
 			logger.warn("Target document doesn't exist or is not a book");
 			return;
 		}
-				
-		BookFilterDescriptor descriptor = new BookFilterDescriptor( bookDocument.getFilterChain(), bookDocument );		
-		
+
+		BookFilterDescriptor descriptor = new BookFilterDescriptor(bookDocument.getFilterChain(), bookDocument);
+
 		boolean ok = bookFilterDialog.showDialog(descriptor, true);
-		if( !ok ) {
+		if (!ok) {
 			return;
 		}
-		
+
 		bookDocument.setFilterChain(descriptor.getChain());
-							
+
 	}
-	
+
 	@Override
 	public void setEnabledAsNeeded() {
-		setEnabled( getActionFocusSelector().getActiveBookDocument() != null ); 
+		setEnabled(getActionFocusSelector().getActiveBookDocument() != null);
 	}
 
 	public BookFilterDialog getBookFilterDialog() {

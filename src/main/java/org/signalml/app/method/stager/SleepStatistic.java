@@ -1,5 +1,5 @@
 /* SleepStatistic.java created 2008-02-21
- * 
+ *
  */
 
 package org.signalml.app.method.stager;
@@ -24,16 +24,16 @@ import org.signalml.util.Util;
 
 /** SleepStatistic
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class SleepStatistic extends TagStatistic implements PropertyProvider {
 
 	protected static final Logger logger = Logger.getLogger(SleepStatistic.class);
-	
+
 	protected int segmentCount;
 	protected float segmentLength;
-	
+
 	protected int[] styleSegments;
 
 	protected float firstSleepTime;
@@ -41,40 +41,40 @@ public class SleepStatistic extends TagStatistic implements PropertyProvider {
 	protected float firstSlowWaveTime;
 	protected float firstREMTime;
 	protected float wakeInsidePropperSleepTime;
-	
+
 	protected float deltaThr;
 	protected float alphaThr;
 	protected float spindleThr;
 	protected float emgTone;
-		
+
 	protected int slowSegments;
-		
-	public SleepStatistic(StagerResult stagerResult, TagDocument tagDocument, int segmentCount, float segmentLength ) {
+
+	public SleepStatistic(StagerResult stagerResult, TagDocument tagDocument, int segmentCount, float segmentLength) {
 		super();
 
-		
+
 		deltaThr = (float) stagerResult.getDeltaThr();
 		alphaThr = (float) stagerResult.getAlphaThr();
 		spindleThr = (float) stagerResult.getSpindleThr();
 		emgTone = (float) stagerResult.getEmgTone();
-		
+
 		this.segmentCount = segmentCount;
 		this.segmentLength = segmentLength;
-				
+
 		StyledTagSet tagSet = tagDocument.getTagSet();
 		LinkedHashSet<TagStyle> pageStyleList = tagSet.getPageStylesNoMarkers();
 		TagStyle[] styles = new TagStyle[pageStyleList.size()];
 		pageStyleList.toArray(styles);
-		
-		init( styles, segmentLength * segmentCount );
-		
+
+		init(styles, segmentLength * segmentCount);
+
 		styleSegments = new int[styles.length+1];
-		
+
 		firstSleepTime = -1;
 		firstREMTime = -1;
 		firstSlowWaveTime = -1;
 		lastSleepTime = -1;
-		
+
 		SortedSet<Tag> tags = tagSet.getTags();
 		TagStyle style;
 		String name;
@@ -84,64 +84,64 @@ public class SleepStatistic extends TagStatistic implements PropertyProvider {
 		float endPosition;
 		float length;
 		float wakeInsidePropperSleepTimeCandidate = 0;
-		for( Tag tag : tags ) {
-			
+		for (Tag tag : tags) {
+
 			style = tag.getStyle();
-			
-			if( style.isMarker() || !style.getType().isPage() ) {
+
+			if (style.isMarker() || !style.getType().isPage()) {
 				continue;
 			}
 			name = style.getName();
 			idx = styleIndices.get(style);
-			if( idx == null ) {
-				logger.warn( "Tag with unknown style [" + name + "]" );
+			if (idx == null) {
+				logger.warn("Tag with unknown style [" + name + "]");
 				continue;
 			}
 			length = tag.getLength();
-			if( length != segmentLength ) {
-				logger.warn( "Tag with bad length [" + length + "]" );
+			if (length != segmentLength) {
+				logger.warn("Tag with bad length [" + length + "]");
 				continue;
 			}
-			
+
 			index = idx.intValue();
-			
+
 			addStyleTime(index, segmentLength);
 			styleSegments[index+1]++;
-			
+
 			position = tag.getPosition();
 			endPosition = tag.getEndPosition();
-			if( SleepTagName.isPropperSleep(name) ) {
-				if( firstSleepTime < 0 ) {
+			if (SleepTagName.isPropperSleep(name)) {
+				if (firstSleepTime < 0) {
 					firstSleepTime = position;
 				}
 			}
-						
-			if( SleepTagName.isAnySleep(name) ) {
+
+			if (SleepTagName.isAnySleep(name)) {
 				lastSleepTime = endPosition;
 				wakeInsidePropperSleepTime += wakeInsidePropperSleepTimeCandidate;
 				wakeInsidePropperSleepTimeCandidate = 0;
 			}
-			else if( SleepTagName.isWake(name) ) {
-				if( firstSleepTime >= 0 ) {
+			else if (SleepTagName.isWake(name)) {
+				if (firstSleepTime >= 0) {
 					wakeInsidePropperSleepTimeCandidate += length;
 				}
 			}
-			
-			if( firstREMTime < 0 ) {
-				if( SleepTagName.isREM(name) ) {
+
+			if (firstREMTime < 0) {
+				if (SleepTagName.isREM(name)) {
 					firstREMTime = position;
 				}
 			}
-			
-			if( SleepTagName.isSlowWave(name) ) {
-				if( firstSlowWaveTime < 0 ) {
+
+			if (SleepTagName.isSlowWave(name)) {
+				if (firstSlowWaveTime < 0) {
 					firstSlowWaveTime = position;
 				}
 				slowSegments++;
 			}
-						
+
 		}
-		
+
 	}
 
 	public int getSegmentCount() {
@@ -169,87 +169,87 @@ public class SleepStatistic extends TagStatistic implements PropertyProvider {
 	}
 
 	public float getSleepPeriodTime() {
-		if( firstSleepTime >= 0 && lastSleepTime >= 0 ) {
+		if (firstSleepTime >= 0 && lastSleepTime >= 0) {
 			return (lastSleepTime - firstSleepTime);
 		} else {
 			return 0;
 		}
 	}
-	
+
 	public String getSleepPeriodTimePretty() {
 		return Util.getPrettyTimeString(getSleepPeriodTime());
 	}
-	
+
 	public float getTotalSleepTime() {
-		if( firstSleepTime >= 0 && lastSleepTime >= 0 ) {
+		if (firstSleepTime >= 0 && lastSleepTime >= 0) {
 			return (lastSleepTime - firstSleepTime) - wakeInsidePropperSleepTime;
 		} else {
 			return 0;
 		}
 	}
-	
+
 	public String getTotalSleepTimePretty() {
 		return Util.getPrettyTimeString(getTotalSleepTime());
 	}
-	
+
 	public float getSleepEfficiencyIndex() {
-		return ( getTotalSleepTime() / getTotalLength() ) * 100;
+		return (getTotalSleepTime() / getTotalLength()) * 100;
 	}
-	
+
 	public Double getSleepEfficiencyIndexPretty() {
-		return (((double) Math.round(getSleepEfficiencyIndex() * 100)) / 100 );
+		return (((double) Math.round(getSleepEfficiencyIndex() * 100)) / 100);
 	}
-	
+
 	public float getSleepOnsetLatency() {
 		return firstSleepTime;
 	}
-	
+
 	public String getSleepOnsetLatencyPretty() {
-		if( firstSleepTime < 0 ) {
+		if (firstSleepTime < 0) {
 			return "-";
 		} else {
 			return Util.getPrettyTimeString(firstSleepTime);
 		}
 	}
-	
+
 	public float getSleepOnsetToSWS() {
-		if( firstSlowWaveTime < 0 ) {
+		if (firstSlowWaveTime < 0) {
 			return -1;
 		} else {
-			return ( firstSlowWaveTime - firstSleepTime );
+			return (firstSlowWaveTime - firstSleepTime);
 		}
 	}
-	
+
 	public String getSleepOnsetToSWSPretty() {
 		float value = getSleepOnsetToSWS();
-		if( value < 0 ) {
+		if (value < 0) {
 			return "-";
 		} else {
 			return Util.getPrettyTimeString(value);
 		}
 	}
-	
+
 	public float getSleepOnsetToREM() {
-		if( firstREMTime < 0 ) {
+		if (firstREMTime < 0) {
 			return -1;
 		} else {
-			return ( firstREMTime - firstSleepTime );
+			return (firstREMTime - firstSleepTime);
 		}
 	}
-	
+
 	public String getSleepOnsetToREMPretty() {
 		float value = getSleepOnsetToREM();
-		if( value < 0 ) {
+		if (value < 0) {
 			return "-";
 		} else {
 			return Util.getPrettyTimeString(value);
 		}
 	}
-	
+
 	public float getWakeInsidePropperSleepTime() {
 		return wakeInsidePropperSleepTime;
 	}
-	
+
 	public String getWakeInsidePropperSleepTimePretty() {
 		return Util.getPrettyTimeString(wakeInsidePropperSleepTime);
 	}
@@ -284,16 +284,16 @@ public class SleepStatistic extends TagStatistic implements PropertyProvider {
 
 	public void setEmgTone(float emgTone) {
 		this.emgTone = emgTone;
-	}	
-	
+	}
+
 	public int getSlowSegments() {
 		return slowSegments;
 	}
-	
+
 	public int getStyleSegmentsAt(int index) {
 		return styleSegments[index+1];
 	}
-	
+
 	public String getDeltaThrPretty() {
 		return new String(""+deltaThr);
 	}
@@ -314,23 +314,23 @@ public class SleepStatistic extends TagStatistic implements PropertyProvider {
 	public List<LabelledPropertyDescriptor> getPropertyList() throws IntrospectionException {
 
 		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
-		
-		list.add( new LabelledPropertyDescriptor("property.sleepStatistic.eegRecordingTime", "totalLengthPretty", SleepStatistic.class, "getTotalLengthPretty", null ) );
-		list.add( new LabelledPropertyDescriptor("property.sleepStatistic.sleepPeriodTime", "sleepPeriodTimePretty", SleepStatistic.class, "getSleepPeriodTimePretty", null ) );
-		list.add( new LabelledPropertyDescriptor("property.sleepStatistic.totalSleepTime", "totalSleepTimePretty", SleepStatistic.class, "getTotalSleepTimePretty", null ) );
-		list.add( new LabelledPropertyDescriptor("property.sleepStatistic.sleepEfficiencyIndex", "sleepEfficiencyIndexPretty", SleepStatistic.class, "getSleepEfficiencyIndexPretty", null ) );
-		list.add( new LabelledPropertyDescriptor("property.sleepStatistic.sleepOnsetLatency", "sleepOnsetLatencyPretty", SleepStatistic.class, "getSleepOnsetLatencyPretty", null ) );
-		list.add( new LabelledPropertyDescriptor("property.sleepStatistic.sleepOnsetToSWS", "sleepOnsetToSWSPretty", SleepStatistic.class, "getSleepOnsetToSWSPretty", null ) );
-		list.add( new LabelledPropertyDescriptor("property.sleepStatistic.sleepOnsetToREM", "sleepOnsetToREMPretty", SleepStatistic.class, "getSleepOnsetToREMPretty", null ) );
-		list.add( new LabelledPropertyDescriptor("property.sleepStatistic.wakePeriodsAfterSleepOnset", "wakeInsidePropperSleepTimePretty", SleepStatistic.class, "getWakeInsidePropperSleepTimePretty", null ) );
 
-		list.add( new LabelledPropertyDescriptor("property.sleepStatistic.deltaThr", "deltaThrPretty", SleepStatistic.class, "deltaThrPretty", null ) );
-		list.add( new LabelledPropertyDescriptor("property.sleepStatistic.alphaThr", "alphaThrPretty", SleepStatistic.class, "alphaThrPretty", null ) );
-		list.add( new LabelledPropertyDescriptor("property.sleepStatistic.spindleThr", "spindleThrPretty", SleepStatistic.class, "spindleThrPretty", null ) );
-		list.add( new LabelledPropertyDescriptor("property.sleepStatistic.emgTone", "emgTonePretty", SleepStatistic.class, "emgTonePretty", null ) );
-				
+		list.add(new LabelledPropertyDescriptor("property.sleepStatistic.eegRecordingTime", "totalLengthPretty", SleepStatistic.class, "getTotalLengthPretty", null));
+		list.add(new LabelledPropertyDescriptor("property.sleepStatistic.sleepPeriodTime", "sleepPeriodTimePretty", SleepStatistic.class, "getSleepPeriodTimePretty", null));
+		list.add(new LabelledPropertyDescriptor("property.sleepStatistic.totalSleepTime", "totalSleepTimePretty", SleepStatistic.class, "getTotalSleepTimePretty", null));
+		list.add(new LabelledPropertyDescriptor("property.sleepStatistic.sleepEfficiencyIndex", "sleepEfficiencyIndexPretty", SleepStatistic.class, "getSleepEfficiencyIndexPretty", null));
+		list.add(new LabelledPropertyDescriptor("property.sleepStatistic.sleepOnsetLatency", "sleepOnsetLatencyPretty", SleepStatistic.class, "getSleepOnsetLatencyPretty", null));
+		list.add(new LabelledPropertyDescriptor("property.sleepStatistic.sleepOnsetToSWS", "sleepOnsetToSWSPretty", SleepStatistic.class, "getSleepOnsetToSWSPretty", null));
+		list.add(new LabelledPropertyDescriptor("property.sleepStatistic.sleepOnsetToREM", "sleepOnsetToREMPretty", SleepStatistic.class, "getSleepOnsetToREMPretty", null));
+		list.add(new LabelledPropertyDescriptor("property.sleepStatistic.wakePeriodsAfterSleepOnset", "wakeInsidePropperSleepTimePretty", SleepStatistic.class, "getWakeInsidePropperSleepTimePretty", null));
+
+		list.add(new LabelledPropertyDescriptor("property.sleepStatistic.deltaThr", "deltaThrPretty", SleepStatistic.class, "deltaThrPretty", null));
+		list.add(new LabelledPropertyDescriptor("property.sleepStatistic.alphaThr", "alphaThrPretty", SleepStatistic.class, "alphaThrPretty", null));
+		list.add(new LabelledPropertyDescriptor("property.sleepStatistic.spindleThr", "spindleThrPretty", SleepStatistic.class, "spindleThrPretty", null));
+		list.add(new LabelledPropertyDescriptor("property.sleepStatistic.emgTone", "emgTonePretty", SleepStatistic.class, "emgTonePretty", null));
+
 		return list;
-		
+
 	}
 
 }

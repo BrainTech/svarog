@@ -1,5 +1,5 @@
 /* ViewerConsolePane.java created 2007-09-11
- * 
+ *
  */
 package org.signalml.app.view;
 
@@ -35,37 +35,37 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** ViewerConsolePane
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ViewerConsolePane extends JPanel implements Console {
 
 	private static final long serialVersionUID = 1L;
 	protected static final Logger logger = Logger.getLogger(ViewerConsolePane.class);
-	
+
 	private JScrollPane scrollPane;
 	private PlainDocument document;
 	private JTextArea textArea;
-	
+
 	private MessageSourceAccessor messageSource;
-	
+
 	private boolean scrollLock = false;
 	private int lockedCaretPosition = 0;
-	
+
 	private ViewerFileChooser fileChooser;
 	private ViewerConsoleAppender consoleAppender;
-		
+
 	public void initialize() {
-		
+
 		setLayout(new BorderLayout());
 		setBorder(new EmptyBorder(3,3,3,3));
-		
+
 		JToolBar consoleToolBar = new JToolBar(JToolBar.HORIZONTAL);
 		consoleToolBar.setFloatable(false);
 		consoleToolBar.add(Box.createHorizontalGlue());
-		
+
 		LogDivertLevelListener logDivertLevelListener = new LogDivertLevelListener();
-		
+
 		JToggleButton noLogDivertButton = new JToggleButton("", IconUtils.loadClassPathIcon("org/signalml/app/icon/stop.png"));
 		noLogDivertButton.setActionCommand("0");
 		noLogDivertButton.addActionListener(logDivertLevelListener);
@@ -78,55 +78,55 @@ public class ViewerConsolePane extends JPanel implements Console {
 		debugLogDivertButton.setActionCommand("2");
 		debugLogDivertButton.addActionListener(logDivertLevelListener);
 		debugLogDivertButton.setToolTipText(messageSource.getMessage("viewer.console.debugLogDivertToolTip"));
-		
+
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(noLogDivertButton);
 		bg.add(errorLogDivertButton);
 		bg.add(debugLogDivertButton);
 		bg.setSelected(errorLogDivertButton.getModel(), true);
-		
+
 		consoleToolBar.add(noLogDivertButton);
 		consoleToolBar.add(errorLogDivertButton);
 		consoleToolBar.add(debugLogDivertButton);
-		
+
 		consoleToolBar.addSeparator(new Dimension(20,1));
-		
+
 		JToggleButton scrollLockButton = new JToggleButton(new ScrollLockAction());
 		scrollLockButton.setText("");
-		
+
 		consoleToolBar.add(scrollLockButton);
 		consoleToolBar.add(new ClearAction());
-		if( fileChooser != null ) {
+		if (fileChooser != null) {
 			consoleToolBar.add(new SaveAsTextAction());
 		}
-		
+
 		this.add(consoleToolBar,BorderLayout.NORTH);
-		
+
 		document = new PlainDocument();
-		
+
 		textArea = new JTextArea(document);
 		textArea.setEditable(false);
-				
+
 		consoleAppender = new ViewerConsoleAppender();
 		consoleAppender.setConsole(this);
 		PatternLayout layout = new PatternLayout("%p [%c] - %m\n");
-		consoleAppender.setLayout(layout);			
+		consoleAppender.setLayout(layout);
 		consoleAppender.setThreshold(Level.WARN);
 		Logger.getRootLogger().addAppender(consoleAppender);
-		
+
 		scrollPane = new JScrollPane(textArea,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		
+
 		this.add(scrollPane,BorderLayout.CENTER);
-				
+
 	}
-	
-	public void addText( final String text ) {
+
+	public void addText(final String text) {
 		final Runnable task = new Runnable() {
 			public void run() {
-				synchronized( document ) {
+				synchronized (document) {
 					try {
 						document.insertString(document.getLength(), text, null);
-						if( scrollLock ) {
+						if (scrollLock) {
 							textArea.setCaretPosition(lockedCaretPosition);
 						} else {
 							textArea.setCaretPosition(document.getLength());
@@ -137,18 +137,18 @@ public class ViewerConsolePane extends JPanel implements Console {
 				}
 			}
 		};
-		if( SwingUtilities.isEventDispatchThread() ) {
+		if (SwingUtilities.isEventDispatchThread()) {
 			task.run();
 		} else {
 			SwingUtilities.invokeLater(task);
 		}
 	}
-		
+
 	public void saveToFile(File file) throws IOException {
 		Writer w = null;
 		try {
 			w = new FileWriter(file);
-			synchronized(document) {
+			synchronized (document) {
 				try {
 					w.write(document.getText(0, document.getLength()));
 				} catch (BadLocationException ex) {
@@ -156,12 +156,12 @@ public class ViewerConsolePane extends JPanel implements Console {
 				}
 			}
 		} finally {
-			if( w != null ) {
+			if (w != null) {
 				w.close();
 			}
 		}
 	}
-	
+
 
 	public ViewerFileChooser getFileChooser() {
 		return fileChooser;
@@ -169,45 +169,45 @@ public class ViewerConsolePane extends JPanel implements Console {
 
 	public void setFileChooser(ViewerFileChooser fileChooser) {
 		this.fileChooser = fileChooser;
-	}	
-	
+	}
+
 	public void setMessageSource(MessageSourceAccessor messageSource) {
 		this.messageSource = messageSource;
 	}
-	
+
 	class ScrollLockAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
-		
+
 		public ScrollLockAction() {
 			super(messageSource.getMessage("viewer.console.scrollLock"));
-			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/lock.png") );
-			putValue(AbstractAction.SHORT_DESCRIPTION, messageSource.getMessage("viewer.console.scrollLockToolTip") );
+			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/lock.png"));
+			putValue(AbstractAction.SHORT_DESCRIPTION, messageSource.getMessage("viewer.console.scrollLockToolTip"));
 		}
-		
+
 		public void actionPerformed(ActionEvent ev) {
 			JToggleButton tb = (JToggleButton) ev.getSource();
 			scrollLock = tb.isSelected();
-			if( scrollLock ) {
+			if (scrollLock) {
 				lockedCaretPosition = textArea.viewToModel(SwingUtilities.convertPoint(scrollPane.getViewport(), 0, scrollPane.getViewport().getHeight()/2, textArea));
 			}
 		}
-		
+
 	}
-		
+
 	class ClearAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 
 		public ClearAction() {
 			super(messageSource.getMessage("viewer.console.clear"));
-			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/trash.png") );
-			putValue(AbstractAction.SHORT_DESCRIPTION, messageSource.getMessage("viewer.console.clearToolTip") );
+			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/trash.png"));
+			putValue(AbstractAction.SHORT_DESCRIPTION, messageSource.getMessage("viewer.console.clearToolTip"));
 		}
-		
+
 		public void actionPerformed(ActionEvent ev) {
 			try {
-				synchronized(document) {
+				synchronized (document) {
 					document.replace(0, document.getLength(), "", null);
 				}
 			} catch (BadLocationException ex) {
@@ -215,59 +215,59 @@ public class ViewerConsolePane extends JPanel implements Console {
 			}
 			lockedCaretPosition = 0;
 		}
-		
+
 	}
-	
+
 	class SaveAsTextAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
-		
+
 		public SaveAsTextAction() {
 			super(messageSource.getMessage("viewer.console.saveAsText"));
-			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/script_save.png") );
-			putValue(AbstractAction.SHORT_DESCRIPTION, messageSource.getMessage("viewer.console.saveAsTextToolTip") );
+			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/script_save.png"));
+			putValue(AbstractAction.SHORT_DESCRIPTION, messageSource.getMessage("viewer.console.saveAsTextToolTip"));
 		}
-		
+
 		public void actionPerformed(ActionEvent ev) {
 			File file = fileChooser.chooseConsoleSaveAsTextFile(ViewerConsolePane.this);
-			if( file != null ) {
+			if (file != null) {
 				try {
 					saveToFile(file);
-				} catch( IOException ex ) {
+				} catch (IOException ex) {
 					logger.error("Failed to save console text to file", ex);
 					OptionPane.showException(ViewerConsolePane.this, "error.failedToSaveFile", ex);
 				}
 			}
 		}
-		
+
 	}
-	
+
 	class LogDivertLevelListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
 			int command = Integer.parseInt(e.getActionCommand());
-			
-			switch( command ) {
-			
-				case 1:
-					consoleAppender.setThreshold(Level.WARN);
-					Logger.getRootLogger().addAppender(consoleAppender);
-					break;
-					
-				case 2:
-					consoleAppender.setThreshold(Level.DEBUG);
-					Logger.getRootLogger().addAppender(consoleAppender);
-					break;
-					
-				case 0:
-				default:
-					Logger.getRootLogger().removeAppender(consoleAppender);
-					break;
-			
+
+			switch (command) {
+
+			case 1:
+				consoleAppender.setThreshold(Level.WARN);
+				Logger.getRootLogger().addAppender(consoleAppender);
+				break;
+
+			case 2:
+				consoleAppender.setThreshold(Level.DEBUG);
+				Logger.getRootLogger().addAppender(consoleAppender);
+				break;
+
+			case 0:
+			default:
+				Logger.getRootLogger().removeAppender(consoleAppender);
+				break;
+
 			}
-			
+
 		}
-		
+
 	}
-		
+
 }

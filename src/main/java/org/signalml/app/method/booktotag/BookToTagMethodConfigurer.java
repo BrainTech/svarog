@@ -1,5 +1,5 @@
 /* BookToTagMethodConfigurer.java created 2007-11-02
- * 
+ *
  */
 
 package org.signalml.app.method.booktotag;
@@ -14,34 +14,34 @@ import org.signalml.method.booktotag.BookToTagData;
 
 /** BookToTagMethodConfigurer
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class BookToTagMethodConfigurer implements InitializingMethodConfigurer {
 
 	protected static final Logger logger = Logger.getLogger(BookToTagMethodConfigurer.class);
-	
+
 	private BookToTagMethodDialog dialog;
 	private Window dialogParent;
-		
+
 	@Override
-	public void initialize(ApplicationMethodManager manager) {		
+	public void initialize(ApplicationMethodManager manager) {
 		dialogParent = manager.getDialogParent();
 		dialog = new BookToTagMethodDialog(manager.getMessageSource(), dialogParent);
 	}
 
 	@Override
 	public boolean configure(Method method, Object methodDataObj) throws SignalMLException {
-		
+
 		BookToTagData data = (BookToTagData) methodDataObj;
-				
+
 		boolean dialogOk = dialog.showDialog(data, true);
-		if( !dialogOk ) {
+		if (!dialogOk) {
 			return false;
 		}
-								
+
 		return true;
-		
+
 	}
 
 }

@@ -1,5 +1,5 @@
 /* TagBasedAtomFilter.java created 2008-02-25
- * 
+ *
  */
 
 package org.signalml.domain.book.filter;
@@ -23,7 +23,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /** TagBasedAtomFilter
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 @XStreamAlias("tagbookfilter")
@@ -32,94 +32,94 @@ public class TagBasedAtomFilter extends AbstractAtomFilter {
 	private static final long serialVersionUID = 1L;
 
 	protected static final Logger logger = Logger.getLogger(TagBasedAtomFilter.class);
-	
+
 	private static final String[] CODES = new String[] { "tagBasedAtomFilter" };
 	private static final Object[] ARGUMENTS = new Object[0];
-	
+
 	private String tagFilePath;
 	private LinkedHashSet<String> styleNames;
-	
+
 	private double secondsBefore;
 	private double secondsAfter;
-	
+
 	private transient TagDocument tagDocument;
-	
+
 	public TagBasedAtomFilter() {
 		styleNames = new LinkedHashSet<String>();
 	}
 
 	public TagBasedAtomFilter(TagBasedAtomFilter filter) {
 		super(filter);
-		
+
 		tagFilePath = filter.tagFilePath;
 		styleNames = new LinkedHashSet<String>();
-		for( String name : filter.styleNames ) {
-			styleNames.add( name ); 
+		for (String name : filter.styleNames) {
+			styleNames.add(name);
 		}
 		secondsBefore = filter.secondsBefore;
 		secondsAfter = filter.secondsAfter;
-		
+
 	}
-		
+
 	@Override
 	public AbstractAtomFilter duplicate() {
-		return new TagBasedAtomFilter( this );
+		return new TagBasedAtomFilter(this);
 	}
-	
+
 	public TagDocument getTagDocument() throws SignalMLException, IOException {
-		if( tagDocument == null ) {
-			tagDocument = new TagDocument( new File( tagFilePath ) );
+		if (tagDocument == null) {
+			tagDocument = new TagDocument(new File(tagFilePath));
 		}
 		return tagDocument;
 	}
-	
+
 	@Override
 	public boolean matches(StandardBookSegment segment, StandardBookAtom atom) {
-		
-		if( tagDocument == null ) {
+
+		if (tagDocument == null) {
 			try {
 				getTagDocument();
 			} catch (SignalMLException ex) {
-				logger.error( "Failed to instantiate delegate", ex );
+				logger.error("Failed to instantiate delegate", ex);
 				throw new SanityCheckException("Failed to instantiate verified filter", ex);
 			} catch (IOException ex) {
-				logger.error( "Failed to instantiate delegate", ex );
+				logger.error("Failed to instantiate delegate", ex);
 				throw new SanityCheckException("Failed to instantiate verified filter", ex);
 			}
 		}
-		
-		float position = segment.getSegmentTime() + atom.getTimePosition();		
-		SortedSet<Tag> tags = tagDocument.getTagSet().getTagsBetween((float) (position-secondsBefore), (float) (position+secondsAfter));
+
+		float position = segment.getSegmentTime() + atom.getTimePosition();
+		SortedSet<Tag> tags = tagDocument.getTagSet().getTagsBetween((float)(position-secondsBefore), (float)(position+secondsAfter));
 		TagStyle style;
 		float markerPosition;
-		for( Tag tag : tags ) {
+		for (Tag tag : tags) {
 			style = tag.getStyle();
-			if( styleNames.contains( style.getName() ) ) {
-				if( style.isMarker() ) {
+			if (styleNames.contains(style.getName())) {
+				if (style.isMarker()) {
 					markerPosition = tag.getCenterPosition();
-					if( position >= (markerPosition-secondsBefore) && position <= (markerPosition+secondsAfter) ) {
-						logger.debug( "Atom @ [" + segment.getSegmentTime() + ":" + atom.getTimePosition() + "] accepted by marker [" + tag.toString() + "]" );
+					if (position >= (markerPosition-secondsBefore) && position <= (markerPosition+secondsAfter)) {
+						logger.debug("Atom @ [" + segment.getSegmentTime() + ":" + atom.getTimePosition() + "] accepted by marker [" + tag.toString() + "]");
 						return true;
 					}
 				} else {
-					if( position >= (tag.getPosition()-secondsBefore) && position < (tag.getEndPosition()+secondsAfter) ) {
-						logger.debug( "Atom @ [" + segment.getSegmentTime() + ":" + atom.getTimePosition() + "] accepted by tag [" + tag.toString() + "]" );
-						return true;										
+					if (position >= (tag.getPosition()-secondsBefore) && position < (tag.getEndPosition()+secondsAfter)) {
+						logger.debug("Atom @ [" + segment.getSegmentTime() + ":" + atom.getTimePosition() + "] accepted by tag [" + tag.toString() + "]");
+						return true;
 					}
 				}
 			}
 		}
-				
+
 		return false;
-		
+
 	}
-		
+
 	public String getTagFilePath() {
 		return tagFilePath;
 	}
 
 	public void setTagFilePath(String tagFilePath) {
-		if( !Util.equalsWithNulls(this.tagFilePath, tagFilePath) ) {
+		if (!Util.equalsWithNulls(this.tagFilePath, tagFilePath)) {
 			this.tagFilePath = tagFilePath;
 			tagDocument = null;
 		}
@@ -162,17 +162,17 @@ public class TagBasedAtomFilter extends AbstractAtomFilter {
 	@Override
 	public String getDefaultMessage() {
 		return "Tag based atom filter";
-	}	
-	
+	}
+
 	@Override
 	public void initialize() throws SignalMLException {
 		try {
 			getTagDocument();
 		} catch (SignalMLException ex) {
-			throw new SignalMLException( "error.tagBasedAtomFilter.initializationFailed", ex );			
+			throw new SignalMLException("error.tagBasedAtomFilter.initializationFailed", ex);
 		} catch (IOException ex) {
-			throw new SignalMLException( "error.tagBasedAtomFilter.initializationFailed", ex );
+			throw new SignalMLException("error.tagBasedAtomFilter.initializationFailed", ex);
 		}
 	}
-	
+
 }

@@ -1,5 +1,5 @@
 /* ParameterIterationSettings.java created 2007-12-05
- * 
+ *
  */
 
 package org.signalml.method.iterator;
@@ -10,23 +10,23 @@ import org.springframework.context.MessageSourceResolvable;
 
 /** ParameterIterationSettings
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ParameterIterationSettings implements Serializable, MessageSourceResolvable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private IterableParameter parameter;
-	
+
 	private boolean iterated;
-	
+
 	private Object startValue;
 	private Object endValue;
-	
+
 	public ParameterIterationSettings(IterableParameter parameter) {
-		if( parameter == null ) {
-			throw new NullPointerException( "No parameter" );
+		if (parameter == null) {
+			throw new NullPointerException("No parameter");
 		}
 		this.parameter = parameter;
 	}
@@ -58,9 +58,9 @@ public class ParameterIterationSettings implements Serializable, MessageSourceRe
 	public IterableParameter getParameter() {
 		return parameter;
 	}
-	
-	public Object setupForIteration( int iteration, int totalIterations ) {
-		if( iterated ) {
+
+	public Object setupForIteration(int iteration, int totalIterations) {
+		if (iterated) {
 			return parameter.setIterationValue(startValue, endValue, iteration, totalIterations);
 		} else {
 			return parameter.getValue();
@@ -81,5 +81,5 @@ public class ParameterIterationSettings implements Serializable, MessageSourceRe
 	public String getDefaultMessage() {
 		return parameter.getDefaultMessage();
 	}
-		
+
 }

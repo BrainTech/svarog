@@ -1,5 +1,5 @@
 /* ResolvableException.java created 2007-09-19
- * 
+ *
  */
 
 package org.signalml.exception;
@@ -11,17 +11,17 @@ import org.springframework.context.MessageSourceResolvable;
 
 /** ResolvableException
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ResolvableException extends SignalMLException implements MessageSourceResolvable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private final String[] codes;
 	private final Object[] arguments;
 	private final String defaultMessage;
-			
+
 	public ResolvableException(String code) {
 		super(code);
 		this.codes = new String[] { code };
@@ -35,12 +35,12 @@ public class ResolvableException extends SignalMLException implements MessageSou
 		this.arguments = arguments;
 		this.defaultMessage = code;
 	}
-	
+
 	public ResolvableException(String[] codes, Object[] arguments) {
-		super(( codes.length > 0 ? codes[0] : "" ));
+		super((codes.length > 0 ? codes[0] : ""));
 		this.codes = codes;
 		this.arguments = arguments;
-		this.defaultMessage = ( codes.length > 0 ? codes[0] : "" );
+		this.defaultMessage = (codes.length > 0 ? codes[0] : "");
 	}
 
 	public ResolvableException(String[] codes, Object[] arguments, String defaultMessage) {
@@ -56,36 +56,36 @@ public class ResolvableException extends SignalMLException implements MessageSou
 		this.arguments = new Object[0];
 		this.defaultMessage = code;
 	}
-	
+
 	public ResolvableException(Throwable cause) {
 		super(cause);
-		
-		if( cause instanceof MessageSourceResolvable ) {
+
+		if (cause instanceof MessageSourceResolvable) {
 			MessageSourceResolvable resolvable = (MessageSourceResolvable) cause;
 			this.codes = resolvable.getCodes();
 			this.arguments = resolvable.getArguments();
 			this.defaultMessage = resolvable.getDefaultMessage();
 		} else {
-		
+
 			String message = cause.getMessage();
-			
+
 			List<String> codes = new LinkedList<String>();
-			if( message != null ) {
+			if (message != null) {
 				codes.add(cause.getMessage());
 			}
 			Class<?> clazz = cause.getClass();
-			while( clazz != null ) {
-				codes.add( clazz.getName() );
+			while (clazz != null) {
+				codes.add(clazz.getName());
 				clazz = clazz.getSuperclass();
 			}
 			codes.add("error.exceptionOccured");
 			this.codes = new String[codes.size()];
 			codes.toArray(this.codes);
-			
+
 			this.arguments = new String[] { cause.getClass().getName(), message != null ? message : "" };
-			
+
 			this.defaultMessage = message != null ? message : "Exception occured";
-			
+
 		}
 	}
 

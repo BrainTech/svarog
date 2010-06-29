@@ -1,5 +1,5 @@
 /* SignalFFTSettingsPanel.java created 2007-12-17
- * 
+ *
  */
 package org.signalml.app.view.element;
 
@@ -30,8 +30,8 @@ import org.springframework.validation.Errors;
 
 /**
  * SignalFFTSettingsPanel
- * 
- * 
+ *
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
@@ -95,7 +95,7 @@ public class SignalFFTSettingsPanel extends JPanel {
 		JPanel windowWidthPanel = new JPanel(new GridLayout(3, 3, 3, 3));
 
 		CompoundBorder border = new CompoundBorder(new TitledCrossBorder(messageSource
-				.getMessage("signalFFTSettings.windowWidthTitle"), hasCloseCross), new EmptyBorder(3, 3, 3, 3));
+		                .getMessage("signalFFTSettings.windowWidthTitle"), hasCloseCross), new EmptyBorder(3, 3, 3, 3));
 		windowWidthPanel.setBorder(border);
 
 		ItemListener cachingListener = new ItemListener() {
@@ -153,7 +153,7 @@ public class SignalFFTSettingsPanel extends JPanel {
 		JPanel fftViewPanel = new JPanel(new GridLayout(2, 2, 3, 3));
 		{
 			border = new CompoundBorder(new TitledBorder(messageSource.getMessage("signalFFTSettings.fftViewTitle")),
-					new EmptyBorder(3, 3, 3, 3));
+			                            new EmptyBorder(3, 3, 3, 3));
 			fftViewPanel.setBorder(border);
 
 			JLabel label = new JLabel(messageSource.getMessage("signalFFTSettings.fftViewRange"));
@@ -168,12 +168,12 @@ public class SignalFFTSettingsPanel extends JPanel {
 							return true;
 						else {
 							JOptionPane.showMessageDialog(input.getParent(), messageSource
-									.getMessage("signalFFTSettings.fftPositiveIntegerRequired"));
+							                              .getMessage("signalFFTSettings.fftPositiveIntegerRequired"));
 							return false;
 						}
 					} catch (NumberFormatException nfe) {
 						JOptionPane.showMessageDialog(input.getParent(), messageSource
-								.getMessage("signalFFTSettings.fftPositiveIntegerRequired"));
+						                              .getMessage("signalFFTSettings.fftPositiveIntegerRequired"));
 						return false;
 					}
 				}
@@ -189,13 +189,13 @@ public class SignalFFTSettingsPanel extends JPanel {
 			rangePanel.add(visibleRangeStartTextField);
 			rangePanel.add(new JLabel("-"));
 			rangePanel.add(visibleRangeEndTextField);
-			fftViewPanel.add(rangePanel);			
-									
+			fftViewPanel.add(rangePanel);
+
 			JPanel countPanel = new JPanel();
 
 			label = new JLabel(messageSource.getMessage("signalFFTSettings.fftViewLabelCountTitle"));
 			countPanel.add(label);
-			
+
 			maxLabelCountTextField = new JTextField();
 			maxLabelCountTextField.setColumns(5);
 			maxLabelCountTextField.setInputVerifier(intInputVerifier);
@@ -210,7 +210,7 @@ public class SignalFFTSettingsPanel extends JPanel {
 		JPanel plotWidthPanel = new JPanel(new GridLayout(1, 4, 3, 3));
 
 		border = new CompoundBorder(new TitledBorder(messageSource.getMessage("signalFFTSettings.plotWidthTitle")),
-				new EmptyBorder(3, 3, 3, 3));
+		                            new EmptyBorder(3, 3, 3, 3));
 		plotWidthPanel.setBorder(border);
 
 		Dimension radioSize = new Dimension(50, 20);
@@ -228,7 +228,7 @@ public class SignalFFTSettingsPanel extends JPanel {
 		JPanel plotHeightPanel = new JPanel(new GridLayout(1, 4, 3, 3));
 
 		border = new CompoundBorder(new TitledBorder(messageSource.getMessage("signalFFTSettings.plotHeightTitle")),
-				new EmptyBorder(3, 3, 3, 3));
+		                            new EmptyBorder(3, 3, 3, 3));
 		plotHeightPanel.setBorder(border);
 
 		plotHeightRadioButtons = new JRadioButton[possiblePlotHeights.length];
@@ -246,7 +246,7 @@ public class SignalFFTSettingsPanel extends JPanel {
 		JPanel optionsPanel = new JPanel(new GridLayout(4, 2, 3, 3));
 
 		border = new CompoundBorder(new TitledBorder(messageSource.getMessage("signalFFTSettings.optionsTitle")),
-				new EmptyBorder(3, 3, 3, 3));
+		                            new EmptyBorder(3, 3, 3, 3));
 		optionsPanel.setBorder(border);
 
 		channelSwitchingCheckBox = new JCheckBox(messageSource.getMessage("signalFFTSettings.channelSwitching"));
@@ -255,9 +255,9 @@ public class SignalFFTSettingsPanel extends JPanel {
 		splineCheckBox = new JCheckBox(messageSource.getMessage("signalFFTSettings.spline"));
 		titleVisibleCheckBox = new JCheckBox(messageSource.getMessage("signalFFTSettings.titleVisible"));
 		frequencyAxisLabelsVisibleCheckBox = new JCheckBox(messageSource
-				.getMessage("signalFFTSettings.frequencyAxisLabelsVisible"));
+		                .getMessage("signalFFTSettings.frequencyAxisLabelsVisible"));
 		powerAxisLabelsVisibleCheckBox = new JCheckBox(messageSource
-				.getMessage("signalFFTSettings.powerAxisLabelsVisible"));
+		                .getMessage("signalFFTSettings.powerAxisLabelsVisible"));
 
 		optionsPanel.add(channelSwitchingCheckBox);
 		optionsPanel.add(logarithmicCheckBox);
@@ -316,7 +316,7 @@ public class SignalFFTSettingsPanel extends JPanel {
 		} else {
 			maxLabelCountTextField.setText("");
 		}
-		
+
 		scaleToFFTViewCheckBox.setSelected(settings.isScaleToView());
 
 		Dimension plotSize = settings.getPlotSize();

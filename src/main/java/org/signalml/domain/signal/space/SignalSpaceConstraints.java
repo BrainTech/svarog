@@ -1,5 +1,5 @@
 /* SignalSpaceConstraints.java created 2008-01-25
- * 
+ *
  */
 
 package org.signalml.domain.signal.space;
@@ -9,35 +9,35 @@ import org.signalml.domain.tag.TagStyle;
 
 /** SignalSpaceConstraints
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class SignalSpaceConstraints {
 
 	private int signalLength;
 	private float timeSignalLength;
-	
+
 	private int maxWholePage;
-	
+
 	private float pageSize;
 	private int blocksPerPage;
 
 	private float blockSize;
 
 	private int maxPage;
-	private int maxBlock;	
-	
+	private int maxBlock;
+
 	private float samplingFrequency;
-	
+
 	private String[] sourceChannels;
 	private String[] channels;
 
 	private TagStyle[] markerStyles;
-	
+
 	private TagIconProducer tagIconProducer;
-	
+
 	private boolean requireCompletePages;
-	
+
 	public int getSignalLength() {
 		return signalLength;
 	}
@@ -93,7 +93,7 @@ public class SignalSpaceConstraints {
 	public void setBlocksPerPage(int blocksPerPage) {
 		this.blocksPerPage = blocksPerPage;
 	}
-	
+
 	public float getBlockSize() {
 		return blockSize;
 	}
@@ -109,7 +109,7 @@ public class SignalSpaceConstraints {
 	public void setSamplingFrequency(float samplingFrequency) {
 		this.samplingFrequency = samplingFrequency;
 	}
-	
+
 	public String[] getSourceChannels() {
 		return sourceChannels;
 	}
@@ -148,6 +148,6 @@ public class SignalSpaceConstraints {
 
 	public void setRequireCompletePages(boolean requireCompletePages) {
 		this.requireCompletePages = requireCompletePages;
-	}	
-			
+	}
+
 }

@@ -1,5 +1,5 @@
 /* AbstractDocument.java created 2007-09-10
- * 
+ *
  */
 package org.signalml.app.document;
 
@@ -16,85 +16,85 @@ import org.signalml.exception.SignalMLException;
 
 /** AbstractDocument
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public abstract class AbstractMutableFileDocument extends AbstractFileDocument implements MutableDocument {
-	
-	public static final String SAVED_PROPERTY = "saved";	
-	
+
+	public static final String SAVED_PROPERTY = "saved";
+
 	protected boolean saved = true;
-		
+
 	public AbstractMutableFileDocument() throws SignalMLException {
 		super();
-		newDocument();		
+		newDocument();
 	}
-	
+
 	public AbstractMutableFileDocument(File file) throws SignalMLException, IOException {
 		super(file);
 	}
-	
+
 	@Override
 	public boolean isSaved() {
 		return saved;
 	}
-		
+
 	@Override
 	public void setSaved(boolean saved) {
-		if( this.saved != saved ) {
+		if (this.saved != saved) {
 			this.saved = saved;
 			pcSupport.firePropertyChange(SAVED_PROPERTY, !saved, saved);
 		}
 	}
-	
+
 	public void invalidate() {
-		setSaved( false );
+		setSaved(false);
 	}
-		
+
 	@Override
 	public final void openDocument() throws SignalMLException, IOException {
 
-		if( backingFile == null ) {
+		if (backingFile == null) {
 			throw new SignalMLException("error.noBackingFile");
 		}
-		
+
 		InputStream is = null;
 		try {
-			is = new BufferedInputStream( new FileInputStream(backingFile) );
+			is = new BufferedInputStream(new FileInputStream(backingFile));
 			readDocument(is);
 		} finally {
-			if( is != null ) {
+			if (is != null) {
 				is.close();
 			}
 		}
-		
-		setSaved( true );
-		
+
+		setSaved(true);
+
 	}
 
 	@Override
 	public final void saveDocument() throws SignalMLException, IOException {
-		
-		if( backingFile == null ) {
+
+		if (backingFile == null) {
 			throw new SignalMLException("error.noBackingFile");
 		}
-		
+
 		OutputStream os = null;
 		try {
-			os = new BufferedOutputStream( new FileOutputStream(backingFile,false));
+			os = new BufferedOutputStream(new FileOutputStream(backingFile,false));
 			writeDocument(os);
 		} finally {
-			if( os != null ) {
+			if (os != null) {
 				os.close();
 			}
-		}		
-		
-		setSaved( true );
-		
+		}
+
+		setSaved(true);
+
 	}
-		
+
 	protected abstract void readDocument(InputStream is) throws SignalMLException, IOException;
-	
+
 	protected abstract void writeDocument(OutputStream os) throws SignalMLException, IOException;
-			
+
 }

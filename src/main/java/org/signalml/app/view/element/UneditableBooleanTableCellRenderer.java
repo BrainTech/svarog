@@ -1,5 +1,5 @@
 /* UneditableBooleanTableCellRenderer.java created 2008-02-04
- * 
+ *
  */
 
 package org.signalml.app.view.element;
@@ -16,7 +16,7 @@ import javax.swing.table.TableCellRenderer;
 
 /** UneditableBooleanTableCellRenderer
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class UneditableBooleanTableCellRenderer extends JCheckBox implements TableCellRenderer {
@@ -47,9 +47,9 @@ public class UneditableBooleanTableCellRenderer extends JCheckBox implements Tab
 		} else {
 			setBorder(noFocusBorder);
 		}
-		
+
 		boolean editable = table.getModel().isCellEditable(row, column);
-		setEnabled( editable );
+		setEnabled(editable);
 
 		return this;
 	}

@@ -1,5 +1,5 @@
 /* SignalMLMRUDEntry.java created 2007-09-20
- * 
+ *
  */
 
 package org.signalml.app.document;
@@ -13,7 +13,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /** SignalMLMRUDEntry
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 @XStreamAlias("mrud-signalml")
@@ -27,11 +27,11 @@ public class SignalMLMRUDEntry extends MRUDEntry {
 	private Float calibration;
 	private Float pageSize;
 	private Integer blocksPerPage;
-		
+
 	protected SignalMLMRUDEntry() {
 		super();
 	}
-	
+
 	public SignalMLMRUDEntry(ManagedDocumentType documentType, Class<?> documentClass, String path, String codecUID, String formatName) {
 		super(documentType, documentClass, path);
 		this.codecUID = codecUID;
@@ -45,14 +45,14 @@ public class SignalMLMRUDEntry extends MRUDEntry {
 	public void setCodecUID(String codecUID) {
 		this.codecUID = codecUID;
 	}
-	
+
 	public String getFormatName() {
 		return formatName;
 	}
 
 	public void setFormatName(String formatName) {
 		this.formatName = formatName;
-	}	
+	}
 
 	public Float getSamplingFrequency() {
 		return samplingFrequency;
@@ -97,11 +97,11 @@ public class SignalMLMRUDEntry extends MRUDEntry {
 	@Override
 	public List<LabelledPropertyDescriptor> getPropertyList() throws IntrospectionException {
 		List<LabelledPropertyDescriptor> list = super.getPropertyList();
-		
-		list.add( 2, new LabelledPropertyDescriptor("property.signalmlmrud.formatName", "formatName", SignalMLMRUDEntry.class) );
-		
+
+		list.add(2, new LabelledPropertyDescriptor("property.signalmlmrud.formatName", "formatName", SignalMLMRUDEntry.class));
+
 		return list;
-		
+
 	}
 
 }

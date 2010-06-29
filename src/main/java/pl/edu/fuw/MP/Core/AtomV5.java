@@ -24,7 +24,7 @@ public class AtomV5 implements StandardBookAtom, StandardBookAtomWriter {
 	public float samplingFreq;
 
 	public AtomV5() {}
-	
+
 	public AtomV5(Object o) {
 		AtomV5 atom = (AtomV5) o;
 		this.iteration = atom.iteration;
@@ -40,7 +40,7 @@ public class AtomV5 implements StandardBookAtom, StandardBookAtomWriter {
 		this.baseSize = atom.baseSize;
 		this.samplingFreq = atom.samplingFreq;
 	}
-	
+
 	public int Size() {
 		return sizeOfAtomsField;
 	}
@@ -48,7 +48,7 @@ public class AtomV5 implements StandardBookAtom, StandardBookAtomWriter {
 	public int SizeOfAtom() {
 		int size=0;
 
-		switch(type) {
+		switch (type) {
 		case DIRACDELTA_IDENTITY:
 			size=3;
 			break;
@@ -68,7 +68,7 @@ public class AtomV5 implements StandardBookAtom, StandardBookAtomWriter {
 		int sizeOfAtom=(int)(stream.readByte())&0xff;
 
 		sizeOfAtomsField=2+sizeOfAtom;
-		switch(type) {
+		switch (type) {
 		case DIRACDELTA_IDENTITY:
 			modulus=stream.readFloat();
 			amplitude=stream.readFloat();
@@ -118,12 +118,12 @@ public class AtomV5 implements StandardBookAtom, StandardBookAtomWriter {
 	}
 
 	public Object getProperty(String name) throws IllegalArgumentException {
-		throw new IllegalArgumentException("No properties"); 
+		throw new IllegalArgumentException("No properties");
 	}
 
 	public Enumeration<String> getPropertyNames() {
 		Vector<String> names = new Vector<String>();
-		return names.elements(); 
+		return names.elements();
 	}
 
 	public int getScale() {
@@ -148,7 +148,7 @@ public class AtomV5 implements StandardBookAtom, StandardBookAtomWriter {
 	}
 
 	public void setPhase(float phase) {
-		this.phase=phase;	
+		this.phase=phase;
 	}
 
 	public void setPosition(float position) {
@@ -164,8 +164,8 @@ public class AtomV5 implements StandardBookAtom, StandardBookAtomWriter {
 		this.type=type;
 	}
 
-	public void set(StandardBookAtom atom) {	
-		if(atom!=null) {
+	public void set(StandardBookAtom atom) {
+		if (atom!=null) {
 			setAmplitude(atom.getAmplitude());
 			setFrequency(atom.getFrequency());
 			setModulus(atom.getModulus());
@@ -173,14 +173,14 @@ public class AtomV5 implements StandardBookAtom, StandardBookAtomWriter {
 			setPosition(atom.getPosition());
 			setScale(atom.getScale());
 			setType(atom.getType());
-		} 
+		}
 	}
 
 	public void Write(DataOutputStream stream) throws IOException  {
 		stream.writeByte(type);
 		stream.writeByte((byte)SizeOfAtom());
 
-		switch(type) {
+		switch (type) {
 		case DIRACDELTA_IDENTITY:
 			stream.writeFloat(modulus);
 			stream.writeFloat(amplitude);
@@ -204,7 +204,7 @@ public class AtomV5 implements StandardBookAtom, StandardBookAtomWriter {
 			stream.writeFloat(position);
 			stream.writeFloat(scale);
 			stream.writeFloat(frequency);
-			stream.writeFloat( phase);
+			stream.writeFloat(phase);
 			break;
 		}
 	}

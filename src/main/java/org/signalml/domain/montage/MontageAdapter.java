@@ -1,12 +1,12 @@
 /* MontageAdapter.java created 2007-11-24
- * 
+ *
  */
 
 package org.signalml.domain.montage;
 
 /** MontageAdapter
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class MontageAdapter implements SourceMontageListener, MontageListener, MontageSampleFilterListener {
@@ -22,7 +22,7 @@ public class MontageAdapter implements SourceMontageListener, MontageListener, M
 	@Override
 	public void sourceMontageChannelRemoved(SourceMontageEvent ev) {
 	}
-	
+
 	@Override
 	public void montageChannelsAdded(MontageEvent ev) {
 	}
@@ -46,7 +46,7 @@ public class MontageAdapter implements SourceMontageListener, MontageListener, M
 	@Override
 	public void filterAdded(MontageSampleFilterEvent ev) {
 	}
-	
+
 	@Override
 	public void filterChanged(MontageSampleFilterEvent ev) {
 	}
@@ -63,5 +63,5 @@ public class MontageAdapter implements SourceMontageListener, MontageListener, M
 	public void filtersChanged(MontageSampleFilterEvent ev) {
 	}
 
-	
+
 }

@@ -1,5 +1,5 @@
 /* MP5ResultTargetDescriptor.java created 2008-02-20
- * 
+ *
  */
 
 package org.signalml.app.method.mp5;
@@ -8,15 +8,15 @@ import java.io.File;
 
 /** MP5ResultTargetDescriptor
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class MP5ResultTargetDescriptor {
 
 	private boolean openInWindow;
-	
+
 	private boolean saveToFile;
-	
+
 	private File bookFile;
 
 	public boolean isOpenInWindow() {
@@ -41,6 +41,6 @@ public class MP5ResultTargetDescriptor {
 
 	public void setBookFile(File bookFile) {
 		this.bookFile = bookFile;
-	}	
-	
+	}
+
 }

@@ -1,6 +1,6 @@
-/* Signal Copyright (C) 2003 Dobieslaw Ircha    <dircha@eranet.pl> 
-                             Artur Biesiadowski <abies@adres.pl> 
-                             Piotr J. Durka     <Piotr-J.Durka@fuw.edu.pl> 
+/* Signal Copyright (C) 2003 Dobieslaw Ircha    <dircha@eranet.pl>
+                             Artur Biesiadowski <abies@adres.pl>
+                             Piotr J. Durka     <Piotr-J.Durka@fuw.edu.pl>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -59,7 +59,7 @@ public class XMLCodecException extends CodecException {
 	}
 
 	public XMLCodecException(String message, Throwable cause) {
-		super(message, cause);	
+		super(message, cause);
 	}
 
 

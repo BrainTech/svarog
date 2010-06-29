@@ -1,18 +1,18 @@
 /* SampleFilterEngine.java created 2008-02-04
- * 
+ *
  */
 
 package org.signalml.domain.signal;
 
 /** SampleFilterEngine
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public abstract class SampleFilterEngine implements SampleSource {
 
 	protected SampleSource source;
-		
+
 	public SampleFilterEngine(SampleSource source) {
 		this.source = source;
 	}

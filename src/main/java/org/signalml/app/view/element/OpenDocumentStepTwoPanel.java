@@ -1,5 +1,5 @@
 /* OpenDocumentStepTwoPanel.java created 2007-09-17
- * 
+ *
  */
 package org.signalml.app.view.element;
 
@@ -16,25 +16,25 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** OpenDocumentStepTwoPanel
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class OpenDocumentStepTwoPanel extends JPanel {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private MessageSourceAccessor messageSource;
-	
+
 	private OpenSignalOptionsPanel signalOptionsPanel = null;
 	private OpenTagOptionsPanel tagOptionsPanel = null;
 	private OpenBookOptionsPanel bookOptionsPanel = null;
-	
+
 	private CardLayout cardLayout = null;
-	
+
 	private JPanel configsPanel = null;
-	
+
 	private JLabel infoLabel = null;
-	
+
 	/**
 	 * This is the default constructor
 	 */
@@ -46,50 +46,50 @@ public class OpenDocumentStepTwoPanel extends JPanel {
 
 	/**
 	 * This method initializes this
-	 * 
+	 *
 	 * @return void
 	 */
 	private void initialize() {
-		
+
 		setLayout(new BorderLayout());
-				
+
 		add(getInfoLabel(), BorderLayout.NORTH);
 		add(getConfigsPanel(),BorderLayout.CENTER);
-				
+
 	}
-	
+
 	public void setExpectedType(ManagedDocumentType type, boolean autodetected) {
-		if( type.equals(ManagedDocumentType.SIGNAL) ) {
-			if( autodetected ) {
+		if (type.equals(ManagedDocumentType.SIGNAL)) {
+			if (autodetected) {
 				getInfoLabel().setText(messageSource.getMessage("openDocument.signalAutodetected"));
 			} else {
 				getInfoLabel().setText(messageSource.getMessage("openDocument.signalChosen"));
 			}
 			getCardLayout().show(getConfigsPanel(), "signal");
-		} else if( type.equals(ManagedDocumentType.BOOK) ) {
-			if( autodetected ) {
+		} else if (type.equals(ManagedDocumentType.BOOK)) {
+			if (autodetected) {
 				getInfoLabel().setText(messageSource.getMessage("openDocument.bookAutodetected"));
 			} else {
 				getInfoLabel().setText(messageSource.getMessage("openDocument.bookChosen"));
 			}
 			getCardLayout().show(getConfigsPanel(), "book");
-		} else if( type.equals(ManagedDocumentType.TAG) ) {
-			if( autodetected ) {
+		} else if (type.equals(ManagedDocumentType.TAG)) {
+			if (autodetected) {
 				getInfoLabel().setText(messageSource.getMessage("openDocument.tagAutodetected"));
 			} else {
 				getInfoLabel().setText(messageSource.getMessage("openDocument.tagChosen"));
 			}
-			getCardLayout().show(getConfigsPanel(), "tag");			
+			getCardLayout().show(getConfigsPanel(), "tag");
 		}
-		if( autodetected ) {
+		if (autodetected) {
 			getInfoLabel().setIcon(IconUtils.getWarningIcon());
 		} else {
 			getInfoLabel().setIcon(IconUtils.getInfoIcon());
 		}
 	}
-	
+
 	private JPanel getConfigsPanel() {
-		if( configsPanel == null ) {
+		if (configsPanel == null) {
 			configsPanel = new JPanel();
 			configsPanel.setLayout(getCardLayout());
 			configsPanel.add(getSignalOptionsPanel(), "signal");
@@ -98,18 +98,18 @@ public class OpenDocumentStepTwoPanel extends JPanel {
 		}
 		return configsPanel;
 	}
-	
+
 	private JLabel getInfoLabel() {
-		if( infoLabel == null ) {
+		if (infoLabel == null) {
 			infoLabel = new JLabel();
 			infoLabel.setBorder(new EmptyBorder(3,0,3,0));
 			infoLabel.setHorizontalAlignment(JLabel.CENTER);
 		}
 		return infoLabel;
 	}
-	
+
 	public CardLayout getCardLayout() {
-		if( cardLayout == null ) {
+		if (cardLayout == null) {
 			cardLayout = new CardLayout();
 		}
 		return cardLayout;
@@ -130,12 +130,12 @@ public class OpenDocumentStepTwoPanel extends JPanel {
 
 		return tagOptionsPanel;
 	}
-	
+
 	public OpenBookOptionsPanel getBookOptionsPanel() {
-		if( bookOptionsPanel == null ) {
+		if (bookOptionsPanel == null) {
 			bookOptionsPanel = new OpenBookOptionsPanel(messageSource);
 		}
 		return bookOptionsPanel;
 	}
-	
+
 }

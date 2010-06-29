@@ -1,5 +1,5 @@
 /* RawSignalDescriptorWriter.java created 2008-01-18
- * 
+ *
  */
 
 package org.signalml.domain.signal.raw;
@@ -28,193 +28,193 @@ import org.w3c.dom.Element;
 
 /** RawSignalDescriptorWriter
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class RawSignalDescriptorWriter {
-	
-	public Document getDocument( RawSignalDescriptor descriptor ) {
-		
+
+	public Document getDocument(RawSignalDescriptor descriptor) {
+
 		Document document = RawSignalDocumentBuilder.getInstance().newDocument();
-		
-		Element root = document.createElementNS(RawSignalDocumentBuilder.NAMESPACE_URI, RawSignalDocumentBuilder.RAW_SIGNAL );
+
+		Element root = document.createElementNS(RawSignalDocumentBuilder.NAMESPACE_URI, RawSignalDocumentBuilder.RAW_SIGNAL);
 		document.appendChild(root);
-		
+
 		Element element;
-		
+
 		element = document.createElement(RawSignalDocumentBuilder.EXPORT_FILE_NAME);
-		element.setTextContent( descriptor.getExportFileName() );
-		root.appendChild( element );
-		
+		element.setTextContent(descriptor.getExportFileName());
+		root.appendChild(element);
+
 		String sourceFileName = descriptor.getSourceFileName();
-		if( sourceFileName != null && !sourceFileName.isEmpty() ) {
+		if (sourceFileName != null && !sourceFileName.isEmpty()) {
 			element = document.createElement(RawSignalDocumentBuilder.SOURCE_FILE_NAME);
-			element.setTextContent( sourceFileName );
-			root.appendChild( element );			
+			element.setTextContent(sourceFileName);
+			root.appendChild(element);
 		}
-		
+
 		Element sourceFileFormatEl = document.createElement(RawSignalDocumentBuilder.SOURCE_FILE_FORMAT);
-		
+
 		SourceSignalType sourceSignalType = descriptor.getSourceSignalType();
-		switch( sourceSignalType ) {
-		
+		switch (sourceSignalType) {
+
 		case SIGNALML :
-		
+
 			Element signalMLSignalEl = document.createElement(RawSignalDocumentBuilder.SIGNALML_SIGNAL_INFO);
-			
+
 			element = document.createElement(RawSignalDocumentBuilder.FORMAT);
-			element.setTextContent( descriptor.getSourceSignalMLFormat() );
+			element.setTextContent(descriptor.getSourceSignalMLFormat());
 			signalMLSignalEl.appendChild(element);
-			
+
 			element = document.createElement(RawSignalDocumentBuilder.SOURCE_UID);
-			element.setTextContent( descriptor.getSourceSignalMLSourceUID() );
+			element.setTextContent(descriptor.getSourceSignalMLSourceUID());
 			signalMLSignalEl.appendChild(element);
-			
+
 			sourceFileFormatEl.appendChild(signalMLSignalEl);
-			
+
 			break;
-			
+
 		case RAW :
 		default :
-			
-			sourceFileFormatEl.appendChild( document.createElement(RawSignalDocumentBuilder.RAW_SIGNAL_INFO) );
-			
+
+			sourceFileFormatEl.appendChild(document.createElement(RawSignalDocumentBuilder.RAW_SIGNAL_INFO));
+
 			break;
-		
+
 		}
-		
+
 		root.appendChild(sourceFileFormatEl);
-		
+
 		element = document.createElement(RawSignalDocumentBuilder.SAMPLING_FREQUENCY);
-		element.setTextContent( Float.toString( descriptor.getSamplingFrequency() ) );
+		element.setTextContent(Float.toString(descriptor.getSamplingFrequency()));
 		root.appendChild(element);
-		
+
 		element = document.createElement(RawSignalDocumentBuilder.CHANNEL_COUNT);
-		element.setTextContent( Integer.toString( descriptor.getChannelCount() ) );
+		element.setTextContent(Integer.toString(descriptor.getChannelCount()));
 		root.appendChild(element);
-		
+
 		element = document.createElement(RawSignalDocumentBuilder.SAMPLE_COUNT);
-		element.setTextContent( Integer.toString( descriptor.getSampleCount() ) );
+		element.setTextContent(Integer.toString(descriptor.getSampleCount()));
 		root.appendChild(element);
-		
+
 		float calibration = descriptor.getCalibration();
-		if( calibration != 0 ) {
-		
+		if (calibration != 0) {
+
 			element = document.createElement(RawSignalDocumentBuilder.CALIBRATION);
-			element.setTextContent( Float.toString( calibration ) );
+			element.setTextContent(Float.toString(calibration));
 			root.appendChild(element);
-			
+
 		}
-		
+
 		element = document.createElement(RawSignalDocumentBuilder.SAMPLE_TYPE);
-		element.setTextContent( descriptor.getSampleType().name() );
+		element.setTextContent(descriptor.getSampleType().name());
 		root.appendChild(element);
-		
+
 		element = document.createElement(RawSignalDocumentBuilder.BYTE_ORDER);
-		element.setTextContent( descriptor.getByteOrder().name() );
+		element.setTextContent(descriptor.getByteOrder().name());
 		root.appendChild(element);
-		
+
 		float pageSize = descriptor.getPageSize();
-		if( pageSize > 0 ) {
-			
+		if (pageSize > 0) {
+
 			element = document.createElement(RawSignalDocumentBuilder.PAGE_SIZE);
-			element.setTextContent( Float.toString( pageSize ) );
-			root.appendChild(element);			
-			
+			element.setTextContent(Float.toString(pageSize));
+			root.appendChild(element);
+
 		}
-		
+
 		int blocksPerPage = descriptor.getBlocksPerPage();
-		if( blocksPerPage > 0 ) {
-			
+		if (blocksPerPage > 0) {
+
 			element = document.createElement(RawSignalDocumentBuilder.BLOCKS_PER_PAGE);
-			element.setTextContent( Integer.toString( blocksPerPage ) );
-			root.appendChild(element);			
-			
+			element.setTextContent(Integer.toString(blocksPerPage));
+			root.appendChild(element);
+
 		}
-		
+
 		String[] channelLabels = descriptor.getChannelLabels();
-		if( channelLabels != null && channelLabels.length > 0 ) {
-		
+		if (channelLabels != null && channelLabels.length > 0) {
+
 			Element channelLabelsEl = document.createElement(RawSignalDocumentBuilder.CHANNEL_LABELS);
-		
-			for( int i=0; i<channelLabels.length; i++ ) {
-				
+
+			for (int i=0; i<channelLabels.length; i++) {
+
 				element = document.createElement(RawSignalDocumentBuilder.LABEL);
-				element.setTextContent( channelLabels[i] );
+				element.setTextContent(channelLabels[i]);
 				channelLabelsEl.appendChild(element);
-				
+
 			}
-			
+
 			root.appendChild(channelLabelsEl);
-			
+
 		}
-		
+
 		double markerOffset = descriptor.getMarkerOffset();
-		if( markerOffset > 0 ) {
-			
+		if (markerOffset > 0) {
+
 			element = document.createElement(RawSignalDocumentBuilder.MARKER_OFFSET);
-			element.setTextContent( Double.toString( markerOffset ) );
-			root.appendChild(element);						
-			
+			element.setTextContent(Double.toString(markerOffset));
+			root.appendChild(element);
+
 		}
-		
+
 		Date exportDate = descriptor.getExportDate();
-		if( exportDate != null ) {
-			
+		if (exportDate != null) {
+
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(exportDate);
-			
-			Formatter formatter = new Formatter();
-			
-			formatter.format( "%04d-%02d-%02dT%02d:%02d:%02d", 
-					cal.get(Calendar.YEAR), 
-					cal.get(Calendar.MONTH) + 1,
-					cal.get(Calendar.DAY_OF_MONTH),
-					cal.get(Calendar.HOUR_OF_DAY),
-					cal.get(Calendar.MINUTE),
-					cal.get(Calendar.SECOND)
-			);
-			
-			element = document.createElement(RawSignalDocumentBuilder.EXPORT_DATE);
-			element.setTextContent( formatter.toString() );
-			root.appendChild(element);
-			
-		}
-		
-		return document;
-		
-	}
-	
-	public void writeDocument( RawSignalDescriptor descriptor, File file ) throws IOException {
-		
-		Document document = getDocument(descriptor);
-		
-		FileOutputStream fileOutputStream = null;
-        try {
 
-        	Source source = new DOMSource(document);    
-            fileOutputStream = new FileOutputStream(file);
+			Formatter formatter = new Formatter();
+
+			formatter.format("%04d-%02d-%02dT%02d:%02d:%02d",
+			                 cal.get(Calendar.YEAR),
+			                 cal.get(Calendar.MONTH) + 1,
+			                 cal.get(Calendar.DAY_OF_MONTH),
+			                 cal.get(Calendar.HOUR_OF_DAY),
+			                 cal.get(Calendar.MINUTE),
+			                 cal.get(Calendar.SECOND)
+			                );
+
+			element = document.createElement(RawSignalDocumentBuilder.EXPORT_DATE);
+			element.setTextContent(formatter.toString());
+			root.appendChild(element);
+
+		}
+
+		return document;
+
+	}
+
+	public void writeDocument(RawSignalDescriptor descriptor, File file) throws IOException {
+
+		Document document = getDocument(descriptor);
+
+		FileOutputStream fileOutputStream = null;
+		try {
+
+			Source source = new DOMSource(document);
+			fileOutputStream = new FileOutputStream(file);
 			Result result = new StreamResult(new OutputStreamWriter(fileOutputStream, "utf-8"));
-            TransformerFactory factory = TransformerFactory.newInstance();
-            factory.setAttribute("indent-number", new Integer(2));
+			TransformerFactory factory = TransformerFactory.newInstance();
+			factory.setAttribute("indent-number", new Integer(2));
 			Transformer xformer = factory.newTransformer();
 			xformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            xformer.transform(source, result);
-            
-        } catch (TransformerConfigurationException ex) {
-        	throw new IOException( "Failed to write xml", ex );
-        } catch (TransformerException ex) {
-        	throw new IOException( "Failed to write xml", ex );
-        } finally {
-        	if( fileOutputStream != null ) {
-        		try {
-        			fileOutputStream.close();
-        		} catch( IOException ex ) {
-        			// ignore
-        		}
-        	}
-        }
-	        
+			xformer.transform(source, result);
+
+		} catch (TransformerConfigurationException ex) {
+			throw new IOException("Failed to write xml", ex);
+		} catch (TransformerException ex) {
+			throw new IOException("Failed to write xml", ex);
+		} finally {
+			if (fileOutputStream != null) {
+				try {
+					fileOutputStream.close();
+				} catch (IOException ex) {
+					// ignore
+				}
+			}
+		}
+
 	}
-	
+
 }

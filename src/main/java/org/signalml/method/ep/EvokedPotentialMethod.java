@@ -1,5 +1,5 @@
 /* EvokedPotentialMethod.java created 2008-01-12
- * 
+ *
  */
 
 package org.signalml.method.ep;
@@ -20,32 +20,32 @@ import org.springframework.validation.Errors;
 
 /** EvokedPotentialMethod
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class EvokedPotentialMethod extends AbstractMethod implements TrackableMethod {
 
 	protected static final Logger logger = Logger.getLogger(EvokedPotentialMethod.class);
-	
+
 	private static final String UID = "561691f8-bd14-486f-989b-a09c0bd57455";
 	private static final String NAME = "evokedPotential";
 	private static final int[] VERSION = new int[] {1,0};
-		
+
 	public EvokedPotentialMethod() throws SignalMLException {
 		super();
 	}
-	
+
 	@Override
 	public Object doComputation(Object dataObj, final MethodExecutionTracker tracker) throws ComputationException {
-		
+
 		logger.debug("Beginning computation of EP");
-		
+
 		EvokedPotentialData data = (EvokedPotentialData) dataObj;
 
-		tracker.setMessage( new ResolvableString("evokedPotentialMethod.message.preparing") );
-				
+		tracker.setMessage(new ResolvableString("evokedPotentialMethod.message.preparing"));
+
 		MultichannelSegmentedSampleSource sampleSource = data.getSampleSource();
-				
+
 		int sampleCount = sampleSource.getSegmentLength();
 		int segmentCount = sampleSource.getSegmentCount();
 		int channelCount = sampleSource.getChannelCount();
@@ -54,74 +54,74 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 		int i;
 		int e;
 		int j;
-		
+
 		double[] samples = new double[sampleCount];
 		double[][] averageSamples = new double[channelCount][sampleCount];
-		
+
 		String[] labels = new String[channelCount];
-		for( i=0; i<channelCount; i++ ) {
+		for (i=0; i<channelCount; i++) {
 			labels[i] = sampleSource.getLabel(i);
 		}
-		
+
 		EvokedPotentialResult result = new EvokedPotentialResult(data);
-		
+
 		SignalSpace signalSpace = data.getParameters().getSignalSpace();
-		
+
 		TimeSpaceType timeSpaceType = signalSpace.getTimeSpaceType();
-		if( timeSpaceType == TimeSpaceType.MARKER_BASED ) {
-			
+		if (timeSpaceType == TimeSpaceType.MARKER_BASED) {
+
 			MarkerTimeSpace markerTimeSpace = signalSpace.getMarkerTimeSpace();
-			
-			result.setSecondsBefore( markerTimeSpace.getSecondsBefore() );
-			result.setSecondsAfter( markerTimeSpace.getSecondsAfter() );
-			
+
+			result.setSecondsBefore(markerTimeSpace.getSecondsBefore());
+			result.setSecondsAfter(markerTimeSpace.getSecondsAfter());
+
 		} else {
-			
+
 			// marker placed at the beginning of the segment
-			result.setSecondsAfter( ((double) sampleCount) / samplingFrequency );
+			result.setSecondsAfter(((double) sampleCount) / samplingFrequency);
 			result.setSecondsBefore(0);
-			
+
 		}
-		
-		tracker.setMessage( new ResolvableString("evokedPotentialMethod.message.summing") );
+
+		tracker.setMessage(new ResolvableString("evokedPotentialMethod.message.summing"));
 		tracker.setTickerLimit(0, segmentCount);
-				
-		for( i=0; i<segmentCount; i++ ) {
-				
-			for( e=0; e<channelCount; e++ ) {
-				
-				if( tracker.isRequestingAbort() ) {
+
+		for (i=0; i<segmentCount; i++) {
+
+			for (e=0; e<channelCount; e++) {
+
+				if (tracker.isRequestingAbort()) {
 					return null;
 				}
-				
+
 				sampleSource.getSegmentSamples(e, samples, i);
-				
-				for( j=0; j<sampleCount; j++ ) {
+
+				for (j=0; j<sampleCount; j++) {
 					averageSamples[e][j] += samples[j];
 				}
-				
+
 			}
 
-			if( i % 10 == 0 ) {
+			if (i % 10 == 0) {
 				tracker.tick(0, 10);
 			}
-			
+
 		}
-					
-		tracker.setMessage( new ResolvableString("evokedPotentialMethod.message.averaging") );
+
+		tracker.setMessage(new ResolvableString("evokedPotentialMethod.message.averaging"));
 		tracker.setTicker(0, 0);
 		tracker.setTickerLimit(0, channelCount);
-		
+
 		// markers have been summed, now divide to get the average
-		
-		for( e=0; e<channelCount; e++ ) {			
-			for( j=0; j<sampleCount; j++ ) {
+
+		for (e=0; e<channelCount; e++) {
+			for (j=0; j<sampleCount; j++) {
 				averageSamples[e][j] /= segmentCount;
 			}
 			tracker.tick(0);
 		}
-		
-		
+
+
 		result.setAverageSamples(averageSamples);
 		result.setLabels(labels);
 		result.setSampleCount(sampleCount);
@@ -130,21 +130,21 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 		result.setAveragedCount(segmentCount);
 		result.setSkippedCount(sampleSource.getUnusableSegmentCount());
 
-		tracker.setMessage( new ResolvableString("evokedPotentialMethod.message.finished") );
+		tracker.setMessage(new ResolvableString("evokedPotentialMethod.message.finished"));
 
 		return result;
-		
+
 	}
 
 	@Override
 	public void validate(Object dataObj, Errors errors) {
 		super.validate(dataObj, errors);
-		if( !errors.hasErrors() ) {
+		if (!errors.hasErrors()) {
 			EvokedPotentialData data = (EvokedPotentialData) dataObj;
 			data.validate(errors);
-		}		
+		}
 	}
-	
+
 	@Override
 	public int getTickerCount() {
 		return 1;
@@ -153,18 +153,18 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 	@Override
 	public String getTickerLabel(MessageSourceAccessor messageSource, int ticker) {
 		String code;
-		switch( ticker ) {
-	
+		switch (ticker) {
+
 		case 0 :
 			code = "evokedPotentialMethod.markerTicker";
 			break;
 		default :
 			throw new IndexOutOfBoundsException();
-		
+
 		}
 		return messageSource.getMessage(code);
 	}
-	
+
 	@Override
 	public String getUID() {
 		return UID;
@@ -174,12 +174,12 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 	public String getName() {
 		return NAME;
 	}
-	
+
 	@Override
 	public int[] getVersion() {
 		return VERSION;
-	}	
-	
+	}
+
 	@Override
 	public Object createData() {
 		return new EvokedPotentialData();

@@ -1,5 +1,5 @@
 /* SignalPageTreeNode.java created 2007-10-06
- * 
+ *
  */
 
 package org.signalml.app.model;
@@ -12,11 +12,11 @@ import org.springframework.context.MessageSourceResolvable;
 
 /** SignalPageTreeNode
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class SignalPageTreeNode implements PropertyProvider, MessageSourceResolvable {
-	
+
 	private int page;
 	private float size;
 	private float startTime;
@@ -49,14 +49,14 @@ public class SignalPageTreeNode implements PropertyProvider, MessageSourceResolv
 	public List<LabelledPropertyDescriptor> getPropertyList() throws IntrospectionException {
 
 		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
-		
-		list.add( new LabelledPropertyDescriptor("property.signalPage.page", "page", SignalPageTreeNode.class, "getPage", null) );
-		list.add( new LabelledPropertyDescriptor("property.signalPage.size", "size", SignalPageTreeNode.class, "getSize", null) );
-		list.add( new LabelledPropertyDescriptor("property.signalPage.startTime", "startTime", SignalPageTreeNode.class, "getStartTime", null) );
-		list.add( new LabelledPropertyDescriptor("property.signalPage.endTime", "endTime", SignalPageTreeNode.class, "getEndTime", null) );
-		
+
+		list.add(new LabelledPropertyDescriptor("property.signalPage.page", "page", SignalPageTreeNode.class, "getPage", null));
+		list.add(new LabelledPropertyDescriptor("property.signalPage.size", "size", SignalPageTreeNode.class, "getSize", null));
+		list.add(new LabelledPropertyDescriptor("property.signalPage.startTime", "startTime", SignalPageTreeNode.class, "getStartTime", null));
+		list.add(new LabelledPropertyDescriptor("property.signalPage.endTime", "endTime", SignalPageTreeNode.class, "getEndTime", null));
+
 		return list;
-	
+
 	}
 
 	@Override
@@ -73,5 +73,5 @@ public class SignalPageTreeNode implements PropertyProvider, MessageSourceResolv
 	public String getDefaultMessage() {
 		return "Page ???";
 	}
-	
+
 }

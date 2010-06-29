@@ -1,5 +1,5 @@
 /* AtomTableModel.java created 2008-02-28
- * 
+ *
  */
 
 package org.signalml.app.view.book;
@@ -14,7 +14,7 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** AtomTableModel
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class AtomTableModel extends AbstractTableModel {
@@ -29,32 +29,32 @@ public class AtomTableModel extends AbstractTableModel {
 	private static final int FREQUENCY_COLUMN = 5;
 	private static final int PHASE_COLUMN = 6;
 	private static final int RECONSTRUCTION_COLUMN = 7;
-		
+
 	private MessageSourceAccessor messageSource;
 
 	private StandardBookSegment segment;
 	private SegmentReconstructionProvider reconstruction;
-	
+
 	private TableRowSorter<AtomTableModel> sorter = null;
-		
+
 	public AtomTableModel(MessageSourceAccessor messageSource) {
 		this.messageSource = messageSource;
 	}
-	
+
 	public TableRowSorter<AtomTableModel> getSorter() {
-		if( sorter == null ) {
+		if (sorter == null) {
 			sorter = new TableRowSorter<AtomTableModel>(this);
 			sorter.setSortsOnUpdates(true);
 		}
 		return sorter;
 	}
-	
+
 	public StandardBookSegment getSegment() {
 		return segment;
 	}
 
 	public void setSegment(StandardBookSegment segment) {
-		if( this.segment != segment ) {
+		if (this.segment != segment) {
 			this.segment = segment;
 			fireTableDataChanged();
 		}
@@ -65,15 +65,15 @@ public class AtomTableModel extends AbstractTableModel {
 	}
 
 	public void setReconstruction(SegmentReconstructionProvider reconstruction) {
-		if( this.reconstruction != reconstruction ) {
-			if( reconstruction != null ) {
-				if( segment == null || segment != reconstruction.getSegment() ) {
-					throw new SanityCheckException( "Reconstruction doesn't match the segment" );
+		if (this.reconstruction != reconstruction) {
+			if (reconstruction != null) {
+				if (segment == null || segment != reconstruction.getSegment()) {
+					throw new SanityCheckException("Reconstruction doesn't match the segment");
 				}
 			}
-			SegmentReconstructionProvider oldReconstruction = this.reconstruction;			
+			SegmentReconstructionProvider oldReconstruction = this.reconstruction;
 			this.reconstruction = reconstruction;
-			if( oldReconstruction == null || reconstruction == null ) {
+			if (oldReconstruction == null || reconstruction == null) {
 				fireTableStructureChanged();
 			} else {
 				fireTableDataChanged();
@@ -85,90 +85,90 @@ public class AtomTableModel extends AbstractTableModel {
 	public int getColumnCount() {
 		return 7 + (reconstruction != null ? 1 : 0);
 	}
-	
+
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 
-		switch( columnIndex ) {
-			
+		switch (columnIndex) {
+
 		case ITERATION_COLUMN :
-			return Integer.class;
-			
+				return Integer.class;
+
 		case MODULUS_COLUMN :
 			return Double.class;
-			
+
 		case AMPLITUDE_COLUMN :
 			return Double.class;
-			
+
 		case POSITION_COLUMN :
 			return Double.class;
-			
+
 		case SCALE_COLUMN :
 			return Double.class;
-			
+
 		case FREQUENCY_COLUMN :
 			return Double.class;
-			
+
 		case PHASE_COLUMN :
 			return Double.class;
-			
+
 		case RECONSTRUCTION_COLUMN :
 			return Boolean.class;
-			
+
 		default :
 			throw new IllegalArgumentException("No such column [" + columnIndex + "]");
-		
+
 		}
-				
+
 	}
-	
+
 	@Override
 	public String getColumnName(int column) {
 
-		switch( column ) {
-		
+		switch (column) {
+
 		case ITERATION_COLUMN :
 			return messageSource.getMessage("bookView.atomList.iteration");
-			
+
 		case MODULUS_COLUMN :
 			return messageSource.getMessage("bookView.atomList.modulus");
-			
+
 		case AMPLITUDE_COLUMN :
 			return messageSource.getMessage("bookView.atomList.amplitude");
-			
+
 		case POSITION_COLUMN :
 			return messageSource.getMessage("bookView.atomList.position");
-			
+
 		case SCALE_COLUMN :
 			return messageSource.getMessage("bookView.atomList.scale");
-			
+
 		case FREQUENCY_COLUMN :
 			return messageSource.getMessage("bookView.atomList.frequency");
-			
+
 		case PHASE_COLUMN :
 			return messageSource.getMessage("bookView.atomList.phase");
-			
+
 		case RECONSTRUCTION_COLUMN :
 			return messageSource.getMessage("bookView.atomList.inReconstruction");
-			
+
 		default :
 			throw new IllegalArgumentException("No such column [" + column + "]");
-		
+
 		}
 
 	}
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		if( columnIndex == RECONSTRUCTION_COLUMN ) {
+		if (columnIndex == RECONSTRUCTION_COLUMN) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	@Override
 	public int getRowCount() {
-		if( segment == null ) {
+		if (segment == null) {
 			return 0;
 		}
 		return segment.getAtomCount();
@@ -177,60 +177,60 @@ public class AtomTableModel extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 
-		switch( columnIndex ) {
-		
+		switch (columnIndex) {
+
 		case ITERATION_COLUMN :
 			return segment.getAtomAt(rowIndex).getIteration();
-			
+
 		case MODULUS_COLUMN :
-			return new Double( segment.getAtomAt(rowIndex).getModulus() );
-			
+			return new Double(segment.getAtomAt(rowIndex).getModulus());
+
 		case AMPLITUDE_COLUMN :
-			return new Double( segment.getAtomAt(rowIndex).getAmplitude() );
-			
+			return new Double(segment.getAtomAt(rowIndex).getAmplitude());
+
 		case POSITION_COLUMN :
-			return new Double( segment.getAtomAt(rowIndex).getTimePosition() );
-			
+			return new Double(segment.getAtomAt(rowIndex).getTimePosition());
+
 		case SCALE_COLUMN :
-			return new Double( segment.getAtomAt(rowIndex).getTimeScale() );
-			
+			return new Double(segment.getAtomAt(rowIndex).getTimeScale());
+
 		case FREQUENCY_COLUMN :
-			return new Double( segment.getAtomAt(rowIndex).getHzFrequency() );
-			
+			return new Double(segment.getAtomAt(rowIndex).getHzFrequency());
+
 		case PHASE_COLUMN :
-			return new Double( segment.getAtomAt(rowIndex).getPhase() );
-			
+			return new Double(segment.getAtomAt(rowIndex).getPhase());
+
 		case RECONSTRUCTION_COLUMN :
-			if( reconstruction == null ) {
-				return new Boolean( false );
+			if (reconstruction == null) {
+				return new Boolean(false);
 			} else {
 				return reconstruction.isAtomInSelectiveReconstruction(rowIndex);
 			}
-			
+
 		default :
 			throw new IllegalArgumentException("No such column [" + columnIndex + "]");
-		
+
 		}
-		
+
 	}
 
 	@Override
 	public void setValueAt(Object value, int rowIndex, int columnIndex) {
 
-		if( reconstruction == null ) {
+		if (reconstruction == null) {
 			return;
 		}
-		
-		if( columnIndex == RECONSTRUCTION_COLUMN ) {			
-			if( ((Boolean) value).booleanValue() ) {
-				reconstruction.addAtomToSelectiveReconstruction( rowIndex );
+
+		if (columnIndex == RECONSTRUCTION_COLUMN) {
+			if (((Boolean) value).booleanValue()) {
+				reconstruction.addAtomToSelectiveReconstruction(rowIndex);
 			} else {
-				reconstruction.removeAtomFromSelectiveReconstruction( rowIndex );
+				reconstruction.removeAtomFromSelectiveReconstruction(rowIndex);
 			}
-			
+
 			fireTableCellUpdated(rowIndex, columnIndex);
 		}
-		
+
 	}
-	
+
 }

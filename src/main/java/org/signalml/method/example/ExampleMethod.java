@@ -1,5 +1,5 @@
 /* ExampleMethod.java created 2007-09-12
- * 
+ *
  */
 package org.signalml.method.example;
 
@@ -23,37 +23,37 @@ import org.springframework.validation.Errors;
 
 /** ExampleMethod - an example implemetnation of a method.
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ExampleMethod extends AbstractMethod implements InitializingMethod, TrackableMethod, SuspendableMethod, IterableMethod {
 
 	protected static final Logger logger = Logger.getLogger(ExampleMethod.class);
-	
+
 	private static final String UID = "65b7e4c7-2d3f-4e5c-a18a-7942392268ea";
 	private static final String NAME = "meaningOfLife";
 	private static final int[] VERSION = new int[] {1,0};
-	
+
 	private static final int COUNT = 10;
-	
+
 	private int[] numbers;
 	private boolean initialized = false;
-	
+
 	public ExampleMethod() throws SignalMLException {
 		super();
 	}
 
 	@Override
 	public void initialize() throws SignalMLException {
-		if( !initialized ) {
+		if (!initialized) {
 			numbers = new int[COUNT];
-			for( int i=0; i<COUNT; i++ ) {
+			for (int i=0; i<COUNT; i++) {
 				numbers[i] = i+1;
 			}
 			initialized = true;
 		}
 	}
-	
+
 	public String getUID() {
 		return UID;
 	}
@@ -65,7 +65,7 @@ public class ExampleMethod extends AbstractMethod implements InitializingMethod,
 	public int[] getVersion() {
 		return VERSION;
 	}
-	
+
 	@Override
 	public Object createData() {
 		return new ExampleData();
@@ -74,45 +74,45 @@ public class ExampleMethod extends AbstractMethod implements InitializingMethod,
 	public boolean supportsDataClass(Class<?> clazz) {
 		return ExampleData.class.isAssignableFrom(clazz);
 	}
-	
+
 	public Class<?> getResultClass() {
 		return ExampleResult.class;
 	}
-	
+
 	@Override
 	public void validate(Object data, Errors errors) {
 		super.validate(data, errors);
 		ExampleData eData = (ExampleData) data;
 		int count = eData.getCount();
-		if( count < 0 || count > 10000 ) {
+		if (count < 0 || count > 10000) {
 			errors.rejectValue("count", "exampleMethod.error.badCount");
 		}
 	}
-	
+
 	@Override
 	public Object doComputation(Object data, MethodExecutionTracker tracker) throws ComputationException {
-		
+
 		int product = 1;
 		ExampleData eData = (ExampleData) data;
 		int count = eData.getCount();
-		
+
 		// initialized task's tickers
 		tracker.resetTickers();
 		tracker.setTickerLimits(new int[] {COUNT,count});
-		
+
 		int i, e;
 		// initialize computation based on whether it has been suspended before or not
-		if( eData.isSuspended() ) {
+		if (eData.isSuspended()) {
 			int[] counters = eData.getSuspendedCounters();
 			i = counters[0];
 			e = counters[1];
 			product = eData.getSuspendedProduct();
-			synchronized( tracker ) {
+			synchronized (tracker) {
 				tracker.setTickers(counters);
-				if( i/2 == 0 ) {
-					tracker.setMessage( new ResolvableString("exampleMethod.start") );			
+				if (i/2 == 0) {
+					tracker.setMessage(new ResolvableString("exampleMethod.start"));
 				} else {
-					tracker.setMessage( new ResolvableString("exampleMethod.processed"+(i/2-1)) );
+					tracker.setMessage(new ResolvableString("exampleMethod.processed"+(i/2-1)));
 				}
 			}
 			eData.setSuspended(false);
@@ -120,52 +120,52 @@ public class ExampleMethod extends AbstractMethod implements InitializingMethod,
 		} else {
 			i = 0;
 			e = 0;
-			tracker.setMessage( new ResolvableString("exampleMethod.start") );			
+			tracker.setMessage(new ResolvableString("exampleMethod.start"));
 		}
-		
+
 		// the main "computation" loop
-		while( i<COUNT ) {			
-			
+		while (i<COUNT) {
+
 			tracker.setTicker(1, e);
-			
-			while( e<count ) {
-				if( !eData.isNoWait() ) {
+
+			while (e<count) {
+				if (!eData.isNoWait()) {
 					try {
 						Thread.sleep(25);
-					} catch( InterruptedException ex ) {}
+					} catch (InterruptedException ex) {}
 				}
 				tracker.tick(1);
 				e++;
-				
+
 				// check for abort request
-				if( tracker.isRequestingAbort() ) {
+				if (tracker.isRequestingAbort()) {
 					return null;
 				}
 
-				// check for suspend request, if requested save state to the data				
-				if( tracker.isRequestingSuspend() ) {
+				// check for suspend request, if requested save state to the data
+				if (tracker.isRequestingSuspend()) {
 					eData.setSuspendedCounters(new int[] {i,e});
 					eData.setSuspendedProduct(product);
 					eData.setSuspended(true);
 					return null;
 				}
 			}
-			
+
 			product *= numbers[i];
-			synchronized( tracker ) {
+			synchronized (tracker) {
 				tracker.tick(0);
-				tracker.setMessage( new ResolvableString("exampleMethod.processed"+(i/2)) );
+				tracker.setMessage(new ResolvableString("exampleMethod.processed"+(i/2)));
 			}
 			i++;
 			e=0;
 		}
-		
+
 		product += count;
-		
+
 		ExampleResult result = new ExampleResult();
 		result.setResult(product);
 		return result;
-		
+
 	}
 
 	@Override
@@ -186,11 +186,11 @@ public class ExampleMethod extends AbstractMethod implements InitializingMethod,
 	@Override
 	public IterableParameter[] getIterableParameters(Object data) {
 
-		IterableNumericProperty countProperty; 
+		IterableNumericProperty countProperty;
 		try {
-			countProperty = new IterableNumericProperty( data, "count" );
+			countProperty = new IterableNumericProperty(data, "count");
 		} catch (IntrospectionException ex) {
-			logger.error( "Failed to get count property", ex );
+			logger.error("Failed to get count property", ex);
 			throw new SanityCheckException(ex);
 		}
 		countProperty.setDefaultStartValue(5);
@@ -198,14 +198,14 @@ public class ExampleMethod extends AbstractMethod implements InitializingMethod,
 		countProperty.setMinimum(1);
 		countProperty.setMaximum(100);
 		countProperty.setStepSize(1);
-				
+
 		return new IterableParameter[] { countProperty };
-		
+
 	}
 
 	@Override
 	public Object digestIterationResult(int iteration, Object result) {
 		return result;
 	}
-	
+
 }

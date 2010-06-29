@@ -1,5 +1,5 @@
 /* SaveDocumentAction.java created 2007-10-15
- * 
+ *
  */
 package org.signalml.app.action;
 
@@ -18,63 +18,63 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** SaveDocumentAction
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class SaveDocumentAction extends AbstractFocusableSignalMLAction<DocumentFocusSelector> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	protected static final Logger logger = Logger.getLogger(SaveDocumentAction.class);
 
 	private DocumentFlowIntegrator documentFlowIntegrator;
-	
+
 	public SaveDocumentAction(MessageSourceAccessor messageSource, DocumentFocusSelector documentFocusSelector) {
 		super(messageSource, documentFocusSelector);
 		setText("action.saveDocument");
 		setIconPath("org/signalml/app/icon/filesave.png");
 		setToolTip("action.saveDocumentToolTip");
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent ev) {
 
 		logger.debug("Save document");
-		
+
 		Document document = getActionFocusSelector().getActiveDocument();
-		if( document == null ) {
+		if (document == null) {
 			return;
 		}
-				
+
 		try {
 			documentFlowIntegrator.saveDocument(document, false);
-		} catch(SignalMLException ex) {
+		} catch (SignalMLException ex) {
 			logger.error("Failed to save focused document", ex);
 			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-			return;			
-		} catch(IOException ex) {
+			return;
+		} catch (IOException ex) {
 			logger.error("Failed to save focused document - i/o exception", ex);
 			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-			return;			
+			return;
 		}
-		
+
 	}
 
-	
+
 	@Override
 	public void setEnabledAsNeeded() {
 		boolean enabled = false;
 		Document document = getActionFocusSelector().getActiveDocument();
-		if( document != null ) {
-			if( document instanceof MutableDocument ) {
-				if( !((MutableDocument) document).isSaved() ) {
+		if (document != null) {
+			if (document instanceof MutableDocument) {
+				if (!((MutableDocument) document).isSaved()) {
 					enabled = true;
 				}
 			}
-		}		
-		setEnabled(enabled);		
+		}
+		setEnabled(enabled);
 	}
-	
+
 	public DocumentFlowIntegrator getDocumentFlowIntegrator() {
 		return documentFlowIntegrator;
 	}
@@ -82,5 +82,5 @@ public class SaveDocumentAction extends AbstractFocusableSignalMLAction<Document
 	public void setDocumentFlowIntegrator(DocumentFlowIntegrator documentFlowIntegrator) {
 		this.documentFlowIntegrator = documentFlowIntegrator;
 	}
-	
+
 }

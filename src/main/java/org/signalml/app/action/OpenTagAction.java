@@ -1,5 +1,5 @@
 /* OpenTagAction.java created 2007-10-07
- * 
+ *
  */
 package org.signalml.app.action;
 
@@ -25,42 +25,42 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** OpenTagAction
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class OpenTagAction extends AbstractFocusableSignalMLAction<SignalDocumentFocusSelector> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	protected static final Logger logger = Logger.getLogger(OpenTagAction.class);
-		
+
 	private DocumentFlowIntegrator documentFlowIntegrator;
 	private ViewerFileChooser fileChooser;
 	private Component optionPaneParent;
-	
+
 	public OpenTagAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
 		super(messageSource, signalDocumentFocusSelector);
 		setText("action.openTag");
 		setIconPath("org/signalml/app/icon/fileopen.png");
 		setToolTip("action.openTagToolTip");
 	}
-		
+
 	@Override
 	public void actionPerformed(ActionEvent ev) {
-		
+
 		logger.debug("Open tag");
 
-		SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();		
-		if( signalDocument == null ) {
+		SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
+		if (signalDocument == null) {
 			logger.warn("Target document doesn't exist or is not a signal");
 			return;
 		}
-		
+
 		File file = fileChooser.chooseOpenTag(optionPaneParent);
-		if( file == null ) {
+		if (file == null) {
 			return;
 		}
-		
+
 		OpenDocumentDescriptor ofd = new OpenDocumentDescriptor();
 		ofd.setType(ManagedDocumentType.TAG);
 		ofd.setMakeActive(true);
@@ -74,42 +74,42 @@ public class OpenTagAction extends AbstractFocusableSignalMLAction<SignalDocumen
 			legTag = false;
 			logger.info("Failed to import tags, not a legacy tag");
 		}
-		
+
 		TagDocument tagDocument = null;
 		try {
-			 tagDocument = new TagDocument(tagSet);
+			tagDocument = new TagDocument(tagSet);
 		} catch (SignalMLException ex) {
 			legTag = false;
 			logger.info("Failed to create document, not a legacy tag");
 		}
-		
+
 		if (legTag) {
 			ofd.getTagOptions().setExistingDocument(tagDocument);
 		} else {
 			ofd.setFile(file);
-		}		
-		
+		}
+
 		ofd.getTagOptions().setParent(signalDocument);
 
 		try {
 			documentFlowIntegrator.openDocument(ofd);
-		} catch(SignalMLException ex) {
+		} catch (SignalMLException ex) {
 			logger.error("Failed to open document", ex);
 			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-			return;			
-		} catch(IOException ex) {
+			return;
+		} catch (IOException ex) {
 			logger.error("Failed to open document - i/o exception", ex);
 			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-			return;			
+			return;
 		}
-				
+
 	}
 
 	@Override
 	public void setEnabledAsNeeded() {
-		setEnabled( getActionFocusSelector().getActiveSignalDocument() != null ); 
+		setEnabled(getActionFocusSelector().getActiveSignalDocument() != null);
 	}
-	
+
 	public DocumentFlowIntegrator getDocumentFlowIntegrator() {
 		return documentFlowIntegrator;
 	}
@@ -133,5 +133,5 @@ public class OpenTagAction extends AbstractFocusableSignalMLAction<SignalDocumen
 	public void setOptionPaneParent(Component optionPaneParent) {
 		this.optionPaneParent = optionPaneParent;
 	}
-			
+
 }

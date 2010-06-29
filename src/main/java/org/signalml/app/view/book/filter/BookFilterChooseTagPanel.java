@@ -1,5 +1,5 @@
 /* BookFilterChooseTagPanel.java created 2008-03-05
- * 
+ *
  */
 package org.signalml.app.view.book.filter;
 
@@ -26,22 +26,22 @@ import org.springframework.validation.Errors;
 
 /** BookFilterChooseTagPanel
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class BookFilterChooseTagPanel extends JPanel {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private MessageSourceAccessor messageSource;
-	
+
 	private JTextField tagTextField;
 	private JButton chooseTagButton;
 
 	private ViewerFileChooser fileChooser;
-	
+
 	private File tagFile;
-	
+
 	public BookFilterChooseTagPanel(MessageSourceAccessor messageSource, ViewerFileChooser fileChooser) {
 		super();
 		this.messageSource = messageSource;
@@ -50,10 +50,10 @@ public class BookFilterChooseTagPanel extends JPanel {
 	}
 
 	private void initialize() {
-		
+
 		CompoundBorder border = new CompoundBorder(
-			new TitledBorder( messageSource.getMessage("tagBasedFilter.chooseTagFileTitle") ),
-			new EmptyBorder(3,3,3,3)
+		        new TitledBorder(messageSource.getMessage("tagBasedFilter.chooseTagFileTitle")),
+		        new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);
 
@@ -63,90 +63,90 @@ public class BookFilterChooseTagPanel extends JPanel {
 		layout.setAutoCreateGaps(true);
 
 		JLabel tagFileLabel = new JLabel(messageSource.getMessage("tagBasedFilter.tagFile"));
-		
+
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
-		
-		hGroup.addGroup(
-				layout.createParallelGroup()
-				.addComponent(tagFileLabel)
-			);
-		
-		hGroup.addGroup(
-				layout.createParallelGroup()
-				.addComponent(getTagTextField())
-			);
 
 		hGroup.addGroup(
-				layout.createParallelGroup()
-				.addComponent(getChooseTagButton())
-			);
-		
+		        layout.createParallelGroup()
+		        .addComponent(tagFileLabel)
+		);
+
+		hGroup.addGroup(
+		        layout.createParallelGroup()
+		        .addComponent(getTagTextField())
+		);
+
+		hGroup.addGroup(
+		        layout.createParallelGroup()
+		        .addComponent(getChooseTagButton())
+		);
+
 		layout.setHorizontalGroup(hGroup);
-		
+
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(tagFileLabel)
-	            .addComponent(getTagTextField())
-	            .addComponent(getChooseTagButton())
-			);
-				
-		layout.setVerticalGroup(vGroup);		
-						
+		        layout.createParallelGroup(Alignment.BASELINE)
+		        .addComponent(tagFileLabel)
+		        .addComponent(getTagTextField())
+		        .addComponent(getChooseTagButton())
+		);
+
+		layout.setVerticalGroup(vGroup);
+
 	}
-	
+
 	public JTextField getTagTextField() {
-		if( tagTextField == null ) {
+		if (tagTextField == null) {
 			tagTextField = new JTextField();
-			tagTextField.setPreferredSize( new Dimension( 300,25 ) );
+			tagTextField.setPreferredSize(new Dimension(300,25));
 			tagTextField.setEditable(false);
 		}
 		return tagTextField;
 	}
 
 	public JButton getChooseTagButton() {
-		if( chooseTagButton == null ) {
-			chooseTagButton = new JButton( new ChooseTagFileAction() );
+		if (chooseTagButton == null) {
+			chooseTagButton = new JButton(new ChooseTagFileAction());
 		}
 		return chooseTagButton;
 	}
-	
+
 	public void fillPanelFromModel(TagBasedAtomFilter filter) {
-		
+
 		String tagFilePath = filter.getTagFilePath();
-		if( tagFilePath == null ) {
+		if (tagFilePath == null) {
 			tagFile = null;
-			getTagTextField().setText( "" );
+			getTagTextField().setText("");
 		} else {
-			tagFile = new File( tagFilePath );
-			getTagTextField().setText( tagFile.getAbsolutePath() );
+			tagFile = new File(tagFilePath);
+			getTagTextField().setText(tagFile.getAbsolutePath());
 		}
-				
+
 	}
-	
+
 	public void fillModelFromPanel(TagBasedAtomFilter filter) {
-		
-		if( tagFile == null ) {
+
+		if (tagFile == null) {
 			filter.setTagFilePath(null);
 		} else {
 			filter.setTagFilePath(tagFile.getAbsolutePath());
 		}
-		
+
 	}
-	
-	public void validatePanel( Errors errors ) {
-				
-		if( tagFile == null ) {
+
+	public void validatePanel(Errors errors) {
+
+		if (tagFile == null) {
 			errors.rejectValue("tagFilePath", "tagBasedFilter.error.badTagFile");
 		} else {
-			if( !tagFile.exists() || !tagFile.canRead() ) {
+			if (!tagFile.exists() || !tagFile.canRead()) {
 				errors.rejectValue("tagFilePath", "tagBasedFilter.error.tagFileNotReadable");
 			}
 		}
-		
+
 	}
-	
+
 	public File getTagFile() {
 		return tagFile;
 	}
@@ -157,30 +157,30 @@ public class BookFilterChooseTagPanel extends JPanel {
 		getChooseTagButton().setEnabled(enabled);
 		super.setEnabled(enabled);
 	}
-	
+
 	protected class ChooseTagFileAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 
 		public ChooseTagFileAction() {
 			super(messageSource.getMessage("tagBasedFilter.chooseTagFile"));
-			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/find.png") );
+			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/find.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("tagBasedFilter.chooseTagFileToolTip"));
 		}
-		
-		public void actionPerformed(ActionEvent ev) {			
-			
+
+		public void actionPerformed(ActionEvent ev) {
+
 			File file = fileChooser.chooseOpenTag(BookFilterChooseTagPanel.this.getTopLevelAncestor());
-			if( file == null ) {
+			if (file == null) {
 				return;
 			}
-			
-			tagFile = file;			
+
+			tagFile = file;
 
 			getTagTextField().setText(tagFile.getAbsolutePath());
-			
+
 		}
-		
-	}	
-	
+
+	}
+
 }

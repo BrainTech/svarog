@@ -1,5 +1,5 @@
 /* LockableJSplitPane.java created 2007-09-26
- * 
+ *
  */
 
 package org.signalml.app.view.element;
@@ -10,7 +10,7 @@ import javax.swing.JSplitPane;
 
 /** LockableJSplitPane
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class LockableJSplitPane extends JSplitPane {
@@ -45,25 +45,25 @@ public class LockableJSplitPane extends JSplitPane {
 	}
 
 	/* XXX ugly hack
-	 * 
+	 *
 	 * As of Swing/Java 6.0 there seems to be no other way prevent the user from moving the divider.
 	 * Setting the whole split pane to disabled achieves the effect, but breaks other things,
 	 * for instance cursors are not changed for any child components.
-	 * 
-	 * The problem is mentioned in several bugs (7+ years old) and forum threads, 
+	 *
+	 * The problem is mentioned in several bugs (7+ years old) and forum threads,
 	 * with no better solution given.
-	 * 
+	 *
 	 * The methods below achieve an acceptable effect via resizing the divider to zero.
 	 * Underlying divider size management methods are wrapped to achieve separation
 	 * of those two properties.
 	 */
-	
+
 	public void setLocked(boolean locked) {
-		if( this.locked != locked ) {			
-			if( locked ) {
+		if (this.locked != locked) {
+			if (locked) {
 				lockedDividerSize = getDividerSizeInternal();
 			}
-			setDividerSizeInternal( locked ? 0 : lockedDividerSize );
+			setDividerSizeInternal(locked ? 0 : lockedDividerSize);
 			this.locked = locked;
 		}
 	}
@@ -75,21 +75,21 @@ public class LockableJSplitPane extends JSplitPane {
 	private void setDividerSizeInternal(int newSize) {
 		super.setDividerSize(newSize);
 	}
-	
+
 	@Override
 	public void setDividerSize(int newSize) {
-		if( locked ) {
+		if (locked) {
 			lockedDividerSize = newSize;
 		} else {
 			super.setDividerSize(newSize);
 		}
 	}
-	
+
 	@Override
 	public int getDividerSize() {
-		return ( locked ) ? lockedDividerSize : super.getDividerSize();
+		return (locked) ? lockedDividerSize : super.getDividerSize();
 	}
-	
-	
-		
+
+
+
 }

@@ -1,5 +1,5 @@
 /* DefaultBookBuilder.java created 2008-02-24
- * 
+ *
  */
 
 package org.signalml.domain.book.test;
@@ -23,19 +23,19 @@ import org.signalml.domain.book.StandardBookWriter;
 
 /** DefaultBookBuilder
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class RandomBookBuilder implements BookBuilder {
 
 	private static RandomBookBuilder sharedInstance = null;
 
-	protected RandomBookBuilder() {		
+	protected RandomBookBuilder() {
 	}
 
 	public static RandomBookBuilder getInstance() {
-		if( sharedInstance == null ) {
-			sharedInstance = new RandomBookBuilder();			
+		if (sharedInstance == null) {
+			sharedInstance = new RandomBookBuilder();
 		}
 		return sharedInstance;
 	}
@@ -58,19 +58,19 @@ public class RandomBookBuilder implements BookBuilder {
 		DefaultMutableBook book = new DefaultMutableBook(channelCount, samplingFrequency);
 
 		MutableBookSegment[] segment1 = book.addNewSegment(0, segmentLength);
-		for( i=0; i<channelCount; i++ ) {
+		for (i=0; i<channelCount; i++) {
 
-			float energy = (float) (1000 * Math.abs( random.nextDouble() ) );
-			segment1[i].setSignalEnergy( energy );
-			segment1[i].setDecompositionEnergy( energy - ((float) (100 * Math.abs( random.nextDouble() ))) );
+			float energy = (float)(1000 * Math.abs(random.nextDouble()));
+			segment1[i].setSignalEnergy(energy);
+			segment1[i].setDecompositionEnergy(energy - ((float)(100 * Math.abs(random.nextDouble()))));
 			float[] samples = new float[segmentLength];
-			for( e=0; e<segmentLength; e++ ) {
-				samples[e] = (float) (100 * (random.nextDouble()-0.5));
+			for (e=0; e<segmentLength; e++) {
+				samples[e] = (float)(100 * (random.nextDouble()-0.5));
 			}
 			segment1[i].setSignalSamples(samples);
 
-			for( e=0; e<20; e++ ) {
-				segment1[i].addAtom( createRandomAtom(random, e, samplingFrequency, segmentLength) );
+			for (e=0; e<20; e++) {
+				segment1[i].addAtom(createRandomAtom(random, e, samplingFrequency, segmentLength));
 			}
 
 			/*
@@ -83,37 +83,37 @@ public class RandomBookBuilder implements BookBuilder {
 		}
 
 		MutableBookSegment[] segment2 = book.addNewSegment(20, segmentLength);
-		for( i=0; i<channelCount; i++ ) {
+		for (i=0; i<channelCount; i++) {
 
-			float energy = (float) (2000 * Math.abs( random.nextDouble() ) );
-			segment2[i].setSignalEnergy( energy );
-			segment2[i].setDecompositionEnergy( energy - ((float) (100 * Math.abs( random.nextDouble() ))) );
+			float energy = (float)(2000 * Math.abs(random.nextDouble()));
+			segment2[i].setSignalEnergy(energy);
+			segment2[i].setDecompositionEnergy(energy - ((float)(100 * Math.abs(random.nextDouble()))));
 			float[] samples = new float[segmentLength];
-			for( e=0; e<segmentLength; e++ ) {
-				samples[e] = (float) (100 * (random.nextDouble()-0.5));
+			for (e=0; e<segmentLength; e++) {
+				samples[e] = (float)(100 * (random.nextDouble()-0.5));
 			}
 			segment2[i].setSignalSamples(samples);
 
-			for( e=0; e<30; e++ ) {
-				segment2[i].addAtom( createRandomAtom(random, e, samplingFrequency, segmentLength) );
+			for (e=0; e<30; e++) {
+				segment2[i].addAtom(createRandomAtom(random, e, samplingFrequency, segmentLength));
 			}
 
 		}
 
 		MutableBookSegment[] segment3 = book.addNewSegment(40, segmentLength);
-		for( i=0; i<channelCount; i++ ) {
+		for (i=0; i<channelCount; i++) {
 
-			float energy = (float) (3000 * Math.abs( random.nextDouble() ) );
-			segment3[i].setSignalEnergy( energy );
-			segment3[i].setDecompositionEnergy( energy - ((float) (100 * Math.abs( random.nextDouble() ))) );
+			float energy = (float)(3000 * Math.abs(random.nextDouble()));
+			segment3[i].setSignalEnergy(energy);
+			segment3[i].setDecompositionEnergy(energy - ((float)(100 * Math.abs(random.nextDouble()))));
 			float[] samples = new float[segmentLength];
-			for( e=0; e<segmentLength; e++ ) {
-				samples[e] = (float) (100 * (random.nextDouble()-0.5));
+			for (e=0; e<segmentLength; e++) {
+				samples[e] = (float)(100 * (random.nextDouble()-0.5));
 			}
 			segment3[i].setSignalSamples(samples);
 
-			for( e=0; e<20; e++ ) {
-				segment3[i].addAtom( createRandomAtom(random, e, samplingFrequency, segmentLength) );
+			for (e=0; e<20; e++) {
+				segment3[i].addAtom(createRandomAtom(random, e, samplingFrequency, segmentLength));
 			}
 
 		}
@@ -137,8 +137,8 @@ public class RandomBookBuilder implements BookBuilder {
 	public void writeBookComplete(StandardBook book, File file) throws IOException {
 		IncrementalBookWriter bookWriter = writeBookIncremental(book, file);
 		int segmentCount = book.getSegmentCount();
-		for( int i=0; i<segmentCount; i++ ) {
-			bookWriter.writeSegment( book.getSegmentAt(i) );
+		for (int i=0; i<segmentCount; i++) {
+			bookWriter.writeSegment(book.getSegmentAt(i));
 		}
 		bookWriter.close();
 	}
@@ -148,21 +148,21 @@ public class RandomBookBuilder implements BookBuilder {
 		return new MPv5BookWriter(book, file);
 	}
 
-	private StandardBookAtom createRandomAtom( Random random, int iteration, float samplingFrequency, int segmentLength ) {
+	private StandardBookAtom createRandomAtom(Random random, int iteration, float samplingFrequency, int segmentLength) {
 
 		DefaultBookAtom atom = new DefaultBookAtom(
-				samplingFrequency,
-				segmentLength,
-				StandardBookAtom.GABORWAVE_IDENTITY,
-				iteration,
-				(float) (100 * Math.abs( random.nextDouble() )),
-				//(int) ( (segmentLength/2) * Math.abs( random.nextDouble() ) ),
-				2560/2-1,
-				//(int) (segmentLength * Math.abs( random.nextDouble() ) ),
-				2560-1,
-				(int) (segmentLength * Math.abs( random.nextDouble() ) ),
-				(float) (100 * Math.abs( random.nextDouble() )),
-				(float) (3.14 * random.nextDouble())
+		        samplingFrequency,
+		        segmentLength,
+		        StandardBookAtom.GABORWAVE_IDENTITY,
+		        iteration,
+		        (float)(100 * Math.abs(random.nextDouble())),
+		        //(int) ( (segmentLength/2) * Math.abs( random.nextDouble() ) ),
+		        2560/2-1,
+		        //(int) (segmentLength * Math.abs( random.nextDouble() ) ),
+		        2560-1,
+		        (int)(segmentLength * Math.abs(random.nextDouble())),
+		        (float)(100 * Math.abs(random.nextDouble())),
+		        (float)(3.14 * random.nextDouble())
 		);
 
 		return atom;

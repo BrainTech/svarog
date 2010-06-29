@@ -1,5 +1,5 @@
 /* BookToTagMethodConsumer.java created 2007-10-23
- * 
+ *
  */
 
 package org.signalml.app.method.booktotag;
@@ -22,15 +22,15 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** BookToTagMethodConsumer
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class BookToTagMethodConsumer implements InitializingMethodResultConsumer {
 
 	protected static final Logger logger = Logger.getLogger(BookToTagMethodConsumer.class);
-	
+
 	private MessageSourceAccessor messageSource;
-	
+
 	private Window dialogParent;
 	private ViewerFileChooser fileChooser;
 
@@ -40,62 +40,62 @@ public class BookToTagMethodConsumer implements InitializingMethodResultConsumer
 		messageSource = manager.getMessageSource();
 		dialogParent = manager.getDialogParent();
 		fileChooser = manager.getFileChooser();
-		
+
 	}
-	
+
 	@Override
 	public boolean consumeResult(Method method, Object methodData, Object methodResult) throws SignalMLException {
 
 		BookToTagResult result = (BookToTagResult) methodResult;
-		
+
 		TagDocument tagDocument = new TagDocument(result.getTagSet());
-		
+
 		boolean hasFile = false;
 		File saveFile;
-		
+
 		do {
-			
+
 			saveFile = fileChooser.chooseSaveTag(dialogParent);
-			if( saveFile == null ) {
+			if (saveFile == null) {
 				// file choice canceled
 				break;
 			}
-			
+
 			hasFile = true;
-			
+
 			// file exists warning
-			if( saveFile.exists() ) {
+			if (saveFile.exists()) {
 				int res = OptionPane.showFileAlreadyExists(dialogParent);
-				if( res != OptionPane.OK_OPTION ) {
+				if (res != OptionPane.OK_OPTION) {
 					hasFile = false;
-				}								
+				}
 			}
-			
-		} while( !hasFile );
-			
-		if( hasFile ) {
-			
-			tagDocument.setBackingFile( saveFile );
+
+		} while (!hasFile);
+
+		if (hasFile) {
+
+			tagDocument.setBackingFile(saveFile);
 			try {
 				tagDocument.saveDocument();
-			} catch(SignalMLException ex ) {
+			} catch (SignalMLException ex) {
 				logger.error("Failed to save document", ex);
 				ErrorsDialog.showImmediateExceptionDialog(dialogParent, ex);
-				return false;							
-			} catch(IOException ex) {
+				return false;
+			} catch (IOException ex) {
 				logger.error("Failed to save document - i/o exception", ex);
 				ErrorsDialog.showImmediateExceptionDialog(dialogParent, ex);
-				return false;			
+				return false;
 			}
-										
+
 		}
-		
+
 		return true;
-								
+
 	}
 
 	public MessageSourceAccessor getMessageSource() {
 		return messageSource;
 	}
-	
+
 }

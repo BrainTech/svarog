@@ -1,5 +1,5 @@
 /* PresetComboBoxModel.java created 2007-10-24
- * 
+ *
  */
 
 package org.signalml.app.config.preset;
@@ -9,7 +9,7 @@ import javax.swing.ComboBoxModel;
 
 /** PresetComboBoxModel
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class PresetComboBoxModel extends AbstractListModel implements ComboBoxModel, PresetManagerListener {
@@ -18,9 +18,9 @@ public class PresetComboBoxModel extends AbstractListModel implements ComboBoxMo
 
 	private PresetManager presetManager;
 	private String chooseTitle;
-		
+
 	private Object selectedItem;
-	
+
 	public PresetComboBoxModel(String chooseTitle, PresetManager presetManager) {
 		super();
 		this.chooseTitle = chooseTitle;
@@ -32,10 +32,10 @@ public class PresetComboBoxModel extends AbstractListModel implements ComboBoxMo
 	public int getSize() {
 		return presetManager.getPresetCount() + 1;
 	}
-	
+
 	@Override
 	public Object getElementAt(int index) {
-		if( index == 0 ) {
+		if (index == 0) {
 			return chooseTitle;
 		} else {
 			return presetManager.getPresetAt(index-1);
@@ -51,7 +51,7 @@ public class PresetComboBoxModel extends AbstractListModel implements ComboBoxMo
 	public void setSelectedItem(Object anItem) {
 		selectedItem = anItem;
 	}
-	
+
 	@Override
 	public void defaultPresetChanged(PresetManagerEvent ev) {
 		// ignored
@@ -64,14 +64,14 @@ public class PresetComboBoxModel extends AbstractListModel implements ComboBoxMo
 
 	@Override
 	public void presetRemoved(PresetManagerEvent ev) {
-		fireContentsChanged(this, 1, presetManager.getPresetCount()+1);		
+		fireContentsChanged(this, 1, presetManager.getPresetCount()+1);
 	}
 
 	@Override
 	public void presetReplaced(PresetManagerEvent ev) {
 		fireContentsChanged(this, 1, presetManager.getPresetCount()+1);
 	}
-	
-	
-	
+
+
+
 }

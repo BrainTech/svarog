@@ -1,5 +1,5 @@
-/* Signal Copyright (C) 2003 Dobieslaw Ircha    <dircha@eranet.pl> 
-                              Artur Biesiadowski <abies@adres.pl> 
+/* Signal Copyright (C) 2003 Dobieslaw Ircha    <dircha@eranet.pl>
+                              Artur Biesiadowski <abies@adres.pl>
                               Piotr J. Durka     <Piotr-J.Durka@fuw.edu.pl>
 
     This program is free software; you can redistribute it and/or modify
@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-    
+
     Linking Signal statically or dynamically with other modules is making a
     combined work based on Signal.  Thus, the terms and conditions of the GNU
     General Public License cover the whole combination.
@@ -52,61 +52,61 @@ import org.xml.sax.SAXParseException;
 
 public class Xerces implements ParserWrapper, ParserWrapper.DocumentInfo, ErrorHandler {
 
-    protected DOMParser parser = new DOMParser();
+	protected DOMParser parser = new DOMParser();
 
-    public Xerces() {
-        parser.setErrorHandler(this);
-    } 
-    
-    public Document parse(String uri) throws Exception {
-        parser.parse(uri);
-        return parser.getDocument();
-    } 
+	public Xerces() {
+		parser.setErrorHandler(this);
+	}
 
-    public void setFeature(String featureId, boolean state)
-        throws SAXNotRecognizedException, SAXNotSupportedException {
-        parser.setFeature(featureId, state);
-    }
+	public Document parse(String uri) throws Exception {
+		parser.parse(uri);
+		return parser.getDocument();
+	}
 
-    public ParserWrapper.DocumentInfo getDocumentInfo() {
-        return this;
-    }
+	public void setFeature(String featureId, boolean state)
+	throws SAXNotRecognizedException, SAXNotSupportedException {
+		parser.setFeature(featureId, state);
+	}
 
-    public boolean isIgnorableWhitespace(Text text) {
-        return ((TextImpl)text).isIgnorableWhitespace();
-    }
+	public ParserWrapper.DocumentInfo getDocumentInfo() {
+		return this;
+	}
 
-    public void warning(SAXParseException ex) throws SAXException {
-        printError("Warning", ex);
-    } 
+	public boolean isIgnorableWhitespace(Text text) {
+		return ((TextImpl)text).isIgnorableWhitespace();
+	}
 
-    public void error(SAXParseException ex) throws SAXException {
-        printError("Error", ex);
-    } 
+	public void warning(SAXParseException ex) throws SAXException {
+		printError("Warning", ex);
+	}
 
-    public void fatalError(SAXParseException ex) throws SAXException {
-        printError("Fatal Error", ex);
-        throw ex;
-    }
+	public void error(SAXParseException ex) throws SAXException {
+		printError("Error", ex);
+	}
 
-    protected void printError(String type, SAXParseException ex) {
-        System.err.print("[");
-        System.err.print(type);
-        System.err.print("] ");
-        String systemId = ex.getSystemId();
-        if (systemId != null) {
-            int index = systemId.lastIndexOf('/');
-            if (index != -1)
-                systemId = systemId.substring(index + 1);
-            System.err.print(systemId);
-        }
-        System.err.print(':');
-        System.err.print(ex.getLineNumber());
-        System.err.print(':');
-        System.err.print(ex.getColumnNumber());
-        System.err.print(": ");
-        System.err.print(ex.getMessage());
-        System.err.println();
-        System.err.flush();
-    } 
-} 
+	public void fatalError(SAXParseException ex) throws SAXException {
+		printError("Fatal Error", ex);
+		throw ex;
+	}
+
+	protected void printError(String type, SAXParseException ex) {
+		System.err.print("[");
+		System.err.print(type);
+		System.err.print("] ");
+		String systemId = ex.getSystemId();
+		if (systemId != null) {
+			int index = systemId.lastIndexOf('/');
+			if (index != -1)
+				systemId = systemId.substring(index + 1);
+			System.err.print(systemId);
+		}
+		System.err.print(':');
+		System.err.print(ex.getLineNumber());
+		System.err.print(':');
+		System.err.print(ex.getColumnNumber());
+		System.err.print(": ");
+		System.err.print(ex.getMessage());
+		System.err.println();
+		System.err.flush();
+	}
+}

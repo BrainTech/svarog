@@ -1,5 +1,5 @@
 /* SignalFFTTool.java created 2007-12-16
- * 
+ *
  */
 package org.signalml.app.view.signal;
 
@@ -17,7 +17,7 @@ import org.signalml.app.util.IconUtils;
 
 /** SignalFFTTool
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class SignalFFTTool extends SignalTool {
@@ -26,7 +26,7 @@ public class SignalFFTTool extends SignalTool {
 	private SignalFFTPlot fftPlot;
 
 	private SignalFFTSettings settings;
-	
+
 	public SignalFFTTool(SignalView signalView) {
 		super(signalView);
 		fftPlot = new SignalFFTPlot(signalView.getMessageSource());
@@ -37,27 +37,27 @@ public class SignalFFTTool extends SignalTool {
 	public Cursor getDefaultCursor() {
 		return IconUtils.getCrosshairCursor();
 	}
-	
+
 	@Override
 	public void mousePressed(MouseEvent e) {
-		
-		if( SwingUtilities.isLeftMouseButton(e) ) {
-			
+
+		if (SwingUtilities.isLeftMouseButton(e)) {
+
 			Object source = e.getSource();
-			if( !(source instanceof SignalPlot) ) {
+			if (!(source instanceof SignalPlot)) {
 				plot = null;
 				return;
 			}
 			plot = (SignalPlot) source;
-						
+
 			Point point = e.getPoint();
 			int channel = plot.toChannelSpace(point);
 			fftPlot.setSettings(settings);
-			if( e.isControlDown() ) {
+			if (e.isControlDown()) {
 				Dimension plotSize = settings.getPlotSize();
-				int width = Math.min( 800, plotSize.width * 2 );
-				int height = Math.min( 600, plotSize.height * 2 );
-				Dimension size = new Dimension( width, height);
+				int width = Math.min(800, plotSize.width * 2);
+				int height = Math.min(600, plotSize.height * 2);
+				Dimension size = new Dimension(width, height);
 				fftPlot.setPlotSize(size);
 				fftPlot.setWindowWidth(2*settings.getWindowWidth());
 			}
@@ -66,40 +66,40 @@ public class SignalFFTTool extends SignalTool {
 			selectAround(point);
 			engaged = true;
 			e.consume();
-			
+
 		}
-		
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		if( SwingUtilities.isLeftMouseButton(e) ) {
+		if (SwingUtilities.isLeftMouseButton(e)) {
 			hideFFT();
 			engaged = false;
 			plot = null;
 			e.consume();
 		}
 	}
-	
+
 	@Override
 	public void mouseDragged(MouseEvent e) {
 
-		if( plot != null ) {
-			if( SwingUtilities.isLeftMouseButton(e) ) {
+		if (plot != null) {
+			if (SwingUtilities.isLeftMouseButton(e)) {
 				Point point = e.getPoint();
 				Rectangle r = new Rectangle(point.x, point.y, 1, 1);
-		        ((SignalPlot)e.getSource()).scrollRectToVisible(r);
-				if( settings.isChannelSwitching() ) {
+				((SignalPlot)e.getSource()).scrollRectToVisible(r);
+				if (settings.isChannelSwitching()) {
 					int channel = plot.toChannelSpace(point);
-					fftPlot.setParameters(point, channel);				
+					fftPlot.setParameters(point, channel);
 				} else {
 					fftPlot.setFocusPoint(point);
 				}
 				positionFFT(point, null);
-				selectAround(point);				
+				selectAround(point);
 			}
 		}
-		
+
 	}
 
 	public SignalFFTSettings getSettings() {
@@ -107,15 +107,15 @@ public class SignalFFTTool extends SignalTool {
 	}
 
 	public void setSettings(SignalFFTSettings settings) {
-		if( settings == null ) {
-			throw new NullPointerException( "No settings" );
+		if (settings == null) {
+			throw new NullPointerException("No settings");
 		}
 		this.settings = settings;
 	}
 
 	private void positionFFT(Point point, JLayeredPane layeredPane) {
-		if( plot != null ) {
-			if( layeredPane == null ) {
+		if (plot != null) {
+			if (layeredPane == null) {
 				layeredPane = plot.getRootPane().getLayeredPane();
 			}
 			Dimension size = fftPlot.getPreferredSize();
@@ -123,26 +123,26 @@ public class SignalFFTTool extends SignalTool {
 			int channelY = plot.channelToPixel(channel);
 			Point location = SwingUtilities.convertPoint(plot, new Point(point.x, channelY), layeredPane);
 			int y;
-			if( location.y > layeredPane.getHeight() / 2 ) {
+			if (location.y > layeredPane.getHeight() / 2) {
 				y = location.y - size.height;
 			} else {
 				y = location.y + plot.getPixelPerChannel();
-			}			
+			}
 			fftPlot.setBounds(location.x-(size.width/2), y, size.width, size.height);
 		}
 	}
-	
+
 	private void showFFT(Point point) {
-		if( plot != null ) {
+		if (plot != null) {
 			fftPlot.setVisible(true);
 			JLayeredPane layeredPane = plot.getRootPane().getLayeredPane();
 			positionFFT(point, layeredPane);
 			layeredPane.add(fftPlot, new Integer(JLayeredPane.DRAG_LAYER));
 		}
 	}
-	
+
 	private void hideFFT() {
-		if( plot != null ) {
+		if (plot != null) {
 			JLayeredPane layeredPane = plot.getRootPane().getLayeredPane();
 			layeredPane.remove(fftPlot);
 			plot.getRootPane().repaint();
@@ -150,22 +150,22 @@ public class SignalFFTTool extends SignalTool {
 	}
 
 	private void selectAround(Point point) {
-		if( plot != null ) {
-			Float centerPosition = plot.toTimeSpace(point);			
-			if( centerPosition != null ) {
+		if (plot != null) {
+			Float centerPosition = plot.toTimeSpace(point);
+			if (centerPosition != null) {
 				double offset = (((float) settings.getWindowWidth()) / plot.getSamplingFrequency()) / 2;
-				Float startPosition = new Float( centerPosition.floatValue() - ((float) offset) );
-				Float endPosition = new Float( centerPosition.floatValue() + ((float) offset) );
-				if( startPosition.equals(endPosition) ) {
+				Float startPosition = new Float(centerPosition.floatValue() - ((float) offset));
+				Float endPosition = new Float(centerPosition.floatValue() + ((float) offset));
+				if (startPosition.equals(endPosition)) {
 					signalView.clearSignalSelection();
 				} else {
 					Integer channel = fftPlot.getChannel();
-					if( channel != null ) {
+					if (channel != null) {
 						signalView.setSignalSelection(plot,plot.getChannelSelection(startPosition, endPosition, channel));
 					}
 				}
 			}
-		}		
+		}
 	}
-	
+
 }

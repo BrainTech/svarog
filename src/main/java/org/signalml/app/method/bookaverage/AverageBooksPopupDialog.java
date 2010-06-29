@@ -1,5 +1,5 @@
 /* AverageBooksPopupDialog.java created 2008-03-12
- * 
+ *
  */
 
 package org.signalml.app.method.bookaverage;
@@ -34,48 +34,48 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** AverageBooksPopupDialog
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class AverageBooksPopupDialog extends AbstractPopupDialog {
 
 	private static final long serialVersionUID = 1L;
-		
+
 	private BookView bookView;
-	
+
 	private JRadioButton averageOffRadio;
 	private JRadioButton averageOnRadio;
-	
+
 	private JSpinner minSegmentSpinner;
 	private JSpinner maxSegmentSpinner;
-	
+
 	private JCheckBox allChannelsCheckBox;
 
 	private ButtonGroup averageGroup;
-		
+
 	public AverageBooksPopupDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
 		super(messageSource, w, isModal);
 	}
-	
+
 	@Override
 	public JComponent createInterface() {
-		
+
 		JPanel averagePanel = new JPanel();
-		averagePanel.setLayout( new BoxLayout( averagePanel, BoxLayout.Y_AXIS ) );
-		averagePanel.setBorder( new CompoundBorder(
-				new TitledCrossBorder(messageSource.getMessage("averageBooks.averageTitle"), true),
-				new EmptyBorder(3,3,3,3)
-		));
-				
-		averagePanel.add( getAverageOffRadio() );
-		averagePanel.add( getAverageOnRadio() );
-		
+		averagePanel.setLayout(new BoxLayout(averagePanel, BoxLayout.Y_AXIS));
+		averagePanel.setBorder(new CompoundBorder(
+		                               new TitledCrossBorder(messageSource.getMessage("averageBooks.averageTitle"), true),
+		                               new EmptyBorder(3,3,3,3)
+		                       ));
+
+		averagePanel.add(getAverageOffRadio());
+		averagePanel.add(getAverageOnRadio());
+
 		JPanel settingsPanel = new JPanel();
-		settingsPanel.setBorder( new CompoundBorder(
-				new TitledBorder(messageSource.getMessage("averageBooks.settingsTitle")),
-				new EmptyBorder(3,3,3,3)
-		));
-		
+		settingsPanel.setBorder(new CompoundBorder(
+		                                new TitledBorder(messageSource.getMessage("averageBooks.settingsTitle")),
+		                                new EmptyBorder(3,3,3,3)
+		                        ));
+
 		GroupLayout layout = new GroupLayout(settingsPanel);
 		settingsPanel.setLayout(layout);
 		layout.setAutoCreateContainerGaps(false);
@@ -84,156 +84,156 @@ public class AverageBooksPopupDialog extends AbstractPopupDialog {
 		JLabel minSegmentLabel = new JLabel(messageSource.getMessage("averageBooks.minSegment"));
 		JLabel maxSegmentLabel = new JLabel(messageSource.getMessage("averageBooks.maxSegment"));
 		JLabel allChannelsLabel = new JLabel(messageSource.getMessage("averageBooks.allChannels"));
-		allChannelsLabel.setMinimumSize( new Dimension(25,35) );
-		
+		allChannelsLabel.setMinimumSize(new Dimension(25,35));
+
 		Component minSegmentGlue = Box.createHorizontalGlue();
 		Component maxSegmentGlue = Box.createHorizontalGlue();
 		Component allChannelsGlue = Box.createHorizontalGlue();
-		
+
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
-		
-		hGroup.addGroup(
-				layout.createParallelGroup()
-				.addComponent(minSegmentLabel)
-				.addComponent(maxSegmentLabel)
-				.addComponent(allChannelsLabel)
-			);
 
 		hGroup.addGroup(
-				layout.createParallelGroup()
-				.addComponent(minSegmentGlue)
-				.addComponent(maxSegmentGlue)
-				.addComponent(allChannelsGlue)
-			);
-		
+		        layout.createParallelGroup()
+		        .addComponent(minSegmentLabel)
+		        .addComponent(maxSegmentLabel)
+		        .addComponent(allChannelsLabel)
+		);
+
 		hGroup.addGroup(
-				layout.createParallelGroup(Alignment.TRAILING)
-				.addComponent(getMinSegmentSpinner())
-				.addComponent(getMaxSegmentSpinner())
-				.addComponent(getAllChannelsCheckBox())
-			);
-		
+		        layout.createParallelGroup()
+		        .addComponent(minSegmentGlue)
+		        .addComponent(maxSegmentGlue)
+		        .addComponent(allChannelsGlue)
+		);
+
+		hGroup.addGroup(
+		        layout.createParallelGroup(Alignment.TRAILING)
+		        .addComponent(getMinSegmentSpinner())
+		        .addComponent(getMaxSegmentSpinner())
+		        .addComponent(getAllChannelsCheckBox())
+		);
+
 		layout.setHorizontalGroup(hGroup);
-		
+
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
-		
+
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(minSegmentLabel)
-	            .addComponent(minSegmentGlue)
-	            .addComponent(getMinSegmentSpinner())
-			);
-		
+		        layout.createParallelGroup(Alignment.BASELINE)
+		        .addComponent(minSegmentLabel)
+		        .addComponent(minSegmentGlue)
+		        .addComponent(getMinSegmentSpinner())
+		);
+
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(maxSegmentLabel)
-	            .addComponent(maxSegmentGlue)
-	            .addComponent(getMaxSegmentSpinner())
-	    	);
-		
+		        layout.createParallelGroup(Alignment.BASELINE)
+		        .addComponent(maxSegmentLabel)
+		        .addComponent(maxSegmentGlue)
+		        .addComponent(getMaxSegmentSpinner())
+		);
+
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(allChannelsLabel)
-	            .addComponent(allChannelsGlue)
-	            .addComponent(getAllChannelsCheckBox())
-	    	);
-		
-		layout.setVerticalGroup(vGroup);		
-				
+		        layout.createParallelGroup(Alignment.BASELINE)
+		        .addComponent(allChannelsLabel)
+		        .addComponent(allChannelsGlue)
+		        .addComponent(getAllChannelsCheckBox())
+		);
+
+		layout.setVerticalGroup(vGroup);
+
 		JPanel interfacePanel = new JPanel(new BorderLayout());
-		
-		interfacePanel.add( averagePanel, BorderLayout.NORTH );
-		interfacePanel.add( settingsPanel, BorderLayout.CENTER );
-				
+
+		interfacePanel.add(averagePanel, BorderLayout.NORTH);
+		interfacePanel.add(settingsPanel, BorderLayout.CENTER);
+
 		Dimension size = averagePanel.getPreferredSize();
-		if( size.width < 220 ) {
+		if (size.width < 220) {
 			size.width = 220;
 		}
 		averagePanel.setPreferredSize(size);
-		
+
 		return interfacePanel;
-		
-	}	
-	
+
+	}
+
 	public ButtonGroup getAverageGroup() {
-		if( averageGroup == null ) {
+		if (averageGroup == null) {
 			averageGroup = new ButtonGroup();
 		}
 		return averageGroup;
 	}
-	
-	public JRadioButton getAverageOnRadio() {
-		if( averageOnRadio == null ) {
 
-			averageOnRadio = new JRadioButton( messageSource.getMessage("averageBooks.averageOn") );
-			getAverageGroup().add( averageOnRadio );
-			
+	public JRadioButton getAverageOnRadio() {
+		if (averageOnRadio == null) {
+
+			averageOnRadio = new JRadioButton(messageSource.getMessage("averageBooks.averageOn"));
+			getAverageGroup().add(averageOnRadio);
+
 		}
 		return averageOnRadio;
 	}
-	
+
 	public JRadioButton getAverageOffRadio() {
-		if( averageOffRadio == null ) {
-			
-			averageOffRadio = new JRadioButton( messageSource.getMessage("averageBooks.averageOff") );
-			getAverageGroup().add( averageOffRadio );
-						
+		if (averageOffRadio == null) {
+
+			averageOffRadio = new JRadioButton(messageSource.getMessage("averageBooks.averageOff"));
+			getAverageGroup().add(averageOffRadio);
+
 		}
 		return averageOffRadio;
 	}
 
 	public JSpinner getMinSegmentSpinner() {
-		if( minSegmentSpinner == null ) {
-			
-			minSegmentSpinner = new JSpinner( new SpinnerNumberModel( 1, 1, bookView.getDocument().getBook().getSegmentCount(), 1 ) );		
-			minSegmentSpinner.setPreferredSize( new Dimension( 75,25 ) );
-			
+		if (minSegmentSpinner == null) {
+
+			minSegmentSpinner = new JSpinner(new SpinnerNumberModel(1, 1, bookView.getDocument().getBook().getSegmentCount(), 1));
+			minSegmentSpinner.setPreferredSize(new Dimension(75,25));
+
 		}
 		return minSegmentSpinner;
 	}
-	
+
 	public JSpinner getMaxSegmentSpinner() {
-		if( maxSegmentSpinner == null ) {
-			
+		if (maxSegmentSpinner == null) {
+
 			int segmentCount = bookView.getDocument().getBook().getSegmentCount();
-			maxSegmentSpinner = new JSpinner( new SpinnerNumberModel( segmentCount, 1, segmentCount, 1 ) );
-			maxSegmentSpinner.setPreferredSize( new Dimension( 75, 25 ) );
-			
+			maxSegmentSpinner = new JSpinner(new SpinnerNumberModel(segmentCount, 1, segmentCount, 1));
+			maxSegmentSpinner.setPreferredSize(new Dimension(75, 25));
+
 		}
 		return maxSegmentSpinner;
 	}
-	
+
 	public JCheckBox getAllChannelsCheckBox() {
-		if( allChannelsCheckBox == null ) {
+		if (allChannelsCheckBox == null) {
 			allChannelsCheckBox = new JCheckBox();
 		}
 		return allChannelsCheckBox;
 	}
-	
+
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
-	
+
 		/*
 		if( bookView.isAveraging() ) {
 			getAverageOnRadio().setSelected(true);
 		} else {
 			getAverageOffRadio().setSelected(true);
 		}
-		
+
 		getMinSegmentSpinner().setValue( provider.getMinSegment()+1 );
 		getMaxSegmentSpinner().setValue( provider.getMaxSegment()+1 );
 		getAllChannelsCheckBox().setSelected( provider.getChannel() < 0 );
 		*/
-		
+
 	}
-		
+
 	@Override
 	public void fillModelFromDialog(Object model) {
 
 		/*
-		
+
 		if( getAverageOnRadio().isSelected() ) {
-			
+
 			provider.setBook( bookView.getFilter() );
 			provider.setMinSegment( ((Number) getMinSegmentSpinner().getValue()).intValue()-1 );
 			provider.setMaxSegment( ((Number) getMaxSegmentSpinner().getValue()).intValue()-1 );
@@ -242,39 +242,39 @@ public class AverageBooksPopupDialog extends AbstractPopupDialog {
 			} else {
 				provider.setChannel(0);
 			}
-			
+
 			bookView.setAveraging(true);
 
 		} else {
-			
+
 			bookView.setAveraging(false);
-			
+
 		}
-		
+
 		*/
-		
+
 	}
-	
+
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
-		return ( clazz == null );
+		return (clazz == null);
 	}
-	
+
 	@Override
 	public boolean isControlPanelEquipped() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean isCancellable() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean isFormClickApproving() {
 		return true;
 	}
-	
+
 	public BookView getBookView() {
 		return bookView;
 	}
@@ -282,5 +282,5 @@ public class AverageBooksPopupDialog extends AbstractPopupDialog {
 	public void setBookView(BookView bookView) {
 		this.bookView = bookView;
 	}
-		
+
 }

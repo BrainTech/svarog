@@ -1,5 +1,5 @@
 /* MP5DictionaryType.java created 2007-10-03
- * 
+ *
  */
 
 package org.signalml.method.mp5;
@@ -10,28 +10,28 @@ import org.springframework.context.MessageSourceResolvable;
 
 /** MP5DictionaryType
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public enum MP5DictionaryType implements Serializable, MessageSourceResolvable {
 
-	OCTAVE_FIXED( "OCTAVE_FIXED" ),
-	OCTAVE_STOCH( "OCTAVE_STOCH" );
-	
+	OCTAVE_FIXED("OCTAVE_FIXED"),
+	OCTAVE_STOCH("OCTAVE_STOCH");
+
 	private String name;
 
 	private MP5DictionaryType(String name) {
 		this.name = name;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-		
+
 	@Override
 	public String toString() {
 		return name;
-	}	
+	}
 
 	@Override
 	public Object[] getArguments() {
@@ -47,6 +47,6 @@ public enum MP5DictionaryType implements Serializable, MessageSourceResolvable {
 	public String getDefaultMessage() {
 		return name;
 	}
-	
-	
+
+
 }

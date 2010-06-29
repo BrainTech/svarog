@@ -1,5 +1,5 @@
 /* RulerSignalTool.java created 2007-10-05
- * 
+ *
  */
 package org.signalml.app.view.signal;
 
@@ -17,7 +17,7 @@ import org.signalml.app.util.IconUtils;
 
 /** RulerSignalTool
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class RulerSignalTool extends SignalTool {
@@ -26,7 +26,7 @@ public class RulerSignalTool extends SignalTool {
 	private SignalPlot plot;
 	private RulerMeasurmentPlot measurmentPlot;
 	private boolean measurmentVisible = false;
-	
+
 	public RulerSignalTool(SignalView signalView) {
 		super(signalView);
 		measurmentPlot = new RulerMeasurmentPlot();
@@ -36,31 +36,31 @@ public class RulerSignalTool extends SignalTool {
 	public Cursor getDefaultCursor() {
 		return IconUtils.getCrosshairCursor();
 	}
-	
+
 	@Override
-	public void mousePressed(MouseEvent e) {			
-		if( SwingUtilities.isLeftMouseButton(e) ) {
-			
+	public void mousePressed(MouseEvent e) {
+		if (SwingUtilities.isLeftMouseButton(e)) {
+
 			Object source = e.getSource();
-			if( !(source instanceof SignalPlot) ) {
+			if (!(source instanceof SignalPlot)) {
 				plot = null;
 				return;
 			}
 			plot = (SignalPlot) source;
-			
+
 			dragStart = e.getPoint();
 			Point origin = plot.getViewport().getViewPosition();
 			measurmentPlot.setStartParameters(dragStart, origin);
 			engaged = true;
 			e.consume();
-			
+
 		}
-		
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		if( SwingUtilities.isLeftMouseButton(e) ) {
+		if (SwingUtilities.isLeftMouseButton(e)) {
 			dragStart = null;
 			hideMeasurment();
 			engaged = false;
@@ -68,24 +68,24 @@ public class RulerSignalTool extends SignalTool {
 			e.consume();
 		}
 	}
-	
+
 	@Override
 	public void mouseDragged(MouseEvent e) {
 
-		if( plot != null ) {		
-			if( SwingUtilities.isLeftMouseButton(e) ) {
+		if (plot != null) {
+			if (SwingUtilities.isLeftMouseButton(e)) {
 				Point point = e.getPoint();
 				Rectangle r = new Rectangle(point.x, point.y, 1, 1);
-		        ((SignalPlot)e.getSource()).scrollRectToVisible(r);
+				((SignalPlot)e.getSource()).scrollRectToVisible(r);
 				measureTo(point);
 			}
 		}
-		
+
 	}
 
 	private void showMeasurment() {
-		if( plot != null ) {		
-			if( !measurmentVisible ) {
+		if (plot != null) {
+			if (!measurmentVisible) {
 				Dimension size = plot.getViewport().getExtentSize();
 				JLayeredPane layeredPane = plot.getRootPane().getLayeredPane();
 				Point location = SwingUtilities.convertPoint(plot.getViewport(), new Point(0,0), layeredPane);
@@ -95,10 +95,10 @@ public class RulerSignalTool extends SignalTool {
 			}
 		}
 	}
-	
+
 	private void hideMeasurment() {
-		if( plot != null ) {
-			if( measurmentVisible ) {
+		if (plot != null) {
+			if (measurmentVisible) {
 				JLayeredPane layeredPane = plot.getRootPane().getLayeredPane();
 				layeredPane.remove(measurmentPlot);
 				measurmentVisible = false;
@@ -106,28 +106,28 @@ public class RulerSignalTool extends SignalTool {
 			}
 		}
 	}
-	
+
 	private void measureTo(Point point) {
-		if( plot != null ) {
+		if (plot != null) {
 			Dimension size = plot.getSize();
 			Point corrPoint = new Point(
-					Math.max( 0, Math.min( size.width, point.x ) ),
-					Math.max( 0, Math.min( size.height, point.y ) )
+			        Math.max(0, Math.min(size.width, point.x)),
+			        Math.max(0, Math.min(size.height, point.y))
 			);
 			Point origin = plot.getViewport().getViewPosition();
-			Point pixelSize = new Point( 
-					Math.abs( corrPoint.x - dragStart.x ), 
-					Math.abs( corrPoint.y - dragStart.y ) 
+			Point pixelSize = new Point(
+			        Math.abs(corrPoint.x - dragStart.x),
+			        Math.abs(corrPoint.y - dragStart.y)
 			);
 			Point2D signalSize = plot.toSignalSpace(pixelSize);
 			measurmentPlot.setEndParameters(
-					corrPoint, 
-					(float) ( Math.round( signalSize.getX()*1000F ) / 1000F ), 
-					(float) ( Math.round( signalSize.getY()*1000F ) / 1000F ),
-					origin
+			        corrPoint,
+			        (float)(Math.round(signalSize.getX()*1000F) / 1000F),
+			        (float)(Math.round(signalSize.getY()*1000F) / 1000F),
+			        origin
 			);
 			showMeasurment();
 		}
 	}
-		
+
 }

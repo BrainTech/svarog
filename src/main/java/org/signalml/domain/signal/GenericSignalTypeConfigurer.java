@@ -1,5 +1,5 @@
 /* GenericSignalTypeConfigurer.java created 2007-11-29
- * 
+ *
  */
 
 package org.signalml.domain.signal;
@@ -20,7 +20,7 @@ import org.signalml.domain.montage.SourceMontage;
 
 /** GenericSignalTypeConfigurer
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class GenericSignalTypeConfigurer extends AbstractSignalTypeConfigurer implements SignalTypeConfigurer {
@@ -30,29 +30,29 @@ public class GenericSignalTypeConfigurer extends AbstractSignalTypeConfigurer im
 
 	private static List<MontageGenerator> getAllMontageGenerators() {
 		ArrayList<MontageGenerator> generators = new ArrayList<MontageGenerator>();
-		generators.add( rawMontageGenerator );
-				
+		generators.add(rawMontageGenerator);
+
 		return Collections.unmodifiableList(generators);
 	}
-	
+
 	@Override
 	public Montage createMontage(int channelCount) {
 
-		Montage montage = new Montage( new SourceMontage( SignalType.OTHER, channelCount ) );
-		rawMontageGenerator.createMontage( montage );
+		Montage montage = new Montage(new SourceMontage(SignalType.OTHER, channelCount));
+		rawMontageGenerator.createMontage(montage);
 		return montage;
-		
+
 	}
 
 	@Override
 	public Montage createMontage(SignalDocument signalDocument) {
 
-		Montage montage = new Montage( new SourceMontage( signalDocument ) );
-		rawMontageGenerator.createMontage( montage );
+		Montage montage = new Montage(new SourceMontage(signalDocument));
+		rawMontageGenerator.createMontage(montage);
 		return montage;
 
 	}
-	
+
 	@Override
 	public Channel[] allChannels() {
 		return GenericChannel.values();
@@ -65,16 +65,16 @@ public class GenericSignalTypeConfigurer extends AbstractSignalTypeConfigurer im
 
 	@Override
 	public Channel channelForName(String name) {
-		if( name == null || name.isEmpty() ) {
+		if (name == null || name.isEmpty()) {
 			return GenericChannel.UNKNOWN;
 		}
 		Channel channel = GenericChannel.forName(name);
-		if( channel == null ) {
+		if (channel == null) {
 			return GenericChannel.UNKNOWN;
 		}
 		return channel;
 	}
-		
+
 	@Override
 	public Image getMatrixBackdrop(int width, int height) {
 		return null;
@@ -99,7 +99,7 @@ public class GenericSignalTypeConfigurer extends AbstractSignalTypeConfigurer im
 	public Collection<MontageGenerator> getMontageGenerators() {
 		return montageGenerators;
 	}
-	
+
 	@Override
 	public MontageGenerator getMontageGeneratorAt(int index) {
 		return montageGenerators.get(index);

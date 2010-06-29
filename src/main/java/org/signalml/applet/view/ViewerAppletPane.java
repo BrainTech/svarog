@@ -1,5 +1,5 @@
 /* ViewerAppletPane.java created 2008-02-20
- * 
+ *
  */
 
 package org.signalml.applet.view;
@@ -31,56 +31,56 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** ViewerAppletPane
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ViewerAppletPane extends JPanel implements View, DocumentManagerListener {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private SvarogApplet applet;
-	
+
 	private ViewerElementManager elementManager;
 
 	private MessageSourceAccessor messageSource;
-	
+
 	private boolean viewMode = false;
 	private boolean mainToolBarVisible = true;
 	private boolean statusBarVisible = true;
-	
+
 	public ViewerAppletPane(SvarogApplet applet) {
 		super();
 		this.applet = applet;
 	}
 
 	public void initialize() {
-		
+
 		setLayout(new BorderLayout());
-		
+
 		elementManager.setView(this);
 		elementManager.setOptionPaneParent(applet.getRootPane());
 		elementManager.setDialogParent(null);
-		
+
 		add(elementManager.getMainToolBar(), BorderLayout.NORTH);
-		
+
 		add(elementManager.getStatusBar(), BorderLayout.SOUTH);
-		
+
 		add(elementManager.getRightPane(), BorderLayout.CENTER);
-		
+
 		elementManager.configureAcceletators();
-		
+
 		ActionFocusManager actionFocusManager = elementManager.getActionFocusManager();
 		ViewerDocumentTabbedPane documentTabbedPane = elementManager.getDocumentTabbedPane();
 		DocumentManager documentManager = elementManager.getDocumentManager();
 
-		documentManager.addDocumentManagerListener(documentTabbedPane);		
+		documentManager.addDocumentManagerListener(documentTabbedPane);
 		documentManager.addDocumentManagerListener(this);
-		
-		actionFocusManager.addActionFocusListener(documentTabbedPane);		
-		documentTabbedPane.addChangeListener(actionFocusManager);		
-		
+
+		actionFocusManager.addActionFocusListener(documentTabbedPane);
+		documentTabbedPane.addChangeListener(actionFocusManager);
+
 	}
-	
+
 	@Override
 	public void closeView() {
 		// ignored
@@ -128,11 +128,11 @@ public class ViewerAppletPane extends JPanel implements View, DocumentManagerLis
 
 	@Override
 	public void setMainToolBarVisible(boolean visible) {
-		if( this.mainToolBarVisible != visible ) {
+		if (this.mainToolBarVisible != visible) {
 			this.mainToolBarVisible = visible;
 			elementManager.getMainToolBar().setVisible(visible);
-			elementManager.getShowMainToolBarAction().putValue( AbstractAction.SELECTED_KEY, visible );
-		}		
+			elementManager.getShowMainToolBarAction().putValue(AbstractAction.SELECTED_KEY, visible);
+		}
 	}
 
 	@Override
@@ -142,48 +142,48 @@ public class ViewerAppletPane extends JPanel implements View, DocumentManagerLis
 
 	@Override
 	public void setStatusBarVisible(boolean visible) {
-		if( this.statusBarVisible != visible ) {
+		if (this.statusBarVisible != visible) {
 			this.statusBarVisible = visible;
 			elementManager.getStatusBar().setVisible(visible);
-			elementManager.getShowStatusBarAction().putValue( AbstractAction.SELECTED_KEY, visible );
+			elementManager.getShowStatusBarAction().putValue(AbstractAction.SELECTED_KEY, visible);
 		}
 	}
 
 	@Override
 	public void setViewMode(boolean viewMode) {
-		if( this.viewMode != viewMode ) {
+		if (this.viewMode != viewMode) {
 			this.viewMode = viewMode;
-			elementManager.getViewModeAction().putValue(AbstractAction.SELECTED_KEY, viewMode);			
+			elementManager.getViewModeAction().putValue(AbstractAction.SELECTED_KEY, viewMode);
 			ApplicationConfiguration applicationConfig = elementManager.getApplicationConfig();
-			if( applicationConfig.isViewModeHidesMainToolBar() ) {
+			if (applicationConfig.isViewModeHidesMainToolBar()) {
 				setMainToolBarVisible(!viewMode);
 			}
-			if( applicationConfig.isViewModeCompactsPageTagBars() || applicationConfig.isViewModeSnapsToPage() ) {
-				
+			if (applicationConfig.isViewModeCompactsPageTagBars() || applicationConfig.isViewModeSnapsToPage()) {
+
 				DocumentManager documentManager = elementManager.getDocumentManager();
-				synchronized( documentManager ) {
+				synchronized (documentManager) {
 					int cnt = documentManager.getDocumentCount(ManagedDocumentType.SIGNAL);
 					SignalDocument signalDocument;
 					SignalView signalView;
-					
-					for( int i=0; i<cnt; i++ ) {
+
+					for (int i=0; i<cnt; i++) {
 						signalDocument = (SignalDocument) documentManager.getDocumentAt(ManagedDocumentType.SIGNAL, i);
 						signalView = (SignalView) signalDocument.getDocumentView();
-						if( applicationConfig.isViewModeCompactsPageTagBars() ) {
-							for( SignalPlot plot : signalView.getPlots() ) {
+						if (applicationConfig.isViewModeCompactsPageTagBars()) {
+							for (SignalPlot plot : signalView.getPlots()) {
 								plot.getSignalPlotColumnHeader().setCompact(viewMode);
 							}
 						}
-						if( applicationConfig.isViewModeSnapsToPage() ) {
-							SwingUtilities.invokeLater( new SnapToPageRunnable(signalView, viewMode) );
+						if (applicationConfig.isViewModeSnapsToPage()) {
+							SwingUtilities.invokeLater(new SnapToPageRunnable(signalView, viewMode));
 						}
 					}
 				}
-				
-			}			
+
+			}
 		}
 	}
-	
+
 	@Override
 	public void documentAdded(DocumentManagerEvent e) {
 		elementManager.getSaveAllDocumentsAction().setEnabledAsNeeded();
@@ -198,7 +198,7 @@ public class ViewerAppletPane extends JPanel implements View, DocumentManagerLis
 	public void documentRemoved(DocumentManagerEvent e) {
 		elementManager.getSaveAllDocumentsAction().setEnabledAsNeeded();
 	}
-	
+
 	public ViewerElementManager getElementManager() {
 		return elementManager;
 	}
@@ -214,5 +214,5 @@ public class ViewerAppletPane extends JPanel implements View, DocumentManagerLis
 	public void setMessageSource(MessageSourceAccessor messageSource) {
 		this.messageSource = messageSource;
 	}
-	
+
 }

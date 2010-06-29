@@ -1,5 +1,5 @@
 /* StagerParameters.java created 2008-02-08
- * 
+ *
  */
 
 package org.signalml.method.stager;
@@ -10,17 +10,17 @@ import org.springframework.validation.Errors;
 
 /** StagerParameters
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class StagerParameters implements Preset {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	public static final double MIN_AMPLITUDE = 0;
 	public static final double MAX_AMPLITUDE = 1000000;
 	public static final double INCR_AMPLITUDE = 1;
-		
+
 	public static final double MIN_FREQUENCY = 0;
 	public static final double MAX_FREQUENCY = 4096;
 	public static final double INCR_FREQUENCY = 0.01;
@@ -32,16 +32,16 @@ public class StagerParameters implements Preset {
 	public static final double MIN_PHASE = -3.14;
 	public static final double MAX_PHASE = 3.14;
 	public static final double INCR_PHASE = 0.01;
-	
+
 	public static final double MIN_EMG_TONE_THRESHOLD = 5;
 	public static final double MAX_EMG_TONE_THRESHOLD = 100;
-	
+
 	public static final double MIN_MT_EEG_THRESHOLD = 10;
 	public static final double MAX_MT_EEG_THRESHOLD = 150;
 
 	public static final double MIN_MT_EMG_THRESHOLD = 100;
 	public static final double MAX_MT_EMG_THRESHOLD = 1000;
-	
+
 	public static final double MIN_MT_TONE_EMG_THRESHOLD = 10;
 	public static final double MAX_MT_TONE_EMG_THRESHOLD = 150;
 
@@ -50,39 +50,39 @@ public class StagerParameters implements Preset {
 
 	public static final double MIN_SEM_EOG_DEFLECTION_THRESHOLD = 5;
 	public static final double MAX_SEM_EOG_DEFLECTION_THRESHOLD = 100;
-	
+
 	private String name;
-	
-	private String signalPath;	
-	
+
+	private String signalPath;
+
 	private String bookFilePath;
 	private boolean primaryHypnogram;
-	
+
 	private boolean advancedConfig = false;
-		
+
 	private SleepStagingRules rules = SleepStagingRules.RK;
-	
+
 	private MinMaxRange deltaAmplitude = new MinMaxRange(MinMaxRange.AUTO);
 	private MinMaxRange deltaFrequency = new MinMaxRange(MinMaxRange.UNLIMITED);
 	private MinMaxRange deltaScale = new MinMaxRange(MinMaxRange.UNLIMITED);
-	
+
 	private MinMaxRange thetaAmplitude = new MinMaxRange(MinMaxRange.UNLIMITED);
 	private MinMaxRange thetaFrequency = new MinMaxRange(MinMaxRange.UNLIMITED);
 	private MinMaxRange thetaScale = new MinMaxRange(MinMaxRange.UNLIMITED);
-	
+
 	private MinMaxRange alphaAmplitude = new MinMaxRange(MinMaxRange.AUTO);
 	private MinMaxRange alphaFrequency = new MinMaxRange(MinMaxRange.UNLIMITED);
 	private MinMaxRange alphaScale = new MinMaxRange(MinMaxRange.UNLIMITED);
-	
+
 	private MinMaxRange spindleAmplitude = new MinMaxRange(MinMaxRange.AUTO);
 	private MinMaxRange spindleFrequency = new MinMaxRange(MinMaxRange.UNLIMITED);
 	private MinMaxRange spindleScale = new MinMaxRange(MinMaxRange.UNLIMITED);
-	
+
 	private MinMaxRange kComplexAmplitude = new MinMaxRange(MinMaxRange.UNLIMITED);
 	private MinMaxRange kComplexFrequency = new MinMaxRange(MinMaxRange.UNLIMITED);
 	private MinMaxRange kComplexScale = new MinMaxRange(MinMaxRange.UNLIMITED);
 	private MinMaxRange kComplexPhase = new MinMaxRange(MinMaxRange.UNLIMITED);
-	
+
 	private double emgToneThreshold = MinMaxRange.AUTO;
 	private double mtEegThreshold;
 	private boolean mtEegThresholdEnabled;
@@ -92,7 +92,7 @@ public class StagerParameters implements Preset {
 	private double mtToneEmgThreshold;
 	private double remEogDeflectionThreshold;
 	private double semEogDeflectionThreshold;
-	
+
 	@Override
 	public String getName() {
 		return name;
@@ -102,7 +102,7 @@ public class StagerParameters implements Preset {
 	public void setName(String name) {
 		this.name = name;
 	}
-		
+
 	public String getBookFilePath() {
 		return bookFilePath;
 	}
@@ -110,7 +110,7 @@ public class StagerParameters implements Preset {
 	public void setBookFilePath(String bookFilePath) {
 		this.bookFilePath = bookFilePath;
 	}
-	
+
 	public boolean isPrimaryHypnogram() {
 		return primaryHypnogram;
 	}
@@ -262,70 +262,70 @@ public class StagerParameters implements Preset {
 	public MinMaxRange getKComplexPhase() {
 		return kComplexPhase;
 	}
-		
+
 	public double[] getDeltaParameterArray() {
 		return new double[] {
-			deltaFrequency.getMinWithUnlimited(),
-			deltaFrequency.getMaxWithUnlimited(),
-			deltaAmplitude.getMinWithUnlimited(),
-			deltaAmplitude.getMaxWithUnlimited(),
-			deltaScale.getMinWithUnlimited(),
-			deltaScale.getMaxWithUnlimited()
-		};			
+		               deltaFrequency.getMinWithUnlimited(),
+		               deltaFrequency.getMaxWithUnlimited(),
+		               deltaAmplitude.getMinWithUnlimited(),
+		               deltaAmplitude.getMaxWithUnlimited(),
+		               deltaScale.getMinWithUnlimited(),
+		               deltaScale.getMaxWithUnlimited()
+		       };
 	}
-	
+
 	public double[] getThetaParameterArray() {
 		return new double[] {
-			thetaFrequency.getMinWithUnlimited(),
-			thetaFrequency.getMaxWithUnlimited(),
-			thetaAmplitude.getMinWithUnlimited(),
-			thetaAmplitude.getMaxWithUnlimited(),
-			thetaScale.getMinWithUnlimited(),
-			thetaScale.getMaxWithUnlimited()
-		};			
+		               thetaFrequency.getMinWithUnlimited(),
+		               thetaFrequency.getMaxWithUnlimited(),
+		               thetaAmplitude.getMinWithUnlimited(),
+		               thetaAmplitude.getMaxWithUnlimited(),
+		               thetaScale.getMinWithUnlimited(),
+		               thetaScale.getMaxWithUnlimited()
+		       };
 	}
 
 	public double[] getAlphaParameterArray() {
 		return new double[] {
-			alphaFrequency.getMinWithUnlimited(),
-			alphaFrequency.getMaxWithUnlimited(),
-			alphaAmplitude.getMinWithUnlimited(),
-			alphaAmplitude.getMaxWithUnlimited(),
-			alphaScale.getMinWithUnlimited(),
-			alphaScale.getMaxWithUnlimited()
-		};			
+		               alphaFrequency.getMinWithUnlimited(),
+		               alphaFrequency.getMaxWithUnlimited(),
+		               alphaAmplitude.getMinWithUnlimited(),
+		               alphaAmplitude.getMaxWithUnlimited(),
+		               alphaScale.getMinWithUnlimited(),
+		               alphaScale.getMaxWithUnlimited()
+		       };
 	}
-	
+
 	public double[] getSpindleParameterArray() {
 		return new double[] {
-			spindleFrequency.getMinWithUnlimited(),
-			spindleFrequency.getMaxWithUnlimited(),
-			spindleAmplitude.getMinWithUnlimited(),
-			spindleAmplitude.getMaxWithUnlimited(),
-			spindleScale.getMinWithUnlimited(),
-			spindleScale.getMaxWithUnlimited()
-		};			
+		               spindleFrequency.getMinWithUnlimited(),
+		               spindleFrequency.getMaxWithUnlimited(),
+		               spindleAmplitude.getMinWithUnlimited(),
+		               spindleAmplitude.getMaxWithUnlimited(),
+		               spindleScale.getMinWithUnlimited(),
+		               spindleScale.getMaxWithUnlimited()
+		       };
 	}
-	
+
 	public double[] getKComplexParameterArray() {
 		return new double[] {
-			kComplexFrequency.getMinWithUnlimited(),
-			kComplexFrequency.getMaxWithUnlimited(),
-			kComplexAmplitude.getMinWithUnlimited(),
-			kComplexAmplitude.getMaxWithUnlimited(),
-			kComplexScale.getMinWithUnlimited(),
-			kComplexScale.getMaxWithUnlimited(),
-			kComplexPhase.getMinWithUnlimited(),
-			kComplexPhase.getMaxWithUnlimited()
-		};			
-	}	
-	
-	public void validate( Errors errors ) {
-	
-		// TODO
-		
+		               kComplexFrequency.getMinWithUnlimited(),
+		               kComplexFrequency.getMaxWithUnlimited(),
+		               kComplexAmplitude.getMinWithUnlimited(),
+		               kComplexAmplitude.getMaxWithUnlimited(),
+		               kComplexScale.getMinWithUnlimited(),
+		               kComplexScale.getMaxWithUnlimited(),
+		               kComplexPhase.getMinWithUnlimited(),
+		               kComplexPhase.getMaxWithUnlimited()
+		       };
 	}
-	
+
+	public void validate(Errors errors) {
+
+		// TODO
+
+	}
+
 	@Override
 	public String toString() {
 		return name;
@@ -352,5 +352,5 @@ public class StagerParameters implements Preset {
 	public void setSignalPath(String signalPath) {
 		this.signalPath = signalPath;
 	}
-	
+
 }

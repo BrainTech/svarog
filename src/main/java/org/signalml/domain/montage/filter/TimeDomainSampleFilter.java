@@ -1,5 +1,5 @@
 /* TimeDomainSampleFilter.java created 2008-02-01
- * 
+ *
  */
 
 package org.signalml.domain.montage.filter;
@@ -9,7 +9,7 @@ import org.springframework.context.MessageSourceResolvable;
 
 /** TimeDomainSampleFilter
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public abstract class TimeDomainSampleFilter extends SampleFilterDefinition {
@@ -17,18 +17,18 @@ public abstract class TimeDomainSampleFilter extends SampleFilterDefinition {
 	private static final long serialVersionUID = 1L;
 
 	private final static Object[] ARGUMENTS = new Object[0];
-	
+
 	// these must be built by the constructor
 	protected transient String[] messageCodes;
 	protected transient String[] effectCodes;
 	protected transient String defaultEffectDescription;
-	
+
 	protected transient double aCoefficients[];
 	protected transient double bCoefficients[];
 	protected transient int margin;
-		
+
 	protected int passCount;
-	
+
 	public double[] getACoefficients() {
 		return aCoefficients;
 	}
@@ -40,7 +40,7 @@ public abstract class TimeDomainSampleFilter extends SampleFilterDefinition {
 	public int getMargin() {
 		return margin;
 	}
-	
+
 	public int getPassCount() {
 		return passCount;
 	}
@@ -51,9 +51,9 @@ public abstract class TimeDomainSampleFilter extends SampleFilterDefinition {
 
 	@Override
 	public MessageSourceResolvable getEffectDescription() {
-		return new ResolvableString( effectCodes, new Object[] { passCount }, defaultEffectDescription );
+		return new ResolvableString(effectCodes, new Object[] { passCount }, defaultEffectDescription);
 	}
-	
+
 	@Override
 	public String getDefaultEffectDescription() {
 		return defaultEffectDescription;
@@ -78,5 +78,5 @@ public abstract class TimeDomainSampleFilter extends SampleFilterDefinition {
 	public String getDefaultMessage() {
 		return "Time domain filter " + getClass().getSimpleName();
 	}
-	
+
 }

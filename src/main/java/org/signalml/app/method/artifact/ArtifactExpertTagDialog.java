@@ -1,5 +1,5 @@
 /* ArtifactExpertTagDialog.java created 2008-03-31
- * 
+ *
  */
 
 package org.signalml.app.method.artifact;
@@ -19,7 +19,7 @@ import org.springframework.validation.Errors;
 
 /** ArtifactExpertTagDialog
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ArtifactExpertTagDialog extends AbstractDialog {
@@ -27,9 +27,9 @@ public class ArtifactExpertTagDialog extends AbstractDialog {
 	private static final long serialVersionUID = 1L;
 
 	private ViewerFileChooser fileChooser;
-	
+
 	private ArtifactExpertTagPanel expertTagPanel;
-	
+
 	public ArtifactExpertTagDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
 		super(messageSource, w, isModal);
 	}
@@ -40,25 +40,25 @@ public class ArtifactExpertTagDialog extends AbstractDialog {
 
 	@Override
 	protected void initialize() {
-		setTitle( messageSource.getMessage( "artifactMethod.dialog.iteration.title" ) );
-		setIconImage( IconUtils.loadClassPathImage( ArtifactMethodDescriptor.ITERATION_ICON_PATH ) );
+		setTitle(messageSource.getMessage("artifactMethod.dialog.iteration.title"));
+		setIconImage(IconUtils.loadClassPathImage(ArtifactMethodDescriptor.ITERATION_ICON_PATH));
 		setResizable(false);
 		super.initialize();
 	}
-	
+
 	@Override
 	protected JComponent createInterface() {
-		
-		JPanel interfacePanel = new JPanel( new BorderLayout() );
-		
-		interfacePanel.add( getExpertTagPanel(), BorderLayout.CENTER );
-		
+
+		JPanel interfacePanel = new JPanel(new BorderLayout());
+
+		interfacePanel.add(getExpertTagPanel(), BorderLayout.CENTER);
+
 		return interfacePanel;
-		
+
 	}
-	
+
 	public ArtifactExpertTagPanel getExpertTagPanel() {
-		if( expertTagPanel == null ) {
+		if (expertTagPanel == null) {
 			expertTagPanel = new ArtifactExpertTagPanel(messageSource, fileChooser);
 		}
 		return expertTagPanel;
@@ -68,9 +68,9 @@ public class ArtifactExpertTagDialog extends AbstractDialog {
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 
 		ArtifactExpertTagDescriptor descriptor = (ArtifactExpertTagDescriptor) model;
-		
-		getExpertTagPanel().setTagFile( descriptor.getExpertTagFile() );
-		
+
+		getExpertTagPanel().setTagFile(descriptor.getExpertTagFile());
+
 	}
 
 	@Override
@@ -78,16 +78,16 @@ public class ArtifactExpertTagDialog extends AbstractDialog {
 
 		ArtifactExpertTagDescriptor descriptor = (ArtifactExpertTagDescriptor) model;
 
-		descriptor.setExpertTagFile( getExpertTagPanel().getTagFile() );
-		
+		descriptor.setExpertTagFile(getExpertTagPanel().getTagFile());
+
 	}
-	
+
 	@Override
 	public void validateDialog(Object model, Errors errors) throws SignalMLException {
 		super.validateDialog(model, errors);
-		
+
 		getExpertTagPanel().validatePanel(errors);
-		
+
 	}
 
 	@Override
@@ -102,5 +102,5 @@ public class ArtifactExpertTagDialog extends AbstractDialog {
 	public void setFileChooser(ViewerFileChooser fileChooser) {
 		this.fileChooser = fileChooser;
 	}
-	
+
 }

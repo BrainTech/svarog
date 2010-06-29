@@ -1,5 +1,5 @@
 /* RemoveAllTasksAction.java created 2008-02-07
- * 
+ *
  */
 package org.signalml.app.action;
 
@@ -15,58 +15,58 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** RemoveAllTasksAction
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class RemoveAllTasksAction extends AbstractSignalMLAction {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	protected static final Logger logger = Logger.getLogger(RemoveAllTasksAction.class);
-		
+
 	private ApplicationTaskManager taskManager;
 	private Component optionPaneParent;
-	
+
 	public RemoveAllTasksAction(MessageSourceAccessor messageSource) {
 		super(messageSource);
 		setText("action.removeAllTasks");
 		setIconPath("org/signalml/app/icon/removealltasks.png");
 		setToolTip("action.removeAllTasksToolTip");
 	}
-			
+
 	@Override
 	public void actionPerformed(ActionEvent ev) {
 
 		int ans = OptionPane.showRemoveAllTasks(optionPaneParent);
-		if( ans != OptionPane.OK_OPTION ) {
+		if (ans != OptionPane.OK_OPTION) {
 			return;
 		}
-		
-		synchronized( taskManager ) {
+
+		synchronized (taskManager) {
 
 			int count = taskManager.getTaskCount();
 			Task task;
 			TaskStatus status;
-			
-			for( int i=0; i<count; i++ ) {
+
+			for (int i=0; i<count; i++) {
 				task = taskManager.getTaskAt(i);
-				synchronized( task ) {
+				synchronized (task) {
 					status = task.getStatus();
-					if( status.isAborted() || status.isError() || status.isFinished() ) {
+					if (status.isAborted() || status.isError() || status.isFinished()) {
 						taskManager.removeTask(task);
 						i--;
 						count--;
 					}
 				}
 			}
-		}		
-		
+		}
+
 	}
-	
+
 	public void setEnabledAsNeeded() {
-		setEnabled( true );
+		setEnabled(true);
 	}
-	
+
 	public Component getOptionPaneParent() {
 		return optionPaneParent;
 	}

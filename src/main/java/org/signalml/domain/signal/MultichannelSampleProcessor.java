@@ -1,5 +1,5 @@
 /* AbstractSampleProcessor.java created 2007-09-24
- * 
+ *
  */
 
 package org.signalml.domain.signal;
@@ -9,24 +9,24 @@ import java.beans.PropertyChangeListener;
 
 /** AbstractSampleProcessor
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public abstract class MultichannelSampleProcessor extends AbstractMultichannelSampleSource implements MultichannelSampleSource, PropertyChangeListener {
 
 	protected MultichannelSampleSource source;
-		
+
 	public MultichannelSampleProcessor(MultichannelSampleSource source) {
 		super();
 		this.source = source;
 		source.addPropertyChangeListener(this);
 	}
-	
+
 	@Override
 	public void destroy() {
 		source.removePropertyChangeListener(this);
 	}
-	
+
 	public MultichannelSampleSource getSource() {
 		return source;
 	}
@@ -65,7 +65,7 @@ public abstract class MultichannelSampleProcessor extends AbstractMultichannelSa
 	public boolean isCalibrationCapable() {
 		return source.isCalibrationCapable();
 	}
-	
+
 	@Override
 	public boolean isChannelCountCapable() {
 		return source.isChannelCountCapable();
@@ -80,5 +80,5 @@ public abstract class MultichannelSampleProcessor extends AbstractMultichannelSa
 	public void propertyChange(PropertyChangeEvent evt) {
 		pcSupport.firePropertyChange(evt);
 	}
-		
+
 }

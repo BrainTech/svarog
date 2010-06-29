@@ -1,5 +1,5 @@
 /* MontageFilterExclusionTable.java created 2008-02-03
- * 
+ *
  */
 
 package org.signalml.app.view.montage;
@@ -26,7 +26,7 @@ import org.signalml.app.view.element.UneditableBooleanTableCellRenderer;
 
 /** MontageFilterExclusionTable
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class MontageFilterExclusionTable extends JTable {
@@ -34,75 +34,75 @@ public class MontageFilterExclusionTable extends JTable {
 	private static final long serialVersionUID = 1L;
 
 	public static final Color DISABLED_COLOR = new Color(220,220,220);
-	
+
 	private static final int ROW_SIZE = 35;
 	private static final int COLUMN_SIZE = 100;
-	
+
 	public MontageFilterExclusionTable(MontageFilterExclusionTableModel model) {
-		
+
 		super(model);
-		
+
 		setTableHeader(null);
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		setCellSelectionEnabled(true);
 		setAutoResizeMode(AUTO_RESIZE_OFF);
-		
+
 		setRowHeight(ROW_SIZE);
-		
-		setDefaultRenderer( Boolean.class, new UneditableBooleanTableCellRenderer() );
-								
+
+		setDefaultRenderer(Boolean.class, new UneditableBooleanTableCellRenderer());
+
 	}
-	
+
 	@Override
 	public MontageFilterExclusionTableModel getModel() {
 		return (MontageFilterExclusionTableModel) super.getModel();
 	}
-		
+
 	@Override
 	protected void configureEnclosingScrollPane() {
 		super.configureEnclosingScrollPane();
 
 		TableModel model = getModel();
-		if( !(model instanceof MontageFilterExclusionTableModel) ) {
+		if (!(model instanceof MontageFilterExclusionTableModel)) {
 			return;
 		}
 		MontageFilterExclusionTableModel tableModel = (MontageFilterExclusionTableModel) model;
-		
-        Container p = getParent();
-        if (p instanceof JViewport) {
-            Container gp = p.getParent();
-            if (gp instanceof JScrollPane) {
-                JScrollPane scrollPane = (JScrollPane)gp;
-                JViewport viewport = scrollPane.getViewport();
-                if (viewport == null || viewport.getView() != this) {
-                    return;
-                }
-                scrollPane.setColumnHeaderView(new ColumnHeaderTable(tableModel.getColumnTableModel()));
-                scrollPane.setRowHeaderView(new RowHeaderTable(tableModel.getRowTableModel()));
-                scrollPane.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, new CornerPanel());
-            }
-        }
+
+		Container p = getParent();
+		if (p instanceof JViewport) {
+			Container gp = p.getParent();
+			if (gp instanceof JScrollPane) {
+				JScrollPane scrollPane = (JScrollPane)gp;
+				JViewport viewport = scrollPane.getViewport();
+				if (viewport == null || viewport.getView() != this) {
+					return;
+				}
+				scrollPane.setColumnHeaderView(new ColumnHeaderTable(tableModel.getColumnTableModel()));
+				scrollPane.setRowHeaderView(new RowHeaderTable(tableModel.getRowTableModel()));
+				scrollPane.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, new CornerPanel());
+			}
+		}
 	}
-	
+
 	@Override
 	protected void unconfigureEnclosingScrollPane() {
 		super.unconfigureEnclosingScrollPane();
-        Container p = getParent();
-        if (p instanceof JViewport) {
-            Container gp = p.getParent();
-            if (gp instanceof JScrollPane) {
-                JScrollPane scrollPane = (JScrollPane)gp;
-                JViewport viewport = scrollPane.getViewport();
-                if (viewport == null || viewport.getView() != this) {
-                    return;
-                }
-                scrollPane.setColumnHeaderView(null);
-                scrollPane.setRowHeaderView(null);
-                scrollPane.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, null);
-            }
-        }
+		Container p = getParent();
+		if (p instanceof JViewport) {
+			Container gp = p.getParent();
+			if (gp instanceof JScrollPane) {
+				JScrollPane scrollPane = (JScrollPane)gp;
+				JViewport viewport = scrollPane.getViewport();
+				if (viewport == null || viewport.getView() != this) {
+					return;
+				}
+				scrollPane.setColumnHeaderView(null);
+				scrollPane.setRowHeaderView(null);
+				scrollPane.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, null);
+			}
+		}
 	}
-	
+
 	@Override
 	public void columnAdded(TableColumnModelEvent e) {
 		super.columnAdded(e);
@@ -119,20 +119,20 @@ public class MontageFilterExclusionTable extends JTable {
 			setBackground(DISABLED_COLOR);
 			setPreferredSize(new Dimension(COLUMN_SIZE,ROW_SIZE));
 		}
-		
+
 		@Override
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
-			
+
 			Dimension size = getSize();
-			
+
 			g.setColor(getGridColor());
 			g.drawLine(0, size.height-1, size.width-1, size.height-1);
 			g.drawLine(size.width-1, 0, size.width-1, size.height-1);
 		}
-		
+
 	}
-	
+
 	private class ColumnHeaderTable extends JTable {
 
 		private static final long serialVersionUID = 1L;
@@ -146,41 +146,41 @@ public class MontageFilterExclusionTable extends JTable {
 			setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			setEnabled(false);
 			setAutoResizeMode(AUTO_RESIZE_OFF);
-			
+
 			setRowHeight(ROW_SIZE);
-			
-			setToolTipText("");			
+
+			setToolTipText("");
 		}
-				
+
 		@Override
 		public void columnAdded(TableColumnModelEvent e) {
 			super.columnAdded(e);
 			int index = e.getToIndex();
 			getColumnModel().getColumn(index).setPreferredWidth(COLUMN_SIZE);
 		}
-		
+
 		@Override
 		public String getToolTipText(MouseEvent event) {
 			Point p = event.getPoint();
 			int row = rowAtPoint(p);
 			int col = columnAtPoint(p);
-			if( row >= 0 && col >= 0 ) {
+			if (row >= 0 && col >= 0) {
 				return (String) getValueAt(row, col);
 			} else {
 				return "";
 			}
 		}
-		
+
 		@Override
 		public Dimension getPreferredSize() {
 			return new Dimension(getColumnCount()*COLUMN_SIZE, getRowCount()*ROW_SIZE);
 		}
-		
+
 		@Override
 		public Dimension getPreferredScrollableViewportSize() {
 			return getPreferredSize();
 		}
-		
+
 	}
 
 	private class RowHeaderTable extends JTable {
@@ -196,37 +196,37 @@ public class MontageFilterExclusionTable extends JTable {
 			setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			setEnabled(false);
 			setAutoResizeMode(AUTO_RESIZE_OFF);
-			
+
 			setRowHeight(ROW_SIZE);
-			
-			setToolTipText("");			
-			
+
+			setToolTipText("");
+
 		}
-		
+
 		@Override
 		public void columnAdded(TableColumnModelEvent e) {
 			super.columnAdded(e);
 			int index = e.getToIndex();
 			getColumnModel().getColumn(index).setPreferredWidth(COLUMN_SIZE);
 		}
-		
+
 		@Override
 		public String getToolTipText(MouseEvent event) {
 			Point p = event.getPoint();
 			int row = rowAtPoint(p);
 			int col = columnAtPoint(p);
-			if( row >= 0 && col >= 0 ) {
+			if (row >= 0 && col >= 0) {
 				return (String) getValueAt(row, col);
 			} else {
 				return "";
 			}
 		}
-				
+
 		@Override
 		public Dimension getPreferredScrollableViewportSize() {
 			return getPreferredSize();
 		}
-		
+
 	}
-		
+
 }

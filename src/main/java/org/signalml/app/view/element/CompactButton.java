@@ -1,5 +1,5 @@
 /* CompactButton.java created 2007-11-21
- * 
+ *
  */
 
 package org.signalml.app.view.element;
@@ -12,7 +12,7 @@ import javax.swing.JButton;
 
 /** CompactButton
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class CompactButton extends JButton {
@@ -45,13 +45,13 @@ public class CompactButton extends JButton {
 	}
 
 	private void configure() {
-		
+
 		setHideActionText(true);
 		setMargin(new Insets(0,0,0,0));
 		setContentAreaFilled(false);
 		setBorder(null);
 		setFocusPainted(false);
-		
+
 	}
-	
+
 }

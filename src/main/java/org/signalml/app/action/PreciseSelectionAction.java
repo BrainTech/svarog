@@ -1,5 +1,5 @@
 /* PreciseSelectionAction.java created 2007-10-05
- * 
+ *
  */
 
 package org.signalml.app.action;
@@ -17,13 +17,13 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** PreciseSelectionAction
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class PreciseSelectionAction extends AbstractFocusableSignalMLAction<SignalPlotFocusSelector> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	protected static final Logger logger = Logger.getLogger(PreciseSelectionAction.class);
 
 	private SignalSelectionDialog signalSelectionDialog;
@@ -34,17 +34,17 @@ public class PreciseSelectionAction extends AbstractFocusableSignalMLAction<Sign
 		setIconPath("org/signalml/app/icon/preciseselection.png");
 		setToolTip("action.preciseSelectionToolTip");
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
 		SignalPlot plot = getActionFocusSelector().getActiveSignalPlot();
-		if( plot == null ) {
+		if (plot == null) {
 			logger.warn("Target plot doesn't exist");
 			return;
 		}
 		SignalView view = plot.getView();
-		
+
 		SignalSelection signalSelection = view.getSignalSelection(plot);
 		BoundedSignalSelection boundedSignalSelection = new BoundedSignalSelection(signalSelection);
 		boundedSignalSelection.setMaxPage(plot.getPageCount());
@@ -54,19 +54,19 @@ public class PreciseSelectionAction extends AbstractFocusableSignalMLAction<Sign
 		boundedSignalSelection.setBlocksPerPage(plot.getBlocksPerPage());
 		boundedSignalSelection.setSamplingFrequency(plot.getSamplingFrequency());
 		boundedSignalSelection.setChannels(plot.getSignalChain().getLabels());
-		
+
 		boolean ok = signalSelectionDialog.showDialog(boundedSignalSelection, true);
-		if( ok ) {
+		if (ok) {
 			view.setSignalSelection(plot, boundedSignalSelection.getSelection());
 		}
-				
+
 	}
 
 	@Override
 	public void setEnabledAsNeeded() {
-		setEnabled( getActionFocusSelector().getActiveSignalPlot() != null );
+		setEnabled(getActionFocusSelector().getActiveSignalPlot() != null);
 	}
-	
+
 	public SignalSelectionDialog getSignalSelectionDialog() {
 		return signalSelectionDialog;
 	}
@@ -74,5 +74,5 @@ public class PreciseSelectionAction extends AbstractFocusableSignalMLAction<Sign
 	public void setSignalSelectionDialog(SignalSelectionDialog signalSelectionDialog) {
 		this.signalSelectionDialog = signalSelectionDialog;
 	}
-	
+
 }

@@ -1,5 +1,5 @@
 /* FFTSignalFilterPresetManager.java created 2008-01-26
- * 
+ *
  */
 
 package org.signalml.app.config.preset;
@@ -12,12 +12,12 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /** FFTSignalFilterPresetManager
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 @XStreamAlias("fftfilters")
 public class FFTSampleFilterPresetManager extends AbstractPresetManager {
-		
+
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -29,10 +29,10 @@ public class FFTSampleFilterPresetManager extends AbstractPresetManager {
 	public Class<?> getPresetClass() {
 		return FFTSampleFilter.class;
 	}
-	
+
 	@Override
 	public XStream getStreamer() {
-		if( streamer == null ) {
+		if (streamer == null) {
 			streamer = createFFTSampleFilterPresetStreamer();
 		}
 		return streamer;
@@ -42,8 +42,8 @@ public class FFTSampleFilterPresetManager extends AbstractPresetManager {
 		XStream streamer = XMLUtils.getDefaultStreamer();
 		XMLUtils.configureStreamerForFFTSampleFilter(streamer);
 		streamer.setMode(XStream.XPATH_RELATIVE_REFERENCES);
-				
+
 		return streamer;
 	}
-		
+
 }

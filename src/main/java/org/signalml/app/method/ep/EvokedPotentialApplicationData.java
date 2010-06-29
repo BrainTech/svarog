@@ -1,5 +1,5 @@
 /* EvokedPotentialApplicationData.java created 2008-01-12
- * 
+ *
  */
 
 package org.signalml.app.method.ep;
@@ -17,7 +17,7 @@ import org.signalml.method.ep.EvokedPotentialData;
 
 /** EvokedPotentialApplicationData
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class EvokedPotentialApplicationData extends EvokedPotentialData {
@@ -26,7 +26,7 @@ public class EvokedPotentialApplicationData extends EvokedPotentialData {
 
 	private SignalDocument signalDocument;
 	private TagDocument tagDocument;
-	
+
 	public EvokedPotentialApplicationData() {
 		super();
 	}
@@ -46,22 +46,22 @@ public class EvokedPotentialApplicationData extends EvokedPotentialData {
 	public void setTagDocument(TagDocument tagDocument) {
 		this.tagDocument = tagDocument;
 	}
-	
+
 	public void calculate() throws SignalMLException {
 
 		SignalView signalView = (SignalView) signalDocument.getDocumentView();
 		SignalPlot plot = signalView.getMasterPlot();
-		
+
 		SignalProcessingChain signalChain = plot.getSignalChain();
 		SignalSpace signalSpace = getParameters().getSignalSpace();
-		
+
 		SignalProcessingChain copyChain = signalChain.createLevelCopyChain(signalSpace.getSignalSourceLevel());
-		
+
 		SegmentedSampleSourceFactory factory = SegmentedSampleSourceFactory.getSharedInstance();
 		MultichannelSegmentedSampleSource segmentedSampleSource = factory.getSegmentedSampleSource(copyChain, signalSpace, tagDocument != null ? tagDocument.getTagSet() : null, plot.getPageSize(), plot.getBlockSize());
-				
+
 		setSampleSource(segmentedSampleSource);
-				
+
 	}
-	
+
 }

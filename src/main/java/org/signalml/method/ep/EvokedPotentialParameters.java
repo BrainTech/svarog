@@ -1,5 +1,5 @@
 /* EvokedPotentialParameters.java created 2008-01-12
- * 
+ *
  */
 
 package org.signalml.method.ep;
@@ -14,22 +14,22 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /** EvokedPotentialParameters
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 @XStreamAlias("epparameters")
 public class EvokedPotentialParameters implements Serializable, Preset {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private String name;
-		
+
 	private SignalSpace signalSpace;
 
 	public EvokedPotentialParameters() {
 		signalSpace = new SignalSpace();
 	}
-	
+
 	@Override
 	public String getName() {
 		return name;
@@ -39,7 +39,7 @@ public class EvokedPotentialParameters implements Serializable, Preset {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public SignalSpace getSignalSpace() {
 		return signalSpace;
 	}
@@ -49,13 +49,13 @@ public class EvokedPotentialParameters implements Serializable, Preset {
 	}
 
 	public void validate(Errors errors) {
-				
-		
+
+
 	}
-	
+
 	@Override
 	public String toString() {
 		return name;
 	}
-	
+
 }

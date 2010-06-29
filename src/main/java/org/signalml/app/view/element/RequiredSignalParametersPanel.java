@@ -1,5 +1,5 @@
 /* RequiredSignalParametersPanel.java created 2007-09-17
- * 
+ *
  */
 package org.signalml.app.view.element;
 
@@ -22,21 +22,21 @@ import org.springframework.validation.Errors;
 
 /** RequiredSignalParametersPanel
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class RequiredSignalParametersPanel extends JPanel {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	protected static final Logger logger = Logger.getLogger(RequiredSignalParametersPanel.class);
-	
+
 	private MessageSourceAccessor messageSource;
-	
+
 	private JTextField samplingFrequencyField;
 	private JTextField channelCountField;
 	private JTextField calibrationField;
-		
+
 	/**
 	 * This is the default constructor
 	 */
@@ -48,18 +48,18 @@ public class RequiredSignalParametersPanel extends JPanel {
 
 	/**
 	 * This method initializes this
-	 * 
+	 *
 	 * @return void
 	 */
 	private void initialize() {
-				
+
 		CompoundBorder cb = new CompoundBorder(
-			new TitledBorder(messageSource.getMessage("signalParameters.requiredSignalParameters")),
-			new EmptyBorder(3,3,3,3)
+		        new TitledBorder(messageSource.getMessage("signalParameters.requiredSignalParameters")),
+		        new EmptyBorder(3,3,3,3)
 		);
-		
+
 		setBorder(cb);
-		
+
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);
 		layout.setAutoCreateContainerGaps(false);
@@ -68,51 +68,51 @@ public class RequiredSignalParametersPanel extends JPanel {
 		JLabel samplingFrequencyLabel = new JLabel(messageSource.getMessage("signalParameters.samplingFrequency"));
 		JLabel channelCountLabel = new JLabel(messageSource.getMessage("signalParameters.channelCount"));
 		JLabel calibrationLabel = new JLabel(messageSource.getMessage("signalParameters.calibration"));
-		
+
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
-		
+
 		hGroup.addGroup(
-				layout.createParallelGroup()
-				.addComponent(samplingFrequencyLabel)
-				.addComponent(channelCountLabel)
-				.addComponent(calibrationLabel)
-			);
-		
+		        layout.createParallelGroup()
+		        .addComponent(samplingFrequencyLabel)
+		        .addComponent(channelCountLabel)
+		        .addComponent(calibrationLabel)
+		);
+
 		hGroup.addGroup(
-				layout.createParallelGroup()
-				.addComponent(getSamplingFrequencyField())
-				.addComponent(getChannelCountField())
-				.addComponent(getCalibrationField())
-			);
-		
+		        layout.createParallelGroup()
+		        .addComponent(getSamplingFrequencyField())
+		        .addComponent(getChannelCountField())
+		        .addComponent(getCalibrationField())
+		);
+
 		layout.setHorizontalGroup(hGroup);
-		
+
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
-		
-		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(samplingFrequencyLabel)
-	            .addComponent(getSamplingFrequencyField())
-			);
-		
-		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(channelCountLabel)
-	            .addComponent(getChannelCountField())
-	    	);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(calibrationLabel)
-	            .addComponent(getCalibrationField())
-	    	);
-		
-		layout.setVerticalGroup(vGroup);		
-		
+		        layout.createParallelGroup(Alignment.BASELINE)
+		        .addComponent(samplingFrequencyLabel)
+		        .addComponent(getSamplingFrequencyField())
+		);
+
+		vGroup.addGroup(
+		        layout.createParallelGroup(Alignment.BASELINE)
+		        .addComponent(channelCountLabel)
+		        .addComponent(getChannelCountField())
+		);
+
+		vGroup.addGroup(
+		        layout.createParallelGroup(Alignment.BASELINE)
+		        .addComponent(calibrationLabel)
+		        .addComponent(getCalibrationField())
+		);
+
+		layout.setVerticalGroup(vGroup);
+
 	}
 
 	public JTextField getSamplingFrequencyField() {
-		if( samplingFrequencyField == null ) {
+		if (samplingFrequencyField == null) {
 			samplingFrequencyField = new JTextField();
 			samplingFrequencyField.setPreferredSize(new Dimension(200,25));
 		}
@@ -120,117 +120,117 @@ public class RequiredSignalParametersPanel extends JPanel {
 	}
 
 	public JTextField getChannelCountField() {
-		if( channelCountField == null ) {
-			channelCountField = new JTextField();			
+		if (channelCountField == null) {
+			channelCountField = new JTextField();
 			channelCountField.setPreferredSize(new Dimension(200,25));
 		}
 		return channelCountField;
 	}
 
 	public JTextField getCalibrationField() {
-		if( calibrationField == null ) {
-			calibrationField = new JTextField();			
+		if (calibrationField == null) {
+			calibrationField = new JTextField();
 			calibrationField.setPreferredSize(new Dimension(200,25));
 		}
 		return calibrationField;
 	}
 
-	public void fillPanelFromModel( SignalParameterDescriptor spd ) throws SignalMLException {
-		
+	public void fillPanelFromModel(SignalParameterDescriptor spd) throws SignalMLException {
+
 		Float samplingFrequency = spd.getSamplingFrequency();
-		if( samplingFrequency != null ) {
-			getSamplingFrequencyField().setText( samplingFrequency.toString() );
+		if (samplingFrequency != null) {
+			getSamplingFrequencyField().setText(samplingFrequency.toString());
 		} else {
-			getSamplingFrequencyField().setText( "" );
-		}
-		
-		Integer channelCount = spd.getChannelCount();
-		if( channelCount != null ) {
-			getChannelCountField().setText( channelCount.toString() );
-		} else {
-			getChannelCountField().setText( "" );
-		}
-		
-		Float calibration = spd.getCalibration();
-		if( calibration != null ) {
-			getCalibrationField().setText( calibration.toString() );
-		} else {
-			getCalibrationField().setText( "" );
+			getSamplingFrequencyField().setText("");
 		}
 
-		if( spd.isSamplingFrequencyEditable() ) {
+		Integer channelCount = spd.getChannelCount();
+		if (channelCount != null) {
+			getChannelCountField().setText(channelCount.toString());
+		} else {
+			getChannelCountField().setText("");
+		}
+
+		Float calibration = spd.getCalibration();
+		if (calibration != null) {
+			getCalibrationField().setText(calibration.toString());
+		} else {
+			getCalibrationField().setText("");
+		}
+
+		if (spd.isSamplingFrequencyEditable()) {
 			getSamplingFrequencyField().setEditable(true);
 			getSamplingFrequencyField().setToolTipText(null);
 		} else {
 			getSamplingFrequencyField().setEditable(false);
 			getSamplingFrequencyField().setToolTipText(messageSource.getMessage("signalParameters.requiredNotEditable"));
 		}
-		
-		if( spd.isChannelCountEditable() ) {
+
+		if (spd.isChannelCountEditable()) {
 			getChannelCountField().setEditable(true);
 			getChannelCountField().setToolTipText(null);
 		} else {
 			getChannelCountField().setEditable(false);
 			getChannelCountField().setToolTipText(messageSource.getMessage("signalParameters.requiredNotEditable"));
 		}
-		
-		if( spd.isCalibrationEditable() ) {
+
+		if (spd.isCalibrationEditable()) {
 			getCalibrationField().setEditable(true);
 			getCalibrationField().setToolTipText(null);
 		} else {
 			getCalibrationField().setEditable(false);
 			getCalibrationField().setToolTipText(messageSource.getMessage("signalParameters.requiredNotEditable"));
 		}
-		
+
 	}
-	
-	public void fillModelFromPanel( SignalParameterDescriptor spd ) throws SignalMLException {
+
+	public void fillModelFromPanel(SignalParameterDescriptor spd) throws SignalMLException {
 		try {
-			if( spd.isSamplingFrequencyEditable() ) {
-				spd.setSamplingFrequency( new Float(getSamplingFrequencyField().getText()) );
+			if (spd.isSamplingFrequencyEditable()) {
+				spd.setSamplingFrequency(new Float(getSamplingFrequencyField().getText()));
 			}
-			if( spd.isChannelCountEditable() ) {
-				spd.setChannelCount( new Integer(getChannelCountField().getText()) );
+			if (spd.isChannelCountEditable()) {
+				spd.setChannelCount(new Integer(getChannelCountField().getText()));
 			}
-			if( spd.isCalibrationEditable() ) { 
-				spd.setCalibration( new Float(getCalibrationField().getText()) );
+			if (spd.isCalibrationEditable()) {
+				spd.setCalibration(new Float(getCalibrationField().getText()));
 			}
-		} catch( NumberFormatException ex ) {
+		} catch (NumberFormatException ex) {
 			throw new SignalMLException(ex);
 		}
 	}
-	
-	public void validatePanel( SignalParameterDescriptor spd, Errors errors ) throws SignalMLException {
-		if( spd.isSamplingFrequencyEditable() ) {
+
+	public void validatePanel(SignalParameterDescriptor spd, Errors errors) throws SignalMLException {
+		if (spd.isSamplingFrequencyEditable()) {
 			try {
 				float samplingFrequency = Float.parseFloat(getSamplingFrequencyField().getText());
-				if( samplingFrequency <= 0 ) {
+				if (samplingFrequency <= 0) {
 					errors.rejectValue("samplingFrequency", "error.samplingFrequencyNegative");
 				}
-			} catch( NumberFormatException ex ) {
+			} catch (NumberFormatException ex) {
 				errors.rejectValue("samplingFrequency", "error.invalidNumber");
 			}
 		}
-		if( spd.isChannelCountEditable() ) {
+		if (spd.isChannelCountEditable()) {
 			try {
 				int channelCount = Integer.parseInt(getChannelCountField().getText());
-				if( channelCount <= 0 ) {
+				if (channelCount <= 0) {
 					errors.rejectValue("channelCount", "error.channelCountNegative");
 				}
-			} catch( NumberFormatException ex ) {
+			} catch (NumberFormatException ex) {
 				errors.rejectValue("channelCount", "error.invalidNumber");
 			}
 		}
-		if( spd.isCalibrationEditable() ) {
+		if (spd.isCalibrationEditable()) {
 			try {
 				float calibration = Float.parseFloat(getCalibrationField().getText());
-				if( calibration <= 0 ) {
+				if (calibration <= 0) {
 					errors.rejectValue("calibration", "error.calibrationNegative");
 				}
-			} catch( NumberFormatException ex ) {
+			} catch (NumberFormatException ex) {
 				errors.rejectValue("calibration", "error.invalidNumber");
 			}
 		}
 	}
-	
+
 }

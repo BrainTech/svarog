@@ -14,7 +14,7 @@ import org.signalml.app.util.IconUtils;
 
 /** SignalTreeCellRenderer
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class SignalTreeCellRenderer extends DefaultTreeCellRenderer {
@@ -25,21 +25,21 @@ public class SignalTreeCellRenderer extends DefaultTreeCellRenderer {
 	public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
 		JLabel label = (JLabel) super.getTreeCellRendererComponent(tree, value, selected, expanded, leaf, row, hasFocus);
 
-		if( value instanceof Document ) {
+		if (value instanceof Document) {
 			ManagedDocumentType type = ManagedDocumentType.getForClass(((Document) value).getClass());
 			Icon icon = null;
-			if( type != null ) {
+			if (type != null) {
 				icon = type.getIcon();
 			}
-			if( icon != null ) {
+			if (icon != null) {
 				label.setIcon(icon);
 			}
 		}
-		else if( value instanceof SignalPageTreeNode ) {
-			label.setIcon( IconUtils.getSignalPageIcon() );
+		else if (value instanceof SignalPageTreeNode) {
+			label.setIcon(IconUtils.getSignalPageIcon());
 		}
-		
+
 		return label;
 	}
-	
+
 }

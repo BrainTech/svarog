@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.app.util;
 
@@ -8,7 +8,7 @@ import java.io.FileFilter;
 
 /**
  * @author oskar
- * 
+ *
  */
 public class XmlFileFilter implements FileFilter {
 

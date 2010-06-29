@@ -1,5 +1,5 @@
 /* ActionFocusManager.java created 2007-10-15
- * 
+ *
  */
 
 package org.signalml.app.action.selector;
@@ -28,32 +28,32 @@ import org.signalml.domain.tag.TagStyle;
 
 /** ActionFocusManager
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ActionFocusManager implements ChangeListener, DocumentFocusSelector, TagFocusSelector, TagStyleFocusSelector, SignalPlotFocusSelector, MontageFocusSelector, BookDocumentFocusSelector, PropertyChangeListener {
 
 	protected static final Logger logger = Logger.getLogger(ActionFocusManager.class);
-	
+
 	private ActionFocusSupport afSupport = new ActionFocusSupport(this);
-			
+
 	private Document activeDocument = null;
-	
+
 	private MontagePresetManager montagePresetManager;
-	private PresetManagerListener presetManagerListener;	
-	
+	private PresetManagerListener presetManagerListener;
+
 	public MontagePresetManager getMontagePresetManager() {
 		return montagePresetManager;
 	}
 
 	public void setMontagePresetManager(MontagePresetManager montagePresetManager) {
-		if( this.montagePresetManager != montagePresetManager ) {
-			if( this.montagePresetManager != null ) {
+		if (this.montagePresetManager != montagePresetManager) {
+			if (this.montagePresetManager != null) {
 				this.montagePresetManager.removePresetManagerListener(presetManagerListener);
 			}
 			this.montagePresetManager = montagePresetManager;
-			if( montagePresetManager != null ) {
-				if( presetManagerListener == null ) {
+			if (montagePresetManager != null) {
+				if (presetManagerListener == null) {
 					presetManagerListener = new PresetManagerAdapter() {
 						@Override
 						public void defaultPresetChanged(PresetManagerEvent ev) {
@@ -70,23 +70,23 @@ public class ActionFocusManager implements ChangeListener, DocumentFocusSelector
 	public Document getActiveDocument() {
 		return activeDocument;
 	}
-	
-	public void setActiveDocument( Document document ) {
-		if( document != activeDocument ) {
-			if( activeDocument != null ) {
+
+	public void setActiveDocument(Document document) {
+		if (document != activeDocument) {
+			if (activeDocument != null) {
 				activeDocument.removePropertyChangeListener(this);
 			}
 			activeDocument = document;
-			if( document != null ) {
+			if (document != null) {
 				document.addPropertyChangeListener(this);
 			}
 			afSupport.fireActionFocusChanged();
 		}
 	}
-			
+
 	@Override
 	public PositionedTag getActiveTag() {
-		logger.warn( "WARNING: active tag not updated" );
+		logger.warn("WARNING: active tag not updated");
 		/*
 		if( activeDocument instanceof SignalDocument ) {
 			SignalView signalView = (SignalView) ( activeDocument.getDocumentView() );
@@ -95,16 +95,16 @@ public class ActionFocusManager implements ChangeListener, DocumentFocusSelector
 		*/
 		return null;
 	}
-	
+
 	@Override
 	public TagStyle getActiveTagStyle() {
-		logger.warn( "WARNING: active tag style not updated" );
+		logger.warn("WARNING: active tag style not updated");
 		return null;
 	}
 
 	@Override
 	public TagDocument getActiveTagDocument() {
-		if( activeDocument instanceof SignalDocument ) {
+		if (activeDocument instanceof SignalDocument) {
 			return ((SignalDocument) activeDocument).getActiveTag();
 		}
 		return null;
@@ -112,17 +112,17 @@ public class ActionFocusManager implements ChangeListener, DocumentFocusSelector
 
 	@Override
 	public SignalDocument getActiveSignalDocument() {
-		if( activeDocument instanceof SignalDocument ) {
+		if (activeDocument instanceof SignalDocument) {
 			return (SignalDocument) activeDocument;
 		}
 		return null;
 	}
-	
-	
-	
+
+
+
 	@Override
 	public BookDocument getActiveBookDocument() {
-		if( activeDocument instanceof BookDocument ) {
+		if (activeDocument instanceof BookDocument) {
 			return (BookDocument) activeDocument;
 		}
 		return null;
@@ -130,16 +130,16 @@ public class ActionFocusManager implements ChangeListener, DocumentFocusSelector
 
 	@Override
 	public SignalPlot getActiveSignalPlot() {
-		if( activeDocument instanceof SignalDocument ) {
-			SignalView signalView = (SignalView) ( activeDocument.getDocumentView() );
+		if (activeDocument instanceof SignalDocument) {
+			SignalView signalView = (SignalView)(activeDocument.getDocumentView());
 			return signalView.getActiveSignalPlot();
 		}
 		return null;
 	}
-	
+
 	@Override
 	public Montage getActiveMontage() {
-		if( montagePresetManager == null ) {
+		if (montagePresetManager == null) {
 			return null;
 		}
 		return (Montage) montagePresetManager.getDefaultPreset();
@@ -148,22 +148,22 @@ public class ActionFocusManager implements ChangeListener, DocumentFocusSelector
 	@Override
 	public void stateChanged(ChangeEvent e) {
 		Object src = e.getSource();
-		if( src instanceof ViewerDocumentTabbedPane ) {
+		if (src instanceof ViewerDocumentTabbedPane) {
 			ViewerDocumentTabbedPane documentTabbedPane = (ViewerDocumentTabbedPane) src;
 			int index = documentTabbedPane.getSelectedIndex();
-			if( index >= 0 ) {
+			if (index >= 0) {
 				setActiveDocument(documentTabbedPane.getDocumentInTab(index));
 			} else {
 				setActiveDocument(null);
 			}
 		}
 	}
-	
+
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		if( evt.getSource() == activeDocument ) {
-			if( activeDocument instanceof SignalDocument ) {
-				if( SignalDocument.ACTIVE_TAG_PROPERTY.equals( evt.getPropertyName() ) ) {
+		if (evt.getSource() == activeDocument) {
+			if (activeDocument instanceof SignalDocument) {
+				if (SignalDocument.ACTIVE_TAG_PROPERTY.equals(evt.getPropertyName())) {
 					afSupport.fireActionFocusChanged();
 				}
 			}
@@ -181,5 +181,5 @@ public class ActionFocusManager implements ChangeListener, DocumentFocusSelector
 	}
 
 
-	
+
 }

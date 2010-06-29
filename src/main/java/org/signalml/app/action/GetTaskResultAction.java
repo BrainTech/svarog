@@ -1,5 +1,5 @@
 /* GetTaskResultAction.java created 2007-10-19
- * 
+ *
  */
 package org.signalml.app.action;
 
@@ -27,23 +27,23 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** GetTaskResultAction
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class GetTaskResultAction extends AbstractFocusableSignalMLAction<TaskFocusSelector> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	protected static final Logger logger = Logger.getLogger(GetTaskResultAction.class);
-		
+
 	private ApplicationMethodManager methodManager;
 	private DialogResultListener dialogResultListener;
 
-	
-	
+
+
 	public GetTaskResultAction(MessageSourceAccessor messageSource,
-			TaskFocusSelector actionFocusSelector,
-			DialogResultListener dialogResultListener) {
+	                           TaskFocusSelector actionFocusSelector,
+	                           DialogResultListener dialogResultListener) {
 		this(messageSource, actionFocusSelector);
 		this.dialogResultListener = dialogResultListener;
 	}
@@ -54,106 +54,106 @@ public class GetTaskResultAction extends AbstractFocusableSignalMLAction<TaskFoc
 		setIconPath("org/signalml/app/icon/getresult.png");
 		setToolTip("action.getTaskResultToolTip");
 	}
-			
+
 	@Override
 	public void actionPerformed(ActionEvent ev) {
-				
+
 		Task targetTask = getActionFocusSelector().getActiveTask();
-		if( targetTask == null ) {
+		if (targetTask == null) {
 			return;
 		}
-		
+
 		TaskResult result = null;
-		synchronized( targetTask ) {
-			if( targetTask.getStatus().isFinished() ) {
+		synchronized (targetTask) {
+			if (targetTask.getStatus().isFinished()) {
 				result = targetTask.getResult();
 			}
 		}
-		if( result == null ) {
+		if (result == null) {
 			logger.warn("No result to get");
 			return;
 		}
-		
-		logger.debug( "Got result [" + result + "]" );
-		
+
+		logger.debug("Got result [" + result + "]");
+
 		Method method = targetTask.getMethod();
-		
-		if( method instanceof MethodIteratorMethod ) {
-			
+
+		if (method instanceof MethodIteratorMethod) {
+
 			MethodIteratorMethod iteratorMethod = (MethodIteratorMethod) method;
 			IterableMethod subjectMethod = iteratorMethod.getSubjectMethod();
-			
-			// special treatment of the iterator, use an iterable result consumer of the subject method 
+
+			// special treatment of the iterator, use an iterable result consumer of the subject method
 			ApplicationMethodDescriptor anyDescr = methodManager.getMethodData(subjectMethod);
 			ApplicationIterableMethodDescriptor descriptor = null;
-			if( anyDescr instanceof ApplicationIterableMethodDescriptor ) {
+			if (anyDescr instanceof ApplicationIterableMethodDescriptor) {
 				descriptor = (ApplicationIterableMethodDescriptor) anyDescr;
 			}
-			if( descriptor == null ) {
+			if (descriptor == null) {
 				logger.warn("No descriptor, can't get consumer");
 				return;
 			}
 
-			MethodIterationResultConsumer consumer = descriptor.getIterationConsumer( methodManager );
-			if( consumer == null ) {
+			MethodIterationResultConsumer consumer = descriptor.getIterationConsumer(methodManager);
+			if (consumer == null) {
 				logger.warn("No consumer");
 				return;
 			}
-			
+
 			MethodIteratorData iteratorData = (MethodIteratorData) targetTask.getData();
 			MethodIteratorResult iteratorResult = (MethodIteratorResult) result.getResult();
-			
+
 			try {
 				consumer.consumeIterationResult(subjectMethod, iteratorData, iteratorResult);
 			} catch (SignalMLException ex) {
 				logger.error("Failed to consume result", ex);
 				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-				return;							
+				return;
 			}
-			
+
 		} else {
 			// normal case - use normal consumer
-		
+
 			ApplicationMethodDescriptor descriptor = methodManager.getMethodData(method);
-			if( descriptor == null ) {
+			if (descriptor == null) {
 				logger.warn("No descriptor, can't get consumer");
 				return;
 			}
-			
-			MethodResultConsumer consumer = descriptor.getConsumer( methodManager );
-			if( consumer == null ) {
+
+			MethodResultConsumer consumer = descriptor.getConsumer(methodManager);
+			if (consumer == null) {
 				logger.warn("No consumer");
 				return;
 			}
-			
+
 			boolean consumerResult = false;
-			
+
 			try {
 				consumerResult = consumer.consumeResult(method, targetTask.getData(), result.getResult());
 			} catch (SignalMLException ex) {
 				logger.error("Failed to consume result", ex);
 				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-				return;							
+				return;
 			}
 
 			if (dialogResultListener != null) {
 				dialogResultListener.dialogCompleted(consumerResult);
 			}
-			
+
 		}
-		
+
 	}
-	
+
 	@Override
 	public void setEnabledAsNeeded() {
 		boolean enabled = false;
 		Task targetTask = getActionFocusSelector().getActiveTask();
-		if( targetTask != null ) {
+		if (targetTask != null) {
 			enabled = targetTask.getStatus().isFinished();
 		}
 		setEnabled(enabled);
 	}
-	
+
 	public ApplicationMethodManager getMethodManager() {
 		return methodManager;
 	}
@@ -161,5 +161,5 @@ public class GetTaskResultAction extends AbstractFocusableSignalMLAction<TaskFoc
 	public void setMethodManager(ApplicationMethodManager methodManager) {
 		this.methodManager = methodManager;
 	}
-	
+
 }

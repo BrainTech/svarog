@@ -1,5 +1,5 @@
 /* MP5Data.java created 2007-10-03
- * 
+ *
  */
 
 package org.signalml.method.mp5;
@@ -16,7 +16,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /** MP5Data
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 @XStreamAlias("mp5data")
@@ -25,27 +25,27 @@ public class MP5Data implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private MP5Parameters parameters;
-		
+
 	private transient MultichannelSegmentedSampleSource sampleSource;
 
 	private File workingDirectory;
 	private String executorUID;
 	private String bookFilePath;
-	
+
 	private boolean suspended;
 	private int completedSegments;
 
 	private SignalProcessingChainDescriptor chainDescriptor;
 	private SegmentedSampleSourceDescriptor sourceDescriptor;
-	
+
 	public MP5Data() {
 		this.parameters = new MP5Parameters();
 	}
-	
+
 	public MP5Data(MP5Parameters parameters) {
-		this.parameters = parameters;		
+		this.parameters = parameters;
 	}
-	
+
 	public MP5Parameters getParameters() {
 		return parameters;
 	}
@@ -56,8 +56,8 @@ public class MP5Data implements Serializable {
 
 	public void setWorkingDirectory(File workingDirectory) {
 		this.workingDirectory = workingDirectory;
-	}	
-	
+	}
+
 	public String getBookFilePath() {
 		return bookFilePath;
 	}
@@ -80,8 +80,8 @@ public class MP5Data implements Serializable {
 
 	public void setSampleSource(MultichannelSegmentedSampleSource sampleSource) {
 		this.sampleSource = sampleSource;
-	}	
-	
+	}
+
 	public boolean isSuspended() {
 		return suspended;
 	}
@@ -96,8 +96,8 @@ public class MP5Data implements Serializable {
 
 	public void setCompletedSegments(int completedSegments) {
 		this.completedSegments = completedSegments;
-	}	
-	
+	}
+
 	public SignalProcessingChainDescriptor getChainDescriptor() {
 		return chainDescriptor;
 	}
@@ -105,7 +105,7 @@ public class MP5Data implements Serializable {
 	public void setChainDescriptor(SignalProcessingChainDescriptor chainDescriptor) {
 		this.chainDescriptor = chainDescriptor;
 	}
-	
+
 	public SegmentedSampleSourceDescriptor getSourceDescriptor() {
 		return sourceDescriptor;
 	}
@@ -115,15 +115,15 @@ public class MP5Data implements Serializable {
 	}
 
 	public void validate(Errors errors) {
-		if( executorUID == null || executorUID.isEmpty() ) {
+		if (executorUID == null || executorUID.isEmpty()) {
 			errors.rejectValue("executorUID", "error.mp5.noExecutor");
 		}
 		errors.pushNestedPath("parameters");
 		parameters.validate(errors);
 		errors.popNestedPath();
-		if( sampleSource == null ) {
+		if (sampleSource == null) {
 			errors.rejectValue("sampleSource", "error.mp5.noSampleSource");
 		}
 	}
-		
+
 }

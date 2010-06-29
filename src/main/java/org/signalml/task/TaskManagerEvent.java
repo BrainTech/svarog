@@ -1,5 +1,5 @@
 /* TaskManagerEvent.java created 2007-10-06
- * 
+ *
  */
 
 package org.signalml.task;
@@ -8,7 +8,7 @@ import java.util.EventObject;
 
 /** TaskManagerEvent
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class TaskManagerEvent extends EventObject {
@@ -17,7 +17,7 @@ public class TaskManagerEvent extends EventObject {
 
 	private Task task;
 	private int index;
-	
+
 	public TaskManagerEvent(Object source, Task task, int index) {
 		super(source);
 		this.task = task;
@@ -30,6 +30,6 @@ public class TaskManagerEvent extends EventObject {
 
 	public int getIndex() {
 		return index;
-	}	
+	}
 
 }

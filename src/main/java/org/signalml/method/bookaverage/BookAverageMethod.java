@@ -1,5 +1,5 @@
 /* BookAverageMethod.java created 2008-03-22
- * 
+ *
  */
 package org.signalml.method.bookaverage;
 
@@ -19,17 +19,17 @@ import org.springframework.validation.Errors;
 
 /** BookAverageMethod
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class BookAverageMethod extends AbstractMethod implements TrackableMethod {
 
 	protected static final Logger logger = Logger.getLogger(BookAverageMethod.class);
-	
+
 	private static final String UID = "705783f7-1cf8-43e5-83d8-c02fed683e7e";
 	private static final String NAME = "bookAverage";
 	private static final int[] VERSION = new int[] {1,0};
-		
+
 	public BookAverageMethod() throws SignalMLException {
 		super();
 	}
@@ -45,7 +45,7 @@ public class BookAverageMethod extends AbstractMethod implements TrackableMethod
 	public int[] getVersion() {
 		return VERSION;
 	}
-	
+
 	@Override
 	public Object createData() {
 		return new BookAverageData();
@@ -54,136 +54,136 @@ public class BookAverageMethod extends AbstractMethod implements TrackableMethod
 	public boolean supportsDataClass(Class<?> clazz) {
 		return BookAverageData.class.isAssignableFrom(clazz);
 	}
-	
+
 	public Class<?> getResultClass() {
 		return BookAverageResult.class;
 	}
-	
+
 	@Override
 	public void validate(Object data, Errors errors) {
 		super.validate(data, errors);
-		
+
 		// TODO validation
-		
+
 	}
-	
+
 	@Override
 	public Object doComputation(Object dataObj, final MethodExecutionTracker tracker) throws ComputationException {
-		
+
 		BookAverageData data = (BookAverageData) dataObj;
-		
+
 		tracker.resetTickers();
-		
+
 		StandardBook book = data.getBook();
-		
+
 		WignerMapProvider provider = new WignerMapProvider(book.getSamplingFrequency());
 		int width = data.getWidth();
 		int height = data.getHeight();
-		provider.setWidth( width );
-		provider.setHeight( height );
-		provider.setMinFrequency( data.getMinFrequency() );
-		provider.setMaxFrequency( data.getMaxFrequency() );
-		provider.setMinPosition( data.getMinPosition() );
-		provider.setMaxPosition( data.getMaxPosition() );
-		
+		provider.setWidth(width);
+		provider.setHeight(height);
+		provider.setMinFrequency(data.getMinFrequency());
+		provider.setMaxFrequency(data.getMaxFrequency());
+		provider.setMinPosition(data.getMinPosition());
+		provider.setMaxPosition(data.getMaxPosition());
+
 		LinkedHashSet<Integer> channels = data.getChannels();
 		int[] channelArr = new int[channels.size()];
 		int channelCnt = 0;
-		for( int i : channels ) {
+		for (int i : channels) {
 			channelArr[channelCnt] = i;
 			channelCnt++;
 		}
-		
+
 		int minSegment = data.getMinSegment();
 		int maxSegment = data.getMaxSegment();
-				
-		int stepCount = (maxSegment+1-minSegment) * channelArr.length;		
+
+		int stepCount = (maxSegment+1-minSegment) * channelArr.length;
 		tracker.setTickerLimits(new int[] {stepCount});
 
 		int x;
 		int y;
-		
+
 		float[] averageSignal = null;
 		boolean averagingNotPossible = false;
 		double[][] averageMap = new double[width][height];
 		double[][] normalMap;
-				
-		int cnt = 0;		
-		
-		StandardBookSegment segment; 
+
+		int cnt = 0;
+
+		StandardBookSegment segment;
 		float[] signalSamples;
 		int j;
-		
-		for( int e=0; e<channelArr.length; e++ ) {
-			for( int i=minSegment; i<=maxSegment; i++ ) {
+
+		for (int e=0; e<channelArr.length; e++) {
+			for (int i=minSegment; i<=maxSegment; i++) {
 				segment = book.getSegmentAt(i,channelArr[e]);
 				provider.setSegment(segment);
 				normalMap = provider.getMap();
-				for( x=0; x<width; x++ ) {
-					for( y=0; y<height; y++ ) {
+				for (x=0; x<width; x++) {
+					for (y=0; y<height; y++) {
 						averageMap[x][y] += normalMap[x][y];
 					}
 				}
-				
-				if( !averagingNotPossible ) {
-					
-					if( !segment.hasSignal() ) {
+
+				if (!averagingNotPossible) {
+
+					if (!segment.hasSignal()) {
 						averagingNotPossible = true;
 						averageSignal = null;
 					} else {
-					
-						signalSamples = segment.getSignalSamples();						
-						if( averageSignal == null ) {
-							averageSignal = new float[signalSamples.length];							
+
+						signalSamples = segment.getSignalSamples();
+						if (averageSignal == null) {
+							averageSignal = new float[signalSamples.length];
 						} else {
-							if( averageSignal.length != signalSamples.length ) {
+							if (averageSignal.length != signalSamples.length) {
 								averagingNotPossible = true;
 								averageSignal = null;
 							}
 						}
-						
-						for( j=0; j<signalSamples.length; j++ ) {
+
+						for (j=0; j<signalSamples.length; j++) {
 							averageSignal[j] += signalSamples[j];
 						}
-					
+
 					}
-											
+
 				}
-				
+
 				cnt++;
 				tracker.setTicker(0, cnt);
-			}				
+			}
 		}
-		
-		if( cnt > 0 ) {
-			
-			for( x=0; x<width; x++ ) {
-				for( y=0; y<height; y++ ) {
+
+		if (cnt > 0) {
+
+			for (x=0; x<width; x++) {
+				for (y=0; y<height; y++) {
 					averageMap[x][y] /= cnt;
 				}
 			}
-			
-			averageMap = provider.scaleMap( null, averageMap, width, height, data.getScaleType() );
-			
-			if( !averagingNotPossible && averageSignal != null ) {
-				for( j=0; j<averageSignal.length; j++ ) {
+
+			averageMap = provider.scaleMap(null, averageMap, width, height, data.getScaleType());
+
+			if (!averagingNotPossible && averageSignal != null) {
+				for (j=0; j<averageSignal.length; j++) {
 					averageSignal[j] /= cnt;
 				}
 			}
-			
+
 		}
-		
-		
+
+
 		BookAverageResult result = new BookAverageResult();
-		
+
 		// getMap is where real processing happens
-		result.setMap( averageMap );
-		result.setSignal( averageSignal );
+		result.setMap(averageMap);
+		result.setSignal(averageSignal);
 		// FIXME do
-		result.setReconstruction( null );
-		
-		return result;		
-				
+		result.setReconstruction(null);
+
+		return result;
+
 	}
 
 	@Override
@@ -196,5 +196,5 @@ public class BookAverageMethod extends AbstractMethod implements TrackableMethod
 		return messageSource.getMessage("bookAverageMethod.ticker");
 	}
 
-	
+
 }

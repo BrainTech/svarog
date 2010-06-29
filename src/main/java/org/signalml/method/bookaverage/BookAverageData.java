@@ -1,5 +1,5 @@
 /* BookAverageData.java created 2008-03-22
- * 
+ *
  */
 
 package org.signalml.method.bookaverage;
@@ -12,34 +12,34 @@ import org.signalml.domain.book.WignerMapScaleType;
 
 /** BookAverageData
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class BookAverageData {
 
 	private StandardBook book;
-	
+
 	private int width;
 	private int height;
-	
+
 	private double minFrequency;
 	private double maxFrequency;
-	
+
 	private double minPosition;
 	private double maxPosition;
-	
+
 	private int minSegment;
 	private int maxSegment;
-	
+
 	private LinkedHashSet<Integer> channels;
-	
+
 	private WignerMapPalette palette;
 	private WignerMapScaleType scaleType;
 
 	public BookAverageData() {
 		channels = new LinkedHashSet<Integer>();
 	}
-	
+
 	public StandardBook getBook() {
 		return book;
 	}
@@ -47,7 +47,7 @@ public class BookAverageData {
 	public void setBook(StandardBook book) {
 		this.book = book;
 	}
-	
+
 	public int getWidth() {
 		return width;
 	}
@@ -119,20 +119,20 @@ public class BookAverageData {
 	public void setChannels(LinkedHashSet<Integer> channels) {
 		this.channels = channels;
 	}
-	
-	public void replaceChannels( int[] array ) {
+
+	public void replaceChannels(int[] array) {
 		channels.clear();
-		for( int i=0; i<array.length; i++ ) {
-			channels.add( array[i] );
+		for (int i=0; i<array.length; i++) {
+			channels.add(array[i]);
 		}
 	}
-	
-	public void addChannel( int channel ) {
-		channels.add( channel );
+
+	public void addChannel(int channel) {
+		channels.add(channel);
 	}
-	
-	public void removeChannel( int channel ) {
-		channels.remove( new Integer( channel ) );
+
+	public void removeChannel(int channel) {
+		channels.remove(new Integer(channel));
 	}
 
 	public WignerMapPalette getPalette() {
@@ -149,8 +149,8 @@ public class BookAverageData {
 
 	public void setScaleType(WignerMapScaleType scaleType) {
 		this.scaleType = scaleType;
-	}	
-	
+	}
+
 }
 
 

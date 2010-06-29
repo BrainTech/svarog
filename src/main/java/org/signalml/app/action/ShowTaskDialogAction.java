@@ -1,5 +1,5 @@
 /* ShowTaskDialogAction.java created 2007-10-19
- * 
+ *
  */
 package org.signalml.app.action;
 
@@ -14,41 +14,41 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** ShowTaskDialogAction
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ShowTaskDialogAction extends AbstractFocusableSignalMLAction<TaskFocusSelector> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	protected static final Logger logger = Logger.getLogger(ShowTaskDialogAction.class);
-		
+
 	private ApplicationTaskManager taskManager;
-	
+
 	public ShowTaskDialogAction(MessageSourceAccessor messageSource, TaskFocusSelector taskFocusSelector) {
 		super(messageSource, taskFocusSelector);
 		setText("action.showTaskDialog");
 		setIconPath("org/signalml/app/icon/running.png");
 		setToolTip("action.showTaskDialogToolTip");
 	}
-			
+
 	@Override
 	public void actionPerformed(ActionEvent ev) {
-		
+
 		Task targetTask = getActionFocusSelector().getActiveTask();
-		if( targetTask == null ) {
+		if (targetTask == null) {
 			return;
 		}
-		
+
 		TaskStatusDialog dialog = taskManager.getStatusDialogForTask(targetTask);
 		dialog.showDialog(true);
-				
+
 	}
-	
+
 	public void setEnabledAsNeeded() {
-		setEnabled( getActionFocusSelector().getActiveTask() != null );
+		setEnabled(getActionFocusSelector().getActiveTask() != null);
 	}
-	
+
 	public ApplicationTaskManager getTaskManager() {
 		return taskManager;
 	}
@@ -56,5 +56,5 @@ public class ShowTaskDialogAction extends AbstractFocusableSignalMLAction<TaskFo
 	public void setTaskManager(ApplicationTaskManager taskManager) {
 		this.taskManager = taskManager;
 	}
-			
+
 }

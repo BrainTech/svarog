@@ -1,5 +1,5 @@
 /* XMLUtils.java created 2007-09-14
- * 
+ *
  */
 package org.signalml.app.util;
 
@@ -45,7 +45,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 
 /** XMLUtils
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public abstract class XMLUtils {
@@ -53,103 +53,103 @@ public abstract class XMLUtils {
 	public static XStream getDefaultStreamer() {
 		return new XStream(new PureJavaReflectionProvider(new FieldDictionary(new NativeFieldKeySorter())), new DomDriver("UTF-8"));
 	}
-	
+
 	public static void configureStreamerForMontage(XStream streamer) {
 		Annotations.configureAliases(
-				streamer,
-				EegChannel.class,
-				MontagePresetManager.class,
-				SourceChannel.class,
-				MontageChannel.class,
-				SourceMontage.class,
-				Montage.class,
-				RawMontageGenerator.class,
-				LeftEarMontageGenerator.class,
-				RightEarMontageGenerator.class,
-				LinkedEarsMontageGenerator.class,
-				MontageSampleFilter.class,
-				SampleFilterDefinition.class,
-				FFTSampleFilter.class
-		);		
+		        streamer,
+		        EegChannel.class,
+		        MontagePresetManager.class,
+		        SourceChannel.class,
+		        MontageChannel.class,
+		        SourceMontage.class,
+		        Montage.class,
+		        RawMontageGenerator.class,
+		        LeftEarMontageGenerator.class,
+		        RightEarMontageGenerator.class,
+		        LinkedEarsMontageGenerator.class,
+		        MontageSampleFilter.class,
+		        SampleFilterDefinition.class,
+		        FFTSampleFilter.class
+		);
 	}
 
 	public static void configureStreamerForBookFilter(XStream streamer) {
 		Annotations.configureAliases(
-				streamer,
-				BookFilterPresetManager.class,
-				AtomFilterChain.class,
-				AbstractAtomFilter.class,
-				ParameterRangeAtomFilter.class,
-				TagBasedAtomFilter.class,
-				DelegatingAtomFilter.class
-		);		
+		        streamer,
+		        BookFilterPresetManager.class,
+		        AtomFilterChain.class,
+		        AbstractAtomFilter.class,
+		        ParameterRangeAtomFilter.class,
+		        TagBasedAtomFilter.class,
+		        DelegatingAtomFilter.class
+		);
 	}
-	
+
 	public static void configureStreamerForSignalExport(XStream streamer) {
 		Annotations.configureAliases(
-				streamer,
-				SignalExportPresetManager.class,
-				SignalExportDescriptor.class
-		);		
+		        streamer,
+		        SignalExportPresetManager.class,
+		        SignalExportDescriptor.class
+		);
 	}
 
 	public static void configureStreamerForFFTSampleFilter(XStream streamer) {
 		Annotations.configureAliases(
-				streamer,
-				FFTSampleFilterPresetManager.class,
-				FFTSampleFilter.class
-		);		
+		        streamer,
+		        FFTSampleFilterPresetManager.class,
+		        FFTSampleFilter.class
+		);
 	}
-	
+
 	public static OutputStream getInitializedXMLOutputStream(File f) throws IOException {
-		OutputStream outputStream = new BufferedOutputStream( new FileOutputStream( f ) );				
+		OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(f));
 		try {
 			outputStream.write(("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+Util.LINE_SEP).getBytes());
-		} catch( IOException ex ) {
+		} catch (IOException ex) {
 			outputStream.close();
 			throw ex;
 		}
-		return outputStream;		
+		return outputStream;
 	}
 
 	public static InputStream getInitializedXMLInputStream(File f) throws IOException {
-		return new BufferedInputStream( new FileInputStream( f ) );		
+		return new BufferedInputStream(new FileInputStream(f));
 	}
-	
+
 	public static void objectToFile(Object o, File f, XStream streamer) throws IOException {
-		
-		OutputStream outputStream = XMLUtils.getInitializedXMLOutputStream(f);		
-		
-		try { 
+
+		OutputStream outputStream = XMLUtils.getInitializedXMLOutputStream(f);
+
+		try {
 			streamer.toXML(o,outputStream);
 		} finally {
 			outputStream.close();
 		}
-		
+
 	}
 
 	public static void objectFromFile(Object o, File f, XStream streamer) throws IOException {
-		
-		InputStream inputStream = XMLUtils.getInitializedXMLInputStream(f);		
-		
-		try { 
+
+		InputStream inputStream = XMLUtils.getInitializedXMLInputStream(f);
+
+		try {
 			streamer.fromXML(inputStream,o);
 		} finally {
 			inputStream.close();
 		}
-		
+
 	}
 
 	public static Object newObjectFromFile(File f, XStream streamer) throws IOException {
-		
-		InputStream inputStream = XMLUtils.getInitializedXMLInputStream(f);		
-		
-		try { 
+
+		InputStream inputStream = XMLUtils.getInitializedXMLInputStream(f);
+
+		try {
 			return streamer.fromXML(inputStream);
 		} finally {
 			inputStream.close();
 		}
-		
+
 	}
-	
+
 }

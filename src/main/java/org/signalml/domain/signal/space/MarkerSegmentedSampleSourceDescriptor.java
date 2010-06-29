@@ -1,5 +1,5 @@
 /* MarkerSegmentedSampleSourceDescriptor.java created 2008-02-15
- * 
+ *
  */
 
 package org.signalml.domain.signal.space;
@@ -11,7 +11,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /** MarkerSegmentedSampleSourceDescriptor
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 @XStreamAlias("markersegsource")
@@ -21,17 +21,17 @@ public class MarkerSegmentedSampleSourceDescriptor implements SegmentedSampleSou
 
 	private int segmentLength;
 	private int[] offsets;
-	
+
 	private int channelCount;
 	private int[] channelIndices;
-	
+
 	private int unusableSegmentCount;
 	private int samplesBefore;
 	private int samplesAfter;
-	
+
 	public MarkerSegmentedSampleSourceDescriptor() {
 	}
-	
+
 	@Override
 	public MultichannelSegmentedSampleSource createSegmentedSource(MultichannelSampleSource source) {
 		return new MarkerSegmentedSampleSource(source, this);
@@ -92,5 +92,5 @@ public class MarkerSegmentedSampleSourceDescriptor implements SegmentedSampleSou
 	public void setSamplesAfter(int samplesAfter) {
 		this.samplesAfter = samplesAfter;
 	}
-	
+
 }

@@ -1,5 +1,5 @@
 /* InputSignalPanel.java created 2007-11-02
- * 
+ *
  */
 package org.signalml.app.method;
 
@@ -17,18 +17,18 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** InputSignalPanel
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class InputSignalPanel extends JPanel {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private MessageSourceAccessor messageSource;
-	
+
 	private JTextField signalTextField;
 	private JButton montageButton;
-	
+
 	public InputSignalPanel(MessageSourceAccessor messageSource) {
 		super();
 		this.messageSource = messageSource;
@@ -37,33 +37,33 @@ public class InputSignalPanel extends JPanel {
 
 	private void initialize() {
 
-		setLayout( new BorderLayout(3,3) );
-		
+		setLayout(new BorderLayout(3,3));
+
 		CompoundBorder border = new CompoundBorder(
-			new TitledBorder( messageSource.getMessage("method.dialog.inputData") ),
-			new EmptyBorder(3,3,3,3)
+		        new TitledBorder(messageSource.getMessage("method.dialog.inputData")),
+		        new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);
-		
-		add( getSignalTextField(), BorderLayout.CENTER );
-		add( getMontageButton(), BorderLayout.EAST );
-				
+
+		add(getSignalTextField(), BorderLayout.CENTER);
+		add(getMontageButton(), BorderLayout.EAST);
+
 	}
 
 	public JTextField getSignalTextField() {
-		if( signalTextField == null ) {
+		if (signalTextField == null) {
 			signalTextField = new JTextField();
-			signalTextField.setPreferredSize( new Dimension(200,25) );
+			signalTextField.setPreferredSize(new Dimension(200,25));
 			signalTextField.setEditable(false);
 		}
 		return signalTextField;
 	}
-	
+
 	public JButton getMontageButton() {
-		if( montageButton == null ) {
+		if (montageButton == null) {
 			montageButton = new JButton();
 		}
 		return montageButton;
 	}
-	
+
 }

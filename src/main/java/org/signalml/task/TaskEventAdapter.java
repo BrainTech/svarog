@@ -1,5 +1,5 @@
 /* TaskEventAdapter.java created 2007-09-12
- * 
+ *
  */
 package org.signalml.task;
 
@@ -23,14 +23,14 @@ public class TaskEventAdapter implements TaskEventListener {
 
 	@Override
 	public void taskSuspended(TaskEvent ev) {}
-	
+
 	@Override
 	public void taskRequestChanged(TaskEvent ev) {
 	}
 
 	@Override
 	public void taskMessageSet(TaskEvent ev) {}
-	
+
 	@Override
 	public void taskTickerUpdated(TaskEvent ev) {}
 

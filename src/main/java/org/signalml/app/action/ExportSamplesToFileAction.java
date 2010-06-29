@@ -1,5 +1,5 @@
 /* ExportSamplesToFileAction.java created 2008-01-15
- * 
+ *
  */
 
 package org.signalml.app.action;
@@ -22,65 +22,65 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** ExportSamplesToFileAction
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public abstract class ExportSamplesToFileAction extends ExportSamplesAction {
 
 	protected static final Logger logger = Logger.getLogger(ExportSamplesToFileAction.class);
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private ViewerFileChooser fileChooser;
 	private Component optionPaneParent;
-	
+
 	public ExportSamplesToFileAction(MessageSourceAccessor messageSource) {
 		super(messageSource);
 		setText("action.exportSamplesToFile");
 		setIconPath("org/signalml/app/icon/script_save.png");
 		setToolTip("action.exportSamplesToFileToolTip");
 	}
-				
+
 	@Override
 	public void actionPerformed(ActionEvent ev) {
-		
+
 		String samplesAsString = getSamplesAsString();
-		if( samplesAsString != null ) {
-		
+		if (samplesAsString != null) {
+
 			File file;
 			boolean hasFile = false;
 			do {
-				
+
 				file = fileChooser.chooseSamplesSaveAsTextFile(optionPaneParent);
-				if( file == null ) {
+				if (file == null) {
 					return;
 				}
 				String ext = Util.getFileExtension(file,false);
-				if( ext == null ) {
-					file = new File( file.getAbsolutePath() + ".txt" );
+				if (ext == null) {
+					file = new File(file.getAbsolutePath() + ".txt");
 				}
-				
+
 				hasFile = true;
-				
-				if( file.exists() ) {
+
+				if (file.exists()) {
 					int res = OptionPane.showFileAlreadyExists(optionPaneParent);
-					if( res != OptionPane.OK_OPTION ) {
+					if (res != OptionPane.OK_OPTION) {
 						hasFile = false;
-					}								
+					}
 				}
-				
-			} while( !hasFile );
-			
+
+			} while (!hasFile);
+
 			Writer writer = null;
 			try {
-				writer = new BufferedWriter( new FileWriter( file ) );
+				writer = new BufferedWriter(new FileWriter(file));
 				writer.append(samplesAsString);
 			} catch (IOException ex) {
 				logger.error("Failed to save to file - i/o exception", ex);
 				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-				return;			
+				return;
 			} finally {
-				if( writer != null ) {
+				if (writer != null) {
 					try {
 						writer.close();
 					} catch (IOException ex) {
@@ -88,11 +88,11 @@ public abstract class ExportSamplesToFileAction extends ExportSamplesAction {
 					}
 				}
 			}
-											
+
 		}
-				
+
 	}
-		
+
 	@Override
 	public void setEnabledAsNeeded() {
 		setEnabled(true);
@@ -113,5 +113,5 @@ public abstract class ExportSamplesToFileAction extends ExportSamplesAction {
 	public void setOptionPaneParent(Component optionPaneParent) {
 		this.optionPaneParent = optionPaneParent;
 	}
-	
+
 }

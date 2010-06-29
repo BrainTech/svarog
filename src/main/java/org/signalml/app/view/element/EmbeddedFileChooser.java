@@ -1,5 +1,5 @@
 /* EmbeddedFileChooser.java created 2008-01-17
- * 
+ *
  */
 
 package org.signalml.app.view.element;
@@ -17,10 +17,10 @@ import javax.swing.plaf.basic.BasicFileChooserUI;
 import org.springframework.validation.Errors;
 
 /** EmbeddedFileChooser
- * 
+ *
  *  This class provides ugly hack fixes for what appears to be bugs or bad design
  *  in JFileChooser.
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class EmbeddedFileChooser extends JFileChooser {
@@ -29,9 +29,9 @@ public class EmbeddedFileChooser extends JFileChooser {
 
 	private boolean suppressActionEvent = false;
 	private boolean invokeDefaultButtonOnApprove = false;
-	
+
 	private ActionListener defaultInvoker = null;
-	
+
 	public EmbeddedFileChooser() {
 		super();
 	}
@@ -59,10 +59,10 @@ public class EmbeddedFileChooser extends JFileChooser {
 	@Override
 	protected void setup(FileSystemView view) {
 		super.setup(view);
-		
-		super.setControlButtonsAreShown(false);		
+
+		super.setControlButtonsAreShown(false);
 	}
-	
+
 	@Override
 	public void setControlButtonsAreShown(boolean b) {
 		// XXX ugly hack
@@ -72,29 +72,29 @@ public class EmbeddedFileChooser extends JFileChooser {
 	@Override
 	protected void fireActionPerformed(String command) {
 		// hacked to allow for supression
-		if( !suppressActionEvent ) {
+		if (!suppressActionEvent) {
 			super.fireActionPerformed(command);
 		}
 	}
-	
+
 	public void forceApproveSelection() {
-		
+
 		// XXX ugly hack
-		
+
 		// if the control buttons are hidden, then there is no way to type in file name
 		// rather than selecting a file from the list
 		// forms using EmbeddedFileChooser must call this before trying to obtain the selected file
 		// because otherwise the typed filename is ignored
-		
+
 		// this is done by invoking the action because the processing in this
 		// action is very complicated and copying all that code here would
 		// not be practical. However the resulting action event needs to be
 		// supressed to allow some use cases
-		
+
 		// action name is appended with "-auto" to allow any action listeners to differentiate
 		// the two cases
 		FileChooserUI ui = getUI();
-		if( ui instanceof BasicFileChooserUI ) {
+		if (ui instanceof BasicFileChooserUI) {
 			Action approveSelectionAction = ((BasicFileChooserUI) ui).getApproveSelectionAction();
 			try {
 				suppressActionEvent = true;
@@ -103,34 +103,34 @@ public class EmbeddedFileChooser extends JFileChooser {
 				suppressActionEvent = false;
 			}
 		}
-				
+
 	}
-	
-	public void validateFile( Errors errors, String property, boolean acceptNone, boolean acceptMissing, boolean acceptDirectory, boolean acceptUnreadable, boolean acceptReadOnly ) {
-				
+
+	public void validateFile(Errors errors, String property, boolean acceptNone, boolean acceptMissing, boolean acceptDirectory, boolean acceptUnreadable, boolean acceptReadOnly) {
+
 		File file = getSelectedFile();
-		if( file == null || file.getPath().length() == 0 ) {
-			if( !acceptNone ) {
+		if (file == null || file.getPath().length() == 0) {
+			if (!acceptNone) {
 				errors.rejectValue(property, "error.fileMustBeChosen");
 			}
 		} else {
-			if( !file.exists() ) {
-				if( !acceptMissing ) {
+			if (!file.exists()) {
+				if (!acceptMissing) {
 					errors.rejectValue(property, "error.fileNotFound");
 				}
 			} else {
-				if( !acceptDirectory && file.isDirectory() ) {
+				if (!acceptDirectory && file.isDirectory()) {
 					errors.rejectValue(property, "error.fileNotFile");
 				}
-				if( !acceptUnreadable && !file.canRead() ) {
+				if (!acceptUnreadable && !file.canRead()) {
 					errors.rejectValue(property, "error.fileNotReadable");
 				}
-				if( !acceptReadOnly && !file.canWrite() ) {
+				if (!acceptReadOnly && !file.canWrite()) {
 					errors.rejectValue(property, "error.fileNotWritable");
 				}
 			}
 		}
-				
+
 	}
 
 	public boolean isInvokeDefaultButtonOnApprove() {
@@ -138,27 +138,27 @@ public class EmbeddedFileChooser extends JFileChooser {
 	}
 
 	public void setInvokeDefaultButtonOnApprove(boolean invokeDefaultButtonOnApprove) {
-		if( this.invokeDefaultButtonOnApprove != invokeDefaultButtonOnApprove ) {
-			if( this.invokeDefaultButtonOnApprove ) {
+		if (this.invokeDefaultButtonOnApprove != invokeDefaultButtonOnApprove) {
+			if (this.invokeDefaultButtonOnApprove) {
 				this.removeActionListener(defaultInvoker);
 			}
 			this.invokeDefaultButtonOnApprove = invokeDefaultButtonOnApprove;
-			if( invokeDefaultButtonOnApprove ) {
-				if( defaultInvoker == null ) {
+			if (invokeDefaultButtonOnApprove) {
+				if (defaultInvoker == null) {
 					defaultInvoker = new ActionListener() {
 
 						@Override
-						public void actionPerformed(ActionEvent e) {					
-							if( e.getActionCommand().equals(JFileChooser.APPROVE_SELECTION )) {
+						public void actionPerformed(ActionEvent e) {
+							if (e.getActionCommand().equals(JFileChooser.APPROVE_SELECTION)) {
 								getRootPane().getDefaultButton().getAction().actionPerformed(e);
 							}
 						}
-						
+
 					};
 					addActionListener(defaultInvoker);
 				}
 			}
 		}
 	}
-	
+
 }

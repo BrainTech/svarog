@@ -1,5 +1,5 @@
 /* SignalDocumentListModel.java created 2007-10-10
- * 
+ *
  */
 
 package org.signalml.app.model;
@@ -13,7 +13,7 @@ import org.signalml.app.document.SignalDocument;
 
 /** SignalDocumentListModel
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class SignalDocumentListModel extends AbstractListModel implements ComboBoxModel {
@@ -21,8 +21,8 @@ public class SignalDocumentListModel extends AbstractListModel implements ComboB
 	private static final long serialVersionUID = 1L;
 
 	private DocumentManager documentManager;
-	private SignalDocument selectedDocument;	
-	
+	private SignalDocument selectedDocument;
+
 	public SignalDocumentListModel(DocumentManager documentManager) {
 		super();
 		this.documentManager = documentManager;

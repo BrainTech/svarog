@@ -1,5 +1,5 @@
 /* FilteredBookSegment.java created 2008-02-28
- * 
+ *
  */
 
 package org.signalml.domain.book;
@@ -12,36 +12,36 @@ import org.signalml.domain.book.filter.AtomFilterChain;
 
 /** FilteredBookSegment
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class FilteredBookSegment implements StandardBookSegment {
 
 	private StandardBookSegment source;
-	
+
 	private StandardBookAtom[] acceptedAtoms;
 	private HashMap<StandardBookAtom,Integer> atomIndexMap;
-		
+
 	public FilteredBookSegment(StandardBookSegment source, AtomFilterChain filter) {
 		this.source = source;
-		
+
 		LinkedList<StandardBookAtom> atoms = new LinkedList<StandardBookAtom>();
-		
+
 		atomIndexMap = new HashMap<StandardBookAtom, Integer>();
-		
+
 		int atomCount = source.getAtomCount();
 		StandardBookAtom atom;
-		for( int i=0; i<atomCount; i++ ) {
+		for (int i=0; i<atomCount; i++) {
 			atom = source.getAtomAt(i);
-			if( filter == null || filter.matches(source, atom) ) {
-				atomIndexMap.put( atom, atoms.size() );
-				atoms.add( atom );
+			if (filter == null || filter.matches(source, atom)) {
+				atomIndexMap.put(atom, atoms.size());
+				atoms.add(atom);
 			}
 		}
-		
+
 		acceptedAtoms = new StandardBookAtom[atoms.size()];
 		atoms.toArray(acceptedAtoms);
-		
+
 	}
 
 	@Override
@@ -78,7 +78,7 @@ public class FilteredBookSegment implements StandardBookSegment {
 	public int getSegmentLength() {
 		return source.getSegmentLength();
 	}
-	
+
 	@Override
 	public float getSamplingFrequency() {
 		return source.getSamplingFrequency();

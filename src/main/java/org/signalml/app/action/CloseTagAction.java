@@ -1,5 +1,5 @@
 /* CloseTagAction.java created 2007-10-14
- * 
+ *
  */
 package org.signalml.app.action;
 
@@ -17,54 +17,54 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** CloseTagAction
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class CloseTagAction extends AbstractFocusableSignalMLAction<TagDocumentFocusSelector> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	protected static final Logger logger = Logger.getLogger(CloseTagAction.class);
-		
+
 	private DocumentFlowIntegrator documentFlowIntegrator;
-		
+
 	public CloseTagAction(MessageSourceAccessor messageSource, TagDocumentFocusSelector tagDocumentFocusSelector) {
 		super(messageSource, tagDocumentFocusSelector);
 		setText("action.closeTag");
 		setIconPath("org/signalml/app/icon/fileclose.png");
 		setToolTip("action.closeTagToolTip");
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent ev) {
-		
+
 		logger.debug("Close tag");
-		
+
 		TagDocument activeTag = getActionFocusSelector().getActiveTagDocument();
-		if( activeTag == null ) {
+		if (activeTag == null) {
 			logger.warn("Active tag doesn't exist");
-			return;		
+			return;
 		}
-		
+
 		try {
 			documentFlowIntegrator.closeDocument(activeTag, false, false);
-		} catch(SignalMLException ex) {
+		} catch (SignalMLException ex) {
 			logger.error("Failed to close document", ex);
 			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-			return;			
-		} catch(IOException ex) {
+			return;
+		} catch (IOException ex) {
 			logger.error("Failed to close document - i/o exception", ex);
 			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-			return;			
+			return;
 		}
-				
+
 	}
 
 	@Override
 	public void setEnabledAsNeeded() {
-		setEnabled( getActionFocusSelector().getActiveTagDocument() != null );		
+		setEnabled(getActionFocusSelector().getActiveTagDocument() != null);
 	}
-	
+
 	public DocumentFlowIntegrator getDocumentFlowIntegrator() {
 		return documentFlowIntegrator;
 	}
@@ -72,5 +72,5 @@ public class CloseTagAction extends AbstractFocusableSignalMLAction<TagDocumentF
 	public void setDocumentFlowIntegrator(DocumentFlowIntegrator documentFlowIntegrator) {
 		this.documentFlowIntegrator = documentFlowIntegrator;
 	}
-			
+
 }

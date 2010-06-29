@@ -1,5 +1,5 @@
 /* DateTableCellRenderer.java created 2007-10-19
- * 
+ *
  */
 
 package org.signalml.app.view;
@@ -12,16 +12,16 @@ import org.signalml.util.Util;
 
 /** DateTableCellRenderer
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class DateTableCellRenderer extends DefaultTableCellRenderer {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Override
 	protected void setValue(Object value) {
 		setText(Util.formatTime((Date) value));
 	}
-	
+
 }

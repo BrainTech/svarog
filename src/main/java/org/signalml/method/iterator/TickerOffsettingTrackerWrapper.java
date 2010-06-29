@@ -1,5 +1,5 @@
 /* TickerOffsettingTrackerWrapper.java created 2007-12-05
- * 
+ *
  */
 
 package org.signalml.method.iterator;
@@ -11,29 +11,29 @@ import org.springframework.context.MessageSourceResolvable;
 
 /** TickerOffsettingTrackerWrapper
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class TickerOffsettingTrackerWrapper implements MethodExecutionTracker {
 
 	private MethodExecutionTracker wrappedTracker;
 	private int offset;
-	
+
 	public TickerOffsettingTrackerWrapper(MethodExecutionTracker wrappedTracker) {
-		this( wrappedTracker, 1 );
+		this(wrappedTracker, 1);
 	}
 
 	public TickerOffsettingTrackerWrapper(MethodExecutionTracker wrappedTracker, int offset) {
-		if( wrappedTracker == null ) {
-			throw new NullPointerException( "No wrapped tracker" );
+		if (wrappedTracker == null) {
+			throw new NullPointerException("No wrapped tracker");
 		}
-		if( offset <= 0 ) {
+		if (offset <= 0) {
 			throw new IllegalArgumentException("Bad offset [" + offset + "]");
 		}
 		this.wrappedTracker = wrappedTracker;
 		this.offset = offset;
 	}
-	
+
 	public MethodExecutionTracker getWrappedTracker() {
 		return wrappedTracker;
 	}
@@ -46,11 +46,11 @@ public class TickerOffsettingTrackerWrapper implements MethodExecutionTracker {
 	public MessageSourceResolvable getMessage() {
 		return wrappedTracker.getMessage();
 	}
-	
+
 	@Override
 	public void setMessage(MessageSourceResolvable message) {
 		wrappedTracker.setMessage(message);
-	}	
+	}
 
 	@Override
 	public boolean isRequestingAbort() {
@@ -61,12 +61,12 @@ public class TickerOffsettingTrackerWrapper implements MethodExecutionTracker {
 	public boolean isRequestingSuspend() {
 		return wrappedTracker.isRequestingSuspend();
 	}
-	
+
 	@Override
 	public Integer getExpectedSecondsUntilComplete(int index) {
 		return wrappedTracker.getExpectedSecondsUntilComplete(index+offset);
 	}
-	
+
 	@Override
 	public int[] getTickerLimits() {
 		int[] limits = wrappedTracker.getTickerLimits();
@@ -82,7 +82,7 @@ public class TickerOffsettingTrackerWrapper implements MethodExecutionTracker {
 	@Override
 	public void resetTickers() {
 		int[] tickers = wrappedTracker.getTickers();
-		Arrays.fill( tickers, offset, tickers.length, 0 );
+		Arrays.fill(tickers, offset, tickers.length, 0);
 		wrappedTracker.setTickers(tickers);
 	}
 
@@ -99,7 +99,7 @@ public class TickerOffsettingTrackerWrapper implements MethodExecutionTracker {
 	@Override
 	public void setTickerLimits(int[] initial) {
 		int[] limits = wrappedTracker.getTickerLimits();
-		for( int i=0; (i<initial.length && (i+offset)<limits.length); i++ ) {
+		for (int i=0; (i<initial.length && (i+offset)<limits.length); i++) {
 			limits[offset+i] = initial[i];
 		}
 		wrappedTracker.setTickerLimits(limits);
@@ -108,7 +108,7 @@ public class TickerOffsettingTrackerWrapper implements MethodExecutionTracker {
 	@Override
 	public void setTickers(int[] current) {
 		int[] tickers = wrappedTracker.getTickers();
-		for( int i=0; (i<current.length && (i+offset)<tickers.length); i++ ) {
+		for (int i=0; (i<current.length && (i+offset)<tickers.length); i++) {
 			tickers[offset+i] = current[i];
 		}
 		wrappedTracker.setTickers(tickers);
@@ -122,6 +122,6 @@ public class TickerOffsettingTrackerWrapper implements MethodExecutionTracker {
 	@Override
 	public void tick(int index) {
 		wrappedTracker.tick(index+offset);
-	}	
-	
+	}
+
 }

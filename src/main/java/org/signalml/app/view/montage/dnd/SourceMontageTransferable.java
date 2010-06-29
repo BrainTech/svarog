@@ -1,5 +1,5 @@
 /* SourceMontageTransferable.java created 2008-01-04
- * 
+ *
  */
 
 package org.signalml.app.view.montage.dnd;
@@ -11,17 +11,17 @@ import java.io.IOException;
 
 /** SourceMontageTransferable
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class SourceMontageTransferable implements Transferable {
 
 	private SourceChannelIndices indices;
 	private DataFlavor[] dataFlavors;
-		
+
 	public SourceMontageTransferable(SourceChannelIndices indices) {
-		if( indices == null ) {
-			throw new NullPointerException( "No source channels" );
+		if (indices == null) {
+			throw new NullPointerException("No source channels");
 		}
 		this.indices = indices;
 		dataFlavors = new DataFlavor[] { new SourceMontageChannelsDataFlavor() };
@@ -29,7 +29,7 @@ public class SourceMontageTransferable implements Transferable {
 
 	@Override
 	public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
-		if( flavor.equals(dataFlavors[0]) ) {
+		if (flavor.equals(dataFlavors[0])) {
 			return indices;
 		}
 		throw new UnsupportedFlavorException(flavor);

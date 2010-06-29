@@ -1,5 +1,5 @@
 /* ArtifactOptionsPanel.java created 2007-11-02
- * 
+ *
  */
 package org.signalml.app.method.artifact;
 
@@ -23,20 +23,20 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** ArtifactOptionsPanel
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  * 			(dialog design based on work by Hubert Klekowicz)
  */
 public class ArtifactOptionsPanel extends JPanel {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private MessageSourceAccessor messageSource;
 
 	private ResolvableComboBox powerComboBox;
 	private JCheckBox exclusionCheckBox;
 	private JButton exclusionButton;
-	
+
 	public ArtifactOptionsPanel(MessageSourceAccessor messageSource) {
 		super();
 		this.messageSource = messageSource;
@@ -44,10 +44,10 @@ public class ArtifactOptionsPanel extends JPanel {
 	}
 
 	private void initialize() {
-		
+
 		CompoundBorder border = new CompoundBorder(
-			new TitledBorder( messageSource.getMessage("artifactMethod.dialog.options") ),
-			new EmptyBorder(3,3,3,3)
+		        new TitledBorder(messageSource.getMessage("artifactMethod.dialog.options")),
+		        new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);
 
@@ -55,72 +55,72 @@ public class ArtifactOptionsPanel extends JPanel {
 		this.setLayout(layout);
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
-		
-		JLabel powerLabel = new JLabel( messageSource.getMessage("artifactMethod.dialog.powerFrequency") );
-		
+
+		JLabel powerLabel = new JLabel(messageSource.getMessage("artifactMethod.dialog.powerFrequency"));
+
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
-		
+
 		hGroup.addGroup(
-				layout.createParallelGroup()
-				.addComponent(powerLabel)
-				.addComponent(getExclusionCheckBox())
-			);
-		
+		        layout.createParallelGroup()
+		        .addComponent(powerLabel)
+		        .addComponent(getExclusionCheckBox())
+		);
+
 		hGroup.addGroup(
-				layout.createParallelGroup(Alignment.TRAILING)
-				.addComponent(getPowerComboBox())
-				.addComponent(getExclusionButton())
-			);
-		
+		        layout.createParallelGroup(Alignment.TRAILING)
+		        .addComponent(getPowerComboBox())
+		        .addComponent(getExclusionButton())
+		);
+
 		layout.setHorizontalGroup(hGroup);
-		
+
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(powerLabel)
-	            .addComponent(getPowerComboBox())
-			);
+		        layout.createParallelGroup(Alignment.BASELINE)
+		        .addComponent(powerLabel)
+		        .addComponent(getPowerComboBox())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-	            .addComponent(getExclusionCheckBox())
-	            .addComponent(getExclusionButton())
-			);
-		
-		layout.setVerticalGroup(vGroup);		
-		
+		        layout.createParallelGroup(Alignment.BASELINE)
+		        .addComponent(getExclusionCheckBox())
+		        .addComponent(getExclusionButton())
+		);
+
+		layout.setVerticalGroup(vGroup);
+
 	}
 
 	public ResolvableComboBox getPowerComboBox() {
-		if( powerComboBox == null ) {
+		if (powerComboBox == null) {
 			powerComboBox = new ResolvableComboBox(messageSource);
 			DefaultComboBoxModel model = new DefaultComboBoxModel(ArtifactPowerGridFrequency.values());
-			powerComboBox.setModel( model );
+			powerComboBox.setModel(model);
 		}
 		return powerComboBox;
 	}
 
 	public JCheckBox getExclusionCheckBox() {
-		if( exclusionCheckBox == null ) {
-			exclusionCheckBox = new JCheckBox( messageSource.getMessage("artifactMethod.dialog.excludeSomeDerivations"));
-			exclusionCheckBox.addItemListener( new ItemListener() {
+		if (exclusionCheckBox == null) {
+			exclusionCheckBox = new JCheckBox(messageSource.getMessage("artifactMethod.dialog.excludeSomeDerivations"));
+			exclusionCheckBox.addItemListener(new ItemListener() {
 
 				@Override
 				public void itemStateChanged(ItemEvent e) {
-					
-					boolean selected = ( e.getStateChange() == ItemEvent.SELECTED );
-					getExclusionButton().setEnabled( selected );
-					
+
+					boolean selected = (e.getStateChange() == ItemEvent.SELECTED);
+					getExclusionButton().setEnabled(selected);
+
 				}
-				
+
 			});
 		}
 		return exclusionCheckBox;
 	}
 
 	public JButton getExclusionButton() {
-		if( exclusionButton == null ) {
+		if (exclusionButton == null) {
 			exclusionButton = new JButton();
 		}
 		return exclusionButton;

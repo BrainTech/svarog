@@ -1,5 +1,5 @@
 /* ArtifactMethod.java created 2007-11-01
- * 
+ *
  */
 
 package org.signalml.method.artifact;
@@ -44,7 +44,7 @@ import com.thoughtworks.xstream.XStream;
 
 /**
  * ArtifactMethod
- * 
+ *
  * @author Oskar Kapala &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ArtifactMethod extends AbstractMethod implements TrackableMethod, IterableMethod, InitializingMethod, DisposableMethod {
@@ -60,42 +60,42 @@ public class ArtifactMethod extends AbstractMethod implements TrackableMethod, I
 	private Artifact_mbfj solver = null;
 
 	private XStream streamer;
-	
+
 	@Override
 	public final void initialize() throws SignalMLException {
 
 		String transformerFactoryClassName = TransformerFactory.newInstance().getClass().getName();
-		logger.debug( "Default class name [" + transformerFactoryClassName + "]" );
-		
+		logger.debug("Default class name [" + transformerFactoryClassName + "]");
+
 		try {
 			this.solver = new Artifact_mbfj();
 		} catch (MWException e) {
 			logger.warn("Couldn't initialize Artifact, this functionality will be broken", e);
 			throw new SignalMLException(e);
 		} finally {
-			System.setProperty( "javax.xml.transform.TransformerFactory", transformerFactoryClassName );			
+			System.setProperty("javax.xml.transform.TransformerFactory", transformerFactoryClassName);
 		}
-	}	
+	}
 
 	@Override
 	public final void dispose() throws SignalMLException {
-		if( solver != null ) {
+		if (solver != null) {
 			solver.dispose();
 		}
 	}
-	
+
 	private final boolean runArtifactML(ArtifactData data, final MethodExecutionTracker tracker)
-			throws ComputationException {
+	throws ComputationException {
 
 		ProgressMonitor progressMonitor = null;
-		
+
 		if (solver == null) {
 			throw new ComputationException("Artifact solver is not avaible");
 		}
 
 		String projectPath = data.getProjectPath();
 		String pacjent = data.getPatientName();
-		
+
 		int [] wektorProcTmp = data.getParameters().getChosenArtifactTypes();
 		MWNumericArray wektorProc = new MWNumericArray(wektorProcTmp , MWClassID.DOUBLE);
 
@@ -113,11 +113,11 @@ public class ArtifactMethod extends AbstractMethod implements TrackableMethod, I
 		eegd.set("NumOfSamples", 1, new MWNumericArray(Double.valueOf(sampleCount), MWClassID.DOUBLE));
 
 		eegd.set("Fs", 1, new MWNumericArray(Double.valueOf(sampleSource.getSamplingFrequency()), MWClassID.DOUBLE));
-		
+
 		// Signal format; now is fixed
 		eegd.set("Format", 1, "float");
 
-		eegd.set("NumKan", 1, new MWNumericArray( Double.valueOf(channelCount), MWClassID.DOUBLE) );
+		eegd.set("NumKan", 1, new MWNumericArray(Double.valueOf(channelCount), MWClassID.DOUBLE));
 
 		int[] eegChannelInt = new int[data.getEegChannels().size()];
 		int i = 0;
@@ -126,18 +126,18 @@ public class ArtifactMethod extends AbstractMethod implements TrackableMethod, I
 		}
 		eegd.set("EEGChannelsVector", 1, eegChannelInt);
 
-		
+
 		if (!data.isProcessedProject()) {
 
-			synchronized( tracker ) {
+			synchronized (tracker) {
 				tracker.setMessage(new ResolvableString("artifactMethod.message.creatingFiles"));
 				tracker.setTickerLimit(0, 3);
 				tracker.setTicker(0, 0);
 			}
-			
+
 			createIntermediateFiles(data);
 
-			synchronized( tracker ) { 
+			synchronized (tracker) {
 				tracker.setMessage(new ResolvableString("artifactMethod.message.writingSignalFile"));
 				tracker.setTickerLimit(1, sampleCount);
 				tracker.setTicker(1,0);
@@ -148,12 +148,12 @@ public class ArtifactMethod extends AbstractMethod implements TrackableMethod, I
 				public void setProcessedSampleCount(int processedCount) {
 					tracker.setTicker(1, processedCount);
 				}
-				
+
 				@Override
 				public boolean isRequestingAbort() {
 					// local abort flag is ignored
 					return tracker.isRequestingAbort();
-				}				
+				}
 			};
 
 			File signalFile = (new File(data.getSignalPath())).getAbsoluteFile();
@@ -169,12 +169,12 @@ public class ArtifactMethod extends AbstractMethod implements TrackableMethod, I
 				logger.error("Failed to create data file", ex);
 				throw new ComputationException(ex);
 			}
-			
-			if( tracker.isRequestingAbort() ) {
+
+			if (tracker.isRequestingAbort()) {
 				return false;
 			}
-			
-			synchronized( tracker ) {
+
+			synchronized (tracker) {
 				tracker.tick(0);
 				tracker.setMessage(new ResolvableString("artifactMethod.message.processing"));
 				tracker.setTickerLimit(1, 1);
@@ -195,63 +195,63 @@ public class ArtifactMethod extends AbstractMethod implements TrackableMethod, I
 				CElec.set(elecName, 1, new MWNumericArray(Double.valueOf(value), MWClassID.DOUBLE));
 			}
 
-			MWNumericArray powerFreq = new MWNumericArray(Double.valueOf(data.getParameters().getPowerGridFrequency()), MWClassID.DOUBLE );
-						
+			MWNumericArray powerFreq = new MWNumericArray(Double.valueOf(data.getParameters().getPowerGridFrequency()), MWClassID.DOUBLE);
+
 			File progresLogFile = new File((new File(projectPath, pacjent)).getAbsolutePath(), "progress.txt");
 			File stopFile = new File((new File(projectPath, pacjent)).getAbsolutePath(), pacjent+".stop");
-			
+
 			progressMonitor = new ProgressMonitor(progresLogFile, stopFile, tracker);
 			Thread monitor = new Thread(progressMonitor);
 
 			try {
-				
+
 				data.setProcessedProject(false);
-				
+
 				monitor.start();
-				
+
 				Object[] result = solver.procesuj_wrapper(1, plik, eegd, wektorProc, CElec, projectPath, pacjent, powerFreq);
 
-				Integer returnValue = ((MWNumericArray) result[0] ).getInt(1); 
+				Integer returnValue = ((MWNumericArray) result[0]).getInt(1);
 				if (returnValue.intValue() == 0) {
 					data.setProcessedProject(true);
 				}
-				
+
 			} catch (MWException e) {
 				throw new ComputationException("Procesuj failed", e);
 			} finally {
 				progressMonitor.shutdown();
-			} 
-			
+			}
+
 			try {
 				XMLUtils.objectToFile(data, data.getProjectFile(), streamer);
 			} catch (IOException ex) {
-				logger.error( "Failed to write project", ex );
+				logger.error("Failed to write project", ex);
 				throw new ComputationException(ex);
 			}
-			
+
 			// mark signal file for deletion on exit
 			signalFile.deleteOnExit();
-			
+
 			tracker.tick(0);
-			
+
 		} else {
-			synchronized( tracker ) {
+			synchronized (tracker) {
 				tracker.setTickerLimit(0, 1);
 				tracker.setTicker(0,0);
 			}
 		}
-		
-		if( tracker.isRequestingAbort() ) {
+
+		if (tracker.isRequestingAbort()) {
 			return false;
 		}
-		
+
 		if (data.isProcessedProject()) {
-			synchronized( tracker ) {
+			synchronized (tracker) {
 				tracker.setMessage(new ResolvableString("artifactMethod.message.tagging"));
 				tracker.setTickerLimit(1, 1); // TODO change
 				tracker.setTicker(1, 0);
 			}
-			
+
 			MWNumericArray wylKanTab = new MWNumericArray(data.getExcludedChannels(), MWClassID.DOUBLE);
 
 			float[] wekAnalSample = data.getParameters().getSensitivities();
@@ -261,12 +261,12 @@ public class ArtifactMethod extends AbstractMethod implements TrackableMethod, I
 				String referenceTag = "";
 				String optimizationType = "";
 
-				
+
 				solver.taguj_wrapper(1, eegd, wylKanTab, wektorProc, wekAnal, ".tag", projectPath, pacjent, referenceTag, optimizationType);
 			} catch (MWException e) {
 				throw new ComputationException("Taguj failed",e);
 			}
-			
+
 			tracker.tick(0);
 
 		}
@@ -283,7 +283,7 @@ public class ArtifactMethod extends AbstractMethod implements TrackableMethod, I
 
 		// put lock file into work directory
 		File lockFile = new File(new File(folRob, pacjent).getAbsoluteFile(), pacjent + ".lock");
-		
+
 		if (lockFile.exists()) {
 			throw new ComputationException("Another Articact Detection is already running");
 		} else {
@@ -296,12 +296,12 @@ public class ArtifactMethod extends AbstractMethod implements TrackableMethod, I
 
 		try {
 			boolean ok = runArtifactML(data, tracker);
-			if( !ok ) {
+			if (!ok) {
 				return null;
 			}
 		} catch (Exception e) {
 			throw new ComputationException("Artifact detection failed",  e);
-		}		
+		}
 		finally {
 			lockFile.delete();
 		}
@@ -423,16 +423,16 @@ public class ArtifactMethod extends AbstractMethod implements TrackableMethod, I
 	public Object digestIterationResult(int iteration, Object resultObj) {
 
 		ArtifactResult result = (ArtifactResult) resultObj;
-		
+
 		File tagFile = result.getTagFile();
-		
-		File iterationTagFile = new File( tagFile.getParentFile(), "iteration_" + iteration + "_" + tagFile.getName() );
-		
+
+		File iterationTagFile = new File(tagFile.getParentFile(), "iteration_" + iteration + "_" + tagFile.getName());
+
 		tagFile.renameTo(iterationTagFile);
 		result.setTagFile(iterationTagFile);
-	
+
 		return result;
-		
+
 	}
 
 	public XStream getStreamer() {
@@ -444,4 +444,3 @@ public class ArtifactMethod extends AbstractMethod implements TrackableMethod, I
 	}
 
 }
-	

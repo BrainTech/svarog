@@ -1,5 +1,5 @@
 /* SignalDocument.java created 2007-09-20
- * 
+ *
  */
 
 package org.signalml.app.document;
@@ -14,11 +14,11 @@ import org.signalml.exception.SignalMLException;
 
 /** SignalDocument
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public interface SignalDocument extends Document {
-	
+
 	public static final String PAGE_SIZE_PROPERTY = "pageSize";
 	public static final String BLOCKS_PER_PAGE_PROPERTY = "blocksPerPage";
 	public static final String MONTAGE_PROPERTY = "montage";
@@ -26,40 +26,40 @@ public interface SignalDocument extends Document {
 	public static final String TAG_DOCUMENTS_PROPERTY = "tagDocuments";
 
 	SignalType getType();
-	
+
 	String getFormatName();
-	
+
 	float getPageSize();
 	void setPageSize(float pageSize);
-	
+
 	int getBlocksPerPage();
 	void setBlocksPerPage(int blocksPerPage);
 
 	public float getBlockSize();
-	
-	float getSamplingFrequency();	
+
+	float getSamplingFrequency();
 	public int getChannelCount();
 
 	public float getMinSignalLength();
 	public float getMaxSignalLength();
-	
+
 	public int getPageCount();
 	public int getBlockCount();
-	
+
 	OriginalMultichannelSampleSource getSampleSource();
-	
+
 	List<TagDocument> getTagDocuments();
-	void addTagDocument( TagDocument document );
-	void removeTagDocument( TagDocument document );
-	
+	void addTagDocument(TagDocument document);
+	void removeTagDocument(TagDocument document);
+
 	TagDocument getActiveTag();
 	void setActiveTag(TagDocument document);
-	
+
 	SignalChecksum[] getChecksums(String[] types, SignalChecksumProgressMonitor monitor) throws SignalMLException;
-	
+
 	Montage getMontage();
-	void setMontage( Montage montage );
+	void setMontage(Montage montage);
 	String getMontageInfo();
 
-	
+
 }

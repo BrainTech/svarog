@@ -1,5 +1,5 @@
 /* ExampleMethodDialog.java created 2007-10-22
- * 
+ *
  */
 
 package org.signalml.app.method.example;
@@ -29,7 +29,7 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** ExampleMethodDialog
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ExampleMethodDialog extends AbstractDialog implements InitializingMethodConfigurer {
@@ -38,40 +38,40 @@ public class ExampleMethodDialog extends AbstractDialog implements InitializingM
 
 	private JTextField textField;
 	private JCheckBox noWaitCheckBox;
-	
+
 	public ExampleMethodDialog(MessageSourceAccessor messageSource,Window window) {
 		super(messageSource, window,true);
-	}	
+	}
 
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 		ExampleData ed = (ExampleData) model;
-		textField.setText( ed.getCount().toString() );
-		noWaitCheckBox.setSelected( ed.isNoWait() );
+		textField.setText(ed.getCount().toString());
+		noWaitCheckBox.setSelected(ed.isNoWait());
 	}
 
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
 		ExampleData ed = (ExampleData) model;
-		ed.setCount( new Integer( textField.getText() ) );
-		ed.setNoWait( noWaitCheckBox.isSelected() );
+		ed.setCount(new Integer(textField.getText()));
+		ed.setNoWait(noWaitCheckBox.isSelected());
 	}
 
 	@Override
 	public JComponent createInterface() {
 
-		JLabel label = new JLabel( messageSource.getMessage("exampleMethod.count"));
+		JLabel label = new JLabel(messageSource.getMessage("exampleMethod.count"));
 		textField = new JTextField();
 		textField.setPreferredSize(new Dimension(150,20));
-		textField.setHorizontalAlignment( JTextField.RIGHT );
-		
+		textField.setHorizontalAlignment(JTextField.RIGHT);
+
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel,BoxLayout.X_AXIS));
 		panel.add(label);
 		panel.add(Box.createHorizontalStrut(5));
 		panel.add(textField);
-		
-		JLabel noWaitLabel = new JLabel( messageSource.getMessage("exampleMethod.noWait" ) );
+
+		JLabel noWaitLabel = new JLabel(messageSource.getMessage("exampleMethod.noWait"));
 		noWaitCheckBox = new JCheckBox();
 
 		JPanel noWaitPanel = new JPanel();
@@ -80,21 +80,21 @@ public class ExampleMethodDialog extends AbstractDialog implements InitializingM
 		panel.add(Box.createHorizontalStrut(5));
 		noWaitPanel.add(Box.createHorizontalGlue());
 		noWaitPanel.add(noWaitCheckBox);
-		
-		JPanel interfacePanel = new JPanel( new BorderLayout(3,3) );
-		CompoundBorder cb = new CompoundBorder( 
-				new TitledBorder( messageSource.getMessage("exampleMethod.configure") ),
-				new EmptyBorder(3,3,3,3)
+
+		JPanel interfacePanel = new JPanel(new BorderLayout(3,3));
+		CompoundBorder cb = new CompoundBorder(
+		        new TitledBorder(messageSource.getMessage("exampleMethod.configure")),
+		        new EmptyBorder(3,3,3,3)
 		);
-		interfacePanel.setBorder( cb );
-		
-		interfacePanel.add( panel, BorderLayout.CENTER );
-		interfacePanel.add( noWaitPanel, BorderLayout.SOUTH );
-		
+		interfacePanel.setBorder(cb);
+
+		interfacePanel.add(panel, BorderLayout.CENTER);
+		interfacePanel.add(noWaitPanel, BorderLayout.SOUTH);
+
 		return interfacePanel;
-		
+
 	}
-		
+
 	@Override
 	public void initialize(ApplicationMethodManager manager) {
 		// do nothing
@@ -115,5 +115,5 @@ public class ExampleMethodDialog extends AbstractDialog implements InitializingM
 	public boolean configure(Method method, Object methodDataObj) throws SignalMLException {
 		return showDialog(methodDataObj, true);
 	}
-	
+
 }

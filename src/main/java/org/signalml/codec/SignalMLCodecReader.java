@@ -1,5 +1,5 @@
 /* SignalMLCodecReader.java created 2007-09-18
- * 
+ *
  */
 
 package org.signalml.codec;
@@ -11,37 +11,37 @@ import org.apache.log4j.Logger;
 
 /** SignalMLCodecReader
  *
- * 
+ *
  * @author most of the code Copyright (C) 2003 Dobieslaw Ircha <dircha@eranet.pl> Artur Biesiadowski <abies@adres.pl> Piotr J. Durka     <Piotr-J.Durka@fuw.edu.pl>
  * 		adapted by Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class SignalMLCodecReader {
 
 	protected static final Logger logger = Logger.getLogger(SignalMLCodecReader.class);
-	
+
 	private SMLCodec delegate = null;
 	private Class<?> delegateClass = null;
 	private SignalMLCodec codec = null;
-	
+
 	private HashMap<String,Method> methodMap = new HashMap<String, Method>();
 	private Method openMethod;
 	private Method closeMethod;
 
 	private Object[] singleArg = new Object[1];
 	private Object[] noArg = new Object[0];
-	
+
 	private String currentFilename = null;
 
 	public SignalMLCodecReader(Class<?> cobj, SignalMLCodec codec) throws SignalMLCodecException {
 		this.codec = codec;
 		this.delegateClass = cobj;
-		
-		if( !SMLCodec.class.isAssignableFrom(cobj) ) {
-			logger.error("Bad codec class [" + cobj + "]" );
-			throw new SignalMLCodecException("Bad codec class");			
+
+		if (!SMLCodec.class.isAssignableFrom(cobj)) {
+			logger.error("Bad codec class [" + cobj + "]");
+			throw new SignalMLCodecException("Bad codec class");
 		}
-		
-        try {
+
+		try {
 			delegate = (SMLCodec) cobj.newInstance();
 //			try {
 //				delegate = new EASYS();
@@ -56,9 +56,9 @@ public class SignalMLCodecReader {
 			logger.error("Failed to instantiate codec delegate", ex);
 			throw new SignalMLCodecException("Failed to instantiate", ex);
 		}
-				
+
 	}
-	
+
 	public SignalMLCodec getCodec() {
 		return codec;
 	}
@@ -67,7 +67,7 @@ public class SignalMLCodecReader {
 		if (delegate != null) {
 			try {
 				Method m = methodMap.get(name+" _int");
-				if( m == null ) {
+				if (m == null) {
 					Class<?> targs[] = { int.class };
 					m = delegateClass.getMethod(name, targs);
 					methodMap.put(name+" _int", m);
@@ -87,7 +87,7 @@ public class SignalMLCodecReader {
 		if (delegate != null) {
 			try {
 				Method m = methodMap.get(name+" _float");
-				if( m == null ) {
+				if (m == null) {
 					Class<?> targs[] = { float.class };
 					m = delegateClass.getMethod(name, targs);
 					methodMap.put(name+" _float", m);
@@ -106,7 +106,7 @@ public class SignalMLCodecReader {
 	private Object getValue(String name) throws SignalMLCodecException {
 		try {
 			Method m = methodMap.get(name);
-			if( m == null ) {
+			if (m == null) {
 				m = delegateClass.getMethod(name, (Class<?>[]) null);
 				if (m == null) {
 					throw new Exception("method: " + name + " not found");
@@ -142,7 +142,7 @@ public class SignalMLCodecReader {
 	}
 
 	private String getString(Object o) {
-		return ( o instanceof String ) ? (String) o : o.toString();
+		return (o instanceof String) ? (String) o : o.toString();
 	}
 
 	private boolean getBoolean(Object o) {
@@ -155,11 +155,11 @@ public class SignalMLCodecReader {
 
 	private float getFloat(Object o) throws SignalMLCodecException {
 		if (o instanceof Integer) {
-			return  ((Integer) o).intValue();
+			return ((Integer) o).intValue();
 		} else if (o instanceof Float) {
 			return ((Float) o).floatValue();
 		} else if (o instanceof Double) {
-			return (float) ((Double) o).doubleValue();
+			return (float)((Double) o).doubleValue();
 		} else if (o instanceof Short) {
 			return ((Short) o).intValue();
 		} else if (o instanceof Byte) {
@@ -171,28 +171,28 @@ public class SignalMLCodecReader {
 				throw new SignalMLCodecException(e);
 			}
 		}
-		else if( o instanceof float[] ) {
+		else if (o instanceof float[]) {
 			float[] arr = (float[]) o;
 			float max = 0;
-			for( int i=0; i<arr.length; i++ ) {
-				if( arr[i] > max ) {
+			for (int i=0; i<arr.length; i++) {
+				if (arr[i] > max) {
 					max = arr[i];
 				}
 			}
 			return max;
 		}
 		else {
-			throw new SignalMLCodecException("Unable to interpret float value of class [" + o.getClass().getName() + "]" );
+			throw new SignalMLCodecException("Unable to interpret float value of class [" + o.getClass().getName() + "]");
 		}
 	}
-	
+
 	private float getFloat(Object o, int index) throws SignalMLCodecException {
 		if (o instanceof Integer) {
 			return ((Integer) o).intValue();
 		} else if (o instanceof Float) {
 			return ((Float) o).floatValue();
 		} else if (o instanceof Double) {
-			return (float) ((Double) o).doubleValue();
+			return (float)((Double) o).doubleValue();
 		} else if (o instanceof Short) {
 			return ((Short) o).intValue();
 		} else if (o instanceof Byte) {
@@ -204,23 +204,23 @@ public class SignalMLCodecReader {
 				throw new SignalMLCodecException(e);
 			}
 		}
-		else if( o instanceof float[] ) {
+		else if (o instanceof float[]) {
 			float[] arr = (float[]) o;
 			try {
 				return arr[index];
-			} catch( IndexOutOfBoundsException ex ) {
-				throw new SignalMLCodecException(ex);				
+			} catch (IndexOutOfBoundsException ex) {
+				throw new SignalMLCodecException(ex);
 			}
 		}
 		else {
-			throw new SignalMLCodecException("Unable to interpret float value of class [" + o.getClass().getName() + "]" );
+			throw new SignalMLCodecException("Unable to interpret float value of class [" + o.getClass().getName() + "]");
 		}
 	}
-	
+
 	public void open(String filename) throws SignalMLCodecException {
 		if (delegate != null) {
 			try {
-				if( openMethod == null ) {
+				if (openMethod == null) {
 					Class<?> targs[] = { String.class };
 					openMethod = delegateClass.getMethod("open", targs);
 				}
@@ -239,7 +239,7 @@ public class SignalMLCodecReader {
 	public void close() {
 		if (delegate != null) {
 			try {
-				if( closeMethod == null ) {
+				if (closeMethod == null) {
 					closeMethod = delegateClass.getMethod("close", (Class<?>[]) null);
 				}
 				closeMethod.invoke(delegate, noArg);
@@ -272,7 +272,7 @@ public class SignalMLCodecReader {
 	public float get_sampling_frequency(int channel) throws SignalMLCodecException {
 		return getFloat(getValue("get_sampling_frequency"), channel);
 	}
-	
+
 	public float get_sampling_frequency() throws SignalMLCodecException {
 		return getFloat(getValue("get_sampling_frequency"));
 	}
@@ -280,10 +280,10 @@ public class SignalMLCodecReader {
 	public boolean is_sampling_frequency() throws SignalMLCodecException {
 		return getBoolean(getValue("is_sampling_frequency"));
 	}
-	
+
 	public boolean is_uniform_sampling_frequency() throws SignalMLCodecException {
 		Object value = getValue("get_sampling_frequency");
-		if( value instanceof float[] ) {
+		if (value instanceof float[]) {
 			return false;
 		}
 		return true;
@@ -296,10 +296,10 @@ public class SignalMLCodecReader {
 	public boolean is_channel_names() throws SignalMLCodecException {
 		return getBoolean(getValue("is_channel_names"));
 	}
-	
+
 	public String[] get_channel_names() throws SignalMLCodecException {
 		Object o = getValue("get_channel_names");
-		if( o instanceof String[] ) {
+		if (o instanceof String[]) {
 			return (String[]) o;
 		}
 		throw new SignalMLCodecException("Invalid return type: " + o.getClass());
@@ -352,5 +352,5 @@ public class SignalMLCodecReader {
 	public String getCurrentFilename() {
 		return currentFilename;
 	}
-	
+
 }

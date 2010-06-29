@@ -1,12 +1,12 @@
 /* CompilationRefusedException.java created 2008-03-03
- * 
+ *
  */
 
 package org.signalml.compilation;
 
 /** CompilationRefusedException
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class CompilationRefusedException extends CompilationException {
@@ -29,6 +29,6 @@ public class CompilationRefusedException extends CompilationException {
 		super(cause);
 	}
 
-	
-	
+
+
 }

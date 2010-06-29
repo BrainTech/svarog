@@ -1,5 +1,5 @@
 /* SleepStatisticTableModel.java created 2008-02-23
- * 
+ *
  */
 
 package org.signalml.app.method.stager;
@@ -15,7 +15,7 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** SleepStatisticTableModel
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class SleepStatisticTableModel extends AbstractTableModel {
@@ -27,11 +27,11 @@ public class SleepStatisticTableModel extends AbstractTableModel {
 	public static final int MINUTES_COLUMN = 2;
 	public static final int TST_COLUMN = 3;
 	public static final int SPT_COLUMN = 4;
-	
+
 	private MessageSourceAccessor messageSource;
-	
+
 	private SleepStatistic statistic;
-	
+
 	private class Row {
 		String stage;
 		Integer epochs;
@@ -40,159 +40,159 @@ public class SleepStatisticTableModel extends AbstractTableModel {
 		Double spt;
 		Integer order;
 	}
-	
+
 	private Row[] data;
-		
+
 	public SleepStatisticTableModel(MessageSourceAccessor messageSource) {
 		super();
-		this.messageSource = messageSource;		
+		this.messageSource = messageSource;
 	}
-	
+
 	public SleepStatistic getStatistic() {
 		return statistic;
 	}
 
 	public void setStatistic(SleepStatistic statistic) {
-		if( this.statistic != statistic ) {
+		if (this.statistic != statistic) {
 			this.statistic = statistic;
-			
+
 			int styleCount = statistic.getStyleCount();
 			data = new Row[styleCount+1];
-			
+
 			int index;
 			int addCnt = 0;
 			TagStyle style;
-			
+
 			float segmentLength = statistic.getSegmentLength();
 			float tst = statistic.getTotalSleepTime();
 			float spt = statistic.getSleepPeriodTime();
 			int segmentCount;
-			int i;	
-			
-			for( i=0; i<styleCount; i++ ) {
-				
+			int i;
+
+			for (i=0; i<styleCount; i++) {
+
 				style = statistic.getStyleAt(i);
 				String name = style.getName();
-				if( SleepTagName.RK_1.equals(name) || SleepTagName.AASM_N1.equals(name) ) {
+				if (SleepTagName.RK_1.equals(name) || SleepTagName.AASM_N1.equals(name)) {
 					index = 0;
 				}
-				else if( SleepTagName.RK_2.equals(name) || SleepTagName.AASM_N2.equals(name) ) {
+				else if (SleepTagName.RK_2.equals(name) || SleepTagName.AASM_N2.equals(name)) {
 					index = 1;
-				} 
-				else if( SleepTagName.RK_3.equals(name) || SleepTagName.AASM_N3.equals(name) ) {
+				}
+				else if (SleepTagName.RK_3.equals(name) || SleepTagName.AASM_N3.equals(name)) {
 					index = 2;
-				} 
-				else if( SleepTagName.RK_4.equals(name) ) {
+				}
+				else if (SleepTagName.RK_4.equals(name)) {
 					index = 3;
-				} 
-				else if( SleepTagName.RK_REM.equals(name) || SleepTagName.AASM_REM.equals(name) ) {
+				}
+				else if (SleepTagName.RK_REM.equals(name) || SleepTagName.AASM_REM.equals(name)) {
 					index = 5;
-				} 
-				else if( SleepTagName.RK_WAKE.equals(name) || SleepTagName.AASM_WAKE.equals(name) ) {
+				}
+				else if (SleepTagName.RK_WAKE.equals(name) || SleepTagName.AASM_WAKE.equals(name)) {
 					index = 6;
-				} 
-				else if( SleepTagName.RK_MT.equals(name) ) {
+				}
+				else if (SleepTagName.RK_MT.equals(name)) {
 					index = 7;
 				}
 				else {
 					index = 8 + addCnt;
 					addCnt++;
 				}
-				
+
 				data[index] = new Row();
-				
+
 				data[index].order = index;
 				data[index].stage = style.getDescriptionOrName();
 				segmentCount = statistic.getStyleSegmentsAt(i);
 				data[index].epochs = segmentCount;
-				data[index].minutes = ( ((double) (segmentCount * segmentLength)) / 60.0 );
-				if( tst > 0 ) {
-					data[index].tst = ( ((double) (segmentCount * segmentLength) * 100) / tst );
+				data[index].minutes = (((double)(segmentCount * segmentLength)) / 60.0);
+				if (tst > 0) {
+					data[index].tst = (((double)(segmentCount * segmentLength) * 100) / tst);
 				} else {
 					data[index].tst = 0.0;
 				}
-				if( spt > 0 ) {
-					data[index].spt = ( ((double) (segmentCount * segmentLength) * 100) / spt );
+				if (spt > 0) {
+					data[index].spt = (((double)(segmentCount * segmentLength) * 100) / spt);
 				} else {
 					data[index].spt = 0.0;
 				}
-				
+
 			}
 
 			index = 4;
-			
+
 			data[index] = new Row();
-			
+
 			data[index].order = index;
 			data[index].stage = messageSource.getMessage("stagerMethod.dialog.resultReview.stageTable.sws");
 			int slowSegmentCount = statistic.getSlowSegments();
 			data[index].epochs = slowSegmentCount;
-			data[index].minutes = ( ((double) (slowSegmentCount * segmentLength)) / 60.0 );
-			if( tst > 0 ) {
-				data[index].tst = ( ((double) (slowSegmentCount * segmentLength) * 100) / tst );
+			data[index].minutes = (((double)(slowSegmentCount * segmentLength)) / 60.0);
+			if (tst > 0) {
+				data[index].tst = (((double)(slowSegmentCount * segmentLength) * 100) / tst);
 			} else {
 				data[index].tst = 0.0;
 			}
-			if( spt > 0 ) {
-				data[index].spt = ( ((double) (slowSegmentCount * segmentLength) * 100) / spt );
+			if (spt > 0) {
+				data[index].spt = (((double)(slowSegmentCount * segmentLength) * 100) / spt);
 			} else {
 				data[index].spt = 0.0;
 			}
-			
+
 			int tgtIndex = 0;
-			for( i=0; i<data.length; i++ ) {
-				if( data[i] == null ) {
+			for (i=0; i<data.length; i++) {
+				if (data[i] == null) {
 					continue;
 				}
-				if( tgtIndex != i ) {
+				if (tgtIndex != i) {
 					data[tgtIndex] = data[i];
 				}
 				tgtIndex++;
 			}
-			
-			data = Arrays.copyOf( data, tgtIndex );
-			
+
+			data = Arrays.copyOf(data, tgtIndex);
+
 			fireTableStructureChanged();
 		}
 	}
-		
+
 	@Override
 	public int getColumnCount() {
 		return 5;
 	}
-	
+
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
-		switch( columnIndex ) {
-		
+		switch (columnIndex) {
+
 		case STAGE_COLUMN :
-			return String.class;
-			
-		case EPOCHS_COLUMN :		
+				return String.class;
+
+		case EPOCHS_COLUMN :
 			return Integer.class;
-			
+
 		case MINUTES_COLUMN :
 		case TST_COLUMN :
 		case SPT_COLUMN :
 			return Double.class;
 
 		default :
-			throw new SanityCheckException( "Unsupported index [" + columnIndex + "]" );
-					
+			throw new SanityCheckException("Unsupported index [" + columnIndex + "]");
+
 		}
 	}
 
-	
+
 	@Override
 	public String getColumnName(int column) {
-		switch( column ) {
-		
+		switch (column) {
+
 		case STAGE_COLUMN :
 			return messageSource.getMessage("stagerMethod.dialog.resultReview.stageTable.stage");
-			
+
 		case EPOCHS_COLUMN :
 			return messageSource.getMessage("stagerMethod.dialog.resultReview.stageTable.epochs");
-			
+
 		case MINUTES_COLUMN :
 			return messageSource.getMessage("stagerMethod.dialog.resultReview.stageTable.minutes");
 
@@ -203,19 +203,19 @@ public class SleepStatisticTableModel extends AbstractTableModel {
 			return messageSource.getMessage("stagerMethod.dialog.resultReview.stageTable.spt");
 
 		default :
-			throw new SanityCheckException( "Unsupported index [" + column + "]" );
-					
+			throw new SanityCheckException("Unsupported index [" + column + "]");
+
 		}
 	}
-	
+
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
 		return false;
 	}
-	
+
 	@Override
 	public int getRowCount() {
-		if( statistic == null ) {
+		if (statistic == null) {
 			return 0;
 		}
 		return data.length;
@@ -223,27 +223,27 @@ public class SleepStatisticTableModel extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		switch( columnIndex ) {
-		
+		switch (columnIndex) {
+
 		case STAGE_COLUMN :
 			return data[rowIndex].stage;
-			
+
 		case EPOCHS_COLUMN :
 			return data[rowIndex].epochs;
-			
+
 		case MINUTES_COLUMN :
 			return data[rowIndex].minutes;
-			
+
 		case TST_COLUMN :
 			return data[rowIndex].tst;
-			
+
 		case SPT_COLUMN :
 			return data[rowIndex].spt;
-			
+
 		default :
-			throw new SanityCheckException( "Unsupported index [" + columnIndex + "]" );
-					
+			throw new SanityCheckException("Unsupported index [" + columnIndex + "]");
+
 		}
 	}
-	
+
 }

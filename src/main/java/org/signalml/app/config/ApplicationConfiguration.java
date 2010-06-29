@@ -1,5 +1,5 @@
 /* ApplicationConfiguration.java created 2007-09-19
- * 
+ *
  */
 
 package org.signalml.app.config;
@@ -17,14 +17,14 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /** ApplicationConfiguration
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 @XStreamAlias("application")
 public class ApplicationConfiguration extends AbstractXMLConfiguration {
 
 	private boolean dontShowDynamicCompilationWarning;
-	
+
 	private String lastOpenTagPath;
 	private String lastImportTagPath;
 	private String lastExportTagPath;
@@ -44,19 +44,19 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration {
 	private String lastSaveTagPath;
 	private String lastExpertTagPath;
 	private String lastLibraryPath;
-	
+
 	private boolean rightClickPagesForward;
 	private boolean autoLoadDefaultMontage;
 	private boolean precalculateSignalChecksums;
-	
+
 	private boolean saveConfigOnEveryChange;
 	private boolean restoreWorkspace;
-	
+
 	private boolean antialiased;
 	private boolean clamped;
 	private boolean offscreenChannelsDrawn;
 	private boolean tagToolTipsVisible;
-	
+
 	private boolean pageLinesVisible;
 	private boolean blockLinesVisible;
 	private boolean channelLinesVisible;
@@ -68,35 +68,35 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration {
 	private float pageSize;
 	private int blocksPerPage;
 	private boolean saveFullMontageWithTag;
-	
+
 	private boolean viewModeHidesMainToolBar;
 	private boolean viewModeHidesLeftPanel;
 	private boolean viewModeHidesBottomPanel;
 	private boolean viewModeCompactsPageTagBars;
 	private boolean viewModeSnapsToPage;
-	
+
 	private int minChannelHeight;
 	private int maxChannelHeight;
 	private int minValueScale;
 	private int maxValueScale;
 	private double minTimeScale;
 	private double maxTimeScale;
-	
+
 	// milliseconds
 	private int toolTipInitialDelay;
 	private int toolTipDismissDelay;
-	
+
 	private ZoomSignalSettings zoomSignalSettings = new ZoomSignalSettings();
 	private SignalFFTSettings signalFFTSettings = new SignalFFTSettings();
-		
+
 	private ArtifactConfiguration artifactConfig = new ArtifactConfiguration();
 	private StagerConfiguration stagerConfig = new StagerConfiguration();
-	
+
 	private boolean disableSeriousWarnings;
-	
+
 	private WignerMapPalette palette;
 	private WignerMapScaleType scaleType;
-	
+
 	private boolean signalAntialiased;
 	private boolean originalSignalVisible;
 	private boolean fullReconstructionVisible;
@@ -105,21 +105,21 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration {
 	private boolean scaleVisible;
 	private boolean axesVisible;
 	private boolean atomToolTipsVisible;
-	
+
 	private int mapAspectRatioUp = 1;
 	private int mapAspectRatioDown = 1;
-	
+
 	private int reconstructionHeight;
-	
+
 	public void applySystemSettings() {
 
 		// apply tooltip settings
 		ToolTipManager toolTipManager = ToolTipManager.sharedInstance();
 		toolTipManager.setInitialDelay(toolTipInitialDelay);
 		toolTipManager.setDismissDelay(toolTipDismissDelay);
-		
-	}	
-	
+
+	}
+
 	@Override
 	public String getStandardFilename() {
 		return "application-config.xml";
@@ -128,7 +128,7 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration {
 	public String getLastOpenTagPath() {
 		return lastOpenTagPath;
 	}
-	
+
 	public String getLastImportTagPath() {
 		return lastImportTagPath;
 	}
@@ -136,7 +136,7 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration {
 	public void setLastImportTagPath(String lastImportTagPath) {
 		this.lastImportTagPath = lastImportTagPath;
 	}
-	
+
 	public String getLastExportTagPath() {
 		return lastExportTagPath;
 	}
@@ -172,7 +172,7 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration {
 	public void setLastConsoleSaveAsTextPath(String lastConsoleSaveAsTextPath) {
 		this.lastConsoleSaveAsTextPath = lastConsoleSaveAsTextPath;
 	}
-	
+
 	public String getLastTableSaveAsTextPath() {
 		return lastTableSaveAsTextPath;
 	}
@@ -196,7 +196,7 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration {
 	public void setLastArtifactProjectPath(String lastArtifactProjectPath) {
 		this.lastArtifactProjectPath = lastArtifactProjectPath;
 	}
-	
+
 	public String getLastSaveMP5ConfigPath() {
 		return lastSaveMP5ConfigPath;
 	}
@@ -675,6 +675,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration {
 
 	public void setLastExportBookPath(String lastExportBookPath) {
 		this.lastExportBookPath = lastExportBookPath;
-	}		
-		
+	}
+
 }

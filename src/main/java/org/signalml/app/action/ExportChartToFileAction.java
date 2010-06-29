@@ -1,5 +1,5 @@
 /* ExportChartToFileAction.java created 2007-12-18
- * 
+ *
  */
 
 package org.signalml.app.action;
@@ -22,73 +22,73 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** ExportChartToFileAction
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public abstract class ExportChartToFileAction extends AbstractSignalMLAction {
 
 	protected static final Logger logger = Logger.getLogger(ExportChartToFileAction.class);
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private ViewerFileChooser fileChooser;
 	private Component optionPaneParent;
-	
+
 	public ExportChartToFileAction(MessageSourceAccessor messageSource) {
 		super(messageSource);
 		setText("action.exportChartToFile");
 		setIconPath("org/signalml/app/icon/picture_save.png");
 		setToolTip("action.exportChartToFileToolTip");
 	}
-		
+
 	protected abstract Dimension getImageSize();
-	
+
 	protected abstract JFreeChart getChart();
-		
+
 	@Override
 	public void actionPerformed(ActionEvent ev) {
-		
+
 		JFreeChart chart = getChart();
-		if( chart != null ) {
-		
+		if (chart != null) {
+
 			File file;
 			boolean hasFile = false;
 			do {
-				
+
 				file = fileChooser.chooseChartSaveAsPngFile(optionPaneParent);
-				if( file == null ) {
+				if (file == null) {
 					return;
 				}
 				String ext = Util.getFileExtension(file,false);
-				if( ext == null ) {
-					file = new File( file.getAbsolutePath() + ".png" );
+				if (ext == null) {
+					file = new File(file.getAbsolutePath() + ".png");
 				}
-				
+
 				hasFile = true;
-				
-				if( file.exists() ) {
+
+				if (file.exists()) {
 					int res = OptionPane.showFileAlreadyExists(optionPaneParent);
-					if( res != OptionPane.OK_OPTION ) {
+					if (res != OptionPane.OK_OPTION) {
 						hasFile = false;
-					}								
+					}
 				}
-				
-			} while( !hasFile );
-			
+
+			} while (!hasFile);
+
 			Dimension imageSize = getImageSize();
-			
+
 			try {
 				ChartUtilities.saveChartAsPNG(file, chart, imageSize.width, imageSize.height);
 			} catch (IOException ex) {
 				logger.error("Failed to save to file - i/o exception", ex);
 				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-				return;			
+				return;
 			}
-											
+
 		}
-				
+
 	}
-		
+
 	@Override
 	public void setEnabledAsNeeded() {
 		setEnabled(true);
@@ -109,5 +109,5 @@ public abstract class ExportChartToFileAction extends AbstractSignalMLAction {
 	public void setOptionPaneParent(Component optionPaneParent) {
 		this.optionPaneParent = optionPaneParent;
 	}
-	
+
 }

@@ -1,5 +1,5 @@
 /* MP5ToolConfigDialog.java created 2008-02-15
- * 
+ *
  */
 
 package org.signalml.app.method.mp5;
@@ -16,20 +16,20 @@ import org.springframework.validation.Errors;
 
 /** MP5ToolConfigDialog
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class MP5ToolConfigDialog extends AbstractDialog {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private MP5ExecutorManager executorManager;
-	
+
 	private MP5LocalExecutorDialog localExecutorDialog;
 	private MP5RemoteExecutorDialog remoteExecutorDialog;
-	
+
 	private MP5ToolConfigPanel configPanel;
-	
+
 	public MP5ToolConfigDialog(MessageSourceAccessor messageSource) {
 		super(messageSource);
 	}
@@ -40,51 +40,51 @@ public class MP5ToolConfigDialog extends AbstractDialog {
 
 	@Override
 	protected void initialize() {
-		setTitle( messageSource.getMessage( "mp5Method.config.title" ) );
-		setIconImage( IconUtils.loadClassPathImage( MP5MethodDescriptor.ICON_PATH ) );
+		setTitle(messageSource.getMessage("mp5Method.config.title"));
+		setIconImage(IconUtils.loadClassPathImage(MP5MethodDescriptor.ICON_PATH));
 		setResizable(false);
 		super.initialize();
 	}
-	
+
 	@Override
 	public JComponent createInterface() {
 		return getConfigPanel();
 	}
-	
+
 	public MP5ToolConfigPanel getConfigPanel() {
-		if( configPanel == null ) {
+		if (configPanel == null) {
 			configPanel = new MP5ToolConfigPanel(messageSource,executorManager);
 			configPanel.setLocalExecutorDialog(localExecutorDialog);
 			configPanel.setRemoteExecutorDialog(remoteExecutorDialog);
 		}
 		return configPanel;
 	}
-	
+
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 
 		// nothing to do
-	
+
 	}
 
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
-		
+
 		// nothing to do
-		
+
 	}
-	
+
 	@Override
 	public void validateDialog(Object model, Errors errors) throws SignalMLException {
 		super.validateDialog(model, errors);
-		
-		if( !errors.hasErrors() ) {
+
+		if (!errors.hasErrors()) {
 			int executorCount = executorManager.getExecutorCount();
-			if( executorCount == 0 ) {
+			if (executorCount == 0) {
 				errors.reject("error.mp5.executorRequired");
 			}
 		}
-		
+
 	}
 
 	@Override
@@ -115,5 +115,5 @@ public class MP5ToolConfigDialog extends AbstractDialog {
 	public void setRemoteExecutorDialog(MP5RemoteExecutorDialog remoteExecutorDialog) {
 		this.remoteExecutorDialog = remoteExecutorDialog;
 	}
-	
+
 }

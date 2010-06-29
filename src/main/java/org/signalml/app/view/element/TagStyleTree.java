@@ -1,5 +1,5 @@
 /* TagStyleTree.java created 2007-11-10
- * 
+ *
  */
 package org.signalml.app.view.element;
 
@@ -12,7 +12,7 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** TagStyleTree
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class TagStyleTree extends AbstractViewerTree {
@@ -21,13 +21,13 @@ public class TagStyleTree extends AbstractViewerTree {
 
 	public TagStyleTree(TagStyleTreeModel model, MessageSourceAccessor messageSource) {
 		super(model,messageSource);
-		setCellRenderer(new TagTreeCellRenderer(model.getIconProducer()));		
-		expandPath( new TreePath(new Object[] {model.getRoot()}) );		
+		setCellRenderer(new TagTreeCellRenderer(model.getIconProducer()));
+		expandPath(new TreePath(new Object[] {model.getRoot()}));
 	}
 
 	@Override
 	public TagStyleTreeModel getModel() {
 		return (TagStyleTreeModel) super.getModel();
-	}	
-	
+	}
+
 }

@@ -1,5 +1,5 @@
 /* ChannelListModel.java created 2007-11-24
- * 
+ *
  */
 
 package org.signalml.app.montage;
@@ -12,18 +12,18 @@ import org.signalml.domain.signal.SignalTypeConfigurer;
 
 /** ChannelListModel
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ChannelListModel extends AbstractListModel implements ComboBoxModel {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private SignalTypeConfigurer configurer;
 	private Channel[] values;
-		
+
 	private Object selectedItem;
-	
+
 	public ChannelListModel() {
 	}
 
@@ -39,12 +39,12 @@ public class ChannelListModel extends AbstractListModel implements ComboBoxModel
 
 	@Override
 	public int getSize() {
-		if( configurer == null ) {
+		if (configurer == null) {
 			return 0;
 		}
 		return values.length;
 	}
-	
+
 	@Override
 	public Object getElementAt(int index) {
 		return values[index];
@@ -55,14 +55,14 @@ public class ChannelListModel extends AbstractListModel implements ComboBoxModel
 	}
 
 	public void setConfigurer(SignalTypeConfigurer configurer) {
-		if( this.configurer != configurer ) {
+		if (this.configurer != configurer) {
 			this.configurer = configurer;
-			if( configurer != null ) {
+			if (configurer != null) {
 				values = configurer.allChannels();
 			}
-			selectedItem = null;			
+			selectedItem = null;
 			fireContentsChanged(this, 0, getSize()-1);
 		}
-	}	
-	
+	}
+
 }

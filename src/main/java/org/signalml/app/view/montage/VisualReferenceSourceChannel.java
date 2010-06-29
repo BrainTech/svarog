@@ -1,5 +1,5 @@
 /* VisualReferenceSourceChannel.java created 2007-11-30
- * 
+ *
  */
 
 package org.signalml.app.view.montage;
@@ -13,22 +13,22 @@ import org.signalml.util.Util;
 
 /** VisualReferenceSourceChannel
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class VisualReferenceSourceChannel {
 
 	public static final int CIRCLE_DIAMETER = 40;
-	
+
 	private int channel;
 	private String label;
 	private Channel function;
-	
+
 	private Point location;
-	
+
 	private Shape cachedShape;
 	private Shape cachedOutlineShape;
-	
+
 	public VisualReferenceSourceChannel(int channel) {
 		this.channel = channel;
 	}
@@ -36,7 +36,7 @@ public class VisualReferenceSourceChannel {
 	public int getChannel() {
 		return channel;
 	}
-	
+
 	public String getLabel() {
 		return label;
 	}
@@ -44,7 +44,7 @@ public class VisualReferenceSourceChannel {
 	public void setLabel(String label) {
 		this.label = label;
 	}
-	
+
 	public Channel getFunction() {
 		return function;
 	}
@@ -58,16 +58,16 @@ public class VisualReferenceSourceChannel {
 	}
 
 	public void setLocation(Point location) {
-		if( !Util.equalsWithNulls( this.location, location) ) {
+		if (!Util.equalsWithNulls(this.location, location)) {
 			this.location = location;
 			cachedShape = null;
 			cachedOutlineShape = null;
 		}
 	}
-	
+
 	public Shape getShape() {
-		if( cachedShape == null ) {
-			if( location != null ) {
+		if (cachedShape == null) {
+			if (location != null) {
 				cachedShape = new Ellipse2D.Float(location.x,location.y,CIRCLE_DIAMETER,CIRCLE_DIAMETER);
 			} else {
 				cachedShape = new Ellipse2D.Float(0,0,CIRCLE_DIAMETER,CIRCLE_DIAMETER);
@@ -75,16 +75,16 @@ public class VisualReferenceSourceChannel {
 		}
 		return cachedShape;
 	}
-	
+
 	public Shape getOutlineShape() {
-		if( cachedOutlineShape == null ) {
-			if( location != null ) {
+		if (cachedOutlineShape == null) {
+			if (location != null) {
 				cachedOutlineShape = new Ellipse2D.Float(location.x,location.y,CIRCLE_DIAMETER-1,CIRCLE_DIAMETER-1);
 			} else {
 				cachedOutlineShape = new Ellipse2D.Float(0,0,CIRCLE_DIAMETER-1,CIRCLE_DIAMETER-1);
 			}
 		}
-		return cachedOutlineShape;		
+		return cachedOutlineShape;
 	}
-	
+
 }

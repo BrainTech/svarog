@@ -1,5 +1,5 @@
 /* TagStyleMenu.java created 2007-10-16
- * 
+ *
  */
 
 package org.signalml.app.view.tag;
@@ -17,7 +17,7 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** TagStyleMenu
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class TagStyleMenu extends JMenu {
@@ -26,19 +26,19 @@ public class TagStyleMenu extends JMenu {
 
 	private StyledTagSet tagSet;
 	private SignalSelectionType type;
-	private TagIconProducer tagIconProducer; 
-	
+	private TagIconProducer tagIconProducer;
+
 	private TagSelectionAction tagSelectionAction;
-	
+
 	private MessageSourceAccessor messageSource;
-		
+
 	public TagStyleMenu(TagSelectionAction tagSelectionAction, TagIconProducer tagIconProducer) {
 		super((String) tagSelectionAction.getValue(TagSelectionAction.NAME));
 		this.tagSelectionAction = tagSelectionAction;
 		this.tagIconProducer = tagIconProducer;
-		setIcon( IconUtils.loadClassPathIcon("org/signalml/app/icon/tag.png") );
+		setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/tag.png"));
 	}
-		
+
 	public MessageSourceAccessor getMessageSource() {
 		return messageSource;
 	}
@@ -53,7 +53,7 @@ public class TagStyleMenu extends JMenu {
 	}
 
 	public void setTagSet(StyledTagSet tagSet) {
-		if( this.tagSet != tagSet ) {
+		if (this.tagSet != tagSet) {
 			this.tagSet = tagSet;
 			recreateMenu();
 		}
@@ -64,27 +64,27 @@ public class TagStyleMenu extends JMenu {
 	}
 
 	public void setType(SignalSelectionType type) {
-		if( this.type != type ) {
+		if (this.type != type) {
 			this.type = type;
 			recreateMenu();
 		}
 	}
-	
-	public void setParameters( StyledTagSet tagSet, SignalSelectionType type ) {
-		if( this.tagSet != tagSet || this.type != type ) {
+
+	public void setParameters(StyledTagSet tagSet, SignalSelectionType type) {
+		if (this.tagSet != tagSet || this.type != type) {
 			this.tagSet = tagSet;
 			this.type = type;
 			recreateMenu();
 		}
 	}
-	
+
 	private void recreateMenu() {
 		removeAll();
 		add(new TagEraserMenuItem(tagSelectionAction,messageSource));
 		Collection<TagStyle> styles = tagSet.getStyles(type);
-		for( TagStyle style : styles ) {
+		for (TagStyle style : styles) {
 			add(new TagStyleMenuItem(tagSelectionAction, style, tagIconProducer));
-		}		
+		}
 	}
-				
+
 }

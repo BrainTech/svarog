@@ -1,5 +1,5 @@
 /* OpenBookOptionsPanel.java created 2008-02-23
- * 
+ *
  */
 
 package org.signalml.app.view.element;
@@ -14,15 +14,15 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** OpenBookOptionsPanel
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class OpenBookOptionsPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-			
+
 	private MessageSourceAccessor messageSource;
-		
+
 	/**
 	 * This is the default constructor
 	 */
@@ -34,33 +34,33 @@ public class OpenBookOptionsPanel extends JPanel {
 
 	/**
 	 * This method initializes this
-	 * 
+	 *
 	 * @return void
 	 */
 	private void initialize() {
-		
+
 		CompoundBorder cb = new CompoundBorder(
-				new TitledBorder(messageSource.getMessage("openBook.options.title")),
-				new EmptyBorder(3,3,3,3)
-			);
-			
-			setBorder(cb);
-		
+		        new TitledBorder(messageSource.getMessage("openBook.options.title")),
+		        new EmptyBorder(3,3,3,3)
+		);
+
+		setBorder(cb);
+
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
-		
+
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
-		
-		
+
+
 		layout.setHorizontalGroup(hGroup);
-		
+
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
-		
-		
-		layout.setVerticalGroup(vGroup);		
-		
+
+
+		layout.setVerticalGroup(vGroup);
+
 	}
-			
+
 }

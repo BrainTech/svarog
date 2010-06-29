@@ -1,5 +1,5 @@
 /* ExportBookWorker.java created 2008-01-27
- * 
+ *
  */
 
 package org.signalml.app.worker;
@@ -18,18 +18,18 @@ import org.signalml.domain.book.StandardBookSegment;
 
 /** ExportBookWorker
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ExportBookWorker extends SwingWorker<Void,Integer> {
 
 	protected static final Logger logger = Logger.getLogger(ExportBookWorker.class);
-	
+
 	private File bookFile;
 	private StandardBook book;
-	
+
 	private PleaseWaitDialog pleaseWaitDialog;
-		
+
 	public ExportBookWorker(StandardBook book, File bookFile, PleaseWaitDialog pleaseWaitDialog) {
 		this.book = book;
 		this.bookFile = bookFile;
@@ -40,43 +40,43 @@ public class ExportBookWorker extends SwingWorker<Void,Integer> {
 	protected Void doInBackground() throws Exception {
 
 		DefaultBookBuilder bookBuilder = DefaultBookBuilder.getInstance();
-		
+
 		IncrementalBookWriter incrementalBookWriter = bookBuilder.writeBookIncremental(book, bookFile);
 		int segmentCount = book.getSegmentCount();
 		StandardBookSegment[] segments;
-		for( int i=0; i<segmentCount; i++ ) {
+		for (int i=0; i<segmentCount; i++) {
 			segments = book.getSegmentAt(i);
 			incrementalBookWriter.writeSegment(segments);
-			publish( new Integer(i+1) );
+			publish(new Integer(i+1));
 		}
-		
+
 		incrementalBookWriter.close();
-		
+
 		return null;
-		
-	}	
-			
-		
+
+	}
+
+
 	public PleaseWaitDialog getPleaseWaitDialog() {
-		synchronized( pleaseWaitDialog ) {
+		synchronized (pleaseWaitDialog) {
 			return pleaseWaitDialog;
 		}
 	}
 
 	@Override
 	protected void done() {
-		if( pleaseWaitDialog != null ) {
+		if (pleaseWaitDialog != null) {
 			pleaseWaitDialog.releaseIfOwnedBy(this);
 		}
 	}
-	
+
 	@Override
 	protected void process(List<Integer> chunks) {
-		if( pleaseWaitDialog != null && !chunks.isEmpty() ) {
-			synchronized( pleaseWaitDialog ) {
-				pleaseWaitDialog.setProgress( (int) chunks.get(0) );
+		if (pleaseWaitDialog != null && !chunks.isEmpty()) {
+			synchronized (pleaseWaitDialog) {
+				pleaseWaitDialog.setProgress((int) chunks.get(0));
 			}
 		}
 	}
-			
+
 }

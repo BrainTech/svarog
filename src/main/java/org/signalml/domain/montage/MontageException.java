@@ -1,5 +1,5 @@
 /* MontageException.java created 2007-11-22
- * 
+ *
  */
 
 package org.signalml.domain.montage;
@@ -8,7 +8,7 @@ import org.signalml.exception.SignalMLException;
 
 /** MontageException
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class MontageException extends SignalMLException {
@@ -30,5 +30,5 @@ public class MontageException extends SignalMLException {
 	public MontageException(Throwable cause) {
 		super(cause);
 	}
-	
+
 }

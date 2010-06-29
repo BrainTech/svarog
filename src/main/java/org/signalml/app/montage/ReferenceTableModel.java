@@ -1,5 +1,5 @@
 /* ReferenceTableModel.java created 2007-10-24
- * 
+ *
  */
 
 package org.signalml.app.montage;
@@ -18,7 +18,7 @@ import org.signalml.domain.montage.SourceMontageListener;
 
 /** ReferenceTableModel
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ReferenceTableModel extends AbstractTableModel implements MontageListener, SourceMontageListener {
@@ -26,32 +26,32 @@ public class ReferenceTableModel extends AbstractTableModel implements MontageLi
 	private static final long serialVersionUID = 1L;
 
 	protected static final Logger logger = Logger.getLogger(ReferenceTableModel.class);
-	
-	private Montage montage; 
-		
+
+	private Montage montage;
+
 	private ColumnTableModel columnTableModel;
 	private RowTableModel rowTableModel;
-		
+
 	public ReferenceTableModel() {
 	}
-	
+
 	public ReferenceTableModel(Montage montage) {
 		this.montage = montage;
-		if( montage != null ) {
+		if (montage != null) {
 			montage.addSourceMontageListener(this);
 			montage.addMontageListener(this);
 		}
-	}	
-	
+	}
+
 	public ColumnTableModel getColumnTableModel() {
-		if( columnTableModel == null ) {
+		if (columnTableModel == null) {
 			columnTableModel = new ColumnTableModel();
 		}
 		return columnTableModel;
 	}
 
 	public RowTableModel getRowTableModel() {
-		if( rowTableModel == null ) {
+		if (rowTableModel == null) {
 			rowTableModel = new RowTableModel();
 		}
 		return rowTableModel;
@@ -59,34 +59,34 @@ public class ReferenceTableModel extends AbstractTableModel implements MontageLi
 
 	private void reset() {
 		fireTableStructureChanged();
-		if( columnTableModel != null ) {
+		if (columnTableModel != null) {
 			columnTableModel.fireTableStructureChanged();
 		}
-		if( rowTableModel != null ) {
+		if (rowTableModel != null) {
 			rowTableModel.fireTableStructureChanged();
-		}		
+		}
 	}
-	
+
 	public Montage getMontage() {
 		return montage;
 	}
 
 	public void setMontage(Montage montage) {
-		if( this.montage != montage ) {
-			if( this.montage != null ) {
+		if (this.montage != montage) {
+			if (this.montage != null) {
 				this.montage.removeSourceMontageListener(this);
 				this.montage.removeMontageListener(this);
 			}
 			this.montage = montage;
-			if( montage != null ) {
+			if (montage != null) {
 				montage.addSourceMontageListener(this);
 				montage.addMontageListener(this);
 			}
 			reset();
 		}
 	}
-	
-	
+
+
 	@Override
 	public void sourceMontageChannelAdded(SourceMontageEvent ev) {
 		reset();
@@ -105,16 +105,16 @@ public class ReferenceTableModel extends AbstractTableModel implements MontageLi
 	@Override
 	public void montageChannelsAdded(MontageEvent ev) {
 		fireTableDataChanged();
-		if( rowTableModel != null ) {
+		if (rowTableModel != null) {
 			rowTableModel.fireTableDataChanged();
-		}				
+		}
 	}
 
 	@Override
 	public void montageChannelsChanged(MontageEvent ev) {
-		for( int index : ev.getChannels() ) {
+		for (int index : ev.getChannels()) {
 			fireTableRowsUpdated(index, index);
-			if( rowTableModel != null ) {
+			if (rowTableModel != null) {
 				rowTableModel.fireTableRowsUpdated(index, index);
 			}
 		}
@@ -123,16 +123,16 @@ public class ReferenceTableModel extends AbstractTableModel implements MontageLi
 	@Override
 	public void montageChannelsRemoved(MontageEvent ev) {
 		fireTableDataChanged();
-		if( rowTableModel != null ) {
+		if (rowTableModel != null) {
 			rowTableModel.fireTableDataChanged();
-		}				
+		}
 	}
 
 	@Override
 	public void montageReferenceChanged(MontageEvent ev) {
-		for( int index : ev.getChannels() ) {
+		for (int index : ev.getChannels()) {
 			fireTableRowsUpdated(index, index);
-			if( rowTableModel != null ) {
+			if (rowTableModel != null) {
 				rowTableModel.fireTableRowsUpdated(index, index);
 			}
 		}
@@ -141,19 +141,19 @@ public class ReferenceTableModel extends AbstractTableModel implements MontageLi
 	@Override
 	public void montageStructureChanged(MontageEvent ev) {
 		fireTableDataChanged();
-		if( rowTableModel != null ) {
+		if (rowTableModel != null) {
 			rowTableModel.fireTableDataChanged();
-		}		
+		}
 	}
 
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 		return String.class;
 	}
-	
+
 	@Override
 	public int getColumnCount() {
-		if( montage == null ) {
+		if (montage == null) {
 			return 0;
 		}
 		return montage.getSourceChannelCount();
@@ -161,7 +161,7 @@ public class ReferenceTableModel extends AbstractTableModel implements MontageLi
 
 	@Override
 	public int getRowCount() {
-		if( montage == null ) {
+		if (montage == null) {
 			return 0;
 		}
 		return montage.getMontageChannelCount();
@@ -171,32 +171,32 @@ public class ReferenceTableModel extends AbstractTableModel implements MontageLi
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		return montage.getReference(rowIndex, columnIndex);
 	}
-		
+
 	@Override
 	public void setValueAt(Object value, int rowIndex, int columnIndex) {
-		
+
 		try {
 			montage.setReference(rowIndex, columnIndex, (String) value);
-		} catch( NumberFormatException ex ) {
+		} catch (NumberFormatException ex) {
 			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
 			fireTableCellUpdated(rowIndex, columnIndex);
-			return;			
+			return;
 		}
-		
+
 	}
-	
+
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return ( columnIndex != montage.getMontagePrimaryChannelAt(rowIndex) );
+		return (columnIndex != montage.getMontagePrimaryChannelAt(rowIndex));
 	}
-	
+
 	public class ColumnTableModel extends AbstractTableModel {
 
 		private static final long serialVersionUID = 1L;
 
 		@Override
 		public int getColumnCount() {
-			if( montage == null ) {
+			if (montage == null) {
 				return 0;
 			}
 			return montage.getSourceChannelCount();
@@ -204,12 +204,12 @@ public class ReferenceTableModel extends AbstractTableModel implements MontageLi
 
 		@Override
 		public int getRowCount() {
-			if( montage == null ) {
+			if (montage == null) {
 				return 0;
 			}
 			return 1;
 		}
-		
+
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
 			return montage.getSourceChannelLabelAt(columnIndex);
@@ -219,16 +219,16 @@ public class ReferenceTableModel extends AbstractTableModel implements MontageLi
 		public Class<?> getColumnClass(int columnIndex) {
 			return String.class;
 		}
-		
+
 	}
-	
+
 	public class RowTableModel extends AbstractTableModel {
 
 		private static final long serialVersionUID = 1L;
 
 		@Override
 		public int getColumnCount() {
-			if( montage == null ) {
+			if (montage == null) {
 				return 0;
 			}
 			return 1;
@@ -236,7 +236,7 @@ public class ReferenceTableModel extends AbstractTableModel implements MontageLi
 
 		@Override
 		public int getRowCount() {
-			if( montage == null ) {
+			if (montage == null) {
 				return 0;
 			}
 			return montage.getMontageChannelCount();
@@ -251,7 +251,7 @@ public class ReferenceTableModel extends AbstractTableModel implements MontageLi
 		public Class<?> getColumnClass(int columnIndex) {
 			return String.class;
 		}
-		
+
 	}
 
 }

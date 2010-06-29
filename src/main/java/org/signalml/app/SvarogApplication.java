@@ -1,5 +1,5 @@
 /* SvarogApplication.java created 2007-09-10
- * 
+ *
  */
 package org.signalml.app;
 
@@ -98,24 +98,24 @@ import com.thoughtworks.xstream.annotations.Annotations;
 
 /** SvarogApplication
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class SvarogApplication {
 
 	private static Preferences preferences = null;
 	private static Locale locale = null;
-	
+
 	private static MessageSourceAccessor messageSource = null;
-		
+
 	protected static final Logger logger = Logger.getLogger(SvarogApplication.class);
-	
+
 	public static final int INITIALIZATION_STEP_COUNT = 5;
-	
+
 	private static File profileDir = null;
-	
+
 	private static ApplicationConfiguration applicationConfig = null;
-		
+
 	private static DefaultSignalMLCodecManager signalMLCodecManager = null;
 	private static DefaultDocumentManager documentManager = null;
 	private static DefaultMRUDRegistry mrudRegistry = null;
@@ -128,126 +128,126 @@ public class SvarogApplication {
 	private static SignalExportPresetManager signalExportPresetManager = null;
 	private static FFTSampleFilterPresetManager fftFilterPresetManager = null;
 	private static MP5ExecutorManager mp5ExecutorManager = null;
-	
+
 	private static ViewerMainFrame viewerMainFrame = null;
-	
+
 	private static XStream streamer = null;
-		
+
 	private static SplashScreen splashScreen = null;
-	
-	private static String startupDir = null; 
-	
+
+	private static String startupDir = null;
+
 	// this needs to be a field to allow for invokeAndWait
 	private static GeneralConfiguration initialConfig = null;
-	
+
 	private static boolean molTest = false;
-	
+
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {		
-		
+	public static void main(String[] args) {
+
 		startupDir = System.getProperty("user.dir");
-		
+
 		Options options = new Options();
 		options.addOption("h", "help", false, "display help");
 		options.addOption("R", "reset", false, "reset workspace settings");
 		options.addOption("s", "nosplash", false, "don't display splash screen");
 		options.addOption("m", "moltest", false, "include test method");
-		
+
 		CommandLineParser parser = new GnuParser();
 		CommandLine line = null;
-	    try {
-	        line = parser.parse( options, args );
-	    }
-	    catch( ParseException exp ) {
-	        System.err.println( "Parsing failed. Reason: " + exp.getMessage() );
-	        System.exit(1);
-	    }
-	    
-	    if( line.hasOption("help") ) {
-	    	HelpFormatter hf = new HelpFormatter();
-	    	hf.printHelp("java -jar singnalml.jar <options>", options);
-	    	System.exit(0);
-	    }
-	    
-	    if( line.hasOption("moltest") ) {
-	    	molTest = true;
-	    }
-	    
+		try {
+			line = parser.parse(options, args);
+		}
+		catch (ParseException exp) {
+			System.err.println("Parsing failed. Reason: " + exp.getMessage());
+			System.exit(1);
+		}
+
+		if (line.hasOption("help")) {
+			HelpFormatter hf = new HelpFormatter();
+			hf.printHelp("java -jar singnalml.jar <options>", options);
+			System.exit(0);
+		}
+
+		if (line.hasOption("moltest")) {
+			molTest = true;
+		}
+
 		Log4jConfigurer.setWorkingDirSystemProperty("signalml.root");
-		
-		// allow for local file config		
-		File loggingConfig = new File( startupDir, "logging.properties" );
+
+		// allow for local file config
+		File loggingConfig = new File(startupDir, "logging.properties");
 		String loggingPath = null;
-		if( loggingConfig.exists() ) {
+		if (loggingConfig.exists()) {
 			loggingPath = "file:" + loggingConfig.getAbsolutePath();
 		} else {
 			loggingPath = "classpath:org/signalml/app/logging/log4j_app.properties";
 		}
-		
+
 		try {
 			Log4jConfigurer.initLogging(loggingPath);
-		} catch( FileNotFoundException ex ) {
+		} catch (FileNotFoundException ex) {
 			System.err.println("Critical error: no logging configuration");
 			System.exit(1);
 		}
-				
+
 		Util.dumpDebuggingInfo();
-		
+
 		createMainStreamer();
-		
+
 		preferences = Preferences.userRoot().node("org/signalml");
 		boolean initialized = false;
-		if( line.hasOption("reset") ) { 
-			preferences.remove(PreferenceName.INITIALIZED.toString());			
-			preferences.remove(PreferenceName.PROFILE_DEFAULT.toString());			
-			preferences.remove(PreferenceName.PROFILE_PATH.toString());			
+		if (line.hasOption("reset")) {
+			preferences.remove(PreferenceName.INITIALIZED.toString());
+			preferences.remove(PreferenceName.PROFILE_DEFAULT.toString());
+			preferences.remove(PreferenceName.PROFILE_PATH.toString());
 		} else {
 			initialized = preferences.getBoolean(PreferenceName.INITIALIZED.toString(), false);
 		}
-		
-		if( initialized ) {
+
+		if (initialized) {
 			initialize();
 		} else {
 			initializeFirstTime(null);
-			preferences.putBoolean(PreferenceName.INITIALIZED.toString(), true);			
+			preferences.putBoolean(PreferenceName.INITIALIZED.toString(), true);
 		}
-						
+
 		LocaleContextHolder.setLocale(locale);
 		Locale.setDefault(locale);
-				
-		logger.debug( "Locale set to [" + locale.toString() + "]" );
-		
+
+		logger.debug("Locale set to [" + locale.toString() + "]");
+
 		logger.debug("Application starting");
-		
-		if( messageSource == null ) {
+
+		if (messageSource == null) {
 			createMessageSource();
 		}
-					
+
 		// TODO check nested modal dialogs
 		setupGUIExceptionHandler();
-		
-	    if( !line.hasOption("nosplash") ) {
+
+		if (!line.hasOption("nosplash")) {
 			try {
 				SwingUtilities.invokeAndWait(new Runnable() {
 					@Override
 					public void run() {
 						splashScreen = new SplashScreen(messageSource);
-						splashScreen.setVisible(true);											
+						splashScreen.setVisible(true);
 					}
 				});
 			} catch (InterruptedException ex) {
-				logger.error("Failed to create splash screen", ex );
+				logger.error("Failed to create splash screen", ex);
 				System.exit(1);
 			} catch (InvocationTargetException ex) {
-				logger.error("Failed to create splash screen", ex );
+				logger.error("Failed to create splash screen", ex);
 				System.exit(1);
 			}
-	    }
-	    	
+		}
+
 		createApplication();
-						
+
 		try {
 			SwingUtilities.invokeAndWait(new Runnable() {
 				@Override
@@ -256,10 +256,10 @@ public class SvarogApplication {
 				}
 			});
 		} catch (InterruptedException ex) {
-			logger.error("Failed to create GUI", ex );
+			logger.error("Failed to create GUI", ex);
 			System.exit(1);
 		} catch (InvocationTargetException ex) {
-			logger.error("Failed to create GUI", ex );
+			logger.error("Failed to create GUI", ex);
 			System.exit(1);
 		}
 
@@ -270,25 +270,25 @@ public class SvarogApplication {
 			public void run() {
 				viewerMainFrame.setVisible(true);
 				viewerMainFrame.bootstrap();
-				if( splashScreen != null ) {
+				if (splashScreen != null) {
 					splashScreen.setVisible(false);
 					splashScreen.dispose();
 					splashScreen = null;
 				}
 			}
 		});
-				
+
 	}
-	
-	private static void initializeFirstTime( final GeneralConfiguration suggested ) {
-			    
-		if( locale == null ) {
+
+	private static void initializeFirstTime(final GeneralConfiguration suggested) {
+
+		if (locale == null) {
 			try {
-				SwingUtilities.invokeAndWait( new Runnable() {
+				SwingUtilities.invokeAndWait(new Runnable() {
 					@Override
 					public void run() {
 						locale = OptionPane.showLanguageOption();
-					}				
+					}
 				});
 			} catch (InterruptedException ex) {
 				logger.error("Language choice error", ex);
@@ -298,25 +298,25 @@ public class SvarogApplication {
 				System.exit(1);
 			}
 		}
-		if( locale == null ) {
+		if (locale == null) {
 			logger.error("Language choice canceled");
 			System.exit(1);
 		}
-		
+
 		// we need to bootstrap the message source
-		if( messageSource == null ) {
+		if (messageSource == null) {
 			createMessageSource();
 		}
-		
+
 		boolean ok = false;
 		initialConfig = null;
 		do {
 			try {
-				SwingUtilities.invokeAndWait( new Runnable() {
+				SwingUtilities.invokeAndWait(new Runnable() {
 					@Override
 					public void run() {
-						initialConfig = askForProfilePath( suggested );
-					}				
+						initialConfig = askForProfilePath(suggested);
+					}
 				});
 			} catch (InterruptedException ex) {
 				logger.error("Profile choice error", ex);
@@ -325,13 +325,13 @@ public class SvarogApplication {
 				logger.error("Profile choice error", ex);
 				System.exit(1);
 			}
-			initialConfig.setLocale(locale.toString());		
+			initialConfig.setLocale(locale.toString());
 			ok = setProfileDir(initialConfig, true);
-		} while( !ok );
-		
+		} while (!ok);
+
 		preferences.putBoolean(PreferenceName.PROFILE_DEFAULT.toString(),initialConfig.isProfileDefault());
-		if( initialConfig.isProfileDefault() ) {
-			preferences.remove(PreferenceName.PROFILE_PATH.toString());			
+		if (initialConfig.isProfileDefault()) {
+			preferences.remove(PreferenceName.PROFILE_PATH.toString());
 		} else {
 			preferences.put(PreferenceName.PROFILE_PATH.toString(),initialConfig.getProfilePath());
 		}
@@ -341,244 +341,244 @@ public class SvarogApplication {
 		} catch (IOException ex) {
 			logger.error("Failed to write configuration", ex);
 		}
-		
+
 	}
-	
+
 	private static void initialize() {
-			    
+
 		GeneralConfiguration config = new GeneralConfiguration();
 		ConfigurationDefaults.setGeneralConfigurationDefaults(config);
-		
+
 		String profileDefault = preferences.get(PreferenceName.PROFILE_DEFAULT.toString(), null);
 		String profilePath = preferences.get(PreferenceName.PROFILE_PATH.toString(), null);
-		
-		if( profileDefault == null ) {
+
+		if (profileDefault == null) {
 			logger.error("Profile settings seem to be lost");
 			initializeFirstTime(null);
 			return;
 		}
-		
+
 		boolean profileDef = Boolean.parseBoolean(profileDefault);
 		config.setProfileDefault(profileDef);
-		if( profileDef ) {
-			config.setProfilePath(null);			
+		if (profileDef) {
+			config.setProfilePath(null);
 		} else {
 			config.setProfilePath(profilePath);
 		}
-		
+
 		boolean ok = setProfileDir(config, false);
-		if( !ok ) {
+		if (!ok) {
 			logger.error("Profile settings seem to be invalid");
 			initializeFirstTime(config);
-			return;			
+			return;
 		}
-		
+
 		GeneralConfiguration config2 = new GeneralConfiguration();
 		try {
 			config2.readFromXML(config2.getStandardFile(profileDir),streamer);
-		} catch( FileNotFoundException ex ) {
-			logger.debug("Failed to read configuration - file not found, will have to reinitialize");			
+		} catch (FileNotFoundException ex) {
+			logger.debug("Failed to read configuration - file not found, will have to reinitialize");
 			initializeFirstTime(config);
-			return;						
-		} catch(Exception ex) {
+			return;
+		} catch (Exception ex) {
 			logger.error("Failed to read configuration", ex);
 			initializeFirstTime(config);
-			return;						
+			return;
 		}
-				
-		locale = new Locale( config2.getLocale() );
+
+		locale = new Locale(config2.getLocale());
 		config.setLocale(locale.toString());
-		
+
 	}
-	
+
 	private static void createMessageSource() {
 		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
 		messageSource.setCacheSeconds(-1);
-		messageSource.setBasenames( new String[] {
-				"classpath:org/signalml/app/resource/message",
-				"classpath:org/signalml/resource/mp5",
-				"classpath:org/signalml/resource/wsmessage"
-		});
+		messageSource.setBasenames(new String[] {
+		                                   "classpath:org/signalml/app/resource/message",
+		                                   "classpath:org/signalml/resource/mp5",
+		                                   "classpath:org/signalml/resource/wsmessage"
+		                           });
 
 		SvarogApplication.messageSource = new MessageSourceAccessor(messageSource, locale);
 		OptionPane.setMessageSource(SvarogApplication.messageSource);
 		ErrorsDialog.setStaticMessageSource(SvarogApplication.messageSource);
 	}
-	
+
 	private static boolean setProfileDir(GeneralConfiguration config, boolean firstTime) {
-		
+
 		String profilePath = null;
-		if( config.isProfileDefault() ) {
+		if (config.isProfileDefault()) {
 			profilePath = System.getProperty("user.home") + File.separator + "signalml";
-			logger.debug( "Setting profile path to default [" + profilePath + "]" );			
+			logger.debug("Setting profile path to default [" + profilePath + "]");
 		} else {
 			profilePath = config.getProfilePath();
-			logger.debug( "Setting profile path to chosen [" + profilePath + "]" );			
+			logger.debug("Setting profile path to chosen [" + profilePath + "]");
 		}
-		
+
 		File file = (new File(profilePath)).getAbsoluteFile();
-		if( !file.exists() ) {
-			logger.debug( "Profile dir not found..." );
-			if( firstTime ) {
+		if (!file.exists()) {
+			logger.debug("Profile dir not found...");
+			if (firstTime) {
 				// create
 				boolean ok = file.mkdirs();
-				if( !ok ) {
+				if (!ok) {
 					logger.error("Failed to create profile dir");
 					// return false to indicate dir invalid
 					return false;
-				}	
+				}
 			} else {
 				// return false to indicate dir invalid
 				return false;
 			}
 		}
 
-		if( !file.isDirectory() ) {
+		if (!file.isDirectory()) {
 			logger.error("This is not a directory");
 			return false;
 		}
-		
-		if( !file.canRead() || !file.canWrite() ) {
-			logger.error( "Selected profile path not accessible" );
-			return false;			
+
+		if (!file.canRead() || !file.canWrite()) {
+			logger.error("Selected profile path not accessible");
+			return false;
 		}
 
 		profileDir = file;
-				
+
 		return true;
-		
+
 	}
-	
+
 	private static GeneralConfiguration askForProfilePath(GeneralConfiguration suggested) {
-				
+
 		ProfilePathDialog dialog = new ProfilePathDialog(messageSource, null, true);
-		
+
 		GeneralConfiguration model;
-		if( suggested == null ) {
+		if (suggested == null) {
 			model = new GeneralConfiguration();
 			ConfigurationDefaults.setGeneralConfigurationDefaults(model);
 		} else {
 			model = suggested;
 		}
-		
+
 		boolean result = dialog.showDialog(model,0.5,0.2);
-		if( !result ) {
+		if (!result) {
 			// we do not allow continuation if profile selection was cancelled
 			System.exit(1);
 		}
-				
+
 		return model;
-		
+
 	}
-	
-	public static void splash( String newMessage, boolean doStep ) {
-		if( splashScreen != null ) {
+
+	public static void splash(String newMessage, boolean doStep) {
+		if (splashScreen != null) {
 			splashScreen.updateSplash(newMessage, doStep);
 		}
 	}
-	
+
 	private static void createMainStreamer() {
 
 		streamer = XMLUtils.getDefaultStreamer();
 		Annotations.configureAliases(
-				streamer,
-				ApplicationConfiguration.class,
-				ZoomSignalSettings.class,
-				SignalFFTSettings.class,
-				GeneralConfiguration.class,
-				MainFrameConfiguration.class,
-				SignalMLCodecConfiguration.class,
-				SignalMLCodecDescriptor.class,
-				MRUDConfiguration.class,
-				MRUDEntry.class,
-				SignalMLMRUDEntry.class,
-				RawSignalMRUDEntry.class,
-				RawSignalDescriptor.class,
-				EegChannel.class,
-				MethodPresetManager.class,
-				MP5Parameters.class,
-				MP5Data.class,
-				MP5ApplicationData.class,
-				EvokedPotentialParameters.class,
-				ArtifactApplicationData.class,
-				ArtifactData.class,
-				ArtifactParameters.class,
-				StagerParameters.class
+		        streamer,
+		        ApplicationConfiguration.class,
+		        ZoomSignalSettings.class,
+		        SignalFFTSettings.class,
+		        GeneralConfiguration.class,
+		        MainFrameConfiguration.class,
+		        SignalMLCodecConfiguration.class,
+		        SignalMLCodecDescriptor.class,
+		        MRUDConfiguration.class,
+		        MRUDEntry.class,
+		        SignalMLMRUDEntry.class,
+		        RawSignalMRUDEntry.class,
+		        RawSignalDescriptor.class,
+		        EegChannel.class,
+		        MethodPresetManager.class,
+		        MP5Parameters.class,
+		        MP5Data.class,
+		        MP5ApplicationData.class,
+		        EvokedPotentialParameters.class,
+		        ArtifactApplicationData.class,
+		        ArtifactData.class,
+		        ArtifactParameters.class,
+		        StagerParameters.class
 		);
-		
-		streamer.setMode(XStream.NO_REFERENCES);		
-		
+
+		streamer.setMode(XStream.NO_REFERENCES);
+
 	}
 
-	
+
 	private static void createApplication() {
-				
-		splash( messageSource.getMessage("startup.restoringConfiguration"), false );
-		
+
+		splash(messageSource.getMessage("startup.restoringConfiguration"), false);
+
 		applicationConfig = new ApplicationConfiguration();
 		ConfigurationDefaults.setApplicationConfigurationDefaults(applicationConfig);
 		applicationConfig.setProfileDir(profileDir);
 		applicationConfig.setStreamer(streamer);
-		
+
 		try {
 			applicationConfig.readFromPersistence(null);
-		} catch( FileNotFoundException ex ) {
-			logger.debug("Application config not found - will use defaults");			
-		} catch( Exception ex ) {
-			logger.error("Failed to read application configuration - will use defaults", ex );
+		} catch (FileNotFoundException ex) {
+			logger.debug("Application config not found - will use defaults");
+		} catch (Exception ex) {
+			logger.error("Failed to read application configuration - will use defaults", ex);
 		}
-		
+
 		applicationConfig.applySystemSettings();
-		
-		splash( messageSource.getMessage("startup.initializingCodecs"), true );
-		
+
+		splash(messageSource.getMessage("startup.initializingCodecs"), true);
+
 		signalMLCodecManager = new DefaultSignalMLCodecManager();
 		signalMLCodecManager.setProfileDir(profileDir);
 		signalMLCodecManager.setStreamer(streamer);
-		
+
 		try {
 			signalMLCodecManager.readFromPersistence(null);
-		} catch( FileNotFoundException ex ) {
-			logger.debug("Seems like codec configuration doesn't exist - codecs will not be restored");			
-		} catch( Exception ex ) {
-			logger.error("Failed to read codec manager configuration - codecs lost", ex);			
+		} catch (FileNotFoundException ex) {
+			logger.debug("Seems like codec configuration doesn't exist - codecs will not be restored");
+		} catch (Exception ex) {
+			logger.error("Failed to read codec manager configuration - codecs lost", ex);
 		}
-		
+
 		signalMLCodecManager.verify();
-				
-		splash( messageSource.getMessage("startup.initializingDocumentManagement"), true );
-		
+
+		splash(messageSource.getMessage("startup.initializingDocumentManagement"), true);
+
 		mrudRegistry = new DefaultMRUDRegistry();
 		mrudRegistry.setProfileDir(profileDir);
 		mrudRegistry.setStreamer(streamer);
 
 		try {
 			mrudRegistry.readFromPersistence(null);
-		} catch( FileNotFoundException ex ) {
-			logger.debug("Seems like mrud configuration doesn't exist - mruds will not be restored");			
-		} catch( Exception ex ) {
-			logger.error("Failed to read mrud codec manager configuration - mruds lost", ex);			
+		} catch (FileNotFoundException ex) {
+			logger.debug("Seems like mrud configuration doesn't exist - mruds will not be restored");
+		} catch (Exception ex) {
+			logger.error("Failed to read mrud codec manager configuration - mruds lost", ex);
 		}
-		
+
 		documentManager = new DefaultDocumentManager();
-		
-		splash( messageSource.getMessage("startup.initializingServices"), true );
-		
+
+		splash(messageSource.getMessage("startup.initializingServices"), true);
+
 		documentDetector = new ExtensionBasedDocumentDetector();
-		
+
 		actionFocusManager = new ActionFocusManager();
-		
+
 		mp5ExecutorManager = new MP5ExecutorManager();
 		mp5ExecutorManager.setProfileDir(profileDir);
-		
+
 		try {
 			mp5ExecutorManager.readFromPersistence(null);
-		} catch( FileNotFoundException ex ) {
+		} catch (FileNotFoundException ex) {
 			logger.debug("MP5 executor manager config not found - will use defaults");
-		} catch( Exception ex ) {
-			logger.error("Failed to read MP5 executor manager configuration - will use defaults", ex );
+		} catch (Exception ex) {
+			logger.error("Failed to read MP5 executor manager configuration - will use defaults", ex);
 		}
-		
+
 		methodManager = new ApplicationMethodManager();
 		methodManager.setMessageSource(messageSource);
 		methodManager.setProfileDir(profileDir);
@@ -587,93 +587,93 @@ public class SvarogApplication {
 		methodManager.setActionFocusManager(actionFocusManager);
 		methodManager.setApplicationConfig(applicationConfig);
 		methodManager.setMp5ExecutorManager(mp5ExecutorManager);
-		
+
 		createMethods();
-						
+
 		taskManager = new ApplicationTaskManager();
-		taskManager.setMode( SignalMLOperationMode.APPLICATION );
+		taskManager.setMode(SignalMLOperationMode.APPLICATION);
 		taskManager.setMessageSource(messageSource);
 		taskManager.setMethodManager(methodManager);
-		
-		splash( messageSource.getMessage("startup.initializingPresets"), true );
-		
+
+		splash(messageSource.getMessage("startup.initializingPresets"), true);
+
 		montagePresetManager = new MontagePresetManager();
 		montagePresetManager.setProfileDir(profileDir);
-		
+
 		try {
 			montagePresetManager.readFromPersistence(null);
-		} catch( FileNotFoundException ex ) {
+		} catch (FileNotFoundException ex) {
 			logger.debug("Montage preset config not found - will use defaults");
-		} catch( Exception ex ) {
-			logger.error("Failed to read montage configuration - will use defaults", ex );
-		}		
-		
+		} catch (Exception ex) {
+			logger.error("Failed to read montage configuration - will use defaults", ex);
+		}
+
 		bookFilterPresetManager = new BookFilterPresetManager();
 		bookFilterPresetManager.setProfileDir(profileDir);
-		
+
 		try {
 			bookFilterPresetManager.readFromPersistence(null);
-		} catch( FileNotFoundException ex ) {
+		} catch (FileNotFoundException ex) {
 			logger.debug("Book filter preset config not found - will use defaults");
-		} catch( Exception ex ) {
-			logger.error("Failed to read book filter configuration - will use defaults", ex );
+		} catch (Exception ex) {
+			logger.error("Failed to read book filter configuration - will use defaults", ex);
 		}
 
 		actionFocusManager.setMontagePresetManager(montagePresetManager);
-		
+
 		signalExportPresetManager = new SignalExportPresetManager();
 		signalExportPresetManager.setProfileDir(profileDir);
-		
+
 		try {
 			signalExportPresetManager.readFromPersistence(null);
-		} catch( FileNotFoundException ex ) {
-			logger.debug("Signal export preset config not found - will use defaults");			
-		} catch( Exception ex ) {
-			logger.error("Failed to read signal export configuration - will use defaults", ex );
+		} catch (FileNotFoundException ex) {
+			logger.debug("Signal export preset config not found - will use defaults");
+		} catch (Exception ex) {
+			logger.error("Failed to read signal export configuration - will use defaults", ex);
 		}
 
 		fftFilterPresetManager = new FFTSampleFilterPresetManager();
 		fftFilterPresetManager.setProfileDir(profileDir);
-		
+
 		try {
 			fftFilterPresetManager.readFromPersistence(null);
-		} catch( FileNotFoundException ex ) {
+		} catch (FileNotFoundException ex) {
 			logger.debug("FFT sample filter preset config not found - will use defaults");
-		} catch( Exception ex ) {
-			logger.error("Failed to read FFT sample filter configuration - will use defaults", ex );
+		} catch (Exception ex) {
+			logger.error("Failed to read FFT sample filter configuration - will use defaults", ex);
 		}
-		
-		splash( null, true );
-				
+
+		splash(null, true);
+
 	}
-	
+
 	private static void createMethods() {
 
 		// Prevent Matlab from replacing L&F
 		MatlabUtil.initialize();
-		
-		if( molTest ) {
+
+		if (molTest) {
 			ExampleMethod exampleMethod = null;
 			try {
-	
+
 				try {
 					exampleMethod = (ExampleMethod) methodManager.registerMethod(ExampleMethod.class);
 					ExampleMethodDescriptor exampleMethodDescriptor = new ExampleMethodDescriptor(exampleMethod);
 					methodManager.setMethodData(exampleMethod, exampleMethodDescriptor);
-				} catch( SignalMLException ex ) {
-					logger.error( "Failed to create example method", ex );
+				} catch (SignalMLException ex) {
+					logger.error("Failed to create example method", ex);
 					throw ex;
-				} catch( Throwable t ) {
-					logger.error( "Serious error - failed to create example method", t );
+				} catch (Throwable t) {
+					logger.error("Serious error - failed to create example method", t);
 					throw t;
 				}
-				
-			} catch( Throwable t ) {
+
+			} catch (Throwable t) {
 				UnavailableMethodDescriptor descriptor = new UnavailableMethodDescriptor(ExampleMethodDescriptor.RUN_METHOD_STRING, t);
 				methodManager.addUnavailableMethod(descriptor);
 			}
 		}
-				
+
 		MP5Method mp5Method = null;
 		try {
 
@@ -683,138 +683,138 @@ public class SvarogApplication {
 				mp5Method.setExecutorLocator(mp5ExecutorManager);
 				MP5MethodDescriptor mp5Descriptor = new MP5MethodDescriptor(mp5Method);
 				methodManager.setMethodData(mp5Method, mp5Descriptor);
-			} catch( SignalMLException ex ) {
-				logger.error( "Failed to create mp5 method", ex );
+			} catch (SignalMLException ex) {
+				logger.error("Failed to create mp5 method", ex);
 				throw ex;
-			} catch( Throwable t ) {
-				logger.error( "Serious error - failed to create mp5 method", t );
+			} catch (Throwable t) {
+				logger.error("Serious error - failed to create mp5 method", t);
 				throw t;
 			}
 
-		} catch( Throwable t ) {
+		} catch (Throwable t) {
 			UnavailableMethodDescriptor descriptor = new UnavailableMethodDescriptor(MP5MethodDescriptor.RUN_METHOD_STRING, t);
 			methodManager.addUnavailableMethod(descriptor);
 		}
-			
+
 		ArtifactMethod artifactMethod = null;
 		try {
-			
+
 			try {
 				artifactMethod = (ArtifactMethod) methodManager.registerMethod(ArtifactMethod.class);
 				artifactMethod.setStreamer(streamer);
 				ArtifactMethodDescriptor artifactDescriptor = new ArtifactMethodDescriptor(artifactMethod);
 				methodManager.setMethodData(artifactMethod, artifactDescriptor);
-			} catch( NoClassDefFoundError er ) {
-				logger.error( "No class def found error - is Matlab installed properly?", er );
+			} catch (NoClassDefFoundError er) {
+				logger.error("No class def found error - is Matlab installed properly?", er);
 				throw er;
-			} catch( UnsatisfiedLinkError er ) {
-				logger.error( "No libraries error - is Matlab installed properly?", er );
+			} catch (UnsatisfiedLinkError er) {
+				logger.error("No libraries error - is Matlab installed properly?", er);
 				throw er;
-			} catch( SignalMLException ex ) {
-				logger.error( "Failed to create artifact method", ex );
+			} catch (SignalMLException ex) {
+				logger.error("Failed to create artifact method", ex);
 				throw ex;
-			} catch( Throwable t ) {
-				logger.error( "Serious error - failed to create artifact method", t );
+			} catch (Throwable t) {
+				logger.error("Serious error - failed to create artifact method", t);
 				throw t;
 			}
-			
-		} catch( Throwable t ) {
+
+		} catch (Throwable t) {
 			UnavailableMethodDescriptor descriptor = new UnavailableMethodDescriptor(ArtifactMethodDescriptor.RUN_METHOD_STRING, t);
 			methodManager.addUnavailableMethod(descriptor);
 		}
 
 		StagerMethod stagerMethod = null;
 		try {
-			
+
 			try {
 				stagerMethod = (StagerMethod) methodManager.registerMethod(StagerMethod.class);
 				StagerMethodDescriptor stagerDescriptor = new StagerMethodDescriptor(stagerMethod);
 				methodManager.setMethodData(stagerMethod, stagerDescriptor);
-			} catch( NoClassDefFoundError er ) {
-				logger.error( "No class def found error - is Matlab installed properly?", er );
+			} catch (NoClassDefFoundError er) {
+				logger.error("No class def found error - is Matlab installed properly?", er);
 				throw er;
-			} catch( UnsatisfiedLinkError er ) {
-				logger.error( "No libraries error - is Matlab installed properly?", er );
+			} catch (UnsatisfiedLinkError er) {
+				logger.error("No libraries error - is Matlab installed properly?", er);
 				throw er;
-			} catch( SignalMLException ex ) {
-				logger.error( "Failed to create stager method", ex );
+			} catch (SignalMLException ex) {
+				logger.error("Failed to create stager method", ex);
 				throw ex;
-			} catch( Throwable t ) {
-				logger.error( "Serious error - failed to create stager method", t );
+			} catch (Throwable t) {
+				logger.error("Serious error - failed to create stager method", t);
 				throw t;
 			}
-			
-		} catch( Throwable t ) {
+
+		} catch (Throwable t) {
 			UnavailableMethodDescriptor descriptor = new UnavailableMethodDescriptor(StagerMethodDescriptor.RUN_METHOD_STRING, t);
 			methodManager.addUnavailableMethod(descriptor);
 		}
-		
+
 		EvokedPotentialMethod evokedPotentialMethod = null;
 		try {
-			
+
 			try {
 				evokedPotentialMethod = (EvokedPotentialMethod) methodManager.registerMethod(EvokedPotentialMethod.class);
 				EvokedPotentialMethodDescriptor evokedPotentialDescriptor = new EvokedPotentialMethodDescriptor(evokedPotentialMethod);
 				methodManager.setMethodData(evokedPotentialMethod, evokedPotentialDescriptor);
-			} catch( SignalMLException ex ) {
-				logger.error( "Failed to create evoked potential method", ex );
+			} catch (SignalMLException ex) {
+				logger.error("Failed to create evoked potential method", ex);
 				throw ex;
-			} catch( Throwable t ) {
-				logger.error( "Serious error - failed to create evoked potential method", t );
+			} catch (Throwable t) {
+				logger.error("Serious error - failed to create evoked potential method", t);
 				throw t;
 			}
-			
-		} catch( Throwable t ) {
+
+		} catch (Throwable t) {
 			UnavailableMethodDescriptor descriptor = new UnavailableMethodDescriptor(EvokedPotentialMethodDescriptor.RUN_METHOD_STRING, t);
 			methodManager.addUnavailableMethod(descriptor);
 		}
 
 		BookAverageMethod bookAverageMethod = null;
 		try {
-			
+
 			try {
 				bookAverageMethod = (BookAverageMethod) methodManager.registerMethod(BookAverageMethod.class);
 				BookAverageMethodDescriptor bookAverageDescriptor = new BookAverageMethodDescriptor(bookAverageMethod);
 				methodManager.setMethodData(bookAverageMethod, bookAverageDescriptor);
-			} catch( SignalMLException ex ) {
-				logger.error( "Failed to create book average method", ex );
+			} catch (SignalMLException ex) {
+				logger.error("Failed to create book average method", ex);
 				throw ex;
-			} catch( Throwable t ) {
-				logger.error( "Serious error - failed to create book average method", t );
+			} catch (Throwable t) {
+				logger.error("Serious error - failed to create book average method", t);
 				throw t;
 			}
-			
-		} catch( Throwable t ) {
+
+		} catch (Throwable t) {
 			UnavailableMethodDescriptor descriptor = new UnavailableMethodDescriptor(BookAverageMethodDescriptor.RUN_METHOD_STRING, t);
 			methodManager.addUnavailableMethod(descriptor);
 		}
 
 		BookToTagMethod bookToTagMethod = null;
 		try {
-			
+
 			try {
 				bookToTagMethod = (BookToTagMethod) methodManager.registerMethod(BookToTagMethod.class);
 				BookToTagMethodDescriptor bookToTagDescriptor = new BookToTagMethodDescriptor(bookToTagMethod);
 				methodManager.setMethodData(bookToTagMethod, bookToTagDescriptor);
-			} catch( SignalMLException ex ) {
-				logger.error( "Failed to create book to tag method", ex );
+			} catch (SignalMLException ex) {
+				logger.error("Failed to create book to tag method", ex);
 				throw ex;
-			} catch( Throwable t ) {
-				logger.error( "Serious error - failed to create book to tag method", t );
+			} catch (Throwable t) {
+				logger.error("Serious error - failed to create book to tag method", t);
 				throw t;
 			}
-			
-		} catch( Throwable t ) {
+
+		} catch (Throwable t) {
 			UnavailableMethodDescriptor descriptor = new UnavailableMethodDescriptor(BookToTagMethodDescriptor.RUN_METHOD_STRING, t);
 			methodManager.addUnavailableMethod(descriptor);
 		}
-		
+
 	}
 
 	private static void createMainFrame() {
 
-		splash( messageSource.getMessage("startup.creatingMainFrame"), false );
-		
+		splash(messageSource.getMessage("startup.creatingMainFrame"), false);
+
 		ViewerElementManager elementManager = new ViewerElementManager(SignalMLOperationMode.APPLICATION);
 		elementManager.setMessageSource(messageSource);
 		elementManager.setProfileDir(profileDir);
@@ -834,40 +834,40 @@ public class SvarogApplication {
 		elementManager.setMp5ExecutorManager(mp5ExecutorManager);
 		elementManager.setPreferences(preferences);
 		elementManager.configureImportedElements();
-		
+
 		viewerMainFrame = new ViewerMainFrame();
 		viewerMainFrame.setMessageSource(messageSource);
 		viewerMainFrame.setElementManager(elementManager);
-		
-		splash( null, true );
-		
+
+		splash(null, true);
+
 		viewerMainFrame.initialize();
-		
+
 	}
-		
+
 	private static void setupGUIExceptionHandler() {
 
 		final UncaughtExceptionHandler prevHandler = Thread.getDefaultUncaughtExceptionHandler();
-		
+
 		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler() {
 
 			@Override
 			public void uncaughtException(final Thread t, final Throwable e) {
-				
+
 				logger.error("Exception caught", e);
-				
+
 				Runnable job = new Runnable() {
 
 					@Override
 					public void run() {
 						try {
 							// prevent the splash screen from staying on top
-							if( splashScreen != null && splashScreen.isVisible() ) {
+							if (splashScreen != null && splashScreen.isVisible()) {
 								splashScreen.setVisible(false);
 								splashScreen.dispose();
 								splashScreen = null;
 							}
-							
+
 							ErrorsDialog errorsDialog = new ErrorsDialog(messageSource, null,true,"error.exception");
 							ResolvableException ex = new ResolvableException(e);
 							errorsDialog.showDialog(ex, true);
@@ -877,100 +877,100 @@ public class SvarogApplication {
 							prevHandler.uncaughtException(t, e);
 						}
 					}
-					
+
 				};
-				
+
 				SwingUtilities.invokeLater(job);
-				
+
 			}
-			
+
 		});
 	}
-	
-	public static void exit( int code ) {
+
+	public static void exit(int code) {
 
 		logger.debug("Application stopping");
-		
+
 		try {
 			signalMLCodecManager.writeToPersistence(null);
-		} catch( Exception ex) {
+		} catch (Exception ex) {
 			logger.error("Failed to write codec manager configuration", ex);
 		}
-		
+
 		signalMLCodecManager.cleanUp();
 
 		try {
 			mrudRegistry.writeToPersistence(null);
-		} catch( Exception ex) {
+		} catch (Exception ex) {
 			logger.error("Failed to write mrud registry configuration", ex);
 		}
-		
+
 		try {
 			applicationConfig.writeToPersistence(null);
-		} catch( Exception ex ) {
+		} catch (Exception ex) {
 			logger.error("Failed to write application configuration", ex);
 		}
 
 		try {
 			montagePresetManager.writeToPersistence(null);
-		} catch( Exception ex ) {
+		} catch (Exception ex) {
 			logger.error("Failed to write montage configuration", ex);
 		}
 
 		try {
 			bookFilterPresetManager.writeToPersistence(null);
-		} catch( Exception ex ) {
+		} catch (Exception ex) {
 			logger.error("Failed to write book filter configuration", ex);
 		}
-		
+
 		try {
 			signalExportPresetManager.writeToPersistence(null);
-		} catch( Exception ex ) {
+		} catch (Exception ex) {
 			logger.error("Failed to write signal export configuration", ex);
 		}
 
 		try {
 			fftFilterPresetManager.writeToPersistence(null);
-		} catch( Exception ex ) {
+		} catch (Exception ex) {
 			logger.error("Failed to write FFT sample filter configuration", ex);
 		}
 
 		try {
 			mp5ExecutorManager.writeToPersistence(null);
-		} catch( Exception ex ) {
+		} catch (Exception ex) {
 			logger.error("Failed to write MP5 executor manager configuration", ex);
 		}
-		
+
 		Method[] methods = methodManager.getMethods();
 		ApplicationMethodDescriptor descriptor;
 		PresetManager presetManager;
-		for( Method method : methods ) {
+		for (Method method : methods) {
 			descriptor = methodManager.getMethodData(method);
-			if( descriptor != null ) {
+			if (descriptor != null) {
 				presetManager =  descriptor.getPresetManager(methodManager, true);
-				if( presetManager != null ) {
+				if (presetManager != null) {
 					try {
 						presetManager.writeToPersistence(null);
-					} catch( Exception ex) {
+					} catch (Exception ex) {
 						logger.error("Failed to write preset manager for method [" + method.getName() + "]", ex);
-					}					
+					}
 				}
 			}
-			if( method instanceof DisposableMethod ) {
+			if (method instanceof DisposableMethod) {
 				try {
 					((DisposableMethod) method).dispose();
 				} catch (SignalMLException ex) {
-					logger.error( "Failed to dispose method [" + method.getName() + "]", ex );
+					logger.error("Failed to dispose method [" + method.getName() + "]", ex);
 				}
 			}
 		}
-		
+
 		logger.debug("Application stopped");
-		
+
 		System.exit(code);
-				
+
 	}
-		
+
 	// this is guaranteed not to be used in applet context
 	public static File getProfileDir() {
 		return profileDir;
@@ -985,5 +985,5 @@ public class SvarogApplication {
 	public static String getStartupDir() {
 		return startupDir;
 	}
-		
+
 }

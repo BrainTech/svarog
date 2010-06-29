@@ -1,5 +1,5 @@
 /* ExportSignalAction.java created 2008-01-27
- * 
+ *
  */
 package org.signalml.app.action;
 
@@ -50,35 +50,35 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** ExportSignalAction
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDocumentFocusSelector> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	protected static final Logger logger = Logger.getLogger(ExportSignalAction.class);
-		
+
 	private ExportSignalDialog exportSignalDialog;
 	private PleaseWaitDialog pleaseWaitDialog;
 	private ViewerFileChooser fileChooser;
 	private Component optionPaneParent;
-	
+
 	private RawSignalDescriptorWriter descriptorWriter;
-	
+
 	public ExportSignalAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
 		super(messageSource, signalDocumentFocusSelector);
 		setText("action.exportSignal");
 		setToolTip("action.exportSignalToolTip");
 	}
-		
+
 	@Override
 	public void actionPerformed(ActionEvent ev) {
-		
+
 		logger.debug("Export signal");
-		
+
 		SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
-		if( signalDocument == null ) {
+		if (signalDocument == null) {
 			logger.warn("Target document doesn't exist or is not a signal");
 			return;
 		}
@@ -86,31 +86,31 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 		SignalPlot masterPlot = signalView.getMasterPlot();
 
 		TagDocument tagDocument = signalDocument.getActiveTag();
-		
-		SignalExportDescriptor descriptor;		
+
+		SignalExportDescriptor descriptor;
 		Preset preset = exportSignalDialog.getPresetManager().getDefaultPreset();
-		if( preset == null ) {
+		if (preset == null) {
 			descriptor = new SignalExportDescriptor();
 		} else {
 			descriptor = (SignalExportDescriptor) preset;
 		}
-		
+
 		SignalSpace space = descriptor.getSignalSpace();
-				
-		SignalSelection signalSelection = signalView.getSignalSelection( masterPlot );
+
+		SignalSelection signalSelection = signalView.getSignalSelection(masterPlot);
 		Tag tag = null;
-		PositionedTag tagSelection = signalView.getTagSelection( masterPlot );
-		if( tagSelection != null ) {
-			if( tagDocument != null && tagSelection.getTagPositionIndex() == signalDocument.getTagDocuments().indexOf(tagDocument) ) {
+		PositionedTag tagSelection = signalView.getTagSelection(masterPlot);
+		if (tagSelection != null) {
+			if (tagDocument != null && tagSelection.getTagPositionIndex() == signalDocument.getTagDocuments().indexOf(tagDocument)) {
 				tag = tagSelection.getTag();
 			}
 		}
 
-		SignalSpaceConstraints constraints = signalView.createSignalSpaceConstraints();		
-		
+		SignalSpaceConstraints constraints = signalView.createSignalSpaceConstraints();
+
 		space.configureFromSelections(signalSelection, tag);
-		
-		if( tagDocument != null ) {
+
+		if (tagDocument != null) {
 			descriptor.setTagSet(tagDocument.getTagSet());
 			tagDocument.updateSignalSpaceConstraints(constraints);
 		} else {
@@ -119,87 +119,87 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 		}
 		descriptor.setPageSize(masterPlot.getPageSize());
 		descriptor.setBlockSize(masterPlot.getBlockSize());
-				
+
 		constraints.setRequireCompletePages(false);
-		
+
 		exportSignalDialog.setConstraints(constraints);
-		
+
 		boolean ok = exportSignalDialog.showDialog(descriptor, true);
-		if( !ok ) {
+		if (!ok) {
 			return;
 		}
-		
+
 		File fileSuggestion = null;
-		if( signalDocument instanceof FileBackedDocument ) {
+		if (signalDocument instanceof FileBackedDocument) {
 			File originalFile = ((FileBackedDocument) signalDocument).getBackingFile();
-			if( originalFile != null ) {
-				originalFile = new File( originalFile.getName() );
+			if (originalFile != null) {
+				originalFile = new File(originalFile.getName());
 				String extension = Util.getFileExtension(originalFile, false);
-				if( extension == null || ! "bin".equals( extension ) ) {
+				if (extension == null || ! "bin".equals(extension)) {
 					fileSuggestion = Util.changeOrAddFileExtension(originalFile, "bin");
 				}
 			}
 		}
-		
+
 		File file;
 		File xmlFile = null;
 		boolean hasFile = false;
 		do {
-			
+
 			file = fileChooser.chooseExportSignalFile(optionPaneParent, fileSuggestion);
-			if( file == null ) {
+			if (file == null) {
 				return;
 			}
 			String ext = Util.getFileExtension(file,false);
-			if( ext == null ) {
-				file = new File( file.getAbsolutePath() + ".bin" );
+			if (ext == null) {
+				file = new File(file.getAbsolutePath() + ".bin");
 			}
-			
+
 			hasFile = true;
-			
-			if( file.exists() ) {
+
+			if (file.exists()) {
 				int res = OptionPane.showFileAlreadyExists(optionPaneParent, file.getName());
-				if( res != OptionPane.OK_OPTION ) {
+				if (res != OptionPane.OK_OPTION) {
 					hasFile = false;
-				}								
-			}
-			
-			if( hasFile && descriptor.isSaveXML() ) {
-				xmlFile = Util.changeOrAddFileExtension(file, "xml");
-				
-				if( xmlFile.exists() || xmlFile.equals(file) ) {
-					int res = OptionPane.showFileAlreadyExists(optionPaneParent, xmlFile.getName());
-					if( res != OptionPane.OK_OPTION ) {
-						hasFile = false;
-					}								
 				}
 			}
-			
-		} while( !hasFile );
-						
+
+			if (hasFile && descriptor.isSaveXML()) {
+				xmlFile = Util.changeOrAddFileExtension(file, "xml");
+
+				if (xmlFile.exists() || xmlFile.equals(file)) {
+					int res = OptionPane.showFileAlreadyExists(optionPaneParent, xmlFile.getName());
+					if (res != OptionPane.OK_OPTION) {
+						hasFile = false;
+					}
+				}
+			}
+
+		} while (!hasFile);
+
 		SignalSpace signalSpace = descriptor.getSignalSpace();
-		
+
 		SignalProcessingChain signalChain;
 		try {
 			signalChain = masterPlot.getSignalChain().createLevelCopyChain(signalSpace.getSignalSourceLevel());
 		} catch (SignalMLException ex) {
-			logger.error( "Failed to create subchain", ex );
+			logger.error("Failed to create subchain", ex);
 			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-			return;			
+			return;
 		}
-		
+
 		SegmentedSampleSourceFactory factory = SegmentedSampleSourceFactory.getSharedInstance();
 		MultichannelSampleSource sampleSource = factory.getContinuousSampleSource(signalChain, signalSpace, descriptor.getTagSet(), descriptor.getPageSize(), descriptor.getBlockSize());
-		
+
 		RawSignalSampleType sampleType = descriptor.getSampleType();
-		if( sampleType == RawSignalSampleType.INT || sampleType == RawSignalSampleType.SHORT ) {
-			
+		if (sampleType == RawSignalSampleType.INT || sampleType == RawSignalSampleType.SHORT) {
+
 			// normalization - check signal half-amplitude maximum
 			ScanSignalWorker scanWorker = new ScanSignalWorker(sampleSource, pleaseWaitDialog);
-			
+
 			scanWorker.execute();
-			
-			pleaseWaitDialog.setActivity(messageSource.getMessage("activity.scanningSignal"));			
+
+			pleaseWaitDialog.setActivity(messageSource.getMessage("activity.scanningSignal"));
 			pleaseWaitDialog.configureForDeterminate(0, SampleSourceUtils.getMaxSampleCount(sampleSource), 0);
 			pleaseWaitDialog.waitAndShowDialogIn(optionPaneParent, 500, scanWorker);
 
@@ -209,87 +209,87 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 			} catch (InterruptedException ex) {
 				// ignore
 			} catch (ExecutionException ex) {
-				logger.error( "Worker failed to save", ex.getCause() );
+				logger.error("Worker failed to save", ex.getCause());
 				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex.getCause());
-				return;			
+				return;
 			}
-			
-			double maxSignalAbsValue = Math.max( Math.abs( signalScanResult.getMaxSignalValue() ), Math.abs( signalScanResult.getMinSignalValue() ) ); 
+
+			double maxSignalAbsValue = Math.max(Math.abs(signalScanResult.getMaxSignalValue()), Math.abs(signalScanResult.getMinSignalValue()));
 			double maxTypeAbsValue = 0;
-			
-			if( sampleType == RawSignalSampleType.INT ) {
-				maxTypeAbsValue = Math.min( (Integer.MAX_VALUE-1), -(Integer.MIN_VALUE+1) );
+
+			if (sampleType == RawSignalSampleType.INT) {
+				maxTypeAbsValue = Math.min((Integer.MAX_VALUE-1), -(Integer.MIN_VALUE+1));
 			} else {
-				maxTypeAbsValue = Math.min( (Short.MAX_VALUE-1), -(Short.MIN_VALUE+1) );
+				maxTypeAbsValue = Math.min((Short.MAX_VALUE-1), -(Short.MIN_VALUE+1));
 			}
-			
+
 			boolean normalize = descriptor.isNormalize();
-			if( !normalize ) {
-				
-				// check if normalization needs to be forced				
-				if( maxTypeAbsValue < Math.ceil( maxSignalAbsValue ) ) {
-					
+			if (!normalize) {
+
+				// check if normalization needs to be forced
+				if (maxTypeAbsValue < Math.ceil(maxSignalAbsValue)) {
+
 					int ans = OptionPane.showNormalizationUnavoidable(optionPaneParent);
-					if( ans != OptionPane.OK_OPTION ) {
+					if (ans != OptionPane.OK_OPTION) {
 						return;
 					}
-					
+
 					normalize = true;
 					descriptor.setNormalize(normalize);
-					
+
 				}
-				
+
 			}
-			
-			if( normalize ) {
-				
-				descriptor.setNormalizationFactor( maxTypeAbsValue / maxSignalAbsValue );
-				
+
+			if (normalize) {
+
+				descriptor.setNormalizationFactor(maxTypeAbsValue / maxSignalAbsValue);
+
 			}
-			
+
 		}
 
 		int minSampleCount = SampleSourceUtils.getMinSampleCount(sampleSource);
-		
+
 		ExportSignalWorker worker = new ExportSignalWorker(sampleSource, file, descriptor, pleaseWaitDialog);
-		
+
 		worker.execute();
 
-		pleaseWaitDialog.setActivity(messageSource.getMessage("activity.exportingSignal"));			
+		pleaseWaitDialog.setActivity(messageSource.getMessage("activity.exportingSignal"));
 		pleaseWaitDialog.configureForDeterminate(0, minSampleCount, 0);
 		pleaseWaitDialog.waitAndShowDialogIn(optionPaneParent, 500, worker);
-		
+
 		try {
 			worker.get();
 		} catch (InterruptedException ex) {
 			// ignore
 		} catch (ExecutionException ex) {
-			logger.error( "Worker failed to save", ex.getCause() );
+			logger.error("Worker failed to save", ex.getCause());
 			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex.getCause());
-			return;			
+			return;
 		}
-		
-		if( descriptor.isSaveXML() ) {
-			
-			if( descriptorWriter == null ) {
+
+		if (descriptor.isSaveXML()) {
+
+			if (descriptorWriter == null) {
 				descriptorWriter = new RawSignalDescriptorWriter();
 			}
-			
+
 			RawSignalDescriptor rawDescriptor = new RawSignalDescriptor();
-			
-			float samplingFrequency = sampleSource.getSamplingFrequency();			
-			
-			rawDescriptor.setBlocksPerPage( masterPlot.getBlocksPerPage() );
-			rawDescriptor.setByteOrder( descriptor.getByteOrder() );
-			if( descriptor.isNormalize() ) {
-				rawDescriptor.setCalibration( (float) (1 / descriptor.getNormalizationFactor()) );
+
+			float samplingFrequency = sampleSource.getSamplingFrequency();
+
+			rawDescriptor.setBlocksPerPage(masterPlot.getBlocksPerPage());
+			rawDescriptor.setByteOrder(descriptor.getByteOrder());
+			if (descriptor.isNormalize()) {
+				rawDescriptor.setCalibration((float)(1 / descriptor.getNormalizationFactor()));
 			} else {
 				rawDescriptor.setCalibration(1F);
 			}
 			int channelCount = sampleSource.getChannelCount();
-			rawDescriptor.setChannelCount( channelCount );
+			rawDescriptor.setChannelCount(channelCount);
 			String[] labels = new String[channelCount];
-			for( int i=0; i<channelCount; i++ ) {
+			for (int i=0; i<channelCount; i++) {
 				labels[i] = sampleSource.getLabel(i);
 			}
 			rawDescriptor.setChannelLabels(labels);
@@ -297,59 +297,59 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 			rawDescriptor.setExportFileName(file.getName());
 
 			TimeSpaceType timeSpaceType = signalSpace.getTimeSpaceType();
-			if( timeSpaceType == TimeSpaceType.MARKER_BASED ) {
-				
+			if (timeSpaceType == TimeSpaceType.MARKER_BASED) {
+
 				MarkerTimeSpace markerTimeSpace = signalSpace.getMarkerTimeSpace();
-								
+
 				rawDescriptor.setMarkerOffset(markerTimeSpace.getSecondsBefore());
-				rawDescriptor.setPageSize( (float) (markerTimeSpace.getSecondsBefore() + markerTimeSpace.getSecondsAfter()) );
-				
+				rawDescriptor.setPageSize((float)(markerTimeSpace.getSecondsBefore() + markerTimeSpace.getSecondsAfter()));
+
 			} else {
-				
+
 				rawDescriptor.setMarkerOffset(0);
-				rawDescriptor.setPageSize( masterPlot.getPageSize() );
-				
+				rawDescriptor.setPageSize(masterPlot.getPageSize());
+
 			}
-			
+
 			rawDescriptor.setSampleCount(minSampleCount);
-			rawDescriptor.setSampleType( descriptor.getSampleType() );
+			rawDescriptor.setSampleType(descriptor.getSampleType());
 			rawDescriptor.setSamplingFrequency(samplingFrequency);
-			if( signalDocument instanceof FileBackedDocument ) {
+			if (signalDocument instanceof FileBackedDocument) {
 				File sourceFile = ((FileBackedDocument) signalDocument).getBackingFile();
-				if( sourceFile != null ) {
+				if (sourceFile != null) {
 					rawDescriptor.setSourceFileName(sourceFile.getName());
 				}
 			}
-			
-			if( signalDocument instanceof SignalMLDocument ) {
-				
+
+			if (signalDocument instanceof SignalMLDocument) {
+
 				SignalMLDocument signalMLDocument = (SignalMLDocument) signalDocument;
-				
-				rawDescriptor.setSourceSignalType( SourceSignalType.SIGNALML );
-				rawDescriptor.setSourceSignalMLFormat( signalMLDocument.getFormatName() );
-				rawDescriptor.setSourceSignalMLSourceUID( signalMLDocument.getSourceUID() );
-				
+
+				rawDescriptor.setSourceSignalType(SourceSignalType.SIGNALML);
+				rawDescriptor.setSourceSignalMLFormat(signalMLDocument.getFormatName());
+				rawDescriptor.setSourceSignalMLSourceUID(signalMLDocument.getSourceUID());
+
 			} else {
-				
-				rawDescriptor.setSourceSignalType( SourceSignalType.RAW );
-				
+
+				rawDescriptor.setSourceSignalType(SourceSignalType.RAW);
+
 			}
-						
+
 			try {
 				descriptorWriter.writeDocument(rawDescriptor, xmlFile);
 			} catch (IOException ex) {
-				logger.error( "Worker failed to save xml", ex );
+				logger.error("Worker failed to save xml", ex);
 				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-				return;			
+				return;
 			}
-						
+
 		}
-				
+
 	}
 
 	@Override
 	public void setEnabledAsNeeded() {
-		setEnabled( getActionFocusSelector().getActiveSignalDocument() != null ); 
+		setEnabled(getActionFocusSelector().getActiveSignalDocument() != null);
 	}
 
 	public ExportSignalDialog getExportSignalDialog() {
@@ -383,5 +383,5 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 	public void setOptionPaneParent(Component optionPaneParent) {
 		this.optionPaneParent = optionPaneParent;
 	}
-	
+
 }

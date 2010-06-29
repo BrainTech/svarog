@@ -1,5 +1,5 @@
 /* SignalSelectionTypePanel.java created 2007-10-04
- * 
+ *
  */
 package org.signalml.app.view.element;
 
@@ -15,20 +15,20 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** SignalSelectionTypePanel
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class SignalSelectionTypePanel extends JPanel {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private MessageSourceAccessor messageSource;
 	private JRadioButton pageRadio = null;
 	private JRadioButton blockRadio = null;
 	private JRadioButton channelRadio = null;
-	
+
 	private ButtonGroup radioGroup;
-	
+
 	/**
 	 * This is the default constructor
 	 */
@@ -40,22 +40,22 @@ public class SignalSelectionTypePanel extends JPanel {
 
 	/**
 	 * This method initializes this
-	 * 
+	 *
 	 * @return void
 	 */
 	private void initialize() {
-		
+
 		setBorder(BorderFactory.createTitledBorder(messageSource.getMessage("signalSelection.selectionType")));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-				
+
 		radioGroup = new ButtonGroup();
-		
+
 		add(getPageRadio());
 		add(getBlockRadio());
 		add(getChannelRadio());
-		
+
 		getPageRadio().setSelected(true);
-		
+
 	}
 
 	public JRadioButton getPageRadio() {
@@ -87,5 +87,5 @@ public class SignalSelectionTypePanel extends JPanel {
 		}
 		return channelRadio;
 	}
-	
+
 }

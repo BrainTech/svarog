@@ -1,5 +1,5 @@
 /* DefaultMutableBookSegment.java created 2008-02-24
- * 
+ *
  */
 
 package org.signalml.domain.book;
@@ -10,7 +10,7 @@ import java.util.Vector;
 
 /** DefaultMutableBookSegment
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class DefaultMutableBookSegment implements MutableBookSegment {
@@ -18,17 +18,17 @@ public class DefaultMutableBookSegment implements MutableBookSegment {
 	private float decompositionEnergy;
 	private float signalEnergy;
 	private float[] signalSamples;
-	
+
 	private int channelNumber;
 	private int segmentNumber;
 
-	private float samplingFrequency;	
+	private float samplingFrequency;
 	private float segmentTime;
-	
+
 	private int segmentLength;
-	
+
 	private ArrayList<StandardBookAtom> atoms;
-	
+
 	public DefaultMutableBookSegment(float samplingFrequency, int channelNumber, int segmentNumber, float segmentTime, int segmentLength) {
 		this.samplingFrequency = samplingFrequency;
 		this.channelNumber = channelNumber;
@@ -36,30 +36,30 @@ public class DefaultMutableBookSegment implements MutableBookSegment {
 		this.segmentTime = segmentTime;
 		this.segmentLength = segmentLength;
 		atoms = new ArrayList<StandardBookAtom>();
-	}	
-	
-	public DefaultMutableBookSegment( StandardBookSegment segment ) {
-		this( segment.getSamplingFrequency(), segment.getChannelNumber(), segment.getSegmentNumber(), segment.getSegmentTime(), segment.getSegmentLength() );
-		
+	}
+
+	public DefaultMutableBookSegment(StandardBookSegment segment) {
+		this(segment.getSamplingFrequency(), segment.getChannelNumber(), segment.getSegmentNumber(), segment.getSegmentTime(), segment.getSegmentLength());
+
 		this.decompositionEnergy = segment.getDecompositionEnergy();
 		this.signalEnergy = segment.getSignalEnergy();
 		this.signalSamples = segment.getSignalSamples();
-		
+
 		int atomCnt = segment.getAtomCount();
 		atoms.ensureCapacity(atomCnt);
-		for( int i=0; i<atomCnt; i++ ) {
-			atoms.add( new DefaultBookAtom( segment.getAtomAt(i) ) );
+		for (int i=0; i<atomCnt; i++) {
+			atoms.add(new DefaultBookAtom(segment.getAtomAt(i)));
 		}
-		
+
 	}
-	
-	public DefaultMutableBookSegment( StandardBookSegment segment, int targetSegmentNumber, float targetSegmentTime ) {
-		this( segment );
-		
+
+	public DefaultMutableBookSegment(StandardBookSegment segment, int targetSegmentNumber, float targetSegmentTime) {
+		this(segment);
+
 		this.segmentNumber = targetSegmentNumber;
-		this.segmentTime = targetSegmentTime;		
+		this.segmentTime = targetSegmentTime;
 	}
-	
+
 	@Override
 	public int addAtom(StandardBookAtom atom) {
 		int index = atoms.size();
@@ -137,7 +137,7 @@ public class DefaultMutableBookSegment implements MutableBookSegment {
 	public int getSegmentLength() {
 		return segmentLength;
 	}
-	
+
 	@Override
 	public float getSamplingFrequency() {
 		return samplingFrequency;
@@ -145,7 +145,7 @@ public class DefaultMutableBookSegment implements MutableBookSegment {
 
 	@Override
 	public float getSegmentTimeLength() {
-		return ( segmentLength / samplingFrequency );
+		return (segmentLength / samplingFrequency);
 	}
 
 	@Override
@@ -170,7 +170,7 @@ public class DefaultMutableBookSegment implements MutableBookSegment {
 
 	@Override
 	public boolean hasSignal() {
-		return ( signalSamples != null );
+		return (signalSamples != null);
 	}
 
 	@Override

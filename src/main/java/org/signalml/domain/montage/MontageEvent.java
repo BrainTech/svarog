@@ -1,5 +1,5 @@
 /* MontageEvent.java created 2007-11-23
- * 
+ *
  */
 
 package org.signalml.domain.montage;
@@ -8,7 +8,7 @@ import java.util.EventObject;
 
 /** MontageEvent
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class MontageEvent extends EventObject {
@@ -17,12 +17,12 @@ public class MontageEvent extends EventObject {
 
 	private int[] channels;
 	private int[] primaryChannels;
-	
+
 	public MontageEvent(Object source, int[] channels, int[] primaryChannels) {
 		super(source);
 		this.channels = channels;
 		this.primaryChannels = primaryChannels;
-		
+
 	}
 
 	public int getChannel() {
@@ -39,6 +39,6 @@ public class MontageEvent extends EventObject {
 
 	public int[] getPrimaryChannels() {
 		return primaryChannels;
-	}		
+	}
 
 }

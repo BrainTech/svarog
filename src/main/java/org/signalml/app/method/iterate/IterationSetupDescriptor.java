@@ -1,5 +1,5 @@
 /* IterationSetupDescriptor.java created 2007-12-05
- * 
+ *
  */
 
 package org.signalml.app.method.iterate;
@@ -9,17 +9,17 @@ import org.signalml.method.iterator.MethodIteratorData;
 
 /** IterationSetupDescriptor
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class IterationSetupDescriptor {
 
 	private IterableMethod method;
 	private MethodIteratorData data;
-	
+
 	public IterationSetupDescriptor() {
 	}
-	
+
 	public IterationSetupDescriptor(IterableMethod method, MethodIteratorData data) {
 		this.method = method;
 		this.data = data;
@@ -40,5 +40,5 @@ public class IterationSetupDescriptor {
 	public void setData(MethodIteratorData data) {
 		this.data = data;
 	}
-		
+
 }

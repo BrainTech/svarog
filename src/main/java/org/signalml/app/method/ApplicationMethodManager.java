@@ -1,5 +1,5 @@
 /* ApplicationMethodManager.java created 2007-10-22
- * 
+ *
  */
 
 package org.signalml.app.method;
@@ -25,56 +25,56 @@ import com.thoughtworks.xstream.XStream;
 
 /** ApplicationMethodManager
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ApplicationMethodManager extends DefaultMethodManager {
 
-	private Map<Method,ApplicationMethodDescriptor> methodData = new HashMap<Method,ApplicationMethodDescriptor>();	
-	
+	private Map<Method,ApplicationMethodDescriptor> methodData = new HashMap<Method,ApplicationMethodDescriptor>();
+
 	private List<UnavailableMethodDescriptor> unavailableMethods = new LinkedList<UnavailableMethodDescriptor>();
-	
+
 	private MessageSourceAccessor messageSource;
 	private File profileDir;
 	private XStream streamer;
 	private ViewerFileChooser fileChooser;
 	private ApplicationConfiguration applicationConfig;
-	
+
 	private DocumentManager documentManager;
 	private DocumentFlowIntegrator documentFlowIntegrator;
 	private ActionFocusManager actionFocusManager;
 	private MP5ExecutorManager mp5ExecutorManager;
 
 	private TableToTextExporter tableToTextExporter;
-	
+
 	private Window dialogParent;
-	
-	public ApplicationMethodDescriptor getMethodData( Method method ) {
+
+	public ApplicationMethodDescriptor getMethodData(Method method) {
 		return methodData.get(method);
 	}
-	
-	public void setMethodData( Method method, ApplicationMethodDescriptor descriptor ) {
-		if( !methods.contains(method) ) {
+
+	public void setMethodData(Method method, ApplicationMethodDescriptor descriptor) {
+		if (!methods.contains(method)) {
 			return;
 		}
 		methodData.put(method, descriptor);
 	}
-	
+
 	@Override
 	public void removeMethod(Method method) {
 		super.removeMethod(method);
 		methodData.remove(method);
 	}
-	
+
 	public int getUnavailableMethodCount() {
 		return unavailableMethods.size();
 	}
-	
-	public UnavailableMethodDescriptor getUnavailableMethodAt( int index ) {
-		return unavailableMethods.get(index);		
+
+	public UnavailableMethodDescriptor getUnavailableMethodAt(int index) {
+		return unavailableMethods.get(index);
 	}
-	
-	public void addUnavailableMethod( UnavailableMethodDescriptor method ) {
+
+	public void addUnavailableMethod(UnavailableMethodDescriptor method) {
 		unavailableMethods.add(method);
 	}
 
@@ -165,5 +165,5 @@ public class ApplicationMethodManager extends DefaultMethodManager {
 	public void setTableToTextExporter(TableToTextExporter tableToTextExporter) {
 		this.tableToTextExporter = tableToTextExporter;
 	}
-	
+
 }

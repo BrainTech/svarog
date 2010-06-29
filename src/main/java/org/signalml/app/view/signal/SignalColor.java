@@ -1,5 +1,5 @@
 /* SignalColor.java created 2007-11-22
- * 
+ *
  */
 
 package org.signalml.app.view.signal;
@@ -10,22 +10,22 @@ import org.springframework.context.MessageSourceResolvable;
 
 /** SignalColor
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public enum SignalColor implements MessageSourceResolvable {
-		
-	BLACK( Color.BLACK ),
-	RED( Color.RED ),
-	GREEN( Color.GREEN.darker() ),
-	BLUE( Color.BLUE )
-	
+
+	BLACK(Color.BLACK),
+	RED(Color.RED),
+	GREEN(Color.GREEN.darker()),
+	BLUE(Color.BLUE)
+
 	;
 
 	private final static Object[] ARGUMENTS = new Object[0];
-	
-	private Color color;	
-	
+
+	private Color color;
+
 	private SignalColor(Color color) {
 		this.color = color;
 	}

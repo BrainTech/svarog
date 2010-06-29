@@ -1,5 +1,5 @@
 /* RangeToolTipSpinner.java created 2007-10-05
- * 
+ *
  */
 
 package org.signalml.app.view.element;
@@ -13,7 +13,7 @@ import org.signalml.app.model.BoundedSpinnerModel;
 
 /** RangeToolTipSpinner
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class RangeToolTipSpinner extends JSpinner implements ChangeListener {
@@ -24,8 +24,8 @@ public class RangeToolTipSpinner extends JSpinner implements ChangeListener {
 		super();
 		// listen to ourselves in order to update tooltips
 		addChangeListener(this);
-	}	
-	
+	}
+
 	public RangeToolTipSpinner(SpinnerModel model) {
 		super(model);
 		// listen to ourselves in order to update tooltips
@@ -36,7 +36,7 @@ public class RangeToolTipSpinner extends JSpinner implements ChangeListener {
 	@Override
 	public void stateChanged(ChangeEvent e) {
 		SpinnerModel model = getModel();
-		if( model != null && (model instanceof BoundedSpinnerModel) ) {
+		if (model != null && (model instanceof BoundedSpinnerModel)) {
 			BoundedSpinnerModel brm = (BoundedSpinnerModel) model;
 			String toolTip = brm.getMinimum().toString() + " - " + brm.getMaximum().toString();
 			setToolTipText(toolTip);
@@ -44,15 +44,15 @@ public class RangeToolTipSpinner extends JSpinner implements ChangeListener {
 			setToolTipText(null);
 		}
 	}
-	
+
 	@Override
 	public void setModel(SpinnerModel model) {
 		SpinnerModel oldModel = getModel();
-		if( oldModel != null ) {
+		if (oldModel != null) {
 			oldModel.removeChangeListener(this);
 		}
 		super.setModel(model);
 		fireStateChanged();
 	}
-	
+
 }

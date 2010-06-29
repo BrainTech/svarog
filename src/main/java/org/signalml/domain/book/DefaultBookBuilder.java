@@ -1,5 +1,5 @@
 /* BookBuilderImpl.java created 2008-03-26
- * 
+ *
  */
 
 package org.signalml.domain.book;
@@ -12,29 +12,29 @@ import pl.edu.fuw.MP.Core.BookLibraryV5Writer;
 
 /** BookBuilderImpl
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class DefaultBookBuilder implements BookBuilder {
 
 	private static DefaultBookBuilder sharedInstance = null;
-	
-	protected DefaultBookBuilder() {		
+
+	protected DefaultBookBuilder() {
 	}
-	
+
 	public static DefaultBookBuilder getInstance() {
-		if( sharedInstance == null ) {
-			sharedInstance = new DefaultBookBuilder();			
+		if (sharedInstance == null) {
+			sharedInstance = new DefaultBookBuilder();
 		}
 		return sharedInstance;
 	}
-	
+
 	@Override
 	public StandardBook readBook(File file) throws IOException, BookFormatException {
 		MPBookStore book = new MPBookStore();
-		
-		if(!book.Open(file.getAbsolutePath())) {
-		    return null;	
+
+		if (!book.Open(file.getAbsolutePath())) {
+			return null;
 		}
 		return book;
 	}
@@ -43,8 +43,8 @@ public class DefaultBookBuilder implements BookBuilder {
 	public void writeBookComplete(StandardBook book, File file) throws IOException {
 		IncrementalBookWriter bookWriter = writeBookIncremental(book, file);
 		int segmentCount = book.getSegmentCount();
-		for( int i=0; i<segmentCount; i++ ) {
-			bookWriter.writeSegment( book.getSegmentAt(i) );
+		for (int i=0; i<segmentCount; i++) {
+			bookWriter.writeSegment(book.getSegmentAt(i));
 		}
 		bookWriter.close();
 	}
@@ -61,7 +61,7 @@ public class DefaultBookBuilder implements BookBuilder {
 		return b;
 	}
 
-	
+
 	public StandardBookWriter createBook() {
 		BookLibraryV5Writer book=new BookLibraryV5Writer();
 		return book;

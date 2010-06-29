@@ -1,5 +1,5 @@
 /* ArtifactMethodIterationConsumer.java created 2007-12-06
- * 
+ *
  */
 
 package org.signalml.app.method.artifact;
@@ -25,76 +25,76 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /** ArtifactMethodIterationConsumer
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ArtifactMethodIterationConsumer implements MethodIterationResultConsumer {
 
 	protected static final Logger logger = Logger.getLogger(ArtifactMethodIterationConsumer.class);
-	
+
 	private ApplicationMethodManager methodManager;
-	
+
 	private MessageSourceAccessor messageSource;
-	
+
 	private ArtifactExpertTagDialog expertTagDialog;
 	private RocDialog rocDialog;
 	private PleaseWaitDialog pleaseWaitDialog;
-	
+
 	private LegacyTagImporter legacyTagImporter;
-	
+
 	public ArtifactMethodIterationConsumer() {
 		legacyTagImporter = new LegacyTagImporter();
 	}
-	
+
 	@Override
 	public void consumeIterationResult(IterableMethod method, MethodIteratorData data, MethodIteratorResult result) {
-		
+
 		ArtifactExpertTagDescriptor expertTagDescriptor = new ArtifactExpertTagDescriptor();
-		
+
 		boolean expertTagOk = getExpertTagDialog().showDialog(expertTagDescriptor, true);
-		if( !expertTagOk ) {
+		if (!expertTagOk) {
 			return;
 		}
-		
+
 		TagDocument expertTag;
 		try {
 			expertTag = new TagDocument(expertTagDescriptor.getExpertTagFile());
 		} catch (SignalMLException ex) {
 			logger.error("Failed to open expertTag", ex);
 			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-			return;			
+			return;
 		} catch (IOException ex) {
 			logger.error("Failed to open expertTag - i/o exception", ex);
 			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-			return;			
+			return;
 		}
-				
+
 		PleaseWaitDialog waitDialog = getPleaseWaitDialog();
-		
+
 		ArtifactIterationResultWorker resultWorker = new ArtifactIterationResultWorker(legacyTagImporter, data, result, expertTag, waitDialog);
-		
+
 		resultWorker.execute();
-		
-		waitDialog.setActivity(messageSource.getMessage("activity.analyzing"));			
+
+		waitDialog.setActivity(messageSource.getMessage("activity.analyzing"));
 		waitDialog.configureForDeterminate(0, data.getCompletedIterations(), 0);
 		waitDialog.waitAndShowDialogIn(methodManager.getDialogParent(), 500, resultWorker);
 
-		RocData rocData = null;		
-		
+		RocData rocData = null;
+
 		try {
 			rocData = resultWorker.get();
 		} catch (InterruptedException ex) {
-			logger.error( "Worker failed to complete", ex );
+			logger.error("Worker failed to complete", ex);
 			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-			return;			
+			return;
 		} catch (ExecutionException ex) {
-			logger.error( "Worker failed to complete", ex.getCause() );
+			logger.error("Worker failed to complete", ex.getCause());
 			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex.getCause());
-			return;			
+			return;
 		}
-										
+
 		getRocDialog().showDialog(rocData, true);
-		
+
 	}
 
 	public void initialize(ApplicationMethodManager methodManager) {
@@ -111,29 +111,28 @@ public class ArtifactMethodIterationConsumer implements MethodIterationResultCon
 	}
 
 	public ArtifactExpertTagDialog getExpertTagDialog() {
-		if( expertTagDialog == null ) {
+		if (expertTagDialog == null) {
 			expertTagDialog = new ArtifactExpertTagDialog(methodManager.getMessageSource(), methodManager.getDialogParent(), true);
-			expertTagDialog.setFileChooser(methodManager.getFileChooser());			
+			expertTagDialog.setFileChooser(methodManager.getFileChooser());
 		}
 		return expertTagDialog;
 	}
-	
+
 	public RocDialog getRocDialog() {
-		if( rocDialog == null ) {
+		if (rocDialog == null) {
 			rocDialog = new RocDialog(methodManager.getMessageSource(), methodManager.getDialogParent(),true);
 			rocDialog.setFileChooser(methodManager.getFileChooser());
-			rocDialog.setTableToTextExporter(methodManager.getTableToTextExporter());			
+			rocDialog.setTableToTextExporter(methodManager.getTableToTextExporter());
 		}
 		return rocDialog;
 	}
-	
+
 	public PleaseWaitDialog getPleaseWaitDialog() {
-		if( pleaseWaitDialog == null ) {
+		if (pleaseWaitDialog == null) {
 			pleaseWaitDialog = new PleaseWaitDialog(methodManager.getMessageSource(), methodManager.getDialogParent());
 			pleaseWaitDialog.initializeNow();
 		}
 		return pleaseWaitDialog;
 	}
-	
+
 }
- 

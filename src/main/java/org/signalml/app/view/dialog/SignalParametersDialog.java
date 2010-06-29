@@ -1,5 +1,5 @@
 /* SignalParametersDialog.java created 2007-09-11
- * 
+ *
  */
 package org.signalml.app.view.dialog;
 
@@ -19,13 +19,13 @@ import org.springframework.validation.Errors;
 
 /** SignalParametersDialog
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class SignalParametersDialog extends AbstractDialog {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private SignalParametersPanel panel;
 
 	private URL contextHelpURL = null;
@@ -33,18 +33,18 @@ public class SignalParametersDialog extends AbstractDialog {
 	public SignalParametersDialog(MessageSourceAccessor messageSource, Window f, boolean isModal) {
 		super(messageSource, f, isModal);
 	}
-	
+
 	@Override
 	protected void initialize() {
 		setTitle(messageSource.getMessage("signalParameters.title"));
-		setIconImage( IconUtils.loadClassPathImage("org/signalml/app/icon/signalparameters.png"));
+		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/signalparameters.png"));
 		setResizable(false);
 		super.initialize();
 	}
-	
+
 	@Override
 	public JComponent createInterface() {
-				
+
 		panel = new SignalParametersPanel(messageSource);
 		return panel;
 
@@ -53,10 +53,10 @@ public class SignalParametersDialog extends AbstractDialog {
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 		SignalParameterDescriptor spd = (SignalParameterDescriptor) model;
-		
-		panel.getRequiredSignalParamersPanel().fillPanelFromModel(spd);		
+
+		panel.getRequiredSignalParamersPanel().fillPanelFromModel(spd);
 		panel.getPagingSignalParamersPanel().fillPanelFromModel(spd);
-		
+
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class SignalParametersDialog extends AbstractDialog {
 		panel.getRequiredSignalParamersPanel().validatePanel(spd, errors);
 		panel.getPagingSignalParamersPanel().validatePanel(errors);
 	}
-	
+
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
 		return SignalParameterDescriptor.class.isAssignableFrom(clazz);
@@ -80,15 +80,15 @@ public class SignalParametersDialog extends AbstractDialog {
 
 	@Override
 	protected URL getContextHelpURL() {
-		if( contextHelpURL == null ) {
-			 try {
-				 contextHelpURL = (new ClassPathResource("org/signalml/help/contents.html")).getURL();
-				 contextHelpURL = new URL( contextHelpURL.toExternalForm() + "#sigparams" );
+		if (contextHelpURL == null) {
+			try {
+				contextHelpURL = (new ClassPathResource("org/signalml/help/contents.html")).getURL();
+				contextHelpURL = new URL(contextHelpURL.toExternalForm() + "#sigparams");
 			} catch (IOException ex) {
 				logger.error("Failed to get help URL", ex);
-			}				
+			}
 		}
 		return contextHelpURL;
 	}
-	
+
 }
