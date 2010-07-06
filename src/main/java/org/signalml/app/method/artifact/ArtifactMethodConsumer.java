@@ -236,7 +236,7 @@ public class ArtifactMethodConsumer implements InitializingMethodResultConsumer 
 						odd.getTagOptions().setExistingDocument(additionalTag);
 
 						if (!documentFlowIntegrator.maybeOpenDocument(odd, dialogParent))
-							return;
+							return false;
 					}
 
 				}
