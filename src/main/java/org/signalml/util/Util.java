@@ -39,7 +39,8 @@ import org.signalml.exception.SanityCheckException;
 import org.signalml.exception.SignalMLException;
 
 /** Util
- *
+ * class provides converting String to Date in various formats, computing signal checksums, file and String MD5 checksums.
+ * It also allows to get file extension, change this extension, invert map, save system information, split String to separate lines, etc.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  * 		parts based on code Copyright (C) 2003 Dobieslaw Ircha <dircha@eranet.pl> Artur Biesiadowski <abies@adres.pl> Piotr J. Durka     <Piotr-J.Durka@fuw.edu.pl>
@@ -48,20 +49,39 @@ public abstract class Util {
 
 	protected static final Logger logger = Logger.getLogger(Util.class);
 
+        /**
+         * line separator
+         */
 	public static final String LINE_SEP = System.getProperty("line.separator");
+
+        /**
+         * file separator
+         */
 	public static final String FILE_SEP = System.getProperty("file.separator");
 
+        /**
+         * numbers in base sixteen
+         */
 	public static final char[] HEX_CHARS = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 
 	public static final Pattern WINDOWS_OS_PATTERN = Pattern.compile(".*[Ww]indows.*");
 	public static final Pattern LINUX_OS_PATTERN = Pattern.compile(".*[Ll]inux.*");
 	public static final Pattern MAC_OS_PATTERN = Pattern.compile(".*[Mm]ac.*");
 
+        /**
+         * Number format with two digits
+         */
 	private static DecimalFormat twoPlaceFormat = new DecimalFormat("00");
 
 	private static Pattern datePattern = null;
 	private static Pattern fqClassNamePattern = null;
 
+        /**
+         * Checks if two objects are equal (if both of them are nulls, it returns true even if they are not of the same class)
+         * @param o1 first object to compare
+	 * @param o2 second object to compare
+         * @return true if specified objects are equal
+         */
 	public static boolean equalsWithNulls(Object o1, Object o2) {
 		if (o1 == null) {
 			return (o2 == null) ? true : false;
@@ -69,10 +89,28 @@ public abstract class Util {
 		return o1.equals(o2);
 	}
 
+        /**
+         * Computes specified checksum for given file and monitor length of processed data.
+         * @param file file to read signal from
+         * @param checksumTypes array of checksums to count
+         * @param monitor monitors legth of processed data once every 1000 iterations
+         * @return array of computed checksum for given file
+         * @throws SignalMlException when in array of checksums exists unsupported checksum type or when occur any problem while reading data from file
+         */
 	public static SignalChecksum[] getSignalChecksums(File file, String[] checksumTypes, SignalChecksumProgressMonitor monitor) throws SignalMLException {
 		return getSignalChecksums(file, checksumTypes, 0, (int) file.length(), monitor);
 	}
 
+        /**
+         * Computes specified checksum for given file and monitor length of processed data. It also can skip given number of starting data and process only specified number of data.
+         * @param file file to read signal from
+         * @param checksumTypes array of checksums to count
+         * @param offset number of starting data to skip (if it is negative, no bytes are skipped)
+         * @param length length of data to process
+         * @param monitor monitors legth of processed data once every 1000 iterations
+         * @return array of computed checksum for given file
+         * @throws SignalMlException when in array of checksums exists unsupported checksum type or when occur any problem while reading data from file
+         */
 	public static SignalChecksum[] getSignalChecksums(File file, String[] checksumTypes, int offset, int length, SignalChecksumProgressMonitor monitor) throws SignalMLException {
 
 		if (checksumTypes.length == 0) {
@@ -160,6 +198,12 @@ public abstract class Util {
 
 	}
 
+        /**
+         * Returs MD5 checksum of specified file
+         * @param file file to count checksum
+         * @return String with MD5 checksum
+	 * @throws IOException if an I/O error occurs
+         */
 	public static String getFileSignature(File file) throws IOException {
 		long len = file.length();
 		FileReader fr = new FileReader(file);
@@ -169,6 +213,11 @@ public abstract class Util {
 		return toMD5String(new String(cbuf));
 	}
 
+        /**
+         * Returns hexadecimal representation of specified array of bytes
+         * @param bytes data to convert
+         * @return String with hexadecimal representation of given data
+         */
 	public static String toHexString(byte[] bytes) {
 		StringBuilder hexString = new StringBuilder();
 		for (int i = 0; i < bytes.length; i++) {
@@ -177,6 +226,12 @@ public abstract class Util {
 		return hexString.toString();
 	}
 
+        /**
+         * Resturns MD5 checksum of specified String
+         * @param s String to count checksum
+         * @return String with MD5 checksum
+	 * @throws NullPointerException if given String is null 
+         */
 	public static String toMD5String(String s) {
 		if (s == null) {
 			throw new NullPointerException();
@@ -195,12 +250,23 @@ public abstract class Util {
 		return toHexString(bytes);
 	}
 
+        /**
+         * Returns random String in hexadecimal representation of specified length
+         * @param byteCount length of target String
+         * @return random String
+         */
 	public static String getRandomHexString(int byteCount) {
 		byte[] bytes = new byte[byteCount];
 		(new Random()).nextBytes(bytes);
 		return toHexString(bytes);
 	}
 
+        /**
+         * Returns extension of specified file. The extension can be returned with or without preceding dot.
+         * @param file File to extract extension from
+	 * @param withDot If is true then returned extension is proceded by a dot.
+         * @return extension of specified file
+         */
 	public static String getFileExtension(File file, boolean withDot) {
 		if (file == null) {
 			return null;
@@ -216,6 +282,11 @@ public abstract class Util {
 		return path.substring(dotAt);
 	}
 
+        /**
+         * Returns name of specified file without its extension
+         * @param file File to extract name from
+         * @return name of File
+         */
 	public static String getFileNameWithoutExtension(File file) {
 		if (file == null) {
 			return null;
@@ -230,7 +301,12 @@ public abstract class Util {
 		return path.substring(0,dotAt);
 	}
 
-
+        /**
+         * Adds specified extension to file. If any extension exists before, it is changed.
+         * @param file File to change extension
+	 * @param extension new extension
+         * @return file with new extension
+         */
 	public static File changeOrAddFileExtension(File file, String extension) {
 
 		String name = file.getName();
@@ -247,6 +323,11 @@ public abstract class Util {
 
 	}
 
+        /**
+         * Inverts Map of Strings (values become keys, keys become values).
+         * @param input Map to invert
+         * @return inverted Map
+         */
 	public static HashMap<String,String> invertStringMap(Map<String,String> input) {
 
 		HashMap<String,String> output = new HashMap<String, String>(input.size());
@@ -260,6 +341,14 @@ public abstract class Util {
 
 	}
 
+        /**
+         * Finds and replaces every key from specified Map in specified String by value from this map in brackets '${...}'.
+	 * Map can be inverted before this operation.
+         * @param input String to process
+	 * @param tokenMap map to take keys and values from for replacing process
+	 * @param invertMap if is true then Map is inverted before replacing
+         * @return String with every occurence of key from Map in input String replaced by its value
+         */
 	public static String substituteForTokens(String input, Map<String,String> tokenMap, boolean invertMap) {
 
 		if (invertMap) {
@@ -287,6 +376,12 @@ public abstract class Util {
 
 	}
 
+        /**
+         * Finds and replaces every key from specified Map in brackets '${...}' in specified String by value from this map in brackets.
+         * @param input String to process
+         * @param tokenMap map to take keys and values from for replacing process
+         * @return String with every occurence of key from Map in input String replaced by its value
+         */
 	public static String expandTokens(String input,  Map<String,String> tokenMap) {
 
 		Set<String> keySet = tokenMap.keySet();
@@ -309,6 +404,12 @@ public abstract class Util {
 
 	}
 
+        /**
+         * Adds time to specified StringBuilder.
+	 * Time is in format DD:HH:MM (DD - days, HH - hours, MM - minutes) or DD:HH:MM.SS (SS - seconds) when second are greater then zero.
+         * @param time time to add
+	 * @param sb StringBuiled to add time to
+         */
 	public static void addTime(float time, StringBuilder sb) {
 		int intTime = (int) Math.floor(time);
 		int remainder = (int) Math.round((time - intTime)*100);
@@ -320,6 +421,11 @@ public abstract class Util {
 		}
 	}
 
+        /**
+         * Returns true if every element of specified String is valid Unicode character
+         * @param s String to validate
+         * @return true if String is valid
+         */
 	public static boolean validateString(String s) {
 
 		int cnt = s.length();
@@ -336,6 +442,11 @@ public abstract class Util {
 
 	}
 
+        /**
+         * Returns String with those elements from specified String which are valid Unicode characters
+         * @param s String to trim
+         * @return valid String
+         */
 	public static String trimString(String s) {
 
 		StringBuilder sb = new StringBuilder();
@@ -369,6 +480,13 @@ public abstract class Util {
 
 	}
 
+        /**
+         * Returns array of String which contains every separate line from specified String with limited number of characters in one line 
+	 * (Single word will not be splitted even if it is longer then limit).
+         * @param string String to split
+	 * @param limit maximal number of characters in one line
+         * @return splitted String
+         */
 	public static String[] splitTextIntoLines(String string, int limit) {
 
 		LinkedList<String> list = new LinkedList<String>();
@@ -422,6 +540,9 @@ public abstract class Util {
 
 	}
 
+        /**
+         * Writes system information to "logger" variable.
+         */
 	public static void dumpDebuggingInfo() {
 
 		Runtime runtime = Runtime.getRuntime();
@@ -441,6 +562,11 @@ public abstract class Util {
 
 	}
 
+        /**
+         * Compresses specified data and encodes it using Base64
+         * @param data Data to process
+         * @return String representation of compressed and encoded data
+         */
 	public static String compressAndBase64Encode(byte[] data) {
 
 		if (data == null) {
@@ -477,6 +603,12 @@ public abstract class Util {
 
 	}
 
+        /**
+         * Decompresses specified data and decodes it using Base64
+         * @param data Data to process
+         * @return String representation of decompressed and decoded data
+	 * @throws DataFormatException when data is not correctly compressed
+         */
 	public static byte[] base64DecodeAndDecompress(String encoded) throws DataFormatException {
 
 		if (encoded == null) {
@@ -515,6 +647,11 @@ public abstract class Util {
 
 	}
 
+        /**
+         * Returns specified date in format "YYYY-MM-DD HH:MM:SS" (YYYY-year, MM-month, DD-day; HH-hour, MM-minutes, SS-seconds)
+         * @param time date to process
+         * @return string representation of date in format above
+         */
 	public static String formatTime(Date time) {
 
 		Calendar calendar = Calendar.getInstance();
@@ -534,6 +671,13 @@ public abstract class Util {
 
 	}
 
+        /**
+         * Returns Date from specified String time representation.
+	 * String representations must be in format YYYY-MM-DD HH:MM:SS (YYYY-year, MM-month, DD-day; HH-hour, MM-minutes, SS-seconds)
+         * @param time String representation of Date
+         * @return Date from String time representation
+	 * @throws ParseException when String is not valid Date representation
+         */
 	public static Date parseTime(String time) throws ParseException {
 
 		if (datePattern == null) {
@@ -565,6 +709,13 @@ public abstract class Util {
 
 	}
 
+        /**
+         * Returns MD5 hash of given data 
+         * @param userName name of the user
+	 * @param loginTime time of logging in
+	 * @param sharedSecret some shared message
+         * @return MD5 hash of given data
+         */
 	public static String createSharedSecretToken(String userName, Date loginTime, String sharedSecret) {
 
 		MessageDigest digest;
@@ -581,6 +732,12 @@ public abstract class Util {
 
 	}
 
+        /**
+         * Returns String representation of givens time in seconds in format "xx h xx m yy s xx ms (yy min / yy epochs)", 
+	 * where all xx are numbers greater then 0 and yy are nonnegative numers.
+         * @param seconds seconds to process
+         * @return String representation of given seconds
+         */
 	public static String getPrettyTimeString(double seconds) {
 
 		int whole = (int) Math.floor(seconds);
@@ -612,14 +769,31 @@ public abstract class Util {
 		return sb.toString();
 	}
 
+        /**
+         * Returns square of specified number
+         * @param x number to count square
+         * @return square of given number
+         */
 	public static double sqr(double x) {
 		return (x*x);
 	}
 
+        /**
+         * Converts representation of color in RGB model in triplet (r, g, b) to single number in hexadecimal system.
+         * @param red amount of red included (between 0 and 255 inclusive)
+	 * @param green amount of green included (between 0 and 255 inclusive)
+	 * @param blue amount of blue included (between 0 and 255 inclusive)
+         * @return hexadecimal representation of color in RGB model
+         */
 	public static int RGBToInteger(int red,int green,int blue) {
 		return 0x00000000|(red<<16)|(green<<8)|blue;
 	}
 
+        /**
+         * Check if class name matches pattern ^[a-zA-Z0-9_][a-zA-Z0-9$._]*$
+         * @param fqClassName class name to check
+         * @return true if class name matches pattern above
+         */
 	public static boolean validateFqClassName(String fqClassName) {
 		if (fqClassNamePattern == null) {
 			fqClassNamePattern = Pattern.compile("^[a-zA-Z0-9_][a-zA-Z0-9$._]*$");
@@ -627,6 +801,11 @@ public abstract class Util {
 		return fqClassNamePattern.matcher(fqClassName).matches();
 	}
 
+        /**
+         * Returns actual time and/or date in specified format
+         * @param dateFormat format of date to count
+         * @return actual time and/or date
+         */
 	public static String now(String dateFormat) {
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);

@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 import org.springframework.context.MessageSourceResolvable;
 
-/** This class provides a simple localized text message in the form of a
+/** ResolvableString class provides a simple localized text message in the form of a
  *  MessageSourceResolvable.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
@@ -66,22 +66,36 @@ public class ResolvableString implements Serializable, MessageSourceResolvable {
 		this.defaultMessage = defaultMessage;
 	}
 
+	/**
+	 * Returns arguments of message, null if there are no arguments
+	 * @return arguments
+	 */
 	@Override
 	public Object[] getArguments() {
 		return arguments;
 	}
 
+        /**
+         * Returns codes of message, null if there are no codes
+         * @return codes
+         */
 	@Override
 	public String[] getCodes() {
 		return codes;
 	}
 
+        /**
+         * Returns default message
+         * @return default message
+         */
 	@Override
 	public String getDefaultMessage() {
 		return defaultMessage;
 	}
 
-	/** Returns default message.
+	/** 
+	 * Returns default message
+	 * @return default message
 	 */
 	@Override
 	public String toString() {
