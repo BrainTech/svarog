@@ -75,25 +75,25 @@ public class ResolvableString implements Serializable, MessageSourceResolvable {
 		return arguments;
 	}
 
-        /**
-         * Returns codes of message, null if there are no codes
-         * @return codes
-         */
+	/**
+	 * Returns codes of message, null if there are no codes
+	 * @return codes
+	 */
 	@Override
 	public String[] getCodes() {
 		return codes;
 	}
 
-        /**
-         * Returns default message
-         * @return default message
-         */
+	/**
+	 * Returns default message
+	 * @return default message
+	 */
 	@Override
 	public String getDefaultMessage() {
 		return defaultMessage;
 	}
 
-	/** 
+	/**
 	 * Returns default message
 	 * @return default message
 	 */

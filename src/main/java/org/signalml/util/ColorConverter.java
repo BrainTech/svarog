@@ -47,7 +47,7 @@ public class ColorConverter implements SingleValueConverter {
 	 * Check if Color is either the same as, or is a superclass of the class which is represented by specified Class parameter
 	 * @param clazz the Class object to be checked
 	 * @return true if objects of type clazz can be assigned to objects of Color class, otherwise false
-         */
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean canConvert(Class clazz) {

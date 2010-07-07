@@ -28,7 +28,7 @@ public class MinMaxRange implements Serializable {
 
 	/**
 	 * Constructor creating range with specified value which will be the limit when eithen minimal, or maximal value is unlimited
-	 * @param unlimitedValue special limit when at least one of bounds of this range is unlimited 
+	 * @param unlimitedValue special limit when at least one of bounds of this range is unlimited
 	 */
 	public MinMaxRange(double unlimitedValue) {
 		this.unlimitedValue = unlimitedValue;
@@ -52,8 +52,8 @@ public class MinMaxRange implements Serializable {
 
 	/**
 	 * Constructor creating range with specified value which will be the limit when eithen minimal, or maximal value is unlimited,
-         * and boolean value telling if range is limited from left and right
-         * @param unlimitedValue special limit when at least one of bounds of this range is unlimited
+	 * and boolean value telling if range is limited from left and right
+	 * @param unlimitedValue special limit when at least one of bounds of this range is unlimited
 	 * @param unlimited boolean value which is true when range is unlimited from left and right, false otherwise
 	 */
 	public MinMaxRange(double unlimitedValue, boolean unlimited) {
@@ -77,7 +77,7 @@ public class MinMaxRange implements Serializable {
 	}
 
 	/**
-	 * Returns left bound of the range 
+	 * Returns left bound of the range
 	 * @return minimal value in this range
 	 */
 	public double getMin() {
@@ -113,34 +113,34 @@ public class MinMaxRange implements Serializable {
 		}
 	}
 
-        /**
-         * Returns right bound of the range 
-         * @return maximal value in this range
-         */
+	/**
+	 * Returns right bound of the range
+	 * @return maximal value in this range
+	 */
 	public double getMax() {
 		return max;
 	}
 
-        /**
-         * Returns right bound of the range when range is limited from right, otherwise special unlimited value
-         * @return right limit of the range
-         */
+	/**
+	 * Returns right bound of the range when range is limited from right, otherwise special unlimited value
+	 * @return right limit of the range
+	 */
 	public double getMaxWithUnlimited() {
 		return (maxUnlimited ? unlimitedValue : max);
 	}
 
-        /**
-         * Sets right bound of the range
-         * @param max value to be set as right bound of the range
-         */
+	/**
+	 * Sets right bound of the range
+	 * @param max value to be set as right bound of the range
+	 */
 	public void setMax(double max) {
 		this.max = max;
 	}
 
-        /**
-         * Set specified value as right bound of the range when it is nonnegative, otherwise range is unlimited from right
-         * @param max potential value to be set as right bound of the range
-         */
+	/**
+	 * Set specified value as right bound of the range when it is nonnegative, otherwise range is unlimited from right
+	 * @param max potential value to be set as right bound of the range
+	 */
 	public void setMaxWithUnlimited(double max) {
 		if (max < 0) {
 			maxUnlimited = true;
@@ -165,10 +165,10 @@ public class MinMaxRange implements Serializable {
 		this.minUnlimited = minUnlimited;
 	}
 
-        /**
-         * Test if range is unlimited from right
-         * @return true if range is unlimited from right, otherwise false
-         */
+	/**
+	 * Test if range is unlimited from right
+	 * @return true if range is unlimited from right, otherwise false
+	 */
 	public boolean isMaxUnlimited() {
 		return maxUnlimited;
 	}
