@@ -20,7 +20,7 @@ public abstract class SvarogConstants {
 
 	/**
 	 * Actual version of project
-	 *//
+	 */
 	public static final String VERSION = "0.4.7";
 
 	/**
