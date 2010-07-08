@@ -7,7 +7,7 @@ package org.signalml.domain.montage;
 import org.springframework.validation.Errors;
 
 /** AverageReferenceMontageGenerator
- *
+ * Abstract class representing generator for a average reference montage
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -15,8 +15,15 @@ public abstract class AverageReferenceMontageGenerator implements MontageGenerat
 
 	private static final long serialVersionUID = 1L;
 
+        /**
+         * array with SourceChannel's functions that generator should concern
+         */
 	protected transient Channel[] refChannels;
 
+        /**
+         * Constructor. Creates generator for average reference montage based on array with SourceChannel's functions that generator should concern
+         * @param refChannels
+         */
 	protected AverageReferenceMontageGenerator(Channel[] refChannels) {
 		if (refChannels == null || refChannels.length == 0) {
 			throw new NullPointerException("Channels cannot be null or empty");
@@ -24,6 +31,11 @@ public abstract class AverageReferenceMontageGenerator implements MontageGenerat
 		this.refChannels = refChannels;
 	}
 
+        /**
+         * Creates a average reference montage from given montage.
+         * @param montage montage to be used
+         * @throws MontageException thrown if two channels have the same function or there is no channel with some function
+         */
 	@Override
 	public void createMontage(Montage montage) throws MontageException {
 
@@ -70,6 +82,12 @@ public abstract class AverageReferenceMontageGenerator implements MontageGenerat
 
 	}
 
+        /**
+         * Checks if montage is a valid average reference montage.
+         * @param sourceMontage montage to be checked
+         * @param errors Errors object used to report errors
+         * @return true if montage is a valid average reference montage, false otherwise
+         */
 	@Override
 	public boolean validateSourceMontage(SourceMontage sourceMontage, Errors errors) {
 
@@ -92,7 +110,18 @@ public abstract class AverageReferenceMontageGenerator implements MontageGenerat
 
 	}
 
+        /**
+         * Reports error, that channel (function of a source channel) was not found
+         * @param refChannel channel that was not found
+         * @param errors Errors object used to report errors
+         */
 	protected abstract void onNotFound(Channel refChannel, Errors errors);
+
+        /**
+         * Reports error, that channel (function of a source channel) was not unique
+         * @param refChannel channel that was not found
+         * @param errors Errors object used to report errors
+         */
 	protected abstract void onDuplicate(Channel refChannel, Errors errors);
 
 }

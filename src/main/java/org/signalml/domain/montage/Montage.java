@@ -19,7 +19,7 @@ import org.signalml.util.Util;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /** Montage
- *
+ * Class representing a montage
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -34,29 +34,71 @@ public class Montage extends SourceMontage implements Preset {
 	public static final String MAJOR_CHANGE_PROPERTY = "majorChange";
 	public static final String FILTERING_ENABLED_PROPERTY = "filteringEnabled";
 
+        /**
+         * String representing name of a montage
+         */
 	private String name;
+
+        /**
+         * String containing description of a montage
+         */
 	private String description;
 
+        /**
+         * MontageGenerator for a current object
+         */
 	private MontageGenerator montageGenerator;
+
+        /**
+         * channels of a signal in a montage
+         */
 	private ArrayList<MontageChannel> montageChannels;
 
+        /**
+         * HashMap associating SourceChannel object with list of MontageChannels for which this object is a primaryChannel
+         */
 	private transient HashMap<SourceChannel,LinkedList<MontageChannel>> montageChannelsByPrimary;
+
+        /**
+         * HashMap associating MontageChannels with their labels
+         */
 	private transient HashMap<String,MontageChannel> montageChannelsByLabel;
 
+        /**
+         * List of filters for montage
+         */
 	private ArrayList<MontageSampleFilter> filters = new ArrayList<MontageSampleFilter>();
+
+        /**
+         * Tells whether signal is being filtered
+         */
 	private boolean filteringEnabled = true;
 
+        /**
+         * Tells whether montage is undergoing a major change
+         */
 	private transient boolean majorChange = false;
 
+        /**
+         * Constructor. Creates empty Montage
+         */
 	protected Montage() {
 		super();
 	}
 
+        /**
+         * Copy constructor
+         * @param montage
+         */
 	public Montage(Montage montage) {
 		this();
 		copyFrom(montage);
 	}
 
+        /**
+         * Copy constructor from given SourceMontage (superclass)
+         * @param sourceMontage SourceMontage object to be copied as Montage
+         */
 	public Montage(SourceMontage sourceMontage) {
 		this();
 		super.copyFrom(sourceMontage);
@@ -64,12 +106,20 @@ public class Montage extends SourceMontage implements Preset {
 		montageChannels = new ArrayList<MontageChannel>();
 	}
 
+        /**
+         * Constructor. Creates Montage from document with a signal
+         * @param document document with a signal
+         */
 	public Montage(SignalDocument document) {
 		super(document);
 
 		montageChannels = new ArrayList<MontageChannel>();
 	}
 
+        /**
+         * Creates a copy a current Montage object
+         * @return created object
+         */
 	@Override
 	public Montage clone() {
 		Montage montage = new Montage();
@@ -77,10 +127,13 @@ public class Montage extends SourceMontage implements Preset {
 		return montage;
 	}
 
+        /**
+         * copies given Montage parameters to current object. MontageChannels and filters are also copied.
+         * Listeners are not copied
+         * @param montage Montage which parameters are to be copied to current object
+         */
 	protected void copyFrom(Montage montage) {
 		super.copyFrom(montage);
-
-		// listeners are not copied
 
 		montageChannels = new ArrayList<MontageChannel>(montage.montageChannels.size());
 		HashMap<String, MontageChannel> map = getMontageChannelsByLabel();
@@ -116,6 +169,15 @@ public class Montage extends SourceMontage implements Preset {
 
 	}
 
+        /**
+         * Checks if current object is compatible with object given as parameter.
+         * Object are compatible if:
+         * 1. they are compatible as SourceMontages
+         * 2. have the same number of montage channels
+         * 3. for each source channel montage channels have the same references
+         * @param montage
+         * @return true if montages are compatible, false otherwise
+         */
 	public boolean isCompatible(Montage montage) {
 
 		boolean sourceCompatible = super.isCompatible(montage);
@@ -182,6 +244,9 @@ public class Montage extends SourceMontage implements Preset {
 
 	}
 
+        /**
+         * Resets parameter of current object
+         */
 	public void reset() {
 
 		getMontageChannelsByLabel().clear();
@@ -202,10 +267,18 @@ public class Montage extends SourceMontage implements Preset {
 
 	}
 
+        /**
+         *
+         * @return name of a montage
+         */
 	public String getName() {
 		return name;
 	}
 
+        /**
+         * Sets a name of a montage
+         * @param name String with a name to be set
+         */
 	public void setName(String name) {
 		if (!Util.equalsWithNulls(this.name, name)) {
 			String oldName = this.name;
@@ -215,10 +288,18 @@ public class Montage extends SourceMontage implements Preset {
 		}
 	}
 
+        /**
+         *
+         * @return description of a montage
+         */
 	public String getDescription() {
 		return description;
 	}
 
+        /**
+         * Sets a description of a montage
+         * @param description String with a description to be set
+         */
 	public void setDescription(String description) {
 		if (!Util.equalsWithNulls(this.description, description)) {
 			String oldDescription = this.description;
@@ -228,10 +309,18 @@ public class Montage extends SourceMontage implements Preset {
 		}
 	}
 
+        /**
+         * 
+         * @return MontageGenerator for a current object
+         */
 	public MontageGenerator getMontageGenerator() {
 		return montageGenerator;
 	}
 
+        /**
+         * Sets a new montageGenerator for a current object
+         * @param montageGenerator MontageGenerator to be set
+         */
 	public void setMontageGenerator(MontageGenerator montageGenerator) {
 		if (!Util.equalsWithNulls(this.montageGenerator, montageGenerator)) {
 			MontageGenerator oldGenerator = this.montageGenerator;
@@ -241,10 +330,18 @@ public class Montage extends SourceMontage implements Preset {
 		}
 	}
 
+        /**
+         * Returns whether there was a major change of current object
+         * @return true if there was, false otherwise
+         */
 	public boolean isMajorChange() {
 		return majorChange;
 	}
 
+        /**
+         * Sets majorChange property to a given value
+         * @param majorChange value to be set
+         */
 	public void setMajorChange(boolean majorChange) {
 		if (this.majorChange != majorChange) {
 			this.majorChange = majorChange;
@@ -259,10 +356,18 @@ public class Montage extends SourceMontage implements Preset {
 	}
 
 
+        /**
+         * Tells whether signal is being filtered
+         * @return true if signal is being filtered, false otherwise
+         */
 	public boolean isFilteringEnabled() {
 		return filteringEnabled;
 	}
 
+        /**
+         * Sets filteringEnabled property to a given value
+         * @param filteringEnabled value to be set
+         */
 	public void setFilteringEnabled(boolean filteringEnabled) {
 		if (this.filteringEnabled != filteringEnabled) {
 			this.filteringEnabled = filteringEnabled;
@@ -270,11 +375,20 @@ public class Montage extends SourceMontage implements Preset {
 		}
 	}
 
+        /**
+         *
+         * @return String with a name of a current object
+         */
 	@Override
 	public String toString() {
 		return name;
 	}
 
+
+        /**
+         *
+         * @return HashMap associating SourceChannel object with list of MontageChannels for which this object is a primaryChannel
+         */
 	protected HashMap<SourceChannel, LinkedList<MontageChannel>> getMontageChannelsByPrimary() {
 		if (montageChannelsByPrimary == null) {
 			montageChannelsByPrimary = new HashMap<SourceChannel, LinkedList<MontageChannel>>();
@@ -282,7 +396,12 @@ public class Montage extends SourceMontage implements Preset {
 		return montageChannelsByPrimary;
 	}
 
-	protected LinkedList<MontageChannel> getMontageChannelsByPrimaryList(SourceChannel channel) {
+        /**
+         * Returns the list of MontageChannels for which given SourceChannel is a primary channel
+         * @param channel SourceChannel object for which list is returned
+         * @return list of MontageChannels for which given SourceChannel is a primary channel
+         */
+        protected LinkedList<MontageChannel> getMontageChannelsByPrimaryList(SourceChannel channel) {
 		HashMap<SourceChannel, LinkedList<MontageChannel>> map = getMontageChannelsByPrimary();
 		LinkedList<MontageChannel> list = map.get(channel);
 		if (list == null) {
@@ -297,6 +416,10 @@ public class Montage extends SourceMontage implements Preset {
 		return list;
 	}
 
+        /**
+         *
+         * @return HashMap associating MontageChannels with their labels
+         */
 	protected HashMap<String,MontageChannel> getMontageChannelsByLabel() {
 		if (montageChannelsByLabel == null) {
 			montageChannelsByLabel = new HashMap<String, MontageChannel>();
@@ -307,22 +430,48 @@ public class Montage extends SourceMontage implements Preset {
 		return montageChannelsByLabel;
 	}
 
+        /**
+         * Finds a MontageChannel with a given label
+         * @param label String with label to be found
+         * @return found MontageChannel object
+         */
 	protected MontageChannel getMontageChannelByLabel(String label) {
 		return getMontageChannelsByLabel().get(label);
 	}
 
+        /**
+         *
+         * @return number of MontageChannels in Montage
+         */
 	public int getMontageChannelCount() {
 		return montageChannels.size();
 	}
 
+        /**
+         * returns number of primary channel for selected MontageChannel
+         * @param index index of MontageChannel
+         * @return found number of primary channel
+         */
 	public int getMontagePrimaryChannelAt(int index) {
 		return montageChannels.get(index).getPrimaryChannel().getChannel();
 	}
 
+        /**
+         * Returns a label of MontageChannel at a given index
+         * @param index index of MontageChannel
+         * @return label of MontageChannel
+         */
 	public String getMontageChannelLabelAt(int index) {
 		return montageChannels.get(index).getLabel();
 	}
 
+        /**
+         * Sets a new label for a MontageChannel at a given index
+         * @param index index of MontageChannel
+         * @param label new label to be set
+         * @return old label
+         * @throws MontageException thrown if label empty, with illegal characters or not unique
+         */
 	public String setMontageChannelLabelAt(int index, String label) throws MontageException {
 
 		if (label == null || label.isEmpty()) {
@@ -354,6 +503,12 @@ public class Montage extends SourceMontage implements Preset {
 
 	}
 
+        /**
+         * Checks whether SourceChannel of given index is in use, i.e.
+         * either is a primaryChannel for some MontageChannel, or there is a reference to it in MontageChannel
+         * @param index index of SourceChannel
+         * @return true if SourceChannel is in use, false otherwise
+         */
 	public boolean isSourceChannelInUse(int index) {
 
 		SourceChannel channel = sourceChannels.get(index);
@@ -372,14 +527,30 @@ public class Montage extends SourceMontage implements Preset {
 
 	}
 
+        /**
+         * Checks if given MontageChannel has a reference to a given SourceChannel
+         * @param montageIndex index of MontageChannel
+         * @param sourceIndex index of SourceChannel
+         * @return true if there is a reference, false otherwise
+         */
 	public boolean hasReference(int montageIndex, int sourceIndex) {
 		return montageChannels.get(montageIndex).hasReference(sourceChannels.get(sourceIndex));
 	}
 
+        /**
+         * Checks if given MontageChannel has a reference to any SourceChannel
+         * @param montageIndex index of MontageChannel
+         * @return true if there is a reference, false otherwise
+         */
 	public boolean hasReference(int montageIndex) {
 		return montageChannels.get(montageIndex).hasReference();
 	}
 
+        /**
+         * Returns list of MontageChannels for which SourceChannel of a given index is a primary channel
+         * @param index index of SourceChannel object
+         * @return list of MontageChannels for which SourceChannel of a given index is a primary channel
+         */
 	public int[] getMontageChannelsForSourceChannel(int index) {
 
 		SourceChannel channel = sourceChannels.get(index);
@@ -397,6 +568,11 @@ public class Montage extends SourceMontage implements Preset {
 
 	}
 
+        /**
+         * Creates unique label for a MontageChannel based on a given Sting
+         * @param stem String object on which new label will be based
+         * @return created unique label
+         */
 	public String getNewMontageChannelLabel(String stem) {
 
 		int cnt = 2;
@@ -412,18 +588,34 @@ public class Montage extends SourceMontage implements Preset {
 
 	}
 
+        /**
+         * For a MontageChannel of a given index, returns array of references in form of Strings
+         * @param index index of MontageChannel object
+         * @return array of references for a MontageChannel of a given index
+         */
 	public String[] getReference(int index) {
 		String[] references = new String[sourceChannels.size()];
 		montageChannels.get(index).getReferences(references);
 		return references;
 	}
 
+        /**
+         * For a MontageChannel of a given index, returns array of references in form of floats (converted from Strings)
+         * @param index of MontageChannel object
+         * @return array of references for a MontageChannel of a given index
+         */
 	public float[] getReferenceAsFloat(int index) {
 		float[] references = new float[sourceChannels.size()];
 		montageChannels.get(index).getReferencesAsFloat(references);
 		return references;
 	}
 
+        /**
+         * Sets a new array of references for a MontageChannel of a given index
+         * @param index index of MontageChannel object
+         * @param references list of references in form of String
+         * @throws NumberFormatException thrown when references array is to long (larger then number of sourceChannels)
+         */
 	public void setReference(int index, String[] references) throws NumberFormatException {
 		if (references.length > sourceChannels.size()) {
 			throw new IndexOutOfBoundsException("References too long [" + references.length + "]");
@@ -437,14 +629,33 @@ public class Montage extends SourceMontage implements Preset {
 		setMontageGenerator(null);
 	}
 
+        /**
+         * Returns the reference between a given MontageChannel and a given SourceChannel
+         * @param montageIndex index of MontageChannel
+         * @param sourceIndex index of SourceChannel
+         * @return reference between a given MontageChannel and a given SourceChannel
+         */
 	public String getReference(int montageIndex, int sourceIndex) {
 		return montageChannels.get(montageIndex).getReference(sourceChannels.get(sourceIndex));
 	}
 
+        /**
+         * Checks if the reference between a given MontageChannel and a given SourceChannel is symmetric
+         * @param montageIndex index of MontageChannel
+         * @param sourceIndex index of SourceChannel
+         * @return true if reference is symmetric, false otherwise
+         */
 	public boolean isReferenceSymmetric(int montageIndex, int sourceIndex) {
 		return montageChannels.get(montageIndex).isSymmetricWeight(sourceChannels.get(sourceIndex));
 	}
 
+        /**
+         * Sets the reference between a given MontageChannel and a given SourceChannel to a given value
+         * @param montageIndex index of MontageChannel
+         * @param sourceIndex index of SourceChannel
+         * @param value value of reference to be set
+         * @throws NumberFormatException thrown when references array is to long (larger then number of sourceChannels)
+         */
 	public void setReference(int montageIndex, int sourceIndex, String value) throws NumberFormatException {
 		MontageChannel channel = montageChannels.get(montageIndex);
 		channel.setReference(sourceChannels.get(sourceIndex), value);
@@ -455,6 +666,11 @@ public class Montage extends SourceMontage implements Preset {
 		setMontageGenerator(null);
 	}
 
+        /**
+         * Removes the reference between a given MontageChannel and a given SourceChannel
+         * @param montageIndex index of MontageChannel
+         * @param sourceIndex index of SourceChannel
+         */
 	public void removeReference(int montageIndex, int sourceIndex) {
 		MontageChannel channel = montageChannels.get(montageIndex);
 		channel.removeReference(sourceChannels.get(sourceIndex));
@@ -465,12 +681,22 @@ public class Montage extends SourceMontage implements Preset {
 		setMontageGenerator(null);
 	}
 
+        /**
+         * Adds new SourceChannel with a given label and function to sourceChannels list
+         * @param label unique label for new SourceChannel
+         * @param function unique function for new SourceChannel
+         * @throws MontageException thrown when label or function not unique
+         */
 	@Override
 	public void addSourceChannel(String label, Channel function) throws MontageException {
 		super.addSourceChannel(label, function);
 		setMontageGenerator(null);
 	}
 
+        /**
+         * Removes last SourceChannel on the sourceChannels list, montage channels with it as a primary and all references to it
+         * @return removed SourceChannel
+         */
 	@Override
 	public SourceChannel removeSourceChannel() {
 
@@ -548,6 +774,13 @@ public class Montage extends SourceMontage implements Preset {
 
 	}
 
+        /**
+         * Adds given MontageChannel to necessary collections (montageChannels, montageChannelsByLabel, montageChannelsByPrimary).
+         * To montageChannels is added at given index.
+         * @param channel MontageChannel to be added
+         * @param atIndex index at which channel will be added to montageChannels list. If atIndex<0 then will be added at the end of a list
+         * @return index at which channel was added to montageChannels list.
+         */
 	protected int addMontageChannelInternal(MontageChannel channel, int atIndex) {
 		getMontageChannelsByLabel().put(channel.getLabel(), channel);
 		getMontageChannelsByPrimaryList(channel.getPrimaryChannel()).add(channel);
@@ -560,20 +793,45 @@ public class Montage extends SourceMontage implements Preset {
 		}
 	}
 
+        /**
+         * Creates montage channel using SourceChannel of given index as primaryChannel and puts it at selected index on montageChannels list
+         * @param sourceIndex index of a SourceChannel
+         * @param atIndex index at which channel will be added to montageChannels list. If atIndex<0 then will be added at the end of a list
+         * @return index at which channel was added to montageChannels list.
+         */
 	public int addMontageChannel(int sourceIndex, int atIndex) {
 		int[] sourceIndices = new int[] { sourceIndex };
 		int[] indices = addMontageChannels(sourceIndices, atIndex);
 		return indices[0];
 	}
 
+        /**
+         * Creates montage channel using SourceChannel of given index as primaryChannel and puts it at the end montageChannels list
+         * @param sourceIndex index of a SourceChannel
+         * @return index at which channel was added to montageChannels list.
+         */
 	public int addMontageChannel(int sourceIndex) {
 		return addMontageChannel(sourceIndex, -1);
 	}
 
+        /**
+         * For each index on a sourceIndices list creates a MontageChannel with SourceChannel of this index as primaryChannel.
+         * Puts created MontageChannel at the end montageChannels list
+         * @param sourceIndices list of indexes of SourceChannels
+         * @return list of indexes of created MontageChannels on montageChannels list
+         */
 	public int[] addMontageChannels(int[] sourceIndices) {
 		return addMontageChannels(sourceIndices, -1);
 	}
 
+        /**
+         * Creates a MontageChannel from SourceChannels of <i>count</i> consecutive indexes starting from <i>fromSourceIndex</i>
+         * and puts them on <i>montageChannels</i> list starting from <i>atIndex</i>
+         * @param fromSourceIndex index of a SourceChannel from which adding new MontageChannels will be started
+         * @param count number of MontageChannels to be added
+         * @param atIndex atIndex index starting from which created MontageChannels are to be put. If atIndex<0 then will be added at the end of a list
+         * @return list of indexes of created MontageChannels on montageChannels list
+         */
 	public int[] addMontageChannels(int fromSourceIndex, int count, int atIndex) {
 		int[] sourceIndices = new int[count];
 		for (int i=0; i<count; i++) {
@@ -582,11 +840,26 @@ public class Montage extends SourceMontage implements Preset {
 		return addMontageChannels(sourceIndices, atIndex);
 	}
 
+        /**
+         * Creates a MontageChannel from SourceChannels of <i>count</i> consecutive indexes starting from <i>fromSourceIndex</i>
+         * and puts them at the end of <i>montageChannels</i> list
+         * @param fromSourceIndex index of a SourceChannel from which adding new MontageChannels will be started
+         * @param count number of MontageChannels to be added
+         * @return list of indexes of created MontageChannels on montageChannels list
+         */
 	public int[] addMontageChannels(int fromSourceIndex, int count) {
 		return addMontageChannels(fromSourceIndex, count, -1);
 	}
 
-	public int[] addMontageChannels(int[] sourceIndices, int atIndex) {
+
+        /**
+         * For each index on a sourceIndices list creates a MontageChannel with SourceChannel of this index as primaryChannel.
+         * Puts created MontageChannel on a montageChannels list starting from given index
+         * @param sourceIndices list of indexes of SourceChannels
+         * @param atIndex index starting from which created MontageChannels are to be put. If atIndex<0 then will be added at the end of a list
+         * @return list of indexes of created MontageChannels on montageChannels list
+         */
+        public int[] addMontageChannels(int[] sourceIndices, int atIndex) {
 		int[] indices = new int[sourceIndices.length];
 		if (sourceIndices.length == 0) {
 			return indices;
@@ -607,6 +880,14 @@ public class Montage extends SourceMontage implements Preset {
 		return indices;
 	}
 
+        /**
+         * Adds MontageChanel to a bipolar montage with a reference
+         * @param sourceIndex index of a SourceChannel
+         * @param atIndex atIndex index at which channel will be added to montageChannels list. If atIndex<0 then will be added at the end of a list
+         * @param label label of a new MontageChanel
+         * @param referenceChannel index of SourceChannel to which montageChannel should have a reference
+         * @return index at which channel was added to montageChannels list.
+         */
 	public int addBipolarMontageChannel(int sourceIndex, int atIndex, String label, int referenceChannel) {
 
 		SourceChannel channel = sourceChannels.get(sourceIndex);
@@ -626,16 +907,34 @@ public class Montage extends SourceMontage implements Preset {
 
 	}
 
+        /**
+         * Adds MontageChanel to a bipolar montage with a reference. Puts it at the end of montageChannels list
+         * @param sourceIndex index of a SourceChannel
+         * @param label label of a new MontageChanel
+         * @param referenceChannel index of SourceChannel to which montageChannel should have a reference
+         * @return index at which channel was added to montageChannels list.
+         */
 	public int addBipolarMontageChannel(int sourceIndex, String label, int referenceChannel) {
 		return addBipolarMontageChannel(sourceIndex, -1, label, referenceChannel);
 	}
 
+        /**
+         * Removes montage channel of specified index
+         * @param index index of channel to be removed
+         * @return removed MontageChannel object
+         */
 	public MontageChannel removeMontageChannel(int index) {
 		int[] indices = new int[] { index };
 		MontageChannel[] channels = removeMontageChannels(indices);
 		return channels[0];
 	}
 
+        /**
+         * Removes consecutive montage channels starting from given index
+         * @param fromIndex index to start from
+         * @param count number of channels to be removed
+         * @return array of removed MontageChannle objects
+         */
 	public MontageChannel[] removeMontageChannels(int fromIndex, int count) {
 		int[] indices = new int[count];
 		for (int i=0; i<count; i++) {
@@ -644,7 +943,12 @@ public class Montage extends SourceMontage implements Preset {
 		return removeMontageChannels(indices);
 	}
 
-	public MontageChannel[] removeMontageChannels(int[] indices) {
+	/**
+         * Removes montage channels of specified indexes
+         * @param indices list of indexes of channels to be removed
+         * @return array of removed MontageChannle objects
+         */
+        public MontageChannel[] removeMontageChannels(int[] indices) {
 
 		MontageChannel[] channels = new MontageChannel[indices.length];
 		if (indices.length == 0) {
@@ -694,6 +998,13 @@ public class Montage extends SourceMontage implements Preset {
 
 	}
 
+        /**
+         * Moves count consecutive montage channels on montageChannels list starting from given index
+         * @param fromIndex index from which selecting montage channels to be moved starts
+         * @param count number of consecutive MontageChannels to be moved
+         * @param delta number of positions MontageChannels are to be moved. If &gt 0 channels are moved forward, if &lt 0 are moved backward
+         * @return number of positions MontageChannels were moved
+         */
 	public int moveMontageChannelRange(int fromIndex, int count, int delta) {
 
 		if (delta == 0 || count == 0) {
@@ -764,6 +1075,10 @@ public class Montage extends SourceMontage implements Preset {
 
 	}
 
+        /**
+         * Returns if montage is bipolar (has only bipolar references)
+         * @return true if montage is bipolar, false otherwise
+         */
 	public boolean isBipolar() {
 		for (MontageChannel channel : montageChannels) {
 			if (!channel.isBipolarReference()) {
@@ -773,6 +1088,10 @@ public class Montage extends SourceMontage implements Preset {
 		return true;
 	}
 
+        /**
+         * Returns whether montage is filtered
+         * @return true if montage is filtered, false otherwise
+         */
 	public boolean isFiltered() {
 		if (!filteringEnabled) {
 			return false;
@@ -783,10 +1102,20 @@ public class Montage extends SourceMontage implements Preset {
 		return true;
 	}
 
+        /**
+         * Checks whether given montage channel is excluded from all filters
+         * @param channel number of montage channel to be checked
+         * @return true if montage channel is excluded from all filters, false otherwise
+         */
 	public boolean isExcludeAllFilters(int channel) {
 		return montageChannels.get(channel).isExcludeAllFilters();
 	}
 
+        /**
+         * Sets if given montage channel should exclude all filters
+         * @param channel number of montage channel for which new value is to be set
+         * @param exclude true if all channels should be excluded, false otherwise
+         */
 	public void setExcludeAllFilters(int channel, boolean exclude) {
 		MontageChannel montageChannel = montageChannels.get(channel);
 		boolean oldValue = montageChannel.isExcludeAllFilters();
@@ -799,14 +1128,28 @@ public class Montage extends SourceMontage implements Preset {
 		}
 	}
 
+        /**
+         *
+         * @return number of filters for a montage
+         */
 	public int getSampleFilterCount() {
 		return filters.size();
 	}
 
+        /**
+         * Returns definition of a filter of a given index
+         * @param index index of a filter
+         * @return definition of a filter
+         */
 	public SampleFilterDefinition getSampleFilterAt(int index) {
 		return filters.get(index).getDefinition();
 	}
 
+        /**
+         * Adds a new filter to a montage
+         * @param definition definition of a filter to be added
+         * @return index of added filter
+         */
 	public int addSampleFilter(SampleFilterDefinition definition) {
 
 		MontageSampleFilter filter = new MontageSampleFilter(definition);
@@ -822,6 +1165,11 @@ public class Montage extends SourceMontage implements Preset {
 
 	}
 
+        /**
+         * Changes the definition of a given filter
+         * @param index index of a filter
+         * @param definition new definition to be set
+         */
 	public void updateSampleFilter(int index, SampleFilterDefinition definition) {
 
 		MontageSampleFilter montageSampleFilter = filters.get(index);
@@ -834,6 +1182,11 @@ public class Montage extends SourceMontage implements Preset {
 
 	}
 
+        /**
+         * Removes filter from montage
+         * @param index index of filter to be removed
+         * @return definition of removed filter
+         */
 	public SampleFilterDefinition removeSampleFilter(int index) {
 
 		MontageSampleFilter removed = filters.remove(index);
@@ -850,6 +1203,9 @@ public class Montage extends SourceMontage implements Preset {
 
 	}
 
+        /**
+         * Removes all filters from a montage
+         */
 	public void clearFilters() {
 
 		filters.clear();
@@ -861,6 +1217,13 @@ public class Montage extends SourceMontage implements Preset {
 
 	}
 
+        /**
+         * Checks if given channel is excluded from a given filter.
+         * If filter is not enabled it is excluded for all channels.
+         * @param filterIndex index of a filter
+         * @param channelIndex index of a channel
+         * @return true if channel is excluded from a filter, false otherwise
+         */
 	public boolean isFilteringExcluded(int filterIndex, int channelIndex) {
 		if (isExcludeAllFilters(channelIndex)) {
 			return true;
@@ -873,6 +1236,13 @@ public class Montage extends SourceMontage implements Preset {
 		return false;
 	}
 
+        /**
+         * Creates an array of exclusions for a given filter.
+         * On position <i>i<\i> is an information if channel <i>i<\i> is excluded from given filter.
+         * If filter is not enabled it is excluded for all channels.
+         * @param filterIndex index of a filter
+         * @return created array
+         */
 	public boolean[] getFilteringExclusionArray(int filterIndex) {
 		MontageSampleFilter filter = filters.get(filterIndex);
 		if (!filter.isEnabled()) {
@@ -887,10 +1257,20 @@ public class Montage extends SourceMontage implements Preset {
 		return exclusionArray;
 	}
 
+        /**
+         * Checks if filter is enabled (option to exclude all channels checked)
+         * @param filterIndex index of a filter
+         * @return true if filter is enabled, false otherwise
+         */
 	public boolean isFilterEnabled(int filterIndex) {
 		return filters.get(filterIndex).isEnabled();
 	}
 
+        /**
+         * Sets if filter should be enabled (option to exclude all channels checked)
+         * @param filterIndex index of a filter
+         * @param enabled value to be set
+         */
 	public void setFilterEnabled(int filterIndex, boolean enabled) {
 		MontageSampleFilter filter = filters.get(filterIndex);
 		boolean oldEnabled = filter.isEnabled();
@@ -905,14 +1285,34 @@ public class Montage extends SourceMontage implements Preset {
 		}
 	}
 
+        /**
+         * Checks if channel is excluded from a filter.
+         * DOESN'T include a situation when filter is not enabled or channel is excluded from all filters.
+         * @param filterIndex index of a filter
+         * @param channelIndex index of a channel
+         * @return true if filter is excluded, false otherwise
+         */
 	public boolean isFilterChannelExcluded(int filterIndex, int channelIndex) {
 		return filters.get(filterIndex).isChannelExcluded(montageChannels.get(channelIndex));
 	}
 
+        /**
+         * Creates an array of exclusions for a given filter.
+         * On position <i>i<\i> is an information if channel <i>i<\i> is excluded from given filter.
+         * DOESN'T include a situation when filter is not enabled or channel is excluded from all filters.
+         * @param filterIndex index of a filter
+         * @return created array
+         */
 	public boolean[] getFilterExclusionArray(int filterIndex) {
 		return filters.get(filterIndex).getExclusionArray(montageChannels);
 	}
 
+        /**
+         * Sets if given channel should be excluded from a given filter.
+         * @param filterIndex index of a filter
+         * @param channelIndex index of a channel
+         * @param excluded value to be set (true if should be excluded, false otherwise)
+         */
 	public void setFilterChannelExcluded(int filterIndex, int channelIndex, boolean excluded) {
 
 		boolean done;
@@ -931,6 +1331,11 @@ public class Montage extends SourceMontage implements Preset {
 
 	}
 
+        /**
+         * Clears exclusions for a given filter.
+         * DOESN'T include a situation when filter is not enabled or channel is excluded from all filters.
+         * @param filterIndex
+         */
 	public void clearFilterExclusion(int filterIndex) {
 		boolean done = filters.get(filterIndex).clearExclusion();
 		if (done) {
@@ -941,22 +1346,42 @@ public class Montage extends SourceMontage implements Preset {
 		}
 	}
 
+        /**
+         * Adds a MontageListener to a montage
+         * @param l MontageListener to be added
+         */
 	public void addMontageListener(MontageListener l) {
 		listenerList.add(MontageListener.class, l);
 	}
 
+        /**
+         * Removes a MontageListener from a montage
+         * @param l MontageListener to be removed
+         */
 	public void removeMontageListener(MontageListener l) {
 		listenerList.remove(MontageListener.class, l);
 	}
 
+        /**
+         * Adds a MontageSampleFilterListener to a montage
+         * @param l MontageSampleFilterListener to be added
+         */
 	public void addMontageSampleFilterListener(MontageSampleFilterListener l) {
 		listenerList.add(MontageSampleFilterListener.class, l);
 	}
 
+        /**
+         * Removes a MontageSampleFilterListener from a montage
+         * @param l MontageSampleFilterListener to be removed
+         */
 	public void removeMontageSampleFilterListener(MontageSampleFilterListener l) {
 		listenerList.remove(MontageSampleFilterListener.class, l);
 	}
 
+        /**
+         * Fires all MontageListeners that montage structure has changed
+         * @param source montage that has changed
+         */
 	protected void fireMontageStructureChanged(Object source) {
 		Object[] listeners = listenerList.getListenerList();
 		MontageEvent e = null;
@@ -970,6 +1395,12 @@ public class Montage extends SourceMontage implements Preset {
 		}
 	}
 
+        /**
+         * Fires all MontageListeners that channels has been added
+         * @param source montage that has changed
+         * @param channels array with indexes of added channels
+         * @param primaryChannels array with indexes of SourceChannels that were added
+         */
 	protected void fireMontageChannelsAdded(Object source, int[] channels, int[] primaryChannels) {
 		Object[] listeners = listenerList.getListenerList();
 		MontageEvent e = null;
@@ -983,6 +1414,12 @@ public class Montage extends SourceMontage implements Preset {
 		}
 	}
 
+         /**
+         * Fires all MontageListeners that channels has been removed
+         * @param source montage that has changed
+         * @param channels array with indexes of removed channels
+         * @param primaryChannels array with indexes of SourceChannels that were removed
+         */
 	protected void fireMontageChannelsRemoved(Object source, int[] channels, int[] primaryChannels) {
 		Object[] listeners = listenerList.getListenerList();
 		MontageEvent e = null;
@@ -996,6 +1433,11 @@ public class Montage extends SourceMontage implements Preset {
 		}
 	}
 
+        /**
+         * Creates an array of int from LinkedList of Integers
+         * @param list LinkedList of Integers
+         * @return created array
+         */
 	private int[] toArray(LinkedList<Integer> list) {
 		int i = 0;
 		int[] indices = new int[list.size()];
@@ -1007,10 +1449,22 @@ public class Montage extends SourceMontage implements Preset {
 		return indices;
 	}
 
+        /**
+         * Fires all MontageListeners that channels has been changed
+         * @param source montage that has changed
+         * @param indexList list with indexes of changed channels
+         * @param primaryIndexList list with indexes of SourceChannels that were changed
+         */
 	protected void fireMontageChannelsChanged(Object source, LinkedList<Integer> indexList, LinkedList<Integer> primaryIndexList) {
 		fireMontageChannelsChanged(source, toArray(indexList), toArray(primaryIndexList));
 	}
 
+        /**
+         * Fires all MontageListeners that channels has been changed
+         * @param source montage that has changed
+         * @param channels array with indexes of changed channels
+         * @param primaryChannels array with indexes of SourceChannels that were changed
+         */
 	protected void fireMontageChannelsChanged(Object source, int[] channels, int[] primaryChannels) {
 		Object[] listeners = listenerList.getListenerList();
 		MontageEvent e = null;
@@ -1024,10 +1478,22 @@ public class Montage extends SourceMontage implements Preset {
 		}
 	}
 
+        /**
+         * Fires all MontageListeners that reference between pairs montage channel - source channel has been changed
+         * @param source montage that has changed
+         * @param indexList list with indexes of channels with reference changed
+         * @param primaryIndexList list with indexes of SourceChannels to which references changed
+         */
 	protected void fireMontageReferenceChanged(Object source, LinkedList<Integer> indexList, LinkedList<Integer> primaryIndexList) {
 		fireMontageReferenceChanged(source, toArray(indexList), toArray(primaryIndexList));
 	}
 
+        /**
+         * Fires all MontageListeners that reference between pairs montage channel - source channel has been changed
+         * @param source montage that has changed
+         * @param channels array with indexes of channels with reference changed
+         * @param primaryChannels array with indexes of SourceChannels to which references changed
+         */
 	protected void fireMontageReferenceChanged(Object source, int[] channels, int[] primaryChannels) {
 		Object[] listeners = listenerList.getListenerList();
 		MontageEvent e = null;
@@ -1041,6 +1507,11 @@ public class Montage extends SourceMontage implements Preset {
 		}
 	}
 
+        /**
+         * Fires all MontageListeners that SampleFilters were added
+         * @param source montage that has changed
+         * @param indices array of indexes of added filters
+         */
 	protected void fireMontageSampleFilterAdded(Object source, int[] indices) {
 		Object[] listeners = listenerList.getListenerList();
 		MontageSampleFilterEvent e = null;
@@ -1054,6 +1525,11 @@ public class Montage extends SourceMontage implements Preset {
 		}
 	}
 
+        /**
+         * Fires all MontageListeners that SampleFilters were changed
+         * @param source montage that has changed
+         * @param indices array of indexes of changed filters
+         */
 	protected void fireMontageSampleFilterChanged(Object source, int[] indices) {
 		Object[] listeners = listenerList.getListenerList();
 		MontageSampleFilterEvent e = null;
@@ -1067,6 +1543,11 @@ public class Montage extends SourceMontage implements Preset {
 		}
 	}
 
+        /**
+         * Fires all MontageListeners that SampleFilters were removed
+         * @param source montage that has changed
+         * @param indices array of indexes of removed filters
+         */
 	protected void fireMontageSampleFilterRemoved(Object source, int[] indices) {
 		Object[] listeners = listenerList.getListenerList();
 		MontageSampleFilterEvent e = null;
@@ -1080,10 +1561,20 @@ public class Montage extends SourceMontage implements Preset {
 		}
 	}
 
+        /**
+         * Fires all MontageListeners that exclusions for SampleFilters were changed
+         * @param source montage that has changed
+         * @param indexList list of indexes of filters for which exclusions has changed
+         */
 	protected void fireMontageSampleFilterExclusionChanged(Object source, LinkedList<Integer> indexList) {
 		fireMontageSampleFilterExclusionChanged(source, toArray(indexList));
 	}
 
+        /**
+         * Fires all MontageListeners that exclusions for SampleFilters were changed
+         * @param source montage that has changed
+         * @param indices array of indexes of filters for which exclusions has changed
+         */
 	protected void fireMontageSampleFilterExclusionChanged(Object source, int[] indices) {
 		Object[] listeners = listenerList.getListenerList();
 		MontageSampleFilterEvent e = null;
@@ -1097,6 +1588,10 @@ public class Montage extends SourceMontage implements Preset {
 		}
 	}
 
+        /**
+         * Fires all MontageListeners that all SampleFilters were changed
+         * @param source montage that has changed
+         */
 	protected void fireMontageSampleFiltersChanged(Object source) {
 		Object[] listeners = listenerList.getListenerList();
 		MontageSampleFilterEvent e = null;
