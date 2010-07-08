@@ -42,12 +42,25 @@ public class TaskEvent extends EventObject {
 	private int[] tickerLimits;
 	private int[] tickers;
 
+	/**
+	 * Creates new Event with specified Task source, type and status of Event.
+	 * @param source Task which caused this Event
+	 * @param type type of Event
+	 * @param status status of Event
+	 */
 	public TaskEvent(Object source, TaskEventType type, TaskStatus status) {
 		super(source);
 		this.type = type;
 		this.status = status;
 	}
 
+        /**
+         * Creates new Event with specified Task source, type and  status of Event and result of Task.
+         * @param source Task which caused this Event
+         * @param type type of Event
+         * @param status status of Event
+	 * @param result result of Task
+         */
 	public TaskEvent(Object source, TaskEventType type, TaskStatus status, TaskResult result) {
 		super(source);
 		this.type = type;
@@ -55,6 +68,13 @@ public class TaskEvent extends EventObject {
 		this.result = result;
 	}
 
+        /**
+         * Creates new Event with specified Task source, type and status of Event and spacial message.
+         * @param source Task which caused this Event
+         * @param type type of Event
+         * @param status status of Event
+	 * @param message message
+         */
 	public TaskEvent(Object source, TaskEventType type, TaskStatus status, MessageSourceResolvable message) {
 		super(source);
 		this.type = type;
@@ -62,6 +82,15 @@ public class TaskEvent extends EventObject {
 		this.message = message;
 	}
 
+        /**
+         * Creates new Event with specified Task source, type and status of Event and spacial message.
+	 * It also sets tickers and limit of tickers of source task.
+         * @param source Task which caused this Event
+         * @param type type of Event
+         * @param status status of Event
+         * @param tickerLimits limits of tickers of Task which caused this Event
+	 * @param tickers tickers of Task which caused this Event
+         */
 	public TaskEvent(Object source, TaskEventType type, TaskStatus status, int[] tickerLimits, int[] tickers) {
 		super(source);
 		this.type = type;
@@ -70,30 +99,68 @@ public class TaskEvent extends EventObject {
 		this.tickers = tickers;
 	}
 
+	/**
+	 * Returns Task which caused this Event.
+	 * @return Task which cause this Event
+	 */
 	public Task getTask() {
 		return (Task) source;
 	}
 
+	/**
+	 * Returns type of this Event.
+	 * @return type of this Event
+	 */
 	public TaskEventType getType() {
 		return type;
 	}
 
+	/**
+	 * Returns status of Task which caused this Event.
+	 * @return status of Task which caused this Event
+	 */
 	public TaskStatus getStatus() {
 		return status;
 	}
 
+	/**
+	 * Returns result of Task which caused this Event.
+	 * @return result of Task which caused this Event
+	 */
 	public TaskResult getResult() {
 		return result;
 	}
 
+        /**
+         * Retrieves the last message set by the computation code with the {@link #setMessage(MessageSourceResolvable)}
+         * method. Initially the Task has no message and null is returned.
+         *
+         * @return the message or null if no message has been posted
+         */
 	public MessageSourceResolvable getMessage() {
 		return message;
 	}
 
+        /**
+         *  Returns the limits (maximum values) for the tickers associated with this task. For methods which
+         *  aren't trackable an empty array should be returned. For trackable methods the length of the array
+         *  should correspond to what is returned by {@link TrackableMethod#getTickerCount()} for the executed
+         *  method.
+         *
+         * @return the ticker limits
+         */
 	public int[] getTickerLimits() {
 		return tickerLimits;
 	}
 
+        /**
+         *  Returns the current values for the tickers associated with this task. For methods which
+         *  aren't trackable an empty array should be returned. For trackable methods the length of the array
+         *  should correspond to what is returned by {@link TrackableMethod#getTickerCount()} for the executed
+         *  method.
+         *
+         * @return the ticker values
+         */
 	public int[] getTickers() {
 		return tickers;
 	}

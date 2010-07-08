@@ -14,6 +14,12 @@ import java.util.Comparator;
  */
 public class AggregateTaskProgressComparator implements Comparator<AggregateTaskProgressInfo> {
 
+        /**
+         * Compares two instances of classAggregateTaskProgressInfo according to their overall progress.
+         * @param o1 first AggregateTaskProgressInfo to compare
+         * @param o2 second AggregateTastProgressInfo to compare
+         * @return positive number if overall progress of first argument is greater than overall progress of second argument, negative if it is smaller and zero they are equal
+         */
 	@Override
 	public int compare(AggregateTaskProgressInfo o1, AggregateTaskProgressInfo o2) {
 		return o1.compareTo(o2);

@@ -42,7 +42,7 @@ public enum TaskStatus implements Serializable, MessageSourceResolvable {
 	 */
 	ABORTED(0),
 
-	/** The task encontered an error.
+	/** The task encountered an error.
 	 */
 	ERROR(10),
 
@@ -163,16 +163,22 @@ public enum TaskStatus implements Serializable, MessageSourceResolvable {
 		return (this == ACTIVE || this == ACTIVE_WAITING);
 	}
 
+	/** Returns empty array of Objects
+	 */
 	@Override
 	public Object[] getArguments() {
 		return new Object[0];
 	}
 
+	/** Returns array of Strings with only one element: "taskStatus.TYPE", where TYPE is current task status
+	 */
 	@Override
 	public String[] getCodes() {
 		return new String[] { "taskStatus." + toString() };
 	}
 
+	/** Returns name of the current status
+	 */
 	@Override
 	public String getDefaultMessage() {
 		return toString();

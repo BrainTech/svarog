@@ -53,13 +53,13 @@ public interface Task extends MethodExecutionTracker {
 
 	/** Returns the data object used as input data for the computation.
 	 *
-	 * @return
+	 * @return the data object used as input data for the computation.
 	 */
 	Object getData();
 
 	/** Starts or resumes the execution of the task (the computation) on the <b>current thread</b>
 	 *  if the task is currently startable or resumable. The method returns only when the computation
-	 *  has finished (due to being completed, aborted, suspenede or due to an exception).
+	 *  has finished (due to being completed, aborted, suspeneded or due to an exception).
 	 */
 	void doIfPossible();
 

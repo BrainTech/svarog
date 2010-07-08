@@ -17,11 +17,18 @@ public class AggregateTaskProgressInfo {
 	private int maxValue;
 	private int value;
 
+	/**
+	 * Creates new instance of AggregateTaskProgressInfo for specified Task
+	 * @param task Task to create an aggregate view of its tickers
+	 */
 	public AggregateTaskProgressInfo(Task task) {
 		this.task = task;
 		update();
 	}
 
+	/**
+	 * Computes total limit of smallest ticks and the total current count of smallest ticks
+	 */
 	public void update() {
 
 		int[] limits;
@@ -68,14 +75,28 @@ public class AggregateTaskProgressInfo {
 
 	}
 
+	/**
+	 * Returns total limit of smallest ticks
+	 * @return total limit of smallest ticks
+	 */
 	public int getMaxValue() {
 		return maxValue;
 	}
 
+	/**
+	 * Returns total current count of smallest ticks
+	 * @return total current count of smallest ticks
+	 */
 	public int getValue() {
 		return value;
 	}
 
+	/**
+	 * Check if two instances of class AggregateTaskProgressInfo are equal.
+	 * It compares result of division total current count of smallest ticks by total limit of smallest ticks.
+	 * @param obj object to be compared for equality with this AggregateTaskProgressInfo
+	 * @return true if argument is instance of AggregateTaskProgressInfo and it equals this AggregateTaskProgressInfo, otherwise false
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (!(obj instanceof AggregateTaskProgressInfo)) {
@@ -86,6 +107,13 @@ public class AggregateTaskProgressInfo {
 		return (test == 0);
 	}
 
+	/**
+	 * Compares two instances of class AggregateTaskProgressInfo.
+	 * It computes result of division total current count of smallest ticks by total limit of smallest ticks for both of instances of AggregateTaskProgressInfo.
+	 * If this value is greater for this instance it returns 1, if is smaller -1 and zero if this value is equal for both of instances.
+	 * @param o instance of class AggregateTaskProgressInfo to be compared with this AggregateTaskProgressInfo
+	 * @return 1 when this AggregateTaskProgressInfo is greater then argument of this method, -1 when is smaller and 0 when they are equal
+	 */
 	public int compareTo(AggregateTaskProgressInfo o) {
 		float test = (((float) value) / maxValue) - (((float) o.value) / o.maxValue);
 		return (test < 0 ? -1 : (test > 0 ? 1 : 0));
