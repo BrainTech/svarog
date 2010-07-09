@@ -41,7 +41,7 @@ public class LocalTask implements Task, MethodExecutionTracker, Runnable {
 
 	private volatile TaskStatus status;
 
-	private Object data;
+	private final Object data;
 	private volatile Object result;
 	private volatile Exception exception;
 	private volatile MessageSourceResolvable message;
@@ -465,7 +465,7 @@ public class LocalTask implements Task, MethodExecutionTracker, Runnable {
 	/**
 	 * Method called on aborting this Task. It sets status to ABORTED and time of end of execution.
 	 */
-	public void onAbort() {
+	private void onAbort() {
 		synchronized (this) {
 
 			status = TaskStatus.ABORTED;
@@ -480,7 +480,7 @@ public class LocalTask implements Task, MethodExecutionTracker, Runnable {
         /**
          * Method called on suspension this Task. It sets status to SUSPENDED and time of suspension of execution.
          */
-	public void onSuspend() {
+	private void onSuspend() {
 		synchronized (this) {
 
 			status = TaskStatus.SUSPENDED;
@@ -496,7 +496,7 @@ public class LocalTask implements Task, MethodExecutionTracker, Runnable {
          * Method called on finish of this Task. It sets status to FINISHED if no error occured, otherwise ERROR.
 	 * It also set a time of end of execution.
          */
-	public void onFinish() {
+	private void onFinish() {
 		synchronized (this) {
 
 			if (exception != null) {
