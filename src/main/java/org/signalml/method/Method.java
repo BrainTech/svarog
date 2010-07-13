@@ -3,7 +3,8 @@
  */
 package org.signalml.method;
 
-/** This interface must be implemented by classes acting as data processing methods
+/**
+ *  This interface must be implemented by classes acting as data processing methods
  *  for SignalML. A method class instance should be able to act as a singleton, whose
  *  compute method is called with given data.
  *
@@ -11,27 +12,31 @@ package org.signalml.method;
  */
 public interface Method {
 
-	/** Returns a unique identifier for the method. The unique identifier is best generated
+	/**
+         *  Returns a unique identifier for the method. The unique identifier is best generated
 	 *  once and hardcoded into the implementing class.
 	 *
 	 * @return the unique identifier
 	 */
 	String getUID();
 
-	/** Returns a common string name for the method. The name should not contain spaces.
+	/**
+         *  Returns a common string name for the method. The name should not contain spaces.
 	 *
 	 * @return the name
 	 */
 	String getName();
 
-	/** Returns method's version as an array of integers. Version 1.5.3 should be
+	/**
+         *  Returns method's version as an array of integers. Version 1.5.3 should be
 	 *  represented by <code>int[] {1,5,3}</code>.
 	 *
 	 * @return the version
 	 */
 	int[] getVersion();
 
-	/** Returns true if and only if an object of the given class may be passed to the compute
+	/**
+         *  Returns true if and only if an object of the given class may be passed to the compute
 	 *  method as input data.
 	 *
 	 * @param clazz the class to test
@@ -39,7 +44,8 @@ public interface Method {
 	 */
 	boolean supportsDataClass(Class<?> clazz);
 
-	/** Instantiates and returns a most standard data object for this method.
+	/**
+         *  Instantiates and returns a most standard data object for this method.
 	 *  Implementations that call methods may choose not to use this method and pass
 	 *  another object instead as long as it's class is accepted by supportsDataClass.
 	 *
@@ -47,13 +53,15 @@ public interface Method {
 	 */
 	Object createData();
 
-	/** Returns the class of the result object returned from compute.
+	/**
+         *  Returns the class of the result object returned from compute.
 	 *
 	 * @return the result class
 	 */
 	Class<?> getResultClass();
 
-	/** Implements the actual computations. The method receives a data object
+	/**
+         *  Implements the actual computations. The method receives a data object
 	 *  and should return a result object. The method alse receives a reference to a tracker - an.
 	 *  This allows the method code to interact with the application,
 	 *  check for abort requests, set progress information, status information, and the like.

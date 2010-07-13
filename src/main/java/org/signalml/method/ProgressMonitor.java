@@ -10,11 +10,16 @@ import java.util.Scanner;
 import org.apache.log4j.Logger;
 
 /**
+ * ProgressMonitor class provides method's execution monitoring.
+ *
  * @author Oskar Kapala &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  *
  */
 public class ProgressMonitor implements Runnable {
 
+        /**
+         * Logger to save history of execution to
+         */
 	protected static final Logger logger = Logger.getLogger(ProgressMonitor.class);
 
 	private boolean shutdown = false;
@@ -26,7 +31,11 @@ public class ProgressMonitor implements Runnable {
 
 
 	/**
-	 * @param file, tracker
+         * Creates new ProgressMonitor with specified file to progress, stop file and tracker.
+         *
+	 * @param progressFile file to monitor progress of
+         * @param stopFile file to be created on abort
+         * @param tracker tracker to save history of progress to
 	 */
 	public ProgressMonitor(File progressFile, File stopFile, final MethodExecutionTracker tracker) {
 		this.progressFile = progressFile;
@@ -42,6 +51,9 @@ public class ProgressMonitor implements Runnable {
 		}
 	}
 
+        /**
+         * Shuts down this ProgressMonitor
+         */
 	public void shutdown() {
 		synchronized (this) {
 			this.shutdown = true;
@@ -49,6 +61,9 @@ public class ProgressMonitor implements Runnable {
 		}
 	}
 
+        /**
+         * Runs this ProgressMonitor. It ends on the end of computation or when abort is requested.
+         */
 	public void run() {
 
 		String lLine = null;

@@ -5,7 +5,8 @@ package org.signalml.method;
 
 import org.springframework.validation.Errors;
 
-/** This is a bare bones abstract implementation of the {@link Method} interface. The compute
+/**
+ *  This is a bare bones abstract implementation of the {@link Method} interface. The compute
  *  method is implemented and split into calling {@link #validate(Object, Errors)} which
  *  validates the input data, and later {@link #doComputation(Object, MethodExecutionTracker)},
  *  provided the validation
@@ -32,7 +33,8 @@ public abstract class AbstractMethod implements Method {
 
 	}
 
-	/** This returns the version as String.
+	/**
+         * Returns the version as String.
 	 *
 	 * @return the version
 	 */
@@ -48,7 +50,8 @@ public abstract class AbstractMethod implements Method {
 		return sb.toString();
 	}
 
-	/** This validates the data object received by the compute method. All problems should
+	/**
+         * Validates the data object received by the compute method. All problems should
 	 *  be added to suppled Errors instance. The default implementation checks if the data
 	 *  object has approprtiate class (using {@link Method#supportsDataClass(Class)}).
 	 *
@@ -61,7 +64,8 @@ public abstract class AbstractMethod implements Method {
 		}
 	}
 
-	/** Subclasses must implement this to perform the actual computations all caveats for
+	/**
+         *  Subclasses must implement this to perform the actual computations all caveats for
 	 *  {@link #compute(Object, MethodExecutionTracker)} apply, except the data successfully passed through
 	 *  {@link #validate(Object, Errors)} before, and may be assumed to be ok.
 	 *
