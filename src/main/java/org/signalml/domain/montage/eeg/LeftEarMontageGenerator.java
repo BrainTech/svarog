@@ -9,8 +9,10 @@ import org.springframework.validation.Errors;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
-/** LeftEarMontageGenerator
- *
+/**
+ * This class represents a montage generator for a left ear montage.
+ * It creates a {@link SingleReferenceMontageGenerator single reference montage}
+ * with EegChannel.A1 as a function of reference channel.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -22,6 +24,9 @@ public class LeftEarMontageGenerator extends SingleReferenceMontageGenerator {
 	private static final Object[] ARGUMENTS = new Object[0];
 	private static final String[] CODES = new String[] { "montageGenerator.leftEar" };
 
+        /**
+         * Constructor. Creates a generator for a left ear montage.
+         */
 	public LeftEarMontageGenerator() {
 		super(EegChannel.A1);
 	}
@@ -34,16 +39,34 @@ public class LeftEarMontageGenerator extends SingleReferenceMontageGenerator {
 	*/
 
 
+        /**
+         * Reports an error, that there was more then one source channel with
+         * EegChannel.A1 function
+         * @param errors an Errors object used to report errors
+         */
 	@Override
 	protected void onDuplicate(Errors errors) {
 		errors.reject("montageGenerator.error.duplicateLeftEarChannel");
 	}
 
+        /**
+         * Reports an error, that a source channel with EegChannel.A1 function
+         * was not found
+         * @param errors an Errors object used to report errors
+         */
 	@Override
 	protected void onNotFound(Errors errors) {
 		errors.reject("montageGenerator.error.noLeftEarChannel");
 	}
 
+        /**
+         * Compares a given object to a current object. Always true if an object
+         * is not null and of type LeftEarMontageGenerator
+         * (all left ear montage generators are equal)
+         * @param obj an object to be compared with a current object
+         * @return true if obj is equal to a current object (is of type
+         * LeftEarMontageGenerator), false otherwise
+         */
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {

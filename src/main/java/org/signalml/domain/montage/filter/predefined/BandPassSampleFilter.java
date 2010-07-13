@@ -9,8 +9,10 @@ import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
-/** BandPassSampleFilter
- *
+/**
+ * This class represents a band-pass sample filter,
+ * which passes frequencies 10-30 Hz.
+ * Allows to create and duplicate a filter.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -19,6 +21,10 @@ public class BandPassSampleFilter extends TimeDomainSampleFilter {
 
 	private static final long serialVersionUID = 1L;
 
+        /**
+         * Constructor. Creates band-pass filter with default coefficients.
+         * Passes frequencies 10-30 Hz.
+         */
 	public BandPassSampleFilter() {
 
 		messageCodes = new String[] { "sampleFilter.td.bandPass" };
@@ -49,6 +55,10 @@ public class BandPassSampleFilter extends TimeDomainSampleFilter {
 
 	}
 
+        /**
+         * Duplicates the current object.
+         * @return copy of a current object
+         */
 	@Override
 	public SampleFilterDefinition duplicate() {
 		BandPassSampleFilter duplicate = new BandPassSampleFilter();

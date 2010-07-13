@@ -12,8 +12,11 @@ import org.signalml.domain.montage.filter.SampleFilterDefinition;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
-/** MontageSampleFilter
- * Class representing sample filter for montage
+/**
+ * This class represents sample filter for a montage.
+ * Contains the definition of a filter, an indicator whether it is enabled and
+ * a list of {@link MontageChannel montage channels} that are excluded from
+ * this filter
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -26,12 +29,12 @@ public class MontageSampleFilter {
 	private SampleFilterDefinition definition;
 
         /**
-         * Tells if filter is enabled
+         * Tells if the filter is enabled
          */
 	private boolean enabled = true;
 
         /**
-         * list of channels excluded from filter
+         * A list of channels excluded from the filter
          */
 	private ArrayList<MontageChannel> excludedChannels = new ArrayList<MontageChannel>();
 
@@ -42,18 +45,21 @@ public class MontageSampleFilter {
 	}
 
         /**
-         * Constructor. Creates filter based on given definition
-         * @param definition definition of a filter
+         * Constructor. Creates a filter based on a given definition
+         * @param definition a definition of a filter
          */
 	public MontageSampleFilter(SampleFilterDefinition definition) {
 		this.definition = definition;
 	}
 
         /**
-         * Copy constructor. Creates new filter (in another montage) based on given.
-         * @param filter filter to be copied
-         * @param montageChannels channels of a montage in which created filter will be located
-         * @param filterMontageChannels channels of a montage in which filter that is being copied is located
+         * Copy constructor. Creates a new filter (in different montage) based
+         * on given.
+         * @param filter a filter to be copied
+         * @param montageChannels channels of a montage in which a created filter
+         * will be located
+         * @param filterMontageChannels channels of a montage in which the filter
+         * that is being copied is located
          */
 	public MontageSampleFilter(MontageSampleFilter filter, ArrayList<MontageChannel> montageChannels, ArrayList<MontageChannel> filterMontageChannels) {
 		this();
@@ -86,15 +92,15 @@ public class MontageSampleFilter {
 
         /**
          *
-         * @return definition of a filter
+         * @return a definition of a filter
          */
 	public SampleFilterDefinition getDefinition() {
 		return definition;
 	}
 
         /**
-         * Sets definition of a filter to a given value
-         * @param definition value to be set
+         * Sets the definition of a filter to a given value
+         * @param definition the value to be set
          */
 	public void setDefinition(SampleFilterDefinition definition) {
 		this.definition = definition;
@@ -102,7 +108,8 @@ public class MontageSampleFilter {
 
         /**
          * Clears all exclusions. After this operation no channel is excluded
-         * @return true if there were any exclusion to be cleared, false otherwise
+         * @return true if there were any exclusion to be cleared, false
+         * otherwise
          */
 	public boolean clearExclusion() {
 		boolean done = !excludedChannels.isEmpty();
@@ -112,7 +119,7 @@ public class MontageSampleFilter {
 
         /**
          *
-         * @return number of channels excluded
+         * @return a number of channels excluded
          */
 	public int getExcludedChannelCount() {
 		return excludedChannels.size();
@@ -120,33 +127,33 @@ public class MontageSampleFilter {
 
         /**
          *
-         * @param index index in excludedChannels array
-         * @return MontageChannel of a given index in excludedChannels array
+         * @param index an index in an excludedChannels array
+         * @return a MontageChannel of a given index in an excludedChannels array
          */
 	public MontageChannel getExcludedChannelAt(int index) {
 		return excludedChannels.get(index);
 	}
 
         /**
-         * Returns iterator for collection of excluded channels
-         * @return iterator for collection of excluded channels
+         * Returns an iterator for a collection of excluded channels
+         * @return an iterator for a collection of excluded channels
          */
 	public Iterator<MontageChannel> getExcludedChannelIterator() {
 		return excludedChannels.iterator();
 	}
 
         /**
-         * Checks if given channel is excluded from filter
-         * @param channel channel to be checked
-         * @return true if channel is excluded, false otherwise
+         * Checks if a given channel is excluded from a filter
+         * @param channel the channel to be checked
+         * @return true if the channel is excluded, false otherwise
          */
 	public boolean isChannelExcluded(MontageChannel channel) {
 		return excludedChannels.contains(channel);
 	}
 
         /**
-         * Adds given channels to excluded channels
-         * @param channel channel to be excluded
+         * Adds a given channel to excluded channels
+         * @param channel a channel to be excluded
          * @return true
          */
 	public boolean addExcludedChannel(MontageChannel channel) {
@@ -154,27 +161,30 @@ public class MontageSampleFilter {
 	}
 
         /**
-         * Removes given channel from excluded channels
-         * @param channel channel to be removed from excluded
-         * @return true if this list contained the specified element, false otherwise
+         * Removes a given channel from excluded channels
+         * @param channel a channel to be removed from excluded
+         * @return true if this list contained the specified element,
+         * false otherwise
          */
 	public boolean removeExcludedChannel(MontageChannel channel) {
 		return excludedChannels.remove(channel);
 	}
 
         /**
-         * Removes given channel with a given index on excludedChannels list from excluded channels
-         * @param index index of a channel to be removed from excluded
-         * @return removed element
+         * Removes a given channel with a given index on an excludedChannels
+         * list from excluded channels
+         * @param index an index of a channel to be removed from excluded
+         * @return a removed element
          */
 	public MontageChannel removeExcludedChannel(int index) {
 		return excludedChannels.remove(index);
 	}
 
         /**
-         * Returns array of indexes (in a given list) of excluded channels
-         * @param montageChannels list of montage channels from which indexes will be used
-         * @return array of indexes (in a given list) of excluded channels
+         * Returns an array of indexes (in a given list) of excluded channels
+         * @param montageChannels a list of montage channels from which indexes
+         * will be used
+         * @return an array of indexes (in a given list) of excluded channels
          */
 	public boolean[] getExclusionArray(ArrayList<MontageChannel> montageChannels) {
 
@@ -199,15 +209,15 @@ public class MontageSampleFilter {
 
         /**
          *
-         * @return true if filter is enabled, false otherwise
+         * @return true if the filter is enabled, false otherwise
          */
 	public boolean isEnabled() {
 		return enabled;
 	}
 
         /**
-         * Set if filter should be enabled
-         * @param enabled true if filter should be enabled, false otherwise
+         * Set if the filter should be enabled
+         * @param enabled true if a filter should be enabled, false otherwise
          */
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;

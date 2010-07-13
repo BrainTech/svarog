@@ -4,10 +4,13 @@
 
 package org.signalml.domain.montage.filter;
 
+import org.signalml.domain.montage.MontageSampleFilter;
 import org.springframework.context.MessageSourceResolvable;
 
-/** MontageSampleFilterType
- *
+/**
+ * This class represents the type of a {@link MontageSampleFilter sample filter}
+ * with two possible types:
+ * TIME_DOMAIN, FFT
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

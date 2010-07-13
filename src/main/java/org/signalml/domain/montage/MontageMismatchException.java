@@ -7,7 +7,7 @@ package org.signalml.domain.montage;
 import org.signalml.exception.SignalMLException;
 
 /** MontageMismatchException
- * Class representing exception of  mismatch between montages
+ * Class representing an exception of mismatch between montages
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -24,8 +24,9 @@ public class MontageMismatchException extends SignalMLException {
 
         /**
          * Constructor.
-         * @param message String with a exception message
-         * @param cause the cause of exception. null indicates that the cause is nonexistent or unknown
+         * @param message a String with an exception message
+         * @param cause the cause of an exception.
+         * null indicates that the cause is nonexistent or unknown
          */
 	public MontageMismatchException(String message, Throwable cause) {
 		super(message, cause);
@@ -33,16 +34,16 @@ public class MontageMismatchException extends SignalMLException {
 
         /**
          * Constructor. Creates an exception with the specified message.
-         * @param message String with a exception message
+         * @param message String with an exception message
          */
 	public MontageMismatchException(String message) {
 		super(message);
 	}
 
         /**
-         * Constructor. Creates an exception based on given Throwable object.
+         * Constructor. Creates an exception based on a given Throwable object.
          * Message of an exception is cause.toString()
-         * @param cause throwable object used as a cause for event
+         * @param cause a throwable object used as a cause for an event
          */
 	public MontageMismatchException(Throwable cause) {
 		super(cause);

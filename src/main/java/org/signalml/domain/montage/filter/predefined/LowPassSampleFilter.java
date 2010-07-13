@@ -9,8 +9,10 @@ import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
-/** LowPassSampleFilter
- *
+/**
+ * This class represents a low-pass sample filter,
+ * which passes frequencies lower then 20Hz.
+ * Allows to create and duplicate a filter.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -19,6 +21,10 @@ public class LowPassSampleFilter extends TimeDomainSampleFilter {
 
 	private static final long serialVersionUID = 1L;
 
+        /**
+         * Constructor. Creates low-pass filter with default coefficients.
+         * Passes frequencies lower then 20Hz
+         */
 	public LowPassSampleFilter() {
 
 		messageCodes = new String[] { "sampleFilter.td.lowPass" };
@@ -49,6 +55,10 @@ public class LowPassSampleFilter extends TimeDomainSampleFilter {
 
 	}
 
+        /**
+         * Duplicates the current object.
+         * @return copy of a current object
+         */
 	@Override
 	public SampleFilterDefinition duplicate() {
 		LowPassSampleFilter duplicate = new LowPassSampleFilter();

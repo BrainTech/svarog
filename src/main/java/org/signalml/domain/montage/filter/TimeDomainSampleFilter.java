@@ -7,8 +7,8 @@ package org.signalml.domain.montage.filter;
 import org.signalml.util.ResolvableString;
 import org.springframework.context.MessageSourceResolvable;
 
-/** TimeDomainSampleFilter
- *
+/**
+ * This abstract class holds a time domain representation of a sample filter.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -23,16 +23,35 @@ public abstract class TimeDomainSampleFilter extends SampleFilterDefinition {
 	protected transient String[] effectCodes;
 	protected transient String defaultEffectDescription;
 
+        /**
+         * an array of filter feedback coefficients
+         */
 	protected transient double aCoefficients[];
+
+        /**
+         * an array of filter feedforward coefficients
+         */
 	protected transient double bCoefficients[];
+
 	protected transient int margin;
 
+        /**
+         * the number of sequential passes of a filter
+         */
 	protected int passCount;
 
+        /**
+         * Returns an array of filter feedback coefficients.
+         * @return an array of filter feedback coefficients.
+         */
 	public double[] getACoefficients() {
 		return aCoefficients;
 	}
 
+        /**
+         * Returns an array of filter feedforward coefficients.
+         * @return an array of filter feedforward coefficients.
+         */
 	public double[] getBCoefficients() {
 		return bCoefficients;
 	}
@@ -41,10 +60,18 @@ public abstract class TimeDomainSampleFilter extends SampleFilterDefinition {
 		return margin;
 	}
 
+        /**
+         * Returns the number of sequential passes of a filter
+         * @return the number of sequential passes of a filter
+         */
 	public int getPassCount() {
 		return passCount;
 	}
 
+        /**
+         * Sets the number of sequential passes of a filter
+         * @param passCount the number of sequential passes of a filter to be set
+         */
 	public void setPassCount(int passCount) {
 		this.passCount = passCount;
 	}

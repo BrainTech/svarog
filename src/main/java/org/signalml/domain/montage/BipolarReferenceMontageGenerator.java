@@ -8,8 +8,10 @@ import java.util.HashMap;
 
 import org.springframework.validation.Errors;
 
-/** BipolarReferenceMontageGenerator
- * Abstract class representing generator for a bipolar montage
+/**
+ * Abstract class representing generator for a bipolar montage.
+ * It generates montage of that type from given "raw" montage and checks
+ * if objects are valid montages of that type.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -18,13 +20,20 @@ public abstract class BipolarReferenceMontageGenerator implements MontageGenerat
 	private static final long serialVersionUID = 1L;
 
         /**
-         * Array of pairs of channels (channels functions) that will be used to create montage channels
+         * An array of pairs of channels (channels functions) that will be used
+         * to create montage channels.
+         * Each pair is used to create one {@link MontageChannel montage channel}.
+         * First element as primary channel, second as reference
          */
 	protected transient Channel[][] definition;
 
         /**
-         * Constructor
-         * @param definition
+         * Constructor. Creates a generator for an bipolar reference montage
+         * based on <i>refChannels</i> array
+         * @param definition Array of pairs of channels (channels functions)
+         * that will be used to create montage channels.
+         * Each pair is used to create one {@link MontageChannel montage channel}.
+         * First element as primary channel, second as reference
          */
 	protected BipolarReferenceMontageGenerator(Channel[][] definition) {
 		if (definition == null || definition.length == 0) {
@@ -35,8 +44,9 @@ public abstract class BipolarReferenceMontageGenerator implements MontageGenerat
 
         /**
          * Creates a bipolar montage from given montage.
-         * @param montage montage to be used
-         * @throws MontageException thrown if two channels have the same function or there is no channel with some function
+         * @param montage the montage to be used
+         * @throws MontageException thrown if two channels have the same function
+         * (in the given montage) or there is no channel with some function
          */
 	@Override
 	public void createMontage(Montage montage) throws MontageException {
@@ -100,9 +110,9 @@ public abstract class BipolarReferenceMontageGenerator implements MontageGenerat
 
         /**
          * Checks if montage is a valid bipolar montage.
-         * @param sourceMontage montage to be checked
+         * @param sourceMontage the montage to be checked
          * @param errors Errors object used to report errors
-         * @return true if montage is a valid bipolar montage, false otherwise
+         * @return true if the montage is a valid bipolar montage, false otherwise
          */
 	@Override
 	public boolean validateSourceMontage(SourceMontage sourceMontage, Errors errors) {
@@ -122,13 +132,17 @@ public abstract class BipolarReferenceMontageGenerator implements MontageGenerat
 	}
 
         /**
-         * Checks it there is exactly one SourceChannel with a given function. Puts pair [function of a source channel - index of a source channel] in a map.
-         * If there is already a SourceChannel with a given function true is returned
-         * @param sourceMontage montage that is being checked
-         * @param map map in which pair [function of a source channel - index of a source channel] will be put
-         * @param channel function of a SourceChannel
+         * Checks it there is exactly one SourceChannel with a given function.
+         * Puts pair [function of a source channel - index of a source channel]
+         * in a map. If there is already a SourceChannel with a given function
+         * true is returned
+         * @param sourceMontage the montage that is being checked
+         * @param map the HashMap in which pair [function of a source channel -
+         * index of a source channel] will be put
+         * @param channel the function of a SourceChannel
          * @param errors Errors object used to report errors
-         * @return true if there is exactly one SourceChannel with a given function or function already in a map, false otherwise
+         * @return true if there is exactly one SourceChannel with a given
+         * function or function already in the map, false otherwise
          */
 	private boolean check(SourceMontage sourceMontage, HashMap<Channel, Integer> map, Channel channel, Errors errors) {
 
@@ -153,16 +167,18 @@ public abstract class BipolarReferenceMontageGenerator implements MontageGenerat
 	}
 
         /**
-         * Reports error, that channel (function of a source channel) was not found
-         * @param refChannel channel that was not found
-         * @param errors Errors object used to report errors
+         * Reports an error, that the channel (the function of a source channel)
+         * was not found
+         * @param refChannel the channel that was not found
+         * @param errors the Errors object used to report errors
          */
 	protected abstract void onNotFound(Channel refChannel, Errors errors);
 
         /**
-         * Reports error, that channel (function of a source channel) was not found
-         * @param refChannel channel that was not found
-         * @param errors Errors object used to report errors
+         * Reports an error, that the channel (the function of a source channel)
+         * was not unique
+         * @param refChannel the channel that was not found
+         * @param errors the Errors object used to report errors
          */
 	protected abstract void onDuplicate(Channel refChannel, Errors errors);
 
