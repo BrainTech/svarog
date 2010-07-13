@@ -4,7 +4,8 @@
 
 package org.signalml.method;
 
-/** This interface is to be implemented by those {@link Method methods} which support having
+/**
+ *  This interface is to be implemented by those {@link Method methods} which support having
  *  computation suspended and later resumed. Implementing classes must provide one method that
  *  checks if the given data object represents suspended computation state, or not. Additionally,
  *  a suspendable method's {@link Method#compute(Object, org.signalml.task.Task)} method must check
@@ -15,7 +16,8 @@ package org.signalml.method;
  */
 public interface SuspendableMethod {
 
-	/** Returns true if the given data object contains suspended execution state that
+	/**
+         *  Returns true if the given data object contains suspended execution state that
 	 *  is to be resumed, rather than fresh computation input data.
 	 *
 	 * @param data the data object

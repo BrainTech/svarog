@@ -6,7 +6,8 @@ package org.signalml.method;
 
 import org.springframework.context.support.MessageSourceAccessor;
 
-/** This interface is to be implemented by those {@link Method methods} which support progress
+/**
+ *  This interface is to be implemented by those {@link Method methods} which support progress
  *  monitoring. The method's {@link Method#compute(Object, MethodExecutionTracker)} method
  *  should call appropriate progress monitoring method on its {@link MethodExecutionTracker} object.
  *  Note that this is possible even if the method doesn't implement the TrackableMethod interface, this
@@ -17,13 +18,15 @@ import org.springframework.context.support.MessageSourceAccessor;
  */
 public interface TrackableMethod {
 
-	/** Returns the number of tickers this method requires.
+	/**
+         *  Returns the number of tickers this method requires.
 	 *
 	 * @return the ticker count
 	 */
 	int getTickerCount();
 
-	/** Returns the label for the given ticker. May use provided MessageSourceAccessor for
+	/**
+         *  Returns the label for the given ticker. May use provided MessageSourceAccessor for
 	 *  internationalization.
 	 *
 	 * @param messageSource the message source accessor capable of resolving localized message codes

@@ -14,6 +14,9 @@ import java.util.Set;
 import org.signalml.domain.montage.eeg.EegChannel;
 
 /**
+ * This is abstract class which should be extended by classes acting as data
+ * to be processed by methods for SignalML.
+ *
  * @author Oskar Kapala &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  *
  */
@@ -21,6 +24,9 @@ public class AbstractData implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+        /**
+         * Constructs new empy Data
+         */
 	public AbstractData() {
 		keyChannelMap = new HashMap<String, Integer>();
 		eegChannels = new ArrayList<Integer>();
@@ -43,9 +49,12 @@ public class AbstractData implements Serializable {
 	        EegChannel.F4,
 	        EegChannel.EMG,
 	        EegChannel.A1,
-	        EegChannel.A2
+	        EegChannel.A1
 	};
 
+        /**
+         * Unmodifiable Set of EEG channels
+         */
 	public static final Set<EegChannel> keyChannelSet = getKeyChannelSet();
 
 	private static Set<EegChannel> getKeyChannelSet() {
@@ -63,34 +72,65 @@ public class AbstractData implements Serializable {
 
 	private int[][] excludedChannels;
 
+        /**
+         * Returns map of channels
+         * @return map of channels
+         */
 	public Map<String, Integer> getKeyChannelMap() {
 		return keyChannelMap;
 	}
 
+        /**
+         *
+         */
 	public void setKeyChannelMap(Map<String, Integer> keyChannelMap) {
 		this.keyChannelMap = keyChannelMap;
 	}
 
+        /**
+         * Returns list of EEG channels
+         * @return list of EEG channels
+         */
 	public ArrayList<Integer> getEegChannels() {
 		return eegChannels;
 	}
 
+        /**
+         * Sets EEG channels
+         * @param eegChannels list to be set as EEG channels
+         */
 	public void setEegChannels(ArrayList<Integer> eegChannels) {
 		this.eegChannels = eegChannels;
 	}
 
+        /**
+         * Returns map of channels
+         * @return map of channels
+         */
 	public Map<String, Integer> getChannelMap() {
 		return channelMap;
 	}
 
+        /**
+         * Sets map of channels
+         * @param channelMap map to be set as map of channels
+         */
 	public void setChannelMap(Map<String, Integer> channelMap) {
 		this.channelMap = channelMap;
 	}
 
+        /**
+         * Returns array of excluded channels
+         * @raturn array of excluded channels
+         */
 	public int[][] getExcludedChannels() {
 		return excludedChannels;
 	}
 
+        /**
+         * Sets array of excluded channels
+         * @param excludedChannels array to be set as excluded channels
+         */
 	public void setExcludedChannels(int[][] excludedChannels) {
 		this.excludedChannels = excludedChannels;
 	}
