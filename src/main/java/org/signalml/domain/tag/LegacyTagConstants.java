@@ -4,17 +4,21 @@
 
 package org.signalml.domain.tag;
 
-/** LegacyTagConstants
- *
+/**
+ * This class contains constants describing the outlook of tags
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class LegacyTagConstants {
 
+        /**
+         * Solid background fill style
+         */
 	public static final byte FILL_SOLID = (byte) 0;
 
 	public static final byte DRAW_MODE_COPY = (byte) 4;
 
+        //how will the outline of the tag look
 	public static final byte OUTLINE_MODE_SOLID = (byte) 0;
 	public static final byte OUTLINE_MODE_DASH = (byte) 1;
 	public static final byte OUTLINE_MODE_DOT = (byte) 2;

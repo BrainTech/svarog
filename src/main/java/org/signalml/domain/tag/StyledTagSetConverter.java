@@ -29,8 +29,9 @@ import com.thoughtworks.xstream.converters.basic.IntConverter;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
-/** StyledTagSetConverter
- *
+/**
+ * This class is responsible for marshaling StyledTagSet objects
+ * to/from textual data.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -45,6 +46,13 @@ public class StyledTagSetConverter implements Converter {
 	private FloatArrayConverter floatArrayConverter = new FloatArrayConverter();
 	private BooleanConverter booleanConverter = new BooleanConverter("1", "0", false);
 
+        /**
+         * Converts an {@link StyledTagSet StyledTagSet} to textual data.
+         * @param value The object to be marshaled
+         * @param writer A stream to write to.
+         * @param context A context that allows nested objects to be processed
+         * by XStream.
+         */
 	@Override
 	public void marshal(Object value, HierarchicalStreamWriter writer, MarshallingContext context) {
 
@@ -153,6 +161,11 @@ public class StyledTagSetConverter implements Converter {
 
 	}
 
+        /**
+         * Converts an {@link TagStyle TagStyle} to textual data.
+         * @param style The TagStyle to be marshaled
+         * @param writer A stream to write to.
+         */
 	private void marshalStyle(HierarchicalStreamWriter writer, TagStyle style) {
 		writer.startNode("tag_item");
 		writer.addAttribute("name", style.getName());
@@ -167,6 +180,12 @@ public class StyledTagSetConverter implements Converter {
 		writer.endNode();
 	}
 
+        /**
+         * Convert textual data back into a {@link StyledTagSet StyledTagSet}.
+         * @param reader the stream to read the text from.
+         * @param context a context that allows nested objects to be processed by XStream.
+         * @return the created StyledTagSet
+         */
 	@Override
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
 
@@ -325,6 +344,11 @@ public class StyledTagSetConverter implements Converter {
 		return sts;
 	}
 
+        /**
+         * Convert textual data back into a {@link TagStyle TagStyle}.
+         * @param reader the stream to read the text from.
+         * @param the TagStyle object on which read data will be written
+         */
 	private void unmarshalStyle(HierarchicalStreamReader reader, TagStyle style) {
 
 		String name = reader.getAttribute("name");
@@ -348,6 +372,12 @@ public class StyledTagSetConverter implements Converter {
 
 	}
 
+        /**
+         * Determines whether the converter can marshal a particular type.
+         * @param clazz the Class representing the object type to be converted
+         * @return true if the converter can marshal a particular type,
+         * false otherwise
+         */
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean canConvert(Class clazz) {

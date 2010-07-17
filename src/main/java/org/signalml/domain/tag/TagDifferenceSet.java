@@ -10,41 +10,77 @@ import java.util.TreeSet;
 
 import org.signalml.domain.signal.SignalSelectionType;
 
-/** TagDifferenceSet
- *
+/**
+ * This class represents a set of tags differences.
+ * Allows to find differences between two points of time.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class TagDifferenceSet {
 
+        /**
+         * The actual set containing tag differences
+         */
 	private TreeSet<TagDifference> differences;
 
+        /**
+         * The length of the longest difference
+         */
 	private float maxDifferenceLength = 0;
 
+        /**
+         * Constructor. Creates an empty TagDifferenceSet
+         */
 	public TagDifferenceSet() {
 		differences = new TreeSet<TagDifference>();
 	}
 
+        /**
+         * Constructor. Creates a TagDifferenceSet with given differences
+         * @param differences the set of differences to be added
+         */
 	public TagDifferenceSet(TreeSet<TagDifference> differences) {
 		this.differences = differences;
 		calculateMaxTagLength();
 	}
 
+        /**
+         * Returns the set containing tag differences
+         * @return the set containing tag differences
+         */
 	public TreeSet<TagDifference> getDifferences() {
 		return differences;
 	}
 
+        /**
+         * Adds the given collection of tag differences to the current object
+         * @param toAdd the collection of tag differences
+         */
 	public void addDifferences(Collection<TagDifference> toAdd) {
 		differences.addAll(toAdd);
 		calculateMaxTagLength();
 	}
 
+        /**
+         * Returns the set of differences for tagged selections
+         * that start between <code>start-maxDifferenceLength</code> (inclusive)
+         * and <code>end</code> (inclusive)
+         * @param start the starting position of the interval
+         * @param end the ending position of the interval
+         * @return the set of differences for tagged selections
+         * that start between <code>start-maxDifferenceLength</code> (inclusive)
+         * and <code>end</code> (inclusive)
+         */
+        //TODO czy to na pewno ma zwracać to co napisałem, wydawało mi się, że mają to być różnice przecinające się z przedziałem, ale tu mogą się załapać także znajdujące się przed nim (i krótsze od maksymalnego)
 	public SortedSet<TagDifference> getDifferencesBetween(float start, float end) {
 		TagDifference startMarker = new TagDifference(SignalSelectionType.CHANNEL, start-maxDifferenceLength, 0, null);
 		TagDifference endMarker = new TagDifference(SignalSelectionType.CHANNEL,end,Float.MAX_VALUE,null); // note that lengths matter, so that all tags starting at exactly end will be selected
 		return differences.subSet(startMarker, true, endMarker, true);
 	}
 
+        /**
+         * Calculates the maximal length of the difference in the set
+         */
 	private void calculateMaxTagLength() {
 		float maxDifferenceLength = 0;
 		for (TagDifference difference : differences) {
