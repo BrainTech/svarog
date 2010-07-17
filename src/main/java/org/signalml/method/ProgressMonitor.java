@@ -18,7 +18,7 @@ import org.apache.log4j.Logger;
 public class ProgressMonitor implements Runnable {
 
         /**
-         * Logger to save history of execution to
+         * Logger to save history of execution at
          */
 	protected static final Logger logger = Logger.getLogger(ProgressMonitor.class);
 
