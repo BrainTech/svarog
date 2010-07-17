@@ -25,7 +25,7 @@ public class AbstractData implements Serializable {
 	private static final long serialVersionUID = 1L;
 
         /**
-         * Constructs new empy Data
+         * Constructs new empy Data.
          */
 	public AbstractData() {
 		keyChannelMap = new HashMap<String, Integer>();
@@ -49,11 +49,11 @@ public class AbstractData implements Serializable {
 	        EegChannel.F4,
 	        EegChannel.EMG,
 	        EegChannel.A1,
-	        EegChannel.A1
+	        EegChannel.A2
 	};
 
         /**
-         * Unmodifiable Set of EEG channels
+         * Unmodifiable Set of EEG channels.
          */
 	public static final Set<EegChannel> keyChannelSet = getKeyChannelSet();
 
@@ -73,7 +73,7 @@ public class AbstractData implements Serializable {
 	private int[][] excludedChannels;
 
         /**
-         * Returns map of channels
+         * Returns map of channels.
          * @return map of channels
          */
 	public Map<String, Integer> getKeyChannelMap() {
@@ -81,14 +81,15 @@ public class AbstractData implements Serializable {
 	}
 
         /**
-         *
+         * Sets map of channels.
+         * @param keyChannelMap map to be set as map of channels
          */
 	public void setKeyChannelMap(Map<String, Integer> keyChannelMap) {
 		this.keyChannelMap = keyChannelMap;
 	}
 
         /**
-         * Returns list of EEG channels
+         * Returns list of EEG channels.
          * @return list of EEG channels
          */
 	public ArrayList<Integer> getEegChannels() {
@@ -96,7 +97,7 @@ public class AbstractData implements Serializable {
 	}
 
         /**
-         * Sets EEG channels
+         * Sets EEG channels.
          * @param eegChannels list to be set as EEG channels
          */
 	public void setEegChannels(ArrayList<Integer> eegChannels) {
@@ -104,7 +105,7 @@ public class AbstractData implements Serializable {
 	}
 
         /**
-         * Returns map of channels
+         * Returns map of channels.
          * @return map of channels
          */
 	public Map<String, Integer> getChannelMap() {
@@ -112,7 +113,7 @@ public class AbstractData implements Serializable {
 	}
 
         /**
-         * Sets map of channels
+         * Sets map of channels.
          * @param channelMap map to be set as map of channels
          */
 	public void setChannelMap(Map<String, Integer> channelMap) {
@@ -120,7 +121,7 @@ public class AbstractData implements Serializable {
 	}
 
         /**
-         * Returns array of excluded channels
+         * Returns array of excluded channels.
          * @raturn array of excluded channels
          */
 	public int[][] getExcludedChannels() {
@@ -128,7 +129,7 @@ public class AbstractData implements Serializable {
 	}
 
         /**
-         * Sets array of excluded channels
+         * Sets array of excluded channels.
          * @param excludedChannels array to be set as excluded channels
          */
 	public void setExcludedChannels(int[][] excludedChannels) {

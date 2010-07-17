@@ -17,8 +17,8 @@ import org.springframework.validation.Errors;
  */
 public abstract class AbstractMethod implements Method {
 
-	/** {@inheritDoc}
-	 *
+	/**
+         * {@inheritDoc}
 	 */
 	@Override
 	public final Object compute(Object data, MethodExecutionTracker tracker) throws InputDataException, ComputationException {
@@ -51,7 +51,7 @@ public abstract class AbstractMethod implements Method {
 	}
 
 	/**
-         * Validates the data object received by the compute method. All problems should
+         *  Validates the data object received by the compute method. All problems should
 	 *  be added to suppled Errors instance. The default implementation checks if the data
 	 *  object has approprtiate class (using {@link Method#supportsDataClass(Class)}).
 	 *
