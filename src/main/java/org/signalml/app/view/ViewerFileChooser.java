@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.Vector;
 import java.util.regex.Pattern;
 
+import org.apache.log4j.Logger;
+
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -27,333 +29,64 @@ import org.springframework.context.support.MessageSourceAccessor;
 public class ViewerFileChooser extends JFileChooser {
 
 	private static final long serialVersionUID = 1L;
-
-	private OptionSet consoleSaveAsText;
-	private OptionSet tableSaveAsText;
-	private OptionSet samplesSaveAsText;
-	private OptionSet samplesSaveAsFloat;
-	private OptionSet chartSaveAsPng;
-	private OptionSet saveMP5Config;
-	private OptionSet saveMP5Signal;
-	private OptionSet saveDocument;
-	private OptionSet saveTag;
-	private OptionSet openTag;
-	private OptionSet expertTag;
-	private OptionSet importTag;
-	private OptionSet exportTag;
-	private OptionSet savePreset;
-	private OptionSet loadPreset;
-	private OptionSet executablePreset;
-	private OptionSet bookPreset;
-	private OptionSet bookSavePreset;
-	private OptionSet artifactProjectPreset;
-	private OptionSet exportSignal;
-	private OptionSet exportBook;
-	private OptionSet readXMLManifest;
-	private OptionSet workingDirectoryPreset;
-	private OptionSet classPathDirectoryPreset;
-	private OptionSet jarFilePreset;
-	private OptionSet codeFilePreset;
+	protected static final Logger logger = Logger.getLogger(ViewerFileChooser.class);
 
 	private MessageSourceAccessor messageSource;
 	private ApplicationConfiguration applicationConfig;
 
+	private FileFilter _getFilter(String message, String...extensions){
+		return new FileNameExtensionFilter(messageSource.getMessage(message), extensions);
+	}
+
 	public void initialize() {
+		messageSource.getMessage("filechooser.consoleSaveAsText.title");
+		messageSource.getMessage("filechooser.tableSaveAsText.title");
 
-		Vector<FileFilter> filters = new Vector<FileFilter>(20);
+		for(OptionSet options : OptionSet.values())
+			options.initialize(messageSource);
 
-		/* save console as text */
-		consoleSaveAsText = new OptionSet();
-		consoleSaveAsText.title = messageSource.getMessage("filechooser.consoleSaveAsText.title");
-		consoleSaveAsText.okButton = messageSource.getMessage("save");
-		consoleSaveAsText.acceptAllUsed = true;
-		consoleSaveAsText.multiSelectionEnabled = false;
-		consoleSaveAsText.fileSelectionMode = FILES_ONLY;
+		FileFilter text = _getFilter("filechooser.filter.textFiles", "txt");
+		FileFilter binary = _getFilter("filechooser.filter.binaryFiles", "bin");
+		FileFilter xml = _getFilter("filechooser.filter.xmlFiles", "xml");
+		FileFilter book = _getFilter("filechooser.filter.bookFiles", "b");
+		FileFilter png = _getFilter("filechooser.filter.pngFiles", "png");
+		FileFilter config = _getFilter("filechooser.filter.configFiles", "cfg");
+		FileFilter exe = _getFilter("filechooser.filter.exeFiles", "exe");
+		FileFilter jar = _getFilter("filechooser.filter.jarFiles", "jar");
+		FileFilter jar_class = _getFilter("filechooser.filter.codeFiles",
+						  "java", "class");
 
-		filters.clear();
-		filters.add(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.textFiles"), "txt"));
+		OptionSet.consoleSaveAsText.setFilters(text);
+		OptionSet.tableSaveAsText.setFilters(text);
+		OptionSet.samplesSaveAsText.setFilters(text);
+		OptionSet.samplesSaveAsFloat.setFilters(binary);
+		OptionSet.chartSaveAsPng.setFilters(png);
+		OptionSet.saveMP5Config.setFilters(config);
+		OptionSet.saveMP5Signal.setFilters(binary);
 
-		consoleSaveAsText.fileFilters = filters.toArray(new FileFilter[filters.size()]);
+		FileFilter managed[] = ManagedDocumentType.TAG.getFileFilters(messageSource);
+		OptionSet.saveTag.setFilters(managed);
+		OptionSet.openTag.setFilters(managed);
+		OptionSet.expertTag.setFilters(managed);
 
-		/* save table as text */
-		tableSaveAsText = new OptionSet();
-		tableSaveAsText.title = messageSource.getMessage("filechooser.tableSaveAsText.title");
-		tableSaveAsText.okButton = messageSource.getMessage("save");
-		tableSaveAsText.acceptAllUsed = true;
-		tableSaveAsText.multiSelectionEnabled = false;
-		tableSaveAsText.fileSelectionMode = FILES_ONLY;
+		OptionSet.readXMLManifest.setFilters(xml);
+		OptionSet.exportSignal.setFilters(binary);
+		OptionSet.exportBook.setFilters(book);
+		OptionSet.savePreset.setFilters(xml);
+		OptionSet.loadPreset.setFilters(xml);
 
-		filters.clear();
-		filters.add(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.textFiles"), "txt"));
+		if (Pattern.matches(".*[Ww]indows.*", System.getProperty("os.name")))
+			OptionSet.executablePreset.setFilters(exe);
 
-		tableSaveAsText.fileFilters = filters.toArray(new FileFilter[filters.size()]);
+		OptionSet.bookPreset.setFilters(book);
+		OptionSet.bookSavePreset.setFilters(book);
 
-		/* save samples as text */
-		samplesSaveAsText = new OptionSet();
-		samplesSaveAsText.title = messageSource.getMessage("filechooser.samplesSaveAsText.title");
-		samplesSaveAsText.okButton = messageSource.getMessage("save");
-		samplesSaveAsText.acceptAllUsed = true;
-		samplesSaveAsText.multiSelectionEnabled = false;
-		samplesSaveAsText.fileSelectionMode = FILES_ONLY;
-
-		filters.clear();
-		filters.add(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.textFiles"), "txt"));
-
-		samplesSaveAsText.fileFilters = filters.toArray(new FileFilter[filters.size()]);
-
-		/* save samples as text */
-		samplesSaveAsFloat = new OptionSet();
-		samplesSaveAsFloat.title = messageSource.getMessage("filechooser.samplesSaveAsFloat.title");
-		samplesSaveAsFloat.okButton = messageSource.getMessage("save");
-		samplesSaveAsFloat.acceptAllUsed = true;
-		samplesSaveAsFloat.multiSelectionEnabled = false;
-		samplesSaveAsFloat.fileSelectionMode = FILES_ONLY;
-
-		filters.clear();
-		filters.add(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.binaryFiles"), "bin"));
-
-		samplesSaveAsFloat.fileFilters = filters.toArray(new FileFilter[filters.size()]);
-
-		/* save chart as png */
-		chartSaveAsPng = new OptionSet();
-		chartSaveAsPng.title = messageSource.getMessage("filechooser.chartSaveAsPng.title");
-		chartSaveAsPng.okButton = messageSource.getMessage("save");
-		chartSaveAsPng.acceptAllUsed = true;
-		chartSaveAsPng.multiSelectionEnabled = false;
-		chartSaveAsPng.fileSelectionMode = FILES_ONLY;
-
-		filters.clear();
-		filters.add(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.pngFiles"), "png"));
-
-		chartSaveAsPng.fileFilters = filters.toArray(new FileFilter[filters.size()]);
-
-		/* save MP5 config */
-		saveMP5Config = new OptionSet();
-		saveMP5Config.title = messageSource.getMessage("filechooser.saveMP5Config.title");
-		saveMP5Config.okButton = messageSource.getMessage("save");
-		saveMP5Config.acceptAllUsed = true;
-		saveMP5Config.multiSelectionEnabled = false;
-		saveMP5Config.fileSelectionMode = FILES_ONLY;
-
-		filters.clear();
-		filters.add(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.configFiles"), "cfg"));
-
-		saveMP5Config.fileFilters = filters.toArray(new FileFilter[filters.size()]);
-
-		/* save MP5 config */
-		saveMP5Signal = new OptionSet();
-		saveMP5Signal.title = messageSource.getMessage("filechooser.saveMP5Signal.title");
-		saveMP5Signal.okButton = messageSource.getMessage("save");
-		saveMP5Signal.acceptAllUsed = true;
-		saveMP5Signal.multiSelectionEnabled = false;
-		saveMP5Signal.fileSelectionMode = FILES_ONLY;
-
-		filters.clear();
-		filters.add(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.binaryFiles"), "bin"));
-
-		saveMP5Signal.fileFilters = filters.toArray(new FileFilter[filters.size()]);
-
-		/* save document */
-		saveDocument = new OptionSet();
-		saveDocument.title = messageSource.getMessage("filechooser.saveDocument.title");
-		saveDocument.okButton = messageSource.getMessage("save");
-		saveDocument.acceptAllUsed = true;
-		saveDocument.multiSelectionEnabled = false;
-		saveDocument.fileSelectionMode = FILES_ONLY;
-
-		/* save tag */
-		saveTag = new OptionSet();
-		saveTag.title = messageSource.getMessage("filechooser.saveTag.title");
-		saveTag.okButton = messageSource.getMessage("save");
-		saveTag.acceptAllUsed = true;
-		saveTag.multiSelectionEnabled = false;
-		saveTag.fileSelectionMode = FILES_ONLY;
-
-		saveTag.fileFilters = ManagedDocumentType.TAG.getFileFilters(messageSource);
-
-		/* open tag */
-		openTag = new OptionSet();
-		openTag.title = messageSource.getMessage("filechooser.openTag.title");
-		openTag.okButton = messageSource.getMessage("open");
-		openTag.acceptAllUsed = true;
-		openTag.multiSelectionEnabled = false;
-		openTag.fileSelectionMode = FILES_ONLY;
-
-		openTag.fileFilters = ManagedDocumentType.TAG.getFileFilters(messageSource);
-
-		/* expert tag */
-		expertTag = new OptionSet();
-		expertTag.title = messageSource.getMessage("filechooser.expertTag.title");
-		expertTag.okButton = messageSource.getMessage("choose");
-		expertTag.acceptAllUsed = true;
-		expertTag.multiSelectionEnabled = false;
-		expertTag.fileSelectionMode = FILES_ONLY;
-
-		expertTag.fileFilters = ManagedDocumentType.TAG.getFileFilters(messageSource);
-
-		/* import tag */
-		importTag = new OptionSet();
-		importTag.title = messageSource.getMessage("filechooser.importTag.title");
-		importTag.okButton = messageSource.getMessage("import");
-		importTag.acceptAllUsed = true;
-		importTag.multiSelectionEnabled = false;
-		importTag.fileSelectionMode = FILES_ONLY;
-
-		/* read XML manifest */
-		readXMLManifest = new OptionSet();
-		readXMLManifest.title = messageSource.getMessage("filechooser.readXMLManifest.title");
-		readXMLManifest.okButton = messageSource.getMessage("read");
-		readXMLManifest.acceptAllUsed = true;
-		readXMLManifest.multiSelectionEnabled = false;
-		readXMLManifest.fileSelectionMode = FILES_ONLY;
-
-		filters.clear();
-		filters.add(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.xmlFiles"), "xml"));
-
-		readXMLManifest.fileFilters = filters.toArray(new FileFilter[filters.size()]);
-
-		/* export tag */
-		exportTag = new OptionSet();
-		exportTag.title = messageSource.getMessage("filechooser.exportTag.title");
-		exportTag.okButton = messageSource.getMessage("export");
-		exportTag.acceptAllUsed = true;
-		exportTag.multiSelectionEnabled = false;
-		exportTag.fileSelectionMode = FILES_ONLY;
-
-		/* export signal */
-		exportSignal = new OptionSet();
-		exportSignal.title = messageSource.getMessage("filechooser.exportSignal.title");
-		exportSignal.okButton = messageSource.getMessage("export");
-		exportSignal.acceptAllUsed = true;
-		exportSignal.multiSelectionEnabled = false;
-		exportSignal.fileSelectionMode = FILES_ONLY;
-
-		filters.clear();
-		filters.add(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.binaryFiles"), "bin"));
-
-		exportSignal.fileFilters = filters.toArray(new FileFilter[filters.size()]);
-
-		/* export book */
-		exportBook = new OptionSet();
-		exportBook.title = messageSource.getMessage("filechooser.exportBook.title");
-		exportBook.okButton = messageSource.getMessage("export");
-		exportBook.acceptAllUsed = true;
-		exportBook.multiSelectionEnabled = false;
-		exportBook.fileSelectionMode = FILES_ONLY;
-
-		filters.clear();
-		filters.add(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.bookFiles"), "b"));
-
-		exportBook.fileFilters = filters.toArray(new FileFilter[filters.size()]);
-
-		/* save & load preset */
-		savePreset = new OptionSet();
-		savePreset.title = messageSource.getMessage("filechooser.savePreset.title");
-		savePreset.okButton = messageSource.getMessage("save");
-		savePreset.acceptAllUsed = true;
-		savePreset.multiSelectionEnabled = false;
-		savePreset.fileSelectionMode = FILES_ONLY;
-
-		loadPreset = new OptionSet();
-		loadPreset.title = messageSource.getMessage("filechooser.loadPreset.title");
-		loadPreset.okButton = messageSource.getMessage("load");
-		loadPreset.acceptAllUsed = true;
-		loadPreset.multiSelectionEnabled = false;
-		loadPreset.fileSelectionMode = FILES_ONLY;
-
-		filters.clear();
-		filters.add(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.xmlFiles"), "xml"));
-
-		savePreset.fileFilters = filters.toArray(new FileFilter[filters.size()]);
-		loadPreset.fileFilters = filters.toArray(new FileFilter[filters.size()]);
-
-		executablePreset = new OptionSet();
-		executablePreset.title = messageSource.getMessage("filechooser.executablePreset.title");
-		executablePreset.okButton = messageSource.getMessage("choose");
-		executablePreset.acceptAllUsed = true;
-		executablePreset.multiSelectionEnabled = false;
-		executablePreset.fileSelectionMode = FILES_ONLY;
-
-		filters.clear();
-		if (Pattern.matches(".*[Ww]indows.*", System.getProperty("os.name"))) {
-			filters.add(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.exeFiles"), "exe"));
-		}
-
-		executablePreset.fileFilters = filters.toArray(new FileFilter[filters.size()]);
-
-		bookPreset = new OptionSet();
-		bookPreset.title = messageSource.getMessage("filechooser.bookFilePreset.title");
-		bookPreset.okButton = messageSource.getMessage("choose");
-		bookPreset.acceptAllUsed = true;
-		bookPreset.multiSelectionEnabled = false;
-		bookPreset.fileSelectionMode = FILES_ONLY;
-
-		filters.clear();
-		filters.add(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.bookFiles"), "b"));
-
-		bookPreset.fileFilters = filters.toArray(new FileFilter[filters.size()]);
-
-		bookSavePreset = new OptionSet();
-		bookSavePreset.title = messageSource.getMessage("filechooser.bookSavePreset.title");
-		bookSavePreset.okButton = messageSource.getMessage("save");
-		bookSavePreset.acceptAllUsed = true;
-		bookSavePreset.multiSelectionEnabled = false;
-		bookSavePreset.fileSelectionMode = FILES_ONLY;
-
-		filters.clear();
-		filters.add(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.bookFiles"), "b"));
-
-		bookSavePreset.fileFilters = filters.toArray(new FileFilter[filters.size()]);
-
-		artifactProjectPreset = new OptionSet();
-		artifactProjectPreset.title = messageSource.getMessage("filechooser.artifactProjectPreset.title");
-		artifactProjectPreset.okButton = messageSource.getMessage("choose");
-		artifactProjectPreset.acceptAllUsed = false;
-		artifactProjectPreset.multiSelectionEnabled = false;
-		artifactProjectPreset.fileSelectionMode = DIRECTORIES_ONLY;
-
-		workingDirectoryPreset = new OptionSet();
-		workingDirectoryPreset.title = messageSource.getMessage("filechooser.workingDirectoryPreset.title");
-		workingDirectoryPreset.okButton = messageSource.getMessage("choose");
-		workingDirectoryPreset.acceptAllUsed = false;
-		workingDirectoryPreset.multiSelectionEnabled = false;
-		workingDirectoryPreset.fileSelectionMode = DIRECTORIES_ONLY;
-
-		classPathDirectoryPreset = new OptionSet();
-		classPathDirectoryPreset.title = messageSource.getMessage("filechooser.classPathDirectoryPreset.title");
-		classPathDirectoryPreset.okButton = messageSource.getMessage("choose");
-		classPathDirectoryPreset.acceptAllUsed = false;
-		classPathDirectoryPreset.multiSelectionEnabled = true;
-		classPathDirectoryPreset.fileSelectionMode = DIRECTORIES_ONLY;
-
-		jarFilePreset = new OptionSet();
-		jarFilePreset.title = messageSource.getMessage("filechooser.jarFilePreset.title");
-		jarFilePreset.okButton = messageSource.getMessage("choose");
-		jarFilePreset.acceptAllUsed = true;
-		jarFilePreset.multiSelectionEnabled = true;
-		jarFilePreset.fileSelectionMode = FILES_ONLY;
-
-		filters.clear();
-		filters.add(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.jarFiles"), "jar"));
-
-		jarFilePreset.fileFilters = filters.toArray(new FileFilter[filters.size()]);
-
-		codeFilePreset = new OptionSet();
-		codeFilePreset.title = messageSource.getMessage("filechooser.codeFilePreset.title");
-		codeFilePreset.okButton = messageSource.getMessage("choose");
-		codeFilePreset.acceptAllUsed = true;
-		codeFilePreset.multiSelectionEnabled = false;
-		codeFilePreset.fileSelectionMode = FILES_ONLY;
-
-		filters.clear();
-		filters.add(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.codeFiles"), "java", "class"));
-
-		codeFilePreset.fileFilters = filters.toArray(new FileFilter[filters.size()]);
-
+		OptionSet.jarFilePreset.setFilters(jar);
+		OptionSet.codeFilePreset.setFilters(jar_class);
 	}
 
 	public int showDialog(Component parent, OptionSet options) {
-		options.use();
+		options.use(this);
 		return showDialog(parent, options.okButton);
 	}
 
@@ -577,7 +310,7 @@ public class ViewerFileChooser extends JFileChooser {
 			setCurrentDirectory(new File(path));
 		}
 
-		file = chooseFileForWrite(parent, consoleSaveAsText);
+		file = chooseFileForWrite(parent, OptionSet.consoleSaveAsText);
 		if (file != null) {
 			applicationConfig.setLastConsoleSaveAsTextPath(getCurrentDirectory().getAbsolutePath());
 		}
@@ -596,7 +329,7 @@ public class ViewerFileChooser extends JFileChooser {
 			setCurrentDirectory(new File(path));
 		}
 
-		file = chooseFileForWrite(parent, tableSaveAsText);
+		file = chooseFileForWrite(parent, OptionSet.tableSaveAsText);
 		if (file != null) {
 			applicationConfig.setLastTableSaveAsTextPath(getCurrentDirectory().getAbsolutePath());
 		}
@@ -615,7 +348,7 @@ public class ViewerFileChooser extends JFileChooser {
 			setCurrentDirectory(new File(path));
 		}
 
-		file = chooseFileForWrite(parent, samplesSaveAsText);
+		file = chooseFileForWrite(parent, OptionSet.samplesSaveAsText);
 		if (file != null) {
 			applicationConfig.setLastSamplesSaveAsTextPath(getCurrentDirectory().getAbsolutePath());
 		}
@@ -634,7 +367,7 @@ public class ViewerFileChooser extends JFileChooser {
 			setCurrentDirectory(new File(path));
 		}
 
-		file = chooseFileForWrite(parent, samplesSaveAsFloat);
+		file = chooseFileForWrite(parent, OptionSet.samplesSaveAsFloat);
 		if (file != null) {
 			applicationConfig.setLastSamplesSaveAsFloatPath(getCurrentDirectory().getAbsolutePath());
 		}
@@ -657,7 +390,7 @@ public class ViewerFileChooser extends JFileChooser {
 			setSelectedFile(fileSuggestion);
 		}
 
-		file = chooseFileForWrite(parent, exportSignal);
+		file = chooseFileForWrite(parent, OptionSet.exportSignal);
 		if (file != null) {
 			applicationConfig.setLastExportSignalPath(getCurrentDirectory().getAbsolutePath());
 		}
@@ -680,7 +413,7 @@ public class ViewerFileChooser extends JFileChooser {
 			setSelectedFile(fileSuggestion);
 		}
 
-		file = chooseFileForWrite(parent, exportBook);
+		file = chooseFileForWrite(parent, OptionSet.exportBook);
 		if (file != null) {
 			applicationConfig.setLastExportBookPath(getCurrentDirectory().getAbsolutePath());
 		}
@@ -699,7 +432,7 @@ public class ViewerFileChooser extends JFileChooser {
 			setCurrentDirectory(new File(path));
 		}
 
-		file = chooseFileForWrite(parent, chartSaveAsPng);
+		file = chooseFileForWrite(parent, OptionSet.chartSaveAsPng);
 		if (file != null) {
 			applicationConfig.setLastChartSaveAsPngPath(getCurrentDirectory().getAbsolutePath());
 		}
@@ -718,7 +451,7 @@ public class ViewerFileChooser extends JFileChooser {
 			setCurrentDirectory(new File(path));
 		}
 
-		file = chooseFileForWrite(parent, saveMP5Config);
+		file = chooseFileForWrite(parent, OptionSet.saveMP5Config);
 		if (file != null) {
 			applicationConfig.setLastSaveMP5ConfigPath(getCurrentDirectory().getAbsolutePath());
 		}
@@ -741,7 +474,7 @@ public class ViewerFileChooser extends JFileChooser {
 			}
 		}
 
-		file = chooseFileForWrite(parent, saveMP5Signal);
+		file = chooseFileForWrite(parent, OptionSet.saveMP5Signal);
 		if (file != null && resetDir) {
 			applicationConfig.setLastSaveMP5ConfigPath(getCurrentDirectory().getAbsolutePath());
 		}
@@ -759,9 +492,9 @@ public class ViewerFileChooser extends JFileChooser {
 		if (path != null) {
 			setCurrentDirectory(new File(path));
 		}
-		saveDocument.fileFilters = filters;
+		//XXX		OptionSet.saveDocument.fileFilters = filters;
 
-		file = chooseFileForWrite(parent, saveDocument);
+		file = chooseFileForWrite(parent, OptionSet.saveDocument);
 		if (file != null) {
 			applicationConfig.setLastSaveDocumentPath(getCurrentDirectory().getAbsolutePath());
 		}
@@ -780,7 +513,7 @@ public class ViewerFileChooser extends JFileChooser {
 			setCurrentDirectory(new File(path));
 		}
 
-		file = chooseFileForWrite(parent, saveTag);
+		file = chooseFileForWrite(parent, OptionSet.saveTag);
 		if (file != null) {
 			applicationConfig.setLastSaveTagPath(getCurrentDirectory().getAbsolutePath());
 		}
@@ -799,7 +532,7 @@ public class ViewerFileChooser extends JFileChooser {
 			setCurrentDirectory(new File(path));
 		}
 
-		file = chooseFileForRead(parent, openTag);
+		file = chooseFileForRead(parent, OptionSet.openTag);
 		if (file != null) {
 			applicationConfig.setLastOpenTagPath(getCurrentDirectory().getAbsolutePath());
 		}
@@ -818,7 +551,7 @@ public class ViewerFileChooser extends JFileChooser {
 			setCurrentDirectory(new File(path));
 		}
 
-		file = chooseFileForRead(parent, expertTag);
+		file = chooseFileForRead(parent, OptionSet.expertTag);
 		if (file != null) {
 			applicationConfig.setLastExpertTagPath(getCurrentDirectory().getAbsolutePath());
 		}
@@ -837,7 +570,7 @@ public class ViewerFileChooser extends JFileChooser {
 			setCurrentDirectory(new File(path));
 		}
 
-		file = chooseFileForRead(parent, importTag);
+		file = chooseFileForRead(parent, OptionSet.importTag);
 		if (file != null) {
 			applicationConfig.setLastImportTagPath(getCurrentDirectory().getAbsolutePath());
 		}
@@ -856,7 +589,7 @@ public class ViewerFileChooser extends JFileChooser {
 			setCurrentDirectory(new File(path));
 		}
 
-		file = chooseFileForWrite(parent, exportTag);
+		file = chooseFileForWrite(parent, OptionSet.exportTag);
 		if (file != null) {
 			applicationConfig.setLastExportTagPath(getCurrentDirectory().getAbsolutePath());
 		}
@@ -876,7 +609,7 @@ public class ViewerFileChooser extends JFileChooser {
 			setSelectedFile(new File(""));
 		}
 
-		file = chooseFileForRead(parent, readXMLManifest);
+		file = chooseFileForRead(parent, OptionSet.readXMLManifest);
 
 		return file;
 
@@ -892,7 +625,7 @@ public class ViewerFileChooser extends JFileChooser {
 			setCurrentDirectory(new File(path));
 		}
 
-		file = chooseFileForWrite(parent, savePreset);
+		file = chooseFileForWrite(parent, OptionSet.savePreset);
 		if (file != null) {
 			applicationConfig.setLastPresetPath(getCurrentDirectory().getAbsolutePath());
 		}
@@ -911,7 +644,7 @@ public class ViewerFileChooser extends JFileChooser {
 			setCurrentDirectory(new File(path));
 		}
 
-		file = chooseFileForRead(parent, loadPreset);
+		file = chooseFileForRead(parent, OptionSet.loadPreset);
 		if (file != null) {
 			applicationConfig.setLastPresetPath(getCurrentDirectory().getAbsolutePath());
 		}
@@ -930,7 +663,7 @@ public class ViewerFileChooser extends JFileChooser {
 			setCurrentDirectory(new File(path));
 		}
 
-		file = chooseFileForWrite(parent, artifactProjectPreset);
+		file = chooseFileForWrite(parent, OptionSet.artifactProjectPreset);
 		if (file != null) {
 			applicationConfig.setLastArtifactProjectPath(getCurrentDirectory().getAbsolutePath());
 		}
@@ -946,7 +679,7 @@ public class ViewerFileChooser extends JFileChooser {
 		setSelectedFile(new File(""));
 		setCurrentDirectory(new File(System.getProperty("user.dir")));
 
-		file = chooseFileForExecute(parent, executablePreset);
+		file = chooseFileForExecute(parent, OptionSet.executablePreset);
 
 		return file;
 
@@ -962,7 +695,7 @@ public class ViewerFileChooser extends JFileChooser {
 			setCurrentDirectory(new File(path));
 		}
 
-		file = chooseFileForRead(parent, bookPreset);
+		file = chooseFileForRead(parent, OptionSet.bookPreset);
 		if (file != null) {
 			applicationConfig.setLastBookFilePath(getCurrentDirectory().getAbsolutePath());
 		}
@@ -981,7 +714,7 @@ public class ViewerFileChooser extends JFileChooser {
 			setCurrentDirectory(new File(path));
 		}
 
-		file = chooseFileForWrite(parent, bookSavePreset);
+		file = chooseFileForWrite(parent, OptionSet.bookSavePreset);
 		if (file != null) {
 			applicationConfig.setLastBookFilePath(getCurrentDirectory().getAbsolutePath());
 		}
@@ -1014,7 +747,7 @@ public class ViewerFileChooser extends JFileChooser {
 			setCurrentDirectory(new File(System.getProperty("user.dir")));
 		}
 
-		file = chooseDirectory(parent, workingDirectoryPreset);
+		file = chooseDirectory(parent, OptionSet.workingDirectoryPreset);
 
 		return file;
 
@@ -1030,7 +763,7 @@ public class ViewerFileChooser extends JFileChooser {
 			setCurrentDirectory(new File(path));
 		}
 
-		files = chooseDirectoriesForRead(parent, classPathDirectoryPreset);
+		files = chooseDirectoriesForRead(parent, OptionSet.classPathDirectoryPreset);
 		if (files != null) {
 			applicationConfig.setLastLibraryPath(getCurrentDirectory().getAbsolutePath());
 		}
@@ -1049,7 +782,7 @@ public class ViewerFileChooser extends JFileChooser {
 			setCurrentDirectory(new File(path));
 		}
 
-		files = chooseFilesForRead(parent, jarFilePreset);
+		files = chooseFilesForRead(parent, OptionSet.jarFilePreset);
 		if (files != null) {
 			applicationConfig.setLastLibraryPath(getCurrentDirectory().getAbsolutePath());
 		}
@@ -1068,7 +801,7 @@ public class ViewerFileChooser extends JFileChooser {
 			setCurrentDirectory(new File(path));
 		}
 
-		file = chooseFileForRead(parent, codeFilePreset);
+		file = chooseFileForRead(parent, OptionSet.codeFilePreset);
 		if (file != null) {
 			applicationConfig.setLastLibraryPath(getCurrentDirectory().getAbsolutePath());
 		}
@@ -1089,28 +822,82 @@ public class ViewerFileChooser extends JFileChooser {
 		this.applicationConfig = applicationConfig;
 	}
 
-	protected class OptionSet {
-		String title;
-		String okButton;
-		boolean acceptAllUsed;
-		boolean multiSelectionEnabled;
-		int fileSelectionMode;
+	protected enum OptionSet {
+		consoleSaveAsText("filechooser.consoleSaveAsText.title", "save"),
+		tableSaveAsText("filechooser.tableSaveAsText.title", "save"),
+		samplesSaveAsText("filechooser.samplesSaveAsText.title", "save"),
+		samplesSaveAsFloat("filechooser.samplesSaveAsFloat.title", "save"),
+		chartSaveAsPng("filechooser.chartSaveAsPng.title", "save"),
+		saveMP5Config("filechooser.saveMP5Config.title", "save"),
+		saveMP5Signal("filechooser.saveMP5Signal.title", "save"),
+		saveDocument("filechooser.saveDocument.title", "save"),
+		saveTag("filechooser.saveTag.title", "save"),
+		openTag("filechooser.openTag.title", "open"),
+		expertTag("filechooser.expertTag.title", "choose"),
+		importTag("filechooser.importTag.title", "import"),
+		exportTag("filechooser.exportTag.title", "export"),
+		savePreset("filechooser.savePreset.title", "save"),
+		loadPreset("filechooser.loadPreset.title", "load"),
+		executablePreset("filechooser.executablePreset.title", "choose"),
+		bookPreset("filechooser.bookFilePreset.title", "choose"),
+		bookSavePreset("filechooser.bookFilePreset.title", "save"),
+		artifactProjectPreset("filechooser.artifactProjectPreset.title", "choose",
+				      false, false, FILES_ONLY),
+		exportSignal("filechooser.exportSignal.title", "export"),
+		exportBook("filechooser.exportBook.title", "export"),
+		readXMLManifest("filechooser.readXMLManifest.title", "read"),
+		workingDirectoryPreset("filechooser.workingDirectoryPreset.title", "choose",
+				       false, false, DIRECTORIES_ONLY),
+		classPathDirectoryPreset("filechooser.classPathDirectoryPreset.title", "choose",
+					 false, true, DIRECTORIES_ONLY),
+		jarFilePreset("filechooser.jarFilePreset.title", "choose",
+			      true, true, FILES_ONLY),
+		codeFilePreset("filechooser.codeFilePreset.title", "choose");
+
+		final String titleMessage;
+		final String okButtonMessage;
+		String title, okButton; /* set through initializer */
+		final boolean acceptAllUsed;
+		final boolean multiSelectionEnabled;
+		final int fileSelectionMode;
 		FileFilter[] fileFilters;
 
-		void use() {
-			setDialogTitle(title);
-			setApproveButtonText(okButton);
-			setAcceptAllFileFilterUsed(acceptAllUsed);
-			resetChoosableFileFilters();
-			setMultiSelectionEnabled(multiSelectionEnabled);
-			setFileSelectionMode(fileSelectionMode);
-			if (fileFilters != null) {
-				for (int i=fileFilters.length-1; i>= 0; i--) {
-					addChoosableFileFilter(fileFilters[i]);
-				}
-			}
+		OptionSet(String titleMessage, String okMessage,
+			  boolean acceptAllUsed, boolean multiSelectionEnabled,
+			  int fileSelectionMode){
+			this.titleMessage = titleMessage;
+			this.okButtonMessage = okMessage;
+			this.acceptAllUsed = acceptAllUsed;
+			this.multiSelectionEnabled = multiSelectionEnabled;
+			this.fileSelectionMode = fileSelectionMode;
+			this.fileFilters = fileFilters;
+
+			logger.debug("added OptionSet: " + this);
+		}
+
+		OptionSet(String titleMessage, String okMessage){
+			this(titleMessage, okMessage, true, false, FILES_ONLY);
+		}
+
+		void use(ViewerFileChooser chooser) {
+			chooser.setDialogTitle(title);
+			chooser.setApproveButtonText(okButton);
+			chooser.setAcceptAllFileFilterUsed(acceptAllUsed);
+			chooser.resetChoosableFileFilters();
+			chooser.setMultiSelectionEnabled(multiSelectionEnabled);
+			chooser.setFileSelectionMode(fileSelectionMode);
+			if (fileFilters != null)
+				for (int i=fileFilters.length-1; i>= 0; i--)
+					chooser.addChoosableFileFilter(fileFilters[i]);
+		}
+
+		void initialize(MessageSourceAccessor messageSource) {
+			this.title = messageSource.getMessage(titleMessage);
+			this.okButton = messageSource.getMessage(okButtonMessage);
+		}
+
+		void setFilters(FileFilter ... fileFilters){
+			this.fileFilters = fileFilters;
 		}
 	}
-
-
 }
