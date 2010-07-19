@@ -9,8 +9,9 @@ import java.util.HashMap;
 
 import org.signalml.app.document.TagDocument;
 
-/** SleepTagName
- *
+/**
+ * This is an abstract class with only static methods and attributes.
+ * Associates sleep stages with their levels and colours.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -58,7 +59,14 @@ public abstract class SleepTagName {
 	public static Color AASM_COLOR_N3 = new Color(0xff9966);
 	public static Color AASM_COLOR_REM = new Color(0xcc00cc);
 
+        /**
+         * HashMap associating sleep stages with their levels
+         */
 	private static final HashMap<String,Integer> levelMap;
+
+        /**
+         * HashMap associating sleep stages with their colours
+         */
 	private static final HashMap<String,Color> colorMap;
 
 	static {
@@ -96,27 +104,57 @@ public abstract class SleepTagName {
 
 	}
 
+        /**
+         * Returns the level of a given sleep stage
+         * @param name the name of the sleep stage
+         * @return the level of a given sleep stage
+         */
 	public static int getLevel(String name) {
 		Integer integer = levelMap.get(name);
 		return (integer == null ? 0 : integer);
 	}
 
+        /**
+         * Returns the colour for the given sleep stage
+         * @param name the name of the sleep stage
+         * @return the colour for the given sleep stage
+         */
 	public static Color getColor(String name) {
 		return colorMap.get(name);
 	}
 
+        /**
+         * Returns whether a given stage is a wake stage
+         * @param name the name of the sleep stage
+         * @return true if a given stage is a wake stage, false otherwise
+         */
 	public static boolean isWake(String name) {
 		return (RK_WAKE.equals(name) || AASM_WAKE.equals(name));
 	}
 
+        /**
+         * Returns whether a given stage is a REM stage
+         * @param name the name of the sleep stage
+         * @return true if a given stage is a REM stage, false otherwise
+         */
 	public static boolean isREM(String name) {
 		return (RK_REM.equals(name) || AASM_REM.equals(name));
 	}
 
+        /**
+         * Returns whether a given stage is a slow wave stage
+         * @param name the name of the sleep stage
+         * @return true if a given stage is a slow wave stage, false otherwise
+         */
 	public static boolean isSlowWave(String name) {
 		return (RK_3.equals(name) || RK_4.equals(name) || AASM_N3.equals(name));
 	}
 
+        /**
+         * Returns whether a given stage is a proper sleep stage
+         * @param name the name of the sleep stage
+         * @return true if a given stage is a proper sleep stage, false otherwise
+         */
 	public static boolean isPropperSleep(String name) {
 		return (
 		               RK_2.equals(name) || RK_3.equals(name) || RK_4.equals(name) || RK_REM.equals(name)
@@ -124,10 +162,21 @@ public abstract class SleepTagName {
 		       );
 	}
 
+        /**
+         * Returns whether a given stage is a sleep stage
+         * @param name the name of the sleep stage
+         * @return true if a given stage is a sleep stage, false otherwise
+         */
 	public static boolean isAnySleep(String name) {
 		return (isPropperSleep(name) || RK_1.equals(name) || AASM_N1.equals(name));
 	}
 
+        /**
+         * Returns whether a given tag is a valid tag for RK sleep
+         * @param tag the tag which validity is to be checked
+         * @return true if a given tag is a valid tag for RK sleep,
+         * false otherwise
+         */
 	public static boolean isValidRKSleepTag(TagDocument tag) {
 
 		StyledTagSet tagSet = tag.getTagSet();
@@ -166,6 +215,12 @@ public abstract class SleepTagName {
 
 	}
 
+        /**
+         * Returns whether a given tag is a valid tag for AAMS sleep
+         * @param tag the tag which validity is to be checked
+         * @return true if a given tag is a valid tag for AAMS sleep,
+         * false otherwise
+         */
 	public static boolean isValidAASMSleepTag(TagDocument tag) {
 
 		StyledTagSet tagSet = tag.getTagSet();

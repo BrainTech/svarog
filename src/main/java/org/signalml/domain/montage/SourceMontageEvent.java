@@ -6,8 +6,10 @@ package org.signalml.domain.montage;
 
 import java.util.EventObject;
 
-/** SourceMontageEvent
- * Class representing event associated with some change in source montage channels
+/**
+ * This class represents an event associated with change, removal of addition of
+ * a {@link SourceChannel source channel}.
+ * Contains an index of this channel.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -17,14 +19,14 @@ public class SourceMontageEvent extends EventObject {
 	private static final long serialVersionUID = 1L;
 
         /**
-         * number of a Source Channel that is connected
+         * an index of a Source Channel that was changed
          */
 	private int channel;
 
         /**
-         * index of a source channel that has been added/removed/changed
-         * @param source source montage on which the Event initially occurred.
-         * @param channel channel that has been added/removed/changed
+         * an index of a source channel that has been added/removed/changed
+         * @param source a source montage on which the Event initially occurred.
+         * @param channel a channel that has been added/removed/changed
          */
 	public SourceMontageEvent(Object source, int channel) {
 		super(source);
@@ -33,7 +35,7 @@ public class SourceMontageEvent extends EventObject {
 
         /**
          *
-         * @return channel that has been added/removed/changed
+         * @return a channel that has been added/removed/changed
          */
 	public int getChannel() {
 		return channel;

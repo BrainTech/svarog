@@ -7,21 +7,54 @@ package org.signalml.domain.tag;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.signal.MultichannelSampleSource;
 
-/** TagComparisonResults
- *
+/**
+ * This class contains {@link TagComparisonResult results} of comparison
+ * between two sets of tags (two files with tags).
+ * Results are divided between different types of tags (page-, block-, channel-)
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class TagComparisonResults {
 
+        /**
+         * Result of comparison between page tags
+         */
 	private TagComparisonResult pageTagResult;
+
+        /**
+         * Result of comparison between block tags
+         */
 	private TagComparisonResult blockTagResult;
+
+        /**
+         * An array of result of comparison between channel tags
+         * (one entry for each channel)
+         */
 	private TagComparisonResult[] channelTagResults;
 
+        /**
+         * The length of the signal
+         */
 	private float totalSignalTime;
+
+        /**
+         * The lengths of channels
+         */
 	private float[] totalChannelTimes;
+
+        /**
+         * The names of channels
+         */
 	private String[] channelNames;
 
+        /**
+         * Constructor. Creates a new object with given results of comparison
+         * of tags of different types
+         * @param pageTagResult the result of comparison between page tags
+         * @param blockTagResult the result of comparison between block tags
+         * @param channelTagResults an array with results of comparison
+         * between channel tags (one channel - one result)
+         */
 	public TagComparisonResults(TagComparisonResult pageTagResult, TagComparisonResult blockTagResult, TagComparisonResult[] channelTagResults) {
 
 		this.pageTagResult = pageTagResult;
@@ -32,42 +65,86 @@ public class TagComparisonResults {
 
 	}
 
+        /**
+         * Returns the number of channels
+         * @return the number of channels
+         */
 	public int getChannelCount() {
 		return channelTagResults.length;
 	}
 
+        /**
+         * Returns the result of comparison between tags for channel of a given
+         * index
+         * @param index the index of the channel
+         * @return the result of comparison between tags for channel of a given
+         * index
+         */
 	public TagComparisonResult getChannelResult(int index) {
 		return channelTagResults[index];
 	}
 
+        /**
+         * Returns the result of comparison between page tags
+         * @return the result of comparison between page tags
+         */
 	public TagComparisonResult getPageTagResult() {
 		return pageTagResult;
 	}
 
+        /**
+         * Returns the result of comparison between block tags
+         * @return the result of comparison between block tags
+         */
 	public TagComparisonResult getBlockTagResult() {
 		return blockTagResult;
 	}
 
+        /**
+         * Returns an array of result of comparison between channel tags
+         * @return an array of result of comparison between channel tags
+         */
 	public TagComparisonResult[] getChannelTagResults() {
 		return channelTagResults;
 	}
 
+        /**
+         * Returns the length of the signal (in seconds)
+         * @return the length of the signal (in seconds)
+         */
 	public float getTotalSignalTime() {
 		return totalSignalTime;
 	}
 
+        /**
+         * Sets the length of the signal to a given value
+         * @param totalSignalTime the length of the signal (in seconds)
+         */
 	public void setTotalSignalTime(float totalSignalTime) {
 		this.totalSignalTime = totalSignalTime;
 	}
 
+        /**
+         * Returns an array of lengths of channels
+         * @return an array of lengths of channels
+         */
 	public float[] getTotalChannelTimes() {
 		return totalChannelTimes;
 	}
 
+        /**
+         * Returns the length of a given channel
+         * @param index the index of a channel
+         * @return the length of a given channel
+         */
 	public float getTotalChannelTime(int index) {
 		return totalChannelTimes[index];
 	}
 
+        /**
+         * Sets lengths of channels to given values
+         * @param totalChannelTimes an array of lengths of channels to be set
+         */
 	public void setTotalChannelTimes(float[] totalChannelTimes) {
 		if (totalChannelTimes.length < channelTagResults.length) {
 			throw new IndexOutOfBoundsException("Array too short");
@@ -77,10 +154,18 @@ public class TagComparisonResults {
 		}
 	}
 
+        /**
+         * Returns an array of channels names
+         * @return an array of channels names
+         */
 	public String[] getChannelNames() {
 		return channelNames;
 	}
 
+        /**
+         * Sets channels names to given values
+         * @param channelNames an array of channels names to be set
+         */
 	public void setChannelNames(String[] channelNames) {
 		if (channelNames.length < channelTagResults.length) {
 			throw new IndexOutOfBoundsException("Array too short");
@@ -90,6 +175,11 @@ public class TagComparisonResults {
 		}
 	}
 
+        /**
+         * Sets attributes of the current object using given parameters
+         * @param source the source of samples
+         * @param montage the montage of source channels
+         */
 	public void getParametersFromSampleSource(MultichannelSampleSource source, SourceMontage montage) {
 
 		int channelCount = source.getChannelCount();

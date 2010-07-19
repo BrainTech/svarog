@@ -23,7 +23,10 @@ import org.signalml.util.Util;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /** SourceMontage
- * Class representing a source montage
+ * This class represents a source montage.
+ * It contains a list of {@link SourceChannel source channels}, from which every
+ * has an assigned {@link Channel function (location)}.
+ * This class are also assigned listeners informing about changes in it.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -61,29 +64,31 @@ public class SourceMontage {
 	private transient HashMap<String,SourceChannel> sourceChannelsByLabel;
 
         /**
-         * list of EventListeners associated with current object
+         * list of EventListeners associated with the current object
          */
 	protected transient EventListenerList listenerList = new EventListenerList();
 
         /**
-         * PropertyChangeSupport associated with current object
+         * PropertyChangeSupport associated with the current object
          */
 	protected transient PropertyChangeSupport pcSupport = new PropertyChangeSupport(this);
 
         /**
-         * Informs whether SourceMontage has been changed
+         * Informs whether the SourceMontage has been changed
          */
 	private transient boolean changed = false;
 
         /**
-         * Constructor. Creates empty SourceMontage
+         * Constructor. Creates an empty SourceMontage
          */
 	protected SourceMontage() {
 	}
 
         /**
-         * Constructor. Creates SourceMontage for a given signalType without channels
-         * @param signalType type of a signal for which SourceMontage is to be created
+         * Constructor. Creates a SourceMontage for a given signalType without
+         * channels
+         * @param signalType a type of a signal for which a SourceMontage
+         * is to be created
          */
 	public SourceMontage(SignalType signalType) {
 		if (signalType == null) {
@@ -94,10 +99,13 @@ public class SourceMontage {
 	}
 
         /**
-         * Constructor. Creates SourceMontage for a given signalType with channelCount empty channels
-         * @param signalType type of a signal
-         * @param channelCount number of channels to be created
-         * @throws SanityCheckException when addSourceChannel fails because of duplicate labels/functions. Means there is error in code
+         * Constructor. Creates a SourceMontage for a given signalType
+         * with channelCount empty channels
+         * @param signalType a type of a signal
+         * @param channelCount a number of channels to be created
+         * @throws SanityCheckException thrown when addSourceChannel fails
+         * because of duplicate labels/functions.
+         * Means there is an error in code
          */
         //TODO moim zdaniem ten wyjątek nie ma prawa być wyrzucony
 	public SourceMontage(SignalType signalType, int channelCount) {
@@ -116,9 +124,11 @@ public class SourceMontage {
 	}
 
         /**
-         * Constructor. Creates SourceMontage from a given document with a signal
-         * @param document document with a signal
-         * @throws SanityCheckException when addSourceChannel fails because of duplicate labels/functions. Means there is error in code
+         * Constructor. Creates a SourceMontage from a given document with a signal
+         * @param document a document with a signal
+         * @throws SanityCheckException thrown when addSourceChannel fails
+         * because of duplicate labels/functions.
+         * Means there is error in code
          */
 	public SourceMontage(SignalDocument document) {
 
@@ -154,7 +164,7 @@ public class SourceMontage {
 
         /**
          * Copy constructor
-         * @param montage SourceMontage to be copied
+         * @param montage a SourceMontage to be copied
          */
 	public SourceMontage(SourceMontage montage) {
 		super();
@@ -162,9 +172,10 @@ public class SourceMontage {
 	}
 
         /**
-         * copies given SourceMontage parameters to current object. sourceChannels are also copied.
+         * Copies given SourceMontage parameters to the current object.
+         * sourceChannels are also copied.
          * Listeners are not copied
-         * @param montage SourceMontage which parameters are to be copied
+         * @param montage a SourceMontage which parameters are to be copied
          */
 	protected void copyFrom(SourceMontage montage) {
 		setChanged(montage.changed);
@@ -185,26 +196,31 @@ public class SourceMontage {
 	}
 
         /**
-         * Checks if current object has the same number of source channels as signal in given document
-         * @param document document with signal to be compared with current object
-         * @return true if number of source channels the same, false otherwise
+         * Checks if the current object has the same number of source channels
+         * as signal in a given document
+         * @param document a document with signal to be compared with current object
+         * @return true if a number of source channels is the same, false otherwise
          */
 	public boolean isCompatible(SignalDocument document) {
 		return(document.getChannelCount() == getSourceChannelCount());
 	}
 
         /**
-         * Checks if current object has the same number of source channels as given SourceMontage object
-         * @param montage SourceMontage to be compared with current object
-         * @return true if number of source channels the same, false otherwise
+         * Checks if the current object has the same number of source channels
+         * as given SourceMontage object
+         * @param montage a SourceMontage to be compared with current object
+         * @return true if number of source channels is the same, false otherwise
          */
 	public boolean isCompatible(SourceMontage montage) {
 		return(montage.getSourceChannelCount() == getSourceChannelCount());
 	}
 
         /**
-         * Adapts current object to a given document with a signal. Changes the number of source channels (adding from file or removing excessive) to make it equal with number of channels in document
-         * @param document document with a signal to which current object is to be adapted
+         * Adapts the current object to a given document with a signal.
+         * Changes the number of source channels (adding from file or removing excessive)
+         * to make it equal with the number of channels in a document
+         * @param document a document with a signal to which current object is
+         * to be adapted
          */
 	public void adapt(SignalDocument document) {
 
@@ -237,7 +253,7 @@ public class SourceMontage {
 	}
 
         /**
-         * Informs whether SourceMontage has been changed
+         * Informs whether a SourceMontage has been changed
          * @return true if SourceMontage has been changed, false otherwise
          */
 	public boolean isChanged() {
@@ -247,7 +263,7 @@ public class SourceMontage {
 
         /**
          * Sets changed parameter
-         * @param changed changed parameter to be set
+         * @param changed a changed parameter to be set
          */
 	public void setChanged(boolean changed) {
 		if (this.changed != changed) {
@@ -271,8 +287,9 @@ public class SourceMontage {
 	}
 
         /**
-         * Returns HashMap associating SourceChannels with their function. If doesn't exists it is created as empty and returned
-         * @return HashMap associating SourceChannels with their function.
+         * Returns a HashMap associating SourceChannels with their function.
+         * If doesn't exists it is created as empty and returned
+         * @return a HashMap associating SourceChannels with their function.
          */
 	protected HashMap<Channel, LinkedList<SourceChannel>> getSourceChannelsByFunction() {
 		if (sourceChannelsByFunction == null) {
@@ -283,7 +300,7 @@ public class SourceMontage {
 
         /**
          * Returns list of SourceChannels with a given function
-         * @param function function thatSourceChannels should fulfil
+         * @param function a function thatSourceChannels should fulfil
          * @return list of SourceChannels with a given function
          */
 	protected LinkedList<SourceChannel> getSourceChannelsByFunctionList(Channel function) {
@@ -302,8 +319,9 @@ public class SourceMontage {
 	}
 
         /**
-         * Returns HashMap associating SourceChannels with their labels. If doesn't exists it is created
-         * @return HashMap associating SourceChannels with their labels.
+         * Returns a HashMap associating SourceChannels with their labels.
+         * If doesn't exist it is created
+         * @return a HashMap associating SourceChannels with their labels.
          */
 	protected HashMap<String,SourceChannel> getSourceChannelsByLabel() {
 		if (sourceChannelsByLabel == null) {
@@ -316,8 +334,8 @@ public class SourceMontage {
 	}
 
         /**
-         * Returns SourceChannel of a given label
-         * @param label label of SourceChannel to be found
+         * Returns a SourceChannel of a given label
+         * @param label a label of SourceChannel to be found
          * @return found SourceChannel
          */
 	protected SourceChannel getSourceChannelByLabel(String label) {
@@ -326,36 +344,38 @@ public class SourceMontage {
 
         /**
          *
-         * @return number of SourceChannels
+         * @return a number of SourceChannels
          */
 	public int getSourceChannelCount() {
 		return sourceChannels.size();
 	}
 
         /**
-         * Finds label of SourceChannel of a given index
-         * @param index index of SourceChannel to be found
-         * @return label of SourceChannel of a given index
+         * Finds the label of a SourceChannel of a given index
+         * @param index an index of SourceChannel to be found
+         * @return the label of a SourceChannel of a given index
          */
 	public String getSourceChannelLabelAt(int index) {
 		return sourceChannels.get(index).getLabel();
 	}
 
         /**
-         * Returns function of a SourceChannel of a given index
-         * @param index index of SourceChannel to be found
-         * @return function of a SourceChannel of a given index
+         * Returns the function of a SourceChannel of a given index
+         * @param index an index of a SourceChannel to be found
+         * @return the function of a SourceChannel of a given index
          */
 	public Channel getSourceChannelFunctionAt(int index) {
 		return sourceChannels.get(index).getFunction();
 	}
 
         /**
-         * Finds SourceChannel of a given index and changes its label to a given value
-         * @param index index of SourceChannel
-         * @param label String with a unique label to be set
-         * @return old label of found SourceChannel
-         * @throws MontageException thrown when label empty, not unique or containing invalid characters
+         * Finds a SourceChannel of a given index and changes its label
+         * to a given value
+         * @param index an index of SourceChannel
+         * @param label a String with a unique label to be set
+         * @return old a label of found SourceChannel
+         * @throws MontageException thrown when the label empty, not unique
+         * or containing invalid characters
          */
 	public String setSourceChannelLabelAt(int index, String label) throws MontageException {
 
@@ -407,11 +427,12 @@ public class SourceMontage {
 	}
 
         /**
-         * Finds SourceChannel of a given index and changes its function to a given value
-         * @param index index of SourceChannel
-         * @param function Channel object with a new function for a SourceChannel
-         * @return old function of found SourceChannel
-         * @throws MontageException thrown when function is not unique
+         * Finds a SourceChannel of a given index and changes its function
+         * to a given value
+         * @param index an index of SourceChannel
+         * @param function a Channel object with a new function for a SourceChannel
+         * @return old a function of found SourceChannel
+         * @throws MontageException thrown when the function is not unique
          */
 	public Channel setSourceChannelFunctionAt(int index, Channel function) throws MontageException {
 
@@ -438,9 +459,9 @@ public class SourceMontage {
 	}
 
         /**
-         * Returns array of indexes of SourceChannels with a given function
-         * @param function function thatSourceChannels should fulfil
-         * @return array of indexes of SourceChannels with a given function
+         * Returns an array of indexes of SourceChannels with a given function
+         * @param function a function that SourceChannels should fulfil
+         * @return an array of indexes of SourceChannels with a given function
          */
 	public int[] getSourceChannelsByFunction(Channel function) {
 		LinkedList<SourceChannel> list = getSourceChannelsByFunctionList(function);
@@ -454,9 +475,10 @@ public class SourceMontage {
 	}
 
         /**
-         * Returns index of first SourceChannels with a given function
-         * @param function function thatSourceChannels should fulfil
-         * @return index of first SourceChannels with a given function, -1 if doesn't exist
+         * Returns an index of a first SourceChannel with a given function
+         * @param function a function that SourceChannels should fulfil
+         * @return an index of a first SourceChannel with a given function,
+         * -1 if doesn't exist
          */
 	public int getFirstSourceChannelWithFunction(Channel function) {
 		LinkedList<SourceChannel> list = getSourceChannelsByFunctionList(function);
@@ -467,9 +489,10 @@ public class SourceMontage {
 	}
 
         /**
-         * Returns index of first SourceChannels with a given label
-         * @param label String with a label to be found
-         * @return index of first SourceChannels with a given label, -1 if doesn't exist
+         * Returns an index of a first SourceChannel with a given label
+         * @param label a String with a label to be found
+         * @return an index of a first SourceChannel with a given label,
+         * -1 if doesn't exist
          */
 	public int getSourceChannelForLabel(String label) {
 		SourceChannel channel = getSourceChannelsByLabel().get(label);
@@ -480,9 +503,9 @@ public class SourceMontage {
 	}
 
 	/**
-         * Adds new SourceChannel with a given label and function
-         * @param label unique label for new SourceChannel
-         * @param function unique function for new SourceChannel
+         * Adds a new SourceChannel with a given label and function
+         * @param label a unique label for new SourceChannel
+         * @param function a unique function for new SourceChannel
          * @throws MontageException thrown when label or function not unique
          */
         public void addSourceChannel(String label, Channel function) throws MontageException {
@@ -510,7 +533,7 @@ public class SourceMontage {
 	}
 
         /**
-         * Removes last SourceChannel on the sourceChannels list from SourceMontage
+         * Removes the last SourceChannel on the sourceChannels list from a SourceMontage
          * @return removed SourceChannel
          */
 	public SourceChannel removeSourceChannel() {
@@ -529,9 +552,9 @@ public class SourceMontage {
 	}
 
         /**
-         * Finds unique label for a SourceChannel.
-         * @param stem String on which new label is to be based
-         * @return unique label for a SourceChannel
+         * Finds a unique label for a SourceChannel.
+         * @param stem a String on which new label is to be based
+         * @return a unique label for a SourceChannel
          */
 	public String getNewSourceChannelLabel(String stem) {
 
@@ -549,7 +572,8 @@ public class SourceMontage {
 	}
 
         /**
-         * Add a PropertyChangeListener to the listener list. The listener is registered for all properties.
+         * Add a PropertyChangeListener to the listener list.
+         * The listener is registered for all properties.
          * @param listener The PropertyChangeListener to be added
          */
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -557,17 +581,20 @@ public class SourceMontage {
 	}
 
         /**
-         * Add a PropertyChangeListener for a specific property. The listener will be invoked only when a call on firePropertyChange names that specific property
+         * Add a PropertyChangeListener for a specific property.
+         * The listener will be invoked only when a call on firePropertyChange
+         * names that specific property
          * @param propertyName The name of the property to listen on.
-         * @param listener The PropertyChangeListener to be added
+         * @param listener the PropertyChangeListener to be added
          */
 	public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
 		pcSupport.addPropertyChangeListener(propertyName, listener);
 	}
 
         /**
-         * Remove a PropertyChangeListener from the listener list. This removes a PropertyChangeListener that was registered for all properties.
-         * @param listener The PropertyChangeListener to be removed
+         * Remove a PropertyChangeListener from the listener list. This removes
+         * a PropertyChangeListener that was registered for all properties.
+         * @param listener the PropertyChangeListener to be removed
          */
 	public void removePropertyChangeListener(PropertyChangeListener listener) {
 		pcSupport.removePropertyChangeListener(listener);
@@ -575,8 +602,8 @@ public class SourceMontage {
 
         /**
          * Remove a PropertyChangeListener for a specific property.
-         * @param propertyName The name of the property that was listened on.
-         * @param listener The PropertyChangeListener to be removed
+         * @param propertyName the name of the property that was listened on.
+         * @param listener the PropertyChangeListener to be removed
          */
 	public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
 		pcSupport.removePropertyChangeListener(propertyName, listener);
@@ -599,9 +626,9 @@ public class SourceMontage {
 	}
 
         /**
-         * Fires event of adding channel
-         * @param source The object on which the Event initially occurred.
-         * @param channel index of channel added
+         * Fires an event of adding a channel
+         * @param source the object on which the Event initially occurred.
+         * @param channel an index of an added channel
          */
 	protected void fireSourceMontageChannelAdded(Object source, int channel) {
 		Object[] listeners = listenerList.getListenerList();
@@ -618,9 +645,9 @@ public class SourceMontage {
 
 
         /**
-         * Fires event of removing channel
-         * @param source The object on which the Event initially occurred.
-         * @param channel index of channel removed
+         * Fires an event of removing channel
+         * @param source the object on which the Event initially occurred.
+         * @param channel an index of removed channel
          */
 	protected void fireSourceMontageChannelRemoved(Object source, int channel) {
 		Object[] listeners = listenerList.getListenerList();
@@ -636,9 +663,9 @@ public class SourceMontage {
 	}
 
         /**
-         * Fires event of changing channel
-         * @param source The object on which the Event initially occurred.
-         * @param channel index of channel changed
+         * Fires an event of changing channel
+         * @param source the object on which the Event initially occurred.
+         * @param channel an index of a changed channel
          */
 	protected void fireSourceMontageChannelChanged(Object source, int channel) {
 		Object[] listeners = listenerList.getListenerList();

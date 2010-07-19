@@ -6,8 +6,10 @@ package org.signalml.domain.montage;
 
 import org.springframework.validation.Errors;
 
-/** AverageReferenceMontageGenerator
- * Abstract class representing generator for a average reference montage
+/**
+ * Abstract class representing a generator for an average reference montage.
+ * It generates montage of that type from given "raw" montage and checks if
+ * objects are valid montages of that type
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -16,13 +18,20 @@ public abstract class AverageReferenceMontageGenerator implements MontageGenerat
 	private static final long serialVersionUID = 1L;
 
         /**
-         * array with SourceChannel's functions that generator should concern
+         * array with functions of {@link SourceChannel source channels} that
+         * generator will use as reference channels in created {@link Montage montages}
+         * (actually in {@link MontageChannel montage channels} in a montage)
          */
 	protected transient Channel[] refChannels;
 
         /**
-         * Constructor. Creates generator for average reference montage based on array with SourceChannel's functions that generator should concern
-         * @param refChannels
+         * Constructor. Creates a generator for an average reference montage
+         * based on <i>refChannels</i> array
+         * @param refChannels array with functions of
+         * {@link SourceChannel source channels} that will be used as
+         * reference channels in created {@link Montage montage}
+         * (actually in {@link MontageChannel montage channels} in a montage)
+         * @throws NullPointerException
          */
 	protected AverageReferenceMontageGenerator(Channel[] refChannels) {
 		if (refChannels == null || refChannels.length == 0) {
@@ -32,9 +41,10 @@ public abstract class AverageReferenceMontageGenerator implements MontageGenerat
 	}
 
         /**
-         * Creates a average reference montage from given montage.
-         * @param montage montage to be used
-         * @throws MontageException thrown if two channels have the same function or there is no channel with some function
+         * Creates an average reference montage from a given montage.
+         * @param montage the montage to be used
+         * @throws MontageException thrown if two channels have the same function
+         * or there is no channel with some function
          */
 	@Override
 	public void createMontage(Montage montage) throws MontageException {
@@ -83,10 +93,11 @@ public abstract class AverageReferenceMontageGenerator implements MontageGenerat
 	}
 
         /**
-         * Checks if montage is a valid average reference montage.
-         * @param sourceMontage montage to be checked
+         * Checks if the montage is a valid average reference montage.
+         * @param sourceMontage the montage to be checked
          * @param errors Errors object used to report errors
-         * @return true if montage is a valid average reference montage, false otherwise
+         * @return true if the montage is a valid average reference montage,
+         * false otherwise
          */
 	@Override
 	public boolean validateSourceMontage(SourceMontage sourceMontage, Errors errors) {
@@ -111,16 +122,18 @@ public abstract class AverageReferenceMontageGenerator implements MontageGenerat
 	}
 
         /**
-         * Reports error, that channel (function of a source channel) was not found
-         * @param refChannel channel that was not found
-         * @param errors Errors object used to report errors
+         * Reports error, that the channel (the function of a source channel)
+         * was not found
+         * @param refChannel the channel that was not found
+         * @param errors the Errors object used to report errors
          */
 	protected abstract void onNotFound(Channel refChannel, Errors errors);
 
         /**
-         * Reports error, that channel (function of a source channel) was not unique
-         * @param refChannel channel that was not found
-         * @param errors Errors object used to report errors
+         * Reports error, that the channel (the function of a source channel)
+         * was not unique
+         * @param refChannel the channel that was not found
+         * @param errors the Errors object used to report errors
          */
 	protected abstract void onDuplicate(Channel refChannel, Errors errors);
 

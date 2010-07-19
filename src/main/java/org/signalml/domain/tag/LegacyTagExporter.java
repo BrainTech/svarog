@@ -20,15 +20,30 @@ import eega.util.tag.TTagHDRRec;
 import eega.util.tag.TagDataSet;
 import eega.util.tag.TagException;
 
-/** LegacyTagExporter
+/**
+ * This class allows to convert a {@link StyledTagSet StyledTagSet} to a
+ * {@link TagDataSet TagDataSet} (which is a form that can be written to file)
+ * and write it to file.
  *
- *
+ * @see LegacyTagConstants
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class LegacyTagExporter {
 
 	protected static final Logger logger = Logger.getLogger(LegacyTagExporter.class);
 
+        /**
+         * Writes a {@link StyledTagSet StyledTagSet} to file.
+         * It is done by creating a {@link TagDataSet TagDataSet} form the given
+         * StyledTagSet and writing it to file
+         * @param tagSet the StyledTagSet to be written to file
+         * @param f the file to which set will be written
+         * @param channelCount the number of channels of signal
+         * @param samplingFrequency the sampling frequency of a signal
+         * @throws SignalMLException if the page size is not an integer
+         * @throws SanityCheckException if the type of a selection improper for
+         * any tag/tag style in the set
+         */
 	public void exportLegacyTags(StyledTagSet tagSet, File f, int channelCount, float samplingFrequency) throws SignalMLException {
 
 		if (Math.floor(tagSet.getPageSize()) != tagSet.getPageSize()) {
@@ -45,6 +60,17 @@ public class LegacyTagExporter {
 
 	}
 
+        /**
+         * Creates a {@link TagDataSet TagDataSet} form the given
+         * {@link StyledTagSet StyledTagSet} assuming there are a given number
+         * of channels in the signal and given sampling frequency of a signal
+         * @param tagSet the StyledTagSet to be converted
+         * @param channelCount the number of channels of signal
+         * @param samplingFrequency the sampling frequency of a signal
+         * @return the created TagDataSet object
+         * @throws SanityCheckException if the type of a selection improper for
+         * any tag/tag style in the set
+         */
 	public TagDataSet exportLegacyTags(StyledTagSet tagSet, int channelCount, float samplingFrequency) {
 
 		TagStyle style;
@@ -119,6 +145,12 @@ public class LegacyTagExporter {
 
 	}
 
+        /**
+         * Converts the {@link TagStyle style of a tag} to {@link TTagHDRRec
+         * object} that can be written to file
+         * @param style the style of a tag
+         * @return the created object
+         */
 	private TTagHDRRec exportStyle(TagStyle style) {
 
 		// note - marker attribute cannot be exported and is not exported
@@ -135,10 +167,23 @@ public class LegacyTagExporter {
 		       );
 	}
 
+        /**
+         * Creates an integer representation of RGB colour.
+         * @param color the colour to be converted
+         * @return an integer representation of RGB colour in the form of
+         * Blue|Green|Red
+         */
 	private int exportColor(Color color) {
 		return (color.getRed() + (color.getGreen() << 8) + (color.getBlue() << 16));
 	}
 
+        /**
+         * Converts the array representing the dashing pattern for the outline
+         * to a constant byte representation of the outline
+         * @param dash the array representing the dashing pattern for the
+         * outline
+         * @return the constant byte representation of the outline
+         */
 	private byte exportDash(float[] dash) {
 		if (dash == null || dash.length < 2) {
 			return LegacyTagConstants.OUTLINE_MODE_SOLID;

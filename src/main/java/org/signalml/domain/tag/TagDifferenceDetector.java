@@ -19,13 +19,22 @@ import org.signalml.domain.signal.SignalSelection;
 import org.signalml.domain.signal.SignalSelectionType;
 import org.signalml.exception.SanityCheckException;
 
-/** TagDifferenceDetector
+/**
  *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class TagDifferenceDetector {
 
+        /**
+         * Calculates the differences between two sets of tags of the given type.
+         * @param topTags the first set of tags (top)
+         * @param bottomTags the second set of tags (bottom)
+         * @param targetType the type signal selection
+         * @param channel the number of the channel which tags concern
+         * @param differences the set in which calculated differences will be
+         * remembered
+         */
 	public void getDifferences(SortedSet<Tag> topTags, SortedSet<Tag> bottomTags, final SignalSelectionType targetType, final int channel, final TreeSet<TagDifference> differences) {
 
 		TaggedFragmentProcessor processor = new TaggedFragmentProcessor() {
@@ -99,6 +108,18 @@ public class TagDifferenceDetector {
 
 	}
 
+        /**
+         * Compares two sets of tags of a given type.
+         * As a result creates {@link TagComparisonResult TagComparisonResult}.
+         * @param topStyles possible styles of tags in the first set (top)
+         * @param bottomStyles possible styles of tags in the second set (bottom)
+         * @param topTags the first set of tags (top)
+         * @param bottomTags the second set of tags (bottom)
+         * @param targetType the type signal selection
+         * @param channel the number of the channel which tags concern
+         * @param signalLength the length of entire signal
+         * @return the created TagComparisonResult object
+         */
 	public TagComparisonResult compare(TagStyle[] topStyles, TagStyle[] bottomStyles, SortedSet<Tag> topTags, SortedSet<Tag> bottomTags, SignalSelectionType targetType, int channel, float signalLength) {
 
 		final TagComparisonResult result = new TagComparisonResult(topStyles, bottomStyles, signalLength, signalLength);
@@ -182,6 +203,15 @@ public class TagDifferenceDetector {
 
 	}
 
+        /**
+         * Fills two arrays of tag styles (one for bottom tags one for
+         * top) beginning with (sorted by name) styles that are in both sets
+         * (top and bottom) and after them putting (also sorted) the rest
+         * @param topStyles the set of styles for top tags
+         * @param bottomStyles the set of styles for bottom tags
+         * @param topArr an array for top styles that will be filled
+         * @param bottomArr an array for bottom styles that will be filled
+         */
 	private void arrangeTagStyles(LinkedHashSet<TagStyle> topStyles, LinkedHashSet<TagStyle> bottomStyles, TagStyle[] topArr, TagStyle[] bottomArr) {
 
 		LinkedHashMap<String,TagStyle> topMap = new LinkedHashMap<String, TagStyle>();
@@ -244,6 +274,14 @@ public class TagDifferenceDetector {
 
 	}
 
+        /**
+         * Compares two sets of tags (all types).
+         * As a result creates {@link TagComparisonResults TagComparisonResults}.
+         * @param topTagDocument the document with possible styles of top tags
+         * @param bottomTagDocument the document with possible styles of
+         * bottom tags
+         * @return the created TagComparisonResults object
+         */
 	public TagComparisonResults compare(TagDocument topTagDocument, TagDocument bottomTagDocument) {
 
 		SignalDocument parent = topTagDocument.getParent();
