@@ -22,7 +22,7 @@
 			<url>http://escher.fuw.edu.pl/~mdobacz/repository</url>
 			<releases>
 				<enabled>true</enabled>
-			</releases>			
+			</releases>
 		</repository>
 	</repositories>
 
@@ -34,11 +34,11 @@
 					<family>windows</family>
 					<arch>x86</arch>
 				</os>
-				<activeByDefault>true</activeByDefault>				
+				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<org.signalml.mbfj.platform>win32</org.signalml.mbfj.platform>	
-			</properties>			
+				<org.signalml.mbfj.platform>win32</org.signalml.mbfj.platform>
+			</properties>
 		</profile>
 		<profile>
 			<id>linux</id>
@@ -50,12 +50,12 @@
 				</os>
 			</activation>
 			<properties>
-				<org.signalml.mbfj.platform>x86</org.signalml.mbfj.platform>	
-			</properties>			
+				<org.signalml.mbfj.platform>x86</org.signalml.mbfj.platform>
+			</properties>
 		</profile>
-		
+
 		<!-- profiles below this line have not been tested -->
-		
+
 		<profile>
 			<id>win64</id>
 			<activation>
@@ -65,8 +65,8 @@
 				</os>
 			</activation>
 			<properties>
-				<org.signalml.mbfj.platform>win64</org.signalml.mbfj.platform>	
-			</properties>			
+				<org.signalml.mbfj.platform>win64</org.signalml.mbfj.platform>
+			</properties>
 		</profile>
 		<profile>
 			<id>linux64</id>
@@ -78,15 +78,15 @@
 				</os>
 			</activation>
 			<properties>
-				<org.signalml.mbfj.platform>x86_64</org.signalml.mbfj.platform>	
-			</properties>			
+				<org.signalml.mbfj.platform>x86_64</org.signalml.mbfj.platform>
+			</properties>
 		</profile>
 	</profiles>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>		
-		<maven.test.skip>true</maven.test.skip>		
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.test.skip>true</maven.test.skip>
 	</properties>
 
 	<build>
@@ -123,7 +123,7 @@
 						</manifest>
 					</archive>
 				</configuration>
-			</plugin>        		
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
@@ -194,7 +194,7 @@
 			<exclusions>
 				<exclusion>
 					<groupId>logkit</groupId>
-					<artifactId>logkit</artifactId>					
+					<artifactId>logkit</artifactId>
 				</exclusion>
 				<exclusion>
 					<groupId>avalon-framework</groupId>
@@ -265,7 +265,7 @@
 				<exclusion>
 					<groupId>org.springframework</groupId>
 					<artifactId>spring-web</artifactId>
-				</exclusion>							
+				</exclusion>
 				<exclusion>
 					<groupId>org.springframework</groupId>
 					<artifactId>spring-webmvc</artifactId>
@@ -278,7 +278,7 @@
 					<groupId>wsdl4j</groupId>
 					<artifactId>wsdl4j</artifactId>
 				</exclusion>
-			</exclusions>			
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.castor</groupId>
@@ -340,7 +340,7 @@
 		<url>http://escher.fuw.edu.pl/git/svarog</url>
 	</scm>
 
-	<reporting>	
+	<reporting>
 		<plugins>
 
 			<plugin>
@@ -379,10 +379,9 @@
 				</reportSets>
 			</plugin>
 
-			<plugin>
+<!--			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jxr-plugin</artifactId>
-				<!-- <version>2.2-SNAPSHOT</version> -->
 				<configuration>
 					<aggregate>true</aggregate>
 					<linkJavadoc>true</linkJavadoc>
@@ -392,38 +391,27 @@
 					<outputEncoding>UTF-8</outputEncoding>
 					<inputEncoding>UTF-8</inputEncoding>
 				</configuration>
-			</plugin>
-			
-			<plugin> 
+			</plugin> -->
+
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<reportSets>
 					<reportSet>
 						<reports>
-							<!-- <report>javadoc</report>  -->	
-							<report>test-javadoc</report>
+							<report>javadoc</report>
 						</reports>
 					</reportSet>
 				</reportSets>
 				<configuration>
-					<tags>
-						<tag>
-							<name>org.signalml.thanks</name>
-							<placement>t</placement>
-							<head>Thanks to:</head>
-						</tag>
-						<tag>
-							<name>org.signalml.copyright</name>
-							<placement>t</placement>
-							<head>Copyright:</head>
-						</tag>
-					</tags>
-					<links>
-						<link>http://java.sun.com/javase/6/docs/api/</link>
-					</links>
+                    <version>2.7</version>
+                    <configuration>
+                        <show>private</show>
+                        <nohelp>false</nohelp>
+                    </configuration>
 				</configuration>
 			</plugin>
-			 
+
 		</plugins>
 	</reporting>
 
@@ -435,6 +423,11 @@
 			<subscribe>signalml-subscribe@googlegroups.com</subscribe>
 			<unsubscribe>signalml-unsubscribe@googlegroups.com</unsubscribe>
 		</mailingList>
+        <mailingList>
+          <name>svarog-dev</name>
+          <post>svarog-dev@eisenbits.homelinux.net</post>
+          <archive>https://eisenbits.homelinux.net/cgi-bin/mailman/private/svarog-dev/</archive>
+        </mailingList>
 	</mailingLists>
 
 	<issueManagement>
@@ -524,9 +517,18 @@
 			</roles>
 			<timezone>+1</timezone>
 		</developer>
+        <developer>
+            <id>STF</id>
+            <name>Stanislaw Findeisen</name>
+            <organization>eisenbits</organization>
+            <roles>
+                <role>Member</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
 	</developers>
 
 	<contributors>
-	</contributors>	
-		
+	</contributors>
+
 </project>
