@@ -13,24 +13,57 @@ import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
 import flanagan.complex.Complex;
 import flanagan.math.FourierTransform;
 
-/** FFTSampleFilterEngine
- *
+/**
+ * This class represents a FFT filter of samples.
+ * Allows to return the filtered samples based on the given source.
+ * If it is possible buffers the filtered samples.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class FFTSampleFilterEngine extends SampleFilterEngine {
 
+        /**
+         * the natural logarithm of 2
+         */
 	public static final double LOG2 = Math.log(2);
 
+        /**
+         * the {@link FFTSampleFilter definition} of the filter
+         */
 	private FFTSampleFilter definition;
+
+        /**
+         * the object performing the Fourier transform
+         */
 	private FourierTransform fourierTransform;
 
 	private double[] cache = null;
+        /**
+         * the buffer of already filtered samples
+         */
 	private double[] filtered = null;
+        /**
+         * the index (in the source) of the first sample in the buffer
+         */
 	private int minFilteredSample;
+        /**
+         * index in the {@link #filtered} array (actually <code>index/2</code>,
+         * because samples are on every second position)
+         * of the first sample in the buffer
+         */
 	private int minFilteredSampleAt;
+        /**
+         * the first index (in the source) after the last sample in the buffer
+         */
 	private int maxFilteredSample; // index after max sample!
 
+        /**
+         * Constructor. Creates an engine of a filter for provided
+         * {@link SampleSource source} of samples.
+         * @param source the source of samples
+         * @param definition the {@link FFTSampleFilter definition} of the
+         * filter
+         */
 	public FFTSampleFilterEngine(SampleSource source, FFTSampleFilter definition) {
 		super(source);
 		this.definition = new FFTSampleFilter(definition);
@@ -39,6 +72,19 @@ public class FFTSampleFilterEngine extends SampleFilterEngine {
 		definition.getWindowType().apply(fourierTransform, definition.getWindowParameter());
 	}
 
+        /**
+         * Returns the given number of the filtered samples starting from
+         * the given position in time.
+         * If it is possible uses the {@link #filtered buffer} of already
+         * filtered samples.
+         * @param target the array to which results will be written starting
+         * from position <code>arrayOffset</code>
+         * @param signalOffset the position (in time) in the signal starting
+         * from which samples will be returned
+         * @param count the number of samples to be returned
+         * @param arrayOffset the offset in <code>target</code> array starting
+         * from which samples will be written
+         */
 	@Override
 	public void getSamples(double[] target, int signalOffset, int count, int arrayOffset) {
 		synchronized (this) {

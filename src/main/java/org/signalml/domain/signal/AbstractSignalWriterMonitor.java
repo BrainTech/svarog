@@ -4,8 +4,9 @@
 
 package org.signalml.domain.signal;
 
-/** AbstractSignalWriterMonitor
- *
+/**
+ * This abstract class represents the monitor that monitors the processing
+ * of samples. Can request abortion of that process.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

@@ -23,8 +23,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-/** RawSignalDescriptorReader
- *
+/**
+ * This class is responsible for reading the
+ * {@link RawSignalDescriptor description} of a raw signal from file.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -32,6 +33,14 @@ public class RawSignalDescriptorReader {
 
 	protected static final Logger logger = Logger.getLogger(RawSignalDescriptorReader.class);
 
+        /**
+         * Converts the given document element to the
+         * {@link RawSignalDescriptor description} of a raw signal
+         * @param rawSignalEl the document element to be converted
+         * @return the created description of a raw signal
+         * @throws SignalMLException if the element doesn't contain a valid
+         * description of a raw signal
+         */
 	public RawSignalDescriptor getDescriptor(Element rawSignalEl) throws SignalMLException {
 
 		RawSignalDescriptor descriptor = new RawSignalDescriptor();
@@ -151,6 +160,16 @@ public class RawSignalDescriptorReader {
 
 	}
 
+        /**
+         * Reads the {@link RawSignalDescriptor description} of a raw signal
+         * from the given file
+         * @param file the file with the description of a raw signal
+         * @return the created description
+         * @throws IOException if the file is not a valid xml file or some
+         * other error while reading file
+         * @throws SignalMLException if the file doesn't contain a valid
+         * description of a raw signal
+         */
 	public RawSignalDescriptor readDocument(File file) throws IOException, SignalMLException {
 
 		try {

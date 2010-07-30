@@ -7,6 +7,7 @@ package org.signalml.domain.signal;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.nio.channels.Pipe.SourceChannel;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
@@ -28,8 +29,12 @@ import org.signalml.exception.MissingCodecException;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.exception.SignalMLException;
 
-/** SignalProcessingChain
- *
+/**
+ * This class represents the chain (series) of
+ * {@link MultichannelSampleSource sample sources} from which the first
+ * is the {@link OriginalMultichannelSampleSource original source of samples}
+ * and the rest in the series is using previous as the source.
+ * The types of sample sources in the series depend on the type of the chain.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -37,19 +42,55 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 
 	protected static final Logger logger = Logger.getLogger(SignalProcessingChain.class);
 
+        /**
+         * the {@link SignalType type} of the signal
+         */
 	private SignalType signalType;
 
 	private boolean createdSource;
 
+        /**
+         * the {@link OriginalMultichannelSampleSource original source}
+         * of samples
+         */
 	private OriginalMultichannelSampleSource source;
+        /**
+         * the {@link MultichannelSampleBuffer buffer} for the
+         * {@link OriginalMultichannelSampleSource original source} of samples
+         */
 	private MultichannelSampleBuffer sourceBuffer;
+        /**
+         * the {@link MultichannelSampleMontage source} of samples for
+         * the montage
+         */
 	private MultichannelSampleMontage montage;
+        /**
+         * the {@link MultichannelSampleBuffer buffer} for the
+         * {@link MultichannelSampleMontage source} of samples for
+         * the montage
+         */
 	private MultichannelSampleBuffer montageBuffer;
 
+        /**
+         * the {@link MultichannelSampleFilter source} of samples
+         * for the filter
+         */
 	private MultichannelSampleFilter filter;
 
+        /**
+         * the last {@link MultichannelSampleSource sample source} in the
+         * chain, used to return samples
+         */
 	private MultichannelSampleSource output;
 
+        /**
+         * Constructor. Creates an empty processing chain based on a
+         * given {@link OriginalMultichannelSampleSource original source}
+         * and the {@link SignalType type} of the signal.
+         * It doesn't provide the ability to return samples.
+         * @param source the original source of the signal
+         * @param signalType the type of the signal
+         */
 	protected SignalProcessingChain(OriginalMultichannelSampleSource source, SignalType signalType) {
 		super();
 
@@ -58,6 +99,15 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 
 	}
 
+        /**
+         * Constructor. Creates the processing chain using the given
+         * {@link SignalProcessingChainDescriptor descriptor}.
+         * @param descriptor the descriptor of the chain
+         * @throws IOException if there is an error while reading samples from
+         * file
+         * @throws SignalMLException if codec doesn't exist or some other error
+         * with the codec
+         */
 	public SignalProcessingChain(SignalProcessingChainDescriptor descriptor) throws IOException, SignalMLException {
 		super();
 
@@ -129,10 +179,15 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 
 	}
 
+        /**
+         * Adds this chain as a listener for the output
+         * {@link MultichannelSampleSource source}.
+         */
 	protected void configureOutput() {
 		output.addPropertyChangeListener(this);
 	}
 
+        @Override
 	public void destroy() {
 
 		output.removePropertyChangeListener(this);
@@ -159,6 +214,14 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 
 	}
 
+        /**
+         * Creates the simplest possible chain where the
+         * {@link OriginalMultichannelSampleSource original source} of samples
+         * is also the output.
+         * @param source the original source of samples
+         * @param signalType the {@link SignalType type} of the signal
+         * @return the created chain
+         */
 	public static SignalProcessingChain createRawChain(OriginalMultichannelSampleSource source, SignalType signalType) {
 
 		SignalProcessingChain chain = new SignalProcessingChain(source,signalType);
@@ -170,6 +233,15 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 
 	}
 
+        /**
+         * Creates the chain of {@link MultichannelSampleSource sources} that
+         * is buffered but doesn't contain any montage and is not filtered.
+         * <code>original source = source -> buffer = output</code>
+         * @param source the 
+         * {@link OriginalMultichannelSampleSource original source} of samples
+         * @param signalType the {@link SignalType type} of the signal
+         * @return the created chain
+         */
 	public static SignalProcessingChain createBufferedRawChain(OriginalMultichannelSampleSource source, SignalType signalType) {
 
 		SignalProcessingChain chain = new SignalProcessingChain(source,signalType);
@@ -182,6 +254,14 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 
 	}
 
+        /**
+         * Creates the chain:
+         * <code>original source = source -> buffer -> montage = output</code>
+         * @param source the
+         * {@link OriginalMultichannelSampleSource original source} of samples
+         * @param signalType the type of the signal
+         * @return the created chain
+         */
 	public static SignalProcessingChain createAssembledChain(OriginalMultichannelSampleSource source, SignalType signalType) {
 
 		SignalProcessingChain chain = new SignalProcessingChain(source,signalType);
@@ -195,6 +275,15 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 
 	}
 
+        /**
+         * Creates the chain:
+         * <code>original source = source -> buffer -> montage
+         * -> montage buffer = output</code>
+         * @param source the
+         * {@link OriginalMultichannelSampleSource original source} of samples
+         * @param signalType the type of the signal
+         * @return the created chain
+         */
 	public static SignalProcessingChain createBufferedAssembledChain(OriginalMultichannelSampleSource source, SignalType signalType) {
 
 		SignalProcessingChain chain = new SignalProcessingChain(source,signalType);
@@ -209,6 +298,15 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 
 	}
 
+        /**
+         * Creates the chain:
+         * <code>original source = source -> buffer -> montage
+         * -> montage buffer -> filter = output</code>
+         * @param source the
+         * {@link OriginalMultichannelSampleSource original source} of samples
+         * @param signalType the type of the signal
+         * @return the created chain
+         */
 	public static SignalProcessingChain createFilteredChain(OriginalMultichannelSampleSource source, SignalType signalType) {
 
 		SignalProcessingChain chain = new SignalProcessingChain(source,signalType);
@@ -227,6 +325,16 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 	// NOTE! buffering filtered chain is risky, so no "createBufferedFilterChain" - be sure to know what you're doing if you decide to implement one
 	// (filtered fragments may not meet correctly at the edges?)
 
+        /**
+         * Creates the simplest possible chain where the
+         * {@link OriginalMultichannelSampleSource original source} of samples
+         * is also the output.
+         * Uses the same the {@link SignalType type} of the signal as it is used
+         * in this chain.
+         * @param sampleSource the original source of samples
+         * @return the created chain
+         * @throws SignalMLException never
+         */
 	protected SignalProcessingChain createRawLevelSharedChain(OriginalMultichannelSampleSource sampleSource) throws SignalMLException {
 
 		SignalProcessingChain chain = new SignalProcessingChain(sampleSource, this.getSignalType());
@@ -238,12 +346,33 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 
 	}
 
+        /**
+         * Creates the simplest possible chain where the
+         * {@link OriginalMultichannelSampleSource original source} of samples
+         * is also the output.
+         * Uses the same the {@link SignalType type} of the signal as it is used
+         * in this chain.
+         * Uses the same (shares) the original sample source with this chain.
+         * @return the created chain
+         * @throws SignalMLException never
+         */
 	public SignalProcessingChain createRawLevelSharedChain() throws SignalMLException {
 
 		return createRawLevelSharedChain(this.getSource());
 
 	}
 
+        /**
+         * Creates the simplest possible chain where the
+         * {@link OriginalMultichannelSampleSource original source} of samples
+         * is also the output.
+         * Uses the same the {@link SignalType type} of the signal as it is used
+         * in this chain.
+         * Uses the copy of the original sample source from this chain.
+         * @return the created chain
+         * @throws SignalMLException if there is an error while duplicating
+         * the original source
+         */
 	public SignalProcessingChain createRawLevelCopyChain() throws SignalMLException {
 
 		OriginalMultichannelSampleSource sampleSource = this.getSource().duplicate();
@@ -253,6 +382,19 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 
 	}
 
+        /**
+         * Creates the chain:
+         * <code>original source = source -> buffer -> montage = output</code>.
+         * Uses the same the {@link SignalType type} of the signal as it is used
+         * in this chain.
+         * Uses the same {@link Montage montage} as it is used in this chain.
+         * @param sampleSource the
+         * {@link OriginalMultichannelSampleSource original source} of samples
+         * @return the created chain
+         * @throws SignalMLException if the number of channels in
+         * the original source is different then the number of source
+         * channels in the montage.
+         */
 	protected SignalProcessingChain createAssembledLevelChain(OriginalMultichannelSampleSource sampleSource) throws SignalMLException {
 
 		SignalType signalType = this.getSignalType();
@@ -271,12 +413,39 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 
 	}
 
+        /**
+         * Creates the chain:
+         * <code>original source = source -> buffer -> montage = output</code>.
+         * Uses the same the {@link SignalType type} of the signal as it is used
+         * in this chain.
+         * Uses the same {@link Montage montage} as it is used in this chain.
+         * Shares the {@link OriginalMultichannelSampleSource original source}
+         * with this chain.
+         * @return the created chain
+         * @throws SignalMLException if the number of channels in
+         * the original source is different then the number of source
+         * channels in the montage.
+         */
 	public SignalProcessingChain createAssembledLevelSharedChain() throws SignalMLException {
 
 		return createAssembledLevelChain(this.getSource());
 
 	}
 
+        /**
+         * Creates the chain:
+         * <code>original source = source -> buffer -> montage = output</code>.
+         * Uses the same the {@link SignalType type} of the signal as it is used
+         * in this chain.
+         * Uses the same {@link Montage montage} as it is used in this chain.
+         * Uses the copy of the
+         * {@link OriginalMultichannelSampleSource original source} from this
+         * chain.
+         * @return the created chain
+         * @throws SignalMLException if the number of channels in
+         * the original source is different then the number of source
+         * channels in the montage.
+         */
 	public SignalProcessingChain createAssembledLevelCopyChain() throws SignalMLException {
 
 		OriginalMultichannelSampleSource sampleSource = this.getSource().duplicate();
@@ -286,6 +455,20 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 
 	}
 
+        /**
+         * Creates the chain:
+         * <code>original source = source -> buffer -> montage
+         * -> montage buffer -> filter = output</code>
+         * Uses the same the {@link SignalType type} of the signal as it is used
+         * in this chain.
+         * Uses the same {@link Montage montage} as it is used in this chain.
+         * @param sampleSource the
+         * {@link OriginalMultichannelSampleSource original source} of samples
+         * @return the created chain
+         * @throws SignalMLException if the number of channels in
+         * the original source is different then the number of source
+         * channels in the montage.
+         */
 	protected SignalProcessingChain createFilteredLevelChain(OriginalMultichannelSampleSource sampleSource) throws SignalMLException {
 
 		SignalType signalType = this.getSignalType();
@@ -308,12 +491,41 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 
 	}
 
+        /**
+         * Creates the chain:
+         * <code>original source = source -> buffer -> montage
+         * -> montage buffer -> filter = output</code>
+         * Uses the same the {@link SignalType type} of the signal as it is used
+         * in this chain.
+         * Uses the same {@link Montage montage} as it is used in this chain.
+         * Shares the {@link OriginalMultichannelSampleSource original source}
+         * with this chain.
+         * @return the created chain
+         * @throws SignalMLException if the number of channels in
+         * the original source is different then the number of source
+         * channels in the montage.
+         */
 	public SignalProcessingChain createFilteredLevelSharedChain() throws SignalMLException {
 
 		return createFilteredLevelChain(this.getSource());
 
 	}
 
+        /**
+         * Creates the chain:
+         * <code>original source = source -> buffer -> montage
+         * -> montage buffer -> filter = output</code>
+         *  Uses the same the {@link SignalType type} of the signal as it is used
+         * in this chain.
+         * Uses the same {@link Montage montage} as it is used in this chain.
+         * Uses the copy of the
+         * {@link OriginalMultichannelSampleSource original source} from this
+         * chain.
+         * @return the created chain
+         * @throws SignalMLException if the number of channels in
+         * the original source is different then the number of source
+         * channels in the montage.
+         */
 	public SignalProcessingChain createFilteredLevelCopyChain() throws SignalMLException {
 
 		OriginalMultichannelSampleSource sampleSource = this.getSource().duplicate();
@@ -323,6 +535,29 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 
 	}
 
+        /**
+         * Creates the chain of the given {@link SignalSourceLevel level}.
+         * FILTERED:
+         * <code>original source = source -> buffer -> montage
+         * -> montage buffer -> filter = output</code>
+         * ASSEMBLED:
+         * <code>original source = source -> buffer -> montage
+         * -> montage buffer = output</code>
+         * RAW:
+         * <code>original source = source = output</code>
+         * Uses the same the {@link SignalType type} of the signal as it is used
+         * in this chain.
+         * Uses the same (shares)
+         * {@link OriginalMultichannelSampleSource original source} as in this
+         * chain.
+         * If necessary uses the same {@link Montage montage} as it is used
+         * in this chain.
+         * @param level the desired level of the chain
+         * @return the created chain
+         * @throws SignalMLException if the number of channels in
+         * the original source is different then the number of source
+         * channels in the montage.
+         */
 	public SignalProcessingChain createLevelSharedChain(SignalSourceLevel level) throws SignalMLException {
 
 		switch (level) {
@@ -341,6 +576,29 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 
 	}
 
+        /**
+         * Creates the chain of the given {@link SignalSourceLevel level}.
+         * FILTERED:
+         * <code>original source = source -> buffer -> montage
+         * -> montage buffer -> filter = output</code>
+         * ASSEMBLED:
+         * <code>original source = source -> buffer -> montage
+         * -> montage buffer = output</code>
+         * RAW:
+         * <code>original source = source = output</code>
+         * Uses the same the {@link SignalType type} of the signal as it is used
+         * in this chain.
+         * Uses the copy of the
+         * {@link OriginalMultichannelSampleSource original source} from this
+         * chain.
+         * If necessary uses the same {@link Montage montage} as it is used
+         * in this chain.
+         * @param level the desired level of the chain
+         * @return the created chain
+         * @throws SignalMLException if the number of channels in
+         * the original source is different then the number of source
+         * channels in the montage.
+         */
 	public SignalProcessingChain createLevelCopyChain(SignalSourceLevel level) throws SignalMLException {
 
 		switch (level) {
@@ -359,6 +617,11 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 
 	}
 
+        /**
+         * Creates the {@link SignalProcessingChainDescriptor descriptor}
+         * describing this chain and stores in it all possible information.
+         * @return the created descriptor
+         */
 	public SignalProcessingChainDescriptor createDescriptor() {
 
 		SignalProcessingChainDescriptor descriptor = new SignalProcessingChainDescriptor();
@@ -454,54 +717,120 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 		return output.getSamplingFrequency();
 	}
 
+        /**
+         * Returns if the last source in the chain (<code>output</code>
+         * is capable of returning a calibration
+         * @return true if the last source in the chain (<code>output</code>
+         * is capable of returning a calibration, false otherwise
+         */
 	@Override
 	public boolean isCalibrationCapable() {
 		return output.isCalibrationCapable();
 	}
 
+        /**
+         * Returns if the last source in the chain (<code>output</code>
+         * is capable of returning a channel count
+         * @return true if the last source in the chain (<code>output</code>
+         * is capable of returning a channel count, false otherwise
+         */
 	@Override
 	public boolean isChannelCountCapable() {
 		return output.isChannelCountCapable();
 	}
 
+        /**
+         * Returns if the last source in the chain (<code>output</code>
+         * is capable of returning a sampling frequency
+         * @return true if the last source in the chain (<code>output</code>
+         * is capable of returning a sampling frequency, false otherwise
+         */
 	@Override
 	public boolean isSamplingFrequencyCapable() {
 		return output.isSamplingFrequencyCapable();
 	}
 
+        /**
+         * Fires all listeners that this chain has changed
+         * @param evt an event describing the change
+         */
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		pcSupport.firePropertyChange(evt);
 	}
 
+        /**
+         * Returns the {@link SignalType type} of the signal
+         * @return the type of the signal
+         */
 	public SignalType getSignalType() {
 		return signalType;
 	}
 
+        /**
+         * Returns the {@link OriginalMultichannelSampleSource original source}
+         * of samples.
+         * @return the original source of samples
+         */
 	public OriginalMultichannelSampleSource getSource() {
 		return source;
 	}
 
+        /**
+         * Returns the {@link MultichannelSampleBuffer buffer} for the
+         * {@link OriginalMultichannelSampleSource original source} of samples.
+         * @return the buffer for the original source of samples.
+         */
 	public MultichannelSampleBuffer getSourceBuffer() {
 		return sourceBuffer;
 	}
 
+        /**
+         * Returns the {@link MultichannelSampleMontage source} of samples for
+         * the montage.
+         * @return the source of samples for the montage
+         */
 	public MultichannelSampleMontage getMontage() {
 		return montage;
 	}
 
+        /**
+         * Returns the {@link MultichannelSampleBuffer buffer} for the
+         * {@link MultichannelSampleMontage source} of samples for
+         * the montage.
+         * @return the buffer for the source of samples for the montage
+         */
 	public MultichannelSampleBuffer getMontageBuffer() {
 		return montageBuffer;
 	}
 
+        /**
+         * Returns the {@link MultichannelSampleFilter source} of samples
+         * for the filter.
+         * @return the source of samples for the filter.
+         */
 	public MultichannelSampleFilter getFilter() {
 		return filter;
 	}
 
+        /**
+         * Returns the last {@link MultichannelSampleSource source}
+         * in the chain.
+         * @return the last source in the chain
+         */
 	public MultichannelSampleSource getOutput() {
 		return output;
 	}
 
+        /**
+         * Changes the actual {@link Montage montage} in the
+         * {@link MultichannelSampleMontage source} of samples for the montage
+         * and in the {@link MultichannelSampleFilter source} of samples for the
+         * filter
+         * @param montageDef the new montage to be set
+         * @throws MontageMismatchException if the number of source channels in
+         * the montage is different then the number of channels in the source
+         */
 	public void applyMontageDefinition(Montage montageDef) throws MontageMismatchException {
 
 		if (montage != null) {
@@ -513,6 +842,15 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 
 	}
 
+        /**
+         * Returns indexes of {@link MontageChannel montage channels} in the
+         * {@link Montage montage} in which the given
+         * {@link SourceChannel source channel} is the primary channel.
+         * If there is no montage only index of provided channel is returned.
+         * @param channel the index of the source channel
+         * @return an array of indexes of montage channels in which
+         * the given source channel is the primary channel.
+         */
 	public int[] getDependantChannelIndices(int channel) {
 
 		if (montage == null) {
@@ -523,6 +861,12 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 
 	}
 
+        /**
+         * Returns an array of labels of channels in the <code>output</code>
+         * {@link MultichannelSampleSource source} of samples.
+         * @return an array of labels of channels in the <code>output</code>
+         * source of samples
+         */
 	public String[] getLabels() {
 
 		if (montage == null) {
@@ -538,6 +882,12 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 
 	}
 
+        /**
+         * Returns the label of the {@link SourceChannel source channel} of a
+         * given index
+         * @param channel the index of a channel
+         * @return string with a label of the channel
+         */
 	public String getPrimaryLabel(int channel) {
 
 		if (montage == null) {

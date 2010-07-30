@@ -20,8 +20,10 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-/** RawSignalDocumentBuilder
- *
+/**
+ * This class represents the builder of documents with the raw signal.
+ * It contains the bunch of constants and allows to create the document for
+ * the raw signal.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -58,11 +60,23 @@ public class RawSignalDocumentBuilder {
 
 	static final String JAXP_SCHEMA_SOURCE = "http://java.sun.com/xml/jaxp/properties/schemaSource";
 
+        /**
+         * the default instance of the builder
+         */
 	private static RawSignalDocumentBuilder instance = null;
 
+        /**
+         * the factory used to create this builder
+         */
 	private DocumentBuilderFactory documentBuiderFactory;
+        /**
+         * the actual {@link DocumentBuilder} of documents
+         */
 	private DocumentBuilder documentBuilder;
 
+        /**
+         * Constructor. Creates the builder.
+         */
 	protected RawSignalDocumentBuilder() {
 
 		Resource schemaResource = new ClassPathResource("org/signalml/schema/rawsignal.xsd");
@@ -114,6 +128,11 @@ public class RawSignalDocumentBuilder {
 
 	}
 
+        /**
+         * Returns the default instance of the builder. If it doesn't exist
+         * creates it.
+         * @return the default instance of the builder
+         */
 	public static RawSignalDocumentBuilder getInstance() {
 		if (instance == null) {
 			instance = new RawSignalDocumentBuilder();
@@ -121,10 +140,21 @@ public class RawSignalDocumentBuilder {
 		return instance;
 	}
 
+        /**
+         * Creates the new document with the raw signal.
+         * @return the new document with the raw signal
+         */
 	public Document newDocument() {
 		return documentBuilder.newDocument();
 	}
 
+        /**
+         * Creates the document with the raw signal from file
+         * @param f the file with the signal
+         * @return the created document
+         * @throws SAXException If any parse errors occur.
+         * @throws IOException If any IO errors occur.
+         */
 	public Document parse(File f) throws SAXException, IOException {
 		return documentBuilder.parse(f);
 	}

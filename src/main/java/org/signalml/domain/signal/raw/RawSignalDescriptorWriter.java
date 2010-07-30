@@ -26,13 +26,20 @@ import org.signalml.domain.signal.raw.RawSignalDescriptor.SourceSignalType;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-/** RawSignalDescriptorWriter
- *
+/**
+ * This class is responsible for writing the
+ * {@link RawSignalDescriptor description} of a raw signal to the file.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class RawSignalDescriptorWriter {
 
+        /**
+         * Creates the document with the description of the signal based on the
+         * given {@link RawSignalDescriptor description}
+         * @param descriptor the description of the raw signal
+         * @return the created document
+         */
 	public Document getDocument(RawSignalDescriptor descriptor) {
 
 		Document document = RawSignalDocumentBuilder.getInstance().newDocument();
@@ -185,6 +192,14 @@ public class RawSignalDescriptorWriter {
 
 	}
 
+        /**
+         * Writes the given {@link RawSignalDescriptor description} to
+         * the given file
+         * @param descriptor the description of the raw signal
+         * @param file the file to which the description will be written
+         * @throws IOException if error while creating the file or while
+         * writing the xml to it
+         */
 	public void writeDocument(RawSignalDescriptor descriptor, File file) throws IOException {
 
 		Document document = getDocument(descriptor);

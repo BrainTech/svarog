@@ -35,20 +35,44 @@ import org.signalml.domain.signal.AbstractSignalTypeConfigurer;
 import org.signalml.domain.signal.SignalType;
 import org.signalml.domain.signal.SignalTypeConfigurer;
 
-/** EegSignalTypeConfigurer
- *
+/**
+ * This class represents the {@link SignalTypeConfigurer configurer} for
+ * an EEG signal.
+ * It configures (or creates) a {@link Montage montage} to be an EEG montage.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class EegSignalTypeConfigurer extends AbstractSignalTypeConfigurer implements SignalTypeConfigurer {
 
+        /**
+         * the predefined raw MontageGenerator
+         */
 	private static final RawMontageGenerator rawMontageGenerator = new RawMontageGenerator();
+
+        /**
+         * the constant list of predefined montageGenerators
+         */
 	private static final List<MontageGenerator> montageGenerators = getAllMontageGenerators();
 
+        /**
+         * the cached backdrop
+         */
 	private Image cachedBackdrop = null;
+        /**
+         * the width (pixels) of the cached backdrop
+         */
 	private int cachedBackdropWidth;
+        /**
+         * the height (pixels) of the cached backdrop
+         */
 	private int cachedBackdropHeight;
 
+        /**
+         * Creates the constant list of predefined
+         * {@link MontageGenerator montageGenerators} for an EEG signal
+         * @return the constant list of predefined montageGenerators for
+         * an EEG signal
+         */
 	private static List<MontageGenerator> getAllMontageGenerators() {
 		ArrayList<MontageGenerator> generators = new ArrayList<MontageGenerator>();
 		generators.add(rawMontageGenerator);
@@ -62,6 +86,12 @@ public class EegSignalTypeConfigurer extends AbstractSignalTypeConfigurer implem
 		return Collections.unmodifiableList(generators);
 	}
 
+         /**
+         * Creates the {@link Montage montage} with channelCount channels for
+          * a EEG signal
+         * @param channelCount the desired number of channels for the montage
+         * @return the created montage
+         */
 	@Override
 	public Montage createMontage(int channelCount) {
 
@@ -71,6 +101,12 @@ public class EegSignalTypeConfigurer extends AbstractSignalTypeConfigurer implem
 
 	}
 
+        /**
+         * Creates the {@link Montage montage} based on the
+         * {@link SignalDocument document} with a signal
+         * @param signalDocument the document with a signal
+         * @return the created montage
+         */
 	@Override
 	public Montage createMontage(SignalDocument signalDocument) {
 
@@ -85,11 +121,20 @@ public class EegSignalTypeConfigurer extends AbstractSignalTypeConfigurer implem
 		return EegChannel.values();
 	}
 
+        /**
+         * Returns an {@link EegChannel eegChannel} of type 'UNKNOWN'
+         * @return EegChannel.UNKNOWN
+         */
 	@Override
 	public Channel genericChannel() {
 		return EegChannel.UNKNOWN;
 	}
 
+        /**
+         * Finds an {@link EegChannel EEG channel} of a given name.
+         * @param name the name of the type of the channel
+         * @return the channel of a given name
+         */
 	@Override
 	public Channel channelForName(String name) {
 		if (name == null || name.isEmpty()) {
@@ -102,6 +147,14 @@ public class EegSignalTypeConfigurer extends AbstractSignalTypeConfigurer implem
 		return channel;
 	}
 
+        /**
+         * Creates the backdrop for electrodes positions matrix.
+         * If backdrop parameters haven't changed and cachedBackdrop exists,
+         * it is used.
+         * @param width the width of the backdrop
+         * @param height the height of the backdrop
+         * @return an Image with backdrop for electrodes positions matrix
+         */
 	@Override
 	public Image getMatrixBackdrop(int width, int height) {
 
@@ -143,26 +196,50 @@ public class EegSignalTypeConfigurer extends AbstractSignalTypeConfigurer implem
 
 	}
 
+        /**
+         * Returns the height of the matrix of {@link EegChannel EEG channels}.
+         * @return the height of the matrix of EEG channels
+         */
 	@Override
 	public int getMatrixHeight() {
 		return EegChannel.MATRIX_HEIGHT;
 	}
 
+        /**
+         * Returns the width of the matrix of {@link EegChannel EEG channels}.
+         * @return the width of the matrix of EEG channels
+         */
 	@Override
 	public int getMatrixWidth() {
 		return EegChannel.MATRIX_WIDTH;
 	}
 
+        /**
+         * Returns the number of predefined
+         * {@link MontageGenerator montage generators}.
+         * @return the number of predefined montage generators
+         */
 	@Override
 	public int getMontageGeneratorCount() {
 		return montageGenerators.size();
 	}
 
+        /**
+         * Returns the collection of predefined
+         * {@link MontageGenerator montage generators}.
+         * @return the collection of predefined montage generators
+         */
 	@Override
 	public Collection<MontageGenerator> getMontageGenerators() {
 		return montageGenerators;
 	}
 
+        /**
+         * Finds the {@link MontageGenerator montage generator} of
+         * a certain index
+         * @param index index of MontageGenerator to be found
+         * @return the found MontageGenerator
+         */
 	@Override
 	public MontageGenerator getMontageGeneratorAt(int index) {
 		return montageGenerators.get(index);

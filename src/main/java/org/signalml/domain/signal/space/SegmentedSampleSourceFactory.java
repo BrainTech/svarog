@@ -12,8 +12,9 @@ import org.signalml.domain.signal.SignalSelectionType;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.exception.SanityCheckException;
 
-/** SegmentedSampleSourceFactory
- *
+/**
+ * This class represents the factory (creator) of
+ * {@link MultichannelSegmentedSampleSource segmented sources} of samples.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -21,10 +22,18 @@ public class SegmentedSampleSourceFactory {
 
 	private static SegmentedSampleSourceFactory sharedInstance = null;
 
+        /**
+         * The default constructor.
+         */
 	protected SegmentedSampleSourceFactory() {
 
 	}
 
+        /**
+         * Returns (and if necessary also creates) the shared factory
+         * of segmented sources of samples
+         * @return the shared factory of segmented sources of samples
+         */
 	public static SegmentedSampleSourceFactory getSharedInstance() {
 		if (sharedInstance == null) {
 			sharedInstance = new SegmentedSampleSourceFactory();
@@ -32,6 +41,20 @@ public class SegmentedSampleSourceFactory {
 		return sharedInstance;
 	}
 
+        /**
+         * Tries to return the continuous (not segmented
+         * {@link MultichannelSampleSource source} of samples. If it is not
+         * possible returns the
+         * {@link MultichannelSegmentedSampleSource segmented one}.
+         * @param source the source of samples for the whole signal
+         * @param signalSpace the {@link SignalSpace description} of the
+         * parameters of the signal or the part of the signal in the
+         * {@link MultichannelSampleSource source}
+         * @param tagSet the set of tagged selections
+         * @param pageSize the length of the page (in seconds)
+         * @param blockSize the size of the page (in seconds)
+         * @return the created source of samples
+         */
 	public MultichannelSampleSource getContinuousSampleSource(MultichannelSampleSource source, SignalSpace signalSpace, StyledTagSet tagSet, float pageSize, float blockSize) {
 
 		if (signalSpace.getTimeSpaceType() == TimeSpaceType.WHOLE_SIGNAL && !signalSpace.isWholeSignalCompletePagesOnly()) {
@@ -45,6 +68,19 @@ public class SegmentedSampleSourceFactory {
 
 	}
 
+        /**
+         * Creates the
+         * {@link MultichannelSegmentedSampleSource segmented source} of
+         * samples.
+         * @param source the source of samples for the whole signal
+         * @param signalSpace the {@link SignalSpace description} of the
+         * parameters of the signal or the part of the signal in the
+         * {@link MultichannelSampleSource source}
+         * @param tagSet the set of tagged selections
+         * @param pageSize the length of the page (in seconds)
+         * @param blockSize the size of the page (in seconds)
+         * @return the created source of samples
+         */
 	public MultichannelSegmentedSampleSource getSegmentedSampleSource(MultichannelSampleSource source, SignalSpace signalSpace, StyledTagSet tagSet, float pageSize, float blockSize) {
 
 		ChannelSpace channelSpace = null;

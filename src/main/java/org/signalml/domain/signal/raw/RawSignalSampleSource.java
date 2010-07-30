@@ -20,8 +20,9 @@ import org.signalml.domain.signal.OriginalMultichannelSampleSource;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.exception.SignalMLException;
 
-/** RawSignalSampleSource
- *
+/**
+ * This class represents the source of samples for the raw signal.
+ * Reads samples from file using buffering if possible.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -29,27 +30,88 @@ public class RawSignalSampleSource extends AbstractMultichannelSampleSource impl
 
 	protected static final Logger logger = Logger.getLogger(RawSignalSampleSource.class);
 
+        /**
+         * the file with the signal
+         */
 	private File file;
+
+        /**
+         * the file opened for random access reading
+         */
 	private RandomAccessFile randomAccessFile;
 
+        /**
+         * the number of signal channels
+         */
 	private int channelCount;
-	private float samplingFrequency;
 
+        /**
+         * the number of samples per seconds (in one channel)
+         */
+        private float samplingFrequency;
+
+        /**
+         * the {@link RawSignalSampleType type} of samples in the signal
+         */
 	private RawSignalSampleType sampleType;
-	private RawSignalByteOrder byteOrder;
 
+        /**
+         * the {@link RawSignalByteOrder order} of bytes in the file with signal
+         */
+        private RawSignalByteOrder byteOrder;
+
+        /**
+         * the calibration
+         */
 	private float calibration = 1F;
 
+        /**
+         * an array of labels of channels
+         */
 	private String[] labels;
 
+        /**
+         * the buffer of read samples
+         */
 	private byte[] byteBuffer;
+
+        /**
+         * the index of the first buffered sample
+         */
 	private int minBufferedSample;
+
+        /**
+         * the index of the last buffered sample
+         */
 	private int maxBufferedSample;
+
+        /**
+         * the wrapper for the buffer of read samples
+         */
 	private ByteBuffer bBuffer;
 
+        /**
+         * the size of the sample in bytes
+         */
 	private int sampleByteWidth;
+        /**
+         * the number of samples in the single channel
+         */
 	private int sampleCount;
 
+        /**
+         * Constructor. Creates the source of samples for the multichannel raw
+         * signal based on the file with that signal.
+         * @param file the file with the signal
+         * @param channelCount number of channels in the signal
+         * @param samplingFrequency number of samples per second
+         * @param sampleType the {@link RawSignalSampleType type} of signal
+         * samples in the file
+         * @param byteOrder the {@link RawSignalByteOrder order} of bytes
+         * in the signal file
+         * @throws IOException if there is an error while reading samples from
+         * file
+         */
 	public RawSignalSampleSource(File file, int channelCount, float samplingFrequency, RawSignalSampleType sampleType, RawSignalByteOrder byteOrder) throws IOException {
 		this.file = file;
 		this.channelCount = channelCount;
@@ -63,6 +125,9 @@ public class RawSignalSampleSource extends AbstractMultichannelSampleSource impl
 		sampleCount = (int)(file.length() / (channelCount * sampleByteWidth));
 	}
 
+        /**
+         * Closes the file with the signal.
+         */
 	public void close() {
 		if (randomAccessFile != null) {
 			try {
@@ -75,6 +140,12 @@ public class RawSignalSampleSource extends AbstractMultichannelSampleSource impl
 		}
 	}
 
+        /**
+         * Creates the copy of this sample source.
+         * @return the copy of this sample source.
+         * @throws SignalMLException if there is an error while reading from
+         * file
+         */
 	@Override
 	public OriginalMultichannelSampleSource duplicate() throws SignalMLException {
 
@@ -94,32 +165,65 @@ public class RawSignalSampleSource extends AbstractMultichannelSampleSource impl
 
 	}
 
+        /**
+         * Returns the file with the signal.
+         * @return the file with the signal
+         */
 	public File getFile() {
 		return file;
 	}
 
+        /**
+         * Returns the number of samples in the single channel.
+         * @return the number of samples in the single channel
+         */
 	public int getSampleCount() {
 		return sampleCount;
 	}
 
+        /**
+         * Returns the {@link RawSignalSampleType type} of the signal sample
+         * @return the type of the signal sample
+         */
 	public RawSignalSampleType getSampleType() {
 		return sampleType;
 	}
 
+        /**
+         * Returns the {@link RawSignalByteOrder order} of bytes in the file
+         * with signal
+         * @return the order of bytes in the file with signal
+         */
 	public RawSignalByteOrder getByteOrder() {
 		return byteOrder;
 	}
 
+        /**
+         * Returns if the implementation is capable of returning a calibration
+         * @return true because the implementation is capable of returning a
+         * calibration
+         */
 	@Override
 	public boolean isCalibrationCapable() {
 		return true;
 	}
 
+        /**
+         * Returns if the implementation is capable of returning a channel count
+         * @return true because the implementation is capable of returning a channel
+         * count
+         */
 	@Override
 	public boolean isChannelCountCapable() {
 		return true;
 	}
 
+        /**
+         * Returns if the implementation is capable of returning a
+         * sampling frequency
+         * @return true because the implementation is capable of returning a
+         * sampling frequency
+         */
 	@Override
 	public boolean isSamplingFrequencyCapable() {
 		return true;
@@ -165,10 +269,18 @@ public class RawSignalSampleSource extends AbstractMultichannelSampleSource impl
 		}
 	}
 
+        /**
+         * Returns an array of labels of channels.
+         * @return an array of labels of channels
+         */
 	public String[] getLabels() {
 		return labels;
 	}
 
+        /**
+         * Sets the labels of channels to given values
+         * @param labels an array with labels to be set
+         */
 	public void setLabels(String[] labels) {
 		if (this.labels != labels) {
 			String[] oldLabels = this.labels;
@@ -178,6 +290,11 @@ public class RawSignalSampleSource extends AbstractMultichannelSampleSource impl
 		}
 	}
 
+        /**
+         * Returns the number of the channel. The same value as given
+         * @param channel the number of a channel
+         * @return the number of the channel, the same value as given
+         */
 	@Override
 	public int getDocumentChannelIndex(int channel) {
 		return channel;
@@ -196,6 +313,24 @@ public class RawSignalSampleSource extends AbstractMultichannelSampleSource impl
 		return sampleCount;
 	}
 
+        /**
+         * Returns the given number of samples for a given channel starting
+         * from a given position in time.
+         * If it is possible uses buffer, if not (or only partially) reads the
+         * data from file (random access).
+         * @param channel the number of channel
+         * @param target the array to which results will be written starting
+         * from position <code>arrayOffset</code>
+         * @param signalOffset the position (in time) in the signal starting
+         * from which samples will be returned
+         * @param count the number of samples to be returned
+         * @param arrayOffset the offset in <code>target</code> array starting
+         * from which samples will be written
+         * @throws IndexOutOfBoundsException if bad channel number is given
+         * or samples of requested indexes are not in the signal
+         * or the requested part of the signal doesn't fit in the
+         * <code>target<\code> array
+         */
 	@Override
 	public void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
 		synchronized (this) {
@@ -285,6 +420,9 @@ public class RawSignalSampleSource extends AbstractMultichannelSampleSource impl
 
 	}
 
+        /**
+         * Destroys this sample source. Closes the file with signal.
+         */
 	@Override
 	public void destroy() {
 		close();

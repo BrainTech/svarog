@@ -11,27 +11,70 @@ import org.signalml.domain.signal.SignalSelection;
 import org.signalml.domain.signal.SignalSelectionType;
 import org.signalml.exception.SanityCheckException;
 
-/** SegmentedSampleSource
- *
+/**
+ * This class represents the {@link MultichannelSampleSource source} of samples
+ * for the {@link SignalSelection selected} part of the signal.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class SelectionSegmentedSampleSource extends MultichannelSampleProcessor implements MultichannelSegmentedSampleSource {
 
+        /**
+         * the index of the first selected sample
+         */
 	private int firstSample;
+        /**
+         * the number of samples in the selection
+         */
 	private int segmentLength;
+        /**
+         * the number of segments in this source
+         * if the {@link SignalSelection selection} is a page selection - the
+         * number of pages in the selection
+         * if the selection is a block selection - the number of blocks
+         * if the selection is a channel selection - <code>1</code>
+         */
 	private int segmentCount;
 
+        /**
+         * the number of channels in this source
+         */
 	private int channelCount;
+        /**
+         * an array mapping indexes in this source to the indexes of channels
+         * in the actual source
+         */
 	private int[] channelIndices;
 
+        /**
+         * the number of segments that can not be used (the required
+         * segment is not in the signal).
+         */
 	private int unusableSegmentCount;
+        /**
+         * the point in time (seconds) where the selection starts
+         */
 	private float firstPosition;
 
+        /**
+         * Constructor. Creates a source without the selection
+         * @param source the actual source of samples
+         */
 	public SelectionSegmentedSampleSource(MultichannelSampleSource source) {
 		super(source);
 	}
 
+        /**
+         * Constructor. Creates the source of samples based on a given
+         * {@link MultichannelSampleSource source} for the whole signal,
+         * {@link ChannelSpace subset} of channels and
+         * {@link SignalSelection selection}.
+         * @param source the source for the whole signal
+         * @param selection the selection of the part of the signal
+         * @param channelSpace the subset of channels
+         * @param pageSize the size of a page (in seconds)
+         * @param blockSize the size of a block (in seconds)
+         */
 	public SelectionSegmentedSampleSource(MultichannelSampleSource source, SignalSelection selection, ChannelSpace channelSpace, float pageSize, float blockSize) {
 		super(source);
 
@@ -101,6 +144,13 @@ public class SelectionSegmentedSampleSource extends MultichannelSampleProcessor 
 		return firstPosition + (segmentLength*segment);
 	}
 
+         /**
+         * Constructor. Creates the source of samples based on the given
+         * {@link MultichannelSampleSource source} of all channels an the given
+         * {@link SelectionSegmentedSampleSourceDescriptor descriptor}.
+         * @param source the source of samples for all channels
+         * @param descriptor the descriptor of this source
+         */
 	public SelectionSegmentedSampleSource(MultichannelSampleSource source, SelectionSegmentedSampleSourceDescriptor descriptor) {
 		this(source);
 

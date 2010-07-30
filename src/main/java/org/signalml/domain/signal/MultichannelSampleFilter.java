@@ -17,8 +17,10 @@ import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
 
-/** SampleFilter
- *
+/**
+ * This abstract class represents a filter of samples for multichannel signal.
+ * It contains the list of {@link SampleFilterEngine engines} for every channel
+ * and using them filters samples.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -26,15 +28,40 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 
 	protected static final Logger logger = Logger.getLogger(MultichannelSampleFilter.class);
 
+        /**
+         * a vector that at each index (being also the index of a channel) holds
+         * a chain (list) of {@link SampleFilterEngine engines}.
+         */
 	private Vector<LinkedList<SampleFilterEngine>> chains;
 
+        /**
+         * the {@link Montage montage} with which this filter is associated
+         */
 	private Montage currentMontage = null;
 
+        /**
+         * Constructor. Creates an empty sample filter using a given source
+         * @param source the source of samples
+         */
 	public MultichannelSampleFilter(MultichannelSampleSource source) {
 		super(source);
 		reinitFilterChains();
 	}
 
+        /**
+         * Returns the given number of filtered samples for a given channel
+         * starting from a given position in time.
+         * Filtering is done by the last of {@link SampleFilterEngine engines}
+         * associated with a given channel.
+         * @param channel the number of channel
+         * @param target the array to which results will be written starting
+         * from position <code>arrayOffset</code>
+         * @param signalOffset the position (in time) in the signal starting
+         * from which samples will be returned
+         * @param count the number of samples to be returned
+         * @param arrayOffset the offset in <code>target</code> array starting
+         * from which samples will be written
+         */
 	@Override
 	public void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
 
@@ -49,6 +76,11 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 
 	}
 
+        /**
+         * Adds the filter {@link SampleFilterEngine engine} for all
+         * channels.
+         * @param filter the filter engine to be added
+         */
 	public void addFilter(SampleFilterEngine filter) {
 		int cnt = chains.size();
 		LinkedList<SampleFilterEngine> chain;
@@ -58,6 +90,13 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 		}
 	}
 
+        /**
+         * Adds the filter {@link SampleFilterEngine engine} for specified
+         * channels.
+         * @param filter the filter engine to be added
+         * @param channels array of indexes of channels for which filter engine
+         * is to be added
+         */
 	public void addFilter(SampleFilterEngine filter, int[] channels) {
 		LinkedList<SampleFilterEngine> chain;
 		for (int i=0; i<channels.length; i++) {
@@ -66,6 +105,13 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 		}
 	}
 
+        /**
+         * Adds the filter {@link SampleFilterEngine engine} for the
+         * specified channel.
+         * @param filter the filter engine to be added
+         * @param channel the number of the channel for which filter engine
+         * is to be added
+         */
 	public void addFilter(SampleFilterEngine filter, int channel) {
 		LinkedList<SampleFilterEngine> chain;
 		chain = chains.get(channel);
@@ -82,6 +128,10 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 		super.propertyChange(evt);
 	}
 
+        /**
+         * Clears the list of filter {@link SampleFilterEngine engines}.
+         * It is done by creating new and replacing.
+         */
 	public void reinitFilterChains() {
 
 		int cnt = source.getChannelCount();
@@ -94,10 +144,21 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 
 	}
 
+        /**
+         * Returns the {@link Montage montage} associated with this sample filter
+         * @return the montage associated with this sample filter
+         */
 	public Montage getCurrentMontage() {
 		return currentMontage;
 	}
 
+        /**
+         * Sets the {@link Montage montage} to be associated with this sample
+         * filter
+         * @param currentMontage the montage which will be associated with this
+         * sample filter
+         * @throws MontageMismatchException
+         */
 	public void setCurrentMontage(Montage currentMontage) throws MontageMismatchException {
 		try {
 			applyMontage(currentMontage);
@@ -110,6 +171,14 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 		this.currentMontage = currentMontage;
 	}
 
+        //TODO when exception is thrown? I can't find the place....
+        /**
+         * Clears the filter {@link SampleFilterEngine engines} and initialises
+         * them creating {@link FFTSampleFilterEngine FFT filter engines}
+         * based on {@link FFTSampleFilter FFT filters} from a given montage.
+         * @param montage the montage used to create new engines
+         * @throws MontageMismatchException
+         */
 	private void applyMontage(Montage montage) throws MontageMismatchException {
 
 		reinitFilterChains();
