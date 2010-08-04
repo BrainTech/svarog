@@ -13,6 +13,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  * This class represents a high-pass sample filter,
  * which passes frequencies higher then 20 Hz.
  * Allows to create and duplicate a filter.
+ * @see TimeDomainSampleFilter
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -56,8 +57,8 @@ public class HighPassSampleFilter extends TimeDomainSampleFilter {
 	}
 
         /**
-         * Duplicates the current object.
-         * @return copy of a current object
+         * Duplicates this filter.
+         * @return the copy this filter
          */
 	@Override
 	public SampleFilterDefinition duplicate() {

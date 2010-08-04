@@ -21,8 +21,6 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-
-//w wielu miejscach brakuje @Override. Dodawać?
 @XStreamAlias("eegchannel")
 public enum EegChannel implements Channel {
 
@@ -30,7 +28,7 @@ public enum EegChannel implements Channel {
 	// this should be a normal class with static final fields, unfortunately no time for refactoring now
 
 	/**
-         * default EEG channel
+         * the default EEG channel
          */
 	UNKNOWN("Unknown", ChannelType.UNKNOWN, false, null),
 
@@ -82,33 +80,33 @@ public enum EegChannel implements Channel {
 	;
 
         /**
-         * a name of a channel
+         * a name of this channel
          */
 	private String name;
 
         /**
-         * a type of a channel. Possible types:
+         * a {@link ChannelType type} of this channel. Possible types:
          * UNKNOWN, PRIMARY, REFERENCE, OTHER
          */
 	private ChannelType type;
 
         /**
-         * The pattern which will be used to search channel by name.
+         * the pattern which will be used to search this channel by name
          */
 	private Pattern matchingPattern;
 
         /**
-         * A variable telling if the channel is unique.
+         * a variable telling if this channel is unique
          */
 	private boolean unique;
 
         /**
-         * The number of a column in which the channel is located.
+         * the number of a column in which this channel is located
          */
 	private int matrixCol;
 
         /**
-         * The number of a row in which the channel is located.
+         * the number of a row in which this channel is located
          */
 	private int matrixRow;
 
@@ -128,7 +126,7 @@ public enum EegChannel implements Channel {
 	private static EegChannel[][] matrix;
 
         /**
-         * creates channels matrix.
+         * Creates channels matrix.
          */
 	static {
 
@@ -143,14 +141,17 @@ public enum EegChannel implements Channel {
 	}
 
         /**
-         * Constructor. Creates a channel of a given type and puts it at given
-         * location.
+         * Constructor. Creates a channel of a given {@link ChannelType type}
+         * and puts it at given location.
          * @param name the name of the channel
          * @param type the type of the channel
-         * @param unique is the channel unique?
-         * @param pattern the regular expression which will be used to search channel by name
-         * @param matrixCol the column of the matrix in which the channel is located
-         * @param matrixRow the row of the matrix in which the channel is located
+         * @param unique is this channel unique?
+         * @param pattern the regular expression which will be used to search
+         * this channel by name
+         * @param matrixCol the column of the matrix in which this channel
+         * is located
+         * @param matrixRow the row of the matrix in which this channel
+         * is located
          */
 	private EegChannel(String name, ChannelType type, boolean unique, String pattern, int matrixCol, int matrixRow) {
 		this.name = name;
@@ -165,7 +166,7 @@ public enum EegChannel implements Channel {
 
         /**
          * Constructor. Creates a channel of a given type and puts outside of
-         * the matrix
+         * the matrix.
          * @param name the name of the channel
          * @param type the type of the channel
          * @param unique is the channel unique?
@@ -183,7 +184,7 @@ public enum EegChannel implements Channel {
 	}
 
         /**
-         * Finds an EegChannel of a given name
+         * Finds an EegChannel of a given name.
          * @param name the name of a channel to be found
          * @return an EegChannel of a given name
          */
@@ -201,56 +202,34 @@ public enum EegChannel implements Channel {
 		return null;
 	}
 
-        /**
-         * Returns the name of the channel
-         * @return the name of the channel
-         */
+    @Override
 	public String getName() {
 		return name;
 	}
 
-        /**
-         * Returns the type of the channel
-         * @return the type of the channel
-         */
+    @Override
 	public ChannelType getType() {
 		return type;
 	}
 
-        /**
-         * Returns if the channel is unique
-         * @return true if the channel is unique, false otherwise
-         */
 	@Override
 	public boolean isUnique() {
 		return unique;
 	}
 
         /**
-         * Returns the pattern which is used to search channel by name
-         * @return the pattern which is used to search channel by name
+         * Returns the pattern which is used to search this channel by name.
+         * @return the pattern which is used to search this channel by name
          */
 	public Pattern getMatchingPattern() {
 		return matchingPattern;
 	}
 
-        /**
-         * Returns the number of a column in the matrix in which
-         * the channel is located.
-         * @return the number of a column in the matrix in which
-         * the channel is located.
-         */
 	@Override
 	public int getMatrixCol() {
 		return matrixCol;
 	}
 
-        /**
-         * Returns the number of a row in the matrix in which
-         * the channel is located.
-         * @return the number of a row in the matrix in which
-         * the channel is located.
-         */
 	@Override
 	public int getMatrixRow() {
 		return matrixRow;
@@ -258,18 +237,13 @@ public enum EegChannel implements Channel {
 
         /**
          * Returns the matrix of channels.
-         * @return the matrix of channels.
+         * @return the matrix of channels
          */
 	public static Channel[][] getMatrix() {
 		return matrix;
 	}
 
-        /**
-         * Finds the left neighbour of a given channel
-         * @param chn the channel for which we are looking for a neighbour
-         * @return the object which is the left neighbour of a given channel.
-         * null if doesn't exist or given channel is not in the matrix
-         */
+        @Override
 	public Channel getLeftNeighbour(Channel chn) {
 		if (!(chn instanceof EegChannel)) {
 			return null;
@@ -284,12 +258,7 @@ public enum EegChannel implements Channel {
 		return matrix[channel.matrixCol-1][channel.matrixRow];
 	}
 
-        /**
-         * Finds the right neighbour of a given channel
-         * @param chn the channel for which we are looking for a neighbour
-         * @return the object which is the right neighbour of a given channel.
-         * null if doesn't exist or given channel is not in the matrix
-         */
+        @Override
 	public Channel getRightNeighbour(Channel chn) {
 		if (!(chn instanceof EegChannel)) {
 			return null;
@@ -304,12 +273,7 @@ public enum EegChannel implements Channel {
 		return matrix[channel.matrixCol+1][channel.matrixRow];
 	}
 
-        /**
-         * Finds the top neighbour of a given channel
-         * @param chn the channel for which we are looking for a neighbour
-         * @return the object which is the top neighbour of a given channel.
-         * null if doesn't exist or given channel is not in the matrix
-         */
+        @Override
 	public Channel getTopNeighbour(Channel chn) {
 		if (!(chn instanceof EegChannel)) {
 			return null;
@@ -324,12 +288,7 @@ public enum EegChannel implements Channel {
 		return matrix[channel.matrixCol][channel.matrixRow-1];
 	}
 
-        /**
-         * Finds the bottom neighbour of a given channel
-         * @param chn the channel for which we are looking for a neighbour
-         * @return the object which is the bottom neighbour of a given channel.
-         * null if doesn't exist or given channel is not in the matrix
-         */
+        @Override
 	public Channel getBottomNeighbour(Channel chn) {
 		if (!(chn instanceof EegChannel)) {
 			return null;
@@ -344,13 +303,7 @@ public enum EegChannel implements Channel {
 		return matrix[channel.matrixCol][channel.matrixRow+1];
 	}
 
-	/**
-         * Finds all channels that are: a) in the matrix;  b) on the left of given;
-         * c) in the same row as given
-         * @param chn the channel for which we are looking for neighbours
-         * @return the array of found channels. An empty array if such channels
-         * don't exist, null if given channel is not in the matrix
-         */
+        @Override
 	public Channel[] getLeftNeighbours(Channel chn) {
 		if (!(chn instanceof EegChannel)) {
 			return null;
@@ -366,13 +319,7 @@ public enum EegChannel implements Channel {
 		return neighbours;
 	}
 
-	/**
-         * Finds all channels that are: a) in the matrix;  b) on the right of given;
-         * c) in the same row as given
-         * @param chn the channel for which we are looking for neighbours
-         * @return the array of found channels. An empty array if such channels
-         * don't exist, null if given channel is not in the matrix
-         */
+        @Override
 	public Channel[] getRightNeighbours(Channel chn) {
 		if (!(chn instanceof EegChannel)) {
 			return null;
@@ -388,13 +335,7 @@ public enum EegChannel implements Channel {
 		return neighbours;
 	}
 
-	/**
-         * Finds all channels that are: a) in the matrix;  b) above given;
-         * c) in the same row as given
-         * @param chn the channel for which we are looking for neighbours
-         * @return the array of found channels. An empty array if such channels
-         * don't exist, null if given channel is not in the matrix
-         */
+        @Override
 	public Channel[] getTopNeighbours(Channel chn) {
 		if (!(chn instanceof EegChannel)) {
 			return null;
@@ -410,13 +351,7 @@ public enum EegChannel implements Channel {
 		return neighbours;
 	}
 
-	/**
-         * Finds all channels that are: a) in the matrix;  b) below given;
-         * c) in the same row as given
-         * @param chn the channel for which we are looking for neighbours
-         * @return the array of found channels. An empty array if such channels
-         * don't exist, null if given channel is not in the matrix
-         */
+        @Override
 	public Channel[] getBottomNeighbours(Channel chn) {
 		if (!(chn instanceof EegChannel)) {
 			return null;
@@ -432,12 +367,7 @@ public enum EegChannel implements Channel {
 		return neighbours;
 	}
 
-	/**
-         * Returns an array which consists of top, left, bottom and right
-         * neighbour (if they exist)
-         * @param chn the channel for which we are looking for neighbours
-         * @return Created array. null if given channel is not in the matrix
-         */
+        @Override
 	public Channel[] getNearestNeighbours(Channel chn) {
 		if (!(chn instanceof EegChannel)) {
 			return null;

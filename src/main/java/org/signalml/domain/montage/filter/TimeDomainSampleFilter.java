@@ -8,7 +8,8 @@ import org.signalml.util.ResolvableString;
 import org.springframework.context.MessageSourceResolvable;
 
 /**
- * This abstract class holds a time domain representation of a sample filter.
+ * This abstract class holds a time domain representation of a
+ * {@link SampleFilterDefinition sample filter}.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -36,21 +37,21 @@ public abstract class TimeDomainSampleFilter extends SampleFilterDefinition {
 	protected transient int margin;
 
         /**
-         * the number of sequential passes of a filter
+         * the number of sequential passes of this filter
          */
 	protected int passCount;
 
         /**
-         * Returns an array of filter feedback coefficients.
-         * @return an array of filter feedback coefficients.
+         * Returns an array of filters feedback coefficients.
+         * @return an array of filters feedback coefficients
          */
 	public double[] getACoefficients() {
 		return aCoefficients;
 	}
 
         /**
-         * Returns an array of filter feedforward coefficients.
-         * @return an array of filter feedforward coefficients.
+         * Returns an array of filters feedforward coefficients.
+         * @return an array of filters feedforward coefficients
          */
 	public double[] getBCoefficients() {
 		return bCoefficients;
@@ -61,16 +62,16 @@ public abstract class TimeDomainSampleFilter extends SampleFilterDefinition {
 	}
 
         /**
-         * Returns the number of sequential passes of a filter
-         * @return the number of sequential passes of a filter
+         * Returns the number of sequential passes of this filter.
+         * @return the number of sequential passes of this filter
          */
 	public int getPassCount() {
 		return passCount;
 	}
 
         /**
-         * Sets the number of sequential passes of a filter
-         * @param passCount the number of sequential passes of a filter to be set
+         * Sets the number of sequential passes of this filter.
+         * @param passCount the number of sequential passes to be set
          */
 	public void setPassCount(int passCount) {
 		this.passCount = passCount;

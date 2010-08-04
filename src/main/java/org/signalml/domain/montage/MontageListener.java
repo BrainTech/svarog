@@ -7,7 +7,7 @@ package org.signalml.domain.montage;
 import java.util.EventListener;
 
 /**
- * Class representing an event listener associated with a change
+ * This class represents an event listener associated with a change
  * in a {@link Montage montage}.
  * Changes include change in a structure, adding/removing/changing a
  * {@link MontageChannel channel}.
@@ -17,31 +17,34 @@ import java.util.EventListener;
 public interface MontageListener extends EventListener {
 
         /**
-         * Invoked when a structure of a montage is changed
+         * Invoked when a structure of a {@link Montage montage} is changed.
          * @param ev event object describing change
          */
 	void montageStructureChanged(MontageEvent ev);
 
         /**
-         * Invoked when montage channels are added to a montage
+         * Invoked when {@link MontageChannel montage channels} are added to
+         * a {@link Montage montage}.
          * @param ev an event object describing a change
          */
 	void montageChannelsAdded(MontageEvent ev);
 
         /**
-         * Invoked when montage channels are removed from a montage
+         * Invoked when {@link MontageChannel montage channels} are removed from
+         * a {@link Montage montage}.
          * @param ev an event object describing a change
          */
 	void montageChannelsRemoved(MontageEvent ev);
 
         /**
-         * Invoked when montage channels are changed
+         * Invoked when {@link MontageChannel montage channels} are changed.
          * @param ev an event object describing a change
          */
 	void montageChannelsChanged(MontageEvent ev);
 
         /**
-         * Invoked when references of montage channels are changed
+         * Invoked when references of {@link MontageChannel montage channels}
+         * are changed.
          * @param ev an event object describing a change
          */
 	void montageReferenceChanged(MontageEvent ev);

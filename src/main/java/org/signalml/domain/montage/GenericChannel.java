@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
- * Class representing a generic channel.
+ * This class represents a generic channel.
  * There is no matrix for generic channels so they don't have any neighbours.
  * @see Channel
  *
@@ -20,7 +20,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 public enum GenericChannel implements Channel {
 
 	/**
-         * default type of the channel
+         * the default type of the channel
          */
 	UNKNOWN("Unknown", ChannelType.UNKNOWN, false, null),
 
@@ -32,33 +32,34 @@ public enum GenericChannel implements Channel {
 	;
 
         /**
-         * name of the channel
+         * the name of this channel
          */
 	private String name;
 
         /**
-         * type of the channel. Possible types:
+         * type of this channel. Possible types:
          * UNKNOWN, PRIMARY, REFERENCE, OTHER
          */
 	private ChannelType type;
 
         /**
-         * Pattern which will be used to search channel by name.
+         * the pattern which will be used to search this channel by name.
          */
 	private Pattern matchingPattern;
 
         /**
-         * a variable telling if the channel is unique
+         * a variable telling if this channel is unique
          */
 	private boolean unique;
 
 
         /**
-         * Constructor
+         * Constructor.
          * @param name the name of the channel
          * @param type the type of the channel
          * @param unique is the channel unique?
-         * @param pattern the regular expression which will be used to search channel by name
+         * @param pattern the regular expression which will be used to search
+         * channel by name
          */
 	private GenericChannel(String name, ChannelType type, boolean unique, String pattern) {
 		this.name = name;
@@ -70,7 +71,7 @@ public enum GenericChannel implements Channel {
 	}
 
         /**
-         * Finds a GenericChannel of a given name
+         * Finds a GenericChannel of a given name.
          * @param name the name of a channel to be found
          * @return a GenericChannel of a given name
          */
@@ -88,34 +89,24 @@ public enum GenericChannel implements Channel {
 		return null;
 	}
 
-        /**
-         * Returns the name of the channel
-         * @return the name of the channel
-         */
+        @Override
 	public String getName() {
 		return name;
 	}
 
-        /**
-         * Returns the type of the channel
-         * @return the type of the channel
-         */
+        @Override
 	public ChannelType getType() {
 		return type;
 	}
 
-        /**
-         * Returns if the channel is unique
-         * @return true if the channel is unique, false otherwise
-         */
 	@Override
 	public boolean isUnique() {
 		return unique;
 	}
 
         /**
-         * Returns the pattern which is used to search channel by name
-         * @return the pattern which is used to search channel by name
+         * Returns the pattern which is used to search this channel by name
+         * @return the pattern which is used to search this channel by name
          */
 	public Pattern getMatchingPattern() {
 		return matchingPattern;
@@ -123,9 +114,9 @@ public enum GenericChannel implements Channel {
 
          /**
          * Returns the number of a column in the matrix in which
-         * the channel is located. Always -1.
+         * this channel is located. Always -1.
          * @return the number of a column in the matrix in which
-         * the channel is located.
+         * this channel is located.
          */
 	@Override
 	public int getMatrixCol() {
@@ -134,7 +125,7 @@ public enum GenericChannel implements Channel {
 
         /**
          * Returns the number of a row in the matrix in which
-         * the channel is located. Always -1.
+         * this channel is located. Always -1.
          * @return the number of a row in the matrix in which
          * the channel is located.
          */
@@ -148,6 +139,7 @@ public enum GenericChannel implements Channel {
          * @param chn the channel for which we are looking for a neighbour
          * @return the channel is not in the matrix so null
          */
+        @Override
 	public Channel getLeftNeighbour(Channel chn) {
 		return null;
 	}
@@ -157,6 +149,7 @@ public enum GenericChannel implements Channel {
          * @param chn the channel for which we are looking for a neighbour
          * @return the channel is not in the matrix so null
          */
+        @Override
 	public Channel getRightNeighbour(Channel chn) {
 		return null;
 	}
@@ -166,6 +159,7 @@ public enum GenericChannel implements Channel {
          * @param chn the channel for which we are looking for a neighbour
          * @return the channel is not in the matrix so null
          */
+        @Override
 	public Channel getTopNeighbour(Channel chn) {
 		return null;
 	}
@@ -175,51 +169,66 @@ public enum GenericChannel implements Channel {
          * @param chn the channel for which we are looking for a neighbour
          * @return the channel is not in the matrix so null
          */
+        @Override
 	public Channel getBottomNeighbour(Channel chn) {
 		return null;
 	}
 
 	/**
-         * Finds all channels that are: a) in the matrix;  a) on the left of given; c) in the same row as given
+         * Finds all channels that satisfies all following conditions:
+         * a) in the matrix;  b) on the left of given;
+         * c) in the same row as given
          * @param chn the channel for which we are looking for neighbours
          * @return the channel is not in the matrix so null
          */
+    @Override
 	public Channel[] getLeftNeighbours(Channel chn) {
 		return null;
 	}
 
 	/**
-         * Finds all channels that are: a) in the matrix;  b) on the right of given; c) in the same row as given
+         * Finds all channels that satisfies all following conditions:
+         * a) in the matrix;  b) on the right of given;
+         * c) in the same row as given
          * @param chn the channel for which we are looking for neighbours
          * @return the channel is not in the matrix so null
          */
+    @Override
 	public Channel[] getRightNeighbours(Channel chn) {
 		return null;
 	}
 
 	/**
-         * Finds all channels that are: a) in the matrix;  b) above given; c) in the same row as given
+         * Finds all channels that satisfies all following conditions:
+         * a) in the matrix;  b) above given;
+         * c) in the same row as given
          * @param chn the channel for which we are looking for neighbours
          * @return the channel is not in the matrix so null
          */
+    @Override
 	public Channel[] getTopNeighbours(Channel chn) {
 		return null;
 	}
 
 	/**
-         * Finds all channels that are: a) in the matrix;  b) below given; c) in the same row as given
+         * Finds all channels that satisfies all following conditions:
+         * a) in the matrix;  b) below given;
+         * c) in the same row as given
          * @param chn the channel for which we are looking for neighbours
          * @return the channel is not in the matrix so null
          */
+    @Override
 	public Channel[] getBottomNeighbours(Channel chn) {
 		return null;
 	}
 
 	/**
-         * Returns an array which consists of top, left, bottom and right neighbour (if they exist)
+         * Returns an array which consists of top, left, bottom and right
+         * neighbour (if they exist)
          * @param chn the channel for which we are looking for neighbours
          * @return the channel is not in the matrix so null
          */
+    @Override
 	public Channel[] getNearestNeighbours(Channel chn) {
 		return null;
 	}

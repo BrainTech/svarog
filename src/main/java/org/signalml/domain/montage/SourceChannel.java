@@ -9,8 +9,8 @@ import java.io.Serializable;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
- * This class represents a source channel. It is composed of a number, a name
- * and a {@link Channel function} of a channel.
+ * This class represents a source channel. It has a certain number, name
+ * and {@link Channel function}.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -20,29 +20,29 @@ public class SourceChannel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
         /**
-         * index of a SourceChannel  >=0
+         * an index of this SourceChannel  >=0
          */
 	private int channel;
 
         /**
-         * String representing a label of a SourceChannel
+         * String representing a label of this SourceChannel
          */
 	private String label;
 
         /**
-         * The function of a SourceChannel
+         * the function of this SourceChannel
          */
 	private Channel function;
 
         /**
-         * Constructor. Creates empty SourceChannel
+         * Constructor. Creates an empty SourceChannel.
          */
 	protected SourceChannel() {
 	}
 
         /**
          * Constructor. Creates a SourceChannel with a given index,
-         * label and function
+         * label and function.
          * @param channel an index of a SourceChannel
          * @param label a label of a SourceChannel
          * @param function a function of a SourceChannel
@@ -54,7 +54,7 @@ public class SourceChannel implements Serializable {
 	}
 
         /**
-         * Copy constructor
+         * Copy constructor.
          * @param sourceChannel a SourceChannel to be copied
          */
 	public SourceChannel(SourceChannel sourceChannel) {
@@ -64,31 +64,31 @@ public class SourceChannel implements Serializable {
 	}
 
         /**
-         *
-         * @return an index of a SourceChannel
+         * Returns an index of this SourceChannel.
+         * @return an index of this SourceChannel
          */
 	public int getChannel() {
 		return channel;
 	}
 
         /**
-         *
-         * @return a label of a SourceChannel
+         * Returns a label of this SourceChannel.
+         * @return a label of this SourceChannel
          */
 	public String getLabel() {
 		return label;
 	}
 
         /**
-         *
-         * @return a function of a SourceChannel
+         * Returns a function of this SourceChannel.
+         * @return a function of this SourceChannel
          */
 	public Channel getFunction() {
 		return function;
 	}
 
         /**
-         *
+         * Sets a label of this SourceChannel.
          * @param label a String with a label to be set
          */
 	public void setLabel(String label) {
@@ -102,7 +102,7 @@ public class SourceChannel implements Serializable {
 	}
 
         /**
-         *
+         * Sets a function of this SourceChannel.
          * @param function a function to be set
          */
 	public void setFunction(Channel function) {

@@ -9,12 +9,14 @@ import org.signalml.domain.montage.Channel;
 import org.springframework.validation.Errors;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import org.signalml.domain.montage.MontageGenerator;
 
 /**
- * This class represents a montage generator for a linked ears montage.
+ * This class represents a generator for a linked ears montage.
  * It creates a {@link AverageReferenceMontageGenerator average reference montage}
  * with EegChannel.A1 and EegChannel.A2 as functions of reference channels.
  *
+ * @see MontageGenerator
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 @XStreamAlias("linkedearsmontage")
@@ -41,7 +43,7 @@ public class LinkedEarsMontageGenerator extends AverageReferenceMontageGenerator
 
          /**
          * Reports error, that the ear channel (the function of a source channel)
-         * was not unique
+         * was not unique.
          * @param refChannel the channel that was not found
          * @param errors the Errors object used to report errors
          */
@@ -52,7 +54,7 @@ public class LinkedEarsMontageGenerator extends AverageReferenceMontageGenerator
 
         /**
          * Reports error, that the ear channel (the function of a source channel)
-         * was not found
+         * was not found.
          * @param refChannel the channel that was not found
          * @param errors the Errors object used to report errors
          */
@@ -63,9 +65,9 @@ public class LinkedEarsMontageGenerator extends AverageReferenceMontageGenerator
 	}
 
         /**
-         * Compares a given object to a current object. Always true if an object
+         * Compares a given object to this generator. Always true if an object
          * is not null and of type LinkedEarsMontageGenerator
-         * (all left ear montage generators are equal)
+         * (all left ear montage generators are equal).
          * @param obj an object to be compared with a current object
          * @return true if obj is equal to a current object (is of type
          * LinkedEarsMontageGenerator), false otherwise

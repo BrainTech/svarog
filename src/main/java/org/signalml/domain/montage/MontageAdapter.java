@@ -5,14 +5,16 @@
 package org.signalml.domain.montage;
 
 /**
- * Class representing listeners associated with source montages, montages and sample filters
+ * This class represents listeners associated with source montages
+ * montages and sample filters.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class MontageAdapter implements SourceMontageListener, MontageListener, MontageSampleFilterListener {
 
         /**
-         * Invoked when a source channel is added to a montage
+         * Invoked when a {@link SourceChannel source channel} is added to
+         * a montage.
          * @param ev an event object describing a change
          */
 	@Override
@@ -20,7 +22,7 @@ public class MontageAdapter implements SourceMontageListener, MontageListener, M
 	}
 
         /**
-         * Invoked when a source channel is changed
+         * Invoked when a {@link SourceChannel source channel} is changed.
          * @param ev an event object describing a change
          */
 	@Override
@@ -28,7 +30,8 @@ public class MontageAdapter implements SourceMontageListener, MontageListener, M
 	}
 
         /**
-         * Invoked when a source channel is removed from a montage
+         * Invoked when a {@link SourceChannel source channel} is removed
+         * from a montage.
          * @param ev an event object describing a change
          */
 	@Override
@@ -36,7 +39,8 @@ public class MontageAdapter implements SourceMontageListener, MontageListener, M
 	}
 
         /**
-         * Invoked when montage channels are added to a montage
+         * Invoked when {@link MontageChannel montage channels} are added to
+         * a montage.
          * @param ev an event object describing a change
          */
 	@Override
@@ -44,7 +48,7 @@ public class MontageAdapter implements SourceMontageListener, MontageListener, M
 	}
 
         /**
-         * Invoked when montage channels are changed
+         * Invoked when {@link MontageChannel montage channels} are changed.
          * @param ev an event object describing a change
          */
 	@Override
@@ -52,7 +56,8 @@ public class MontageAdapter implements SourceMontageListener, MontageListener, M
 	}
 
         /**
-         * Invoked when montage channels are removed from a montage
+         * Invoked when {@link MontageChannel montage channels} are removed
+         * from a montage.
          * @param ev an event object describing a change
          */
 	@Override
@@ -60,7 +65,8 @@ public class MontageAdapter implements SourceMontageListener, MontageListener, M
 	}
 
         /**
-         * Invoked when references of montage channels are changed
+         * Invoked when references of {@link MontageChannel montage channels}
+         * are changed.
          * @param ev an event object describing a change
          */
 	@Override
@@ -68,7 +74,7 @@ public class MontageAdapter implements SourceMontageListener, MontageListener, M
 	}
 
         /**
-         * Invoked when structure of a montage is changed
+         * Invoked when structure of a {@link Montage montage} is changed.
          * @param ev an event object describing a change
          */
 	@Override
@@ -76,7 +82,7 @@ public class MontageAdapter implements SourceMontageListener, MontageListener, M
 	}
 
         /**
-         * Invoked when a filter is added to a montage
+         * Invoked when a filter is added to a {@link Montage montage}.
          * @param ev an event object describing a change
          */
 	@Override
@@ -84,7 +90,7 @@ public class MontageAdapter implements SourceMontageListener, MontageListener, M
 	}
 
         /**
-         * Invoked when a sample filter in a montage is changed
+         * Invoked when a sample filter in a {@link Montage montage} is changed.
          * @param ev an event object describing a change
          */
 	@Override
@@ -92,7 +98,7 @@ public class MontageAdapter implements SourceMontageListener, MontageListener, M
 	}
 
         /**
-         * Invoked when filters exclusions are changed
+         * Invoked when filters exclusions are changed.
          * @param ev an event object describing a change
          */
 	@Override
@@ -100,7 +106,7 @@ public class MontageAdapter implements SourceMontageListener, MontageListener, M
 	}
 
         /**
-         * Invoked when a filter is removed from a montage
+         * Invoked when a filter is removed from a {@link Montage montage}.
          * @param ev an event object describing a change
          */
 	@Override
@@ -108,7 +114,7 @@ public class MontageAdapter implements SourceMontageListener, MontageListener, M
 	}
 
         /**
-         * Invoked when all filters are changed
+         * Invoked when all filters are changed.
          * @param ev an event object describing a change
          */
 	@Override

@@ -33,17 +33,17 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
 	private static final String[] EFFECT_CODES = new String[] { "fftFilter.effect" };
 
         /**
-         * Name of a filter
+         * the name of this filter
          */
 	private String name;
 
         /**
-         * An array of frequencies ranges with given coefficients
+         * an array of frequencies ranges with given coefficients
          */
 	private ArrayList<Range> ranges;
 
         /**
-         * {@link WindowType Type} of a window
+         * the {@link WindowType type} of a window
          */
 	private WindowType windowType = WindowType.RECTANGULAR;
 
@@ -53,19 +53,19 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
 	private double windowParameter = 0;
 
         /**
-         *
+         * the string with the description of filters effect
          */
 	private transient String effectString;
 
         /**
-         * Constructor. Creates an empty filter
+         * Constructor. Creates an empty filter.
          */
 	protected FFTSampleFilter() {
 	}
 
         /**
          * Constructor. Creates a filter which should initially pass or block
-         * a signal
+         * a signal.
          * @param initiallyPassing true if a signal should be passed,
          * false otherwise
          */
@@ -90,8 +90,8 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
 	}
 
         /**
-         * Returns the name of the filter
-         * @return the name of the filter
+         * Returns the name of this filter.
+         * @return the name of this filter
          */
 	@Override
 	public String getName() {
@@ -99,7 +99,7 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
 	}
 
         /**
-         * Sets the name of the filter
+         * Sets the name of this filter.
          * @param name the name to be set
          */
 	@Override
@@ -108,7 +108,7 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
 	}
 
         /**
-         * Returns the number of ranges
+         * Returns the number of ranges.
          * @return the number of ranges
          */
 	public int getRangeCount() {
@@ -116,7 +116,7 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
 	}
 
         /**
-         * Returns a range of a given index
+         * Returns a range of a given index.
          * @param index index of a range
          * @return a range of a given index
          */
@@ -125,7 +125,7 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
 	}
 
         /**
-         * Returns an iterator over a ranges list
+         * Returns an iterator over a ranges list.
          * @return an iterator over a ranges list
          */
 	public Iterator<Range> getRangeIterator() {
@@ -287,7 +287,7 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
 	}
 
         /**
-         * Returns the type of the window
+         * Returns the type of the window.
          * @return the type of the window
          */
 	@Override
@@ -296,7 +296,7 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
 	}
 
         /**
-         * Sets the type of the window
+         * Sets the type of the window.
          * @param windowType the type of the window to be set
          */
 	@Override
@@ -308,7 +308,7 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
 	}
 
         /**
-         * Returns the parameter of a window
+         * Returns the parameter of a window.
          * @return the parameter of a window
          */
 	@Override
@@ -317,7 +317,7 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
 	}
 
         /**
-         * Sets the parameter of a window
+         * Sets the parameter of a window.
          * @param windowParameter  the parameter of a window to be set
          */
 	@Override
@@ -326,8 +326,8 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
 	}
 
         /**
-         * Creates a copy of the current object.
-         * @return a copy of the current object.
+         * Creates a copy of this filter.
+         * @return a copy of this filter.
          */
 	@Override
 	public FFTSampleFilter duplicate() {
@@ -340,10 +340,10 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
 	}
 
         /**
-         * Sets all parameters of the current object to values of
-         * parameters of a given object
+         * Sets all parameters of this filter to values of
+         * parameters of a given filter.
          * @param filter a filter which parameters are to be copied
-         * to the current object
+         * to this filter
          */
 	public void copyFrom(FFTSampleFilter filter) {
 
@@ -363,7 +363,7 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
 	}
 
         /**
-         * Creates a string with a description of an effect of a filter.
+         * Creates a string with a description of an effect of this filter.
          * Consists of a list of ranges intervals and coefficients.
          * @return a string with a description of an effect of a filter.
          */
@@ -437,7 +437,7 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
         /**
          * This class represents a left-closed interval (range) of frequencies.
          * Allows to compare ranges (using left end of interval) and
-         * to check whether they intersect
+         * to check whether they intersect.
          */
 	@XStreamAlias("range")
 	public class Range implements Comparable<Range>, Cloneable, Serializable {
@@ -452,7 +452,7 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
                 /**
                  * right end of frequencies interval - exclusive.
                  * If <= lowFrequency then interval is not right-bounded
-                 * (or bounded by sf/2)
+                 * (or bounded by sf/2).
                  */
 		private float highFrequency; // exclusive
 
@@ -464,7 +464,7 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
 		public Range() {};
 
                 /**
-                 * Creates a range of frequencies with given ends and coefficient
+                 * Creates a range of frequencies with given ends and coefficient.
                  * @param lowFrequency the left end of frequencies interval
                  * @param highFrequency the right end of frequencies interval
                  * @param coefficient
@@ -476,7 +476,7 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
 		}
 
                 /**
-                 * Returns the left end of frequencies interval
+                 * Returns the left end of frequencies interval.
                  * @return the left end of frequencies interval
                  */
 		public float getLowFrequency() {
@@ -484,7 +484,7 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
 		}
 
                 /**
-                 * Returns the right end of frequencies interval
+                 * Returns the right end of frequencies interval.
                  * @return the right end of frequencies interval
                  */
 		public float getHighFrequency() {
@@ -492,7 +492,7 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
 		}
 
                 /**
-                 * Returns the coefficient
+                 * Returns the coefficient.
                  * @return the coefficient
                  */
 		public double getCoefficient() {
@@ -500,7 +500,7 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
 		}
 
                 /**
-                 * Returns whether interval (range) is right-bounded
+                 * Returns whether interval (range) is right-bounded.
                  * @return false if interval is right-bounded, true otherwise
                  */
 		public boolean isOpenEnded() {
@@ -508,8 +508,8 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
 		}
 
                 /**
-                 * Returns whether the current range intersects with given
-                 * @param range range to be intersected with current
+                 * Returns whether this range intersects with given.
+                 * @param range range to be intersected with this range
                  * @return true if intersection is nonempty, false otherwise
                  */
 		public boolean intersects(Range range) {
@@ -535,8 +535,8 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
 		}
 
                 /**
-                 * Compares current range to given
-                 * @param o range to be compared with given
+                 * Compares this range to given.
+                 * @param o range to be compared with this range
                  * @return difference between left ends of interval
                  * (current - given)
                  */
@@ -546,8 +546,8 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
 		}
 
                 /**
-                 * Creates a copy of a current object
-                 * @return a copy of a current object
+                 * Creates a copy of this range.
+                 * @return a copy of this range
                  */
 		@Override
 		protected Range clone() {

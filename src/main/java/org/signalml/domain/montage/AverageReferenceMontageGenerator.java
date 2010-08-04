@@ -7,9 +7,9 @@ package org.signalml.domain.montage;
 import org.springframework.validation.Errors;
 
 /**
- * Abstract class representing a generator for an average reference montage.
- * It generates montage of that type from given "raw" montage and checks if
- * objects are valid montages of that type
+ * This abstract class represents a generator for an average reference montage.
+ * It generates montage of that type from the given "raw" montage and checks if
+ * the given {@link SourceMontage montages} are valid average reference montages.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -18,15 +18,16 @@ public abstract class AverageReferenceMontageGenerator implements MontageGenerat
 	private static final long serialVersionUID = 1L;
 
         /**
-         * array with functions of {@link SourceChannel source channels} that
-         * generator will use as reference channels in created {@link Montage montages}
-         * (actually in {@link MontageChannel montage channels} in a montage)
+         * an array with functions of {@link SourceChannel source channels} that
+         * this generator will use as reference channels in the created
+         * {@link Montage montages} (actually in the
+         * {@link MontageChannel montage channels} in a montage)
          */
 	protected transient Channel[] refChannels;
 
         /**
          * Constructor. Creates a generator for an average reference montage
-         * based on <i>refChannels</i> array
+         * based on the <i>refChannels</i> array.
          * @param refChannels array with functions of
          * {@link SourceChannel source channels} that will be used as
          * reference channels in created {@link Montage montage}
@@ -122,16 +123,16 @@ public abstract class AverageReferenceMontageGenerator implements MontageGenerat
 	}
 
         /**
-         * Reports error, that the channel (the function of a source channel)
-         * was not found
+         * Reports an error, that the {@link Channel channel} (the function of
+         * a source channel) was not found
          * @param refChannel the channel that was not found
          * @param errors the Errors object used to report errors
          */
 	protected abstract void onNotFound(Channel refChannel, Errors errors);
 
         /**
-         * Reports error, that the channel (the function of a source channel)
-         * was not unique
+         * Reports an error, that the {@link Channel channel} (the function of
+         * a source channel) was not unique
          * @param refChannel the channel that was not found
          * @param errors the Errors object used to report errors
          */

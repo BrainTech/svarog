@@ -7,7 +7,7 @@ package org.signalml.domain.montage;
 import org.signalml.exception.SignalMLException;
 
 /**
- * This class represents exception in a montage.
+ * This class represents an exception in a {@link Montage montage}.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -16,7 +16,7 @@ public class MontageException extends SignalMLException {
 	private static final long serialVersionUID = 1L;
 
         /**
-         * Constructor. Creates an empty montage exception
+         * Constructor. Creates an empty montage exception.
          */
 	public MontageException() {
 		super();
@@ -24,8 +24,9 @@ public class MontageException extends SignalMLException {
 
         /**
          * Constructor.
-         * @param message a String with an exception message
-         * @param cause the cause of an exception. null indicates that the cause is nonexistent or unknown
+         * @param message a String with the exception message
+         * @param cause the cause of an exception or
+         * null if the cause is nonexistent or unknown
          */
 	public MontageException(String message, Throwable cause) {
 		super(message, cause);

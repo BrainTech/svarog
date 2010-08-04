@@ -9,9 +9,9 @@ import org.springframework.validation.Errors;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
- * Class representing a generator for a raw montage.
- * It generates montage of that type from given montage and checks if
- * objects are valid montages of that type
+ * This class represents a generator for a raw {@link SourceMontage montage}.
+ * It generates raw montage from the given montage and checks if the given
+ * montages are valid raw montages.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -23,7 +23,7 @@ public class RawMontageGenerator implements MontageGenerator {
 	private static final String[] CODES = new String[] { "montageGenerator.raw" };
 
         /**
-         * Creates a raw Montage from a given montage
+         * Creates a raw {@link Montage montage} from a given montage.
          * @param montage a montage to be used
          */
 	@Override
@@ -50,10 +50,12 @@ public class RawMontageGenerator implements MontageGenerator {
 	}
 
         /**
-         * Checks if a montage is a valid raw montage. True for all montages
+         * Checks if a {@link SourceMontage montage} is a valid raw montage.
+         * True for all montages.
          * @param sourceMontage a montage to be checked
          * @param errors an Errors object used to report errors (here never)
-         * @return true if a montage is a valid raw montage, false otherwise (i.e. never)
+         * @return true if a montage is a valid raw montage, false otherwise
+         * (here never)
          */
 	@Override
 	public boolean validateSourceMontage(SourceMontage sourceMontage, Errors errors) {
@@ -62,10 +64,10 @@ public class RawMontageGenerator implements MontageGenerator {
 	}
 
         /**
-         * Compares a given object to a current object. Always true if an object
-         * is of type RawMontageGenerator (all raw montage generators are equal)
+         * Compares a given object to this generator. Always true if an object
+         * is of type RawMontageGenerator (all raw montage generators are equal).
          * @param obj an object to be compared with a current object
-         * @return true if obj is equal to a current object (is of type
+         * @return true if obj is equal to this generator (is of type
          * RawMontageGenerator), false otherwise
          */
 	@Override

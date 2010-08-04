@@ -13,6 +13,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  * This class represents a low-pass sample filter,
  * which passes frequencies lower then 20Hz.
  * Allows to create and duplicate a filter.
+ * @see TimeDomainSampleFilter
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -23,7 +24,7 @@ public class LowPassSampleFilter extends TimeDomainSampleFilter {
 
         /**
          * Constructor. Creates low-pass filter with default coefficients.
-         * Passes frequencies lower then 20Hz
+         * Passes frequencies lower then 20Hz.
          */
 	public LowPassSampleFilter() {
 
@@ -56,8 +57,8 @@ public class LowPassSampleFilter extends TimeDomainSampleFilter {
 	}
 
         /**
-         * Duplicates the current object.
-         * @return copy of a current object
+         * Duplicates this filter.
+         * @return the copy this filter
          */
 	@Override
 	public SampleFilterDefinition duplicate() {

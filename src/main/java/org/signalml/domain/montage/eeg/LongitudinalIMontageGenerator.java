@@ -9,11 +9,13 @@ import org.signalml.domain.montage.Channel;
 import org.springframework.validation.Errors;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import org.signalml.domain.montage.MontageGenerator;
 
 /**
- * This class represents a montage generator for a longitudinal I montage.
+ * This class represents a generator for a longitudinal I montage.
  * It creates a {@link BipolarReferenceMontageGenerator bipolar reference montage}
  * with a certain array of pairs of channels.
+ * @see MontageGenerator
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -26,10 +28,10 @@ public class LongitudinalIMontageGenerator extends BipolarReferenceMontageGenera
 	private static final String[] CODES = new String[] { "montageGenerator.longitudinalI" };
 
         /**
-         * An array of pairs of channels (channels functions) that will be used
-         * to create montage channels.
+         * An array of pairs of channels (channels {@link Channel functions})
+         * that will be used to create montage channels.
          * Each pair is used to create one {@link MontageChannel montage channel}.
-         * First element as primary channel, second as reference
+         * First element as primary channel, second as reference.
          */
 	private static final Channel[][] MATRIX = new Channel[][] {
 
@@ -63,23 +65,11 @@ public class LongitudinalIMontageGenerator extends BipolarReferenceMontageGenera
 		super(MATRIX);
 	}
 
-        /**
-         * Reports an error, that the channel (the function of a source channel)
-         * was not unique
-         * @param refChannel the channel that was not found
-         * @param errors the Errors object used to report errors
-         */
 	@Override
 	protected void onDuplicate(Channel refChannel, Errors errors) {
 		errors.reject("montageGenerator.error.duplicateChannel", new Object[] { refChannel }, "montageGenerator.error.duplicateChannel");
 	}
 
-        /**
-         * Reports an error, that the channel (the function of a source channel)
-         * was not found
-         * @param refChannel the channel that was not found
-         * @param errors the Errors object used to report errors
-         */
 	@Override
 	protected void onNotFound(Channel refChannel, Errors errors) {
 		errors.reject("montageGenerator.error.missingChannel", new Object[] { refChannel }, "montageGenerator.error.missingChannel");
@@ -87,11 +77,11 @@ public class LongitudinalIMontageGenerator extends BipolarReferenceMontageGenera
 	}
 
         /**
-         * Compares a given object to a current object. Always true if an object
+         * Compares a given object to this generator. Always true if an object
          * is not null and of type LongitudinalIMontageGenerator
          * (all left ear montage generators are equal)
-         * @param obj an object to be compared with a current object
-         * @return true if obj is equal to a current object (is of type
+         * @param obj an object to be compared with this generator
+         * @return true if obj is equal to this generator (is of type
          * LongitudinalIMontageGenerator), false otherwise
          */
 	@Override

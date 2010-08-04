@@ -9,9 +9,9 @@ import java.util.HashMap;
 import org.springframework.validation.Errors;
 
 /**
- * Abstract class representing generator for a bipolar montage.
+ * This abstract class represents the generator for a bipolar montage.
  * It generates montage of that type from given "raw" montage and checks
- * if objects are valid montages of that type.
+ * if {@link SourceMontage montages} are valid bipolar montages.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -20,20 +20,20 @@ public abstract class BipolarReferenceMontageGenerator implements MontageGenerat
 	private static final long serialVersionUID = 1L;
 
         /**
-         * An array of pairs of channels (channels functions) that will be used
-         * to create montage channels.
+         * An array of pairs of channels (channels {@link Channel functions})
+         * that will be used to create montage channels.
          * Each pair is used to create one {@link MontageChannel montage channel}.
-         * First element as primary channel, second as reference
+         * First element as primary channel, second as reference.
          */
 	protected transient Channel[][] definition;
 
         /**
          * Constructor. Creates a generator for an bipolar reference montage
          * based on <i>refChannels</i> array
-         * @param definition Array of pairs of channels (channels functions)
-         * that will be used to create montage channels.
+         * @param definition an array of pairs of {@link Channel channels}
+         * (channels functions) that will be used to create montage channels.
          * Each pair is used to create one {@link MontageChannel montage channel}.
-         * First element as primary channel, second as reference
+         * First element as primary channel, second as reference.
          */
 	protected BipolarReferenceMontageGenerator(Channel[][] definition) {
 		if (definition == null || definition.length == 0) {
@@ -43,9 +43,9 @@ public abstract class BipolarReferenceMontageGenerator implements MontageGenerat
 	}
 
         /**
-         * Creates a bipolar montage from given montage.
+         * Creates a bipolar montage from the given montage.
          * @param montage the montage to be used
-         * @throws MontageException thrown if two channels have the same function
+         * @throws MontageException if two channels have the same function
          * (in the given montage) or there is no channel with some function
          */
 	@Override
@@ -109,7 +109,7 @@ public abstract class BipolarReferenceMontageGenerator implements MontageGenerat
 	}
 
         /**
-         * Checks if montage is a valid bipolar montage.
+         * Checks if the montage is a valid bipolar montage.
          * @param sourceMontage the montage to be checked
          * @param errors Errors object used to report errors
          * @return true if the montage is a valid bipolar montage, false otherwise
@@ -167,16 +167,16 @@ public abstract class BipolarReferenceMontageGenerator implements MontageGenerat
 	}
 
         /**
-         * Reports an error, that the channel (the function of a source channel)
-         * was not found
+         * Reports an error, that the {@link Channel channel} (the function of
+         * a source channel) was not found.
          * @param refChannel the channel that was not found
          * @param errors the Errors object used to report errors
          */
 	protected abstract void onNotFound(Channel refChannel, Errors errors);
 
         /**
-         * Reports an error, that the channel (the function of a source channel)
-         * was not unique
+         * Reports an error, that the {@link Channel channel} (the function of
+         * a source channel) was not unique.
          * @param refChannel the channel that was not found
          * @param errors the Errors object used to report errors
          */

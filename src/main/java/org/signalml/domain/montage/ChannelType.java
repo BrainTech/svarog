@@ -7,7 +7,7 @@ package org.signalml.domain.montage;
 import org.springframework.context.MessageSourceResolvable;
 
 /**
- * Enumerator with possible types of channels
+ * Enumerator with possible types of channels.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

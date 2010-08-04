@@ -7,9 +7,9 @@ package org.signalml.domain.montage;
 import org.springframework.validation.Errors;
 
 /**
- * Abstract class representing a montage generator for a single channel reference montage.
- * It generates montage of that type from given "raw" montage and checks if
- * objects are valid montages of that type
+ * This abstract class represents a generator for a single reference montage.
+ * It generates montage of that type from the given "raw" montage and checks if
+ * the given {@link SourceMontage montages} are valid single reference montages.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -18,13 +18,14 @@ public abstract class SingleReferenceMontageGenerator implements MontageGenerato
 	private static final long serialVersionUID = 1L;
 
         /**
-         * the function of a source channel which will be a reference channel
+         * the {@link Channel function} of a {@link SourceChannel source channel}
+         * which will be a reference channel
          */
 	protected transient Channel refChannel;
 
         /**
-         * Constructor. Creates a new generator based on function of
-         * a reference channel
+         * Constructor. Creates a new generator based on {@link Channel function}
+         * of a reference channel.
          * @param refChannel function of a {@link SourceChannel source channel}
          * that will be used as reference channel in a created
          * {@link Montage montage}
@@ -37,7 +38,8 @@ public abstract class SingleReferenceMontageGenerator implements MontageGenerato
 	}
 
         /**
-         * Creates a single channel reference montage from given montage.
+         * Creates a single channel reference montage from a given
+         * {@link Montage montage}.
          * @param montage a montage to be used
          * @throws MontageException thrown if there are two channels with
          * function <i>refChannel</i>
@@ -75,7 +77,8 @@ public abstract class SingleReferenceMontageGenerator implements MontageGenerato
 	}
 
         /**
-         * Checks if montage is a valid single channel reference montage.
+         * Checks if {@link Montage montage} is a valid single channel
+         * reference montage.
          * @param sourceMontage a montage to be checked
          * @param errors an Errors object used to report errors
          * @return true if the montage is a valid single channel reference montage,
@@ -96,15 +99,16 @@ public abstract class SingleReferenceMontageGenerator implements MontageGenerato
 	}
 
         /**
-         * Reports error, that a source channel with <i>refChannel</i> function
-         * was not found
+         * Reports error, that a {@link SourceChannel source channel}
+         * with <i>refChannel</i> {@link Channel function} was not found.
          * @param errors an Errors object used to report errors
          */
 	protected abstract void onNotFound(Errors errors);
 
         /**
-         * Reports an error, that there was more then one source channel with
-         * <i>refChannel</i> function
+         * Reports an error, that there was more then one
+         * {@link SourceChannel source channel} with <i>refChannel</i>
+         * {@link Channel function}.
          * @param errors an Errors object used to report errors
          */
 	protected abstract void onDuplicate(Errors errors);
