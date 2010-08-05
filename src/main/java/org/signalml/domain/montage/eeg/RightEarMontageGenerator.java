@@ -10,6 +10,7 @@ import org.springframework.validation.Errors;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import org.signalml.domain.montage.Channel;
 import org.signalml.domain.montage.MontageGenerator;
+import org.signalml.domain.montage.SourceChannel;
 
 /**
  * This class represents a generator for a right ear montage.
@@ -55,7 +56,7 @@ public class RightEarMontageGenerator extends SingleReferenceMontageGenerator {
 	}
 
         /**
-         * Compares a given object to this generatort. Always true if an object
+         * Compares a given object to this generator. Always true if an object
          * is not null and of type RightEarMontageGenerator
          * (all left ear montage generators are equal).
          * @param obj an object to be compared with this generator
