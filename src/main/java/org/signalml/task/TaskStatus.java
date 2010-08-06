@@ -61,7 +61,7 @@ public enum TaskStatus implements Serializable, MessageSourceResolvable {
 
 	/** Returns the <i>importance</i> of the status. This is used for sorting of tasks.
 	 *
-	 * @return
+	 *
 	 */
 	public int getImportance() {
 		return importance;

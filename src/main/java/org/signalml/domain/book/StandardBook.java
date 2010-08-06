@@ -15,80 +15,80 @@ public interface StandardBook {
 
 	/** Format version.
 	 *
-	 * @return
+	 *
 	 */
 	String getVersion();
 
 	/** Book comment (## in mp5 config)
 	 *
-	 * @return
+	 *
 	 */
 	String getBookComment();
 
 	/** Decomposition energy percent.
 	 *
-	 * @return
+	 *
 	 */
 	float getEnergyPercent();
 
 	/** Max number of iterations.
 	 *
-	 * @return
+	 *
 	 */
 	int getMaxIterationCount();
 
 	/** Dictionary size.
 	 *
-	 * @return
+	 *
 	 */
 	int getDictionarySize();
 
 	/** Dictionary types (possible value info needed)
 	 *
-	 * @return
+	 *
 	 */
 	char getDictionaryType();
 
 	/** Signal sampling frequency Hz.
 	 *
-	 * @return
+	 *
 	 */
 	float getSamplingFrequency();
 
 	/** Calibration (~ points per microvolt), interpreted as: 1 uV = 1 sample * calibration
 	 *
-	 * @return
+	 *
 	 */
 	float getCalibration();
 
 	/** Number of channels in signal file (same as channel count?).
 	 *
-	 * @return
+	 *
 	 */
 	int getSignalChannelCount();
 
 	/** Text info (TEXT_INFO header)
 	 *
-	 * @return
+	 *
 	 */
 	String getTextInfo();
 
 	/** Web site info.
 	 *
-	 * @return
+	 *
 	 */
 	String getWebSiteInfo();
 
 	/** Book date.
 	 *
-	 * @return
+	 *
 	 */
 	String getDate();
 
 	/** Number of channels in book file (each segment is assumed to contain this number of versions, one
 	 *  for each channel).
 	 *
-	 * @return
+	 *
 	 */
 	int getChannelCount();
 
@@ -103,14 +103,14 @@ public interface StandardBook {
 	 *  total number of StandardBookSegments obtainable should equal
 	 *  getSegmentCount() * getChannelCount()
 	 *
-	 * @return
+	 *
 	 */
 	int getSegmentCount();
 
 	/** Should return an array of "pages", one entry per channel.
 	 *
 	 * @param segmentIndex
-	 * @return
+	 *
 	 */
 	StandardBookSegment[] getSegmentAt(int segmentIndex);
 
@@ -118,13 +118,13 @@ public interface StandardBook {
 	 *
 	 * @param segmentIndex
 	 * @param channelIndex
-	 * @return
+	 *
 	 */
 	StandardBookSegment getSegmentAt(int segmentIndex, int channelIndex);
 
 	/** The names of additional (version or format specific) properties of this book.
 	 *
-	 * @return
+	 *
 	 */
 	Enumeration<String> getPropertyNames();
 

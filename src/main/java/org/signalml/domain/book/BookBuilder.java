@@ -17,7 +17,7 @@ public interface BookBuilder {
 	/** Should create a new mutable book with given channel count.
 	 ** XXXYYY added to test
 	 *
-	 * @return
+	 *
 	 */
 	StandardBookWriter createBook();
 
@@ -27,7 +27,7 @@ public interface BookBuilder {
 	 *  implementing MutableBook if possible, but is not required to do so.
 	 *
 	 * @param file
-	 * @return
+	 *
 	 * @throws IOException when disk access fails
 	 * @throws BookFormatException when file format is invalid
 	 */
@@ -50,7 +50,7 @@ public interface BookBuilder {
 	 *
 	 * @param book
 	 * @param file
-	 * @return
+	 *
 	 * @throws IOException
 	 */
 	IncrementalBookWriter writeBookIncremental(StandardBook book, File file) throws IOException;

@@ -105,7 +105,7 @@ public interface MutableBook extends StandardBook {
 	 *  Returned segments should have segmentNumber and channelNumber set
 	 *  accordingly to where they are located in this book.
 	 *
-	 * @return
+	 *
 	 */
 	MutableBookSegment[] addNewSegment(float segmentTime, int segmentLength);
 
@@ -144,7 +144,7 @@ public interface MutableBook extends StandardBook {
 	/** Removes given segment from the book (all channels) and returns them.
 	 *
 	 * @param segmentIndex
-	 * @return
+	 *
 	 */
 	StandardBookSegment[] removeSegmentAt(int segmentIndex);
 

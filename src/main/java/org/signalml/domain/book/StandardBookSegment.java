@@ -14,7 +14,7 @@ public interface StandardBookSegment {
 
 	/** Sampling frequnecy in Hz.
 	 *
-	 * @return
+	 *
 	 */
 	float getSamplingFrequency();
 
@@ -23,7 +23,7 @@ public interface StandardBookSegment {
 	 *  Note that this is the index of the segment in original decomposition. The index of this
 	 *  segment in a book may be different.
 	 *
-	 * @return
+	 *
 	 */
 	int getSegmentNumber();
 
@@ -32,31 +32,31 @@ public interface StandardBookSegment {
 	 *  Note that this is the index of the channel in original decomposition. The index of this
 	 *  channel in a book may be different.
 	 *
-	 * @return
+	 *
 	 */
 	int getChannelNumber();
 
 	/** Segment start time in seconds.
 	 *
-	 * @return
+	 *
 	 */
 	float getSegmentTime();
 
 	/** Segment length in points.
 	 *
-	 * @return
+	 *
 	 */
 	int getSegmentLength();
 
 	/** Segment length in seconds.
 	 *
-	 * @return
+	 *
 	 */
 	float getSegmentTimeLength();
 
 	/** Whether the segment has a signal.
 	 *
-	 * @return
+	 *
 	 */
 	boolean hasSignal();
 
@@ -68,39 +68,39 @@ public interface StandardBookSegment {
 
 	/** Signal energy.
 	 *
-	 * @return
+	 *
 	 */
 	float getSignalEnergy();
 
 	/** Number of atoms in decomposition
 	 *
-	 * @return
+	 *
 	 */
 	int getAtomCount();
 
 	/** Index'th atom from decomposition.
 	 *
 	 * @param index
-	 * @return
+	 *
 	 */
 	StandardBookAtom getAtomAt(int index);
 
 	/** The index of this atom in the decomposition.
 	 *
 	 * @param atom
-	 * @return
+	 *
 	 */
 	int indexOfAtom(StandardBookAtom atom);
 
 	/** Decomposition energy.
 	 *
-	 * @return
+	 *
 	 */
 	float getDecompositionEnergy();
 
 	/** The names of additional (version or format specific) properties of this segment.
 	 *
-	 * @return
+	 *
 	 */
 	Enumeration<String> getPropertyNames();
 

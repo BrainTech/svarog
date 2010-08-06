@@ -21,7 +21,7 @@ public interface MutableBookSegment extends StandardBookSegment {
 	 * @param scale
 	 * @param frquency
 	 * @param phase
-	 * @return
+	 *
 	 */
 	StandardBookAtom createAtom(int type, int iteration, float modulus, float amplitude, int position, int scale, int frequency, float phase);
 
@@ -41,7 +41,7 @@ public interface MutableBookSegment extends StandardBookSegment {
 	/** Remove index'th atom from the segment and return it.
 	 *
 	 * @param index
-	 * @return
+	 *
 	 */
 	StandardBookAtom removeAtomAt(int index);
 

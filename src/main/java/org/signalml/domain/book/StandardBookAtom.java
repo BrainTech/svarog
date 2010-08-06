@@ -27,81 +27,81 @@ public interface StandardBookAtom {
 
 	/** Atom base (signal length) in points.
 	 *
-	 * @return
+	 *
 	 */
 	int getBaseLength();
 
 	/** Sampling frequency in Hz.
 	 *
-	 * @return
+	 *
 	 */
 	float getSamplingFrequency();
 
 	/** Iteration number.
 	 *
-	 * @return
+	 *
 	 */
 	int getIteration();
 
 	/** Modulus (energy > 0).
 	 *
-	 * @return
+	 *
 	 */
 	float getModulus();
 
 	/** Amplitude.
 	 *
-	 * @return
+	 *
 	 */
 	float getAmplitude();
 
 	/** Position in points relative to the beginning of decomposed signal.
 	 *
-	 * @return
+	 *
 	 */
 	int getPosition();
 
 	/** Position in seconds relative to the beginning of decomposed signal.
 	 *
-	 * @return
+	 *
 	 */
 	float getTimePosition();
 
 	/** Scale in points.
 	 *
-	 * @return
+	 *
 	 */
 	int getScale();
 
 	/** Scale in seconds.
 	 *
-	 * @return
+	 *
 	 */
 	float getTimeScale();
 
 	/** Frequency in natural units 0 to signal length / 2.
 	 *
 	 *
-	 * @return
+	 *
 	 */
 	int getFrequency();
 
 	/** Frequency in Hz.
 	 *
 	 *
-	 * @return
+	 *
 	 */
 	float getHzFrequency();
 
 	/** Phase (-pi to pi).
 	 *
-	 * @return
+	 *
 	 */
 	float getPhase();
 
 	/** The names of additional (version or format specific) properties of this atom.
 	 *
-	 * @return
+	 *
 	 */
 	Enumeration<String> getPropertyNames();
 
