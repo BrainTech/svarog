@@ -20,7 +20,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * This class represents the montage of channels.
- * Contains a list of {@link MontageChannel mongate channels} and
+ * Contains a list of {@link MontageChannel montage channels} and
  * a list of {@link MontageSampleFilter filters}.
  * Filters can be excluded either for selected channels or for all of them.
  * This class has also assigned listeners informing about changes in a montage.
@@ -180,11 +180,14 @@ public class Montage extends SourceMontage implements Preset {
 	}
 
         /**
-         * Checks if this montage is compatible with the object given as parameter.
-         * Montages are compatible if:
-         * 1. they are compatible as {@link SourceMontage source montages}
-         * 2. have the same number of montage channels
-         * 3. for each source channel montage channels have the same references
+         * Checks if this montage is compatible with the object given as the parameter.
+         *
+         * <p>Montages are compatible if:
+         * <ol>
+         * <li> they are compatible as {@link SourceMontage source montages}
+         * <li> have the same number of montage channels
+         * <li> for each source channel montage channels have the same references
+         * </ol>
          * @param montage the montage to be compared with a current object
          * @return true if montages are compatible, false otherwise
          */
