@@ -36,7 +36,6 @@ public class ChannelSignalSelectionPanel extends JPanel {
 
 	/**
 	 * This is the default constructor
-	 * @param noChannelSelection
 	 */
 	public ChannelSignalSelectionPanel(MessageSourceAccessor messageSource, boolean withChannelSelection) {
 		super();

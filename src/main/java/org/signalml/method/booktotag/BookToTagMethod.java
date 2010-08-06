@@ -108,10 +108,11 @@ public class BookToTagMethod extends AbstractMethod implements TrackableMethod {
         /**
          * Executes this BookToTagMethod and returns BookToTagResult containing result of computation.
          *
-         * @param data the data object
+         * @param dataObj the data object
          * @param tracker the tracker used to monitor the execution
          * @return the result object
-         * @throws ComputationException when computation fails for reasons other than bad input data, e.g. when book is empty
+         * @throws ComputationException when computation fails for
+         * reasons other than bad input data, e.g. when book is empty
          */
 	@Override
 	public Object doComputation(Object dataObj, final MethodExecutionTracker tracker) throws ComputationException {

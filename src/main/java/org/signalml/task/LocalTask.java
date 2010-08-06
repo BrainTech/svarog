@@ -65,7 +65,7 @@ public class LocalTask implements Task, MethodExecutionTracker, Runnable {
 	}
 
         /**
-         * Creates new instance of Task with specified Method and Data of it.
+         * Creates new instance of Task with specified Method and Data.
          * Sets Task's UID, creation time, status and prepares tickers.
          *
 	 * Note that this Task will not collect tick statistics.
@@ -79,15 +79,15 @@ public class LocalTask implements Task, MethodExecutionTracker, Runnable {
 	}
 
         /**
-         * Creates new instance of Task with specified Method and Data of it.
+         * Creates a new instance of Task with specified Method and Data.
          * Sets Task's UID, creation time, status and prepares tickers.
 	 *
-	 * When given boolean value is true, this Task will collect tick statistics
-         * which enables receiving progress status.
+	 * When boolean collectTickStatistics is true and method is a {@link TrackableMethod}, this
+	 * Task will collect tick statistics which enables reading progress status.
          *
          * @param method method to be computed by this Task
          * @param data arguments of the method
-         * @param collectTickStatiscics says if Task should collect tick statistics
+         * @param collectTickStatistics is true if Task should collect tick statistics
 	 * @throws NullPointerException when specified Method is null
          */
 	public LocalTask(Method method, Object data, boolean collectTickStatistics) {
@@ -124,13 +124,13 @@ public class LocalTask implements Task, MethodExecutionTracker, Runnable {
 	}
 
 	/**
-	 * Creates new instance of Task with specified Method, Data and Status of it.
-	 * When given boolean value is true, this Task will collect tick statistics
-	 * which enables receiving progress status.
+	 * Creates a new instance of Task with specified Method, Data and TaskStatus.  When boolean
+	 * collectTickStatistics is true and method is a {@link TrackableMethod}, this Task will
+	 * collect tick statistics which enables reading progress status.
 	 *
 	 * @param method method to be computed by this Task
 	 * @param data arguments of the method
-	 * @param collectTickStatiscics says if Task should collect tick statistics
+	 * @param collectTickStatistics true if Task should collect tick statistics
 	 * @param status status of this Task
 	 * @throws IllegalArgumentException when Status is not a valid Task status
 	 * @throws NullPointerException when specified Method is null
@@ -639,8 +639,9 @@ public class LocalTask implements Task, MethodExecutionTracker, Runnable {
 	}
 
         /**
-	 * Retrieves the last message set by the computation code with the {@link #setMessage(MessageSourceResolvable)}
-         * method. Initially the Task has no message and null is returned
+	 * Retrieves the last message set by the computation code with the
+	 * {@link #setMessage(MessageSourceResolvable)} method. Initially the Task has no
+	 * message and null is returned.
          *
          * @return the message or null if no message has been posted
          */
@@ -650,14 +651,15 @@ public class LocalTask implements Task, MethodExecutionTracker, Runnable {
 	}
 
         /**
-	 *  Posts a task message, which may be displayed by any controling application. A message is actually
-         *  a MessageSourceResolvable in order to help enforce localization of messages. Use
-         *  {@link ResolvableString} to set a text message.
+	 *  Posts a task message, which may be displayed by any controling application. A message
+         *  is actually a MessageSourceResolvable in order to help enforce localization of
+         *  messages. Use {@link org.signalml.util.ResolvableString} to set a text message.
          *
-         *  <p>Typically this method will be called from within the {@link Method#compute(Object, MethodExecutionTracker)} method to
+         *  <p>Typically this method will be called from within the {@link Method#compute} method to
          *  indicate the current stage or status of the ongoing computation.
          *
-	 *  <p>Note that when second thread calls setMessage() on the same object, it will have to wait for the first thread to complete the call to this method.
+	 *  <p>Note that when second thread calls setMessage() on the same object, it will have to
+	 *  wait for the first thread to complete the call to this method.
          *
 	 * @param message the new message
          */
@@ -671,12 +673,13 @@ public class LocalTask implements Task, MethodExecutionTracker, Runnable {
 	}
 
         /**
-	 *  Returns the limits (maximum values) for the tickers associated with this task. For methods which
-         *  aren't trackable an empty array should be returned. For trackable methods the length of the array
-         *  should correspond to what is returned by {@link TrackableMethod#getTickerCount()} for the executed
-         *  method.
+	 *  Returns the limits (maximum values) for the tickers associated with this task. For
+         *  methods which aren't trackable an empty array should be returned. For trackable methods
+         *  the length of the array should correspond to what is returned by
+	 *  {@link TrackableMethod#getTickerCount()} for the executed method.
          *
-	 *  <p>Note that when second thread calls getTickerLimits() on the same object, it will have to wait for the first thread to complete the call to this method.
+	 *  <p>Note that when second thread calls getTickerLimits() on the same object, it will
+	 *  have to wait for the first thread to complete the call to this method.
          *
 	 * @return the ticker limits
          */
@@ -692,7 +695,8 @@ public class LocalTask implements Task, MethodExecutionTracker, Runnable {
          *  should generally throw IndexOutOfBoundsException if the method is not trackable or if
          *  the given array is longer than the ticker count for the method.
          *
-	 *  <p>Note that when second thread calls setTickerLimits() on the same object, it will have to wait for the first thread to complete the call to this method.
+	 *  <p>Note that when second thread calls setTickerLimits on the same object, it will
+	 *  have to wait for the first thread to complete the call to this method.
          * @param initial the array of ticker limits
          */
 	@Override
@@ -773,9 +777,10 @@ public class LocalTask implements Task, MethodExecutionTracker, Runnable {
          *  should generally throw IndexOutOfBoundsException if the method is not trackable or if
          *  the given array is longer than the ticker count for the method.
          *
-	 *  <p>Note that when second thread calls setTickers() on the same object, it will have to wait for the first thread to complete the call to this method.
+	 *  <p>Note that when second thread calls setTickers() on the same object, it will have to
+	 *  wait for the first thread to complete the call to this method.
 	 *
-         * @param current the array of ticker values
+         * @param tickers an array of ticker values
          */
 	@Override
 	public void setTickers(int[] tickers) {

@@ -6,6 +6,7 @@ package org.signalml.domain.signal.space;
 
 import org.signalml.domain.signal.MultichannelSampleSource;
 import org.signalml.domain.signal.MultichannelSegmentedSampleSource;
+import org.signalml.domain.signal.SignalSelection;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 

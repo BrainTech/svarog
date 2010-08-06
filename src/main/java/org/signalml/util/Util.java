@@ -605,7 +605,7 @@ public abstract class Util {
 
 	/**
 	 * Decompresses specified data and decodes it using Base64
-	 * @param data Data to process
+	 * @param encoded data to process
 	 * @return String representation of decompressed and decoded data
 	 * @throws DataFormatException when data is not correctly compressed
 	 */

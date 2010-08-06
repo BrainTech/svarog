@@ -4,6 +4,7 @@
 package org.signalml.task;
 
 import java.util.EventObject;
+import org.signalml.method.TrackableMethod;
 
 import org.springframework.context.MessageSourceResolvable;
 
@@ -132,20 +133,21 @@ public class TaskEvent extends EventObject {
 	}
 
         /**
-         * Retrieves the last message set by the computation code with the {@link #setMessage(MessageSourceResolvable)}
-         * method. Initially the Task has no message and null is returned.
+         * Retrieves the message set during construction.
          *
-         * @return the message or null if no message has been posted
+         * @return the message, might be null
          */
 	public MessageSourceResolvable getMessage() {
 		return message;
 	}
 
         /**
-         *  Returns the limits (maximum values) for the tickers associated with this task. For methods which
-         *  aren't trackable an empty array should be returned. For trackable methods the length of the array
-         *  should correspond to what is returned by {@link TrackableMethod#getTickerCount()} for the executed
-         *  method.
+         *  Returns the limits (maximum values) for the tickers
+         *  associated with this task. For methods which aren't
+         *  trackable an empty array should be returned. For trackable
+         *  methods the length of the array should correspond to what
+         *  is returned by {@link TrackableMethod#getTickerCount()}
+         *  for the executed method.
          *
          * @return the ticker limits
          */
@@ -154,9 +156,11 @@ public class TaskEvent extends EventObject {
 	}
 
         /**
-         *  Returns the current values for the tickers associated with this task. For methods which
-         *  aren't trackable an empty array should be returned. For trackable methods the length of the array
-         *  should correspond to what is returned by {@link TrackableMethod#getTickerCount()} for the executed
+         *  Returns the current values for the tickers associated with
+         *  this task. For methods which aren't trackable an empty
+         *  array should be returned. For trackable methods the length
+         *  of the array should correspond to what is returned by
+         *  {@link TrackableMethod#getTickerCount()} for the executed
          *  method.
          *
          * @return the ticker values

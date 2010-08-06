@@ -122,7 +122,7 @@ public class AbstractData implements Serializable {
 
         /**
          * Returns array of excluded channels.
-         * @raturn array of excluded channels
+         * @return array of excluded channels
          */
 	public int[][] getExcludedChannels() {
 		return excludedChannels;

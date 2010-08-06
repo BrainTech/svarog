@@ -347,7 +347,7 @@ public class StyledTagSetConverter implements Converter {
         /**
          * Convert textual data back into a {@link TagStyle TagStyle}.
          * @param reader the stream to read the text from.
-         * @param the TagStyle object on which read data will be written
+         * @param style the TagStyle object on which read data will be written
          */
 	private void unmarshalStyle(HierarchicalStreamReader reader, TagStyle style) {
 

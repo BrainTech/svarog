@@ -1476,8 +1476,7 @@ public class StyledTagSet implements Serializable {
 
         /**
          * Creates the cache of tagged selection styles for all types of
-         * selection (if they don't exist or are invalidated).
-         * @param type the type of a selection
+         * selections (if they don't exist or are invalidated).
          */
 	private void makeStyleCache() {
 
@@ -1545,10 +1544,8 @@ public class StyledTagSet implements Serializable {
         /**
          * Creates the cache of tagged selections for all types of
          * selection (if they don't exist or are invalidated).
-         * @param type the type of a selection
          */
 	private void makeTagCache() {
-
 		if (pageTagsCache != null && blockTagsCache != null && channelTagsCache != null) {
 			return;
 		}

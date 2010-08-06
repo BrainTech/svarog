@@ -8,7 +8,7 @@ import org.signalml.method.MethodExecutionTracker;
 
 /** This interface must be implemented by classes used to control method execution.
  *
- * @see Method#compute(Object, Task)
+ * @see Method#compute
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

@@ -19,7 +19,7 @@ public interface MutableBookSegment extends StandardBookSegment {
 	 * @param amplitude
 	 * @param position
 	 * @param scale
-	 * @param frquency
+	 * @param frequency
 	 * @param phase
 	 *
 	 */

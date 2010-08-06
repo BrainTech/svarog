@@ -89,7 +89,7 @@ public class TagDifference extends SignalSelection implements Comparable<TagDiff
 
         /**
          * Checks if the current object is equal to given.
-         * Uses {@linkplain compareTo()}
+         * Uses {@linkplain #compareTo(TagDifference)}
          * @param obj the object to be compared with current
          * @return true if the given object is equal to current, false otherwise
          */

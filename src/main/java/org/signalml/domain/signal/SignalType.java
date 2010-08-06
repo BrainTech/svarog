@@ -5,6 +5,7 @@
 package org.signalml.domain.signal;
 
 import org.signalml.domain.signal.eeg.EegSignalTypeConfigurer;
+import org.signalml.domain.montage.Montage;
 import org.springframework.context.MessageSourceResolvable;
 
 /**

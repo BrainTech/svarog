@@ -8,7 +8,7 @@ import java.io.Serializable;
 import org.signalml.method.Method;
 
 /** This is a simple wrapper class for the result of a task. This encompases basic task information
- *  as well as the result of the {@link Method#compute(Object, Task)} method or the exception
+ *  as well as the result of the {@link Method#compute} method or the exception
  *  it threw.
  *
  *
@@ -42,7 +42,7 @@ public class TaskResult implements Serializable {
 		this.exception = exception;
 	}
 
-	/** Returns the exception thrown by the {@link Method#compute(Object, Task)} method.
+	/** Returns the exception thrown by the {@link Method#compute} method.
 	 *
 	 * @return the exception or null if no exception
 	 */
@@ -58,7 +58,7 @@ public class TaskResult implements Serializable {
 		return taskInfo;
 	}
 
-	/** Returns the result returned by the {@link Method#compute(Object, Task)} method.
+	/** Returns the result returned by the {@link Method#compute} method.
 	 *
 	 * @return the result or null if the compute method returned null.
 	 */

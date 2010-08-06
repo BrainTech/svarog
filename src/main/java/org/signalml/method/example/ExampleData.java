@@ -3,6 +3,9 @@
  */
 package org.signalml.method.example;
 
+import org.signalml.method.Method;
+import org.signalml.method.MethodExecutionTracker;
+
 /**
  * ExampleData - an example data object.
  *
@@ -29,8 +32,11 @@ public class ExampleData {
         /**
          * Constructs new ExampleData with specified count and
          * boolean value saying if data should wait before execution
-         * @param count number of iterations while executing in {@link Method#doComputation(Object, org.signalml.method.MethodExecutionTracker)} method in {@link ExampleMethod} class
-         * @param noWait true if this {@link Method#doComputation(Object, org.signalml.method.MethodExecutionTracker)} method in {@link ExampleMethod} class should wait before execution, otherwise true
+         * @param count number of iterations while executing in
+	 * {@link Method#compute(Object, MethodExecutionTracker)} method in
+	 * {@link ExampleMethod} class
+         * @param noWait true if this {@link Method#compute(Object, MethodExecutionTracker)}
+	 * method in {@link ExampleMethod} class should wait before execution, otherwise false
          */
 	public ExampleData(Integer count, boolean noWait) {
 		this.count = count;
@@ -38,7 +44,9 @@ public class ExampleData {
 	}
 
         /**
-         * Returns the number of iterations while executing in {@link Method#doComputation(Object, org.signalml.method.MethodE     xecutionTracker)} method in {@link ExampleMethod} class
+         * Returns the number of iterations while executing in
+         * {@link Method#compute(Object, MethodExecutionTracker)} method in
+	 * {@link ExampleMethod} class
          * @return count data count
          */
 	public Integer getCount() {
@@ -46,7 +54,9 @@ public class ExampleData {
 	}
 
         /**
-         * Sets the number of iterations while executing in {@link Method#doComputation(Object, org.signalml.method.MethodExecutionTracker)} method in {@link ExampleMethod} class
+         * Sets the number of iterations while executing in
+         * {@link Method#compute(Object, MethodExecutionTracker)}
+	 * method in {@link ExampleMethod} class
          * @param count Integer to be set as this EmapleData count
          */
 	public void setCount(Integer count) {
@@ -54,7 +64,8 @@ public class ExampleData {
 	}
 
         /**
-         * Checks if {@link Method#doComputation(Object, org.signalml.method.MethodExecutionTracker)} method in {@link ExampleMethod} class should wait before execution
+         * Checks if {@link Method#compute(Object, MethodExecutionTracker)} method
+	 * in {@link ExampleMethod} class should wait before execution
          * @return false if this method should wait, otherwise true
          */
 	public boolean isNoWait() {
@@ -62,7 +73,8 @@ public class ExampleData {
 	}
 
         /**
-         * Set boolean value saying if {@link Method#doComputation(Object, org.signalml.method.MethodExecutionTracker)} method in {@link ExampleMethod} class should wait before execution
+         * Set boolean value saying if {@link Method#compute(Object, MethodExecutionTracker)}
+	 * method in {@link ExampleMethod} class should wait before execution
          * @param noWait boolean value saying if this method should wait before execution
          */
 	public void setNoWait(boolean noWait) {
@@ -78,8 +90,10 @@ public class ExampleData {
 	}
 
         /**
-         * Sets this ExampleData as suspended if specified boolean value is true, otherwise as not suspended.
-         * @param suspended if true then this ExampleData becomes suspended, otherwise it becomes not suspended
+         * Sets this ExampleData as suspended if specified boolean
+         * value is true, otherwise as not suspended.
+         * @param suspended if true then this ExampleData becomes
+         * suspended, otherwise it becomes not suspended
          */
 	public void setSuspended(boolean suspended) {
 		this.suspended = suspended;
@@ -87,7 +101,7 @@ public class ExampleData {
 
         /**
          * Returns array with two elements which say how much iterations
-         * of two main loops in {@link Method#doComputation(Object, org.signalml.method.MethodExecutionTracker)}
+         * of two main loops in {@link Method#compute(Object, MethodExecutionTracker)}
          * method in {@link ExampleMethod} class hass been done.
          * @return progress of computation result
          */
@@ -97,7 +111,7 @@ public class ExampleData {
 
         /**
          * Sets array of counters which say how much iterations
-         * of two main loops in {@link Method#doComputation(Object, org.signalml.method.MethodExecutionTracker)}
+         * of two main loops in {@link Method#compute(Object, MethodExecutionTracker)}
          * method in {@link ExampleMethod} class hass been done.
          *
          * @param suspendedCounters new counters
@@ -108,7 +122,7 @@ public class ExampleData {
 
         /**
          * Returns product which is computed during execution of
-         * {@link Method#doComputation(Object, org.signalml.method.MethodExecutionTracker)}
+         * {@link Method#compute(Object, MethodExecutionTracker)}
          * method in {@link ExampleMethod} class.
          *
          * @return product computed before suspension
@@ -119,10 +133,8 @@ public class ExampleData {
 
         /**
          * Sets product which is computed during execution of
-         * {@link Method#doComputation(Object, org.signalml.method.MethodExecutionTracker)}
+         * {@link Method#compute(Object, MethodExecutionTracker)}
          * method in {@link ExampleMethod} class.
-         *
-         * @return suspendedProduct integer to be set as product computed before suspension
          */
 	public void setSuspendedProduct(int suspendedProduct) {
 		this.suspendedProduct = suspendedProduct;

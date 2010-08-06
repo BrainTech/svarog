@@ -71,7 +71,7 @@ public interface Method {
 	 *  the method should terminate as soon as possible and return null. If
 	 *  calculations finish normally, then a non null result must be returned.
 	 *
-	 *  <p>Additionally a method class may implement the {@link SuspenableMethod} interface
+	 *  <p>Additionally a method class may implement the {@link SuspendableMethod} interface
 	 *  in which case it's compute method must also test {@link MethodExecutionTracker#isRequestingSuspend()}.
 	 *  becoming true. If such situation is detected, the method should save computation state in
 	 *  the data object, and return null as soon as possible. The compute method must also be prepared
@@ -81,8 +81,8 @@ public interface Method {
 	 * @param tracker the object used to interact with the executing code
 	 * @return the result object or null if execution was aborted
 	 * @throws InputDataException when the input data is invalid. Note that this exception
-	 * 		class implements Spring's Errors interface, so detailed information about
-	 * 		encountered problems should be included as errors
+	 *		class implements Spring's Errors interface, so detailed information about
+	 *		encountered problems should be included as errors
 	 * @throws ComputationException when computation fails for reasons other than bad input data
 	 *
 	 * @see MethodExecutionTracker

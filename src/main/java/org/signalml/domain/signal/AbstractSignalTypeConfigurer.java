@@ -15,7 +15,8 @@ import org.signalml.domain.montage.filter.predefined.HighPassSampleFilter;
 import org.signalml.domain.montage.filter.predefined.LowPassSampleFilter;
 
 /**
- * This abstract class represents a configurer of {@link Montage montages}.
+ * This abstract class represents a configurer of
+ * {@link org.signalml.domain.montage.Montage Montages}.
  * Contains 3 predefined filters (low-, band- and high-pass).
  *
  * @see SignalTypeConfigurer

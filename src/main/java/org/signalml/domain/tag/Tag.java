@@ -133,15 +133,17 @@ public class Tag extends SignalSelection implements Comparable<Tag>, Cloneable, 
 		return (style != null ? style.isMarker() : false);
 	}
 
-        /**
-         * Compares the current object to given.
-         * To compare uses the starting position, length and the number
-         * of channel which this selection concerns (in this order)
-         * @param t a tagged selection to be compared with the current object
-         * @return $gt 0 if the current object is grater then given
-         * $lt 0 if a given object is grater then current
-         * 0 if selections are equal
-         */
+	/**
+	 * Compares the current object to given.
+	 * The comparison uses the following characteristics in turn:
+	 * starting position, length, the channel number,
+	 * and the TagStyle of this tag. The first characteristic that
+	 * doesn't match determines the outcome of the comparison.
+	 * @param t a tagged selection to be compared with the current object
+	 * @return &gt; 0 if the current object is greater than given;
+	 * &lt; 0 if current is smaller than given;
+	 * 0 if the selections are equal.
+	 */
 	@Override
 	public int compareTo(Tag t) {
 
@@ -165,7 +167,7 @@ public class Tag extends SignalSelection implements Comparable<Tag>, Cloneable, 
 
         /**
          * Checks if the current object is equal to given.
-         * Uses {@link compareTo() compareTo()}
+         * Uses {@link #compareTo(Tag)}
          * @param obj an object to be compared with current
          * @return true if a given object is equal to current, false otherwise
          */
