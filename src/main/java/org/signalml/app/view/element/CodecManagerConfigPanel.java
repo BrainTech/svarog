@@ -52,7 +52,7 @@ public class CodecManagerConfigPanel extends JPanel {
 	/**
 	 * This method initializes this
 	 *
-	 * @return void
+	 *
 	 */
 	private void initialize() {
 

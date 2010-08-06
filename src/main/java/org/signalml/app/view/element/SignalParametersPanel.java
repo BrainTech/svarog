@@ -38,7 +38,7 @@ public class SignalParametersPanel extends JPanel {
 	/**
 	 * This method initializes this
 	 *
-	 * @return void
+	 *
 	 */
 	private void initialize() {
 

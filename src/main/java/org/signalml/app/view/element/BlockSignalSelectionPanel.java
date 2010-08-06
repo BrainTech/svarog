@@ -42,7 +42,7 @@ public class BlockSignalSelectionPanel extends JPanel {
 	/**
 	 * This method initializes this
 	 *
-	 * @return void
+	 *
 	 */
 	private void initialize() {
 

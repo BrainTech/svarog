@@ -52,7 +52,7 @@ public class ProfilePathTypePanel extends JPanel {
 	/**
 	 * This method initializes this
 	 *
-	 * @return void
+	 *
 	 */
 	private void initialize() {
 
