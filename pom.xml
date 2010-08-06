@@ -404,11 +404,15 @@
 					</reportSet>
 				</reportSets>
 				<configuration>
-                    <version>2.7</version>
-                    <configuration>
-                        <show>private</show>
-                        <nohelp>false</nohelp>
-                    </configuration>
+				    <version>2.7</version>
+				    <show>private</show>
+				    <nohelp>false</nohelp>
+				    <javaApiLinks>
+					<property>
+					    <name>api_1.6</name>
+					    <value>http://download.oracle.com/javase/6/docs/api/</value>
+					</property>
+				    </javaApiLinks>
 				</configuration>
 			</plugin>
 
