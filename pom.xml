@@ -521,15 +521,31 @@
 			</roles>
 			<timezone>+1</timezone>
 		</developer>
-        <developer>
-            <id>STF</id>
-            <name>Stanislaw Findeisen</name>
-            <organization>eisenbits</organization>
-            <roles>
-                <role>Member</role>
-            </roles>
-            <timezone>+1</timezone>
-        </developer>
+		<developer>
+		    <id>STF</id>
+		    <name>Stanisław Findeisen</name>
+		    <organization>eisenbits</organization>
+		    <roles>
+			<role>Member</role>
+		    </roles>
+		    <timezone>+1</timezone>
+		</developer>
+		<developer>
+		    <name>Marcin Szumski</name>
+		    <organization>eisenbits</organization>
+		    <timezone>+1</timezone>
+		    <roles>
+			<role>documentation</role>
+		    </roles>
+		</developer>
+		<developer>
+		    <name>Mateusz Dzwonek</name>
+		    <organization>eisenbits</organization>
+		    <timezone>+1</timezone>
+		    <roles>
+			<role>documentation</role>
+		    </roles>
+		</developer>
 	</developers>
 
 	<contributors>
