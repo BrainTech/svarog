@@ -413,6 +413,9 @@
 					    <value>http://download.oracle.com/javase/6/docs/api/</value>
 					</property>
 				    </javaApiLinks>
+				    <links>
+					<link>http://static.springsource.org/spring/docs/2.0.7/api</link>
+				    </links>
 				</configuration>
 			</plugin>
 
