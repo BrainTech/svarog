@@ -38,9 +38,9 @@ import org.signalml.domain.signal.SignalChecksum;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.exception.SignalMLException;
 
-/** Util
- * class provides converting String to Date in various formats, computing signal checksums, file and String MD5 checksums.
- * It also allows to get file extension, change this extension, invert map, save system information, split String to separate lines, etc.
+/**
+ * Util provides various String to Date conversions, signal checksums, file and String MD5 sums.
+ * It also allows to get and change file extension, invert map, save system information, split String to separate lines, etc.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  * 		parts based on code Copyright (C) 2003 Dobieslaw Ircha <dircha@eranet.pl> Artur Biesiadowski <abies@adres.pl> Piotr J. Durka     <Piotr-J.Durka@fuw.edu.pl>
@@ -77,7 +77,7 @@ public abstract class Util {
 	private static Pattern fqClassNamePattern = null;
 
 	/**
-	 * Checks if two objects are equal (if both of them are nulls, it returns true even if they are not of the same class)
+	 * Checks if two objects are equal (if both of them are nulls, it returns true even if they are not of the same class).
 	 * @param o1 first object to compare
 	 * @param o2 second object to compare
 	 * @return true if specified objects are equal
@@ -199,7 +199,7 @@ public abstract class Util {
 	}
 
 	/**
-	 * Returs MD5 checksum of specified file
+	 * Returs MD5 checksum of specified file.
 	 * @param file file to count checksum
 	 * @return String with MD5 checksum
 	 * @throws IOException if an I/O error occurs
@@ -214,7 +214,7 @@ public abstract class Util {
 	}
 
 	/**
-	 * Returns hexadecimal representation of specified array of bytes
+	 * Returns hexadecimal representation of specified array of bytes.
 	 * @param bytes data to convert
 	 * @return String with hexadecimal representation of given data
 	 */
@@ -227,7 +227,7 @@ public abstract class Util {
 	}
 
 	/**
-	 * Resturns MD5 checksum of specified String
+	 * Resturns MD5 checksum of specified String.
 	 * @param s String to count checksum
 	 * @return String with MD5 checksum
 	 * @throws NullPointerException if given String is null
@@ -251,7 +251,7 @@ public abstract class Util {
 	}
 
 	/**
-	 * Returns random String in hexadecimal representation of specified length
+	 * Returns random String in hexadecimal representation of specified length.
 	 * @param byteCount length of target String
 	 * @return random String
 	 */
@@ -283,7 +283,7 @@ public abstract class Util {
 	}
 
 	/**
-	 * Returns name of specified file without its extension
+	 * Returns name of specified file without its extension.
 	 * @param file File to extract name from
 	 * @return name of File
 	 */
@@ -422,7 +422,7 @@ public abstract class Util {
 	}
 
 	/**
-	 * Returns true if every element of specified String is valid Unicode character
+	 * Returns true if every element of specified String is valid Unicode character.
 	 * @param s String to validate
 	 * @return true if String is valid
 	 */
@@ -443,7 +443,7 @@ public abstract class Util {
 	}
 
 	/**
-	 * Returns String with those elements from specified String which are valid Unicode characters
+	 * Returns String with those elements from specified String which are valid Unicode characters.
 	 * @param s String to trim
 	 * @return valid String
 	 */
@@ -482,7 +482,7 @@ public abstract class Util {
 
 	/**
 	 * Returns array of String which contains every separate line from specified String with limited number of characters in one line
-	 * (Single word will not be splitted even if it is longer then limit).
+	 * NOTE: Single word will not be splitted even if it is longer then limit.
 	 * @param string String to split
 	 * @param limit maximal number of characters in one line
 	 * @return splitted String
@@ -563,7 +563,7 @@ public abstract class Util {
 	}
 
 	/**
-	 * Compresses specified data and encodes it using Base64
+	 * Compresses specified data and encodes it using Base64.
 	 * @param data Data to process
 	 * @return String representation of compressed and encoded data
 	 */
@@ -604,7 +604,7 @@ public abstract class Util {
 	}
 
 	/**
-	 * Decompresses specified data and decodes it using Base64
+	 * Decompresses specified data and decodes it using Base64.
 	 * @param encoded data to process
 	 * @return String representation of decompressed and decoded data
 	 * @throws DataFormatException when data is not correctly compressed
@@ -648,7 +648,7 @@ public abstract class Util {
 	}
 
 	/**
-	 * Returns specified date in format "YYYY-MM-DD HH:MM:SS" (YYYY-year, MM-month, DD-day; HH-hour, MM-minutes, SS-seconds)
+	 * Returns specified date in format "YYYY-MM-DD HH:MM:SS" (YYYY-year, MM-month, DD-day; HH-hour, MM-minutes, SS-seconds).
 	 * @param time date to process
 	 * @return string representation of date in format above
 	 */
@@ -673,7 +673,7 @@ public abstract class Util {
 
 	/**
 	 * Returns Date from specified String time representation.
-	 * String representations must be in format YYYY-MM-DD HH:MM:SS (YYYY-year, MM-month, DD-day; HH-hour, MM-minutes, SS-seconds)
+	 * String representations must be in format YYYY-MM-DD HH:MM:SS (YYYY-year, MM-month, DD-day; HH-hour, MM-minutes, SS-seconds).
 	 * @param time String representation of Date
 	 * @return Date from String time representation
 	 * @throws ParseException when String is not valid Date representation
@@ -710,7 +710,7 @@ public abstract class Util {
 	}
 
 	/**
-	 * Returns MD5 hash of given data
+	 * Returns MD5 hash of given data.
 	 * @param userName name of the user
 	 * @param loginTime time of logging in
 	 * @param sharedSecret some shared message
@@ -770,7 +770,7 @@ public abstract class Util {
 	}
 
 	/**
-	 * Returns square of specified number
+	 * Returns square of specified number.
 	 * @param x number to count square
 	 * @return square of given number
 	 */
@@ -802,7 +802,7 @@ public abstract class Util {
 	}
 
 	/**
-	 * Returns actual time and/or date in specified format
+	 * Returns actual time and/or date in specified format.
 	 * @param dateFormat format of date to count
 	 * @return actual time and/or date
 	 */

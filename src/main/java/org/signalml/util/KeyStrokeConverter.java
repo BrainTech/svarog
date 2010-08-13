@@ -8,8 +8,8 @@ import javax.swing.KeyStroke;
 
 import com.thoughtworks.xstream.converters.SingleValueConverter;
 
-/** KeyStrokeConverter
- * class provides conversion between KeyStroke and String.
+/**
+ * KeyStrokeConverter provides conversion between KeyStroke and String.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -35,7 +35,7 @@ public class KeyStrokeConverter implements SingleValueConverter {
 	}
 
 	/**
-	 * Converts KeyStroke to String
+	 * Converts KeyStroke to String.
 	 * @param obj is Object which is KeyStroke to convert
 	 * @return String representation of KeyStroke
 	 */
@@ -45,13 +45,14 @@ public class KeyStrokeConverter implements SingleValueConverter {
 			return "";
 		}
 		String s = ((KeyStroke) obj).toString();
+		//TODO unsafe type cast
 		s = s.replaceAll("pressed *", "");
 
 		return s;
 	}
 
 	/**
-	 * Check if KeyStroke is either the same as, or is a superclass of the class which is represented by specified Class parameter
+	 * Check if KeyStroke is either the same as, or is a superclass of the class which is represented by specified Class parameter.
 	 * @param clazz the Class object to be checked
 	 * @return true if objects of type clazz can be assigned to objects of KeyStroke class, otherwise false
 	 */

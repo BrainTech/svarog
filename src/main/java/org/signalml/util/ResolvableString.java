@@ -8,8 +8,9 @@ import java.io.Serializable;
 
 import org.springframework.context.MessageSourceResolvable;
 
-/** ResolvableString class provides a simple localized text message in the form of a
- *  MessageSourceResolvable.
+/**
+ * ResolvableString provides a simple localized text message in the form of a
+ * MessageSourceResolvable.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -21,8 +22,8 @@ public class ResolvableString implements Serializable, MessageSourceResolvable {
 	private Object[] arguments;
 	private String defaultMessage;
 
-	/** Constructs a message with one code, no attributes and the default message equal to the code.
-	 *
+	/**
+	 * Constructs a message with one code, no attributes and the default message equal to the code.
 	 * @param code the code
 	 */
 	public ResolvableString(String code) {
@@ -31,8 +32,8 @@ public class ResolvableString implements Serializable, MessageSourceResolvable {
 		this.defaultMessage = code;
 	}
 
-	/** Constructs a message with one code, given attributes and the default message equal to the code.
-	 *
+	/**
+	 * Constructs a message with one code, given attributes and the default message equal to the code.
 	 * @param code the code
 	 * @param arguments the arguments
 	 */
@@ -42,8 +43,8 @@ public class ResolvableString implements Serializable, MessageSourceResolvable {
 		this.defaultMessage = code;
 	}
 
-	/** Constructs a message with one code, given attributes and given default message.
-	 *
+	/**
+	 * Constructs a message with one code, given attributes and given default message.
 	 * @param code the code
 	 * @param arguments the arguments
 	 * @param defaultMessage the default message
@@ -54,8 +55,8 @@ public class ResolvableString implements Serializable, MessageSourceResolvable {
 		this.defaultMessage = defaultMessage;
 	}
 
-	/** Constructs the message with multiple codes, given attributes and given default message.
-	 *
+	/**
+	 * Constructs the message with multiple codes, given attributes and given default message.
 	 * @param codes the codes
 	 * @param arguments the arguments
 	 * @param defaultMessage the default message
@@ -67,7 +68,7 @@ public class ResolvableString implements Serializable, MessageSourceResolvable {
 	}
 
 	/**
-	 * Returns arguments of message, null if there are no arguments
+	 * Returns arguments of message, null if there are no arguments.
 	 * @return arguments
 	 */
 	@Override
@@ -76,7 +77,7 @@ public class ResolvableString implements Serializable, MessageSourceResolvable {
 	}
 
 	/**
-	 * Returns codes of message, null if there are no codes
+	 * Returns codes of message, null if there are no codes.
 	 * @return codes
 	 */
 	@Override
@@ -85,7 +86,7 @@ public class ResolvableString implements Serializable, MessageSourceResolvable {
 	}
 
 	/**
-	 * Returns default message
+	 * Returns default message.
 	 * @return default message
 	 */
 	@Override
@@ -94,7 +95,7 @@ public class ResolvableString implements Serializable, MessageSourceResolvable {
 	}
 
 	/**
-	 * Returns default message
+	 * Returns default message.
 	 * @return default message
 	 */
 	@Override

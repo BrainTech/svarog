@@ -5,15 +5,15 @@ package org.signalml.util;
 
 import com.thoughtworks.xstream.converters.SingleValueConverter;
 
-/** FloatArrayConverter
- * class provides conversion between array of floats and String.
+/**
+ * FloatArrayConverter provides conversion between array of floats and String datatypes.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class FloatArrayConverter implements SingleValueConverter {
 
 	/**
-	 * Creates array of floats from specified String, using ", " as separator between following numbers
+	 * Creates array of floats from specified String, using ", " as separator between following numbers.
 	 * @param s is String to read floats from
 	 * @return array of floats
 	 */
@@ -31,7 +31,7 @@ public class FloatArrayConverter implements SingleValueConverter {
 	}
 
 	/**
-	 * Converts array of floats to String, using ", " as separator between following numbers
+	 * Converts array of floats to String, using ", " as separator between following numbers.
 	 * @param obj the Object which is array of floats to convert
 	 * @return String representation of array of floats
 	 */
@@ -41,6 +41,7 @@ public class FloatArrayConverter implements SingleValueConverter {
 			return "";
 		}
 		float[] arr = (float[]) obj;
+		//TODO unsafe type cast
 		StringBuilder sb = new StringBuilder();
 		for (int i=0; i<arr.length; i++) {
 			if (i > 0) {

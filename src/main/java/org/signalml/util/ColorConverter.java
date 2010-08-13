@@ -9,15 +9,15 @@ import java.util.Formatter;
 
 import com.thoughtworks.xstream.converters.SingleValueConverter;
 
-/** ColorConverter
- * class provides conversion between Color and String.
+/**
+ * ColorConverter provides conversion between Color and String.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ColorConverter implements SingleValueConverter {
 
 	/**
-	 * Creates Color from specified String (String must be in format xxyyzz*, where xx, yy, zz are nonnegative numbers in base sixteen)
+	 * Creates Color from specified String (String must be in format rrggbb*, where rr, gg, bb are nonnegative numbers in base sixteen).
 	 * @param s String representation of Color in RGB model
 	 * @return Color which is represented by specified String
 	 */
@@ -28,10 +28,12 @@ public class ColorConverter implements SingleValueConverter {
 		               Integer.parseInt(s.substring(2, 4), 16),
 		               Integer.parseInt(s.substring(4, 6), 16)
 		       );
+		//TODO maybe throw an error when s has more than 6 elements
+		// and/or when one of numbers is negative
 	}
 
 	/**
-	 * Converts Color to String
+	 * Converts Color to String.
 	 * @param obj the Object which is Color to convert
 	 * @return String representation of color in RGB model (in format rrggbb, where rr, gg, bb are nonnegative numbers in base sixteen with leading zeros)
 	 */
@@ -44,7 +46,7 @@ public class ColorConverter implements SingleValueConverter {
 	}
 
 	/**
-	 * Check if Color is either the same as, or is a superclass of the class which is represented by specified Class parameter
+	 * Check if Color is either the same as, or is a superclass of the class which is represented by specified Class parameter.
 	 * @param clazz the Class object to be checked
 	 * @return true if objects of type clazz can be assigned to objects of Color class, otherwise false
 	 */

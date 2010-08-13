@@ -7,24 +7,24 @@ package org.signalml.util;
 import java.awt.Dimension;
 import java.util.Locale;
 
-/** SvarogConstants
- * class contains general project constants.
+/**
+ * SvarogConstants contains general project constants.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public abstract class SvarogConstants {
 	/**
-	 * Name of project
+	 * Name of the project
 	 */
 	public static final String NAME = "Svarog";
 
 	/**
-	 * Actual version of project
+	 * Actual version of the project
 	 */
 	public static final String VERSION = "0.4.7";
 
 	/**
-	 * Recommended minimal dimension of screen
+	 * Recommended minimal dimension of the screen
 	 */
 	public static final Dimension MIN_ASSUMED_DESKTOP_SIZE = new Dimension(1024,768);
 

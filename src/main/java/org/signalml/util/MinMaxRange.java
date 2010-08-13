@@ -6,8 +6,9 @@ package org.signalml.util;
 
 import java.io.Serializable;
 
-/** MinMaxRange
- * class implements standard mathematical interval. It can be limited from both left and right.
+/**
+ * MinMaxRange implements standard mathematical interval closed from both left and right.
+ * It can also be limited from both left and right.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -27,7 +28,7 @@ public class MinMaxRange implements Serializable {
 	private boolean maxUnlimited;
 
 	/**
-	 * Constructor creating range with specified value which will be the limit when eithen minimal, or maximal value is unlimited
+	 * Constructor creating range with specified value which will be the limit when eithen minimal, or maximal value is unlimited.
 	 * @param unlimitedValue special limit when at least one of bounds of this range is unlimited
 	 */
 	public MinMaxRange(double unlimitedValue) {
@@ -36,7 +37,7 @@ public class MinMaxRange implements Serializable {
 
 	/**
 	 * Constructor creating range with specified value which will be the limit when eithen minimal, or maximal value is unlimited,
-	 * minimum and maximum of the range, boolean values telling if range is limited from left and right respectively
+	 * minimum and maximum of the range, boolean values telling if range is limited from left and right respectively.
 	 * @param unlimitedValue special limit when at least one of bounds of this range is unlimited
 	 * @param min left bound of this range
 	 * @param max right bound of this range
@@ -52,7 +53,7 @@ public class MinMaxRange implements Serializable {
 
 	/**
 	 * Constructor creating range with specified value which will be the limit when eithen minimal, or maximal value is unlimited,
-	 * and boolean value telling if range is limited from left and right
+	 * and boolean value telling if range is limited from left and right.
 	 * @param unlimitedValue special limit when at least one of bounds of this range is unlimited
 	 * @param unlimited boolean value which is true when range is unlimited from left and right, false otherwise
 	 */
@@ -65,7 +66,7 @@ public class MinMaxRange implements Serializable {
 	}
 
 	/**
-	 * Copy constructor
+	 * Copy constructor.
 	 * @param template range to be copied
 	 */
 	public MinMaxRange(MinMaxRange template) {
@@ -77,7 +78,7 @@ public class MinMaxRange implements Serializable {
 	}
 
 	/**
-	 * Returns left bound of the range
+	 * Returns left bound of the range.
 	 * @return minimal value in this range
 	 */
 	public double getMin() {
@@ -85,7 +86,7 @@ public class MinMaxRange implements Serializable {
 	}
 
 	/**
-	 * Returns left bound of the range when range is limited from left, otherwise special unlimited value
+	 * Returns left bound of the range when range is limited from left, otherwise special unlimited value.
 	 * @return left limit of the range
 	 */
 	public double getMinWithUnlimited() {
@@ -93,7 +94,7 @@ public class MinMaxRange implements Serializable {
 	}
 
 	/**
-	 * Sets left bound of the range
+	 * Sets left bound of the range.
 	 * @param min value to be set as left bound of the range
 	 */
 	public void setMin(double min) {
@@ -101,7 +102,7 @@ public class MinMaxRange implements Serializable {
 	}
 
 	/**
-	 * Set specified value as left bound of the range when it is nonnegative, otherwise range is unlimited from left
+	 * Set specified value as left bound of the range when it is nonnegative, otherwise range is unlimited from left.
 	 * @param min potential value to be set as left bound of the range
 	 */
 	public void setMinWithUnlimited(double min) {
@@ -114,7 +115,7 @@ public class MinMaxRange implements Serializable {
 	}
 
 	/**
-	 * Returns right bound of the range
+	 * Returns right bound of the range.
 	 * @return maximal value in this range
 	 */
 	public double getMax() {
@@ -122,7 +123,7 @@ public class MinMaxRange implements Serializable {
 	}
 
 	/**
-	 * Returns right bound of the range when range is limited from right, otherwise special unlimited value
+	 * Returns right bound of the range when range is limited from right, otherwise special unlimited value.
 	 * @return right limit of the range
 	 */
 	public double getMaxWithUnlimited() {
@@ -130,7 +131,7 @@ public class MinMaxRange implements Serializable {
 	}
 
 	/**
-	 * Sets right bound of the range
+	 * Sets right bound of the range.
 	 * @param max value to be set as right bound of the range
 	 */
 	public void setMax(double max) {
@@ -138,7 +139,7 @@ public class MinMaxRange implements Serializable {
 	}
 
 	/**
-	 * Set specified value as right bound of the range when it is nonnegative, otherwise range is unlimited from right
+	 * Set specified value as right bound of the range when it is nonnegative, otherwise range is unlimited from right.
 	 * @param max potential value to be set as right bound of the range
 	 */
 	public void setMaxWithUnlimited(double max) {
@@ -151,7 +152,7 @@ public class MinMaxRange implements Serializable {
 	}
 
 	/**
-	 * Test if range is unlimited from left
+	 * Test if range is unlimited from left.
 	 * @return true if range is unlimited from left, otherwise false
 	 */
 	public boolean isMinUnlimited() {
@@ -159,6 +160,7 @@ public class MinMaxRange implements Serializable {
 	}
 
 	/**
+	 * If specified value is true, then range becomes limited from left, otherwise unlimited.
 	 * @param minUnlimited if this value is true then range becomes limited from left, otherwise becomes unlimited
 	 */
 	public void setMinUnlimited(boolean minUnlimited) {
@@ -166,7 +168,7 @@ public class MinMaxRange implements Serializable {
 	}
 
 	/**
-	 * Test if range is unlimited from right
+	 * Test if range is unlimited from right.
 	 * @return true if range is unlimited from right, otherwise false
 	 */
 	public boolean isMaxUnlimited() {
@@ -174,6 +176,7 @@ public class MinMaxRange implements Serializable {
 	}
 
 	/**
+	 * If specified value is true, then range becomes limited from right, otherwise unlimited.
 	 * @param maxUnlimited if this value is true then range becomes limited from right, otherwise becomes unlimited
 	 */
 	public void setMaxUnlimited(boolean maxUnlimited) {
@@ -181,7 +184,7 @@ public class MinMaxRange implements Serializable {
 	}
 
 	/**
-	 * Normalizes the range (right bound becomes greater or equal to left)
+	 * Normalizes the range (right bound becomes greater or equal to left).
 	 */
 	public void normalize() {
 		if (!minUnlimited && !maxUnlimited) {
@@ -194,7 +197,7 @@ public class MinMaxRange implements Serializable {
 	}
 
 	/**
-	 * Returns true if specified value is in the range (inclusive), otherwise false
+	 * Returns true if specified value is in the range (inclusive), otherwise false.
 	 * @param value value to be tested
 	 * @return true if value is in the range
 	 */
@@ -209,7 +212,7 @@ public class MinMaxRange implements Serializable {
 	}
 
 	/**
-	 * Returns special value which becomes the limit when one of bounds is unlimited
+	 * Returns special value which becomes the limit when one of bounds is unlimited.
 	 * @return the unlimitedValue
 	 */
 	public double getUnlimitedValue() {
@@ -217,7 +220,7 @@ public class MinMaxRange implements Serializable {
 	}
 
 	/**
-	 * Sets special value which becomes the limit when one of bounds is unlimited
+	 * Sets special value which becomes the limit when one of bounds is unlimited.
 	 * @param unlimitedValue the unlimitedValue to set
 	 */
 	public void setUnlimitedValue(double unlimitedValue) {
