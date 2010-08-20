@@ -210,6 +210,28 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 		
 	}
 
+        /**
+         * Creates the chain:
+         * <code>original source = source -> montage
+         * -> filter = output</code>
+         * @param source the
+         * {@link OriginalMultichannelSampleSource original source} of samples
+         * @param signalType the type of the signal
+         * @return the created chain
+         */
+        public static SignalProcessingChain createNotBufferedFilteredChain(OriginalMultichannelSampleSource source, SignalType signalType) {
+
+		SignalProcessingChain chain = new SignalProcessingChain(source,signalType);
+		chain.montage = new MultichannelSampleMontage(signalType, chain.source);
+		chain.filter = new MultichannelSampleFilter(chain.montage);
+		chain.output = chain.filter;
+
+		chain.configureOutput();
+	
+		return chain;
+
+	}
+
 	public static SignalProcessingChain createFilteredChain(OriginalMultichannelSampleSource source, SignalType signalType) {
 
 		SignalProcessingChain chain = new SignalProcessingChain(source,signalType);
@@ -224,7 +246,7 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 		return chain;
 		
 	}
-	
+
 	// NOTE! buffering filtered chain is risky, so no "createBufferedFilterChain" - be sure to know what you're doing if you decide to implement one
 	// (filtered fragments may not meet correctly at the edges?)
 
