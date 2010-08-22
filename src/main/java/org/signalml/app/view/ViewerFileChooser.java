@@ -90,7 +90,7 @@ public class ViewerFileChooser extends JFileChooser {
 		return showDialog(parent, options.okButton);
 	}
 
-	public File chooseFileForReadOrWrite(Component parent, OptionSet options) {
+	public File chooseForReadOrWrite(Component parent, OptionSet options) {
 		File file = null;
 		boolean hasFile = false;
 
@@ -181,53 +181,6 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File chooseDirectory(Component parent, OptionSet options) {
-
-		File file;
-
-		boolean hasFile = false;
-
-		do {
-
-			file = null;
-
-			int result = showDialog(parent, options);
-			if (result == APPROVE_OPTION) {
-				file = getSelectedFile();
-			} else {
-				break;
-			}
-
-			if (!file.exists()) {
-
-				int ans = OptionPane.showDirectoryDoesntExistCreate(parent, file);
-				if (ans != OptionPane.YES_OPTION) {
-					continue;
-				}
-
-				boolean createOk = file.mkdirs();
-				if (!createOk) {
-					OptionPane.showDirectoryNotCreated(parent, file);
-					continue;
-				}
-
-			}
-
-			if (!file.canRead() || !file.canWrite()) {
-
-				OptionPane.showDirectoryNotAccessible(parent, file);
-				continue;
-
-			}
-
-			hasFile = true;
-
-		} while (!hasFile);
-
-		return file;
-
-	}
-
 	public File chooseFile(Component parent,
 			       OptionSet optionset, String savename,
 			       File fileSuggestion) {
@@ -239,7 +192,7 @@ public class ViewerFileChooser extends JFileChooser {
 		else
 			setSelectedFile(fileSuggestion);
 
-		File file = chooseFileForReadOrWrite(parent, optionset);
+		File file = chooseForReadOrWrite(parent, optionset);
 		if (file != null)
 			applicationConfig.setPath(savename,
 				getCurrentDirectory().getAbsolutePath());
@@ -304,7 +257,7 @@ public class ViewerFileChooser extends JFileChooser {
 			}
 		}
 
-		file = chooseFileForReadOrWrite(parent, OptionSet.saveMP5Signal);
+		file = chooseForReadOrWrite(parent, OptionSet.saveMP5Signal);
 		if (file != null && resetDir) {
 			applicationConfig.setLastSaveMP5ConfigPath(getCurrentDirectory().getAbsolutePath());
 		}
@@ -353,7 +306,7 @@ public class ViewerFileChooser extends JFileChooser {
 			setSelectedFile(new File(""));
 		}
 
-		file = chooseFileForReadOrWrite(parent, OptionSet.readXMLManifest);
+		file = chooseForReadOrWrite(parent, OptionSet.readXMLManifest);
 
 		return file;
 
@@ -378,7 +331,7 @@ public class ViewerFileChooser extends JFileChooser {
 		setSelectedFile(new File(""));
 		setCurrentDirectory(new File(System.getProperty("user.dir")));
 
-		return chooseFileForReadOrWrite(parent, OptionSet.executablePreset);
+		return chooseForReadOrWrite(parent, OptionSet.executablePreset);
 	}
 
 	public File chooseBookFile(Component parent) {
@@ -415,7 +368,7 @@ public class ViewerFileChooser extends JFileChooser {
 			setCurrentDirectory(new File(System.getProperty("user.dir")));
 		}
 
-		file = chooseDirectory(parent, OptionSet.workingDirectoryPreset);
+		file = chooseForReadOrWrite(parent, OptionSet.workingDirectoryPreset);
 
 		return file;
 
@@ -513,44 +466,68 @@ public class ViewerFileChooser extends JFileChooser {
 			}
 		}
 
+		private static class UseDirectory extends Operation {
+			@Override
+			boolean verify(Component parent, File file) {
+				if (!file.exists()) {
+					int ans = OptionPane.showDirectoryDoesntExistCreate(parent, file);
+					if (ans != OptionPane.YES_OPTION)
+						return false;
+
+					boolean createOk = file.mkdirs();
+					if (!createOk) {
+						OptionPane.showDirectoryNotCreated(parent, file);
+						return false;
+					}
+				}
+
+				boolean good = file.canRead() && file.canWrite();
+				if (!good)
+					OptionPane.showDirectoryNotAccessible(parent, file);
+				return good;
+			}
+		}
+
 		static Operation
 			open = new Open(),
 			save = new Save(),
-			execute = new Execute();
+			execute = new Execute(),
+			usedir = new UseDirectory();
 	}
 
 	protected enum OptionSet {
-		consoleSaveAsText("filechooser.consoleSaveAsText.title", "save"),
-		tableSaveAsText("filechooser.tableSaveAsText.title", "save"),
-		samplesSaveAsText("filechooser.samplesSaveAsText.title", "save"),
-		samplesSaveAsFloat("filechooser.samplesSaveAsFloat.title", "save"),
-		chartSaveAsPng("filechooser.chartSaveAsPng.title", "save"),
-		saveMP5Config("filechooser.saveMP5Config.title", "save"),
-		saveMP5Signal("filechooser.saveMP5Signal.title", "save"),
-		saveDocument("filechooser.saveDocument.title", "save"),
-		saveTag("filechooser.saveTag.title", "save"),
-		openTag("filechooser.openTag.title", "open"),
-		expertTag("filechooser.expertTag.title", "choose"),
-		importTag("filechooser.importTag.title", "import"),
-		exportTag("filechooser.exportTag.title", "export"),
-		savePreset("filechooser.savePreset.title", "save"),
-		loadPreset("filechooser.loadPreset.title", "load"),
-		executablePreset("filechooser.executablePreset.title", "choose"),
-		bookPreset("filechooser.bookFilePreset.title", "choose"),
-		bookSavePreset("filechooser.bookFilePreset.title", "save"),
-		artifactProjectPreset("filechooser.artifactProjectPreset.title", "choose",
+		consoleSaveAsText(Operation.save, "filechooser.consoleSaveAsText.title", "save"),
+		tableSaveAsText(Operation.save, "filechooser.tableSaveAsText.title", "save"),
+		samplesSaveAsText(Operation.save, "filechooser.samplesSaveAsText.title", "save"),
+		samplesSaveAsFloat(Operation.save, "filechooser.samplesSaveAsFloat.title", "save"),
+		chartSaveAsPng(Operation.save, "filechooser.chartSaveAsPng.title", "save"),
+		saveMP5Config(Operation.save, "filechooser.saveMP5Config.title", "save"),
+		saveMP5Signal(Operation.save, "filechooser.saveMP5Signal.title", "save"),
+		saveDocument(Operation.save, "filechooser.saveDocument.title", "save"),
+		saveTag(Operation.save, "filechooser.saveTag.title", "save"),
+		openTag(Operation.open, "filechooser.openTag.title", "open"),
+		expertTag(Operation.open, "filechooser.expertTag.title", "choose"),
+		importTag(Operation.open, "filechooser.importTag.title", "import"),
+		exportTag(Operation.save, "filechooser.exportTag.title", "export"),
+		savePreset(Operation.save, "filechooser.savePreset.title", "save"),
+		loadPreset(Operation.open, "filechooser.loadPreset.title", "load"),
+		executablePreset(Operation.open, "filechooser.executablePreset.title", "choose"),
+		bookPreset(Operation.open, "filechooser.bookFilePreset.title", "choose"),
+		bookSavePreset(Operation.save, "filechooser.bookFilePreset.title", "save"),
+		artifactProjectPreset(Operation.usedir, "filechooser.artifactProjectPreset.title", "choose",
 				      false, false, FILES_ONLY),
-		exportSignal("filechooser.exportSignal.title", "export"),
-		exportBook("filechooser.exportBook.title", "export"),
-		readXMLManifest("filechooser.readXMLManifest.title", "read"),
-		workingDirectoryPreset("filechooser.workingDirectoryPreset.title", "choose",
+		exportSignal(Operation.save, "filechooser.exportSignal.title", "export"),
+		exportBook(Operation.save, "filechooser.exportBook.title", "export"),
+		readXMLManifest(Operation.open, "filechooser.readXMLManifest.title", "read"),
+		workingDirectoryPreset(Operation.usedir, "filechooser.workingDirectoryPreset.title", "choose",
 				       false, false, DIRECTORIES_ONLY),
-		classPathDirectoryPreset("filechooser.classPathDirectoryPreset.title", "choose",
+		classPathDirectoryPreset(Operation.open, "filechooser.classPathDirectoryPreset.title", "choose",
 					 false, true, DIRECTORIES_ONLY),
-		jarFilePreset("filechooser.jarFilePreset.title", "choose",
+		jarFilePreset(Operation.open, "filechooser.jarFilePreset.title", "choose",
 			      true, true, FILES_ONLY),
-		codeFilePreset("filechooser.codeFilePreset.title", "choose");
+		codeFilePreset(Operation.open, "filechooser.codeFilePreset.title", "choose");
 
+		final Operation operation;
 		final String titleMessage;
 		final String okButtonMessage;
 		String title, okButton; /* set through initializer */
@@ -558,29 +535,24 @@ public class ViewerFileChooser extends JFileChooser {
 		final boolean multiSelectionEnabled;
 		final int fileSelectionMode;
 		FileFilter[] fileFilters;
-		final Operation operation;
 
-		OptionSet(String titleMessage, String okMessage,
+		OptionSet(Operation operation,
+			  String titleMessage, String okMessage,
 			  boolean acceptAllUsed, boolean multiSelectionEnabled,
 			  int fileSelectionMode){
+			this.operation = operation;
 			this.titleMessage = titleMessage;
 			this.okButtonMessage = okMessage;
 			this.acceptAllUsed = acceptAllUsed;
 			this.multiSelectionEnabled = multiSelectionEnabled;
 			this.fileSelectionMode = fileSelectionMode;
 			this.fileFilters = fileFilters;
-			if (titleMessage.contains("executable"))
-				this.operation = Operation.execute;
-			else if (okMessage.equals("save") || okMessage.equals("export"))
-				this.operation = Operation.save;
-			else
-				this.operation = Operation.open;
-
-			logger.debug("added OptionSet: " + this);
+			logger.debug("added OptionSet: " + this + "/" + this.operation);
 		}
 
-		OptionSet(String titleMessage, String okMessage){
-			this(titleMessage, okMessage, true, false, FILES_ONLY);
+		OptionSet(Operation operation,
+			  String titleMessage, String okMessage){
+			this(operation, titleMessage, okMessage, true, false, FILES_ONLY);
 		}
 
 		void use(ViewerFileChooser chooser) {
