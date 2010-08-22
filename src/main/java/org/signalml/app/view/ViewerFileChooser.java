@@ -93,7 +93,6 @@ public class ViewerFileChooser extends JFileChooser {
 	public File chooseFileForReadOrWrite(Component parent, OptionSet options) {
 		File file = null;
 		boolean hasFile = false;
-		boolean write = options.save;
 
 		do {
 			int result = showDialog(parent, options);
@@ -102,21 +101,10 @@ public class ViewerFileChooser extends JFileChooser {
 			else
 				break;
 
-			if (write) {
-				File dir = file.getParentFile();
-				if (dir != null &&
-				    (!dir.exists() || !dir.canRead() || !dir.canWrite())) {
-
-					OptionPane.showDirectoryNotFound(parent, dir);
-					file = null;
-					continue;
-				}
-			} else {
-				if (!file.exists() || !file.canRead()) {
-					OptionPane.showFileNotFound(parent, file);
-					file = null;
-					continue;
-				}
+			boolean good = options.operation.verify(parent, file);
+			if (!good) {
+				file = null;
+				continue;
 			}
 
 			hasFile = true;
@@ -190,37 +178,6 @@ public class ViewerFileChooser extends JFileChooser {
 		okFiles = Arrays.copyOf(okFiles, cnt);
 
 		return okFiles;
-
-	}
-
-	public File chooseFileForExecute(Component parent, OptionSet options) {
-
-		File file = null;
-
-		boolean hasFile = false;
-
-		do {
-
-			int result = showDialog(parent, options);
-			if (result == APPROVE_OPTION) {
-				file = getSelectedFile();
-			} else {
-				break;
-			}
-
-			if (!file.exists() || !file.canRead() || !file.canExecute()) {
-
-				OptionPane.showFileNotFound(parent, file);
-				file = null;
-				continue;
-
-			}
-
-			hasFile = true;
-
-		} while (!hasFile);
-
-		return file;
 
 	}
 
@@ -418,16 +375,10 @@ public class ViewerFileChooser extends JFileChooser {
 	}
 
 	public File chooseExecutableFile(Component parent) {
-
-		File file = null;
-
 		setSelectedFile(new File(""));
 		setCurrentDirectory(new File(System.getProperty("user.dir")));
 
-		file = chooseFileForExecute(parent, OptionSet.executablePreset);
-
-		return file;
-
+		return chooseFileForReadOrWrite(parent, OptionSet.executablePreset);
 	}
 
 	public File chooseBookFile(Component parent) {
@@ -525,6 +476,49 @@ public class ViewerFileChooser extends JFileChooser {
 		this.applicationConfig = applicationConfig;
 	}
 
+	protected static abstract class Operation {
+		abstract boolean verify(Component parent, File file);
+
+		private static class Open extends Operation {
+			@Override
+			boolean verify(Component parent, File file) {
+				boolean good = file.exists() && file.canRead();
+				if (!good)
+					OptionPane.showFileNotFound(parent, file);
+				return good;
+			}
+		}
+
+		private static class Save extends Operation {
+			@Override
+			boolean verify(Component parent, File file) {
+				File dir = file.getParentFile();
+				boolean good = dir != null &&
+					dir.exists() && dir.canRead() && dir.canWrite();
+				// XXX: when dir == null?
+				if (!good)
+					OptionPane.showDirectoryNotFound(parent, dir);
+				return good;
+			}
+		}
+
+		private static class Execute extends Operation {
+			@Override
+			boolean verify(Component parent, File file) {
+				boolean good = file.exists() && file.canRead()
+					&& file.canExecute();
+				if (!good)
+					OptionPane.showFileNotFound(parent, file);
+				return good;
+			}
+		}
+
+		static Operation
+			open = new Open(),
+			save = new Save(),
+			execute = new Execute();
+	}
+
 	protected enum OptionSet {
 		consoleSaveAsText("filechooser.consoleSaveAsText.title", "save"),
 		tableSaveAsText("filechooser.tableSaveAsText.title", "save"),
@@ -564,7 +558,7 @@ public class ViewerFileChooser extends JFileChooser {
 		final boolean multiSelectionEnabled;
 		final int fileSelectionMode;
 		FileFilter[] fileFilters;
-		final boolean save;
+		final Operation operation;
 
 		OptionSet(String titleMessage, String okMessage,
 			  boolean acceptAllUsed, boolean multiSelectionEnabled,
@@ -575,7 +569,12 @@ public class ViewerFileChooser extends JFileChooser {
 			this.multiSelectionEnabled = multiSelectionEnabled;
 			this.fileSelectionMode = fileSelectionMode;
 			this.fileFilters = fileFilters;
-			this.save = okMessage.equals("save") || okMessage.equals("export");
+			if (titleMessage.contains("executable"))
+				this.operation = Operation.execute;
+			else if (okMessage.equals("save") || okMessage.equals("export"))
+				this.operation = Operation.save;
+			else
+				this.operation = Operation.open;
 
 			logger.debug("added OptionSet: " + this);
 		}
