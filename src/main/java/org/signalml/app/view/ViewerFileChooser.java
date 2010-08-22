@@ -91,26 +91,18 @@ public class ViewerFileChooser extends JFileChooser {
 	}
 
 	public File chooseForReadOrWrite(Component parent, OptionSet options) {
-		File file = null;
-		boolean hasFile = false;
-
 		do {
 			int result = showDialog(parent, options);
-			if (result == APPROVE_OPTION)
-				file = getSelectedFile();
-			else
-				break;
+			if (result != APPROVE_OPTION)
+				return null;
 
+			File file = getSelectedFile();
 			boolean good = options.operation.verify(parent, file);
-			if (!good) {
-				file = null;
+			if (!good)
 				continue;
-			}
 
-			hasFile = true;
-		} while (!hasFile);
-
-		return file;
+			return file;
+		} while (true);
 	}
 
 	public File[] chooseFilesForRead(Component parent, OptionSet options) {
