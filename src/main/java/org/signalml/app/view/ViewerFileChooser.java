@@ -90,35 +90,39 @@ public class ViewerFileChooser extends JFileChooser {
 		return showDialog(parent, options.okButton);
 	}
 
-	public File chooseFileForRead(Component parent, OptionSet options) {
-
+	public File chooseFileForReadOrWrite(Component parent, OptionSet options) {
 		File file = null;
-
 		boolean hasFile = false;
+		boolean write = options.save;
 
 		do {
-
 			int result = showDialog(parent, options);
-			if (result == APPROVE_OPTION) {
+			if (result == APPROVE_OPTION)
 				file = getSelectedFile();
-			} else {
+			else
 				break;
-			}
 
-			if (!file.exists() || !file.canRead()) {
+			if (write) {
+				File dir = file.getParentFile();
+				if (dir != null &&
+				    (!dir.exists() || !dir.canRead() || !dir.canWrite())) {
 
-				OptionPane.showFileNotFound(parent, file);
-				file = null;
-				continue;
-
+					OptionPane.showDirectoryNotFound(parent, dir);
+					file = null;
+					continue;
+				}
+			} else {
+				if (!file.exists() || !file.canRead()) {
+					OptionPane.showFileNotFound(parent, file);
+					file = null;
+					continue;
+				}
 			}
 
 			hasFile = true;
-
 		} while (!hasFile);
 
 		return file;
-
 	}
 
 	public File[] chooseFilesForRead(Component parent, OptionSet options) {
@@ -220,39 +224,6 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File chooseFileForWrite(Component parent, OptionSet options) {
-
-		File file = null;
-
-		boolean hasFile = false;
-
-		do {
-
-			int result = showDialog(parent, options);
-			if (result == APPROVE_OPTION) {
-				file = getSelectedFile();
-			} else {
-				break;
-			}
-
-			File dir = file.getParentFile();
-
-			if (dir != null && (!dir.exists() || !dir.canRead() || !dir.canWrite())) {
-
-				OptionPane.showDirectoryNotFound(parent, dir);
-				file = null;
-				continue;
-
-			}
-
-			hasFile = true;
-
-		} while (!hasFile);
-
-		return file;
-
-	}
-
 	public File chooseDirectory(Component parent, OptionSet options) {
 
 		File file;
@@ -300,164 +271,66 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File chooseConsoleSaveAsTextFile(Component parent) {
-
-		File file = null;
-
-		setSelectedFile(new File(""));
-		String path = applicationConfig.getLastConsoleSaveAsTextPath();
-		if (path != null) {
+	public File chooseFile(Component parent,
+			       OptionSet optionset, String savename,
+			       File fileSuggestion) {
+		String path = applicationConfig.getPath(savename);
+		if (path != null)
 			setCurrentDirectory(new File(path));
-		}
+		if (fileSuggestion == null)
+			setSelectedFile(new File(""));
+		else
+			setSelectedFile(fileSuggestion);
 
-		file = chooseFileForWrite(parent, OptionSet.consoleSaveAsText);
-		if (file != null) {
-			applicationConfig.setLastConsoleSaveAsTextPath(getCurrentDirectory().getAbsolutePath());
-		}
-
+		File file = chooseFileForReadOrWrite(parent, optionset);
+		if (file != null)
+			applicationConfig.setPath(savename,
+				getCurrentDirectory().getAbsolutePath());
 		return file;
+	}
+	public File chooseFile(Component parent,
+			       OptionSet optionset, String savename) {
+		return chooseFile(parent, optionset, savename, null);
+	}
 
+	public File chooseConsoleSaveAsTextFile(Component parent) {
+		return chooseFile(parent, OptionSet.consoleSaveAsText,
+				  "LastSamplesSaveAsTextPath");
 	}
 
 	public File chooseTableSaveAsTextFile(Component parent) {
-
-		File file = null;
-
-		setSelectedFile(new File(""));
-		String path = applicationConfig.getLastTableSaveAsTextPath();
-		if (path != null) {
-			setCurrentDirectory(new File(path));
-		}
-
-		file = chooseFileForWrite(parent, OptionSet.tableSaveAsText);
-		if (file != null) {
-			applicationConfig.setLastTableSaveAsTextPath(getCurrentDirectory().getAbsolutePath());
-		}
-
-		return file;
-
+		return chooseFile(parent, OptionSet.tableSaveAsText,
+				  "LastTableSaveAsTextPath");
 	}
 
 	public File chooseSamplesSaveAsTextFile(Component parent) {
-
-		File file = null;
-
-		setSelectedFile(new File(""));
-		String path = applicationConfig.getLastSamplesSaveAsTextPath();
-		if (path != null) {
-			setCurrentDirectory(new File(path));
-		}
-
-		file = chooseFileForWrite(parent, OptionSet.samplesSaveAsText);
-		if (file != null) {
-			applicationConfig.setLastSamplesSaveAsTextPath(getCurrentDirectory().getAbsolutePath());
-		}
-
-		return file;
-
+		return chooseFile(parent, OptionSet.samplesSaveAsText,
+				  "LastSamplesSaveAsTextFile");
 	}
 
 	public File chooseSamplesSaveAsFloatFile(Component parent) {
-
-		File file = null;
-
-		setSelectedFile(new File(""));
-		String path = applicationConfig.getLastSamplesSaveAsFloatPath();
-		if (path != null) {
-			setCurrentDirectory(new File(path));
-		}
-
-		file = chooseFileForWrite(parent, OptionSet.samplesSaveAsFloat);
-		if (file != null) {
-			applicationConfig.setLastSamplesSaveAsFloatPath(getCurrentDirectory().getAbsolutePath());
-		}
-
-		return file;
-
+		return chooseFile(parent, OptionSet.samplesSaveAsFloat,
+				  "LastSamplesSaveAsFloatPath");
 	}
 
 	public File chooseExportSignalFile(Component parent, File fileSuggestion) {
-
-		File file = null;
-
-		String path = applicationConfig.getLastExportSignalPath();
-		if (path != null) {
-			setCurrentDirectory(new File(path));
-		}
-		if (fileSuggestion == null) {
-			setSelectedFile(new File(""));
-		} else {
-			setSelectedFile(fileSuggestion);
-		}
-
-		file = chooseFileForWrite(parent, OptionSet.exportSignal);
-		if (file != null) {
-			applicationConfig.setLastExportSignalPath(getCurrentDirectory().getAbsolutePath());
-		}
-
-		return file;
-
+		return chooseFile(parent, OptionSet.exportSignal,
+				  "LastExportSignalPath");
 	}
 
 	public File chooseExportBookFile(Component parent, File fileSuggestion) {
-
-		File file = null;
-
-		String path = applicationConfig.getLastExportBookPath();
-		if (path != null) {
-			setCurrentDirectory(new File(path));
-		}
-		if (fileSuggestion == null) {
-			setSelectedFile(new File(""));
-		} else {
-			setSelectedFile(fileSuggestion);
-		}
-
-		file = chooseFileForWrite(parent, OptionSet.exportBook);
-		if (file != null) {
-			applicationConfig.setLastExportBookPath(getCurrentDirectory().getAbsolutePath());
-		}
-
-		return file;
-
+		return chooseFile(parent, OptionSet.exportBook,
+				  "LastExportBookPath");
 	}
 
 	public File chooseChartSaveAsPngFile(Component parent) {
-
-		File file = null;
-
-		setSelectedFile(new File(""));
-		String path = applicationConfig.getLastChartSaveAsPngPath();
-		if (path != null) {
-			setCurrentDirectory(new File(path));
-		}
-
-		file = chooseFileForWrite(parent, OptionSet.chartSaveAsPng);
-		if (file != null) {
-			applicationConfig.setLastChartSaveAsPngPath(getCurrentDirectory().getAbsolutePath());
-		}
-
-		return file;
-
+		return chooseFile(parent, OptionSet.chartSaveAsPng,
+				  "LastChartSaveAsPngPath");
 	}
 
 	public File chooseSaveMP5ConfigFile(Component parent) {
-
-		File file = null;
-
-		setSelectedFile(new File(""));
-		String path = applicationConfig.getLastSaveMP5ConfigPath();
-		if (path != null) {
-			setCurrentDirectory(new File(path));
-		}
-
-		file = chooseFileForWrite(parent, OptionSet.saveMP5Config);
-		if (file != null) {
-			applicationConfig.setLastSaveMP5ConfigPath(getCurrentDirectory().getAbsolutePath());
-		}
-
-		return file;
-
+		return chooseFile(parent, OptionSet.saveMP5Config,
+				  "LastSaveMP5ConfigPath");
 	}
 
 	public File chooseSaveMP5SignalFile(Component parent) {
@@ -474,128 +347,42 @@ public class ViewerFileChooser extends JFileChooser {
 			}
 		}
 
-		file = chooseFileForWrite(parent, OptionSet.saveMP5Signal);
+		file = chooseFileForReadOrWrite(parent, OptionSet.saveMP5Signal);
 		if (file != null && resetDir) {
 			applicationConfig.setLastSaveMP5ConfigPath(getCurrentDirectory().getAbsolutePath());
 		}
 
 		return file;
-
 	}
 
 	public File chooseSaveDocument(Component parent, FileFilter[] filters) {
-
-		File file = null;
-
-		setSelectedFile(new File(""));
-		String path = applicationConfig.getLastSaveDocumentPath();
-		if (path != null) {
-			setCurrentDirectory(new File(path));
-		}
-		//XXX		OptionSet.saveDocument.fileFilters = filters;
-
-		file = chooseFileForWrite(parent, OptionSet.saveDocument);
-		if (file != null) {
-			applicationConfig.setLastSaveDocumentPath(getCurrentDirectory().getAbsolutePath());
-		}
-
-		return file;
-
+		return chooseFile(parent, OptionSet.saveDocument,
+				  "LastSaveDocumentPath");
 	}
 
 	public File chooseSaveTag(Component parent) {
-
-		File file = null;
-
-		setSelectedFile(new File(""));
-		String path = applicationConfig.getLastSaveTagPath();
-		if (path != null) {
-			setCurrentDirectory(new File(path));
-		}
-
-		file = chooseFileForWrite(parent, OptionSet.saveTag);
-		if (file != null) {
-			applicationConfig.setLastSaveTagPath(getCurrentDirectory().getAbsolutePath());
-		}
-
-		return file;
-
+		return chooseFile(parent, OptionSet.saveTag,
+				  "LastSaveTagPath");
 	}
 
 	public File chooseOpenTag(Component parent) {
-
-		File file = null;
-
-		setSelectedFile(new File(""));
-		String path = applicationConfig.getLastOpenTagPath();
-		if (path != null) {
-			setCurrentDirectory(new File(path));
-		}
-
-		file = chooseFileForRead(parent, OptionSet.openTag);
-		if (file != null) {
-			applicationConfig.setLastOpenTagPath(getCurrentDirectory().getAbsolutePath());
-		}
-
-		return file;
-
+		return chooseFile(parent, OptionSet.openTag,
+				  "LastOpenTagPath");
 	}
 
 	public File chooseExpertTag(Component parent) {
-
-		File file = null;
-
-		setSelectedFile(new File(""));
-		String path = applicationConfig.getLastExpertTagPath();
-		if (path != null) {
-			setCurrentDirectory(new File(path));
-		}
-
-		file = chooseFileForRead(parent, OptionSet.expertTag);
-		if (file != null) {
-			applicationConfig.setLastExpertTagPath(getCurrentDirectory().getAbsolutePath());
-		}
-
-		return file;
-
+		return chooseFile(parent, OptionSet.expertTag,
+				  "LastExpertTagPath");
 	}
 
 	public File chooseImportTag(Component parent) {
-
-		File file = null;
-
-		setSelectedFile(new File(""));
-		String path = applicationConfig.getLastImportTagPath();
-		if (path != null) {
-			setCurrentDirectory(new File(path));
-		}
-
-		file = chooseFileForRead(parent, OptionSet.importTag);
-		if (file != null) {
-			applicationConfig.setLastImportTagPath(getCurrentDirectory().getAbsolutePath());
-		}
-
-		return file;
-
+		return chooseFile(parent, OptionSet.importTag,
+				  "LastImportTagPath");
 	}
 
 	public File chooseExportTag(Component parent) {
-
-		File file = null;
-
-		setSelectedFile(new File(""));
-		String path = applicationConfig.getLastExportTagPath();
-		if (path != null) {
-			setCurrentDirectory(new File(path));
-		}
-
-		file = chooseFileForWrite(parent, OptionSet.exportTag);
-		if (file != null) {
-			applicationConfig.setLastExportTagPath(getCurrentDirectory().getAbsolutePath());
-		}
-
-		return file;
-
+		return chooseFile(parent, OptionSet.exportTag,
+				  "LastExportTagPath");
 	}
 
 	public File chooseReadXMLManifest(File directory, File fileSuggestion, Component parent) {
@@ -609,67 +396,25 @@ public class ViewerFileChooser extends JFileChooser {
 			setSelectedFile(new File(""));
 		}
 
-		file = chooseFileForRead(parent, OptionSet.readXMLManifest);
+		file = chooseFileForReadOrWrite(parent, OptionSet.readXMLManifest);
 
 		return file;
 
 	}
 
 	public File chooseSavePresetFile(Component parent) {
-
-		File file = null;
-
-		setSelectedFile(new File(""));
-		String path = applicationConfig.getLastPresetPath();
-		if (path != null) {
-			setCurrentDirectory(new File(path));
-		}
-
-		file = chooseFileForWrite(parent, OptionSet.savePreset);
-		if (file != null) {
-			applicationConfig.setLastPresetPath(getCurrentDirectory().getAbsolutePath());
-		}
-
-		return file;
-
+		return chooseFile(parent, OptionSet.savePreset,
+				  "LastPresetPath");
 	}
 
 	public File chooseLoadPresetFile(Component parent) {
-
-		File file = null;
-
-		setSelectedFile(new File(""));
-		String path = applicationConfig.getLastPresetPath();
-		if (path != null) {
-			setCurrentDirectory(new File(path));
-		}
-
-		file = chooseFileForRead(parent, OptionSet.loadPreset);
-		if (file != null) {
-			applicationConfig.setLastPresetPath(getCurrentDirectory().getAbsolutePath());
-		}
-
-		return file;
-
+		return chooseFile(parent, OptionSet.loadPreset,
+				  "LastPresetPath");
 	}
 
 	public File chooseArtifactProjectDirectory(Component parent) {
-
-		File file = null;
-
-		setSelectedFile(new File(""));
-		String path = applicationConfig.getLastArtifactProjectPath();
-		if (path != null) {
-			setCurrentDirectory(new File(path));
-		}
-
-		file = chooseFileForWrite(parent, OptionSet.artifactProjectPreset);
-		if (file != null) {
-			applicationConfig.setLastArtifactProjectPath(getCurrentDirectory().getAbsolutePath());
-		}
-
-		return file;
-
+		return chooseFile(parent, OptionSet.artifactProjectPreset,
+				  "LastArtifactProjectPath");
 	}
 
 	public File chooseExecutableFile(Component parent) {
@@ -686,41 +431,13 @@ public class ViewerFileChooser extends JFileChooser {
 	}
 
 	public File chooseBookFile(Component parent) {
-
-		File file = null;
-
-		setSelectedFile(new File(""));
-		String path = applicationConfig.getLastBookFilePath();
-		if (path != null) {
-			setCurrentDirectory(new File(path));
-		}
-
-		file = chooseFileForRead(parent, OptionSet.bookPreset);
-		if (file != null) {
-			applicationConfig.setLastBookFilePath(getCurrentDirectory().getAbsolutePath());
-		}
-
-		return file;
-
+		return chooseFile(parent, OptionSet.bookPreset,
+				  "LastBookFilePath");
 	}
 
 	public File chooseBookFileForWrite(Component parent) {
-
-		File file = null;
-
-		setSelectedFile(new File(""));
-		String path = applicationConfig.getLastBookFilePath();
-		if (path != null) {
-			setCurrentDirectory(new File(path));
-		}
-
-		file = chooseFileForWrite(parent, OptionSet.bookSavePreset);
-		if (file != null) {
-			applicationConfig.setLastBookFilePath(getCurrentDirectory().getAbsolutePath());
-		}
-
-		return file;
-
+		return chooseFile(parent, OptionSet.bookSavePreset,
+				  "LastBookFilePath");
 	}
 
 	public File chooseWorkingDirectory(Component parent, File currentDirectory) {
@@ -792,22 +509,8 @@ public class ViewerFileChooser extends JFileChooser {
 	}
 
 	public File chooseCodeFile(Component parent) {
-
-		File file = null;
-
-		setSelectedFile(new File(""));
-		String path = applicationConfig.getLastLibraryPath();
-		if (path != null) {
-			setCurrentDirectory(new File(path));
-		}
-
-		file = chooseFileForRead(parent, OptionSet.codeFilePreset);
-		if (file != null) {
-			applicationConfig.setLastLibraryPath(getCurrentDirectory().getAbsolutePath());
-		}
-
-		return file;
-
+		return chooseFile(parent, OptionSet.codeFilePreset,
+				  "LastLibraryPath");
 	}
 
 	public void setMessageSource(MessageSourceAccessor messageSource) {
@@ -861,6 +564,7 @@ public class ViewerFileChooser extends JFileChooser {
 		final boolean multiSelectionEnabled;
 		final int fileSelectionMode;
 		FileFilter[] fileFilters;
+		final boolean save;
 
 		OptionSet(String titleMessage, String okMessage,
 			  boolean acceptAllUsed, boolean multiSelectionEnabled,
@@ -871,6 +575,7 @@ public class ViewerFileChooser extends JFileChooser {
 			this.multiSelectionEnabled = multiSelectionEnabled;
 			this.fileSelectionMode = fileSelectionMode;
 			this.fileFilters = fileFilters;
+			this.save = okMessage.equals("save") || okMessage.equals("export");
 
 			logger.debug("added OptionSet: " + this);
 		}
