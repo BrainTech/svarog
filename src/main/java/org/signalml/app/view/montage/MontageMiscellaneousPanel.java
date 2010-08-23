@@ -75,7 +75,8 @@ public class MontageMiscellaneousPanel extends JPanel implements PropertyChangeL
 				public void focusLost(FocusEvent e) {
 					if (montage != null) {
 						String description = editDescriptionPanel.getTextPane().getText();
-						if (description == null || description.isEmpty() || Util.validateString(description)) {
+						// XXX: this doesn't look good
+						if (description == null || description.isEmpty()) {
 							montage.setDescription(description);
 						}
 					}

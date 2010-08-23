@@ -422,24 +422,22 @@ public abstract class Util {
 	}
 
 	/**
-	 * Returns true if every element of specified String is valid Unicode character.
+	 * Checks whether any of the characters of s are control characters.
 	 * @param s String to validate
-	 * @return true if String is valid
+	 * @return false if any of code points in this string are of
+	 * Unicode class Cc (control characters) or if s is obviously invalid unicode
 	 */
 	public static boolean validateString(String s) {
-
-		int cnt = s.length();
-		int code;
-		for (int i=0; i<cnt; i++) {
-			code = s.codePointAt(i);
-			// note the negation
-			if (!(code == 0x9 || code == 0xA || code == 0xD || (code >= 0x20 && code <= 0xD7FF) || (code >= 0xE000 && code <= 0xFFFD))) {
+		final int length = s.length();
+		for (int offset = 0; offset < length; ) {
+			final int codepoint = s.codePointAt(offset);
+			final int type = Character.getType(codepoint);
+			if (type == Character.CONTROL || type == Character.SURROGATE
+			    || type == Character.PRIVATE_USE)
 				return false;
-			}
+			offset += Character.charCount(codepoint);
 		}
-
 		return true;
-
 	}
 
 	/**

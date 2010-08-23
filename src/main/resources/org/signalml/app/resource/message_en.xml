@@ -1435,13 +1435,7 @@
 	<entry key="error.style.nameEmpty">Tag style name cannot be empty</entry>
 	<entry key="error.style.nameBadCharacters">Tag style name must not contain control characters</entry>
 	<entry key="error.style.nameDuplicate">Tag style name already used. Choose another.</entry>
-	<entry key="error.style.descriptionBadCharacters">Tag style description must not contain control characters</entry>
 	<entry key="error.style.keyStrokeDuplicate">Key already used on another style. Choose another.</entry>
-
-	<entry key="error.annotationBadChars">Annotation must not contain control characters</entry>
-	<entry key="error.descriptionBadChars">Description must not contain control characters</entry>
-
-	<entry key="error.descriptionBadChars">Description must not contain control characters</entry>
 
 	<entry key="error.invalidRawSignalXML">Invalid raw signal XML description</entry>
 

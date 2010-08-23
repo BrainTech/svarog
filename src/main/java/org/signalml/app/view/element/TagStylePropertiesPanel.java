@@ -627,25 +627,15 @@ public class TagStylePropertiesPanel extends JPanel {
 	}
 
 	public Errors validateChanges() {
-
 		Errors errors = new BindException(currentStyle, "data");
 		String name = getNameTextField().getText();
-		if (name == null || name.isEmpty()) {
+		if (name == null || name.isEmpty())
 			errors.rejectValue("name", "error.style.nameEmpty");
-		}
-		if (!Util.validateString(name)) {
-			errors.rejectValue("name", "error.style.nameBadCharacters");
-		}
 
-		String description = getDescriptionTextPane().getText();
-		if (description != null && !description.isEmpty()) {
-			if (!Util.validateString(description)) {
-				errors.rejectValue("description", "error.style.descriptionBadCharacters");
-			}
-		}
+		if (!Util.validateString(name))
+			errors.rejectValue("name", "error.style.nameBadCharacters");
 
 		return errors;
-
 	}
 
 	public void applyChanges() {

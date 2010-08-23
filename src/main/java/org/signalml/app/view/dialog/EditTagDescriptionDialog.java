@@ -66,19 +66,6 @@ public class EditTagDescriptionDialog extends AbstractDialog {
 	}
 
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
-		super.validateDialog(model, errors);
-
-		String description = textInfoPanel.getTextPane().getText();
-		if (description != null && !description.isEmpty()) {
-			if (!Util.validateString(description)) {
-				errors.rejectValue("description", "error.descriptionnBadChars");
-			}
-		}
-
-	}
-
-	@Override
 	protected void initialize() {
 		setTitle(messageSource.getMessage("tagDescription.title"));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/edittagdescription.png"));

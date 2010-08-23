@@ -59,19 +59,6 @@ public class EditTagAnnotationDialog extends AbstractDialog {
 	}
 
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
-		super.validateDialog(model, errors);
-
-		String annotation = textPanePanel.getTextPane().getText();
-		if (annotation != null && !annotation.isEmpty()) {
-			if (!Util.validateString(annotation)) {
-				errors.rejectValue("annotation", "error.annotationBadChars");
-			}
-		}
-
-	}
-
-	@Override
 	protected void initialize() {
 		setTitle(messageSource.getMessage("tagAnnotation.title"));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/editannotation.png"));

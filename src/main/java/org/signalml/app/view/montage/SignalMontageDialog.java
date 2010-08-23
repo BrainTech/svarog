@@ -232,14 +232,6 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 		if (currentMontage.getMontageChannelCount() == 0) {
 			errors.reject("error.noChannelInMontage");
 		}
-
-		String description = miscellaneousPanel.getEditDescriptionPanel().getTextPane().getText();
-		if (description != null && !description.isEmpty()) {
-			if (!Util.validateString(description)) {
-				errors.rejectValue("montage.description", "error.descriptionBadChars");
-			}
-		}
-
 	}
 
 	@Override
