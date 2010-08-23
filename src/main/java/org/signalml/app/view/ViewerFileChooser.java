@@ -405,65 +405,64 @@ public class ViewerFileChooser extends JFileChooser {
 	}
 
 	protected enum OptionSet {
-		consoleSaveAsText(Operation.save, "filechooser.consoleSaveAsText.title",
+		consoleSaveAsText(Operation.save,
 				  "LastSamplesSaveAsTextPath", "save"),
-		tableSaveAsText(Operation.save, "filechooser.tableSaveAsText.title",
+		tableSaveAsText(Operation.save,
 				"LastTableSaveAsTextPath", "save"),
-		samplesSaveAsText(Operation.save, "filechooser.samplesSaveAsText.title",
+		samplesSaveAsText(Operation.save,
 				  "LastSamplesSaveAsTextFile", "save"),
-		samplesSaveAsFloat(Operation.save, "filechooser.samplesSaveAsFloat.title",
+		samplesSaveAsFloat(Operation.save,
 				   "LastSamplesSaveAsFloatPath", "save"),
-		chartSaveAsPng(Operation.save, "filechooser.chartSaveAsPng.title",
+		chartSaveAsPng(Operation.save,
 			       "LastChartSaveAsPngPath", "save"),
-		saveMP5Config(Operation.save, "filechooser.saveMP5Config.title",
+		saveMP5Config(Operation.save,
 			      "LastSaveMP5ConfigPath", "save"),
-		saveMP5Signal(Operation.save, "filechooser.saveMP5Signal.title",
+		saveMP5Signal(Operation.save,
 			      "LastSaveMP5ConfigPath" /* sic */, "save"),
-		saveDocument(Operation.save, "filechooser.saveDocument.title",
+		saveDocument(Operation.save,
 			     "LastSaveDocumentPath", "save"),
-		saveTag(Operation.save, "filechooser.saveTag.title",
+		saveTag(Operation.save,
 			"LastSaveTagPath", "save"),
-		openTag(Operation.open, "filechooser.openTag.title",
+		openTag(Operation.open,
 			"LastOpenTagPath", "open"),
-		expertTag(Operation.open, "filechooser.expertTag.title",
+		expertTag(Operation.open,
 			  "LastExpertTagPath", "choose"),
-		importTag(Operation.open, "filechooser.importTag.title",
+		importTag(Operation.open,
 			  "LastImportTagPath", "import"),
-		exportTag(Operation.save, "filechooser.exportTag.title",
+		exportTag(Operation.save,
 			  "LastExportTagPath", "export"),
-		savePreset(Operation.save, "filechooser.savePreset.title",
+		savePreset(Operation.save,
 			   "LastPresetPath", "save"),
-		loadPreset(Operation.open, "filechooser.loadPreset.title",
+		loadPreset(Operation.open,
 			   "LastPresetPath", "load"),
-		executablePreset(Operation.open, "filechooser.executablePreset.title",
+		executablePreset(Operation.open,
 				 null, "choose"),
-		bookPreset(Operation.open, "filechooser.bookFilePreset.title",
+		bookPreset(Operation.open,
 			   "LastBookFilePath", "choose"),
-		bookSavePreset(Operation.save, "filechooser.bookFilePreset.title",
+		bookSavePreset(Operation.save,
 			       "LastBookFilePath", "save"),
-		artifactProjectPreset(Operation.usedir, "filechooser.artifactProjectPreset.title",
+		artifactProjectPreset(Operation.usedir,
 				      "LastArtifactProjectPath", "choose",
 				      false, false, FILES_ONLY),
-		exportSignal(Operation.save, "filechooser.exportSignal.title",
+		exportSignal(Operation.save,
 			     "LastExportSignalPath", "export"),
-		exportBook(Operation.save, "filechooser.exportBook.title",
+		exportBook(Operation.save,
 			   "LastExportBookPath", "export"),
-		readXMLManifest(Operation.open, "filechooser.readXMLManifest.title",
+		readXMLManifest(Operation.open,
 				null, "read"),
-		workingDirectoryPreset(Operation.usedir, "filechooser.workingDirectoryPreset.title",
+		workingDirectoryPreset(Operation.usedir,
 				       null, "choose",
 				       false, false, DIRECTORIES_ONLY),
-		classPathDirectoryPreset(Operation.open, "filechooser.classPathDirectoryPreset.title",
+		classPathDirectoryPreset(Operation.open,
 					 null, "choose",
 					 false, true, DIRECTORIES_ONLY),
-		jarFilePreset(Operation.open, "filechooser.jarFilePreset.title",
+		jarFilePreset(Operation.open,
 			      null, "choose",
 			      true, true, FILES_ONLY),
-		codeFilePreset(Operation.open, "filechooser.codeFilePreset.title",
+		codeFilePreset(Operation.open,
 			       "LastLibraryPath" /* sic */, "choose");
 
 		final Operation operation;
-		final String titleMessage;
 		final String okButtonMessage;
 		String title, okButton; /* set through initializer */
 		final String path;
@@ -472,12 +471,10 @@ public class ViewerFileChooser extends JFileChooser {
 		final int fileSelectionMode;
 		FileFilter[] fileFilters;
 
-		OptionSet(Operation operation,
-			  String titleMessage, String okMessage, String path,
+		OptionSet(Operation operation, String okMessage, String path,
 			  boolean acceptAllUsed, boolean multiSelectionEnabled,
 			  int fileSelectionMode){
 			this.operation = operation;
-			this.titleMessage = titleMessage;
 			this.okButtonMessage = okMessage;
 			this.path = path;
 			this.acceptAllUsed = acceptAllUsed;
@@ -487,9 +484,8 @@ public class ViewerFileChooser extends JFileChooser {
 			logger.debug("added OptionSet: " + this + " / " + operation.getClass().getSimpleName());;
 		}
 
-		OptionSet(Operation operation,
-			  String titleMessage, String okMessage, String path){
-			this(operation, titleMessage, okMessage, path, true, false, FILES_ONLY);
+		OptionSet(Operation operation, String okMessage, String path){
+			this(operation, okMessage, path, true, false, FILES_ONLY);
 		}
 
 		void use(ViewerFileChooser chooser) {
@@ -505,7 +501,8 @@ public class ViewerFileChooser extends JFileChooser {
 		}
 
 		void initialize(MessageSourceAccessor messageSource) {
-			this.title = messageSource.getMessage(titleMessage);
+			String name = "filechooser." + this.name() + ".title";
+			this.title = messageSource.getMessage(name);
 			this.okButton = messageSource.getMessage(okButtonMessage);
 		}
 
