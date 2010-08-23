@@ -812,5 +812,12 @@ public abstract class Util {
 		return sdf.format(cal.getTime());
 	}
 
-
+	/**
+	 * Return a new string with the first letter capitalized.
+	 * @param string the string to capitalize
+	 * @return string with the first letter possibly changed
+	 */
+	public static String capitalize(String string) {
+		return string.substring(0, 1).toUpperCase() + string.substring(1);
+	}
 }

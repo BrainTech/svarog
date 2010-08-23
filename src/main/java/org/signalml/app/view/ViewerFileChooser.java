@@ -19,12 +19,14 @@ import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.view.dialog.OptionPane;
 import org.springframework.context.support.MessageSourceAccessor;
+import static org.signalml.util.Util.capitalize;
 
 /** ViewerFileChooser
  *
  *	Not thread safe! Use from event dispatcher thread only!
  *
- * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
+ * @author Michał Dobaczewski © 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
+ * @author Zbigniew Jędrzejewski-Szmek © 2010
  */
 public class ViewerFileChooser extends JFileChooser {
 
@@ -405,62 +407,40 @@ public class ViewerFileChooser extends JFileChooser {
 	}
 
 	protected enum OptionSet {
-		consoleSaveAsText(Operation.save,
-				  "LastSamplesSaveAsTextPath", "save"),
-		tableSaveAsText(Operation.save,
-				"LastTableSaveAsTextPath", "save"),
-		samplesSaveAsText(Operation.save,
-				  "LastSamplesSaveAsTextFile", "save"),
-		samplesSaveAsFloat(Operation.save,
-				   "LastSamplesSaveAsFloatPath", "save"),
-		chartSaveAsPng(Operation.save,
-			       "LastChartSaveAsPngPath", "save"),
-		saveMP5Config(Operation.save,
-			      "LastSaveMP5ConfigPath", "save"),
-		saveMP5Signal(Operation.save,
-			      "LastSaveMP5ConfigPath" /* sic */, "save"),
-		saveDocument(Operation.save,
-			     "LastSaveDocumentPath", "save"),
-		saveTag(Operation.save,
-			"LastSaveTagPath", "save"),
-		openTag(Operation.open,
-			"LastOpenTagPath", "open"),
-		expertTag(Operation.open,
-			  "LastExpertTagPath", "choose"),
-		importTag(Operation.open,
-			  "LastImportTagPath", "import"),
-		exportTag(Operation.save,
-			  "LastExportTagPath", "export"),
-		savePreset(Operation.save,
-			   "LastPresetPath", "save"),
-		loadPreset(Operation.open,
-			   "LastPresetPath", "load"),
-		executablePreset(Operation.open,
-				 null, "choose"),
-		bookPreset(Operation.open,
-			   "LastBookFilePath", "choose"),
-		bookSavePreset(Operation.save,
-			       "LastBookFilePath", "save"),
-		artifactProjectPreset(Operation.usedir,
-				      "LastArtifactProjectPath", "choose",
+		consoleSaveAsText(Operation.save, "save", "LastSamplesSaveAsTextPath"),
+		tableSaveAsText(Operation.save, "save"),
+		samplesSaveAsText(Operation.save, "save"),
+		samplesSaveAsFloat(Operation.save, "save"),
+		chartSaveAsPng(Operation.save, "save"),
+		saveMP5Config(Operation.save, "save"),
+		saveMP5Signal(Operation.save, "save", "LastSaveMP5ConfigPath"),
+		saveDocument(Operation.save, "save"),
+		saveTag(Operation.save, "save"),
+		openTag(Operation.open, "open"),
+		expertTag(Operation.open, "choose"),
+		importTag(Operation.open, "import"),
+		exportTag(Operation.save, "export"),
+		savePreset(Operation.save, "save"),
+		loadPreset(Operation.open, "load"),
+		executablePreset(Operation.open, "choose", null),
+		bookPreset(Operation.open, "choose", "LastBookFilePath"),
+		bookSavePreset(Operation.save, "save", "LastBookFilePath"),
+		artifactProjectPreset(Operation.usedir, "choose",
+				      "LastArtifactProjectPath",
 				      false, false, FILES_ONLY),
-		exportSignal(Operation.save,
-			     "LastExportSignalPath", "export"),
-		exportBook(Operation.save,
-			   "LastExportBookPath", "export"),
-		readXMLManifest(Operation.open,
-				null, "read"),
+		exportSignal(Operation.save, "export"),
+		exportBook(Operation.save, "export"),
+		readXMLManifest(Operation.open, "read", null),
 		workingDirectoryPreset(Operation.usedir,
-				       null, "choose",
+				       "choose", null,
 				       false, false, DIRECTORIES_ONLY),
 		classPathDirectoryPreset(Operation.open,
-					 null, "choose",
+					 "choose", null,
 					 false, true, DIRECTORIES_ONLY),
 		jarFilePreset(Operation.open,
-			      null, "choose",
+			      "choose", null,
 			      true, true, FILES_ONLY),
-		codeFilePreset(Operation.open,
-			       "LastLibraryPath" /* sic */, "choose");
+		codeFilePreset(Operation.open, "choose", "LastLibraryPath");
 
 		final Operation operation;
 		final String okButtonMessage;
@@ -471,11 +451,13 @@ public class ViewerFileChooser extends JFileChooser {
 		final int fileSelectionMode;
 		FileFilter[] fileFilters;
 
-		OptionSet(Operation operation, String okMessage, String path,
+		private OptionSet(Operation operation, String okMessage, String path,
 			  boolean acceptAllUsed, boolean multiSelectionEnabled,
-			  int fileSelectionMode){
+			  int fileSelectionMode) {
 			this.operation = operation;
 			this.okButtonMessage = okMessage;
+			if ("_gen".equals(path))
+				path = "Last" + capitalize(this.name()) + "Path";
 			this.path = path;
 			this.acceptAllUsed = acceptAllUsed;
 			this.multiSelectionEnabled = multiSelectionEnabled;
@@ -483,9 +465,14 @@ public class ViewerFileChooser extends JFileChooser {
 			this.fileFilters = fileFilters;
 			logger.debug("added OptionSet: " + this + " / " + operation.getClass().getSimpleName());;
 		}
-
-		OptionSet(Operation operation, String okMessage, String path){
+		private OptionSet(Operation operation, String okMessage, String path) {
 			this(operation, okMessage, path, true, false, FILES_ONLY);
+		}
+		private OptionSet(Operation operation, String okMessage) {
+			this(operation, okMessage, "_gen");
+			/* note: "_gen" is used instead of e.g. null,
+			   because  null is used for something else
+			*/
 		}
 
 		void use(ViewerFileChooser chooser) {
