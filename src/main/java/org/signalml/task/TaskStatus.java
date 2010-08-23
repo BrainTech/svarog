@@ -26,7 +26,7 @@ public enum TaskStatus implements Serializable, MessageSourceResolvable {
 	 */
 	ACTIVE_WAITING(90),
 
-	/** The task is executing, but requesting to be suspended.
+	/** The task is executing, but has been signalled to suspend.
 	 */
 	REQUESTING_SUSPEND(100),
 
@@ -34,7 +34,7 @@ public enum TaskStatus implements Serializable, MessageSourceResolvable {
 	 */
 	SUSPENDED(50),
 
-	/** The task is executing but requesting to be aborted.
+	/** The task is executing, but has been signalled to abort.
 	 */
 	REQUESTING_ABORT(100),
 
@@ -145,7 +145,11 @@ public enum TaskStatus implements Serializable, MessageSourceResolvable {
 		return (this == NEW);
 	}
 
-	/** Returns true if the status is ACTIVE, ACTIVE_WAITING, REQUESTING_ABORT or REQUESTING_SUSPEND.
+	/** Check whether the task can be requested to abort. This is
+	 * possible if the task is or will soon be active or suspended.
+	 * @return true if the task can be aborted (is ACTIVE,
+	 * ACTIVE_WAITING, REQUESTING_SUSPEND or SUSPENDED)
+	 * @see org.signalml.task.LocalTask#abort
 	 */
 	public boolean isAbortable() {
 		return (this == ACTIVE || this == ACTIVE_WAITING || this == REQUESTING_SUSPEND || this == SUSPENDED);
