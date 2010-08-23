@@ -129,9 +129,7 @@ public class ViewerFileChooser extends JFileChooser {
 		return okFiles;
 	}
 
-	public File chooseFile(Component parent,
-			       OptionSet optionset,
-			       File fileSuggestion) {
+	public File chooseFile(Component parent, OptionSet optionset, File fileSuggestion) {
 		String path = applicationConfig.getPath(optionset.path);
 		if (path != null)
 			setCurrentDirectory(new File(path));
@@ -146,8 +144,12 @@ public class ViewerFileChooser extends JFileChooser {
 				getCurrentDirectory().getAbsolutePath());
 		return file;
 	}
-	public File chooseFile(Component parent,
-			       OptionSet optionset) {
+	public File chooseFile(Component parent, OptionSet optionset,
+			       File directory, File fileSuggestion) {
+		setCurrentDirectory(directory);
+		return chooseFile(parent, optionset, fileSuggestion);
+	}
+	public File chooseFile(Component parent, OptionSet optionset) {
 		return chooseFile(parent, optionset, null);
 	}
 
@@ -239,20 +241,8 @@ public class ViewerFileChooser extends JFileChooser {
 	}
 
 	public File chooseReadXMLManifest(File directory, File fileSuggestion, Component parent) {
-
-		File file = null;
-
-		setCurrentDirectory(directory);
-		if (fileSuggestion != null && fileSuggestion.exists()) {
-			setSelectedFile(fileSuggestion);
-		} else {
-			setSelectedFile(new File(""));
-		}
-
-		file = chooseForReadOrWrite(parent, OptionSet.readXMLManifest);
-
-		return file;
-
+		return chooseFile(parent, OptionSet.readXMLManifest,
+				  fileSuggestion, directory);
 	}
 
 	public File chooseSavePresetFile(Component parent) {
