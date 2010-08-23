@@ -80,7 +80,7 @@ public class ViewerFileChooser extends JFileChooser {
 		if (Pattern.matches(".*[Ww]indows.*", System.getProperty("os.name")))
 			OptionSet.executablePreset.setFilters(exe);
 
-		OptionSet.bookPreset.setFilters(book);
+		OptionSet.bookFilePreset.setFilters(book);
 		OptionSet.bookSavePreset.setFilters(book);
 
 		OptionSet.jarFilePreset.setFilters(jar);
@@ -275,7 +275,7 @@ public class ViewerFileChooser extends JFileChooser {
 	}
 
 	public File chooseBookFile(Component parent) {
-		return chooseFile(parent, OptionSet.bookPreset);
+		return chooseFile(parent, OptionSet.bookFilePreset);
 	}
 
 	public File chooseBookFileForWrite(Component parent) {
@@ -414,7 +414,7 @@ public class ViewerFileChooser extends JFileChooser {
 		savePreset(Operation.save, "save"),
 		loadPreset(Operation.open, "load"),
 		executablePreset(Operation.open, "choose", null),
-		bookPreset(Operation.open, "choose", "LastBookFilePath"),
+		bookFilePreset(Operation.open, "choose", "LastBookFilePath"),
 		bookSavePreset(Operation.save, "save", "LastBookFilePath"),
 		artifactProjectPreset(Operation.usedir, "choose",
 				      "LastArtifactProjectPath",
