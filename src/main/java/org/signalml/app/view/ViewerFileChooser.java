@@ -196,9 +196,6 @@ public class ViewerFileChooser extends JFileChooser {
 	}
 
 	public File chooseSaveMP5SignalFile(Component parent) {
-
-		File file = null;
-
 		File selFile = getSelectedFile();
 		boolean resetDir = false;
 		if (selFile == null || selFile.getName().isEmpty()) {
@@ -209,10 +206,9 @@ public class ViewerFileChooser extends JFileChooser {
 			}
 		}
 
-		file = chooseForReadOrWrite(parent, OptionSet.saveMP5Signal);
-		if (file != null && resetDir) {
+		File file = chooseForReadOrWrite(parent, OptionSet.saveMP5Signal);
+		if (file != null && resetDir)
 			applicationConfig.setLastSaveMP5ConfigPath(getCurrentDirectory().getAbsolutePath());
-		}
 
 		return file;
 	}
@@ -287,9 +283,6 @@ public class ViewerFileChooser extends JFileChooser {
 	}
 
 	public File chooseWorkingDirectory(Component parent, File currentDirectory) {
-
-		File file = null;
-
 		boolean dirSet = false;
 		if (currentDirectory != null) {
 			if (currentDirectory.exists()) {
@@ -310,10 +303,8 @@ public class ViewerFileChooser extends JFileChooser {
 			setCurrentDirectory(new File(System.getProperty("user.dir")));
 		}
 
-		file = chooseForReadOrWrite(parent, OptionSet.workingDirectoryPreset);
-
+		File file = chooseForReadOrWrite(parent, OptionSet.workingDirectoryPreset);
 		return file;
-
 	}
 
 	public File[] chooseClassPathDirectories(Component parent) {
