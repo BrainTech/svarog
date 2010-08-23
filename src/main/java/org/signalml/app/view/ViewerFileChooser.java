@@ -105,72 +105,26 @@ public class ViewerFileChooser extends JFileChooser {
 		} while (true);
 	}
 
-	public File[] chooseFilesForRead(Component parent, OptionSet options) {
-
-		File[] files = null;
-
+	public File[] chooseFilesOrDirectoriesForRead(Component parent, OptionSet options) {
 		int result = showDialog(parent, options);
-		if (result == APPROVE_OPTION) {
-			files = getSelectedFiles();
-		} else {
+		if (result != APPROVE_OPTION)
 			return null;
-		}
 
+		File[] files = getSelectedFiles();
 		File[] okFiles = new File[files.length];
 		int cnt = 0;
 
 		for (File file : files) {
-
-			if (!file.exists() || !file.canRead()) {
-
-				OptionPane.showFileNotFound(parent, file);
+			boolean good = options.operation.verify(parent, file);
+			if (!good)
 				continue;
 
-			} else {
-				okFiles[cnt] = file;
-				cnt++;
-			}
-
+			okFiles[cnt] = file;
+			cnt++;
 		}
 
 		okFiles = Arrays.copyOf(okFiles, cnt);
-
 		return okFiles;
-
-	}
-
-	public File[] chooseDirectoriesForRead(Component parent, OptionSet options) {
-
-		File[] files = null;
-
-		int result = showDialog(parent, options);
-		if (result == APPROVE_OPTION) {
-			files = getSelectedFiles();
-		} else {
-			return null;
-		}
-
-		File[] okFiles = new File[files.length];
-		int cnt = 0;
-
-		for (File file : files) {
-
-			if (!file.exists() || !file.isDirectory() || !file.canRead()) {
-
-				OptionPane.showDirectoryNotFound(parent, file);
-				continue;
-
-			} else {
-				okFiles[cnt] = file;
-				cnt++;
-			}
-
-		}
-
-		okFiles = Arrays.copyOf(okFiles, cnt);
-
-		return okFiles;
-
 	}
 
 	public File chooseFile(Component parent,
@@ -193,6 +147,18 @@ public class ViewerFileChooser extends JFileChooser {
 	public File chooseFile(Component parent,
 			       OptionSet optionset, String savename) {
 		return chooseFile(parent, optionset, savename, null);
+	}
+
+	public File[] chooseFiles(Component parent, OptionSet options) {
+		setSelectedFile(new File(""));
+		String path = applicationConfig.getLastLibraryPath();
+		if (path != null)
+			setCurrentDirectory(new File(path));
+
+		File[] files = chooseFilesOrDirectoriesForRead(parent, options);
+		if (files != null)
+			applicationConfig.setLastLibraryPath(getCurrentDirectory().getAbsolutePath());
+		return files;
 	}
 
 	public File chooseConsoleSaveAsTextFile(Component parent) {
@@ -367,41 +333,11 @@ public class ViewerFileChooser extends JFileChooser {
 	}
 
 	public File[] chooseClassPathDirectories(Component parent) {
-
-		File[] files = null;
-
-		setSelectedFile(new File(""));
-		String path = applicationConfig.getLastLibraryPath();
-		if (path != null) {
-			setCurrentDirectory(new File(path));
-		}
-
-		files = chooseDirectoriesForRead(parent, OptionSet.classPathDirectoryPreset);
-		if (files != null) {
-			applicationConfig.setLastLibraryPath(getCurrentDirectory().getAbsolutePath());
-		}
-
-		return files;
-
+		return chooseFiles(parent, OptionSet.classPathDirectoryPreset);
 	}
 
 	public File[] chooseJarFiles(Component parent) {
-
-		File[] files = null;
-
-		setSelectedFile(new File(""));
-		String path = applicationConfig.getLastLibraryPath();
-		if (path != null) {
-			setCurrentDirectory(new File(path));
-		}
-
-		files = chooseFilesForRead(parent, OptionSet.jarFilePreset);
-		if (files != null) {
-			applicationConfig.setLastLibraryPath(getCurrentDirectory().getAbsolutePath());
-		}
-
-		return files;
-
+		return chooseFiles(parent, OptionSet.classPathDirectoryPreset);
 	}
 
 	public File chooseCodeFile(Component parent) {
