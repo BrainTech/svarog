@@ -10,9 +10,9 @@ import java.util.Collections;
 import java.util.List;
 
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
-import org.signalml.domain.montage.filter.predefined.BandPassSampleFilter;
 import org.signalml.domain.montage.filter.predefined.HighPassSampleFilter;
 import org.signalml.domain.montage.filter.predefined.LowPassSampleFilter;
+
 
 /** AbstractSignalTypeConfigurer
  *
@@ -22,7 +22,6 @@ import org.signalml.domain.montage.filter.predefined.LowPassSampleFilter;
 public abstract class AbstractSignalTypeConfigurer implements SignalTypeConfigurer {
 
 	private static final LowPassSampleFilter lowPassSampleFilter = new LowPassSampleFilter();
-	private static final BandPassSampleFilter bandPassSampleFilter = new BandPassSampleFilter();
 	private static final HighPassSampleFilter highPassSampleFilter = new HighPassSampleFilter();
 
 	private static final List<SampleFilterDefinition> predefinedFilters = getAllPredefinedFilters();
@@ -30,7 +29,6 @@ public abstract class AbstractSignalTypeConfigurer implements SignalTypeConfigur
 	private static List<SampleFilterDefinition> getAllPredefinedFilters() {
 		ArrayList<SampleFilterDefinition> filters = new ArrayList<SampleFilterDefinition>();
 		filters.add( lowPassSampleFilter );
-		filters.add( bandPassSampleFilter );
 		filters.add( highPassSampleFilter );
 				
 		return Collections.unmodifiableList(filters);

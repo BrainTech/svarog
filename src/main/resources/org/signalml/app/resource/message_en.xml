@@ -71,13 +71,11 @@
 	<entry key="fftFilter">FFT filter</entry>
 	<entry key="fftFilter.effect">{0}</entry>
 
-	<entry key="sampleFilter.td.lowPass">Low pass filter (6th order 0-20 Hz)</entry>
-	<entry key="sampleFilter.td.bandPass">Band pass filter (6th order 10-30 Hz)</entry>
-	<entry key="sampleFilter.td.highPass">High pass filter (6th order 20-4000 Hz)</entry>
+	<entry key="sampleFilter.td.lowPass">Low pass filter (5th order 0-2 Hz)</entry>
+	<entry key="sampleFilter.td.highPass">High pass filter (5th order 4-... Hz)</entry>
 
-	<entry key="sampleFilter.td.lowPassEffect">Low pass filter ({0} pass 6th order 0-20 Hz)</entry>
-	<entry key="sampleFilter.td.bandPassEffect">Band pass filter ({0} pass 6th order 10-30 Hz)</entry>
-	<entry key="sampleFilter.td.highPassEffect">High pass filter ({0} pass 6th order 20-4000 Hz)</entry>
+	<entry key="sampleFilter.td.lowPassEffect">Low pass filter ({0} pass 6th order 0-2 Hz)</entry>
+	<entry key="sampleFilter.td.highPassEffect">High pass filter ({0} pass 6th order 4-.. Hz)</entry>
 
 	<entry key="signalSelectionType.page">Page</entry>
 	<entry key="signalSelectionType.block">Block</entry>
@@ -785,7 +783,7 @@
 
 	<entry key="montageFilters.addTimeDomainFilterTitle">Add time domain filter</entry>
 
-	<entry key="montageFilters.addFFTFilterTitle">Add filter</entry>
+	<entry key="montageFilters.addFFTFilterTitle">Add FFT filter</entry>
 
 	<entry key="montageFilters.passingFFTFilter">Initially passing filter</entry>
 	<entry key="montageFilters.stoppingFFTFilter">Initially stopping filter</entry>

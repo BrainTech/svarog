@@ -16,6 +16,7 @@ import org.signalml.domain.montage.MontageMismatchException;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
+import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 
 /** SampleFilter
  *
@@ -43,7 +44,7 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 			source.getSamples(channel, target, signalOffset, count, arrayOffset);
 		} else {
 			ListIterator<SampleFilterEngine> it = chain.listIterator(chain.size());
-			SampleFilterEngine last = it.previous();
+                        SampleFilterEngine last = it.previous();
 			last.getSamples(target, signalOffset, count, arrayOffset);
 		}
 		
@@ -121,6 +122,8 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 				
 		FFTSampleFilter[] summaryFFTFilters = new FFTSampleFilter[channelCount];
 		FFTSampleFilter fftFilter;
+
+                TimeDomainSampleFilter tdsFilter;
 		
 		int filterCount = montage.getSampleFilterCount();
 		SampleFilterDefinition[] definitions = new SampleFilterDefinition[filterCount];
@@ -150,6 +153,17 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 				}
 				
 			}
+                        else if(definitions[i] instanceof TimeDomainSampleFilter){
+                                tdsFilter = (TimeDomainSampleFilter) definitions[i];
+
+                                for( e=0; e<channelCount; e++)
+                                    if(!montage.isFilteringExcluded(i,e))
+                                        addFilter(
+                                          new TimeDomainSampleFilterEngine(
+                                              new ChannelSelectorSampleSource(source,e), tdsFilter),
+                                              e);
+                        }
+                        
 		}
 		
 		for( e=0; e<channelCount; e++ ) {
