@@ -422,18 +422,21 @@ public abstract class Util {
 	}
 
 	/**
-	 * Checks whether any of the characters of s are control characters.
+	 * Checks whether s looks like a valid unicode string and if
+	 * any of the characters of s are control characters.
+	 * This is a general sanity check, not enough for security
+	 * purposes, mainly useful to avoid display problems.
 	 * @param s String to validate
 	 * @return false if any of code points in this string are of
-	 * Unicode class Cc (control characters) or if s is obviously invalid unicode
+	 * Unicode class Cc (control characters) or s contains
+	 * truncated codepoints or the first code point is combining.
 	 */
 	public static boolean validateString(String s) {
 		final int length = s.length();
 		for (int offset = 0; offset < length; ) {
 			final int codepoint = s.codePointAt(offset);
-			final int type = Character.getType(codepoint);
-			if (type == Character.CONTROL || type == Character.SURROGATE
-			    || type == Character.PRIVATE_USE)
+			if ((offset == 0 && !Character.isJavaIdentifierStart(codepoint))
+			    || (offset > 0 && !Character.isJavaIdentifierPart(codepoint)))
 				return false;
 			offset += Character.charCount(codepoint);
 		}
