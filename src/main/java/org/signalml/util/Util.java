@@ -435,9 +435,12 @@ public abstract class Util {
 		final int length = s.length();
 		for (int offset = 0; offset < length; ) {
 			final int codepoint = s.codePointAt(offset);
-			if ((offset == 0 && !Character.isJavaIdentifierStart(codepoint))
-			    || (offset > 0 && !Character.isJavaIdentifierPart(codepoint)))
-				return false;
+			boolean valid =
+			    Character.isWhitespace(codepoint)
+			    || (offset == 0 && Character.isJavaIdentifierStart(codepoint))
+			    || (offset > 0 && Character.isJavaIdentifierPart(codepoint));
+			if (!valid)
+			    return false;
 			offset += Character.charCount(codepoint);
 		}
 		return true;
