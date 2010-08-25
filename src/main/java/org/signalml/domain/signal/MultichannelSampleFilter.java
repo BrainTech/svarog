@@ -1,4 +1,4 @@
-/* SampleFilter.java created 2007-09-24
+/* SampleFilter.java created 2007-09-24 modified 2010-08-25
  * 
  */
 
@@ -122,76 +122,53 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 		}
 		
 		int channelCount = montage.getMontageChannelCount();
+                int filterCount = montage.getSampleFilterCount();
+                SampleFilterDefinition[] definitions = new SampleFilterDefinition[filterCount];
 				
-		FFTSampleFilter[] summaryFFTFilters = new FFTSampleFilter[channelCount];
 		FFTSampleFilter fftFilter;
-
                 TimeDomainSampleFilter tdsFilter;
+                LinkedList<SampleFilterEngine> chain;
+                SampleSource input;//input for the next filter in the list
 		
-		int filterCount = montage.getSampleFilterCount();
-		SampleFilterDefinition[] definitions = new SampleFilterDefinition[filterCount];
 		int i;
 		int e;
-		Iterator<Range> it;
-                Range range;
 
 		for( i=0; i<filterCount; i++ ) {
 			definitions[i] = montage.getSampleFilterAt(i);
 			if( definitions[i] instanceof FFTSampleFilter ) {
-                            //sums up all FFT filters
-
+                            
 				fftFilter = (FFTSampleFilter) definitions[i];
-				it = fftFilter.getRangeIterator();
-				while( it.hasNext() ) {
-					range = it.next();
-					
-					for( e=0; e<channelCount; e++ ) {
-						if( !montage.isFilteringExcluded(i, e) ) {
-							if( summaryFFTFilters[e] == null ) {
-								summaryFFTFilters[e] = new FFTSampleFilter(true);
-							}
-							summaryFFTFilters[e].setRange(range, true);
-						}
-					}					
-					
-				}
 				
+				for( e=0; e<channelCount; e++)
+                                    if(!montage.isFilteringExcluded(i,e)){
+                                        chain = chains.get(e);
+
+                                        if(chain.isEmpty())
+                                            input=new ChannelSelectorSampleSource(source,e);
+                                        else
+                                            input=chain.getLast();
+
+                                        addFilter(new FFTSampleFilterEngine(input, fftFilter ), e);
+                                    }
 			}
                         else if(definitions[i] instanceof TimeDomainSampleFilter){
                                 tdsFilter = (TimeDomainSampleFilter) definitions[i];
 
                                 for( e=0; e<channelCount; e++)
                                     if(!montage.isFilteringExcluded(i,e)){
-                                        LinkedList<SampleFilterEngine> chain = chains.get(e);
-                                        if(chain.isEmpty()){
-                                            addFilter(
-                                              new TimeDomainSampleFilterEngine(
-                                              new ChannelSelectorSampleSource(source,e), tdsFilter),
-                                              e);
-                                        }
-                                        else{
-                                            //get last filter engine
-                                            ListIterator<SampleFilterEngine> iter = chain.listIterator(chain.size());
-                                            SampleFilterEngine last = iter.previous();
-//                                            last.getSamples(target, signalOffset, count, arrayOffset);
+                                        chain = chains.get(e);
 
-                                            addFilter(
-                                              new TimeDomainSampleFilterEngine(
-                                              last, tdsFilter),
-                                              e);
-                                        }
+                                        if(chain.isEmpty())
+                                            input=new ChannelSelectorSampleSource(source,e);
+                                        else
+                                            input=chain.getLast();
 
+                                        addFilter(new TimeDomainSampleFilterEngine(input, tdsFilter),e);
                                     }
                         
                         }
                 }
-		
-		for( e=0; e<channelCount; e++ ) {
-			if( summaryFFTFilters[e] != null ) {
-				addFilter( new FFTSampleFilterEngine( new ChannelSelectorSampleSource(source,e), summaryFFTFilters[e] ), e);
-			}
-		}
-		
+				
 	}
 					
 }
