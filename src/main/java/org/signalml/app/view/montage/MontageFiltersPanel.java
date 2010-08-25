@@ -46,8 +46,6 @@ import org.signalml.app.view.element.ResolvableComboBox;
 import java.util.Collection;
 import org.signalml.app.util.SwingUtils;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
-import org.signalml.domain.montage.filter.predefined.HighPassSampleFilter;
-import org.signalml.domain.montage.filter.predefined.LowPassSampleFilter;
 
 /** MontageFiltersPanel
  *
@@ -426,13 +424,9 @@ public class MontageFiltersPanel extends JPanel {
 
                    	int index = getTimeDomainFilterTypeComboBox().getSelectedIndex();
 
-                        TimeDomainSampleFilter filter;
-                        if(index==0)
-                            filter= new LowPassSampleFilter();
-                        else
-                            filter=new HighPassSampleFilter();
+                        TimeDomainSampleFilter filter=(TimeDomainSampleFilter)montage.getSignalTypeConfigurer().getPredefinedFilterAt(index);
 
-			montage.addSampleFilter(filter);
+                        montage.addSampleFilter(filter);
 						
 		}
 	

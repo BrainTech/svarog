@@ -23,13 +23,13 @@ public class HighPassSampleFilter extends TimeDomainSampleFilter {
 
 		messageCodes = new String[] { "sampleFilter.td.highPass" };
 		effectCodes = new String[] { "sampleFilter.td.highPassEffect" };
-		defaultEffectDescription = "4-.. Hz";
+		defaultEffectDescription = "8-.. Hz";
 
                 /*
                  a,b generated in python:
-                 b,a = signal.iirdesign(wp = 0.125, ws=0.0625 , gstop= 30, gpass=3, ftype=butter)
-                  wp=4Hz (if fs=128Hz)
-                  ws=2Hz (--''--)
+                 b,a = signal.iirdesign(wp = 0.125, ws=0.0625 , gstop= 30, gpass=3, ftype='butter')
+                  wp=8Hz (if fs=128Hz, then Nyquist freq=64Hz) 0.125*64
+                  ws=4Hz (--''--)
                  */
 
                 aCoefficients=new double[]{
