@@ -1,4 +1,4 @@
-/* TimeDomainSampleFilter.java created 2008-02-01
+/* TimeDomainSampleFilter.java created 2008-02-01 modified 2010-08-26
  * 
  */
 
@@ -7,27 +7,37 @@ package org.signalml.domain.montage.filter;
 import org.signalml.util.ResolvableString;
 import org.springframework.context.MessageSourceResolvable;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 /** TimeDomainSampleFilter
  *
  * 
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public abstract class TimeDomainSampleFilter extends SampleFilterDefinition {
+@XStreamAlias("timeDomainSampleFilter")
+public class TimeDomainSampleFilter extends SampleFilterDefinition {
 
 	private static final long serialVersionUID = 1L;
 
-	private final static Object[] ARGUMENTS = new Object[0];
-	
-	// these must be built by the constructor
-	protected transient String[] messageCodes;
-	protected transient String[] effectCodes;
-	protected transient String defaultEffectDescription;
-	
-	protected transient double aCoefficients[];
-	protected transient double bCoefficients[];
-	protected transient int margin;
-		
-	protected int passCount;
+	protected Object[] arguments;
+	protected String[] messageCodes;
+
+	protected double aCoefficients[];
+	protected double bCoefficients[];
+
+        public TimeDomainSampleFilter(){
+        }
+
+        public TimeDomainSampleFilter(String messageCode, String passBand, double[] aCoefs, double[] bCoefs) {
+                this.messageCodes=new String[] {messageCode};
+                this.arguments=new Object[]{new String(passBand)};
+
+                this.aCoefficients=aCoefs.clone();
+                this.bCoefficients=bCoefs.clone();
+
+                this.setDescription("Time Domain Filter");
+
+	}
 	
 	public double[] getACoefficients() {
 		return aCoefficients;
@@ -37,26 +47,14 @@ public abstract class TimeDomainSampleFilter extends SampleFilterDefinition {
 		return bCoefficients;
 	}
 
-	public int getMargin() {
-		return margin;
-	}
-	
-	public int getPassCount() {
-		return passCount;
-	}
-
-	public void setPassCount(int passCount) {
-		this.passCount = passCount;
-	}
-
 	@Override
 	public MessageSourceResolvable getEffectDescription() {
-		return new ResolvableString( effectCodes, new Object[] { passCount }, defaultEffectDescription );
+            return new ResolvableString(messageCodes, arguments, getDefaultEffectDescription());
 	}
 	
 	@Override
 	public String getDefaultEffectDescription() {
-		return defaultEffectDescription;
+            return new String("Time Domain Filter");
 	}
 
 	@Override
@@ -66,7 +64,7 @@ public abstract class TimeDomainSampleFilter extends SampleFilterDefinition {
 
 	@Override
 	public Object[] getArguments() {
-		return ARGUMENTS;
+		return arguments;
 	}
 
 	@Override
@@ -76,7 +74,19 @@ public abstract class TimeDomainSampleFilter extends SampleFilterDefinition {
 
 	@Override
 	public String getDefaultMessage() {
-		return "Time domain filter " + getClass().getSimpleName();
+            return "Time domain filter "+getClass().getSimpleName();
+	}
+
+        @Override
+        public SampleFilterDefinition duplicate() {
+                TimeDomainSampleFilter duplicate=new TimeDomainSampleFilter();
+
+                duplicate.aCoefficients=aCoefficients.clone();
+                duplicate.bCoefficients=bCoefficients.clone();
+                duplicate.messageCodes=messageCodes.clone();
+                duplicate.arguments=arguments.clone();
+
+		return duplicate;
 	}
 	
 }

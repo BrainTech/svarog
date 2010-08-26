@@ -43,10 +43,9 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
                         int newOffset=signalOffset-addLeft;
                         int newCount=count+addLeft;
 
-
                         cache = new double[newCount];
                         filtered= new double[newCount];
-                        System.out.println("FILTR: Pobrano "+count+ " /signalOffset="+signalOffset+" arrayOffset="+arrayOffset); // 900, 1800 probek
+
                         source.getSamples(cache, newOffset, newCount, 0);
 
                         for(i=0; i< newCount; i++){
@@ -61,28 +60,6 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 
                         for( i=0; i<count; i++ )
                                 target[arrayOffset+i]=filtered[addLeft+i];
-
-                        /*to get accurate results, the engine calculates the applies
-                         * the filter on the whole signal.
-                         
-                        cache = new double[signalOffset+count];
-                        filtered= new double[signalOffset+count];
-                        System.out.println("FILTR: Pobrano "+count+ " /signalOffset="+signalOffset+" arrayOffset="+arrayOffset); // 900, 1800 probek
-                        source.getSamples(cache, 0, signalOffset+count, 0);
-
-                        for(i=0; i< signalOffset+count; i++){
-                            for(j=i-bCoefficients.length+1; j<=i; j++){
-                                if (j<0) j=0;
-                                filtered[i]+=cache[j]*bCoefficients[i-j];
-                                if (j<i)
-                                    filtered[i]-=filtered[j]*aCoefficients[i-j];
-                            }
-                            filtered[i]/=aCoefficients[0];
-                        }
-
-                        for( i=0; i<count; i++ ) 
-                                target[arrayOffset+i]=filtered[signalOffset+i];
-                         */
 						
 		}
 	}

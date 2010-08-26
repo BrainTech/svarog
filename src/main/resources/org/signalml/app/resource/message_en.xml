@@ -71,11 +71,8 @@
 	<entry key="fftFilter">FFT filter</entry>
 	<entry key="fftFilter.effect">{0}</entry>
 
-	<entry key="sampleFilter.td.lowPass">Low pass filter (5th order 0-12 Hz)</entry>
-	<entry key="sampleFilter.td.highPass">High pass filter (5th order 8-... Hz)</entry>
-
-	<entry key="sampleFilter.td.lowPassEffect">Low pass filter ({0} pass 5th order 0-12 Hz)</entry>
-	<entry key="sampleFilter.td.highPassEffect">High pass filter ({0} pass 5th order 8-.. Hz)</entry>
+	<entry key="sampleFilter.td.lowPass">Low pass filter ({0}) </entry>
+	<entry key="sampleFilter.td.highPass">High pass filter ({0}) </entry>
 
 	<entry key="signalSelectionType.page">Page</entry>
 	<entry key="signalSelectionType.block">Block</entry>
