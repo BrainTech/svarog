@@ -73,6 +73,7 @@
 
 	<entry key="sampleFilter.td.lowPass">Low pass filter ({0}) </entry>
 	<entry key="sampleFilter.td.highPass">High pass filter ({0}) </entry>
+	<entry key="sampleFilter.td.notch">Notch filter ({0}) </entry>
 
 	<entry key="signalSelectionType.page">Page</entry>
 	<entry key="signalSelectionType.block">Block</entry>
