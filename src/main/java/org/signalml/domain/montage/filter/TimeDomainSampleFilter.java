@@ -85,6 +85,7 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition {
                 duplicate.bCoefficients=bCoefficients.clone();
                 duplicate.messageCodes=messageCodes.clone();
                 duplicate.arguments=arguments.clone();
+                duplicate.setDescription(this.description);
 
 		return duplicate;
 	}

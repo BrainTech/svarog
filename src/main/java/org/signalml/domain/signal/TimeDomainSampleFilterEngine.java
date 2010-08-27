@@ -37,7 +37,7 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
                     
 			int i,j;
 
-                        int addLeft=100;
+                        int addLeft=300;
                         if(signalOffset-addLeft<0)
                             addLeft=signalOffset;
                         int newOffset=signalOffset-addLeft;

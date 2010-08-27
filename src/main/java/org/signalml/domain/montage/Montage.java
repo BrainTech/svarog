@@ -17,6 +17,8 @@ import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.util.Util;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import org.signalml.domain.montage.filter.FFTSampleFilter;
+import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 
 /** Montage
  *
@@ -810,7 +812,19 @@ public class Montage extends SourceMontage implements Preset {
 	public int addSampleFilter( SampleFilterDefinition definition ) {
 		
 		MontageSampleFilter filter = new MontageSampleFilter( definition );
-		filters.add(filter);
+
+                //time domain filters are added and processed before FFTSampleFilters
+                if(definition instanceof TimeDomainSampleFilter){
+                    int i=0;
+                    for(i=0;i<filters.size();i++){
+                        if(filters.get(i).getDefinition() instanceof FFTSampleFilter)
+                             break;
+                    }
+                    filters.add(i,filter);
+                }
+                else
+                    filters.add(filter);
+
 		int index = filters.indexOf(filter);
 		
 		if( !majorChange ) {

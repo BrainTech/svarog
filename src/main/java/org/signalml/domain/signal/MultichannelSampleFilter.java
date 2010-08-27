@@ -126,6 +126,10 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
                 SampleFilterDefinition[] definitions = new SampleFilterDefinition[filterCount];
 				
 		FFTSampleFilter fftFilter;
+                FFTSampleFilter[] summaryFFTFilters = new FFTSampleFilter[channelCount];
+                Iterator<Range> it;
+		Range range;
+
                 TimeDomainSampleFilter tdsFilter;
                 LinkedList<SampleFilterEngine> chain;
                 SampleSource input;//input for the next filter in the list
@@ -136,20 +140,23 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 		for( i=0; i<filterCount; i++ ) {
 			definitions[i] = montage.getSampleFilterAt(i);
 			if( definitions[i] instanceof FFTSampleFilter ) {
-                            
-				fftFilter = (FFTSampleFilter) definitions[i];
-				
-				for( e=0; e<channelCount; e++)
-                                    if(!montage.isFilteringExcluded(i,e)){
-                                        chain = chains.get(e);
 
-                                        if(chain.isEmpty())
-                                            input=new ChannelSelectorSampleSource(source,e);
-                                        else
-                                            input=chain.getLast();
+                                fftFilter = (FFTSampleFilter) definitions[i];
+				it = fftFilter.getRangeIterator();
+				while( it.hasNext() ) {
+					range = it.next();
 
-                                        addFilter(new FFTSampleFilterEngine(input, fftFilter ), e);
-                                    }
+					for( e=0; e<channelCount; e++ ) {
+						if( !montage.isFilteringExcluded(i, e) ) {
+							if( summaryFFTFilters[e] == null ) {
+								summaryFFTFilters[e] = new FFTSampleFilter(true);
+							}
+							summaryFFTFilters[e].setRange(range, true);
+						}
+					}
+
+				}
+
 			}
                         else if(definitions[i] instanceof TimeDomainSampleFilter){
                                 tdsFilter = (TimeDomainSampleFilter) definitions[i];
@@ -168,7 +175,13 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
                         
                         }
                 }
-				
+
+                for( e=0; e<channelCount; e++ ) {
+			if( summaryFFTFilters[e] != null ) {
+				addFilter( new FFTSampleFilterEngine( new ChannelSelectorSampleSource(source,e), summaryFFTFilters[e] ), e);
+			}
+		}
+
 	}
 					
 }
