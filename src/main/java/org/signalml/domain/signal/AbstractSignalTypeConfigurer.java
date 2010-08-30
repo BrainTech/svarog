@@ -25,7 +25,7 @@ public abstract class AbstractSignalTypeConfigurer implements SignalTypeConfigur
 		ArrayList<SampleFilterDefinition> filters = new ArrayList<SampleFilterDefinition>();
 
                 //b,a generated in Python (import scipy.signal as signal)
-                
+
                 //b,a=signal.iirdesign(wp = 0.3125, ws=0.46875 , gstop= 40, gpass=3, ftype='cheby1')
                 filters.add( new TimeDomainSampleFilter("sampleFilter.td.lowPass", "0-20 Hz",
                 new double[] {

@@ -75,17 +75,17 @@ public class MontageFiltersPanel extends JPanel {
 	private MontageFilterExclusionTableModel filterExclusionTableModel;
 	private MontageFilterExclusionTable filterExclusionTable;
 	private JScrollPane filterExclusionScrollPane;
-	
-       	private ResolvableComboBox timeDomainFilterTypeComboBox;
+
+        private ResolvableComboBox timeDomainFilterTypeComboBox;
 	private JComboBox fftFilterTypeComboBox;
-		
-       	private AddTimeDomainFilterAction addTimeDomainFilterAction;
+
+        private AddTimeDomainFilterAction addTimeDomainFilterAction;
 	private AddFFTFilterAction addFFTFilterAction;
 	private EditFilterAction editFilterAction;
 	private RemoveFilterAction removeFilterAction;
 	private ClearFilterExclusionAction clearFilterExclusionAction;
-	
-       	private JButton addTimeDomainFilterButton;
+
+        private JButton addTimeDomainFilterButton;
 	private JButton addFFTFilterButton;
 	private JButton editFilterButton;
 	private JButton removeFilterButton;
@@ -277,8 +277,6 @@ public class MontageFiltersPanel extends JPanel {
 		if( timeDomainFilterTypeComboBox == null ) {
 			timeDomainFilterTypeComboBox = new ResolvableComboBox(messageSource);
 			timeDomainFilterTypeComboBox.setPreferredSize( new Dimension( 200, 25 ) );
-			
-			timeDomainFilterTypeComboBox.setEnabled(true);
 		}
 		return timeDomainFilterTypeComboBox;
         }
@@ -303,7 +301,6 @@ public class MontageFiltersPanel extends JPanel {
 		}
 		return addTimeDomainFilterButton;
 	}
-	
 
 	public JButton getAddFFTFilterButton() {
 		if( addFFTFilterButton == null ) {
@@ -360,7 +357,6 @@ public class MontageFiltersPanel extends JPanel {
 			getFilterExclusionTableModel().setMontage(montage);
 			
 			if( montage != null ) {
-				
 				Collection<SampleFilterDefinition> predefinedFilters = montage.getSignalTypeConfigurer().getPredefinedFilters();
 				SampleFilterDefinition[] arr = new SampleFilterDefinition[predefinedFilters.size()];
 				predefinedFilters.toArray(arr);
@@ -369,7 +365,7 @@ public class MontageFiltersPanel extends JPanel {
 				comboBox.setModel( model );
 				comboBox.setSelectedIndex(0);
 				comboBox.repaint();
-				
+
 				getFilteringEnabledCheckBox().setSelected( montage.isFilteringEnabled() );
 			} else {
 				getTimeDomainFilterTypeComboBox().setModel( new DefaultComboBoxModel( new Object[0] ) );
@@ -412,8 +408,6 @@ public class MontageFiltersPanel extends JPanel {
 			super(messageSource.getMessage("montageFilters.addTimeDomainFilter"));
 			putValue(AbstractAction.SHORT_DESCRIPTION, messageSource.getMessage("montageFilters.addTimeDomainFilterToolTip") );
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/addtimedomainfilter.png") );
-			// TODO implement
-			setEnabled(true);
 		}
 		
 		public void actionPerformed(ActionEvent ev) {			
@@ -422,16 +416,13 @@ public class MontageFiltersPanel extends JPanel {
 				return;
 			}
 
-                   	int index = getTimeDomainFilterTypeComboBox().getSelectedIndex();
-
+                        int index = getTimeDomainFilterTypeComboBox().getSelectedIndex();
                         TimeDomainSampleFilter filter=(TimeDomainSampleFilter)montage.getSignalTypeConfigurer().getPredefinedFilterAt(index);
-
                         montage.addSampleFilter(filter);
 						
 		}
 	
 	}
-	
 
 	protected class AddFFTFilterAction extends AbstractAction {
 

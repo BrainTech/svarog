@@ -18,19 +18,21 @@ import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 
-/** SampleFilter
+/**
+ * This abstract class represents a filter of samples for multichannel signal.
+ * It contains the list of {@link SampleFilterEngine engines} for every channel
+ * and uses them to filter samples.
  *
- * 
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 
 	protected static final Logger logger = Logger.getLogger(MultichannelSampleFilter.class);
 	
-	private Vector<LinkedList<SampleFilterEngine>> chains;
-	
+	protected Vector<LinkedList<SampleFilterEngine>> chains;
+
 	private Montage currentMontage = null;
-	
+
 	public MultichannelSampleFilter(MultichannelSampleSource source) {
 		super(source);
 		reinitFilterChains();
@@ -38,8 +40,6 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 
 	@Override
 	public void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
-                logger.debug("Getting "+count+" samples from channel "+channel);
-                logger.debug("Number of filters + "+chains.get(1).size());
 
 		LinkedList<SampleFilterEngine> chain = chains.get(channel);
 		if( chain.isEmpty() ) {
@@ -113,8 +113,16 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 		}
 		this.currentMontage = currentMontage;
 	}
-	
-	private void applyMontage(Montage montage) throws MontageMismatchException {
+
+
+        /**
+         * Clears the filter {@link SampleFilterEngine engines} and initialises
+         * them creating {@link SampleFilterEngine filter engines}
+         * based on {@link SampleFilter sample filters} (both FFT and Time Domain) from a given montage.
+         * @param montage the montage used to create new engines
+         * @throws MontageMismatchException
+         */
+	protected void applyMontage(Montage montage) throws MontageMismatchException {
 
 		reinitFilterChains();
 		if( !montage.isFilteringEnabled() ) {
@@ -154,9 +162,7 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 							summaryFFTFilters[e].setRange(range, true);
 						}
 					}
-
 				}
-
 			}
                         else if(definitions[i] instanceof TimeDomainSampleFilter){
                                 tdsFilter = (TimeDomainSampleFilter) definitions[i];
@@ -172,7 +178,6 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 
                                         addFilter(new TimeDomainSampleFilterEngine(input, tdsFilter),e);
                                     }
-                        
                         }
                 }
 

@@ -22,7 +22,6 @@ public class FFTSampleFilterEngine extends SampleFilterEngine {
 	
 	public static final double LOG2 = Math.log(2);
 	
-	private FFTSampleFilter definition;
 	private FourierTransform fourierTransform;
 	
 	private double[] cache = null;
@@ -38,6 +37,11 @@ public class FFTSampleFilterEngine extends SampleFilterEngine {
 		
 		definition.getWindowType().apply(fourierTransform, definition.getWindowParameter());		
 	}
+
+        @Override
+        public FFTSampleFilter getFilterDefinition(){
+            return (FFTSampleFilter)definition;
+        }
 		
 	@Override
 	public void getSamples(double[] target, int signalOffset, int count, int arrayOffset) {
@@ -108,7 +112,7 @@ public class FFTSampleFilterEngine extends SampleFilterEngine {
 				int segCount = (transformed.length/2) + 1;
 				double hzPerSegment = samplingFrequency / transformed.length;
 				
-				Iterator<Range> it = definition.getRangeIterator();
+				Iterator<Range> it = ((FFTSampleFilter)definition).getRangeIterator();
 				int lowSeg;
 				int highSeg;
 				float lowFrequency;

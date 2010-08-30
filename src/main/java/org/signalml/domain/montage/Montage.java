@@ -813,7 +813,7 @@ public class Montage extends SourceMontage implements Preset {
 		
 		MontageSampleFilter filter = new MontageSampleFilter( definition );
 
-                //time domain filters are added and processed before FFTSampleFilters
+                //time domain filters are added and thus processed before FFTSampleFilters
                 if(definition instanceof TimeDomainSampleFilter){
                     int i=0;
                     for(i=0;i<filters.size();i++){
