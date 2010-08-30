@@ -69,7 +69,7 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 		synchronized( this ) {
 			int i,j;
 
-                        int addLeft=300;
+                        int addLeft=1800;
                         if(signalOffset-addLeft<0)
                             addLeft=signalOffset;
                         int newOffset=signalOffset-addLeft;
