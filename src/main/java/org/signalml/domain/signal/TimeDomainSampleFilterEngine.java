@@ -4,7 +4,6 @@
 
 package org.signalml.domain.signal;
 
-import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 
 /**
@@ -15,14 +14,9 @@ import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
  */
 public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 
-        /**
-         * used to store part of unfiltered signal
-         */
-	private double[] cache = null;
-        /*
-         * stores filtered samples
-         */
-	private double[] filtered = null;
+        private int cacheSize=0;
+        private int newSamples=0;
+        private double[] filteredCache=null;
 
         /**
          * a Coefficients of the Time Domain filter (feedback filter coefficients).
@@ -48,6 +42,56 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
                 bCoefficients=definition.getBCoefficients();
 	}
 
+        public TimeDomainSampleFilterEngine(SampleSource source, TimeDomainSampleFilter definition, int cacheSize){
+            this(source,definition);
+            this.cacheSize=cacheSize;
+        }
+
+        public synchronized void updateCache(int numberOfNewSamples){
+                        newSamples+=numberOfNewSamples;
+
+                        double[] filtered = null;
+                        double[] cache = null;
+
+                        int i,j;
+
+                        int newCount=source.getSampleCount();
+                        cache = new double[newCount];
+                        filtered= new double[newCount];
+
+                        source.getSamples(cache, 0, newCount, 0);
+
+                        System.out.println(this+": new samples="+newSamples);
+
+                        for(i=0; i< newCount; i++){
+                            if(filteredCache!=null && i<cacheSize-newSamples){
+                                    filtered[i]=filteredCache[newSamples+i];
+                            }
+                            else{
+                                for(j=i-bCoefficients.length+1; j<=i; j++){
+                                    if (j<0) j=0;
+
+                                    else{
+                                        filtered[i]+=cache[j]*bCoefficients[i-j];
+                                        if (j<i)
+                                            filtered[i]-=filtered[j]*aCoefficients[i-j];
+                                    }
+                                }
+                                filtered[i]/=aCoefficients[0];
+                            }
+                        }
+
+                        if(filteredCache==null)
+                            filteredCache=new double[cacheSize];
+
+                        for(i=0; i<cacheSize; i++){
+                            filteredCache[i]=filtered[i];
+                            newSamples=0;
+                        }
+
+        }
+
+
         @Override
         public TimeDomainSampleFilter getFilterDefinition(){
             return (TimeDomainSampleFilter)definition.duplicate();
@@ -67,31 +111,10 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 	@Override
 	public void getSamples(double[] target, int signalOffset, int count, int arrayOffset) {
 		synchronized( this ) {
-			int i,j;
+                    
+                        for(int i=0; i<count; i++ )
+                                target[arrayOffset+i]=filteredCache[signalOffset+i];
 
-                        int addLeft=1800;
-                        if(signalOffset-addLeft<0)
-                            addLeft=signalOffset;
-                        int newOffset=signalOffset-addLeft;
-                        int newCount=count+addLeft;
-
-                        cache = new double[newCount];
-                        filtered= new double[newCount];
-
-                        source.getSamples(cache, newOffset, newCount, 0);
-
-                        for(i=0; i< newCount; i++){
-                            for(j=i-bCoefficients.length+1; j<=i; j++){
-                                if (j<0) j=0;
-                                filtered[i]+=cache[j]*bCoefficients[i-j];
-                                if (j<i)
-                                    filtered[i]-=filtered[j]*aCoefficients[i-j];
-                            }
-                            filtered[i]/=aCoefficients[0];
-                        }
-
-                        for( i=0; i<count; i++ )
-                                target[arrayOffset+i]=filtered[addLeft+i];
 		}
 	}
 

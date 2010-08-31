@@ -17,7 +17,7 @@ import multiplexer.protocol.Protocol.MultiplexerMessage;
 import org.apache.log4j.Logger;
 import org.jboss.netty.channel.ChannelFuture;
 import org.signalml.app.model.OpenMonitorDescriptor;
-import org.signalml.domain.signal.RoundBufferSampleSource;
+import org.signalml.domain.signal.RoundBufferMultichannelSampleSource;
 import org.signalml.domain.signal.SignalSelectionType;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.domain.tag.Tag;
@@ -41,11 +41,11 @@ public class MonitorWorker extends SwingWorker< Void, Object> {
 	private JmxClient jmxClient;
 	private OpenMonitorDescriptor monitorDescriptor;
 	private LinkedBlockingQueue< double[]> sampleQueue;
-	private RoundBufferSampleSource sampleSource;
+	private RoundBufferMultichannelSampleSource sampleSource;
 	private StyledTagSet tagSet = new StyledTagSet();
 	private volatile boolean finished;
 
-	public MonitorWorker( JmxClient jmxClient, OpenMonitorDescriptor monitorDescriptor, RoundBufferSampleSource sampleSource) {
+	public MonitorWorker( JmxClient jmxClient, OpenMonitorDescriptor monitorDescriptor, RoundBufferMultichannelSampleSource sampleSource) {
 		this.jmxClient = jmxClient;
 		this.monitorDescriptor = monitorDescriptor;
 		this.sampleSource = sampleSource;
@@ -105,8 +105,10 @@ public class MonitorWorker extends SwingWorker< Void, Object> {
 			IncomingMessageData msgData = null;
 			try {
 				msgData = jmxClient.receive( TIMEOUT_MILIS, TimeUnit.MILLISECONDS);
-				if (msgData == null)
+				if (msgData == null){
+                                            logger.debug("Received null msgData");
 					continue;
+                                }
 				MultiplexerMessage sampleMsg = msgData.getMessage();
 				int type = sampleMsg.getType();
 				logger.debug( "Worker: received message type: " + type);
@@ -165,6 +167,7 @@ public class MonitorWorker extends SwingWorker< Void, Object> {
 						e.printStackTrace();
 						continue;
 					}
+
 					// TODO dodać obsługę stylów - może wybór z kakiejś palety dla poszczególnych nazw i kanałów
 					TagStyle style = new TagStyle( SignalSelectionType.CHANNEL, tagMsg.getName(), tagMsg.getName(), Color.RED, Color.BLUE, 2);
 					String channels = tagMsg.getChannels();

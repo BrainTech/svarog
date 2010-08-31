@@ -223,7 +223,7 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 
 		SignalProcessingChain chain = new SignalProcessingChain(source,signalType);
 		chain.montage = new MultichannelSampleMontage(signalType, chain.source);
-		chain.filter = new MultichannelSampleFilter(chain.montage);
+		chain.filter = new MultichannelSampleFilter(chain.montage,source);
 		chain.output = chain.filter;
 
 		chain.configureOutput();
@@ -238,7 +238,7 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 		chain.sourceBuffer = new MultichannelSampleBuffer(chain.source, MultichannelSampleBuffer.INITIAL_BUFFER_SIZE);
 		chain.montage = new MultichannelSampleMontage(signalType, chain.sourceBuffer);
 		chain.montageBuffer = new MultichannelSampleBuffer(chain.montage, MultichannelSampleBuffer.INITIAL_BUFFER_SIZE);
-		chain.filter = new MultichannelSampleFilter(chain.montageBuffer);
+		chain.filter = new MultichannelSampleFilter(chain.montageBuffer,chain.source);
 		chain.output = chain.filter;
 		
 		chain.configureOutput();

@@ -32,7 +32,7 @@ public class TimeDomainSampleFilterEngineTest {
         /**
          * the source of samples which will be filtered by the engine
          */
-	private RoundBufferSampleSource source;
+	private RoundBufferMultichannelSampleSource source;
         /**
          * the engine used to filter the samples taken from the source
          */
@@ -43,7 +43,7 @@ public class TimeDomainSampleFilterEngineTest {
 	 */
 	@Before
 	public void setUp() {
-            	source = new RoundBufferSampleSource( 1, TEST_SAMPLE_COUNT);
+            	source = new RoundBufferMultichannelSampleSource( 1, TEST_SAMPLE_COUNT);
 	}
 
 	/**

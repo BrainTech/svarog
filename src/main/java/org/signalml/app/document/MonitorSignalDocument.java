@@ -19,7 +19,7 @@ import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.worker.MonitorWorker;
 import org.signalml.app.worker.SignalRecorderWorker;
-import org.signalml.domain.signal.RoundBufferSampleSource;
+import org.signalml.domain.signal.RoundBufferMultichannelSampleSource;
 import org.signalml.domain.signal.SignalChecksum;
 import org.signalml.domain.signal.SignalProcessingChain;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
@@ -56,9 +56,9 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		double freq = monitorOptions.getSamplingFrequency();
 		double ps = monitorOptions.getPageSize();
 		int sampleCount = (int) Math.ceil( ps * freq);
-		sampleSource = new RoundBufferSampleSource( monitorOptions.getSelectedChannelList().length, sampleCount);
-		((RoundBufferSampleSource) sampleSource).setLabels( monitorOptions.getSelectedChannelList());
-		((RoundBufferSampleSource) sampleSource).setDocumentView( getDocumentView());
+		sampleSource = new RoundBufferMultichannelSampleSource( monitorOptions.getSelectedChannelList().length, sampleCount);
+		((RoundBufferMultichannelSampleSource) sampleSource).setLabels( monitorOptions.getSelectedChannelList());
+		((RoundBufferMultichannelSampleSource) sampleSource).setDocumentView( getDocumentView());
 
 		recorderOutputFile = new File( "signal.buf");
 		try {
@@ -106,8 +106,8 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 				signalPlot.setSignalChain( signalChain);
 			}
 		}
-		if (sampleSource != null && sampleSource instanceof RoundBufferSampleSource) {
-			((RoundBufferSampleSource) sampleSource).setDocumentView( documentView);
+		if (sampleSource != null && sampleSource instanceof RoundBufferMultichannelSampleSource) {
+			((RoundBufferMultichannelSampleSource) sampleSource).setDocumentView( documentView);
 		}
 	}
 
@@ -135,7 +135,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 			recorderWorker.execute();
 		}
 
-		monitorWorker = new MonitorWorker( monitorOptions.getJmxClient(), monitorOptions, (RoundBufferSampleSource) sampleSource);
+		monitorWorker = new MonitorWorker( monitorOptions.getJmxClient(), monitorOptions, (RoundBufferMultichannelSampleSource) sampleSource);
 		if (sampleQueue != null)
 			monitorWorker.setSampleQueue( sampleQueue);
 		monitorWorker.execute();

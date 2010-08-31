@@ -41,14 +41,14 @@ public class MultichannelSampleFilterTest {
         /**
          * the multichannel source of samples which is fed into the MultichannelSampleFilter
          */
-        private RoundBufferSampleSource source;
+        private RoundBufferMultichannelSampleSource source;
 
 	/**
 	 * Sets everything up for the tests.
 	 */
 	@Before
 	public void setUp() {
-            source=new RoundBufferSampleSource(TEST_CHANNEL_COUNT,TEST_SAMPLE_COUNT);
+            source=new RoundBufferMultichannelSampleSource(TEST_CHANNEL_COUNT,TEST_SAMPLE_COUNT);
             mfilter=new MultichannelSampleFilter(source);
 	}
 
