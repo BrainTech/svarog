@@ -57,6 +57,10 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition {
 		return bCoefficients;
 	}
 
+        public int getFilterOrder(){
+            return Math.max(aCoefficients.length,bCoefficients.length)-1;
+        }
+
 	@Override
 	public MessageSourceResolvable getEffectDescription() {
             return new ResolvableString(messageCodes, arguments, getDefaultEffectDescription());
