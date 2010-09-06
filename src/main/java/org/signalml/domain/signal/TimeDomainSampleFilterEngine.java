@@ -51,15 +51,15 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
             int zeroPaddingSize=0;
             double[] unfilteredSamplesCache=new double[unfilteredSamplesNeeded];
 
-            System.out.println("UnfilteredSamplesNeeded="+unfilteredSamplesNeeded);
+//            System.out.println("UnfilteredSamplesNeeded="+unfilteredSamplesNeeded);
             if(unfilteredSamplesNeeded>source.getSampleCount())
                 zeroPaddingSize=unfilteredSamplesNeeded-source.getSampleCount();
             for(int i=0;i<zeroPaddingSize;i++)
                 unfilteredSamplesCache[i]=0.0;
 
-            System.out.println("ZeroPaddingSize="+zeroPaddingSize);
-            System.out.println("start="+(source.getSampleCount()-unfilteredSamplesNeeded+zeroPaddingSize));
-            System.out.println("count="+(unfilteredSamplesNeeded-zeroPaddingSize));
+//            System.out.println("ZeroPaddingSize="+zeroPaddingSize);
+//            System.out.println("start="+(source.getSampleCount()-unfilteredSamplesNeeded+zeroPaddingSize));
+//            System.out.println("count="+(unfilteredSamplesNeeded-zeroPaddingSize));
             source.getSamples(unfilteredSamplesCache,
                     source.getSampleCount()-unfilteredSamplesNeeded+zeroPaddingSize,
                     unfilteredSamplesNeeded-zeroPaddingSize, zeroPaddingSize);
@@ -104,9 +104,13 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
         }
 
         public synchronized void updateCache(int newSamples){
-            System.out.println("TimeSampleFilterEngine: Updating cache: "+newSamples+" new samples");
+//            System.out.println("TimeSampleFilterEngine: Updating cache: "+newSamples+" new samples");
 
-            String s="";
+            double[] unfilteredSamplesCache=getUnfilteredSamplesCache(newSamples);
+            double[] filteredSamplesCache=getFilteredSamplesCache(newSamples);
+            double[] newFilteredSamples=calculateNewFilteredSamples(unfilteredSamplesCache, filteredSamplesCache, newSamples);
+
+/*            String s="";
             double[] unfilteredSamplesCache=getUnfilteredSamplesCache(newSamples);
 
             int i;
@@ -140,7 +144,7 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
             if(i<0) i=0;
             for(;(i<filteredSamplesCache.length);i++)
                 s+=filteredSamplesCache[i]+", ";
-            logger.debug(s);
+            logger.debug(s);*/
             
             filtered.addSamples(newFilteredSamples);
         }
@@ -165,10 +169,12 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 	@Override
 	public synchronized void getSamples(double[] target, int signalOffset, int count, int arrayOffset) {
 		synchronized( this ) {
-                    if(filtered==null){
+                /*    if(filtered==null){
                         //logger.debug("TEST21: Wywołuję updateCache z getSamples");
                         updateCache(source.getSampleCount());
-                    }
+                    }*/
+                    //while(filtered==null);
+
                     filtered.getSamples(target, signalOffset, count, arrayOffset);
 		}
 	}

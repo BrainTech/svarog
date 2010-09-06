@@ -2,11 +2,13 @@ package org.signalml.domain.signal;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.*;
 
 import org.signalml.app.view.DocumentView;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.exception.SignalMLException;
+
 
 public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource implements OriginalMultichannelSampleSource {
 
@@ -14,13 +16,19 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
  	protected boolean full;
 	protected DocumentView documentView;
 	protected Object[] labels;
+        protected Semaphore semaphore;
 
 	public RoundBufferMultichannelSampleSource( int channelCount, int sampleCount) {
 		super( null, channelCount, sampleCount);
 		this.samples = new double[channelCount][sampleCount];
 		nextInsertPos = 0;
 		full = false;
+                semaphore=new Semaphore(1);
 	}
+
+        public Semaphore getSemaphore(){
+            return semaphore;
+        }
 
 	public DocumentView getDocumentView() {
 		return documentView;

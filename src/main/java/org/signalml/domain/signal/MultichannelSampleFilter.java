@@ -11,6 +11,8 @@ import java.util.ListIterator;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
+import java.util.concurrent.Semaphore;
+import java.util.logging.Level;
 
 import org.apache.log4j.Logger;
 import org.signalml.domain.montage.Montage;
@@ -30,8 +32,6 @@ import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 
         protected int lastInsertPos=0;
-        Timer timer;
-        Zadanie zadanie;
 
         protected OriginalMultichannelSampleSource originalSource;
 
@@ -42,7 +42,9 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 	private Montage currentMontage = null;
 
         boolean newMontage=false;
+        Semaphore semaphore=new Semaphore(1);
 
+        UpdateTimeDomainFiltersCacheTask updateTimeDomainFiltersCacheTask;
 
 	public MultichannelSampleFilter(MultichannelSampleSource source) {
 		super(source);
@@ -53,16 +55,18 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
             this(source);
             this.originalSource=originalSource;
 
-            timer=new Timer();
-            zadanie=new Zadanie();
-            timer.scheduleAtFixedRate(zadanie, 0, 100);
+            if(originalSource instanceof RoundBufferMultichannelSampleSource){
+                        
+                Timer timer=new Timer();
+                updateTimeDomainFiltersCacheTask=new UpdateTimeDomainFiltersCacheTask();
+                timer.scheduleAtFixedRate(updateTimeDomainFiltersCacheTask, 0, 100);
+            }
         }
 
         private void updateTimeDomainSampleFilterEnginesCache(int samplesAdded){
                 SampleFilterEngine eng;
                 Iterator<SampleFilterEngine> it;
                 for(int i=0;i<chains.size();i++){
-                    logger.debug("MultichannelSampleFilter-updateCaches - Kanał nr "+i);
                     it=(chains.get(i)).iterator();
                     while(it.hasNext()){
                         eng=it.next();
@@ -71,16 +75,16 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
                         }
                     }
                 }
-
         }
 
-        class Zadanie extends TimerTask
-        {
-            public void run( ){
-                logger.debug("Zadanie uruchomione");
-                //update time domain filter engines' cache
+        private void updateTimeDomainSampleFilterEnginesCache(){
+            //update time domain filter engines' cache
                 if(originalSource instanceof RoundBufferMultichannelSampleSource){
+                try {
+                ((RoundBufferMultichannelSampleSource) originalSource).getSemaphore().acquire();
+
                         RoundBufferMultichannelSampleSource os=(RoundBufferMultichannelSampleSource)originalSource;
+
                         int newInsertPos=os.getNextInsertPos();
 
                         int samplesAdded;
@@ -96,46 +100,64 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
                                 samplesAdded=os.getSampleCount(0)-lastInsertPos+newInsertPos;
                         }
 
-                        if(samplesAdded>0){
-                            //logger.debug("Channel"+channel);
-                            logger.debug("TEST21: Wywołuję updateCache z zadania");
+                        if(samplesAdded>0)
                             updateTimeDomainSampleFilterEnginesCache(samplesAdded);
-                        }
-                        logger.debug("lastInsertPos="+lastInsertPos+" newInsertPos="+newInsertPos+" change="+samplesAdded);
+                        //logger.debug("lastInsertPos="+lastInsertPos+" newInsertPos="+newInsertPos+" change="+samplesAdded);
                         lastInsertPos=newInsertPos;
+
+                        }
+                        catch (InterruptedException ex) {
+                            java.util.logging.Logger.getLogger(MultichannelSampleFilter.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        finally{
+                            ((RoundBufferMultichannelSampleSource)originalSource).getSemaphore().release();
+                        }
 
   //                      double[] x=new double[3];
 //                        getSamples(20,x,0,3,0);
-                        
+                        logger.debug("End updating");
                 }
+        }
+
+        private class UpdateTimeDomainFiltersCacheTask extends TimerTask
+        {
+            @Override
+            public synchronized void run( ){
+                try {
+                    semaphore.acquire();
+                    updateTimeDomainSampleFilterEnginesCache();
+                } 
+                catch (InterruptedException ex) {
+                    java.util.logging.Logger.getLogger(MultichannelSampleFilter.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                finally{semaphore.release();}
 
             }
-
         }
 
 	@Override
 	public synchronized void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
-                //update time domain filter engines' cache
-/*                if(originalSource instanceof RoundBufferMultichannelSampleSource){
-                        RoundBufferMultichannelSampleSource os=(RoundBufferMultichannelSampleSource)originalSource;
-                        int newInsertPos=os.getNextInsertPos();
-                        
-                        int samplesAdded;
-                        if(newInsertPos>=lastInsertPos)
-                            samplesAdded=newInsertPos-lastInsertPos;
-                        else
-                            samplesAdded=os.getSampleCount(0)-lastInsertPos+newInsertPos;
+        try {
+            //update time domain filter engines' cache
+            /*                if(originalSource instanceof RoundBufferMultichannelSampleSource){
+            RoundBufferMultichannelSampleSource os=(RoundBufferMultichannelSampleSource)originalSource;
+            int newInsertPos=os.getNextInsertPos();
+            int samplesAdded;
+            if(newInsertPos>=lastInsertPos)
+            samplesAdded=newInsertPos-lastInsertPos;
+            else
+            samplesAdded=os.getSampleCount(0)-lastInsertPos+newInsertPos;
+            if(samplesAdded>0){
+            logger.debug("Channel"+channel);
+            updateTimeDomainSampleFilterEnginesCache(samplesAdded);
+            }
+            logger.debug("lastInsertPos="+lastInsertPos+" newInsertPos="+newInsertPos+" change="+(newInsertPos-lastInsertPos));
+            lastInsertPos=newInsertPos;
+            }*/
+            semaphore.acquire();
+                updateTimeDomainSampleFilterEnginesCache();
 
-                        if(samplesAdded>0){
-                            logger.debug("Channel"+channel);
-                            updateTimeDomainSampleFilterEnginesCache(samplesAdded);
-                        }
-                        logger.debug("lastInsertPos="+lastInsertPos+" newInsertPos="+newInsertPos+" change="+(newInsertPos-lastInsertPos));
-                        lastInsertPos=newInsertPos;
-                }*/
-
-                newMontage=false;
-
+                 logger.debug("Getting samples");
 		LinkedList<SampleFilterEngine> chain = chains.get(channel);
 		if( chain.isEmpty() ) {
 			source.getSamples(channel, target, signalOffset, count, arrayOffset);
@@ -145,7 +167,13 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 			last.getSamples(target, signalOffset, count, arrayOffset);
 
 		}
-		
+        } catch (InterruptedException ex) {
+            java.util.logging.Logger.getLogger(MultichannelSampleFilter.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally{
+            semaphore.release();
+        }
+
 	}
 	
 	public void addFilter(SampleFilterEngine filter) {
@@ -217,7 +245,9 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
          * @param montage the montage used to create new engines
          * @throws MontageMismatchException
          */
-	protected void applyMontage(Montage montage) throws MontageMismatchException {
+	protected synchronized void applyMontage(Montage montage) throws MontageMismatchException {
+        try {
+            semaphore.acquire();
 
                 logger.debug("applyMontage");
 
@@ -293,22 +323,23 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 			}
 		}
 
-                if(! (originalSource instanceof RoundBufferMultichannelSampleSource) ){
+                if(!(originalSource instanceof RoundBufferMultichannelSampleSource) ){
                     logger.debug("Is NOT instance of RoundBufferMultichannelSampleSource.");
                     updateTimeDomainSampleFilterEnginesCache(originalSource.getSampleCount(0));
-                    if(timer!=null)
-                        timer.cancel();
                 }
 
-                if(originalSource instanceof RoundBufferMultichannelSampleSource){
-                    if(timer==null){
-
-                    }
-                    //updateTimeDomainSampleFilterEnginesCache(originalSource.getSampleCount(0));
+                if(originalSource instanceof RoundBufferMultichannelSampleSource){    
+                    updateTimeDomainSampleFilterEnginesCache();
                 }
 
                 newMontage=true;
-
+         } catch (InterruptedException ex) {
+            java.util.logging.Logger.getLogger(MultichannelSampleFilter.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally{
+                semaphore.release();
+        }
+                
 	}
 					
 }

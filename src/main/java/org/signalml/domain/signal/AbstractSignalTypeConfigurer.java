@@ -26,6 +26,13 @@ public abstract class AbstractSignalTypeConfigurer implements SignalTypeConfigur
 
                 //b,a generated in Python (import scipy.signal as signal)
 
+                filters.add( new TimeDomainSampleFilter("sampleFilter.td.highPass", "0.01-... Hz",
+                new double[] {
+                1.0, 0.01},
+                new double[] {
+                0.5,-0.5}
+                ) );
+
                 //b,a=signal.iirdesign(wp = 0.3125, ws=0.46875 , gstop= 40, gpass=3, ftype='cheby1')
                 filters.add( new TimeDomainSampleFilter("sampleFilter.td.lowPass", "0-20 Hz",
                 new double[] {

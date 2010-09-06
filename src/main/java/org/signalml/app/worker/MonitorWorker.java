@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 
 import javax.swing.SwingWorker;
 
@@ -229,7 +230,15 @@ public class MonitorWorker extends SwingWorker< Void, Object> {
 	protected void process( List< Object> objs) {
 		for (Object o : objs) {
 			if (o instanceof double[]) {
-				sampleSource.addSamples( (double[]) o);
+                                try {
+                                    sampleSource.getSemaphore().acquire();
+                                    sampleSource.addSamples( (double[]) o);
+                                } catch (InterruptedException ex) {
+                                    java.util.logging.Logger.getLogger(MonitorWorker.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                finally{
+                                    sampleSource.getSemaphore().release();
+                                }
 			}
 			else {
 				tagSet.addTag( (Tag) o);
