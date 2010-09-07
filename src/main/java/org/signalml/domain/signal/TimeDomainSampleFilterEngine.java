@@ -14,8 +14,11 @@ import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
  * @author Piotr Szachewicz
  */
 public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
-    protected static final Logger logger = Logger.getLogger(TimeDomainSampleFilterEngine.class);
+        protected static final Logger logger = Logger.getLogger(TimeDomainSampleFilterEngine.class);
 
+        /**
+         * Round buffer used to store filtered samples of the signal.
+         */
         protected RoundBufferSampleSource filtered=null;
 
         /**
@@ -27,6 +30,9 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
          */
 	protected double bCoefficients[];
 
+        /**
+         * the order of the {@link TimeDomainSampleFilter filter}.
+         */
         protected int filterOrder;
 
         /**
@@ -46,110 +52,107 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
                 filtered=null;
 	}
 
+        /**
+         * Returns an array containing newly added unfiltered samples which can be used to
+         * calculate a specified number of new filtered samples using the filters definition.
+         * @param number of samples which were added to the signal since the last call
+         * of this method
+         * @return an array containing enough unfiltered samples to filter newSamples of new samples
+         * (size of the array = newSamples+ order of the filter).
+         */
         protected double[] getUnfilteredSamplesCache(int newSamples){
-            int unfilteredSamplesNeeded=newSamples+filterOrder;
-            int zeroPaddingSize=0;
-            double[] unfilteredSamplesCache=new double[unfilteredSamplesNeeded];
+                int unfilteredSamplesNeeded=newSamples+filterOrder;
+                int zeroPaddingSize=0;
+                double[] unfilteredSamplesCache=new double[unfilteredSamplesNeeded];
 
-//            System.out.println("UnfilteredSamplesNeeded="+unfilteredSamplesNeeded);
-            if(unfilteredSamplesNeeded>source.getSampleCount())
-                zeroPaddingSize=unfilteredSamplesNeeded-source.getSampleCount();
-            for(int i=0;i<zeroPaddingSize;i++)
-                unfilteredSamplesCache[i]=0.0;
+                if(unfilteredSamplesNeeded>source.getSampleCount())
+                    zeroPaddingSize=unfilteredSamplesNeeded-source.getSampleCount();
+                for(int i=0;i<zeroPaddingSize;i++)
+                    unfilteredSamplesCache[i]=0.0;
 
-//            System.out.println("ZeroPaddingSize="+zeroPaddingSize);
-//            System.out.println("start="+(source.getSampleCount()-unfilteredSamplesNeeded+zeroPaddingSize));
-//            System.out.println("count="+(unfilteredSamplesNeeded-zeroPaddingSize));
-            source.getSamples(unfilteredSamplesCache,
-                    source.getSampleCount()-unfilteredSamplesNeeded+zeroPaddingSize,
-                    unfilteredSamplesNeeded-zeroPaddingSize, zeroPaddingSize);
-            return unfilteredSamplesCache;
+                source.getSamples(unfilteredSamplesCache,
+                        source.getSampleCount()-unfilteredSamplesNeeded+zeroPaddingSize,
+                        unfilteredSamplesNeeded-zeroPaddingSize, zeroPaddingSize);
+                return unfilteredSamplesCache;
         }
 
+        /**
+         * Returns an array with filtered samples from the filter engine's
+         * cache which can be used to calculate a specified number of new filtered
+         * samples using the filters definition.
+         *
+         * @param number of samples which were added to the signal since the last call
+         * of this method
+         * @return an array containing enough filtered samples to filter newSamples of new samples
+         * (size of the array = newSamples+ order of the filter. Last newSamples cells in
+         * the array is filled with zeros).
+         */
         protected double[] getFilteredSamplesCache(int newSamples){
-            int filteredCacheSize=newSamples+filterOrder;
-            int zeroPaddingSize=0;
-            double[] filteredSamplesCache=new double[filteredCacheSize];
+                int filteredCacheSize=newSamples+filterOrder;
+                int zeroPaddingSize=0;
+                double[] filteredSamplesCache=new double[filteredCacheSize];
 
-            if(filtered==null){
-                filtered=new RoundBufferSampleSource(source.getSampleCount());
-                for(int i=0;i<source.getSampleCount();i++)
-                    filtered.addSamples(new double[] {0.0});
-            }
-
-            if(filteredCacheSize>filtered.getSampleCount())
-                zeroPaddingSize=filteredCacheSize-filtered.getSampleCount();
-            for(int i=0;i<zeroPaddingSize;i++)
-                filteredSamplesCache[i]=0.0;
-
-            filtered.getSamples(filteredSamplesCache, filtered.getSampleCount()-filterOrder, filterOrder, zeroPaddingSize);
-            return filteredSamplesCache;
-        }
-
-        protected double[] calculateNewFilteredSamples(double[] unfilteredSamplesCache, double[] filteredSamplesCache, int newSamples){
-            for(int i=filterOrder;i<filteredSamplesCache.length;i++){
-                for(int j=i-filterOrder;j<=i;j++){
-                    filteredSamplesCache[i]+=unfilteredSamplesCache[j]*bCoefficients[i-j];
-                    if(j<i)
-                        filteredSamplesCache[i]-=filteredSamplesCache[j]*aCoefficients[i-j];
+                if(filtered==null){
+                    filtered=new RoundBufferSampleSource(source.getSampleCount());
+                    for(int i=0;i<source.getSampleCount();i++)
+                        filtered.addSamples(new double[] {0.0});
                 }
-                filteredSamplesCache[i]/=aCoefficients[0];
 
-            }
+                if(filteredCacheSize>filtered.getSampleCount())
+                    zeroPaddingSize=filteredCacheSize-filtered.getSampleCount();
+                for(int i=0;i<zeroPaddingSize;i++)
+                    filteredSamplesCache[i]=0.0;
 
-            double[] newFilteredSamples=new double[newSamples];
-            for(int i=0;i<newSamples;i++)
-                newFilteredSamples[i]=filteredSamplesCache[filterOrder+i];
-            return newFilteredSamples;
+                filtered.getSamples(filteredSamplesCache, filtered.getSampleCount()-filterOrder, filterOrder, zeroPaddingSize);
+                return filteredSamplesCache;
         }
 
+        /**
+         * Calculates newSamples of new filtered samples using a part of the unfiltered signal and
+         * part of the filtered signal stored in the cache.
+         * @param unfilteredSamplesCache an array containing unfiltered samples needed to calculate
+         * newSamples of new filtered samples.
+         * @param filteredSamplesCache an array containg filtered samples needed to calculate
+         * newSamples of new filtered samples.
+         * @param newSamples number of samples which were added to the signal since the last call
+         * of this method
+         * @return an array containing new filtered samples of the signal (size of the array = newSamples)
+         */
+        protected double[] calculateNewFilteredSamples(double[] unfilteredSamplesCache, double[] filteredSamplesCache, int newSamples){
+                for(int i=filterOrder;i<filteredSamplesCache.length;i++){
+                    for(int j=i-filterOrder;j<=i;j++){
+                        filteredSamplesCache[i]+=unfilteredSamplesCache[j]*bCoefficients[i-j];
+                        if(j<i)
+                            filteredSamplesCache[i]-=filteredSamplesCache[j]*aCoefficients[i-j];
+                    }
+                    filteredSamplesCache[i]/=aCoefficients[0];
+
+                }
+
+                double[] newFilteredSamples=new double[newSamples];
+                for(int i=0;i<newSamples;i++)
+                    newFilteredSamples[i]=filteredSamplesCache[filterOrder+i];
+                return newFilteredSamples;
+        }
+
+        /**
+         * Updates the cache used to store filtered samples of the signal.
+         * @param newSamples number of samples which were added to the signal since the last call
+         * of this method
+         */
         public synchronized void updateCache(int newSamples){
-//            System.out.println("TimeSampleFilterEngine: Updating cache: "+newSamples+" new samples");
+                double[] unfilteredSamplesCache=getUnfilteredSamplesCache(newSamples);
+                double[] filteredSamplesCache=getFilteredSamplesCache(newSamples);
+                double[] newFilteredSamples=calculateNewFilteredSamples(unfilteredSamplesCache, filteredSamplesCache, newSamples);
 
-            double[] unfilteredSamplesCache=getUnfilteredSamplesCache(newSamples);
-            double[] filteredSamplesCache=getFilteredSamplesCache(newSamples);
-            double[] newFilteredSamples=calculateNewFilteredSamples(unfilteredSamplesCache, filteredSamplesCache, newSamples);
-
-/*            String s="";
-            double[] unfilteredSamplesCache=getUnfilteredSamplesCache(newSamples);
-
-            int i;
-            s+="UnfilteredSmplesCache ["+unfilteredSamplesCache.length+"]:";
-            for(i=0;(i<unfilteredSamplesCache.length)&&(i<20);i++)
-              s+=unfilteredSamplesCache[i]+", ";
-            s+=" [...] ";
-            i=unfilteredSamplesCache.length-20;
-            if(i<0) i=0;
-            for(;i<unfilteredSamplesCache.length;i++)
-              s+=unfilteredSamplesCache[i]+", ";
-            logger.debug(s);
-
-            double[] filteredSamplesCache=getFilteredSamplesCache(newSamples);
-            s="FilteredSamplesCache ["+filteredSamplesCache.length+"[:";
-            for(i=0;(i<filteredSamplesCache.length)&&(i<20);i++)
-                s+=filteredSamplesCache[i]+", ";
-            s+=" [...] ";
-            i=filteredSamplesCache.length-20;
-            if(i<0) i=0;
-            for(;(i<filteredSamplesCache.length);i++)
-                s+=filteredSamplesCache[i]+", ";
-            logger.debug(s);
-
-            double[] newFilteredSamples=calculateNewFilteredSamples(unfilteredSamplesCache, filteredSamplesCache, newSamples);
-            s="newFilteredSamplesCache ["+newFilteredSamples.length+": ";
-            for(i=0;(i<newFilteredSamples.length)&&(i<20);i++)
-                s+=newFilteredSamples[i]+", ";
-            s+=" [...] ";
-            i=filteredSamplesCache.length-20;
-            if(i<0) i=0;
-            for(;(i<filteredSamplesCache.length);i++)
-                s+=filteredSamplesCache[i]+", ";
-            logger.debug(s);*/
-            
-            filtered.addSamples(newFilteredSamples);
+                filtered.addSamples(newFilteredSamples);
         }
 
 
+        /**
+         * Return the {@link TimeDomainSampleFilter definition} of the filter.
+         * @return the {@link TimeDomainSampleFilter definition} of the filter
+         */
         @Override
         public TimeDomainSampleFilter getFilterDefinition(){
             return (TimeDomainSampleFilter)definition.duplicate();
@@ -157,7 +160,10 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 
         /**
          * Returns the given number of the filtered samples starting from
-         * the given position in time.
+         * the given position in time. {@link TimeDomainSampleFilterEngine#updateCache(int)
+         * must be run before running this method if new samples were added or
+         * cache was never updated before.
+         * 
          * @param target the array to which results will be written starting
          * from position <code>arrayOffset</code>
          * @param signalOffset the position (in time) in the signal starting
@@ -168,15 +174,7 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
          */
 	@Override
 	public synchronized void getSamples(double[] target, int signalOffset, int count, int arrayOffset) {
-		synchronized( this ) {
-                /*    if(filtered==null){
-                        //logger.debug("TEST21: Wywołuję updateCache z getSamples");
-                        updateCache(source.getSampleCount());
-                    }*/
-                    //while(filtered==null);
-
-                    filtered.getSamples(target, signalOffset, count, arrayOffset);
-		}
+                filtered.getSamples(target, signalOffset, count, arrayOffset);
 	}
 
 }

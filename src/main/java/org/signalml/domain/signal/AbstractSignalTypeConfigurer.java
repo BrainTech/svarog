@@ -1,4 +1,4 @@
-/* AbstractSignalTypeConfigurer.java created 2008-02-01 modified 2010-08-26
+/* AbstractSignalTypeConfigurer.java created 2008-02-01
  * 
  */
 
@@ -25,13 +25,6 @@ public abstract class AbstractSignalTypeConfigurer implements SignalTypeConfigur
 		ArrayList<SampleFilterDefinition> filters = new ArrayList<SampleFilterDefinition>();
 
                 //b,a generated in Python (import scipy.signal as signal)
-
-                filters.add( new TimeDomainSampleFilter("sampleFilter.td.highPass", "0.01-... Hz",
-                new double[] {
-                1.0, 0.01},
-                new double[] {
-                0.5,-0.5}
-                ) );
 
                 //b,a=signal.iirdesign(wp = 0.3125, ws=0.46875 , gstop= 40, gpass=3, ftype='cheby1')
                 filters.add( new TimeDomainSampleFilter("sampleFilter.td.lowPass", "0-20 Hz",
@@ -91,22 +84,12 @@ public abstract class AbstractSignalTypeConfigurer implements SignalTypeConfigur
                 0.0607428129214719059181248894674354232847690582275390625000000000}
                 ) );
 
-                //b,a=signal.iirdesign(wp = 0.0015625, ws=0.00104166666667 , gstop= 40, gpass=3, ftype='cheby1')
-                filters.add( new TimeDomainSampleFilter("sampleFilter.td.highPass", "0.1-.. Hz",
+                //single pole highpass filter. (dspguide.com)
+                filters.add( new TimeDomainSampleFilter("sampleFilter.td.highPass", "0.01-... Hz",
                 new double[] {
-                1.0000000000000000000000000000000000000000000000000000000000000000,
-                -4.9683290640172588226164407387841492891311645507812500000000000000,
-                9.8735280072577165100256024743430316448211669921875000000000000000,
-                -9.8106069976801801857391183148138225078582763671875000000000000000,
-                4.8739462350084492570090333174448460340499877929687500000000000000,
-                -0.9685381805239507979621293998206965625286102294921875000000000000},
+                1.0, 0.01},
                 new double[] {
-                0.9842171401402363128951833459723275154829025268554687500000000000,
-                -4.9210857007011794550521699420642107725143432617187500000000000000,
-                9.8421714014023606864611792843788862228393554687500000000000000000,
-                -9.8421714014023606864611792843788862228393554687500000000000000000,
-                4.9210857007011794550521699420642107725143432617187500000000000000,
-                -0.9842171401402363128951833459723275154829025268554687500000000000}
+                0.5,-0.5}
                 ) );
 
                 //b,a=signal.iirdesign(wp = 0.0078125, ws=0.00520833333333 , gstop= 40, gpass=3, ftype='cheby1')

@@ -121,7 +121,7 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 			}
 		}
 		if( descriptor.isFiltered() ) {
-			filter = new MultichannelSampleFilter(output);
+			filter = new MultichannelSampleFilter(output,source);
 			filter.setCurrentMontage( descriptor.getMontage() );
 			output = filter;
 		}
@@ -238,7 +238,7 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 		chain.sourceBuffer = new MultichannelSampleBuffer(chain.source, MultichannelSampleBuffer.INITIAL_BUFFER_SIZE);
 		chain.montage = new MultichannelSampleMontage(signalType, chain.sourceBuffer);
 		chain.montageBuffer = new MultichannelSampleBuffer(chain.montage, MultichannelSampleBuffer.INITIAL_BUFFER_SIZE);
-		chain.filter = new MultichannelSampleFilter(chain.montageBuffer,chain.source);
+		chain.filter = new MultichannelSampleFilter(chain.montageBuffer);
 		chain.output = chain.filter;
 		
 		chain.configureOutput();

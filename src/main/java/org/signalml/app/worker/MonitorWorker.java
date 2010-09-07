@@ -230,15 +230,9 @@ public class MonitorWorker extends SwingWorker< Void, Object> {
 	protected void process( List< Object> objs) {
 		for (Object o : objs) {
 			if (o instanceof double[]) {
-                                try {
-                                    sampleSource.getSemaphore().acquire();
-                                    sampleSource.addSamples( (double[]) o);
-                                } catch (InterruptedException ex) {
-                                    java.util.logging.Logger.getLogger(MonitorWorker.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-                                finally{
-                                    sampleSource.getSemaphore().release();
-                                }
+                                sampleSource.lock();
+                                sampleSource.addSamples( (double[]) o);
+                                sampleSource.unlock();
 			}
 			else {
 				tagSet.addTag( (Tag) o);

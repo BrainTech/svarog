@@ -1,6 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/* RoundBufferSampleSourceTest.java created 2010-09-07
+ *
  */
 
 package org.signalml.domain.signal;
@@ -8,47 +7,45 @@ package org.signalml.domain.signal;
 import static org.junit.Assert.*;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
+ * This class performs unit tests on {@link RoundBufferSampleSource} class.
  *
- * @author kret
+ * @author Piotr Szachewicz
  */
 public class RoundBufferSampleSourceTest {
+
+        /**
+         * number of samples used for the tests.
+         */
         public static final int TEST_SAMPLE_COUNT = 4;
 
+        /**
+         * the sample source used for the test
+         */
         private RoundBufferSampleSource source;
 
-        @BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
+        /**
+         * sets everything up for the test
+         */
 	@Before
-	public void setUp() throws Exception {
+	public void setUp(){
 		source = new RoundBufferSampleSource(TEST_SAMPLE_COUNT);
 	}
 
 	/**
-	 * @throws java.lang.Exception
+         * cleans everything after the test
 	 */
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown(){
 		source = null;
 	}
 
+        /**
+         * Test method for {@link RoundBufferSampleSource#addSamples(double[])}.
+         */
         @Test
         public void addSamplesTest(){
 
@@ -68,6 +65,9 @@ public class RoundBufferSampleSourceTest {
             assertEquals(theSamples[3],1.3,0.00001);
         }
 
+        /**
+         * Test method for {@link RoundBufferSampleSource#getSamples(double[], int, int, int) }.
+         */
         @Test
         public void getSamplesTest(){
             double target[];
@@ -98,6 +98,9 @@ public class RoundBufferSampleSourceTest {
 
         }
 
+        /**
+         * Test method for {@link RoundBufferSampleSource#getSamples(double[], int, int, int) }.
+         */
         @Test
         public void getSamplesTestGettingTheLastAddedSample(){
             double target[]=new double[1];
@@ -119,4 +122,5 @@ public class RoundBufferSampleSourceTest {
             assertEquals(target[1],sample+1,0.00001);
 
         }
+        
 }

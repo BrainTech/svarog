@@ -1,4 +1,4 @@
-/* TimeDomainSampleFilter.java created 2008-02-01 modified 2010-08-26
+/* TimeDomainSampleFilter.java created 2008-02-01
  * 
  */
 
@@ -24,9 +24,20 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition {
 	protected Object[] arguments;
 	protected String[] messageCodes;
 
+        /**
+         * an array of filter feedback coefficients
+         */
 	protected double aCoefficients[];
+
+        /**
+         * an array of filter feedforward coefficients
+         */
 	protected double bCoefficients[];
 
+        /**
+         * Constructor. Creates an empty instance of a TimeDomainSampleFilter.
+         * For internal use only.
+         */
         protected TimeDomainSampleFilter(){
         }
 
@@ -57,18 +68,22 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition {
 		return bCoefficients;
 	}
 
+        /**
+         * Returns the order of the filter.
+         * @return the order of the filter
+         */
         public int getFilterOrder(){
-            return Math.max(aCoefficients.length,bCoefficients.length)-1;
+                return Math.max(aCoefficients.length,bCoefficients.length)-1;
         }
 
 	@Override
 	public MessageSourceResolvable getEffectDescription() {
-            return new ResolvableString(messageCodes, arguments, getDefaultEffectDescription());
+                return new ResolvableString(messageCodes, arguments, getDefaultEffectDescription());
 	}
 	
 	@Override
 	public String getDefaultEffectDescription() {
-            return new String("Time Domain Filter");
+                return new String("Time Domain Filter");
 	}
 
 	@Override
@@ -88,11 +103,11 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition {
 
 	@Override
 	public String getDefaultMessage() {
-            return "Time domain filter "+getClass().getSimpleName();
+                return "Time domain filter "+getClass().getSimpleName();
 	}
 
         /**
-         * Duplicates (@link the definition of the filter).
+         * Duplicates (@link TimeDomainSampleFilter the definition of the filter).
          * @return the copy of the filter
          */
         @Override
@@ -118,14 +133,14 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition {
          */
         @Override
         public boolean equals(Object o){
-            if(!(o instanceof TimeDomainSampleFilter))
-                return false;
+                if(!(o instanceof TimeDomainSampleFilter))
+                        return false;
 
-            TimeDomainSampleFilter tdf=(TimeDomainSampleFilter)o;
-            if( (Arrays.equals(aCoefficients,tdf.aCoefficients)) && Arrays.equals(bCoefficients, tdf.bCoefficients))
-                return true;
-            else
-                return false;
+                TimeDomainSampleFilter tdf=(TimeDomainSampleFilter)o;
+                if( (Arrays.equals(aCoefficients,tdf.aCoefficients)) && Arrays.equals(bCoefficients, tdf.bCoefficients))
+                        return true;
+                else
+                        return false;
         }
 	
 }

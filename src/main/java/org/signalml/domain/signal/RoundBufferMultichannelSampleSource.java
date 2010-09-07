@@ -1,8 +1,13 @@
+/* RoundBufferMultichannelSampleSource.java
+ *
+ */
+
 package org.signalml.domain.signal;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.*;
+import java.util.logging.Level;
 
 import org.signalml.app.view.DocumentView;
 import org.signalml.app.view.signal.SignalPlot;
@@ -10,13 +15,22 @@ import org.signalml.app.view.signal.SignalView;
 import org.signalml.exception.SignalMLException;
 
 
-public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource implements OriginalMultichannelSampleSource {
+public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource implements OriginalMultichannelSampleSource, ChangeableMultichannelSampleSource {
 
 	protected int nextInsertPos;
  	protected boolean full;
 	protected DocumentView documentView;
 	protected Object[] labels;
-        protected Semaphore semaphore;
+
+        /**
+         * Semaphore preventing simultaneous read/write/newSamplesCount operations.
+         */
+        private Semaphore semaphore;
+
+        /**
+         * Stores the number of new samples - used by getNewSamplesCount().
+         */
+        private int newSamplesCount=0;
 
 	public RoundBufferMultichannelSampleSource( int channelCount, int sampleCount) {
 		super( null, channelCount, sampleCount);
@@ -25,10 +39,6 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 		full = false;
                 semaphore=new Semaphore(1);
 	}
-
-        public Semaphore getSemaphore(){
-            return semaphore;
-        }
 
 	public DocumentView getDocumentView() {
 		return documentView;
@@ -70,13 +80,16 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 		}
 	}
 
+        @Override
 	public synchronized void addSampleChunk( double[] newSamples) {
 		for (int i=0; i<channelCount; i++) {
 			samples[i][nextInsertPos] = newSamples[i];
 		}
 		incrNextInsertPos();
+                newSamplesCount++;
 	}
 
+        @Override
 	public synchronized void addSamples( double[] newSamples) {
 		addSampleChunk( newSamples);
 		if (documentView != null && ((SignalView) documentView).getPlots() != null) {
@@ -86,6 +99,7 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 
 	}
 
+        @Override
 	public synchronized void addSamples( List<double[]> newSamples) {
 		for (Iterator< double[]> i=newSamples.iterator(); i.hasNext(); )
 			addSampleChunk( i.next());
@@ -164,5 +178,31 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 	public void setLabels( Object[] labels) {
 		this.labels = labels;
 	}
+
+        @Override
+        public synchronized int getNewSamplesCount() {
+                int x=newSamplesCount;
+                clearNewSamplesCount();
+                return x;
+        }
+
+        @Override
+        public synchronized void clearNewSamplesCount(){
+                newSamplesCount=0;
+        }
+
+        @Override
+        public void lock() {
+                try {
+                        semaphore.acquire();
+                } catch (InterruptedException ex) {
+                        java.util.logging.Logger.getLogger(RoundBufferMultichannelSampleSource.class.getName()).log(Level.SEVERE, null, ex);
+                }
+        }
+
+        @Override
+        public void unlock() {
+                semaphore.release();
+        }
 
 }

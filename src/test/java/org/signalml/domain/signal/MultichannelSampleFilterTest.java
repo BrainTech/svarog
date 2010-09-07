@@ -48,8 +48,8 @@ public class MultichannelSampleFilterTest {
 	 */
 	@Before
 	public void setUp() {
-            source=new RoundBufferMultichannelSampleSource(TEST_CHANNEL_COUNT,TEST_SAMPLE_COUNT);
-            mfilter=new MultichannelSampleFilter(source);
+                source=new RoundBufferMultichannelSampleSource(TEST_CHANNEL_COUNT,TEST_SAMPLE_COUNT);
+                mfilter=new MultichannelSampleFilter(source,source);
 	}
 
 	/**
@@ -57,8 +57,8 @@ public class MultichannelSampleFilterTest {
 	 */
 	@After
 	public void tearDown(){
-            source=null;
-            mfilter=null;
+                source=null;
+                mfilter=null;
 	}
 
         /**
@@ -100,11 +100,11 @@ public class MultichannelSampleFilterTest {
 
                 //validating the output of the filter
                 for(j=0;i<TEST_CHANNEL_COUNT;i++){
-                    source.getSamples(i,target1, 0, TEST_SAMPLE_COUNT, 0);
-                    mfilter.getSamples(i,target2, 0, TEST_SAMPLE_COUNT, 0);
+                        source.getSamples(i,target1, 0, TEST_SAMPLE_COUNT, 0);
+                        mfilter.getSamples(i,target2, 0, TEST_SAMPLE_COUNT, 0);
 
-                    for(j=0;j<TEST_SAMPLE_COUNT;j++)
-                        assertEquals(target1[j],6*target2[j],0.00001);
+                        for(j=0;j<TEST_SAMPLE_COUNT;j++)
+                                assertEquals(target1[j],6*target2[j],0.00001);
                 }
             
         }
@@ -115,19 +115,19 @@ public class MultichannelSampleFilterTest {
 	 */
 	@Test
 	public void testAddFilterAllChannels() {
-            TimeDomainSampleFilter definition=new TimeDomainSampleFilter("sampleFilter.td.lowPass", "xxx",
-                new double[] {1.0,0.0},
-                new double[] {1.0,0.0} );
-            TimeDomainSampleFilterEngine filterEngine=new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source,0),definition);
+                TimeDomainSampleFilter definition=new TimeDomainSampleFilter("sampleFilter.td.lowPass", "xxx",
+                        new double[] {1.0,0.0},
+                        new double[] {1.0,0.0} );
+                TimeDomainSampleFilterEngine filterEngine=new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source,0),definition);
 
-            int i,j;
+                int i,j;
 
-            //adds one filter on each step and checks if the filter chains' sizes are correct
-            for(i=0;i<4;i++){
-                for(j=0;j<TEST_CHANNEL_COUNT;j++)
-                      assertEquals(mfilter.chains.elementAt(j).size(),i);
-                mfilter.addFilter(filterEngine);
-            }
+                //adds one filter on each step and checks if the filter chains' sizes are correct
+                for(i=0;i<4;i++){
+                        for(j=0;j<TEST_CHANNEL_COUNT;j++)
+                              assertEquals(mfilter.chains.elementAt(j).size(),i);
+                        mfilter.addFilter(filterEngine);
+                }
 
 	}
 
@@ -136,36 +136,36 @@ public class MultichannelSampleFilterTest {
 	 */
         @Test
 	public void testAddFilterForSpecifiedChannels() {
-            TimeDomainSampleFilter definition=new TimeDomainSampleFilter("sampleFilter.td.lowPass", "xxx",
-                new double[] {1.0,0.0},
-                new double[] {1.0,0.0} );
-            TimeDomainSampleFilterEngine filterEngine=new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source,0),definition);
+                TimeDomainSampleFilter definition=new TimeDomainSampleFilter("sampleFilter.td.lowPass", "xxx",
+                        new double[] {1.0,0.0},
+                        new double[] {1.0,0.0} );
+                TimeDomainSampleFilterEngine filterEngine=new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source,0),definition);
 
-            int i,j;
+                int i,j;
 
-            //checking if the filter chains are empty
-            for(j=0;j<TEST_CHANNEL_COUNT;j++)
-                 assertEquals(mfilter.chains.elementAt(j).size(),0);
-
-            //adding  one filter to channels 2,3  & validating chains sizes
-             mfilter.addFilter(filterEngine,new int[]{2,3});
-             for(j=0;j<TEST_CHANNEL_COUNT;j++){
-                 if(j==2 || j==3 )
-                    assertEquals(mfilter.chains.elementAt(j).size(),1);
-                 else
+                //checking if the filter chains are empty
+                for(j=0;j<TEST_CHANNEL_COUNT;j++)
                      assertEquals(mfilter.chains.elementAt(j).size(),0);
-             }
 
-             //adding one filter to channels 3,4,5 & validating chains sizes
-             mfilter.addFilter(filterEngine,new int[]{3,4,5});
-             for(j=0;j<TEST_CHANNEL_COUNT;j++){
-                 if(j==2 || j==4 || j==5 )
-                    assertEquals(mfilter.chains.elementAt(j).size(),1);
-                 else if (j==3)
-                     assertEquals(mfilter.chains.elementAt(j).size(),2);
-                 else
-                     assertEquals(mfilter.chains.elementAt(j).size(),0);
-             }
+                //adding  one filter to channels 2,3  & validating chains sizes
+                 mfilter.addFilter(filterEngine,new int[]{2,3});
+                 for(j=0;j<TEST_CHANNEL_COUNT;j++){
+                        if(j==2 || j==3 )
+                                assertEquals(mfilter.chains.elementAt(j).size(),1);
+                        else
+                                assertEquals(mfilter.chains.elementAt(j).size(),0);
+                 }
+
+                 //adding one filter to channels 3,4,5 & validating chains sizes
+                 mfilter.addFilter(filterEngine,new int[]{3,4,5});
+                 for(j=0;j<TEST_CHANNEL_COUNT;j++){
+                        if(j==2 || j==4 || j==5 )
+                                assertEquals(mfilter.chains.elementAt(j).size(),1);
+                        else if (j==3)
+                                assertEquals(mfilter.chains.elementAt(j).size(),2);
+                        else
+                                assertEquals(mfilter.chains.elementAt(j).size(),0);
+                 }
 
 	}
 
@@ -174,78 +174,78 @@ public class MultichannelSampleFilterTest {
 	 */
         @Test
         public void testApplyMontage() throws MontageMismatchException{
-            int i;
+                int i;
 
-            SourceMontage sMontage=new SourceMontage(SignalType.EEG_10_20,TEST_CHANNEL_COUNT);
-            Montage montage=new Montage(sMontage);
-            for(i=0;i<TEST_CHANNEL_COUNT;i++)
-                montage.addMontageChannel(i,i);
+                SourceMontage sMontage=new SourceMontage(SignalType.EEG_10_20,TEST_CHANNEL_COUNT);
+                Montage montage=new Montage(sMontage);
+                for(i=0;i<TEST_CHANNEL_COUNT;i++)
+                        montage.addMontageChannel(i,i);
 
-            //no filters
-            mfilter.applyMontage(montage);
+                //no filters
+                mfilter.applyMontage(montage);
 
-            for(i=0;i<TEST_CHANNEL_COUNT;i++)
-                assertEquals(mfilter.chains.elementAt(i).size(),0);
+                for(i=0;i<TEST_CHANNEL_COUNT;i++)
+                        assertEquals(mfilter.chains.elementAt(i).size(),0);
 
-            //two filters in a montage
-            SampleFilterDefinition definition[]={new TimeDomainSampleFilter("sampleFilter.td.lowPass", "xxx",
-                new double[] {2.0,0.0},
-                new double[] {1.0,0.0} ),
-            new TimeDomainSampleFilter("sampleFilter.td.lowPass", "xxx",
-                new double[] {6.0,0.0},
-                new double[] {1.0,0.0} ),
-            new TimeDomainSampleFilter("sampleFilter.td.lowPass", "xxx",
-                new double[] {4.0,0.0},
-                new double[] {1.0,0.0} ),
-            new FFTSampleFilter(true),
-            new FFTSampleFilter(true)};
+                //two filters in a montage
+                SampleFilterDefinition definition[]={new TimeDomainSampleFilter("sampleFilter.td.lowPass", "xxx",
+                        new double[] {2.0,0.0},
+                        new double[] {1.0,0.0} ),
+                new TimeDomainSampleFilter("sampleFilter.td.lowPass", "xxx",
+                        new double[] {6.0,0.0},
+                        new double[] {1.0,0.0} ),
+                new TimeDomainSampleFilter("sampleFilter.td.lowPass", "xxx",
+                        new double[] {4.0,0.0},
+                        new double[] {1.0,0.0} ),
+                new FFTSampleFilter(true),
+                new FFTSampleFilter(true)};
 
-            /*MultichannelSampleFilter sums all FFT filters ranges into one FFT filter
-             *summaryFFT filter is used to check if that functionality works
-             */
-            FFTSampleFilter summaryFFT=new FFTSampleFilter(true);
-            Range range=((FFTSampleFilter)definition[3]).new Range(10,20,0.5);
-            ((FFTSampleFilter)definition[3]).setRange(range);
-            summaryFFT.setRange(range);
-            range=((FFTSampleFilter)definition[3]).new Range(50,60,0);
-            ((FFTSampleFilter)definition[4]).setRange(range);
-            summaryFFT.setRange(range);
+                /*MultichannelSampleFilter sums all FFT filters ranges into one FFT filter
+                 *summaryFFT filter is used to check if that functionality works
+                 */
+                FFTSampleFilter summaryFFT=new FFTSampleFilter(true);
+                Range range=((FFTSampleFilter)definition[3]).new Range(10,20,0.5);
+                ((FFTSampleFilter)definition[3]).setRange(range);
+                summaryFFT.setRange(range);
+                range=((FFTSampleFilter)definition[3]).new Range(50,60,0);
+                ((FFTSampleFilter)definition[4]).setRange(range);
+                summaryFFT.setRange(range);
 
-            montage.addSampleFilter(definition[0]);
-            montage.addSampleFilter(definition[1]);
-            mfilter.applyMontage(montage);
+                montage.addSampleFilter(definition[0]);
+                montage.addSampleFilter(definition[1]);
+                mfilter.applyMontage(montage);
 
-            for(i=0;i<TEST_CHANNEL_COUNT;i++)
-                assertEquals(mfilter.chains.elementAt(i).size(),2);
+                for(i=0;i<TEST_CHANNEL_COUNT;i++)
+                        assertEquals(mfilter.chains.elementAt(i).size(),2);
 
-            //third filter but excluded on one channel
-            montage.addSampleFilter(definition[2]);
-            montage.setFilterChannelExcluded(2, 2, true);
-            mfilter.applyMontage(montage);
+                //third filter but excluded on one channel
+                montage.addSampleFilter(definition[2]);
+                montage.setFilterChannelExcluded(2, 2, true);
+                mfilter.applyMontage(montage);
 
-            for(i=0;i<TEST_CHANNEL_COUNT;i++){
-                if(i==2)
-                    assertEquals(mfilter.chains.elementAt(i).size(),2);
-                else
-                    assertEquals(mfilter.chains.elementAt(i).size(),3);
-            }
-
-            //adding FFT Filters
-            montage.addSampleFilter(definition[3]);
-            montage.addSampleFilter(definition[4]);
-            mfilter.applyMontage(montage);
-
-            for(i=0;i<1;i++){
-                    assertTrue(definition[0].equals(mfilter.chains.get(i).get(0).getFilterDefinition()));
-                    assertTrue(definition[1].equals(mfilter.chains.get(i).get(1).getFilterDefinition()));
-                if(i==2) //second filter is excluded on the second channel
-                    assertTrue(summaryFFT.equals(mfilter.chains.get(i).get(2).getFilterDefinition()));
-                else{
-                    assertTrue(definition[2].equals(mfilter.chains.get(i).get(2).getFilterDefinition()));
-                    assertTrue(summaryFFT.equals(mfilter.chains.get(i).get(3).getFilterDefinition()));
+                for(i=0;i<TEST_CHANNEL_COUNT;i++){
+                        if(i==2)
+                                assertEquals(mfilter.chains.elementAt(i).size(),2);
+                        else
+                                assertEquals(mfilter.chains.elementAt(i).size(),3);
                 }
-                    
-            }
+
+                //adding FFT Filters
+                montage.addSampleFilter(definition[3]);
+                montage.addSampleFilter(definition[4]);
+                mfilter.applyMontage(montage);
+
+                for(i=0;i<1;i++){
+                        assertTrue(definition[0].equals(mfilter.chains.get(i).get(0).getFilterDefinition()));
+                        assertTrue(definition[1].equals(mfilter.chains.get(i).get(1).getFilterDefinition()));
+                        if(i==2) //second filter is excluded on the second channel
+                                assertTrue(summaryFFT.equals(mfilter.chains.get(i).get(2).getFilterDefinition()));
+                        else{
+                                assertTrue(definition[2].equals(mfilter.chains.get(i).get(2).getFilterDefinition()));
+                                assertTrue(summaryFFT.equals(mfilter.chains.get(i).get(3).getFilterDefinition()));
+                        }
+
+                }
 
         }
 

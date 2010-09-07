@@ -138,7 +138,6 @@ public class MontageFiltersPanel extends JPanel {
 		filtersTablePanel.add( getFiltersScrollPane(), BorderLayout.CENTER );
 		filtersTablePanel.add( filtersTableButtonPanel, BorderLayout.SOUTH );
 		
-		
 		JPanel addTimeDomainFilterPanel = new JPanel( new BorderLayout(3,3) );
 		border = new CompoundBorder(
 				new TitledBorder( messageSource.getMessage("montageFilters.addTimeDomainFilterTitle") ),
@@ -157,10 +156,10 @@ public class MontageFiltersPanel extends JPanel {
 				new EmptyBorder(3,3,3,3)
 		);
 		addFftFilterPanel.setBorder( border );
-		
+
 		addFftFilterPanel.add( getFftFilterTypeComboBox(), BorderLayout.CENTER );
 		addFftFilterPanel.add( getAddFFTFilterButton(), BorderLayout.EAST );
-		
+
 		JPanel bottomLeftPanel = new JPanel( new BorderLayout() );
 		
 		bottomLeftPanel.add( addTimeDomainFilterPanel, BorderLayout.CENTER );
