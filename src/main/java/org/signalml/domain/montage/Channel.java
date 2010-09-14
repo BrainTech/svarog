@@ -9,7 +9,8 @@ import java.io.Serializable;
 import org.springframework.context.MessageSourceResolvable;
 
 /**
- * This interface describes the types (functions) of channels and their location.
+ * This interface describes the types (functions) of channels and their location
+ * (location of electrodes).
  * Allows to find neighbours for a given channel.
  * Its implementations are enumerators containing possible functions of channels
  * (e.g. for {@link GenericChannel GenericChannel} it will be

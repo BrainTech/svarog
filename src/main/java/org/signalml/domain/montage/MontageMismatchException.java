@@ -8,7 +8,8 @@ import org.signalml.exception.SignalMLException;
 
 /**
  * This class represents an exception of mismatch between
- * @link Montage montages}.
+ * {@link Montage montages}.
+ * Occurs if the number of channels in montages is different.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

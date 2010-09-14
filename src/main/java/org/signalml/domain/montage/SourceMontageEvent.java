@@ -8,7 +8,7 @@ import java.util.EventObject;
 
 /**
  * This class represents an event associated with change, removal or addition of
- * a {@link SourceChannel source channel}.
+ * a {@link SourceChannel source channel} to a {@link SourceMontage source montage}.
  * Contains an index of this channel.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.

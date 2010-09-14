@@ -12,8 +12,8 @@ import org.springframework.context.MessageSourceResolvable;
 /**
  * An abstract class representing definition and specification
  * of a {@link MontageSampleFilter filter}.
- * Allows to duplicate a filter, return a description and
- * {@link SampleFilterType type} of a filter.
+ * Allows to duplicate a filter, return a description (String) and
+ * a {@link SampleFilterType type} of a filter.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

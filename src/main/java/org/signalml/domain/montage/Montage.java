@@ -19,8 +19,12 @@ import org.signalml.util.Util;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
- * This class represents the montage of channels.
- * Contains a list of {@link MontageChannel montage channels} and
+ * This class represents the signal montage.
+ * Montage is the representation of the EEG channels.
+ * Every montage channel is a difference between the voltage of the electrode
+ * and voltage of some reference (may be another electrode or average of electrodes).
+ * 
+ * This class contains a list of {@link MontageChannel mongate channels} and
  * a list of {@link MontageSampleFilter filters}.
  * Filters can be excluded either for selected channels or for all of them.
  * This class has also assigned listeners informing about changes in a montage.
@@ -180,14 +184,11 @@ public class Montage extends SourceMontage implements Preset {
 	}
 
         /**
-         * Checks if this montage is compatible with the object given as the parameter.
-         *
-         * <p>Montages are compatible if:
-         * <ol>
-         * <li> they are compatible as {@link SourceMontage source montages}
-         * <li> have the same number of montage channels
-         * <li> for each source channel montage channels have the same references
-         * </ol>
+         * Checks if this montage is compatible with the object given as parameter.
+         * Montages are compatible if:
+         * 1. they are compatible as {@link SourceMontage source montages}
+         * 2. have the same number of montage channels
+         * 3. for each source channel montage channels have the same references
          * @param montage the montage to be compared with a current object
          * @return true if montages are compatible, false otherwise
          */

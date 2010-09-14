@@ -13,9 +13,21 @@ import org.springframework.context.MessageSourceResolvable;
  */
 public enum ChannelType implements MessageSourceResolvable {
 
+	/**
+	 * "normal" channel with signal
+	 */
 	PRIMARY,
+	/**
+	 * channel used as reference
+	 */
 	REFERENCE,
+	/**
+	 * other known type
+	 */
 	OTHER,
+	/**
+	 * unknown type
+	 */
 	UNKNOWN
 	;
 

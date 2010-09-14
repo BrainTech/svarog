@@ -13,9 +13,9 @@ import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
- * This class represents sample filter for a {@link Montage montage}.
- * Contains the {@link SampleFilterDefinition definition} of a filter,
- * an indicator whether it is enabled and a list of
+ * This class contains a description of a sample filter for a {@link Montage montage}.
+ * This description includes the {@link SampleFilterDefinition definition} of a filter,
+ * an indicator whether it is enabled or not and a list of
  * {@link MontageChannel montage channels} that are excluded from
  * this filter.
  *

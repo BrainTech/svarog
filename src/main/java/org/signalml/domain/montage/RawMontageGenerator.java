@@ -9,9 +9,10 @@ import org.springframework.validation.Errors;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
- * This class represents a generator for a raw {@link SourceMontage montage}.
+ * This class represents a generator for a raw (without type) {@link SourceMontage montage}.
  * It generates raw montage from the given montage and checks if the given
  * montages are valid raw montages.
+ * Every montage is valid raw montage.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

@@ -8,7 +8,16 @@ import org.springframework.validation.Errors;
 
 /**
  * This abstract class represents a generator for a single reference montage.
- * It generates montage of that type from the given "raw" montage and checks if
+ * In single reference montage each channel represents the difference between
+ * a certain electrode and a designated reference electrode.
+ * There is no standard position for this reference; it is, however, at a different
+ * position than the "recording" electrodes. Midline positions are often used because
+ * they do not amplify the signal in one hemisphere vs. the other.
+ * Another popular reference is "linked ears," which is a physical or mathematical
+ * average of electrodes attached to both earlobes or mastoids.
+ * (source: {@link http://en.wikipedia.org/wiki/Electroencephalography})
+ * 
+ * This class generates montage of that type from the given "raw" montage and checks if
  * the given {@link SourceMontage montages} are valid single reference montages.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.

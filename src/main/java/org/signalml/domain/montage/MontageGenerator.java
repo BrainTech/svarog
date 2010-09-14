@@ -11,7 +11,7 @@ import org.springframework.validation.Errors;
 
 /**
  * This interface for all montage generators allows to create and
- * validate a {@link Montage montage}.
+ * validate a {@link Montage montage} of a certain type (defined by implementation).
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

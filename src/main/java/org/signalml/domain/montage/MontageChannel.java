@@ -15,7 +15,10 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * This class represents a channel of a {@link Montage montage}.
- * It is composed of one selected {@link SourceChannel channel} and
+ * Montage channel is a difference between the voltage of the electrode
+ * and voltage of some reference (may be another electrode or average of electrodes).
+ * 
+ * This class is composed of one selected {@link SourceChannel source channel} and
  * references to another channels.
  * It contains also exclusions for {@link MontageSampleFilter filters}.
  *

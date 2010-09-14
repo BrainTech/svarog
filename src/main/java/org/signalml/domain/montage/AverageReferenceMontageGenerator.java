@@ -8,7 +8,12 @@ import org.springframework.validation.Errors;
 
 /**
  * This abstract class represents a generator for an average reference montage.
- * It generates montage of that type from the given "raw" montage and checks if
+ * In the average reference montage the outputs of all of the amplifiers are
+ * summed and averaged, and this averaged signal is used as the common reference
+ * for each channel.
+ * (source: {@link http://en.wikipedia.org/wiki/Electroencephalography})
+ * 
+ * This class generates montage of that type from the given "raw" montage and checks if
  * the given {@link SourceMontage montages} are valid average reference montages.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
@@ -124,7 +129,7 @@ public abstract class AverageReferenceMontageGenerator implements MontageGenerat
 
         /**
          * Reports an error, that the {@link Channel channel} (the function of
-         * a source channel) was not found
+         * a source channel) was not found.
          * @param refChannel the channel that was not found
          * @param errors the Errors object used to report errors
          */
@@ -132,7 +137,7 @@ public abstract class AverageReferenceMontageGenerator implements MontageGenerat
 
         /**
          * Reports an error, that the {@link Channel channel} (the function of
-         * a source channel) was not unique
+         * a source channel) was not unique.
          * @param refChannel the channel that was not found
          * @param errors the Errors object used to report errors
          */

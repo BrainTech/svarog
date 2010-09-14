@@ -24,8 +24,8 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * This class represents a source montage.
- * It contains a list of {@link SourceChannel source channels}, from which every
- * has an assigned {@link Channel function (location)}.
+ * Source montage consists of a list of {@link SourceChannel source channels},
+ * from which every has an assigned {@link Channel function (location)}.
  * This class has also assigned listeners informing about changes in it.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.

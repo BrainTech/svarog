@@ -8,8 +8,9 @@ import org.signalml.util.ResolvableString;
 import org.springframework.context.MessageSourceResolvable;
 
 /**
- * This abstract class holds a time domain representation of a
- * {@link SampleFilterDefinition sample filter}.
+ * This abstract class holds description of a
+ * {@link SampleFilterDefinition sample filter} in a time domain.
+ * Contains filters feedback and feedforward coefficients.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

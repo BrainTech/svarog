@@ -9,7 +9,10 @@ import java.util.EventObject;
 /**
  * This class represents an event associated with some change in a
  * {@link Montage montage}.
- * Contains arrays of indexes of {@link MontageChannel montage channels} and
+ * Changes may involve adding, removing and changing the
+ * {@link MontageChannel montage channel}, changing reference and changing
+ * the montage structure.
+ * Contains arrays of indexes of montage channels and
  * {@link SourceChannel primary channels} that were changed.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.

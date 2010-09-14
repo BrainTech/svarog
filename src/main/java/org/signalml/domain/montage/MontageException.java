@@ -7,8 +7,14 @@ package org.signalml.domain.montage;
 import org.signalml.exception.SignalMLException;
 
 /**
- * This class represents an exception in a {@link Montage montage}.
- *
+ * This class represents an exception that has occured in a {@link Montage montage}.
+ * Possible exceptions are:
+ * <ul>
+ * <li>channel label or function duplicate</li>
+ * <li>bad primary or reference channel count</li>
+ * <li>channel label empty or containing invalid characters</li>
+ * </ul>
+ * 
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class MontageException extends SignalMLException {

@@ -10,6 +10,15 @@ import org.springframework.validation.Errors;
 
 /**
  * This abstract class represents the generator for a bipolar montage.
+ * In bipolar montage each channel (i.e., waveform) represents the difference
+ * between two adjacent electrodes. The entire montage consists of a series
+ * of these channels.
+ * For example, the channel "Fp1-F3" represents the difference in voltage
+ * between the Fp1 electrode and the F3 electrode. The next channel in the montage,
+ * "F3-C3," represents the voltage difference between F3 and C3, and so on through
+ * the entire array of electrodes.
+ * (source: {@link http://en.wikipedia.org/wiki/Electroencephalography})
+ * 
  * It generates montage of that type from given "raw" montage and checks
  * if {@link SourceMontage montages} are valid bipolar montages.
  *

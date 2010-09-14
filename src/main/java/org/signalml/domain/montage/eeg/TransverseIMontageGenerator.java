@@ -6,7 +6,6 @@ package org.signalml.domain.montage.eeg;
 
 import org.signalml.domain.montage.BipolarReferenceMontageGenerator;
 import org.signalml.domain.montage.Channel;
-import org.signalml.domain.montage.MontageChannel;
 import org.springframework.validation.Errors;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
@@ -16,6 +15,7 @@ import org.signalml.domain.montage.MontageGenerator;
  * This class represents a generator for a transverse I montage.
  * It creates a {@link BipolarReferenceMontageGenerator bipolar reference montage}
  * with a certain array of pairs of channels.
+ * <img src="doc-files/TransverseIMontage.png">
  *
  * @see MontageGenerator
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.

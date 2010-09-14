@@ -15,7 +15,7 @@ import org.signalml.domain.montage.SourceChannel;
 /**
  * This class represents a generator for a left ear montage.
  * It creates a {@link SingleReferenceMontageGenerator single reference montage}
- * with EegChannel.A1 as a {@link Channel function} of reference channel.
+ * with EegChannel.A1 (left ear) as a {@link Channel function} of reference channel.
  *
  * @see MontageGenerator
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.

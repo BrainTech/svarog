@@ -14,7 +14,8 @@ import org.signalml.domain.montage.MontageGenerator;
 /**
  * This class represents a generator for a linked ears montage.
  * It creates a {@link AverageReferenceMontageGenerator average reference montage}
- * with EegChannel.A1 and EegChannel.A2 as functions of reference channels.
+ * with EegChannel.A1 and EegChannel.A2 (left and right ear) as functions of
+ * reference channels (average of this channels is taken as reference).
  *
  * @see MontageGenerator
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.

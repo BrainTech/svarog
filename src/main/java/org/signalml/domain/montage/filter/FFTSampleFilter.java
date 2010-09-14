@@ -18,8 +18,9 @@ import org.springframework.context.MessageSourceResolvable;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
- * This class holds a representation of FFT sample filter.
- *
+ * This class holds a representation of parameters of FFT sample filter.
+ * Contains an array of {@link Range frequency ranges} in which samples are multiplied by a given
+ * coefficients.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
