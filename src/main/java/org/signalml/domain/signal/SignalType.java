@@ -4,14 +4,15 @@
 
 package org.signalml.domain.signal;
 
-import org.signalml.domain.signal.eeg.EegSignalTypeConfigurer;
 import org.signalml.domain.montage.Montage;
+import org.signalml.domain.signal.eeg.EegSignalTypeConfigurer;
 import org.springframework.context.MessageSourceResolvable;
 
 /**
  * This class represents the type of a signal.
  * Contains the {@link SignalTypeConfigurer configurer} which creates
- * {@link Montage montages} for that type.
+ * {@link Montage montages} of that type.
+ * Possible types: EEG, other.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

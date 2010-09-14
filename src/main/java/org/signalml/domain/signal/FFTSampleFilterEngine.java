@@ -15,8 +15,10 @@ import flanagan.math.FourierTransform;
 
 /**
  * This class represents a FFT filter of samples.
- * Allows to return the filtered samples based on the given source.
- * If it is possible buffers the filtered samples.
+ * Allows to return the filtered samples based on the given 
+ * {@link MultichannelSampleSource source}.
+ * Uses {@link FourierTransform} to compute filtered samples.
+ * If it is possible, buffers filtered samples.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

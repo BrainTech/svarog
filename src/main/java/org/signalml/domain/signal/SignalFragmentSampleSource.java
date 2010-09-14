@@ -5,8 +5,8 @@
 package org.signalml.domain.signal;
 
 /**
- * This class represents the {@link MultichannelSampleSource soruce} of samples
- * for the fragment of multichannel signal.
+ * This class represents the {@link MultichannelSampleSource source} of samples
+ * for the fragment (in time) of multichannel signal.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

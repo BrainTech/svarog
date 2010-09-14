@@ -14,7 +14,9 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  * {@link MarkerSegmentedSampleSource source of samples} associated with the
  * marker.
  * Contains the basic information about the source, such as length, selected
- * channels, location of segments and so on.
+ * channels, location of segments, number of neighbourhoods of markers that
+ * can not be used and number of samples before and after the marker that should
+ * be available. 
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

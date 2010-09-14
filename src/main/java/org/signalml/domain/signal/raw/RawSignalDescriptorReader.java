@@ -25,7 +25,8 @@ import org.xml.sax.SAXException;
 
 /**
  * This class is responsible for reading the
- * {@link RawSignalDescriptor description} of a raw signal from file.
+ * {@link RawSignalDescriptor description} of a raw signal from XML file.
+ * TODO add link to example file (need to put it somewhere it the web).
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

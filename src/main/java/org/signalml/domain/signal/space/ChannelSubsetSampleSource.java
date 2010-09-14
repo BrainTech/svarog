@@ -11,6 +11,8 @@ import org.signalml.domain.signal.MultichannelSampleSource;
  * This class represents the source of samples for the selected channels.
  * Contains the source for all channels and the set of indexes of channels that
  * are allowed.
+ * Maps the indexes of channels from stored array to indexes in the source.
+ * @see #getSamples(int, double[], int, int, int)
  *
  * @see MultichannelSampleSource
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
@@ -22,7 +24,7 @@ public class ChannelSubsetSampleSource extends MultichannelSampleProcessor {
          */
 	private int channelCount;
         /**
-         * the collection of indexes of selected channels
+         * the collection of indexes of selected channels.
          */
 	private int[] channelIndices;
 
@@ -56,6 +58,10 @@ public class ChannelSubsetSampleSource extends MultichannelSampleProcessor {
         /**
          * Returns the given number of samples for a given channel starting
          * from a given position in time.
+         * The index of the channel means index in the mapping array, for example:
+         * {@code getSamples(i,...)} return samples for channel
+         * {@code channelIndicies[i]}.
+         * @see #channelIndices
          * @param channel the index of a channel in this source
          * (<code>channelIndices</code> array)
          * @param target the array to which results will be written starting

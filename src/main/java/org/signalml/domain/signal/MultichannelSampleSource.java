@@ -7,8 +7,11 @@ package org.signalml.domain.signal;
 import java.beans.PropertyChangeListener;
 
 /**
- * This is an interface representing the multichannel source of signal samples.
- *
+ * This is an interface representing source of samples for a multichannel signal.
+ * Most important is a function returning samples for a given channel.
+ * Additional functions allow to return number of channels, number of samples,
+ * sampling frequency, calibration and labels for channels.
+ * 
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public interface MultichannelSampleSource {

@@ -28,7 +28,8 @@ import org.w3c.dom.Element;
 
 /**
  * This class is responsible for writing the
- * {@link RawSignalDescriptor description} of a raw signal to the file.
+ * {@link RawSignalDescriptor description} of a raw signal to the XML file.
+ * TODO add link to example file (need to put it somewhere it the web).
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

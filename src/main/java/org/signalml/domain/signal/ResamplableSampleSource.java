@@ -5,9 +5,9 @@
 package org.signalml.domain.signal;
 
 /**
- * This interface represents the source of samples that can be resampled.
+ * This interface represents the source of samples that can be
+ * {@link MultichannelSignalResampler resampled}.
  *
- * @see MultichannelSignalResampler
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public interface ResamplableSampleSource {

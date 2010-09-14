@@ -7,12 +7,21 @@ package org.signalml.domain.signal;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import org.signalml.domain.signal.space.ChannelSubsetSampleSource;
+import org.signalml.domain.signal.space.MarkerSegmentedSampleSource;
+import org.signalml.domain.signal.space.SelectionSegmentedSampleSource;
+
 /**
  * This class represents an abstract processor of source samples for a
  * multichannel signal.
  * It is also a listener for property changes.
  *
  * @see AbstractMultichannelSampleSource
+ * @see ChannelSubsetSampleSource
+ * @see MarkerSegmentedSampleSource
+ * @see MultichannelSampleBuffer
+ * @see MultichannelSampleMontage
+ * @see SelectionSegmentedSampleSource
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public abstract class MultichannelSampleProcessor extends AbstractMultichannelSampleSource implements MultichannelSampleSource, PropertyChangeListener {

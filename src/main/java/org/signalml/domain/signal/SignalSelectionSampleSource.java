@@ -8,8 +8,8 @@ import org.signalml.app.view.signal.SampleSourceUtils;
 
 /**
  * This class represents the {@link MultichannelSampleSource soruce} of samples
- * for the fragment of multichannel signal. This fragment is created based on
- *  a given {@link SignalSelection selection}.
+ * for the fragment of multichannel signal. This fragment is created from
+ * a given {@link SignalSelection selection}.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

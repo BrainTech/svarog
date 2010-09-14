@@ -13,6 +13,7 @@ import org.signalml.domain.tag.Tag;
 /**
  * This class describes the parameters of the signal or the part of the signal
  * in the {@link MultichannelSampleSource source}.
+ * For these parameters see "See also".
  *
  * @see ChannelSpace
  * @see ChannelSpaceType

@@ -11,10 +11,10 @@ import org.signalml.domain.signal.MultichannelSampleSource;
 import org.signalml.domain.tag.TagStyle;
 
 /**
- * This class represents the basic informations about the
+ * This class represents different parameters of
  * {@link MultichannelSampleSource sampled signal}
  * (length, size of pages, blocks, frequency of sampling, labels of channels
- * and so on)
+ * and so on).
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

@@ -7,6 +7,8 @@ package org.signalml.domain.signal;
 /**
  * This is an interface for an abstract source of samples.
  * Allows to return samples for the specified fragment of the signal.
+ * Additionally returns, if possible, the number of samples, calibration
+ * and sampling frequency.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

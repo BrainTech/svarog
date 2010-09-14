@@ -6,15 +6,18 @@ package org.signalml.domain.signal;
 
 import java.io.Serializable;
 
-/** SignalSelection
- *  This class represents a selected part of a signal.
+/**
+ * This class represents a selected part of a signal.
+ * Contains the {@link SignalSelectionType type} of selection,
+ * the starting position in time, the number of selected channel and
+ * the length of the selection. 
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class SignalSelection implements Serializable {
 
         /**
-         * constant saying that no chanel is selected
+         * constant saying that no channel is selected
          */
 	public static final int CHANNEL_NULL = -1;
 

@@ -102,21 +102,21 @@ public interface SignalTypeConfigurer {
 	MontageGenerator getMontageGeneratorAt(int index);
 
         /**
-         * Returns the number of predefined
-         * {@link SampleFilterDefinition filters}.
+         * Returns the number of predefined.
+         * {@link SampleFilterDefinition filters}
          * @return the number of predefined filters
          */
 	int getPredefinedFilterCount();
 
         /**
-         * Returns the collection of predefined
-         * {@link SampleFilterDefinition filters}.
+         * Returns the collection of predefined.
+         * {@link SampleFilterDefinition filters}
          * @return the collection of predefined filters
          */
 	Collection<SampleFilterDefinition> getPredefinedFilters();
 
         /**
-         * Returns predefined {@link SampleFilterDefinition filter} of
+         * Returns predefined @link SampleFilterDefinition filter} of
          * a specified index.
          * @param index the index of the filter to be returned
          * @return the predefined filter of the specified index

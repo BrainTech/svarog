@@ -15,6 +15,8 @@ import org.signalml.exception.SanityCheckException;
 /**
  * This class represents the factory (creator) of
  * {@link MultichannelSegmentedSampleSource segmented sources} of samples.
+ * Allows to create continuous (not segmented) and segmented source based on
+ * Only static shared instance is used.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -72,6 +74,13 @@ public class SegmentedSampleSourceFactory {
          * Creates the
          * {@link MultichannelSegmentedSampleSource segmented source} of
          * samples.
+         * If time space is:
+         * <ul>
+         * <li>marker based - creates {@link MarkerSegmentedSampleSource}</li>
+         * <li>selection based - creates {@link SelectionSegmentedSampleSource}</li>
+         * <li>whole signal - creates {@link SelectionSegmentedSampleSource}, but
+         * as a selection uses maximum possible page selection</li>
+         * </ul>
          * @param source the source of samples for the whole signal
          * @param signalSpace the {@link SignalSpace description} of the
          * parameters of the signal or the part of the signal in the

@@ -24,7 +24,8 @@ import org.signalml.exception.SanityCheckException;
 
 /**
  * This class is responsible for writing the raw signal (or its part)
- * to the file or to the stream.
+ * to the file or to the stream. 
+ * To determine the format uses provided {@link SignalExportDescriptor descriptor}.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import org.signalml.domain.montage.Montage;
 
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.montage.filter.predefined.BandPassSampleFilter;
@@ -15,9 +16,9 @@ import org.signalml.domain.montage.filter.predefined.HighPassSampleFilter;
 import org.signalml.domain.montage.filter.predefined.LowPassSampleFilter;
 
 /**
- * This abstract class represents a configurer of
- * {@link org.signalml.domain.montage.Montage Montages}.
- * Contains 3 predefined filters (low-, band- and high-pass).
+ * This abstract class represents a configurer of {@link Montage montages}.
+ * Contains 3 predefined filters ({@link LowPassSampleFilter low-}, 
+ * {@link BandPassSampleFilter band-} and {@link HighPassSampleFilter high}-pass).
  *
  * @see SignalTypeConfigurer
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.

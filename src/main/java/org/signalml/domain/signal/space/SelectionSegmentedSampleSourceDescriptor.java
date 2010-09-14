@@ -6,15 +6,18 @@ package org.signalml.domain.signal.space;
 
 import org.signalml.domain.signal.MultichannelSampleSource;
 import org.signalml.domain.signal.MultichannelSegmentedSampleSource;
-import org.signalml.domain.signal.SignalSelection;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import org.signalml.domain.signal.SignalSelection;
 
 /**
  * This class represents a descriptor of a
  * {@link SelectionSegmentedSampleSource segmented source of samples}.
  * Allows to create a {@link MultichannelSegmentedSampleSource segmented source}
- * of samples based on this descriptor.
+ * of samples from the given {@link MultichannelSampleSource source}
+ * based on this descriptor.
+ * Contains the index of the first sample, selected channels and the length
+ * of the segment.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

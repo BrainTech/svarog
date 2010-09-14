@@ -11,7 +11,9 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 /**
  * This class represents the descriptor of a raw signal.
  * I consists of basic parameters of the signal, such as the number of channels,
- * the frequency of sampling, length, associated files, types and so on.
+ * the frequency of sampling, length, associated files (source and destination),
+ * {@link SourceSignalType source type}, {@link RawSignalSampleType sample type}
+ * and {@link RawSignalByteOrder byte order}.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -19,7 +21,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 public class RawSignalDescriptor {
 
         /**
-         * This class tells if the signal is stored as raw or described
+         * This enumerator tells if the signal is stored as raw or described
          * by signalML codec.
          */
 	public enum SourceSignalType {

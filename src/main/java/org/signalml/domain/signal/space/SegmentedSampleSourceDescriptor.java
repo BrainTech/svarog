@@ -12,7 +12,8 @@ import org.signalml.domain.signal.MultichannelSegmentedSampleSource;
 /**
  * This is an interface for a descriptor of the
  * {@link MultichannelSegmentedSampleSource segmented source of samples}.
- * Allows to create a segmented source of samples based on this descriptor.
+ * Allows to create a segmented source of samples from the given source
+ * based on this descriptor.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

@@ -12,6 +12,10 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 /**
  * This class represents the description of the
  * {@link SignalProcessingChain signal processing chain}.
+ * Description contains the {@link SignalType type} of the signal,
+ * document with the signal, the {@link Montage} used and the information
+ * if successive types of {@link MultichannelSampleSource sources} are used 
+ * in the chain.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

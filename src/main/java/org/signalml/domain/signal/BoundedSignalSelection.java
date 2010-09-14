@@ -6,7 +6,7 @@ package org.signalml.domain.signal;
 
 /**
  * This class represents a selected part of a signal that is limited by the
- * given parameters.
+ * given parameters (maximum page, block and point in time).
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

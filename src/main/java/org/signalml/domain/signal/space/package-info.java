@@ -1,3 +1,8 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 /**
  * This package contains the implementations of
  * {@link org.signalml.domain.signal.MultichannelSegmentedSampleSource segmented

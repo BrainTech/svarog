@@ -9,7 +9,7 @@ import org.springframework.context.MessageSourceResolvable;
 /**
  * Class representing the type of a {@link SignalSelection selection}.
  * Contains only the name of this type.
- * Predefined types are: page, block, channel.
+ * Possible types are: page, block, channel.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

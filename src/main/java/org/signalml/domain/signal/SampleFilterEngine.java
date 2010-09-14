@@ -6,6 +6,8 @@ package org.signalml.domain.signal;
 
 /**
  * This abstract class represents the engine of a sample filter.
+ * Implements {@link SampleSource} by mapping functions from the actual source.
+ * @see FFTSampleFilterEngine
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

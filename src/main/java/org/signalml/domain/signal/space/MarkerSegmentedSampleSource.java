@@ -17,6 +17,8 @@ import org.signalml.domain.tag.TagStyle;
 /**
  * This class represents the {@link MultichannelSampleSource source} of samples
  * for the neighbourhood of the markers for the selected channels.
+ * Contains the number of samples before and after the markers that should be available
+ * and subset of channels that can be accessed.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

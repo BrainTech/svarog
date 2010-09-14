@@ -18,9 +18,9 @@ import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
 
 /**
- * This abstract class represents a filter of samples for multichannel signal.
+ * This class represents a filter of samples for multichannel signal.
  * It contains the list of {@link SampleFilterEngine engines} for every channel
- * and using them filters samples.
+ * and uses them to filter samples.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

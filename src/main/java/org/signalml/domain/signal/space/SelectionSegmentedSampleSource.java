@@ -14,6 +14,8 @@ import org.signalml.exception.SanityCheckException;
 /**
  * This class represents the {@link MultichannelSampleSource source} of samples
  * for the {@link SignalSelection selected} part of the signal.
+ * Contains the index of the first sample, selected channels and the length
+ * of the segment.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -28,11 +30,13 @@ public class SelectionSegmentedSampleSource extends MultichannelSampleProcessor 
          */
 	private int segmentLength;
         /**
-         * the number of segments in this source
-         * if the {@link SignalSelection selection} is a page selection - the
-         * number of pages in the selection
-         * if the selection is a block selection - the number of blocks
-         * if the selection is a channel selection - <code>1</code>
+         * the number of segments in this source:
+         * <ul>
+         * <li>if the {@link SignalSelection selection} is a page selection - the
+         * number of pages in the selection</li>
+         * <li>if the selection is a block selection - the number of blocks</li>
+         * <li>if the selection is a channel selection - <code>1</code></li>
+         * </ul>
          */
 	private int segmentCount;
 
@@ -66,7 +70,7 @@ public class SelectionSegmentedSampleSource extends MultichannelSampleProcessor 
 
         /**
          * Constructor. Creates the source of samples based on a given
-         * {@link MultichannelSampleSource source} for the whole signal,
+         * {@link MultichannelSampleSource source} of the signal,
          * {@link ChannelSpace subset} of channels and
          * {@link SignalSelection selection}.
          * @param source the source for the whole signal

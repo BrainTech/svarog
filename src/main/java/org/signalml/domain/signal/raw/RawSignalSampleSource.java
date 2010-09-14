@@ -22,7 +22,10 @@ import org.signalml.exception.SignalMLException;
 
 /**
  * This class represents the source of samples for the raw signal.
- * Reads samples from file using buffering if possible.
+ * Reads samples from file and uses buffering if possible.
+ * Contains information about the file with the signal, the number of channels, the sampling
+ * frequency, the {@link RawSignalSampleType type of samples} and
+ * the {@link RawSignalByteOrder byte order}.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

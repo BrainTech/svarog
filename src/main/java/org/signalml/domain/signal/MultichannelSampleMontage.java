@@ -18,7 +18,8 @@ import org.signalml.exception.SanityCheckException;
 
 /**
  * This class represents a source of samples for a {@link Montage montage}.
- *
+ * Using the given montage and source of samples combines (adds with coefficients) different
+ * {@link SourceChannel source channels} to provide desired output.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -29,7 +30,7 @@ public class MultichannelSampleMontage extends MultichannelSampleProcessor {
 	private static final String MATRIX_PROPERTY = "matrix";
 
         /**
-         * an array of {@link Entry entries} holding information about
+         * an array of entries holding information about
          * {@link MontageChannel montage channels}. Indexes in the array are the
          * same as indexes of montage channels in the {@link Montage montage}.
          */
@@ -286,7 +287,7 @@ public class MultichannelSampleMontage extends MultichannelSampleProcessor {
 	}
 
         /**
-         * Returns an array of {@link Entry entries} holding information about
+         * Returns an array of entries holding information about
          * {@link MontageChannel montage channels}. Indexes in the array are the
          * same as indexes of montage channels in the {@link Montage montage}.
          * @return an array of entries with information about montage channels

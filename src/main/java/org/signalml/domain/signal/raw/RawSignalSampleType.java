@@ -9,6 +9,7 @@ import org.springframework.context.MessageSourceResolvable;
 /**
  * This class represents the type (actually length in bits and the
  * interpretation of these bits) of samples in the file with raw signal.
+ * Samples can be represented as: double, float, int, short.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

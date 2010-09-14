@@ -8,7 +8,7 @@ import org.signalml.domain.signal.space.SegmentedSampleSourceDescriptor;
 
 /**
  * This interface represents the {@link MultichannelSampleSource source} of
- * samples for some segments from the signal.
+ * samples for selected segments of the signal.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

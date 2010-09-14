@@ -39,6 +39,9 @@ import org.signalml.domain.signal.SignalTypeConfigurer;
  * This class represents the {@link SignalTypeConfigurer configurer} for
  * an EEG signal.
  * It configures (or creates) a {@link Montage montage} to be an EEG montage.
+ * Contains generators for different EEG montages
+ * (left and right ear, linked ears, longitudinal, transverse).
+ * Returns the backdrop for the signal of that type.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

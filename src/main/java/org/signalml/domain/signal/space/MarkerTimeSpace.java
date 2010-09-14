@@ -7,8 +7,10 @@ package org.signalml.domain.signal.space;
 import org.signalml.domain.signal.MultichannelSampleSource;
 
 /**
- * This class describes the time space associated with the
- * {@link MarkerSegmentedSampleSource source}.
+ * This class describes the neighbourhood of a marker.
+ * Contains the number of channel in which the marker is located and
+ * time before and after the marker that should be included in this space.
+ * Also includes the desciption of the style of the marker. 
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
