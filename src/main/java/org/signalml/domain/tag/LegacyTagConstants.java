@@ -5,14 +5,14 @@
 package org.signalml.domain.tag;
 
 /**
- * This class contains constants describing the outlook of tags
+ * This class contains constants describing the outlook (fill, outline) of tags.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class LegacyTagConstants {
 
         /**
-         * Solid background fill style
+         * solid background fill style
          */
 	public static final byte FILL_SOLID = (byte) 0;
 

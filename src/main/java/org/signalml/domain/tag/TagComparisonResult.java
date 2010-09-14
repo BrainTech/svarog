@@ -12,39 +12,40 @@ import org.signalml.app.model.WriterExportableTable;
 /**
  * This class represents the result of comparison between two sets of tags
  * of the same type.
- * Contains {@link TagStatistic statistics} for bottom and top tags and
- * an array with lengths of common parts of tags of a specified style.
+ * Contains {@link TagStatistic statistics} for bottom and top tags
+ * an array with lengths of common parts of tags of a specified style
+ * (see {@link #styleOverlayMatrix}).
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class TagComparisonResult implements WriterExportableTable {
 
         /**
-         * The statistics of top tags
+         * the {@link TagStatistic statistics} of top tags
          */
 	private TagStatistic topStatistic;
 
         /**
-         * The statistics of bottom tags
+         * the {@link TagStatistic statistics} of bottom tags
          */
 	private TagStatistic bottomStatistic;
 
         /**
          * A 2D array with lengths of common parts of tags of a specified style.
          * First coordinate represents top tags, second - bottom tags.
-         * e.g.
+         * for example:<br>
          * arr[x+1][y+1] -> length of common part of top tags of style of index
-         * <i>x</i> and bottom tags of style of index <i>y</i>
+         * <i>x</i> and bottom tags of style of index <i>y</i><br>
          * arr[x][0] -> length of a part of top tags of style of index
-         * <i>x</i> that is not tagged in bottom tags
+         * <i>x</i> that is not tagged in bottom tags<br>
          * arr[0][y] -> length of a part of bottom tags of style of index
-         * <i>y</i> that is not tagged in top tags
+         * <i>y</i> that is not tagged in top tags.
          */
 	private float[][] styleOverlayMatrix;
 
         /**
-         * Constructor. Creates a result of tag comparison
-         * @param topTagStyles first set of tag styles (top)
+         * Constructor. Creates a result of {@link Tag tag} comparison.
+         * @param topTagStyles first set of {@link TagStyle tag styles} (top)
          * @param bottomTagStyles second set of tag styles (bottom)
          * @param topTotalLength total length (in seconds) of top tags
          * @param bottomTotalLength total length (in seconds) of bottom tags
@@ -59,7 +60,7 @@ public class TagComparisonResult implements WriterExportableTable {
 	}
 
         /**
-         * Returns the statistics of top tags
+         * Returns the statistics of top {@link Tag tags}.
          * @return the statistics of top tags
          */
 	public TagStatistic getTopStatistic() {
@@ -67,7 +68,7 @@ public class TagComparisonResult implements WriterExportableTable {
 	}
 
         /**
-         * Returns the statistics of bottom tags
+         * Returns the statistics of bottom {@link Tag tags}.
          * @return the statistics of bottom tags
          */
 	public TagStatistic getBottomStatistic() {
@@ -75,7 +76,8 @@ public class TagComparisonResult implements WriterExportableTable {
 	}
 
         /**
-         * Returns the number of styles of top tags
+         * Returns the number of {@link TagStyle tag styles} of
+         * top {@link Tag tags}.
          * @return the number of styles of top tags
          */
 	public int getTopStyleCount() {
@@ -83,7 +85,7 @@ public class TagComparisonResult implements WriterExportableTable {
 	}
 
         /**
-         * Returns the top style of a given index
+         * Returns the top {@link TagStyle tag style} of a given index.
          * @param index the index of a top style to be returned
          * @return the top style of a given index
          */
@@ -92,7 +94,8 @@ public class TagComparisonResult implements WriterExportableTable {
 	}
 
         /**
-         * Returns the number of styles of bottom tags
+         * Returns the number of {@link TagStyle tag styles} of
+         * bottom {@link Tag tags}.
          * @return the number of styles of bottom tags
          */
 	public int getBottomStyleCount() {
@@ -100,7 +103,7 @@ public class TagComparisonResult implements WriterExportableTable {
 	}
 
         /**
-         * Returns the bottom style of a given index
+         * Returns the bottom {@link TagStyle tag style} of a given index.
          * @param index the index of a bottom style to be returned
          * @return the bottom style of a given index
          */
@@ -109,7 +112,8 @@ public class TagComparisonResult implements WriterExportableTable {
 	}
 
         /**
-         * Returns the index of a given style in top styles array
+         * Returns the index of a given {@link TagStyle tag style} in
+         * the top styles array.
          * @param style the style which index is to be returned
          * @return the index of a given style in top styles array
          */
@@ -118,7 +122,8 @@ public class TagComparisonResult implements WriterExportableTable {
 	}
 
         /**
-         * Returns the index of a given style in bottom styles array
+         * Returns the index of a given {@link TagStyle tag style} in
+         * the bottom styles array.
          * @param style the style which index is to be returned
          * @return the index of a given style in bottom styles array
          */
@@ -127,8 +132,8 @@ public class TagComparisonResult implements WriterExportableTable {
 	}
 
         /**
-         * Adds a given value to the length of bottom selections
-         * of the given style
+         * Adds a given value to the length of bottom {@link Tag selections}
+         * of the given {@link TagStyle style}.
          * @param index the index of the style in bottomStatistics
          * @param time the length of bottom selections to be added
          */
@@ -137,8 +142,8 @@ public class TagComparisonResult implements WriterExportableTable {
 	}
 
         /**
-         * Adds a given value to the length of bottom selections
-         * of the given style
+         * Adds a given value to the length of bottom {@link Tag selections}
+         * of the given {@link TagStyle style}.
          * @param style the tag style
          * @param time the length of tagged bottom to be added
          */
@@ -147,7 +152,8 @@ public class TagComparisonResult implements WriterExportableTable {
 	}
 
         /**
-         * Returns the length of bottom selections of the given style
+         * Returns the length of bottom {@link Tag selections}
+         * of the given {@link TagStyle style}.
          * @param index the index of the style in bottomStatistics
          * @return the length of bottom selections of the given style
          */
@@ -156,7 +162,8 @@ public class TagComparisonResult implements WriterExportableTable {
 	}
 
         /**
-         * Returns the length of bottom selections of the given style
+         * Returns the length of bottom {@link Tag selections}
+         * of the given {@link TagStyle style}.
          * @param style the tag style
          * @return the length of bottom selections of the given style
          */
@@ -165,7 +172,8 @@ public class TagComparisonResult implements WriterExportableTable {
 	}
 
         /**
-         * Sets the length of bottom selections of the given style
+         * Sets the length of bottom {@link Tag selections}
+         * of the given {@link TagStyle style}.
          * @param index the index of the style in bottomStatistics
          * @param time the length of bottom selections to be set
          */
@@ -174,7 +182,8 @@ public class TagComparisonResult implements WriterExportableTable {
 	}
 
         /**
-         * Sets the length of bottom selections of the given style
+         * Sets the length of bottom {@link Tag selections}
+         * of the given {@link TagStyle style}.
          * @param style the tag style
          * @param time the length of bottom selections to be set
          */
@@ -183,8 +192,8 @@ public class TagComparisonResult implements WriterExportableTable {
 	}
 
          /**
-         * Adds a given value to the length of top selections
-         * of the given style
+         * Adds a given value to the length of top {@link Tag selections}
+         * of the given {@link TagStyle style}.
          * @param index the index of the style in topStatistics
          * @param time the length of top selections to be added
          */
@@ -193,8 +202,8 @@ public class TagComparisonResult implements WriterExportableTable {
 	}
 
         /**
-         * Adds a given value to the length of top selections
-         * of the given style
+         * Adds a given value to the length of top {@link Tag selections}
+         * of the given {@link TagStyle style}.
          * @param style the tag style
          * @param time the length of tagged top to be added
          */
@@ -203,7 +212,8 @@ public class TagComparisonResult implements WriterExportableTable {
 	}
 
         /**
-         * Returns the length of top selections of the given style
+         * Returns the length of top {@link Tag selections}
+         * of the given {@link TagStyle style}.
          * @param index the index of the style in topStatistics
          * @return the length of top selections of the given style
          */
@@ -212,7 +222,8 @@ public class TagComparisonResult implements WriterExportableTable {
 	}
 
         /**
-         * Returns the length of top selections of the given style
+         * Returns the length of top {@link Tag selections}
+         * of the given {@link TagStyle style}.
          * @param style the tag style
          * @return the length of top selections of the given style
          */
@@ -221,7 +232,8 @@ public class TagComparisonResult implements WriterExportableTable {
 	}
 
         /**
-         * Sets the length of top selections of the given style
+         * Sets the length of top {@link Tag selections}
+         * of the given {@link TagStyle style}.
          * @param index the index of the style in topStatistics
          * @param time the length of top selections to be set
          */
@@ -230,7 +242,8 @@ public class TagComparisonResult implements WriterExportableTable {
 	}
 
         /**
-         * Sets the length of top selections of the given style
+         * Sets the length of top {@link Tag selections}
+         * of the given {@link TagStyle style}.
          * @param style the tag style
          * @param time the length of top selections to be set
          */
@@ -239,8 +252,8 @@ public class TagComparisonResult implements WriterExportableTable {
 	}
 
         /**
-         * Adds the given time to the length of common part of two given tag
-         * styles (one of top tags, one of bottom)
+         * Adds the given time to the length of common part of two given
+         * {@link TagStyle tag styles} (one of top tags, one of bottom).
          * @param topIndex the index of the first style in topTags;
          * -1 if no tag
          * @param bottomIndex the index of the second style in bottomTags;
@@ -252,8 +265,8 @@ public class TagComparisonResult implements WriterExportableTable {
 	}
 
         /**
-         * Adds the given time to the length of common part of two given tag
-         * styles (one of top tags, one of bottom)
+         * Adds the given time to the length of common part of two given
+         * {@link TagStyle tag styles} (one of top tags, one of bottom).
          * @param topStyle the style of the top tag; null if no tag
          * @param bottomStyle the style of the bottom tag; null if no tag
          * @param time the time value to be added in seconds
@@ -286,8 +299,8 @@ public class TagComparisonResult implements WriterExportableTable {
 	}
 
 	/**
-         * Returns the length of common part of two given tag styles
-         * (one of top tags, one of bottom)
+         * Returns the length of common part of two given
+         * {@link TagStyle tag styles} (one of top tags, one of bottom).
          * @param topIndex the index of the first style in topTags;
          * -1 if no tag
          * @param bottomIndex the index of the second style in bottomTags;
@@ -299,8 +312,8 @@ public class TagComparisonResult implements WriterExportableTable {
 	}
 
 	/**
-         * Returns the length of common part of two given tag styles
-         * (one of top tags, one of bottom)
+         * Returns the length of common part of two given
+         * {@link TagStyle tag styles} (one of top tags, one of bottom).
          * @param topStyle the style of the top tag; null if no tag
          * @param bottomStyle the style of the bottom tag; null if no tag
          * @return the length of common part of two given tag styles
@@ -333,8 +346,8 @@ public class TagComparisonResult implements WriterExportableTable {
 	}
 
 	/**
-         * Sets the length of common part of two given tag styles
-         * (one of top tags, one of bottom)
+         * Sets the length of common part of two given
+         * {@link TagStyle tag styles} (one of top tags, one of bottom).
          * @param topIndex the index of the first style in topTags;
          * -1 if no tag
          * @param bottomIndex the index of the second style in bottomTags;
@@ -346,8 +359,8 @@ public class TagComparisonResult implements WriterExportableTable {
 	}
 
 	/**
-         * Sets the length of common part of two given tag styles
-         * (one of top tags, one of bottom)
+         * Sets the length of common part of two given
+         * {@link TagStyle tag styles} (one of top tags, one of bottom).
          * @param topStyle the style of the top tag; null if no tag
          * @param bottomStyle the style of the bottom tag; null if no tag
          * @param time the time value to be set in seconds
@@ -380,8 +393,8 @@ public class TagComparisonResult implements WriterExportableTable {
 	}
 
         /**
-         * Writes the current object parameters to a given {@link Writer writer}
-         * using given column and row separator
+         * Writes parameters of this comparison result to a given
+         * {@link Writer writer} using given column and row separator.
          * @param writer the writer to which current object parameters will be
          * written
          * @param columnSeparator a string used to separate columns

@@ -30,9 +30,10 @@ import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
 /**
- * This class is responsible for marshaling StyledTagSet objects
- * to/from textual data.
- *
+ * This class is responsible for marshaling/unmarshaling {@link StyledTagSet}
+ * objects to/from textual data.
+ * Doesn't seem to be used.
+ * 
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class StyledTagSetConverter implements Converter {
@@ -47,11 +48,11 @@ public class StyledTagSetConverter implements Converter {
 	private BooleanConverter booleanConverter = new BooleanConverter("1", "0", false);
 
         /**
-         * Converts an {@link StyledTagSet StyledTagSet} to textual data.
-         * @param value The object to be marshaled
-         * @param writer A stream to write to.
-         * @param context A context that allows nested objects to be processed
-         * by XStream.
+         * Converts a {@link StyledTagSet StyledTagSet} to textual data.
+         * @param value the object to be marshaled
+         * @param writer a stream to write to
+         * @param context a context that allows nested objects to be processed
+         * by XStream
          */
 	@Override
 	public void marshal(Object value, HierarchicalStreamWriter writer, MarshallingContext context) {
@@ -162,7 +163,7 @@ public class StyledTagSetConverter implements Converter {
 	}
 
         /**
-         * Converts an {@link TagStyle TagStyle} to textual data.
+         * Converts a {@link TagStyle TagStyle} to textual data.
          * @param style The TagStyle to be marshaled
          * @param writer A stream to write to.
          */
@@ -373,9 +374,9 @@ public class StyledTagSetConverter implements Converter {
 	}
 
         /**
-         * Determines whether the converter can marshal a particular type.
+         * Determines whether this converter can marshal a particular type.
          * @param clazz the Class representing the object type to be converted
-         * @return true if the converter can marshal a particular type,
+         * @return true if this converter can marshal a particular type,
          * false otherwise
          */
 	@SuppressWarnings("unchecked")

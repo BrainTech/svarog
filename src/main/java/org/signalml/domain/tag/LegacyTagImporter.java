@@ -26,8 +26,12 @@ import eega.util.tag.TagException;
 /**
  * This class allows to create a {@link StyledTagSet StyledTagSet} from file
  * and to convert a {@link TagDataSet TagDataSet} to a StyledTagSet.
+ * Reading from file is done by reading TagDataSet (using method
+ * {@link TagDataSet#loadTagDataSet(String)}) from file and converting it
+ * to StyledTagSet. 
  *
  * @see LegacyTagConstants
+ * @see LegacyTagExporter
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class LegacyTagImporter {
@@ -37,11 +41,11 @@ public class LegacyTagImporter {
         /**
          * Reads a {@link StyledTagSet StyledTagSet} from file.
          * It is done by reading a {@link TagDataSet TagDataSet} form the file
-         * and converting it to StyledTagSet
+         * and converting it to StyledTagSet.
          * @param f the file from which set will be read
          * @param samplingFrequency the sampling frequency of a signal
          * @return the created StyledTagSet
-         * @throws ResolvableException if file contains no legacy tag or
+         * @throws SignalMLException if file contains no legacy tag or
          * some other error while reading legacy tags
          */
 	public StyledTagSet importLegacyTags(File f, float samplingFrequency) throws SignalMLException {
@@ -61,7 +65,7 @@ public class LegacyTagImporter {
         /**
          * Converts a {@link TagDataSet TagDataSet} to the given
          * {@link StyledTagSet StyledTagSet} assuming given sampling frequency
-         * of a signal
+         * of a signal.
          * @param tds the TagDataSet to be converted
          * @param samplingFrequency the sampling frequency of a signal
          * @return the created StyledTagSet object
@@ -163,7 +167,7 @@ public class LegacyTagImporter {
 
         /**
          * Converts the {@link TTagHDRRec TTagHDRRec object} to a
-         * {@link TagStyle TagStyle}
+         * {@link TagStyle TagStyle}.
          * @param rec the object to be converted
          * @param type the type of signal selection associated with the style
          * @return the created object
@@ -189,7 +193,7 @@ public class LegacyTagImporter {
 
         /**
          * Converts an integer representation of a RGB colour to
-         * {@link Color Color} object
+         * {@link Color Color} object.
          * @param rgb an integer with colour in the form of
          * Blue|Green|Red (8 bits every base colour)
          * @return the created Colour object
@@ -200,7 +204,7 @@ public class LegacyTagImporter {
 
         /**
          * Converts the constant byte representation of the outline to the array
-         * representing the dashing pattern for the outline
+         * representing the dashing pattern for the outline.
          * @param id the constant byte representation of the outline
          * @return the array representing the dashing pattern for the outline
          */

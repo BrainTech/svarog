@@ -19,7 +19,7 @@ import org.springframework.context.MessageSourceResolvable;
  * This class represents a tagged {@link SignalSelection selection} of a signal.
  * Contains the {@link TagStyle style} and annotation of this selection.
  * Allows to compare tagged selections using its left end, length and the
- * number of channel
+ * number of channel (in this order).
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -29,18 +29,19 @@ public class Tag extends SignalSelection implements Comparable<Tag>, Cloneable, 
 	private static final long serialVersionUID = 1L;
 
         /**
-         * Style of tagged selection
+         * {@link TagStyle style} of this tagged selection
          */
 	private TagStyle style;
 
         /*
-         * String with annotation of a tagged selection
+         * String with annotation of this tagged selection
          */
 	private String annotation;
 
         /**
-         * Constructor. Creates a tagged selection from a given selection with
-         * a given style and annotation
+         * Constructor. Creates a tagged selection from a given
+         * {@link SignalSelection selection} with a given {@link TagStyle style}
+         * and annotation.
          * @param style the style of the tagged selection
          * @param signalSelection a signal selection to be copied/used
          * @param annotation an annotation of a tagged selection
@@ -52,8 +53,9 @@ public class Tag extends SignalSelection implements Comparable<Tag>, Cloneable, 
 	}
 
         /**
-         * Constructor. Creates a tagged selection with a given style, starting
-         * position, length, annotation and the number of channel
+         * Constructor. Creates a tagged selection with a given
+         * {@link TagStyle style}, starting position, length, annotation and
+         * the number of the channel.
          * @param style the style of the tagged selection
          * @param position the position from which the selection starts
          * @param length the length of the selection
@@ -68,10 +70,10 @@ public class Tag extends SignalSelection implements Comparable<Tag>, Cloneable, 
 	}
 
         /**
-         * Constructor. Creates a tagged selection with a given style, starting
-         * position and length, but without any annotation.
-         * Selection will concern all channels
-         * @param style the style of the tagged selection
+         * Constructor. Creates a tagged selection with a given
+         * {@link TagStyle style}, starting position and length, but without
+         * any annotation. Selection will concern all channels.
+         * @param style the style of the tagged selection.
          * @param position the position from which the selection starts
          * @param length the length of the selection
          */
@@ -81,8 +83,9 @@ public class Tag extends SignalSelection implements Comparable<Tag>, Cloneable, 
 	}
 
         /**
-         * Constructor. Creates a tagged selection with a given style, starting
-         * position, length and the number of channel, but without any annotation.
+         * Constructor. Creates a tagged selection with a given
+         * {@link TagStyle style}, starting position, length and the number of
+         * channel, but without any annotation.
          * @param style the style of the tagged selection
          * @param position the position from which the selection starts
          * @param length the length of the selection
@@ -94,7 +97,7 @@ public class Tag extends SignalSelection implements Comparable<Tag>, Cloneable, 
 	}
 
         /**
-         * Copy constructor
+         * Copy constructor.
          * @param tag the tagged selection to be copied
          */
 	public Tag(Tag tag) {
@@ -102,48 +105,48 @@ public class Tag extends SignalSelection implements Comparable<Tag>, Cloneable, 
 	}
 
         /**
-         * Returns the style of the current object
-         * @return the style of the current object
+         * Returns the style of this tagged selection.
+         * @return the style of this tagged selection
          */
 	public TagStyle getStyle() {
 		return style;
 	}
 
         /**
-         * Returns the annotation of the current object
-         * @return the annotation of the current object
+         * Returns the annotation of this tagged selection.
+         * @return the annotation of this tagged selection
          */
 	public String getAnnotation() {
 		return annotation;
 	}
 
         /**
-         * Sets the annotation of the current object
-         * @param annotation  the annotation to be set
+         * Sets the annotation of this tagged selection.
+         * @param annotation the annotation to be set
          */
 	public void setAnnotation(String annotation) {
 		this.annotation = annotation;
 	}
 
         /**
-         * Returns whether the current object is a marker
-         * @return true if the current object is a marker, false otherwise
+         * Returns whether this tagged selection is a marker.
+         * @return true if this tagged selection is a marker, false otherwise
          */
 	public boolean isMarker() {
 		return (style != null ? style.isMarker() : false);
 	}
 
-	/**
-	 * Compares the current object to given.
-	 * The comparison uses the following characteristics in turn:
-	 * starting position, length, the channel number,
-	 * and the TagStyle of this tag. The first characteristic that
-	 * doesn't match determines the outcome of the comparison.
-	 * @param t a tagged selection to be compared with the current object
-	 * @return &gt; 0 if the current object is greater than given;
-	 * &lt; 0 if current is smaller than given;
-	 * 0 if the selections are equal.
-	 */
+        /**
++        * Compares the current object to given.
++        * The comparison uses the following characteristics in turn:
++        * starting position, length, the channel number,
++        * and the TagStyle of this tag. The first characteristic that
++        * doesn't match determines the outcome of the comparison.
++        * @param t a tagged selection to be compared with the current object
++        * @return &gt; 0 if the current object is greater than given;
++        * &lt; 0 if current is smaller than given;
++        * 0 if the selections are equal.
++        */
 	@Override
 	public int compareTo(Tag t) {
 
@@ -166,10 +169,11 @@ public class Tag extends SignalSelection implements Comparable<Tag>, Cloneable, 
 	}
 
         /**
-         * Checks if the current object is equal to given.
-         * Uses {@link #compareTo(Tag)}
-         * @param obj an object to be compared with current
-         * @return true if a given object is equal to current, false otherwise
+         * Checks if this tagged selection is equal to given.
+         * Uses {@link #compareTo(Tag)}.
+         * @param obj an object to be compared with this tagged selection
+         * @return true if a given object is equal to this tagged selection,
+         * false otherwise
          */
 	@Override
 	public boolean equals(Object obj) {
@@ -180,8 +184,8 @@ public class Tag extends SignalSelection implements Comparable<Tag>, Cloneable, 
 	}
 
         /**
-         * Creates a copy of the current object
-         * @return a copy of the current object
+         * Creates a copy of this tagged selection.
+         * @return a copy of this tagged selection
          */
 	@Override
 	protected Tag clone() {

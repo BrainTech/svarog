@@ -12,38 +12,40 @@ import org.signalml.app.model.WriterExportableTable;
 import org.signalml.util.Util;
 
 /**
- * This class contains for each style the total length of tagged selections
- * of a given style
+ * This class contains for each {@link TagStyle style} the total length of
+ * {@link Tag tagged selections} of a this style.
+ * Allows to export this statistics to a Writer.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class TagStatistic implements WriterExportableTable {
 
         /**
-         * Total length of all tagged selections
+         * total length of all {@link Tag tagged selections}
          */
 	protected float totalLength;
 
         /**
-         * An array of styles of tagged selections
+         * an array of {@link TagStyle styles} of {@link Tag tagged selections}
          */
 	protected TagStyle[] tagStyles;
 
         /**
-         * Hash map associating TagStyles with their indexes in a <i>tagStyles</i>
-         * array
+         * Hash map associating {@link TagStyle styles} with their indexes
+         * in a {@link #tagStyles <i>tagStyles</i> array}
          */
 	protected HashMap<TagStyle,Integer> styleIndices;
 
         /**
-         * An array of tagged selections lengths.
-         * For each style (index in a <i>tagStyles</i> array) holds the length
-         * of all tagged selections of this type
+         * An array of {@link Tag tagged selections} lengths.
+         * For each {@link TagStyle style} (index in a
+         * {@link #tagStyles <i>tagStyles</i> array}) holds the length
+         * of all tagged selections of this type.
          */
 	protected float[] styleTimes;
 
         /**
-         * Constructor. Creates an empty TagStatistic
+         * Constructor. Creates an empty TagStatistic.
          */
 	protected TagStatistic() {
 
@@ -52,8 +54,9 @@ public class TagStatistic implements WriterExportableTable {
         /**
          * Initialises attributes using given values.
          * Creates all necessary structures.
-         * @param tagStyles an array of tag styles
-         * @param totalLength the total length of all tagged selections
+         * @param tagStyles an array of {@link TagStyle tag styles}
+         * @param totalLength the total length of all
+         * {@link Tag tagged selections}.
          */
 	protected void init(TagStyle[] tagStyles, float totalLength) {
 
@@ -73,15 +76,16 @@ public class TagStatistic implements WriterExportableTable {
         /**
          * Constructor. Creates a TagStatistic object and initialises its
          * attributes using given values.
-         * @param tagStyles an array of tag styles
-         * @param totalLength the total length of all tagged selections
+         * @param tagStyles an array of {@link TagStyle tag styles}
+         * @param totalLength the total length of all
+         * {@link Tag tagged selections}.
          */
 	public TagStatistic(TagStyle[] tagStyles, float totalLength) {
 		init(tagStyles, totalLength);
 	}
 
         /**
-         * Returns the total length of all tagged selections
+         * Returns the total length of all {@link Tag tagged selections}.
          * @return the total length of all tagged selections
          */
 	public float getTotalLength() {
@@ -89,8 +93,8 @@ public class TagStatistic implements WriterExportableTable {
 	}
 
         /**
-         * Returns the total length of all tagged selections in the form of
-         * string
+         * Returns the total length of all {@link Tag tagged selections} in
+         * the form of strings.
          * @return the total length of all tagged selections in the form of
          * string
          */
@@ -99,7 +103,7 @@ public class TagStatistic implements WriterExportableTable {
 	}
 
         /**
-         * Returns the number of tag styles
+         * Returns the number of {@link TagStyle tag styles}.
          * @return the number of tag styles
          */
 	public int getStyleCount() {
@@ -107,7 +111,8 @@ public class TagStatistic implements WriterExportableTable {
 	}
 
         /**
-         * Returns the tag style of a given index
+         * Returns the {@link TagStyle tag style} of a given index in
+         * the {@link #tagStyles tagStyles array}.
          * @param index the index of a tag style
          * @return the tag style of a given index
          */
@@ -116,7 +121,7 @@ public class TagStatistic implements WriterExportableTable {
 	}
 
         /**
-         * Returns the index of a given tag style
+         * Returns the index of a given {@link TagStyle tag style}.
          * @param style the tag style which index is to be found
          * @return the index of a given tag style
          */
@@ -129,7 +134,8 @@ public class TagStatistic implements WriterExportableTable {
 	}
 
         /**
-         * Returns the length of tagged selections of the given style
+         * Returns the length of {@link Tag tagged selections} of the
+         * given {@link TagStyle style}.
          * @param index the index of the style
          * @return the length of tagged selections of the given style
          */
@@ -138,7 +144,8 @@ public class TagStatistic implements WriterExportableTable {
 	}
 
         /**
-         * Sets the length of tagged selections of the given style
+         * Sets the length of {@link Tag tagged selections} of the
+         * given {@link TagStyle style}.
          * @param index the index of the style
          * @param time the length of tagged selections to be set
          */
@@ -147,8 +154,8 @@ public class TagStatistic implements WriterExportableTable {
 	}
 
         /**
-         * Adds a given value to the length of tagged selections
-         * of the given style
+         * Adds a given value to the length of {@link Tag tagged selections}
+         * of the given {@link TagStyle style}.
          * @param index the index of the style
          * @param time the length of tagged selections to be added
          */
@@ -157,7 +164,8 @@ public class TagStatistic implements WriterExportableTable {
 	}
 
         /**
-         * Returns the length of tagged selections of the given style
+         * Returns the length of {@link Tag tagged selections} of the
+         * given {@link TagStyle style}
          * @param style the tag style
          * @return the length of tagged selections of the given style
          */
@@ -173,7 +181,8 @@ public class TagStatistic implements WriterExportableTable {
 	}
 
         /**
-         * Sets the length of tagged selections of the given style
+         * Sets the length of {@link Tag tagged selections} of the
+         * given {@link TagStyle style}.
          * @param style the tag style
          * @param time the length of tagged selections to be set
          */
@@ -189,7 +198,8 @@ public class TagStatistic implements WriterExportableTable {
 	}
 
         /**
-         * Adds a given value to the length of tagged selections
+         * Adds a given value to the length of {@link Tag tagged selections}
+         * of the* given {@link TagStyle style}.
          * of the given style
          * @param style the tag style
          * @param time the length of tagged selections to be added
@@ -206,8 +216,8 @@ public class TagStatistic implements WriterExportableTable {
 	}
 
         /**
-         * Writes the current object parameters to a given {@link Writer writer}
-         * using given column and row separator
+         * Writes parameters of this statistic to a given {@link Writer writer}
+         * using given column and row separator.
          * @param writer the writer to which current object parameters will be
          * written
          * @param columnSeparator a string used to separate columns

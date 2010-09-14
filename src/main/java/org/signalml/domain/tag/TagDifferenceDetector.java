@@ -20,14 +20,17 @@ import org.signalml.domain.signal.SignalSelectionType;
 import org.signalml.exception.SanityCheckException;
 
 /**
- *
+ * This class represents the detector of {@link TagDifference diferences}
+ * between {@link Tag tags} from two sets. Allows to compare two sets of
+ * tags and find their difference (that is set of differences between tags).
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class TagDifferenceDetector {
 
         /**
-         * Calculates the differences between two sets of tags of the given type.
+         * Calculates the differences between two sets of {@link Tag tags}
+         * of the given {@link SignalSelectionType type}.
          * @param topTags the first set of tags (top)
          * @param bottomTags the second set of tags (bottom)
          * @param targetType the type signal selection
@@ -109,7 +112,8 @@ public class TagDifferenceDetector {
 	}
 
         /**
-         * Compares two sets of tags of a given type.
+         * Compares two sets of {@link Tag tags} of the given
+         * {@link SignalSelectionType type}.
          * As a result creates {@link TagComparisonResult TagComparisonResult}.
          * @param topStyles possible styles of tags in the first set (top)
          * @param bottomStyles possible styles of tags in the second set (bottom)
@@ -204,9 +208,10 @@ public class TagDifferenceDetector {
 	}
 
         /**
-         * Fills two arrays of tag styles (one for bottom tags one for
-         * top) beginning with (sorted by name) styles that are in both sets
-         * (top and bottom) and after them putting (also sorted) the rest
+         * Fills two arrays of {@link TagStyle tag styles} (one for bottom tags
+         * and one for top) beginning with (sorted by name) styles that are
+         * in both sets (top and bottom) and after them putting
+         * (also sorted) the rest.
          * @param topStyles the set of styles for top tags
          * @param bottomStyles the set of styles for bottom tags
          * @param topArr an array for top styles that will be filled
@@ -275,9 +280,11 @@ public class TagDifferenceDetector {
 	}
 
         /**
-         * Compares two sets of tags (all types).
+         * Compares two sets of f {@link Tag tags} (all
+         * {@link SignalSelectionType types}).
          * As a result creates {@link TagComparisonResults TagComparisonResults}.
-         * @param topTagDocument the document with possible styles of top tags
+         * @param topTagDocument the {@link Document document} with possible
+         * styles of top tags
          * @param bottomTagDocument the document with possible styles of
          * bottom tags
          * @return the created TagComparisonResults object

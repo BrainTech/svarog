@@ -23,9 +23,11 @@ import eega.util.tag.TagException;
 /**
  * This class allows to convert a {@link StyledTagSet StyledTagSet} to a
  * {@link TagDataSet TagDataSet} (which is a form that can be written to file)
- * and write it to file.
+ * and write it to a file.
+ * To write to file uses {@link TagDataSet#write(String)}.
  *
  * @see LegacyTagConstants
+ * @see LegacyTagImporter
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class LegacyTagExporter {
@@ -35,7 +37,7 @@ public class LegacyTagExporter {
         /**
          * Writes a {@link StyledTagSet StyledTagSet} to file.
          * It is done by creating a {@link TagDataSet TagDataSet} form the given
-         * StyledTagSet and writing it to file
+         * StyledTagSet and writing it to file.
          * @param tagSet the StyledTagSet to be written to file
          * @param f the file to which set will be written
          * @param channelCount the number of channels of signal
@@ -63,7 +65,7 @@ public class LegacyTagExporter {
         /**
          * Creates a {@link TagDataSet TagDataSet} form the given
          * {@link StyledTagSet StyledTagSet} assuming there are a given number
-         * of channels in the signal and given sampling frequency of a signal
+         * of channels in the signal and given sampling frequency of a signal.
          * @param tagSet the StyledTagSet to be converted
          * @param channelCount the number of channels of signal
          * @param samplingFrequency the sampling frequency of a signal
@@ -147,7 +149,7 @@ public class LegacyTagExporter {
 
         /**
          * Converts the {@link TagStyle style of a tag} to {@link TTagHDRRec
-         * object} that can be written to file
+         * object} that can be written to file.
          * @param style the style of a tag
          * @return the created object
          */
@@ -179,7 +181,7 @@ public class LegacyTagExporter {
 
         /**
          * Converts the array representing the dashing pattern for the outline
-         * to a constant byte representation of the outline
+         * to a constant byte representation of the outline.
          * @param dash the array representing the dashing pattern for the
          * outline
          * @return the constant byte representation of the outline

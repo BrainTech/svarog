@@ -11,7 +11,10 @@ import org.signalml.app.document.TagDocument;
 
 /**
  * This is an abstract class with only static methods and attributes.
- * Associates sleep stages with their levels and colours.
+ * Associates sleep stages with their levels in AASM and RK standards and colours.
+ * Checks if a given String describes proper stage.
+ * Checks if a given String describes a given stage
+ * (for example wake, REM, slow wave). 
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -105,7 +108,7 @@ public abstract class SleepTagName {
 	}
 
         /**
-         * Returns the level of a given sleep stage
+         * Returns the level of a given sleep stage.
          * @param name the name of the sleep stage
          * @return the level of a given sleep stage
          */
@@ -115,7 +118,7 @@ public abstract class SleepTagName {
 	}
 
         /**
-         * Returns the colour for the given sleep stage
+         * Returns the colour for the given sleep stage.
          * @param name the name of the sleep stage
          * @return the colour for the given sleep stage
          */
@@ -124,7 +127,7 @@ public abstract class SleepTagName {
 	}
 
         /**
-         * Returns whether a given stage is a wake stage
+         * Returns whether a given stage is a wake stage.
          * @param name the name of the sleep stage
          * @return true if a given stage is a wake stage, false otherwise
          */
@@ -133,7 +136,7 @@ public abstract class SleepTagName {
 	}
 
         /**
-         * Returns whether a given stage is a REM stage
+         * Returns whether a given stage is a REM stage.
          * @param name the name of the sleep stage
          * @return true if a given stage is a REM stage, false otherwise
          */
@@ -142,7 +145,7 @@ public abstract class SleepTagName {
 	}
 
         /**
-         * Returns whether a given stage is a slow wave stage
+         * Returns whether a given stage is a slow wave stage.
          * @param name the name of the sleep stage
          * @return true if a given stage is a slow wave stage, false otherwise
          */
@@ -151,7 +154,7 @@ public abstract class SleepTagName {
 	}
 
         /**
-         * Returns whether a given stage is a proper sleep stage
+         * Returns whether a given stage is a proper sleep stage.
          * @param name the name of the sleep stage
          * @return true if a given stage is a proper sleep stage, false otherwise
          */
@@ -163,7 +166,7 @@ public abstract class SleepTagName {
 	}
 
         /**
-         * Returns whether a given stage is a sleep stage
+         * Returns whether a given stage is a sleep stage.
          * @param name the name of the sleep stage
          * @return true if a given stage is a sleep stage, false otherwise
          */
@@ -172,9 +175,9 @@ public abstract class SleepTagName {
 	}
 
         /**
-         * Returns whether a given tag is a valid tag for RK sleep
+         * Returns whether a given tag is a valid tag for RK sleep description.
          * @param tag the tag which validity is to be checked
-         * @return true if a given tag is a valid tag for RK sleep,
+         * @return true if a given tag is a valid tag for RK sleep description,
          * false otherwise
          */
 	public static boolean isValidRKSleepTag(TagDocument tag) {
@@ -216,9 +219,9 @@ public abstract class SleepTagName {
 	}
 
         /**
-         * Returns whether a given tag is a valid tag for AAMS sleep
+         * Returns whether a given tag is a valid tag for AAMS sleep description.
          * @param tag the tag which validity is to be checked
-         * @return true if a given tag is a valid tag for AAMS sleep,
+         * @return true if a given tag is a valid tag for AAMS sleep description,
          * false otherwise
          */
 	public static boolean isValidAASMSleepTag(TagDocument tag) {
