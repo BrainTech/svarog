@@ -14,17 +14,19 @@ import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
  * @author Piotr Szachewicz
  */
 public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
+
         protected static final Logger logger = Logger.getLogger(TimeDomainSampleFilterEngine.class);
 
         /**
          * Round buffer used to store filtered samples of the signal.
          */
-        protected RoundBufferSampleSource filtered=null;
+        protected RoundBufferSampleSource filtered = null;
 
         /**
          * a Coefficients of the Time Domain filter (feedback filter coefficients).
          */
         protected double aCoefficients[];
+
         /**
          * b Coefficients of the Time Domain filter (feedforward filter coefficients).
          */
@@ -43,13 +45,15 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
          * filter
          */
 	public TimeDomainSampleFilterEngine( SampleSource source, TimeDomainSampleFilter definition ) {
-		super( source );
 
-                this.definition=definition;
-                aCoefficients=definition.getACoefficients();
-                bCoefficients=definition.getBCoefficients();
-                filterOrder=definition.getFilterOrder();
-                filtered=null;
+		super(source);
+
+                this.definition = definition;
+                aCoefficients = definition.getACoefficients();
+                bCoefficients = definition.getBCoefficients();
+                filterOrder = definition.getFilterOrder();
+                filtered = null;
+
 	}
 
         /**
@@ -61,19 +65,21 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
          * (size of the array = newSamples+ order of the filter).
          */
         protected double[] getUnfilteredSamplesCache(int newSamples){
-                int unfilteredSamplesNeeded=newSamples+filterOrder;
-                int zeroPaddingSize=0;
-                double[] unfilteredSamplesCache=new double[unfilteredSamplesNeeded];
 
-                if(unfilteredSamplesNeeded>source.getSampleCount())
-                    zeroPaddingSize=unfilteredSamplesNeeded-source.getSampleCount();
-                for(int i=0;i<zeroPaddingSize;i++)
-                    unfilteredSamplesCache[i]=0.0;
+                int unfilteredSamplesNeeded = newSamples + filterOrder;
+                int zeroPaddingSize = 0;
+                double[] unfilteredSamplesCache = new double[unfilteredSamplesNeeded];
+
+                if(unfilteredSamplesNeeded > source.getSampleCount())
+                    zeroPaddingSize = unfilteredSamplesNeeded - source.getSampleCount();
+                for(int i = 0; i < zeroPaddingSize; i++)
+                    unfilteredSamplesCache[i] = 0.0;
 
                 source.getSamples(unfilteredSamplesCache,
-                        source.getSampleCount()-unfilteredSamplesNeeded+zeroPaddingSize,
-                        unfilteredSamplesNeeded-zeroPaddingSize, zeroPaddingSize);
+                        source.getSampleCount() - unfilteredSamplesNeeded + zeroPaddingSize,
+                        unfilteredSamplesNeeded - zeroPaddingSize, zeroPaddingSize);
                 return unfilteredSamplesCache;
+
         }
 
         /**
@@ -88,23 +94,25 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
          * the array is filled with zeros).
          */
         protected double[] getFilteredSamplesCache(int newSamples){
-                int filteredCacheSize=newSamples+filterOrder;
-                int zeroPaddingSize=0;
-                double[] filteredSamplesCache=new double[filteredCacheSize];
 
-                if(filtered==null){
-                    filtered=new RoundBufferSampleSource(source.getSampleCount());
-                    for(int i=0;i<source.getSampleCount();i++)
+                int filteredCacheSize = newSamples + filterOrder;
+                int zeroPaddingSize = 0;
+                double[] filteredSamplesCache = new double[filteredCacheSize];
+
+                if(filtered == null){
+                    filtered = new RoundBufferSampleSource(source.getSampleCount());
+                    for(int i = 0; i < source.getSampleCount(); i++)
                         filtered.addSamples(new double[] {0.0});
                 }
 
-                if(filteredCacheSize>filtered.getSampleCount())
-                    zeroPaddingSize=filteredCacheSize-filtered.getSampleCount();
-                for(int i=0;i<zeroPaddingSize;i++)
-                    filteredSamplesCache[i]=0.0;
+                if(filteredCacheSize > filtered.getSampleCount())
+                    zeroPaddingSize = filteredCacheSize - filtered.getSampleCount();
+                for(int i = 0; i < zeroPaddingSize; i++)
+                    filteredSamplesCache[i] = 0.0;
 
-                filtered.getSamples(filteredSamplesCache, filtered.getSampleCount()-filterOrder, filterOrder, zeroPaddingSize);
+                filtered.getSamples(filteredSamplesCache, filtered.getSampleCount() - filterOrder, filterOrder, zeroPaddingSize);
                 return filteredSamplesCache;
+
         }
 
         /**
@@ -119,19 +127,21 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
          * @return an array containing new filtered samples of the signal (size of the array = newSamples)
          */
         protected double[] calculateNewFilteredSamples(double[] unfilteredSamplesCache, double[] filteredSamplesCache, int newSamples){
-                for(int i=filterOrder;i<filteredSamplesCache.length;i++){
-                    for(int j=i-filterOrder;j<=i;j++){
-                        filteredSamplesCache[i]+=unfilteredSamplesCache[j]*bCoefficients[i-j];
-                        if(j<i)
-                            filteredSamplesCache[i]-=filteredSamplesCache[j]*aCoefficients[i-j];
+
+                for(int i = filterOrder; i < filteredSamplesCache.length; i++){
+
+                    for(int j = i - filterOrder; j <= i; j++){
+                        filteredSamplesCache[i] += unfilteredSamplesCache[j] * bCoefficients[i - j];
+                        if(j < i)
+                            filteredSamplesCache[i] -= filteredSamplesCache[j] * aCoefficients[i - j];
                     }
-                    filteredSamplesCache[i]/=aCoefficients[0];
+                    filteredSamplesCache[i] /= aCoefficients[0];
 
                 }
 
-                double[] newFilteredSamples=new double[newSamples];
-                for(int i=0;i<newSamples;i++)
-                    newFilteredSamples[i]=filteredSamplesCache[filterOrder+i];
+                double[] newFilteredSamples = new double[newSamples];
+                for(int i = 0; i < newSamples; i++)
+                    newFilteredSamples[i] = filteredSamplesCache[filterOrder + i];
                 return newFilteredSamples;
         }
 
@@ -141,13 +151,14 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
          * of this method
          */
         public synchronized void updateCache(int newSamples){
-                double[] unfilteredSamplesCache=getUnfilteredSamplesCache(newSamples);
-                double[] filteredSamplesCache=getFilteredSamplesCache(newSamples);
-                double[] newFilteredSamples=calculateNewFilteredSamples(unfilteredSamplesCache, filteredSamplesCache, newSamples);
+
+                double[] unfilteredSamplesCache = getUnfilteredSamplesCache(newSamples);
+                double[] filteredSamplesCache = getFilteredSamplesCache(newSamples);
+                double[] newFilteredSamples = calculateNewFilteredSamples(unfilteredSamplesCache, filteredSamplesCache, newSamples);
 
                 filtered.addSamples(newFilteredSamples);
-        }
 
+        }
 
         /**
          * Return the {@link TimeDomainSampleFilter definition} of the filter.

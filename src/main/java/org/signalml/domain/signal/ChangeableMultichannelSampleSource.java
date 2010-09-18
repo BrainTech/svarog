@@ -14,33 +14,35 @@ import java.util.List;
  * @author Piotr Szachewicz
  */
 public interface ChangeableMultichannelSampleSource {
-        /**
-         * Returns the number of new samples added counting from last call of
-         * this function.
-         *
-         * @return number of new samples added
-         */
-        int getNewSamplesCount();
 
-        /**
-         * Clears the counter of new samples used by {@link getNewSamplesCount()}.
-         */
-        void clearNewSamplesCount();
+	/**
+	 * Returns the number of new samples added counting from last call of
+	 * this function.
+	 *
+	 * @return number of new samples added
+	 */
+	int getNewSamplesCount();
 
-        void addSampleChunk(double[] newSamples);
-        void addSamples( List<double[]> newSamples);
-        void addSamples(double[] newSamples);
+	/**
+	 * Clears the counter of new samples used by {@link getNewSamplesCount()}.
+	 */
+	void clearNewSamplesCount();
 
-        /**
-         * Acquires the built in binary semaphore. It does not prevent other threads
-         * from using the {@link ChangeableMultichannelSampleSource}, unless their
-         * critical sections are surrounded by {@link lock()} and {@link unlock()}
-         * methods.
-         */
-        void lock();
+	void addSampleChunk(double[] newSamples);
+	void addSamples( List<double[]> newSamples);
+	void addSamples(double[] newSamples);
 
-        /**
-         * Releases the built in binary semaphore.
-         */
-        void unlock();
+	/**
+	 * Acquires the built in binary semaphore. It does not prevent other threads
+	 * from using the {@link ChangeableMultichannelSampleSource}, unless their
+	 * critical sections are surrounded by {@link lock()} and {@link unlock()}
+	 * methods.
+	 */
+	void lock();
+
+	/**
+	 * Releases the built in binary semaphore.
+	 */
+	void unlock();
+
 }

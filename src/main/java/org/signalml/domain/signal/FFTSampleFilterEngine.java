@@ -38,10 +38,10 @@ public class FFTSampleFilterEngine extends SampleFilterEngine {
 		definition.getWindowType().apply(fourierTransform, definition.getWindowParameter());		
 	}
 
-        @Override
-        public FFTSampleFilter getFilterDefinition(){
-            return (FFTSampleFilter)definition;
-        }
+	@Override
+	public FFTSampleFilter getFilterDefinition(){
+		return (FFTSampleFilter)definition;
+	}
 		
 	@Override
 	public void getSamples(double[] target, int signalOffset, int count, int arrayOffset) {

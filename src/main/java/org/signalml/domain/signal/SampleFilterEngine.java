@@ -1,5 +1,5 @@
 /* SampleFilterEngine.java created 2008-02-04
- * 
+ *
  */
 
 package org.signalml.domain.signal;
@@ -8,18 +8,18 @@ import org.signalml.domain.montage.filter.SampleFilterDefinition;
 
 /** SampleFilterEngine
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public abstract class SampleFilterEngine implements SampleSource {
 
-        /*
-         * the {@link SampleFilterDefinition definition} of the filter
-         */
-        SampleFilterDefinition definition;
+	/*
+	 * the {@link SampleFilterDefinition definition} of the filter
+	 */
+	SampleFilterDefinition definition;
 
 	protected SampleSource source;
-		
+
 	public SampleFilterEngine(SampleSource source) {
 		this.source = source;
 	}
@@ -29,12 +29,12 @@ public abstract class SampleFilterEngine implements SampleSource {
 		return source.getCalibration();
 	}
 
-        /**
-         * Returs the (@link SampleFilterDefinition definition of the filter) used
-         * by the filtering engine.
-         * @return (@link SampleFilterDefinition the definition of the filter)
-         */
-        public abstract SampleFilterDefinition getFilterDefinition();
+	/**
+	 * Returs the (@link SampleFilterDefinition definition of the filter) used
+	 * by the filtering engine.
+	 * @return (@link SampleFilterDefinition the definition of the filter)
+	 */
+	public abstract SampleFilterDefinition getFilterDefinition();
 
 	@Override
 	public String getLabel() {

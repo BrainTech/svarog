@@ -50,25 +50,25 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 
 	private boolean saved = true;
 
-	public MonitorSignalDocument( OpenMonitorDescriptor monitorOptions) {
-		super( monitorOptions.getType());
+	public MonitorSignalDocument(OpenMonitorDescriptor monitorOptions) {
+		super(monitorOptions.getType());
 		this.monitorOptions = monitorOptions;
 		double freq = monitorOptions.getSamplingFrequency();
 		double ps = monitorOptions.getPageSize();
-		int sampleCount = (int) Math.ceil( ps * freq);
-		sampleSource = new RoundBufferMultichannelSampleSource( monitorOptions.getSelectedChannelList().length, sampleCount);
-		((RoundBufferMultichannelSampleSource) sampleSource).setLabels( monitorOptions.getSelectedChannelList());
-		((RoundBufferMultichannelSampleSource) sampleSource).setDocumentView( getDocumentView());
+		int sampleCount = (int) Math.ceil(ps * freq);
+		sampleSource = new RoundBufferMultichannelSampleSource(monitorOptions.getSelectedChannelList().length, sampleCount);
+		((RoundBufferMultichannelSampleSource) sampleSource).setLabels(monitorOptions.getSelectedChannelList());
+		((RoundBufferMultichannelSampleSource) sampleSource).setDocumentView(getDocumentView());
 
-		recorderOutputFile = new File( "signal.buf");
+		recorderOutputFile = new File("signal.buf");
 		try {
-			recorderOutput = new FileOutputStream( recorderOutputFile);
+			recorderOutput = new FileOutputStream(recorderOutputFile);
 		}
 		catch (FileNotFoundException e) {
 		}
 	}
 
-	public void setName( String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 
@@ -99,15 +99,15 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	@Override
 	public void setDocumentView(DocumentView documentView) {
 		super.setDocumentView(documentView);
-		if (documentView != null){
-			for (Iterator<SignalPlot> i=((SignalView) documentView).getPlots().iterator(); i.hasNext(); ) {
+		if (documentView != null) {
+			for (Iterator<SignalPlot> i=((SignalView) documentView).getPlots().iterator(); i.hasNext();) {
 				SignalPlot signalPlot = i.next();
-				SignalProcessingChain signalChain = SignalProcessingChain.createNotBufferedFilteredChain( sampleSource, getType());
-				signalPlot.setSignalChain( signalChain);
+				SignalProcessingChain signalChain = SignalProcessingChain.createNotBufferedFilteredChain(sampleSource, getType());
+				signalPlot.setSignalChain(signalChain);
 			}
 		}
 		if (sampleSource != null && sampleSource instanceof RoundBufferMultichannelSampleSource) {
-			((RoundBufferMultichannelSampleSource) sampleSource).setDocumentView( documentView);
+			((RoundBufferMultichannelSampleSource) sampleSource).setDocumentView(documentView);
 		}
 	}
 
@@ -122,7 +122,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	@Override
 	public void openDocument() throws SignalMLException, IOException {
 
-		setSaved( true );
+		setSaved(true);
 
 		if (monitorOptions.getJmxClient() == null) {
 			throw new IOException();
@@ -131,13 +131,13 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		LinkedBlockingQueue< double[]> sampleQueue = null;
 		if (recorderOutput != null) {
 			sampleQueue = new LinkedBlockingQueue< double[]>();
-			recorderWorker = new SignalRecorderWorker( sampleQueue, recorderOutputFile, monitorOptions, 50L);
+			recorderWorker = new SignalRecorderWorker(sampleQueue, recorderOutputFile, monitorOptions, 50L);
 			recorderWorker.execute();
 		}
 
-		monitorWorker = new MonitorWorker( monitorOptions.getJmxClient(), monitorOptions, (RoundBufferMultichannelSampleSource) sampleSource);
+		monitorWorker = new MonitorWorker(monitorOptions.getJmxClient(), monitorOptions, (RoundBufferMultichannelSampleSource) sampleSource);
 		if (sampleQueue != null)
-			monitorWorker.setSampleQueue( sampleQueue);
+			monitorWorker.setSampleQueue(sampleQueue);
 		monitorWorker.execute();
 
 	}
@@ -148,10 +148,10 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		int sampleCount = 0;
 		StyledTagSet tagSet = null;
 		if (monitorWorker != null && !monitorWorker.isCancelled()) {
-			monitorWorker.cancel( false);
+			monitorWorker.cancel(false);
 			do {
 				try {
-					Thread.sleep( 1);
+					Thread.sleep(1);
 				}
 				catch (InterruptedException e) {}
 			} while (!monitorWorker.isFinished());
@@ -160,10 +160,10 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		}
 
 		if (recorderWorker != null && !recorderWorker.isCancelled()) {
-			recorderWorker.cancel( false);
+			recorderWorker.cancel(false);
 			do {
 				try {
-					Thread.sleep( 1);
+					Thread.sleep(1);
 				}
 				catch (InterruptedException e) {}
 			} while (!recorderWorker.isFinished());
@@ -180,7 +180,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		}
 		if (path == null && monitorOptions.getFileName() != null) {
 			File f = null;
-			f = new File( monitorOptions.getFileName());
+			f = new File(monitorOptions.getFileName());
 			try {
 				path = f.getCanonicalPath();
 			}
@@ -196,61 +196,61 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 			String tagPath	  = null;
 			File tagFile		= null;
 
-			if (path.endsWith( ".xml")) {
+			if (path.endsWith(".xml")) {
 				metadataPath = path;
-				dataPath = path.substring( 0, path.length() - 4) + ".raw";
-				tagPath = path.substring( 0, path.length() - 4) + ".tag";
+				dataPath = path.substring(0, path.length() - 4) + ".raw";
+				tagPath = path.substring(0, path.length() - 4) + ".tag";
 			}
-			else if (path.endsWith( "raw")) {
+			else if (path.endsWith("raw")) {
 				dataPath = path;
-				metadataPath = path.substring( 0, path.length() - 4) + ".xml";
-				tagPath = path.substring( 0, path.length() - 4) + ".tag";
+				metadataPath = path.substring(0, path.length() - 4) + ".xml";
+				tagPath = path.substring(0, path.length() - 4) + ".tag";
 			}
 			else {
 				metadataPath = path + ".xml";
 				dataPath = path + ".raw";
 				tagPath = path + ".tag";
 			}
-			metadataFile = new File( metadataPath);
-			dataFile = new File( dataPath);
-			tagFile = new File( tagPath);
+			metadataFile = new File(metadataPath);
+			dataFile = new File(dataPath);
+			tagFile = new File(tagPath);
 
 			RawSignalDescriptor rsd = new RawSignalDescriptor();
-			rsd.setExportFileName( dataPath);
-			rsd.setBlocksPerPage( 1);
-			rsd.setByteOrder( monitorOptions.getByteOrder());
-			rsd.setCalibrationGain( monitorOptions.getCalibrationGain());
-			rsd.setCalibrationOffset( monitorOptions.getCalibrationOffset());
-			rsd.setChannelCount( monitorOptions.getChannelCount());
-			rsd.setChannelLabels( monitorOptions.getChannelLabels());
-			rsd.setPageSize( monitorOptions.getPageSize().floatValue());
-			rsd.setSampleCount( sampleCount);
-			rsd.setSampleType( monitorOptions.getSampleType());
-			rsd.setSamplingFrequency( monitorOptions.getSamplingFrequency());
-			rsd.setSourceSignalType( SourceSignalType.RAW);
+			rsd.setExportFileName(dataPath);
+			rsd.setBlocksPerPage(1);
+			rsd.setByteOrder(monitorOptions.getByteOrder());
+			rsd.setCalibrationGain(monitorOptions.getCalibrationGain());
+			rsd.setCalibrationOffset(monitorOptions.getCalibrationOffset());
+			rsd.setChannelCount(monitorOptions.getChannelCount());
+			rsd.setChannelLabels(monitorOptions.getChannelLabels());
+			rsd.setPageSize(monitorOptions.getPageSize().floatValue());
+			rsd.setSampleCount(sampleCount);
+			rsd.setSampleType(monitorOptions.getSampleType());
+			rsd.setSamplingFrequency(monitorOptions.getSamplingFrequency());
+			rsd.setSourceSignalType(SourceSignalType.RAW);
 			RawSignalDescriptorWriter descrWriter = new RawSignalDescriptorWriter();
 			try {
-				descrWriter.writeDocument( rsd, metadataFile);
+				descrWriter.writeDocument(rsd, metadataFile);
 			}
 			catch (IOException e) {
-				throw new SignalMLException( e);
+				throw new SignalMLException(e);
 			}
 
 			try {
-				FileUtils.copyFile( recorderOutputFile, dataFile);
+				FileUtils.copyFile(recorderOutputFile, dataFile);
 			}
 			catch (IOException e) {
-				throw new SignalMLException( e);
+				throw new SignalMLException(e);
 			}
 
 			if (tagSet != null && tagSet.getTagCount() > 0) {
-				TagDocument tagDoc = new TagDocument( tagSet);
-				tagDoc.setBackingFile( tagFile);
+				TagDocument tagDoc = new TagDocument(tagSet);
+				tagDoc.setBackingFile(tagFile);
 				try {
 					tagDoc.saveDocument();
 				}
 				catch (IOException e) {
-					throw new SignalMLException( e);
+					throw new SignalMLException(e);
 				}
 			}
 
@@ -276,7 +276,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 
 	@Override
 	public SignalChecksum[] getChecksums(String[] types,
-			SignalChecksumProgressMonitor monitor) throws SignalMLException {
+	                                     SignalChecksumProgressMonitor monitor) throws SignalMLException {
 		return null;
 	}
 
@@ -287,12 +287,12 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 
 	@Override
 	public float getMaxSignalLength() {
-		return sampleSource.getSampleCount( 0);
+		return sampleSource.getSampleCount(0);
 	}
 
 	@Override
 	public float getMinSignalLength() {
-		return sampleSource.getSampleCount( 0);
+		return sampleSource.getSampleCount(0);
 	}
 
 	@Override
@@ -307,7 +307,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 
 	@Override
 	public void setPageSize(float pageSize) {
-		if( this.pageSize != pageSize ) {
+		if (this.pageSize != pageSize) {
 			float last = this.pageSize;
 			this.pageSize = pageSize;
 			this.blockSize = pageSize;
@@ -364,7 +364,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
+
 	@Override
 	public boolean isSaved() {
 		return saved;
@@ -372,47 +372,47 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 
 	@Override
 	public void setSaved(boolean saved) {
-		if( this.saved != saved ) {
+		if (this.saved != saved) {
 			this.saved = saved;
-			pcSupport.firePropertyChange( AbstractMutableFileDocument.SAVED_PROPERTY, !saved, saved);
+			pcSupport.firePropertyChange(AbstractMutableFileDocument.SAVED_PROPERTY, !saved, saved);
 		}
 	}
 
 	public void invalidate() {
-		setSaved( false );
+		setSaved(false);
 	}
 
 	@Override
 	public final void saveDocument() throws SignalMLException, IOException {
-		
-		
-		if( backingFile == null ) {
-			
+
+
+		if (backingFile == null) {
+
 			String fileName = monitorOptions.getFileName();
-			if (fileName != null && !"".equals( fileName)) {
-				backingFile = new File( monitorOptions.getFileName());
+			if (fileName != null && !"".equals(fileName)) {
+				backingFile = new File(monitorOptions.getFileName());
 			}
 			else {
 				JFileChooser fileChooser = new JFileChooser();
-				int res = fileChooser.showSaveDialog( null);
+				int res = fileChooser.showSaveDialog(null);
 				if (res == JFileChooser.APPROVE_OPTION) {
 					backingFile = fileChooser.getSelectedFile();
 				}
-	
+
 				if (backingFile != null) {
-					setSaved( false);
+					setSaved(false);
 				}
 			}
-			
+
 		}
-		
-		setSaved( true );
-		
+
+		setSaved(true);
+
 	}
 
 	@Override
 	public void newDocument() throws SignalMLException {
-		
+
 	}
 
 
