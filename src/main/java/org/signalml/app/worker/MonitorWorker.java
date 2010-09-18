@@ -35,7 +35,7 @@ import com.google.protobuf.ByteString;
  */
 public class MonitorWorker extends SwingWorker< Void, Object> {
 
-	protected static final Logger logger = Logger.getLogger( MonitorWorker.class);
+	protected static final Logger logger = Logger.getLogger(MonitorWorker.class);
 
 	public static final int TIMEOUT_MILIS = 50;
 
@@ -46,7 +46,7 @@ public class MonitorWorker extends SwingWorker< Void, Object> {
 	private StyledTagSet tagSet = new StyledTagSet();
 	private volatile boolean finished;
 
-	public MonitorWorker( JmxClient jmxClient, OpenMonitorDescriptor monitorDescriptor, RoundBufferMultichannelSampleSource sampleSource) {
+	public MonitorWorker(JmxClient jmxClient, OpenMonitorDescriptor monitorDescriptor, RoundBufferMultichannelSampleSource sampleSource) {
 		this.jmxClient = jmxClient;
 		this.monitorDescriptor = monitorDescriptor;
 		this.sampleSource = sampleSource;
@@ -63,17 +63,17 @@ public class MonitorWorker extends SwingWorker< Void, Object> {
 	@Override
 	protected Void doInBackground() throws Exception {
 
-		logger.debug( "Worker: start...");
+		logger.debug("Worker: start...");
 
 
 		MultiplexerMessage.Builder builder = MultiplexerMessage.newBuilder();
-		builder.setType( SvarogConstants.MessageTypes.SIGNAL_STREAMER_START);
+		builder.setType(SvarogConstants.MessageTypes.SIGNAL_STREAMER_START);
 
 		MultiplexerMessage msg = jmxClient.createMessage(builder);
 
 		// send message
 		try {
-			ChannelFuture sendingOperation = jmxClient.send( msg, SendingMethod.THROUGH_ONE);
+			ChannelFuture sendingOperation = jmxClient.send(msg, SendingMethod.THROUGH_ONE);
 			sendingOperation.await(1, TimeUnit.SECONDS);
 			if (!sendingOperation.isSuccess()) {
 				logger.error("sending failed!");
@@ -89,7 +89,7 @@ public class MonitorWorker extends SwingWorker< Void, Object> {
 			return null;
 		}
 
-		logger.debug( "Worker: sent streaming request!");
+		logger.debug("Worker: sent streaming request!");
 
 		int channelCount = monitorDescriptor.getChannelCount();
 		int plotCount = monitorDescriptor.getSelectedChannelList().length;
@@ -97,39 +97,39 @@ public class MonitorWorker extends SwingWorker< Void, Object> {
 		double[] gain = monitorDescriptor.getGain();
 		double[] offset = monitorDescriptor.getOffset();
 
-//		PrintWriter out = new PrintWriter( new File( "recv_data.tsv"));
+//		PrintWriter out = new PrintWriter(new File("recv_data.tsv"));
 
 		while (!isCancelled()) {
 
-			logger.debug( "Worker: receiving!");
+			logger.debug("Worker: receiving!");
 			// receive message
 			IncomingMessageData msgData = null;
 			try {
-				msgData = jmxClient.receive( TIMEOUT_MILIS, TimeUnit.MILLISECONDS);
-				if (msgData == null){
-                                            logger.debug("Received null msgData");
+				msgData = jmxClient.receive(TIMEOUT_MILIS, TimeUnit.MILLISECONDS);
+				if (msgData == null) {
+					logger.debug("Received null msgData");
 					continue;
-                                }
+				}
 				MultiplexerMessage sampleMsg = msgData.getMessage();
 				int type = sampleMsg.getType();
-				logger.debug( "Worker: received message type: " + type);
-				
+				logger.debug("Worker: received message type: " + type);
+
 				if (sampleMsg.getType() == SvarogConstants.MessageTypes.STREAMED_SIGNAL_MESSAGE) {
-					logger.debug( "Worker: reading chunk!");
+					logger.debug("Worker: reading chunk!");
 
 					ByteString msgString = sampleMsg.getMessage();
 					SampleVector sampleVector = null;
 					try {
-						sampleVector = SampleVector.parseFrom( msgString);
-					} 
+						sampleVector = SampleVector.parseFrom(msgString);
+					}
 					catch (Exception e) {
 						e.printStackTrace();
 					}
 					List<Sample> samples = sampleVector.getSamplesList();
 
-//					String s = Double.toString( samples.get(0).getTimestamp());
-//					s = s.replace( '.', ',');
-//					out.print( s);
+//					String s = Double.toString(samples.get(0).getTimestamp());
+//					s = s.replace('.', ',');
+//					out.print(s);
 
 					// wyciągnięcie chunka do tablicy double z sampli
 					double[] chunk = new double[channelCount];
@@ -139,55 +139,55 @@ public class MonitorWorker extends SwingWorker< Void, Object> {
 
 					// przesłanie chunka do recordera
 					if (sampleQueue != null)
-						sampleQueue.offer( chunk.clone());
+						sampleQueue.offer(chunk.clone());
 
 					// kondycjonowanie chunka z danymi do wyświetlenia
 					double[] condChunk = new double[plotCount];
 					for (int i=0; i<plotCount; i++) {
 						int n = selectedChannels[i];
 						condChunk[i] = gain[n] * chunk[n] + offset[n];
-//						out.print( "\t");
-//						s = Double.toString( condChunk[i]);
-//						s = s.replace( '.', ',');
-//						out.print( s);
+//						out.print("\t");
+//						s = Double.toString(condChunk[i]);
+//						s = s.replace('.', ',');
+//						out.print(s);
 					}
 //					out.println();
 
-					publish( condChunk);
+					publish(condChunk);
 				}
 				else if (sampleMsg.getType() == SvarogConstants.MessageTypes.TAG) {
 
-					logger.debug( "Tag recorder: got a tag!");
+					logger.debug("Tag recorder: got a tag!");
 
 					ByteString msgString = sampleMsg.getMessage();
 					SvarogProtocol.Tag tagMsg = null;
 					try {
-						tagMsg = SvarogProtocol.Tag.parseFrom( msgString);
-					} 
+						tagMsg = SvarogProtocol.Tag.parseFrom(msgString);
+					}
 					catch (Exception e) {
 						e.printStackTrace();
 						continue;
 					}
 
 					// TODO dodać obsługę stylów - może wybór z kakiejś palety dla poszczególnych nazw i kanałów
-					TagStyle style = new TagStyle( SignalSelectionType.CHANNEL, tagMsg.getName(), tagMsg.getName(), Color.RED, Color.BLUE, 2);
+					TagStyle style = new TagStyle(SignalSelectionType.CHANNEL, tagMsg.getName(), tagMsg.getName(), Color.RED, Color.BLUE, 2);
 					String channels = tagMsg.getChannels();
-					StringTokenizer st = new StringTokenizer( channels, " ");
+					StringTokenizer st = new StringTokenizer(channels, " ");
 					int n = st.countTokens();
 					for (int i=0; i<n; i++) {
 						String s = st.nextToken();
-						int channel = Integer.parseInt( s);
-						Tag tag = new Tag( style, 
-								(float) tagMsg.getStartTimestamp(), 
-								(float) tagMsg.getEndTimestamp(), 
-								channel);
-						publish( tag);
+						int channel = Integer.parseInt(s);
+						Tag tag = new Tag(style,
+						                   (float) tagMsg.getStartTimestamp(),
+						                   (float) tagMsg.getEndTimestamp(),
+						                   channel);
+						publish(tag);
 					}
 				}
 				else {
-					logger.error( "received bad reply! " + sampleMsg.getMessage());
+					logger.error("received bad reply! " + sampleMsg.getMessage());
 
-					logger.debug( "Worker: receive failed!");
+					logger.debug("Worker: receive failed!");
 
 					return null;
 				}
@@ -199,25 +199,25 @@ public class MonitorWorker extends SwingWorker< Void, Object> {
 			}
 		}
 
-		logger.debug( "Worker: stopping serwer...");
+		logger.debug("Worker: stopping serwer...");
 
 		builder = MultiplexerMessage.newBuilder();
-		builder.setType( SvarogConstants.MessageTypes.SIGNAL_STREAMER_STOP);
+		builder.setType(SvarogConstants.MessageTypes.SIGNAL_STREAMER_STOP);
 		msg = jmxClient.createMessage(builder);
 
 		// send message
 		try {
-			ChannelFuture sendingOperation = jmxClient.send( msg, SendingMethod.THROUGH_ONE);
+			ChannelFuture sendingOperation = jmxClient.send(msg, SendingMethod.THROUGH_ONE);
 			sendingOperation.await(1, TimeUnit.SECONDS);
 			if (!sendingOperation.isSuccess()) {
 				logger.error("sending failed!");
 				return null;
 			}
-		} 
+		}
 		catch (NoPeerForTypeException e) {
 			logger.error("sending failed! " + e.getMessage());
 			return null;
-		} 
+		}
 		catch (InterruptedException e) {
 			logger.error("sending failed! " + e.getMessage());
 			return null;
@@ -227,16 +227,16 @@ public class MonitorWorker extends SwingWorker< Void, Object> {
 	}
 
 	@Override
-	protected void process( List< Object> objs) {
+	protected void process(List< Object> objs) {
 		for (Object o : objs) {
 			if (o instanceof double[]) {
-                                sampleSource.lock();
-                                sampleSource.addSamples( (double[]) o);
-                                sampleSource.unlock();
+				sampleSource.lock();
+				sampleSource.addSamples((double[]) o);
+				sampleSource.unlock();
 			}
 			else {
-				tagSet.addTag( (Tag) o);
-				firePropertyChange( "newTag", null, (Tag) o);
+				tagSet.addTag((Tag) o);
+				firePropertyChange("newTag", null, (Tag) o);
 			}
 		}
 	}
@@ -244,7 +244,7 @@ public class MonitorWorker extends SwingWorker< Void, Object> {
 	@Override
 	protected void done() {
 		finished = true;
-		firePropertyChange( "tagsRead", null, tagSet);
+		firePropertyChange("tagsRead", null, tagSet);
 	}
 
 	public StyledTagSet getTagSet() {

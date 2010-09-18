@@ -1,5 +1,5 @@
 /* TimeDomainSampleFilter.java created 2008-02-01
- * 
+ *
  */
 
 package org.signalml.domain.montage.filter;
@@ -24,42 +24,43 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition {
 	protected Object[] arguments;
 	protected String[] messageCodes;
 
-        /**
-         * an array of filter feedback coefficients
-         */
+	/**
+	 * an array of filter feedback coefficients
+	 */
 	protected double aCoefficients[];
 
-        /**
-         * an array of filter feedforward coefficients
-         */
+	/**
+	 * an array of filter feedforward coefficients
+	 */
 	protected double bCoefficients[];
 
-        /**
-         * Constructor. Creates an empty instance of a TimeDomainSampleFilter.
-         * For internal use only.
-         */
-        protected TimeDomainSampleFilter(){
-        }
+	/**
+	 * Constructor. Creates an empty instance of a TimeDomainSampleFilter.
+	 * For internal use only.
+	 */
+	protected TimeDomainSampleFilter() {
+	}
 
-         /**
-         * Constructor.
-         * @param messsageCode the code for (@link MessageSourceResolvable MessageSourceResolvable)
-          * specyfying the type of the filter (e.g. "sampleFilter.td.lowPass")
-         * @param passBand a String describing the passband of the filter (e.g. "0-20 Hz")
-         * @param aCoefs array of A Coefficients (feedback filter coefficients)
-         * @param bCoefs array of B Coefficients (feedforward filter coefficients)
-         */
-        public TimeDomainSampleFilter(String messageCode, String passBand, double[] aCoefs, double[] bCoefs) {
-                this.messageCodes=new String[] {messageCode};
-                this.arguments=new Object[]{new String(passBand)};
+	/**
+	* Constructor.
+	* @param messsageCode the code for (@link MessageSourceResolvable MessageSourceResolvable)
+	 * specyfying the type of the filter (e.g. "sampleFilter.td.lowPass")
+	* @param passBand a String describing the passband of the filter (e.g. "0-20 Hz")
+	* @param aCoefs array of A Coefficients (feedback filter coefficients)
+	* @param bCoefs array of B Coefficients (feedforward filter coefficients)
+	*/
+	public TimeDomainSampleFilter(String messageCode, String passBand, double[] aCoefs, double[] bCoefs) {
 
-                this.aCoefficients=aCoefs.clone();
-                this.bCoefficients=bCoefs.clone();
+		this.messageCodes = new String[] {messageCode};
+		this.arguments = new Object[] {new String(passBand)};
 
-                this.setDescription("Time Domain Filter");
+		this.aCoefficients = aCoefs.clone();
+		this.bCoefficients = bCoefs.clone();
+
+		this.setDescription("Time Domain Filter");
 
 	}
-	
+
 	public double[] getACoefficients() {
 		return aCoefficients;
 	}
@@ -68,22 +69,22 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition {
 		return bCoefficients;
 	}
 
-        /**
-         * Returns the order of the filter.
-         * @return the order of the filter
-         */
-        public int getFilterOrder(){
-                return Math.max(aCoefficients.length,bCoefficients.length)-1;
-        }
+	/**
+	 * Returns the order of the filter.
+	 * @return the order of the filter
+	 */
+	public int getFilterOrder() {
+		return Math.max(aCoefficients.length,bCoefficients.length) - 1;
+	}
 
 	@Override
 	public MessageSourceResolvable getEffectDescription() {
-                return new ResolvableString(messageCodes, arguments, getDefaultEffectDescription());
+		return new ResolvableString(messageCodes, arguments, getDefaultEffectDescription());
 	}
-	
+
 	@Override
 	public String getDefaultEffectDescription() {
-                return new String("Time Domain Filter");
+		return new String("Time Domain Filter");
 	}
 
 	@Override
@@ -103,44 +104,47 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition {
 
 	@Override
 	public String getDefaultMessage() {
-                return "Time domain filter "+getClass().getSimpleName();
+		return "Time domain filter "+getClass().getSimpleName();
 	}
 
-        /**
-         * Duplicates (@link TimeDomainSampleFilter the definition of the filter).
-         * @return the copy of the filter
-         */
-        @Override
-        public SampleFilterDefinition duplicate() {
-                TimeDomainSampleFilter duplicate=new TimeDomainSampleFilter();
+	/**
+	 * Duplicates (@link TimeDomainSampleFilter the definition of the filter).
+	 * @return the copy of the filter
+	 */
+	@Override
+	public SampleFilterDefinition duplicate() {
 
-                duplicate.aCoefficients=aCoefficients.clone();
-                duplicate.bCoefficients=bCoefficients.clone();
-                duplicate.messageCodes=messageCodes.clone();
-                duplicate.arguments=arguments.clone();
-                duplicate.setDescription(this.description);
+		TimeDomainSampleFilter duplicate = new TimeDomainSampleFilter();
+
+		duplicate.aCoefficients = aCoefficients.clone();
+		duplicate.bCoefficients = bCoefficients.clone();
+		duplicate.messageCodes = messageCodes.clone();
+		duplicate.arguments = arguments.clone();
+		duplicate.setDescription(this.description);
 
 		return duplicate;
+
 	}
 
-        /**
-         * Checks if the filter is equal to another filter o.
-         * (to be equal o must be an instance of (@link TimeDomainSampleFilter TimeDomainSampleFilter)
-         * and feedback and feedforward coefficients of each filters must be equal.
-         * (Strings describing the filters are not taken into account while comparing).
-         * @param o an Object to be compared with the filter
-         * @return true if the the filter is equal to the Object o, otherwise - false
-         */
-        @Override
-        public boolean equals(Object o){
-                if(!(o instanceof TimeDomainSampleFilter))
-                        return false;
+	/**
+	 * Checks if the filter is equal to another filter o.
+	 * (to be equal o must be an instance of (@link TimeDomainSampleFilter TimeDomainSampleFilter)
+	 * and feedback and feedforward coefficients of each filters must be equal.
+	 * (Strings describing the filters are not taken into account while comparing).
+	 * @param o an Object to be compared with the filter
+	 * @return true if the the filter is equal to the Object o, otherwise - false
+	 */
+	@Override
+	public boolean equals(Object o) {
 
-                TimeDomainSampleFilter tdf=(TimeDomainSampleFilter)o;
-                if( (Arrays.equals(aCoefficients,tdf.aCoefficients)) && Arrays.equals(bCoefficients, tdf.bCoefficients))
-                        return true;
-                else
-                        return false;
-        }
-	
+		if (!(o instanceof TimeDomainSampleFilter))
+			return false;
+
+		TimeDomainSampleFilter tdf = (TimeDomainSampleFilter)o;
+		if ((Arrays.equals(aCoefficients,tdf.aCoefficients)) && Arrays.equals(bCoefficients, tdf.bCoefficients))
+			return true;
+		else
+			return false;
+	}
+
 }
