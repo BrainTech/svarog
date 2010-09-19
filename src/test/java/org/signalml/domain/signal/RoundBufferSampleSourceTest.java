@@ -114,7 +114,11 @@ public class RoundBufferSampleSourceTest {
 			sample = Math.random();
 			source.addSamples(new double[] {sample});
 			source.getSamples(target, source.getSampleCount() - 1, 1, 0);
+<<<<<<< HEAD
 			assertEquals(sample, target[0], 0.000001);
+=======
+			assertEquals(sample,target[0], 0.000001);
+>>>>>>> 31942768576274efe958843fdf3a76fbc300c40c
 
 		}
 

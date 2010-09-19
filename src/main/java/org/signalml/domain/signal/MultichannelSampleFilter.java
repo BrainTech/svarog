@@ -297,6 +297,7 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 
 					for (e = 0; e < channelCount; e++)
 						if (!montage.isFilteringExcluded(i, e)) {
+
 							chain = chains.get(e);
 
 							if (chain.isEmpty())
@@ -305,6 +306,7 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 								input = chain.getLast();
 
 							addFilter(new TimeDomainSampleFilterEngine(input, tdsFilter), e);
+
 						}
 
 				}

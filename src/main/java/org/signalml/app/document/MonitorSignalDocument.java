@@ -102,7 +102,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		if (documentView != null) {
 			for (Iterator<SignalPlot> i = ((SignalView) documentView).getPlots().iterator(); i.hasNext();) {
 				SignalPlot signalPlot = i.next();
-				SignalProcessingChain signalChain = SignalProcessingChain.createNotBufferedFilteredChain(sampleSource, getType());
+				SignalProcessingChain signalChain = SignalProcessingChain.createNotBufferedFilteredChain(samplebSource, getType());
 				signalPlot.setSignalChain(signalChain);
 			}
 		}

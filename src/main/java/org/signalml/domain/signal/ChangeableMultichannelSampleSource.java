@@ -29,7 +29,9 @@ public interface ChangeableMultichannelSampleSource {
 	void clearNewSamplesCount();
 
 	void addSampleChunk(double[] newSamples);
+
 	void addSamples(List<double[]> newSamples);
+
 	void addSamples(double[] newSamples);
 
 	/**

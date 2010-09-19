@@ -246,6 +246,7 @@ public class MultichannelSampleFilterTest {
 		for (i = 0; i < 1; i++) {
 			assertTrue(definition[0].equals(mfilter.chains.get(i).get(0).getFilterDefinition()));
 			assertTrue(definition[1].equals(mfilter.chains.get(i).get(1).getFilterDefinition()));
+
 			if (i==2) //second filter is excluded on the second channel
 				assertTrue(summaryFFT.equals(mfilter.chains.get(i).get(2).getFilterDefinition()));
 			else {
