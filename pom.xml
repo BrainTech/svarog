@@ -29,6 +29,11 @@
 		  <name>JBoss Repository</name>
 		  <url>http://repository.jboss.org/maven2/</url>
 		</repository>
+		<repository>
+		  <id>flanagan</id>
+		  <name>ActiveQuant Repository</name>
+		  <url>http://activequant.org/m2/external/</url>
+		</repository>
 	</repositories>
 
     <pluginRepositories>
@@ -199,6 +204,11 @@
 	</build>
 
 	<dependencies>
+		<dependency>
+			<groupId>flanagan</groupId>
+			<artifactId>flanagan</artifactId>
+			<version>1.1.0</version>
+		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
