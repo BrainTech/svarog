@@ -80,10 +80,10 @@ public class MultichannelSampleFilterTest {
 		//adding filters
 		TimeDomainSampleFilter definition1 = new TimeDomainSampleFilter("sampleFilter.td.lowPass", "xxx",
 		                new double[] {2.0,0.0},
-		                new double[] {1.0,0.0} );
+		                new double[] {1.0,0.0});
 		TimeDomainSampleFilter definition2=new TimeDomainSampleFilter("sampleFilter.td.lowPass", "xxx",
 		                new double[] {3.0,0.0},
-		                new double[] {1.0,0.0} );
+		                new double[] {1.0,0.0});
 
 		montage.addSampleFilter(definition1);
 		montage.addSampleFilter(definition2);
@@ -104,7 +104,7 @@ public class MultichannelSampleFilterTest {
 
 		//validating the output of the filter
 		for (j = 0; i < TEST_CHANNEL_COUNT; i++) {
-			source.getSamples(i,target1, 0, TEST_SAMPLE_COUNT, 0);
+			source.getSamples(i, target1, 0, TEST_SAMPLE_COUNT, 0);
 			mfilter.getSamples(i, target2, 0, TEST_SAMPLE_COUNT, 0);
 
 			for (j = 0; j < TEST_SAMPLE_COUNT; j++)
@@ -119,16 +119,16 @@ public class MultichannelSampleFilterTest {
 	@Test
 	public void testAddFilterAllChannels() {
 		TimeDomainSampleFilter definition = new TimeDomainSampleFilter("sampleFilter.td.lowPass", "xxx",
-		                new double[] {1.0,0.0},
-		                new double[] {1.0,0.0} );
+		                new double[] {1.0, 0.0},
+		                new double[] {1.0, 0.0});
 		TimeDomainSampleFilterEngine filterEngine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source,0), definition);
 
-		int i,j;
+		int i, j;
 
 		//adds one filter on each step and checks if the filter chains' sizes are correct
-		for (i=0; i<4; i++) {
-			for (j=0; j<TEST_CHANNEL_COUNT; j++)
-				assertEquals(mfilter.chains.elementAt(j).size(),i);
+		for (i = 0; i < 4; i++) {
+			for (j = 0; j < TEST_CHANNEL_COUNT; j++)
+				assertEquals(mfilter.chains.elementAt(j).size(), i);
 			mfilter.addFilter(filterEngine);
 		}
 
@@ -139,10 +139,10 @@ public class MultichannelSampleFilterTest {
 	 */
 	@Test
 	public void testAddFilterForSpecifiedChannels() {
-		TimeDomainSampleFilter definition=new TimeDomainSampleFilter("sampleFilter.td.lowPass", "xxx",
-		                new double[] {1.0,0.0},
-		                new double[] {1.0,0.0} );
-		TimeDomainSampleFilterEngine filterEngine=new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source,0),definition);
+		TimeDomainSampleFilter definition = new TimeDomainSampleFilter("sampleFilter.td.lowPass", "xxx",
+		                new double[] {1.0, 0.0},
+		                new double[] {1.0, 0.0});
+		TimeDomainSampleFilterEngine filterEngine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source,0), definition);
 
 		int i, j;
 
@@ -151,9 +151,9 @@ public class MultichannelSampleFilterTest {
 			assertEquals(mfilter.chains.elementAt(j).size(), 0);
 
 		//adding  one filter to channels 2,3  & validating chains sizes
-		mfilter.addFilter(filterEngine,new int[] {2, 3});
+		mfilter.addFilter(filterEngine, new int[] {2, 3});
 		for (j = 0; j < TEST_CHANNEL_COUNT; j++) {
-			if (j == 2 || j == 3 )
+			if (j == 2 || j == 3)
 				assertEquals(mfilter.chains.elementAt(j).size(), 1);
 			else
 				assertEquals(mfilter.chains.elementAt(j).size(), 0);
@@ -198,10 +198,10 @@ public class MultichannelSampleFilterTest {
 		                                     new double[] {1.0, 0.0}),
 		                                     new TimeDomainSampleFilter("sampleFilter.td.lowPass", "xxx",
 		                                                                new double[] {6.0, 0.0},
-		                                                                new double[] {1.0, 0.0} ),
+		                                                                new double[] {1.0, 0.0}),
 		                                     new TimeDomainSampleFilter("sampleFilter.td.lowPass", "xxx",
 		                                                                new double[] {4.0, 0.0},
-		                                                                new double[] {1.0, 0.0} ),
+		                                                                new double[] {1.0, 0.0}),
 		                                     new FFTSampleFilter(true),
 		                                     new FFTSampleFilter(true)
 		                                    };
@@ -246,7 +246,7 @@ public class MultichannelSampleFilterTest {
 		for (i = 0; i < 1; i++) {
 			assertTrue(definition[0].equals(mfilter.chains.get(i).get(0).getFilterDefinition()));
 			assertTrue(definition[1].equals(mfilter.chains.get(i).get(1).getFilterDefinition()));
-			if ( i==2 ) //second filter is excluded on the second channel
+			if (i==2) //second filter is excluded on the second channel
 				assertTrue(summaryFFT.equals(mfilter.chains.get(i).get(2).getFilterDefinition()));
 			else {
 				assertTrue(definition[2].equals(mfilter.chains.get(i).get(2).getFilterDefinition()));

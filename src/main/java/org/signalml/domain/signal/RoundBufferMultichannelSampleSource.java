@@ -99,7 +99,7 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 
 		addSampleChunk(newSamples);
 		if (documentView != null && ((SignalView) documentView).getPlots() != null) {
-			for (Iterator<SignalPlot> i=((SignalView) documentView).getPlots().iterator(); i.hasNext();)
+			for (Iterator<SignalPlot> i = ((SignalView) documentView).getPlots().iterator(); i.hasNext();)
 				i.next().repaint();
 		}
 

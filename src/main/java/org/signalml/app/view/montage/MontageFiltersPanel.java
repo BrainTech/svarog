@@ -389,7 +389,7 @@ public class MontageFiltersPanel extends JPanel {
 	public void setCurrentSamplingFrequency(float currentSamplingFrequency) {
 		this.currentSamplingFrequency = currentSamplingFrequency;
 		if (currentSamplingFrequency >= 0) {
-			editFFTSampleFilterDialog.setGraphFrequencyMax(currentSamplingFrequency/2);
+			editFFTSampleFilterDialog.setGraphFrequencyMax(currentSamplingFrequency / 2);
 		} else {
 			double frequencyMax = editFFTSampleFilterDialog.getGraphFrequencyMax();
 			if (frequencyMax < 0.25) {

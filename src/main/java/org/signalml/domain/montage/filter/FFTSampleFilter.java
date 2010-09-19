@@ -415,7 +415,7 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
 		FFTSampleFilter fft = (FFTSampleFilter)o;
 
 		Iterator<Range> it1, it2;
-		Range r1,r2;
+		Range r1, r2;
 		it1 = fft.getRangeIterator();
 		it2 = getRangeIterator();
 		while (it1.hasNext() && it2.hasNext()) {

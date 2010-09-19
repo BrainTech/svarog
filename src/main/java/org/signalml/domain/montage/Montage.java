@@ -827,7 +827,7 @@ public class Montage extends SourceMontage implements Preset {
 				if (filters.get(i).getDefinition() instanceof FFTSampleFilter)
 					break;
 			}
-			filters.add(i,filter);
+			filters.add(i, filter);
 		}
 		else
 			filters.add(filter);

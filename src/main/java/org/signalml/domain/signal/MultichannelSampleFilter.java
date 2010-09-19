@@ -296,15 +296,15 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 					tdsFilter = (TimeDomainSampleFilter) definitions[i];
 
 					for (e = 0; e < channelCount; e++)
-						if (!montage.isFilteringExcluded(i,e)) {
+						if (!montage.isFilteringExcluded(i, e)) {
 							chain = chains.get(e);
 
 							if (chain.isEmpty())
-								input = new ChannelSelectorSampleSource(source,e);
+								input = new ChannelSelectorSampleSource(source, e);
 							else
 								input = chain.getLast();
 
-							addFilter(new TimeDomainSampleFilterEngine(input, tdsFilter),e);
+							addFilter(new TimeDomainSampleFilterEngine(input, tdsFilter), e);
 						}
 
 				}
@@ -317,7 +317,7 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 					chain = chains.get(e);
 
 					if (chain.isEmpty())
-						input = new ChannelSelectorSampleSource(source,e);
+						input = new ChannelSelectorSampleSource(source, e);
 					else
 						input = chain.getLast();
 

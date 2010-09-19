@@ -27,7 +27,7 @@ public abstract class AbstractSignalTypeConfigurer implements SignalTypeConfigur
 		//b,a generated in Python (import scipy.signal as signal)
 
 		//b,a=signal.iirdesign(wp = 0.3125, ws=0.46875 , gstop= 40, gpass=3, ftype='cheby1')
-		filters.add( new TimeDomainSampleFilter("sampleFilter.td.lowPass", "0-20 Hz",
+		filters.add(new TimeDomainSampleFilter("sampleFilter.td.lowPass", "0-20 Hz",
 		                                        new double[] {
 		                                                1.0000000000000000000000000000000000000000000000000000000000000000,
 		                                                -3.3464713712644158505327141028828918933868408203125000000000000000,
@@ -47,7 +47,7 @@ public abstract class AbstractSignalTypeConfigurer implements SignalTypeConfigur
 		                                       ) );
 
 		//b,a=signal.iirdesign(wp = 0.46875, ws=0.703125 , gstop= 40, gpass=3, ftype='cheby1')
-		filters.add( new TimeDomainSampleFilter("sampleFilter.td.lowPass", "0-30 Hz",
+		filters.add(new TimeDomainSampleFilter("sampleFilter.td.lowPass", "0-30 Hz",
 		                                        new double[] {
 		                                                1.0000000000000000000000000000000000000000000000000000000000000000,
 		                                                -1.3663575204543101371257307619089260697364807128906250000000000000,
@@ -65,7 +65,7 @@ public abstract class AbstractSignalTypeConfigurer implements SignalTypeConfigur
 		                                       ) );
 
 		//b,a=signal.iirdesign(wp = 0.78125, ws=1.171875 , gstop= 40, gpass=3, ftype='cheby1')
-		filters.add( new TimeDomainSampleFilter("sampleFilter.td.lowPass", "0-50 Hz",
+		filters.add(new TimeDomainSampleFilter("sampleFilter.td.lowPass", "0-50 Hz",
 		                                        new double[] {
 		                                                1.0000000000000000000000000000000000000000000000000000000000000000,
 		                                                2.9708497540446878737441238627070561051368713378906250000000000000,
@@ -91,7 +91,7 @@ public abstract class AbstractSignalTypeConfigurer implements SignalTypeConfigur
 		                                       ) );
 
 		//single pole highpass filter. (dspguide.com)
-		filters.add( new TimeDomainSampleFilter("sampleFilter.td.highPass", "0.01-... Hz",
+		filters.add(new TimeDomainSampleFilter("sampleFilter.td.highPass", "0.01-... Hz",
 		                                        new double[] {
 		                                                1.0, 0.01
 		                                        },
@@ -101,7 +101,7 @@ public abstract class AbstractSignalTypeConfigurer implements SignalTypeConfigur
 		                                       ) );
 
 		//b,a=signal.iirdesign(wp = 0.0078125, ws=0.00520833333333 , gstop= 40, gpass=3, ftype='cheby1')
-		filters.add( new TimeDomainSampleFilter("sampleFilter.td.highPass", "0.5-.. Hz",
+		filters.add(new TimeDomainSampleFilter("sampleFilter.td.highPass", "0.5-.. Hz",
 		                                        new double[] {
 		                                                1.0000000000000000000000000000000000000000000000000000000000000000,
 		                                                -4.8470635657474971935698704328387975692749023437500000000000000000,
@@ -121,7 +121,7 @@ public abstract class AbstractSignalTypeConfigurer implements SignalTypeConfigur
 		                                       ) );
 
 		//b,a=signal.iirdesign(wp = 0.015625, ws=0.0104166666667 , gstop= 40, gpass=3, ftype='cheby1')
-		filters.add( new TimeDomainSampleFilter("sampleFilter.td.highPass", "1-.. Hz",
+		filters.add(new TimeDomainSampleFilter("sampleFilter.td.highPass", "1-.. Hz",
 		                                        new double[] {
 		                                                1.0000000000000000000000000000000000000000000000000000000000000000,
 		                                                -4.7058076517491791435077175265178084373474121093750000000000000000,
@@ -141,7 +141,7 @@ public abstract class AbstractSignalTypeConfigurer implements SignalTypeConfigur
 		                                       ) );
 
 		//b,a=signal.iirdesign(wp = 0.03125, ws=0.0208333333333 , gstop= 40, gpass=3, ftype='cheby1')
-		filters.add( new TimeDomainSampleFilter("sampleFilter.td.highPass", "2-.. Hz",
+		filters.add(new TimeDomainSampleFilter("sampleFilter.td.highPass", "2-.. Hz",
 		                                        new double[] {
 		                                                1.0000000000000000000000000000000000000000000000000000000000000000,
 		                                                -4.4486104007786213543340636533685028553009033203125000000000000000,
@@ -161,7 +161,7 @@ public abstract class AbstractSignalTypeConfigurer implements SignalTypeConfigur
 		                                       ) );
 
 		//b,a=signal.iirdesign(wp = 0.078125, ws=0.0520833333333 , gstop= 40, gpass=3, ftype='cheby1')
-		filters.add( new TimeDomainSampleFilter("sampleFilter.td.highPass", "5-.. Hz",
+		filters.add(new TimeDomainSampleFilter("sampleFilter.td.highPass", "5-.. Hz",
 		                                        new double[] {
 		                                                1.0000000000000000000000000000000000000000000000000000000000000000,
 		                                                -3.7810149027063286730765412357868626713752746582031250000000000000,
@@ -181,7 +181,7 @@ public abstract class AbstractSignalTypeConfigurer implements SignalTypeConfigur
 		                                       ) );
 
 		//b,a = signal.iirdesign(wp = [0.520833333333, 1] , ws=[0.744047619048, 0.8203125] , gstop= 40, gpass=3, ftype='cheby1')
-		filters.add( new TimeDomainSampleFilter("sampleFilter.td.notch", "50 Hz",
+		filters.add(new TimeDomainSampleFilter("sampleFilter.td.notch", "50 Hz",
 		                                        new double[] {
 		                                                1.0000000000000000000000000000000000000000000000000000000000000000,
 		                                                2.3445392270471461237946186884073540568351745605468750000000000000,
@@ -203,7 +203,7 @@ public abstract class AbstractSignalTypeConfigurer implements SignalTypeConfigur
 		                                       ) );
 
 		//b,a = signal.iirdesign(wp = [0.625, 1] , ws=[0.892857142857, 0.984375] , gstop= 40, gpass=3, ftype='cheby1')
-		filters.add( new TimeDomainSampleFilter("sampleFilter.td.notch", "60 Hz",
+		filters.add(new TimeDomainSampleFilter("sampleFilter.td.notch", "60 Hz",
 		                                        new double[] {
 		                                                1.0000000000000000000000000000000000000000000000000000000000000000,
 		                                                3.1475263557772357181363531708484515547752380371093750000000000000,

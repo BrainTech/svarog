@@ -133,7 +133,7 @@ public class MonitorWorker extends SwingWorker< Void, Object> {
 
 					// wyciągnięcie chunka do tablicy double z sampli
 					double[] chunk = new double[channelCount];
-					for (int i=0; i<channelCount; i++) {
+					for (int i = 0; i < channelCount; i++) {
 						chunk[i] = samples.get(i).getValue();
 					}
 
@@ -143,7 +143,7 @@ public class MonitorWorker extends SwingWorker< Void, Object> {
 
 					// kondycjonowanie chunka z danymi do wyświetlenia
 					double[] condChunk = new double[plotCount];
-					for (int i=0; i<plotCount; i++) {
+					for (int i = 0; i < plotCount; i++) {
 						int n = selectedChannels[i];
 						condChunk[i] = gain[n] * chunk[n] + offset[n];
 //						out.print("\t");
@@ -174,7 +174,7 @@ public class MonitorWorker extends SwingWorker< Void, Object> {
 					String channels = tagMsg.getChannels();
 					StringTokenizer st = new StringTokenizer(channels, " ");
 					int n = st.countTokens();
-					for (int i=0; i<n; i++) {
+					for (int i = 0; i < n; i++) {
 						String s = st.nextToken();
 						int channel = Integer.parseInt(s);
 						Tag tag = new Tag(style,

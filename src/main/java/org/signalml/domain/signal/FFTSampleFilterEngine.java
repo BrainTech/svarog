@@ -30,9 +30,9 @@ public class FFTSampleFilterEngine extends SampleFilterEngine {
 	private int minFilteredSampleAt;
 	private int maxFilteredSample; // index after max sample!
 	
-	public FFTSampleFilterEngine( SampleSource source, FFTSampleFilter definition ) {
-		super( source );
-		this.definition = new FFTSampleFilter( definition );
+	public FFTSampleFilterEngine(SampleSource source, FFTSampleFilter definition) {
+		super(source);
+		this.definition = new FFTSampleFilter(definition);
 		fourierTransform = new FourierTransform();
 		
 		definition.getWindowType().apply(fourierTransform, definition.getWindowParameter());		
@@ -45,7 +45,7 @@ public class FFTSampleFilterEngine extends SampleFilterEngine {
 		
 	@Override
 	public void getSamples(double[] target, int signalOffset, int count, int arrayOffset) {
-		synchronized( this ) {
+		synchronized(this) {
 
 			// check usability of previously filtered samples
 			
@@ -53,9 +53,9 @@ public class FFTSampleFilterEngine extends SampleFilterEngine {
 			int i;
 
 			double samplingFrequency = source.getSamplingFrequency();
-			int intSamplingFrequency = (int) Math.ceil( samplingFrequency );
+			int intSamplingFrequency = (int) Math.ceil(samplingFrequency);
 			
-			if( 
+			if(
 					filtered != null
 					&&
 					minFilteredSample <= signalOffset - intSamplingFrequency
@@ -68,41 +68,41 @@ public class FFTSampleFilterEngine extends SampleFilterEngine {
 								
 			} else {
 
-				fourierTransform.setDeltaT( 1.0 / samplingFrequency );
+				fourierTransform.setDeltaT(1.0 / samplingFrequency);
 				
 				// normalize count to power of 2 with offset
-				int minCount = Math.max( 6 * intSamplingFrequency, count + 2 * intSamplingFrequency );
-				int countPow2 = (int) Math.pow( 2, Math.ceil( Math.log(minCount) / LOG2 ) );
+				int minCount = Math.max(6 * intSamplingFrequency, count + 2 * intSamplingFrequency);
+				int countPow2 = (int) Math.pow(2, Math.ceil(Math.log(minCount) / LOG2));
 				
 				// calculate padding
 				int padding = (countPow2 - count)/2;
 				int leftPadding = padding;
 				leftOffsetToCopy = padding;
-				int rightPadding = padding + ( count % 2 == 0 ? 0 : 1 );
+				int rightPadding = padding + (count % 2 == 0 ? 0 : 1);
 				
 				int avSampleCount = source.getSampleCount();		
 				int rightAvSampleCount = avSampleCount - (signalOffset+count);
 		
-				int zeroLeftPadding = ( signalOffset < leftPadding ? (leftPadding-signalOffset) : 0 );
-				int zeroRightPadding = ( rightAvSampleCount < rightPadding ? (rightPadding-rightAvSampleCount) : 0 );
+				int zeroLeftPadding = (signalOffset < leftPadding ? (leftPadding-signalOffset) : 0);
+				int zeroRightPadding = (rightAvSampleCount < rightPadding ? (rightPadding-rightAvSampleCount) : 0);
 				
 				leftPadding -= zeroLeftPadding;
 				rightPadding -= zeroRightPadding;
 				
 				// get raw data
-				if( cache == null || cache.length < countPow2 ) {
+				if(cache == null || cache.length < countPow2) {
 					cache = new double[countPow2];
 				}
-				if( zeroLeftPadding > 0 ) {
-					Arrays.fill( cache, 0, zeroLeftPadding, 0.0 );
+				if(zeroLeftPadding > 0) {
+					Arrays.fill(cache, 0, zeroLeftPadding, 0.0);
 				}
 				source.getSamples(cache, signalOffset-leftPadding, leftPadding+count+rightPadding, zeroLeftPadding);
-				if( zeroRightPadding > 0 ) {
-					Arrays.fill( cache, zeroLeftPadding+leftPadding+count+rightPadding, cache.length, 0.0 );
+				if(zeroRightPadding > 0) {
+					Arrays.fill(cache, zeroLeftPadding+leftPadding+count+rightPadding, cache.length, 0.0);
 				}
 				
 				// transform			
-				fourierTransform.setData( cache );			
+				fourierTransform.setData(cache);
 				fourierTransform.transform();
 				
 				// apply range coefficients
@@ -120,13 +120,13 @@ public class FFTSampleFilterEngine extends SampleFilterEngine {
 				boolean end = false;
 				double coefficient;
 				
-				while( !end && it.hasNext() ) {
+				while(!end && it.hasNext()) {
 					
 					Range range = it.next();
 					coefficient = range.getCoefficient();
 					
 					// optymization
-					if( coefficient == 1 ) {
+					if(coefficient == 1) {
 						continue;
 					}
 					
@@ -134,34 +134,34 @@ public class FFTSampleFilterEngine extends SampleFilterEngine {
 					highFrequency = range.getHighFrequency();
 					
 					lowSeg = (int) Math.floor(lowFrequency / hzPerSegment);
-					if( lowSeg >= segCount ) {
+					if(lowSeg >= segCount) {
 						break;
 					}
 					
-					if( highFrequency <= lowFrequency ) {
+					if(highFrequency <= lowFrequency) {
 						highSeg = segCount;
 					} else {
-						highSeg = (int) Math.floor( highFrequency / hzPerSegment );
-						if( highSeg > segCount ) {
+						highSeg = (int) Math.floor(highFrequency / hzPerSegment);
+						if(highSeg > segCount) {
 							highSeg = segCount;
 							end = true;
 						}
 					}
 					
-					if( lowSeg == 0 ) {
+					if(lowSeg == 0) {
 						transformed[0].timesEquals(coefficient);
 						lowSeg++;
 					}
 					
-					if( highSeg == segCount ) {
-						transformed[segCount-1].timesEquals(coefficient);
+					if(highSeg == segCount) {
+						transformed[segCount - 1].timesEquals(coefficient);
 						highSeg--;
 					}
 					
 					// max extent of i is from 1 to N/2-1
-					for( i=lowSeg; i<highSeg; i++ ) {
+					for(i = lowSeg; i < highSeg; i++) {
 						transformed[i].timesEquals(coefficient);
-						transformed[transformed.length-i].timesEquals(coefficient);
+						transformed[transformed.length - i].timesEquals(coefficient);
 					}
 									
 				}
@@ -181,8 +181,8 @@ public class FFTSampleFilterEngine extends SampleFilterEngine {
 			int filteredIdx = 2 * leftOffsetToCopy;
 			
 			// return data
-			for( i=0; i<count; i++ ) {
-				target[arrayOffset+i] =  filtered[filteredIdx];
+			for(i = 0; i < count; i++) {
+				target[arrayOffset + i] =  filtered[filteredIdx];
 				filteredIdx += 2;
 			}
 						

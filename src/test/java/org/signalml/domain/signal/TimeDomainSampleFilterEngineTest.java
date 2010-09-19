@@ -63,7 +63,7 @@ public class TimeDomainSampleFilterEngineTest {
 		definition = new TimeDomainSampleFilter("sampleFilter.td.lowPass", "xxx",
 		                                      new double[] {1.0,0.0,0.0,0.0},
 		                                      new double[] {1.0,0.0,0.0,0.0} );
-		engine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source,0),definition);
+		engine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source,0), definition);
 
 		//testing empty then full
 		double[] samples = new double[TEST_SAMPLE_COUNT];
@@ -113,10 +113,10 @@ public class TimeDomainSampleFilterEngineTest {
 		definition = new TimeDomainSampleFilter("sampleFilter.td.lowPass", "xxx",
 		                                      new double[] {1.0, 0.0, 0.0, 0.0},
 		                                      new double[] {1.0, 0.0, 0.0, 0.0} );
-		engine= new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source, 0), definition);
+		engine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source, 0), definition);
 
 		double[] fCache = engine.getFilteredSamplesCache(source.getSampleCount(0));
-		assertEquals(fCache.length,source.getSampleCount(0) + 3,0.00001);
+		assertEquals(fCache.length, source.getSampleCount(0) + 3, 0.00001);
 		for (int i = 0; i < fCache.length; i++)
 			assertEquals(fCache[i], 0.0, 0.000001);
 
@@ -126,7 +126,7 @@ public class TimeDomainSampleFilterEngineTest {
 		double x[] = new double[engine.filtered.getSampleCount()];
 		engine.filtered.getSamples(x, 0, engine.filtered.getSampleCount(), 0);
 
-		fCache=engine.getFilteredSamplesCache(2);
+		fCache = engine.getFilteredSamplesCache(2);
 
 		assertEquals(fCache.length, 3 + 2, 0.000001);
 		assertEquals(fCache[0], 0.0, 0.000001);
@@ -171,7 +171,7 @@ public class TimeDomainSampleFilterEngineTest {
 		definition = new TimeDomainSampleFilter("sampleFilter.td.lowPass", "xxx",
 		                                      new double[] {1.0, 0.0, 0.0},
 		                                      new double[] {1.0, 0.0, 0.0} );
-		engine= new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source, 0), definition);
+		engine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source, 0), definition);
 
 		//adding whole at once
 		double[] samples = new double[TEST_SAMPLE_COUNT];
@@ -255,7 +255,7 @@ public class TimeDomainSampleFilterEngineTest {
 		                                      new double[] {1.0,  0.04940057,  0.33397875,  0.00449333},
 		                                      new double[] {0.16001061, -0.48003182,  0.48003182, -0.16001061}
 		                                     );
-		engine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source,0),definition);
+		engine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source, 0), definition);
 
 		double[] target1 = new double[TEST_SAMPLE_COUNT];
 		double[] target2 = new double[TEST_SAMPLE_COUNT];

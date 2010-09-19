@@ -83,7 +83,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	public double[] getGain() {
 		double[] result = new double[monitorOptions.getChannelCount()];
 		float[] fg = monitorOptions.getCalibrationGain();
-		for (int i=0; i<monitorOptions.getChannelCount(); i++)
+		for (int i = 0; i < monitorOptions.getChannelCount(); i++)
 			result[i] = fg[i];
 		return result;
 	}
@@ -91,7 +91,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	public double[] getOffset() {
 		double[] result = new double[monitorOptions.getChannelCount()];
 		float[] fg = monitorOptions.getCalibrationOffset();
-		for (int i=0; i<monitorOptions.getChannelCount(); i++)
+		for (int i = 0; i < monitorOptions.getChannelCount(); i++)
 			result[i] = fg[i];
 		return result;
 	}
@@ -100,7 +100,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	public void setDocumentView(DocumentView documentView) {
 		super.setDocumentView(documentView);
 		if (documentView != null) {
-			for (Iterator<SignalPlot> i=((SignalView) documentView).getPlots().iterator(); i.hasNext();) {
+			for (Iterator<SignalPlot> i = ((SignalView) documentView).getPlots().iterator(); i.hasNext();) {
 				SignalPlot signalPlot = i.next();
 				SignalProcessingChain signalChain = SignalProcessingChain.createNotBufferedFilteredChain(sampleSource, getType());
 				signalPlot.setSignalChain(signalChain);

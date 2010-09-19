@@ -75,28 +75,28 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 			}
 			
 			SignalMLCodecReader reader = codec.createReader();
-			reader.open( smlEntry.getPath() );
+			reader.open(smlEntry.getPath());
 			
 			source = new SignalMLCodecSampleSource(reader);
 			
-			if( source.isCalibrationCapable() ) {
-				source.setCalibration( smlEntry.getCalibration() );
+			if(source.isCalibrationCapable()) {
+				source.setCalibration(smlEntry.getCalibration());
 			}
-			if( !source.isSamplingFrequencyCapable() ) {
-				source.setSamplingFrequency( smlEntry.getSamplingFrequency() );				
+			if(!source.isSamplingFrequencyCapable()) {
+				source.setSamplingFrequency(smlEntry.getSamplingFrequency());
 			}
-			if( !source.isChannelCountCapable() ) {
-				source.setChannelCount( smlEntry.getChannelCount() );
+			if(!source.isChannelCountCapable()) {
+				source.setChannelCount(smlEntry.getChannelCount());
 			}
 			
 		}
-		else if( mrud instanceof RawSignalMRUDEntry ) {
+		else if(mrud instanceof RawSignalMRUDEntry) {
 			
 			RawSignalMRUDEntry rawEntry = (RawSignalMRUDEntry) mrud;
 			RawSignalDescriptor rawDescriptor = rawEntry.getDescriptor();
 			
-			source = new RawSignalSampleSource(rawEntry.getFile(), rawDescriptor.getChannelCount(), rawDescriptor.getSamplingFrequency(), rawDescriptor.getSampleType(), rawDescriptor.getByteOrder() );
-			source.setCalibration( rawDescriptor.getCalibration() );
+			source = new RawSignalSampleSource(rawEntry.getFile(), rawDescriptor.getChannelCount(), rawDescriptor.getSamplingFrequency(), rawDescriptor.getSampleType(), rawDescriptor.getByteOrder());
+			source.setCalibration(rawDescriptor.getCalibration());
 			
 		}
 		else {
@@ -107,22 +107,22 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 		this.signalType = descriptor.getType();
 
 		output = source;
-		if( descriptor.isSourceBuffered() ) {
+		if(descriptor.isSourceBuffered()) {
 			sourceBuffer = new MultichannelSampleBuffer(output, MultichannelSampleBuffer.INITIAL_BUFFER_SIZE);
 			output = sourceBuffer;
 		}
-		if( descriptor.isAssembled() ) {
+		if(descriptor.isAssembled()) {
 			montage = new MultichannelSampleMontage(signalType, output);
-			montage.setCurrentMontage( descriptor.getMontage() );
+			montage.setCurrentMontage(descriptor.getMontage());
 			output = montage;
-			if( descriptor.isMontageBuffered() ) {			
+			if(descriptor.isMontageBuffered()) {
 				montageBuffer = new MultichannelSampleBuffer(output, MultichannelSampleBuffer.INITIAL_BUFFER_SIZE);
 				output = montageBuffer;
 			}
 		}
-		if( descriptor.isFiltered() ) {
-			filter = new MultichannelSampleFilter(output,source);
-			filter.setCurrentMontage( descriptor.getMontage() );
+		if(descriptor.isFiltered()) {
+			filter = new MultichannelSampleFilter(output, source);
+			filter.setCurrentMontage(descriptor.getMontage());
 			output = filter;
 		}
 		
@@ -138,23 +138,23 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 
 		output.removePropertyChangeListener(this);
 		
-		if( createdSource ) {
+		if(createdSource) {
 			source.destroy();
 		}
 		
-		if( filter != null ) {
+		if(filter != null) {
 			filter.destroy();
 		}
 		
-		if( montageBuffer != null ) {
+		if(montageBuffer != null) {
 			montageBuffer.destroy();
 		}
 		
-		if( montage != null ) {
+		if(montage != null) {
 			montage.destroy();
 		}
 				
-		if( sourceBuffer != null ) {
+		if(sourceBuffer != null) {
 			sourceBuffer.destroy();
 		}
 		
@@ -162,7 +162,7 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 	
 	public static SignalProcessingChain createRawChain(OriginalMultichannelSampleSource source, SignalType signalType) {
 		
-		SignalProcessingChain chain = new SignalProcessingChain(source,signalType);
+		SignalProcessingChain chain = new SignalProcessingChain(source, signalType);
 		chain.output = chain.source;
 		
 		chain.configureOutput();
@@ -173,7 +173,7 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 	
 	public static SignalProcessingChain createBufferedRawChain(OriginalMultichannelSampleSource source, SignalType signalType) {
 
-		SignalProcessingChain chain = new SignalProcessingChain(source,signalType);
+		SignalProcessingChain chain = new SignalProcessingChain(source, signalType);
 		chain.sourceBuffer = new MultichannelSampleBuffer(chain.source, MultichannelSampleBuffer.INITIAL_BUFFER_SIZE);
 		chain.output = chain.sourceBuffer;
 		
@@ -185,7 +185,7 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 	
 	public static SignalProcessingChain createAssembledChain(OriginalMultichannelSampleSource source, SignalType signalType) {
 
-		SignalProcessingChain chain = new SignalProcessingChain(source,signalType);
+		SignalProcessingChain chain = new SignalProcessingChain(source, signalType);
 		chain.sourceBuffer = new MultichannelSampleBuffer(chain.source, MultichannelSampleBuffer.INITIAL_BUFFER_SIZE);
 		chain.montage = new MultichannelSampleMontage(signalType, chain.sourceBuffer);
 		chain.output = chain.montage;
@@ -198,7 +198,7 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 	
 	public static SignalProcessingChain createBufferedAssembledChain(OriginalMultichannelSampleSource source, SignalType signalType) {
 
-		SignalProcessingChain chain = new SignalProcessingChain(source,signalType);
+		SignalProcessingChain chain = new SignalProcessingChain(source, signalType);
 		chain.sourceBuffer = new MultichannelSampleBuffer(chain.source, MultichannelSampleBuffer.INITIAL_BUFFER_SIZE);
 		chain.montage = new MultichannelSampleMontage(signalType, chain.sourceBuffer);
 		chain.montageBuffer = new MultichannelSampleBuffer(chain.montage, MultichannelSampleBuffer.INITIAL_BUFFER_SIZE);
@@ -221,9 +221,9 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
          */
         public static SignalProcessingChain createNotBufferedFilteredChain(OriginalMultichannelSampleSource source, SignalType signalType) {
 
-		SignalProcessingChain chain = new SignalProcessingChain(source,signalType);
+		SignalProcessingChain chain = new SignalProcessingChain(source, signalType);
 		chain.montage = new MultichannelSampleMontage(signalType, chain.source);
-		chain.filter = new MultichannelSampleFilter(chain.montage,source);
+		chain.filter = new MultichannelSampleFilter(chain.montage, source);
 		chain.output = chain.filter;
 
 		chain.configureOutput();
@@ -234,7 +234,7 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 
 	public static SignalProcessingChain createFilteredChain(OriginalMultichannelSampleSource source, SignalType signalType) {
 
-		SignalProcessingChain chain = new SignalProcessingChain(source,signalType);
+		SignalProcessingChain chain = new SignalProcessingChain(source, signalType);
 		chain.sourceBuffer = new MultichannelSampleBuffer(chain.source, MultichannelSampleBuffer.INITIAL_BUFFER_SIZE);
 		chain.montage = new MultichannelSampleMontage(signalType, chain.sourceBuffer);
 		chain.montageBuffer = new MultichannelSampleBuffer(chain.montage, MultichannelSampleBuffer.INITIAL_BUFFER_SIZE);
@@ -250,9 +250,9 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 	// NOTE! buffering filtered chain is risky, so no "createBufferedFilterChain" - be sure to know what you're doing if you decide to implement one
 	// (filtered fragments may not meet correctly at the edges?)
 
-	protected SignalProcessingChain createRawLevelSharedChain( OriginalMultichannelSampleSource sampleSource ) throws SignalMLException {
+	protected SignalProcessingChain createRawLevelSharedChain(OriginalMultichannelSampleSource sampleSource) throws SignalMLException {
 		
-		SignalProcessingChain chain = new SignalProcessingChain( sampleSource, this.getSignalType() );
+		SignalProcessingChain chain = new SignalProcessingChain(sampleSource, this.getSignalType());
 		chain.output = chain.source;
 		
 		chain.configureOutput();
@@ -263,28 +263,28 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 	
 	public SignalProcessingChain createRawLevelSharedChain() throws SignalMLException {
 				
-		return createRawLevelSharedChain( this.getSource() );		
+		return createRawLevelSharedChain(this.getSource());
 		
 	}
 	
 	public SignalProcessingChain createRawLevelCopyChain() throws SignalMLException {
 		
 		OriginalMultichannelSampleSource sampleSource = this.getSource().duplicate();			
-		SignalProcessingChain chain = createRawLevelSharedChain( sampleSource );
+		SignalProcessingChain chain = createRawLevelSharedChain(sampleSource);
 		chain.createdSource = true;
 		return chain;
 		
 	}
 
-	protected SignalProcessingChain createAssembledLevelChain( OriginalMultichannelSampleSource sampleSource ) throws SignalMLException {
+	protected SignalProcessingChain createAssembledLevelChain(OriginalMultichannelSampleSource sampleSource) throws SignalMLException {
 		
 		SignalType signalType = this.getSignalType();
-		SignalProcessingChain chain = new SignalProcessingChain( sampleSource, signalType );
+		SignalProcessingChain chain = new SignalProcessingChain(sampleSource, signalType);
 		chain.sourceBuffer = new MultichannelSampleBuffer(chain.source, MultichannelSampleBuffer.INITIAL_BUFFER_SIZE);
 		chain.montage = new MultichannelSampleMontage(signalType, chain.sourceBuffer);
 		MultichannelSampleMontage baseMontage = this.getMontage();
-		if( baseMontage != null ) {
-			chain.montage.setCurrentMontage( baseMontage.getCurrentMontage() );
+		if(baseMontage != null) {
+			chain.montage.setCurrentMontage(baseMontage.getCurrentMontage());
 		}
 		chain.output = chain.montage;
 		
@@ -309,19 +309,19 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 				
 	}
 
-	protected SignalProcessingChain createFilteredLevelChain( OriginalMultichannelSampleSource sampleSource ) throws SignalMLException {
+	protected SignalProcessingChain createFilteredLevelChain(OriginalMultichannelSampleSource sampleSource) throws SignalMLException {
 		
 		SignalType signalType = this.getSignalType();
-		SignalProcessingChain chain = new SignalProcessingChain( sampleSource, signalType );
+		SignalProcessingChain chain = new SignalProcessingChain(sampleSource, signalType);
 		chain.sourceBuffer = new MultichannelSampleBuffer(chain.source, MultichannelSampleBuffer.INITIAL_BUFFER_SIZE);
 		chain.montage = new MultichannelSampleMontage(signalType, chain.sourceBuffer);
 		// no montage buffer is used
 		chain.filter = new MultichannelSampleFilter(chain.montage);
 		MultichannelSampleMontage baseMontage = this.getMontage();
-		if( baseMontage != null ) {
+		if(baseMontage != null) {
 			Montage currentBaseMontage = baseMontage.getCurrentMontage();
-			chain.montage.setCurrentMontage( currentBaseMontage );
-			chain.filter.setCurrentMontage( currentBaseMontage );
+			chain.montage.setCurrentMontage(currentBaseMontage);
+			chain.filter.setCurrentMontage(currentBaseMontage);
 		}
 		chain.output = chain.filter;
 		
@@ -346,9 +346,9 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 				
 	}
 
-	public SignalProcessingChain createLevelSharedChain( SignalSourceLevel level ) throws SignalMLException {
+	public SignalProcessingChain createLevelSharedChain(SignalSourceLevel level) throws SignalMLException {
 		
-		switch( level ) {
+		switch(level) {
 		
 		case FILTERED :
 			return createFilteredLevelSharedChain();
@@ -364,9 +364,9 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 		
 	}
 	
-	public SignalProcessingChain createLevelCopyChain( SignalSourceLevel level ) throws SignalMLException {
+	public SignalProcessingChain createLevelCopyChain(SignalSourceLevel level) throws SignalMLException {
 	
-		switch( level ) {
+		switch(level) {
 		
 		case FILTERED :
 			return createFilteredLevelCopyChain();
@@ -387,18 +387,18 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 		SignalProcessingChainDescriptor descriptor = new SignalProcessingChainDescriptor();
 		descriptor.setType(signalType);
 		
-		descriptor.setFiltered( filter != null );
-		descriptor.setMontageBuffered( montageBuffer != null );
-		if( montage != null ) {
+		descriptor.setFiltered(filter != null);
+		descriptor.setMontageBuffered(montageBuffer != null);
+		if(montage != null) {
 			descriptor.setAssembled(true);
-			descriptor.setMontage( new Montage( montage.getCurrentMontage() ) );
+			descriptor.setMontage(new Montage(montage.getCurrentMontage()));
 		} else {
 			descriptor.setAssembled(false);
 			descriptor.setMontage(null);
 		}
-		descriptor.setSourceBuffered( sourceBuffer != null );
+		descriptor.setSourceBuffered(sourceBuffer != null);
 		
-		if( source instanceof SignalMLCodecSampleSource ) {
+		if(source instanceof SignalMLCodecSampleSource) {
 			
 			SignalMLCodecSampleSource codecSource = (SignalMLCodecSampleSource) source;
 			SignalMLCodecReader reader = codecSource.getReader();
@@ -415,19 +415,19 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 			descriptor.setDocument(mrud);
 			
 		}
-		else if( source instanceof RawSignalSampleSource ) {
+		else if(source instanceof RawSignalSampleSource) {
 			
 			RawSignalSampleSource rawSource = (RawSignalSampleSource) source;
 			RawSignalDescriptor rawDescriptor = new RawSignalDescriptor();
 
-			rawDescriptor.setSamplingFrequency( rawSource.getSamplingFrequency() );
-			rawDescriptor.setSampleCount( rawSource.getSampleCount() );
-			rawDescriptor.setChannelCount( rawSource.getChannelCount() );
-			rawDescriptor.setCalibration( rawSource.getCalibration() );
-			rawDescriptor.setSampleType( rawSource.getSampleType() );
-			rawDescriptor.setByteOrder( rawSource.getByteOrder() );
+			rawDescriptor.setSamplingFrequency(rawSource.getSamplingFrequency());
+			rawDescriptor.setSampleCount(rawSource.getSampleCount());
+			rawDescriptor.setChannelCount(rawSource.getChannelCount());
+			rawDescriptor.setCalibration(rawSource.getCalibration());
+			rawDescriptor.setSampleType(rawSource.getSampleType());
+			rawDescriptor.setByteOrder(rawSource.getByteOrder());
 			
-			RawSignalMRUDEntry mrud = new RawSignalMRUDEntry(ManagedDocumentType.SIGNAL, RawSignalDocument.class, rawSource.getFile().getAbsolutePath(), rawDescriptor );
+			RawSignalMRUDEntry mrud = new RawSignalMRUDEntry(ManagedDocumentType.SIGNAL, RawSignalDocument.class, rawSource.getFile().getAbsolutePath(), rawDescriptor);
 			mrud.setLastTimeOpened(new Date());
 
 			descriptor.setDocument(mrud);
@@ -435,7 +435,7 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 		}
 		else {
 			
-			throw new SanityCheckException( "Unsupported sample source type: " + source.getClass().getName() );
+			throw new SanityCheckException("Unsupported sample source type: " + source.getClass().getName());
 			
 		}
 		
@@ -526,12 +526,12 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 		return output;
 	}
 	
-	public void applyMontageDefinition( Montage montageDef ) throws MontageMismatchException {
+	public void applyMontageDefinition(Montage montageDef) throws MontageMismatchException {
 		
-		if( montage != null ) {
+		if(montage != null) {
 			montage.setCurrentMontage(montageDef);
 		}
-		if( filter != null ) {
+		if(filter != null) {
 			filter.setCurrentMontage(montageDef);
 		}
 		
@@ -539,7 +539,7 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 	
 	public int[] getDependantChannelIndices(int channel) {
 		
-		if( montage == null ) {
+		if(montage == null) {
 			return new int[] { channel };
 		} else {
 			return montage.getMontageChannelIndices(channel);
@@ -549,10 +549,10 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 	
 	public String[] getLabels() {
 		
-		if( montage == null ) {
+		if(montage == null) {
 			int channelCount = getChannelCount();
 			String[] labels = new String[channelCount];
-			for( int i=0; i<channelCount; i++ ) {
+			for(int i = 0; i < channelCount; i++) {
 				labels[i] = getLabel(i);
 			}
 			return labels;
@@ -562,9 +562,9 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 		
 	}
 	
-	public String getPrimaryLabel( int channel ) {
+	public String getPrimaryLabel(int channel) {
 		
-		if( montage == null ) {
+		if(montage == null) {
 			return output.getLabel(channel);
 		} else {
 			return montage.getPrimaryLabel(channel);

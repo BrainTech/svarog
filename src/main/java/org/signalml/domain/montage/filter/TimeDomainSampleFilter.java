@@ -74,7 +74,7 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition {
 	 * @return the order of the filter
 	 */
 	public int getFilterOrder() {
-		return Math.max(aCoefficients.length,bCoefficients.length) - 1;
+		return Math.max(aCoefficients.length, bCoefficients.length) - 1;
 	}
 
 	@Override
@@ -104,7 +104,7 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition {
 
 	@Override
 	public String getDefaultMessage() {
-		return "Time domain filter "+getClass().getSimpleName();
+		return "Time domain filter " + getClass().getSimpleName();
 	}
 
 	/**
@@ -141,7 +141,7 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition {
 			return false;
 
 		TimeDomainSampleFilter tdf = (TimeDomainSampleFilter)o;
-		if ((Arrays.equals(aCoefficients,tdf.aCoefficients)) && Arrays.equals(bCoefficients, tdf.bCoefficients))
+		if ((Arrays.equals(aCoefficients, tdf.aCoefficients)) && Arrays.equals(bCoefficients, tdf.bCoefficients))
 			return true;
 		else
 			return false;

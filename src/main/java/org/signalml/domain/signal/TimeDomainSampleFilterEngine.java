@@ -44,7 +44,7 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
          * @param definition the {@link TimeDomainSampleFilter definition} of the
          * filter
          */
-	public TimeDomainSampleFilterEngine( SampleSource source, TimeDomainSampleFilter definition ) {
+	public TimeDomainSampleFilterEngine(SampleSource source, TimeDomainSampleFilter definition ) {
 
 		super(source);
 
@@ -174,7 +174,7 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
          * the given position in time. {@link TimeDomainSampleFilterEngine#updateCache(int)
          * must be run before running this method if new samples were added or
          * cache was never updated before.
-         * 
+         *
          * @param target the array to which results will be written starting
          * from position <code>arrayOffset</code>
          * @param signalOffset the position (in time) in the signal starting
