@@ -20,15 +20,15 @@ public enum FilterType implements MessageSourceResolvable {
 	BANDSTOP
 	;
 
-/*	private String name;
+	/*	private String name;
 
-	private FilterType(String name) {
-		this.name = name;
-	}
+		private FilterType(String name) {
+			this.name = name;
+		}
 
-	public String getName() {
-		return name;
-	}*/
+		public String getName() {
+			return name;
+		}*/
 
 	public boolean isLowpass() {
 		return (this == LOWPASS);

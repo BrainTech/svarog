@@ -173,7 +173,7 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 	*
 	 * Returns the order of the filter.
 	 * @return the order of the filter
-	 
+
 	public int getFilterOrder() {
 		return Math.max(aCoefficients.length, bCoefficients.length) - 1;
 	}*/
@@ -187,10 +187,10 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 			effectString += passbandEdgeFrequencies[0] + " - Fn";
 		else if (filterType.isBandpass())
 			effectString += passbandEdgeFrequencies[0] + " - " + passbandEdgeFrequencies[1];
-		else if(filterType.isBandstop())
+		else if (filterType.isBandstop())
 			effectString += stopbandEdgeFrequencies[0] + " - " + stopbandEdgeFrequencies[1];
 		effectString += ")";
-		
+
 		return effectString;
 
 	}
