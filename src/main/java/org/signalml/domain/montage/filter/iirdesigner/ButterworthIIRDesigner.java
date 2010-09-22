@@ -139,6 +139,15 @@ class ButterworthIIRDesigner extends AbstractIIRDesigner {
 	@Override
 	protected int calculateFilterOrder(FilterType type, double[] wp, double[] ws, double gpass, double gstop, boolean analog) throws BadFilterParametersException {
 
+		System.out.println("calculateFilterOrder");
+		System.out.println("type = "+type);
+		System.out.println("wp = " + wp[0] + ", " + wp[1]);
+		System.out.println("ws = " + ws[0] + ", " + ws[1]);
+		System.out.println("gpass = " + gpass);
+		System.out.println("gstop = " + gstop);
+		System.out.println("analog = "+analog);
+
+
 		double[] passb;
 		double[] stopb;
 		if (!analog) {

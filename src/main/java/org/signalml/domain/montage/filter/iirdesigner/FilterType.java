@@ -14,12 +14,13 @@ import org.springframework.context.MessageSourceResolvable;
  */
 public enum FilterType implements MessageSourceResolvable {
 
-	LOWPASS("lowpass"),
-	HIGHPASS("highpass"),
-	BANDPASS("bandpass"),
-	BANDSTOP("bandstop");
+	LOWPASS,
+	HIGHPASS,
+	BANDPASS,
+	BANDSTOP
+	;
 
-	private String name;
+/*	private String name;
 
 	private FilterType(String name) {
 		this.name = name;
@@ -27,7 +28,7 @@ public enum FilterType implements MessageSourceResolvable {
 
 	public String getName() {
 		return name;
-	}
+	}*/
 
 	public boolean isLowpass() {
 		return (this == LOWPASS);
@@ -52,12 +53,12 @@ public enum FilterType implements MessageSourceResolvable {
 
 	@Override
 	public String[] getCodes() {
-		return new String[] { "signalSelectionType." + name };
+		return new String[] { "iirdesigner.filterType." + this.toString()};
 	}
 
 	@Override
 	public String getDefaultMessage() {
-		return name;
+		return this.toString();
 	}
 
 }

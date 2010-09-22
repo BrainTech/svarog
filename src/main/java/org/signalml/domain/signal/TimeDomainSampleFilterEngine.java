@@ -4,8 +4,12 @@
 
 package org.signalml.domain.signal;
 
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
+import org.signalml.domain.montage.filter.iirdesigner.BadFilterParametersException;
+import org.signalml.domain.montage.filter.iirdesigner.FilterCoefficients;
+import org.signalml.domain.montage.filter.iirdesigner.IIRDesigner;
 
 /**
  * This class represents a Time Domain (IIR or FIR) filter of samples.
@@ -49,9 +53,23 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 		super(source);
 
                 this.definition = definition;
-                aCoefficients = definition.getACoefficients();
-                bCoefficients = definition.getBCoefficients();
-                filterOrder = definition.getFilterOrder();
+                /*aCoefficients = definition.getACoefficients();
+                bCoefficients = definition.getBCoefficients();*/
+
+		FilterCoefficients coeffs = null;
+		try {
+			coeffs = IIRDesigner.designDigitalFilter(definition);
+			System.out.println("Designed coefficients: ");
+			coeffs.print();
+			aCoefficients = coeffs.getACoefficients();
+			bCoefficients = coeffs.getBCoefficients();
+
+		} catch (BadFilterParametersException ex) {
+			java.util.logging.Logger.getLogger(TimeDomainSampleFilterEngine.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+                //filterOrder = definition.getFilterOrder();
+		filterOrder = coeffs.getFilterOrder();
                 filtered = null;
 
 	}
@@ -128,21 +146,22 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
          */
         protected double[] calculateNewFilteredSamples(double[] unfilteredSamplesCache, double[] filteredSamplesCache, int newSamples){
 
-                for(int i = filterOrder; i < filteredSamplesCache.length; i++){
+		for(int i = filterOrder; i < filteredSamplesCache.length; i++){
 
-                    for(int j = i - filterOrder; j <= i; j++){
-                        filteredSamplesCache[i] += unfilteredSamplesCache[j] * bCoefficients[i - j];
-                        if(j < i)
-                            filteredSamplesCache[i] -= filteredSamplesCache[j] * aCoefficients[i - j];
-                    }
-                    filteredSamplesCache[i] /= aCoefficients[0];
+			for(int j = i - filterOrder; j <= i; j++){
+				if(i - j < bCoefficients.length)
+					filteredSamplesCache[i] += unfilteredSamplesCache[j] * bCoefficients[i - j];
+				if(j < i && i -j < aCoefficients.length)
+					filteredSamplesCache[i] -= filteredSamplesCache[j] * aCoefficients[i - j];
+			}
+			filteredSamplesCache[i] /= aCoefficients[0];
 
-                }
+		}
 
-                double[] newFilteredSamples = new double[newSamples];
-                for(int i = 0; i < newSamples; i++)
-                    newFilteredSamples[i] = filteredSamplesCache[filterOrder + i];
-                return newFilteredSamples;
+		double[] newFilteredSamples = new double[newSamples];
+		for(int i = 0; i < newSamples; i++)
+			newFilteredSamples[i] = filteredSamplesCache[filterOrder + i];
+		return newFilteredSamples;
         }
 
         /**

@@ -61,6 +61,7 @@ public class MontageFiltersPanel extends JPanel {
 	private MessageSourceAccessor messageSource;
 	private SeriousWarningDialog seriousWarningDialog;
 	private EditFFTSampleFilterDialog editFFTSampleFilterDialog;
+	private EditTimeDomainSampleFilterDialog editTimeDomainSampleFilterDialog;
 
 	private Montage montage;
 	private boolean signalBound;
@@ -344,6 +345,14 @@ public class MontageFiltersPanel extends JPanel {
 		this.editFFTSampleFilterDialog = editFFTSampleFilterDialog;
 	}
 
+	public EditTimeDomainSampleFilterDialog getEditTimeDomainSampleFilterDialog() {
+		return editTimeDomainSampleFilterDialog;
+	}
+
+	public void setTimeDomainSampleFilterDialog(EditTimeDomainSampleFilterDialog editTimeDomainSampleFilterDialog) {
+		this.editTimeDomainSampleFilterDialog = editTimeDomainSampleFilterDialog;
+	}
+
 	public Montage getMontage() {
 		return montage;
 	}
@@ -415,7 +424,9 @@ public class MontageFiltersPanel extends JPanel {
 			}
 
 			int index = getTimeDomainFilterTypeComboBox().getSelectedIndex();
-			TimeDomainSampleFilter filter = (TimeDomainSampleFilter)montage.getSignalTypeConfigurer().getPredefinedFilterAt(index);
+			TimeDomainSampleFilter filter = (TimeDomainSampleFilter)montage.getSignalTypeConfigurer().getPredefinedFilterAt(index).duplicate();
+			filter.setDescription(messageSource.getMessage("montageFilters.newTimeDomainFilter"));
+			filter.setSamplingFrequency(currentSamplingFrequency);
 			montage.addSampleFilter(filter);
 
 		}
@@ -478,16 +489,25 @@ public class MontageFiltersPanel extends JPanel {
 
 			SampleFilterDefinition filter = montage.getSampleFilterAt(selectedRow);
 			SampleFilterType type = filter.getType();
+			boolean ok;
 			switch (type) {
 
 			case TIME_DOMAIN :
-				// XXX feature postponed - needs to be completed or removed in the future
+
+				editTimeDomainSampleFilterDialog.setCurrentSamplingFrequency(currentSamplingFrequency);
+				ok = editTimeDomainSampleFilterDialog.showDialog(filter, true);
+				if (!ok) {
+					return;
+				}
+
+				montage.updateSampleFilter(selectedRow, filter);
+
 				break;
 
 			case FFT :
 
 				editFFTSampleFilterDialog.setCurrentSamplingFrequency(currentSamplingFrequency);
-				boolean ok = editFFTSampleFilterDialog.showDialog(filter, true);
+				ok = editFFTSampleFilterDialog.showDialog(filter, true);
 				if (!ok) {
 					return;
 				}

@@ -31,32 +31,50 @@ public class IIRDesigner {
 	 */
 	public static FilterCoefficients designDigitalFilter(ApproximationFunctionType approximationFunctionType, FilterType type, double[] passbandEdgeFrequencies, double[] stopbandEdgeFrequencies, double passbandRipple, double stopbandAttenuation, double samplingFrequency) throws BadFilterParametersException {
 
+		System.out.println("approx: " + approximationFunctionType);
+		System.out.println("type: " + type);
+		System.out.println("passband: " + passbandEdgeFrequencies[0] + ", " + passbandEdgeFrequencies[1]);
+		System.out.println("stopband: " + stopbandEdgeFrequencies[0] + ", " + stopbandEdgeFrequencies[1]);
+		System.out.println("passRipple: " + passbandRipple);
+		System.out.println("stopbandAttenua: " + stopbandAttenuation);
+		System.out.println("sampling Freq: " + samplingFrequency);
+
 		if (approximationFunctionType.isButterworth()) {
 
 			ButterworthIIRDesigner iirdesigner = new ButterworthIIRDesigner();
-			return iirdesigner.designDigitalFilter(samplingFrequency, type, passbandEdgeFrequencies, stopbandEdgeFrequencies, passbandRipple, passbandRipple);
+			return iirdesigner.designDigitalFilter(samplingFrequency, type, passbandEdgeFrequencies, stopbandEdgeFrequencies, passbandRipple, stopbandAttenuation);
 
 		}
 		else if (approximationFunctionType.isChebyshev1()) {
 
 			Chebyshev1IIRDesigner iirdesigner = new Chebyshev1IIRDesigner();
-			return iirdesigner.designDigitalFilter(samplingFrequency, type, passbandEdgeFrequencies, stopbandEdgeFrequencies, passbandRipple, passbandRipple);
+			return iirdesigner.designDigitalFilter(samplingFrequency, type, passbandEdgeFrequencies, stopbandEdgeFrequencies, passbandRipple, stopbandAttenuation);
 
 		}
 		else if (approximationFunctionType.isChebyshev2()) {
 
 			Chebyshev2IIRDesigner iirdesigner = new Chebyshev2IIRDesigner();
-			return iirdesigner.designDigitalFilter(samplingFrequency, type, passbandEdgeFrequencies, stopbandEdgeFrequencies, passbandRipple, passbandRipple);
+			return iirdesigner.designDigitalFilter(samplingFrequency, type, passbandEdgeFrequencies, stopbandEdgeFrequencies, passbandRipple, stopbandAttenuation);
 
 		}
 		else if (approximationFunctionType.isElliptic()) {
 
 			EllipticIIRDesigner iirdesigner = new EllipticIIRDesigner();
-			return iirdesigner.designDigitalFilter(samplingFrequency, type, passbandEdgeFrequencies, stopbandEdgeFrequencies, passbandRipple, passbandRipple);
+			return iirdesigner.designDigitalFilter(samplingFrequency, type, passbandEdgeFrequencies, stopbandEdgeFrequencies, passbandRipple, stopbandAttenuation);
 
 		}
 		else
 			throw new BadFilterParametersException("This approximation function type is not supported by the IIRFilterDesigner.");
+
+	}
+
+	public static FilterCoefficients designDigitalFilter(TimeDomainSampleFilter filterDefinition) throws BadFilterParametersException {
+
+		System.out.println("IIRDEsigner : " + filterDefinition.getSamplingFrequency());
+
+		return IIRDesigner.designDigitalFilter(filterDefinition.getApproximationFunctionType(), filterDefinition.getFilterType(),
+			filterDefinition.getPassbandEdgeFrequencies(), filterDefinition.getStopbandEdgeFrequencies(),
+			filterDefinition.getPassbandRipple(), filterDefinition.getStopbandAttenuation(), filterDefinition.getSamplingFrequency());
 
 	}
 

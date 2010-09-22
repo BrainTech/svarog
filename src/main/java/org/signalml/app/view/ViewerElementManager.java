@@ -127,6 +127,7 @@ import org.signalml.util.SvarogConstants;
 import org.springframework.context.support.MessageSourceAccessor;
 
 import com.thoughtworks.xstream.XStream;
+import org.signalml.app.view.montage.EditTimeDomainSampleFilterDialog;
 
 /** ViewerElementManager
  *
@@ -235,6 +236,7 @@ public class ViewerElementManager {
 	private IterationSetupDialog iterationSetupDialog;
 	private ExportSignalDialog exportSignalDialog;
 	private EditFFTSampleFilterDialog editFFTSampleFilterDialog;
+	private EditTimeDomainSampleFilterDialog editTimeDomainSampleFilterDialog;
 	private MP5LocalExecutorDialog mp5LocalExecutorDialog;
 	private MP5RemoteExecutorDialog mp5RemoteExecutorDialog;
 	private DynamicCompilationWarningDialog dynamicCompilationWarningDialog;
@@ -1094,6 +1096,15 @@ public class ViewerElementManager {
 			editFFTSampleFilterDialog.setFileChooser(getFileChooser());
 		}
 		return editFFTSampleFilterDialog;
+	}
+
+	public EditTimeDomainSampleFilterDialog getEditTimeDomainSampleFilterDialog() {
+		if( editTimeDomainSampleFilterDialog == null ) {
+			editTimeDomainSampleFilterDialog = new EditTimeDomainSampleFilterDialog(messageSource, getFftFilterPresetManager(), getDialogParent(), true);
+			editTimeDomainSampleFilterDialog.setApplicationConfig(getApplicationConfig());
+			editTimeDomainSampleFilterDialog.setFileChooser(getFileChooser());
+		}
+		return editTimeDomainSampleFilterDialog;
 	}
 	
 	public MP5LocalExecutorDialog getMp5LocalExecutorDialog() {

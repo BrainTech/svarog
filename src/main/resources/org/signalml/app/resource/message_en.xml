@@ -71,6 +71,9 @@
 	<entry key="fftFilter">FFT filter</entry>
 	<entry key="fftFilter.effect">{0}</entry>
 
+	<entry key="timeDomainFilter">Time domain filter</entry>
+	<entry key="timeDomainFilter.effect">{0} {1}</entry>
+
 	<entry key="sampleFilter.td.lowPass">Low pass filter ({0}) </entry>
 	<entry key="sampleFilter.td.highPass">High pass filter ({0}) </entry>
 	<entry key="sampleFilter.td.notch">Notch filter ({0}) </entry>
@@ -113,6 +116,18 @@
 	<entry key="fft.windowType.HAMMING">Hamming</entry>
 	<entry key="fft.windowType.KAISER">Kaiser</entry>
 	<entry key="fft.windowType.GAUSSIAN">Gaussian</entry>
+
+	<entry key="iirdesigner.approximationFunctionType.BUTTERWORTH">Butterworth</entry>
+	<entry key="iirdesigner.approximationFunctionType.CHEBYSHEV1">Chebyshev I</entry>
+	<entry key="iirdesigner.approximationFunctionType.CHEBYSHEV2">Chebyshev II</entry>
+	<entry key="iirdesigner.approximationFunctionType.ELLIPTIC">Elliptic</entry>
+
+	<entry key="iirdesigner.filterType.LOWPASS">Low-pass</entry>
+	<entry key="iirdesigner.filterType.HIGHPASS">High-pass</entry>
+	<entry key="iirdesigner.filterType.BANDPASS">Band-pass</entry>
+	<entry key="iirdesigner.filterType.BANDSTOP">Band-
+
+stop</entry>
 
 	<entry key="sampleType.DOUBLE">Double (64-bit IEEE 754)</entry>
 	<entry key="sampleType.FLOAT">Float (32-bit IEEE 754)</entry>
@@ -763,6 +778,7 @@
 
 	<entry key="montageFilters.filtersTableTitle">Filters</entry>
 	<entry key="montageFilters.newFFT">New FFT filter</entry>
+	<entry key="montageFilters.newTimeDomainFilter">New time domain filter</entry>
 
 	<entry key="montageFiltersTable.index">Index</entry>
 	<entry key="montageFiltersTable.description">Description</entry>
@@ -788,17 +804,20 @@
 
 	<entry key="montageFilters.filterChannelExclusionTitle">Filter channel exclusion</entry>
 
+	<entry key="editSampleFilter.descriptionTitle">Filter description</entry>
+	<entry key="editSampleFilter.graphSpinnerLabel">Maximum graph frequency [Hz]</entry>
+	<entry key="editSampleFilter.graphPanelTitle">Filter design graph</entry>
+	<entry key="editSampleFilter.graphFrequencyLabel">Frequency [Hz]</entry>
+	<entry key="editSampleFilter.graphTitle">Filter frequency response</entry>
+
 	<entry key="editFFTSampleFilter.title">Edit FFT sample filter</entry>
 	<entry key="editFFTSampleFilter.tableToolTip">Double click a row to copy parameters to new range parameters panel</entry>
 
-	<entry key="editFFTSampleFilter.descriptionTitle">Filter description</entry>
-	<entry key="editFFTSampleFilter.graphPanelTitle">FFT filter design graph</entry>
+
 	<entry key="editFFTSampleFilter.addNewRangeTitle">New range parameters</entry>
 	<entry key="editFFTSampleFilter.rangesTitle">Ranges</entry>
 
 	<entry key="editFFTSampleFilter.graphTitle">FFT coefficients</entry>
-	<entry key="editFFTSampleFilter.graphSpinnerLabel">Maximum graph frequency [Hz]</entry>
-	<entry key="editFFTSampleFilter.graphFrequencyLabel">Frequency [Hz]</entry>
 	<entry key="editFFTSampleFilter.graphCoefficientLabel">Coefficient</entry>
 
 	<entry key="editFFTSampleFilter.fromFrequency">From (incl.) [Hz]</entry>
@@ -815,6 +834,18 @@
 
 	<entry key="error.editFFTSampleFilter.descriptionEmpty">A filter must have a description</entry>
 	<entry key="error.editFFTSampleFilter.descriptionBadChars">Filter description must not contain control characters</entry>
+
+	<entry key="editTimeDomainSampleFilter.title">Edit time domain filter</entry>
+	<entry key="editTimeDomainSampleFilter.filterParametersTitle">Filter parameters</entry>
+
+	<entry key="editTimeDomainSampleFilter.filterType">Filter type</entry>
+	<entry key="editTimeDomainSampleFilter.filterFamily">Filter family</entry>
+	<entry key="editTimeDomainSampleFilter.passbandEdgeFrequency1">Passband edge frequency 1 [Hz]</entry>
+	<entry key="editTimeDomainSampleFilter.passbandEdgeFrequency2">Passband edge frequency 2 [Hz]</entry>
+	<entry key="editTimeDomainSampleFilter.stopbandEdgeFrequency1">Stopband edge frequency 1 [Hz]</entry>
+	<entry key="editTimeDomainSampleFilter.stopbandEdgeFrequency2">Stopband edge frequency 2 [Hz]</entry>
+	<entry key="editTimeDomainSampleFilter.passbandRipple">Passband ripple [dB]</entry>
+	<entry key="editTimeDomainSampleFilter.stopbandAttenuation">Stopband attenuation [dB]</entry>
 
 	<entry key="signalSpace.signalLevelType.title">Signal source level</entry>
 	<entry key="signalSpace.signalLevelType.rawSignal">Raw signal</entry>

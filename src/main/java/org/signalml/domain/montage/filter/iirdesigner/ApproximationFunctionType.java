@@ -15,16 +15,16 @@ import org.springframework.context.MessageSourceResolvable;
  */
 public enum ApproximationFunctionType implements MessageSourceResolvable {
 
-	BUTTERWORTH("butterworth"),
-	CHEBYSHEV1("chebyshev1"),
-	CHEBYSHEV2("chebyshev2"),
-	ELLIPTIC("elliptic");
+	BUTTERWORTH,
+	CHEBYSHEV1,
+	CHEBYSHEV2,
+	ELLIPTIC;
 
-	private String name;
+	//private String name;
 
-	private ApproximationFunctionType(String name) {
+	/*private ApproximationFunctionType(String name) {
 		this.name = name;
-	}
+	}*/
 
 	public boolean isButterworth() {
 		return (this == BUTTERWORTH);
@@ -49,12 +49,12 @@ public enum ApproximationFunctionType implements MessageSourceResolvable {
 
 	@Override
 	public String[] getCodes() {
-		return new String[] { "signalSelectionType." + name };
+		return new String[] { "iirdesigner.approximationFunctionType." + this.toString() };
 	}
 
 	@Override
 	public String getDefaultMessage() {
-		return name;
+		return this.toString();
 	}
 
 }

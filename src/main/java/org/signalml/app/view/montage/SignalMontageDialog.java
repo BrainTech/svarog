@@ -44,6 +44,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	private static final long serialVersionUID = 1L;
 	
 	private EditFFTSampleFilterDialog editFFTSampleFilterDialog;
+	private EditTimeDomainSampleFilterDialog editTimeDomainSampleFilterDialog;
 	
 	private MontageChannelsPanel channelsPanel;
 	private MontageGeneratorPanel generatorPanel;
@@ -93,6 +94,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 		filtersPanel = new MontageFiltersPanel(messageSource);
 		filtersPanel.setSeriousWarningDialog(getSeriousWarningDialog());
 		filtersPanel.setEditFFTSampleFilterDialog(getEditFFTSampleFilterDialog());
+		filtersPanel.setTimeDomainSampleFilterDialog(getEditTimeDomainSampleFilterDialog());
 		
 		miscellaneousPanel = new MontageMiscellaneousPanel(messageSource);
 		
@@ -343,6 +345,15 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 			editFFTSampleFilterDialog.setFileChooser(getFileChooser());
 		}
 		return editFFTSampleFilterDialog;
+	}
+
+	protected EditTimeDomainSampleFilterDialog getEditTimeDomainSampleFilterDialog() {
+		if( editTimeDomainSampleFilterDialog == null ) {
+			editTimeDomainSampleFilterDialog = new EditTimeDomainSampleFilterDialog(messageSource, fftFilterPresetManager, this, true);
+			editTimeDomainSampleFilterDialog.setApplicationConfig(getApplicationConfig());
+			editTimeDomainSampleFilterDialog.setFileChooser(getFileChooser());
+		}
+		return editTimeDomainSampleFilterDialog;
 	}
 	
 }

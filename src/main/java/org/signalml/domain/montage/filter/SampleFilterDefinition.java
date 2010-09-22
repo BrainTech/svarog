@@ -5,6 +5,7 @@
 package org.signalml.domain.montage.filter;
 
 import java.io.Serializable;
+import org.signalml.app.config.preset.Preset;
 
 import org.springframework.context.MessageSourceResolvable;
 
@@ -13,7 +14,7 @@ import org.springframework.context.MessageSourceResolvable;
  * 
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public abstract class SampleFilterDefinition implements MessageSourceResolvable, Serializable {
+public abstract class SampleFilterDefinition implements MessageSourceResolvable, Serializable, Preset {
 	
 	private static final long serialVersionUID = 1L;
 
