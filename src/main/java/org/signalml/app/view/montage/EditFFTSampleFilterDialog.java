@@ -629,14 +629,6 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 
 		getFFTWindowTypePanel().validatePanel(errors);
 
-		String description = getDescriptionTextField().getText();
-		if ( description == null || description.isEmpty() ) {
-			errors.rejectValue( "description", "error.editFFTSampleFilter.descriptionEmpty" );
-		}
-		else if ( !Util.validateString(description) ) {
-			errors.rejectValue( "description", "error.editFFTSampleFilter.descriptionBadChars" );
-		}
-
 	}
 
 	@Override

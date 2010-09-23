@@ -39,6 +39,7 @@ import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.dialog.AbstractPresetDialog;
 import org.signalml.exception.SignalMLException;
+import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
@@ -209,7 +210,17 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 
 	@Override
 	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+
 		super.validateDialog(model, errors);
+
+		String description = getDescriptionTextField().getText();
+		if(description == null || description.isEmpty()) {
+			errors.rejectValue("description", "error.editSampleFilter.descriptionEmpty");
+		}
+		else if(!Util.validateString(description)) {
+			errors.rejectValue("description", "error.editSampleFilter.descriptionBadChars");
+		}
+
 	}
 
 	@Override

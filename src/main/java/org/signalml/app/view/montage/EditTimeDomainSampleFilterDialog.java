@@ -15,6 +15,8 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.Box;
 import javax.swing.DefaultComboBoxModel;
@@ -39,7 +41,10 @@ import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.element.ResolvableComboBox;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.iirdesigner.ApproximationFunctionType;
+import org.signalml.domain.montage.filter.iirdesigner.BadFilterParametersException;
+import org.signalml.domain.montage.filter.iirdesigner.FilterCoefficients;
 import org.signalml.domain.montage.filter.iirdesigner.FilterType;
+import org.signalml.domain.montage.filter.iirdesigner.IIRDesigner;
 import org.signalml.exception.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
@@ -714,8 +719,8 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 		);
 		currentFilter.setPassbandRipple(((Number) getPassbandRippleSpinner().getValue()).doubleValue());
 		currentFilter.setStopbandAttenuation(((Number) getStopbandAttenuationSpinner().getValue()).doubleValue());
-		//currentFilter.setSamplingFrequency(getCurrentSamplingFrequency());
-		currentFilter.setSamplingFrequency(128.0);
+
+		currentFilter.setSamplingFrequency(getCurrentSamplingFrequency());
 
 		((TimeDomainSampleFilter)model).copyFrom(currentFilter);
 
@@ -723,17 +728,21 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 	@Override
 	public void validateDialog(Object model, Errors errors) throws SignalMLException {
-		/*super.validateDialog(model, errors);
 
-		getFFTWindowTypePanel().validatePanel(errors);
+		super.validateDialog(model, errors);
 
-		String description = getDescriptionTextField().getText();
-		if(description == null || description.isEmpty()) {
-			errors.rejectValue("description", "error.editFFTSampleFilter.descriptionEmpty");
+		fillModelFromDialog(currentFilter);
+		try {
+			FilterCoefficients coeffs = IIRDesigner.designDigitalFilter(currentFilter);
+			int filterOrder = coeffs.getFilterOrder();
+			if(filterOrder > 7)
+				errors.reject("error.editTimeDomainSampleFilter.badFilterParametersFilterOrderTooBig");
+		} catch (BadFilterParametersException ex) {
+			errors.reject("error.editTimeDomainSampleFilter.badFilterParameters");
+		} catch (Exception e) {
+			errors.reject("error.editTimeDomainSampleFilter.badFilterParameters");
 		}
-		else if(!Util.validateString(description)) {
-			errors.rejectValue("description", "error.editFFTSampleFilter.descriptionBadChars");
-		}*/
+
 
 	}
 

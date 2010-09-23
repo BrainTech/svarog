@@ -37,7 +37,7 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 	private double[] stopbandEdgeFrequencies = new double[2];
 	private double passbandRipple;
 	private double stopbandAttenuation;
-	private double samplingFrequency;
+	private transient double samplingFrequency;
 
 	private transient String effectString;
 

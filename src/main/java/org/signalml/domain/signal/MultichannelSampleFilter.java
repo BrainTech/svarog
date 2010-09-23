@@ -294,6 +294,7 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 				else if (definitions[i] instanceof TimeDomainSampleFilter) {
 
 					tdsFilter = (TimeDomainSampleFilter) definitions[i];
+					tdsFilter.setSamplingFrequency(source.getSamplingFrequency());
 
 					for (e = 0; e < channelCount; e++)
 						if (!montage.isFilteringExcluded(i, e)) {

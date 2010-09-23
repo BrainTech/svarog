@@ -810,6 +810,9 @@ stop</entry>
 	<entry key="editSampleFilter.graphFrequencyLabel">Frequency [Hz]</entry>
 	<entry key="editSampleFilter.graphTitle">Filter frequency response</entry>
 
+	<entry key="error.editSampleFilter.descriptionEmpty">A filter must have a description</entry>
+	<entry key="error.editSampleFilter.descriptionBadChars">Filter description must not contain control characters</entry>
+
 	<entry key="editFFTSampleFilter.title">Edit FFT sample filter</entry>
 	<entry key="editFFTSampleFilter.tableToolTip">Double click a row to copy parameters to new range parameters panel</entry>
 
@@ -832,9 +835,6 @@ stop</entry>
 	<entry key="editFFTSampleFilter.table.frequencyRange">Frequency range [Hz]</entry>
 	<entry key="editFFTSampleFilter.table.coefficient">Coefficient</entry>
 
-	<entry key="error.editFFTSampleFilter.descriptionEmpty">A filter must have a description</entry>
-	<entry key="error.editFFTSampleFilter.descriptionBadChars">Filter description must not contain control characters</entry>
-
 	<entry key="editTimeDomainSampleFilter.title">Edit time domain filter</entry>
 	<entry key="editTimeDomainSampleFilter.filterParametersTitle">Filter parameters</entry>
 
@@ -846,6 +846,9 @@ stop</entry>
 	<entry key="editTimeDomainSampleFilter.stopbandEdgeFrequency2">Stopband edge frequency 2 [Hz]</entry>
 	<entry key="editTimeDomainSampleFilter.passbandRipple">Passband ripple [dB]</entry>
 	<entry key="editTimeDomainSampleFilter.stopbandAttenuation">Stopband attenuation [dB]</entry>
+
+	<entry key="error.editTimeDomainSampleFilter.badFilterParameters">The filter cannot be designed for the given parameters - please correct them.</entry>
+	<entry key="error.editTimeDomainSampleFilter.badFilterParametersFilterOrderTooBig">The order of the filter designed for the given parameters is too big - please correct the parameters.</entry>
 
 	<entry key="signalSpace.signalLevelType.title">Signal source level</entry>
 	<entry key="signalSpace.signalLevelType.rawSignal">Raw signal</entry>
