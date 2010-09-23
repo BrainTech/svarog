@@ -510,6 +510,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 	@Override
 	public Preset getPreset() throws SignalMLException {
+		fillModelFromDialog(currentFilter);
 		return currentFilter.duplicate();
 	}
 

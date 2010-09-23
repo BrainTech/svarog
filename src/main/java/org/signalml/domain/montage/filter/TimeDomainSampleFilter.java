@@ -274,11 +274,14 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 			return false;
 
 		TimeDomainSampleFilter tdf = (TimeDomainSampleFilter)o;
-		if ((Arrays.equals(aCoefficients, tdf.aCoefficients)) && Arrays.equals(bCoefficients, tdf.bCoefficients))
-			return true;
-		else
-			return false;
+		if(tdf.filterType.equals(filterType) && tdf.approximationFunctionType.equals(approximationFunctionType) &&
+			Arrays.equals(passbandEdgeFrequencies, tdf.passbandEdgeFrequencies) &&
+			Arrays.equals(stopbandEdgeFrequencies, tdf.stopbandEdgeFrequencies) &&
+			passbandRipple == tdf.passbandRipple && stopbandAttenuation == tdf.stopbandAttenuation)
+				return true;
+		return false;
 	}
+
 
 	/*public String getEffectString() {
 
@@ -340,12 +343,12 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 	@Override
 	public MessageSourceResolvable getEffectDescription() {
 		return new ResolvableString(EFFECT_CODES, new Object[] { getEffectString() }, getDefaultEffectDescription());
-	}
+	}*/
 
 	@Override
 	public String toString() {
 		return name;
-	}*/
+	}
 
 	@Override
 	public String getName() {

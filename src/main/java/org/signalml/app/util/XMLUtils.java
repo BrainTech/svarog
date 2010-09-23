@@ -42,6 +42,8 @@ import com.thoughtworks.xstream.converters.reflection.FieldDictionary;
 import com.thoughtworks.xstream.converters.reflection.NativeFieldKeySorter;
 import com.thoughtworks.xstream.converters.reflection.PureJavaReflectionProvider;
 import com.thoughtworks.xstream.io.xml.DomDriver;
+import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
+import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 
 /** XMLUtils
  *
@@ -69,7 +71,8 @@ public abstract class XMLUtils {
 				LinkedEarsMontageGenerator.class,
 				MontageSampleFilter.class,
 				SampleFilterDefinition.class,
-				FFTSampleFilter.class
+				FFTSampleFilter.class,
+				TimeDomainSampleFilter.class
 		);		
 	}
 
@@ -99,6 +102,14 @@ public abstract class XMLUtils {
 				FFTSampleFilterPresetManager.class,
 				FFTSampleFilter.class
 		);		
+	}
+
+	public static void configureStreamerForTimeDomainSampleFilter(XStream streamer) {
+		Annotations.configureAliases(
+				streamer,
+				TimeDomainSampleFilterPresetManager.class,
+				TimeDomainSampleFilter.class
+		);
 	}
 	
 	public static OutputStream getInitializedXMLOutputStream(File f) throws IOException {

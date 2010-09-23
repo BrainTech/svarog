@@ -16,6 +16,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.signalml.app.config.preset.FFTSampleFilterPresetManager;
+import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.model.MontageDescriptor;
@@ -61,6 +62,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	private URL contextHelpURL = null;
 
 	private FFTSampleFilterPresetManager fftFilterPresetManager;
+	private TimeDomainSampleFilterPresetManager timeDomainSampleFilterPresetManager;
 
 	public SignalMontageDialog(MessageSourceAccessor messageSource, MontagePresetManager montagePresetManager, Window f, boolean isModal) {
 		super(messageSource, montagePresetManager, f, isModal);
@@ -338,6 +340,14 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 		this.fftFilterPresetManager = fftFilterPresetManager;
 	}
 
+	public TimeDomainSampleFilterPresetManager getTimeDomainSampleFilterPresetManager() {
+		return timeDomainSampleFilterPresetManager;
+	}
+
+	public void setTimeDomainSampleFilterPresetManager(TimeDomainSampleFilterPresetManager timeDomainSampleFilterPresetManager) {
+		this.timeDomainSampleFilterPresetManager = timeDomainSampleFilterPresetManager;
+	}
+
 	protected EditFFTSampleFilterDialog getEditFFTSampleFilterDialog() {
 		if ( editFFTSampleFilterDialog == null ) {
 			editFFTSampleFilterDialog = new EditFFTSampleFilterDialog(messageSource, fftFilterPresetManager, this, true);
@@ -349,7 +359,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 
 	protected EditTimeDomainSampleFilterDialog getEditTimeDomainSampleFilterDialog() {
 		if ( editTimeDomainSampleFilterDialog == null ) {
-			editTimeDomainSampleFilterDialog = new EditTimeDomainSampleFilterDialog(messageSource, fftFilterPresetManager, this, true);
+			editTimeDomainSampleFilterDialog = new EditTimeDomainSampleFilterDialog(messageSource, timeDomainSampleFilterPresetManager, this, true);
 			editTimeDomainSampleFilterDialog.setApplicationConfig(getApplicationConfig());
 			editTimeDomainSampleFilterDialog.setFileChooser(getFileChooser());
 		}

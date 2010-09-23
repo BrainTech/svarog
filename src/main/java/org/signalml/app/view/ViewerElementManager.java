@@ -127,6 +127,7 @@ import org.signalml.util.SvarogConstants;
 import org.springframework.context.support.MessageSourceAccessor;
 
 import com.thoughtworks.xstream.XStream;
+import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
 import org.signalml.app.view.montage.EditTimeDomainSampleFilterDialog;
 
 /** ViewerElementManager
@@ -162,6 +163,7 @@ public class ViewerElementManager {
 	private BookFilterPresetManager bookFilterPresetManager;
 	private SignalExportPresetManager signalExportPresetManager;
 	private FFTSampleFilterPresetManager fftFilterPresetManager;
+	private TimeDomainSampleFilterPresetManager timeDomainSampleFilterPresetManager;
 	private MP5ExecutorManager mp5ExecutorManager;
 	private Preferences preferences;
 
@@ -453,6 +455,14 @@ public class ViewerElementManager {
 
 	public void setFftFilterPresetManager(FFTSampleFilterPresetManager fftFilterPresetManager) {
 		this.fftFilterPresetManager = fftFilterPresetManager;
+	}
+
+	public TimeDomainSampleFilterPresetManager getTimeDomainSampleFilterPresetManager() {
+		return timeDomainSampleFilterPresetManager;
+	}
+
+	public void setTimeDomainSampleFilterPresetManager(TimeDomainSampleFilterPresetManager timeDomainSampleFilterPresetManager) {
+		this.timeDomainSampleFilterPresetManager = timeDomainSampleFilterPresetManager;
 	}
 
 	public MP5ExecutorManager getMp5ExecutorManager() {
@@ -1006,6 +1016,7 @@ public class ViewerElementManager {
 			signalMontageDialog.setFileChooser(getFileChooser());
 			signalMontageDialog.setApplicationConfig(getApplicationConfig());
 			signalMontageDialog.setFftFilterPresetManager(getFftFilterPresetManager());
+			signalMontageDialog.setTimeDomainSampleFilterPresetManager(getTimeDomainSampleFilterPresetManager());
 		}
 		return signalMontageDialog;
 	}
@@ -1100,7 +1111,7 @@ public class ViewerElementManager {
 
 	public EditTimeDomainSampleFilterDialog getEditTimeDomainSampleFilterDialog() {
 		if ( editTimeDomainSampleFilterDialog == null ) {
-			editTimeDomainSampleFilterDialog = new EditTimeDomainSampleFilterDialog(messageSource, getFftFilterPresetManager(), getDialogParent(), true);
+			editTimeDomainSampleFilterDialog = new EditTimeDomainSampleFilterDialog(messageSource, getTimeDomainSampleFilterPresetManager(), getDialogParent(), true);
 			editTimeDomainSampleFilterDialog.setApplicationConfig(getApplicationConfig());
 			editTimeDomainSampleFilterDialog.setFileChooser(getFileChooser());
 		}
