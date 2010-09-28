@@ -32,6 +32,7 @@ import javax.swing.event.ChangeListener;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.ui.RectangleInsets;
@@ -64,7 +65,7 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 	protected FrequencyResponseChartPanel frequencyResponseChartPanel;
 
 	protected NumberAxis frequencyAxis;
-	protected NumberAxis gainAxis;
+
 
 	public EditSampleFilterDialog(MessageSourceAccessor messageSource, PresetManager presetManager, Window w, boolean isModal) {
 		super(messageSource, presetManager, w, isModal);
@@ -77,7 +78,7 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 	@Override
 	protected void initialize() {
 
-		setIconImage( IconUtils.loadClassPathImage("org/signalml/app/icon/editfilter.png"));
+		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/editfilter.png"));
 		setResizable(false);
 
 		super.initialize();
@@ -89,14 +90,14 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 
 	public JPanel getDescriptionPanel() {
 
-		JPanel descriptionPanel = new JPanel( new BorderLayout() );
+		JPanel descriptionPanel = new JPanel(new BorderLayout());
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder( messageSource.getMessage("editSampleFilter.descriptionTitle") ),
-		        new EmptyBorder(3,3,3,3)
+		        new TitledBorder(messageSource.getMessage("editSampleFilter.descriptionTitle")),
+		        new EmptyBorder(3, 3, 3, 3)
 		);
-		descriptionPanel.setBorder( border );
+		descriptionPanel.setBorder(border);
 
-		descriptionPanel.add( getDescriptionTextField() );
+		descriptionPanel.add(getDescriptionTextField());
 
 		return descriptionPanel;
 	}
@@ -104,63 +105,63 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 	public JPanel getGraphPanel() {
 
 		JPanel graphSpinnerPanel = new JPanel();
-		graphSpinnerPanel.setLayout( new BoxLayout( graphSpinnerPanel, BoxLayout.X_AXIS ) );
+		graphSpinnerPanel.setLayout(new BoxLayout(graphSpinnerPanel, BoxLayout.X_AXIS));
 
-		graphSpinnerPanel.add( new JLabel( messageSource.getMessage("editSampleFilter.graphSpinnerLabel") ) );
-		graphSpinnerPanel.add( Box.createHorizontalStrut(5) );
-		graphSpinnerPanel.add( Box.createHorizontalGlue() );
-		graphSpinnerPanel.add( getGraphScaleSpinner() );
+		graphSpinnerPanel.add(new JLabel(messageSource.getMessage("editSampleFilter.graphSpinnerLabel")));
+		graphSpinnerPanel.add(Box.createHorizontalStrut(5));
+		graphSpinnerPanel.add(Box.createHorizontalGlue());
+		graphSpinnerPanel.add(getGraphScaleSpinner());
 
-		JPanel graphPanel = new JPanel( new BorderLayout(6,6) );
+		JPanel graphPanel = new JPanel(new BorderLayout(6, 6));
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder( messageSource.getMessage("editSampleFilter.graphPanelTitle") ),
-		        new EmptyBorder(3,3,3,3)
+		        new TitledBorder(messageSource.getMessage("editSampleFilter.graphPanelTitle")),
+		        new EmptyBorder(3, 3, 3, 3)
 		);
-		graphPanel.setBorder( border );
+		graphPanel.setBorder(border);
 
-		graphPanel.add( getFrequencyResponseChartPanel(), BorderLayout.CENTER );
-		graphPanel.add( graphSpinnerPanel, BorderLayout.SOUTH );
+		graphPanel.add(getFrequencyResponseChartPanel(), BorderLayout.CENTER);
+		graphPanel.add(graphSpinnerPanel, BorderLayout.SOUTH);
 
 		return graphPanel;
 	}
 
 	public JTextField getDescriptionTextField() {
-		if ( descriptionTextField == null ) {
+		if (descriptionTextField == null) {
 			descriptionTextField = new JTextField();
-			descriptionTextField.setPreferredSize( new Dimension(200,25) );
+			descriptionTextField.setPreferredSize(new Dimension(200, 25));
 		}
 		return descriptionTextField;
 	}
 
 	public NumberAxis getFrequencyAxis() {
-		if ( frequencyAxis == null ) {
+		if (frequencyAxis == null) {
 			frequencyAxis = new NumberAxis();
 			frequencyAxis.setAutoRange(false);
-			frequencyAxis.setLabel( messageSource.getMessage("editSampleFilter.graphFrequencyLabel") );
+			frequencyAxis.setLabel(messageSource.getMessage("editSampleFilter.graphFrequencyLabel"));
 		}
 		return frequencyAxis;
 	}
 
-	public abstract NumberAxis getGainAxis();
+	public abstract ValueAxis getGainAxis();
 
 	public XYPlot getFrequencyResponsePlot() {
-		if ( frequencyResponsePlot == null ) {
+		if (frequencyResponsePlot == null) {
 
 			XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer(true, false);
 
-			frequencyResponsePlot = new XYPlot( null, getFrequencyAxis(), getGainAxis(), renderer );
+			frequencyResponsePlot = new XYPlot(null, getFrequencyAxis(), getGainAxis(), renderer);
 
 		}
 		return frequencyResponsePlot;
 	}
 
 	public JFreeChart getFrequencyResponseChart() {
-		if ( frequencyResponseChart == null ) {
-			frequencyResponseChart = new JFreeChart(messageSource.getMessage("editSampleFilter.graphTitle"), new Font( Font.DIALOG, Font.PLAIN, 12 ), getFrequencyResponsePlot(), false);
+		if (frequencyResponseChart == null) {
+			frequencyResponseChart = new JFreeChart(messageSource.getMessage("editSampleFilter.graphTitle"), new Font(Font.DIALOG, Font.PLAIN, 12), getFrequencyResponsePlot(), false);
 			frequencyResponseChart.setBorderVisible(true);
 			frequencyResponseChart.setBackgroundPaint(Color.WHITE);
-			frequencyResponseChart.setPadding(new RectangleInsets(5,5,5,5) );
+			frequencyResponseChart.setPadding(new RectangleInsets(5, 5, 5, 5));
 		}
 		return frequencyResponseChart;
 	}
@@ -168,12 +169,12 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 	public abstract FrequencyResponseChartPanel getFrequencyResponseChartPanel();
 
 	public JSpinner getGraphScaleSpinner() {
-		if ( graphScaleSpinner == null ) {
-			graphScaleSpinner = new JSpinner( new SpinnerNumberModel( 0.25, 0.25, 4096.0, 0.25 ) );
-			graphScaleSpinner.setPreferredSize( new Dimension(80,25) );
+		if (graphScaleSpinner == null) {
+			graphScaleSpinner = new JSpinner(new SpinnerNumberModel(0.25, 0.25, 4096.0, 0.25));
+			graphScaleSpinner.setPreferredSize(new Dimension(80, 25));
 
-			graphScaleSpinner.setEditor( new JSpinner.NumberEditor( graphScaleSpinner, "0.00" ) );
-			graphScaleSpinner.setFont( graphScaleSpinner.getFont().deriveFont( Font.PLAIN ) );
+			graphScaleSpinner.setEditor(new JSpinner.NumberEditor(graphScaleSpinner, "0.00"));
+			graphScaleSpinner.setFont(graphScaleSpinner.getFont().deriveFont(Font.PLAIN));
 		}
 		return graphScaleSpinner;
 	}
@@ -191,11 +192,11 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 	}
 
 	public void setGraphFrequencyMax(double graphFrequencyMax) {
-		if ( this.graphFrequencyMax != graphFrequencyMax ) {
+		if (this.graphFrequencyMax != graphFrequencyMax) {
 
 			this.graphFrequencyMax = graphFrequencyMax;
 
-			getGraphScaleSpinner().setValue( graphFrequencyMax );
+			getGraphScaleSpinner().setValue(graphFrequencyMax);
 
 		}
 	}
@@ -214,10 +215,10 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 		super.validateDialog(model, errors);
 
 		String description = getDescriptionTextField().getText();
-		if(description == null || description.isEmpty()) {
+		if (description == null || description.isEmpty()) {
 			errors.rejectValue("description", "error.editSampleFilter.descriptionEmpty");
 		}
-		else if(!Util.validateString(description)) {
+		else if (!Util.validateString(description)) {
 			errors.rejectValue("description", "error.editSampleFilter.descriptionBadChars");
 		}
 
@@ -233,7 +234,7 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 		@Override
 		public void stateChanged(ChangeEvent e) {
 
-			if ( lock ) {
+			if (lock) {
 				return;
 			}
 
@@ -242,9 +243,9 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 
 				JSpinner spinner = (JSpinner) e.getSource();
 				double doubleValue = ((Number) spinner.getValue()).doubleValue();
-				double newDoubleValue = ((double) Math.round( 4 * doubleValue )) / 4;
-				if ( newDoubleValue != doubleValue ) {
-					spinner.setValue( newDoubleValue );
+				double newDoubleValue = ((double) Math.round(4 * doubleValue)) / 4;
+				if (newDoubleValue != doubleValue) {
+					spinner.setValue(newDoubleValue);
 				}
 
 			} finally {
@@ -254,8 +255,6 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 		}
 
 	}
-
-
 
 	protected abstract class FrequencyResponseChartPanel extends ChartPanel {
 
@@ -280,41 +279,41 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 
 		}
 
-		protected double getFrequency( Point p ) {
+		protected double getFrequency(Point p) {
 
 			Rectangle2D area = getScreenDataArea();
 
-			int xMin = (int) Math.floor( area.getX() );
-			int xMax = (int) Math.ceil( area.getX() + area.getWidth() );
+			int xMin = (int) Math.floor(area.getX());
+			int xMax = (int) Math.ceil(area.getX() + area.getWidth());
 
-			if ( p.x < xMin ) {
+			if (p.x < xMin) {
 				return 0;
 			}
-			if ( p.x > xMax ) {
+			if (p.x > xMax) {
 				return graphFrequencyMax + 1;
 			}
 
-			double freq = graphFrequencyMax * (((double) (p.x-xMin)) / ((double) (xMax-xMin)) );
+			double freq = graphFrequencyMax * (((double) (p.x-xMin)) / ((double) (xMax-xMin)));
 
 			return ((double) Math.round(freq * 4)) / 4.0;
 
 		}
 
-		protected void setDragHighlight( double highlightStart, double highlightEnd ) {
+		protected void setDragHighlight(double highlightStart, double highlightEnd) {
 
 			Rectangle2D area = getScreenDataArea();
 
-			int xMin = (int) Math.floor( area.getX() );
-			int xMax = (int) Math.ceil( area.getX() + area.getWidth() );
+			int xMin = (int) Math.floor(area.getX());
+			int xMax = (int) Math.ceil(area.getX() + area.getWidth());
 
 			double perHz = ((double) (xMax-xMin)) / graphFrequencyMax;
 
-			setDragHighlight( (int) Math.round( xMin + highlightStart*perHz ), (int) Math.round( xMin + highlightEnd*perHz ) );
+			setDragHighlight((int) Math.round(xMin + highlightStart*perHz), (int) Math.round(xMin + highlightEnd*perHz));
 
 		}
 
-		protected void setDragHighlight( int highlightStart, int highlightEnd ) {
-			if ( this.dragHighlightStart != highlightStart || this.dragHighlightEnd != highlightEnd ) {
+		protected void setDragHighlight(int highlightStart, int highlightEnd) {
+			if (this.dragHighlightStart != highlightStart || this.dragHighlightEnd != highlightEnd) {
 				this.dragHighlightStart = highlightStart;
 				this.dragHighlightEnd = highlightEnd;
 				repaint();
@@ -322,41 +321,41 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 		}
 
 		protected void clearDragHighlight() {
-			if ( dragHighlightStart >= 0 || dragHighlightEnd >= 0 ) {
+			if (dragHighlightStart >= 0 || dragHighlightEnd >= 0) {
 				dragHighlightStart = -1;
 				dragHighlightEnd = -1;
 				repaint();
 			}
 		}
 
-		public void setSelectionHighlightStart( double highlightStart ) {
+		public void setSelectionHighlightStart(double highlightStart) {
 
 			Rectangle2D area = getScreenDataArea();
 
-			int xMin = (int) Math.floor( area.getX() );
-			int xMax = (int) Math.ceil( area.getX() + area.getWidth() );
+			int xMin = (int) Math.floor(area.getX());
+			int xMax = (int) Math.ceil(area.getX() + area.getWidth());
 
 			double perHz = ((double) (xMax-xMin)) / graphFrequencyMax;
 
-			setSelectionHighlight( (int) Math.round( xMin + highlightStart*perHz ), selectionHighlightEnd );
+			setSelectionHighlight((int) Math.round(xMin + highlightStart*perHz), selectionHighlightEnd);
 
 		}
 
-		public void setSelectionHighlightEnd( double highlightEnd ) {
+		public void setSelectionHighlightEnd(double highlightEnd) {
 
 			Rectangle2D area = getScreenDataArea();
 
-			int xMin = (int) Math.floor( area.getX() );
-			int xMax = (int) Math.ceil( area.getX() + area.getWidth() );
+			int xMin = (int) Math.floor(area.getX());
+			int xMax = (int) Math.ceil(area.getX() + area.getWidth());
 
 			double perHz = ((double) (xMax-xMin)) / graphFrequencyMax;
 
-			setSelectionHighlight( selectionHighlightStart, (int) Math.round( xMin + highlightEnd*perHz ) );
+			setSelectionHighlight(selectionHighlightStart, (int) Math.round(xMin + highlightEnd*perHz));
 
 		}
 
-		protected void setSelectionHighlight( int highlightStart, int highlightEnd ) {
-			if ( this.selectionHighlightStart != highlightStart || this.selectionHighlightEnd != highlightEnd ) {
+		protected void setSelectionHighlight(int highlightStart, int highlightEnd) {
+			if (this.selectionHighlightStart != highlightStart || this.selectionHighlightEnd != highlightEnd) {
 				this.selectionHighlightStart = highlightStart;
 				this.selectionHighlightEnd = highlightEnd;
 				repaint();
@@ -364,7 +363,7 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 		}
 
 		public void clearSelectionHighlight() {
-			if ( selectionHighlightStart >= 0 || selectionHighlightEnd >= 0 ) {
+			if (selectionHighlightStart >= 0 || selectionHighlightEnd >= 0) {
 				selectionHighlightStart = -1;
 				selectionHighlightEnd = -1;
 				repaint();
@@ -374,8 +373,8 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 		@Override
 		public void mousePressed(MouseEvent ev) {
 			hideSelectionHighlight = true;
-			startFrequency = getFrequency( ev.getPoint() );
-			if ( startFrequency >= graphFrequencyMax ) {
+			startFrequency = getFrequency(ev.getPoint());
+			if (startFrequency >= graphFrequencyMax) {
 				startFrequency = null;
 			}
 			repaint();
@@ -397,21 +396,21 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 			Graphics2D g = (Graphics2D) gOrig;
 			Rectangle2D area = getScreenDataArea();
 
-			if ( !hideSelectionHighlight ) {
+			if (!hideSelectionHighlight) {
 
-				if ( selectionHighlightStart > 0 && selectionHighlightEnd > 0 ) {
+				if (selectionHighlightStart > 0 && selectionHighlightEnd > 0) {
 
-					g.setColor( new Color( 0.55F, 1.0F, 0.55F, 0.5F ) );
-					g.fillRect( selectionHighlightStart, (int) area.getY(), selectionHighlightEnd-selectionHighlightStart, (int) area.getHeight() );
+					g.setColor(new Color(0.55F, 1.0F, 0.55F, 0.5F));
+					g.fillRect(selectionHighlightStart, (int) area.getY(), selectionHighlightEnd-selectionHighlightStart, (int) area.getHeight());
 
 				}
 
 			}
 
-			if ( dragHighlightStart > 0 && dragHighlightEnd > 0 ) {
+			if (dragHighlightStart > 0 && dragHighlightEnd > 0) {
 
-				g.setColor( new Color( 0.5F, 0.5F, 0.5F, 0.5F ) );
-				g.fillRect( dragHighlightStart, (int) area.getY(), dragHighlightEnd-dragHighlightStart, (int) area.getHeight() );
+				g.setColor(new Color(0.5F, 0.5F, 0.5F, 0.5F));
+				g.fillRect(dragHighlightStart, (int) area.getY(), dragHighlightEnd-dragHighlightStart, (int) area.getHeight());
 
 			}
 

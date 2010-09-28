@@ -133,6 +133,8 @@ abstract class AbstractIIRDesigner {
 	protected FilterCoefficients designFilter(FilterType type, double[] passb, double[] stopb, double gpass, double gstop, boolean analog) throws BadFilterParametersException {
 
 		int filterOrder = calculateFilterOrder(type, passb, stopb, gpass, gstop, analog);
+		if (filterOrder > 8)
+			throw new FilterOrderTooBigException("The order of the filter is too big - the parameters are too strict.");
 		double[] naturalFrequencies = calculateNaturalFrequency(type, filterOrder, passb, stopb, gpass, gstop, analog);
 		return designFilter(type, filterOrder, naturalFrequencies, gpass, gstop, analog);
 
@@ -232,7 +234,7 @@ abstract class AbstractIIRDesigner {
 			possibilities[1] = (stopb[1] * stopb[1] - passb[0] * passb[1])/(stopb[1] * (passb[0] - passb[1]));
 			frequencyRatio = Math.min(Math.abs(possibilities[0]), Math.abs(possibilities[1]));
 
-		}		
+		}
 
 		return frequencyRatio;
 
@@ -309,8 +311,8 @@ abstract class AbstractIIRDesigner {
 	protected double[] optimizeBandstopFilterPassbandFrequencies(double[] passb, double[] stopb, double gpass, double gstop) {
 
 		double[] passbCopy = passb.clone();
-		if(passbCopy.length == 0)System.out.println("passbCopy == null");
-		if(stopb.length == 0 ) System.out.println("stopb");
+		if (passbCopy.length == 0)System.out.println("passbCopy == null");
+		if (stopb.length == 0 ) System.out.println("stopb");
 
 		BandstopObjectiveFunction objectiveFunction = new BandstopObjectiveFunction(0, passbCopy, stopb, gpass, gstop);
 		double passb0 = SpecialMath.minimizeFunctionConstrained(objectiveFunction, passbCopy[0], stopb[0]-1e-12);

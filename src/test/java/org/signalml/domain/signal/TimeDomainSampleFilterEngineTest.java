@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import java.lang.Math.*;
+import org.signalml.domain.montage.filter.iirdesigner.FilterCoefficients;
 
 /**
  * This class performs unit tests on the {@link TimeDomainSampleFilterEngine TimeDomainSampleFilterEngine} class.
@@ -25,10 +26,10 @@ public class TimeDomainSampleFilterEngineTest {
 	public static final int TEST_SAMPLE_COUNT = 10;
 
 	/**
-	 * the {@link TimeDomainSampleFilter definition} of the filter used for testing
+	 * the {@link FilterCoefficients coefficients} of the filter used for testing
 	 * {@link TimeDomainSampleFilter TimeDomainSampleFilter} class.
 	 */
-	private TimeDomainSampleFilter definition;
+	private FilterCoefficients coefficients;
 
 	/**
 	 * the source of samples which will be filtered by the engine
@@ -54,16 +55,14 @@ public class TimeDomainSampleFilterEngineTest {
 	@After
 	public void tearDown() {
 		source = null;
-		definition = null;
+		coefficients = null;
 	}
 
 	@Test
 	public void testGetUnfilteredSamplesCache() {
 
-		definition = new TimeDomainSampleFilter("sampleFilter.td.lowPass", "xxx",
-		                                      new double[] {1.0,0.0,0.0,0.0},
-		                                      new double[] {1.0,0.0,0.0,0.0} );
-		engine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source,0), definition);
+		coefficients = new FilterCoefficients(new double[] {1.0,0.0,0.0,0.0}, new double[] {1.0,0.0,0.0,0.0} );
+		engine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source,0), coefficients);
 
 		//testing empty then full
 		double[] samples = new double[TEST_SAMPLE_COUNT];
@@ -110,11 +109,10 @@ public class TimeDomainSampleFilterEngineTest {
 	@Test
 	public void testGetFilteredSamplesCache() {
 
-		definition = new TimeDomainSampleFilter("sampleFilter.td.lowPass", "xxx",
-		                                      new double[] {1.0, 0.0, 0.0, 0.0},
+		coefficients = new FilterCoefficients(new double[] {1.0, 0.0, 0.0, 0.0},
 		                                      new double[] {1.0, 0.0, 0.0, 0.0} );
 
-		engine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source, 0), definition);
+		engine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source, 0), coefficients);
 
 		double[] fCache = engine.getFilteredSamplesCache(source.getSampleCount(0));
 		assertEquals(fCache.length, source.getSampleCount(0) + 3, 0.00001);
@@ -170,11 +168,10 @@ public class TimeDomainSampleFilterEngineTest {
 	@Test
 	public void testCalculateNewFilteredSamples() {
 
-		definition = new TimeDomainSampleFilter("sampleFilter.td.lowPass", "xxx",
-		                                      new double[] {1.0, 0.0, 0.0},
+		coefficients = new FilterCoefficients(new double[] {1.0, 0.0, 0.0},
 		                                      new double[] {1.0, 0.0, 0.0} );
 
-		engine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source, 0), definition);
+		engine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source, 0), coefficients);
 
 		//adding whole at once
 		double[] samples = new double[TEST_SAMPLE_COUNT];
@@ -203,10 +200,9 @@ public class TimeDomainSampleFilterEngineTest {
 	}
 
 	@Test public void testUpdateCache() {
-		definition = new TimeDomainSampleFilter("sampleFilter.td.lowPass", "xxx",
-		                                      new double[] {1.0, 0.0, 0.0},
+		coefficients = new FilterCoefficients(new double[] {1.0, 0.0, 0.0},
 		                                      new double[] {1.0, 0.0, 0.0} );
-		engine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source, 0), definition);
+		engine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source, 0), coefficients);
 
 		double[] samples = new double[TEST_SAMPLE_COUNT];
 		for (int i = 0; i < TEST_SAMPLE_COUNT; i++)
@@ -225,10 +221,9 @@ public class TimeDomainSampleFilterEngineTest {
 	 */
 	@Test
 	public void testGetSamplesAllPassFilter() {
-		definition = new TimeDomainSampleFilter("sampleFilter.td.lowPass", "xxx",
-		                                      new double[] {1.0, 0.0},
+		coefficients = new FilterCoefficients(new double[] {1.0, 0.0},
 		                                      new double[] {1.0, 0.0} );
-		engine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source, 0), definition);
+		engine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source, 0), coefficients);
 
 		double[] target1 = new double[TEST_SAMPLE_COUNT];
 		double[] target2 = new double[TEST_SAMPLE_COUNT];
@@ -254,12 +249,11 @@ public class TimeDomainSampleFilterEngineTest {
 	public void testGetSamplesHighPassFilter() {
 		/*this filter was generated in python and is a highpass filter:
 		 b,a=signal.iirdesign(wp=0.6,ws=0.2,gstop=30, gpass=3,ftype='butter')*/
-		definition = new TimeDomainSampleFilter("sampleFilter.td.highPass", "this filter does nothing",
-		                                      new double[] {1.0,  0.04940057,  0.33397875,  0.00449333},
+		coefficients = new FilterCoefficients(new double[] {1.0,  0.04940057,  0.33397875,  0.00449333},
 		                                      new double[] {0.16001061, -0.48003182,  0.48003182, -0.16001061}
 		                                     );
 
-		engine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source, 0), definition);
+		engine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source, 0), coefficients);
 
 		double[] target1 = new double[TEST_SAMPLE_COUNT];
 		double[] target2 = new double[TEST_SAMPLE_COUNT];
@@ -297,11 +291,10 @@ public class TimeDomainSampleFilterEngineTest {
 
 		/*this filter was generated in python and is a lowpass filter:
 		 b,a=signal.iirdesign(wp=0.2,ws=0.6,gstop=30, gpass=3,ftype='butter')*/
-		definition = new TimeDomainSampleFilter("sampleFilter.td.highPass", "this filter does nothing",
-		                                      new double[] {1.0, -1.39105118, 0.85664657, -0.18260807},
+		coefficients = new FilterCoefficients(new double[] {1.0, -1.39105118, 0.85664657, -0.18260807},
 		                                      new double[] {0.03537341, 0.10612024, 0.10612024, 0.03537341}
 		                                     );
-		engine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source, 0), definition);
+		engine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source, 0), coefficients);
 
 		double[] target2 = new double[TEST_SAMPLE_COUNT];
 

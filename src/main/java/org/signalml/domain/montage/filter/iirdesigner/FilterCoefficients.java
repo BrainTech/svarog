@@ -3,6 +3,8 @@
  */
 package org.signalml.domain.montage.filter.iirdesigner;
 
+import flanagan.complex.Complex;
+import flanagan.complex.ComplexPoly;
 import java.util.Arrays;
 
 /**
@@ -30,7 +32,7 @@ public class FilterCoefficients {
 	 * @param bCoefficients an array of feedback coefficients
 	 * @param aCoefficients an array of feedforward coefficients
 	 */
-	FilterCoefficients(double[] bCoefficients, double[] aCoefficients) {
+	public FilterCoefficients(double[] bCoefficients, double[] aCoefficients) {
 
 		this.aCoefficients = aCoefficients.clone();
 		this.bCoefficients = bCoefficients.clone();
@@ -44,6 +46,10 @@ public class FilterCoefficients {
 	 * @return the order orf the filter
 	 */
 	public int getFilterOrder() {
+		return Math.max(aCoefficients.length - 1, bCoefficients.length - 1);
+	}
+
+	public int getNumberOfCoefficients() {
 		return Math.max(aCoefficients.length, bCoefficients.length);
 	}
 
@@ -77,6 +83,78 @@ public class FilterCoefficients {
 		if (getFilterOrder() % 2 == 1)
 			return true;
 		return false;
+
+	}
+
+	protected class ComplexFrequencyResponse {
+
+		protected double[] frequencies;
+		protected Complex[] gain;
+
+		ComplexFrequencyResponse(int numberOfPoints) {
+			frequencies = new double[numberOfPoints];
+			gain = new Complex[numberOfPoints];
+		}
+
+		public void setValue(int i, double frequency, Complex value) {
+			frequencies[i] = frequency;
+			gain[i] = value;
+		}
+
+		public int getSize() {
+			if (frequencies != null)
+				return frequencies.length;
+			return 0;
+		}
+
+		public double[] getFrequencies() {
+			return frequencies;
+		}
+
+		public double getFrequency(int number) {
+			return frequencies[number];
+		}
+
+		public Complex[] getGain() {
+			return gain;
+		}
+
+		public Complex getGain(int number) {
+			return gain[number];
+		}
+
+	}
+
+	protected ComplexFrequencyResponse getComplexFrequencyResponse(int numberOfPoints) {
+
+		ComplexPoly numerator = new ComplexPoly(bCoefficients);
+		ComplexPoly denominator = new ComplexPoly(aCoefficients);
+
+		ComplexFrequencyResponse frequencyResponse = new ComplexFrequencyResponse(numberOfPoints);
+
+		double frequency;
+		Complex exponent = new Complex();
+		for (int i = 0; i < numberOfPoints; i++) {
+			frequency = i * Math.PI / numberOfPoints;
+			exponent = Complex.exp(new Complex(0, -frequency));
+			frequencyResponse.setValue(i, frequency, Complex.over(numerator.evaluate(exponent), denominator.evaluate(exponent)));
+		}
+
+		return frequencyResponse;
+
+	}
+
+	public FilterFrequencyResponse getFrequencyResponse(int numberOfPoints, double samplingFrequency) {
+
+		FilterFrequencyResponse frequencyResponse = new FilterFrequencyResponse(numberOfPoints);
+		ComplexFrequencyResponse complexFrequencyResponse = getComplexFrequencyResponse(numberOfPoints);
+
+		for (int i = 0; i < complexFrequencyResponse.getSize(); i++) {
+			frequencyResponse.setFrequency(i, samplingFrequency / (2 * Math.PI) * complexFrequencyResponse.getFrequency(i));
+			frequencyResponse.setGain(i, 20 * Math.log10(complexFrequencyResponse.getGain(i).abs()));
+		}
+
+		return frequencyResponse;
 
 	}
 
@@ -136,12 +214,12 @@ public class FilterCoefficients {
 	 */
 	protected void transformLowpassToLowpass(double w0) throws BadFilterParametersException {
 
-		int filterOrder = getFilterOrder();
-		double[] powers = new double[filterOrder];
+		int numberOfCoeffs = getNumberOfCoefficients();
+		double[] powers = new double[numberOfCoeffs];
 		int i;
 
-		for (i = 0; i < filterOrder; i++)
-			powers[i] = Math.pow(w0, filterOrder - 1 - i);
+		for (i = 0; i < numberOfCoeffs; i++)
+			powers[i] = Math.pow(w0, numberOfCoeffs - 1 - i);
 
 		double[] a = getACoefficients();
 		double[] b = getBCoefficients();
@@ -168,11 +246,11 @@ public class FilterCoefficients {
 	 */
 	protected void transformLowpassToHighpass(double w0) throws BadFilterParametersException {
 
-		int filterOrder = getFilterOrder();
-		double[] powers = new double[filterOrder];
+		int numberOfCoeffs = getNumberOfCoefficients();
+		double[] powers = new double[numberOfCoeffs];
 		int i;
 
-		for (i = 0; i < filterOrder; i++) {
+		for (i = 0; i < numberOfCoeffs; i++) {
 
 			if (w0 != 1)
 				powers[i] = Math.pow(w0, i);

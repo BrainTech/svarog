@@ -1,4 +1,4 @@
-/* TimeDomainSampleFilter.java created 2008-02-01
+/* TimeDomainSampleFilter.java created 2010-09-29
  *
  */
 
@@ -17,7 +17,7 @@ import org.signalml.domain.montage.filter.iirdesigner.FilterType;
  * This class holds a time domain representation of a
  * {@link SampleFilterDefinition sample filter}.
  *
- * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
+ * @author Piotr Szachewicz
  */
 @XStreamAlias("timeDomainSampleFilter")
 public class TimeDomainSampleFilter extends SampleFilterDefinition implements Preset {
@@ -25,9 +25,7 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 	private static final long serialVersionUID = 1L;
 
 	protected Object[] arguments;
-	protected String[] messageCodes;
-	private static final String[] CODES = new String[] { "timeDomainFilter" };
-	private static final String[] EFFECT_CODES = new String[] { "timeDomainFilter.effect" };
+	private static final String[] EFFECT_CODES = new String[] {"timeDomainFilter.effect"};
 
 	private String name;
 
@@ -40,6 +38,29 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 	private transient double samplingFrequency;
 
 	private transient String effectString;
+
+
+	/**
+	 * Constructor. Creates an empty instance of a TimeDomainSampleFilter.
+	 * For internal use only.
+	 */
+	protected TimeDomainSampleFilter() {
+	}
+
+	public TimeDomainSampleFilter(TimeDomainSampleFilter filter) {
+		this.copyFrom(filter);
+	}
+
+	public TimeDomainSampleFilter(FilterType filterType, ApproximationFunctionType approximationFunctionType, double[] passbandEdgeFrequencies, double[] stopbandEdgeFrequencies, double passbandRipple, double stopbandAttenuation) {
+
+		this.filterType = filterType;
+		this.approximationFunctionType = approximationFunctionType;
+		this.passbandEdgeFrequencies = passbandEdgeFrequencies.clone();
+		this.stopbandEdgeFrequencies = stopbandEdgeFrequencies.clone();
+		this.passbandRipple = passbandRipple;
+		this.stopbandAttenuation = stopbandAttenuation;
+
+	}
 
 	public FilterType getFilterType() {
 		return filterType;
@@ -97,87 +118,6 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 		this.samplingFrequency = samplingFrequency;
 	}
 
-	/**
-	 * an array of filter feedback coefficients
-	 */
-	protected double aCoefficients[];
-
-	/**
-	 * an array of filter feedforward coefficients
-	 */
-	protected double bCoefficients[];
-
-	/**
-	 * Constructor. Creates an empty instance of a TimeDomainSampleFilter.
-	 * For internal use only.
-	 */
-	protected TimeDomainSampleFilter() {
-	}
-
-	public TimeDomainSampleFilter(TimeDomainSampleFilter filter) {
-		this.copyFrom(filter);
-	}
-
-	/**
-	* Constructor.
-	* @param messsageCode the code for (@link MessageSourceResolvable MessageSourceResolvable)
-	 * specyfying the type of the filter (e.g. "sampleFilter.td.lowPass")
-	* @param passBand a String describing the passband of the filter (e.g. "0-20 Hz")
-	* @param aCoefs array of A Coefficients (feedback filter coefficients)
-	* @param bCoefs array of B Coefficients (feedforward filter coefficients)
-	*/
-	public TimeDomainSampleFilter(String messageCode, String passBand, double[] aCoefs, double[] bCoefs) {
-
-		this.messageCodes = new String[] {messageCode};
-		this.arguments = new Object[] {new String(passBand)};
-
-		this.aCoefficients = aCoefs.clone();
-		this.bCoefficients = bCoefs.clone();
-
-		//this.setDescription("Time Domain Filter");
-
-	}
-
-	public TimeDomainSampleFilter(String messageCode, String passBand, double[] aCoefs, double[] bCoefs, FilterType filterType, ApproximationFunctionType approximationFunctionType, double[] passbandEdgeFrequencies, double[] stopbandEdgeFrequencies, double passbandRipple, double stopbandAttenuation) {
-
-		this(messageCode, passBand, aCoefs, bCoefs);
-
-		this.filterType = filterType;
-		this.approximationFunctionType = approximationFunctionType;
-		this.passbandEdgeFrequencies = passbandEdgeFrequencies.clone();
-		this.stopbandEdgeFrequencies = stopbandEdgeFrequencies.clone();
-		this.passbandRipple = passbandRipple;
-		this.stopbandAttenuation = stopbandAttenuation;
-
-	}
-
-	public TimeDomainSampleFilter(FilterType filterType, ApproximationFunctionType approximationFunctionType, double[] passbandEdgeFrequencies, double[] stopbandEdgeFrequencies, double passbandRipple, double stopbandAttenuation) {
-
-		this.filterType = filterType;
-		this.approximationFunctionType = approximationFunctionType;
-		this.passbandEdgeFrequencies = passbandEdgeFrequencies.clone();
-		this.stopbandEdgeFrequencies = stopbandEdgeFrequencies.clone();
-		this.passbandRipple = passbandRipple;
-		this.stopbandAttenuation = stopbandAttenuation;
-
-	}
-
-	/*public double[] getACoefficients() {
-		return aCoefficients;
-	}
-
-	public double[] getBCoefficients() {
-		return bCoefficients;
-	}
-
-	*
-	 * Returns the order of the filter.
-	 * @return the order of the filter
-
-	public int getFilterOrder() {
-		return Math.max(aCoefficients.length, bCoefficients.length) - 1;
-	}*/
-
 	public String getEffectString() {
 
 		effectString = "(";
@@ -197,7 +137,7 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 
 	@Override
 	public MessageSourceResolvable getEffectDescription() {
-		return new ResolvableString(EFFECT_CODES, new Object[] { filterType, getEffectString() }, getDefaultEffectDescription());
+		return new ResolvableString(EFFECT_CODES, getArguments(), getDefaultEffectDescription());
 	}
 
 	@Override
@@ -212,12 +152,14 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 
 	@Override
 	public Object[] getArguments() {
+		if (arguments == null)
+			arguments = new Object[] {filterType, getEffectString()};
 		return arguments;
 	}
 
 	@Override
 	public String[] getCodes() {
-		return messageCodes;
+		return EFFECT_CODES;
 	}
 
 	@Override
@@ -274,76 +216,13 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 			return false;
 
 		TimeDomainSampleFilter tdf = (TimeDomainSampleFilter)o;
-		if(tdf.filterType.equals(filterType) && tdf.approximationFunctionType.equals(approximationFunctionType) &&
-			Arrays.equals(passbandEdgeFrequencies, tdf.passbandEdgeFrequencies) &&
-			Arrays.equals(stopbandEdgeFrequencies, tdf.stopbandEdgeFrequencies) &&
-			passbandRipple == tdf.passbandRipple && stopbandAttenuation == tdf.stopbandAttenuation)
-				return true;
+		if (tdf.filterType.equals(filterType) && tdf.approximationFunctionType.equals(approximationFunctionType) &&
+		                Arrays.equals(passbandEdgeFrequencies, tdf.passbandEdgeFrequencies) &&
+		                Arrays.equals(stopbandEdgeFrequencies, tdf.stopbandEdgeFrequencies) &&
+		                passbandRipple == tdf.passbandRipple && stopbandAttenuation == tdf.stopbandAttenuation)
+			return true;
 		return false;
 	}
-
-
-	/*public String getEffectString() {
-
-		if (effectString == null) {
-
-			StringBuilder sb = new StringBuilder("[");
-			boolean first = true;
-
-			Iterator<Range> it = ranges.iterator();
-			Range range;
-			while (it.hasNext()) {
-				if (!first) {
-					sb.append(", ");
-				}
-				range = it.next();
-				sb.append('(').append(range.lowFrequency).append('-');
-				if (range.highFrequency <= range.lowFrequency) {
-					sb.append("Fn)");
-				} else {
-					sb.append(range.highFrequency).append(')');
-				}
-				sb.append('=').append(range.coefficient);
-				first = false;
-			}
-
-			effectString = sb.append(']').toString();
-
-		}
-
-		return effectString;
-
-	}
-
-	@Override
-	public String getDefaultEffectDescription() {
-		return "FFT: " + getEffectString();
-	}
-
-	@Override
-	public SampleFilterType getType() {
-		return SampleFilterType.FFT;
-	}
-
-	@Override
-	public Object[] getArguments() {
-		return ARGUMENTS;
-	}
-
-	@Override
-	public String[] getCodes() {
-		return CODES;
-	}
-
-	@Override
-	public String getDefaultMessage() {
-		return "FFT filter";
-	}
-
-	@Override
-	public MessageSourceResolvable getEffectDescription() {
-		return new ResolvableString(EFFECT_CODES, new Object[] { getEffectString() }, getDefaultEffectDescription());
-	}*/
 
 	@Override
 	public String toString() {

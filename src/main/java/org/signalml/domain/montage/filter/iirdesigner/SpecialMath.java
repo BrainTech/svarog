@@ -206,7 +206,7 @@ class SpecialMath {
 		return new double[] {sn, cn, dn, ph};
 
 	}
-	
+
 	/**
 	 * Returns the value of the parameter found by the Nelder and Mead simplex
 	 * algorithm which minimizes the value of the given function.
@@ -340,7 +340,6 @@ class SpecialMath {
 
 	}
 
-
 	/**
 	 * Returns the value of the factorial n!
 	 *
@@ -376,6 +375,17 @@ class SpecialMath {
 			numerator *= i;
 
 		return numerator / factorial(n - k);
+
+	}
+
+	public static double[] invertArray(double[] array) {
+
+		double[] newArray = new double[array.length];
+
+		for (int i = 0; i < array.length; i++)
+			newArray[i] = array[array.length - i - 1];
+
+		return newArray;
 
 	}
 

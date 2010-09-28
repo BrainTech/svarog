@@ -34,7 +34,7 @@ public class ButterworthIIRDesignerTest {
 		                            };
 		double[] pyb = new double[] {10000.5000375};
 
-		FilterCoefficients coeffs = iirdesigner.designFilter(FilterType.LOWPASS, new double[] {4.0}, new double[] {10.0}, 3.0, 40.0, true);
+		FilterCoefficients coeffs = iirdesigner.designFilter(FilterType.LOWPASS, new double[] {4.0, 0.0}, new double[] {10.0, 0.0}, 3.0, 40.0, true);
 		FilterCoefficients pyCoeffs = new FilterCoefficients(pyb, pya);
 
 		assertEquals(pyCoeffs, coeffs, 1e-4);
@@ -61,7 +61,7 @@ public class ButterworthIIRDesignerTest {
 		                    1.88178747, -0.22144923
 		                   };
 
-		coeffs = iirdesigner.designDigitalFilter(FilterType.LOWPASS, new double[] {0.1}, new double[] {0.2}, 3.0, 40.0);
+		coeffs = iirdesigner.designDigitalFilter(FilterType.LOWPASS, new double[] {0.1, 0.0}, new double[] {0.2, 0.0}, 3.0, 40.0);
 		assertEquals(new FilterCoefficients(pyb, pya), coeffs, 1e-8);
 
 		//highpass
@@ -73,7 +73,7 @@ public class ButterworthIIRDesignerTest {
 		                    1.13734282e+00, 6.51093826e-01, 2.22784566e-01,
 		                    5.74976483e-02, 8.15653354e-03, 5.74611669e-04
 		                   };
-		coeffs = iirdesigner.designDigitalFilter(FilterType.HIGHPASS, new double[] {0.6}, new double[] {0.4}, 3.0, 40.0);
+		coeffs = iirdesigner.designDigitalFilter(FilterType.HIGHPASS, new double[] {0.6, 0.0}, new double[] {0.4, 0.0}, 3.0, 40.0);
 		assertEquals(new FilterCoefficients(pyb, pya), coeffs, 1e-8);
 
 		//bandpass
@@ -173,7 +173,7 @@ public class ButterworthIIRDesignerTest {
 	public void testCalculateFilterOrder() throws BadFilterParametersException {
 
 		//lowpass
-		int filterOrder = iirdesigner.calculateFilterOrder(FilterType.LOWPASS, new double[] {10}, new double[] {20}, 5, 40, true);
+		int filterOrder = iirdesigner.calculateFilterOrder(FilterType.LOWPASS, new double[] {10, 0.0}, new double[] {20, 0.0}, 5, 40, true);
 		assertEquals(7, filterOrder);
 
 		//digital lowpass
@@ -181,7 +181,7 @@ public class ButterworthIIRDesignerTest {
 		assertEquals(7, filterOrder);
 
 		//highpass
-		filterOrder = iirdesigner.calculateFilterOrder(FilterType.HIGHPASS, new double[] {20}, new double[] {10}, 3, 20, true);
+		filterOrder = iirdesigner.calculateFilterOrder(FilterType.HIGHPASS, new double[] {20, 0.0}, new double[] {10, 0.0}, 3, 20, true);
 		assertEquals(4, filterOrder);
 
 		//bandstop

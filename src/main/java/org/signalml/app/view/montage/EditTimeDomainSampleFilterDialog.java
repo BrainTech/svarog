@@ -6,10 +6,11 @@ package org.signalml.app.view.montage;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Window;
+import java.awt.event.ActionEvent;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
@@ -17,8 +18,8 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.AbstractAction;
 
-import javax.swing.Box;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.JComponent;
@@ -27,14 +28,18 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.LogarithmicAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.data.xy.DefaultXYDataset;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.util.IconUtils;
@@ -43,11 +48,14 @@ import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.iirdesigner.ApproximationFunctionType;
 import org.signalml.domain.montage.filter.iirdesigner.BadFilterParametersException;
 import org.signalml.domain.montage.filter.iirdesigner.FilterCoefficients;
+import org.signalml.domain.montage.filter.iirdesigner.FilterFrequencyResponse;
+import org.signalml.domain.montage.filter.iirdesigner.FilterOrderTooBigException;
 import org.signalml.domain.montage.filter.iirdesigner.FilterType;
 import org.signalml.domain.montage.filter.iirdesigner.IIRDesigner;
 import org.signalml.exception.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
+
 
 /** EditTimeDomainSampleFilterDialog
  *
@@ -70,6 +78,10 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	private JSpinner passbandRippleSpinner;
 	private JSpinner stopbandAttenuationSpinner;
 
+	protected ValueAxis gainAxis;
+	private DrawFrequencyResponseAction drawFrequencyResponseAction;
+	private JButton drawFrequencyResponseButton;
+
 
 	public EditTimeDomainSampleFilterDialog(MessageSourceAccessor messageSource, PresetManager presetManager, Window w, boolean isModal) {
 		super(messageSource, presetManager, w, isModal);
@@ -81,9 +93,11 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 	@Override
 	protected void initialize() {
+
 		setTitle(messageSource.getMessage("editTimeDomainSampleFilter.title"));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/editfilter.png"));
 		setResizable(false);
+		drawFrequencyResponseAction = new DrawFrequencyResponseAction();
 
 		super.initialize();
 
@@ -96,11 +110,11 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 					getPassbandEdgeFrequency2Spinner().setEnabled(false);
 					getStopbandEdgeFrequency2Spinner().setEnabled(false);
 				}
-				//getCoefficientChartPanel().setSelectionHighlightStart(((Number) getFromFrequencySpinner().getValue()).doubleValue());
-				//getCoefficientChartPanel().setSelectionHighlightEnd(((Number) getToFrequencySpinner().getValue()).doubleValue());
+
 			}
 
 		});
+
 	}
 
 	@Override
@@ -113,11 +127,11 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 		editFilterParametersPanel.setBorder(new TitledBorder(messageSource.getMessage("editTimeDomainSampleFilter.filterParametersTitle")));
 
-//		JPanel addNewRangeButtonPanel = new JPanel(new FlowLayout(FlowLayout.TRAILING, 3, 3));
-//		addNewRangeButtonPanel.add(getAddNewRangeButton());
+		JPanel drawFrequencyResponseButtonPanel = new JPanel(new FlowLayout(FlowLayout.TRAILING, 3, 3));
+		drawFrequencyResponseButtonPanel.add(getDrawFrequencyResponseButton());
 
 		editFilterParametersPanel.add(getFilterParametersPanel(), BorderLayout.CENTER);
-//		editFilterParametersPanel.add(addNewRangeButtonPanel, BorderLayout.SOUTH);
+		editFilterParametersPanel.add(drawFrequencyResponseButtonPanel, BorderLayout.SOUTH);
 
 		JPanel interfacePanel = new JPanel(new BorderLayout());
 
@@ -135,7 +149,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 		if (graphScaleSpinner == null) {
 
 			graphScaleSpinner = super.getGraphScaleSpinner();
-			/*graphScaleSpinner.addChangeListener(new SpinnerRoundingChangeListener() {
+			graphScaleSpinner.addChangeListener(new SpinnerRoundingChangeListener() {
 
 				@Override
 				public void stateChanged(ChangeEvent e) {
@@ -144,26 +158,24 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 					graphFrequencyMax = ((Number) graphScaleSpinner.getValue()).doubleValue();
 					updateGraph();
 
-					if(getUnlimitedCheckBox().isSelected()) {
-						getFrequencyResponseChartPanel().setSelectionHighlightEnd(graphFrequencyMax);
-					}
-
 				}
 
-			});*/
+			});
 		}
 		return graphScaleSpinner;
 
 	}
 
 	@Override
-	public NumberAxis getGainAxis() {
+	public ValueAxis getGainAxis() {
+
 		if (gainAxis == null) {
-			gainAxis = new NumberAxis();
+			gainAxis = new LogarithmicAxis("");
 			gainAxis.setAutoRange(false);
-			gainAxis.setTickUnit(new NumberTickUnit(1));
+			((LogarithmicAxis)gainAxis).setStrictValuesFlag(false);
 		}
 		return gainAxis;
+
 	}
 
 	public ResolvableComboBox getFilterTypeComboBox() {
@@ -208,6 +220,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	}
 
 	public ResolvableComboBox getFilterFamilyComboBox() {
+
 		if (filterFamilyComboBox == null) {
 			filterFamilyComboBox = new ResolvableComboBox(messageSource);
 			filterFamilyComboBox.setPreferredSize(new Dimension(200, 25));
@@ -219,9 +232,11 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 		}
 		return filterFamilyComboBox;
+
 	}
 
 	public JPanel getFilterParametersPanel() {
+
 		if (filterParametersPanel == null) {
 
 			filterParametersPanel = new JPanel(null);
@@ -313,7 +328,9 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 			layout.setVerticalGroup(vGroup);
 
 		}
+
 		return filterParametersPanel;
+
 	}
 
 	public JSpinner getPassbandEdgeFrequency1Spinner() {
@@ -331,6 +348,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 				@Override
 				public void stateChanged(ChangeEvent e) {
+
 					super.stateChanged(e);
 
 					FilterType filterType = (FilterType)getFilterTypeComboBox().getSelectedItem();
@@ -370,6 +388,8 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 					if (value < 0)
 						passbandEdgeFrequency1Spinner.setValue(0.0);
 
+					updateHighlights();
+
 				}
 
 			});
@@ -386,7 +406,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 		if (passbandEdgeFrequency2Spinner == null) {
 
 			passbandEdgeFrequency2Spinner = new JSpinner(new SpinnerNumberModel(0.25, 0.0, getCurrentSamplingFrequency() / 2, 0.25));
-			passbandEdgeFrequency2Spinner.setPreferredSize(new Dimension(80,25));
+			passbandEdgeFrequency2Spinner.setPreferredSize(new Dimension(80, 25));
 
 			passbandEdgeFrequency2Spinner.setEditor(new JSpinner.NumberEditor(passbandEdgeFrequency2Spinner, "0.00"));
 			passbandEdgeFrequency2Spinner.setFont(passbandEdgeFrequency2Spinner.getFont().deriveFont(Font.PLAIN));
@@ -435,6 +455,8 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 					if (value > getCurrentSamplingFrequency() / 2)
 						passbandEdgeFrequency2Spinner.setValue(getCurrentSamplingFrequency() /2);
 
+					updateHighlights();
+
 				}
 
 			});
@@ -450,7 +472,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 		if (stopbandEdgeFrequency1Spinner == null) {
 
 			stopbandEdgeFrequency1Spinner = new JSpinner(new SpinnerNumberModel(0.25, 0.0, getCurrentSamplingFrequency() / 2, 0.25));
-			stopbandEdgeFrequency1Spinner.setPreferredSize(new Dimension(80,25));
+			stopbandEdgeFrequency1Spinner.setPreferredSize(new Dimension(80, 25));
 
 			stopbandEdgeFrequency1Spinner.setEditor(new JSpinner.NumberEditor(stopbandEdgeFrequency1Spinner, "0.00"));
 			stopbandEdgeFrequency1Spinner.setFont(stopbandEdgeFrequency1Spinner.getFont().deriveFont(Font.PLAIN));
@@ -459,6 +481,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 				@Override
 				public void stateChanged(ChangeEvent e) {
+
 					super.stateChanged(e);
 
 					FilterType filterType = (FilterType)getFilterTypeComboBox().getSelectedItem();
@@ -498,6 +521,8 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 					if (value < 0)
 						stopbandEdgeFrequency1Spinner.setValue(0.0);
 
+					updateHighlights();
+
 				}
 
 			});
@@ -510,6 +535,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	}
 
 	public JSpinner getStopbandEdgeFrequency2Spinner() {
+
 		if (stopbandEdgeFrequency2Spinner == null) {
 
 			stopbandEdgeFrequency2Spinner = new JSpinner(new SpinnerNumberModel(0.25, 0.0, getCurrentSamplingFrequency() / 2, 0.25));
@@ -561,6 +587,8 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 					if (value > getCurrentSamplingFrequency() / 2)
 						stopbandEdgeFrequency2Spinner.setValue(getCurrentSamplingFrequency() /2);
 
+					updateHighlights();
+
 				}
 
 			});
@@ -587,6 +615,15 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 	}
 
+	public JButton getDrawFrequencyResponseButton() {
+
+		if (drawFrequencyResponseButton == null) {
+			drawFrequencyResponseButton = new JButton(drawFrequencyResponseAction);
+		}
+		return drawFrequencyResponseButton;
+
+	}
+
 	public JSpinner getStopbandAttenuationSpinner() {
 
 		if (stopbandAttenuationSpinner == null) {
@@ -605,77 +642,69 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 	@Override
 	protected void updateGraph() {
+		drawFrequencyResponse();
+	}
 
-		/*if(currentFilter == null) {
+	protected void updateHighlights() {
+
+		FilterType filterType = (FilterType)getFilterTypeComboBox().getSelectedItem();
+		double lowerFrequency = 0;
+		double higherFrequency = 0;
+		if (filterType.isLowpass()) {
+			lowerFrequency = 0;
+			higherFrequency = ((Number) getPassbandEdgeFrequency1Spinner().getValue()).doubleValue();
+		}
+		else if (filterType.isHighpass()) {
+			lowerFrequency = ((Number) getPassbandEdgeFrequency1Spinner().getValue()).doubleValue();
+			higherFrequency = getCurrentSamplingFrequency() / 2;
+		}
+		else if (filterType.isBandpass()) {
+			lowerFrequency = ((Number) getPassbandEdgeFrequency1Spinner().getValue()).doubleValue();
+			higherFrequency = ((Number) getPassbandEdgeFrequency2Spinner().getValue()).doubleValue();
+		}
+		else if (filterType.isBandstop()) {
+			lowerFrequency = ((Number) getStopbandEdgeFrequency1Spinner().getValue()).doubleValue();
+			higherFrequency = ((Number) getStopbandEdgeFrequency2Spinner().getValue()).doubleValue();
+		}
+
+		getFrequencyResponseChartPanel().setSelectionHighlightStart(lowerFrequency);
+		getFrequencyResponseChartPanel().setSelectionHighlightEnd(higherFrequency);
+
+		getFrequencyResponseChartPanel().repaint();
+
+	}
+
+	public void drawFrequencyResponse() {
+
+		if (currentFilter == null)
 			return;
+
+		FilterCoefficients coeffs = null;
+		try {
+			coeffs = IIRDesigner.designDigitalFilter(currentFilter);
+		} catch (BadFilterParametersException ex) {
+			validateDialog();
+			Logger.getLogger(EditTimeDomainSampleFilterDialog.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
-		int frequencyCnt = (int) Math.ceil(getGraphFrequencyMax() / 0.25) + 1;
-		double[] frequencies = new double[frequencyCnt];
-		double[] coefficients = new double[frequencyCnt];
-		int i;
-		double frequency = 0;
+		if (coeffs == null)
+			return;
 
-		for(i=0; i<frequencyCnt; i++) {
-			frequencies[i] = frequency;
-			frequency += 0.25;
-		}
+		FilterFrequencyResponse frequencyResponse = coeffs.getFrequencyResponse(512, getCurrentSamplingFrequency());
 
-		Iterator<Range> it = currentFilter.getRangeIterator();
-		Range range;
-		double limit;
-		float lowFrequency;
-		float highFrequency;
-		double coefficient;
-		double maxCoefficient = 0;
-
-		while(it.hasNext()) {
-
-			range = it.next();
-
-			lowFrequency = range.getLowFrequency();
-			if(lowFrequency > getGraphFrequencyMax()) {
-				break;
-			}
-
-			highFrequency = range.getHighFrequency();
-			coefficient = range.getCoefficient();
-
-			if(highFrequency <= lowFrequency) {
-				limit = getGraphFrequencyMax();
-			} else {
-				limit = Math.min(highFrequency, getGraphFrequencyMax());
-			}
-
-			int index;
-			for(frequency=lowFrequency; frequency<=limit; frequency += 0.25) {
-
-				index = (int) (frequency / 0.25);
-				coefficients[index] = coefficient;
-
-			}
-
-			if(coefficient > maxCoefficient) {
-				maxCoefficient = coefficient;
-			}
-
-		}
-
-		maxCoefficient *= 1.1;
-		if(maxCoefficient < 1) {
-			maxCoefficient  = 1;
-		}
+		double[] frequencies = frequencyResponse.getFrequencies();
+		double[] coefficients = frequencyResponse.getGain();
 
 		double unit = Math.max(4, Math.round(getGraphFrequencyMax() / (16*4)) * 4);
 		NumberAxis axis = getFrequencyAxis();
 		axis.setRange(0, getGraphFrequencyMax());
 		axis.setTickUnit(new NumberTickUnit(unit));
 
-		getGainAxis().setRange(0, maxCoefficient);
-
 		DefaultXYDataset dataset = new DefaultXYDataset();
 		dataset.addSeries("data", new double[][] { frequencies, coefficients });
-		getFrequencyResponsePlot().setDataset(dataset);*/
+		getFrequencyResponsePlot().setDataset(dataset);
+
+		getGainAxis().setRange(-100, 0);
 
 	}
 
@@ -696,6 +725,13 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 		getDescriptionTextField().setText(currentFilter.getDescription());
 
 		updateGraph();
+		System.out.println("Filling dialog from model");
+		getPassbandEdgeFrequency1Spinner().setValue(((Number)getPassbandEdgeFrequency1Spinner().getValue()).doubleValue());
+		getFrequencyResponseChartPanel().transferFocus();
+		getFrequencyResponseChartPanel().repaint();
+
+		updateHighlights();
+
 
 	}
 
@@ -734,15 +770,13 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 		fillModelFromDialog(currentFilter);
 		try {
 			FilterCoefficients coeffs = IIRDesigner.designDigitalFilter(currentFilter);
-			int filterOrder = coeffs.getFilterOrder();
-			if(filterOrder > 7)
-				errors.reject("error.editTimeDomainSampleFilter.badFilterParametersFilterOrderTooBig");
+		} catch (FilterOrderTooBigException ex) {
+			errors.reject("error.editTimeDomainSampleFilter.badFilterParametersFilterOrderTooBig");
 		} catch (BadFilterParametersException ex) {
 			errors.reject("error.editTimeDomainSampleFilter.badFilterParameters");
 		} catch (Exception e) {
 			errors.reject("error.editTimeDomainSampleFilter.badFilterParameters");
 		}
-
 
 	}
 
@@ -788,11 +822,6 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 			clearDragHighlight();
 			repaint();
 
-			/*JSpinner spinner = getCoefficientSpinner();
-			// XXX ugly hack - this class is utterly hopeless...
-			JTextField editor = ((JTextField) ((JSpinner.NumberEditor) spinner.getEditor()).getComponent(0));
-			editor.selectAll();
-			editor.requestFocusInWindow();*/
 		}
 
 		@Override
@@ -803,8 +832,9 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 				return;
 			}
 
-			//getFromFrequencySpinner().setValue(frequency);
-			//getToFrequencySpinner().setValue(frequency+0.25);
+			FilterType filterType = (FilterType)getFilterTypeComboBox().getSelectedItem();
+			if (filterType.isLowpass() || filterType.isHighpass())
+				getPassbandEdgeFrequency1Spinner().setValue(frequency);
 
 		}
 
@@ -829,18 +859,37 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 				endFrequency = temp;
 			}
 
-			/*getFromFrequencySpinner().setValue(startFrequency);
-			if(endFrequency >= getGraphFrequencyMax()) {
-				getToFrequencySpinner().setValue(getGraphFrequencyMax());
-				getUnlimitedCheckBox().setSelected(true);
-				setDragHighlight(startFrequency, getGraphFrequencyMax());
-			} else {
-				getUnlimitedCheckBox().setSelected(false);
-				getToFrequencySpinner().setValue(endFrequency);
-				setDragHighlight(startFrequency, endFrequency);
+			FilterType filterType = (FilterType)getFilterTypeComboBox().getSelectedItem();
+			if (filterType.isBandpass()) {
+				getPassbandEdgeFrequency1Spinner().setValue(startFrequency);
+				getPassbandEdgeFrequency2Spinner().setValue(endFrequency);
 			}
-			*/
+			else if (filterType.isBandstop()) {
+				getStopbandEdgeFrequency1Spinner().setValue(startFrequency);
+				getStopbandEdgeFrequency2Spinner().setValue(endFrequency);
+			}
+			setDragHighlight(startFrequency, endFrequency);
 
+		}
+
+	}
+
+	protected class DrawFrequencyResponseAction extends AbstractAction {
+
+		public DrawFrequencyResponseAction() {
+			super(messageSource.getMessage("editTimeDomainSampleFilter.drawFilterFrequencyResponse"));
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent ev) {
+
+			try {
+				fillModelFromDialog(currentFilter);
+			} catch (SignalMLException ex) {
+				Logger.getLogger(EditTimeDomainSampleFilterDialog.class.getName()).log(Level.SEVERE, null, ex);
+			}
+
+			drawFrequencyResponse();
 
 		}
 
