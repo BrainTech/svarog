@@ -232,7 +232,7 @@ class SpecialMath {
 	public static double[] minimizeFunction(MinimisationFunction function, double[] start, int nmax) {
 
 		Minimisation min = new Minimisation();
-		min.suppressNoConvergenceMessage();
+		//min.suppressNoConvergenceMessage();
 		min.nelderMead(function, start, nmax);
 		return min.getParamValues();
 
@@ -300,7 +300,7 @@ class SpecialMath {
 			min.addConstraint(i, 1, higherBounds[i]);
 		}
 
-		min.suppressNoConvergenceMessage();
+		//min.suppressNoConvergenceMessage();
 		min.nelderMead(function, start, nmax);
 		return min.getParamValues();
 
@@ -334,7 +334,7 @@ class SpecialMath {
 			min.addConstraint(i, 1, higherBounds[i]);
 		}
 
-		min.suppressNoConvergenceMessage();
+		//min.suppressNoConvergenceMessage();
 		min.nelderMead(function, start);
 		return min.getParamValues();
 
