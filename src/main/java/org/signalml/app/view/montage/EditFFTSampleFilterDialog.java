@@ -79,8 +79,6 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 
 	private JPanel newRangePanel;
 
-	//private JTextField descriptionTextField;
-
 	private JSpinner fromFrequencySpinner;
 	private JSpinner toFrequencySpinner;
 	private JSpinner coefficientSpinner;
@@ -95,8 +93,6 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 
 	private FFTWindowTypePanel fftWindowTypePanel;
 
-	protected NumberAxis gainAxis;
-
 	public EditFFTSampleFilterDialog(MessageSourceAccessor messageSource, PresetManager presetManager, Window w, boolean isModal) {
 		super(messageSource, presetManager, w, isModal);
 	}
@@ -107,6 +103,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 
 	@Override
 	protected void initialize() {
+
 		setTitle(messageSource.getMessage("editFFTSampleFilter.title"));
 
 		addNewRangeAction = new AddNewRangeAction();
@@ -124,6 +121,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 			}
 
 		});
+
 	}
 
 	@Override
@@ -156,7 +154,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 
 		border = new CompoundBorder(
 		        new TitledBorder(messageSource.getMessage("editFFTSampleFilter.rangesTitle")),
-		        new EmptyBorder(3,3,3,3)
+		        new EmptyBorder(3, 3, 3, 3)
 		);
 		rightPanel.setBorder(border);
 
@@ -175,15 +173,18 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 	}
 
 	public FFTSampleFilterTableModel getTableModel() {
+
 		if (tableModel == null) {
 			tableModel = new FFTSampleFilterTableModel(messageSource);
 		}
 		return tableModel;
+
 	}
 
 	public FFTSampleFilterTable getTable() {
+
 		if (table == null) {
-			table = new FFTSampleFilterTable(getTableModel(),messageSource);
+			table = new FFTSampleFilterTable(getTableModel(), messageSource);
 			table.setPopupMenuProvider(new RangeTablePopupProvider());
 
 			table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -240,22 +241,26 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 
 		}
 		return table;
+
 	}
 
 	public JScrollPane getTableScrollPane() {
+
 		if (tableScrollPane == null) {
 			tableScrollPane = new JScrollPane(getTable());
 			tableScrollPane.setPreferredSize(new Dimension(250, 300));
 		}
 		return tableScrollPane;
+
 	}
 
 	public JPanel getNewRangePanel() {
+
 		if (newRangePanel == null) {
 
 			newRangePanel = new JPanel(null);
 
-			newRangePanel.setBorder(new EmptyBorder(3,3,3,3));
+			newRangePanel.setBorder(new EmptyBorder(3, 3, 3, 3));
 
 			GroupLayout layout = new GroupLayout(newRangePanel);
 			newRangePanel.setLayout(layout);
@@ -338,6 +343,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 
 		}
 		return newRangePanel;
+
 	}
 
 	@Override
@@ -368,16 +374,19 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 	}
 
 	@Override
-	public ValueAxis getGainAxis() {
+	public NumberAxis getGainAxis() {
+
 		if (gainAxis == null) {
 			gainAxis = new NumberAxis();
 			gainAxis.setAutoRange(false);
 			gainAxis.setTickUnit(new NumberTickUnit(1));
 		}
 		return gainAxis;
+
 	}
 
 	public JSpinner getFromFrequencySpinner() {
+
 		if (fromFrequencySpinner == null) {
 			fromFrequencySpinner = new JSpinner(new SpinnerNumberModel(0.0, 0.0, 4096.0, 0.25));
 			fromFrequencySpinner.setPreferredSize(new Dimension(80, 25));
@@ -407,9 +416,11 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 
 		}
 		return fromFrequencySpinner;
+
 	}
 
 	public JSpinner getToFrequencySpinner() {
+
 		if (toFrequencySpinner == null) {
 			toFrequencySpinner = new JSpinner(new SpinnerNumberModel(0.25, 0.25, 4096.0, 0.25));
 			toFrequencySpinner.setPreferredSize(new Dimension(80, 25));
@@ -441,9 +452,11 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 
 		}
 		return toFrequencySpinner;
+
 	}
 
 	public JCheckBox getUnlimitedCheckBox() {
+
 		if (unlimitedCheckBox == null) {
 			unlimitedCheckBox = new JCheckBox();
 
@@ -466,9 +479,11 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 			});
 		}
 		return unlimitedCheckBox;
+
 	}
 
 	public JSpinner getCoefficientSpinner() {
+
 		if (coefficientSpinner == null) {
 			coefficientSpinner = new JSpinner(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.1));
 			coefficientSpinner.setPreferredSize(new Dimension(80, 25));
@@ -481,23 +496,29 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 
 		}
 		return coefficientSpinner;
+
 	}
 
 	public JCheckBox getMultiplyCheckBox() {
+
 		if (multiplyCheckBox == null) {
 			multiplyCheckBox = new JCheckBox();
 		}
 		return multiplyCheckBox;
+
 	}
 
 	public JButton getAddNewRangeButton() {
+
 		if (addNewRangeButton == null) {
 			addNewRangeButton = new JButton(addNewRangeAction);
 		}
 		return addNewRangeButton;
+
 	}
 
 	public JButton getRemoveRangeButton() {
+
 		if (removeRangeButton == null) {
 			removeRangeButton = new JButton(removeRangeAction);
 		}
@@ -524,7 +545,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 		int i;
 		double frequency = 0;
 
-		for (i=0; i<frequencyCnt; i++) {
+		for (i = 0; i < frequencyCnt; i++) {
 			frequencies[i] = frequency;
 			frequency += 0.25;
 		}
@@ -574,7 +595,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 			maxCoefficient  = 1;
 		}
 
-		double unit = Math.max(4, Math.round(getGraphFrequencyMax() / (16*4)) * 4);
+		double unit = Math.max(4, Math.round(getGraphFrequencyMax() / (16 * 4)) * 4);
 		NumberAxis axis = getFrequencyAxis();
 		axis.setRange(0, getGraphFrequencyMax());
 		axis.setTickUnit(new NumberTickUnit(unit));
@@ -582,7 +603,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 		getGainAxis().setRange(0, maxCoefficient);
 
 		DefaultXYDataset dataset = new DefaultXYDataset();
-		dataset.addSeries("data", new double[][] { frequencies, coefficients });
+		dataset.addSeries("data", new double[][] {frequencies, coefficients});
 		getFrequencyResponsePlot().setDataset(dataset);
 
 	}
@@ -626,8 +647,8 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 
 	@Override
 	public void validateDialog(Object model, Errors errors) throws SignalMLException {
-		super.validateDialog(model, errors);
 
+		super.validateDialog(model, errors);
 		getFFTWindowTypePanel().validatePanel(errors);
 
 	}
@@ -773,6 +794,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 
 	@Override
 	public FrequencyResponseChartPanel getFrequencyResponseChartPanel() {
+
 		if (frequencyResponseChartPanel == null) {
 
 			frequencyResponseChartPanel = new FFTFrequencyResponseChartPanel(getFrequencyResponseChart());
@@ -781,6 +803,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 
 		}
 		return frequencyResponseChartPanel;
+
 	}
 
 	protected class FFTFrequencyResponseChartPanel extends FrequencyResponseChartPanel {
@@ -847,8 +870,6 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 				getToFrequencySpinner().setValue(endFrequency);
 				setDragHighlight(startFrequency, endFrequency);
 			}
-
-
 
 		}
 

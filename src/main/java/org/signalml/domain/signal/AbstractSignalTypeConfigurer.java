@@ -27,10 +27,10 @@ public abstract class AbstractSignalTypeConfigurer implements SignalTypeConfigur
 		ArrayList<SampleFilterDefinition> filters = new ArrayList<SampleFilterDefinition>();
 
 		filters.add(new TimeDomainSampleFilter(FilterType.LOWPASS, ApproximationFunctionType.BUTTERWORTH,
-		                                       new double[] {20, 0}, new double[] {30, 8}, 5.0, 20.0));
+		                                       new double[] {20, 0}, new double[] {30, 0}, 5.0, 20.0));
 
 		filters.add(new TimeDomainSampleFilter(FilterType.HIGHPASS, ApproximationFunctionType.CHEBYSHEV1,
-		                                       new double[] {6, 0}, new double[] {1, 8}, 3.0, 40.0)
+		                                       new double[] {6, 0}, new double[] {3, 0}, 3.0, 40.0)
 		           );
 
 		return Collections.unmodifiableList(filters);

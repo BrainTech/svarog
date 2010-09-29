@@ -1,5 +1,5 @@
 /* TimeDomainSampleFilterPresetManager.java created 2010-09-22
- * 
+ *
  */
 
 package org.signalml.app.config.preset;
@@ -12,12 +12,11 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /** TimeDomainSampleFilterPresetManager
  *
- * 
  * @author Piotr Szachewicz
  */
 @XStreamAlias("timeDomainSampleFilters")
 public class TimeDomainSampleFilterPresetManager extends AbstractPresetManager {
-		
+
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -29,21 +28,24 @@ public class TimeDomainSampleFilterPresetManager extends AbstractPresetManager {
 	public Class<?> getPresetClass() {
 		return TimeDomainSampleFilter.class;
 	}
-	
+
 	@Override
 	public XStream getStreamer() {
-		if( streamer == null ) {
+
+		if(streamer == null)
 			streamer = createTimeDomainSampleFilterPresetStreamer();
-		}
 		return streamer;
+
 	}
 
 	private XStream createTimeDomainSampleFilterPresetStreamer() {
+
 		XStream streamer = XMLUtils.getDefaultStreamer();
 		XMLUtils.configureStreamerForTimeDomainSampleFilter(streamer);
 		streamer.setMode(XStream.XPATH_RELATIVE_REFERENCES);
-				
+
 		return streamer;
+
 	}
-		
+
 }

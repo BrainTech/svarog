@@ -71,10 +71,10 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	@Override
 	protected void initialize() {
 		setTitle(messageSource.getMessage("signalMontage.title"));
-		setIconImage( IconUtils.loadClassPathImage("org/signalml/app/icon/montage.png"));
+		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/montage.png"));
 		setPreferredSize(SvarogConstants.MIN_ASSUMED_DESKTOP_SIZE);
 		super.initialize();
-		setMinimumSize(new Dimension(800,600));
+		setMinimumSize(new Dimension(800, 600));
 	}
 
 	@Override
@@ -101,21 +101,21 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 		miscellaneousPanel = new MontageMiscellaneousPanel(messageSource);
 
 		tabbedPane = new JTabbedPane();
-		tabbedPane.addTab( messageSource.getMessage("signalMontage.channelsTabTitle"), channelsPanel);
-		tabbedPane.addTab( messageSource.getMessage("signalMontage.visualTabTitle"), visualReferenceEditorPanel);
-		tabbedPane.addTab( messageSource.getMessage("signalMontage.matrixTabTitle"), matrixReferenceEditorPanel);
-		tabbedPane.addTab( messageSource.getMessage("signalMontage.filtersTabTitle"), filtersPanel);
-		tabbedPane.addTab( messageSource.getMessage("signalMontage.miscellaneousTabTitle"), miscellaneousPanel);
+		tabbedPane.addTab(messageSource.getMessage("signalMontage.channelsTabTitle"), channelsPanel);
+		tabbedPane.addTab(messageSource.getMessage("signalMontage.visualTabTitle"), visualReferenceEditorPanel);
+		tabbedPane.addTab(messageSource.getMessage("signalMontage.matrixTabTitle"), matrixReferenceEditorPanel);
+		tabbedPane.addTab(messageSource.getMessage("signalMontage.filtersTabTitle"), filtersPanel);
+		tabbedPane.addTab(messageSource.getMessage("signalMontage.miscellaneousTabTitle"), miscellaneousPanel);
 
-		tabbedPane.addChangeListener( new ChangeListener() {
+		tabbedPane.addChangeListener(new ChangeListener() {
 
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				int index = tabbedPane.getSelectedIndex();
-				if ( index < 0 ) {
+				if (index < 0) {
 					return;
 				}
-				switch ( index ) {
+				switch (index) {
 
 				case 1 :
 					visualReferenceEditorPanel.getEditor().requestFocusInWindow();
@@ -136,8 +136,8 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 		});
 
 
-		interfacePanel.add( generatorPanel, BorderLayout.NORTH );
-		interfacePanel.add( tabbedPane, BorderLayout.CENTER);
+		interfacePanel.add(generatorPanel, BorderLayout.NORTH);
+		interfacePanel.add(tabbedPane, BorderLayout.CENTER);
 
 		return interfacePanel;
 
@@ -146,10 +146,10 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 
-		if ( model instanceof Montage ) {
+		if (model instanceof Montage) {
 
 			// for presets
-			currentMontage = new Montage( (Montage) model );
+			currentMontage = new Montage((Montage) model);
 
 		} else {
 
@@ -157,18 +157,18 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 			Montage montage = descriptor.getMontage();
 			SignalDocument signalDocument = descriptor.getSignalDocument();
 			boolean signalBound = (signalDocument != null);
-			if ( montage == null ) {
-				if ( signalBound ) {
-					currentMontage = new Montage( new SourceMontage( signalDocument ) );
+			if (montage == null) {
+				if (signalBound) {
+					currentMontage = new Montage(new SourceMontage(signalDocument));
 				} else {
-					currentMontage = new Montage( new SourceMontage( SignalType.EEG_10_20 ) );
+					currentMontage = new Montage(new SourceMontage(SignalType.EEG_10_20));
 				}
 			} else {
-				currentMontage = new Montage( montage );
+				currentMontage = new Montage(montage);
 			}
 			this.signalDocument = signalDocument;
 
-			if ( signalBound ) {
+			if (signalBound) {
 				getOkButton().setVisible(true);
 				getRootPane().setDefaultButton(getOkButton());
 			} else {
@@ -176,28 +176,28 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 				getRootPane().setDefaultButton(getCancelButton());
 			}
 
-			channelsPanel.setSignalBound( signalBound );
-			filtersPanel.setSignalBound( signalBound );
-			if ( signalBound ) {
-				filtersPanel.setCurrentSamplingFrequency( signalDocument.getSamplingFrequency() );
+			channelsPanel.setSignalBound(signalBound);
+			filtersPanel.setSignalBound(signalBound);
+			if (signalBound) {
+				filtersPanel.setCurrentSamplingFrequency(signalDocument.getSamplingFrequency());
 			} else {
-				filtersPanel.setCurrentSamplingFrequency( -1 );
+				filtersPanel.setCurrentSamplingFrequency(-1);
 			}
 
 		}
 
-		if ( signalDocument != null ) {
-			if ( !currentMontage.isCompatible(signalDocument) ) {
+		if (signalDocument != null) {
+			if (!currentMontage.isCompatible(signalDocument)) {
 
-				String warning =  messageSource.getMessage("montageDialog.onIncompatible" );
+				String warning =  messageSource.getMessage("montageDialog.onIncompatible");
 				SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 3);
 
 				boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
-				if ( !ok ) {
+				if (!ok) {
 					return;
 				}
 
-				currentMontage.adapt( signalDocument );
+				currentMontage.adapt(signalDocument);
 
 			}
 		}
@@ -233,14 +233,14 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	public void validateDialog(Object model, Errors errors) throws SignalMLException {
 
 		// validate montage table
-		if ( currentMontage.getMontageChannelCount() == 0 ) {
+		if (currentMontage.getMontageChannelCount() == 0) {
 			errors.reject("error.noChannelInMontage");
 		}
 
 		String description = miscellaneousPanel.getEditDescriptionPanel().getTextPane().getText();
-		if ( description != null && !description.isEmpty() ) {
-			if ( !Util.validateString(description) ) {
-				errors.rejectValue( "montage.description", "error.descriptionBadChars" );
+		if (description != null && !description.isEmpty()) {
+			if (!Util.validateString(description)) {
+				errors.rejectValue("montage.description", "error.descriptionBadChars");
 			}
 		}
 
@@ -255,12 +255,12 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	@Override
 	public Preset getPreset() throws SignalMLException {
 
-		Montage preset = new Montage( currentMontage );
+		Montage preset = new Montage(currentMontage);
 
 		Errors errors = new BindException(preset, "data");
 		validateDialog(preset, errors);
 
-		if ( errors.hasErrors() ) {
+		if (errors.hasErrors()) {
 			showValidationErrors(errors);
 			return null;
 		}
@@ -298,7 +298,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 
 	@Override
 	public boolean isChanged() {
-		if ( currentMontage != null ) {
+		if (currentMontage != null) {
 			return currentMontage.isChanged();
 		} else {
 			return super.isChanged();
@@ -307,7 +307,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 
 	@Override
 	protected void setChanged(boolean changed) {
-		if ( currentMontage != null ) {
+		if (currentMontage != null) {
 			currentMontage.setChanged(changed);
 		} else {
 			super.setChanged(changed);
@@ -321,10 +321,10 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 
 	@Override
 	protected URL getContextHelpURL() {
-		if ( contextHelpURL == null ) {
+		if (contextHelpURL == null) {
 			try {
 				contextHelpURL = (new ClassPathResource("org/signalml/help/contents.html")).getURL();
-				contextHelpURL = new URL( contextHelpURL.toExternalForm() + "#montage" );
+				contextHelpURL = new URL(contextHelpURL.toExternalForm() + "#montage");
 			} catch (IOException ex) {
 				logger.error("Failed to get help URL", ex);
 			}
@@ -349,7 +349,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	}
 
 	protected EditFFTSampleFilterDialog getEditFFTSampleFilterDialog() {
-		if ( editFFTSampleFilterDialog == null ) {
+		if (editFFTSampleFilterDialog == null) {
 			editFFTSampleFilterDialog = new EditFFTSampleFilterDialog(messageSource, fftFilterPresetManager, this, true);
 			editFFTSampleFilterDialog.setApplicationConfig(getApplicationConfig());
 			editFFTSampleFilterDialog.setFileChooser(getFileChooser());
@@ -358,7 +358,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	}
 
 	protected EditTimeDomainSampleFilterDialog getEditTimeDomainSampleFilterDialog() {
-		if ( editTimeDomainSampleFilterDialog == null ) {
+		if (editTimeDomainSampleFilterDialog == null) {
 			editTimeDomainSampleFilterDialog = new EditTimeDomainSampleFilterDialog(messageSource, timeDomainSampleFilterPresetManager, this, true);
 			editTimeDomainSampleFilterDialog.setApplicationConfig(getApplicationConfig());
 			editTimeDomainSampleFilterDialog.setFileChooser(getFileChooser());

@@ -38,7 +38,6 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.LogarithmicAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
-import org.jfree.chart.axis.ValueAxis;
 import org.jfree.data.xy.DefaultXYDataset;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
@@ -78,10 +77,8 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	private JSpinner passbandRippleSpinner;
 	private JSpinner stopbandAttenuationSpinner;
 
-	protected ValueAxis gainAxis;
 	private DrawFrequencyResponseAction drawFrequencyResponseAction;
 	private JButton drawFrequencyResponseButton;
-
 
 	public EditTimeDomainSampleFilterDialog(MessageSourceAccessor messageSource, PresetManager presetManager, Window w, boolean isModal) {
 		super(messageSource, presetManager, w, isModal);
@@ -167,7 +164,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	}
 
 	@Override
-	public ValueAxis getGainAxis() {
+	public NumberAxis getGainAxis() {
 
 		if (gainAxis == null) {
 			gainAxis = new LogarithmicAxis("");
@@ -695,13 +692,13 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 		double[] frequencies = frequencyResponse.getFrequencies();
 		double[] coefficients = frequencyResponse.getGain();
 
-		double unit = Math.max(4, Math.round(getGraphFrequencyMax() / (16*4)) * 4);
+		double unit = Math.max(4, Math.round(getGraphFrequencyMax() / (16 * 4)) * 4);
 		NumberAxis axis = getFrequencyAxis();
 		axis.setRange(0, getGraphFrequencyMax());
 		axis.setTickUnit(new NumberTickUnit(unit));
 
 		DefaultXYDataset dataset = new DefaultXYDataset();
-		dataset.addSeries("data", new double[][] { frequencies, coefficients });
+		dataset.addSeries("data", new double[][] {frequencies, coefficients});
 		getFrequencyResponsePlot().setDataset(dataset);
 
 		getGainAxis().setRange(-100, 0);
@@ -725,11 +722,6 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 		getDescriptionTextField().setText(currentFilter.getDescription());
 
 		updateGraph();
-		System.out.println("Filling dialog from model");
-		getPassbandEdgeFrequency1Spinner().setValue(((Number)getPassbandEdgeFrequency1Spinner().getValue()).doubleValue());
-		getFrequencyResponseChartPanel().transferFocus();
-		getFrequencyResponseChartPanel().repaint();
-
 		updateHighlights();
 
 

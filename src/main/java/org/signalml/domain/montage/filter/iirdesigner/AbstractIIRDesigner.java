@@ -311,8 +311,6 @@ abstract class AbstractIIRDesigner {
 	protected double[] optimizeBandstopFilterPassbandFrequencies(double[] passb, double[] stopb, double gpass, double gstop) {
 
 		double[] passbCopy = passb.clone();
-		if (passbCopy.length == 0)System.out.println("passbCopy == null");
-		if (stopb.length == 0 ) System.out.println("stopb");
 
 		BandstopObjectiveFunction objectiveFunction = new BandstopObjectiveFunction(0, passbCopy, stopb, gpass, gstop);
 		double passb0 = SpecialMath.minimizeFunctionConstrained(objectiveFunction, passbCopy[0], stopb[0]-1e-12);

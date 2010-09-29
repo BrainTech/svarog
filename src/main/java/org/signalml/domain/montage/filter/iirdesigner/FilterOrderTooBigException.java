@@ -12,6 +12,11 @@ package org.signalml.domain.montage.filter.iirdesigner;
  */
 public class FilterOrderTooBigException extends BadFilterParametersException {
 
+	/**
+	 * Constructs a new exception with the specified detail message.
+	 *
+	 * @param problem the detail message
+	 */
 	public FilterOrderTooBigException(String problem) {
 		super(problem);
 	}

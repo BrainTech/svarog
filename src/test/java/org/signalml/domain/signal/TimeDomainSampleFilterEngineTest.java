@@ -200,6 +200,7 @@ public class TimeDomainSampleFilterEngineTest {
 	}
 
 	@Test public void testUpdateCache() {
+
 		coefficients = new FilterCoefficients(new double[] {1.0, 0.0, 0.0},
 		                                      new double[] {1.0, 0.0, 0.0} );
 		engine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source, 0), coefficients);
@@ -221,6 +222,7 @@ public class TimeDomainSampleFilterEngineTest {
 	 */
 	@Test
 	public void testGetSamplesAllPassFilter() {
+
 		coefficients = new FilterCoefficients(new double[] {1.0, 0.0},
 		                                      new double[] {1.0, 0.0} );
 		engine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source, 0), coefficients);
@@ -238,6 +240,7 @@ public class TimeDomainSampleFilterEngineTest {
 		engine.getSamples(target2, 0, TEST_SAMPLE_COUNT, 0);
 		for (i = 0; i < TEST_SAMPLE_COUNT; i++)
 			assertEquals(target1[i], target2[i], 0.00001);
+
 	}
 
 	/**
@@ -247,6 +250,7 @@ public class TimeDomainSampleFilterEngineTest {
 	*/
 	@Test
 	public void testGetSamplesHighPassFilter() {
+
 		/*this filter was generated in python and is a highpass filter:
 		 b,a=signal.iirdesign(wp=0.6,ws=0.2,gstop=30, gpass=3,ftype='butter')*/
 		coefficients = new FilterCoefficients(new double[] {1.0,  0.04940057,  0.33397875,  0.00449333},
@@ -317,6 +321,7 @@ public class TimeDomainSampleFilterEngineTest {
 		// first few samples are distorted by the rectangular window function
 		for (i = 60; i < TEST_SAMPLE_COUNT; i++)
 			assertEquals(1.5, target2[i], 0.0001);
+
 	}
 
 }

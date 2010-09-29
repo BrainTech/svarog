@@ -66,56 +66,6 @@ public class MultichannelSampleFilterTest {
 	}
 
 	/**
-	 * Test method for {@link org.signalml.domain.signal.MultichannelSampleFilter#getSamples(int, double[], int, int, int) ()}.
-	 */
-	@Test
-	public void testGetSamples() throws MontageMismatchException {
-
-		/*int i, j;
-
-		//preparing montage
-		SourceMontage sMontage = new SourceMontage(SignalType.EEG_10_20, TEST_CHANNEL_COUNT);
-		Montage montage = new Montage(sMontage);
-		for (i = 0; i < TEST_CHANNEL_COUNT; i++)
-			montage.addMontageChannel(i, i);
-
-		//adding filters
-		TimeDomainSampleFilter definition1 = new TimeDomainSampleFilter("sampleFilter.td.lowPass", "xxx",
-		                new double[] {2.0,0.0},
-		                new double[] {1.0,0.0});
-		TimeDomainSampleFilter definition2=new TimeDomainSampleFilter("sampleFilter.td.lowPass", "xxx",
-		                new double[] {3.0,0.0},
-		                new double[] {1.0,0.0});
-
-		montage.addSampleFilter(definition1);
-		montage.addSampleFilter(definition2);
-		mfilter.applyMontage(montage);
-
-		//generating samples
-		double[] target1 = new double[TEST_SAMPLE_COUNT];
-		double[] target2 = new double[TEST_SAMPLE_COUNT];
-
-		double samples[] = new double[TEST_CHANNEL_COUNT];
-		for (i = 0; i < TEST_SAMPLE_COUNT; i++) {
-
-			for (j = 0; j < TEST_CHANNEL_COUNT; j++)
-				samples[j] = Math.random();
-			source.addSamples(samples);
-
-		}
-
-		//validating the output of the filter
-		for (j = 0; i < TEST_CHANNEL_COUNT; i++) {
-			source.getSamples(i, target1, 0, TEST_SAMPLE_COUNT, 0);
-			mfilter.getSamples(i, target2, 0, TEST_SAMPLE_COUNT, 0);
-
-			for (j = 0; j < TEST_SAMPLE_COUNT; j++)
-				assertEquals(target1[j], 6 * target2[j], 0.00001);
-		}*/
-
-	}
-
-	/**
 	 * Test method for {@link org.signalml.domain.signal.MultichannelSampleFilter#addFilter(SampleFilterEngine)}.
 	 */
 	@Test

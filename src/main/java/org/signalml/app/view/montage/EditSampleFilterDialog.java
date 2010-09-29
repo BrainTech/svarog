@@ -32,7 +32,6 @@ import javax.swing.event.ChangeListener;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.ui.RectangleInsets;
@@ -53,7 +52,6 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 
 	private static final long serialVersionUID = 1L;
 
-	//protected SampleFilterDefinition currentFilter;
 	private float currentSamplingFrequency;
 
 	private JTextField descriptionTextField;
@@ -65,7 +63,7 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 	protected FrequencyResponseChartPanel frequencyResponseChartPanel;
 
 	protected NumberAxis frequencyAxis;
-
+	protected NumberAxis gainAxis;
 
 	public EditSampleFilterDialog(MessageSourceAccessor messageSource, PresetManager presetManager, Window w, boolean isModal) {
 		super(messageSource, presetManager, w, isModal);
@@ -100,6 +98,7 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 		descriptionPanel.add(getDescriptionTextField());
 
 		return descriptionPanel;
+
 	}
 
 	public JPanel getGraphPanel() {
@@ -124,28 +123,34 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 		graphPanel.add(graphSpinnerPanel, BorderLayout.SOUTH);
 
 		return graphPanel;
+
 	}
 
 	public JTextField getDescriptionTextField() {
+
 		if (descriptionTextField == null) {
 			descriptionTextField = new JTextField();
 			descriptionTextField.setPreferredSize(new Dimension(200, 25));
 		}
 		return descriptionTextField;
+
 	}
 
 	public NumberAxis getFrequencyAxis() {
+
 		if (frequencyAxis == null) {
 			frequencyAxis = new NumberAxis();
 			frequencyAxis.setAutoRange(false);
 			frequencyAxis.setLabel(messageSource.getMessage("editSampleFilter.graphFrequencyLabel"));
 		}
 		return frequencyAxis;
+
 	}
 
-	public abstract ValueAxis getGainAxis();
+	public abstract NumberAxis getGainAxis();
 
 	public XYPlot getFrequencyResponsePlot() {
+
 		if (frequencyResponsePlot == null) {
 
 			XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer(true, false);
@@ -154,9 +159,11 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 
 		}
 		return frequencyResponsePlot;
+
 	}
 
 	public JFreeChart getFrequencyResponseChart() {
+
 		if (frequencyResponseChart == null) {
 			frequencyResponseChart = new JFreeChart(messageSource.getMessage("editSampleFilter.graphTitle"), new Font(Font.DIALOG, Font.PLAIN, 12), getFrequencyResponsePlot(), false);
 			frequencyResponseChart.setBorderVisible(true);
@@ -164,11 +171,13 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 			frequencyResponseChart.setPadding(new RectangleInsets(5, 5, 5, 5));
 		}
 		return frequencyResponseChart;
+
 	}
 
 	public abstract FrequencyResponseChartPanel getFrequencyResponseChartPanel();
 
 	public JSpinner getGraphScaleSpinner() {
+
 		if (graphScaleSpinner == null) {
 			graphScaleSpinner = new JSpinner(new SpinnerNumberModel(0.25, 0.25, 4096.0, 0.25));
 			graphScaleSpinner.setPreferredSize(new Dimension(80, 25));
@@ -177,6 +186,7 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 			graphScaleSpinner.setFont(graphScaleSpinner.getFont().deriveFont(Font.PLAIN));
 		}
 		return graphScaleSpinner;
+
 	}
 
 	public float getCurrentSamplingFrequency() {
@@ -192,6 +202,7 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 	}
 
 	public void setGraphFrequencyMax(double graphFrequencyMax) {
+
 		if (this.graphFrequencyMax != graphFrequencyMax) {
 
 			this.graphFrequencyMax = graphFrequencyMax;
@@ -199,6 +210,7 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 			getGraphScaleSpinner().setValue(graphFrequencyMax);
 
 		}
+
 	}
 
 	protected abstract void updateGraph();
@@ -270,6 +282,7 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 		protected boolean hideSelectionHighlight = false;
 
 		public FrequencyResponseChartPanel(JFreeChart chart) {
+
 			super(chart);
 
 			setDomainZoomable(false);
@@ -313,19 +326,23 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 		}
 
 		protected void setDragHighlight(int highlightStart, int highlightEnd) {
+
 			if (this.dragHighlightStart != highlightStart || this.dragHighlightEnd != highlightEnd) {
 				this.dragHighlightStart = highlightStart;
 				this.dragHighlightEnd = highlightEnd;
 				repaint();
 			}
+
 		}
 
 		protected void clearDragHighlight() {
+
 			if (dragHighlightStart >= 0 || dragHighlightEnd >= 0) {
 				dragHighlightStart = -1;
 				dragHighlightEnd = -1;
 				repaint();
 			}
+
 		}
 
 		public void setSelectionHighlightStart(double highlightStart) {
@@ -355,29 +372,35 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 		}
 
 		protected void setSelectionHighlight(int highlightStart, int highlightEnd) {
+
 			if (this.selectionHighlightStart != highlightStart || this.selectionHighlightEnd != highlightEnd) {
 				this.selectionHighlightStart = highlightStart;
 				this.selectionHighlightEnd = highlightEnd;
 				repaint();
 			}
+
 		}
 
 		public void clearSelectionHighlight() {
+
 			if (selectionHighlightStart >= 0 || selectionHighlightEnd >= 0) {
 				selectionHighlightStart = -1;
 				selectionHighlightEnd = -1;
 				repaint();
 			}
+
 		}
 
 		@Override
 		public void mousePressed(MouseEvent ev) {
+
 			hideSelectionHighlight = true;
 			startFrequency = getFrequency(ev.getPoint());
 			if (startFrequency >= graphFrequencyMax) {
 				startFrequency = null;
 			}
 			repaint();
+
 		}
 
 		@Override
@@ -391,6 +414,7 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 
 		@Override
 		public void paintComponent(Graphics gOrig) {
+
 			super.paintComponent(gOrig);
 
 			Graphics2D g = (Graphics2D) gOrig;

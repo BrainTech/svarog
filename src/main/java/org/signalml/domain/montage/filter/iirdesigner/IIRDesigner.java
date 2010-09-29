@@ -31,14 +31,6 @@ public class IIRDesigner {
 	 */
 	public static FilterCoefficients designDigitalFilter(ApproximationFunctionType approximationFunctionType, FilterType type, double[] passbandEdgeFrequencies, double[] stopbandEdgeFrequencies, double passbandRipple, double stopbandAttenuation, double samplingFrequency) throws BadFilterParametersException {
 
-		System.out.println("approx: " + approximationFunctionType);
-		System.out.println("type: " + type);
-		System.out.println("passband: " + passbandEdgeFrequencies[0] + ", " + passbandEdgeFrequencies[1]);
-		System.out.println("stopband: " + stopbandEdgeFrequencies[0] + ", " + stopbandEdgeFrequencies[1]);
-		System.out.println("passRipple: " + passbandRipple);
-		System.out.println("stopbandAttenua: " + stopbandAttenuation);
-		System.out.println("sampling Freq: " + samplingFrequency);
-
 		if (approximationFunctionType.isButterworth()) {
 
 			ButterworthIIRDesigner iirdesigner = new ButterworthIIRDesigner();
@@ -69,8 +61,6 @@ public class IIRDesigner {
 	}
 
 	public static FilterCoefficients designDigitalFilter(TimeDomainSampleFilter filterDefinition) throws BadFilterParametersException {
-
-		System.out.println("IIRDEsigner : " + filterDefinition.getSamplingFrequency());
 
 		return IIRDesigner.designDigitalFilter(filterDefinition.getApproximationFunctionType(), filterDefinition.getFilterType(),
 		                                       filterDefinition.getPassbandEdgeFrequencies(), filterDefinition.getStopbandEdgeFrequencies(),

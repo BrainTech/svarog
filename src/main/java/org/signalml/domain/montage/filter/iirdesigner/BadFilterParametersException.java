@@ -12,6 +12,11 @@ package org.signalml.domain.montage.filter.iirdesigner;
  */
 public class BadFilterParametersException extends Exception {
 
+	/**
+	 * Constructs a new exception with the specified detail message.
+	 *
+	 * @param problem the detail message
+	 */
 	public BadFilterParametersException(String problem){
 		super(problem);
 	}
