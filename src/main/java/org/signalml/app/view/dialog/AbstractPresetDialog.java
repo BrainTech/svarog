@@ -544,9 +544,10 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("presetDialog.loadPreset"));
 		}
 		
-		public void actionPerformed(ActionEvent ev) {			
+		public void actionPerformed(ActionEvent ev) {
 			
 			int index = getPresetComboBox().getSelectedIndex();
+
 			if( index <= 0 ) {
 				return;
 			}

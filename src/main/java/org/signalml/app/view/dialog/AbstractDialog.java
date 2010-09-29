@@ -308,9 +308,6 @@ public abstract class AbstractDialog extends JDialog {
 				return false;
 			}
 		}
-		else
-			return false;
-
 		return true;
 
 	}

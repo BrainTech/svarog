@@ -709,6 +709,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 
 		currentFilter = new TimeDomainSampleFilter((TimeDomainSampleFilter) model);
+		currentFilter.setSamplingFrequency(getCurrentSamplingFrequency());
 
 		getFilterTypeComboBox().setSelectedItem(currentFilter.getFilterType());
 		getFilterFamilyComboBox().setSelectedItem(currentFilter.getApproximationFunctionType());
