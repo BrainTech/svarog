@@ -44,37 +44,37 @@ public class Chebyshev1IIRDesignerTest {
 	@Test
 	public void testDesignDigitalFilter() throws BadFilterParametersException {
 
-		double[] pyb;
-		double[] pya;
+		double[] pythonB;
+		double[] pythonA;
 		FilterCoefficients coeffs;
 
 		//lowpass test
-		pyb = new double[] {7.02019760e-05, 2.80807904e-04, 4.21211856e-04,
+		pythonB = new double[] {7.02019760e-05, 2.80807904e-04, 4.21211856e-04,
 		                    2.80807904e-04, 7.02019760e-05
 		                   };
-		pya = new double[] {1.0, -3.72214229, 5.29043743,
+		pythonA = new double[] {1.0, -3.72214229, 5.29043743,
 		                    -3.39981985, 0.83311132
 		                   };
 		coeffs = iirdesigner.designDigitalFilter(FilterType.LOWPASS, new double[] {0.1}, new double[] {0.2}, 3.0, 40.0);
-		assertEquals(new FilterCoefficients(pyb, pya), coeffs, 1e-8);
+		assertEquals(new FilterCoefficients(pythonB, pythonA), coeffs, 1e-8);
 
 		//highpass
-		pyb = new double[] {0.25733687, -0.25733687};
-		pya = new double[] {1.0, 0.48532626};
+		pythonB = new double[] {0.25733687, -0.25733687};
+		pythonA = new double[] {1.0, 0.48532626};
 		coeffs = iirdesigner.designDigitalFilter(FilterType.HIGHPASS, new double[] {0.7}, new double[] {0.2}, 5.0, 10.0);
-		assertEquals(new FilterCoefficients(pyb, pya), coeffs, 1e-4);
+		assertEquals(new FilterCoefficients(pythonB, pythonA), coeffs, 1e-4);
 
 		//bandpass test
-		pyb = new double[] {0.18097462, 0.0, -0.18097462};
-		pya = new double[] {1.00000000e+00, -1.81860167e-16, 6.38050764e-01};
+		pythonB = new double[] {0.18097462, 0.0, -0.18097462};
+		pythonA = new double[] {1.00000000e+00, -1.81860167e-16, 6.38050764e-01};
 		coeffs = iirdesigner.designDigitalFilter(FilterType.BANDPASS, new double[] {0.4, 0.6}, new double[] {0.2, 0.8}, 5.0, 10.0);
-		assertEquals(new FilterCoefficients(pyb, pya), coeffs, 1e-4);
+		assertEquals(new FilterCoefficients(pythonB, pythonA), coeffs, 1e-4);
 
 		//bandstop test
-		pyb = new double[] {3.30701236e-01,  -1.60021832e-07,   3.30701236e-01};
-		pya = new double[] {1.00000000e+00,  -1.60021832e-07,  -3.38597528e-01};
+		pythonB = new double[] {3.30701236e-01,  -1.60021832e-07,   3.30701236e-01};
+		pythonA = new double[] {1.00000000e+00,  -1.60021832e-07,  -3.38597528e-01};
 		coeffs = iirdesigner.designDigitalFilter(FilterType.BANDSTOP, new double[] {0.2, 0.8}, new double[] {0.4, 0.6}, 5.0, 10.0);
-		assertEquals(new FilterCoefficients(pyb, pya), coeffs, 1e-4);
+		assertEquals(new FilterCoefficients(pythonB, pythonA), coeffs, 1e-4);
 
 	}
 

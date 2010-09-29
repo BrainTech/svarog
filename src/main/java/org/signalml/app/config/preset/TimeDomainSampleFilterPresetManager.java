@@ -32,7 +32,7 @@ public class TimeDomainSampleFilterPresetManager extends AbstractPresetManager {
 	@Override
 	public XStream getStreamer() {
 
-		if(streamer == null)
+		if (streamer == null)
 			streamer = createTimeDomainSampleFilterPresetStreamer();
 		return streamer;
 

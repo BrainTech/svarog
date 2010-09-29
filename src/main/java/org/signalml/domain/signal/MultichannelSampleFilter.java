@@ -238,6 +238,116 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 	}
 
 	/**
+	 * Imports all {@link TimeDomainSampleFilter time domain filters} from the
+	 * given montage to the {@link MultichannelSampleFilter}.
+	 *
+	 * @param montage the montage from which the filters will be imported
+	 */
+	private void importTimeDomainFiltersFromMontage(Montage montage) {
+
+		int channelCount = montage.getMontageChannelCount();
+		int filterCount = montage.getSampleFilterCount();
+		SampleFilterDefinition[] definitions = new SampleFilterDefinition[filterCount];
+		TimeDomainSampleFilter tdsFilter;
+		LinkedList<SampleFilterEngine> chain;
+
+		SampleSource input;//input for the next filter in the list
+
+		int i, e;
+
+		for (i = 0; i < filterCount; i++) {
+
+			definitions[i] = montage.getSampleFilterAt(i);
+
+			if (definitions[i] instanceof TimeDomainSampleFilter) {
+
+				tdsFilter = (TimeDomainSampleFilter) definitions[i];
+				tdsFilter.setSamplingFrequency(source.getSamplingFrequency());
+
+				for (e = 0; e < channelCount; e++) {
+					if (!montage.isFilteringExcluded(i, e)) {
+
+						chain = chains.get(e);
+
+						if (chain.isEmpty())
+							input = new ChannelSelectorSampleSource(source, e);
+						else
+							input = chain.getLast();
+
+						addFilter(new TimeDomainSampleFilterEngine(input, tdsFilter), e);
+
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+	/**
+	 * Imports all {@link FFTSampleFilter FFT filters} from the
+	 * given montage to the {@link MultichannelSampleFilter}.
+	 *
+	 * @param montage the montage from which the filters will be imported
+	 */
+	private void importFFTSampleFiltersFromMontage(Montage montage) {
+
+		int channelCount = montage.getMontageChannelCount();
+		int filterCount = montage.getSampleFilterCount();
+		SampleFilterDefinition[] definitions = new SampleFilterDefinition[filterCount];
+		LinkedList<SampleFilterEngine> chain;
+
+		FFTSampleFilter fftFilter;
+		FFTSampleFilter[] summaryFFTFilters = new FFTSampleFilter[channelCount];
+		Iterator<Range> rangeIterator;
+		Range range;
+		SampleSource input;//input for the next filter in the list
+
+		int i, e;
+
+		for (i = 0; i < filterCount; i++) {
+
+			definitions[i] = montage.getSampleFilterAt(i);
+			if (definitions[i] instanceof FFTSampleFilter) {
+
+				fftFilter = (FFTSampleFilter) definitions[i];
+				rangeIterator = fftFilter.getRangeIterator();
+				while (rangeIterator.hasNext()) {
+					range = rangeIterator.next();
+
+					for (e = 0; e < channelCount; e++) {
+						if (!montage.isFilteringExcluded(i, e)) {
+							if (summaryFFTFilters[e] == null)
+								summaryFFTFilters[e] = new FFTSampleFilter(true);
+							summaryFFTFilters[e].setRange(range, true);
+						}
+					}
+				}
+			}
+
+		}
+
+		for (e = 0; e < channelCount; e++) {
+
+			if (summaryFFTFilters[e] != null) {
+
+				chain = chains.get(e);
+
+				if (chain.isEmpty())
+					input = new ChannelSelectorSampleSource(source, e);
+				else
+					input = chain.getLast();
+
+				addFilter(new FFTSampleFilterEngine(input, summaryFFTFilters[e]), e);
+
+			}
+		}
+
+	}
+
+	/**
 	 * Clears the filter {@link SampleFilterEngine engines} and initialises
 	 * them creating {@link SampleFilterEngine filter engines}
 	 * based on {@link SampleFilter sample filters} (both FFT and Time Domain) from a given montage.
@@ -254,80 +364,8 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 				return;
 			}
 
-			int channelCount = montage.getMontageChannelCount();
-			int filterCount = montage.getSampleFilterCount();
-			SampleFilterDefinition[] definitions = new SampleFilterDefinition[filterCount];
-
-			FFTSampleFilter fftFilter;
-			FFTSampleFilter[] summaryFFTFilters = new FFTSampleFilter[channelCount];
-			Iterator<Range> it;
-			Range range;
-
-			TimeDomainSampleFilter tdsFilter;
-			LinkedList<SampleFilterEngine> chain;
-			SampleSource input;//input for the next filter in the list
-
-			int i;
-			int e;
-
-			for (i = 0; i < filterCount; i++) {
-
-				definitions[i] = montage.getSampleFilterAt(i);
-				if (definitions[i] instanceof FFTSampleFilter) {
-
-					fftFilter = (FFTSampleFilter) definitions[i];
-					it = fftFilter.getRangeIterator();
-					while (it.hasNext()) {
-						range = it.next();
-
-						for (e = 0; e < channelCount; e++) {
-							if (!montage.isFilteringExcluded(i, e)) {
-								if (summaryFFTFilters[e] == null) {
-									summaryFFTFilters[e] = new FFTSampleFilter(true);
-								}
-								summaryFFTFilters[e].setRange(range, true);
-							}
-						}
-					}
-
-				}
-				else if (definitions[i] instanceof TimeDomainSampleFilter) {
-
-					tdsFilter = (TimeDomainSampleFilter) definitions[i];
-					tdsFilter.setSamplingFrequency(source.getSamplingFrequency());
-
-					for (e = 0; e < channelCount; e++)
-						if (!montage.isFilteringExcluded(i, e)) {
-
-							chain = chains.get(e);
-
-							if (chain.isEmpty())
-								input = new ChannelSelectorSampleSource(source, e);
-							else
-								input = chain.getLast();
-
-							addFilter(new TimeDomainSampleFilterEngine(input, tdsFilter), e);
-
-						}
-
-				}
-
-			}
-
-			for (e = 0; e < channelCount; e++) {
-				if (summaryFFTFilters[e] != null) {
-
-					chain = chains.get(e);
-
-					if (chain.isEmpty())
-						input = new ChannelSelectorSampleSource(source, e);
-					else
-						input = chain.getLast();
-
-					addFilter(new FFTSampleFilterEngine(input, summaryFFTFilters[e]), e);
-
-				}
-			}
+			importTimeDomainFiltersFromMontage(montage);
+			importFFTSampleFiltersFromMontage(montage);
 
 			newMontage = true;
 

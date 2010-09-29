@@ -67,6 +67,7 @@ import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.config.preset.BookFilterPresetManager;
 import org.signalml.app.config.preset.FFTSampleFilterPresetManager;
+import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
 import org.signalml.app.config.preset.SignalExportPresetManager;
 import org.signalml.app.document.BookDocument;
 import org.signalml.app.document.Document;
@@ -114,6 +115,7 @@ import org.signalml.app.view.dialog.SignalSelectionDialog;
 import org.signalml.app.view.dialog.TagStylePaletteDialog;
 import org.signalml.app.view.element.LockableJSplitPane;
 import org.signalml.app.view.montage.EditFFTSampleFilterDialog;
+import org.signalml.app.view.montage.EditTimeDomainSampleFilterDialog;
 import org.signalml.app.view.montage.SignalMontageDialog;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.view.signal.popup.SlavePlotSettingsPopupDialog;
@@ -127,8 +129,6 @@ import org.signalml.util.SvarogConstants;
 import org.springframework.context.support.MessageSourceAccessor;
 
 import com.thoughtworks.xstream.XStream;
-import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
-import org.signalml.app.view.montage.EditTimeDomainSampleFilterDialog;
 
 /** ViewerElementManager
  *
@@ -164,6 +164,7 @@ public class ViewerElementManager {
 	private SignalExportPresetManager signalExportPresetManager;
 	private FFTSampleFilterPresetManager fftFilterPresetManager;
 	private TimeDomainSampleFilterPresetManager timeDomainSampleFilterPresetManager;
+
 	private MP5ExecutorManager mp5ExecutorManager;
 	private Preferences preferences;
 
@@ -239,6 +240,7 @@ public class ViewerElementManager {
 	private ExportSignalDialog exportSignalDialog;
 	private EditFFTSampleFilterDialog editFFTSampleFilterDialog;
 	private EditTimeDomainSampleFilterDialog editTimeDomainSampleFilterDialog;
+
 	private MP5LocalExecutorDialog mp5LocalExecutorDialog;
 	private MP5RemoteExecutorDialog mp5RemoteExecutorDialog;
 	private DynamicCompilationWarningDialog dynamicCompilationWarningDialog;

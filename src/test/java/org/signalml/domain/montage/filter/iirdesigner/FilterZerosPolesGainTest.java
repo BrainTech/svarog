@@ -30,9 +30,9 @@ public class FilterZerosPolesGainTest {
 
 		FilterZerosPolesGain zpk1 = new FilterZerosPolesGain(zeros, poles, gain);
 
-		double[] pyb = new double[] {0.12529716};
-		double[] pya = new double[] {1.00000000, 0.58157986, 1.16911757, 0.40476795, 0.17698695};
-		FilterCoefficients pycoeffs = new FilterCoefficients(pyb, pya);
+		double[] pythonB = new double[] {0.12529716};
+		double[] pythonA = new double[] {1.00000000, 0.58157986, 1.16911757, 0.40476795, 0.17698695};
+		FilterCoefficients pycoeffs = new FilterCoefficients(pythonB, pythonA);
 		FilterCoefficients coeffs = zpk1.convertToBACoefficients();
 
 		assertEquals(pycoeffs, coeffs, 1e-6);

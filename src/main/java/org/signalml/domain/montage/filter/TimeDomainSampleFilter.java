@@ -222,6 +222,7 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 		                passbandRipple == tdf.passbandRipple && stopbandAttenuation == tdf.stopbandAttenuation)
 			return true;
 		return false;
+
 	}
 
 	@Override

@@ -378,6 +378,12 @@ class SpecialMath {
 
 	}
 
+	/**
+	 * Inverts the order of the elements in the array.
+	 *
+	 * @param array an array to be inverted
+	 * @return an inverted array
+	 */
 	public static double[] invertArray(double[] array) {
 
 		double[] newArray = new double[array.length];

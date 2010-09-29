@@ -1,4 +1,3 @@
-
 /* Montage.java created 2007-10-23
  *
  */
@@ -15,11 +14,11 @@ import java.util.LinkedList;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
+import org.signalml.domain.montage.filter.FFTSampleFilter;
+import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.util.Util;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import org.signalml.domain.montage.filter.FFTSampleFilter;
-import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 
 /** Montage
  *
@@ -836,7 +835,7 @@ public class Montage extends SourceMontage implements Preset {
 		int index = filters.indexOf(filter);
 
 		if (!majorChange) {
-			fireMontageSampleFilterAdded(this, new int[] { index });
+			fireMontageSampleFilterAdded(this, new int[] {index});
 			setChanged(true);
 		}
 

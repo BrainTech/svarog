@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.StringTokenizer;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
 
 import javax.swing.SwingWorker;
 
@@ -106,10 +105,9 @@ public class MonitorWorker extends SwingWorker< Void, Object> {
 			IncomingMessageData msgData = null;
 			try {
 				msgData = jmxClient.receive(TIMEOUT_MILIS, TimeUnit.MILLISECONDS);
-				if (msgData == null) {
-					logger.debug("Received null msgData");
+				if (msgData == null)
 					continue;
-				}
+				
 				MultiplexerMessage sampleMsg = msgData.getMessage();
 				int type = sampleMsg.getType();
 				logger.debug("Worker: received message type: " + type);

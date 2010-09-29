@@ -57,8 +57,8 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 		FilterCoefficients coeffs = null;
 		try {
 			coeffs = IIRDesigner.designDigitalFilter(definition);
-			System.out.println("Designed coefficients: ");
-			coeffs.print();
+			//System.out.println("Designed coefficients: ");
+			//coeffs.print();
 			aCoefficients = coeffs.getACoefficients();
 			bCoefficients = coeffs.getBCoefficients();
 

@@ -68,12 +68,12 @@ public class FilterCoefficientsTest {
 		                          };
 		FilterCoefficients coeffs = new FilterCoefficients(b, a);
 
-		double[] pyb = new double[] {47573.76605485};
-		double[] pya = new double[] {1.00000000e+00, 8.61750040e+00, 3.18380657e+02,
+		double[] pythonB = new double[] {47573.76605485};
+		double[] pythonA = new double[] {1.00000000e+00, 8.61750040e+00, 3.18380657e+02,
 		                             1.85266276e+03, 2.06532946e+04, 4.75737661e+04
 		                            };
 		coeffs.transformLowpassToLowpass(15.0);
-		assertEquals(new FilterCoefficients(pyb, pya), coeffs, 1e-3);
+		assertEquals(new FilterCoefficients(pythonB, pythonA), coeffs, 1e-3);
 
 	}
 
@@ -89,13 +89,13 @@ public class FilterCoefficientsTest {
 		                          };
 		FilterCoefficients coeffs = new FilterCoefficients(b, a);
 
-		double[] pyb = new double[] {1, 0, 0, 0, 0, 0};
-		double[] pya = new double[] {1.00000000e+00, 1.95359404e+01, 7.88594723e+01,
+		double[] pythonB = new double[] {1, 0, 0, 0, 0, 0};
+		double[] pythonA = new double[] {1.00000000e+00, 1.95359404e+01, 7.88594723e+01,
 		                             6.09841090e+02, 7.42786214e+02, 3.87877901e+03
 		                            };
 
 		coeffs.transformLowpassToHighpass(3.0);
-		assertEquals(new FilterCoefficients(pyb, pya), coeffs, 1e-4);
+		assertEquals(new FilterCoefficients(pythonB, pythonA), coeffs, 1e-4);
 
 	}
 
@@ -111,15 +111,15 @@ public class FilterCoefficientsTest {
 		                          };
 		FilterCoefficients coeffs = new FilterCoefficients(b, a);
 
-		double[] pyb = new double[] {2.00475456, 0, 0, 0, 0, 0};
-		double[] pya = new double[] { 1.00000000e+00, 1.14900006e+00, 5.06601006e+01,
+		double[] pythonB = new double[] {2.00475456, 0, 0, 0, 0, 0};
+		double[] pythonA = new double[] { 1.00000000e+00, 1.14900006e+00, 5.06601006e+01,
 		                              4.57554990e+01, 9.69350176e+02, 6.39465728e+02,
 		                              8.72415158e+03, 3.70619542e+03, 3.69312133e+04,
 		                              7.53858939e+03, 5.90490000e+04
 		                            };
 
 		coeffs.transformLowpassToBandpass(3.0, 2.0);
-		assertEquals(new FilterCoefficients(pyb, pya), coeffs, 1e-5);
+		assertEquals(new FilterCoefficients(pythonB, pythonA), coeffs, 1e-5);
 
 	}
 
@@ -135,19 +135,19 @@ public class FilterCoefficientsTest {
 		                          };
 		FilterCoefficients coeffs = new FilterCoefficients(b, a);
 
-		double[] pyb = new double[] {1.00000000e+00, 0.00000000e+00, 4.50000000e+01,
+		double[] pythonB = new double[] {1.00000000e+00, 0.00000000e+00, 4.50000000e+01,
 		                             0.00000000e+00, 8.10000000e+02, 0.00000000e+00,
 		                             7.29000000e+03, 0.00000000e+00, 3.28050000e+04,
 		                             0.00000000e+00, 5.90490000e+04
 		                            };
-		double[] pya = new double[] {1.00000000e+00, 1.30239603e+01, 8.00486546e+01,
+		double[] pythonA = new double[] {1.00000000e+00, 1.30239603e+01, 8.00486546e+01,
 		                             6.49556230e+02, 1.90303688e+03, 1.00929163e+04,
 		                             1.71273319e+04, 5.26140546e+04, 5.83554692e+04,
 		                             8.54502037e+04, 5.90490000e+04
 		                            };
 
 		coeffs.transformFromLowpassToBandstop(3.0, 2.0);
-		assertEquals(new FilterCoefficients(pyb, pya), coeffs, 1e-3);
+		assertEquals(new FilterCoefficients(pythonB, pythonA), coeffs, 1e-3);
 
 	}
 
@@ -165,14 +165,14 @@ public class FilterCoefficientsTest {
 		double wo = 3.9999999999999862;
 
 		coeffs.transformFromLowpassToBandstop(wo, bw);
-		double[] pyb = new double[] {1.0000000, 0.0000000, 15.9999925};
-		double[] pya = new double[] {1.0000000, 7.7980768, 15.9999925};
-		assertEquals(new FilterCoefficients(pyb, pya), coeffs, 1e-5);
+		double[] pythonB = new double[] {1.0000000, 0.0000000, 15.9999925};
+		double[] pythonA = new double[] {1.0000000, 7.7980768, 15.9999925};
+		assertEquals(new FilterCoefficients(pythonB, pythonA), coeffs, 1e-5);
 
 		coeffs.bilinearTransform(2.0);
-		pyb = new double[] {5.06390694e-01, -2.37380515e-07, 5.06390694e-01};
-		pya = new double[] {1.00000000e+00, -2.37380515e-07, 1.27813882e-02};
-		assertEquals(new FilterCoefficients(pyb, pya), coeffs, 1e-5);
+		pythonB = new double[] {5.06390694e-01, -2.37380515e-07, 5.06390694e-01};
+		pythonA = new double[] {1.00000000e+00, -2.37380515e-07, 1.27813882e-02};
+		assertEquals(new FilterCoefficients(pythonB, pythonA), coeffs, 1e-5);
 
 	}
 
@@ -185,34 +185,34 @@ public class FilterCoefficientsTest {
 		double[] b;
 		double[] a;
 		FilterCoefficients coeffs;
-		double[] pyb;
-		double[] pya;
+		double[] pythonB;
+		double[] pythonA;
 
 		//test 1
 		b = new double[] {5.0, 6.0, 7.0};
 		a = new double[] {1.0, 2.0, 3.0, 4.0};
 		coeffs = new FilterCoefficients(b, a);
 
-		pyb = new double[] {
+		pythonB = new double[] {
 		        0.04959992, -0.04839636, -0.04957248, 0.0484238
 		};
-		pya = new double[] {
+		pythonA = new double[] {
 		        1.        , -2.95959636, 2.92041588, -0.96078816
 		};
 
 		coeffs.bilinearTransform(50.0);
-		assertEquals(new FilterCoefficients(pyb, pya), coeffs, 1e-4);
+		assertEquals(new FilterCoefficients(pythonB, pythonA), coeffs, 1e-4);
 
 		//test 2
 		b = new double[] {1.0000000, 0.0000000, 15.9999925};
 		a = new double[] {1.0000000, 7.7980768, 15.9999925};
-		pyb = new double[] {5.06390694e-01, -2.37370693e-07, 5.06390694e-01};
-		pya = new double[] {1.00000000e+00, -2.37370693e-07, 1.27813880e-02};
+		pythonB = new double[] {5.06390694e-01, -2.37370693e-07, 5.06390694e-01};
+		pythonA = new double[] {1.00000000e+00, -2.37370693e-07, 1.27813880e-02};
 
 		coeffs = new FilterCoefficients(b, a);
 		coeffs.print();
 		coeffs.bilinearTransform(2.0);
-		assertEquals(new FilterCoefficients(pyb, pya), coeffs, 1e-4);
+		assertEquals(new FilterCoefficients(pythonB, pythonA), coeffs, 1e-4);
 		coeffs.print();
 
 	}

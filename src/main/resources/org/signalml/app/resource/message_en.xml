@@ -74,10 +74,6 @@
 	<entry key="timeDomainFilter">Time domain filter</entry>
 	<entry key="timeDomainFilter.effect">{0} {1}</entry>
 
-	<entry key="sampleFilter.td.lowPass">Low pass filter ({0}) </entry>
-	<entry key="sampleFilter.td.highPass">High pass filter ({0}) </entry>
-	<entry key="sampleFilter.td.notch">Notch filter ({0}) </entry>
-
 	<entry key="signalSelectionType.page">Page</entry>
 	<entry key="signalSelectionType.block">Block</entry>
 	<entry key="signalSelectionType.channel">Channel</entry>
@@ -125,9 +121,7 @@
 	<entry key="iirdesigner.filterType.LOWPASS">Low-pass</entry>
 	<entry key="iirdesigner.filterType.HIGHPASS">High-pass</entry>
 	<entry key="iirdesigner.filterType.BANDPASS">Band-pass</entry>
-	<entry key="iirdesigner.filterType.BANDSTOP">Band-
-
-stop</entry>
+	<entry key="iirdesigner.filterType.BANDSTOP">Band-stop</entry>
 
 	<entry key="sampleType.DOUBLE">Double (64-bit IEEE 754)</entry>
 	<entry key="sampleType.FLOAT">Float (32-bit IEEE 754)</entry>

@@ -24,6 +24,7 @@ public class RoundBufferSampleSource {
 	 * an array containing samples.
 	 */
 	protected double samples[];
+	
 	/**
 	 * an integer indicating how much samples can be stored in the buffer
 	 */

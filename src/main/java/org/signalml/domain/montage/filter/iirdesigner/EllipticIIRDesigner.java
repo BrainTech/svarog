@@ -184,7 +184,6 @@ class EllipticIIRDesigner extends AbstractIIRDesigner {
 		for (i = 0; i < zeros.length; i++)
 			denominator = denominator.times(zeros[i].times(-1.0));
 
-
 		gain = (numerator.over(denominator)).getReal();
 
 		if (Fmath.isEven(filterOrder))
@@ -192,6 +191,7 @@ class EllipticIIRDesigner extends AbstractIIRDesigner {
 
 		//return zeros, poles & gain
 		return new FilterZerosPolesGain(zeros, poles, gain);
+
 	}
 
 	/**

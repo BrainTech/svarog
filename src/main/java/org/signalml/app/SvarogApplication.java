@@ -32,6 +32,7 @@ import org.signalml.app.config.SignalMLCodecDescriptor;
 import org.signalml.app.config.ZoomSignalSettings;
 import org.signalml.app.config.preset.BookFilterPresetManager;
 import org.signalml.app.config.preset.FFTSampleFilterPresetManager;
+import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.config.preset.SignalExportPresetManager;
 import org.signalml.app.document.DefaultDocumentManager;
@@ -95,7 +96,6 @@ import org.springframework.util.Log4jConfigurer;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.Annotations;
-import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
 
 /** SvarogApplication
  *
@@ -129,6 +129,7 @@ public class SvarogApplication {
 	private static SignalExportPresetManager signalExportPresetManager = null;
 	private static FFTSampleFilterPresetManager fftFilterPresetManager = null;
 	private static TimeDomainSampleFilterPresetManager timeDomainSampleFilterPresetManager = null;
+
 	private static MP5ExecutorManager mp5ExecutorManager = null;
 
 	private static ViewerMainFrame viewerMainFrame = null;
@@ -845,6 +846,7 @@ public class SvarogApplication {
 		elementManager.setSignalExportPresetManager(signalExportPresetManager);
 		elementManager.setFftFilterPresetManager(fftFilterPresetManager);
 		elementManager.setTimeDomainSampleFilterPresetManager(timeDomainSampleFilterPresetManager);
+
 		elementManager.setMp5ExecutorManager(mp5ExecutorManager);
 		elementManager.setPreferences(preferences);
 		elementManager.configureImportedElements();

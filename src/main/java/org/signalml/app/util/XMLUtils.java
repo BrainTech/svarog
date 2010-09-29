@@ -14,6 +14,7 @@ import java.io.OutputStream;
 
 import org.signalml.app.config.preset.BookFilterPresetManager;
 import org.signalml.app.config.preset.FFTSampleFilterPresetManager;
+import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
 import org.signalml.app.config.preset.SignalExportPresetManager;
 import org.signalml.app.model.SignalExportDescriptor;
 import org.signalml.app.montage.MontagePresetManager;
@@ -33,6 +34,7 @@ import org.signalml.domain.montage.eeg.LeftEarMontageGenerator;
 import org.signalml.domain.montage.eeg.LinkedEarsMontageGenerator;
 import org.signalml.domain.montage.eeg.RightEarMontageGenerator;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
+import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.util.Util;
 
@@ -42,8 +44,6 @@ import com.thoughtworks.xstream.converters.reflection.FieldDictionary;
 import com.thoughtworks.xstream.converters.reflection.NativeFieldKeySorter;
 import com.thoughtworks.xstream.converters.reflection.PureJavaReflectionProvider;
 import com.thoughtworks.xstream.io.xml.DomDriver;
-import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
-import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 
 /** XMLUtils
  *
