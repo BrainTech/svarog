@@ -4,8 +4,10 @@
 
 package org.signalml.exception;
 
-/** AuthenticationException
- *
+/**
+ * TODO this exception is not referenced anywhere, delete it?
+ * 
+ * Thrown to indicate authentication attempt failure.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
