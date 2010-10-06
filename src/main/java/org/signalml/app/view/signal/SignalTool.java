@@ -6,11 +6,11 @@ import javax.swing.event.MouseInputListener;
 
 /**
  * Mouse event processor associated with a single {@link SignalView} instance.
- * 
+ *
  * @author STF &copy; 2010 eisenbits
  */
 public interface SignalTool extends MouseInputListener, MouseWheelListener {
-    
+
     /**
      * Mouse actions are often composed of multiple events, for instance:
      * {@link MouseInputListener#mousePressed(java.awt.event.MouseEvent)},
@@ -20,7 +20,7 @@ public interface SignalTool extends MouseInputListener, MouseWheelListener {
      * 
      * The value returned by this method serves as an indicator that this SignalTool
      * is currently involved in processing some mouse action and that other mouse
-     * triggered actions associated with the same {@link #SignalView} instance (like
+     * triggered actions associated with the same {@link SignalView} instance (like
      * popup menu) should be blocked. This helps to avoid interference.
      * 
      * A sample implementation can store a boolean variable and set it to true in
