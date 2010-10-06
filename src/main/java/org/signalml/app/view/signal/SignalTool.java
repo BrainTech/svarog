@@ -35,6 +35,8 @@ public interface SignalTool extends MouseInputListener, MouseWheelListener {
     boolean isEngaged();
 
     /**
+     * Tells if this SignalTool supports column header.
+     * <p>
      * TODO better description
      * 
      * @return True if this SignalTool supports column header, and false otherwise.
@@ -42,6 +44,8 @@ public interface SignalTool extends MouseInputListener, MouseWheelListener {
     boolean supportsColumnHeader();
 
     /**
+     * Tells if this SignalTool supports row header.
+     * <p>
      * TODO better description
      * 
      * @return True if this SignalTool supports row header, and false otherwise.

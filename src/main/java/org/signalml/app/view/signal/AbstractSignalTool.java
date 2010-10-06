@@ -9,14 +9,14 @@ import java.awt.Cursor;
 import javax.swing.event.MouseInputAdapter;
 
 /**
- * Base implementation of {@link SignalTool} interface.
+ * Abstract implementation of {@link SignalTool} interface.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  * @author STF &copy; 2010 eisenbits
  */
 public abstract class AbstractSignalTool extends MouseInputAdapter implements SignalTool {
 
-    /** {@link SignalView} this signal tool is associated with. */
+    /** {@link SignalView} this SignalTool is associated with. */
 	private SignalView signalView;
 	/** Tells whether this SignalTool is currently processing any mouse event sequence. */
 	private boolean engaged = false;
@@ -34,18 +34,31 @@ public abstract class AbstractSignalTool extends MouseInputAdapter implements Si
 	@Override
 	public abstract Cursor getDefaultCursor();
 	
-	/** @return False */
+	/**
+	 * Returns false.
+	 * 
+	 * @return false
+	 */
 	@Override
 	public boolean supportsColumnHeader() {
 		return false;
 	}
 
-	/** @return False */
+	/**
+	 * Returns false.
+	 * 
+	 * @return false
+	 */
 	@Override
 	public boolean supportsRowHeader() {
 		return false;
 	}
 	
+	/**
+	 * Returns the {@link SignalView} associated with this SignalTool.
+	 *
+	 * @return {@link #signalView}
+	 */
 	protected SignalView getSignalView() {
 	    return signalView;
 	}
