@@ -19,7 +19,7 @@ import org.signalml.domain.signal.SignalSelectionType;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class SelectPageSignalTool extends SignalTool implements SelectionSignalTool {
+public class SelectPageSignalTool extends AbstractSignalTool implements SelectionSignalTool {
 
 	private Integer startPage;
 
@@ -52,7 +52,7 @@ public class SelectPageSignalTool extends SignalTool implements SelectionSignalT
 			plot = (SignalPlot) source;
 
 			startPage = plot.toPageSpace(e.getPoint());
-			engaged = true;
+			setEngaged(true);
 			e.consume();
 
 		}
@@ -64,7 +64,7 @@ public class SelectPageSignalTool extends SignalTool implements SelectionSignalT
 		if (SwingUtilities.isLeftMouseButton(e)) {
 			selectTo(e.getPoint());
 			startPage = null;
-			engaged = false;
+			setEngaged(false);
 			plot = null;
 			e.consume();
 		}
@@ -84,7 +84,7 @@ public class SelectPageSignalTool extends SignalTool implements SelectionSignalT
 		if (startPage != null) {
 			Integer endPage = plot.toPageSpace(point);
 			if (endPage != null) {
-				signalView.setSignalSelection(plot,plot.getPageSelection(startPage, endPage));
+			    getSignalView().setSignalSelection(plot,plot.getPageSelection(startPage, endPage));
 			}
 		}
 	}

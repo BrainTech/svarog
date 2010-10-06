@@ -11,8 +11,6 @@ import org.signalml.domain.signal.SignalSelectionType;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public interface TaggingSignalTool {
-
+public interface TaggingSignalTool extends SignalTool {
 	SignalSelectionType getTagType();
-
 }

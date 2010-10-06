@@ -20,7 +20,7 @@ import org.signalml.app.util.IconUtils;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class ZoomSignalTool extends SignalTool {
+public class ZoomSignalTool extends AbstractSignalTool {
 
 	private SignalPlot plot;
 	private ZoomSignalPlot zoomPlot;
@@ -65,7 +65,7 @@ public class ZoomSignalTool extends SignalTool {
 			}
 			zoomPlot.setParameters(plot, point, channel);
 			showZoom(point);
-			engaged = true;
+			setEngaged(true);
 			e.consume();
 
 		}
@@ -76,7 +76,7 @@ public class ZoomSignalTool extends SignalTool {
 	public void mouseReleased(MouseEvent e) {
 		if (SwingUtilities.isLeftMouseButton(e)) {
 			hideZoom();
-			engaged = false;
+			setEngaged(false);
 			plot = null;
 			e.consume();
 		}

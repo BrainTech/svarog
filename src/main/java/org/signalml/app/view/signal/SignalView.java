@@ -1104,9 +1104,8 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 	}
 
-
 	public boolean isToolEngaged() {
-		return (currentSignalTool != null && currentSignalTool.isEngaged());
+		return ((null != currentSignalTool) && (currentSignalTool.isEngaged()));
 	}
 
 	public SignalDocument getDocument() {
@@ -1498,7 +1497,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	}
 
 	public SignalSelectionType getCurrentTagType() {
-		if (currentSignalTool != null && currentSignalTool instanceof TaggingSignalTool) {
+		if ((currentSignalTool != null) && (currentSignalTool instanceof TaggingSignalTool)) {
 			return ((TaggingSignalTool) currentSignalTool).getTagType();
 		}
 		return null;
@@ -1758,7 +1757,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 				} else {
 					key = "none";
 				}
-				tagSelection = tool.isSignalSelectionTool();
+				tagSelection = (tool instanceof SelectionSignalTool);
 				TagStyleToolBar toolBar = styleToolBarMap.get(key);
 				if (toolBar != null) {
 					toolBar.setTagSelectionOnButtonClick(tagSelection);
@@ -1918,10 +1917,10 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		}
 
 		if (tagSelection != null) {
-			if (currentSignalTool.isSignalSelectionTool()) {
+			if (currentSignalTool instanceof SelectionSignalTool) {
 				clearTagSelection();
 			}
-			else if (currentSignalTool.isSignalTaggingTool()) {
+			else if (currentSignalTool instanceof TaggingSignalTool) {
 				SignalSelectionType type = tagSelection.tag.getType();
 				if (type != ((TaggingSignalTool) currentSignalTool).getTagType()) {
 					clearTagSelection();
@@ -1930,10 +1929,10 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		}
 
 		if (signalSelection != null) {
-			if (currentSignalTool.isSignalTaggingTool()) {
+			if (currentSignalTool instanceof TaggingSignalTool) {
 				clearSignalSelection();
 			}
-			else if (currentSignalTool.isSignalSelectionTool()) {
+			else if (currentSignalTool instanceof SelectionSignalTool) {
 				SignalSelectionType type = signalSelection.getType();
 				if (type != ((SelectionSignalTool) currentSignalTool).getSelectionType()) {
 					clearSignalSelection();
@@ -2153,8 +2152,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-
-			if (currentSignalTool.isSignalSelectionTool()) {
+			if (currentSignalTool instanceof SelectionSignalTool) {
 				getTagSelectionAction().actionPerformed(new ActionEvent(this, 0, "delete"));
 			} else {
 				getRemoveTagAction().actionPerformed(e);
@@ -2165,7 +2163,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		@Override
 		public boolean isEnabled() {
 
-			if (currentSignalTool.isSignalSelectionTool()) {
+			if (currentSignalTool instanceof SelectionSignalTool) {
 				return getTagSelectionAction().isEnabled();
 			} else {
 				return getRemoveTagAction().isEnabled();
@@ -2196,7 +2194,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			if (currentSignalTool.isSignalSelectionTool()) {
+			if (currentSignalTool instanceof SelectionSignalTool) {
 
 				if (signalSelection == null) {
 					return;
@@ -2213,7 +2211,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 				getTagSelectionAction().actionPerformed(new ActionEvent(this, 0, "tag"));
 
 			}
-			else if (currentSignalTool.isSignalTaggingTool()) {
+			else if (currentSignalTool instanceof TaggingSignalTool) {
 
 				SignalSelectionType currentTagType = getCurrentTagType();
 				SignalSelectionType desiredTagType = tagStyle.getType();
@@ -2247,9 +2245,9 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		@Override
 		public boolean isEnabled() {
 
-			if (currentSignalTool.isSignalSelectionTool()) {
+			if (currentSignalTool instanceof SelectionSignalTool) {
 				return getTagSelectionAction().isEnabled();
-			} else if (currentSignalTool.isSignalTaggingTool()) {
+			} else if (currentSignalTool instanceof TaggingSignalTool) {
 				return true;
 			}
 

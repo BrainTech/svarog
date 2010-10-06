@@ -20,7 +20,7 @@ import org.signalml.app.util.IconUtils;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class RulerSignalTool extends SignalTool {
+public class RulerSignalTool extends AbstractSignalTool {
 
 	private Point dragStart = null;
 	private SignalPlot plot;
@@ -51,7 +51,7 @@ public class RulerSignalTool extends SignalTool {
 			dragStart = e.getPoint();
 			Point origin = plot.getViewport().getViewPosition();
 			measurmentPlot.setStartParameters(dragStart, origin);
-			engaged = true;
+			setEngaged(true);
 			e.consume();
 
 		}
@@ -63,7 +63,7 @@ public class RulerSignalTool extends SignalTool {
 		if (SwingUtilities.isLeftMouseButton(e)) {
 			dragStart = null;
 			hideMeasurment();
-			engaged = false;
+			setEngaged(false);
 			plot = null;
 			e.consume();
 		}

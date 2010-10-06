@@ -22,7 +22,7 @@ import org.signalml.domain.tag.TagStyle;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class TagChannelSignalTool extends SignalTool implements TaggingSignalTool {
+public class TagChannelSignalTool extends AbstractSignalTool implements TaggingSignalTool {
 
 	protected static final Logger logger = Logger.getLogger(TagChannelSignalTool.class);
 
@@ -56,7 +56,7 @@ public class TagChannelSignalTool extends SignalTool implements TaggingSignalToo
 				return;
 			}
 			plot = (SignalPlot) source;
-			style = signalView.getCurrentTagStyle(SignalSelectionType.CHANNEL);
+			style = getSignalView().getCurrentTagStyle(SignalSelectionType.CHANNEL);
 
 			if (style != null && style.isMarker()) {
 				markAt(e.getPoint());
@@ -64,7 +64,7 @@ public class TagChannelSignalTool extends SignalTool implements TaggingSignalToo
 				startPosition = plot.toTimeSpace(e.getPoint());
 			}
 
-			engaged = true;
+			setEngaged(true);
 			e.consume();
 
 		}
@@ -78,7 +78,7 @@ public class TagChannelSignalTool extends SignalTool implements TaggingSignalToo
 				tagTo(e.getPoint());
 			}
 			startPosition = null;
-			engaged = false;
+			setEngaged(false);
 			plot = null;
 			style = null;
 			e.consume();
@@ -100,11 +100,11 @@ public class TagChannelSignalTool extends SignalTool implements TaggingSignalToo
 			Float endPosition = plot.toTimeSpace(point);
 			if (endPosition != null) {
 				if (startPosition.equals(endPosition)) {
-					signalView.clearSignalSelection();
+				    getSignalView().clearSignalSelection();
 				} else {
 					Integer channel = plot.toChannelSpace(point);
 					if (channel != null) {
-						signalView.setSignalSelection(plot, plot.getChannelSelection(startPosition, endPosition, channel));
+					    getSignalView().setSignalSelection(plot, plot.getChannelSelection(startPosition, endPosition, channel));
 					}
 				}
 			}
@@ -112,9 +112,7 @@ public class TagChannelSignalTool extends SignalTool implements TaggingSignalToo
 	}
 
 	private void tagTo(Point point) {
-
 		if (startPosition != null) {
-
 			Float endPosition = plot.toTimeSpace(point);
 			if (endPosition != null) {
 
@@ -122,7 +120,7 @@ public class TagChannelSignalTool extends SignalTool implements TaggingSignalToo
 					Integer channel = plot.toChannelSpace(point);
 					if (channel != null) {
 
-						TagDocument tagDocument = signalView.getDocument().getActiveTag();
+						TagDocument tagDocument = getSignalView().getDocument().getActiveTag();
 						if (tagDocument != null) {
 
 							if (style == null) {
@@ -138,33 +136,25 @@ public class TagChannelSignalTool extends SignalTool implements TaggingSignalToo
 
 			}
 
-			signalView.clearSignalSelection();
-
+			getSignalView().clearSignalSelection();
 		}
-
 	}
 
 	private void markAt(Point point) {
-
 		Integer channel = plot.toChannelSpace(point);
+		
 		if (channel != null) {
-
-			TagDocument tagDocument = signalView.getDocument().getActiveTag();
+			TagDocument tagDocument = getSignalView().getDocument().getActiveTag();
+			
 			if (tagDocument != null) {
-
 				int sampleAtPoint = plot.toSampleSpace(point);
-
 				float samplingFrequency = plot.getSamplingFrequency();
 				float startPosition = sampleAtPoint / samplingFrequency;
 
 				plot.tagChannelSelection(tagDocument, style, plot.getChannelSelection(startPosition, startPosition + 1/samplingFrequency, channel), true);
-
 			}
-
 		}
 
-		signalView.clearSignalSelection();
-
+		getSignalView().clearSignalSelection();
 	}
-
 }
