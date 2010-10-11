@@ -45,7 +45,8 @@ import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.domain.tag.TagSignalIdentification;
 import org.signalml.exception.MissingCodecException;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.Document;
 import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
 

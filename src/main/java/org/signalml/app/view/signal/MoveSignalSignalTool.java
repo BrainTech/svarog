@@ -13,6 +13,7 @@ import javax.swing.JViewport;
 import javax.swing.SwingUtilities;
 
 import org.signalml.app.util.IconUtils;
+import org.signalml.plugin.export.signal.AbstractSignalTool;
 
 /** MoveSignalSignalTool
  *

@@ -8,7 +8,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.document.Document;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.method.ApplicationMethodDescriptor;
@@ -19,6 +18,7 @@ import org.signalml.app.method.MethodResultConsumer;
 import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.method.ep.EvokedPotentialMethod;
 import org.signalml.method.ep.EvokedPotentialParameters;
+import org.signalml.plugin.export.signal.Document;
 
 /** EvokedPotentialMethodDescriptor
  *

@@ -12,8 +12,8 @@ import org.signalml.domain.signal.MultichannelSegmentedSampleSource;
 import org.signalml.domain.signal.SignalProcessingChain;
 import org.signalml.domain.signal.space.SegmentedSampleSourceFactory;
 import org.signalml.domain.signal.space.SignalSpace;
-import org.signalml.exception.SignalMLException;
 import org.signalml.method.mp5.MP5Data;
+import org.signalml.plugin.export.SignalMLException;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 

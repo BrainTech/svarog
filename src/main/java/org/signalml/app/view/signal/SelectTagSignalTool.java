@@ -9,6 +9,8 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.SwingUtilities;
 
+import org.signalml.plugin.export.signal.AbstractSignalTool;
+
 /** SelectTagSignalTool
  *
  *

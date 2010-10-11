@@ -9,9 +9,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.signalml.exception.SignalMLException;
 import org.signalml.method.InitializingMethod;
 import org.signalml.method.Method;
+import org.signalml.plugin.export.SignalMLException;
 
 /** DefaultMethodManager
  *

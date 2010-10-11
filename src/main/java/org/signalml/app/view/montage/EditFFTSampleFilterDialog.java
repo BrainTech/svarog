@@ -68,7 +68,7 @@ import org.signalml.app.view.dialog.AbstractPresetDialog;
 import org.signalml.app.view.element.FFTWindowTypePanel;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;

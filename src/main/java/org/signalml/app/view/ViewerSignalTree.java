@@ -18,11 +18,13 @@ import org.signalml.app.action.selector.ActionFocusListener;
 import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.action.selector.ActionFocusSupport;
 import org.signalml.app.action.selector.SignalPageFocusSelector;
-import org.signalml.app.document.Document;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.model.SignalPageTreeNode;
 import org.signalml.app.model.SignalTreeModel;
+import org.signalml.plugin.export.signal.Document;
+import org.signalml.plugin.export.view.AbstractViewerTree;
+import org.signalml.plugin.impl.PluginAccessClass;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** ViewerSignalTree
@@ -125,6 +127,8 @@ public class ViewerSignalTree extends AbstractViewerTree implements SignalPageFo
 			documentPopupMenu.add(getActivateDocumentAction());
 			documentPopupMenu.addSeparator();
 			documentPopupMenu.add(getCloseDocumentAction());
+			
+			PluginAccessClass.getGUIImpl().addToSignalTreeDocumentPopupMenu(documentPopupMenu);
 		}
 
 		return documentPopupMenu;
@@ -137,6 +141,8 @@ public class ViewerSignalTree extends AbstractViewerTree implements SignalPageFo
 			signalPagePopupMenu = new JPopupMenu();
 
 			signalPagePopupMenu.add(getActivateSignalPageAction());
+			
+			PluginAccessClass.getGUIImpl().addToSignalTreeSignalPagePopupMenu(signalPagePopupMenu);
 		}
 
 		return signalPagePopupMenu;

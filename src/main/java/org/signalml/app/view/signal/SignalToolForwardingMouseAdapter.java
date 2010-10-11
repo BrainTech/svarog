@@ -10,6 +10,8 @@ import java.awt.event.MouseWheelEvent;
 
 import javax.swing.SwingUtilities;
 
+import org.signalml.plugin.export.signal.SignalTool;
+
 /** SignalToolForwardingMouseAdapter
  *
  *

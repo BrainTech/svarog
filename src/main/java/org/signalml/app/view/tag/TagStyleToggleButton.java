@@ -9,7 +9,7 @@ import java.awt.Dimension;
 import javax.swing.Icon;
 import javax.swing.JToggleButton;
 
-import org.signalml.domain.tag.TagStyle;
+import org.signalml.plugin.export.signal.TagStyle;
 
 /** TagStyleToggleButton
  *

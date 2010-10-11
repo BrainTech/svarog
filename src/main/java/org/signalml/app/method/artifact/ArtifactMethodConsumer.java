@@ -23,9 +23,9 @@ import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.domain.tag.LegacyTagImporter;
 import org.signalml.domain.tag.StyledTagSet;
-import org.signalml.exception.SignalMLException;
 import org.signalml.method.Method;
 import org.signalml.method.artifact.ArtifactResult;
+import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
 
 /** ArtifactMethodConsumer

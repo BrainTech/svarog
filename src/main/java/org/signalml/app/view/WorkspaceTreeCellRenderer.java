@@ -10,9 +10,9 @@ import javax.swing.JLabel;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
-import org.signalml.app.document.Document;
 import org.signalml.app.document.MRUDEntry;
 import org.signalml.app.document.ManagedDocumentType;
+import org.signalml.plugin.export.signal.Document;
 
 /** WorkspaceTreeCellRenderer
  *

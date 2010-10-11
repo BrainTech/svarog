@@ -35,7 +35,7 @@ import org.signalml.domain.book.StandardBookAtom;
 import org.signalml.domain.book.StandardBookSegment;
 import org.signalml.domain.book.WignerMapProvider;
 import org.signalml.domain.book.WignerMapScaleType;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** BookPlot

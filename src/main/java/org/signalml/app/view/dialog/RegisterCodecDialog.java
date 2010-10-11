@@ -21,7 +21,7 @@ import org.signalml.app.view.element.RegisterCodecStepTwoPanel;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.codec.XMLSignalMLCodec;
 import org.signalml.codec.generator.xml.XMLCodecException;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;

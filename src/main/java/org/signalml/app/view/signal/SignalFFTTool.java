@@ -14,6 +14,7 @@ import javax.swing.SwingUtilities;
 
 import org.signalml.app.config.SignalFFTSettings;
 import org.signalml.app.util.IconUtils;
+import org.signalml.plugin.export.signal.AbstractSignalTool;
 
 /** SignalFFTTool
  *

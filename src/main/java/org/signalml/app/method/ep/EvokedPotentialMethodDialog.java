@@ -19,12 +19,12 @@ import org.signalml.app.view.element.SignalSpacePanel;
 import org.signalml.app.view.signal.PositionedTag;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
-import org.signalml.domain.signal.SignalSelection;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
-import org.signalml.domain.tag.Tag;
-import org.signalml.exception.SignalMLException;
 import org.signalml.method.ep.EvokedPotentialParameters;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.SignalSelection;
+import org.signalml.plugin.export.signal.Tag;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 

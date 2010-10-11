@@ -4,10 +4,10 @@
 
 package org.signalml.app.method;
 
-import org.signalml.exception.SignalMLException;
 import org.signalml.method.iterator.IterableMethod;
 import org.signalml.method.iterator.MethodIteratorData;
 import org.signalml.method.iterator.MethodIteratorResult;
+import org.signalml.plugin.export.SignalMLException;
 
 /** MethodIterationResultConsumer
  *

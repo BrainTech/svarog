@@ -10,14 +10,14 @@ import javax.swing.JLabel;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
-import org.signalml.app.document.Document;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.model.TagStylesTreeNode;
 import org.signalml.app.model.TagTypeTreeNode;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.tag.TagIconProducer;
-import org.signalml.domain.tag.Tag;
-import org.signalml.domain.tag.TagStyle;
+import org.signalml.plugin.export.signal.Document;
+import org.signalml.plugin.export.signal.Tag;
+import org.signalml.plugin.export.signal.TagStyle;
 
 /** WorkspaceTreeCellRenderer
  *

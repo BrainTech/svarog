@@ -10,7 +10,8 @@ import javax.swing.JComponent;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.element.SignalSelectionPanel;
 import org.signalml.domain.signal.BoundedSignalSelection;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 

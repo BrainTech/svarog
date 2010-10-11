@@ -19,6 +19,7 @@ import org.signalml.domain.signal.DoubleArraySampleSource;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
 import org.signalml.domain.signal.raw.RawSignalWriter;
+import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
 

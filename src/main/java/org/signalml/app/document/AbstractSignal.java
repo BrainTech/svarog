@@ -20,7 +20,9 @@ import org.signalml.domain.montage.Montage;
 import org.signalml.domain.signal.OriginalMultichannelSampleSource;
 import org.signalml.domain.signal.SignalType;
 import org.signalml.exception.SanityCheckException;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.AbstractDocument;
+import org.signalml.plugin.export.signal.ExportedTagDocument;
 import org.springframework.context.MessageSourceResolvable;
 
 /** AbstractReaderSignal
@@ -271,6 +273,15 @@ public abstract class AbstractSignal extends AbstractDocument implements SignalD
 
 		return sb.toString();
 
+	}
+	
+	@Override
+	public List<ExportedTagDocument> getExportedTagDocuments(){
+		List<ExportedTagDocument> exportedTagDocuments = new LinkedList<ExportedTagDocument>();
+		List<TagDocument> tagDocuments = getTagDocuments();
+		for (TagDocument tagDocument : tagDocuments)
+			exportedTagDocuments.add(tagDocument);
+		return exportedTagDocuments;
 	}
 
 	@Override

@@ -6,6 +6,8 @@ package org.signalml.domain.tag;
 
 import java.util.Comparator;
 
+import org.signalml.plugin.export.signal.TagStyle;
+
 /**
  * This class represents the comparator of (two) {@link TagStyle tag styles}.
  * Comparison is done by comparing the names of styles.

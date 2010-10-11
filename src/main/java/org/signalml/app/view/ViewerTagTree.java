@@ -23,7 +23,6 @@ import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.action.selector.ActionFocusSupport;
 import org.signalml.app.action.selector.TagFocusSelector;
 import org.signalml.app.action.selector.TagStyleFocusSelector;
-import org.signalml.app.document.Document;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
@@ -32,8 +31,11 @@ import org.signalml.app.view.dialog.EditTagAnnotationDialog;
 import org.signalml.app.view.dialog.EditTagDescriptionDialog;
 import org.signalml.app.view.dialog.TagStylePaletteDialog;
 import org.signalml.app.view.signal.PositionedTag;
-import org.signalml.domain.tag.Tag;
-import org.signalml.domain.tag.TagStyle;
+import org.signalml.plugin.export.signal.Document;
+import org.signalml.plugin.export.signal.Tag;
+import org.signalml.plugin.export.signal.TagStyle;
+import org.signalml.plugin.export.view.AbstractViewerTree;
+import org.signalml.plugin.impl.PluginAccessClass;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** ViewerTagTree
@@ -172,6 +174,8 @@ public class ViewerTagTree extends AbstractViewerTree implements TagFocusSelecto
 			signalDocumentPopupMenu.add(getActivateDocumentAction());
 			signalDocumentPopupMenu.addSeparator();
 			signalDocumentPopupMenu.add(getCloseDocumentAction());
+			
+			PluginAccessClass.getGUIImpl().addToTagTreeSignalDocumentPopupMenu(signalDocumentPopupMenu);
 		}
 
 		return signalDocumentPopupMenu;
@@ -189,6 +193,8 @@ public class ViewerTagTree extends AbstractViewerTree implements TagFocusSelecto
 			tagDocumentPopupMenu.add(getEditTagDescriptionAction());
 			tagDocumentPopupMenu.addSeparator();
 			tagDocumentPopupMenu.add(getCloseDocumentAction());
+			
+			PluginAccessClass.getGUIImpl().addToTagTreeTagDocumentPopupMenu(tagDocumentPopupMenu);
 		}
 
 		return tagDocumentPopupMenu;
@@ -201,6 +207,8 @@ public class ViewerTagTree extends AbstractViewerTree implements TagFocusSelecto
 			tagStylePopupMenu = new JPopupMenu();
 
 			tagStylePopupMenu.add(getEditTagStylesAction());
+			
+			PluginAccessClass.getGUIImpl().addToTagTreeTagStylePopupMenu(tagStylePopupMenu);
 		}
 
 		return tagStylePopupMenu;
@@ -217,6 +225,8 @@ public class ViewerTagTree extends AbstractViewerTree implements TagFocusSelecto
 			tagPopupMenu.add(getEditTagAnnotationAction());
 			tagPopupMenu.addSeparator();
 			tagPopupMenu.add(getRemoveTagAction());
+			
+			PluginAccessClass.getGUIImpl().addToTagTreeTagPopupMenu(tagPopupMenu);
 		}
 
 		return tagPopupMenu;

@@ -4,7 +4,7 @@
 
 package org.signalml.codec;
 
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 
 /** SignalMLCodecException
  *

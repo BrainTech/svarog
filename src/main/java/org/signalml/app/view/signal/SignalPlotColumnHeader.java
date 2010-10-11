@@ -28,13 +28,13 @@ import javax.swing.JPopupMenu;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.view.tag.TagRenderer;
 import org.signalml.app.view.tag.comparison.TagDifferenceRenderer;
-import org.signalml.domain.signal.SignalSelection;
-import org.signalml.domain.signal.SignalSelectionType;
 import org.signalml.domain.tag.StyledTagSet;
-import org.signalml.domain.tag.Tag;
 import org.signalml.domain.tag.TagDifference;
 import org.signalml.domain.tag.TagDifferenceSet;
-import org.signalml.domain.tag.TagStyle;
+import org.signalml.plugin.export.signal.SignalSelection;
+import org.signalml.plugin.export.signal.SignalSelectionType;
+import org.signalml.plugin.export.signal.Tag;
+import org.signalml.plugin.export.signal.TagStyle;
 
 /** SignalPlotColumnHeader
  *

@@ -27,14 +27,14 @@ import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.action.AbstractSignalMLAction;
 import org.signalml.app.action.TagSelectionAction;
 import org.signalml.app.view.signal.popup.TagStylesPopupDialog;
-import org.signalml.domain.signal.SignalSelectionType;
 import org.signalml.domain.tag.StyledTagSet;
-import org.signalml.domain.tag.TagStyle;
 import org.signalml.domain.tag.TagStyleEvent;
 import org.signalml.domain.tag.TagStyleListener;
+import org.signalml.plugin.export.signal.SignalSelectionType;
+import org.signalml.plugin.export.signal.TagStyle;
+import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** TagStyleToolBar

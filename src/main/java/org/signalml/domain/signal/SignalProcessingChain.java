@@ -28,7 +28,7 @@ import org.signalml.domain.signal.raw.RawSignalSampleSource;
 import org.signalml.domain.signal.space.SignalSourceLevel;
 import org.signalml.exception.MissingCodecException;
 import org.signalml.exception.SanityCheckException;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 
 /**
  * This class represents the chain (series) of

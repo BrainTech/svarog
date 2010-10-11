@@ -34,7 +34,7 @@ import org.signalml.app.util.SwingUtils;
 import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.element.FileListCellRenderer;
 import org.signalml.domain.book.filter.DelegatingAtomFilter;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;

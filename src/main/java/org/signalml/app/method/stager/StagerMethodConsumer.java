@@ -25,9 +25,9 @@ import org.signalml.app.view.signal.SampleSourceUtils;
 import org.signalml.domain.signal.MultichannelSampleSource;
 import org.signalml.domain.tag.LegacyTagImporter;
 import org.signalml.domain.tag.StyledTagSet;
-import org.signalml.exception.SignalMLException;
 import org.signalml.method.Method;
 import org.signalml.method.stager.StagerResult;
+import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
 
 /** StagerMethodConsumer

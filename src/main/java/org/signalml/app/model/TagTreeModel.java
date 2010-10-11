@@ -8,7 +8,6 @@ import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.document.Document;
 import org.signalml.app.document.DocumentManager;
 import org.signalml.app.document.DocumentManagerEvent;
 import org.signalml.app.document.DocumentManagerListener;
@@ -16,14 +15,16 @@ import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.view.tag.TagIconProducer;
-import org.signalml.domain.signal.SignalSelectionType;
 import org.signalml.domain.tag.StyledTagSet;
-import org.signalml.domain.tag.Tag;
 import org.signalml.domain.tag.TagEvent;
 import org.signalml.domain.tag.TagListener;
-import org.signalml.domain.tag.TagStyle;
 import org.signalml.domain.tag.TagStyleEvent;
 import org.signalml.domain.tag.TagStyleListener;
+import org.signalml.plugin.export.signal.Document;
+import org.signalml.plugin.export.signal.SignalSelectionType;
+import org.signalml.plugin.export.signal.Tag;
+import org.signalml.plugin.export.signal.TagStyle;
+import org.signalml.plugin.export.view.AbstractTreeModel;
 
 /** TagTreeModel
  *
@@ -340,6 +341,10 @@ public class TagTreeModel extends AbstractTreeModel implements DocumentManagerLi
 
 		return path;
 
+	}
+	
+	public TagDocument getDocumentFromSet(StyledTagSet tagSet){
+		return tagDocumentMap.get(tagSet);
 	}
 
 	protected int getTagEventIndex(TagEvent e) {

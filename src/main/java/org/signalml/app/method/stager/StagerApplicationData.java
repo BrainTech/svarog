@@ -20,8 +20,8 @@ import org.signalml.domain.signal.space.ChannelSpaceType;
 import org.signalml.domain.signal.space.SegmentedSampleSourceFactory;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.TimeSpaceType;
-import org.signalml.exception.SignalMLException;
 import org.signalml.method.stager.StagerData;
+import org.signalml.plugin.export.SignalMLException;
 
 /** StagerApplicationData
  *

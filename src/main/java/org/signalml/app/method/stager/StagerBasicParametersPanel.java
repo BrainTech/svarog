@@ -20,12 +20,12 @@ import javax.swing.border.TitledBorder;
 
 import org.signalml.app.action.EnableAction;
 import org.signalml.app.util.SwingUtils;
-import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.app.view.element.AutoSpinnerPanel;
 import org.signalml.app.view.element.CompactButton;
 import org.signalml.app.view.element.ResolvableComboBox;
 import org.signalml.method.stager.SleepStagingRules;
 import org.signalml.method.stager.StagerParameters;
+import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 

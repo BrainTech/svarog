@@ -6,6 +6,7 @@ package org.signalml.domain.tag;
 
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.signal.MultichannelSampleSource;
+import org.signalml.plugin.export.signal.Tag;
 
 /**
  * This class contains {@link TagComparisonResult results} of comparison

@@ -4,7 +4,7 @@
 
 package org.signalml.app.view.tag;
 
-import org.signalml.domain.tag.TagStyle;
+import org.signalml.plugin.export.signal.TagStyle;
 
 /** TagStyleSelector
  *

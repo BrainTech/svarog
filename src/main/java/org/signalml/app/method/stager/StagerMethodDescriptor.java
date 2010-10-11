@@ -9,7 +9,6 @@ import java.io.IOException;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.config.ConfigurationDefaults;
-import org.signalml.app.document.Document;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.method.ApplicationMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodManager;
@@ -19,6 +18,7 @@ import org.signalml.app.method.MethodResultConsumer;
 import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.method.stager.StagerMethod;
 import org.signalml.method.stager.StagerParameters;
+import org.signalml.plugin.export.signal.Document;
 
 /** StagerMethodDescriptor
  *

@@ -4,6 +4,8 @@
 
 package org.signalml.exception;
 
+import org.signalml.plugin.export.SignalMLException;
+
 /** MissingCodecException
  *
  *

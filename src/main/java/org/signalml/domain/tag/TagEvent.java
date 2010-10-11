@@ -6,6 +6,8 @@ package org.signalml.domain.tag;
 
 import java.util.EventObject;
 
+import org.signalml.plugin.export.signal.Tag;
+
 /**
  * This class represents an event of adding, removing or changing the
  * {@link Tag tag} in a {@link StyledTagSet StyledTagSet}.
@@ -17,7 +19,7 @@ public class TagEvent extends EventObject {
 	private static final long serialVersionUID = 1L;
 
         /**
-         * the {@link Tag taga} that has changed
+         * the {@link Tag tag} that has changed
          */
 	private Tag tag;
 

@@ -9,11 +9,11 @@ import java.io.IOException;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.DocumentFocusSelector;
-import org.signalml.app.document.Document;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.MutableDocument;
 import org.signalml.app.view.dialog.ErrorsDialog;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.Document;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** SaveDocumentAction

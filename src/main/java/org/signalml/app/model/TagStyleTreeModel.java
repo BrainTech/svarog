@@ -6,11 +6,12 @@ package org.signalml.app.model;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.view.tag.TagIconProducer;
-import org.signalml.domain.signal.SignalSelectionType;
 import org.signalml.domain.tag.StyledTagSet;
-import org.signalml.domain.tag.TagStyle;
 import org.signalml.domain.tag.TagStyleEvent;
 import org.signalml.domain.tag.TagStyleListener;
+import org.signalml.plugin.export.signal.SignalSelectionType;
+import org.signalml.plugin.export.signal.TagStyle;
+import org.signalml.plugin.export.view.AbstractTreeModel;
 
 /** TagStyleTreeModel
  *

@@ -4,7 +4,7 @@
 
 package org.signalml.app.action.selector;
 
-import org.signalml.app.document.Document;
+import org.signalml.plugin.export.signal.Document;
 
 /** DocumentFocusSelector
  *

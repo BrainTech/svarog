@@ -4,7 +4,8 @@
 
 package org.signalml.app.view.signal;
 
-import org.signalml.domain.signal.SignalSelectionType;
+import org.signalml.plugin.export.signal.SignalSelectionType;
+import org.signalml.plugin.export.signal.SignalTool;
 
 /** TaggingSignalTool
  *

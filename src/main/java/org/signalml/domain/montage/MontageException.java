@@ -4,7 +4,7 @@
 
 package org.signalml.domain.montage;
 
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 
 /**
  * This class represents an exception that has occured in a {@link Montage montage}.

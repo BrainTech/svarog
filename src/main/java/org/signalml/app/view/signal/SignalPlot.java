@@ -21,6 +21,7 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.InvalidClassException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Formatter;
@@ -51,15 +52,19 @@ import org.signalml.domain.montage.MontageMismatchException;
 import org.signalml.domain.signal.MultichannelSampleSource;
 import org.signalml.domain.signal.OriginalMultichannelSampleSource;
 import org.signalml.domain.signal.SignalProcessingChain;
-import org.signalml.domain.signal.SignalSelection;
-import org.signalml.domain.signal.SignalSelectionType;
 import org.signalml.domain.tag.StyledTagSet;
-import org.signalml.domain.tag.Tag;
 import org.signalml.domain.tag.TagDifference;
 import org.signalml.domain.tag.TagDifferenceSet;
-import org.signalml.domain.tag.TagStyle;
 import org.signalml.exception.SanityCheckException;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.ExportedSignalSelection;
+import org.signalml.plugin.export.signal.ExportedTagDocument;
+import org.signalml.plugin.export.signal.ExportedTagStyle;
+import org.signalml.plugin.export.signal.SignalSelection;
+import org.signalml.plugin.export.signal.SignalSelectionType;
+import org.signalml.plugin.export.signal.Tag;
+import org.signalml.plugin.export.signal.TagStyle;
+import org.signalml.plugin.export.view.ExportedSignalPlot;
 import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
 
@@ -69,19 +74,11 @@ import org.springframework.context.support.MessageSourceAccessor;
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  * 		based on code Copyright (C) 2003 Dobieslaw Ircha <dircha@eranet.pl> Artur Biesiadowski <abies@adres.pl> Piotr J. Durka     <Piotr-J.Durka@fuw.edu.pl>
  */
-public class SignalPlot extends JComponent implements PropertyChangeListener, ChangeListener, Scrollable {
+public class SignalPlot extends JComponent implements PropertyChangeListener, ChangeListener, Scrollable, ExportedSignalPlot {
 
 	private static final long serialVersionUID = 1L;
 
 	protected static final Logger logger = Logger.getLogger(SignalPlot.class);
-
-	public static final int SCALE_TO_SIGNAL_GAP = 0;
-	public static final int COMPARISON_STRIP_HEIGHT = 14;
-	public static final int COMPARISON_STRIP_MARGIN = 3;
-
-	public static final String TIME_ZOOM_FACTOR_PROPERTY = "timeZoomFactor";
-	public static final String VOLTAGE_ZOOM_FACTOR_PROPERTY = "voltageZoomFactor";
-	public static final String PIXEL_PER_CHANNEL_PROPERTY = "pixelPerChannel";
 
 	private static final Dimension MINIMUM_SIZE = new Dimension(0,0);
 
@@ -1008,6 +1005,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		}
 	}
 
+	@Override
 	public int getPageForwardSkip(Point position) {
 		int currentPage = (int) Math.floor(position.x / pixelPerPage);
 		int pageOffset = position.x - ((int)(currentPage*pixelPerPage));
@@ -1020,6 +1018,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		return (pageOffset + ((int)(currentPage*pixelPerPage))) - position.x;
 	}
 
+	@Override
 	public int getPageBackwardSkip(Point position) {
 		int currentPage = (int) Math.floor(position.x / pixelPerPage);
 		int pageOffset = position.x - ((int)(currentPage*pixelPerPage));
@@ -1032,6 +1031,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		return (pageOffset + ((int)(currentPage*pixelPerPage))) - position.x;
 	}
 
+	@Override
 	public int getBlockForwardSkip(Point position) {
 		int currentBlock = (int) Math.floor(position.x / pixelPerBlock);
 		int blockOffset = position.x - ((int)(currentBlock*pixelPerBlock));
@@ -1044,6 +1044,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		return (blockOffset + ((int)(currentBlock*pixelPerBlock))) - position.x;
 	}
 
+	@Override
 	public int getBlockBackwardSkip(Point position) {
 		int currentBlock = (int) Math.floor(position.x / pixelPerBlock);
 		int blockOffset = position.x - ((int)(currentBlock*pixelPerBlock));
@@ -1056,6 +1057,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		return (blockOffset + ((int)(currentBlock*pixelPerBlock))) - position.x;
 	}
 
+	@Override
 	public void pageForward() {
 		Point position = viewport.getViewPosition();
 		position.x += getPageForwardSkip(position);
@@ -1063,6 +1065,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		viewport.setViewPosition(position);
 	}
 
+	@Override
 	public void pageBackward() {
 		Point position = viewport.getViewPosition();
 		position.x += getPageBackwardSkip(position);
@@ -1288,6 +1291,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 	/* Conversions */
 
+	@Override
 	public Point2D.Float toSignalSpace(Point p) {
 		float time = (float)(((double) p.x) / pixelPerSecond);
 		float value = (float)(((double) p.y) / pixelPerValue);
@@ -1295,6 +1299,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		return new Point2D.Float(time,value);
 	}
 
+	@Override
 	public Point toPixelSpace(Point2D.Float p) {
 		int x = (int) Math.round(p.getX() * pixelPerSecond);
 		int y = (int) Math.round(p.getY() * pixelPerValue);
@@ -1302,36 +1307,44 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		return new Point(x,y);
 	}
 
+	@Override
 	public int toPageSpace(Point p) {
 		return (int) Math.max(0, Math.min(pageCount-1, Math.floor(p.x / pixelPerPage)));
 	}
 
+	@Override
 	public int toBlockSpace(Point p) {
 		return (int) Math.max(0, Math.min(blockCount-1, Math.floor(p.x / pixelPerBlock)));
 	}
 
+	@Override
 	public float toTimeSpace(Point p) {
 		return Math.max(0, Math.min(maxTime, (float)(((double) p.x) / pixelPerSecond)));
 	}
 
+	@Override
 	public int toSampleSpace(Point p) {
 		return Math.max(0, Math.min(maxSampleCount-1, (int)(((double) p.x) / timeZoomFactor)));
 	}
 
+	@Override
 	public float toValueSpace(Point p) {
 		int channel = toChannelSpace(p);
 		int y = channelLevel[channel] - p.y;
 		return (float) Math.round(((double) y) / pixelPerValue);
 	}
 
+	@Override
 	public int timeToPixel(float time) {
 		return (int) Math.round(((double) time) * pixelPerSecond);
 	}
 
+	@Override
 	public int channelToPixel(int channel) {
 		return (channel * pixelPerChannel);
 	}
 
+	@Override
 	public int toChannelSpace(Point p) {
 		return (int) Math.max(0, Math.min(channelCount-1, Math.floor(p.y / pixelPerChannel)));
 	}
@@ -1609,6 +1622,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		repaint(selectionBounds);
 	}
 
+	@Override
 	public SignalSelection getPageSelection(int fromPage, int toPage) {
 		if (fromPage > toPage) {
 			int temp = toPage;
@@ -1623,6 +1637,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		return selection;
 	}
 
+	@Override
 	public SignalSelection getBlockSelection(int fromBlock, int toBlock) {
 		if (fromBlock > toBlock) {
 			int temp = toBlock;
@@ -1637,6 +1652,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		return selection;
 	}
 
+	@Override
 	public SignalSelection getChannelSelection(float fromPosition, float toPosition, int channel) {
 		if (fromPosition > toPosition) {
 			float temp = toPosition;
@@ -2228,6 +2244,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		}
 	}
 
+	@Override
 	public int getPixelPerChannel() {
 		return pixelPerChannel;
 	}
@@ -2265,6 +2282,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 	}
 
+	@Override
 	public boolean isAntialiased() {
 		return antialiased;
 	}
@@ -2317,30 +2335,37 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		}
 	}
 
+	@Override
 	public double getPixelPerSecond() {
 		return pixelPerSecond;
 	}
 
+	@Override
 	public double getPixelPerBlock() {
 		return pixelPerBlock;
 	}
 
+	@Override
 	public double getPixelPerPage() {
 		return pixelPerPage;
 	}
 
+	@Override
 	public double getPixelPerValue() {
 		return pixelPerValue;
 	}
 
+	@Override
 	public double getDetectedMaxValue() {
 		return detectedMaxValue;
 	}
 
+	@Override
 	public int getChannelCount() {
 		return channelCount;
 	}
 
+	@Override
 	public int getPageCount() {
 		return pageCount;
 	}
@@ -2349,22 +2374,27 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		return wholePageCount;
 	}
 
+	@Override
 	public int getBlockCount() {
 		return blockCount;
 	}
 
+	@Override
 	public float getMaxTime() {
 		return maxTime;
 	}
 
+	@Override
 	public int getBlocksPerPage() {
 		return blocksPerPage;
 	}
 
+	@Override
 	public float getPageSize() {
 		return pageSize;
 	}
 
+	@Override
 	public float getBlockSize() {
 		return blockSize;
 	}
@@ -2523,10 +2553,12 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		}
 	}
 
+	@Override
 	public int getMaxSampleCount() {
 		return maxSampleCount;
 	}
 
+	@Override
 	public SignalDocument getDocument() {
 		return document;
 	}
@@ -2535,6 +2567,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		return channelLevel;
 	}
 
+	@Override
 	public SignalView getView() {
 		return view;
 	}
@@ -2552,12 +2585,73 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		return messageSource;
 	}
 
+	@Override
 	public SignalPlot getMasterPlot() {
 		return masterPlot;
 	}
 
 	public boolean isMaster() {
 		return(masterPlot == null);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.view.ExportedSignalPlot#tagSelection(org.signalml.plugin.export.signal.ExportedTagDocument, org.signalml.plugin.export.signal.TagStyle, org.signalml.plugin.export.signal.ExportedSignalSelection, boolean)
+	 */
+	@Override
+	public void tagSelection(ExportedTagDocument tagDocument, ExportedTagStyle style,
+			ExportedSignalSelection selection, boolean selectNew) throws InvalidClassException {
+		if (tagDocument instanceof TagDocument)
+			tagSelection((TagDocument) tagDocument, new TagStyle(style), new SignalSelection(selection), selectNew);
+		else throw new InvalidClassException("only document got from SvarogAccess can be used");
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.view.ExportedSignalPlot#eraseTagsFromSelection(org.signalml.plugin.export.signal.ExportedTagDocument, org.signalml.plugin.export.signal.ExportedSignalSelection)
+	 */
+	@Override
+	public void eraseTagsFromSelection(ExportedTagDocument tagDocument,
+			ExportedSignalSelection selection) throws InvalidClassException {
+		if (tagDocument instanceof TagDocument)
+			eraseTagsFromSelection((TagDocument) tagDocument,  new SignalSelection(selection));
+		else throw new InvalidClassException("only document got from SvarogAccess can be used");
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.view.ExportedSignalPlot#tagPageSelection(org.signalml.plugin.export.signal.ExportedTagDocument, org.signalml.plugin.export.signal.TagStyle, org.signalml.plugin.export.signal.ExportedSignalSelection, boolean)
+	 */
+	@Override
+	public void tagPageSelection(ExportedTagDocument tagDocument,
+			ExportedTagStyle style, ExportedSignalSelection selection, boolean selectNew) throws InvalidClassException {
+		if (tagDocument instanceof TagDocument)
+			tagPageSelection((TagDocument) tagDocument, new TagStyle(style), new SignalSelection(selection), selectNew);
+		else throw new InvalidClassException("only document got from SvarogAccess can be used");
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.view.ExportedSignalPlot#tagBlockSelection(org.signalml.plugin.export.signal.ExportedTagDocument, org.signalml.plugin.export.signal.TagStyle, org.signalml.plugin.export.signal.ExportedSignalSelection, boolean)
+	 */
+	@Override
+	public void tagBlockSelection(ExportedTagDocument tagDocument,
+			ExportedTagStyle style, ExportedSignalSelection selection, boolean selectNew) throws InvalidClassException {
+		if (tagDocument instanceof TagDocument)
+			tagBlockSelection((TagDocument) tagDocument, new TagStyle(style), new SignalSelection(selection), selectNew);
+		else throw new InvalidClassException("only document got from SvarogAccess can be used");
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.view.ExportedSignalPlot#tagChannelSelection(org.signalml.plugin.export.signal.ExportedTagDocument, org.signalml.plugin.export.signal.TagStyle, org.signalml.plugin.export.signal.ExportedSignalSelection, boolean)
+	 */
+	@Override
+	public void tagChannelSelection(ExportedTagDocument tagDocument,
+			ExportedTagStyle style, ExportedSignalSelection selection, boolean selectNew) throws InvalidClassException {
+		if (tagDocument instanceof TagDocument)
+			tagChannelSelection((TagDocument) tagDocument, new TagStyle(style), new SignalSelection(selection), selectNew);
+		else throw new InvalidClassException("only document got from SvarogAccess can be used");
+		
 	}
 
 }

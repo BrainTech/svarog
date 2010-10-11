@@ -19,7 +19,7 @@ import org.signalml.app.model.NewTagDescriptor.NewTagTypeMode;
 import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.dialog.NewTagDialog;
 import org.signalml.exception.SanityCheckException;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** NewTagAction

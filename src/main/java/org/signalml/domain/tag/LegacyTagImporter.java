@@ -12,9 +12,11 @@ import java.util.TreeSet;
 import javax.swing.KeyStroke;
 
 import org.apache.log4j.Logger;
-import org.signalml.domain.signal.SignalSelectionType;
 import org.signalml.exception.ResolvableException;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.SignalSelectionType;
+import org.signalml.plugin.export.signal.Tag;
+import org.signalml.plugin.export.signal.TagStyle;
 
 import eega.util.tag.BlockTag;
 import eega.util.tag.ChannelTag;

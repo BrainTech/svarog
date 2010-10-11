@@ -7,6 +7,7 @@ package org.signalml.exception;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.MessageSourceResolvable;
 
 /** ResolvableException

@@ -22,13 +22,13 @@ import org.signalml.app.model.TableToTextExporter;
 import org.signalml.app.model.TagComparisonDescriptor;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.ViewerFileChooser;
-import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.app.view.element.ResolvableComboBox;
 import org.signalml.app.view.tag.TagIconProducer;
 import org.signalml.domain.tag.TagComparisonResults;
 import org.signalml.domain.tag.TagDifferenceDetector;
 import org.signalml.exception.SanityCheckException;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.view.AbstractDialog;
 import org.signalml.util.SvarogConstants;
 import org.springframework.context.support.MessageSourceAccessor;
 

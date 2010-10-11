@@ -5,7 +5,7 @@
 package org.signalml.domain.signal.space;
 
 import org.signalml.domain.signal.MultichannelSampleSource;
-import org.signalml.domain.signal.SignalSelection;
+import org.signalml.plugin.export.signal.SignalSelection;
 
 /**
  * This class informs if the whole length of a signal is in the

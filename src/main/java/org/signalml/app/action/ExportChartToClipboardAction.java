@@ -15,6 +15,7 @@ import java.awt.image.BufferedImage;
 import org.apache.log4j.Logger;
 import org.jfree.chart.JFreeChart;
 import org.signalml.app.util.ImageTransferable;
+import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** ExportChartToClipboardAction

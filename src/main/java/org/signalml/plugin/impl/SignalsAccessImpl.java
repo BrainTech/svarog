@@ -1,0 +1,673 @@
+/**
+ * 
+ */
+package org.signalml.plugin.impl;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InvalidClassException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+
+import org.signalml.app.action.selector.ActionFocusManager;
+import org.signalml.app.document.DocumentFlowIntegrator;
+import org.signalml.app.document.DocumentManager;
+import org.signalml.app.document.ManagedDocumentType;
+import org.signalml.app.document.SignalDocument;
+import org.signalml.app.document.TagDocument;
+import org.signalml.app.model.OpenDocumentDescriptor;
+import org.signalml.app.model.OpenSignalDescriptor;
+import org.signalml.app.model.OpenSignalDescriptor.OpenSignalMethod;
+import org.signalml.app.model.SignalParameterDescriptor;
+import org.signalml.app.view.ViewerElementManager;
+import org.signalml.app.view.signal.PositionedTag;
+import org.signalml.app.view.signal.SignalPlot;
+import org.signalml.app.view.signal.SignalView;
+import org.signalml.codec.SignalMLCodec;
+import org.signalml.codec.SignalMLCodecManager;
+import org.signalml.codec.XMLSignalMLCodec;
+import org.signalml.codec.generator.xml.XMLCodecException;
+import org.signalml.domain.signal.MultichannelSampleSource;
+import org.signalml.domain.signal.OriginalMultichannelSampleSource;
+import org.signalml.domain.signal.raw.RawSignalByteOrder;
+import org.signalml.domain.signal.raw.RawSignalDescriptor;
+import org.signalml.domain.signal.raw.RawSignalSampleType;
+import org.signalml.domain.tag.LegacyTagImporter;
+import org.signalml.domain.tag.StyledTagSet;
+import org.signalml.plugin.export.NoActiveObjectException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.Document;
+import org.signalml.plugin.export.signal.ExportedSignalDocument;
+import org.signalml.plugin.export.signal.ExportedSignalSelection;
+import org.signalml.plugin.export.signal.ExportedTag;
+import org.signalml.plugin.export.signal.ExportedTagDocument;
+import org.signalml.plugin.export.signal.SvarogAccessSignal;
+import org.signalml.plugin.export.signal.SignalSamples;
+import org.signalml.plugin.export.signal.Tag;
+import org.signalml.plugin.export.signal.TagStyle;
+import org.signalml.plugin.export.view.DocumentView;
+import org.signalml.plugin.loader.PluginLoader;
+
+/**
+ * Implementation of {@link SvarogAccessSignal} interface.
+ * @author Marcin Szumski
+ */
+public class SignalsAccessImpl implements SvarogAccessSignal {
+
+	/**
+	 * the manager of the elements of Svarog
+	 */
+	private ViewerElementManager manager;
+	/**
+	 * informs which objects are focused
+	 */
+	private ActionFocusManager focusManager;
+	
+	/**
+	 * Returns the output of signal samples.
+	 * @return the output of signal samples
+	 * @throws NoActiveObjectException if there is no active signal plot
+	 */
+	private MultichannelSampleSource getOutput() throws NoActiveObjectException{
+		SignalPlot plot = getFocusManager().getActiveSignalPlot();
+		if (null == plot) throw new NoActiveObjectException("no active signal plot");
+		MultichannelSampleSource output = plot.getSignalOutput();
+		if (output == null) throw new RuntimeException("output of signal samples is null");
+		return output;
+	}
+	
+	/**
+	 * Returns samples for the given source of samples and the given channel.
+	 * @param source the source of samples
+	 * @param channel the number of the channel (from 0 to {@code source.getChannelCount()-1})
+	 * @return samples for the given source of samples and the given channel
+	 * @throws IndexOutOfBoundsException if the index of a channel is out of range
+	 */
+	private ChannelSamplesImpl getSamplesFromSource(MultichannelSampleSource source, int channel) throws IndexOutOfBoundsException{
+		indexInBounds(source, channel);
+		double[] samples = new double[source.getSampleCount(channel)];
+		source.getSamples(channel, samples, 0, source.getSampleCount(channel), 0);
+		ChannelSamplesImpl channelSamples = new ChannelSamplesImpl(samples, channel, source.getSamplingFrequency(), source.getLabel(channel));
+		return channelSamples;
+	}
+	
+	/**
+	 * Checks if the index of the channel is in range from 0 to
+	 * {@code source.getChannelCount()-1}. Throws exception if not.
+	 * @param source the source of samples
+	 * @param channel the index of the channel
+	 * @throws IndexOutOfBoundsException if the index of a channel is out of range
+	 */
+	private void indexInBounds(MultichannelSampleSource source, int channel) throws IndexOutOfBoundsException{
+		if ((channel < 0) || (channel >= source.getChannelCount()))
+			throw new IndexOutOfBoundsException("index "+ channel + "is out of range ["+ "0, " + (source.getChannelCount()-1) + "]");
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.PluginAccessSignal#getActiveProcessedSignalSamples(int)
+	 */
+	@Override
+	public ChannelSamplesImpl getActiveProcessedSignalSamples(int channel) throws NoActiveObjectException, IndexOutOfBoundsException {
+		MultichannelSampleSource output = getOutput();
+		ChannelSamplesImpl channelSamples = getSamplesFromSource(output, channel);
+		return channelSamples;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.PluginAccessSignal#getActiveProcessedSignalSamples()
+	 */
+	@Override
+	public SignalSamples getActiveProcessedSignalSamples() throws NoActiveObjectException {
+		MultichannelSampleSource output = getOutput();
+		int numberOfChannels = output.getChannelCount();
+		SignalSamplesImpl signalSamples = new SignalSamplesImpl();
+		for (int i = 0; i < numberOfChannels; ++i){
+			ChannelSamplesImpl channelSamples = getActiveProcessedSignalSamples(i);
+			if (null == channelSamples) throw new RuntimeException();
+			signalSamples.addChannelSamples(channelSamples);
+		}
+		return signalSamples;
+	}
+
+	/**
+	 * 
+	 * @return the list of documents in the signal. may be empty
+	 */
+	private ArrayList<SignalDocument> getSignalDocuments(){
+		DocumentManager documentManager = manager.getDocumentManager();
+		int numberOfDocuments = documentManager.getDocumentCount();
+		ArrayList<SignalDocument> documents = new ArrayList<SignalDocument>();
+		for (int i = 0; i < numberOfDocuments; ++i ){
+			Document documentTmp = documentManager.getDocumentAt(i);
+			if (documentTmp instanceof SignalDocument){
+				documents.add((SignalDocument) documentTmp);				
+			}
+		}
+		return documents;
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.PluginAccessSignal#getProcessedSignalSamplesForAllSignals()
+	 */
+	@Override
+	public SignalSamples[] getProcessedSignalSamplesForAllSignals() {
+		ArrayList<SignalDocument> documents = getSignalDocuments();
+		ArrayList<SignalSamplesImpl> signalsSamples = new ArrayList<SignalSamplesImpl>();
+		for (SignalDocument signalDocument : documents){
+			SignalSamplesImpl samplesTmp;
+			try {
+				samplesTmp = getProcessedSignalSamplesFromDocument(signalDocument);
+				signalsSamples.add(samplesTmp);
+			} catch (InvalidClassException e) {
+				//never happens
+			} 
+			
+		}
+		return signalsSamples.toArray(new SignalSamplesImpl[signalsSamples.size()]);
+	}
+
+	/**
+	 * Returns the source of unprocessed signal samples for the active signal.
+	 * @return the source of unprocessed signal samples for the active signal
+	 * @throws NoActiveObjectException if there is no active signal
+	 */
+	private OriginalMultichannelSampleSource getOriginalSource() throws NoActiveObjectException{
+		SignalPlot plot = getFocusManager().getActiveSignalPlot();
+		if (null == plot) throw new NoActiveObjectException("no active signal plot");
+		OriginalMultichannelSampleSource originalSource = plot.getSignalSource();
+		if (originalSource == null) throw new RuntimeException("original source of samples is null");
+		return originalSource;
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.PluginAccessSignal#getActiveRawSignalSamples(int)
+	 */
+	@Override
+	public ChannelSamplesImpl getActiveRawSignalSamples(int channel) throws NoActiveObjectException, IndexOutOfBoundsException {
+		MultichannelSampleSource source = getOriginalSource();
+		ChannelSamplesImpl channelSamples = getSamplesFromSource(source, channel);
+		return channelSamples;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.PluginAccessSignal#getActiveRawSignalSamples()
+	 */
+	@Override
+	public SignalSamples getActiveRawSignalSamples() throws NoActiveObjectException {
+		MultichannelSampleSource source = getOutput();
+		int numberOfChannels = source.getChannelCount();
+		SignalSamplesImpl signalSamples = new SignalSamplesImpl();
+		for (int i = 0; i < numberOfChannels; ++i){
+			ChannelSamplesImpl channelSamples = getActiveRawSignalSamples(i);
+			if (null == channelSamples) throw new RuntimeException("Channel samples are null");
+			signalSamples.addChannelSamples(channelSamples);
+		}
+		return signalSamples;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.PluginAccessSignal#getActiveSignalSamplesForAllSignals()
+	 */
+	@Override
+	public SignalSamples[] getRawSignalSamplesForAllSignals() {
+		ArrayList<SignalDocument> documents = getSignalDocuments();
+		if (documents == null) return null;
+		ArrayList<SignalSamplesImpl> signalsSamples = new ArrayList<SignalSamplesImpl>();
+		for (SignalDocument signalDocument : documents){
+			SignalSamplesImpl samplesTmp;
+			try {
+				samplesTmp = getRawSignalSamplesFromDocument(signalDocument);
+				signalsSamples.add(samplesTmp);
+			} catch (InvalidClassException e) {
+				//never happens
+			}
+		}
+		return signalsSamples.toArray(new SignalSamplesImpl[signalsSamples.size()]);
+	}
+
+	/**
+	 * Returns the {@link OriginalMultichannelSampleSource original source}
+	 * of samples (source of raw samples) for a given
+	 * {@link ExportedSignalDocument signal document}.
+	 * @param document the signal document
+	 * @return the origina source of samples
+	 * @throws InvalidClassException if document is not of type {@link SignalDocument}
+	 */
+	private MultichannelSampleSource getOriginalSourceFromDocument(ExportedSignalDocument document) throws InvalidClassException{
+		SignalPlot signalPlot = getSignalPlotFromDocument(document);
+		if (signalPlot == null) throw new RuntimeException("signal plot is null");
+		MultichannelSampleSource source = signalPlot.getSignalSource();	
+		if (source == null) throw new RuntimeException("source of samples is null");
+		return source;
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.PluginAccessSignal#getRawSignalSamplesFromDocument(org.signalml.plugin.export.ExportedSignalDocument, int)
+	 */
+	@Override
+	public ChannelSamplesImpl getRawSignalSamplesFromDocument(ExportedSignalDocument document, int channel) throws InvalidClassException, IndexOutOfBoundsException {
+		MultichannelSampleSource source = getOriginalSourceFromDocument(document);
+		ChannelSamplesImpl channelSamples = getSamplesFromSource(source, channel);
+		return channelSamples;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.PluginAccessSignal#getRawSignalSamplesFromDocument(org.signalml.plugin.export.ExportedSignalDocument)
+	 */
+	@Override
+	public SignalSamplesImpl getRawSignalSamplesFromDocument(ExportedSignalDocument document) throws InvalidClassException {
+		MultichannelSampleSource source = getOriginalSourceFromDocument(document);
+		int numberOfChannels = source.getChannelCount();
+		SignalSamplesImpl signalSamples = new SignalSamplesImpl();
+		for (int i = 0; i < numberOfChannels; ++i){
+			try {
+				signalSamples.addChannelSamples(getRawSignalSamplesFromDocument(document, i));
+			} catch (IndexOutOfBoundsException e){
+				throw new RuntimeException("incorrect index of a channel passed");
+			}
+		}
+		return signalSamples;
+	}
+
+	
+	
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.PluginAccessSignal#getTagsFromActiveDocument()
+	 */
+	@Override
+	public Set<ExportedTag> getTagsFromActiveDocument() throws NoActiveObjectException {
+		TagDocument tagDocument = getFocusManager().getActiveTagDocument();
+		if (tagDocument == null) throw new NoActiveObjectException("no active tag document");
+		return new TreeSet<ExportedTag>(tagDocument.getSetOfTags());
+	}
+
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.PluginAccessSignal#getTagsFromAllDocumentsAssociatedWithAcitiveSignal()
+	 */
+	@Override
+	public Set<ExportedTag> getTagsFromAllDocumentsAssociatedWithAcitiveSignal() throws NoActiveObjectException {
+		SignalDocument signalDocument = getFocusManager().getActiveSignalDocument();
+		if (null == signalDocument) throw new NoActiveObjectException("no active signal document");
+		try {
+			return getTagsFromSignalDocument(signalDocument);
+		} catch (InvalidClassException e) {
+			throw new RuntimeException("getActiveSignalDocument() didn't return an object of class SignalDocument");
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.PluginAccessSignal#getTagsFromAllDocuments()
+	 */
+	@Override
+	public Set<ExportedTag> getTagsFromAllDocuments() {
+		ArrayList<SignalDocument> signalDocuments = getSignalDocuments();
+		Set<ExportedTag> tags = new TreeSet<ExportedTag>();
+		for (SignalDocument signalDocument : signalDocuments){
+			try {
+				Set<ExportedTag> tagsTmp = getTagsFromSignalDocument(signalDocument);
+				tags.addAll(tagsTmp);
+			} catch (InvalidClassException e) {
+				//never occurs
+			}
+		}
+		return tags;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.PluginAccessSignal#getActiveTag()
+	 */
+	@Override
+	public ExportedTag getActiveTag() throws NoActiveObjectException {
+		SignalDocument signalDocument = getFocusManager().getActiveSignalDocument();
+		if (signalDocument ==  null) throw new NoActiveObjectException("no active singal document");
+		DocumentView documentView = signalDocument.getDocumentView();
+		if (!(documentView instanceof SignalView)) throw new RuntimeException("signal documetn didn't return a valid SignalView");
+		SignalView signalView = (SignalView) documentView;
+		PositionedTag positionedTag = signalView.getActiveTag();
+		if (positionedTag == null) throw new NoActiveObjectException("no active tag");
+		return positionedTag.getTag();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.PluginAccessSignal#getTagsFromSignalDocument(org.signalml.plugin.export.ExportedSignalDocument)
+	 */
+	@Override
+	public Set<ExportedTag> getTagsFromSignalDocument(ExportedSignalDocument document) throws InvalidClassException {
+		if (!(document instanceof SignalDocument)) throw new InvalidClassException("document is not of type SignalDocument = was not returned from Svarog");
+		SignalDocument signalDocument = (SignalDocument) document;
+		List<TagDocument> tagDocuments = signalDocument.getTagDocuments();
+		Set<ExportedTag> tags = new TreeSet<ExportedTag>();
+		for (TagDocument tagDocument : tagDocuments){
+			tags.addAll(tagDocument.getSetOfTags());
+		}
+		return tags;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.PluginAccessSignal#getActiveSelection()
+	 */
+	@Override
+	public ExportedSignalSelection getActiveSelection() throws NoActiveObjectException {
+		SignalPlot signalPlot = getFocusManager().getActiveSignalPlot();
+		if (signalPlot == null) throw new NoActiveObjectException("no active signal plot");
+		SignalView signalView = signalPlot.getView();
+		ExportedSignalSelection selection = signalView.getSignalSelection();
+		if (selection == null) throw new NoActiveObjectException("no active signal selection");
+		return selection;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.PluginAccessSignal#addTagToActiveTagDocument(org.signalml.plugin.export.Tag)
+	 */
+	@Override
+	public void addTagToActiveTagDocument(ExportedTag tag) throws NoActiveObjectException, IllegalArgumentException {
+		TagDocument tagDocument = getFocusManager().getActiveTagDocument();
+		try {
+			addTagToDocument(tagDocument, tag);
+		} catch (InvalidClassException e) {
+			throw new RuntimeException("FocusManager.getActiveTagDocument() didn't return a valid TagDocument object");
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.PluginAccessSignal#addTagToDocument(org.signalml.plugin.export.ExportedTagDocument, org.signalml.plugin.export.Tag)
+	 */
+	@Override
+	public void addTagToDocument(ExportedTagDocument document, ExportedTag tag) throws InvalidClassException, IllegalArgumentException {
+		if (!(document instanceof TagDocument)) throw new InvalidClassException("document is not of type TagDocument => was not returned from Svarog");
+		TagDocument tagDocument = (TagDocument) document;
+		StyledTagSet tagSet = tagDocument.getTagSet();
+		Set<TagStyle> styles = tagSet.getStyles();
+		TagStyle style = null;
+		for (TagStyle styleTmp : styles){
+			if (styleTmp.equals(tag.getStyle())){
+				style = styleTmp;
+				break;
+			}
+		}
+		if (style == null) throw new IllegalArgumentException("tag style is not in the document");
+		Tag trueTag = new Tag(style, tag.getPosition(), tag.getLength(), tag.getChannel(), tag.getAnnotation());
+		tagSet.addTag(trueTag);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.PluginAccessSignal#getTagDocumentsFromActiveSignal()
+	 */
+	@Override
+	public ExportedTagDocument[] getTagDocumentsFromActiveSignal() throws NoActiveObjectException {
+		SignalDocument signalDocument = getFocusManager().getActiveSignalDocument();
+		if (null == signalDocument) throw new NoActiveObjectException("no active signal document");
+		List<TagDocument> tagDocuments = signalDocument.getTagDocuments();
+		return tagDocuments.toArray(new TagDocument[tagDocuments.size()]);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.PluginAccessSignal#getActiveTagDocument()
+	 */
+	@Override
+	public ExportedTagDocument getActiveTagDocument() throws NoActiveObjectException {
+		ExportedTagDocument exportedTagDocument = getFocusManager().getActiveTagDocument();
+		if (exportedTagDocument == null) throw new NoActiveObjectException("no active tag document");
+		return exportedTagDocument;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.PluginAccessSignal#getActiveDocument()
+	 */
+	@Override
+	public Document getActiveDocument() throws NoActiveObjectException {
+		Document document = getFocusManager().getActiveDocument();
+		if (document == null) throw new NoActiveObjectException("no active document");
+		return document;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.PluginAccessSignal#openSignal(java.lang.String)
+	 */
+	@Override
+	public void openRawSignal(File file, float samplingFrequency, int channelCount, RawSignalSampleType sampleType, RawSignalByteOrder byteOrder, float calibration, float pageSize, int blocksPerPage)
+	throws SignalMLException, IOException {
+		OpenDocumentDescriptor ofd = new OpenDocumentDescriptor();
+		ofd.setMakeActive(true);
+		if (file == null) throw new NullPointerException("file can not be null");
+		if (!file.exists()) throw new IOException("file doesn't exist");
+		if (!file.canRead()) throw new IOException("can not access file");
+		ofd.setFile(file);
+		ofd.setType(ManagedDocumentType.SIGNAL);
+		OpenSignalDescriptor osd = ofd.getSignalOptions();
+		osd.setMethod(OpenSignalMethod.RAW);
+		RawSignalDescriptor descriptor = new RawSignalDescriptor();
+		descriptor.setSamplingFrequency(samplingFrequency);
+		descriptor.setChannelCount(channelCount);
+		descriptor.setSampleType(sampleType);
+		descriptor.setByteOrder(byteOrder);
+		descriptor.setCalibration(calibration);
+		descriptor.setPageSize(pageSize);
+		descriptor.setBlocksPerPage(blocksPerPage);
+		osd.setRawSignalDescriptor(descriptor);
+		DocumentFlowIntegrator documentFlowIntegrator = manager.getDocumentFlowIntegrator();
+		if (!documentFlowIntegrator.maybeOpenDocument(ofd))
+			throw new SignalMLException("failed to open document");
+	}
+
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.PluginAccessSignal#openTagDocument(java.lang.String, org.signalml.plugin.export.ExportedSignalDocument)
+	 */
+	@Override
+	public void openTagDocument(File file, ExportedSignalDocument document)
+	throws SignalMLException, IOException {
+		if (file == null) throw new NullPointerException("file can not be null");
+		if (!(document instanceof SignalDocument)) throw new InvalidClassException("document is not of type SignalDocument = was not returned from Svarog");
+		SignalDocument signalDocument = (SignalDocument) document;
+		if (!file.exists()) throw new IOException("file doesn't exist");
+		if (!file.canRead()) throw new IOException("can not access file");
+		OpenDocumentDescriptor ofd = new OpenDocumentDescriptor();
+		ofd.setType(ManagedDocumentType.TAG);
+		ofd.setMakeActive(true);
+		
+		boolean legTag = true;
+		LegacyTagImporter importer = new LegacyTagImporter();
+		StyledTagSet tagSet = null;
+		try {
+			tagSet = importer.importLegacyTags(file, signalDocument.getSamplingFrequency());
+		} catch (SignalMLException ex) {
+			legTag = false;
+		}
+
+		TagDocument tagDocument = null;
+		try {
+			tagDocument = new TagDocument(tagSet);
+		} catch (SignalMLException ex) {
+			legTag = false;
+		}
+
+		if (legTag) {
+			ofd.getTagOptions().setExistingDocument(tagDocument);
+		} else {
+			ofd.setFile(file);
+		}
+
+		ofd.getTagOptions().setParent(signalDocument);
+
+		DocumentFlowIntegrator documentFlowIntegrator = manager.getDocumentFlowIntegrator();
+		//if (documentFlowIntegrator == null) return false;
+		if (!documentFlowIntegrator.maybeOpenDocument(ofd))
+			throw new SignalMLException("failed to open document");
+	}
+
+
+	/**
+	 * @param manager the manager to set
+	 */
+	public void setManager(ViewerElementManager manager) {
+		this.manager = manager;
+	}
+	
+	/**
+	 * Returns a {@link SignalPlot signal plot} for a {@link SignalView view}
+	 * associated with a given document. 
+	 * @param document the document with the signal. Must be of type SignalDocument
+	 * @return a plot for a view associated with a given document
+	 * @throws InvalidClassException if document is not of type SignalDocument
+	 */
+	private SignalPlot getSignalPlotFromDocument(ExportedSignalDocument document) throws InvalidClassException{
+		if (!(document instanceof SignalDocument)) throw new InvalidClassException("document is not of type SignalDocument = was not returned from Svarog");
+		SignalDocument signalDocument = (SignalDocument) document;
+		DocumentView documentView = signalDocument.getDocumentView();
+		if (!(documentView instanceof SignalView)) throw new RuntimeException("view is not of type SignalView");
+		SignalView signalView = (SignalView) documentView;
+		SignalPlot signalPlot = signalView.getMasterPlot();
+		if (signalPlot == null) throw new RuntimeException("no master plot for signal view");
+		return signalPlot;
+	}
+	
+	/**
+	 * Returns the output of signal samples associated with a given document.
+	 * @param document the document with the signal. Must be of type SignalDocument
+	 * @return the output of signal samples associated with a given document
+	 * @throws InvalidClassException if document is not of type SignalDocument
+	 */
+	private MultichannelSampleSource getOutputFromDocument(ExportedSignalDocument document) throws InvalidClassException{
+		SignalPlot signalPlot = getSignalPlotFromDocument(document);
+		MultichannelSampleSource output = signalPlot.getSignalOutput();	
+		if (output == null) throw new RuntimeException("no output of signal samples for a signal plot");
+		return output;
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.PluginAccessSignal#getProcessedSignalSamplesFromDocument(org.signalml.plugin.export.ExportedSignalDocument, int)
+	 */
+	@Override
+	public ChannelSamplesImpl getProcessedSignalSamplesFromDocument(ExportedSignalDocument document, int channel) throws InvalidClassException, IndexOutOfBoundsException {
+		MultichannelSampleSource output = getOutputFromDocument(document);
+		ChannelSamplesImpl channelSamples = getSamplesFromSource(output, channel);
+		return channelSamples;
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.PluginAccessSignal#getProcessedSignalSamplesFromDocument(org.signalml.plugin.export.ExportedSignalDocument)
+	 */
+	@Override
+	public SignalSamplesImpl getProcessedSignalSamplesFromDocument(ExportedSignalDocument document) throws InvalidClassException {
+		MultichannelSampleSource output = getOutputFromDocument(document);
+		int numberOfChannels = output.getChannelCount();
+		SignalSamplesImpl signalSamples = new SignalSamplesImpl();
+		for (int i = 0; i < numberOfChannels; ++i){
+			signalSamples.addChannelSamples(getProcessedSignalSamplesFromDocument(document, i));
+		}
+		return signalSamples;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.signal.PluginAccessSignal#openSignalWithCodec(java.io.File, java.lang.String)
+	 */
+	@Override
+	public void openSignalWithCodec(File file, String codecFormatName, float pageSize, int blocksPerPage)
+	throws IOException, IllegalArgumentException, SignalMLException {
+		OpenDocumentDescriptor ofd = new OpenDocumentDescriptor();
+		ofd.setMakeActive(true);
+		ofd.setFile(file);
+		ofd.setType(ManagedDocumentType.SIGNAL);
+		OpenSignalDescriptor osd = ofd.getSignalOptions();
+		osd.setMethod(OpenSignalMethod.USE_SIGNALML);
+		SignalParameterDescriptor spd = osd.getParameters();
+		SignalMLCodecManager codecManager = manager.getCodecManager();
+		if (file == null) throw new NullPointerException("file can not be null");
+		if (!file.exists()) throw new IOException("file doesn't exist");
+		if (!file.canRead()) throw new IOException("can not access file");
+		SignalMLCodec codec = codecManager.getCodecForFormat(codecFormatName);
+		if (codec == null) throw new IllegalArgumentException("codec of this name doesn't exist");
+		osd.setCodec(codec);
+		if (spd.isBlocksPerPageEditable()){
+			spd.setBlocksPerPage(blocksPerPage);
+		}
+		if (spd.isPageSizeEditable()){
+			spd.setPageSize(pageSize);
+		}
+		DocumentFlowIntegrator documentFlowIntegrator = manager.getDocumentFlowIntegrator();
+		if (!documentFlowIntegrator.maybeOpenDocument(ofd))
+			throw new SignalMLException("failed to open document");
+	}
+
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.signal.PluginAccessSignal#addCodec(java.io.File, java.lang.String)
+	 */
+	@Override
+	public void addCodec(File codecFile, String codecFormatName) throws IOException {
+		SignalMLCodecManager codecManager = manager.getCodecManager();
+		if (codecFile == null) throw new NullPointerException("file can not be null");
+		if (!codecFile.exists()) throw new IOException("file doesn't exist");
+		if (!codecFile.canRead()) throw new IOException("can not access file");
+		SignalMLCodec codec;
+		try {
+			codec = new XMLSignalMLCodec(codecFile, getProfileDirectory());
+		} catch (XMLCodecException e) {
+			throw new IOException("failed to read codec");
+		}
+		codec.setFormatName(codecFormatName);
+		codecManager.registerSignalMLCodec(codec);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.signal.PluginAccessSignal#openBook(java.io.File)
+	 */
+	@Override
+	public void openBook(File file) throws IOException, SignalMLException {
+		OpenDocumentDescriptor ofd = new OpenDocumentDescriptor();
+		if (file == null) throw new NullPointerException("file can not be null");
+		if (!file.exists()) throw new IOException("file doesn't exist");
+		if (!file.canRead()) throw new IOException("can not access file");
+		ofd.setMakeActive(true);
+		ofd.setFile(file);
+		ofd.setType(ManagedDocumentType.BOOK);
+		DocumentFlowIntegrator documentFlowIntegrator = manager.getDocumentFlowIntegrator();
+		if (!documentFlowIntegrator.maybeOpenDocument(ofd))
+			throw new SignalMLException("failed to open book document");
+	}
+
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.signal.PluginAccessSignal#getProfileDirectory()
+	 */
+	@Override
+	public File getProfileDirectory() {
+		return new File(manager.getProfileDir().getAbsolutePath());
+	}
+
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.signal.PluginAccessSignal#getPluginDirectory()
+	 */
+	@Override
+	public File[] getPluginDirectories() {
+		PluginLoader loader = PluginLoader.getInstance();
+		ArrayList<File> files = loader.getPluginDirs();
+		if (files == null) throw new RuntimeException("no profile directories stored");
+		File[] filesArray = new File[files.size()];
+		int i = 0;
+		for (File file : files){
+			filesArray[i++] = new File(file.getAbsolutePath());
+		}
+		return filesArray;
+	}
+
+	/**
+	 * @return the focusManager
+	 */
+	private ActionFocusManager getFocusManager() {
+		if (focusManager == null) focusManager = manager.getActionFocusManager();
+		return focusManager;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.signal.SvarogAccessSignal#getActiveSignalDocument()
+	 */
+	@Override
+	public ExportedSignalDocument getActiveSignalDocument()
+			throws NoActiveObjectException {
+		Document document = getActiveDocument();
+		if (!(document instanceof ExportedSignalDocument)) throw new NoActiveObjectException("no active signal document");
+		return (ExportedSignalDocument) document;
+	}
+
+}

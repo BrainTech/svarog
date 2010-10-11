@@ -17,10 +17,10 @@ import org.signalml.app.view.dialog.PleaseWaitDialog;
 import org.signalml.app.view.roc.RocDialog;
 import org.signalml.domain.roc.RocData;
 import org.signalml.domain.tag.LegacyTagImporter;
-import org.signalml.exception.SignalMLException;
 import org.signalml.method.iterator.IterableMethod;
 import org.signalml.method.iterator.MethodIteratorData;
 import org.signalml.method.iterator.MethodIteratorResult;
+import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** ArtifactMethodIterationConsumer
