@@ -5,6 +5,7 @@
 package org.signalml.app.document;
 
 import java.beans.IntrospectionException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -301,6 +302,26 @@ public abstract class AbstractSignal extends AbstractDocument implements SignalD
 
 		return list;
 
+	}
+	
+	@Override
+	public ArrayList<String> getMontageChannelLabels(){
+		Montage montage = getMontage();
+		ArrayList<String> labels = new ArrayList<String>(montage.getMontageChannelCount());
+		for (int i = 0; i < montage.getMontageChannelCount(); ++i){
+			labels.add(montage.getMontageChannelLabelAt(i));
+		}
+		return labels;
+	}
+	
+	@Override
+	public ArrayList<String> getSourceChannelLabels(){
+		Montage montage = getMontage();
+		ArrayList<String> labels = new ArrayList<String>(montage.getSourceChannelCount());
+		for (int i = 0; i < montage.getSourceChannelCount(); ++i){
+			labels.add(montage.getSourceChannelLabelAt(i));
+		}
+		return labels;
 	}
 
 }

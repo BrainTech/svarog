@@ -115,4 +115,17 @@ public interface ExportedSignalDocument extends Document {
 	 */
 	List<ExportedTagDocument> getExportedTagDocuments();
 
+	/**
+	 * Returns the array of labels of montage channels.
+	 * At a given index there is a label for the channel of this index. 
+	 * @return the array of labels of montage channels
+	 */
+	List<String> getMontageChannelLabels();
+	
+	/**
+	 * Returns the array of labels of source channels.
+	 * At a given index there is a label for the channel of this index. 
+	 * @return the array of labels of source channels
+	 */
+	List<String> getSourceChannelLabels();
 }

@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InvalidClassException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -41,10 +42,12 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.export.signal.ExportedSignalSelection;
+import org.signalml.plugin.export.signal.ExportedSignalSelectionType;
 import org.signalml.plugin.export.signal.ExportedTag;
 import org.signalml.plugin.export.signal.ExportedTagDocument;
-import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.signal.SignalSamples;
+import org.signalml.plugin.export.signal.SignalSelection;
+import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.plugin.export.view.DocumentView;
@@ -287,7 +290,7 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 	 * @see org.signalml.plugin.export.PluginAccessSignal#getTagsFromAllDocumentsAssociatedWithAcitiveSignal()
 	 */
 	@Override
-	public Set<ExportedTag> getTagsFromAllDocumentsAssociatedWithAcitiveSignal() throws NoActiveObjectException {
+	public List<ExportedTag> getTagsFromAllDocumentsAssociatedWithAcitiveSignal() throws NoActiveObjectException {
 		SignalDocument signalDocument = getFocusManager().getActiveSignalDocument();
 		if (null == signalDocument) throw new NoActiveObjectException("no active signal document");
 		try {
@@ -301,12 +304,12 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 	 * @see org.signalml.plugin.export.PluginAccessSignal#getTagsFromAllDocuments()
 	 */
 	@Override
-	public Set<ExportedTag> getTagsFromAllDocuments() {
+	public List<ExportedTag> getTagsFromAllDocuments() {
 		ArrayList<SignalDocument> signalDocuments = getSignalDocuments();
-		Set<ExportedTag> tags = new TreeSet<ExportedTag>();
+		List<ExportedTag> tags = new ArrayList<ExportedTag>();
 		for (SignalDocument signalDocument : signalDocuments){
 			try {
-				Set<ExportedTag> tagsTmp = getTagsFromSignalDocument(signalDocument);
+				List<ExportedTag> tagsTmp = getTagsFromSignalDocument(signalDocument);
 				tags.addAll(tagsTmp);
 			} catch (InvalidClassException e) {
 				//never occurs
@@ -334,11 +337,11 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 	 * @see org.signalml.plugin.export.PluginAccessSignal#getTagsFromSignalDocument(org.signalml.plugin.export.ExportedSignalDocument)
 	 */
 	@Override
-	public Set<ExportedTag> getTagsFromSignalDocument(ExportedSignalDocument document) throws InvalidClassException {
+	public List<ExportedTag> getTagsFromSignalDocument(ExportedSignalDocument document) throws InvalidClassException {
 		if (!(document instanceof SignalDocument)) throw new InvalidClassException("document is not of type SignalDocument = was not returned from Svarog");
 		SignalDocument signalDocument = (SignalDocument) document;
 		List<TagDocument> tagDocuments = signalDocument.getTagDocuments();
-		Set<ExportedTag> tags = new TreeSet<ExportedTag>();
+		List<ExportedTag> tags = new ArrayList<ExportedTag>();
 		for (TagDocument tagDocument : tagDocuments){
 			tags.addAll(tagDocument.getSetOfTags());
 		}
@@ -371,13 +374,15 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see org.signalml.plugin.export.PluginAccessSignal#addTagToDocument(org.signalml.plugin.export.ExportedTagDocument, org.signalml.plugin.export.Tag)
+	/**
+	 * In the given document finds the {@link TagStyle style} that is equal to
+	 * the style of the provided {@link ExportedTag tag}. 
+	 * @param tagDocument the document in which we are looking for a style
+	 * @param tag the tag for which the actual style is to be found
+	 * @return the style that is equal to the style of the provided tag
+	 * @throws IllegalArgumentException
 	 */
-	@Override
-	public void addTagToDocument(ExportedTagDocument document, ExportedTag tag) throws InvalidClassException, IllegalArgumentException {
-		if (!(document instanceof TagDocument)) throw new InvalidClassException("document is not of type TagDocument => was not returned from Svarog");
-		TagDocument tagDocument = (TagDocument) document;
+	private TagStyle findStyle(TagDocument tagDocument, ExportedTag tag) throws IllegalArgumentException{
 		StyledTagSet tagSet = tagDocument.getTagSet();
 		Set<TagStyle> styles = tagSet.getStyles();
 		TagStyle style = null;
@@ -388,8 +393,58 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 			}
 		}
 		if (style == null) throw new IllegalArgumentException("tag style is not in the document");
-		Tag trueTag = new Tag(style, tag.getPosition(), tag.getLength(), tag.getChannel(), tag.getAnnotation());
-		tagSet.addTag(trueTag);
+		return style;
+	}
+	
+	/**
+	 * From the given {@link ExportedTag exported tag} creates a collection of
+	 * {@link Tag tags} by splitting it to separate blocks/pages (only if
+	 * exported tag has a {@link ExportedSignalSelectionType type}
+	 * {@code BLOCK} or {@code PAGE}).
+	 * If the exported tag has a type {@code CHANNEL} the collection conatins
+	 * only one tag created from it
+	 * @param tag the tag to be converted
+	 * @param tagDocument the document to which the tag will be added;
+	 * used to get styles and lengths of blocks/pages.
+	 * @return the collection of tags
+	 */
+	private Collection<Tag> splitTag(ExportedTag tag, TagDocument tagDocument){
+		float blockOrPageLength = 0;
+		Collection<Tag> tags = new ArrayList<Tag>();
+		TagStyle style = findStyle(tagDocument, tag);
+		if (tag.getType().getName().equals(ExportedSignalSelectionType.BLOCK)){
+			blockOrPageLength = tagDocument.getBlockSize();
+		} else if (tag.getType().getName().equals(ExportedSignalSelectionType.PAGE)){
+			blockOrPageLength = tagDocument.getPageSize();
+		} else {
+			Tag trueTag = new Tag(style, tag.getPosition(), tag.getLength(), tag.getChannel(), tag.getAnnotation());
+			tags.add(trueTag);
+			return tags;
+		}
+		int startBlockOrPage = tag.getStartSegment(blockOrPageLength);
+		int endBlockOrPage = tag.getEndSegment(blockOrPageLength);
+		for (int i=startBlockOrPage; i<endBlockOrPage; i++) {
+			Tag trueTag = new Tag(style, i*blockOrPageLength, blockOrPageLength, SignalSelection.CHANNEL_NULL, tag.getAnnotation());
+			tags.add(trueTag);
+		}
+		return tags;
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.PluginAccessSignal#addTagToDocument(org.signalml.plugin.export.ExportedTagDocument, org.signalml.plugin.export.Tag)
+	 */
+	@Override
+	public void addTagToDocument(ExportedTagDocument document, ExportedTag tag) throws InvalidClassException, IllegalArgumentException {
+		if (!(document instanceof TagDocument)) throw new InvalidClassException("document is not of type TagDocument => was not returned from Svarog");
+		TagDocument tagDocument = (TagDocument) document;
+		StyledTagSet tagSet = tagDocument.getTagSet();
+		TagStyle style = findStyle(tagDocument, tag);
+		ExportedSignalSelectionType type = tag.getType();
+		if (!(style.getType().getName().equals(type.getName()))) throw new IllegalArgumentException("tag style is not in the document");
+		Collection<Tag> tags = splitTag(tag, tagDocument);
+		for (Tag trueTag : tags)
+			tagSet.replaceSameTypeTags(trueTag);
+		tagDocument.setSaved(false);
 	}
 
 	/* (non-Javadoc)

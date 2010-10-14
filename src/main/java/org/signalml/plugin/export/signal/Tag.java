@@ -21,7 +21,7 @@ import org.springframework.context.MessageSourceResolvable;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class Tag extends SignalSelection implements Comparable<Tag>, Cloneable, MessageSourceResolvable, PropertyProvider, ExportedTag {
+public class Tag extends SignalSelection implements Comparable<ExportedTag>, Cloneable, MessageSourceResolvable, PropertyProvider, ExportedTag {
 
     //TODO (can't extend SignalSelection due to strange xstream behaviour)
 	private static final long serialVersionUID = 1L;
@@ -158,7 +158,6 @@ public class Tag extends SignalSelection implements Comparable<Tag>, Cloneable, 
      * &lt; 0 if current is smaller than given;
      * 0 if the selections are equal.
      */
-	@Override
 	public int compareTo(Tag t) {
 
 		float test = position - t.position;

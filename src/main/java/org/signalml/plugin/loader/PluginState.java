@@ -135,7 +135,7 @@ public class PluginState {
 
 	/**
 	 * Adds a {@link PluginDependency dependency} to the
-	 * {@link #missingDependencies list} of missing dependencies. 
+	 * list of missing dependencies. 
 	 * @param missingDependency the dependency to add
 	 */
 	public void addMissingDependency(PluginDependency missingDependency){

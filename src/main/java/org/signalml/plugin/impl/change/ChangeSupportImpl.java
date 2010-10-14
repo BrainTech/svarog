@@ -159,7 +159,7 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 				if (e.getSource() instanceof SignalView){
 					SignalView signalView = (SignalView) e.getSource();
 					PositionedTag positionedTag = signalView.getActiveTag();
-					ExportedTag newActiveTag;
+					Tag newActiveTag;
 					if (positionedTag != null)
 						newActiveTag = positionedTag.getTag();
 					else newActiveTag = null;
@@ -174,6 +174,7 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 								ex.printStackTrace();
 							}
 						}
+						activeTags.put(signalView, newActiveTag);
 					}
 				}
 			}

@@ -6,6 +6,7 @@ package org.signalml.plugin.export.signal;
 import java.io.File;
 import java.io.IOException;
 import java.io.InvalidClassException;
+import java.util.List;
 import java.util.Set;
 
 import org.signalml.app.document.TagDocument;
@@ -146,14 +147,14 @@ public interface SvarogAccessSignal {
 	 * @return the set of tags
 	 * @throws NoActiveObjectException if there is no active signal
 	 */
-	Set<ExportedTag> getTagsFromAllDocumentsAssociatedWithAcitiveSignal() throws NoActiveObjectException;
+	List<ExportedTag> getTagsFromAllDocumentsAssociatedWithAcitiveSignal() throws NoActiveObjectException;
 	
 	/**
 	 * Returns all opened {@link Tag tags} (no matter with which
 	 * document are associated).
-	 * @return the set of tags
+	 * @return the list of tags
 	 */
-	Set<ExportedTag> getTagsFromAllDocuments();
+	List<ExportedTag> getTagsFromAllDocuments();
 	
 	/**
 	 * Returns the active {@link Tag tag}.
@@ -166,11 +167,11 @@ public interface SvarogAccessSignal {
 	 * Returns {@link Tag tags} associated with the given {@link ExportedSignalDocument}.
 	 * @param document the signalDocument. Must be returned from this
 	 * SvarogAcces (actually be of type SignalDocument - internal to Svarog).
-	 * @return the set of tags
+	 * @return the list of tags
 	 * @throws InvalidClassException if document is not returned from
 	 * this SvarogAccess (not of type SignalDocument - internal to Svarog)
 	 */
-	Set<ExportedTag> getTagsFromSignalDocument(ExportedSignalDocument document) throws InvalidClassException;	
+	List<ExportedTag> getTagsFromSignalDocument(ExportedSignalDocument document) throws InvalidClassException;	
 	
 	
 	/**

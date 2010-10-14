@@ -214,6 +214,19 @@ public class GUIAccessImpl implements SvarogAccessGUI {
 		isSubmenu.add(true);
 	}
 	
+	private JMenu copyMenu(JMenu menu){
+		JMenu copy = new JMenu(menu.getText());
+		Component[] menuComponents = menu.getMenuComponents();
+		for (Component component : menuComponents){
+			if (component instanceof JMenuItem){
+				JMenuItem item = (JMenuItem) component;
+				Action action = item.getAction();
+				copy.add(action);
+			}
+		}
+		return copy;
+	}
+	
 	/**
 	 * Adds buttons and submenus from given lists to the given menu.
 	 * To determine the order of adding uses {@code isSubmenu} array.
@@ -222,7 +235,7 @@ public class GUIAccessImpl implements SvarogAccessGUI {
 	 * @param submenus the list with submenus
 	 * @param isSubmenu the list in which order is stored.
 	 * If successive value is false next element from {@code actions}
-	 * is taken, if true element from {@cod submenus} is used.
+	 * is taken, if true element from {@code submenus} is used.
 	 */
 	private void addToPopupMenu(JPopupMenu menu, ArrayList<Action> actions, ArrayList<JMenu> submenus, ArrayList<Boolean> isSubmenu){
 		try {
@@ -232,7 +245,7 @@ public class GUIAccessImpl implements SvarogAccessGUI {
 			}
 			for (Boolean isMenu : isSubmenu){
 				if (isMenu){
-					menu.add(submenus.get(iSubmenu++));
+					menu.add(copyMenu(submenus.get(iSubmenu++)));
 				} else {
 					menu.add(actions.get(iButton++));
 				}

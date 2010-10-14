@@ -31,6 +31,7 @@ import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.dialog.HelpDialog;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.impl.PluginAccessClass;
 import org.signalml.util.SvarogConstants;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.BindException;
@@ -126,7 +127,17 @@ public abstract class AbstractDialog extends JDialog {
 	 * the dialog in which the help for this dialog is displayed
 	 */
 	private HelpDialog helpDialog;
-
+	
+	/**
+	 * Constructor. Sets the default source of messages (obtained from
+	 * {@link PluginAccessClass}).
+	 */
+	public AbstractDialog() {
+		super();
+		messageSource = PluginAccessClass.getSharedInstance().getMessageSource();
+	}
+	
+	
 	/**
 	 * Constructor. Sets message source.
 	 * @param messageSource message source to set

@@ -14,7 +14,7 @@ package org.signalml.plugin.export.signal;
  * 
  * @author Marcin Szumski
  */
-public interface ExportedTag extends ExportedSignalSelection {
+public interface ExportedTag extends ExportedSignalSelection, Comparable<ExportedTag> {
 
 	/**
 	 * Returns the style of this tagged selection.
