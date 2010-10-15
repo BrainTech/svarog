@@ -12,6 +12,7 @@ import org.signalml.app.document.DocumentManager;
 import org.signalml.app.document.DocumentManagerEvent;
 import org.signalml.app.document.DocumentManagerListener;
 import org.signalml.app.document.ManagedDocumentType;
+import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.SignalDocument;
 
 /** SignalTreeModel
@@ -95,7 +96,7 @@ public class SignalTreeModel extends AbstractTreeModel implements DocumentManage
 	@Override
 	public void documentAdded(DocumentManagerEvent e) {
 
-		if (!(e.getDocument() instanceof SignalDocument)) {
+		if (!(e.getDocument() instanceof SignalDocument) || e.getDocument() instanceof MonitorSignalDocument) {
 			return;
 		}
 		SignalDocument signalDocument = (SignalDocument) e.getDocument();
@@ -107,7 +108,7 @@ public class SignalTreeModel extends AbstractTreeModel implements DocumentManage
 
 	@Override
 	public void documentRemoved(DocumentManagerEvent e) {
-		if (!(e.getDocument() instanceof SignalDocument)) {
+		if (!(e.getDocument() instanceof SignalDocument) || e.getDocument() instanceof MonitorSignalDocument) {
 			return;
 		}
 		SignalDocument signalDocument = (SignalDocument) e.getDocument();

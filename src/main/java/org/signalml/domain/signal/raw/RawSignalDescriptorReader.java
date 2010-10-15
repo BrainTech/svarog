@@ -153,6 +153,61 @@ public class RawSignalDescriptorReader {
 
 			}
 
+			Element gainElems = (Element) path.evaluate(RawSignalDocumentBuilder.CALIBRATION_GAIN, rawSignalEl, XPathConstants.NODE);
+			if (gainElems != null && gainElems.hasChildNodes()) {
+								
+				NodeList paramList = (NodeList) path.evaluate( RawSignalDocumentBuilder.CALIBRATION_PARAM, gainElems, XPathConstants.NODESET );
+				if (paramList != null) {
+
+					int paramCount = paramList.getLength();
+					if (paramCount > 0) {
+				
+						float[] params = new float[paramCount];
+	
+						for(int i=0; i<paramCount; i++) {
+					
+							if (i < paramCount) {
+								params[i] = Float.parseFloat(paramList.item(i).getTextContent());
+							} else {
+								params[i] = 1f;
+							}
+							
+						}
+						
+						descriptor.setCalibrationGain( params);
+						
+					}
+				}
+				
+			}
+
+			Element offsetElems = (Element) path.evaluate( RawSignalDocumentBuilder.CALIBRATION_OFFSET, rawSignalEl, XPathConstants.NODE);
+			if (offsetElems != null && offsetElems.hasChildNodes()) {
+								
+				NodeList paramList = (NodeList) path.evaluate( RawSignalDocumentBuilder.CALIBRATION_PARAM, offsetElems, XPathConstants.NODESET);
+				if (paramList != null) {
+
+					int paramCount = paramList.getLength();
+					if (paramCount > 0) {
+				
+						float[] params = new float[paramCount];
+	
+						for (int i=0; i<paramCount; i++) {
+					
+							if (i < paramCount) {
+								params[i] = Float.parseFloat(paramList.item(i).getTextContent());
+							} else {
+								params[i] = 1f;
+							}
+							
+						}
+						
+						descriptor.setCalibrationOffset(params);
+						
+					}
+				}
+				
+			}
 		} catch (XPathExpressionException ex) {
 			throw new SignalMLException("error.invalidRawSignalXML", ex);
 		}

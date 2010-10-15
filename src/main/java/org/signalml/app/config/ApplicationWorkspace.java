@@ -7,6 +7,8 @@ package org.signalml.app.config;
 import java.io.IOException;
 import java.util.LinkedList;
 
+import multiplexer.jmx.client.ConnectException;
+
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.document.BookDocument;
@@ -86,7 +88,9 @@ public class ApplicationWorkspace extends AbstractXMLConfiguration {
 			} catch (IOException ex) {
 				logger.error("Exeption while restoring workspace", ex);
 			} catch (SignalMLException ex) {
-				logger.error("Exeption while restoring workspace", ex);
+				logger.error( "Exeption while restoring workspace", ex );
+			} catch (ConnectException ex) {
+				logger.error( "Exeption while restoring workspace", ex );
 			}
 
 			if (this.activeDocument == workspaceDocument) {
@@ -111,8 +115,7 @@ public class ApplicationWorkspace extends AbstractXMLConfiguration {
 		if (document instanceof FileBackedDocument) {
 
 			type = ManagedDocumentType.getForClass(document.getClass());
-			if (type == ManagedDocumentType.SIGNAL) {
-
+			if (type == ManagedDocumentType.SIGNAL || type == ManagedDocumentType.MONITOR) {
 				WorkspaceSignal signal = new WorkspaceSignal((SignalDocument) document);
 				documents.add(signal);
 
@@ -147,10 +150,8 @@ public class ApplicationWorkspace extends AbstractXMLConfiguration {
 		return documents.size();
 	}
 
-	public Document restoreDocument(WorkspaceDocument workspaceDocument, DocumentFlowIntegrator integrator) throws IOException, SignalMLException {
-
+	public Document restoreDocument(WorkspaceDocument workspaceDocument, DocumentFlowIntegrator integrator) throws IOException, SignalMLException, ConnectException {
 		if (workspaceDocument instanceof WorkspaceSignal) {
-
 			Document document = integrator.openMRUDEntry(workspaceDocument.getMrudEntry());
 			if (document == null || !(document instanceof SignalDocument)) {
 				logger.warn("WARNING: not a signal");

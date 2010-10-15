@@ -27,12 +27,17 @@ public enum ManagedDocumentType implements MessageSourceResolvable {
 	"org/signalml/app/icon/signal.png"
 	),
 
-	BOOK(
-	        "book",
-	        BookDocument.class,
-	        "filechooser.filter.bookFiles",
-	new String[] { "b" },
-	"org/signalml/app/icon/book.png"
+	MONITOR( 
+			"monitor", 
+			MonitorSignalDocument.class 
+	),
+	
+	BOOK( 
+			"book", 
+			BookDocument.class, 
+			"filechooser.filter.bookFiles", 
+			new String[] { "b" },
+			"org/signalml/app/icon/book.png" 
 	),
 
 	TAG(
@@ -94,10 +99,13 @@ public enum ManagedDocumentType implements MessageSourceResolvable {
 	}
 
 	public static ManagedDocumentType[] getAll() {
-		return new ManagedDocumentType[] { SIGNAL, BOOK, TAG };
+		return new ManagedDocumentType[] { SIGNAL, MONITOR, BOOK, TAG };
 	}
 
 	public static ManagedDocumentType getForClass(Class<?> clazz) {
+		if (clazz == MonitorSignalDocument.class) {
+			return ManagedDocumentType.MONITOR;
+		}
 		ManagedDocumentType[] all = getAll();
 		for (int i=0; i<all.length; i++) {
 			if (all[i].baseClass.isAssignableFrom(clazz)) {

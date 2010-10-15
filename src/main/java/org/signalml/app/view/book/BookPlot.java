@@ -446,7 +446,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 		if (fullReconstructionVisible) {
 
 			fullReconstructionRectangle = new Rectangle();
-
+			
 			fullReconstructionRectangle.x = insets.left + reservedLeftWidth;
 			fullReconstructionRectangle.width = availableWidth;
 
@@ -1030,8 +1030,12 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 		}
 
+	
+		if ( signalAntialiased ) {	   
+			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+		}				
+
 		int relX = areaToRepaint.x - area.x;
-//		int relEndX = relX + areaToRepaint.width - 1;
 		int level = area.y + area.height / 2;
 
 		g.setColor(Color.BLUE);
@@ -1039,7 +1043,6 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 
 		g.setColor(Color.BLACK);
 
-		//int firstSample = (int) Math.max( 0, Math.floor( ((double) (relX-1)) / reconstructionPixelPerSample ) - 1 );
 		int firstSample = (int)((minPosition / segment.getSegmentLength()) * samples.length);
 		int lastSample = (int) Math.min(samples.length - 1, (maxPosition / segment.getSegmentLength()) * samples.length);
 		if (lastSample < firstSample) {

@@ -7,7 +7,7 @@ public class Book {
 	 *
 	 */
 	public MPParameters param;
-	public NewAtom      atoms[];
+	public NewAtom atoms[];
 
 	public Book() {
 		param=new MPParameters();
@@ -34,8 +34,8 @@ public class Book {
 		}
 
 		param.MaxNumberOfIteration=lib.getMaxNumberOfIteration();
-		param.EnergyEps=           lib.getEnergyPercent();
-		param.DictionarySize=      lib.getDictionarySize();
+		param.EnergyEps=		   lib.getEnergyPercent();
+		param.DictionarySize=	  lib.getDictionarySize();
 		param.SamplingFrequency=   lib.getSamplingFreq();
 	}
 }

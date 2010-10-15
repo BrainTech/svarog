@@ -14,6 +14,8 @@ import java.util.LinkedList;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
+import org.signalml.domain.montage.filter.FFTSampleFilter;
+import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.util.Util;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
@@ -1244,19 +1246,33 @@ public class Montage extends SourceMontage implements Preset {
 		return filters.get(index).getDefinition();
 	}
 
-        /**
-         * Adds a new filter to a montage.
-         * @param definition a definition of a filter to be added
-         * @return an index of added filter
-         */
+	/**
+	 * Adds a new filter to a montage.
+	 * (Note: {@link TimeDomainSampleFilter TimeDomainSampleFilters} are
+	 * added before {@link FFTSampleFilter FFTSampleFilters}).
+	 * @param definition a definition of a filter to be added
+	 * @return an index of added filter
+	 */
 	public int addSampleFilter(SampleFilterDefinition definition) {
 
 		MontageSampleFilter filter = new MontageSampleFilter(definition);
-		filters.add(filter);
+
+		//time domain filters are added and thus processed before FFTSampleFilters
+		if (definition instanceof TimeDomainSampleFilter) {
+			int i = 0;
+			for (i = 0; i < filters.size(); i++) {
+				if (filters.get(i).getDefinition() instanceof FFTSampleFilter)
+					break;
+			}
+			filters.add(i, filter);
+		}
+		else
+			filters.add(filter);
+
 		int index = filters.indexOf(filter);
 
 		if (!majorChange) {
-			fireMontageSampleFilterAdded(this, new int[] { index });
+			fireMontageSampleFilterAdded(this, new int[] {index});
 			setChanged(true);
 		}
 

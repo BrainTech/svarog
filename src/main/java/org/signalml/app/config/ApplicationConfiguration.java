@@ -110,6 +110,13 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration {
 	private int mapAspectRatioDown = 1;
 
 	private int reconstructionHeight;
+	
+	private String multiplexerAddress;
+	private int multiplexerPort;
+
+	private float  monitorPageSize;
+	
+	private String signalRecorderFileName;
 
 	public void applySystemSettings() {
 
@@ -677,4 +684,35 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration {
 		this.lastExportBookPath = lastExportBookPath;
 	}
 
+	public void setMultiplexerAddress(String multiplexerAddress) {
+		this.multiplexerAddress = multiplexerAddress;
+	}
+
+	public String getMultiplexerAddress() {
+		return multiplexerAddress;
+	}
+
+	public void setMultiplexerPort(int multiplexerPort) {
+		this.multiplexerPort = multiplexerPort;
+	}
+
+	public int getMultiplexerPort() {
+		return multiplexerPort;
+	}
+
+	public double getMonitorPageSize() {
+		return monitorPageSize;
+	}
+
+	public void setMonitorPageSize(float monitorPageSize) {
+		this.monitorPageSize = monitorPageSize;
+	}
+
+	public String getSignalRecorderFileName() {
+		return signalRecorderFileName;
+	}
+
+	public void setSignalRecorderFileName(String signalRecorderFileName) {
+		this.signalRecorderFileName = signalRecorderFileName;
+	}
 }

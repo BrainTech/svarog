@@ -3,8 +3,11 @@
  */
 package org.signalml.app.action;
 
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+
+import multiplexer.jmx.client.ConnectException;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.document.DocumentFlowIntegrator;
@@ -47,7 +50,21 @@ public class OpenDocumentAction extends AbstractSignalMLAction {
 			return;
 		}
 
-		documentFlowIntegrator.maybeOpenDocument(ofd);
+		try {
+			documentFlowIntegrator.openDocument(ofd);
+		} catch(SignalMLException ex) {
+			logger.error("Failed to open document", ex);
+			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+			return;			
+		} catch(IOException ex) {
+			logger.error("Failed to open document - i/o exception", ex);
+			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+			return;			
+		} catch (ConnectException ex) {
+			logger.error("Failed to open document - connection exception", ex);
+			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+			return;		 
+		}
 	}
 
 	@Override

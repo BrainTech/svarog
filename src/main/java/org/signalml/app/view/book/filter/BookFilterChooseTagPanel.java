@@ -86,13 +86,15 @@ public class BookFilterChooseTagPanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(tagFileLabel)
-		        .addComponent(getTagTextField())
-		        .addComponent(getChooseTagButton())
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(tagFileLabel)
+				.addComponent(getTagTextField())
+				.addComponent(getChooseTagButton())
 		);
 
-		layout.setVerticalGroup(vGroup);
+		layout.setVerticalGroup(vGroup);		
+
+
 
 	}
 

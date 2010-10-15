@@ -118,28 +118,28 @@ public class AverageBooksPopupDialog extends AbstractPopupDialog {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(minSegmentLabel)
-		        .addComponent(minSegmentGlue)
-		        .addComponent(getMinSegmentSpinner())
-		);
-
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(minSegmentLabel)
+				.addComponent(minSegmentGlue)
+				.addComponent(getMinSegmentSpinner())
+			);
+		
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(maxSegmentLabel)
-		        .addComponent(maxSegmentGlue)
-		        .addComponent(getMaxSegmentSpinner())
-		);
-
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(maxSegmentLabel)
+				.addComponent(maxSegmentGlue)
+				.addComponent(getMaxSegmentSpinner())
+			);
+		
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(allChannelsLabel)
-		        .addComponent(allChannelsGlue)
-		        .addComponent(getAllChannelsCheckBox())
-		);
-
-		layout.setVerticalGroup(vGroup);
-
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(allChannelsLabel)
+				.addComponent(allChannelsGlue)
+				.addComponent(getAllChannelsCheckBox())
+			);
+		
+		layout.setVerticalGroup(vGroup);		
+				
 		JPanel interfacePanel = new JPanel(new BorderLayout());
 
 		interfacePanel.add(averagePanel, BorderLayout.NORTH);

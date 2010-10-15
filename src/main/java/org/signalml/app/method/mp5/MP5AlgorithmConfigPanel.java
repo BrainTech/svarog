@@ -94,15 +94,15 @@ public class MP5AlgorithmConfigPanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.CENTER)
-		        .addComponent(algorithmLabel)
-		        .addComponent(glue1)
-		        .addComponent(getAlgorithmComboBox())
-		        .addComponent(algorithmHelpButton)
-		);
-
-		layout.setVerticalGroup(vGroup);
-
+				layout.createParallelGroup(Alignment.CENTER)
+				.addComponent(algorithmLabel)
+				.addComponent(glue1)
+				.addComponent(getAlgorithmComboBox())
+				.addComponent(algorithmHelpButton)
+			);
+					
+		layout.setVerticalGroup(vGroup);				
+						
 	}
 
 	public ResolvableComboBox getAlgorithmComboBox() {

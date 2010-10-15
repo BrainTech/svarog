@@ -220,16 +220,16 @@ public class TagStylePropertiesPanel extends JPanel {
 			GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.BASELINE)
-			        .addComponent(widthLabel)
-			        .addComponent(getWidthSpinner())
-			);
+					layout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(widthLabel)
+					.addComponent(getWidthSpinner())
+				);
 
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.BASELINE)
-			        .addComponent(dashLabel)
-			        .addComponent(getDashComboBox())
-			);
+					layout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(dashLabel)
+					.addComponent(getDashComboBox())
+				);
 
 			layout.setVerticalGroup(vGroup);
 
@@ -285,30 +285,30 @@ public class TagStylePropertiesPanel extends JPanel {
 			GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.BASELINE)
-			        .addComponent(nameLabel)
-			        .addComponent(getNameTextField())
-			);
+					layout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(nameLabel)
+					.addComponent(getNameTextField())
+				);
+			
+			vGroup.addGroup(
+					layout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(descriptionLabel)
+					.addComponent(getDescriptionScrollPane())
+				);
 
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.BASELINE)
-			        .addComponent(descriptionLabel)
-			        .addComponent(getDescriptionScrollPane())
-			);
+					layout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(keyLabel)
+					.addComponent(keyPanel)
+				);
 
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.BASELINE)
-			        .addComponent(keyLabel)
-			        .addComponent(keyPanel)
-			);
+					layout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(markerLabel)
+					.addComponent(getMarkerCheckBox())
+				);
 
-			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.BASELINE)
-			        .addComponent(markerLabel)
-			        .addComponent(getMarkerCheckBox())
-			);
-
-			layout.setVerticalGroup(vGroup);
+			layout.setVerticalGroup(vGroup);													
 
 		}
 		return propertiesPanel;

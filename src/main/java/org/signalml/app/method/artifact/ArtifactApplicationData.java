@@ -77,32 +77,32 @@ public class ArtifactApplicationData extends ArtifactData {
 	}
 
 	public void calculate() throws SignalMLException {
-
+				
 		int i;
 
 		Map<String,Integer> keyChannelMap = getKeyChannelMap();
-		ArrayList<Integer> eegChannels = getEegChannels();
+		ArrayList<Integer> eegChannels = getEegChannels();			
 		Map<String,Integer> channelMap = getChannelMap();
-
+		
 		keyChannelMap.clear();
 		eegChannels.clear();
 		channelMap.clear();
-
+					
 		int cnt = montage.getSourceChannelCount();
 		Channel function;
-		for (i=0; i<cnt; i++) {
-			channelMap.put(montage.getSourceChannelLabelAt(i), i);
+		for( i=0; i<cnt; i++ ) {
+			channelMap.put( montage.getSourceChannelLabelAt(i), i );
 			function = montage.getSourceChannelFunctionAt(i);
-			if (function != null) {
-				if (function.getType() == ChannelType.PRIMARY) {
+			if( function != null ) {
+				if( function.getType() == ChannelType.PRIMARY ) {
 					eegChannels.add(i);
 				}
-				if (ArtifactData.keyChannelSet.contains(function)) {
-					keyChannelMap.put(function.getName(), i);
+				if( ArtifactData.keyChannelSet.contains(function) ) {
+					keyChannelMap.put( function.getName(), i );
 				}
 			}
 		}
-
+		
 		SignalView signalView = (SignalView) signalDocument.getDocumentView();
 		SignalPlot plot = signalView.getMasterPlot();
 

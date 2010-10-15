@@ -293,22 +293,22 @@ public class SignalViewingConfigPanel extends JPanel {
 			GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.BASELINE)
-			        .addComponent(tagPaintModeLabel)
-			        .addComponent(getTagPaintModeComboBox())
-			);
+					layout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(tagPaintModeLabel)
+					.addComponent(getTagPaintModeComboBox())
+				);
+			
+			vGroup.addGroup(
+					layout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(signalColorLabel)
+					.addComponent(getSignalColorComboBox())
+				);
 
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.BASELINE)
-			        .addComponent(signalColorLabel)
-			        .addComponent(getSignalColorComboBox())
-			);
-
-			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.BASELINE)
-			        .addComponent(signalXORLabel)
-			        .addComponent(getSignalXORCheckBox())
-			);
+					layout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(signalXORLabel)
+					.addComponent(getSignalXORCheckBox())
+				);
 
 			layout.setVerticalGroup(vGroup);
 
@@ -385,31 +385,31 @@ public class SignalViewingConfigPanel extends JPanel {
 			GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.BASELINE)
-			        .addComponent(channelHeightLabel)
-			        .addComponent(minChannelHeightLabel)
-			        .addComponent(getMinChannelHeightSpinner())
-			        .addComponent(maxChannelHeightLabel)
-			        .addComponent(getMaxChannelHeightSpinner())
-			);
+					layout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(channelHeightLabel)
+					.addComponent(minChannelHeightLabel)
+					.addComponent(getMinChannelHeightSpinner())
+					.addComponent(maxChannelHeightLabel)
+					.addComponent(getMaxChannelHeightSpinner())
+				);
+			
+			vGroup.addGroup(
+					layout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(valueScaleLabel)
+					.addComponent(minValueScaleLabel)
+					.addComponent(getMinValueScaleSpinner())
+					.addComponent(maxValueScaleLabel)
+					.addComponent(getMaxValueScaleSpinner())
+				);
 
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.BASELINE)
-			        .addComponent(valueScaleLabel)
-			        .addComponent(minValueScaleLabel)
-			        .addComponent(getMinValueScaleSpinner())
-			        .addComponent(maxValueScaleLabel)
-			        .addComponent(getMaxValueScaleSpinner())
-			);
-
-			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.BASELINE)
-			        .addComponent(timeScaleLabel)
-			        .addComponent(minTimeScaleLabel)
-			        .addComponent(getMinTimeScaleSpinner())
-			        .addComponent(maxTimeScaleLabel)
-			        .addComponent(getMaxTimeScaleSpinner())
-			);
+					layout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(timeScaleLabel)
+					.addComponent(minTimeScaleLabel)
+					.addComponent(getMinTimeScaleSpinner())
+					.addComponent(maxTimeScaleLabel)
+					.addComponent(getMaxTimeScaleSpinner())
+				);
 
 			layout.setVerticalGroup(vGroup);
 

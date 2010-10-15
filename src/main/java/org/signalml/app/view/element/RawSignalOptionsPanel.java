@@ -169,29 +169,29 @@ public class RawSignalOptionsPanel extends JPanel {
 			GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 			vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-			                .addComponent(samplingFrequencyLabel)
-			                .addComponent(getSamplingFrequencyField())
-			               );
+					.addComponent(samplingFrequencyLabel)
+					.addComponent(getSamplingFrequencyField())
+				);
+			
+			vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(channelCountLabel)
+					.addComponent(getChannelCountField())
+				);
 
 			vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-			                .addComponent(channelCountLabel)
-			                .addComponent(getChannelCountField())
-			               );
+					.addComponent(sampleTypeLabel)
+					.addComponent(getSampleTypeComboBox())
+				);
 
 			vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-			                .addComponent(sampleTypeLabel)
-			                .addComponent(getSampleTypeComboBox())
-			               );
+					.addComponent(byteOrderLabel)
+					.addComponent(getByteOrderComboBox())
+				);
 
 			vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-			                .addComponent(byteOrderLabel)
-			                .addComponent(getByteOrderComboBox())
-			               );
-
-			vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-			                .addComponent(calibrationLabel)
-			                .addComponent(getCalibrationField())
-			               );
+					.addComponent(calibrationLabel)
+					.addComponent(getCalibrationField())
+				);
 
 			layout.setVerticalGroup(vGroup);
 

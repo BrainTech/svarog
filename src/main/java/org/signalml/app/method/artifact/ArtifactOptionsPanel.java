@@ -77,19 +77,19 @@ public class ArtifactOptionsPanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(powerLabel)
-		        .addComponent(getPowerComboBox())
-		);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(powerLabel)
+				.addComponent(getPowerComboBox())
+			);
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(getExclusionCheckBox())
-		        .addComponent(getExclusionButton())
-		);
-
-		layout.setVerticalGroup(vGroup);
-
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(getExclusionCheckBox())
+				.addComponent(getExclusionButton())
+			);
+		
+		layout.setVerticalGroup(vGroup);		
+		
 	}
 
 	public ResolvableComboBox getPowerComboBox() {

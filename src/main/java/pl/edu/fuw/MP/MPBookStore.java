@@ -49,9 +49,9 @@ public class MPBookStore implements StandardBook {
 	}
 
 	/*
-	    public BookAtom []getAtoms() {
-	return library.getAtoms();
-	    }
+	public BookAtom []getAtoms() {
+		return library.getAtoms();
+	}
 	 */
 
 

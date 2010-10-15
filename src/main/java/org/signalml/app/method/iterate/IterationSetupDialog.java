@@ -158,40 +158,40 @@ public class IterationSetupDialog extends AbstractDialog {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(iterationCountLabel)
-		        .addComponent(getIterationCountSpinner())
-		);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(iterationCountLabel)
+				.addComponent(getIterationCountSpinner())
+			);
+		
+		vGroup.addGroup(
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(parameterLabel)
+				.addComponent(getParameterComboBox())
+			);
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(parameterLabel)
-		        .addComponent(getParameterComboBox())
-		);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(iterateLabel)
+				.addComponent(getIterateCheckBox())
+			);
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(iterateLabel)
-		        .addComponent(getIterateCheckBox())
-		);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(iterationStartLabel)
+				.addComponent(getStartSpinner())
+			);
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(iterationStartLabel)
-		        .addComponent(getStartSpinner())
-		);
-
-		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(iterationEndLabel)
-		        .addComponent(getEndSpinner())
-		);
-
-		layout.setVerticalGroup(vGroup);
-
-		interfacePanel.add(baseConfigurationPanel, BorderLayout.NORTH);
-		interfacePanel.add(iterationPanel, BorderLayout.CENTER);
-
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(iterationEndLabel)
+				.addComponent(getEndSpinner())
+			);
+		
+		layout.setVerticalGroup(vGroup);		
+		
+		interfacePanel.add( baseConfigurationPanel, BorderLayout.NORTH );
+		interfacePanel.add( iterationPanel, BorderLayout.CENTER );
+		
 		return interfacePanel;
 
 	}

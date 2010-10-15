@@ -254,16 +254,16 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 			GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.BASELINE)
-			        .addComponent(secondsBeforeLabel)
-			        .addComponent(getSecondsBeforeSpinner())
-			);
-
+					layout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(secondsBeforeLabel)
+					.addComponent(getSecondsBeforeSpinner())
+				);
+			
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.BASELINE)
-			        .addComponent(secondsAfterLabel)
-			        .addComponent(getSecondsAfterSpinner())
-			);
+					layout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(secondsAfterLabel)
+					.addComponent(getSecondsAfterSpinner())
+				);
 
 			layout.setVerticalGroup(vGroup);
 

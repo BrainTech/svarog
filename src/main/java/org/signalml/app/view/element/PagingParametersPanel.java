@@ -87,16 +87,16 @@ public class PagingParametersPanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(pageSizeLabel)
-		        .addComponent(getPageSizeField())
-		);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(pageSizeLabel)
+				.addComponent(getPageSizeField())
+			);
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(blocksPerPageLabel)
-		        .addComponent(getBlocksPerPageField())
-		);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(blocksPerPageLabel)
+				.addComponent(getBlocksPerPageField())
+			);
 
 		layout.setVerticalGroup(vGroup);
 

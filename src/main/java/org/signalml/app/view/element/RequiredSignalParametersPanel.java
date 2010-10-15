@@ -90,22 +90,22 @@ public class RequiredSignalParametersPanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(samplingFrequencyLabel)
-		        .addComponent(getSamplingFrequencyField())
-		);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(samplingFrequencyLabel)
+				.addComponent(getSamplingFrequencyField())
+			);
+		
+		vGroup.addGroup(
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(channelCountLabel)
+				.addComponent(getChannelCountField())
+			);
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(channelCountLabel)
-		        .addComponent(getChannelCountField())
-		);
-
-		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(calibrationLabel)
-		        .addComponent(getCalibrationField())
-		);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(calibrationLabel)
+				.addComponent(getCalibrationField())
+			);
 
 		layout.setVerticalGroup(vGroup);
 

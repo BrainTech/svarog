@@ -85,28 +85,28 @@ public class WholeTimeSpacePanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(signalLengthLabel)
-		        .addComponent(getSignalLengthTextField())
-		);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(signalLengthLabel)
+				.addComponent(getSignalLengthTextField())
+			);
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(pageSizeLabel)
-		        .addComponent(getPageSizeTextField())
-		);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(pageSizeLabel)
+				.addComponent(getPageSizeTextField())
+			);
+		
+		vGroup.addGroup(
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(pageCountLabel)
+				.addComponent(getPageCountTextField())
+			);
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(pageCountLabel)
-		        .addComponent(getPageCountTextField())
-		);
-
-		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(completePagesLabel)
-		        .addComponent(getCompletePagesCheckBox())
-		);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(completePagesLabel)
+				.addComponent(getCompletePagesCheckBox())
+			);
 
 		layout.setVerticalGroup(vGroup);
 

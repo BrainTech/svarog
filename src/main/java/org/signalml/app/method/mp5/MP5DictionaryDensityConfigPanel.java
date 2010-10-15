@@ -108,31 +108,31 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.CENTER)
-		        .addComponent(dilationFactorLabel)
-		        .addComponent(glue1)
-		        .addComponent(getDilationFactorSpinner())
-		        .addComponent(dilationFactorHelpButton)
-		);
+				layout.createParallelGroup(Alignment.CENTER)
+				.addComponent(dilationFactorLabel)
+				.addComponent(glue1)
+				.addComponent(getDilationFactorSpinner())
+				.addComponent(dilationFactorHelpButton)
+			);
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.CENTER)
-		        .addComponent(atomCountLabel)
-		        .addComponent(glue2)
-		        .addComponent(getAtomCountTextField())
-		        .addComponent(atomCountHelpButton)
-		);
+				layout.createParallelGroup(Alignment.CENTER)
+				.addComponent(atomCountLabel)
+				.addComponent(glue2)
+				.addComponent(getAtomCountTextField())
+				.addComponent(atomCountHelpButton)
+			);
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.CENTER)
-		        .addComponent(ramUsageLabel)
-		        .addComponent(glue3)
-		        .addComponent(getRamUsageTextField())
-		        .addComponent(ramUsageHelpButton)
-		);
-
-		layout.setVerticalGroup(vGroup);
-
+				layout.createParallelGroup(Alignment.CENTER)
+				.addComponent(ramUsageLabel)
+				.addComponent(glue3)
+				.addComponent(getRamUsageTextField())
+				.addComponent(ramUsageHelpButton)
+			);
+		
+		layout.setVerticalGroup(vGroup);				
+						
 	}
 
 	@SuppressWarnings("cast")

@@ -89,7 +89,7 @@ public class SignalFFTTool extends SignalTool {
 				Point point = e.getPoint();
 				Rectangle r = new Rectangle(point.x, point.y, 1, 1);
 				((SignalPlot)e.getSource()).scrollRectToVisible(r);
-				if (settings.isChannelSwitching()) {
+				if( settings.isChannelSwitching() ) {
 					int channel = plot.toChannelSpace(point);
 					fftPlot.setParameters(point, channel);
 				} else {

@@ -207,53 +207,53 @@ public class MP5RemoteExecutorDialog extends AbstractDialog {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.CENTER)
-		        .addComponent(typeLabel)
-		        .addComponent(glue1)
-		        .addComponent(getTypeComboBox())
-		);
+				layout.createParallelGroup(Alignment.CENTER)
+				.addComponent(typeLabel)
+				.addComponent(glue1)
+				.addComponent(getTypeComboBox())
+			);
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.CENTER)
-		        .addComponent(urlLabel)
-		        .addComponent(glue2)
-		        .addComponent(getUrlTextField())
-		);
+				layout.createParallelGroup(Alignment.CENTER)
+				.addComponent(urlLabel)
+				.addComponent(glue2)
+				.addComponent(getUrlTextField())
+			);
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.CENTER)
-		        .addComponent(userNameLabel)
-		        .addComponent(glue3)
-		        .addComponent(getUserNameTextField())
-		);
+				layout.createParallelGroup(Alignment.CENTER)
+				.addComponent(userNameLabel)
+				.addComponent(glue3)
+				.addComponent(getUserNameTextField())
+			);
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.CENTER)
-		        .addComponent(passwordLabel)
-		        .addComponent(glue4)
-		        .addComponent(getPasswordField())
-		);
+				layout.createParallelGroup(Alignment.CENTER)
+				.addComponent(passwordLabel)
+				.addComponent(glue4)
+				.addComponent(getPasswordField())
+			);
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.CENTER)
-		        .addComponent(passwordAgainLabel)
-		        .addComponent(glue5)
-		        .addComponent(getPasswordAgainField())
-		);
+				layout.createParallelGroup(Alignment.CENTER)
+				.addComponent(passwordAgainLabel)
+				.addComponent(glue5)
+				.addComponent(getPasswordAgainField())
+			);
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.CENTER)
-		        .addComponent(savePasswordLabel)
-		        .addComponent(glue6)
-		        .addComponent(getSavePasswordCheckBox())
-		);
+				layout.createParallelGroup(Alignment.CENTER)
+				.addComponent(savePasswordLabel)
+				.addComponent(glue6)
+				.addComponent(getSavePasswordCheckBox())
+			);
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(filler1)
-		        .addComponent(glue7)
-		        .addComponent(getLinkLabel())
-		);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(filler1)
+				.addComponent(glue7)
+				.addComponent(getLinkLabel())
+			);
 
 		layout.setVerticalGroup(vGroup);
 

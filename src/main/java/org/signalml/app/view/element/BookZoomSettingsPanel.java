@@ -140,39 +140,38 @@ public class BookZoomSettingsPanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(positionLabel)
-		        .addComponent(minPositionLabel)
-		        .addComponent(getMinPositionSpinner())
-		        .addComponent(positionGlue)
-		        .addComponent(maxPositionLabel)
-		        .addComponent(getMaxPositionSpinner())
-		);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(positionLabel)
+				.addComponent(minPositionLabel)
+				.addComponent(getMinPositionSpinner())
+				.addComponent(positionGlue)
+				.addComponent(maxPositionLabel)
+				.addComponent(getMaxPositionSpinner())
+			);
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(frequencyLabel)
-		        .addComponent(minFrequencyLabel)
-		        .addComponent(getMinFrequencySpinner())
-		        .addComponent(frequencyGlue)
-		        .addComponent(maxFrequencyLabel)
-		        .addComponent(getMaxFrequencySpinner())
-		);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(frequencyLabel)
+				.addComponent(minFrequencyLabel)
+				.addComponent(getMinFrequencySpinner())
+				.addComponent(frequencyGlue)
+				.addComponent(maxFrequencyLabel)
+				.addComponent(getMaxFrequencySpinner())
+			);
 
 		layout.setVerticalGroup(vGroup);
 
 		JPanel preservationPanel = new JPanel(new FlowLayout());
 
-		preservationPanel.setBorder(new CompoundBorder(
-		                                    new TitledBorder(messageSource.getMessage("bookZoomSettings.preserveTitle")),
-		                                    new EmptyBorder(3,3,3,3)
-		                            ));
+		preservationPanel.setBorder( new CompoundBorder(
+				new TitledBorder( messageSource.getMessage("bookZoomSettings.preserveTitle") ),
+				new EmptyBorder( 3,3,3,3 )					
+		));
 
 		preservationPanel.add(getPreserveRatioCheckBox());
 
 		add(rangePanel, BorderLayout.CENTER);
 		add(preservationPanel, BorderLayout.SOUTH);
-
 		Dimension size = getPreferredSize();
 		if (size.width < 150) {
 			size.width = 150;

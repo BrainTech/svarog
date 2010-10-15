@@ -8,6 +8,8 @@ import java.awt.Window;
 import java.io.File;
 import java.io.IOException;
 
+import multiplexer.jmx.client.ConnectException;
+
 import org.apache.log4j.Logger;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.ManagedDocumentType;
@@ -94,9 +96,22 @@ public class MP5MethodConsumer implements InitializingMethodResultConsumer {
 			odd.setFile(new File(bookFilePath));
 			odd.setMakeActive(true);
 			odd.setType(ManagedDocumentType.BOOK);
-
-			if (!documentFlowIntegrator.maybeOpenDocument(odd))
-				return false;
+			
+			try {
+				documentFlowIntegrator.openDocument(odd);
+			} catch(SignalMLException ex) {
+				logger.error("Failed to open document", ex);
+				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+				return false;			
+			} catch(IOException ex) {
+				logger.error("Failed to open document - i/o exception", ex);
+				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+				return false;			
+			} catch (ConnectException ex) {
+				logger.error("Failed to open document - connection exception", ex);
+				ErrorsDialog.showImmediateExceptionDialog(dialogParent, ex);
+				return false;		   
+			}
 		}
 
 		return true;

@@ -70,7 +70,7 @@ public abstract class AbstractDialog extends JDialog {
 		this.messageSource = messageSource;
 	}
 
-	public AbstractDialog(MessageSourceAccessor messageSource,Window w, boolean isModal) {
+	public AbstractDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
 		super(w, (isModal) ? Dialog.ModalityType.APPLICATION_MODAL : Dialog.ModalityType.MODELESS);
 		if (w != null) {
 			hasParent = true;
@@ -94,9 +94,9 @@ public abstract class AbstractDialog extends JDialog {
 			@Override
 			public void windowClosing(WindowEvent arg0) {
 				if (isCancellable()) {
-					getCancelAction().actionPerformed(new ActionEvent(this,0,"cancel"));
+					getCancelAction().actionPerformed(new ActionEvent(this, 0, "cancel"));
 				} else {
-					okAction.actionPerformed(new ActionEvent(this,0,"cancel"));
+					okAction.actionPerformed(new ActionEvent(this, 0, "cancel"));
 				}
 			}
 		});
@@ -126,7 +126,7 @@ public abstract class AbstractDialog extends JDialog {
 	protected final void initializeControlPane() {
 
 		JPanel controlPane = getControlPane();
-		contentPane.add(controlPane,BorderLayout.SOUTH);
+		contentPane.add(controlPane, BorderLayout.SOUTH);
 
 		addContextHelp();
 
@@ -157,7 +157,7 @@ public abstract class AbstractDialog extends JDialog {
 
 		JPanel controlPane = new JPanel();
 		controlPane.setLayout(new BoxLayout(controlPane, BoxLayout.X_AXIS));
-		controlPane.setBorder(new EmptyBorder(3,0,0,0));
+		controlPane.setBorder(new EmptyBorder(3, 0, 0, 0));
 		controlPane.add(Box.createHorizontalGlue());
 
 		getRootPane().setDefaultButton(getOkButton());
@@ -181,9 +181,9 @@ public abstract class AbstractDialog extends JDialog {
 
 	protected void initializeContentPane() {
 
-		contentPane.setBorder(new EmptyBorder(3,3,3,3));
+		contentPane.setBorder(new EmptyBorder(3, 3, 3, 3));
 
-		contentPane.add(getInterface(),BorderLayout.CENTER);
+		contentPane.add(getInterface(), BorderLayout.CENTER);
 
 	}
 
@@ -288,6 +288,30 @@ public abstract class AbstractDialog extends JDialog {
 		// do nothing
 	}
 
+	public boolean validateDialog() {
+
+		if (currentModel != null) {
+			Errors errors = new BindException(currentModel, "data");
+			try {
+				validateDialog(currentModel, errors);
+			} catch (SignalMLException ex) {
+				logger.error("Dialog validation threw an exception", ex);
+				ErrorsDialog.showImmediateExceptionDialog(AbstractDialog.this, ex);
+				currentModel = null;
+				closedWithOk = false;
+				setVisible(false);
+				return false;
+			}
+
+			if (errors.hasErrors()) {
+				showValidationErrors(errors);
+				return false;
+			}
+		}
+		return true;
+
+	}
+
 	public void validateDialog(Object model, Errors errors) throws SignalMLException {
 		/* do nothing */
 	}
@@ -318,8 +342,8 @@ public abstract class AbstractDialog extends JDialog {
 			d = tk.getScreenSize();
 		}
 
-		int x = (int)((d.width - getWidth()) * safeXpos);
-		int y = (int)((d.height - getHeight()) * safeYpos);
+		int x = (int) ((d.width - getWidth()) * safeXpos);
+		int y = (int) ((d.height - getHeight()) * safeYpos);
 
 		if (isUndecorated() && hasParent) {
 			Point parentLoc = getParent().getLocationOnScreen();
@@ -342,14 +366,14 @@ public abstract class AbstractDialog extends JDialog {
 			d = tk.getScreenSize();
 		}
 
-		int x = (int)((d.width - getWidth()) * safeXpos);
-		int y = (int)((d.height - getHeight()) * safeYpos);
+		int x = (int) ((d.width - getWidth()) * safeXpos);
+		int y = (int) ((d.height - getHeight()) * safeYpos);
 
 		Point parentLoc;
 		if (top != null) {
 			parentLoc = top.getLocationOnScreen();
 		} else {
-			parentLoc = new Point(0,0);
+			parentLoc = new Point(0, 0);
 		}
 		x += parentLoc.x;
 		y += parentLoc.y;
@@ -360,14 +384,14 @@ public abstract class AbstractDialog extends JDialog {
 
 	protected ErrorsDialog getErrorsDialog() {
 		if (errorsDialog == null) {
-			errorsDialog = new ErrorsDialog(messageSource,this,true);
+			errorsDialog = new ErrorsDialog(messageSource, this, true);
 		}
 		return errorsDialog;
 	}
 
 	protected HelpDialog getHelpDialog() {
 		if (helpDialog == null) {
-			helpDialog = new HelpDialog(messageSource,this,true);
+			helpDialog = new HelpDialog(messageSource, this, true);
 		}
 		return helpDialog;
 	}
@@ -427,24 +451,8 @@ public abstract class AbstractDialog extends JDialog {
 
 		public void actionPerformed(ActionEvent ev) {
 
-			if (currentModel != null) {
-				Errors errors = new BindException(currentModel, "data");
-				try {
-					validateDialog(currentModel,errors);
-				} catch (SignalMLException ex) {
-					logger.error("Dialog validation threw an exception", ex);
-					ErrorsDialog.showImmediateExceptionDialog(AbstractDialog.this, ex);
-					currentModel = null;
-					closedWithOk = false;
-					setVisible(false);
-					return;
-				}
-
-				if (errors.hasErrors()) {
-					showValidationErrors(errors);
-					return;
-				}
-			}
+			if (validateDialog() == false)
+				return;
 
 			try {
 				fillModelFromDialog(currentModel);
@@ -502,7 +510,7 @@ public abstract class AbstractDialog extends JDialog {
 		public ContextHelpAction(URL url) {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/help.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("help.contextHelpToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION, messageSource.getMessage("help.contextHelpToolTip"));
 			contextHelpURL = url;
 		}
 

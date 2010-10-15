@@ -20,6 +20,7 @@ public class OpenDocumentDescriptor {
 	private boolean makeActive;
 
 	private OpenSignalDescriptor signalOptions = new OpenSignalDescriptor();
+	private OpenMonitorDescriptor monitorOptions = new OpenMonitorDescriptor();
 	private OpenTagDescriptor tagOptions = new OpenTagDescriptor();
 	private OpenBookDescriptor bookOptions = new OpenBookDescriptor();
 
@@ -49,6 +50,10 @@ public class OpenDocumentDescriptor {
 
 	public OpenSignalDescriptor getSignalOptions() {
 		return signalOptions;
+	}
+
+	public OpenMonitorDescriptor getMonitorOptions() {
+		return monitorOptions;
 	}
 
 	public OpenTagDescriptor getTagOptions() {

@@ -124,21 +124,24 @@ public class ConfigurationDefaults {
 			config.setPalette(RainbowMapPalette.getInstance());
 		}
 
-		config.setScaleType(WignerMapScaleType.valueOf(properties.getProperty("application.scaleType")));
-
-		config.setSignalAntialiased(Boolean.parseBoolean(properties.getProperty("application.signalAntialiased")));
-		config.setOriginalSignalVisible(Boolean.parseBoolean(properties.getProperty("application.originalSignalVisible")));
-		config.setFullReconstructionVisible(Boolean.parseBoolean(properties.getProperty("application.fullReconstructionVisible")));
-		config.setReconstructionVisible(Boolean.parseBoolean(properties.getProperty("application.reconstructionVisible")));
-		config.setLegendVisible(Boolean.parseBoolean(properties.getProperty("application.legendVisible")));
-		config.setScaleVisible(Boolean.parseBoolean(properties.getProperty("application.scaleVisible")));
-		config.setAxesVisible(Boolean.parseBoolean(properties.getProperty("application.axesVisible")));
-		config.setAtomToolTipsVisible(Boolean.parseBoolean(properties.getProperty("application.atomToolTipsVisible")));
-
-		config.setMapAspectRatioUp(Integer.parseInt(properties.getProperty("application.mapAspectRatioUp")));
-		config.setMapAspectRatioDown(Integer.parseInt(properties.getProperty("application.mapAspectRatioDown")));
-		config.setReconstructionHeight(Integer.parseInt(properties.getProperty("application.reconstructionHeight")));
-
+		config.setScaleType( WignerMapScaleType.valueOf( properties.getProperty("application.scaleType") ) );
+		
+		config.setSignalAntialiased( Boolean.parseBoolean(properties.getProperty("application.signalAntialiased")) );
+		config.setOriginalSignalVisible( Boolean.parseBoolean(properties.getProperty("application.originalSignalVisible")) );
+		config.setFullReconstructionVisible( Boolean.parseBoolean(properties.getProperty("application.fullReconstructionVisible")) );
+		config.setReconstructionVisible( Boolean.parseBoolean(properties.getProperty("application.reconstructionVisible")) );
+		config.setLegendVisible( Boolean.parseBoolean(properties.getProperty("application.legendVisible")) );
+		config.setScaleVisible( Boolean.parseBoolean(properties.getProperty("application.scaleVisible")) );
+		config.setAxesVisible( Boolean.parseBoolean(properties.getProperty("application.axesVisible")) );
+		config.setAtomToolTipsVisible( Boolean.parseBoolean(properties.getProperty("application.atomToolTipsVisible")) );
+		
+		config.setMapAspectRatioUp( Integer.parseInt(properties.getProperty("application.mapAspectRatioUp")) );
+		config.setMapAspectRatioDown( Integer.parseInt(properties.getProperty("application.mapAspectRatioDown")) );
+		config.setReconstructionHeight( Integer.parseInt(properties.getProperty("application.reconstructionHeight")) );
+		
+		setMultiplexerDefaultParameters( config);
+		setMonitorDefaultParameters( config);
+		setSignalRecorderDefaultParameters( config);
 	}
 
 	public static void setZoomSignalSettingsDefaults(ZoomSignalSettings settings) {
@@ -292,6 +295,26 @@ public class ConfigurationDefaults {
 		parameters.setAlphaPerc2(Double.parseDouble(properties.getProperty("stager.fixed.alphaPerc2")));
 		parameters.setCorrCoeffRems(Double.parseDouble(properties.getProperty("stager.fixed.corrCoeffRems")));
 		parameters.setCorrCoeffSems(Double.parseDouble(properties.getProperty("stager.fixed.corrCoeffSems")));
+
+	}
+	
+	public static void setMultiplexerDefaultParameters( ApplicationConfiguration config ) {
+
+		config.setMultiplexerAddress( properties.getProperty("multiplexer.address"));
+		int port = Integer.parseInt(properties.getProperty("multiplexer.port"));
+		config.setMultiplexerPort( port);
+		
+	}
+	
+	public static void setMonitorDefaultParameters( ApplicationConfiguration config ) {
+
+		config.setMonitorPageSize( Float.parseFloat( properties.getProperty( "monitor.pageSize")));
+
+	}
+	
+	public static void setSignalRecorderDefaultParameters( ApplicationConfiguration config ) {
+
+		config.setSignalRecorderFileName( properties.getProperty( "signalRecorder.fileName"));
 
 	}
 

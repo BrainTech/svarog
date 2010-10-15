@@ -557,4 +557,41 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
 
 	}
 
+	/**
+	 * Checks if the object o is an instance of FFTSampleFilter and if so
+	 * checks if ranges (and appriopriate coefficients) and window types are
+	 * equal.
+	 * @param o object to compare with the FFTSampleFilter
+	 * @return true if the Object o is an FFTSampleFilter with equal ranges
+	 * and window types as this FFTSamplesFilter, false otherwise.
+	 */
+	@Override
+	public boolean equals(Object o) {
+
+		if (!(o instanceof FFTSampleFilter))
+			return false;
+
+		FFTSampleFilter fft = (FFTSampleFilter)o;
+
+		Iterator<Range> it1, it2;
+		Range r1, r2;
+
+		it1 = fft.getRangeIterator();
+		it2 = getRangeIterator();
+		while (it1.hasNext() && it2.hasNext()) {
+			r1 = it1.next();
+			r2 = it2.next();
+			if (r1.compareTo(r2) != 0)
+				return false;
+		}
+		if (it1.hasNext() || it2.hasNext())
+			return false;
+
+		if (!this.windowType.equals(windowType) || this.windowParameter!=fft.windowParameter)
+			return false;
+
+		return true;
+
+	}
+
 }

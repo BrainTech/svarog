@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="SvarogProtocol" default="generate-sources" basedir=".">
+
+  <!-- version -->
+  <property name="version" value="0.0" />
+
+  <property name="src" location="src" />
+  <property name="lib" location="lib" />
+  <property name="generated.src" location="../src/main/java/org/signalml/multiplexer/protocol" />
+
+  <property name="svarog.rules" location="multiplexer.rules" />
+  <property name="constants.src"
+            value="${generated.src}/Constants.java" />
+
+  <property name="svarog.protocol" location="variables.proto" />
+  <property name="svarog.protocol.class"
+            location="${src}/java/org/signalml/multiplexer/protocol/Protocol.java" />
+
+
+  <!-- - - - - - - - - - - - - - - - - - 
+          target: init                      
+         - - - - - - - - - - - - - - - - - -->
+  <target name="init">
+    <mkdir dir="../src/main/java/org/signalml/multiplexer/protocol" />
+  </target>
+
+  <!-- - - - - - - - - - - - - - - - - - 
+          target: constants                      
+         - - - - - - - - - - - - - - - - - -->
+  <target name="constants"
+          depends="init,constants.check"
+          unless="constants.notRequired">
+       <java classname="multiplexer.jmx.tools.CompileConstants">
+         <arg value="-input"/>
+         <arg value="${src}/protobuf/multiplexer.rules"/>
+         <arg value="-outdir"/>
+         <arg value="${generated.src}"/>
+         <arg value="-class"/>
+         <arg value="SvarogConstants"/>
+         <arg value="-package"/>
+         <arg value="org.signalml.multiplexer.protocol"/>
+         <classpath>
+           <pathelement location="${lib}/jmx-0.9-withdeps.jar"/>
+           <pathelement path="${java.class.path}"/>
+         </classpath>
+       </java>
+  </target>
+  <target name="constants.check" depends="init">
+    <uptodate property="constants.notRequired"
+              srcfile="multiplexer.rules"
+              targetfile="${constants.src}" />
+  </target>
+
+  <!-- - - - - - - - - - - - - - - - - - 
+          target: protocol
+         - - - - - - - - - - - - - - - - - -->
+  <target name="protocol"
+          depends="protocol.check"
+          unless="protocol.notRequired">
+    <exec executable="protoc" failonerror="true">
+      <arg value="--proto_path=${src}/protobuf" />
+      <arg value="--java_out=../src/main/java" />
+      <arg value="${src}/protobuf/variables.proto" />
+    </exec>
+  </target>
+  <target name="protocol.check">
+    <uptodate property="protocol.notRequired"
+              srcfile="${src}/protobuf/variables.proto"
+              targetfile="${svarog.protocol.class}" />
+  </target>
+
+  <!-- - - - - - - - - - - - - - - - - - 
+          target: generate-sources
+         - - - - - - - - - - - - - - - - - -->
+  <target name="generate-sources"
+          depends="constants,protocol"
+          description="create the sources that are generated" />
+
+  <!-- ================================= 
+          target: clean              
+         ================================= -->
+  <target name="clean" description="removes generated files">
+    <delete dir="${generated.src}" />
+  </target>
+
+</project>

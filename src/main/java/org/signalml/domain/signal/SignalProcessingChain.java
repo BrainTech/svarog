@@ -171,7 +171,7 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 			}
 		}
 		if (descriptor.isFiltered()) {
-			filter = new MultichannelSampleFilter(output);
+			filter = new MultichannelSampleFilter(output, source);
 			filter.setCurrentMontage(descriptor.getMontage());
 			output = filter;
 		}
@@ -225,7 +225,7 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
          */
 	public static SignalProcessingChain createRawChain(OriginalMultichannelSampleSource source, SignalType signalType) {
 
-		SignalProcessingChain chain = new SignalProcessingChain(source,signalType);
+		SignalProcessingChain chain = new SignalProcessingChain(source, signalType);
 		chain.output = chain.source;
 
 		chain.configureOutput();
@@ -308,6 +308,18 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
          * @param signalType the type of the signal
          * @return the created chain
          */
+        public static SignalProcessingChain createNotBufferedFilteredChain(OriginalMultichannelSampleSource source, SignalType signalType) {
+
+		SignalProcessingChain chain = new SignalProcessingChain(source, signalType);
+		chain.montage = new MultichannelSampleMontage(signalType, chain.source);
+		chain.filter = new MultichannelSampleFilter(chain.montage, source);
+		chain.output = chain.filter;
+
+		chain.configureOutput();
+	
+		return chain;
+
+	}
 	public static SignalProcessingChain createFilteredChain(OriginalMultichannelSampleSource source, SignalType signalType) {
 
 		SignalProcessingChain chain = new SignalProcessingChain(source,signalType);

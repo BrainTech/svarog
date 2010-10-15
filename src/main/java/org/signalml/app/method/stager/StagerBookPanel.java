@@ -86,11 +86,11 @@ public class StagerBookPanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(bookFileLabel)
-		        .addComponent(getBookTextField())
-		        .addComponent(getChooseBookButton())
-		);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(bookFileLabel)
+				.addComponent(getBookTextField())
+				.addComponent(getChooseBookButton())
+			);
 
 		layout.setVerticalGroup(vGroup);
 

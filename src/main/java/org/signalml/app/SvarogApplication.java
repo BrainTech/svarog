@@ -32,6 +32,7 @@ import org.signalml.app.config.SignalMLCodecDescriptor;
 import org.signalml.app.config.ZoomSignalSettings;
 import org.signalml.app.config.preset.BookFilterPresetManager;
 import org.signalml.app.config.preset.FFTSampleFilterPresetManager;
+import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.config.preset.SignalExportPresetManager;
 import org.signalml.app.document.DefaultDocumentManager;
@@ -127,6 +128,8 @@ public class SvarogApplication {
 	private static BookFilterPresetManager bookFilterPresetManager = null;
 	private static SignalExportPresetManager signalExportPresetManager = null;
 	private static FFTSampleFilterPresetManager fftFilterPresetManager = null;
+	private static TimeDomainSampleFilterPresetManager timeDomainSampleFilterPresetManager = null;
+
 	private static MP5ExecutorManager mp5ExecutorManager = null;
 
 	private static ViewerMainFrame viewerMainFrame = null;
@@ -642,6 +645,18 @@ public class SvarogApplication {
 			logger.error("Failed to read FFT sample filter configuration - will use defaults", ex);
 		}
 
+
+		timeDomainSampleFilterPresetManager = new TimeDomainSampleFilterPresetManager();
+		timeDomainSampleFilterPresetManager.setProfileDir(profileDir);
+
+		try {
+			timeDomainSampleFilterPresetManager.readFromPersistence(null);
+		} catch (FileNotFoundException ex) {
+			logger.debug("Time domain sample filter preset config not found - will use defaults");
+		} catch (Exception ex) {
+			logger.error("Failed to read time domain sample filter configuration - will use defaults", ex);
+		}
+
 		splash(null, true);
 
 	}
@@ -830,6 +845,8 @@ public class SvarogApplication {
 		elementManager.setBookFilterPresetManager(bookFilterPresetManager);
 		elementManager.setSignalExportPresetManager(signalExportPresetManager);
 		elementManager.setFftFilterPresetManager(fftFilterPresetManager);
+		elementManager.setTimeDomainSampleFilterPresetManager(timeDomainSampleFilterPresetManager);
+
 		elementManager.setMp5ExecutorManager(mp5ExecutorManager);
 		elementManager.setPreferences(preferences);
 		elementManager.configureImportedElements();
@@ -932,6 +949,12 @@ public class SvarogApplication {
 			fftFilterPresetManager.writeToPersistence(null);
 		} catch (Exception ex) {
 			logger.error("Failed to write FFT sample filter configuration", ex);
+		}
+
+		try {
+			timeDomainSampleFilterPresetManager.writeToPersistence(null);
+		} catch (Exception ex) {
+			logger.error("Failed to write time domain sample filter configuration", ex);
 		}
 
 		try {

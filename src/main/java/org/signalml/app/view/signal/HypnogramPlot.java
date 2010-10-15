@@ -70,9 +70,9 @@ public class HypnogramPlot extends JComponent implements PropertyChangeListener,
 	private int focusEnd;
 	private int focusWidth;
 	private int focusCenter;
-
+		
 	private int factorStep;
-
+	
 	private String noTagsMessage = null;
 
 	private HypnogramMode mode = HypnogramMode.SHOW_ACTIVE;
@@ -444,7 +444,6 @@ public class HypnogramPlot extends JComponent implements PropertyChangeListener,
 	private HypnogramLine getHypnogramLine(Tag tag) {
 
 		String type = tag.getStyle().getName().toLowerCase();
-
 		int linePosition;
 		Color color = null;
 
