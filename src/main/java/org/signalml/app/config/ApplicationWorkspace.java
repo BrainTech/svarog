@@ -86,11 +86,11 @@ public class ApplicationWorkspace extends AbstractXMLConfiguration {
 			try {
 				document = restoreDocument(workspaceDocument, integrator);
 			} catch (IOException ex) {
-				logger.error("Exeption while restoring workspace", ex);
+				logger.error("Exception while restoring workspace", ex);
 			} catch (SignalMLException ex) {
-				logger.error( "Exeption while restoring workspace", ex );
+				logger.error( "Exception while restoring workspace", ex );
 			} catch (ConnectException ex) {
-				logger.error( "Exeption while restoring workspace", ex );
+				logger.error( "Exception while restoring workspace", ex );
 			}
 
 			if (this.activeDocument == workspaceDocument) {
