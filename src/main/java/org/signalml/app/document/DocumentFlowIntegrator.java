@@ -93,6 +93,29 @@ public class DocumentFlowIntegrator {
 		}
 	}
 
+	public boolean maybeOpenDocument(OpenDocumentDescriptor descriptor, Window window) {
+		try {
+			this.openDocument(descriptor);
+			return true;
+		} catch (SignalMLException ex) {
+			logger.error("Failed to open document", ex);
+			ErrorsDialog.showImmediateExceptionDialog(window, ex);
+			return false;
+		} catch (IOException ex) {
+			logger.error("Failed to open document - I/O exception", ex);
+			ErrorsDialog.showImmediateExceptionDialog(window, ex);
+			return false;
+		} catch (ConnectException ex) {
+			logger.error("Failed to open document - connection exception", ex);
+			ErrorsDialog.showImmediateExceptionDialog(window, ex);
+			return false;
+		}
+	}
+
+	public boolean maybeOpenDocument(OpenDocumentDescriptor descriptor) {
+		return this.maybeOpenDocument(descriptor, null);
+	}
+
 	public boolean closeDocument(Document document, boolean saveAsOnly, boolean force) throws IOException, SignalMLException {
 
 		synchronized (documentManager) {

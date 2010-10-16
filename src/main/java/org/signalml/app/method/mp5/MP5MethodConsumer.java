@@ -96,22 +96,9 @@ public class MP5MethodConsumer implements InitializingMethodResultConsumer {
 			odd.setFile(new File(bookFilePath));
 			odd.setMakeActive(true);
 			odd.setType(ManagedDocumentType.BOOK);
-			
-			try {
-				documentFlowIntegrator.openDocument(odd);
-			} catch(SignalMLException ex) {
-				logger.error("Failed to open document", ex);
-				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-				return false;			
-			} catch(IOException ex) {
-				logger.error("Failed to open document - i/o exception", ex);
-				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-				return false;			
-			} catch (ConnectException ex) {
-				logger.error("Failed to open document - connection exception", ex);
-				ErrorsDialog.showImmediateExceptionDialog(dialogParent, ex);
-				return false;		   
-			}
+
+			if (!documentFlowIntegrator.maybeOpenDocument(odd))
+				return false;
 		}
 
 		return true;
