@@ -1,0 +1,6 @@
+*.xml	diff=html
+*.xsd	diff=html
+/.project diff=html
+/.classpath diff=html
+
+*.java  diff=java
