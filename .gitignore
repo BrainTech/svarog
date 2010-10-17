@@ -1,2 +1,8 @@
 target
 log
+*~
+*.bak
+/recv_data.tsv
+/signal.raw
+/signal.xml
+/test.xml

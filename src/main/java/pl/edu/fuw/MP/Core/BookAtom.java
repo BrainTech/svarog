@@ -82,7 +82,6 @@ public class BookAtom implements StandardBookAtom {
 	public String getAtomString(BookHeader head,float SecPP) {
 		int hour,minute,sec;
 		float sec_time;
-
 		sec_time=head.file_offset*SecPP+position/head.FREQUENCY;
 		hour=(int)(sec_time/3600.0F);
 		minute=(int)((sec_time-3600.0F*hour)/60.0F);

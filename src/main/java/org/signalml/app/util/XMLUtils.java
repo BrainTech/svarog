@@ -14,6 +14,7 @@ import java.io.OutputStream;
 
 import org.signalml.app.config.preset.BookFilterPresetManager;
 import org.signalml.app.config.preset.FFTSampleFilterPresetManager;
+import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
 import org.signalml.app.config.preset.SignalExportPresetManager;
 import org.signalml.app.model.SignalExportDescriptor;
 import org.signalml.app.montage.MontagePresetManager;
@@ -33,6 +34,7 @@ import org.signalml.domain.montage.eeg.LeftEarMontageGenerator;
 import org.signalml.domain.montage.eeg.LinkedEarsMontageGenerator;
 import org.signalml.domain.montage.eeg.RightEarMontageGenerator;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
+import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.util.Util;
 
@@ -56,21 +58,22 @@ public abstract class XMLUtils {
 
 	public static void configureStreamerForMontage(XStream streamer) {
 		Annotations.configureAliases(
-		        streamer,
-		        EegChannel.class,
-		        MontagePresetManager.class,
-		        SourceChannel.class,
-		        MontageChannel.class,
-		        SourceMontage.class,
-		        Montage.class,
-		        RawMontageGenerator.class,
-		        LeftEarMontageGenerator.class,
-		        RightEarMontageGenerator.class,
-		        LinkedEarsMontageGenerator.class,
-		        MontageSampleFilter.class,
-		        SampleFilterDefinition.class,
-		        FFTSampleFilter.class
-		);
+				streamer,
+				EegChannel.class,
+				MontagePresetManager.class,
+				SourceChannel.class,
+				MontageChannel.class,
+				SourceMontage.class,
+				Montage.class,
+				RawMontageGenerator.class,
+				LeftEarMontageGenerator.class,
+				RightEarMontageGenerator.class,
+				LinkedEarsMontageGenerator.class,
+				MontageSampleFilter.class,
+				SampleFilterDefinition.class,
+				FFTSampleFilter.class,
+				TimeDomainSampleFilter.class
+		);		
 	}
 
 	public static void configureStreamerForBookFilter(XStream streamer) {
@@ -98,6 +101,14 @@ public abstract class XMLUtils {
 		        streamer,
 		        FFTSampleFilterPresetManager.class,
 		        FFTSampleFilter.class
+		);
+	}
+
+	public static void configureStreamerForTimeDomainSampleFilter(XStream streamer) {
+		Annotations.configureAliases(
+				streamer,
+				TimeDomainSampleFilterPresetManager.class,
+				TimeDomainSampleFilter.class
 		);
 	}
 

@@ -21,10 +21,10 @@ import javax.swing.border.TitledBorder;
 
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.InitializingMethodConfigurer;
-import org.signalml.app.view.dialog.AbstractDialog;
-import org.signalml.exception.SignalMLException;
 import org.signalml.method.Method;
 import org.signalml.method.example.ExampleData;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** ExampleMethodDialog

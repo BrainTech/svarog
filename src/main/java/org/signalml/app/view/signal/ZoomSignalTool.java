@@ -14,13 +14,14 @@ import javax.swing.SwingUtilities;
 
 import org.signalml.app.config.ZoomSignalSettings;
 import org.signalml.app.util.IconUtils;
+import org.signalml.plugin.export.signal.AbstractSignalTool;
 
 /** ZoomSignalTool
  *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class ZoomSignalTool extends SignalTool {
+public class ZoomSignalTool extends AbstractSignalTool {
 
 	private SignalPlot plot;
 	private ZoomSignalPlot zoomPlot;
@@ -65,7 +66,7 @@ public class ZoomSignalTool extends SignalTool {
 			}
 			zoomPlot.setParameters(plot, point, channel);
 			showZoom(point);
-			engaged = true;
+			setEngaged(true);
 			e.consume();
 
 		}
@@ -76,7 +77,7 @@ public class ZoomSignalTool extends SignalTool {
 	public void mouseReleased(MouseEvent e) {
 		if (SwingUtilities.isLeftMouseButton(e)) {
 			hideZoom();
-			engaged = false;
+			setEngaged(false);
 			plot = null;
 			e.consume();
 		}
@@ -90,7 +91,7 @@ public class ZoomSignalTool extends SignalTool {
 				Point point = e.getPoint();
 				Rectangle r = new Rectangle(point.x, point.y, 1, 1);
 				((SignalPlot)e.getSource()).scrollRectToVisible(r);
-				if (settings.isChannelSwitching()) {
+				if( settings.isChannelSwitching() ) {
 					int channel = plot.toChannelSpace(point);
 					zoomPlot.setParameters(point, channel);
 				} else {

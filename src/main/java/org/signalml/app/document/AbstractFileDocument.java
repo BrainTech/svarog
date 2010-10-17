@@ -12,7 +12,8 @@ import java.util.List;
 
 import org.signalml.app.model.LabelledPropertyDescriptor;
 import org.signalml.app.model.PropertyProvider;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.AbstractDocument;
 import org.signalml.util.Util;
 import org.springframework.context.MessageSourceResolvable;
 

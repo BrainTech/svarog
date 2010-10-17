@@ -8,6 +8,8 @@ import java.awt.Window;
 import java.io.File;
 import java.io.IOException;
 
+import multiplexer.jmx.client.ConnectException;
+
 import org.apache.log4j.Logger;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.ManagedDocumentType;
@@ -15,10 +17,10 @@ import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.InitializingMethodResultConsumer;
 import org.signalml.app.model.OpenDocumentDescriptor;
 import org.signalml.app.view.dialog.ErrorsDialog;
-import org.signalml.exception.SignalMLException;
 import org.signalml.method.Method;
 import org.signalml.method.mp5.MP5Data;
 import org.signalml.method.mp5.MP5Result;
+import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.FileUtils;
 
 /** MP5MethodConsumer

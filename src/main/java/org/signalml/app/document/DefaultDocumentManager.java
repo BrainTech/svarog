@@ -13,6 +13,7 @@ import javax.swing.event.EventListenerList;
 
 import org.apache.log4j.Logger;
 import org.signalml.exception.SanityCheckException;
+import org.signalml.plugin.export.signal.Document;
 
 /** DefaultDocumentManager
  *
@@ -253,39 +254,39 @@ public class DefaultDocumentManager implements DocumentManager {
 		Object[] listeners = listenerList.getListenerList();
 		DocumentManagerEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-			if (listeners[i]==DocumentManagerListener.class) {
-				if (e == null) {
-					e = new DocumentManagerEvent(this,document,index,inTypeIndex);
-				}
-				((DocumentManagerListener)listeners[i+1]).documentAdded(e);
-			}
-		}
+			 if (listeners[i]==DocumentManagerListener.class) {
+				 if( e == null ) { 
+					 e = new DocumentManagerEvent(this,document,index,inTypeIndex);
+				 }
+				 ((DocumentManagerListener)listeners[i+1]).documentAdded(e);
+			 }
+		 }
 	}
 
 	protected void fireDocumentRemoved(Document document, int index, int inTypeIndex) {
 		Object[] listeners = listenerList.getListenerList();
 		DocumentManagerEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-			if (listeners[i]==DocumentManagerListener.class) {
-				if (e == null) {
-					e = new DocumentManagerEvent(this,document,index,inTypeIndex);
-				}
-				((DocumentManagerListener)listeners[i+1]).documentRemoved(e);
-			}
-		}
+			 if (listeners[i]==DocumentManagerListener.class) {
+				 if( e == null ) { 
+					 e = new DocumentManagerEvent(this,document,index,inTypeIndex);
+				 }
+				 ((DocumentManagerListener)listeners[i+1]).documentRemoved(e);
+			 }
+		 }
 	}
 
 	protected void fireDocumentPathChanged(Document document, int index, int inTypeIndex) {
 		Object[] listeners = listenerList.getListenerList();
 		DocumentManagerEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-			if (listeners[i]==DocumentManagerListener.class) {
-				if (e == null) {
-					e = new DocumentManagerEvent(this,document,index,inTypeIndex);
-				}
-				((DocumentManagerListener)listeners[i+1]).documentPathChanged(e);
-			}
-		}
+			 if (listeners[i]==DocumentManagerListener.class) {
+				 if( e == null ) { 
+					 e = new DocumentManagerEvent(this,document,index,inTypeIndex);
+				 }
+				 ((DocumentManagerListener)listeners[i+1]).documentPathChanged(e);
+			 }
+		 }
 	}
 
 	public void addDocumentManagerListener(DocumentManagerListener listener) {

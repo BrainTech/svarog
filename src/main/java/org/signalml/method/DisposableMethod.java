@@ -3,7 +3,7 @@
  */
 package org.signalml.method;
 
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 
 /**
  *  This interface is to be implemented by those {@link Method methods} which need to dispose

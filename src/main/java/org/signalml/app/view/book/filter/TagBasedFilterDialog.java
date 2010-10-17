@@ -40,8 +40,8 @@ import org.signalml.app.view.tag.TagIconProducer;
 import org.signalml.app.view.tag.TagStyleListCellRenderer;
 import org.signalml.domain.book.filter.TagBasedAtomFilter;
 import org.signalml.domain.tag.StyledTagSet;
-import org.signalml.domain.tag.TagStyle;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.TagStyle;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
@@ -254,16 +254,16 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 			GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.BASELINE)
-			        .addComponent(secondsBeforeLabel)
-			        .addComponent(getSecondsBeforeSpinner())
-			);
-
+					layout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(secondsBeforeLabel)
+					.addComponent(getSecondsBeforeSpinner())
+				);
+			
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.BASELINE)
-			        .addComponent(secondsAfterLabel)
-			        .addComponent(getSecondsAfterSpinner())
-			);
+					layout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(secondsAfterLabel)
+					.addComponent(getSecondsAfterSpinner())
+				);
 
 			layout.setVerticalGroup(vGroup);
 

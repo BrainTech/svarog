@@ -29,7 +29,7 @@ import org.signalml.app.model.BookFilterDescriptor;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.dialog.AbstractPresetDialog;
 import org.signalml.domain.book.filter.AtomFilterChain;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.validation.BindException;

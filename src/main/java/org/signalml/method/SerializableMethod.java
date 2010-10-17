@@ -7,7 +7,7 @@ package org.signalml.method;
 import java.io.File;
 import java.io.IOException;
 
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 
 /**
  * SerializableMethod interface is to be implemented by those {@link Method methods} which need to

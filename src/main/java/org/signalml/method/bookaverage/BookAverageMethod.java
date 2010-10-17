@@ -9,11 +9,11 @@ import org.apache.log4j.Logger;
 import org.signalml.domain.book.StandardBook;
 import org.signalml.domain.book.StandardBookSegment;
 import org.signalml.domain.book.WignerMapProvider;
-import org.signalml.exception.SignalMLException;
 import org.signalml.method.AbstractMethod;
 import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;
 import org.signalml.method.TrackableMethod;
+import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 

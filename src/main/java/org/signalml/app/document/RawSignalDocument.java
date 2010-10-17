@@ -14,7 +14,7 @@ import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalSampleSource;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 
 /** RawSignalDocument
  *

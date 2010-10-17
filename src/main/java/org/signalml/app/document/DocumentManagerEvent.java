@@ -6,6 +6,8 @@ package org.signalml.app.document;
 
 import java.util.EventObject;
 
+import org.signalml.plugin.export.signal.Document;
+
 /** DocumentManagerEvent
  *
  *

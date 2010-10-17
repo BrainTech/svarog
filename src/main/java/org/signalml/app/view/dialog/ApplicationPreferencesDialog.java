@@ -32,7 +32,8 @@ import org.signalml.app.view.element.SignalZoomSettingsPanel;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.codec.SignalMLCodecSelector;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 

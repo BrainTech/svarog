@@ -71,13 +71,8 @@
 	<entry key="fftFilter">FFT filter</entry>
 	<entry key="fftFilter.effect">{0}</entry>
 
-	<entry key="sampleFilter.td.lowPass">Low pass filter (6th order 0-20 Hz)</entry>
-	<entry key="sampleFilter.td.bandPass">Band pass filter (6th order 10-30 Hz)</entry>
-	<entry key="sampleFilter.td.highPass">High pass filter (6th order 20-4000 Hz)</entry>
-
-	<entry key="sampleFilter.td.lowPassEffect">Low pass filter ({0} pass 6th order 0-20 Hz)</entry>
-	<entry key="sampleFilter.td.bandPassEffect">Band pass filter ({0} pass 6th order 10-30 Hz)</entry>
-	<entry key="sampleFilter.td.highPassEffect">High pass filter ({0} pass 6th order 20-4000 Hz)</entry>
+	<entry key="timeDomainFilter">Time domain filter</entry>
+	<entry key="timeDomainFilter.effect">{0} {1}</entry>
 
 	<entry key="signalSelectionType.page">Page</entry>
 	<entry key="signalSelectionType.block">Block</entry>
@@ -117,6 +112,16 @@
 	<entry key="fft.windowType.HAMMING">Hamming</entry>
 	<entry key="fft.windowType.KAISER">Kaiser</entry>
 	<entry key="fft.windowType.GAUSSIAN">Gaussian</entry>
+
+	<entry key="iirdesigner.approximationFunctionType.BUTTERWORTH">Butterworth</entry>
+	<entry key="iirdesigner.approximationFunctionType.CHEBYSHEV1">Chebyshev I</entry>
+	<entry key="iirdesigner.approximationFunctionType.CHEBYSHEV2">Chebyshev II</entry>
+	<entry key="iirdesigner.approximationFunctionType.ELLIPTIC">Elliptic</entry>
+
+	<entry key="iirdesigner.filterType.LOWPASS">Low-pass</entry>
+	<entry key="iirdesigner.filterType.HIGHPASS">High-pass</entry>
+	<entry key="iirdesigner.filterType.BANDPASS">Band-pass</entry>
+	<entry key="iirdesigner.filterType.BANDSTOP">Band-stop</entry>
 
 	<entry key="sampleType.DOUBLE">Double (64-bit IEEE 754)</entry>
 	<entry key="sampleType.FLOAT">Float (32-bit IEEE 754)</entry>
@@ -175,10 +180,12 @@
 	<entry key="viewer.workspaceTabTitle">Workspace</entry>
 	<entry key="viewer.bookTabTitle">Books</entry>
 	<entry key="viewer.signalTabTitle">Signals</entry>
+	<entry key="viewer.monitorTabTitle">Monitors</entry>
 	<entry key="viewer.tagTabTitle">Tags</entry>
 	<entry key="viewer.workspaceTabToolTip">Shows workspace</entry>
 	<entry key="viewer.bookTabToolTip">Shows open books</entry>
 	<entry key="viewer.signalTabToolTip">Shows open signals</entry>
+	<entry key="viewer.monitorTabToolTip">Shows open monitors</entry>
 	<entry key="viewer.tagTabToolTip">Shows open tags</entry>
 
 	<entry key="viewer.consoleTabTitle">Console</entry>
@@ -256,9 +263,11 @@
 	<entry key="workspaceTree.openDocuments">Open documents</entry>
 	<entry key="workspaceTree.recentDocuments">Recent documents</entry>
 	<entry key="workspaceTree.openSignals">Signals</entry>
+	<entry key="workspaceTree.openMonitors">Monitors</entry>
 	<entry key="workspaceTree.openBooks">Books</entry>
 	<entry key="workspaceTree.openTags">Tags</entry>
 	<entry key="workspaceTree.recentSignals">Signals</entry>
+	<entry key="workspaceTree.recentMonitors">Monitors</entry>
 	<entry key="workspaceTree.recentBooks">Books</entry>
 	<entry key="workspaceTree.recentTags">Tags</entry>
 
@@ -294,12 +303,76 @@
 	<entry key="action.saveAllDocumentsToolTip">Save all unsaved documents</entry>
 	<entry key="action.closeDocument">Close</entry>
 	<entry key="action.closeDocumentToolTip">Close the active document</entry>
+
+	<entry key="action.openMonitorLabel">Open monitor...</entry>
+	<entry key="action.openMonitorToolTip">Open monitor and connect to multiplexer</entry>
+
+	<entry key="action.connectMultiplexer.actionName">Connect</entry>
+	<entry key="action.cancelConnectMultiplexer.actionName">Cancel</entry>
+	<entry key="action.disconnectMultiplexer.actionName">Disconnect</entry>
+	<entry key="action.connectingMultiplexer.badPortNumberMsg">Bad address!</entry>
+	<entry key="action.connectingMultiplexer.badAddressMsg">Bad port number!</entry>
+	<entry key="action.connectingMultiplexer.connectionFailedMsg">Connection failed!</entry>
+	<entry key="action.connectingMultiplexer.connectionTimeoutMsg">Connection timeout!</entry>
+	<entry key="action.connectingMultiplexer.connectionOkMsg">Connection OK!</entry>
+
+	<entry key="action.openMonitor.testMultiplexerConnectionLabel">Test connection</entry>
+	<entry key="action.openMonitor.testMultiplexerConnectionToolTip">Test connection to multiplexer</entry>
+	<entry key="action.openMonitor.testMultiplexerConnectionAccelerator">T</entry>
+	<entry key="action.openMonitor.testMultiplexerConnection.sendingFailedMsg">Sending failed!</entry>
+	<entry key="action.openMonitor.testMultiplexerConnection.receiveTimedout">Receive timed out!</entry>
+	<entry key="action.openMonitor.testMultiplexerConnection.receivedBadReplyMsg">Received bad reply!</entry>
+	<entry key="action.openMonitor.testMultiplexerConnection.receivingFailedMsg">Receiving failed!</entry>
+	<entry key="action.openMonitor.testMultiplexerConnection.connectionOkMsg">Connection ok!</entry>
+
+	<entry key="action.openMonitor.metadataWorker.samplingRate.sendingFailedMsg">Sending failed!</entry>
+	<entry key="action.openMonitor.metadataWorker.samplingRate.receivedBadReplyMsg">Received bad reply!</entry>
+	<entry key="action.openMonitor.metadataWorker.samplingRate.receiveTimedout">Receive timed out!</entry>
+	<entry key="action.openMonitor.metadataWorker.samplingRate.receivingFailedMsg">Receiving failed!</entry>
+
+	<entry key="action.openMonitor.metadataWorker.channelCount.sendingFailedMsg">Sending failed!</entry>
+	<entry key="action.openMonitor.metadataWorker.channelCount.receivedBadReplyMsg">Received bad reply!</entry>
+	<entry key="action.openMonitor.metadataWorker.channelCount.receiveTimedout">Receive timed out!</entry>
+	<entry key="action.openMonitor.metadataWorker.channelCount.receivingFailedMsg">Receiving failed!</entry>
+
+	<entry key="action.openMonitor.metadataWorker.amplifierChannels.sendingFailedMsg">Sending failed!</entry>
+	<entry key="action.openMonitor.metadataWorker.amplifierChannels.receivedBadReplyMsg">Received bad reply!</entry>
+	<entry key="action.openMonitor.metadataWorker.amplifierChannels.receiveTimedout">Receive timed out!</entry>
+	<entry key="action.openMonitor.metadataWorker.amplifierChannels.receivingFailedMsg">Receiving failed!</entry>
+
+	<entry key="action.openMonitor.metadataWorker.channelNames.sendingFailedMsg">Sending failed!</entry>
+	<entry key="action.openMonitor.metadataWorker.channelNames.receivedBadReplyMsg">Received bad reply!</entry>
+	<entry key="action.openMonitor.metadataWorker.channelNames.receiveTimedout">Receive timed out!</entry>
+	<entry key="action.openMonitor.metadataWorker.channelNames.receivingFailedMsg">Receiving failed!</entry>
+
+	<entry key="action.openMonitor.metadataWorker.calibrationGain.sendingFailedMsg">Sending failed!</entry>
+	<entry key="action.openMonitor.metadataWorker.calibrationGain.receivedBadReplyMsg">Received bad reply!</entry>
+	<entry key="action.openMonitor.metadataWorker.calibrationGain.receiveTimedout">Receive timed out!</entry>
+	<entry key="action.openMonitor.metadataWorker.calibrationGain.receivingFailedMsg">Receiving failed!</entry>
+
+	<entry key="action.openMonitor.metadataWorker.calibrationOffset.sendingFailedMsg">Sending failed!</entry>
+	<entry key="action.openMonitor.metadataWorker.calibrationOffset.receivedBadReplyMsg">Received bad reply!</entry>
+	<entry key="action.openMonitor.metadataWorker.calibrationOffset.receiveTimedout">Receive timed out!</entry>
+	<entry key="action.openMonitor.metadataWorker.calibrationOffset.receivingFailedMsg">Receiving failed!</entry>
+
+	<entry key="action.openMonitor.metadataWorker.minimumValue.sendingFailedMsg">Sending failed!</entry>
+	<entry key="action.openMonitor.metadataWorker.minimumValue.receivedBadReplyMsg">Received bad reply!</entry>
+	<entry key="action.openMonitor.metadataWorker.minimumValue.receiveTimedout">Receive timed out!</entry>
+	<entry key="action.openMonitor.metadataWorker.minimumValue.receivingFailedMsg">Receiving failed!</entry>
+
+	<entry key="action.openMonitor.metadataWorker.maximumValue.sendingFailedMsg">Sending failed!</entry>
+	<entry key="action.openMonitor.metadataWorker.maximumValue.receivedBadReplyMsg">Received bad reply!</entry>
+	<entry key="action.openMonitor.metadataWorker.maximumValue.receiveTimedout">Receive timed out!</entry>
+	<entry key="action.openMonitor.metadataWorker.maximumValue.receivingFailedMsg">Receiving failed!</entry>
+
+	<entry key="action.openMonitor.metadataWorker.receivedMetadata">Metadata retrieved!</entry>
+
 	<entry key="action.editPreferences">Preferences...</entry>
 	<entry key="action.editPreferencesToolTip">Edit preferences</entry>
 	<entry key="action.viewMode">View mode</entry>
 	<entry key="action.viewModeToolTip">Maximize the document view (see preferences for settings)</entry>
-  <entry key="action.registerCodec">Register new codec</entry>
-  <entry key="action.registerAllCodecs">Register all codecs</entry>
+	<entry key="action.registerCodec">Register new codec</entry>
+	<entry key="action.registerAllCodecs">Register all codecs</entry>
 	<entry key="action.removeCodec">Remove codec</entry>
 	<entry key="action.newTag">New Tag</entry>
 	<entry key="action.newTagToolTip">Create a new tag for this signal</entry>
@@ -564,6 +637,28 @@
 	<entry key="openDocument.signalChosen">Signal document chosen</entry>
 	<entry key="openDocument.bookChosen">Book document chosen</entry>
 	<entry key="openDocument.tagChosen">Tag document chosen</entry>
+
+<!-- ============================ -->
+
+	<entry key="openMonitor.title">Open monitor</entry>
+	<entry key="openMonitor.multiplexerAddressLabel">Multiplexer address</entry>
+	<entry key="openMonitor.multiplexerPortLabel">Multiplexer port</entry>
+	<entry key="openMonitor.samplingLabel">Sampling</entry>
+	<entry key="openMonitor.channelCountLabel">Channel count</entry>
+	<entry key="openMonitor.calibrationGainLabel">Calibration gain</entry>
+	<entry key="openMonitor.calibrationOffsetLabel">Calibration offset</entry>
+	<entry key="openMonitor.pageSizeLabel">Page size</entry>
+	<entry key="openMonitor.channelsListLabel">Channels</entry>
+	<entry key="openMonitor.saveDataLabel">Select file</entry>
+	<entry key="openMonitor.browseButtonLabel">Browse</entry>
+	<entry key="openDocument.signalAutodetected">Signal document autodetected</entry>
+	<entry key="openDocument.bookAutodetected">Book document autodetected</entry>
+	<entry key="openDocument.tagAutodetected">Tag document autodetected</entry>
+	<entry key="openDocument.signalChosen">Signal document chosen</entry>
+	<entry key="openDocument.bookChosen">Book document chosen</entry>
+	<entry key="openDocument.tagChosen">Tag document chosen</entry>
+	
+<!-- ================================= -->
 	
 	<entry key="openSignal.options.title">Choose options for signal</entry>
 	<entry key="openSignal.options.methodTitle">Choose signal loading method</entry>
@@ -677,6 +772,7 @@
 
 	<entry key="montageFilters.filtersTableTitle">Filters</entry>
 	<entry key="montageFilters.newFFT">New FFT filter</entry>
+	<entry key="montageFilters.newTimeDomainFilter">New time domain filter</entry>
 
 	<entry key="montageFiltersTable.index">Index</entry>
 	<entry key="montageFiltersTable.description">Description</entry>
@@ -695,24 +791,30 @@
 
 	<entry key="montageFilters.addTimeDomainFilterTitle">Add time domain filter</entry>
 
-	<entry key="montageFilters.addFFTFilterTitle">Add filter</entry>
+	<entry key="montageFilters.addFFTFilterTitle">Add FFT filter</entry>
 
 	<entry key="montageFilters.passingFFTFilter">Initially passing filter</entry>
 	<entry key="montageFilters.stoppingFFTFilter">Initially stopping filter</entry>
 
 	<entry key="montageFilters.filterChannelExclusionTitle">Filter channel exclusion</entry>
 
+	<entry key="editSampleFilter.descriptionTitle">Filter description</entry>
+	<entry key="editSampleFilter.graphSpinnerLabel">Maximum graph frequency [Hz]</entry>
+	<entry key="editSampleFilter.graphPanelTitle">Filter design graph</entry>
+	<entry key="editSampleFilter.graphFrequencyLabel">Frequency [Hz]</entry>
+	<entry key="editSampleFilter.graphTitle">Filter frequency response</entry>
+
+	<entry key="error.editSampleFilter.descriptionEmpty">A filter must have a description</entry>
+	<entry key="error.editSampleFilter.descriptionBadChars">Filter description must not contain control characters</entry>
+
 	<entry key="editFFTSampleFilter.title">Edit FFT sample filter</entry>
 	<entry key="editFFTSampleFilter.tableToolTip">Double click a row to copy parameters to new range parameters panel</entry>
 
-	<entry key="editFFTSampleFilter.descriptionTitle">Filter description</entry>
-	<entry key="editFFTSampleFilter.graphPanelTitle">FFT filter design graph</entry>
+
 	<entry key="editFFTSampleFilter.addNewRangeTitle">New range parameters</entry>
 	<entry key="editFFTSampleFilter.rangesTitle">Ranges</entry>
 
 	<entry key="editFFTSampleFilter.graphTitle">FFT coefficients</entry>
-	<entry key="editFFTSampleFilter.graphSpinnerLabel">Maximum graph frequency [Hz]</entry>
-	<entry key="editFFTSampleFilter.graphFrequencyLabel">Frequency [Hz]</entry>
 	<entry key="editFFTSampleFilter.graphCoefficientLabel">Coefficient</entry>
 
 	<entry key="editFFTSampleFilter.fromFrequency">From (incl.) [Hz]</entry>
@@ -727,8 +829,22 @@
 	<entry key="editFFTSampleFilter.table.frequencyRange">Frequency range [Hz]</entry>
 	<entry key="editFFTSampleFilter.table.coefficient">Coefficient</entry>
 
-	<entry key="error.editFFTSampleFilter.descriptionEmpty">A filter must have a description</entry>
-	<entry key="error.editFFTSampleFilter.descriptionBadChars">Filter description must not contain control characters</entry>
+	<entry key="editTimeDomainSampleFilter.title">Edit time domain filter</entry>
+	<entry key="editTimeDomainSampleFilter.filterParametersTitle">Filter parameters</entry>
+
+	<entry key="editTimeDomainSampleFilter.filterType">Filter type</entry>
+	<entry key="editTimeDomainSampleFilter.filterFamily">Filter family</entry>
+	<entry key="editTimeDomainSampleFilter.passbandEdgeFrequency1">Passband edge frequency 1 [Hz]</entry>
+	<entry key="editTimeDomainSampleFilter.passbandEdgeFrequency2">Passband edge frequency 2 [Hz]</entry>
+	<entry key="editTimeDomainSampleFilter.stopbandEdgeFrequency1">Stopband edge frequency 1 [Hz]</entry>
+	<entry key="editTimeDomainSampleFilter.stopbandEdgeFrequency2">Stopband edge frequency 2 [Hz]</entry>
+	<entry key="editTimeDomainSampleFilter.passbandRipple">Passband ripple [dB]</entry>
+	<entry key="editTimeDomainSampleFilter.stopbandAttenuation">Stopband attenuation [dB]</entry>
+
+	<entry key="editTimeDomainSampleFilter.drawFilterFrequencyResponse">Draw filter frequency response</entry>
+
+	<entry key="error.editTimeDomainSampleFilter.badFilterParameters">The filter cannot be designed for the given parameters - please correct them.</entry>
+	<entry key="error.editTimeDomainSampleFilter.badFilterParametersFilterOrderTooBig">The order of the filter designed for the given parameters is too big - please correct the parameters.</entry>
 
 	<entry key="signalSpace.signalLevelType.title">Signal source level</entry>
 	<entry key="signalSpace.signalLevelType.rawSignal">Raw signal</entry>

@@ -35,9 +35,10 @@ import javax.swing.event.ChangeListener;
 import org.signalml.app.document.TagDocument;
 import org.signalml.domain.tag.SleepTagName;
 import org.signalml.domain.tag.StyledTagSet;
-import org.signalml.domain.tag.Tag;
 import org.signalml.domain.tag.TagEvent;
 import org.signalml.domain.tag.TagListener;
+import org.signalml.plugin.export.signal.Tag;
+import org.signalml.plugin.impl.PluginAccessClass;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** HypnogramPlot
@@ -70,9 +71,9 @@ public class HypnogramPlot extends JComponent implements PropertyChangeListener,
 	private int focusEnd;
 	private int focusWidth;
 	private int focusCenter;
-
+		
 	private int factorStep;
-
+	
 	private String noTagsMessage = null;
 
 	private HypnogramMode mode = HypnogramMode.SHOW_ACTIVE;
@@ -328,6 +329,8 @@ public class HypnogramPlot extends JComponent implements PropertyChangeListener,
 			allRadio = new JRadioButtonMenuItem(messageSource.getMessage("hypnogram.paintForAllTags"));
 			group.add(allRadio);
 			popupMenu.add(allRadio);
+			
+			PluginAccessClass.getGUIImpl().addToHypnogramPlotPopupMenu(popupMenu);
 
 			ActionListener actionListener = new ActionListener() {
 				@Override
@@ -444,7 +447,6 @@ public class HypnogramPlot extends JComponent implements PropertyChangeListener,
 	private HypnogramLine getHypnogramLine(Tag tag) {
 
 		String type = tag.getStyle().getName().toLowerCase();
-
 		int linePosition;
 		Color color = null;
 

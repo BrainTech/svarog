@@ -1,4 +1,4 @@
-/* SampleFilter.java created 2007-09-24
+/* MultichannelSampleFilter.java created 2007-09-24
  *
  */
 
@@ -9,6 +9,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.Vector;
+import java.util.concurrent.Semaphore;
+import java.util.logging.Level;
 
 import org.apache.log4j.Logger;
 import org.signalml.domain.montage.Montage;
@@ -16,9 +18,10 @@ import org.signalml.domain.montage.MontageMismatchException;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
+import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 
 /**
- * This class represents a filter of samples for multichannel signal.
+ * This abstract class represents a filter of samples for multichannel signal.
  * It contains the list of {@link SampleFilterEngine engines} for every channel
  * and uses them to filter samples.
  *
@@ -26,52 +29,145 @@ import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
  */
 public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 
+	protected OriginalMultichannelSampleSource originalSource;
+
 	protected static final Logger logger = Logger.getLogger(MultichannelSampleFilter.class);
 
         /**
          * a vector that at each index (being also the index of a channel) holds
          * a chain (list) of {@link SampleFilterEngine engines}.
          */
-	private Vector<LinkedList<SampleFilterEngine>> chains;
+	protected Vector<LinkedList<SampleFilterEngine>> chains;
 
         /**
          * the {@link Montage montage} with which this filter is associated
          */
 	private Montage currentMontage = null;
 
-        /**
-         * Constructor. Creates an empty sample filter using a given source
-         * @param source the source of samples
-         */
+	/**
+	 * A boolean indicating if montage has just changed.
+	 * For the use of {@link updateTimeDomainSampleFilterEnginesCache()}.
+	 */
+	private boolean newMontage = false;
+
+	/**
+	 * A semaphore to prevent using getSamples() and
+	 * applyMontage() simultaneously in a multithreading enviroment.
+	 */
+	private Semaphore semaphore = new Semaphore(1);
+
+	/**
+	 * Constructor. Creates an empty sample filter using a given source.
+	 * @param source the source of samples
+	 */
 	public MultichannelSampleFilter(MultichannelSampleSource source) {
 		super(source);
 		reinitFilterChains();
 	}
 
-        /**
-         * Returns the given number of filtered samples for a given channel
-         * starting from a given position in time.
-         * Filtering is done by the last of {@link SampleFilterEngine engines}
-         * associated with a given channel.
-         * @param channel the number of channel
-         * @param target the array to which results will be written starting
-         * from position <code>arrayOffset</code>
-         * @param signalOffset the position (in time) in the signal starting
-         * from which samples will be returned
-         * @param count the number of samples to be returned
-         * @param arrayOffset the offset in <code>target</code> array starting
-         * from which samples will be written
-         */
-	@Override
-	public void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
+	/**
+	 * Constructor. Creates an empty sample filter using a given source and
+	 * a given original sample source. Original source of samples is used to
+	 * detect changes in original source of signal (i.e. new samples) which
+	 * should be used to update the cached filtered signal which is stored
+	 * in {@link TimeDomainSampleFilterEngine TimeDomainSampleFilterEngines}.
+	 * This is useful if the originalSource is an instance of
+	 * {@link ChangeableMultichannelSampleSource}.
+	 * @param source the source of samples
+	 * @param originalSource the original source of samples
+	 */
+	public MultichannelSampleFilter(MultichannelSampleSource source, OriginalMultichannelSampleSource originalSource) {
+		this(source);
+		this.originalSource = originalSource;
+	}
 
-		LinkedList<SampleFilterEngine> chain = chains.get(channel);
-		if (chain.isEmpty()) {
-			source.getSamples(channel, target, signalOffset, count, arrayOffset);
-		} else {
-			ListIterator<SampleFilterEngine> it = chain.listIterator(chain.size());
-			SampleFilterEngine last = it.previous();
-			last.getSamples(target, signalOffset, count, arrayOffset);
+	/**
+	 * Updates the filtered signal cache in all
+	 * {@link TimeDomainSampleFilterEngine TimeDomainSampleFilterEngines}
+	 * in the MultichannelSampleFilter.
+	 *
+	 * @param samplesAdded how many new samples were added to the originalSource
+	 * since the last time this method was evoked.
+	 */
+	private void updateTimeDomainSampleFilterEnginesCache(int samplesAdded) {
+
+		SampleFilterEngine eng;
+		Iterator<SampleFilterEngine> it;
+		for (int i = 0; i < chains.size(); i++) {
+
+			it = (chains.get(i)).iterator();
+			while (it.hasNext()) {
+				eng = it.next();
+				if (eng instanceof TimeDomainSampleFilterEngine) {
+					((TimeDomainSampleFilterEngine)eng).updateCache(samplesAdded);
+				}
+			}
+
+		}
+
+	}
+
+	/**
+	 * Updates the filtered signal cache in all
+	 * {@link TimeDomainSampleFilterEngine TimeDomainSampleFilterEngines}
+	 * in the MultichannelSampleFilter. Automatically detects the number of
+	 * new samples if originalSource is {@link ChangeableMultichannelSampleSource}
+	 * and runs the {@link MultichannelSampleSource#updateTimeDomainSampleFilterEnginesCache(int)}.
+	 * Has no effect if the originalSource is not a {@link ChangeableMultichannelSampleSource}.
+	 */
+	private void updateTimeDomainSampleFilterEnginesCache() {
+
+		if (originalSource instanceof ChangeableMultichannelSampleSource) {
+			ChangeableMultichannelSampleSource os = (ChangeableMultichannelSampleSource)originalSource;
+			try {
+				semaphore.acquire();
+				os.lock();
+
+				int samplesAdded;
+				if (newMontage) {
+					newMontage = false;
+					samplesAdded = source.getSampleCount(0);
+					os.clearNewSamplesCount();
+				}
+				else
+					samplesAdded = os.getNewSamplesCount();
+
+				if (samplesAdded > 0)
+					updateTimeDomainSampleFilterEnginesCache(samplesAdded);
+			}
+			catch (InterruptedException ex) {
+				java.util.logging.Logger.getLogger(MultichannelSampleFilter.class.getName()).log(Level.SEVERE, null, ex);
+			}
+			finally {
+				os.unlock();
+				semaphore.release();
+			}
+		}
+
+	}
+
+	@Override
+	public synchronized void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
+
+		try {
+			if (originalSource instanceof ChangeableMultichannelSampleSource)
+				updateTimeDomainSampleFilterEnginesCache();
+			semaphore.acquire();
+
+			LinkedList<SampleFilterEngine> chain = chains.get(channel);
+			if (chain.isEmpty()) {
+				source.getSamples(channel, target, signalOffset, count, arrayOffset);
+			} else {
+				ListIterator<SampleFilterEngine> it = chain.listIterator(chain.size());
+				SampleFilterEngine last = it.previous();
+				last.getSamples(target, signalOffset, count, arrayOffset);
+			}
+		}
+		catch (InterruptedException ex) {
+			java.util.logging.Logger.getLogger(MultichannelSampleFilter.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		finally {
+			semaphore.release();
 		}
 
 	}
@@ -144,22 +240,12 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 
 	}
 
-        /**
-         * Returns the {@link Montage montage} associated with this sample filter
-         * @return the montage associated with this sample filter
-         */
 	public Montage getCurrentMontage() {
 		return currentMontage;
 	}
 
-        /**
-         * Sets the {@link Montage montage} to be associated with this sample
-         * filter
-         * @param currentMontage the montage which will be associated with this
-         * sample filter
-         * @throws MontageMismatchException
-         */
 	public void setCurrentMontage(Montage currentMontage) throws MontageMismatchException {
+
 		try {
 			applyMontage(currentMontage);
 		} catch (MontageMismatchException ex) {
@@ -169,62 +255,150 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 			throw ex;
 		}
 		this.currentMontage = currentMontage;
+
 	}
 
-        //TODO when exception is thrown? I can't find the place....
-        /**
-         * Clears the filter {@link SampleFilterEngine engines} and initialises
-         * them creating {@link FFTSampleFilterEngine FFT filter engines}
-         * based on {@link FFTSampleFilter FFT filters} from a given montage.
-         * @param montage the montage used to create new engines
-         * @throws MontageMismatchException
-         */
-	private void applyMontage(Montage montage) throws MontageMismatchException {
-
-		reinitFilterChains();
-		if (!montage.isFilteringEnabled()) {
-			return;
-		}
+	/**
+	 * Imports all {@link TimeDomainSampleFilter time domain filters} from the
+	 * given montage to the {@link MultichannelSampleFilter}.
+	 *
+	 * @param montage the montage from which the filters will be imported
+	 */
+	private void importTimeDomainFiltersFromMontage(Montage montage) {
 
 		int channelCount = montage.getMontageChannelCount();
-
-		FFTSampleFilter[] summaryFFTFilters = new FFTSampleFilter[channelCount];
-		FFTSampleFilter fftFilter;
-
 		int filterCount = montage.getSampleFilterCount();
 		SampleFilterDefinition[] definitions = new SampleFilterDefinition[filterCount];
-		int i;
-		int e;
-		Iterator<Range> it;
-		Range range;
+		TimeDomainSampleFilter tdsFilter;
+		LinkedList<SampleFilterEngine> chain;
 
-		for (i=0; i<filterCount; i++) {
+		SampleSource input;//input for the next filter in the list
+
+		int i, e;
+
+		for (i = 0; i < filterCount; i++) {
+
 			definitions[i] = montage.getSampleFilterAt(i);
-			if (definitions[i] instanceof FFTSampleFilter) {
 
-				fftFilter = (FFTSampleFilter) definitions[i];
-				it = fftFilter.getRangeIterator();
-				while (it.hasNext()) {
-					range = it.next();
+			if (definitions[i] instanceof TimeDomainSampleFilter) {
 
-					for (e=0; e<channelCount; e++) {
-						if (!montage.isFilteringExcluded(i, e)) {
-							if (summaryFFTFilters[e] == null) {
-								summaryFFTFilters[e] = new FFTSampleFilter(true);
-							}
-							summaryFFTFilters[e].setRange(range, true);
-						}
+				tdsFilter = (TimeDomainSampleFilter) definitions[i];
+				tdsFilter.setSamplingFrequency(source.getSamplingFrequency());
+
+				for (e = 0; e < channelCount; e++) {
+					if (!montage.isFilteringExcluded(i, e)) {
+
+						chain = chains.get(e);
+
+						if (chain.isEmpty())
+							input = new ChannelSelectorSampleSource(source, e);
+						else
+							input = chain.getLast();
+
+						addFilter(new TimeDomainSampleFilterEngine(input, tdsFilter), e);
+
 					}
 
 				}
 
 			}
+
 		}
 
-		for (e=0; e<channelCount; e++) {
-			if (summaryFFTFilters[e] != null) {
-				addFilter(new FFTSampleFilterEngine(new ChannelSelectorSampleSource(source,e), summaryFFTFilters[e]), e);
+	}
+
+	/**
+	 * Imports all {@link FFTSampleFilter FFT filters} from the
+	 * given montage to the {@link MultichannelSampleFilter}.
+	 *
+	 * @param montage the montage from which the filters will be imported
+	 */
+	private void importFFTSampleFiltersFromMontage(Montage montage) {
+
+		int channelCount = montage.getMontageChannelCount();
+		int filterCount = montage.getSampleFilterCount();
+		SampleFilterDefinition[] definitions = new SampleFilterDefinition[filterCount];
+		LinkedList<SampleFilterEngine> chain;
+
+		FFTSampleFilter fftFilter;
+		FFTSampleFilter[] summaryFFTFilters = new FFTSampleFilter[channelCount];
+		Iterator<Range> rangeIterator;
+		Range range;
+		SampleSource input;//input for the next filter in the list
+
+		int i, e;
+
+		for (i = 0; i < filterCount; i++) {
+
+			definitions[i] = montage.getSampleFilterAt(i);
+			if (definitions[i] instanceof FFTSampleFilter) {
+
+				fftFilter = (FFTSampleFilter) definitions[i];
+				rangeIterator = fftFilter.getRangeIterator();
+				while (rangeIterator.hasNext()) {
+					range = rangeIterator.next();
+
+					for (e = 0; e < channelCount; e++) {
+						if (!montage.isFilteringExcluded(i, e)) {
+							if (summaryFFTFilters[e] == null)
+								summaryFFTFilters[e] = new FFTSampleFilter(true);
+							summaryFFTFilters[e].setRange(range, true);
+						}
+					}
+				}
 			}
+
+		}
+
+		for (e = 0; e < channelCount; e++) {
+
+			if (summaryFFTFilters[e] != null) {
+
+				chain = chains.get(e);
+
+				if (chain.isEmpty())
+					input = new ChannelSelectorSampleSource(source, e);
+				else
+					input = chain.getLast();
+
+				addFilter(new FFTSampleFilterEngine(input, summaryFFTFilters[e]), e);
+
+			}
+		}
+
+	}
+
+	/**
+	 * Clears the filter {@link SampleFilterEngine engines} and initialises
+	 * them creating {@link SampleFilterEngine filter engines}
+	 * based on {@link SampleFilter sample filters} (both FFT and Time Domain) from a given montage.
+	 * @param montage the montage used to create new engines
+	 * @throws MontageMismatchException
+	 */
+	protected synchronized void applyMontage(Montage montage) throws MontageMismatchException {
+
+		try {
+			semaphore.acquire();
+
+			reinitFilterChains();
+			if (!montage.isFilteringEnabled()) {
+				return;
+			}
+
+			importTimeDomainFiltersFromMontage(montage);
+			importFFTSampleFiltersFromMontage(montage);
+
+			newMontage = true;
+
+		} catch (InterruptedException ex) {
+			java.util.logging.Logger.getLogger(MultichannelSampleFilter.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		finally {
+			semaphore.release();
+		}
+
+		if (!(originalSource instanceof ChangeableMultichannelSampleSource)) {
+			updateTimeDomainSampleFilterEnginesCache(source.getSampleCount(0));
 		}
 
 	}

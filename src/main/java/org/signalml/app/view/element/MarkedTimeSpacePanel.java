@@ -24,7 +24,7 @@ import org.signalml.app.view.tag.TagStyleListCellRenderer;
 import org.signalml.domain.signal.space.MarkerTimeSpace;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
-import org.signalml.domain.tag.TagStyle;
+import org.signalml.plugin.export.signal.TagStyle;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
@@ -108,16 +108,16 @@ public class MarkedTimeSpacePanel extends JPanel {
 			GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.BASELINE)
-			        .addComponent(markerChannelLabel)
-			        .addComponent(getMarkerChannelComboBox())
-			);
+					layout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(markerChannelLabel)
+					.addComponent(getMarkerChannelComboBox())
+				);
 
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.BASELINE)
-			        .addComponent(markerStyleLabel)
-			        .addComponent(getMarkerStyleComboBox())
-			);
+					layout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(markerStyleLabel)
+					.addComponent(getMarkerStyleComboBox())
+				);
 
 			layout.setVerticalGroup(vGroup);
 
@@ -187,19 +187,18 @@ public class MarkedTimeSpacePanel extends JPanel {
 			GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.BASELINE)
-			        .addComponent(secondsBeforeLabel)
-			        .addComponent(getSecondsBeforeSpinner())
-			);
+					layout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(secondsBeforeLabel)
+					.addComponent(getSecondsBeforeSpinner())
+				);
 
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.BASELINE)
-			        .addComponent(secondsAfterLabel)
-			        .addComponent(getSecondsAfterSpinner())
-			);
+					layout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(secondsAfterLabel)
+					.addComponent(getSecondsAfterSpinner())
+				);
 
 			layout.setVerticalGroup(vGroup);
-
 		}
 		return settingsPanel;
 	}

@@ -4,7 +4,7 @@
 
 package org.signalml.compilation;
 
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 
 /** CompilationException
  *

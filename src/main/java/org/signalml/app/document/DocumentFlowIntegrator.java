@@ -8,6 +8,7 @@ import java.awt.Component;
 import java.awt.Window;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Iterator;
@@ -17,10 +18,13 @@ import java.util.concurrent.ExecutionException;
 
 import javax.swing.filechooser.FileFilter;
 
+import multiplexer.jmx.client.ConnectException;
+
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.model.OpenDocumentDescriptor;
+import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.app.model.OpenSignalDescriptor;
 import org.signalml.app.model.OpenTagDescriptor;
 import org.signalml.app.model.SignalParameterDescriptor;
@@ -45,7 +49,8 @@ import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.domain.tag.TagSignalIdentification;
 import org.signalml.exception.MissingCodecException;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.Document;
 import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
 
@@ -73,10 +78,12 @@ public class DocumentFlowIntegrator {
 
 	private PleaseWaitDialog pleaseWaitDialog;
 
-	public Document openDocument(OpenDocumentDescriptor descriptor) throws IOException, SignalMLException {
+	public Document openDocument(OpenDocumentDescriptor descriptor) throws IOException, SignalMLException, ConnectException {
 		ManagedDocumentType type = descriptor.getType();
 		if (type.equals(ManagedDocumentType.SIGNAL)) {
 			return openSignalDocument(descriptor);
+		} if(type.equals(ManagedDocumentType.MONITOR)) {
+			return openMonitorDocument(descriptor);
 		} else if (type.equals(ManagedDocumentType.BOOK)) {
 			return openBookDocument(descriptor);
 		} else if (type.equals(ManagedDocumentType.TAG)) {
@@ -97,6 +104,10 @@ public class DocumentFlowIntegrator {
 			return false;
 		} catch (IOException ex) {
 			logger.error("Failed to open document - I/O exception", ex);
+			ErrorsDialog.showImmediateExceptionDialog(window, ex);
+			return false;
+		} catch (ConnectException ex) {
+			logger.error("Failed to open document - connection exception", ex);
 			ErrorsDialog.showImmediateExceptionDialog(window, ex);
 			return false;
 		}
@@ -269,6 +280,9 @@ public class DocumentFlowIntegrator {
 					if (type.equals(ManagedDocumentType.SIGNAL)) {
 						ok = true;
 						// do nothing
+					} else if(type.equals(ManagedDocumentType.MONITOR) ) {
+						ok = true;
+						// do nothing
 					} else if (type.equals(ManagedDocumentType.BOOK)) {
 						ok = true;
 						// do nothing
@@ -316,7 +330,6 @@ public class DocumentFlowIntegrator {
 		Document document;
 		int i;
 		boolean savedOk;
-
 		synchronized (documentManager) {
 
 			count = documentManager.getDocumentCount();
@@ -333,8 +346,8 @@ public class DocumentFlowIntegrator {
 		return allOk;
 
 	}
-
-	public Document openMRUDEntry(MRUDEntry mrud) throws IOException, SignalMLException {
+		
+	public Document openMRUDEntry(MRUDEntry mrud) throws IOException, SignalMLException, ConnectException {
 
 		ManagedDocumentType type = mrud.getDocumentType();
 
@@ -535,6 +548,31 @@ public class DocumentFlowIntegrator {
 			logger.error("Unsupported method [" + method + "]");
 			throw new SignalMLException("error.invalidValue");
 		}
+					
+	}
+
+	private SignalDocument openMonitorDocument(final OpenDocumentDescriptor descriptor) throws IOException, SignalMLException, ConnectException {
+
+		OpenMonitorDescriptor monitorOptions = descriptor.getMonitorOptions();
+		
+		MonitorSignalDocument monitorSignalDocument = new MonitorSignalDocument( monitorOptions);
+
+		String fileName = monitorOptions.getFileName();
+		if (fileName != null && !"".equals( fileName)) {
+			FileOutputStream recorderOutput = new FileOutputStream( new File( fileName + ".raw"));
+			monitorSignalDocument.setRecorderOutput( recorderOutput);
+		}
+
+		monitorSignalDocument.openDocument();
+
+		onSignalDocumentAdded( monitorSignalDocument, descriptor.isMakeActive());
+		onCommonDocumentAdded( monitorSignalDocument);
+
+		actionFocusManager.setActiveDocument( monitorSignalDocument);
+
+		logger.debug("monitor openned");
+		
+		return monitorSignalDocument;
 
 	}
 

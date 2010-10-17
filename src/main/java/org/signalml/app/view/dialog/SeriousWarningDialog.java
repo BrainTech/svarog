@@ -26,7 +26,8 @@ import javax.swing.border.EmptyBorder;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.model.SeriousWarningDescriptor;
 import org.signalml.app.util.IconUtils;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** SeriousWarningDialog

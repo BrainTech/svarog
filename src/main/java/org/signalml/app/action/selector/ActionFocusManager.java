@@ -15,7 +15,6 @@ import org.signalml.app.config.preset.PresetManagerAdapter;
 import org.signalml.app.config.preset.PresetManagerEvent;
 import org.signalml.app.config.preset.PresetManagerListener;
 import org.signalml.app.document.BookDocument;
-import org.signalml.app.document.Document;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.montage.MontagePresetManager;
@@ -24,7 +23,8 @@ import org.signalml.app.view.signal.PositionedTag;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.domain.montage.Montage;
-import org.signalml.domain.tag.TagStyle;
+import org.signalml.plugin.export.signal.Document;
+import org.signalml.plugin.export.signal.TagStyle;
 
 /** ActionFocusManager
  *

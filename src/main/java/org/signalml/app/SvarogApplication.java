@@ -32,6 +32,7 @@ import org.signalml.app.config.SignalMLCodecDescriptor;
 import org.signalml.app.config.ZoomSignalSettings;
 import org.signalml.app.config.preset.BookFilterPresetManager;
 import org.signalml.app.config.preset.FFTSampleFilterPresetManager;
+import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.config.preset.SignalExportPresetManager;
 import org.signalml.app.document.DefaultDocumentManager;
@@ -71,7 +72,6 @@ import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.domain.montage.eeg.EegChannel;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.exception.ResolvableException;
-import org.signalml.exception.SignalMLException;
 import org.signalml.method.DisposableMethod;
 import org.signalml.method.Method;
 import org.signalml.method.artifact.ArtifactData;
@@ -87,6 +87,9 @@ import org.signalml.method.mp5.MP5Method;
 import org.signalml.method.mp5.MP5Parameters;
 import org.signalml.method.stager.StagerMethod;
 import org.signalml.method.stager.StagerParameters;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.impl.PluginAccessClass;
+import org.signalml.plugin.loader.PluginLoader;
 import org.signalml.util.Util;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -127,6 +130,8 @@ public class SvarogApplication {
 	private static BookFilterPresetManager bookFilterPresetManager = null;
 	private static SignalExportPresetManager signalExportPresetManager = null;
 	private static FFTSampleFilterPresetManager fftFilterPresetManager = null;
+	private static TimeDomainSampleFilterPresetManager timeDomainSampleFilterPresetManager = null;
+
 	private static MP5ExecutorManager mp5ExecutorManager = null;
 
 	private static ViewerMainFrame viewerMainFrame = null;
@@ -263,6 +268,8 @@ public class SvarogApplication {
 		}
 
 		logger.debug("Application successfully created - main window is showing and should be visible soon");
+		
+		PluginLoader.getInstance().loadPlugins();
 
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
@@ -443,6 +450,8 @@ public class SvarogApplication {
 		}
 
 		profileDir = file;
+		
+		PluginLoader.createInstance(profileDir);
 
 		return true;
 
@@ -642,6 +651,18 @@ public class SvarogApplication {
 			logger.error("Failed to read FFT sample filter configuration - will use defaults", ex);
 		}
 
+
+		timeDomainSampleFilterPresetManager = new TimeDomainSampleFilterPresetManager();
+		timeDomainSampleFilterPresetManager.setProfileDir(profileDir);
+
+		try {
+			timeDomainSampleFilterPresetManager.readFromPersistence(null);
+		} catch (FileNotFoundException ex) {
+			logger.debug("Time domain sample filter preset config not found - will use defaults");
+		} catch (Exception ex) {
+			logger.error("Failed to read time domain sample filter configuration - will use defaults", ex);
+		}
+
 		splash(null, true);
 
 	}
@@ -830,6 +851,8 @@ public class SvarogApplication {
 		elementManager.setBookFilterPresetManager(bookFilterPresetManager);
 		elementManager.setSignalExportPresetManager(signalExportPresetManager);
 		elementManager.setFftFilterPresetManager(fftFilterPresetManager);
+		elementManager.setTimeDomainSampleFilterPresetManager(timeDomainSampleFilterPresetManager);
+
 		elementManager.setMp5ExecutorManager(mp5ExecutorManager);
 		elementManager.setPreferences(preferences);
 		elementManager.configureImportedElements();
@@ -837,6 +860,8 @@ public class SvarogApplication {
 		viewerMainFrame = new ViewerMainFrame();
 		viewerMainFrame.setMessageSource(messageSource);
 		viewerMainFrame.setElementManager(elementManager);
+		
+		PluginAccessClass.getSharedInstance().setManager(elementManager);
 
 		splash(null, true);
 
@@ -932,6 +957,12 @@ public class SvarogApplication {
 			fftFilterPresetManager.writeToPersistence(null);
 		} catch (Exception ex) {
 			logger.error("Failed to write FFT sample filter configuration", ex);
+		}
+
+		try {
+			timeDomainSampleFilterPresetManager.writeToPersistence(null);
+		} catch (Exception ex) {
+			logger.error("Failed to write time domain sample filter configuration", ex);
 		}
 
 		try {

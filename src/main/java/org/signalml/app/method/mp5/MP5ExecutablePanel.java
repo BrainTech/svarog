@@ -88,14 +88,14 @@ public class MP5ExecutablePanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(executableLabel)
-		        .addComponent(getExecutableTextField())
-		        .addComponent(getChooseExecutableButton())
-		);
-
-		layout.setVerticalGroup(vGroup);
-
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(executableLabel)
+				.addComponent(getExecutableTextField())
+				.addComponent(getChooseExecutableButton())
+			);
+				
+		layout.setVerticalGroup(vGroup);		
+						
 	}
 
 	public JTextField getExecutableTextField() {

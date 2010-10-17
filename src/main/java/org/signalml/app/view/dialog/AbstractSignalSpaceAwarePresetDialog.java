@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** AbstractSignalSpaceAwarePresetDialog

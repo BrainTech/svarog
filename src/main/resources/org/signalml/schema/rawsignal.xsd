@@ -170,6 +170,10 @@
     	</restriction>
     </simpleType>
 
+    <simpleType name="calibrationParam">
+        <restriction base="float"/>
+    </simpleType>
+
 
 
     <complexType name="rawSignalInfo">
@@ -291,6 +295,24 @@
                 </annotation>
     		</element>
     		<element name="exportDate" type="dateTime" maxOccurs="1" minOccurs="0"></element>
+    		<element name="calibrationGain" type="rs:calibrationParamList" maxOccurs="1" minOccurs="0">
+                <annotation>
+                	<documentation>
+                		Calibration gain parameters for each channel - optional.
+                		The number of parameter elements inside should match
+                		the declared channel number.
+                	</documentation>
+                </annotation>
+    		</element>
+    		<element name="calibrationOffset" type="rs:calibrationParamList" maxOccurs="1" minOccurs="0">
+                <annotation>
+                	<documentation>
+                		Calibration offset parameters for each channel - optional.
+                		The number of parameter elements inside should match
+                		the declared channel number.
+                	</documentation>
+                </annotation>
+    		</element>
     	</sequence>
     </complexType>
 
@@ -300,8 +322,16 @@
     	</sequence>
     </complexType>
 
+    <complexType name="calibrationParamList">
+    	<sequence>
+    		<element name="calibrationParam" type="rs:calibrationParam" minOccurs="1" maxOccurs="unbounded"></element>
+    	</sequence>
+    </complexType>
+
     <element name="rawSignal" type="rs:rawSignalInfo">
     	<annotation>
     		<documentation>Signal info</documentation>
-    	</annotation></element>
+    	</annotation>
+	</element>
+
 </schema>

@@ -20,10 +20,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.util.SwingUtils;
-import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.app.view.element.AutoSpinnerWithSliderPanel;
 import org.signalml.app.view.element.CompactButton;
 import org.signalml.method.stager.StagerParameters;
+import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
@@ -167,57 +167,57 @@ public class StagerThresholdConfigPanel extends JPanel {
 			GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.CENTER)
-			        .addComponent(filler1)
-			        .addComponent(emgToneThresholdLabel)
-			        .addComponent(glue1)
-			        .addComponent(getEmgToneThresholdPanel())
-			        .addComponent(emgToneThresholdHelpButton)
+					layout.createParallelGroup(Alignment.CENTER)
+					.addComponent(filler1)
+					.addComponent(emgToneThresholdLabel)
+					.addComponent(glue1)
+					.addComponent(getEmgToneThresholdPanel())
+					.addComponent(emgToneThresholdHelpButton)
 			);
 
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.CENTER)
-			        .addComponent(getMtEegThresholdEnabledCheckBox())
-			        .addComponent(mtEegThresholdLabel)
-			        .addComponent(glue2)
-			        .addComponent(getMtEegThresholdPanel())
-			        .addComponent(mtEegThresholdHelpButton)
+					layout.createParallelGroup(Alignment.CENTER)
+					.addComponent(getMtEegThresholdEnabledCheckBox())
+					.addComponent(mtEegThresholdLabel)
+					.addComponent(glue2)
+					.addComponent(getMtEegThresholdPanel())
+					.addComponent(mtEegThresholdHelpButton)
 			);
 
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.CENTER)
-			        .addComponent(getMtArtifactsThresholdEnabledCheckBox())
-			        .addComponent(mtEmgThresholdLabel)
-			        .addComponent(glue3)
-			        .addComponent(getMtEmgThresholdPanel())
-			        .addComponent(mtEmgThresholdHelpButton)
+					layout.createParallelGroup(Alignment.CENTER)
+					.addComponent(getMtArtifactsThresholdEnabledCheckBox())
+					.addComponent(mtEmgThresholdLabel)
+					.addComponent(glue3)
+					.addComponent(getMtEmgThresholdPanel())
+					.addComponent(mtEmgThresholdHelpButton)
 			);
 
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.CENTER)
-			        .addComponent(filler4)
-			        .addComponent(mtToneEmgThresholdLabel)
-			        .addComponent(glue4)
-			        .addComponent(getMtToneEmgThresholdPanel())
-			        .addComponent(mtToneEmgThresholdHelpButton)
+					layout.createParallelGroup(Alignment.CENTER)
+					.addComponent(filler4)
+					.addComponent(mtToneEmgThresholdLabel)
+					.addComponent(glue4)
+					.addComponent(getMtToneEmgThresholdPanel())
+					.addComponent(mtToneEmgThresholdHelpButton)
 			);
 
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.CENTER)
-			        .addComponent(filler5)
-			        .addComponent(remEogDeflectionThresholdLabel)
-			        .addComponent(glue5)
-			        .addComponent(getRemEogDeflectionThresholdPanel())
-			        .addComponent(remEogDeflectionThresholdHelpButton)
+					layout.createParallelGroup(Alignment.CENTER)
+					.addComponent(filler5)
+					.addComponent(remEogDeflectionThresholdLabel)
+					.addComponent(glue5)
+					.addComponent(getRemEogDeflectionThresholdPanel())
+					.addComponent(remEogDeflectionThresholdHelpButton)
 			);
 
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.CENTER)
-			        .addComponent(filler6)
-			        .addComponent(semEogDeflectionThresholdLabel)
-			        .addComponent(glue6)
-			        .addComponent(getSemEogDeflectionThresholdPanel())
-			        .addComponent(semEogDeflectionThresholdHelpButton)
+					layout.createParallelGroup(Alignment.CENTER)
+					.addComponent(filler6)
+					.addComponent(semEogDeflectionThresholdLabel)
+					.addComponent(glue6)
+					.addComponent(getSemEogDeflectionThresholdPanel())
+					.addComponent(semEogDeflectionThresholdHelpButton)
 			);
 
 			layout.setVerticalGroup(vGroup);

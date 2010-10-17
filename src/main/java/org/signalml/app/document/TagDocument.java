@@ -13,13 +13,19 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.signalml.app.model.LabelledPropertyDescriptor;
 import org.signalml.app.util.XMLUtils;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
 import org.signalml.domain.tag.StyledTagSet;
-import org.signalml.domain.tag.TagStyle;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.ExportedTag;
+import org.signalml.plugin.export.signal.ExportedTagDocument;
+import org.signalml.plugin.export.signal.ExportedTagStyle;
+import org.signalml.plugin.export.signal.Tag;
+import org.signalml.plugin.export.signal.TagStyle;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
@@ -36,7 +42,7 @@ import com.thoughtworks.xstream.io.xml.XmlFriendlyReplacer;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class TagDocument extends AbstractMutableFileDocument {
+public class TagDocument extends AbstractMutableFileDocument implements ExportedTagDocument {
 
 	private StyledTagSet tagSet;
 	private SignalDocument parent;
@@ -124,18 +130,22 @@ public class TagDocument extends AbstractMutableFileDocument {
 		return tagSet;
 	}
 
+	@Override
 	public float getBlockSize() {
 		return tagSet.getBlockSize();
 	}
 
+	@Override
 	public int getBlocksPerPage() {
 		return tagSet.getBlocksPerPage();
 	}
 
+	@Override
 	public float getPageSize() {
 		return tagSet.getPageSize();
 	}
 
+	@Override
 	public SignalDocument getParent() {
 		return parent;
 	}
@@ -186,6 +196,7 @@ public class TagDocument extends AbstractMutableFileDocument {
 		return (backingFile != null ? backingFile.getName() : fallbackName);
 	}
 
+	@Override
 	public String getFallbackName() {
 		return fallbackName;
 	}
@@ -222,6 +233,7 @@ public class TagDocument extends AbstractMutableFileDocument {
 		return tagSet.getTagStyleCount();
 	}
 
+	@Override
 	public int getTagCount() {
 		return tagSet.getTagCount();
 	}
@@ -253,6 +265,34 @@ public class TagDocument extends AbstractMutableFileDocument {
 
 		return list;
 
+	}
+
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.signal.ExportedTagDocument#getSetOfTags()
+	 */
+	@Override
+	public Set<ExportedTag> getSetOfTags() {
+		Set<Tag> tagSet = getTagSet().getTags();
+
+		Set<ExportedTag> exportedTagSet = new TreeSet<ExportedTag>();
+		for (Tag tag : tagSet){
+			exportedTagSet.add(tag);
+		}
+		return exportedTagSet;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.signal.ExportedTagDocument#getTagStyles()
+	 */
+	@Override
+	public Set<ExportedTagStyle> getTagStyles() {
+		StyledTagSet tagSet = getTagSet();
+		Set<TagStyle> styles = tagSet.getStyles();
+		Set<ExportedTagStyle> exportedStyles = new LinkedHashSet<ExportedTagStyle>();
+		for(TagStyle style : styles){
+			exportedStyles.add(style);
+		}
+		return exportedStyles;
 	}
 
 }

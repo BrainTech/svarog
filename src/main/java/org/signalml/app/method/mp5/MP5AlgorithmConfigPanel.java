@@ -16,11 +16,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.util.SwingUtils;
-import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.app.view.element.CompactButton;
 import org.signalml.app.view.element.ResolvableComboBox;
 import org.signalml.method.mp5.MP5Algorithm;
 import org.signalml.method.mp5.MP5Parameters;
+import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
@@ -94,15 +94,15 @@ public class MP5AlgorithmConfigPanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.CENTER)
-		        .addComponent(algorithmLabel)
-		        .addComponent(glue1)
-		        .addComponent(getAlgorithmComboBox())
-		        .addComponent(algorithmHelpButton)
-		);
-
-		layout.setVerticalGroup(vGroup);
-
+				layout.createParallelGroup(Alignment.CENTER)
+				.addComponent(algorithmLabel)
+				.addComponent(glue1)
+				.addComponent(getAlgorithmComboBox())
+				.addComponent(algorithmHelpButton)
+			);
+					
+		layout.setVerticalGroup(vGroup);				
+						
 	}
 
 	public ResolvableComboBox getAlgorithmComboBox() {

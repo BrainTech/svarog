@@ -19,8 +19,8 @@ import org.signalml.app.method.PresetEquippedMethodConfigurer;
 import org.signalml.app.util.XMLUtils;
 import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.dialog.OptionPane;
-import org.signalml.exception.SignalMLException;
 import org.signalml.method.Method;
+import org.signalml.plugin.export.SignalMLException;
 
 import com.thoughtworks.xstream.XStream;
 

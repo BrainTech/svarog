@@ -14,7 +14,8 @@ import org.signalml.app.action.TagSelectionAction;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.view.tag.TagIconProducer;
 import org.signalml.app.view.tag.TagStyleMenu;
-import org.signalml.domain.signal.SignalSelection;
+import org.signalml.plugin.export.signal.SignalSelection;
+import org.signalml.plugin.impl.PluginAccessClass;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** SignalPlotPopupProvider
@@ -55,6 +56,8 @@ public class SignalPlotPopupProvider {
 			plotPopupMenu.add(removeTagAction);
 			plotPopupMenu.addSeparator();
 			plotPopupMenu.add(preciseSelectionAction);
+			
+			PluginAccessClass.getGUIImpl().addToSignalPlotPopupMenu(plotPopupMenu);
 		}
 
 		boolean tagStyleMenuEnabled = false;
@@ -89,6 +92,8 @@ public class SignalPlotPopupProvider {
 			columnHeaderPopupMenu.addSeparator();
 			JCheckBoxMenuItem compactMenuItem = new JCheckBoxMenuItem(plot.getSignalPlotColumnHeader().getSetCompactAction());
 			columnHeaderPopupMenu.add(compactMenuItem);
+			
+			PluginAccessClass.getGUIImpl().addToColumnHeaderPopupMenu(columnHeaderPopupMenu);
 		}
 
 		return columnHeaderPopupMenu;

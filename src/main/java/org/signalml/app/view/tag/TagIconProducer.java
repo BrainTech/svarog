@@ -18,7 +18,7 @@ import java.util.Map;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
-import org.signalml.domain.tag.TagStyle;
+import org.signalml.plugin.export.signal.TagStyle;
 
 /** TagIconProducer
  *

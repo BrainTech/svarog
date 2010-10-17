@@ -17,9 +17,11 @@ import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.action.selector.ActionFocusSupport;
 import org.signalml.app.action.selector.BookDocumentFocusSelector;
 import org.signalml.app.document.BookDocument;
-import org.signalml.app.document.Document;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.model.BookTreeModel;
+import org.signalml.plugin.export.signal.Document;
+import org.signalml.plugin.export.view.AbstractViewerTree;
+import org.signalml.plugin.impl.PluginAccessClass;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** ViewerBookTree
@@ -107,6 +109,8 @@ public class ViewerBookTree extends AbstractViewerTree  implements BookDocumentF
 			bookDocumentPopupMenu.add(getActivateDocumentAction());
 			bookDocumentPopupMenu.addSeparator();
 			bookDocumentPopupMenu.add(getCloseDocumentAction());
+			
+			PluginAccessClass.getGUIImpl().addToBookTreeBookDocumentPopupMenu(bookDocumentPopupMenu);
 		}
 
 		return bookDocumentPopupMenu;

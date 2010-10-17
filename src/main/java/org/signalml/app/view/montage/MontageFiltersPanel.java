@@ -13,6 +13,8 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import java.util.Collection;
+
 import javax.swing.AbstractAction;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -33,10 +35,13 @@ import org.apache.log4j.Logger;
 import org.signalml.app.montage.MontageFilterExclusionTableModel;
 import org.signalml.app.montage.MontageFiltersTableModel;
 import org.signalml.app.util.IconUtils;
+import org.signalml.app.util.SwingUtils;
 import org.signalml.app.view.TablePopupMenuProvider;
 import org.signalml.app.view.dialog.SeriousWarningDialog;
+import org.signalml.app.view.element.ResolvableComboBox;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
+import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.montage.filter.SampleFilterType;
 import org.signalml.exception.SanityCheckException;
@@ -56,6 +61,7 @@ public class MontageFiltersPanel extends JPanel {
 	private MessageSourceAccessor messageSource;
 	private SeriousWarningDialog seriousWarningDialog;
 	private EditFFTSampleFilterDialog editFFTSampleFilterDialog;
+	private EditTimeDomainSampleFilterDialog editTimeDomainSampleFilterDialog;
 
 	private Montage montage;
 	private boolean signalBound;
@@ -71,16 +77,16 @@ public class MontageFiltersPanel extends JPanel {
 	private MontageFilterExclusionTable filterExclusionTable;
 	private JScrollPane filterExclusionScrollPane;
 
-//	private ResolvableComboBox timeDomainFilterTypeComboBox;
+	private ResolvableComboBox timeDomainFilterTypeComboBox;
 	private JComboBox fftFilterTypeComboBox;
 
-//	private AddTimeDomainFilterAction addTimeDomainFilterAction;
+	private AddTimeDomainFilterAction addTimeDomainFilterAction;
 	private AddFFTFilterAction addFFTFilterAction;
 	private EditFilterAction editFilterAction;
 	private RemoveFilterAction removeFilterAction;
 	private ClearFilterExclusionAction clearFilterExclusionAction;
 
-//	private JButton addTimeDomainFilterButton;
+	private JButton addTimeDomainFilterButton;
 	private JButton addFFTFilterButton;
 	private JButton editFilterButton;
 	private JButton removeFilterButton;
@@ -94,7 +100,7 @@ public class MontageFiltersPanel extends JPanel {
 
 	private void initialize() {
 
-//		addTimeDomainFilterAction = new AddTimeDomainFilterAction();
+		addTimeDomainFilterAction = new AddTimeDomainFilterAction();
 		addFFTFilterAction = new AddFFTFilterAction();
 		editFilterAction = new EditFilterAction();
 		removeFilterAction = new RemoveFilterAction();
@@ -103,13 +109,13 @@ public class MontageFiltersPanel extends JPanel {
 		editFilterAction.setEnabled(false);
 		removeFilterAction.setEnabled(false);
 
-		setLayout(new GridLayout(1,2,3,3));
+		setLayout(new GridLayout(1, 2, 3, 3));
 
-		JPanel masterSwitchPanel = new JPanel(new BorderLayout(3,3));
+		JPanel masterSwitchPanel = new JPanel(new BorderLayout(3, 3));
 
 		CompoundBorder border = new CompoundBorder(
 		        new TitledBorder(messageSource.getMessage("montageFilters.masterSwitchTitle")),
-		        new EmptyBorder(3,3,3,3)
+		        new EmptyBorder(3, 3, 3, 3)
 		);
 		masterSwitchPanel.setBorder(border);
 
@@ -118,10 +124,10 @@ public class MontageFiltersPanel extends JPanel {
 		masterSwitchPanel.add(filteringEnabledLabel, BorderLayout.CENTER);
 		masterSwitchPanel.add(getFilteringEnabledCheckBox(), BorderLayout.EAST);
 
-		JPanel filtersTablePanel = new JPanel(new BorderLayout(3,3));
+		JPanel filtersTablePanel = new JPanel(new BorderLayout(3, 3));
 		border = new CompoundBorder(
 		        new TitledBorder(messageSource.getMessage("montageFilters.filtersTableTitle")),
-		        new EmptyBorder(3,3,3,3)
+		        new EmptyBorder(3, 3, 3, 3)
 		);
 		filtersTablePanel.setBorder(border);
 
@@ -133,24 +139,22 @@ public class MontageFiltersPanel extends JPanel {
 		filtersTablePanel.add(getFiltersScrollPane(), BorderLayout.CENTER);
 		filtersTablePanel.add(filtersTableButtonPanel, BorderLayout.SOUTH);
 
-		/*
-		JPanel addTimeDomainFilterPanel = new JPanel( new BorderLayout(3,3) );
+		JPanel addTimeDomainFilterPanel = new JPanel(new BorderLayout(3, 3));
 		border = new CompoundBorder(
-				new TitledBorder( messageSource.getMessage("montageFilters.addTimeDomainFilterTitle") ),
-				new EmptyBorder(3,3,3,3)
+		        new TitledBorder(messageSource.getMessage("montageFilters.addTimeDomainFilterTitle")),
+		        new EmptyBorder(3, 3, 3, 3)
 		);
-		addTimeDomainFilterPanel.setBorder( border );
+		addTimeDomainFilterPanel.setBorder(border);
 
-		SwingUtils.makeButtonsSameSize( new JButton[] { getAddTimeDomainFilterButton(), getAddFFTFilterButton() } );
+		SwingUtils.makeButtonsSameSize(new JButton[] {getAddTimeDomainFilterButton(), getAddFFTFilterButton()});
 
-		addTimeDomainFilterPanel.add( getTimeDomainFilterTypeComboBox(), BorderLayout.CENTER );
-		addTimeDomainFilterPanel.add( getAddTimeDomainFilterButton(), BorderLayout.EAST );
-		*/
+		addTimeDomainFilterPanel.add(getTimeDomainFilterTypeComboBox(), BorderLayout.CENTER);
+		addTimeDomainFilterPanel.add(getAddTimeDomainFilterButton(), BorderLayout.EAST);
 
-		JPanel addFftFilterPanel = new JPanel(new BorderLayout(3,3));
+		JPanel addFftFilterPanel = new JPanel(new BorderLayout(3, 3));
 		border = new CompoundBorder(
 		        new TitledBorder(messageSource.getMessage("montageFilters.addFFTFilterTitle")),
-		        new EmptyBorder(3,3,3,3)
+		        new EmptyBorder(3, 3, 3, 3)
 		);
 		addFftFilterPanel.setBorder(border);
 
@@ -159,9 +163,7 @@ public class MontageFiltersPanel extends JPanel {
 
 		JPanel bottomLeftPanel = new JPanel(new BorderLayout());
 
-		/*
-		bottomLeftPanel.add( addTimeDomainFilterPanel, BorderLayout.CENTER );
-		*/
+		bottomLeftPanel.add(addTimeDomainFilterPanel, BorderLayout.CENTER);
 
 		bottomLeftPanel.add(addFftFilterPanel, BorderLayout.SOUTH);
 
@@ -175,10 +177,10 @@ public class MontageFiltersPanel extends JPanel {
 
 		rightButtonPanel.add(getClearFilterExclusionButton());
 
-		JPanel rightPanel = new JPanel(new BorderLayout(3,3));
+		JPanel rightPanel = new JPanel(new BorderLayout(3, 3));
 		border = new CompoundBorder(
 		        new TitledBorder(messageSource.getMessage("montageFilters.filterChannelExclusionTitle")),
-		        new EmptyBorder(3,3,3,3)
+		        new EmptyBorder(3, 3, 3, 3)
 		);
 		rightPanel.setBorder(border);
 
@@ -271,17 +273,13 @@ public class MontageFiltersPanel extends JPanel {
 		return filterExclusionScrollPane;
 	}
 
-	/*
 	public ResolvableComboBox getTimeDomainFilterTypeComboBox() {
-		if( timeDomainFilterTypeComboBox == null ) {
+		if (timeDomainFilterTypeComboBox == null) {
 			timeDomainFilterTypeComboBox = new ResolvableComboBox(messageSource);
-			timeDomainFilterTypeComboBox.setPreferredSize( new Dimension( 200, 25 ) );
-
-			timeDomainFilterTypeComboBox.setEnabled(false);
+			timeDomainFilterTypeComboBox.setPreferredSize(new Dimension(200, 25));
 		}
 		return timeDomainFilterTypeComboBox;
 	}
-	*/
 
 	public JComboBox getFftFilterTypeComboBox() {
 		if (fftFilterTypeComboBox == null) {
@@ -296,14 +294,12 @@ public class MontageFiltersPanel extends JPanel {
 		return fftFilterTypeComboBox;
 	}
 
-	/*
 	public JButton getAddTimeDomainFilterButton() {
-		if( addTimeDomainFilterButton == null ) {
-			addTimeDomainFilterButton = new JButton( addTimeDomainFilterAction );
+		if (addTimeDomainFilterButton == null) {
+			addTimeDomainFilterButton = new JButton(addTimeDomainFilterAction);
 		}
 		return addTimeDomainFilterButton;
 	}
-	*/
 
 	public JButton getAddFFTFilterButton() {
 		if (addFFTFilterButton == null) {
@@ -349,6 +345,14 @@ public class MontageFiltersPanel extends JPanel {
 		this.editFFTSampleFilterDialog = editFFTSampleFilterDialog;
 	}
 
+	public EditTimeDomainSampleFilterDialog getEditTimeDomainSampleFilterDialog() {
+		return editTimeDomainSampleFilterDialog;
+	}
+
+	public void setTimeDomainSampleFilterDialog(EditTimeDomainSampleFilterDialog editTimeDomainSampleFilterDialog) {
+		this.editTimeDomainSampleFilterDialog = editTimeDomainSampleFilterDialog;
+	}
+
 	public Montage getMontage() {
 		return montage;
 	}
@@ -360,19 +364,18 @@ public class MontageFiltersPanel extends JPanel {
 			getFilterExclusionTableModel().setMontage(montage);
 
 			if (montage != null) {
-				/*
 				Collection<SampleFilterDefinition> predefinedFilters = montage.getSignalTypeConfigurer().getPredefinedFilters();
 				SampleFilterDefinition[] arr = new SampleFilterDefinition[predefinedFilters.size()];
 				predefinedFilters.toArray(arr);
-				DefaultComboBoxModel model = new DefaultComboBoxModel( arr );
+				DefaultComboBoxModel model = new DefaultComboBoxModel(arr);
 				ResolvableComboBox comboBox = getTimeDomainFilterTypeComboBox();
-				comboBox.setModel( model );
+				comboBox.setModel(model);
 				comboBox.setSelectedIndex(0);
 				comboBox.repaint();
-				*/
+
 				getFilteringEnabledCheckBox().setSelected(montage.isFilteringEnabled());
 			} else {
-				//getTimeDomainFilterTypeComboBox().setModel( new DefaultComboBoxModel( new Object[0] ) );
+				getTimeDomainFilterTypeComboBox().setModel(new DefaultComboBoxModel(new Object[0]));
 				getFilteringEnabledCheckBox().setSelected(false);
 			}
 		}
@@ -395,38 +398,41 @@ public class MontageFiltersPanel extends JPanel {
 	public void setCurrentSamplingFrequency(float currentSamplingFrequency) {
 		this.currentSamplingFrequency = currentSamplingFrequency;
 		if (currentSamplingFrequency >= 0) {
-			editFFTSampleFilterDialog.setGraphFrequencyMax(currentSamplingFrequency/2);
+			editFFTSampleFilterDialog.setGraphFrequencyMax(currentSamplingFrequency / 2);
+			editTimeDomainSampleFilterDialog.setGraphFrequencyMax(currentSamplingFrequency / 2);
 		} else {
 			double frequencyMax = editFFTSampleFilterDialog.getGraphFrequencyMax();
 			if (frequencyMax < 0.25) {
 				editFFTSampleFilterDialog.setGraphFrequencyMax(64.0);
+				editTimeDomainSampleFilterDialog.setGraphFrequencyMax(currentSamplingFrequency / 2);
 			}
 		}
 	}
 
-	/*
 	protected class AddTimeDomainFilterAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 
 		public AddTimeDomainFilterAction() {
 			super(messageSource.getMessage("montageFilters.addTimeDomainFilter"));
-			putValue(AbstractAction.SHORT_DESCRIPTION, messageSource.getMessage("montageFilters.addTimeDomainFilterToolTip") );
-			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/addtimedomainfilter.png") );
-			// TODO implement
-			setEnabled(false);
+			putValue(AbstractAction.SHORT_DESCRIPTION, messageSource.getMessage("montageFilters.addTimeDomainFilterToolTip"));
+			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/addtimedomainfilter.png"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {
 
-			if( montage == null ) {
+			if (montage == null) {
 				return;
 			}
 
+			int index = getTimeDomainFilterTypeComboBox().getSelectedIndex();
+			TimeDomainSampleFilter filter = (TimeDomainSampleFilter)montage.getSignalTypeConfigurer().getPredefinedFilterAt(index).duplicate();
+			filter.setDescription(messageSource.getMessage("montageFilters.newTimeDomainFilter"));
+			filter.setSamplingFrequency(currentSamplingFrequency);
+			montage.addSampleFilter(filter);
 		}
 
 	}
-	*/
 
 	protected class AddFFTFilterAction extends AbstractAction {
 
@@ -484,16 +490,24 @@ public class MontageFiltersPanel extends JPanel {
 
 			SampleFilterDefinition filter = montage.getSampleFilterAt(selectedRow);
 			SampleFilterType type = filter.getType();
+			boolean ok;
 			switch (type) {
 
 			case TIME_DOMAIN :
-				// XXX feature postponed - needs to be completed or removed in the future
+				editTimeDomainSampleFilterDialog.setCurrentSamplingFrequency(currentSamplingFrequency);
+				ok = editTimeDomainSampleFilterDialog.showDialog(filter, true);
+				if (!ok) {
+					return;
+				}
+
+				montage.updateSampleFilter(selectedRow, filter);
+
 				break;
 
 			case FFT :
 
 				editFFTSampleFilterDialog.setCurrentSamplingFrequency(currentSamplingFrequency);
-				boolean ok = editFFTSampleFilterDialog.showDialog(filter, true);
+				ok = editFFTSampleFilterDialog.showDialog(filter, true);
 				if (!ok) {
 					return;
 				}
@@ -554,13 +568,13 @@ public class MontageFiltersPanel extends JPanel {
 
 			int count = montage.getSampleFilterCount();
 			int i;
-			for (i=0; i<count; i++) {
+			for (i = 0; i < count; i++) {
 				montage.setFilterEnabled(i, true);
 				montage.clearFilterExclusion(i);
 			}
 
 			count = montage.getMontageChannelCount();
-			for (i=0; i<count; i++) {
+			for (i = 0; i < count; i++) {
 				montage.setExcludeAllFilters(i, false);
 			}
 
@@ -608,7 +622,7 @@ public class MontageFiltersPanel extends JPanel {
 			if (SwingUtilities.isLeftMouseButton(e) && (e.getClickCount() % 2) == 0) {
 				int selRow = table.rowAtPoint(e.getPoint());
 				if (selRow >= 0) {
-					editFilterAction.actionPerformed(new ActionEvent(table,0,"edit"));
+					editFilterAction.actionPerformed(new ActionEvent(table, 0, "edit"));
 				}
 			}
 		}

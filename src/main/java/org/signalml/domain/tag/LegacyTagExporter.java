@@ -11,10 +11,12 @@ import java.util.Iterator;
 import java.util.SortedSet;
 
 import org.apache.log4j.Logger;
-import org.signalml.domain.signal.SignalSelectionType;
 import org.signalml.exception.ResolvableException;
 import org.signalml.exception.SanityCheckException;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.SignalSelectionType;
+import org.signalml.plugin.export.signal.Tag;
+import org.signalml.plugin.export.signal.TagStyle;
 
 import eega.util.tag.TTagHDRRec;
 import eega.util.tag.TagDataSet;

@@ -20,12 +20,12 @@ import javax.swing.border.TitledBorder;
 
 import org.signalml.app.action.EnableAction;
 import org.signalml.app.util.SwingUtils;
-import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.app.view.element.AutoSpinnerPanel;
 import org.signalml.app.view.element.CompactButton;
 import org.signalml.app.view.element.ResolvableComboBox;
 import org.signalml.method.stager.SleepStagingRules;
 import org.signalml.method.stager.StagerParameters;
+import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
@@ -142,44 +142,45 @@ public class StagerBasicParametersPanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.CENTER)
-		        .addComponent(rulesLabel)
-		        .addComponent(glue1)
-		        .addComponent(getRulesComboBox())
-		        .addComponent(rulesHelpButton)
-		);
+				layout.createParallelGroup(Alignment.CENTER)
+				.addComponent(rulesLabel)
+				.addComponent(glue1)
+				.addComponent(getRulesComboBox())
+				.addComponent(rulesHelpButton)
+			);
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.CENTER)
-		        .addComponent(deltaMinAmplitudeLabel)
-		        .addComponent(glue2)
-		        .addComponent(getDeltaMinAmplitudePanel())
-		        .addComponent(deltaMinAmplitudeHelpButton)
-		);
+				layout.createParallelGroup(Alignment.CENTER)
+				.addComponent(deltaMinAmplitudeLabel)
+				.addComponent(glue2)
+				.addComponent(getDeltaMinAmplitudePanel())
+				.addComponent(deltaMinAmplitudeHelpButton)
+			);
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.CENTER)
-		        .addComponent(alphaMinAmplitudeLabel)
-		        .addComponent(glue3)
-		        .addComponent(getAlphaMinAmplitudePanel())
-		        .addComponent(alphaMinAmplitudeHelpButton)
-		);
+				layout.createParallelGroup(Alignment.CENTER)
+				.addComponent(alphaMinAmplitudeLabel)
+				.addComponent(glue3)
+				.addComponent(getAlphaMinAmplitudePanel())
+				.addComponent(alphaMinAmplitudeHelpButton)
+			);
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.CENTER)
-		        .addComponent(spindleMinAmplitudeLabel)
-		        .addComponent(glue4)
-		        .addComponent(getSpindleMinAmplitudePanel())
-		        .addComponent(spindleMinAmplitudeHelpButton)
-		);
+				layout.createParallelGroup(Alignment.CENTER)
+				.addComponent(spindleMinAmplitudeLabel)
+				.addComponent(glue4)
+				.addComponent(getSpindleMinAmplitudePanel())
+				.addComponent(spindleMinAmplitudeHelpButton)
+			);
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.CENTER)
-		        .addComponent(primaryHypnogramLabel)
-		        .addComponent(glue5)
-		        .addComponent(getPrimaryHypnogramCheckBox())
-		        .addComponent(primaryHypnogramHelpButton)
-		);
+				layout.createParallelGroup(Alignment.CENTER)
+				.addComponent(primaryHypnogramLabel)
+				.addComponent(glue5)
+				.addComponent(getPrimaryHypnogramCheckBox())
+				.addComponent(primaryHypnogramHelpButton)
+			);
+
 
 		layout.setVerticalGroup(vGroup);
 

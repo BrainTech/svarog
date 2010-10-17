@@ -44,7 +44,7 @@ import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalDescriptorReader;
 import org.signalml.domain.tag.LegacyTagImporter;
 import org.signalml.domain.tag.StyledTagSet;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.support.MessageSourceAccessor;

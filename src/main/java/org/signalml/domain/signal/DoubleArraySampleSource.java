@@ -13,21 +13,9 @@ package org.signalml.domain.signal;
  */
 public class DoubleArraySampleSource extends AbstractMultichannelSampleSource implements MultichannelSampleSource {
 
-        /**
-         * A 2D array of samples. On the first coordinate is a channel,
-         * on the second number of sample within a channel
-         */
-	private double[][] samples;
-
-        /**
-         * the number of channels
-         */
-	private int channelCount;
-
-        /**
-         * the number of samples per channel
-         */
-	private int sampleCount;
+	protected double[][] samples;
+	protected int channelCount;
+	protected int sampleCount;
 
         /**
          * Constructor. Creates a <code>DoubleArraySampleSource</code> with a

@@ -16,7 +16,7 @@ import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.model.SignalParameterDescriptor;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
@@ -90,22 +90,22 @@ public class RequiredSignalParametersPanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(samplingFrequencyLabel)
-		        .addComponent(getSamplingFrequencyField())
-		);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(samplingFrequencyLabel)
+				.addComponent(getSamplingFrequencyField())
+			);
+		
+		vGroup.addGroup(
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(channelCountLabel)
+				.addComponent(getChannelCountField())
+			);
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(channelCountLabel)
-		        .addComponent(getChannelCountField())
-		);
-
-		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(calibrationLabel)
-		        .addComponent(getCalibrationField())
-		);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(calibrationLabel)
+				.addComponent(getCalibrationField())
+			);
 
 		layout.setVerticalGroup(vGroup);
 

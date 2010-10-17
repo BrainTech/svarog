@@ -12,21 +12,21 @@ import javax.swing.SwingUtilities;
 
 import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.config.ApplicationConfiguration;
-import org.signalml.app.document.Document;
 import org.signalml.app.document.DocumentManager;
 import org.signalml.app.document.DocumentManagerEvent;
 import org.signalml.app.document.DocumentManagerListener;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.util.SnapToPageRunnable;
-import org.signalml.app.view.DocumentView;
 import org.signalml.app.view.View;
 import org.signalml.app.view.ViewerDocumentTabbedPane;
 import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.applet.SvarogApplet;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.Document;
+import org.signalml.plugin.export.view.DocumentView;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** ViewerAppletPane

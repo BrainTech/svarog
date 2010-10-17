@@ -5,7 +5,6 @@ package org.signalml.app.model;
 
 import javax.swing.tree.TreePath;
 
-import org.signalml.app.document.Document;
 import org.signalml.app.document.DocumentManager;
 import org.signalml.app.document.DocumentManagerEvent;
 import org.signalml.app.document.DocumentManagerListener;
@@ -14,6 +13,8 @@ import org.signalml.app.document.MRUDRegistry;
 import org.signalml.app.document.MRUDRegistryEvent;
 import org.signalml.app.document.MRUDRegistryListener;
 import org.signalml.app.document.ManagedDocumentType;
+import org.signalml.plugin.export.signal.Document;
+import org.signalml.plugin.export.view.AbstractTreeModel;
 
 /** WorkspaceTreeModel
  *
@@ -27,10 +28,12 @@ public class WorkspaceTreeModel extends AbstractTreeModel implements DocumentMan
 	private static final String ROOT_NODE = "workspaceTree.root";
 	private static final String OPEN_DOCUMENTS_NODE = "workspaceTree.openDocuments";
 	private static final String OPEN_SIGNALS_NODE = "workspaceTree.openSignals";
+	private static final String OPEN_MONITORS_NODE = "workspaceTree.openMonitors";
 	private static final String OPEN_BOOKS_NODE = "workspaceTree.openBooks";
 	private static final String OPEN_TAGS_NODE = "workspaceTree.openTags";
 	private static final String RECENT_DOCUMENTS_NODE = "workspaceTree.recentDocuments";
 	private static final String RECENT_SIGNALS_NODE = "workspaceTree.recentSignals";
+	private static final String RECENT_MONITORS_NODE = "workspaceTree.recentMonitors";
 	private static final String RECENT_BOOKS_NODE = "workspaceTree.recentBooks";
 	private static final String RECENT_TAGS_NODE = "workspaceTree.recentTags";
 
@@ -39,28 +42,33 @@ public class WorkspaceTreeModel extends AbstractTreeModel implements DocumentMan
 	        RECENT_DOCUMENTS_NODE
 	};
 
-	private static final String[] OPEN_NODE_CHILDREN = new String[] {
-	        OPEN_SIGNALS_NODE,
-	        OPEN_BOOKS_NODE,
-	        OPEN_TAGS_NODE
+
+	private static final String[] OPEN_NODE_CHILDREN = new String[] { 
+		OPEN_SIGNALS_NODE, 
+		OPEN_MONITORS_NODE, 
+		OPEN_BOOKS_NODE,
+		OPEN_TAGS_NODE
 	};
 
-	private static final String[] RECENT_NODE_CHILDREN = new String[] {
-	        RECENT_SIGNALS_NODE,
-	        RECENT_BOOKS_NODE,
-	        RECENT_TAGS_NODE
+	private static final String[] RECENT_NODE_CHILDREN = new String[] { 
+		RECENT_SIGNALS_NODE,
+		RECENT_MONITORS_NODE,
+		RECENT_BOOKS_NODE,
+		RECENT_TAGS_NODE
+	};
+	
+	private static final ManagedDocumentType[] OPEN_TYPES = new ManagedDocumentType[] { 
+		ManagedDocumentType.SIGNAL,
+		ManagedDocumentType.MONITOR,
+		ManagedDocumentType.BOOK,
+		ManagedDocumentType.TAG
 	};
 
-	private static final ManagedDocumentType[] OPEN_TYPES = new ManagedDocumentType[] {
-	        ManagedDocumentType.SIGNAL,
-	        ManagedDocumentType.BOOK,
-	        ManagedDocumentType.TAG
-	};
-
-	private static final ManagedDocumentType[] RECENT_TYPES = new ManagedDocumentType[] {
-	        ManagedDocumentType.SIGNAL,
-	        ManagedDocumentType.BOOK,
-	        ManagedDocumentType.TAG
+	private static final ManagedDocumentType[] RECENT_TYPES = new ManagedDocumentType[] { 
+		ManagedDocumentType.SIGNAL,
+		ManagedDocumentType.MONITOR,
+		ManagedDocumentType.BOOK,
+		ManagedDocumentType.TAG
 	};
 
 	private DocumentManager documentManager;
@@ -97,12 +105,16 @@ public class WorkspaceTreeModel extends AbstractTreeModel implements DocumentMan
 			return RECENT_TYPES.length;
 		} else if (parent == OPEN_SIGNALS_NODE) {
 			return documentManager.getDocumentCount(ManagedDocumentType.SIGNAL);
+		} else if (parent == OPEN_MONITORS_NODE) {
+			return documentManager.getDocumentCount(ManagedDocumentType.MONITOR);
 		} else if (parent == OPEN_BOOKS_NODE) {
 			return documentManager.getDocumentCount(ManagedDocumentType.BOOK);
 		} else if (parent == OPEN_TAGS_NODE) {
 			return documentManager.getDocumentCount(ManagedDocumentType.TAG);
 		} else if (parent == RECENT_SIGNALS_NODE) {
 			return mrudRegistry.getMRUDEntryCount(ManagedDocumentType.SIGNAL);
+		} else if (parent == RECENT_MONITORS_NODE) {
+			return mrudRegistry.getMRUDEntryCount(ManagedDocumentType.MONITOR);
 		} else if (parent == RECENT_BOOKS_NODE) {
 			return mrudRegistry.getMRUDEntryCount(ManagedDocumentType.BOOK);
 		} else if (parent == RECENT_TAGS_NODE) {
@@ -122,12 +134,16 @@ public class WorkspaceTreeModel extends AbstractTreeModel implements DocumentMan
 			return RECENT_NODE_CHILDREN[index];
 		} else if (parent == OPEN_SIGNALS_NODE) {
 			return documentManager.getDocumentAt(ManagedDocumentType.SIGNAL, index);
+		} else if (parent == OPEN_MONITORS_NODE) {
+			return documentManager.getDocumentAt(ManagedDocumentType.MONITOR, index);
 		} else if (parent == OPEN_BOOKS_NODE) {
 			return documentManager.getDocumentAt(ManagedDocumentType.BOOK, index);
 		} else if (parent == OPEN_TAGS_NODE) {
 			return documentManager.getDocumentAt(ManagedDocumentType.TAG, index);
 		} else if (parent == RECENT_SIGNALS_NODE) {
 			return mrudRegistry.getMRUDEntryAt(ManagedDocumentType.SIGNAL, index);
+		} else if (parent == RECENT_MONITORS_NODE) {
+			return mrudRegistry.getMRUDEntryAt(ManagedDocumentType.MONITOR, index);
 		} else if (parent == RECENT_BOOKS_NODE) {
 			return mrudRegistry.getMRUDEntryAt(ManagedDocumentType.BOOK, index);
 		} else if (parent == RECENT_TAGS_NODE) {
@@ -155,12 +171,16 @@ public class WorkspaceTreeModel extends AbstractTreeModel implements DocumentMan
 			}
 		} else if (parent == OPEN_SIGNALS_NODE && (child instanceof Document)) {
 			return documentManager.getIndexOfDocument(ManagedDocumentType.SIGNAL, (Document) child);
+		} else if (parent == OPEN_MONITORS_NODE && (child instanceof Document)) {
+			return documentManager.getIndexOfDocument(ManagedDocumentType.MONITOR, (Document) child);
 		} else if (parent == OPEN_BOOKS_NODE && (child instanceof Document)) {
 			return documentManager.getIndexOfDocument(ManagedDocumentType.BOOK, (Document) child);
 		} else if (parent == OPEN_TAGS_NODE && (child instanceof Document)) {
 			return documentManager.getIndexOfDocument(ManagedDocumentType.TAG, (Document) child);
 		} else if (parent == RECENT_SIGNALS_NODE && (child instanceof MRUDEntry)) {
 			return mrudRegistry.getIndexOfMRUDEntry(ManagedDocumentType.SIGNAL, (MRUDEntry) child);
+		} else if (parent == RECENT_MONITORS_NODE && (child instanceof MRUDEntry)) {
+			return mrudRegistry.getIndexOfMRUDEntry(ManagedDocumentType.MONITOR, (MRUDEntry) child);
 		} else if (parent == RECENT_BOOKS_NODE && (child instanceof MRUDEntry)) {
 			return mrudRegistry.getIndexOfMRUDEntry(ManagedDocumentType.BOOK, (MRUDEntry) child);
 		} else if (parent == RECENT_TAGS_NODE && (child instanceof MRUDEntry)) {

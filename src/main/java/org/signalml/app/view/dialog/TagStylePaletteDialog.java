@@ -33,10 +33,11 @@ import org.signalml.app.model.TagStyleTreeModel;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.element.TagStylePropertiesPanel;
 import org.signalml.app.view.element.TagStyleTree;
-import org.signalml.domain.signal.SignalSelectionType;
 import org.signalml.domain.tag.StyledTagSet;
-import org.signalml.domain.tag.TagStyle;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.SignalSelectionType;
+import org.signalml.plugin.export.signal.TagStyle;
+import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 

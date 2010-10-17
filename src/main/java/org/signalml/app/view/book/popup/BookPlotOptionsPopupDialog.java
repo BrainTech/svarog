@@ -31,9 +31,9 @@ import javax.swing.event.ChangeListener;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.book.BookPlot;
 import org.signalml.app.view.book.BookView;
-import org.signalml.app.view.dialog.AbstractPopupDialog;
 import org.signalml.app.view.element.TitledCrossBorder;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.view.AbstractPopupDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** BookPlotOptionsPopupDialog
@@ -130,10 +130,10 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(aspectRatioLabel)
-		        .addComponent(getAspectRatioPanel())
-		);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(aspectRatioLabel)
+				.addComponent(getAspectRatioPanel())
+			);
 
 		layout.setVerticalGroup(vGroup);
 

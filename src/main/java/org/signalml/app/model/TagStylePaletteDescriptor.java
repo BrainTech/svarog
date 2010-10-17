@@ -5,7 +5,7 @@
 package org.signalml.app.model;
 
 import org.signalml.domain.tag.StyledTagSet;
-import org.signalml.domain.tag.TagStyle;
+import org.signalml.plugin.export.signal.TagStyle;
 
 /** TagStylePaletteDescriptor
  *

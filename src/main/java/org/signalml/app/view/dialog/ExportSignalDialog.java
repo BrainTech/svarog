@@ -16,7 +16,7 @@ import org.signalml.app.model.SignalExportDescriptor;
 import org.signalml.app.view.element.ExportSignalOptionsPanel;
 import org.signalml.app.view.element.SignalSpacePanel;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 

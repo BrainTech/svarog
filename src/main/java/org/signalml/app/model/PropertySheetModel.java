@@ -23,7 +23,7 @@ import javax.swing.tree.TreePath;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.view.ViewerTabbedPane;
-import org.signalml.app.view.ViewerTreePane;
+import org.signalml.plugin.export.view.ViewerTreePane;
 import org.signalml.util.Util;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.support.MessageSourceAccessor;

@@ -8,7 +8,8 @@ import java.util.Collection;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.signalml.domain.signal.SignalSelectionType;
+import org.signalml.plugin.export.signal.SignalSelectionType;
+import org.signalml.plugin.export.signal.Tag;
 
 /**
  * This class represents a set of {@link TagDifference differences} between

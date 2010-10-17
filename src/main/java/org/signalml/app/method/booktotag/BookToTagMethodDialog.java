@@ -27,10 +27,10 @@ import org.signalml.app.action.util.ListSelectAllAction;
 import org.signalml.app.action.util.ListSelectInvertAction;
 import org.signalml.app.action.util.ListSelectNoneAction;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.domain.book.StandardBook;
-import org.signalml.exception.SignalMLException;
 import org.signalml.method.booktotag.BookToTagData;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 

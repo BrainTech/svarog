@@ -11,36 +11,19 @@ import java.util.List;
 import org.signalml.domain.montage.Montage;
 
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
-import org.signalml.domain.montage.filter.predefined.BandPassSampleFilter;
-import org.signalml.domain.montage.filter.predefined.HighPassSampleFilter;
-import org.signalml.domain.montage.filter.predefined.LowPassSampleFilter;
+import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
+import org.signalml.domain.montage.filter.iirdesigner.ApproximationFunctionType;
+import org.signalml.domain.montage.filter.iirdesigner.FilterType;
 
 /**
  * This abstract class represents a configurer of {@link Montage montages}.
  * Contains 3 predefined filters ({@link LowPassSampleFilter low-}, 
  * {@link BandPassSampleFilter band-} and {@link HighPassSampleFilter high}-pass).
  *
- * @see SignalTypeConfigurer
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public abstract class AbstractSignalTypeConfigurer implements SignalTypeConfigurer {
 
-        /**
-         * predefined low-pass filter
-         */
-	private static final LowPassSampleFilter lowPassSampleFilter = new LowPassSampleFilter();
-        /**
-         * predefined band-pass filter
-         */
-	private static final BandPassSampleFilter bandPassSampleFilter = new BandPassSampleFilter();
-        /**
-         * predefined high-pass filter
-         */
-	private static final HighPassSampleFilter highPassSampleFilter = new HighPassSampleFilter();
-
-        /**
-         * list of all predefined {@link SampleFilterDefinition sample filters}
-         */
 	private static final List<SampleFilterDefinition> predefinedFilters = getAllPredefinedFilters();
 
         /**
@@ -50,10 +33,15 @@ public abstract class AbstractSignalTypeConfigurer implements SignalTypeConfigur
          * @return a constant list of predefined filters
          */
 	private static List<SampleFilterDefinition> getAllPredefinedFilters() {
+
 		ArrayList<SampleFilterDefinition> filters = new ArrayList<SampleFilterDefinition>();
-		filters.add(lowPassSampleFilter);
-		filters.add(bandPassSampleFilter);
-		filters.add(highPassSampleFilter);
+
+		filters.add(new TimeDomainSampleFilter(FilterType.LOWPASS, ApproximationFunctionType.BUTTERWORTH,
+		                                       new double[] {20, 0}, new double[] {30, 0}, 5.0, 20.0));
+
+		filters.add(new TimeDomainSampleFilter(FilterType.HIGHPASS, ApproximationFunctionType.CHEBYSHEV1,
+		                                       new double[] {6, 0}, new double[] {3, 0}, 3.0, 40.0)
+		           );
 
 		return Collections.unmodifiableList(filters);
 	}

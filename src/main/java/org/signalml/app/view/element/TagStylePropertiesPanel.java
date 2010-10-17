@@ -39,8 +39,8 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 
 import org.signalml.app.view.tag.TagRenderer;
-import org.signalml.domain.signal.SignalSelectionType;
-import org.signalml.domain.tag.TagStyle;
+import org.signalml.plugin.export.signal.SignalSelectionType;
+import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.BindException;
@@ -220,16 +220,16 @@ public class TagStylePropertiesPanel extends JPanel {
 			GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.BASELINE)
-			        .addComponent(widthLabel)
-			        .addComponent(getWidthSpinner())
-			);
+					layout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(widthLabel)
+					.addComponent(getWidthSpinner())
+				);
 
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.BASELINE)
-			        .addComponent(dashLabel)
-			        .addComponent(getDashComboBox())
-			);
+					layout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(dashLabel)
+					.addComponent(getDashComboBox())
+				);
 
 			layout.setVerticalGroup(vGroup);
 
@@ -285,30 +285,30 @@ public class TagStylePropertiesPanel extends JPanel {
 			GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.BASELINE)
-			        .addComponent(nameLabel)
-			        .addComponent(getNameTextField())
-			);
+					layout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(nameLabel)
+					.addComponent(getNameTextField())
+				);
+			
+			vGroup.addGroup(
+					layout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(descriptionLabel)
+					.addComponent(getDescriptionScrollPane())
+				);
 
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.BASELINE)
-			        .addComponent(descriptionLabel)
-			        .addComponent(getDescriptionScrollPane())
-			);
+					layout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(keyLabel)
+					.addComponent(keyPanel)
+				);
 
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.BASELINE)
-			        .addComponent(keyLabel)
-			        .addComponent(keyPanel)
-			);
+					layout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(markerLabel)
+					.addComponent(getMarkerCheckBox())
+				);
 
-			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.BASELINE)
-			        .addComponent(markerLabel)
-			        .addComponent(getMarkerCheckBox())
-			);
-
-			layout.setVerticalGroup(vGroup);
+			layout.setVerticalGroup(vGroup);													
 
 		}
 		return propertiesPanel;

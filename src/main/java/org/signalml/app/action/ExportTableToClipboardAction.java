@@ -10,6 +10,7 @@ import javax.swing.JTable;
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.TableFocusSelector;
 import org.signalml.app.model.TableToTextExporter;
+import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** ExportTableToClipboardAction

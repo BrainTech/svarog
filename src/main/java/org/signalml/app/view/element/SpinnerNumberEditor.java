@@ -47,8 +47,8 @@ public class SpinnerNumberEditor extends JSpinner.DefaultEditor {
 	public SpinnerNumberEditor(JSpinner spinner, DecimalFormat format) {
 		super(spinner);
 		if (!(spinner.getModel() instanceof BoundedSpinnerModel)) {
-			throw new IllegalArgumentException(
-			        "model not a BoundedSpinnerModel");
+		throw new IllegalArgumentException(
+				"model not a BoundedSpinnerModel");
 		}
 
 		BoundedSpinnerModel model = (BoundedSpinnerModel) spinner.getModel();

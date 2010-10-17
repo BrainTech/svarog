@@ -36,19 +36,19 @@ import javax.swing.border.TitledBorder;
 
 import org.signalml.app.config.ConfigurationDefaults;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.app.view.dialog.PleaseWaitDialog;
 import org.signalml.app.view.element.ExternalLinkLabel;
 import org.signalml.app.worker.TestConnectionWorker;
 import org.signalml.exception.SanityCheckException;
-import org.signalml.exception.SignalMLException;
 import org.signalml.method.mp5.MP5RemotePasswordExecutor;
 import org.signalml.method.mp5.remote.Credentials;
 import org.signalml.method.mp5.remote.PasswordCredentials;
 import org.signalml.method.mp5.remote.TestConnectionRequest;
 import org.signalml.method.mp5.remote.TestConnectionResponse;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.view.AbstractDialog;
 import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.core.io.ClassPathResource;
@@ -207,53 +207,53 @@ public class MP5RemoteExecutorDialog extends AbstractDialog {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.CENTER)
-		        .addComponent(typeLabel)
-		        .addComponent(glue1)
-		        .addComponent(getTypeComboBox())
-		);
+				layout.createParallelGroup(Alignment.CENTER)
+				.addComponent(typeLabel)
+				.addComponent(glue1)
+				.addComponent(getTypeComboBox())
+			);
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.CENTER)
-		        .addComponent(urlLabel)
-		        .addComponent(glue2)
-		        .addComponent(getUrlTextField())
-		);
+				layout.createParallelGroup(Alignment.CENTER)
+				.addComponent(urlLabel)
+				.addComponent(glue2)
+				.addComponent(getUrlTextField())
+			);
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.CENTER)
-		        .addComponent(userNameLabel)
-		        .addComponent(glue3)
-		        .addComponent(getUserNameTextField())
-		);
+				layout.createParallelGroup(Alignment.CENTER)
+				.addComponent(userNameLabel)
+				.addComponent(glue3)
+				.addComponent(getUserNameTextField())
+			);
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.CENTER)
-		        .addComponent(passwordLabel)
-		        .addComponent(glue4)
-		        .addComponent(getPasswordField())
-		);
+				layout.createParallelGroup(Alignment.CENTER)
+				.addComponent(passwordLabel)
+				.addComponent(glue4)
+				.addComponent(getPasswordField())
+			);
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.CENTER)
-		        .addComponent(passwordAgainLabel)
-		        .addComponent(glue5)
-		        .addComponent(getPasswordAgainField())
-		);
+				layout.createParallelGroup(Alignment.CENTER)
+				.addComponent(passwordAgainLabel)
+				.addComponent(glue5)
+				.addComponent(getPasswordAgainField())
+			);
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.CENTER)
-		        .addComponent(savePasswordLabel)
-		        .addComponent(glue6)
-		        .addComponent(getSavePasswordCheckBox())
-		);
+				layout.createParallelGroup(Alignment.CENTER)
+				.addComponent(savePasswordLabel)
+				.addComponent(glue6)
+				.addComponent(getSavePasswordCheckBox())
+			);
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(filler1)
-		        .addComponent(glue7)
-		        .addComponent(getLinkLabel())
-		);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(filler1)
+				.addComponent(glue7)
+				.addComponent(getLinkLabel())
+			);
 
 		layout.setVerticalGroup(vGroup);
 

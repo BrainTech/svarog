@@ -6,6 +6,8 @@ package org.signalml.domain.tag;
 
 import java.util.EventListener;
 
+import org.signalml.plugin.export.signal.Tag;
+
 /**
  * This is an interface for an event listeners associated with adding, removing
  * or changing the {@link Tag tag} in a {@link StyledTagSet StyledTagSet}.

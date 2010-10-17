@@ -78,22 +78,22 @@ public class BlockSignalSelectionPanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(startPageLabel)
-		        .addComponent(getStartPageSpinner())
-		);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(startPageLabel)
+				.addComponent(getStartPageSpinner())
+			);
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(startBlockLabel)
-		        .addComponent(getStartBlockSpinner())
-		);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(startBlockLabel)
+				.addComponent(getStartBlockSpinner())
+			);
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(lengthLabel)
-		        .addComponent(getLengthSpinner())
-		);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(lengthLabel)
+				.addComponent(getLengthSpinner())
+			);
 
 		layout.setVerticalGroup(vGroup);
 

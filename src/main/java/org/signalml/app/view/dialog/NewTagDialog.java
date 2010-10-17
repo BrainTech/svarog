@@ -17,7 +17,8 @@ import org.signalml.app.view.element.EmbeddedFileChooser;
 import org.signalml.app.view.element.NewTagPanel;
 import org.signalml.app.view.element.PagingParametersPanel;
 import org.signalml.exception.SanityCheckException;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 

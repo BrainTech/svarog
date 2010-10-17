@@ -31,7 +31,6 @@ import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.config.ApplicationWorkspace;
 import org.signalml.app.config.ConfigurationDefaults;
 import org.signalml.app.config.MainFrameConfiguration;
-import org.signalml.app.document.Document;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.DocumentManager;
 import org.signalml.app.document.DocumentManagerEvent;
@@ -53,12 +52,15 @@ import org.signalml.app.view.element.LockableJSplitPane;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.exception.SanityCheckException;
-import org.signalml.exception.SignalMLException;
 import org.signalml.method.CleanupMethod;
 import org.signalml.method.Method;
 import org.signalml.method.SerializableMethod;
 import org.signalml.method.TrackableMethod;
 import org.signalml.method.mp5.MP5Method;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.Document;
+import org.signalml.plugin.export.view.DocumentView;
+import org.signalml.plugin.loader.PluginLoader;
 import org.signalml.task.LocalTask;
 import org.signalml.task.Task;
 import org.signalml.task.TaskStatus;
@@ -213,6 +215,7 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 		documentManager.addDocumentManagerListener(workspaceTreeModel);
 
 		documentManager.addDocumentManagerListener(elementManager.getSignalTreeModel());
+		documentManager.addDocumentManagerListener(elementManager.getMonitorTreeModel());
 		documentManager.addDocumentManagerListener(elementManager.getTagTreeModel());
 		documentManager.addDocumentManagerListener(elementManager.getBookTreeModel());
 
@@ -450,6 +453,8 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
 			return;
 		}
+		
+		PluginLoader.getInstance().onClose();
 
 		saveViewPreferences();
 		setVisible(false);

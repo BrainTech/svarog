@@ -8,7 +8,7 @@ import org.signalml.app.view.tag.TagIconProducer;
 import org.signalml.domain.montage.MontageChannel;
 import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.signal.MultichannelSampleSource;
-import org.signalml.domain.tag.TagStyle;
+import org.signalml.plugin.export.signal.TagStyle;
 
 /**
  * This class represents different parameters of

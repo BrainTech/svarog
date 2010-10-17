@@ -5,6 +5,8 @@
 package org.signalml.domain.signal;
 
 import org.signalml.app.view.signal.SampleSourceUtils;
+import org.signalml.plugin.export.signal.SignalSelection;
+import org.signalml.plugin.export.signal.SignalSelectionType;
 
 /**
  * This class represents the {@link MultichannelSampleSource soruce} of samples

@@ -10,7 +10,8 @@ import java.io.IOException;
 import org.apache.log4j.Logger;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.view.dialog.ErrorsDialog;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** SaveAllDocumentsAction

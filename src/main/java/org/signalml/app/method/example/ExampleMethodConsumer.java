@@ -7,9 +7,9 @@ package org.signalml.app.method.example;
 import javax.swing.JOptionPane;
 
 import org.signalml.app.method.MethodResultConsumer;
-import org.signalml.exception.SignalMLException;
 import org.signalml.method.Method;
 import org.signalml.method.example.ExampleResult;
+import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** ExampleMethodConsumer

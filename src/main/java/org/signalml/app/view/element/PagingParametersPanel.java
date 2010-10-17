@@ -17,7 +17,7 @@ import javax.swing.border.TitledBorder;
 import org.apache.log4j.Logger;
 import org.signalml.app.model.PagingParameterDescriptor;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
@@ -87,16 +87,16 @@ public class PagingParametersPanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(pageSizeLabel)
-		        .addComponent(getPageSizeField())
-		);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(pageSizeLabel)
+				.addComponent(getPageSizeField())
+			);
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(blocksPerPageLabel)
-		        .addComponent(getBlocksPerPageField())
-		);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(blocksPerPageLabel)
+				.addComponent(getBlocksPerPageField())
+			);
 
 		layout.setVerticalGroup(vGroup);
 

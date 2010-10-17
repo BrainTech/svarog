@@ -13,13 +13,14 @@ import javax.swing.JViewport;
 import javax.swing.SwingUtilities;
 
 import org.signalml.app.util.IconUtils;
+import org.signalml.plugin.export.signal.AbstractSignalTool;
 
 /** MoveSignalSignalTool
  *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class MoveSignalSignalTool extends SignalTool {
+public class MoveSignalSignalTool extends AbstractSignalTool {
 
 	private Point dragStart = null;
 	private Point dragScrollStart = null;
@@ -50,7 +51,7 @@ public class MoveSignalSignalTool extends SignalTool {
 
 			dragStart = e.getLocationOnScreen();
 			dragScrollStart = plot.getViewport().getViewPosition();
-			engaged = true;
+			setEngaged(true);
 			e.consume();
 
 		}
@@ -62,7 +63,7 @@ public class MoveSignalSignalTool extends SignalTool {
 		if (SwingUtilities.isLeftMouseButton(e)) {
 			dragStart = null;
 			dragScrollStart = null;
-			engaged = false;
+			setEngaged(false);
 			plot = null;
 			e.consume();
 		}

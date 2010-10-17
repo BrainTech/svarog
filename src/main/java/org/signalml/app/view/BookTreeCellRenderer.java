@@ -7,12 +7,12 @@ import javax.swing.JLabel;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
-import org.signalml.app.document.Document;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.model.BookAtomTreeNode;
 import org.signalml.app.model.BookChannelTreeNode;
 import org.signalml.app.model.BookSegmentTreeNode;
 import org.signalml.app.util.IconUtils;
+import org.signalml.plugin.export.signal.Document;
 
 /** BookTreeCellRenderer
  *

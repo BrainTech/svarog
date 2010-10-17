@@ -5,13 +5,13 @@
 package org.signalml.app.method.booktotag;
 
 import org.signalml.app.document.BookDocument;
-import org.signalml.app.document.Document;
 import org.signalml.app.method.ApplicationMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.MethodPresetManager;
 import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.method.booktotag.BookToTagData;
 import org.signalml.method.booktotag.BookToTagMethod;
+import org.signalml.plugin.export.signal.Document;
 
 /** BookToTagMethodDescriptor
  *

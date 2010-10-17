@@ -11,8 +11,9 @@ import javax.swing.JComponent;
 
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.element.TextPanePanel;
-import org.signalml.domain.tag.Tag;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.Tag;
+import org.signalml.plugin.export.view.AbstractDialog;
 import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;

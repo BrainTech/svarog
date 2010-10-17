@@ -6,7 +6,6 @@ package org.signalml.method.iterator;
 
 import org.apache.log4j.Logger;
 import org.signalml.exception.SanityCheckException;
-import org.signalml.exception.SignalMLException;
 import org.signalml.method.AbstractMethod;
 import org.signalml.method.ComputationException;
 import org.signalml.method.InitializingMethod;
@@ -14,6 +13,7 @@ import org.signalml.method.InputDataException;
 import org.signalml.method.MethodExecutionTracker;
 import org.signalml.method.SuspendableMethod;
 import org.signalml.method.TrackableMethod;
+import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** IteratorMethod

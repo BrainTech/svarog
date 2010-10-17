@@ -13,8 +13,9 @@ import java.util.List;
 
 import javax.swing.SwingUtilities;
 
+import multiplexer.jmx.client.ConnectException;
+
 import org.apache.log4j.Logger;
-import org.signalml.app.document.Document;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.FileBackedDocument;
 import org.signalml.app.document.MRUDEntry;
@@ -31,7 +32,8 @@ import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.domain.montage.Montage;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.Document;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -97,11 +99,12 @@ public class WorkspaceSignal extends WorkspaceDocument {
 			mrud.setLastTimeOpened(new Date());
 
 			mrudEntry = mrud;
-
+		
 		} else {
-
-			mrudEntry = new MRUDEntry(ManagedDocumentType.SIGNAL, document.getClass(), ((FileBackedDocument) document).getBackingFile().getAbsolutePath());
-
+			File backingFile = ((FileBackedDocument) document).getBackingFile();
+			if (backingFile != null)
+				mrudEntry = new MRUDEntry( ManagedDocumentType.SIGNAL, document.getClass(), backingFile.getAbsolutePath() );
+			
 		}
 
 		SignalView view = (SignalView) document.getDocumentView();
@@ -178,7 +181,7 @@ public class WorkspaceSignal extends WorkspaceDocument {
 
 	}
 
-	public void configureSignal(SignalDocument document, DocumentFlowIntegrator integrator) throws IOException, SignalMLException {
+	public void configureSignal(SignalDocument document, DocumentFlowIntegrator integrator) throws IOException, SignalMLException, ConnectException {
 
 		SignalView view = (SignalView) document.getDocumentView();
 		SignalPlot masterSignalPlot = view.getMasterPlot();

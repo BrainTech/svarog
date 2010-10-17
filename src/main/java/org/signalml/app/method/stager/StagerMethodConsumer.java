@@ -10,6 +10,8 @@ import java.io.FileFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import multiplexer.jmx.client.ConnectException;
+
 import org.apache.log4j.Logger;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.ManagedDocumentType;
@@ -25,9 +27,9 @@ import org.signalml.app.view.signal.SampleSourceUtils;
 import org.signalml.domain.signal.MultichannelSampleSource;
 import org.signalml.domain.tag.LegacyTagImporter;
 import org.signalml.domain.tag.StyledTagSet;
-import org.signalml.exception.SignalMLException;
 import org.signalml.method.Method;
 import org.signalml.method.stager.StagerResult;
+import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
 
 /** StagerMethodConsumer

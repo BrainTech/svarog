@@ -5,6 +5,7 @@
 package org.signalml.app.document;
 
 import java.beans.IntrospectionException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,7 +21,9 @@ import org.signalml.domain.montage.Montage;
 import org.signalml.domain.signal.OriginalMultichannelSampleSource;
 import org.signalml.domain.signal.SignalType;
 import org.signalml.exception.SanityCheckException;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.AbstractDocument;
+import org.signalml.plugin.export.signal.ExportedTagDocument;
 import org.springframework.context.MessageSourceResolvable;
 
 /** AbstractReaderSignal
@@ -272,6 +275,15 @@ public abstract class AbstractSignal extends AbstractDocument implements SignalD
 		return sb.toString();
 
 	}
+	
+	@Override
+	public List<ExportedTagDocument> getExportedTagDocuments(){
+		List<ExportedTagDocument> exportedTagDocuments = new LinkedList<ExportedTagDocument>();
+		List<TagDocument> tagDocuments = getTagDocuments();
+		for (TagDocument tagDocument : tagDocuments)
+			exportedTagDocuments.add(tagDocument);
+		return exportedTagDocuments;
+	}
 
 	@Override
 	public List<LabelledPropertyDescriptor> getPropertyList() throws IntrospectionException {
@@ -290,6 +302,26 @@ public abstract class AbstractSignal extends AbstractDocument implements SignalD
 
 		return list;
 
+	}
+	
+	@Override
+	public ArrayList<String> getMontageChannelLabels(){
+		Montage montage = getMontage();
+		ArrayList<String> labels = new ArrayList<String>(montage.getMontageChannelCount());
+		for (int i = 0; i < montage.getMontageChannelCount(); ++i){
+			labels.add(montage.getMontageChannelLabelAt(i));
+		}
+		return labels;
+	}
+	
+	@Override
+	public ArrayList<String> getSourceChannelLabels(){
+		Montage montage = getMontage();
+		ArrayList<String> labels = new ArrayList<String>(montage.getSourceChannelCount());
+		for (int i = 0; i < montage.getSourceChannelCount(); ++i){
+			labels.add(montage.getSourceChannelLabelAt(i));
+		}
+		return labels;
 	}
 
 }

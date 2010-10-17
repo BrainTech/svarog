@@ -75,10 +75,10 @@ public class OpenTagOptionsPanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(signalDocumentLabel)
-		        .addComponent(getSignalDocumentComboBox())
-		);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(signalDocumentLabel)
+				.addComponent(getSignalDocumentComboBox())
+			);
 
 		layout.setVerticalGroup(vGroup);
 

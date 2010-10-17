@@ -62,10 +62,8 @@ import org.signalml.app.action.selector.BookPlotFocusSelector;
 import org.signalml.app.action.selector.BookViewFocusSelector;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.document.BookDocument;
-import org.signalml.app.document.Document;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.DocumentView;
 import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.book.filter.BookFilterDialog;
 import org.signalml.app.view.book.popup.BookPlotOptionsPopupDialog;
@@ -76,7 +74,9 @@ import org.signalml.app.view.element.TitledSliderPanel;
 import org.signalml.domain.book.BookFilterProcessor;
 import org.signalml.domain.book.WignerMapScaleType;
 import org.signalml.domain.book.filter.AtomFilterChain;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.Document;
+import org.signalml.plugin.export.view.DocumentView;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** BookView

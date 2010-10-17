@@ -17,9 +17,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.util.SwingUtils;
-import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.app.view.element.CompactButton;
 import org.signalml.method.mp5.MP5Parameters;
+import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
@@ -99,20 +99,20 @@ public class MP5StoppingCriteriaConfigPanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.CENTER)
-		        .addComponent(maxIterationCountLabel)
-		        .addComponent(glue1)
-		        .addComponent(getMaxIterationCountSpinner())
-		        .addComponent(maxIterationCountHelpButton)
-		);
+				layout.createParallelGroup(Alignment.CENTER)
+				.addComponent(maxIterationCountLabel)
+				.addComponent(glue1)
+				.addComponent(getMaxIterationCountSpinner())
+				.addComponent(maxIterationCountHelpButton)
+			);
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.CENTER)
-		        .addComponent(energyPercentLabel)
-		        .addComponent(glue2)
-		        .addComponent(getEnergyPercentSpinner())
-		        .addComponent(energyPercentHelpButton)
-		);
+				layout.createParallelGroup(Alignment.CENTER)
+				.addComponent(energyPercentLabel)
+				.addComponent(glue2)
+				.addComponent(getEnergyPercentSpinner())
+				.addComponent(energyPercentHelpButton)
+			);
 
 		layout.setVerticalGroup(vGroup);
 

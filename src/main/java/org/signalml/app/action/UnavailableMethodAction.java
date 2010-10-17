@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import org.apache.log4j.Logger;
 import org.signalml.app.method.UnavailableMethodDescriptor;
 import org.signalml.app.view.dialog.ErrorsDialog;
+import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** UnavailableMethodAction

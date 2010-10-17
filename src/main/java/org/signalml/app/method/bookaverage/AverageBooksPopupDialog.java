@@ -25,9 +25,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.view.book.BookView;
-import org.signalml.app.view.dialog.AbstractPopupDialog;
 import org.signalml.app.view.element.TitledCrossBorder;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.view.AbstractPopupDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 
 // FIXME reuse this class in the mehtod
@@ -118,28 +118,28 @@ public class AverageBooksPopupDialog extends AbstractPopupDialog {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(minSegmentLabel)
-		        .addComponent(minSegmentGlue)
-		        .addComponent(getMinSegmentSpinner())
-		);
-
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(minSegmentLabel)
+				.addComponent(minSegmentGlue)
+				.addComponent(getMinSegmentSpinner())
+			);
+		
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(maxSegmentLabel)
-		        .addComponent(maxSegmentGlue)
-		        .addComponent(getMaxSegmentSpinner())
-		);
-
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(maxSegmentLabel)
+				.addComponent(maxSegmentGlue)
+				.addComponent(getMaxSegmentSpinner())
+			);
+		
 		vGroup.addGroup(
-		        layout.createParallelGroup(Alignment.BASELINE)
-		        .addComponent(allChannelsLabel)
-		        .addComponent(allChannelsGlue)
-		        .addComponent(getAllChannelsCheckBox())
-		);
-
-		layout.setVerticalGroup(vGroup);
-
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(allChannelsLabel)
+				.addComponent(allChannelsGlue)
+				.addComponent(getAllChannelsCheckBox())
+			);
+		
+		layout.setVerticalGroup(vGroup);		
+				
 		JPanel interfacePanel = new JPanel(new BorderLayout());
 
 		interfacePanel.add(averagePanel, BorderLayout.NORTH);

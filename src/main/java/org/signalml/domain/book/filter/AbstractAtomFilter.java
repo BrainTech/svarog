@@ -6,7 +6,7 @@ package org.signalml.domain.book.filter;
 
 import java.io.Serializable;
 
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.MessageSourceResolvable;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;

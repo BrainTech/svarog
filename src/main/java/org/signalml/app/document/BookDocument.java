@@ -18,7 +18,7 @@ import org.signalml.domain.book.StandardBook;
 import org.signalml.domain.book.filter.AbstractAtomFilter;
 import org.signalml.domain.book.filter.AtomFilterChain;
 import org.signalml.exception.ResolvableException;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 
 

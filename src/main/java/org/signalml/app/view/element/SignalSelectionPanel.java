@@ -19,11 +19,11 @@ import org.signalml.app.model.ChannelSelectionModelProvider;
 import org.signalml.app.model.PageSelectionModelProvider;
 import org.signalml.app.util.SwingUtils;
 import org.signalml.domain.signal.BoundedSignalSelection;
-import org.signalml.domain.signal.SignalSelection;
-import org.signalml.domain.signal.SignalSelectionType;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
 import org.signalml.exception.SanityCheckException;
+import org.signalml.plugin.export.signal.SignalSelection;
+import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 

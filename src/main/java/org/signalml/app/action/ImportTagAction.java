@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 
+import multiplexer.jmx.client.ConnectException;
+
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.DocumentFlowIntegrator;
@@ -20,7 +22,7 @@ import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.domain.tag.LegacyTagImporter;
 import org.signalml.domain.tag.StyledTagSet;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** ImportTagAction

@@ -16,8 +16,8 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeListener;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.app.view.element.CompactButton;
+import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.core.io.ClassPathResource;
 

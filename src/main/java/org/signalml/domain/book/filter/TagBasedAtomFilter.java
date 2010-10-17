@@ -13,10 +13,10 @@ import org.apache.log4j.Logger;
 import org.signalml.app.document.TagDocument;
 import org.signalml.domain.book.StandardBookAtom;
 import org.signalml.domain.book.StandardBookSegment;
-import org.signalml.domain.tag.Tag;
-import org.signalml.domain.tag.TagStyle;
 import org.signalml.exception.SanityCheckException;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.Tag;
+import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.util.Util;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;

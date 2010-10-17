@@ -4,8 +4,10 @@
 
 package org.signalml.domain.tag;
 
-import org.signalml.domain.signal.SignalSelection;
-import org.signalml.domain.signal.SignalSelectionType;
+import org.signalml.plugin.export.signal.SignalSelection;
+import org.signalml.plugin.export.signal.SignalSelectionType;
+import org.signalml.plugin.export.signal.Tag;
+import org.signalml.plugin.export.signal.TagStyle;
 
 /**
  * This class represents the difference between two {@link Tag tags} from

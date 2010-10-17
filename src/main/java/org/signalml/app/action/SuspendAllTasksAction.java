@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.signalml.app.task.ApplicationTaskManager;
 import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.method.SuspendableMethod;
+import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.task.Task;
 import org.springframework.context.support.MessageSourceAccessor;
 

@@ -12,7 +12,7 @@ import org.signalml.app.view.dialog.SignalSelectionDialog;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.domain.signal.BoundedSignalSelection;
-import org.signalml.domain.signal.SignalSelection;
+import org.signalml.plugin.export.signal.SignalSelection;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** PreciseSelectionAction

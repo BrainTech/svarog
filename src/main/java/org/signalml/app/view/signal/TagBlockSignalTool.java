@@ -14,15 +14,16 @@ import javax.swing.SwingUtilities;
 import org.apache.log4j.Logger;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.util.IconUtils;
-import org.signalml.domain.signal.SignalSelectionType;
-import org.signalml.domain.tag.TagStyle;
+import org.signalml.plugin.export.signal.AbstractSignalTool;
+import org.signalml.plugin.export.signal.SignalSelectionType;
+import org.signalml.plugin.export.signal.TagStyle;
 
 /** TagBlockSignalTool
  *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class TagBlockSignalTool extends SignalTool implements TaggingSignalTool {
+public class TagBlockSignalTool extends AbstractSignalTool implements TaggingSignalTool {
 
 	protected static final Logger logger = Logger.getLogger(TagBlockSignalTool.class);
 
@@ -57,7 +58,7 @@ public class TagBlockSignalTool extends SignalTool implements TaggingSignalTool 
 			plot = (SignalPlot) source;
 
 			startBlock = plot.toBlockSpace(e.getPoint());
-			engaged = true;
+			setEngaged(true);
 			e.consume();
 
 		}
@@ -69,7 +70,7 @@ public class TagBlockSignalTool extends SignalTool implements TaggingSignalTool 
 		if (SwingUtilities.isLeftMouseButton(e)) {
 			tagTo(e.getPoint());
 			startBlock = null;
-			engaged = false;
+			setEngaged(false);
 			plot = null;
 			e.consume();
 		}
@@ -89,20 +90,18 @@ public class TagBlockSignalTool extends SignalTool implements TaggingSignalTool 
 		if (startBlock != null) {
 			Integer endBlock = plot.toBlockSpace(point);
 			if (endBlock != null) {
-				signalView.setSignalSelection(plot,plot.getBlockSelection(startBlock, endBlock));
+			    getSignalView().setSignalSelection(plot,plot.getBlockSelection(startBlock, endBlock));
 			}
 		}
 	}
 
 	private void tagTo(Point point) {
-
 		if (startBlock != null) {
-
 			Integer endBlock = plot.toBlockSpace(point);
 			if (endBlock != null) {
 
-				TagStyle style = signalView.getCurrentTagStyle(SignalSelectionType.BLOCK);
-				TagDocument tagDocument = signalView.getDocument().getActiveTag();
+				TagStyle style = getSignalView().getCurrentTagStyle(SignalSelectionType.BLOCK);
+				TagDocument tagDocument = getSignalView().getDocument().getActiveTag();
 				if (tagDocument != null) {
 
 					if (style == null) {
@@ -115,10 +114,8 @@ public class TagBlockSignalTool extends SignalTool implements TaggingSignalTool 
 
 			}
 
-			signalView.clearSignalSelection();
-
+			getSignalView().clearSignalSelection();
 		}
-
 	}
 
 }

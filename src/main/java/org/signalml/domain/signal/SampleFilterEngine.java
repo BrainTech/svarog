@@ -3,6 +3,7 @@
  */
 
 package org.signalml.domain.signal;
+import org.signalml.domain.montage.filter.SampleFilterDefinition;
 
 /**
  * This abstract class represents the engine of a sample filter.
@@ -12,6 +13,11 @@ package org.signalml.domain.signal;
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public abstract class SampleFilterEngine implements SampleSource {
+
+	/*
+	 * the {@link SampleFilterDefinition definition} of the filter
+	 */
+	SampleFilterDefinition definition;
 
         /**
          * the {@link SampleSource source} of samples
@@ -31,6 +37,13 @@ public abstract class SampleFilterEngine implements SampleSource {
 	public float getCalibration() {
 		return source.getCalibration();
 	}
+
+	/**
+	 * Returs the (@link SampleFilterDefinition definition of the filter) used
+	 * by the filtering engine.
+	 * @return (@link SampleFilterDefinition the definition of the filter)
+	 */
+	public abstract SampleFilterDefinition getFilterDefinition();
 
 	@Override
 	public String getLabel() {

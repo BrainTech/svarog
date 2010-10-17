@@ -36,14 +36,14 @@ import org.apache.log4j.Logger;
 import org.signalml.app.document.SignalChecksumProgressMonitor;
 import org.signalml.domain.signal.SignalChecksum;
 import org.signalml.exception.SanityCheckException;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 
 /**
  * Util provides various String to Date conversions, signal checksums, file and String MD5 sums.
  * It also allows to get and change file extension, invert map, save system information, split String to separate lines, etc.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
- * 		parts based on code Copyright (C) 2003 Dobieslaw Ircha <dircha@eranet.pl> Artur Biesiadowski <abies@adres.pl> Piotr J. Durka     <Piotr-J.Durka@fuw.edu.pl>
+ * 		parts based on code Copyright (C) 2003 Dobieslaw Ircha <dircha@eranet.pl> Artur Biesiadowski <abies@adres.pl> Piotr J. Durka <Piotr-J.Durka@fuw.edu.pl>
  */
 public abstract class Util {
 

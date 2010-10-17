@@ -21,9 +21,11 @@ import javax.swing.event.EventListenerList;
 import org.apache.log4j.Logger;
 import org.signalml.app.model.SignalParameterDescriptor;
 import org.signalml.domain.montage.Montage;
-import org.signalml.domain.signal.SignalSelection;
-import org.signalml.domain.signal.SignalSelectionType;
 import org.signalml.exception.SanityCheckException;
+import org.signalml.plugin.export.signal.SignalSelection;
+import org.signalml.plugin.export.signal.SignalSelectionType;
+import org.signalml.plugin.export.signal.Tag;
+import org.signalml.plugin.export.signal.TagStyle;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;

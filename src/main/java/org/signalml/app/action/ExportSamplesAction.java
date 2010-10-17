@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
 

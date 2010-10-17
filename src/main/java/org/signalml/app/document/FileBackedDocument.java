@@ -6,6 +6,8 @@ package org.signalml.app.document;
 
 import java.io.File;
 
+import org.signalml.plugin.export.signal.Document;
+
 /** SingleFileBackedDocument
  *
  *

@@ -12,14 +12,15 @@ import java.awt.event.MouseEvent;
 import javax.swing.SwingUtilities;
 
 import org.signalml.app.util.IconUtils;
-import org.signalml.domain.signal.SignalSelectionType;
+import org.signalml.plugin.export.signal.AbstractSignalTool;
+import org.signalml.plugin.export.signal.SignalSelectionType;
 
 /** SelectChannelSignalTool
  *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class SelectChannelSignalTool extends SignalTool implements SelectionSignalTool {
+public class SelectChannelSignalTool extends AbstractSignalTool implements SelectionSignalTool {
 
 	public Float startPosition;
 
@@ -52,7 +53,7 @@ public class SelectChannelSignalTool extends SignalTool implements SelectionSign
 			plot = (SignalPlot) source;
 
 			startPosition = plot.toTimeSpace(e.getPoint());
-			engaged = true;
+			setEngaged(true);
 			e.consume();
 		}
 
@@ -63,7 +64,7 @@ public class SelectChannelSignalTool extends SignalTool implements SelectionSign
 		if (SwingUtilities.isLeftMouseButton(e)) {
 			selectTo(e.getPoint());
 			startPosition = null;
-			engaged = false;
+			setEngaged(false);
 			plot = null;
 			e.consume();
 		}
@@ -84,11 +85,11 @@ public class SelectChannelSignalTool extends SignalTool implements SelectionSign
 			Float endPosition = plot.toTimeSpace(point);
 			if (endPosition != null) {
 				if (startPosition.equals(endPosition)) {
-					signalView.clearSignalSelection();
+				    getSignalView().clearSignalSelection();
 				} else {
 					Integer channel = plot.toChannelSpace(point);
 					if (channel != null) {
-						signalView.setSignalSelection(plot,plot.getChannelSelection(startPosition, endPosition, channel));
+					    getSignalView().setSignalSelection(plot,plot.getChannelSelection(startPosition, endPosition, channel));
 					}
 				}
 			}

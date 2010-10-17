@@ -16,6 +16,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.signalml.app.config.preset.FFTSampleFilterPresetManager;
+import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.model.MontageDescriptor;
@@ -26,7 +27,7 @@ import org.signalml.app.view.dialog.AbstractPresetDialog;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.signal.SignalType;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.SvarogConstants;
 import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -44,6 +45,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	private static final long serialVersionUID = 1L;
 
 	private EditFFTSampleFilterDialog editFFTSampleFilterDialog;
+	private EditTimeDomainSampleFilterDialog editTimeDomainSampleFilterDialog;
 
 	private MontageChannelsPanel channelsPanel;
 	private MontageGeneratorPanel generatorPanel;
@@ -60,6 +62,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	private URL contextHelpURL = null;
 
 	private FFTSampleFilterPresetManager fftFilterPresetManager;
+	private TimeDomainSampleFilterPresetManager timeDomainSampleFilterPresetManager;
 
 	public SignalMontageDialog(MessageSourceAccessor messageSource, MontagePresetManager montagePresetManager, Window f, boolean isModal) {
 		super(messageSource, montagePresetManager, f, isModal);
@@ -71,7 +74,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/montage.png"));
 		setPreferredSize(SvarogConstants.MIN_ASSUMED_DESKTOP_SIZE);
 		super.initialize();
-		setMinimumSize(new Dimension(800,600));
+		setMinimumSize(new Dimension(800, 600));
 	}
 
 	@Override
@@ -93,6 +96,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 		filtersPanel = new MontageFiltersPanel(messageSource);
 		filtersPanel.setSeriousWarningDialog(getSeriousWarningDialog());
 		filtersPanel.setEditFFTSampleFilterDialog(getEditFFTSampleFilterDialog());
+		filtersPanel.setTimeDomainSampleFilterDialog(getEditTimeDomainSampleFilterDialog());
 
 		miscellaneousPanel = new MontageMiscellaneousPanel(messageSource);
 
@@ -232,6 +236,12 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 		if (currentMontage.getMontageChannelCount() == 0) {
 			errors.reject("error.noChannelInMontage");
 		}
+		String description = miscellaneousPanel.getEditDescriptionPanel().getTextPane().getText();
+		if (description != null && !description.isEmpty()) {
+			if (!Util.validateString(description)) {
+				errors.rejectValue("montage.description", "error.descriptionBadChars");
+			}
+		}
 	}
 
 	@Override
@@ -328,6 +338,14 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 		this.fftFilterPresetManager = fftFilterPresetManager;
 	}
 
+	public TimeDomainSampleFilterPresetManager getTimeDomainSampleFilterPresetManager() {
+		return timeDomainSampleFilterPresetManager;
+	}
+
+	public void setTimeDomainSampleFilterPresetManager(TimeDomainSampleFilterPresetManager timeDomainSampleFilterPresetManager) {
+		this.timeDomainSampleFilterPresetManager = timeDomainSampleFilterPresetManager;
+	}
+
 	protected EditFFTSampleFilterDialog getEditFFTSampleFilterDialog() {
 		if (editFFTSampleFilterDialog == null) {
 			editFFTSampleFilterDialog = new EditFFTSampleFilterDialog(messageSource, fftFilterPresetManager, this, true);
@@ -335,6 +353,15 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 			editFFTSampleFilterDialog.setFileChooser(getFileChooser());
 		}
 		return editFFTSampleFilterDialog;
+	}
+
+	protected EditTimeDomainSampleFilterDialog getEditTimeDomainSampleFilterDialog() {
+		if (editTimeDomainSampleFilterDialog == null) {
+			editTimeDomainSampleFilterDialog = new EditTimeDomainSampleFilterDialog(messageSource, timeDomainSampleFilterPresetManager, this, true);
+			editTimeDomainSampleFilterDialog.setApplicationConfig(getApplicationConfig());
+			editTimeDomainSampleFilterDialog.setFileChooser(getFileChooser());
+		}
+		return editTimeDomainSampleFilterDialog;
 	}
 
 }

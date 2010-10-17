@@ -9,8 +9,8 @@ import java.util.Arrays;
 import javax.swing.table.AbstractTableModel;
 
 import org.signalml.domain.tag.SleepTagName;
-import org.signalml.domain.tag.TagStyle;
 import org.signalml.exception.SanityCheckException;
+import org.signalml.plugin.export.signal.TagStyle;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** SleepStatisticTableModel

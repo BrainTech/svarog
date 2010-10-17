@@ -7,12 +7,14 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 
+import multiplexer.jmx.client.ConnectException;
+
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.MRUDFocusSelector;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.MRUDEntry;
 import org.signalml.app.view.dialog.ErrorsDialog;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** OpenMRUDAction
@@ -54,7 +56,11 @@ public class OpenMRUDAction extends AbstractFocusableSignalMLAction<MRUDFocusSel
 		} catch (IOException ex) {
 			logger.error("Failed to open mrud - i/o exception", ex);
 			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-			return;
+			return;			
+		} catch (ConnectException ex) {
+			logger.error("Failed to open mrud - connection exception", ex);
+			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+			return;		 
 		}
 
 	}

@@ -173,6 +173,13 @@
 	<entry key="stager.fixed.corrCoeffRems">-0.85</entry>	
 	<entry key="stager.fixed.corrCoeffSems">-0.7</entry>	
 
+	<entry key="multiplexer.address">127.0.0.1</entry>
+	<entry key="multiplexer.port">31889</entry>
+
+	<entry key="monitor.pageSize">20.0</entry>
+
+	<entry key="signalRecorder.fileName">signal</entry>
+
 	<entry key="eeg.pl.registerUrl">http://www.eeg.pl/join_form</entry>
 	
  	<entry key="eeg.pl.signalmlwsUrl">http://signalml.eeg.pl:8080/signalmlws/ws</entry>  		

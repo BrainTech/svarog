@@ -7,6 +7,8 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 
+import multiplexer.jmx.client.ConnectException;
+
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.DocumentFlowIntegrator;
@@ -19,7 +21,7 @@ import org.signalml.app.model.NewTagDescriptor.NewTagTypeMode;
 import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.dialog.NewTagDialog;
 import org.signalml.exception.SanityCheckException;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** NewTagAction
