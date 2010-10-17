@@ -9,7 +9,7 @@ import org.signalml.plugin.export.signal.ExportedTagStyle;
  * Interface for a listener on tag style changes (addition, removal, change).
  * @author Marcin Szumski
  */
-public interface SvarogTagStyleListener extends SvarogListner {
+public interface SvarogTagStyleListener extends SvarogListener {
 
 	/**
 	 * Invoked when a {@link ExportedTagStyle tag style} is added to the set.

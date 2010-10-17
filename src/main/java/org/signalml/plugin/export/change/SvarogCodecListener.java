@@ -7,7 +7,7 @@ package org.signalml.plugin.export.change;
  * Interface for a listener on codec changes (addition and removal).
  * @author Marcin Szumski
  */
-public interface SvarogCodecListener extends SvarogListner {
+public interface SvarogCodecListener extends SvarogListener {
 	
 	/**
 	 * Gives notification that codec was added.

@@ -10,7 +10,7 @@ import org.signalml.plugin.export.signal.ExportedTag;
  * removal, change).
  * @author Marcin Szumski
  */
-public interface SvarogTagListener extends SvarogListner {
+public interface SvarogTagListener extends SvarogListener {
 
 	/**
 	 * Invoked when the {@link ExportedTag tag} is added to the set.

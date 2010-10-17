@@ -15,7 +15,7 @@ import org.signalml.plugin.export.signal.Document;
  * </ul>
  * @author Marcin Szumski
  */
-public interface SvarogDocumentListener extends SvarogListner {
+public interface SvarogDocumentListener extends SvarogListener {
 
 	/**
 	 * Invoked when a document is added.
