@@ -8,10 +8,10 @@ import java.awt.Window;
 
 import javax.swing.JComponent;
 
-import org.signalml.app.view.dialog.AbstractPopupDialog;
 import org.signalml.app.view.element.SignalFFTSettingsPanel;
 import org.signalml.app.view.signal.SignalFFTTool;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.view.AbstractPopupDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 

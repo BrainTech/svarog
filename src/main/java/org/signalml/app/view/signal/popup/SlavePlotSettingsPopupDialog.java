@@ -28,12 +28,12 @@ import javax.swing.border.TitledBorder;
 import org.signalml.app.model.MontageDescriptor;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.SwingUtils;
-import org.signalml.app.view.dialog.AbstractPopupDialog;
 import org.signalml.app.view.element.TitledCrossBorder;
 import org.signalml.app.view.montage.SignalMontageDialog;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.domain.montage.Montage;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.view.AbstractPopupDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** SlavePlotSettingsPopupDialog

@@ -28,12 +28,12 @@ import javax.swing.border.TitledBorder;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.TagComparisonDescriptor;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.dialog.AbstractPopupDialog;
 import org.signalml.app.view.element.TitledCrossBorder;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.view.tag.comparison.TagComparisonDialog;
 import org.signalml.exception.SanityCheckException;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.view.AbstractPopupDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** CompareTagsPopupDialog

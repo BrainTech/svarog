@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 
 import org.signalml.app.model.TableToTextExporter;
 import org.signalml.app.model.WriterExportableTable;
+import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** ExportToClipboardAction

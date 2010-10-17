@@ -24,7 +24,7 @@ import org.signalml.app.view.tag.TagStyleListCellRenderer;
 import org.signalml.domain.signal.space.MarkerTimeSpace;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
-import org.signalml.domain.tag.TagStyle;
+import org.signalml.plugin.export.signal.TagStyle;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 

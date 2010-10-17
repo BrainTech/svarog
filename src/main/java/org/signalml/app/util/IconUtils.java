@@ -15,7 +15,7 @@ import java.util.Map;
 import javax.swing.ImageIcon;
 
 import org.apache.log4j.Logger;
-import org.signalml.domain.signal.SignalSelectionType;
+import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.task.TaskStatus;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;

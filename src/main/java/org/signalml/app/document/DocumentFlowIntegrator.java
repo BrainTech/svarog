@@ -49,7 +49,8 @@ import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.domain.tag.TagSignalIdentification;
 import org.signalml.exception.MissingCodecException;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.Document;
 import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
 
@@ -91,6 +92,29 @@ public class DocumentFlowIntegrator {
 			logger.error("Unsupported type [" + type + "]");
 			throw new ClassCastException();
 		}
+	}
+
+	public boolean maybeOpenDocument(OpenDocumentDescriptor descriptor, Window window) {
+		try {
+			this.openDocument(descriptor);
+			return true;
+		} catch (SignalMLException ex) {
+			logger.error("Failed to open document", ex);
+			ErrorsDialog.showImmediateExceptionDialog(window, ex);
+			return false;
+		} catch (IOException ex) {
+			logger.error("Failed to open document - I/O exception", ex);
+			ErrorsDialog.showImmediateExceptionDialog(window, ex);
+			return false;
+		} catch (ConnectException ex) {
+			logger.error("Failed to open document - connection exception", ex);
+			ErrorsDialog.showImmediateExceptionDialog(window, ex);
+			return false;
+		}
+	}
+
+	public boolean maybeOpenDocument(OpenDocumentDescriptor descriptor) {
+		return this.maybeOpenDocument(descriptor, null);
 	}
 
 	public boolean closeDocument(Document document, boolean saveAsOnly, boolean force) throws IOException, SignalMLException {

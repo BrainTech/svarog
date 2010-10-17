@@ -14,7 +14,7 @@ import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.view.book.BookPlot;
 import org.signalml.app.view.book.BookView;
 import org.signalml.domain.book.filter.AtomFilterChain;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 

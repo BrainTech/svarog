@@ -7,7 +7,6 @@ import java.beans.IntrospectionException;
 
 import org.apache.log4j.Logger;
 import org.signalml.exception.SanityCheckException;
-import org.signalml.exception.SignalMLException;
 import org.signalml.method.AbstractMethod;
 import org.signalml.method.ComputationException;
 import org.signalml.method.InitializingMethod;
@@ -17,6 +16,7 @@ import org.signalml.method.TrackableMethod;
 import org.signalml.method.iterator.IterableMethod;
 import org.signalml.method.iterator.IterableNumericProperty;
 import org.signalml.method.iterator.IterableParameter;
+import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.ResolvableString;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;

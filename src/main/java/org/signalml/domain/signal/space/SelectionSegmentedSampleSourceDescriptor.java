@@ -8,7 +8,8 @@ import org.signalml.domain.signal.MultichannelSampleSource;
 import org.signalml.domain.signal.MultichannelSegmentedSampleSource;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import org.signalml.domain.signal.SignalSelection;
+
+import org.signalml.plugin.export.signal.SignalSelection;
 
 /**
  * This class represents a descriptor of a

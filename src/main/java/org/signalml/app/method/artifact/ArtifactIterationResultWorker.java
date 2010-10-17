@@ -16,11 +16,11 @@ import org.signalml.domain.roc.RocDataPoint;
 import org.signalml.domain.signal.MultichannelSampleSource;
 import org.signalml.domain.tag.LegacyTagImporter;
 import org.signalml.domain.tag.StyledTagSet;
-import org.signalml.exception.SignalMLException;
 import org.signalml.method.artifact.ArtifactData;
 import org.signalml.method.artifact.ArtifactResult;
 import org.signalml.method.iterator.MethodIteratorData;
 import org.signalml.method.iterator.MethodIteratorResult;
+import org.signalml.plugin.export.SignalMLException;
 
 /** ArtifactIterationResultWorker
  *

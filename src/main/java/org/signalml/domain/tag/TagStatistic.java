@@ -9,6 +9,8 @@ import java.io.Writer;
 import java.util.HashMap;
 
 import org.signalml.app.model.WriterExportableTable;
+import org.signalml.plugin.export.signal.Tag;
+import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.util.Util;
 
 /**

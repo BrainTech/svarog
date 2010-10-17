@@ -19,9 +19,9 @@ import org.signalml.domain.signal.space.ChannelSpaceType;
 import org.signalml.domain.signal.space.SegmentedSampleSourceFactory;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.TimeSpaceType;
-import org.signalml.exception.SignalMLException;
 import org.signalml.method.artifact.ArtifactData;
 import org.signalml.method.artifact.ArtifactSignalFormat;
+import org.signalml.plugin.export.SignalMLException;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;

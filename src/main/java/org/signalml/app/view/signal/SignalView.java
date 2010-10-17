@@ -26,6 +26,7 @@ import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.InvalidClassException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -86,14 +87,12 @@ import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.config.preset.PresetManagerAdapter;
 import org.signalml.app.config.preset.PresetManagerEvent;
 import org.signalml.app.config.preset.PresetManagerListener;
-import org.signalml.app.document.Document;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.montage.MontagePresetManager;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.ResnapToPageRunnable;
-import org.signalml.app.view.DocumentView;
 import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.dialog.EditTagAnnotationDialog;
 import org.signalml.app.view.dialog.EditTagDescriptionDialog;
@@ -117,21 +116,29 @@ import org.signalml.app.view.tag.TagStyleToolBar;
 import org.signalml.app.view.tag.comparison.TagComparisonDialog;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.signal.MultichannelSampleSource;
-import org.signalml.domain.signal.SignalSelection;
-import org.signalml.domain.signal.SignalSelectionType;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
 import org.signalml.domain.tag.StyledTagSet;
-import org.signalml.domain.tag.Tag;
 import org.signalml.domain.tag.TagDifference;
 import org.signalml.domain.tag.TagDifferenceDetector;
 import org.signalml.domain.tag.TagDifferenceSet;
 import org.signalml.domain.tag.TagEvent;
 import org.signalml.domain.tag.TagListener;
-import org.signalml.domain.tag.TagStyle;
 import org.signalml.domain.tag.TagStyleEvent;
 import org.signalml.domain.tag.TagStyleListener;
 import org.signalml.exception.SanityCheckException;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.Document;
+import org.signalml.plugin.export.signal.ExportedSignalSelection;
+import org.signalml.plugin.export.signal.SignalSelection;
+import org.signalml.plugin.export.signal.SignalSelectionType;
+import org.signalml.plugin.export.signal.SignalTool;
+import org.signalml.plugin.export.signal.Tag;
+import org.signalml.plugin.export.signal.TagStyle;
+import org.signalml.plugin.export.view.DocumentView;
+import org.signalml.plugin.export.view.ExportedPositionedTag;
+import org.signalml.plugin.export.view.ExportedSignalPlot;
+import org.signalml.plugin.export.view.ExportedSignalView;
+import org.signalml.plugin.impl.PluginAccessClass;
 import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
 
@@ -140,7 +147,7 @@ import org.springframework.context.support.MessageSourceAccessor;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class SignalView extends DocumentView implements PropertyChangeListener, TagListener, TagStyleListener, TagFocusSelector, TagStyleFocusSelector, SignalPlotFocusSelector, MontageFocusSelector {
+public class SignalView extends DocumentView implements PropertyChangeListener, TagListener, TagStyleListener, TagFocusSelector, TagStyleFocusSelector, SignalPlotFocusSelector, MontageFocusSelector, ExportedSignalView {
 
 	private static final long serialVersionUID = 1L;
 
@@ -820,6 +827,8 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		tagChannelToolButton.addActionListener(toolSelectionListener);
 		zoomSignalToolButton.addActionListener(toolSelectionListener);
 		signalFFTToolButton.addActionListener(toolSelectionListener);
+		
+		PluginAccessClass.getGUIImpl().registerSignalTools(toolMap, toolButtonGroup, toolSelectionListener, this);
 
 		selectToolButton.setSelected(true);
 
@@ -924,6 +933,8 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		mainToolBar.add(zoomSignalToolButton);
 		mainToolBar.add(signalFFTToolButton);
 		mainToolBar.add(rulerToolButton);
+		
+		PluginAccessClass.getGUIImpl().toolsToMainMenu(mainToolBar, this);
 
 		mainToolBar.addSeparator();
 		mainToolBar.add(getNewTagAction());
@@ -931,6 +942,8 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		mainToolBar.add(getSaveTagAction());
 		mainToolBar.add(getSaveTagAsAction());
 		mainToolBar.add(getCloseTagAction());
+		
+		PluginAccessClass.getGUIImpl().addToMainSignalToolBar(mainToolBar);
 
 		mainToolBar.add(Box.createHorizontalGlue());
 
@@ -1104,9 +1117,8 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 	}
 
-
 	public boolean isToolEngaged() {
-		return (currentSignalTool != null && currentSignalTool.isEngaged());
+		return ((null != currentSignalTool) && (currentSignalTool.isEngaged()));
 	}
 
 	public SignalDocument getDocument() {
@@ -1498,7 +1510,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	}
 
 	public SignalSelectionType getCurrentTagType() {
-		if (currentSignalTool != null && currentSignalTool instanceof TaggingSignalTool) {
+		if ((currentSignalTool != null) && (currentSignalTool instanceof TaggingSignalTool)) {
 			return ((TaggingSignalTool) currentSignalTool).getTagType();
 		}
 		return null;
@@ -1758,7 +1770,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 				} else {
 					key = "none";
 				}
-				tagSelection = tool.isSignalSelectionTool();
+				tagSelection = (tool instanceof SelectionSignalTool);
 				TagStyleToolBar toolBar = styleToolBarMap.get(key);
 				if (toolBar != null) {
 					toolBar.setTagSelectionOnButtonClick(tagSelection);
@@ -1918,10 +1930,10 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		}
 
 		if (tagSelection != null) {
-			if (currentSignalTool.isSignalSelectionTool()) {
+			if (currentSignalTool instanceof SelectionSignalTool) {
 				clearTagSelection();
 			}
-			else if (currentSignalTool.isSignalTaggingTool()) {
+			else if (currentSignalTool instanceof TaggingSignalTool) {
 				SignalSelectionType type = tagSelection.tag.getType();
 				if (type != ((TaggingSignalTool) currentSignalTool).getTagType()) {
 					clearTagSelection();
@@ -1930,10 +1942,10 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		}
 
 		if (signalSelection != null) {
-			if (currentSignalTool.isSignalTaggingTool()) {
+			if (currentSignalTool instanceof TaggingSignalTool) {
 				clearSignalSelection();
 			}
-			else if (currentSignalTool.isSignalSelectionTool()) {
+			else if (currentSignalTool instanceof SelectionSignalTool) {
 				SignalSelectionType type = signalSelection.getType();
 				if (type != ((SelectionSignalTool) currentSignalTool).getSelectionType()) {
 					clearSignalSelection();
@@ -2080,6 +2092,31 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		}
 
 	}
+	
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.view.ExportedSignalView#setSignalSelection(org.signalml.plugin.export.view.ExportedSignalPlot, org.signalml.plugin.export.signal.ExportedSignalSelection)
+	 */
+	@Override
+	public void setSignalSelection(ExportedSignalPlot plot,	ExportedSignalSelection signalSelection) throws InvalidClassException {
+		if (plot instanceof SignalPlot)
+			setSignalSelection((SignalPlot) plot, new SignalSelection(signalSelection));
+		else throw new InvalidClassException("only plot got from Svarog can be used");
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.view.ExportedSignalView#setTagSelection(org.signalml.plugin.export.view.ExportedSignalPlot, org.signalml.plugin.export.view.ExportedPositionedTag)
+	 */
+	@Override
+	public void setTagSelection(ExportedSignalPlot plot,
+			ExportedPositionedTag tagSelection) throws InvalidClassException {
+		if (plot instanceof SignalPlot){
+			SignalPlot signalPlot = (SignalPlot) plot;
+			setTagSelection(signalPlot, new PositionedTag(tagSelection));
+		}
+		else throw new InvalidClassException("only plot got from Svarog can be used");
+		
+	}
 
 	private class SignalFFTToolButtonMouseListener extends MouseAdapter {
 
@@ -2153,8 +2190,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-
-			if (currentSignalTool.isSignalSelectionTool()) {
+			if (currentSignalTool instanceof SelectionSignalTool) {
 				getTagSelectionAction().actionPerformed(new ActionEvent(this, 0, "delete"));
 			} else {
 				getRemoveTagAction().actionPerformed(e);
@@ -2165,7 +2201,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		@Override
 		public boolean isEnabled() {
 
-			if (currentSignalTool.isSignalSelectionTool()) {
+			if (currentSignalTool instanceof SelectionSignalTool) {
 				return getTagSelectionAction().isEnabled();
 			} else {
 				return getRemoveTagAction().isEnabled();
@@ -2196,7 +2232,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			if (currentSignalTool.isSignalSelectionTool()) {
+			if (currentSignalTool instanceof SelectionSignalTool) {
 
 				if (signalSelection == null) {
 					return;
@@ -2213,7 +2249,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 				getTagSelectionAction().actionPerformed(new ActionEvent(this, 0, "tag"));
 
 			}
-			else if (currentSignalTool.isSignalTaggingTool()) {
+			else if (currentSignalTool instanceof TaggingSignalTool) {
 
 				SignalSelectionType currentTagType = getCurrentTagType();
 				SignalSelectionType desiredTagType = tagStyle.getType();
@@ -2247,9 +2283,9 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		@Override
 		public boolean isEnabled() {
 
-			if (currentSignalTool.isSignalSelectionTool()) {
+			if (currentSignalTool instanceof SelectionSignalTool) {
 				return getTagSelectionAction().isEnabled();
-			} else if (currentSignalTool.isSignalTaggingTool()) {
+			} else if (currentSignalTool instanceof TaggingSignalTool) {
 				return true;
 			}
 

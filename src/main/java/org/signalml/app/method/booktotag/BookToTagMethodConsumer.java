@@ -15,9 +15,9 @@ import org.signalml.app.method.InitializingMethodResultConsumer;
 import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.dialog.OptionPane;
-import org.signalml.exception.SignalMLException;
 import org.signalml.method.Method;
 import org.signalml.method.booktotag.BookToTagResult;
+import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** BookToTagMethodConsumer

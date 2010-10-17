@@ -4,7 +4,7 @@
 
 package org.signalml.domain.signal;
 
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 
 /**
  * This interface represents the source of samples for the multichannel signal

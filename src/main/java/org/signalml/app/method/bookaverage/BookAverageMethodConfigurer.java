@@ -8,9 +8,9 @@ import java.awt.Window;
 import org.apache.log4j.Logger;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.InitializingMethodConfigurer;
-import org.signalml.exception.SignalMLException;
 import org.signalml.method.Method;
 import org.signalml.method.bookaverage.BookAverageData;
+import org.signalml.plugin.export.SignalMLException;
 
 /** BookAverageMethodConfigurer
  *

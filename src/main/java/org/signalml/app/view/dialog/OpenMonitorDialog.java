@@ -14,7 +14,7 @@ import org.signalml.app.view.element.FileSelectPanel;
 import org.signalml.app.view.element.MonitorChannelSelectPanel;
 import org.signalml.app.view.element.MultiplexerConnectionPanel;
 import org.signalml.app.view.element.MonitorParamsPanel;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.core.io.ClassPathResource;
 

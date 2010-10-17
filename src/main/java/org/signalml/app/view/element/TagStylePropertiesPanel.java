@@ -39,8 +39,8 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 
 import org.signalml.app.view.tag.TagRenderer;
-import org.signalml.domain.signal.SignalSelectionType;
-import org.signalml.domain.tag.TagStyle;
+import org.signalml.plugin.export.signal.SignalSelectionType;
+import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.BindException;

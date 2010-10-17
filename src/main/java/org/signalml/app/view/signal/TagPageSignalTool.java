@@ -14,15 +14,16 @@ import javax.swing.SwingUtilities;
 import org.apache.log4j.Logger;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.util.IconUtils;
-import org.signalml.domain.signal.SignalSelectionType;
-import org.signalml.domain.tag.TagStyle;
+import org.signalml.plugin.export.signal.AbstractSignalTool;
+import org.signalml.plugin.export.signal.SignalSelectionType;
+import org.signalml.plugin.export.signal.TagStyle;
 
 /** TagPageSignalTool
  *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class TagPageSignalTool extends SignalTool implements TaggingSignalTool {
+public class TagPageSignalTool extends AbstractSignalTool implements TaggingSignalTool {
 
 	protected static final Logger logger = Logger.getLogger(TagPageSignalTool.class);
 
@@ -57,7 +58,7 @@ public class TagPageSignalTool extends SignalTool implements TaggingSignalTool {
 			plot = (SignalPlot) source;
 
 			startPage = plot.toPageSpace(e.getPoint());
-			engaged = true;
+			setEngaged(true);
 			e.consume();
 
 		}
@@ -69,7 +70,7 @@ public class TagPageSignalTool extends SignalTool implements TaggingSignalTool {
 		if (SwingUtilities.isLeftMouseButton(e)) {
 			tagTo(e.getPoint());
 			startPage = null;
-			engaged = false;
+			setEngaged(false);
 			plot = null;
 			e.consume();
 		}
@@ -89,7 +90,7 @@ public class TagPageSignalTool extends SignalTool implements TaggingSignalTool {
 		if (startPage != null) {
 			Integer endPage = plot.toPageSpace(point);
 			if (endPage != null) {
-				signalView.setSignalSelection(plot,plot.getPageSelection(startPage, endPage));
+			    getSignalView().setSignalSelection(plot,plot.getPageSelection(startPage, endPage));
 			}
 		}
 	}
@@ -101,8 +102,8 @@ public class TagPageSignalTool extends SignalTool implements TaggingSignalTool {
 			Integer endPage = plot.toPageSpace(point);
 
 			if (endPage != null) {
-				TagStyle style = signalView.getCurrentTagStyle(SignalSelectionType.PAGE);
-				TagDocument tagDocument = signalView.getDocument().getActiveTag();
+				TagStyle style = getSignalView().getCurrentTagStyle(SignalSelectionType.PAGE);
+				TagDocument tagDocument = getSignalView().getDocument().getActiveTag();
 				if (tagDocument != null) {
 
 					if (style == null) {
@@ -114,8 +115,7 @@ public class TagPageSignalTool extends SignalTool implements TaggingSignalTool {
 				}
 			}
 
-			signalView.clearSignalSelection();
-
+			getSignalView().clearSignalSelection();
 		}
 
 	}

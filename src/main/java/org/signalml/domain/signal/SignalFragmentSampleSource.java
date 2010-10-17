@@ -4,6 +4,8 @@
 
 package org.signalml.domain.signal;
 
+import org.signalml.plugin.export.signal.SignalSelection;
+
 /**
  * This class represents the {@link MultichannelSampleSource source} of samples
  * for the fragment (in time) of multichannel signal.

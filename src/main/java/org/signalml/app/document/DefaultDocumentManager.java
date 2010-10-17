@@ -13,6 +13,7 @@ import javax.swing.event.EventListenerList;
 
 import org.apache.log4j.Logger;
 import org.signalml.exception.SanityCheckException;
+import org.signalml.plugin.export.signal.Document;
 
 /** DefaultDocumentManager
  *

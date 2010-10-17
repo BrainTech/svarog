@@ -9,12 +9,14 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.SwingUtilities;
 
+import org.signalml.plugin.export.signal.AbstractSignalTool;
+
 /** SelectTagSignalTool
  *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class SelectTagSignalTool extends SignalTool {
+public class SelectTagSignalTool extends AbstractSignalTool {
 
 	public SelectTagSignalTool(SignalView signalView) {
 		super(signalView);

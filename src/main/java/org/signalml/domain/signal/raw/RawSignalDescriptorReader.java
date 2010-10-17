@@ -16,7 +16,7 @@ import javax.xml.xpath.XPathFactory;
 import org.apache.log4j.Logger;
 import org.signalml.app.util.SingleNameSpaceContext;
 import org.signalml.domain.signal.raw.RawSignalDescriptor.SourceSignalType;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

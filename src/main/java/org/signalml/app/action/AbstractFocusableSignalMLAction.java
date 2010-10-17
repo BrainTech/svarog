@@ -7,6 +7,7 @@ package org.signalml.app.action;
 import org.signalml.app.action.selector.ActionFocusEvent;
 import org.signalml.app.action.selector.ActionFocusListener;
 import org.signalml.app.action.selector.ActionFocusSelector;
+import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** AbstractFocusableSignalMLAction

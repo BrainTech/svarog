@@ -27,7 +27,7 @@ import org.signalml.app.view.dialog.AbstractPresetDialog;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.signal.SignalType;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.SvarogConstants;
 import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;

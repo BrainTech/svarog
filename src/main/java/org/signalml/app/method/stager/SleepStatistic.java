@@ -16,10 +16,10 @@ import org.signalml.app.model.LabelledPropertyDescriptor;
 import org.signalml.app.model.PropertyProvider;
 import org.signalml.domain.tag.SleepTagName;
 import org.signalml.domain.tag.StyledTagSet;
-import org.signalml.domain.tag.Tag;
 import org.signalml.domain.tag.TagStatistic;
-import org.signalml.domain.tag.TagStyle;
 import org.signalml.method.stager.StagerResult;
+import org.signalml.plugin.export.signal.Tag;
+import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.util.Util;
 
 /** SleepStatistic

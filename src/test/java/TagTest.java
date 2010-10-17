@@ -5,11 +5,11 @@ import java.io.IOException;
 
 import org.junit.Test;
 import org.signalml.app.document.TagDocument;
-import org.signalml.domain.signal.SignalSelectionType;
+import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.domain.tag.StyledTagSet;
-import org.signalml.domain.tag.Tag;
-import org.signalml.domain.tag.TagStyle;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.signal.Tag;
+import org.signalml.plugin.export.signal.TagStyle;
+import org.signalml.plugin.export.SignalMLException;
 
 
 public class TagTest {

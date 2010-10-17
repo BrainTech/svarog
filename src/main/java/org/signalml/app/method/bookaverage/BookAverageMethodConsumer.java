@@ -5,8 +5,8 @@
 package org.signalml.app.method.bookaverage;
 
 import org.signalml.app.method.MethodResultConsumer;
-import org.signalml.exception.SignalMLException;
 import org.signalml.method.Method;
+import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** BookAverageMethodConsumer

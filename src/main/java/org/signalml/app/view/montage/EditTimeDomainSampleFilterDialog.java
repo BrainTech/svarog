@@ -51,7 +51,7 @@ import org.signalml.domain.montage.filter.iirdesigner.FilterFrequencyResponse;
 import org.signalml.domain.montage.filter.iirdesigner.FilterOrderTooBigException;
 import org.signalml.domain.montage.filter.iirdesigner.FilterType;
 import org.signalml.domain.montage.filter.iirdesigner.IIRDesigner;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 

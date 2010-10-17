@@ -6,6 +6,8 @@ package org.signalml.domain.tag;
 
 import java.awt.Color;
 
+import org.signalml.plugin.export.signal.Tag;
+
 /**
  * This enumerator represents the type of a {@link TagDifference difference} between
  * {@link Tag tags}.

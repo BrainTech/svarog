@@ -11,8 +11,8 @@ import org.signalml.domain.signal.MultichannelSampleProcessor;
 import org.signalml.domain.signal.MultichannelSampleSource;
 import org.signalml.domain.signal.MultichannelSegmentedSampleSource;
 import org.signalml.domain.tag.StyledTagSet;
-import org.signalml.domain.tag.Tag;
-import org.signalml.domain.tag.TagStyle;
+import org.signalml.plugin.export.signal.Tag;
+import org.signalml.plugin.export.signal.TagStyle;
 
 /**
  * This class represents the {@link MultichannelSampleSource source} of samples

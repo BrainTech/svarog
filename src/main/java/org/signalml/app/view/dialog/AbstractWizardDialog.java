@@ -15,7 +15,8 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import org.signalml.app.util.IconUtils;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;

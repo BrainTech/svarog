@@ -9,7 +9,7 @@ import java.text.DecimalFormat;
 import javax.swing.table.AbstractTableModel;
 
 import org.signalml.domain.tag.TagComparisonResult;
-import org.signalml.domain.tag.TagStyle;
+import org.signalml.plugin.export.signal.TagStyle;
 
 /** TagComparisonTableModel
  *

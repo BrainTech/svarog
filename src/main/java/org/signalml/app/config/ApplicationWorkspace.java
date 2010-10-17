@@ -12,7 +12,6 @@ import multiplexer.jmx.client.ConnectException;
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.document.BookDocument;
-import org.signalml.app.document.Document;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.DocumentManager;
 import org.signalml.app.document.FileBackedDocument;
@@ -20,7 +19,8 @@ import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.util.XMLUtils;
 import org.signalml.exception.SanityCheckException;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.Document;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.Annotations;
@@ -86,11 +86,11 @@ public class ApplicationWorkspace extends AbstractXMLConfiguration {
 			try {
 				document = restoreDocument(workspaceDocument, integrator);
 			} catch (IOException ex) {
-				logger.error("Exeption while restoring workspace", ex);
+				logger.error("Exception while restoring workspace", ex);
 			} catch (SignalMLException ex) {
-				logger.error( "Exeption while restoring workspace", ex );
+				logger.error( "Exception while restoring workspace", ex );
 			} catch (ConnectException ex) {
-				logger.error( "Exeption while restoring workspace", ex );
+				logger.error( "Exception while restoring workspace", ex );
 			}
 
 			if (this.activeDocument == workspaceDocument) {

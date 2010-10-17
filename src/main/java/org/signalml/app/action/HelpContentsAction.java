@@ -9,7 +9,8 @@ import java.awt.event.ActionEvent;
 import org.apache.log4j.Logger;
 import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.dialog.HelpDialog;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** HelpContentsAction

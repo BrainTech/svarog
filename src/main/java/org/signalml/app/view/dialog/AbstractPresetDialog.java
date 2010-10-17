@@ -40,7 +40,8 @@ import org.signalml.app.model.SeriousWarningDescriptor;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.element.AnyChangeDocumentAdapter;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.view.AbstractDialog;
 import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
 

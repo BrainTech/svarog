@@ -36,7 +36,7 @@ import org.apache.log4j.Logger;
 import org.signalml.app.document.SignalChecksumProgressMonitor;
 import org.signalml.domain.signal.SignalChecksum;
 import org.signalml.exception.SanityCheckException;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 
 /**
  * Util provides various String to Date conversions, signal checksums, file and String MD5 sums.

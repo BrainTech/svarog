@@ -38,7 +38,7 @@ import org.jfree.ui.RectangleInsets;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.dialog.AbstractPresetDialog;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;

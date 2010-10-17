@@ -6,8 +6,8 @@ package org.signalml.app.method.ep;
 
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.InitializingMethodResultConsumer;
-import org.signalml.exception.SignalMLException;
 import org.signalml.method.Method;
+import org.signalml.plugin.export.SignalMLException;
 
 /** EvokedPotentialMethodConsumer
  *

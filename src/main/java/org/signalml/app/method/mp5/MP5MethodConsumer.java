@@ -17,10 +17,10 @@ import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.InitializingMethodResultConsumer;
 import org.signalml.app.model.OpenDocumentDescriptor;
 import org.signalml.app.view.dialog.ErrorsDialog;
-import org.signalml.exception.SignalMLException;
 import org.signalml.method.Method;
 import org.signalml.method.mp5.MP5Data;
 import org.signalml.method.mp5.MP5Result;
+import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.FileUtils;
 
 /** MP5MethodConsumer
@@ -96,22 +96,9 @@ public class MP5MethodConsumer implements InitializingMethodResultConsumer {
 			odd.setFile(new File(bookFilePath));
 			odd.setMakeActive(true);
 			odd.setType(ManagedDocumentType.BOOK);
-			
-			try {
-				documentFlowIntegrator.openDocument(odd);
-			} catch(SignalMLException ex) {
-				logger.error("Failed to open document", ex);
-				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-				return false;			
-			} catch(IOException ex) {
-				logger.error("Failed to open document - i/o exception", ex);
-				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-				return false;			
-			} catch (ConnectException ex) {
-				logger.error("Failed to open document - connection exception", ex);
-				ErrorsDialog.showImmediateExceptionDialog(dialogParent, ex);
-				return false;		   
-			}
+
+			if (!documentFlowIntegrator.maybeOpenDocument(odd))
+				return false;
 		}
 
 		return true;

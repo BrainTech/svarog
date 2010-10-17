@@ -10,6 +10,8 @@ import java.awt.event.MouseWheelEvent;
 
 import javax.swing.SwingUtilities;
 
+import org.signalml.plugin.export.signal.SignalTool;
+
 /** SignalToolForwardingMouseAdapter
  *
  *
@@ -58,7 +60,8 @@ public class SignalToolForwardingMouseAdapter extends MouseAdapter {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		if (!signalTool.isSignalSelectionTool() && (SwingUtilities.isMiddleMouseButton(e) || (SwingUtilities.isLeftMouseButton(e) && e.isShiftDown()))) {
+		if ((! (signalTool instanceof SelectionSignalTool)) && (SwingUtilities.isMiddleMouseButton(e) || (SwingUtilities.isLeftMouseButton(e) && e.isShiftDown()))) {
+		    // TODO signalTool.mousePressed(e) ??
 			selectTagSignalTool.mousePressed(e);
 		} else {
 			if (signalTool != null) {

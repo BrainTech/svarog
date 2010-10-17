@@ -11,7 +11,7 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;
 import javax.swing.JList;
 
-import org.signalml.domain.tag.TagStyle;
+import org.signalml.plugin.export.signal.TagStyle;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** TagStyleListCellRenderer

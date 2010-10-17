@@ -14,7 +14,7 @@ import javax.swing.JFileChooser;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.model.OpenMonitorDescriptor;
-import org.signalml.app.view.DocumentView;
+import org.signalml.plugin.export.view.DocumentView;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.worker.MonitorWorker;
@@ -26,7 +26,8 @@ import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalDescriptorWriter;
 import org.signalml.domain.signal.raw.RawSignalDescriptor.SourceSignalType;
 import org.signalml.domain.tag.StyledTagSet;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.Document;
 import org.signalml.util.FileUtils;
 
 /**

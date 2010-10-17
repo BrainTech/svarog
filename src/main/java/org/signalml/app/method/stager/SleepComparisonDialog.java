@@ -19,8 +19,8 @@ import javax.swing.border.TitledBorder;
 import org.signalml.app.model.PropertySheetModel;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.ViewerPropertySheet;
-import org.signalml.app.view.dialog.AbstractDialog;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** SleepComparisonDialog

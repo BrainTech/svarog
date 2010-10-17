@@ -25,9 +25,9 @@ import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.domain.tag.LegacyTagImporter;
 import org.signalml.domain.tag.StyledTagSet;
-import org.signalml.exception.SignalMLException;
 import org.signalml.method.Method;
 import org.signalml.method.artifact.ArtifactResult;
+import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
 
 /** ArtifactMethodConsumer
@@ -158,22 +158,8 @@ public class ArtifactMethodConsumer implements InitializingMethodResultConsumer 
 			odd.getTagOptions().setParent(signalDocument);
 			odd.getTagOptions().setExistingDocument(primaryTag);
 
-			try {
-				documentFlowIntegrator.openDocument(odd);
-			} catch(SignalMLException ex) {
-				logger.error("Failed to open document", ex);
-				ErrorsDialog.showImmediateExceptionDialog(dialogParent, ex);
-				return false;			
-			} catch(IOException ex) {
-				logger.error("Failed to open document - i/o exception", ex);
-				ErrorsDialog.showImmediateExceptionDialog(dialogParent, ex);
-				return false;			
-			} catch (ConnectException ex) {
-				logger.error("Failed to open document - connection exception", ex);
-				ErrorsDialog.showImmediateExceptionDialog(dialogParent, ex);
-				return false;		   
-			}
-			
+			if (!documentFlowIntegrator.maybeOpenDocument(odd, dialogParent))
+				return false;
 		}
 
 		ArrayList<File> chosenAdditionalTags = descriptor.getChosenAdditionalTags();
@@ -251,22 +237,8 @@ public class ArtifactMethodConsumer implements InitializingMethodResultConsumer 
 						odd.getTagOptions().setParent(signalDocument);
 						odd.getTagOptions().setExistingDocument(additionalTag);
 
-						try {
-							documentFlowIntegrator.openDocument(odd);
-						} catch(SignalMLException ex) {
-							logger.error("Failed to open document", ex);
-							ErrorsDialog.showImmediateExceptionDialog(dialogParent, ex);
-							return false;			
-						} catch(IOException ex) {
-							logger.error("Failed to open document - i/o exception", ex);
-							ErrorsDialog.showImmediateExceptionDialog(dialogParent, ex);
-							return false;			
-						} catch (ConnectException ex) {
-							logger.error("Failed to open document - connection exception", ex);
-							ErrorsDialog.showImmediateExceptionDialog(dialogParent, ex);
-							return false;		   
-						}
-												
+						if (!documentFlowIntegrator.maybeOpenDocument(odd, dialogParent))
+							return false;
 					}
 
 				}

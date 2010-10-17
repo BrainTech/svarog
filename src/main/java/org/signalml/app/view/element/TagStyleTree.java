@@ -6,8 +6,8 @@ package org.signalml.app.view.element;
 import javax.swing.tree.TreePath;
 
 import org.signalml.app.model.TagStyleTreeModel;
-import org.signalml.app.view.AbstractViewerTree;
 import org.signalml.app.view.TagTreeCellRenderer;
+import org.signalml.plugin.export.view.AbstractViewerTree;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** TagStyleTree

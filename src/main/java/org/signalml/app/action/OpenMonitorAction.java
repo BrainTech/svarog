@@ -13,7 +13,7 @@ import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.dialog.OpenMonitorDialog;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 
 /** 
  * 

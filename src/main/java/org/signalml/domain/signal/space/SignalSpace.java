@@ -7,8 +7,8 @@ package org.signalml.domain.signal.space;
 import java.io.Serializable;
 import org.signalml.domain.signal.MultichannelSampleSource;
 
-import org.signalml.domain.signal.SignalSelection;
-import org.signalml.domain.tag.Tag;
+import org.signalml.plugin.export.signal.SignalSelection;
+import org.signalml.plugin.export.signal.Tag;
 
 /**
  * This class describes the parameters of the signal or the part of the signal

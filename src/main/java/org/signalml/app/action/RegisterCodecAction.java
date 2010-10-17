@@ -30,6 +30,7 @@ import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.codec.SignalMLCodecReader;
 import org.signalml.codec.SignalMLCodecSelector;
 import org.signalml.codec.XMLSignalMLCodec;
+import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** RegisterCodecAction

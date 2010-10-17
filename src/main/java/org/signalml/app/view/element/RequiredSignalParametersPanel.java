@@ -16,7 +16,7 @@ import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.model.SignalParameterDescriptor;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 

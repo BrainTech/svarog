@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.Writer;
 
 import org.signalml.app.model.WriterExportableTable;
+import org.signalml.plugin.export.signal.Tag;
+import org.signalml.plugin.export.signal.TagStyle;
 
 /**
  * This class represents the result of comparison between two sets of tags

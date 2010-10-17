@@ -4,8 +4,8 @@
 
 package org.signalml.app.method;
 
-import org.signalml.exception.SignalMLException;
 import org.signalml.method.Method;
+import org.signalml.plugin.export.SignalMLException;
 
 /** MethodConfigurer
  *

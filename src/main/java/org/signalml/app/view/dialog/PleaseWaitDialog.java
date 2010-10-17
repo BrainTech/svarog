@@ -30,7 +30,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import org.signalml.app.util.IconUtils;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** PleaseWaitDialog

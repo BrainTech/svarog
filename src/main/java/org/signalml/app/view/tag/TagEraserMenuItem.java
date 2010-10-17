@@ -8,7 +8,7 @@ import javax.swing.Action;
 import javax.swing.JMenuItem;
 
 import org.signalml.app.util.IconUtils;
-import org.signalml.domain.tag.TagStyle;
+import org.signalml.plugin.export.signal.TagStyle;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** TagEraserMenuItem

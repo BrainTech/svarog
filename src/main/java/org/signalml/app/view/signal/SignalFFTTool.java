@@ -14,13 +14,14 @@ import javax.swing.SwingUtilities;
 
 import org.signalml.app.config.SignalFFTSettings;
 import org.signalml.app.util.IconUtils;
+import org.signalml.plugin.export.signal.AbstractSignalTool;
 
 /** SignalFFTTool
  *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class SignalFFTTool extends SignalTool {
+public class SignalFFTTool extends AbstractSignalTool {
 
 	private SignalPlot plot;
 	private SignalFFTPlot fftPlot;
@@ -64,7 +65,7 @@ public class SignalFFTTool extends SignalTool {
 			fftPlot.setParameters(plot, point, channel);
 			showFFT(point);
 			selectAround(point);
-			engaged = true;
+			setEngaged(true);
 			e.consume();
 
 		}
@@ -75,7 +76,7 @@ public class SignalFFTTool extends SignalTool {
 	public void mouseReleased(MouseEvent e) {
 		if (SwingUtilities.isLeftMouseButton(e)) {
 			hideFFT();
-			engaged = false;
+			setEngaged(false);
 			plot = null;
 			e.consume();
 		}
@@ -157,11 +158,11 @@ public class SignalFFTTool extends SignalTool {
 				Float startPosition = new Float(centerPosition.floatValue() - ((float) offset));
 				Float endPosition = new Float(centerPosition.floatValue() + ((float) offset));
 				if (startPosition.equals(endPosition)) {
-					signalView.clearSignalSelection();
+				    getSignalView().clearSignalSelection();
 				} else {
 					Integer channel = fftPlot.getChannel();
 					if (channel != null) {
-						signalView.setSignalSelection(plot,plot.getChannelSelection(startPosition, endPosition, channel));
+					    getSignalView().setSignalSelection(plot,plot.getChannelSelection(startPosition, endPosition, channel));
 					}
 				}
 			}

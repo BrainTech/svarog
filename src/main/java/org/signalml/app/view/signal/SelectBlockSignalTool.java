@@ -12,14 +12,15 @@ import java.awt.event.MouseEvent;
 import javax.swing.SwingUtilities;
 
 import org.signalml.app.util.IconUtils;
-import org.signalml.domain.signal.SignalSelectionType;
+import org.signalml.plugin.export.signal.AbstractSignalTool;
+import org.signalml.plugin.export.signal.SignalSelectionType;
 
 /** SelectBlockSignalTool
  *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class SelectBlockSignalTool extends SignalTool implements SelectionSignalTool {
+public class SelectBlockSignalTool extends AbstractSignalTool implements SelectionSignalTool {
 
 	private Integer startBlock;
 	private SignalPlot plot;
@@ -51,7 +52,7 @@ public class SelectBlockSignalTool extends SignalTool implements SelectionSignal
 			plot = (SignalPlot) source;
 
 			startBlock = plot.toBlockSpace(e.getPoint());
-			engaged = true;
+			setEngaged(true);
 			e.consume();
 
 		}
@@ -62,7 +63,7 @@ public class SelectBlockSignalTool extends SignalTool implements SelectionSignal
 		if (SwingUtilities.isLeftMouseButton(e)) {
 			selectTo(e.getPoint());
 			startBlock = null;
-			engaged = false;
+			setEngaged(false);
 			plot = null;
 			e.consume();
 		}
@@ -82,7 +83,7 @@ public class SelectBlockSignalTool extends SignalTool implements SelectionSignal
 		if (startBlock != null) {
 			Integer endBlock = plot.toBlockSpace(point);
 			if (endBlock != null) {
-				signalView.setSignalSelection(plot,plot.getBlockSelection(startBlock, endBlock));
+				getSignalView().setSignalSelection(plot,plot.getBlockSelection(startBlock, endBlock));
 			}
 		}
 	}

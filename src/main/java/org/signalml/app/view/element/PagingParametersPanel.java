@@ -17,7 +17,7 @@ import javax.swing.border.TitledBorder;
 import org.apache.log4j.Logger;
 import org.signalml.app.model.PagingParameterDescriptor;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 

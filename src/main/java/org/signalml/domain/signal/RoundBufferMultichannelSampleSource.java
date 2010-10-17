@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 
-import org.signalml.app.view.DocumentView;
+import org.signalml.plugin.export.view.DocumentView;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 
 
 public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource implements OriginalMultichannelSampleSource, ChangeableMultichannelSampleSource {

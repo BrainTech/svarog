@@ -14,7 +14,7 @@ import org.signalml.app.model.LabelledPropertyDescriptor;
 import org.signalml.app.worker.SignalChecksumWorker;
 import org.signalml.domain.signal.SignalChecksum;
 import org.signalml.domain.signal.SignalType;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
 
 /** AbstractReaderDocument

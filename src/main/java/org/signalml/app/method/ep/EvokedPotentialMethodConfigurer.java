@@ -11,8 +11,8 @@ import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.InitializingMethodConfigurer;
 import org.signalml.app.method.PresetEquippedMethodConfigurer;
-import org.signalml.exception.SignalMLException;
 import org.signalml.method.Method;
+import org.signalml.plugin.export.SignalMLException;
 
 /** EvokedPotentialMethodConfigurer
  *

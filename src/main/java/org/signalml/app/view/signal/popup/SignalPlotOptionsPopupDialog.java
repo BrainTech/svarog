@@ -30,14 +30,14 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.EmptyBorder;
 
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.dialog.AbstractPopupDialog;
 import org.signalml.app.view.element.ResolvableComboBox;
 import org.signalml.app.view.element.TitledCrossBorder;
 import org.signalml.app.view.signal.SignalColor;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.view.tag.TagPaintMode;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.view.AbstractPopupDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** SignalPlotOptionsPopupDialog

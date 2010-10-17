@@ -7,7 +7,7 @@ package org.signalml.domain.signal;
 import org.apache.log4j.Logger;
 import org.signalml.codec.SignalMLCodecException;
 import org.signalml.codec.SignalMLCodecReader;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
 
 /**

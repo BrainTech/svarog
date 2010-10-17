@@ -10,14 +10,16 @@ import org.signalml.domain.montage.Montage;
 import org.signalml.domain.signal.OriginalMultichannelSampleSource;
 import org.signalml.domain.signal.SignalChecksum;
 import org.signalml.domain.signal.SignalType;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.Document;
+import org.signalml.plugin.export.signal.ExportedSignalDocument;
 
 /** SignalDocument
  *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public interface SignalDocument extends Document {
+public interface SignalDocument extends ExportedSignalDocument {
 
 	public static final String PAGE_SIZE_PROPERTY = "pageSize";
 	public static final String BLOCKS_PER_PAGE_PROPERTY = "blocksPerPage";

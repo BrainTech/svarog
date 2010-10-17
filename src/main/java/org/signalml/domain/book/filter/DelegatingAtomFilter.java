@@ -16,7 +16,7 @@ import org.signalml.compilation.DynamicCompiler;
 import org.signalml.domain.book.StandardBookAtom;
 import org.signalml.domain.book.StandardBookSegment;
 import org.signalml.exception.SanityCheckException;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;

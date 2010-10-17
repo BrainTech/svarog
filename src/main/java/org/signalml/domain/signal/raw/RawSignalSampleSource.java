@@ -18,7 +18,7 @@ import org.apache.log4j.Logger;
 import org.signalml.domain.signal.AbstractMultichannelSampleSource;
 import org.signalml.domain.signal.OriginalMultichannelSampleSource;
 import org.signalml.exception.SanityCheckException;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 
 /**
  * This class represents the source of samples for the raw signal.

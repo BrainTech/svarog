@@ -58,7 +58,7 @@ import org.signalml.app.view.TablePopupMenuProvider;
 import org.signalml.app.view.element.FFTWindowTypePanel;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 

@@ -21,7 +21,7 @@ import org.signalml.app.model.NewTagDescriptor.NewTagTypeMode;
 import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.dialog.NewTagDialog;
 import org.signalml.exception.SanityCheckException;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** NewTagAction
@@ -96,22 +96,7 @@ public class NewTagAction extends AbstractFocusableSignalMLAction<SignalDocument
 		ofd.getTagOptions().setParent(signalDocument);
 		ofd.getTagOptions().setExistingDocument(tagDocument);
 
-		try {
-			documentFlowIntegrator.openDocument(ofd);
-		} catch(SignalMLException ex) {
-			logger.error("Failed to open document", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-			return;			
-		} catch(IOException ex) {
-			logger.error("Failed to open document - i/o exception", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-			return;			
-		} catch (ConnectException ex) {
-			logger.error("Failed to open document - connection exception", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-			return;		 
-		}
-				
+		documentFlowIntegrator.maybeOpenDocument(ofd);
 	}
 
 	@Override

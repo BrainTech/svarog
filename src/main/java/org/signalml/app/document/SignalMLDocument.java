@@ -12,7 +12,7 @@ import org.signalml.app.model.LabelledPropertyDescriptor;
 import org.signalml.codec.SignalMLCodecReader;
 import org.signalml.domain.signal.SignalMLCodecSampleSource;
 import org.signalml.domain.signal.SignalType;
-import org.signalml.exception.SignalMLException;
+import org.signalml.plugin.export.SignalMLException;
 
 /** SignalMLDocument
  *

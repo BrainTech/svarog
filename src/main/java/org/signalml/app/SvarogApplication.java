@@ -72,7 +72,6 @@ import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.domain.montage.eeg.EegChannel;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.exception.ResolvableException;
-import org.signalml.exception.SignalMLException;
 import org.signalml.method.DisposableMethod;
 import org.signalml.method.Method;
 import org.signalml.method.artifact.ArtifactData;
@@ -88,6 +87,9 @@ import org.signalml.method.mp5.MP5Method;
 import org.signalml.method.mp5.MP5Parameters;
 import org.signalml.method.stager.StagerMethod;
 import org.signalml.method.stager.StagerParameters;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.impl.PluginAccessClass;
+import org.signalml.plugin.loader.PluginLoader;
 import org.signalml.util.Util;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -266,6 +268,8 @@ public class SvarogApplication {
 		}
 
 		logger.debug("Application successfully created - main window is showing and should be visible soon");
+		
+		PluginLoader.getInstance().loadPlugins();
 
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
@@ -446,6 +450,8 @@ public class SvarogApplication {
 		}
 
 		profileDir = file;
+		
+		PluginLoader.createInstance(profileDir);
 
 		return true;
 
@@ -854,6 +860,8 @@ public class SvarogApplication {
 		viewerMainFrame = new ViewerMainFrame();
 		viewerMainFrame.setMessageSource(messageSource);
 		viewerMainFrame.setElementManager(elementManager);
+		
+		PluginAccessClass.getSharedInstance().setManager(elementManager);
 
 		splash(null, true);
 

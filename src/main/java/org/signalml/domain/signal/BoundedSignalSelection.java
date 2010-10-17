@@ -4,6 +4,8 @@
 
 package org.signalml.domain.signal;
 
+import org.signalml.plugin.export.signal.SignalSelection;
+
 /**
  * This class represents a selected part of a signal that is limited by the
  * given parameters (maximum page, block and point in time).

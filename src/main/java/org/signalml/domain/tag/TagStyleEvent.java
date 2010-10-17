@@ -6,6 +6,8 @@ package org.signalml.domain.tag;
 
 import java.util.EventObject;
 
+import org.signalml.plugin.export.signal.TagStyle;
+
 /**
  * This class represents an event of adding, removing or changing the
  * {@link TagStyle tag style} in a {@link StyledTagSet StyledTagSet}.

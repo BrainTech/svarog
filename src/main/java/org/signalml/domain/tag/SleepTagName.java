@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.util.HashMap;
 
 import org.signalml.app.document.TagDocument;
+import org.signalml.plugin.export.signal.TagStyle;
 
 /**
  * This is an abstract class with only static methods and attributes.
