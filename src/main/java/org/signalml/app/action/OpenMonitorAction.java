@@ -14,6 +14,7 @@ import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.dialog.OpenMonitorDialog;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.view.AbstractSignalMLAction;
 
 /** 
  * 
