@@ -13,8 +13,11 @@ import javax.swing.JPanel;
  * This panel allows to manage plug-in options.
  * Contains two sub-panels:
  * <ul>
- * <li>first to select folders in which plug-ins are stored</li>
- * <li>second to select which plug-ins should be active</li>
+ * <li>{@link PluginDirsPanel first} to select folders in which plug-ins are
+ * stored</li>
+ * <li>{@link PluginListPanel second} to select which plug-ins should be
+ * active and if necessary to inform about missing dependencies or failure
+ * while loading</li>
  * </ul>
  * @author Marcin Szumski
  */

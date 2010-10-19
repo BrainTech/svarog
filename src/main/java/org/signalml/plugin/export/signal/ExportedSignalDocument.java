@@ -14,7 +14,8 @@ import java.util.List;
  * <li>format in which signal was stored</li>
  * <li>size of the block and the page</li>
  * <li>number of channels</li>
- * <li>all tag documents and the active one<li>
+ * <li>all dependent tag documents and the active one<li>
+ * <li>labels of source and montage channels</li>
  * </ul>
  * @author Marcin Szumski
  */

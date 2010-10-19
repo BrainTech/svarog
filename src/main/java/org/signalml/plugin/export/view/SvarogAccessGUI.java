@@ -14,15 +14,27 @@ import javax.swing.JPanel;
 import org.signalml.app.view.signal.SelectTagSignalTool;
 import org.signalml.app.view.signal.SignalFFTTool;
 import org.signalml.plugin.export.NoActiveObjectException;
+import org.signalml.plugin.export.Plugin;
 import org.signalml.plugin.export.signal.SignalTool;
 
 /**
  * This interface that allows to:
  * <ul>
- * <li>add buttons and submenus</li>
- * <li>add tabs</li>
- * <li>draw components on the {@link ExportedSignalPlot signal plot}</li>
+ * <li>add buttons and sub-menus,</li>
+ * <li>add and remove tabs,</li>
+ * <li>add {@link SignalTool signal tools},</li>
+ * <li>draw components on the {@link ExportedSignalPlot signal plot}.</li>
  * </ul>
+ * <p>
+ * Operations of addition of tabs, sub-menus and signal tools can be performed
+ * only in the initialization phase (in the method
+ * {@link Plugin#register(org.signalml.plugin.export.SvarogAccess) register}
+ * of the starting class}).
+ * <p>
+ * The menus that are added to pop-up menus are copied, so that they can
+ * be added for example to different signal plots.
+ * But, as in this operation only actions are copied, you have to be careful
+ * to use only buttons in these menus.
  *
  * @author Marcin Szumski
  */

@@ -6,9 +6,15 @@ package org.signalml.plugin.export.signal;
 
 /**
  * This is an interface for a selected part of a signal.
- * Allows to return a {@link ExportedSignalSelectionType type} of this selection,
- * position where it starts, length, number of selected channel,
- * how many segments fit in the selection and to compare selections.
+ * Allows to:
+ * <ul>
+ * <li>return the {@link ExportedSignalSelectionType type} of this selection,</li>
+ * <li>return the position where it starts,</li>
+ * <li>return the length,</li>
+ * <li>return the number of the selected channel,</li>
+ * <li>return how many segments of a given size would fit in the selection,</li>
+ * <li>compare selections.</li>
+ * </ul>
  * @author Marcin Szumski
  */
 public interface ExportedSignalSelection {

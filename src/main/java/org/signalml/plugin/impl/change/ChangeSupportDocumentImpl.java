@@ -6,6 +6,7 @@ package org.signalml.plugin.impl.change;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.TagTreeModel;
 import org.signalml.app.view.ViewerElementManager;
@@ -14,6 +15,7 @@ import org.signalml.domain.tag.TagEvent;
 import org.signalml.domain.tag.TagListener;
 import org.signalml.domain.tag.TagStyleEvent;
 import org.signalml.domain.tag.TagStyleListener;
+import org.signalml.plugin.export.change.SvarogAccessChangeSupport;
 import org.signalml.plugin.export.change.SvarogTagEvent;
 import org.signalml.plugin.export.change.SvarogTagListener;
 import org.signalml.plugin.export.change.SvarogTagStyleEvent;
@@ -24,9 +26,16 @@ import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
 
 /**
- * This class represents a listener for changes such as
+ * A part of the implementation of {@link SvarogAccessChangeSupport}.
+ * It listens for changes concerning {@link Tag tags} and {@link TagStyle tag
+ * styles} (addition, removal and change).
  * adding/removing/changing of a tag/tag style.
- * For every type of a change holds the list of plug-ins listening on this change.
+ * For every type of a change holds the list of plug-ins listening for it
+ * and informs them when this change occurs.
+ * <p>
+ * This is used both as a super-type for {@link ChangeSupportImpl} and to listen
+ * for changes associated with a single {@link TagDocument tag}/{@link
+ * SignalDocument signal} document.
  * 
  * @author Marcin Szumski
  */

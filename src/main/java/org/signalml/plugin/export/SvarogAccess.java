@@ -10,10 +10,13 @@ import org.signalml.plugin.export.view.SvarogAccessGUI;
 
 /**
  * This interface is used by plug-ins to communicate with Svarog.
- * Every plug-in during the creation gets the implementation of this
- * interface.
- * Returns sub-interfaces.
- * 
+ * Every plug-in during the {@link Plugin#register(SvarogAccess) registration}
+ * gets the instance of this interface and from it can obtain the sub-interfaces:
+ * <ul>
+ * <li>{@link SvarogAccessChangeSupport}</li>
+ * <li>{@link SvarogAccessGUI}</li>
+ * <li>{@link SvarogAccessSignal}</li>
+ * </ul>
  * @author Marcin Szumski
  */
 public interface SvarogAccess {

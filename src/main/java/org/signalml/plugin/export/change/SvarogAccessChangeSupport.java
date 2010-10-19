@@ -13,6 +13,23 @@ import org.signalml.plugin.export.signal.ExportedTagStyle;
 
 /**
  * This interface is used by plug-ins to listen on changes in Svarog.
+ * Allows to add listeners:
+ * <ul>
+ * <li>{@link SvarogCloseListener}</li>
+ * <li>{@link SvarogCodecListener}</li>
+ * <li>{@link SvarogDocumentListener}</li>
+ * <li>{@link SvarogTagDocumentListener}</li>
+ * <li>{@link SvarogTagListenerWithAcitve}</li>
+ * <li>{@link SvarogTagStyleListener}</li>
+ * </ul>
+ * to listen on specified changes in whole Svarog.
+ * <p>
+ * It is also possible to add listeners:
+ * <ul>
+ * <li>{@link SvarogTagStyleListener}</li>
+ * <li>{@link SvarogTagListener}</li>
+ * to listen on changes concerning only one {@link ExportedTagDocument tag}
+ * or {@link ExportedSignalDocument signal} document.
  * 
  * @author Marcin Szumski
  */

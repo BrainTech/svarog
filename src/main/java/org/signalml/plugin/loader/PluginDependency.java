@@ -10,6 +10,14 @@ import java.util.ArrayList;
  * Contains the name and the minimum version of the dependency
  * (dependency = the plug-in that is needed to start the described
  * plug-in).
+ * <p>
+ * Allows to:
+ * <ul>
+ * <li>{@link #satisfied(ArrayList)} check} if this dependency is satisfied
+ * (if it is a dependency on Svarog - {@link #svarogVersion predefined version}
+ * is used)</li>
+ * <li>{@link #versionToString() convert} the minimum version to string</li>
+ * </ul>
  * @author Marcin Szumski
  */
 public class PluginDependency {

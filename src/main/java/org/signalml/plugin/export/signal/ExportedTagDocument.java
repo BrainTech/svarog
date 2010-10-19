@@ -16,6 +16,7 @@ import org.signalml.app.document.MutableDocument;
  * document is dependent,</li>
  * <li>get {@link ExportedTag tags} stored in this document.</li>
  * </ul>
+ * @see Document
  * @author Marcin Szumski
  */
 public interface ExportedTagDocument extends Document, MutableDocument, FileBackedDocument {

@@ -11,7 +11,7 @@ import javax.swing.JTree;
 
 /**
  * The tab in the left panel (tree panel).
- * Contains the associated tree that is displayed within
+ * Contains the tree that is displayed within
  * this tab (in a scroll pane).
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.

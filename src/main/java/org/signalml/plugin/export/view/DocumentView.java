@@ -34,6 +34,7 @@ public abstract class DocumentView extends JPanel{
 	 * @param isDoubleBuffered true for double-buffering, which
      * uses additional memory space to achieve fast, flicker-free 
      * updates
+     * @see JPanel#JPanel(boolean)
 	 */
 	public DocumentView(boolean isDoubleBuffered) {
 		super(isDoubleBuffered);
@@ -47,6 +48,7 @@ public abstract class DocumentView extends JPanel{
 	 * @param isDoubleBuffered true for double-buffering, which
      * uses additional memory space to achieve fast, flicker-free 
      * updates
+     * @see JPanel#JPanel(LayoutManager, boolean)
 	 */
 	public DocumentView(LayoutManager layout, boolean isDoubleBuffered) {
 		super(layout, isDoubleBuffered);
@@ -56,6 +58,7 @@ public abstract class DocumentView extends JPanel{
 	 * Create a new document view with the specified layout manager
 	 * and double buffering.
 	 * @param layout the LayoutManager to use
+	 * @see JPanel#JPanel(LayoutManager)
 	 */
 	public DocumentView(LayoutManager layout) {
 		super(layout);

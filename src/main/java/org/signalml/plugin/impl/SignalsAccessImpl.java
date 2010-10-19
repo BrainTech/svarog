@@ -55,6 +55,16 @@ import org.signalml.plugin.loader.PluginLoader;
 
 /**
  * Implementation of {@link SvarogAccessSignal} interface.
+ * Contains only two fields:
+ * <ul>
+ * <li>the {@link ViewerElementManager element manager} - allows to access
+ * elements of Svarog. It is used to open documents,
+ * {@link #addCodec(File, String) add codecs} and return
+ * {@link #getProfileDirectory() profile directory}.</li>
+ * <li>the {@link ActionFocusManager focus manager} - allows to get active
+ * {@link SignalDocument signal} and {@link TagDocument documents}, used in
+ * every function where active element is needed.</li>
+ * </ul>
  * @author Marcin Szumski
  */
 public class SignalsAccessImpl implements SvarogAccessSignal {

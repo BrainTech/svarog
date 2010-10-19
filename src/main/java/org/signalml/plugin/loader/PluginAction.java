@@ -11,6 +11,8 @@ import javax.swing.AbstractAction;
 /**
  * A button used to create a
  * {@link PluginDialog plug-in options dialog}.
+ * Remembers the {@link PluginState states} of plug-ins and passes them
+ * to the dialog when this action is performed.
  * @author Marcin Szumski
  */
 public class PluginAction extends AbstractAction {

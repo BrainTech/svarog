@@ -5,7 +5,7 @@
 package org.signalml.plugin.export;
 
 /**
- * This class represents some exception in Svarog
+ * This class represents an exception in Svarog.
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class SignalMLException extends Exception {

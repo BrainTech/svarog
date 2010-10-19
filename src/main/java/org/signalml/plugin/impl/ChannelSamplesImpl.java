@@ -6,7 +6,8 @@ package org.signalml.plugin.impl;
 import org.signalml.plugin.export.signal.ChannelSamples;
 
 /**
- * This class holds samples of the signal for a given channel.
+ * Implementation of {@link ChannelSamples}.
+ * Holds samples of the signal for a given channel.
  * Contains also additional information, such as index of the channel,
  * label and sampling frequency.
  * @author Marcin Szumski

@@ -47,6 +47,54 @@ import org.signalml.plugin.export.view.DocumentView;
 
 /**
  * Implementation of {@link SvarogAccessChangeSupport}.
+ * For every type of a change holds the list of plug-ins listening for it
+ * and informs them when this change occurs.
+ * <p>
+ * Remembers:
+ * <ul>
+ * <li>the active {@link Document} and {@link TagDocument},</li>
+ * <li>the active tag for every view</li>
+ * </ul>
+ * to be able to pass the old and new value of the active elements to listeners.
+ * <p>
+ * For every tag and {@link SignalDocument signal document} holds the
+ * {@link ChangeSupportDocumentImpl document change support}. 
+ * <p>
+ * To listen on every change:
+ * <ul>
+ * <li>when an {@link ViewerElementManager element manager} is
+ * {@link #setManager(ViewerElementManager) set}:
+ * <ul>
+ * <li>{@link DocumentManager#addDocumentManagerListener(DocumentManagerListener)
+ * registers} listening for addition/removal of a document</li>
+ * <li>{@link SignalMLCodecManager#addSignalMLCodecManagerListener(SignalMLCodecManagerListener)
+ * registers} listening for addition/removal of a {@link SignalMLCodec codec}</li>
+ * <li>{@link ActionFocusManager#addActionFocusListener(ActionFocusListener)
+ * registers} listening for active document/tag document changes</li>
+ * </ul>
+ * </li>
+ * <li>when document {@link #documentAdded(DocumentManagerEvent) is added}:
+ * <ul>
+ * <li>if it is signal or tag document registers listening for
+ * {@link StyledTagSet#addTagListener(org.signalml.domain.tag.TagListener) tag}
+ * and 
+ * {@link StyledTagSet#addTagStyleListener(org.signalml.domain.tag.TagStyleListener)
+ * tag style} changes</li>
+ * <li>if it is a signal document and has a view
+ * {@link #registerFocusListener(DocumentView) registers} listening for
+ * active tag changes</li>
+ * <li>{@link Document#addPropertyChangeListener(PropertyChangeListener)
+ * registers} listening for {@link DocumentView} changes</li>
+ * <li>if it is signal or tag document creates a
+ * {@link ChangeSupportDocumentImpl document change support} and registers
+ * it to listen for tag and tag style changes associated with this document</li>
+ * </ul></li>
+ * <li>when a document view for a document
+ * {@link #propertyChange(PropertyChangeEvent) changed} and it is a SignalView:
+ * <ul><li>{@link #registerFocusListener(DocumentView) registers} listening for
+ * active tag changes</li></ul>
+ * </ul>
+ * 
  * @author Marcin Szumski
  */
 public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements SvarogAccessChangeSupport, ActionFocusListener, DocumentManagerListener, SignalMLCodecManagerListener, PropertyChangeListener{

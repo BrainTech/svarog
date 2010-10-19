@@ -32,7 +32,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 /**
- * Class responsible for loading plug-ins. Its main functions are
+ * Class responsible for loading plug-ins. Its main functions are:
  * <ul>
  * <li>to read (and write when the application is closing) the list of
  * directories in which the plug-ins are stored,</li>
