@@ -27,29 +27,29 @@ public class TagEvent extends EventObject {
          * the position in time (seconds) that starts the interval in which
          * {@link Tag tag} changes took place
          */
-	private float affectedRegionStart;
+	private double affectedRegionStart;
 
          /**
          * the position in time (seconds) that ends the interval in which
          * {@link Tag tag} changes took place
          */
-	private float affectedRegionEnd;
+	private double affectedRegionEnd;
 
         /**
          * Constructor. Creates an event associated with adding, removing or
          * changing the {@link Tag tag} in a {@link StyledTagSet set}.
          * @param source a set with which the event is associated
          * @param tag the tag that has changed
-         * @param affectedRegionStart the position that starts the interval in
+         * @param d the position that starts the interval in
          * which tag changes took place
-         * @param affectedRegionEnd the position that ends the interval in
+         * @param e the position that ends the interval in
          * which tag changes took place
          */
-	public TagEvent(Object source, Tag tag, float affectedRegionStart, float affectedRegionEnd) {
+	public TagEvent(Object source, Tag tag, double d, double e) {
 		super(source);
 		this.tag = tag;
-		this.affectedRegionStart = affectedRegionStart;
-		this.affectedRegionEnd = affectedRegionEnd;
+		this.affectedRegionStart = d;
+		this.affectedRegionEnd = e;
 	}
 
         /**
@@ -66,7 +66,7 @@ public class TagEvent extends EventObject {
          * @return the position in time that starts the interval in which
          * tag changes took place
          */
-	public float getAffectedRegionStart() {
+	public double getAffectedRegionStart() {
 		return affectedRegionStart;
 	}
 
@@ -76,7 +76,7 @@ public class TagEvent extends EventObject {
          * @return the position in time that ends the interval in which
          * tag changes took place
          */
-	public float getAffectedRegionEnd() {
+	public double getAffectedRegionEnd() {
 		return affectedRegionEnd;
 	}
 

@@ -28,25 +28,25 @@ public interface ExportedSignalSelection {
 	 *
 	 * @return position where selection starts
 	 */
-	float getPosition();
+	double getPosition();
 
 	/**
 	 *
 	 * @return length of selection in seconds
 	 */
-	float getLength();
+	double getLength();
 
 	/**
 	 * returns position of the middle of selection
 	 * @return middle of selection
 	 */
-	float getCenterPosition();
+	double getCenterPosition();
 
 	/**
 	 * returns position where selection is ending
 	 * @return position where selection is ending
 	 */
-	float getEndPosition();
+	double getEndPosition();
 
 	/**
 	 *

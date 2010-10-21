@@ -1375,7 +1375,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	}
 
 	@Override
-	public int timeToPixel(float time) {
+	public int timeToPixel(double time) {
 		return (int) Math.round(((double) time) * pixelPerSecond);
 	}
 
@@ -1391,8 +1391,8 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 	public Rectangle getPixelSelectionBounds(SignalSelection selection, Rectangle useRect) {
 
-		float position = selection.getPosition();
-		float length = selection.getLength();
+		double position = selection.getPosition();
+		double length = selection.getLength();
 		SignalSelectionType type = selection.getType();
 		
 		int selLeft = (int) Math.floor( selection.getPosition() * pixelPerSecond );
@@ -1451,7 +1451,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		int endX;
 		int endY;
 
-		float position = tag.getPosition();
+		double position = tag.getPosition();
 		rect.x = (int)(position * pixelPerSecond);
 		if (rect.x > 0 && blockLinesVisible && pixelPerBlock > 4) {
 			int linePosition = (int)((int)((position / blockSize)) * pixelPerBlock);
@@ -1461,7 +1461,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		}
 		endX = (int)((position+tag.getLength()) * pixelPerSecond);
 		rect.width = endX-rect.x;
-
+		
 		if (tagCnt > 1) {
 
 			int height = (plotSize.height <= viewportSize.height ? plotSize.height : viewportSize.height);

@@ -55,14 +55,14 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
      * {@link TagStyle style}, starting position, length, annotation and
      * the number of the channel.
      * @param style the style of the tagged selection
-     * @param position the position from which the selection starts
-     * @param length the length of the selection
+     * @param d the position from which the selection starts
+     * @param e the length of the selection
      * @param channel a number of a channel which this selection should
      * concern. CHANNEL_NULL if selection should concern all channels
      * @param annotation an annotation of a tagged selection
      */
-	public Tag(TagStyle style, float position, float length, int channel, String annotation) {
-		super(style.getType(), position, length, channel);
+	public Tag(TagStyle style, double d, double e, int channel, String annotation) {
+		super(style.getType(), d, e, channel);
 		this.style = style;
 		this.annotation = annotation;
 	}
@@ -75,7 +75,7 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
      * @param position the position from which the selection starts
      * @param length the length of the selection
      */
-	public Tag(TagStyle style, float position, float length) {
+	public Tag(TagStyle style, double position, double length) {
 		super((style != null ? style.getType() : SignalSelectionType.CHANNEL), position, length);
 		this.style = style;
 	}
@@ -89,7 +89,7 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
      * @param length the length of the selection
      * @param channel a number of a channel which this selection should
      */
-	public Tag(TagStyle style, float position, float length, int channel) {
+	public Tag(TagStyle style, double position, double length, int channel) {
 		super(style.getType(), position, length, channel);
 		this.style = style;
 	}
@@ -160,7 +160,7 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
      */
 	public int compareTo(Tag t) {
 
-		float test = position - t.position;
+		double test = position - t.position;
 		if (test == 0) {
 			test = length - t.length;
 			if (test == 0) {
@@ -254,7 +254,7 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
 	 */
 	@Override
 	public int compareTo(ExportedTag t) {
-		float test = position - t.getPosition();
+		double test = position - t.getPosition();
 		if (test == 0) {
 			test = length - t.getLength();
 			if (test == 0) {

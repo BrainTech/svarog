@@ -109,7 +109,7 @@ public class TagComparisonTableModel extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		if (showPercent) {
-			float divider = result.getTopStyleTime(rowIndex-1);
+			double divider = result.getTopStyleTime(rowIndex-1);
 			if (divider == 0) {
 				return "-";
 			} else {
