@@ -20,7 +20,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  * <li>name and id of the codec</li>
  * <li>sampling frequency of the signal</li>
  * <li>number of channels in the signal</li>
- * <li>size of a page of signal (in seconds) and the number of blocks in a
+ * <li>size of a page of the signal (in seconds) and the number of blocks in a
  * single page</li>
  * <li>calibration of the signal</li>
  * </ul>
@@ -41,7 +41,7 @@ public class SignalMLMRUDEntry extends MRUDEntry {
 	private String formatName;
 
 	/**
-	 * the number of samples in one second of the signal (in a signle channel)
+	 * the number of samples in one second of the signal (in a single channel)
 	 */
 	private Float samplingFrequency;
 	

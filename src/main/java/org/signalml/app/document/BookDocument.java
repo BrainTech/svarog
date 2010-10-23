@@ -231,10 +231,10 @@ public class BookDocument extends AbstractFileDocument {
 	}
 
 	/**
-	 * Returns the number of channels described by the {@link StandardBook
+	 * Returns the number of channels described in the {@link StandardBook
 	 * book}.
 	 * @return the number of channels in the signal described
-	 * by the book
+	 * in the book
 	 */
 	public int getChannelCount() {
 		return book.getChannelCount();

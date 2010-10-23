@@ -29,7 +29,7 @@ public interface MutableDocument extends Document {
 	boolean isSaved();
 	
 	/**
-	 * Sets if this document is saved or false otherwise.
+	 * Sets if this document is saved.
 	 * @param saved true if this document is saved or false otherwise
 	 */
 	void setSaved(boolean saved);

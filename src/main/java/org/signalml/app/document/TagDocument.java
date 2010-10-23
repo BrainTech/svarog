@@ -83,7 +83,7 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 
 	/**
 	 * Constructor. Sets the size of the page and the block.
-	 * Creates a new {@link StyledTagSet set} with these parameters
+	 * Creates a new {@link StyledTagSet set} with these parameters.
 	 * @param pageSize the size of the page
 	 * @param blocksPerPage the number of blocks in the single page
 	 * @throws SignalMLException never thrown
@@ -158,8 +158,8 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 
 	/**
 	 * Creates the new {@link TagDocument tag document} with the
-	 * {@link TagStyle styles} taken another tag document stored in the given
-	 * file.
+	 * {@link TagStyle styles} taken from another tag document stored
+	 * in the given file.
 	 * @param file the file with the tag document from which the styles are
 	 * to be taken
 	 * @param pageSize the size of the page

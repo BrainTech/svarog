@@ -32,7 +32,7 @@ public abstract class AbstractMutableFileDocument extends AbstractFileDocument i
 	public static final String SAVED_PROPERTY = "saved";
 
 	/**
-	 * true if the document is saved, false if some informations in this
+	 * true if the document is saved, false if some information in this
 	 * document are not saved
 	 */
 	protected boolean saved = true;

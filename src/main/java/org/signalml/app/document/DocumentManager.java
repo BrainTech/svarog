@@ -13,7 +13,7 @@ import org.signalml.plugin.export.signal.Document;
  * Allows to:
  * <ul>
  * <li>add and remove documents,</li>
- * <li>get the number of all documents and of document of a specified type,</li>
+ * <li>get the number of all documents and of documents of a specified type,</li>
  * <li>get the document of a specified index in the collection of all documents
  * in this manager and in the collection of documents of a specified
  * {@link ManagedDocumentType type},</li>
@@ -98,7 +98,7 @@ public interface DocumentManager {
 
 	/**
 	 * Called when the backing file for the {@link Document document} changes.
-	 * Changes the stored file for the document.
+	 * <p>Changes the stored file for the document.
 	 * If the document is not in this manager no action is taken.
 	 * @param document the document for which the path has changed
 	 * @param oldFile the old file for this document
@@ -107,7 +107,7 @@ public interface DocumentManager {
 	void onDocumentPathChange(Document document, File oldFile, File newFile);
 
 	/**
-	 * The number of {@link Document documents} of a specified
+	 * Returns the number of {@link Document documents} of a specified
 	 * {@link ManagedDocumentType type}.
 	 * @param type the type of a document
 	 * @return the number of documents of a specified type

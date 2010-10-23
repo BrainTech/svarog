@@ -51,6 +51,7 @@ import org.signalml.domain.tag.TagSignalIdentification;
 import org.signalml.exception.MissingCodecException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Document;
+import org.signalml.plugin.export.signal.Tag;
 import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
 
@@ -213,7 +214,7 @@ public class DocumentFlowIntegrator {
 	 * <li>Checks if the documents dependent on a given document are closed and
 	 * if not:
 	 * <ul>
-	 * <li>if {@code force} is set - #closes them</li>
+	 * <li>if {@code force} is set - closes them</li>
 	 * <li>if {@code force} is not set - asks user what to do:
 	 * <ul>
 	 * <li>if user answers to proceed - closes the documents</li>
@@ -638,8 +639,7 @@ public class DocumentFlowIntegrator {
 	 * {@link SaveDocumentWorker save worker}
 	 * failed to save the document or if {@link SignalChecksumWorker checksum
 	 * worker} was interrupted or failed to calculate the checksum
-	 * @throws NullPointerException if there is no method or see
-	 * {@link #closeDocument(Document, boolean, boolean)}
+	 * @throws NullPointerException if there is no method or
 	 * if the method is {@code USE_SIGNALML} if there is no codec or,
 	 * if the method is {@code RAW} if there is no descriptor of a raw signal
 	 */
@@ -1135,8 +1135,8 @@ public class DocumentFlowIntegrator {
 	 * Performs operations necessary when a {@link SignalDocument signal
 	 * document} is added:
 	 * <ul>
-	 * <li>adds a default {@link Montage montage} to this document if it exists 
-	 * {@link ApplicationConfiguration#isAutoLoadDefaultMontage() should be
+	 * <li>adds a default {@link Montage montage} to this document if it exists
+	 * and {@link ApplicationConfiguration#isAutoLoadDefaultMontage() should be
 	 * added}</li>
 	 * </ul>
 	 * @param document the added document
@@ -1192,9 +1192,10 @@ public class DocumentFlowIntegrator {
 	}
 
 	/**
-	 * Sets the information about the {@link SignalDocument signal}
+	 * Copies the information about the {@link SignalDocument signal}
 	 * {@link TagDocument#getParent() parent} to this {@link TagDocument tag
-	 * document} in the {@link StyledTagSet set} for this document.
+	 * document} to the {@link StyledTagSet set} of {@link Tag tags}
+	 * for this document.
 	 * These information include:
 	 * <ul>
 	 * <li>the name of the format in which the signal was stored</li>
@@ -1822,7 +1823,7 @@ public class DocumentFlowIntegrator {
 	}
 
 	/**
-	 * Sets the {@link MontagePresetManager manager} of montage presets/
+	 * Sets the {@link MontagePresetManager manager} of montage presets.
 	 * @param montagePresetManager the manager of montage presets
 	 */
 	public void setMontagePresetManager(MontagePresetManager montagePresetManager) {

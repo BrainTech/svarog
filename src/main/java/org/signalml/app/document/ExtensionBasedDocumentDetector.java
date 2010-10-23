@@ -13,12 +13,12 @@ import org.signalml.util.Util;
 /**
  * Implementation of {@link DocumentDetector}, which detects
  * {@link ManagedDocumentType types} of {@link Document documents} based
- * on the extensions:
+ * on their extensions:
  * <ul>
  * <li>{@code *.b} - {@link ManagedDocumentType#BOOK book} file,</li>
  * <li>{@code *.xml} or {@code *.tag} - {@link ManagedDocumentType#TAG tag}
  * file,</li>
- * <li>any other extension of no extension -
+ * <li>any other extension or no extension -
  * {@link ManagedDocumentType#SIGNAL signal} file.</li>
  * </ul>
  * 
@@ -28,7 +28,7 @@ public class ExtensionBasedDocumentDetector implements DocumentDetector {
 
 	/**
 	 * Detects the {@link ManagedDocumentType type} of a {@link Document
-	 * document} stored in the given file, based on the extention of the file:
+	 * document} stored in the given file, based on the extension of the file:
 	 * <ul>
 	 * <li>{@code *.b} - {@link ManagedDocumentType#BOOK book} file,</li>
 	 * <li>{@code *.xml} or {@code *.tag} - {@link ManagedDocumentType#TAG tag}

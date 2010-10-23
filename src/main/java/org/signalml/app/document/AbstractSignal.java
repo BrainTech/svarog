@@ -55,7 +55,7 @@ public abstract class AbstractSignal extends AbstractDocument implements SignalD
 	protected TagDocument activeTag;
 	
 	/**
-	 * list of all {@link TagDocument tag documents} for from this signal 
+	 * list of all {@link TagDocument tag documents} for this signal 
 	 */
 	protected List<TagDocument> tagDocuments = new LinkedList<TagDocument>();
 

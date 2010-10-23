@@ -1,9 +1,9 @@
 
 /**
- * This package contains documents the class hierarchy of
+ * This package contains the class hierarchy of
  * {@link org.signalml.plugin.export.signal.Document documents}.
  * The most important {@link org.signalml.app.document.ManagedDocumentType
- * types} of documents used in this hierarchy, are 
+ * types} of documents used in this hierarchy, are:
  * <ul>
  * <li> {@link org.signalml.app.document.SignalDocument SignalDocument}
  * <ul>
@@ -18,9 +18,9 @@
  * The second part of this package is the
  * {@link org.signalml.app.document.DocumentFlowIntegrator
  * DocumentFlowIntegrator}, which is responsible for opening, closing and
- * saving of documents.
+ * saving the documents.
  * <p>
- * Open documents are stored in the
+ * Opened documents are stored in the
  * {@link org.signalml.app.document.DocumentManager DocumentManager} and the
  * {@link org.signalml.app.document.MRUDEntry descriptions} of last open
  * files in the {@link org.signalml.app.document.MRUDRegistry MRUDRegistry}.

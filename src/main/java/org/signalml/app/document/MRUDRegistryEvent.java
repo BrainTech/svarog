@@ -49,7 +49,7 @@ public class MRUDRegistryEvent extends EventObject {
 	 * @param entry the {@link MRUDEntry entry} connected with the change
 	 * @param index the index of the entry in the collection of all
 	 * entries in the registry
-	 * @param inTypeIndex  the index of the entry} in the collection of entries
+	 * @param inTypeIndex  the index of the entry in the collection of entries
 	 * for a specified {@link ManagedDocumentType type} of a {@link Document}
 	 */
 	public MRUDRegistryEvent(MRUDRegistry source, MRUDEntry entry, int index, int inTypeIndex) {

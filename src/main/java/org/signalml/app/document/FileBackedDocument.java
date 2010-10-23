@@ -9,7 +9,7 @@ import java.io.File;
 import org.signalml.plugin.export.signal.Document;
 
 /**
- * Interface for a {@link Document} which is backed with File.
+ * Interface for a {@link Document} which is backed with a file.
  * Allows to get and set this file.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
