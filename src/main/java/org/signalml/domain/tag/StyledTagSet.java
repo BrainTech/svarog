@@ -100,14 +100,14 @@ public class StyledTagSet implements Serializable {
         /**
          * Collection of all tagged selections.
          */
-	private TreeSet<Tag> tags;
+	protected TreeSet<Tag> tags;
 
         /**
          * Maximal length of a tagged selection in <i>tags</i>.
          * This is just an estimate - may be 10% more than the actual length
          * of the longest tag in the set.
          */
-	private double maxTagLength = 0;
+	protected double maxTagLength = 0;
 
         /**
          * list of tagged selections of signal pages

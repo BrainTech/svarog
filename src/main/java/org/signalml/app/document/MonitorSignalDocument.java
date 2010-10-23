@@ -20,12 +20,14 @@ import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.worker.MonitorWorker;
 import org.signalml.app.worker.SignalRecorderWorker;
 import org.signalml.domain.signal.RoundBufferMultichannelSampleSource;
+import org.signalml.domain.signal.RoundBufferSampleSource;
 import org.signalml.domain.signal.SignalChecksum;
 import org.signalml.domain.signal.SignalProcessingChain;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalDescriptorWriter;
 import org.signalml.domain.signal.raw.RawSignalDescriptor.SourceSignalType;
 import org.signalml.domain.tag.StyledTagSet;
+import org.signalml.domain.tag.StyledMonitorTagSet;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Document;
 import org.signalml.util.FileUtils;
@@ -44,6 +46,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	private File recorderOutputFile;
 	private OutputStream recorderOutput;
 	private MonitorWorker monitorWorker;
+    private RoundBufferSampleSource timestampsSource ;
 	private SignalRecorderWorker recorderWorker;
 	private String name;
 
@@ -58,6 +61,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		double ps = monitorOptions.getPageSize();
 		int sampleCount = (int) Math.ceil(ps * freq);
 		sampleSource = new RoundBufferMultichannelSampleSource(monitorOptions.getSelectedChannelList().length, sampleCount);
+		timestampsSource = new RoundBufferSampleSource(sampleCount);
 		((RoundBufferMultichannelSampleSource) sampleSource).setLabels(monitorOptions.getSelectedChannelList());
 		((RoundBufferMultichannelSampleSource) sampleSource).setDocumentView(getDocumentView());
 
@@ -67,6 +71,9 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		}
 		catch (FileNotFoundException e) {
 		}
+		}
+    public RoundBufferSampleSource getTimestampSource() {
+	return timestampsSource;
 	}
 
 	public void setName(String name) {
@@ -117,7 +124,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	}
 
 	public void setRecorderOutput(OutputStream recorderOutput) {
-		this.recorderOutput = recorderOutput;
+	    this.recorderOutput = recorderOutput;
 	}
 
 	@Override
@@ -136,7 +143,10 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 			recorderWorker.execute();
 		}
 
-		monitorWorker = new MonitorWorker(monitorOptions.getJmxClient(), monitorOptions, (RoundBufferMultichannelSampleSource) sampleSource);
+		StyledMonitorTagSet tagSet = new StyledMonitorTagSet((float) 20.0, 5);//TODO - pobierac rozmiar strony w init		
+		TagDocument tagDoc = new TagDocument(tagSet);
+		tagDoc.setParent(this);
+		monitorWorker = new MonitorWorker(monitorOptions.getJmxClient(), monitorOptions, (RoundBufferMultichannelSampleSource) sampleSource, timestampsSource, tagSet);
 		if (sampleQueue != null)
 			monitorWorker.setSampleQueue(sampleQueue);
 		monitorWorker.execute();
@@ -328,41 +338,11 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		this.blocksPerPage = 1;
 	}
 
-	@Override
-	public void addDependentDocument(Document document) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void removeDependentDocument(Document document) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public List<Document> getDependentDocuments() {
-		return new ArrayList<Document>();
-	}
-
-	@Override
-	public boolean hasDependentDocuments() {
-		return false;
-	}
-
 //	@Override
 	public String getName() {
 		return name;
 	}
 
-	@Override
-	public void addTagDocument(TagDocument document) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public TagDocument getActiveTag() {
-		// dla monitora tagi nie są obsługiwane - na razie
-		return null;
-	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
