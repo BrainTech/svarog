@@ -17,17 +17,39 @@ import org.signalml.domain.signal.SignalType;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
 
-/** AbstractReaderDocument
- *
+/**
+ * Abstract implementation of {@link FileBackedDocument}.
+ * Apart from what can be found in {@link AbstractSignal}, contains
+ * the {@link #getBackingFile() backing file} and implements the calculation
+ * of the {@link SignalChecksum signal checksums} (using the provided
+ * {@link SignalChecksumWorker worker}).
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public abstract class AbstractFileSignal extends AbstractSignal implements FileBackedDocument {
 
+	/**
+	 * the file with which this document is backed
+	 */
 	protected File backingFile = null;
+	
+	/**
+	 * {@code HashMap} associating the names of the types of
+	 * {@link SignalChecksum checksums} with the calculated checksums
+	 * for this signal
+	 */
 	protected HashMap<String,SignalChecksum> checksums = new HashMap<String,SignalChecksum>();
+	
+	/**
+	 * the {@link SignalChecksumWorker worker} responsible for calculating
+	 * the {@link SignalChecksum checksums}
+	 */
 	protected volatile SignalChecksumWorker precalculatingWorker;
 
+	/**
+	 * Constructor. Sets the {@link SignalType type} of the signal.
+	 * @param type the type of the signal to set
+	 */
 	public AbstractFileSignal(SignalType type) {
 		super(type);
 	}
@@ -53,10 +75,21 @@ public abstract class AbstractFileSignal extends AbstractSignal implements FileB
 		this.backingFile = backingFile;
 	}
 
+	/**
+	 * Returns the {@link SignalChecksumWorker worker} responsible for
+	 * calculating the {@link SignalChecksum checksums}.
+	 * @return the worker responsible for calculating the checksums
+	 */
 	public SignalChecksumWorker getPrecalculatingWorker() {
 		return precalculatingWorker;
 	}
 
+	/**
+	 * Sets the {@link SignalChecksumWorker worker} responsible for
+	 * calculating the {@link SignalChecksum checksums}.
+	 * @param precalculatingWorker the worker responsible for calculating the
+	 * checksums
+	 */
 	public void setPrecalculatingWorker(SignalChecksumWorker precalculatingWorker) {
 		this.precalculatingWorker = precalculatingWorker;
 	}

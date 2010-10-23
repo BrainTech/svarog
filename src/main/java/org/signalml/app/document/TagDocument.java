@@ -37,29 +37,81 @@ import com.thoughtworks.xstream.converters.reflection.PureJavaReflectionProvider
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.io.xml.XmlFriendlyReplacer;
 
-/** TagDocument
- *
+/**
+ * The document with {@link Tag tags} and {@link TagStyle tag styles}.
+ * Contains two static methods, which create documents with:
+ * <ul>
+ * <li>the styles from the given file,</li>
+ * <li>the default styles of sleeping stages.</li>
+ * </ul>
+ * Tags and styles are stored in the {@link StyledTagSet set}, which can be
+ * obtained from this document.
+ * Moreover every instance has methods that allow to:
+ * <ul>
+ * <li>get the name,</li>
+ * <li>get the size (in seconds) of the block and the page,</li>
+ * <li>get the {@link SignalDocument document} with a signal with which the
+ * tags in this document are associated,</li>
+ * <li>get the number of tags and tag styles.</li>
+ * </ul>
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class TagDocument extends AbstractMutableFileDocument implements ExportedTagDocument {
 
+	/**
+	 * the {@link StyledTagSet set} in which the {@link Tag tags} and
+	 * {@link TagStyle styles} are stored
+	 */
 	private StyledTagSet tagSet;
+	/**
+	 * the {@link SignalDocument document} with a signal with which the tags
+	 * in this document are associated
+	 */
 	private SignalDocument parent;
+	/**
+	 * the fallback name
+	 */
 	private String fallbackName = "";
 
+	/**
+	 * Empty constructor.
+	 * @throws SignalMLException never thrown (???)
+	 */
 	private TagDocument() throws SignalMLException {
 	}
 
+	/**
+	 * Constructor. Sets the size of the page and the block.
+	 * Creates a new {@link StyledTagSet set} with these parameters
+	 * @param pageSize the size of the page
+	 * @param blocksPerPage the number of blocks in the single page
+	 * @throws SignalMLException never thrown
+	 */
 	public TagDocument(float pageSize, int blocksPerPage) throws SignalMLException {
 		tagSet = new StyledTagSet(pageSize, blocksPerPage);
 		saved = true;
 	}
 
+	/**
+	 * Constructor. Reads the {@link Tag tags} and their {@link TagStyle
+	 * styles} from file.
+	 * @param file the file to be read
+	 * @throws SignalMLException if there is no backing file or
+	 * the document stored in the file has invalid format or other
+	 * non I/O error occurs while reading a file
+	 * @throws IOException if I/O error occurs while reading the file
+	 */
 	public TagDocument(File file) throws SignalMLException, IOException {
 		super(file);
 	}
 
+	/**
+	 * Constructor. Sets the {@link StyledTagSet set}.
+	 * @param tagSet the set in which the {@link Tag tags} and {@link TagStyle
+	 * styles} are stored
+	 * @throws SignalMLException never thrown (???)
+	 */
 	public TagDocument(StyledTagSet tagSet) throws SignalMLException {
 		this.tagSet = tagSet;
 		saved = true;
@@ -75,6 +127,16 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 		saved = true;
 	}
 
+	/**
+	 * Creates the new tag document with the {@link TagStyle styles} to mark
+	 * sleep stages.
+	 * @param pageSize the size of the page
+	 * @param blocksPerPage the number of blocks in the page
+	 * @return the created tag document
+	 * @throws SignalMLException never thrown (??)
+	 * @throws IOException if the stream to the file with styles could not
+	 * be opened
+	 */
 	public static TagDocument getNewSleepDefaultDocument(float pageSize, int blocksPerPage) throws SignalMLException, IOException {
 
 		Resource r = new ClassPathResource("org/signalml/domain/tag/sample/default_sleep_styles.xml");
@@ -94,6 +156,19 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 
 	}
 
+	/**
+	 * Creates the new {@link TagDocument tag document} with the
+	 * {@link TagStyle styles} taken another tag document stored in the given
+	 * file.
+	 * @param file the file with the tag document from which the styles are
+	 * to be taken
+	 * @param pageSize the size of the page
+	 * @param blocksPerPage the number of blocks in the page
+	 * @return the created tag document
+	 * @throws SignalMLException if the document stored in the file has
+	 * invalid format or other non I/O error occurs while reading a file
+	 * @throws IOException if I/O error occurs while reading the file
+	 */
 	public static TagDocument getStylesFromFileDocument(File file, float pageSize, int blocksPerPage) throws SignalMLException, IOException {
 		TagDocument templateDocument = new TagDocument(file);
 		LinkedHashMap<String,TagStyle> styles = new LinkedHashMap<String, TagStyle>();
@@ -126,6 +201,11 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 
 	}
 
+	/**
+	 * Returns the {@link StyledTagSet set} in which the {@link Tag tags} and
+	 * {@link TagStyle styles} are stored.
+	 * @return the set in which the tags and styles are stored
+	 */
 	public StyledTagSet getTagSet() {
 		return tagSet;
 	}
@@ -150,6 +230,12 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 		return parent;
 	}
 
+	/**
+	 * Sets the {@link SignalDocument document} with a signal with which the
+	 * {@link Tag tags} in this document are associated.
+	 * @param parent the document with a signal with which the tags
+	 * in this document are associated
+	 */
 	public void setParent(SignalDocument parent) {
 		if (this.parent != parent) {
 			if (this.parent != null) {
@@ -162,6 +248,11 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 		}
 	}
 
+	/**
+	 * Returns the streamer which reads {@link Tag tags} and {@link TagStyle
+	 * tag styles} from file.
+	 * @return the streamer which reads tags and styles from file
+	 */
 	private XStream getTagStreamer() {
 
 		XStream streamer = new XStream(
@@ -201,6 +292,10 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 		return fallbackName;
 	}
 
+	/**
+	 * Sets the fallback name.
+	 * @param fallbackName the fallback name to set
+	 */
 	public void setFallbackName(String fallbackName) {
 		this.fallbackName = fallbackName;
 	}
@@ -229,6 +324,10 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 		return toString();
 	}
 
+	/**
+	 * Returns the number of {@link TagStyle tag styles} in this document.
+	 * @return the number of tag styles in this document
+	 */
 	public int getTagStyleCount() {
 		return tagSet.getTagStyleCount();
 	}
@@ -238,6 +337,12 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 		return tagSet.getTagCount();
 	}
 
+	/**
+	 * Sets the {@link TagStyle#isMarker() marker} styles from this document
+	 * in the {@link SignalSpaceConstraints signal space constraints}.
+	 * @param constraints the constraints in which the marker styles are
+	 * to be set
+	 */
 	public void updateSignalSpaceConstraints(SignalSpaceConstraints constraints) {
 
 		LinkedHashSet<TagStyle> channelStyles = getTagSet().getChannelStyles();

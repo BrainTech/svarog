@@ -15,8 +15,18 @@ import org.apache.log4j.Logger;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.signal.Document;
 
-/** DefaultDocumentManager
- *
+/**
+ * Implementation of {@link DocumentManager}.
+ * Each {@link Document document} is stored in three collections:
+ * <ul>
+ * <li>the vector with all documents,</li>
+ * <li>the vector containing documents of a specified {@link ManagedDocumentType
+ * type},</li>
+ * <li>the map associating files with the documents backed with these files.
+ * </li>
+ * </ul>
+ * Contains {@link DocumentManagerListener listeners} and informs them about
+ * changes.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -24,12 +34,26 @@ public class DefaultDocumentManager implements DocumentManager {
 
 	protected static final Logger logger = Logger.getLogger(DefaultDocumentManager.class);
 
+	/**
+	 * the vector containing all {@link Document documents} in this manager
+	 */
 	private Vector<Document> documents = new Vector<Document>(100,100);
 
+	/**
+	 * the map associating files with the {@link Document documents} backed
+	 * with them
+	 */
 	private Map<File,Document> documentsByFile = new HashMap<File,Document>(100);
 
+	/**
+	 * the map associating {@link ManagedDocumentType types} of {@link Document
+	 * documents} with vectors of {@link Document documents} of these types
+	 */
 	private Map<ManagedDocumentType,Vector<Document>> documentVectorsByType = new HashMap<ManagedDocumentType,Vector<Document>>(10);
 
+	/**
+	 * the list of {@link DocumentManagerListener listeners}
+	 */
 	private EventListenerList listenerList = new EventListenerList();
 
 	@Override
@@ -82,6 +106,18 @@ public class DefaultDocumentManager implements DocumentManager {
 		}
 	}
 
+	/**
+	 * Adds a {@link Document document} to this manager.
+	 * In order to do it:
+	 * <ul>
+	 * <li>if the document {@link FileBackedDocument has a backing file} it is
+	 * added to the map associating files with the documents backed with them
+	 * </li>
+	 * <li>adds the document to the vector of all documents,</li>
+	 * <li>adds the document to the vector of documents of a specified
+	 * {@link ManagedDocumentType type}.</li>
+	 * </ul>
+	 */
 	@Override
 	public void addDocument(Document document) {
 
@@ -146,6 +182,19 @@ public class DefaultDocumentManager implements DocumentManager {
 
 	}
 
+	/**
+	 * Removes a {@link Document document} from this manager:
+	 * <ul>
+	 * <li>if the document {@link FileBackedDocument has a backing file}
+	 * it is removed form the map associating files with the documents backed
+	 * with them,</li>
+	 * <li>removes the document from the vector of documents of a specified
+	 * {@link ManagedDocumentType type},</li>
+	 * <li>removes the document from a vector of all documents in this manager.
+	 * </li>
+	 * </ul>
+	 * @param document the document to be removed
+	 */
 	private void removeDocumentInternal(Document document) {
 
 		if (document instanceof FileBackedDocument) {
@@ -250,6 +299,15 @@ public class DefaultDocumentManager implements DocumentManager {
 
 	}
 
+	/**
+	 * Informs all {@link DocumentManagerListener listeners} that the
+	 * {@link Document document} was added.
+	 * @param document the added document
+	 * @param index the index of the document in the
+	 * collection of all documents in this manager
+	 * @param inTypeIndex the index of the document in the
+	 * collection of documents of a specified {@link ManagedDocumentType type}
+	 */
 	protected void fireDocumentAdded(Document document, int index, int inTypeIndex) {
 		Object[] listeners = listenerList.getListenerList();
 		DocumentManagerEvent e = null;
@@ -263,6 +321,15 @@ public class DefaultDocumentManager implements DocumentManager {
 		 }
 	}
 
+	/**
+	 * Informs all {@link DocumentManagerListener listeners} that the
+	 * {@link Document document} was removed.
+	 * @param document the removed document
+	 * @param index the index of the document in the
+	 * collection of all documents in this manager
+	 * @param inTypeIndex the index of the document in the
+	 * collection of documents of a specified {@link ManagedDocumentType type}
+	 */
 	protected void fireDocumentRemoved(Document document, int index, int inTypeIndex) {
 		Object[] listeners = listenerList.getListenerList();
 		DocumentManagerEvent e = null;
@@ -276,6 +343,15 @@ public class DefaultDocumentManager implements DocumentManager {
 		 }
 	}
 
+	/**
+	 * Informs all {@link DocumentManagerListener listeners} that the path to
+	 * the {@link Document document} has changed.
+	 * @param document the document with the changed path
+	 * @param index the index of the document in the
+	 * collection of all documents in this manager
+	 * @param inTypeIndex the index of the document in the
+	 * collection of documents of a specified {@link ManagedDocumentType type}
+	 */
 	protected void fireDocumentPathChanged(Document document, int index, int inTypeIndex) {
 		Object[] listeners = listenerList.getListenerList();
 		DocumentManagerEvent e = null;
@@ -289,12 +365,14 @@ public class DefaultDocumentManager implements DocumentManager {
 		 }
 	}
 
+	@Override
 	public void addDocumentManagerListener(DocumentManagerListener listener) {
 		synchronized (this) {
 			listenerList.add(DocumentManagerListener.class, listener);
 		}
 	}
 
+	@Override
 	public void removeDocumentManagerListener(DocumentManagerListener listener) {
 		synchronized (this) {
 			listenerList.remove(DocumentManagerListener.class, listener);

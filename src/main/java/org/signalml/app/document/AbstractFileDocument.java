@@ -14,24 +14,43 @@ import org.signalml.app.model.LabelledPropertyDescriptor;
 import org.signalml.app.model.PropertyProvider;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.AbstractDocument;
+import org.signalml.plugin.export.signal.Document;
 import org.signalml.util.Util;
 import org.springframework.context.MessageSourceResolvable;
 
-/** AbstractFileDocument
- *
- *
+/**
+ * Abstract implementation of a {@link Document document} with a
+ * {@link FileBackedDocument backing file}.
+ * Contains this file and as a {@link #getDefaultMessage() default message}
+ * uses the path to it.
+ * 
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public abstract class AbstractFileDocument extends AbstractDocument implements FileBackedDocument, MessageSourceResolvable, PropertyProvider {
 
 	public static final String BACKING_FILE_PROPERTY = "backingFile";
 
+	/**
+	 * the file with which this document is backed
+	 */
 	protected File backingFile = null;
 
+	/**
+	 * Constructor.
+	 */
 	protected AbstractFileDocument() {
 		super();
 	}
 
+	/**
+	 * Constructor. Sets the file that backs this document and
+	 * {@link #openDocument() opens} this document
+	 * @param file the file from which this document will be read
+	 * @throws SignalMLException if the file is null or
+	 * the document stored in the file has invalid format or other
+	 * non I/O error occurs while reading a file
+	 * @throws IOException if I/O error occurs while reading the file
+	 */
 	public AbstractFileDocument(File file) throws SignalMLException, IOException {
 		this.backingFile = file;
 		openDocument();
