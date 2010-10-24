@@ -32,31 +32,31 @@ public class SleepStatistic extends TagStatistic implements PropertyProvider {
 	protected static final Logger logger = Logger.getLogger(SleepStatistic.class);
 
 	protected int segmentCount;
-	protected float segmentLength;
+	protected double segmentLength;
 
 	protected int[] styleSegments;
 
-	protected float firstSleepTime;
-	protected float lastSleepTime;
-	protected float firstSlowWaveTime;
-	protected float firstREMTime;
-	protected float wakeInsidePropperSleepTime;
+	protected double firstSleepTime;
+	protected double lastSleepTime;
+	protected double firstSlowWaveTime;
+	protected double firstREMTime;
+	protected double wakeInsidePropperSleepTime;
 
-	protected float deltaThr;
-	protected float alphaThr;
-	protected float spindleThr;
-	protected float emgTone;
+	protected double deltaThr;
+	protected double alphaThr;
+	protected double spindleThr;
+	protected double emgTone;
 
 	protected int slowSegments;
 
-	public SleepStatistic(StagerResult stagerResult, TagDocument tagDocument, int segmentCount, float segmentLength) {
+	public SleepStatistic(StagerResult stagerResult, TagDocument tagDocument, int segmentCount, double segmentLength) {
 		super();
 
 
-		deltaThr = (float) stagerResult.getDeltaThr();
-		alphaThr = (float) stagerResult.getAlphaThr();
-		spindleThr = (float) stagerResult.getSpindleThr();
-		emgTone = (float) stagerResult.getEmgTone();
+		deltaThr = (double) stagerResult.getDeltaThr();
+		alphaThr = (double) stagerResult.getAlphaThr();
+		spindleThr = (double) stagerResult.getSpindleThr();
+		emgTone = (double) stagerResult.getEmgTone();
 
 		this.segmentCount = segmentCount;
 		this.segmentLength = segmentLength;
@@ -80,10 +80,10 @@ public class SleepStatistic extends TagStatistic implements PropertyProvider {
 		String name;
 		int index;
 		Integer idx;
-		float position;
-		float endPosition;
-		float length;
-		float wakeInsidePropperSleepTimeCandidate = 0;
+		double position;
+		double endPosition;
+		double length;
+		double wakeInsidePropperSleepTimeCandidate = 0;
 		for (Tag tag : tags) {
 
 			style = tag.getStyle();
@@ -148,27 +148,27 @@ public class SleepStatistic extends TagStatistic implements PropertyProvider {
 		return segmentCount;
 	}
 
-	public float getSegmentLength() {
+	public double getSegmentLength() {
 		return segmentLength;
 	}
 
-	public float getFirstSleepTime() {
+	public double getFirstSleepTime() {
 		return firstSleepTime;
 	}
 
-	public float getLastSleepTime() {
+	public double getLastSleepTime() {
 		return lastSleepTime;
 	}
 
-	public float getFirstSlowWaveTime() {
+	public double getFirstSlowWaveTime() {
 		return firstSlowWaveTime;
 	}
 
-	public float getFirstREMTime() {
+	public double getFirstREMTime() {
 		return firstREMTime;
 	}
 
-	public float getSleepPeriodTime() {
+	public double getSleepPeriodTime() {
 		if (firstSleepTime >= 0 && lastSleepTime >= 0) {
 			return (lastSleepTime - firstSleepTime);
 		} else {
@@ -180,7 +180,7 @@ public class SleepStatistic extends TagStatistic implements PropertyProvider {
 		return Util.getPrettyTimeString(getSleepPeriodTime());
 	}
 
-	public float getTotalSleepTime() {
+	public double getTotalSleepTime() {
 		if (firstSleepTime >= 0 && lastSleepTime >= 0) {
 			return (lastSleepTime - firstSleepTime) - wakeInsidePropperSleepTime;
 		} else {
@@ -192,7 +192,7 @@ public class SleepStatistic extends TagStatistic implements PropertyProvider {
 		return Util.getPrettyTimeString(getTotalSleepTime());
 	}
 
-	public float getSleepEfficiencyIndex() {
+	public double getSleepEfficiencyIndex() {
 		return (getTotalSleepTime() / getTotalLength()) * 100;
 	}
 
@@ -200,7 +200,7 @@ public class SleepStatistic extends TagStatistic implements PropertyProvider {
 		return (((double) Math.round(getSleepEfficiencyIndex() * 100)) / 100);
 	}
 
-	public float getSleepOnsetLatency() {
+	public double getSleepOnsetLatency() {
 		return firstSleepTime;
 	}
 
@@ -212,7 +212,7 @@ public class SleepStatistic extends TagStatistic implements PropertyProvider {
 		}
 	}
 
-	public float getSleepOnsetToSWS() {
+	public double getSleepOnsetToSWS() {
 		if (firstSlowWaveTime < 0) {
 			return -1;
 		} else {
@@ -221,7 +221,7 @@ public class SleepStatistic extends TagStatistic implements PropertyProvider {
 	}
 
 	public String getSleepOnsetToSWSPretty() {
-		float value = getSleepOnsetToSWS();
+		double value = getSleepOnsetToSWS();
 		if (value < 0) {
 			return "-";
 		} else {
@@ -229,7 +229,7 @@ public class SleepStatistic extends TagStatistic implements PropertyProvider {
 		}
 	}
 
-	public float getSleepOnsetToREM() {
+	public double getSleepOnsetToREM() {
 		if (firstREMTime < 0) {
 			return -1;
 		} else {
@@ -238,7 +238,7 @@ public class SleepStatistic extends TagStatistic implements PropertyProvider {
 	}
 
 	public String getSleepOnsetToREMPretty() {
-		float value = getSleepOnsetToREM();
+		double value = getSleepOnsetToREM();
 		if (value < 0) {
 			return "-";
 		} else {
@@ -246,7 +246,7 @@ public class SleepStatistic extends TagStatistic implements PropertyProvider {
 		}
 	}
 
-	public float getWakeInsidePropperSleepTime() {
+	public double getWakeInsidePropperSleepTime() {
 		return wakeInsidePropperSleepTime;
 	}
 
@@ -254,35 +254,35 @@ public class SleepStatistic extends TagStatistic implements PropertyProvider {
 		return Util.getPrettyTimeString(wakeInsidePropperSleepTime);
 	}
 
-	public float getDeltaThr() {
+	public double getDeltaThr() {
 		return deltaThr;
 	}
 
-	public void setDeltaThr(float deltaThr) {
+	public void setDeltaThr(double deltaThr) {
 		this.deltaThr = deltaThr;
 	}
 
-	public float getAlphaThr() {
+	public double getAlphaThr() {
 		return alphaThr;
 	}
 
-	public void setAlphaThr(float alphaThr) {
+	public void setAlphaThr(double alphaThr) {
 		this.alphaThr = alphaThr;
 	}
 
-	public float getSpindleThr() {
+	public double getSpindleThr() {
 		return spindleThr;
 	}
 
-	public void setSpindleThr(float spindleThr) {
+	public void setSpindleThr(double spindleThr) {
 		this.spindleThr = spindleThr;
 	}
 
-	public float getEmgTone() {
+	public double getEmgTone() {
 		return emgTone;
 	}
 
-	public void setEmgTone(float emgTone) {
+	public void setEmgTone(double emgTone) {
 		this.emgTone = emgTone;
 	}
 

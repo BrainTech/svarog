@@ -492,8 +492,8 @@ public class ViewerStatusBar extends JPanel implements ActionFocusListener, Prop
 
 	private void addPageSelectionInfo(SignalPlot plot, SignalSelection signalSelection, StringBuilder sb) {
 
-		float time = signalSelection.getPosition();
-		float endTime = time + signalSelection.getLength();
+		double time = signalSelection.getPosition();
+		double endTime = time + signalSelection.getLength();
 
 		Util.addTime(time, sb);
 		sb.append(" - ");
@@ -507,8 +507,8 @@ public class ViewerStatusBar extends JPanel implements ActionFocusListener, Prop
 
 	private void addBlockSelectionInfo(SignalPlot plot, SignalSelection signalSelection, StringBuilder sb) {
 
-		float time = signalSelection.getPosition();
-		float endTime = time + signalSelection.getLength();
+		double time = signalSelection.getPosition();
+		double endTime = time + signalSelection.getLength();
 
 		Util.addTime(time, sb);
 		sb.append(" - ");
@@ -522,8 +522,8 @@ public class ViewerStatusBar extends JPanel implements ActionFocusListener, Prop
 
 	private void addChannelSelectionInfo(SignalDocument document, SignalPlot plot, SignalSelection signalSelection, StringBuilder sb) {
 
-		float time = signalSelection.getPosition();
-		float endTime = time + signalSelection.getLength();
+		double time = signalSelection.getPosition();
+		double endTime = time + signalSelection.getLength();
 
 		Util.addTime(time, sb);
 		sb.append(" - ");
@@ -540,8 +540,8 @@ public class ViewerStatusBar extends JPanel implements ActionFocusListener, Prop
 
 	private void addChannelTagInfo(SignalDocument document, SignalPlot plot, Tag tag, StringBuilder sb) {
 
-		float time = tag.getPosition();
-		float endTime = time + tag.getLength();
+		double time = tag.getPosition();
+		double endTime = time + tag.getLength();
 
 		Util.addTime(time, sb);
 		sb.append(" - ");

@@ -153,7 +153,7 @@ public class SignalPlotColumnHeader extends JComponent {
 			rect = useRect;
 		}
 
-		float position = tag.getPosition();
+		double position = tag.getPosition();
 		rect.x = ((int)(position * pixelPerSecond));
 		if (rect.x > 0 && pageLinesVisible && pixelPerPage > 4) {  // avoid obscuring by page lines if visible
 			int linePosition = (int)((int)((position / pageSize)) * pixelPerPage);

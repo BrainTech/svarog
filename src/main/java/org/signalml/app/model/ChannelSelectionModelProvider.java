@@ -14,17 +14,17 @@ import javax.swing.DefaultComboBoxModel;
  */
 public class ChannelSelectionModelProvider {
 
-	float maxTime;
-	float minTime;
-	float currentTime;
-	float currentLength;
+	double maxTime;
+	double minTime;
+	double currentTime;
+	double currentLength;
 	protected String[] labels;
 
 	private StartTimeSpinnerModel startTimeSpinnerModel;
 	protected LengthSpinnerModel lengthSpinnerModel;
 	private ChannelComboBoxModel channelComboBoxModel;
 
-	public ChannelSelectionModelProvider(float maxTime, float samplingFrequency, String[] labels, float currentTime, float currentLength, int currentLabel) {
+	public ChannelSelectionModelProvider(double maxTime, float samplingFrequency, String[] labels, double currentTime, double currentLength, int currentLabel) {
 
 		this.maxTime = maxTime;
 		this.minTime = Math.round(1000F / samplingFrequency) / 1000F;
@@ -42,15 +42,15 @@ public class ChannelSelectionModelProvider {
 
 	}
 
-	public float getMaxTime() {
+	public double getMaxTime() {
 		return maxTime;
 	}
 
-	public float getCurrentTime() {
+	public double getCurrentTime() {
 		return currentTime;
 	}
 
-	public float getCurrentLength() {
+	public double getCurrentLength() {
 		return currentLength;
 	}
 
@@ -89,7 +89,7 @@ public class ChannelSelectionModelProvider {
 			if (currentTime >= maxTime) {
 				return null;
 			}
-			float newTime = Math.min(maxTime, currentTime+1);
+			double newTime = Math.min(maxTime, currentTime+1);
 			return newTime;
 		}
 
@@ -98,7 +98,7 @@ public class ChannelSelectionModelProvider {
 			if (currentTime <= 0) {
 				return null;
 			}
-			float newTime = Math.max(0, currentTime-1);
+			double newTime = Math.max(0, currentTime-1);
 			return newTime;
 		}
 
@@ -139,7 +139,7 @@ public class ChannelSelectionModelProvider {
 			if (currentTime + currentLength >= maxTime) {
 				return null;
 			}
-			float newLength = Math.min(maxTime-currentTime, currentLength+1);
+			double newLength = Math.min(maxTime-currentTime, currentLength+1);
 			return newLength;
 		}
 
@@ -148,7 +148,7 @@ public class ChannelSelectionModelProvider {
 			if (currentLength <= minTime) {
 				return null;
 			}
-			float newLength = Math.max(minTime, currentLength-1);
+			double newLength = Math.max(minTime, currentLength-1);
 			return newLength;
 		}
 

@@ -31,7 +31,7 @@ public interface MultichannelSegmentedSampleSource extends MultichannelSampleSou
          * @param segment the index of the segment
          * @return the point in time where the segment begins
          */
-	float getSegmentTime(int segment);
+	double getSegmentTime(int segment);
 
         /**
          * Returns the samples for the given segment and channel.

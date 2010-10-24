@@ -410,7 +410,7 @@ public abstract class Util {
 	 * @param time time to add
 	 * @param sb StringBuiled to add time to
 	 */
-	public static void addTime(float time, StringBuilder sb) {
+	public static void addTime(double time, StringBuilder sb) {
 		int intTime = (int) Math.floor(time);
 		int remainder = (int) Math.round((time - intTime)*100);
 		sb.append(twoPlaceFormat.format(intTime/3600)).append(':');

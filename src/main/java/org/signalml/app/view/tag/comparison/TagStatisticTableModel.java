@@ -28,7 +28,7 @@ public class TagStatisticTableModel extends AbstractTableModel {
 	private DecimalFormat percentFormat = new DecimalFormat("0.000 '%'");
 
 	private TagStatistic statistic;
-	private float totalLength;
+	private double totalLength;
 
 	public TagStatisticTableModel() {
 		super();

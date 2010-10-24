@@ -78,7 +78,7 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 	 * Empty constructor.
 	 * @throws SignalMLException never thrown (???)
 	 */
-	private TagDocument() throws SignalMLException {
+	public TagDocument() throws SignalMLException {
 	}
 
 	/**
@@ -188,7 +188,7 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 	}
 
 	@Override
-	protected void readDocument(InputStream is) {
+	public void readDocument(InputStream is) {
 		XStream streamer = getTagStreamer();
 		tagSet = (StyledTagSet) streamer.fromXML(is);
 	}

@@ -155,7 +155,7 @@ public interface ExportedSignalPlot {
 	 * @param time the point in time
 	 * @return the first coordinate of the pixel
 	 */
-	int timeToPixel(float time);
+	int timeToPixel(double time);
 
 	/**
 	 * Returns the second coordinate of the pixel that represents the point

@@ -28,7 +28,7 @@ public class TagDifferenceSet {
         /**
          * the length of the longest {@link TagDifference differences}
          */
-	private float maxDifferenceLength = 0;
+	private double maxDifferenceLength = 0;
 
         /**
          * Constructor. Creates an empty TagDifferenceSet.
@@ -77,9 +77,9 @@ public class TagDifferenceSet {
          * and <code>end</code> (inclusive)
          */
         //TODO czy to na pewno ma zwracać to co napisałem, wydawało mi się, że mają to być różnice przecinające się z przedziałem, ale tu mogą się załapać także znajdujące się przed nim (i krótsze od maksymalnego)
-	public SortedSet<TagDifference> getDifferencesBetween(float start, float end) {
+	public SortedSet<TagDifference> getDifferencesBetween(double start, double end) {
 		TagDifference startMarker = new TagDifference(SignalSelectionType.CHANNEL, start-maxDifferenceLength, 0, null);
-		TagDifference endMarker = new TagDifference(SignalSelectionType.CHANNEL,end,Float.MAX_VALUE,null); // note that lengths matter, so that all tags starting at exactly end will be selected
+		TagDifference endMarker = new TagDifference(SignalSelectionType.CHANNEL,end, Double.MAX_VALUE,null); // note that lengths matter, so that all tags starting at exactly end will be selected
 		return differences.subSet(startMarker, true, endMarker, true);
 	}
 
@@ -87,7 +87,7 @@ public class TagDifferenceSet {
          * Calculates the maximal length of the difference in this set.
          */
 	private void calculateMaxTagLength() {
-		float maxDifferenceLength = 0;
+		double maxDifferenceLength = 0;
 		for (TagDifference difference : differences) {
 			if (maxDifferenceLength < difference.getLength()) {
 				maxDifferenceLength = difference.getLength();

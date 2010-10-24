@@ -63,9 +63,9 @@ public class SleepStatisticTableModel extends AbstractTableModel {
 			int addCnt = 0;
 			TagStyle style;
 
-			float segmentLength = statistic.getSegmentLength();
-			float tst = statistic.getTotalSleepTime();
-			float spt = statistic.getSleepPeriodTime();
+			double segmentLength = statistic.getSegmentLength();
+			double tst = statistic.getTotalSleepTime();
+			double spt = statistic.getSleepPeriodTime();
 			int segmentCount;
 			int i;
 

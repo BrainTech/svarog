@@ -91,7 +91,7 @@ public class TagBasedAtomFilter extends AbstractAtomFilter {
 		float position = segment.getSegmentTime() + atom.getTimePosition();
 		SortedSet<Tag> tags = tagDocument.getTagSet().getTagsBetween((float)(position-secondsBefore), (float)(position+secondsAfter));
 		TagStyle style;
-		float markerPosition;
+		double markerPosition;
 		for (Tag tag : tags) {
 			style = tag.getStyle();
 			if (styleNames.contains(style.getName())) {

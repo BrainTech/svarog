@@ -36,7 +36,7 @@ public class RoundBufferSampleSource {
 	 * @param sampleCount number of samples which the buffer must be able
 	 * to store
 	 */
-	RoundBufferSampleSource(int sampleCount) {
+	public RoundBufferSampleSource(int sampleCount) {
 		this.sampleCount = sampleCount;
 		samples = new double[sampleCount];
 	}
@@ -95,6 +95,11 @@ public class RoundBufferSampleSource {
 		}
 
 	}
+
+    public void addSample(double newSample) {
+	samples[nextInsertPos] = newSample;
+	incrNextInsertPos();
+    }
 
 	/**
 	 * Returns an array containing samples in this buffer.

@@ -70,7 +70,7 @@ public class TagSelectionAction extends AbstractFocusableSignalMLAction<SignalPl
 
 			if (selection.getType() == SignalSelectionType.CHANNEL && style.isMarker()) {
 
-				float centerPoint = selection.getCenterPosition();
+				double centerPoint = selection.getCenterPosition();
 
 				float samplingFrequency = plot.getSamplingFrequency();
 

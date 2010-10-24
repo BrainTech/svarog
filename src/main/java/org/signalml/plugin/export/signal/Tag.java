@@ -5,6 +5,8 @@
 package org.signalml.plugin.export.signal;
 
 import java.beans.IntrospectionException;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,13 +32,13 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
      * {@link TagStyle style} of this tagged selection
      */
 	private TagStyle style;
+	
+	/**
+	 * A string -> string map of Tag attributes (like 'annotation').
+	 */
+	private HashMap<String, String> attributes;
 
-    /**
-     * String with annotation of this tagged selection
-     */
-	private String annotation;
-
-    /**
+	/**
      * Constructor. Creates a tagged selection from a given
      * {@link SignalSelection selection} with a given {@link TagStyle style}
      * and annotation.
@@ -47,7 +49,8 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
 	public Tag(TagStyle style, SignalSelection signalSelection, String annotation) {
 		super(style.getType(), signalSelection.getPosition(), signalSelection.getLength(), signalSelection.getChannel());
 		this.style = style;
-		this.annotation = annotation;
+		this.attributes = new HashMap<String, String>();
+		this.setAnnotation(annotation);
 	}
 
     /**
@@ -55,16 +58,17 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
      * {@link TagStyle style}, starting position, length, annotation and
      * the number of the channel.
      * @param style the style of the tagged selection
-     * @param position the position from which the selection starts
-     * @param length the length of the selection
+     * @param d the position from which the selection starts
+     * @param e the length of the selection
      * @param channel a number of a channel which this selection should
      * concern. CHANNEL_NULL if selection should concern all channels
      * @param annotation an annotation of a tagged selection
      */
-	public Tag(TagStyle style, float position, float length, int channel, String annotation) {
-		super(style.getType(), position, length, channel);
+	public Tag(TagStyle style, double d, double e, int channel, String annotation) {
+		super(style.getType(), d, e, channel);
 		this.style = style;
-		this.annotation = annotation;
+		this.attributes = new HashMap<String, String>();
+		this.setAnnotation(annotation);
 	}
 
     /**
@@ -75,9 +79,11 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
      * @param position the position from which the selection starts
      * @param length the length of the selection
      */
-	public Tag(TagStyle style, float position, float length) {
+	public Tag(TagStyle style, double position, double length) {
 		super((style != null ? style.getType() : SignalSelectionType.CHANNEL), position, length);
 		this.style = style;
+		this.attributes = new HashMap<String, String>();
+
 	}
 
     /**
@@ -89,9 +95,11 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
      * @param length the length of the selection
      * @param channel a number of a channel which this selection should
      */
-	public Tag(TagStyle style, float position, float length, int channel) {
+	public Tag(TagStyle style, double position, double length, int channel) {
 		super(style.getType(), position, length, channel);
 		this.style = style;
+		this.attributes = new HashMap<String, String>();
+
 	}
 
     /**
@@ -99,7 +107,7 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
      * @param tag the tagged selection to be copied
      */
 	public Tag(Tag tag) {
-		this(tag.style, tag.position, tag.length, tag.channel, tag.annotation);
+		this(tag.style, tag.position, tag.length, tag.channel, tag.getAnnotation());
 	}
 	
 	/**
@@ -109,6 +117,7 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
 	 */
 	public Tag(ExportedTag tag){
 		this(new TagStyle(tag.getStyle()), tag.getPosition(), tag.getLength(), tag.getChannel(), tag.getAnnotation());
+		this.attributes = new HashMap<String, String>();
 	}
 
     /**
@@ -126,7 +135,7 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
      */
 	@Override
 	public String getAnnotation() {
-		return annotation;
+		return this.attributes.get("annotation");
 	}
 
     /**
@@ -135,9 +144,36 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
      */
 	@Override
 	public void setAnnotation(String annotation) {
-		this.annotation = annotation;
+		this.setAttribute("annotation", annotation);
 	}
 
+	/**
+	 * Returns a string-string HashMap of tag attributes.
+	 * @return a string-string HashMap of tag attributes.
+	 */
+    public HashMap<String, String> getAttributes() {
+		return attributes;
+	}
+	
+    /**
+     * Returns a string representation of 'key' tag's attribute or null 
+     * if there is no attribute with key 'key'.
+     * @param key a string-key for the attribute to be returned
+     * @return a string representation of 'key' attribute or null
+     * if there is no attribute with key 'key'
+     */
+	public String getAttribute(String key) {
+		return this.attributes.get(key);
+	}
+
+	/**
+	 * Set tag's attribute with string key 'key' and string value 'value'.
+	 * @param key a key for the attribute to be set
+	 * @param value a value for the attribute to be set
+	 */
+	public void setAttribute(String key, String value) {
+		this.attributes.put(key, value);
+	}
     /**
      * Returns whether this tagged selection is a marker.
      * @return true if this tagged selection is a marker, false otherwise
@@ -160,7 +196,7 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
      */
 	public int compareTo(Tag t) {
 
-		float test = position - t.position;
+		double test = position - t.position;
 		if (test == 0) {
 			test = length - t.length;
 			if (test == 0) {
@@ -199,7 +235,7 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
      */
 	@Override
 	public Tag clone() {
-		return new Tag(style,position,length,channel,annotation);
+		return new Tag(style,position,length,channel,this.getAnnotation());
 	}
 
 	@Override
@@ -254,7 +290,7 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
 	 */
 	@Override
 	public int compareTo(ExportedTag t) {
-		float test = position - t.getPosition();
+		double test = position - t.getPosition();
 		if (test == 0) {
 			test = length - t.getLength();
 			if (test == 0) {

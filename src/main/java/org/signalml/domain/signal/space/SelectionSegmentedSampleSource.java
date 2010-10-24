@@ -58,7 +58,7 @@ public class SelectionSegmentedSampleSource extends MultichannelSampleProcessor 
         /**
          * the point in time (seconds) where the selection starts
          */
-	private float firstPosition;
+	private double firstPosition;
 
         /**
          * Constructor. Creates a source without the selection
@@ -144,7 +144,7 @@ public class SelectionSegmentedSampleSource extends MultichannelSampleProcessor 
 	}
 
 	@Override
-	public float getSegmentTime(int segment) {
+	public double getSegmentTime(int segment) {
 		return firstPosition + (segmentLength*segment);
 	}
 
