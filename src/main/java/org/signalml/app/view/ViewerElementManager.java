@@ -300,6 +300,7 @@ public class ViewerElementManager {
 	private JMenu fileMenu;
 	private JMenu editMenu;
 	private JMenu viewMenu;
+	private JMenu monitorMenu;
 	private JMenu toolsMenu;
 	private JMenu helpMenu;
 
@@ -588,8 +589,6 @@ public class ViewerElementManager {
 			fileMenu.add(getSaveAllDocumentsAction());
 			fileMenu.add(getCloseActiveDocumentAction());
 			fileMenu.addSeparator();
-			fileMenu.add(getOpenMonitorAction());
-			fileMenu.addSeparator();
 			fileMenu.add(getNewTagAction());
 			fileMenu.add(getOpenTagAction());
 			fileMenu.add(getSaveTagAction());
@@ -644,6 +643,14 @@ public class ViewerElementManager {
 		return viewMenu;
 	}
 
+	public JMenu getMonitorMenu() {
+		if (monitorMenu == null) {
+			monitorMenu = new JMenu(messageSource.getMessage("menu.monitor"));
+			monitorMenu.add(getOpenMonitorAction());
+		}
+		return monitorMenu;
+	}
+
 	public JMenu getToolsMenu() {
 		if (toolsMenu == null) {
 			toolsMenu = new JMenu(messageSource.getMessage("menu.tools"));
@@ -685,6 +692,7 @@ public class ViewerElementManager {
 			menuBar.add(getFileMenu());
 			menuBar.add(getEditMenu());
 			menuBar.add(getViewMenu());
+			menuBar.add(getMonitorMenu());
 			menuBar.add(getToolsMenu());
 			menuBar.add(getHelpMenu());
 		}
