@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tag_file>
+<tag_file format_version="1.0">
   <paging page_size="20.0" blocks_per_page="5"/>  
   <tag_definitions>
     <def_group name='pageTags'>
