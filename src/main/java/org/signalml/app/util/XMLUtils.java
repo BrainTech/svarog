@@ -115,7 +115,7 @@ public abstract class XMLUtils {
 	public static OutputStream getInitializedXMLOutputStream(File f) throws IOException {
 		OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(f));
 		try {
-			outputStream.write(("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+Util.LINE_SEP).getBytes());
+			writeXMLHeader(outputStream);
 		} catch (IOException ex) {
 			outputStream.close();
 			throw ex;
@@ -161,6 +161,15 @@ public abstract class XMLUtils {
 			inputStream.close();
 		}
 
+	}
+
+	/**
+	 * Writes a standard XML header to the given output stream.
+	 * @param outputStream the stream to which the XML header will be written
+	 * @throws IOException thrown if an IO error occurs
+	 */
+	public static void writeXMLHeader(OutputStream outputStream) throws IOException {
+		outputStream.write(("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+Util.LINE_SEP).getBytes());
 	}
 
 }
