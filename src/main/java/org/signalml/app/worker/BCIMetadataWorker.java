@@ -34,8 +34,9 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 	public static final String CHANNEL_NAMES	  = "ChannelsNames";
 	public static final String CALIBRATION_GAIN   = "Gain";
 	public static final String CALIBRATION_OFFSET = "Offset";
-	public static final String MINIMUN_VALUE	  = "MinData";
-	public static final String MAXIMUN_VALUE	  = "MaxData";
+	public static final String MINIMUM_VALUE	  = "MinData";
+	public static final String MAXIMUM_VALUE	  = "MaxData";
+	public static final String AMPLIFIER_NULL     = "AmplifierNull";
 
 	private MessageSourceAccessor messageSource;
 	private JmxClient client;
@@ -54,652 +55,187 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 		this.timeout = timeout;
 	}
 
+	/**
+	 * Ask multiplexer for dataId, return value for that key, or null when no key or problems
+	 * with connection/protocol.
+	 * @param dataId A string representing key for data we want to ask for
+	 * @param failMsg A message prefix to be sent to monitor descriptor when connection/protocol
+	 * problems occur
+	 * @return 
+	 */
+	protected String queryMetaData(String dataId, String failMsg) {
+		logger.info("Sending "+dataId+" request...");
+
+		// create message
+		MultiplexerMessage.Builder builder = MultiplexerMessage.newBuilder();
+		ByteString msgBody = ByteString.copyFromUtf8(dataId);
+		builder.setType( SvarogConstants.MessageTypes.DICT_GET_REQUEST_MESSAGE).setMessage(msgBody);
+		MultiplexerMessage msg = client.createMessage(builder);
+
+		// send message
+		try {
+			ChannelFuture sendingOperation = client.send( msg, SendingMethod.THROUGH_ONE);
+			sendingOperation.await(1, TimeUnit.SECONDS);
+			if (!sendingOperation.isSuccess()) {
+				logger.info("sending "+dataId+" request failed!");
+				String info = messageSource.getMessage( 
+						failMsg+".sendingFailedMsg");
+				openMonitorDescriptor.setMetadataInfo( info);
+				return null;
+			}
+		}
+		catch (NoPeerForTypeException e) {
+			logger.error("sending failed! " + e.getMessage());
+			String info = messageSource.getMessage( 
+					failMsg+".sendingFailedMsg");
+			openMonitorDescriptor.setMetadataInfo( info);
+			return null;
+		}
+		catch (InterruptedException e) {
+			logger.error("sending failed! " + e.getMessage());
+			String info = messageSource.getMessage( 
+					failMsg+".sendingFailedMsg");
+			openMonitorDescriptor.setMetadataInfo( info);
+			return null;
+		}
+
+
+		logger.debug( "Receiving "+dataId+"...");
+
+		// receive message
+		IncomingMessageData msgData = null;
+		try {
+			msgData = client.receive(timeout);
+			if (msgData != null) {
+				MultiplexerMessage reply = msgData.getMessage();
+				if (reply.getType() != SvarogConstants.MessageTypes.DICT_GET_RESPONSE_MESSAGE) {
+					logger.error("received bad reply! " + reply.getMessage());
+					String info = messageSource.getMessage( 
+							failMsg+".receivedBadReplyMsg");
+					openMonitorDescriptor.setMetadataInfo( info);
+					return null;
+				}
+				else {
+					ByteString bs = reply.getMessage();
+					String val = bs.toStringUtf8();
+					return val;
+				}
+			}
+			else {
+				logger.info("receive timed out!");
+				String info = messageSource.getMessage( 
+						failMsg+".receiveTimedout");
+				openMonitorDescriptor.setMetadataInfo( info);
+				return null;
+			}
+		} 
+		catch (InterruptedException e) {
+			logger.error("receiveing failed! " + e.getMessage());
+			String info = messageSource.getMessage( 
+					failMsg+".receivingFailedMsg");
+			openMonitorDescriptor.setMetadataInfo( info);
+			return null;
+		}
+		
+	}
 	@Override
 	protected OpenMonitorDescriptor doInBackground() throws Exception {
 
+		String value;
 		int step = 0;
 		int channelCount = -1;
 		
 		logger.info("Gathering metadata...");
 
-		logger.info("Sending sampling request...");
-
-		// create message
-		MultiplexerMessage.Builder builder = MultiplexerMessage.newBuilder();
-		ByteString msgBody = ByteString.copyFromUtf8( SAMPLING_RATE);
-		builder.setType( SvarogConstants.MessageTypes.DICT_GET_REQUEST_MESSAGE).setMessage( msgBody);
-		MultiplexerMessage msg = client.createMessage( builder);
-
-		// send message
-		try {
-			ChannelFuture sendingOperation = client.send( msg, SendingMethod.THROUGH_ONE);
-			sendingOperation.await(1, TimeUnit.SECONDS);
-			if (!sendingOperation.isSuccess()) {
-				logger.info("sending sampling request failed!");
-				String info = messageSource.getMessage( 
-						"action.openMonitor.metadataWorker.samplingRate.sendingFailedMsg");
-				openMonitorDescriptor.setMetadataInfo( info);
-				return openMonitorDescriptor;
-			}
-		}
-		catch (NoPeerForTypeException e) {
-			logger.error("sending failed! " + e.getMessage());
-			String info = messageSource.getMessage( 
-					"action.openMonitor.metadataWorker.samplingRate.sendingFailedMsg");
-			openMonitorDescriptor.setMetadataInfo( info);
+		// sampling freq
+		value = queryMetaData(SAMPLING_RATE, "action.openMonitor.metadataWorker.samplingRate");
+		if (value == null)
 			return openMonitorDescriptor;
-		}
-		catch (InterruptedException e) {
-			logger.error("sending failed! " + e.getMessage());
-			String info = messageSource.getMessage( 
-					"action.openMonitor.metadataWorker.samplingRate.sendingFailedMsg");
-			openMonitorDescriptor.setMetadataInfo( info);
+		Float freq = new Float(value);
+		openMonitorDescriptor.setSamplingFrequency(freq);
+		publish(++step);
+
+		// channel count
+		value = queryMetaData(NUMBER_OF_CHANNELS, "action.openMonitor.metadataWorker.channelCount");
+		if (value == null)
 			return openMonitorDescriptor;
-		}
+		channelCount = Integer.parseInt(value);
+		openMonitorDescriptor.setChannelCount(new Integer(channelCount));
+		publish(++step);
 
-
-		logger.debug( "Receiving sampling rate...");
-
-		// receive message
-		IncomingMessageData msgData = null;
-		try {
-			msgData = client.receive( timeout);
-			if (msgData != null) {
-				MultiplexerMessage reply = msgData.getMessage();
-				if (reply.getType() != SvarogConstants.MessageTypes.DICT_GET_RESPONSE_MESSAGE) {
-					logger.error("received bad reply! " + reply.getMessage());
-					String info = messageSource.getMessage( 
-							"action.openMonitor.metadataWorker.samplingRate.receivedBadReplyMsg");
-					openMonitorDescriptor.setMetadataInfo( info);
-					return openMonitorDescriptor;
-				}
-				else {
-					ByteString bs = reply.getMessage();
-					String val = bs.toStringUtf8();
-					Float freq = new Float( val);
-					openMonitorDescriptor.setSamplingFrequency( freq);
-				}
-			}
-			else {
-				logger.info("receive timed out!");
-				String info = messageSource.getMessage( 
-						"action.openMonitor.metadataWorker.samplingRate.receiveTimedout");
-				openMonitorDescriptor.setMetadataInfo( info);
-				return openMonitorDescriptor;
-			}
-		} 
-		catch (InterruptedException e) {
-			logger.error("receiveing failed! " + e.getMessage());
-			String info = messageSource.getMessage( 
-					"action.openMonitor.metadataWorker.samplingRate.receivingFailedMsg");
-			openMonitorDescriptor.setMetadataInfo( info);
+		// amplifier channels
+		value = queryMetaData(AMPLIFIER_CHANNELS, "action.openMonitor.metadataWorker.amplifierChannels");
+		if (value == null)
 			return openMonitorDescriptor;
+		StringTokenizer st = new StringTokenizer(value, " ");
+		int[] amplifierChannels = new int[channelCount];
+		for (int i=0; i<channelCount && st.hasMoreTokens(); i++) {
+			String s = st.nextToken();
+			amplifierChannels[i] = Integer.parseInt(s);
 		}
+		openMonitorDescriptor.setAmplifierChannels(amplifierChannels);
+		publish(++step);
 
+		// channel labels
+		value = queryMetaData(CHANNEL_NAMES, "action.openMonitor.metadataWorker.channelNames");
+		if (value == null)
+			return openMonitorDescriptor;
+		StringTokenizer st2 = new StringTokenizer(value, ";");
+		String[] channelLabels = new String[channelCount];
+		for (int i=0; i<channelCount && st2.hasMoreTokens(); i++)
+			channelLabels[i] = st2.nextToken();
+		openMonitorDescriptor.setChannelLabels(channelLabels);
+		publish(++step);
+
+		// calibration gain
+		value = queryMetaData(CALIBRATION_GAIN, "action.openMonitor.metadataWorker.calibrationGain");
+		if (value == null)
+			return openMonitorDescriptor;
+		StringTokenizer st3 = new StringTokenizer(value, " ");
+		float[] gain = new float[channelCount];
+		for (int i=0; i<channelCount && st3.hasMoreTokens(); i++) {
+			String s = st3.nextToken();
+			gain[i] = Float.parseFloat(s);
+		}		
+		openMonitorDescriptor.setCalibrationGain(gain);
 		publish( ++step);
 
-// channel count
-
-		logger.info("Sending channel count request...");
-
-		// create message
-		builder = MultiplexerMessage.newBuilder();
-		msgBody = ByteString.copyFromUtf8( NUMBER_OF_CHANNELS);
-		builder.setType( SvarogConstants.MessageTypes.DICT_GET_REQUEST_MESSAGE).setMessage( msgBody);
-		msg = client.createMessage( builder);
-
-		// send message
-		try {
-			ChannelFuture sendingOperation = client.send( msg, SendingMethod.THROUGH_ONE);
-			sendingOperation.await(1, TimeUnit.SECONDS);
-			if (!sendingOperation.isSuccess()) {
-				logger.info("sending channel count failed!");
-				String info = messageSource.getMessage( 
-						"action.openMonitor.metadataWorker.channelCount.sendingFailedMsg");
-				openMonitorDescriptor.setMetadataInfo( info);
-				return openMonitorDescriptor;
-			}
-		}
-		catch (NoPeerForTypeException e) {
-			logger.error("sending failed! " + e.getMessage());
-			String info = messageSource.getMessage( 
-					"action.openMonitor.metadataWorker.channelCount.sendingFailedMsg");
-			openMonitorDescriptor.setMetadataInfo( info);
+		// calibration offset
+		value = queryMetaData(CALIBRATION_OFFSET, "action.openMonitor.metadataWorker.calibrationOffset");
+		if (value == null)
 			return openMonitorDescriptor;
+		StringTokenizer st4 = new StringTokenizer(value, " ");
+		float[] offset = new float[channelCount];
+		for (int i=0; i<channelCount && st4.hasMoreTokens(); i++) {
+			String s = st4.nextToken();
+			offset[i] = Float.parseFloat(s);
 		}
-		catch (InterruptedException e) {
-			logger.error("sending failed! " + e.getMessage());
-			String info = messageSource.getMessage( 
-					"action.openMonitor.metadataWorker.channelCount.sendingFailedMsg");
-			openMonitorDescriptor.setMetadataInfo( info);
+		openMonitorDescriptor.setCalibrationOffset(offset);
+		publish(++step);
+
+		// minimum value
+		value = queryMetaData(MINIMUM_VALUE, "action.openMonitor.metadataWorker.minimumValue");
+		if (value == null)
 			return openMonitorDescriptor;
-		}
+		float minVal = Float.parseFloat(value);
+		openMonitorDescriptor.setMinimumValue( minVal);
+		publish(++step);
 
-
-		logger.debug( "Receiving channel count rate...");
-
-		// receive message
-		msgData = null;
-		try {
-			msgData = client.receive( 10000);
-			if (msgData != null) {
-				MultiplexerMessage reply = msgData.getMessage();
-				if (reply.getType() != SvarogConstants.MessageTypes.DICT_GET_RESPONSE_MESSAGE) {
-					logger.error("received bad reply! " + reply.getMessage());
-					String info = messageSource.getMessage( 
-							"action.openMonitor.metadataWorker.channelCount.receivedBadReplyMsg");
-					openMonitorDescriptor.setMetadataInfo( info);
-					return openMonitorDescriptor;
-				}
-				else {
-					ByteString bs = reply.getMessage();
-					String val = bs.toStringUtf8();
-					channelCount = Integer.parseInt( val);
-					openMonitorDescriptor.setChannelCount( new Integer(channelCount));
-				}
-			}
-			else {
-				logger.info("receive timed out!");
-				String info = messageSource.getMessage( 
-						"action.openMonitor.metadataWorker.channelCount.receiveTimedout");
-				openMonitorDescriptor.setMetadataInfo( info);
-				return openMonitorDescriptor;
-			}
-		} 
-		catch (InterruptedException e) {
-			logger.error("receiveing failed! " + e.getMessage());
-			String info = messageSource.getMessage( 
-					"action.openMonitor.metadataWorker.channelCount.receivingFailedMsg");
-			openMonitorDescriptor.setMetadataInfo( info);
+		// maximum value
+		value = queryMetaData(MAXIMUM_VALUE, "action.openMonitor.metadataWorker.maximumValue");
+		if (value == null)
 			return openMonitorDescriptor;
-		}
-
-		publish( ++step);
-
-// amplifier channels
-
-		logger.info("Sending AmplifierChannelsToRecord request...");
-
-		// create message
-		builder = MultiplexerMessage.newBuilder();
-		msgBody = ByteString.copyFromUtf8( AMPLIFIER_CHANNELS);
-		builder.setType( SvarogConstants.MessageTypes.DICT_GET_REQUEST_MESSAGE).setMessage( msgBody);
-		msg = client.createMessage( builder);
-
-		// send message
-		try {
-			ChannelFuture sendingOperation = client.send( msg, SendingMethod.THROUGH_ONE);
-			sendingOperation.await(1, TimeUnit.SECONDS);
-			if (!sendingOperation.isSuccess()) {
-				logger.info("sending amplifier channels failed!");
-				String info = messageSource.getMessage( 
-						"action.openMonitor.metadataWorker.amplifierChannels.sendingFailedMsg");
-				openMonitorDescriptor.setMetadataInfo( info);
-				return openMonitorDescriptor;
-			}
-		}
-		catch (NoPeerForTypeException e) {
-			logger.error("sending failed! " + e.getMessage());
-			String info = messageSource.getMessage( 
-					"action.openMonitor.metadataWorker.amplifierChannels.sendingFailedMsg");
-			openMonitorDescriptor.setMetadataInfo( info);
+		float maxVal = Float.parseFloat(value);
+		openMonitorDescriptor.setMaximumValue(maxVal);
+		publish(++step);
+		
+		// amplifier null value
+		value = queryMetaData(AMPLIFIER_NULL, "action.openMonitor.metadataWorker.amplifierNull");
+		if (value == null)
 			return openMonitorDescriptor;
-		}
-		catch (InterruptedException e) {
-			logger.error("sending failed! " + e.getMessage());
-			String info = messageSource.getMessage( 
-					"action.openMonitor.metadataWorker.amplifierChannels.sendingFailedMsg");
-			openMonitorDescriptor.setMetadataInfo( info);
-			return openMonitorDescriptor;
-		}
-
-
-		logger.debug( "Receiving amplifier channels rate...");
-
-		// receive message
-		msgData = null;
-		try {
-			msgData = client.receive( 10000);
-			if (msgData != null) {
-				MultiplexerMessage reply = msgData.getMessage();
-				if (reply.getType() != SvarogConstants.MessageTypes.DICT_GET_RESPONSE_MESSAGE) {
-					logger.error("received bad reply! " + reply.getMessage());
-					String info = messageSource.getMessage( 
-							"action.openMonitor.metadataWorker.amplifierChannels.receivedBadReplyMsg");
-					openMonitorDescriptor.setMetadataInfo( info);
-					return openMonitorDescriptor;
-				}
-				else {
-					ByteString bs = reply.getMessage();
-					String val = bs.toStringUtf8();
-					StringTokenizer st = new StringTokenizer( val, " ");
-					int[] amplifierChannels = new int[channelCount];
-					for (int i=0; i<channelCount && st.hasMoreTokens(); i++) {
-						String s = st.nextToken();
-						amplifierChannels[i] = Integer.parseInt( s);
-					}
-					openMonitorDescriptor.setAmplifierChannels( amplifierChannels);
-				}
-			}
-			else {
-				logger.info("receive timed out!");
-				String info = messageSource.getMessage( 
-						"action.openMonitor.metadataWorker.channelCount.receiveTimedout");
-				openMonitorDescriptor.setMetadataInfo( info);
-				return openMonitorDescriptor;
-			}
-		}
-		catch (InterruptedException e) {
-			logger.error("receiveing failed! " + e.getMessage());
-			String info = messageSource.getMessage( 
-					"action.openMonitor.metadataWorker.channelCount.receivingFailedMsg");
-			openMonitorDescriptor.setMetadataInfo( info);
-			return openMonitorDescriptor;
-		}
-
-		publish( ++step);
-
- // channel labels
-
-		 logger.info("Sending channel names request...");
-
-		 // create message
-		 builder = MultiplexerMessage.newBuilder();
-		 msgBody = ByteString.copyFromUtf8( CHANNEL_NAMES);
-		 builder.setType( SvarogConstants.MessageTypes.DICT_GET_REQUEST_MESSAGE).setMessage( msgBody);
-		 msg = client.createMessage( builder);
-
-		 // send message
-		 try {
-			 ChannelFuture sendingOperation = client.send( msg, SendingMethod.THROUGH_ONE);
-			 sendingOperation.await(1, TimeUnit.SECONDS);
-			 if (!sendingOperation.isSuccess()) {
-				 logger.info("sending channel names failed!");
-				 String info = messageSource.getMessage( 
-						 "action.openMonitor.metadataWorker.channelNames.sendingFailedMsg");
-				 openMonitorDescriptor.setMetadataInfo( info);
-				 return openMonitorDescriptor;
-			 }
-		 }
-		 catch (NoPeerForTypeException e) {
-			 logger.error("sending failed! " + e.getMessage());
-			 String info = messageSource.getMessage( 
-					 "action.openMonitor.metadataWorker.channelNames.sendingFailedMsg");
-			 openMonitorDescriptor.setMetadataInfo( info);
-			 return openMonitorDescriptor;
-		 }
-		 catch (InterruptedException e) {
-			 logger.error("sending failed! " + e.getMessage());
-			 String info = messageSource.getMessage( 
-					 "action.openMonitor.metadataWorker.channelNames.sendingFailedMsg");
-			 openMonitorDescriptor.setMetadataInfo( info);
-			 return openMonitorDescriptor;
-		 }
-
-		 logger.debug( "Receiving channel names gain...");
-
-		 // receive message
-		 msgData = null;
-		 try {
-			 msgData = client.receive( timeout);
-			 if (msgData != null) {
-				 MultiplexerMessage reply = msgData.getMessage();
-				 if (reply.getType() != SvarogConstants.MessageTypes.DICT_GET_RESPONSE_MESSAGE) {
-					 logger.error("received bad reply! " + reply.getMessage());
-					 String info = messageSource.getMessage( 
-							 "action.openMonitor.metadataWorker.channelNames.receivedBadReplyMsg");
-					 openMonitorDescriptor.setMetadataInfo( info);
-					 return openMonitorDescriptor;
-				 }
-				 else {
-					 ByteString bs = reply.getMessage();
-					 String val = bs.toStringUtf8();
-					 StringTokenizer st = new StringTokenizer( val, ";");
-					 String[] channelLabels = new String[channelCount];
-					 for (int i=0; i<channelCount && st.hasMoreTokens(); i++)
-						 channelLabels[i] = st.nextToken();
-					 openMonitorDescriptor.setChannelLabels( channelLabels);
-				 }
-			 }
-			 else {
-				 logger.info("receive timed out!");
-				 String info = messageSource.getMessage( 
-						 "action.openMonitor.metadataWorker.channelNames.receiveTimedout");
-				 openMonitorDescriptor.setMetadataInfo( info);
-				 return openMonitorDescriptor;
-			 }
-		 } 
-		 catch (InterruptedException e) {
-			 logger.error("receiveing failed! " + e.getMessage());
-			 String info = messageSource.getMessage( 
-					 "action.openMonitor.metadataWorker.channelNames.receivingFailedMsg");
-			 openMonitorDescriptor.setMetadataInfo( info);
-			 return openMonitorDescriptor;
-		 }
-
-		 publish( ++step);
-
-// calibration gain
-
-		logger.info("Sending calibration gain request...");
-
-		// create message
-		builder = MultiplexerMessage.newBuilder();
-		msgBody = ByteString.copyFromUtf8( CALIBRATION_GAIN);
-		builder.setType( SvarogConstants.MessageTypes.DICT_GET_REQUEST_MESSAGE).setMessage( msgBody);
-		msg = client.createMessage( builder);
-
-		// send message
-		try {
-			ChannelFuture sendingOperation = client.send( msg, SendingMethod.THROUGH_ONE);
-			sendingOperation.await(1, TimeUnit.SECONDS);
-			if (!sendingOperation.isSuccess()) {
-				logger.info("sending calibration gain failed!");
-				String info = messageSource.getMessage( 
-						"action.openMonitor.metadataWorker.calibrationGain.sendingFailedMsg");
-				openMonitorDescriptor.setMetadataInfo( info);
-				return openMonitorDescriptor;
-			}
-		}
-		catch (NoPeerForTypeException e) {
-			logger.error("sending failed! " + e.getMessage());
-			String info = messageSource.getMessage( 
-					"action.openMonitor.metadataWorker.calibrationGain.sendingFailedMsg");
-			openMonitorDescriptor.setMetadataInfo( info);
-			return openMonitorDescriptor;
-		}
-		catch (InterruptedException e) {
-			logger.error("sending failed! " + e.getMessage());
-			String info = messageSource.getMessage( 
-					"action.openMonitor.metadataWorker.calibrationGain.sendingFailedMsg");
-			openMonitorDescriptor.setMetadataInfo( info);
-			return openMonitorDescriptor;
-		}
-
-
-		logger.debug( "Receiving calibration gain...");
-
-		// receive message
-		msgData = null;
-		try {
-			msgData = client.receive( timeout);
-			if (msgData != null) {
-				MultiplexerMessage reply = msgData.getMessage();
-				if (reply.getType() != SvarogConstants.MessageTypes.DICT_GET_RESPONSE_MESSAGE) {
-					logger.error("received bad reply! " + reply.getMessage());
-					String info = messageSource.getMessage( 
-							"action.openMonitor.metadataWorker.calibrationGain.receivedBadReplyMsg");
-					openMonitorDescriptor.setMetadataInfo( info);
-					return openMonitorDescriptor;
-				}
-				else {
-					ByteString bs = reply.getMessage();
-					String val = bs.toStringUtf8();
-					StringTokenizer st = new StringTokenizer( val, " ");
-					float[] gain = new float[channelCount];
-					for (int i=0; i<channelCount && st.hasMoreTokens(); i++) {
-						String s = st.nextToken();
-						gain[i] = Float.parseFloat( s);
-					}
-					openMonitorDescriptor.setCalibrationGain( gain);
-				}
-			}
-			else {
-				logger.info("receive timed out!");
-				String info = messageSource.getMessage( 
-						"action.openMonitor.metadataWorker.calibrationGain.receiveTimedout");
-				openMonitorDescriptor.setMetadataInfo( info);
-				return openMonitorDescriptor;
-			}
-		} 
-		catch (InterruptedException e) {
-			logger.error("receiveing failed! " + e.getMessage());
-			String info = messageSource.getMessage( 
-					"action.openMonitor.metadataWorker.calibrationGain.receivingFailedMsg");
-			openMonitorDescriptor.setMetadataInfo( info);
-			return openMonitorDescriptor;
-		}
-
-		publish( ++step);
-
-// calibration offset
-
-		logger.info("Sending calibration offset request...");
-
-		// create message
-		builder = MultiplexerMessage.newBuilder();
-		msgBody = ByteString.copyFromUtf8( CALIBRATION_OFFSET);
-		builder.setType( SvarogConstants.MessageTypes.DICT_GET_REQUEST_MESSAGE).setMessage( msgBody);
-		msg = client.createMessage( builder);
-
-		// send message
-		try {
-			ChannelFuture sendingOperation = client.send( msg, SendingMethod.THROUGH_ONE);
-			sendingOperation.await(1, TimeUnit.SECONDS);
-			if (!sendingOperation.isSuccess()) {
-				logger.info("sending calibration offset failed!");
-				String info = messageSource.getMessage( 
-						"action.openMonitor.metadataWorker.calibrationOffset.sendingFailedMsg");
-				openMonitorDescriptor.setMetadataInfo( info);
-				return openMonitorDescriptor;
-			}
-		}
-		catch (NoPeerForTypeException e) {
-			logger.error("sending failed! " + e.getMessage());
-			String info = messageSource.getMessage( 
-					"action.openMonitor.metadataWorker.calibrationOffset.sendingFailedMsg");
-			openMonitorDescriptor.setMetadataInfo( info);
-			return openMonitorDescriptor;
-		}
-		catch (InterruptedException e) {
-			logger.error("sending failed! " + e.getMessage());
-			String info = messageSource.getMessage( 
-					"action.openMonitor.metadataWorker.calibrationOffset.sendingFailedMsg");
-			openMonitorDescriptor.setMetadataInfo( info);
-			return openMonitorDescriptor;
-		}
-
-
-		logger.debug( "Receiving calibration offset...");
-
-		// receive message
-		msgData = null;
-		try {
-			msgData = client.receive( timeout);
-			if (msgData != null) {
-				MultiplexerMessage reply = msgData.getMessage();
-				if (reply.getType() != SvarogConstants.MessageTypes.DICT_GET_RESPONSE_MESSAGE) {
-					logger.error("received bad reply! " + reply.getMessage());
-					String info = messageSource.getMessage( 
-							"action.openMonitor.metadataWorker.calibrationOffset.receivedBadReplyMsg");
-					openMonitorDescriptor.setMetadataInfo( info);
-					return openMonitorDescriptor;
-				}
-				else {
-					ByteString bs = reply.getMessage();
-					String val = bs.toStringUtf8();
-					StringTokenizer st = new StringTokenizer( val, " ");
-					float[] offset = new float[channelCount];
-					for (int i=0; i<channelCount && st.hasMoreTokens(); i++) {
-						String s = st.nextToken();
-						offset[i] = Float.parseFloat( s);
-					}
-					openMonitorDescriptor.setCalibrationOffset( offset);
-				}
-			}
-			else {
-				logger.info("receive timed out!");
-				String info = messageSource.getMessage( 
-						"action.openMonitor.metadataWorker.calibrationOffset.receiveTimedout");
-				openMonitorDescriptor.setMetadataInfo( info);
-				return openMonitorDescriptor;
-			}
-		} 
-		catch (InterruptedException e) {
-			logger.error("receiveing failed! " + e.getMessage());
-			String info = messageSource.getMessage( 
-					"action.openMonitor.metadataWorker.calibrationOffset.receivingFailedMsg");
-			openMonitorDescriptor.setMetadataInfo( info);
-			return openMonitorDescriptor;
-		}
-
-		publish( ++step);
-
-// minimum value
-
-		logger.info("Sending minimum value request...");
-
-		// create message
-		builder = MultiplexerMessage.newBuilder();
-		msgBody = ByteString.copyFromUtf8( MINIMUN_VALUE);
-		builder.setType( SvarogConstants.MessageTypes.DICT_GET_REQUEST_MESSAGE).setMessage( msgBody);
-		msg = client.createMessage( builder);
-
-		// send message
-		try {
-			ChannelFuture sendingOperation = client.send( msg, SendingMethod.THROUGH_ONE);
-			sendingOperation.await(1, TimeUnit.SECONDS);
-			if (!sendingOperation.isSuccess()) {
-				logger.info("sending minimum value failed!");
-				String info = messageSource.getMessage( 
-						"action.openMonitor.metadataWorker.minimumValue.sendingFailedMsg");
-				openMonitorDescriptor.setMetadataInfo( info);
-				return openMonitorDescriptor;
-			}
-		}
-		catch (NoPeerForTypeException e) {
-			logger.error("sending failed! " + e.getMessage());
-			String info = messageSource.getMessage( 
-					"action.openMonitor.metadataWorker.minimumValue.sendingFailedMsg");
-			openMonitorDescriptor.setMetadataInfo( info);
-			return openMonitorDescriptor;
-		}
-		catch (InterruptedException e) {
-			logger.error("sending failed! " + e.getMessage());
-			String info = messageSource.getMessage( 
-					"action.openMonitor.metadataWorker.minimumValue.sendingFailedMsg");
-			openMonitorDescriptor.setMetadataInfo( info);
-			return openMonitorDescriptor;
-		}
-
-
-		logger.debug( "Receiving minimum value...");
-
-		// receive message
-		msgData = null;
-		try {
-			msgData = client.receive( timeout);
-			if (msgData != null) {
-				MultiplexerMessage reply = msgData.getMessage();
-				if (reply.getType() != SvarogConstants.MessageTypes.DICT_GET_RESPONSE_MESSAGE) {
-					logger.error("received bad reply! " + reply.getMessage());
-					String info = messageSource.getMessage( 
-							"action.openMonitor.metadataWorker.minimumValue.receivedBadReplyMsg");
-					openMonitorDescriptor.setMetadataInfo( info);
-					return openMonitorDescriptor;
-				}
-				else {
-					ByteString bs = reply.getMessage();
-					String val = bs.toStringUtf8();
-					float minVal = Float.parseFloat( val);
-					openMonitorDescriptor.setMinimumValue( minVal);
-				}
-			}
-			else {
-				logger.info("receive timed out!");
-				String info = messageSource.getMessage( 
-						"action.openMonitor.metadataWorker.minimumValue.receiveTimedout");
-				openMonitorDescriptor.setMetadataInfo( info);
-				return openMonitorDescriptor;
-			}
-		} 
-		catch (InterruptedException e) {
-			logger.error("receiveing failed! " + e.getMessage());
-			String info = messageSource.getMessage( 
-					"action.openMonitor.metadataWorker.minimumValue.receivingFailedMsg");
-			openMonitorDescriptor.setMetadataInfo( info);
-			return openMonitorDescriptor;
-		}
-
-		publish( ++step);
-
-// maximum value
-
-		logger.info("Sending maximum value request...");
-
-		// create message
-		builder = MultiplexerMessage.newBuilder();
-		msgBody = ByteString.copyFromUtf8( MAXIMUN_VALUE);
-		builder.setType( SvarogConstants.MessageTypes.DICT_GET_REQUEST_MESSAGE).setMessage( msgBody);
-		msg = client.createMessage( builder);
-
-		// send message
-		try {
-			ChannelFuture sendingOperation = client.send( msg, SendingMethod.THROUGH_ONE);
-			sendingOperation.await(1, TimeUnit.SECONDS);
-			if (!sendingOperation.isSuccess()) {
-				logger.info("sending maximum value failed!");
-				String info = messageSource.getMessage( 
-						"action.openMonitor.metadataWorker.maximumValue.sendingFailedMsg");
-				openMonitorDescriptor.setMetadataInfo( info);
-				return openMonitorDescriptor;
-			}
-		}
-		catch (NoPeerForTypeException e) {
-			logger.error("sending failed! " + e.getMessage());
-			String info = messageSource.getMessage( 
-					"action.openMonitor.metadataWorker.maximumValue.sendingFailedMsg");
-			openMonitorDescriptor.setMetadataInfo( info);
-			return openMonitorDescriptor;
-		}
-		catch (InterruptedException e) {
-			logger.error("sending failed! " + e.getMessage());
-			String info = messageSource.getMessage( 
-					"action.openMonitor.metadataWorker.maximumValue.sendingFailedMsg");
-			openMonitorDescriptor.setMetadataInfo( info);
-			return openMonitorDescriptor;
-		}
-
-
-		logger.debug( "Receiving maximum value...");
-
-		// receive message
-		msgData = null;
-		try {
-			msgData = client.receive( timeout);
-			if (msgData != null) {
-				MultiplexerMessage reply = msgData.getMessage();
-				if (reply.getType() != SvarogConstants.MessageTypes.DICT_GET_RESPONSE_MESSAGE) {
-					logger.error("received bad reply! " + reply.getMessage());
-					String info = messageSource.getMessage( 
-							"action.openMonitor.metadataWorker.maximumValue.receivedBadReplyMsg");
-					openMonitorDescriptor.setMetadataInfo( info);
-					return openMonitorDescriptor;
-				}
-				else {
-					ByteString bs = reply.getMessage();
-					String val = bs.toStringUtf8();
-					float maxVal = Float.parseFloat( val);
-					openMonitorDescriptor.setMaximumValue( maxVal);
-				}
-			}
-			else {
-				logger.info("receive timed out!");
-				String info = messageSource.getMessage( 
-						"action.openMonitor.metadataWorker.maximumValue.receiveTimedout");
-				openMonitorDescriptor.setMetadataInfo( info);
-				return openMonitorDescriptor;
-			}
-		} 
-		catch (InterruptedException e) {
-			logger.error("receiveing failed! " + e.getMessage());
-			String info = messageSource.getMessage( 
-					"action.openMonitor.metadataWorker.maximumValue.receivingFailedMsg");
-			openMonitorDescriptor.setMetadataInfo( info);
-			return openMonitorDescriptor;
-		}
-
-		publish( ++step);
+		int ampNull = Integer.parseInt(value);
+		openMonitorDescriptor.setAmplifierNull(ampNull);
+		publish(++step);
 
 		String info = messageSource.getMessage( 
 				"action.openMonitor.metadataWorker.receivedMetadata");

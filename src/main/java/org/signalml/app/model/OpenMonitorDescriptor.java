@@ -32,6 +32,11 @@ public class OpenMonitorDescriptor {
 	private float[] calibrationOffset;
 	private Float minimumValue;
 	private Float maximumValue;
+	
+	/**
+	 * An integer value representing amplifier`s channel value for non-connected channel.
+	 */
+	private Integer amplifierNull;
 
 	private String fileName;
 	private RawSignalSampleType sampleType;
@@ -154,7 +159,18 @@ public class OpenMonitorDescriptor {
 	public void setMinimumValue(Float minimumValue) {
 		this.minimumValue = minimumValue;
 	}
+	
+	/**
+	 * Returns an integer value representing amplifier`s channel value for non-connected channel
+	 * @return an integer value representing amplifier`s channel value for non-connected channel
+	 */
+	public Integer getAmplifierNull() {
+		return this.amplifierNull;
+	}
 
+	public void setAmplifierNull(Integer ampNull) {
+		this.amplifierNull = ampNull;
+	}
 	public Float getMaximumValue() {
 		return maximumValue;
 	}
