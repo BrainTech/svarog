@@ -76,7 +76,7 @@ public class MonitorWorker extends SwingWorker< Void, Object> {
 	@Override
 	protected Void doInBackground() throws Exception {
 
-		logger.debug("Worker: start...");
+		logger.info("Worker: start...");
 
 
 		MultiplexerMessage.Builder builder = MultiplexerMessage.newBuilder();
@@ -102,15 +102,13 @@ public class MonitorWorker extends SwingWorker< Void, Object> {
 			return null;
 		}
 
-		logger.debug("Worker: sent streaming request!");
-
+		logger.info("Worker: sent streaming request!");
 		int channelCount = monitorDescriptor.getChannelCount();
 		int plotCount = monitorDescriptor.getSelectedChannelList().length;
 		int[] selectedChannels = monitorDescriptor.getSelectedChannelsIndecies();
 		double[] gain = monitorDescriptor.getGain();
 		double[] offset = monitorDescriptor.getOffset();
-
-//		PrintWriter out = new PrintWriter(new File("recv_data.tsv"));
+		logger.info("Worker: got what wanted!");
 
 		//DEBUG
 		SvarogProtocol.Tag xxx_tagMsg = null;
@@ -126,12 +124,12 @@ public class MonitorWorker extends SwingWorker< Void, Object> {
 
 		List<Sample> samples;
 		double[] chunk = new double[channelCount];					
-		double[] condChunk = new double[plotCount];
 		TagStylesGenerator stylesGenerator = new TagStylesGenerator();
 		int sampleType = 0;
 		Tag tag;
 		double tagLen;
 		SvarogProtocol.VariableVector tagDesc;
+		logger.info("Start receiving ...");
 		while (!isCancelled()) {
 
 			logger.debug("Worker: receiving!");
@@ -180,6 +178,7 @@ public class MonitorWorker extends SwingWorker< Void, Object> {
 						sampleQueue.offer(chunk.clone());
 
 					// Transform chunk using gain and offset
+					double[] condChunk = new double[plotCount];
 					for (int i = 0; i < plotCount; i++) {
 						int n = selectedChannels[i];
 						condChunk[i] = gain[n] * chunk[n] + offset[n];

@@ -103,6 +103,14 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 			result[i] = fg[i];
 		return result;
 	}
+	
+	/**
+	 * Returns an integer value representing amplifier`s channel value for non-connected channel
+	 * @return an integer value representing amplifier`s channel value for non-connected channel
+	 */
+	public int getAmplifierNull() {
+		return monitorOptions.getAmplifierNull();
+	}
 
 	@Override
 	public void setDocumentView(DocumentView documentView) {
@@ -142,7 +150,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 			recorderWorker = new SignalRecorderWorker(sampleQueue, recorderOutputFile, monitorOptions, 50L);
 			recorderWorker.execute();
 		}
-
+		logger.info("Start initializing monitor data.");
 		StyledMonitorTagSet tagSet = new StyledMonitorTagSet((float) 20.0, 5);//TODO - pobierac rozmiar strony w init		
 		TagDocument tagDoc = new TagDocument(tagSet);
 		tagDoc.setParent(this);
@@ -150,6 +158,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		if (sampleQueue != null)
 			monitorWorker.setSampleQueue(sampleQueue);
 		monitorWorker.execute();
+		logger.info("Monitor executed.");
 
 	}
 
