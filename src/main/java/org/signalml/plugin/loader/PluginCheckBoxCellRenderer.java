@@ -15,10 +15,10 @@ import javax.swing.table.TableCellRenderer;
 /**
  * This class represents a renderer for cells containing 
  * check-boxes in the {@link PluginTableModel table} of
- * plug-in states.
- * If plug-in has some missing dependencies or loading
- * of this plug-in failed the cell has red background 
- * and the tooltip is set. 
+ * plug-in {@link PluginState states}.
+ * <p>
+ * If plug-in has some missing {@link PluginDependency dependencies} or loading
+ * of this plug-in failed the cell has red background and the tool-tip is set. 
  * 
  * @author Marcin Szumski
  */

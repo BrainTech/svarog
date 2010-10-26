@@ -10,7 +10,8 @@ import org.signalml.plugin.export.view.DocumentView;
 /**
  * Implementation of {@link SvarogDocumentViewEvent}.
  * Contains the {@link Document} and the old value of the
- * {@link DocumentView view} for it.  
+ * {@link DocumentView view} for it (the new value can be obtained from
+ * document).  
  * @author Marcin Szumski
  */
 public class DocumentViewEventImpl extends DocumentEventImpl implements SvarogDocumentViewEvent {

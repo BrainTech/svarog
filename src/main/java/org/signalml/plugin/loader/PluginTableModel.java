@@ -8,11 +8,17 @@ import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 
 /**
- * The model for the table containing the information
- * which plug-ins are active/should be active at the next
- * start of the application.
- * In each row are 3 cells: name, version and the state
+ * The model for the table containing the information which plug-ins are
+ * active/should be active at the next start of the application.
+ * Each row stands for one plug-in and has 3 cells: name, version and the state
  * (active/inactive) of the plug-in.
+ * <p>
+ * If the plug-in has no missing {@link PluginDependency dependencies} and
+ * there were no error while loading it, the third cell (in the third column)
+ * is editable and allows to select if the plug-in should be active at
+ * the next start of the application.
+ * Otherwise this cell can not be edited and the whole row has a red background.
+ * Also the tool-tip with the description of the problem is set.
  * 
  * @author Marcin Szumski
  */

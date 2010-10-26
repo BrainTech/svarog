@@ -9,10 +9,11 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.TitledBorder;
 
 /**
- * This panel contains a table with information
- * which plug-ins are active.
- * Allows to select which plug-ins should be active
- * at next start of application.
+ * This panel contains a table with information which plug-ins are active.
+ * Allows to select which plug-ins should be active at the next start of
+ * the application.
+ * <p>
+ * For a description of the table see {@link PluginTableModel}.
  * 
  * @author Marcin Szumski
  */

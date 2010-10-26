@@ -10,6 +10,8 @@ import org.signalml.plugin.export.view.DocumentView;
  * Interface for an event associated with a change of a {@link DocumentView view}
  * for a {@link Document}.
  * Allows to return a document and the old view (the view before the change).
+ * The new value of a view can be {@link Document#getDocumentView() obtained}
+ * from document.
  * @author Marcin Szumski
  */
 public interface SvarogDocumentViewEvent extends SvarogDocumentEvent {

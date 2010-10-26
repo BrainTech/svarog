@@ -520,6 +520,7 @@
 	<entry key="menu.tools">Tools</entry>
 	<entry key="menu.tools.iterate">Iterate</entry>
 	<entry key="menu.view">View</entry>
+	<entry key="menu.monitor">Monitor</entry>
 
 	<entry key="seriousWarning.title">WARNING! Are you sure?</entry>			
 	<entry key="seriousWarning.warning">WARNING! You are about to perform an irreversible operation.</entry>			

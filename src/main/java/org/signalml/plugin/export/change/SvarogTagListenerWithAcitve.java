@@ -9,6 +9,8 @@ import org.signalml.plugin.export.signal.ExportedTag;
 /**
  * Interface for a listener on {@link ExportedTag tag} changes (addition,
  * removal, change) including changes of an active tag.
+ * 
+ * @see SvarogAccessChangeSupport
  * @author Marcin Szumski
  */
 public interface SvarogTagListenerWithAcitve extends SvarogTagListener {

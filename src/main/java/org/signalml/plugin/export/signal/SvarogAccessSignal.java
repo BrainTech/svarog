@@ -17,14 +17,33 @@ import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.SignalMLException;
 
 /**
- * This interface allows to:
+ * This interface allows to access a part of Svarog logic, namely:
  * <ul>
- * <li>return processed and unprocessed signal samples</li>
- * <li>return {@link Tag tags}</li>
- * <li>return {@link Document documents}</li>
- * <li>return active elements</li>
- * <li>open documents</li>
- * <li>register {@link SignalMLCodec codecs}</li>
+ * <li>return signal samples:
+ * <ul>
+ * <li>either for the active signal or for the signal from the given document,</li>
+ * <li>either from a {@link ChannelSamples single channel} or
+ * from {@link SignalSamples all channels} in the signal,</li>
+ * <li>either processed (after the montage and filtering) or raw (unprocessed).</li>
+ * </ul></li>
+ * <li>return {@link Tag tags}:
+ * <ul>
+ * <li>from active or specified tag document</li>
+ * <li>from all tag documents dependent from the active or selected signal,</li>
+ * <li>from all tag documents</li>
+ * <li>the active tag</li>
+ * </ul></li>
+ * <li>return active {@link ExportedSignalDocument signal} and
+ * {@link ExportedTagDocument tag} documents or just active {@link Document}</li>
+ * <li>open:
+ * <ul>
+ * <li>a book file and add it as a tab</li>
+ * <li>a signal file and add it as a tab:
+ * <ul><li>using codec</li>
+ * <li>as raw signal</li></ul>
+ * <li>a file with {@link SignalMLCodec codec} and register a new codec,</li>
+ * <li>a file with tags and add it to the active or specified signal.</li>
+ * </ul></li>
  * </ul>
  * 
  * @author Marcin Szumski

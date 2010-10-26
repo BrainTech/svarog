@@ -14,11 +14,9 @@ import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
- * This dialog allows to manage plug-in options:
- * <ul>
- * <li>add and remove folders in which plug-ins are stored,</li>
- * <li>select which plug-ins should be active.</li>
- * </ul>
+ * This {@link AbstractDialog dialog} allows to manage plug-in options.
+ * Contains one {@link PluginPanel panel} in border layout.
+ * @see PluginPanel the funtion of this dialog
  * @author Marcin Szumski
  */
 public class PluginDialog extends AbstractDialog {

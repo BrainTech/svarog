@@ -3,9 +3,22 @@
  */
 package org.signalml.plugin.export;
 
+import org.signalml.plugin.export.signal.Document;
+import org.signalml.plugin.export.signal.ExportedTag;
+import org.signalml.plugin.export.signal.SvarogAccessSignal;
+import org.signalml.plugin.export.view.SvarogAccessGUI;
+
 /**
- * Thrown if function should return an active object, but there
- * is none.
+ * Thrown if a function should return an active object, but there
+ * is none, for example:
+ * <ul>
+ * <li>if there is no active {@link ExportedTag tag} for function
+ * {@link SvarogAccessSignal#getActiveTag() getActiveTag()},</li>
+ * <li>if there is no active {@link Document} for function
+ * {@link SvarogAccessSignal#getActiveDocument()},</li>
+ * <li>if there is no active tab for function
+ * {@link SvarogAccessGUI#getSelectedMainTab()}.</li>
+ * </ul>
  * 
  * @author Marcin Szumski
  */

@@ -7,17 +7,17 @@ import java.util.ArrayList;
 
 /**
  * This class describes the state of the plug-in.
- * In the state are included:
+ * In this description are included:
  * <ul>
  * <li>the name of the plug-in,</li>
  * <li>the version of the plug-in,</li>
  * <li>boolean if the plug-in is active,</li>
  * <li>boolean if loading the plug-in failed,</li>
- * <li>a list of dependencies that can't be loaded
- * (either are missing, inactive or their loading
- * failed).</li> 
+ * <li>a list of {@link PluginDependency dependencies} that can't be loaded
+ * (either are missing, inactive or their loading failed).</li>
  * </ul>
- * 
+ * Allows to {@link #missingDependenciesToString() create} a string that
+ * describes the missing dependencies.
  * @author Marcin Szumski
  */
 public class PluginState {
@@ -30,7 +30,7 @@ public class PluginState {
 	 */
 	protected boolean active = true;
 	/**
-	 * the version of the plug-in
+	 * the version of the plug-in,
 	 */
 	protected int[] version;
 	/**

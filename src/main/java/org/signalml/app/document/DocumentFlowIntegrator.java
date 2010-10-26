@@ -51,10 +51,28 @@ import org.signalml.domain.tag.TagSignalIdentification;
 import org.signalml.exception.MissingCodecException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Document;
+import org.signalml.plugin.export.signal.Tag;
 import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
 
-/** DocumentFlowIntegrator
+/**
+ * Integrates the flow of {@link Document documents}.
+ * Allows to:
+ * <ul>
+ * <li>open the document or all documents based on a
+ * {@link OpenDocumentDescriptor descriptor},</li>
+ * <li>open the document based on a {@link MRUDEntry},</li>
+ * <li>close the document or all documents,</li>
+ * <li>save the document or all documents,</li>
+ * <li>check if all documents are saved,</li>
+ * </ul>
+ * for the following types of documents:
+ * <ul>
+ * <li> {@link SignalDocument}</li>
+ * <li> {@link MonitorSignalDocument}</li>
+ * <li> {@link TagDocument}</li>
+ * <li> {@link BookDocument}</li>
+ * </ul>
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -62,22 +80,78 @@ public class DocumentFlowIntegrator {
 
 	protected static final Logger logger = Logger.getLogger(DocumentFlowIntegrator.class);
 
+	/**
+	 * the {@link MessageSourceAccessor source} of messages (labels)
+	 */
 	private MessageSourceAccessor messageSource;
 
+	/**
+	 * the {@link DocumentManager manager} of {@link Document documents} in Svarog
+	 */
 	private DocumentManager documentManager;
+	
+	/**
+	 * the {@link MRUDRegistry cache} of {@link MRUDEntry file descriptions}
+	 */
 	private MRUDRegistry mrudRegistry;
+	
+	/**
+	 * the manager of {@link SignalMLCodec codecs}
+	 */
 	private SignalMLCodecManager codecManager;
+	
+	/**
+	 * the parent pane to all dialogs shown by this integrator 
+	 */
 	private Component optionPaneParent = null;
+	
+	/**
+	 * the {@link ViewerFileChooser chooser} for files in Svarog
+	 */
 	private ViewerFileChooser fileChooser;
 
+	/**
+	 * the {@link SignalParametersDialog dialog} to get parameters of the
+	 * signal
+	 */
 	private SignalParametersDialog signalParametersDialog;
 
+	/**
+	 * the {@link ActionFocusManager manager} of active elements in Svarog
+	 */
 	private ActionFocusManager actionFocusManager;
+	
+	/**
+	 * the {@link ApplicationConfiguration configuration} of Svarog
+	 */
 	private ApplicationConfiguration applicationConfig;
+	
+	/**
+	 * the {@link MontagePresetManager manager} of montage presets
+	 */
 	private MontagePresetManager montagePresetManager;
 
+	/**
+	 * the {@link PleaseWaitDialog dialog} that tells the user to wait
+	 */
 	private PleaseWaitDialog pleaseWaitDialog;
 
+	/**
+	 * Opens a {@link Document document} described in a given 
+	 * {@link OpenDocumentDescriptor descriptor} and returns it.
+	 * Depending on a {@link ManagedDocumentType type} of a document
+	 * {@link OpenDocumentDescriptor#getType() obtained} from the descriptor
+	 * calls the function that opens that type.
+	 * @param descriptor the descriptor of a document to open
+	 * @return the opened document
+	 * @throws IOException if the file doesn't exist or is unreadable or I/O
+	 * error occurs while opening RAW signal
+	 * @throws SignalMLException if {@link SaveDocumentWorker save worker}
+	 * failed to save the document or if {@link SignalChecksumWorker checksum
+	 * worker} was interrupted or failed to calculate the checksum
+	 * @throws ConnectException TODO when {@link MonitorSignalDocument}
+	 * throws it and above exceptions
+	 */
 	public Document openDocument(OpenDocumentDescriptor descriptor) throws IOException, SignalMLException, ConnectException {
 		ManagedDocumentType type = descriptor.getType();
 		if (type.equals(ManagedDocumentType.SIGNAL)) {
@@ -94,6 +168,14 @@ public class DocumentFlowIntegrator {
 		}
 	}
 
+	/**
+	 * Tries to {@link #openDocument(OpenDocumentDescriptor) open} a
+	 * {@link Document document}. If this operation fails the
+	 * {@link ErrorsDialog dialog} with the description of an error is shown.
+	 * @param descriptor the descriptor of a document to open
+	 * @param window the window that should be parent to errors dialog
+	 * @return true if the operation is successful, false otherwise
+	 */
 	public boolean maybeOpenDocument(OpenDocumentDescriptor descriptor, Window window) {
 		try {
 			this.openDocument(descriptor);
@@ -113,10 +195,47 @@ public class DocumentFlowIntegrator {
 		}
 	}
 
+	/**
+	 * Tries to {@link #openDocument(OpenDocumentDescriptor) open} a
+	 * {@link Document document}. If this operation fails the
+	 * {@link ErrorsDialog dialog} with the description of an error is shown.
+	 * @param descriptor the descriptor of a document to open
+	 * @return true if the operation is successful, false otherwise
+	 */
 	public boolean maybeOpenDocument(OpenDocumentDescriptor descriptor) {
 		return this.maybeOpenDocument(descriptor, null);
 	}
 
+	/**
+	 * Tries to close a {@link Document document}.
+	 * <ul>
+	 * <li>checks if the document is saved and if not asks the user what
+	 * to do,</li>
+	 * <li>Checks if the documents dependent on a given document are closed and
+	 * if not:
+	 * <ul>
+	 * <li>if {@code force} is set - closes them</li>
+	 * <li>if {@code force} is not set - asks user what to do:
+	 * <ul>
+	 * <li>if user answers to proceed - closes the documents</li>
+	 * <li>if user answers to cancel - returns false</li>
+	 * </ul></li></ul>
+	 * <li>closes the document</li>
+	 * </ul>
+	 * @param document the document to close
+	 * @param saveAsOnly if the document should be saved in a new file
+	 * (even if it has a backing file)
+	 * @param force {@code true} if the dependent documents should be closed
+	 * without asking the user, {@code false} otherwise
+	 * @return {@code true} if operation is successful, {@code false} if
+	 * some document was not saved or some document was not closed
+	 * @throws IOException TODO never thrown (??)
+	 * @throws SignalMLException if {@link SaveDocumentWorker save worker}
+	 * failed to save the document or <br>
+	 * if {@link SignalChecksumWorker checksum worker} was interrupted or
+	 * failed to calculate the checksum or<br>
+	 * TODO when {@link MonitorSignalDocument} throws it
+	 */
 	public boolean closeDocument(Document document, boolean saveAsOnly, boolean force) throws IOException, SignalMLException {
 
 		synchronized (documentManager) {
@@ -146,6 +265,19 @@ public class DocumentFlowIntegrator {
 	}
 
 
+	/**
+	 * Checks if all {@link Document documents} stored in {@link DocumentManager
+	 * document manager} are saved and asks the user what to do if they are not.
+	 * @return {@code true} if all files are saved (or were saved in this
+	 * function) or user answered not to save it,<br>
+	 * {@code false} if user aborted the dialog
+	 * @throws IOException TODO never thrown (???)
+	 * @throws SignalMLException if {@link SaveDocumentWorker save worker}
+	 * failed to save the document or <br>
+	 * if {@link SignalChecksumWorker checksum worker} was interrupted or
+	 * failed to calculate the checksum or<br>
+	 * TODO when {@link MonitorSignalDocument} throws it
+	 */
 	public boolean checkCloseAllDocuments() throws IOException, SignalMLException {
 
 		// Note that this method doesn't check dependencies - either way all documents are closed
@@ -180,6 +312,17 @@ public class DocumentFlowIntegrator {
 
 	}
 
+	/**
+	 * {@link #closeDocument(Document, boolean, boolean) Closes} all
+	 * {@link Document documents} stored in {@link DocumentManager
+	 * document manager}.
+	 * @throws IOException TODO never thrown (???)
+	 * @throws SignalMLException if {@link SaveDocumentWorker save worker}
+	 * failed to save the document or <br>
+	 * if {@link SignalChecksumWorker checksum worker} was interrupted or
+	 * failed to calculate the checksum or<br>
+	 * TODO when {@link MonitorSignalDocument} throws it
+	 */
 	public void closeAllDocuments() throws IOException, SignalMLException {
 
 		// Note that this method doesn't check dependencies - either way all documents are closed
@@ -212,6 +355,27 @@ public class DocumentFlowIntegrator {
 
 	}
 
+	/**
+	 * Tries to save a given {@link Document document} and returns if the
+	 * operation was successful.
+	 * If the document is not savable (is not a {@link MutableDocument})
+	 * always true is returned.
+	 * <p>
+	 * If the document should {@link FileBackedDocument have a backing file}
+	 * but there is no or if {@code saveAsOnly} is set, the user is asked
+	 * to select the file.
+	 * <p>
+	 * Executes {@link MutableDocument#saveDocument() saving} operation
+	 * in the {@link SaveDocumentWorker worker} and shows the
+	 * {@link PleaseWaitDialog wait dialog} until the operation is complete.
+	 * @param document the document to be saved
+	 * @param saveAsOnly tells if the document should be saved in a new file
+	 * @return true if the operation was successful, false otherwise
+	 * @throws IOException TODO never thrown (???)
+	 * @throws SignalMLException if save worker failed to save the document or
+	 * if {@link SignalChecksumWorker checksum worker} was interrupted or 
+	 * failed to calculate the checksum
+	 */
 	public boolean saveDocument(Document document, boolean saveAsOnly) throws IOException, SignalMLException {
 
 		if (!(document instanceof MutableDocument)) {
@@ -323,6 +487,16 @@ public class DocumentFlowIntegrator {
 
 	}
 
+	/**
+	 * {@link #saveDocument(Document, boolean) Saves} all documents stored
+	 * in the {@link DocumentManager document manager}.
+	 * @return {@code true} if the operation is successful,
+	 * {@code false} if saving any of the files failed
+	 * @throws IOException TODO never thrown (???)
+	 * @throws SignalMLException if save worker failed to save the document or
+	 * if {@link SignalChecksumWorker checksum worker} was interrupted or 
+	 * failed to calculate the checksum
+	 */
 	public boolean saveAllDocuments() throws IOException, SignalMLException {
 
 		boolean allOk = true;
@@ -347,6 +521,27 @@ public class DocumentFlowIntegrator {
 
 	}
 		
+	/**
+	 * Creates a {@link OpenDocumentDescriptor descriptor} of a file based
+	 * on a given {@link MRUDEntry} and uses this descriptor to
+	 * {@link #openDocument(OpenDocumentDescriptor) open} a file.
+	 * @param mrud the entry describing the file to open
+	 * @return the opened {@link Document document} or {@code null} if
+	 * <ul>
+	 * <li>it is a {@link SignalDocument signal document} but the entry is of
+	 * unknown type,</li>
+	 * <li>it is a {@link TagDocument tag document} and there is no active
+	 * signal</li>
+	 * </ul> 
+	 * @throws IOException if the file doesn't exist or is unreadable
+	 * or I/O error occurs while opening RAW signal
+	 * @throws SignalMLException if there is no {@link SignalMLCodec codec}
+	 * of a given UID or if {@link SaveDocumentWorker save worker}
+	 * failed to save the document or if {@link SignalChecksumWorker checksum
+	 * worker} was interrupted or failed to calculate the checksum
+	 * @throws ConnectException TODO when {@link MonitorSignalDocument}
+	 * throws it and above exceptions
+	 */
 	public Document openMRUDEntry(MRUDEntry mrud) throws IOException, SignalMLException, ConnectException {
 
 		ManagedDocumentType type = mrud.getDocumentType();
@@ -406,6 +601,48 @@ public class DocumentFlowIntegrator {
 
 	}
 
+	/**
+	 * Opens a {@link SignalDocument signal document} based on a
+	 * {@link OpenSignalMethod method} from the given
+	 * {@link OpenDocumentDescriptor descriptor}.
+	 * <ul>
+	 * <li>if the method is {@code USE_SIGNALML}:
+	 * <ul>
+	 * <li>{@link OpenSignalDescriptor#getCodec() gets} the
+	 * {@link SignalMLCodec codec}</li>
+	 * <li>loads a {@link SignalMLDocument document} in a
+	 * {@link OpenSignalMLDocumentWorker worker}</li>
+	 * <li>sets the size of a block and a page from the descriptor</li>
+	 * <li>fills missing parameters of the signal</li>
+	 * </ul>
+	 * </li>
+	 * <li>if the method is {@code RAW}:
+	 * <ul>
+	 * <li>{@link OpenSignalDescriptor#getRawSignalDescriptor() gets} the
+	 * {@link RawSignalDescriptor parameters} of the raw signal,</li>
+	 * <li>loads the document in this thread,</li>
+	 * </ul></li>
+	 * <li>sets to calculate the {@link SignalChecksum checksum} in the
+	 * background,</li>
+	 * <li>creates a {@link MRUDEntry} and adds it to the
+	 * {@link MRUDRegistry cache},</li>
+	 * <li>adds a document to the {@link DocumentManager},</li>
+	 * <li>if the document {@link OpenDocumentDescriptor#isMakeActive() should}
+	 * be set as active does it.</li>
+	 * </ul>
+	 * @param descriptor the descriptor of the signal to open
+	 * @return the created document with the signal (either
+	 * {@link SignalMLDocument} or {@link RawSignalDocument})
+	 * @throws IOException if the file doesn't exist or is unreadable
+	 * or I/O error occurs while opening RAW signal
+	 * @throws SignalMLException if the method is unsupported or if
+	 * {@link SaveDocumentWorker save worker}
+	 * failed to save the document or if {@link SignalChecksumWorker checksum
+	 * worker} was interrupted or failed to calculate the checksum
+	 * @throws NullPointerException if there is no method or
+	 * if the method is {@code USE_SIGNALML} if there is no codec or,
+	 * if the method is {@code RAW} if there is no descriptor of a raw signal
+	 */
 	private SignalDocument openSignalDocument(final OpenDocumentDescriptor descriptor) throws IOException, SignalMLException {
 
 		final File file = descriptor.getFile();
@@ -576,6 +813,30 @@ public class DocumentFlowIntegrator {
 
 	}
 
+	/**
+	 * Opens a {@link BookDocument book document} based on a given
+	 * {@link OpenDocumentDescriptor descriptor}:
+	 * <ul>
+	 * <li>checks if the file is not already open,</li>
+	 * <li>opens a document in the {@link OpenBookDocumentWorker worker},</li>
+	 * <li>creates a {@link MRUDEntry} and adds it to the
+	 * {@link MRUDRegistry cache},</li>
+	 * <li>adds a document to the {@link DocumentManager},</li>
+	 * <li>if the document {@link OpenDocumentDescriptor#isMakeActive() should}
+	 * be set as active does it.</li>
+	 * </ul>
+	 * @param descriptor the descriptor of the document to open
+	 * @return created book document or {@code null} if the opening failed:
+	 * <ul>
+	 * <li>file is already open and the user doesn't want to replace it or
+	 * closing the old file fails</li>
+	 * <li>error while opening the file in the worker</li>
+	 * </ul>
+	 * @throws IOException if the file doesn't exist or is unreadable
+	 * @throws SignalMLException if save worker failed to save the document or
+	 * if {@link SignalChecksumWorker checksum worker} was interrupted or 
+	 * failed to calculate the checksum
+	 */
 	private BookDocument openBookDocument(final OpenDocumentDescriptor descriptor) throws IOException, SignalMLException {
 
 		synchronized (documentManager) {
@@ -634,6 +895,32 @@ public class DocumentFlowIntegrator {
 
 	}
 
+	/**
+	 * Opens a {@link TagDocument tag document} based on a given
+	 * {@link OpenDocumentDescriptor descriptor}:
+	 * <ul>
+	 * <li>checks if the file is not already open,</li>
+	 * <li>if there is no document in the descriptor reads it in the
+	 * {@link OpenBookDocumentWorker worker},</li>
+	 * <li>{@link #getSignalCheckSum(SignalDocument, String) calculates} the
+	 * {@link SignalChecksum checksum} of the parent signal</li>
+	 * <li>checks if a {@link Montage montage} of the tag document is compatible
+	 * with the montage of the parent signal. If it is not, asks the user what
+	 * to do,</li>
+	 * <li>creates a {@link MRUDEntry} and adds it to the
+	 * {@link MRUDRegistry cache},</li>
+	 * <li>adds a document to the {@link DocumentManager},</li>
+	 * <li>if the document {@link OpenDocumentDescriptor#isMakeActive() should}
+	 * be set as active does it.</li>
+	 * </ul>
+	 * @param descriptor the descriptor of the document to open
+	 * @return the created tag document or {@code null} if the operation was
+	 * not successful
+	 * @throws IOException if the file doesn't exist or is unreadable
+	 * @throws SignalMLException if {@link SaveDocumentWorker save worker}
+	 * failed to save the document or if {@link SignalChecksumWorker checksum
+	 * worker} was interrupted or failed to calculate the checksum
+	 */
 	private TagDocument openTagDocument(OpenDocumentDescriptor descriptor) throws IOException, SignalMLException {
 
 		synchronized (documentManager) {
@@ -752,6 +1039,22 @@ public class DocumentFlowIntegrator {
 		}
 	}
 
+	/**
+	 * Closes the given {@link Document document}. Calls methods specific
+	 * for different {@link ManagedDocumentType document types}:
+	 * <ul>
+	 * <li>for a {@link SignalDocument} -
+	 * {@link #closeSignalDocument(SignalDocument)}</li>
+	 * <li>for a {@link BookDocument} -
+	 * {@link #closeBookDocument(BookDocument)}</li>
+	 * <li>for a {@link TagDocument} -
+	 * {@link #closeTagDocument(TagDocument)}</li>
+	 * </ul>
+	 * @param document the document to be closed
+	 * @throws IOException TODO never thrown
+	 * @throws SignalMLException TODO when {@link MonitorSignalDocument} throws
+	 * it
+	 */
 	private void closeDocumentInternal(Document document) throws IOException, SignalMLException {
 
 		if (document instanceof SignalDocument) {
@@ -769,6 +1072,19 @@ public class DocumentFlowIntegrator {
 
 	}
 
+	/**
+	 * Checks if the file is not already open.
+	 * If it is asks user what to do.
+	 * @param file the file to be checked
+	 * @return {@code true} if the file is not open yet or <br>
+	 * if it is open, but the users tells to replace it and closing old file is
+	 * successful<br>
+	 * {@code false} otherwise
+	 * @throws IOException if the file doesn't exist or is unreadable
+	 * @throws SignalMLException if {@link SaveDocumentWorker save worker}
+	 * failed to save the document or if {@link SignalChecksumWorker checksum
+	 * worker} was interrupted or failed to calculate the checksum
+	 */
 	private boolean checkOpenedFile(File file) throws IOException, SignalMLException {
 
 		if (file == null) {
@@ -801,12 +1117,31 @@ public class DocumentFlowIntegrator {
 
 	}
 
+	
+	/**
+	 * Performs operations necessary when a {@link Document document} is added:
+	 * <ul>
+	 * <li>adds the document to {@link #documentManager}.</li>
+	 * </ul>
+	 * @param document the added document
+	 */
 	private void onCommonDocumentAdded(Document document) {
 
 		documentManager.addDocument(document);
 
 	}
 
+	/**
+	 * Performs operations necessary when a {@link SignalDocument signal
+	 * document} is added:
+	 * <ul>
+	 * <li>adds a default {@link Montage montage} to this document if it exists
+	 * and {@link ApplicationConfiguration#isAutoLoadDefaultMontage() should be
+	 * added}</li>
+	 * </ul>
+	 * @param document the added document
+	 * @param makeActive TODO not used
+	 */
 	private void onSignalDocumentAdded(SignalDocument document, boolean makeActive) {
 
 		if (applicationConfig.isAutoLoadDefaultMontage()) {
@@ -822,11 +1157,28 @@ public class DocumentFlowIntegrator {
 
 	}
 
+	/**
+	 * Performs operations necessary when a {@link BookDocument book document}
+	 * is added - does nothing.
+	 * @param document the added document
+	 * @param makeActive TODO not used
+	 */
 	private void onBookDocumentAdded(BookDocument document, boolean makeActive) {
 
 
 	}
 
+	/**
+	 * Performs operations necessary when a {@link TagDocument tag document}
+	 * is added:
+	 * <ul>
+	 * <li>if {@code makeActive} is {@code true} sets the tag document as an
+	 * active tag document in the {@link SignalView signal view}</li>
+	 * </ul>
+	 * @param document the added tag document
+	 * @param makeActive tells if the tag document should be set as an active
+	 * tag document
+	 */
 	private void onTagDocumentAdded(TagDocument document, boolean makeActive) {
 
 		if (makeActive) {
@@ -839,6 +1191,27 @@ public class DocumentFlowIntegrator {
 
 	}
 
+	/**
+	 * Copies the information about the {@link SignalDocument signal}
+	 * {@link TagDocument#getParent() parent} to this {@link TagDocument tag
+	 * document} to the {@link StyledTagSet set} of {@link Tag tags}
+	 * for this document.
+	 * These information include:
+	 * <ul>
+	 * <li>the name of the format in which the signal was stored</li>
+	 * <li>the path to the file in which the signal is stored</li>
+	 * <li>the crc32 {@link SignalChecksum checksum} of the signal</li>
+	 * <li>the default {@link Montage} for the signal if it is compatible,
+	 * if it is not asks user what to do</li>
+	 * </ul>
+	 * @param tagDocument the tag document that is saved
+	 * @return if the operation was successful:<br>
+	 * {@code false} if the montage in the set is not compatible with
+	 * the default montage for the signal and the user cancels the dialog,
+	 * {@code true} otherwise
+	 * @throws SignalMLException see
+	 * {@link #getSignalCheckSum(SignalDocument, String)}
+	 */
 	private boolean onSaveTagDocument(TagDocument tagDocument) throws SignalMLException {
 
 		SignalDocument parent = tagDocument.getParent();
@@ -910,6 +1283,17 @@ public class DocumentFlowIntegrator {
 
 	}
 
+	/**
+	 * Calculates the 'crc32' {@link SignalChecksum checksum} of the given
+	 * signal.
+	 * Calculation is done by the {@link SignalChecksumWorker worker} and
+	 * during the calculation {@link PleaseWaitDialog wait dialog} is shown.
+	 * @param parent the signal of which the checksum is to be calculated
+	 * @param string TODO never used
+	 * @return the calculated checksum
+	 * @throws SignalMLException if the calculation was interrupted or
+	 * {@link SignalChecksumWorker worker} failed to calculate the checksum 
+	 */
 	private SignalChecksum getSignalCheckSum(SignalDocument parent, String string) throws SignalMLException {
 
 		SignalChecksumWorker checksummer = null;
@@ -969,6 +1353,11 @@ public class DocumentFlowIntegrator {
 
 	}
 
+	/**
+	 * Closes the {@link SignalDocument signal document}. Removes it from the
+	 * {@link #documentManager document manager}.
+	 * @param document the document to be closed
+	 */
 	private void closeSignalDocument(SignalDocument document) {
 
 		onCommonDocumentRemoved(document);
@@ -976,6 +1365,11 @@ public class DocumentFlowIntegrator {
 
 	}
 
+	/**
+	 * Closes the {@link BookDocument book document}. Removes it from the
+	 * {@link #documentManager document manager}.
+	 * @param document the document to be closed
+	 */
 	private void closeBookDocument(BookDocument document) {
 
 		onCommonDocumentRemoved(document);
@@ -983,6 +1377,12 @@ public class DocumentFlowIntegrator {
 
 	}
 
+	/**
+	 * Closes the {@link TagDocument tag document}. Removes it from the
+	 * {@link #documentManager document manager} and sets its parent to
+	 * {@code null}.
+	 * @param document the document to be closed
+	 */
 	private void closeTagDocument(TagDocument document) {
 
 		onCommonDocumentRemoved(document);
@@ -990,20 +1390,48 @@ public class DocumentFlowIntegrator {
 
 	}
 
+	/**
+	 * Performs operations necessary when a {@link Document document} is
+	 * removed:
+	 * <ul>
+	 * <li>removes a given {@link Document document} from a
+	 * {@link #documentManager document manager}</li>
+	 * </ul>
+	 * @param document the document to be removed
+	 */
 	private void onCommonDocumentRemoved(Document document) {
 
 		documentManager.removeDocument(document);
 
 	}
 
+	/**
+	 * Performs operations necessary when a {@link SignalDocument signal
+	 * document} is removed - nothing to do.
+	 * @param document the removed document
+	 */
 	private void onSignalDocumentRemoved(SignalDocument document) {
 		// nothing to do
 	}
 
+	/**
+	 * Performs operations necessary when a {@link BookDocument book
+	 * document} is removed - nothing to do.
+	 * @param document the removed document
+	 */
 	private void onBookDocumentRemoved(BookDocument document) {
 		// nothing to do
 	}
 
+	/**
+	 * Performs operations necessary when a {@link TagDocument tag
+	 * document} is removed:
+	 * <ul>
+	 * <li>{@link TagDocument#setParent(SignalDocument) sets} the parent
+	 * document for this tag document to {@code null}</li>
+	 * </ul>
+	 * @param document the removed document
+	 */
 	private void onTagDocumentRemoved(TagDocument document) {
 
 		// this removes from tag list
@@ -1011,6 +1439,33 @@ public class DocumentFlowIntegrator {
 
 	}
 
+	/**
+	 * Checks if the {@link Document document} is saved and if not asks
+	 * the user what to do.
+	 * If the user:
+	 * <ul>
+	 * <li>answers to save a document - it is
+	 * {@link #saveDocument(Document, boolean) saved} and {@code true}
+	 * is returned</li>
+	 * <li>answers to not save a document - if {@code closeOnDiscard} is true
+	 * it is {@link #closeDocument(Document, boolean, boolean) closed} and
+	 * {@code true} is returned</li>
+	 * <li>aborts the dialog - {@code false} is returned</li>
+	 * </ul>
+	 * @param document the document to be checked
+	 * @param saveAsOnly if the document should be saved in a new file (even if
+	 * it has a backing file)
+	 * @param closeOnDiscard true if the document should be closed when
+	 * user decides not to save it, false otherwise
+	 * @return true if the document is (or was in this function) either saved
+	 * or the user decided not to save it, false otherwise
+	 * @throws IOException TODO never thrown (???)
+	 * @throws SignalMLException if {@link SaveDocumentWorker save worker}
+	 * failed to save the document or <br>
+	 * if {@link SignalChecksumWorker checksum worker} was interrupted or
+	 * failed to calculate the checksum or<br>
+	 * TODO when {@link MonitorSignalDocument} throws it
+	 */
 	private boolean assertDocumentIsSaved(Document document, boolean saveAsOnly, boolean closeOnDiscard) throws IOException, SignalMLException {
 
 		boolean ok;
@@ -1048,6 +1503,33 @@ public class DocumentFlowIntegrator {
 
 	}
 
+	/**
+	 * Checks if the {@link Document documents} dependent on a given document
+	 * are closed. If they are not:
+	 * <ul>
+	 * <li>if {@code force} is set - #closes them</li>
+	 * <li>if {@code force} is not set - asks user what to do:
+	 * <ul>
+	 * <li>if user answers to proceed - closes the documents</li>
+	 * <li>if user answers to cancel - returns false</li>
+	 * </ul></li>
+	 * </ul>
+	 * If the dependent documents are successfully saved and have no dependent
+	 * documents they are closed and {@code true} is returned,
+	 * if one these is not true {@code false} is returned.
+	 * @param document the document to be checked
+	 * @param force true if the dependent documents should be closed without
+	 * asking the user, false otherwise
+	 * @return {@code true} if the dependent documents are closed or were
+	 * closed in this function,<br>
+	 * {@code false} otherwise
+	 * @throws IOException TODO never thrown
+	 * @throws SignalMLException if {@link SaveDocumentWorker save worker}
+	 * failed to save the document or <br>
+	 * if {@link SignalChecksumWorker checksum worker} was interrupted or
+	 * failed to calculate the checksum or<br>
+	 * TODO when {@link MonitorSignalDocument} throws it
+	 */
 	private boolean assertDocumentDependantsClosed(Document document, boolean force) throws IOException, SignalMLException {
 
 		List<Document> childDocuments;
@@ -1112,6 +1594,24 @@ public class DocumentFlowIntegrator {
 
 	}
 
+	/**
+	 * Fills the {@link SignalParameterDescriptor descriptor} with the data
+	 * from the given {@link SignalMLDocument document}:
+	 * <ul>
+	 * <li>boolean if the calibration is supported,</li>
+	 * <li>boolean if the number of channels is supported and that number,</li>
+	 * <li>boolean if the sampling frequency is supported and that frequency.
+	 * </li>
+	 * </ul>
+	 * If some of the parameters are not supported shows the
+	 * {@link SignalParametersDialog dialog} to the user and asks him about
+	 * them.
+	 * @param signalMLDocument the document
+	 * @param spd the descriptor of the signal parameters
+	 * @return {@code true} if the dialog shown to user was closed with OK
+	 * or there was no need to show that dialog,<br>
+	 * {@code false} if the dialog was closed with CANCEL
+	 */
 	private boolean collectRequiredSignalConfiguration(SignalMLDocument signalMLDocument, SignalParameterDescriptor spd) {
 
 		spd.setCalibration(null);
@@ -1162,90 +1662,186 @@ public class DocumentFlowIntegrator {
 
 	}
 
+	/**
+	 * Returns the {@link MessageSourceAccessor source} of messages (labels).
+	 * @return the source of messages (labels)
+	 */
 	public MessageSourceAccessor getMessageSource() {
 		return messageSource;
 	}
 
+	/**
+	 * Sets the {@link MessageSourceAccessor source} of messages (labels).
+	 * @param messageSource the source of messages (labels)
+	 */
 	public void setMessageSource(MessageSourceAccessor messageSource) {
 		this.messageSource = messageSource;
 	}
 
+	/**
+	 * Returns the {@link DocumentManager manager} of {@link Document
+	 * documents} in Svarog.
+	 * @return the manager of documents in Svarog
+	 */
 	public DocumentManager getDocumentManager() {
 		return documentManager;
 	}
 
+	/**
+	 * Sets the {@link DocumentManager manager} of {@link Document documents}
+	 * in Svarog.
+	 * @param documentManager the manager of documents in Svarog
+	 */
 	public void setDocumentManager(DocumentManager documentManager) {
 		this.documentManager = documentManager;
 	}
 
+	/**
+	 * Returns the {@link MRUDRegistry cache} of {@link MRUDEntry
+	 * file descriptions}.
+	 * @return the cache of file descriptions
+	 */
 	public MRUDRegistry getMrudRegistry() {
 		return mrudRegistry;
 	}
 
+	/**
+	 * Sets the {@link MRUDRegistry cache} of {@link MRUDEntry file
+	 * descriptions}.
+	 * @param mrudRegistry the cache of file descriptions
+	 */
 	public void setMrudRegistry(MRUDRegistry mrudRegistry) {
 		this.mrudRegistry = mrudRegistry;
 	}
 
+	/**
+	 * Returns the manager of {@link SignalMLCodec codecs}.
+	 * @return the manager of codecs
+	 */
 	public SignalMLCodecManager getCodecManager() {
 		return codecManager;
 	}
 
+	/**
+	 * Sets the manager of {@link SignalMLCodec codecs}.
+	 * @param codecManager the manager of codecs
+	 */
 	public void setCodecManager(SignalMLCodecManager codecManager) {
 		this.codecManager = codecManager;
 	}
 
+	/**
+	 * Returns the parent pane to all dialogs shown by this integrator.
+	 * @return the parent pane to all dialogs shown by this integrator
+	 */
 	public Component getOptionPaneParent() {
 		return optionPaneParent;
 	}
 
+	/**
+	 * Sets the parent pane to all dialogs shown by this integrator.
+	 * @param optionPaneParent the parent pane to all dialogs shown by this
+	 * integrator
+	 */
 	public void setOptionPaneParent(Component optionPaneParent) {
 		this.optionPaneParent = optionPaneParent;
 	}
 
+	/**
+	 * Returns the {@link ViewerFileChooser chooser} for files in Svarog.
+	 * @return the chooser for files in Svarog
+	 */
 	public ViewerFileChooser getFileChooser() {
 		return fileChooser;
 	}
 
+	/**
+	 * Sets the {@link ViewerFileChooser chooser} for files in Svarog.
+	 * @param fileChooser the chooser for files in Svarog
+	 */
 	public void setFileChooser(ViewerFileChooser fileChooser) {
 		this.fileChooser = fileChooser;
 	}
 
+	/**
+	 * Returns the {@link SignalParametersDialog dialog} to get parameters of
+	 * the signal.
+	 * @return the dialog to get parameters of the signal
+	 */
 	public SignalParametersDialog getSignalParametersDialog() {
 		return signalParametersDialog;
 	}
 
+	/**
+	 * Sets the {@link SignalParametersDialog dialog} to get parameters of the
+	 * signal.
+	 * @param signalParametersDialog the dialog to get parameters of the signal
+	 */
 	public void setSignalParametersDialog(SignalParametersDialog signalParametersDialog) {
 		this.signalParametersDialog = signalParametersDialog;
 	}
 
+	/**
+	 * Returns the {@link ActionFocusManager manager} of active elements in
+	 * Svarog.
+	 * @return the manager of active elements in Svarog
+	 */
 	public ActionFocusManager getActionFocusManager() {
 		return actionFocusManager;
 	}
 
+	/**
+	 * Sets the {@link ActionFocusManager manager} of active elements in Svarog.
+	 * @param actionFocusManager the manager of active elements in Svarog
+	 */
 	public void setActionFocusManager(ActionFocusManager actionFocusManager) {
 		this.actionFocusManager = actionFocusManager;
 	}
 
+	/**
+	 * Returns the {@link ApplicationConfiguration configuration} of Svarog.
+	 * @return the configuration of Svarog
+	 */
 	public ApplicationConfiguration getApplicationConfig() {
 		return applicationConfig;
 	}
 
+	/**
+	 * Sets the {@link ApplicationConfiguration configuration} of Svarog.
+	 * @param applicationConfig the configuration of Svarog
+	 */
 	public void setApplicationConfig(ApplicationConfiguration applicationConfig) {
 		this.applicationConfig = applicationConfig;
 	}
 
+	/**
+	 * Returns the {@link MontagePresetManager manager} of montage presets.
+	 * @return the manager of montage presets
+	 */
 	public MontagePresetManager getMontagePresetManager() {
 		return montagePresetManager;
 	}
 
+	/**
+	 * Sets the {@link MontagePresetManager manager} of montage presets.
+	 * @param montagePresetManager the manager of montage presets
+	 */
 	public void setMontagePresetManager(MontagePresetManager montagePresetManager) {
 		this.montagePresetManager = montagePresetManager;
 	}
 
+	/**
+	 * Returns the {@link PleaseWaitDialog dialog} that tells the user to wait.
+	 * @return the dialog that tells the user to wait
+	 */
 	public PleaseWaitDialog getPleaseWaitDialog() {
 		return pleaseWaitDialog;
 	}
 
+	/**
+	 * Sets the {@link PleaseWaitDialog dialog} that tells the user to wait.
+	 * @param pleaseWaitDialog the dialog that tells the user to wait
+	 */
 	public void setPleaseWaitDialog(PleaseWaitDialog pleaseWaitDialog) {
 		this.pleaseWaitDialog = pleaseWaitDialog;
 	}

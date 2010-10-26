@@ -13,6 +13,8 @@ import org.signalml.plugin.export.signal.Document;
  * <li>change of an active document</li>
  * <li>change of a view associated with a document</li>
  * </ul>
+ * 
+ * @see SvarogAccessChangeSupport
  * @author Marcin Szumski
  */
 public interface SvarogDocumentListener extends SvarogListener {

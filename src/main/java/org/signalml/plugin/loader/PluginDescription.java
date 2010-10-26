@@ -19,16 +19,21 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
- * This class describes the plug-in. Extends the
- * {@link PluginState state} of the plug-in.
- * Apart form parameters of the state, contains:
+ * This class describes the plug-in. Extends the {@link PluginState state} of
+ * the plug-in.
+ * Apart from parameters of the state, contains:
  * <ul>
  * <li>the string with the full name of the class,
  * that will be loaded to register the plug-in,</li>
  * <li>the name of the jar file with the plug-in,</li>
  * <li>the package that is exported by the plug-in,</li>
- * <li>the list of {@link PluginDependency dependencies}
- * of the plug-in.</li>
+ * <li>the list of {@link PluginDependency dependencies} of the plug-in.</li>
+ * </ul>
+ * The parameters of this description are read from an XML file.
+ * This description allows to:
+ * <ul>
+ * <li>check if its dependencies are satisfied,</li>
+ * <li>find missing dependencies.</li>
  * </ul>
  * @author Marcin Szumski
  */
@@ -62,7 +67,8 @@ public class PluginDescription extends PluginState{
 	 * contains the description of the plug-in.
 	 * @param fileName the path to an XML file with the
 	 * description of the plug-in 
-	 * @throws ParserConfigurationException
+	 * @throws ParserConfigurationException if a DocumentBuilder
+     *   cannot be created
 	 * @throws SAXException if the creation of document builder fails
 	 * @throws IOException if an error while parsing the file occurs
 	 */

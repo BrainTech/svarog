@@ -11,7 +11,12 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Implementation of {@link SvarogAccess} interface.
- * Allows to return only one, shared instance of this class. 
+ * Allows to return only one, {@link #getSharedInstance() shared instance}
+ * of this class.
+ * Passes the information that the {@link #setInitializationPhase(boolean)
+ * initialization phase} has finished to the {@link GUIAccessImpl GUI access}
+ * and the information that the application is {@link #onClose() closing}
+ * to {@link ChangeSupportImpl change support}. 
  * 
  * @author Marcin Szumski
  */

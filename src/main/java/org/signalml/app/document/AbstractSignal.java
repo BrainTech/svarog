@@ -26,8 +26,17 @@ import org.signalml.plugin.export.signal.AbstractDocument;
 import org.signalml.plugin.export.signal.ExportedTagDocument;
 import org.springframework.context.MessageSourceResolvable;
 
-/** AbstractReaderSignal
- *
+/**
+ * Abstract implementation of a {@link SignalDocument}.
+ * Only implements the methods of {@code SignalDocument}.
+ * Stores the information about:
+ * <ul>
+ * <li>all {@link TagDocument tag documents} and the active one</li>
+ * <li>the size of a block and a page</li>
+ * <li>the {@link OriginalMultichannelSampleSource source} of unprocessed (raw)
+ * samples</li>
+ * <li>the main {@link Montage montage} for the signal</li>
+ * </ul>
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -35,20 +44,56 @@ public abstract class AbstractSignal extends AbstractDocument implements SignalD
 
 	protected static final Logger logger = Logger.getLogger(AbstractSignal.class);
 
+	/**
+	 * the source of unprocessed (raw) samples
+	 */
 	protected OriginalMultichannelSampleSource sampleSource = null;
 
+	/**
+	 * the currently active (selected) {@link TagDocument tag document}
+	 */
 	protected TagDocument activeTag;
+	
+	/**
+	 * list of all {@link TagDocument tag documents} for this signal 
+	 */
 	protected List<TagDocument> tagDocuments = new LinkedList<TagDocument>();
 
+	/**
+	 * the length of the page in seconds
+	 */
 	protected float pageSize = SignalParameterDescriptor.DEFAULT_PAGE_SIZE;
+	
+	/**
+	 * the number of blocks in a page
+	 */
 	protected int blocksPerPage = SignalParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE;
+	
+	/**
+	 * the length of a block in seconds
+	 */
 	protected float blockSize = pageSize / blocksPerPage;
 
+	/**
+	 * the {@link SignalType type} of this signal
+	 */
 	protected SignalType type;
 
+	/**
+	 * the main {@link Montage montage} for this signal
+	 */
 	protected Montage montage = null;
+	
+	/**
+	 * the number of {@link TagDocument tag documents} for this signal
+	 * that have no backing file {@code + 1}
+	 */
 	private int namelessTagCounter = 1;
 
+	/**
+	 * Constructor. Sets the {@link SignalType type} of the signal.
+	 * @param type the type of the signal to set
+	 */
 	public AbstractSignal(SignalType type) {
 		this.type = type;
 	}

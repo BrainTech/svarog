@@ -36,6 +36,20 @@ import org.signalml.plugin.export.view.ViewerTreePane;
 
 /**
  * The implementation of {@link SvarogAccessGUI}.
+ * Contains:
+ * <ul>
+ * <li>the {@link ViewerElementManager element manager} - allows to access
+ * elements of Svarog. It is used to add/remove tabs, add elements to main menu,
+ * get active tabs</li>
+ * <li>array of buttons and sub-menus for every pop-up menu and for menus in
+ * the signal view - these elements are added, when a specific menu is created.
+ * Sub-menus are also copied (only actions are copied).</li>
+ * <li>collection of {@link SignalTool signal tools} and buttons for them
+ * (actually the {@link ToolButtonParameters parameters} of these buttons) -
+ * when a new {@link SignalView signal view} is created, the new buttons and
+ * the copies of tools are created and added to this view.</li>
+ * <li>a boolean which indicates if currently is an initialization phase</li
+ * </ul>
  * @author Marcin Szumski
  */
 public class GUIAccessImpl implements SvarogAccessGUI {
@@ -53,80 +67,277 @@ public class GUIAccessImpl implements SvarogAccessGUI {
 	private boolean initializationPhase = true;
 	
 	/**
-	 * buttons that will be added to signal plot popup menu
+	 * actions that will be used to create buttons that will be added to
+	 * the pop-up menu that appears when a signal plot is right-clicked
 	 */
 	private ArrayList<Action> signalPlotPopupButtons = new ArrayList<Action>();
 	/**
-	 * menus that will be added to signal plot popup menu as submenus
+	 * menus which will be copied (only actions in them) and that copies will
+	 * be added the pop-up menu that appears when
+	 * a signal plot is right-clicked
 	 */
 	private ArrayList<JMenu> signalPlotPopupSubmenus = new ArrayList<JMenu>();
 	/**
-	 * Information about the order of elements that will be added to signal plot
-	 * popup menu. If value is false next element from {@link #signalPlotPopupButtons}
+	 * Information about the order of elements that will be added to
+	 * the pop-up menu that appears when a signal plot is right-clicked.
+	 * If value is false next element from {@link #signalPlotPopupButtons}
 	 * is taken, if true element from {@link #signalPlotPopupSubmenus} is used.
 	 */
 	private ArrayList<Boolean> signalPlotPopupIsSubmenu = new ArrayList<Boolean>();
 	
 	/**
-	 * buttons that will be added to hypnogram plot popup menu
+	 * actions that will be used to create buttons that will be added to
+	 * the pop-up menu that appears when a hypnogram plot is right-clicked
 	 */
 	private ArrayList<Action> hypnogramPlotPopupButtons = new ArrayList<Action>();
+	/**
+	 * menus which will be copied (only actions in them) and that copies will
+	 * be added the pop-up menu that appears when
+	 * a hypnogram plot is right-clicked
+	 */
 	private ArrayList<JMenu> hypnogramPlotPopupSubmenus = new ArrayList<JMenu>();
+	/**
+	 * Information about the order of elements that will be added to
+	 * the pop-up menu that appears when a hypnogram plot is right-clicked.
+	 * If value is false next element from {@link #hypnogramPlotPopupButtons}
+	 * is taken, if true element from {@link #hypnogramPlotPopupSubmenus} is used.
+	 */
 	private ArrayList<Boolean> hypnogramPlotPopupIsSubmenu = new ArrayList<Boolean>();
 	
 	/**
-	 * buttons that will be added to column header popup menu
+	 * actions that will be used to create buttons that will be added to
+	 * the pop-up menu that appears when a column header is right-clicked
 	 */
 	private ArrayList<Action> columnHeaderPopupButtons = new ArrayList<Action>();
+	/**
+	 * menus which will be copied (only actions in them) and that copies will
+	 * be added the pop-up menu that appears when
+	 * a column header is right-clicked
+	 */
 	private ArrayList<JMenu> columnHeaderPopupSubmenus = new ArrayList<JMenu>();
+	/**
+	 * Information about the order of elements that will be added to
+	 * the pop-up menu that appears when a column header is right-clicked.
+	 * If value is false next element from {@link #columnHeaderPopupButtons}
+	 * is taken, if true element from {@link #columnHeaderPopupSubmenus} is used.
+	 */
 	private ArrayList<Boolean> columnHeaderPopupIsSubmenu = new ArrayList<Boolean>();
 	
-	
+	/**
+	 * actions that will be used to create buttons that will be added to
+	 * the pop-up menu that appears when a MRUD entry node in the workspace tree
+	 * tab (tab "workspace" in the pane on the left) is right-clicked
+	 */
 	private ArrayList<Action> workspaceTreeMRUDPopupButtons = new ArrayList<Action>();
+	/**
+	 * menus which will be copied (only actions in them) and that copies will
+	 * be added the pop-up menu that appears when a MRUD entry node in the workspace tree
+	 * tab (tab "workspace" in the pane on the left) is right-clicked
+	 */
 	private ArrayList<JMenu> workspaceTreeMRUDPopupSubmenus = new ArrayList<JMenu>();
+	/**
+	 * Information about the order of elements that will be added to
+	 * the pop-up menu that appears when a MRUD entry node in the workspace tree
+	 * tab (tab "workspace" in the pane on the left) is right-clicked.
+	 * If value is false next element from {@link #workspaceTreeMRUDPopupButtons}
+	 * is taken, if true element from {@link #workspaceTreeMRUDPopupSubmenus} is used.
+	 */
 	private ArrayList<Boolean> workspaceTreeMRUDPopupIsSubmenu = new ArrayList<Boolean>();
 	
+	/**
+	 * actions that will be used to create buttons that will be added to
+	 * the pop-up menu that appears when a document node in the workspace tree
+	 * panel (tab "workspace" in the pane on the left) is right-clicked
+	 */
 	private ArrayList<Action> workspaceTreeDocumentPopupButtons = new ArrayList<Action>();
+	/**
+	 * menus which will be copied (only actions in them) and that copies will
+	 * be added the pop-up menu that appears when a document node in the workspace tree
+	 * panel (tab "workspace" in the pane on the left) is right-clicked
+	 */
 	private ArrayList<JMenu> workspaceTreeDocumentPopupSubmenus = new ArrayList<JMenu>();
+	/**
+	 * Information about the order of elements that will be added to
+	 * the pop-up menu that appears when a document node in the workspace tree
+	 * panel (tab "workspace" in the pane on the left) is right-clicked.
+	 * If value is false next element from {@link #workspaceTreeDocumentPopupButtons}
+	 * is taken, if true element from {@link #workspaceTreeDocumentPopupSubmenus} is used.
+	 */
 	private ArrayList<Boolean> workspaceTreeDocumentPopupIsSubmenu = new ArrayList<Boolean>();
 	
+	/**
+	 * actions that will be used to create buttons that will be added to
+	 * the pop-up menu that appears when a different place of a workspace tree tab 
+	 * (tab "workspace" in the pane on the left)
+	 * then a MRUD entry or a document node is right-clicked
+	 */
 	private ArrayList<Action> workspaceTreeOtherPopupButtons = new ArrayList<Action>();
+	/**
+	 * menus which will be copied (only actions in them) and that copies will
+	 * be added the pop-up menu that appears when a different place of
+	 * a workspace tree tab (tab "workspace" in the pane on the left)
+	 * then a MRUD entry or a document node is right-clicked
+	 */
 	private ArrayList<JMenu> workspaceTreeOtherPopupSubmenus = new ArrayList<JMenu>();
+	/**
+	 * Information about the order of elements that will be added to
+	 * the pop-up menu that appears when a different place of
+	 * a workspace tree tab (tab "workspace" in the pane on the left)
+	 * then a MRUD entry or a document node is right-clicked.
+	 * If value is false next element from {@link #workspaceTreeOtherPopupButtons}
+	 * is taken, if true element from {@link #workspaceTreeOtherPopupSubmenus} is used.
+	 */
 	private ArrayList<Boolean> workspaceTreeOtherPopupIsSubmenu = new ArrayList<Boolean>();
 	
-	
+	/**
+	 * actions that will be used to create buttons that will be added to
+	 * the pop-up menu that appears when a signal document node in the tag tree
+	 * tab (tab "Tags" in the pane on the left) is right-clicked
+	 */
 	private ArrayList<Action> tagTreeSignalDocumentPopupButtons = new ArrayList<Action>();
+	/**
+	 * menus which will be copied (only actions in them) and that copies will
+	 * be added the pop-up menu that appears when a signal document node
+	 * in the tag tree tab (tab "Tags" in the pane on the left) is right-clicked
+	 */
 	private ArrayList<JMenu> tagTreeSignalDocumentPopupSubmenus = new ArrayList<JMenu>();
+	/**
+	 * Information about the order of elements that will be added to
+	 * the pop-up menu that appears when a signal document node
+	 * in the tag tree tab (tab "Tags" in the pane on the left) is right-clicked.
+	 * If value is false next element from {@link #tagTreeSignalDocumentPopupButtons}
+	 * is taken, if true element from {@link #tagTreeSignalDocumentPopupSubmenus} is used.
+	 */
 	private ArrayList<Boolean> tagTreeSignalDocumentPopupIsSubmenu = new ArrayList<Boolean>();
 	
+	/**
+	 * actions that will be used to create buttons that will be added to
+	 * the pop-up menu that appears when a tag document node in the tag tree
+	 * tab (tab "Tags" in the pane on the left) is right-clicked
+	 */
 	private ArrayList<Action> tagTreeTagDocumentPopupButtons = new ArrayList<Action>();
+	/**
+	 * menus which will be copied (only actions in them) and that copies will
+	 * be added the pop-up menu that appears when a tag document node in the tag tree
+	 * tab (tab "Tags" in the pane on the left) is right-clicked
+	 */
 	private ArrayList<JMenu> tagTreeTagDocumentPopupSubmenus = new ArrayList<JMenu>();
+	/**
+	 * Information about the order of elements that will be added to
+	 * the pop-up menu that appears when a tag document node in the tag tree
+	 * tab (tab "Tags" in the pane on the left) is right-clicked.
+	 * If value is false next element from {@link #tagTreeTagDocumentPopupButtons}
+	 * is taken, if true element from {@link #tagTreeTagDocumentPopupSubmenus} is used.
+	 */
 	private ArrayList<Boolean> tagTreeTagDocumentPopupIsSubmenu = new ArrayList<Boolean>();
 	
+	/**
+	 * actions that will be used to create buttons that will be added to
+	 * the pop-up menu that appears when a tag style node in the tag tree
+	 * tab (tab "Tags" in the pane on the left) is right-clicked
+	 */
 	private ArrayList<Action> tagTreeTagStylePopupButtons = new ArrayList<Action>();
+	/**
+	 * menus which will be copied (only actions in them) and that copies will
+	 * be added the pop-up menu that appears when a tag style node in the tag tree
+	 * tab (tab "Tags" in the pane on the left) is right-clicked
+	 */
 	private ArrayList<JMenu> tagTreeTagStylePopupSubmenus = new ArrayList<JMenu>();
+	/**
+	 * Information about the order of elements that will be added to
+	 * the pop-up menu that appears when a tag style node in the tag tree
+	 * tab (tab "Tags" in the pane on the left) is right-clicked.
+	 * If value is false next element from {@link #tagTreeTagStylePopupButtons}
+	 * is taken, if true element from {@link #tagTreeTagStylePopupSubmenus} is used.
+	 */
 	private ArrayList<Boolean> tagTreeTagStylePopupIsSubmenu = new ArrayList<Boolean>();
 
+	/**
+	 * actions that will be used to create buttons that will be added to
+	 * the pop-up menu that appears when a tag node in the tag tree
+	 * tab (tab "Tags" in the pane on the left) is right-clicked
+	 */
 	private ArrayList<Action> tagTreeTagPopupButtons = new ArrayList<Action>();
+	/**
+	 * menus which will be copied (only actions in them) and that copies will
+	 * be added the pop-up menu that appears when a tag node in the tag tree
+	 * tab (tab "Tags" in the pane on the left) is right-clicked
+	 */
 	private ArrayList<JMenu> tagTreeTagPopupSubmenus = new ArrayList<JMenu>();
+	/**
+	 * Information about the order of elements that will be added to
+	 * the pop-up menu that appears when a tag node in the tag tree
+	 * tab (tab "Tags" in the pane on the left) is right-clicked.
+	 * If value is false next element from {@link #tagTreeTagPopupButtons}
+	 * is taken, if true element from {@link #tagTreeTagPopupSubmenus} is used.
+	 */
 	private ArrayList<Boolean> tagTreeTagPopupIsSubmenu = new ArrayList<Boolean>();
 	
-	
+	/**
+	 * actions that will be used to create buttons that will be added to
+	 * the pop-up menu that appears when a document node in the signal tree
+	 * tab (tab "Signals" in the pane on the left) is right-clicked
+	 */
 	private ArrayList<Action> signalTreeDocumentPopupButtons = new ArrayList<Action>();
+	/**
+	 * menus which will be copied (only actions in them) and that copies will
+	 * be added the pop-up menu that appears when a document node in the signal tree
+	 * tab (tab "Signals" in the pane on the left) is right-clicked
+	 */
 	private ArrayList<JMenu> signalTreeDocumentPopupSubmenus = new ArrayList<JMenu>();
+	/**
+	 * Information about the order of elements that will be added to
+	 * the pop-up menu that appears when a document node in the signal tree
+	 * tab (tab "Signals" in the pane on the left) is right-clicked.
+	 * If value is false next element from {@link #signalTreeDocumentPopupButtons}
+	 * is taken, if true element from {@link #signalTreeDocumentPopupSubmenus} is used.
+	 */
 	private ArrayList<Boolean> signalTreeDocumentPopupIsSubmenu = new ArrayList<Boolean>();
 	
+	/**
+	 * actions that will be used to create buttons that will be added to
+	 * the pop-up menu that appears when a signal page node in the signal tree
+	 * tab (tab "Signals" in the pane on the left) is right-clicked
+	 */
 	private ArrayList<Action> signalTreeSignalPagePopupButtons = new ArrayList<Action>();
+	/**
+	 * menus which will be copied (only actions in them) and that copies will
+	 * be added the pop-up menu that appears when a signal page node in the signal tree
+	 * tab (tab "Signals" in the pane on the left) is right-clicked
+	 */
 	private ArrayList<JMenu> signalTreeSignalPagePopupSubmenus = new ArrayList<JMenu>();
+	/**
+	 * Information about the order of elements that will be added to
+	 * the pop-up menu that appears when a signal page node in the signal tree
+	 * tab (tab "Signals" in the pane on the left) is right-clicked.
+	 * If value is false next element from {@link #signalTreeSignalPagePopupButtons}
+	 * is taken, if true element from {@link #signalTreeSignalPagePopupSubmenus} is used.
+	 */
 	private ArrayList<Boolean> signalTreeSignalPagePopupIsSubmenu = new ArrayList<Boolean>();
 	
-	
+	/**
+	 * actions that will be used to create buttons that will be added to
+	 * the pop-up menu that appears when a book document node in the book tree
+	 * tab (tab "Books" in the pane on the left) is right-clicked
+	 */
 	private ArrayList<Action> bookTreeBookDocumentPopupButtons = new ArrayList<Action>();
+	/**
+	 * menus which will be copied (only actions in them) and that copies will
+	 * be added the pop-up menu that appears when a book document node in the book tree
+	 * tab (tab "Books" in the pane on the left) is right-clicked
+	 */
 	private ArrayList<JMenu> bookTreeBookDocumentPopupSubmenus = new ArrayList<JMenu>();
+	/**
+	 * Information about the order of elements that will be added to
+	 * the pop-up menu that appears when a book document node in the book tree
+	 * tab (tab "Books" in the pane on the left) is right-clicked.
+	 * If value is false next element from {@link #bookTreeBookDocumentPopupButtons}
+	 * is taken, if true element from {@link #bookTreeBookDocumentPopupSubmenus} is used.
+	 */
 	private ArrayList<Boolean> bookTreeBookDocumentPopupIsSubmenu = new ArrayList<Boolean>();
 	
 	/**
-	 * the list of signal tools
+	 * the list of signal tools that will be copied and added to {@link SignalView}s.
 	 */
 	private ArrayList<SignalTool> signalTools = new ArrayList<SignalTool>();
 	

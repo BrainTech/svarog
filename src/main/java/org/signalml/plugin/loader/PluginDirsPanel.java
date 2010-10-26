@@ -1,5 +1,6 @@
 package org.signalml.plugin.loader;
 
+import java.awt.BorderLayout;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -9,8 +10,9 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.TitledBorder;
 
 /**
- * This panel contains a text field with the string containing
+ * This panel contains only a text field with the string containing
  * paths to directories in which plug-ins are stored.
+ * Paths to these directories are separated by semicolons.
  * @author Marcin Szumski
  */
 public class PluginDirsPanel extends JPanel {
@@ -35,6 +37,7 @@ public class PluginDirsPanel extends JPanel {
 	 */
 	public PluginDirsPanel(ArrayList<File> pluginDirs){
 		this.pluginDirs = pluginDirs;
+		setLayout(new BorderLayout());
 		CompoundBorder cb = new CompoundBorder(
 		        new TitledBorder("Plugin directories"),
 		        null
