@@ -5,6 +5,7 @@
 package org.signalml.domain.tag;
 
 import java.awt.Color;
+import java.text.DecimalFormat;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.TreeSet;
@@ -15,6 +16,7 @@ import org.apache.log4j.Logger;
 import org.signalml.app.model.PagingParameterDescriptor;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.signal.SignalChecksum;
+import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
@@ -42,6 +44,13 @@ public class StyledTagSetConverter implements Converter {
 
 	protected static final Logger logger = Logger.getLogger(StyledTagSetConverter.class);
 
+	/**
+	 * Holds the version number of the format of the tag file written by this converter to the XML files.
+	 * It is written to the tag files by the marshal method. Unmarshall method throws an exception if
+	 * the file tag document given to it has a different format version.
+	 */
+	private static final double formatVersion = 1.0;
+
 	private FloatConverter floatConverter = new FloatConverter();
 	private IntConverter intConverter = new IntConverter();
 	private ColorConverter colorConverter = new ColorConverter();
@@ -66,6 +75,8 @@ public class StyledTagSetConverter implements Converter {
 		Montage montage = sts.getMontage();
 		Collection<TagStyle> styles;
 		String annotation;
+
+		writer.addAttribute("format_version", (new DecimalFormat("0.0")).format(formatVersion));
 
 		if (ident != null) {
 			writer.startNode("datafile_identification");
@@ -211,6 +222,10 @@ public class StyledTagSetConverter implements Converter {
 		boolean pagingOk = false;
 
 		Montage montage = null;
+
+		if(Double.parseDouble(reader.getAttribute("format_version")) != formatVersion) {
+			throw new SanityCheckException("Unsupported tag file format version. Svarog supports only tag file with format version equal to " + formatVersion + ".");
+		}
 
 		while (reader.hasMoreChildren()) {
 			reader.moveDown();
