@@ -108,7 +108,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	 * Returns an integer value representing amplifier`s channel value for non-connected channel
 	 * @return an integer value representing amplifier`s channel value for non-connected channel
 	 */
-	public int getAmplifierNull() {
+	public double getAmplifierNull() {
 		return monitorOptions.getAmplifierNull();
 	}
 
