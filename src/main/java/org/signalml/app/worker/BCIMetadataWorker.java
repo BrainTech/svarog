@@ -233,14 +233,14 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 		value = queryMetaData(AMPLIFIER_NULL, "action.openMonitor.metadataWorker.amplifierNull");
 		if (value == null)
 			return openMonitorDescriptor;
-		int ampNull = Integer.parseInt(value);
+		double ampNull = Double.parseDouble(value);
 		openMonitorDescriptor.setAmplifierNull(ampNull);
 		publish(++step);
 
 		String info = messageSource.getMessage( 
 				"action.openMonitor.metadataWorker.receivedMetadata");
 		openMonitorDescriptor.setMetadataReceived( true);
-		openMonitorDescriptor.setMetadataInfo( info);
+		openMonitorDescriptor.setMetadataInfo(info);
 		return openMonitorDescriptor;
 
 	}

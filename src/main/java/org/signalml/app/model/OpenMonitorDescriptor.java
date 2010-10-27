@@ -36,7 +36,7 @@ public class OpenMonitorDescriptor {
 	/**
 	 * An integer value representing amplifier`s channel value for non-connected channel.
 	 */
-	private Integer amplifierNull;
+	private double amplifierNull;
 
 	private String fileName;
 	private RawSignalSampleType sampleType;
@@ -164,11 +164,11 @@ public class OpenMonitorDescriptor {
 	 * Returns an integer value representing amplifier`s channel value for non-connected channel
 	 * @return an integer value representing amplifier`s channel value for non-connected channel
 	 */
-	public Integer getAmplifierNull() {
+	public double getAmplifierNull() {
 		return this.amplifierNull;
 	}
 
-	public void setAmplifierNull(Integer ampNull) {
+	public void setAmplifierNull(double ampNull) {
 		this.amplifierNull = ampNull;
 	}
 	public Float getMaximumValue() {
