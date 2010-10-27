@@ -15,6 +15,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import org.apache.log4j.Logger;
 
 import org.signalml.app.model.LabelledPropertyDescriptor;
 import org.signalml.app.util.XMLUtils;
@@ -58,6 +59,11 @@ import com.thoughtworks.xstream.io.xml.XmlFriendlyReplacer;
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class TagDocument extends AbstractMutableFileDocument implements ExportedTagDocument {
+
+	/**
+         * Logger to save history of execution at
+         */
+	protected static final Logger logger = Logger.getLogger(TagDocument.class);
 
 	/**
 	 * the {@link StyledTagSet set} in which the {@link Tag tags} and
@@ -197,6 +203,11 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 	protected void writeDocument(OutputStream os) {
 
 		XStream streamer = getTagStreamer();
+		try {
+			XMLUtils.writeXMLHeader(os);
+		} catch (IOException ex) {
+			logger.error("Failed to save tag - i/o exception", ex);
+		}
 		streamer.toXML(tagSet, os);
 
 	}

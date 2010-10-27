@@ -5,6 +5,7 @@
 package org.signalml.domain.tag;
 
 import java.awt.Color;
+import java.text.DecimalFormat;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.TreeSet;
@@ -15,6 +16,7 @@ import org.apache.log4j.Logger;
 import org.signalml.app.model.PagingParameterDescriptor;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.signal.SignalChecksum;
+import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
@@ -42,6 +44,13 @@ public class StyledTagSetConverter implements Converter {
 
 	protected static final Logger logger = Logger.getLogger(StyledTagSetConverter.class);
 
+	/**
+	 * Holds the version number of the format of the tag file written by this converter to the XML files.
+	 * It is written to the tag files by the marshal method. Unmarshall method throws an exception if
+	 * the file tag document given to it has a different format version.
+	 */
+	private static final double formatVersion = 1.0;
+
 	private FloatConverter floatConverter = new FloatConverter();
 	private IntConverter intConverter = new IntConverter();
 	private ColorConverter colorConverter = new ColorConverter();
@@ -67,16 +76,18 @@ public class StyledTagSetConverter implements Converter {
 		Collection<TagStyle> styles;
 		String annotation;
 
+		writer.addAttribute("format_version", (new DecimalFormat("0.0")).format(formatVersion));
+
 		if (ident != null) {
 			writer.startNode("datafile_identification");
-			if (ident.getFormatId() != null) {
-				writer.startNode("format");
-				writer.addAttribute("id", ident.getFormatId());
-				writer.endNode();
-			}
 			if (ident.getFileName() != null) {
 				writer.startNode("name");
 				writer.setValue(ident.getFileName());
+				writer.endNode();
+			}
+			if (ident.getFormatId() != null) {
+				writer.startNode("format");
+				writer.addAttribute("id", ident.getFormatId());
 				writer.endNode();
 			}
 			SignalChecksum signalChecksum = ident.getChecksum();
@@ -127,7 +138,7 @@ public class StyledTagSetConverter implements Converter {
 		writer.startNode("tag_data");
 
 		if (info != null) {
-			writer.startNode("text_info");
+			writer.startNode("description");
 			writer.setValue(info);
 			writer.endNode();
 		}
@@ -147,9 +158,9 @@ public class StyledTagSetConverter implements Converter {
 		for (Tag tag : sts.getTags()) {
 			writer.startNode("tag");
 			writer.addAttribute("name", tag.getStyle().getName());
+			writer.addAttribute("channel_number", intConverter.toString(tag.getChannel()));
 			writer.addAttribute("position", floatConverter.toString(tag.getPosition()));
 			writer.addAttribute("length", floatConverter.toString(tag.getLength()));
-			writer.addAttribute("channel_number", intConverter.toString(tag.getChannel()));
 			annotation = tag.getAnnotation();
 			if (annotation != null) {
 				writer.startNode("annotation");
@@ -212,17 +223,21 @@ public class StyledTagSetConverter implements Converter {
 
 		Montage montage = null;
 
+		if(Double.parseDouble(reader.getAttribute("format_version")) != formatVersion) {
+			throw new SanityCheckException("Unsupported tag file format version. Svarog supports only tag file with format version equal to " + formatVersion + ".");
+		}
+
 		while (reader.hasMoreChildren()) {
 			reader.moveDown();
 			if ("datafile_identification".equals(reader.getNodeName())) {
 				ident = new TagSignalIdentification();
 				while (reader.hasMoreChildren()) {
 					reader.moveDown();
-					if ("format".equals(reader.getNodeName())) {
-						ident.setFormatId(reader.getAttribute("id"));
-					}
-					else if ("name".equals(reader.getNodeName())) {
+					if ("name".equals(reader.getNodeName())) {
 						ident.setFileName(reader.getValue());
+					}
+					else if ("format".equals(reader.getNodeName())) {
+						ident.setFormatId(reader.getAttribute("id"));
 					}
 					else if ("signature".equals(reader.getNodeName())) {
 						SignalChecksum signalChecksum = new SignalChecksum();
@@ -292,7 +307,7 @@ public class StyledTagSetConverter implements Converter {
 			} else if ("tag_data".equals(reader.getNodeName())) {
 				while (reader.hasMoreChildren()) {
 					reader.moveDown();
-					if ("text_info".equals(reader.getNodeName())) {
+					if ("description".equals(reader.getNodeName())) {
 						info = reader.getValue();
 					} else if ("montage".equals(reader.getNodeName())) {
 						montage = (Montage) context.convertAnother(null, Montage.class);
@@ -306,9 +321,9 @@ public class StyledTagSetConverter implements Converter {
 								if (style == null) {
 									style = TagStyle.getDefault();
 								}
+								channel = (Integer) intConverter.fromString(reader.getAttribute("channel_number"));
 								position = (Float) floatConverter.fromString(reader.getAttribute("position"));
 								length = (Float) floatConverter.fromString(reader.getAttribute("length"));
-								channel = (Integer) intConverter.fromString(reader.getAttribute("channel_number"));
 								annotation = null;
 								while (reader.hasMoreChildren()) {
 									reader.moveDown();

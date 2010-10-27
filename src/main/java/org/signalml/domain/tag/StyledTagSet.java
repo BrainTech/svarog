@@ -43,7 +43,7 @@ import com.thoughtworks.xstream.annotations.XStreamConverter;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-@XStreamAlias("annotations")
+@XStreamAlias("tag_file")
 @XStreamConverter(StyledTagSetConverter.class)
 public class StyledTagSet implements Serializable {
 

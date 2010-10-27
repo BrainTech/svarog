@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<annotations>
+<tag_file format_version="1.0">
   <paging page_size="20.0" blocks_per_page="5"/>  
   <tag_definitions>
     <def_group name='pageTags'>
@@ -21,4 +21,4 @@
       <tag_item name='Y' description='Yellow selection' outline_color='ffff00' fill_color='ffff00' outline_width='1.0' outline_dash='' key_shortcut='shift Y'/>
     </def_group>
   </tag_definitions>
-</annotations>
+</tag_file>
