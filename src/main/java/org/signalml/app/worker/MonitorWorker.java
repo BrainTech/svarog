@@ -35,6 +35,7 @@ import org.signalml.multiplexer.protocol.SvarogProtocol.Sample;
 import org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector;
 
 import com.google.protobuf.ByteString;
+import org.signalml.app.model.PagingParameterDescriptor;
 
 /** MonitorWorker
  *
@@ -123,8 +124,10 @@ public class MonitorWorker extends SwingWorker< Void, Object> {
 		SvarogProtocol.Tag tagMsg = null;
 
 		List<Sample> samples;
-		double[] chunk = new double[channelCount];					
-		TagStylesGenerator stylesGenerator = new TagStylesGenerator();
+		double[] chunk = new double[channelCount];
+		//TODO blocksPerPage - is that information sent to the monitor worker? Can we substitute default PagingParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE
+		//with a real value?
+		TagStylesGenerator stylesGenerator = new TagStylesGenerator(monitorDescriptor.getPageSize(), PagingParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE);
 		int sampleType = 0;
 		Tag tag;
 		double tagLen;
@@ -221,7 +224,7 @@ public class MonitorWorker extends SwingWorker< Void, Object> {
 					// By now we ignore field channels and assume that tag if for all channels
 					
 					tagLen = tagMsg.getEndTimestamp() - tagMsg.getStartTimestamp();
-					tag = new MonitorTag(stylesGenerator.getSmartStyleFor(tagMsg.getName(), tagLen),
+					tag = new MonitorTag(stylesGenerator.getSmartStyleFor(tagMsg.getName(), tagLen, -1),
 							tagMsg.getStartTimestamp(),
 							tagLen,							  
 							-1);

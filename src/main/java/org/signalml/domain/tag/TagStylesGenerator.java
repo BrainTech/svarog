@@ -15,12 +15,18 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
 public class TagStylesGenerator {
+
 	protected static final Logger logger = Logger.getLogger(TagStylesGenerator.class);
+
 	protected static String STYLES_PATH = "org/signalml/domain/tag/sample/default_sleep_styles.xml";
 	protected HashMap<String,TagStyle> styles;
 	protected HashMap<String,TagStyle> tempStyles;
 
-	public TagStylesGenerator() {
+	private double pageSize;
+	private double blockSize;
+
+	private TagStylesGenerator() {
+
 		this.tempStyles = new HashMap<String, TagStyle>();
 		
 		this.styles = new HashMap<String, TagStyle>();
@@ -30,6 +36,20 @@ public class TagStylesGenerator {
 		}
 		
 	}
+
+	/**
+	 * Constructor. Creates a new tag style generator for the given page size and the given
+	 * number of blocks per page. Page size and number of blocks per page is needed to help to
+	 * determine the type of tag (page/block/channel) for which styles would be generated.
+	 * @param pageSize the length of the page (in seconds)
+	 * @param blocksPerPage number of blocks per page
+	 */
+	public TagStylesGenerator(double pageSize, int blocksPerPage) {
+		this();
+		this.pageSize = pageSize;
+		this.blockSize = pageSize / blocksPerPage;
+	}
+
 	protected Collection<TagStyle> getStylesFromDataBase(){
 		
 		//Create for a moment TagDocument so that it'll read-in database styles
@@ -49,35 +69,62 @@ public class TagStylesGenerator {
 		}
 
 		return templateDocument.getTagSet().getStyles();
+
 	}
-	protected TagStyle generateNewStyleFor(String name, double tagLength) {
-		TagStyle style = new TagStyle(SignalSelectionType.CHANNEL, name, "", 
-				Color.BLUE, Color.RED, 5);
+
+	protected TagStyle generateNewStyleFor(String name, double tagLength, int channel) {
+
+		//determining the type of tag
+		SignalSelectionType signalSelectionType;
+		if (channel != -1)
+			signalSelectionType = SignalSelectionType.CHANNEL;
+		else if (tagLength == pageSize)
+			signalSelectionType = SignalSelectionType.PAGE;
+		else if (tagLength == blockSize)
+			signalSelectionType = SignalSelectionType.BLOCK;
+		else
+			signalSelectionType = SignalSelectionType.CHANNEL;
+
+		//generating new style for the tag
+		TagStyle style;
+		if(signalSelectionType.isBlock())
+			style = new TagStyle(signalSelectionType, name, "", Color.GREEN, Color.RED, 1);
+		else if (signalSelectionType.isPage())
+			style = new TagStyle(signalSelectionType, name, "", Color.YELLOW, Color.BLACK, 1);
+		else
+			style = new TagStyle(signalSelectionType, name, "", Color.ORANGE, Color.BLUE, 1);
+
 		if (tagLength < 0.01)
 			style.setMarker(true);
 		else
 			style.setMarker(false);
 		this.tempStyles.put(name, style);
 		return style;
+
 	}
+
 	public TagStyle getTempOrRealStyleFor(String name) {
+
 		TagStyle style = this.styles.get(name);
 		if (style != null)
 			return style;
 		else 
 			return this.tempStyles.get(name);
+
 	}
 
 	public TagStyle getStyleFor(String name) {
 		return this.styles.get(name);
 	}
-	
-	
-	public TagStyle getSmartStyleFor(String name, double tagLength) {
+
+	public TagStyle getSmartStyleFor(String name, double tagLength, int channel) {
+
 		TagStyle style = this.getTempOrRealStyleFor(name);
 		if (style != null)
 			return style;
 		else 
-			return generateNewStyleFor(name,tagLength);
+			return generateNewStyleFor(name, tagLength, channel);
+
 	}
+
 }

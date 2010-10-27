@@ -32,6 +32,7 @@ import com.thoughtworks.xstream.converters.basic.FloatConverter;
 import com.thoughtworks.xstream.converters.basic.IntConverter;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
+import javax.swing.JOptionPane;
 
 /**
  * This class is responsible for marshaling/unmarshaling {@link StyledTagSet}
@@ -305,6 +306,18 @@ public class StyledTagSetConverter implements Converter {
 					reader.moveUp();
 				}
 			} else if ("tag_data".equals(reader.getNodeName())) {
+
+				/* paging information is needed before processing tag data to generate tag styles
+				 * for tags for which styles were not generated in the file
+				 */
+				if (!pagingOk) {
+					logger.warn("WARNING: tag doesn't contain paging information or paging information is AFTER the tag information, assuming defaults");
+					pageSize = PagingParameterDescriptor.DEFAULT_PAGE_SIZE;
+					blocksPerPage = PagingParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE;
+				}
+
+				TagStylesGenerator tagStylesGenerator = new TagStylesGenerator(pageSize, blocksPerPage);
+
 				while (reader.hasMoreChildren()) {
 					reader.moveDown();
 					if ("description".equals(reader.getNodeName())) {
@@ -317,13 +330,19 @@ public class StyledTagSetConverter implements Converter {
 						while (reader.hasMoreChildren()) {
 							reader.moveDown();
 							if ("tag".equals(reader.getNodeName())) {
-								style = styles.get(reader.getAttribute("name"));
-								if (style == null) {
-									style = TagStyle.getDefault();
-								}
+
+								String tagName = reader.getAttribute("name");
+
 								channel = (Integer) intConverter.fromString(reader.getAttribute("channel_number"));
 								position = (Float) floatConverter.fromString(reader.getAttribute("position"));
 								length = (Float) floatConverter.fromString(reader.getAttribute("length"));
+
+								style = styles.get(tagName);
+								if (style == null) {
+									style = tagStylesGenerator.getSmartStyleFor(tagName, length, channel);
+									styles.put(tagName, style);
+								}
+
 								annotation = null;
 								while (reader.hasMoreChildren()) {
 									reader.moveDown();
@@ -342,12 +361,6 @@ public class StyledTagSetConverter implements Converter {
 				}
 			}
 			reader.moveUp();
-		}
-
-		if (!pagingOk) {
-			logger.warn("WARNING: tag doesn't contain paging information, assuming defaults");
-			pageSize = PagingParameterDescriptor.DEFAULT_PAGE_SIZE;
-			blocksPerPage = PagingParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE;
 		}
 
 		StyledTagSet sts = new StyledTagSet(styles,tags,pageSize,blocksPerPage);
