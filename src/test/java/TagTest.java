@@ -2,6 +2,7 @@
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
+import java.util.Set;
 
 import org.junit.Test;
 import org.signalml.app.document.TagDocument;
@@ -10,6 +11,7 @@ import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.SignalSelection;
 
 
 public class TagTest {

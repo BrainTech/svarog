@@ -32,6 +32,7 @@ import com.thoughtworks.xstream.converters.basic.FloatConverter;
 import com.thoughtworks.xstream.converters.basic.IntConverter;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
+import java.util.Set;
 import javax.swing.JOptionPane;
 
 /**
@@ -75,9 +76,8 @@ public class StyledTagSetConverter implements Converter {
 		String montageInfo = sts.getMontageInfo();
 		Montage montage = sts.getMontage();
 		Collection<TagStyle> styles;
-		String annotation;
 
-		writer.addAttribute("format_version", (new DecimalFormat("0.0")).format(formatVersion));
+		writer.addAttribute("format_version", floatConverter.toString(formatVersion));
 
 		if (ident != null) {
 			writer.startNode("datafile_identification");
@@ -156,23 +156,45 @@ public class StyledTagSetConverter implements Converter {
 		}
 
 		writer.startNode("tags");
-		for (Tag tag : sts.getTags()) {
-			writer.startNode("tag");
-			writer.addAttribute("name", tag.getStyle().getName());
-			writer.addAttribute("channel_number", intConverter.toString(tag.getChannel()));
-			writer.addAttribute("position", floatConverter.toString(tag.getPosition()));
-			writer.addAttribute("length", floatConverter.toString(tag.getLength()));
-			annotation = tag.getAnnotation();
-			if (annotation != null) {
-				writer.startNode("annotation");
-				writer.setValue(annotation);
-				writer.endNode();
-			}
-			writer.endNode();
-		}
+		for (Tag tag : sts.getTags())
+			marshalTag(writer, tag);
 		writer.endNode();
 
 		writer.endNode(); // tag_data
+
+	}
+
+	/**
+	 * Converts a {@link Tag Tag} to textual data using the given writer.
+	 * @param writer a stream to write to
+	 * @param tag a tag to be converted to XML
+	 */
+	private void marshalTag(HierarchicalStreamWriter writer, Tag tag) {
+		writer.startNode("tag");
+		writer.addAttribute("name", tag.getStyle().getName());
+		writer.addAttribute("channel_number", intConverter.toString(tag.getChannel()));
+		writer.addAttribute("position", floatConverter.toString(tag.getPosition()));
+		writer.addAttribute("length", floatConverter.toString(tag.getLength()));
+		marshalTagAttributes(writer, tag);
+		writer.endNode();
+	}
+
+	/**
+	 * Converts tag's attributes to textual data using the given writer.
+	 * @param writer a stream to write to
+	 * @param tag a tag whose attributes will be be converted to XML
+	 */
+	private void marshalTagAttributes(HierarchicalStreamWriter writer, Tag tag) {
+
+		String attributeValue;
+		for (String key: tag.getAttributes().keySet()) {
+			attributeValue = tag.getAttribute(key);
+			if(attributeValue != null) {
+				writer.startNode(key);
+				writer.setValue(tag.getAttribute(key));
+				writer.endNode();
+			}
+		}
 
 	}
 
@@ -344,14 +366,14 @@ public class StyledTagSetConverter implements Converter {
 								}
 
 								annotation = null;
+								tag = new Tag(style,position,length,channel,annotation);
+
 								while (reader.hasMoreChildren()) {
 									reader.moveDown();
-									if ("annotation".equals(reader.getNodeName())) {
-										annotation = reader.getValue();
-									}
+									tag.setAttribute(reader.getNodeName(), reader.getValue());
 									reader.moveUp();
 								}
-								tag = new Tag(style,position,length,channel,annotation);
+
 								tags.add(tag);
 							}
 							reader.moveUp();
