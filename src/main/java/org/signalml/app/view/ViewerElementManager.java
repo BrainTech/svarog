@@ -25,6 +25,7 @@ import multiplexer.jmx.client.JmxClient;
 import org.signalml.SignalMLOperationMode;
 import org.signalml.app.action.AbortAllTasksAction;
 import org.signalml.app.action.ApplyDefaultMontageAction;
+import org.signalml.app.action.CheckSignalAction;
 import org.signalml.app.action.CloseDocumentAction;
 import org.signalml.app.action.CloseTagAction;
 import org.signalml.app.action.CloseWindowAction;
@@ -112,6 +113,7 @@ import org.signalml.app.view.dialog.SignalParametersDialog;
 import org.signalml.app.view.dialog.SignalSelectionDialog;
 import org.signalml.app.view.dialog.TagStylePaletteDialog;
 import org.signalml.app.view.element.LockableJSplitPane;
+import org.signalml.app.view.monitor.CheckSignalDialog;
 import org.signalml.app.view.montage.EditFFTSampleFilterDialog;
 import org.signalml.app.view.montage.EditTimeDomainSampleFilterDialog;
 import org.signalml.app.view.montage.SignalMontageDialog;
@@ -131,6 +133,8 @@ import org.signalml.util.SvarogConstants;
 import org.springframework.context.support.MessageSourceAccessor;
 
 import com.thoughtworks.xstream.XStream;
+
+
 
 /** ViewerElementManager
  *
@@ -221,6 +225,7 @@ public class ViewerElementManager {
 	private ViewerTabbedPane propertyTabbedPane;
 
 	/* Dialogs */
+        private CheckSignalDialog checkSignalDialog;
 	private ErrorsDialog errorsDialog;
 	private PleaseWaitDialog pleaseWaitDialog;
 	private SeriousWarningDialog seriousWarningDialog;
@@ -250,6 +255,7 @@ public class ViewerElementManager {
 	private BookFilterDialog bookFilterDialog;
 
 	/* Actions */
+        private CheckSignalAction checkSignalAction;
 	private CloseWindowAction closeWindowAction;
 	private EditPreferencesAction editPreferencesAction;
 	private HelpContentsAction helpContentsAction;
@@ -647,6 +653,7 @@ public class ViewerElementManager {
 		if (monitorMenu == null) {
 			monitorMenu = new JMenu(messageSource.getMessage("menu.monitor"));
 			monitorMenu.add(getOpenMonitorAction());
+                        monitorMenu.add(getCheckSignalAction());
 		}
 		return monitorMenu;
 	}
@@ -1002,6 +1009,14 @@ public class ViewerElementManager {
 		return openMonitorDialog;
 	}
 
+        public CheckSignalDialog getCheckSignalDialog() {
+		if (checkSignalDialog == null) {
+			checkSignalDialog = new CheckSignalDialog(messageSource, getDialogParent(), true);
+		}
+		return checkSignalDialog;
+	}
+
+
 	public RegisterCodecDialog getRegisterCodecDialog() {
 		if (registerCodecDialog == null) {
 			registerCodecDialog = new RegisterCodecDialog(messageSource, getDialogParent(), true);
@@ -1254,6 +1269,15 @@ public class ViewerElementManager {
 		}
 		return openMonitorAction;
 	}
+
+        public CheckSignalAction getCheckSignalAction() {
+		if (checkSignalAction == null) {
+			checkSignalAction = new CheckSignalAction(messageSource, getActionFocusManager());
+			checkSignalAction.setCheckSignalDialog(getCheckSignalDialog());
+		}
+		return checkSignalAction;
+        }
+
 
 	public CloseDocumentAction getCloseActiveDocumentAction() {
 		if (closeActiveDocumentAction == null) {

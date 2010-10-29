@@ -307,6 +307,9 @@
 	<entry key="action.openMonitorLabel">Open monitor...</entry>
 	<entry key="action.openMonitorToolTip">Open monitor and connect to multiplexer</entry>
 
+	<entry key="action.checkSignalLabel">Check signal...</entry>
+	<entry key="action.checkSignalToolTip">Check if signal is OK</entry>
+
 	<entry key="action.connectMultiplexer.actionName">Connect</entry>
 	<entry key="action.cancelConnectMultiplexer.actionName">Cancel</entry>
 	<entry key="action.disconnectMultiplexer.actionName">Disconnect</entry>
@@ -638,6 +641,9 @@
 	<entry key="openDocument.signalChosen">Signal document chosen</entry>
 	<entry key="openDocument.bookChosen">Book document chosen</entry>
 	<entry key="openDocument.tagChosen">Tag document chosen</entry>
+
+	<entry key="checkSignal.title">Check Signal</entry>
+        <entry key="checkSignal.label">Channels</entry>
 
 <!-- ============================ -->
 

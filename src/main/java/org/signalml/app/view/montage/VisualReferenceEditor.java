@@ -7,27 +7,14 @@ package org.signalml.app.view.montage;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.RenderingHints;
 import java.awt.Shape;
-import java.awt.Stroke;
-import java.awt.geom.Rectangle2D;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
-
-import javax.swing.JComponent;
-import javax.swing.JViewport;
-import javax.swing.Scrollable;
 
 import org.signalml.app.util.GeometryUtils;
 
@@ -36,12 +23,9 @@ import org.signalml.app.util.GeometryUtils;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class VisualReferenceEditor extends JComponent implements VisualReferenceListener, PropertyChangeListener, Scrollable {
+public class VisualReferenceEditor extends VisualReferenceDisplay {
 
 	private static final long serialVersionUID = 1L;
-
-	public static final int MAX_CHANNEL_LABEL_LENGTH = 7;
-	public static final int BIN_SPACING = 10;
 
 	private static final BasicStroke WHITE_SELECTION_STROKE = new BasicStroke(1F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10F, new float[] {3,3}, 0F);
 	private static final BasicStroke BLACK_SELECTION_STROKE = new BasicStroke(1F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10F, new float[] {3,3}, 3F);
@@ -57,56 +41,21 @@ public class VisualReferenceEditor extends JComponent implements VisualReference
 		Color.BLACK
 	};
 
-	private static final Color INACTIVE_CHANNEL_COLOR = Color.LIGHT_GRAY;
+        private static final Color INACTIVE_CHANNEL_COLOR = Color.LIGHT_GRAY;
 	private static final Color ACTIVE_CHANNEL_COLOR = new Color(0, 198, 255);
 
-	private VisualReferenceModel model;
-
-	private Font binLabelFont;
-	private Font channelLabelFont;
-
-	private FontMetrics binLabelFontMetrics;
-	private FontMetrics channelLabelFontMetrics;
-
-	private Stroke defaultStroke;
-	private Stroke activeChannelStroke;
-
-	private JViewport viewport;
-
-	private Dimension requiredSize = null;
-
 	private LinkedList<VisualReferenceArrow> tempArrowsToDraw = new LinkedList<VisualReferenceArrow>();
-
 	private VisualReferenceArrow prospectiveArrow;
 
 	public VisualReferenceEditor(VisualReferenceModel model) {
-		super();
 
-		setAutoscrolls(true);
-
-		if (model == null) {
-			throw new NullPointerException("No model");
-		}
-		this.model = model;
-
-		setFocusable(true);
-
-		model.addPropertyChangeListener(this);
-		model.addVisualReferenceListener(this);
+                super(model);
 
 		VisualReferenceEditorMouseHandler mouseHandler = new VisualReferenceEditorMouseHandler(this);
 
 		addMouseListener(mouseHandler);
 		addMouseMotionListener(mouseHandler);
 
-	}
-
-	public JViewport getViewport() {
-		return viewport;
-	}
-
-	public void setViewport(JViewport viewport) {
-		this.viewport = viewport;
 	}
 
 	public VisualReferenceArrow getProspectiveArrow() {
@@ -130,94 +79,26 @@ public class VisualReferenceEditor extends JComponent implements VisualReference
 
 	public void paintChannel(String label, int perPrimarySize, Shape shape, Shape outlineShape, boolean source, boolean selected, Graphics2D g) {
 
-		if (source) {
-			g.setColor(INACTIVE_CHANNEL_COLOR);
-		} else {
-			g.setColor(ACTIVE_CHANNEL_COLOR);
-		}
+        	Color fill;
+                Color outline;
+                boolean boldBorder;
 
-		g.fill(shape);
-
+		if (source) fill = INACTIVE_CHANNEL_COLOR;
+		else fill = ACTIVE_CHANNEL_COLOR;
+		
 		if (selected) {
-			g.setColor(Color.RED);
-			g.setStroke(activeChannelStroke);
+			outline = Color.RED;
+			boldBorder = true;
 		} else {
-			g.setColor(Color.BLACK);
+			outline = Color.BLACK;
+                        boldBorder = false;
 		}
 
-		g.draw(outlineShape);
-		g.setStroke(defaultStroke);
-
-		g.setColor(Color.BLACK);
-		g.setFont(channelLabelFont);
-		String abbrLabel;
-		if (label.length() > MAX_CHANNEL_LABEL_LENGTH) {
-			abbrLabel = label.substring(0,MAX_CHANNEL_LABEL_LENGTH-2) + "...";
-		} else {
-			abbrLabel = label;
-		}
-		Rectangle2D rect = channelLabelFontMetrics.getStringBounds(abbrLabel, g);
-
-		int textHeight = (int)(rect.getHeight());
-		int textWidth  = (int)(rect.getWidth());
-
-		Rectangle r = shape.getBounds();
-
-		g.drawString(abbrLabel, r.x + (r.width  - textWidth)  / 2, r.y + (r.height - textHeight) / 2  + channelLabelFontMetrics.getAscent());
-
-		if (perPrimarySize > 1) {
-
-			abbrLabel = "(" + Integer.toString(perPrimarySize) + ")";
-			rect = channelLabelFontMetrics.getStringBounds(abbrLabel, g);
-			textWidth  = (int)(rect.getWidth());
-
-			g.drawString(abbrLabel, r.x + (r.width  - textWidth)  / 2, r.y + (r.height - textHeight) / 2  + channelLabelFontMetrics.getAscent() + textHeight);
-
-		}
+		paintGivenChannel(label, perPrimarySize, shape, outlineShape, fill, outline, boldBorder, g);
 
 	}
-
-	protected void paintBin(VisualReferenceBin bin, Graphics2D g) {
-
-		Dimension size = bin.getSize();
-		Point location = bin.getLocation();
-		String name = bin.getName();
-
-		g.setColor(Color.DARK_GRAY);
-		g.drawRect(location.x, location.y, size.width-1, size.height-1);
-		g.fillRect(location.x, location.y, size.width, VisualReferenceBin.HEADER_HEIGHT);
-
-		if (name != null && !name.isEmpty()) {
-
-			g.setColor(Color.WHITE);
-
-			g.setFont(binLabelFont);
-			Rectangle2D rect = binLabelFontMetrics.getStringBounds(name, g);
-
-			int textHeight = (int)(rect.getHeight());
-			int textWidth  = (int)(rect.getWidth());
-
-			g.drawString(name, location.x + (size.width  - textWidth)  / 2, location.y + (VisualReferenceBin.HEADER_HEIGHT - textHeight) / 2  + binLabelFontMetrics.getAscent());
-
-		}
-
-		if (bin instanceof VisualReferencePositionedBin) {
-			VisualReferencePositionedBin positionedBin = (VisualReferencePositionedBin) bin;
-			Insets backdropMargin = positionedBin.getBackdropMargin();
-			if (backdropMargin == null) {
-				backdropMargin = new Insets(0,0,0,0);
-			}
-			Insets margin = positionedBin.getMargin();
-			int width = size.width - (margin.left + margin.right + backdropMargin.left + backdropMargin.right);
-			int height = size.height - (VisualReferenceBin.HEADER_HEIGHT + margin.top + margin.bottom + backdropMargin.top + backdropMargin.bottom);
-			Image backdrop = model.getMontage().getSignalTypeConfigurer().getMatrixBackdrop(width, height);
-			if (backdrop != null) {
-				g.drawImage(backdrop, location.x + margin.left + backdropMargin.left, location.y + VisualReferenceBin.HEADER_HEIGHT + margin.top + backdropMargin.top, null);
-			}
-		}
-
-	}
-
+        
+        @Override
 	protected void paintBinContents(VisualReferenceBin bin, Graphics2D g) {
 
 		Iterator<VisualReferenceSourceChannel> it = bin.iterator();
@@ -302,25 +183,9 @@ public class VisualReferenceEditor extends JComponent implements VisualReference
 	@Override
 	protected void paintComponent(Graphics gOrig) {
 
-		Graphics2D g = (Graphics2D) gOrig;
-		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		super.paintComponent(gOrig);
 
-		if (defaultStroke == null) {
-			defaultStroke = g.getStroke();
-			activeChannelStroke = new BasicStroke(3);
-		}
-
-		if (binLabelFont == null || channelLabelFont == null) {
-			binLabelFont = g.getFont();
-			channelLabelFont = new Font(Font.DIALOG, Font.PLAIN, 9);
-			binLabelFontMetrics = g.getFontMetrics(binLabelFont);
-			channelLabelFontMetrics = g.getFontMetrics(channelLabelFont);
-		}
-
-		Rectangle clip = g.getClipBounds();
-
-		g.setColor(getBackground());
-		g.fill(clip);
+        	Graphics2D g = Get2DGraphics(gOrig);
 
 		VisualReferenceChannel selChannel = model.getActiveChannel();
 		int selChannelIndex = -1;
@@ -331,23 +196,7 @@ public class VisualReferenceEditor extends JComponent implements VisualReference
 		VisualReferenceArrow selArrow = model.getActiveArrow();
 		VisualReferenceArrow arrow;
 
-		VisualReferenceBin othersBin = model.getOthersBin();
-		VisualReferencePositionedBin positionedBin = model.getPositionedBin();
-		VisualReferenceBin referencesBin = model.getReferencesBin();
-		VisualReferenceBin primariesBin = model.getPrimariesBin();
-
-		paintBin(positionedBin, g);
-		if (!othersBin.isEmpty()) {
-			paintBin(othersBin, g);
-		}
-		if (!referencesBin.isEmpty()) {
-			paintBin(referencesBin, g);
-		}
-		if (!primariesBin.isEmpty()) {
-			paintBin(primariesBin, g);
-		}
-
-		tempArrowsToDraw.clear();
+                tempArrowsToDraw.clear();
 
 		int colorIndex;
 		VisualReferenceChannel toChannel;
@@ -367,17 +216,6 @@ public class VisualReferenceEditor extends JComponent implements VisualReference
 					tempArrowsToDraw.add(arrow);
 				}
 			}
-		}
-
-		paintBinContents(positionedBin, g);
-		if (!othersBin.isEmpty()) {
-			paintBinContents(othersBin, g);
-		}
-		if (!referencesBin.isEmpty()) {
-			paintBinContents(referencesBin, g);
-		}
-		if (!primariesBin.isEmpty()) {
-			paintBinContents(primariesBin, g);
 		}
 
 		if (selChannel != null) {
@@ -492,115 +330,14 @@ public class VisualReferenceEditor extends JComponent implements VisualReference
 
 	}
 
-	private Dimension calculateRequiredSize() {
+        @Override
+	protected Dimension calculateRequiredSize() {
 
-		Dimension viewportSize = viewport.getExtentSize();
-		int avHeight = viewportSize.height - (2 * BIN_SPACING);
+		Dimension retval = super.calculateRequiredSize();
 
-		VisualReferenceBin othersBin = model.getOthersBin();
-		VisualReferencePositionedBin positionedBin = model.getPositionedBin();
-		VisualReferenceBin referencesBin = model.getReferencesBin();
-		VisualReferenceBin primariesBin = model.getPrimariesBin();
+                positionArrows(true);
 
-		int minimumHeight = 0;
-		int minBinHeight;
-		if (!othersBin.isEmpty()) {
-			minBinHeight = othersBin.getMinHeight();
-			if (minBinHeight > minimumHeight) {
-				minimumHeight = minBinHeight;
-			}
-		}
-
-		minimumHeight += (2 * BIN_SPACING);
-		if (avHeight < minimumHeight) {
-			avHeight = minimumHeight;
-		}
-
-		Dimension size;
-
-		positionedBin.setMaxHeight(avHeight);
-
-		size = positionedBin.getSize();
-
-		int width = 2*BIN_SPACING + size.width;
-
-		if (!othersBin.isEmpty()) {
-
-			othersBin.setMaxHeight(avHeight);
-
-			size = othersBin.getSize();
-			width += (BIN_SPACING + size.width);
-
-		}
-
-		if (!referencesBin.isEmpty()) {
-
-			referencesBin.setMaxHeight(avHeight);
-			size = referencesBin.getSize();
-
-			width += (BIN_SPACING + size.width);
-
-		}
-
-		if (!primariesBin.isEmpty()) {
-
-			primariesBin.setMaxHeight(avHeight);
-			size = primariesBin.getSize();
-
-			width += (BIN_SPACING + size.width);
-
-		}
-
-		int centeringOffset = 0;
-		if (viewportSize.width > width) {
-			centeringOffset = (viewportSize.width - width) / 2;
-		}
-
-		// now position the bins and re-validate them
-		int topX = centeringOffset + BIN_SPACING;
-
-		if (!othersBin.isEmpty()) {
-
-			othersBin.setLocation(new Point(topX, BIN_SPACING));
-			if (!othersBin.isPositioned()) {
-				othersBin.reposition();
-			}
-			size = othersBin.getSize();
-			topX += (size.width + BIN_SPACING);
-
-		}
-
-		if (!primariesBin.isEmpty()) {
-
-			primariesBin.setLocation(new Point(topX, BIN_SPACING));
-			if (!primariesBin.isPositioned()) {
-				primariesBin.reposition();
-			}
-			size = primariesBin.getSize();
-			topX += (size.width + BIN_SPACING);
-
-
-		}
-
-		if (!referencesBin.isEmpty()) {
-
-			referencesBin.setLocation(new Point(topX, BIN_SPACING));
-			if (!referencesBin.isPositioned()) {
-				referencesBin.reposition();
-			}
-			size = referencesBin.getSize();
-			topX += (size.width + BIN_SPACING);
-
-		}
-
-		positionedBin.setLocation(new Point(topX, BIN_SPACING));
-		if (!positionedBin.isPositioned()) {
-			positionedBin.reposition();
-		}
-
-		positionArrows(true);
-
-		return new Dimension(width, viewportSize.height);
+		return retval;
 
 	}
 
@@ -674,49 +411,6 @@ public class VisualReferenceEditor extends JComponent implements VisualReference
 
 		arrow.setPositioned(true);
 
-	}
-
-	public VisualReferenceModel getModel() {
-		return model;
-	}
-
-	@Override
-	public Dimension getPreferredScrollableViewportSize() {
-		return getPreferredSize();
-	}
-
-	@Override
-	public int getScrollableBlockIncrement(Rectangle visibleRect, int orientation, int direction) {
-		return 100;
-	}
-
-	@Override
-	public boolean getScrollableTracksViewportHeight() {
-		return true;
-	}
-
-	@Override
-	public boolean getScrollableTracksViewportWidth() {
-		return (getPreferredSize().width < viewport.getExtentSize().width);
-	}
-
-	@Override
-	public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction) {
-		return 10;
-	}
-
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		Object source = evt.getSource();
-		String name = evt.getPropertyName();
-		if (source == model) {
-			if (VisualReferenceModel.ACTIVE_ARROW_PROPERTY.equals(name)) {
-				repaint();
-			}
-			else if (VisualReferenceModel.ACTIVE_CHANNEL_PROPERTY.equals(name)) {
-				repaint();
-			}
-		}
 	}
 
 	@Override
