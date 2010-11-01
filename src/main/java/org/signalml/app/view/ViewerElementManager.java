@@ -133,6 +133,8 @@ import org.signalml.util.SvarogConstants;
 import org.springframework.context.support.MessageSourceAccessor;
 
 import com.thoughtworks.xstream.XStream;
+import org.signalml.app.action.StartMonitorRecordingAction;
+import org.signalml.app.action.StopMonitorRecordingAction;
 
 
 
@@ -293,6 +295,8 @@ public class ViewerElementManager {
 	private RemoveAllFinishedTasksAction removeAllFinishedTasksAction;
 	private RemoveAllAbortedTasksAction removeAllAbortedTasksAction;
 	private RemoveAllFailedTasksAction removeAllFailedTasksAction;
+	private StartMonitorRecordingAction startMonitorRecordingAction;
+	private StopMonitorRecordingAction stopMonitorRecordingAction;
 
 	private ArrayList<AbstractSignalMLAction> runMethodActions;
 	private ArrayList<AbstractSignalMLAction> iterateMethodActions;
@@ -654,6 +658,9 @@ public class ViewerElementManager {
 			monitorMenu = new JMenu(messageSource.getMessage("menu.monitor"));
 			monitorMenu.add(getOpenMonitorAction());
                         monitorMenu.add(getCheckSignalAction());
+			monitorMenu.addSeparator();
+			monitorMenu.add(getStartMonitorRecordingAction());
+			monitorMenu.add(getStopMonitorRecordingAction());
 		}
 		return monitorMenu;
 	}
@@ -1277,6 +1284,18 @@ public class ViewerElementManager {
 		}
 		return checkSignalAction;
         }
+
+	public StartMonitorRecordingAction getStartMonitorRecordingAction() {
+		if (startMonitorRecordingAction == null)
+			startMonitorRecordingAction = new StartMonitorRecordingAction(messageSource, getActionFocusManager());
+		return startMonitorRecordingAction;
+	}
+
+	public StopMonitorRecordingAction getStopMonitorRecordingAction() {
+		if (stopMonitorRecordingAction == null)
+			stopMonitorRecordingAction = new StopMonitorRecordingAction(messageSource, getActionFocusManager());
+		return stopMonitorRecordingAction;
+	}
 
 
 	public CloseDocumentAction getCloseActiveDocumentAction() {

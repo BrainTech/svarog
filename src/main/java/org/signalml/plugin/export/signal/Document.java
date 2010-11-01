@@ -96,6 +96,7 @@ public interface Document {
 	 * @param listener the listener to be added.
 	 */
 	public void addPropertyChangeListener(PropertyChangeListener listener);
+
 	/**
 	 * Removes a given listener.
 	 * If <code>listener</code> was added more than once, it will be notified one
@@ -104,5 +105,14 @@ public interface Document {
 	 * @param listener the listener to be removed.
 	 */
 	public void removePropertyChangeListener(PropertyChangeListener listener);
+
+	/**
+	 * Returns an array containing all {@link PropertyChangeListener property change listeners}
+	 * added to this document.
+	 *
+	 * @return an array of {@link PropertyChangeListener property change listeners} added to this
+	 * document.
+	 */
+	public PropertyChangeListener[] getPropertyChangeListeners();
 
 }

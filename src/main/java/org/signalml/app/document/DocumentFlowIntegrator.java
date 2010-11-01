@@ -794,12 +794,6 @@ public class DocumentFlowIntegrator {
 		
 		MonitorSignalDocument monitorSignalDocument = new MonitorSignalDocument( monitorOptions);
 
-		String fileName = monitorOptions.getFileName();
-		if (fileName != null && !"".equals( fileName)) {
-			FileOutputStream recorderOutput = new FileOutputStream( new File( fileName + ".raw"));
-			monitorSignalDocument.setRecorderOutput( recorderOutput);
-		}
-
 		monitorSignalDocument.openDocument();
 
 		onSignalDocumentAdded( monitorSignalDocument, descriptor.isMakeActive());

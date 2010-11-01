@@ -310,6 +310,11 @@
 	<entry key="action.checkSignalLabel">Check signal...</entry>
 	<entry key="action.checkSignalToolTip">Check if signal is OK</entry>
 
+	<entry key="action.startMonitorRecordingLabel">Start monitor recording</entry>
+	<entry key="action.startMonitorRecordingToolTip">Record signal and tags from this monitor to a file</entry>
+	<entry key="action.stopMonitorRecordingLabel">Stop monitor recording</entry>
+	<entry key="action.stopMonitorRecordingToolTip">Stop to record signal and tags to a file</entry>
+
 	<entry key="action.connectMultiplexer.actionName">Connect</entry>
 	<entry key="action.cancelConnectMultiplexer.actionName">Cancel</entry>
 	<entry key="action.disconnectMultiplexer.actionName">Disconnect</entry>
