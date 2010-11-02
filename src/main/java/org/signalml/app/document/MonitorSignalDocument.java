@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import org.signalml.app.model.LabelledPropertyDescriptor;
 import org.signalml.app.model.OpenMonitorDescriptor;
+import org.signalml.domain.montage.MontageMismatchException;
 import org.signalml.plugin.export.view.DocumentView;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
@@ -144,6 +145,11 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 			for (Iterator<SignalPlot> i = ((SignalView) documentView).getPlots().iterator(); i.hasNext();) {
 				SignalPlot signalPlot = i.next();
 				SignalProcessingChain signalChain = SignalProcessingChain.createNotBufferedFilteredChain(sampleSource, getType());
+				try {
+					signalChain.applyMontageDefinition(this.getMontage());
+				} catch (MontageMismatchException ex) {
+					logger.error("Failed to apply montage to the Signal Chain.", ex);
+				}
 				signalPlot.setSignalChain(signalChain);
 			}
 		}
