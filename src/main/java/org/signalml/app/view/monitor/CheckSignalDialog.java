@@ -155,9 +155,10 @@ public class CheckSignalDialog extends AbstractDialog {
 
         /**
          * This class' instance is passed to the {@link Timer} object of a {@link CheckSignalDialog}.
-         * It gets a {@link GenericAmplifierDiagnosis} object and calls it's {@link GenericAmplifierDiagnosis#signalState()} method.
+         * It gets a {@link GenericAmplifierDiagnosis} object and calls it's {@link GenericAmplifierDiagnosis#signalState()} method
+         * constantly in a seperate thread with a given delay
          */
-        private class TimerClass implements ActionListener {
+        private class TimerClass implements ActionListener, Runnable {
 
                 private GenericAmplifierDiagnosis amplifierDiagnosis;
                 private CheckSignalDisplay checkSignalDisplay;
@@ -178,6 +179,12 @@ public class CheckSignalDialog extends AbstractDialog {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
+
+                        (new Thread(this)).start();
+                }
+
+                @Override
+                public void run() {
 
                         checkSignalDisplay.setChannelsState(amplifierDiagnosis.signalState());
                 }
