@@ -92,7 +92,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		int sampleCount = (int) Math.ceil(ps * freq);
 		sampleSource = new RoundBufferMultichannelSampleSource(monitorOptions.getSelectedChannelList().length, sampleCount);
 		timestampsSource = new RoundBufferSampleSource(sampleCount);
-		((RoundBufferMultichannelSampleSource) sampleSource).setLabels(monitorOptions.getSelectedChannelList());
+		((RoundBufferMultichannelSampleSource) sampleSource).setLabels(monitorOptions.getSelectedChannelsLabels());
 		((RoundBufferMultichannelSampleSource) sampleSource).setDocumentView(getDocumentView());
 
 	}
@@ -440,10 +440,10 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		rsd.setExportFileName(dataPath);
 		rsd.setBlocksPerPage(1);
 		rsd.setByteOrder(monitorOptions.getByteOrder());
-		rsd.setCalibrationGain(monitorOptions.getCalibrationGain());
-		rsd.setCalibrationOffset(monitorOptions.getCalibrationOffset());
-		rsd.setChannelCount(monitorOptions.getChannelCount());
-		rsd.setChannelLabels(monitorOptions.getChannelLabels());
+		rsd.setCalibrationGain(monitorOptions.getSelectedChannelsCalibrationGain());
+		rsd.setCalibrationOffset(monitorOptions.getSelectedChannelsCalibrationOffset());
+		rsd.setChannelCount(monitorOptions.getSelectedChannelsCount());
+		rsd.setChannelLabels(monitorOptions.getSelectedChannelsLabels());
 		rsd.setPageSize(monitorOptions.getPageSize().floatValue());
 		rsd.setSampleCount(sampleCount);
 		rsd.setSampleType(monitorOptions.getSampleType());

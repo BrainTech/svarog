@@ -172,14 +172,6 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 						chunk[i] = samples.get(i).getValue();
 					}
 
-					// Send chunk to recorder
-					if (sampleQueue != null) {
-						sampleQueue.offer(chunk.clone());
-						if (tagRecorderWorker != null && !tagRecorderWorker.isStartRecordingTimestampSet()) {
-							tagRecorderWorker.setStartRecordingTimestamp(samples.get(0).getTimestamp());
-						}
-					}
-
 					// Transform chunk using gain and offset
 					double[] condChunk = new double[plotCount];
 					for (int i = 0; i < plotCount; i++) {
@@ -187,6 +179,13 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 						condChunk[i] = gain[n] * chunk[n] + offset[n];
 					}
 
+					// Send chunk to recorder
+					if (sampleQueue != null) {
+						sampleQueue.offer(condChunk.clone());
+						if (tagRecorderWorker != null && !tagRecorderWorker.isStartRecordingTimestampSet()) {
+							tagRecorderWorker.setStartRecordingTimestamp(samples.get(0).getTimestamp());
+						}
+					}
 
 					//DEBUG
 					if (xxx_debug > 1 && xxx_tagMsg != null) {
