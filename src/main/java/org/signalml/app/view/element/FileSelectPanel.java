@@ -25,15 +25,17 @@ public class FileSelectPanel extends JPanel {
 	
 	private MessageSourceAccessor messageSource;
 
+	private JLabel selectFileLabel;
 	private JTextField fileNameField;
-	private JButton changeButton;
+	private JButton browseButton;
 
 	/**
 	 * This is the default constructor
 	 */
-	public FileSelectPanel( MessageSourceAccessor messageSource) {
+	public FileSelectPanel(MessageSourceAccessor messageSource, String selectFilePrompt) {
 		super();
 		this.messageSource = messageSource;
+		this.selectFileLabel = new JLabel(selectFilePrompt);
 		initialize();
 	}
 
@@ -43,24 +45,23 @@ public class FileSelectPanel extends JPanel {
 	 * @return void
 	 */
 	private void initialize() {
-		JLabel label = new JLabel( messageSource.getMessage( "openMonitor.saveDataLabel"));
 		setLayout( new FlowLayout());
-		add( label);
+		add(selectFileLabel);
 		add( getFileNameField());
 		add( getChangeButton());
 	}
 
-	public JTextField getFileNameField() {
+	protected JTextField getFileNameField() {
 		if (fileNameField == null) {
 			fileNameField = new JTextField( 20);
 		}
 		return fileNameField;
 	}
 
-	public JButton getChangeButton() {
-		if (changeButton == null) {
-			changeButton = new JButton( messageSource.getMessage( "openMonitor.browseButtonLabel"));
-			changeButton.addActionListener( new ActionListener() {
+	protected JButton getChangeButton() {
+		if (browseButton == null) {
+			browseButton = new JButton( messageSource.getMessage( "fileSelectPanel.browseButtonLabel"));
+			browseButton.addActionListener( new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					JFileChooser chooser = new JFileChooser();
@@ -76,7 +77,15 @@ public class FileSelectPanel extends JPanel {
 				}
 			});
 		}
-		return changeButton;
+		return browseButton;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileNameField.setText(fileName);
+	}
+
+	public String getFileName() {
+		return this.fileNameField.getText();
 	}
 
 	public boolean isFileSelected() {
@@ -85,6 +94,14 @@ public class FileSelectPanel extends JPanel {
 			return true;
 		else
 			return false;
+	}
+
+	@Override
+	public void setEnabled(boolean enabled) {
+		super.setEnabled(enabled);
+		selectFileLabel.setEnabled(enabled);
+		fileNameField.setEnabled(enabled);
+		browseButton.setEnabled(enabled);
 	}
 
 }

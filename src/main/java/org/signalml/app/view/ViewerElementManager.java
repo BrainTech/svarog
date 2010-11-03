@@ -135,6 +135,7 @@ import org.springframework.context.support.MessageSourceAccessor;
 import com.thoughtworks.xstream.XStream;
 import org.signalml.app.action.StartMonitorRecordingAction;
 import org.signalml.app.action.StopMonitorRecordingAction;
+import org.signalml.app.view.monitor.StartMonitorRecordingDialog;
 
 
 
@@ -249,6 +250,7 @@ public class ViewerElementManager {
 	private ExportSignalDialog exportSignalDialog;
 	private EditFFTSampleFilterDialog editFFTSampleFilterDialog;
 	private EditTimeDomainSampleFilterDialog editTimeDomainSampleFilterDialog;
+	private StartMonitorRecordingDialog startMonitorRecordingDialog;
 
 	private MP5LocalExecutorDialog mp5LocalExecutorDialog;
 	private MP5RemoteExecutorDialog mp5RemoteExecutorDialog;
@@ -1148,6 +1150,14 @@ public class ViewerElementManager {
 		return editTimeDomainSampleFilterDialog;
 	}
 
+	public StartMonitorRecordingDialog getStartMonitorRecordingDialog() {
+		if (startMonitorRecordingDialog == null) {
+			startMonitorRecordingDialog = new StartMonitorRecordingDialog(messageSource, getDialogParent(), true);
+
+		}
+		return startMonitorRecordingDialog;
+	}
+
 	public MP5LocalExecutorDialog getMp5LocalExecutorDialog() {
 		if (mp5LocalExecutorDialog == null) {
 			mp5LocalExecutorDialog = new MP5LocalExecutorDialog(messageSource, getDialogParent(), true);
@@ -1286,8 +1296,10 @@ public class ViewerElementManager {
         }
 
 	public StartMonitorRecordingAction getStartMonitorRecordingAction() {
-		if (startMonitorRecordingAction == null)
+		if (startMonitorRecordingAction == null) {
 			startMonitorRecordingAction = new StartMonitorRecordingAction(messageSource, getActionFocusManager());
+			startMonitorRecordingAction.setStartMonitorRecordingDialog(getStartMonitorRecordingDialog());
+		}
 		return startMonitorRecordingAction;
 	}
 

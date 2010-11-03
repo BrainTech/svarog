@@ -342,10 +342,12 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	/**
 	 * Starts to record this monitor document samples and tags to the given files.
 	 * After calling {@link MonitorSignalDocument#stopMonitorRecording()} the data
-	 * will be written to the given files.
+	 * will be written to the given files. If the tagFile is null, only signal is
+	 * recorded.
 	 *
 	 * @param signalFile the file to which the recorded samples should be written
-	 * @param tagFile the file to which the recorded tags should be written
+	 * @param tagFile the file to which the recorded tags should be written.
+	 * If null, no tags are recorded.
 	 * @throws FileNotFoundException thrown when the files for buffering, signal and tag recording are not found
 	 */
 	public void startMonitorRecording(File signalFile, File tagFile) throws FileNotFoundException {

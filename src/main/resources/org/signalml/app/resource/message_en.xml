@@ -662,7 +662,6 @@
 	<entry key="openMonitor.pageSizeLabel">Page size</entry>
 	<entry key="openMonitor.channelsListLabel">Channels</entry>
 	<entry key="openMonitor.saveDataLabel">Select file</entry>
-	<entry key="openMonitor.browseButtonLabel">Browse</entry>
 	<entry key="openDocument.signalAutodetected">Signal document autodetected</entry>
 	<entry key="openDocument.bookAutodetected">Book document autodetected</entry>
 	<entry key="openDocument.tagAutodetected">Tag document autodetected</entry>
@@ -822,7 +821,6 @@
 	<entry key="editFFTSampleFilter.title">Edit FFT sample filter</entry>
 	<entry key="editFFTSampleFilter.tableToolTip">Double click a row to copy parameters to new range parameters panel</entry>
 
-
 	<entry key="editFFTSampleFilter.addNewRangeTitle">New range parameters</entry>
 	<entry key="editFFTSampleFilter.rangesTitle">Ranges</entry>
 
@@ -852,11 +850,18 @@
 	<entry key="editTimeDomainSampleFilter.stopbandEdgeFrequency2">Stopband edge frequency 2 [Hz]</entry>
 	<entry key="editTimeDomainSampleFilter.passbandRipple">Passband ripple [dB]</entry>
 	<entry key="editTimeDomainSampleFilter.stopbandAttenuation">Stopband attenuation [dB]</entry>
-
 	<entry key="editTimeDomainSampleFilter.drawFilterFrequencyResponse">Draw filter frequency response</entry>
 
 	<entry key="error.editTimeDomainSampleFilter.badFilterParameters">The filter cannot be designed for the given parameters - please correct them.</entry>
 	<entry key="error.editTimeDomainSampleFilter.badFilterParametersFilterOrderTooBig">The order of the filter designed for the given parameters is too big - please correct the parameters.</entry>
+
+	<entry key="startMonitorRecording.title">Start monitor recording</entry>
+	<entry key="startMonitorRecording.chooseFilesTitle">Choose files to record signal and tags to</entry>
+	<entry key="startMonitorRecording.chooseSignalFileLabel">Record signal to file</entry>
+	<entry key="startMonitorRecording.chooseTagFileLabel">Record tags to file</entry>
+	<entry key="startMonitorRecording.doNotRecordTagsLabel">Do not record tags</entry>
+
+	<entry key="fileSelectPanel.browseButtonLabel">Browse</entry>
 
 	<entry key="signalSpace.signalLevelType.title">Signal source level</entry>
 	<entry key="signalSpace.signalLevelType.rawSignal">Raw signal</entry>

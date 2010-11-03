@@ -11,6 +11,8 @@ import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.SignalDocument;
+import org.signalml.app.model.MonitorRecordingDescriptor;
+import org.signalml.app.view.monitor.StartMonitorRecordingDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
@@ -24,6 +26,8 @@ public class StartMonitorRecordingAction extends MonitorRecordingAction {
 	 * Logger to save history of execution at.
 	 */
 	protected static final Logger logger = Logger.getLogger(StartMonitorRecordingAction.class);
+
+	protected StartMonitorRecordingDialog startMonitorRecordingDialog;
 	
 	public StartMonitorRecordingAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
                 super(messageSource, signalDocumentFocusSelector);
@@ -39,14 +43,33 @@ public class StartMonitorRecordingAction extends MonitorRecordingAction {
 	@Override
 	public void actionPerformed(ActionEvent ev) {
 
+		MonitorRecordingDescriptor monitorRecordingDescriptor;
+		File signalRecordingFile;
+		File tagsRecordingFile;
+
 		SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
 		if ((signalDocument != null) && (signalDocument instanceof MonitorSignalDocument)) {
+
 			MonitorSignalDocument monitorSignalDocument = (MonitorSignalDocument) signalDocument;
+			monitorRecordingDescriptor = new MonitorRecordingDescriptor("monitor_signal_rec", "monitor_tags_rec", false);
+
+			boolean ok = startMonitorRecordingDialog.showDialog(monitorRecordingDescriptor, true);
+				if (!ok) {
+				return;
+			}
+
+			signalRecordingFile = new File(monitorRecordingDescriptor.getSignalRecordingFilePath());
+			if (monitorRecordingDescriptor.isTagsRecordingDisabled())
+				tagsRecordingFile = null;
+			else
+				tagsRecordingFile = new File(monitorRecordingDescriptor.getTagsRecordingFilePath());
+
 			try {
-				monitorSignalDocument.startMonitorRecording(new File("sygnal"), new File("sygnal-tagi"));
+				monitorSignalDocument.startMonitorRecording(signalRecordingFile, tagsRecordingFile);
 			} catch (FileNotFoundException ex) {
 				logger.error("The files to which you want to record signal/tags were not found", ex);
 			}
+
 		}
 
 	}
@@ -66,6 +89,14 @@ public class StartMonitorRecordingAction extends MonitorRecordingAction {
 		else
 			setEnabled(false);
 
+	}
+
+	public StartMonitorRecordingDialog getStartMonitorRecordingDialog() {
+		return startMonitorRecordingDialog;
+	}
+
+	public void setStartMonitorRecordingDialog(StartMonitorRecordingDialog startMonitorRecordingDialog) {
+		this.startMonitorRecordingDialog = startMonitorRecordingDialog;
 	}
 
 }
