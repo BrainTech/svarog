@@ -1153,7 +1153,6 @@ public class ViewerElementManager {
 	public StartMonitorRecordingDialog getStartMonitorRecordingDialog() {
 		if (startMonitorRecordingDialog == null) {
 			startMonitorRecordingDialog = new StartMonitorRecordingDialog(messageSource, getDialogParent(), true);
-
 		}
 		return startMonitorRecordingDialog;
 	}
@@ -1637,6 +1636,7 @@ public class ViewerElementManager {
 			signalView.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 			signalView.setMontagePresetManager(getMontagePresetManager());
 			signalView.setSignalMontageDialog(getSignalMontageDialog());
+			signalView.setStartMonitorRecordingDialog(getStartMonitorRecordingDialog());
 			signalView.setSignalParametersDialog(getSignalParametersDialog());
 			signalView.setSignalSelectionDialog(getSignalSelectionDialog());
 			signalView.setTagStylePaletteDialog(getTagStylePaletteDialog());
@@ -1659,6 +1659,7 @@ public class ViewerElementManager {
 			signalView.setSlavePlotSettingsPopupDialog(getSlavePlotSettingsPopupDialog());
 			signalView.setErrorsDialog(getErrorsDialog());
 			signalView.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
+			signalView.setStartMonitorRecordingDialog(getStartMonitorRecordingDialog());
 			signalView.setSignalParametersDialog(getSignalParametersDialog());
 			signalView.setSignalSelectionDialog(getSignalSelectionDialog());
 			signalView.setApplicationConfig(getApplicationConfig());

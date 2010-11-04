@@ -32,7 +32,8 @@ public class StartMonitorRecordingAction extends MonitorRecordingAction {
 	public StartMonitorRecordingAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
                 super(messageSource, signalDocumentFocusSelector);
 		setText("action.startMonitorRecordingLabel");
-		setToolTip("action.startMonitorRecordingToolTip");		
+		setIconPath("org/signalml/app/icon/record.png");
+		setToolTip("action.startMonitorRecordingToolTip");
 	}
 
 	/**

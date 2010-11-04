@@ -28,6 +28,7 @@ public class StopMonitorRecordingAction extends MonitorRecordingAction {
 	public StopMonitorRecordingAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
 
                 super(messageSource, signalDocumentFocusSelector);
+		setIconPath("org/signalml/app/icon/stop-recording.png");
 		setText("action.stopMonitorRecordingLabel");
 		setToolTip("action.stopMonitorRecordingToolTip");
 
