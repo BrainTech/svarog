@@ -1649,24 +1649,6 @@ public class ViewerElementManager {
 
 			documentView = signalView;
 
-		} else if (document instanceof MonitorSignalDocument) {
-
-			SignalView signalView;
-			signalView = new SignalView((SignalDocument) document);
-
-			signalView.setMessageSource(messageSource);
-			signalView.setActionFocusManager(getActionFocusManager());
-			signalView.setSlavePlotSettingsPopupDialog(getSlavePlotSettingsPopupDialog());
-			signalView.setErrorsDialog(getErrorsDialog());
-			signalView.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
-			signalView.setStartMonitorRecordingDialog(getStartMonitorRecordingDialog());
-			signalView.setSignalParametersDialog(getSignalParametersDialog());
-			signalView.setSignalSelectionDialog(getSignalSelectionDialog());
-			signalView.setApplicationConfig(getApplicationConfig());
-			signalView.initialize();
-
-			documentView = signalView;
-
 		} else if (document instanceof BookDocument) {
 
 			BookView bookView;
