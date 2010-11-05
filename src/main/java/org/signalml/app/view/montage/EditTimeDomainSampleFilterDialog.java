@@ -63,6 +63,7 @@ import org.springframework.validation.Errors;
  */
 public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
+	private final double FREQUENCY_SPINNER_STEP_SIZE = 0.1;
 
 	private TimeDomainSampleFilter currentFilter;
 
@@ -334,14 +335,14 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 		if (passbandEdgeFrequency1Spinner == null) {
 
-			passbandEdgeFrequency1Spinner = new JSpinner(new SpinnerNumberModel(0.25, 0.0, getCurrentSamplingFrequency() / 2, 0.25));
+			passbandEdgeFrequency1Spinner = new JSpinner(new SpinnerNumberModel(0.0, 0.0, getCurrentSamplingFrequency() / 2, FREQUENCY_SPINNER_STEP_SIZE));
 			passbandEdgeFrequency1Spinner.setPreferredSize(new Dimension(80, 25));
 
 			passbandEdgeFrequency1Spinner.setEditor(new JSpinner.NumberEditor(passbandEdgeFrequency1Spinner, "0.00"));
 			passbandEdgeFrequency1Spinner.setFont(passbandEdgeFrequency1Spinner.getFont().deriveFont(Font.PLAIN));
 
 
-			passbandEdgeFrequency1Spinner.addChangeListener(new SpinnerRoundingChangeListener() {
+			/*passbandEdgeFrequency1Spinner.addChangeListener(new SpinnerRoundingChangeListener() {
 
 				@Override
 				public void stateChanged(ChangeEvent e) {
@@ -358,7 +359,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 						otherValue = ((Number) getStopbandEdgeFrequency1Spinner().getValue()).doubleValue();
 
 						if (value >= otherValue) {
-							getStopbandEdgeFrequency1Spinner().setValue(value + 0.25);
+							getStopbandEdgeFrequency1Spinner().setValue(value + FREQUENCY_SPINNER_STEP_SIZE);
 						}
 
 					}
@@ -367,7 +368,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 						otherValue = ((Number) getStopbandEdgeFrequency1Spinner().getValue()).doubleValue();
 
 						if (value <= otherValue) {
-							getStopbandEdgeFrequency1Spinner().setValue(value - 0.25);
+							getStopbandEdgeFrequency1Spinner().setValue(value - FREQUENCY_SPINNER_STEP_SIZE);
 						}
 
 					}
@@ -377,7 +378,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 						otherValue = ((Number) getPassbandEdgeFrequency2Spinner().getValue()).doubleValue();
 
 						if (value >= otherValue) {
-							getPassbandEdgeFrequency2Spinner().setValue(value + 0.25);
+							getPassbandEdgeFrequency2Spinner().setValue(value + FREQUENCY_SPINNER_STEP_SIZE);
 						}
 
 					}
@@ -389,7 +390,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 				}
 
-			});
+			});*/
 
 
 		}
@@ -402,14 +403,14 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 		if (passbandEdgeFrequency2Spinner == null) {
 
-			passbandEdgeFrequency2Spinner = new JSpinner(new SpinnerNumberModel(0.25, 0.0, getCurrentSamplingFrequency() / 2, 0.25));
+			passbandEdgeFrequency2Spinner = new JSpinner(new SpinnerNumberModel(0.0, 0.0, getCurrentSamplingFrequency() / 2, FREQUENCY_SPINNER_STEP_SIZE));
 			passbandEdgeFrequency2Spinner.setPreferredSize(new Dimension(80, 25));
 
 			passbandEdgeFrequency2Spinner.setEditor(new JSpinner.NumberEditor(passbandEdgeFrequency2Spinner, "0.00"));
 			passbandEdgeFrequency2Spinner.setFont(passbandEdgeFrequency2Spinner.getFont().deriveFont(Font.PLAIN));
 
 
-			passbandEdgeFrequency2Spinner.addChangeListener(new SpinnerRoundingChangeListener() {
+			/*passbandEdgeFrequency2Spinner.addChangeListener(new SpinnerRoundingChangeListener() {
 
 				@Override
 				public void stateChanged(ChangeEvent e) {
@@ -425,7 +426,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 						otherValue = ((Number) getStopbandEdgeFrequency2Spinner().getValue()).doubleValue();
 
 						if (value <= otherValue) {
-							getStopbandEdgeFrequency2Spinner().setValue(value - 0.25);
+							getStopbandEdgeFrequency2Spinner().setValue(value - FREQUENCY_SPINNER_STEP_SIZE);
 						}
 
 					}
@@ -434,7 +435,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 						otherValue = ((Number) getStopbandEdgeFrequency2Spinner().getValue()).doubleValue();
 
 						if (value >= otherValue) {
-							getStopbandEdgeFrequency2Spinner().setValue(value + 0.25);
+							getStopbandEdgeFrequency2Spinner().setValue(value + FREQUENCY_SPINNER_STEP_SIZE);
 						}
 
 					}
@@ -444,7 +445,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 						otherValue = ((Number) getPassbandEdgeFrequency1Spinner().getValue()).doubleValue();
 
 						if (value <= otherValue) {
-							getPassbandEdgeFrequency1Spinner().setValue(value - 0.25);
+							getPassbandEdgeFrequency1Spinner().setValue(value - FREQUENCY_SPINNER_STEP_SIZE);
 						}
 
 					}
@@ -456,7 +457,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 				}
 
-			});
+			});*/
 
 		}
 
@@ -468,13 +469,13 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 		if (stopbandEdgeFrequency1Spinner == null) {
 
-			stopbandEdgeFrequency1Spinner = new JSpinner(new SpinnerNumberModel(0.25, 0.0, getCurrentSamplingFrequency() / 2, 0.25));
+			stopbandEdgeFrequency1Spinner = new JSpinner(new SpinnerNumberModel(0.0, 0.0, getCurrentSamplingFrequency() / 2, FREQUENCY_SPINNER_STEP_SIZE));
 			stopbandEdgeFrequency1Spinner.setPreferredSize(new Dimension(80, 25));
 
 			stopbandEdgeFrequency1Spinner.setEditor(new JSpinner.NumberEditor(stopbandEdgeFrequency1Spinner, "0.00"));
 			stopbandEdgeFrequency1Spinner.setFont(stopbandEdgeFrequency1Spinner.getFont().deriveFont(Font.PLAIN));
 
-			stopbandEdgeFrequency1Spinner.addChangeListener(new SpinnerRoundingChangeListener() {
+			/*stopbandEdgeFrequency1Spinner.addChangeListener(new SpinnerRoundingChangeListener() {
 
 				@Override
 				public void stateChanged(ChangeEvent e) {
@@ -491,7 +492,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 						otherValue = ((Number) getPassbandEdgeFrequency1Spinner().getValue()).doubleValue();
 
 						if (value <= otherValue) {
-							getPassbandEdgeFrequency1Spinner().setValue(value - 0.25);
+							getPassbandEdgeFrequency1Spinner().setValue(value - FREQUENCY_SPINNER_STEP_SIZE);
 						}
 
 					}
@@ -500,7 +501,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 						otherValue = ((Number) getPassbandEdgeFrequency1Spinner().getValue()).doubleValue();
 
 						if (value >= otherValue) {
-							getPassbandEdgeFrequency1Spinner().setValue(value + 0.25);
+							getPassbandEdgeFrequency1Spinner().setValue(value + FREQUENCY_SPINNER_STEP_SIZE);
 						}
 
 					}
@@ -510,7 +511,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 						otherValue = ((Number) getStopbandEdgeFrequency2Spinner().getValue()).doubleValue();
 
 						if (value >= otherValue) {
-							getStopbandEdgeFrequency2Spinner().setValue(value + 0.25);
+							getStopbandEdgeFrequency2Spinner().setValue(value + FREQUENCY_SPINNER_STEP_SIZE);
 						}
 
 					}
@@ -522,7 +523,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 				}
 
-			});
+			});*/
 
 
 		}
@@ -535,13 +536,13 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 		if (stopbandEdgeFrequency2Spinner == null) {
 
-			stopbandEdgeFrequency2Spinner = new JSpinner(new SpinnerNumberModel(0.25, 0.0, getCurrentSamplingFrequency() / 2, 0.25));
+			stopbandEdgeFrequency2Spinner = new JSpinner(new SpinnerNumberModel(0.0, 0.0, getCurrentSamplingFrequency() / 2, FREQUENCY_SPINNER_STEP_SIZE));
 			stopbandEdgeFrequency2Spinner.setPreferredSize(new Dimension(80, 25));
 
 			stopbandEdgeFrequency2Spinner.setEditor(new JSpinner.NumberEditor(stopbandEdgeFrequency2Spinner, "0.00"));
 			stopbandEdgeFrequency2Spinner.setFont(stopbandEdgeFrequency2Spinner.getFont().deriveFont(Font.PLAIN));
 
-			stopbandEdgeFrequency2Spinner.addChangeListener(new SpinnerRoundingChangeListener() {
+			/*stopbandEdgeFrequency2Spinner.addChangeListener(new SpinnerRoundingChangeListener() {
 
 				@Override
 				public void stateChanged(ChangeEvent e) {
@@ -557,7 +558,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 						otherValue = ((Number) getPassbandEdgeFrequency2Spinner().getValue()).doubleValue();
 
 						if (value >= otherValue) {
-							getPassbandEdgeFrequency2Spinner().setValue(value + 0.25);
+							getPassbandEdgeFrequency2Spinner().setValue(value + FREQUENCY_SPINNER_STEP_SIZE);
 						}
 
 					}
@@ -566,7 +567,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 						otherValue = ((Number) getPassbandEdgeFrequency2Spinner().getValue()).doubleValue();
 
 						if (value <= otherValue) {
-							getPassbandEdgeFrequency2Spinner().setValue(value - 0.25);
+							getPassbandEdgeFrequency2Spinner().setValue(value - FREQUENCY_SPINNER_STEP_SIZE);
 						}
 
 					}
@@ -576,7 +577,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 						otherValue = ((Number) getStopbandEdgeFrequency1Spinner().getValue()).doubleValue();
 
 						if (value <= otherValue) {
-							getStopbandEdgeFrequency1Spinner().setValue(value - 0.25);
+							getStopbandEdgeFrequency1Spinner().setValue(value - FREQUENCY_SPINNER_STEP_SIZE);
 						}
 
 					}
@@ -588,7 +589,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 				}
 
-			});
+			});*/
 
 		}
 
@@ -600,7 +601,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 		if (passbandRippleSpinner == null) {
 
-			passbandRippleSpinner = new JSpinner(new SpinnerNumberModel(3.0, 0.25, 10.0, 0.25));
+			passbandRippleSpinner = new JSpinner(new SpinnerNumberModel(3.0, 0.25, 10.0, FREQUENCY_SPINNER_STEP_SIZE));
 			passbandRippleSpinner.setPreferredSize(new Dimension(80, 25));
 
 			passbandRippleSpinner.setEditor(new JSpinner.NumberEditor(passbandRippleSpinner, "0.00"));
@@ -625,7 +626,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 		if (stopbandAttenuationSpinner == null) {
 
-			stopbandAttenuationSpinner = new JSpinner(new SpinnerNumberModel(30.0, 10.25, 100.0, 0.25));
+			stopbandAttenuationSpinner = new JSpinner(new SpinnerNumberModel(30.0, 10.25, 100.0, FREQUENCY_SPINNER_STEP_SIZE));
 			stopbandAttenuationSpinner.setPreferredSize(new Dimension(80, 25));
 
 			stopbandAttenuationSpinner.setEditor(new JSpinner.NumberEditor(stopbandAttenuationSpinner, "0.00"));
