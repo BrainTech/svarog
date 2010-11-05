@@ -242,6 +242,11 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 	protected class SpinnerRoundingChangeListener implements ChangeListener {
 
 		protected boolean lock = false;
+		double spinnerStepSize;
+
+		public SpinnerRoundingChangeListener(double spinnerStepSize) {
+			this.spinnerStepSize = spinnerStepSize;
+		}
 
 		@Override
 		public void stateChanged(ChangeEvent e) {
@@ -255,7 +260,7 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 
 				JSpinner spinner = (JSpinner) e.getSource();
 				double doubleValue = ((Number) spinner.getValue()).doubleValue();
-				double newDoubleValue = ((double) Math.round(4 * doubleValue)) / 4;
+				double newDoubleValue = ((double) Math.round(doubleValue / spinnerStepSize)) * spinnerStepSize;
 				if (newDoubleValue != doubleValue) {
 					spinner.setValue(newDoubleValue);
 				}
