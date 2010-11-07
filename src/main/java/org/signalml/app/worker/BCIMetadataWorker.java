@@ -30,7 +30,6 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 
 	public static final String SAMPLING_RATE	  = "SamplingRate";
 	public static final String NUMBER_OF_CHANNELS = "NumOfChannels";
-	public static final String AMPLIFIER_CHANNELS = "AmplifierChannelsToRecord";
 	public static final String CHANNEL_NAMES	  = "ChannelsNames";
 	public static final String CALIBRATION_GAIN   = "Gain";
 	public static final String CALIBRATION_OFFSET = "Offset";
@@ -161,19 +160,6 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 			return openMonitorDescriptor;
 		channelCount = Integer.parseInt(value);
 		openMonitorDescriptor.setChannelCount(new Integer(channelCount));
-		publish(++step);
-
-		// amplifier channels
-		value = queryMetaData(AMPLIFIER_CHANNELS, "action.openMonitor.metadataWorker.amplifierChannels");
-		if (value == null)
-			return openMonitorDescriptor;
-		StringTokenizer st = new StringTokenizer(value, " ");
-		int[] amplifierChannels = new int[channelCount];
-		for (int i=0; i<channelCount && st.hasMoreTokens(); i++) {
-			String s = st.nextToken();
-			amplifierChannels[i] = Integer.parseInt(s);
-		}
-		openMonitorDescriptor.setAmplifierChannels(amplifierChannels);
 		publish(++step);
 
 		// channel labels

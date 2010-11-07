@@ -343,11 +343,6 @@
 	<entry key="action.openMonitor.metadataWorker.channelCount.receiveTimedout">Receive timed out!</entry>
 	<entry key="action.openMonitor.metadataWorker.channelCount.receivingFailedMsg">Receiving failed!</entry>
 
-	<entry key="action.openMonitor.metadataWorker.amplifierChannels.sendingFailedMsg">Sending failed!</entry>
-	<entry key="action.openMonitor.metadataWorker.amplifierChannels.receivedBadReplyMsg">Received bad reply!</entry>
-	<entry key="action.openMonitor.metadataWorker.amplifierChannels.receiveTimedout">Receive timed out!</entry>
-	<entry key="action.openMonitor.metadataWorker.amplifierChannels.receivingFailedMsg">Receiving failed!</entry>
-
 	<entry key="action.openMonitor.metadataWorker.channelNames.sendingFailedMsg">Sending failed!</entry>
 	<entry key="action.openMonitor.metadataWorker.channelNames.receivedBadReplyMsg">Received bad reply!</entry>
 	<entry key="action.openMonitor.metadataWorker.channelNames.receiveTimedout">Receive timed out!</entry>
