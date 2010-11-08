@@ -21,7 +21,6 @@ public class OpenMonitorDescriptor {
 	private String metadataInfo;
 
 	private Integer channelCount = 1;
-	private int[] amplifierChannels;
 	private String[] channelLabels;
 	private Object[] selectedChannelList;
 	private int[] selectedChannelsIndecies;
@@ -249,14 +248,6 @@ public class OpenMonitorDescriptor {
 
 	public void setChannelLabels(String[] channelLabels) {
 		this.channelLabels = channelLabels;
-	}
-
-	public int[] getAmplifierChannels() {
-		return amplifierChannels;
-	}
-
-	public void setAmplifierChannels( int[] channelNumbers) {
-		this.amplifierChannels = channelNumbers;
 	}
 
 	public Object[] getSelectedChannelList() {
