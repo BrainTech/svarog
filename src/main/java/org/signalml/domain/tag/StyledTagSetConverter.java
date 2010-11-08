@@ -5,7 +5,6 @@
 package org.signalml.domain.tag;
 
 import java.awt.Color;
-import java.text.DecimalFormat;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.TreeSet;
@@ -32,8 +31,6 @@ import com.thoughtworks.xstream.converters.basic.FloatConverter;
 import com.thoughtworks.xstream.converters.basic.IntConverter;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
-import java.util.Set;
-import javax.swing.JOptionPane;
 
 /**
  * This class is responsible for marshaling/unmarshaling {@link StyledTagSet}
@@ -77,10 +74,10 @@ public class StyledTagSetConverter implements Converter {
 		Montage montage = sts.getMontage();
 		Collection<TagStyle> styles;
 
-		writer.addAttribute("format_version", floatConverter.toString(formatVersion));
+		writer.addAttribute("formatVersion", floatConverter.toString(formatVersion));
 
 		if (ident != null) {
-			writer.startNode("datafile_identification");
+			writer.startNode("datafileIdentification");
 			if (ident.getFileName() != null) {
 				writer.startNode("name");
 				writer.setValue(ident.getFileName());
@@ -104,13 +101,13 @@ public class StyledTagSetConverter implements Converter {
 		}
 
 		writer.startNode("paging");
-		writer.addAttribute("page_size", floatConverter.toString(sts.getPageSize()));
-		writer.addAttribute("blocks_per_page", intConverter.toString(sts.getBlocksPerPage()));
+		writer.addAttribute("pageSize", floatConverter.toString(sts.getPageSize()));
+		writer.addAttribute("blocksPerPage", intConverter.toString(sts.getBlocksPerPage()));
 		writer.endNode();
 
-		writer.startNode("tag_definitions");
+		writer.startNode("tagDefinitions");
 
-		writer.startNode("def_group");
+		writer.startNode("defGroup");
 		writer.addAttribute("name", "pageTags");
 		styles = sts.getPageStyles();
 		for (TagStyle style : styles) {
@@ -118,7 +115,7 @@ public class StyledTagSetConverter implements Converter {
 		}
 		writer.endNode();
 
-		writer.startNode("def_group");
+		writer.startNode("defGroup");
 		writer.addAttribute("name", "blockTags");
 		styles = sts.getBlockStyles();
 		for (TagStyle style : styles) {
@@ -126,7 +123,7 @@ public class StyledTagSetConverter implements Converter {
 		}
 		writer.endNode();
 
-		writer.startNode("def_group");
+		writer.startNode("defGroup");
 		writer.addAttribute("name", "channelTags");
 		styles = sts.getChannelStyles();
 		for (TagStyle style : styles) {
@@ -134,9 +131,9 @@ public class StyledTagSetConverter implements Converter {
 		}
 		writer.endNode();
 
-		writer.endNode(); // tag_definitions
+		writer.endNode(); // tagDefinitions
 
-		writer.startNode("tag_data");
+		writer.startNode("tagData");
 
 		if (info != null) {
 			writer.startNode("description");
@@ -150,7 +147,7 @@ public class StyledTagSetConverter implements Converter {
 			writer.endNode();
 		}
 		else if (montageInfo != null && !montageInfo.isEmpty()) {
-			writer.startNode("montage_info");
+			writer.startNode("montageInfo");
 			writer.setValue(montageInfo);
 			writer.endNode();
 		}
@@ -160,7 +157,7 @@ public class StyledTagSetConverter implements Converter {
 			marshalTag(writer, tag);
 		writer.endNode();
 
-		writer.endNode(); // tag_data
+		writer.endNode(); // tagData
 
 	}
 
@@ -172,7 +169,7 @@ public class StyledTagSetConverter implements Converter {
 	private void marshalTag(HierarchicalStreamWriter writer, Tag tag) {
 		writer.startNode("tag");
 		writer.addAttribute("name", tag.getStyle().getName());
-		writer.addAttribute("channel_number", intConverter.toString(tag.getChannel()));
+		writer.addAttribute("channelNumber", intConverter.toString(tag.getChannel()));
 		writer.addAttribute("position", floatConverter.toString(tag.getPosition()));
 		writer.addAttribute("length", floatConverter.toString(tag.getLength()));
 		marshalTagAttributes(writer, tag);
@@ -204,15 +201,15 @@ public class StyledTagSetConverter implements Converter {
          * @param writer A stream to write to.
          */
 	private void marshalStyle(HierarchicalStreamWriter writer, TagStyle style) {
-		writer.startNode("tag_item");
+		writer.startNode("tagItem");
 		writer.addAttribute("name", style.getName());
 		String description = style.getDescription();
 		writer.addAttribute("description", description != null ? description : "");
-		writer.addAttribute("fill_color", colorConverter.toString(style.getFillColor()));
-		writer.addAttribute("outline_color", colorConverter.toString(style.getOutlineColor()));
-		writer.addAttribute("outline_width", floatConverter.toString(style.getOutlineWidth()));
-		writer.addAttribute("outline_dash", floatArrayConverter.toString(style.getOutlineDash()));
-		writer.addAttribute("key_shortcut", keyStrokeConverter.toString(style.getKeyStroke()));
+		writer.addAttribute("fillColor", colorConverter.toString(style.getFillColor()));
+		writer.addAttribute("outlineColor", colorConverter.toString(style.getOutlineColor()));
+		writer.addAttribute("outlineWidth", floatConverter.toString(style.getOutlineWidth()));
+		writer.addAttribute("outlineDash", floatArrayConverter.toString(style.getOutlineDash()));
+		writer.addAttribute("keyShortcut", keyStrokeConverter.toString(style.getKeyStroke()));
 		writer.addAttribute("marker", booleanConverter.toString(style.isMarker()));
 		writer.endNode();
 	}
@@ -246,13 +243,13 @@ public class StyledTagSetConverter implements Converter {
 
 		Montage montage = null;
 
-		if(Double.parseDouble(reader.getAttribute("format_version")) != formatVersion) {
+		if(Double.parseDouble(reader.getAttribute("formatVersion")) != formatVersion) {
 			throw new SanityCheckException("Unsupported tag file format version. Svarog supports only tag file with format version equal to " + formatVersion + ".");
 		}
 
 		while (reader.hasMoreChildren()) {
 			reader.moveDown();
-			if ("datafile_identification".equals(reader.getNodeName())) {
+			if ("datafileIdentification".equals(reader.getNodeName())) {
 				ident = new TagSignalIdentification();
 				while (reader.hasMoreChildren()) {
 					reader.moveDown();
@@ -275,13 +272,13 @@ public class StyledTagSetConverter implements Converter {
 			} else if ("paging".equals(reader.getNodeName())) {
 				boolean pageSizeOk = false;
 				boolean blocksPerPageOk = false;
-				String attr = reader.getAttribute("page_size");
+				String attr = reader.getAttribute("pageSize");
 				if (attr != null && !attr.isEmpty()) {
 					pageSize = (Float) floatConverter.fromString(attr);
 					pageSizeOk = true;
 				}
 
-				attr = reader.getAttribute("blocks_per_page");
+				attr = reader.getAttribute("blocksPerPage");
 				if (attr != null && !attr.isEmpty()) {
 					blocksPerPage = (Integer) intConverter.fromString(attr);
 					blocksPerPageOk = true;
@@ -290,14 +287,14 @@ public class StyledTagSetConverter implements Converter {
 				if (pageSizeOk && blocksPerPageOk) {
 					pagingOk = true;
 				}
-			} else if ("tag_definitions".equals(reader.getNodeName())) {
+			} else if ("tagDefinitions".equals(reader.getNodeName())) {
 				while (reader.hasMoreChildren()) {
 					reader.moveDown();
 					String type = reader.getAttribute("name");
 					if ("pageTags".equals(type)) {
 						while (reader.hasMoreChildren()) {
 							reader.moveDown();
-							if ("tag_item".equals(reader.getNodeName())) {
+							if ("tagItem".equals(reader.getNodeName())) {
 								style = new TagStyle(SignalSelectionType.PAGE);
 								unmarshalStyle(reader, style);
 								styles.put(style.getName(),style);
@@ -307,7 +304,7 @@ public class StyledTagSetConverter implements Converter {
 					} else if ("blockTags".equals(type)) {
 						while (reader.hasMoreChildren()) {
 							reader.moveDown();
-							if ("tag_item".equals(reader.getNodeName())) {
+							if ("tagItem".equals(reader.getNodeName())) {
 								style = new TagStyle(SignalSelectionType.BLOCK);
 								unmarshalStyle(reader, style);
 								styles.put(style.getName(),style);
@@ -317,7 +314,7 @@ public class StyledTagSetConverter implements Converter {
 					} else if ("channelTags".equals(type)) {
 						while (reader.hasMoreChildren()) {
 							reader.moveDown();
-							if ("tag_item".equals(reader.getNodeName())) {
+							if ("tagItem".equals(reader.getNodeName())) {
 								style = new TagStyle(SignalSelectionType.CHANNEL);
 								unmarshalStyle(reader, style);
 								styles.put(style.getName(),style);
@@ -327,7 +324,7 @@ public class StyledTagSetConverter implements Converter {
 					}
 					reader.moveUp();
 				}
-			} else if ("tag_data".equals(reader.getNodeName())) {
+			} else if ("tagData".equals(reader.getNodeName())) {
 
 				/* paging information is needed before processing tag data to generate tag styles
 				 * for tags for which styles were not generated in the file
@@ -346,7 +343,7 @@ public class StyledTagSetConverter implements Converter {
 						info = reader.getValue();
 					} else if ("montage".equals(reader.getNodeName())) {
 						montage = (Montage) context.convertAnother(null, Montage.class);
-					} else if ("montage_info".equals(reader.getNodeName())) {
+					} else if ("montageInfo".equals(reader.getNodeName())) {
 						montageInfo = reader.getValue();
 					} else if ("tags".equals(reader.getNodeName())) {
 						while (reader.hasMoreChildren()) {
@@ -355,7 +352,7 @@ public class StyledTagSetConverter implements Converter {
 
 								String tagName = reader.getAttribute("name");
 
-								channel = (Integer) intConverter.fromString(reader.getAttribute("channel_number"));
+								channel = (Integer) intConverter.fromString(reader.getAttribute("channelNumber"));
 								position = (Float) floatConverter.fromString(reader.getAttribute("position"));
 								length = (Float) floatConverter.fromString(reader.getAttribute("length"));
 
@@ -406,11 +403,11 @@ public class StyledTagSetConverter implements Converter {
 
 		String name = reader.getAttribute("name");
 		String description = reader.getAttribute("description");
-		Color fillColor = (Color) colorConverter.fromString(reader.getAttribute("fill_color"));
-		Color outlineColor = (Color) colorConverter.fromString(reader.getAttribute("outline_color"));
-		float outlineWidth = (Float) floatConverter.fromString(reader.getAttribute("outline_width"));
-		float[] outlineDash = (float[]) floatArrayConverter.fromString(reader.getAttribute("outline_dash"));
-		KeyStroke keyStroke = (KeyStroke) keyStrokeConverter.fromString(reader.getAttribute("key_shortcut"));
+		Color fillColor = (Color) colorConverter.fromString(reader.getAttribute("fillColor"));
+		Color outlineColor = (Color) colorConverter.fromString(reader.getAttribute("outlineColor"));
+		float outlineWidth = (Float) floatConverter.fromString(reader.getAttribute("outlineWidth"));
+		float[] outlineDash = (float[]) floatArrayConverter.fromString(reader.getAttribute("outlineDash"));
+		KeyStroke keyStroke = (KeyStroke) keyStrokeConverter.fromString(reader.getAttribute("keyShortcut"));
 		boolean marker = false;
 		String markerAttr = reader.getAttribute("marker");
 		if (markerAttr != null && !markerAttr.isEmpty()) {
