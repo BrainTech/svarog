@@ -70,6 +70,7 @@ import org.springframework.validation.Errors;
 public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 
 	private static final long serialVersionUID = 1L;
+	private static final double FREQUENCY_SPINNER_STEP_SIZE = 0.25;
 
 	private FFTSampleFilter currentFilter;
 
@@ -217,7 +218,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 							getFromFrequencySpinner().setValue((double) lowFrequency);
 							if (highFrequency <= lowFrequency) {
 								double scaleSpinnerValue = ((Number) getGraphScaleSpinner().getValue()).doubleValue();
-								getToFrequencySpinner().setValue(Math.max((double) lowFrequency + 0.25, scaleSpinnerValue));
+								getToFrequencySpinner().setValue(Math.max((double) lowFrequency + FREQUENCY_SPINNER_STEP_SIZE, scaleSpinnerValue));
 								getUnlimitedCheckBox().setSelected(true);
 							} else {
 								getToFrequencySpinner().setValue((double) highFrequency);
@@ -352,7 +353,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 		if (graphScaleSpinner == null) {
 
 			graphScaleSpinner = super.getGraphScaleSpinner();
-			graphScaleSpinner.addChangeListener(new SpinnerRoundingChangeListener() {
+			graphScaleSpinner.addChangeListener(new SpinnerRoundingChangeListener(FREQUENCY_SPINNER_STEP_SIZE) {
 
 				@Override
 				public void stateChanged(ChangeEvent e) {
@@ -388,10 +389,10 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 	public JSpinner getFromFrequencySpinner() {
 
 		if (fromFrequencySpinner == null) {
-			fromFrequencySpinner = new JSpinner(new SpinnerNumberModel(0.0, 0.0, 4096.0, 0.25));
+			fromFrequencySpinner = new JSpinner(new SpinnerNumberModel(0.0, 0.0, 4096.0, FREQUENCY_SPINNER_STEP_SIZE));
 			fromFrequencySpinner.setPreferredSize(new Dimension(80, 25));
 
-			fromFrequencySpinner.addChangeListener(new SpinnerRoundingChangeListener() {
+			fromFrequencySpinner.addChangeListener(new SpinnerRoundingChangeListener(FREQUENCY_SPINNER_STEP_SIZE) {
 
 				@Override
 				public void stateChanged(ChangeEvent e) {
@@ -404,7 +405,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 					double otherValue = ((Number) getToFrequencySpinner().getValue()).doubleValue();
 
 					if (value >= otherValue) {
-						getToFrequencySpinner().setValue(value + 0.25);
+						getToFrequencySpinner().setValue(value + FREQUENCY_SPINNER_STEP_SIZE);
 					}
 
 				}
@@ -422,10 +423,10 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 	public JSpinner getToFrequencySpinner() {
 
 		if (toFrequencySpinner == null) {
-			toFrequencySpinner = new JSpinner(new SpinnerNumberModel(0.25, 0.25, 4096.0, 0.25));
+			toFrequencySpinner = new JSpinner(new SpinnerNumberModel(FREQUENCY_SPINNER_STEP_SIZE, FREQUENCY_SPINNER_STEP_SIZE, 4096.0, FREQUENCY_SPINNER_STEP_SIZE));
 			toFrequencySpinner.setPreferredSize(new Dimension(80, 25));
 
-			toFrequencySpinner.addChangeListener(new SpinnerRoundingChangeListener() {
+			toFrequencySpinner.addChangeListener(new SpinnerRoundingChangeListener(FREQUENCY_SPINNER_STEP_SIZE) {
 
 				@Override
 				public void stateChanged(ChangeEvent e) {
@@ -440,7 +441,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 					double otherValue = ((Number) getFromFrequencySpinner().getValue()).doubleValue();
 
 					if (value <= otherValue) {
-						getFromFrequencySpinner().setValue(value - 0.25);
+						getFromFrequencySpinner().setValue(value - FREQUENCY_SPINNER_STEP_SIZE);
 					}
 
 				}
@@ -539,7 +540,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 			return;
 		}
 
-		int frequencyCnt = (int) Math.ceil(getGraphFrequencyMax() / 0.25) + 1;
+		int frequencyCnt = (int) Math.ceil(getGraphFrequencyMax() / FREQUENCY_SPINNER_STEP_SIZE) + 1;
 		double[] frequencies = new double[frequencyCnt];
 		double[] coefficients = new double[frequencyCnt];
 		int i;
@@ -547,7 +548,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 
 		for (i = 0; i < frequencyCnt; i++) {
 			frequencies[i] = frequency;
-			frequency += 0.25;
+			frequency += FREQUENCY_SPINNER_STEP_SIZE;
 		}
 
 		Iterator<Range> it = currentFilter.getRangeIterator();
@@ -577,9 +578,9 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 			}
 
 			int index;
-			for (frequency=lowFrequency; frequency<=limit; frequency += 0.25) {
+			for (frequency=lowFrequency; frequency<=limit; frequency += FREQUENCY_SPINNER_STEP_SIZE) {
 
-				index = (int) (frequency / 0.25);
+				index = (int) (frequency / FREQUENCY_SPINNER_STEP_SIZE);
 				coefficients[index] = coefficient;
 
 			}
@@ -835,7 +836,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 			}
 
 			getFromFrequencySpinner().setValue(frequency);
-			getToFrequencySpinner().setValue(frequency + 0.25);
+			getToFrequencySpinner().setValue(frequency + FREQUENCY_SPINNER_STEP_SIZE);
 
 		}
 

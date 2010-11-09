@@ -6,22 +6,21 @@ import org.signalml.domain.signal.SignalType;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
 
-/** 
- * @author Mariusz Podsiadło 
+/**
+ * @author Mariusz Podsiadło
  */
 public class OpenMonitorDescriptor {
 
 	private SignalType type;
-	
+
 	private String multiplexerAddress;
 	private int multiplexerPort = -1;
 	private JmxClient jmxClient;
 	private JmxClient tagClient;
 	private boolean metadataReceived = false;
 	private String metadataInfo;
-	
+
 	private Integer channelCount = 1;
-	private int[] amplifierChannels;
 	private String[] channelLabels;
 	private Object[] selectedChannelList;
 	private int[] selectedChannelsIndecies;
@@ -32,7 +31,7 @@ public class OpenMonitorDescriptor {
 	private float[] calibrationOffset;
 	private Float minimumValue;
 	private Float maximumValue;
-	
+
 	/**
 	 * An integer value representing amplifier`s channel value for non-connected channel.
 	 */
@@ -118,12 +117,40 @@ public class OpenMonitorDescriptor {
 		return channelCount;
 	}
 
+	/**
+	 * Returns the number of channels to be monitored (selected in the
+	 * Open Monitor dialog).
+	 *
+	 * @return how many channels are to be monitored.
+	 */
+	public Integer getSelectedChannelsCount() {
+		return selectedChannelList.length;
+	}
+
 	public void setChannelCount(Integer channelCount) {
 		this.channelCount = channelCount;
 	}
 
 	public float[] getCalibrationGain() {
 		return calibrationGain;
+	}
+
+	/**
+	 * Returns the values of calibration gain for the channels selected in the
+	 * Open Monitor dialog.
+	 *
+	 * @return calibration gain for the selected channels.
+	 */
+	public float[] getSelectedChannelsCalibrationGain() {
+		float [] selectedChannelsCalibrationGain = new float[getSelectedChannelList().length];
+		int j = 0;
+
+		for(int i: getSelectedChannelsIndecies()) {
+			selectedChannelsCalibrationGain[j] = calibrationGain[i];
+			j++;
+		}
+
+		return selectedChannelsCalibrationGain;
 	}
 
 	public double[] getGain() {
@@ -139,6 +166,24 @@ public class OpenMonitorDescriptor {
 
 	public float[] getCalibrationOffset() {
 		return calibrationOffset;
+	}
+
+	/**
+	 * Returns the values of calibration offset for the channels selected in the
+	 * Open Monitor dialog.
+	 *
+	 * @return calibration offset for the selected channels.
+	 */
+	public float[] getSelectedChannelsCalibrationOffset() {
+		float [] selectedChannelsCalibrationOffset = new float[getSelectedChannelList().length];
+		int j = 0;
+
+		for(int i: getSelectedChannelsIndecies()) {
+			selectedChannelsCalibrationOffset[j] = calibrationOffset[i];
+			j++;
+		}
+
+		return selectedChannelsCalibrationOffset;
 	}
 
 	public double[] getOffset() {
@@ -159,7 +204,7 @@ public class OpenMonitorDescriptor {
 	public void setMinimumValue(Float minimumValue) {
 		this.minimumValue = minimumValue;
 	}
-	
+
 	/**
 	 * Returns an integer value representing amplifier`s channel value for non-connected channel
 	 * @return an integer value representing amplifier`s channel value for non-connected channel
@@ -183,16 +228,26 @@ public class OpenMonitorDescriptor {
 		return channelLabels;
 	}
 
+	/**
+	 * Returns the labels for the channels selected to be monitored in the
+	 * Open Monitor dialog.
+	 *
+	 * @return labels of the selected channels.
+	 */
+	public String[] getSelectedChannelsLabels() {
+		String [] selectedChannelLabels = new String[getSelectedChannelList().length];
+		int j = 0;
+
+		for(int i: getSelectedChannelsIndecies()) {
+			selectedChannelLabels[j] = channelLabels[i];
+			j++;
+		}
+
+		return selectedChannelLabels;
+	}
+
 	public void setChannelLabels(String[] channelLabels) {
 		this.channelLabels = channelLabels;
-	}
-
-	public int[] getAmplifierChannels() {
-		return amplifierChannels;
-	}
-
-	public void setAmplifierChannels( int[] channelNumbers) {
-		this.amplifierChannels = channelNumbers;
 	}
 
 	public Object[] getSelectedChannelList() {

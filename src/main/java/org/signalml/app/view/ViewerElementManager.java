@@ -133,6 +133,9 @@ import org.signalml.util.SvarogConstants;
 import org.springframework.context.support.MessageSourceAccessor;
 
 import com.thoughtworks.xstream.XStream;
+import org.signalml.app.action.StartMonitorRecordingAction;
+import org.signalml.app.action.StopMonitorRecordingAction;
+import org.signalml.app.view.monitor.StartMonitorRecordingDialog;
 
 
 
@@ -247,6 +250,7 @@ public class ViewerElementManager {
 	private ExportSignalDialog exportSignalDialog;
 	private EditFFTSampleFilterDialog editFFTSampleFilterDialog;
 	private EditTimeDomainSampleFilterDialog editTimeDomainSampleFilterDialog;
+	private StartMonitorRecordingDialog startMonitorRecordingDialog;
 
 	private MP5LocalExecutorDialog mp5LocalExecutorDialog;
 	private MP5RemoteExecutorDialog mp5RemoteExecutorDialog;
@@ -293,6 +297,8 @@ public class ViewerElementManager {
 	private RemoveAllFinishedTasksAction removeAllFinishedTasksAction;
 	private RemoveAllAbortedTasksAction removeAllAbortedTasksAction;
 	private RemoveAllFailedTasksAction removeAllFailedTasksAction;
+	private StartMonitorRecordingAction startMonitorRecordingAction;
+	private StopMonitorRecordingAction stopMonitorRecordingAction;
 
 	private ArrayList<AbstractSignalMLAction> runMethodActions;
 	private ArrayList<AbstractSignalMLAction> iterateMethodActions;
@@ -654,6 +660,9 @@ public class ViewerElementManager {
 			monitorMenu = new JMenu(messageSource.getMessage("menu.monitor"));
 			monitorMenu.add(getOpenMonitorAction());
                         monitorMenu.add(getCheckSignalAction());
+			monitorMenu.addSeparator();
+			monitorMenu.add(getStartMonitorRecordingAction());
+			monitorMenu.add(getStopMonitorRecordingAction());
 		}
 		return monitorMenu;
 	}
@@ -1141,6 +1150,13 @@ public class ViewerElementManager {
 		return editTimeDomainSampleFilterDialog;
 	}
 
+	public StartMonitorRecordingDialog getStartMonitorRecordingDialog() {
+		if (startMonitorRecordingDialog == null) {
+			startMonitorRecordingDialog = new StartMonitorRecordingDialog(messageSource, getDialogParent(), true);
+		}
+		return startMonitorRecordingDialog;
+	}
+
 	public MP5LocalExecutorDialog getMp5LocalExecutorDialog() {
 		if (mp5LocalExecutorDialog == null) {
 			mp5LocalExecutorDialog = new MP5LocalExecutorDialog(messageSource, getDialogParent(), true);
@@ -1277,6 +1293,20 @@ public class ViewerElementManager {
 		}
 		return checkSignalAction;
         }
+
+	public StartMonitorRecordingAction getStartMonitorRecordingAction() {
+		if (startMonitorRecordingAction == null) {
+			startMonitorRecordingAction = new StartMonitorRecordingAction(messageSource, getActionFocusManager());
+			startMonitorRecordingAction.setStartMonitorRecordingDialog(getStartMonitorRecordingDialog());
+		}
+		return startMonitorRecordingAction;
+	}
+
+	public StopMonitorRecordingAction getStopMonitorRecordingAction() {
+		if (stopMonitorRecordingAction == null)
+			stopMonitorRecordingAction = new StopMonitorRecordingAction(messageSource, getActionFocusManager());
+		return stopMonitorRecordingAction;
+	}
 
 
 	public CloseDocumentAction getCloseActiveDocumentAction() {
@@ -1606,6 +1636,7 @@ public class ViewerElementManager {
 			signalView.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 			signalView.setMontagePresetManager(getMontagePresetManager());
 			signalView.setSignalMontageDialog(getSignalMontageDialog());
+			signalView.setStartMonitorRecordingDialog(getStartMonitorRecordingDialog());
 			signalView.setSignalParametersDialog(getSignalParametersDialog());
 			signalView.setSignalSelectionDialog(getSignalSelectionDialog());
 			signalView.setTagStylePaletteDialog(getTagStylePaletteDialog());
@@ -1613,23 +1644,6 @@ public class ViewerElementManager {
 			signalView.setFileChooser(getFileChooser());
 			signalView.setEditTagAnnotationDialog(getEditTagAnnotationDialog());
 			signalView.setEditTagDescriptionDialog(getEditTagDescriptionDialog());
-			signalView.setApplicationConfig(getApplicationConfig());
-			signalView.initialize();
-
-			documentView = signalView;
-
-		} else if (document instanceof MonitorSignalDocument) {
-
-			SignalView signalView;
-			signalView = new SignalView((SignalDocument) document);
-
-			signalView.setMessageSource(messageSource);
-			signalView.setActionFocusManager(getActionFocusManager());
-			signalView.setSlavePlotSettingsPopupDialog(getSlavePlotSettingsPopupDialog());
-			signalView.setErrorsDialog(getErrorsDialog());
-			signalView.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
-			signalView.setSignalParametersDialog(getSignalParametersDialog());
-			signalView.setSignalSelectionDialog(getSignalSelectionDialog());
 			signalView.setApplicationConfig(getApplicationConfig());
 			signalView.initialize();
 

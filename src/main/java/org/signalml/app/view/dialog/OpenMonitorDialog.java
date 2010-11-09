@@ -75,7 +75,7 @@ public class OpenMonitorDialog extends AbstractWizardDialog {
 	}
 
 	protected JComponent createMonitorStepFourPanel() {
-		return new FileSelectPanel( messageSource);
+		return new FileSelectPanel(messageSource, messageSource.getMessage( "openMonitor.saveDataLabel"));
 	}
 
 	public FileSelectPanel getFileSelectPanel() {
@@ -217,7 +217,7 @@ public class OpenMonitorDialog extends AbstractWizardDialog {
 		String fileName = m.getFileName();
 		if (fileName == null)
 			fileName = applicationConfig.getSignalRecorderFileName();
-		getFileSelectPanel().getFileNameField().setText( fileName);
+		getFileSelectPanel().setFileName(fileName);
 
 	}
 
@@ -226,7 +226,7 @@ public class OpenMonitorDialog extends AbstractWizardDialog {
 
 		OpenMonitorDescriptor m = (OpenMonitorDescriptor) model;
 
-		String fileName = getFileSelectPanel().getFileNameField().getText();
+		String fileName = getFileSelectPanel().getFileName();
 		if (fileName.endsWith( ".raw") || fileName.endsWith( ".xml"))
 			fileName = fileName.substring( 0, fileName.length() - 4);
 		m.setFileName( fileName);

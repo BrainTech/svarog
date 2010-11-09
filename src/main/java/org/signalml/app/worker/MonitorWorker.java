@@ -1,10 +1,6 @@
 package org.signalml.app.worker;
 
-import java.awt.Color;
 import java.util.List;
-import java.lang.Float;
-import java.lang.Double;
-import java.util.StringTokenizer;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
@@ -21,40 +17,41 @@ import org.apache.log4j.Level;
 
 import org.jboss.netty.channel.ChannelFuture;
 import org.signalml.app.model.OpenMonitorDescriptor;
+import org.signalml.app.model.PagingParameterDescriptor;
 import org.signalml.domain.signal.RoundBufferSampleSource;
 import org.signalml.domain.signal.RoundBufferMultichannelSampleSource;
-import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.domain.tag.MonitorTag;
 import org.signalml.domain.tag.StyledMonitorTagSet;
 import org.signalml.domain.tag.TagStylesGenerator;
-import org.signalml.plugin.export.signal.Tag;
-import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.multiplexer.protocol.SvarogConstants;
 import org.signalml.multiplexer.protocol.SvarogProtocol;
 import org.signalml.multiplexer.protocol.SvarogProtocol.Sample;
 import org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector;
 
 import com.google.protobuf.ByteString;
-import org.signalml.app.model.PagingParameterDescriptor;
 
 /** MonitorWorker
  *
  */
-public class MonitorWorker extends SwingWorker< Void, Object> {
+public class MonitorWorker extends SwingWorker<Void, Object> {
 
 	protected static final Logger logger = Logger.getLogger(MonitorWorker.class);
-
 	public static final int TIMEOUT_MILIS = 50;
 	private static int TS_DIVIDER = 100000;
-
 	private JmxClient jmxClient;
 	private OpenMonitorDescriptor monitorDescriptor;
-	private LinkedBlockingQueue< double[]> sampleQueue;
+	private LinkedBlockingQueue<double[]> sampleQueue;
 	private RoundBufferMultichannelSampleSource sampleSource;
 	private RoundBufferSampleSource timestampsSource;
 	private StyledMonitorTagSet tagSet;
 	private volatile boolean finished;
 
+	/**
+	 * This object is responsible for recording tags received by this {@link MonitorWorker}.
+	 * It is connected to the monitor by an external object using
+	 * {@link MonitorWorker#connectTagRecorderWorker(org.signalml.app.worker.TagRecorder)}.
+	 */
+	private TagRecorder tagRecorderWorker;
 
 	public MonitorWorker(JmxClient jmxClient, OpenMonitorDescriptor monitorDescriptor, RoundBufferMultichannelSampleSource sampleSource, RoundBufferSampleSource timestampsSource, StyledMonitorTagSet tagSet) {
 		this.jmxClient = jmxClient;
@@ -93,12 +90,10 @@ public class MonitorWorker extends SwingWorker< Void, Object> {
 				logger.error("sending failed!");
 				return null;
 			}
-		}
-		catch (NoPeerForTypeException e) {
+		} catch (NoPeerForTypeException e) {
 			logger.error("sending failed! " + e.getMessage());
 			return null;
-		}
-		catch (InterruptedException e) {
+		} catch (InterruptedException e) {
 			logger.error("sending failed! " + e.getMessage());
 			return null;
 		}
@@ -129,7 +124,7 @@ public class MonitorWorker extends SwingWorker< Void, Object> {
 		//with a real value?
 		TagStylesGenerator stylesGenerator = new TagStylesGenerator(monitorDescriptor.getPageSize(), PagingParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE);
 		int sampleType = 0;
-		Tag tag;
+		MonitorTag tag;
 		double tagLen;
 		SvarogProtocol.VariableVector tagDesc;
 		logger.info("Start receiving ...");
@@ -141,27 +136,28 @@ public class MonitorWorker extends SwingWorker< Void, Object> {
 				msgData = jmxClient.receive(TIMEOUT_MILIS, TimeUnit.MILLISECONDS);
 				if (msgData == null)
 					continue;
+
 				// Unpack message
 				sampleMsg = msgData.getMessage();
 				sampleMsgString = sampleMsg.getMessage();
 				sampleType = sampleMsg.getType();
 				logger.debug("Worker: received message type: " + sampleType);
-				
-				
+
+
 				//DEBUG
 				if (sampleType == SvarogConstants.MessageTypes.TAG && xxx_debug > 0) {
-				    xxx_tagMsg = SvarogProtocol.Tag.parseFrom(sampleMsgString);
+					xxx_tagMsg = SvarogProtocol.Tag.parseFrom(sampleMsgString);
 				}
 				//DEBUG
 
 
 				if (sampleType == SvarogConstants.MessageTypes.STREAMED_SIGNAL_MESSAGE) {
+
 					logger.debug("Worker: reading chunk!");
 
 					try {
 						sampleVector = SampleVector.parseFrom(sampleMsgString);
-					}
-					catch (Exception e) {
+					} catch (Exception e) {
 						e.printStackTrace();
 					}
 					samples = sampleVector.getSamplesList();
@@ -170,15 +166,11 @@ public class MonitorWorker extends SwingWorker< Void, Object> {
 					timestampsSource.addSample(samples.get(0).getTimestamp());
 					this.tagSet.newSample(samples.get(0).getTimestamp());
 					//DEBUG
-					
+
 					// Get values from samples to chunk
 					for (int i = 0; i < channelCount; i++) {
-						chunk[i] = samples.get(i).getValue();		
-					};
-
-					// Send chunk to recorder
-					if (sampleQueue != null)
-						sampleQueue.offer(chunk.clone());
+						chunk[i] = samples.get(i).getValue();
+					}
 
 					// Transform chunk using gain and offset
 					double[] condChunk = new double[plotCount];
@@ -186,54 +178,64 @@ public class MonitorWorker extends SwingWorker< Void, Object> {
 						int n = selectedChannels[i];
 						condChunk[i] = gain[n] * chunk[n] + offset[n];
 					}
-					
-					
+
+					// Send chunk to recorder
+					if (sampleQueue != null) {
+						sampleQueue.offer(condChunk.clone());
+						if (tagRecorderWorker != null && !tagRecorderWorker.isStartRecordingTimestampSet()) {
+							tagRecorderWorker.setStartRecordingTimestamp(samples.get(0).getTimestamp());
+						}
+					}
+
 					//DEBUG
 					if (xxx_debug > 1 && xxx_tagMsg != null) {
-					for (int i = 0; i < plotCount; i++) {					
-						double a = condChunk[i];
-					    condChunk[i] = 0.0;
-					    double b = condChunk[i];
-						logger.info("Zmieniam chunka z"+a+" na "+b);
-					};
-					};
+						for (int i = 0; i < plotCount; i++) {
+							double a = condChunk[i];
+							condChunk[i] = 0.0;
+							double b = condChunk[i];
+							logger.info("Zmieniam chunka z" + a + " na " + b);
+						}
+					}
 					if (xxx_debug > 0 && xxx_tagMsg != null) {
-					    double y = xxx_tagMsg.getStartTimestamp();
-					    logger.info("Received tag VS sample timestamp: "+y+" VS "+samples.get(0).getTimestamp());
-					    //xxx_tagMsg = null;
-					};
+						double y = xxx_tagMsg.getStartTimestamp();
+						logger.info("Received tag VS sample timestamp: " + y + " VS " + samples.get(0).getTimestamp());
+						//xxx_tagMsg = null;
+					}
 					//DEBUG
-					
-					
+
+
 					publish(condChunk);
-				}
-				else if (sampleMsg.getType() == SvarogConstants.MessageTypes.TAG) {
+
+				} else if (sampleMsg.getType() == SvarogConstants.MessageTypes.TAG) {
 
 					logger.info("Tag recorder: got a tag!");
+
 					try {
 						tagMsg = SvarogProtocol.Tag.parseFrom(sampleMsgString);
-					}
-					catch (Exception e) {
+					} catch (Exception e) {
 						e.printStackTrace();
 						continue;
 					}
-					
+
 					// Create MonitorTag Object, define its style and attributes
-					
+
 					// String channels = tagMsg.getChannels();
 					// By now we ignore field channels and assume that tag if for all channels
-					
+
 					tagLen = tagMsg.getEndTimestamp() - tagMsg.getStartTimestamp();
 					tag = new MonitorTag(stylesGenerator.getSmartStyleFor(tagMsg.getName(), tagLen, -1),
-							tagMsg.getStartTimestamp(),
-							tagLen,							  
-							-1);
+						tagMsg.getStartTimestamp(),
+						tagLen,
+						-1);
 
 					for (SvarogProtocol.Variable v : tagMsg.getDesc().getVariablesList())
 						tag.setAttribute(v.getKey(), v.getValue());
-									
+
+					if (tagRecorderWorker != null)
+						tagRecorderWorker.offer(tag);
+
 					publish(tag);
-					logger.info("ILE MAM TAGOW: "+tagSet.getTagCount());
+					logger.info("ILE MAM TAGOW: " + tagSet.getTagCount());
 
 				} else {
 					logger.error("received bad reply! " + sampleMsg.getMessage());
@@ -241,8 +243,7 @@ public class MonitorWorker extends SwingWorker< Void, Object> {
 					return null;
 				}
 
-			}
-			catch (InterruptedException e) {
+			} catch (InterruptedException e) {
 				logger.error("receiveing failed! " + e.getMessage());
 				return null;
 			}
@@ -262,12 +263,10 @@ public class MonitorWorker extends SwingWorker< Void, Object> {
 				logger.error("sending failed!");
 				return null;
 			}
-		}
-		catch (NoPeerForTypeException e) {
+		} catch (NoPeerForTypeException e) {
 			logger.error("sending failed! " + e.getMessage());
 			return null;
-		}
-		catch (InterruptedException e) {
+		} catch (InterruptedException e) {
 			logger.error("sending failed! " + e.getMessage());
 			return null;
 		}
@@ -276,21 +275,22 @@ public class MonitorWorker extends SwingWorker< Void, Object> {
 	}
 
 	private double convertTs(double ts) {
-	    double tmp_s_ts = ((double) ((((int) ts)/this.TS_DIVIDER)*this.TS_DIVIDER));
-	    double ret_ts = ts - tmp_s_ts;
-	    return ret_ts;
+		double tmp_s_ts = ((double) ((((int) ts) / this.TS_DIVIDER) * this.TS_DIVIDER));
+		double ret_ts = ts - tmp_s_ts;
+		return ret_ts;
 
 	}
+
 	@Override
-	protected void process(List< Object> objs) {
+	protected void process(List<Object> objs) {
 		for (Object o : objs) {
 			if (o instanceof double[]) {
 				sampleSource.lock();
 				sampleSource.addSamples((double[]) o);
 				sampleSource.unlock();
 			} else {
-			    logger.info("got TAG ");
-			    tagSet.lock();
+				logger.info("got TAG ");
+				tagSet.lock();
 				tagSet.addTag((MonitorTag) o);
 				tagSet.unlock();
 				firePropertyChange("newTag", null, (MonitorTag) o);
@@ -312,4 +312,25 @@ public class MonitorWorker extends SwingWorker< Void, Object> {
 		return finished;
 	}
 
+	/**
+	 * Sets the {@link TagRecorder} to which the tags will be sent by this
+	 * {@link MonitorWorker}. Setting a {@link TagRecorder} using this method
+	 * starts sending all tags received by this {@link MonitorWorker} to the
+	 * given {@link TagRecorderWorker}.
+	 *
+	 * @param tagRecorderWorker the {@link TagRecorder} responsible for recording
+	 * the tags from this {@link MonitorWorker}.
+	 */
+	public void connectTagRecorderWorker(TagRecorder tagRecorderWorker) {
+		this.tagRecorderWorker = tagRecorderWorker;
+	}
+
+	/**
+	 * Allows to disconnect a {@link TagRecorder} which was connected using
+	 * {@link MonitorWorker#connectTagRecorderWorker(org.signalml.app.worker.TagRecorder)}.
+	 * No more tags are sent to the {@link TagRecorder} after disconnecting.
+	 */
+	public void disconnectTagRecorderWorker() {
+		this.tagRecorderWorker = null;
+	}
 }

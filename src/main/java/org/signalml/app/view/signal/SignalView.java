@@ -75,6 +75,8 @@ import org.signalml.app.action.RemoveTagAction;
 import org.signalml.app.action.SaveTagAction;
 import org.signalml.app.action.SaveTagAsAction;
 import org.signalml.app.action.SnapToPageAction;
+import org.signalml.app.action.StartMonitorRecordingAction;
+import org.signalml.app.action.StopMonitorRecordingAction;
 import org.signalml.app.action.TagSelectionAction;
 import org.signalml.app.action.selector.ActionFocusListener;
 import org.signalml.app.action.selector.ActionFocusManager;
@@ -103,6 +105,7 @@ import org.signalml.app.view.dialog.SignalSelectionDialog;
 import org.signalml.app.view.dialog.TagStylePaletteDialog;
 import org.signalml.app.view.element.LockableJSplitPane;
 import org.signalml.app.view.element.TitledSliderPanel;
+import org.signalml.app.view.monitor.StartMonitorRecordingDialog;
 import org.signalml.app.view.montage.SignalMontageDialog;
 import org.signalml.app.view.signal.popup.ActiveTagPopupDialog;
 import org.signalml.app.view.signal.popup.CompareTagsPopupDialog;
@@ -230,6 +233,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	private NewTagDialog newTagDialog;
 	private ViewerFileChooser fileChooser;
 	private SignalSelectionDialog signalSelectionDialog;
+	private StartMonitorRecordingDialog startMonitorRecordingDialog;
 	private SignalParametersDialog signalParametersDialog;
 	private SignalMontageDialog signalMontageDialog;
 	private EditTagAnnotationDialog editTagAnnotationDialog;
@@ -241,6 +245,8 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	private CloseTagAction closeTagAction;
 	private SaveTagAction saveTagAction;
 	private SaveTagAsAction saveTagAsAction;
+	private StartMonitorRecordingAction startMonitorRecordingAction;
+	private StopMonitorRecordingAction stopMonitorRecordingAction;
 	private EditSignalParametersAction editSignalParametersAction;
 	private EditSignalMontageAction editSignalMontageAction;
 	private ApplyDefaultMontageAction applyDefaultMontageAction;
@@ -942,7 +948,11 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		mainToolBar.add(getSaveTagAction());
 		mainToolBar.add(getSaveTagAsAction());
 		mainToolBar.add(getCloseTagAction());
-		
+
+		mainToolBar.add(Box.createHorizontalGlue());
+		mainToolBar.add(getStartMonitorRecordingAction());
+		mainToolBar.add(getStopMonitorRecordingAction());
+
 		PluginAccessClass.getGUIImpl().addToMainSignalToolBar(mainToolBar);
 
 		mainToolBar.add(Box.createHorizontalGlue());
@@ -1221,6 +1231,21 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		return removeTagAction;
 	}
 
+	public StartMonitorRecordingAction getStartMonitorRecordingAction() {
+		if (startMonitorRecordingAction == null) {
+			startMonitorRecordingAction = new StartMonitorRecordingAction(messageSource, getActionFocusManager());
+			startMonitorRecordingAction.setStartMonitorRecordingDialog(startMonitorRecordingDialog);
+		}
+		return startMonitorRecordingAction;
+	}
+
+	public StopMonitorRecordingAction getStopMonitorRecordingAction() {
+		if (stopMonitorRecordingAction == null) {
+			stopMonitorRecordingAction = new StopMonitorRecordingAction(messageSource, getActionFocusManager());
+		}
+		return stopMonitorRecordingAction;
+	}
+
 	public EditSignalParametersAction getEditSignalParametersAction() {
 		if (editSignalParametersAction == null) {
 			editSignalParametersAction = new EditSignalParametersAction(messageSource,this);
@@ -1386,6 +1411,15 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 	public void setSignalSelectionDialog(SignalSelectionDialog signalSelectionDialog) {
 		this.signalSelectionDialog = signalSelectionDialog;
+	}
+
+	public StartMonitorRecordingDialog getStartMonitorRecordingDialog() {
+		return startMonitorRecordingDialog;
+	}
+
+	public void setStartMonitorRecordingDialog(StartMonitorRecordingDialog startMonitorRecordingDialog) {
+		this.startMonitorRecordingDialog = startMonitorRecordingDialog;
+		getStartMonitorRecordingAction().setStartMonitorRecordingDialog(startMonitorRecordingDialog);
 	}
 
 	public SignalParametersDialog getSignalParametersDialog() {

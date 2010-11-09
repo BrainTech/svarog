@@ -115,4 +115,13 @@ public abstract class AbstractDocument implements Document {
 		pcSupport.removePropertyChangeListener(listener);
 	}
 
+	/**
+	 * @see Document#getPropertyChangeListeners()
+	 * @return
+	 */
+	@Override
+	public PropertyChangeListener[] getPropertyChangeListeners() {
+		return pcSupport.getPropertyChangeListeners();
+	}
+
 }
