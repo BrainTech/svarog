@@ -7,6 +7,7 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.List;
 
+import org.signalml.app.document.FileBackedDocument;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.DocumentView;
 
@@ -34,7 +35,9 @@ public interface Document {
 	String getName();
 
 	/**
-	 * Reads the file associated with this document.
+	 * If this document has a {@link FileBackedDocument#getBackingFile()
+	 * backing file} reads this document from this file.
+	 * If there is no such file TODO
 	 * @throws SignalMLException if backing file doesn't exist and
 	 * additional situations dependent on an implementation
 	 * @throws IOException if I/O error occurs while reading data from file
@@ -42,7 +45,7 @@ public interface Document {
 	void openDocument() throws SignalMLException, IOException;
 	/**
 	 * Closes the document and depending data.
-	 * @throws SignalMLException depends from an implementation.
+	 * @throws SignalMLException depends on an implementation.
 	 */
 	void closeDocument() throws SignalMLException;
 	/**

@@ -6,13 +6,14 @@ package org.signalml.plugin.export.signal;
 import java.io.File;
 import java.io.IOException;
 import java.io.InvalidClassException;
+import java.nio.ByteOrder;
 import java.util.List;
 import java.util.Set;
 
+import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.codec.SignalMLCodec;
-import org.signalml.domain.signal.raw.RawSignalByteOrder;
-import org.signalml.domain.signal.raw.RawSignalSampleType;
+import org.signalml.domain.signal.space.SignalSourceLevel;
 import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.SignalMLException;
 
@@ -267,15 +268,15 @@ public interface SvarogAccessSignal {
 	 * @param file the file with the signal
 	 * @param samplingFrequency the number of samples per second
 	 * @param channelCount the number of channels in the signal
-	 * @param sampleType the {@link RawSignalSampleType type} of samples
-	 * @param byteOrder the {@link RawSignalByteOrder order} of bits in the file 
+	 * @param sampleType the {@link ExportedRawSignalSampleType type} of samples
+	 * @param byteOrder the {@link ByteOrder order} of bits in the file 
 	 * @param calibration constant by which numbers from file are multiplied to get a physical value
 	 * @param pageSize the length of the page (in seconds)
 	 * @param blocksPerPage the number of blocks per page
 	 * @throws SignalMLException if opening the file fails
 	 * @throws IOException if opening the file fails due to IO error
 	 */
-	void openRawSignal(File file, float samplingFrequency, int channelCount, RawSignalSampleType sampleType, RawSignalByteOrder byteOrder, float calibration, float pageSize, int blocksPerPage) throws SignalMLException, IOException;
+	void openRawSignal(File file, float samplingFrequency, int channelCount, ExportedRawSignalSampleType sampleType, ByteOrder byteOrder, float calibration, float pageSize, int blocksPerPage) throws SignalMLException, IOException;
 	
 	/**
 	 * Opens the signal from the given file using the given {@link SignalMLCodec codec}.
@@ -331,6 +332,37 @@ public interface SvarogAccessSignal {
 	 */
 	File[] getPluginDirectories();
 	
+	/**
+	 * Export the part of the signal to the given file.
+	 * @param position the position in signal (seconds) where the exported
+	 * part starts
+	 * @param length the length (seconds) of the exported part of the signal
+	 * @param channels the array with indexes of the channels that should be
+	 * exported (from {@code 0} to {@code SignalDocument.getChannelCount()-1})
+	 * @param level the {@link SignalSourceLevel level} of processing of
+	 * the signal
+	 * @param sampleType the {@link ExportedRawSignalSampleType type} of samples
+	 * (short, int, float, double)
+	 * @param byteOrder the {@link ByteOrder order} of bytes in which
+	 * the signal should be written
+	 * @param document the {@link SignalDocument document} with the signal
+	 * @param file the file to which the signal will be exported
+	 * @throws InvalidClassException if document is not returned from
+	 * this SvarogAccess (not of type SignalDocument - internal to Svarog)
+	 * @throws SignalMLException if the export failed due to other reasons
+	 */
+	void exportSignal(float position, float length, int[] channels, SignalSourceLevel level, ExportedRawSignalSampleType sampleType, ByteOrder byteOrder, ExportedSignalDocument document, File file) throws InvalidClassException, SignalMLException;
 	
+	/**
+	 * Creates and returns a temporary file.
+	 * The file is created in the {@code %profile-directory%/temp}.
+	 * When the Svarog is closed (actually when the virtual machine is
+	 * terminated) the file is removed
+	 * @param extension the extension to the file (for example {@code "bin",
+	 * "xml"})
+	 * @return the created temporary file
+	 * @throws IOException if the file couldn't be created
+	 */
+	public File getTemporaryFile(String extension) throws IOException;
 	
 }

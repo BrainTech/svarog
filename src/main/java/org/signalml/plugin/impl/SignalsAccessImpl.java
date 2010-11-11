@@ -3,15 +3,19 @@
  */
 package org.signalml.plugin.impl;
 
+import java.awt.Window;
 import java.io.File;
 import java.io.IOException;
 import java.io.InvalidClassException;
+import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.ExecutionException;
 
+import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.DocumentManager;
@@ -20,26 +24,42 @@ import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.OpenDocumentDescriptor;
 import org.signalml.app.model.OpenSignalDescriptor;
+import org.signalml.app.model.SignalExportDescriptor;
 import org.signalml.app.model.OpenSignalDescriptor.OpenSignalMethod;
 import org.signalml.app.model.SignalParameterDescriptor;
 import org.signalml.app.view.ViewerElementManager;
+import org.signalml.app.view.dialog.ErrorsDialog;
+import org.signalml.app.view.dialog.OptionPane;
+import org.signalml.app.view.dialog.PleaseWaitDialog;
 import org.signalml.app.view.signal.PositionedTag;
+import org.signalml.app.view.signal.SampleSourceUtils;
 import org.signalml.app.view.signal.SignalPlot;
+import org.signalml.app.view.signal.SignalScanResult;
 import org.signalml.app.view.signal.SignalView;
+import org.signalml.app.worker.ExportSignalWorker;
+import org.signalml.app.worker.ScanSignalWorker;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.codec.XMLSignalMLCodec;
 import org.signalml.codec.generator.xml.XMLCodecException;
 import org.signalml.domain.signal.MultichannelSampleSource;
 import org.signalml.domain.signal.OriginalMultichannelSampleSource;
+import org.signalml.domain.signal.SignalProcessingChain;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
+import org.signalml.domain.signal.space.ChannelSpace;
+import org.signalml.domain.signal.space.ChannelSpaceType;
+import org.signalml.domain.signal.space.SegmentedSampleSourceFactory;
+import org.signalml.domain.signal.space.SignalSourceLevel;
+import org.signalml.domain.signal.space.SignalSpace;
+import org.signalml.domain.signal.space.TimeSpaceType;
 import org.signalml.domain.tag.LegacyTagImporter;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Document;
+import org.signalml.plugin.export.signal.ExportedRawSignalSampleType;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.export.signal.ExportedSignalSelection;
 import org.signalml.plugin.export.signal.ExportedSignalSelectionType;
@@ -47,6 +67,7 @@ import org.signalml.plugin.export.signal.ExportedTag;
 import org.signalml.plugin.export.signal.ExportedTagDocument;
 import org.signalml.plugin.export.signal.SignalSamples;
 import org.signalml.plugin.export.signal.SignalSelection;
+import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
@@ -69,6 +90,8 @@ import org.signalml.plugin.loader.PluginLoader;
  */
 public class SignalsAccessImpl implements SvarogAccessSignal {
 
+	protected static final Logger logger = Logger.getLogger(SignalsAccessImpl.class);
+	
 	/**
 	 * the manager of the elements of Svarog
 	 */
@@ -390,7 +413,8 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 	 * @param tagDocument the document in which we are looking for a style
 	 * @param tag the tag for which the actual style is to be found
 	 * @return the style that is equal to the style of the provided tag
-	 * @throws IllegalArgumentException
+	 * @throws IllegalArgumentException if there is no such tag style in
+	 * the document
 	 */
 	private TagStyle findStyle(TagDocument tagDocument, ExportedTag tag) throws IllegalArgumentException{
 		StyledTagSet tagSet = tagDocument.getTagSet();
@@ -492,7 +516,7 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 	 * @see org.signalml.plugin.export.PluginAccessSignal#openSignal(java.lang.String)
 	 */
 	@Override
-	public void openRawSignal(File file, float samplingFrequency, int channelCount, RawSignalSampleType sampleType, RawSignalByteOrder byteOrder, float calibration, float pageSize, int blocksPerPage)
+	public void openRawSignal(File file, float samplingFrequency, int channelCount, ExportedRawSignalSampleType sampleType, ByteOrder byteOrder, float calibration, float pageSize, int blocksPerPage)
 	throws SignalMLException, IOException {
 		OpenDocumentDescriptor ofd = new OpenDocumentDescriptor();
 		ofd.setMakeActive(true);
@@ -506,8 +530,8 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 		RawSignalDescriptor descriptor = new RawSignalDescriptor();
 		descriptor.setSamplingFrequency(samplingFrequency);
 		descriptor.setChannelCount(channelCount);
-		descriptor.setSampleType(sampleType);
-		descriptor.setByteOrder(byteOrder);
+		descriptor.setSampleType(getSampleType(sampleType));
+		descriptor.setByteOrder(getByteOrder(byteOrder));
 		descriptor.setCalibration(calibration);
 		descriptor.setPageSize(pageSize);
 		descriptor.setBlocksPerPage(blocksPerPage);
@@ -578,7 +602,7 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 	 * @throws InvalidClassException if document is not of type SignalDocument
 	 */
 	private SignalPlot getSignalPlotFromDocument(ExportedSignalDocument document) throws InvalidClassException{
-		if (!(document instanceof SignalDocument)) throw new InvalidClassException("document is not of type SignalDocument = was not returned from Svarog");
+		if (!(document instanceof SignalDocument)) throw new InvalidClassException("document is not of type SignalDocument => was not returned from Svarog");
 		SignalDocument signalDocument = (SignalDocument) document;
 		DocumentView documentView = signalDocument.getDocumentView();
 		if (!(documentView instanceof SignalView)) throw new RuntimeException("view is not of type SignalView");
@@ -733,6 +757,170 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 		Document document = getActiveDocument();
 		if (!(document instanceof ExportedSignalDocument)) throw new NoActiveObjectException("no active signal document");
 		return (ExportedSignalDocument) document;
+	}
+
+	/**
+	 * Obtains {@link RawSignalByteOrder} for a given {@link ByteOrder}
+	 * @param order the ByteOrder
+	 * @return the RawSignalByteOrder
+	 * @throws InvalidClassException if there is no such RawSignalByteOrder
+	 */
+	private RawSignalByteOrder getByteOrder(ByteOrder order) throws InvalidClassException {
+		RawSignalByteOrder[] rawByteOrders = RawSignalByteOrder.values();
+		for (RawSignalByteOrder rawByteOrder : rawByteOrders) {
+			if (rawByteOrder.getByteOrder().equals(order)) return rawByteOrder;
+		}
+		throw new InvalidClassException("No such byte order");
+	}
+	
+	private RawSignalSampleType getSampleType(ExportedRawSignalSampleType sampleType) {
+		switch (sampleType) {
+		case DOUBLE:
+			return RawSignalSampleType.DOUBLE;
+		case FLOAT:
+			return RawSignalSampleType.FLOAT;
+		case INT:
+			return RawSignalSampleType.INT;
+		case SHORT:
+			return RawSignalSampleType.SHORT;
+			default:
+				return RawSignalSampleType.FLOAT;
+		}
+	}
+	
+	@Override
+	public void exportSignal(float position, float length, int[] channels, SignalSourceLevel level,
+			ExportedRawSignalSampleType sampleType, ByteOrder byteOrder, ExportedSignalDocument document, File file) throws InvalidClassException, SignalMLException {
+		if (!(document instanceof SignalDocument)) throw new InvalidClassException("document is not of type SignalDocument => was not returned from Svarog");
+		SignalDocument signalDocument = (SignalDocument) document;
+		SignalView signalView = (SignalView) signalDocument.getDocumentView();
+		SignalPlot masterPlot = signalView.getMasterPlot();
+		
+		RawSignalByteOrder rawByteOrder = getByteOrder(byteOrder);
+		
+		SignalExportDescriptor descriptor = new SignalExportDescriptor();
+		SignalSpace signalSpace = new SignalSpace();
+		descriptor.setSignalSpace(signalSpace);
+		
+		ChannelSpace channelSpace = new ChannelSpace(channels);
+		signalSpace.setChannelSpace(channelSpace);
+		SignalSelection selection = new SignalSelection(SignalSelectionType.CHANNEL, position, length);
+		signalSpace.setSelectionTimeSpace(selection);
+		signalSpace.setChannelSpaceType(ChannelSpaceType.SELECTED);
+		signalSpace.setSignalSourceLevel(level);
+		signalSpace.setTimeSpaceType(TimeSpaceType.SELECTION_BASED);
+		
+		descriptor.setByteOrder(rawByteOrder);
+		descriptor.setBlockSize(masterPlot.getBlockSize());
+		descriptor.setPageSize(masterPlot.getPageSize());
+		
+		RawSignalSampleType rawSignalSampleType = getSampleType(sampleType);
+		descriptor.setSampleType(rawSignalSampleType);
+		descriptor.setNormalize(false);
+		
+		
+		SignalProcessingChain signalChain;
+		try {
+			signalChain = masterPlot.getSignalChain().createLevelCopyChain(signalSpace.getSignalSourceLevel());
+		} catch (SignalMLException ex) {
+			logger.error("Failed to create subchain", ex);
+			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+			return;
+		}
+		
+		SegmentedSampleSourceFactory factory = SegmentedSampleSourceFactory.getSharedInstance();
+		MultichannelSampleSource sampleSource = factory.getContinuousSampleSource(signalChain, signalSpace, descriptor.getTagSet(), descriptor.getPageSize(), descriptor.getBlockSize());
+		
+		PleaseWaitDialog pleaseWaitDialog = new PleaseWaitDialog(manager.getMessageSource(), manager.getDialogParent());
+		pleaseWaitDialog.initializeNow();
+		
+		if (rawSignalSampleType == RawSignalSampleType.INT || rawSignalSampleType == RawSignalSampleType.SHORT) {
+			// normalization - check signal half-amplitude maximum
+			ScanSignalWorker scanWorker = new ScanSignalWorker(sampleSource, pleaseWaitDialog);
+
+			scanWorker.execute();
+
+			pleaseWaitDialog.setActivity(manager.getMessageSource().getMessage("activity.scanningSignal"));
+			pleaseWaitDialog.configureForDeterminate(0, SampleSourceUtils.getMaxSampleCount(sampleSource), 0);
+			pleaseWaitDialog.waitAndShowDialogIn(manager.getDialogParent(), 500, scanWorker);
+
+			SignalScanResult signalScanResult = null;
+			try {
+				signalScanResult = scanWorker.get();
+			} catch (InterruptedException ex) {
+				// ignore
+			} catch (ExecutionException ex) {
+				logger.error("Worker failed to save", ex.getCause());
+				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex.getCause());
+				return;
+			}
+
+			double maxSignalAbsValue = Math.max(Math.abs(signalScanResult.getMaxSignalValue()), Math.abs(signalScanResult.getMinSignalValue()));
+			double maxTypeAbsValue = 0;
+
+			if (rawSignalSampleType == RawSignalSampleType.INT) {
+				maxTypeAbsValue = Math.min((Integer.MAX_VALUE-1), -(Integer.MIN_VALUE+1));
+			} else {
+				maxTypeAbsValue = Math.min((Short.MAX_VALUE-1), -(Short.MIN_VALUE+1));
+			}
+
+			boolean normalize = descriptor.isNormalize();
+			if (!normalize) {
+
+				// check if normalization needs to be forced
+				if (maxTypeAbsValue < Math.ceil(maxSignalAbsValue)) {
+
+					int ans = OptionPane.showNormalizationUnavoidable(manager.getOptionPaneParent());
+					if (ans != OptionPane.OK_OPTION) {
+						return;
+					}
+
+					normalize = true;
+					descriptor.setNormalize(normalize);
+
+				}
+
+			}
+
+			if (normalize) {
+
+				descriptor.setNormalizationFactor(maxTypeAbsValue / maxSignalAbsValue);
+
+			}
+
+		}
+
+		int minSampleCount = SampleSourceUtils.getMinSampleCount(sampleSource);
+
+		ExportSignalWorker worker = new ExportSignalWorker(sampleSource, file, descriptor, pleaseWaitDialog);
+
+		worker.execute();
+
+		pleaseWaitDialog.setActivity(manager.getMessageSource().getMessage("activity.exportingSignal"));
+		pleaseWaitDialog.configureForDeterminate(0, minSampleCount, 0);
+		pleaseWaitDialog.waitAndShowDialogIn(manager.getOptionPaneParent(), 500, worker);
+
+		try {
+			worker.get();
+		} catch (InterruptedException ex) {
+			// ignore
+		} catch (ExecutionException ex) {
+			logger.error("Worker failed to save", ex.getCause());
+			throw new SignalMLException("failed to export signal", ex);
+		}
+
+		
+	}
+	
+	@Override
+	public File getTemporaryFile(String extension) throws IOException {
+		File profileDirectory = manager.getProfileDir().getAbsoluteFile();
+		File tempDirectory = new File(profileDirectory, "temp");
+		if (tempDirectory.exists() && !tempDirectory.isDirectory()) throw new IOException("can not create the directory for temporary files");
+		if (!tempDirectory.exists()) tempDirectory.mkdir();
+		File tempFile = File.createTempFile("temp", ".".concat(extension), tempDirectory);
+		tempFile.deleteOnExit();
+		return tempFile;
 	}
 
 }
