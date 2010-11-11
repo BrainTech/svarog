@@ -13,46 +13,14 @@
     <section name="Downloads">
 
       <p>
-	Stable versions of Svarog are available as packages below.
+	Latest versions of Svarog are not available as compiled
+	packages. Please compile from the
+	<a href="http://escher.fuw.edu.pl/git/svarog">source</a>.
       </p>
-
-      <subsection name="Latest stable version">
-
-	<a name="0.5.0" />
-	<h4>Svarog 0.5.0<span style="font-size: 10px;">(<a href="changes-report.html#a0.5.0">release notes</a>)</span></h4>
-
-	<table><tbody>
-	  <tr>
-	    <th>
-	      Platform/format
-	    </th>
-	    <th>
-	      URL
-	    </th>
-	  </tr>
-	  <tr>
-	    <td>Microsoft Windows network installer</td>
-	    <td><a href="http://signalml.eeg.pl:8080/svarog/downloads/0.5.0/svarog-0.5.0-installer.exe">svarog-0.5.0-installer.exe</a></td>
-	  </tr>
-	  <tr>
-	    <td>Multiplatform network installer (run with Java)</td>
-	    <td><a href="http://signalml.eeg.pl:8080/svarog/downloads/0.5.0/svarog-0.5.0-installer.jar">svarog-0.5.0-installer.jar</a></td>
-	  </tr>
-	  <tr>
-	    <td>Multiplatform package ZIP (see below)</td>
-	    <td><a href="http://signalml.eeg.pl:8080/svarog/downloads/0.5.0/svarog-0.5.0.zip">svarog-0.5.0.zip</a></td>
-	  </tr>
-	  <tr>
-	    <td>Multiplatform package TAR.GZ (see below)</td>
-	    <td><a href="http://signalml.eeg.pl:8080/svarog/downloads/0.5.0/svarog-0.5.0.tar.gz">svarog-0.5.0.tar.gz</a></td>
-	  </tr>
-	  <tr>
-	    <td>Multiplatform package TAR.BZ2 (see below)</td>
-	    <td><a href="http://signalml.eeg.pl:8080/svarog/downloads/0.5.0/svarog-0.5.0.tar.bz2">svarog-0.5.0.tar.bz2</a></td>
-	  </tr>
-	</tbody></table>
-
-      </subsection>
+      <p>
+	Previous stable versions of Svarog are available as packages
+	in the <a href="archive.html">archive</a>.
+      </p>
 
       <subsection name="Matlab Component Runtime redistributables">
 
