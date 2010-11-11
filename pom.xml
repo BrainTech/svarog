@@ -530,17 +530,14 @@
 
 	<developers>
 		<developer>
-			<id>mdobacz</id>
 			<name>Michał Dobaczewski</name>
 			<email>michal (dot) d08 (at) "Google mail"</email>
 			<roles>
 				<role>Developer</role>
-				<role>Svarog subproject coordinator</role>
 			</roles>
 			<timezone>+1</timezone>
 		</developer>
 		<developer>
-			<id>dobi</id>
 			<name>Dobiesław Ircha</name>
 			<organization>ZFB</organization>
 			<roles>
@@ -550,82 +547,86 @@
 			<timezone>+1</timezone>
 		</developer>
 		<developer>
-			<id>piotr</id>
 			<name>Piotr Durka</name>
 			<url>http://durka.info/</url>
 			<organization>ZFB</organization>
 			<roles>
-				<role>Member</role>
 				<role>DBF Contact Person</role>
 				<role>signalml.org Coordinator</role>
 			</roles>
 			<timezone>+1</timezone>
 		</developer>
 		<developer>
-			<id>zbyszek</id>
 			<name>Zbyszek Jędrzejewski-Szmek</name>
-			<organization>ZFB</organization>
 			<roles>
-				<role>Member</role>
 				<role>Infrastructure admin</role>
 			</roles>
 			<timezone>+1</timezone>
 		</developer>
 		<developer>
-			<id>hubert</id>
+			<name>Mateusz Kruszyński</name>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
+			<name>Piotr Szachewicz</name>
+			<roles>
+				<role>Developer (tags and filters?)</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
 			<name>Hubert Klekowicz</name>
 			<organization>ZFB</organization>
 			<roles>
-				<role>Member</role>
 				<role>Matlab integration</role>
 				<role>Artifact developer</role>
 			</roles>
 			<timezone>+1</timezone>
 		</developer>
 		<developer>
-			<id>rafal</id>
 			<name>Rafał Kuś</name>
 			<organization>ZFB</organization>
 			<roles>
-				<role>Member</role>
 				<role>Mp5 developer</role>
 			</roles>
 			<timezone>+1</timezone>
 		</developer>
 		<developer>
-			<id>ula</id>
 			<name>Ula Malinowska</name>
 			<organization>ZFB</organization>
 			<roles>
-				<role>Member</role>
 				<role>Stager developer</role>
 			</roles>
 			<timezone>+1</timezone>
 		</developer>
 		<developer>
-		    <id>STF</id>
-		    <name>Stanisław Findeisen</name>
-		    <organization>eisenbits</organization>
-		    <roles>
-			<role>Member</role>
-		    </roles>
-		    <timezone>+1</timezone>
+			<name>Stanisław Findeisen</name>
+			<organization>eisenbits</organization>
+			<roles>
+				<role>Documentation</role>
+				<role>Plugin system developer</role>
+			</roles>
+			<timezone>+1</timezone>
 		</developer>
 		<developer>
-		    <name>Marcin Szumski</name>
-		    <organization>eisenbits</organization>
-		    <timezone>+1</timezone>
-		    <roles>
-			<role>documentation</role>
-		    </roles>
+			<name>Marcin Szumski</name>
+			<organization>eisenbits</organization>
+			<timezone>+1</timezone>
+			<roles>
+				<role>Documentation</role>
+				<role>Plugin system developer</role>
+			</roles>
 		</developer>
 		<developer>
-		    <name>Mateusz Dzwonek</name>
-		    <organization>eisenbits</organization>
-		    <timezone>+1</timezone>
-		    <roles>
-			<role>documentation</role>
-		    </roles>
+			<name>Mateusz Dzwonek</name>
+			<organization>eisenbits</organization>
+			<timezone>+1</timezone>
+			<roles>
+				<role>Documentation</role>
+			</roles>
 		</developer>
 	</developers>
 
