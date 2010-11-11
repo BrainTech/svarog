@@ -42,13 +42,14 @@ public class OpenMonitorAction extends AbstractSignalMLAction {
 		logger.debug("Open monitor");
 
 		OpenDocumentDescriptor ofd = new OpenDocumentDescriptor();
+
 		ofd.setType( ManagedDocumentType.MONITOR);
 		ofd.setMakeActive(true);
 
 		OpenMonitorDescriptor model = ofd.getMonitorOptions();
 		
 		openMonitorDialog.cancelConnection();
-		boolean ok = openMonitorDialog.showDialog( model, true);		
+		boolean ok = openMonitorDialog.showDialog(model, true);
 		if( !ok ) {
 			return;
 		}
@@ -68,7 +69,7 @@ public class OpenMonitorAction extends AbstractSignalMLAction {
 			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
 			return;		 
 		}
-										
+
 	}
 	
 	@Override

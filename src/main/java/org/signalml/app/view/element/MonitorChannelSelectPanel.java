@@ -1,14 +1,18 @@
 package org.signalml.app.view.element;
 
 import java.awt.BorderLayout;
+import java.util.logging.Level;
 
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.model.OpenMonitorDescriptor;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
@@ -39,10 +43,13 @@ public class MonitorChannelSelectPanel extends JPanel {
 	 * @return void
 	 */
 	private void initialize() {
-		JLabel label = new JLabel( messageSource.getMessage( "openMonitor.channelsListLabel"));
 		setLayout( new BorderLayout());
-		add( label, BorderLayout.NORTH);
 		add( new JScrollPane( getChannelList()), BorderLayout.CENTER);
+
+		CompoundBorder border = new CompoundBorder(
+			new TitledBorder(messageSource.getMessage("openMonitor.channelSelectPanelTitle")),
+			new EmptyBorder(3, 3, 3, 3));
+		setBorder(border);
 	}
 
 	public JList getChannelList() {
@@ -51,6 +58,31 @@ public class MonitorChannelSelectPanel extends JPanel {
 			channelList.setSelectionMode( ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		}
 		return channelList;
+	}
+
+	public void fillPanelFromModel(OpenMonitorDescriptor openMonitorDescriptor) {
+
+		String[] channelLabels = openMonitorDescriptor.getChannelLabels();
+
+		if (channelLabels == null) {
+			Integer channelCount = openMonitorDescriptor.getChannelCount();
+			if (channelCount == null)
+				channelCount = 0;
+			channelLabels = new String[channelCount];
+			for (int i=0; i<channelCount; i++)
+				channelLabels[i] = Integer.toBinaryString( i);
+		}
+
+		getChannelList().setListData(channelLabels);
+
+	}
+
+	public void fillModelFromPanel(OpenMonitorDescriptor openMonitorDescriptor) {
+		try {
+			openMonitorDescriptor.setSelectedChannelList(getChannelList().getSelectedValues());
+		} catch (Exception ex) {
+			java.util.logging.Logger.getLogger(MonitorChannelSelectPanel.class.getName()).log(Level.SEVERE, null, ex);
+		}
 	}
 
 }

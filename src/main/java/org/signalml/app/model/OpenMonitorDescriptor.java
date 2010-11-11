@@ -20,7 +20,7 @@ public class OpenMonitorDescriptor {
 	private boolean metadataReceived = false;
 	private String metadataInfo;
 
-	private Integer channelCount = 1;
+	private Integer channelCount;
 	private int[] amplifierChannels;
 	private String[] channelLabels;
 	private Object[] selectedChannelList;
@@ -42,12 +42,16 @@ public class OpenMonitorDescriptor {
 	private RawSignalSampleType sampleType;
 	private RawSignalByteOrder byteOrder;
 
+	private MonitorRecordingDescriptor monitorRecordingDescriptor;
+
 	public OpenMonitorDescriptor() {
 		// XXX currently all signals are treated as EEG - there is no way to change this in the GUI
 		type = SignalType.EEG_10_20;
-		channelCount = 1;
+		channelCount = 0;
 		sampleType = RawSignalSampleType.DOUBLE;
 		byteOrder = RawSignalByteOrder.LITTLE_ENDIAN;
+
+		monitorRecordingDescriptor = new MonitorRecordingDescriptor();
 	}
 
 	public String getMultiplexerAddress() {
@@ -315,6 +319,14 @@ public class OpenMonitorDescriptor {
 
 	public void setByteOrder(RawSignalByteOrder byteOrder) {
 		this.byteOrder = byteOrder;
+	}
+
+	public void setMonitorRecordingDescriptor(MonitorRecordingDescriptor monitorRecordingDescriptor) {
+		this.monitorRecordingDescriptor = monitorRecordingDescriptor;
+	}
+
+	public MonitorRecordingDescriptor getMonitorRecordingDescriptor() {
+		return monitorRecordingDescriptor;
 	}
 
 }

@@ -10,9 +10,13 @@ package org.signalml.app.model;
  */
 public class MonitorRecordingDescriptor {
 
+	private boolean recordingEnabled = false;
 	private String signalRecordingFilePath;
 	private String tagsRecordingFilePath;
 	private boolean tagsRecordingDisabled;
+
+	public MonitorRecordingDescriptor() {
+	}
 
 	public MonitorRecordingDescriptor(String signalRecordingFilePath, String tagsRecordingFilePath, boolean isTagsRecordingDisabled) {
 		this.signalRecordingFilePath = signalRecordingFilePath;
@@ -42,6 +46,14 @@ public class MonitorRecordingDescriptor {
 
 	public void setTagsRecordingDisabled(boolean tagsRecordingDisabled) {
 		this.tagsRecordingDisabled = tagsRecordingDisabled;
+	}
+
+	public void setRecordingEnabled(boolean isRecordingEnabled) {
+		this.recordingEnabled = isRecordingEnabled;
+	}
+
+	public boolean isRecordingEnabled() {
+		return recordingEnabled;
 	}
 
 }

@@ -8,9 +8,11 @@ import java.awt.Window;
 import javax.swing.JComponent;
 
 import org.signalml.app.model.MonitorRecordingDescriptor;
+import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
+import org.springframework.validation.Errors;
 
 /**
  *
@@ -44,7 +46,7 @@ public class StartMonitorRecordingDialog extends AbstractDialog {
 
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
-		return MonitorRecordingDescriptor.class.isAssignableFrom(clazz);
+		return OpenMonitorDescriptor.class.isAssignableFrom(clazz);
 	}
 
 	@Override
@@ -61,6 +63,14 @@ public class StartMonitorRecordingDialog extends AbstractDialog {
 		if (chooseFilesForMonitorRecordingPanel == null)
 			chooseFilesForMonitorRecordingPanel = new ChooseFilesForMonitorRecordingPanel(messageSource);
 		return chooseFilesForMonitorRecordingPanel;
+	}
+
+	@Override
+	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+		super.validateDialog(model, errors);
+
+		fillModelFromDialog(model);
+		getChooseFilesForMonitorRecordingPanel().validatePanel(model, errors);
 	}
 
 }

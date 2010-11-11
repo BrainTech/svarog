@@ -45,28 +45,19 @@ public class StartMonitorRecordingAction extends MonitorRecordingAction {
 	public void actionPerformed(ActionEvent ev) {
 
 		MonitorRecordingDescriptor monitorRecordingDescriptor;
-		File signalRecordingFile;
-		File tagsRecordingFile;
 
 		SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
 		if ((signalDocument != null) && (signalDocument instanceof MonitorSignalDocument)) {
 
 			MonitorSignalDocument monitorSignalDocument = (MonitorSignalDocument) signalDocument;
-			monitorRecordingDescriptor = new MonitorRecordingDescriptor("monitor_signal_rec", "monitor_tags_rec", false);
 
-			boolean ok = startMonitorRecordingDialog.showDialog(monitorRecordingDescriptor, true);
+			boolean ok = startMonitorRecordingDialog.showDialog(monitorSignalDocument.getMonitorOptions(), true);
 				if (!ok) {
 				return;
 			}
 
-			signalRecordingFile = new File(monitorRecordingDescriptor.getSignalRecordingFilePath());
-			if (monitorRecordingDescriptor.isTagsRecordingDisabled())
-				tagsRecordingFile = null;
-			else
-				tagsRecordingFile = new File(monitorRecordingDescriptor.getTagsRecordingFilePath());
-
 			try {
-				monitorSignalDocument.startMonitorRecording(signalRecordingFile, tagsRecordingFile);
+				monitorSignalDocument.startMonitorRecording();
 			} catch (FileNotFoundException ex) {
 				logger.error("The files to which you want to record signal/tags were not found", ex);
 			}
