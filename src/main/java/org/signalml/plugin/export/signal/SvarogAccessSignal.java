@@ -10,12 +10,11 @@ import java.nio.ByteOrder;
 import java.util.List;
 import java.util.Set;
 
-import org.signalml.app.document.SignalDocument;
-import org.signalml.app.document.TagDocument;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.domain.signal.space.SignalSourceLevel;
 import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.view.ExportedSignalPlot;
 
 /**
  * This interface allows to access a part of Svarog logic, namely:
@@ -345,19 +344,24 @@ public interface SvarogAccessSignal {
 	 * (short, int, float, double)
 	 * @param byteOrder the {@link ByteOrder order} of bytes in which
 	 * the signal should be written
-	 * @param document the {@link SignalDocument document} with the signal
+	 * @param plot the {@link ExportedSignalPlot plot} for the
+	 * signal. Must be returned from this
+	 * SvarogAcces (actually be of type SignalPlot - internal to Svarog).
 	 * @param file the file to which the signal will be exported
 	 * @throws InvalidClassException if document is not returned from
 	 * this SvarogAccess (not of type SignalDocument - internal to Svarog)
 	 * @throws SignalMLException if the export failed due to other reasons
 	 */
-	void exportSignal(float position, float length, int[] channels, SignalSourceLevel level, ExportedRawSignalSampleType sampleType, ByteOrder byteOrder, ExportedSignalDocument document, File file) throws InvalidClassException, SignalMLException;
+	void exportSignal(float position, float length, int[] channels, SignalSourceLevel level, ExportedRawSignalSampleType sampleType, ByteOrder byteOrder, ExportedSignalPlot plot, File file) throws InvalidClassException, SignalMLException;
 	
 	/**
 	 * Creates and returns a temporary file.
 	 * The file is created in the {@code %profile-directory%/temp}.
-	 * When the Svarog is closed (actually when the virtual machine is
-	 * terminated) the file is removed
+	 * When the File object is destroyed (by the Garbage Collector)
+	 * the file is removed from disk.
+	 * NOTE: it would be a good practice if you removed your temporary files
+	 * when you finish using them. Especially if you use a lot of them or
+	 * big ones.
 	 * @param extension the extension to the file (for example {@code "bin",
 	 * "xml"})
 	 * @return the created temporary file

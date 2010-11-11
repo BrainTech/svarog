@@ -4,6 +4,7 @@
 
 package org.signalml.app.document;
 
+import java.io.InvalidClassException;
 import java.util.List;
 
 import org.signalml.app.view.signal.SignalPlot;
@@ -173,6 +174,8 @@ public interface SignalDocument extends ExportedSignalDocument {
 	 * the view for this document
 	 */
 	String getMontageInfo();
-
+	
+	@Override
+	SignalView getSignalView() throws InvalidClassException;
 
 }

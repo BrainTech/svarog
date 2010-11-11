@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InvalidClassException;
 import java.nio.ByteOrder;
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -71,7 +72,9 @@ import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
+import org.signalml.plugin.export.signal.TemporaryFile;
 import org.signalml.plugin.export.view.DocumentView;
+import org.signalml.plugin.export.view.ExportedSignalPlot;
 import org.signalml.plugin.loader.PluginLoader;
 
 /**
@@ -773,6 +776,13 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 		throw new InvalidClassException("No such byte order");
 	}
 	
+	/**
+	 * Obtains {@link RawSignalSampleType} for a given
+	 * {@link ExportedRawSignalSampleType}.
+	 * @param sampleType the {@link ExportedRawSignalSampleType}
+	 * @return the RawSignalSampleType
+	 * @throws InvalidParameterException if there is no type
+	 */
 	private RawSignalSampleType getSampleType(ExportedRawSignalSampleType sampleType) {
 		switch (sampleType) {
 		case DOUBLE:
@@ -783,18 +793,17 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 			return RawSignalSampleType.INT;
 		case SHORT:
 			return RawSignalSampleType.SHORT;
-			default:
-				return RawSignalSampleType.FLOAT;
+		default:
+			throw new InvalidParameterException("such type doesn't exist");
 		}
 	}
 	
 	@Override
 	public void exportSignal(float position, float length, int[] channels, SignalSourceLevel level,
-			ExportedRawSignalSampleType sampleType, ByteOrder byteOrder, ExportedSignalDocument document, File file) throws InvalidClassException, SignalMLException {
-		if (!(document instanceof SignalDocument)) throw new InvalidClassException("document is not of type SignalDocument => was not returned from Svarog");
-		SignalDocument signalDocument = (SignalDocument) document;
-		SignalView signalView = (SignalView) signalDocument.getDocumentView();
-		SignalPlot masterPlot = signalView.getMasterPlot();
+			ExportedRawSignalSampleType sampleType, ByteOrder byteOrder, ExportedSignalPlot plot, File file) throws InvalidClassException, SignalMLException {
+		if (!(plot instanceof SignalPlot)) 
+			throw new InvalidClassException("document is not of type SignalPlot => was not returned from Svarog");
+		SignalPlot masterPlot = (SignalPlot) plot;
 		
 		RawSignalByteOrder rawByteOrder = getByteOrder(byteOrder);
 		
@@ -916,11 +925,14 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 	public File getTemporaryFile(String extension) throws IOException {
 		File profileDirectory = manager.getProfileDir().getAbsoluteFile();
 		File tempDirectory = new File(profileDirectory, "temp");
-		if (tempDirectory.exists() && !tempDirectory.isDirectory()) throw new IOException("can not create the directory for temporary files");
-		if (!tempDirectory.exists()) tempDirectory.mkdir();
+		if (tempDirectory.exists() && !tempDirectory.isDirectory())
+			throw new IOException("can not create the directory for temporary files");
+		if (!tempDirectory.exists())
+			tempDirectory.mkdir();
 		File tempFile = File.createTempFile("temp", ".".concat(extension), tempDirectory);
-		tempFile.deleteOnExit();
-		return tempFile;
+		TemporaryFile temporaryFile = new TemporaryFile(tempFile.getAbsolutePath());
+		temporaryFile.deleteOnExit();
+		return temporaryFile;
 	}
 
 }

@@ -3,7 +3,10 @@
  */
 package org.signalml.plugin.export.signal;
 
+import java.io.InvalidClassException;
 import java.util.List;
+
+import org.signalml.plugin.export.view.ExportedSignalView;
 
 
 /**
@@ -129,4 +132,11 @@ public interface ExportedSignalDocument extends Document {
 	 * @return the array of labels of source channels
 	 */
 	List<String> getSourceChannelLabels();
+	
+	/**
+	 * Returns a {@link ExportedSignalView signal view} for this document.
+	 * @return a signal view for this document.
+	 * @throws InvalidClassException if the view for this document has an invalid type
+	 */
+	ExportedSignalView getSignalView() throws InvalidClassException;
 }
