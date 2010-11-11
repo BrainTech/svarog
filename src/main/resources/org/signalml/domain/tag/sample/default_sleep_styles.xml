@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tag_file format_version="1.0">
-  <paging page_size="20.0" blocks_per_page="5"/>  
-  <tag_definitions>
-    <def_group name='pageTags'>
-      <tag_item name='1' description='Stage 1' outline_color='00cccc' fill_color='00cccc' outline_width='1.0' outline_dash='' key_shortcut='1'/>
-      <tag_item name='2' description='Stage 2' outline_color='99ff00' fill_color='99ff00' outline_width='1.0' outline_dash='' key_shortcut='2'/>
-      <tag_item name='3' description='Stage 3' outline_color='ffff66' fill_color='ffff66' outline_width='1.0' outline_dash='' key_shortcut='3'/>
-      <tag_item name='4' description='Stage 4' outline_color='ff9966' fill_color='ff9966' outline_width='1.0' outline_dash='' key_shortcut='4'/>
-      <tag_item name='m' description='MUSC' outline_color='00ff66' fill_color='00ff66' outline_width='1.0' outline_dash='' key_shortcut='M'/>
-      <tag_item name='r' description='REM' outline_color='cc00cc' fill_color='cc00cc' outline_width='1.0' outline_dash='' key_shortcut='R'/>
-      <tag_item name='w' description='WAKE' outline_color='ffff00' fill_color='ffff00' outline_width='1.0' outline_dash='' key_shortcut='W'/>
-    </def_group>
-    <def_group name='blockTags'>
-      <tag_item name='A' description='Artifact' outline_color='808080' fill_color='808080' outline_width='1.0' outline_dash='' key_shortcut='A'/>
-    </def_group>
-    <def_group name='channelTags'>
-      <tag_item name='B' description='Blue selection' outline_color='0000ff' fill_color='0000ff' outline_width='1.0' outline_dash='' key_shortcut='shift B'/>
-      <tag_item name='G' description='Green selection' outline_color='00ff00' fill_color='00ff00' outline_width='1.0' outline_dash='' key_shortcut='shift G'/>
-      <tag_item name='R' description='Red selection' outline_color='ff0000' fill_color='ff0000' outline_width='1.0' outline_dash='' key_shortcut='shift R'/>
-      <tag_item name='Y' description='Yellow selection' outline_color='ffff00' fill_color='ffff00' outline_width='1.0' outline_dash='' key_shortcut='shift Y'/>
-    </def_group>
-  </tag_definitions>
-</tag_file>
+<tagFile formatVersion="1.0">
+  <paging pageSize="20.0" blocksPerPage="5"/>
+  <tagDefinitions>
+    <defGroup name='pageTags'>
+      <tagItem name='1' description='Stage 1' outlineColor='00cccc' fillColor='00cccc' outlineWidth='1.0' outlineDash='' keyShortcut='1'/>
+      <tagItem name='2' description='Stage 2' outlineColor='99ff00' fillColor='99ff00' outlineWidth='1.0' outlineDash='' keyShortcut='2'/>
+      <tagItem name='3' description='Stage 3' outlineColor='ffff66' fillColor='ffff66' outlineWidth='1.0' outlineDash='' keyShortcut='3'/>
+      <tagItem name='4' description='Stage 4' outlineColor='ff9966' fillColor='ff9966' outlineWidth='1.0' outlineDash='' keyShortcut='4'/>
+      <tagItem name='m' description='MUSC' outlineColor='00ff66' fillColor='00ff66' outlineWidth='1.0' outlineDash='' keyShortcut='M'/>
+      <tagItem name='r' description='REM' outlineColor='cc00cc' fillColor='cc00cc' outlineWidth='1.0' outlineDash='' keyShortcut='R'/>
+      <tagItem name='w' description='WAKE' outlineColor='ffff00' fillColor='ffff00' outlineWidth='1.0' outlineDash='' keyShortcut='W'/>
+    </defGroup>
+    <defGroup name='blockTags'>
+      <tagItem name='A' description='Artifact' outlineColor='808080' fillColor='808080' outlineWidth='1.0' outlineDash='' keyShortcut='A'/>
+    </defGroup>
+    <defGroup name='channelTags'>
+      <tagItem name='B' description='Blue selection' outlineColor='0000ff' fillColor='0000ff' outlineWidth='1.0' outlineDash='' keyShortcut='shift B'/>
+      <tagItem name='G' description='Green selection' outlineColor='00ff00' fillColor='00ff00' outlineWidth='1.0' outlineDash='' keyShortcut='shift G'/>
+      <tagItem name='R' description='Red selection' outlineColor='ff0000' fillColor='ff0000' outlineWidth='1.0' outlineDash='' keyShortcut='shift R'/>
+      <tagItem name='Y' description='Yellow selection' outlineColor='ffff00' fillColor='ffff00' outlineWidth='1.0' outlineDash='' keyShortcut='shift Y'/>
+    </defGroup>
+  </tagDefinitions>
+</tagFile>
