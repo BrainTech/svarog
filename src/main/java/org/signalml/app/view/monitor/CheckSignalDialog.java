@@ -19,6 +19,8 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import java.util.HashMap;
+
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.plugin.export.SignalMLException;
@@ -43,21 +45,21 @@ public class CheckSignalDialog extends AbstractDialog {
          * The delay between each check in miliseconds
          */
         private static final int DELAY = 1000;
-        private static final String AMP_TYPE = "TMSI-porti7";        
+        private static final String AMP_TYPE = "TMSI-porti7";
 
         private Montage currentMontage;
         private MonitorSignalDocument monitorSignalDocument;
 
-        private CheckSignalDisplay checkSignalDisplay;	
+        private CheckSignalDisplay checkSignalDisplay;
         private VisualReferenceModel visualReferenceModel;
-        
+
         private Timer timer;
         private TimerClass timerClass;
 
 
         public CheckSignalDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
-                                
-                super(messageSource, w, isModal);              
+
+                super(messageSource, w, isModal);
         }
 
 	@Override
@@ -87,7 +89,7 @@ public class CheckSignalDialog extends AbstractDialog {
 
 		interfacePanel.add(editorPanel, BorderLayout.CENTER);
 		return interfacePanel;
-                
+
 	}
 
         @Override
@@ -96,7 +98,7 @@ public class CheckSignalDialog extends AbstractDialog {
 		MontageDescriptor descriptor = (MontageDescriptor) model;
 		Montage montage = descriptor.getMontage();
 		SignalDocument signalDocument = descriptor.getSignalDocument();
-		
+
 		if (montage == null) {
 
                         currentMontage = new Montage(new SourceMontage(signalDocument));
@@ -104,7 +106,7 @@ public class CheckSignalDialog extends AbstractDialog {
 
                         currentMontage = new Montage(montage);
                 }
-			
+
 		getOkButton().setVisible(true);
 		getRootPane().setDefaultButton(getOkButton());
 
@@ -138,7 +140,7 @@ public class CheckSignalDialog extends AbstractDialog {
 
 		return false;
 	}
-        
+
         @Override
 	protected void onDialogClose() {
 
@@ -149,7 +151,7 @@ public class CheckSignalDialog extends AbstractDialog {
 
         @Override
 	public boolean supportsModelClass(Class<?> clazz) {
-                
+
 		return MontageDescriptor.class.isAssignableFrom(clazz);
 	}
 
@@ -160,6 +162,7 @@ public class CheckSignalDialog extends AbstractDialog {
          */
         private class TimerClass implements ActionListener, Runnable {
 
+                private HashMap<String, Boolean> channels;
                 private GenericAmplifierDiagnosis amplifierDiagnosis;
                 private CheckSignalDisplay checkSignalDisplay;
 
@@ -173,8 +176,35 @@ public class CheckSignalDialog extends AbstractDialog {
                  */
                 public TimerClass(CheckSignalDisplay checkSignalDisplay, MonitorSignalDocument monitorSignalDocument, String ampType) {
 
-                        this.checkSignalDisplay = checkSignalDisplay;                       
+                        this.checkSignalDisplay = checkSignalDisplay;
                         amplifierDiagnosis = AmplifierDignosisManufacture.getAmplifierDiagnosis(ampType, monitorSignalDocument);
+                }
+
+                /**
+                 * Compares given channel state to {@link #channels}
+                 *
+                 * @param channels2 Given channel state
+                 * @return false if the state is the same, true if there is a difference
+                 */
+                private boolean compareChannels(HashMap<String, Boolean> channels2) {
+
+                        if (channels == null || channels2 == null) {
+
+                                if (channels == null && channels2 == null)
+                                        return false;
+                                else
+                                        return true;
+
+                        } else {
+
+                                for (String s : monitorSignalDocument.getSourceChannelLabels()) {
+
+                                        if (channels.get(s) != channels2.get(s))
+                                                return true;
+                                }
+                        }
+
+                        return false;
                 }
 
                 @Override
@@ -186,7 +216,12 @@ public class CheckSignalDialog extends AbstractDialog {
                 @Override
                 public void run() {
 
-                        checkSignalDisplay.setChannelsState(amplifierDiagnosis.signalState());
+                        HashMap<String, Boolean> channels2 = amplifierDiagnosis.signalState();
+                        if (compareChannels(channels2)) {
+
+                                channels = channels2;
+                                checkSignalDisplay.setChannelsState(channels);
+                        }
                 }
         }
 }

@@ -21,10 +21,14 @@ import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.action.ConnectMultiplexerAction;
 import org.signalml.app.action.DisconnectMultiplexerAction;
+import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.dialog.OpenMonitorDialog;
@@ -41,6 +45,8 @@ public class MultiplexerConnectionPanel extends JPanel {
 	protected static final Logger logger = Logger.getLogger(MultiplexerConnectionPanel.class);
 	
 	private ViewerElementManager elementManager;
+	private ApplicationConfiguration applicationConfiguration;
+
 	private OpenMonitorDescriptor openMonitorDescriptor;
 
 	private JTextField multiplexerAddressField;
@@ -50,14 +56,17 @@ public class MultiplexerConnectionPanel extends JPanel {
 	private JProgressBar progressBar;
 	private JButton connectButton;
 	private JButton disonnectButton;
+
 	private ConnectMultiplexerAction connectAction;
+	private DisconnectMultiplexerAction disconnectAction;
 
 	/**
 	 * This is the default constructor
 	 */
-	public MultiplexerConnectionPanel( ViewerElementManager elementManager) {
+	public MultiplexerConnectionPanel(ViewerElementManager elementManager, ApplicationConfiguration applicationConfiguration) {
 		super();
 		this.elementManager = elementManager;
+		this.applicationConfiguration = applicationConfiguration;
 		initialize();
 	}
 
@@ -72,7 +81,12 @@ public class MultiplexerConnectionPanel extends JPanel {
 	 */
 	private void initialize() {
 
-		setLayout( new BorderLayout());
+		setLayout(new BorderLayout());
+
+		CompoundBorder border = new CompoundBorder(
+			new TitledBorder(getMessageSource().getMessage("openMonitor.multiplexerConnectionPanelTitle")),
+			new EmptyBorder(3, 3, 3, 3));
+		setBorder(border);
 
 		JPanel fieldPanel = new JPanel();
 		GroupLayout layout = new GroupLayout(fieldPanel);
@@ -112,7 +126,7 @@ public class MultiplexerConnectionPanel extends JPanel {
 		JPanel connectionPanel = new JPanel();
 		connectionPanel.setLayout( new GridBagLayout());
 
-		DisconnectMultiplexerAction disconnectAction = new DisconnectMultiplexerAction( elementManager);
+		disconnectAction = new DisconnectMultiplexerAction( elementManager);
 		getDisconnectButton().setAction( disconnectAction);
 		disconnectAction.addPropertyChangeListener( new PropertyChangeListener() {
 			@Override
@@ -165,6 +179,7 @@ public class MultiplexerConnectionPanel extends JPanel {
 		connectAction.setTryoutCount( OpenMonitorDialog.TRYOUT_COUNT);
 		connectAction.setTimeoutMilis( OpenMonitorDialog.TIMEOUT_MILIS);
 		connectAction.addPropertyChangeListener( propertyChangeHandler);
+		connectAction.setOpenMonitorDescriptor(openMonitorDescriptor);
 		getConnectButton().setAction( connectAction);
 
 		GridBagConstraints c = new GridBagConstraints();
@@ -191,7 +206,7 @@ public class MultiplexerConnectionPanel extends JPanel {
 		return openMonitorDescriptor;
 	}
 
-	public void setOpenMonitorDescriptor(OpenMonitorDescriptor openMonitorDescriptor) {
+	protected void setOpenMonitorDescriptor(OpenMonitorDescriptor openMonitorDescriptor) {
 		this.openMonitorDescriptor = openMonitorDescriptor;
 		if (connectAction != null)
 			connectAction.setOpenMonitorDescriptor( openMonitorDescriptor);
@@ -250,4 +265,68 @@ public class MultiplexerConnectionPanel extends JPanel {
 		getProgressBar().setValue( 0);
 		getStatusArea().setText( "");
 	}
+
+	/**
+	 * Returns the action associated with the Connect button.
+	 * @return an action associated with the Connect button.
+	 */
+	public ConnectMultiplexerAction getConnectAction() {
+		return connectAction;
+	}
+
+	/**
+	 * Returns the action associated with the Disonnect button.
+	 * @return an action associated with the Disconnect button.
+	 */
+	public DisconnectMultiplexerAction getDisconnectAction() {
+		return disconnectAction;
+	}
+
+	/**
+	 * Fills the fields of this panel from the given model.
+	 * @param openMonitorDescriptor the model from which this dialog will be
+	 * filled.
+	 */
+	public void fillPanelFromModel(OpenMonitorDescriptor openMonitorDescriptor) {
+
+		setOpenMonitorDescriptor(openMonitorDescriptor);
+
+		String address = openMonitorDescriptor.getMultiplexerAddress();
+		if (address == null && applicationConfiguration != null)
+			address = applicationConfiguration.getMultiplexerAddress();
+		getMultiplexerAddressField().setText(address);
+
+		int port = openMonitorDescriptor.getMultiplexerPort();
+		if (port == -1 && applicationConfiguration != null)
+			port = applicationConfiguration.getMultiplexerPort();
+		getMultiplexerPortField().setText(Integer.toString( port));
+	}
+
+	/**
+	 * Fills the model with the data from this panel (user input).
+	 * @param openMonitorDescriptor the model to be filled.
+	 */
+	public void fillModelFromPanel(OpenMonitorDescriptor m) {
+
+		String adres = getMultiplexerAddressField().getText();
+		m.setMultiplexerAddress(adres);
+		if (applicationConfiguration != null)
+			applicationConfiguration.setMultiplexerAddress( adres);
+
+		int port = Integer.parseInt(getMultiplexerPortField().getText());
+		m.setMultiplexerPort(port);
+		if (applicationConfiguration != null)
+			applicationConfiguration.setMultiplexerPort( port);
+
+	}
+
+	/**
+	 * Sets the {@link ApplicationConfiguration} for this panel.
+	 * @param applicationConfiguration a Svarog configuration to be used with
+	 * this panel to get the default values for some fields.
+	 */
+	public void setApplicationConfiguration(ApplicationConfiguration applicationConfiguration) {
+		this.applicationConfiguration = applicationConfiguration;
+	}
+
 }

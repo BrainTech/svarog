@@ -45,7 +45,6 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 	private RoundBufferSampleSource timestampsSource;
 	private StyledMonitorTagSet tagSet;
 	private volatile boolean finished;
-
 	/**
 	 * This object is responsible for recording tags received by this {@link MonitorWorker}.
 	 * It is connected to the monitor by an external object using
@@ -134,13 +133,15 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 			try {
 				// Receive message
 				msgData = jmxClient.receive(TIMEOUT_MILIS, TimeUnit.MILLISECONDS);
-				if (msgData == null)
+				if (msgData == null) {
 					continue;
+				}
 
 				// Unpack message
 				sampleMsg = msgData.getMessage();
 				sampleMsgString = sampleMsg.getMessage();
 				sampleType = sampleMsg.getType();
+
 				logger.debug("Worker: received message type: " + sampleType);
 
 
@@ -228,13 +229,31 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 						tagLen,
 						-1);
 
-					for (SvarogProtocol.Variable v : tagMsg.getDesc().getVariablesList())
+					for (SvarogProtocol.Variable v : tagMsg.getDesc().getVariablesList()) {
 						tag.setAttribute(v.getKey(), v.getValue());
+					}
 
-					if (tagRecorderWorker != null)
-						tagRecorderWorker.offer(tag);
+					boolean isChannelSelected = false;
 
-					publish(tag);
+					if (tag.getChannel() == -1) {
+						isChannelSelected = true;
+					} else {
+						for (int channel : selectedChannels) {
+							if (selectedChannels[channel] == tag.getChannel()) {
+								isChannelSelected = true;
+								break;
+							}
+						}
+					}
+
+					if (isChannelSelected) {
+						if (tagRecorderWorker != null) {
+							tagRecorderWorker.offer(tag);
+						}
+
+						publish(tag);
+					}
+
 					logger.info("ILE MAM TAGOW: " + tagSet.getTagCount());
 
 				} else {

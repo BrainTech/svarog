@@ -7,12 +7,15 @@ package org.signalml.app.view.monitor;
 import java.awt.Window;
 import javax.swing.JComponent;
 
-import org.signalml.app.model.MonitorRecordingDescriptor;
+import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
+import org.springframework.validation.Errors;
 
 /**
+ * Represents a dialog shown when the user choose to start monitor recording.
+ * Contains a panel to select files to which signal and tags will be recorded.
  *
  * @author Piotr Szachewicz
  */
@@ -37,30 +40,69 @@ public class StartMonitorRecordingDialog extends AbstractDialog {
 		super.initialize();
 	}
 
+	/**
+	 * Creates the interface of this dialog.
+	 * Contents of this interface depends on the implementation.
+	 * @return the interface of this dialog
+	 */
 	@Override
 	protected JComponent createInterface() {
 		return getChooseFilesForMonitorRecordingPanel();
 	}
 
+	/**
+	 * Returns if the model can be of the given type.
+	 * @param clazz the type of the model
+	 * @return true the model can be of the given type, false otherwise
+	 */
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
-		return MonitorRecordingDescriptor.class.isAssignableFrom(clazz);
+		return OpenMonitorDescriptor.class.isAssignableFrom(clazz);
 	}
 
+	/**
+	 * Fills the fields of this dialog from the given model.
+	 * @param model the model from which this dialog will be filled.
+	 * @throws SignalMLException TODO when it is thrown
+	 */
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
-		getChooseFilesForMonitorRecordingPanel().fillDialogFromModel(model);
+		getChooseFilesForMonitorRecordingPanel().fillPanelFromModel(model);
 	}
 
+	/**
+	 * Fills the model with the data from this dialog (user input).
+	 * @param model the model to be filled
+	 * @throws SignalMLException TODO when it is thrown
+	 */
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
-		getChooseFilesForMonitorRecordingPanel().fillModelFromDialog(model);
+		getChooseFilesForMonitorRecordingPanel().fillModelFromPanel(model);
 	}
 
+	/**
+	 * Returns the {@link ChooseFilesForMonitorRecordingPanel} used to select
+	 * files to which the monitor signal and tags will be recorded.
+	 * @return the panel used for file selection
+	 */
 	public ChooseFilesForMonitorRecordingPanel getChooseFilesForMonitorRecordingPanel() {
 		if (chooseFilesForMonitorRecordingPanel == null)
 			chooseFilesForMonitorRecordingPanel = new ChooseFilesForMonitorRecordingPanel(messageSource);
 		return chooseFilesForMonitorRecordingPanel;
+	}
+
+	/**
+	 * Checks if this dialog is properly filled.
+	 * @param model the model for this dialog
+	 * @param errors the object in which errors are stored
+	 * @throws SignalMLException TODO when it is thrown
+	 */
+	@Override
+	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+		super.validateDialog(model, errors);
+
+		fillModelFromDialog(model);
+		getChooseFilesForMonitorRecordingPanel().validatePanel(model, errors);
 	}
 
 }

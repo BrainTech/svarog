@@ -178,8 +178,6 @@
 
 	<entry key="monitor.pageSize">20.0</entry>
 
-	<entry key="signalRecorder.fileName">signal</entry>
-
 	<entry key="eeg.pl.registerUrl">http://www.eeg.pl/join_form</entry>
 	
  	<entry key="eeg.pl.signalmlwsUrl">http://signalml.eeg.pl:8080/signalmlws/ws</entry>  		
