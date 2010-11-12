@@ -106,11 +106,16 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 	 */
 	@Override
 	public void setEnabled(boolean enabled) {
+
 		super.setEnabled(enabled);
 
 		for (Component component : this.getComponents()) {
 			component.setEnabled(enabled);
 		}
+
+		if (getDisableTagRecordingPanel().isTagRecordingDisabled())
+			getSelectTagsRecordingFilePanel().setEnabled(false);
+
 	}
 
 	/**
