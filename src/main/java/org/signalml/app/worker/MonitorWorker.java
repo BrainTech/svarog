@@ -151,7 +151,7 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 				//DEBUG
 
 
-				if (sampleType == SvarogConstants.MessageTypes.STREAMED_SIGNAL_MESSAGE) {
+				if (sampleType == SvarogConstants.MessageTypes.AMPLIFIER_SIGNAL_MESSAGE) {
 
 					logger.debug("Worker: reading chunk!");
 
@@ -239,8 +239,8 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 
 				} else {
 					logger.error("received bad reply! " + sampleMsg.getMessage());
-					logger.debug("Worker: receive failed!");
-					return null;
+					//logger.debug("Worker: receive failed!");
+					//return null;
 				}
 
 			} catch (InterruptedException e) {
