@@ -15,20 +15,26 @@ import org.signalml.app.model.OpenMonitorDescriptor;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
- *
+ * This panel is responsible for displaying and setting monitor signal parameters.
+ * Dispayed information include number of channels and sampling frequency.
+ * Page size can be set using this panel.
  */
 public class MonitorSignalParametersPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	protected static final Logger logger = Logger.getLogger(MonitorSignalParametersPanel.class);
+
 	private ApplicationConfiguration applicationConfiguration;
 	private MessageSourceAccessor messageSource;
+
 	private JTextField samplingField;
 	private JTextField channelCountField;
 	private JTextField pageSizeField;
 
 	/**
-	 * This is the default constructor
+	 * Constructor.
+	 * @param messageSource the message source accessor capable of resolving
+	 * localized message codes
+	 * @param applicationConfiguration the configuration of Svarog
 	 */
 	public MonitorSignalParametersPanel(MessageSourceAccessor messageSource, ApplicationConfiguration applicationConfiguration) {
 		super();
@@ -76,7 +82,7 @@ public class MonitorSignalParametersPanel extends JPanel {
 
 	}
 
-	public JTextField getSamplingField() {
+	protected JTextField getSamplingField() {
 		if (samplingField == null) {
 			samplingField = new JTextField();
 			samplingField.setEditable(false);
@@ -84,7 +90,7 @@ public class MonitorSignalParametersPanel extends JPanel {
 		return samplingField;
 	}
 
-	public JTextField getChannelCountField() {
+	protected JTextField getChannelCountField() {
 		if (channelCountField == null) {
 			channelCountField = new JTextField();
 			channelCountField.setEditable(false);
@@ -92,13 +98,18 @@ public class MonitorSignalParametersPanel extends JPanel {
 		return channelCountField;
 	}
 
-	public JTextField getPageSizeField() {
+	protected JTextField getPageSizeField() {
 		if (pageSizeField == null) {
 			pageSizeField = new JTextField();
 		}
 		return pageSizeField;
 	}
 
+	/**
+	 * Fills the fields of this panel from the given model.
+	 * @param openMonitorDescriptor the model from which this dialog will be
+	 * filled.
+	 */
 	public void fillPanelFromModel(OpenMonitorDescriptor openMonitorDescriptor) {
 		Double pageSize = openMonitorDescriptor.getPageSize();
 		if (pageSize == null && applicationConfiguration != null) {
@@ -122,11 +133,21 @@ public class MonitorSignalParametersPanel extends JPanel {
 		getChannelCountField().setText(channelCount.toString());
 	}
 
+	/**
+	 * Fills the model with the data from this panel (user input).
+	 * @param openMonitorDescriptor the model to be filled.
+	 */
 	public void fillModelFromPanel(OpenMonitorDescriptor openMonitorDescriptor) {
 		openMonitorDescriptor.setPageSize(Double.parseDouble(getPageSizeField().getText()));
 	}
 
+	/**
+	 * Sets the {@link ApplicationConfiguration} for this panel.
+	 * @param applicationConfiguration a Svarog configuration to be used with
+	 * this panel to get the default values for some fields.
+	 */
 	public void setApplicationConfiguration(ApplicationConfiguration applicationConfiguration) {
 		this.applicationConfiguration = applicationConfiguration;
 	}
+
 }

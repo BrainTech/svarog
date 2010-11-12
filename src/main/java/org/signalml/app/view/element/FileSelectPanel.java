@@ -40,9 +40,7 @@ public class FileSelectPanel extends JPanel {
 	}
 
 	/**
-	 * This method initializes this
-	 * 
-	 * @return void
+	 * Initializes this panel.
 	 */
 	private void initialize() {
 		setLayout( new FlowLayout());
@@ -80,14 +78,26 @@ public class FileSelectPanel extends JPanel {
 		return browseButton;
 	}
 
+	/**
+	 * Sets the file name which shows in the file name text field.
+	 * @param fileName a value of file name to be set
+	 */
 	public void setFileName(String fileName) {
 		this.fileNameField.setText(fileName);
 	}
 
+	/**
+	 * Returns the file name selected in this panel.
+	 * @return a file name which was selected using this panel.
+	 */
 	public String getFileName() {
 		return this.fileNameField.getText();
 	}
 
+	/**
+	 * Returns whether a file was selected using this panel or not.
+	 * @return true if the file is selected, false otherwise
+	 */
 	public boolean isFileSelected() {
 		String t = getFileNameField().getText();
 		if (t != null && !"".equals( t))
@@ -96,6 +106,10 @@ public class FileSelectPanel extends JPanel {
 			return false;
 	}
 
+	/**
+	 * Sets the state (enabled/disabled) of this component.
+	 * @param enabled true if this panel should be enabled, false otherwise.
+	 */
 	@Override
 	public void setEnabled(boolean enabled) {
 		super.setEnabled(enabled);

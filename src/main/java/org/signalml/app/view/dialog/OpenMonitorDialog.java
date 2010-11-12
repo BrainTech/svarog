@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import multiplexer.jmx.client.JmxClient;
 
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.model.OpenMonitorDescriptor;
@@ -21,7 +22,6 @@ import org.signalml.app.view.element.MonitorChannelSelectPanel;
 import org.signalml.app.view.element.MonitorRecordingPanel;
 import org.signalml.app.view.element.MonitorSignalParametersPanel;
 import org.signalml.app.view.element.MultiplexerConnectionPanel;
-import org.signalml.app.worker.WorkerResult;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractDialog;
 
@@ -29,6 +29,8 @@ import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
 /**
+ * Represents a dialog which is shown when the user wants to open a new monitor
+ * document.
  *
  * @author Piotr Szachewicz
  */
@@ -45,11 +47,25 @@ public class OpenMonitorDialog extends AbstractDialog implements PropertyChangeL
 	private MonitorChannelSelectPanel monitorChannelSelectPanel = null;
 	private MonitorRecordingPanel monitorRecordingPanel = null;
 
+	/**
+	 * Creates a new
+	 * @param messageSource the message source accessor capable of resolving localized message codes
+	 * @param viewerElementManager a {@link ViewerElementManager} which contains
+	 * a {@link JmxClient}.
+	 */
 	public OpenMonitorDialog(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager) {
 		super(messageSource);
 		initialize(viewerElementManager);
 	}
 
+	/**
+	 *
+	 * @param messageSource the message source accessor capable of resolving localized message codes
+	 * @param viewerElementManager a {@link ViewerElementManager} which contains
+	 * a {@link JmxClient}.
+	 * @param f the parent window or null if there is no parent
+	 * @param isModal true, dialog blocks top-level windows, false otherwise
+	 */
 	public OpenMonitorDialog(MessageSourceAccessor messageSource,
 		ViewerElementManager viewerElementManager,
 		Window f,
@@ -58,11 +74,20 @@ public class OpenMonitorDialog extends AbstractDialog implements PropertyChangeL
 		initialize(viewerElementManager);
 	}
 
+	/**
+	 * Initializes this window and sets the {@link ViewerElementManager}.
+	 * @param viewerElementManager a {@link ViewerElementManager} which contains
+	 * a {@link JmxClient}.
+	 */
 	private void initialize(ViewerElementManager viewerElementManager) {
 		this.viewerElementManager = viewerElementManager;
 		this.setTitle(messageSource.getMessage("openMonitor.title"));
 	}
 
+	/**
+	 * Creates the interface of this dialog.
+	 * @return the interface of this dialog
+	 */
 	@Override
 	protected JComponent createInterface() {
 		JPanel interfacePanel = new JPanel(new GridLayout(2, 2, 10, 10));
@@ -75,11 +100,21 @@ public class OpenMonitorDialog extends AbstractDialog implements PropertyChangeL
 		return interfacePanel;
 	}
 
+	/**
+	 * Returns if the model can be of the given type.
+	 * @param clazz the type of the model
+	 * @return true the model can be of the given type, false otherwise
+	 */
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
 		return OpenMonitorDescriptor.class.isAssignableFrom(clazz);
 	}
 
+	/**
+	 * Fills the fields of this dialog from the given model.
+	 * @param model the model from which this dialog will be filled.
+	 * @throws SignalMLException TODO when it is thrown
+	 */
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 
@@ -96,20 +131,16 @@ public class OpenMonitorDialog extends AbstractDialog implements PropertyChangeL
 			getOkButton().setEnabled(true);
 		}
 
-		/*String fileName = m.getFileName();
-		if (fileName == null)
-		fileName = applicationConfig.getSignalRecorderFileName();
-		getFileSelectPanel().setFileName(fileName);*/
 	}
 
+	/**
+	 * Fills the model with the data from this dialog (user input).
+	 * @param model the model to be filled
+	 * @throws SignalMLException TODO when it is thrown
+	 */
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
 		OpenMonitorDescriptor m = (OpenMonitorDescriptor) model;
-
-		/*String fileName = getFileSelectPanel().getFileName();
-		if (fileName.endsWith( ".raw") || fileName.endsWith( ".xml"))
-		fileName = fileName.substring( 0, fileName.length() - 4);
-		m.setFileName( fileName);*/
 
 		getMultiplexerConnectionPanel().fillModelFromPanel(m);
 
@@ -121,14 +152,6 @@ public class OpenMonitorDialog extends AbstractDialog implements PropertyChangeL
 		getMonitorChannelSelectPanel().fillModelFromPanel(m);
 
 		getMonitorRecordingPanel().fillModelFromPanel(m);
-		/*
-
-		try {
-		m.setSelectedChannelList( getChannelSelectPanel().getChannelList().getSelectedValues());
-		}
-		catch (Exception e) {
-		throw new SignalMLException( e);
-		}*/
 	}
 
 	protected MultiplexerConnectionPanel getMultiplexerConnectionPanel() {
@@ -161,10 +184,17 @@ public class OpenMonitorDialog extends AbstractDialog implements PropertyChangeL
 		return monitorRecordingPanel;
 	}
 
+	/**
+	 * Cancels the connection associated with this dialog.
+	 */
 	public void cancelConnection() {
 		getMultiplexerConnectionPanel().cancel();
 	}
 
+	/**
+	 * Sets the {@link ApplicationConfiguration configuration} of Svarog.
+	 * @param applicationConfig the configuration of Svarog.
+	 */
 	public void setApplicationConfig(ApplicationConfiguration applicationConfig) {
 		this.applicationConfig = applicationConfig;
 		getMultiplexerConnectionPanel().setApplicationConfiguration(applicationConfig);
@@ -172,9 +202,9 @@ public class OpenMonitorDialog extends AbstractDialog implements PropertyChangeL
 	}
 
 	/**
-	 * Updates this dialog in reponse to changes in the connection status.
+	 * Updates this dialog in reponse to changes in the multiplexer connection status.
 	 *
-	 * @param evt
+	 * @param evt an event descibing a change.
 	 */
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
@@ -204,6 +234,12 @@ public class OpenMonitorDialog extends AbstractDialog implements PropertyChangeL
 
 	}
 
+	/**
+	 * Checks if this dialog is properly filled.
+	 * @param model the model for this dialog
+	 * @param errors the object in which errors are stored
+	 * @throws SignalMLException TODO when it is thrown
+	 */
 	@Override
 	public void validateDialog(Object model, Errors errors) throws SignalMLException {
 

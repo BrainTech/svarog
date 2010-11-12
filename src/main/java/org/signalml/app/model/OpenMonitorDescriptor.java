@@ -37,10 +37,13 @@ public class OpenMonitorDescriptor {
 	 */
 	private double amplifierNull;
 
-	private String fileName;
 	private RawSignalSampleType sampleType;
 	private RawSignalByteOrder byteOrder;
 
+	/**
+	 * This {@link MonitorRecordingDescriptor} represents the parameters of
+	 * the recording which can be performed on this monitor.
+	 */
 	private MonitorRecordingDescriptor monitorRecordingDescriptor;
 
 	public OpenMonitorDescriptor() {
@@ -288,14 +291,6 @@ public class OpenMonitorDescriptor {
 		this.pageSize = pageSize;
 	}
 
-	public String getFileName() {
-		return fileName;
-	}
-
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
-
 	public RawSignalSampleType getSampleType() {
 		return sampleType;
 	}
@@ -312,10 +307,21 @@ public class OpenMonitorDescriptor {
 		this.byteOrder = byteOrder;
 	}
 
+	/**
+	 * Sets the parameters for this monitor recording.
+	 * @param monitorRecordingDescriptor an object describing the parameters
+	 * used to record this monitor.
+	 */
 	public void setMonitorRecordingDescriptor(MonitorRecordingDescriptor monitorRecordingDescriptor) {
 		this.monitorRecordingDescriptor = monitorRecordingDescriptor;
 	}
 
+	/**
+	 * Returns the parameters of the recording which can be performed on this
+	 * monitor.
+	 * @return the parameters decribing a recording which can be made
+	 * on this monitor.
+	 */
 	public MonitorRecordingDescriptor getMonitorRecordingDescriptor() {
 		return monitorRecordingDescriptor;
 	}

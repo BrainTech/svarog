@@ -115,8 +115,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration {
 	private int multiplexerPort;
 
 	private float  monitorPageSize;
-	
-	private String signalRecorderFileName;
 
 	public void applySystemSettings() {
 
@@ -708,11 +706,4 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration {
 		this.monitorPageSize = monitorPageSize;
 	}
 
-	public String getSignalRecorderFileName() {
-		return signalRecorderFileName;
-	}
-
-	public void setSignalRecorderFileName(String signalRecorderFileName) {
-		this.signalRecorderFileName = signalRecorderFileName;
-	}
 }

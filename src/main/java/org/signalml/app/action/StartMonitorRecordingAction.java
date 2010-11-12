@@ -6,17 +6,17 @@ package org.signalml.app.action;
 
 import java.io.FileNotFoundException;
 import java.awt.event.ActionEvent;
-import java.io.File;
 import org.apache.log4j.Logger;
+
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.SignalDocument;
-import org.signalml.app.model.MonitorRecordingDescriptor;
 import org.signalml.app.view.monitor.StartMonitorRecordingDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
- * This class is responsible for actions regarding the menu item which starts the recording of the monitor.
+ * This class is responsible for actions regarding the menu item which starts 
+ * the recording of the opened monitor.
  *
  * @author Piotr Szachewicz
  */
@@ -27,8 +27,18 @@ public class StartMonitorRecordingAction extends MonitorRecordingAction {
 	 */
 	protected static final Logger logger = Logger.getLogger(StartMonitorRecordingAction.class);
 
+	/**
+	 * The dialog which is shown after evoking this action.
+	 */
 	protected StartMonitorRecordingDialog startMonitorRecordingDialog;
-	
+
+	/**
+	 * Constructor.
+	 *
+	 * @param messageSource the message source accessor capable of resolving localized message codes
+	 * @param signalDocumentFocusSelector a {@link SignalDocumentFocusSelector} used to detect
+	 * which document is active.
+	 */
 	public StartMonitorRecordingAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
                 super(messageSource, signalDocumentFocusSelector);
 		setText("action.startMonitorRecordingLabel");
@@ -37,21 +47,19 @@ public class StartMonitorRecordingAction extends MonitorRecordingAction {
 	}
 
 	/**
-	 * Starts the recording for the currently open document. (If it is a {@link MonitorSignalDocument}).
+	 * Starts the recording for the currently open document (if it is a {@link MonitorSignalDocument}).
 	 *
-	 * @param ev represents the event that has happened
+	 * @param ev an event describing a change
 	 */
 	@Override
 	public void actionPerformed(ActionEvent ev) {
-
-		MonitorRecordingDescriptor monitorRecordingDescriptor;
 
 		SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
 		if ((signalDocument != null) && (signalDocument instanceof MonitorSignalDocument)) {
 
 			MonitorSignalDocument monitorSignalDocument = (MonitorSignalDocument) signalDocument;
 
-			boolean ok = startMonitorRecordingDialog.showDialog(monitorSignalDocument.getMonitorOptions(), true);
+			boolean ok = startMonitorRecordingDialog.showDialog(monitorSignalDocument.getOpenMonitorDescriptor(), true);
 				if (!ok) {
 				return;
 			}
@@ -83,10 +91,23 @@ public class StartMonitorRecordingAction extends MonitorRecordingAction {
 
 	}
 
+	/**
+	 * Returns the {@link StartMonitorRecordingDialog} which is shown
+	 * when this action is performed.
+	 *
+	 * @return the {@link StartMonitorRecordingDialog} associated with this action
+	 */
 	public StartMonitorRecordingDialog getStartMonitorRecordingDialog() {
 		return startMonitorRecordingDialog;
 	}
 
+	/**
+	 * Sets a {@link StartMonitorRecordingDialog} which will be shown when
+	 * this action is performed.
+	 *
+	 * @param startMonitorRecordingDialog the {@link StartMonitorRecordingDialog}
+	 * to be associated with this action.
+	 */
 	public void setStartMonitorRecordingDialog(StartMonitorRecordingDialog startMonitorRecordingDialog) {
 		this.startMonitorRecordingDialog = startMonitorRecordingDialog;
 	}

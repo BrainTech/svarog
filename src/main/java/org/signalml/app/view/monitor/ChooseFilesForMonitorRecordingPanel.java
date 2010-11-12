@@ -21,16 +21,24 @@ import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
 /**
+ * Represents a panel used to select files used to record monitor.
  *
  * @author Piotr Szachewicz
  */
 public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 
 	private final MessageSourceAccessor messageSource;
+
 	private FileSelectPanel selectSignalRecordingFilePanel;
 	private FileSelectPanel selectTagsRecordingFilePanel;
 	private DisableTagRecordingPanel disableTagRecordingPanel;
 
+	/**
+	 * Constructor.
+	 *
+	 * @param messageSource the message source accessor capable of resolving
+	 * localized message codes
+	 */
 	public ChooseFilesForMonitorRecordingPanel(MessageSourceAccessor messageSource) {
 		super();
 		this.messageSource = messageSource;
@@ -48,41 +56,54 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 		add(getDisableTagRecordingPanel());
 	}
 
-	public FileSelectPanel getSelectSignalRecordingFilePanel() {
+	protected FileSelectPanel getSelectSignalRecordingFilePanel() {
 		if (selectSignalRecordingFilePanel == null) {
 			selectSignalRecordingFilePanel = new FileSelectPanel(messageSource, messageSource.getMessage("startMonitorRecording.chooseSignalFileLabel"));
 		}
 		return selectSignalRecordingFilePanel;
 	}
 
-	public FileSelectPanel getSelectTagsRecordingFilePanel() {
+	protected FileSelectPanel getSelectTagsRecordingFilePanel() {
 		if (selectTagsRecordingFilePanel == null) {
 			selectTagsRecordingFilePanel = new FileSelectPanel(messageSource, messageSource.getMessage("startMonitorRecording.chooseTagFileLabel"));
 		}
 		return selectTagsRecordingFilePanel;
 	}
 
-	public DisableTagRecordingPanel getDisableTagRecordingPanel() {
+	protected DisableTagRecordingPanel getDisableTagRecordingPanel() {
 		if (disableTagRecordingPanel == null) {
 			disableTagRecordingPanel = new DisableTagRecordingPanel();
 		}
 		return disableTagRecordingPanel;
 	}
 
-	public void fillModelFromDialog(Object model) {
+	/**
+	 * Fills the model with the data from this panel (user input).
+	 * @param openMonitorDescriptor the model to be filled.
+	 */
+	public void fillModelFromPanel(Object model) {
 		MonitorRecordingDescriptor monitorRecordingDescriptor = ((OpenMonitorDescriptor) model).getMonitorRecordingDescriptor();
 		monitorRecordingDescriptor.setSignalRecordingFilePath(getSelectSignalRecordingFilePanel().getFileName());
 		monitorRecordingDescriptor.setTagsRecordingFilePath(getSelectTagsRecordingFilePanel().getFileName());
 		monitorRecordingDescriptor.setTagsRecordingDisabled(getDisableTagRecordingPanel().isTagRecordingDisabled());
 	}
 
-	public void fillDialogFromModel(Object model) {
+	/**
+	 * Fills the fields of this panel from the given model.
+	 * @param openMonitorDescriptor the model from which this panel will be
+	 * filled.
+	 */
+	public void fillPanelFromModel(Object model) {
 		MonitorRecordingDescriptor monitorRecordingDescriptor = ((OpenMonitorDescriptor) model).getMonitorRecordingDescriptor();
 		getSelectSignalRecordingFilePanel().setFileName(monitorRecordingDescriptor.getSignalRecordingFilePath());
 		getSelectTagsRecordingFilePanel().setFileName(monitorRecordingDescriptor.getTagsRecordingFilePath());
 		getDisableTagRecordingPanel().setTagRecordingDisabled(monitorRecordingDescriptor.isTagsRecordingDisabled());
 	}
 
+	/**
+	 * Sets this panel to be enabled or disabled.
+	 * @param enabled false to disable this panel, true otherwise
+	 */
 	@Override
 	public void setEnabled(boolean enabled) {
 		super.setEnabled(enabled);
@@ -92,6 +113,11 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Checks if this panel is properly filled.
+	 * @param model the model for this panel
+	 * @param errors the object in which errors are stored
+	 */
 	public void validatePanel(Object model, Errors errors) {
 		if (getSelectSignalRecordingFilePanel().getFileName().isEmpty()) {
 			errors.reject("error.startMonitorRecording.incorrectSignalFile");
@@ -101,10 +127,16 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Represents a panel that contains a checkbox to enable/disable tag recording.
+	 */
 	private class DisableTagRecordingPanel extends JPanel {
 
 		private JCheckBox disableTagRecordingCheckBox = null;
 
+		/**
+		 * Constructor. Creates a new {@link DisableTagRecordingPanel}.
+		 */
 		public DisableTagRecordingPanel() {
 
 			disableTagRecordingCheckBox = new JCheckBox();
@@ -123,6 +155,10 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 			add(new JLabel(messageSource.getMessage("startMonitorRecording.doNotRecordTagsLabel")));
 		}
 
+		/**
+		* Sets this panel to be enabled or disabled.
+		* @param enabled false to disable this panel, true otherwise
+		*/
 		@Override
 		public void setEnabled(boolean enabled) {
 			super.setEnabled(enabled);
@@ -132,16 +168,29 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 			}
 		}
 
+		/**
+		 * Returns whether tag recording was disabled using this panel.
+		 * @return true if tag recording was disabled, false otherwise
+		 */
 		public boolean isTagRecordingDisabled() {
 			return disableTagRecordingCheckBox.isSelected();
 		}
 
+		/**
+		 * Returns whether tag recording was enabled using this panel.
+		 * @return true if tag recording was enabled, false otherwise
+		 */
 		public boolean isTagRecordingEnabled() {
 			return !isTagRecordingDisabled();
 		}
 
+		/**
+		 * Sets the status of the tag recording checkbox.
+		 * @param disable true to disable tag recording, false otherwise
+		 */
 		public void setTagRecordingDisabled(boolean disable) {
 			disableTagRecordingCheckBox.setSelected(disable);
 		}
 	}
+
 }

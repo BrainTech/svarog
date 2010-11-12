@@ -5,8 +5,10 @@ package org.signalml.app.view.element;
 
 import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.app.view.monitor.ChooseFilesForMonitorRecordingPanel;
+import org.signalml.app.view.dialog.OpenMonitorDialog;
 
 import org.springframework.context.support.MessageSourceAccessor;
+import org.springframework.validation.Errors;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -18,10 +20,11 @@ import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-import org.signalml.app.model.MonitorRecordingDescriptor;
-import org.springframework.validation.Errors;
 
 /**
+ * Represents a panel in the {@link OpenMonitorDialog} used to enable/disable
+ * monitor recording and set files to which the monitor should be recorded
+ * (if recording is enabled).
  *
  * @author Piotr Szachewicz
  */
@@ -32,6 +35,11 @@ public class MonitorRecordingPanel extends JPanel {
 	private JPanel enableRecordingPanel = null;
 	private JCheckBox enableRecordingCheckbox = null;
 
+	/**
+	 * Constructor. Creates a new {@link MonitorRecordingPanel}.
+	 * @param messageSource the message source accessor capable of resolving
+	 * localized message codes
+	 */
 	public MonitorRecordingPanel(MessageSourceAccessor messageSource) {
 		super();
 		this.messageSource = messageSource;
@@ -89,22 +97,36 @@ public class MonitorRecordingPanel extends JPanel {
 		return enableRecordingCheckbox;
 	}
 
+	/**
+	 * Returns whether recording was enabled on this panel.
+	 * @return true if recording was enabled, false otherwise.
+	 */
 	public boolean isRecordingEnabled() {
 		return enableRecordingCheckbox.isSelected();
 	}
 
+	/**
+	 * Fills the model with the data from this panel (user input).
+	 * @param openMonitorDescriptor the model to be filled.
+	 */
 	public void fillModelFromPanel(OpenMonitorDescriptor openMonitorDescriptor) {
 		if (isRecordingEnabled()) {
 			openMonitorDescriptor.getMonitorRecordingDescriptor().setRecordingEnabled(true);
-			getChooseFilesForMonitorRecordingPanel().fillModelFromDialog(openMonitorDescriptor);
+			getChooseFilesForMonitorRecordingPanel().fillModelFromPanel(openMonitorDescriptor);
 		} else {
 			openMonitorDescriptor.getMonitorRecordingDescriptor().setRecordingEnabled(false);
 		}
 	}
 
+	/**
+	 * Checks if this dialog is properly filled.
+	 * @param model the model for this dialog
+	 * @param errors the object in which errors are stored
+	 */
 	public void validatePanel(Object model, Errors errors) {
 		if (isRecordingEnabled()) {
 			getChooseFilesForMonitorRecordingPanel().validatePanel(model, errors);
 		}
 	}
+
 }

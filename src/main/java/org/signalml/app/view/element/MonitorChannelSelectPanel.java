@@ -52,6 +52,10 @@ public class MonitorChannelSelectPanel extends JPanel {
 		setBorder(border);
 	}
 
+	/**
+	 * Returns the list of channels which were selected using this panel.
+	 * @return the list of selected channels
+	 */
 	public JList getChannelList() {
 		if (channelList == null) {
 			channelList = new JList();
@@ -60,6 +64,11 @@ public class MonitorChannelSelectPanel extends JPanel {
 		return channelList;
 	}
 
+	/**
+	 * Fills the fields of this panel from the given model.
+	 * @param openMonitorDescriptor the model from which this dialog will be
+	 * filled.
+	 */
 	public void fillPanelFromModel(OpenMonitorDescriptor openMonitorDescriptor) {
 
 		String[] channelLabels = openMonitorDescriptor.getChannelLabels();
@@ -77,6 +86,10 @@ public class MonitorChannelSelectPanel extends JPanel {
 
 	}
 
+	/**
+	 * Fills the model with the data from this panel (user input).
+	 * @param openMonitorDescriptor the model to be filled.
+	 */
 	public void fillModelFromPanel(OpenMonitorDescriptor openMonitorDescriptor) {
 		try {
 			openMonitorDescriptor.setSelectedChannelList(getChannelList().getSelectedValues());

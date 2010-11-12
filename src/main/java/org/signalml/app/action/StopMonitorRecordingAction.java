@@ -7,6 +7,7 @@ package org.signalml.app.action;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.awt.event.ActionEvent;
+
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.MonitorSignalDocument;
@@ -23,11 +24,18 @@ public class StopMonitorRecordingAction extends MonitorRecordingAction {
 	/**
 	 * Logger to save history of execution at.
 	 */
-        protected static final Logger logger = Logger.getLogger(StopMonitorRecordingAction.class);
-	
+	protected static final Logger logger = Logger.getLogger(StopMonitorRecordingAction.class);
+
+	/**
+	 * Constructor.
+	 *
+	 * @param messageSource the message source accessor capable of resolving localized message codes
+	 * @param signalDocumentFocusSelector a {@link SignalDocumentFocusSelector} used to detect
+	 * which document is active.
+	 */
 	public StopMonitorRecordingAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
 
-                super(messageSource, signalDocumentFocusSelector);
+		super(messageSource, signalDocumentFocusSelector);
 		setIconPath("org/signalml/app/icon/stop-recording.png");
 		setText("action.stopMonitorRecordingLabel");
 		setToolTip("action.stopMonitorRecordingToolTip");
@@ -35,13 +43,13 @@ public class StopMonitorRecordingAction extends MonitorRecordingAction {
 	}
 
 	/**
-	 * Stops the recording for the currently open document. (If it is a {@link MonitorSignalDocument}).
+	 * Stops the recording for the currently open document (if it is a {@link MonitorSignalDocument}).
 	 *
 	 * @param ev represents the event that has happened
 	 */
 	@Override
 	public void actionPerformed(ActionEvent ev) {
-		System.out.println("stopped recording");
+
 		SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
 		if ((signalDocument != null) && (signalDocument instanceof MonitorSignalDocument)) {
 			MonitorSignalDocument monitorSignalDocument = (MonitorSignalDocument) signalDocument;
@@ -51,6 +59,7 @@ public class StopMonitorRecordingAction extends MonitorRecordingAction {
 				java.util.logging.Logger.getLogger(StopMonitorRecordingAction.class.getName()).log(Level.SEVERE, null, ex);
 			}
 		}
+
 	}
 
 	/**
@@ -63,13 +72,14 @@ public class StopMonitorRecordingAction extends MonitorRecordingAction {
 		SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
 
 		if ((signalDocument != null) && (signalDocument instanceof MonitorSignalDocument)) {
-			if(((MonitorSignalDocument) signalDocument).isRecording())
+			if (((MonitorSignalDocument) signalDocument).isRecording()) {
 				setEnabled(true);
-			else
+			} else {
 				setEnabled(false);
-		}
-		else
+			}
+		} else {
 			setEnabled(false);
+		}
 
 	}
 

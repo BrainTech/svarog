@@ -11,7 +11,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Observer;
 
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
@@ -267,14 +266,27 @@ public class MultiplexerConnectionPanel extends JPanel {
 		getStatusArea().setText( "");
 	}
 
+	/**
+	 * Returns the action associated with the Connect button.
+	 * @return an action associated with the Connect button.
+	 */
 	public ConnectMultiplexerAction getConnectAction() {
 		return connectAction;
 	}
 
+	/**
+	 * Returns the action associated with the Disonnect button.
+	 * @return an action associated with the Disconnect button.
+	 */
 	public DisconnectMultiplexerAction getDisconnectAction() {
 		return disconnectAction;
 	}
 
+	/**
+	 * Fills the fields of this panel from the given model.
+	 * @param openMonitorDescriptor the model from which this dialog will be
+	 * filled.
+	 */
 	public void fillPanelFromModel(OpenMonitorDescriptor openMonitorDescriptor) {
 
 		setOpenMonitorDescriptor(openMonitorDescriptor);
@@ -290,6 +302,10 @@ public class MultiplexerConnectionPanel extends JPanel {
 		getMultiplexerPortField().setText(Integer.toString( port));
 	}
 
+	/**
+	 * Fills the model with the data from this panel (user input).
+	 * @param openMonitorDescriptor the model to be filled.
+	 */
 	public void fillModelFromPanel(OpenMonitorDescriptor m) {
 
 		String adres = getMultiplexerAddressField().getText();
@@ -304,6 +320,11 @@ public class MultiplexerConnectionPanel extends JPanel {
 
 	}
 
+	/**
+	 * Sets the {@link ApplicationConfiguration} for this panel.
+	 * @param applicationConfiguration a Svarog configuration to be used with
+	 * this panel to get the default values for some fields.
+	 */
 	public void setApplicationConfiguration(ApplicationConfiguration applicationConfiguration) {
 		this.applicationConfiguration = applicationConfiguration;
 	}
