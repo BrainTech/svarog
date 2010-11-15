@@ -53,6 +53,8 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
 		this.setAnnotation(annotation);
 	}
 
+
+
     /**
      * Constructor. Creates a tagged selection with a given
      * {@link TagStyle style}, starting position, length, annotation and
@@ -69,6 +71,24 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
 		this.style = style;
 		this.attributes = new HashMap<String, String>();
 		this.setAnnotation(annotation);
+	}
+
+	/**
+     * Constructor. Creates a tagged selection with a given
+     * {@link TagStyle style}, starting position, length, annotation and
+     * the number of the channel.
+     * @param style the style of the tagged selection
+     * @param d the position from which the selection starts
+     * @param e the length of the selection
+     * @param channel a number of a channel which this selection should
+     * concern. CHANNEL_NULL if selection should concern all channels
+     * @param attributes attributes of this tagged selection
+     */
+	public Tag(TagStyle style, double d, double e, int channel, HashMap<String, String> attributes) {
+		super(style.getType(), d, e, channel);
+		this.style = style;
+		this.attributes = new HashMap<String, String>();
+		this.attributes = (HashMap<String, String>) attributes.clone();
 	}
 
     /**
@@ -174,6 +194,7 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
 	public void setAttribute(String key, String value) {
 		this.attributes.put(key, value);
 	}
+
     /**
      * Returns whether this tagged selection is a marker.
      * @return true if this tagged selection is a marker, false otherwise
@@ -235,7 +256,7 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
      */
 	@Override
 	public Tag clone() {
-		return new Tag(style,position,length,channel,this.getAnnotation());
+		return new Tag(style,position,length,channel,this.getAttributes());
 	}
 
 	@Override
