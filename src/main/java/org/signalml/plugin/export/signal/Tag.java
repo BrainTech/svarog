@@ -72,24 +72,6 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
 
 	/**
 	 * Constructor. Creates a tagged selection with a given
-	 * {@link TagStyle style}, starting position, length, annotation and
-	 * the number of the channel.
-	 * @param style the style of the tagged selection
-	 * @param d the position from which the selection starts
-	 * @param e the length of the selection
-	 * @param channel a number of a channel which this selection should
-	 * concern. CHANNEL_NULL if selection should concern all channels
-	 * @param attributes attributes of this tagged selection
-	 */
-	public Tag(TagStyle style, double d, double e, int channel, HashMap<String, String> attributes) {
-		super(style.getType(), d, e, channel);
-		this.style = style;
-		this.attributes = new HashMap<String, String>();
-		this.attributes = (HashMap<String, String>) attributes.clone();
-	}
-
-	/**
-	 * Constructor. Creates a tagged selection with a given
 	 * {@link TagStyle style}, starting position and length, but without
 	 * any annotation. Selection will concern all channels.
 	 * @param style the style of the tagged selection.
@@ -253,7 +235,9 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
 	 */
 	@Override
 	public Tag clone() {
-		return new Tag(style, position, length, channel, this.getAttributes());
+		Tag tag = new Tag(style, position, length, channel, this.getAnnotation());
+		tag.attributes = (HashMap<String, String>) this.attributes.clone();
+		return tag;
 	}
 
 	@Override
