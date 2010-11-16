@@ -175,14 +175,16 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 
 					// Transform chunk using gain and offset
 					double[] condChunk = new double[plotCount];
+					double[] selectedChunk = new double[plotCount];
 					for (int i = 0; i < plotCount; i++) {
 						int n = selectedChannels[i];
 						condChunk[i] = gain[n] * chunk[n] + offset[n];
+						selectedChunk[i] = chunk[n];
 					}
 
 					// Send chunk to recorder
 					if (sampleQueue != null) {
-						sampleQueue.offer(condChunk.clone());
+						sampleQueue.offer(selectedChunk.clone());
 						if (tagRecorderWorker != null && !tagRecorderWorker.isStartRecordingTimestampSet()) {
 							tagRecorderWorker.setStartRecordingTimestamp(samples.get(0).getTimestamp());
 						}
@@ -253,8 +255,6 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 
 						publish(tag);
 					}
-
-					logger.info("ILE MAM TAGOW: " + tagSet.getTagCount());
 
 				} else {
 					logger.error("received bad reply! " + sampleMsg.getMessage());
