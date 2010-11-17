@@ -13,16 +13,15 @@ import org.signalml.app.document.SignalDocument;
 import org.signalml.app.model.MontageDescriptor;
 import org.springframework.context.support.MessageSourceAccessor;
 
-/** CheckSignalAction
- *
+/** 
+ * Opens a {@link CheckSignalDialog}.
  *
  * @author Tomasz Sawicki
  */
 public class CheckSignalAction extends AbstractFocusableSignalMLAction<SignalDocumentFocusSelector> {
 
-	private static final long serialVersionUID = 1L;	
+	private static final long serialVersionUID = 1L;
         private CheckSignalDialog checkSignalDialog;
-
         protected static final Logger logger = Logger.getLogger(CheckSignalAction.class);
 	
 	public CheckSignalAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
@@ -53,6 +52,9 @@ public class CheckSignalAction extends AbstractFocusableSignalMLAction<SignalDoc
 		signalDocument.setMontage(descriptor.getMontage());
 	}
 
+        /**
+         * Action is enabled only if the monitor is open.
+         */
 	@Override
 	public void setEnabledAsNeeded() {
 
@@ -60,13 +62,23 @@ public class CheckSignalAction extends AbstractFocusableSignalMLAction<SignalDoc
 		setEnabled((signalDocument != null) && (signalDocument instanceof MonitorSignalDocument));
 	}
 
+        /**
+         * Gets the {@link #checkSignalDialog}.
+         *
+         * @return {@link #checkSignalDialog}
+         */
 	public CheckSignalDialog getCheckSignalDialog() {
 
                 return checkSignalDialog;
 	}
 
+        /**
+         * Sets the {@link #checkSignalDialog}.
+         *
+         * @param checkSignalDialog a {@link CheckSignalDialog} object
+         */
 	public void setCheckSignalDialog(CheckSignalDialog checkSignalDialog) {
-
+           
                 if( checkSignalDialog == null ) {
 			throw new NullPointerException();
 		}

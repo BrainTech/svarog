@@ -216,6 +216,11 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 		semaphore.release();
 	}
 
+        /*
+         * Gets the number of received samples.
+         *
+         * @return number of samples received from the start
+         */
         public int getReceivedSampleCount() {
                 if (full) {
                         return sampleCount;

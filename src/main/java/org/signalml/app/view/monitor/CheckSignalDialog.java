@@ -34,7 +34,7 @@ import org.signalml.util.SvarogConstants;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
- * Dialog which checks and represents the signal state
+ * Checks and represents the signal state.
  *
  * @author Tomasz Sawicki
  */
@@ -42,9 +42,18 @@ import org.springframework.context.support.MessageSourceAccessor;
 public class CheckSignalDialog extends AbstractDialog {
 
         /**
-         * The delay between each check in miliseconds
+         * The delay between each check in miliseconds.
          */
         private static final int DELAY = 1000;
+
+        /**
+         * Minimum windows size.
+         */
+        private static final int WINDOW_SIZE = 500;
+
+        /**
+         * Amplifier type.
+         */
         private static final String AMP_TYPE = "TMSI-porti7";
 
         private Montage currentMontage;
@@ -68,7 +77,7 @@ public class CheckSignalDialog extends AbstractDialog {
 		setTitle(messageSource.getMessage("checkSignal.title"));
 		setPreferredSize(SvarogConstants.MIN_ASSUMED_DESKTOP_SIZE);
 		super.initialize();
-		setMinimumSize(new Dimension(650, 650));
+		setMinimumSize(new Dimension(WINDOW_SIZE, WINDOW_SIZE));
 	}
 
         @Override
@@ -100,10 +109,8 @@ public class CheckSignalDialog extends AbstractDialog {
 		SignalDocument signalDocument = descriptor.getSignalDocument();
 
 		if (montage == null) {
-
                         currentMontage = new Montage(new SourceMontage(signalDocument));
                 } else {
-
                         currentMontage = new Montage(montage);
                 }
 
@@ -120,13 +127,7 @@ public class CheckSignalDialog extends AbstractDialog {
                 timer = new Timer(DELAY, timerClass);
                 timer.start();
 	}
-
-	private void setMontage(Montage montage) {
-
-		visualReferenceModel.setMontage(montage);
-
-	}
-
+        
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
 
@@ -135,12 +136,20 @@ public class CheckSignalDialog extends AbstractDialog {
 
 	}
 
-        @Override
-        public boolean isCancellable() {
+        /**
+         * Sets the montage for the component.
+         *
+         * @param montage {@link Montage} object
+         */
+	private void setMontage(Montage montage) {
 
-		return false;
+		visualReferenceModel.setMontage(montage);
+
 	}
 
+        /**
+         * Stops the timer on dialog close.
+         */
         @Override
 	protected void onDialogClose() {
 
@@ -150,15 +159,21 @@ public class CheckSignalDialog extends AbstractDialog {
 	}
 
         @Override
+        public boolean isCancellable() {
+
+		return false;
+	}
+
+        @Override
 	public boolean supportsModelClass(Class<?> clazz) {
 
 		return MontageDescriptor.class.isAssignableFrom(clazz);
-	}
+        }
 
         /**
          * This class' instance is passed to the {@link Timer} object of a {@link CheckSignalDialog}.
          * It gets a {@link GenericAmplifierDiagnosis} object and calls it's {@link GenericAmplifierDiagnosis#signalState()} method
-         * constantly in a seperate thread with a given delay
+         * constantly in a seperate thread with a given delay.
          */
         private class TimerClass implements ActionListener, Runnable {
 
@@ -181,16 +196,16 @@ public class CheckSignalDialog extends AbstractDialog {
                 }
 
                 /**
-                 * Compares given channel state to {@link #channels}
+                 * Compares given channel state to {@link #channels}.
                  *
-                 * @param channels2 Given channel state
+                 * @param newChannelState Given channel state
                  * @return false if the state is the same, true if there is a difference
                  */
-                private boolean compareChannels(HashMap<String, Boolean> channels2) {
+                private boolean compareChannels(HashMap<String, Boolean> newChannelState) {
 
-                        if (channels == null || channels2 == null) {
+                        if (channels == null || newChannelState == null) {
 
-                                if (channels == null && channels2 == null)
+                                if (channels == null && newChannelState == null)
                                         return false;
                                 else
                                         return true;
@@ -199,7 +214,7 @@ public class CheckSignalDialog extends AbstractDialog {
 
                                 for (String s : monitorSignalDocument.getSourceChannelLabels()) {
 
-                                        if (channels.get(s) != channels2.get(s))
+                                        if (channels.get(s) != newChannelState.get(s))
                                                 return true;
                                 }
                         }
@@ -207,12 +222,21 @@ public class CheckSignalDialog extends AbstractDialog {
                         return false;
                 }
 
+                /**
+                 * Calls the {@link #run()} method in a seperate thread.
+                 *
+                 * @param e {@link ActionEvent} object
+                 */
                 @Override
                 public void actionPerformed(ActionEvent e) {
 
                         (new Thread(this)).start();
                 }
 
+                /**
+                 * Gets the signal state, compares it with the old signal state and if there
+                 * is a difference: redraws the signal display component.
+                 */
                 @Override
                 public void run() {
 

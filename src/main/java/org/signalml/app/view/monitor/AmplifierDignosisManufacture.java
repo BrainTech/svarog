@@ -7,20 +7,20 @@ package org.signalml.app.view.monitor;
 import org.signalml.app.document.MonitorSignalDocument;
 
 /**
- * This class has only one static method which returns a {@link GenericAmplifierDiagnosis}
- * object for a given amplifier type
+ * Class has only one static method which returns a {@link GenericAmplifierDiagnosis}
+ * object for a given amplifier type.
  *
  * @author Tomasz Sawicki
  */
 public class AmplifierDignosisManufacture {
 
         /**
-         * A static method which returns a {@link GenericAmplifierDiagnosis} object
+         * A static method which returns a {@link GenericAmplifierDiagnosis} object.
          *
          * @param amplifierName name of an amplifier mode
          * @param monitorSignalDocument a {@link MonitorSignalDocument} object representing the
          * currently open monitor document
-         * @return A {@link GenericAmplifierDiagnosis} object for the given amplifier model
+         * @return a {@link GenericAmplifierDiagnosis} object for the given amplifier model
          */
         public static GenericAmplifierDiagnosis getAmplifierDiagnosis(String amplifierName, MonitorSignalDocument monitorSignalDocument) {
 

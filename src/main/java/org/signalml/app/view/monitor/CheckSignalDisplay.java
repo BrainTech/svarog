@@ -16,13 +16,16 @@ import org.signalml.app.view.montage.VisualReferenceModel;
 import org.signalml.app.view.montage.VisualReferenceSourceChannel;
 
 /**
- * This class is a component which - based on information from a {@link VisualReferenceModel} object
+ * A component which - based on information from a {@link VisualReferenceModel} object
  * and a {@link GenericAmplifierDiagnosis} object - draws the state of each channel.
  *
  * @author Tomasz Sawicki
  */
 public class CheckSignalDisplay extends VisualReferenceDisplay {
 
+        /**
+         * Channel info used when drawing the channel state.
+         */
         private HashMap<String, Boolean> channels;
 
         public CheckSignalDisplay(VisualReferenceModel model) {
@@ -31,8 +34,8 @@ public class CheckSignalDisplay extends VisualReferenceDisplay {
         }
 
         /**
-         * Method which sets the given channels state, then repaints the component
-         * to visualize any possible changes
+         * Sets the given channels state, then repaints the component
+         * to visualize any possible changes.
          *
          * @param channels HashMap representing channels state
          */
@@ -42,6 +45,12 @@ public class CheckSignalDisplay extends VisualReferenceDisplay {
                 this.repaint();
         }
 
+        /**
+         * Draws bin contents based on the channel state.
+         *
+         * @param bin {@link VisualReferenceBin} object
+         * @param g {@link Graphics2D} object
+         */
         @Override
         protected void paintBinContents(VisualReferenceBin bin, Graphics2D g) {
 
@@ -61,13 +70,16 @@ public class CheckSignalDisplay extends VisualReferenceDisplay {
                         while (it.hasNext()) {
 
                                 channel = it.next();
-                                if (channels.get(channel.getLabel())) paintValidChannel(channel, g); else paintInvalidChannel(channel, g);
+                                if (channels.get(channel.getLabel()))
+                                        paintValidChannel(channel, g);
+                                else
+                                        paintInvalidChannel(channel, g);
                         }
                 }
         }
 
         /**
-         * Method which draws a valid channel - green fill and black thin outline
+         * Draws a valid channel - green fill and black thin outline.
          *
          * @param channel {@link VisualReferenceSourceChannel} object
          * @param g {@link Graphics2D} object
@@ -78,7 +90,7 @@ public class CheckSignalDisplay extends VisualReferenceDisplay {
         }
 
         /**
-         * Method which draws an invalid channel - red fill and black thick outline
+         * Draws an invalid channel - red fill and black thick outline.
          * 
          * @param channel {@link VisualReferenceSourceChannel} object
          * @param g {@link Graphics2D} object
@@ -89,7 +101,7 @@ public class CheckSignalDisplay extends VisualReferenceDisplay {
         }
 
         /**
-         * Method which draws an unknown channel - white fill and red thick outline
+         * Draws an unknown channel - white fill and red thick outline.
          * 
          * @param channel {@link VisualReferenceSourceChannel} object
          * @param g {@link Graphics2D} object
