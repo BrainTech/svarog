@@ -126,8 +126,9 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 	 */
 	private ChannelSamplesImpl getSamplesFromSource(MultichannelSampleSource source, int channel) throws IndexOutOfBoundsException{
 		indexInBounds(source, channel);
-		double[] samples = new double[source.getSampleCount(channel)];
-		source.getSamples(channel, samples, 0, source.getSampleCount(channel), 0);
+		int sz = source.getSampleCount(channel);
+		double[] samples = new double[sz];
+		source.getSamples(channel, samples, 0, sz, 0);
 		ChannelSamplesImpl channelSamples = new ChannelSamplesImpl(samples, channel, source.getSamplingFrequency(), source.getLabel(channel));
 		return channelSamples;
 	}
