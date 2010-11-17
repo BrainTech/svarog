@@ -204,8 +204,8 @@ public class ConnectMultiplexerAction extends AbstractAction implements Property
 		}
 		else if ("metadataRetrieved".equals( evt.getPropertyName())) {
 			OpenMonitorDescriptor omd = (OpenMonitorDescriptor) evt.getNewValue();
-			if (omd.isMetadataReceived())
-				disconnectAction.setEnabled( true);
+			if (omd != null && omd.isMetadataReceived())
+				disconnectAction.setEnabled(true);
 		}
 	}
 

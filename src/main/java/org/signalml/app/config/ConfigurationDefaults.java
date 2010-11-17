@@ -141,7 +141,6 @@ public class ConfigurationDefaults {
 		
 		setMultiplexerDefaultParameters( config);
 		setMonitorDefaultParameters( config);
-		setSignalRecorderDefaultParameters( config);
 	}
 
 	public static void setZoomSignalSettingsDefaults(ZoomSignalSettings settings) {
@@ -309,12 +308,6 @@ public class ConfigurationDefaults {
 	public static void setMonitorDefaultParameters( ApplicationConfiguration config ) {
 
 		config.setMonitorPageSize( Float.parseFloat( properties.getProperty( "monitor.pageSize")));
-
-	}
-	
-	public static void setSignalRecorderDefaultParameters( ApplicationConfiguration config ) {
-
-		config.setSignalRecorderFileName( properties.getProperty( "signalRecorder.fileName"));
 
 	}
 

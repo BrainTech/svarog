@@ -14,6 +14,8 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.SwingWorker;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.Level;
+
 import org.signalml.app.model.OpenMonitorDescriptor;
 
 /** 
@@ -43,7 +45,8 @@ public class SignalRecorderWorker extends SwingWorker< Integer, Integer> {
 		pendingAbort = false;
 		savedSampleCount = 0;
 		finished = false;
-	}
+		logger.setLevel((Level) Level.INFO);
+}
 
 	@Override
 	protected Integer doInBackground() throws Exception {

@@ -104,15 +104,12 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 		// receive message
 		IncomingMessageData msgData = null;
 		try {
+		    while (true) {
 			msgData = client.receive(timeout);
 			if (msgData != null) {
 				MultiplexerMessage reply = msgData.getMessage();
 				if (reply.getType() != SvarogConstants.MessageTypes.DICT_GET_RESPONSE_MESSAGE) {
-					logger.error("received bad reply! " + reply.getMessage());
-					String info = messageSource.getMessage( 
-							failMsg+".receivedBadReplyMsg");
-					openMonitorDescriptor.setMetadataInfo( info);
-					return null;
+				    logger.info("Got message, but not DICT_GET_RESPONSE_MESSAGE. Still waiting ...");
 				}
 				else {
 					ByteString bs = reply.getMessage();
@@ -127,6 +124,7 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 				openMonitorDescriptor.setMetadataInfo( info);
 				return null;
 			}
+		    }
 		} 
 		catch (InterruptedException e) {
 			logger.error("receiveing failed! " + e.getMessage());

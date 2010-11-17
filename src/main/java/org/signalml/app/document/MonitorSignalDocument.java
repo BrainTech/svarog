@@ -1,6 +1,7 @@
 package org.signalml.app.document;
 
 import java.beans.IntrospectionException;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -9,9 +10,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
+import javax.swing.SwingWorker;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.model.LabelledPropertyDescriptor;
+import org.signalml.app.model.MonitorRecordingDescriptor;
 import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.domain.montage.MontageMismatchException;
 import org.signalml.plugin.export.view.DocumentView;
@@ -39,14 +42,35 @@ import org.signalml.util.FileUtils;
  */
 public class MonitorSignalDocument extends AbstractSignal implements MutableDocument {
 
+	/**
+	 * A property describing whether this document is recording its signal.
+	 */
 	public static String IS_RECORDING_PROPERTY = "isRecording";
 
+	/**
+	 * A logger to save history of execution at.
+	 */
 	protected static final Logger logger = Logger.getLogger(MonitorSignalDocument.class);
+
+	/**
+	 * The name of this document.
+	 */
 	private String name;
 
+	/**
+	 * Describes the parameters of the monitor connected to this {@link MonitorSignalDocument}.
+	 */
 	private OpenMonitorDescriptor monitorOptions;
 
+	/**
+	 * This worker is responsible for receiving the monitor signal and tags.
+	 */
 	private MonitorWorker monitorWorker;
+
+	/**
+	 * This {@link RoundBufferMultichannelSampleSource} stores the timestamps
+	 * of each sample in the sample sample source
+	 */
 	private RoundBufferSampleSource timestampsSource;
 
 	/**
@@ -309,29 +333,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 
 	@Override
 	public final void saveDocument() throws SignalMLException, IOException {
-
-		/*if (backingFile == null) {
-
-			String fileName = monitorOptions.getFileName();
-			if (fileName != null && !"".equals(fileName)) {
-				backingFile = new File(monitorOptions.getFileName());
-			}
-			else {
-				JFileChooser fileChooser = new JFileChooser();
-				int res = fileChooser.showSaveDialog(null);
-				if (res == JFileChooser.APPROVE_OPTION) {
-					backingFile = fileChooser.getSelectedFile();
-				}
-
-				if (backingFile != null) {
-					setSaved(false);
-				}
-			}
-
-		}
-
-		setSaved(true);*/
-
+		throw new UnsupportedOperationException("Saving monitor document is not supported - use monitor recording instead.");
 	}
 
 	@Override
@@ -340,20 +342,26 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	}
 
 	/**
-	 * Starts to record this monitor document samples and tags to the given files.
+	 * Starts to record this monitor document samples and tags according
+	 * to the configuration (file names etc.) maintained in the
+	 * {@link OpenMonitorDescriptor} related to this MonitorSignalDocument
+	 * (this configuration can be changed by changing this object:
+	 * {@link MonitorSignalDocument#getOpenMonitorDescriptor()}.
 	 * After calling {@link MonitorSignalDocument#stopMonitorRecording()} the data
-	 * will be written to the given files. If the tagFile is null, only signal is
-	 * recorded.
+	 * will be written to the given files.
 	 *
-	 * @param signalFile the file to which the recorded samples should be written
-	 * @param tagFile the file to which the recorded tags should be written.
-	 * If null, no tags are recorded.
+	 * @param monitorRecordingDescriptor describes the configuration of the recording (file names etc.)
 	 * @throws FileNotFoundException thrown when the files for buffering, signal and tag recording are not found
 	 */
-	public void startMonitorRecording(File signalFile, File tagFile) throws FileNotFoundException {
+	public void startMonitorRecording() throws FileNotFoundException {
 
-		this.signalRecorderOutputFile = signalFile;
-		this.tagRecorderOutputFile = tagFile;
+		MonitorRecordingDescriptor monitorRecordingDescriptor = monitorOptions.getMonitorRecordingDescriptor();
+
+		signalRecorderOutputFile = new File(monitorRecordingDescriptor.getSignalRecordingFilePath());
+		tagRecorderOutputFile = null;
+
+		if(!monitorRecordingDescriptor.isTagsRecordingDisabled())
+			tagRecorderOutputFile = new File(monitorRecordingDescriptor.getTagsRecordingFilePath());
 
 		signalRecorderBufferFile = new File(signalRecorderBufferFilename);
 		FileOutputStream signalRecorderBufferOutput = new FileOutputStream(signalRecorderBufferFile);
@@ -378,10 +386,11 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	}
 
 	/**
-	 * Stops to record data and writes the recorded data to the files given on
-	 * the last call of {@link MonitorSignalDocument#startMonitorRecording(java.io.File, java.io.File)}.
+	 * Stops to record data and writes the recorded data to the files set
+	 * in the {@link OpenMonitorDescriptor}.
 	 *
-	 * @throws IOException thrown where an error while writing the recorded data to the given files occurs
+	 * @throws IOException thrown where an error while writing the recorded
+	 * data to the given files occurs
 	 */
 	public void stopMonitorRecording() throws IOException {
 
@@ -414,9 +423,10 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	}
 
 	/**
-	 * Saves the recorded samples to the file given on the last call of
-	 * {@link MonitorSignalDocument#startMonitorRecording(java.io.File, java.io.File)}
-	 * and writes a metafile (having the same name) describing this file.
+	 * Saves the recorded samples to the file specified in the
+	 * {@link MonitorSignalDocument#getOpenMonitorDescriptor()} describing
+	 * this monitor and writes a metafile (with the same name) describing
+	 * this signal file.
 	 *
 	 * @throws IOException thrown where an error while writing the recorded data to the given files occurs
 	 */
@@ -467,8 +477,8 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	}
 
 	/**
-	 * Saves the recorded tags to the file given on the last call of
-	 * {@link MonitorSignalDocument#startMonitorRecording(java.io.File, java.io.File)}.
+	 * Saves the recorded tags to the file specified in the
+	 * {@link OpenMonitorDescriptor}.
 	 *
 	 * @throws IOException thrown where an error while writing the recorded data to the given files occurs
 	 */
@@ -496,11 +506,29 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 
 	}
 
+	/**
+	 * Returns a list of properties that {@link PropertyChangeListener
+	 * PropertyChangeListeners} can handle.
+	 * 
+	 * @return a list of properties
+	 * @throws IntrospectionException if an exception occurs during introspection
+	 */
 	@Override
 	public List<LabelledPropertyDescriptor> getPropertyList() throws IntrospectionException {
 		List<LabelledPropertyDescriptor> list = super.getPropertyList();
 		list.add(new LabelledPropertyDescriptor("property.monitorsignaldocument."+IS_RECORDING_PROPERTY, IS_RECORDING_PROPERTY, MonitorSignalDocument.class, "isRecording", null));
 		return list;
+	}
+
+	/**
+	 * Returns an {@link OpenMonitorDescriptor} which describes the open monitor
+	 * associated with this {@link MonitorSignalDocument}.
+	 *
+	 * @return an {@link OpenMonitorDescriptor} associated with this {@link
+	 * MonitorSignalDocument}.
+	 */
+	public OpenMonitorDescriptor getOpenMonitorDescriptor() {
+		return monitorOptions;
 	}
 
 }

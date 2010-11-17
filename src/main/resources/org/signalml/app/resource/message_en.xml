@@ -650,13 +650,19 @@
 	<entry key="openMonitor.title">Open monitor</entry>
 	<entry key="openMonitor.multiplexerAddressLabel">Multiplexer address</entry>
 	<entry key="openMonitor.multiplexerPortLabel">Multiplexer port</entry>
-	<entry key="openMonitor.samplingLabel">Sampling</entry>
+	<entry key="openMonitor.samplingLabel">Sampling frequency</entry>
 	<entry key="openMonitor.channelCountLabel">Channel count</entry>
 	<entry key="openMonitor.calibrationGainLabel">Calibration gain</entry>
 	<entry key="openMonitor.calibrationOffsetLabel">Calibration offset</entry>
 	<entry key="openMonitor.pageSizeLabel">Page size</entry>
 	<entry key="openMonitor.channelsListLabel">Channels</entry>
-	<entry key="openMonitor.saveDataLabel">Select file</entry>
+	<entry key="openMonitor.multiplexerConnectionPanelTitle">Connect to the multiplexer</entry>
+	<entry key="openMonitor.channelSelectPanelTitle">Select channels to be monitored</entry>
+	<entry key="openMonitor.signalParametersPanelTitle">Signal parameters</entry>
+	<entry key="openMonitor.monitorRecordingPanelTitle">Monitor recording</entry>
+
+	<entry key="error.openMonitor.noChannelsSelected">Please select at least one channel to monitor</entry>
+
 	<entry key="openDocument.signalAutodetected">Signal document autodetected</entry>
 	<entry key="openDocument.bookAutodetected">Book document autodetected</entry>
 	<entry key="openDocument.tagAutodetected">Tag document autodetected</entry>
@@ -851,10 +857,13 @@
 	<entry key="error.editTimeDomainSampleFilter.badFilterParametersFilterOrderTooBig">The order of the filter designed for the given parameters is too big - please correct the parameters.</entry>
 
 	<entry key="startMonitorRecording.title">Start monitor recording</entry>
-	<entry key="startMonitorRecording.chooseFilesTitle">Choose files to record signal and tags to</entry>
+	<entry key="startMonitorRecording.chooseFilesTitle">Choose files to which signal and tags will be recorded</entry>
 	<entry key="startMonitorRecording.chooseSignalFileLabel">Record signal to file</entry>
 	<entry key="startMonitorRecording.chooseTagFileLabel">Record tags to file</entry>
 	<entry key="startMonitorRecording.doNotRecordTagsLabel">Do not record tags</entry>
+
+	<entry key="error.startMonitorRecording.incorrectSignalFile">Please input a correct signal filename</entry>
+	<entry key="error.startMonitorRecording.incorrectTagFile">Please input a correct tag filename</entry>
 
 	<entry key="fileSelectPanel.browseButtonLabel">Browse</entry>
 

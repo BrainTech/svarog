@@ -20,7 +20,7 @@ public class OpenMonitorDescriptor {
 	private boolean metadataReceived = false;
 	private String metadataInfo;
 
-	private Integer channelCount = 1;
+	private Integer channelCount;
 	private String[] channelLabels;
 	private Object[] selectedChannelList;
 	private int[] selectedChannelsIndecies;
@@ -37,16 +37,23 @@ public class OpenMonitorDescriptor {
 	 */
 	private double amplifierNull;
 
-	private String fileName;
 	private RawSignalSampleType sampleType;
 	private RawSignalByteOrder byteOrder;
+
+	/**
+	 * This {@link MonitorRecordingDescriptor} represents the parameters of
+	 * the recording which can be performed on this monitor.
+	 */
+	private MonitorRecordingDescriptor monitorRecordingDescriptor;
 
 	public OpenMonitorDescriptor() {
 		// XXX currently all signals are treated as EEG - there is no way to change this in the GUI
 		type = SignalType.EEG_10_20;
-		channelCount = 1;
+		channelCount = 0;
 		sampleType = RawSignalSampleType.DOUBLE;
 		byteOrder = RawSignalByteOrder.LITTLE_ENDIAN;
+
+		monitorRecordingDescriptor = new MonitorRecordingDescriptor();
 	}
 
 	public String getMultiplexerAddress() {
@@ -284,14 +291,6 @@ public class OpenMonitorDescriptor {
 		this.pageSize = pageSize;
 	}
 
-	public String getFileName() {
-		return fileName;
-	}
-
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
-
 	public RawSignalSampleType getSampleType() {
 		return sampleType;
 	}
@@ -306,6 +305,25 @@ public class OpenMonitorDescriptor {
 
 	public void setByteOrder(RawSignalByteOrder byteOrder) {
 		this.byteOrder = byteOrder;
+	}
+
+	/**
+	 * Sets the parameters for this monitor recording.
+	 * @param monitorRecordingDescriptor an object describing the parameters
+	 * used to record this monitor.
+	 */
+	public void setMonitorRecordingDescriptor(MonitorRecordingDescriptor monitorRecordingDescriptor) {
+		this.monitorRecordingDescriptor = monitorRecordingDescriptor;
+	}
+
+	/**
+	 * Returns the parameters of the recording which can be performed on this
+	 * monitor.
+	 * @return the parameters decribing a recording which can be made
+	 * on this monitor.
+	 */
+	public MonitorRecordingDescriptor getMonitorRecordingDescriptor() {
+		return monitorRecordingDescriptor;
 	}
 
 }

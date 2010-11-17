@@ -45,7 +45,6 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 	private RoundBufferSampleSource timestampsSource;
 	private StyledMonitorTagSet tagSet;
 	private volatile boolean finished;
-
 	/**
 	 * This object is responsible for recording tags received by this {@link MonitorWorker}.
 	 * It is connected to the monitor by an external object using
@@ -134,13 +133,15 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 			try {
 				// Receive message
 				msgData = jmxClient.receive(TIMEOUT_MILIS, TimeUnit.MILLISECONDS);
-				if (msgData == null)
+				if (msgData == null) {
 					continue;
+				}
 
 				// Unpack message
 				sampleMsg = msgData.getMessage();
 				sampleMsgString = sampleMsg.getMessage();
 				sampleType = sampleMsg.getType();
+
 				logger.debug("Worker: received message type: " + sampleType);
 
 
@@ -151,7 +152,7 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 				//DEBUG
 
 
-				if (sampleType == SvarogConstants.MessageTypes.STREAMED_SIGNAL_MESSAGE) {
+				if (sampleType == SvarogConstants.MessageTypes.AMPLIFIER_SIGNAL_MESSAGE) {
 
 					logger.debug("Worker: reading chunk!");
 
@@ -174,14 +175,16 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 
 					// Transform chunk using gain and offset
 					double[] condChunk = new double[plotCount];
+					double[] selectedChunk = new double[plotCount];
 					for (int i = 0; i < plotCount; i++) {
 						int n = selectedChannels[i];
 						condChunk[i] = gain[n] * chunk[n] + offset[n];
+						selectedChunk[i] = chunk[n];
 					}
 
 					// Send chunk to recorder
 					if (sampleQueue != null) {
-						sampleQueue.offer(condChunk.clone());
+						sampleQueue.offer(selectedChunk.clone());
 						if (tagRecorderWorker != null && !tagRecorderWorker.isStartRecordingTimestampSet()) {
 							tagRecorderWorker.setStartRecordingTimestamp(samples.get(0).getTimestamp());
 						}
@@ -228,19 +231,35 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 						tagLen,
 						-1);
 
-					for (SvarogProtocol.Variable v : tagMsg.getDesc().getVariablesList())
+					for (SvarogProtocol.Variable v : tagMsg.getDesc().getVariablesList()) {
 						tag.setAttribute(v.getKey(), v.getValue());
+					}
 
-					if (tagRecorderWorker != null)
-						tagRecorderWorker.offer(tag);
+					boolean isChannelSelected = false;
 
-					publish(tag);
-					logger.info("ILE MAM TAGOW: " + tagSet.getTagCount());
+					if (tag.getChannel() == -1) {
+						isChannelSelected = true;
+					} else {
+						for (int channel : selectedChannels) {
+							if (selectedChannels[channel] == tag.getChannel()) {
+								isChannelSelected = true;
+								break;
+							}
+						}
+					}
+
+					if (isChannelSelected) {
+						if (tagRecorderWorker != null) {
+							tagRecorderWorker.offer(tag);
+						}
+
+						publish(tag);
+					}
 
 				} else {
 					logger.error("received bad reply! " + sampleMsg.getMessage());
-					logger.debug("Worker: receive failed!");
-					return null;
+					//logger.debug("Worker: receive failed!");
+					//return null;
 				}
 
 			} catch (InterruptedException e) {
