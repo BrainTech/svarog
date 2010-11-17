@@ -87,6 +87,20 @@ public interface SvarogAccessSignal {
 	 */
 	ChannelSamples getActiveRawSignalSamples(int channel) throws NoActiveObjectException, IndexOutOfBoundsException;
 
+    /**
+     * Returns the unprocessed signal samples (raw from the source)
+     * for the active signal and the selected channel.
+     * @param channel the index of the channel
+     * (range from 0 to {@code getActiveSignalDocument().getChannelCount()-1})
+     * @param signalOffset the position (in time) in the signal starting
+     * from which samples will be returned
+     * @param count the number of samples to be returned
+     * @return the signal samples
+     * @throws NoActiveObjectException if there is no active signal
+     * @throws IndexOutOfBoundsException if the index of a channel is out of range
+     */
+    ChannelSamples getActiveRawSignalSamples(int channel, int signalOffset, int count) throws NoActiveObjectException, IndexOutOfBoundsException;
+
 	/**
 	 * Returns the unprocessed signal samples (raw from the source)
 	 * for all channels of the active signal.

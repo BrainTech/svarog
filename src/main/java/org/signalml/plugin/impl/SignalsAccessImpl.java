@@ -133,6 +133,23 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 		return channelSamples;
 	}
 	
+    /**
+     * Returns samples for the given source of samples and the given channel.
+     * @param source the source of samples
+     * @param channel the number of the channel (from 0 to {@code source.getChannelCount()-1})
+     * @param signalOffset the position (in time) in the signal starting
+     * from which samples will be returned
+     * @param count the number of samples to be returned
+     * @return samples for the given source of samples and the given channel
+     * @throws IndexOutOfBoundsException if the index of a channel is out of range
+     */
+    private ChannelSamplesImpl getSamplesFromSource(MultichannelSampleSource source, int channel, int signalOffset, int count) throws IndexOutOfBoundsException{
+        indexInBounds(source, channel);
+        double[] samples = new double[count];
+        source.getSamples(channel, samples, signalOffset, count, 0);
+        return new ChannelSamplesImpl(samples, channel, source.getSamplingFrequency(), source.getLabel(channel));
+    }
+    
 	/**
 	 * Checks if the index of the channel is in range from 0 to
 	 * {@code source.getChannelCount()-1}. Throws exception if not.
@@ -230,6 +247,16 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 		ChannelSamplesImpl channelSamples = getSamplesFromSource(source, channel);
 		return channelSamples;
 	}
+
+    /* (non-Javadoc)
+     * @see org.signalml.plugin.export.PluginAccessSignal#getActiveRawSignalSamples(int)
+     */
+    @Override
+    public ChannelSamplesImpl getActiveRawSignalSamples(int channel, int signalOffset, int count) throws NoActiveObjectException, IndexOutOfBoundsException {
+        MultichannelSampleSource source = getOriginalSource();
+        ChannelSamplesImpl channelSamples = getSamplesFromSource(source, channel, signalOffset, count);
+        return channelSamples;
+    }
 
 	/* (non-Javadoc)
 	 * @see org.signalml.plugin.export.PluginAccessSignal#getActiveRawSignalSamples()
