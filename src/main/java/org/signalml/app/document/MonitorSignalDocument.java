@@ -10,7 +10,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
-import javax.swing.SwingWorker;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.model.LabelledPropertyDescriptor;
@@ -350,7 +349,6 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	 * After calling {@link MonitorSignalDocument#stopMonitorRecording()} the data
 	 * will be written to the given files.
 	 *
-	 * @param monitorRecordingDescriptor describes the configuration of the recording (file names etc.)
 	 * @throws FileNotFoundException thrown when the files for buffering, signal and tag recording are not found
 	 */
 	public void startMonitorRecording() throws FileNotFoundException {

@@ -54,7 +54,7 @@ public class RoundBufferSampleSource {
 	/**
 	 * Changes the value of the position at which the next new sample will be
 	 * stored.
-	 * @param the new value of nextInsertPos
+	 * @param nextInsertPos the new value of nextInsertPos
 	 */
 	synchronized void setNextInsertPos(int nextInsertPos) {
 		this.nextInsertPos = nextInsertPos;

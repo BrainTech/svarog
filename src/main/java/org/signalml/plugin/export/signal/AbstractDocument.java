@@ -116,8 +116,10 @@ public abstract class AbstractDocument implements Document {
 	}
 
 	/**
-	 * @see Document#getPropertyChangeListeners()
-	 * @return
+	 * Returns an array containing all {@link PropertyChangeListener
+	 * PropertyChangeListeners} added to this document.
+	 * @return an array containing all {@link PropertyChangeListener
+	 * PropertyChangeListeners}.
 	 */
 	@Override
 	public PropertyChangeListener[] getPropertyChangeListeners() {

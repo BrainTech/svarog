@@ -39,8 +39,6 @@ public class MonitorChannelSelectPanel extends JPanel {
 
 	/**
 	 * This method initializes this
-	 * 
-	 * @return void
 	 */
 	private void initialize() {
 		setLayout( new BorderLayout());

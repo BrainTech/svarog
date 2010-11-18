@@ -46,7 +46,7 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 
 	/**
 	 * A boolean indicating if montage has just changed.
-	 * For the use of {@link updateTimeDomainSampleFilterEnginesCache()}.
+	 * For the use of {@link MultichannelSampleFilter#updateTimeDomainSampleFilterEnginesCache()}.
 	 */
 	private boolean newMontage = false;
 
@@ -112,7 +112,7 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 	 * {@link TimeDomainSampleFilterEngine TimeDomainSampleFilterEngines}
 	 * in the MultichannelSampleFilter. Automatically detects the number of
 	 * new samples if originalSource is {@link ChangeableMultichannelSampleSource}
-	 * and runs the {@link MultichannelSampleSource#updateTimeDomainSampleFilterEnginesCache(int)}.
+	 * and runs the {@link MultichannelSampleFilter#updateTimeDomainSampleFilterEnginesCache(int)}.
 	 * Has no effect if the originalSource is not a {@link ChangeableMultichannelSampleSource}.
 	 */
 	private void updateTimeDomainSampleFilterEnginesCache() {
@@ -371,7 +371,7 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 	/**
 	 * Clears the filter {@link SampleFilterEngine engines} and initialises
 	 * them creating {@link SampleFilterEngine filter engines}
-	 * based on {@link SampleFilter sample filters} (both FFT and Time Domain) from a given montage.
+	 * based on {@link SampleFilterDefinition sample filters} (both FFT and Time Domain) from a given montage.
 	 * @param montage the montage used to create new engines
 	 * @throws MontageMismatchException
 	 */

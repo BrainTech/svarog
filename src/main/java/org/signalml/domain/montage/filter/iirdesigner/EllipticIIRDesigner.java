@@ -90,7 +90,6 @@ class EllipticIIRDesigner extends AbstractIIRDesigner {
 	 *
 	 * @param filterOrder the order of the prototype
 	 * @param gpass the maximum loss in the passband [dB]
-	 * @param gstop the minimum attenuation in the stopband [dB]
 	 * @return zeros, poles and gain of the filter prototype which meets the given specification
 	 */
 	@Override
@@ -201,7 +200,6 @@ class EllipticIIRDesigner extends AbstractIIRDesigner {
 	 * @param filterOrder the order of the filter to be designed (can be calculated using {@link AbstractIIRDesigner#calculateFilterOrder(org.signalml.domain.montage.filter.iirdesigner.FilterType, double[], double[], double, double, boolean) })
 	 * @param wp passband edge frequencies [PI*rad/sample for digital filters or rad/sec. for analog filters]
 	 * @param ws stopband edge frequencies [PI*rad/sample for digital filters or rad/sec. for analog filters]
-	 * @param stopb stopband edge frequencies [PI*rad/sample for digital filters or rad/sec. for analog filters ]
 	 * @param gpass the maximum loss in the passband [dB]
 	 * @param gstop the minimum attenuation in the stopband [dB]
 	 * @param analog true to design an analog filter, false to design a digital filter

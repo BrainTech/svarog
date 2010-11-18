@@ -85,8 +85,6 @@ public class MultiplexerConnectionPanel extends JPanel {
 
 	/**
 	 * This method initializes this
-	 * 
-	 * @return void
 	 */
 	private void initialize() {
 
@@ -365,15 +363,15 @@ public class MultiplexerConnectionPanel extends JPanel {
 	 * Fills the model with the data from this panel (user input).
 	 * @param openMonitorDescriptor the model to be filled.
 	 */
-	public void fillModelFromPanel(OpenMonitorDescriptor m) {
+	public void fillModelFromPanel(OpenMonitorDescriptor openMonitorDescriptor) {
 
 		String adres = getMultiplexerAddressField().getText();
-		m.setMultiplexerAddress(adres);
+		openMonitorDescriptor.setMultiplexerAddress(adres);
 		if (applicationConfiguration != null)
 			applicationConfiguration.setMultiplexerAddress( adres);
 
 		int port = Integer.parseInt(getMultiplexerPortField().getText());
-		m.setMultiplexerPort(port);
+		openMonitorDescriptor.setMultiplexerPort(port);
 		if (applicationConfiguration != null)
 			applicationConfiguration.setMultiplexerPort( port);
 

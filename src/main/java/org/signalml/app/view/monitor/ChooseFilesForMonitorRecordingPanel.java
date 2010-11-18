@@ -81,7 +81,7 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 
 	/**
 	 * Fills the model with the data from this panel (user input).
-	 * @param openMonitorDescriptor the model to be filled.
+	 * @param model the model to be filled.
 	 */
 	public void fillModelFromPanel(Object model) {
 		MonitorRecordingDescriptor monitorRecordingDescriptor = ((OpenMonitorDescriptor) model).getMonitorRecordingDescriptor();

@@ -28,6 +28,8 @@ public class IIRDesigner {
 	 * @param stopbandAttenuation minimum attenuation required for the filter to have in the stopband [dB]
 	 * @param samplingFrequency the sampling frequency at which the filter will operate
 	 * @return the {@link FilterCoefficients} of the filter designed which meets given specification.
+	 * @throws BadFilterParametersException thrown when the filter cannot
+	 * design a filter for the given parameters.
 	 */
 	public static FilterCoefficients designDigitalFilter(ApproximationFunctionType approximationFunctionType, FilterType type, double[] passbandEdgeFrequencies, double[] stopbandEdgeFrequencies, double passbandRipple, double stopbandAttenuation, double samplingFrequency) throws BadFilterParametersException {
 
@@ -60,6 +62,15 @@ public class IIRDesigner {
 
 	}
 
+	/**
+	 * Designs a digital filter according to the given {@link TimeDomainSampleFilter
+	 * filter definition}.
+	 * @param filterDefinition the definition containing parameters for which
+	 * the filter should be designed.
+	 * @return coefficients of the designed filter.
+	 * @throws BadFilterParametersException thrown when the filter cannot
+	 * design a filter for the given parameters.
+	 */
 	public static FilterCoefficients designDigitalFilter(TimeDomainSampleFilter filterDefinition) throws BadFilterParametersException {
 
 		return IIRDesigner.designDigitalFilter(filterDefinition.getApproximationFunctionType(), filterDefinition.getFilterType(),

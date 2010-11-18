@@ -70,11 +70,11 @@ class Chebyshev1IIRDesigner extends ChebyshevIIRDesigner {
 	 *
 	 * @param type type of the filter (lowpass/highpass/bandpass/bandstop)
 	 * @param filterOrder the order of the filter to be designed (can be calculated using {@link AbstractIIRDesigner#calculateFilterOrder(org.signalml.domain.montage.filter.iirdesigner.FilterType, double[], double[], double, double, boolean) })
-	 * @param passb passband edge frequencies [PI*rad/sample for digital filters or rad/sec. for analog filters ]
-	 * @param stopb stopband edge frequencies [PI*rad/sample for digital filters or rad/sec. for analog filters ]
+	 * @param wp passband edge frequencies [PI*rad/sample for digital filters or rad/sec. for analog filters ]
+	 * @param ws stopband edge frequencies [PI*rad/sample for digital filters or rad/sec. for analog filters ]
 	 * @param gpass the maximum loss in the passband [dB]
 	 * @param gstop the minimum attenuation in the stopband [dB]
-	 * @param isAnalog true to design an analog filter, false to design a digital filter
+	 * @param analog true to design an analog filter, false to design a digital filter
 	 * @return the critical frequencies
 	 */
 	@Override

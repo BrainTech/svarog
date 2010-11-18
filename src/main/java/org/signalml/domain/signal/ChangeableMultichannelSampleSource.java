@@ -24,7 +24,8 @@ public interface ChangeableMultichannelSampleSource {
 	int getNewSamplesCount();
 
 	/**
-	 * Clears the counter of new samples used by {@link getNewSamplesCount()}.
+	 * Clears the counter of new samples used also by
+	 * {@link ChangeableMultichannelSampleSource#getNewSamplesCount()}.
 	 */
 	void clearNewSamplesCount();
 
@@ -37,7 +38,9 @@ public interface ChangeableMultichannelSampleSource {
 	/**
 	 * Acquires the built in binary semaphore. It does not prevent other threads
 	 * from using the {@link ChangeableMultichannelSampleSource}, unless their
-	 * critical sections are surrounded by {@link lock()} and {@link unlock()}
+	 * critical sections are surrounded by
+	 * {@link ChangeableMultichannelSampleSource#lock()} and
+	 * {@link ChangeableMultichannelSampleSource#unlock()}
 	 * methods.
 	 */
 	void lock();

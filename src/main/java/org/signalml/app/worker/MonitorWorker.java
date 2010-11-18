@@ -335,7 +335,7 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 	 * Sets the {@link TagRecorder} to which the tags will be sent by this
 	 * {@link MonitorWorker}. Setting a {@link TagRecorder} using this method
 	 * starts sending all tags received by this {@link MonitorWorker} to the
-	 * given {@link TagRecorderWorker}.
+	 * given {@link TagRecorder}.
 	 *
 	 * @param tagRecorderWorker the {@link TagRecorder} responsible for recording
 	 * the tags from this {@link MonitorWorker}.
