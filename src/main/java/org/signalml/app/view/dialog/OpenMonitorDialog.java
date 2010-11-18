@@ -256,4 +256,14 @@ public class OpenMonitorDialog extends AbstractDialog implements PropertyChangeL
 		getMonitorRecordingPanel().validatePanel(model, errors);
 
 	}
+
+	/**
+	 * Called when the dialog is closed with OK button.
+	 */
+	@Override
+	protected void onDialogCloseWithOK() {
+		super.onDialogClose();
+		getMonitorRecordingPanel().resetFileNames();
+	}
+
 }

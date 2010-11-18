@@ -67,7 +67,7 @@ public class StartMonitorRecordingDialog extends AbstractDialog {
 	 */
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
-		getChooseFilesForMonitorRecordingPanel().fillPanelFromModel(model);
+		//do nothing
 	}
 
 	/**
@@ -103,6 +103,15 @@ public class StartMonitorRecordingDialog extends AbstractDialog {
 
 		fillModelFromDialog(model);
 		getChooseFilesForMonitorRecordingPanel().validatePanel(model, errors);
+	}
+
+	/**
+	 * Called when the dialog is closed with OK button.
+	 */
+	@Override
+	protected void onDialogCloseWithOK() {
+		super.onDialogCloseWithOK();
+		getChooseFilesForMonitorRecordingPanel().resetFileNames();
 	}
 
 }

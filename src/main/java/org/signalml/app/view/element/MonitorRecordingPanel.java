@@ -129,4 +129,12 @@ public class MonitorRecordingPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Resets the signal and tag filenames entered in the panel to an empty
+	 * string.
+	 */
+	public void resetFileNames() {
+		getChooseFilesForMonitorRecordingPanel().resetFileNames();
+	}
+
 }

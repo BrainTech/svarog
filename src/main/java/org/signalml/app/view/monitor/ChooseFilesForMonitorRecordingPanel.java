@@ -91,18 +91,6 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 	}
 
 	/**
-	 * Fills the fields of this panel from the given model.
-	 * @param openMonitorDescriptor the model from which this panel will be
-	 * filled.
-	 */
-	public void fillPanelFromModel(Object model) {
-		MonitorRecordingDescriptor monitorRecordingDescriptor = ((OpenMonitorDescriptor) model).getMonitorRecordingDescriptor();
-		getSelectSignalRecordingFilePanel().setFileName(monitorRecordingDescriptor.getSignalRecordingFilePath());
-		getSelectTagsRecordingFilePanel().setFileName(monitorRecordingDescriptor.getTagsRecordingFilePath());
-		getDisableTagRecordingPanel().setTagRecordingDisabled(monitorRecordingDescriptor.isTagsRecordingDisabled());
-	}
-
-	/**
 	 * Sets this panel to be enabled or disabled.
 	 * @param enabled false to disable this panel, true otherwise
 	 */
@@ -118,6 +106,14 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 		if (getDisableTagRecordingPanel().isTagRecordingDisabled())
 			getSelectTagsRecordingFilePanel().setEnabled(false);
 
+	}
+
+	/**
+	 * Resets the signal and tag recording filenames to empty strings.
+	 */
+	public void resetFileNames() {
+		getSelectSignalRecordingFilePanel().setFileName("");
+		getSelectTagsRecordingFilePanel().setFileName("");
 	}
 
 	/**

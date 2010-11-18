@@ -1,3 +1,6 @@
+/* FileSelectPanel.java
+ *
+ */
 package org.signalml.app.view.element;
 
 import java.awt.FlowLayout;
@@ -16,18 +19,31 @@ import org.apache.log4j.Logger;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
- *
+ * This class represents a panel which may be used to select a file.
+ * It contains text fields where a file name can be entered, a label for this
+ * field (which can be set in the constructor) and a button which opens a dialog
+ * using which a file path can be selected more conveniently.
  */
 public class FileSelectPanel extends JPanel {
-	
-	private static final long serialVersionUID = 1L;
 
+	private static final long serialVersionUID = 1L;
 	protected static final Logger logger = Logger.getLogger(FileSelectPanel.class);
-	
 	private MessageSourceAccessor messageSource;
 
+	/**
+	 * Label for the fileNameField.
+	 */
 	private JLabel selectFileLabel;
+
+	/**
+	 * A text field where file name can be entered.
+	 */
 	private JTextField fileNameField;
+
+	/**
+	 * A button for opening a file chooser dialog using which a file path
+	 * can be selected more conveniently.
+	 */
 	private JButton browseButton;
 
 	/**
@@ -44,22 +60,22 @@ public class FileSelectPanel extends JPanel {
 	 * Initializes this panel.
 	 */
 	private void initialize() {
-		setLayout( new FlowLayout());
+		setLayout(new FlowLayout());
 		add(selectFileLabel);
-		add( getFileNameField());
-		add( getChangeButton());
+		add(getFileNameField());
+		add(getChangeButton());
 	}
 
 	protected JTextField getFileNameField() {
 		if (fileNameField == null) {
-			fileNameField = new JTextField( 20);
+			fileNameField = new JTextField(20);
 		}
 		return fileNameField;
 	}
 
 	protected JButton getChangeButton() {
 		if (browseButton == null) {
-			browseButton = new JButton( messageSource.getMessage("fileSelectPanel.browseButtonLabel"));
+			browseButton = new JButton(messageSource.getMessage("fileSelectPanel.browseButtonLabel"));
 			browseButton.addActionListener(new BrowseButtonAction());
 		}
 		return browseButton;
@@ -87,10 +103,11 @@ public class FileSelectPanel extends JPanel {
 	 */
 	public boolean isFileSelected() {
 		String t = getFileNameField().getText();
-		if (t != null && !"".equals( t))
+		if (t != null && !"".equals(t)) {
 			return true;
-		else
+		} else {
 			return false;
+		}
 	}
 
 	/**
@@ -112,27 +129,38 @@ public class FileSelectPanel extends JPanel {
 	 */
 	private class BrowseButtonAction implements ActionListener {
 
+		/**
+		 * A file chooser to select files with. Shows in response to
+		 * this action.
+		 */
+		private JFileChooser fileChooser;
+
+		/**
+		 * Creates a new BrowseButtonAction and initializes it.
+		 */
+		BrowseButtonAction() {
+			super();
+			fileChooser = new JFileChooser();
+			fileChooser.setApproveButtonText(messageSource.getMessage("ok"));
+		}
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JFileChooser chooser = new JFileChooser();
 
-			chooser.setApproveButtonText(messageSource.getMessage("ok"));
-			int returnVal = chooser.showOpenDialog( FileSelectPanel.this);
+			int returnVal = fileChooser.showOpenDialog(FileSelectPanel.this);
 
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
-				File selectedFile = chooser.getSelectedFile();
+				File selectedFile = fileChooser.getSelectedFile();
 
 				try {
-					getFileNameField().setText( chooser.getSelectedFile().getCanonicalPath());
-				}
-				catch (IOException e1) {
+					getFileNameField().setText(selectedFile.getCanonicalPath());
+				} catch (IOException e1) {
 					getFileNameField().setText("");
 				}
 
 			}
 
 		}
-
 	}
 
 }

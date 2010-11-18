@@ -496,6 +496,13 @@ public abstract class AbstractDialog extends JDialog {
 		// do nothing
 	}
 
+	/**
+	 * Called when the dialog is closing with OK.
+	 */
+	protected void onDialogCloseWithOK() {
+		// do nothing
+	}
+
 	public boolean validateDialog() {
 
 		if (currentModel != null) {
@@ -785,6 +792,7 @@ public abstract class AbstractDialog extends JDialog {
 			closedWithOk = true;
 			setVisible(false);
 
+			onDialogCloseWithOK();
 			onDialogClose();
 
 		}
