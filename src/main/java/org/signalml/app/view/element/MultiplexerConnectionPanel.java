@@ -9,6 +9,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -215,6 +217,17 @@ public class MultiplexerConnectionPanel extends JPanel {
 	public JTextField getMultiplexerAddressField() {
 		if (multiplexerAddressField == null) {
 			multiplexerAddressField = new JTextField();
+			multiplexerAddressField.addFocusListener(new FocusListener() {
+
+				@Override
+				public void focusGained(FocusEvent e) {
+				}
+
+				@Override
+				public void focusLost(FocusEvent e) {
+					applicationConfiguration.setMultiplexerAddress(multiplexerAddressField.getText());
+				}
+			});
 		}
 		return multiplexerAddressField;
 	}
@@ -222,6 +235,17 @@ public class MultiplexerConnectionPanel extends JPanel {
 	public JTextField getMultiplexerPortField() {
 		if (multiplexerPortField == null) {
 			multiplexerPortField = new JTextField();
+			multiplexerPortField.addFocusListener(new FocusListener() {
+
+				@Override
+				public void focusGained(FocusEvent e) {
+				}
+
+				@Override
+				public void focusLost(FocusEvent e) {
+					applicationConfiguration.setMultiplexerPort(Integer.valueOf(multiplexerPortField.getText()));
+				}
+			});
 		}
 		return multiplexerPortField;
 	}
@@ -294,15 +318,15 @@ public class MultiplexerConnectionPanel extends JPanel {
 
 		setOpenMonitorDescriptor(openMonitorDescriptor);
 
-		if (getMultiplexerAddressField().getText().isEmpty() && applicationConfiguration != null)
+		if (applicationConfiguration != null) {
 			address = applicationConfiguration.getMultiplexerAddress();
+			port = applicationConfiguration.getMultiplexerPort();
+		}
+
 		if (address != null)
 			getMultiplexerAddressField().setText(address);
-
-		if (getMultiplexerPortField().getText().isEmpty() && applicationConfiguration != null)
-			port = applicationConfiguration.getMultiplexerPort();
 		if (port != -1)
-			getMultiplexerPortField().setText(Integer.toString( port));
+			getMultiplexerPortField().setText(Integer.toString(port));
 
 	}
 
