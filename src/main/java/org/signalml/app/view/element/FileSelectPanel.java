@@ -3,6 +3,7 @@ package org.signalml.app.view.element;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JButton;
@@ -58,22 +59,8 @@ public class FileSelectPanel extends JPanel {
 
 	protected JButton getChangeButton() {
 		if (browseButton == null) {
-			browseButton = new JButton( messageSource.getMessage( "fileSelectPanel.browseButtonLabel"));
-			browseButton.addActionListener( new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					JFileChooser chooser = new JFileChooser();
-					int returnVal = chooser.showOpenDialog( FileSelectPanel.this);
-					if (returnVal == JFileChooser.APPROVE_OPTION) {
-						try {
-							getFileNameField().setText( chooser.getSelectedFile().getCanonicalPath());
-						}
-						catch (IOException e1) {
-							getFileNameField().setText( "");
-						}
-					}
-				}
-			});
+			browseButton = new JButton( messageSource.getMessage("fileSelectPanel.browseButtonLabel"));
+			browseButton.addActionListener(new BrowseButtonAction());
 		}
 		return browseButton;
 	}
@@ -116,6 +103,36 @@ public class FileSelectPanel extends JPanel {
 		selectFileLabel.setEnabled(enabled);
 		fileNameField.setEnabled(enabled);
 		browseButton.setEnabled(enabled);
+	}
+
+	/**
+	 * Class responsible for the action performed after pressing Browse button.
+	 * Shows a window in which the user can choose a file name's path and changes the
+	 * text field containing the file name in the current FileSelectPanel.
+	 */
+	private class BrowseButtonAction implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JFileChooser chooser = new JFileChooser();
+
+			chooser.setApproveButtonText(messageSource.getMessage("ok"));
+			int returnVal = chooser.showOpenDialog( FileSelectPanel.this);
+
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				File selectedFile = chooser.getSelectedFile();
+
+				try {
+					getFileNameField().setText( chooser.getSelectedFile().getCanonicalPath());
+				}
+				catch (IOException e1) {
+					getFileNameField().setText("");
+				}
+
+			}
+
+		}
+
 	}
 
 }

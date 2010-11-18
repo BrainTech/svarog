@@ -861,6 +861,8 @@
 	<entry key="startMonitorRecording.chooseSignalFileLabel">Record signal to file</entry>
 	<entry key="startMonitorRecording.chooseTagFileLabel">Record tags to file</entry>
 	<entry key="startMonitorRecording.doNotRecordTagsLabel">Do not record tags</entry>
+	<entry key="startMonitorRecording.signalFileAlreadyExistsMessage">Signal recording target file already exists! Do you want to overwrite?</entry>
+	<entry key="startMonitorRecording.tagFileAlreadyExistsMessage">Tag recording target file already exists! Do you want to overwrite?</entry>
 
 	<entry key="error.startMonitorRecording.incorrectSignalFile">Please input a correct signal filename</entry>
 	<entry key="error.startMonitorRecording.incorrectTagFile">Please input a correct tag filename</entry>

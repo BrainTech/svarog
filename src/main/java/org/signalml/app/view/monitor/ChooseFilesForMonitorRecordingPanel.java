@@ -7,8 +7,10 @@ import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -124,12 +126,28 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 	 * @param errors the object in which errors are stored
 	 */
 	public void validatePanel(Object model, Errors errors) {
-		if (getSelectSignalRecordingFilePanel().getFileName().isEmpty()) {
+
+		String recordingFileName = getSelectSignalRecordingFilePanel().getFileName();
+		String tagRecordingFileName = getSelectTagsRecordingFilePanel().getFileName();
+
+		if (recordingFileName.isEmpty()) {
 			errors.reject("error.startMonitorRecording.incorrectSignalFile");
 		}
-		if (getDisableTagRecordingPanel().isTagRecordingEnabled() && getSelectTagsRecordingFilePanel().getFileName().isEmpty()) {
+		else if ((new File(recordingFileName)).exists()) {
+			int anwser = JOptionPane.showConfirmDialog(null, messageSource.getMessage("startMonitorRecording.signalFileAlreadyExistsMessage"));
+			if (anwser == JOptionPane.CANCEL_OPTION || anwser == JOptionPane.NO_OPTION)
+				errors.reject("");
+		}
+
+		if (getDisableTagRecordingPanel().isTagRecordingEnabled() && tagRecordingFileName.isEmpty()) {
 			errors.reject("error.startMonitorRecording.incorrectTagFile");
 		}
+		else if (getDisableTagRecordingPanel().isTagRecordingEnabled() && (new File(tagRecordingFileName)).exists()) {
+			int anwser = JOptionPane.showConfirmDialog(null, messageSource.getMessage("startMonitorRecording.tagFileAlreadyExistsMessage"));
+			if (anwser == JOptionPane.CANCEL_OPTION || anwser == JOptionPane.NO_OPTION)
+				errors.reject("");
+		}
+
 	}
 
 	/**
