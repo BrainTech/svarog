@@ -9,10 +9,12 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import javax.swing.AbstractAction;
 
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
@@ -58,6 +60,11 @@ public class MultiplexerConnectionPanel extends JPanel {
 	private JProgressBar progressBar;
 	private JButton connectButton;
 	private JButton disonnectButton;
+
+	/**
+	 * Button used to reset to defaults multiplexer address and port values.
+	 */
+	private JButton resetToDefaultsButton;
 
 	private ConnectMultiplexerAction connectAction;
 	private DisconnectMultiplexerAction disconnectAction;
@@ -189,11 +196,14 @@ public class MultiplexerConnectionPanel extends JPanel {
 		c.anchor = GridBagConstraints.WEST;
 		connectionPanel.add( getConnectButton(), c);
 		c.gridx = 1;
-		c.gridwidth = GridBagConstraints.REMAINDER;
 		connectionPanel.add( getDisconnectButton(), c);
+		c.gridx = 2;
+		c.anchor = GridBagConstraints.EAST;
+		connectionPanel.add(getResetToDefaultsButton(), c);
+
 		c.gridx = 0;
 		c.gridy = 1;
-		c.gridwidth = 2;
+		c.gridwidth = 3;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		connectionPanel.add( getProgressBar(), c);
 		c.gridy = 2;
@@ -278,6 +288,27 @@ public class MultiplexerConnectionPanel extends JPanel {
 			disonnectButton = new JButton();
 		}
 		return disonnectButton;
+	}
+
+	/**
+	 * Returns button which may be used to reset to defaults multiplexer
+	 * address and port fields values.
+	 * @return button which can be used to reset connection parameters.
+	 */
+	public JButton getResetToDefaultsButton() {
+		if (resetToDefaultsButton == null) {
+			resetToDefaultsButton = new JButton(new AbstractAction(getMessageSource().getMessage("action.resetToDefaults.actionName")) {
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						applicationConfiguration.resetMultiplexerAddressToDefaults();
+						applicationConfiguration.resetMultiplexerPortToDefaults();
+						fillPanelFromModel(openMonitorDescriptor);
+					}
+				}
+			);
+		}
+		return resetToDefaultsButton;
 	}
 
 	public void cancel() {

@@ -323,6 +323,7 @@
 	<entry key="action.connectingMultiplexer.connectionFailedMsg">Connection failed!</entry>
 	<entry key="action.connectingMultiplexer.connectionTimeoutMsg">Connection timeout!</entry>
 	<entry key="action.connectingMultiplexer.connectionOkMsg">Connection OK!</entry>
+	<entry key="action.resetToDefaults.actionName">Reset to defaults</entry>
 
 	<entry key="action.openMonitor.testMultiplexerConnectionLabel">Test connection</entry>
 	<entry key="action.openMonitor.testMultiplexerConnectionToolTip">Test connection to multiplexer</entry>

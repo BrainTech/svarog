@@ -297,12 +297,17 @@ public class ConfigurationDefaults {
 
 	}
 	
-	public static void setMultiplexerDefaultParameters( ApplicationConfiguration config ) {
+	public static void setMultiplexerDefaultParameters(ApplicationConfiguration config) {
 
-		config.setMultiplexerAddress( properties.getProperty("multiplexer.address"));
+		config.setMultiplexerAddress(properties.getProperty("multiplexer.address"));
+		config.setDefaultMultiplexerAddress(properties.getProperty("default.multiplexer.address"));
+
 		int port = Integer.parseInt(properties.getProperty("multiplexer.port"));
 		config.setMultiplexerPort( port);
-		
+
+		port = Integer.parseInt(properties.getProperty("default.multiplexer.port"));
+		config.setDefaultMultiplexerPort(port);
+
 	}
 	
 	public static void setMonitorDefaultParameters( ApplicationConfiguration config ) {
