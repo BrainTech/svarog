@@ -111,13 +111,13 @@ public class MonitorSignalParametersPanel extends JPanel {
 	 * filled.
 	 */
 	public void fillPanelFromModel(OpenMonitorDescriptor openMonitorDescriptor) {
+
 		Double pageSize = openMonitorDescriptor.getPageSize();
-		if (pageSize == null && applicationConfiguration != null) {
+
+		if (getPageSizeField().getText().isEmpty() && applicationConfiguration != null)
 			pageSize = applicationConfiguration.getMonitorPageSize();
-		}
-		if (pageSize != null) {
+		if (pageSize != null)
 			getPageSizeField().setText(Double.toString(pageSize));
-		}
 
 		Float freq = openMonitorDescriptor.getSamplingFrequency();
 		if (freq != null) {
@@ -131,6 +131,7 @@ public class MonitorSignalParametersPanel extends JPanel {
 			channelCount = 0;
 		}
 		getChannelCountField().setText(channelCount.toString());
+
 	}
 
 	/**

@@ -289,17 +289,21 @@ public class MultiplexerConnectionPanel extends JPanel {
 	 */
 	public void fillPanelFromModel(OpenMonitorDescriptor openMonitorDescriptor) {
 
+		String address = openMonitorDescriptor.getMultiplexerAddress();
+		int port = openMonitorDescriptor.getMultiplexerPort();
+
 		setOpenMonitorDescriptor(openMonitorDescriptor);
 
-		String address = openMonitorDescriptor.getMultiplexerAddress();
-		if (address == null && applicationConfiguration != null)
+		if (getMultiplexerAddressField().getText().isEmpty() && applicationConfiguration != null)
 			address = applicationConfiguration.getMultiplexerAddress();
-		getMultiplexerAddressField().setText(address);
+		if (address != null)
+			getMultiplexerAddressField().setText(address);
 
-		int port = openMonitorDescriptor.getMultiplexerPort();
-		if (port == -1 && applicationConfiguration != null)
+		if (getMultiplexerPortField().getText().isEmpty() && applicationConfiguration != null)
 			port = applicationConfiguration.getMultiplexerPort();
-		getMultiplexerPortField().setText(Integer.toString( port));
+		if (port != -1)
+			getMultiplexerPortField().setText(Integer.toString( port));
+
 	}
 
 	/**
