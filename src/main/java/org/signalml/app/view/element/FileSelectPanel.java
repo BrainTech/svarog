@@ -3,7 +3,11 @@
  */
 package org.signalml.app.view.element;
 
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -60,10 +64,21 @@ public class FileSelectPanel extends JPanel {
 	 * Initializes this panel.
 	 */
 	private void initialize() {
-		setLayout(new FlowLayout());
-		add(selectFileLabel);
-		add(getFileNameField());
-		add(getChangeButton());
+
+		setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+
+		c.anchor = GridBagConstraints.WEST;
+		c.gridx = 0;
+		c.weightx = 100;
+		c.insets = new Insets(0, 2, 0, 2);
+		add(selectFileLabel, c);
+		c.weightx = 0;
+		c.gridx = 1;
+		add(getFileNameField(), c);
+		c.gridx = 2;
+		add(getChangeButton(), c);
+
 	}
 
 	protected JTextField getFileNameField() {
