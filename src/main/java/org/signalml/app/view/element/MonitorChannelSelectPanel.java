@@ -1,12 +1,18 @@
+/* MonitorChannelSelectPanel.java
+ *
+ */
 package org.signalml.app.view.element;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
 import java.util.logging.Level;
+import javax.swing.AbstractAction;
+import javax.swing.JButton;
 
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
@@ -16,22 +22,41 @@ import org.signalml.app.model.OpenMonitorDescriptor;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
- *
+ * This class represents a panel for selecting channels which will be monitored.
  */
 public class MonitorChannelSelectPanel extends JPanel {
-	
+
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Logger to save history of execution at.
+	 */
 	protected static final Logger logger = Logger.getLogger(MonitorChannelSelectPanel.class);
-	
+
+	/**
+	 * The {@link MessageSourceAccessor source} of messages (labels) for elements.
+	 */
 	private MessageSourceAccessor messageSource;
 
-	private JList channelList;
+	/**
+	 * A list on which selections can be made.
+	 */
+	private CheckBoxList channelList;
+
+	/**
+	 * Button for selecting all channels on the list.
+	 */
+	private JButton selectAllButton;
+
+	/**
+	 * Button for deselecting all channels on the list.
+	 */
+	private JButton clearSelectionButton;
 
 	/**
 	 * This is the default constructor
 	 */
-	public MonitorChannelSelectPanel( MessageSourceAccessor messageSource) {
+	public MonitorChannelSelectPanel(MessageSourceAccessor messageSource) {
 		super();
 		this.messageSource = messageSource;
 		initialize();
@@ -41,13 +66,19 @@ public class MonitorChannelSelectPanel extends JPanel {
 	 * This method initializes this
 	 */
 	private void initialize() {
-		setLayout( new BorderLayout());
-		add( new JScrollPane( getChannelList()), BorderLayout.CENTER);
+		setLayout(new BorderLayout());
+		add(new JScrollPane(getChannelList()), BorderLayout.CENTER);
 
 		CompoundBorder border = new CompoundBorder(
 			new TitledBorder(messageSource.getMessage("openMonitor.channelSelectPanelTitle")),
 			new EmptyBorder(3, 3, 3, 3));
 		setBorder(border);
+
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		buttonPanel.add(getSelectAllButton());
+		buttonPanel.add(getClearSelectionButton());
+		add(buttonPanel, BorderLayout.SOUTH);
+
 	}
 
 	/**
@@ -56,10 +87,49 @@ public class MonitorChannelSelectPanel extends JPanel {
 	 */
 	public JList getChannelList() {
 		if (channelList == null) {
-			channelList = new JList();
-			channelList.setSelectionMode( ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+			channelList = new CheckBoxList();
 		}
 		return channelList;
+	}
+
+	/**
+	 * Returns the button for selecting all channels.
+	 * @return the button which is useful for selecting all channels from
+	 * the list.
+	 */
+	public JButton getSelectAllButton() {
+		if (selectAllButton == null) {
+			selectAllButton = new JButton(new AbstractAction(messageSource.getMessage("openMonitor.channelSelectPanel.selectAll")) {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					channelList.clearSelection();
+					int end = channelList.getModel().getSize() - 1;
+					if (end >= 0) {
+						channelList.setSelectionInterval(0, end);
+					}
+				}
+			});
+		}
+		return selectAllButton;
+	}
+
+	/**
+	 * Returns the button for deselecting all positions in the list.
+	 * @return the button which can be used to clear all selections made
+	 * on the list.
+	 */
+	public JButton getClearSelectionButton() {
+		if (clearSelectionButton == null) {
+			clearSelectionButton = new JButton(new AbstractAction(messageSource.getMessage("openMonitor.channelSelectPanel.clearSelection")) {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					channelList.clearSelection();
+				}
+			});
+		}
+		return clearSelectionButton;
 	}
 
 	/**
@@ -76,8 +146,8 @@ public class MonitorChannelSelectPanel extends JPanel {
 			if (channelCount == null)
 				channelCount = 0;
 			channelLabels = new String[channelCount];
-			for (int i=0; i<channelCount; i++)
-				channelLabels[i] = Integer.toBinaryString( i);
+			for (int i = 0; i < channelCount; i++)
+				channelLabels[i] = Integer.toBinaryString(i);
 		}
 
 		getChannelList().setListData(channelLabels);
@@ -95,5 +165,4 @@ public class MonitorChannelSelectPanel extends JPanel {
 			java.util.logging.Logger.getLogger(MonitorChannelSelectPanel.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
-
 }

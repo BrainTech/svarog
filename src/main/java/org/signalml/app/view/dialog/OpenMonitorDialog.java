@@ -32,7 +32,7 @@ import org.springframework.validation.Errors;
  * Represents a dialog which is shown when the user wants to open a new monitor
  * document.
  *
- * @author Piotr Szachewicz
+ * @author Mariusz Podsiadło
  */
 public class OpenMonitorDialog extends AbstractDialog implements PropertyChangeListener {
 
