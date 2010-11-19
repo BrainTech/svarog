@@ -40,11 +40,36 @@ public class OpenMonitorDialog extends AbstractDialog implements PropertyChangeL
 	public static final int TRYOUT_COUNT = 10;
 	public static final Color SUCCESS_COLOR = Color.GREEN;
 	public static final Color FAILURE_COLOR = Color.RED;
+
+	/**
+	 * An {@link ApplicationConfiguration} which holds the current configuration
+	 * preferences for Svarog.
+	 */
 	private ApplicationConfiguration applicationConfig;
+
+	/**
+	 * A {@link ViewerElementManager} which manages all Svarog visual components.
+	 */
 	private ViewerElementManager viewerElementManager = null;
+
+	/**
+	 * A {@link MultiplexerConnectionPanel} which is shown in this dialog.
+	 */
 	private MultiplexerConnectionPanel multiplexerConnectionPanel = null;
+
+	/**
+	 * A {@link MonitorSignalParametersPanel} which is shown in this dialog.
+	 */
 	private MonitorSignalParametersPanel monitorSignalParametersPanel = null;
+
+	/**
+	 * A {@link MonitorChannelSelectPanel} which is shown in this dialog.
+	 */
 	private MonitorChannelSelectPanel monitorChannelSelectPanel = null;
+
+	/**
+	 * A {@link MonitorRecordingPanel} which is shown in this dialog.
+	 */
 	private MonitorRecordingPanel monitorRecordingPanel = null;
 
 	/**
@@ -154,6 +179,11 @@ public class OpenMonitorDialog extends AbstractDialog implements PropertyChangeL
 		getMonitorRecordingPanel().fillModelFromPanel(m);
 	}
 
+	/**
+	 * Returns a panel (used in this dialog) responsible for multiplexer
+	 * connection.
+	 * @return panel responsible for multiplexer connection.
+	 */
 	protected MultiplexerConnectionPanel getMultiplexerConnectionPanel() {
 		if (multiplexerConnectionPanel == null) {
 			multiplexerConnectionPanel = new MultiplexerConnectionPanel(viewerElementManager, applicationConfig);
@@ -163,6 +193,11 @@ public class OpenMonitorDialog extends AbstractDialog implements PropertyChangeL
 		return multiplexerConnectionPanel;
 	}
 
+	/**
+	 * Returns a panel (used in this dialog) responsible for showing and
+	 * editing monitor signal parameters (sampling frequency, page size etc.)
+	 * @return the panel responsible for signal parameters configuration.
+	 */
 	protected MonitorSignalParametersPanel getMonitorSignalParametersPanel() {
 		if (monitorSignalParametersPanel == null) {
 			monitorSignalParametersPanel = new MonitorSignalParametersPanel(messageSource, applicationConfig);
@@ -170,6 +205,11 @@ public class OpenMonitorDialog extends AbstractDialog implements PropertyChangeL
 		return monitorSignalParametersPanel;
 	}
 
+	/**
+	 * Returns a panel (used in this dialog) which can be used to select
+	 * which channels will be monitored.
+	 * @return panel responsible for choosing channels to be monitored.
+	 */
 	protected MonitorChannelSelectPanel getMonitorChannelSelectPanel() {
 		if (monitorChannelSelectPanel == null) {
 			monitorChannelSelectPanel = new MonitorChannelSelectPanel(messageSource);
@@ -177,6 +217,11 @@ public class OpenMonitorDialog extends AbstractDialog implements PropertyChangeL
 		return monitorChannelSelectPanel;
 	}
 
+	/**
+	 * Returns a panel (used in this dialog) responsible for setting
+	 * recording files for the monitor to be opened.
+	 * @return panel responsible for setting recording parameters.
+	 */
 	protected MonitorRecordingPanel getMonitorRecordingPanel() {
 		if (monitorRecordingPanel == null) {
 			monitorRecordingPanel = new MonitorRecordingPanel(messageSource);
