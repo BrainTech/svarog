@@ -32,6 +32,7 @@ import javax.swing.event.ChangeListener;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.ui.RectangleInsets;
@@ -139,9 +140,11 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 	public NumberAxis getFrequencyAxis() {
 
 		if (frequencyAxis == null) {
+
 			frequencyAxis = new NumberAxis();
 			frequencyAxis.setAutoRange(false);
 			frequencyAxis.setLabel(messageSource.getMessage("editSampleFilter.graphFrequencyLabel"));
+
 		}
 		return frequencyAxis;
 
@@ -214,6 +217,28 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 	}
 
 	protected abstract void updateGraph();
+
+	/**
+	 * Updates the unit shown for the frequency axis depending on the maximum
+	 * graph frequency set.
+	 */
+	protected void updateFrequencyAxis() {
+
+		double unit = getGraphFrequencyMax() / 16;
+
+		if (unit > 0.65) //for max graph frequency > 12 Hz
+			unit = Math.round(unit);
+		else if (unit > 0.25) //for max graph frequency > 4.0 Hz
+			unit = 0.5;
+		else if (unit > 0.1) //for max graph frequency > 1.6 Hz
+			unit = 0.25;
+		else
+			unit = 0.1;
+
+		getFrequencyAxis().setRange(0, getGraphFrequencyMax());
+		getFrequencyAxis().setTickUnit(new NumberTickUnit(unit));
+
+	}
 
 	@Override
 	public abstract void fillDialogFromModel(Object model) throws SignalMLException;

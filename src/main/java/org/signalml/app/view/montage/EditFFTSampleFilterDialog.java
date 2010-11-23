@@ -48,7 +48,6 @@ import javax.swing.event.ListSelectionListener;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
-import org.jfree.chart.axis.ValueAxis;
 import org.jfree.data.xy.DefaultXYDataset;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
@@ -596,10 +595,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 			maxCoefficient  = 1;
 		}
 
-		double unit = Math.max(4, Math.round(getGraphFrequencyMax() / (16 * 4)) * 4);
-		NumberAxis axis = getFrequencyAxis();
-		axis.setRange(0, getGraphFrequencyMax());
-		axis.setTickUnit(new NumberTickUnit(unit));
+		updateFrequencyAxis();
 
 		getGainAxis().setRange(0, maxCoefficient);
 
