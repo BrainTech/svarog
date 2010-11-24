@@ -645,8 +645,15 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	@Override
 	protected void updateGraph() {
 		drawFrequencyResponse();
+
+		updateFrequencyAxis();
+		updateHighlights();
 	}
 
+	/**
+	 * Updates the rectangle which highlights the selected frequency range.
+	 */
+	@Override
 	protected void updateHighlights() {
 
 		FilterType filterType = (FilterType)getFilterTypeComboBox().getSelectedItem();
@@ -696,8 +703,6 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 		double[] frequencies = frequencyResponse.getFrequencies();
 		double[] coefficients = frequencyResponse.getGain();
-
-		updateFrequencyAxis();
 
 		DefaultXYDataset dataset = new DefaultXYDataset();
 		dataset.addSeries("data", new double[][] {frequencies, coefficients});

@@ -219,6 +219,11 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 	protected abstract void updateGraph();
 
 	/**
+	 * Updates the rectangle which highlights the selected frequency range.
+	 */
+	protected abstract void updateHighlights();
+
+	/**
 	 * Updates the unit shown for the frequency axis depending on the maximum
 	 * graph frequency set.
 	 */

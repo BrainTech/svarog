@@ -116,8 +116,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 
 			@Override
 			public void componentShown(ComponentEvent e) {
-				getFrequencyResponseChartPanel().setSelectionHighlightStart(((Number) getFromFrequencySpinner().getValue()).doubleValue());
-				getFrequencyResponseChartPanel().setSelectionHighlightEnd(((Number) getToFrequencySpinner().getValue()).doubleValue());
+				updateHighlights();
 			}
 
 		});
@@ -361,10 +360,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 					graphFrequencyMax = ((Number) graphScaleSpinner.getValue()).doubleValue();
 					updateGraph();
 
-					if (getUnlimitedCheckBox().isSelected()) {
-						getFrequencyResponseChartPanel().setSelectionHighlightEnd(graphFrequencyMax);
-					}
-
+					updateHighlights();
 				}
 
 			});
@@ -399,14 +395,13 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 
 					double value = ((Number) fromFrequencySpinner.getValue()).doubleValue();
 
-					getFrequencyResponseChartPanel().setSelectionHighlightStart(value);
-
 					double otherValue = ((Number) getToFrequencySpinner().getValue()).doubleValue();
 
 					if (value >= otherValue) {
 						getToFrequencySpinner().setValue(value + FREQUENCY_SPINNER_STEP_SIZE);
 					}
 
+					updateHighlights();
 				}
 
 			});
@@ -433,16 +428,13 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 
 					double value = ((Number) toFrequencySpinner.getValue()).doubleValue();
 
-					if (!getUnlimitedCheckBox().isSelected()) {
-						getFrequencyResponseChartPanel().setSelectionHighlightEnd(value);
-					}
-
 					double otherValue = ((Number) getFromFrequencySpinner().getValue()).doubleValue();
 
 					if (value <= otherValue) {
 						getFromFrequencySpinner().setValue(value - FREQUENCY_SPINNER_STEP_SIZE);
 					}
 
+					updateHighlights();
 				}
 
 			});
@@ -464,16 +456,10 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 
 				@Override
 				public void itemStateChanged(ItemEvent e) {
-
-					JSpinner spinner = getToFrequencySpinner();
 					boolean unlimited = getUnlimitedCheckBox().isSelected();
-					if (unlimited) {
-						getFrequencyResponseChartPanel().setSelectionHighlightEnd(((Number) getGraphScaleSpinner().getValue()).doubleValue());
-					} else {
-						getFrequencyResponseChartPanel().setSelectionHighlightEnd(((Number) spinner.getValue()).doubleValue());
-					}
-					spinner.setEnabled(!unlimited);
 
+					getToFrequencySpinner().setEnabled(!unlimited);
+					updateHighlights();
 				}
 
 			});
@@ -602,6 +588,23 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 		DefaultXYDataset dataset = new DefaultXYDataset();
 		dataset.addSeries("data", new double[][] {frequencies, coefficients});
 		getFrequencyResponsePlot().setDataset(dataset);
+
+	}
+
+	/**
+	 * Updates the rectangle which highlights the selected frequency range.
+	 */
+	@Override
+	protected void updateHighlights() {
+
+		getFrequencyResponseChartPanel().setSelectionHighlightStart(((Number) getFromFrequencySpinner().getValue()).doubleValue());
+
+		if (getUnlimitedCheckBox().isSelected()) {
+			getFrequencyResponseChartPanel().setSelectionHighlightEnd(getGraphFrequencyMax());
+		}
+		else {
+			getFrequencyResponseChartPanel().setSelectionHighlightEnd(((Number) getToFrequencySpinner().getValue()).doubleValue());
+		}
 
 	}
 
