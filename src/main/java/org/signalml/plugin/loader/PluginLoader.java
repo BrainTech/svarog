@@ -57,23 +57,23 @@ public class PluginLoader {
 	public static URLClassLoader myLoader;
 
 	/**
-	 * the name of the XML file with {@link PluginState states} of
+	 * the path to the XML file with {@link PluginState states} of
 	 * plug-ins
 	 */
-	private static String pluginsStateFileName = "pluginsState.xml";
+	private final File pluginsStateFile;
 	/**
-	 * the name of the XML file with the list of directories where
+	 * the path to the XML file with the list of directories where
 	 * plug-ins are stored
 	 */
-	private static String pluginsDirectoriesFileName = "plugin-locations.xml";
+	private final File pluginsDirectoriesFile;
 
 	//constants for reading XML files
-	private static String XMLDirectoryNode = "directory";
-	private static String XMLDirectoriesNode = "directories";
-	private static String XMLStatesPluginsNode = "plugins";
-	private static String XMLStatesPluginNode = "plugin";
-	private static String XMLStatesPluginNameNode = "name";
-	private static String XMLStatesPluginActiveNode = "active";
+	private static final String XMLDirectoryNode = "directory";
+	private static final String XMLDirectoriesNode = "directories";
+	private static final String XMLStatesPluginsNode = "plugins";
+	private static final String XMLStatesPluginNode = "plugin";
+	private static final String XMLStatesPluginNameNode = "name";
+	private static final String XMLStatesPluginActiveNode = "active";
 
 	/**
 	 * the shared (only) instance of this loader
@@ -84,11 +84,6 @@ public class PluginLoader {
 	 * the list of directories in which plug-ins are stored
 	 */
 	private ArrayList<File> pluginDirs = new ArrayList<File>();
-
-	/**
-	 * the path to the profile directory
-	 */
-	private String profileDirPath;
 
 	/**
 	 * list of descriptions of plug-ins.
@@ -161,11 +156,12 @@ public class PluginLoader {
 	 */
 	protected PluginLoader(File profileDir)
 	{
+		this.pluginsStateFile = new File(profileDir + File.separator + "pluginsState.xml");
+		this.pluginsDirectoriesFile = new File(profileDir + File.separator + "plugin-locations.xml");
 		try {
-			profileDirPath = profileDir.getAbsolutePath();
 			if (!readPluginDirectories())
-				setDefaultPluginDir();
-			readPluginsState(profileDirPath.concat("\\").concat(pluginsStateFileName));
+				setDefaultPluginDir(profileDir);
+			readPluginsState(this.pluginsStateFile);
 		} catch (Exception e) {
 			logger.error("Failed to create loader of plug-ins");
 			e.printStackTrace();
@@ -182,14 +178,15 @@ public class PluginLoader {
 	private ArrayList<URL> scanPluginDirectory(File directory) {
 		FilenameFilter filter = new FilesystemFilter("xml", "Xml File", false);
 		String[] filenames = directory.list(filter);
-		for (int i = 0; i < filenames.length; ++i) {
-			PluginDescription descr = readXml(directory.getAbsolutePath().concat("\\").concat(filenames[i]));
+		for (String filename: filenames) {
+			PluginDescription descr = readXml(directory
+			                                  + File.separator + filename);
 			if (descr != null) {
 				descriptions.add(descr);
 				descriptionsByName.put(descr.getName(), descr);
 			}
-
 		}
+
 		ArrayList<URL> urls = new ArrayList<URL>();
 		for (PluginDescription descr : descriptions) {
 			PluginState state = statesByName.get(descr.getName());
@@ -217,14 +214,13 @@ public class PluginLoader {
 	 * @param profileDir profile directory where default
 	 * plug-in folder is located
 	 */
-	private void setDefaultPluginDir() {
-		File pluginDirTmp = (new File(profileDirPath + "\\plugins")).getAbsoluteFile();
-		if (!pluginDirTmp.exists())
-			pluginDirTmp.mkdir();
-		if (pluginDirTmp.exists() && pluginDirTmp.isDirectory() && pluginDirTmp.canRead()) {
-			pluginDirs.add(pluginDirTmp);
+	private void setDefaultPluginDir(File profileDir) {
+		File pluginDir = new File(profileDir + File.separator + "plugins");
+		if (!pluginDir.exists())
+			pluginDir.mkdir();
+		if (pluginDir.exists() && pluginDir.isDirectory() && pluginDir.canRead()) {
+			this.pluginDirs.add(pluginDir);
 		}
-
 	}
 
 	/**
@@ -375,9 +371,9 @@ public class PluginLoader {
 	 * XML file.
 	 * @param fileName the path to the file
 	 */
-	private void readPluginsState(String fileName) {
+	private void readPluginsState(File fileName) {
 		try {
-			Element element = openXMLDocument(new File(fileName));
+			Element element = openXMLDocument(fileName);
 			NodeList nodeList = element.getChildNodes();
 			for (int i = 0; i < nodeList.getLength(); ++i) {
 				Node node = nodeList.item(i);
@@ -428,7 +424,7 @@ public class PluginLoader {
 	 * @throws TransformerException if transformation from
 	 * DOMSource to StreamResult is not possible
 	 */
-	private void saveToXMLFile(String path, Document data) throws FileNotFoundException, TransformerException {
+	private void saveToXMLFile(File path, Document data) throws FileNotFoundException, TransformerException {
 		PrintStream ps = new PrintStream(path);
 		StreamResult result = new StreamResult(ps);
 		TransformerFactory transfac = TransformerFactory.newInstance();
@@ -459,7 +455,7 @@ public class PluginLoader {
 				activeNode.appendChild(doc.createTextNode(state.isActive() ? "true" : "false"));
 				pluginNode.appendChild(activeNode);
 			}
-			saveToXMLFile(profileDirPath.concat("\\").concat(pluginsStateFileName), doc);
+			saveToXMLFile(this.pluginsStateFile, doc);
 			return true;
 		} catch (Exception e) {
 			logger.error("failed to save states of plug-ins");
@@ -496,11 +492,8 @@ public class PluginLoader {
 	 */
 	private boolean readPluginDirectories() {
 		try {
-			File file;
-			file = new File(profileDirPath.concat("\\").concat(pluginsDirectoriesFileName));
-			if (file.exists()) {
-				Element element;
-				element = openXMLDocument(file);
+			if (this.pluginsDirectoriesFile.exists()) {
+				Element element = openXMLDocument(this.pluginsDirectoriesFile);
 				NodeList nodeList = element.getChildNodes();
 				for (int i = 0; i < nodeList.getLength(); ++i) {
 					Node node = nodeList.item(i);
@@ -509,16 +502,13 @@ public class PluginLoader {
 						pluginDirs.add(directoryToAdd);
 					}
 				}
-			} else {
-				setDefaultPluginDir();
+				return true;
 			}
-			return true;
 		} catch (Exception e) {
 			logger.error("failed to read plug-in directories from file");
 			e.printStackTrace();
-			return false;
 		}
-
+		return false;
 	}
 
 	/**
@@ -535,7 +525,7 @@ public class PluginLoader {
 				root.appendChild(directoryNode);
 				directoryNode.appendChild(doc.createTextNode(directory.getPath()));
 			}
-			saveToXMLFile(profileDirPath.concat("\\").concat(pluginsDirectoriesFileName), doc);
+			saveToXMLFile(this.pluginsDirectoriesFile, doc);
 		} catch (Exception e) {
 			logger.error("failed to save current plug-in directories");
 			e.printStackTrace();
