@@ -32,6 +32,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.config.preset.PredefinedTimeDomainSampleFilterPresetManager;
 import org.signalml.app.montage.MontageFilterExclusionTableModel;
 import org.signalml.app.montage.MontageFiltersTableModel;
 import org.signalml.app.util.IconUtils;
@@ -81,26 +82,32 @@ public class MontageFiltersPanel extends JPanel {
 	private JComboBox fftFilterTypeComboBox;
 
 	private AddTimeDomainFilterAction addTimeDomainFilterAction;
+	private AddCustomTimeDomainFilterAction addCustomTimeDomainFilterAction;
 	private AddFFTFilterAction addFFTFilterAction;
 	private EditFilterAction editFilterAction;
 	private RemoveFilterAction removeFilterAction;
 	private ClearFilterExclusionAction clearFilterExclusionAction;
 
 	private JButton addTimeDomainFilterButton;
+	private JButton addCustomTimeDomainFilterButton;
 	private JButton addFFTFilterButton;
 	private JButton editFilterButton;
 	private JButton removeFilterButton;
 	private JButton clearFilterExclusionButton;
 
-	public MontageFiltersPanel(MessageSourceAccessor messageSource) {
+	private PredefinedTimeDomainSampleFilterPresetManager predefinedTimeDomainSampleFilterPresetManager;
+
+	public MontageFiltersPanel(MessageSourceAccessor messageSource, PredefinedTimeDomainSampleFilterPresetManager predefinedTimeDomainSampleFilterPresetManager) {
 		super();
 		this.messageSource = messageSource;
+		this.predefinedTimeDomainSampleFilterPresetManager = predefinedTimeDomainSampleFilterPresetManager;
 		initialize();
 	}
 
 	private void initialize() {
 
 		addTimeDomainFilterAction = new AddTimeDomainFilterAction();
+		addCustomTimeDomainFilterAction = new AddCustomTimeDomainFilterAction();
 		addFFTFilterAction = new AddFFTFilterAction();
 		editFilterAction = new EditFilterAction();
 		removeFilterAction = new RemoveFilterAction();
@@ -146,10 +153,14 @@ public class MontageFiltersPanel extends JPanel {
 		);
 		addTimeDomainFilterPanel.setBorder(border);
 
-		SwingUtils.makeButtonsSameSize(new JButton[] {getAddTimeDomainFilterButton(), getAddFFTFilterButton()});
+		SwingUtils.makeButtonsSameSize(new JButton[] {getAddTimeDomainFilterButton(), getAddFFTFilterButton(), getAddCustomTimeDomainFilterButton()});
 
 		addTimeDomainFilterPanel.add(getTimeDomainFilterTypeComboBox(), BorderLayout.CENTER);
 		addTimeDomainFilterPanel.add(getAddTimeDomainFilterButton(), BorderLayout.EAST);
+
+		JPanel addCustomTimeDomainFilterPanel = new JPanel(new BorderLayout(3, 3));
+		addTimeDomainFilterPanel.add(addCustomTimeDomainFilterPanel, BorderLayout.SOUTH);
+		addCustomTimeDomainFilterPanel.add(getAddCustomTimeDomainFilterButton(), BorderLayout.EAST);
 
 		JPanel addFftFilterPanel = new JPanel(new BorderLayout(3, 3));
 		border = new CompoundBorder(
@@ -301,6 +312,13 @@ public class MontageFiltersPanel extends JPanel {
 		return addTimeDomainFilterButton;
 	}
 
+	public JButton getAddCustomTimeDomainFilterButton() {
+		if (addCustomTimeDomainFilterButton == null) {
+			addCustomTimeDomainFilterButton = new JButton(addCustomTimeDomainFilterAction);
+		}
+		return addCustomTimeDomainFilterButton;
+	}
+
 	public JButton getAddFFTFilterButton() {
 		if (addFFTFilterButton == null) {
 			addFFTFilterButton = new JButton(addFFTFilterAction);
@@ -364,7 +382,7 @@ public class MontageFiltersPanel extends JPanel {
 			getFilterExclusionTableModel().setMontage(montage);
 
 			if (montage != null) {
-				Collection<SampleFilterDefinition> predefinedFilters = montage.getSignalTypeConfigurer().getPredefinedFilters();
+				Collection<TimeDomainSampleFilter> predefinedFilters = predefinedTimeDomainSampleFilterPresetManager.getPredefinedFilters(getCurrentSamplingFrequency());
 				SampleFilterDefinition[] arr = new SampleFilterDefinition[predefinedFilters.size()];
 				predefinedFilters.toArray(arr);
 				DefaultComboBoxModel model = new DefaultComboBoxModel(arr);
@@ -426,10 +444,47 @@ public class MontageFiltersPanel extends JPanel {
 			}
 
 			int index = getTimeDomainFilterTypeComboBox().getSelectedIndex();
-			TimeDomainSampleFilter filter = (TimeDomainSampleFilter)montage.getSignalTypeConfigurer().getPredefinedFilterAt(index).duplicate();
+			TimeDomainSampleFilter filter = predefinedTimeDomainSampleFilterPresetManager.getPredefinedFilterAt(currentSamplingFrequency, index);
 			filter.setDescription(messageSource.getMessage("montageFilters.newTimeDomainFilter"));
 			filter.setSamplingFrequency(currentSamplingFrequency);
 			montage.addSampleFilter(filter);
+		}
+
+	}
+
+	protected class AddCustomTimeDomainFilterAction extends AbstractAction {
+
+		private static final long serialVersionUID = 1L;
+
+		public AddCustomTimeDomainFilterAction() {
+			super(messageSource.getMessage("montageFilters.addCustomTimeDomainFilter"));
+			putValue(AbstractAction.SHORT_DESCRIPTION, messageSource.getMessage("montageFilters.addCustomTimeDomainFilterToolTip"));
+			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/addcustomtimedomainfilter.png"));
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent ev) {
+
+			if (montage == null) {
+				return;
+			}
+
+			TimeDomainSampleFilter filter = predefinedTimeDomainSampleFilterPresetManager.getCustomFilterStartingPoint(getCurrentSamplingFrequency());
+
+			if (filter == null) {
+				filter = predefinedTimeDomainSampleFilterPresetManager.getCustomStartingPoint();
+			}
+
+			editTimeDomainSampleFilterDialog.setCurrentSamplingFrequency(currentSamplingFrequency);
+			boolean ok = editTimeDomainSampleFilterDialog.showDialog(filter, true);
+			if (!ok) {
+				return;
+			}
+
+			filter.setDescription(messageSource.getMessage("montageFilters.newTimeDomainFilter"));
+			filter.setSamplingFrequency(getCurrentSamplingFrequency());
+			montage.addSampleFilter(filter);
+
 		}
 
 	}

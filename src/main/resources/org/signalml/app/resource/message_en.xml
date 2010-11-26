@@ -797,7 +797,9 @@
 	<entry key="filterExclusionTable.allChannels">All channels</entry>
 
 	<entry key="montageFilters.addTimeDomainFilter">Add filter</entry>
+	<entry key="montageFilters.addCustomTimeDomainFilter">Add custom filter</entry>
 	<entry key="montageFilters.addTimeDomainFilterToolTip">Add selected time domain filter</entry>
+	<entry key="montageFilters.addCustomTimeDomainFilterToolTip">Add a custom-made time domain filter</entry>
 	<entry key="montageFilters.addFFTFilter">Add filter</entry>
 	<entry key="montageFilters.addFFTFilterToolTip">Add new filter</entry>
 	<entry key="montageFilters.editFilter">Edit filter</entry>

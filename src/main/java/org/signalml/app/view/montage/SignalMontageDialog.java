@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import org.signalml.app.config.preset.PredefinedTimeDomainSampleFilterPresetManager;
 
 import org.signalml.app.config.preset.FFTSampleFilterPresetManager;
 import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
@@ -63,9 +64,12 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 
 	private FFTSampleFilterPresetManager fftFilterPresetManager;
 	private TimeDomainSampleFilterPresetManager timeDomainSampleFilterPresetManager;
+	private PredefinedTimeDomainSampleFilterPresetManager predefinedTimeDomainSampleFilterPresetManager;
 
-	public SignalMontageDialog(MessageSourceAccessor messageSource, MontagePresetManager montagePresetManager, Window f, boolean isModal) {
+	public SignalMontageDialog(MessageSourceAccessor messageSource, MontagePresetManager montagePresetManager,
+		PredefinedTimeDomainSampleFilterPresetManager predefinedTimeDomainSampleFilterPresetManager, Window f, boolean isModal) {
 		super(messageSource, montagePresetManager, f, isModal);
+		this.predefinedTimeDomainSampleFilterPresetManager = predefinedTimeDomainSampleFilterPresetManager;
 	}
 
 	@Override
@@ -93,7 +97,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 
 		visualReferenceEditorPanel = new VisualReferenceEditorPanel(messageSource);
 
-		filtersPanel = new MontageFiltersPanel(messageSource);
+		filtersPanel = new MontageFiltersPanel(messageSource, predefinedTimeDomainSampleFilterPresetManager);
 		filtersPanel.setSeriousWarningDialog(getSeriousWarningDialog());
 		filtersPanel.setEditFFTSampleFilterDialog(getEditFFTSampleFilterDialog());
 		filtersPanel.setTimeDomainSampleFilterDialog(getEditTimeDomainSampleFilterDialog());

@@ -33,6 +33,7 @@ import org.signalml.app.config.ZoomSignalSettings;
 import org.signalml.app.config.preset.BookFilterPresetManager;
 import org.signalml.app.config.preset.FFTSampleFilterPresetManager;
 import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
+import org.signalml.app.config.preset.PredefinedTimeDomainSampleFilterPresetManager;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.config.preset.SignalExportPresetManager;
 import org.signalml.app.document.DefaultDocumentManager;
@@ -108,17 +109,11 @@ public class SvarogApplication {
 
 	private static Preferences preferences = null;
 	private static Locale locale = null;
-
 	private static MessageSourceAccessor messageSource = null;
-
 	protected static final Logger logger = Logger.getLogger(SvarogApplication.class);
-
 	public static final int INITIALIZATION_STEP_COUNT = 5;
-
 	private static File profileDir = null;
-
 	private static ApplicationConfiguration applicationConfig = null;
-
 	private static DefaultSignalMLCodecManager signalMLCodecManager = null;
 	private static DefaultDocumentManager documentManager = null;
 	private static DefaultMRUDRegistry mrudRegistry = null;
@@ -131,20 +126,14 @@ public class SvarogApplication {
 	private static SignalExportPresetManager signalExportPresetManager = null;
 	private static FFTSampleFilterPresetManager fftFilterPresetManager = null;
 	private static TimeDomainSampleFilterPresetManager timeDomainSampleFilterPresetManager = null;
-
+	private static PredefinedTimeDomainSampleFilterPresetManager predefinedTimeDomainSampleFilterPresetManager = null;
 	private static MP5ExecutorManager mp5ExecutorManager = null;
-
 	private static ViewerMainFrame viewerMainFrame = null;
-
 	private static XStream streamer = null;
-
 	private static SplashScreen splashScreen = null;
-
 	private static String startupDir = null;
-
 	// this needs to be a field to allow for invokeAndWait
 	private static GeneralConfiguration initialConfig = null;
-
 	private static boolean molTest = false;
 
 	/**
@@ -235,6 +224,7 @@ public class SvarogApplication {
 		if (!line.hasOption("nosplash")) {
 			try {
 				SwingUtilities.invokeAndWait(new Runnable() {
+
 					@Override
 					public void run() {
 						splashScreen = new SplashScreen(messageSource);
@@ -254,6 +244,7 @@ public class SvarogApplication {
 
 		try {
 			SwingUtilities.invokeAndWait(new Runnable() {
+
 				@Override
 				public void run() {
 					createMainFrame();
@@ -268,10 +259,11 @@ public class SvarogApplication {
 		}
 
 		logger.debug("Application successfully created - main window is showing and should be visible soon");
-		
+
 		PluginLoader.getInstance().loadPlugins();
 
 		SwingUtilities.invokeLater(new Runnable() {
+
 			@Override
 			public void run() {
 				viewerMainFrame.setVisible(true);
@@ -291,6 +283,7 @@ public class SvarogApplication {
 		if (locale == null) {
 			try {
 				SwingUtilities.invokeAndWait(new Runnable() {
+
 					@Override
 					public void run() {
 						locale = OptionPane.showLanguageOption();
@@ -319,6 +312,7 @@ public class SvarogApplication {
 		do {
 			try {
 				SwingUtilities.invokeAndWait(new Runnable() {
+
 					@Override
 					public void run() {
 						initialConfig = askForProfilePath(suggested);
@@ -335,15 +329,15 @@ public class SvarogApplication {
 			ok = setProfileDir(initialConfig, true);
 		} while (!ok);
 
-		preferences.putBoolean(PreferenceName.PROFILE_DEFAULT.toString(),initialConfig.isProfileDefault());
+		preferences.putBoolean(PreferenceName.PROFILE_DEFAULT.toString(), initialConfig.isProfileDefault());
 		if (initialConfig.isProfileDefault()) {
 			preferences.remove(PreferenceName.PROFILE_PATH.toString());
 		} else {
-			preferences.put(PreferenceName.PROFILE_PATH.toString(),initialConfig.getProfilePath());
+			preferences.put(PreferenceName.PROFILE_PATH.toString(), initialConfig.getProfilePath());
 		}
 
 		try {
-			initialConfig.writeToXML(initialConfig.getStandardFile(profileDir),streamer);
+			initialConfig.writeToXML(initialConfig.getStandardFile(profileDir), streamer);
 		} catch (IOException ex) {
 			logger.error("Failed to write configuration", ex);
 		}
@@ -381,7 +375,7 @@ public class SvarogApplication {
 
 		GeneralConfiguration config2 = new GeneralConfiguration();
 		try {
-			config2.readFromXML(config2.getStandardFile(profileDir),streamer);
+			config2.readFromXML(config2.getStandardFile(profileDir), streamer);
 		} catch (FileNotFoundException ex) {
 			logger.debug("Failed to read configuration - file not found, will have to reinitialize");
 			initializeFirstTime(config);
@@ -400,11 +394,11 @@ public class SvarogApplication {
 	private static void createMessageSource() {
 		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
 		messageSource.setCacheSeconds(-1);
-		messageSource.setBasenames(new String[] {
-		                                   "classpath:org/signalml/app/resource/message",
-		                                   "classpath:org/signalml/resource/mp5",
-		                                   "classpath:org/signalml/resource/wsmessage"
-		                           });
+		messageSource.setBasenames(new String[]{
+				"classpath:org/signalml/app/resource/message",
+				"classpath:org/signalml/resource/mp5",
+				"classpath:org/signalml/resource/wsmessage"
+			});
 
 		SvarogApplication.messageSource = new MessageSourceAccessor(messageSource, locale);
 		OptionPane.setMessageSource(SvarogApplication.messageSource);
@@ -450,7 +444,7 @@ public class SvarogApplication {
 		}
 
 		profileDir = file;
-		
+
 		PluginLoader.createInstance(profileDir);
 
 		return true;
@@ -469,7 +463,7 @@ public class SvarogApplication {
 			model = suggested;
 		}
 
-		boolean result = dialog.showDialog(model,0.5,0.2);
+		boolean result = dialog.showDialog(model, 0.5, 0.2);
 		if (!result) {
 			// we do not allow continuation if profile selection was cancelled
 			System.exit(1);
@@ -489,35 +483,33 @@ public class SvarogApplication {
 
 		streamer = XMLUtils.getDefaultStreamer();
 		Annotations.configureAliases(
-		        streamer,
-		        ApplicationConfiguration.class,
-		        ZoomSignalSettings.class,
-		        SignalFFTSettings.class,
-		        GeneralConfiguration.class,
-		        MainFrameConfiguration.class,
-		        SignalMLCodecConfiguration.class,
-		        SignalMLCodecDescriptor.class,
-		        MRUDConfiguration.class,
-		        MRUDEntry.class,
-		        SignalMLMRUDEntry.class,
-		        RawSignalMRUDEntry.class,
-		        RawSignalDescriptor.class,
-		        EegChannel.class,
-		        MethodPresetManager.class,
-		        MP5Parameters.class,
-		        MP5Data.class,
-		        MP5ApplicationData.class,
-		        EvokedPotentialParameters.class,
-		        ArtifactApplicationData.class,
-		        ArtifactData.class,
-		        ArtifactParameters.class,
-		        StagerParameters.class
-		);
+			streamer,
+			ApplicationConfiguration.class,
+			ZoomSignalSettings.class,
+			SignalFFTSettings.class,
+			GeneralConfiguration.class,
+			MainFrameConfiguration.class,
+			SignalMLCodecConfiguration.class,
+			SignalMLCodecDescriptor.class,
+			MRUDConfiguration.class,
+			MRUDEntry.class,
+			SignalMLMRUDEntry.class,
+			RawSignalMRUDEntry.class,
+			RawSignalDescriptor.class,
+			EegChannel.class,
+			MethodPresetManager.class,
+			MP5Parameters.class,
+			MP5Data.class,
+			MP5ApplicationData.class,
+			EvokedPotentialParameters.class,
+			ArtifactApplicationData.class,
+			ArtifactData.class,
+			ArtifactParameters.class,
+			StagerParameters.class);
 
 		streamer.setMode(XStream.NO_REFERENCES);
 
 	}
-
 
 	private static void createApplication() {
 
@@ -662,6 +654,8 @@ public class SvarogApplication {
 		} catch (Exception ex) {
 			logger.error("Failed to read time domain sample filter configuration - will use defaults", ex);
 		}
+
+		predefinedTimeDomainSampleFilterPresetManager = new PredefinedTimeDomainSampleFilterPresetManager();
 
 		splash(null, true);
 
@@ -852,6 +846,7 @@ public class SvarogApplication {
 		elementManager.setSignalExportPresetManager(signalExportPresetManager);
 		elementManager.setFftFilterPresetManager(fftFilterPresetManager);
 		elementManager.setTimeDomainSampleFilterPresetManager(timeDomainSampleFilterPresetManager);
+		elementManager.setPredefinedTimeDomainSampleFilterPresetManager(predefinedTimeDomainSampleFilterPresetManager);
 
 		elementManager.setMp5ExecutorManager(mp5ExecutorManager);
 		elementManager.setPreferences(preferences);
@@ -860,7 +855,7 @@ public class SvarogApplication {
 		viewerMainFrame = new ViewerMainFrame();
 		viewerMainFrame.setMessageSource(messageSource);
 		viewerMainFrame.setElementManager(elementManager);
-		
+
 		PluginAccessClass.getSharedInstance().setManager(elementManager);
 
 		splash(null, true);
@@ -892,7 +887,7 @@ public class SvarogApplication {
 								splashScreen = null;
 							}
 
-							ErrorsDialog errorsDialog = new ErrorsDialog(messageSource, null,true,"error.exception");
+							ErrorsDialog errorsDialog = new ErrorsDialog(messageSource, null, true, "error.exception");
 							ResolvableException ex = new ResolvableException(e);
 							errorsDialog.showDialog(ex, true);
 						} catch (Throwable ex1) {
@@ -901,13 +896,11 @@ public class SvarogApplication {
 							prevHandler.uncaughtException(t, e);
 						}
 					}
-
 				};
 
 				SwingUtilities.invokeLater(job);
 
 			}
-
 		});
 	}
 
@@ -977,7 +970,7 @@ public class SvarogApplication {
 		for (Method method : methods) {
 			descriptor = methodManager.getMethodData(method);
 			if (descriptor != null) {
-				presetManager =  descriptor.getPresetManager(methodManager, true);
+				presetManager = descriptor.getPresetManager(methodManager, true);
 				if (presetManager != null) {
 					try {
 						presetManager.writeToPersistence(null);
@@ -1015,5 +1008,4 @@ public class SvarogApplication {
 	public static String getStartupDir() {
 		return startupDir;
 	}
-
 }

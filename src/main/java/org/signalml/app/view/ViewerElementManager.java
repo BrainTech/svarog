@@ -65,6 +65,7 @@ import org.signalml.app.action.UnavailableMethodAction;
 import org.signalml.app.action.ViewModeAction;
 import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.config.ApplicationConfiguration;
+import org.signalml.app.config.preset.PredefinedTimeDomainSampleFilterPresetManager;
 import org.signalml.app.config.preset.BookFilterPresetManager;
 import org.signalml.app.config.preset.FFTSampleFilterPresetManager;
 import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
@@ -173,6 +174,7 @@ public class ViewerElementManager {
 	private SignalExportPresetManager signalExportPresetManager;
 	private FFTSampleFilterPresetManager fftFilterPresetManager;
 	private TimeDomainSampleFilterPresetManager timeDomainSampleFilterPresetManager;
+	private PredefinedTimeDomainSampleFilterPresetManager predefinedTimeDomainSampleFilterPresetManager;
 
 	private MP5ExecutorManager mp5ExecutorManager;
 	private Preferences preferences;
@@ -476,6 +478,14 @@ public class ViewerElementManager {
 
 	public void setTimeDomainSampleFilterPresetManager(TimeDomainSampleFilterPresetManager timeDomainSampleFilterPresetManager) {
 		this.timeDomainSampleFilterPresetManager = timeDomainSampleFilterPresetManager;
+	}
+
+	public PredefinedTimeDomainSampleFilterPresetManager getPredefinedTimeDomainSampleFilterPresetManager() {
+		return predefinedTimeDomainSampleFilterPresetManager;
+	}
+
+	public void setPredefinedTimeDomainSampleFilterPresetManager(PredefinedTimeDomainSampleFilterPresetManager predefinedTimeDomainSampleFilterPresetManager) {
+		this.predefinedTimeDomainSampleFilterPresetManager = predefinedTimeDomainSampleFilterPresetManager;
 	}
 
 	public MP5ExecutorManager getMp5ExecutorManager() {
@@ -1044,11 +1054,13 @@ public class ViewerElementManager {
 
 	public SignalMontageDialog getSignalMontageDialog() {
 		if (signalMontageDialog == null) {
-			signalMontageDialog = new SignalMontageDialog(messageSource, getMontagePresetManager(), getDialogParent(), true);
+			signalMontageDialog = new SignalMontageDialog(messageSource, getMontagePresetManager(),
+				getPredefinedTimeDomainSampleFilterPresetManager(), getDialogParent(), true);
 			signalMontageDialog.setFileChooser(getFileChooser());
 			signalMontageDialog.setApplicationConfig(getApplicationConfig());
 			signalMontageDialog.setFftFilterPresetManager(getFftFilterPresetManager());
 			signalMontageDialog.setTimeDomainSampleFilterPresetManager(getTimeDomainSampleFilterPresetManager());
+//			signalMontageDialog.setPredefinedTimeDomainSampleFilterPresetManager(getPredefinedTimeDomainSampleFilterPresetManager());
 		}
 		return signalMontageDialog;
 	}
