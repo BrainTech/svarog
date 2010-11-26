@@ -203,7 +203,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 					}
 
 					getPassbandEdgeFrequency1Spinner().getListeners(ChangeListener.class)[0].stateChanged(new ChangeEvent(getStopbandEdgeFrequency1Spinner()));
-					getStopbandEdgeFrequency1Spinner().getListeners(ChangeListener.class)[0].stateChanged(new ChangeEvent(getPassbandEdgeFrequency1Spinner()));
+					getStopbandEdgeFrequency1Spinner().getListeners(ChangeListener.class)[0].stateChanged(new ChangeEvent(getStopbandEdgeFrequency1Spinner()));
 					getPassbandEdgeFrequency2Spinner().getListeners(ChangeListener.class)[0].stateChanged(new ChangeEvent(getStopbandEdgeFrequency2Spinner()));
 					getStopbandEdgeFrequency2Spinner().getListeners(ChangeListener.class)[0].stateChanged(new ChangeEvent(getPassbandEdgeFrequency2Spinner()));
 
@@ -647,7 +647,10 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 		drawFrequencyResponse();
 
 		updateFrequencyAxis();
-		updateHighlights();
+		if (passbandEdgeFrequency1Spinner != null && passbandEdgeFrequency2Spinner != null && stopbandEdgeFrequency1Spinner != null
+				&& stopbandEdgeFrequency2Spinner != null) {
+			updateHighlights();
+		}
 	}
 
 	/**
@@ -659,6 +662,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 		FilterType filterType = (FilterType)getFilterTypeComboBox().getSelectedItem();
 		double lowerFrequency = 0;
 		double higherFrequency = 0;
+
 		if (filterType.isLowpass()) {
 			lowerFrequency = 0;
 			higherFrequency = ((Number) getPassbandEdgeFrequency1Spinner().getValue()).doubleValue();
@@ -730,8 +734,6 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 		getDescriptionTextField().setText(currentFilter.getDescription());
 
 		updateGraph();
-		updateHighlights();
-
 
 	}
 
