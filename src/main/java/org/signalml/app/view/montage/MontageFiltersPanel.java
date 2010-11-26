@@ -39,6 +39,7 @@ import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.SwingUtils;
 import org.signalml.app.view.TablePopupMenuProvider;
 import org.signalml.app.view.dialog.SeriousWarningDialog;
+import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.element.ResolvableComboBox;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
@@ -46,6 +47,8 @@ import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.montage.filter.SampleFilterType;
 import org.signalml.exception.SanityCheckException;
+import org.signalml.exception.ResolvableException;
+
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** MontageFiltersPanel
@@ -383,6 +386,12 @@ public class MontageFiltersPanel extends JPanel {
 
 			if (montage != null) {
 				List<SampleFilterDefinition> predefinedFilters = predefinedTimeDomainSampleFilterPresetManager.getPredefinedFilters(getCurrentSamplingFrequency());
+
+				if (predefinedFilters == null) {
+					ErrorsDialog.showImmediateExceptionDialog(this, new ResolvableException("error.noPredefinedFiltersForThisSamplingFrequency"));
+					return;
+				}
+
 				SampleFilterDefinition[] arr = new SampleFilterDefinition[predefinedFilters.size()];
 				predefinedFilters.toArray(arr);
 				DefaultComboBoxModel model = new DefaultComboBoxModel(arr);

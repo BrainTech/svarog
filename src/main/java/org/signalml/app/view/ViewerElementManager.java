@@ -1060,7 +1060,6 @@ public class ViewerElementManager {
 			signalMontageDialog.setApplicationConfig(getApplicationConfig());
 			signalMontageDialog.setFftFilterPresetManager(getFftFilterPresetManager());
 			signalMontageDialog.setTimeDomainSampleFilterPresetManager(getTimeDomainSampleFilterPresetManager());
-//			signalMontageDialog.setPredefinedTimeDomainSampleFilterPresetManager(getPredefinedTimeDomainSampleFilterPresetManager());
 		}
 		return signalMontageDialog;
 	}
