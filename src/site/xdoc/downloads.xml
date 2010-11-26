@@ -14,8 +14,11 @@
 
       <p>
 	Latest versions of Svarog are not available as compiled
-	packages. Please compile from the
-	<a href="http://escher.fuw.edu.pl/git/svarog">source</a>.
+	packages. Please compile from the source in the
+	<a href="http://escher.fuw.edu.pl/git/svarog">git repository</a>.
+	<a href="http://signalml.org/wiki/Compiling_Svarog">
+	  Instructions how to compile are on the wiki.
+	</a>
       </p>
       <p>
 	Previous stable versions of Svarog are available as packages
