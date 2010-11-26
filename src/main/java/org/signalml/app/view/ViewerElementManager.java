@@ -65,7 +65,7 @@ import org.signalml.app.action.UnavailableMethodAction;
 import org.signalml.app.action.ViewModeAction;
 import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.config.ApplicationConfiguration;
-import org.signalml.app.config.preset.PredefinedTimeDomainSampleFilterPresetManager;
+import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
 import org.signalml.app.config.preset.BookFilterPresetManager;
 import org.signalml.app.config.preset.FFTSampleFilterPresetManager;
 import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
@@ -174,7 +174,7 @@ public class ViewerElementManager {
 	private SignalExportPresetManager signalExportPresetManager;
 	private FFTSampleFilterPresetManager fftFilterPresetManager;
 	private TimeDomainSampleFilterPresetManager timeDomainSampleFilterPresetManager;
-	private PredefinedTimeDomainSampleFilterPresetManager predefinedTimeDomainSampleFilterPresetManager;
+	private PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainFiltersPresetManager;
 
 	private MP5ExecutorManager mp5ExecutorManager;
 	private Preferences preferences;
@@ -480,12 +480,12 @@ public class ViewerElementManager {
 		this.timeDomainSampleFilterPresetManager = timeDomainSampleFilterPresetManager;
 	}
 
-	public PredefinedTimeDomainSampleFilterPresetManager getPredefinedTimeDomainSampleFilterPresetManager() {
-		return predefinedTimeDomainSampleFilterPresetManager;
+	public PredefinedTimeDomainFiltersPresetManager getPredefinedTimeDomainFiltersPresetManager() {
+		return predefinedTimeDomainFiltersPresetManager;
 	}
 
-	public void setPredefinedTimeDomainSampleFilterPresetManager(PredefinedTimeDomainSampleFilterPresetManager predefinedTimeDomainSampleFilterPresetManager) {
-		this.predefinedTimeDomainSampleFilterPresetManager = predefinedTimeDomainSampleFilterPresetManager;
+	public void setPredefinedTimeDomainFiltersPresetManager(PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainFiltersPresetManager) {
+		this.predefinedTimeDomainFiltersPresetManager = predefinedTimeDomainFiltersPresetManager;
 	}
 
 	public MP5ExecutorManager getMp5ExecutorManager() {
@@ -1055,7 +1055,7 @@ public class ViewerElementManager {
 	public SignalMontageDialog getSignalMontageDialog() {
 		if (signalMontageDialog == null) {
 			signalMontageDialog = new SignalMontageDialog(messageSource, getMontagePresetManager(),
-				getPredefinedTimeDomainSampleFilterPresetManager(), getDialogParent(), true);
+				getPredefinedTimeDomainFiltersPresetManager(), getDialogParent(), true);
 			signalMontageDialog.setFileChooser(getFileChooser());
 			signalMontageDialog.setApplicationConfig(getApplicationConfig());
 			signalMontageDialog.setFftFilterPresetManager(getFftFilterPresetManager());

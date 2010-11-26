@@ -13,7 +13,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import java.util.Collection;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.DefaultComboBoxModel;
@@ -32,7 +32,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.config.preset.PredefinedTimeDomainSampleFilterPresetManager;
+import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
 import org.signalml.app.montage.MontageFilterExclusionTableModel;
 import org.signalml.app.montage.MontageFiltersTableModel;
 import org.signalml.app.util.IconUtils;
@@ -95,9 +95,9 @@ public class MontageFiltersPanel extends JPanel {
 	private JButton removeFilterButton;
 	private JButton clearFilterExclusionButton;
 
-	private PredefinedTimeDomainSampleFilterPresetManager predefinedTimeDomainSampleFilterPresetManager;
+	private PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainSampleFilterPresetManager;
 
-	public MontageFiltersPanel(MessageSourceAccessor messageSource, PredefinedTimeDomainSampleFilterPresetManager predefinedTimeDomainSampleFilterPresetManager) {
+	public MontageFiltersPanel(MessageSourceAccessor messageSource, PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainSampleFilterPresetManager) {
 		super();
 		this.messageSource = messageSource;
 		this.predefinedTimeDomainSampleFilterPresetManager = predefinedTimeDomainSampleFilterPresetManager;
@@ -382,7 +382,7 @@ public class MontageFiltersPanel extends JPanel {
 			getFilterExclusionTableModel().setMontage(montage);
 
 			if (montage != null) {
-				Collection<TimeDomainSampleFilter> predefinedFilters = predefinedTimeDomainSampleFilterPresetManager.getPredefinedFilters(getCurrentSamplingFrequency());
+				List<SampleFilterDefinition> predefinedFilters = predefinedTimeDomainSampleFilterPresetManager.getPredefinedFilters(getCurrentSamplingFrequency());
 				SampleFilterDefinition[] arr = new SampleFilterDefinition[predefinedFilters.size()];
 				predefinedFilters.toArray(arr);
 				DefaultComboBoxModel model = new DefaultComboBoxModel(arr);
