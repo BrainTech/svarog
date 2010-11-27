@@ -484,14 +484,15 @@ public class MontageFiltersPanel extends JPanel {
 				filter = predefinedTimeDomainSampleFilterPresetManager.getCustomStartingPoint();
 			}
 
+			filter.setDescription(messageSource.getMessage("montageFilters.newTimeDomainFilter"));
+			filter.setSamplingFrequency(getCurrentSamplingFrequency());
+
 			editTimeDomainSampleFilterDialog.setCurrentSamplingFrequency(currentSamplingFrequency);
 			boolean ok = editTimeDomainSampleFilterDialog.showDialog(filter, true);
 			if (!ok) {
 				return;
 			}
 
-			filter.setDescription(messageSource.getMessage("montageFilters.newTimeDomainFilter"));
-			filter.setSamplingFrequency(getCurrentSamplingFrequency());
 			montage.addSampleFilter(filter);
 
 		}

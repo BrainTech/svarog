@@ -24,7 +24,6 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 
 	private static final long serialVersionUID = 1L;
 
-	protected Object[] arguments;
 	private static final String[] EFFECT_CODES = new String[] {"timeDomainFilter.effect"};
 
 	private String name;
@@ -36,8 +35,6 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 	private double passbandRipple;
 	private double stopbandAttenuation;
 	private transient double samplingFrequency;
-
-	private transient String effectString;
 
 
 	/**
@@ -120,7 +117,7 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 
 	public String getEffectString() {
 
-		effectString = "(";
+		String effectString = "(";
 		if (filterType.isLowpass())
 			effectString += "0 - " + passbandEdgeFrequencies[0];
 		else if (filterType.isHighpass())
@@ -152,9 +149,7 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 
 	@Override
 	public Object[] getArguments() {
-		if (arguments == null)
-			arguments = new Object[] {filterType, getEffectString()};
-		return arguments;
+		return new Object[] {filterType, getEffectString()};
 	}
 
 	@Override
@@ -175,13 +170,7 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 	public TimeDomainSampleFilter duplicate() {
 
 		TimeDomainSampleFilter duplicate = new TimeDomainSampleFilter();
-
 		duplicate.copyFrom(this);
-		/*duplicate.aCoefficients = aCoefficients.clone();
-		duplicate.bCoefficients = bCoefficients.clone();
-		duplicate.messageCodes = messageCodes.clone();
-		duplicate.arguments = arguments.clone();
-		duplicate.setDescription(this.description);*/
 
 		return duplicate;
 

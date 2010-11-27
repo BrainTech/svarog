@@ -14,8 +14,8 @@ import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 
 /**
- * This class holds presets a list of predefined {@link PredefinedFiltersConfiguration}
- * for each sampling frequency.
+ * This class holds a list of {@link PredefinedFiltersConfiguration}
+ * which contains a set of predefined filters for each sampling frequency.
  *
  * @author Piotr Szachewicz
  */
@@ -62,7 +62,9 @@ public abstract class PredefinedFiltersPresetManager extends AbstractXMLConfigur
 
 	/**
 	 * Returns the filter which should be the starting point when designing
-	 * custom filter in the filter designer's window.
+	 * custom filter in the filter designer's window. Modifying this filter
+	 * does not affect the filter contained in this preset manager (this
+	 * method returns a copy of the filter).
 	 * @param samplingFrequency sampling frequency at which the filter will
 	 * be designed
 	 * @return the {@link TimeDomainSampleFilter filter} which should be
@@ -73,7 +75,7 @@ public abstract class PredefinedFiltersPresetManager extends AbstractXMLConfigur
 		PredefinedFiltersConfiguration p = findConfiguration(samplingFrequency);
 
 		if (p != null)
-			return p.getCustomFilterStartingPoint();
+			return p.getCustomFilterStartingPoint().duplicate();
 		return null;
 
 	}
@@ -82,14 +84,16 @@ public abstract class PredefinedFiltersPresetManager extends AbstractXMLConfigur
 	 * Returns a custom filter design starting point. This method should
 	 * be used only if method
 	 * {@link PredefinedTimeDomainSampleFilterPresetManager#getCustomFilterStartingPoint(double)}
-	 * does not return any filter.
+	 * does not return any filter. Modifying this filter
+	 * does not affect the filter contained in this preset manager (this
+	 * method returns a copy of the filter).
 	 * @return custom starting point which could be used while starting to
 	 * design a custom filter
 	 */
 	public SampleFilterDefinition getCustomStartingPoint() {
 
 		if (predefinedTimeDomainFilters.size() > 0) {
-			return predefinedTimeDomainFilters.get(0).getCustomFilterStartingPoint();
+			return predefinedTimeDomainFilters.get(0).getCustomFilterStartingPoint().duplicate();
 		}
 		return null;
 
@@ -114,6 +118,9 @@ public abstract class PredefinedFiltersPresetManager extends AbstractXMLConfigur
 	/**
 	 * Returns the predefined {@link TimeDomainSampleFilter filters} of
 	 * a specified index defined for the specified sampling frequency.
+	 * Modifying the filters returned by this method
+	 * does not affect the filters contained in this preset manager (this
+	 * method returns copies of the filters).
 	 * @param samplingFrequency sampling frequency for which the returned
 	 * filter should be designed
 	 * @param index the index of the filter to be returned
@@ -125,7 +132,7 @@ public abstract class PredefinedFiltersPresetManager extends AbstractXMLConfigur
 		PredefinedFiltersConfiguration p = findConfiguration(samplingFrequency);
 
 		if (p != null)
-			return (SampleFilterDefinition) p.getPredefinedFilters().get(index);
+			return ((SampleFilterDefinition) p.getPredefinedFilters().get(index)).duplicate();
 		return null;
 
 	}

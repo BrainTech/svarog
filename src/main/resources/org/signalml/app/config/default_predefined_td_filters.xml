@@ -5,11 +5,7 @@
       <samplingFrequency>128.0</samplingFrequency>
       <predefinedFilters>
         <timeDomainSampleFilter>
-          <arguments>
-            <org.signalml.domain.montage.filter.iirdesigner.FilterType>LOWPASS</org.signalml.domain.montage.filter.iirdesigner.FilterType>
-            <string>(0 - 20.0)</string>
-          </arguments>
-          <filterType reference="../arguments/org.signalml.domain.montage.filter.iirdesigner.FilterType"/>
+          <filterType>LOWPASS</filterType>
           <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
           <passbandEdgeFrequencies>
             <double>20.0</double>
@@ -24,11 +20,7 @@
         </timeDomainSampleFilter>
         <timeDomainSampleFilter>
           <description>New time domain filter</description>
-          <arguments>
-            <org.signalml.domain.montage.filter.iirdesigner.FilterType>HIGHPASS</org.signalml.domain.montage.filter.iirdesigner.FilterType>
-            <string>(6.0 - Fn)</string>
-          </arguments>
-          <filterType reference="../arguments/org.signalml.domain.montage.filter.iirdesigner.FilterType"/>
+          <filterType>HIGHPASS</filterType>
           <approximationFunctionType>CHEBYSHEV1</approximationFunctionType>
           <passbandEdgeFrequencies>
             <double>6.0</double>
@@ -43,7 +35,7 @@
         </timeDomainSampleFilter>
       </predefinedFilters>
       <customFilterStartingPoint class="timeDomainSampleFilter">
-        <filterType reference="../../predefinedFilters/timeDomainSampleFilter[2]/arguments/org.signalml.domain.montage.filter.iirdesigner.FilterType"/>
+        <filterType>HIGHPASS</filterType>
         <approximationFunctionType>CHEBYSHEV2</approximationFunctionType>
         <passbandEdgeFrequencies>
           <double>6.0</double>
@@ -61,14 +53,10 @@
       <samplingFrequency>256.0</samplingFrequency>
       <predefinedFilters>
         <timeDomainSampleFilter>
-          <arguments>
-            <org.signalml.domain.montage.filter.iirdesigner.FilterType>LOWPASS</org.signalml.domain.montage.filter.iirdesigner.FilterType>
-            <string>(0 - 20.0)</string>
-          </arguments>
-          <filterType reference="../arguments/org.signalml.domain.montage.filter.iirdesigner.FilterType"/>
+          <filterType>LOWPASS</filterType>
           <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
           <passbandEdgeFrequencies>
-            <double>10.0</double>
+            <double>20.0</double>
             <double>0.0</double>
           </passbandEdgeFrequencies>
           <stopbandEdgeFrequencies>
@@ -78,31 +66,12 @@
           <passbandRipple>5.0</passbandRipple>
           <stopbandAttenuation>20.0</stopbandAttenuation>
         </timeDomainSampleFilter>
-        <timeDomainSampleFilter>
-          <description>New time domain filter</description>
-          <arguments>
-            <org.signalml.domain.montage.filter.iirdesigner.FilterType>HIGHPASS</org.signalml.domain.montage.filter.iirdesigner.FilterType>
-            <string>(6.0 - Fn)</string>
-          </arguments>
-          <filterType reference="../arguments/org.signalml.domain.montage.filter.iirdesigner.FilterType"/>
-          <approximationFunctionType>CHEBYSHEV1</approximationFunctionType>
-          <passbandEdgeFrequencies>
-            <double>10.0</double>
-            <double>0.0</double>
-          </passbandEdgeFrequencies>
-          <stopbandEdgeFrequencies>
-            <double>3.0</double>
-            <double>0.0</double>
-          </stopbandEdgeFrequencies>
-          <passbandRipple>3.0</passbandRipple>
-          <stopbandAttenuation>40.0</stopbandAttenuation>
-        </timeDomainSampleFilter>
       </predefinedFilters>
       <customFilterStartingPoint class="timeDomainSampleFilter">
-        <filterType reference="../../predefinedFilters/timeDomainSampleFilter[2]/arguments/org.signalml.domain.montage.filter.iirdesigner.FilterType"/>
+        <filterType>HIGHPASS</filterType>
         <approximationFunctionType>CHEBYSHEV2</approximationFunctionType>
         <passbandEdgeFrequencies>
-          <double>10.0</double>
+          <double>7.0</double>
           <double>0.0</double>
         </passbandEdgeFrequencies>
         <stopbandEdgeFrequencies>
