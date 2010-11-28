@@ -16,10 +16,12 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.AbstractAction;
 
+import javax.swing.AbstractAction;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.JComponent;
@@ -57,6 +59,7 @@ import org.signalml.domain.montage.filter.iirdesigner.FilterType;
 import org.signalml.domain.montage.filter.iirdesigner.IIRDesigner;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.validation.Errors;
 
 /**
@@ -977,6 +980,17 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 		}
 		return frequencyResponseChartPanel;
+	}
+
+	@Override
+	protected URL getContextHelpURL() {
+		URL contextHelpURL = null;
+		try {
+			contextHelpURL = (new ClassPathResource("org/signalml/help/editTimeDomainSampleFilterDialog.html")).getURL();
+		} catch (IOException ex) {
+			logger.error("Failed to get help URL", ex);
+		}
+		return contextHelpURL;
 	}
 
 	/**
