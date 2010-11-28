@@ -37,7 +37,12 @@ import javax.swing.event.ChangeListener;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.LogarithmicAxis;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.title.TextTitle;
 import org.jfree.data.xy.DefaultXYDataset;
+import org.jfree.ui.HorizontalAlignment;
+import org.jfree.ui.RectangleEdge;
+import org.jfree.ui.RectangleInsets;
+import org.jfree.ui.VerticalAlignment;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.util.IconUtils;
@@ -53,7 +58,6 @@ import org.signalml.domain.montage.filter.iirdesigner.IIRDesigner;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
-
 
 /**
  * This class represents a dialog for {@link TimeDomainSampleFilter
@@ -866,6 +870,17 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 		getFrequencyResponsePlot().setDataset(dataset);
 
 		getGainAxis().setRange(-100, 0);
+
+		String subtitleText = messageSource.getMessage("editTimeDomainSampleFilter.graphSubtitle", new Object[] {coeffs.getFilterOrder()});
+
+		getFrequencyResponseChart().clearSubtitles();
+		getFrequencyResponseChart().addSubtitle(
+			new TextTitle(subtitleText,
+			getFrequencyResponseChart().getTitle().getFont(),
+			getFrequencyResponseChart().getTitle().getPaint(),
+			RectangleEdge.TOP,
+			HorizontalAlignment.RIGHT, VerticalAlignment.TOP,
+			new RectangleInsets(0, 0, 0, 9)));
 
 	}
 

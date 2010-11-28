@@ -848,6 +848,8 @@
 	<entry key="editTimeDomainSampleFilter.title">Edit time domain filter</entry>
 	<entry key="editTimeDomainSampleFilter.filterParametersTitle">Filter parameters</entry>
 
+	<entry key="editTimeDomainSampleFilter.graphSubtitle">filter order = {0}</entry>
+
 	<entry key="editTimeDomainSampleFilter.filterType">Filter type</entry>
 	<entry key="editTimeDomainSampleFilter.filterFamily">Filter family</entry>
 	<entry key="editTimeDomainSampleFilter.passbandEdgeFrequency1">Passband edge frequency 1 [Hz]</entry>
