@@ -39,13 +39,15 @@ import org.jfree.ui.RectangleInsets;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.dialog.AbstractPresetDialog;
+import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
-/** EditSampleFilterDialog
- *
+/**
+ * A class representing an abstract dialog for {@link TimeDomainSampleFilter}
+ * and {@link FFTSampleFilter} editing.
  *
  * @author Piotr Szachewicz
  */
@@ -53,23 +55,78 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Contains the sampling frequency of the currently edited signal.
+	 */
 	private float currentSamplingFrequency;
 
+	/**
+	 * A {@link JTextField} which can be used to edit the filter's description.
+	 */
 	private JTextField descriptionTextField;
 
+	/**
+	 * The value of the maximum frequency which should be shown on the
+	 * {@link EditSampleFilterDialog#frequencyResponsePlot}.
+	 */
 	protected double graphFrequencyMax;
+
+	/**
+	 * A {@link JSpinner} used to set the value of the
+	 * {@link EditSampleFilterDialog#graphFrequencyMax} field.
+	 */
 	protected JSpinner graphScaleSpinner;
+
+	/**
+	 * The filter's frequency response plot.
+	 */
 	protected XYPlot frequencyResponsePlot;
+
+	/**
+	 * A {@link JFreeChart} containing the filter's
+	 * {@link EditSampleFilterDialog#frequencyResponsePlot},
+	 * a plot title etc.
+	 */
 	protected JFreeChart frequencyResponseChart;
+
+	/**
+	 * A {@link FrequencyResponseChartPanel} containing the
+	 * {@link EditSampleFilterDialog#frequencyResponseChart} and allowing
+	 * to set highlights for selected frequency bands.
+	 */
 	protected FrequencyResponseChartPanel frequencyResponseChartPanel;
 
+	/**
+	 * The frequency axis for the {@link EditSampleFilterDialog#frequencyResponsePlot}.
+	 */
 	protected NumberAxis frequencyAxis;
+
+	/**
+	 * The gain axis for the {@link EditSampleFilterDialog#frequencyResponsePlot}.
+	 */
 	protected NumberAxis gainAxis;
 
+	/**
+	 * Constructor. Sets the message source, parent window, preset manager
+	 * for time domain filters and if this dialog blocks top-level windows.
+	 * @param messageSource message source to set
+	 * @param presetManager a {@link PresetManager} to manage the presets
+	 * configured in this window
+	 * @param w the parent window or null if there is no parent
+	 * @param isModal true if this dialog should block top-level windows,
+	 * false otherwise
+	 */
 	public EditSampleFilterDialog(MessageSourceAccessor messageSource, PresetManager presetManager, Window w, boolean isModal) {
 		super(messageSource, presetManager, w, isModal);
 	}
 
+	/**
+	 * Constructor. Sets the message source and a preset manager
+	 * for this window.
+	 * @param messageSource message source to set
+	 * @param presetManager a {@link PresetManager} to manage the presets
+	 * configured in this window
+	 */
 	public EditSampleFilterDialog(MessageSourceAccessor messageSource, PresetManager presetManager) {
 		super(messageSource, presetManager);
 	}
@@ -87,6 +144,12 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 	@Override
 	public abstract JComponent createInterface();
 
+	/**
+	 * Returns the {@link JPanel} containing a {@link JTextField} for setting
+	 * the description for the currently edited filter.
+	 * @return the {@link JPanel} with controls to edit the filter's
+	 * description
+	 */
 	public JPanel getDescriptionPanel() {
 
 		JPanel descriptionPanel = new JPanel(new BorderLayout());
@@ -102,6 +165,12 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 
 	}
 
+	/**
+	 * Returns the {@link JPanel} containing the filter's frequency response
+	 * plot and maximum graph frequency spinner.
+	 * @return the {@link JPanel} containing a fiter's frequency response
+	 * graph
+	 */
 	public JPanel getGraphPanel() {
 
 		JPanel graphSpinnerPanel = new JPanel();
@@ -127,6 +196,11 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 
 	}
 
+	/**
+	 * Returns the {@link JTextField} which is shown in this dialog and
+	 * can be used to edit the filter's description.
+	 * @return the {@link JTextField} to edit the filter's description
+	 */
 	public JTextField getDescriptionTextField() {
 
 		if (descriptionTextField == null) {
@@ -137,6 +211,10 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 
 	}
 
+	/**
+	 * Returns the frequency axis of the filter's frequency response plot.
+	 * @return the frequency axis of the filter's frequency response plot
+	 */
 	public NumberAxis getFrequencyAxis() {
 
 		if (frequencyAxis == null) {
@@ -150,8 +228,16 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 
 	}
 
+	/**
+	 * Returns the gain axis of the filter's frequency response plot.
+	 * @return the gain axis of the filter's frequency response plot
+	 */
 	public abstract NumberAxis getGainAxis();
 
+	/**
+	 * Returns the {@link XYPlot} showing the filter's frequency response.
+	 * @return the {@link XYPlot} showing the filter's frequency response
+	 */
 	public XYPlot getFrequencyResponsePlot() {
 
 		if (frequencyResponsePlot == null) {
@@ -165,6 +251,12 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 
 	}
 
+	/**
+	 * Returns the {@link JFreeChart} containing the filter's frequency
+	 * response {@link XYPlot}.
+	 * @return the {@link JFreeChart} containing the filter's frequency
+	 * response {@link XYPlot}
+	 */
 	public JFreeChart getFrequencyResponseChart() {
 
 		if (frequencyResponseChart == null) {
@@ -177,8 +269,20 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 
 	}
 
+	/**
+	 * Returns the {@link FrequencyResponseChartPanel} containing the
+	 * {@link FrequencyResponseChart}.
+	 * @return the {@link FrequencyResponseChartPanel} containing the
+	 * {@link FrequencyResponseChart}
+	 */
 	public abstract FrequencyResponseChartPanel getFrequencyResponseChartPanel();
 
+	/**
+	 * Returns the {@link JSpinner} which can be used to set the graph
+	 * maximum frequency shown.
+	 * @return the {@link JSpinner} which can be used to set the graph
+	 * maximum frequency shown
+	 */
 	public JSpinner getGraphScaleSpinner() {
 
 		if (graphScaleSpinner == null) {
@@ -192,18 +296,39 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 
 	}
 
+	/**
+	 * Returns the sampling frequency for which the filter is being designed.
+	 * @return the sampling frequency for the currently edited filter
+	 */
 	public float getCurrentSamplingFrequency() {
 		return currentSamplingFrequency;
 	}
 
+	/**
+	 * Sets the sampling frequency for which this filter will be designed.
+	 * @param currentSamplingFrequency the sampling frequency for the
+	 * currently edited filter
+	 */
 	public void setCurrentSamplingFrequency(float currentSamplingFrequency) {
 		this.currentSamplingFrequency = currentSamplingFrequency;
 	}
 
+	/**
+	 * Returns the maximum frequency shown on the filter's frequency
+	 * response plot.
+	 * @return the maximum frequency which is shown of the filter's frequency
+	 * response plot
+	 */
 	public double getGraphFrequencyMax() {
 		return graphFrequencyMax;
 	}
 
+	/**
+	 * Sets the maximum frequency shown on the filter's frequency
+	 * response plot.
+	 * @return the maximum frequency to be shown of the filter's frequency
+	 * response plot
+	 */
 	public void setGraphFrequencyMax(double graphFrequencyMax) {
 
 		if (this.graphFrequencyMax != graphFrequencyMax) {
@@ -216,6 +341,10 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 
 	}
 
+	/**
+	 * Redraws the frequency response plot for the current filter and
+	 * sets appropriate values on the frequency axis.
+	 */
 	protected abstract void updateGraph();
 
 	/**
@@ -269,6 +398,10 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 	@Override
 	public abstract boolean supportsModelClass(Class<?> clazz);
 
+	/**
+	 * A class representing a {@link ChangeListener} to be used to round
+	 * the values set in the {@link JSpinner JSpinners} used in this dialog.
+	 */
 	protected class SpinnerRoundingChangeListener implements ChangeListener {
 
 		protected boolean lock = false;
@@ -303,6 +436,11 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 
 	}
 
+	/**
+	 * A class representing a {@link ChartPanel} which is used to display
+	 * the filter's frequency response and highlight currently selected
+	 * frequency bands.
+	 */
 	protected abstract class FrequencyResponseChartPanel extends ChartPanel {
 
 		private static final long serialVersionUID = 1L;

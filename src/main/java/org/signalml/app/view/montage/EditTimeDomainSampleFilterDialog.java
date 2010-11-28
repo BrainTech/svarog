@@ -55,36 +55,118 @@ import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
 
-/** EditTimeDomainSampleFilterDialog
- *
+/**
+ * This class represents a dialog for {@link TimeDomainSampleFilter
+ * TimeDomainSampleFilters} editing.
  *
  * @author Piotr Szachewicz
  */
 public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
+	/**
+	 * A value of step size for passband and stop band edge frequency
+	 * spinners.
+	 */
 	private final double FREQUENCY_SPINNER_STEP_SIZE = 0.1;
+
+	/**
+	 * The value of step size for passband ripple and stopband attenuation
+	 * spinners.
+	 */
 	private final double DECIBELS_SPINNER_STEP_SIZE = 0.1;
 
+	/**
+	 * represents the currently edited filter
+	 */
 	private TimeDomainSampleFilter currentFilter;
 
+	/**
+	 * A panel containing controls allowing to change the filter's
+	 * parameters.
+	 */
 	private JPanel filterParametersPanel;
 
+	/**
+	 * A {@link ResolvableComboBox} to select filter's {@link FilterType} from.
+	 */
 	private ResolvableComboBox filterTypeComboBox;
+
+	/**
+	 * A {@link ResolvableComboBox} which can be used  to select filter's
+	 * {@link ApproximationFunctionType} from.
+	 */
 	private ResolvableComboBox filterFamilyComboBox;
+
+	/**
+	 * The spinner controlling the value of the first passband edge
+	 * frequency of the filter.
+	 */
 	private JSpinner passbandEdgeFrequency1Spinner;
+
+	/**
+	 * A {@link JSpinner} controlling the value of the second passband edge
+	 * frequency of the filter.
+	 */
 	private JSpinner passbandEdgeFrequency2Spinner;
+
+	/**
+	 * A {@link JSpinner} controlling the value of the first stopband edge
+	 * frequency of the filter.
+	 */
 	private JSpinner stopbandEdgeFrequency1Spinner;
+
+	/**
+	 * A spinner controlling the value of the second stopband edge
+	 * frequency of the filter.
+	 */
 	private JSpinner stopbandEdgeFrequency2Spinner;
+
+	/**
+	 * A {@link JSpinner} controlling the value of filter's maximum ripple
+	 * in the passband.
+	 */
 	private JSpinner passbandRippleSpinner;
+
+	/**
+	 * A {@link JSpinner} controlling the value of filter's minimum
+	 * attenuation in the stopband.
+	 */
 	private JSpinner stopbandAttenuationSpinner;
 
+	/**
+	 * An action called after pressing the
+	 * {@link EditTimeDomainSampleFilterDialog#drawFrequencyResponseButton}.
+	 */
 	private DrawFrequencyResponseAction drawFrequencyResponseAction;
+
+	/**
+	 * The button which can be used to draw the frequency response
+	 * for the parametrs set in the
+	 * {@link EditTimeDomainSampleFilterDialog#filterParametersPanel}.
+	 */
 	private JButton drawFrequencyResponseButton;
 
+	/**
+	 * Constructor. Sets the message source, parent window, preset manager
+	 * for time domain filters and if this dialog blocks top-level windows.
+	 * @param messageSource message source to set
+	 * @param presetManager a {@link PresetManager} to manage the presets
+	 * configured in this window
+	 * @param w the parent window or null if there is no parent
+	 * @param isModal true if this dialog should block top-level windows,
+	 * false otherwise
+	 */
 	public EditTimeDomainSampleFilterDialog(MessageSourceAccessor messageSource, PresetManager presetManager, Window w, boolean isModal) {
 		super(messageSource, presetManager, w, isModal);
 	}
 
+	/**
+	 * Constructor. Sets the message source and a preset manager
+	 * for this window.
+	 * @param messageSource message source to set
+	 * @param presetManager a {@link PresetManager} to manage the presets
+	 * configured in this window
+	 */
 	public EditTimeDomainSampleFilterDialog(MessageSourceAccessor messageSource, PresetManager presetManager) {
 		super(messageSource, presetManager);
 	}
@@ -176,6 +258,13 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 	}
 
+	/**
+	 * Returns the {@link ResolvableComboBox} which can be used to set
+	 * the type of the filter (i.e. whether the filter is low-pass, high-pass,
+	 * band-pass or band-stop).
+	 * @return a {@link ResolvableComboBox} used to set the type of this
+	 * filter
+	 */
 	public ResolvableComboBox getFilterTypeComboBox() {
 
 		if (filterTypeComboBox == null) {
@@ -217,6 +306,12 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 	}
 
+	/**
+	 * Returns the {@link ResolvableComboBox} which can be used to set the
+	 * filter family ({@link ApproximationFunctionType}).
+	 * @return the {@link ResolvableComboBox} which can be used to set the
+	 * filter family
+	 */
 	public ResolvableComboBox getFilterFamilyComboBox() {
 
 		if (filterFamilyComboBox == null) {
@@ -233,6 +328,12 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 	}
 
+	/**
+	 * Returns the {@link JPanel} containing controls allowing to set the
+	 * filter's parameters.
+	 * @return the {@link JPanel} used in this dialog, containing spinners
+	 * allowing to control the filter's parameters
+	 */
 	public JPanel getFilterParametersPanel() {
 
 		if (filterParametersPanel == null) {
@@ -331,6 +432,12 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 	}
 
+	/**
+	 * Returns the {@link JSpinner} allowing to set the first passband
+	 * edge frequency of this filter.
+	 * @return the {@link JSpinner} allowing to set the first passband
+	 * edge frequency of this filter
+	 */
 	public JSpinner getPassbandEdgeFrequency1Spinner() {
 
 		if (passbandEdgeFrequency1Spinner == null) {
@@ -399,6 +506,12 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 	}
 
+	/**
+	 * Returns the {@link JSpinner} allowing to set the second passband
+	 * edge frequency of this filter.
+	 * @return the {@link JSpinner} allowing to set the second passband
+	 * edge frequency of this filter
+	 */
 	public JSpinner getPassbandEdgeFrequency2Spinner() {
 
 		if (passbandEdgeFrequency2Spinner == null) {
@@ -465,6 +578,12 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 	}
 
+	/**
+	 * Returns the {@link JSpinner} allowing to set the first stopband
+	 * edge frequency of this filter.
+	 * @return the {@link JSpinner} allowing to set the first stopband
+	 * edge frequency of this filter
+	 */
 	public JSpinner getStopbandEdgeFrequency1Spinner() {
 
 		if (stopbandEdgeFrequency1Spinner == null) {
@@ -532,6 +651,12 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 	}
 
+	/**
+	 * Returns the {@link JSpinner} allowing to set the second stopband
+	 * edge frequency of this filter.
+	 * @return the {@link JSpinner} allowing to set the second stopband
+	 * edge frequency of this filter
+	 */
 	public JSpinner getStopbandEdgeFrequency2Spinner() {
 
 		if (stopbandEdgeFrequency2Spinner == null) {
@@ -597,6 +722,12 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 	}
 
+	/**
+	 * Returns the {@link JSpinner} used in this window to control the
+	 * maximum passband ripple for this filter.
+	 * @return the {@link JSpinner} for this window, which can be used
+	 * to control the passband ripple of this filter
+	 */
 	public JSpinner getPassbandRippleSpinner() {
 
 		if (passbandRippleSpinner == null) {
@@ -613,15 +744,12 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 	}
 
-	public JButton getDrawFrequencyResponseButton() {
-
-		if (drawFrequencyResponseButton == null) {
-			drawFrequencyResponseButton = new JButton(drawFrequencyResponseAction);
-		}
-		return drawFrequencyResponseButton;
-
-	}
-
+	/**
+	 * Returns the {@link JSpinner} used in this window to control the
+	 * maximum passband ripple for this filter.
+	 * @return the {@link JSpinner} for this window, which can be used
+	 * to control the passband ripple of this filter
+	 */
 	public JSpinner getStopbandAttenuationSpinner() {
 
 		if (stopbandAttenuationSpinner == null) {
@@ -638,6 +766,27 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 	}
 
+	/**
+	 * Returns the button which can be used to draw the frequency response
+	 * for the parametrs set in this dialog.
+	 * @return the button used to redraw the frequency response of this
+	 * filter
+	 */
+	public JButton getDrawFrequencyResponseButton() {
+
+		if (drawFrequencyResponseButton == null) {
+			drawFrequencyResponseButton = new JButton(drawFrequencyResponseAction);
+		}
+		return drawFrequencyResponseButton;
+
+	}
+
+	/**
+	 * Returns a {@link SpinnerNumberModel} which should be used for
+	 * passband and stopband edge frequency spinners.
+	 * @return a {@link SpinnerNumberModel} to be used with frequency
+	 * spinners
+	 */
 	protected SpinnerNumberModel createFrequencySpinnerNumberModel() {
 		return new SpinnerNumberModel(0.0, 0.0, getCurrentSamplingFrequency() / 2, FREQUENCY_SPINNER_STEP_SIZE);
 	}
@@ -687,7 +836,11 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 	}
 
-	public void drawFrequencyResponse() {
+	/**
+	 * Draw the frequency response of the
+	 * {@link EditTimeDomainSampleFilterDialog#currentFilter}.
+	 */
+	protected void drawFrequencyResponse() {
 
 		if (currentFilter == null)
 			return;
@@ -811,6 +964,10 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 		return frequencyResponseChartPanel;
 	}
 
+	/**
+	 * A {@link FrequencyResponseChartPanel} used to draw filter's frequency
+	 * response on it.
+	 */
 	protected class TimeDomainFilterFrequencyResponseChartPanel extends FrequencyResponseChartPanel {
 
 		public TimeDomainFilterFrequencyResponseChartPanel(JFreeChart chart) {
@@ -876,6 +1033,10 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 	}
 
+	/**
+	 * An action envoked when the user presses the
+	 * {@link EditTimeDomainSampleFilterDialog#drawFrequencyResponseButton}.
+	 */
 	protected class DrawFrequencyResponseAction extends AbstractAction {
 
 		public DrawFrequencyResponseAction() {

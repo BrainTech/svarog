@@ -25,6 +25,10 @@ import org.springframework.core.io.Resource;
 @XStreamAlias("predefinedFilters")
 public class PredefinedTimeDomainFiltersPresetManager extends PredefinedFiltersPresetManager {
 
+	/**
+	 * A path pointing a file at which the default predefined filters
+	 * configuration is stored.
+	 */
 	protected static final String DEFAULT_PREDEFINED_FILTERS_PATH = "org/signalml/app/config/default_predefined_td_filters.xml";
 
 	/**
@@ -41,7 +45,9 @@ public class PredefinedTimeDomainFiltersPresetManager extends PredefinedFiltersP
 
 	/**
 	 * Returns the filter which should be the starting point when designing
-	 * custom filter in the filter designer's window.
+	 * custom filter in the filter designer's window. Modifying this filter
+	 * does not affect the filter contained in this preset manager (this
+	 * method returns a copy of the filter).
 	 * @param samplingFrequency sampling frequency at which the filter will
 	 * be designed
 	 * @return the {@link TimeDomainSampleFilter filter} which should be
@@ -56,7 +62,9 @@ public class PredefinedTimeDomainFiltersPresetManager extends PredefinedFiltersP
 	 * Returns a custom filter design starting point. This method should
 	 * be used only if method
 	 * {@link PredefinedTimeDomainSampleFilterPresetManager#getCustomFilterStartingPoint(double)}
-	 * does not return any filter.
+	 * does not return any filter. Modifying this filter
+	 * does not affect the filter contained in this preset manager (this
+	 * method returns a copy of the filter).
 	 * @return custom starting point which could be used while starting to
 	 * design a custom filter
 	 */
@@ -68,6 +76,9 @@ public class PredefinedTimeDomainFiltersPresetManager extends PredefinedFiltersP
 	/**
 	 * Returns the predefined {@link TimeDomainSampleFilter filters} of
 	 * a specified index defined for the specified sampling frequency.
+	 * Modifying the filters returned by this method
+	 * does not affect the filters contained in this preset manager (this
+	 * method returns copies of the filters).
 	 * @param samplingFrequency sampling frequency for which the returned
 	 * filter should be designed
 	 * @param index the index of the filter to be returned

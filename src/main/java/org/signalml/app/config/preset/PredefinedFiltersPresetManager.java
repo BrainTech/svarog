@@ -21,6 +21,11 @@ import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
  */
 public abstract class PredefinedFiltersPresetManager extends AbstractXMLConfiguration {
 
+	/**
+	 * A list containing {@link PredefinedFiltersConfiguration} of
+	 * {@link TimeDomainSampleFilter time domain filters} for each
+	 * sampling frequency.
+	 */
 	private List<PredefinedFiltersConfiguration> predefinedTimeDomainFilters;
 
 	/**

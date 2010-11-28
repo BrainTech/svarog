@@ -106,6 +106,11 @@ public abstract class XMLUtils {
 		);
 	}
 
+	/**
+	 * Configures the given {@link XStream XStreamer} for {@link TimeDomainSampleFilter}
+	 * streaming.
+	 * @param streamer a streamer to be configured
+	 */
 	public static void configureStreamerForTimeDomainSampleFilter(XStream streamer) {
 		Annotations.configureAliases(
 				streamer,
@@ -114,6 +119,11 @@ public abstract class XMLUtils {
 		);
 	}
 
+	/**
+	 * Configures the given {@link XStream XStreamer} for
+	 * {@link PredefinedTimeDomainFiltersPresetManager}.
+	 * @param streamer a streamer to be configured
+	 */
 	public static void configureStreamerForPredefinedTimeDomainSampleFilter(XStream streamer) {
 		Annotations.configureAliases(
 				streamer,
