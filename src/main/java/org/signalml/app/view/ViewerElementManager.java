@@ -11,6 +11,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.prefs.Preferences;
 
+import javax.swing.Action;
 import javax.swing.Box;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
@@ -66,6 +67,7 @@ import org.signalml.app.action.ViewModeAction;
 import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
+import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.config.preset.BookFilterPresetManager;
 import org.signalml.app.config.preset.FFTSampleFilterPresetManager;
 import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
@@ -75,7 +77,6 @@ import org.signalml.app.document.DocumentDetector;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.DocumentManager;
 import org.signalml.app.document.MRUDRegistry;
-import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.iterate.IterationSetupDialog;
@@ -123,6 +124,7 @@ import org.signalml.app.view.signal.popup.SlavePlotSettingsPopupDialog;
 import org.signalml.app.view.tag.comparison.TagComparisonDialog;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.compilation.DynamicCompilationContext;
+import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.method.Method;
 import org.signalml.method.iterator.IterableMethod;
 import org.signalml.plugin.export.SignalMLException;
@@ -173,7 +175,17 @@ public class ViewerElementManager {
 	private BookFilterPresetManager bookFilterPresetManager;
 	private SignalExportPresetManager signalExportPresetManager;
 	private FFTSampleFilterPresetManager fftFilterPresetManager;
+
+	/**
+	 * A {@link PresetManager} managing the user-defined
+	 * {@link TimeDomainSampleFilter} presets.
+	 */
 	private TimeDomainSampleFilterPresetManager timeDomainSampleFilterPresetManager;
+
+	/**
+	 * A {@link PresetManager} managing the predefined
+	 * {@link TimeDomainSampleFilter TimeDomainSampleFilters}.
+	 */
 	private PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainFiltersPresetManager;
 
 	private MP5ExecutorManager mp5ExecutorManager;
@@ -251,7 +263,16 @@ public class ViewerElementManager {
 	private IterationSetupDialog iterationSetupDialog;
 	private ExportSignalDialog exportSignalDialog;
 	private EditFFTSampleFilterDialog editFFTSampleFilterDialog;
+
+	/**
+	 * A dialog allowing to edit the {@link TimeDomainSampleFilter} parameters.
+	 */
 	private EditTimeDomainSampleFilterDialog editTimeDomainSampleFilterDialog;
+
+	/**
+	 * A dialog shown when the user wants to start a recording of a monitor
+	 * signal. Recording target files can be set using this dialog.
+	 */
 	private StartMonitorRecordingDialog startMonitorRecordingDialog;
 
 	private MP5LocalExecutorDialog mp5LocalExecutorDialog;
@@ -299,7 +320,17 @@ public class ViewerElementManager {
 	private RemoveAllFinishedTasksAction removeAllFinishedTasksAction;
 	private RemoveAllAbortedTasksAction removeAllAbortedTasksAction;
 	private RemoveAllFailedTasksAction removeAllFailedTasksAction;
+
+	/**
+	 * Represents an {@link Action} invoked when the user wants to start
+	 * a monitor signal recording.
+	 */
 	private StartMonitorRecordingAction startMonitorRecordingAction;
+
+	/**
+	 * Represents an {@link Action} invoked when the user wants to stop
+	 * a monitor signal recording.
+	 */
 	private StopMonitorRecordingAction stopMonitorRecordingAction;
 
 	private ArrayList<AbstractSignalMLAction> runMethodActions;
@@ -314,7 +345,12 @@ public class ViewerElementManager {
 	private JMenu fileMenu;
 	private JMenu editMenu;
 	private JMenu viewMenu;
+
+	/**
+	 * A {@link JMenu} for operating on a monitor signal.
+	 */
 	private JMenu monitorMenu;
+
 	private JMenu toolsMenu;
 	private JMenu helpMenu;
 
@@ -472,18 +508,42 @@ public class ViewerElementManager {
 		this.fftFilterPresetManager = fftFilterPresetManager;
 	}
 
+	/**
+	 * Returns a {@link TimeDomainSampleFilterPresetManager} used by this
+	 * ViewerElementManager.
+	 * @return a {@link TimeDomainSampleFilterPresetManager} used by this
+	 * ViewerElementManager
+	 */
 	public TimeDomainSampleFilterPresetManager getTimeDomainSampleFilterPresetManager() {
 		return timeDomainSampleFilterPresetManager;
 	}
 
+	/**
+	 * Sets a {@link TimeDomainSampleFilterPresetManager} to be used by this
+	 * ViewerElementManager.
+	 * @param timeDomainSampleFilterPresetManager a TimeDomainSampleFilterPresetManager
+	 * to be used
+	 */
 	public void setTimeDomainSampleFilterPresetManager(TimeDomainSampleFilterPresetManager timeDomainSampleFilterPresetManager) {
 		this.timeDomainSampleFilterPresetManager = timeDomainSampleFilterPresetManager;
 	}
 
+	/**
+	 * Returns a {@link PredefinedTimeDomainFiltersPresetManager} used
+	 * by this ViewerElementManager.
+	 * @return a {@link PredefinedTimeDomainFiltersPresetManager} used
+	 * by this ViewerElementManager
+	 */
 	public PredefinedTimeDomainFiltersPresetManager getPredefinedTimeDomainFiltersPresetManager() {
 		return predefinedTimeDomainFiltersPresetManager;
 	}
 
+	/**
+	 * Sets a {@link PredefinedTimeDomainFiltersPresetManager} to be used
+	 * by this ViewerElementManager
+	 * @param predefinedTimeDomainFiltersPresetManager
+	 * a {@link PredefinedTimeDomainFiltersPresetManager} to be used
+	 */
 	public void setPredefinedTimeDomainFiltersPresetManager(PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainFiltersPresetManager) {
 		this.predefinedTimeDomainFiltersPresetManager = predefinedTimeDomainFiltersPresetManager;
 	}
@@ -665,6 +725,11 @@ public class ViewerElementManager {
 		return viewMenu;
 	}
 
+	/**
+	 * Returns the {@link JMenu} which holds the items responsible for
+	 * operating on monitors.
+	 * @return a {@link JMenu} for operating on monitor signals.
+	 */
 	public JMenu getMonitorMenu() {
 		if (monitorMenu == null) {
 			monitorMenu = new JMenu(messageSource.getMessage("menu.monitor"));
@@ -1152,6 +1217,11 @@ public class ViewerElementManager {
 		return editFFTSampleFilterDialog;
 	}
 
+	/**
+	 * Returns a {@link EditTimeDomainSampleFilterDialog} used by this
+	 * ViewerElementManager.
+	 * @return the {@link EditTimeDomainSampleFilterDialog} used
+	 */
 	public EditTimeDomainSampleFilterDialog getEditTimeDomainSampleFilterDialog() {
 		if (editTimeDomainSampleFilterDialog == null) {
 			editTimeDomainSampleFilterDialog = new EditTimeDomainSampleFilterDialog(messageSource, getTimeDomainSampleFilterPresetManager(), getDialogParent(), true);
@@ -1161,6 +1231,11 @@ public class ViewerElementManager {
 		return editTimeDomainSampleFilterDialog;
 	}
 
+	/**
+	 * Returns a {@link StartMonitorRecordingDialog} used by this
+	 * ViewerElementManager.
+	 * @return the {@link StartMonitorRecordingDialog} used
+	 */
 	public StartMonitorRecordingDialog getStartMonitorRecordingDialog() {
 		if (startMonitorRecordingDialog == null) {
 			startMonitorRecordingDialog = new StartMonitorRecordingDialog(messageSource, getDialogParent(), true);
@@ -1305,6 +1380,13 @@ public class ViewerElementManager {
 		return checkSignalAction;
         }
 
+	/**
+	 * Returns an {@link Action} responsible for starting a new monitor
+	 * recording (it shows a dialog which allows to select recording target
+	 * files and starts the recording).
+	 * @return an {@link Action} responsible for starting a new monitor
+	 * recording
+	 */
 	public StartMonitorRecordingAction getStartMonitorRecordingAction() {
 		if (startMonitorRecordingAction == null) {
 			startMonitorRecordingAction = new StartMonitorRecordingAction(messageSource, getActionFocusManager());
@@ -1313,6 +1395,11 @@ public class ViewerElementManager {
 		return startMonitorRecordingAction;
 	}
 
+	/**
+	 * Returns an {@link Action} responsible for stopping a monitor recording.
+	 * @return an {@link Action} responsible for stopping an  monitor
+	 * recording
+	 */
 	public StopMonitorRecordingAction getStopMonitorRecordingAction() {
 		if (stopMonitorRecordingAction == null)
 			stopMonitorRecordingAction = new StopMonitorRecordingAction(messageSource, getActionFocusManager());

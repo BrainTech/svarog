@@ -61,7 +61,7 @@ public class PredefinedTimeDomainFiltersPresetManager extends PredefinedFiltersP
 	/**
 	 * Returns a custom filter design starting point. This method should
 	 * be used only if method
-	 * {@link PredefinedTimeDomainSampleFilterPresetManager#getCustomFilterStartingPoint(double)}
+	 * {@link PredefinedTimeDomainFiltersPresetManager#getCustomFilterStartingPoint(double)}
 	 * does not return any filter. Modifying this filter
 	 * does not affect the filter contained in this preset manager (this
 	 * method returns a copy of the filter).
@@ -93,11 +93,11 @@ public class PredefinedTimeDomainFiltersPresetManager extends PredefinedFiltersP
 	/**
 	 * This method can be used in the future to support predefined filters
 	 * lists editing etc. For now - it always throws an {@link UnsupportedOperationException}.
-	 * @return
+	 * @return always throws an exception
 	 */
 	@Override
 	public String getStandardFilename() {
-		//TODO: this method should return
+		//TODO: complete this functionality or remove this code
 		throw new UnsupportedOperationException("This operation is not supported yet");
 	}
 

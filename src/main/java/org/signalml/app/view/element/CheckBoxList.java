@@ -75,13 +75,14 @@ class CheckBoxListCellRenderer extends JComponent implements ListCellRenderer {
 	}
 
 	/**
-	 * Return a component that has been configured to display the specified value.
+	 * Returns a component that has been configured to display the specified
+	 * value.
 	 * @param list the JList we're painting.
 	 * @param value the value returned by list.getModel().getElementAt(index).
 	 * @param index the cells index.
 	 * @param isSelected true if the specified cell was selected.
 	 * @param cellHasFocus true if the specified cell has the focus.
-	 * @return
+	 * @return a component for displaying the specified value
 	 */
 	@Override
 	public Component getListCellRendererComponent(JList list, Object value,

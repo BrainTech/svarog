@@ -99,6 +99,7 @@ import org.springframework.util.Log4jConfigurer;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.Annotations;
+import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 
 /** SvarogApplication
  *
@@ -125,8 +126,19 @@ public class SvarogApplication {
 	private static BookFilterPresetManager bookFilterPresetManager = null;
 	private static SignalExportPresetManager signalExportPresetManager = null;
 	private static FFTSampleFilterPresetManager fftFilterPresetManager = null;
+
+	/**
+	 * A {@link PresetManager} managing the user-defined
+	 * {@link TimeDomainSampleFilter} presets.
+	 */
 	private static TimeDomainSampleFilterPresetManager timeDomainSampleFilterPresetManager = null;
+
+	/**
+	 * A {@link PresetManager} managing the predefined
+	 * {@link TimeDomainSampleFilter TimeDomainSampleFilters}.
+	 */
 	private static PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainSampleFilterPresetManager = null;
+
 	private static MP5ExecutorManager mp5ExecutorManager = null;
 	private static ViewerMainFrame viewerMainFrame = null;
 	private static XStream streamer = null;

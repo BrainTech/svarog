@@ -19,12 +19,15 @@ import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
 import org.signalml.app.config.preset.FFTSampleFilterPresetManager;
 import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
 import org.signalml.app.config.preset.Preset;
+import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.model.MontageDescriptor;
 import org.signalml.app.model.SeriousWarningDescriptor;
 import org.signalml.app.montage.MontagePresetManager;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.dialog.AbstractPresetDialog;
+import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
+import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.signal.SignalType;
@@ -45,7 +48,16 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * This dialog is used when edititing
+	 * {@link FFTSampleFilter FFTSampleFilter's} parameters.
+	 */
 	private EditFFTSampleFilterDialog editFFTSampleFilterDialog;
+
+	/**
+	 * This dialog is used when editing {@link TimeDomainSampleFilter}
+	 * parameters.
+	 */
 	private EditTimeDomainSampleFilterDialog editTimeDomainSampleFilterDialog;
 
 	private MontageChannelsPanel channelsPanel;
@@ -63,7 +75,17 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	private URL contextHelpURL = null;
 
 	private FFTSampleFilterPresetManager fftFilterPresetManager;
+
+	/**
+	 * A {@link PresetManager} managing the user-defined
+	 * {@link TimeDomainSampleFilter} presets.
+	 */
 	private TimeDomainSampleFilterPresetManager timeDomainSampleFilterPresetManager;
+
+	/**
+	 * A {@link PresetManager} managing the predefined
+	 * {@link TimeDomainSampleFilter TimeDomainSampleFilters}.
+	 */
 	private PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainSampleFilterPresetManager;
 
 	public SignalMontageDialog(MessageSourceAccessor messageSource, MontagePresetManager montagePresetManager,
@@ -342,10 +364,21 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 		this.fftFilterPresetManager = fftFilterPresetManager;
 	}
 
+	/**
+	 * Returns the {@link TimeDomainSampleFilterPresetManager} used by this
+	 * SignalMontageDialog.
+	 * @return the {@link TimeDomainSampleFilterPresetManager} used
+	 */
 	public TimeDomainSampleFilterPresetManager getTimeDomainSampleFilterPresetManager() {
 		return timeDomainSampleFilterPresetManager;
 	}
 
+	/**
+	 * Sets a {@link TimeDomainSampleFilterPresetManager} to be used by this
+	 * SignalMontageDialog.
+	 * @param timeDomainSampleFilterPresetManager
+	 * the {@link TimeDomainSampleFilterPresetManager} to be used
+	 */
 	public void setTimeDomainSampleFilterPresetManager(TimeDomainSampleFilterPresetManager timeDomainSampleFilterPresetManager) {
 		this.timeDomainSampleFilterPresetManager = timeDomainSampleFilterPresetManager;
 	}
@@ -359,6 +392,11 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 		return editFFTSampleFilterDialog;
 	}
 
+	/**
+	 * Returns the {@link EditTimeDomainSampleFilterDialog} used by
+	 * this SignalMontageDialog.
+	 * @return the {@link EditTimeDomainSampleFilterDialog} used
+	 */
 	protected EditTimeDomainSampleFilterDialog getEditTimeDomainSampleFilterDialog() {
 		if (editTimeDomainSampleFilterDialog == null) {
 			editTimeDomainSampleFilterDialog = new EditTimeDomainSampleFilterDialog(messageSource, timeDomainSampleFilterPresetManager, this, true);

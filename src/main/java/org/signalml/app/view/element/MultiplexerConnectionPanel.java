@@ -84,7 +84,7 @@ public class MultiplexerConnectionPanel extends JPanel {
 	}
 
 	/**
-	 * This method initializes this
+	 * This method initializes components used in this panel.
 	 */
 	private void initialize() {
 

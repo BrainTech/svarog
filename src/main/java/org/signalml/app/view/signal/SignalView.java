@@ -245,8 +245,18 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	private CloseTagAction closeTagAction;
 	private SaveTagAction saveTagAction;
 	private SaveTagAsAction saveTagAsAction;
+
+	/**
+	 * An {@link Action} responsible for starting a monitor recording.
+	 */
 	private StartMonitorRecordingAction startMonitorRecordingAction;
+
+	/**
+	 * An {@link Action} responsible for stopping an ongoing monitor
+	 * recording.
+	 */
 	private StopMonitorRecordingAction stopMonitorRecordingAction;
+
 	private EditSignalParametersAction editSignalParametersAction;
 	private EditSignalMontageAction editSignalMontageAction;
 	private ApplyDefaultMontageAction applyDefaultMontageAction;
@@ -1231,6 +1241,13 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		return removeTagAction;
 	}
 
+	/**
+	 * Returns an {@link Action} responsible for starting a new monitor
+	 * recording (it shows a dialog which allows to select recording target
+	 * files and starts the recording).
+	 * @return an {@link Action} responsible for starting a new monitor
+	 * recording
+	 */
 	public StartMonitorRecordingAction getStartMonitorRecordingAction() {
 		if (startMonitorRecordingAction == null) {
 			startMonitorRecordingAction = new StartMonitorRecordingAction(messageSource, getActionFocusManager());
@@ -1239,6 +1256,11 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		return startMonitorRecordingAction;
 	}
 
+	/**
+	 * Returns an {@link Action} responsible for stopping a monitor recording.
+	 * @return an {@link Action} responsible for stopping an  monitor
+	 * recording
+	 */
 	public StopMonitorRecordingAction getStopMonitorRecordingAction() {
 		if (stopMonitorRecordingAction == null) {
 			stopMonitorRecordingAction = new StopMonitorRecordingAction(messageSource, getActionFocusManager());

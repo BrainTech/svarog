@@ -40,6 +40,7 @@ import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.dialog.AbstractPresetDialog;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
+import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -271,9 +272,9 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 
 	/**
 	 * Returns the {@link FrequencyResponseChartPanel} containing the
-	 * {@link FrequencyResponseChart}.
+	 * {@link EditSampleFilterDialog#frequencyResponseChart}.
 	 * @return the {@link FrequencyResponseChartPanel} containing the
-	 * {@link FrequencyResponseChart}
+	 * {@link EditSampleFilterDialog#frequencyResponseChart}
 	 */
 	public abstract FrequencyResponseChartPanel getFrequencyResponseChartPanel();
 
@@ -326,8 +327,8 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 	/**
 	 * Sets the maximum frequency shown on the filter's frequency
 	 * response plot.
-	 * @return the maximum frequency to be shown of the filter's frequency
-	 * response plot
+	 * @param graphFrequencyMax maximum frequency to be shown of the filter's
+	 * frequency response plot
 	 */
 	public void setGraphFrequencyMax(double graphFrequencyMax) {
 

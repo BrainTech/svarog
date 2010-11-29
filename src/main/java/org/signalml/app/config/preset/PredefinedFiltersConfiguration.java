@@ -7,6 +7,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.util.ArrayList;
 import java.util.List;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
+import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 
 /**
  * This class holds predefined filters for one given sampling frequency.

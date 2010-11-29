@@ -186,7 +186,8 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 	 * passband should begin and/or end. If the filter is a low-pass or a
 	 * high-pass filter, then only the first passbandband edge frequency
 	 * is valid.
-	 * @return an array containing passband edge frequencies (in Hz)
+	 * @param passbandEdgeFrequencies an array containing passband edge
+	 * frequencies (in Hz)
 	 */
 	public void setPassbandEdgeFrequencies(double[] passbandEdgeFrequencies) {
 		this.passbandEdgeFrequencies = passbandEdgeFrequencies.clone();

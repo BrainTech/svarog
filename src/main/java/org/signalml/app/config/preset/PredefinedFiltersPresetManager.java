@@ -13,6 +13,7 @@ import org.signalml.app.config.AbstractXMLConfiguration;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 
+
 /**
  * This class holds a list of {@link PredefinedFiltersConfiguration}
  * which contains a set of predefined filters for each sampling frequency.
@@ -29,12 +30,12 @@ public abstract class PredefinedFiltersPresetManager extends AbstractXMLConfigur
 	private List<PredefinedFiltersConfiguration> predefinedTimeDomainFilters;
 
 	/**
-	 * Finds a {@link PredefinedFilterConfiguration} for the given sampling
+	 * Finds a {@link PredefinedFiltersConfiguration} for the given sampling
 	 * frequency.
 	 * @param samplingFrequency sampling frequency for which the returned
-	 * {@link PredefinedFilterConfiguration} must operate.
-	 * @return a {@link PredefinedFilterConfiguration} for the given sampling
-	 * frequency. If no {@link PredefinedFilterConfiguration} exists for
+	 * {@link PredefinedFiltersConfiguration} must operate.
+	 * @return a {@link PredefinedFiltersConfiguration} for the given sampling
+	 * frequency. If no {@link PredefinedFiltersConfiguration} exists for
 	 * the given sampling frequency, null is returned.
 	 */
 	private PredefinedFiltersConfiguration findConfiguration(double samplingFrequency) {
@@ -88,11 +89,11 @@ public abstract class PredefinedFiltersPresetManager extends AbstractXMLConfigur
 	/**
 	 * Returns a custom filter design starting point. This method should
 	 * be used only if method
-	 * {@link PredefinedTimeDomainSampleFilterPresetManager#getCustomFilterStartingPoint(double)}
+	 * {@link PredefinedTimeDomainFiltersPresetManager#getCustomFilterStartingPoint(double)}
 	 * does not return any filter. Modifying this filter
 	 * does not affect the filter contained in this preset manager (this
 	 * method returns a copy of the filter).
-	 * @return custom starting point which could be used while starting to
+	 * @return a custom starting point which could be used while starting to
 	 * design a custom filter
 	 */
 	public SampleFilterDefinition getCustomStartingPoint() {
@@ -107,7 +108,6 @@ public abstract class PredefinedFiltersPresetManager extends AbstractXMLConfigur
 	/**
          * Returns the number of {@link TimeDomainSampleFilter filters} predefined
 	 * for the given sampling frequency.
-         *
          * @return the number of predefined filters
          */
 	public int getPredefinedFilterCount(double samplingFrequency) {
