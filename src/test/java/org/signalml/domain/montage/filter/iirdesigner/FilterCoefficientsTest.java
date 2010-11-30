@@ -25,7 +25,7 @@ public class FilterCoefficientsTest {
 		        new double[] {0.01875398, 0.0937699, 0.18753981, 0.18753981, 0.0937699, 0.01875398},
 		        new double[] {1.0, -1.13877891, 1.08854509, -0.46710982, 0.13151932, -0.0140483});
 
-		ComplexFrequencyResponse response = coeffs.getComplexFrequencyResponse(512);
+		TransferFunction response = coeffs.getComplexFrequencyResponse(512);
 
 		assertEquals(new Complex(1,0), response.getGain()[0], new Complex(1e-6, 1e-6));
 		assertEquals(new Complex(9.89651405e-01, -1.43492499e-01), response.getGain()[10], new Complex(1e-6, 1e-6));

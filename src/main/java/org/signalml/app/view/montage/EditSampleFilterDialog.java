@@ -193,6 +193,7 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 		graphPanel.setBorder(border);
 
 		graphPanel.add((getFilterGraphsPanel()));
+
 		graphPanel.add(graphSpinnerPanel, BorderLayout.SOUTH);
 
 		return graphPanel;

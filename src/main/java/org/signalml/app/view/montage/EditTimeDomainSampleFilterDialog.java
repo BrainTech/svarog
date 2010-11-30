@@ -60,6 +60,7 @@ import org.signalml.domain.montage.filter.iirdesigner.BadFilterParametersExcepti
 import org.signalml.domain.montage.filter.iirdesigner.FilterCoefficients;
 import org.signalml.domain.montage.filter.iirdesigner.FilterFrequencyResponse;
 import org.signalml.domain.montage.filter.iirdesigner.FilterOrderTooBigException;
+import org.signalml.domain.montage.filter.iirdesigner.FilterResponseCalculator;
 import org.signalml.domain.montage.filter.iirdesigner.FilterType;
 import org.signalml.domain.montage.filter.iirdesigner.IIRDesigner;
 import org.signalml.plugin.export.SignalMLException;
@@ -926,7 +927,8 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 		if (coeffs == null)
 			return;
 
-		FilterFrequencyResponse frequencyResponse = coeffs.getFrequencyResponse(512, getCurrentSamplingFrequency());
+		FilterResponseCalculator responseCalculator = new FilterResponseCalculator(512, getCurrentSamplingFrequency(), coeffs);
+		FilterFrequencyResponse frequencyResponse = responseCalculator.getFrequencyResponse();
 
 		double[] frequencies = frequencyResponse.getFrequencies();
 		double[] coefficients = frequencyResponse.getValues();
@@ -948,7 +950,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 			HorizontalAlignment.RIGHT, VerticalAlignment.TOP,
 			new RectangleInsets(0, 0, 0, 9)));
 
-		FilterFrequencyResponse groupDelayResponse = coeffs.getPhaseResponse(512, getCurrentSamplingFrequency());
+		FilterFrequencyResponse groupDelayResponse = responseCalculator.getPhaseResponse();
 		frequencies = groupDelayResponse.getFrequencies();
 		coefficients = groupDelayResponse.getValues();
 		DefaultXYDataset phaseDataset = new DefaultXYDataset();
