@@ -7,7 +7,7 @@ package org.signalml.domain.montage.filter.iirdesigner;
 /**
  * This class holds a representation of a filter frequency response. It contains
  * two arrays - one holding frequencies at which the response was calculated,
- * the other holds the frequency response.
+ * the other holds the frequency response (gain or phase response).
  *
  * @author Piotr Szachewicz
  */
@@ -21,7 +21,7 @@ public class FilterFrequencyResponse {
 	/**
 	 * an array containing the calculated frequency response
 	 */
-	protected double[] gain;
+	protected double[] values;
 
 	/**
 	 * Constructor. Creates an empty {@link FilterFrequencyResponse} which can
@@ -32,7 +32,7 @@ public class FilterFrequencyResponse {
 	 */
 	FilterFrequencyResponse(int numberOfPoints) {
 		frequencies = new double[numberOfPoints];
-		gain = new double[numberOfPoints];
+		values = new double[numberOfPoints];
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class FilterFrequencyResponse {
 	 */
 	public void setValue(int i, double frequency, double value) {
 		frequencies[i] = frequency;
-		gain[i] = value;
+		values[i] = value;
 	}
 
 	/**
@@ -62,10 +62,10 @@ public class FilterFrequencyResponse {
 	 * Sets the value of the specified element in the gain arrray.
 	 *
 	 * @param i the index of the element to change
-	 * @param newGain the new value of gain
+	 * @param newValues the new value of gain
 	 */
-	public void setGain(int i, double newGain) {
-		gain[i] = newGain;
+	public void setValues(int i, double newValues) {
+		values[i] = newValues;
 	}
 
 	/**
@@ -94,8 +94,8 @@ public class FilterFrequencyResponse {
 	 *
 	 * @return the frequency response
 	 */
-	public double[] getGain() {
-		return gain;
+	public double[] getValues() {
+		return values;
 	}
 
 }

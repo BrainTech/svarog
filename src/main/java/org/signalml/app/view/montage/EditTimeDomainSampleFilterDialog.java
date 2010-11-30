@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentAdapter;
@@ -35,10 +36,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import org.jfree.chart.ChartPanel;
 
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.LogarithmicAxis;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.NumberTickUnit;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.data.xy.DefaultXYDataset;
 import org.jfree.ui.HorizontalAlignment;
@@ -139,6 +144,11 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	 * attenuation in the stopband.
 	 */
 	private JSpinner stopbandAttenuationSpinner;
+
+	private NumberAxis groupDelayAxis;
+	private XYPlot groupDelayPlot;
+	private JFreeChart groupDelayChart;
+	private ChartPanel groupDelayChartPanel;
 
 	/**
 	 * An action called after pressing the
@@ -254,6 +264,18 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	}
 
 	@Override
+	public JPanel getFilterGraphsPanel() {
+
+		if (filterGraphsPanel == null) {
+			filterGraphsPanel = new JPanel(new GridLayout(2, 1, 5, 5));
+			filterGraphsPanel.add(getFrequencyResponseChartPanel());
+			filterGraphsPanel.add(getGroupDelayChartPanel());
+		}
+		return filterGraphsPanel;
+
+	}
+
+	@Override
 	public NumberAxis getGainAxis() {
 
 		if (gainAxis == null) {
@@ -264,6 +286,48 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 		return gainAxis;
 
 	}
+
+	public JFreeChart getGroupDelayChart() {
+
+		if (groupDelayChart == null) {
+			groupDelayChart = new JFreeChart("Filter phase delay [degrees]", new Font(Font.DIALOG, Font.PLAIN, 12), getGroupDelayPlot(), false);
+			groupDelayChart.setBorderVisible(true);
+			groupDelayChart.setBackgroundPaint(Color.WHITE);
+			groupDelayChart.setPadding(new RectangleInsets(5, 5, 5, 5));
+		}
+		return groupDelayChart;
+	}
+
+
+
+	/**
+	 * Returns the {@link XYPlot} showing the filter's group delay.
+	 * @return the {@link XYPlot} showing the filter's group delay
+	 */
+	public XYPlot getGroupDelayPlot() {
+
+		if (groupDelayPlot == null) {
+
+			XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer(true, false);
+
+			groupDelayPlot = new XYPlot(null, getFrequencyAxis(), getGroupDelayAxis(), renderer);
+
+		}
+		return groupDelayPlot;
+
+	}
+
+	public NumberAxis getGroupDelayAxis() {
+
+		if (groupDelayAxis == null) {
+			groupDelayAxis = new NumberAxis("");
+			groupDelayAxis.setAutoRange(false);
+		}
+		return groupDelayAxis;
+
+	}
+
+
 
 	/**
 	 * Returns the {@link ResolvableComboBox} which can be used to set
@@ -344,7 +408,6 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	public JPanel getFilterParametersPanel() {
 
 		if (filterParametersPanel == null) {
-
 			filterParametersPanel = new JPanel(null);
 
 			filterParametersPanel.setBorder(new EmptyBorder(3, 3, 3, 3));
@@ -866,7 +929,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 		FilterFrequencyResponse frequencyResponse = coeffs.getFrequencyResponse(512, getCurrentSamplingFrequency());
 
 		double[] frequencies = frequencyResponse.getFrequencies();
-		double[] coefficients = frequencyResponse.getGain();
+		double[] coefficients = frequencyResponse.getValues();
 
 		DefaultXYDataset dataset = new DefaultXYDataset();
 		dataset.addSeries("data", new double[][] {frequencies, coefficients});
@@ -884,6 +947,15 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 			RectangleEdge.TOP,
 			HorizontalAlignment.RIGHT, VerticalAlignment.TOP,
 			new RectangleInsets(0, 0, 0, 9)));
+
+		FilterFrequencyResponse groupDelayResponse = coeffs.getPhaseResponse(512, getCurrentSamplingFrequency());
+		frequencies = groupDelayResponse.getFrequencies();
+		coefficients = groupDelayResponse.getValues();
+		DefaultXYDataset phaseDataset = new DefaultXYDataset();
+		phaseDataset.addSeries("data", new double[][] {frequencies, coefficients});
+		getGroupDelayPlot().setDataset(phaseDataset);
+		getGroupDelayAxis().setRange(-90, 90);
+		getGroupDelayAxis().setTickUnit(new NumberTickUnit(45));
 
 	}
 
@@ -980,6 +1052,17 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 		}
 		return frequencyResponseChartPanel;
+	}
+
+	public ChartPanel getGroupDelayChartPanel() {
+
+		if (groupDelayChartPanel == null) {
+			groupDelayChartPanel = new ChartPanel(getGroupDelayChart());
+			groupDelayChartPanel.setBackground(Color.WHITE);
+			groupDelayChartPanel.setPreferredSize(new Dimension(500, 150));
+		}
+		return groupDelayChartPanel;
+
 	}
 
 	@Override

@@ -78,6 +78,8 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 	 */
 	protected JSpinner graphScaleSpinner;
 
+	protected JPanel filterGraphsPanel;
+
 	/**
 	 * The filter's frequency response plot.
 	 */
@@ -190,7 +192,7 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 		);
 		graphPanel.setBorder(border);
 
-		graphPanel.add(getFrequencyResponseChartPanel(), BorderLayout.CENTER);
+		graphPanel.add((getFilterGraphsPanel()));
 		graphPanel.add(graphSpinnerPanel, BorderLayout.SOUTH);
 
 		return graphPanel;
@@ -209,6 +211,16 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 			descriptionTextField.setPreferredSize(new Dimension(200, 25));
 		}
 		return descriptionTextField;
+
+	}
+
+	public JPanel getFilterGraphsPanel() {
+
+		if (filterGraphsPanel == null) {
+			filterGraphsPanel = new JPanel();
+			filterGraphsPanel.add(getFrequencyResponseChartPanel());
+		}
+		return filterGraphsPanel;
 
 	}
 
