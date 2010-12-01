@@ -49,7 +49,7 @@ public class FilterResponseCalculator {
 
 	}
 
-	public FilterFrequencyResponse getPhaseResponseInDegrees() {
+	public FilterFrequencyResponse getPhaseShiftInDegrees() {
 
 		FilterFrequencyResponse frequencyResponse = new FilterFrequencyResponse(numberOfPoints);
 
@@ -67,18 +67,48 @@ public class FilterResponseCalculator {
 
 	}
 
-	public FilterFrequencyResponse getGroupDelayResponse() {
+	public FilterFrequencyResponse getPhaseShiftInMilliseconds() {
 
-		FilterFrequencyResponse frequencyResponse = new FilterFrequencyResponse(numberOfPoints);
+		FilterFrequencyResponse phaseShift = this.getPhaseShiftInDegrees();
+		double[] values = phaseShift.getValues();
+		double period;
 
-		frequencyResponse.setFrequencies(frequencies);
-
-		frequencyResponse.setValues(SpecialMath.calculateDerivative(frequencies, getPhaseResponseInDegrees().getValues()));
-
-		for (int i = 0; i < frequencyResponse.getSize(); i++) {
-			frequencyResponse.setValue(i, -1 * frequencyResponse.getValue(i));
+		for (int i = 0; i < values.length; i++) {
+			period = 1 / frequencies[i];
+			values[i] = period * values[i] / 360.0;
+			values[i] = 1000 * values[i]; //convert from seconds to milliseconds
 		}
 
-		return frequencyResponse;
+		phaseShift.setValues(values);
+		return phaseShift;
+
+	}
+
+	public FilterFrequencyResponse getGroupDelayResponse() {
+
+		FilterFrequencyResponse groupDelay = getPhaseShiftInMilliseconds();
+		return groupDelay;
+
+		//groupDelay
+
+		/*FilterFrequencyResponse groupDelay = getPhaseShiftInDegrees();
+
+		double[] values = groupDelay.getValues();
+		int n = values.length;
+
+		values[0] = -1 * ((values[1] - values[0])
+			/ (frequencies[1] - frequencies[0])) / 360;
+
+		for (int i = 1; i < n - 1; i++) {
+			values[i] = -1 * (((values[i] - values[i - 1]) / (frequencies[i] - frequencies[i - 1]))
+				+ ((values[i + 1] - values[i]) / (frequencies[i + 1] - frequencies[i]))) / (2 * 360);
+		}
+
+		values[n - 1] = -1 * ((values[n - 1] - values[n - 2])
+			/ (frequencies[n - 1] - frequencies[n - 2])) / 360;
+
+		groupDelay.setValues(values);
+		return groupDelay;*/
+
 	}
 }

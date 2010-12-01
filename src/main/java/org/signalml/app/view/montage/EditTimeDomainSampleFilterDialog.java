@@ -951,7 +951,10 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 			new RectangleInsets(0, 0, 0, 9)));
 
 		//FilterFrequencyResponse groupDelayResponse = responseCalculator.getGroupDelayResponse();//.getPhaseResponse();
-		FilterFrequencyResponse groupDelayResponse = responseCalculator.getPhaseResponseInDegrees();
+		FilterFrequencyResponse groupDelayResponse = responseCalculator.getPhaseShiftInDegrees();
+		//FilterFrequencyResponse groupDelayResponse = responseCalculator.getPhaseShiftInMilliseconds();
+		
+		//FilterFrequencyResponse groupDelayResponse = responseCalculator.getGroupDelayResponse();
 		frequencies = groupDelayResponse.getFrequencies();
 		coefficients = groupDelayResponse.getValues();
 		DefaultXYDataset phaseDataset = new DefaultXYDataset();

@@ -415,7 +415,6 @@ class SpecialMath {
 		else if (angle > 0)
 			angle -= 360;
 		return angle;
-
 	}
 
 	public static double[] unwrap(double[] angles) {
