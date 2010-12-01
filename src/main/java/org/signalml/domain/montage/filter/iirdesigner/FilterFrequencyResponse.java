@@ -5,9 +5,10 @@
 package org.signalml.domain.montage.filter.iirdesigner;
 
 /**
- * This class holds a representation of a filter frequency response. It contains
+ * This class can hold a representation of various filter responses
+ * (like frequency response, phase shift, group delay). It contains
  * two arrays - one holding frequencies at which the response was calculated,
- * the other holds the frequency response (gain or phase response).
+ * the other holds the response (gain or phase response).
  *
  * @author Piotr Szachewicz
  */
@@ -58,14 +59,29 @@ public class FilterFrequencyResponse {
 		frequencies[i] = frequency;
 	}
 
+	public void setFrequencies(double[] frequencies) {
+		/*the number of points was set in the constructor
+		 * should not change.
+		 */
+		assert(frequencies.length == this.frequencies.length);
+
+		this.frequencies = frequencies;
+	}
+
 	/**
 	 * Sets the value of the specified element in the gain arrray.
 	 *
 	 * @param i the index of the element to change
-	 * @param newValues the new value of gain
+	 * @param newValue the new value of gain
 	 */
-	public void setValues(int i, double newValues) {
-		values[i] = newValues;
+	public void setValue(int i, double newValue) {
+		values[i] = newValue;
+	}
+
+	public void setValues(double[] values) {
+		assert(frequencies.length == values.length);
+
+		this.values = values;
 	}
 
 	/**
@@ -87,6 +103,10 @@ public class FilterFrequencyResponse {
 	 */
 	public double[] getFrequencies() {
 		return frequencies;
+	}
+
+	public double getValue(int i) {
+		return values[i];
 	}
 
 	/**

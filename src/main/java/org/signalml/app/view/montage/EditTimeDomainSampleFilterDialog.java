@@ -928,7 +928,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 			return;
 
 		FilterResponseCalculator responseCalculator = new FilterResponseCalculator(512, getCurrentSamplingFrequency(), coeffs);
-		FilterFrequencyResponse frequencyResponse = responseCalculator.getFrequencyResponse();
+		FilterFrequencyResponse frequencyResponse = responseCalculator.getMagnitudeResponse();
 
 		double[] frequencies = frequencyResponse.getFrequencies();
 		double[] coefficients = frequencyResponse.getValues();
@@ -950,14 +950,15 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 			HorizontalAlignment.RIGHT, VerticalAlignment.TOP,
 			new RectangleInsets(0, 0, 0, 9)));
 
-		FilterFrequencyResponse groupDelayResponse = responseCalculator.getPhaseResponse();
+		//FilterFrequencyResponse groupDelayResponse = responseCalculator.getGroupDelayResponse();//.getPhaseResponse();
+		FilterFrequencyResponse groupDelayResponse = responseCalculator.getPhaseResponseInDegrees();
 		frequencies = groupDelayResponse.getFrequencies();
 		coefficients = groupDelayResponse.getValues();
 		DefaultXYDataset phaseDataset = new DefaultXYDataset();
 		phaseDataset.addSeries("data", new double[][] {frequencies, coefficients});
 		getGroupDelayPlot().setDataset(phaseDataset);
-		getGroupDelayAxis().setRange(-90, 90);
-		getGroupDelayAxis().setTickUnit(new NumberTickUnit(45));
+		getGroupDelayAxis().setRange(-360, 360);
+		getGroupDelayAxis().setTickUnit(new NumberTickUnit(90));
 
 	}
 

@@ -395,4 +395,43 @@ class SpecialMath {
 
 	}
 
+	public static double[] calculateDerivative(double[] x, double[] y) {
+		assert(x.length == y.length);
+
+		double[] derivative = new double[x.length];
+
+		for (int i = 0; i < x.length - 1; i++)
+			derivative[i] = (y[i+1] - y[i]) / (x[i+1] - x[i]);
+
+		derivative[derivative.length - 1] = derivative[derivative.length - 2];
+
+		return derivative;
+	}
+
+	public static double complement(double angle) {
+
+		if (angle < 0)
+			angle += 360;
+		else if (angle > 0)
+			angle -= 360;
+		return angle;
+
+	}
+
+	public static double[] unwrap(double[] angles) {
+
+		double[] unwrapped = new double[angles.length];
+
+		unwrapped[0] = angles[0];
+
+		for (int i = 1; i < unwrapped.length; i++) {
+			if (Math.abs(angles[i] - unwrapped[i - 1]) > 180.0)
+				unwrapped[i] = complement(angles[i]);
+			else
+				unwrapped[i] = angles[i];
+		}
+		return unwrapped;
+
+	}
+
 }
