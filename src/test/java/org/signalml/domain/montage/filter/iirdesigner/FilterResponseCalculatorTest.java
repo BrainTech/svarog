@@ -14,6 +14,9 @@ import static org.signalml.domain.montage.filter.iirdesigner.IIRDesignerAssert.*
  */
 public class FilterResponseCalculatorTest {
 
+	/**
+	 * A test method for {@link FilterResponseCalculator#getGroupDelayResponse() }.
+	 */
 	@Test
 	public void testGetGroupDelayResponse() {
 

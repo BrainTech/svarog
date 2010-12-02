@@ -37,54 +37,6 @@ public class FilterFrequencyResponse {
 	}
 
 	/**
-	 * Sets the value of the specified elements in the frequency and
-	 * gain arrays.
-	 *
-	 * @param i the index of the element to change
-	 * @param frequency the new value of frequency to be put in the array
-	 * @param value the new value of gain to be put in the array
-	 */
-	public void setValue(int i, double frequency, double value) {
-		frequencies[i] = frequency;
-		values[i] = value;
-	}
-
-	/**
-	 * Sets the value of the specified element in the frequency array.
-	 *
-	 * @param i the index of the element to change
-	 * @param frequency the new value of frequency
-	 */
-	public void setFrequency(int i, double frequency) {
-		frequencies[i] = frequency;
-	}
-
-	public void setFrequencies(double[] frequencies) {
-		/*the number of points was set in the constructor
-		 * should not change.
-		 */
-		assert(frequencies.length == this.frequencies.length);
-
-		this.frequencies = frequencies;
-	}
-
-	/**
-	 * Sets the value of the specified element in the gain arrray.
-	 *
-	 * @param i the index of the element to change
-	 * @param newValue the new value of gain
-	 */
-	public void setValue(int i, double newValue) {
-		values[i] = newValue;
-	}
-
-	public void setValues(double[] values) {
-		assert(frequencies.length == values.length);
-
-		this.values = values;
-	}
-
-	/**
 	 * Returns how much points this frequency response can hold
 	 *
 	 * @return the number of points this frequency response can hold.
@@ -105,6 +57,38 @@ public class FilterFrequencyResponse {
 		return frequencies;
 	}
 
+	/**
+	 * Sets the value of the specified element in the frequency array.
+	 *
+	 * @param i the index of the element to change
+	 * @param frequency the new value of frequency
+	 */
+	public void setFrequency(int i, double frequency) {
+		frequencies[i] = frequency;
+	}
+
+	/**
+	 * Sets the frequencies for this frequency response. The new frequency
+	 * array size must be equal to the number of points given to the
+	 * constructor.
+	 * @param frequencies the new frequencies values for this frequency
+	 * response
+	 */
+	public void setFrequencies(double[] frequencies) {
+		/*the number of points was set in the constructor
+		 * should not change.
+		 */
+		assert(frequencies.length == this.frequencies.length);
+
+		this.frequencies = frequencies;
+	}
+
+	/**
+	 * Returns the value of the specified element in the frequency response
+	 * (values).
+	 * @param i the index of the element to be returned
+	 * @return the value in the frequency response having the given index
+	 */
 	public double getValue(int i) {
 		return values[i];
 	}
@@ -118,4 +102,38 @@ public class FilterFrequencyResponse {
 		return values;
 	}
 
+		/**
+	 * Sets the value of the specified element in the gain arrray.
+	 *
+	 * @param i the index of the element to change
+	 * @param newValue the new value of gain
+	 */
+	public void setValue(int i, double newValue) {
+		values[i] = newValue;
+	}
+
+	/**
+	 * Sets the values of gain.
+	 * @param values the values to which the gain should be set (new values
+	 * array size must be equal to the number of points given to the
+	 * constructor)
+	 */
+	public void setValues(double[] values) {
+		assert(frequencies.length == values.length);
+
+		this.values = values;
+	}
+
+	/**
+	 * Sets the value of the specified elements in the frequency and
+	 * gain arrays.
+	 *
+	 * @param i the index of the element to change
+	 * @param frequency the new value of frequency to be put in the array
+	 * @param value the new value of gain to be put in the array
+	 */
+	public void setValue(int i, double frequency, double value) {
+		frequencies[i] = frequency;
+		values[i] = value;
+	}
 }

@@ -395,19 +395,11 @@ class SpecialMath {
 
 	}
 
-	public static double[] calculateDerivative(double[] x, double[] y) {
-		assert(x.length == y.length);
-
-		double[] derivative = new double[x.length];
-
-		for (int i = 0; i < x.length - 1; i++)
-			derivative[i] = (y[i+1] - y[i]) / (x[i+1] - x[i]);
-
-		derivative[derivative.length - 1] = derivative[derivative.length - 2];
-
-		return derivative;
-	}
-
+	/**
+	 * Returns the given angle changed to a 360 degrees complement.
+	 * @param angle an angle to complement
+	 * @return the 360 degrees complement of the angle
+	 */
 	public static double complement(double angle) {
 
 		if (angle < 0)
@@ -417,6 +409,12 @@ class SpecialMath {
 		return angle;
 	}
 
+	/**
+	 * Unwraps angles by converting it to a 360 degrees complements
+	 * whenever the jumps between the values is larger than 180 degrees.
+	 * @param angles an array of angles to be unwrapped
+	 * @return the unwrapped copy of the angles
+	 */
 	public static double[] unwrap(double[] angles) {
 
 		double[] unwrapped = new double[angles.length];

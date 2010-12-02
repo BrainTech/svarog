@@ -1,4 +1,4 @@
-/* ConvolutionTest.java created 2010-12-02
+/* ArrayOperationsTest.java created 2010-12-02
  *
  */
 
@@ -15,6 +15,9 @@ import static org.signalml.domain.montage.filter.iirdesigner.IIRDesignerAssert.*
  */
 public class ArrayOperationsTest {
 
+	/**
+	 * A test method for {@link ArrayOperations#padWithZeros(double[], int) }.
+	 */
 	@Test
 	public void testPadWithZeros() {
 
@@ -27,6 +30,9 @@ public class ArrayOperationsTest {
 
 	}
 
+	/**
+	 * A test method for {@link ArrayOperations#convolve(double[], double[]) }.
+	 */
 	@Test
 	public void testConvolve() {
 
@@ -47,6 +53,9 @@ public class ArrayOperationsTest {
 
 	}
 
+	/**
+	 * A test method for {@link ArrayOperations#reverse(double[]) }.
+	 */
 	@Test
 	public void testReverse() {
 		double[] array = new double[] {1, 2, 3, 4, 5};
@@ -54,6 +63,9 @@ public class ArrayOperationsTest {
 		assertArrayEquals(ArrayOperations.reverse(array), new double[] {5, 4, 3, 2, 1}, 0.001);
 	}
 
+	/**
+	 * A test method for {@link ArrayOperations#trimArrayToSize(double[], int) }.
+	 */
 	@Test
 	public void testTrimArrayToSize() {
 

@@ -1,4 +1,4 @@
-/* ComplexFrequencyResponse.java created 2010-11-30
+/* TransferFunction.java created 2010-11-30
  *
  */
 
@@ -16,6 +16,10 @@ import flanagan.complex.ComplexPoly;
  */
 public class TransferFunction {
 
+	/**
+	 * The coefficients of the filter for which this transfer function
+	 * is calculated.
+	 */
 	protected FilterCoefficients filterCoefficients;
 
 	/**
@@ -29,7 +33,7 @@ public class TransferFunction {
 	protected Complex[] gain;
 
 	/**
-	 * Constructor. Creates an empty {@link ComplexFrequencyResponse} which can
+	 * Constructor. Creates an empty {@link TransferFunction} which can
 	 * contain specified number of points.
 	 *
 	 * @param numberOfPoints number of frequencies at which the frequency response
@@ -43,7 +47,7 @@ public class TransferFunction {
 	}
 
 	/**
-	 * Calculates the {@link ComplexFrequencyResponse complex frequency response}
+	 * Calculates the {@link TransferFunction complex frequency response}
 	 * for the parameters given to  to the constructor.
 	 */
 	protected void calculateTransferFunction() {

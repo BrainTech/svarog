@@ -12,12 +12,44 @@ import flanagan.math.FourierTransform;
  */
 public class FilterResponseCalculator {
 
+	/**
+	 * The number of points the filter responses calculated using
+	 * this FilterResponseCalculator would have.
+	 */
 	private int numberOfPoints;
+
+	/**
+	 * The sampling frequency for which the filter responses will be calculated.
+	 */
 	private double samplingFrequency;
+
+	/**
+	 * The coefficients of the filter for which the filter responses
+	 * are calculated.
+	 */
 	private FilterCoefficients filterCoefficients;
+
+	/**
+	 * The transfer function of this filter.
+	 */
 	private TransferFunction transferFunction;
+
+	/**
+	 * The frequencies vector for frequency responses calculated using
+	 * this FilterResponseCalculator.
+	 */
 	private double[] frequencies;
 
+	/**
+	 * Constructor.
+	 * @param numberOfPoints the number of values for which the filter
+	 * responses will be calculated (equal to the size of the arrays
+	 * containing the responses)
+	 * @param samplingFrequency the sampling frequency of the signal for
+	 * which the filter responses will be calculated
+	 * @param filterCoefficients the coefficients of the filter for which
+	 * the filter responsess will be calculated
+	 */
 	public FilterResponseCalculator(int numberOfPoints, double samplingFrequency, FilterCoefficients filterCoefficients) {
 		this.numberOfPoints = numberOfPoints;
 		this.samplingFrequency = samplingFrequency;
@@ -27,6 +59,9 @@ public class FilterResponseCalculator {
 		calculateFrequencies();
 	}
 
+	/**
+	 * Precalculates the values for the frequencies.
+	 */
 	protected void calculateFrequencies() {
 		frequencies = new double[transferFunction.getSize()];
 
@@ -54,6 +89,10 @@ public class FilterResponseCalculator {
 
 	}
 
+	/**
+	 * Returns the filter phase shift in degrees.
+	 * @return the phase delay
+	 */
 	public FilterFrequencyResponse getPhaseShiftInDegrees() {
 
 		FilterFrequencyResponse frequencyResponse = new FilterFrequencyResponse(numberOfPoints);
@@ -72,23 +111,11 @@ public class FilterResponseCalculator {
 
 	}
 
-	public FilterFrequencyResponse getPhaseShiftInMilliseconds() {
-
-		FilterFrequencyResponse phaseShift = this.getPhaseShiftInDegrees();
-		double[] values = phaseShift.getValues();
-		double period;
-
-		for (int i = 0; i < values.length; i++) {
-			period = 1 / frequencies[i];
-			values[i] = period * values[i] / 360.0;
-			values[i] = 1000 * values[i]; //convert from seconds to milliseconds
-		}
-
-		phaseShift.setValues(values);
-		return phaseShift;
-
-	}
-
+	/**
+	 * Returns the group delay characterizing the filter given in the
+	 * constructor.
+	 * @return the group delay for the filter given in the constructor
+	 */
 	public FilterFrequencyResponse getGroupDelayResponse() {
 
 		int fft_size = numberOfPoints * 2;
@@ -147,4 +174,5 @@ public class FilterResponseCalculator {
 		return filterResponse;
 
 	}
+
 }

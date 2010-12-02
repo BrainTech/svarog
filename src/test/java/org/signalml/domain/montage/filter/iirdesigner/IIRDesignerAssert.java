@@ -5,7 +5,6 @@
 package org.signalml.domain.montage.filter.iirdesigner;
 
 import flanagan.complex.Complex;
-//import junit.framework.Assert;
 import org.junit.Assert;
 
 /**
@@ -48,6 +47,15 @@ class IIRDesignerAssert extends Assert {
 
 	}
 
+	/**
+	 * Asserts that the elements of two double arrays are equal concerning
+	 * a delta.
+	 *
+	 * @param expected the expected values
+	 * @param actual the actual values
+	 * @param delta determines how much the actual value can be different from the expected
+	 * value for the assertion to hold true
+	 */
 	protected static void assertArrayEquals(double[] expected, double[] actual, double delta) {
 
 		assertEquals(expected.length, actual.length);

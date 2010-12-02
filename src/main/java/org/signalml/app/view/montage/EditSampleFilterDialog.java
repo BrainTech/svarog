@@ -78,6 +78,9 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 	 */
 	protected JSpinner graphScaleSpinner;
 
+	/**
+	 * A {@link JPanel} containing filter-related plots.
+	 */
 	protected JPanel filterGraphsPanel;
 
 	/**
@@ -169,10 +172,11 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 	}
 
 	/**
-	 * Returns the {@link JPanel} containing the filter's frequency response
-	 * plot and maximum graph frequency spinner.
-	 * @return the {@link JPanel} containing a fiter's frequency response
-	 * graph
+	 * Returns the {@link JPanel} containing the filter response plot
+	 * (or plots), maximum graph frequency spinner etc. surrounded by
+	 * a labeled border.
+	 * @return the {@link JPanel} containing a fiter response
+	 * graph (graphs)
 	 */
 	public JPanel getGraphPanel() {
 
@@ -215,6 +219,10 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 
 	}
 
+	/**
+	 * Returns the {@link JPanel} containing filter plot (or plots).
+	 * @return {@link JPanel} containing filter-related plots
+	 */
 	public JPanel getFilterGraphsPanel() {
 
 		if (filterGraphsPanel == null) {
