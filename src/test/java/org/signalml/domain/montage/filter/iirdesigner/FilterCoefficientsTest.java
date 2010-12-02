@@ -6,7 +6,6 @@ package org.signalml.domain.montage.filter.iirdesigner;
 
 import flanagan.complex.Complex;
 import org.junit.Test;
-import org.signalml.domain.montage.filter.iirdesigner.FilterCoefficients.ComplexFrequencyResponse;
 
 import static org.signalml.domain.montage.filter.iirdesigner.IIRDesignerAssert.*;
 
@@ -25,7 +24,7 @@ public class FilterCoefficientsTest {
 		        new double[] {0.01875398, 0.0937699, 0.18753981, 0.18753981, 0.0937699, 0.01875398},
 		        new double[] {1.0, -1.13877891, 1.08854509, -0.46710982, 0.13151932, -0.0140483});
 
-		TransferFunction response = coeffs.getComplexFrequencyResponse(512);
+		TransferFunction response = new TransferFunction(512, coeffs);
 
 		assertEquals(new Complex(1,0), response.getGain()[0], new Complex(1e-6, 1e-6));
 		assertEquals(new Complex(9.89651405e-01, -1.43492499e-01), response.getGain()[10], new Complex(1e-6, 1e-6));

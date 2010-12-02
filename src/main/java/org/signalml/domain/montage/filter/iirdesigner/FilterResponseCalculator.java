@@ -3,6 +3,9 @@
  */
 package org.signalml.domain.montage.filter.iirdesigner;
 
+import flanagan.complex.Complex;
+import flanagan.math.FourierTransform;
+
 /**
  *
  * @author Piotr Szachewicz
@@ -11,6 +14,7 @@ public class FilterResponseCalculator {
 
 	private int numberOfPoints;
 	private double samplingFrequency;
+	private FilterCoefficients filterCoefficients;
 	private TransferFunction transferFunction;
 	private double[] frequencies;
 
@@ -18,6 +22,7 @@ public class FilterResponseCalculator {
 		this.numberOfPoints = numberOfPoints;
 		this.samplingFrequency = samplingFrequency;
 
+		this.filterCoefficients = filterCoefficients;
 		transferFunction = new TransferFunction(numberOfPoints, filterCoefficients);
 		calculateFrequencies();
 	}
@@ -86,29 +91,60 @@ public class FilterResponseCalculator {
 
 	public FilterFrequencyResponse getGroupDelayResponse() {
 
-		FilterFrequencyResponse groupDelay = getPhaseShiftInMilliseconds();
-		return groupDelay;
+		int fft_size = numberOfPoints * 2;
 
-		//groupDelay
+		double[] freq = new double[fft_size];
+		int i;
 
-		/*FilterFrequencyResponse groupDelay = getPhaseShiftInDegrees();
-
-		double[] values = groupDelay.getValues();
-		int n = values.length;
-
-		values[0] = -1 * ((values[1] - values[0])
-			/ (frequencies[1] - frequencies[0])) / 360;
-
-		for (int i = 1; i < n - 1; i++) {
-			values[i] = -1 * (((values[i] - values[i - 1]) / (frequencies[i] - frequencies[i - 1]))
-				+ ((values[i + 1] - values[i]) / (frequencies[i + 1] - frequencies[i]))) / (2 * 360);
+		for (i = 0; i < fft_size; i++) {
+			freq[i] = samplingFrequency * i / fft_size;
 		}
 
-		values[n - 1] = -1 * ((values[n - 1] - values[n - 2])
-			/ (frequencies[n - 1] - frequencies[n - 2])) / 360;
+		int oa = filterCoefficients.getACoefficients().length - 1;
+		int oc = oa + filterCoefficients.getBCoefficients().length - 1;
+		double[] c = ArrayOperations.convolve(
+			filterCoefficients.getBCoefficients(),
+			ArrayOperations.reverse(filterCoefficients.getACoefficients()));
 
-		groupDelay.setValues(values);
-		return groupDelay;*/
+		double[] cr = new double[oc + 1]; //derivative
+		for (i = 0; i < cr.length; i++) {
+			cr[i] = c[i] * i;
+		}
+
+		cr = ArrayOperations.padWithZeros(cr, fft_size);
+		FourierTransform fourierTransform = new FourierTransform(cr);
+		fourierTransform.transform();
+		Complex[] num = fourierTransform.getTransformedDataAsComplex();
+
+		c = ArrayOperations.padWithZeros(c, fft_size);
+		FourierTransform fourierTransform2 = new FourierTransform(c);
+		fourierTransform2.transform();
+		Complex[] den = fourierTransform2.getTransformedDataAsComplex();
+
+		double minmag = SpecialMath.getMachineEpsilon() * 10;
+
+		for (i = 0; i < den.length; i++) {
+			if (den[i].abs() < minmag) {
+				System.out.println("group delay singular - setting to 0");
+				num[i].reset(0, 0);
+				den[i].reset(1, 0);
+			}
+		}
+
+		double[] groupDelay = new double[c.length];
+
+		for (i = 0; i < groupDelay.length; i++) {
+			groupDelay[i] = (num[i].over(den[i])).getReal() - oa;
+		}
+
+		groupDelay = ArrayOperations.trimArrayToSize(groupDelay, fft_size / 2);
+		freq = ArrayOperations.trimArrayToSize(freq, fft_size / 2);
+
+		FilterFrequencyResponse filterResponse = new FilterFrequencyResponse(freq.length);
+		filterResponse.setFrequencies(freq);
+		filterResponse.setValues(groupDelay);
+
+		return filterResponse;
 
 	}
 }

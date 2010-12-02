@@ -849,6 +849,7 @@
 	<entry key="editTimeDomainSampleFilter.filterParametersTitle">Filter parameters</entry>
 
 	<entry key="editTimeDomainSampleFilter.graphSubtitle">filter order = {0}</entry>
+	<entry key="editTimeDomainSampleFilter.groupDelayGraphTitle">Group delay [samples]</entry>
 
 	<entry key="editTimeDomainSampleFilter.filterType">Filter type</entry>
 	<entry key="editTimeDomainSampleFilter.filterFamily">Filter family</entry>

@@ -41,7 +41,6 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.LogarithmicAxis;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.chart.title.TextTitle;
@@ -291,7 +290,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	public JFreeChart getGroupDelayChart() {
 
 		if (groupDelayChart == null) {
-			groupDelayChart = new JFreeChart("Filter phase delay [degrees]", new Font(Font.DIALOG, Font.PLAIN, 12), getGroupDelayPlot(), false);
+			groupDelayChart = new JFreeChart(messageSource.getMessage("editTimeDomainSampleFilter.groupDelayGraphTitle"), new Font(Font.DIALOG, Font.PLAIN, 12), getGroupDelayPlot(), false);
 			groupDelayChart.setBorderVisible(true);
 			groupDelayChart.setBackgroundPaint(Color.WHITE);
 			groupDelayChart.setPadding(new RectangleInsets(5, 5, 5, 5));
@@ -322,7 +321,6 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 		if (groupDelayAxis == null) {
 			groupDelayAxis = new NumberAxis("");
-			groupDelayAxis.setAutoRange(false);
 		}
 		return groupDelayAxis;
 
@@ -949,19 +947,13 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 			RectangleEdge.TOP,
 			HorizontalAlignment.RIGHT, VerticalAlignment.TOP,
 			new RectangleInsets(0, 0, 0, 9)));
-
-		//FilterFrequencyResponse groupDelayResponse = responseCalculator.getGroupDelayResponse();//.getPhaseResponse();
-		FilterFrequencyResponse groupDelayResponse = responseCalculator.getPhaseShiftInDegrees();
-		//FilterFrequencyResponse groupDelayResponse = responseCalculator.getPhaseShiftInMilliseconds();
 		
-		//FilterFrequencyResponse groupDelayResponse = responseCalculator.getGroupDelayResponse();
+		FilterFrequencyResponse groupDelayResponse = responseCalculator.getGroupDelayResponse();
 		frequencies = groupDelayResponse.getFrequencies();
 		coefficients = groupDelayResponse.getValues();
 		DefaultXYDataset phaseDataset = new DefaultXYDataset();
 		phaseDataset.addSeries("data", new double[][] {frequencies, coefficients});
 		getGroupDelayPlot().setDataset(phaseDataset);
-		getGroupDelayAxis().setRange(-360, 360);
-		getGroupDelayAxis().setTickUnit(new NumberTickUnit(90));
 
 	}
 
