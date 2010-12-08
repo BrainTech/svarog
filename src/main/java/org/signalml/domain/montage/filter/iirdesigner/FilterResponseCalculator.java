@@ -101,7 +101,7 @@ public class FilterResponseCalculator {
 
 		frequencyResponse.setFrequencies(frequencies);
 		for (int i = 0; i < transferFunction.getSize(); i++) {
-			phaseDelay = transferFunction.getGain(i).argDeg();
+			phaseDelay = Math.toDegrees(transferFunction.getGain(i).arg());
 			frequencyResponse.setValue(i, phaseDelay);
 		}
 
