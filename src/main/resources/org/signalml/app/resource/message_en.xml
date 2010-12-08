@@ -819,7 +819,7 @@
 	<entry key="editSampleFilter.graphSpinnerLabel">Maximum graph frequency [Hz]</entry>
 	<entry key="editSampleFilter.graphPanelTitle">Filter design graph</entry>
 	<entry key="editSampleFilter.graphFrequencyLabel">Frequency [Hz]</entry>
-	<entry key="editSampleFilter.graphTitle">Filter frequency response</entry>
+	<entry key="editSampleFilter.graphTitle">Filter frequency response [decibels]</entry>
 
 	<entry key="error.editSampleFilter.descriptionEmpty">A filter must have a description</entry>
 	<entry key="error.editSampleFilter.descriptionBadChars">Filter description must not contain control characters</entry>
