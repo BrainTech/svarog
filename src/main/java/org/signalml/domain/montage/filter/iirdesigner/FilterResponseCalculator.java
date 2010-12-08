@@ -7,6 +7,10 @@ import flanagan.complex.Complex;
 import flanagan.math.FourierTransform;
 
 /**
+ * This class represents a calculator capable of computing various filter
+ * frequency response for filter coefficients given in the constructor.
+ * The available filter responses include: magnitude frequency response,
+ * phase shift frequency response and group delay.
  *
  * @author Piotr Szachewicz
  */
