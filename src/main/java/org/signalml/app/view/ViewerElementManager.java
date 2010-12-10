@@ -351,6 +351,11 @@ public class ViewerElementManager {
 	 */
 	private JMenu monitorMenu;
 
+	/**
+	 * A {@link JMenu} for operations concerning tags.
+	 */
+	private JMenu tagsMenu;
+
 	private JMenu toolsMenu;
 	private JMenu helpMenu;
 
@@ -670,13 +675,9 @@ public class ViewerElementManager {
 			fileMenu.add(getSaveActiveDocumentAsAction());
 			fileMenu.add(getSaveAllDocumentsAction());
 			fileMenu.add(getCloseActiveDocumentAction());
+
 			fileMenu.addSeparator();
-			fileMenu.add(getNewTagAction());
-			fileMenu.add(getOpenTagAction());
-			fileMenu.add(getSaveTagAction());
-			fileMenu.add(getSaveTagAsAction());
-			fileMenu.add(getCloseTagAction());
-			fileMenu.addSeparator();
+
 			fileMenu.add(importSubmenu);
 			fileMenu.add(exportSubmenu);
 
@@ -742,6 +743,25 @@ public class ViewerElementManager {
 		return monitorMenu;
 	}
 
+	/**
+	 * Returns the {@link JMenu} which holds the items responsible for
+	 * operating on tags.
+	 * @return a {@link JMenu} for items connected with operations on tags
+	 */
+	public JMenu getTagsMenu() {
+		if (tagsMenu == null) {
+			tagsMenu = new JMenu("Tags");
+			tagsMenu = new JMenu("Tags");
+			tagsMenu.add(getNewTagAction());
+			tagsMenu.add(getOpenTagAction());
+			tagsMenu.add(getSaveTagAction());
+			tagsMenu.add(getSaveTagAsAction());
+			tagsMenu.add(getCloseTagAction());
+			tagsMenu.addSeparator();
+		}
+		return tagsMenu;
+	}
+
 	public JMenu getToolsMenu() {
 		if (toolsMenu == null) {
 			toolsMenu = new JMenu(messageSource.getMessage("menu.tools"));
@@ -784,6 +804,7 @@ public class ViewerElementManager {
 			menuBar.add(getEditMenu());
 			menuBar.add(getViewMenu());
 			menuBar.add(getMonitorMenu());
+			menuBar.add(getTagsMenu());
 			menuBar.add(getToolsMenu());
 			menuBar.add(getHelpMenu());
 		}
