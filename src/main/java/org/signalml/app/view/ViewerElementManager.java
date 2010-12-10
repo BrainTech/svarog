@@ -699,9 +699,6 @@ public class ViewerElementManager {
 			editMenu.add(getEditSignalMontageAction());
 			editMenu.add(getApplyDefaultMontageAction());
 			editMenu.addSeparator();
-			editMenu.add(getEditTagStylesAction());
-			editMenu.add(getEditTagDescriptionAction());
-			editMenu.addSeparator();
 			if (mode == SignalMLOperationMode.APPLICATION) {
 				editMenu.add(getEditStoredMontagesAction());
 			}
@@ -757,6 +754,9 @@ public class ViewerElementManager {
 			tagsMenu.add(getSaveTagAction());
 			tagsMenu.add(getSaveTagAsAction());
 			tagsMenu.add(getCloseTagAction());
+			tagsMenu.addSeparator();
+			tagsMenu.add(getEditTagStylesAction());
+			tagsMenu.add(getEditTagDescriptionAction());
 			tagsMenu.addSeparator();
 		}
 		return tagsMenu;
