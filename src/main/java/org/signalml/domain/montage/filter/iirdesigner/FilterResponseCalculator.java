@@ -3,6 +3,8 @@
  */
 package org.signalml.domain.montage.filter.iirdesigner;
 
+import org.apache.log4j.Logger;
+
 import flanagan.complex.Complex;
 import flanagan.math.FourierTransform;
 
@@ -15,6 +17,11 @@ import flanagan.math.FourierTransform;
  * @author Piotr Szachewicz
  */
 public class FilterResponseCalculator {
+
+	/**
+	 * Logger to save history of execution at.
+	 */
+	protected static final Logger logger = Logger.getLogger(FilterResponseCalculator.class);
 
 	/**
 	 * The number of points the filter responses calculated using
@@ -121,33 +128,38 @@ public class FilterResponseCalculator {
 	 * @return the group delay for the filter given in the constructor
 	 */
 	public FilterFrequencyResponse getGroupDelayResponse() {
+		/**
+		 * Implementation details:
+		 * https://ccrma.stanford.edu/~jos/filters/Numerical_Computation_Group_Delay.html
+		 * https://ccrma.stanford.edu/~jos/filters/Group_Delay_Computation_grpdelay_m.html
+		 */
 
-		int fft_size = numberOfPoints * 2;
+		int fftSize = numberOfPoints * 2;
 
-		double[] freq = new double[fft_size];
+		double[] freq = new double[fftSize];
 		int i;
 
-		for (i = 0; i < fft_size; i++) {
-			freq[i] = samplingFrequency * i / fft_size;
+		for (i = 0; i < fftSize; i++) {
+			freq[i] = samplingFrequency * i / fftSize;
 		}
 
-		int oa = filterCoefficients.getACoefficients().length - 1;
-		int oc = oa + filterCoefficients.getBCoefficients().length - 1;
+		int oa = filterCoefficients.getACoefficients().length - 1; //order of a(z)
+		int oc = oa + filterCoefficients.getBCoefficients().length - 1; //order of c(z)
 		double[] c = ArrayOperations.convolve(
 			filterCoefficients.getBCoefficients(),
-			ArrayOperations.reverse(filterCoefficients.getACoefficients()));
+			ArrayOperations.reverse(filterCoefficients.getACoefficients())); //c(z) = b(z)*a(1/z)*z^(-oa)
 
-		double[] cr = new double[oc + 1]; //derivative
+		double[] cr = new double[oc + 1]; //derivative of c wrt 1/z
 		for (i = 0; i < cr.length; i++) {
 			cr[i] = c[i] * i;
 		}
 
-		cr = ArrayOperations.padWithZeros(cr, fft_size);
+		cr = ArrayOperations.padWithZeros(cr, fftSize);
 		FourierTransform fourierTransform = new FourierTransform(cr);
 		fourierTransform.transform();
 		Complex[] num = fourierTransform.getTransformedDataAsComplex();
 
-		c = ArrayOperations.padWithZeros(c, fft_size);
+		c = ArrayOperations.padWithZeros(c, fftSize);
 		FourierTransform fourierTransform2 = new FourierTransform(c);
 		fourierTransform2.transform();
 		Complex[] den = fourierTransform2.getTransformedDataAsComplex();
@@ -156,7 +168,7 @@ public class FilterResponseCalculator {
 
 		for (i = 0; i < den.length; i++) {
 			if (den[i].abs() < minmag) {
-				System.out.println("group delay singular - setting to 0");
+				logger.debug("group delay singular - setting to 0");
 				num[i].reset(0, 0);
 				den[i].reset(1, 0);
 			}
@@ -168,8 +180,8 @@ public class FilterResponseCalculator {
 			groupDelay[i] = (num[i].over(den[i])).getReal() - oa;
 		}
 
-		groupDelay = ArrayOperations.trimArrayToSize(groupDelay, fft_size / 2);
-		freq = ArrayOperations.trimArrayToSize(freq, fft_size / 2);
+		groupDelay = ArrayOperations.trimArrayToSize(groupDelay, fftSize / 2);
+		freq = ArrayOperations.trimArrayToSize(freq, fftSize / 2);
 
 		FilterFrequencyResponse filterResponse = new FilterFrequencyResponse(freq.length);
 		filterResponse.setFrequencies(freq);
