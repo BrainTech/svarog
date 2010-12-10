@@ -136,6 +136,7 @@ import org.signalml.util.SvarogConstants;
 import org.springframework.context.support.MessageSourceAccessor;
 
 import com.thoughtworks.xstream.XStream;
+import org.signalml.app.action.ChooseActiveTagAction;
 import org.signalml.app.action.StartMonitorRecordingAction;
 import org.signalml.app.action.StopMonitorRecordingAction;
 import org.signalml.app.view.monitor.StartMonitorRecordingDialog;
@@ -304,6 +305,14 @@ public class ViewerElementManager {
 	private SaveTagAsAction saveTagAsAction;
 	private OpenTagAction importTagAction;
 	private ExportTagAction exportTagAction;
+
+	/**
+	 * Represents an {@link Action action} responsible for showing a dialog
+	 * allowing to select which tag document should be active (the one that
+	 * is being edited).
+	 */
+	private ChooseActiveTagAction chooseActiveTagAction;
+
 	private EditSignalParametersAction editSignalParametersAction;
 	private EditSignalMontageAction editSignalMontageAction;
 	private ApplyDefaultMontageAction applyDefaultMontageAction;
@@ -747,8 +756,7 @@ public class ViewerElementManager {
 	 */
 	public JMenu getTagsMenu() {
 		if (tagsMenu == null) {
-			tagsMenu = new JMenu("Tags");
-			tagsMenu = new JMenu("Tags");
+			tagsMenu = new JMenu(messageSource.getMessage("menu.tags"));
 			tagsMenu.add(getNewTagAction());
 			tagsMenu.add(getOpenTagAction());
 			tagsMenu.add(getSaveTagAction());
@@ -757,6 +765,7 @@ public class ViewerElementManager {
 			tagsMenu.addSeparator();
 			tagsMenu.add(getEditTagStylesAction());
 			tagsMenu.add(getEditTagDescriptionAction());
+			tagsMenu.add(getChooseActiveTagAction());
 			tagsMenu.addSeparator();
 		}
 		return tagsMenu;
@@ -1511,6 +1520,20 @@ public class ViewerElementManager {
 			importTagAction.setOptionPaneParent(getOptionPaneParent());
 		}
 		return importTagAction;
+	}
+
+	/**
+	 * Returns an {@link Action} responsible for showing a dialog allowing
+	 * to select which tag document should be active (the one that is being
+	 * edited).
+	 * @return an {@link Action} responsible for showing a dialog for
+	 * selecting active tag document
+	 */
+	public ChooseActiveTagAction getChooseActiveTagAction() {
+		if (chooseActiveTagAction == null) {
+			chooseActiveTagAction = new ChooseActiveTagAction(messageSource, getActionFocusManager());
+		}
+		return chooseActiveTagAction;
 	}
 
 	public ExportTagAction getExportTagAction() {

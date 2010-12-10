@@ -196,7 +196,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	private ButtonGroup toolButtonGroup;
 
 	private JButton plotOptionsButton;
-	private JButton activeTagButton;
 	private JToggleButton compareTagsButton;
 
 	private JToggleButton selectToolButton;
@@ -276,7 +275,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	private PresetManagerListener montagePresetManagerListener;
 
 	private SignalPlotOptionsPopupDialog signalPlotOptionsPopupDialog;
-	private ActiveTagPopupDialog activeTagDialog;
 	private CompareTagsPopupDialog compareTagsDialog;
 	private ZoomSettingsPopupDialog zoomSettingsDialog;
 	private SignalFFTSettingsPopupDialog signalFFTSettingsDialog;
@@ -843,7 +841,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		tagChannelToolButton.addActionListener(toolSelectionListener);
 		zoomSignalToolButton.addActionListener(toolSelectionListener);
 		signalFFTToolButton.addActionListener(toolSelectionListener);
-		
+
 		PluginAccessClass.getGUIImpl().registerSignalTools(toolMap, toolButtonGroup, toolSelectionListener, this);
 
 		selectToolButton.setSelected(true);
@@ -949,7 +947,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		mainToolBar.add(zoomSignalToolButton);
 		mainToolBar.add(signalFFTToolButton);
 		mainToolBar.add(rulerToolButton);
-		
+
 		PluginAccessClass.getGUIImpl().toolsToMainMenu(mainToolBar, this);
 
 		mainToolBar.addSeparator();
@@ -999,10 +997,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		tagToolBar.setFloatable(false);
 		tagToolBar.setVisible(false);
 
-		activeTagButton = new JButton(IconUtils.loadClassPathIcon("org/signalml/app/icon/activetag.png"));
-		activeTagButton.setToolTipText(messageSource.getMessage("signalView.activeTagToolTip"));
-		activeTagButton.addActionListener(new ActiveTagButtonListener());
-
 		compareTagsButton = new JToggleButton(IconUtils.loadClassPathIcon("org/signalml/app/icon/comparetags.png"));
 		compareTagsButton.setToolTipText(messageSource.getMessage("signalView.compareTagsToolTip"));
 		compareTagsButton.addActionListener(new CompareTagsButtonListener());
@@ -1016,7 +1010,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		tagChannelToolButton = new JToggleButton(IconUtils.getChannelTagIcon());
 		tagChannelToolButton.setToolTipText(messageSource.getMessage("signalView.tagChannelToolToolTip"));
 
-		tagToolBar.add(activeTagButton);
 		tagToolBar.add(compareTagsButton);
 
 		tagToolBar.addSeparator(new Dimension(0,5));
@@ -1517,14 +1510,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		return signalPlotOptionsPopupDialog;
 	}
 
-	private ActiveTagPopupDialog getActiveTagDialog() {
-		if (activeTagDialog == null) {
-			activeTagDialog = new ActiveTagPopupDialog(messageSource, (Window) getTopLevelAncestor(), true);
-			activeTagDialog.setSignalView(this);
-		}
-		return activeTagDialog;
-	}
-
 	private CompareTagsPopupDialog getCompareTagsDialog() {
 		if (compareTagsDialog == null) {
 			compareTagsDialog = new CompareTagsPopupDialog(messageSource, (Window) getTopLevelAncestor(), true);
@@ -1687,7 +1672,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 					newDocument.addPropertyChangeListener(this);
 
-					activeTagDialog = null;
 					compareTagsDialog = null;
 
 				}
@@ -1728,7 +1712,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 						}
 					}
 
-					activeTagDialog = null;
 					compareTagsDialog = null;
 
 				}
@@ -1798,9 +1781,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 				if (tagDocument == document.getActiveTag()) {
 					afSupport.fireActionFocusChanged();
 				}
-			}
-			else if (TagDocument.BACKING_FILE_PROPERTY.equals(name)) {
-				activeTagDialog = null;
 			}
 		}
 
@@ -2057,21 +2037,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 	}
 
-	private class ActiveTagButtonListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			ActiveTagPopupDialog dialog = getActiveTagDialog();
-			Container ancestor = getTopLevelAncestor();
-			Point containerLocation = ancestor.getLocation();
-			Point location = SwingUtilities.convertPoint(activeTagButton, new Point(0,0), ancestor);
-			location.translate(containerLocation.x, containerLocation.y);
-			dialog.setLocation(location);
-			dialog.showDialog(null);
-		}
-
-	}
-
 	private class CompareTagsButtonListener implements ActionListener {
 
 		@Override
@@ -2148,7 +2113,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		}
 
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.signalml.plugin.export.view.ExportedSignalView#setSignalSelection(org.signalml.plugin.export.view.ExportedSignalPlot, org.signalml.plugin.export.signal.ExportedSignalSelection)
 	 */
@@ -2157,7 +2122,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		if (plot instanceof SignalPlot)
 			setSignalSelection((SignalPlot) plot, new SignalSelection(signalSelection));
 		else throw new InvalidClassException("only plot got from Svarog can be used");
-		
+
 	}
 
 	/* (non-Javadoc)
@@ -2171,7 +2136,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 			setTagSelection(signalPlot, new PositionedTag(tagSelection));
 		}
 		else throw new InvalidClassException("only plot got from Svarog can be used");
-		
+
 	}
 
 	private class SignalFFTToolButtonMouseListener extends MouseAdapter {

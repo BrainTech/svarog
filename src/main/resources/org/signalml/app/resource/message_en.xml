@@ -394,6 +394,8 @@
 	<entry key="action.closeTagToolTip">Close active tag</entry>
 	<entry key="action.removeTag">Remove tag</entry>
 	<entry key="action.removeTagToolTip">Remove selected tag</entry>
+	<entry key="action.chooseActiveTag">Choose active tag</entry>
+	<entry key="action.chooseActiveTagToolTip">Change active tag (the tag that is being edited)</entry>
 	<entry key="action.openMRUD">Open</entry>
 	<entry key="action.openMRUDToolTip">Open recently used document</entry>
 	<entry key="action.activateDocument">Show</entry>
@@ -525,6 +527,7 @@
 	<entry key="menu.tools.iterate">Iterate</entry>
 	<entry key="menu.view">View</entry>
 	<entry key="menu.monitor">Monitor</entry>
+	<entry key="menu.tags">Tags</entry>
 
 	<entry key="seriousWarning.title">WARNING! Are you sure?</entry>			
 	<entry key="seriousWarning.warning">WARNING! You are about to perform an irreversible operation.</entry>			
@@ -1324,7 +1327,6 @@
 	<entry key="signalView.tagPageToolToolTip">Tag signal pages</entry>
 	<entry key="signalView.tagBlockToolToolTip">Tag signal blocks</entry>
 	<entry key="signalView.tagChannelToolToolTip">Tag single channel signal fragments</entry>
-	<entry key="signalView.activeTagToolTip">Change active tag (the tag that is being edited)</entry>
 	<entry key="signalView.compareTagsToolTip">Compare tags (2 or more must be open)</entry>
 
 	<entry key="signalView.plotOptions">Plot options</entry>
