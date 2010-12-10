@@ -65,8 +65,6 @@ import org.signalml.app.action.CloseTagAction;
 import org.signalml.app.action.EditSignalMontageAction;
 import org.signalml.app.action.EditSignalParametersAction;
 import org.signalml.app.action.EditTagAnnotationAction;
-import org.signalml.app.action.EditTagDescriptionAction;
-import org.signalml.app.action.EditTagStylesAction;
 import org.signalml.app.action.SignalFilterSwitchAction;
 import org.signalml.app.action.NewTagAction;
 import org.signalml.app.action.OpenTagAction;
@@ -107,7 +105,6 @@ import org.signalml.app.view.element.LockableJSplitPane;
 import org.signalml.app.view.element.TitledSliderPanel;
 import org.signalml.app.view.monitor.StartMonitorRecordingDialog;
 import org.signalml.app.view.montage.SignalMontageDialog;
-import org.signalml.app.view.signal.popup.ActiveTagPopupDialog;
 import org.signalml.app.view.signal.popup.CompareTagsPopupDialog;
 import org.signalml.app.view.signal.popup.SignalPlotOptionsPopupDialog;
 import org.signalml.app.view.signal.popup.SignalFFTSettingsPopupDialog;
@@ -263,8 +260,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	private TagSelectionAction tagSelectionAction;
 	private RemoveTagAction removeTagAction;
 	private EditTagAnnotationAction editTagAnnotationAction;
-	private EditTagStylesAction editTagStylesAction;
-	private EditTagDescriptionAction editTagDescriptionAction;
 	private SnapToPageAction snapToPageAction;
 	private SignalFilterSwitchAction signalFilterSwitchAction;
 
@@ -1014,11 +1009,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 		tagToolBar.addSeparator(new Dimension(0,5));
 
-		tagToolBar.add(getEditTagStylesAction());
-		tagToolBar.add(getEditTagDescriptionAction());
-
-		tagToolBar.addSeparator(new Dimension(0,5));
-
 		tagToolBar.add(getEditTagAnnotationAction());
 		tagToolBar.add(getRemoveTagAction());
 
@@ -1293,22 +1283,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 			getActionMap().put("editTagAnnotationAction", editTagAnnotationAction);
 		}
 		return editTagAnnotationAction;
-	}
-
-	public EditTagStylesAction getEditTagStylesAction() {
-		if (editTagStylesAction == null) {
-			editTagStylesAction = new EditTagStylesAction(messageSource,this);
-			editTagStylesAction.setTagStylePaletteDialog(tagStylePaletteDialog);
-		}
-		return editTagStylesAction;
-	}
-
-	public EditTagDescriptionAction getEditTagDescriptionAction() {
-		if (editTagDescriptionAction == null) {
-			editTagDescriptionAction = new EditTagDescriptionAction(messageSource,this);
-			editTagDescriptionAction.setEditTagDescriptionDialog(editTagDescriptionDialog);
-		}
-		return editTagDescriptionAction;
 	}
 
 	public SnapToPageAction getSnapToPageAction() {
