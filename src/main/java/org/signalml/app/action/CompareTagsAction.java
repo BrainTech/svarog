@@ -23,11 +23,6 @@ import org.springframework.context.support.MessageSourceAccessor;
 public class CompareTagsAction extends AbstractFocusableSignalMLAction<SignalDocumentFocusSelector> {
 
 	/**
-	 * A dialog for choosing which tags to compare.
-	 */
-	private CompareTagsPopupDialog compareTagsPopupDialog;
-
-	/**
 	 * A dialog for showing the results of comparison.
 	 */
 	private TagComparisonDialog tagComparisonDialog;
@@ -56,7 +51,8 @@ public class CompareTagsAction extends AbstractFocusableSignalMLAction<SignalDoc
 		if (documentView instanceof SignalView)
 			signalView = (SignalView) documentView;
 
-		CompareTagsPopupDialog dialog = getCompareTagsPopupDialog();
+		CompareTagsPopupDialog dialog = new CompareTagsPopupDialog(messageSource, null, true);
+		dialog.setTagComparisonDialog(tagComparisonDialog);
 		dialog.setSignalView(signalView);
 		dialog.showDialog(null, true);
 
@@ -90,18 +86,6 @@ public class CompareTagsAction extends AbstractFocusableSignalMLAction<SignalDoc
 	 */
 	public void setTagComparisonDialog(TagComparisonDialog tagComparisonDialog) {
 		this.tagComparisonDialog = tagComparisonDialog;
-	}
-
-	/**
-	 * Returns a dialog for choosing which tags to compare.
-	 * @return a dialog for choosing which tags to compare
-	 */
-	protected CompareTagsPopupDialog getCompareTagsPopupDialog() {
-		if (compareTagsPopupDialog == null) {
-			compareTagsPopupDialog = new CompareTagsPopupDialog(messageSource, null, true);
-			compareTagsPopupDialog.setTagComparisonDialog(tagComparisonDialog);
-		}
-		return compareTagsPopupDialog;
 	}
 
 }
