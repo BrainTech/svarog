@@ -193,7 +193,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	private ButtonGroup toolButtonGroup;
 
 	private JButton plotOptionsButton;
-	private JToggleButton compareTagsButton;
 
 	private JToggleButton selectToolButton;
 	private JToggleButton moveToolButton;
@@ -224,7 +223,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	private Map<ButtonModel,SignalTool> toolMap = new HashMap<ButtonModel,SignalTool>();
 
 	private ErrorsDialog errorsDialog;
-	private TagComparisonDialog tagComparisonDialog;
 	private DocumentFlowIntegrator documentFlowIntegrator;
 	private NewTagDialog newTagDialog;
 	private ViewerFileChooser fileChooser;
@@ -270,7 +268,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	private PresetManagerListener montagePresetManagerListener;
 
 	private SignalPlotOptionsPopupDialog signalPlotOptionsPopupDialog;
-	private CompareTagsPopupDialog compareTagsDialog;
 	private ZoomSettingsPopupDialog zoomSettingsDialog;
 	private SignalFFTSettingsPopupDialog signalFFTSettingsDialog;
 	private SlavePlotSettingsPopupDialog slavePlotSettingsPopupDialog;
@@ -992,20 +989,12 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		tagToolBar.setFloatable(false);
 		tagToolBar.setVisible(false);
 
-		compareTagsButton = new JToggleButton(IconUtils.loadClassPathIcon("org/signalml/app/icon/comparetags.png"));
-		compareTagsButton.setToolTipText(messageSource.getMessage("signalView.compareTagsToolTip"));
-		compareTagsButton.addActionListener(new CompareTagsButtonListener());
-		compareTagsButton.setSelected(false);
-		compareTagsButton.setEnabled(false);
-
 		tagPageToolButton = new JToggleButton(IconUtils.getPageTagIcon());
 		tagPageToolButton.setToolTipText(messageSource.getMessage("signalView.tagPageToolToolTip"));
 		tagBlockToolButton = new JToggleButton(IconUtils.getBlockTagIcon());
 		tagBlockToolButton.setToolTipText(messageSource.getMessage("signalView.tagBlockToolToolTip"));
 		tagChannelToolButton = new JToggleButton(IconUtils.getChannelTagIcon());
 		tagChannelToolButton.setToolTipText(messageSource.getMessage("signalView.tagChannelToolToolTip"));
-
-		tagToolBar.add(compareTagsButton);
 
 		tagToolBar.addSeparator(new Dimension(0,5));
 
@@ -1338,14 +1327,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		this.errorsDialog = errorsDialog;
 	}
 
-	public TagComparisonDialog getTagComparisonDialog() {
-		return tagComparisonDialog;
-	}
-
-	public void setTagComparisonDialog(TagComparisonDialog tagComparisonDialog) {
-		this.tagComparisonDialog = tagComparisonDialog;
-	}
-
 	public DocumentFlowIntegrator getDocumentFlowIntegrator() {
 		return documentFlowIntegrator;
 	}
@@ -1482,15 +1463,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		}
 
 		return signalPlotOptionsPopupDialog;
-	}
-
-	private CompareTagsPopupDialog getCompareTagsDialog() {
-		if (compareTagsDialog == null) {
-			compareTagsDialog = new CompareTagsPopupDialog(messageSource, (Window) getTopLevelAncestor(), true);
-			compareTagsDialog.setSignalView(this);
-			compareTagsDialog.setTagComparisonDialog(tagComparisonDialog);
-		}
-		return compareTagsDialog;
 	}
 
 	private ZoomSettingsPopupDialog getZoomSettingsDialog() {
@@ -1646,8 +1618,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 					newDocument.addPropertyChangeListener(this);
 
-					compareTagsDialog = null;
-
 				}
 
 				if (oldDocument != null) {
@@ -1686,8 +1656,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 						}
 					}
 
-					compareTagsDialog = null;
-
 				}
 
 				int tagCnt = document.getTagDocuments().size();
@@ -1696,12 +1664,10 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 					for (SignalPlotScrollPane scrollPane : scrollPanes) {
 						scrollPane.getViewport().setScrollMode(JViewport.SIMPLE_SCROLL_MODE);
 					}
-					compareTagsButton.setEnabled(true);
 				} else {
 					for (SignalPlotScrollPane scrollPane : scrollPanes) {
 						scrollPane.getViewport().setScrollMode(JViewport.BLIT_SCROLL_MODE);
 					}
-					compareTagsButton.setEnabled(false);
 				}
 
 				hypnogramPlot.revalidateAndReset();
@@ -1854,10 +1820,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		onTagsChanged();
 	}
 
-	public void updateCompareTagsButtonState() {
-		compareTagsButton.setSelected(isComparingTags());
-	}
-
 	private void rebindTagKeys() {
 
 		InputMap inputMap = getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
@@ -2008,21 +1970,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		constraints.setMaxWholePage(masterPlot.getWholePageCount()-1);
 
 		return constraints;
-
-	}
-
-	private class CompareTagsButtonListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			CompareTagsPopupDialog dialog = getCompareTagsDialog();
-			Container ancestor = getTopLevelAncestor();
-			Point containerLocation = ancestor.getLocation();
-			Point location = SwingUtilities.convertPoint(compareTagsButton, new Point(0,0), ancestor);
-			location.translate(containerLocation.x, containerLocation.y);
-			dialog.setLocation(location);
-			dialog.showDialog(null);
-		}
 
 	}
 

@@ -433,9 +433,10 @@
 	<entry key="action.editTagAnnotationToolTip">Edit tag annotation (Ctrl-A)</entry>
 	<entry key="action.editTagDescription">Edit tag description</entry>
 	<entry key="action.editTagDescriptionToolTip">Edit tag description</entry>
-
 	<entry key="action.editTagStyles">Tag styles</entry>
 	<entry key="action.editTagStylesToolTip">Edit tag styles</entry>
+	<entry key="action.compareTags">Compare tags</entry>
+	<entry key="action.compareTagsToolTip">Compare tags (2 or more must be open)</entry>
 
 	<entry key="action.showAllTagStyles">Show all</entry>
 	<entry key="action.showAllTagStylesToolTip">Show all styles</entry>
@@ -1327,7 +1328,6 @@
 	<entry key="signalView.tagPageToolToolTip">Tag signal pages</entry>
 	<entry key="signalView.tagBlockToolToolTip">Tag signal blocks</entry>
 	<entry key="signalView.tagChannelToolToolTip">Tag single channel signal fragments</entry>
-	<entry key="signalView.compareTagsToolTip">Compare tags (2 or more must be open)</entry>
 
 	<entry key="signalView.plotOptions">Plot options</entry>
 	<entry key="signalView.plotToolTipSignal">T: {0}, V:{1} [P: {2}, B: {3}, C: {4}]</entry>

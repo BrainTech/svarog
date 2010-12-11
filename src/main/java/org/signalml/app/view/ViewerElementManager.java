@@ -137,6 +137,7 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 import com.thoughtworks.xstream.XStream;
 import org.signalml.app.action.ChooseActiveTagAction;
+import org.signalml.app.action.CompareTagsAction;
 import org.signalml.app.action.StartMonitorRecordingAction;
 import org.signalml.app.action.StopMonitorRecordingAction;
 import org.signalml.app.view.monitor.StartMonitorRecordingDialog;
@@ -312,6 +313,12 @@ public class ViewerElementManager {
 	 * is being edited).
 	 */
 	private ChooseActiveTagAction chooseActiveTagAction;
+
+	/**
+	 * Represents an {@link Action action} responsible for showing a dialog
+	 * using which tag documents can be compared.
+	 */
+	private CompareTagsAction compareTagsAction;
 
 	private EditSignalParametersAction editSignalParametersAction;
 	private EditSignalMontageAction editSignalMontageAction;
@@ -767,6 +774,7 @@ public class ViewerElementManager {
 			tagsMenu.add(getEditTagDescriptionAction());
 			tagsMenu.add(getChooseActiveTagAction());
 			tagsMenu.addSeparator();
+			tagsMenu.add(getCompareTagsAction());
 		}
 		return tagsMenu;
 	}
@@ -1536,6 +1544,20 @@ public class ViewerElementManager {
 		return chooseActiveTagAction;
 	}
 
+	/**
+	 * Returns an {@link Action} responsible for showing a dialog
+	 * using which tag documents can be compared.
+	 * @return an {@link Action} responsible for showing a dialog
+	 * which can be used to compare tags
+	 */
+	public CompareTagsAction getCompareTagsAction() {
+		if (compareTagsAction == null) {
+			compareTagsAction = new CompareTagsAction(messageSource, getActionFocusManager());
+			compareTagsAction.setTagComparisonDialog(getTagComparisonDialog());
+		}
+		return compareTagsAction;
+	}
+
 	public ExportTagAction getExportTagAction() {
 		if (exportTagAction == null) {
 			exportTagAction = new ExportTagAction(messageSource, getActionFocusManager());
@@ -1774,7 +1796,6 @@ public class ViewerElementManager {
 			signalView.setActionFocusManager(getActionFocusManager());
 			signalView.setSlavePlotSettingsPopupDialog(getSlavePlotSettingsPopupDialog());
 			signalView.setErrorsDialog(getErrorsDialog());
-			signalView.setTagComparisonDialog(getTagComparisonDialog());
 			signalView.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 			signalView.setMontagePresetManager(getMontagePresetManager());
 			signalView.setSignalMontageDialog(getSignalMontageDialog());

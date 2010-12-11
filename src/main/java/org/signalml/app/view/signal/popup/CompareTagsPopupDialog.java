@@ -239,11 +239,6 @@ public class CompareTagsPopupDialog extends AbstractPopupDialog {
 		return true;
 	}
 
-	@Override
-	protected void onDialogClose() {
-		signalView.updateCompareTagsButtonState();
-	}
-
 	private class CheckBoxCoordinator implements ItemListener {
 
 		private JCheckBox penultimateSelection;
@@ -335,7 +330,6 @@ public class CompareTagsPopupDialog extends AbstractPopupDialog {
 			}
 
 			// temporarily hide the popup
-			signalView.updateCompareTagsButtonState();
 			setVisible(false);
 
 			tagComparisonDialog.showDialog(descriptor, true);
