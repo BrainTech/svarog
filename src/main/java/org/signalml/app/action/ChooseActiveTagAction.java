@@ -22,11 +22,6 @@ import org.springframework.context.support.MessageSourceAccessor;
 public class ChooseActiveTagAction extends AbstractFocusableSignalMLAction<SignalDocumentFocusSelector> {
 
 	/**
-	 * A dialog for choosing an active tag.
-	 */
-	private ActiveTagPopupDialog activeTagDialog;
-
-	/**
 	 * Constructor.
 	 * @param messageSource the message source accessor capable of resolving
 	 * localized message codes
@@ -49,7 +44,7 @@ public class ChooseActiveTagAction extends AbstractFocusableSignalMLAction<Signa
 		if (documentView instanceof SignalView)
 			signalView = (SignalView) documentView;
 
-		ActiveTagPopupDialog dialog = getActiveTagDialog();
+		ActiveTagPopupDialog dialog = new ActiveTagPopupDialog(messageSource, null, true);
 		dialog.setSignalView(signalView);
 		dialog.showDialog(null, true);
 
@@ -65,17 +60,6 @@ public class ChooseActiveTagAction extends AbstractFocusableSignalMLAction<Signa
 		else
 			setEnabled(false);
 
-	}
-
-	/**
-	 * Returns a dialog for choosing active tags.
-	 * @return a dialog for choosing which tag document should be active
-	 */
-	private ActiveTagPopupDialog getActiveTagDialog() {
-		if (activeTagDialog == null) {
-			activeTagDialog = new ActiveTagPopupDialog(messageSource, null, true);
-		}
-		return activeTagDialog;
 	}
 
 }
