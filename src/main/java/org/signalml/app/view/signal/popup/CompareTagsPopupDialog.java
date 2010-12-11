@@ -157,8 +157,8 @@ public class CompareTagsPopupDialog extends AbstractPopupDialog {
 		interfacePanel.add(buttonPanel, BorderLayout.SOUTH);
 
 		Dimension size = chooseTagsPanel.getPreferredSize();
-		if (size.width < 220) {
-			size.width = 220;
+		if (size.width < 270) {
+			size.width = 270;
 		}
 		chooseTagsPanel.setPreferredSize(size);
 

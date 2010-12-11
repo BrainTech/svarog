@@ -676,11 +676,7 @@ public class ViewerElementManager {
 
 	public JMenu getFileMenu() {
 		if (fileMenu == null) {
-			JMenu importSubmenu = new JMenu(messageSource.getMessage("menu.import"));
-			importSubmenu.add(getImportTagAction());
-
 			JMenu exportSubmenu = new JMenu(messageSource.getMessage("menu.export"));
-			exportSubmenu.add(getExportTagAction());
 			exportSubmenu.add(getExportSignalAction());
 			exportSubmenu.add(getExportBookAction());
 
@@ -694,7 +690,6 @@ public class ViewerElementManager {
 
 			fileMenu.addSeparator();
 
-			fileMenu.add(importSubmenu);
 			fileMenu.add(exportSubmenu);
 
 			if (mode == SignalMLOperationMode.APPLICATION) {
@@ -763,18 +758,33 @@ public class ViewerElementManager {
 	 */
 	public JMenu getTagsMenu() {
 		if (tagsMenu == null) {
+
+			JMenu importSubmenu = new JMenu(messageSource.getMessage("menu.import"));
+			importSubmenu.add(getImportTagAction());
+
+			JMenu exportSubmenu = new JMenu(messageSource.getMessage("menu.export"));
+			exportSubmenu.add(getExportTagAction());
+
 			tagsMenu = new JMenu(messageSource.getMessage("menu.tags"));
+
 			tagsMenu.add(getNewTagAction());
 			tagsMenu.add(getOpenTagAction());
 			tagsMenu.add(getSaveTagAction());
 			tagsMenu.add(getSaveTagAsAction());
 			tagsMenu.add(getCloseTagAction());
 			tagsMenu.addSeparator();
-			tagsMenu.add(getEditTagStylesAction());
-			tagsMenu.add(getEditTagDescriptionAction());
-			tagsMenu.add(getChooseActiveTagAction());
+
+			tagsMenu.add(importSubmenu);
+			tagsMenu.add(exportSubmenu);
 			tagsMenu.addSeparator();
+
+			tagsMenu.add(getChooseActiveTagAction());
+			tagsMenu.add(getEditTagDescriptionAction());
+			tagsMenu.add(getEditTagStylesAction());
+			tagsMenu.addSeparator();
+
 			tagsMenu.add(getCompareTagsAction());
+
 		}
 		return tagsMenu;
 	}
