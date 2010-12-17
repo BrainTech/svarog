@@ -414,6 +414,8 @@
 	<entry key="action.exportSignalToolTip">Export signal to simple binary format</entry>
 	<entry key="action.exportBook">Export Book...</entry>
 	<entry key="action.exportBookToolTip">Export book to file</entry>
+	<entry key="action.exportEEGLab">Export to EEGLab...</entry>
+	<entry key="action.exportEEGLabToolTip">Export signal in EEGLab format</entry>
 
 	<entry key="action.signalParameters">Signal parameters</entry>
 	<entry key="action.signalParametersToolTip">Change signal parameters</entry>
@@ -564,6 +566,13 @@
 	<entry key="exportSignalDialog.options.saveXML">Save XML manifest</entry>						
 	<entry key="exportSignalDialog.options.normalize">Normalize samples</entry>						
 			
+        <entry key="eeglabExport.title">Export to EEGLab</entry>
+        <entry key="eeglabExport.chooseFileLabel">Output file name: </entry>
+        <entry key="eegLabExport.fileNameExists">File already exists! Do you want to overwrite?</entry>
+
+        <entry key="error.eeglabExport.incorrectFileName">Please input a filename</entry>
+        <entry key="error.eeglabExport.cantWrite">File cannot be written</entry>
+
 	<entry key="profilePath.title">Choose profile path</entry>
 	<entry key="profilePath.welcome">Welcome to signalml viewer</entry>
 	<entry key="profilePath.info">The signalml viewer needs a directory to store its configuration and files. This directory may reside inside the default user's home directory (system dependent), or you can select any directory on disk (remember that you need to select a concrete directory for SignalML files, not the directory in which you would like the later to be created - create the directory if necessary).</entry>

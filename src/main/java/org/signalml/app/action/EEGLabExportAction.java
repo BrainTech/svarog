@@ -1,25 +1,26 @@
-/* CheckSignalAction.java created 2010-10-24
+/* EEGLabExportAction.java created 2010-11-29
  *
  */
 
 package org.signalml.app.action;
 
-import org.signalml.app.view.monitor.CheckSignalDialog;
 import java.awt.event.ActionEvent;
-import org.apache.log4j.Logger;
+
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.model.MontageDescriptor;
+import org.signalml.app.view.dialog.EEGLabExportDialog;
+import org.apache.log4j.Logger;
 import org.springframework.context.support.MessageSourceAccessor;
 
-/** 
- * Opens a {@link CheckSignalDialog}.
+/**
+ * Opens a {@link EEGLabExportDialog}.
  *
  * @author Tomasz Sawicki
  */
-public class CheckSignalAction extends AbstractFocusableSignalMLAction<SignalDocumentFocusSelector> {
-       
+public class EEGLabExportAction extends AbstractFocusableSignalMLAction<SignalDocumentFocusSelector> {
+
 	/**
 	 * Logger to save history of execution at.
 	 */
@@ -28,7 +29,7 @@ public class CheckSignalAction extends AbstractFocusableSignalMLAction<SignalDoc
         /**
 	 * The dialog which is shown after evoking this action.
 	 */
-        private CheckSignalDialog checkSignalDialog;
+        private EEGLabExportDialog eeglabExportDialog;
 
 	/**
 	 * Constructor.
@@ -37,11 +38,11 @@ public class CheckSignalAction extends AbstractFocusableSignalMLAction<SignalDoc
 	 * @param signalDocumentFocusSelector a {@link SignalDocumentFocusSelector} used to detect
 	 * which document is active.
 	 */
-	public CheckSignalAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
+        public EEGLabExportAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
 
                 super(messageSource, signalDocumentFocusSelector);
-		setText("action.checkSignalLabel");
-		setToolTip("action.checkSignalToolTip");
+		setText("action.exportEEGLab");
+		setToolTip("action.exportEEGLabToolTip");
 	}
 
 	/**
@@ -49,11 +50,11 @@ public class CheckSignalAction extends AbstractFocusableSignalMLAction<SignalDoc
 	 *
 	 * @param ev an event describing a change
 	 */
-	@Override
-	public void actionPerformed(ActionEvent ev) {
+        @Override
+        public void actionPerformed(ActionEvent e) {
 
-		logger.debug("Check signal");
-                
+                logger.debug("EEGLab Export");
+
                 SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
 		if (signalDocument == null) {
 			logger.warn("Target document doesn't exist or is not a signal");
@@ -62,44 +63,43 @@ public class CheckSignalAction extends AbstractFocusableSignalMLAction<SignalDoc
 
 		MontageDescriptor descriptor = new MontageDescriptor(signalDocument.getMontage(), signalDocument);
 
-		boolean ok = checkSignalDialog.showDialog(descriptor, true);
-		if (!ok) {
-			return;
-		}
+                boolean ok = eeglabExportDialog.showDialog(descriptor, true);
+                if (!ok) {
+                        return;
+                }
 
-		signalDocument.setMontage(descriptor.getMontage());
-	}
+        }
 
         /**
-         * Action is enabled only if the monitor is open.
+         * Action is enabled only if an offline document is open.
          */
 	@Override
 	public void setEnabledAsNeeded() {
 
                 SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
-		setEnabled((signalDocument != null) && (signalDocument instanceof MonitorSignalDocument));
+		setEnabled((signalDocument != null) && !(signalDocument instanceof MonitorSignalDocument));
 	}
 
         /**
-         * Gets the {@link #checkSignalDialog}.
+         * Gets the {@link #eeglabExportDialog}.
          *
-         * @return {@link #checkSignalDialog}
+         * @return the {@link #eeglabExportDialog}
          */
-	public CheckSignalDialog getCheckSignalDialog() {
+        public EEGLabExportDialog getEEGLabExportDialog() {
 
-                return checkSignalDialog;
-	}
+                return eeglabExportDialog;
+        }
 
         /**
-         * Sets the {@link #checkSignalDialog}.
+         * Sets the {@link #eeglabExportDialog}
          *
-         * @param checkSignalDialog a {@link CheckSignalDialog} object
+         * @param eeglabExportDialog an {@link EEGLabExportDialog} object
          */
-	public void setCheckSignalDialog(CheckSignalDialog checkSignalDialog) {
-           
-                if( checkSignalDialog == null ) {
+        public void setEEGLabExportDialog(EEGLabExportDialog eeglabExportDialog) {
+
+                if(eeglabExportDialog == null) {
 			throw new NullPointerException();
 		}
-		this.checkSignalDialog = checkSignalDialog;
-	}
+                this.eeglabExportDialog = eeglabExportDialog;
+        }
 }

@@ -3,8 +3,6 @@
  */
 package org.signalml.app.view.element;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -12,12 +10,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.apache.log4j.Logger;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -50,6 +50,18 @@ public class FileSelectPanel extends JPanel {
 	 */
 	private JButton browseButton;
 
+        /**
+         * List of filters the user can choose from. The key is the file description,
+         * the value is the file extensions array. If the selected file doesn't exist,
+         * first extension in the array will be added to it's name.
+         */
+        private HashMap<String, String[]> filters;
+
+        /**
+         * Indicates if the "All files" filter is available
+         */
+        private boolean allFilters;
+
 	/**
 	 * This is the default constructor
 	 */
@@ -57,6 +69,18 @@ public class FileSelectPanel extends JPanel {
 		super();
 		this.messageSource = messageSource;
 		this.selectFileLabel = new JLabel(selectFilePrompt);
+		initialize();
+	}
+
+	/**
+	 * This constructor takes two additional parameters: {@link #filters} and {@link #allFilters}
+	 */
+	public FileSelectPanel(MessageSourceAccessor messageSource, String selectFilePrompt, HashMap<String, String[]> filters, boolean allFilters) {
+		super();
+		this.messageSource = messageSource;
+		this.selectFileLabel = new JLabel(selectFilePrompt);
+                this.filters = filters;
+                this.allFilters = allFilters;
 		initialize();
 	}
 
@@ -91,7 +115,10 @@ public class FileSelectPanel extends JPanel {
 	protected JButton getChangeButton() {
 		if (browseButton == null) {
 			browseButton = new JButton(messageSource.getMessage("fileSelectPanel.browseButtonLabel"));
-			browseButton.addActionListener(new BrowseButtonAction());
+                        if (filters == null)
+                                browseButton.addActionListener(new BrowseButtonAction());
+                        else
+                                browseButton.addActionListener(new BrowseButtonAction(filters, allFilters));
 		}
 		return browseButton;
 	}
@@ -150,13 +177,35 @@ public class FileSelectPanel extends JPanel {
 		 */
 		private JFileChooser fileChooser;
 
+                /**
+                 * List of filters the user can choose from. The key is the file description,
+                 * the value is the file extensions array.
+                 */
+                private HashMap<String, String[]> filters;
+
 		/**
 		 * Creates a new BrowseButtonAction and initializes it.
 		 */
-		BrowseButtonAction() {
+		public BrowseButtonAction() {
 			super();
 			fileChooser = new JFileChooser();
 			fileChooser.setApproveButtonText(messageSource.getMessage("ok"));
+		}
+
+		public BrowseButtonAction(HashMap<String, String[]> filters, boolean allFilters) {
+			super();
+			fileChooser = new JFileChooser();
+			fileChooser.setApproveButtonText(messageSource.getMessage("ok"));
+
+                        fileChooser.setAcceptAllFileFilterUsed(allFilters);
+
+                        for (String description : filters.keySet()) {
+
+                                FileNameExtensionFilter filter = new FileNameExtensionFilter(description, filters.get(description));
+                                fileChooser.addChoosableFileFilter(filter);
+                        }
+
+                        this.filters = filters;
 		}
 
 		@Override
@@ -173,9 +222,16 @@ public class FileSelectPanel extends JPanel {
 					getFileNameField().setText("");
 				}
 
+                                if (fileChooser.getFileFilter() instanceof FileNameExtensionFilter)
+                                {
+                                        FileNameExtensionFilter filter = (FileNameExtensionFilter) fileChooser.getFileFilter();
+                                        String extension = filters.get(filter.getDescription())[0];
+
+                                        if (!getFileNameField().getText().endsWith(extension))
+                                                getFileNameField().setText(getFileNameField().getText() + "." + extension);
+                                }
 			}
 
 		}
 	}
-
 }

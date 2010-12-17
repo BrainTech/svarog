@@ -56,13 +56,34 @@ public class CheckSignalDialog extends AbstractDialog {
          */
         private static final String AMP_TYPE = "TMSI-porti7";
 
+        /**
+         * The current montage.
+         */
         private Montage currentMontage;
+
+        /**
+         * The currently open document.
+         */
         private MonitorSignalDocument monitorSignalDocument;
 
+        /**
+         * A component showing the signal status.
+         */
         private CheckSignalDisplay checkSignalDisplay;
+
+        /**
+         * A current visual reference model.
+         */
         private VisualReferenceModel visualReferenceModel;
 
+        /**
+         * Timer used to invoke {@link #timerClass} {@link TimerClass#run()}.
+         */
         private Timer timer;
+
+        /**
+         * Object which periodically does all the checking.
+         */
         private TimerClass timerClass;
 
 
@@ -71,6 +92,9 @@ public class CheckSignalDialog extends AbstractDialog {
                 super(messageSource, w, isModal);
         }
 
+        /**
+         * Sets window's title and size, then calls {@link AbstractDialog#initialize()}.
+         */
 	@Override
 	protected void initialize() {
 
@@ -80,6 +104,11 @@ public class CheckSignalDialog extends AbstractDialog {
 		setMinimumSize(new Dimension(WINDOW_SIZE, WINDOW_SIZE));
 	}
 
+        /**
+         * Creates the interface - a panel with {@link #checkSignalDisplay}.
+         *
+         * @return the interface
+         */
         @Override
 	public JComponent createInterface() {
 
@@ -101,6 +130,12 @@ public class CheckSignalDialog extends AbstractDialog {
 
 	}
 
+        /**
+         * Sets the montage and starts the {@link #timer}.
+         *
+         * @param model  model the model from which this dialog will be filled
+         * @throws SignalMLException TODO when it is thrown
+         */
         @Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 
@@ -127,7 +162,7 @@ public class CheckSignalDialog extends AbstractDialog {
                 timer = new Timer(DELAY, timerClass);
                 timer.start();
 	}
-        
+
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
 
@@ -148,7 +183,7 @@ public class CheckSignalDialog extends AbstractDialog {
 	}
 
         /**
-         * Stops the timer on dialog close.
+         * Stops the timer on dialog close. Then calls {@link AbstractDialog#onDialogClose()}.
          */
         @Override
 	protected void onDialogClose() {

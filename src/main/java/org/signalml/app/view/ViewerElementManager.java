@@ -35,6 +35,7 @@ import org.signalml.app.action.EditSignalParametersAction;
 import org.signalml.app.action.EditStoredMontagesAction;
 import org.signalml.app.action.EditTagDescriptionAction;
 import org.signalml.app.action.EditTagStylesAction;
+import org.signalml.app.action.EEGLabExportAction;
 import org.signalml.app.action.ExportBookAction;
 import org.signalml.app.action.ExportSignalAction;
 import org.signalml.app.action.ExportTagAction;
@@ -100,6 +101,7 @@ import org.signalml.app.view.dialog.ApplicationPreferencesDialog;
 import org.signalml.app.view.dialog.DynamicCompilationWarningDialog;
 import org.signalml.app.view.dialog.EditTagAnnotationDialog;
 import org.signalml.app.view.dialog.EditTagDescriptionDialog;
+import org.signalml.app.view.dialog.EEGLabExportDialog;
 import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.dialog.ExportSignalDialog;
 import org.signalml.app.view.dialog.HelpDialog;
@@ -228,6 +230,7 @@ public class ViewerElementManager {
 	private ViewerTabbedPane propertyTabbedPane;
 
 	/* Dialogs */
+        private EEGLabExportDialog eeglabExportDialog;
         private CheckSignalDialog checkSignalDialog;
 	private ErrorsDialog errorsDialog;
 	private PleaseWaitDialog pleaseWaitDialog;
@@ -259,6 +262,7 @@ public class ViewerElementManager {
 	private BookFilterDialog bookFilterDialog;
 
 	/* Actions */
+        private EEGLabExportAction eeglabExportAction;
         private CheckSignalAction checkSignalAction;
 	private CloseWindowAction closeWindowAction;
 	private EditPreferencesAction editPreferencesAction;
@@ -592,6 +596,7 @@ public class ViewerElementManager {
 			exportSubmenu.add(getExportTagAction());
 			exportSubmenu.add(getExportSignalAction());
 			exportSubmenu.add(getExportBookAction());
+                        exportSubmenu.add(getEEGLabExportAction());
 
 			fileMenu = new JMenu(messageSource.getMessage("menu.file"));
 
@@ -1132,6 +1137,13 @@ public class ViewerElementManager {
 		return exportSignalDialog;
 	}
 
+        public EEGLabExportDialog getEEGLabExportDialog() {
+                if (eeglabExportDialog == null) {
+                        eeglabExportDialog = new EEGLabExportDialog(messageSource, getDialogParent(), true);
+                }
+                return eeglabExportDialog;
+        }
+
 	public EditFFTSampleFilterDialog getEditFFTSampleFilterDialog() {
 		if (editFFTSampleFilterDialog == null) {
 			editFFTSampleFilterDialog = new EditFFTSampleFilterDialog(messageSource, getFftFilterPresetManager(), getDialogParent(), true);
@@ -1478,6 +1490,14 @@ public class ViewerElementManager {
 		}
 		return exportBookAction;
 	}
+
+        public EEGLabExportAction getEEGLabExportAction() {
+                if (eeglabExportAction == null) {
+                        eeglabExportAction = new EEGLabExportAction((messageSource), getActionFocusManager());
+                        eeglabExportAction.setEEGLabExportDialog(getEEGLabExportDialog());
+                }
+                return eeglabExportAction;
+        }
 
 	public AbortAllTasksAction getAbortAllTasksAction() {
 		if (abortAllTasksAction == null) {
