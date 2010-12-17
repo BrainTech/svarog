@@ -94,7 +94,7 @@ public class EEGLabExportDialog extends AbstractDialog  {
 		if (fileSelectPanel == null) {
 
                         HashMap<String, String[]> filters = new HashMap<String, String[]>();
-                        filters.put("Dataset files", new String[] { "set" } );
+                        filters.put(messageSource.getMessage("eeglabExport.datasetFiles"), new String[] { "set" } );
 			fileSelectPanel = new FileSelectPanel(messageSource, messageSource.getMessage("eeglabExport.chooseFileLabel"), filters, true);
 		}
 		return fileSelectPanel;

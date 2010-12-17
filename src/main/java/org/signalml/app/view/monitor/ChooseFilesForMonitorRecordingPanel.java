@@ -23,16 +23,33 @@ import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
 /**
- * Represents a panel used to select files used to record monitor.
+ * Represents a panel for selecting files used to record monitor.
  *
  * @author Piotr Szachewicz
  */
 public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 
+	/**
+	 * A message source accessor capable of resolving localized message codes.
+	 */
 	private final MessageSourceAccessor messageSource;
 
+	/**
+	 * A {@link FileSelectPanel} for selecting a signal recording target file
+	 * for a monitor recording.
+	 */
 	private FileSelectPanel selectSignalRecordingFilePanel;
+
+	/**
+	 * A {@link FileSelectPanel} for selecting a tag recording target file
+	 * for a monitor recording.
+	 */
 	private FileSelectPanel selectTagsRecordingFilePanel;
+
+	/**
+	 * A panel containing a {@link JCheckBox} allowing to enable/disable
+	 * the recording of tags (only signal is recorded then).
+	 */
 	private DisableTagRecordingPanel disableTagRecordingPanel;
 
 	/**
@@ -47,6 +64,9 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 		initialize();
 	}
 
+	/**
+	 * Initializes this panel.
+	 */
 	private void initialize() {
 		setLayout(new GridLayout(3, 1, 10, 5));
 		CompoundBorder border = new CompoundBorder(
@@ -58,6 +78,12 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 		add(getDisableTagRecordingPanel());
 	}
 
+	/**
+	 * Returns a {@link FileSelectPanel} allowing to select a signal recording
+	 * target file.
+	 * @return a {@link FileSelectPanel} for selecting signal recording target
+	 * file using this panel
+	 */
 	protected FileSelectPanel getSelectSignalRecordingFilePanel() {
 		if (selectSignalRecordingFilePanel == null) {
 			selectSignalRecordingFilePanel = new FileSelectPanel(messageSource, messageSource.getMessage("startMonitorRecording.chooseSignalFileLabel"));
@@ -65,6 +91,12 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 		return selectSignalRecordingFilePanel;
 	}
 
+	/**
+	 * Returns a {@link FileSelectPanel} allowing to select a tags recording
+	 * target file.
+	 * @return a {@link FileSelectPanel} for selecting tags recording target
+	 * file using this panel
+	 */
 	protected FileSelectPanel getSelectTagsRecordingFilePanel() {
 		if (selectTagsRecordingFilePanel == null) {
 			selectTagsRecordingFilePanel = new FileSelectPanel(messageSource, messageSource.getMessage("startMonitorRecording.chooseTagFileLabel"));
@@ -72,6 +104,12 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 		return selectTagsRecordingFilePanel;
 	}
 
+	/**
+	 * Returns a {@link Panel} containing a {@link JCheckBox} allowing to
+	 * enable/disable tag recording (if tag recording is disabled, then only
+	 * signal is recorded).
+	 * @return a {@link Panel} for enabling/disabling tag recording
+	 */
 	protected DisableTagRecordingPanel getDisableTagRecordingPanel() {
 		if (disableTagRecordingPanel == null) {
 			disableTagRecordingPanel = new DisableTagRecordingPanel();
@@ -149,7 +187,7 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 	/**
 	 * Represents a panel that contains a checkbox to enable/disable tag recording.
 	 */
-	private class DisableTagRecordingPanel extends JPanel {
+	protected class DisableTagRecordingPanel extends JPanel {
 
 		private JCheckBox disableTagRecordingCheckBox = null;
 

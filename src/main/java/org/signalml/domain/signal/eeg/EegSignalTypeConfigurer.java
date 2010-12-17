@@ -31,7 +31,6 @@ import org.signalml.domain.montage.eeg.LongitudinalIIMontageGenerator;
 import org.signalml.domain.montage.eeg.LongitudinalIMontageGenerator;
 import org.signalml.domain.montage.eeg.RightEarMontageGenerator;
 import org.signalml.domain.montage.eeg.TransverseIMontageGenerator;
-import org.signalml.domain.signal.AbstractSignalTypeConfigurer;
 import org.signalml.domain.signal.SignalType;
 import org.signalml.domain.signal.SignalTypeConfigurer;
 
@@ -45,7 +44,7 @@ import org.signalml.domain.signal.SignalTypeConfigurer;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class EegSignalTypeConfigurer extends AbstractSignalTypeConfigurer implements SignalTypeConfigurer {
+public class EegSignalTypeConfigurer implements SignalTypeConfigurer {
 
         /**
          * the predefined raw MontageGenerator

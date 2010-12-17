@@ -16,7 +16,7 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * This class is responsible for actions regarding the menu item which starts 
- * the recording of the opened monitor.
+ * the recording of the open monitor.
  *
  * @author Piotr Szachewicz
  */

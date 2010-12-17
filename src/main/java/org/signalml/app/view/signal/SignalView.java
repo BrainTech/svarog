@@ -65,8 +65,6 @@ import org.signalml.app.action.CloseTagAction;
 import org.signalml.app.action.EditSignalMontageAction;
 import org.signalml.app.action.EditSignalParametersAction;
 import org.signalml.app.action.EditTagAnnotationAction;
-import org.signalml.app.action.EditTagDescriptionAction;
-import org.signalml.app.action.EditTagStylesAction;
 import org.signalml.app.action.SignalFilterSwitchAction;
 import org.signalml.app.action.NewTagAction;
 import org.signalml.app.action.OpenTagAction;
@@ -107,7 +105,6 @@ import org.signalml.app.view.element.LockableJSplitPane;
 import org.signalml.app.view.element.TitledSliderPanel;
 import org.signalml.app.view.monitor.StartMonitorRecordingDialog;
 import org.signalml.app.view.montage.SignalMontageDialog;
-import org.signalml.app.view.signal.popup.ActiveTagPopupDialog;
 import org.signalml.app.view.signal.popup.CompareTagsPopupDialog;
 import org.signalml.app.view.signal.popup.SignalPlotOptionsPopupDialog;
 import org.signalml.app.view.signal.popup.SignalFFTSettingsPopupDialog;
@@ -196,8 +193,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	private ButtonGroup toolButtonGroup;
 
 	private JButton plotOptionsButton;
-	private JButton activeTagButton;
-	private JToggleButton compareTagsButton;
 
 	private JToggleButton selectToolButton;
 	private JToggleButton moveToolButton;
@@ -228,7 +223,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	private Map<ButtonModel,SignalTool> toolMap = new HashMap<ButtonModel,SignalTool>();
 
 	private ErrorsDialog errorsDialog;
-	private TagComparisonDialog tagComparisonDialog;
 	private DocumentFlowIntegrator documentFlowIntegrator;
 	private NewTagDialog newTagDialog;
 	private ViewerFileChooser fileChooser;
@@ -245,8 +239,18 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	private CloseTagAction closeTagAction;
 	private SaveTagAction saveTagAction;
 	private SaveTagAsAction saveTagAsAction;
+
+	/**
+	 * An {@link Action} responsible for starting a monitor recording.
+	 */
 	private StartMonitorRecordingAction startMonitorRecordingAction;
+
+	/**
+	 * An {@link Action} responsible for stopping an ongoing monitor
+	 * recording.
+	 */
 	private StopMonitorRecordingAction stopMonitorRecordingAction;
+
 	private EditSignalParametersAction editSignalParametersAction;
 	private EditSignalMontageAction editSignalMontageAction;
 	private ApplyDefaultMontageAction applyDefaultMontageAction;
@@ -254,8 +258,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	private TagSelectionAction tagSelectionAction;
 	private RemoveTagAction removeTagAction;
 	private EditTagAnnotationAction editTagAnnotationAction;
-	private EditTagStylesAction editTagStylesAction;
-	private EditTagDescriptionAction editTagDescriptionAction;
 	private SnapToPageAction snapToPageAction;
 	private SignalFilterSwitchAction signalFilterSwitchAction;
 
@@ -266,8 +268,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	private PresetManagerListener montagePresetManagerListener;
 
 	private SignalPlotOptionsPopupDialog signalPlotOptionsPopupDialog;
-	private ActiveTagPopupDialog activeTagDialog;
-	private CompareTagsPopupDialog compareTagsDialog;
 	private ZoomSettingsPopupDialog zoomSettingsDialog;
 	private SignalFFTSettingsPopupDialog signalFFTSettingsDialog;
 	private SlavePlotSettingsPopupDialog slavePlotSettingsPopupDialog;
@@ -833,7 +833,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		tagChannelToolButton.addActionListener(toolSelectionListener);
 		zoomSignalToolButton.addActionListener(toolSelectionListener);
 		signalFFTToolButton.addActionListener(toolSelectionListener);
-		
+
 		PluginAccessClass.getGUIImpl().registerSignalTools(toolMap, toolButtonGroup, toolSelectionListener, this);
 
 		selectToolButton.setSelected(true);
@@ -939,7 +939,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		mainToolBar.add(zoomSignalToolButton);
 		mainToolBar.add(signalFFTToolButton);
 		mainToolBar.add(rulerToolButton);
-		
+
 		PluginAccessClass.getGUIImpl().toolsToMainMenu(mainToolBar, this);
 
 		mainToolBar.addSeparator();
@@ -989,30 +989,12 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		tagToolBar.setFloatable(false);
 		tagToolBar.setVisible(false);
 
-		activeTagButton = new JButton(IconUtils.loadClassPathIcon("org/signalml/app/icon/activetag.png"));
-		activeTagButton.setToolTipText(messageSource.getMessage("signalView.activeTagToolTip"));
-		activeTagButton.addActionListener(new ActiveTagButtonListener());
-
-		compareTagsButton = new JToggleButton(IconUtils.loadClassPathIcon("org/signalml/app/icon/comparetags.png"));
-		compareTagsButton.setToolTipText(messageSource.getMessage("signalView.compareTagsToolTip"));
-		compareTagsButton.addActionListener(new CompareTagsButtonListener());
-		compareTagsButton.setSelected(false);
-		compareTagsButton.setEnabled(false);
-
 		tagPageToolButton = new JToggleButton(IconUtils.getPageTagIcon());
 		tagPageToolButton.setToolTipText(messageSource.getMessage("signalView.tagPageToolToolTip"));
 		tagBlockToolButton = new JToggleButton(IconUtils.getBlockTagIcon());
 		tagBlockToolButton.setToolTipText(messageSource.getMessage("signalView.tagBlockToolToolTip"));
 		tagChannelToolButton = new JToggleButton(IconUtils.getChannelTagIcon());
 		tagChannelToolButton.setToolTipText(messageSource.getMessage("signalView.tagChannelToolToolTip"));
-
-		tagToolBar.add(activeTagButton);
-		tagToolBar.add(compareTagsButton);
-
-		tagToolBar.addSeparator(new Dimension(0,5));
-
-		tagToolBar.add(getEditTagStylesAction());
-		tagToolBar.add(getEditTagDescriptionAction());
 
 		tagToolBar.addSeparator(new Dimension(0,5));
 
@@ -1231,6 +1213,13 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		return removeTagAction;
 	}
 
+	/**
+	 * Returns an {@link Action} responsible for starting a new monitor
+	 * recording (it shows a dialog which allows to select recording target
+	 * files and starts the recording).
+	 * @return an {@link Action} responsible for starting a new monitor
+	 * recording
+	 */
 	public StartMonitorRecordingAction getStartMonitorRecordingAction() {
 		if (startMonitorRecordingAction == null) {
 			startMonitorRecordingAction = new StartMonitorRecordingAction(messageSource, getActionFocusManager());
@@ -1239,6 +1228,11 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		return startMonitorRecordingAction;
 	}
 
+	/**
+	 * Returns an {@link Action} responsible for stopping a monitor recording.
+	 * @return an {@link Action} responsible for stopping an  monitor
+	 * recording
+	 */
 	public StopMonitorRecordingAction getStopMonitorRecordingAction() {
 		if (stopMonitorRecordingAction == null) {
 			stopMonitorRecordingAction = new StopMonitorRecordingAction(messageSource, getActionFocusManager());
@@ -1278,22 +1272,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 			getActionMap().put("editTagAnnotationAction", editTagAnnotationAction);
 		}
 		return editTagAnnotationAction;
-	}
-
-	public EditTagStylesAction getEditTagStylesAction() {
-		if (editTagStylesAction == null) {
-			editTagStylesAction = new EditTagStylesAction(messageSource,this);
-			editTagStylesAction.setTagStylePaletteDialog(tagStylePaletteDialog);
-		}
-		return editTagStylesAction;
-	}
-
-	public EditTagDescriptionAction getEditTagDescriptionAction() {
-		if (editTagDescriptionAction == null) {
-			editTagDescriptionAction = new EditTagDescriptionAction(messageSource,this);
-			editTagDescriptionAction.setEditTagDescriptionDialog(editTagDescriptionDialog);
-		}
-		return editTagDescriptionAction;
 	}
 
 	public SnapToPageAction getSnapToPageAction() {
@@ -1347,14 +1325,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 	public void setErrorsDialog(ErrorsDialog errorsDialog) {
 		this.errorsDialog = errorsDialog;
-	}
-
-	public TagComparisonDialog getTagComparisonDialog() {
-		return tagComparisonDialog;
-	}
-
-	public void setTagComparisonDialog(TagComparisonDialog tagComparisonDialog) {
-		this.tagComparisonDialog = tagComparisonDialog;
 	}
 
 	public DocumentFlowIntegrator getDocumentFlowIntegrator() {
@@ -1493,23 +1463,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		}
 
 		return signalPlotOptionsPopupDialog;
-	}
-
-	private ActiveTagPopupDialog getActiveTagDialog() {
-		if (activeTagDialog == null) {
-			activeTagDialog = new ActiveTagPopupDialog(messageSource, (Window) getTopLevelAncestor(), true);
-			activeTagDialog.setSignalView(this);
-		}
-		return activeTagDialog;
-	}
-
-	private CompareTagsPopupDialog getCompareTagsDialog() {
-		if (compareTagsDialog == null) {
-			compareTagsDialog = new CompareTagsPopupDialog(messageSource, (Window) getTopLevelAncestor(), true);
-			compareTagsDialog.setSignalView(this);
-			compareTagsDialog.setTagComparisonDialog(tagComparisonDialog);
-		}
-		return compareTagsDialog;
 	}
 
 	private ZoomSettingsPopupDialog getZoomSettingsDialog() {
@@ -1665,9 +1618,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 					newDocument.addPropertyChangeListener(this);
 
-					activeTagDialog = null;
-					compareTagsDialog = null;
-
 				}
 
 				if (oldDocument != null) {
@@ -1706,9 +1656,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 						}
 					}
 
-					activeTagDialog = null;
-					compareTagsDialog = null;
-
 				}
 
 				int tagCnt = document.getTagDocuments().size();
@@ -1717,12 +1664,10 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 					for (SignalPlotScrollPane scrollPane : scrollPanes) {
 						scrollPane.getViewport().setScrollMode(JViewport.SIMPLE_SCROLL_MODE);
 					}
-					compareTagsButton.setEnabled(true);
 				} else {
 					for (SignalPlotScrollPane scrollPane : scrollPanes) {
 						scrollPane.getViewport().setScrollMode(JViewport.BLIT_SCROLL_MODE);
 					}
-					compareTagsButton.setEnabled(false);
 				}
 
 				hypnogramPlot.revalidateAndReset();
@@ -1776,9 +1721,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 				if (tagDocument == document.getActiveTag()) {
 					afSupport.fireActionFocusChanged();
 				}
-			}
-			else if (TagDocument.BACKING_FILE_PROPERTY.equals(name)) {
-				activeTagDialog = null;
 			}
 		}
 
@@ -1876,10 +1818,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	public void tagStyleRemoved(TagStyleEvent e) {
 		onTagStylesChanged();
 		onTagsChanged();
-	}
-
-	public void updateCompareTagsButtonState() {
-		compareTagsButton.setSelected(isComparingTags());
 	}
 
 	private void rebindTagKeys() {
@@ -2035,36 +1973,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 	}
 
-	private class ActiveTagButtonListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			ActiveTagPopupDialog dialog = getActiveTagDialog();
-			Container ancestor = getTopLevelAncestor();
-			Point containerLocation = ancestor.getLocation();
-			Point location = SwingUtilities.convertPoint(activeTagButton, new Point(0,0), ancestor);
-			location.translate(containerLocation.x, containerLocation.y);
-			dialog.setLocation(location);
-			dialog.showDialog(null);
-		}
-
-	}
-
-	private class CompareTagsButtonListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			CompareTagsPopupDialog dialog = getCompareTagsDialog();
-			Container ancestor = getTopLevelAncestor();
-			Point containerLocation = ancestor.getLocation();
-			Point location = SwingUtilities.convertPoint(compareTagsButton, new Point(0,0), ancestor);
-			location.translate(containerLocation.x, containerLocation.y);
-			dialog.setLocation(location);
-			dialog.showDialog(null);
-		}
-
-	}
-
 	private class PlotOptionsButtonListener implements ActionListener {
 
 		@Override
@@ -2126,7 +2034,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		}
 
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.signalml.plugin.export.view.ExportedSignalView#setSignalSelection(org.signalml.plugin.export.view.ExportedSignalPlot, org.signalml.plugin.export.signal.ExportedSignalSelection)
 	 */
@@ -2135,7 +2043,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		if (plot instanceof SignalPlot)
 			setSignalSelection((SignalPlot) plot, new SignalSelection(signalSelection));
 		else throw new InvalidClassException("only plot got from Svarog can be used");
-		
+
 	}
 
 	/* (non-Javadoc)
@@ -2149,7 +2057,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 			setTagSelection(signalPlot, new PositionedTag(tagSelection));
 		}
 		else throw new InvalidClassException("only plot got from Svarog can be used");
-		
+
 	}
 
 	private class SignalFFTToolButtonMouseListener extends MouseAdapter {

@@ -105,6 +105,11 @@ public class FileSelectPanel extends JPanel {
 
 	}
 
+	/**
+	 * Returns the {@link JTextField} which can be used to input
+	 * a file name.
+	 * @return the {@link JTextField} used in this panel
+	 */
 	protected JTextField getFileNameField() {
 		if (fileNameField == null) {
 			fileNameField = new JTextField(20);
@@ -112,6 +117,12 @@ public class FileSelectPanel extends JPanel {
 		return fileNameField;
 	}
 
+	/**
+	 * Returns a {@link JButton} which opens a {@link JFileChooser} to
+	 * which allows to select a file path.
+	 * @return a {@link JButton} allowing to browse through directories
+	 * and choose a file path
+	 */
 	protected JButton getChangeButton() {
 		if (browseButton == null) {
 			browseButton = new JButton(messageSource.getMessage("fileSelectPanel.browseButtonLabel"));

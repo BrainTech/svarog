@@ -395,4 +395,40 @@ class SpecialMath {
 
 	}
 
+	/**
+	 * Returns the given angle changed to a 360 degrees complement.
+	 * @param angle an angle to complement
+	 * @return the 360 degrees complement of the angle
+	 */
+	public static double complement(double angle) {
+
+		if (angle < 0)
+			angle += 360;
+		else if (angle > 0)
+			angle -= 360;
+		return angle;
+	}
+
+	/**
+	 * Unwraps angles by converting it to a 360 degrees complements
+	 * whenever the jumps between the values is larger than 180 degrees.
+	 * @param angles an array of angles to be unwrapped
+	 * @return the unwrapped copy of the angles
+	 */
+	public static double[] unwrap(double[] angles) {
+
+		double[] unwrapped = new double[angles.length];
+
+		unwrapped[0] = angles[0];
+
+		for (int i = 1; i < unwrapped.length; i++) {
+			if (Math.abs(angles[i] - unwrapped[i - 1]) > 180.0)
+				unwrapped[i] = complement(angles[i]);
+			else
+				unwrapped[i] = angles[i];
+		}
+		return unwrapped;
+
+	}
+
 }

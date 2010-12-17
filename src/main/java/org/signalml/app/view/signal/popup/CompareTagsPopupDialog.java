@@ -157,8 +157,8 @@ public class CompareTagsPopupDialog extends AbstractPopupDialog {
 		interfacePanel.add(buttonPanel, BorderLayout.SOUTH);
 
 		Dimension size = chooseTagsPanel.getPreferredSize();
-		if (size.width < 220) {
-			size.width = 220;
+		if (size.width < 270) {
+			size.width = 270;
 		}
 		chooseTagsPanel.setPreferredSize(size);
 
@@ -237,11 +237,6 @@ public class CompareTagsPopupDialog extends AbstractPopupDialog {
 	@Override
 	public boolean isFormClickApproving() {
 		return true;
-	}
-
-	@Override
-	protected void onDialogClose() {
-		signalView.updateCompareTagsButtonState();
 	}
 
 	private class CheckBoxCoordinator implements ItemListener {
@@ -335,7 +330,6 @@ public class CompareTagsPopupDialog extends AbstractPopupDialog {
 			}
 
 			// temporarily hide the popup
-			signalView.updateCompareTagsButtonState();
 			setVisible(false);
 
 			tagComparisonDialog.showDialog(descriptor, true);

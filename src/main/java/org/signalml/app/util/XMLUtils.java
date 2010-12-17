@@ -44,6 +44,8 @@ import com.thoughtworks.xstream.converters.reflection.FieldDictionary;
 import com.thoughtworks.xstream.converters.reflection.NativeFieldKeySorter;
 import com.thoughtworks.xstream.converters.reflection.PureJavaReflectionProvider;
 import com.thoughtworks.xstream.io.xml.DomDriver;
+import org.signalml.app.config.preset.PredefinedFiltersConfiguration;
+import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
 
 /** XMLUtils
  *
@@ -104,10 +106,29 @@ public abstract class XMLUtils {
 		);
 	}
 
+	/**
+	 * Configures the given {@link XStream XStreamer} for {@link TimeDomainSampleFilter}
+	 * streaming.
+	 * @param streamer a streamer to be configured
+	 */
 	public static void configureStreamerForTimeDomainSampleFilter(XStream streamer) {
 		Annotations.configureAliases(
 				streamer,
 				TimeDomainSampleFilterPresetManager.class,
+				TimeDomainSampleFilter.class
+		);
+	}
+
+	/**
+	 * Configures the given {@link XStream XStreamer} for
+	 * {@link PredefinedTimeDomainFiltersPresetManager}.
+	 * @param streamer a streamer to be configured
+	 */
+	public static void configureStreamerForPredefinedTimeDomainSampleFilter(XStream streamer) {
+		Annotations.configureAliases(
+				streamer,
+				PredefinedTimeDomainFiltersPresetManager.class,
+				PredefinedFiltersConfiguration.class,
 				TimeDomainSampleFilter.class
 		);
 	}

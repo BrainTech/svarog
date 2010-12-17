@@ -339,6 +339,11 @@
 			</exclusions>
 		</dependency>
 		<dependency>
+			<groupId>jmatio</groupId>
+			<artifactId>jmatio</artifactId>
+			<version>0.1-alpha</version>
+		</dependency>
+		<dependency>
 			<groupId>com.mathworks</groupId>
 			<artifactId>javabuilder</artifactId>
 			<version>1.0.0</version>

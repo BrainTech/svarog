@@ -30,9 +30,25 @@ import javax.swing.border.TitledBorder;
  */
 public class MonitorRecordingPanel extends JPanel {
 
+	/**
+	 * A message source accessor capable of resolving localized message codes.
+	 */
 	private final MessageSourceAccessor messageSource;
+
+	/**
+	 * A panel for choosing signal and tags recording target files for this
+	 * recording.
+	 */
 	private ChooseFilesForMonitorRecordingPanel chooseFilesForMonitorRecordingPanel = null;
+
+	/**
+	 * A panel containing the {@link MonitorRecordingPanel#enableRecordingCheckbox}.
+	 */
 	private JPanel enableRecordingPanel = null;
+
+	/**
+	 * A {@link JCheckBox} for enabling/disabling signal and tags recording.
+	 */
 	private JCheckBox enableRecordingCheckbox = null;
 
 	/**
@@ -46,6 +62,9 @@ public class MonitorRecordingPanel extends JPanel {
 		initialize();
 	}
 
+	/**
+	 * Initializes all components.
+	 */
 	private void initialize() {
 
 		setLayout(new BorderLayout(10, 10));
@@ -63,6 +82,11 @@ public class MonitorRecordingPanel extends JPanel {
 
 	}
 
+	/**
+	 * Returns the panel for choosing signal and tags recording target files
+	 * used in this {@link MonitorRecordingPanel}
+	 * @return the {@link ChooseFilesForMonitorRecordingPanel} used
+	 */
 	protected ChooseFilesForMonitorRecordingPanel getChooseFilesForMonitorRecordingPanel() {
 		if (chooseFilesForMonitorRecordingPanel == null) {
 			chooseFilesForMonitorRecordingPanel = new ChooseFilesForMonitorRecordingPanel(messageSource);
@@ -70,6 +94,11 @@ public class MonitorRecordingPanel extends JPanel {
 		return chooseFilesForMonitorRecordingPanel;
 	}
 
+	/**
+	 * Returns the panel for enabling/disabling signal and tags recording
+	 * used in this {@link MonitorRecordingPanel}
+	 * @return the panel for enabling/disabling monitor recording
+	 */
 	protected JPanel getEnableRecordingPanel() {
 		if (enableRecordingPanel == null) {
 			enableRecordingPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -79,6 +108,11 @@ public class MonitorRecordingPanel extends JPanel {
 		return enableRecordingPanel;
 	}
 
+	/**
+	 * Returns the {@link JCheckBox} for enabling/disabling monitor recording
+	 * used in this panel.
+	 * @return a {@link JCheckBox} for enabling/disabling monitor recording
+	 */
 	protected JCheckBox getEnableRecordingCheckbox() {
 		if (enableRecordingCheckbox == null) {
 			enableRecordingCheckbox = new JCheckBox();
