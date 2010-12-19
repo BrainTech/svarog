@@ -60,7 +60,7 @@ public class EEGLabExportDialog extends AbstractDialog  {
         }        
 
         /**
-         * Sets window's title, then calls {@link AbstractDialog#initialize()}.
+         * Sets window's title then calls {@link AbstractDialog#initialize()}.
          */
 	@Override
 	protected void initialize() {

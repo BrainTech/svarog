@@ -124,15 +124,11 @@ public class EEGLabSignalWriter {
                 eegStruct.setField("ref", new MLInt64("ref", new long[]{ referenceChannel }, 1));
                 eegStruct.setField("saved", new MLChar("saved", "no"));
                 eegStruct.setField("data", new MLDouble("data", data));
+		
+                eegStruct.setField("icawinv", new MLDouble("icawinv", new double[][] { { } } ));
+                eegStruct.setField("icaweights", new MLDouble("icaweights", new double[][] { { } } ));
+                eegStruct.setField("icasphere", new MLDouble("icasphere", new double[][] { { } } ));
 
-                double[] icasphere = new double[channelCount];
-                for (double i : icasphere)
-                        i = 0;
-
-                eegStruct.setField("icawinv", new MLDouble("icawinv", new double[] { 0 }, 1));
-                eegStruct.setField("icaweights", new MLDouble("icaweights", new double[] { 0 }, 1));
-                eegStruct.setField("icasphere", new MLDouble("icasphere", icasphere, 1));
-						
 		ArrayList<MLArray> list = new ArrayList<MLArray>();
 		list.add(eegStruct);
 		new MatFileWriter(output, list);
