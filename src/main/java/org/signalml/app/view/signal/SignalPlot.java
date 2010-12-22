@@ -1939,7 +1939,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 					}
 				}
 				else if (tag.getStyle().getType() == SignalSelectionType.CHANNEL) {
-					if (tag.getChannel() == channel) {
+					if (tag.getChannel() == channel || tag.getChannel() == Tag.CHANNEL_NULL) {
 						if (tag.isMarker() || (time >= tag.getPosition() && time < tag.getEndPosition())) {
 							tagBounds = getPixelChannelTagBoundsInChannel(tag, tag.isMarker(), tagCnt, cnt, viewChannel, comparing, tempBounds);
 							if (tagBounds.contains(point)) {
@@ -1961,7 +1961,8 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 	public String getTagMessage(Tag tag) {
 		SignalSelectionType type = tag.getType();
-		if (type == SignalSelectionType.PAGE || type == SignalSelectionType.BLOCK) {
+		if (type == SignalSelectionType.PAGE || type == SignalSelectionType.BLOCK
+			|| (type == SignalSelectionType.CHANNEL && tag.getChannel() == Tag.CHANNEL_NULL)) {
 			return messageSource.getMessage("tagWithoutChannel", new Object[] {
 			                                        tag.getStyle().getDescriptionOrName(),
 			                                        tag.getPosition(),

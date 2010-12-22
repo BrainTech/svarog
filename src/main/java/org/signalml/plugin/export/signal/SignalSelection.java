@@ -36,8 +36,8 @@ public class SignalSelection implements Serializable, ExportedSignalSelection {
 	protected double length;
 
     /**
-     * number of selected channel
-     * CHANNEL_NULL when no channel is selected
+     * Number of selected channel. (CHANNEL_NULL when no channel is selected -
+     * if no channel is selected then the selection covers all channels).
      */
 	protected int channel;
 
