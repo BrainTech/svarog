@@ -25,8 +25,10 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 
-/** KeyStrokeCaptureDialog
- *
+/**
+ * Dialog which allows to capture the key stroke (combination of
+ * SHIFT/CONTROL/ALT with another key).
+ * The visual part contains only one label, which tells the user to wait.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -34,26 +36,50 @@ public class KeyStrokeCaptureDialog extends AbstractDialog {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * the last captured key stroke
+	 */
 	private KeyStroke currentStroke = null;
 
+	/**
+	 * Constructor. Sets the source of messages.
+	 * @param messageSource the source of messages
+	 */
 	public KeyStrokeCaptureDialog(MessageSourceAccessor messageSource) {
 		super(messageSource);
 	}
 
+	/**
+	 * Constructor. Sets message source, parent window and that this dialog
+	 * blocks top-level windows.
+	 * @param messageSource message source to set
+	 * @param w the parent window or null if there is no parent
+	 */
 	public KeyStrokeCaptureDialog(MessageSourceAccessor messageSource, Window w) {
 		super(messageSource, w, true);
 	}
 
+	/**
+	 * This dialog has no model.
+	 */
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 		// do nothing
 	}
 
+	/**
+	 * This dialog has no model.
+	 */
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
 		// do nothing
 	}
 
+	/**
+	 * Creates the interface for this dialog with BoxLayout and only one label,
+	 * which tells the user to wait.
+	 * Sets the cursor to the {@code WAIT_CURSOR}.
+	 */
 	@Override
 	public JComponent createInterface() {
 
@@ -77,26 +103,44 @@ public class KeyStrokeCaptureDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * This dialog has no control panel.
+	 */
 	@Override
 	public boolean isControlPanelEquipped() {
 		return false;
 	}
 
+	/**
+	 * This dialog has no cancel button.
+	 */
 	@Override
 	public boolean isCancellable() {
 		return false;
 	}
 
+	/**
+	 * This dialog is not canceled when escape is pressed.
+	 */
 	@Override
 	public boolean isCancelOnEscape() {
 		return false;
 	}
 
+	/**
+	 * This dialog has no model so {@code class} must be {@code null}.
+	 */
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
 		return (clazz == null);
 	}
 
+	/**
+	 * Initializes this dialog - adds a key listener to this dialog, which
+	 * (when the key is captured) remembers this key (combination of
+	 * SHIFT/CONTROL/ALT with another key) and makes this dialog
+	 * invisible.
+	 */
 	@Override
 	protected void initialize() {
 		setUndecorated(true);
@@ -115,11 +159,20 @@ public class KeyStrokeCaptureDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Sets that there was no captured key stroke (combination of
+	 * SHIFT/CONTROL/ALT with another key).
+	 */
 	@Override
 	protected void resetDialog() {
 		currentStroke = null;
 	}
 
+	/**
+	 * Shows this dialog and returns the key stroke (combination of
+	 * SHIFT/CONTROL/ALT with another key) captured by it.
+	 * @return the captured key stroke
+	 */
 	public KeyStroke captureKeyStroke() {
 
 		currentStroke = null;
@@ -129,6 +182,13 @@ public class KeyStrokeCaptureDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Shows this dialog and returns the key stroke (combination of
+	 * SHIFT/CONTROL/ALT with another key) captured by it.
+	 * If the captured key stroke is escape - null is returned
+	 * @return the captured key stroke or null if the captured key stroke was
+	 * {@code KeyEvent#VK_ESCAPE}
+	 */
 	public KeyStroke captureKeyStrokeWithEscAsCancel() {
 
 		currentStroke = null;

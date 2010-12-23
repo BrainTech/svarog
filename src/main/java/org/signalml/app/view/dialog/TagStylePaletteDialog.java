@@ -36,13 +36,21 @@ import org.signalml.app.view.element.TagStyleTree;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.SignalSelectionType;
+import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
-/** TagStylePaletteDialog
- *
+/**
+ * Dialog which allows to add, remove and edit {@link TagStyle tag styles}.
+ * This dialog contains two panels:
+ * <ul>
+ * <li>on the left - the panel with the {@link TagStyleTree tree} with
+ * {@link TagStyle tag styles} and buttons to add/remove styles,</li>
+ * <li>on the right - the {@link TagStylePropertiesPanel panel} with
+ * the properties of the selected style.</li>
+ * </ul>
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -50,43 +58,163 @@ public class TagStylePaletteDialog extends AbstractDialog {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * the {@link TagStyleTreeModel model} for the {@link
+	 * #getTagStyleTree() tree} with {@link TagStyle tag styles}
+	 */
 	private TagStyleTreeModel tagStyleTreeModel;
+	/**
+	 * the {@link TagStyleTree tree} with {@link TagStyle tag styles}
+	 */
 	private TagStyleTree tagStyleTree;
+	/**
+	 * the panel with the {@link #getTagStyleTree() tree} of {@link
+	 * TagStyle tag styles}
+	 */
 	private JScrollPane treeScrollPane;
+	/**
+	 * The left panel in this dialog.
+	 * The panel contains two elements:
+	 * <ul>
+	 * <li>the {@link #getTreeScrollPane() panel} with the {@link TagStyleTree
+	 * tree} of {@link TagStyle tag styles},</li>
+	 * <li>the {@link #getButtonPanel() panel} with control buttons.</li></ul>
+	 */
 	private JPanel tagTreePanel;
 
+	/**
+	 * the {@link TagStylePropertiesPanel panel} with
+	 * the properties of the selected style
+	 */
 	private TagStylePropertiesPanel tagStylePropertiesPanel;
 
+	/**
+	 * the {@link AddPageStyleAction action} which adds a new
+	 * {@link SignalSelectionType#PAGE page} {@link TagStyle style}.
+	 * If the action doesn't exist it is created
+	 */
 	private AddPageStyleAction addPageStyleAction;
+	/**
+	 * the {@link AddBlockStyleAction action} which adds a new
+	 * {@link SignalSelectionType#BLOCK block} {@link TagStyle style}
+	 */
 	private AddBlockStyleAction addBlockStyleAction;
+	/**
+	 * the {@link AddChannelStyleAction action} which adds a new
+	 * {@link SignalSelectionType#CHANNEL channel} {@link TagStyle style}
+	 */
 	private AddChannelStyleAction addChannelStyleAction;
+	/**
+	 * the {@link RemoveStyleAction action} which removes the
+	 * currently selected {@link TagStyle style}
+	 */
 	private RemoveStyleAction removeStyleAction;
 
+	/**
+	 * the button which calls the {@link #getAddChannelStyleAction()
+	 * action} which adds a new {@link SignalSelectionType#PAGE page}
+	 * {@link TagStyle style}
+	 */
 	private JButton addPageStyleButton;
+	/**
+	 * the button which calls the {@link #getAddChannelStyleAction()
+	 * action} which adds a new {@link SignalSelectionType#BLOCK block}
+	 * {@link TagStyle style}
+	 */
 	private JButton addBlockStyleButton;
+	/**
+	 * the button which calls the {@link #getAddChannelStyleAction()
+	 * action} which adds a new {@link SignalSelectionType#CHANNEL channel}
+	 * {@link TagStyle style}
+	 */
 	private JButton addChannelStyleButton;
+	/**
+	 * the button which calls the {@link #getRemoveStyleAction() action}
+	 * which removes the currently selected {@link TagStyle style}
+	 */
 	private JButton removeStyleButton;
 
+	/**
+	 * the {@link ApplyChangesActionAction action} which applies changes
+	 */
 	private ApplyChangesActionAction applyChangesActionAction;
+	
+	/**
+	 * the button which calls the {@link ApplyChangesActionAction action}
+	 * which applies changes
+	 */
 	private JButton applyChangesButton;
 
+	/**
+	 * the panel with buttons:
+	 * <ul>
+	 * <li>the button which removes the
+	 * selected {@link TagStyle style},</li>
+	 * <li>the button which adds a {@link SignalSelectionType#PAGE page} style,
+	 * </li>
+	 * <li>the button which adds a {@link SignalSelectionType#BLOCK block}
+	 * style,</li>
+	 * <li>the button which adds a {@link SignalSelectionType#CHANNEL channel}
+	 * style</li>
+	 */
 	private JPanel buttonPanel;
 
+	/**
+	 * the {@link KeyStrokeCaptureDialog dialog} which captures the key stroke
+	 * for the style
+	 */
 	private KeyStrokeCaptureDialog keyStrokeCaptureDialog = null;
 
+	/**
+	 * the {@link StyledTagSet set} of tag styles that is currently used
+	 */
 	private StyledTagSet currentTagSet;
+	/**
+	 * the currently selected {@link TagStyle style}
+	 */
 	private TagStyle currentStyle;
 
+	/**
+	 * {@code true} if the current {@link TagStyle style} was changed or
+	 * if the style was added/removed,
+	 * {@code false} otherwise
+	 */
 	private boolean changed = false;
 
+	/**
+	 * Constructor. Sets message source.
+	 * @param messageSource message source to set
+	 */
 	public TagStylePaletteDialog(MessageSourceAccessor messageSource) {
 		super(messageSource);
 	}
 
+	/**
+	 * Constructor. Sets message source, parent window and if this dialog
+	 * blocks top-level windows.
+	 * @param messageSource message source to set
+	 * @param w the parent window or null if there is no parent
+	 * @param isModal true, dialog blocks top-level windows, false otherwise
+	 */
 	public TagStylePaletteDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
 		super(messageSource, w, isModal);
 	}
 
+	/**
+	 * Initializes this panel:
+	 * <ul>
+	 * <li>sets the title and the icon,</li>
+	 * <li>calls the {@link AbstractDialog#initialize() initialization} in
+	 * {@link AbstractDialog parent},</li>
+	 * <li>adds the listener to the {@link TagStyleTree tree} with {@link
+	 * TagStyle tag styles}, which is called when the selection is changed and:
+	 * <ul>
+	 * <li>checks if the last selected style has not been edited - if yes
+	 * {@link OptionPane#showTagStyleModified(java.awt.Component) asks} the
+	 * user what to do,</li>
+	 * <li>changes the current style in the {@link TagStylePropertiesPanel
+	 * properties panel}.</li></ul></li></ul>
+	 */
 	@Override
 	protected void initialize() {
 		setTitle(messageSource.getMessage("tagStylePalette.title"));
@@ -153,6 +281,11 @@ public class TagStylePaletteDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Creates the control pane.
+	 * Adds OK button, the CANCEL button and the button which calls the
+	 * {@link ApplyChangesActionAction action} which applies changes.  
+	 */
 	@Override
 	protected JPanel createControlPane() {
 
@@ -167,6 +300,16 @@ public class TagStylePaletteDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Creates the interface for this dialog.
+	 * This dialog contains two panels:
+	 * <ul>
+	 * <li>on the left - the panel with the {@link TagStyleTree tree} with
+	 * {@link TagStyle tag styles} and buttons to add/remove styles,</li>
+	 * <li>on the right - the {@link TagStylePropertiesPanel panel} with
+	 * the properties of the selected style.</li>
+	 * </ul>
+	 */
 	@Override
 	public JComponent createInterface() {
 
@@ -183,6 +326,11 @@ public class TagStylePaletteDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Returns the {@link TagStyleTreeModel model} for the {@link
+	 * #getTagStyleTree() tree} with {@link TagStyle tag styles}.
+	 * @return the model for the tree with tag styles
+	 */
 	private TagStyleTreeModel getTagStyleTreeModel() {
 		if (tagStyleTreeModel == null) {
 			tagStyleTreeModel = new TagStyleTreeModel();
@@ -190,6 +338,11 @@ public class TagStylePaletteDialog extends AbstractDialog {
 		return tagStyleTreeModel;
 	}
 
+	/**
+	 * Returns the {@link TagStyleTree tree} with {@link TagStyle tag styles}.
+	 * If the tree doesn't exist it is created.
+	 * @return the tree with tag styles
+	 */
 	private TagStyleTree getTagStyleTree() {
 		if (tagStyleTree == null) {
 			tagStyleTree = new TagStyleTree(getTagStyleTreeModel(), messageSource);
@@ -197,6 +350,12 @@ public class TagStylePaletteDialog extends AbstractDialog {
 		return tagStyleTree;
 	}
 
+	/**
+	 * Returns the panel with the {@link #getTagStyleTree() tree} of {@link
+	 * TagStyle tag styles}.
+	 * If the panel doesn't exist it is created.
+	 * @return the panel with the tree of tag styles
+	 */
 	private JScrollPane getTreeScrollPane() {
 		if (treeScrollPane == null) {
 			treeScrollPane = new JScrollPane(getTagStyleTree());
@@ -205,6 +364,16 @@ public class TagStylePaletteDialog extends AbstractDialog {
 		return treeScrollPane;
 	}
 
+	/**
+	 * Returns the left panel in this dialog.
+	 * The panel contains two elements:
+	 * <ul>
+	 * <li>the {@link #getTreeScrollPane() panel} with the {@link TagStyleTree
+	 * tree} of {@link TagStyle tag styles},</li>
+	 * <li>the {@link #getButtonPanel() panel} with control buttons.</li></ul>
+	 * If the panel doesn't exist it is created.
+	 * @return the left panel
+	 */
 	private JPanel getTagTreePanel() {
 		if (tagTreePanel == null) {
 
@@ -218,6 +387,12 @@ public class TagStylePaletteDialog extends AbstractDialog {
 		return tagTreePanel;
 	}
 
+	/**
+	 * Returns the {@link AddPageStyleAction action} which adds a new
+	 * {@link SignalSelectionType#PAGE page} {@link TagStyle style}.
+	 * If the action doesn't exist it is created.
+	 * @return the action which adds a new page style
+	 */
 	private AddPageStyleAction getAddPageStyleAction() {
 		if (addPageStyleAction == null) {
 			addPageStyleAction = new AddPageStyleAction();
@@ -225,6 +400,12 @@ public class TagStylePaletteDialog extends AbstractDialog {
 		return addPageStyleAction;
 	}
 
+	/**
+	 * Returns the {@link AddBlockStyleAction action} which adds a new
+	 * {@link SignalSelectionType#BLOCK block} {@link TagStyle style}.
+	 * If the action doesn't exist it is created.
+	 * @return the action which adds a new block style
+	 */
 	private AddBlockStyleAction getAddBlockStyleAction() {
 		if (addBlockStyleAction == null) {
 			addBlockStyleAction = new AddBlockStyleAction();
@@ -232,6 +413,12 @@ public class TagStylePaletteDialog extends AbstractDialog {
 		return addBlockStyleAction;
 	}
 
+	/**
+	 * Returns the {@link AddChannelStyleAction action} which adds a new
+	 * {@link SignalSelectionType#CHANNEL channel} {@link TagStyle style}.
+	 * If the action doesn't exist it is created.
+	 * @return the action which adds a new channel style
+	 */
 	private AddChannelStyleAction getAddChannelStyleAction() {
 		if (addChannelStyleAction == null) {
 			addChannelStyleAction = new AddChannelStyleAction();
@@ -239,6 +426,12 @@ public class TagStylePaletteDialog extends AbstractDialog {
 		return addChannelStyleAction;
 	}
 
+	/**
+	 * Returns the {@link RemoveStyleAction action} which removes the
+	 * currently selected {@link TagStyle style}.
+	 * If the action doesn't exist it is created.
+	 * @return the action which removes the currently selected style
+	 */
 	private RemoveStyleAction getRemoveStyleAction() {
 		if (removeStyleAction == null) {
 			removeStyleAction = new RemoveStyleAction();
@@ -246,6 +439,13 @@ public class TagStylePaletteDialog extends AbstractDialog {
 		return removeStyleAction;
 	}
 
+	/**
+	 * Returns the button which calls the {@link #getAddChannelStyleAction()
+	 * action} which adds a new {@link SignalSelectionType#PAGE page}
+	 * {@link TagStyle style}.
+	 * If the button doesn't exist it is created.
+	 * @return the button which calls the action which adds a new page style
+	 */
 	private JButton getAddPageStyleButton() {
 		if (addPageStyleButton == null) {
 			addPageStyleButton = new JButton(getAddPageStyleAction());
@@ -253,6 +453,13 @@ public class TagStylePaletteDialog extends AbstractDialog {
 		return addPageStyleButton;
 	}
 
+	/**
+	 * Returns the button which calls the {@link #getAddChannelStyleAction()
+	 * action} which adds a new {@link SignalSelectionType#BLOCK block}
+	 * {@link TagStyle style}.
+	 * If the button doesn't exist it is created.
+	 * @return the button which calls the action which adds a new block style
+	 */
 	private JButton getAddBlockStyleButton() {
 		if (addBlockStyleButton == null) {
 			addBlockStyleButton = new JButton(getAddBlockStyleAction());
@@ -260,6 +467,13 @@ public class TagStylePaletteDialog extends AbstractDialog {
 		return addBlockStyleButton;
 	}
 
+	/**
+	 * Returns the button which calls the {@link #getAddChannelStyleAction()
+	 * action} which adds a new {@link SignalSelectionType#CHANNEL channel}
+	 * {@link TagStyle style}.
+	 * If the button doesn't exist it is created.
+	 * @return the button which calls the action which adds a new channel style
+	 */
 	private JButton getAddChannelStyleButton() {
 		if (addChannelStyleButton == null) {
 			addChannelStyleButton = new JButton(getAddChannelStyleAction());
@@ -267,6 +481,13 @@ public class TagStylePaletteDialog extends AbstractDialog {
 		return addChannelStyleButton;
 	}
 
+	/**
+	 * Returns the button which calls the {@link #getRemoveStyleAction() action}
+	 * which removes the currently selected {@link TagStyle style}.
+	 * If the button doesn't exist it is created.
+	 * @return the button which calls the action which removes the currently
+	 * selected style
+	 */
 	private JButton getRemoveStyleButton() {
 		if (removeStyleButton == null) {
 			removeStyleButton = new JButton(getRemoveStyleAction());
@@ -274,6 +495,19 @@ public class TagStylePaletteDialog extends AbstractDialog {
 		return removeStyleButton;
 	}
 
+	/**
+	 * Returns the panel with buttons:
+	 * <ul>
+	 * <li>the button which removes the
+	 * selected {@link TagStyle style},</li>
+	 * <li>the button which adds a {@link SignalSelectionType#PAGE page} style,
+	 * </li>
+	 * <li>the button which adds a {@link SignalSelectionType#BLOCK block}
+	 * style,</li>
+	 * <li>the button which adds a {@link SignalSelectionType#CHANNEL channel}
+	 * style,</li>
+	 * @return the panel with buttons
+	 */
 	public JPanel getButtonPanel() {
 
 		if (buttonPanel == null) {
@@ -290,6 +524,15 @@ public class TagStylePaletteDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Fills the fields of this dialog:
+	 * <ul>
+	 * <li>sets the {@link TagStylePaletteDescriptor#getTagSet() tag set} from
+	 * {@link TagStylePaletteDescriptor model} in the {@link TagStyleTreeModel
+	 * tree model},</li>
+	 * <li>sets the {@link TagStylePaletteDescriptor#getStyle() initial style}
+	 * as the current style.</li></ul>
+	 */
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 
@@ -319,6 +562,9 @@ public class TagStylePaletteDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Stores the changes in the tag style.
+	 */
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
 
@@ -329,6 +575,10 @@ public class TagStylePaletteDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Validates this dialog.
+	 * This dialog is valid if the name and the key stroke are unique.
+	 */
 	@Override
 	public void validateDialog(Object model, Errors errors) throws SignalMLException {
 		if (tagStylePropertiesPanel.isChanged()) {
@@ -337,16 +587,30 @@ public class TagStylePaletteDialog extends AbstractDialog {
 		}
 	}
 
+	/**
+	 * Sets that there is no {@link StyledTagSet tag set} in the
+	 * {@link TagStyleTreeModel tree model}.
+	 */
 	@Override
 	protected void onDialogClose() {
 		tagStyleTreeModel.setTagSet(null);
 	}
 
+	/**
+	 * The model for this dialog must be of type {@link
+	 * TagStylePaletteDescriptor}.
+	 */
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
 		return TagStylePaletteDescriptor.class.isAssignableFrom(clazz);
 	}
 
+	/**
+	 * Adds the given {@link TagStyle style} to the set and sets it as the
+	 * current style in the {@link #getTagStyleTree() tree} and in the
+	 * {@link #tagStylePropertiesPanel}.
+	 * @param newStyle the style to be added
+	 */
 	private void addNewStyle(TagStyle newStyle) {
 
 		currentTagSet.addStyle(newStyle);
@@ -363,6 +627,12 @@ public class TagStylePaletteDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Creates and returns the new {@link TagStyle tag style} of the given
+	 * {@link SignalSelectionType type} with the default name and color.
+	 * @param type the type of the style
+	 * @return the created style
+	 */
 	private TagStyle getNewStyle(SignalSelectionType type) {
 		String name = messageSource.getMessage("new");
 		int cnt = 2;
@@ -373,6 +643,11 @@ public class TagStylePaletteDialog extends AbstractDialog {
 		return new TagStyle(type, name, null, Color.GREEN, Color.GREEN, 1, null, null, false);
 	}
 
+	/**
+	 * Validates the changes in this dialog.
+	 * The changes are valid if the name and the key stroke are unique.
+	 * @return the object in which errors are stored
+	 */
 	private Errors validateChanges() {
 
 		Errors errors = tagStylePropertiesPanel.validateChanges();
@@ -395,6 +670,9 @@ public class TagStylePaletteDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Stores the changes (user input) in the {@link TagStyle tag style}.
+	 */
 	private void applyChanges() {
 
 		boolean changed = false;
@@ -413,6 +691,11 @@ public class TagStylePaletteDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * {@link #validateChanges() Validates} changes and, if they are valid,
+	 * {@link #applyChanges() applies} them.
+	 * @return {@code true} if the changes were valid, {@code false} otherwise
+	 */
 	private boolean validateAndApplyChanges() {
 
 		Errors errors = validateChanges();
@@ -430,6 +713,19 @@ public class TagStylePaletteDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * If there were unsaved changes {@link OptionPane#showTagStyleModified(
+	 * java.awt.Component) shows} the dialog and asks the user what to do.
+	 * If the user answers:
+	 * <ul>
+	 * <li>to save them - validates and saves them and returns {@code true},
+	 * </li>
+	 * <li>to discard them - sets that there were no changes and returns
+	 * {@code true},</li>
+	 * <li>otherwise - returns {@code false}.</li>
+	 * @return {@code true} if there were no changes or the user chose to
+	 * save or discard the changes, {@code false} otherwise
+	 */
 	@Override
 	protected boolean onCancel() {
 		if (tagStylePropertiesPanel.isChanged()) {
@@ -448,21 +744,36 @@ public class TagStylePaletteDialog extends AbstractDialog {
 		return true;
 	}
 
+	/**
+	 * Sets that no change has occurred.
+	 */
 	@Override
 	protected void resetDialog() {
 		changed = false;
 	}
 
+	/**
+	 * Action which adds a {@link SignalSelectionType#PAGE PAGE} {@link TagStyle
+	 * style}.
+	 */
 	protected class AddPageStyleAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 
+		/**
+		 * Constructor. Sets the icon and the tooltip.
+		 */
 		public AddPageStyleAction() {
 			super(messageSource.getMessage("tagStylePalette.newPageStyle"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/pagetag.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("tagStylePalette.newPageStyleToolTip"));
 		}
 
+		/**
+		 * When this action is performed the {@link SignalSelectionType#PAGE
+		 * PAGE} {@link TagStyle style} is added and the boolean is set that
+		 * the change has occurred.
+		 */
 		public void actionPerformed(ActionEvent ev) {
 
 			addNewStyle(getNewStyle(SignalSelectionType.PAGE));
@@ -472,16 +783,28 @@ public class TagStylePaletteDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Action which adds a {@link SignalSelectionType#BLOCK BLOCK} {@link
+	 * TagStyle style}.
+	 */
 	protected class AddBlockStyleAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 
+		/**
+		 * Constructor. Sets the icon and the tooltip.
+		 */
 		public AddBlockStyleAction() {
 			super(messageSource.getMessage("tagStylePalette.newBlockStyle"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/blocktag.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("tagStylePalette.newBlockStyleToolTip"));
 		}
 
+		/**
+		 * When this action is performed the {@link SignalSelectionType#BLOCK
+		 * BLOCK} {@link TagStyle style} is added and the boolean is set that
+		 * the change has occurred.
+		 */
 		public void actionPerformed(ActionEvent ev) {
 
 			addNewStyle(getNewStyle(SignalSelectionType.BLOCK));
@@ -491,16 +814,28 @@ public class TagStylePaletteDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Action which adds a {@link SignalSelectionType#CHANNEL CHANNEL} {@link
+	 * TagStyle style}.
+	 */
 	protected class AddChannelStyleAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 
+		/**
+		 * Constructor. Sets the icon and the tool-tip.
+		 */
 		public AddChannelStyleAction() {
 			super(messageSource.getMessage("tagStylePalette.newChannelStyle"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/channeltag.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("tagStylePalette.newChannelStyleToolTip"));
 		}
 
+		/**
+		 * When this action is performed the {@link SignalSelectionType#CHANNEL
+		 * CHANNEL} {@link TagStyle style} is added and the boolean is set that
+		 * the change has occurred.
+		 */
 		public void actionPerformed(ActionEvent ev) {
 
 			addNewStyle(getNewStyle(SignalSelectionType.CHANNEL));
@@ -510,16 +845,31 @@ public class TagStylePaletteDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Action which removes the currently selected {@link TagStyle style}.
+	 * <p>
+	 * If the style is used (there exist {@link Tag tags} with that style)
+	 * appropriate information is shown and no action is taken.
+	 * Otherwise removes that style and sets that there is no active style.
+	 */
 	protected class RemoveStyleAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 
+		/**
+		 * Constructor. Sets the icon and the tool-tip.
+		 */
 		public RemoveStyleAction() {
 			super(messageSource.getMessage("tagStylePalette.removeStyle"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/removetag.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("tagStylePalette.removeStyleToolTip"));
 		}
 
+		/**
+		 * If the style is used (there exist {@link Tag tags} with that style)
+		 * appropriate information is shown and no action is taken.
+		 * Otherwise removes that style and sets that there is no active style.
+		 */
 		public void actionPerformed(ActionEvent ev) {
 
 			TreePath selection = getTagStyleTree().getSelectionPath();
@@ -547,6 +897,11 @@ public class TagStylePaletteDialog extends AbstractDialog {
 
 		}
 
+		/**
+		 * If the last component on the given path is of type {@link TagStyle}
+		 * enables this action, otherwise disables it.
+		 * @param selection the path
+		 */
 		public void setEnabled(TreePath selection) {
 			boolean enabled = false;
 			if (selection != null) {
@@ -560,16 +915,26 @@ public class TagStylePaletteDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Action which validates and applies the changes (user input).
+	 */
 	protected class ApplyChangesActionAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 
+		/**
+		 * Constructor. Sets the icon and the tool-tip.
+		 */
 		public ApplyChangesActionAction() {
 			super(messageSource.getMessage("tagStylePalette.applyChanges"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/apply.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("tagStylePalette.applyChangesToolTip"));
 		}
 
+		/**
+		 * When the action is performed validates and applies the changes
+		 * (user input).
+		 */
 		public void actionPerformed(ActionEvent ev) {
 
 			validateAndApplyChanges();
@@ -578,16 +943,30 @@ public class TagStylePaletteDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Action which displays the {@link KeyStrokeCaptureDialog dialog} which
+	 * captures the key stroke which activates this {@link TagStyle tag style}.
+	 * Displays the captured key stroke in the text field.
+	 */
 	protected class CaptureKeyStrokeAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 
+		/**
+		 * Constructor. Sets the icon and the tool-tip.
+		 */
 		public CaptureKeyStrokeAction() {
 			super(messageSource.getMessage("tagStylePalette.captureKeyStroke"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/keyboard.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("tagStylePalette.captureKeyStrokeToolTip"));
 		}
 
+		/**
+		 * Then this action is performed displays the {@link
+		 * KeyStrokeCaptureDialog dialog} which captures the key stroke which
+		 * activates this {@link TagStyle tag style}.
+		 * Displays the captured key stroke in the text field.
+		 */
 		public void actionPerformed(ActionEvent ev) {
 
 			if (keyStrokeCaptureDialog == null) {

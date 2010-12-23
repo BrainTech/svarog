@@ -45,57 +45,168 @@ import org.signalml.plugin.export.view.AbstractDialog;
 import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
 
-/** AbstractPresetDialog
- *
- *
+/**
+ * Dialog which data can be stored in a {@link Preset preset}.
+ * Contains the panel that allows management of presets:
+ * <ul>
+ * <li>open a preset from file and save it to file,</li>
+ * <li>set the current preset as default and load it from default,</li>
+ * <li>remove the default preset,</li>
+ * <li>save the current preset in {@link PresetManager} and get a preset from
+ * there.</li>
+ * </ul>
+ * 
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public abstract class AbstractPresetDialog extends AbstractDialog {
 
 	static final long serialVersionUID = 1L;
 
+	/**
+	 * the panel with OK and CANCEL button
+	 */
 	protected JPanel buttonPane;
 
+	/**
+	 * the {@link PresetManager manager} of {@link Preset presets}
+	 */
 	protected PresetManager presetManager;
+	
+	/**
+	 * the {@link ViewerFileChooser file chooser}
+	 */
 	protected ViewerFileChooser fileChooser;
+	
+	/**
+	 * the {@link ApplicationConfiguration configuration} of Svarog
+	 */
 	protected ApplicationConfiguration applicationConfig;
 
+	/**
+	 * the model for {@link #presetComboBox}
+	 */
 	private PresetComboBoxModel presetComboBoxModel;
+	
+	/**
+	 * the combo box which allows to select the {@link Preset preset}
+	 */
 	private JComboBox presetComboBox;
 
+	/**
+	 * the dialog that allows to select the {@link #getPresetComboBox preset}
+	 * and specify the name for it
+	 */
 	private ChoosePresetDialog choosePresetDialog;
+	
+	/**
+	 * the {@link SeriousWarningDialog dialog} which displays the
+	 * warning to the user and allows him to decide if the operation should
+	 * be terminated
+	 */
 	private SeriousWarningDialog seriousWarningDialog;
 
+	/**
+	 * @see LoadDefaultPresetAction
+	 */
 	private Action loadDefaultPresetAction;
+	
+	/**
+	 * @see SaveDefaultPresetAction
+	 */
 	private Action saveDefaultPresetAction;
+	
+	/**
+	 * @see RemoveDefaultPresetAction
+	 */
 	private Action removeDefaultPresetAction;
 
+	/**
+	 * @see SavePresetAction
+	 */
 	private Action savePresetAction;
+	
+	/**
+	 * @see LoadPresetAction
+	 */
 	private Action loadPresetAction;
+	
+	/**
+	 * @see RemovePresetAction
+	 */
 	private Action removePresetAction;
 
+	/**
+	 * @see SaveFileAction
+	 */
 	private Action saveFileAction;
+	
+	/**
+	 * @see LoadFileAction
+	 */
 	private Action loadFileAction;
 
+	/**
+	 * the button for {@link #loadDefaultPresetAction}
+	 */
 	private JButton loadDefaultPresetButton;
+	
+	/**
+	 * the button for {@link #saveDefaultPresetAction}
+	 */
 	private JButton saveDefaultPresetButton;
+	
+	/**
+	 * the button for {@link #removeDefaultPresetAction}
+	 */
 	private JButton removeDefaultPresetButton;
 
+	/**
+	 * the button for {@link #savePresetAction}
+	 */
 	private JButton savePresetButton;
+	/**
+	 * the button for {@link #removePresetAction}
+	 */
 	private JButton removePresetButton;
 
+	/**
+	 * the button for {@link #saveFileAction}
+	 */
 	private JButton saveFileButton;
+	/**
+	 * the button for {@link #loadFileAction}
+	 */
 	private JButton loadFileButton;
 
+	/**
+	 * boolean if the fields of this dialog have been changed
+	 */
 	private boolean changed = false;
 
+	/**
+	 * @see #createPresetPane()
+	 */
 	protected JPanel presetPane;
 
+	/**
+	 * Constructor. Sets message source and the {@link PresetManager preset
+	 * manager}.
+	 * @param messageSource message source to set
+	 * @param presetManager the preset manager to set
+	 */
 	public AbstractPresetDialog(MessageSourceAccessor messageSource,PresetManager presetManager) {
 		super(messageSource);
 		this.presetManager = presetManager;
 	}
 
+	/**
+	 * Constructor. Sets message source, {@link PresetManager preset
+	 * manager}, parent window and if this dialog blocks top-level windows.
+	 * @param messageSource message source to set
+	 * @param presetManager the preset manager to set
+	 * @param w the parent window or null if there is no parent
+	 * @param isModal true, dialog blocks top-level windows, false otherwise
+	 */
 	public AbstractPresetDialog(MessageSourceAccessor messageSource,PresetManager presetManager, Window w, boolean isModal) {
 		super(messageSource, w, isModal);
 		this.presetManager = presetManager;
@@ -107,10 +218,34 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 		presetManager.addPresetManagerListener(new PresetManagerChangeListener());
 	}
 
+	/**
+	 * Creates the panel with OK and CANCEL button.
+	 * @see AbstractDialog#createControlPane()
+	 * @return the created panel
+	 */
 	protected JPanel createButtonPane() {
 		return super.createControlPane();
 	}
 
+	/**
+	 * Creates the panel located in the {@link #createControlPane() control
+	 * panel}.
+	 * Contains (from left to right):
+	 * <ul>
+	 * <li>{@link #getPresetComboBox() preset combo box},</li>
+	 * <li>button to save the current preset,</li>
+	 * <li>button to remove preset selected in preset combo box,</li>
+	 * <li>button to load default preset if it {@link #showLoadDefaultButton()
+	 * should} be displayed,</li>
+	 * <li>button to set the current preset as the default one if it
+	 * {@link #showSaveDefaultButton() should} be displayed},</li>
+	 * <li>button to remove the default preset if it
+	 * {@link #showRemoveDefaultButton() should} be displayed,</li>
+	 * <li>button to load preset from file,</li>
+	 * <li>button to save the preset to file.</li>
+	 * </ul>
+	 * @return the created panel
+	 */
 	protected JPanel createPresetPane() {
 
 		JPanel presetPane = new JPanel();
@@ -180,6 +315,14 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Creates the control panel, which contains two sub-panels (from top to
+	 * bottom):
+	 * <ul>
+	 * <li>the {@link #createButtonPane() button panel},</li>
+	 * <li>the {@link #createPresetPane() preset panel}.</li>
+	 * </ul>
+	 */
 	@Override
 	protected JPanel createControlPane() {
 
@@ -215,22 +358,50 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Returns if this dialog knows if there are any changes in it (and
+	 * therefore supports {@link #isChanged()}).
+	 * @return {@code true} if this dialog knows if there are any changes in
+	 * it, {@code false} otherwise
+	 */
 	protected boolean isTrackingChanges() {
 		return false;
 	}
 
+	/**
+	 * Returns if this dialog should show the button to load the default
+	 * {@link Preset preset}.
+	 * @return {@code true} if this dialog should show the button to load the
+	 * default preset, {@code false} otherwise
+	 */
 	protected boolean showLoadDefaultButton() {
 		return false;
 	}
 
+	/**
+	 * Returns if this dialog should show the button to save the default
+	 * {@link Preset preset}.
+	 * @return {@code true} if this dialog should show the button to save the
+	 * default preset, {@code false} otherwise
+	 */
 	protected boolean showSaveDefaultButton() {
 		return false;
 	}
 
+	/**
+	 * Returns if this dialog should show the button to remove the default
+	 * {@link Preset preset}.
+	 * @return {@code true} if this dialog should show the button to remove the
+	 * default preset, {@code false} otherwise
+	 */
 	protected boolean showRemoveDefaultButton() {
 		return false;
 	}
 
+	/**
+	 * Creates the combo box which allows to select the {@link Preset preset}.
+	 * @return created combo box
+	 */
 	protected JComboBox getPresetComboBox() {
 		if (presetComboBox == null) {
 
@@ -245,6 +416,10 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 		return presetComboBox;
 	}
 
+	/**
+	 * Returns the {@link ChoosePresetDialog}.
+	 * @return the ChoosePresetDialog
+	 */
 	protected ChoosePresetDialog getChoosePresetDialog() {
 		if (choosePresetDialog == null) {
 			choosePresetDialog = new ChoosePresetDialog();
@@ -252,6 +427,13 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 		return choosePresetDialog;
 	}
 
+	/**
+	 * Returns the {@link SeriousWarningDialog dialog} which displays the
+	 * warning to the user and allows him to decide if the operation should
+	 * be terminated.
+	 * If the dialog doesn't exist, it is created.
+	 * @return the warning dialog
+	 */
 	protected SeriousWarningDialog getSeriousWarningDialog() {
 		if (seriousWarningDialog == null) {
 			seriousWarningDialog = new SeriousWarningDialog(messageSource,this,true);
@@ -260,38 +442,84 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 		return seriousWarningDialog;
 	}
 
+	/**
+	 * Returns the {@link PresetManager preset manager}.
+	 * @return the preset manager
+	 */
 	public PresetManager getPresetManager() {
 		return presetManager;
 	}
 
+	/**
+	 * Returns the {@link ViewerFileChooser file chooser}.
+	 * @return the file chooser
+	 */
 	public ViewerFileChooser getFileChooser() {
 		return fileChooser;
 	}
 
+	/**
+	 * Sets the {@link ViewerFileChooser file chooser}.
+	 * @param fileChooser the file chooser to set
+	 */
 	public void setFileChooser(ViewerFileChooser fileChooser) {
 		this.fileChooser = fileChooser;
 	}
 
+	/**
+	 * Returns the {@link ApplicationConfiguration configuration} of Svarog.
+	 * @return the configuration of Svarog
+	 */
 	public ApplicationConfiguration getApplicationConfig() {
 		return applicationConfig;
 	}
 
+	/**
+	 * Sets the {@link ApplicationConfiguration configuration} of Svarog. 
+	 * @param applicationConfig the configuration of Svarog
+	 */
 	public void setApplicationConfig(ApplicationConfiguration applicationConfig) {
 		this.applicationConfig = applicationConfig;
 	}
 
+	/**
+	 * (Creates and) returns the current {@link Preset preset}.
+	 * Must be specified in the implementing class.
+	 * @return the current preset
+	 * @throws SignalMLException TODO never thrown in implementations (???)
+	 */
 	public abstract Preset getPreset() throws SignalMLException;
 
+	/**
+	 * Sets the given preset as the current {@link Preset preset}.
+	 * Fills all necessary fields of the dialog with the data from this preset.
+	 * Must be specified in the implementing class.
+	 * @param preset the preset to use as the new current preset.
+	 * @throws SignalMLException TODO never thrown in implementations
+	 */
 	public abstract void setPreset(Preset preset) throws SignalMLException;
 
+	/**
+	 * Returns if the fields of this dialog have changed.
+	 * @return {@code true} if the fields of this dialog have changed,
+	 * {@code false} otherwise
+	 */
 	public boolean isChanged() {
 		return changed;
 	}
 
+	/**
+	 * Sets that the fields of this dialog have changed.
+	 */
 	public void invalidateChanged() {
 		this.changed = true;
 	}
 
+	/**
+	 * Sets if the fields of this dialog have changed.
+	 * @param changed {@code true} if the fields of this dialog have changed,
+	 * {@code false} otherwise
+	 */
 	protected void setChanged(boolean changed) {
 		this.changed = changed;
 	}
@@ -305,6 +533,15 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 		setEnableds();
 	}
 
+	/**
+	 * Sets if buttons should be enabled:
+	 * <ul>
+	 * <li>removePresetAction - if there is at least one {@link Preset preset}
+	 * </li>
+	 * <li>loadDefaultPresetAction & removeDefaultPresetAction -
+	 * if the default preset exists</li>
+	 * </ul>
+	 */
 	protected void setEnableds() {
 
 		boolean hasDefault = (presetManager.getDefaultPreset() != null);
@@ -316,23 +553,43 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Listens on changes in the {@link PresetManager preset manager} and
+	 * {@link AbstractPresetDialog#setEnabled(boolean) updates} the states of
+	 * buttons.
+	 */
 	protected class PresetManagerChangeListener implements PresetManagerListener {
 
+		/**
+		 * {@link AbstractPresetDialog#setEnabled(boolean) Updates} the states
+		 * of buttons
+		 */
 		@Override
 		public void defaultPresetChanged(PresetManagerEvent ev) {
 			setEnableds();
 		}
 
+		/**
+		 * {@link AbstractPresetDialog#setEnabled(boolean) Updates} the states
+		 * of buttons
+		 */
 		@Override
 		public void presetAdded(PresetManagerEvent ev) {
 			setEnableds();
 		}
 
+		/**
+		 * {@link AbstractPresetDialog#setEnabled(boolean) Updates} the states
+		 * of buttons
+		 */
 		@Override
 		public void presetRemoved(PresetManagerEvent ev) {
 			setEnableds();
 		}
 
+		/**
+		 * Does nothing.
+		 */
 		@Override
 		public void presetReplaced(PresetManagerEvent ev) {
 			// ignored
@@ -340,16 +597,35 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Action that sets the {@link AbstractPresetDialog#getPreset() current}
+	 * {@link Preset preset} as the
+	 * {@link PresetManager#setDefaultPreset(Preset) default} one.
+	 */
 	protected class SaveDefaultPresetAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 
+		/**
+		 * Constructor. Sets the icon and the tool-tip text for this action.
+		 */
 		public SaveDefaultPresetAction() {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/default_preset_save.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("presetDialog.saveDefaultPreset"));
 		}
 
+		/**
+		 * Called when this action is performed:
+		 * <ul>
+		 * <li>{@link AbstractPresetDialog#getPreset() gets} the current
+		 * {@link Preset preset} from the dialog,</li>
+		 * <li>if the default preset already exists asks the user if it should
+		 * be replaced,</li>
+		 * <li>{@link PresetManager#setDefaultPreset(Preset) sets} the preset
+		 * as the default one.</li>
+		 * </ul>
+		 */
 		public void actionPerformed(ActionEvent ev) {
 
 			Preset preset;
@@ -394,16 +670,36 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Action that replaces the current {@link Preset preset} in the dialog
+	 * with the {@link PresetManager#getDefaultPreset()} default preset
+	 * (fills the dialog using the default preset).
+	 */
 	protected class LoadDefaultPresetAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 
+		/**
+		 * Constructor. Sets the icon and the tool-tip text for this action.
+		 */
 		public LoadDefaultPresetAction() {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/default_preset_load.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("presetDialog.loadDefaultPreset"));
 		}
 
+		/**
+		 * Called when this action is performed:
+		 * <ul>
+		 * <li>{@link PresetManager#getDefaultPreset() gets} the default
+		 * {@link Preset preset},</li>
+		 * <li>if there were changes in the dialog or dialog doesn't know if
+		 * there were, shows the warning to the user that the current preset
+		 * will be overridden and allows him to cancel the operation,</li>
+		 * <li>{@link AbstractPresetDialog#setPreset(Preset) fills} the dialog
+		 * from the preset.</li>
+		 * </ul>
+		 */
 		public void actionPerformed(ActionEvent ev) {
 
 			Preset preset = presetManager.getDefaultPreset();
@@ -435,16 +731,31 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Action that sets that there is no default {@link Preset preset}.
+	 */
 	protected class RemoveDefaultPresetAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 
+		/**
+		 * Constructor. Sets the icon and the tool-tip text for this action.
+		 */
 		public RemoveDefaultPresetAction() {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/default_preset_remove.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("presetDialog.removeDefaultPreset"));
 		}
 
+		/**
+		 * Called when this action is performed:
+		 * <ul>
+		 * <li>if there is no default {@link Preset preset} does nothing,</li>
+		 * <li>displays the warning to the user,</li>
+		 * <li>if user accepted the warning sets that there is no active
+		 * preset.</li>
+		 * </ul>
+		 */
 		public void actionPerformed(ActionEvent ev) {
 
 			Preset preset = presetManager.getDefaultPreset();
@@ -474,16 +785,35 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Action that saves the {@link AbstractPresetDialog#getPreset() current
+	 * preset} to the list of presets.
+	 */
 	protected class SavePresetAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 
+		/**
+		 * Constructor. Sets the icon and the tool-tip text for this action.
+		 */
 		public SavePresetAction() {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/preset_save.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("presetDialog.savePreset"));
 		}
 
+		/**
+		 * Called when this action is performed:
+		 * <ul>
+		 * <li>{@link AbstractPresetDialog#getPreset() gets} the current
+		 * {@link Preset preset} from the dialog,</li>
+		 * <li>{@link ChoosePresetDialog#getName(String, boolean) gets} the
+		 * name for this preset,</li>
+		 * <li>if the preset of such name exists asks if it should be replaced,
+		 * </li>
+		 * <li>saves the preset to the {@link PresetManager}.</li>
+		 * </ul>
+		 */
 		public void actionPerformed(ActionEvent ev) {
 
 			Preset preset;
@@ -535,16 +865,36 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Action that {@link AbstractPresetDialog#setPreset(Preset) sets}
+	 * the selected {@link Preset preset} as active.
+	 */
 	protected class LoadPresetAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 
+		/**
+		 * Constructor. Sets the icon and the tool-tip text for this action.
+		 */
 		public LoadPresetAction() {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/preset_load.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("presetDialog.loadPreset"));
 		}
 
+		/**
+		 * Called when the action is performed:
+		 * <ul>
+		 * <li>gets the selected {@link Preset preset} or if there is no this
+		 * functions ends,
+		 * </li>
+		 * <li>if there were changes in the dialog or dialog doesn't know if
+		 * there were, shows the warning to the user that the current preset
+		 * will be overridden and allows him to cancel the operation,</li>
+		 * <li>{@link AbstractPresetDialog#setPreset(Preset) sets} this preset
+		 * as the active one (fills the dialog with the data from it).</li>
+		 * </ul>
+		 */
 		public void actionPerformed(ActionEvent ev) {
 
 			int index = getPresetComboBox().getSelectedIndex();
@@ -585,16 +935,36 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 
 	}
 
+	
+	/**
+	 * Action that removes the selected preset.
+	 * If there is no selected preset does nothing.
+	 * If there is warns the user before the removal.
+	 */
 	protected class RemovePresetAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 
+		/**
+		 * Constructor. Sets the icon and the tool-tip text for this action.
+		 */
 		public RemovePresetAction() {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/preset_remove.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("presetDialog.removePreset"));
 		}
 
+		/**
+		 * Called when the action is performed:
+		 * <ul>
+		 * <li>gets the selected {@link Preset preset} or if there is no this
+		 * functions ends,
+		 * </li>
+		 * <li>warns the user and if the user cancels operation this function
+		 * ends,</li>
+		 * <li>removes the selected preset.</li>
+		 * </ul>
+		 */
 		public void actionPerformed(ActionEvent ev) {
 
 			String name = getChoosePresetDialog().getName(null, false);
@@ -629,16 +999,35 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Action of saving the {@link Preset preset} to the file.
+	 * {@link AbstractPresetDialog#getPreset() Obtains} the preset and saves it
+	 * to the file selected by user.
+	 */
 	protected class SaveFileAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 
+		/**
+		 * Constructor. Sets the icon and the tool-tip text for this action.
+		 */
 		public SaveFileAction() {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/script_save.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("presetDialog.saveFile"));
 		}
 
+		/**
+		 * Called when the action is performed:
+		 * <ul>
+		 * <li>{@link AbstractPresetDialog#getPreset() Obtains} the
+		 * {@link Preset preset} from dialog,</li>
+		 * <li>asks the user to select the file to which the preset should be
+		 * saved</li>
+		 * <li>{@link PresetManager#writeToFile(File, Preset) saves} the preset
+		 * to the selected file.</li>
+		 * </ul>
+		 */
 		public void actionPerformed(ActionEvent ev) {
 
 			Preset preset;
@@ -689,16 +1078,42 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * The action of loading the {@link Preset preset} from file.
+	 * Asks the user to select the file and
+	 * {@link PresetManager#readFromFile(File) loads} the preset from file.
+	 */
 	protected class LoadFileAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 
+		/**
+		 * Constructor. Sets the icon and the tool-tip text for this action.
+		 */
 		public LoadFileAction() {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/script_load.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("presetDialog.loadFile"));
 		}
 
+		/**
+		 * Called when the button is clicked.
+		 * <ul>
+		 * <li>asks the user to select the file with {@link Preset preset},</li>
+		 * <li>{@link PresetManager#readFromFile(File) loads} the preset from
+		 * the selected file,</li>
+		 * <li>if there were changes in the dialog or dialog doesn't know if
+		 * there were, shows the warning to the user that the current preset
+		 * will be overridden and allows him to cancel the operation,</li>
+		 * <li>{@link AbstractPresetDialog#setPreset(Preset) sets} this preset
+		 * as the active one (fills the dialog with the data from it),</li>
+		 * <li>{@link ChoosePresetDialog#getName(String, boolean) gets} the
+		 * name for this preset,</li>
+		 * <li>if the preset of such name exists asks if it should be replaced,
+		 * </li>
+		 * <li>saves the preset to the {@link PresetManager}.</li>
+		 * </ul>
+		 */
 		public void actionPerformed(ActionEvent ev) {
 
 			File file = fileChooser.chooseLoadPresetFile(AbstractPresetDialog.this);
@@ -769,24 +1184,55 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Dialog that allows to select the {@link #getPresetComboBox preset}
+	 * and specify the name for it.
+	 */
 	protected class ChoosePresetDialog extends AbstractDialog {
 
 		private static final long serialVersionUID = 1L;
 
+		/**
+		 * the model for a combo box that allows to select the preset
+		 */
 		private PresetComboBoxModel presetComboBoxModel;
+		
+		/**
+		 * the combo box that allows to select the preset
+		 */
 		protected JComboBox presetComboBox;
+		
+		/**
+		 * the text field to specify the name for the preset
+		 */
 		private JTextField nameTextField;
 
 		protected boolean editable = true;
 
+		/**
+		 * Constructor. Sets the message source from enclosing class and
+		 * uses the enclosing class as the parent window to this dialog.
+		 */
 		protected ChoosePresetDialog() {
 			super(AbstractPresetDialog.this.messageSource, AbstractPresetDialog.this, true);
 		}
 
+		/**
+		 * Returns  if the text field with the name of the preset should be
+		 * editable.
+		 * @return {@code true} if the text field with the name of the
+		 * preset should be editable, {@code false} otherwise
+		 */
 		public boolean isEditable() {
 			return editable;
 		}
 
+		/**
+		 * Sets if the text field with the name of the preset should be
+		 * editable.
+		 * @param editable {@code true} if the text field with the name of the
+		 * preset should be editable, {@code false} otherwise
+		 */
 		public void setEditable(boolean editable) {
 			if (this.editable != editable) {
 				this.editable = editable;
@@ -810,6 +1256,15 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 			super.initialize();
 		}
 
+		/**
+		 * Adds the panel with 3 elements:
+		 * <ul>
+		 * <li>icon with a question mark,</li>
+		 * <li>{@link #getPresetComboBox() combo box} to select the preset,</li>
+		 * <li>{@link #getNameTextField() text field} with the name of the
+		 * preset (may be editable or not).</li>
+		 * </ul>
+		 */
 		@Override
 		public JComponent createInterface() {
 
@@ -836,6 +1291,12 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 
 		}
 
+		/**
+		 * Returns the {@link PresetComboBoxModel model} for a combo box
+		 * to select presets.
+		 * If the model doesn't exist it is created.
+		 * @return the model
+		 */
 		public PresetComboBoxModel getPresetComboBoxModel() {
 			if (presetComboBoxModel == null) {
 				presetComboBoxModel = new PresetComboBoxModel(messageSource.getMessage("presetDialog.selectToChoose"), presetManager);
@@ -843,6 +1304,14 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 			return presetComboBoxModel;
 		}
 
+		/**
+		 * If the preset combo box already exists it is simply returned.
+		 * If it doesn't, it is created.
+		 * Created combo box contains the listener, which sets the
+		 * {@link #getNameTextField() name field} depending on the selected
+		 * preset.
+		 * @return the preset combo box
+		 */
 		public JComboBox getPresetComboBox() {
 
 			if (presetComboBox == null) {
@@ -885,6 +1354,13 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 
 		}
 
+		/**
+		 * Returns the text field with the name of the preset.
+		 * If the field doesn't exist it is created.
+		 * If this name contains at least one character the OK button is
+		 * activated.
+		 * @return the text field with the name of the preset.
+		 */
 		public JTextField getNameTextField() {
 			if (nameTextField == null) {
 				nameTextField = new JTextField();
@@ -901,6 +1377,15 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 			return nameTextField;
 		}
 
+		/**
+		 * Shows this dialog and returns the entered name.
+		 * @param initialName the name that (if it is not empty) will be
+		 * set as the value of {@link #getNameTextField() name text field} 
+		 * @param editable {@code true} if the name text field should be
+		 * editable, {@code false} otherwise
+		 * @return the specified name or null if there is no name (or the name
+		 * is empty)
+		 */
 		public String getName(String initialName, boolean editable) {
 
 			initializeNow();

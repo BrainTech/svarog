@@ -34,9 +34,14 @@ import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
-/** ErrorsDialog
- *
- *
+/**
+ * Dialog with the list of errors.
+ * Contains only the list of errors/exceptions which is located within
+ * a scroll pane.
+ * <p>
+ * Contains a {@link #showImmediateExceptionDialog(Window, Throwable) static
+ * function} which displays the dialog with the provided exception.
+ * 
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ErrorsDialog extends AbstractDialog {
@@ -45,32 +50,77 @@ public class ErrorsDialog extends AbstractDialog {
 
 	protected static final Logger logger = Logger.getLogger(ErrorsDialog.class);
 
+	/**
+	 * the static source of messages (labels)
+	 */
 	private static MessageSourceAccessor staticMessageSource = null;
 
+	/**
+	 * the list on which errors are displayed
+	 */
 	private JList errorList = null;
+	
+	/**
+	 * the code to obtain the title for this dialog from the source of messages;
+	 * if the code is {@code null} the default title is used
+	 */
 	private String titleCode = null;
 
+	/**
+	 * Returns the static source of messages (labels).
+	 * @return the static source of messages (labels)
+	 */
 	public static MessageSourceAccessor getStaticMessageSource() {
 		return staticMessageSource;
 	}
 
+	/**
+	 * Sets the static source of messages (labels)
+	 * @param staticMessageSource the source of messages
+	 */
 	public static void setStaticMessageSource(MessageSourceAccessor staticMessageSource) {
 		ErrorsDialog.staticMessageSource = staticMessageSource;
 	}
 
+	/**
+	 * Constructor. Sets the source of messages.
+	 * @param messageSource the source of messages
+	 */
 	public ErrorsDialog(MessageSourceAccessor messageSource) {
 		super(messageSource);
 	}
 
+	/**
+	 * Constructor. Sets message source, parent window and if this dialog
+	 * blocks top-level windows.
+	 * @param messageSource message source to set
+	 * @param w the parent window or null if there is no parent
+	 * @param isModal true, dialog blocks top-level windows, false otherwise
+	 */
 	public ErrorsDialog(MessageSourceAccessor messageSource,Window w, boolean isModal) {
 		super(messageSource,w, isModal);
 	}
 
+	/**
+	 * Constructor. Sets message source, parent window and if this dialog
+	 * blocks top-level windows.
+	 * @param messageSource message source to set
+	 * @param w the parent window or null if there is no parent
+	 * @param isModal true, dialog blocks top-level windows, false otherwise
+	 * @param titleCode  the code to obtain the title for this dialog from the
+	 * source of messages; if the code is {@code null} the default title is used
+	 */
 	public ErrorsDialog(MessageSourceAccessor messageSource,Window w, boolean isModal, String titleCode) {
 		super(messageSource,w, isModal);
 		this.titleCode = titleCode;
 	}
 
+	/**
+	 * Sets the title and the icon and calls the {@link AbstractDialog#
+	 * initialize() initialization} in parent.
+	 * The title is obtained using the {@code titleCode} or if it is {@code
+	 * null} the default one is used.
+	 */
 	@Override
 	protected void initialize() {
 
@@ -85,6 +135,11 @@ public class ErrorsDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Creates the interface for this dialog.
+	 * Contains only the list of errors/exceptions which is located within
+	 * a scroll pane.
+	 */
 	@Override
 	public JComponent createInterface() {
 
@@ -127,11 +182,28 @@ public class ErrorsDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * This dialog can not be canceled.
+	 */
 	@Override
 	public boolean isCancellable() {
 		return false;
 	}
 
+	/**
+	 * Depending on the type of the {@code model}:
+	 * <ul>
+	 * <li>for {@link Errors}:<ul>
+	 * <li>obtains the list of errors and converts it to an array,</li>
+	 * <li>using this array creates the {@link ErrorListModel model} for the
+	 * list of errors and sets it,</li></ul></li>
+	 * <li>for {@link MessageSourceResolvable}:
+	 * <ul>
+	 * <li>creates the array containing one element - this model,</li>
+	 * <li>using this array creates the {@link ErrorListModel model} for the
+	 * list of errors and sets it.</li></ul></li>
+	 * </ul>
+	 */
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 		if (model instanceof Errors) {
@@ -145,11 +217,23 @@ public class ErrorsDialog extends AbstractDialog {
 		}
 	}
 
+	/**
+	 * Shows this dialog with the list of errors from the provided object.
+	 * @param errors the Errors object from which errors are to be shown
+	 * @return if this dialog was closed with OK
+	 */
 	public boolean showErrors(Errors errors) {
 		setTitle(messageSource.getMessage("errors.title"));
 		return showDialog(errors,true);
 	}
 
+	/**
+	 * Shows this dialog with just one element - the provided throwable.
+	 * If the throwable is of type {@link MessageSourceResolvable} it is simply
+	 * used, otherwise the {@link ResolvableException} is created from it.
+	 * @param t the throwable to be displayed
+	 * @return if this dialog was closed with OK
+	 */
 	public boolean showException(Throwable t) {
 		setTitle(messageSource.getMessage("error.exception"));
 		MessageSourceResolvable resolvable;
@@ -161,22 +245,39 @@ public class ErrorsDialog extends AbstractDialog {
 		return showDialog(resolvable,true);
 	}
 
+	/**
+	 * Does nothing as it is a read only dialog.
+	 */
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
 		// read only dialog
 	}
 
+	/**
+	 * The model for this dialog must be either of type {@link Errors} or
+	 * {@link MessageSourceResolvable}.
+	 */
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
 		return Errors.class.isAssignableFrom(clazz) || MessageSourceResolvable.class.isAssignableFrom(clazz);
 	}
 
+	/**
+	 * The model for the list of errors.
+	 */
 	private class ErrorListModel extends AbstractListModel {
 
 		private static final long serialVersionUID = 1L;
 
+		/**
+		 * the array containing errors.
+		 */
 		private Object[] errors;
 
+		/**
+		 * Creates this model and sets the data for it (errors).
+		 * @param errors the array containing errors/exceptions
+		 */
 		public ErrorListModel(Object[] errors) {
 			super();
 			this.errors = errors;
@@ -194,6 +295,13 @@ public class ErrorsDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Shows the {@link ErrorsDialog} with the provided exception.
+	 * The dialog is shown in the Event Dispatching Thread.
+	 * @param c the component from which the parent window for this dialog
+	 * will be retrieved
+	 * @param t the exception to be displayed
+	 */
 	public static void showImmediateExceptionDialog(final JComponent c, final Throwable t) {
 
 		Window w = null;
@@ -209,6 +317,12 @@ public class ErrorsDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Shows the {@link ErrorsDialog} with the provided exception.
+	 * The dialog is shown in the Event Dispatching Thread.
+	 * @param w the parent window or null if there is no parent
+	 * @param t the exception to be displayed
+	 */
 	public static void showImmediateExceptionDialog(final Window w, final Throwable t) {
 
 		Runnable job = new Runnable() {

@@ -14,15 +14,21 @@ import javax.swing.JPanel;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.element.TextPanePanel;
+import org.signalml.domain.montage.Montage;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractDialog;
-import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
-import org.springframework.validation.Errors;
 
-/** EditTagDescriptionDialog
- *
+/**
+ * Dialog which allows to specify the description of a {@link TagDocument}.
+ * Contains two panels:
+ * <ul>
+ * <li>the {@link TextPanePanel text panel} for the {@link StyledTagSet#
+ * setInfo(String) description} of the document,</li>
+ * <li>the text panel for the {@link StyledTagSet#setMontageInfo(String)
+ * description} of the {@link Montage montage}.</li>
+ * </ul>
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -30,22 +36,52 @@ public class EditTagDescriptionDialog extends AbstractDialog {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * the {@link TextPanePanel text panel} for the {@link StyledTagSet#
+	 * setInfo(String) description} of the {@link StyledTagSet tag set} for
+	 * a specified {@link TagDocument}
+	 */
 	private TextPanePanel textInfoPanel;
+	/**
+	 * the {@link TextPanePanel text panel} for the {@link StyledTagSet#
+	 * setMontageInfo(String) description} of the {@link Montage montage} for
+	 * a specified {@link TagDocument}
+	 */
 	private TextPanePanel montageInfoPanel;
 
+	/**
+	 * Constructor. Sets the source of messages.
+	 * @param messageSource the source of messages
+	 */
 	public EditTagDescriptionDialog(MessageSourceAccessor messageSource) {
 		super(messageSource);
 	}
 
+	/**
+	 * Constructor. Sets message source, parent window and if this dialog
+	 * blocks top-level windows.
+	 * @param messageSource message source to set
+	 * @param w the parent window or null if there is no parent
+	 * @param isModal true, dialog blocks top-level windows, false otherwise
+	 */
 	public EditTagDescriptionDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
 		super(messageSource, w, isModal);
 	}
 
+	/**
+	 * The model for this dialog has to be of type {@link TagDocument}.
+	 */
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
 		return TagDocument.class.isAssignableFrom(clazz);
 	}
 
+	/**
+	 * Using the {@link StyledTagSet tag set} for the provided {@link
+	 * TagDocument} sets the {@link StyledTagSet#getInfo() description}
+	 * of the tag set and the {@link StyledTagSet#getMontageInfo() information}
+	 * about the {@link Montage} in the text fields.
+	 */
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 		TagDocument tagDocument = (TagDocument) model;
@@ -56,6 +92,12 @@ public class EditTagDescriptionDialog extends AbstractDialog {
 		montageInfoPanel.getTextPane().setText(description != null ? description : "");
 	}
 
+	/**
+	 * Using the user input sets the {@link StyledTagSet#getInfo() description}
+	 * of the {@link StyledTagSet tag set} and the {@link StyledTagSet#
+	 * getMontageInfo() information} about the {@link Montage} in the
+	 * tag set for the {@link TagDocument} provided as a model.
+	 */
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
 		TagDocument tagDocument = (TagDocument) model;
@@ -66,6 +108,10 @@ public class EditTagDescriptionDialog extends AbstractDialog {
 		tagDocument.getTagSet().setInfo(description);
 	}
 
+	/**
+	 * Sets the title and the icon of this dialog and calls the
+	 * {@link AbstractDialog#initialize() initialization} in the parent.
+	 */
 	@Override
 	protected void initialize() {
 		setTitle(messageSource.getMessage("tagDescription.title"));
@@ -73,6 +119,15 @@ public class EditTagDescriptionDialog extends AbstractDialog {
 		super.initialize();
 	}
 
+	/**
+	 * Creates the interface for this dialog, which consists of two panels:
+	 * <ul>
+	 * <li>the {@link TextPanePanel text panel} for the {@link StyledTagSet#
+	 * setInfo(String) description} of the {@link StyledTagSet tag set},</li>
+	 * <li>the text panel for the {@link StyledTagSet#setMontageInfo(String)
+	 * description} of the {@link Montage montage}.</li>
+	 * </ul>
+	 */
 	@Override
 	public JComponent createInterface() {
 

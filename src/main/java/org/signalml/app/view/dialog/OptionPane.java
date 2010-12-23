@@ -10,15 +10,21 @@ import java.util.Locale;
 import javax.swing.JOptionPane;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.config.preset.Preset;
 import org.signalml.app.document.FileBackedDocument;
 import org.signalml.app.document.MutableDocument;
+import org.signalml.app.document.TagDocument;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.PrettyStringLocaleWrapper;
+import org.signalml.domain.montage.Montage;
+import org.signalml.method.SerializableMethod;
+import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.util.SvarogConstants;
 import org.springframework.context.support.MessageSourceAccessor;
 
-/** OptionPane
- *
+/**
+ * This class contains different static methods which show simple dialogs
+ * (mostly informational or YES/NO).
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -28,8 +34,14 @@ public class OptionPane extends JOptionPane {
 
 	protected static final Logger logger = Logger.getLogger(OptionPane.class);
 
+	/**
+	 * the boolean which says if the static variables have been initialized
+	 */
 	private static boolean initialized = false;
 
+	/**
+	 * the static source of messages (labels)
+	 */
 	private static MessageSourceAccessor messageSource = null;
 
 	private static String errorString = null;
@@ -46,14 +58,26 @@ public class OptionPane extends JOptionPane {
 	private static String warningString = null;
 	private static String createString = null;
 
+	/**
+	 * Returns the source of messages (labels).
+	 * @return the source of messages (labels)
+	 */
 	public static MessageSourceAccessor getMessageSource() {
 		return messageSource;
 	}
 
+	/**
+	 * Sets the source of messages (labels).
+	 * @param messageSource the source of messages (labels)
+	 */
 	public static void setMessageSource(MessageSourceAccessor messageSource) {
 		OptionPane.messageSource = messageSource;
 	}
 
+	/**
+	 * Obtains the messages from the source of messages and sets them to
+	 * the static variables.
+	 */
 	private static void initialize() {
 
 		okString = messageSource.getMessage("ok");
@@ -74,6 +98,13 @@ public class OptionPane extends JOptionPane {
 
 	}
 
+	/**
+	 * Shows the dialog with the description of an error.
+	 * The dialog has only OK option.
+	 * @param parent the window parent to this one
+	 * @param message the code of the message that should be displayed in the
+	 * source of messages
+	 */
 	public static void showError(Component parent, String message) {
 		if (!initialized) {
 			initialize();
@@ -90,6 +121,15 @@ public class OptionPane extends JOptionPane {
 		);
 	}
 
+	/**
+	 * Shows the dialog with the description of an error.
+	 * The dialog has only OK option.
+	 * @param parent the window parent to this one
+	 * @param message the code of the message that should be displayed in the
+	 * source of messages
+	 * @param arguments the codes of arguments used to obtain the message from
+	 * the source of messages
+	 */
 	public static void showError(Component parent, String message, Object[] arguments) {
 		if (!initialized) {
 			initialize();
@@ -106,6 +146,12 @@ public class OptionPane extends JOptionPane {
 		);
 	}
 
+	/**
+	 * Shows the dialog with the description of an error.
+	 * The dialog has only OK option.
+	 * @param parent the window parent to this one
+	 * @param message the message which describes the error
+	 */
 	public static void showRawError(Component parent, String message) {
 		if (!initialized) {
 			initialize();
@@ -122,6 +168,13 @@ public class OptionPane extends JOptionPane {
 		);
 	}
 
+	/**
+	 * Shows the dialog with the specified message.
+	 * The dialog has only OK option.
+	 * @param parent the window parent to this one
+	 * @param message the code of the message that should be displayed in the
+	 * source of messages
+	 */
 	public static void showMessage(Component parent, String message) {
 		if (!initialized) {
 			initialize();
@@ -138,6 +191,12 @@ public class OptionPane extends JOptionPane {
 		);
 	}
 
+	/**
+	 * Shows the dialog with the specified message.
+	 * The dialog has only OK option.
+	 * @param parent the window parent to this one
+	 * @param message the message which describes the error
+	 */
 	public static void showRawMessage(Component parent, String message) {
 		if (!initialized) {
 			initialize();
@@ -154,6 +213,15 @@ public class OptionPane extends JOptionPane {
 		);
 	}
 
+	/**
+	 * Shows the dialog with the description of an exception.
+	 * The dialog has only OK option.
+	 * @param parent the window parent to this one
+	 * @param message the code of the message that should be displayed in the
+	 * source of messages
+	 * @param ex the exception which description should be displayed; used to
+	 * obtain the message that should be displayed
+	 */
 	public static void showException(Component parent, String message, Exception ex) {
 		if (!initialized) {
 			initialize();
@@ -171,6 +239,16 @@ public class OptionPane extends JOptionPane {
 		);
 	}
 
+	/**
+	 * Shows the information that the document is already opened and asks the
+	 * user what to do. 
+	 * @param parent the window parent to this one
+	 * @return
+	 * <ul>
+	 * <li>{@code OK_OPTION} if the user chose to reload the file,</li>
+	 * <li>{@code CLOSED_OPTION} if the user chose to cancel opening,</li>
+	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
+	 */
 	public static int showDocumentAlreadyOpened(Component parent) {
 		if (!initialized) {
 			initialize();
@@ -198,10 +276,30 @@ public class OptionPane extends JOptionPane {
 
 	}
 
+	/**
+	 * Shows the information that the running tasks will be aborted and asks
+	 * the user what to do.
+	 * @param parent the window parent to this one
+	 * @return
+	 * <ul>
+	 * <li>{@code OK_OPTION} if the user chose to proceed,</li>
+	 * <li>{@code CLOSED_OPTION} if the user chose to cancel,</li>
+	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
+	 */
 	public static int showTaskRunning(Component parent) {
 		return showProceedOption(parent, "situation.tasksWillBeAborted");
 	}
 
+	/**
+	 * Shows the information that the artifact project already exits and asks
+	 * the user what to do. 
+	 * @param parent the window parent to this one
+	 * @return
+	 * <ul>
+	 * <li>{@code OK_OPTION} if the user chose to create the project,</li>
+	 * <li>{@code CLOSED_OPTION} if the user chose to cancel,</li>
+	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
+	 */
 	public static int showArtifactProjectDoesntExist(Component parent) {
 		if (!initialized) {
 			initialize();
@@ -229,14 +327,49 @@ public class OptionPane extends JOptionPane {
 
 	}
 
+	/**
+	 * Informs that the artifact project exists and asks the user whether to
+	 * reuse it or to replace it.
+	 * @param parent the window parent to this one
+	 * @param name the name of the project
+	 * @return
+	 * <ul>
+	 * <li>{@code YES_OPTION} if the user chose to reuse the project,</li>
+	 * <li>{@code N0_OPTION} if the user chose to replace the project,</li>
+	 * <li>{@code CLOSED_OPTION} if the user chose to cancel the operation,</li>
+	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
+	 */
 	public static int showArtifactProjectExists(Component parent, String name) {
 		return showReuseReplaceOption(parent, "artifactMethod.situation.artifactProjectExists", new Object[] { name });
 	}
 
+	/**
+	 * Informs that the stager project exists and asks the user whether to
+	 * reuse it or to replace it.
+	 * @param parent the window parent to this one
+	 * @param name the name of the project
+	 * @return
+	 * <ul>
+	 * <li>{@code YES_OPTION} if the user chose to reuse the project,</li>
+	 * <li>{@code N0_OPTION} if the user chose to replace the project,</li>
+	 * <li>{@code CLOSED_OPTION} if the user chose to cancel the operation,</li>
+	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
+	 */
 	public static int showStagerProjectExists(Component parent, String name) {
 		return showReuseReplaceOption(parent, "stagerMethod.situation.stagerProjectExists", new Object[] { name });
 	}
 
+	/**
+	 * Shows the information that the directory doesn't exist and asks the
+	 * user what to do. 
+	 * @param parent the window parent to this one
+	 * @param file the directory that doesn't exist
+	 * @return
+	 * <ul>
+	 * <li>{@code YES_OPTION} if the user chose to create the directory,</li>
+	 * <li>{@code CLOSED_OPTION} if the user chose to cancel,</li>
+	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
+	 */
 	public static int showDirectoryDoesntExistCreate(Component parent, File file) {
 		if (!initialized) {
 			initialize();
@@ -270,6 +403,19 @@ public class OptionPane extends JOptionPane {
 
 	}
 
+	/**
+	 * Shows the information that the document has not been saved and asks the
+	 * user what to do. 
+	 * @param parent the window parent to this one
+	 * @param document the document that was not saved
+	 * @return
+	 * <ul>
+	 * <li>{@code YES_OPTION} if the user chose to save the document,</li>
+	 * <li>{@code NO_OPTION} if the user chose not to save the document,</li>
+	 * <li>{@code CLOSED_OPTION} if the user chose to cancel closing the
+	 * document,</li>
+	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
+	 */
 	public static int showDocumentUnsaved(Component parent, MutableDocument document) {
 		if (!initialized) {
 			initialize();
@@ -312,6 +458,16 @@ public class OptionPane extends JOptionPane {
 
 	}
 
+	/**
+	 * Shows the information that the exported signal has to be normalized
+	 * and asks the user what to do. 
+	 * @param parent the window parent to this one
+	 * @return
+	 * <ul>
+	 * <li>{@code OK_OPTION} if the user chose to normalize the signal,</li>
+	 * <li>{@code CLOSED_OPTION} if the user chose to cancel the export,</li>
+	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
+	 */
 	public static int showNormalizationUnavoidable(Component parent) {
 		if (!initialized) {
 			initialize();
@@ -341,6 +497,17 @@ public class OptionPane extends JOptionPane {
 
 	}
 
+	/**
+	 * Asks the user if the specified task should be continued.
+	 * @param parent the window parent to this one
+	 * @param messageCode the code used to obtain the message describing the
+	 * task from the source of messages
+	 * @return
+	 * <ul>
+	 * <li>{@code OK_OPTION} if the user chose to proceed,</li>
+	 * <li>{@code CLOSED_OPTION} if the user chose to cancel,</li>
+	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
+	 */
 	public static int showProceedOption(Component parent, String messageCode) {
 		if (!initialized) {
 			initialize();
@@ -370,6 +537,19 @@ public class OptionPane extends JOptionPane {
 
 	}
 
+	/**
+	 * Asks the user if the specified task should be continued.
+	 * @param parent the window parent to this one
+	 * @param messageCode the code used to obtain the message describing the
+	 * task from the source of messages
+	 * @param args the codes of arguments used to obtain the message from
+	 * the source of messages
+	 * @return
+	 * <ul>
+	 * <li>{@code OK_OPTION} if the user chose to proceed,</li>
+	 * <li>{@code CLOSED_OPTION} if the user chose to cancel,</li>
+	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
+	 */
 	public static int showProceedOption(Component parent, String messageCode, Object[] args) {
 		if (!initialized) {
 			initialize();
@@ -399,6 +579,21 @@ public class OptionPane extends JOptionPane {
 
 	}
 
+	/**
+	 * Informs that the object exists and asks the user whether to reuse it or
+	 * to replace it.
+	 * @param parent the window parent to this one
+	 * @param messageCode the code used to obtain the message for the dialog
+	 * from the source of messages
+	 * @param args the codes of arguments used to obtain the message from
+	 * the source of messages
+	 * @return
+	 * <ul>
+	 * <li>{@code YES_OPTION} if the user chose to reuse the object,</li>
+	 * <li>{@code N0_OPTION} if the user chose to replace the object,</li>
+	 * <li>{@code CLOSED_OPTION} if the user chose to cancel the operation,</li>
+	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
+	 */
 	public static int showReuseReplaceOption(Component parent, String messageCode, Object[] args) {
 		if (!initialized) {
 			initialize();
@@ -431,6 +626,17 @@ public class OptionPane extends JOptionPane {
 
 	}
 
+	/**
+	 * Informs that the {@link SerializableMethod serializable tasks} are
+	 * running and asks the user whether to suspend them or to abort them.
+	 * @param parent the window parent to this one
+	 * @return
+	 * <ul>
+	 * <li>{@code YES_OPTION} if the user chose to suspends the tasks,</li>
+	 * <li>{@code N0_OPTION} if the user chose to abort the tasks,</li>
+	 * <li>{@code CLOSED_OPTION} if the user chose to cancel the operation,</li>
+	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
+	 */
 	public static int showSerializableTaskRunning(Component parent) {
 		if (!initialized) {
 			initialize();
@@ -463,38 +669,128 @@ public class OptionPane extends JOptionPane {
 
 	}
 
+	/**
+	 * Informs that the changes to the raw configuration will be lost and asks
+	 * the user what to do.
+	 * @param parent the window parent to this one
+	 * @return
+	 * <ul>
+	 * <li>{@code OK_OPTION} if the user chose to proceed,</li>
+	 * <li>{@code CLOSED_OPTION} if the user chose to cancel,</li>
+	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
+	 */
 	public static int showRawConfigWillBeLost(Component parent) {
 		return showProceedOption(parent, "situation.rawConfigWillBeLost");
 	}
 
+	/**
+	 * Informs that all running tasks will be aborted and asks the user what to
+	 * do.
+	 * @param parent the window parent to this one
+	 * @return
+	 * <ul>
+	 * <li>{@code OK_OPTION} if the user chose to proceed,</li>
+	 * <li>{@code CLOSED_OPTION} if the user chose to cancel,</li>
+	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
+	 */
 	public static int showAbortAllTasks(Component parent) {
 		return showProceedOption(parent, "situation.abortAllTasks");
 	}
 
+	/**
+	 * Informs that all running tasks (that can be suspended) will be suspended
+	 * and asks the user what to do.
+	 * @param parent the window parent to this one
+	 * @return
+	 * <ul>
+	 * <li>{@code OK_OPTION} if the user chose to proceed,</li>
+	 * <li>{@code CLOSED_OPTION} if the user chose to cancel,</li>
+	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
+	 */
 	public static int showSuspendAllTasks(Component parent) {
 		return showProceedOption(parent, "situation.suspendAllTasks");
 	}
 
+	/**
+	 * Informs that all suspended tasks will be resumed and asks the user what
+	 * to do.
+	 * @param parent the window parent to this one
+	 * @return
+	 * <ul>
+	 * <li>{@code OK_OPTION} if the user chose to proceed,</li>
+	 * <li>{@code CLOSED_OPTION} if the user chose to cancel,</li>
+	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
+	 */
 	public static int showResumeAllTasks(Component parent) {
 		return showProceedOption(parent, "situation.resumeAllTasks");
 	}
 
+	/**
+	 * Informs that all non running tasks will be removed and asks the user
+	 * what to do.
+	 * @param parent the window parent to this one
+	 * @return
+	 * <ul>
+	 * <li>{@code OK_OPTION} if the user chose to remove them,</li>
+	 * <li>{@code CLOSED_OPTION} if the user chose to cancel,</li>
+	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
+	 */
 	public static int showRemoveAllTasks(Component parent) {
 		return showProceedOption(parent, "situation.removeAllTasks");
 	}
 
+	/**
+	 * Informs that all finished tasks will be removed and asks the user what
+	 * to do.
+	 * @param parent the window parent to this one
+	 * @return
+	 * <ul>
+	 * <li>{@code OK_OPTION} if the user chose to remove them,</li>
+	 * <li>{@code CLOSED_OPTION} if the user chose to cancel,</li>
+	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
+	 */
 	public static int showRemoveAllFinishedTasks(Component parent) {
 		return showProceedOption(parent, "situation.removeAllFinishedTasks");
 	}
 
+	/**
+	 * Informs that all aborted tasks will be removed and asks the user what
+	 * to do.
+	 * @param parent the window parent to this one
+	 * @return
+	 * <ul>
+	 * <li>{@code OK_OPTION} if the user chose to remove them,</li>
+	 * <li>{@code CLOSED_OPTION} if the user chose to cancel,</li>
+	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
+	 */
 	public static int showRemoveAllAbortedTasks(Component parent) {
 		return showProceedOption(parent, "situation.removeAllAbortedTasks");
 	}
 
+	/**
+	 * Informs that all failed tasks will be removed and asks the user what
+	 * to do.
+	 * @param parent the window parent to this one
+	 * @return
+	 * <ul>
+	 * <li>{@code OK_OPTION} if the user chose to remove them,</li>
+	 * <li>{@code CLOSED_OPTION} if the user chose to cancel,</li>
+	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
+	 */
 	public static int showRemoveAllFailedTasks(Component parent) {
 		return showProceedOption(parent, "situation.removeAllFailedTasks");
 	}
 
+	/**
+	 * Shows the information that the file already exits and asks
+	 * the user what to do. 
+	 * @param parent the window parent to this one
+	 * @return
+	 * <ul>
+	 * <li>{@code OK_OPTION} if the user chose to overwrite it,</li>
+	 * <li>{@code CLOSED_OPTION} if the user chose to cancel,</li>
+	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
+	 */
 	public static int showFileAlreadyExists(Component parent) {
 		if (!initialized) {
 			initialize();
@@ -522,6 +818,17 @@ public class OptionPane extends JOptionPane {
 
 	}
 
+	/**
+	 * Shows the information that the file already exits and asks
+	 * the user what to do. 
+	 * @param parent the window parent to this one
+	 * @param fileName the name of the file
+	 * @return
+	 * <ul>
+	 * <li>{@code OK_OPTION} if the user chose to overwrite it,</li>
+	 * <li>{@code CLOSED_OPTION} if the user chose to cancel,</li>
+	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
+	 */
 	public static int showFileAlreadyExists(Component parent, String fileName) {
 		if (!initialized) {
 			initialize();
@@ -549,6 +856,16 @@ public class OptionPane extends JOptionPane {
 
 	}
 
+	/**
+	 * Shows the information that there are tasks that are restored from the
+	 * previous run and asks the user if they should be restored. 
+	 * @param parent the window parent to this one
+	 * @return
+	 * <ul>
+	 * <li>{@code YES_OPTION} if the user chose to restore them,</li>
+	 * <li>{@code CLOSED_OPTION} if the user chose not to restore them,</li>
+	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
+	 */
 	public static int showResumeRestoredTasks(Component parent) {
 		if (!initialized) {
 			initialize();
@@ -579,6 +896,16 @@ public class OptionPane extends JOptionPane {
 
 	}
 
+	/**
+	 * Shows the information that the {@link TagDocument tag document} is not
+	 * compatible with the signal and asks the user what to do. 
+	 * @param parent the window parent to this one
+	 * @return
+	 * <ul>
+	 * <li>{@code OK_OPTION} if the user chose to continue,</li>
+	 * <li>{@code CLOSED_OPTION} if the user chose to cancel,</li>
+	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
+	 */
 	public static int showTagNotCompatible(Component parent) {
 		if (!initialized) {
 			initialize();
@@ -606,6 +933,16 @@ public class OptionPane extends JOptionPane {
 
 	}
 
+	/**
+	 * Shows the information that the {@link TagDocument tag document} has
+	 * different checksum than the signal and asks the user what to do. 
+	 * @param parent the window parent to this one
+	 * @return
+	 * <ul>
+	 * <li>{@code OK_OPTION} if the user chose to continue,</li>
+	 * <li>{@code CLOSED_OPTION} if the user chose to cancel,</li>
+	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
+	 */
 	public static int showTagChecksumBad(Component parent) {
 		if (!initialized) {
 			initialize();
@@ -633,6 +970,16 @@ public class OptionPane extends JOptionPane {
 
 	}
 
+	/**
+	 * Shows the information that there are other document dependent on the
+	 * closed one and asks the user whether to close them. 
+	 * @param parent the window parent to this one
+	 * @return
+	 * <ul>
+	 * <li>{@code YES_OPTION} if the user chose to close,</li>
+	 * <li>{@code CLOSED_OPTION} if the user chose to cancel,</li>
+	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
+	 */
 	public static int showOtherDocumentsDepend(Component parent) {
 		if (!initialized) {
 			initialize();
@@ -660,6 +1007,12 @@ public class OptionPane extends JOptionPane {
 
 	}
 
+	/**
+	 * Shows the information that the document of the specified path is already
+	 * open and the user should choose a different path.
+	 * The dialog has only OK option.
+	 * @param parent the window parent to this one
+	 */
 	public static void showDocumentAlreadyOpenError(Component parent) {
 		if (!initialized) {
 			initialize();
@@ -676,6 +1029,13 @@ public class OptionPane extends JOptionPane {
 		);
 	}
 
+	/**
+	 * Shows the information that the selected file is not found.
+	 * The dialog has only OK option.
+	 * @param parent the window parent to this one
+	 * @param file the file that was not found or null if no name should be
+	 * used
+	 */
 	public static void showFileNotFound(Component parent, File file) {
 		if (!initialized) {
 			initialize();
@@ -704,6 +1064,13 @@ public class OptionPane extends JOptionPane {
 		);
 	}
 
+	/**
+	 * Shows the information that the selected directory is not found.
+	 * The dialog has only OK option.
+	 * @param parent the window parent to this one
+	 * @param file the directory that was not found or null if no name should
+	 * be used
+	 */
 	public static void showDirectoryNotFound(Component parent, File file) {
 		if (!initialized) {
 			initialize();
@@ -732,6 +1099,13 @@ public class OptionPane extends JOptionPane {
 		);
 	}
 
+	/**
+	 * Shows the information that the selected directory is not accessible.
+	 * The dialog has only OK option.
+	 * @param parent the window parent to this one
+	 * @param file the directory that was not accessible or null if no name
+	 * should be used
+	 */
 	public static void showDirectoryNotAccessible(Component parent, File file) {
 		if (!initialized) {
 			initialize();
@@ -760,6 +1134,13 @@ public class OptionPane extends JOptionPane {
 		);
 	}
 
+	/**
+	 * Shows the information that the selected directory could not be created.
+	 * The dialog has only OK option.
+	 * @param parent the window parent to this one
+	 * @param file the directory that was not created or null if no name should
+	 * be used
+	 */
 	public static void showDirectoryNotCreated(Component parent, File file) {
 		if (!initialized) {
 			initialize();
@@ -788,6 +1169,12 @@ public class OptionPane extends JOptionPane {
 		);
 	}
 
+	/**
+	 * Shows the information that the default {@link Montage montage} is not
+	 * compatible with the signal.
+	 * The dialog has only OK option.
+	 * @param parent the window parent to this one
+	 */
 	public static void showDefaultMontageNotCompatible(Component parent) {
 		if (!initialized) {
 			initialize();
@@ -804,6 +1191,12 @@ public class OptionPane extends JOptionPane {
 		);
 	}
 
+	/**
+	 * Shows the information that the {@link Preset preset} is not compatible
+	 * with the signal and has to be edited.
+	 * The dialog has only OK option.
+	 * @param parent the window parent to this one
+	 */
 	public static void showPresetNotCompatible(Component parent) {
 		if (!initialized) {
 			initialize();
@@ -820,6 +1213,12 @@ public class OptionPane extends JOptionPane {
 		);
 	}
 
+	/**
+	 * Shows the information that the {@link TagStyle tag style} is used and
+	 * can't be removed.
+	 * The dialog has only OK option.
+	 * @param parent the window parent to this one
+	 */
 	public static void showTagStyleInUse(Component parent) {
 		if (!initialized) {
 			initialize();
@@ -836,6 +1235,17 @@ public class OptionPane extends JOptionPane {
 		);
 	}
 
+	/**
+	 * Shows the information that the {@link TagStyle tag style} has been
+	 * modified and asks the user whether to apply changes. 
+	 * @param parent the window parent to this one
+	 * @return
+	 * <ul>
+	 * <li>{@code YES_OPTION} if the user chose to apply changes,</li>
+	 * <li>{@code NO_OPTION} if the user chose discard changes,</li>
+	 * <li>{@code CLOSED_OPTION} if the user chose to cancel the operation,</li>
+	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
+	 */
 	public static int showTagStyleModified(Component parent) {
 		if (!initialized) {
 			initialize();
@@ -865,6 +1275,21 @@ public class OptionPane extends JOptionPane {
 
 	}
 
+	/**
+	 * Shows the information that the {@link Montage montage} in the {@link
+	 * TagDocument tag document} is different from the current montage (when
+	 * the document is to be saved) and asks
+	 * the user what to do. 
+	 * @param parent the window parent to this one
+	 * @return
+	 * <ul>
+	 * <li>{@code YES_OPTION} if the user chose to keep the original montage,
+	 * </li>
+	 * <li>{@code NO_OPTION} if the user chose to replace the montage with
+	 * current,</li>
+	 * <li>{@code CLOSED_OPTION} if the user chose to cancel the operation,</li>
+	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
+	 */
 	public static int showMontageDifferentOnTagSave(Component parent) {
 
 		if (!initialized) {
@@ -898,6 +1323,20 @@ public class OptionPane extends JOptionPane {
 
 	}
 
+	/**
+	 * Shows the information that the {@link Montage montage} in the {@link
+	 * TagDocument tag document} is different from the current montage (when
+	 * the document is to be loaded) and asks
+	 * the user what to do. 
+	 * @param parent the window parent to this one
+	 * @return
+	 * <ul>
+	 * <li>{@code YES_OPTION} if the user chose to load the montage from tag
+	 * document,</li>
+	 * <li>{@code NO_OPTION} if the user chose to keep the current montage,</li>
+	 * <li>{@code CLOSED_OPTION} if the user chose to cancel the operation,</li>
+	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
+	 */
 	public static int showMontageDifferentOnTagLoad(Component parent) {
 
 		if (!initialized) {
@@ -931,6 +1370,12 @@ public class OptionPane extends JOptionPane {
 
 	}
 
+	/**
+	 * Shows the information that there is no active signal and the user should
+	 * choose the tab with the signal before performing the operation.
+	 * The dialog has only OK option.
+	 * @param parent the window parent to this one
+	 */
 	public static void showNoActiveSignal(Component parent) {
 		if (!initialized) {
 			initialize();
@@ -947,6 +1392,12 @@ public class OptionPane extends JOptionPane {
 		);
 	}
 
+	/**
+	 * Shows the information that there is no active book and the user should
+	 * choose the tab with the book before performing the operation.
+	 * The dialog has only OK option.
+	 * @param parent the window parent to this one
+	 */
 	public static void showNoActiveBook(Component parent) {
 		if (!initialized) {
 			initialize();
@@ -963,6 +1414,12 @@ public class OptionPane extends JOptionPane {
 		);
 	}
 
+	/**
+	 * Shows the information that there is no active tag and the user should
+	 * open a {@link TagDocument tag document} before performing the operation.
+	 * The dialog has only OK option.
+	 * @param parent the window parent to this one
+	 */
 	public static void showNoActiveTag(Component parent) {
 		if (!initialized) {
 			initialize();
@@ -979,6 +1436,12 @@ public class OptionPane extends JOptionPane {
 		);
 	}
 
+	/**
+	 * Shows the information that there is no signal selection and the user
+	 * should select the part of the the signal before performing the operation.
+	 * The dialog has only OK option.
+	 * @param parent the window parent to this one
+	 */
 	public static void showNoSignalSelection(Component parent) {
 		if (!initialized) {
 			initialize();
@@ -995,6 +1458,12 @@ public class OptionPane extends JOptionPane {
 		);
 	}
 
+	/**
+	 * Shows the dialog which allows to choose the language for Svarog from the
+	 * list of {@link SvarogConstants#AVAILABLE_LOCALES available locales}.
+	 * @return the locale chosen by user or {@code null} if the user canceled
+	 * the dialog
+	 */
 	public static Locale showLanguageOption() {
 
 		Locale[] locales = SvarogConstants.AVAILABLE_LOCALES;
@@ -1030,6 +1499,13 @@ public class OptionPane extends JOptionPane {
 		return s.getLocale();
 	}
 
+	/**
+	 * Shows the dialog which allows the user to input the name for the
+	 * {@link Preset preset}.
+	 * @param parent the window parent to this one
+	 * @param name the initial value of the name
+	 * @return the input name of the preset
+	 */
 	public static String showPresetNameOption(Component parent, String name) {
 		if (!initialized) {
 			initialize();

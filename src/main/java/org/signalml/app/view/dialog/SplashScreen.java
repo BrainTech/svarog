@@ -35,8 +35,18 @@ import org.signalml.app.view.ViewerMainFrame;
 import org.signalml.util.SvarogConstants;
 import org.springframework.context.support.MessageSourceAccessor;
 
-/** SplashScreen
- *
+/**
+ * Dialog that is shown when application is starting.
+ * Contains two elements:
+ * <ul>
+ * <li>the progress bar on which the information about the current step is
+ * displayed,</li>
+ * <li>the logo of Svarog on which 3 labels are displayed:
+ * <ul>
+ * <li>the name and version of Svarog,</li>
+ * <li>the URL to the web page,</li>
+ * <li>the information that Svarog was financed from Polish science
+ * funds.</li></ul></li></ul>
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -46,9 +56,24 @@ public class SplashScreen extends JDialog {
 
 	protected static final Logger logger = Logger.getLogger(SplashScreen.class);
 
+	/**
+	 * the progress bar which displays the progress of loading Svarog with
+	 * the information about the current loading step
+	 */
 	private JProgressBar progressBar;
+	/**
+	 * the source of messages (labels)
+	 */
 	private MessageSourceAccessor messageSource;
 
+	/**
+	 * Constructor. Sets the source of messages and displays creates the view
+	 * for this dialog:
+	 * <ul>
+	 * <li>the {@link SplashPanel panel} with the logo of Svarog,</li>
+	 * <li>the {@link #getProgressBar() progress bar}.</li></ul>
+	 * @param messageSource the source of messages (labels)
+	 */
 	public SplashScreen(MessageSourceAccessor messageSource) {
 
 		super((Frame) null, false);
@@ -78,6 +103,13 @@ public class SplashScreen extends JDialog {
 
 	}
 
+	/**
+	 * Returns the progress bar which displays the progress of loading Svarog
+	 * with the information about the current loading step
+	 * If it doesn't exist it is created with the string saying that
+	 * application is being initialized.
+	 * @return the progress bar
+	 */
 	public JProgressBar getProgressBar() {
 		if (progressBar == null) {
 			progressBar = new JProgressBar(SwingConstants.HORIZONTAL,0,SvarogApplication.INITIALIZATION_STEP_COUNT+ViewerMainFrame.INITIALIZATION_STEP_COUNT);
@@ -88,6 +120,16 @@ public class SplashScreen extends JDialog {
 		return progressBar;
 	}
 
+	/**
+	 * Updates this dialog.
+	 * Sets the new label on the progress bar and
+	 * if {@code doStep} is set increases the value of the progress bar.
+	 * This operation is performed in the Event Dispatch Thread (using
+	 * Runnable).
+	 * @param text the text that should be displayed on the progress bar
+	 * @param doStep {@code true} if the value of the progress bar should be
+	 * increased, {@code false} otherwise.
+	 */
 	public void updateSplash(final String text, final boolean doStep) {
 
 		Runnable job = new Runnable() {
@@ -118,6 +160,12 @@ public class SplashScreen extends JDialog {
 
 	}
 
+	/**
+	 * Sets the new text on the progress bar.
+	 * This operation is performed in the Event Dispatch Thread (using
+	 * Runnable).
+	 * @param text the text that should be displayed on the progress bar
+	 */
 	public void setStepTitle(final String text) {
 
 		Runnable job = new Runnable() {
@@ -143,6 +191,11 @@ public class SplashScreen extends JDialog {
 
 	}
 
+	/**
+	 * Increases the value of the progress bar.
+	 * This operation is performed in the Event Dispatch Thread (using
+	 * Runnable).
+	 */
 	public void stepCompleted() {
 
 		Runnable job = new Runnable() {
@@ -168,13 +221,31 @@ public class SplashScreen extends JDialog {
 
 	}
 
+	/**
+	 * The panel with logo of Svarog and 3 labels drawn on it:
+	 * <ul>
+	 * <li>the name and version of Svarog,</li>
+	 * <li>the URL to the web page,</li>
+	 * <li>the information that Svarog was financed from Polish science
+	 * funds.</li></ul>
+	 */
 	private class SplashPanel extends JPanel {
 
 		private static final long serialVersionUID = 1L;
 
+		/**
+		 * the image with the logo of Svarog
+		 */
 		private Image splashImage;
+		/**
+		 * the size of this panel
+		 */
 		private Dimension size;
 
+		/**
+		 * Constructor. Creates this panel and adds the image to it
+		 * (the image fills the entire panel).
+		 */
 		public SplashPanel() {
 			super(null);
 
@@ -187,6 +258,14 @@ public class SplashScreen extends JDialog {
 
 		}
 
+		/**
+		 * Draws the image and 3 strings on it:
+		 * <ul>
+		 * <li>the name and version of Svarog,</li>
+		 * <li>the URL to the webpage,</li>
+		 * <li>the information that Svarog was financed from Polish science
+		 * funds.</li></ul>
+		 */
 		@Override
 		protected void paintComponent(Graphics gOrig) {
 
@@ -262,11 +341,17 @@ public class SplashScreen extends JDialog {
 			return size;
 		}
 
+		/**
+		 * This panel is opaque.
+		 */
 		@Override
 		public boolean isOpaque() {
 			return true;
 		}
 
+		/**
+		 * This panel doesn't use the buffer to paint.
+		 */
 		@Override
 		public boolean isDoubleBuffered() {
 			return false;

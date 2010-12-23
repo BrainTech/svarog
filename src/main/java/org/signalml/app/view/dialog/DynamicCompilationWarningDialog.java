@@ -18,8 +18,13 @@ import org.signalml.app.util.IconUtils;
 import org.signalml.compilation.DynamicCompilationWarning;
 import org.springframework.context.support.MessageSourceAccessor;
 
-/** DynamicCompilationWarningDialog
- *
+/**
+ * The {@link AbstractMessageDialog message dialog} which warns the user that
+ * the code will be compiled dynamically.
+ * <p>
+ * Provides the {@link #warn()} method which shows this dialog and asks the
+ * user for acceptance.
+ * User can also select that such warning shouldn't be shown again.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -29,14 +34,31 @@ public class DynamicCompilationWarningDialog extends AbstractMessageDialog imple
 
 	private Runnable showRunnable;
 
+	/**
+	 * Constructor. Sets the source of messages.
+	 * @param messageSource the source of messages
+	 */
 	public DynamicCompilationWarningDialog(MessageSourceAccessor messageSource) {
 		super(messageSource);
 	}
 
+	/**
+	 * Constructor. Sets message source, parent window and if this dialog
+	 * blocks top-level windows.
+	 * @param messageSource message source to set
+	 * @param w the parent window or null if there is no parent
+	 * @param isModal true, dialog blocks top-level windows, false otherwise
+	 */
 	public DynamicCompilationWarningDialog(MessageSourceAccessor messageSource,Window w, boolean isModal) {
 		super(messageSource, w, isModal);
 	}
 
+	/**
+	 * Sets the tile of this dialog and fills the {@link #getMessageLabel()
+	 * label}.
+	 * Afterwards calls the initialization in {@link AbstractMessageDialog
+	 * parent}.
+	 */
 	@Override
 	protected void initialize() {
 		setTitle(messageSource.getMessage("dynamicCompilationWarning.title"));

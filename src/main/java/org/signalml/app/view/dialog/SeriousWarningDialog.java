@@ -30,8 +30,10 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 
-/** SeriousWarningDialog
- *
+/**
+ * The dialog which displays the warnings that were considered 'serious'.
+ * Contains the label with the large bomb to attract users attention.
+ * Moreover the OK button is activated after the specified timeout passes. 
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -39,22 +41,58 @@ public class SeriousWarningDialog extends AbstractDialog {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * the {@link ApplicationConfiguration configuration} of Svarog
+	 */
 	private ApplicationConfiguration applicationConfig;
 
+	/**
+	 * the label with the warning messagge
+	 */
 	private JLabel messageLabel;
+	/**
+	 * the remaining timeout until the accept button will be clickable
+	 */
 	private int currentTimeout;
 
+	/**
+	 * the timer which counts the timeout until the accept button will be
+	 * clickable
+	 */
 	private Timer timeoutTimer;
+	/**
+	 * the listener for {@link #timeoutTimer}
+	 */
 	private ActionListener timeoutListener;
 
+	/**
+	 * Constructor. Sets the source of messages.
+	 * @param messageSource the source of messages
+	 */
 	public SeriousWarningDialog(MessageSourceAccessor messageSource) {
 		super(messageSource);
 	}
 
+	/**
+	 * Constructor. Sets message source, parent window and if this dialog
+	 * blocks top-level windows.
+	 * @param messageSource message source to set
+	 * @param w the parent window or null if there is no parent
+	 * @param isModal true, dialog blocks top-level windows, false otherwise
+	 */
 	public SeriousWarningDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
 		super(messageSource, w, isModal);
 	}
 
+	/**
+	 * Initializes this dialog:
+	 * <uL>
+	 * <li>sets the icon and the title,</li>
+	 * <li>creates the timeout listener, which decreases the timeout left and
+	 * sets it in the timer,</li>
+	 * <li>adds a window listener, which stops the timer if the window is
+	 * closing.</li></ul>
+	 */
 	@Override
 	protected void initialize() {
 		setTitle(messageSource.getMessage("seriousWarning.title"));
@@ -90,6 +128,13 @@ public class SeriousWarningDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Creates the interface for this dialog which consists of:
+	 * <ul>
+	 * <li>the label with the bomb,</li>
+	 * <li>the panel with the warning.</li>
+	 * </ul>
+	 */
 	@Override
 	public JComponent createInterface() {
 
@@ -115,6 +160,11 @@ public class SeriousWarningDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Returns the label with the warning message.
+	 * If the label doesn't exist, it is created with empty text.
+	 * @return the label with the warning message.
+	 */
 	public JLabel getMessageLabel() {
 		if (messageLabel == null) {
 			messageLabel = new JLabel();
@@ -124,6 +174,12 @@ public class SeriousWarningDialog extends AbstractDialog {
 		return messageLabel;
 	}
 
+	/**
+	 * Updates the state of OK button.
+	 * If the remaining timeout is greater then 0 makes the button inactive and
+	 * displays the information about the remaining timeout.
+	 * Otherwise enables the OK button.
+	 */
 	private void updateOkAction() {
 		if (currentTimeout > 0) {
 			getOkAction().putValue(AbstractAction.NAME, messageSource.getMessage("seriousWarning.doItTimeout", new Object[] { currentTimeout }));
@@ -136,10 +192,20 @@ public class SeriousWarningDialog extends AbstractDialog {
 		getOkButton().paintImmediately(new Rectangle(new Point(0,0), getOkButton().getSize()));
 	}
 
+	/**
+	 * Sets the text of the warning.
+	 * @param text the text of the warning
+	 */
 	private void setMessageText(String text) {
 		getMessageLabel().setText("<html><body><div style=\"width: 300px;\">" + text + "</div></body></html>");
 	}
 
+	/**
+	 * Fills the fields of this dialog using the given {@link
+	 * SeriousWarningDescriptor model}:
+	 * <ul><li>sets the timeout and updates OK button,</li>
+	 * <li>set the text of the warning message.</li></ul>
+	 */
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 
@@ -152,11 +218,18 @@ public class SeriousWarningDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Does nothing.
+	 */
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
 		// do nothing
 	}
 
+	/**
+	 * If the serious warnings were disabled returns, otherwise shows this
+	 * dialog.
+	 */
 	@Override
 	public boolean showDialog(Object model) {
 
@@ -169,15 +242,26 @@ public class SeriousWarningDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * The model for this dialog must be of type {@link SeriousWarningDescriptor}.
+	 */
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
 		return SeriousWarningDescriptor.class.isAssignableFrom(clazz);
 	}
 
+	/**
+	 * Returns the {@link ApplicationConfiguration configuration} of Svarog.
+	 * @return the configuration of Svarog
+	 */
 	public ApplicationConfiguration getApplicationConfig() {
 		return applicationConfig;
 	}
 
+	/**
+	 * Sets the {@link ApplicationConfiguration configuration} of Svarog.
+	 * @param applicationConfig the configuration of Svarog
+	 */
 	public void setApplicationConfig(ApplicationConfiguration applicationConfig) {
 		this.applicationConfig = applicationConfig;
 	}

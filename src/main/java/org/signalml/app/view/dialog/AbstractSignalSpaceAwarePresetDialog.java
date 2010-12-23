@@ -13,11 +13,14 @@ import javax.swing.JPanel;
 
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
+import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 
-/** AbstractSignalSpaceAwarePresetDialog
- *
+/**
+ * Abstract {@link AbstractPresetDialog preset dialog} with the check-box that
+ * tells if the {@link SignalSpace signal space} should be included in the
+ * Preset.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -25,16 +28,39 @@ public abstract class AbstractSignalSpaceAwarePresetDialog extends AbstractPrese
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * the check-box which tells if the {@link SignalSpace signal space} should
+	 * be included in the {@link Preset}
+	 */
 	private JCheckBox includeSpaceCheckBox;
 
+
+	/**
+	 * Constructor. Sets message source, {@link PresetManager preset
+	 * manager}, parent window and if this dialog blocks top-level windows.
+	 * @param messageSource message source to set
+	 * @param presetManager the preset manager to set
+	 * @param w the parent window or null if there is no parent
+	 * @param isModal true, dialog blocks top-level windows, false otherwise
+	 */
 	public AbstractSignalSpaceAwarePresetDialog(MessageSourceAccessor messageSource, PresetManager presetManager, Window w, boolean isModal) {
 		super(messageSource, presetManager, w, isModal);
 	}
 
+	/**
+	 * Constructor. Sets message source and the {@link PresetManager preset
+	 * manager}.
+	 * @param messageSource message source to set
+	 * @param presetManager the preset manager to set
+	 */
 	public AbstractSignalSpaceAwarePresetDialog(MessageSourceAccessor messageSource, PresetManager presetManager) {
 		super(messageSource, presetManager);
 	}
 
+	/**
+	 * {@link AbstractPresetDialog#createPresetPane() Creates} preset pane
+	 * and adds the {@link #getIncludeSpaceCheckBox() check-box} to it.
+	 */
 	@Override
 	protected JPanel createPresetPane() {
 
@@ -52,6 +78,14 @@ public abstract class AbstractSignalSpaceAwarePresetDialog extends AbstractPrese
 
 	}
 
+	/**
+	 * Returns the check-box which tells if the {@link SignalSpace signal
+	 * space} should be included in the {@link Preset}.
+	 * If the check-box doesn't exist, it is created.
+	 * <p>NOTE: the state of the check-box must be set by implementation.
+	 * @return the check-box which tells if the signal space should be included
+	 * in the Preset
+	 */
 	public JCheckBox getIncludeSpaceCheckBox() {
 		if (includeSpaceCheckBox == null) {
 			includeSpaceCheckBox = new JCheckBox(messageSource.getMessage("spacePresetDialog.includeSpace"));
@@ -65,6 +99,15 @@ public abstract class AbstractSignalSpaceAwarePresetDialog extends AbstractPrese
 		setPreset(preset, getIncludeSpaceCheckBox().isSelected());
 	}
 
+	/**
+	 * Fills the fields of this dialog from the given {@link Preset preset}.
+	 * @param preset the preset to be used
+	 * @param includeSpace {@code true} if the information from the preset
+	 * about the {@link SignalSpace signal space} should be used,
+	 * {@code false} otherwise
+	 * @throws SignalMLException depends on an implementation;
+	 * now never thrown
+	 */
 	public abstract void setPreset(Preset preset, boolean includeSpace) throws SignalMLException;
 
 }

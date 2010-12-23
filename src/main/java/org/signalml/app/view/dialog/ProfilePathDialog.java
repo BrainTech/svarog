@@ -17,8 +17,11 @@ import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
-/** ProfilePathDialog
- *
+/**
+ * Dialog which is displayed at the first use of the application (or if
+ * profile directory was deleted). Allows the user to select the directory
+ * which should be a profile directory.
+ * Contains only one panel - {@link ProfilePathTypePanel}.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -26,12 +29,27 @@ public class ProfilePathDialog extends AbstractDialog {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * the {@link ProfilePathTypePanel panel} with the actual contents of this
+	 * dialog
+	 */
 	private ProfilePathTypePanel panel;
 
+	/**
+	 * Constructor. Sets message source, parent window and if this dialog
+	 * blocks top-level windows.
+	 * @param messageSource message source to set
+	 * @param f the parent window or null if there is no parent
+	 * @param isModal true, dialog blocks top-level windows, false otherwise
+	 */
 	public ProfilePathDialog(MessageSourceAccessor messageSource, Window f, boolean isModal) {
 		super(messageSource, f, isModal);
 	}
 
+	/**
+	 * Sets the title of this dialog and calls the {@link AbstractDialog#
+	 * initialize() initialization} in parent.
+	 */
 	@Override
 	protected void initialize() {
 		setTitle(messageSource.getMessage("profilePath.title"));
@@ -39,6 +57,10 @@ public class ProfilePathDialog extends AbstractDialog {
 		super.initialize();
 	}
 
+	/**
+	 * Creates the interface for this dialog which contains only one panel -
+	 * {@link ProfilePathTypePanel}.
+	 */
 	@Override
 	public JComponent createInterface() {
 
@@ -47,6 +69,22 @@ public class ProfilePathDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Fills the fields of this dialog using the given {@link
+	 * GeneralConfiguration model}:
+	 * <ul>
+	 * <li>if by default the default profile directory should be chosen sets
+	 * the {@link ProfilePathTypePanel#getDefaultRadio() default button} as
+	 * selected, otherwise sets the {@link ProfilePathTypePanel#getCustomRadio()
+	 * custom button} as selected,</li>
+	 * <li>if the {@link GeneralConfiguration#getProfilePath() path} to the
+	 * profile directory exists:
+	 * <ul><li>if the file (directory) exists sets in the file chooser,</li>
+	 * <li>if the parent directory exists sets it in the file chooser,</li>
+	 * </ul></li>
+	 * <li>otherwise sets the user's home directory in the file chooser.</li>
+	 * </ul>
+	 */
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 		GeneralConfiguration config = (GeneralConfiguration) model;
@@ -85,6 +123,12 @@ public class ProfilePathDialog extends AbstractDialog {
 		}
 	}
 
+	/**
+	 * Sets in the {@link GeneralConfiguration model} if the {@link
+	 * GeneralConfiguration#setProfileDefault(boolean) default directory}
+	 * should be used and if not, sets {@link GeneralConfiguration#
+	 * setProfilePath(String)} path to it.
+	 */
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
 		GeneralConfiguration config = (GeneralConfiguration) model;
@@ -99,6 +143,12 @@ public class ProfilePathDialog extends AbstractDialog {
 		}
 	}
 
+	/**
+	 * Validates this dialog. This dialog is valid if either {@link
+	 * ProfilePathTypePanel#getDefaultRadio() default button} is selected or
+	 * the profile directory is selected in the file chooser (and it is a
+	 * directory).
+	 */
 	@Override
 	public void validateDialog(Object model, Errors errors) throws SignalMLException {
 		if (!panel.getDefaultRadio().isSelected()) {
@@ -117,6 +167,9 @@ public class ProfilePathDialog extends AbstractDialog {
 		}
 	}
 
+	/**
+	 * The model for this class must be of type {@link GeneralConfiguration}.
+	 */
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
 		return GeneralConfiguration.class.isAssignableFrom(clazz);

@@ -31,8 +31,17 @@ import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.core.io.ClassPathResource;
 
-/** HelpDialog
- *
+/**
+ * Dialog which displays the help for Svarog.
+ * Contains two elements:
+ * <ul>
+ * <li>the web-browser style tool bar with 4 buttons ({@link BackAction back},
+ * {@link ForwardAction forward}, {@link ReloadAction reload} and
+ * {@link HomeAction home}),</li>
+ * <li>the {@link #getScrollPane() scroll pane} with the {@link
+ * #getHelpPane() help pane}.</li>
+ * </ul>
+ * User can use this dialog in the way similar to the web browser.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -40,29 +49,82 @@ public class HelpDialog extends AbstractDialog {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * the text pane in which the actual help is displayed
+	 */
 	private JTextPane helpPane;
+	/**
+	 * the scroll pane which contains {@link #helpPane}
+	 */
 	private JScrollPane scrollPane;
 
+	/**
+	 * the stack of URLs to that can be used to go to the previously visited
+	 * pages (as back in web browser)
+	 */
 	private Stack<URL> backURLs = new Stack<URL>();
+	/**
+	 * the stack of URLs to that can be used to go to pages from which we went
+	 * back (as forward in web browser)
+	 */
 	private Stack<URL> forwardURLs = new Stack<URL>();
 
+	/**
+	 * the URL to the page that is currently displayed
+	 */
 	private URL currentURL = null;
 
+	/**
+	 * the URL to the contents of the help
+	 */
 	private URL helpContentsURL = null;
 
+	/**
+	 * the {@link ReloadAction action} which reloads the current help page
+	 */
 	private ReloadAction reloadAction;
+	/**
+	 * the {@link HomeAction action} which shows the contents of the help
+	 */
 	private HomeAction homeAction;
+	/**
+	 * the {@link BackAction action} which shows the previously visited page
+	 */
 	private BackAction backAction;
+	/**
+	 * the {@link ForwardAction action} which shows the page from which we went
+	 * back
+	 */
 	private ForwardAction forwardAction;
 
+	/**
+	 * Constructor. Sets the source of messages.
+	 * @param messageSource the source of messages
+	 */
 	public HelpDialog(MessageSourceAccessor messageSource) {
 		super(messageSource);
 	}
 
+	/**
+	 * Constructor. Sets message source, parent window and if this dialog
+	 * blocks top-level windows.
+	 * @param messageSource message source to set
+	 * @param w the parent window or null if there is no parent
+	 * @param isModal true, dialog blocks top-level windows, false otherwise
+	 */
 	public HelpDialog(MessageSourceAccessor messageSource,Window w, boolean isModal) {
 		super(messageSource,w, isModal);
 	}
 
+	/**
+	 * Initializes this panel:
+	 * <ul>
+	 * <li>sets the icon and the title,</li>
+	 * <li>adds the {@code HyperlinkListener} to the {@link #getHelpPane()
+	 * help panel} (the listener {@link #setPage(URL) changes} the page when
+	 * the link is clicked.</li>
+	 * </ul>
+	 */
 	@Override
 	protected void initialize() {
 
@@ -89,6 +151,16 @@ public class HelpDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Creates the interface for this dialog:
+	 * <ul>
+	 * <li>the tool bar with 4 buttons ({@link BackAction back},
+	 * {@link ForwardAction forward}, {@link ReloadAction reload} and
+	 * {@link HomeAction home}),</li>
+	 * <li>the {@link #getScrollPane() scroll pane} with the {@link
+	 * #getHelpPane() help pane}.</li>
+	 * </ul>
+	 */
 	@Override
 	public JComponent createInterface() {
 
@@ -120,6 +192,11 @@ public class HelpDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Returns the text pane in which the actual help is displayed.
+	 * If the pane doesn't exist it is created.
+	 * @return the text pane in which the actual help is displayed
+	 */
 	private JTextPane getHelpPane() {
 		if (helpPane == null) {
 			helpPane = new JTextPane();
@@ -128,6 +205,12 @@ public class HelpDialog extends AbstractDialog {
 		return helpPane;
 	}
 
+	/**
+	 * Returns the scroll pane which contains the {@link #getHelpPane() help
+	 * pane}.
+	 * If the pane doesn't exist it is created.
+	 * @return the scroll pane which contains the help pane
+	 */
 	private JScrollPane getScrollPane() {
 		if (scrollPane == null) {
 			scrollPane = new JScrollPane(getHelpPane());
@@ -136,6 +219,12 @@ public class HelpDialog extends AbstractDialog {
 		return scrollPane;
 	}
 
+	/**
+	 * Returns the URL to the contents of the help.
+	 * If the URL doens't exist it is set to the default location.
+	 * @return the URL to the contents of the help
+	 * @throws SignalMLException if IO exception occurs
+	 */
 	public URL getHomeURL() throws SignalMLException {
 		if (helpContentsURL == null) {
 			try {
@@ -148,6 +237,13 @@ public class HelpDialog extends AbstractDialog {
 		return helpContentsURL;
 	}
 
+	/**
+	 * Changes the page to the specified URL.
+	 * @param url the URL to the page
+	 * @throws SignalMLException for a null or invalid page specification,
+	 * or exception from the stream being read
+	 * @see JTextPane#setPage(URL)
+	 */
 	private void setPageInternal(URL url) throws SignalMLException {
 
 		JTextPane helpPane = getHelpPane();
@@ -160,6 +256,20 @@ public class HelpDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Changes the displayed page to the specified URL.
+	 * If no URL is provided the URL to the contents of the help is used.
+	 * <p>
+	 * Performs operations necessary when the page is chagned:
+	 * <ul>
+	 * <li>adds the current URL to the stack of closed pages,</li>
+	 * <li>clears the stack of 'forward' pages,</li>
+	 * <li>{@link #setActionsEnabled() sets} which buttons should be
+	 * active.</li></ul>
+	 * @param url the URL to the page
+	 * @throws SignalMLException for a null or invalid page specification,
+	 * or exception from the stream being read
+	 */
 	public void setPage(URL url) throws SignalMLException {
 
 		URL targetURL = (url != null ? url : getHomeURL());
@@ -176,6 +286,10 @@ public class HelpDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Clears the stacks of back and forward pages and {@link
+	 * #setActionsEnabled() sets} the state of buttons according to it.
+	 */
 	public void reset() {
 		backURLs.clear();
 		forwardURLs.clear();
@@ -184,6 +298,18 @@ public class HelpDialog extends AbstractDialog {
 		}
 	}
 
+	/**
+	 * Changes the currently displayed page to the previously visited one
+	 * (from the 'back' stack):
+	 * <ul>
+	 * <li>if there is no URL in this stack does nothing, otherwise</li>
+	 * <li>adds the current URL to the stack of 'forward' pages,</li>
+	 * <li>{@link #setActionsEnabled() sets} which buttons should be
+	 * active.</li>
+	 * </ul>
+	 * @throws SignalMLException for a null or invalid page specification,
+	 * or exception from the stream being read
+	 */
 	public void back() throws SignalMLException {
 
 		if (backURLs.isEmpty()) {
@@ -203,6 +329,18 @@ public class HelpDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Changes the currently displayed page to the page from which the user
+	 * went back (first from the 'forward' stack):
+	 * <ul>
+	 * <li>if there is no URL in this stack does nothing, otherwise</li>
+	 * <li>adds the current URL to the stack of 'back' pages,</li>
+	 * <li>{@link #setActionsEnabled() sets} which buttons should be
+	 * active.</li>
+	 * </ul>
+	 * @throws SignalMLException for a null or invalid page specification,
+	 * or exception from the stream being read
+	 */
 	public void forward() throws SignalMLException {
 
 		if (forwardURLs.isEmpty()) {
@@ -222,6 +360,11 @@ public class HelpDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Reloads the current page. If there is no page does nothing.
+	 * @throws SignalMLException for invalid page specification,
+	 * or exception from the stream being read
+	 */
 	public void reload() throws SignalMLException {
 
 		if (currentURL == null) {
@@ -236,42 +379,73 @@ public class HelpDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Sets if the following actions should be enabled:
+	 * <ul>
+	 * <li>the {@link ReloadAction#setEnabled() reload action},</li>
+	 * <li>the {@link BackAction#setEnabled() back action},</li>
+	 * <li>the {@link ForwardAction#setEnabled() forward action}.</li>
+	 * </ul>
+	 */
 	public void setActionsEnabled() {
 		reloadAction.setEnabled();
 		backAction.setEnabled();
 		forwardAction.setEnabled();
 	}
 
+	/**
+	 * {@link #setPage(URL) Sets} the current page to the URL provided as
+	 * a model.
+	 */
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 		setPage((URL) model);
 	}
 
+	/**
+	 * Does nothing, beacuse it is a read only dialog.
+	 */
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
 		// do nothing
 	}
 
+	/**
+	 * The model for this dialog must be either null or of type URL.
+	 */
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
 		return (clazz == null || URL.class.isAssignableFrom(clazz));
 	}
 
+	/**
+	 * This dialog can not be canceled (has no CANCEL) button. 
+	 */
 	@Override
 	public boolean isCancellable() {
 		return false;
 	}
 
+	/**
+	 * Action which {@link HelpDialog#reload() reloads} the current page.
+	 */
 	protected class ReloadAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 
+		/**
+		 * Constructor. Sets the icon and the tool tip.
+		 */
 		public ReloadAction() {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/reload.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("help.reloadToolTip"));
 		}
 
+		/**
+		 * When the action is performed the current page is {@link HelpDialog#
+		 * reload() reloaded}
+		 */
 		public void actionPerformed(ActionEvent ev) {
 			try {
 				reload();
@@ -280,22 +454,37 @@ public class HelpDialog extends AbstractDialog {
 			}
 		}
 
+		/**
+		 * If the current URL is different the null this action is enabled,
+		 * otherwise it is disabled.
+		 */
 		public void setEnabled() {
 			setEnabled(currentURL != null);
 		}
 
 	}
 
+	/**
+	 * The action which changes the current page to the home page (contents of
+	 * the help).
+	 */
 	protected class HomeAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 
+		/**
+		 * Constructor. Sets the icon and the tool tip.
+		 */
 		public HomeAction() {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/help.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("help.homeToolTip"));
 		}
 
+		/**
+		 * When this action is performed the current page is changed to the
+		 * home page.
+		 */
 		public void actionPerformed(ActionEvent ev) {
 			try {
 				setPage(null);
@@ -306,16 +495,27 @@ public class HelpDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * The action which changes the current page to the previously visited page
+	 * (the first page from 'back' stack).
+	 */
 	protected class BackAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 
+		/**
+		 * Constructor. Sets the icon and the tool tip.
+		 */
 		public BackAction() {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/back.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("help.backToolTip"));
 		}
 
+		/**
+		 * When this action is performed the {@link HelpDialog#back()} function
+		 * is called.
+		 */
 		public void actionPerformed(ActionEvent ev) {
 			try {
 				back();
@@ -324,22 +524,37 @@ public class HelpDialog extends AbstractDialog {
 			}
 		}
 
+		/**
+		 * If there is at least one URL in the 'back' stack enables this action,
+		 * otherwise disables it.
+		 */
 		public void setEnabled() {
 			setEnabled(!backURLs.isEmpty());
 		}
 
 	}
 
+	/**
+	 * The action which changes the current page to the page from which te user
+	 * went back (the first page from 'forward' stack).
+	 */
 	protected class ForwardAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 
+		/**
+		 * Constructor. Sets the icon and the tool tip.
+		 */
 		public ForwardAction() {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/forward.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("help.forwardToolTip"));
 		}
 
+		/**
+		 * When this action is performed the {@link HelpDialog#forward()} function
+		 * is called.
+		 */
 		public void actionPerformed(ActionEvent ev) {
 			try {
 				forward();
@@ -348,6 +563,10 @@ public class HelpDialog extends AbstractDialog {
 			}
 		}
 
+		/**
+		 * If there is at least one URL in the 'forward' stack enables this
+		 * action, otherwise disables it.
+		 */
 		public void setEnabled() {
 			setEnabled(!forwardURLs.isEmpty());
 		}

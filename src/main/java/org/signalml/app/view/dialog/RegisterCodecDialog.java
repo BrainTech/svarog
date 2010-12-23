@@ -18,6 +18,7 @@ import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.element.EmbeddedFileChooser;
 import org.signalml.app.view.element.RegisterCodecStepOnePanel;
 import org.signalml.app.view.element.RegisterCodecStepTwoPanel;
+import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.codec.XMLSignalMLCodec;
 import org.signalml.codec.generator.xml.XMLCodecException;
@@ -26,8 +27,16 @@ import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
-/** RegisterCodecDialog
- *
+
+/**
+ * {@link AbstractWizardDialog Wizard dialog} to register a new
+ * {@link SignalMLCodec codec}.
+ * This dialog contains two steps:
+ * <ul>
+ * <li>{@link RegisterCodecStepOnePanel first}, in which the user selects
+ * the the file with the codec,</li>
+ * <li>{@link RegisterCodecStepTwoPanel second}, in which the user selects the
+ * name for the codec.</li>
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -35,19 +44,49 @@ public class RegisterCodecDialog extends AbstractWizardDialog {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * the {@link SignalMLCodecManager manager} of {@link SignalMLCodec codecs}
+	 */
 	private SignalMLCodecManager codecManager;
+	
+	/**
+	 * the {@link SignalMLCodec codec} read in this dialog
+	 */
 	private XMLSignalMLCodec currentCodec;
 
+	/**
+	 * the profile directory
+	 */
 	private File profileDir;
 
+	/**
+	 * Constructor. Sets message source.
+	 * @param messageSource message source to set
+	 */
 	public RegisterCodecDialog(MessageSourceAccessor messageSource) {
 		super(messageSource);
 	}
 
+	/**
+	 * Constructor. Sets message source, parent window and if this dialog
+	 * blocks top-level windows.
+	 * @param messageSource message source to set
+	 * @param f the parent window or null if there is no parent
+	 * @param isModal true, dialog blocks top-level windows, false otherwise
+	 */
 	public RegisterCodecDialog(MessageSourceAccessor messageSource, Window f, boolean isModal) {
 		super(messageSource, f, isModal);
 	}
 
+	/**
+	 * Initializes this dialog:
+	 * <ul><li>sets the title and icon for this dialog,</li>
+	 * <li>adds a listener which {@link #checkNameExists(String) checks} if
+	 * the {@link SignalMLCodec codec} of that name exists and displays the
+	 * warning,</li>
+	 * <li>calls {@link AbstractWizardDialog#initializeNow() initialization}
+	 * in parent class.</li></ul>
+	 */
 	@Override
 	protected void initialize() {
 
@@ -85,11 +124,20 @@ public class RegisterCodecDialog extends AbstractWizardDialog {
 
 	}
 
+	/**
+	 * Returns the number of steps, which equals {@code two}
+	 */
 	@Override
 	public int getStepCount() {
 		return 2;
 	}
 
+	/**
+	 * If it is the change from first step to second puts the
+	 * {@link XMLSignalMLCodec#getFormatName() name} of the codec in the
+	 * {@link RegisterCodecStepTwoPanel#getName() text field} and
+	 * {@link #checkNameExists(String) checks} if such name already exists.
+	 */
 	@Override
 	protected boolean onStepChange(int toStep, int fromStep, Object model) {
 		if (fromStep == 0) {
@@ -100,6 +148,15 @@ public class RegisterCodecDialog extends AbstractWizardDialog {
 		return true;
 	}
 
+	/**
+	 * For step one:
+	 * <ul><li>checks if the file is {@link EmbeddedFileChooser#validateFile(
+	 * Errors, String, boolean, boolean, boolean, boolean, boolean) valid} and
+	 * </li><li>creates the {@link XMLSignalMLCodec codec}</li>
+	 * </ul>
+	 * For step two:
+	 * <ul><li>checks if the name of the codec is valid.</li></ul>
+	 */
 	@Override
 	public void validateDialogStep(int step, Object model, Errors errors) throws SignalMLException {
 		if (step == 0) {
@@ -132,6 +189,13 @@ public class RegisterCodecDialog extends AbstractWizardDialog {
 		}
 	}
 
+	/**
+	 * Checks if there {@link SignalMLCodecManager#getCodecForFormat(String)
+	 * is} a {@link SignalMLCodec codec} of a given name.
+	 * If there is makes the {@link RegisterCodecStepTwoPanel#getWarningLabel()
+	 * warning label} in step two visible, otherwise makes it invisible.
+	 * @param formatName the name of the codec
+	 */
 	private void checkNameExists(String formatName) {
 		if (codecManager.getCodecForFormat(formatName) != null) {
 			getStepTwoPanel().getWarningLabel().setVisible(true);
@@ -140,12 +204,24 @@ public class RegisterCodecDialog extends AbstractWizardDialog {
 		}
 	}
 
+	/**
+	 * Calls the {@link AbstractWizardDialog#resetDialog() reset function} in
+	 * parent and makes the {@link RegisterCodecStepTwoPanel#getWarningLabel()
+	 * warning label} in step two invisible.
+	 */
 	@Override
 	protected void resetDialog() {
 		super.resetDialog();
 		getStepTwoPanel().getWarningLabel().setVisible(false);
 	}
 
+	/**
+	 * Creates the interface for step:
+	 * <ul><li>one - {@link RegisterCodecStepOnePanel},</li>
+	 * <li>two - {@link RegisterCodecStepTwoPanel},</li></ul>
+	 * @throws IndexOutOfBoundsException if the number of the step is
+	 * different from 1 or 2
+	 */
 	@Override
 	public JComponent createInterfaceForStep(int step) {
 		switch (step) {
@@ -158,19 +234,35 @@ public class RegisterCodecDialog extends AbstractWizardDialog {
 		}
 	}
 
+	/**
+	 * Finish is allowed only for the last (second) step.
+	 */
 	@Override
 	public boolean isFinishAllowedOnStep(int step) {
 		return (step == (getStepCount() - 1));
 	}
 
+	/**
+	 * Returns the {@link RegisterCodecStepOnePanel panel} for the first
+	 * step.
+	 * @return the panel for the first step
+	 */
 	public RegisterCodecStepOnePanel getStepOnePanel() {
 		return (RegisterCodecStepOnePanel) getInterfaceForStep(0);
 	}
 
+	/**
+	 * Returns the {@link RegisterCodecStepTwoPanel panel} for the second
+	 * step.
+	 * @return the panel for the second step
+	 */
 	public RegisterCodecStepTwoPanel getStepTwoPanel() {
 		return (RegisterCodecStepTwoPanel) getInterfaceForStep(1);
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 		RegisterCodecDescriptor rcd = (RegisterCodecDescriptor) model;
@@ -189,23 +281,44 @@ public class RegisterCodecDialog extends AbstractWizardDialog {
 		rcd.setFormatName(getStepTwoPanel().getNameField().getText());
 	}
 
+	/**
+	 * Model have to have type {@link RegisterCodecDescriptor}.
+	 */
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
 		return RegisterCodecDescriptor.class.isAssignableFrom(clazz);
 	}
 
+	/**
+	 * Returns the {@link SignalMLCodecManager manager} of
+	 * {@link SignalMLCodec codecs}.
+	 * @return the manager of codecs
+	 */
 	public SignalMLCodecManager getCodecManager() {
 		return codecManager;
 	}
 
+	/**
+	 * Sets the {@link SignalMLCodecManager manager} of
+	 * {@link SignalMLCodec codecs}.
+	 * @param codecManager the manager of codecs
+	 */
 	public void setCodecManager(SignalMLCodecManager codecManager) {
 		this.codecManager = codecManager;
 	}
 
+	/**
+	 * Returns the profile directory.
+	 * @return the profile directory
+	 */
 	public File getProfileDir() {
 		return profileDir;
 	}
 
+	/**
+	 * Sets the profile directory.
+	 * @param profileDir the profile directory
+	 */
 	public void setProfileDir(File profileDir) {
 		this.profileDir = profileDir;
 	}

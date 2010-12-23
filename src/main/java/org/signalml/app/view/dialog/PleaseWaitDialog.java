@@ -34,41 +34,92 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 
-/** PleaseWaitDialog
- *
- *
+/**
+ * Dialog shown when the user has to wait.
+ * Contains 3 elements:
+ * <ul> <li>the label that informs the user he should wait,</li>
+ * <li>the progress bar, which may display actual progress or just
+ * the animation,</li>
+ * <li>the label that describes the action in progress.</li>
+ * </ul>
+ * This dialog can be shown after the specified time without it (so that maybe
+ * the operation finishes before it is needed).
+ * 
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class PleaseWaitDialog extends AbstractDialog {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * the label that describes the action in progress
+	 */
 	private JLabel activityLabel;
+	/**
+	 * the progress bar.
+	 * May display actual progress or just the animation.
+	 */
 	private JProgressBar progressBar;
 
+	/**
+	 * the timer that shows the dialog
+	 */
 	private Timer showTimer;
+	
+	/**
+	 * the listener for the {@link #showTimer} that shows this dialog.
+	 */
 	private ActionListener showListener;
 
+	/**
+	 * the object that owns this dialog - usually a {@link SwingWorker}
+	 */
 	private Object currentOwner;
 
+	/**
+	 * Constructor. Sets message source.
+	 * @param messageSource message source to set
+	 */
 	public PleaseWaitDialog(MessageSourceAccessor messageSource) {
 		super(messageSource);
 	}
 
+	/**
+	 * Constructor. Sets message source, parent window.
+	 * This dialog blocks top-level windows.
+	 * @param messageSource message source to set
+	 * @param w the parent window or null if there is no parent
+	 */
 	public PleaseWaitDialog(MessageSourceAccessor messageSource, Window w) {
 		super(messageSource, w, true);
 	}
 
+	/**
+	 * Does nothing.
+	 */
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 		// do nothing
 	}
 
+	/**
+	 * Does nothing.
+	 */
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
 		// do nothing
 	}
 
+	/**
+	 * Creates the interface of this dialog.
+	 * Dialog has a {@link BoxLayout} and contains (from top to bottom):
+	 * <ul>
+	 * <li>the label that informs the user he should wait,</li>
+	 * <li>the progress bar, which may display actual progress or just
+	 * the animation,</li>
+	 * <li>the label that describes the action in progress.</li>
+	 * </ul>
+	 */
 	@Override
 	public JComponent createInterface() {
 
@@ -106,21 +157,36 @@ public class PleaseWaitDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Returns that there is no control panel.
+	 */
 	@Override
 	public boolean isControlPanelEquipped() {
 		return false;
 	}
 
+	/**
+	 * The dialog can not be canceled.
+	 */
 	@Override
 	public boolean isCancellable() {
 		return false;
 	}
 
+	/**
+	 * There is no model, so the {@code clazz} must be {@code null}.
+	 */
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
 		return (clazz == null);
 	}
 
+	/**
+	 * Initializes this dialog.
+	 * Adds a WindowListener to this dialog.
+	 * If the owner of this dialog is a {@link SwingWorker},
+	 * when the worker is done makes this dialog invisible. 
+	 */
 	@Override
 	protected void initialize() {
 		setUndecorated(true);
@@ -143,12 +209,20 @@ public class PleaseWaitDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Sets that the progress bar should display only the animation instead
+	 * of a real progress.
+	 */
 	public void configureForIndeterminate() {
 		progressBar.setValue(0);
 		progressBar.setIndeterminate(true);
 		progressBar.setStringPainted(false);
 	}
 
+	/**
+	 * Sets that the progress bar should display only the animation instead
+	 * of a real progress.
+	 */
 	public void configureForIndeterminateSimulated() {
 
 		progressBar.setValue(0);
@@ -157,6 +231,13 @@ public class PleaseWaitDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Sets that the progress bar should a real progress from a given range.
+	 * Sets the value of this progress to the given value
+	 * @param min the left endpoint of the interval
+	 * @param max the right endpoint of the interval
+	 * @param value the current value of the progress
+	 */
 	public void configureForDeterminate(int min, int max, int value) {
 		progressBar.setMinimum(min);
 		progressBar.setMaximum(max);
@@ -165,24 +246,46 @@ public class PleaseWaitDialog extends AbstractDialog {
 		progressBar.setStringPainted(true);
 	}
 
+	/**
+	 * Sets the left endpoint of the progress interval.
+	 * @param min the left endpoint of the interval
+	 */
 	public void setMinimum(int min) {
 		progressBar.setMinimum(min);
 	}
 
+	/**
+	 * Sets the right endpoint of the progress interval
+	 * @param max the right endpoint of the interval
+	 */
 	public void setMaximum(int max) {
 		progressBar.setMaximum(max);
 	}
 
+	/**
+	 * Sets the current value of the progress.
+	 * @param value the current value of the progress
+	 */
 	public void setProgress(int value) {
 		progressBar.setValue(value);
 	}
 
+	/**
+	 * Sets the text that describes the action in progress.
+	 * @param activity the text that describes the action in progress
+	 */
 	public void setActivity(String activity) {
 		activityLabel.setText(activity);
 	}
 
-	// this method waits for specified amout of time while allowing the application to continue
-	// THEN locks the application on a modal dialog
+	/**
+	 * This method waits for specified amount of time while allowing the
+	 * application to continue
+	 * THEN locks the application on a modal dialog
+	 * @param parent the window parent to this dialog
+	 * @param noDialogTimeout the amount of milliseconds without the dialog;
+	 * after that time passes this dialog is shown
+	 */
 	public void showDialogIn(final Component parent, int noDialogTimeout) {
 
 		currentOwner = null;
@@ -206,9 +309,17 @@ public class PleaseWaitDialog extends AbstractDialog {
 
 	}
 
-	// this method locks the application on a modal dialog that cannot be closed
-	// the dialog is not shown until noDialogTimeout has elapsed, during which time the
-	// application is WAITING in event dispatching thread
+	/**
+	 * Waits a given amount of time without the dialog and when that time
+	 * passes this dialog is shown.
+	 * The application is locked on a modal dialog that cannot be closed.
+	 * During the time without the dialog the application is WAITING in
+	 * event dispatching thread.
+	 * @param parent the window parent to this dialog
+	 * @param noDialogTimeout the amount of milliseconds without the dialog;
+	 * after that time passes this dialog is shown
+	 * @param worker the worker in which the computation is performed
+	 */
 	@SuppressWarnings("unchecked")
 	public void waitAndShowDialogIn(Component parent, int noDialogTimeout, SwingWorker worker) {
 
@@ -247,7 +358,10 @@ public class PleaseWaitDialog extends AbstractDialog {
 
 	}
 
-	// this method locks the application on a modal dialog that cannot be closed
+	/**
+	 * Shows this dialog and locks the application on it.
+	 * @param parent the window parent to this dialog
+	 */
 	public void showDialogNow(Component parent) {
 
 		currentOwner = null;
@@ -257,7 +371,9 @@ public class PleaseWaitDialog extends AbstractDialog {
 
 	}
 
-	// this cancels showDialogIn, not other ways of timed showing
+	/**
+	 * Cancels showDialogIn, but not other ways of timed showing.
+	 */
 	public void cancelShowing() {
 		if (showTimer != null && showTimer.isRunning()) {
 			showTimer.stop();
@@ -265,11 +381,19 @@ public class PleaseWaitDialog extends AbstractDialog {
 		currentOwner = null;
 	}
 
+	/**
+	 * Makes this dialog invisible.
+	 */
 	public void release() {
 		setVisible(false);
 		currentOwner = null;
 	}
 
+	/**
+	 * Makes the dialog invisible if the given object owns it.
+	 * @param owner if the object own this dialog, this dialog is made
+	 * invisible
+	 */
 	public void releaseIfOwnedBy(Object owner) {
 		logger.debug("releaseIfOwnedBy for [" + owner + "]");
 		if (currentOwner == owner) {

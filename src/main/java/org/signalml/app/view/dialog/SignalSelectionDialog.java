@@ -11,25 +11,42 @@ import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.element.SignalSelectionPanel;
 import org.signalml.domain.signal.BoundedSignalSelection;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.SignalSelection;
 import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
-/** SignalSelectionDialog
- *
- *
+/**
+ * The dialog which allows to select the parameters of the {@link
+ * SignalSelection signal selection}.
+ * For more details see - {@link SignalSelectionPanel}.
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class SignalSelectionDialog extends AbstractDialog {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * the {@link SignalSelectionPanel panel} which allows to select the
+	 * parameters of the {@link SignalSelection signal selection}
+	 */
 	private SignalSelectionPanel signalSelectionPanel;
 
+	/**
+	 * Constructor. Sets message source, parent window and if this dialog
+	 * blocks top-level windows.
+	 * @param messageSource message source to set
+	 * @param f the parent window or null if there is no parent
+	 * @param isModal true, dialog blocks top-level windows, false otherwise
+	 */
 	public SignalSelectionDialog(MessageSourceAccessor messageSource, Window f, boolean isModal) {
 		super(messageSource, f, isModal);
 	}
 
+	/**
+	 * Sets the title, the icon and that this panel can not be resized and
+	 * calls the {@link AbstractDialog#initialize() initialization} in parent.
+	 */
 	@Override
 	protected void initialize() {
 		setTitle(messageSource.getMessage("signalSelection.title"));
@@ -38,6 +55,10 @@ public class SignalSelectionDialog extends AbstractDialog {
 		super.initialize();
 	}
 
+	/**
+	 * Creates the interface for this dialog with only one panel - {@link
+	 * SignalSelectionDialog}.
+	 */
 	@Override
 	public JComponent createInterface() {
 
@@ -47,6 +68,11 @@ public class SignalSelectionDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Fills the {@link SignalSelectionPanel#fillPanelFromModel(
+	 * BoundedSignalSelection) panel} for this dialog using the given
+	 * {@link BoundedSignalSelection model}.
+	 */
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 
@@ -55,6 +81,11 @@ public class SignalSelectionDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Fills the given {@link BoundedSignalSelection model} from the {@link
+	 * SignalSelectionPanel#fillModelFromPanel(BoundedSignalSelection) panel}
+	 * for this dialog.
+	 */
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
 
@@ -63,6 +94,10 @@ public class SignalSelectionDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * Validates this dialog. This dialog is valid if the panel for this dialog
+	 * {@link SignalSelectionPanel#validatePanel(Errors) is valid}.
+	 */
 	@Override
 	public void validateDialog(Object model, Errors errors) throws SignalMLException {
 
@@ -70,6 +105,9 @@ public class SignalSelectionDialog extends AbstractDialog {
 
 	}
 
+	/**
+	 * The model for this dialog must be of type {@link BoundedSignalSelection}.
+	 */
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
 		return BoundedSignalSelection.class.isAssignableFrom(clazz);

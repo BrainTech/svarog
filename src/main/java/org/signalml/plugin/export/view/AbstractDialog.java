@@ -264,7 +264,7 @@ public abstract class AbstractDialog extends JDialog {
 
 	/**
 	 * Creates the control pane.
-	 * Adds OK button and, if dialog can be canceled, the CANCEL button.  
+	 * Adds OK button and, if dialog can be canceled, the CANCEL button.
 	 * @return the created pane
 	 */
 	protected JPanel createControlPane() {
@@ -593,6 +593,7 @@ public abstract class AbstractDialog extends JDialog {
 	 * {@code xpos*parentWidth} from the left border of the given component and
 	 * {@code ypos*parentHeight} from the top border of the given component.
 	 * If there is no parent window, the whole screen is considered.
+	 * @param top the component in which this dialog is to centered
 	 * @param xpos the x proportion of the given component at which this dialog
 	 * should be located 
 	 * @param ypos the y proportion of the given component at which this dialog
