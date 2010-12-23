@@ -63,15 +63,10 @@ public class TagChannelSignalTool extends AbstractSignalTool implements TaggingS
 				return;
 			}
 			plot = (SignalPlot) source;
-			style = getSignalView().getCurrentTagStyle(SignalSelectionType.CHANNEL);
 
-			if (style != null && style.isMarker()) {
-				markAt(e.getPoint());
-			} else {
-				Point point = e.getPoint();
-				startPosition = plot.toTimeSpace(point);
-				channel = plot.toChannelSpace(point);
-			}
+			Point point = e.getPoint();
+			startPosition = plot.toTimeSpace(point);
+			channel = plot.toChannelSpace(point);
 
 			setEngaged(true);
 			e.consume();
@@ -83,6 +78,9 @@ public class TagChannelSignalTool extends AbstractSignalTool implements TaggingS
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		if (SwingUtilities.isLeftMouseButton(e)) {
+
+			style = getSignalView().getCurrentTagStyle(SignalSelectionType.CHANNEL);
+
 			if (startPosition != null) {
 				tagTo(e.getPoint());
 			}
@@ -160,21 +158,4 @@ public class TagChannelSignalTool extends AbstractSignalTool implements TaggingS
 		}
 	}
 
-	private void markAt(Point point) {
-		Integer channel = plot.toChannelSpace(point);
-
-		if (channel != null) {
-			TagDocument tagDocument = getSignalView().getDocument().getActiveTag();
-
-			if (tagDocument != null) {
-				int sampleAtPoint = plot.toSampleSpace(point);
-				float samplingFrequency = plot.getSamplingFrequency();
-				float startPosition = sampleAtPoint / samplingFrequency;
-
-				plot.tagChannelSelection(tagDocument, style, plot.getChannelSelection(startPosition, startPosition + 1/samplingFrequency, channel), true);
-			}
-		}
-
-		getSignalView().clearSignalSelection();
-	}
 }

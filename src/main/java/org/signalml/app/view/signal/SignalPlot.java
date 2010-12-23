@@ -1721,6 +1721,24 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		return new SignalSelection(SignalSelectionType.CHANNEL, fromPosition, toPosition-fromPosition, channel);
 	}
 
+	/**
+	 * Transforms a given {@link SignalSelection}to a marker selection type.
+	 * The result of the transformation is a one-sample wide signal selection
+	 * positioned at the center of the original signal selection.
+	 * @param selection the selection to be transformed
+	 * @return the result of the transformation - a one-sample wide signal
+	 * selection position at the center of the given signal selection.
+	 */
+	protected SignalSelection transformToMarkerSelection(SignalSelection selection) {
+
+		double centerPoint = selection.getCenterPosition();
+		int sampleAtPoint = (int)(centerPoint * samplingFrequency);
+		float newStartPosition = sampleAtPoint / samplingFrequency;
+
+		return getChannelSelection(newStartPosition, newStartPosition + 1/samplingFrequency, selection.getChannel());
+
+	}
+
 	/* ***************** ***************** ***************** */
 	/* ***************** ***************** ***************** */
 	/* ***************** ***************** ***************** */
@@ -1848,6 +1866,9 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		if (!selection.getType().isChannel()) {
 			throw new SanityCheckException("Not a channel selection");
 		}
+
+		if (style.isMarker())
+			selection = transformToMarkerSelection(selection);
 
 		int channel = selection.getChannel();
 		if (channel != Tag.CHANNEL_NULL)
