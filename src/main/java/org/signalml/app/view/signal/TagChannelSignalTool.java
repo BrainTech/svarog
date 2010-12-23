@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.export.signal.AbstractSignalTool;
+import org.signalml.plugin.export.signal.SignalSelection;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.TagStyle;
 
@@ -28,6 +29,11 @@ public class TagChannelSignalTool extends AbstractSignalTool implements TaggingS
 	protected static final Logger logger = Logger.getLogger(TagChannelSignalTool.class);
 
 	public Float startPosition;
+
+	/**
+	 * The channel on which the current selection was started.
+	 */
+	private Integer channel = null;
 
 	private SignalPlot plot;
 	private TagStyle style;
@@ -62,7 +68,9 @@ public class TagChannelSignalTool extends AbstractSignalTool implements TaggingS
 			if (style != null && style.isMarker()) {
 				markAt(e.getPoint());
 			} else {
-				startPosition = plot.toTimeSpace(e.getPoint());
+				Point point = e.getPoint();
+				startPosition = plot.toTimeSpace(point);
+				channel = plot.toChannelSpace(point);
 			}
 
 			setEngaged(true);
@@ -103,10 +111,16 @@ public class TagChannelSignalTool extends AbstractSignalTool implements TaggingS
 				if (startPosition.equals(endPosition)) {
 				    getSignalView().clearSignalSelection();
 				} else {
-					Integer channel = plot.toChannelSpace(point);
-					if (channel != null) {
-					    getSignalView().setSignalSelection(plot, plot.getChannelSelection(startPosition, endPosition, channel));
-					}
+
+					int currentChannel = plot.toChannelSpace(point);
+
+					if (Math.abs((currentChannel - channel)) > 0)
+						currentChannel = SignalSelection.CHANNEL_NULL;
+					else
+						currentChannel = channel;
+
+					getSignalView().setSignalSelection(plot,plot.getChannelSelection(startPosition, endPosition, currentChannel));
+
 				}
 			}
 		}
@@ -118,16 +132,21 @@ public class TagChannelSignalTool extends AbstractSignalTool implements TaggingS
 			if (endPosition != null) {
 
 				if (!startPosition.equals(endPosition)) {
-					Integer channel = plot.toChannelSpace(point);
-					if (channel != null) {
+					Integer currentChannel = plot.toChannelSpace(point);
+					if (currentChannel != null) {
 
 						TagDocument tagDocument = getSignalView().getDocument().getActiveTag();
 						if (tagDocument != null) {
 
+							if (Math.abs((currentChannel - channel)) > 0)
+								currentChannel = SignalSelection.CHANNEL_NULL;
+							else
+								currentChannel = channel;
+
 							if (style == null) {
-								plot.eraseTagsFromSelection(tagDocument, plot.getChannelSelection(startPosition, endPosition, channel));
+								plot.eraseTagsFromSelection(tagDocument, plot.getChannelSelection(startPosition, endPosition, currentChannel));
 							} else {
-								plot.tagChannelSelection(tagDocument, style, plot.getChannelSelection(startPosition, endPosition, channel), true);
+								plot.tagChannelSelection(tagDocument, style, plot.getChannelSelection(startPosition, endPosition, currentChannel), true);
 							}
 
 						}
@@ -143,10 +162,10 @@ public class TagChannelSignalTool extends AbstractSignalTool implements TaggingS
 
 	private void markAt(Point point) {
 		Integer channel = plot.toChannelSpace(point);
-		
+
 		if (channel != null) {
 			TagDocument tagDocument = getSignalView().getDocument().getActiveTag();
-			
+
 			if (tagDocument != null) {
 				int sampleAtPoint = plot.toSampleSpace(point);
 				float samplingFrequency = plot.getSamplingFrequency();

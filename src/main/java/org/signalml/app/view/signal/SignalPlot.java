@@ -1771,7 +1771,12 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		if (selection.getType().isChannel()) {
 			// channel must be converted to source channel
 			SignalSelection corrSelection;
-			corrSelection = new SignalSelection(SignalSelectionType.CHANNEL, selection.getPosition(), selection.getLength(), signalChain.getDocumentChannelIndex(selection.getChannel()));
+
+			int channel = selection.getChannel();
+			if (channel != SignalSelection.CHANNEL_NULL)
+				channel = signalChain.getDocumentChannelIndex(channel);
+
+			corrSelection = new SignalSelection(SignalSelectionType.CHANNEL, selection.getPosition(), selection.getLength(), channel);
 			tagDocument.getTagSet().eraseTags(corrSelection);
 		} else {
 			tagDocument.getTagSet().eraseTags(selection);
@@ -1844,7 +1849,11 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			throw new SanityCheckException("Not a channel selection");
 		}
 
-		Tag tag = new Tag(style,selection.getPosition(), selection.getLength(), signalChain.getDocumentChannelIndex(selection.getChannel()), null);
+		int channel = selection.getChannel();
+		if (channel != Tag.CHANNEL_NULL)
+			channel = signalChain.getDocumentChannelIndex(channel);
+
+		Tag tag = new Tag(style,selection.getPosition(), selection.getLength(), channel, null);
 		logger.debug("Adding channel tag [" + tag.toString() + "]");
 		tagDocument.getTagSet().mergeSameTypeChannelTags(tag);
 		tagDocument.invalidate();

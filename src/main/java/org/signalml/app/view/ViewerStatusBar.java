@@ -534,7 +534,10 @@ public class ViewerStatusBar extends JPanel implements ActionFocusListener, Prop
 			montage = document.getMontage();
 		}
 
-		sb.append(" (").append(montage.getMontageChannelLabelAt(signalSelection.getChannel())).append(')');
+		if (signalSelection.getChannel() != SignalSelection.CHANNEL_NULL)
+			sb.append(" (").append(montage.getMontageChannelLabelAt(signalSelection.getChannel())).append(')');
+		else
+			sb.append(" (all channels)");
 
 	}
 

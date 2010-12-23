@@ -13,6 +13,7 @@ import javax.swing.SwingUtilities;
 
 import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.export.signal.AbstractSignalTool;
+import org.signalml.plugin.export.signal.SignalSelection;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 
 /** SelectChannelSignalTool
@@ -24,6 +25,10 @@ public class SelectChannelSignalTool extends AbstractSignalTool implements Selec
 
 	public Float startPosition;
 
+	/**
+	 * The channel on which the current selection was started.
+	 */
+	private Integer channel = null;
 	private SignalPlot plot;
 
 	public SelectChannelSignalTool(SignalView signalView) {
@@ -52,7 +57,10 @@ public class SelectChannelSignalTool extends AbstractSignalTool implements Selec
 			}
 			plot = (SignalPlot) source;
 
-			startPosition = plot.toTimeSpace(e.getPoint());
+			Point point = e.getPoint();
+			startPosition = plot.toTimeSpace(point);
+			channel = plot.toChannelSpace(point);
+
 			setEngaged(true);
 			e.consume();
 		}
@@ -85,11 +93,19 @@ public class SelectChannelSignalTool extends AbstractSignalTool implements Selec
 			Float endPosition = plot.toTimeSpace(point);
 			if (endPosition != null) {
 				if (startPosition.equals(endPosition)) {
-				    getSignalView().clearSignalSelection();
+					getSignalView().clearSignalSelection();
 				} else {
-					Integer channel = plot.toChannelSpace(point);
 					if (channel != null) {
-					    getSignalView().setSignalSelection(plot,plot.getChannelSelection(startPosition, endPosition, channel));
+
+						int currentChannel = plot.toChannelSpace(point);
+
+						if (Math.abs((currentChannel - channel)) > 0)
+							currentChannel = SignalSelection.CHANNEL_NULL;
+						else
+							currentChannel = channel;
+
+						getSignalView().setSignalSelection(plot,plot.getChannelSelection(startPosition, endPosition, currentChannel));
+
 					}
 				}
 			}
