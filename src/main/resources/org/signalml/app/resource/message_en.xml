@@ -1330,14 +1330,14 @@
 	<entry key="signalView.selectToolToolTip">Select tags</entry>
 	<entry key="signalView.selectPageToolToolTip">Select signal pages</entry>
 	<entry key="signalView.selectBlockToolToolTip">Select signal blocks</entry>
-	<entry key="signalView.selectChannelToolToolTip">Select single channel signal fragments</entry>
+	<entry key="signalView.selectChannelToolToolTip">Select single channel or multichannel custom size signal fragments</entry>
 	<entry key="signalView.zoomSignalToolToolTip">Magnify the signal (for settings press and hold the mouse button here)</entry>
 	<entry key="signalView.signalFFTToolToolTip">Signal FFT (for settings press and hold the mouse button here)</entry>
 	<entry key="signalView.rulerToolToolTip">Measure the signal</entry>
 	<entry key="signalView.plotOptionsToolTip">Change plot options</entry>
 	<entry key="signalView.tagPageToolToolTip">Tag signal pages</entry>
 	<entry key="signalView.tagBlockToolToolTip">Tag signal blocks</entry>
-	<entry key="signalView.tagChannelToolToolTip">Tag single channel signal fragments</entry>
+	<entry key="signalView.tagChannelToolToolTip">Tag single channel or multichannel custom size signal fragments</entry>
 
 	<entry key="signalView.plotOptions">Plot options</entry>
 	<entry key="signalView.plotToolTipSignal">T: {0}, V:{1} [P: {2}, B: {3}, C: {4}]</entry>
