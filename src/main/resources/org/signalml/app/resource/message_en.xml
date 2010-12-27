@@ -1191,6 +1191,7 @@
 	<entry key="tagComparison.topDocument">First document</entry>
 	<entry key="tagComparison.bottomDocument">Second document</entry>
 	<entry key="tagComparison.showPercent">Show as percent</entry>
+	<entry key="tagComparison.multichannelTags">MULTICHANNEL TAGS</entry>
 	<entry key="tagComparison.comparisonResult">Comparison result</entry>
 	<entry key="tagComparison.pageStatistic">Page statistic</entry>
 	<entry key="tagComparison.blockStatistic">Block statistic</entry>

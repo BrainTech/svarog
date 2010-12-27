@@ -82,7 +82,7 @@ public class TagComparisonResultPanel extends JPanel {
 	private JComboBox selectedChannelComboBox;
 	private JCheckBox percentCheckBox;
 
-	private int selectedChannel = -1;
+	private Integer selectedChannel = null;
 	private TableToTextExporter tableToTextExporter;
 	private ViewerFileChooser fileChooser;
 
@@ -135,7 +135,7 @@ public class TagComparisonResultPanel extends JPanel {
 
 				getChannelListModel().setResults(null);
 
-				setSelectedChannel(-1);
+				setSelectedChannel(null);
 
 			} else {
 
@@ -153,7 +153,7 @@ public class TagComparisonResultPanel extends JPanel {
 				getChannelListModel().setResults(results);
 
 				if (results.getChannelCount() == 0) {
-					selectedChannel = -1;
+					selectedChannel = null;
 				}
 				else if (selectedChannel < 0) {
 					selectedChannel = 0;
@@ -168,7 +168,7 @@ public class TagComparisonResultPanel extends JPanel {
 		return selectedChannel;
 	}
 
-	public void setSelectedChannel(int selectedChannel) {
+	public void setSelectedChannel(Integer selectedChannel) {
 
 		if (this.selectedChannel != selectedChannel) {
 			this.selectedChannel = selectedChannel;
@@ -181,7 +181,7 @@ public class TagComparisonResultPanel extends JPanel {
 
 		JTabbedPane tabbedPane = getTabbedPane();
 
-		if (results == null || selectedChannel < 0) {
+		if (results == null || selectedChannel == null) {
 
 			getTopChannelStatisticModel().setStatistic(null);
 			getBottomChannelStatisticModel().setStatistic(null);
@@ -517,7 +517,7 @@ public class TagComparisonResultPanel extends JPanel {
 				public void actionPerformed(ActionEvent e) {
 					int index = selectedChannelComboBox.getSelectedIndex();
 					if (index < 0) {
-						setSelectedChannel(-1);
+						setSelectedChannel(null);
 					} else {
 						setSelectedChannel(index);
 					}

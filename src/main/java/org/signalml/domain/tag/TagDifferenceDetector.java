@@ -338,10 +338,11 @@ public class TagDifferenceDetector {
 
 		arrangeTagStyles(topStyleSet, bottomStyleSet, topStyles, bottomStyles);
 
-		TagComparisonResult[] channelComparisonResults = new TagComparisonResult[channelCount];
+		TagComparisonResult[] channelComparisonResults = new TagComparisonResult[channelCount + 1]; // +1 for SignalSelection.CHANNEL_NULL
 		for (int i=0; i<channelCount; i++) {
 			channelComparisonResults[i] = compare(topStyles, bottomStyles, topTags, bottomTags, SignalSelectionType.CHANNEL, i, signalLength);
 		}
+		channelComparisonResults[channelCount] = compare(topStyles, bottomStyles, topTags, bottomTags, SignalSelectionType.CHANNEL, SignalSelection.CHANNEL_NULL, signalLength);
 
 		return new TagComparisonResults(pageComparisonResult, blockComparisonResult, channelComparisonResults);
 
