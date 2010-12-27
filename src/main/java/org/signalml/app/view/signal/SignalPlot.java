@@ -1961,17 +1961,25 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			for (Tag tag : tagSet) {
 
 				if (tag.getStyle().getType() == SignalSelectionType.BLOCK) {
-					if (time >= tag.getPosition() && time < (tag.getPosition()+tag.getLength())) {
-					    tagBounds = getPixelBlockTagBounds(tag, tag.isMarker(), tagCnt, cnt, viewportPoint, viewportSize, plotSize, comparing, tempBounds );
+					if (time >= tag.getPosition() && time < (tag.getPosition() + tag.getLength())) {
+					    tagBounds = getPixelBlockTagBounds(tag, tag.isMarker(), tagCnt, cnt, viewportPoint, viewportSize, plotSize, comparing, tempBounds);
 						if (tagBounds.contains(point)) {
 							list.add(new PositionedTag(tag,tagIndex));
 						}
 					}
 				}
 				else if (tag.getStyle().getType() == SignalSelectionType.CHANNEL) {
-					if (tag.getChannel() == channel || tag.getChannel() == Tag.CHANNEL_NULL) {
+					if (tag.getChannel() == channel) {
 						if (tag.isMarker() || (time >= tag.getPosition() && time < tag.getEndPosition())) {
 							tagBounds = getPixelChannelTagBoundsInChannel(tag, tag.isMarker(), tagCnt, cnt, viewChannel, comparing, tempBounds);
+							if (tagBounds.contains(point)) {
+								list.add(new PositionedTag(tag,tagIndex));
+							}
+						}
+					}
+					else if (tag.getChannel() == Tag.CHANNEL_NULL) {
+						if (time >= tag.getPosition() && time < (tag.getPosition() + tag.getLength())) {
+							tagBounds = getPixelBlockTagBounds(tag, tag.isMarker(), tagCnt, cnt, viewportPoint, viewportSize, plotSize, comparing, tempBounds);
 							if (tagBounds.contains(point)) {
 								list.add(new PositionedTag(tag,tagIndex));
 							}
