@@ -1566,6 +1566,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 		detector.getDifferences(tags1, tags2, SignalSelectionType.PAGE, SignalSelection.CHANNEL_NULL, differences);
 		detector.getDifferences(tags1, tags2, SignalSelectionType.BLOCK, SignalSelection.CHANNEL_NULL, differences);
+		detector.getDifferences(tags1, tags2, SignalSelectionType.CHANNEL, SignalSelection.CHANNEL_NULL, differences);
 
 		int cnt = document.getChannelCount();
 		for (int i=0; i<cnt; i++) {
