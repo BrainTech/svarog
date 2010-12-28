@@ -172,6 +172,8 @@ public class ConfigurationDefaults {
 		settings.setFrequencyAxisLabelsVisible(Boolean.parseBoolean(properties.getProperty("application.signalFFTSettings.frequencyAxisLabelsVisible")));
 		settings.setPowerAxisLabelsVisible(Boolean.parseBoolean(properties.getProperty("application.signalFFTSettings.powerAxisLabelsVisible")));
 
+		settings.setMaxLabelCount(Integer.parseInt(properties.getProperty("application.signalFFTSettings.maxLabelCount")));
+
 	}
 
 	public static void setStagerParameters(StagerParameters parameters) {

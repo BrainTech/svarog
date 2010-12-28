@@ -65,7 +65,7 @@
 
     <entry key="application.signalFFTSettings.plotSize.width">600</entry>
     <entry key="application.signalFFTSettings.plotSize.height">200</entry>
-    <entry key="application.signalFFTSettings.windowWidth">256</entry>
+    <entry key="application.signalFFTSettings.windowWidth">1024</entry>
     <entry key="application.signalFFTSettings.windowType">RECTANGULAR</entry>
     <entry key="application.signalFFTSettings.windowParameter">0.0</entry>
     <entry key="application.signalFFTSettings.channelSwitching">false</entry>
@@ -74,7 +74,8 @@
     <entry key="application.signalFFTSettings.spline">false</entry>
     <entry key="application.signalFFTSettings.titleVisible">false</entry>
     <entry key="application.signalFFTSettings.frequencyAxisLabelsVisible">true</entry>
-    <entry key="application.signalFFTSettings.powerAxisLabelsVisible">false</entry>
+    <entry key="application.signalFFTSettings.powerAxisLabelsVisible">true</entry>
+    <entry key="application.signalFFTSettings.maxLabelCount">20</entry>
 
 	<entry key="stager.rules">RK</entry>	
 
