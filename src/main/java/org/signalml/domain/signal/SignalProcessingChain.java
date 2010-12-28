@@ -301,8 +301,8 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 
         /**
          * Creates the chain:
-         * <code>original source = source -> buffer -> montage
-         * -> montage buffer -> filter = output</code>
+         * <code>original source = source -> montage
+         * -> filter = output</code>
          * @param source the
          * {@link OriginalMultichannelSampleSource original source} of samples
          * @param signalType the type of the signal
