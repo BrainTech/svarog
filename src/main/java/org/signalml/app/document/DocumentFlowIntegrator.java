@@ -21,8 +21,10 @@ import javax.swing.filechooser.FileFilter;
 import multiplexer.jmx.client.ConnectException;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.action.MonitorRecordingAction;
 import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.config.ApplicationConfiguration;
+import org.signalml.app.model.MonitorRecordingDescriptor;
 import org.signalml.app.model.OpenDocumentDescriptor;
 import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.app.model.OpenSignalDescriptor;
@@ -792,20 +794,17 @@ public class DocumentFlowIntegrator {
 
 		OpenMonitorDescriptor monitorOptions = descriptor.getMonitorOptions();
 		
-		MonitorSignalDocument monitorSignalDocument = new MonitorSignalDocument( monitorOptions);
-
-		String fileName = monitorOptions.getFileName();
-		if (fileName != null && !"".equals( fileName)) {
-			FileOutputStream recorderOutput = new FileOutputStream( new File( fileName + ".raw"));
-			monitorSignalDocument.setRecorderOutput( recorderOutput);
-		}
+		MonitorSignalDocument monitorSignalDocument = new MonitorSignalDocument(monitorOptions);
 
 		monitorSignalDocument.openDocument();
 
-		onSignalDocumentAdded( monitorSignalDocument, descriptor.isMakeActive());
-		onCommonDocumentAdded( monitorSignalDocument);
+		onSignalDocumentAdded(monitorSignalDocument, descriptor.isMakeActive());
+		onCommonDocumentAdded(monitorSignalDocument);
 
 		actionFocusManager.setActiveDocument( monitorSignalDocument);
+
+		if(monitorOptions.getMonitorRecordingDescriptor().isRecordingEnabled())
+			monitorSignalDocument.startMonitorRecording();
 
 		logger.debug("monitor openned");
 		

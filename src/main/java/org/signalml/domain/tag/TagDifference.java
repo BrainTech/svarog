@@ -39,7 +39,7 @@ public class TagDifference extends SignalSelection implements Comparable<TagDiff
          * @param differenceType the {@link TagDifferenceType type} of
          * this difference
          */
-	public TagDifference(SignalSelectionType type, float position, float length, int channel, TagDifferenceType differenceType) {
+	public TagDifference(SignalSelectionType type, double position, double length, int channel, TagDifferenceType differenceType) {
 		super(type, position, length, channel);
 		this.differenceType = differenceType;
 	}
@@ -49,13 +49,13 @@ public class TagDifference extends SignalSelection implements Comparable<TagDiff
          * @param type the {@link SignalSelectionType type} of a
          * {@link SignalSelection signal} selection which this difference
          * concerns
-         * @param position the position when difference begins
-         * @param length the length of the difference
+         * @param d the position when difference begins
+         * @param maxValue the length of the difference
          * @param differenceType the {@link TagDifferenceType type} of
          * this difference
          */
-	public TagDifference(SignalSelectionType type, float position, float length, TagDifferenceType differenceType) {
-		super(type, position, length);
+	public TagDifference(SignalSelectionType type, double d, double maxValue, TagDifferenceType differenceType) {
+		super(type, d, maxValue);
 		this.differenceType = differenceType;
 	}
 
@@ -79,7 +79,7 @@ public class TagDifference extends SignalSelection implements Comparable<TagDiff
 	@Override
 	public int compareTo(TagDifference t) {
 
-		float test = position - t.position;
+		double test = position - t.position;
 		if (test == 0) {
 			test = length - t.length;
 			if (test == 0) {

@@ -56,12 +56,12 @@ public interface ExportedTag extends ExportedSignalSelection, Comparable<Exporte
 	/**
      * @param position position where selection starts
      */
-	void setPosition(float position);
+	void setPosition(double position);
 	
 	/**
     * @param length length of selection in seconds
     */
-	void setLength(float length);
+	void setLength(double length);
 	
 	/**
     * @param channel number of selected channel

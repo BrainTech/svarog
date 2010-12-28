@@ -193,6 +193,7 @@ public class TagComparisonDialog extends AbstractDialog {
 		// TODO maybe needs worker - if so the detector needs progress reporting
 
 		TagComparisonResults results = detector.compare(currentTopDocument, currentBottomDocument);
+		results.setMessageSourceAccessor(messageSource);
 		results.getParametersFromSampleSource(currentSignalDocument.getSampleSource(), currentSignalDocument.getMontage());
 		resultPanel.setResults(results);
 

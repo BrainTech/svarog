@@ -28,16 +28,16 @@ public class SignalSelection implements Serializable, ExportedSignalSelection {
     /**
      * position where selection starts >= 0
      */
-	protected float position;
+	protected double position;
 
     /**
      * length of selection in seconds >= 0
      */
-	protected float length;
+	protected double length;
 
     /**
-     * number of selected channel
-     * CHANNEL_NULL when no channel is selected
+     * Number of selected channel. (CHANNEL_NULL when no channel is selected -
+     * if no channel is selected then the selection covers all channels).
      */
 	protected int channel;
 
@@ -62,7 +62,7 @@ public class SignalSelection implements Serializable, ExportedSignalSelection {
      * @param length length of selection in seconds
      * @throws NullPointerException if no type given
      */
-	public SignalSelection(SignalSelectionType type, float position, float length) {
+	public SignalSelection(SignalSelectionType type, double position, double length) {
 		if (type == null) {
 			throw new NullPointerException("No type");
 		}
@@ -80,7 +80,7 @@ public class SignalSelection implements Serializable, ExportedSignalSelection {
      * @param channel number of selected channel
      * CHANNEL_NULL when no channel is selected
      */
-	public SignalSelection(SignalSelectionType type, float position, float length, int channel) {
+	public SignalSelection(SignalSelectionType type, double position, double length, int channel) {
 		this.type = type;
 		this.position = position;
 		this.length = length;
@@ -117,7 +117,7 @@ public class SignalSelection implements Serializable, ExportedSignalSelection {
      * @param channel number of selected channel
      * CHANNEL_NULL when no channel is selected
      */
-	public void setParameters(float position, float length, int channel) {
+	public void setParameters(double position, double length, int channel) {
 		this.position = position;
 		this.length = length;
 		this.channel = ((type != SignalSelectionType.CHANNEL || channel < 0) ? CHANNEL_NULL : channel);
@@ -128,7 +128,7 @@ public class SignalSelection implements Serializable, ExportedSignalSelection {
      * @param position position where selection starts
      * @param length length of selection in seconds
      */
-	public void setParameters(float position, float length) {
+	public void setParameters(double position, double length) {
 		this.position = position;
 		this.length = length;
 	}
@@ -147,15 +147,15 @@ public class SignalSelection implements Serializable, ExportedSignalSelection {
      * @return position where selection starts
      */
 	@Override
-	public float getPosition() {
+	public double getPosition() {
 		return position;
 	}
 
-    /**
+    /*
      *
      * @param position position where selection starts
      */
-	public void setPosition(float position) {
+	public void setPosition(double position) {
 		this.position = position;
 	}
 
@@ -164,7 +164,7 @@ public class SignalSelection implements Serializable, ExportedSignalSelection {
      * @return length of selection in seconds
      */
 	@Override
-	public float getLength() {
+	public double getLength() {
 		return length;
 	}
 
@@ -172,7 +172,7 @@ public class SignalSelection implements Serializable, ExportedSignalSelection {
      *
      * @param length length of selection in seconds
      */
-	public void setLength(float length) {
+	public void setLength(double length) {
 		this.length = length;
 	}
 
@@ -181,7 +181,7 @@ public class SignalSelection implements Serializable, ExportedSignalSelection {
      * @return middle of selection
      */
 	@Override
-	public float getCenterPosition() {
+	public double getCenterPosition() {
 		return position + length / 2;
 	}
 
@@ -190,7 +190,7 @@ public class SignalSelection implements Serializable, ExportedSignalSelection {
      * @return position where selection is ending
      */
 	@Override
-	public float getEndPosition() {
+	public double getEndPosition() {
 		return position + length;
 	}
 
@@ -285,11 +285,11 @@ public class SignalSelection implements Serializable, ExportedSignalSelection {
      */
 	public boolean overlaps(SignalSelection selection) {
 
-		float sEndPosition = selection.position + selection.length;
+		double sEndPosition = selection.position + selection.length;
 		if (selection.position <= position && sEndPosition <= position) {
 			return false;
 		}
-		float endPosition = position + length;
+		double endPosition = position + length;
 		if (selection.position >= endPosition && sEndPosition >= endPosition) {
 			return false;
 		}

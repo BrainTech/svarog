@@ -5,9 +5,10 @@
 package org.signalml.domain.montage.filter.iirdesigner;
 
 /**
- * This class holds a representation of a filter frequency response. It contains
+ * This class can hold a representation of various filter responses
+ * (like frequency response, phase shift, group delay). It contains
  * two arrays - one holding frequencies at which the response was calculated,
- * the other holds the frequency response.
+ * the other holds the response (gain or phase response).
  *
  * @author Piotr Szachewicz
  */
@@ -21,7 +22,7 @@ public class FilterFrequencyResponse {
 	/**
 	 * an array containing the calculated frequency response
 	 */
-	protected double[] gain;
+	protected double[] values;
 
 	/**
 	 * Constructor. Creates an empty {@link FilterFrequencyResponse} which can
@@ -32,40 +33,7 @@ public class FilterFrequencyResponse {
 	 */
 	FilterFrequencyResponse(int numberOfPoints) {
 		frequencies = new double[numberOfPoints];
-		gain = new double[numberOfPoints];
-	}
-
-	/**
-	 * Sets the value of the specified elements in the frequency and
-	 * gain arrays.
-	 *
-	 * @param i the index of the element to change
-	 * @param frequency the new value of frequency to be put in the array
-	 * @param value the new value of gain to be put in the array
-	 */
-	public void setValue(int i, double frequency, double value) {
-		frequencies[i] = frequency;
-		gain[i] = value;
-	}
-
-	/**
-	 * Sets the value of the specified element in the frequency array.
-	 *
-	 * @param i the index of the element to change
-	 * @param frequency the new value of frequency
-	 */
-	public void setFrequency(int i, double frequency) {
-		frequencies[i] = frequency;
-	}
-
-	/**
-	 * Sets the value of the specified element in the gain arrray.
-	 *
-	 * @param i the index of the element to change
-	 * @param newGain the new value of gain
-	 */
-	public void setGain(int i, double newGain) {
-		gain[i] = newGain;
+		values = new double[numberOfPoints];
 	}
 
 	/**
@@ -90,12 +58,82 @@ public class FilterFrequencyResponse {
 	}
 
 	/**
+	 * Sets the value of the specified element in the frequency array.
+	 *
+	 * @param i the index of the element to change
+	 * @param frequency the new value of frequency
+	 */
+	public void setFrequency(int i, double frequency) {
+		frequencies[i] = frequency;
+	}
+
+	/**
+	 * Sets the frequencies for this frequency response. The new frequency
+	 * array size must be equal to the number of points given to the
+	 * constructor.
+	 * @param frequencies the new frequencies values for this frequency
+	 * response
+	 */
+	public void setFrequencies(double[] frequencies) {
+		/*the number of points was set in the constructor
+		 * should not change.
+		 */
+		assert(frequencies.length == this.frequencies.length);
+
+		this.frequencies = frequencies;
+	}
+
+	/**
+	 * Returns the value of the specified element in the frequency response
+	 * (values).
+	 * @param i the index of the element to be returned
+	 * @return the value in the frequency response having the given index
+	 */
+	public double getValue(int i) {
+		return values[i];
+	}
+
+	/**
 	 * Returns an array containing the frequency response.
 	 *
 	 * @return the frequency response
 	 */
-	public double[] getGain() {
-		return gain;
+	public double[] getValues() {
+		return values;
 	}
 
+		/**
+	 * Sets the value of the specified element in the gain arrray.
+	 *
+	 * @param i the index of the element to change
+	 * @param newValue the new value of gain
+	 */
+	public void setValue(int i, double newValue) {
+		values[i] = newValue;
+	}
+
+	/**
+	 * Sets the values of gain.
+	 * @param values the values to which the gain should be set (new values
+	 * array size must be equal to the number of points given to the
+	 * constructor)
+	 */
+	public void setValues(double[] values) {
+		assert(frequencies.length == values.length);
+
+		this.values = values;
+	}
+
+	/**
+	 * Sets the value of the specified elements in the frequency and
+	 * gain arrays.
+	 *
+	 * @param i the index of the element to change
+	 * @param frequency the new value of frequency to be put in the array
+	 * @param value the new value of gain to be put in the array
+	 */
+	public void setValue(int i, double frequency, double value) {
+		frequencies[i] = frequency;
+		values[i] = value;
+	}
 }

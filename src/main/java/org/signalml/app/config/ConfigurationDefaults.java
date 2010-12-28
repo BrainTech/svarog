@@ -141,7 +141,6 @@ public class ConfigurationDefaults {
 		
 		setMultiplexerDefaultParameters( config);
 		setMonitorDefaultParameters( config);
-		setSignalRecorderDefaultParameters( config);
 	}
 
 	public static void setZoomSignalSettingsDefaults(ZoomSignalSettings settings) {
@@ -172,6 +171,8 @@ public class ConfigurationDefaults {
 		settings.setTitleVisible(Boolean.parseBoolean(properties.getProperty("application.signalFFTSettings.titleVisible")));
 		settings.setFrequencyAxisLabelsVisible(Boolean.parseBoolean(properties.getProperty("application.signalFFTSettings.frequencyAxisLabelsVisible")));
 		settings.setPowerAxisLabelsVisible(Boolean.parseBoolean(properties.getProperty("application.signalFFTSettings.powerAxisLabelsVisible")));
+
+		settings.setMaxLabelCount(Integer.parseInt(properties.getProperty("application.signalFFTSettings.maxLabelCount")));
 
 	}
 
@@ -298,23 +299,22 @@ public class ConfigurationDefaults {
 
 	}
 	
-	public static void setMultiplexerDefaultParameters( ApplicationConfiguration config ) {
+	public static void setMultiplexerDefaultParameters(ApplicationConfiguration config) {
 
-		config.setMultiplexerAddress( properties.getProperty("multiplexer.address"));
+		config.setMultiplexerAddress(properties.getProperty("multiplexer.address"));
+		config.setDefaultMultiplexerAddress(properties.getProperty("default.multiplexer.address"));
+
 		int port = Integer.parseInt(properties.getProperty("multiplexer.port"));
 		config.setMultiplexerPort( port);
-		
+
+		port = Integer.parseInt(properties.getProperty("default.multiplexer.port"));
+		config.setDefaultMultiplexerPort(port);
+
 	}
 	
 	public static void setMonitorDefaultParameters( ApplicationConfiguration config ) {
 
 		config.setMonitorPageSize( Float.parseFloat( properties.getProperty( "monitor.pageSize")));
-
-	}
-	
-	public static void setSignalRecorderDefaultParameters( ApplicationConfiguration config ) {
-
-		config.setSignalRecorderFileName( properties.getProperty( "signalRecorder.fileName"));
 
 	}
 

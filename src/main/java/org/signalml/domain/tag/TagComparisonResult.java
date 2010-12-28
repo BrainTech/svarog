@@ -43,7 +43,7 @@ public class TagComparisonResult implements WriterExportableTable {
          * arr[0][y] -> length of a part of bottom tags of style of index
          * <i>y</i> that is not tagged in top tags.
          */
-	private float[][] styleOverlayMatrix;
+	private double[][] styleOverlayMatrix;
 
         /**
          * Constructor. Creates a result of {@link Tag tag} comparison.
@@ -52,12 +52,12 @@ public class TagComparisonResult implements WriterExportableTable {
          * @param topTotalLength total length (in seconds) of top tags
          * @param bottomTotalLength total length (in seconds) of bottom tags
          */
-	public TagComparisonResult(TagStyle[] topTagStyles, TagStyle[] bottomTagStyles, float topTotalLength, float bottomTotalLength) {
+	public TagComparisonResult(TagStyle[] topTagStyles, TagStyle[] bottomTagStyles, double topTotalLength, double bottomTotalLength) {
 
 		topStatistic = new TagStatistic(topTagStyles, topTotalLength);
 		bottomStatistic = new TagStatistic(bottomTagStyles, bottomTotalLength);
 
-		styleOverlayMatrix = new float[topTagStyles.length+1][bottomTagStyles.length+1];
+		styleOverlayMatrix = new double[topTagStyles.length+1][bottomTagStyles.length+1];
 
 	}
 
@@ -139,7 +139,7 @@ public class TagComparisonResult implements WriterExportableTable {
          * @param index the index of the style in bottomStatistics
          * @param time the length of bottom selections to be added
          */
-	public void addBottomStyleTime(int index, float time) {
+	public void addBottomStyleTime(int index, double time) {
 		bottomStatistic.addStyleTime(index, time);
 	}
 
@@ -149,7 +149,7 @@ public class TagComparisonResult implements WriterExportableTable {
          * @param style the tag style
          * @param time the length of tagged bottom to be added
          */
-	public void addBottomStyleTime(TagStyle style, float time) {
+	public void addBottomStyleTime(TagStyle style, double time) {
 		bottomStatistic.addStyleTime(style, time);
 	}
 
@@ -159,7 +159,7 @@ public class TagComparisonResult implements WriterExportableTable {
          * @param index the index of the style in bottomStatistics
          * @return the length of bottom selections of the given style
          */
-	public float getBottomStyleTime(int index) {
+	public double getBottomStyleTime(int index) {
 		return bottomStatistic.getStyleTime(index);
 	}
 
@@ -169,7 +169,7 @@ public class TagComparisonResult implements WriterExportableTable {
          * @param style the tag style
          * @return the length of bottom selections of the given style
          */
-	public float getBottomStyleTime(TagStyle style) {
+	public double getBottomStyleTime(TagStyle style) {
 		return bottomStatistic.getStyleTime(style);
 	}
 
@@ -179,7 +179,7 @@ public class TagComparisonResult implements WriterExportableTable {
          * @param index the index of the style in bottomStatistics
          * @param time the length of bottom selections to be set
          */
-	public void setBottomStyleTime(int index, float time) {
+	public void setBottomStyleTime(int index, double time) {
 		bottomStatistic.setStyleTime(index, time);
 	}
 
@@ -189,7 +189,7 @@ public class TagComparisonResult implements WriterExportableTable {
          * @param style the tag style
          * @param time the length of bottom selections to be set
          */
-	public void setBottomStyleTime(TagStyle style, float time) {
+	public void setBottomStyleTime(TagStyle style, double time) {
 		bottomStatistic.setStyleTime(style, time);
 	}
 
@@ -197,10 +197,10 @@ public class TagComparisonResult implements WriterExportableTable {
          * Adds a given value to the length of top {@link Tag selections}
          * of the given {@link TagStyle style}.
          * @param index the index of the style in topStatistics
-         * @param time the length of top selections to be added
+         * @param length the length of top selections to be added
          */
-	public void addTopStyleTime(int index, float time) {
-		topStatistic.addStyleTime(index, time);
+	public void addTopStyleTime(int index, double length) {
+		topStatistic.addStyleTime(index, length);
 	}
 
         /**
@@ -209,7 +209,7 @@ public class TagComparisonResult implements WriterExportableTable {
          * @param style the tag style
          * @param time the length of tagged top to be added
          */
-	public void addTopStyleTime(TagStyle style, float time) {
+	public void addTopStyleTime(TagStyle style, double time) {
 		topStatistic.addStyleTime(style, time);
 	}
 
@@ -219,7 +219,7 @@ public class TagComparisonResult implements WriterExportableTable {
          * @param index the index of the style in topStatistics
          * @return the length of top selections of the given style
          */
-	public float getTopStyleTime(int index) {
+	public double getTopStyleTime(int index) {
 		return topStatistic.getStyleTime(index);
 	}
 
@@ -229,7 +229,7 @@ public class TagComparisonResult implements WriterExportableTable {
          * @param style the tag style
          * @return the length of top selections of the given style
          */
-	public float getTopStyleTime(TagStyle style) {
+	public double getTopStyleTime(TagStyle style) {
 		return topStatistic.getStyleTime(style);
 	}
 
@@ -239,7 +239,7 @@ public class TagComparisonResult implements WriterExportableTable {
          * @param index the index of the style in topStatistics
          * @param time the length of top selections to be set
          */
-	public void setTopStyleTime(int index, float time) {
+	public void setTopStyleTime(int index, double time) {
 		topStatistic.setStyleTime(index, time);
 	}
 
@@ -249,7 +249,7 @@ public class TagComparisonResult implements WriterExportableTable {
          * @param style the tag style
          * @param time the length of top selections to be set
          */
-	public void setTopStyleTime(TagStyle style, float time) {
+	public void setTopStyleTime(TagStyle style, double time) {
 		topStatistic.setStyleTime(style, time);
 	}
 
@@ -260,10 +260,10 @@ public class TagComparisonResult implements WriterExportableTable {
          * -1 if no tag
          * @param bottomIndex the index of the second style in bottomTags;
          * -1 if no tag
-         * @param time the time value to be added in seconds
+         * @param length the time value to be added in seconds
          */
-	public void addStyleOverlay(int topIndex, int bottomIndex, float time) {
-		styleOverlayMatrix[topIndex+1][bottomIndex+1] += time;
+	public void addStyleOverlay(int topIndex, int bottomIndex, double length) {
+		styleOverlayMatrix[topIndex+1][bottomIndex+1] += length;
 	}
 
         /**
@@ -273,7 +273,7 @@ public class TagComparisonResult implements WriterExportableTable {
          * @param bottomStyle the style of the bottom tag; null if no tag
          * @param time the time value to be added in seconds
          */
-	public void addStyleOverlay(TagStyle topStyle, TagStyle bottomStyle, float time) {
+	public void addStyleOverlay(TagStyle topStyle, TagStyle bottomStyle, double time) {
 
 		int topIndex;
 		int bottomIndex;
@@ -309,7 +309,7 @@ public class TagComparisonResult implements WriterExportableTable {
          * -1 if no tag
          * @return the length of common part of two given tag styles
          */
-	public float getStyleOverlay(int topIndex, int bottomIndex) {
+	public double getStyleOverlay(int topIndex, int bottomIndex) {
 		return styleOverlayMatrix[topIndex+1][bottomIndex+1];
 	}
 
@@ -320,7 +320,7 @@ public class TagComparisonResult implements WriterExportableTable {
          * @param bottomStyle the style of the bottom tag; null if no tag
          * @return the length of common part of two given tag styles
          */
-	public float getStyleOverlay(TagStyle topStyle, TagStyle bottomStyle) {
+	public double getStyleOverlay(TagStyle topStyle, TagStyle bottomStyle) {
 
 		int topIndex;
 		int bottomIndex;
@@ -356,7 +356,7 @@ public class TagComparisonResult implements WriterExportableTable {
          * -1 if no tag
          * @param time the time value to be set in seconds
          */
-	public void setStyleOverlay(int topIndex, int bottomIndex, float time) {
+	public void setStyleOverlay(int topIndex, int bottomIndex, double time) {
 		styleOverlayMatrix[topIndex+1][bottomIndex+1] = time;
 	}
 
@@ -367,7 +367,7 @@ public class TagComparisonResult implements WriterExportableTable {
          * @param bottomStyle the style of the bottom tag; null if no tag
          * @param time the time value to be set in seconds
          */
-	public void setStyleOverlay(TagStyle topStyle, TagStyle bottomStyle, float time) {
+	public void setStyleOverlay(TagStyle topStyle, TagStyle bottomStyle, double time) {
 
 		int topIndex;
 		int bottomIndex;
@@ -416,7 +416,7 @@ public class TagComparisonResult implements WriterExportableTable {
 		int topCnt = topStatistic.getStyleCount();
 		int bottomCnt = bottomStatistic.getStyleCount();
 		int i,e;
-		float divider;
+		double divider;
 
 		writer.append(columnSeparator);
 		writer.append("(none)");
@@ -439,10 +439,10 @@ public class TagComparisonResult implements WriterExportableTable {
 					if (divider == 0) {
 						writer.append("-");
 					} else {
-						writer.append(Float.toString(100 *(styleOverlayMatrix[i][e] / divider)));
+						writer.append(Double.toString(100 *(styleOverlayMatrix[i][e] / divider)));
 					}
 				} else {
-					writer.append(Float.toString(styleOverlayMatrix[i][e]));
+					writer.append(Double.toString(styleOverlayMatrix[i][e]));
 				}
 			}
 			writer.append(rowSeparator);

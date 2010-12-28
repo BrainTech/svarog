@@ -13,7 +13,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import java.util.Collection;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.DefaultComboBoxModel;
@@ -32,12 +32,14 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
 import org.signalml.app.montage.MontageFilterExclusionTableModel;
 import org.signalml.app.montage.MontageFiltersTableModel;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.SwingUtils;
 import org.signalml.app.view.TablePopupMenuProvider;
 import org.signalml.app.view.dialog.SeriousWarningDialog;
+import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.element.ResolvableComboBox;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
@@ -45,6 +47,8 @@ import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.montage.filter.SampleFilterType;
 import org.signalml.exception.SanityCheckException;
+import org.signalml.exception.ResolvableException;
+
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** MontageFiltersPanel
@@ -60,7 +64,17 @@ public class MontageFiltersPanel extends JPanel {
 
 	private MessageSourceAccessor messageSource;
 	private SeriousWarningDialog seriousWarningDialog;
+
+	/**
+	 * This dialog is used when edititing
+	 * {@link FFTSampleFilter FFTSampleFilter's} parameters.
+	 */
 	private EditFFTSampleFilterDialog editFFTSampleFilterDialog;
+
+	/**
+	 * This dialog is used when editing {@link TimeDomainSampleFilter}
+	 * parameters.
+	 */
 	private EditTimeDomainSampleFilterDialog editTimeDomainSampleFilterDialog;
 
 	private Montage montage;
@@ -77,30 +91,86 @@ public class MontageFiltersPanel extends JPanel {
 	private MontageFilterExclusionTable filterExclusionTable;
 	private JScrollPane filterExclusionScrollPane;
 
+	/**
+	 * A {@link ResolvableComboBox} allowing to select a predefined
+	 * {@link TimeDomainSampleFilter} to be added to the signal chain.
+	 */
 	private ResolvableComboBox timeDomainFilterTypeComboBox;
+
+	/**
+	 * A {@link JComboBox} allowing to select the initial parameters of
+	 * the {@link FFTSampleFilter} shown in the {@link EditFFTSampleFilterDialog}.
+	 */
 	private JComboBox fftFilterTypeComboBox;
 
+	/**
+	 * Represents an {@link Action} which is invoked after pressing
+	 * the {@link MontageFiltersPanel#addTimeDomainFilterButton}.
+	 */
 	private AddTimeDomainFilterAction addTimeDomainFilterAction;
+
+	/**
+	 * Represents an {@link Action} which is invoked after pressing
+	 * the {@link MontageFiltersPanel#addCustomTimeDomainFilterButton}.
+	 */
+	private AddCustomTimeDomainFilterAction addCustomTimeDomainFilterAction;
 	private AddFFTFilterAction addFFTFilterAction;
 	private EditFilterAction editFilterAction;
 	private RemoveFilterAction removeFilterAction;
 	private ClearFilterExclusionAction clearFilterExclusionAction;
 
+	/**
+	 * A button which can be used to add a predefined {@link TimeDomainSampleFilter}
+	 * to the list of filters.
+	 */
 	private JButton addTimeDomainFilterButton;
+
+	/**
+	 * A button allowing to add a custom-designed filter to the list of
+	 * filters.
+	 */
+	private JButton addCustomTimeDomainFilterButton;
+
+	/**
+	 * A button which can be used to add a predefined {@link FFTSampleFilter}
+	 * to the list of filters.
+	 */
 	private JButton addFFTFilterButton;
+
+	/**
+	 * This button allows to edit the selected filter's parameters.
+	 */
 	private JButton editFilterButton;
+
+	/**
+	 * This button allows to delete currently selected filter from the filter
+	 * list.
+	 */
 	private JButton removeFilterButton;
+
+	/**
+	 * This button allows to clear all selections in the
+	 * {@link MontageFiltersPanel#filterExclusionTable}.
+	 */
 	private JButton clearFilterExclusionButton;
 
-	public MontageFiltersPanel(MessageSourceAccessor messageSource) {
+	/**
+	 * The manager at which predefined {@link TimeDomainSampleFilter
+	 * TimeDomainSampleFilters} are stored.
+	 */
+	private PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainSampleFilterPresetManager;
+
+	public MontageFiltersPanel(MessageSourceAccessor messageSource, PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainSampleFilterPresetManager) {
 		super();
 		this.messageSource = messageSource;
+		this.predefinedTimeDomainSampleFilterPresetManager = predefinedTimeDomainSampleFilterPresetManager;
 		initialize();
 	}
 
 	private void initialize() {
 
 		addTimeDomainFilterAction = new AddTimeDomainFilterAction();
+		addCustomTimeDomainFilterAction = new AddCustomTimeDomainFilterAction();
 		addFFTFilterAction = new AddFFTFilterAction();
 		editFilterAction = new EditFilterAction();
 		removeFilterAction = new RemoveFilterAction();
@@ -146,10 +216,14 @@ public class MontageFiltersPanel extends JPanel {
 		);
 		addTimeDomainFilterPanel.setBorder(border);
 
-		SwingUtils.makeButtonsSameSize(new JButton[] {getAddTimeDomainFilterButton(), getAddFFTFilterButton()});
+		SwingUtils.makeButtonsSameSize(new JButton[] {getAddTimeDomainFilterButton(), getAddFFTFilterButton(), getAddCustomTimeDomainFilterButton()});
 
 		addTimeDomainFilterPanel.add(getTimeDomainFilterTypeComboBox(), BorderLayout.CENTER);
 		addTimeDomainFilterPanel.add(getAddTimeDomainFilterButton(), BorderLayout.EAST);
+
+		JPanel addCustomTimeDomainFilterPanel = new JPanel(new BorderLayout(3, 3));
+		addTimeDomainFilterPanel.add(addCustomTimeDomainFilterPanel, BorderLayout.SOUTH);
+		addCustomTimeDomainFilterPanel.add(getAddCustomTimeDomainFilterButton(), BorderLayout.EAST);
 
 		JPanel addFftFilterPanel = new JPanel(new BorderLayout(3, 3));
 		border = new CompoundBorder(
@@ -273,6 +347,12 @@ public class MontageFiltersPanel extends JPanel {
 		return filterExclusionScrollPane;
 	}
 
+	/**
+	 * Returns the {@link ResolvableComboBox} allowing to select
+	 * a predefined {@link TimeDomainSampleFilter} to be added to the
+	 * signal chain.
+	 * @return the {@link ResolvableComboBox} to select a predefined filter
+	 */
 	public ResolvableComboBox getTimeDomainFilterTypeComboBox() {
 		if (timeDomainFilterTypeComboBox == null) {
 			timeDomainFilterTypeComboBox = new ResolvableComboBox(messageSource);
@@ -281,6 +361,14 @@ public class MontageFiltersPanel extends JPanel {
 		return timeDomainFilterTypeComboBox;
 	}
 
+	/**
+	 * Returns the {@link JComboBox} allowing to select whether the
+	 * {@link FFTSampleFilter} which will be shown in
+	 * {@link MontageFiltersPanel#editFFTSampleFilterDialog} will be
+	 * initially-passing or initially-stopping.
+	 * @return a {@link JComboBox} allowing to select initial parameters
+	 * of the {@link FFTSampleFilter} to be edited
+	 */
 	public JComboBox getFftFilterTypeComboBox() {
 		if (fftFilterTypeComboBox == null) {
 			DefaultComboBoxModel model = new DefaultComboBoxModel(new Object[] {
@@ -294,6 +382,12 @@ public class MontageFiltersPanel extends JPanel {
 		return fftFilterTypeComboBox;
 	}
 
+	/**
+	 * Returns a {@link JButton} allowing to add a predefined
+	 * {@link TimeDomainSampleFilter} to the signal chain.
+	 * @return a button allowing to add a new predefined TimeDomainSampleFilter
+	 * to the signal chain
+	 */
 	public JButton getAddTimeDomainFilterButton() {
 		if (addTimeDomainFilterButton == null) {
 			addTimeDomainFilterButton = new JButton(addTimeDomainFilterAction);
@@ -301,6 +395,25 @@ public class MontageFiltersPanel extends JPanel {
 		return addTimeDomainFilterButton;
 	}
 
+	/**
+	 * Returns a button which opens a {@link EditTimeDomainSampleFilterDialog}
+	 * which allows to add a new custom designed
+	 * {@link TimeDomainSampleFilter} to the signal chain
+	 * @return a button allowing to open
+	 * a {@link EditTimeDomainSampleFilterDialog}
+	 */
+	public JButton getAddCustomTimeDomainFilterButton() {
+		if (addCustomTimeDomainFilterButton == null) {
+			addCustomTimeDomainFilterButton = new JButton(addCustomTimeDomainFilterAction);
+		}
+		return addCustomTimeDomainFilterButton;
+	}
+
+	/**
+	 * Returns a button which opens a {@link EditFFTSampleFilterDialog}
+	 * which allows to add a new {@link FFTSampleFilter} to the signal chain.
+	 * @return a button allowing to open a {@link EditFFTSampleFilterDialog}
+	 */
 	public JButton getAddFFTFilterButton() {
 		if (addFFTFilterButton == null) {
 			addFFTFilterButton = new JButton(addFFTFilterAction);
@@ -345,10 +458,21 @@ public class MontageFiltersPanel extends JPanel {
 		this.editFFTSampleFilterDialog = editFFTSampleFilterDialog;
 	}
 
+	/**
+	 * Returns a {@link EditTimeDomainSampleFilterDialog} which can be opened
+	 * using this {@link MontageFiltersPanel}.
+	 * @return a {@link EditTimeDomainSampleFilterDialog} set for this panel
+	 */
 	public EditTimeDomainSampleFilterDialog getEditTimeDomainSampleFilterDialog() {
 		return editTimeDomainSampleFilterDialog;
 	}
 
+	/**
+	 * Sets an {@link EditTimeDomainSampleFilterDialog} to be opened in this panel
+	 * when needed.
+	 * @param editTimeDomainSampleFilterDialog an EditTimeDomainSampleFilterDialog
+	 * to be opened in this panel
+	 */
 	public void setTimeDomainSampleFilterDialog(EditTimeDomainSampleFilterDialog editTimeDomainSampleFilterDialog) {
 		this.editTimeDomainSampleFilterDialog = editTimeDomainSampleFilterDialog;
 	}
@@ -364,7 +488,13 @@ public class MontageFiltersPanel extends JPanel {
 			getFilterExclusionTableModel().setMontage(montage);
 
 			if (montage != null) {
-				Collection<SampleFilterDefinition> predefinedFilters = montage.getSignalTypeConfigurer().getPredefinedFilters();
+				List<SampleFilterDefinition> predefinedFilters = predefinedTimeDomainSampleFilterPresetManager.getPredefinedFilters(getCurrentSamplingFrequency());
+
+				if (predefinedFilters == null) {
+					ErrorsDialog.showImmediateExceptionDialog(this, new ResolvableException("error.noPredefinedFiltersForThisSamplingFrequency"));
+					return;
+				}
+
 				SampleFilterDefinition[] arr = new SampleFilterDefinition[predefinedFilters.size()];
 				predefinedFilters.toArray(arr);
 				DefaultComboBoxModel model = new DefaultComboBoxModel(arr);
@@ -409,16 +539,25 @@ public class MontageFiltersPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * A class representing an {@link AbstractAction} which is invoked
+	 * after pressing the {@link MontageFiltersPanel#addTimeDomainFilterButton}.
+	 */
 	protected class AddTimeDomainFilterAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 
+		/**
+		 * Constructor. Creates a new action and sets a label, tooltip
+		 * and an icon for the button which will use this action.
+		 */
 		public AddTimeDomainFilterAction() {
 			super(messageSource.getMessage("montageFilters.addTimeDomainFilter"));
 			putValue(AbstractAction.SHORT_DESCRIPTION, messageSource.getMessage("montageFilters.addTimeDomainFilterToolTip"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/addtimedomainfilter.png"));
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			if (montage == null) {
@@ -426,10 +565,57 @@ public class MontageFiltersPanel extends JPanel {
 			}
 
 			int index = getTimeDomainFilterTypeComboBox().getSelectedIndex();
-			TimeDomainSampleFilter filter = (TimeDomainSampleFilter)montage.getSignalTypeConfigurer().getPredefinedFilterAt(index).duplicate();
+			TimeDomainSampleFilter filter = predefinedTimeDomainSampleFilterPresetManager.getPredefinedFilterAt(currentSamplingFrequency, index);
 			filter.setDescription(messageSource.getMessage("montageFilters.newTimeDomainFilter"));
 			filter.setSamplingFrequency(currentSamplingFrequency);
 			montage.addSampleFilter(filter);
+		}
+
+	}
+
+	/**
+	 * A class representing an {@link AbstractAction} which is invoked
+	 * after pressing the
+	 * {@link MontageFiltersPanel#addCustomTimeDomainFilterButton}.
+	 */
+	protected class AddCustomTimeDomainFilterAction extends AbstractAction {
+
+		private static final long serialVersionUID = 1L;
+
+		/**
+		 * Constructor. Creates a new action and sets a label, tooltip
+		 * and an icon for the button which will use this action.
+		 */
+		public AddCustomTimeDomainFilterAction() {
+			super(messageSource.getMessage("montageFilters.addCustomTimeDomainFilter"));
+			putValue(AbstractAction.SHORT_DESCRIPTION, messageSource.getMessage("montageFilters.addCustomTimeDomainFilterToolTip"));
+			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/addcustomtimedomainfilter.png"));
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent ev) {
+
+			if (montage == null) {
+				return;
+			}
+
+			TimeDomainSampleFilter filter = predefinedTimeDomainSampleFilterPresetManager.getCustomFilterStartingPoint(getCurrentSamplingFrequency());
+
+			if (filter == null) {
+				filter = predefinedTimeDomainSampleFilterPresetManager.getCustomStartingPoint();
+			}
+
+			filter.setDescription(messageSource.getMessage("montageFilters.newTimeDomainFilter"));
+			filter.setSamplingFrequency(getCurrentSamplingFrequency());
+
+			editTimeDomainSampleFilterDialog.setCurrentSamplingFrequency(currentSamplingFrequency);
+			boolean ok = editTimeDomainSampleFilterDialog.showDialog(filter, true);
+			if (!ok) {
+				return;
+			}
+
+			montage.addSampleFilter(filter);
+
 		}
 
 	}

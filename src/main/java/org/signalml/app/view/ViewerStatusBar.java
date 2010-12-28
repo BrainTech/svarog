@@ -492,8 +492,8 @@ public class ViewerStatusBar extends JPanel implements ActionFocusListener, Prop
 
 	private void addPageSelectionInfo(SignalPlot plot, SignalSelection signalSelection, StringBuilder sb) {
 
-		float time = signalSelection.getPosition();
-		float endTime = time + signalSelection.getLength();
+		double time = signalSelection.getPosition();
+		double endTime = time + signalSelection.getLength();
 
 		Util.addTime(time, sb);
 		sb.append(" - ");
@@ -507,8 +507,8 @@ public class ViewerStatusBar extends JPanel implements ActionFocusListener, Prop
 
 	private void addBlockSelectionInfo(SignalPlot plot, SignalSelection signalSelection, StringBuilder sb) {
 
-		float time = signalSelection.getPosition();
-		float endTime = time + signalSelection.getLength();
+		double time = signalSelection.getPosition();
+		double endTime = time + signalSelection.getLength();
 
 		Util.addTime(time, sb);
 		sb.append(" - ");
@@ -522,8 +522,8 @@ public class ViewerStatusBar extends JPanel implements ActionFocusListener, Prop
 
 	private void addChannelSelectionInfo(SignalDocument document, SignalPlot plot, SignalSelection signalSelection, StringBuilder sb) {
 
-		float time = signalSelection.getPosition();
-		float endTime = time + signalSelection.getLength();
+		double time = signalSelection.getPosition();
+		double endTime = time + signalSelection.getLength();
 
 		Util.addTime(time, sb);
 		sb.append(" - ");
@@ -534,14 +534,17 @@ public class ViewerStatusBar extends JPanel implements ActionFocusListener, Prop
 			montage = document.getMontage();
 		}
 
-		sb.append(" (").append(montage.getMontageChannelLabelAt(signalSelection.getChannel())).append(')');
+		if (signalSelection.getChannel() != SignalSelection.CHANNEL_NULL)
+			sb.append(" (").append(montage.getMontageChannelLabelAt(signalSelection.getChannel())).append(')');
+		else
+			sb.append(" (all channels)");
 
 	}
 
 	private void addChannelTagInfo(SignalDocument document, SignalPlot plot, Tag tag, StringBuilder sb) {
 
-		float time = tag.getPosition();
-		float endTime = time + tag.getLength();
+		double time = tag.getPosition();
+		double endTime = time + tag.getLength();
 
 		Util.addTime(time, sb);
 		sb.append(" - ");
@@ -552,7 +555,10 @@ public class ViewerStatusBar extends JPanel implements ActionFocusListener, Prop
 			montage = document.getMontage();
 		}
 
-		sb.append(" (").append(montage.getSourceChannelLabelAt(tag.getChannel())).append(')');
+		if (tag.getChannel() != -1)
+			sb.append(" (").append(montage.getSourceChannelLabelAt(tag.getChannel())).append(')');
+		else
+			sb.append(" (all channels)");
 
 	}
 

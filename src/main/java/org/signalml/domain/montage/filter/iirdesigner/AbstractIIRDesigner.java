@@ -109,7 +109,7 @@ abstract class AbstractIIRDesigner {
 	 * Designs a digital filter satisfying given specifications.
 	 *
 	 * @param type type of the filter (lowpass/highpass/bandpass/bandstop)
-	 * @param passbandEdgeFrequencie passband edge frequencies [PI*rad/sample]
+	 * @param passb passband edge frequencies [PI*rad/sample]
 	 * @param stopb stopband edge frequencies [PI*rad/sample]
 	 * @param gpass the maximum loss in the passband [dB]
 	 * @param gstop the minimum attenuation in the stopband [dB]

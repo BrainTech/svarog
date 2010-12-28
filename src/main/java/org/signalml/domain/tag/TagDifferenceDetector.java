@@ -52,7 +52,7 @@ public class TagDifferenceDetector {
 			boolean found;
 
 			@Override
-			public void process(List<Tag> activeTopTags, List<Tag> activeBottomTags, float start, float end) {
+			public void process(List<Tag> activeTopTags, List<Tag> activeBottomTags, double start, double end) {
 
 				// now we have established that in the time period from
 				// timePointer to nextInterestingEvent respective active tags of the given
@@ -126,7 +126,7 @@ public class TagDifferenceDetector {
          * @param signalLength the length of entire signal
          * @return the created TagComparisonResult object
          */
-	public TagComparisonResult compare(TagStyle[] topStyles, TagStyle[] bottomStyles, SortedSet<Tag> topTags, SortedSet<Tag> bottomTags, SignalSelectionType targetType, int channel, float signalLength) {
+	public TagComparisonResult compare(TagStyle[] topStyles, TagStyle[] bottomStyles, SortedSet<Tag> topTags, SortedSet<Tag> bottomTags, SignalSelectionType targetType, int channel, double signalLength) {
 
 		final TagComparisonResult result = new TagComparisonResult(topStyles, bottomStyles, signalLength, signalLength);
 
@@ -136,12 +136,12 @@ public class TagDifferenceDetector {
 			private Iterator<Tag> bottomIterator;
 			private TagStyle topTagStyle;
 			private TagStyle bottomTagStyle;
-			private float length;
+			private double length;
 			private boolean topEmpty;
 			private boolean bottomEmpty;
 
 			@Override
-			public void process(List<Tag> activeTopTags, List<Tag> activeBottomTags, float start, float end) {
+			public void process(List<Tag> activeTopTags, List<Tag> activeBottomTags, double start, double end) {
 
 				length = end - start;
 				if (length <= 0) {
@@ -299,7 +299,7 @@ public class TagDifferenceDetector {
 		}
 
 		int channelCount = parent.getChannelCount();
-		float signalLength = parent.getMaxSignalLength();
+		double signalLength = parent.getMaxSignalLength();
 
 		StyledTagSet topTagSet = topTagDocument.getTagSet();
 		StyledTagSet bottomTagSet = bottomTagDocument.getTagSet();
@@ -338,16 +338,17 @@ public class TagDifferenceDetector {
 
 		arrangeTagStyles(topStyleSet, bottomStyleSet, topStyles, bottomStyles);
 
-		TagComparisonResult[] channelComparisonResults = new TagComparisonResult[channelCount];
+		TagComparisonResult[] channelComparisonResults = new TagComparisonResult[channelCount + 1]; // +1 for SignalSelection.CHANNEL_NULL
 		for (int i=0; i<channelCount; i++) {
 			channelComparisonResults[i] = compare(topStyles, bottomStyles, topTags, bottomTags, SignalSelectionType.CHANNEL, i, signalLength);
 		}
+		channelComparisonResults[channelCount] = compare(topStyles, bottomStyles, topTags, bottomTags, SignalSelectionType.CHANNEL, SignalSelection.CHANNEL_NULL, signalLength);
 
 		return new TagComparisonResults(pageComparisonResult, blockComparisonResult, channelComparisonResults);
 
 	}
 
-	private void iterate(SortedSet<Tag> topTags, SortedSet<Tag> bottomTags, SignalSelectionType targetType, int channel, TaggedFragmentProcessor processor, float signalLength) {
+	private void iterate(SortedSet<Tag> topTags, SortedSet<Tag> bottomTags, SignalSelectionType targetType, int channel, TaggedFragmentProcessor processor, double signalLength) {
 
 		Iterator<Tag> topIterator = topTags.iterator();
 		Iterator<Tag> bottomIterator = bottomTags.iterator();
@@ -364,8 +365,8 @@ public class TagDifferenceDetector {
 		Tag topTag = null;
 		Tag bottomTag = null;
 		Tag tagCandidate = null;
-		float timePointer = 0;
-		float nextInterestingEvent;
+		double timePointer = 0;
+		double nextInterestingEvent;
 		boolean finished = false;
 
 		boolean channelMode = targetType.isChannel();
@@ -378,7 +379,7 @@ public class TagDifferenceDetector {
 			addedTopTag = null;
 			addedBottomTag = null;
 
-			nextInterestingEvent = Float.MAX_VALUE;
+			nextInterestingEvent = Double.MAX_VALUE;
 			hasEvent = false;
 
 			if (!activeTopTags.isEmpty()) {
@@ -503,7 +504,7 @@ public class TagDifferenceDetector {
 
 	private interface TaggedFragmentProcessor {
 
-		void process(List<Tag> activeTopTags, List<Tag> activeBottomTags, float start, float end);
+		void process(List<Tag> activeTopTags, List<Tag> activeBottomTags, double start, double end);
 
 	}
 

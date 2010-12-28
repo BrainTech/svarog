@@ -5,7 +5,7 @@
 package org.signalml.domain.montage.filter.iirdesigner;
 
 import flanagan.complex.Complex;
-import junit.framework.Assert;
+import org.junit.Assert;
 
 /**
  * This class is an extension of a JUnit class and is able to perform some additional
@@ -39,7 +39,24 @@ class IIRDesignerAssert extends Assert {
 	 * @param delta determines how much the actual value can be different from the expected
 	 * value
 	 */
-	protected static void assertEquals(Complex[] expected, Complex[] actual, Complex delta) {
+	protected static void assertArrayEquals(Complex[] expected, Complex[] actual, Complex delta) {
+
+		assertEquals(expected.length, actual.length);
+		for (int i = 0; i < expected.length; i++)
+			assertEquals(expected[i],actual[i], delta);
+
+	}
+
+	/**
+	 * Asserts that the elements of two double arrays are equal concerning
+	 * a delta.
+	 *
+	 * @param expected the expected values
+	 * @param actual the actual values
+	 * @param delta determines how much the actual value can be different from the expected
+	 * value for the assertion to hold true
+	 */
+	protected static void assertArrayEquals(double[] expected, double[] actual, double delta) {
 
 		assertEquals(expected.length, actual.length);
 		for (int i = 0; i < expected.length; i++)
@@ -61,8 +78,8 @@ class IIRDesignerAssert extends Assert {
 	 */
 	protected static void assertEquals(FilterZerosPolesGain zpk1, FilterZerosPolesGain zpk2, Complex complexDelta, double gainDelta) {
 
-		assertEquals(zpk1.getZeros(), zpk2.getZeros(), complexDelta);
-		assertEquals(zpk1.getPoles(), zpk2.getPoles(), complexDelta);
+		assertArrayEquals(zpk1.getZeros(), zpk2.getZeros(), complexDelta);
+		assertArrayEquals(zpk1.getPoles(), zpk2.getPoles(), complexDelta);
 		assertEquals(zpk1.getGain(), zpk2.getGain(), gainDelta);
 
 	}

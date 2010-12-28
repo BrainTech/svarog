@@ -46,7 +46,7 @@ public class ArtifactComparison {
 
 		Tag tag = null;
 		TagStyle style = null;
-		float position = 0;
+		double position = 0;
 		int i;
 
 		SortedSet<Tag> tags = tagSet.getTags();

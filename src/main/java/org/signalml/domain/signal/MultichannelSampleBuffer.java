@@ -42,7 +42,7 @@ public class MultichannelSampleBuffer extends MultichannelSampleProcessor {
          * an array containing for each <code>channel</code> the index in the
          * buffer where sample <code>minSample</code> is located
          * (in the range from 0 to <code>bufferLength-1</code>)
-         * @see minSample
+         * @see MultichannelSampleBuffer#minSample
          */
 	private int boundary[];
 

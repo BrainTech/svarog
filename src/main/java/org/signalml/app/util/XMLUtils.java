@@ -44,6 +44,8 @@ import com.thoughtworks.xstream.converters.reflection.FieldDictionary;
 import com.thoughtworks.xstream.converters.reflection.NativeFieldKeySorter;
 import com.thoughtworks.xstream.converters.reflection.PureJavaReflectionProvider;
 import com.thoughtworks.xstream.io.xml.DomDriver;
+import org.signalml.app.config.preset.PredefinedFiltersConfiguration;
+import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
 
 /** XMLUtils
  *
@@ -104,6 +106,11 @@ public abstract class XMLUtils {
 		);
 	}
 
+	/**
+	 * Configures the given {@link XStream XStreamer} for {@link TimeDomainSampleFilter}
+	 * streaming.
+	 * @param streamer a streamer to be configured
+	 */
 	public static void configureStreamerForTimeDomainSampleFilter(XStream streamer) {
 		Annotations.configureAliases(
 				streamer,
@@ -112,10 +119,24 @@ public abstract class XMLUtils {
 		);
 	}
 
+	/**
+	 * Configures the given {@link XStream XStreamer} for
+	 * {@link PredefinedTimeDomainFiltersPresetManager}.
+	 * @param streamer a streamer to be configured
+	 */
+	public static void configureStreamerForPredefinedTimeDomainSampleFilter(XStream streamer) {
+		Annotations.configureAliases(
+				streamer,
+				PredefinedTimeDomainFiltersPresetManager.class,
+				PredefinedFiltersConfiguration.class,
+				TimeDomainSampleFilter.class
+		);
+	}
+
 	public static OutputStream getInitializedXMLOutputStream(File f) throws IOException {
 		OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(f));
 		try {
-			outputStream.write(("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+Util.LINE_SEP).getBytes());
+			writeXMLHeader(outputStream);
 		} catch (IOException ex) {
 			outputStream.close();
 			throw ex;
@@ -161,6 +182,15 @@ public abstract class XMLUtils {
 			inputStream.close();
 		}
 
+	}
+
+	/**
+	 * Writes a standard XML header to the given output stream.
+	 * @param outputStream the stream to which the XML header will be written
+	 * @throws IOException thrown if an IO error occurs
+	 */
+	public static void writeXMLHeader(OutputStream outputStream) throws IOException {
+		outputStream.write(("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+Util.LINE_SEP).getBytes());
 	}
 
 }

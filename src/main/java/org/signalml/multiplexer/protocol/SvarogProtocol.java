@@ -5,2252 +5,3459 @@ package org.signalml.multiplexer.protocol;
 public final class SvarogProtocol {
   private SvarogProtocol() {}
   public static void registerAllExtensions(
-	  com.google.protobuf.ExtensionRegistry registry) {
+      com.google.protobuf.ExtensionRegistry registry) {
   }
   public static final class Variable extends
-	  com.google.protobuf.GeneratedMessage {
-	// Use Variable.newBuilder() to construct.
-	private Variable() {}
-	
-	private static final Variable defaultInstance = new Variable();
-	public static Variable getDefaultInstance() {
-	  return defaultInstance;
-	}
-	
-	public Variable getDefaultInstanceForType() {
-	  return defaultInstance;
-	}
-	
-	public static final com.google.protobuf.Descriptors.Descriptor
-		getDescriptor() {
-	  return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_Variable_descriptor;
-	}
-	
-	@Override
-	protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-		internalGetFieldAccessorTable() {
-	  return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_Variable_fieldAccessorTable;
-	}
-	
-	// required string key = 1;
-	private boolean hasKey;
-	private java.lang.String key_ = "";
-	public boolean hasKey() { return hasKey; }
-	public java.lang.String getKey() { return key_; }
-	
-	// required string value = 2;
-	private boolean hasValue;
-	private java.lang.String value_ = "";
-	public boolean hasValue() { return hasValue; }
-	public java.lang.String getValue() { return value_; }
-	
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Variable parseFrom(
-		com.google.protobuf.ByteString data)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Variable parseFrom(
-		com.google.protobuf.ByteString data,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data, extensionRegistry)
-			   .buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Variable parseFrom(byte[] data)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Variable parseFrom(
-		byte[] data,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data, extensionRegistry)
-			   .buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Variable parseFrom(java.io.InputStream input)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Variable parseFrom(
-		java.io.InputStream input,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input, extensionRegistry)
-			   .buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Variable parseFrom(
-		com.google.protobuf.CodedInputStream input)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Variable parseFrom(
-		com.google.protobuf.CodedInputStream input,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input, extensionRegistry)
-			   .buildParsed();
-	}
-	
-	public static Builder newBuilder() { return new Builder(); }
-	public Builder newBuilderForType() { return new Builder(); }
-	public static Builder newBuilder(org.signalml.multiplexer.protocol.SvarogProtocol.Variable prototype) {
-	  return new Builder().mergeFrom(prototype);
-	}
-	
-	public static final class Builder extends
-		com.google.protobuf.GeneratedMessage.Builder<Builder> {
-	  // Construct using org.signalml.multiplexer.protocol.SvarogProtocol.Variable.newBuilder()
-	  private Builder() {}
-	  
-	  org.signalml.multiplexer.protocol.SvarogProtocol.Variable result = new org.signalml.multiplexer.protocol.SvarogProtocol.Variable();
-	  
-	  @Override
-	  protected org.signalml.multiplexer.protocol.SvarogProtocol.Variable internalGetResult() {
-		return result;
-	  }
-	  
-	  @Override
-	  public Builder clear() {
-		result = new org.signalml.multiplexer.protocol.SvarogProtocol.Variable();
-		return this;
-	  }
-	  
-	  @Override
-	  public Builder clone() {
-		return new Builder().mergeFrom(result);
-	  }
-	  
-	  @Override
-	  public com.google.protobuf.Descriptors.Descriptor
-		  getDescriptorForType() {
-		return org.signalml.multiplexer.protocol.SvarogProtocol.Variable.getDescriptor();
-	  }
-	  
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.Variable getDefaultInstanceForType() {
-		return org.signalml.multiplexer.protocol.SvarogProtocol.Variable.getDefaultInstance();
-	  }
-	  
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.Variable build() {
-		if (!isInitialized()) {
-		  throw new com.google.protobuf.UninitializedMessageException(
-			result);
-		}
-		return buildPartial();
-	  }
-	  
-	  private org.signalml.multiplexer.protocol.SvarogProtocol.Variable buildParsed()
-		  throws com.google.protobuf.InvalidProtocolBufferException {
-		if (!isInitialized()) {
-		  throw new com.google.protobuf.UninitializedMessageException(
-			result).asInvalidProtocolBufferException();
-		}
-		return buildPartial();
-	  }
-	  
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.Variable buildPartial() {
-		org.signalml.multiplexer.protocol.SvarogProtocol.Variable returnMe = result;
-		result = null;
-		return returnMe;
-	  }
-	  
-	  
-	  // required string key = 1;
-	  public boolean hasKey() {
-		return result.hasKey();
-	  }
-	  public java.lang.String getKey() {
-		return result.getKey();
-	  }
-	  public Builder setKey(java.lang.String value) {
-		result.hasKey = true;
-		result.key_ = value;
-		return this;
-	  }
-	  public Builder clearKey() {
-		result.hasKey = false;
-		result.key_ = "";
-		return this;
-	  }
-	  
-	  // required string value = 2;
-	  public boolean hasValue() {
-		return result.hasValue();
-	  }
-	  public java.lang.String getValue() {
-		return result.getValue();
-	  }
-	  public Builder setValue(java.lang.String value) {
-		result.hasValue = true;
-		result.value_ = value;
-		return this;
-	  }
-	  public Builder clearValue() {
-		result.hasValue = false;
-		result.value_ = "";
-		return this;
-	  }
-	}
-	
-	static {
-	  org.signalml.multiplexer.protocol.SvarogProtocol.getDescriptor();
-	}
-
-	@Override
-	public com.google.protobuf.Message.Builder toBuilder() {
-		return null;
-	}
+      com.google.protobuf.GeneratedMessage {
+    // Use Variable.newBuilder() to construct.
+    private Variable() {}
+    
+    private static final Variable defaultInstance = new Variable();
+    public static Variable getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public Variable getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_Variable_descriptor;
+    }
+    
+    @Override
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_Variable_fieldAccessorTable;
+    }
+    
+    // required string key = 1;
+    public static final int KEY_FIELD_NUMBER = 1;
+    private boolean hasKey;
+    private java.lang.String key_ = "";
+    public boolean hasKey() { return hasKey; }
+    public java.lang.String getKey() { return key_; }
+    
+    // required string value = 2;
+    public static final int VALUE_FIELD_NUMBER = 2;
+    private boolean hasValue;
+    private java.lang.String value_ = "";
+    public boolean hasValue() { return hasValue; }
+    public java.lang.String getValue() { return value_; }
+    
+    @Override
+    public final boolean isInitialized() {
+      if (!hasKey) return false;
+      if (!hasValue) return false;
+      return true;
+    }
+    
+    @Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (hasKey()) {
+        output.writeString(1, getKey());
+      }
+      if (hasValue()) {
+        output.writeString(2, getValue());
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    @Override
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (hasKey()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(1, getKey());
+      }
+      if (hasValue()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(2, getValue());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Variable parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Variable parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Variable parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Variable parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Variable parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Variable parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Variable parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Variable parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Variable parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Variable parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
+    public static Builder newBuilder(org.signalml.multiplexer.protocol.SvarogProtocol.Variable prototype) {
+      return new Builder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      // Construct using org.signalml.multiplexer.protocol.SvarogProtocol.Variable.newBuilder()
+      private Builder() {}
+      
+      org.signalml.multiplexer.protocol.SvarogProtocol.Variable result = new org.signalml.multiplexer.protocol.SvarogProtocol.Variable();
+      
+      @Override
+      protected org.signalml.multiplexer.protocol.SvarogProtocol.Variable internalGetResult() {
+        return result;
+      }
+      
+      @Override
+      public Builder clear() {
+        result = new org.signalml.multiplexer.protocol.SvarogProtocol.Variable();
+        return this;
+      }
+      
+      @Override
+      public Builder clone() {
+        return new Builder().mergeFrom(result);
+      }
+      
+      @Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return org.signalml.multiplexer.protocol.SvarogProtocol.Variable.getDescriptor();
+      }
+      
+      public org.signalml.multiplexer.protocol.SvarogProtocol.Variable getDefaultInstanceForType() {
+        return org.signalml.multiplexer.protocol.SvarogProtocol.Variable.getDefaultInstance();
+      }
+      
+      public org.signalml.multiplexer.protocol.SvarogProtocol.Variable build() {
+        if (result != null && !isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
+        }
+        return buildPartial();
+      }
+      
+      private org.signalml.multiplexer.protocol.SvarogProtocol.Variable buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public org.signalml.multiplexer.protocol.SvarogProtocol.Variable buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");  }
+        org.signalml.multiplexer.protocol.SvarogProtocol.Variable returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      @Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof org.signalml.multiplexer.protocol.SvarogProtocol.Variable) {
+          return mergeFrom((org.signalml.multiplexer.protocol.SvarogProtocol.Variable)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(org.signalml.multiplexer.protocol.SvarogProtocol.Variable other) {
+        if (other == org.signalml.multiplexer.protocol.SvarogProtocol.Variable.getDefaultInstance()) return this;
+        if (other.hasKey()) {
+          setKey(other.getKey());
+        }
+        if (other.hasValue()) {
+          setValue(other.getValue());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      @Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return mergeFrom(input,
+          com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
+      }
+      
+      @Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistry extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+            case 10: {
+              setKey(input.readString());
+              break;
+            }
+            case 18: {
+              setValue(input.readString());
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // required string key = 1;
+      public boolean hasKey() {
+        return result.hasKey();
+      }
+      public java.lang.String getKey() {
+        return result.getKey();
+      }
+      public Builder setKey(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasKey = true;
+        result.key_ = value;
+        return this;
+      }
+      public Builder clearKey() {
+        result.hasKey = false;
+        result.key_ = "";
+        return this;
+      }
+      
+      // required string value = 2;
+      public boolean hasValue() {
+        return result.hasValue();
+      }
+      public java.lang.String getValue() {
+        return result.getValue();
+      }
+      public Builder setValue(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasValue = true;
+        result.value_ = value;
+        return this;
+      }
+      public Builder clearValue() {
+        result.hasValue = false;
+        result.value_ = "";
+        return this;
+      }
+    }
+    
+    static {
+      org.signalml.multiplexer.protocol.SvarogProtocol.getDescriptor();
+    }
   }
   
   public static final class VariableVector extends
-	  com.google.protobuf.GeneratedMessage {
-	// Use VariableVector.newBuilder() to construct.
-	private VariableVector() {}
-	
-	private static final VariableVector defaultInstance = new VariableVector();
-	public static VariableVector getDefaultInstance() {
-	  return defaultInstance;
-	}
-	
-	public VariableVector getDefaultInstanceForType() {
-	  return defaultInstance;
-	}
-	
-	public static final com.google.protobuf.Descriptors.Descriptor
-		getDescriptor() {
-	  return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_VariableVector_descriptor;
-	}
-	
-	@Override
-	protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-		internalGetFieldAccessorTable() {
-	  return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_VariableVector_fieldAccessorTable;
-	}
-	
-	// repeated .variables.Variable variables = 1;
-	private java.util.List<org.signalml.multiplexer.protocol.SvarogProtocol.Variable> variables_ =
-	  java.util.Collections.emptyList();
-	public java.util.List<org.signalml.multiplexer.protocol.SvarogProtocol.Variable> getVariablesList() {
-	  return variables_;
-	}
-	public int getVariablesCount() { return variables_.size(); }
-	public org.signalml.multiplexer.protocol.SvarogProtocol.Variable getVariables(int index) {
-	  return variables_.get(index);
-	}
-	
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector parseFrom(
-		com.google.protobuf.ByteString data)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector parseFrom(
-		com.google.protobuf.ByteString data,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data, extensionRegistry)
-			   .buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector parseFrom(byte[] data)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector parseFrom(
-		byte[] data,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data, extensionRegistry)
-			   .buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector parseFrom(java.io.InputStream input)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector parseFrom(
-		java.io.InputStream input,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input, extensionRegistry)
-			   .buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector parseFrom(
-		com.google.protobuf.CodedInputStream input)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector parseFrom(
-		com.google.protobuf.CodedInputStream input,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input, extensionRegistry)
-			   .buildParsed();
-	}
-	
-	public static Builder newBuilder() { return new Builder(); }
-	public Builder newBuilderForType() { return new Builder(); }
-	public static Builder newBuilder(org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector prototype) {
-	  return new Builder().mergeFrom(prototype);
-	}
-	
-	public static final class Builder extends
-		com.google.protobuf.GeneratedMessage.Builder<Builder> {
-	  // Construct using org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector.newBuilder()
-	  private Builder() {}
-	  
-	  org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector result = new org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector();
-	  
-	  @Override
-	  protected org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector internalGetResult() {
-		return result;
-	  }
-	  
-	  @Override
-	  public Builder clear() {
-		result = new org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector();
-		return this;
-	  }
-	  
-	  @Override
-	  public Builder clone() {
-		return new Builder().mergeFrom(result);
-	  }
-	  
-	  @Override
-	  public com.google.protobuf.Descriptors.Descriptor
-		  getDescriptorForType() {
-		return org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector.getDescriptor();
-	  }
-	  
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector getDefaultInstanceForType() {
-		return org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector.getDefaultInstance();
-	  }
-	  
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector build() {
-		if (!isInitialized()) {
-		  throw new com.google.protobuf.UninitializedMessageException(
-			result);
-		}
-		return buildPartial();
-	  }
-	  
-	  private org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector buildParsed()
-		  throws com.google.protobuf.InvalidProtocolBufferException {
-		if (!isInitialized()) {
-		  throw new com.google.protobuf.UninitializedMessageException(
-			result).asInvalidProtocolBufferException();
-		}
-		return buildPartial();
-	  }
-	  
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector buildPartial() {
-		if (result.variables_ != java.util.Collections.EMPTY_LIST) {
-		  result.variables_ =
-			java.util.Collections.unmodifiableList(result.variables_);
-		}
-		org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector returnMe = result;
-		result = null;
-		return returnMe;
-	  }
-	  
-	  
-	  // repeated .variables.Variable variables = 1;
-	  public java.util.List<org.signalml.multiplexer.protocol.SvarogProtocol.Variable> getVariablesList() {
-		return java.util.Collections.unmodifiableList(result.variables_);
-	  }
-	  public int getVariablesCount() {
-		return result.getVariablesCount();
-	  }
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.Variable getVariables(int index) {
-		return result.getVariables(index);
-	  }
-	  public Builder setVariables(int index, org.signalml.multiplexer.protocol.SvarogProtocol.Variable value) {
-		result.variables_.set(index, value);
-		return this;
-	  }
-	  public Builder setVariables(int index, org.signalml.multiplexer.protocol.SvarogProtocol.Variable.Builder builderForValue) {
-		result.variables_.set(index, builderForValue.build());
-		return this;
-	  }
-	  public Builder addVariables(org.signalml.multiplexer.protocol.SvarogProtocol.Variable value) {
-		if (result.variables_.isEmpty()) {
-		  result.variables_ = new java.util.ArrayList<org.signalml.multiplexer.protocol.SvarogProtocol.Variable>();
-		}
-		result.variables_.add(value);
-		return this;
-	  }
-	  public Builder addVariables(org.signalml.multiplexer.protocol.SvarogProtocol.Variable.Builder builderForValue) {
-		if (result.variables_.isEmpty()) {
-		  result.variables_ = new java.util.ArrayList<org.signalml.multiplexer.protocol.SvarogProtocol.Variable>();
-		}
-		result.variables_.add(builderForValue.build());
-		return this;
-	  }
-	  public Builder addAllVariables(
-		  java.lang.Iterable<? extends org.signalml.multiplexer.protocol.SvarogProtocol.Variable> values) {
-		if (result.variables_.isEmpty()) {
-		  result.variables_ = new java.util.ArrayList<org.signalml.multiplexer.protocol.SvarogProtocol.Variable>();
-		}
-		super.addAll(values, result.variables_);
-		return this;
-	  }
-	  public Builder clearVariables() {
-		result.variables_ = java.util.Collections.emptyList();
-		return this;
-	  }
-	}
-	
-	static {
-	  org.signalml.multiplexer.protocol.SvarogProtocol.getDescriptor();
-	}
-
-	@Override
-	public com.google.protobuf.Message.Builder toBuilder() {
-		return null;
-	}
+      com.google.protobuf.GeneratedMessage {
+    // Use VariableVector.newBuilder() to construct.
+    private VariableVector() {}
+    
+    private static final VariableVector defaultInstance = new VariableVector();
+    public static VariableVector getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public VariableVector getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_VariableVector_descriptor;
+    }
+    
+    @Override
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_VariableVector_fieldAccessorTable;
+    }
+    
+    // repeated .variables.Variable variables = 1;
+    public static final int VARIABLES_FIELD_NUMBER = 1;
+    private java.util.List<org.signalml.multiplexer.protocol.SvarogProtocol.Variable> variables_ =
+      java.util.Collections.emptyList();
+    public java.util.List<org.signalml.multiplexer.protocol.SvarogProtocol.Variable> getVariablesList() {
+      return variables_;
+    }
+    public int getVariablesCount() { return variables_.size(); }
+    public org.signalml.multiplexer.protocol.SvarogProtocol.Variable getVariables(int index) {
+      return variables_.get(index);
+    }
+    
+    @Override
+    public final boolean isInitialized() {
+      for (org.signalml.multiplexer.protocol.SvarogProtocol.Variable element : getVariablesList()) {
+        if (!element.isInitialized()) return false;
+      }
+      return true;
+    }
+    
+    @Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      for (org.signalml.multiplexer.protocol.SvarogProtocol.Variable element : getVariablesList()) {
+        output.writeMessage(1, element);
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    @Override
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      for (org.signalml.multiplexer.protocol.SvarogProtocol.Variable element : getVariablesList()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, element);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
+    public static Builder newBuilder(org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector prototype) {
+      return new Builder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      // Construct using org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector.newBuilder()
+      private Builder() {}
+      
+      org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector result = new org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector();
+      
+      @Override
+      protected org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector internalGetResult() {
+        return result;
+      }
+      
+      @Override
+      public Builder clear() {
+        result = new org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector();
+        return this;
+      }
+      
+      @Override
+      public Builder clone() {
+        return new Builder().mergeFrom(result);
+      }
+      
+      @Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector.getDescriptor();
+      }
+      
+      public org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector getDefaultInstanceForType() {
+        return org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector.getDefaultInstance();
+      }
+      
+      public org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector build() {
+        if (result != null && !isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
+        }
+        return buildPartial();
+      }
+      
+      private org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");  }
+        if (result.variables_ != java.util.Collections.EMPTY_LIST) {
+          result.variables_ =
+            java.util.Collections.unmodifiableList(result.variables_);
+        }
+        org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      @Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector) {
+          return mergeFrom((org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector other) {
+        if (other == org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector.getDefaultInstance()) return this;
+        if (!other.variables_.isEmpty()) {
+          if (result.variables_.isEmpty()) {
+            result.variables_ = new java.util.ArrayList<org.signalml.multiplexer.protocol.SvarogProtocol.Variable>();
+          }
+          result.variables_.addAll(other.variables_);
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      @Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return mergeFrom(input,
+          com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
+      }
+      
+      @Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistry extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+            case 10: {
+              org.signalml.multiplexer.protocol.SvarogProtocol.Variable.Builder subBuilder = org.signalml.multiplexer.protocol.SvarogProtocol.Variable.newBuilder();
+              input.readMessage(subBuilder, extensionRegistry);
+              addVariables(subBuilder.buildPartial());
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // repeated .variables.Variable variables = 1;
+      public java.util.List<org.signalml.multiplexer.protocol.SvarogProtocol.Variable> getVariablesList() {
+        return java.util.Collections.unmodifiableList(result.variables_);
+      }
+      public int getVariablesCount() {
+        return result.getVariablesCount();
+      }
+      public org.signalml.multiplexer.protocol.SvarogProtocol.Variable getVariables(int index) {
+        return result.getVariables(index);
+      }
+      public Builder setVariables(int index, org.signalml.multiplexer.protocol.SvarogProtocol.Variable value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.variables_.set(index, value);
+        return this;
+      }
+      public Builder setVariables(int index, org.signalml.multiplexer.protocol.SvarogProtocol.Variable.Builder builderForValue) {
+        result.variables_.set(index, builderForValue.build());
+        return this;
+      }
+      public Builder addVariables(org.signalml.multiplexer.protocol.SvarogProtocol.Variable value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        if (result.variables_.isEmpty()) {
+          result.variables_ = new java.util.ArrayList<org.signalml.multiplexer.protocol.SvarogProtocol.Variable>();
+        }
+        result.variables_.add(value);
+        return this;
+      }
+      public Builder addVariables(org.signalml.multiplexer.protocol.SvarogProtocol.Variable.Builder builderForValue) {
+        if (result.variables_.isEmpty()) {
+          result.variables_ = new java.util.ArrayList<org.signalml.multiplexer.protocol.SvarogProtocol.Variable>();
+        }
+        result.variables_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addAllVariables(
+          java.lang.Iterable<? extends org.signalml.multiplexer.protocol.SvarogProtocol.Variable> values) {
+        if (result.variables_.isEmpty()) {
+          result.variables_ = new java.util.ArrayList<org.signalml.multiplexer.protocol.SvarogProtocol.Variable>();
+        }
+        super.addAll(values, result.variables_);
+        return this;
+      }
+      public Builder clearVariables() {
+        result.variables_ = java.util.Collections.emptyList();
+        return this;
+      }
+    }
+    
+    static {
+      org.signalml.multiplexer.protocol.SvarogProtocol.getDescriptor();
+    }
   }
   
   public static final class Blink extends
-	  com.google.protobuf.GeneratedMessage {
-	// Use Blink.newBuilder() to construct.
-	private Blink() {}
-	
-	private static final Blink defaultInstance = new Blink();
-	public static Blink getDefaultInstance() {
-	  return defaultInstance;
-	}
-	
-	public Blink getDefaultInstanceForType() {
-	  return defaultInstance;
-	}
-	
-	public static final com.google.protobuf.Descriptors.Descriptor
-		getDescriptor() {
-	  return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_Blink_descriptor;
-	}
-	
-	@Override
-	protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-		internalGetFieldAccessorTable() {
-	  return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_Blink_fieldAccessorTable;
-	}
-	
-	// required int32 index = 1;
-	private boolean hasIndex;
-	private int index_ = 0;
-	public boolean hasIndex() { return hasIndex; }
-	public int getIndex() { return index_; }
-	
-	// required double timestamp = 2;
-	private boolean hasTimestamp;
-	private double timestamp_ = 0D;
-	public boolean hasTimestamp() { return hasTimestamp; }
-	public double getTimestamp() { return timestamp_; }
-	
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Blink parseFrom(
-		com.google.protobuf.ByteString data)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Blink parseFrom(
-		com.google.protobuf.ByteString data,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data, extensionRegistry)
-			   .buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Blink parseFrom(byte[] data)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Blink parseFrom(
-		byte[] data,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data, extensionRegistry)
-			   .buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Blink parseFrom(java.io.InputStream input)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Blink parseFrom(
-		java.io.InputStream input,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input, extensionRegistry)
-			   .buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Blink parseFrom(
-		com.google.protobuf.CodedInputStream input)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Blink parseFrom(
-		com.google.protobuf.CodedInputStream input,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input, extensionRegistry)
-			   .buildParsed();
-	}
-	
-	public static Builder newBuilder() { return new Builder(); }
-	public Builder newBuilderForType() { return new Builder(); }
-	public static Builder newBuilder(org.signalml.multiplexer.protocol.SvarogProtocol.Blink prototype) {
-	  return new Builder().mergeFrom(prototype);
-	}
-	
-	public static final class Builder extends
-		com.google.protobuf.GeneratedMessage.Builder<Builder> {
-	  // Construct using org.signalml.multiplexer.protocol.SvarogProtocol.Blink.newBuilder()
-	  private Builder() {}
-	  
-	  org.signalml.multiplexer.protocol.SvarogProtocol.Blink result = new org.signalml.multiplexer.protocol.SvarogProtocol.Blink();
-	  
-	  @Override
-	  protected org.signalml.multiplexer.protocol.SvarogProtocol.Blink internalGetResult() {
-		return result;
-	  }
-	  
-	  @Override
-	  public Builder clear() {
-		result = new org.signalml.multiplexer.protocol.SvarogProtocol.Blink();
-		return this;
-	  }
-	  
-	  @Override
-	  public Builder clone() {
-		return new Builder().mergeFrom(result);
-	  }
-	  
-	  @Override
-	  public com.google.protobuf.Descriptors.Descriptor
-		  getDescriptorForType() {
-		return org.signalml.multiplexer.protocol.SvarogProtocol.Blink.getDescriptor();
-	  }
-	  
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.Blink getDefaultInstanceForType() {
-		return org.signalml.multiplexer.protocol.SvarogProtocol.Blink.getDefaultInstance();
-	  }
-	  
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.Blink build() {
-		if (!isInitialized()) {
-		  throw new com.google.protobuf.UninitializedMessageException(
-			result);
-		}
-		return buildPartial();
-	  }
-	  
-	  private org.signalml.multiplexer.protocol.SvarogProtocol.Blink buildParsed()
-		  throws com.google.protobuf.InvalidProtocolBufferException {
-		if (!isInitialized()) {
-		  throw new com.google.protobuf.UninitializedMessageException(
-			result).asInvalidProtocolBufferException();
-		}
-		return buildPartial();
-	  }
-	  
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.Blink buildPartial() {
-		org.signalml.multiplexer.protocol.SvarogProtocol.Blink returnMe = result;
-		result = null;
-		return returnMe;
-	  }
-	  
-	  
-	  // required int32 index = 1;
-	  public boolean hasIndex() {
-		return result.hasIndex();
-	  }
-	  public int getIndex() {
-		return result.getIndex();
-	  }
-	  public Builder setIndex(int value) {
-		result.hasIndex = true;
-		result.index_ = value;
-		return this;
-	  }
-	  public Builder clearIndex() {
-		result.hasIndex = false;
-		result.index_ = 0;
-		return this;
-	  }
-	  
-	  // required double timestamp = 2;
-	  public boolean hasTimestamp() {
-		return result.hasTimestamp();
-	  }
-	  public double getTimestamp() {
-		return result.getTimestamp();
-	  }
-	  public Builder setTimestamp(double value) {
-		result.hasTimestamp = true;
-		result.timestamp_ = value;
-		return this;
-	  }
-	  public Builder clearTimestamp() {
-		result.hasTimestamp = false;
-		result.timestamp_ = 0D;
-		return this;
-	  }
-	}
-	
-	static {
-	  org.signalml.multiplexer.protocol.SvarogProtocol.getDescriptor();
-	}
-
-	@Override
-	public com.google.protobuf.Message.Builder toBuilder() {
-		return null;
-	}
+      com.google.protobuf.GeneratedMessage {
+    // Use Blink.newBuilder() to construct.
+    private Blink() {}
+    
+    private static final Blink defaultInstance = new Blink();
+    public static Blink getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public Blink getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_Blink_descriptor;
+    }
+    
+    @Override
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_Blink_fieldAccessorTable;
+    }
+    
+    // required int32 index = 1;
+    public static final int INDEX_FIELD_NUMBER = 1;
+    private boolean hasIndex;
+    private int index_ = 0;
+    public boolean hasIndex() { return hasIndex; }
+    public int getIndex() { return index_; }
+    
+    // required double timestamp = 2;
+    public static final int TIMESTAMP_FIELD_NUMBER = 2;
+    private boolean hasTimestamp;
+    private double timestamp_ = 0D;
+    public boolean hasTimestamp() { return hasTimestamp; }
+    public double getTimestamp() { return timestamp_; }
+    
+    @Override
+    public final boolean isInitialized() {
+      if (!hasIndex) return false;
+      if (!hasTimestamp) return false;
+      return true;
+    }
+    
+    @Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (hasIndex()) {
+        output.writeInt32(1, getIndex());
+      }
+      if (hasTimestamp()) {
+        output.writeDouble(2, getTimestamp());
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    @Override
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (hasIndex()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, getIndex());
+      }
+      if (hasTimestamp()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeDoubleSize(2, getTimestamp());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Blink parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Blink parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Blink parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Blink parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Blink parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Blink parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Blink parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Blink parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Blink parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Blink parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
+    public static Builder newBuilder(org.signalml.multiplexer.protocol.SvarogProtocol.Blink prototype) {
+      return new Builder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      // Construct using org.signalml.multiplexer.protocol.SvarogProtocol.Blink.newBuilder()
+      private Builder() {}
+      
+      org.signalml.multiplexer.protocol.SvarogProtocol.Blink result = new org.signalml.multiplexer.protocol.SvarogProtocol.Blink();
+      
+      @Override
+      protected org.signalml.multiplexer.protocol.SvarogProtocol.Blink internalGetResult() {
+        return result;
+      }
+      
+      @Override
+      public Builder clear() {
+        result = new org.signalml.multiplexer.protocol.SvarogProtocol.Blink();
+        return this;
+      }
+      
+      @Override
+      public Builder clone() {
+        return new Builder().mergeFrom(result);
+      }
+      
+      @Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return org.signalml.multiplexer.protocol.SvarogProtocol.Blink.getDescriptor();
+      }
+      
+      public org.signalml.multiplexer.protocol.SvarogProtocol.Blink getDefaultInstanceForType() {
+        return org.signalml.multiplexer.protocol.SvarogProtocol.Blink.getDefaultInstance();
+      }
+      
+      public org.signalml.multiplexer.protocol.SvarogProtocol.Blink build() {
+        if (result != null && !isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
+        }
+        return buildPartial();
+      }
+      
+      private org.signalml.multiplexer.protocol.SvarogProtocol.Blink buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public org.signalml.multiplexer.protocol.SvarogProtocol.Blink buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");  }
+        org.signalml.multiplexer.protocol.SvarogProtocol.Blink returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      @Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof org.signalml.multiplexer.protocol.SvarogProtocol.Blink) {
+          return mergeFrom((org.signalml.multiplexer.protocol.SvarogProtocol.Blink)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(org.signalml.multiplexer.protocol.SvarogProtocol.Blink other) {
+        if (other == org.signalml.multiplexer.protocol.SvarogProtocol.Blink.getDefaultInstance()) return this;
+        if (other.hasIndex()) {
+          setIndex(other.getIndex());
+        }
+        if (other.hasTimestamp()) {
+          setTimestamp(other.getTimestamp());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      @Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return mergeFrom(input,
+          com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
+      }
+      
+      @Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistry extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+            case 8: {
+              setIndex(input.readInt32());
+              break;
+            }
+            case 17: {
+              setTimestamp(input.readDouble());
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // required int32 index = 1;
+      public boolean hasIndex() {
+        return result.hasIndex();
+      }
+      public int getIndex() {
+        return result.getIndex();
+      }
+      public Builder setIndex(int value) {
+        result.hasIndex = true;
+        result.index_ = value;
+        return this;
+      }
+      public Builder clearIndex() {
+        result.hasIndex = false;
+        result.index_ = 0;
+        return this;
+      }
+      
+      // required double timestamp = 2;
+      public boolean hasTimestamp() {
+        return result.hasTimestamp();
+      }
+      public double getTimestamp() {
+        return result.getTimestamp();
+      }
+      public Builder setTimestamp(double value) {
+        result.hasTimestamp = true;
+        result.timestamp_ = value;
+        return this;
+      }
+      public Builder clearTimestamp() {
+        result.hasTimestamp = false;
+        result.timestamp_ = 0D;
+        return this;
+      }
+    }
+    
+    static {
+      org.signalml.multiplexer.protocol.SvarogProtocol.getDescriptor();
+    }
   }
   
   public static final class BlinkVector extends
-	  com.google.protobuf.GeneratedMessage {
-	// Use BlinkVector.newBuilder() to construct.
-	private BlinkVector() {}
-	
-	private static final BlinkVector defaultInstance = new BlinkVector();
-	public static BlinkVector getDefaultInstance() {
-	  return defaultInstance;
-	}
-	
-	public BlinkVector getDefaultInstanceForType() {
-	  return defaultInstance;
-	}
-	
-	public static final com.google.protobuf.Descriptors.Descriptor
-		getDescriptor() {
-	  return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_BlinkVector_descriptor;
-	}
-	
-	@Override
-	protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-		internalGetFieldAccessorTable() {
-	  return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_BlinkVector_fieldAccessorTable;
-	}
-	
-	// repeated .variables.Blink blinks = 1;
-	private java.util.List<org.signalml.multiplexer.protocol.SvarogProtocol.Blink> blinks_ =
-	  java.util.Collections.emptyList();
-	public java.util.List<org.signalml.multiplexer.protocol.SvarogProtocol.Blink> getBlinksList() {
-	  return blinks_;
-	}
-	public int getBlinksCount() { return blinks_.size(); }
-	public org.signalml.multiplexer.protocol.SvarogProtocol.Blink getBlinks(int index) {
-	  return blinks_.get(index);
-	}
-	
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector parseFrom(
-		com.google.protobuf.ByteString data)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector parseFrom(
-		com.google.protobuf.ByteString data,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data, extensionRegistry)
-			   .buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector parseFrom(byte[] data)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector parseFrom(
-		byte[] data,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data, extensionRegistry)
-			   .buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector parseFrom(java.io.InputStream input)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector parseFrom(
-		java.io.InputStream input,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input, extensionRegistry)
-			   .buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector parseFrom(
-		com.google.protobuf.CodedInputStream input)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector parseFrom(
-		com.google.protobuf.CodedInputStream input,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input, extensionRegistry)
-			   .buildParsed();
-	}
-	
-	public static Builder newBuilder() { return new Builder(); }
-	public Builder newBuilderForType() { return new Builder(); }
-	public static Builder newBuilder(org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector prototype) {
-	  return new Builder().mergeFrom(prototype);
-	}
-	
-	public static final class Builder extends
-		com.google.protobuf.GeneratedMessage.Builder<Builder> {
-	  // Construct using org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector.newBuilder()
-	  private Builder() {}
-	  
-	  org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector result = new org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector();
-	  
-	  @Override
-	  protected org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector internalGetResult() {
-		return result;
-	  }
-	  
-	  @Override
-	  public Builder clear() {
-		result = new org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector();
-		return this;
-	  }
-	  
-	  @Override
-	  public Builder clone() {
-		return new Builder().mergeFrom(result);
-	  }
-	  
-	  @Override
-	  public com.google.protobuf.Descriptors.Descriptor
-		  getDescriptorForType() {
-		return org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector.getDescriptor();
-	  }
-	  
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector getDefaultInstanceForType() {
-		return org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector.getDefaultInstance();
-	  }
-	  
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector build() {
-		if (!isInitialized()) {
-		  throw new com.google.protobuf.UninitializedMessageException(
-			result);
-		}
-		return buildPartial();
-	  }
-	  
-	  private org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector buildParsed()
-		  throws com.google.protobuf.InvalidProtocolBufferException {
-		if (!isInitialized()) {
-		  throw new com.google.protobuf.UninitializedMessageException(
-			result).asInvalidProtocolBufferException();
-		}
-		return buildPartial();
-	  }
-	  
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector buildPartial() {
-		if (result.blinks_ != java.util.Collections.EMPTY_LIST) {
-		  result.blinks_ =
-			java.util.Collections.unmodifiableList(result.blinks_);
-		}
-		org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector returnMe = result;
-		result = null;
-		return returnMe;
-	  }
-	  
-	  
-	  // repeated .variables.Blink blinks = 1;
-	  public java.util.List<org.signalml.multiplexer.protocol.SvarogProtocol.Blink> getBlinksList() {
-		return java.util.Collections.unmodifiableList(result.blinks_);
-	  }
-	  public int getBlinksCount() {
-		return result.getBlinksCount();
-	  }
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.Blink getBlinks(int index) {
-		return result.getBlinks(index);
-	  }
-	  public Builder setBlinks(int index, org.signalml.multiplexer.protocol.SvarogProtocol.Blink value) {
-		result.blinks_.set(index, value);
-		return this;
-	  }
-	  public Builder setBlinks(int index, org.signalml.multiplexer.protocol.SvarogProtocol.Blink.Builder builderForValue) {
-		result.blinks_.set(index, builderForValue.build());
-		return this;
-	  }
-	  public Builder addBlinks(org.signalml.multiplexer.protocol.SvarogProtocol.Blink value) {
-		if (result.blinks_.isEmpty()) {
-		  result.blinks_ = new java.util.ArrayList<org.signalml.multiplexer.protocol.SvarogProtocol.Blink>();
-		}
-		result.blinks_.add(value);
-		return this;
-	  }
-	  public Builder addBlinks(org.signalml.multiplexer.protocol.SvarogProtocol.Blink.Builder builderForValue) {
-		if (result.blinks_.isEmpty()) {
-		  result.blinks_ = new java.util.ArrayList<org.signalml.multiplexer.protocol.SvarogProtocol.Blink>();
-		}
-		result.blinks_.add(builderForValue.build());
-		return this;
-	  }
-	  public Builder addAllBlinks(
-		  java.lang.Iterable<? extends org.signalml.multiplexer.protocol.SvarogProtocol.Blink> values) {
-		if (result.blinks_.isEmpty()) {
-		  result.blinks_ = new java.util.ArrayList<org.signalml.multiplexer.protocol.SvarogProtocol.Blink>();
-		}
-		super.addAll(values, result.blinks_);
-		return this;
-	  }
-	  public Builder clearBlinks() {
-		result.blinks_ = java.util.Collections.emptyList();
-		return this;
-	  }
-	}
-	
-	static {
-	  org.signalml.multiplexer.protocol.SvarogProtocol.getDescriptor();
-	}
-
-	@Override
-	public com.google.protobuf.Message.Builder toBuilder() {
-		return null;
-	}
+      com.google.protobuf.GeneratedMessage {
+    // Use BlinkVector.newBuilder() to construct.
+    private BlinkVector() {}
+    
+    private static final BlinkVector defaultInstance = new BlinkVector();
+    public static BlinkVector getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public BlinkVector getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_BlinkVector_descriptor;
+    }
+    
+    @Override
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_BlinkVector_fieldAccessorTable;
+    }
+    
+    // repeated .variables.Blink blinks = 1;
+    public static final int BLINKS_FIELD_NUMBER = 1;
+    private java.util.List<org.signalml.multiplexer.protocol.SvarogProtocol.Blink> blinks_ =
+      java.util.Collections.emptyList();
+    public java.util.List<org.signalml.multiplexer.protocol.SvarogProtocol.Blink> getBlinksList() {
+      return blinks_;
+    }
+    public int getBlinksCount() { return blinks_.size(); }
+    public org.signalml.multiplexer.protocol.SvarogProtocol.Blink getBlinks(int index) {
+      return blinks_.get(index);
+    }
+    
+    @Override
+    public final boolean isInitialized() {
+      for (org.signalml.multiplexer.protocol.SvarogProtocol.Blink element : getBlinksList()) {
+        if (!element.isInitialized()) return false;
+      }
+      return true;
+    }
+    
+    @Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      for (org.signalml.multiplexer.protocol.SvarogProtocol.Blink element : getBlinksList()) {
+        output.writeMessage(1, element);
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    @Override
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      for (org.signalml.multiplexer.protocol.SvarogProtocol.Blink element : getBlinksList()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, element);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
+    public static Builder newBuilder(org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector prototype) {
+      return new Builder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      // Construct using org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector.newBuilder()
+      private Builder() {}
+      
+      org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector result = new org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector();
+      
+      @Override
+      protected org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector internalGetResult() {
+        return result;
+      }
+      
+      @Override
+      public Builder clear() {
+        result = new org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector();
+        return this;
+      }
+      
+      @Override
+      public Builder clone() {
+        return new Builder().mergeFrom(result);
+      }
+      
+      @Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector.getDescriptor();
+      }
+      
+      public org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector getDefaultInstanceForType() {
+        return org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector.getDefaultInstance();
+      }
+      
+      public org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector build() {
+        if (result != null && !isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
+        }
+        return buildPartial();
+      }
+      
+      private org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");  }
+        if (result.blinks_ != java.util.Collections.EMPTY_LIST) {
+          result.blinks_ =
+            java.util.Collections.unmodifiableList(result.blinks_);
+        }
+        org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      @Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector) {
+          return mergeFrom((org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector other) {
+        if (other == org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector.getDefaultInstance()) return this;
+        if (!other.blinks_.isEmpty()) {
+          if (result.blinks_.isEmpty()) {
+            result.blinks_ = new java.util.ArrayList<org.signalml.multiplexer.protocol.SvarogProtocol.Blink>();
+          }
+          result.blinks_.addAll(other.blinks_);
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      @Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return mergeFrom(input,
+          com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
+      }
+      
+      @Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistry extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+            case 10: {
+              org.signalml.multiplexer.protocol.SvarogProtocol.Blink.Builder subBuilder = org.signalml.multiplexer.protocol.SvarogProtocol.Blink.newBuilder();
+              input.readMessage(subBuilder, extensionRegistry);
+              addBlinks(subBuilder.buildPartial());
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // repeated .variables.Blink blinks = 1;
+      public java.util.List<org.signalml.multiplexer.protocol.SvarogProtocol.Blink> getBlinksList() {
+        return java.util.Collections.unmodifiableList(result.blinks_);
+      }
+      public int getBlinksCount() {
+        return result.getBlinksCount();
+      }
+      public org.signalml.multiplexer.protocol.SvarogProtocol.Blink getBlinks(int index) {
+        return result.getBlinks(index);
+      }
+      public Builder setBlinks(int index, org.signalml.multiplexer.protocol.SvarogProtocol.Blink value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.blinks_.set(index, value);
+        return this;
+      }
+      public Builder setBlinks(int index, org.signalml.multiplexer.protocol.SvarogProtocol.Blink.Builder builderForValue) {
+        result.blinks_.set(index, builderForValue.build());
+        return this;
+      }
+      public Builder addBlinks(org.signalml.multiplexer.protocol.SvarogProtocol.Blink value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        if (result.blinks_.isEmpty()) {
+          result.blinks_ = new java.util.ArrayList<org.signalml.multiplexer.protocol.SvarogProtocol.Blink>();
+        }
+        result.blinks_.add(value);
+        return this;
+      }
+      public Builder addBlinks(org.signalml.multiplexer.protocol.SvarogProtocol.Blink.Builder builderForValue) {
+        if (result.blinks_.isEmpty()) {
+          result.blinks_ = new java.util.ArrayList<org.signalml.multiplexer.protocol.SvarogProtocol.Blink>();
+        }
+        result.blinks_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addAllBlinks(
+          java.lang.Iterable<? extends org.signalml.multiplexer.protocol.SvarogProtocol.Blink> values) {
+        if (result.blinks_.isEmpty()) {
+          result.blinks_ = new java.util.ArrayList<org.signalml.multiplexer.protocol.SvarogProtocol.Blink>();
+        }
+        super.addAll(values, result.blinks_);
+        return this;
+      }
+      public Builder clearBlinks() {
+        result.blinks_ = java.util.Collections.emptyList();
+        return this;
+      }
+    }
+    
+    static {
+      org.signalml.multiplexer.protocol.SvarogProtocol.getDescriptor();
+    }
   }
   
   public static final class Sample extends
-	  com.google.protobuf.GeneratedMessage {
-	// Use Sample.newBuilder() to construct.
-	private Sample() {}
-	
-	private static final Sample defaultInstance = new Sample();
-	public static Sample getDefaultInstance() {
-	  return defaultInstance;
-	}
-	
-	public Sample getDefaultInstanceForType() {
-	  return defaultInstance;
-	}
-	
-	public static final com.google.protobuf.Descriptors.Descriptor
-		getDescriptor() {
-	  return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_Sample_descriptor;
-	}
-	
-	@Override
-	protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-		internalGetFieldAccessorTable() {
-	  return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_Sample_fieldAccessorTable;
-	}
-	
-	// required double value = 1;
-	private boolean hasValue;
-	private double value_ = 0D;
-	public boolean hasValue() { return hasValue; }
-	public double getValue() { return value_; }
-	
-	// required double timestamp = 2;
-	private boolean hasTimestamp;
-	private double timestamp_ = 0D;
-	public boolean hasTimestamp() { return hasTimestamp; }
-	public double getTimestamp() { return timestamp_; }
-	
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Sample parseFrom(
-		com.google.protobuf.ByteString data)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Sample parseFrom(
-		com.google.protobuf.ByteString data,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data, extensionRegistry)
-			   .buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Sample parseFrom(byte[] data)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Sample parseFrom(
-		byte[] data,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data, extensionRegistry)
-			   .buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Sample parseFrom(java.io.InputStream input)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Sample parseFrom(
-		java.io.InputStream input,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input, extensionRegistry)
-			   .buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Sample parseFrom(
-		com.google.protobuf.CodedInputStream input)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Sample parseFrom(
-		com.google.protobuf.CodedInputStream input,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input, extensionRegistry)
-			   .buildParsed();
-	}
-	
-	public static Builder newBuilder() { return new Builder(); }
-	public Builder newBuilderForType() { return new Builder(); }
-	public static Builder newBuilder(org.signalml.multiplexer.protocol.SvarogProtocol.Sample prototype) {
-	  return new Builder().mergeFrom(prototype);
-	}
-	
-	public static final class Builder extends
-		com.google.protobuf.GeneratedMessage.Builder<Builder> {
-	  // Construct using org.signalml.multiplexer.protocol.SvarogProtocol.Sample.newBuilder()
-	  private Builder() {}
-	  
-	  org.signalml.multiplexer.protocol.SvarogProtocol.Sample result = new org.signalml.multiplexer.protocol.SvarogProtocol.Sample();
-	  
-	  @Override
-	  protected org.signalml.multiplexer.protocol.SvarogProtocol.Sample internalGetResult() {
-		return result;
-	  }
-	  
-	  @Override
-	  public Builder clear() {
-		result = new org.signalml.multiplexer.protocol.SvarogProtocol.Sample();
-		return this;
-	  }
-	  
-	  @Override
-	  public Builder clone() {
-		return new Builder().mergeFrom(result);
-	  }
-	  
-	  @Override
-	  public com.google.protobuf.Descriptors.Descriptor
-		  getDescriptorForType() {
-		return org.signalml.multiplexer.protocol.SvarogProtocol.Sample.getDescriptor();
-	  }
-	  
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.Sample getDefaultInstanceForType() {
-		return org.signalml.multiplexer.protocol.SvarogProtocol.Sample.getDefaultInstance();
-	  }
-	  
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.Sample build() {
-		if (!isInitialized()) {
-		  throw new com.google.protobuf.UninitializedMessageException(
-			result);
-		}
-		return buildPartial();
-	  }
-	  
-	  private org.signalml.multiplexer.protocol.SvarogProtocol.Sample buildParsed()
-		  throws com.google.protobuf.InvalidProtocolBufferException {
-		if (!isInitialized()) {
-		  throw new com.google.protobuf.UninitializedMessageException(
-			result).asInvalidProtocolBufferException();
-		}
-		return buildPartial();
-	  }
-	  
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.Sample buildPartial() {
-		org.signalml.multiplexer.protocol.SvarogProtocol.Sample returnMe = result;
-		result = null;
-		return returnMe;
-	  }
-	  
-	  
-	  // required double value = 1;
-	  public boolean hasValue() {
-		return result.hasValue();
-	  }
-	  public double getValue() {
-		return result.getValue();
-	  }
-	  public Builder setValue(double value) {
-		result.hasValue = true;
-		result.value_ = value;
-		return this;
-	  }
-	  public Builder clearValue() {
-		result.hasValue = false;
-		result.value_ = 0D;
-		return this;
-	  }
-	  
-	  // required double timestamp = 2;
-	  public boolean hasTimestamp() {
-		return result.hasTimestamp();
-	  }
-	  public double getTimestamp() {
-		return result.getTimestamp();
-	  }
-	  public Builder setTimestamp(double value) {
-		result.hasTimestamp = true;
-		result.timestamp_ = value;
-		return this;
-	  }
-	  public Builder clearTimestamp() {
-		result.hasTimestamp = false;
-		result.timestamp_ = 0D;
-		return this;
-	  }
-	}
-	
-	static {
-	  org.signalml.multiplexer.protocol.SvarogProtocol.getDescriptor();
-	}
-
-	@Override
-	public com.google.protobuf.Message.Builder toBuilder() {
-		return null;
-	}
+      com.google.protobuf.GeneratedMessage {
+    // Use Sample.newBuilder() to construct.
+    private Sample() {}
+    
+    private static final Sample defaultInstance = new Sample();
+    public static Sample getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public Sample getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_Sample_descriptor;
+    }
+    
+    @Override
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_Sample_fieldAccessorTable;
+    }
+    
+    // required double value = 1;
+    public static final int VALUE_FIELD_NUMBER = 1;
+    private boolean hasValue;
+    private double value_ = 0D;
+    public boolean hasValue() { return hasValue; }
+    public double getValue() { return value_; }
+    
+    // required double timestamp = 2;
+    public static final int TIMESTAMP_FIELD_NUMBER = 2;
+    private boolean hasTimestamp;
+    private double timestamp_ = 0D;
+    public boolean hasTimestamp() { return hasTimestamp; }
+    public double getTimestamp() { return timestamp_; }
+    
+    @Override
+    public final boolean isInitialized() {
+      if (!hasValue) return false;
+      if (!hasTimestamp) return false;
+      return true;
+    }
+    
+    @Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (hasValue()) {
+        output.writeDouble(1, getValue());
+      }
+      if (hasTimestamp()) {
+        output.writeDouble(2, getTimestamp());
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    @Override
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (hasValue()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeDoubleSize(1, getValue());
+      }
+      if (hasTimestamp()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeDoubleSize(2, getTimestamp());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Sample parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Sample parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Sample parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Sample parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Sample parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Sample parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Sample parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Sample parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Sample parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Sample parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
+    public static Builder newBuilder(org.signalml.multiplexer.protocol.SvarogProtocol.Sample prototype) {
+      return new Builder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      // Construct using org.signalml.multiplexer.protocol.SvarogProtocol.Sample.newBuilder()
+      private Builder() {}
+      
+      org.signalml.multiplexer.protocol.SvarogProtocol.Sample result = new org.signalml.multiplexer.protocol.SvarogProtocol.Sample();
+      
+      @Override
+      protected org.signalml.multiplexer.protocol.SvarogProtocol.Sample internalGetResult() {
+        return result;
+      }
+      
+      @Override
+      public Builder clear() {
+        result = new org.signalml.multiplexer.protocol.SvarogProtocol.Sample();
+        return this;
+      }
+      
+      @Override
+      public Builder clone() {
+        return new Builder().mergeFrom(result);
+      }
+      
+      @Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return org.signalml.multiplexer.protocol.SvarogProtocol.Sample.getDescriptor();
+      }
+      
+      public org.signalml.multiplexer.protocol.SvarogProtocol.Sample getDefaultInstanceForType() {
+        return org.signalml.multiplexer.protocol.SvarogProtocol.Sample.getDefaultInstance();
+      }
+      
+      public org.signalml.multiplexer.protocol.SvarogProtocol.Sample build() {
+        if (result != null && !isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
+        }
+        return buildPartial();
+      }
+      
+      private org.signalml.multiplexer.protocol.SvarogProtocol.Sample buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public org.signalml.multiplexer.protocol.SvarogProtocol.Sample buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");  }
+        org.signalml.multiplexer.protocol.SvarogProtocol.Sample returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      @Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof org.signalml.multiplexer.protocol.SvarogProtocol.Sample) {
+          return mergeFrom((org.signalml.multiplexer.protocol.SvarogProtocol.Sample)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(org.signalml.multiplexer.protocol.SvarogProtocol.Sample other) {
+        if (other == org.signalml.multiplexer.protocol.SvarogProtocol.Sample.getDefaultInstance()) return this;
+        if (other.hasValue()) {
+          setValue(other.getValue());
+        }
+        if (other.hasTimestamp()) {
+          setTimestamp(other.getTimestamp());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      @Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return mergeFrom(input,
+          com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
+      }
+      
+      @Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistry extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+            case 9: {
+              setValue(input.readDouble());
+              break;
+            }
+            case 17: {
+              setTimestamp(input.readDouble());
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // required double value = 1;
+      public boolean hasValue() {
+        return result.hasValue();
+      }
+      public double getValue() {
+        return result.getValue();
+      }
+      public Builder setValue(double value) {
+        result.hasValue = true;
+        result.value_ = value;
+        return this;
+      }
+      public Builder clearValue() {
+        result.hasValue = false;
+        result.value_ = 0D;
+        return this;
+      }
+      
+      // required double timestamp = 2;
+      public boolean hasTimestamp() {
+        return result.hasTimestamp();
+      }
+      public double getTimestamp() {
+        return result.getTimestamp();
+      }
+      public Builder setTimestamp(double value) {
+        result.hasTimestamp = true;
+        result.timestamp_ = value;
+        return this;
+      }
+      public Builder clearTimestamp() {
+        result.hasTimestamp = false;
+        result.timestamp_ = 0D;
+        return this;
+      }
+    }
+    
+    static {
+      org.signalml.multiplexer.protocol.SvarogProtocol.getDescriptor();
+    }
   }
   
   public static final class SampleVector extends
-	  com.google.protobuf.GeneratedMessage {
-	// Use SampleVector.newBuilder() to construct.
-	private SampleVector() {}
-	
-	private static final SampleVector defaultInstance = new SampleVector();
-	public static SampleVector getDefaultInstance() {
-	  return defaultInstance;
-	}
-	
-	public SampleVector getDefaultInstanceForType() {
-	  return defaultInstance;
-	}
-	
-	public static final com.google.protobuf.Descriptors.Descriptor
-		getDescriptor() {
-	  return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_SampleVector_descriptor;
-	}
-	
-	@Override
-	protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-		internalGetFieldAccessorTable() {
-	  return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_SampleVector_fieldAccessorTable;
-	}
-	
-	// repeated .variables.Sample samples = 1;
-	private java.util.List<org.signalml.multiplexer.protocol.SvarogProtocol.Sample> samples_ =
-	  java.util.Collections.emptyList();
-	public java.util.List<org.signalml.multiplexer.protocol.SvarogProtocol.Sample> getSamplesList() {
-	  return samples_;
-	}
-	public int getSamplesCount() { return samples_.size(); }
-	public org.signalml.multiplexer.protocol.SvarogProtocol.Sample getSamples(int index) {
-	  return samples_.get(index);
-	}
-	
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector parseFrom(
-		com.google.protobuf.ByteString data)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector parseFrom(
-		com.google.protobuf.ByteString data,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data, extensionRegistry)
-			   .buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector parseFrom(byte[] data)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector parseFrom(
-		byte[] data,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data, extensionRegistry)
-			   .buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector parseFrom(java.io.InputStream input)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector parseFrom(
-		java.io.InputStream input,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input, extensionRegistry)
-			   .buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector parseFrom(
-		com.google.protobuf.CodedInputStream input)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector parseFrom(
-		com.google.protobuf.CodedInputStream input,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input, extensionRegistry)
-			   .buildParsed();
-	}
-	
-	public static Builder newBuilder() { return new Builder(); }
-	public Builder newBuilderForType() { return new Builder(); }
-	public static Builder newBuilder(org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector prototype) {
-	  return new Builder().mergeFrom(prototype);
-	}
-	
-	public static final class Builder extends
-		com.google.protobuf.GeneratedMessage.Builder<Builder> {
-	  // Construct using org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector.newBuilder()
-	  private Builder() {}
-	  
-	  org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector result = new org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector();
-	  
-	  @Override
-	  protected org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector internalGetResult() {
-		return result;
-	  }
-	  
-	  @Override
-	  public Builder clear() {
-		result = new org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector();
-		return this;
-	  }
-	  
-	  @Override
-	  public Builder clone() {
-		return new Builder().mergeFrom(result);
-	  }
-	  
-	  @Override
-	  public com.google.protobuf.Descriptors.Descriptor
-		  getDescriptorForType() {
-		return org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector.getDescriptor();
-	  }
-	  
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector getDefaultInstanceForType() {
-		return org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector.getDefaultInstance();
-	  }
-	  
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector build() {
-		if (!isInitialized()) {
-		  throw new com.google.protobuf.UninitializedMessageException(
-			result);
-		}
-		return buildPartial();
-	  }
-	  
-	  private org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector buildParsed()
-		  throws com.google.protobuf.InvalidProtocolBufferException {
-		if (!isInitialized()) {
-		  throw new com.google.protobuf.UninitializedMessageException(
-			result).asInvalidProtocolBufferException();
-		}
-		return buildPartial();
-	  }
-	  
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector buildPartial() {
-		if (result.samples_ != java.util.Collections.EMPTY_LIST) {
-		  result.samples_ =
-			java.util.Collections.unmodifiableList(result.samples_);
-		}
-		org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector returnMe = result;
-		result = null;
-		return returnMe;
-	  }
-	  
-	  
-	  // repeated .variables.Sample samples = 1;
-	  public java.util.List<org.signalml.multiplexer.protocol.SvarogProtocol.Sample> getSamplesList() {
-		return java.util.Collections.unmodifiableList(result.samples_);
-	  }
-	  public int getSamplesCount() {
-		return result.getSamplesCount();
-	  }
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.Sample getSamples(int index) {
-		return result.getSamples(index);
-	  }
-	  public Builder setSamples(int index, org.signalml.multiplexer.protocol.SvarogProtocol.Sample value) {
-		result.samples_.set(index, value);
-		return this;
-	  }
-	  public Builder setSamples(int index, org.signalml.multiplexer.protocol.SvarogProtocol.Sample.Builder builderForValue) {
-		result.samples_.set(index, builderForValue.build());
-		return this;
-	  }
-	  public Builder addSamples(org.signalml.multiplexer.protocol.SvarogProtocol.Sample value) {
-		if (result.samples_.isEmpty()) {
-		  result.samples_ = new java.util.ArrayList<org.signalml.multiplexer.protocol.SvarogProtocol.Sample>();
-		}
-		result.samples_.add(value);
-		return this;
-	  }
-	  public Builder addSamples(org.signalml.multiplexer.protocol.SvarogProtocol.Sample.Builder builderForValue) {
-		if (result.samples_.isEmpty()) {
-		  result.samples_ = new java.util.ArrayList<org.signalml.multiplexer.protocol.SvarogProtocol.Sample>();
-		}
-		result.samples_.add(builderForValue.build());
-		return this;
-	  }
-	  public Builder addAllSamples(
-		  java.lang.Iterable<? extends org.signalml.multiplexer.protocol.SvarogProtocol.Sample> values) {
-		if (result.samples_.isEmpty()) {
-		  result.samples_ = new java.util.ArrayList<org.signalml.multiplexer.protocol.SvarogProtocol.Sample>();
-		}
-		super.addAll(values, result.samples_);
-		return this;
-	  }
-	  public Builder clearSamples() {
-		result.samples_ = java.util.Collections.emptyList();
-		return this;
-	  }
-	}
-	
-	static {
-	  org.signalml.multiplexer.protocol.SvarogProtocol.getDescriptor();
-	}
-
-	@Override
-	public com.google.protobuf.Message.Builder toBuilder() {
-		return null;
-	}
+      com.google.protobuf.GeneratedMessage {
+    // Use SampleVector.newBuilder() to construct.
+    private SampleVector() {}
+    
+    private static final SampleVector defaultInstance = new SampleVector();
+    public static SampleVector getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public SampleVector getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_SampleVector_descriptor;
+    }
+    
+    @Override
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_SampleVector_fieldAccessorTable;
+    }
+    
+    // repeated .variables.Sample samples = 1;
+    public static final int SAMPLES_FIELD_NUMBER = 1;
+    private java.util.List<org.signalml.multiplexer.protocol.SvarogProtocol.Sample> samples_ =
+      java.util.Collections.emptyList();
+    public java.util.List<org.signalml.multiplexer.protocol.SvarogProtocol.Sample> getSamplesList() {
+      return samples_;
+    }
+    public int getSamplesCount() { return samples_.size(); }
+    public org.signalml.multiplexer.protocol.SvarogProtocol.Sample getSamples(int index) {
+      return samples_.get(index);
+    }
+    
+    @Override
+    public final boolean isInitialized() {
+      for (org.signalml.multiplexer.protocol.SvarogProtocol.Sample element : getSamplesList()) {
+        if (!element.isInitialized()) return false;
+      }
+      return true;
+    }
+    
+    @Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      for (org.signalml.multiplexer.protocol.SvarogProtocol.Sample element : getSamplesList()) {
+        output.writeMessage(1, element);
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    @Override
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      for (org.signalml.multiplexer.protocol.SvarogProtocol.Sample element : getSamplesList()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, element);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
+    public static Builder newBuilder(org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector prototype) {
+      return new Builder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      // Construct using org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector.newBuilder()
+      private Builder() {}
+      
+      org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector result = new org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector();
+      
+      @Override
+      protected org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector internalGetResult() {
+        return result;
+      }
+      
+      @Override
+      public Builder clear() {
+        result = new org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector();
+        return this;
+      }
+      
+      @Override
+      public Builder clone() {
+        return new Builder().mergeFrom(result);
+      }
+      
+      @Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector.getDescriptor();
+      }
+      
+      public org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector getDefaultInstanceForType() {
+        return org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector.getDefaultInstance();
+      }
+      
+      public org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector build() {
+        if (result != null && !isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
+        }
+        return buildPartial();
+      }
+      
+      private org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");  }
+        if (result.samples_ != java.util.Collections.EMPTY_LIST) {
+          result.samples_ =
+            java.util.Collections.unmodifiableList(result.samples_);
+        }
+        org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      @Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector) {
+          return mergeFrom((org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector other) {
+        if (other == org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector.getDefaultInstance()) return this;
+        if (!other.samples_.isEmpty()) {
+          if (result.samples_.isEmpty()) {
+            result.samples_ = new java.util.ArrayList<org.signalml.multiplexer.protocol.SvarogProtocol.Sample>();
+          }
+          result.samples_.addAll(other.samples_);
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      @Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return mergeFrom(input,
+          com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
+      }
+      
+      @Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistry extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+            case 10: {
+              org.signalml.multiplexer.protocol.SvarogProtocol.Sample.Builder subBuilder = org.signalml.multiplexer.protocol.SvarogProtocol.Sample.newBuilder();
+              input.readMessage(subBuilder, extensionRegistry);
+              addSamples(subBuilder.buildPartial());
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // repeated .variables.Sample samples = 1;
+      public java.util.List<org.signalml.multiplexer.protocol.SvarogProtocol.Sample> getSamplesList() {
+        return java.util.Collections.unmodifiableList(result.samples_);
+      }
+      public int getSamplesCount() {
+        return result.getSamplesCount();
+      }
+      public org.signalml.multiplexer.protocol.SvarogProtocol.Sample getSamples(int index) {
+        return result.getSamples(index);
+      }
+      public Builder setSamples(int index, org.signalml.multiplexer.protocol.SvarogProtocol.Sample value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.samples_.set(index, value);
+        return this;
+      }
+      public Builder setSamples(int index, org.signalml.multiplexer.protocol.SvarogProtocol.Sample.Builder builderForValue) {
+        result.samples_.set(index, builderForValue.build());
+        return this;
+      }
+      public Builder addSamples(org.signalml.multiplexer.protocol.SvarogProtocol.Sample value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        if (result.samples_.isEmpty()) {
+          result.samples_ = new java.util.ArrayList<org.signalml.multiplexer.protocol.SvarogProtocol.Sample>();
+        }
+        result.samples_.add(value);
+        return this;
+      }
+      public Builder addSamples(org.signalml.multiplexer.protocol.SvarogProtocol.Sample.Builder builderForValue) {
+        if (result.samples_.isEmpty()) {
+          result.samples_ = new java.util.ArrayList<org.signalml.multiplexer.protocol.SvarogProtocol.Sample>();
+        }
+        result.samples_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addAllSamples(
+          java.lang.Iterable<? extends org.signalml.multiplexer.protocol.SvarogProtocol.Sample> values) {
+        if (result.samples_.isEmpty()) {
+          result.samples_ = new java.util.ArrayList<org.signalml.multiplexer.protocol.SvarogProtocol.Sample>();
+        }
+        super.addAll(values, result.samples_);
+        return this;
+      }
+      public Builder clearSamples() {
+        result.samples_ = java.util.Collections.emptyList();
+        return this;
+      }
+    }
+    
+    static {
+      org.signalml.multiplexer.protocol.SvarogProtocol.getDescriptor();
+    }
   }
   
   public static final class Decision extends
-	  com.google.protobuf.GeneratedMessage {
-	// Use Decision.newBuilder() to construct.
-	private Decision() {}
-	
-	private static final Decision defaultInstance = new Decision();
-	public static Decision getDefaultInstance() {
-	  return defaultInstance;
-	}
-	
-	public Decision getDefaultInstanceForType() {
-	  return defaultInstance;
-	}
-	
-	public static final com.google.protobuf.Descriptors.Descriptor
-		getDescriptor() {
-	  return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_Decision_descriptor;
-	}
-	
-	@Override
-	protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-		internalGetFieldAccessorTable() {
-	  return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_Decision_fieldAccessorTable;
-	}
-	
-	// required int32 decision = 1;
-	private boolean hasDecision;
-	private int decision_ = 0;
-	public boolean hasDecision() { return hasDecision; }
-	public int getDecision() { return decision_; }
-	
-	// optional int32 type = 2;
-	private boolean hasType;
-	private int type_ = 0;
-	public boolean hasType() { return hasType; }
-	public int getType() { return type_; }
-	
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Decision parseFrom(
-		com.google.protobuf.ByteString data)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Decision parseFrom(
-		com.google.protobuf.ByteString data,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data, extensionRegistry)
-			   .buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Decision parseFrom(byte[] data)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Decision parseFrom(
-		byte[] data,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data, extensionRegistry)
-			   .buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Decision parseFrom(java.io.InputStream input)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Decision parseFrom(
-		java.io.InputStream input,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input, extensionRegistry)
-			   .buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Decision parseFrom(
-		com.google.protobuf.CodedInputStream input)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Decision parseFrom(
-		com.google.protobuf.CodedInputStream input,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input, extensionRegistry)
-			   .buildParsed();
-	}
-	
-	public static Builder newBuilder() { return new Builder(); }
-	public Builder newBuilderForType() { return new Builder(); }
-	public static Builder newBuilder(org.signalml.multiplexer.protocol.SvarogProtocol.Decision prototype) {
-	  return new Builder().mergeFrom(prototype);
-	}
-	
-	public static final class Builder extends
-		com.google.protobuf.GeneratedMessage.Builder<Builder> {
-	  // Construct using org.signalml.multiplexer.protocol.SvarogProtocol.Decision.newBuilder()
-	  private Builder() {}
-	  
-	  org.signalml.multiplexer.protocol.SvarogProtocol.Decision result = new org.signalml.multiplexer.protocol.SvarogProtocol.Decision();
-	  
-	  @Override
-	  protected org.signalml.multiplexer.protocol.SvarogProtocol.Decision internalGetResult() {
-		return result;
-	  }
-	  
-	  @Override
-	  public Builder clear() {
-		result = new org.signalml.multiplexer.protocol.SvarogProtocol.Decision();
-		return this;
-	  }
-	  
-	  @Override
-	  public Builder clone() {
-		return new Builder().mergeFrom(result);
-	  }
-	  
-	  @Override
-	  public com.google.protobuf.Descriptors.Descriptor
-		  getDescriptorForType() {
-		return org.signalml.multiplexer.protocol.SvarogProtocol.Decision.getDescriptor();
-	  }
-	  
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.Decision getDefaultInstanceForType() {
-		return org.signalml.multiplexer.protocol.SvarogProtocol.Decision.getDefaultInstance();
-	  }
-	  
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.Decision build() {
-		if (!isInitialized()) {
-		  throw new com.google.protobuf.UninitializedMessageException(
-			result);
-		}
-		return buildPartial();
-	  }
-	  
-	  private org.signalml.multiplexer.protocol.SvarogProtocol.Decision buildParsed()
-		  throws com.google.protobuf.InvalidProtocolBufferException {
-		if (!isInitialized()) {
-		  throw new com.google.protobuf.UninitializedMessageException(
-			result).asInvalidProtocolBufferException();
-		}
-		return buildPartial();
-	  }
-	  
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.Decision buildPartial() {
-		org.signalml.multiplexer.protocol.SvarogProtocol.Decision returnMe = result;
-		result = null;
-		return returnMe;
-	  }
-	  
-	  
-	  // required int32 decision = 1;
-	  public boolean hasDecision() {
-		return result.hasDecision();
-	  }
-	  public int getDecision() {
-		return result.getDecision();
-	  }
-	  public Builder setDecision(int value) {
-		result.hasDecision = true;
-		result.decision_ = value;
-		return this;
-	  }
-	  public Builder clearDecision() {
-		result.hasDecision = false;
-		result.decision_ = 0;
-		return this;
-	  }
-	  
-	  // optional int32 type = 2;
-	  public boolean hasType() {
-		return result.hasType();
-	  }
-	  public int getType() {
-		return result.getType();
-	  }
-	  public Builder setType(int value) {
-		result.hasType = true;
-		result.type_ = value;
-		return this;
-	  }
-	  public Builder clearType() {
-		result.hasType = false;
-		result.type_ = 0;
-		return this;
-	  }
-	}
-	
-	static {
-	  org.signalml.multiplexer.protocol.SvarogProtocol.getDescriptor();
-	}
-
-	@Override
-	public com.google.protobuf.Message.Builder toBuilder() {
-		return null;
-	}
+      com.google.protobuf.GeneratedMessage {
+    // Use Decision.newBuilder() to construct.
+    private Decision() {}
+    
+    private static final Decision defaultInstance = new Decision();
+    public static Decision getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public Decision getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_Decision_descriptor;
+    }
+    
+    @Override
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_Decision_fieldAccessorTable;
+    }
+    
+    // required int32 decision = 1;
+    public static final int DECISION_FIELD_NUMBER = 1;
+    private boolean hasDecision;
+    private int decision_ = 0;
+    public boolean hasDecision() { return hasDecision; }
+    public int getDecision() { return decision_; }
+    
+    // optional int32 type = 2;
+    public static final int TYPE_FIELD_NUMBER = 2;
+    private boolean hasType;
+    private int type_ = 0;
+    public boolean hasType() { return hasType; }
+    public int getType() { return type_; }
+    
+    @Override
+    public final boolean isInitialized() {
+      if (!hasDecision) return false;
+      return true;
+    }
+    
+    @Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (hasDecision()) {
+        output.writeInt32(1, getDecision());
+      }
+      if (hasType()) {
+        output.writeInt32(2, getType());
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    @Override
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (hasDecision()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, getDecision());
+      }
+      if (hasType()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, getType());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Decision parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Decision parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Decision parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Decision parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Decision parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Decision parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Decision parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Decision parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Decision parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Decision parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
+    public static Builder newBuilder(org.signalml.multiplexer.protocol.SvarogProtocol.Decision prototype) {
+      return new Builder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      // Construct using org.signalml.multiplexer.protocol.SvarogProtocol.Decision.newBuilder()
+      private Builder() {}
+      
+      org.signalml.multiplexer.protocol.SvarogProtocol.Decision result = new org.signalml.multiplexer.protocol.SvarogProtocol.Decision();
+      
+      @Override
+      protected org.signalml.multiplexer.protocol.SvarogProtocol.Decision internalGetResult() {
+        return result;
+      }
+      
+      @Override
+      public Builder clear() {
+        result = new org.signalml.multiplexer.protocol.SvarogProtocol.Decision();
+        return this;
+      }
+      
+      @Override
+      public Builder clone() {
+        return new Builder().mergeFrom(result);
+      }
+      
+      @Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return org.signalml.multiplexer.protocol.SvarogProtocol.Decision.getDescriptor();
+      }
+      
+      public org.signalml.multiplexer.protocol.SvarogProtocol.Decision getDefaultInstanceForType() {
+        return org.signalml.multiplexer.protocol.SvarogProtocol.Decision.getDefaultInstance();
+      }
+      
+      public org.signalml.multiplexer.protocol.SvarogProtocol.Decision build() {
+        if (result != null && !isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
+        }
+        return buildPartial();
+      }
+      
+      private org.signalml.multiplexer.protocol.SvarogProtocol.Decision buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public org.signalml.multiplexer.protocol.SvarogProtocol.Decision buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");  }
+        org.signalml.multiplexer.protocol.SvarogProtocol.Decision returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      @Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof org.signalml.multiplexer.protocol.SvarogProtocol.Decision) {
+          return mergeFrom((org.signalml.multiplexer.protocol.SvarogProtocol.Decision)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(org.signalml.multiplexer.protocol.SvarogProtocol.Decision other) {
+        if (other == org.signalml.multiplexer.protocol.SvarogProtocol.Decision.getDefaultInstance()) return this;
+        if (other.hasDecision()) {
+          setDecision(other.getDecision());
+        }
+        if (other.hasType()) {
+          setType(other.getType());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      @Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return mergeFrom(input,
+          com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
+      }
+      
+      @Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistry extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+            case 8: {
+              setDecision(input.readInt32());
+              break;
+            }
+            case 16: {
+              setType(input.readInt32());
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // required int32 decision = 1;
+      public boolean hasDecision() {
+        return result.hasDecision();
+      }
+      public int getDecision() {
+        return result.getDecision();
+      }
+      public Builder setDecision(int value) {
+        result.hasDecision = true;
+        result.decision_ = value;
+        return this;
+      }
+      public Builder clearDecision() {
+        result.hasDecision = false;
+        result.decision_ = 0;
+        return this;
+      }
+      
+      // optional int32 type = 2;
+      public boolean hasType() {
+        return result.hasType();
+      }
+      public int getType() {
+        return result.getType();
+      }
+      public Builder setType(int value) {
+        result.hasType = true;
+        result.type_ = value;
+        return this;
+      }
+      public Builder clearType() {
+        result.hasType = false;
+        result.type_ = 0;
+        return this;
+      }
+    }
+    
+    static {
+      org.signalml.multiplexer.protocol.SvarogProtocol.getDescriptor();
+    }
   }
   
   public static final class UgmUpdate extends
-	  com.google.protobuf.GeneratedMessage {
-	// Use UgmUpdate.newBuilder() to construct.
-	private UgmUpdate() {}
-	
-	private static final UgmUpdate defaultInstance = new UgmUpdate();
-	public static UgmUpdate getDefaultInstance() {
-	  return defaultInstance;
-	}
-	
-	public UgmUpdate getDefaultInstanceForType() {
-	  return defaultInstance;
-	}
-	
-	public static final com.google.protobuf.Descriptors.Descriptor
-		getDescriptor() {
-	  return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_UgmUpdate_descriptor;
-	}
-	
-	@Override
-	protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-		internalGetFieldAccessorTable() {
-	  return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_UgmUpdate_fieldAccessorTable;
-	}
-	
-	// required int32 type = 1;
-	private boolean hasType;
-	private int type_ = 0;
-	public boolean hasType() { return hasType; }
-	public int getType() { return type_; }
-	
-	// required string value = 2;
-	private boolean hasValue;
-	private java.lang.String value_ = "";
-	public boolean hasValue() { return hasValue; }
-	public java.lang.String getValue() { return value_; }
-	
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate parseFrom(
-		com.google.protobuf.ByteString data)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate parseFrom(
-		com.google.protobuf.ByteString data,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data, extensionRegistry)
-			   .buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate parseFrom(byte[] data)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate parseFrom(
-		byte[] data,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data, extensionRegistry)
-			   .buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate parseFrom(java.io.InputStream input)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate parseFrom(
-		java.io.InputStream input,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input, extensionRegistry)
-			   .buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate parseFrom(
-		com.google.protobuf.CodedInputStream input)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate parseFrom(
-		com.google.protobuf.CodedInputStream input,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input, extensionRegistry)
-			   .buildParsed();
-	}
-	
-	public static Builder newBuilder() { return new Builder(); }
-	public Builder newBuilderForType() { return new Builder(); }
-	public static Builder newBuilder(org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate prototype) {
-	  return new Builder().mergeFrom(prototype);
-	}
-	
-	public static final class Builder extends
-		com.google.protobuf.GeneratedMessage.Builder<Builder> {
-	  // Construct using org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate.newBuilder()
-	  private Builder() {}
-	  
-	  org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate result = new org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate();
-	  
-	  @Override
-	  protected org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate internalGetResult() {
-		return result;
-	  }
-	  
-	  @Override
-	  public Builder clear() {
-		result = new org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate();
-		return this;
-	  }
-	  
-	  @Override
-	  public Builder clone() {
-		return new Builder().mergeFrom(result);
-	  }
-	  
-	  @Override
-	  public com.google.protobuf.Descriptors.Descriptor
-		  getDescriptorForType() {
-		return org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate.getDescriptor();
-	  }
-	  
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate getDefaultInstanceForType() {
-		return org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate.getDefaultInstance();
-	  }
-	  
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate build() {
-		if (!isInitialized()) {
-		  throw new com.google.protobuf.UninitializedMessageException(
-			result);
-		}
-		return buildPartial();
-	  }
-	  
-	  private org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate buildParsed()
-		  throws com.google.protobuf.InvalidProtocolBufferException {
-		if (!isInitialized()) {
-		  throw new com.google.protobuf.UninitializedMessageException(
-			result).asInvalidProtocolBufferException();
-		}
-		return buildPartial();
-	  }
-	  
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate buildPartial() {
-		org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate returnMe = result;
-		result = null;
-		return returnMe;
-	  }
-	  
-	  
-	  // required int32 type = 1;
-	  public boolean hasType() {
-		return result.hasType();
-	  }
-	  public int getType() {
-		return result.getType();
-	  }
-	  public Builder setType(int value) {
-		result.hasType = true;
-		result.type_ = value;
-		return this;
-	  }
-	  public Builder clearType() {
-		result.hasType = false;
-		result.type_ = 0;
-		return this;
-	  }
-	  
-	  // required string value = 2;
-	  public boolean hasValue() {
-		return result.hasValue();
-	  }
-	  public java.lang.String getValue() {
-		return result.getValue();
-	  }
-	  public Builder setValue(java.lang.String value) {
-		result.hasValue = true;
-		result.value_ = value;
-		return this;
-	  }
-	  public Builder clearValue() {
-		result.hasValue = false;
-		result.value_ = "";
-		return this;
-	  }
-	}
-	
-	static {
-	  org.signalml.multiplexer.protocol.SvarogProtocol.getDescriptor();
-	}
-
-	@Override
-	public com.google.protobuf.Message.Builder toBuilder() {
-		return null;
-	}
+      com.google.protobuf.GeneratedMessage {
+    // Use UgmUpdate.newBuilder() to construct.
+    private UgmUpdate() {}
+    
+    private static final UgmUpdate defaultInstance = new UgmUpdate();
+    public static UgmUpdate getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public UgmUpdate getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_UgmUpdate_descriptor;
+    }
+    
+    @Override
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_UgmUpdate_fieldAccessorTable;
+    }
+    
+    // required int32 type = 1;
+    public static final int TYPE_FIELD_NUMBER = 1;
+    private boolean hasType;
+    private int type_ = 0;
+    public boolean hasType() { return hasType; }
+    public int getType() { return type_; }
+    
+    // required string value = 2;
+    public static final int VALUE_FIELD_NUMBER = 2;
+    private boolean hasValue;
+    private java.lang.String value_ = "";
+    public boolean hasValue() { return hasValue; }
+    public java.lang.String getValue() { return value_; }
+    
+    @Override
+    public final boolean isInitialized() {
+      if (!hasType) return false;
+      if (!hasValue) return false;
+      return true;
+    }
+    
+    @Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (hasType()) {
+        output.writeInt32(1, getType());
+      }
+      if (hasValue()) {
+        output.writeString(2, getValue());
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    @Override
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (hasType()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, getType());
+      }
+      if (hasValue()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(2, getValue());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
+    public static Builder newBuilder(org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate prototype) {
+      return new Builder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      // Construct using org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate.newBuilder()
+      private Builder() {}
+      
+      org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate result = new org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate();
+      
+      @Override
+      protected org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate internalGetResult() {
+        return result;
+      }
+      
+      @Override
+      public Builder clear() {
+        result = new org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate();
+        return this;
+      }
+      
+      @Override
+      public Builder clone() {
+        return new Builder().mergeFrom(result);
+      }
+      
+      @Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate.getDescriptor();
+      }
+      
+      public org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate getDefaultInstanceForType() {
+        return org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate.getDefaultInstance();
+      }
+      
+      public org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate build() {
+        if (result != null && !isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
+        }
+        return buildPartial();
+      }
+      
+      private org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");  }
+        org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      @Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate) {
+          return mergeFrom((org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate other) {
+        if (other == org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate.getDefaultInstance()) return this;
+        if (other.hasType()) {
+          setType(other.getType());
+        }
+        if (other.hasValue()) {
+          setValue(other.getValue());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      @Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return mergeFrom(input,
+          com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
+      }
+      
+      @Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistry extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+            case 8: {
+              setType(input.readInt32());
+              break;
+            }
+            case 18: {
+              setValue(input.readString());
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // required int32 type = 1;
+      public boolean hasType() {
+        return result.hasType();
+      }
+      public int getType() {
+        return result.getType();
+      }
+      public Builder setType(int value) {
+        result.hasType = true;
+        result.type_ = value;
+        return this;
+      }
+      public Builder clearType() {
+        result.hasType = false;
+        result.type_ = 0;
+        return this;
+      }
+      
+      // required string value = 2;
+      public boolean hasValue() {
+        return result.hasValue();
+      }
+      public java.lang.String getValue() {
+        return result.getValue();
+      }
+      public Builder setValue(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasValue = true;
+        result.value_ = value;
+        return this;
+      }
+      public Builder clearValue() {
+        result.hasValue = false;
+        result.value_ = "";
+        return this;
+      }
+    }
+    
+    static {
+      org.signalml.multiplexer.protocol.SvarogProtocol.getDescriptor();
+    }
   }
   
   public static final class Tag extends
-	  com.google.protobuf.GeneratedMessage {
-	// Use Tag.newBuilder() to construct.
-	private Tag() {}
-	
-	private static final Tag defaultInstance = new Tag();
-	public static Tag getDefaultInstance() {
-	  return defaultInstance;
-	}
-	
-	public Tag getDefaultInstanceForType() {
-	  return defaultInstance;
-	}
-	
-	public static final com.google.protobuf.Descriptors.Descriptor
-		getDescriptor() {
-	  return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_Tag_descriptor;
-	}
-	
-	@Override
-	protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-		internalGetFieldAccessorTable() {
-	  return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_Tag_fieldAccessorTable;
-	}
-	
-	// required double start_timestamp = 1;
-	private boolean hasStartTimestamp;
-	private double startTimestamp_ = 0D;
-	public boolean hasStartTimestamp() { return hasStartTimestamp; }
-	public double getStartTimestamp() { return startTimestamp_; }
-	
-	// required double end_timestamp = 2;
-	private boolean hasEndTimestamp;
-	private double endTimestamp_ = 0D;
-	public boolean hasEndTimestamp() { return hasEndTimestamp; }
-	public double getEndTimestamp() { return endTimestamp_; }
-	
-	// required string name = 3;
-	private boolean hasName;
-	private java.lang.String name_ = "";
-	public boolean hasName() { return hasName; }
-	public java.lang.String getName() { return name_; }
-	
-	// required string channels = 4;
-	private boolean hasChannels;
-	private java.lang.String channels_ = "";
-	public boolean hasChannels() { return hasChannels; }
-	public java.lang.String getChannels() { return channels_; }
-	
-	// required .variables.VariableVector desc = 5;
-	private boolean hasDesc;
-	private org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector desc_ = org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector.getDefaultInstance();
-	public boolean hasDesc() { return hasDesc; }
-	public org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector getDesc() { return desc_; }
-	
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Tag parseFrom(
-		com.google.protobuf.ByteString data)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Tag parseFrom(
-		com.google.protobuf.ByteString data,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data, extensionRegistry)
-			   .buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Tag parseFrom(byte[] data)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Tag parseFrom(
-		byte[] data,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data, extensionRegistry)
-			   .buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Tag parseFrom(java.io.InputStream input)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Tag parseFrom(
-		java.io.InputStream input,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input, extensionRegistry)
-			   .buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Tag parseFrom(
-		com.google.protobuf.CodedInputStream input)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.Tag parseFrom(
-		com.google.protobuf.CodedInputStream input,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input, extensionRegistry)
-			   .buildParsed();
-	}
-	
-	public static Builder newBuilder() { return new Builder(); }
-	public Builder newBuilderForType() { return new Builder(); }
-	public static Builder newBuilder(org.signalml.multiplexer.protocol.SvarogProtocol.Tag prototype) {
-	  return new Builder().mergeFrom(prototype);
-	}
-	
-	public static final class Builder extends
-		com.google.protobuf.GeneratedMessage.Builder<Builder> {
-	  // Construct using org.signalml.multiplexer.protocol.SvarogProtocol.Tag.newBuilder()
-	  private Builder() {}
-	  
-	  org.signalml.multiplexer.protocol.SvarogProtocol.Tag result = new org.signalml.multiplexer.protocol.SvarogProtocol.Tag();
-	  
-	  @Override
-	  protected org.signalml.multiplexer.protocol.SvarogProtocol.Tag internalGetResult() {
-		return result;
-	  }
-	  
-	  @Override
-	  public Builder clear() {
-		result = new org.signalml.multiplexer.protocol.SvarogProtocol.Tag();
-		return this;
-	  }
-	  
-	  @Override
-	  public Builder clone() {
-		return new Builder().mergeFrom(result);
-	  }
-	  
-	  @Override
-	  public com.google.protobuf.Descriptors.Descriptor
-		  getDescriptorForType() {
-		return org.signalml.multiplexer.protocol.SvarogProtocol.Tag.getDescriptor();
-	  }
-	  
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.Tag getDefaultInstanceForType() {
-		return org.signalml.multiplexer.protocol.SvarogProtocol.Tag.getDefaultInstance();
-	  }
-	  
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.Tag build() {
-		if (!isInitialized()) {
-		  throw new com.google.protobuf.UninitializedMessageException(
-			result);
-		}
-		return buildPartial();
-	  }
-	  
-	  private org.signalml.multiplexer.protocol.SvarogProtocol.Tag buildParsed()
-		  throws com.google.protobuf.InvalidProtocolBufferException {
-		if (!isInitialized()) {
-		  throw new com.google.protobuf.UninitializedMessageException(
-			result).asInvalidProtocolBufferException();
-		}
-		return buildPartial();
-	  }
-	  
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.Tag buildPartial() {
-		org.signalml.multiplexer.protocol.SvarogProtocol.Tag returnMe = result;
-		result = null;
-		return returnMe;
-	  }
-	  
-	  
-	  // required double start_timestamp = 1;
-	  public boolean hasStartTimestamp() {
-		return result.hasStartTimestamp();
-	  }
-	  public double getStartTimestamp() {
-		return result.getStartTimestamp();
-	  }
-	  public Builder setStartTimestamp(double value) {
-		result.hasStartTimestamp = true;
-		result.startTimestamp_ = value;
-		return this;
-	  }
-	  public Builder clearStartTimestamp() {
-		result.hasStartTimestamp = false;
-		result.startTimestamp_ = 0D;
-		return this;
-	  }
-	  
-	  // required double end_timestamp = 2;
-	  public boolean hasEndTimestamp() {
-		return result.hasEndTimestamp();
-	  }
-	  public double getEndTimestamp() {
-		return result.getEndTimestamp();
-	  }
-	  public Builder setEndTimestamp(double value) {
-		result.hasEndTimestamp = true;
-		result.endTimestamp_ = value;
-		return this;
-	  }
-	  public Builder clearEndTimestamp() {
-		result.hasEndTimestamp = false;
-		result.endTimestamp_ = 0D;
-		return this;
-	  }
-	  
-	  // required string name = 3;
-	  public boolean hasName() {
-		return result.hasName();
-	  }
-	  public java.lang.String getName() {
-		return result.getName();
-	  }
-	  public Builder setName(java.lang.String value) {
-		result.hasName = true;
-		result.name_ = value;
-		return this;
-	  }
-	  public Builder clearName() {
-		result.hasName = false;
-		result.name_ = "";
-		return this;
-	  }
-	  
-	  // required string channels = 4;
-	  public boolean hasChannels() {
-		return result.hasChannels();
-	  }
-	  public java.lang.String getChannels() {
-		return result.getChannels();
-	  }
-	  public Builder setChannels(java.lang.String value) {
-		result.hasChannels = true;
-		result.channels_ = value;
-		return this;
-	  }
-	  public Builder clearChannels() {
-		result.hasChannels = false;
-		result.channels_ = "";
-		return this;
-	  }
-	  
-	  // required .variables.VariableVector desc = 5;
-	  public boolean hasDesc() {
-		return result.hasDesc();
-	  }
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector getDesc() {
-		return result.getDesc();
-	  }
-	  public Builder setDesc(org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector value) {
-		result.hasDesc = true;
-		result.desc_ = value;
-		return this;
-	  }
-	  public Builder setDesc(org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector.Builder builderForValue) {
-		result.hasDesc = true;
-		result.desc_ = builderForValue.build();
-		return this;
-	  }
-	  public Builder mergeDesc(org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector value) {
-		if (result.hasDesc() &&
-			result.desc_ != org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector.getDefaultInstance()) {
-		  result.desc_ =
-			org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector.newBuilder(result.desc_).mergeFrom(value).buildPartial();
-		} else {
-		  result.desc_ = value;
-		}
-		result.hasDesc = true;
-		return this;
-	  }
-	  public Builder clearDesc() {
-		result.hasDesc = false;
-		result.desc_ = org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector.getDefaultInstance();
-		return this;
-	  }
-	}
-	
-	static {
-	  org.signalml.multiplexer.protocol.SvarogProtocol.getDescriptor();
-	}
-
-	@Override
-	public com.google.protobuf.Message.Builder toBuilder() {
-		return null;
-	}
+      com.google.protobuf.GeneratedMessage {
+    // Use Tag.newBuilder() to construct.
+    private Tag() {}
+    
+    private static final Tag defaultInstance = new Tag();
+    public static Tag getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public Tag getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_Tag_descriptor;
+    }
+    
+    @Override
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_Tag_fieldAccessorTable;
+    }
+    
+    // required double start_timestamp = 1;
+    public static final int START_TIMESTAMP_FIELD_NUMBER = 1;
+    private boolean hasStartTimestamp;
+    private double startTimestamp_ = 0D;
+    public boolean hasStartTimestamp() { return hasStartTimestamp; }
+    public double getStartTimestamp() { return startTimestamp_; }
+    
+    // required double end_timestamp = 2;
+    public static final int END_TIMESTAMP_FIELD_NUMBER = 2;
+    private boolean hasEndTimestamp;
+    private double endTimestamp_ = 0D;
+    public boolean hasEndTimestamp() { return hasEndTimestamp; }
+    public double getEndTimestamp() { return endTimestamp_; }
+    
+    // required string name = 3;
+    public static final int NAME_FIELD_NUMBER = 3;
+    private boolean hasName;
+    private java.lang.String name_ = "";
+    public boolean hasName() { return hasName; }
+    public java.lang.String getName() { return name_; }
+    
+    // required string channels = 4;
+    public static final int CHANNELS_FIELD_NUMBER = 4;
+    private boolean hasChannels;
+    private java.lang.String channels_ = "";
+    public boolean hasChannels() { return hasChannels; }
+    public java.lang.String getChannels() { return channels_; }
+    
+    // optional .variables.VariableVector desc = 5;
+    public static final int DESC_FIELD_NUMBER = 5;
+    private boolean hasDesc;
+    private org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector desc_ = org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector.getDefaultInstance();
+    public boolean hasDesc() { return hasDesc; }
+    public org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector getDesc() { return desc_; }
+    
+    @Override
+    public final boolean isInitialized() {
+      if (!hasStartTimestamp) return false;
+      if (!hasEndTimestamp) return false;
+      if (!hasName) return false;
+      if (!hasChannels) return false;
+      if (hasDesc()) {
+        if (!getDesc().isInitialized()) return false;
+      }
+      return true;
+    }
+    
+    @Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (hasStartTimestamp()) {
+        output.writeDouble(1, getStartTimestamp());
+      }
+      if (hasEndTimestamp()) {
+        output.writeDouble(2, getEndTimestamp());
+      }
+      if (hasName()) {
+        output.writeString(3, getName());
+      }
+      if (hasChannels()) {
+        output.writeString(4, getChannels());
+      }
+      if (hasDesc()) {
+        output.writeMessage(5, getDesc());
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    @Override
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (hasStartTimestamp()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeDoubleSize(1, getStartTimestamp());
+      }
+      if (hasEndTimestamp()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeDoubleSize(2, getEndTimestamp());
+      }
+      if (hasName()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(3, getName());
+      }
+      if (hasChannels()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(4, getChannels());
+      }
+      if (hasDesc()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(5, getDesc());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Tag parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Tag parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Tag parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Tag parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Tag parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Tag parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Tag parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Tag parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Tag parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.Tag parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
+    public static Builder newBuilder(org.signalml.multiplexer.protocol.SvarogProtocol.Tag prototype) {
+      return new Builder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      // Construct using org.signalml.multiplexer.protocol.SvarogProtocol.Tag.newBuilder()
+      private Builder() {}
+      
+      org.signalml.multiplexer.protocol.SvarogProtocol.Tag result = new org.signalml.multiplexer.protocol.SvarogProtocol.Tag();
+      
+      @Override
+      protected org.signalml.multiplexer.protocol.SvarogProtocol.Tag internalGetResult() {
+        return result;
+      }
+      
+      @Override
+      public Builder clear() {
+        result = new org.signalml.multiplexer.protocol.SvarogProtocol.Tag();
+        return this;
+      }
+      
+      @Override
+      public Builder clone() {
+        return new Builder().mergeFrom(result);
+      }
+      
+      @Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return org.signalml.multiplexer.protocol.SvarogProtocol.Tag.getDescriptor();
+      }
+      
+      public org.signalml.multiplexer.protocol.SvarogProtocol.Tag getDefaultInstanceForType() {
+        return org.signalml.multiplexer.protocol.SvarogProtocol.Tag.getDefaultInstance();
+      }
+      
+      public org.signalml.multiplexer.protocol.SvarogProtocol.Tag build() {
+        if (result != null && !isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
+        }
+        return buildPartial();
+      }
+      
+      private org.signalml.multiplexer.protocol.SvarogProtocol.Tag buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public org.signalml.multiplexer.protocol.SvarogProtocol.Tag buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");  }
+        org.signalml.multiplexer.protocol.SvarogProtocol.Tag returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      @Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof org.signalml.multiplexer.protocol.SvarogProtocol.Tag) {
+          return mergeFrom((org.signalml.multiplexer.protocol.SvarogProtocol.Tag)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(org.signalml.multiplexer.protocol.SvarogProtocol.Tag other) {
+        if (other == org.signalml.multiplexer.protocol.SvarogProtocol.Tag.getDefaultInstance()) return this;
+        if (other.hasStartTimestamp()) {
+          setStartTimestamp(other.getStartTimestamp());
+        }
+        if (other.hasEndTimestamp()) {
+          setEndTimestamp(other.getEndTimestamp());
+        }
+        if (other.hasName()) {
+          setName(other.getName());
+        }
+        if (other.hasChannels()) {
+          setChannels(other.getChannels());
+        }
+        if (other.hasDesc()) {
+          mergeDesc(other.getDesc());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      @Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return mergeFrom(input,
+          com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
+      }
+      
+      @Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistry extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+            case 9: {
+              setStartTimestamp(input.readDouble());
+              break;
+            }
+            case 17: {
+              setEndTimestamp(input.readDouble());
+              break;
+            }
+            case 26: {
+              setName(input.readString());
+              break;
+            }
+            case 34: {
+              setChannels(input.readString());
+              break;
+            }
+            case 42: {
+              org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector.Builder subBuilder = org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector.newBuilder();
+              if (hasDesc()) {
+                subBuilder.mergeFrom(getDesc());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setDesc(subBuilder.buildPartial());
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // required double start_timestamp = 1;
+      public boolean hasStartTimestamp() {
+        return result.hasStartTimestamp();
+      }
+      public double getStartTimestamp() {
+        return result.getStartTimestamp();
+      }
+      public Builder setStartTimestamp(double value) {
+        result.hasStartTimestamp = true;
+        result.startTimestamp_ = value;
+        return this;
+      }
+      public Builder clearStartTimestamp() {
+        result.hasStartTimestamp = false;
+        result.startTimestamp_ = 0D;
+        return this;
+      }
+      
+      // required double end_timestamp = 2;
+      public boolean hasEndTimestamp() {
+        return result.hasEndTimestamp();
+      }
+      public double getEndTimestamp() {
+        return result.getEndTimestamp();
+      }
+      public Builder setEndTimestamp(double value) {
+        result.hasEndTimestamp = true;
+        result.endTimestamp_ = value;
+        return this;
+      }
+      public Builder clearEndTimestamp() {
+        result.hasEndTimestamp = false;
+        result.endTimestamp_ = 0D;
+        return this;
+      }
+      
+      // required string name = 3;
+      public boolean hasName() {
+        return result.hasName();
+      }
+      public java.lang.String getName() {
+        return result.getName();
+      }
+      public Builder setName(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasName = true;
+        result.name_ = value;
+        return this;
+      }
+      public Builder clearName() {
+        result.hasName = false;
+        result.name_ = "";
+        return this;
+      }
+      
+      // required string channels = 4;
+      public boolean hasChannels() {
+        return result.hasChannels();
+      }
+      public java.lang.String getChannels() {
+        return result.getChannels();
+      }
+      public Builder setChannels(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasChannels = true;
+        result.channels_ = value;
+        return this;
+      }
+      public Builder clearChannels() {
+        result.hasChannels = false;
+        result.channels_ = "";
+        return this;
+      }
+      
+      // optional .variables.VariableVector desc = 5;
+      public boolean hasDesc() {
+        return result.hasDesc();
+      }
+      public org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector getDesc() {
+        return result.getDesc();
+      }
+      public Builder setDesc(org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.hasDesc = true;
+        result.desc_ = value;
+        return this;
+      }
+      public Builder setDesc(org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector.Builder builderForValue) {
+        result.hasDesc = true;
+        result.desc_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeDesc(org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector value) {
+        if (result.hasDesc() &&
+            result.desc_ != org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector.getDefaultInstance()) {
+          result.desc_ =
+            org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector.newBuilder(result.desc_).mergeFrom(value).buildPartial();
+        } else {
+          result.desc_ = value;
+        }
+        result.hasDesc = true;
+        return this;
+      }
+      public Builder clearDesc() {
+        result.hasDesc = false;
+        result.desc_ = org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector.getDefaultInstance();
+        return this;
+      }
+    }
+    
+    static {
+      org.signalml.multiplexer.protocol.SvarogProtocol.getDescriptor();
+    }
   }
   
   public static final class TagVector extends
-	  com.google.protobuf.GeneratedMessage {
-	// Use TagVector.newBuilder() to construct.
-	private TagVector() {}
-	
-	private static final TagVector defaultInstance = new TagVector();
-	public static TagVector getDefaultInstance() {
-	  return defaultInstance;
-	}
-	
-	public TagVector getDefaultInstanceForType() {
-	  return defaultInstance;
-	}
-	
-	public static final com.google.protobuf.Descriptors.Descriptor
-		getDescriptor() {
-	  return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_TagVector_descriptor;
-	}
-	
-	@Override
-	protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-		internalGetFieldAccessorTable() {
-	  return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_TagVector_fieldAccessorTable;
-	}
-	
-	// repeated .variables.Tag tags = 1;
-	private java.util.List<org.signalml.multiplexer.protocol.SvarogProtocol.Tag> tags_ =
-	  java.util.Collections.emptyList();
-	public java.util.List<org.signalml.multiplexer.protocol.SvarogProtocol.Tag> getTagsList() {
-	  return tags_;
-	}
-	public int getTagsCount() { return tags_.size(); }
-	public org.signalml.multiplexer.protocol.SvarogProtocol.Tag getTags(int index) {
-	  return tags_.get(index);
-	}
-	
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.TagVector parseFrom(
-		com.google.protobuf.ByteString data)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.TagVector parseFrom(
-		com.google.protobuf.ByteString data,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data, extensionRegistry)
-			   .buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.TagVector parseFrom(byte[] data)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.TagVector parseFrom(
-		byte[] data,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws com.google.protobuf.InvalidProtocolBufferException {
-	  return newBuilder().mergeFrom(data, extensionRegistry)
-			   .buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.TagVector parseFrom(java.io.InputStream input)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.TagVector parseFrom(
-		java.io.InputStream input,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input, extensionRegistry)
-			   .buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.TagVector parseFrom(
-		com.google.protobuf.CodedInputStream input)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input).buildParsed();
-	}
-	public static org.signalml.multiplexer.protocol.SvarogProtocol.TagVector parseFrom(
-		com.google.protobuf.CodedInputStream input,
-		com.google.protobuf.ExtensionRegistry extensionRegistry)
-		throws java.io.IOException {
-	  return newBuilder().mergeFrom(input, extensionRegistry)
-			   .buildParsed();
-	}
-	
-	public static Builder newBuilder() { return new Builder(); }
-	public Builder newBuilderForType() { return new Builder(); }
-	public static Builder newBuilder(org.signalml.multiplexer.protocol.SvarogProtocol.TagVector prototype) {
-	  return new Builder().mergeFrom(prototype);
-	}
-	
-	public static final class Builder extends
-		com.google.protobuf.GeneratedMessage.Builder<Builder> {
-	  // Construct using org.signalml.multiplexer.protocol.SvarogProtocol.TagVector.newBuilder()
-	  private Builder() {}
-	  
-	  org.signalml.multiplexer.protocol.SvarogProtocol.TagVector result = new org.signalml.multiplexer.protocol.SvarogProtocol.TagVector();
-	  
-	  @Override
-	  protected org.signalml.multiplexer.protocol.SvarogProtocol.TagVector internalGetResult() {
-		return result;
-	  }
-	  
-	  @Override
-	  public Builder clear() {
-		result = new org.signalml.multiplexer.protocol.SvarogProtocol.TagVector();
-		return this;
-	  }
-	  
-	  @Override
-	  public Builder clone() {
-		return new Builder().mergeFrom(result);
-	  }
-	  
-	  @Override
-	  public com.google.protobuf.Descriptors.Descriptor
-		  getDescriptorForType() {
-		return org.signalml.multiplexer.protocol.SvarogProtocol.TagVector.getDescriptor();
-	  }
-	  
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.TagVector getDefaultInstanceForType() {
-		return org.signalml.multiplexer.protocol.SvarogProtocol.TagVector.getDefaultInstance();
-	  }
-	  
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.TagVector build() {
-		if (!isInitialized()) {
-		  throw new com.google.protobuf.UninitializedMessageException(
-			result);
-		}
-		return buildPartial();
-	  }
-	  
-	  private org.signalml.multiplexer.protocol.SvarogProtocol.TagVector buildParsed()
-		  throws com.google.protobuf.InvalidProtocolBufferException {
-		if (!isInitialized()) {
-		  throw new com.google.protobuf.UninitializedMessageException(
-			result).asInvalidProtocolBufferException();
-		}
-		return buildPartial();
-	  }
-	  
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.TagVector buildPartial() {
-		if (result.tags_ != java.util.Collections.EMPTY_LIST) {
-		  result.tags_ =
-			java.util.Collections.unmodifiableList(result.tags_);
-		}
-		org.signalml.multiplexer.protocol.SvarogProtocol.TagVector returnMe = result;
-		result = null;
-		return returnMe;
-	  }
-	  
-	  
-	  // repeated .variables.Tag tags = 1;
-	  public java.util.List<org.signalml.multiplexer.protocol.SvarogProtocol.Tag> getTagsList() {
-		return java.util.Collections.unmodifiableList(result.tags_);
-	  }
-	  public int getTagsCount() {
-		return result.getTagsCount();
-	  }
-	  public org.signalml.multiplexer.protocol.SvarogProtocol.Tag getTags(int index) {
-		return result.getTags(index);
-	  }
-	  public Builder setTags(int index, org.signalml.multiplexer.protocol.SvarogProtocol.Tag value) {
-		result.tags_.set(index, value);
-		return this;
-	  }
-	  public Builder setTags(int index, org.signalml.multiplexer.protocol.SvarogProtocol.Tag.Builder builderForValue) {
-		result.tags_.set(index, builderForValue.build());
-		return this;
-	  }
-	  public Builder addTags(org.signalml.multiplexer.protocol.SvarogProtocol.Tag value) {
-		if (result.tags_.isEmpty()) {
-		  result.tags_ = new java.util.ArrayList<org.signalml.multiplexer.protocol.SvarogProtocol.Tag>();
-		}
-		result.tags_.add(value);
-		return this;
-	  }
-	  public Builder addTags(org.signalml.multiplexer.protocol.SvarogProtocol.Tag.Builder builderForValue) {
-		if (result.tags_.isEmpty()) {
-		  result.tags_ = new java.util.ArrayList<org.signalml.multiplexer.protocol.SvarogProtocol.Tag>();
-		}
-		result.tags_.add(builderForValue.build());
-		return this;
-	  }
-	  public Builder addAllTags(
-		  java.lang.Iterable<? extends org.signalml.multiplexer.protocol.SvarogProtocol.Tag> values) {
-		if (result.tags_.isEmpty()) {
-		  result.tags_ = new java.util.ArrayList<org.signalml.multiplexer.protocol.SvarogProtocol.Tag>();
-		}
-		super.addAll(values, result.tags_);
-		return this;
-	  }
-	  public Builder clearTags() {
-		result.tags_ = java.util.Collections.emptyList();
-		return this;
-	  }
-	}
-	
-	static {
-	  org.signalml.multiplexer.protocol.SvarogProtocol.getDescriptor();
-	}
-
-	@Override
-	public com.google.protobuf.Message.Builder toBuilder() {
-		return null;
-	}
+      com.google.protobuf.GeneratedMessage {
+    // Use TagVector.newBuilder() to construct.
+    private TagVector() {}
+    
+    private static final TagVector defaultInstance = new TagVector();
+    public static TagVector getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public TagVector getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_TagVector_descriptor;
+    }
+    
+    @Override
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return org.signalml.multiplexer.protocol.SvarogProtocol.internal_static_variables_TagVector_fieldAccessorTable;
+    }
+    
+    // repeated .variables.Tag tags = 1;
+    public static final int TAGS_FIELD_NUMBER = 1;
+    private java.util.List<org.signalml.multiplexer.protocol.SvarogProtocol.Tag> tags_ =
+      java.util.Collections.emptyList();
+    public java.util.List<org.signalml.multiplexer.protocol.SvarogProtocol.Tag> getTagsList() {
+      return tags_;
+    }
+    public int getTagsCount() { return tags_.size(); }
+    public org.signalml.multiplexer.protocol.SvarogProtocol.Tag getTags(int index) {
+      return tags_.get(index);
+    }
+    
+    @Override
+    public final boolean isInitialized() {
+      for (org.signalml.multiplexer.protocol.SvarogProtocol.Tag element : getTagsList()) {
+        if (!element.isInitialized()) return false;
+      }
+      return true;
+    }
+    
+    @Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      for (org.signalml.multiplexer.protocol.SvarogProtocol.Tag element : getTagsList()) {
+        output.writeMessage(1, element);
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    @Override
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      for (org.signalml.multiplexer.protocol.SvarogProtocol.Tag element : getTagsList()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, element);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.TagVector parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.TagVector parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.TagVector parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.TagVector parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.TagVector parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.TagVector parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.TagVector parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.TagVector parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.TagVector parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static org.signalml.multiplexer.protocol.SvarogProtocol.TagVector parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
+    public static Builder newBuilder(org.signalml.multiplexer.protocol.SvarogProtocol.TagVector prototype) {
+      return new Builder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      // Construct using org.signalml.multiplexer.protocol.SvarogProtocol.TagVector.newBuilder()
+      private Builder() {}
+      
+      org.signalml.multiplexer.protocol.SvarogProtocol.TagVector result = new org.signalml.multiplexer.protocol.SvarogProtocol.TagVector();
+      
+      @Override
+      protected org.signalml.multiplexer.protocol.SvarogProtocol.TagVector internalGetResult() {
+        return result;
+      }
+      
+      @Override
+      public Builder clear() {
+        result = new org.signalml.multiplexer.protocol.SvarogProtocol.TagVector();
+        return this;
+      }
+      
+      @Override
+      public Builder clone() {
+        return new Builder().mergeFrom(result);
+      }
+      
+      @Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return org.signalml.multiplexer.protocol.SvarogProtocol.TagVector.getDescriptor();
+      }
+      
+      public org.signalml.multiplexer.protocol.SvarogProtocol.TagVector getDefaultInstanceForType() {
+        return org.signalml.multiplexer.protocol.SvarogProtocol.TagVector.getDefaultInstance();
+      }
+      
+      public org.signalml.multiplexer.protocol.SvarogProtocol.TagVector build() {
+        if (result != null && !isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
+        }
+        return buildPartial();
+      }
+      
+      private org.signalml.multiplexer.protocol.SvarogProtocol.TagVector buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public org.signalml.multiplexer.protocol.SvarogProtocol.TagVector buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");  }
+        if (result.tags_ != java.util.Collections.EMPTY_LIST) {
+          result.tags_ =
+            java.util.Collections.unmodifiableList(result.tags_);
+        }
+        org.signalml.multiplexer.protocol.SvarogProtocol.TagVector returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      @Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof org.signalml.multiplexer.protocol.SvarogProtocol.TagVector) {
+          return mergeFrom((org.signalml.multiplexer.protocol.SvarogProtocol.TagVector)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(org.signalml.multiplexer.protocol.SvarogProtocol.TagVector other) {
+        if (other == org.signalml.multiplexer.protocol.SvarogProtocol.TagVector.getDefaultInstance()) return this;
+        if (!other.tags_.isEmpty()) {
+          if (result.tags_.isEmpty()) {
+            result.tags_ = new java.util.ArrayList<org.signalml.multiplexer.protocol.SvarogProtocol.Tag>();
+          }
+          result.tags_.addAll(other.tags_);
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      @Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return mergeFrom(input,
+          com.google.protobuf.ExtensionRegistry.getEmptyRegistry());
+      }
+      
+      @Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistry extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+            case 10: {
+              org.signalml.multiplexer.protocol.SvarogProtocol.Tag.Builder subBuilder = org.signalml.multiplexer.protocol.SvarogProtocol.Tag.newBuilder();
+              input.readMessage(subBuilder, extensionRegistry);
+              addTags(subBuilder.buildPartial());
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // repeated .variables.Tag tags = 1;
+      public java.util.List<org.signalml.multiplexer.protocol.SvarogProtocol.Tag> getTagsList() {
+        return java.util.Collections.unmodifiableList(result.tags_);
+      }
+      public int getTagsCount() {
+        return result.getTagsCount();
+      }
+      public org.signalml.multiplexer.protocol.SvarogProtocol.Tag getTags(int index) {
+        return result.getTags(index);
+      }
+      public Builder setTags(int index, org.signalml.multiplexer.protocol.SvarogProtocol.Tag value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.tags_.set(index, value);
+        return this;
+      }
+      public Builder setTags(int index, org.signalml.multiplexer.protocol.SvarogProtocol.Tag.Builder builderForValue) {
+        result.tags_.set(index, builderForValue.build());
+        return this;
+      }
+      public Builder addTags(org.signalml.multiplexer.protocol.SvarogProtocol.Tag value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        if (result.tags_.isEmpty()) {
+          result.tags_ = new java.util.ArrayList<org.signalml.multiplexer.protocol.SvarogProtocol.Tag>();
+        }
+        result.tags_.add(value);
+        return this;
+      }
+      public Builder addTags(org.signalml.multiplexer.protocol.SvarogProtocol.Tag.Builder builderForValue) {
+        if (result.tags_.isEmpty()) {
+          result.tags_ = new java.util.ArrayList<org.signalml.multiplexer.protocol.SvarogProtocol.Tag>();
+        }
+        result.tags_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addAllTags(
+          java.lang.Iterable<? extends org.signalml.multiplexer.protocol.SvarogProtocol.Tag> values) {
+        if (result.tags_.isEmpty()) {
+          result.tags_ = new java.util.ArrayList<org.signalml.multiplexer.protocol.SvarogProtocol.Tag>();
+        }
+        super.addAll(values, result.tags_);
+        return this;
+      }
+      public Builder clearTags() {
+        result.tags_ = java.util.Collections.emptyList();
+        return this;
+      }
+    }
+    
+    static {
+      org.signalml.multiplexer.protocol.SvarogProtocol.getDescriptor();
+    }
   }
   
   private static com.google.protobuf.Descriptors.Descriptor
-	internal_static_variables_Variable_descriptor;
+    internal_static_variables_Variable_descriptor;
   private static
-	com.google.protobuf.GeneratedMessage.FieldAccessorTable
-	  internal_static_variables_Variable_fieldAccessorTable;
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_variables_Variable_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-	internal_static_variables_VariableVector_descriptor;
+    internal_static_variables_VariableVector_descriptor;
   private static
-	com.google.protobuf.GeneratedMessage.FieldAccessorTable
-	  internal_static_variables_VariableVector_fieldAccessorTable;
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_variables_VariableVector_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-	internal_static_variables_Blink_descriptor;
+    internal_static_variables_Blink_descriptor;
   private static
-	com.google.protobuf.GeneratedMessage.FieldAccessorTable
-	  internal_static_variables_Blink_fieldAccessorTable;
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_variables_Blink_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-	internal_static_variables_BlinkVector_descriptor;
+    internal_static_variables_BlinkVector_descriptor;
   private static
-	com.google.protobuf.GeneratedMessage.FieldAccessorTable
-	  internal_static_variables_BlinkVector_fieldAccessorTable;
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_variables_BlinkVector_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-	internal_static_variables_Sample_descriptor;
+    internal_static_variables_Sample_descriptor;
   private static
-	com.google.protobuf.GeneratedMessage.FieldAccessorTable
-	  internal_static_variables_Sample_fieldAccessorTable;
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_variables_Sample_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-	internal_static_variables_SampleVector_descriptor;
+    internal_static_variables_SampleVector_descriptor;
   private static
-	com.google.protobuf.GeneratedMessage.FieldAccessorTable
-	  internal_static_variables_SampleVector_fieldAccessorTable;
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_variables_SampleVector_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-	internal_static_variables_Decision_descriptor;
+    internal_static_variables_Decision_descriptor;
   private static
-	com.google.protobuf.GeneratedMessage.FieldAccessorTable
-	  internal_static_variables_Decision_fieldAccessorTable;
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_variables_Decision_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-	internal_static_variables_UgmUpdate_descriptor;
+    internal_static_variables_UgmUpdate_descriptor;
   private static
-	com.google.protobuf.GeneratedMessage.FieldAccessorTable
-	  internal_static_variables_UgmUpdate_fieldAccessorTable;
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_variables_UgmUpdate_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-	internal_static_variables_Tag_descriptor;
+    internal_static_variables_Tag_descriptor;
   private static
-	com.google.protobuf.GeneratedMessage.FieldAccessorTable
-	  internal_static_variables_Tag_fieldAccessorTable;
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_variables_Tag_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-	internal_static_variables_TagVector_descriptor;
+    internal_static_variables_TagVector_descriptor;
   private static
-	com.google.protobuf.GeneratedMessage.FieldAccessorTable
-	  internal_static_variables_TagVector_fieldAccessorTable;
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_variables_TagVector_fieldAccessorTable;
   
   public static com.google.protobuf.Descriptors.FileDescriptor
-	  getDescriptor() {
-	return descriptor;
+      getDescriptor() {
+    return descriptor;
   }
   private static com.google.protobuf.Descriptors.FileDescriptor
-	  descriptor;
+      descriptor;
   static {
-	java.lang.String descriptorData =
-	  "\n\017variables.proto\022\tvariables\032\021Multiplexe" +
-	  "r.proto\"&\n\010Variable\022\013\n\003key\030\001 \002(\t\022\r\n\005valu" +
-	  "e\030\002 \002(\t\"8\n\016VariableVector\022&\n\tvariables\030\001" +
-	  " \003(\0132\023.variables.Variable\")\n\005Blink\022\r\n\005in" +
-	  "dex\030\001 \002(\005\022\021\n\ttimestamp\030\002 \002(\001\"/\n\013BlinkVec" +
-	  "tor\022 \n\006blinks\030\001 \003(\0132\020.variables.Blink\"*\n" +
-	  "\006Sample\022\r\n\005value\030\001 \002(\001\022\021\n\ttimestamp\030\002 \002(" +
-	  "\001\"2\n\014SampleVector\022\"\n\007samples\030\001 \003(\0132\021.var" +
-	  "iables.Sample\"*\n\010Decision\022\020\n\010decision\030\001 " +
-	  "\002(\005\022\014\n\004type\030\002 \001(\005\"(\n\tUgmUpdate\022\014\n\004type\030\001" +
-	  " \002(\005\022\r\n\005value\030\002 \002(\t\"~\n\003Tag\022\027\n\017start_time" +
-	  "stamp\030\001 \002(\001\022\025\n\rend_timestamp\030\002 \002(\001\022\014\n\004na" +
-	  "me\030\003 \002(\t\022\020\n\010channels\030\004 \002(\t\022\'\n\004desc\030\005 \002(\013" +
-	  "2\031.variables.VariableVector\")\n\tTagVector" +
-	  "\022\034\n\004tags\030\001 \003(\0132\016.variables.TagB3\n!org.si" +
-	  "gnalml.multiplexer.protocolB\016SvarogProto" +
-	  "col";
-	com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-	  new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
-		public com.google.protobuf.ExtensionRegistry assignDescriptors(
-			com.google.protobuf.Descriptors.FileDescriptor root) {
-		  descriptor = root;
-		  internal_static_variables_Variable_descriptor =
-			getDescriptor().getMessageTypes().get(0);
-		  internal_static_variables_Variable_fieldAccessorTable = new
-			com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-			  internal_static_variables_Variable_descriptor,
-			  new java.lang.String[] { "Key", "Value", },
-			  org.signalml.multiplexer.protocol.SvarogProtocol.Variable.class,
-			  org.signalml.multiplexer.protocol.SvarogProtocol.Variable.Builder.class);
-		  internal_static_variables_VariableVector_descriptor =
-			getDescriptor().getMessageTypes().get(1);
-		  internal_static_variables_VariableVector_fieldAccessorTable = new
-			com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-			  internal_static_variables_VariableVector_descriptor,
-			  new java.lang.String[] { "Variables", },
-			  org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector.class,
-			  org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector.Builder.class);
-		  internal_static_variables_Blink_descriptor =
-			getDescriptor().getMessageTypes().get(2);
-		  internal_static_variables_Blink_fieldAccessorTable = new
-			com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-			  internal_static_variables_Blink_descriptor,
-			  new java.lang.String[] { "Index", "Timestamp", },
-			  org.signalml.multiplexer.protocol.SvarogProtocol.Blink.class,
-			  org.signalml.multiplexer.protocol.SvarogProtocol.Blink.Builder.class);
-		  internal_static_variables_BlinkVector_descriptor =
-			getDescriptor().getMessageTypes().get(3);
-		  internal_static_variables_BlinkVector_fieldAccessorTable = new
-			com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-			  internal_static_variables_BlinkVector_descriptor,
-			  new java.lang.String[] { "Blinks", },
-			  org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector.class,
-			  org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector.Builder.class);
-		  internal_static_variables_Sample_descriptor =
-			getDescriptor().getMessageTypes().get(4);
-		  internal_static_variables_Sample_fieldAccessorTable = new
-			com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-			  internal_static_variables_Sample_descriptor,
-			  new java.lang.String[] { "Value", "Timestamp", },
-			  org.signalml.multiplexer.protocol.SvarogProtocol.Sample.class,
-			  org.signalml.multiplexer.protocol.SvarogProtocol.Sample.Builder.class);
-		  internal_static_variables_SampleVector_descriptor =
-			getDescriptor().getMessageTypes().get(5);
-		  internal_static_variables_SampleVector_fieldAccessorTable = new
-			com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-			  internal_static_variables_SampleVector_descriptor,
-			  new java.lang.String[] { "Samples", },
-			  org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector.class,
-			  org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector.Builder.class);
-		  internal_static_variables_Decision_descriptor =
-			getDescriptor().getMessageTypes().get(6);
-		  internal_static_variables_Decision_fieldAccessorTable = new
-			com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-			  internal_static_variables_Decision_descriptor,
-			  new java.lang.String[] { "Decision", "Type", },
-			  org.signalml.multiplexer.protocol.SvarogProtocol.Decision.class,
-			  org.signalml.multiplexer.protocol.SvarogProtocol.Decision.Builder.class);
-		  internal_static_variables_UgmUpdate_descriptor =
-			getDescriptor().getMessageTypes().get(7);
-		  internal_static_variables_UgmUpdate_fieldAccessorTable = new
-			com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-			  internal_static_variables_UgmUpdate_descriptor,
-			  new java.lang.String[] { "Type", "Value", },
-			  org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate.class,
-			  org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate.Builder.class);
-		  internal_static_variables_Tag_descriptor =
-			getDescriptor().getMessageTypes().get(8);
-		  internal_static_variables_Tag_fieldAccessorTable = new
-			com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-			  internal_static_variables_Tag_descriptor,
-			  new java.lang.String[] { "StartTimestamp", "EndTimestamp", "Name", "Channels", "Desc", },
-			  org.signalml.multiplexer.protocol.SvarogProtocol.Tag.class,
-			  org.signalml.multiplexer.protocol.SvarogProtocol.Tag.Builder.class);
-		  internal_static_variables_TagVector_descriptor =
-			getDescriptor().getMessageTypes().get(9);
-		  internal_static_variables_TagVector_fieldAccessorTable = new
-			com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-			  internal_static_variables_TagVector_descriptor,
-			  new java.lang.String[] { "Tags", },
-			  org.signalml.multiplexer.protocol.SvarogProtocol.TagVector.class,
-			  org.signalml.multiplexer.protocol.SvarogProtocol.TagVector.Builder.class);
-		  return null;
-		}
-	  };
-	com.google.protobuf.Descriptors.FileDescriptor
-	  .internalBuildGeneratedFileFrom(descriptorData,
-		new com.google.protobuf.Descriptors.FileDescriptor[] {
-		  multiplexer.protocol.Protocol.getDescriptor(),
-		}, assigner);
+    java.lang.String descriptorData =
+      "\n\017variables.proto\022\tvariables\"&\n\010Variable" +
+      "\022\013\n\003key\030\001 \002(\t\022\r\n\005value\030\002 \002(\t\"8\n\016Variable" +
+      "Vector\022&\n\tvariables\030\001 \003(\0132\023.variables.Va" +
+      "riable\")\n\005Blink\022\r\n\005index\030\001 \002(\005\022\021\n\ttimest" +
+      "amp\030\002 \002(\001\"/\n\013BlinkVector\022 \n\006blinks\030\001 \003(\013" +
+      "2\020.variables.Blink\"*\n\006Sample\022\r\n\005value\030\001 " +
+      "\002(\001\022\021\n\ttimestamp\030\002 \002(\001\"2\n\014SampleVector\022\"" +
+      "\n\007samples\030\001 \003(\0132\021.variables.Sample\"*\n\010De" +
+      "cision\022\020\n\010decision\030\001 \002(\005\022\014\n\004type\030\002 \001(\005\"(" +
+      "\n\tUgmUpdate\022\014\n\004type\030\001 \002(\005\022\r\n\005value\030\002 \002(\t" +
+      "\"~\n\003Tag\022\027\n\017start_timestamp\030\001 \002(\001\022\025\n\rend_" +
+      "timestamp\030\002 \002(\001\022\014\n\004name\030\003 \002(\t\022\020\n\010channel" +
+      "s\030\004 \002(\t\022\'\n\004desc\030\005 \001(\0132\031.variables.Variab" +
+      "leVector\")\n\tTagVector\022\034\n\004tags\030\001 \003(\0132\016.va" +
+      "riables.Tag";
+    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
+      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
+        public com.google.protobuf.ExtensionRegistry assignDescriptors(
+            com.google.protobuf.Descriptors.FileDescriptor root) {
+          descriptor = root;
+          internal_static_variables_Variable_descriptor =
+            getDescriptor().getMessageTypes().get(0);
+          internal_static_variables_Variable_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_variables_Variable_descriptor,
+              new java.lang.String[] { "Key", "Value", },
+              org.signalml.multiplexer.protocol.SvarogProtocol.Variable.class,
+              org.signalml.multiplexer.protocol.SvarogProtocol.Variable.Builder.class);
+          internal_static_variables_VariableVector_descriptor =
+            getDescriptor().getMessageTypes().get(1);
+          internal_static_variables_VariableVector_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_variables_VariableVector_descriptor,
+              new java.lang.String[] { "Variables", },
+              org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector.class,
+              org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector.Builder.class);
+          internal_static_variables_Blink_descriptor =
+            getDescriptor().getMessageTypes().get(2);
+          internal_static_variables_Blink_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_variables_Blink_descriptor,
+              new java.lang.String[] { "Index", "Timestamp", },
+              org.signalml.multiplexer.protocol.SvarogProtocol.Blink.class,
+              org.signalml.multiplexer.protocol.SvarogProtocol.Blink.Builder.class);
+          internal_static_variables_BlinkVector_descriptor =
+            getDescriptor().getMessageTypes().get(3);
+          internal_static_variables_BlinkVector_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_variables_BlinkVector_descriptor,
+              new java.lang.String[] { "Blinks", },
+              org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector.class,
+              org.signalml.multiplexer.protocol.SvarogProtocol.BlinkVector.Builder.class);
+          internal_static_variables_Sample_descriptor =
+            getDescriptor().getMessageTypes().get(4);
+          internal_static_variables_Sample_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_variables_Sample_descriptor,
+              new java.lang.String[] { "Value", "Timestamp", },
+              org.signalml.multiplexer.protocol.SvarogProtocol.Sample.class,
+              org.signalml.multiplexer.protocol.SvarogProtocol.Sample.Builder.class);
+          internal_static_variables_SampleVector_descriptor =
+            getDescriptor().getMessageTypes().get(5);
+          internal_static_variables_SampleVector_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_variables_SampleVector_descriptor,
+              new java.lang.String[] { "Samples", },
+              org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector.class,
+              org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector.Builder.class);
+          internal_static_variables_Decision_descriptor =
+            getDescriptor().getMessageTypes().get(6);
+          internal_static_variables_Decision_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_variables_Decision_descriptor,
+              new java.lang.String[] { "Decision", "Type", },
+              org.signalml.multiplexer.protocol.SvarogProtocol.Decision.class,
+              org.signalml.multiplexer.protocol.SvarogProtocol.Decision.Builder.class);
+          internal_static_variables_UgmUpdate_descriptor =
+            getDescriptor().getMessageTypes().get(7);
+          internal_static_variables_UgmUpdate_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_variables_UgmUpdate_descriptor,
+              new java.lang.String[] { "Type", "Value", },
+              org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate.class,
+              org.signalml.multiplexer.protocol.SvarogProtocol.UgmUpdate.Builder.class);
+          internal_static_variables_Tag_descriptor =
+            getDescriptor().getMessageTypes().get(8);
+          internal_static_variables_Tag_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_variables_Tag_descriptor,
+              new java.lang.String[] { "StartTimestamp", "EndTimestamp", "Name", "Channels", "Desc", },
+              org.signalml.multiplexer.protocol.SvarogProtocol.Tag.class,
+              org.signalml.multiplexer.protocol.SvarogProtocol.Tag.Builder.class);
+          internal_static_variables_TagVector_descriptor =
+            getDescriptor().getMessageTypes().get(9);
+          internal_static_variables_TagVector_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_variables_TagVector_descriptor,
+              new java.lang.String[] { "Tags", },
+              org.signalml.multiplexer.protocol.SvarogProtocol.TagVector.class,
+              org.signalml.multiplexer.protocol.SvarogProtocol.TagVector.Builder.class);
+          return null;
+        }
+      };
+    com.google.protobuf.Descriptors.FileDescriptor
+      .internalBuildGeneratedFileFrom(descriptorData,
+        new com.google.protobuf.Descriptors.FileDescriptor[] {
+        }, assigner);
   }
 }

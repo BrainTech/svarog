@@ -67,23 +67,7 @@ public class TagSelectionAction extends AbstractFocusableSignalMLAction<SignalPl
 		if (style == null) {
 			plot.eraseTagsFromSelection(tagDocument, selection);
 		} else {
-
-			if (selection.getType() == SignalSelectionType.CHANNEL && style.isMarker()) {
-
-				float centerPoint = selection.getCenterPosition();
-
-				float samplingFrequency = plot.getSamplingFrequency();
-
-				int sampleAtPoint = (int)(centerPoint * samplingFrequency);
-
-				float startPosition = sampleAtPoint / samplingFrequency;
-
-				selection = plot.getChannelSelection(startPosition, startPosition + 1/samplingFrequency, selection.getChannel());
-
-			}
-
 			plot.tagSelection(tagDocument, style, selection, false);
-
 		}
 
 	}

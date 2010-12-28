@@ -43,7 +43,7 @@ import com.thoughtworks.xstream.annotations.XStreamConverter;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-@XStreamAlias("annotations")
+@XStreamAlias("tagFile")
 @XStreamConverter(StyledTagSetConverter.class)
 public class StyledTagSet implements Serializable {
 
@@ -100,14 +100,14 @@ public class StyledTagSet implements Serializable {
         /**
          * Collection of all tagged selections.
          */
-	private TreeSet<Tag> tags;
+	protected TreeSet<Tag> tags;
 
         /**
          * Maximal length of a tagged selection in <i>tags</i>.
          * This is just an estimate - may be 10% more than the actual length
          * of the longest tag in the set.
          */
-	private float maxTagLength = 0;
+	protected double maxTagLength = 0;
 
         /**
          * list of tagged selections of signal pages
@@ -600,7 +600,7 @@ public class StyledTagSet implements Serializable {
          * @return set of tagged selections that may be between two
          * given positions.
          */
-	public SortedSet<Tag> getTagsBetween(float start, float end) {
+	public SortedSet<Tag> getTagsBetween(double start, double end) {
 		Tag startMarker = new Tag(null, start-maxTagLength, 0);
 		Tag endMarker = new Tag(null,end,Float.MAX_VALUE); // note that lengths matter, so that all tags starting at exactly end will be selected
 		return tags.subSet(startMarker, true, endMarker, true);
@@ -948,11 +948,11 @@ public class StyledTagSet implements Serializable {
 
 		// erase same type tags from selection
 
-		float selStart = selection.getPosition();
-		float selEnd = selStart + selection.getLength();
+		double selStart = selection.getPosition();
+		double selEnd = selStart + selection.getLength();
 		SortedSet<Tag> conflicts = getTagsBetween(selStart, selEnd);
-		float confStart;
-		float confEnd;
+		double confStart;
+		double confEnd;
 		Tag confTag;
 		Iterator<Tag> it = conflicts.iterator();
 		SignalSelectionType type = selection.getType();
@@ -990,12 +990,12 @@ public class StyledTagSet implements Serializable {
 
 		// remove conflicting tags
 
-		float selStart = tag.getPosition();
-		float selEnd = selStart + tag.getLength();
+		double selStart = tag.getPosition();
+		double selEnd = selStart + tag.getLength();
 		SortedSet<Tag> conflicts = getTagsBetween(selStart, selEnd);
 		TagStyle confStyle;
-		float confStart;
-		float confEnd;
+		double confStart;
+		double confEnd;
 		Tag confTag;
 		Iterator<Tag> it = conflicts.iterator();
 		SignalSelectionType type = tag.getStyle().getType();
@@ -1039,12 +1039,12 @@ public class StyledTagSet implements Serializable {
 
 		// split conflicting tags while merging same type tags
 
-		float selStart = tag.getPosition();
-		float selEnd = selStart + tag.getLength();
+		double selStart = tag.getPosition();
+		double selEnd = selStart + tag.getLength();
 		SortedSet<Tag> conflicts = getTagsBetween(selStart, selEnd);
 		TagStyle confStyle;
-		float confStart;
-		float confEnd;
+		double confStart;
+		double confEnd;
 		Tag confTag;
 		Iterator<Tag> it = conflicts.iterator();
 		SignalSelectionType type = tag.getStyle().getType();
@@ -1053,8 +1053,8 @@ public class StyledTagSet implements Serializable {
 		LinkedList<Tag> addedTags = new LinkedList<Tag>();
 		Tag addedTag;
 
-		float newSelStart = selStart;
-		float newSelEnd = selEnd;
+		double newSelStart = selStart;
+		double newSelEnd = selEnd;
 
 		while (it.hasNext()) {
 			confTag = it.next();
@@ -1140,16 +1140,16 @@ public class StyledTagSet implements Serializable {
 			return;
 		}
 
-		float selStart = tag.getPosition();
-		float selEnd = selStart + tag.getLength();
+		double selStart = tag.getPosition();
+		double selEnd = selStart + tag.getLength();
 
-		float newSelStart = selStart;
-		float newSelEnd = selEnd;
+		double newSelStart = selStart;
+		double newSelEnd = selEnd;
 
 		SortedSet<Tag> conflicts = getTagsBetween(selStart, selEnd);
 		TagStyle confStyle;
-		float confStart;
-		float confEnd;
+		double confStart;
+		double confEnd;
 		Tag confTag;
 		Iterator<Tag> it = conflicts.iterator();
 
@@ -1335,7 +1335,7 @@ public class StyledTagSet implements Serializable {
          * actual length of the longest tag in the set.
          * @return estimated maximal length of a tagged selection in <i>tags</i>.
          */
-	public float getMaxTagLength() {
+	public double getMaxTagLength() {
 		return maxTagLength;
 	}
 
@@ -1478,8 +1478,8 @@ public class StyledTagSet implements Serializable {
 		for (int i = listeners.length-2; i>=0; i-=2) {
 			if (listeners[i]==TagListener.class) {
 				if (e == null) {
-					float start;
-					float end;
+					double start;
+					double end;
 					if (oldTag != null) {
 						start = Math.min(tag.getPosition(), oldTag.getPosition());
 						end = Math.max(tag.getPosition()+tag.getLength(), oldTag.getPosition()+oldTag.getLength());
@@ -1636,7 +1636,7 @@ public class StyledTagSet implements Serializable {
          * Calculates the maximum length of a {@link Tag tagged selection}.
          */
 	private void calculateMaxTagLength() {
-		float maxTagLength = 0;
+		double maxTagLength = 0;
 		for (Tag tag : tags) {
 			if (maxTagLength < tag.getLength()) {
 				maxTagLength = tag.getLength();

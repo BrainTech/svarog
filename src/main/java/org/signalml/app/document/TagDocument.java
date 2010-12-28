@@ -15,6 +15,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import org.apache.log4j.Logger;
 
 import org.signalml.app.model.LabelledPropertyDescriptor;
 import org.signalml.app.util.XMLUtils;
@@ -60,6 +61,11 @@ import com.thoughtworks.xstream.io.xml.XmlFriendlyReplacer;
 public class TagDocument extends AbstractMutableFileDocument implements ExportedTagDocument {
 
 	/**
+         * Logger to save history of execution at
+         */
+	protected static final Logger logger = Logger.getLogger(TagDocument.class);
+
+	/**
 	 * the {@link StyledTagSet set} in which the {@link Tag tags} and
 	 * {@link TagStyle styles} are stored
 	 */
@@ -78,7 +84,7 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 	 * Empty constructor.
 	 * @throws SignalMLException never thrown (???)
 	 */
-	private TagDocument() throws SignalMLException {
+	public TagDocument() throws SignalMLException {
 	}
 
 	/**
@@ -188,7 +194,7 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 	}
 
 	@Override
-	protected void readDocument(InputStream is) {
+	public void readDocument(InputStream is) {
 		XStream streamer = getTagStreamer();
 		tagSet = (StyledTagSet) streamer.fromXML(is);
 	}
@@ -197,6 +203,11 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 	protected void writeDocument(OutputStream os) {
 
 		XStream streamer = getTagStreamer();
+		try {
+			XMLUtils.writeXMLHeader(os);
+		} catch (IOException ex) {
+			logger.error("Failed to save tag - i/o exception", ex);
+		}
 		streamer.toXML(tagSet, os);
 
 	}

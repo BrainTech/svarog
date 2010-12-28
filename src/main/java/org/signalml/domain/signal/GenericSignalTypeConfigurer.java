@@ -27,8 +27,7 @@ import org.signalml.domain.montage.SourceMontage;
  * @see RawMontageGenerator
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class GenericSignalTypeConfigurer extends AbstractSignalTypeConfigurer implements SignalTypeConfigurer {
-
+public class GenericSignalTypeConfigurer implements SignalTypeConfigurer {
 
         /**
          * the predefined {@link RawMontageGenerator raw montage generator}

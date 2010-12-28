@@ -115,4 +115,15 @@ public abstract class AbstractDocument implements Document {
 		pcSupport.removePropertyChangeListener(listener);
 	}
 
+	/**
+	 * Returns an array containing all {@link PropertyChangeListener
+	 * PropertyChangeListeners} added to this document.
+	 * @return an array containing all {@link PropertyChangeListener
+	 * PropertyChangeListeners}.
+	 */
+	@Override
+	public PropertyChangeListener[] getPropertyChangeListeners() {
+		return pcSupport.getPropertyChangeListeners();
+	}
+
 }

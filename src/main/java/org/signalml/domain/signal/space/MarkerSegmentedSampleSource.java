@@ -195,8 +195,8 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 	}
 
 	@Override
-	public float getSegmentTime(int segment) {
-		return ((float) offsets[segment]) / samplingFrequency;
+	public double getSegmentTime(int segment) {
+		return ((double) offsets[segment]) / samplingFrequency;
 	}
 
 	@Override

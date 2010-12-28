@@ -11,6 +11,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.prefs.Preferences;
 
+import javax.swing.Action;
 import javax.swing.Box;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
@@ -25,6 +26,7 @@ import multiplexer.jmx.client.JmxClient;
 import org.signalml.SignalMLOperationMode;
 import org.signalml.app.action.AbortAllTasksAction;
 import org.signalml.app.action.ApplyDefaultMontageAction;
+import org.signalml.app.action.CheckSignalAction;
 import org.signalml.app.action.CloseDocumentAction;
 import org.signalml.app.action.CloseTagAction;
 import org.signalml.app.action.CloseWindowAction;
@@ -34,6 +36,7 @@ import org.signalml.app.action.EditSignalParametersAction;
 import org.signalml.app.action.EditStoredMontagesAction;
 import org.signalml.app.action.EditTagDescriptionAction;
 import org.signalml.app.action.EditTagStylesAction;
+import org.signalml.app.action.EEGLabExportAction;
 import org.signalml.app.action.ExportBookAction;
 import org.signalml.app.action.ExportSignalAction;
 import org.signalml.app.action.ExportTagAction;
@@ -64,6 +67,8 @@ import org.signalml.app.action.UnavailableMethodAction;
 import org.signalml.app.action.ViewModeAction;
 import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.config.ApplicationConfiguration;
+import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
+import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.config.preset.BookFilterPresetManager;
 import org.signalml.app.config.preset.FFTSampleFilterPresetManager;
 import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
@@ -73,7 +78,6 @@ import org.signalml.app.document.DocumentDetector;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.DocumentManager;
 import org.signalml.app.document.MRUDRegistry;
-import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.iterate.IterationSetupDialog;
@@ -99,6 +103,7 @@ import org.signalml.app.view.dialog.ApplicationPreferencesDialog;
 import org.signalml.app.view.dialog.DynamicCompilationWarningDialog;
 import org.signalml.app.view.dialog.EditTagAnnotationDialog;
 import org.signalml.app.view.dialog.EditTagDescriptionDialog;
+import org.signalml.app.view.dialog.EEGLabExportDialog;
 import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.dialog.ExportSignalDialog;
 import org.signalml.app.view.dialog.HelpDialog;
@@ -112,6 +117,7 @@ import org.signalml.app.view.dialog.SignalParametersDialog;
 import org.signalml.app.view.dialog.SignalSelectionDialog;
 import org.signalml.app.view.dialog.TagStylePaletteDialog;
 import org.signalml.app.view.element.LockableJSplitPane;
+import org.signalml.app.view.monitor.CheckSignalDialog;
 import org.signalml.app.view.montage.EditFFTSampleFilterDialog;
 import org.signalml.app.view.montage.EditTimeDomainSampleFilterDialog;
 import org.signalml.app.view.montage.SignalMontageDialog;
@@ -120,6 +126,7 @@ import org.signalml.app.view.signal.popup.SlavePlotSettingsPopupDialog;
 import org.signalml.app.view.tag.comparison.TagComparisonDialog;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.compilation.DynamicCompilationContext;
+import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.method.Method;
 import org.signalml.method.iterator.IterableMethod;
 import org.signalml.plugin.export.SignalMLException;
@@ -131,6 +138,13 @@ import org.signalml.util.SvarogConstants;
 import org.springframework.context.support.MessageSourceAccessor;
 
 import com.thoughtworks.xstream.XStream;
+import org.signalml.app.action.ChooseActiveTagAction;
+import org.signalml.app.action.CompareTagsAction;
+import org.signalml.app.action.StartMonitorRecordingAction;
+import org.signalml.app.action.StopMonitorRecordingAction;
+import org.signalml.app.view.monitor.StartMonitorRecordingDialog;
+
+
 
 /** ViewerElementManager
  *
@@ -165,7 +179,18 @@ public class ViewerElementManager {
 	private BookFilterPresetManager bookFilterPresetManager;
 	private SignalExportPresetManager signalExportPresetManager;
 	private FFTSampleFilterPresetManager fftFilterPresetManager;
+
+	/**
+	 * A {@link PresetManager} managing the user-defined
+	 * {@link TimeDomainSampleFilter} presets.
+	 */
 	private TimeDomainSampleFilterPresetManager timeDomainSampleFilterPresetManager;
+
+	/**
+	 * A {@link PresetManager} managing the predefined
+	 * {@link TimeDomainSampleFilter TimeDomainSampleFilters}.
+	 */
+	private PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainFiltersPresetManager;
 
 	private MP5ExecutorManager mp5ExecutorManager;
 	private Preferences preferences;
@@ -221,6 +246,8 @@ public class ViewerElementManager {
 	private ViewerTabbedPane propertyTabbedPane;
 
 	/* Dialogs */
+        private EEGLabExportDialog eeglabExportDialog;
+        private CheckSignalDialog checkSignalDialog;
 	private ErrorsDialog errorsDialog;
 	private PleaseWaitDialog pleaseWaitDialog;
 	private SeriousWarningDialog seriousWarningDialog;
@@ -241,7 +268,17 @@ public class ViewerElementManager {
 	private IterationSetupDialog iterationSetupDialog;
 	private ExportSignalDialog exportSignalDialog;
 	private EditFFTSampleFilterDialog editFFTSampleFilterDialog;
+
+	/**
+	 * A dialog allowing to edit the {@link TimeDomainSampleFilter} parameters.
+	 */
 	private EditTimeDomainSampleFilterDialog editTimeDomainSampleFilterDialog;
+
+	/**
+	 * A dialog shown when the user wants to start a recording of a monitor
+	 * signal. Recording target files can be set using this dialog.
+	 */
+	private StartMonitorRecordingDialog startMonitorRecordingDialog;
 
 	private MP5LocalExecutorDialog mp5LocalExecutorDialog;
 	private MP5RemoteExecutorDialog mp5RemoteExecutorDialog;
@@ -250,6 +287,8 @@ public class ViewerElementManager {
 	private BookFilterDialog bookFilterDialog;
 
 	/* Actions */
+        private EEGLabExportAction eeglabExportAction;
+        private CheckSignalAction checkSignalAction;
 	private CloseWindowAction closeWindowAction;
 	private EditPreferencesAction editPreferencesAction;
 	private HelpContentsAction helpContentsAction;
@@ -271,6 +310,20 @@ public class ViewerElementManager {
 	private SaveTagAsAction saveTagAsAction;
 	private OpenTagAction importTagAction;
 	private ExportTagAction exportTagAction;
+
+	/**
+	 * Represents an {@link Action action} responsible for showing a dialog
+	 * allowing to select which tag document should be active (the one that
+	 * is being edited).
+	 */
+	private ChooseActiveTagAction chooseActiveTagAction;
+
+	/**
+	 * Represents an {@link Action action} responsible for showing a dialog
+	 * using which tag documents can be compared.
+	 */
+	private CompareTagsAction compareTagsAction;
+
 	private EditSignalParametersAction editSignalParametersAction;
 	private EditSignalMontageAction editSignalMontageAction;
 	private ApplyDefaultMontageAction applyDefaultMontageAction;
@@ -288,6 +341,18 @@ public class ViewerElementManager {
 	private RemoveAllAbortedTasksAction removeAllAbortedTasksAction;
 	private RemoveAllFailedTasksAction removeAllFailedTasksAction;
 
+	/**
+	 * Represents an {@link Action} invoked when the user wants to start
+	 * a monitor signal recording.
+	 */
+	private StartMonitorRecordingAction startMonitorRecordingAction;
+
+	/**
+	 * Represents an {@link Action} invoked when the user wants to stop
+	 * a monitor signal recording.
+	 */
+	private StopMonitorRecordingAction stopMonitorRecordingAction;
+
 	private ArrayList<AbstractSignalMLAction> runMethodActions;
 	private ArrayList<AbstractSignalMLAction> iterateMethodActions;
 
@@ -300,6 +365,17 @@ public class ViewerElementManager {
 	private JMenu fileMenu;
 	private JMenu editMenu;
 	private JMenu viewMenu;
+
+	/**
+	 * A {@link JMenu} for operating on a monitor signal.
+	 */
+	private JMenu monitorMenu;
+
+	/**
+	 * A {@link JMenu} for operations concerning tags.
+	 */
+	private JMenu tagsMenu;
+
 	private JMenu toolsMenu;
 	private JMenu helpMenu;
 
@@ -457,12 +533,44 @@ public class ViewerElementManager {
 		this.fftFilterPresetManager = fftFilterPresetManager;
 	}
 
+	/**
+	 * Returns a {@link TimeDomainSampleFilterPresetManager} used by this
+	 * ViewerElementManager.
+	 * @return a {@link TimeDomainSampleFilterPresetManager} used by this
+	 * ViewerElementManager
+	 */
 	public TimeDomainSampleFilterPresetManager getTimeDomainSampleFilterPresetManager() {
 		return timeDomainSampleFilterPresetManager;
 	}
 
+	/**
+	 * Sets a {@link TimeDomainSampleFilterPresetManager} to be used by this
+	 * ViewerElementManager.
+	 * @param timeDomainSampleFilterPresetManager a TimeDomainSampleFilterPresetManager
+	 * to be used
+	 */
 	public void setTimeDomainSampleFilterPresetManager(TimeDomainSampleFilterPresetManager timeDomainSampleFilterPresetManager) {
 		this.timeDomainSampleFilterPresetManager = timeDomainSampleFilterPresetManager;
+	}
+
+	/**
+	 * Returns a {@link PredefinedTimeDomainFiltersPresetManager} used
+	 * by this ViewerElementManager.
+	 * @return a {@link PredefinedTimeDomainFiltersPresetManager} used
+	 * by this ViewerElementManager
+	 */
+	public PredefinedTimeDomainFiltersPresetManager getPredefinedTimeDomainFiltersPresetManager() {
+		return predefinedTimeDomainFiltersPresetManager;
+	}
+
+	/**
+	 * Sets a {@link PredefinedTimeDomainFiltersPresetManager} to be used
+	 * by this ViewerElementManager
+	 * @param predefinedTimeDomainFiltersPresetManager
+	 * a {@link PredefinedTimeDomainFiltersPresetManager} to be used
+	 */
+	public void setPredefinedTimeDomainFiltersPresetManager(PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainFiltersPresetManager) {
+		this.predefinedTimeDomainFiltersPresetManager = predefinedTimeDomainFiltersPresetManager;
 	}
 
 	public MP5ExecutorManager getMp5ExecutorManager() {
@@ -572,13 +680,10 @@ public class ViewerElementManager {
 
 	public JMenu getFileMenu() {
 		if (fileMenu == null) {
-			JMenu importSubmenu = new JMenu(messageSource.getMessage("menu.import"));
-			importSubmenu.add(getImportTagAction());
-
 			JMenu exportSubmenu = new JMenu(messageSource.getMessage("menu.export"));
-			exportSubmenu.add(getExportTagAction());
 			exportSubmenu.add(getExportSignalAction());
 			exportSubmenu.add(getExportBookAction());
+                        exportSubmenu.add(getEEGLabExportAction());
 
 			fileMenu = new JMenu(messageSource.getMessage("menu.file"));
 
@@ -587,16 +692,9 @@ public class ViewerElementManager {
 			fileMenu.add(getSaveActiveDocumentAsAction());
 			fileMenu.add(getSaveAllDocumentsAction());
 			fileMenu.add(getCloseActiveDocumentAction());
+
 			fileMenu.addSeparator();
-			fileMenu.add(getOpenMonitorAction());
-			fileMenu.addSeparator();
-			fileMenu.add(getNewTagAction());
-			fileMenu.add(getOpenTagAction());
-			fileMenu.add(getSaveTagAction());
-			fileMenu.add(getSaveTagAsAction());
-			fileMenu.add(getCloseTagAction());
-			fileMenu.addSeparator();
-			fileMenu.add(importSubmenu);
+
 			fileMenu.add(exportSubmenu);
 
 			if (mode == SignalMLOperationMode.APPLICATION) {
@@ -616,9 +714,6 @@ public class ViewerElementManager {
 			editMenu.add(getEditSignalParametersAction());
 			editMenu.add(getEditSignalMontageAction());
 			editMenu.add(getApplyDefaultMontageAction());
-			editMenu.addSeparator();
-			editMenu.add(getEditTagStylesAction());
-			editMenu.add(getEditTagDescriptionAction());
 			editMenu.addSeparator();
 			if (mode == SignalMLOperationMode.APPLICATION) {
 				editMenu.add(getEditStoredMontagesAction());
@@ -642,6 +737,61 @@ public class ViewerElementManager {
 			viewMenu.add(new JCheckBoxMenuItem(getViewModeAction()));
 		}
 		return viewMenu;
+	}
+
+	/**
+	 * Returns the {@link JMenu} which holds the items responsible for
+	 * operating on monitors.
+	 * @return a {@link JMenu} for operating on monitor signals.
+	 */
+	public JMenu getMonitorMenu() {
+		if (monitorMenu == null) {
+			monitorMenu = new JMenu(messageSource.getMessage("menu.monitor"));
+			monitorMenu.add(getOpenMonitorAction());
+                        monitorMenu.add(getCheckSignalAction());
+			monitorMenu.addSeparator();
+			monitorMenu.add(getStartMonitorRecordingAction());
+			monitorMenu.add(getStopMonitorRecordingAction());
+		}
+		return monitorMenu;
+	}
+
+	/**
+	 * Returns the {@link JMenu} which holds the items responsible for
+	 * operating on tags.
+	 * @return a {@link JMenu} for items connected with operations on tags
+	 */
+	public JMenu getTagsMenu() {
+		if (tagsMenu == null) {
+
+			JMenu importSubmenu = new JMenu(messageSource.getMessage("menu.import"));
+			importSubmenu.add(getImportTagAction());
+
+			JMenu exportSubmenu = new JMenu(messageSource.getMessage("menu.export"));
+			exportSubmenu.add(getExportTagAction());
+
+			tagsMenu = new JMenu(messageSource.getMessage("menu.tags"));
+
+			tagsMenu.add(getNewTagAction());
+			tagsMenu.add(getOpenTagAction());
+			tagsMenu.add(getSaveTagAction());
+			tagsMenu.add(getSaveTagAsAction());
+			tagsMenu.add(getCloseTagAction());
+			tagsMenu.addSeparator();
+
+			tagsMenu.add(importSubmenu);
+			tagsMenu.add(exportSubmenu);
+			tagsMenu.addSeparator();
+
+			tagsMenu.add(getChooseActiveTagAction());
+			tagsMenu.add(getEditTagDescriptionAction());
+			tagsMenu.add(getEditTagStylesAction());
+			tagsMenu.addSeparator();
+
+			tagsMenu.add(getCompareTagsAction());
+
+		}
+		return tagsMenu;
 	}
 
 	public JMenu getToolsMenu() {
@@ -685,6 +835,8 @@ public class ViewerElementManager {
 			menuBar.add(getFileMenu());
 			menuBar.add(getEditMenu());
 			menuBar.add(getViewMenu());
+			menuBar.add(getMonitorMenu());
+			menuBar.add(getTagsMenu());
 			menuBar.add(getToolsMenu());
 			menuBar.add(getHelpMenu());
 		}
@@ -994,6 +1146,14 @@ public class ViewerElementManager {
 		return openMonitorDialog;
 	}
 
+        public CheckSignalDialog getCheckSignalDialog() {
+		if (checkSignalDialog == null) {
+			checkSignalDialog = new CheckSignalDialog(messageSource, getDialogParent(), true);
+		}
+		return checkSignalDialog;
+	}
+
+
 	public RegisterCodecDialog getRegisterCodecDialog() {
 		if (registerCodecDialog == null) {
 			registerCodecDialog = new RegisterCodecDialog(messageSource, getDialogParent(), true);
@@ -1012,7 +1172,8 @@ public class ViewerElementManager {
 
 	public SignalMontageDialog getSignalMontageDialog() {
 		if (signalMontageDialog == null) {
-			signalMontageDialog = new SignalMontageDialog(messageSource, getMontagePresetManager(), getDialogParent(), true);
+			signalMontageDialog = new SignalMontageDialog(messageSource, getMontagePresetManager(),
+				getPredefinedTimeDomainFiltersPresetManager(), getDialogParent(), true);
 			signalMontageDialog.setFileChooser(getFileChooser());
 			signalMontageDialog.setApplicationConfig(getApplicationConfig());
 			signalMontageDialog.setFftFilterPresetManager(getFftFilterPresetManager());
@@ -1100,6 +1261,13 @@ public class ViewerElementManager {
 		return exportSignalDialog;
 	}
 
+        public EEGLabExportDialog getEEGLabExportDialog() {
+                if (eeglabExportDialog == null) {
+                        eeglabExportDialog = new EEGLabExportDialog(messageSource, getDialogParent(), true);
+                }
+                return eeglabExportDialog;
+        }
+
 	public EditFFTSampleFilterDialog getEditFFTSampleFilterDialog() {
 		if (editFFTSampleFilterDialog == null) {
 			editFFTSampleFilterDialog = new EditFFTSampleFilterDialog(messageSource, getFftFilterPresetManager(), getDialogParent(), true);
@@ -1109,6 +1277,11 @@ public class ViewerElementManager {
 		return editFFTSampleFilterDialog;
 	}
 
+	/**
+	 * Returns a {@link EditTimeDomainSampleFilterDialog} used by this
+	 * ViewerElementManager.
+	 * @return the {@link EditTimeDomainSampleFilterDialog} used
+	 */
 	public EditTimeDomainSampleFilterDialog getEditTimeDomainSampleFilterDialog() {
 		if (editTimeDomainSampleFilterDialog == null) {
 			editTimeDomainSampleFilterDialog = new EditTimeDomainSampleFilterDialog(messageSource, getTimeDomainSampleFilterPresetManager(), getDialogParent(), true);
@@ -1116,6 +1289,18 @@ public class ViewerElementManager {
 			editTimeDomainSampleFilterDialog.setFileChooser(getFileChooser());
 		}
 		return editTimeDomainSampleFilterDialog;
+	}
+
+	/**
+	 * Returns a {@link StartMonitorRecordingDialog} used by this
+	 * ViewerElementManager.
+	 * @return the {@link StartMonitorRecordingDialog} used
+	 */
+	public StartMonitorRecordingDialog getStartMonitorRecordingDialog() {
+		if (startMonitorRecordingDialog == null) {
+			startMonitorRecordingDialog = new StartMonitorRecordingDialog(messageSource, getDialogParent(), true);
+		}
+		return startMonitorRecordingDialog;
 	}
 
 	public MP5LocalExecutorDialog getMp5LocalExecutorDialog() {
@@ -1247,6 +1432,41 @@ public class ViewerElementManager {
 		return openMonitorAction;
 	}
 
+        public CheckSignalAction getCheckSignalAction() {
+		if (checkSignalAction == null) {
+			checkSignalAction = new CheckSignalAction(messageSource, getActionFocusManager());
+			checkSignalAction.setCheckSignalDialog(getCheckSignalDialog());
+		}
+		return checkSignalAction;
+        }
+
+	/**
+	 * Returns an {@link Action} responsible for starting a new monitor
+	 * recording (it shows a dialog which allows to select recording target
+	 * files and starts the recording).
+	 * @return an {@link Action} responsible for starting a new monitor
+	 * recording
+	 */
+	public StartMonitorRecordingAction getStartMonitorRecordingAction() {
+		if (startMonitorRecordingAction == null) {
+			startMonitorRecordingAction = new StartMonitorRecordingAction(messageSource, getActionFocusManager());
+			startMonitorRecordingAction.setStartMonitorRecordingDialog(getStartMonitorRecordingDialog());
+		}
+		return startMonitorRecordingAction;
+	}
+
+	/**
+	 * Returns an {@link Action} responsible for stopping a monitor recording.
+	 * @return an {@link Action} responsible for stopping an  monitor
+	 * recording
+	 */
+	public StopMonitorRecordingAction getStopMonitorRecordingAction() {
+		if (stopMonitorRecordingAction == null)
+			stopMonitorRecordingAction = new StopMonitorRecordingAction(messageSource, getActionFocusManager());
+		return stopMonitorRecordingAction;
+	}
+
+
 	public CloseDocumentAction getCloseActiveDocumentAction() {
 		if (closeActiveDocumentAction == null) {
 			closeActiveDocumentAction = new CloseDocumentAction(messageSource, getActionFocusManager());
@@ -1330,6 +1550,34 @@ public class ViewerElementManager {
 			importTagAction.setOptionPaneParent(getOptionPaneParent());
 		}
 		return importTagAction;
+	}
+
+	/**
+	 * Returns an {@link Action} responsible for showing a dialog allowing
+	 * to select which tag document should be active (the one that is being
+	 * edited).
+	 * @return an {@link Action} responsible for showing a dialog for
+	 * selecting active tag document
+	 */
+	public ChooseActiveTagAction getChooseActiveTagAction() {
+		if (chooseActiveTagAction == null) {
+			chooseActiveTagAction = new ChooseActiveTagAction(messageSource, getActionFocusManager());
+		}
+		return chooseActiveTagAction;
+	}
+
+	/**
+	 * Returns an {@link Action} responsible for showing a dialog
+	 * using which tag documents can be compared.
+	 * @return an {@link Action} responsible for showing a dialog
+	 * which can be used to compare tags
+	 */
+	public CompareTagsAction getCompareTagsAction() {
+		if (compareTagsAction == null) {
+			compareTagsAction = new CompareTagsAction(messageSource, getActionFocusManager());
+			compareTagsAction.setTagComparisonDialog(getTagComparisonDialog());
+		}
+		return compareTagsAction;
 	}
 
 	public ExportTagAction getExportTagAction() {
@@ -1416,6 +1664,14 @@ public class ViewerElementManager {
 		}
 		return exportBookAction;
 	}
+
+        public EEGLabExportAction getEEGLabExportAction() {
+                if (eeglabExportAction == null) {
+                        eeglabExportAction = new EEGLabExportAction((messageSource), getActionFocusManager());
+                        eeglabExportAction.setEEGLabExportDialog(getEEGLabExportDialog());
+                }
+                return eeglabExportAction;
+        }
 
 	public AbortAllTasksAction getAbortAllTasksAction() {
 		if (abortAllTasksAction == null) {
@@ -1570,10 +1826,10 @@ public class ViewerElementManager {
 			signalView.setActionFocusManager(getActionFocusManager());
 			signalView.setSlavePlotSettingsPopupDialog(getSlavePlotSettingsPopupDialog());
 			signalView.setErrorsDialog(getErrorsDialog());
-			signalView.setTagComparisonDialog(getTagComparisonDialog());
 			signalView.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 			signalView.setMontagePresetManager(getMontagePresetManager());
 			signalView.setSignalMontageDialog(getSignalMontageDialog());
+			signalView.setStartMonitorRecordingDialog(getStartMonitorRecordingDialog());
 			signalView.setSignalParametersDialog(getSignalParametersDialog());
 			signalView.setSignalSelectionDialog(getSignalSelectionDialog());
 			signalView.setTagStylePaletteDialog(getTagStylePaletteDialog());
@@ -1581,23 +1837,6 @@ public class ViewerElementManager {
 			signalView.setFileChooser(getFileChooser());
 			signalView.setEditTagAnnotationDialog(getEditTagAnnotationDialog());
 			signalView.setEditTagDescriptionDialog(getEditTagDescriptionDialog());
-			signalView.setApplicationConfig(getApplicationConfig());
-			signalView.initialize();
-
-			documentView = signalView;
-
-		} else if (document instanceof MonitorSignalDocument) {
-
-			SignalView signalView;
-			signalView = new SignalView((SignalDocument) document);
-
-			signalView.setMessageSource(messageSource);
-			signalView.setActionFocusManager(getActionFocusManager());
-			signalView.setSlavePlotSettingsPopupDialog(getSlavePlotSettingsPopupDialog());
-			signalView.setErrorsDialog(getErrorsDialog());
-			signalView.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
-			signalView.setSignalParametersDialog(getSignalParametersDialog());
-			signalView.setSignalSelectionDialog(getSignalSelectionDialog());
 			signalView.setApplicationConfig(getApplicationConfig());
 			signalView.initialize();
 

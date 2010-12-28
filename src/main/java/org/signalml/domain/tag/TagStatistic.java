@@ -25,7 +25,7 @@ public class TagStatistic implements WriterExportableTable {
         /**
          * total length of all {@link Tag tagged selections}
          */
-	protected float totalLength;
+	protected double totalLength;
 
         /**
          * an array of {@link TagStyle styles} of {@link Tag tagged selections}
@@ -44,7 +44,7 @@ public class TagStatistic implements WriterExportableTable {
          * {@link #tagStyles <i>tagStyles</i> array}) holds the length
          * of all tagged selections of this type.
          */
-	protected float[] styleTimes;
+	protected double[] styleTimes;
 
         /**
          * Constructor. Creates an empty TagStatistic.
@@ -60,7 +60,7 @@ public class TagStatistic implements WriterExportableTable {
          * @param totalLength the total length of all
          * {@link Tag tagged selections}.
          */
-	protected void init(TagStyle[] tagStyles, float totalLength) {
+	protected void init(TagStyle[] tagStyles, double totalLength) {
 
 		this.tagStyles = tagStyles;
 		this.totalLength = totalLength;
@@ -71,7 +71,7 @@ public class TagStatistic implements WriterExportableTable {
 			styleIndices.put(tagStyles[i],i);
 		}
 
-		styleTimes = new float[tagStyles.length+1];
+		styleTimes = new double[tagStyles.length+1];
 
 	}
 
@@ -79,18 +79,18 @@ public class TagStatistic implements WriterExportableTable {
          * Constructor. Creates a TagStatistic object and initialises its
          * attributes using given values.
          * @param tagStyles an array of {@link TagStyle tag styles}
-         * @param totalLength the total length of all
+         * @param topTotalLength the total length of all
          * {@link Tag tagged selections}.
          */
-	public TagStatistic(TagStyle[] tagStyles, float totalLength) {
-		init(tagStyles, totalLength);
+	public TagStatistic(TagStyle[] tagStyles, double topTotalLength) {
+		init(tagStyles, topTotalLength);
 	}
 
         /**
          * Returns the total length of all {@link Tag tagged selections}.
          * @return the total length of all tagged selections
          */
-	public float getTotalLength() {
+	public double getTotalLength() {
 		return totalLength;
 	}
 
@@ -141,7 +141,7 @@ public class TagStatistic implements WriterExportableTable {
          * @param index the index of the style
          * @return the length of tagged selections of the given style
          */
-	public float getStyleTime(int index) {
+	public double getStyleTime(int index) {
 		return styleTimes[index+1];
 	}
 
@@ -151,7 +151,7 @@ public class TagStatistic implements WriterExportableTable {
          * @param index the index of the style
          * @param time the length of tagged selections to be set
          */
-	public void setStyleTime(int index, float time) {
+	public void setStyleTime(int index, double time) {
 		styleTimes[index+1] = time;
 	}
 
@@ -161,7 +161,7 @@ public class TagStatistic implements WriterExportableTable {
          * @param index the index of the style
          * @param time the length of tagged selections to be added
          */
-	public void addStyleTime(int index, float time) {
+	public void addStyleTime(int index, double time) {
 		styleTimes[index+1] += time;
 	}
 
@@ -171,7 +171,7 @@ public class TagStatistic implements WriterExportableTable {
          * @param style the tag style
          * @return the length of tagged selections of the given style
          */
-	public float getStyleTime(TagStyle style) {
+	public double getStyleTime(TagStyle style) {
 		if (style == null) {
 			return styleTimes[0];
 		}
@@ -188,7 +188,7 @@ public class TagStatistic implements WriterExportableTable {
          * @param style the tag style
          * @param time the length of tagged selections to be set
          */
-	public void setStyleTime(TagStyle style, float time) {
+	public void setStyleTime(TagStyle style, double time) {
 		if (style == null) {
 			styleTimes[0] = time;
 		}
@@ -206,7 +206,7 @@ public class TagStatistic implements WriterExportableTable {
          * @param style the tag style
          * @param time the length of tagged selections to be added
          */
-	public void addStyleTime(TagStyle style, float time) {
+	public void addStyleTime(TagStyle style, double time) {
 		if (style == null) {
 			styleTimes[0] += time;
 		}
@@ -231,21 +231,21 @@ public class TagStatistic implements WriterExportableTable {
 
 		writer.append("(none)");
 		writer.append(columnSeparator);
-		writer.append(Float.toString(styleTimes[0]));
+		writer.append(Double.toString(styleTimes[0]));
 		writer.append(columnSeparator);
-		writer.append(Float.toString(styleTimes[0]/totalLength));
+		writer.append(Double.toString(styleTimes[0]/totalLength));
 		writer.append(rowSeparator);
 
 		for (int i=0; i<tagStyles.length; i++) {
 
 			writer.append(tagStyles[i].getName());
 			writer.append(columnSeparator);
-			writer.append(Float.toString(styleTimes[i+1]));
+			writer.append(Double.toString(styleTimes[i+1]));
 			writer.append(columnSeparator);
 			if (totalLength == 0) {
 				writer.append("-");
 			} else {
-				writer.append(Float.toString(100*(styleTimes[i+1]/totalLength)));
+				writer.append(Double.toString(100*(styleTimes[i+1]/totalLength)));
 			}
 			writer.append(rowSeparator);
 

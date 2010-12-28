@@ -110,13 +110,25 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration {
 	private int mapAspectRatioDown = 1;
 
 	private int reconstructionHeight;
-	
+
+	/**
+	 * Default value for the multiplexer address. If the user changes
+	 * multiplexer address value in the Open monitor dialog, it can be
+	 * reset to defaults stored in this variable.
+	 */
+	private String defaultMultiplexerAddress = "3";
+
+	/**
+	 * Default value for the multiplexer port. If the user changes
+	 * multiplexer port value in the Open monitor dialog, it can be
+	 * reset to defaults stored in this variable.
+	 */
+	private int defaultMultiplexerPort = 4;
+
 	private String multiplexerAddress;
 	private int multiplexerPort;
 
 	private float  monitorPageSize;
-	
-	private String signalRecorderFileName;
 
 	public void applySystemSettings() {
 
@@ -700,6 +712,59 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration {
 		return multiplexerPort;
 	}
 
+	/**
+	 * Returns the default value of the multiplexer address.
+	 * @return a string containing default multiplexer address.
+	 */
+	public String getDefaultMultiplexerAddress() {
+		return defaultMultiplexerAddress;
+	}
+
+	/**
+	 * Sets the value of the defalut multiplexer address.
+	 * @param defaultMultiplexerAddress new value for default multiplexer
+	 * address.
+	 */
+	public void setDefaultMultiplexerAddress(String defaultMultiplexerAddress) {
+		this.defaultMultiplexerAddress = defaultMultiplexerAddress;
+	}
+
+	/**
+	 * Sets the value of the default multiplexer port.
+	 * @param defaultMultiplexerPort new value for default multiplexer port.
+	 */
+	public void setDefaultMultiplexerPort(int defaultMultiplexerPort) {
+		this.defaultMultiplexerPort = defaultMultiplexerPort;
+	}
+
+	/**
+	 * Returns the default value of the multiplexer port.
+	 * @return default multiplexer port number
+	 */
+	public int getDefaultMultiplexerPort() {
+		return defaultMultiplexerPort;
+	}
+
+	/**
+	 * Resets the current value of the multiplexer address to defaults.
+	 * This method can be useful when the user changes the current
+	 * multiplexer address in the Open monitor dialog and wants to get back
+	 * the default value.
+	 */
+	public void resetMultiplexerAddressToDefaults() {
+		this.multiplexerAddress = this.defaultMultiplexerAddress;
+	}
+
+	/**
+	 * Resets the current value of the multiplexer port to defaults.
+	 * This method can be useful when the user changes the current
+	 * multiplexer address in the Open monitor dialog and wants to get back
+	 * the default value.
+	 */
+	public void resetMultiplexerPortToDefaults() {
+		this.multiplexerPort = this.defaultMultiplexerPort;
+	}
+
 	public double getMonitorPageSize() {
 		return monitorPageSize;
 	}
@@ -708,11 +773,4 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration {
 		this.monitorPageSize = monitorPageSize;
 	}
 
-	public String getSignalRecorderFileName() {
-		return signalRecorderFileName;
-	}
-
-	public void setSignalRecorderFileName(String signalRecorderFileName) {
-		this.signalRecorderFileName = signalRecorderFileName;
-	}
 }

@@ -47,7 +47,7 @@ public class SleepComparison implements PropertyProvider {
 
 	private int styleCount;
 
-	private float segmentLength;
+	private double segmentLength;
 
 	private int segmentCount;
 
@@ -94,7 +94,7 @@ public class SleepComparison implements PropertyProvider {
 		Tag tag = null;
 		int index = 0;
 		TagStyle style = null;
-		float position = 0;
+		double position = 0;
 		int i;
 
 		SortedSet<Tag> tags = tagSet.getTags();
@@ -116,7 +116,7 @@ public class SleepComparison implements PropertyProvider {
 
 		styleOverlay = new int[styleCount][styleCount+1];
 
-		float expectedTime;
+		double expectedTime;
 		Integer idx;
 
 		segmentLength = statistic.getSegmentLength();
@@ -276,7 +276,7 @@ public class SleepComparison implements PropertyProvider {
 		return segmentCount;
 	}
 
-	public float getSegmentLength() {
+	public double getSegmentLength() {
 		return segmentLength;
 	}
 
