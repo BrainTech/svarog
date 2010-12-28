@@ -376,8 +376,7 @@ public class SignalFFTPlot extends JComponent {
 	public void setFocusPoint(Point focusPoint) {
 		if (!Util.equalsWithNulls(this.focusPoint, focusPoint)) {
 			this.focusPoint = focusPoint;
-			calculated = false;
-			repaint();
+			recalculateAndRepaint();
 		}
 	}
 
@@ -388,8 +387,7 @@ public class SignalFFTPlot extends JComponent {
 	public void setChannel(int channel) {
 		if (this.channel != channel) {
 			this.channel = channel;
-			calculated = false;
-			repaint();
+			recalculateAndRepaint();
 		}
 	}
 
@@ -400,8 +398,7 @@ public class SignalFFTPlot extends JComponent {
 	public void setPlot(SignalPlot plot) {
 		if (this.plot != plot) {
 			this.plot = plot;
-			calculated = false;
-			repaint();
+			recalculateAndRepaint();
 		}
 	}
 
@@ -409,14 +406,31 @@ public class SignalFFTPlot extends JComponent {
 		this.plot = plot;
 		this.focusPoint = focusPoint;
 		this.channel = channel;
-		calculated = false;
-		repaint();
+		recalculateAndRepaint();
 	}
 
 	public void setParameters(Point focusPoint, int channel) {
 		this.focusPoint = focusPoint;
 		this.channel = channel;
+		recalculateAndRepaint();
+	}
+
+	/**
+	 * Recalculates and repaints this FFT plot. This method is useful
+	 * when the parameters for which the plot was drawn have changed and
+	 * because of that the plot should be redrawn.
+	 */
+	public void recalculateAndRepaint() {
 		calculated = false;
+		repaint();
+	}
+
+	/**
+	 * Recalculates, revalidates and repaints this FFT plot.
+	 */
+	protected void recalculateRevalidateAndRepaint() {
+		calculated = false;
+		revalidate();
 		repaint();
 	}
 
@@ -430,9 +444,7 @@ public class SignalFFTPlot extends JComponent {
 		}
 		if (!plotSize.equals(this.plotSize)) {
 			this.plotSize = plotSize;
-			calculated = false;
-			revalidate();
-			repaint();
+			recalculateRevalidateAndRepaint();
 		}
 	}
 
@@ -443,8 +455,7 @@ public class SignalFFTPlot extends JComponent {
 	public void setWindowWidth(int windowWidth) {
 		if (this.windowWidth != windowWidth) {
 			this.windowWidth = windowWidth;
-			calculated = false;
-			repaint();
+			recalculateAndRepaint();
 		}
 	}
 
@@ -455,8 +466,7 @@ public class SignalFFTPlot extends JComponent {
 	public void setWindowType(WindowType windowType) {
 		if (this.windowType != windowType) {
 			this.windowType = windowType;
-			calculated = false;
-			repaint();
+			recalculateAndRepaint();
 		}
 	}
 
@@ -467,8 +477,7 @@ public class SignalFFTPlot extends JComponent {
 	public void setWindowParameter(double windowParameter) {
 		if (this.windowParameter != windowParameter) {
 			this.windowParameter = windowParameter;
-			calculated = false;
-			repaint();
+			recalculateAndRepaint();
 		}
 	}
 
@@ -479,8 +488,7 @@ public class SignalFFTPlot extends JComponent {
 	public void setLogarithmic(boolean logarithmic) {
 		if (this.logarithmic != logarithmic) {
 			this.logarithmic = logarithmic;
-			calculated = false;
-			repaint();
+			recalculateAndRepaint();
 		}
 	}
 
@@ -491,8 +499,7 @@ public class SignalFFTPlot extends JComponent {
 	public void setSpline(boolean spline) {
 		if (this.spline != spline) {
 			this.spline = spline;
-			calculated = false;
-			repaint();
+			recalculateAndRepaint();
 		}
 	}
 
@@ -503,8 +510,7 @@ public class SignalFFTPlot extends JComponent {
 	public void setAntialias(boolean antialias) {
 		if (this.antialias != antialias) {
 			this.antialias = antialias;
-			calculated = false;
-			repaint();
+			recalculateAndRepaint();
 		}
 	}
 
@@ -515,8 +521,7 @@ public class SignalFFTPlot extends JComponent {
 	public void setTitleVisible(boolean titleVisible) {
 		if (this.titleVisible != titleVisible) {
 			this.titleVisible = titleVisible;
-			calculated = false;
-			repaint();
+			recalculateAndRepaint();
 		}
 	}
 
@@ -527,8 +532,7 @@ public class SignalFFTPlot extends JComponent {
 	public void setFrequencyAxisLabelsVisible(boolean frequencyAxisLabelsVisible) {
 		if (this.frequencyAxisLabelsVisible != frequencyAxisLabelsVisible) {
 			this.frequencyAxisLabelsVisible = frequencyAxisLabelsVisible;
-			calculated = false;
-			repaint();
+			recalculateAndRepaint();
 		}
 	}
 
@@ -539,8 +543,7 @@ public class SignalFFTPlot extends JComponent {
 	public void setPowerAxisLabelsVisible(boolean powerAxisLabelsVisible) {
 		if (this.powerAxisLabelsVisible != powerAxisLabelsVisible) {
 			this.powerAxisLabelsVisible = powerAxisLabelsVisible;
-			calculated = false;
-			repaint();
+			recalculateAndRepaint();
 		}
 	}
 
@@ -556,9 +559,7 @@ public class SignalFFTPlot extends JComponent {
 		titleVisible = settings.isTitleVisible();
 		frequencyAxisLabelsVisible = settings.isFrequencyAxisLabelsVisible();
 		powerAxisLabelsVisible = settings.isPowerAxisLabelsVisible();
-		calculated = false;
-		revalidate();
-		repaint();
+		recalculateRevalidateAndRepaint();
 	}
 
 

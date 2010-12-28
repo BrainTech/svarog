@@ -11,9 +11,11 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JLayeredPane;
 import javax.swing.SwingUtilities;
+import org.apache.log4j.Logger;
 
 import org.signalml.app.config.SignalFFTSettings;
 import org.signalml.app.util.IconUtils;
+import org.signalml.domain.signal.ChangeableMultichannelSampleSource;
 import org.signalml.plugin.export.signal.AbstractSignalTool;
 
 /** SignalFFTTool
@@ -23,10 +25,32 @@ import org.signalml.plugin.export.signal.AbstractSignalTool;
  */
 public class SignalFFTTool extends AbstractSignalTool {
 
+	/**
+	 * logger to save history of execution at
+	 */
+	protected static final Logger logger = Logger.getLogger(SignalFFTTool.class);
+
+	/**
+	 * The number of milliseconds between each FFT plot recalculations.
+	 * Describes how often the FFT plot is recalculated and redrawn.
+	 */
+	protected static final int fftRefreshingPeriod = 1000;
+
 	private SignalPlot plot;
 	private SignalFFTPlot fftPlot;
 
 	private SignalFFTSettings settings;
+
+	/**
+	 * True if the FFT refreshing thread is running, false otherwise.
+	 */
+	private boolean fftRefreshingThreadRunning = false;
+
+	/**
+	 * The thread which recalculates and redraws the FFT plot once in
+	 * a {@link SignalFFTTool#fftRefreshingPeriod}.
+	 */
+	private FFTRefreshingThread fftRefreshingThread;
 
 	public SignalFFTTool(SignalView signalView) {
 		super(signalView);
@@ -68,6 +92,8 @@ public class SignalFFTTool extends AbstractSignalTool {
 			setEngaged(true);
 			e.consume();
 
+			if (getSignalView().getActiveSignalDocument().getSampleSource() instanceof ChangeableMultichannelSampleSource)
+				startFFTRefreshing();
 		}
 
 	}
@@ -75,6 +101,7 @@ public class SignalFFTTool extends AbstractSignalTool {
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		if (SwingUtilities.isLeftMouseButton(e)) {
+			stopFFTRefreshing();
 			hideFFT();
 			setEngaged(false);
 			plot = null;
@@ -167,6 +194,48 @@ public class SignalFFTTool extends AbstractSignalTool {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Begins to refresh FFT plot once in a {@link SignalFFTTool#fftRefreshingPeriod}.
+	 * Refreshing happens until {@link SignalFFTTool#stopFFTRefreshing()}
+	 * method is called.
+	 */
+	private void startFFTRefreshing() {
+		fftRefreshingThreadRunning = true;
+		if (fftRefreshingThread == null || !fftRefreshingThread.isAlive()) {
+			fftRefreshingThread = new FFTRefreshingThread();
+			fftRefreshingThread.start();
+		}
+	}
+
+	/**
+	 * Stops the refreshing of the FFT plot.
+	 */
+	private void stopFFTRefreshing() {
+		fftRefreshingThreadRunning = false;
+	}
+
+	/**
+	 * A {@link Thread} which performs the operation of recalculating
+	 * and redrawing the FFT plot at a distincts periods of time
+	 * (specified by the {@link SignalFFTTool#fftRefreshingPeriod}).
+	 */
+	private class FFTRefreshingThread extends Thread {
+
+		@Override
+		public void run() {
+			while (fftRefreshingThreadRunning) {
+				logger.debug("FFT plot was recalculated.");
+				fftPlot.recalculateAndRepaint();
+				try {
+					Thread.sleep(fftRefreshingPeriod);
+				} catch (InterruptedException ex) {
+					logger.error("InterruptedException occurred in the FFTRefreshingThread in the FignalFFTTool.");
+				}
+			}
+		}
+
 	}
 
 }
