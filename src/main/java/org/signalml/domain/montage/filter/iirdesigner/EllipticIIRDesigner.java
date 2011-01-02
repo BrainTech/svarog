@@ -275,7 +275,7 @@ class EllipticIIRDesigner extends AbstractIIRDesigner {
 		int filterOrder = (int)(Math.ceil(d0[0] * d1[1] / (d0[1] * d1[0])));
 
 		if (filterOrder == 0)
-			throw new BadFilterParametersException("Filter order is zero - check input parameters!");
+			throw new BadFilterParametersException("Filter order is zero - check the input parameters!");
 
 		return filterOrder;
 

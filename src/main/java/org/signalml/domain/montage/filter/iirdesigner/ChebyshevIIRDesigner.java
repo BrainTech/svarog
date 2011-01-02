@@ -25,7 +25,7 @@ abstract class ChebyshevIIRDesigner extends AbstractIIRDesigner {
 	 * @return the order of filter
 	 */
 	@Override
-	protected int calculateFilterOrder(FilterType type, double[] wp, double[] ws, double gpass, double gstop, boolean analog) {
+	protected int calculateFilterOrder(FilterType type, double[] wp, double[] ws, double gpass, double gstop, boolean analog) throws BadFilterParametersException {
 
 		double[] passb;
 		double[] stopb;
@@ -46,7 +46,7 @@ abstract class ChebyshevIIRDesigner extends AbstractIIRDesigner {
 		int filterOrder = (int)(Math.ceil(Fmath.acosh(Math.sqrt((GSTOP - 1.0) / (GPASS - 1.0))) / Fmath.acosh(frequencyRatio)));
 
 		if (filterOrder == 0)
-			throw new IllegalArgumentException("Filter order is zero - check input parameters!");
+			throw new BadFilterParametersException("Filter order is zero - check the input parameters!");
 
 		return filterOrder;
 

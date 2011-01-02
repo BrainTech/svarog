@@ -244,6 +244,33 @@ public class TimeDomainSampleFilterEngineTest {
 	}
 
 	/**
+	 * Test method for {@link org.signalml.domain.signal.TimeDomainSampleFilterEngine#getSamples(double[], int, int, int)}.
+	 * Uses a filter that applies gain to a signal.
+	 */
+	@Test
+	public void testGetSamplesWithGain() {
+
+		coefficients = new FilterCoefficients(new double[] {0.7},
+		                                      new double[] {1.0} );
+		engine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source, 0), coefficients);
+
+		double[] target1 = new double[TEST_SAMPLE_COUNT];
+		double[] target2 = new double[TEST_SAMPLE_COUNT];
+
+		int i;
+
+		for (i = 0; i < TEST_SAMPLE_COUNT; i++)
+			source.addSamples(new double[] {Math.random()});
+
+		source.getSamples(0, target1, 0, TEST_SAMPLE_COUNT, 0);
+		engine.updateCache(source.getSampleCount(0));
+		engine.getSamples(target2, 0, TEST_SAMPLE_COUNT, 0);
+		for (i = 0; i < TEST_SAMPLE_COUNT; i++)
+			assertEquals(0.7 * target1[i], target2[i], 0.00001);
+
+	}
+
+	/**
 	* Test method for {@link org.signalml.domain.signal.TimeDomainSampleFilterEngine#getSamples(double[], int, int, int)}.
 	* Uses high pass filter to filter out a constant from the signal and pass only high
 	* frequency component.

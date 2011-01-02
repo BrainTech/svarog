@@ -6,6 +6,7 @@ package org.signalml.domain.montage.filter.iirdesigner;
 
 import flanagan.math.Minimisation;
 import flanagan.math.MinimisationFunction;
+import org.apache.log4j.Logger;
 
 /**
  * This class contains methods for performing specialistic mathematical operations
@@ -14,6 +15,11 @@ import flanagan.math.MinimisationFunction;
  * @author Piotr Szachewicz
  */
 class SpecialMath {
+
+	/**
+	 * Logger to save history of execution at.
+	 */
+	protected static final Logger logger = Logger.getLogger(SpecialMath.class);
 
 	/**
 	 * the machine epsilon for the type double - the largest positive value that,
@@ -107,8 +113,10 @@ class SpecialMath {
 			return evaluatePolynomial(m,P) - Math.log(m)*evaluatePolynomial(m,Q);
 		else
 		{
-			if (m  ==  0.0)
-				throw new IllegalArgumentException("Error - cannot calculate elliptic integer");
+			if (m  ==  0.0) {
+				logger.warn("Singular argument for the complete elliptic integral of the first kind (m=0)!");
+				return Double.MAX_VALUE;
+			}
 			else
 				return C1 - 0.5 * Math.log(m);
 		}

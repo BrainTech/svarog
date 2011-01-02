@@ -20,6 +20,13 @@ abstract class AbstractIIRDesigner {
 	protected static final Complex imaginaryUnit = new Complex(0, 1); //imaginary unit
 
 	/**
+	 * Maximum filter order which can be designed using this designer.
+	 * If a user wants to design a filter with a higher order,
+	 * a {@link FilterOrderTooBigException} is thrown.
+	 */
+	protected static final int maximumFilterOrder = 8;
+
+	/**
 	 * Pre-warps the frequencies for digital filter design.
 	 *
 	 * @param frequencies frequencies to be pre-warped
@@ -133,7 +140,7 @@ abstract class AbstractIIRDesigner {
 	protected FilterCoefficients designFilter(FilterType type, double[] passb, double[] stopb, double gpass, double gstop, boolean analog) throws BadFilterParametersException {
 
 		int filterOrder = calculateFilterOrder(type, passb, stopb, gpass, gstop, analog);
-		if (filterOrder > 8)
+		if (filterOrder > maximumFilterOrder)
 			throw new FilterOrderTooBigException("The order of the filter is too big - the parameters are too strict.");
 		double[] naturalFrequencies = calculateNaturalFrequency(type, filterOrder, passb, stopb, gpass, gstop, analog);
 		return designFilter(type, filterOrder, naturalFrequencies, gpass, gstop, analog);
