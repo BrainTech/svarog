@@ -51,7 +51,7 @@
 
 	<entry key="pleaseWait">Please wait...</entry>
 	<entry key="pressAnyKey">Press a key...</entry>
-	
+
 	<entry key="document">Document [{0}]</entry>
 	<entry key="signalDocument">{0}</entry>
 	<entry key="bookDocument">{0}</entry>
@@ -127,7 +127,7 @@
 	<entry key="sampleType.FLOAT">Float (32-bit IEEE 754)</entry>
 	<entry key="sampleType.INT">Integer (32-bit)</entry>
 	<entry key="sampleType.SHORT">Short (16-bit)</entry>
-	
+
 	<entry key="byteOrder.LITTLE_ENDIAN">Little endian</entry>
 	<entry key="byteOrder.BIG_ENDIAN">Big endian</entry>
 
@@ -215,10 +215,10 @@
 	<entry key="viewer.taskTable.status">Status</entry>
 	<entry key="viewer.taskTable.progress">Progress</entry>
 	<entry key="viewer.taskTable.message">Message</entry>
-	
+
 	<entry key="viewer.taskTable.allTasks">All tasks</entry>
-	
-	<entry key="toolTipText.displayFieldHelp">Display context help for this field</entry>	
+
+	<entry key="toolTipText.displayFieldHelp">Display context help for this field</entry>
 
 	<entry key="filechooser.consoleSaveAsText.title">Choose text file to save</entry>
 	<entry key="filechooser.tableSaveAsText.title">Choose text file to save</entry>
@@ -258,7 +258,7 @@
 	<entry key="filechooser.filter.configFiles">Config files (*.cfg)</entry>
 	<entry key="filechooser.filter.jarFiles">Jar files (*.jar)</entry>
 	<entry key="filechooser.filter.codeFiles">Code files (*.java, *.class)</entry>
-	
+
 	<entry key="workspaceTree.root">Workspace</entry>
 	<entry key="workspaceTree.openDocuments">Open documents</entry>
 	<entry key="workspaceTree.recentDocuments">Recent documents</entry>
@@ -282,13 +282,13 @@
 	<entry key="markerWithChannel">{0} [{1} in channel {2}]</entry>
 
 	<entry key="tagStyleTree.root">Tags</entry>
-	
+
 	<entry key="bookTree.root">Books</entry>
 
 	<entry key="bookTree.segment">Segment {0} [{2} -> {3}]</entry>
 	<entry key="bookTree.channel">Channel {0} [{1}]</entry>
 	<entry key="bookTree.atom">Atom {0} @ ({1}/{2}) [mod: {3}]</entry>
-	
+
 	<entry key="action.closeWindow">Exit</entry>
 	<entry key="action.closeWindowToolTip">Close the window and exit the aplication</entry>
 	<entry key="action.helpContents">Contents...</entry>
@@ -307,6 +307,14 @@
 	<entry key="action.openMonitorLabel">Open monitor...</entry>
 	<entry key="action.openMonitorToolTip">Open monitor and connect to multiplexer</entry>
 
+	<entry key="action.checkSignalLabel">Check signal...</entry>
+	<entry key="action.checkSignalToolTip">Check if signal is OK</entry>
+
+	<entry key="action.startMonitorRecordingLabel">Start monitor recording</entry>
+	<entry key="action.startMonitorRecordingToolTip">Record signal and tags from this monitor to a file</entry>
+	<entry key="action.stopMonitorRecordingLabel">Stop monitor recording</entry>
+	<entry key="action.stopMonitorRecordingToolTip">Stop to record signal and tags to a file</entry>
+
 	<entry key="action.connectMultiplexer.actionName">Connect</entry>
 	<entry key="action.cancelConnectMultiplexer.actionName">Cancel</entry>
 	<entry key="action.disconnectMultiplexer.actionName">Disconnect</entry>
@@ -315,6 +323,7 @@
 	<entry key="action.connectingMultiplexer.connectionFailedMsg">Connection failed!</entry>
 	<entry key="action.connectingMultiplexer.connectionTimeoutMsg">Connection timeout!</entry>
 	<entry key="action.connectingMultiplexer.connectionOkMsg">Connection OK!</entry>
+	<entry key="action.resetToDefaults.actionName">Reset to defaults</entry>
 
 	<entry key="action.openMonitor.testMultiplexerConnectionLabel">Test connection</entry>
 	<entry key="action.openMonitor.testMultiplexerConnectionToolTip">Test connection to multiplexer</entry>
@@ -334,11 +343,6 @@
 	<entry key="action.openMonitor.metadataWorker.channelCount.receivedBadReplyMsg">Received bad reply!</entry>
 	<entry key="action.openMonitor.metadataWorker.channelCount.receiveTimedout">Receive timed out!</entry>
 	<entry key="action.openMonitor.metadataWorker.channelCount.receivingFailedMsg">Receiving failed!</entry>
-
-	<entry key="action.openMonitor.metadataWorker.amplifierChannels.sendingFailedMsg">Sending failed!</entry>
-	<entry key="action.openMonitor.metadataWorker.amplifierChannels.receivedBadReplyMsg">Received bad reply!</entry>
-	<entry key="action.openMonitor.metadataWorker.amplifierChannels.receiveTimedout">Receive timed out!</entry>
-	<entry key="action.openMonitor.metadataWorker.amplifierChannels.receivingFailedMsg">Receiving failed!</entry>
 
 	<entry key="action.openMonitor.metadataWorker.channelNames.sendingFailedMsg">Sending failed!</entry>
 	<entry key="action.openMonitor.metadataWorker.channelNames.receivedBadReplyMsg">Received bad reply!</entry>
@@ -390,6 +394,8 @@
 	<entry key="action.closeTagToolTip">Close active tag</entry>
 	<entry key="action.removeTag">Remove tag</entry>
 	<entry key="action.removeTagToolTip">Remove selected tag</entry>
+	<entry key="action.chooseActiveTag">Choose active tag</entry>
+	<entry key="action.chooseActiveTagToolTip">Change active tag (the tag that is being edited)</entry>
 	<entry key="action.openMRUD">Open</entry>
 	<entry key="action.openMRUDToolTip">Open recently used document</entry>
 	<entry key="action.activateDocument">Show</entry>
@@ -410,6 +416,8 @@
 	<entry key="action.exportSignalToolTip">Export signal to simple binary format</entry>
 	<entry key="action.exportBook">Export Book...</entry>
 	<entry key="action.exportBookToolTip">Export book to file</entry>
+	<entry key="action.exportEEGLab">Export to EEGLab...</entry>
+	<entry key="action.exportEEGLabToolTip">Export signal in EEGLab format</entry>
 
 	<entry key="action.signalParameters">Signal parameters</entry>
 	<entry key="action.signalParametersToolTip">Change signal parameters</entry>
@@ -427,9 +435,10 @@
 	<entry key="action.editTagAnnotationToolTip">Edit tag annotation (Ctrl-A)</entry>
 	<entry key="action.editTagDescription">Edit tag description</entry>
 	<entry key="action.editTagDescriptionToolTip">Edit tag description</entry>
-
 	<entry key="action.editTagStyles">Tag styles</entry>
 	<entry key="action.editTagStylesToolTip">Edit tag styles</entry>
+	<entry key="action.compareTags">Compare tags</entry>
+	<entry key="action.compareTagsToolTip">Compare tags (2 or more must be open)</entry>
 
 	<entry key="action.showAllTagStyles">Show all</entry>
 	<entry key="action.showAllTagStylesToolTip">Show all styles</entry>
@@ -462,7 +471,7 @@
 	<entry key="action.removeAllAbortedTasksToolTip">Remove all aborted tasks</entry>
 	<entry key="action.removeAllFailedTasks">Remove all failed tasks</entry>
 	<entry key="action.removeAllFailedTasksToolTip">Remove all failed tasks</entry>
-		
+
 	<entry key="action.exportTableToClipboard">Copy to clipboard</entry>
 	<entry key="action.exportTableToClipboardToolTip">Copy contents to clipboard</entry>
 	<entry key="action.exportTableToFile">Save to file</entry>
@@ -490,7 +499,7 @@
 
 	<entry key="action.exportSamplesToFloatFile">Save all samples as float file</entry>
 	<entry key="action.exportSamplesToFloatFileToolTip">Save all samples as a float file</entry>
-		
+
 	<entry key="action.unavailableMethod">Unavailable method</entry>
 	<entry key="action.runMethod">Run method {0}</entry>
 	<entry key="action.iterateMethod">Iterate method {0}</entry>
@@ -512,67 +521,77 @@
 	<entry key="action.util.selectNone">Select none</entry>
 	<entry key="action.util.selectInvert">Invert</entry>
 
-	<entry key="menu.file">File</entry>	
-	<entry key="menu.import">Import</entry>	
-	<entry key="menu.export">Export</entry>	
+	<entry key="menu.file">File</entry>
+	<entry key="menu.import">Import</entry>
+	<entry key="menu.export">Export</entry>
 	<entry key="menu.help">Help</entry>
 	<entry key="menu.edit">Edit</entry>
 	<entry key="menu.tools">Tools</entry>
 	<entry key="menu.tools.iterate">Iterate</entry>
 	<entry key="menu.view">View</entry>
+	<entry key="menu.monitor">Monitor</entry>
+	<entry key="menu.tags">Tags</entry>
 
-	<entry key="seriousWarning.title">WARNING! Are you sure?</entry>			
-	<entry key="seriousWarning.warning">WARNING! You are about to perform an irreversible operation.</entry>			
-	<entry key="seriousWarning.doItTimeout">Please reconsider... ({0})</entry>			
-	<entry key="seriousWarning.doIt">I am completely sure! Do it!</entry>			
-			
-	<entry key="presetDialog.title">Presets</entry>			
-	<entry key="presetDialog.presetNameTitle">Set preset name</entry>			
-	<entry key="presetDialog.savePreset">Save</entry>			
-	<entry key="presetDialog.loadPreset">Load</entry>			
-	<entry key="presetDialog.removePreset">Remove</entry>			
-	<entry key="presetDialog.saveDefaultPreset">Make default</entry>			
-	<entry key="presetDialog.loadDefaultPreset">Load default</entry>			
-	<entry key="presetDialog.removeDefaultPreset">Remove default</entry>			
-	<entry key="presetDialog.saveFile">Export preset to file...</entry>			
-	<entry key="presetDialog.loadFile">Import preset from file...</entry>			
+	<entry key="seriousWarning.title">WARNING! Are you sure?</entry>
+	<entry key="seriousWarning.warning">WARNING! You are about to perform an irreversible operation.</entry>
+	<entry key="seriousWarning.doItTimeout">Please reconsider... ({0})</entry>
+	<entry key="seriousWarning.doIt">I am completely sure! Do it!</entry>
 
-	<entry key="presetDialog.selectToLoad">&lt;&lt; select to load preset &gt;&gt;</entry>			
-	<entry key="presetDialog.selectToChoose">&lt;&lt; select to choose preset &gt;&gt;</entry>			
-	<entry key="presetDialog.selectPreset">Select preset</entry>			
-	<entry key="presetDialog.selectPresetName">Select preset name</entry>			
+	<entry key="presetDialog.title">Presets</entry>
+	<entry key="presetDialog.presetNameTitle">Set preset name</entry>
+	<entry key="presetDialog.savePreset">Save</entry>
+	<entry key="presetDialog.loadPreset">Load</entry>
+	<entry key="presetDialog.removePreset">Remove</entry>
+	<entry key="presetDialog.saveDefaultPreset">Make default</entry>
+	<entry key="presetDialog.loadDefaultPreset">Load default</entry>
+	<entry key="presetDialog.removeDefaultPreset">Remove default</entry>
+	<entry key="presetDialog.saveFile">Export preset to file...</entry>
+	<entry key="presetDialog.loadFile">Import preset from file...</entry>
 
-	<entry key="presetDialog.onRemovePreset">Selected preset named ''&lt;b&gt;{0}&lt;/b&gt;'' will be permanently removed.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;permanently remove&lt;/b&gt; this preset?</entry>			
-	<entry key="presetDialog.onReplacePreset">Preset named ''&lt;b&gt;{0}&lt;/b&gt;'' will be permanently overwritten.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;permanently overwrite&lt;/b&gt; this preset?</entry>			
-	<entry key="presetDialog.onLoadPreset">The settings currently on the dialog will be permanently overwritten with preset named ''&lt;b&gt;{0}&lt;/b&gt;''.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;permanently overwrite&lt;/b&gt; current settings?</entry>			
+	<entry key="presetDialog.selectToLoad">&lt;&lt; select to load preset &gt;&gt;</entry>
+	<entry key="presetDialog.selectToChoose">&lt;&lt; select to choose preset &gt;&gt;</entry>
+	<entry key="presetDialog.selectPreset">Select preset</entry>
+	<entry key="presetDialog.selectPresetName">Select preset name</entry>
 
-	<entry key="presetDialog.onRemoveDefaultPreset">The default preset will be permanently removed.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;permanently remove&lt;/b&gt; the default?</entry>			
-	<entry key="presetDialog.onReplaceDefaultPreset">The default preset will be permanently overwritten.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;permanently overwrite&lt;/b&gt; the default?</entry>			
-	<entry key="presetDialog.onLoadDefaultPreset">The settings currently on the dialog will be permanently overwritten with the default preset.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;permanently overwrite&lt;/b&gt; current settings?</entry>			
-			
-	<entry key="spacePresetDialog.includeSpace">Load signal selection from loaded preset</entry>						
-			
-	<entry key="exportSignalDialog.title">Export signal</entry>						
-	<entry key="exportSignalDialog.options.title">Export options</entry>						
-	<entry key="exportSignalDialog.options.sampleType">Sample type</entry>						
-	<entry key="exportSignalDialog.options.byteOrder">Byte order</entry>						
-	<entry key="exportSignalDialog.options.saveXML">Save XML manifest</entry>						
-	<entry key="exportSignalDialog.options.normalize">Normalize samples</entry>						
-			
+	<entry key="presetDialog.onRemovePreset">Selected preset named ''&lt;b&gt;{0}&lt;/b&gt;'' will be permanently removed.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;permanently remove&lt;/b&gt; this preset?</entry>
+	<entry key="presetDialog.onReplacePreset">Preset named ''&lt;b&gt;{0}&lt;/b&gt;'' will be permanently overwritten.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;permanently overwrite&lt;/b&gt; this preset?</entry>
+	<entry key="presetDialog.onLoadPreset">The settings currently on the dialog will be permanently overwritten with preset named ''&lt;b&gt;{0}&lt;/b&gt;''.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;permanently overwrite&lt;/b&gt; current settings?</entry>
+
+	<entry key="presetDialog.onRemoveDefaultPreset">The default preset will be permanently removed.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;permanently remove&lt;/b&gt; the default?</entry>
+	<entry key="presetDialog.onReplaceDefaultPreset">The default preset will be permanently overwritten.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;permanently overwrite&lt;/b&gt; the default?</entry>
+	<entry key="presetDialog.onLoadDefaultPreset">The settings currently on the dialog will be permanently overwritten with the default preset.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;permanently overwrite&lt;/b&gt; current settings?</entry>
+
+	<entry key="spacePresetDialog.includeSpace">Load signal selection from loaded preset</entry>
+
+	<entry key="exportSignalDialog.title">Export signal</entry>
+	<entry key="exportSignalDialog.options.title">Export options</entry>
+	<entry key="exportSignalDialog.options.sampleType">Sample type</entry>
+	<entry key="exportSignalDialog.options.byteOrder">Byte order</entry>
+	<entry key="exportSignalDialog.options.saveXML">Save XML manifest</entry>
+	<entry key="exportSignalDialog.options.normalize">Normalize samples</entry>
+
+        <entry key="eeglabExport.title">Export to EEGLab</entry>
+        <entry key="eeglabExport.chooseFileLabel">Output file name: </entry>
+        <entry key="eegLabExport.fileNameExists">File already exists! Do you want to overwrite?</entry>
+        <entry key="eeglabExport.datasetFiles">Dateset files</entry>
+
+        <entry key="error.eeglabExport.incorrectFileName">Please input a filename</entry>
+        <entry key="error.eeglabExport.cantWrite">File cannot be written</entry>
+
 	<entry key="profilePath.title">Choose profile path</entry>
 	<entry key="profilePath.welcome">Welcome to signalml viewer</entry>
 	<entry key="profilePath.info">The signalml viewer needs a directory to store its configuration and files. This directory may reside inside the default user's home directory (system dependent), or you can select any directory on disk (remember that you need to select a concrete directory for SignalML files, not the directory in which you would like the later to be created - create the directory if necessary).</entry>
 	<entry key="profilePath.defaultRadio">signalml directory inside default home</entry>
 	<entry key="profilePath.customRadio">custom location</entry>
 	<entry key="profilePath.directoryFilter">Directories</entry>
-	
+
 	<entry key="errors.title">Errors in data</entry>
-	
+
 	<entry key="preferences.title">Preferences</entry>
-	
+
 	<entry key="preferences.codecs">SignalML Codecs</entry>
 	<entry key="preferences.codecs.installedCodecs">Installed codecs</entry>
-	
+
 	<entry key="preferences.signalViewing">Signal viewing</entry>
 	<entry key="preferences.signalViewing.general">General</entry>
 	<entry key="preferences.signalViewing.plotOptions">Plot options</entry>
@@ -622,7 +641,7 @@
 
 	<entry key="preferences.tools">Tools</entry>
 	<entry key="preferences.tools.artifact">Artifact working directory</entry>
-		
+
 	<entry key="openDocument.title">Open document</entry>
 	<entry key="openDocument.chooseFile">Choose file</entry>
 	<entry key="openDocument.chooseFileType">Choose file type</entry>
@@ -638,28 +657,38 @@
 	<entry key="openDocument.bookChosen">Book document chosen</entry>
 	<entry key="openDocument.tagChosen">Tag document chosen</entry>
 
+	<entry key="checkSignal.title">Check Signal</entry>
+        <entry key="checkSignal.label">Channels</entry>
+
 <!-- ============================ -->
 
 	<entry key="openMonitor.title">Open monitor</entry>
 	<entry key="openMonitor.multiplexerAddressLabel">Multiplexer address</entry>
 	<entry key="openMonitor.multiplexerPortLabel">Multiplexer port</entry>
-	<entry key="openMonitor.samplingLabel">Sampling</entry>
+	<entry key="openMonitor.samplingLabel">Sampling frequency</entry>
 	<entry key="openMonitor.channelCountLabel">Channel count</entry>
 	<entry key="openMonitor.calibrationGainLabel">Calibration gain</entry>
 	<entry key="openMonitor.calibrationOffsetLabel">Calibration offset</entry>
 	<entry key="openMonitor.pageSizeLabel">Page size</entry>
 	<entry key="openMonitor.channelsListLabel">Channels</entry>
-	<entry key="openMonitor.saveDataLabel">Select file</entry>
-	<entry key="openMonitor.browseButtonLabel">Browse</entry>
+	<entry key="openMonitor.multiplexerConnectionPanelTitle">Connect to the multiplexer</entry>
+	<entry key="openMonitor.channelSelectPanelTitle">Select channels to be monitored</entry>
+	<entry key="openMonitor.channelSelectPanel.selectAll">Select all</entry>
+	<entry key="openMonitor.channelSelectPanel.clearSelection">Clear selection</entry>
+	<entry key="openMonitor.signalParametersPanelTitle">Signal parameters</entry>
+	<entry key="openMonitor.monitorRecordingPanelTitle">Monitor recording</entry>
+
+	<entry key="error.openMonitor.noChannelsSelected">Please select at least one channel to monitor</entry>
+
 	<entry key="openDocument.signalAutodetected">Signal document autodetected</entry>
 	<entry key="openDocument.bookAutodetected">Book document autodetected</entry>
 	<entry key="openDocument.tagAutodetected">Tag document autodetected</entry>
 	<entry key="openDocument.signalChosen">Signal document chosen</entry>
 	<entry key="openDocument.bookChosen">Book document chosen</entry>
 	<entry key="openDocument.tagChosen">Tag document chosen</entry>
-	
+
 <!-- ================================= -->
-	
+
 	<entry key="openSignal.options.title">Choose options for signal</entry>
 	<entry key="openSignal.options.methodTitle">Choose signal loading method</entry>
 	<entry key="openSignal.options.methodSignalML">Load using SignalML codec</entry>
@@ -696,7 +725,7 @@
 	<entry key="registerCodec.nameExistsWarning">Name exists. Current codec will be replaced!</entry>
 
 	<entry key="pagingParameters.pageSize">Page size (s)</entry>
-	<entry key="pagingParameters.blocksPerPage">Number of blocks per page</entry>	
+	<entry key="pagingParameters.blocksPerPage">Number of blocks per page</entry>
 
 	<entry key="signalParameters.title">Signal parameters</entry>
 	<entry key="signalParameters.requiredSignalParameters">Required signal parameters</entry>
@@ -761,9 +790,9 @@
 	<entry key="montageTable.moveUp">Move up</entry>
 	<entry key="montageTable.moveDown">Move down</entry>
 
-	<entry key="montageTable.onClear">The montage will be irreversibly lost.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;clear&lt;/b&gt; the montage?</entry>			
-	<entry key="montageTable.onDeleteUsed">The removed source channel is used either as a primary channel or as a reference. Montage will be altered.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;remove&lt;/b&gt; a source channel?</entry>			
-	<entry key="montageTable.onGenerate">The montage will be permanently replaced with the generated montage.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;generate&lt;/b&gt; the montage?</entry>			
+	<entry key="montageTable.onClear">The montage will be irreversibly lost.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;clear&lt;/b&gt; the montage?</entry>
+	<entry key="montageTable.onDeleteUsed">The removed source channel is used either as a primary channel or as a reference. Montage will be altered.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;remove&lt;/b&gt; a source channel?</entry>
+	<entry key="montageTable.onGenerate">The montage will be permanently replaced with the generated montage.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;generate&lt;/b&gt; the montage?</entry>
 
 	<entry key="montageTable.wasteBasketToolTip">Drop target channels here to delete them</entry>
 
@@ -782,7 +811,9 @@
 	<entry key="filterExclusionTable.allChannels">All channels</entry>
 
 	<entry key="montageFilters.addTimeDomainFilter">Add filter</entry>
+	<entry key="montageFilters.addCustomTimeDomainFilter">Add custom filter</entry>
 	<entry key="montageFilters.addTimeDomainFilterToolTip">Add selected time domain filter</entry>
+	<entry key="montageFilters.addCustomTimeDomainFilterToolTip">Add a custom-made time domain filter</entry>
 	<entry key="montageFilters.addFFTFilter">Add filter</entry>
 	<entry key="montageFilters.addFFTFilterToolTip">Add new filter</entry>
 	<entry key="montageFilters.editFilter">Edit filter</entry>
@@ -802,14 +833,13 @@
 	<entry key="editSampleFilter.graphSpinnerLabel">Maximum graph frequency [Hz]</entry>
 	<entry key="editSampleFilter.graphPanelTitle">Filter design graph</entry>
 	<entry key="editSampleFilter.graphFrequencyLabel">Frequency [Hz]</entry>
-	<entry key="editSampleFilter.graphTitle">Filter frequency response</entry>
+	<entry key="editSampleFilter.graphTitle">Filter frequency response [decibels]</entry>
 
 	<entry key="error.editSampleFilter.descriptionEmpty">A filter must have a description</entry>
 	<entry key="error.editSampleFilter.descriptionBadChars">Filter description must not contain control characters</entry>
 
 	<entry key="editFFTSampleFilter.title">Edit FFT sample filter</entry>
 	<entry key="editFFTSampleFilter.tableToolTip">Double click a row to copy parameters to new range parameters panel</entry>
-
 
 	<entry key="editFFTSampleFilter.addNewRangeTitle">New range parameters</entry>
 	<entry key="editFFTSampleFilter.rangesTitle">Ranges</entry>
@@ -832,6 +862,9 @@
 	<entry key="editTimeDomainSampleFilter.title">Edit time domain filter</entry>
 	<entry key="editTimeDomainSampleFilter.filterParametersTitle">Filter parameters</entry>
 
+	<entry key="editTimeDomainSampleFilter.graphSubtitle">filter order = {0}</entry>
+	<entry key="editTimeDomainSampleFilter.groupDelayGraphTitle">Group delay [samples]</entry>
+
 	<entry key="editTimeDomainSampleFilter.filterType">Filter type</entry>
 	<entry key="editTimeDomainSampleFilter.filterFamily">Filter family</entry>
 	<entry key="editTimeDomainSampleFilter.passbandEdgeFrequency1">Passband edge frequency 1 [Hz]</entry>
@@ -840,11 +873,23 @@
 	<entry key="editTimeDomainSampleFilter.stopbandEdgeFrequency2">Stopband edge frequency 2 [Hz]</entry>
 	<entry key="editTimeDomainSampleFilter.passbandRipple">Passband ripple [dB]</entry>
 	<entry key="editTimeDomainSampleFilter.stopbandAttenuation">Stopband attenuation [dB]</entry>
-
 	<entry key="editTimeDomainSampleFilter.drawFilterFrequencyResponse">Draw filter frequency response</entry>
 
 	<entry key="error.editTimeDomainSampleFilter.badFilterParameters">The filter cannot be designed for the given parameters - please correct them.</entry>
 	<entry key="error.editTimeDomainSampleFilter.badFilterParametersFilterOrderTooBig">The order of the filter designed for the given parameters is too big - please correct the parameters.</entry>
+
+	<entry key="startMonitorRecording.title">Start monitor recording</entry>
+	<entry key="startMonitorRecording.chooseFilesTitle">Choose files to which signal and tags will be recorded</entry>
+	<entry key="startMonitorRecording.chooseSignalFileLabel">Record signal to file</entry>
+	<entry key="startMonitorRecording.chooseTagFileLabel">Record tags to file</entry>
+	<entry key="startMonitorRecording.doNotRecordTagsLabel">Do not record tags</entry>
+	<entry key="startMonitorRecording.signalFileAlreadyExistsMessage">Signal recording target file already exists! Do you want to overwrite?</entry>
+	<entry key="startMonitorRecording.tagFileAlreadyExistsMessage">Tag recording target file already exists! Do you want to overwrite?</entry>
+
+	<entry key="error.startMonitorRecording.incorrectSignalFile">Please input a correct signal filename</entry>
+	<entry key="error.startMonitorRecording.incorrectTagFile">Please input a correct tag filename</entry>
+
+	<entry key="fileSelectPanel.browseButtonLabel">Browse</entry>
 
 	<entry key="signalSpace.signalLevelType.title">Signal source level</entry>
 	<entry key="signalSpace.signalLevelType.rawSignal">Raw signal</entry>
@@ -919,12 +964,12 @@
 	<entry key="tagStylePalette.noStyle">Select or add a style</entry>
 
 	<entry key="compareTags.graphicalCompareTitle">Graphical comparison</entry>
-	<entry key="compareTags.chooseTagsTitle">Choose tag documents (2 required)</entry>	
-	<entry key="compareTags.graphicalCompareOn">Comparison mode enabled</entry>	
+	<entry key="compareTags.chooseTagsTitle">Choose tag documents (2 required)</entry>
+	<entry key="compareTags.graphicalCompareOn">Comparison mode enabled</entry>
 	<entry key="compareTags.graphicalCompareOff">Comparison mode disabled</entry>
-	<entry key="compareTags.analyze">Analyze tag differences</entry>		
-	<entry key="compareTags.analyzeToolTip">Show analytical comparison summary</entry>		
-	<entry key="compareTags.tag">{0}</entry>		
+	<entry key="compareTags.analyze">Analyze tag differences</entry>
+	<entry key="compareTags.analyzeToolTip">Show analytical comparison summary</entry>
+	<entry key="compareTags.tag">{0}</entry>
 
 	<entry key="averageBooks.averageTitle">Book averaging</entry>
 	<entry key="averageBooks.averageOn">Book averaging on</entry>
@@ -935,21 +980,21 @@
 	<entry key="averageBooks.maxSegment">To segment</entry>
 	<entry key="averageBooks.allChannels">All channels together</entry>
 
-	<entry key="roc.title">Roc result</entry>		
-	<entry key="roc.chartTitle">Roc curve chart</entry>		
+	<entry key="roc.title">Roc result</entry>
+	<entry key="roc.chartTitle">Roc curve chart</entry>
 	<entry key="roc.tableTitle">Roc parameters</entry>
 	<entry key="roc.rocDataProperties">Roc properties</entry>
 	<entry key="roc.rocDataPointProperties">Roc point properties</entry>
-			
-	<entry key="roc.falsePositiveRate">False positive rate</entry>		
-	<entry key="roc.truePositiveRate">True positive rate</entry>		
-	<entry key="roc.tablePointIndex">Index</entry>		
-	<entry key="roc.tableFPRate">FP rate</entry>		
-	<entry key="roc.tableTPRate">TP rate</entry>		
-	<entry key="roc.tableTP">TP</entry>		
-	<entry key="roc.tableFP">FP</entry>		
-	<entry key="roc.tableTN">TN</entry>		
-	<entry key="roc.tableFN">FN</entry>		
+
+	<entry key="roc.falsePositiveRate">False positive rate</entry>
+	<entry key="roc.truePositiveRate">True positive rate</entry>
+	<entry key="roc.tablePointIndex">Index</entry>
+	<entry key="roc.tableFPRate">FP rate</entry>
+	<entry key="roc.tableTPRate">TP rate</entry>
+	<entry key="roc.tableTP">TP</entry>
+	<entry key="roc.tableFP">FP</entry>
+	<entry key="roc.tableTN">TN</entry>
+	<entry key="roc.tableFN">FN</entry>
 
 	<entry key="atomTable.title">Atom table</entry>
 	<entry key="atomTable.tableTitle">Atoms in the current segment (may exclude filtered atoms)</entry>
@@ -972,7 +1017,7 @@
 
 	<entry key="bookFilter.addParameterFilter">Add parameter filter</entry>
 	<entry key="bookFilter.addParameterFilterToolTip">Add a filter that filters based on parameter ranges</entry>
-	
+
 	<entry key="bookFilter.addTagBasedFilter">Add tag based filter</entry>
 	<entry key="bookFilter.addTagBasedFilterToolTip">Add a filter that filters based on a signal tag</entry>
 
@@ -1007,7 +1052,7 @@
 
 	<entry key="tagBasedFilter.title">Tag based atom filter</entry>
 	<entry key="tagBasedFilter.new">New tag based filter</entry>
-	
+
 	<entry key="tagBasedFilter.chooseTagFileTitle">Choose tag file</entry>
 	<entry key="tagBasedFilter.tagFile">Tag file</entry>
 	<entry key="tagBasedFilter.chooseTagFile">Choose...</entry>
@@ -1022,7 +1067,7 @@
 
 	<entry key="delegatingFilter.title">Custom atom filter</entry>
 	<entry key="delegatingFilter.classPathTitle">Choose class path</entry>
-	<entry key="delegatingFilter.fqClassNameTitle">Choose fully qualified filter class name</entry>	
+	<entry key="delegatingFilter.fqClassNameTitle">Choose fully qualified filter class name</entry>
 	<entry key="delegatingFilter.new">New custom filter</entry>
 
 	<entry key="delegatingFilter.addDirectoryEntry">Add directories</entry>
@@ -1054,13 +1099,13 @@
 	<entry key="property.rocData.pointBelowOSSIteration">Max OSS below OSS line accurs at point</entry>
 	<entry key="property.rocData.pointBelowOSSDistance">Max OSS below distance</entry>
 	<entry key="property.rocData.ossIntersectionTP">Interpolated TP at OSS line between points</entry>
-	
+
 	<entry key="property.rocDataPoint.truePositiveCount">True positive count (TP)</entry>
 	<entry key="property.rocDataPoint.falsePositiveCount">False positive count (FP)</entry>
 	<entry key="property.rocDataPoint.trueNegativeCount">True negative count (TN)</entry>
 	<entry key="property.rocDataPoint.falseNegativeCount">False negative count (FN)</entry>
 	<entry key="property.rocDataPoint.falseRate">False positive rate (FP rate)</entry>
-	<entry key="property.rocDataPoint.trueRate">True positive rate (TP rate)</entry>			
+	<entry key="property.rocDataPoint.trueRate">True positive rate (TP rate)</entry>
 	<entry key="property.rocDataPoint.sensitivity">Sensitivity (TP rate)</entry>
 	<entry key="property.rocDataPoint.specifity">Specifity (1 - FP rate)</entry>
 	<entry key="property.rocDataPoint.accuracy">Accuracy ( (TP+TN)/(TP+FP+TN+FN) )</entry>
@@ -1117,8 +1162,8 @@
 	<entry key="signalFFTSettings.fftViewLabelCountTitle">X-axis label count</entry>
 	<entry key="signalFFTSettings.fftPositiveIntegerRequired">Positive integer required</entry>
 	<entry key="signalFFTSettings.fftAutoScaleToView">Scale Y-axis to view</entry>
-	
-		
+
+
 	<entry key="signalFFTSettings.optionsTitle">Options</entry>
 	<entry key="signalFFTSettings.channelSwitching">Sticky channel</entry>
 	<entry key="signalFFTSettings.logarithmic">Logarithmic</entry>
@@ -1129,23 +1174,24 @@
 	<entry key="signalFFTSettings.powerAxisLabelsVisible">Power labels</entry>
 
 	<entry key="signalFFTSettings.error.badWindowWidth">Bad window width. Must be an integer greater than 7</entry>
-	
+
 	<entry key="fftWindowTypeSettings.windowTypeTitle">Window type</entry>
 	<entry key="fftWindowTypeSettings.windowParameter">Window parameter</entry>
 
 	<entry key="fftWindowTypeSettings.error.badWindowParameter">Bad window parameter. Must be a double precision value</entry>
 	<entry key="fftWindowTypeSettings.error.windowParameterOutOfRange">Bad window parameter. Allowed range {0}-{1}</entry>
-	
+
 	<entry key="tagAnnotation.title">Set tag annotation</entry>
 
 	<entry key="tagDescription.title">Set tag document description</entry>
 	<entry key="tagDescription.info">Tag document description</entry>
 	<entry key="tagDescription.montageInfo">Montage description</entry>
-	
+
 	<entry key="tagComparison.title">Tag comparison</entry>
 	<entry key="tagComparison.topDocument">First document</entry>
 	<entry key="tagComparison.bottomDocument">Second document</entry>
 	<entry key="tagComparison.showPercent">Show as percent</entry>
+	<entry key="tagComparison.multichannelTags">MULTICHANNEL TAGS</entry>
 	<entry key="tagComparison.comparisonResult">Comparison result</entry>
 	<entry key="tagComparison.pageStatistic">Page statistic</entry>
 	<entry key="tagComparison.blockStatistic">Block statistic</entry>
@@ -1248,7 +1294,7 @@
 	<entry key="signalColor.RED">Red</entry>
 	<entry key="signalColor.GREEN">Green</entry>
 	<entry key="signalColor.BLUE">Blue</entry>
-	
+
 	<entry key="signalView.timeScale">Time scale</entry>
 	<entry key="signalView.timeScaleToolTip">{0} pixels/sample</entry>
 	<entry key="signalView.valueScale">Value scale</entry>
@@ -1280,21 +1326,19 @@
 	<entry key="signalView.columnHeaderCompact">Compact mode</entry>
 	<entry key="signalView.eraser">Erase tags</entry>
 	<entry key="signalView.eraserToolTip">Erase tags</entry>
-		
+
 	<entry key="signalView.moveToolToolTip">Move signal with the mouse</entry>
 	<entry key="signalView.selectToolToolTip">Select tags</entry>
 	<entry key="signalView.selectPageToolToolTip">Select signal pages</entry>
 	<entry key="signalView.selectBlockToolToolTip">Select signal blocks</entry>
-	<entry key="signalView.selectChannelToolToolTip">Select single channel signal fragments</entry>
+	<entry key="signalView.selectChannelToolToolTip">Select single channel or multichannel custom size signal fragments</entry>
 	<entry key="signalView.zoomSignalToolToolTip">Magnify the signal (for settings press and hold the mouse button here)</entry>
 	<entry key="signalView.signalFFTToolToolTip">Signal FFT (for settings press and hold the mouse button here)</entry>
 	<entry key="signalView.rulerToolToolTip">Measure the signal</entry>
 	<entry key="signalView.plotOptionsToolTip">Change plot options</entry>
 	<entry key="signalView.tagPageToolToolTip">Tag signal pages</entry>
 	<entry key="signalView.tagBlockToolToolTip">Tag signal blocks</entry>
-	<entry key="signalView.tagChannelToolToolTip">Tag single channel signal fragments</entry>
-	<entry key="signalView.activeTagToolTip">Change active tag (the tag that is being edited)</entry>
-	<entry key="signalView.compareTagsToolTip">Compare tags (2 or more must be open)</entry>
+	<entry key="signalView.tagChannelToolToolTip">Tag single channel or multichannel custom size signal fragments</entry>
 
 	<entry key="signalView.plotOptions">Plot options</entry>
 	<entry key="signalView.plotToolTipSignal">T: {0}, V:{1} [P: {2}, B: {3}, C: {4}]</entry>
@@ -1398,28 +1442,28 @@
 	<entry key="property.mrud.lastTimeOpened">Last time opened</entry>
 	<entry key="property.mrud.documentType">Document type</entry>
 	<entry key="property.signalmlmrud.formatName">SignalML format name</entry>
-			
+
 	<entry key="property.document.backingFile">File path</entry>
 	<entry key="property.signalmldocument.formatName">SignalML format name</entry>
-	<entry key="property.signaldocument.samplingFrequency">Sampling frequency [Hz]</entry>				
-	<entry key="property.signaldocument.channelCount">Channel count</entry>				
-	<entry key="property.signaldocument.calibrationCapable">Is calibration capable</entry>				
-	<entry key="property.signaldocument.calibration">Calibration</entry>				
-	<entry key="property.signaldocument.pageSize">Page size [s]</entry>				
-	<entry key="property.signaldocument.blocksPerPage">Blocks per page</entry>				
-	<entry key="property.signaldocument.blockSize">Block size [s]</entry>				
-	<entry key="property.signaldocument.minSignalLength">Min signal length [s]</entry>				
-	<entry key="property.signaldocument.maxSignalLength">Max signal length [s]</entry>				
-	<entry key="property.signaldocument.pageCount">Number of pages</entry>				
-	<entry key="property.signaldocument.blockCount">Number of blocks</entry>				
+	<entry key="property.signaldocument.samplingFrequency">Sampling frequency [Hz]</entry>
+	<entry key="property.signaldocument.channelCount">Channel count</entry>
+	<entry key="property.signaldocument.calibrationCapable">Is calibration capable</entry>
+	<entry key="property.signaldocument.calibration">Calibration</entry>
+	<entry key="property.signaldocument.pageSize">Page size [s]</entry>
+	<entry key="property.signaldocument.blocksPerPage">Blocks per page</entry>
+	<entry key="property.signaldocument.blockSize">Block size [s]</entry>
+	<entry key="property.signaldocument.minSignalLength">Min signal length [s]</entry>
+	<entry key="property.signaldocument.maxSignalLength">Max signal length [s]</entry>
+	<entry key="property.signaldocument.pageCount">Number of pages</entry>
+	<entry key="property.signaldocument.blockCount">Number of blocks</entry>
 
 	<entry key="property.signalPage.page">Page number</entry>
 	<entry key="property.signalPage.size">Page size</entry>
 	<entry key="property.signalPage.startTime">Page start time [s]</entry>
 	<entry key="property.signalPage.endTime">Page end time [s]</entry>
 
-	<entry key="property.rawSignal.sampleType">Sample type</entry>				
-	<entry key="property.rawSignal.byteOrder">Byte order</entry>				
+	<entry key="property.rawSignal.sampleType">Sample type</entry>
+	<entry key="property.rawSignal.byteOrder">Byte order</entry>
 
 	<entry key="property.bookDocument.version">Book file version</entry>
 	<entry key="property.bookDocument.channelCount">Book channel count</entry>
@@ -1435,11 +1479,11 @@
 	<entry key="property.bookDocument.signalChannelCount">Signal channel count</entry>
 	<entry key="property.bookDocument.textInfo">Text info</entry>
 	<entry key="property.bookDocument.webSiteInfo">Web site into</entry>
-			
+
 	<entry key="property.bookChannel.channelIndex">Channel number</entry>
 	<entry key="property.bookChannel.label">label</entry>
-			
-	<entry key="property.bookSegment.channelIndex">Channel number</entry>			
+
+	<entry key="property.bookSegment.channelIndex">Channel number</entry>
 	<entry key="property.bookSegment.segmentIndex">Segment number</entry>
 	<entry key="property.bookSegment.size">Segment size</entry>
 	<entry key="property.bookSegment.startTime">Segment start time [s]</entry>
@@ -1482,8 +1526,9 @@
 	<entry key="property.tag.length">Length</entry>
 	<entry key="property.tag.channel">Channel</entry>
 	<entry key="property.tag.annotation">Annotation</entry>
-			
+
 	<entry key="error.exception">Exception occured</entry>
+	<entry key="error.noPredefinedFiltersForThisSamplingFrequency">Warning - there are no predefined filters for this sampling frequency!</entry>
 	<entry key="error.compilationRejected">User refused to allow code compilation</entry>
 	<entry key="error.classNotFilter">Class doesn't implement any filter</entry>
 	<entry key="error.computationException">Computation exception occured</entry>
@@ -1516,7 +1561,7 @@
 	<entry key="error.tagExport.secPPNotInteger">This tag cannot be exported - seconds per page is not integer</entry>
 	<entry key="error.filterFailedToInitialize">Filter [{0}] failed to initialize with message [{1}] and has been disabled.</entry>
 
-	<entry key="error.taskStateMustBeFinishedOrError">Task state must be finished or error</entry>	
+	<entry key="error.taskStateMustBeFinishedOrError">Task state must be finished or error</entry>
 	<entry key="error.taskStateMustBeNew">Task state must be new</entry>
 	<entry key="error.taskNotAbortable">Task method not abortable or bad task state</entry>
 	<entry key="error.taskNotSuspendable">Task method not suspendable or bad task state</entry>
@@ -1563,8 +1608,8 @@
 	<entry key="evokedPotentialMethod.message.finished">Finished</entry>
 
 	<entry key="evokedPotentialMethod.markerTicker">Processing markers</entry>
-	
-	<entry key="error.evokedPotential.noSampleSource">No sample source</entry>	
+
+	<entry key="error.evokedPotential.noSampleSource">No sample source</entry>
 	<entry key="error.evokedPotential.noTagSet">No tag set</entry>
 	<entry key="error.evokedPotential.noSuchMarkerStyle">No such marker style in the tag</entry>
 	<entry key="error.evokedPotential.markerChannelDoesntExist">Marker channel doesn't exist in sample source</entry>
@@ -1572,7 +1617,7 @@
 
 	<entry key="error.signalSpace.noChannels">At least one channel must be selected</entry>
 	<entry key="error.signalSpace.noSeconds">Either seconds after or seconds before must be > 0</entry>
-	
+
 	<entry key="error.mp5.badChannelCount">Bad channel count</entry>
 	<entry key="error.mp5.badSampleCount">Bad sample count</entry>
 	<entry key="error.mp5.badSamplingFrequency">Bad sampling frequency</entry>
@@ -1596,9 +1641,9 @@
 	<entry key="error.mp5.noPassword">Password not given</entry>
 	<entry key="error.mp5.resultRenameFailed">Failed to rename result file</entry>
 	<entry key="error.mp5.executorRequired">You must configure at least one executor</entry>
-	
+
 	<entry key="mp5Method.runMethodString">MP decomposition</entry>
-		
+
 	<entry key="mp5Method.sectionTicker">Segment progress</entry>
 	<entry key="mp5Method.channelTicker">Channel progress</entry>
 	<entry key="mp5Method.atomTicker">Atom (non-linear progress)</entry>
@@ -1660,7 +1705,7 @@
 	<entry key="mp5Method.saveForLaterUseDialog.frameTitle">Choose what to save</entry>
 	<entry key="mp5Method.saveForLaterUseDialog.saveConfig">Save MP configuration</entry>
 	<entry key="mp5Method.saveForLaterUseDialog.saveSignal">Save signal for MP computation</entry>
-	
+
 	<entry key="mp5Method.dictionaryReinitType.NO_REINIT_AT_ALL">No reinit at all</entry>
 	<entry key="mp5Method.dictionaryReinitType.REINIT_IN_CHANNEL_DOMAIN">Reinit in channel domain</entry>
 	<entry key="mp5Method.dictionaryReinitType.REINIT_IN_OFFSET_DOMAIN">Reinit in offset domain</entry>
@@ -1741,7 +1786,7 @@
 	<entry key="mp5Method.config.remote.testConnectionToolTip">Try to connect to server</entry>
 
 	<entry key="mp5Method.config.remote.testConnectionSuccess">Server successfully contacted</entry>
-	
+
 	<entry key="mp5Method.config.remote.makeEegPlAccount">No account at eeg.pl? Click here to register now.</entry>
 
 	<entry key="evokedPotentialMethod.dialog.title">Evoked potential averaging configuration</entry>
@@ -1831,7 +1876,7 @@
 	<entry key="artifactMethod.config.chooseWorkingDirectoryToolTip">Choose a directory for artifact projects</entry>
 
 	<entry key="artifactMethod.dialog.result.title">Artifact result</entry>
-	
+
 	<entry key="artifactMethod.dialog.result.actionTitle">Choose primary result targets</entry>
 	<entry key="artifactMethod.dialog.result.openInWindow">Open in the viewer</entry>
 	<entry key="artifactMethod.dialog.result.saveToFile">Save to file</entry>
@@ -1899,12 +1944,12 @@
 	<entry key="stagerMethod.dialog.alpha">Alpha waves</entry>
 	<entry key="stagerMethod.dialog.spindle">Sleep spindles</entry>
 	<entry key="stagerMethod.dialog.kComplex">K-Compl</entry>
-	
+
 	<entry key="stagerMethod.dialog.amplitude">Amplitude [uv]&lt;br /&gt;min/max</entry>
 	<entry key="stagerMethod.dialog.frequency">Frequency [Hz]&lt;br /&gt;min/max</entry>
 	<entry key="stagerMethod.dialog.scale">Scale [s]&lt;br /&gt;min/max</entry>
 	<entry key="stagerMethod.dialog.phase">Phase&lt;br /&gt;min/max</entry>
-	
+
 	<entry key="stagerMethod.dialog.thresholdsTitle">Thresholds</entry>
 	<entry key="stagerMethod.dialog.emgToneThreshold">EMG tone</entry>
 	<entry key="stagerMethod.dialog.mtEegThreshold">MT artifacts in EEG</entry>
@@ -1912,9 +1957,9 @@
 	<entry key="stagerMethod.dialog.mtToneEmgThreshold">MT artifacts in tone EMG</entry>
 	<entry key="stagerMethod.dialog.remEogDeflectionThreshold">EOG deflection for rapid eye movement [%]</entry>
 	<entry key="stagerMethod.dialog.semEogDeflectionThreshold">EOG deflection for slow eye movement [%]</entry>
-	
+
 	<entry key="stagerMethod.dialog.result.title">Stager result</entry>
-	
+
 	<entry key="stagerMethod.dialog.result.actionTitle">Choose primary result targets</entry>
 	<entry key="stagerMethod.dialog.result.openInWindow">Open in the viewer</entry>
 	<entry key="stagerMethod.dialog.result.saveToFile">Save to file</entry>
@@ -1974,20 +2019,20 @@
 	<entry key="stagerMethod.dialog.resultReview.comparison.concordance">Concordance %</entry>
 	<entry key="stagerMethod.dialog.resultReview.comparison.sensitivity">Sensitivity %</entry>
 	<entry key="stagerMethod.dialog.resultReview.comparison.selectivity">Selectivity %</entry>
-	
+
 	<entry key="stagerMethod.stepTicker">Processing step</entry>
-  <entry key="stagerMethod.progressTicker">Step progress</entry>
-  <entry key="stagerMethod.message.processing">Processing</entry>
-	
+        <entry key="stagerMethod.progressTicker">Step progress</entry>
+        <entry key="stagerMethod.message.processing">Processing</entry>
+
 	<entry key="property.sleepComparison.totalConcordance">Total concordance %</entry>
 	<entry key="property.sleepComparison.cohensKappa">Cohen's Kappa</entry>
-	
+
 	<entry key="error.stager.result.badTagFile">Tag file not chosen</entry>
 	<entry key="error.stager.result.tagFileNotWritable">Tag file parent directory doesn't exist or not writable</entry>
 	<entry key="error.stager.result.resultTagUnknownRules">The resulting tag uses unknown staging rules</entry>
 	<entry key="error.stager.result.expertTagNotCompatibleRK">The expert tag doesn't use the R&amp;K system or has misnamed tags. Tag names w, 1, 2, 3, 4, r and m are required.</entry>
 	<entry key="error.stager.result.expertTagNotCompatibleAASM">The expert tag doesn't use the AASM system or has misnamed tags. Tag names nw, n1, n2, n3 and nr are required.</entry>
-	
+
 	<entry key="stagerMethod.situation.stagerProjectExists">Project [{0}] exists. Reuse or replace?</entry>
 
 	<entry key="stagerMethod.message.staging">Detecting sleep stages</entry>
@@ -2006,7 +2051,7 @@
 
 	<entry key="sleepStagingRules.RK">Rechtshaffen and Kales (R&amp;K 1967) rules</entry>
 	<entry key="sleepStagingRules.AASM">AASM (2007) rules</entry>
-	
+
 	<entry key="iterableNumericProperty">Property [{0}]</entry>
 
 	<entry key="eegChannel.Reference">Reference</entry>
@@ -2057,17 +2102,17 @@
 	<entry key="bookToTagMethod.makeBlockTags">Create block tags</entry>
 	<entry key="bookToTagMethod.makeChannelTags">Create channel tags</entry>
 
-	<entry key="bookToTagMethod.ticker">Segments processed</entry>	
+	<entry key="bookToTagMethod.ticker">Segments processed</entry>
 
 	<entry key="error.bookToTagMethod.noChannels">Select at least one channel</entry>
 	<entry key="error.bookToTagMethod.noTypesSelected">Select at least one tag type</entry>
-	
+
 	<!-- legacy code errors -->
 	<entry key="eega.unexpEndOfFile">Unexpected end of file</entry>
 	<entry key="eega.errReadFile">Failed to read file</entry>
 	<entry key="eega.errWriteFile">Failed to write file</entry>
 	<entry key="eega.tooManyStyles">Too many styles in tag. Only 256 styles are allowed per type.</entry>
-	
+
 	<!-- test code strings - need not be translated -->
 	<entry key="exampleMethod.runMethodString">Find the meaning of life</entry>
 	<entry key="exampleMethod.iterateMethodString">Iterate finding the meaning of life</entry>
@@ -2075,7 +2120,7 @@
 	<entry key="exampleMethod.count">Useless deliberation count</entry>
 	<entry key="exampleMethod.noWait">Hurry up</entry>
 	<entry key="exampleMethod.configure">Configure search</entry>
-		
+
 	<entry key="exampleMethod.start">Let's find the meaning of life</entry>
 	<entry key="exampleMethod.processed0">Life is generally pointless</entry>
 	<entry key="exampleMethod.processed1">Life sucks</entry>
@@ -2085,7 +2130,7 @@
 
 	<entry key="exampleMethod.ticker0">Pondering</entry>
 	<entry key="exampleMethod.ticker1">Deliberating</entry>
-	
+
 	<entry key="exampleMethod.error.badCount">Bad count</entry>
 
 	<entry key="exampleMethod.result">The meaning of life turns out to be {0}</entry>
