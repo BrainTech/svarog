@@ -74,4 +74,18 @@ public class ArrayOperationsTest {
 
 	}
 
+	/**
+	 * A test method for {@link ArrayOperations#removeFirstElements(double[], int) }.
+	 */
+	@Test
+	public void testRemoveFirstElements() {
+
+		double[] array = new double[] {1, 2, 3, 4, 5, 6};
+		double[] trimmed = ArrayOperations.removeFirstElements(array, 2);
+
+		assertEquals(4, trimmed.length);
+		assertArrayEquals(trimmed, new double[] {3, 4, 5, 6}, 0.001);
+
+	}
+
 }

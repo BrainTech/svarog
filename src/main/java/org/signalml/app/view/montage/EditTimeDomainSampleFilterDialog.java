@@ -903,6 +903,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 			return;
 		}
 
+		//draws the magnitude response
 		FilterResponseCalculator responseCalculator = new FilterResponseCalculator(512, getCurrentSamplingFrequency(), coeffs);
 		FilterFrequencyResponse frequencyResponse = responseCalculator.getMagnitudeResponse();
 
@@ -926,6 +927,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 			HorizontalAlignment.RIGHT, VerticalAlignment.TOP,
 			new RectangleInsets(0, 0, 0, 9)));
 
+		//draws group delay response
 		FilterFrequencyResponse groupDelayResponse = responseCalculator.getGroupDelayResponse();
 		frequencies = groupDelayResponse.getFrequencies();
 		coefficients = groupDelayResponse.getValues();

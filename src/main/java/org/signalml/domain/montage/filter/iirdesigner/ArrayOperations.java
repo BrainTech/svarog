@@ -102,4 +102,26 @@ public class ArrayOperations {
 		return trimmedArray;
 
 	}
+
+	/**
+	 * Returns a trimmed copy of a given array with the first numberOfElements
+	 * removed.
+	 *
+	 * @param array an array to be trimmed
+	 * @param numberOfElements the number of elements to be removed from
+	 * array
+	 * @return a trimmed copy of the given array
+	 */
+	public static double[] removeFirstElements(double[] array, int numberOfElements) {
+
+		assert (array.length > numberOfElements);
+
+		double[] trimmedArray = new double[array.length - numberOfElements];
+
+		for (int i = 0; i < trimmedArray.length; i++)
+			trimmedArray[i] = array[i + numberOfElements];
+
+		return trimmedArray;
+
+	}
 }

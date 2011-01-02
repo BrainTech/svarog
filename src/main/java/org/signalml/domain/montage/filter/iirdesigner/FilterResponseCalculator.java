@@ -132,6 +132,11 @@ public class FilterResponseCalculator {
 		 * Implementation details:
 		 * https://ccrma.stanford.edu/~jos/filters/Numerical_Computation_Group_Delay.html
 		 * https://ccrma.stanford.edu/~jos/filters/Group_Delay_Computation_grpdelay_m.html
+		 *
+		 * This algorithm poorly handles singularities and should probably
+		 * be replaced, maybe by Shpak algorithm.
+		 * (An implementation of Shpak algorithm may be seen in Matlab
+		 * after typing 'type grpdelay').
 		 */
 
 		int fftSize = numberOfPoints * 2;
@@ -182,6 +187,10 @@ public class FilterResponseCalculator {
 
 		groupDelay = ArrayOperations.trimArrayToSize(groupDelay, fftSize / 2);
 		freq = ArrayOperations.trimArrayToSize(freq, fftSize / 2);
+
+		// removing the first element which is (very often) a singularity
+		groupDelay = ArrayOperations.removeFirstElements(groupDelay, 1);
+		freq = ArrayOperations.removeFirstElements(freq, 1);
 
 		FilterFrequencyResponse filterResponse = new FilterFrequencyResponse(freq.length);
 		filterResponse.setFrequencies(freq);
