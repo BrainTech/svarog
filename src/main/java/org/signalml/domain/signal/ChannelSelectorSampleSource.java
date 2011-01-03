@@ -56,11 +56,6 @@ public class ChannelSelectorSampleSource implements SampleSource {
 	}
 
 	@Override
-	public float getCalibration() {
-		return source.getCalibration();
-	}
-
-	@Override
 	public String getLabel() {
 		return source.getLabel(channel);
 	}
@@ -78,17 +73,6 @@ public class ChannelSelectorSampleSource implements SampleSource {
 	@Override
 	public float getSamplingFrequency() {
 		return source.getSamplingFrequency();
-	}
-
-        /**
-         * Returns if the {@link MultichannelSampleSource sample source} for all
-         * channels is capable of returning a calibration
-         * @return true if the sample source for all channels is capable of
-         * returning a calibration, false otherwise
-         */
-	@Override
-	public boolean isCalibrationCapable() {
-		return source.isCalibrationCapable();
 	}
 
         /**

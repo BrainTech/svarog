@@ -33,11 +33,6 @@ public class DoubleArraySampleSource extends AbstractMultichannelSampleSource im
 	}
 
 	@Override
-	public float getCalibration() {
-		return 1F;
-	}
-
-	@Override
 	public int getChannelCount() {
 		return channelCount;
 	}
@@ -77,16 +72,6 @@ public class DoubleArraySampleSource extends AbstractMultichannelSampleSource im
 	@Override
 	public float getSamplingFrequency() {
 		return 128F;
-	}
-
-        /**
-         * Returns if the implementation is capable of returning a calibration
-         * @return the implementation is not capable of returning a calibration,
-         * so false.
-         */
-	@Override
-	public boolean isCalibrationCapable() {
-		return false;
 	}
 
         /**

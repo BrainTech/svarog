@@ -15,6 +15,19 @@ import org.signalml.plugin.export.SignalMLException;
  */
 public interface OriginalMultichannelSampleSource extends MultichannelSampleSource {
 
+	/**
+         * Returns if the implementation is capable of returning a calibration
+         * @return true if the implementation is capable of returning a
+         * calibration, false otherwise
+         */
+	boolean isCalibrationCapable();
+
+	/**
+         * Returns the calibration
+         * @return the calibration
+         */
+	float getCalibration();
+
         /**
          * Sets the sampling frequency (number of samples per second) to a
          * given value

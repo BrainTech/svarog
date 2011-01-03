@@ -14,13 +14,6 @@ package org.signalml.domain.signal;
  */
 public interface SampleSource {
 
-        /**
-         * Returns if the implementation is capable of returning a calibration
-         * @return true if the implementation is capable of returning a
-         * calibration, false otherwise
-         */
-	boolean isCalibrationCapable();
-
          /**
          * Returns if the implementation is capable of returning a
          * sampling frequency
@@ -47,12 +40,6 @@ public interface SampleSource {
          * @return the number of samples
          */
 	int getSampleCount();
-
-        /**
-         * Returns the calibration
-         * @return the calibration
-         */
-	float getCalibration();
 
         /**
          * Returns the given number of samples starting from a given position

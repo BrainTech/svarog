@@ -33,11 +33,6 @@ public abstract class SampleFilterEngine implements SampleSource {
 		this.source = source;
 	}
 
-	@Override
-	public float getCalibration() {
-		return source.getCalibration();
-	}
-
 	/**
 	 * Returs the (@link SampleFilterDefinition definition of the filter) used
 	 * by the filtering engine.
@@ -58,17 +53,6 @@ public abstract class SampleFilterEngine implements SampleSource {
 	@Override
 	public float getSamplingFrequency() {
 		return source.getSamplingFrequency();
-	}
-
-        /**
-         * Returns if the actual {@link SampleSource source} of samples
-         * is capable of returning its calibration
-         * @return true if the actual sample source is capable of
-         * returning its calibration, false otherwise
-         */
-	@Override
-	public boolean isCalibrationCapable() {
-		return source.isCalibrationCapable();
 	}
 
         /**

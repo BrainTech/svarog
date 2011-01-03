@@ -57,11 +57,6 @@ public abstract class MultichannelSampleProcessor extends AbstractMultichannelSa
 	}
 
 	@Override
-	public float getCalibration() {
-		return source.getCalibration();
-	}
-
-	@Override
 	public int getChannelCount() {
 		return source.getChannelCount();
 	}
@@ -84,17 +79,6 @@ public abstract class MultichannelSampleProcessor extends AbstractMultichannelSa
 	@Override
 	public float getSamplingFrequency() {
 		return source.getSamplingFrequency();
-	}
-
-        /**
-         * Returns if the actual {@link MultichannelSampleSource sample source}
-         * is capable of returning a calibration
-         * @return true if the actual sample source is capable of
-         * returning a calibration, false otherwise
-         */
-	@Override
-	public boolean isCalibrationCapable() {
-		return source.isCalibrationCapable();
 	}
 
         /**

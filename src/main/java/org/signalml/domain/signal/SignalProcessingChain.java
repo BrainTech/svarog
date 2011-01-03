@@ -696,11 +696,6 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 	}
 
 	@Override
-	public float getCalibration() {
-		return output.getCalibration();
-	}
-
-	@Override
 	public int getChannelCount() {
 		return output.getChannelCount();
 	}
@@ -728,17 +723,6 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 	@Override
 	public float getSamplingFrequency() {
 		return output.getSamplingFrequency();
-	}
-
-        /**
-         * Returns if the last source in the chain (<code>output</code>
-         * is capable of returning a calibration
-         * @return true if the last source in the chain (<code>output</code>
-         * is capable of returning a calibration, false otherwise
-         */
-	@Override
-	public boolean isCalibrationCapable() {
-		return output.isCalibrationCapable();
 	}
 
         /**

@@ -228,4 +228,15 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
                         return nextInsertPos;
                 }
         }
+
+	@Override
+	public boolean isCalibrationCapable() {
+		return false;
+	}
+
+	@Override
+	public float getCalibration() {
+		return 1F;
+	}
+
 }

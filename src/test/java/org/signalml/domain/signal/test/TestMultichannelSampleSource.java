@@ -31,12 +31,6 @@ public class TestMultichannelSampleSource implements MultichannelSampleSource {
 		}
 	}
 
-
-	@Override
-	public float getCalibration() {
-		return 1;
-	}
-
 	@Override
 	public int getChannelCount() {
 		return channelCount;
@@ -60,11 +54,6 @@ public class TestMultichannelSampleSource implements MultichannelSampleSource {
 	@Override
 	public float getSamplingFrequency() {
 		return 128.0F;
-	}
-
-	@Override
-	public boolean isCalibrationCapable() {
-		return true;
 	}
 
 	@Override

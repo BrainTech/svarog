@@ -37,13 +37,6 @@ public interface MultichannelSampleSource {
 	boolean isChannelCountCapable();
 
         /**
-         * Returns if the implementation is capable of returning a calibration
-         * @return true if the implementation is capable of returning a
-         * calibration, false otherwise
-         */
-	boolean isCalibrationCapable();
-
-        /**
          * Returns the number of samples per second
          * @return the number of samples per second
          */
@@ -54,12 +47,6 @@ public interface MultichannelSampleSource {
          * @return the number of channels in this source
          */
 	int getChannelCount();
-
-        /**
-         * Returns the calibration
-         * @return the calibration
-         */
-	float getCalibration();
 
         /**
          * Returns the number of samples for a given channel
