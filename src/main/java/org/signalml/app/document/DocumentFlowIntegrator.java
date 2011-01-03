@@ -571,7 +571,7 @@ public class DocumentFlowIntegrator {
 				spd.setBlocksPerPage(smlEntry.getBlocksPerPage());
 				spd.setSamplingFrequency(smlEntry.getSamplingFrequency());
 				spd.setChannelCount(smlEntry.getChannelCount());
-				spd.setCalibration(smlEntry.getCalibration());
+				spd.setCalibration(smlEntry.getCalibrationGain());
 
 			}
 			else if (mrud instanceof RawSignalMRUDEntry) {
@@ -723,7 +723,7 @@ public class DocumentFlowIntegrator {
 				mrud.setBlocksPerPage(spd.getBlocksPerPage());
 				mrud.setSamplingFrequency(spd.getSamplingFrequency());
 				mrud.setChannelCount(spd.getChannelCount());
-				mrud.setCalibration(spd.getCalibration());
+				mrud.setCalibrationGain(spd.getCalibration());
 				mrudRegistry.registerMRUDEntry(mrud);
 			}
 

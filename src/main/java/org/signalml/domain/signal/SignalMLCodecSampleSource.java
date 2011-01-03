@@ -4,6 +4,7 @@
 
 package org.signalml.domain.signal;
 
+import java.util.Arrays;
 import org.apache.log4j.Logger;
 import org.signalml.codec.SignalMLCodecException;
 import org.signalml.codec.SignalMLCodecReader;
@@ -309,8 +310,8 @@ public class SignalMLCodecSampleSource extends AbstractMultichannelSampleSource 
 	}
 
 	@Override
-	public float getCalibration() {
-		return calibration;
+	public float[] getCalibrationGain() {
+		throw new UnsupportedOperationException("Calling float[] getCalibrationGain is not supported for SignalMLCodecSampleSource.");
 	}
 
 	@Override
@@ -403,7 +404,7 @@ public class SignalMLCodecSampleSource extends AbstractMultichannelSampleSource 
          * @param calibration the new value of calibration
          */
 	@Override
-	public void setCalibration(float calibration) {
+	public void setCalibrationGain(float calibration) {
 		synchronized (this) {
 			if (this.calibration != calibration) {
 				float last = this.calibration;
@@ -474,7 +475,7 @@ public class SignalMLCodecSampleSource extends AbstractMultichannelSampleSource 
 			duplicate.setSamplingFrequency(samplingFrequency);
 		}
 		if (calibrationExternal) {
-			duplicate.setCalibration(calibration);
+			duplicate.setCalibrationGain(calibration);
 		}
 
 		return duplicate;
@@ -489,6 +490,21 @@ public class SignalMLCodecSampleSource extends AbstractMultichannelSampleSource 
 	public void destroy() {
 		reader.close();
 		reader = null;
+	}
+
+	@Override
+	public boolean areIndividualChannelsCalibrationCapable() {
+		return false;
+	}
+
+	@Override
+	public void setCalibrationGain(float[] calibration) {
+		throw new UnsupportedOperationException("Setting calibration gain for individual channels is not supported for the SignalMLCodecSampleSource");
+	}
+
+	@Override
+	public float getSingleCalibrationGain() {
+		return calibration;
 	}
 
 }

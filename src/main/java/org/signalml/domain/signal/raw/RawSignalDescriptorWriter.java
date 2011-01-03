@@ -105,15 +105,6 @@ public class RawSignalDescriptorWriter {
 		element.setTextContent(Integer.toString(descriptor.getSampleCount()));
 		root.appendChild(element);
 
-		float calibration = descriptor.getCalibration();
-		if (calibration != 0) {
-
-			element = document.createElement(RawSignalDocumentBuilder.CALIBRATION);
-			element.setTextContent(Float.toString(calibration));
-			root.appendChild(element);
-
-		}
-
 		element = document.createElement(RawSignalDocumentBuilder.SAMPLE_TYPE);
 		element.setTextContent(descriptor.getSampleType().name());
 		root.appendChild(element);

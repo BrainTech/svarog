@@ -81,7 +81,7 @@ public class SignalMLDocument extends AbstractFileSignal {
 	 * @return the value of calibration
 	 */
 	public float getCalibration() {
-		return sampleSource.getCalibration();
+		return sampleSource.getSingleCalibrationGain();
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class SignalMLDocument extends AbstractFileSignal {
 	 * @param calibration the new value of calibration
 	 */
 	public void setCalibration(float calibration) {
-		sampleSource.setCalibration(calibration);
+		sampleSource.setCalibrationGain(calibration);
 	}
 
 	/**

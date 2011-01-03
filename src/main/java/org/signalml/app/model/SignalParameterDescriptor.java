@@ -17,7 +17,7 @@ public class SignalParameterDescriptor extends PagingParameterDescriptor {
 
 	private boolean samplingFrequencyEditable = true;
 	private boolean channelCountEditable = true;
-	private boolean calibrationEditable = true;
+	private boolean calibrationEditable = false;
 
 	public Float getSamplingFrequency() {
 		return samplingFrequency;

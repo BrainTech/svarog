@@ -131,7 +131,7 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 			source = new SignalMLCodecSampleSource(reader);
 
 			if (source.isCalibrationCapable()) {
-				source.setCalibration(smlEntry.getCalibration());
+				source.setCalibrationGain(smlEntry.getCalibrationGain());
 			}
 			if (!source.isSamplingFrequencyCapable()) {
 				source.setSamplingFrequency(smlEntry.getSamplingFrequency());
@@ -147,7 +147,7 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 			RawSignalDescriptor rawDescriptor = rawEntry.getDescriptor();
 
 			source = new RawSignalSampleSource(rawEntry.getFile(), rawDescriptor.getChannelCount(), rawDescriptor.getSamplingFrequency(), rawDescriptor.getSampleType(), rawDescriptor.getByteOrder());
-			source.setCalibration(rawDescriptor.getCalibration());
+			source.setCalibrationGain(rawDescriptor.getCalibrationGain());
 
 		} else {
 			throw new SanityCheckException("Don't know how to open this kind of mrud [" + mrud.getClass().getName() + "]");
@@ -663,7 +663,7 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 			mrud.setBlocksPerPage(-1);
 			mrud.setSamplingFrequency(codecSource.getSamplingFrequency());
 			mrud.setChannelCount(codecSource.getChannelCount());
-			mrud.setCalibration(codecSource.getCalibration());
+			mrud.setCalibrationGain(codecSource.getSingleCalibrationGain());
 
 			descriptor.setDocument(mrud);
 
@@ -676,7 +676,7 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 			rawDescriptor.setSamplingFrequency(rawSource.getSamplingFrequency());
 			rawDescriptor.setSampleCount(rawSource.getSampleCount());
 			rawDescriptor.setChannelCount(rawSource.getChannelCount());
-			rawDescriptor.setCalibration(rawSource.getCalibration());
+			rawDescriptor.setCalibrationGain(rawSource.getCalibrationGain());
 			rawDescriptor.setSampleType(rawSource.getSampleType());
 			rawDescriptor.setByteOrder(rawSource.getByteOrder());
 

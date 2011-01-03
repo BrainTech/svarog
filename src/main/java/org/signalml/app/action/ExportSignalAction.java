@@ -282,9 +282,9 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 			rawDescriptor.setBlocksPerPage(masterPlot.getBlocksPerPage());
 			rawDescriptor.setByteOrder(descriptor.getByteOrder());
 			if (descriptor.isNormalize()) {
-				rawDescriptor.setCalibration((float)(1 / descriptor.getNormalizationFactor()));
+				rawDescriptor.setCalibrationGain((float)(1 / descriptor.getNormalizationFactor()));
 			} else {
-				rawDescriptor.setCalibration(1F);
+				rawDescriptor.setCalibrationGain(1F);
 			}
 			int channelCount = sampleSource.getChannelCount();
 			rawDescriptor.setChannelCount(channelCount);

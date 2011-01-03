@@ -91,6 +91,7 @@ public class RawSignalOptionsPanel extends JPanel {
 		if (calibrationField == null) {
 			calibrationField = new JTextField();
 			calibrationField.setPreferredSize(new Dimension(200,25));
+			calibrationField.setEditable(false);
 		}
 		return calibrationField;
 	}
@@ -207,7 +208,7 @@ public class RawSignalOptionsPanel extends JPanel {
 		getChannelCountField().setText(Integer.toString(descriptor.getChannelCount()));
 		getSampleTypeComboBox().setSelectedItem(descriptor.getSampleType());
 		getByteOrderComboBox().setSelectedItem(descriptor.getByteOrder());
-		getCalibrationField().setText(Float.toString(descriptor.getCalibration()));
+		getCalibrationField().setText(Float.toString(descriptor.getCalibrationGain()[0]));
 
 	}
 
@@ -217,7 +218,7 @@ public class RawSignalOptionsPanel extends JPanel {
 		descriptor.setChannelCount(Integer.parseInt(getChannelCountField().getText()));
 		descriptor.setSampleType((RawSignalSampleType) getSampleTypeComboBox().getSelectedItem());
 		descriptor.setByteOrder((RawSignalByteOrder) getByteOrderComboBox().getSelectedItem());
-		descriptor.setCalibration(Float.parseFloat(getCalibrationField().getText()));
+		//descriptor.setCalibrationGain(Float.parseFloat(getCalibrationField().getText()));
 
 	}
 

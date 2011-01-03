@@ -86,7 +86,7 @@ public class WorkspaceSignal extends WorkspaceDocument {
 			mrud.setBlocksPerPage(signalMLDocument.getBlocksPerPage());
 			mrud.setSamplingFrequency(signalMLDocument.getSamplingFrequency());
 			mrud.setChannelCount(signalMLDocument.getChannelCount());
-			mrud.setCalibration(signalMLDocument.getCalibration());
+			mrud.setCalibrationGain(signalMLDocument.getCalibration());
 
 			mrudEntry = mrud;
 

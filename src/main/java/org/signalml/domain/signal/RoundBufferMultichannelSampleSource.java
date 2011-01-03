@@ -159,7 +159,7 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 	}
 
 	@Override
-	public void setCalibration(float calibration) {
+	public void setCalibrationGain(float calibration) {
 	}
 
 	@Override
@@ -235,7 +235,27 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 	}
 
 	@Override
-	public float getCalibration() {
+	public float[] getCalibrationGain() {
+		float[] calibration = new float[getChannelCount()];
+
+		for (int i = 0; i < calibration.length; i++)
+			calibration[i] = 1F;
+
+		return calibration;
+	}
+
+	@Override
+	public boolean areIndividualChannelsCalibrationCapable() {
+		return false;
+	}
+
+	@Override
+	public void setCalibrationGain(float[] calibration) {
+		throw new UnsupportedOperationException("Not supported.");
+	}
+
+	@Override
+	public float getSingleCalibrationGain() {
 		return 1F;
 	}
 

@@ -7,6 +7,7 @@ package org.signalml.domain.signal.raw;
 import java.util.Date;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import java.util.Arrays;
 
 /**
  * This class represents the descriptor of a raw signal.
@@ -72,12 +73,17 @@ public class RawSignalDescriptor {
          * the number of samples in a single channel
          */
 	private int sampleCount;
-        /**
-         * the calibration of the signal
-         */
-	private float calibration;
 
+	/**
+	 * The calibration gain for the signal - the value by which each sample
+	 * value is multiplied.
+	 */
 	private float[] calibrationGain;
+
+	/**
+	 * The calibration offset for the signal - the value which is added
+	 * to each sample value.
+	 */
 	private float[] calibrationOffset;
 	private Float minimumValue;
 	private Float maximumValue;
@@ -251,26 +257,16 @@ public class RawSignalDescriptor {
 	public void setSampleCount(int sampleCount) {
 		this.sampleCount = sampleCount;
 	}
-
-        /**
-         * Returns the calibration
-         * @return the calibration
-         */
-	public float getCalibration() {
-		return calibration;
-	}
-
-        /**
-         * Sets the calibration
-         * @param calibration the calibration
-         */
-	public void setCalibration(float calibration) {
-		this.calibration = calibration;
-	}
-
 	
 	public float[] getCalibrationGain() {
 		return calibrationGain;
+	}
+
+	public void setCalibrationGain(float calibration) {
+		if (calibrationGain == null) {
+			calibrationGain = new float[getChannelCount()];
+		}
+		Arrays.fill(calibrationGain, calibration);
 	}
 
 	public void setCalibrationGain(float[] calibrationGain) {

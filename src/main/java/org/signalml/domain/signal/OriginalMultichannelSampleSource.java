@@ -23,10 +23,32 @@ public interface OriginalMultichannelSampleSource extends MultichannelSampleSour
 	boolean isCalibrationCapable();
 
 	/**
-         * Returns the calibration
-         * @return the calibration
+	 * Returns if the implementation is capable of returning and setting
+	 * a calibration for each channel. It can be used to determine, if
+	 * - for example - method {@link OriginalMultichannelSampleSource#setCalibrationGain()}
+	 * can be called for the implementation.
+	 *
+	 * @return true, if calibration could be get or set for each channel,
+	 * false if implementation is not calibration capable
+	 * ({@link OriginalMultichannelSampleSource#isCalibrationCapable() }
+	 * or the implementation is capable of getting or setting calibration
+	 * only for all channels
+	 */
+	boolean areIndividualChannelsCalibrationCapable();
+
+	/**
+	 * Returns a single value representing the calibration gain.
+	 * If the implementation enables calibrating each channel, then
+	 * calibration gain for the first channel is returned.
+	 * @return the calibration gain
+	 */
+	float getSingleCalibrationGain();
+
+	/**
+         * Returns the calibration gain for each channel.
+         * @return an array containing calibration gain for each channel
          */
-	float getCalibration();
+	float[] getCalibrationGain();
 
         /**
          * Sets the sampling frequency (number of samples per second) to a
@@ -43,10 +65,19 @@ public interface OriginalMultichannelSampleSource extends MultichannelSampleSour
         void setChannelCount(int channelCount);
 
         /**
-         * Sets the new value of calibration.
+         * Sets the new value of calibration. Could be used only if the source
+	 * is capable of calibrating each channel
+	 * (see: {@link OriginalMultichannelSampleSource#areIndividualChannelsCalibrationCapable()}.
+	 *
          * @param calibration the new value of calibration
          */
-	void setCalibration(float calibration);
+	void setCalibrationGain(float[] calibration);
+
+	/**
+	 * Sets an identical value of calibration gain for all channels.
+	 * @param new calibration value
+	 */
+	void setCalibrationGain(float calibration);
 
         /**
          * Creates the copy of this sample source.

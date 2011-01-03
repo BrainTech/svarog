@@ -73,7 +73,7 @@ public class RawSignalDocument extends AbstractFileSignal {
 			throw new SignalMLException("error.noBackingFile");
 		}
 		RawSignalSampleSource sampleSource = new RawSignalSampleSource(backingFile.getAbsoluteFile(), descriptor.getChannelCount(), descriptor.getSamplingFrequency(), descriptor.getSampleType(), descriptor.getByteOrder());
-		sampleSource.setCalibration(descriptor.getCalibration());
+		sampleSource.setCalibrationGain(descriptor.getCalibrationGain());
 		sampleSource.setLabels(descriptor.getChannelLabels());
 
 		this.sampleSource = sampleSource;
@@ -83,8 +83,8 @@ public class RawSignalDocument extends AbstractFileSignal {
 	 * Returns the value of calibration.
 	 * @return the value of calibration
 	 */
-	public float getCalibration() {
-		return sampleSource.getCalibration();
+	public float[] getCalibrationGain() {
+		return sampleSource.getCalibrationGain();
 	}
 
 	/**
@@ -120,7 +120,7 @@ public class RawSignalDocument extends AbstractFileSignal {
 	 * @param calibration the new value of calibration
 	 */
 	public void setCalibration(float calibration) {
-		sampleSource.setCalibration(calibration);
+		sampleSource.setCalibrationGain(calibration);
 	}
 
 	/**

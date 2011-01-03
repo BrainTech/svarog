@@ -563,7 +563,7 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 		descriptor.setChannelCount(channelCount);
 		descriptor.setSampleType(getSampleType(sampleType));
 		descriptor.setByteOrder(getByteOrder(byteOrder));
-		descriptor.setCalibration(calibration);
+		descriptor.setCalibrationGain(calibration);
 		descriptor.setPageSize(pageSize);
 		descriptor.setBlocksPerPage(blocksPerPage);
 		osd.setRawSignalDescriptor(descriptor);

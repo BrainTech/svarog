@@ -82,7 +82,7 @@ public class EditSignalParametersAction extends AbstractFocusableSignalMLAction<
 		}
 
 		if (mss.isCalibrationCapable()) {
-			spd.setCalibration(mss.getCalibration());
+			spd.setCalibration(mss.getSingleCalibrationGain());
 			spd.setCalibrationEditable(true);
 		} else {
 			spd.setCalibration(null);
@@ -107,7 +107,7 @@ public class EditSignalParametersAction extends AbstractFocusableSignalMLAction<
 		}
 
 		if (mss.isCalibrationCapable()) {
-			mss.setCalibration(spd.getCalibration());
+			mss.setCalibrationGain(spd.getCalibration());
 		}
 
 		signalView.clearSignalSelection();

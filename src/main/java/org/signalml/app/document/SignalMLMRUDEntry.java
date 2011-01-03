@@ -163,7 +163,7 @@ public class SignalMLMRUDEntry extends MRUDEntry {
 	 * Returns the value of calibration.
 	 * @return the value of calibration
 	 */
-	public Float getCalibration() {
+	public Float getCalibrationGain() {
 		return calibration;
 	}
 
@@ -171,7 +171,7 @@ public class SignalMLMRUDEntry extends MRUDEntry {
 	 * Sets the value of calibration.
 	 * @param calibration the value of calibration
 	 */
-	public void setCalibration(Float calibration) {
+	public void setCalibrationGain(Float calibration) {
 		this.calibration = calibration;
 	}
 

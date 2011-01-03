@@ -90,9 +90,9 @@ public class RawSignalDescriptorReader {
 
 			String calibration = path.evaluate(RawSignalDocumentBuilder.CALIBRATION, rawSignalEl);
 			if (calibration != null && !calibration.isEmpty()) {
-				descriptor.setCalibration(Float.parseFloat(calibration));
+				descriptor.setCalibrationGain(Float.parseFloat(calibration));
 			} else {
-				descriptor.setCalibration(1F);
+				descriptor.setCalibrationGain(1F);
 			}
 
 			descriptor.setSampleType(RawSignalSampleType.valueOf(path.evaluate(RawSignalDocumentBuilder.SAMPLE_TYPE, rawSignalEl)));
@@ -174,7 +174,7 @@ public class RawSignalDescriptorReader {
 							
 						}
 						
-						descriptor.setCalibrationGain( params);
+						descriptor.setCalibrationGain(params);
 						
 					}
 				}
