@@ -259,4 +259,31 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 		return 1F;
 	}
 
+	/**
+	 * Getting and setting calibration offset for RoundBufferMultichannelSampleSource
+	 * is not supported yet.
+	 * TODO: a clean-up is needed, and calibration gain/offset calculations
+	 * should be performed in this class.
+	 * @return
+	 */
+	@Override
+	public float[] getCalibrationOffset() {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void setCalibrationOffset(float[] calibrationOffset) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void setCalibrationOffset(float calibrationOffset) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public float getSingleCalibrationOffset() {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
 }

@@ -395,7 +395,7 @@ public class RawSignalSampleSource extends AbstractMultichannelSampleSource impl
 			case DOUBLE :
 				DoubleBuffer doubleBuffer = bBuffer.asDoubleBuffer();
 				for (i=0; i<count; i++) {
-					target[arrayOffset+i] = (doubleBuffer.get(targetOffset+sample) * calibrationGain[channel]);
+					target[arrayOffset+i] = (doubleBuffer.get(targetOffset+sample) * calibrationGain[channel] + calibrationOffset[channel]);
 					sample += channelCount;
 				}
 				break;
@@ -403,7 +403,7 @@ public class RawSignalSampleSource extends AbstractMultichannelSampleSource impl
 			case FLOAT :
 				FloatBuffer floatBuffer = bBuffer.asFloatBuffer();
 				for (i=0; i<count; i++) {
-					target[arrayOffset+i] = (floatBuffer.get(targetOffset+sample) * calibrationGain[channel]);
+					target[arrayOffset+i] = (floatBuffer.get(targetOffset+sample) * calibrationGain[channel] + calibrationOffset[channel]);
 					sample += channelCount;
 				}
 				break;
@@ -411,7 +411,7 @@ public class RawSignalSampleSource extends AbstractMultichannelSampleSource impl
 			case INT :
 				IntBuffer intBuffer = bBuffer.asIntBuffer();
 				for (i=0; i<count; i++) {
-					target[arrayOffset+i] = (intBuffer.get(targetOffset+sample) * calibrationGain[channel]);
+					target[arrayOffset+i] = (intBuffer.get(targetOffset+sample) * calibrationGain[channel] + calibrationOffset[channel]);
 					sample += channelCount;
 				}
 				break;
@@ -419,7 +419,7 @@ public class RawSignalSampleSource extends AbstractMultichannelSampleSource impl
 			case SHORT :
 				ShortBuffer shortBuffer = bBuffer.asShortBuffer();
 				for (i=0; i<count; i++) {
-					target[arrayOffset+i] = (shortBuffer.get(targetOffset+sample) * calibrationGain[channel]);
+					target[arrayOffset+i] = (shortBuffer.get(targetOffset+sample) * calibrationGain[channel] + calibrationOffset[channel]);
 					sample += channelCount;
 				}
 				break;
@@ -447,11 +447,40 @@ public class RawSignalSampleSource extends AbstractMultichannelSampleSource impl
 	public void setCalibrationGain(float calibration) {
 		for (int i = 0; i < calibrationGain.length; i++)
 			calibrationGain[i] = calibration;
+		pcSupport.firePropertyChange(CALIBRATION_PROPERTY, null, calibrationGain);
+
 	}
 
 	@Override
 	public float getSingleCalibrationGain() {
 		return calibrationGain[0];
+	}
+
+	@Override
+	public float[] getCalibrationOffset() {
+		return calibrationOffset;
+	}
+
+	@Override
+	public void setCalibrationOffset(float calibrationOffset) {
+		Arrays.fill(this.calibrationOffset, calibrationOffset);
+		pcSupport.firePropertyChange(CALIBRATION_PROPERTY, null, calibrationOffset);
+	}
+
+	@Override
+	public void setCalibrationOffset(float[] calibrationOffset) {
+		if (!Arrays.equals(this.calibrationOffset, calibrationOffset)) {
+			float[] oldCalibration = this.calibrationOffset;
+			this.calibrationOffset = calibrationOffset;
+
+			pcSupport.firePropertyChange(CALIBRATION_PROPERTY, oldCalibration, calibrationOffset);
+		}
+
+	}
+
+	@Override
+	public float getSingleCalibrationOffset() {
+		return calibrationOffset[0];
 	}
 
 }

@@ -13,11 +13,22 @@ public class SignalParameterDescriptor extends PagingParameterDescriptor {
 
 	private Float samplingFrequency = 128F;
 	private Integer channelCount = 1;
-	private Float calibration = null;
+
+	/**
+	 * Calibration gain for the signal (the number by which each sample
+	 * in the signal should be multiplied).
+	 */
+	private Float calibrationGain = null;
+
+	/**
+	 * Calibration offset for the signal (the number which should be
+	 * added to each sample in the signal).
+	 */
+	private Float calibrationOffset = null;
 
 	private boolean samplingFrequencyEditable = true;
-	private boolean channelCountEditable = true;
-	private boolean calibrationEditable = false;
+	private boolean channelCountEditable = false;
+	private boolean calibrationEditable = true;
 
 	public Float getSamplingFrequency() {
 		return samplingFrequency;
@@ -35,12 +46,36 @@ public class SignalParameterDescriptor extends PagingParameterDescriptor {
 		this.channelCount = channelCount;
 	}
 
-	public Float getCalibration() {
-		return calibration;
+	/**
+	 * Returns the calibration gain for the signal.
+	 * @return the calibration gain for the signal
+	 */
+	public Float getCalibrationGain() {
+		return calibrationGain;
 	}
 
-	public void setCalibration(Float calibration) {
-		this.calibration = calibration;
+	/**
+	 * Sets a new value of calibration gain for the signal.
+	 * @param calibration new value of calibration gain
+	 */
+	public void setCalibrationGain(Float calibration) {
+		this.calibrationGain = calibration;
+	}
+
+	/**
+	 * Returns the calibration offset for the signal.
+	 * @return the calibration offset for the signal
+	 */
+	public Float getCalibrationOffset() {
+		return calibrationOffset;
+	}
+
+	/**
+	 * Sets the calibration offset for the signal.
+	 * @param calibrationOffset new value of calibration offset
+	 */
+	public void setCalibrationOffset(Float calibrationOffset) {
+		this.calibrationOffset = calibrationOffset;
 	}
 
 	public boolean isSamplingFrequencyEditable() {

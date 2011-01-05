@@ -564,6 +564,8 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 				RawSignalDescriptor descriptor = currentRawSignalDescriptor;
 				if (descriptor == null) {
 					descriptor = new RawSignalDescriptor();
+					descriptor.setCalibrationGain(1.0F);
+					descriptor.setCalibrationOffset(0.0F);
 				}
 				signalOptionsPanel.getRawSignalOptionsPanel().fillModelFromPanel(descriptor);
 				signalOptionsPanel.getPagingSignalParamersPanel().fillModelFromPanel(descriptor);

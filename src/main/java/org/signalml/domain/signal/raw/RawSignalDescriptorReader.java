@@ -208,6 +208,9 @@ public class RawSignalDescriptorReader {
 				}
 				
 			}
+			else {
+				descriptor.setCalibrationOffset(0.0F);
+			}
 		} catch (XPathExpressionException ex) {
 			throw new SignalMLException("error.invalidRawSignalXML", ex);
 		}

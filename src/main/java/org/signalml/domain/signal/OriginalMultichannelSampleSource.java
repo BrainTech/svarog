@@ -79,6 +79,32 @@ public interface OriginalMultichannelSampleSource extends MultichannelSampleSour
 	 */
 	void setCalibrationGain(float calibration);
 
+	/**
+	 * Returns the values of calibration offset for the sample source for
+	 * each channel.
+	 * @return the values of calibration offset for the signal
+	 */
+	float[] getCalibrationOffset();
+
+	/**
+	 * Sets the values of calibration offset for each channel in the sample source.
+	 * @param calibrationOffset the new values of calibration offset
+	 */
+	void setCalibrationOffset(float[] calibrationOffset);
+
+	/**
+	 * Returns a single value representing calibration offset
+	 * @return
+	 */
+	float getSingleCalibrationOffset();
+
+	/**
+	 * Sets a new value of calibration offset (each channel will have the
+	 * same value).
+	 * @param calibrationOffset new value of calibration offset.
+	 */
+	void setCalibrationOffset(float calibrationOffset);
+
         /**
          * Creates the copy of this sample source.
          * @return the copy of this sample source.

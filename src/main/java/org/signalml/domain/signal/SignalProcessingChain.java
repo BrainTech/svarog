@@ -148,6 +148,7 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 
 			source = new RawSignalSampleSource(rawEntry.getFile(), rawDescriptor.getChannelCount(), rawDescriptor.getSamplingFrequency(), rawDescriptor.getSampleType(), rawDescriptor.getByteOrder());
 			source.setCalibrationGain(rawDescriptor.getCalibrationGain());
+			source.setCalibrationOffset(rawDescriptor.getCalibrationOffset());
 
 		} else {
 			throw new SanityCheckException("Don't know how to open this kind of mrud [" + mrud.getClass().getName() + "]");

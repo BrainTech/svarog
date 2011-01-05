@@ -216,12 +216,17 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
+
 		if (evt.getSource() == source) {
 			if (evt.getPropertyName().equals(CHANNEL_COUNT_PROPERTY)) {
 				reinitFilterChains();
 			}
 		}
+		else if (evt.getPropertyName().equals(OriginalMultichannelSampleSource.CALIBRATION_PROPERTY)) {
+			updateTimeDomainSampleFilterEnginesCache(source.getSampleCount(0));
+		}
 		super.propertyChange(evt);
+
 	}
 
         /**

@@ -74,6 +74,7 @@ public class RawSignalDocument extends AbstractFileSignal {
 		}
 		RawSignalSampleSource sampleSource = new RawSignalSampleSource(backingFile.getAbsoluteFile(), descriptor.getChannelCount(), descriptor.getSamplingFrequency(), descriptor.getSampleType(), descriptor.getByteOrder());
 		sampleSource.setCalibrationGain(descriptor.getCalibrationGain());
+		sampleSource.setCalibrationOffset(descriptor.getCalibrationOffset());
 		sampleSource.setLabels(descriptor.getChannelLabels());
 
 		this.sampleSource = sampleSource;

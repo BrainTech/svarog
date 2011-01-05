@@ -703,7 +703,8 @@
 	<entry key="openSignal.options.raw.channelCount">Number of channels</entry>
 	<entry key="openSignal.options.raw.sampleType">Sample type</entry>
 	<entry key="openSignal.options.raw.byteOrder">Byte order</entry>
-	<entry key="openSignal.options.raw.calibration">Calibration</entry>
+	<entry key="openSignal.options.raw.calibrationGain">Calibration gain</entry>
+	<entry key="openSignal.options.raw.calibrationOffset">Calibration offset</entry>
 
 	<entry key="openSignal.options.raw.readXMLManifest">Read manifest...</entry>
 	<entry key="openSignal.options.raw.readXMLManifestToolTip">Read signal parameters from XML manifest</entry>
@@ -731,7 +732,8 @@
 	<entry key="signalParameters.requiredSignalParameters">Required signal parameters</entry>
 	<entry key="signalParameters.samplingFrequency">Sampling Frequency (Hz)</entry>
 	<entry key="signalParameters.channelCount">Number of channels</entry>
-	<entry key="signalParameters.calibration">Calibration</entry>
+	<entry key="signalParameters.calibrationGain">Calibration gain</entry>
+	<entry key="signalParameters.calibrationOffset">Calibration offset</entry>
 	<entry key="signalParameters.pagingSignalParameters">Page &amp; block parameters</entry>
 
 	<entry key="signalParameters.requiredNotEditable">This parameter may not be changed for this signal file</entry>

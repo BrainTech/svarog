@@ -571,7 +571,7 @@ public class DocumentFlowIntegrator {
 				spd.setBlocksPerPage(smlEntry.getBlocksPerPage());
 				spd.setSamplingFrequency(smlEntry.getSamplingFrequency());
 				spd.setChannelCount(smlEntry.getChannelCount());
-				spd.setCalibration(smlEntry.getCalibrationGain());
+				spd.setCalibrationGain(smlEntry.getCalibrationGain());
 
 			}
 			else if (mrud instanceof RawSignalMRUDEntry) {
@@ -723,7 +723,7 @@ public class DocumentFlowIntegrator {
 				mrud.setBlocksPerPage(spd.getBlocksPerPage());
 				mrud.setSamplingFrequency(spd.getSamplingFrequency());
 				mrud.setChannelCount(spd.getChannelCount());
-				mrud.setCalibrationGain(spd.getCalibration());
+				mrud.setCalibrationGain(spd.getCalibrationGain());
 				mrudRegistry.registerMRUDEntry(mrud);
 			}
 
@@ -1613,7 +1613,7 @@ public class DocumentFlowIntegrator {
 	 */
 	private boolean collectRequiredSignalConfiguration(SignalMLDocument signalMLDocument, SignalParameterDescriptor spd) {
 
-		spd.setCalibration(null);
+		spd.setCalibrationGain(null);
 		if (signalMLDocument.isCalibrationCapable()) {
 			spd.setCalibrationEditable(true);
 		} else {
@@ -1652,7 +1652,7 @@ public class DocumentFlowIntegrator {
 				signalMLDocument.setChannelCount(spd.getChannelCount());
 			}
 			if (spd.isCalibrationEditable()) {
-				signalMLDocument.setCalibration(spd.getCalibration());
+				signalMLDocument.setCalibration(spd.getCalibrationGain());
 			}
 
 		}

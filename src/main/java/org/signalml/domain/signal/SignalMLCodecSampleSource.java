@@ -507,4 +507,36 @@ public class SignalMLCodecSampleSource extends AbstractMultichannelSampleSource 
 		return calibration;
 	}
 
+	@Override
+	public float[] getCalibrationOffset() {
+		float[] calibrationOffset = new float[getChannelCount()];
+		Arrays.fill(calibrationOffset, 0);
+		return calibrationOffset;
+	}
+
+	/**
+	 * Setting calibration offset is not supported for the
+	 * SignalMLCodecsSampleSource.
+	 * @param calibrationOffset
+	 */
+	@Override
+	public void setCalibrationOffset(float[] calibrationOffset) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	/**
+	 * Setting calibration offset is not supported for the
+	 * SignalMLCodecsSampleSource.
+	 * @param calibrationOffset
+	 */
+	@Override
+	public void setCalibrationOffset(float calibrationOffset) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public float getSingleCalibrationOffset() {
+		return 0.0F;
+	}
+
 }

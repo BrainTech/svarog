@@ -4,6 +4,8 @@
 package org.signalml.app.view.element;
 
 import java.awt.Dimension;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;
@@ -25,7 +27,7 @@ import org.springframework.validation.Errors;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class RequiredSignalParametersPanel extends JPanel {
+public class RequiredSignalParametersPanel extends JPanel implements FocusListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -35,7 +37,26 @@ public class RequiredSignalParametersPanel extends JPanel {
 
 	private JTextField samplingFrequencyField;
 	private JTextField channelCountField;
-	private JTextField calibrationField;
+
+	private JTextField calibrationGainField;
+	private JTextField calibrationOffsetField;
+
+	/**
+	 * True if the calibration gain field was focused, false otherwise.
+	 * It is assumed that if this field was focused, then it probably
+	 * was also modified, so the descriptor for the signal is also modified.
+	 *
+	 * TODO: This is a temporary solution - RawSignalSampleSource supports
+	 * individual calibrations for each channel, so there should be a
+	 * possiblity to edit calibration gain and offeset for each channel
+	 * separately. In that case these boolean variables would not be needed.
+	 */
+	private boolean wasCalibrationGainFocused = false;
+
+	/**
+	 * True if the calibration offset field was focused, false otherwise.
+	 */
+	private boolean wasCalibrationOffsetFocused = false;
 
 	/**
 	 * This is the default constructor
@@ -67,7 +88,8 @@ public class RequiredSignalParametersPanel extends JPanel {
 
 		JLabel samplingFrequencyLabel = new JLabel(messageSource.getMessage("signalParameters.samplingFrequency"));
 		JLabel channelCountLabel = new JLabel(messageSource.getMessage("signalParameters.channelCount"));
-		JLabel calibrationLabel = new JLabel(messageSource.getMessage("signalParameters.calibration"));
+		JLabel calibrationGainLabel = new JLabel(messageSource.getMessage("signalParameters.calibrationGain"));
+		JLabel calibrationOffsetLabel = new JLabel(messageSource.getMessage("signalParameters.calibrationOffset"));
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
@@ -75,14 +97,16 @@ public class RequiredSignalParametersPanel extends JPanel {
 		        layout.createParallelGroup()
 		        .addComponent(samplingFrequencyLabel)
 		        .addComponent(channelCountLabel)
-		        .addComponent(calibrationLabel)
+		        .addComponent(calibrationGainLabel)
+			.addComponent(calibrationOffsetLabel)
 		);
 
 		hGroup.addGroup(
 		        layout.createParallelGroup()
 		        .addComponent(getSamplingFrequencyField())
 		        .addComponent(getChannelCountField())
-		        .addComponent(getCalibrationField())
+		        .addComponent(getCalibrationGainField())
+			.addComponent(getCalibrationOffsetField())
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -103,8 +127,14 @@ public class RequiredSignalParametersPanel extends JPanel {
 
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(calibrationLabel)
-				.addComponent(getCalibrationField())
+				.addComponent(calibrationGainLabel)
+				.addComponent(getCalibrationGainField())
+			);
+
+		vGroup.addGroup(
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(calibrationOffsetLabel)
+				.addComponent(getCalibrationOffsetField())
 			);
 
 		layout.setVerticalGroup(vGroup);
@@ -127,12 +157,22 @@ public class RequiredSignalParametersPanel extends JPanel {
 		return channelCountField;
 	}
 
-	public JTextField getCalibrationField() {
-		if (calibrationField == null) {
-			calibrationField = new JTextField();
-			calibrationField.setPreferredSize(new Dimension(200,25));
+	public JTextField getCalibrationGainField() {
+		if (calibrationGainField == null) {
+			calibrationGainField = new JTextField();
+			calibrationGainField.setPreferredSize(new Dimension(200,25));
+			calibrationGainField.addFocusListener(this);
 		}
-		return calibrationField;
+		return calibrationGainField;
+	}
+
+	public JTextField getCalibrationOffsetField() {
+		if (calibrationOffsetField == null) {
+			calibrationOffsetField = new JTextField();
+			calibrationOffsetField.setPreferredSize(new Dimension(200,25));
+			calibrationOffsetField.addFocusListener(this);
+		}
+		return calibrationOffsetField;
 	}
 
 	public void fillPanelFromModel(SignalParameterDescriptor spd) throws SignalMLException {
@@ -151,11 +191,18 @@ public class RequiredSignalParametersPanel extends JPanel {
 			getChannelCountField().setText("");
 		}
 
-		Float calibration = spd.getCalibration();
+		Float calibration = spd.getCalibrationGain();
 		if (calibration != null) {
-			getCalibrationField().setText(calibration.toString());
+			getCalibrationGainField().setText(calibration.toString());
 		} else {
-			getCalibrationField().setText("");
+			getCalibrationGainField().setText("");
+		}
+
+		Float calibrationOffset = spd.getCalibrationOffset();
+		if (calibrationOffset != null) {
+			getCalibrationOffsetField().setText(calibrationOffset.toString());
+		} else {
+			getCalibrationOffsetField().setText("");
 		}
 
 		if (spd.isSamplingFrequencyEditable()) {
@@ -175,11 +222,15 @@ public class RequiredSignalParametersPanel extends JPanel {
 		}
 
 		if (spd.isCalibrationEditable()) {
-			getCalibrationField().setEditable(true);
-			getCalibrationField().setToolTipText(null);
+			getCalibrationGainField().setEditable(true);
+			getCalibrationGainField().setToolTipText(null);
+			getCalibrationOffsetField().setEditable(true);
+			getCalibrationOffsetField().setToolTipText(null);
 		} else {
-			getCalibrationField().setEditable(false);
-			getCalibrationField().setToolTipText(messageSource.getMessage("signalParameters.requiredNotEditable"));
+			getCalibrationGainField().setEditable(false);
+			getCalibrationGainField().setToolTipText(messageSource.getMessage("signalParameters.requiredNotEditable"));
+			getCalibrationOffsetField().setToolTipText(messageSource.getMessage("signalParameters.requiredNotEditable"));
+			getCalibrationOffsetField().setEditable(false);
 		}
 
 	}
@@ -193,8 +244,18 @@ public class RequiredSignalParametersPanel extends JPanel {
 				spd.setChannelCount(new Integer(getChannelCountField().getText()));
 			}
 			if (spd.isCalibrationEditable()) {
-				spd.setCalibration(new Float(getCalibrationField().getText()));
+
+				if (wasCalibrationGainFocused) {
+					spd.setCalibrationGain(Float.parseFloat(getCalibrationGainField().getText()));
+					wasCalibrationGainFocused = false;
+				}
+				if (wasCalibrationOffsetFocused) {
+					spd.setCalibrationOffset(Float.parseFloat(getCalibrationOffsetField().getText()));
+					wasCalibrationOffsetFocused = false;
+				}
+
 			}
+
 		} catch (NumberFormatException ex) {
 			throw new SignalMLException(ex);
 		}
@@ -223,7 +284,7 @@ public class RequiredSignalParametersPanel extends JPanel {
 		}
 		if (spd.isCalibrationEditable()) {
 			try {
-				float calibration = Float.parseFloat(getCalibrationField().getText());
+				float calibration = Float.parseFloat(getCalibrationGainField().getText());
 				if (calibration <= 0) {
 					errors.rejectValue("calibration", "error.calibrationNegative");
 				}
@@ -231,6 +292,20 @@ public class RequiredSignalParametersPanel extends JPanel {
 				errors.rejectValue("calibration", "error.invalidNumber");
 			}
 		}
+	}
+
+	@Override
+	public void focusGained(FocusEvent e) {
+		if (e.getSource() == getCalibrationGainField()) {
+			wasCalibrationGainFocused = true;
+		}
+		else if (e.getSource() == getCalibrationOffsetField()) {
+			wasCalibrationOffsetFocused = true;
+		}
+	}
+
+	@Override
+	public void focusLost(FocusEvent e) {
 	}
 
 }

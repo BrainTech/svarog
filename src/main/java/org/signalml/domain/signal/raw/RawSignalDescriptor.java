@@ -263,8 +263,11 @@ public class RawSignalDescriptor {
 	}
 
 	public void setCalibrationGain(float calibration) {
-		if (calibrationGain == null) {
-			calibrationGain = new float[getChannelCount()];
+		if (calibrationGain == null || getChannelCount() != calibrationGain.length) {
+			if (getChannelCount() > 0)
+				calibrationGain = new float[getChannelCount()];
+			else
+				calibrationGain = new float[1];
 		}
 		Arrays.fill(calibrationGain, calibration);
 	}
@@ -275,6 +278,15 @@ public class RawSignalDescriptor {
 
 	public float[] getCalibrationOffset() {
 		return calibrationOffset;
+	}
+
+	public void setCalibrationOffset(float calibrationOffset) {
+		if (this.calibrationOffset == null || getChannelCount() != this.calibrationOffset.length)
+			if (getChannelCount() > 0)
+				this.calibrationOffset = new float[getChannelCount()];
+			else
+				this.calibrationOffset = new float[1];
+		Arrays.fill(this.calibrationOffset, calibrationOffset);
 	}
 
 	public void setCalibrationOffset(float[] calibrationOffset) {

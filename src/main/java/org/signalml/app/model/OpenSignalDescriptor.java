@@ -39,9 +39,10 @@ public class OpenSignalDescriptor {
 
 		rawSignalDescriptor.setSamplingFrequency(128F);
 		rawSignalDescriptor.setChannelCount(1);
-		rawSignalDescriptor.setSampleType(RawSignalSampleType.FLOAT);
+		rawSignalDescriptor.setSampleType(RawSignalSampleType.DOUBLE);
 		rawSignalDescriptor.setByteOrder(RawSignalByteOrder.LITTLE_ENDIAN);
 		rawSignalDescriptor.setCalibrationGain(1F);
+		rawSignalDescriptor.setCalibrationOffset(0.0F);
 
 	}
 
