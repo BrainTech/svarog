@@ -3,9 +3,9 @@
  */
 package org.signalml.plugin.impl;
 
-import java.awt.event.MouseListener;
-
 import javax.swing.Icon;
+
+import org.signalml.plugin.export.signal.SignalToolButtonListener;
 
 /**
  * Contains the parameters of a button:
@@ -28,7 +28,7 @@ public class ToolButtonParameters {
 	/**
 	 * the listener for mouse events
 	 */
-	private MouseListener listener;
+	private SignalToolButtonListener listener;
 	
 	/**
 	 * Constructor. Sets parameters.
@@ -36,7 +36,7 @@ public class ToolButtonParameters {
 	 * @param icon the icon of the button
 	 * @param listener the listener for mouse events
 	 */
-	public ToolButtonParameters(String toolTipText, Icon icon, MouseListener listener) {
+	public ToolButtonParameters(String toolTipText, Icon icon, SignalToolButtonListener listener) {
 		this.toolTipText = toolTipText;
 		this.icon = icon;
 		this.listener = listener;
@@ -59,7 +59,7 @@ public class ToolButtonParameters {
 	/**
 	 * @return the listener for mouse events
 	 */
-	public MouseListener getListener() {
+	public SignalToolButtonListener getListener() {
 		return listener;
 	}
 }

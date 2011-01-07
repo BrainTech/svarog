@@ -12,7 +12,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.SwingUtilities;
 
 import org.signalml.app.util.IconUtils;
-import org.signalml.plugin.export.signal.AbstractSignalTool;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 
 /** SelectChannelSignalTool

@@ -25,8 +25,8 @@ import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.OpenDocumentDescriptor;
 import org.signalml.app.model.OpenSignalDescriptor;
-import org.signalml.app.model.SignalExportDescriptor;
 import org.signalml.app.model.OpenSignalDescriptor.OpenSignalMethod;
+import org.signalml.app.model.SignalExportDescriptor;
 import org.signalml.app.model.SignalParameterDescriptor;
 import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.dialog.ErrorsDialog;
@@ -257,6 +257,73 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
         ChannelSamplesImpl channelSamples = getSamplesFromSource(source, channel, signalOffset, count);
         return channelSamples;
     }
+    
+    @Override
+    public ChannelSamplesImpl getActiveProcessedSignalSamples(int channel, int signalOffset, int count) throws NoActiveObjectException, IndexOutOfBoundsException {
+    	MultichannelSampleSource source = getOutput();
+    	ChannelSamplesImpl channelSamples = getSamplesFromSource(source, channel, signalOffset, count);
+        return channelSamples;
+    }
+    
+    @Override
+    public ChannelSamplesImpl getRawSignalSamplesFromDocument(ExportedSignalDocument document, int channel, int signalOffset, int count) throws InvalidClassException, IndexOutOfBoundsException {
+    	MultichannelSampleSource source = getOriginalSourceFromDocument(document);
+    	ChannelSamplesImpl channelSamples = getSamplesFromSource(source, channel, signalOffset, count);
+        return channelSamples;
+    }
+    
+    @Override
+    public ChannelSamplesImpl getProcessedSignalSamplesFromDocument(ExportedSignalDocument document, int channel, int signalOffset, int count) throws InvalidClassException, IndexOutOfBoundsException {
+		MultichannelSampleSource source = getOutputFromDocument(document);
+		ChannelSamplesImpl channelSamples = getSamplesFromSource(source, channel, signalOffset, count);
+        return channelSamples;
+    }
+    
+    /**
+     * Returns samples for the given source of samples, the given channel and
+     * the specified period of time.
+     * @param source the source of samples
+     * @param channel the number of the channel (from 0 to {@code
+     * source.getChannelCount()-1})
+     * @param signalOffset the position (in time in seconds) in the signal
+     * starting from which samples will be returned
+     * @param length the length of the part of the signal which should be returned
+     * @return samples for the given source of samples and the given channel
+     * @throws IndexOutOfBoundsException if the index of a channel is out of range
+     */
+    private ChannelSamplesImpl getSamplesFromSource(MultichannelSampleSource source, int channel, float signalOffsetTime, float length) throws IndexOutOfBoundsException {
+    	ChannelSamplesImpl channelSamples = getSamplesFromSource(source, channel, (int) (signalOffsetTime*source.getSamplingFrequency()), (int) (length*source.getSamplingFrequency()));
+        return channelSamples;
+    }
+    
+    @Override
+    public ChannelSamplesImpl getActiveProcessedSignalSamples(int channel, float signalOffsetTime, float length) throws NoActiveObjectException, IndexOutOfBoundsException {
+    	MultichannelSampleSource source = getOutput();
+    	ChannelSamplesImpl channelSamples = getSamplesFromSource(source, channel, signalOffsetTime, length);
+        return channelSamples;
+    }
+    
+    @Override
+    public ChannelSamplesImpl getActiveRawSignalSamples(int channel, float signalOffsetTime, float length) throws NoActiveObjectException, IndexOutOfBoundsException {
+    	MultichannelSampleSource source = getOriginalSource();
+    	ChannelSamplesImpl channelSamples = getSamplesFromSource(source, channel, signalOffsetTime, length);
+        return channelSamples;
+    }
+    
+    @Override
+    public ChannelSamplesImpl getRawSignalSamplesFromDocument(ExportedSignalDocument document, int channel, float signalOffsetTime, float length) throws InvalidClassException, IndexOutOfBoundsException {
+    	MultichannelSampleSource source = getOriginalSourceFromDocument(document);
+    	ChannelSamplesImpl channelSamples = getSamplesFromSource(source, channel, signalOffsetTime, length);
+        return channelSamples;
+    }
+    
+    @Override
+    public ChannelSamplesImpl getProcessedSignalSamplesFromDocument(ExportedSignalDocument document, int channel, float signalOffsetTime, float length) throws InvalidClassException, IndexOutOfBoundsException {
+		MultichannelSampleSource source = getOutputFromDocument(document);
+		ChannelSamplesImpl channelSamples = getSamplesFromSource(source, channel, signalOffsetTime, length);
+        return channelSamples;
+    }
+    
 
 	/* (non-Javadoc)
 	 * @see org.signalml.plugin.export.PluginAccessSignal#getActiveRawSignalSamples()

@@ -5,9 +5,10 @@ import java.awt.event.MouseWheelListener;
 import javax.swing.event.MouseInputListener;
 
 import org.signalml.app.view.signal.SignalView;
+import org.signalml.plugin.export.view.ExportedSignalView;
 
 /**
- * Mouse event processor associated with a single {@link SignalView} instance.
+ * Mouse event processor associated with a single {@link ExportedSignalView} instance.
  *
  * @author STF &copy; 2010 eisenbits
  */
@@ -62,10 +63,10 @@ public interface SignalTool extends MouseInputListener, MouseWheelListener {
     Cursor getDefaultCursor();
     
     /**
-     * Sets the associated {@link SignalView signal view}.
+     * Sets the associated {@link ExportedSignalView signal view}.
      * @param signalView the associated signal view
      */
-    void setSignalView(SignalView signalView);
+    void setSignalView(ExportedSignalView signalView);
     
     /**
      * Creates a copy of this signal tool if such operation is supported

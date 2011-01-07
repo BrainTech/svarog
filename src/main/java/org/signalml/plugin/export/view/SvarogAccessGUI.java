@@ -3,7 +3,6 @@
  */
 package org.signalml.plugin.export.view;
 
-import java.awt.event.MouseListener;
 
 import javax.swing.Action;
 import javax.swing.Icon;
@@ -16,6 +15,7 @@ import org.signalml.app.view.signal.SignalFFTTool;
 import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.Plugin;
 import org.signalml.plugin.export.signal.SignalTool;
+import org.signalml.plugin.export.signal.SignalToolButtonListener;
 
 /**
  * This interface that allows to:
@@ -361,7 +361,7 @@ public interface SvarogAccessGUI {
 	 * @see SignalFFTTool
 	 * @see SelectTagSignalTool
 	 */
-	public void addSignalTool(SignalTool tool, Icon icon, String toolTipText, MouseListener buttonListener) throws UnsupportedOperationException;
+	public void addSignalTool(SignalTool tool, Icon icon, String toolTipText, SignalToolButtonListener buttonListener) throws UnsupportedOperationException;
 	
 	/**
 	 * Adds the button to the main toolbar (the top one).
