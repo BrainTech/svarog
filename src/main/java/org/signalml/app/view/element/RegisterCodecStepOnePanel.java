@@ -16,10 +16,15 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.signalml.app.view.dialog.RegisterCodecDialog;
+import org.signalml.codec.SignalMLCodec;
 import org.springframework.context.support.MessageSourceAccessor;
 
-/** RegisterCodecStepOnePanel
- *
+
+/**
+ * Panel for the first step of {@link RegisterCodecDialog}.
+ * Contains only one {@link #getFilePanel() panel}, which allows to
+ * select the file with the {@link SignalMLCodec codec}.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -27,14 +32,25 @@ public class RegisterCodecStepOnePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * the source of messages (labels)
+	 */
 	private MessageSourceAccessor messageSource;
 
+	/**
+	 * the {@link #getFileChooser() embedded file chooser}
+	 */
 	private EmbeddedFileChooser fileChooser = null;
 
+	/**
+	 * the panel with the {@link #getFileChooser() file chooser}.
+	 */
 	private JPanel filePanel = null;
 
 	/**
-	 * This is the default constructor
+	 * Constructor. Sets the {@link MessageSourceAccessor message source} and
+	 * initializes this panel.
+	 * @param messageSource the source of messages (labels)
 	 */
 	public RegisterCodecStepOnePanel(MessageSourceAccessor messageSource) {
 		super();
@@ -43,9 +59,9 @@ public class RegisterCodecStepOnePanel extends JPanel {
 	}
 
 	/**
-	 * This method initializes this
-	 *
-	 *
+	 * Initializes this panel with the {@link BorderLayout} and
+	 * adds to it the {@link #getFilePanel() panel} with the
+	 * {@link #getFileChooser() file chooser}.
 	 */
 	private void initialize() {
 
@@ -55,6 +71,11 @@ public class RegisterCodecStepOnePanel extends JPanel {
 
 	}
 
+	/**
+	 * Returns the panel with the {@link #getFileChooser() file chooser}.
+	 * If the panel doens't exist it is created.
+	 * @return the panel with the file chooser.
+	 */
 	private JPanel getFilePanel() {
 		if (filePanel == null) {
 			filePanel = new JPanel();
@@ -68,9 +89,15 @@ public class RegisterCodecStepOnePanel extends JPanel {
 	}
 
 	/**
-	 * This method initializes fileChooser
-	 *
-	 * @return javax.swing.JFileChooser
+	 * Returns the embedded file chooser.
+	 * If it doesn't exist it is created:
+	 * <ul>
+	 * <li>as open dialog,</li>
+	 * <li>without multi-selection and hiding files,</li>
+	 * <li>to open files: {@code XML} or all,</li>
+	 * <li>with the user directory as the current directory.</li>
+	 * </ul>
+	 * @return the embedded file chooser
 	 */
 	public EmbeddedFileChooser getFileChooser() {
 		if (fileChooser == null) {

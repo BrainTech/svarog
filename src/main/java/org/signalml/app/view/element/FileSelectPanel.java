@@ -26,6 +26,7 @@ public class FileSelectPanel extends JPanel {
 	private MessageSourceAccessor messageSource;
 
 	private JTextField fileNameField;
+	
 	private JButton changeButton;
 
 	/**

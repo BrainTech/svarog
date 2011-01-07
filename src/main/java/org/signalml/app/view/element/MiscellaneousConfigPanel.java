@@ -20,11 +20,43 @@ import javax.swing.border.TitledBorder;
 
 import org.signalml.SignalMLOperationMode;
 import org.signalml.app.config.ApplicationConfiguration;
+import org.signalml.app.config.preset.Preset;
+import org.signalml.app.view.dialog.DynamicCompilationWarningDialog;
+import org.signalml.app.view.dialog.SeriousWarningDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
-/** MiscellaneousConfigPanel
- *
+/**
+ * Panel with various options of (tooltips, "view mode", warning dialogs):
+ * Contains 3 sub-panels:
+ * <ul>
+ * <li>the general panel with some check-boxes telling:
+ * <ul>
+ * <li>{@link #getSaveConfigOnEveryChangeCheckBox() if} configuration files
+ * should be saved after every change,</li>
+ * <li>{@link #getRestoreWorkspaceCheckBox() if} the workspace should be
+ * restored when the application starts,</li>
+ * <li>{@link #getDisableSeriousWarningsCheckBox() if} the {@link
+ * SeriousWarningDialog serious warning dialog} should be shown for
+ * operations on {@link Preset presets},</li>
+ * <li>{@link #getDontShowCompilationWarningCheckBox() if} if the {@link
+ * DynamicCompilationWarningDialog} should be shown when a dynamic
+ * compilation is needed,</li></ul></li>
+ * <li>the panel which allows to select {@link #getToolTipInitialSpinner()
+ * after} how many milliseconds the tool tips should appear and {@link
+ * #getToolTipDismissSpinner() how long} they should be displayed,</li>
+ * <li>the panel which allows to select the parameters of the "view mode":
+ * <ul><li>{@link #getViewModeHidesMainToolBarCheckBox() if} the main tool
+ * bar should be displayed,</li>
+ * <li>{@link #getViewModeHidesLeftPanelCheckBox() if} the left panel
+ * should be displayed,</li>
+ * <li>{@link #getViewModeHidesBottomPanelCheckBox() if} the bottom panel
+ * should be displayed,</li>
+ * <li>{@link #getViewModeCompactsPageTagBarsCheckBox() if} the column
+ * header (where the page tags are shown) should be compacted,</li>
+ * <li>{@link #getViewModeSnapsToPageCheckBox() if} the signal plot should
+ * be snapped to the beginning of the page.</li></ul></li>
+ * </ul>
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -32,24 +64,82 @@ public class MiscellaneousConfigPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * the {@link MessageSourceAccessor source} of messages (labels)
+	 */
 	private MessageSourceAccessor messageSource;
 
+	/**
+	 * the check-box if configuration files should be saved after every change
+	 * (checked) or on exit (unchecked)
+	 */
 	private JCheckBox saveConfigOnEveryChangeCheckBox;
+	/**
+	 * the check-box if the workspace should be restored when the application
+	 * starts
+	 */
 	private JCheckBox restoreWorkspaceCheckBox;
+	/**
+	 * the check-box if the {@link SeriousWarningDialog serious warning dialog}
+	 * should be shown for the operations on {@link Preset presets} (unchecked)
+	 * or not (checked)
+	 */
 	private JCheckBox disableSeriousWarningsCheckBox;
+	/**
+	 * the check-box if the {@link DynamicCompilationWarningDialog} should be
+	 * shown when a dynamic compilation is needed (unchecked)
+	 */
 	private JCheckBox dontShowCompilationWarningCheckBox;
 
+	/**
+	 * the check-box if the main tool bar should (unchecked) be displayed in
+	 * the "view mode" (F11) or not (checked)
+	 */
 	private JCheckBox viewModeHidesMainToolBarCheckBox;
+	/**
+	 * the check-box if the left panel should (unchecked) be displayed in
+	 * the "view mode" (F11) or not (checked)
+	 */
 	private JCheckBox viewModeHidesLeftPanelCheckBox;
+	/**
+	 * the check-box if the bottom panel should (unchecked) be displayed in
+	 * the "view mode" (F11) or not (checked)
+	 */
 	private JCheckBox viewModeHidesBottomPanelCheckBox;
+	/**
+	 * the check-box if the column header should (checked) be compacted in
+	 * the "view mode" (F11) or not (unchecked)
+	 */
 	private JCheckBox viewModeCompactsPageTagBarsCheckBox;
+	/**
+	 * the check-box if the signal plot should (checked) be snapped to the
+	 * beginning of the page in the "view mode" (F11)
+	 */
 	private JCheckBox viewModeSnapsToPageCheckBox;
 
+	/**
+	 * the spinner which allows to select after how many milliseconds the
+	 * tooltip message should be shown
+	 */
 	private JSpinner toolTipInitialSpinner;
+	/**
+	 * the spinner which allows to select for how many milliseconds the
+	 * tooltip message should be displayed
+	 */
 	private JSpinner toolTipDismissSpinner;
 
+	/**
+	 * the {@link SignalMLOperationMode mode} in which Svarog is running
+	 */
 	private SignalMLOperationMode mode;
 
+	/**
+	 * Constructor. Sets the {@link MessageSourceAccessor message source} and
+	 * initializes this panel.
+	 * @param messageSource the source of messages (labels)
+	 * @param mode the {@link SignalMLOperationMode mode} in which Svarog
+	 * is running (application or applet)
+	 */
 	public MiscellaneousConfigPanel(MessageSourceAccessor messageSource, SignalMLOperationMode mode) {
 		super();
 		this.messageSource = messageSource;
@@ -57,6 +147,37 @@ public class MiscellaneousConfigPanel extends JPanel {
 		initialize();
 	}
 
+	/**
+	 * Initializes this panel with 3 sub-panels:
+	 * <ul>
+	 * <li>the general panel with some check-boxes telling:
+	 * <ul>
+	 * <li>{@link #getSaveConfigOnEveryChangeCheckBox() if} configuration files
+	 * should be saved after every change,</li>
+	 * <li>{@link #getRestoreWorkspaceCheckBox() if} the workspace should be
+	 * restored when the application starts,</li>
+	 * <li>{@link #getDisableSeriousWarningsCheckBox() if} the {@link
+	 * SeriousWarningDialog serious warning dialog} should be shown for
+	 * operations on {@link Preset presets},</li>
+	 * <li>{@link #getDontShowCompilationWarningCheckBox() if} if the {@link
+	 * DynamicCompilationWarningDialog} should be shown when a dynamic
+	 * compilation is needed,</li></ul></li>
+	 * <li>the panel which allows to select {@link #getToolTipInitialSpinner()
+	 * after} how many milliseconds the tool tips should appear and {@link
+	 * #getToolTipDismissSpinner() how long} they should be displayed,</li>
+	 * <li>the panel which allows to select the parameters of the "view mode":
+	 * <ul><li>{@link #getViewModeHidesMainToolBarCheckBox() if} the main tool
+	 * bar should be displayed,</li>
+	 * <li>{@link #getViewModeHidesLeftPanelCheckBox() if} the left panel
+	 * should be displayed,</li>
+	 * <li>{@link #getViewModeHidesBottomPanelCheckBox() if} the bottom panel
+	 * should be displayed,</li>
+	 * <li>{@link #getViewModeCompactsPageTagBarsCheckBox() if} the column
+	 * header (where the page tags are shown) should be compacted,</li>
+	 * <li>{@link #getViewModeSnapsToPageCheckBox() if} the signal plot should
+	 * be snapped to the beginning of the page.</li></ul></li>
+	 * </ul>
+	 */
 	private void initialize() {
 
 		setBorder(new EmptyBorder(3,3,3,3));
@@ -128,6 +249,13 @@ public class MiscellaneousConfigPanel extends JPanel {
 
 	}
 
+	/**
+	 * Returns the check-box if configuration files should be saved after every
+	 * change (checked) or on exit (unchecked).
+	 * If the check-box doesn't exist, it is created.
+	 * @return the check-box if configuration files should be saved after every
+	 * change (checked) or on exit (unchecked)
+	 */
 	public JCheckBox getSaveConfigOnEveryChangeCheckBox() {
 		if (saveConfigOnEveryChangeCheckBox == null) {
 			saveConfigOnEveryChangeCheckBox = new JCheckBox(messageSource.getMessage("preferences.miscellaneous.saveConfigOnEveryChange"));
@@ -135,6 +263,13 @@ public class MiscellaneousConfigPanel extends JPanel {
 		return saveConfigOnEveryChangeCheckBox;
 	}
 
+	/**
+	 * Returns the check-box if the workspace should be restored when the
+	 * application starts.
+	 * If the check-box doesn't exist, it is created.
+	 * @return the check-box if the workspace should be restored when the
+	 * application starts
+	 */
 	public JCheckBox getRestoreWorkspaceCheckBox() {
 		if (restoreWorkspaceCheckBox == null) {
 			restoreWorkspaceCheckBox = new JCheckBox(messageSource.getMessage("preferences.miscellaneous.restoreWorkspace"));
@@ -142,6 +277,14 @@ public class MiscellaneousConfigPanel extends JPanel {
 		return restoreWorkspaceCheckBox;
 	}
 
+	/**
+	 * Returns the check-box if the {@link SeriousWarningDialog serious warning
+	 * dialog} should be shown for the operations on {@link Preset presets}
+	 * (unchecked) or not (checked).
+	 * If the check-box doesn't exist, it is created.
+	 * @return the check-box if the serious warning should be shown for the
+	 * operations on presets (unchecked) or not (checked)
+	 */
 	public JCheckBox getDisableSeriousWarningsCheckBox() {
 		if (disableSeriousWarningsCheckBox == null) {
 			disableSeriousWarningsCheckBox = new JCheckBox(messageSource.getMessage("preferences.miscellaneous.disableSeriousWarnings"));
@@ -149,6 +292,13 @@ public class MiscellaneousConfigPanel extends JPanel {
 		return disableSeriousWarningsCheckBox;
 	}
 
+	/**
+	 * Returns the check-box if the {@link DynamicCompilationWarningDialog}
+	 * should be shown when a dynamic compilation is needed (unchecked).
+	 * If the check-box doesn't exist, it is created.
+	 * @return the check-box if the {@code DynamicCompilationWarningDialog}
+	 * should be shown when a dynamic compilation is needed (unchecked)
+	 */
 	public JCheckBox getDontShowCompilationWarningCheckBox() {
 		if (dontShowCompilationWarningCheckBox == null) {
 			dontShowCompilationWarningCheckBox = new JCheckBox(messageSource.getMessage("preferences.miscellaneous.dontShowCompilationWarning"));
@@ -156,6 +306,13 @@ public class MiscellaneousConfigPanel extends JPanel {
 		return dontShowCompilationWarningCheckBox;
 	}
 
+	/**
+	 * Returns the check-box if the main tool bar should (unchecked) be
+	 * displayed in the "view mode" (F11) or not (checked).
+	 * If the check-box doesn't exist, it is created.
+	 * @return the check-box if the main tool bar should (unchecked) be
+	 * displayed in the "view mode" (F11) or not (checked)
+	 */
 	public JCheckBox getViewModeHidesMainToolBarCheckBox() {
 		if (viewModeHidesMainToolBarCheckBox == null) {
 			viewModeHidesMainToolBarCheckBox = new JCheckBox(messageSource.getMessage("preferences.miscellaneous.viewModeHidesMainToolBar"));
@@ -163,6 +320,13 @@ public class MiscellaneousConfigPanel extends JPanel {
 		return viewModeHidesMainToolBarCheckBox;
 	}
 
+	/**
+	 * Returns the check-box if the left panel should (unchecked) be displayed
+	 * in the "view mode" (F11) or not (checked).
+	 * If the check-box doesn't exist, it is created.
+	 * @return the check-box if the left panel should (unchecked) be displayed
+	 * in the "view mode" (F11) or not (checked)
+	 */
 	public JCheckBox getViewModeHidesLeftPanelCheckBox() {
 		if (viewModeHidesLeftPanelCheckBox == null) {
 			viewModeHidesLeftPanelCheckBox = new JCheckBox(messageSource.getMessage("preferences.miscellaneous.viewModeHidesLeftPanel"));
@@ -170,6 +334,13 @@ public class MiscellaneousConfigPanel extends JPanel {
 		return viewModeHidesLeftPanelCheckBox;
 	}
 
+	/**
+	 * Returns the check-box if the bottom panel should (unchecked) be
+	 * displayed in the "view mode" (F11) or not (checked).
+	 * If the check-box doesn't exist, it is created.
+	 * @return the check-box if the bottom panel should (unchecked) be
+	 * displayed in the "view mode" (F11) or not (checked)
+	 */
 	public JCheckBox getViewModeHidesBottomPanelCheckBox() {
 		if (viewModeHidesBottomPanelCheckBox == null) {
 			viewModeHidesBottomPanelCheckBox = new JCheckBox(messageSource.getMessage("preferences.miscellaneous.viewModeHidesBottomPanel"));
@@ -177,6 +348,13 @@ public class MiscellaneousConfigPanel extends JPanel {
 		return viewModeHidesBottomPanelCheckBox;
 	}
 
+	/**
+	 * Returns the check-box if the column header should (checked) be compacted
+	 * in the "view mode" (F11) or not (unchecked).
+	 * If the check-box doesn't exist, it is created.
+	 * @return the check-box if the column header should (checked) be compacted
+	 * in the "view mode" (F11) or not (unchecked)
+	 */
 	public JCheckBox getViewModeCompactsPageTagBarsCheckBox() {
 		if (viewModeCompactsPageTagBarsCheckBox == null) {
 			viewModeCompactsPageTagBarsCheckBox = new JCheckBox(messageSource.getMessage("preferences.miscellaneous.viewModeCompactsPageTagBars"));
@@ -184,6 +362,13 @@ public class MiscellaneousConfigPanel extends JPanel {
 		return viewModeCompactsPageTagBarsCheckBox;
 	}
 
+	/**
+	 * Returns the check-box if the signal plot should (checked) be snapped to
+	 * the beginning of the page in the "view mode" (F11).
+	 * If the check-box doesn't exist, it is created.
+	 * @return the check-box if the signal plot should (checked) be snapped to
+	 * the beginning of the page in the "view mode" (F11)
+	 */
 	public JCheckBox getViewModeSnapsToPageCheckBox() {
 		if (viewModeSnapsToPageCheckBox == null) {
 			viewModeSnapsToPageCheckBox = new JCheckBox(messageSource.getMessage("preferences.miscellaneous.viewModeSnapsToPage"));
@@ -191,6 +376,13 @@ public class MiscellaneousConfigPanel extends JPanel {
 		return viewModeSnapsToPageCheckBox;
 	}
 
+	/**
+	 * Returns the spinner which allows to select after how many milliseconds
+	 * the tooltip message should be shown.
+	 * If the spinner doesn't exist it is created.
+	 * @return the spinner which allows to select after how many milliseconds
+	 * the tooltip message should be shown
+	 */
 	public JSpinner getToolTipInitialSpinner() {
 		if (toolTipInitialSpinner == null) {
 			toolTipInitialSpinner = new JSpinner(new SpinnerNumberModel(100,100,100000,100));
@@ -199,6 +391,13 @@ public class MiscellaneousConfigPanel extends JPanel {
 		return toolTipInitialSpinner;
 	}
 
+	/**
+	 * Returns the spinner which allows to select for how many milliseconds the
+	 * tooltip message should be displayed.
+	 * If the spinner doesn't exist it is created.
+	 * @return the spinner which allows to select for how many milliseconds the
+	 * tooltip message should be displayed
+	 */
 	public JSpinner getToolTipDismissSpinner() {
 		if (toolTipDismissSpinner == null) {
 			toolTipDismissSpinner = new JSpinner(new SpinnerNumberModel(100,100,100000,100));
@@ -207,6 +406,11 @@ public class MiscellaneousConfigPanel extends JPanel {
 		return toolTipDismissSpinner;
 	}
 
+	/**
+	 * Fills all the fields of this panel (check-boxes and spinners) from the
+	 * given {@link ApplicationConfiguration configuration} of Svarog
+	 * @param applicationConfig the configuration of Svarog
+	 */
 	public void fillPanelFromModel(ApplicationConfiguration applicationConfig) {
 
 		if (mode == SignalMLOperationMode.APPLICATION) {
@@ -231,6 +435,11 @@ public class MiscellaneousConfigPanel extends JPanel {
 
 	}
 
+	/**
+	 * Stores the user input from all check-boxes and spinners in this dialog
+	 * in the {@link ApplicationConfiguration configuration} of Svarog.
+	 * @param applicationConfig the configuration of Svarog
+	 */
 	public void fillModelFromPanel(ApplicationConfiguration applicationConfig) {
 
 		if (mode == SignalMLOperationMode.APPLICATION) {
@@ -255,6 +464,11 @@ public class MiscellaneousConfigPanel extends JPanel {
 
 	}
 
+	/**
+	 * Validates this panel.
+	 * This panel is always valid
+	 * @param errors the object in which errors should be stored.
+	 */
 	public void validate(Errors errors) {
 		// do nothing
 	}

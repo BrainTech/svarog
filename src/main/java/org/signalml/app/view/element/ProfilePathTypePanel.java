@@ -22,26 +22,61 @@ import javax.swing.border.EmptyBorder;
 import org.signalml.app.util.DirectoryFileFilter;
 import org.springframework.context.support.MessageSourceAccessor;
 
-/** ProfilePathTypePanel
- *
+/**
+ * The panel which is displayed at the first use of the application (or if
+ * profile directory was deleted). Contains:
+ * <ul>
+ * <li>the label with the welcome message,</li>
+ * <li>the label with information that the profile directory is required and
+ * where it can be located,</li>
+ * <li>the group of radio buttons which allows to select if the profile
+ * directory should be located in the {@link #getDefaultRadio() default
+ * directory} inside user's home directory or in the {@link #getCustomRadio()
+ * custom location},</li>
+ * <li>the {@link #getFileChooser() file chooser} which allows to select
+ * the directory to be used (this chooser is visible only if appropriate
+ * radio button is selected.</li></ul> 
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ProfilePathTypePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+	/**
+	 * the label with the welcome message
+	 */
 	private JLabel welcomeLabel = null;
 
+	/**
+	 * the source of messages (labels)
+	 */
 	private MessageSourceAccessor messageSource;
+	/**
+	 * the radio button which tells that the profile directory should
+	 * be located in the default directory inside user's home directory
+	 */
 	private JRadioButton defaultRadio = null;
+	/**
+	 * the radio button which tells that the profile directory should
+	 * be chosen by user
+	 */
 	private JRadioButton customRadio = null;
+	/**
+	 * the label with information that the profile directory is
+	 * required and where it can be located
+	 */
 	private JLabel infoLabel = null;
 
 	private ButtonGroup radioGroup;
+	/**
+	 * the {@link EmbeddedFileChooser chooser} which allows to select the
+	 * profile directory
+	 */
 	private EmbeddedFileChooser fileChooser = null;
 
 	/**
-	 * This is the default constructor
+	 * Constructor. Sets the source of messages and initializes this panel.
+	 * @param messageSource the source of messages
 	 */
 	public ProfilePathTypePanel(MessageSourceAccessor messageSource) {
 		super();
@@ -50,9 +85,18 @@ public class ProfilePathTypePanel extends JPanel {
 	}
 
 	/**
-	 * This method initializes this
-	 *
-	 *
+	 * Initializes this panel with BoxLayout and:
+	 * <ul>
+	 * <li>the {@link #welcomeLabel label} with the welcome message,</li>
+	 * <li>the {@link #infoLabel label} with information that the profile
+	 * directory is required and where it can be located,</li>
+	 * <li>the {@link #radioGroup group} of buttons which allows to select
+	 * if the profile directory should be located in the {@link
+	 * #getDefaultRadio() default directory} inside user's home directory or in
+	 * the {@link #getCustomRadio() custom location},</li>
+	 * <li>the {@link #getFileChooser() file chooser} which allows to select
+	 * the directory to be used (this chooser is visible only if appropriate
+	 * radio button is selected).</li></ul>
 	 */
 	private void initialize() {
 
@@ -81,9 +125,11 @@ public class ProfilePathTypePanel extends JPanel {
 	}
 
 	/**
-	 * This method initializes defaultRadio
-	 *
-	 * @return javax.swing.JRadioButton
+	 * Returns the radio button which tells that the profile directory should
+	 * be located in the default directory inside user's home directory.
+	 * If the button doesn't exist it is created.
+	 * @return the radio button which tells that the profile directory should
+	 * be located in the default directory inside user's home directory
 	 */
 	public JRadioButton getDefaultRadio() {
 		if (defaultRadio == null) {
@@ -96,9 +142,13 @@ public class ProfilePathTypePanel extends JPanel {
 	}
 
 	/**
-	 * This method initializes customRadio
-	 *
-	 * @return javax.swing.JRadioButton
+	 * Returns the radio button which tells that the profile directory should
+	 * be chosen by user.
+	 * If the button doesn't exist it is created and the listener is added to
+	 * it. If this button is selected the listener shows the {@link
+	 * #getFileChooser() file chooser}, if it is not hides it.
+	 * @return the radio button which tells that the profile directory should
+	 * be chosen by user
 	 */
 	public JRadioButton getCustomRadio() {
 		if (customRadio == null) {
@@ -122,6 +172,13 @@ public class ProfilePathTypePanel extends JPanel {
 		return customRadio;
 	}
 
+	/**
+	 * Returns the label with information that the profile directory is
+	 * required and where it can be located.
+	 * If the label doesn't exist it is created.
+	 * @return the label with information that the profile directory is
+	 * required and where it can be located
+	 */
 	private JLabel getInfoLabel() {
 		if (infoLabel == null) {
 			infoLabel = new JLabel();
@@ -134,6 +191,11 @@ public class ProfilePathTypePanel extends JPanel {
 		return infoLabel;
 	}
 
+	/**
+	 * Returns the {@link EmbeddedFileChooser chooser} which allows to select the
+	 * profile directory.
+	 * @return the chooser which allows to select the profile directory
+	 */
 	public EmbeddedFileChooser getFileChooser() {
 		if (fileChooser == null) {
 			fileChooser = new EmbeddedFileChooser();

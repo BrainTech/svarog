@@ -21,8 +21,8 @@ import org.signalml.util.MinMaxRangeFloat;
 import org.signalml.util.MinMaxRangeInteger;
 import org.springframework.context.support.MessageSourceAccessor;
 
-/** UnlimitedSpinnerPanel
- *
+/** TODO it is almost the same as {@link AutoSpinnerPanel}
+ * 
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -30,7 +30,11 @@ public class UnlimitedSpinnerPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * the source of messages (labels)
+	 */
 	private MessageSourceAccessor messageSource;
+
 	private boolean compact;
 
 	private JRadioButton spinnerRadio;

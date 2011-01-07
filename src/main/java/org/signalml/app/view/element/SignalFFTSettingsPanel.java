@@ -23,15 +23,43 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;
+import org.jfree.chart.renderer.xy.XYSplineRenderer;
 import org.signalml.app.config.SignalFFTSettings;
 import org.signalml.exception.SanityCheckException;
+import org.signalml.fft.WindowType;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
 /**
- * SignalFFTSettingsPanel
- *
- *
+ * Panel which allows to select the parameters of the FFT.
+ * Contains 6 sub-panels:
+ * <ul>
+ * <li>The panel which allows to select the size of the FFT window (the
+ * number of samples). The size can be selected from predefined values
+ * (powers of 2 from 64 to 2048) or entered custom.</li>
+ * <li>The panel which allows to select the parameters of the view such as
+ * the frequency range and the number of labels on the x axis.</li>
+ * <li>The panel which allows to select the width of the FFT plot (the
+ * number of pixels). The size can be selected from predefined values from
+ * 300 to 800.</li>
+ * <li>The panel which allows to select the height of the FFT plot (the
+ * number of pixels). The size can be selected from predefined values from
+ * 200 to 700.</li>
+ * <li>The {@link FFTWindowTypePanel panel} which allows to select the
+ * {@link WindowType type} of the FFT window,</li>
+ * <li>The panel which allows to select other options of the FFT plot:
+ * <ul>
+ * <li>if the channel should be switched when the mouse goes up or
+ * down,</li>
+ * <li>if the amplitude should be displayed in the logarithmic scale,</li>
+ * <li>if the plot should be rendered using {@link XYSplineRenderer
+ * splines},</li>
+ * <li>if the title describing the FFT plot (name of the channel, time
+ * interval and number of samples) should be visible,</li>
+ * <li>if the labels for frequencies axis should be visible,</li>
+ * <li>if the label for power axis should be visible,</li></ul></li>
+ * </ul>
+ * 
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
@@ -41,42 +69,152 @@ public class SignalFFTSettingsPanel extends JPanel {
 
 	protected static final Logger logger = Logger.getLogger(SignalFFTSettingsPanel.class);
 
+	/**
+	 * the {@link MessageSourceAccessor source} of messages (labels)
+	 */
 	private MessageSourceAccessor messageSource;
 
+	/**
+	 * the array with possible sizes of FFT window (number of samples)
+	 */
 	private int[] possibleWindowWidths = new int[] { 64, 128, 256, 512, 1024, 2048 };
+	
+	/**
+	 * the array with possible widths of a FFT plot (pixels)
+	 */
 	private int[] possiblePlotWidths = new int[] { 300, 400, 500, 600, 700, 800 };
+	
+	/**
+	 * the array with possible heights of a FFT plot (pixels)
+	 */
 	private int[] possiblePlotHeights = new int[] { 200, 300, 400, 500, 600, 700 };
 
+	/**
+	 * the {@link FFTWindowTypePanel panel} which allows to select the {@link
+	 * WindowType type} of the FFT window
+	 */
 	private FFTWindowTypePanel fftWindowTypePanel;
 
+	/**
+	 * the radio button which allows to select custom (specified in in
+	 * {@link #customWindowWidthTextField}) size of the FFT window (number
+	 * of samples)
+	 */
 	private JRadioButton customWindowWidthRadioButton;
+	
+	/**
+	 * the array with radio buttons for {@link #possibleWindowWidths possible
+	 * sizes} of a FFT window
+	 */
 	private JRadioButton[] windowWidthRadioButtons;
+	/**
+	 * the array with radio buttons for {@link #possiblePlotWidths possible
+	 * widths} of a FFT plot (pixels)
+	 */
 	private JRadioButton[] plotWidthRadioButtons;
+	/**
+	 * the array with buttons for {@link #possiblePlotHeights possible heights}
+	 * of a FFT plot (pixels)
+	 */
 	private JRadioButton[] plotHeightRadioButtons;
 
+	/**
+	 * the check-box which tells if the channel should be switched (checked)
+	 * when the mouse goes up or down or should remain the same (checked)
+	 */
 	private JCheckBox channelSwitchingCheckBox;
+	/**
+	 * the check-box which tells if the amplitude should be displayed in the
+	 * logarithmic scale (checked)
+	 */
 	private JCheckBox logarithmicCheckBox;
+	/**
+	 * the check-box which tells if the plot should be rendered using
+	 * {@link XYSplineRenderer splines}
+	 */
 	private JCheckBox splineCheckBox;
+	/**
+	 * the check-box which tells if the signal should be antialiased
+	 */
 	private JCheckBox antialiasCheckBox;
+	/**
+	 * the check-box which tells if the title describing the FFT plot (name of
+	 * the channel, time interval and number of samples) should be visible
+	 * (checked)
+	 */
 	private JCheckBox titleVisibleCheckBox;
+	/**
+	 * the check-box which tells if the labels for frequencies axies should be
+	 * visible (checked)
+	 */
 	private JCheckBox frequencyAxisLabelsVisibleCheckBox;
+	/**
+	 * the check-box which tells if the label for power axis should be visible
+	 * (checked)
+	 */
 	private JCheckBox powerAxisLabelsVisibleCheckBox;
 
+	/**
+	 * the text field which allows to enter the size (number of samples) of
+	 * the FFT window
+	 */
 	private JTextField customWindowWidthTextField;
 
+	/**
+	 * the text field which allows to enter the beginning of the visible
+	 * frequency range (Hz)
+	 */
 	private JTextField visibleRangeStartTextField;
+	/**
+	 * the text field which allows to enter the end of the visible
+	 * frequency range (Hz)
+	 */
 	private JTextField visibleRangeEndTextField;
+	/**
+	 * the text field which allows to enter how many labels should be displayed
+	 * on the X axis
+	 */
 	private JTextField maxLabelCountTextField;
+	/**
+	 * TODO
+	 */
 	private JCheckBox scaleToFFTViewCheckBox;
 
+	/**
+	 * the group of {@link #windowWidthRadioButtons radio buttons} for the
+	 * FFT window size 
+	 */
 	private ButtonGroup windowWidthButtonGroup;
+	/**
+	 * the group of {@link #plotWidthRadioButtons radio buttons} for the
+	 * FFT plot width (pixels)
+	 */
 	private ButtonGroup plotWidthButtonGroup;
+	/**
+	 * the group of {@link #plotHeightRadioButtons radio buttons} for the
+	 * FFT plot height (pixels)
+	 */
 	private ButtonGroup plotHeightButtonGroup;
 
+	/**
+	 * the cached {@link #customWindowWidthTextField custom size} of the
+	 * FFT window (number of samples)
+	 */
 	private String cachedWindowWidth = null;
 
+	/**
+	 * {@code true} if the panel has a cross which closes it,
+	 * {@code false} otherwise
+	 */
 	private boolean hasCloseCross;
 
+	/**
+	 * Constructor. Sets the {@link MessageSourceAccessor message source} and
+	 * initializes this panel.
+	 * @param messageSource the source of messages (labels)
+	 * @param hasCloseCross {@code true} if the panel should has a cross which
+	 * closes it, {@code false} otherwise
+	 */
 	public SignalFFTSettingsPanel(MessageSourceAccessor messageSource, boolean hasCloseCross) {
 		super();
 		this.messageSource = messageSource;
@@ -84,6 +222,35 @@ public class SignalFFTSettingsPanel extends JPanel {
 		initialize();
 	}
 
+	/**
+	 * Initializes this panel with BoxLayout and 6 sub-panels:
+	 * <ul>
+	 * <li>The panel which allows to select the size of the FFT window (the
+	 * number of samples). The size can be selected from predefined values
+	 * (powers of 2 from 64 to 2048) or entered custom.</li>
+	 * <li>The panel which allows to select the parameters of the view such as
+	 * the frequency range and the number of labels on the x axis.</li>
+	 * <li>The panel which allows to select the width of the FFT plot (the
+	 * number of pixels). The size can be selected from predefined values from
+	 * 300 to 800.</li>
+	 * <li>The panel which allows to select the height of the FFT plot (the
+	 * number of pixels). The size can be selected from predefined values from
+	 * 200 to 700.</li>
+	 * <li>The {@link FFTWindowTypePanel panel} which allows to select the
+	 * {@link WindowType type} of the FFT window,</li>
+	 * <li>The panel which allows to select other options of the FFT plot:
+	 * <ul>
+	 * <li>if the channel should be switched when the mouse goes up or
+	 * down,</li>
+	 * <li>if the amplitude should be displayed in the logarithmic scale,</li>
+	 * <li>if the plot should be rendered using {@link XYSplineRenderer
+	 * splines},</li>
+	 * <li>if the title describing the FFT plot (name of the channel, time
+	 * interval and number of samples) should be visible,</li>
+	 * <li>if the labels for frequencies axis should be visible,</li>
+	 * <li>if the label for power axis should be visible,</li></ul></li>
+	 * </ul>
+	 */
 	private void initialize() {
 
 		windowWidthButtonGroup = new ButtonGroup();
@@ -282,6 +449,17 @@ public class SignalFFTSettingsPanel extends JPanel {
 
 	}
 
+	/**
+	 * Fills the fields of this panel from the given {@link SignalFFTSettings
+	 * model}:
+	 * <ul>
+	 * <li>the width and height of the plot,<li>
+	 * <li>the size of the FFT window (number of samples),</li>
+	 * <li>the {@link WindowType type} of the FFT window,</li>
+	 * <li>the additional options such as if the title and labels should
+	 * be visible or the signal should be antialiased.</li></ul>
+	 * @param settings the model
+	 */
 	public void fillPanelFromModel(SignalFFTSettings settings) {
 
 		int windowWidth = settings.getWindowWidth();
@@ -355,6 +533,16 @@ public class SignalFFTSettingsPanel extends JPanel {
 
 	}
 
+	/**
+	 * Stores the user input in the given {@link SignalFFTSettings model}:
+	 * <ul>
+	 * <li>the width and height of the plot,</li>
+	 * <li>the size of the FFT window (number of samples),</li>
+	 * <li>the {@link WindowType type} of the FFT window,</li>
+	 * <li>the additional options such as if the title and labels should
+	 * be visible or the signal should be antialiased.</li></ul>
+	 * @param settings the model
+	 */
 	public void fillModelFromPanel(SignalFFTSettings settings) {
 
 		int i;
@@ -449,6 +637,12 @@ public class SignalFFTSettingsPanel extends JPanel {
 
 	}
 
+	/**
+	 * Validates this panel.
+	 * This panel can be invalid only in the custom window size is selected
+	 * and the entered value is in bad format or to small ({@code < 8}).
+	 * @param errors the object in which the errors are stored
+	 */
 	public void validatePanel(Errors errors) {
 
 		if (customWindowWidthRadioButton.isSelected()) {

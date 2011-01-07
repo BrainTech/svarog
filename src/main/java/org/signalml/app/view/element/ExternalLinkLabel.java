@@ -20,8 +20,14 @@ import javax.swing.SwingUtilities;
 
 import org.apache.log4j.Logger;
 
-/** ExternalLinkLabel
- *
+/**
+ * The label with the link, which has following features:
+ * <ul>
+ * <li>the blue foreground color,</li>
+ * <li>underline,</li>
+ * <li>hand cursor,</li>
+ * <li>the listener which browses to the address of this link.</li>
+ * </ul>
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -31,8 +37,22 @@ public class ExternalLinkLabel extends JLabel {
 
 	protected static final Logger logger = Logger.getLogger(ExternalLinkLabel.class);
 
+	/**
+	 * the address of this link
+	 */
 	private URI link;
 
+	/**
+	 * Constructor. Creates the {@link ExternalLinkLabel} with:
+	 * <ul>
+	 * <li>the blue foreground color,</li>
+	 * <li>underline,</li>
+	 * <li>hand cursor,</li>
+	 * <li>the listener which browses to the address of this link.</li>
+	 * </ul>
+	 * @param text the text of the link
+	 * @param link the address of the link
+	 */
 	@SuppressWarnings("unchecked")
 	public ExternalLinkLabel(String text, URI link) {
 		super(text);

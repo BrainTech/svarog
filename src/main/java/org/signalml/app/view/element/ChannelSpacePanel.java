@@ -28,8 +28,21 @@ import org.signalml.domain.signal.space.SignalSpaceConstraints;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
-/** ChannelSpacePanel
- *
+/**
+ * Panel which allows to select channels from the {@link #getChannelList()
+ * list} containing their names (labels).
+ * Contains two sub-panels:
+ * <ul>
+ * <li>the {@link #getChannelScrollPane() pane} with the list of channels,
+ * </li><li>the panel with 3 buttons (from top to bottom):
+ * <ul><li>to select {@link #getChannelSelectAllButton() all} channel,</li>
+ * <li>to select {@link #getChannelSelectNoneButton() no} channels,</li>
+ * <li>to {@link #getChannelSelectInvertButton() invert} the selection
+ * of channels.</li></ul></li></ul>
+ * Channels can be selected either from the list of {@link #getSourceChannels()
+ * source} or {@link #getChannels() montage} channels depending on the
+ * currently {@link #getCurrentLevel() selected}
+ * {@link SignalSourceLevel level}.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -39,27 +52,75 @@ public class ChannelSpacePanel extends JPanel {
 
 	protected static final Logger logger = Logger.getLogger(ChannelSpacePanel.class);
 
+	/**
+	 * the source of messages (labels0
+	 */
 	private MessageSourceAccessor messageSource;
 
+	/**
+	 * the list with the names of channels;
+	 * multiple selection is allowed
+	 */
 	private JList channelList;
+	/**
+	 * the scroll pane with the {@link #channelList list} of names of channels
+	 */
 	private JScrollPane channelScrollPane;
 
+	/**
+	 * the button which selects all channels on the {@link #channelList list}
+	 */
 	private JButton channelSelectAllButton;
+	/**
+	 * the button which inverts the selection on the {@link #channelList list}
+	 */
 	private JButton channelSelectInvertButton;
+	/**
+	 * the button which makes there is no element selected on the
+	 * {@link #channelList list}
+	 */
 	private JButton channelSelectNoneButton;
 
+	/**
+	 * the array of names (labels) of source channels
+	 */
 	private String[] sourceChannels;
+	/**
+	 * the array of names (labels) of montage channels
+	 */
 	private String[] channels;
 
+	/**
+	 * the currently selected {@link SignalSourceLevel level} of signal
+	 * processing
+	 */
 	private SignalSourceLevel currentLevel;
+	/**
+	 * the list of names (labels) of channels of the currently
+	 * {@link #currentLevel selected} {@link SignalSourceLevel level}
+	 */
 	private String[] currentChannels;
 
+	/**
+	 * Constructor. Sets the source of messages and initializes this panel.
+	 * @param messageSource the source of messages
+	 */
 	public ChannelSpacePanel(MessageSourceAccessor messageSource) {
 		super();
 		this.messageSource = messageSource;
 		initialize();
 	}
 
+	/**
+	 * Initializes this panel with BorderLayout and two sub-panels:
+	 * <ul>
+	 * <li>the {@link #getChannelScrollPane() pane} with the list of channels,
+	 * </li><li>the panel with 3 buttons (from top to bottom):
+	 * <ul><li>to select {@link #getChannelSelectAllButton() all} channel,</li>
+	 * <li>to select {@link #getChannelSelectNoneButton() no} channels,</li>
+	 * <li>to {@link #getChannelSelectInvertButton() invert} the selection
+	 * of channels.</li></ul></li></ul>
+	 */
 	private void initialize() {
 
 		setLayout(new BorderLayout());
@@ -79,6 +140,12 @@ public class ChannelSpacePanel extends JPanel {
 
 	}
 
+	/**
+	 * Returns the list with the names (labels) of channels.
+	 * If the list doesn't exist it is created with multiple selection
+	 * allowed.
+	 * @return the list with the names (labels) of channels
+	 */
 	public JList getChannelList() {
 		if (channelList == null) {
 
@@ -90,6 +157,12 @@ public class ChannelSpacePanel extends JPanel {
 		return channelList;
 	}
 
+	/**
+	 * Returns the pane with the {@link #getChannelList() list} of the names
+	 * (labels) of channels.
+	 * If the pane doesn't exist it is created.
+	 * @return the pane with the list of the names of channels
+	 */
 	public JScrollPane getChannelScrollPane() {
 		if (channelScrollPane == null) {
 			channelScrollPane = new JScrollPane(getChannelList());
@@ -98,6 +171,12 @@ public class ChannelSpacePanel extends JPanel {
 		return channelScrollPane;
 	}
 
+	/**
+	 * Returns the button which selects all channels on the
+	 * {@link #getChannelList() list}.
+	 * If the button doesn't exist it is created.
+	 * @return the button which selects all channels on the list
+	 */
 	public JButton getChannelSelectAllButton() {
 		if (channelSelectAllButton == null) {
 			channelSelectAllButton = new JButton(new ListSelectAllAction(messageSource, getChannelList()));
@@ -105,6 +184,12 @@ public class ChannelSpacePanel extends JPanel {
 		return channelSelectAllButton;
 	}
 
+	/**
+	 * Returns the button which makes there is no element selected on the
+	 * {@link #getChannelList() list}.
+	 * If the button doesn't exist it is created.
+	 * @return the button which makes there is no element selected on the list
+	 */
 	public JButton getChannelSelectNoneButton() {
 		if (channelSelectNoneButton == null) {
 			channelSelectNoneButton = new JButton(new ListSelectNoneAction(messageSource, getChannelList()));
@@ -112,6 +197,12 @@ public class ChannelSpacePanel extends JPanel {
 		return channelSelectNoneButton;
 	}
 
+	/**
+	 * Returns the button which inverts the selection on the
+	 * {@link #getChannelList() list}.
+	 * If the button doesn't exist it is created.
+	 * @return the button which inverts the selection on the list
+	 */
 	public JButton getChannelSelectInvertButton() {
 		if (channelSelectInvertButton == null) {
 			channelSelectInvertButton = new JButton(new ListSelectInvertAction(messageSource, getChannelList()));
@@ -119,6 +210,12 @@ public class ChannelSpacePanel extends JPanel {
 		return channelSelectInvertButton;
 	}
 
+	/**
+	 * Using the {@link ChannelSpace} from given {@link SignalSpace model}
+	 * sets which elements on the {@link #getChannelList() list} are
+	 * selected.
+	 * @param space the signal space
+	 */
 	public void fillPanelFromModel(SignalSpace space) {
 
 		ChannelSpaceType channelSpaceType = space.getChannelSpaceType();
@@ -144,6 +241,18 @@ public class ChannelSpacePanel extends JPanel {
 
 	}
 
+	/**
+	 * Stores the information which channels on the {@link #getChannelList()
+	 * list} are selected in the {@link SignalSpace model}.
+	 * In order to do it:
+	 * <ul>
+	 * <li>if all channels are selected {@link SignalSpace#setChannelSpaceType(
+	 * ChannelSpaceType) sets} the {@link ChannelSpaceType type} of
+	 * {@link ChannelSpace} in the model,</li>
+	 * <li>otherwise stores this information in channel space and sets in the
+	 * model,</li></ul>
+	 * @param space the signal space
+	 */
 	public void fillModelFromPanel(SignalSpace space) {
 
 		boolean all = true;
@@ -180,10 +289,20 @@ public class ChannelSpacePanel extends JPanel {
 
 	}
 
+	/**
+	 * Returns the array of names (labels) of source channels.
+	 * @return the array of names (labels) of source channels
+	 */
 	public String[] getSourceChannels() {
 		return sourceChannels;
 	}
 
+	/**
+	 * Sets the array of names (labels) of source channels.
+	 * If the {@link #getCurrentLevel() current level} is RAW, sets this
+	 * channels as {@link #setCurrentChannels(String[]) current channels}.
+	 * @param sourceChannels the array of names (labels) of source channels
+	 */
 	public void setSourceChannels(String[] sourceChannels) {
 		if (this.sourceChannels != sourceChannels) {
 
@@ -195,10 +314,24 @@ public class ChannelSpacePanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Returns the list of names (labels) of channels of the currently
+	 * {@link #getCurrentLevel() selected} {@link SignalSourceLevel level}.
+	 * @return the list of names (labels) of channels of the currently
+	 * selected level
+	 */
 	public String[] getCurrentChannels() {
 		return currentChannels;
 	}
 
+	/**
+	 * Sets the list of names (labels) of channels of the currently
+	 * {@link #getCurrentLevel() selected} {@link SignalSourceLevel level}.
+	 * This list is encapsulated in the model and set as the model to
+	 * {@link #getChannelList() channel list}.
+	 * @param currentChannels the list of names (labels) of channels of the
+	 * currently selected level
+	 */
 	public void setCurrentChannels(String[] currentChannels) {
 		if (this.currentChannels != currentChannels) {
 
@@ -216,10 +349,21 @@ public class ChannelSpacePanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Returns the array of names (labels) of montage channels.
+	 * @return the array of names (labels) of montage channels
+	 */
 	public String[] getChannels() {
 		return channels;
 	}
 
+	/**
+	 * Sets the array of names (labels) of montage channels.
+	 * If the {@link #getCurrentLevel() current level} is  different then RAW,
+	 * sets this channels as {@link #setCurrentChannels(String[]) current
+	 * channels}.
+	 * @param channels the array of names (labels) of montage channels
+	 */
 	public void setChannels(String[] channels) {
 		if (this.channels != channels) {
 			this.channels = channels;
@@ -231,10 +375,22 @@ public class ChannelSpacePanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Returns the currently selected {@link SignalSourceLevel level} of signal
+	 * processing.
+	 * @return the currently selected level of signal processing
+	 */
 	public SignalSourceLevel getCurrentLevel() {
 		return currentLevel;
 	}
 
+	/**
+	 * Sets the currently selected {@link SignalSourceLevel level} of signal
+	 * processing.
+	 * According to this level sets appropriate channels as
+	 * {@link #setCurrentChannels(String[]) current channels}.
+	 * @param currentLevel the currently selected level of signal processing
+	 */
 	public void setCurrentLevel(SignalSourceLevel currentLevel) {
 		if (this.currentLevel != currentLevel) {
 
@@ -249,6 +405,12 @@ public class ChannelSpacePanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Sets the names of {@link #setSourceChannels(String[]) source} and
+	 * {@link #setChannels(String[]) montage} channels using the given
+	 * {@link SignalSpaceConstraints parameters} of the signal.
+	 * @param constraints the parameters of the signal
+	 */
 	public void setConstraints(SignalSpaceConstraints constraints) {
 
 		setSourceChannels(constraints.getSourceChannels());
@@ -256,6 +418,11 @@ public class ChannelSpacePanel extends JPanel {
 
 	}
 
+	/**
+	 * Validates this panel.
+	 * This panel is valid if there is at least one channel selected.
+	 * @param errors the object in which errors are stored
+	 */
 	public void validatePanel(Errors errors) {
 
 		if (getChannelList().isSelectionEmpty()) {

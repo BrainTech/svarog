@@ -26,35 +26,87 @@ import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
-/** RawSignalOptionsPanel
- *
- *
+
+/**
+ * The panel which allows to select the parameters of the raw signal:
+ * <ul>
+ * <li>the sampling frequency,</li>
+ * <li>the number of channels,</li>
+ * <li>the {@link RawSignalSampleType type} of samples,</li>
+ * <li>the {@link RawSignalByteOrder order} of bytes,</li>
+ * <li>the value of calibration.</li>
+ * </ul>
+ * Contains also the button which reads these parameters from an XML file.
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class RawSignalOptionsPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * the {@link MessageSourceAccessor source} of messages (labels)
+	 */
 	private MessageSourceAccessor messageSource;
 
+	/**
+	 * the text field with the number of samples per second of the signal
+	 */
 	private JTextField samplingFrequencyField;
+	/**
+	 * the text field with the number of channels
+	 */
 	private JTextField channelCountField;
+	/**
+	 * the text field with the value of calibration
+	 */
 	private JTextField calibrationField;
 
+	/**
+	 * the combo-box which allows to select the {@link RawSignalSampleType
+	 * type} of signal samples (SHORT, INT, FLOAT, DOUBLE)
+	 */
 	private ResolvableComboBox sampleTypeComboBox;
+	/**
+	 * the combo-box which allows to select the {@link RawSignalByteOrder
+	 * order} of bytes (little or big endian)
+	 */
 	private ResolvableComboBox byteOrderComboBox;
 
+	/**
+	 * the button which reads the values of the fields in this panel from an
+	 * XML file
+	 */
 	private JButton readXMLManifestButton;
 
+	/**
+	 * the panel with the parameters of the signal, see
+	 * {@link #getSettingsPanel()}
+	 */
 	private JPanel settingsPanel;
+	/**
+	 * the panel with {@link #readXMLManifestButton}
+	 */
 	private JPanel buttonPanel;
 
+	/**
+	 * Constructor. Sets the {@link MessageSourceAccessor message source} and
+	 * initializes this panel.
+	 * @param messageSource the source of messages (labels)
+	 */
 	public RawSignalOptionsPanel(MessageSourceAccessor messageSource) {
 		super();
 		this.messageSource = messageSource;
 		initialize();
 	}
 
+	/**
+	 * Initializes this panel with a {@link BorderLayout} and adds two
+	 * sub-panels to it:
+	 * <ul><li>the {@link #getSettingsPanel() panel} with the parameters of the
+	 * signal,</li>
+	 * <li>the panel with {@link #readXMLManifestButton}.</li>
+	 * </ul>
+	 */
 	private void initialize() {
 
 		setLayout(new BorderLayout());
@@ -71,6 +123,13 @@ public class RawSignalOptionsPanel extends JPanel {
 
 	}
 
+	/**
+	 * Returns the text field with the number of samples per second of the
+	 * signal.
+	 * If it doesn't exist it is created.
+	 * @return the text field with the number of samples per second of the
+	 * signal
+	 */
 	public JTextField getSamplingFrequencyField() {
 		if (samplingFrequencyField == null) {
 			samplingFrequencyField = new JTextField();
@@ -79,6 +138,11 @@ public class RawSignalOptionsPanel extends JPanel {
 		return samplingFrequencyField;
 	}
 
+	/**
+	 * Returns the text field with the number of channels.
+	 * If it doesn't exist it is created.
+	 * @return the text field with the number of channels
+	 */
 	public JTextField getChannelCountField() {
 		if (channelCountField == null) {
 			channelCountField = new JTextField();
@@ -87,6 +151,11 @@ public class RawSignalOptionsPanel extends JPanel {
 		return channelCountField;
 	}
 
+	/**
+	 * Returns the text field with the value of calibration.
+	 * If it doesn't exist it is created.
+	 * @return the text field with the value of calibration
+	 */
 	public JTextField getCalibrationField() {
 		if (calibrationField == null) {
 			calibrationField = new JTextField();
@@ -95,6 +164,14 @@ public class RawSignalOptionsPanel extends JPanel {
 		return calibrationField;
 	}
 
+	/**
+	 * Returns the combo-box which allows to select the
+	 * {@link RawSignalSampleType type} of signal samples (SHORT, INT, FLOAT,
+	 * DOUBLE).
+	 * If it doesn't exist it is created and possible
+	 * {@link RawSignalSampleType#values() values} are added to it.
+	 * @return the combo-box which allows to select the type of signal samples
+	 */
 	public ResolvableComboBox getSampleTypeComboBox() {
 		if (sampleTypeComboBox == null) {
 			sampleTypeComboBox = new ResolvableComboBox(messageSource);
@@ -104,6 +181,13 @@ public class RawSignalOptionsPanel extends JPanel {
 		return sampleTypeComboBox;
 	}
 
+	/**
+	 * Returns the combo-box which allows to select the
+	 * {@link RawSignalByteOrder order} of bytes (little or big endian).
+	 * If it doesn't exist it is created and possible
+	 * {@link RawSignalByteOrder#values() values} are added to it.
+	 * @return the combo-box which allows to select the order of bytes
+	 */
 	public ResolvableComboBox getByteOrderComboBox() {
 		if (byteOrderComboBox == null) {
 			byteOrderComboBox = new ResolvableComboBox(messageSource);
@@ -113,6 +197,13 @@ public class RawSignalOptionsPanel extends JPanel {
 		return byteOrderComboBox;
 	}
 
+	/**
+	 * Returns the button which reads the values of the fields in this panel
+	 * from an XML file.
+	 * If it doesn't exist it is created.
+	 * @return the button which reads the values of the fields in this panel
+	 * from an XML file
+	 */
 	public JButton getReadXMLManifestButton() {
 		if (readXMLManifestButton == null) {
 			readXMLManifestButton = new JButton(); // action is set outside
@@ -120,6 +211,13 @@ public class RawSignalOptionsPanel extends JPanel {
 		return readXMLManifestButton;
 	}
 
+	/**
+	 * Returns the panel with the {@link #getReadXMLManifestButton() button}
+	 * which reads the values of the fields in this panel from an XML file.
+	 * If the panel doesn't exist it is created.
+	 * @return the panel with the button which reads the values of the fields
+	 * in this panel from an XML file
+	 */
 	public JPanel getButtonPanel() {
 		if (buttonPanel == null) {
 			buttonPanel = new JPanel(new FlowLayout(FlowLayout.TRAILING,3,3));
@@ -129,6 +227,28 @@ public class RawSignalOptionsPanel extends JPanel {
 		return buttonPanel;
 	}
 
+	/**
+	 * Returns the panel with the parameters of the signal.
+	 * The panel contains two groups:
+	 * <ul>
+	 * <li>horizontal group which has two sub-groups: one for labels and one
+	 * for combo-boxes and text fields.
+	 * This group positions the elements in two columns.</li>
+	 * <li>vertical group which has 5 sub-groups - one for every row:
+	 * <ul>
+	 * <li>the label and the text field with the sampling frequency,</li>
+	 * <li>the label and the text field with the number of channels,</li>
+	 * <li>the label and the combo-box which allows to select the
+	 * {@link RawSignalSampleType type} of samples,</li>
+	 * <li>the label and the combo-box which allows to select the
+	 * {@link RawSignalByteOrder order} of bytes,</li>
+	 * <li>the label and the text field with the value of calibration,</li>
+	 * </ul>
+	 * This group positions elements in rows.</li>
+	 * </ul>
+	 * If the panel doesn't exist it is created.
+	 * @return the panel with the parameters of the signal
+	 */
 	public JPanel getSettingsPanel() {
 		if (settingsPanel == null) {
 
@@ -201,6 +321,22 @@ public class RawSignalOptionsPanel extends JPanel {
 
 	}
 
+	/**
+	 * Fills the fields of this panel using the given
+	 * {@link RawSignalDescriptor descriptor}:
+	 * <ul>
+	 * <li>the {@link RawSignalDescriptor#getSamplingFrequency() sampling
+	 * frequency},</li>
+	 * <li>the {@link RawSignalDescriptor#getChannelCount() number} of
+	 * channels,</li>
+	 * <li>the selected {@link RawSignalDescriptor#getSampleType() sample
+	 * type},</li>
+	 * <li>the selected {@link RawSignalDescriptor#getByteOrder() byte order},
+	 * </li>
+	 * <li>the {@link RawSignalDescriptor#getCalibration() calibration}.</li>
+	 * </ul>
+	 * @param descriptor the descriptor
+	 */
 	public void fillPanelFromModel(RawSignalDescriptor descriptor) {
 
 		getSamplingFrequencyField().setText(Float.toString(descriptor.getSamplingFrequency()));
@@ -211,6 +347,23 @@ public class RawSignalOptionsPanel extends JPanel {
 
 	}
 
+	/**
+	 * Fills the given {@link RawSignalDescriptor descriptor} with the user
+	 * input from this panel:
+	 * <ul>
+	 * <li>the {@link RawSignalDescriptor#setSamplingFrequency(float) sampling
+	 * frequency},</li>
+	 * <li>the {@link RawSignalDescriptor#setChannelCount(int) number} of
+	 * channels,</li>
+	 * <li>the selected {@link RawSignalDescriptor#setSampleType(
+	 * RawSignalSampleType) sample type},</li>
+	 * <li>the selected {@link RawSignalDescriptor#setByteOrder(
+	 * RawSignalByteOrder) byte order},</li>
+	 * <li>the {@link RawSignalDescriptor#setCalibration(float) calibration}.
+	 * </li>
+	 * </ul>
+	 * @param descriptor the descriptor to fill
+	 */
 	public void fillModelFromPanel(RawSignalDescriptor descriptor) {
 
 		descriptor.setSamplingFrequency(Float.parseFloat(getSamplingFrequencyField().getText()));
@@ -221,6 +374,13 @@ public class RawSignalOptionsPanel extends JPanel {
 
 	}
 
+	/**
+	 * Validates this dialog.
+	 * Dialog is valid if all numbers in text field have valid format and
+	 * are positive.
+	 * @param errors the object in which the errors are stored
+	 * @throws SignalMLException never thrown
+	 */
 	public void validatePanel(Errors errors) throws SignalMLException {
 
 		try {

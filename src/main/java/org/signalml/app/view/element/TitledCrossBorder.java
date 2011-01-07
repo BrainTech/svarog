@@ -15,8 +15,9 @@ import java.awt.Stroke;
 
 import javax.swing.border.TitledBorder;
 
-/** TitledCrossBorder
- *
+/**
+ * Titled border which can contain the closing cross at the top right corner
+ * (if {@code hasCloseCross==true}).
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -24,16 +25,40 @@ public class TitledCrossBorder extends TitledBorder {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * the size of the cross
+	 */
 	private static final Dimension CLOSE_CROSS_SIZE = new Dimension(10,10);
+	/**
+	 * the distance between the cross and the border
+	 */
 	private static final int CLOSE_CROSS_OFFSET = 2;
 
+	/**
+	 * {@code true} if this border should contain the cross,
+	 * {@code false} otherwise
+	 */
 	private boolean hasCloseCross;
 
+	/**
+	 * Constructor.
+	 * Creates this border with the given title and, if {@code
+	 * hasCloseCross==true}, the closing cross.
+	 * @param title the title of this border
+	 * @param hasCloseCross {@code true} if this border should contain the
+	 * cross, {@code false} otherwise
+	 */
 	public TitledCrossBorder(String title, boolean hasCloseCross) {
 		super(title);
 		this.hasCloseCross = hasCloseCross;
 	}
 
+	/**
+	 * {@link TitledBorder#paintBorder(Component, Graphics, int, int, int, int)
+	 * Paints} the border of this component and if contains the close cross
+	 * ({@code hasCloseCross==true}) paints two red lines, which form a cross
+	 * at the top right corner.
+	 */
 	@Override
 	public void paintBorder(Component c, Graphics gOrig, int x, int y, int width, int height) {
 		super.paintBorder(c, gOrig, x, y, width, height);

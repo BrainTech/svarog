@@ -10,10 +10,13 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import org.signalml.app.document.BookDocument;
 import org.springframework.context.support.MessageSourceAccessor;
 
-/** OpenBookOptionsPanel
- *
+
+/**
+ * Panel with options for opening a {@link BookDocument}.
+ * For a time being there are no options for that, so this panel is empty. 
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -21,10 +24,15 @@ public class OpenBookOptionsPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * the {@link MessageSourceAccessor source} of messages (labels)
+	 */
 	private MessageSourceAccessor messageSource;
 
 	/**
-	 * This is the default constructor
+	 * Constructor. Sets the {@link MessageSourceAccessor message source} and
+	 * initializes this panel.
+	 * @param messageSource the source of messages (labels)
 	 */
 	public OpenBookOptionsPanel(MessageSourceAccessor messageSource) {
 		super();
@@ -33,9 +41,9 @@ public class OpenBookOptionsPanel extends JPanel {
 	}
 
 	/**
-	 * This method initializes this
-	 *
-	 *
+	 * Initializes this panel with a group layout and empty vertical and
+	 * horizontal groups.
+	 * For a time being there is no elements of this panel.
 	 */
 	private void initialize() {
 
