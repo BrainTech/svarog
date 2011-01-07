@@ -25,7 +25,7 @@ public class SignalRecorderWorker extends SwingWorker< Integer, Integer> {
 
 	protected static final Logger logger = Logger.getLogger( SignalRecorderWorker.class);
 
-	private LinkedBlockingQueue< double[]> sampleQueue;
+	private LinkedBlockingQueue< double[]> sampleQueue = null;
 	private OutputStream outputStream;
 	private OpenMonitorDescriptor monitorDescriptor;
 	private long pollingInterval;
@@ -34,11 +34,14 @@ public class SignalRecorderWorker extends SwingWorker< Integer, Integer> {
 	private volatile int savedSampleCount;
 	private volatile boolean finished;
 
-	public SignalRecorderWorker( LinkedBlockingQueue< double[]> sampleQueue, 
-								 File file,
-								 OpenMonitorDescriptor monitorDescriptor,
-								 long pollingInterval) throws FileNotFoundException {
-		this.sampleQueue = sampleQueue;
+	/**
+	 * The timestamp of the first recorded sample.
+	 */
+	private double firstSampleTimestamp = Double.NaN;
+
+	public SignalRecorderWorker(File file, OpenMonitorDescriptor monitorDescriptor, long pollingInterval) throws FileNotFoundException {
+
+		sampleQueue = new LinkedBlockingQueue< double[]>();
 		this.outputStream = new FileOutputStream( file);
 		this.monitorDescriptor = monitorDescriptor;
 		this.pollingInterval = pollingInterval;
@@ -46,7 +49,17 @@ public class SignalRecorderWorker extends SwingWorker< Integer, Integer> {
 		savedSampleCount = 0;
 		finished = false;
 		logger.setLevel((Level) Level.INFO);
-}
+		this.execute();
+
+	}
+
+	/**
+	 * Records the given samples.
+	 * @param samples samples to be recorded
+	 */
+	public void offer(double[] samples) {
+		sampleQueue.offer(samples);
+	}
 
 	@Override
 	protected Integer doInBackground() throws Exception {
@@ -112,6 +125,34 @@ public class SignalRecorderWorker extends SwingWorker< Integer, Integer> {
 
 	public boolean isFinished() {
 		return finished;
+	}
+
+	/**
+	 * Returns the timestamp of the first sample for this signal.
+	 * @return the timestamp of the first sample in this signal (NaN if
+	 * the timestamp was not set).
+	 */
+	public double getFirstSampleTimestamp() {
+		return firstSampleTimestamp;
+	}
+
+	/**
+	 * Sets the timestamp of the first sample for this signal.
+	 * @param value new value of the timestamp
+	 */
+	public void setFirstSampleTimestamp(double value) {
+		this.firstSampleTimestamp = value;
+	}
+
+	/**
+	 * Returns if the firstSampleTimestamp was set using {@link SignalRecorderWorker#setFirstSampleTimestamp(double) }.
+	 *
+	 * @return true if the firstSampleTimestamp was set, false otherwise.
+	 */
+	public boolean isFirstSampleTimestampSet() {
+		if (Double.isNaN(firstSampleTimestamp))
+			return false;
+		return true;
 	}
 
 }

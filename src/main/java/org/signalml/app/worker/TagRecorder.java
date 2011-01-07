@@ -102,6 +102,6 @@ public class TagRecorder {
 		if (Double.isNaN(startRecordingTimestamp))
 			return false;
 		return true;
-	}	
+	}
 
 }

@@ -365,18 +365,15 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		FileOutputStream signalRecorderBufferOutput = new FileOutputStream(signalRecorderBufferFile);
 
 		//starting signal recorder
-		LinkedBlockingQueue< double[]> sampleQueue = null;
-		if (signalRecorderBufferOutput != null) {
-			sampleQueue = new LinkedBlockingQueue< double[]>();
-			signalRecorderWorker = new SignalRecorderWorker(sampleQueue, signalRecorderBufferFile, monitorOptions, 50L);
-			signalRecorderWorker.execute();
-		}
+		if (signalRecorderBufferOutput != null)
+			signalRecorderWorker = new SignalRecorderWorker(signalRecorderBufferFile, monitorOptions, 50L);
 
 		//starting tag recorder
 		if (tagRecorderOutputFile != null)
 			tagRecorderWorker = new TagRecorder();
 
-		monitorWorker.setSampleQueue(sampleQueue);
+		//connecting recorders to the monitor worker
+		monitorWorker.connectSignalRecorderWorker(signalRecorderWorker);
 		monitorWorker.connectTagRecorderWorker(tagRecorderWorker);
 
 		pcSupport.firePropertyChange(IS_RECORDING_PROPERTY, false, true);
@@ -393,8 +390,8 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	public void stopMonitorRecording() throws IOException {
 
 		//stops the monitorWorker from sending more samples and tags to the recorders
-		monitorWorker.connectTagRecorderWorker(null);
-		monitorWorker.setSampleQueue(null);
+		monitorWorker.disconnectTagRecorderWorker();
+		monitorWorker.disconnectSignalRecorderWorker();
 
 		//stops the recorderWorker and saves the recorded samples
 		if (signalRecorderWorker != null && !signalRecorderWorker.isCancelled()) {
@@ -431,6 +428,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	private void saveRecordedSamples() throws IOException {
 
 		int sampleCount = signalRecorderWorker.getSavedSampleCount();
+		double firstSampleTimestamp = signalRecorderWorker.getFirstSampleTimestamp();
 		signalRecorderWorker = null;
 
 		String dataPath = null;
@@ -465,6 +463,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		rsd.setSampleType(monitorOptions.getSampleType());
 		rsd.setSamplingFrequency(monitorOptions.getSamplingFrequency());
 		rsd.setSourceSignalType(SourceSignalType.RAW);
+		rsd.setFirstSampleTimestamp(firstSampleTimestamp);
 		RawSignalDescriptorWriter descrWriter = new RawSignalDescriptorWriter();
 		descrWriter.writeDocument(rsd, metadataFile);
 

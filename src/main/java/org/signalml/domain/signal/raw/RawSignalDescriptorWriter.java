@@ -213,6 +213,13 @@ public class RawSignalDescriptorWriter {
 			root.appendChild(offsetElems);
 
 		}
+
+		element = document.createElement(RawSignalDocumentBuilder.FIRST_SAMPLE_TIMESTAMP);
+		if (descriptor.getFirstSampleTimestamp() != Double.NaN) {
+			element.setTextContent(Double.toString(descriptor.getFirstSampleTimestamp()));
+			root.appendChild(element);
+		}
+
 		return document;
 
 	}

@@ -1,7 +1,6 @@
 package org.signalml.app.worker;
 
 import java.util.List;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.SwingWorker;
@@ -40,17 +39,24 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 	private static int TS_DIVIDER = 100000;
 	private JmxClient jmxClient;
 	private OpenMonitorDescriptor monitorDescriptor;
-	private LinkedBlockingQueue<double[]> sampleQueue;
 	private RoundBufferMultichannelSampleSource sampleSource;
 	private RoundBufferSampleSource timestampsSource;
 	private StyledMonitorTagSet tagSet;
 	private volatile boolean finished;
+
 	/**
 	 * This object is responsible for recording tags received by this {@link MonitorWorker}.
 	 * It is connected to the monitor by an external object using
 	 * {@link MonitorWorker#connectTagRecorderWorker(org.signalml.app.worker.TagRecorder)}.
 	 */
 	private TagRecorder tagRecorderWorker;
+
+	/**
+	 * This object is responsible for recording signal received by this {@link MonitorWorker}.
+	 * It is connected to the monitor by an external object using
+	 * {@link MonitorWorker#connectSignalRecorderWorker(org.signalml.app.worker.SignalRecorderWorker) }.
+	 */
+	private SignalRecorderWorker signalRecorderWorker;
 
 	public MonitorWorker(JmxClient jmxClient, OpenMonitorDescriptor monitorDescriptor, RoundBufferMultichannelSampleSource sampleSource, RoundBufferSampleSource timestampsSource, StyledMonitorTagSet tagSet) {
 		this.jmxClient = jmxClient;
@@ -60,14 +66,6 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 		this.tagSet = tagSet;
 		this.tagSet.setTs(timestampsSource);
 		logger.setLevel((Level) Level.INFO);
-	}
-
-	public LinkedBlockingQueue<double[]> getSampleQueue() {
-		return sampleQueue;
-	}
-
-	public void setSampleQueue(LinkedBlockingQueue<double[]> sampleQueue) {
-		this.sampleQueue = sampleQueue;
 	}
 
 	@Override
@@ -182,12 +180,16 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 						selectedChunk[i] = chunk[n];
 					}
 
-					// Send chunk to recorder
-					if (sampleQueue != null) {
-						sampleQueue.offer(selectedChunk.clone());
-						if (tagRecorderWorker != null && !tagRecorderWorker.isStartRecordingTimestampSet()) {
-							tagRecorderWorker.setStartRecordingTimestamp(samples.get(0).getTimestamp());
-						}
+					// set first sample timestamp for the tag recorder
+					if (tagRecorderWorker != null && !tagRecorderWorker.isStartRecordingTimestampSet()) {
+						tagRecorderWorker.setStartRecordingTimestamp(samples.get(0).getTimestamp());
+					}
+
+					// sends chunks to the signal recorder
+					if (signalRecorderWorker != null) {
+						signalRecorderWorker.offer(selectedChunk.clone());
+						if (!signalRecorderWorker.isFirstSampleTimestampSet())
+							signalRecorderWorker.setFirstSampleTimestamp(samples.get(0).getTimestamp());
 					}
 
 					//DEBUG
@@ -351,5 +353,27 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 	 */
 	public void disconnectTagRecorderWorker() {
 		this.tagRecorderWorker = null;
+	}
+
+	/**
+	 * Sets the {@link SignalRecorderWorker} to which the tags will be sent by this
+	 * {@link MonitorWorker}. Setting a {@link SignalRecorderWorker} using this method
+	 * starts sending signal received by this {@link MonitorWorker} to the
+	 * given SignalRecorderWorker.
+	 *
+	 * @param tagRecorderWorker the {@link TagRecorder} responsible for recording
+	 * the tags from this {@link MonitorWorker}.
+	 */
+	public void connectSignalRecorderWorker(SignalRecorderWorker signalRecorderWorker) {
+		this.signalRecorderWorker = signalRecorderWorker;
+	}
+
+	/**
+	 * Disconnects a {@link SignalRecorderWorker} which was connected using
+	 * {@link MonitorWorker#connectSignalRecorderWorker(org.signalml.app.worker.SignalRecorderWorker) }.
+	 * Signal is no longer sent to the {@link SignalRecorderWorker} after disconnecting.
+	 */
+	public void disconnectSignalRecorderWorker() {
+		this.signalRecorderWorker = null;
 	}
 }
