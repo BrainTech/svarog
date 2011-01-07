@@ -117,10 +117,16 @@ public class RawSignalDescriptor {
          * signal
          */
 	private double markerOffset;
+
         /**
          * the time of exporting the signal to the file
          */
 	private Date exportDate;
+
+	/**
+	 * The timestamp of the first sample in the signal.
+	 */
+	private double firstSampleTimestamp = Double.NaN;
 
         /**
          * Constructor. Creates an empty descriptor of a raw signal.
@@ -280,6 +286,12 @@ public class RawSignalDescriptor {
 		return calibrationOffset;
 	}
 
+	/**
+	 * Sets a value of calibration offset for this signal (same for every
+	 * channel.
+	 * @param calibrationOffset new value of calibration offset for
+	 * all channels in the signal
+	 */
 	public void setCalibrationOffset(float calibrationOffset) {
 		if (this.calibrationOffset == null || getChannelCount() != this.calibrationOffset.length)
 			if (getChannelCount() > 0)
@@ -289,6 +301,10 @@ public class RawSignalDescriptor {
 		Arrays.fill(this.calibrationOffset, calibrationOffset);
 	}
 
+	/**
+	 * Sets a new value of calibration offset for each channel.
+	 * @param calibrationOffset new value of calibration offset
+	 */
 	public void setCalibrationOffset(float[] calibrationOffset) {
 		this.calibrationOffset = calibrationOffset;
 	}
@@ -427,6 +443,23 @@ public class RawSignalDescriptor {
          */
 	public void setExportDate(Date exportDate) {
 		this.exportDate = exportDate;
+	}
+
+	/**
+	 * Returns the timestamp of the first sample for this signal.
+	 * @return the timestamp of the first sample in this signal (NaN if
+	 * the timestamp was not set).
+	 */
+	public double getFirstSampleTimestamp() {
+		return firstSampleTimestamp;
+	}
+
+	/**
+	 * Sets the timestamp of the first sample for this signal.
+	 * @param value new value of the timestamp
+	 */
+	public void setFirstSampleTimestamp(double value) {
+		this.firstSampleTimestamp = value;
 	}
 
 }

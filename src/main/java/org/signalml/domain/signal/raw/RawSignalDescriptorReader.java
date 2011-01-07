@@ -211,6 +211,13 @@ public class RawSignalDescriptorReader {
 			else {
 				descriptor.setCalibrationOffset(0.0F);
 			}
+
+			String firstSampleTimestamp = path.evaluate(RawSignalDocumentBuilder.FIRST_SAMPLE_TIMESTAMP, rawSignalEl);
+			if (firstSampleTimestamp != null && !firstSampleTimestamp.isEmpty()) {
+				descriptor.setFirstSampleTimestamp(Double.parseDouble(firstSampleTimestamp));
+			}
+
+
 		} catch (XPathExpressionException ex) {
 			throw new SignalMLException("error.invalidRawSignalXML", ex);
 		}

@@ -109,6 +109,11 @@ public class RawSignalSampleSource extends AbstractMultichannelSampleSource impl
          */
 	private int sampleCount;
 
+	/**
+	 * The timestamp of the first sample in the signal.
+	 */
+	private double firstSampleTimestamp;
+
         /**
          * Constructor. Creates the source of samples for the multichannel raw
          * signal based on the file with that signal.
@@ -481,6 +486,22 @@ public class RawSignalSampleSource extends AbstractMultichannelSampleSource impl
 	@Override
 	public float getSingleCalibrationOffset() {
 		return calibrationOffset[0];
+	}
+
+	/**
+	 * Return the timestamp of the first sample in the signal.
+	 * @return the timestamp of the first sample in the signal
+	 */
+	public double getFirstSampleTimestamp() {
+		return firstSampleTimestamp;
+	}
+
+	/**
+	 * Sets the timestamp of the first sample in the signal.
+	 * @param value the new value of the first sample in the signal
+	 */
+	public void setFirstSampleTimestamp(double value) {
+		this.firstSampleTimestamp = value;
 	}
 
 }

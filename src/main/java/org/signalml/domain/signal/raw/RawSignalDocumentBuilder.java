@@ -56,6 +56,7 @@ public class RawSignalDocumentBuilder {
 	public static final String CALIBRATION_PARAM = "rs:calibrationParam";
 	public static final String CALIBRATION_GAIN = "rs:calibrationGain";
 	public static final String CALIBRATION_OFFSET = "rs:calibrationOffset";
+	public static final String FIRST_SAMPLE_TIMESTAMP = "rs:firstSampleTimestamp";
 
 	static final String JAXP_SCHEMA_LANGUAGE = "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
 

@@ -25,7 +25,7 @@
     		<minExclusive value="0"></minExclusive>
     	</restriction>
     </simpleType>
-    
+
     <simpleType name="sampleCount">
         <annotation>
         	<documentation>Number of samples in data.</documentation>
@@ -65,7 +65,7 @@
     		<minExclusive value="0"></minExclusive>
     	</restriction>
     </simpleType>
-    
+
     <simpleType name="fileName">
         <annotation>
         	<documentation>
@@ -86,7 +86,7 @@
     		</element>
     	</choice>
     </complexType>
-    
+
     <complexType name="rawSignalFormat">
     	<annotation>
     		<documentation>Raw source signal format info</documentation>
@@ -116,7 +116,7 @@
     		<any minOccurs="0" maxOccurs="unbounded"></any>
     	</sequence>
     </complexType>
-    
+
     <simpleType name="signalmlFormatName">
         <annotation>
         	<documentation>SignalML codec format name</documentation>
@@ -172,6 +172,17 @@
 
     <simpleType name="calibrationParam">
         <restriction base="float"/>
+    </simpleType>
+
+    <simpleType name="firstSampleTimestamp">
+    	<annotation>
+    		<documentation>
+    			The timestamp of the first sample in the signal
+    		</documentation>
+    	</annotation>
+    	<restriction base="double">
+    		<minExclusive value="0"></minExclusive>
+    	</restriction>
     </simpleType>
 
 
@@ -313,6 +324,11 @@
                 	</documentation>
                 </annotation>
     		</element>
+		<element name="firstSampleTimestamp" type="rs:firstSampleTimestamp" maxOccurs="1" minOccurs="0">
+		<annotation>
+		    <documentation>The timestamp of the first sample in the signal.</documentation>
+		</annotation>
+		</element>
     	</sequence>
     </complexType>
 
