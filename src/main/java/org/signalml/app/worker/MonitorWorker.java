@@ -356,13 +356,13 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 	}
 
 	/**
-	 * Sets the {@link SignalRecorderWorker} to which the tags will be sent by this
+	 * Sets the {@link SignalRecorderWorker} to which signal will be sent by this
 	 * {@link MonitorWorker}. Setting a {@link SignalRecorderWorker} using this method
 	 * starts sending signal received by this {@link MonitorWorker} to the
 	 * given SignalRecorderWorker.
 	 *
-	 * @param tagRecorderWorker the {@link TagRecorder} responsible for recording
-	 * the tags from this {@link MonitorWorker}.
+	 * @param signalRecorderWorker the {@link SignalRecorderWorker} responsible for recording
+	 * signal from this {@link MonitorWorker}.
 	 */
 	public void connectSignalRecorderWorker(SignalRecorderWorker signalRecorderWorker) {
 		this.signalRecorderWorker = signalRecorderWorker;

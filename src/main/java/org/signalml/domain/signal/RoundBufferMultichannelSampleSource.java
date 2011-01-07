@@ -264,7 +264,7 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 	 * is not supported yet.
 	 * TODO: a clean-up is needed, and calibration gain/offset calculations
 	 * should be performed in this class.
-	 * @return
+	 * @return (not supported)
 	 */
 	@Override
 	public float[] getCalibrationOffset() {

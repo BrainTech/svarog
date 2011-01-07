@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import javax.swing.JComponent;
+import org.omg.CORBA.Request;
 
 import org.signalml.app.model.SignalParameterDescriptor;
 import org.signalml.app.util.IconUtils;
@@ -79,11 +80,11 @@ public class SignalParametersDialog extends AbstractDialog {
 
 	/**
 	 * Fills the sub-panels of this dialog using the given {@link
-	 * SignalParameterDescriptor model} ({@link RequiredSignalParametersPanel#
-	 * fillPanelFromModel(SignalParameterDescriptor)
-	 * RequiredSignalParametersPanel} and {@link PagingParametersPanel#
-	 * fillPanelFromModel(org.signalml.app.model.PagingParameterDescriptor)
-	 * PagingParametersPanel}).
+	 * SignalParameterDescriptor model} (
+	 * {@link RequiredSignalParametersPanel#fillPanelFromModel(org.signalml.app.model.SignalParameterDescriptor)
+	 * RequiredSignalParamatersPanel} and
+	 * {@link PagingParametersPanel#fillPanelFromModel(org.signalml.app.model.PagingParameterDescriptor)
+	 * PagingParametersPanel}.
 	 */
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
@@ -96,10 +97,9 @@ public class SignalParametersDialog extends AbstractDialog {
 
 	/**
 	 * Fills the the given {@link SignalParameterDescriptor model} from
-	 * sub-panels ({@link RequiredSignalParametersPanel#
-	 * fillPanelFromModel(SignalParameterDescriptor)
-	 * RequiredSignalParametersPanel} and {@link PagingParametersPanel#
-	 * fillPanelFromModel(org.signalml.app.model.PagingParameterDescriptor)
+	 * sub-panels ({@link RequiredSignalParametersPanel#fillPanelFromModel(org.signalml.app.model.SignalParameterDescriptor)
+	 * RequiredSignalParamatersPanel} and
+	 * {@link PagingParametersPanel#fillPanelFromModel(org.signalml.app.model.PagingParameterDescriptor)
 	 * PagingParametersPanel}).
 	 */
 	@Override

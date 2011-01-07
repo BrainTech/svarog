@@ -190,8 +190,8 @@ public class NewTagDialog extends AbstractDialog {
 	 * Validates this dialog.
 	 * This dialog is valid if:
 	 * <ul>
-	 * <li>the {@link PagingParametersPanel} is {@link PagingParametersPanel#
-	 * validatePanel(Errors) valid} and</li>
+	 * <li>the {@link PagingParametersPanel} is {@link PagingParametersPanel#validatePanel(org.springframework.validation.Errors)
+	 * valid} and</li>
 	 * <li>if the {@link NewTagPanel#getFromFileRadio() from file radio button}
 	 * is selected - if the file is valid.</li></ul>
 	 */

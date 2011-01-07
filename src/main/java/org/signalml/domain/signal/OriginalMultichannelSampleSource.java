@@ -25,7 +25,7 @@ public interface OriginalMultichannelSampleSource extends MultichannelSampleSour
 	/**
 	 * Returns if the implementation is capable of returning and setting
 	 * a calibration for each channel. It can be used to determine, if
-	 * - for example - method {@link OriginalMultichannelSampleSource#setCalibrationGain()}
+	 * - for example - method {@link OriginalMultichannelSampleSource#setCalibrationGain(float[])}
 	 * can be called for the implementation.
 	 *
 	 * @return true, if calibration could be get or set for each channel,
@@ -75,7 +75,7 @@ public interface OriginalMultichannelSampleSource extends MultichannelSampleSour
 
 	/**
 	 * Sets an identical value of calibration gain for all channels.
-	 * @param new calibration value
+	 * @param calibration new calibration value
 	 */
 	void setCalibrationGain(float calibration);
 
@@ -93,8 +93,8 @@ public interface OriginalMultichannelSampleSource extends MultichannelSampleSour
 	void setCalibrationOffset(float[] calibrationOffset);
 
 	/**
-	 * Returns a single value representing calibration offset
-	 * @return
+	 * Returns a single value representing calibration offset.
+	 * @return single value representing calibration offset
 	 */
 	float getSingleCalibrationOffset();
 

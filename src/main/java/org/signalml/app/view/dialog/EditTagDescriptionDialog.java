@@ -6,6 +6,7 @@ package org.signalml.app.view.dialog;
 
 import java.awt.Dimension;
 import java.awt.Window;
+import java.lang.String;
 
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;

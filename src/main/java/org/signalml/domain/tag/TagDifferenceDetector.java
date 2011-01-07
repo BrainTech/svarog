@@ -16,6 +16,7 @@ import java.util.TreeSet;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.exception.SanityCheckException;
+import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.signal.SignalSelection;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
