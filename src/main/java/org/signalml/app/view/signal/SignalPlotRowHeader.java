@@ -81,7 +81,7 @@ public class SignalPlotRowHeader extends JComponent {
 			pixelPerRowUnit *= 10;
 			sb.append("0");
 		}
-		sb.append(" units");
+		sb.append(" uV");
 		rowUnitLabel = sb.toString();
 
 		normalFont = g.getFont();
