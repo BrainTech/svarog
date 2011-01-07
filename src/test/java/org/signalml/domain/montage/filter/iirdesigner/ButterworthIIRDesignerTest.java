@@ -139,15 +139,15 @@ public class ButterworthIIRDesignerTest {
 
 		//lowpass
 		double[] result = iirdesigner.calculateNaturalFrequency(FilterType.LOWPASS, 7, new double[] {10}, new double[] {20}, 5, 40, true);
-		assertEquals(10.359023354921998, result[0]);
+		assertEquals(10.359023354921998, result[0], 1e-4);
 
 		//digital lowpass
 		result = iirdesigner.calculateNaturalFrequency(FilterType.LOWPASS, 7, new double[] {0.1}, new double[] {0.2}, 3.0, 40.0, false);
-		assertEquals(0.10614373313957487, result[0]);
+		assertEquals(0.10614373313957487, result[0], 1e-4);
 
 		//analog highpass
 		result = iirdesigner.calculateNaturalFrequency(FilterType.HIGHPASS, 4, new double[] {20}, new double[] {10}, 3, 20, true);
-		assertEquals(17.760467745895387, result[0]);
+		assertEquals(17.760467745895387, result[0], 1e-4);
 
 		//analog bandstop
 		result = iirdesigner.calculateNaturalFrequency(FilterType.BANDSTOP, 3, new double[] {1, 4}, new double[] {2, 3}, 3, 20, true);
@@ -225,7 +225,7 @@ public class ButterworthIIRDesignerTest {
 		bo = iirdesigner.new BandstopObjectiveFunction(0, new double[] {1.0, 4.0}, new double[] {2.0, 3.0}, 3, 20);
 
 		//double wp0 = SpecialMath.minimizeFunctionConstrained(objectiveFunction, 1.0, 2.0-1e-12);
-		assertEquals(2.5100487397489273, bo.function(new double[] {1.5}));
+		assertEquals(2.5100487397489273, bo.function(new double[] {1.5}), 1e-4);
 
 	}
 

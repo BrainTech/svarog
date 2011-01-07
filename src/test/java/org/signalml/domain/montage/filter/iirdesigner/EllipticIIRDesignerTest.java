@@ -122,7 +122,7 @@ public class EllipticIIRDesignerTest {
 		double gain = 0.70791820787954829;
 		zpk2 = new FilterZerosPolesGain(zeros, poles, gain);
 
-		assertEquals(zpk1, zpk2);
+		assertEquals(zpk1, zpk2, 1e-1);
 
 		//odd filter order
 		zpk1 = iirdesigner.calculatePrototype(5, 3, 40);
@@ -148,12 +148,12 @@ public class EllipticIIRDesignerTest {
 		//elliptic test 2
 		bo = iirdesigner.new BandstopObjectiveFunction(0,
 		                new double[] {0.5, 0.8}, new double[] {0.55, 0.7}, 0.5, 100);
-		assertEquals(11.571836975873939, bo.function(new double[] {0.00}));
+		assertEquals(11.571836975873939, bo.function(new double[] {0.00}), 1e-4);
 
 		//elliptic test 3
 		bo = iirdesigner.new BandstopObjectiveFunction(0,
 		                new double[] {0.5, 0.8}, new double[] {0.55, 0.7}, 2.5, 130);
-		assertEquals(12.802279159652183, bo.function(new double[] {0.09}));
+		assertEquals(12.802279159652183, bo.function(new double[] {0.09}), 1e-4);
 
 
 	}

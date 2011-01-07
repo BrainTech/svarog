@@ -188,10 +188,6 @@ public class FilterResponseCalculator {
 		groupDelay = ArrayOperations.trimArrayToSize(groupDelay, fftSize / 2);
 		freq = ArrayOperations.trimArrayToSize(freq, fftSize / 2);
 
-		// removing the first element which is (very often) a singularity
-		groupDelay = ArrayOperations.removeFirstElements(groupDelay, 1);
-		freq = ArrayOperations.removeFirstElements(freq, 1);
-
 		FilterFrequencyResponse filterResponse = new FilterFrequencyResponse(freq.length);
 		filterResponse.setFrequencies(freq);
 		filterResponse.setValues(groupDelay);

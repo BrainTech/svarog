@@ -458,7 +458,7 @@ public class RawSignalDescriptor {
 	 * Sets the timestamp of the first sample for this signal.
 	 * @param value new value of the timestamp
 	 */
-	public void setFirstSampleTimestamp(double value) {
+		public void setFirstSampleTimestamp(double value) {
 		this.firstSampleTimestamp = value;
 	}
 

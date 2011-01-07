@@ -54,6 +54,7 @@ import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.element.ResolvableComboBox;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.iirdesigner.ApproximationFunctionType;
+import org.signalml.domain.montage.filter.iirdesigner.ArrayOperations;
 import org.signalml.domain.montage.filter.iirdesigner.BadFilterParametersException;
 import org.signalml.domain.montage.filter.iirdesigner.FilterCoefficients;
 import org.signalml.domain.montage.filter.iirdesigner.FilterFrequencyResponse;
@@ -931,6 +932,11 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 		FilterFrequencyResponse groupDelayResponse = responseCalculator.getGroupDelayResponse();
 		frequencies = groupDelayResponse.getFrequencies();
 		coefficients = groupDelayResponse.getValues();
+
+		// removing the first element which is (very often) a singularity and spoils the plot
+		frequencies = ArrayOperations.removeFirstElements(frequencies, 1);
+		coefficients = ArrayOperations.removeFirstElements(coefficients, 1);
+
 		DefaultXYDataset phaseDataset = new DefaultXYDataset();
 		phaseDataset.addSeries("data", new double[][]{frequencies, coefficients});
 		getGroupDelayPlot().setDataset(phaseDataset);

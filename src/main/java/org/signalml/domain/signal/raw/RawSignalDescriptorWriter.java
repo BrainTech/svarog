@@ -215,7 +215,8 @@ public class RawSignalDescriptorWriter {
 		}
 
 		element = document.createElement(RawSignalDocumentBuilder.FIRST_SAMPLE_TIMESTAMP);
-		if (descriptor.getFirstSampleTimestamp() != Double.NaN) {
+		double firstSampleTimestamp = descriptor.getFirstSampleTimestamp();
+		if (!Double.isNaN(firstSampleTimestamp)) {
 			element.setTextContent(Double.toString(descriptor.getFirstSampleTimestamp()));
 			root.appendChild(element);
 		}
