@@ -381,11 +381,6 @@
 			<version>1.0.0</version>
 		</dependency>
 		<dependency>
-			<groupId>flanagan.uk.ac.ucl.ee</groupId>
-			<artifactId>flanagan-math-fft</artifactId>
-			<version>1.0.0</version>
-		</dependency>
-		<dependency>
 			<groupId>org.signalml</groupId>
 			<artifactId>svarog-launcher</artifactId>
 			<version>1.0.0</version>
@@ -429,6 +424,11 @@
 			<groupId>multiplexer</groupId>
 			<artifactId>jmx</artifactId>
 			<version>0.9</version>
+		</dependency>
+		<dependency>
+			<groupId>edu.emory.mathcs</groupId>
+			<artifactId>jtransforms</artifactId>
+			<version>2.3</version>
 		</dependency>
 	</dependencies>
 

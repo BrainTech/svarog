@@ -106,7 +106,6 @@ public class ConfigurationDefaults {
 		config.setToolTipDismissDelay(toolTipManager.getDismissDelay());
 
 		setZoomSignalSettingsDefaults(config.getZoomSignalSettings());
-		setSignalFFTSettingsDefaults(config.getSignalFFTSettings());
 
 		config.setMinChannelHeight(Integer.parseInt(properties.getProperty("application.minChannelHeight")));
 		config.setMaxChannelHeight(Integer.parseInt(properties.getProperty("application.maxChannelHeight")));
@@ -152,26 +151,6 @@ public class ConfigurationDefaults {
 		settings.setZoomSize(new Dimension(width, height));
 		settings.setFactor(Float.parseFloat(properties.getProperty("application.zoomSettings.factor")));
 		settings.setChannelSwitching(Boolean.parseBoolean(properties.getProperty("application.zoomSettings.channelSwitching")));
-
-	}
-
-	public static void setSignalFFTSettingsDefaults(SignalFFTSettings settings) {
-
-		int width = Integer.parseInt(properties.getProperty("application.signalFFTSettings.plotSize.width"));
-		int height = Integer.parseInt(properties.getProperty("application.signalFFTSettings.plotSize.height"));
-
-		settings.setPlotSize(new Dimension(width,height));
-		settings.setWindowWidth(Integer.parseInt(properties.getProperty("application.signalFFTSettings.windowWidth")));
-		settings.setWindowType(WindowType.valueOf(properties.getProperty("application.signalFFTSettings.windowType")));
-		settings.setWindowParameter(Double.parseDouble(properties.getProperty("application.signalFFTSettings.windowParameter")));
-
-		settings.setChannelSwitching(Boolean.parseBoolean(properties.getProperty("application.signalFFTSettings.channelSwitching")));
-		settings.setLogarithmic(Boolean.parseBoolean(properties.getProperty("application.signalFFTSettings.logarithmic")));
-		settings.setAntialias(Boolean.parseBoolean(properties.getProperty("application.signalFFTSettings.antialias")));
-		settings.setSpline(Boolean.parseBoolean(properties.getProperty("application.signalFFTSettings.spline")));
-		settings.setTitleVisible(Boolean.parseBoolean(properties.getProperty("application.signalFFTSettings.titleVisible")));
-		settings.setFrequencyAxisLabelsVisible(Boolean.parseBoolean(properties.getProperty("application.signalFFTSettings.frequencyAxisLabelsVisible")));
-		settings.setPowerAxisLabelsVisible(Boolean.parseBoolean(properties.getProperty("application.signalFFTSettings.powerAxisLabelsVisible")));
 
 	}
 

@@ -12,6 +12,7 @@ import java.util.Locale;
 import java.util.prefs.Preferences;
 
 import javax.swing.SwingUtilities;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.GnuParser;
@@ -26,15 +27,14 @@ import org.signalml.app.config.ConfigurationDefaults;
 import org.signalml.app.config.GeneralConfiguration;
 import org.signalml.app.config.MRUDConfiguration;
 import org.signalml.app.config.MainFrameConfiguration;
-import org.signalml.app.config.SignalFFTSettings;
 import org.signalml.app.config.SignalMLCodecConfiguration;
 import org.signalml.app.config.SignalMLCodecDescriptor;
 import org.signalml.app.config.ZoomSignalSettings;
 import org.signalml.app.config.preset.BookFilterPresetManager;
 import org.signalml.app.config.preset.FFTSampleFilterPresetManager;
-import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.config.preset.SignalExportPresetManager;
+import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
 import org.signalml.app.document.DefaultDocumentManager;
 import org.signalml.app.document.DefaultMRUDRegistry;
 import org.signalml.app.document.DocumentDetector;
@@ -492,7 +492,6 @@ public class SvarogApplication {
 		        streamer,
 		        ApplicationConfiguration.class,
 		        ZoomSignalSettings.class,
-		        SignalFFTSettings.class,
 		        GeneralConfiguration.class,
 		        MainFrameConfiguration.class,
 		        SignalMLCodecConfiguration.class,

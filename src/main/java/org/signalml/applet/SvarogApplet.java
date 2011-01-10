@@ -30,7 +30,6 @@ import org.signalml.app.config.ConfigurationDefaults;
 import org.signalml.app.config.GeneralConfiguration;
 import org.signalml.app.config.MRUDConfiguration;
 import org.signalml.app.config.MainFrameConfiguration;
-import org.signalml.app.config.SignalFFTSettings;
 import org.signalml.app.config.SignalMLCodecConfiguration;
 import org.signalml.app.config.SignalMLCodecDescriptor;
 import org.signalml.app.config.ZoomSignalSettings;
@@ -186,7 +185,6 @@ public class SvarogApplet extends JApplet implements ViewFocusSelector {
 		        streamer,
 		        ApplicationConfiguration.class,
 		        ZoomSignalSettings.class,
-		        SignalFFTSettings.class,
 		        GeneralConfiguration.class,
 		        MainFrameConfiguration.class,
 		        SignalMLCodecConfiguration.class,

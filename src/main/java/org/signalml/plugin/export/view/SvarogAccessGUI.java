@@ -11,7 +11,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import org.signalml.app.view.signal.SelectTagSignalTool;
-import org.signalml.app.view.signal.SignalFFTTool;
 import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.Plugin;
 import org.signalml.plugin.export.signal.SignalTool;
@@ -358,7 +357,6 @@ public interface SvarogAccessGUI {
 	 * @throws UnsupportedOperationException if the function called
 	 * not during the initialization phase.
 	 * @see SignalTool
-	 * @see SignalFFTTool
 	 * @see SelectTagSignalTool
 	 */
 	public void addSignalTool(SignalTool tool, Icon icon, String toolTipText, SignalToolButtonListener buttonListener) throws UnsupportedOperationException;

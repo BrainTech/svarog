@@ -4,10 +4,7 @@
 
 package org.signalml.fft;
 
-import org.signalml.exception.SanityCheckException;
 import org.springframework.context.MessageSourceResolvable;
-
-import flanagan.math.FourierTransform;
 
 /** WindowType
  *
@@ -69,45 +66,6 @@ public enum WindowType implements MessageSourceResolvable {
 
 	public double getParameterMax() {
 		return parameterMax;
-	}
-
-	public void apply(FourierTransform fourierTransform, double parameter) {
-
-		switch (this) {
-
-		case RECTANGULAR :
-			fourierTransform.setRectangular();
-			break;
-
-		case BARTLETT :
-			fourierTransform.setBartlett();
-			break;
-
-		case WELCH :
-			fourierTransform.setWelch();
-			break;
-
-		case HANN :
-			fourierTransform.setHann();
-			break;
-
-		case HAMMING :
-			fourierTransform.setHamming();
-			break;
-
-		case KAISER :
-			fourierTransform.setKaiser(parameter);
-			break;
-
-		case GAUSSIAN :
-			fourierTransform.setGaussian(parameter);
-			break;
-
-		default :
-			throw new SanityCheckException("Not supported [" + this + "]");
-
-		}
-
 	}
 
 	@Override
