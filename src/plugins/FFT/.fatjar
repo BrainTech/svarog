@@ -1,0 +1,14 @@
+#Fat Jar Configuration File
+#Tue Jan 04 23:26:18 CET 2011
+onejar.license.required=true
+manifest.classpath=
+manifest.removesigners=true
+onejar.checkbox=false
+jarname=C\:\\Users\\Marcin\\Documents\\praca\\FFT\\FFT.jar
+manifest.mergeall=true
+manifest.mainclass=
+manifest.file=<createnew>
+jarname.isextern=true
+onejar.expand=
+excludes=<jar|svarog-0.5.0-SNAPSHOT.jar>
+includes=
