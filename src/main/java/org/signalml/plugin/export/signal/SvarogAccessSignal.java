@@ -478,8 +478,8 @@ public interface SvarogAccessSignal {
 	 * NOTE: it would be a good practice if you removed your temporary files
 	 * when you finish using them. Especially if you use a lot of them or
 	 * big ones.
-	 * @param extension the extension to the file (for example {@code "bin",
-	 * "xml"})
+	 * @param extension the suffix to the file name (for example {@code ".bin",
+	 * ".xml"})
 	 * @return the created temporary file
 	 * @throws IOException if the file couldn't be created
 	 */

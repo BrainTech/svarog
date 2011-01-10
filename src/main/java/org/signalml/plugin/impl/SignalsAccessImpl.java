@@ -1024,7 +1024,7 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 			throw new IOException("can not create the directory for temporary files");
 		if (!tempDirectory.exists())
 			tempDirectory.mkdir();
-		File tempFile = File.createTempFile("temp", ".".concat(extension), tempDirectory);
+		File tempFile = File.createTempFile("temp", extension, tempDirectory);
 		TemporaryFile temporaryFile = new TemporaryFile(tempFile.getAbsolutePath());
 		temporaryFile.deleteOnExit();
 		return temporaryFile;
