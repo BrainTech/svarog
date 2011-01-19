@@ -65,15 +65,7 @@ public class DoubleArraySampleSource extends AbstractMultichannelSampleSource im
 	}
         //TODO shouldn't we check if index is not out of bound?
 
-        /**
-         * Returns the number of samples per second
-         * @return the number of samples per second = 128
-         */
-	@Override
-	public float getSamplingFrequency() {
-		return 128F;
-	}
-
+		
         /**
          * Returns if the implementation is capable of returning a channel count
          * @return the implementation is capable of returning a channel
@@ -98,6 +90,11 @@ public class DoubleArraySampleSource extends AbstractMultichannelSampleSource im
 	@Override
 	public void destroy() {
 		// do nothing
+	}
+
+	@Override
+	public float getSamplingFrequency() {
+		return 0.0F;
 	}
 
 }

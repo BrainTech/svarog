@@ -20,6 +20,7 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 	protected int nextInsertPos;
 	protected boolean full;
 	protected DocumentView documentView;
+	protected float samplingFrequency;
 	protected Object[] labels;
 
 	/**
@@ -167,10 +168,6 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 	}
 
 	@Override
-	public void setSamplingFrequency(float samplingFrequency) {
-	}
-
-	@Override
 	public String getLabel(int channel) {
 
 		if (labels != null)
@@ -257,6 +254,23 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 	@Override
 	public float getSingleCalibrationGain() {
 		return 1F;
+	}
+
+        /**
+         * Returns the number of samples per second
+         * @return the number of samples per second = 128
+         */
+	public float getSamplingFrequency() {
+		return this.samplingFrequency;
+	}
+
+        /**
+         * Sets the number of samples per second
+         * @param sampling - sampling frequency
+         * @return Null
+         */
+	public void setSamplingFrequency(float sampling) {
+		this.samplingFrequency = sampling;
 	}
 
 	/**

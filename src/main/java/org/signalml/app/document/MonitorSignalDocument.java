@@ -111,13 +111,14 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 
 		super(monitorOptions.getType());
 		this.monitorOptions = monitorOptions;
-		double freq = monitorOptions.getSamplingFrequency();
+		float freq = monitorOptions.getSamplingFrequency();
 		double ps = monitorOptions.getPageSize();
 		int sampleCount = (int) Math.ceil(ps * freq);
 		sampleSource = new RoundBufferMultichannelSampleSource(monitorOptions.getSelectedChannelList().length, sampleCount);
 		timestampsSource = new RoundBufferSampleSource(sampleCount);
 		((RoundBufferMultichannelSampleSource) sampleSource).setLabels(monitorOptions.getSelectedChannelsLabels());
 		((RoundBufferMultichannelSampleSource) sampleSource).setDocumentView(getDocumentView());
+		((RoundBufferMultichannelSampleSource) sampleSource).setSamplingFrequency(freq);
 
 	}
 
