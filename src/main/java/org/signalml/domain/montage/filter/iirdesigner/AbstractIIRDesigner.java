@@ -6,6 +6,8 @@ package org.signalml.domain.montage.filter.iirdesigner;
 
 import flanagan.complex.Complex;
 import flanagan.math.MinimisationFunction;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 /**
  * This is an abstract class representing a Designer capable of designing an IIR Filter.
@@ -13,6 +15,11 @@ import flanagan.math.MinimisationFunction;
  * @author Piotr Szachewicz
  */
 abstract class AbstractIIRDesigner {
+
+	/**
+	 * Logger to log history of designing a filter to it.
+	 */
+	protected static final Logger logger = Logger.getLogger(AbstractIIRDesigner.class);
 
 	/*
 	 * contains the value of imaginary unit i (which fulfills: sqrt(i) = -1)
@@ -105,8 +112,29 @@ abstract class AbstractIIRDesigner {
 	 */
 	protected FilterCoefficients designDigitalFilter(double samplingFrequency, FilterType type, double[] passb, double[] stopb, double gpass, double gstop) throws BadFilterParametersException {
 
+		debug("==================================================");
+		debug("Designing digital filter for parameters:");
+		debug("sampling frequency: " + samplingFrequency + " Hz");
+		debug("filter type: " + type);
+		debug("passband frequency 1: " + passb[0] + " Hz");
+		debug("stopband frequency 1: " + stopb[0] + " Hz");
+		if (type.isBandpass() || type.isBandstop()) {
+			debug("passband frequency 2: " + passb[1] + " Hz");
+			debug("stopband frequency 2: " + stopb[1] + " Hz");
+		}
+		debug("passband ripple: " + gpass + " dB");
+		debug("stopband attenuation: " + gstop + " dB");
+		debug("");
+
 		double[] normalizedPassband = normalizeFrequencies(passb, samplingFrequency);
 		double[] normalizedStopband = normalizeFrequencies(stopb, samplingFrequency);
+
+		debug("normalized passband frequency 1: " + normalizedPassband[0]);
+		debug("normalized stopband frequency 1: " + normalizedStopband[0]);
+		if (type.isBandpass() || type.isBandstop()) {
+			debug("normalized passband frequency 2: " + normalizedPassband[1]);
+			debug("normalized stopband frequency 2: " + normalizedStopband[1]);
+		}
 
 		return designDigitalFilter(type, normalizedPassband, normalizedStopband, gpass, gstop);
 
@@ -140,9 +168,16 @@ abstract class AbstractIIRDesigner {
 	protected FilterCoefficients designFilter(FilterType type, double[] passb, double[] stopb, double gpass, double gstop, boolean analog) throws BadFilterParametersException {
 
 		int filterOrder = calculateFilterOrder(type, passb, stopb, gpass, gstop, analog);
+		debug("filter order: " + filterOrder);
 		if (filterOrder > maximumFilterOrder)
 			throw new FilterOrderTooBigException("The order of the filter is too big - the parameters are too strict.");
+
 		double[] naturalFrequencies = calculateNaturalFrequency(type, filterOrder, passb, stopb, gpass, gstop, analog);
+
+		debug("natural frequency 1: " + naturalFrequencies[0]);
+		if (type.isBandpass() || type.isBandstop())
+			debug("natural frequency 2: " + naturalFrequencies[1]);
+
 		return designFilter(type, filterOrder, naturalFrequencies, gpass, gstop, analog);
 
 	}
@@ -176,7 +211,12 @@ abstract class AbstractIIRDesigner {
 		}
 
 		FilterZerosPolesGain zpk = calculatePrototype(filterOrder, gpass, gstop);
+		debug("\n### Designing a lowpass prototype: ");
+		debug(zpk.toString());
+
 		FilterCoefficients coeffs = zpk.convertToBACoefficients();
+		debug("### Transformed zpk prototype to b,a coefficients: ");
+		debug(coeffs.toString());
 
 		if (type.isLowpass())
 			coeffs.transformLowpassToLowpass(wo);
@@ -187,8 +227,16 @@ abstract class AbstractIIRDesigner {
 		else if (type.isBandpass())
 			coeffs.transformLowpassToBandpass(wo, bw);
 
+		debug("### Transformed lowpass prototype to " + type + " filter");
+		debug(coeffs.toString());
+
 		if (!analog)
 			coeffs.bilinearTransform(samplingFrequency);
+
+		debug("### Bilinear transform performed: ");
+		debug(coeffs.toString());
+
+		debug("### The filter was successfully designed.");
 
 		return coeffs;
 
@@ -474,6 +522,31 @@ abstract class AbstractIIRDesigner {
 			return gstop;
 		}
 
+	}
+
+	/**
+	 * Writes the debug information contained in the given string using
+	 * the program
+	 * @param s a string to be logged.
+	 */
+	protected void debug(String s) {
+		String split[];
+
+		split = s.split("\\n");
+		for(String str: split)
+			logger.debug(str);
+	}
+
+	/**
+	 * Enables or disables the logger that prints debug information
+	 * about the process of designing a filter.
+	 * @param enable true if the logger should be enabled, false otherwise.
+	 */
+	protected void enableDebugger(boolean enable) {
+		if (enable != true)
+			logger.setLevel(Level.OFF);
+		else
+			logger.setLevel(Level.ALL);
 	}
 
 }

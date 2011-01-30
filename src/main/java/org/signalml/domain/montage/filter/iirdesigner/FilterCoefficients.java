@@ -410,4 +410,23 @@ public class FilterCoefficients {
 		System.out.println();
 	}
 
+	/**
+	 * Returns a String containing information about b and a coefficients.
+	 * @return a String describing these filter coefficients.
+	 */
+	@Override
+	public String toString() {
+		String s = "filter order: " + getFilterOrder();
+		s += "\n";
+
+		s += "b coefficients:\n";
+		for (int i = 0; i < bCoefficients.length; i++)
+			s += ("     " +bCoefficients[i] + "\n");
+
+		s += "a coefficients:\n";
+		for (int i = 0; i < aCoefficients.length; i++)
+			s += ("     " + aCoefficients[i] + "\n");
+		return s;
+	}
+
 }

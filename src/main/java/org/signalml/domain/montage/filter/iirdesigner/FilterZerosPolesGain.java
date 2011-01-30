@@ -113,18 +113,32 @@ class FilterZerosPolesGain {
 
 	}
 
+	/**
+	 * Prints the poles, zeros and gain on screen.
+	 */
 	protected void print() {
+		System.out.println(toString());
+	}
 
-		System.out.println("Zeros:");
+	/**
+	 * Returns a string containing the values of poles, zeros and gain.
+	 * @return a string containing the values of zeros, poles and gain.
+	 */
+	@Override
+	public String toString() {
+
+		String s;
+		s = "Zeros:\n";
 		for (int i = 0; i < zeros.length; i++)
-			zeros[i].println();
+			s += ("     " + zeros[i].toString() + "\n");
 
-		System.out.println("Poles:");
+		s += "Poles:\n";
 		for (int i = 0; i < poles.length; i++)
-			poles[i].println();
+			s += ("     " + poles[i] + "\n");
 
-		System.out.println("Gain: "+gain);
+		s += ("Gain: " + gain);
 
+		return s;
 	}
 
 	@Override

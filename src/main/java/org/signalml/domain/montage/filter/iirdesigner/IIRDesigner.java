@@ -16,6 +16,11 @@ import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 public class IIRDesigner {
 
 	/**
+	 * A variable which controls whether logging should be performed.
+	 */
+	protected static boolean enableLogger = true;
+
+	/**
 	 * Returs the {@link FilterCoefficients coefficients} of a digital filter
 	 * which meets the given filter specification.
 	 *
@@ -36,24 +41,28 @@ public class IIRDesigner {
 		if (approximationFunctionType.isButterworth()) {
 
 			ButterworthIIRDesigner iirdesigner = new ButterworthIIRDesigner();
+			iirdesigner.enableDebugger(enableLogger);
 			return iirdesigner.designDigitalFilter(samplingFrequency, type, passbandEdgeFrequencies, stopbandEdgeFrequencies, passbandRipple, stopbandAttenuation);
 
 		}
 		else if (approximationFunctionType.isChebyshev1()) {
 
 			Chebyshev1IIRDesigner iirdesigner = new Chebyshev1IIRDesigner();
+			iirdesigner.enableDebugger(enableLogger);
 			return iirdesigner.designDigitalFilter(samplingFrequency, type, passbandEdgeFrequencies, stopbandEdgeFrequencies, passbandRipple, stopbandAttenuation);
 
 		}
 		else if (approximationFunctionType.isChebyshev2()) {
 
 			Chebyshev2IIRDesigner iirdesigner = new Chebyshev2IIRDesigner();
+			iirdesigner.enableDebugger(enableLogger);
 			return iirdesigner.designDigitalFilter(samplingFrequency, type, passbandEdgeFrequencies, stopbandEdgeFrequencies, passbandRipple, stopbandAttenuation);
 
 		}
 		else if (approximationFunctionType.isElliptic()) {
 
 			EllipticIIRDesigner iirdesigner = new EllipticIIRDesigner();
+			iirdesigner.enableDebugger(enableLogger);
 			return iirdesigner.designDigitalFilter(samplingFrequency, type, passbandEdgeFrequencies, stopbandEdgeFrequencies, passbandRipple, stopbandAttenuation);
 
 		}
