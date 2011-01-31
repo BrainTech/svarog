@@ -11,6 +11,7 @@ import org.signalml.app.util.XMLUtils;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import java.io.InputStream;
 
 /** AbstractXMLConfiguration
  *
@@ -66,6 +67,18 @@ public abstract class AbstractXMLConfiguration {
 
 	public void readFromPersistence(File file) throws IOException {
 		readFromXML(getUsableFile(file), getStreamer());
+	}
+
+	/**
+	 * Reads this configuration from the input stream.
+	 * @param inputStream the input stream from which the configuration
+	 * should be read. It is automatically closed after all the reading
+	 * is done.
+	 * @throws IOException thrown when an I/O error occurs while closing
+	 * the input stream.
+	 */
+	public void readFromInputStream(InputStream inputStream) throws IOException {
+		XMLUtils.objectFromInputStream(this, inputStream, getStreamer());
 	}
 
 	public final File getStandardFile(File profileDir) {

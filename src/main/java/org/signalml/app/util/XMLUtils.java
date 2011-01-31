@@ -172,6 +172,23 @@ public abstract class XMLUtils {
 
 	}
 
+	/**
+	 * Reads an object from an input stream.
+	 * @param o the read object (after calling this method, this object
+	 * should be equal to the one read from the input stream)
+	 * @param inputStream an input stream from which the object should be read.
+	 * It is closed after all data is read.
+	 * @param streamer the streamer which should be used to read the object
+	 * @throws IOException if an I/O error occurs while closing the input stream
+	 */
+	public static void objectFromInputStream(Object o, InputStream inputStream, XStream streamer) throws IOException {
+		try {
+			streamer.fromXML(inputStream, o);
+		} finally {
+			inputStream.close();
+		}
+	}
+
 	public static Object newObjectFromFile(File f, XStream streamer) throws IOException {
 
 		InputStream inputStream = XMLUtils.getInitializedXMLInputStream(f);

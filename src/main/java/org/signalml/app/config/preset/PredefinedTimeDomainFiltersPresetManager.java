@@ -5,8 +5,10 @@ package org.signalml.app.config.preset;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import java.io.BufferedInputStream;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import org.signalml.app.util.XMLUtils;
@@ -123,7 +125,10 @@ public class PredefinedTimeDomainFiltersPresetManager extends PredefinedFiltersP
 	 */
 	@Override
 	public void loadDefaults() throws IOException {
-		Resource r = new ClassPathResource(DEFAULT_PREDEFINED_FILTERS_PATH);
-		readFromPersistence(r.getFile());
+
+		Resource resource = new ClassPathResource(DEFAULT_PREDEFINED_FILTERS_PATH);
+		InputStream inputStream = new BufferedInputStream(resource.getInputStream());
+		readFromInputStream(inputStream);
+
 	}
 }
