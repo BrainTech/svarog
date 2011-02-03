@@ -178,7 +178,6 @@ public class RawSignalDocument extends AbstractFileSignal {
 
 		List<LabelledPropertyDescriptor> list = super.getPropertyList();
 
-		list.add(new LabelledPropertyDescriptor("property.signaldocument.calibration", "calibration", RawSignalDocument.class));
 		list.add(new LabelledPropertyDescriptor("property.rawSignal.sampleType", "sampleType", RawSignalDocument.class, "getSampleType", null));
 		list.add(new LabelledPropertyDescriptor("property.rawSignal.byteOrder", "byteOrder", RawSignalDocument.class, "getByteOrder", null));
 
