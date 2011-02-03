@@ -84,7 +84,6 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 		}
 		SignalView signalView = (SignalView) signalDocument.getDocumentView();
 		SignalPlot masterPlot = signalView.getMasterPlot();
-
 		TagDocument tagDocument = signalDocument.getActiveTag();
 
 		SignalExportDescriptor signalExportDescriptor;
@@ -129,6 +128,46 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 			return;
 		}
 
+		ExportFiles exportFiles = chooseFiles(signalExportDescriptor);
+		if (exportFiles == null)
+			return;
+
+		SignalSpace signalSpace = signalExportDescriptor.getSignalSpace();
+
+		SignalProcessingChain signalChain;
+		try {
+			signalChain = masterPlot.getSignalChain().createLevelCopyChain(signalSpace.getSignalSourceLevel());
+		} catch (SignalMLException ex) {
+			logger.error("Failed to create subchain", ex);
+			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+			return;
+		}
+
+		SegmentedSampleSourceFactory factory = SegmentedSampleSourceFactory.getSharedInstance();
+		MultichannelSampleSource sampleSource = factory.getContinuousSampleSource(signalChain, signalSpace, signalExportDescriptor.getTagSet(), signalExportDescriptor.getPageSize(), signalExportDescriptor.getBlockSize());
+
+		normalizeSamplesIfNeeded(sampleSource, signalExportDescriptor);
+
+		if (saveSignal(sampleSource, exportFiles.getSignalFile(), signalExportDescriptor) == false)
+			return;
+
+		if (signalExportDescriptor.isSaveXML())
+			if(saveDescriptor(sampleSource, signalExportDescriptor, masterPlot, exportFiles) == false)
+				return;
+
+	}
+
+	/**
+	 * Shows dialog for choosing files to which the signal and its descriptor
+	 * should be exported.
+	 * @param signalExportDescriptor the desciptor describing the parameters
+	 * of the export
+	 * @return true if files were chosen, false if the user cancelled choosing
+	 * files
+	 */
+	protected ExportFiles chooseFiles(SignalExportDescriptor signalExportDescriptor) {
+
+		SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
 		File fileSuggestion = null;
 		if (signalDocument instanceof FileBackedDocument) {
 			File originalFile = ((FileBackedDocument) signalDocument).getBackingFile();
@@ -145,10 +184,9 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 		File xmlFile = null;
 		boolean hasFile = false;
 		do {
-
 			file = fileChooser.chooseExportSignalFile(optionPaneParent, fileSuggestion);
 			if (file == null) {
-				return;
+				return null;
 			}
 			String ext = Util.getFileExtension(file,false);
 			if (ext == null) {
@@ -177,20 +215,17 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 
 		} while (!hasFile);
 
-		SignalSpace signalSpace = signalExportDescriptor.getSignalSpace();
+		return new ExportFiles(file, xmlFile);
+	}
 
-		SignalProcessingChain signalChain;
-		try {
-			signalChain = masterPlot.getSignalChain().createLevelCopyChain(signalSpace.getSignalSourceLevel());
-		} catch (SignalMLException ex) {
-			logger.error("Failed to create subchain", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-			return;
-		}
-
-		SegmentedSampleSourceFactory factory = SegmentedSampleSourceFactory.getSharedInstance();
-		MultichannelSampleSource sampleSource = factory.getContinuousSampleSource(signalChain, signalSpace, signalExportDescriptor.getTagSet(), signalExportDescriptor.getPageSize(), signalExportDescriptor.getBlockSize());
-
+	/**
+	 * Normalizes samples if it is needed or the user chosed an appropriate
+	 * option.
+	 * @param sampleSource source of samples to be exported
+	 * @param signalExportDescriptor the desciptor describing the parameters
+	 * of the export
+	 */
+	protected void normalizeSamplesIfNeeded(MultichannelSampleSource sampleSource, SignalExportDescriptor signalExportDescriptor) {
 		RawSignalSampleType sampleType = signalExportDescriptor.getSampleType();
 		if (sampleType == RawSignalSampleType.INT || sampleType == RawSignalSampleType.SHORT) {
 
@@ -248,10 +283,20 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 			}
 
 		}
+	}
 
+	/**
+	 * Saves the samples to a given file.
+	 * @param sampleSource source containing samples to be exported
+	 * @param signalFile a file to which the signal should be saved
+	 * @param signalExportDescriptor the desciptor describing the parameters
+	 * of the export
+	 * @return true if succeeded, false otherwise
+	 */
+	public boolean saveSignal(MultichannelSampleSource sampleSource, File signalFile, SignalExportDescriptor signalExportDescriptor) {
 		int minSampleCount = SampleSourceUtils.getMinSampleCount(sampleSource);
 
-		ExportSignalWorker worker = new ExportSignalWorker(sampleSource, file, signalExportDescriptor, pleaseWaitDialog);
+		ExportSignalWorker worker = new ExportSignalWorker(sampleSource, signalFile, signalExportDescriptor, pleaseWaitDialog);
 
 		worker.execute();
 
@@ -266,15 +311,29 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 		} catch (ExecutionException ex) {
 			logger.error("Worker failed to save", ex.getCause());
 			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex.getCause());
-			return;
+			return false;
 		}
+		return true;
+	}
 
-		if (signalExportDescriptor.isSaveXML()) {
-
+	/**
+	 * Saves the XML descriptor for the signal file.
+	 * @param sampleSource source of samples which should be exported
+	 * @param signalExportDescriptor the desciptor describing the parameters
+	 * of the export
+	 * @param masterPlot a {@link SignalPlot} containing the samples to be
+	 * exported
+	 * @param exportFiles {@link ExportFiles} containing files to which
+	 * the signal and its descriptor should be saved
+	 * @return true if succeeded, false otherwise
+	 */
+	public boolean saveDescriptor(MultichannelSampleSource sampleSource, SignalExportDescriptor signalExportDescriptor, SignalPlot masterPlot, ExportFiles exportFiles) {
 			if (descriptorWriter == null) {
 				descriptorWriter = new RawSignalDescriptorWriter();
 			}
 
+			SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
+			SignalSpace signalSpace = signalExportDescriptor.getSignalSpace();
 			RawSignalDescriptor rawDescriptor = new RawSignalDescriptor();
 
 			float samplingFrequency = sampleSource.getSamplingFrequency();
@@ -297,7 +356,7 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 			}
 			rawDescriptor.setChannelLabels(labels);
 			rawDescriptor.setExportDate(new Date());
-			rawDescriptor.setExportFileName(file.getName());
+			rawDescriptor.setExportFileName(exportFiles.getSignalFile().getName());
 
 			TimeSpaceType timeSpaceType = signalSpace.getTimeSpaceType();
 			if (timeSpaceType == TimeSpaceType.MARKER_BASED) {
@@ -314,6 +373,7 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 
 			}
 
+			int minSampleCount = SampleSourceUtils.getMinSampleCount(sampleSource);
 			rawDescriptor.setSampleCount(minSampleCount);
 			rawDescriptor.setSampleType(signalExportDescriptor.getSampleType());
 			rawDescriptor.setSamplingFrequency(samplingFrequency);
@@ -339,14 +399,13 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 			}
 
 			try {
-				descriptorWriter.writeDocument(rawDescriptor, xmlFile);
+				descriptorWriter.writeDocument(rawDescriptor, exportFiles.getXmlFile());
 			} catch (IOException ex) {
 				logger.error("Worker failed to save xml", ex);
 				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-				return;
+				return false;
 			}
-
-		}
+			return true;
 
 	}
 
@@ -385,6 +444,50 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 
 	public void setOptionPaneParent(Component optionPaneParent) {
 		this.optionPaneParent = optionPaneParent;
+	}
+
+	/**
+	 * This class holds the files to which the signal and its descriptor
+	 * will be saved.
+	 */
+	protected class ExportFiles {
+
+		/**
+		 * The file to which the signal will be exported.
+		 */
+		private File signalFile;
+
+		/**
+		 * The file to which the exported signal XML descriptor will be written.
+		 */
+		private File xmlFile;
+
+		/**
+		 * Constructor.
+		 * @param signalFile a file to which the signal will be saved
+		 * @param xmlFile a file to which the signal descriptor will be saved
+		 */
+		public ExportFiles(File signalFile, File xmlFile) {
+			this.signalFile = signalFile;
+			this.xmlFile = xmlFile;
+		}
+
+		/**
+		 * Returns a file to which the signal should be exported.
+		 * @return a file to which the signal should be exported
+		 */
+		public File getSignalFile() {
+			return signalFile;
+		}
+
+		/**
+		 * Returns a file to which the signal's descriptor should be written.
+		 * @return a file to which the signal's descriptor should be written;
+		 */
+		public File getXmlFile() {
+			return xmlFile;
+		}
+
 	}
 
 }
