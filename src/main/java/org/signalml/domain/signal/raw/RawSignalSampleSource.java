@@ -172,6 +172,7 @@ public class RawSignalSampleSource extends AbstractMultichannelSampleSource impl
 		}
 
 		newSource.calibrationGain = Arrays.copyOf(calibrationGain, calibrationGain.length);
+		newSource.calibrationOffset = Arrays.copyOf(calibrationOffset, calibrationOffset.length);
 		if (labels != null) {
 			newSource.labels = Arrays.copyOf(labels, labels.length);
 		}

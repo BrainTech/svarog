@@ -87,15 +87,15 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 
 		TagDocument tagDocument = signalDocument.getActiveTag();
 
-		SignalExportDescriptor descriptor;
+		SignalExportDescriptor signalExportDescriptor;
 		Preset preset = exportSignalDialog.getPresetManager().getDefaultPreset();
 		if (preset == null) {
-			descriptor = new SignalExportDescriptor();
+			signalExportDescriptor = new SignalExportDescriptor();
 		} else {
-			descriptor = (SignalExportDescriptor) preset;
+			signalExportDescriptor = (SignalExportDescriptor) preset;
 		}
 
-		SignalSpace space = descriptor.getSignalSpace();
+		SignalSpace space = signalExportDescriptor.getSignalSpace();
 
 		SignalSelection signalSelection = signalView.getSignalSelection(masterPlot);
 		Tag tag = null;
@@ -111,20 +111,20 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 		space.configureFromSelections(signalSelection, tag);
 
 		if (tagDocument != null) {
-			descriptor.setTagSet(tagDocument.getTagSet());
+			signalExportDescriptor.setTagSet(tagDocument.getTagSet());
 			tagDocument.updateSignalSpaceConstraints(constraints);
 		} else {
-			descriptor.setTagSet(null);
+			signalExportDescriptor.setTagSet(null);
 			constraints.setMarkerStyles(null);
 		}
-		descriptor.setPageSize(masterPlot.getPageSize());
-		descriptor.setBlockSize(masterPlot.getBlockSize());
+		signalExportDescriptor.setPageSize(masterPlot.getPageSize());
+		signalExportDescriptor.setBlockSize(masterPlot.getBlockSize());
 
 		constraints.setRequireCompletePages(false);
 
 		exportSignalDialog.setConstraints(constraints);
 
-		boolean ok = exportSignalDialog.showDialog(descriptor, true);
+		boolean ok = exportSignalDialog.showDialog(signalExportDescriptor, true);
 		if (!ok) {
 			return;
 		}
@@ -164,7 +164,7 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 				}
 			}
 
-			if (hasFile && descriptor.isSaveXML()) {
+			if (hasFile && signalExportDescriptor.isSaveXML()) {
 				xmlFile = Util.changeOrAddFileExtension(file, "xml");
 
 				if (xmlFile.exists() || xmlFile.equals(file)) {
@@ -177,7 +177,7 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 
 		} while (!hasFile);
 
-		SignalSpace signalSpace = descriptor.getSignalSpace();
+		SignalSpace signalSpace = signalExportDescriptor.getSignalSpace();
 
 		SignalProcessingChain signalChain;
 		try {
@@ -189,9 +189,9 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 		}
 
 		SegmentedSampleSourceFactory factory = SegmentedSampleSourceFactory.getSharedInstance();
-		MultichannelSampleSource sampleSource = factory.getContinuousSampleSource(signalChain, signalSpace, descriptor.getTagSet(), descriptor.getPageSize(), descriptor.getBlockSize());
+		MultichannelSampleSource sampleSource = factory.getContinuousSampleSource(signalChain, signalSpace, signalExportDescriptor.getTagSet(), signalExportDescriptor.getPageSize(), signalExportDescriptor.getBlockSize());
 
-		RawSignalSampleType sampleType = descriptor.getSampleType();
+		RawSignalSampleType sampleType = signalExportDescriptor.getSampleType();
 		if (sampleType == RawSignalSampleType.INT || sampleType == RawSignalSampleType.SHORT) {
 
 			// normalization - check signal half-amplitude maximum
@@ -223,7 +223,7 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 				maxTypeAbsValue = Math.min((Short.MAX_VALUE-1), -(Short.MIN_VALUE+1));
 			}
 
-			boolean normalize = descriptor.isNormalize();
+			boolean normalize = signalExportDescriptor.isNormalize();
 			if (!normalize) {
 
 				// check if normalization needs to be forced
@@ -235,7 +235,7 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 					}
 
 					normalize = true;
-					descriptor.setNormalize(normalize);
+					signalExportDescriptor.setNormalize(normalize);
 
 				}
 
@@ -243,7 +243,7 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 
 			if (normalize) {
 
-				descriptor.setNormalizationFactor(maxTypeAbsValue / maxSignalAbsValue);
+				signalExportDescriptor.setNormalizationFactor(maxTypeAbsValue / maxSignalAbsValue);
 
 			}
 
@@ -251,7 +251,7 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 
 		int minSampleCount = SampleSourceUtils.getMinSampleCount(sampleSource);
 
-		ExportSignalWorker worker = new ExportSignalWorker(sampleSource, file, descriptor, pleaseWaitDialog);
+		ExportSignalWorker worker = new ExportSignalWorker(sampleSource, file, signalExportDescriptor, pleaseWaitDialog);
 
 		worker.execute();
 
@@ -269,7 +269,7 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 			return;
 		}
 
-		if (descriptor.isSaveXML()) {
+		if (signalExportDescriptor.isSaveXML()) {
 
 			if (descriptorWriter == null) {
 				descriptorWriter = new RawSignalDescriptorWriter();
@@ -280,14 +280,17 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 			float samplingFrequency = sampleSource.getSamplingFrequency();
 
 			rawDescriptor.setBlocksPerPage(masterPlot.getBlocksPerPage());
-			rawDescriptor.setByteOrder(descriptor.getByteOrder());
-			if (descriptor.isNormalize()) {
-				rawDescriptor.setCalibrationGain((float)(1 / descriptor.getNormalizationFactor()));
+			rawDescriptor.setByteOrder(signalExportDescriptor.getByteOrder());
+			int channelCount = sampleSource.getChannelCount();
+			rawDescriptor.setChannelCount(channelCount);
+
+			if (signalExportDescriptor.isNormalize()) {
+				rawDescriptor.setCalibrationGain((float)(1 / signalExportDescriptor.getNormalizationFactor()));
 			} else {
 				rawDescriptor.setCalibrationGain(1F);
 			}
-			int channelCount = sampleSource.getChannelCount();
-			rawDescriptor.setChannelCount(channelCount);
+			rawDescriptor.setCalibrationOffset(0);
+
 			String[] labels = new String[channelCount];
 			for (int i=0; i<channelCount; i++) {
 				labels[i] = sampleSource.getLabel(i);
@@ -312,7 +315,7 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 			}
 
 			rawDescriptor.setSampleCount(minSampleCount);
-			rawDescriptor.setSampleType(descriptor.getSampleType());
+			rawDescriptor.setSampleType(signalExportDescriptor.getSampleType());
 			rawDescriptor.setSamplingFrequency(samplingFrequency);
 			if (signalDocument instanceof FileBackedDocument) {
 				File sourceFile = ((FileBackedDocument) signalDocument).getBackingFile();
