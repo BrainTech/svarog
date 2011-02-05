@@ -5,7 +5,7 @@
 package org.signalml.domain.montage.filter.iirdesigner;
 
 /**
- * This class can hold a representation of various filter responses
+ * This class can hold a representation of various filter frequency responses
  * (like frequency response, phase shift, group delay). It contains
  * two arrays - one holding frequencies at which the response was calculated,
  * the other holds the response (gain or phase response).

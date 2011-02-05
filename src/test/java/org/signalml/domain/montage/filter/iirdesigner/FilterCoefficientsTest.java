@@ -16,6 +16,18 @@ import static org.signalml.domain.montage.filter.iirdesigner.IIRDesignerAssert.*
  */
 public class FilterCoefficientsTest {
 
+	/**
+	 * Test method for {@link FilterCoefficients#getFilterOrder() }.
+	 */
+	@Test
+	public void testGetFilterOrder() {
+		FilterCoefficients coeffs = new FilterCoefficients(
+		        new double[] {0.01875398, 0.0937699, 0.18753981, 0.18753981, 0.0937699, 0.01875398},
+		        new double[] {1.0, -1.13877891, 1.08854509, -0.46710982, 0.1315193});
+
+		assertEquals(5, coeffs.getFilterOrder());
+	}
+
 	@Test
 	public void testGetComplexFrequencyResponse() {
 

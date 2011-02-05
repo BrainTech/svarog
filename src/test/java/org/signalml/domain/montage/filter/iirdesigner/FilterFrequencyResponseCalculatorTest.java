@@ -1,4 +1,4 @@
-/* ConvolutionTest.java created 2010-12-02
+/* FilterFrequencyResponseCalculatorTest.java created 2010-12-02
  *
  */
 package org.signalml.domain.montage.filter.iirdesigner;
@@ -12,7 +12,7 @@ import static org.signalml.domain.montage.filter.iirdesigner.IIRDesignerAssert.*
  *
  * @author Piotr Szachewicz
  */
-public class FilterResponseCalculatorTest {
+public class FilterFrequencyResponseCalculatorTest {
 
 	/**
 	 * A test method for {@link FilterResponseCalculator#getGroupDelayResponse() }.
@@ -23,7 +23,7 @@ public class FilterResponseCalculatorTest {
 		FilterCoefficients coeffs = new FilterCoefficients(
 			new double[]{0.0562, -0.0260, -0.0603, -0.0260, 0.0562},
 			new double[]{1.0000, -3.0870, 3.7266, -2.1103, 0.4806});
-		FilterResponseCalculator calc = new FilterResponseCalculator(512, 128, coeffs);
+		FilterFrequencyResponseCalculator calc = new FilterFrequencyResponseCalculator(512, 128, coeffs);
 
 		FilterFrequencyResponse groupDelay = calc.getGroupDelayResponse();
 
@@ -36,4 +36,6 @@ public class FilterResponseCalculatorTest {
 		assertArrayEquals(new double[]{0, 0.1250, 0.2500, 0.3750, 0.5000, 0.6250, 0.7500, 0.8750, 1.0000, 1.1250}, actual, 0.001);
 
 	}
+
+
 }

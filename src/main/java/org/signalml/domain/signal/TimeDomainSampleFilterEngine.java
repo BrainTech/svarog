@@ -154,7 +154,28 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 	 * of this method
 	 * @return an array containing new filtered samples of the signal (size of the array = newSamples)
 	 */
-	protected double[] calculateNewFilteredSamples(double[] unfilteredSamplesCache, double[] filteredSamplesCache, int newSamples) {
+	protected double[] calculateNewFilteredSamples(double[] unfilteredSamplesCache,
+		double[] filteredSamplesCache, int newSamples) {
+		return calculateNewFilteredSamples(bCoefficients, aCoefficients, filterOrder, unfilteredSamplesCache, filteredSamplesCache, newSamples);
+	}
+
+	/**
+	 * Calculates newSamples of new filtered samples using a part of the unfiltered signal and
+	 * part of the filtered signal stored in the cache.
+	 * @param bCoefficients b Coefficients of the filter
+	 * @param aCoefficients a Coefficients of the filter
+	 * @param filterOrder the order of the filter
+	 * @param unfilteredSamplesCache an array containing unfiltered samples needed to calculate
+	 * newSamples of new filtered samples.
+	 * @param filteredSamplesCache an array containg filtered samples needed to calculate
+	 * newSamples of new filtered samples.
+	 * @param newSamples number of samples which were added to the signal since the last call
+	 * of this method
+	 * @return an array containing new filtered samples of the signal (size of the array = newSamples)
+	 */
+	protected static double[] calculateNewFilteredSamples(double[] bCoefficients,
+		double[] aCoefficients, int filterOrder, double[] unfilteredSamplesCache,
+		double[] filteredSamplesCache, int newSamples) {
 
 		for (int i = filterOrder; i < filteredSamplesCache.length; i++) {
 
@@ -175,6 +196,31 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 	}
 
 	/**
+	 * Filters the given data using the specified digital filter.
+	 * @param bCoefficients feedforward coefficients of the filter
+	 * @param aCoefficients feedback coeffcients of the filter
+	 * @param input the input signal to be filtered
+	 * @return the input signal after filtering
+	 */
+	public static double[] filter(double[] bCoefficients, double[] aCoefficients, double[] input) {
+
+		int filterOrder = Math.max(aCoefficients.length - 1, bCoefficients.length - 1);
+		int cacheSize = filterOrder + input.length;
+		double[] unfilteredSamplesCache = new double[cacheSize];
+		double[] filteredSamplesCache = new double[cacheSize];
+
+		for (int i = 0; i < filterOrder; i++)
+			unfilteredSamplesCache[i] = 0.0;
+		for (int i = filterOrder; i < unfilteredSamplesCache.length; i++)
+			unfilteredSamplesCache[i] = input[i - filterOrder];
+
+		double[] filteredSamples = calculateNewFilteredSamples(bCoefficients, aCoefficients, filterOrder, unfilteredSamplesCache, filteredSamplesCache, input.length);
+
+		return filteredSamples;
+
+	}
+
+	/**
 	 * Updates the cache used to store filtered samples of the signal.
 	 * @param newSamples number of samples which were added to the signal since the last call
 	 * of this method
@@ -183,7 +229,7 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 
 		double[] unfilteredSamplesCache = getUnfilteredSamplesCache(newSamples);
 		double[] filteredSamplesCache = getFilteredSamplesCache(newSamples);
-		double[] newFilteredSamples = calculateNewFilteredSamples(unfilteredSamplesCache, filteredSamplesCache, newSamples);
+		double[] newFilteredSamples = calculateNewFilteredSamples(bCoefficients, aCoefficients, filterOrder, unfilteredSamplesCache, filteredSamplesCache, newSamples);
 
 		filtered.addSamples(newFilteredSamples);
 

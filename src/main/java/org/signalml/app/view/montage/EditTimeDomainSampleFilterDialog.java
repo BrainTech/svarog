@@ -59,7 +59,7 @@ import org.signalml.domain.montage.filter.iirdesigner.BadFilterParametersExcepti
 import org.signalml.domain.montage.filter.iirdesigner.FilterCoefficients;
 import org.signalml.domain.montage.filter.iirdesigner.FilterFrequencyResponse;
 import org.signalml.domain.montage.filter.iirdesigner.FilterOrderTooBigException;
-import org.signalml.domain.montage.filter.iirdesigner.FilterResponseCalculator;
+import org.signalml.domain.montage.filter.iirdesigner.FilterFrequencyResponseCalculator;
 import org.signalml.domain.montage.filter.iirdesigner.FilterType;
 import org.signalml.domain.montage.filter.iirdesigner.IIRDesigner;
 import org.signalml.plugin.export.SignalMLException;
@@ -905,7 +905,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 		}
 
 		//draws the magnitude response
-		FilterResponseCalculator responseCalculator = new FilterResponseCalculator(512, getCurrentSamplingFrequency(), coeffs);
+		FilterFrequencyResponseCalculator responseCalculator = new FilterFrequencyResponseCalculator(512, getCurrentSamplingFrequency(), coeffs);
 		FilterFrequencyResponse frequencyResponse = responseCalculator.getMagnitudeResponse();
 
 		double[] frequencies = frequencyResponse.getFrequencies();

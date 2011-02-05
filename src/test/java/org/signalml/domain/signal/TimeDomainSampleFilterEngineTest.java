@@ -3,14 +3,13 @@
  */
 package org.signalml.domain.signal;
 
-import static org.junit.Assert.*;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import java.lang.Math.*;
 import org.signalml.domain.montage.filter.iirdesigner.FilterCoefficients;
+import static org.signalml.SignalMLAssert.*;
 
 /**
  * This class performs unit tests on the {@link TimeDomainSampleFilterEngine TimeDomainSampleFilterEngine} class.
@@ -58,6 +57,9 @@ public class TimeDomainSampleFilterEngineTest {
 		coefficients = null;
 	}
 
+	/**
+	 * Test method for {@link TimeDomainSampleFilterEngine#getUnfilteredSamplesCache(int)}.
+	 */
 	@Test
 	public void testGetUnfilteredSamplesCache() {
 
@@ -106,6 +108,9 @@ public class TimeDomainSampleFilterEngineTest {
 		assertEquals(uCache[3], newNewSamples[0], 0.00001);
 	}
 
+	/**
+	 * Test method for {@link TimeDomainSampleFilterEngine#getFilteredSamplesCache(int)}.
+	 */
 	@Test
 	public void testGetFilteredSamplesCache() {
 
@@ -165,6 +170,9 @@ public class TimeDomainSampleFilterEngineTest {
 
 	}
 
+	/**
+	 * Test method for {@link TimeDomainSampleFilterEngine#calculateNewFilteredSamples(double[], double[], int)}.
+	 */
 	@Test
 	public void testCalculateNewFilteredSamples() {
 
@@ -199,6 +207,9 @@ public class TimeDomainSampleFilterEngineTest {
 
 	}
 
+	/**
+	 * Test method for {@link TimeDomainSampleFilterEngine#updateCache()}.
+	 */
 	@Test public void testUpdateCache() {
 
 		coefficients = new FilterCoefficients(new double[] {1.0, 0.0, 0.0},
@@ -349,6 +360,20 @@ public class TimeDomainSampleFilterEngineTest {
 		for (i = 60; i < TEST_SAMPLE_COUNT; i++)
 			assertEquals(1.5, target2[i], 0.0001);
 
+	}
+
+	/**
+	 * Test method for {@link TimeDomainSampleFilterEngine#filter(double[], double[], double[])}.
+	 */
+	@Test
+	public void testFilter() {
+		double[] bCoefficients = new double[] {0.6, 0.22};
+		double[] aCoefficients = new double[] {1, 0.3,  0.4};
+		double[] input = new double[] {1, 2, 3, 4, 5, 6, 7, 8};
+		double[] filtered = TimeDomainSampleFilterEngine.filter(bCoefficients, aCoefficients, input);
+
+		assertArrayEquals(new double[] {0.6, 1.24, 1.628, 2.0756, 2.60612, 3.087924,
+		3.5511748, 4.03947796}, filtered, 0.0001);
 	}
 
 }

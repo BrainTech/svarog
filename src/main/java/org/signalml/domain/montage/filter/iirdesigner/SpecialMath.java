@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
  *
  * @author Piotr Szachewicz
  */
-class SpecialMath {
+public class SpecialMath {
 
 	/**
 	 * Logger to save history of execution at.
