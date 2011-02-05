@@ -11,7 +11,7 @@ import static org.signalml.domain.montage.filter.iirdesigner.IIRDesignerAssert.*
  *
  * @author Piotr Szachewicz
  */
-public class FilterTimeResponseCalculatorTest {
+public class FilterTimeDomainResponseCalculatorTest {
 
 	/**
 	 * Test method for {@link FilterTimeDomainResponseCalculator#getStepResponse(int)}.

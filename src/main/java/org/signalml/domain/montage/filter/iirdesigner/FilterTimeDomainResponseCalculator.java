@@ -25,21 +25,51 @@ public class FilterTimeDomainResponseCalculator extends FilterResponseCalculator
 	}
 
 	/**
+	 * Calculates the given number of values of the step function
+	 * (impulse).
+	 * @param excitationLength the length of the excitation
+	 * @return the step excitation of a given length
+	 */
+	protected double[] generateStepExcitation(int excitationLength) {
+
+		double[] excitation = new double[excitationLength];
+
+		for(int i = 0; i < excitation.length; i++)
+			excitation[i] = 1.0;
+
+		return excitation;
+
+	}
+
+	/**
 	 * Returns the step response of the filter.
 	 * @param numberOfPoints the length of the filter time domain response
 	 * @return the step response of the filter
 	 */
 	public FilterTimeDomainResponse getStepResponse(int numberOfPoints) {
 
-		double[] input = new double[numberOfPoints];
+		double[] excitation = generateStepExcitation(numberOfPoints);
+		double[] stepResponseAmplitudes = TimeDomainSampleFilterEngine.filter(filterCoefficients.getBCoefficients(), filterCoefficients.getACoefficients(), excitation);
 
-		for(int i = 0; i < input.length; i++)
-			input[i] = 1.0;
+		return new FilterTimeDomainResponse(stepResponseAmplitudes, samplingFrequency);
 
-		double[] stepResponseAmplitudes = TimeDomainSampleFilterEngine.filter(filterCoefficients.getBCoefficients(), filterCoefficients.getACoefficients(), input);
+	}
 
-		FilterTimeDomainResponse stepResponse = new FilterTimeDomainResponse(stepResponseAmplitudes, samplingFrequency);
-		return stepResponse;
+	/**
+	 * Calculates the given number of values of the Dirac delta function
+	 * (impulse).
+	 * @param excitationLength the length of the excitation
+	 * @return the impulse excitation of a given length
+	 */
+	protected double[] generateImpulseExcitation(int excitationLength) {
+
+		double[] excitation = new double[excitationLength];
+
+		excitation[0] = 1.0;
+		for(int i = 0; i < excitation.length; i++)
+			excitation[i] = 0.0;
+
+		return excitation;
 
 	}
 
@@ -50,13 +80,8 @@ public class FilterTimeDomainResponseCalculator extends FilterResponseCalculator
 	 */
 	public FilterTimeDomainResponse getImpulseResponse(int numberOfPoints) {
 
-		double[] input = new double[numberOfPoints];
-
-		input[0] = 1.0;
-		for(int i = 1; i < input.length; i++)
-			input[i] = 0.0;
-
-		double[] impulseResponseAmplitudes = TimeDomainSampleFilterEngine.filter(filterCoefficients.getBCoefficients(), filterCoefficients.getACoefficients(), input);
+		double[] excitation = generateImpulseExcitation(numberOfPoints);
+		double[] impulseResponseAmplitudes = TimeDomainSampleFilterEngine.filter(filterCoefficients.getBCoefficients(), filterCoefficients.getACoefficients(), excitation);
 
 		FilterTimeDomainResponse stepResponse = new FilterTimeDomainResponse(impulseResponseAmplitudes, samplingFrequency);
 		return stepResponse;
