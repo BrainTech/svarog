@@ -832,10 +832,10 @@
 	<entry key="montageFilters.filterChannelExclusionTitle">Filter channel exclusion</entry>
 
 	<entry key="editSampleFilter.descriptionTitle">Filter description</entry>
-	<entry key="editSampleFilter.graphSpinnerLabel">Maximum graph frequency [Hz]</entry>
 	<entry key="editSampleFilter.graphPanelTitle">Filter design graph</entry>
+
+	<entry key="editSampleFilter.graphFrequencySpinnerLabel">Maximum graph frequency [Hz]</entry>
 	<entry key="editSampleFilter.graphFrequencyLabel">Frequency [Hz]</entry>
-	<entry key="editSampleFilter.graphTitle">Filter frequency response [decibels]</entry>
 
 	<entry key="error.editSampleFilter.descriptionEmpty">A filter must have a description</entry>
 	<entry key="error.editSampleFilter.descriptionBadChars">Filter description must not contain control characters</entry>
@@ -864,7 +864,13 @@
 	<entry key="editTimeDomainSampleFilter.title">Edit time domain filter</entry>
 	<entry key="editTimeDomainSampleFilter.filterParametersTitle">Filter parameters</entry>
 
-	<entry key="editTimeDomainSampleFilter.graphSubtitle">filter order = {0}</entry>
+	<entry key="editTimeDomainSampleFilter.frequencyResponseGraphTitle">Filter frequency response [decibels]</entry>
+	<entry key="editTimeDomainSampleFilter.graphTimeSpinnerLabel">Maximum graph time value [s]</entry>
+	<entry key="editTimeDomainSampleFilter.graphTimeLabel">Time [s]</entry>
+	<entry key="editTimeDomainSampleFilter.impulseResponseGrapTitle">Impulse response</entry>
+	<entry key="editTimeDomainSampleFilter.stepResponseGrapTitle">Step response</entry>
+
+	<entry key="editTimeDomainSampleFilter.filterOrderSubtitle">filter order = {0}</entry>
 	<entry key="editTimeDomainSampleFilter.groupDelayGraphTitle">Group delay [samples]</entry>
 
 	<entry key="editTimeDomainSampleFilter.filterType">Filter type</entry>

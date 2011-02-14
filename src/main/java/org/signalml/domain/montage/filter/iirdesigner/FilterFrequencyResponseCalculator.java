@@ -69,6 +69,10 @@ public class FilterFrequencyResponseCalculator extends FilterResponseCalculator 
 		}
 	}
 
+	public FilterCoefficients getFilterCoefficients() {
+		return filterCoefficients;
+	}
+
 	/**
 	 *  Returns the magnitude of the frequency response of the filter
 	 *  set in the constructor.

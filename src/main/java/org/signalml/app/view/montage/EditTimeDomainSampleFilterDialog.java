@@ -4,18 +4,15 @@
 package org.signalml.app.view.montage;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.logging.Level;
@@ -31,41 +28,24 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import org.jfree.chart.ChartPanel;
 
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.LogarithmicAxis;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.chart.title.TextTitle;
-import org.jfree.data.xy.DefaultXYDataset;
-import org.jfree.ui.HorizontalAlignment;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.ui.RectangleInsets;
-import org.jfree.ui.VerticalAlignment;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.element.ResolvableComboBox;
+import org.signalml.app.view.montage.charts.TimeDomainFilterResponseChartGroupPanel;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.iirdesigner.ApproximationFunctionType;
-import org.signalml.domain.montage.filter.iirdesigner.ArrayOperations;
 import org.signalml.domain.montage.filter.iirdesigner.BadFilterParametersException;
-import org.signalml.domain.montage.filter.iirdesigner.FilterCoefficients;
-import org.signalml.domain.montage.filter.iirdesigner.FilterFrequencyResponse;
-import org.signalml.domain.montage.filter.iirdesigner.FilterOrderTooBigException;
-import org.signalml.domain.montage.filter.iirdesigner.FilterFrequencyResponseCalculator;
 import org.signalml.domain.montage.filter.iirdesigner.FilterType;
-import org.signalml.domain.montage.filter.iirdesigner.IIRDesigner;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.validation.Errors;
 
 /**
  * This class represents a dialog for {@link TimeDomainSampleFilter
@@ -80,29 +60,24 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	 * spinners.
 	 */
 	private final double FREQUENCY_SPINNER_STEP_SIZE = 0.1;
-
 	/**
 	 * The value of step size for passband ripple and stopband attenuation
 	 * spinners.
 	 */
 	private final double DECIBELS_SPINNER_STEP_SIZE = 0.1;
-
 	/**
 	 * represents the currently edited filter
 	 */
 	private TimeDomainSampleFilter currentFilter;
-
 	/**
 	 * A panel containing controls allowing to change the filter's
 	 * parameters.
 	 */
 	private JPanel filterParametersPanel;
-
 	/**
 	 * A {@link ResolvableComboBox} to select filter's {@link FilterType} from.
 	 */
 	private ResolvableComboBox filterTypeComboBox;
-
 	/**
 	 * A {@link ResolvableComboBox} which can be used  to select filter's
 	 * {@link ApproximationFunctionType} from.
@@ -113,72 +88,43 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	 * frequency of the filter.
 	 */
 	private JSpinner passbandEdgeFrequency1Spinner;
-
 	/**
 	 * A {@link JSpinner} controlling the value of the second passband edge
 	 * frequency of the filter.
 	 */
 	private JSpinner passbandEdgeFrequency2Spinner;
-
 	/**
 	 * A {@link JSpinner} controlling the value of the first stopband edge
 	 * frequency of the filter.
 	 */
 	private JSpinner stopbandEdgeFrequency1Spinner;
-
 	/**
 	 * A spinner controlling the value of the second stopband edge
 	 * frequency of the filter.
 	 */
 	private JSpinner stopbandEdgeFrequency2Spinner;
-
 	/**
 	 * A {@link JSpinner} controlling the value of filter's maximum ripple
 	 * in the passband.
 	 */
 	private JSpinner passbandRippleSpinner;
-
 	/**
 	 * A {@link JSpinner} controlling the value of filter's minimum
 	 * attenuation in the stopband.
 	 */
 	private JSpinner stopbandAttenuationSpinner;
-
-	/**
-	 * The value axis for the groupDelayPlot.
-	 */
-	private NumberAxis groupDelayAxis;
-
-	/**
-	 * A {@link XYPlot} displaying filter group delay.
-	 */
-	private XYPlot groupDelayPlot;
-
-	/**
-	 * A {@link JFreeChart} containing the filter's
-	 * {@link EditTimeDomainSampleFilterDialog#groupDelayPlot},
-	 * a plot title etc.
-	 */
-	private JFreeChart groupDelayChart;
-
-	/**
-	 * A {@link ChartPanel} containing the
-	 * {@link EditTimeDomainSampleFilterDialog#groupDelayChart}.
-	 */
-	private ChartPanel groupDelayChartPanel;
-
 	/**
 	 * An action called after pressing the
 	 * {@link EditTimeDomainSampleFilterDialog#drawFrequencyResponseButton}.
 	 */
 	private DrawFrequencyResponseAction drawFrequencyResponseAction;
-
 	/**
 	 * The button which can be used to draw the frequency response
 	 * for the parametrs set in the
 	 * {@link EditTimeDomainSampleFilterDialog#filterParametersPanel}.
 	 */
 	private JButton drawFrequencyResponseButton;
+	protected TimeDomainFilterResponseChartGroupPanel graphsPanel;
 
 	/**
 	 * Constructor. Sets the message source, parent window, preset manager
@@ -253,104 +199,6 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 		interfacePanel.add(editFilterParametersPanel, BorderLayout.SOUTH);
 
 		return interfacePanel;
-
-	}
-
-	@Override
-	public JSpinner getGraphScaleSpinner() {
-
-		if (graphScaleSpinner == null) {
-
-			graphScaleSpinner = super.getGraphScaleSpinner();
-			graphScaleSpinner.addChangeListener(new SpinnerRoundingChangeListener(FREQUENCY_SPINNER_STEP_SIZE) {
-
-				@Override
-				public void stateChanged(ChangeEvent e) {
-					super.stateChanged(e);
-
-					graphFrequencyMax = ((Number) graphScaleSpinner.getValue()).doubleValue();
-					updateGraph();
-
-				}
-			});
-		}
-		return graphScaleSpinner;
-
-	}
-
-	/**
-	 * Returns the {@link JPanel} containing filter plot (or plots):
-	 * the frequency response plot and the group delay plot.
-	 * @return {@link JPanel} containing filter-related plots
-	 */
-	@Override
-	public JPanel getFilterGraphsPanel() {
-
-		if (filterGraphsPanel == null) {
-			filterGraphsPanel = new JPanel(new GridLayout(2, 1, 5, 5));
-			filterGraphsPanel.add(getFrequencyResponseChartPanel());
-			filterGraphsPanel.add(getGroupDelayChartPanel());
-		}
-		return filterGraphsPanel;
-
-	}
-
-	@Override
-	public NumberAxis getGainAxis() {
-
-		if (gainAxis == null) {
-			gainAxis = new LogarithmicAxis("");
-			gainAxis.setAutoRange(false);
-			((LogarithmicAxis) gainAxis).setStrictValuesFlag(false);
-		}
-		return gainAxis;
-
-	}
-
-	/**
-	 * Returns the {@link JFreeChart} containing the filter's
-	 * {@link EditTimeDomainSampleFilterDialog#groupDelayPlot},
-	 * a plot title etc.
-	 * @return the {@link JFreeChart} containing the filter group delay plot
-	 */
-	public JFreeChart getGroupDelayChart() {
-
-		if (groupDelayChart == null) {
-			groupDelayChart = new JFreeChart(messageSource.getMessage("editTimeDomainSampleFilter.groupDelayGraphTitle"), new Font(Font.DIALOG, Font.PLAIN, 12), getGroupDelayPlot(), false);
-			groupDelayChart.setBorderVisible(true);
-			groupDelayChart.setBackgroundPaint(Color.WHITE);
-			groupDelayChart.setPadding(new RectangleInsets(5, 5, 5, 5));
-		}
-		return groupDelayChart;
-	}
-
-	/**
-	 * Returns the {@link XYPlot} showing the filter's group delay.
-	 * @return the {@link XYPlot} showing the filter's group delay
-	 */
-	public XYPlot getGroupDelayPlot() {
-
-		if (groupDelayPlot == null) {
-
-			XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer(true, false);
-
-			groupDelayPlot = new XYPlot(null, getFrequencyAxis(), getGroupDelayAxis(), renderer);
-
-		}
-		return groupDelayPlot;
-
-	}
-
-	/**
-	 * Returns the value {@link NumberAxis axis} for the group delay plot.
-	 * @return the value axis for the group delay plot
-	 */
-	public NumberAxis getGroupDelayAxis() {
-
-		if (groupDelayAxis == null) {
-			groupDelayAxis = new NumberAxis("");
-		}
-		return groupDelayAxis;
 
 	}
 
@@ -500,7 +348,6 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 			passbandEdgeFrequency1Spinner.setEditor(new JSpinner.NumberEditor(passbandEdgeFrequency1Spinner, "0.00"));
 			passbandEdgeFrequency1Spinner.setFont(passbandEdgeFrequency1Spinner.getFont().deriveFont(Font.PLAIN));
-
 
 			passbandEdgeFrequency1Spinner.addChangeListener(new SpinnerRoundingChangeListener(FREQUENCY_SPINNER_STEP_SIZE) {
 
@@ -842,105 +689,11 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 	@Override
 	protected void updateGraph() {
-		drawFrequencyResponse();
-
-		updateFrequencyAxis();
-		if (passbandEdgeFrequency1Spinner != null && passbandEdgeFrequency2Spinner != null && stopbandEdgeFrequency1Spinner != null
-			&& stopbandEdgeFrequency2Spinner != null) {
-			updateHighlights();
-		}
-	}
-
-	/**
-	 * Updates the rectangle which highlights the selected frequency range.
-	 */
-	@Override
-	protected void updateHighlights() {
-
-		FilterType filterType = (FilterType) getFilterTypeComboBox().getSelectedItem();
-		double lowerFrequency = 0;
-		double higherFrequency = 0;
-
-		if (filterType.isLowpass()) {
-			lowerFrequency = 0;
-			higherFrequency = ((Number) getPassbandEdgeFrequency1Spinner().getValue()).doubleValue();
-		} else if (filterType.isHighpass()) {
-			lowerFrequency = ((Number) getPassbandEdgeFrequency1Spinner().getValue()).doubleValue();
-			higherFrequency = getCurrentSamplingFrequency() / 2;
-		} else if (filterType.isBandpass()) {
-			lowerFrequency = ((Number) getPassbandEdgeFrequency1Spinner().getValue()).doubleValue();
-			higherFrequency = ((Number) getPassbandEdgeFrequency2Spinner().getValue()).doubleValue();
-		} else if (filterType.isBandstop()) {
-			lowerFrequency = ((Number) getStopbandEdgeFrequency1Spinner().getValue()).doubleValue();
-			higherFrequency = ((Number) getStopbandEdgeFrequency2Spinner().getValue()).doubleValue();
-		}
-
-		getFrequencyResponseChartPanel().setSelectionHighlightStart(lowerFrequency);
-		getFrequencyResponseChartPanel().setSelectionHighlightEnd(higherFrequency);
-
-		getFrequencyResponseChartPanel().repaint();
-
-	}
-
-	/**
-	 * Draw the frequency response of the
-	 * {@link EditTimeDomainSampleFilterDialog#currentFilter}.
-	 */
-	protected void drawFrequencyResponse() {
-
-		if (currentFilter == null) {
-			return;
-		}
-
-		FilterCoefficients coeffs = null;
 		try {
-			coeffs = IIRDesigner.designDigitalFilter(currentFilter);
+			getGraphsPanel().updateGraphs(currentFilter);
 		} catch (BadFilterParametersException ex) {
-			validateDialog();
-			Logger.getLogger(EditTimeDomainSampleFilterDialog.class.getName()).log(Level.SEVERE, null, ex);
+			JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
-
-		if (coeffs == null) {
-			return;
-		}
-
-		//draws the magnitude response
-		FilterFrequencyResponseCalculator responseCalculator = new FilterFrequencyResponseCalculator(512, getCurrentSamplingFrequency(), coeffs);
-		FilterFrequencyResponse frequencyResponse = responseCalculator.getMagnitudeResponse();
-
-		double[] frequencies = frequencyResponse.getFrequencies();
-		double[] coefficients = frequencyResponse.getValues();
-
-		DefaultXYDataset dataset = new DefaultXYDataset();
-		dataset.addSeries("data", new double[][]{frequencies, coefficients});
-		getFrequencyResponsePlot().setDataset(dataset);
-
-		getGainAxis().setRange(-100, 0);
-
-		String subtitleText = messageSource.getMessage("editTimeDomainSampleFilter.graphSubtitle", new Object[]{coeffs.getFilterOrder()});
-
-		getFrequencyResponseChart().clearSubtitles();
-		getFrequencyResponseChart().addSubtitle(
-			new TextTitle(subtitleText,
-			getFrequencyResponseChart().getTitle().getFont(),
-			getFrequencyResponseChart().getTitle().getPaint(),
-			RectangleEdge.TOP,
-			HorizontalAlignment.RIGHT, VerticalAlignment.TOP,
-			new RectangleInsets(0, 0, 0, 9)));
-
-		//draws group delay response
-		FilterFrequencyResponse groupDelayResponse = responseCalculator.getGroupDelayResponse();
-		frequencies = groupDelayResponse.getFrequencies();
-		coefficients = groupDelayResponse.getValues();
-
-		// removing the first element which is (very often) a singularity and spoils the plot
-		frequencies = ArrayOperations.removeFirstElements(frequencies, 1);
-		coefficients = ArrayOperations.removeFirstElements(coefficients, 1);
-
-		DefaultXYDataset phaseDataset = new DefaultXYDataset();
-		phaseDataset.addSeries("data", new double[][]{frequencies, coefficients});
-		getGroupDelayPlot().setDataset(phaseDataset);
-
 	}
 
 	@Override
@@ -990,24 +743,6 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	}
 
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
-
-		super.validateDialog(model, errors);
-
-		fillModelFromDialog(currentFilter);
-		try {
-			FilterCoefficients coeffs = IIRDesigner.designDigitalFilter(currentFilter);
-		} catch (FilterOrderTooBigException ex) {
-			errors.reject("error.editTimeDomainSampleFilter.badFilterParametersFilterOrderTooBig");
-		} catch (BadFilterParametersException ex) {
-			errors.reject("error.editTimeDomainSampleFilter.badFilterParameters");
-		} catch (Exception e) {
-			errors.reject("error.editTimeDomainSampleFilter.badFilterParameters");
-		}
-
-	}
-
-	@Override
 	public Preset getPreset() throws SignalMLException {
 		fillModelFromDialog(currentFilter);
 		return currentFilter.duplicate();
@@ -1024,34 +759,6 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	}
 
 	@Override
-	public FrequencyResponseChartPanel getFrequencyResponseChartPanel() {
-		if (frequencyResponseChartPanel == null) {
-
-			frequencyResponseChartPanel = new TimeDomainFilterFrequencyResponseChartPanel(getFrequencyResponseChart());
-			frequencyResponseChartPanel.setBackground(Color.WHITE);
-			frequencyResponseChartPanel.setPreferredSize(new Dimension(500, 150));
-
-		}
-		return frequencyResponseChartPanel;
-	}
-
-	/**
-	 * Returns the {@link ChartPanel} containing the
-	 * {@link EditTimeDomainSampleFilterDialog#groupDelayChart}.
-	 * @return the panel containing the group delay chart
-	 */
-	public ChartPanel getGroupDelayChartPanel() {
-
-		if (groupDelayChartPanel == null) {
-			groupDelayChartPanel = new ChartPanel(getGroupDelayChart());
-			groupDelayChartPanel.setBackground(Color.WHITE);
-			groupDelayChartPanel.setPreferredSize(new Dimension(500, 150));
-		}
-		return groupDelayChartPanel;
-
-	}
-
-	@Override
 	protected URL getContextHelpURL() {
 		URL contextHelpURL = null;
 		try {
@@ -1062,72 +769,20 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 		return contextHelpURL;
 	}
 
-	/**
-	 * A {@link FrequencyResponseChartPanel} used to draw filter's frequency
-	 * response on it.
-	 */
-	protected class TimeDomainFilterFrequencyResponseChartPanel extends FrequencyResponseChartPanel {
-
-		public TimeDomainFilterFrequencyResponseChartPanel(JFreeChart chart) {
-			super(chart);
+	@Override
+	public TimeDomainFilterResponseChartGroupPanel getGraphsPanel() {
+		if (graphsPanel == null) {
+			graphsPanel = new TimeDomainFilterResponseChartGroupPanel(messageSource, currentFilter);
+			graphsPanel.setSamplingFrequency(getCurrentSamplingFrequency());
 		}
+		return graphsPanel;
+	}
 
-		@Override
-		public void mouseReleased(MouseEvent ev) {
-			startFrequency = null;
-			hideSelectionHighlight = false;
-			clearDragHighlight();
-			repaint();
-
-		}
-
-		@Override
-		public void mouseClicked(MouseEvent ev) {
-
-			double frequency = getFrequency(ev.getPoint());
-			if (frequency >= getGraphFrequencyMax()) {
-				return;
-			}
-
-			FilterType filterType = (FilterType) getFilterTypeComboBox().getSelectedItem();
-			if (filterType.isLowpass() || filterType.isHighpass()) {
-				getPassbandEdgeFrequency1Spinner().setValue(frequency);
-			}
-
-		}
-
-		@Override
-		public void mouseDragged(MouseEvent ev) {
-
-			if (startFrequency == null) {
-				return;
-			}
-
-			double startFrequency = this.startFrequency;
-			double endFrequency = getFrequency(ev.getPoint());
-
-			if (startFrequency == endFrequency) {
-				clearDragHighlight();
-				return;
-			}
-
-			if (startFrequency > endFrequency) {
-				double temp = startFrequency;
-				startFrequency = endFrequency;
-				endFrequency = temp;
-			}
-
-			FilterType filterType = (FilterType) getFilterTypeComboBox().getSelectedItem();
-			if (filterType.isBandpass()) {
-				getPassbandEdgeFrequency1Spinner().setValue(startFrequency);
-				getPassbandEdgeFrequency2Spinner().setValue(endFrequency);
-			} else if (filterType.isBandstop()) {
-				getStopbandEdgeFrequency1Spinner().setValue(startFrequency);
-				getStopbandEdgeFrequency2Spinner().setValue(endFrequency);
-			}
-			setDragHighlight(startFrequency, endFrequency);
-
-		}
+	@Override
+	protected void updateHighlights() {
+		/* TODO: TimeDomain filter dialog doesn't support highlighting the
+		 * selection yet.
+		 */
 	}
 
 	/**
@@ -1149,7 +804,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 				Logger.getLogger(EditTimeDomainSampleFilterDialog.class.getName()).log(Level.SEVERE, null, ex);
 			}
 
-			drawFrequencyResponse();
+			updateGraph();
 
 		}
 	}

@@ -5,21 +5,19 @@
 package org.signalml.app.view.montage;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.text.ParseException;
-import java.util.Iterator;
 
 import javax.swing.AbstractAction;
 import javax.swing.Box;
@@ -45,16 +43,14 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.NumberTickUnit;
-import org.jfree.data.xy.DefaultXYDataset;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.montage.FFTSampleFilterTableModel;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.TablePopupMenuProvider;
 import org.signalml.app.view.element.FFTWindowTypePanel;
+import org.signalml.app.view.montage.charts.FFTFilterResponseChartGroupPanel;
+import org.signalml.app.view.montage.charts.FrequencyRangeSelection;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
 import org.signalml.plugin.export.SignalMLException;
@@ -66,7 +62,7 @@ import org.springframework.validation.Errors;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
+public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements PropertyChangeListener {
 
 	private static final long serialVersionUID = 1L;
 	private static final double FREQUENCY_SPINNER_STEP_SIZE = 0.25;
@@ -93,6 +89,8 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 
 	private FFTWindowTypePanel fftWindowTypePanel;
 
+	protected FFTFilterResponseChartGroupPanel graphsPanel;
+
 	public EditFFTSampleFilterDialog(MessageSourceAccessor messageSource, PresetManager presetManager, Window w, boolean isModal) {
 		super(messageSource, presetManager, w, isModal);
 	}
@@ -111,15 +109,6 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 		removeRangeAction.setEnabled(false);
 
 		super.initialize();
-
-		addComponentListener(new ComponentAdapter() {
-
-			@Override
-			public void componentShown(ComponentEvent e) {
-				updateHighlights();
-			}
-
-		});
 
 	}
 
@@ -215,8 +204,8 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 
 							getFromFrequencySpinner().setValue((double) lowFrequency);
 							if (highFrequency <= lowFrequency) {
-								double scaleSpinnerValue = ((Number) getGraphScaleSpinner().getValue()).doubleValue();
-								getToFrequencySpinner().setValue(Math.max((double) lowFrequency + FREQUENCY_SPINNER_STEP_SIZE, scaleSpinnerValue));
+								double maximumFrequency = getCurrentSamplingFrequency() / 2;
+								getToFrequencySpinner().setValue(Math.max((double) lowFrequency + FREQUENCY_SPINNER_STEP_SIZE, maximumFrequency));
 								getUnlimitedCheckBox().setSelected(true);
 							} else {
 								getToFrequencySpinner().setValue((double) highFrequency);
@@ -342,42 +331,6 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 
 		}
 		return newRangePanel;
-
-	}
-
-	@Override
-	public JSpinner getGraphScaleSpinner() {
-
-		if (graphScaleSpinner == null) {
-
-			graphScaleSpinner = super.getGraphScaleSpinner();
-			graphScaleSpinner.addChangeListener(new SpinnerRoundingChangeListener(FREQUENCY_SPINNER_STEP_SIZE) {
-
-				@Override
-				public void stateChanged(ChangeEvent e) {
-					super.stateChanged(e);
-
-					graphFrequencyMax = ((Number) graphScaleSpinner.getValue()).doubleValue();
-					updateGraph();
-
-					updateHighlights();
-				}
-
-			});
-		}
-		return graphScaleSpinner;
-
-	}
-
-	@Override
-	public NumberAxis getGainAxis() {
-
-		if (gainAxis == null) {
-			gainAxis = new NumberAxis();
-			gainAxis.setAutoRange(false);
-			gainAxis.setTickUnit(new NumberTickUnit(1));
-		}
-		return gainAxis;
 
 	}
 
@@ -520,75 +473,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 
 	@Override
 	protected void updateGraph() {
-
-		if (currentFilter == null) {
-			return;
-		}
-
-		int frequencyCnt = (int) Math.ceil(getGraphFrequencyMax() / FREQUENCY_SPINNER_STEP_SIZE) + 1;
-		double[] frequencies = new double[frequencyCnt];
-		double[] coefficients = new double[frequencyCnt];
-		int i;
-		double frequency = 0;
-
-		for (i = 0; i < frequencyCnt; i++) {
-			frequencies[i] = frequency;
-			frequency += FREQUENCY_SPINNER_STEP_SIZE;
-		}
-
-		Iterator<Range> it = currentFilter.getRangeIterator();
-		Range range;
-		double limit;
-		float lowFrequency;
-		float highFrequency;
-		double coefficient;
-		double maxCoefficient = 0;
-
-		while (it.hasNext()) {
-
-			range = it.next();
-
-			lowFrequency = range.getLowFrequency();
-			if (lowFrequency > getGraphFrequencyMax()) {
-				break;
-			}
-
-			highFrequency = range.getHighFrequency();
-			coefficient = range.getCoefficient();
-
-			if (highFrequency <= lowFrequency) {
-				limit = getGraphFrequencyMax();
-			} else {
-				limit = Math.min(highFrequency, getGraphFrequencyMax());
-			}
-
-			int index;
-			for (frequency=lowFrequency; frequency<=limit; frequency += FREQUENCY_SPINNER_STEP_SIZE) {
-
-				index = (int) (frequency / FREQUENCY_SPINNER_STEP_SIZE);
-				coefficients[index] = coefficient;
-
-			}
-
-			if (coefficient > maxCoefficient) {
-				maxCoefficient = coefficient;
-			}
-
-		}
-
-		maxCoefficient *= 1.1;
-		if (maxCoefficient < 1) {
-			maxCoefficient  = 1;
-		}
-
-		updateFrequencyAxis();
-
-		getGainAxis().setRange(0, maxCoefficient);
-
-		DefaultXYDataset dataset = new DefaultXYDataset();
-		dataset.addSeries("data", new double[][] {frequencies, coefficients});
-		getFrequencyResponsePlot().setDataset(dataset);
-
+		getGraphsPanel().updateGraphs(currentFilter);
 	}
 
 	/**
@@ -597,14 +482,11 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 	@Override
 	protected void updateHighlights() {
 
-		getFrequencyResponseChartPanel().setSelectionHighlightStart(((Number) getFromFrequencySpinner().getValue()).doubleValue());
+		double startFrequency = getSpinnerDoubleValue(getFromFrequencySpinner());
+		double endFrequency = getSpinnerDoubleValue(getToFrequencySpinner());
+		FrequencyRangeSelection selection = new FrequencyRangeSelection(startFrequency, endFrequency);
 
-		if (getUnlimitedCheckBox().isSelected()) {
-			getFrequencyResponseChartPanel().setSelectionHighlightEnd(getGraphFrequencyMax());
-		}
-		else {
-			getFrequencyResponseChartPanel().setSelectionHighlightEnd(((Number) getToFrequencySpinner().getValue()).doubleValue());
-		}
+		getGraphsPanel().setHighlightedSelection(selection);
 
 	}
 
@@ -647,15 +529,32 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 
 	@Override
 	public void validateDialog(Object model, Errors errors) throws SignalMLException {
-
 		super.validateDialog(model, errors);
 		getFFTWindowTypePanel().validatePanel(errors);
-
 	}
 
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
 		return FFTSampleFilter.class.isAssignableFrom(clazz);
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		String propertyName = evt.getPropertyName();
+
+		FrequencyRangeSelection selection = (FrequencyRangeSelection)evt.getNewValue();
+		double lowerFrequency = selection.getLowerFrequency();
+		double higherFrequency = selection.getHigherFrequency();
+		System.out.println("selection : " + lowerFrequency + " .. " + higherFrequency);
+
+		getFromFrequencySpinner().setValue(lowerFrequency);
+		getToFrequencySpinner().setValue(higherFrequency);
+
+		if (higherFrequency == getMaximumFrequency())
+			getUnlimitedCheckBox().setSelected(true);
+		else
+			getUnlimitedCheckBox().setSelected(false);
+
 	}
 
 	protected class AddNewRangeAction extends AbstractAction {
@@ -781,98 +680,20 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog {
 	}
 
 	@Override
-	public JFreeChart getFrequencyResponseChart() {
-
-		if (frequencyResponseChart == null) {
-			frequencyResponseChart = super.getFrequencyResponseChart();
-			frequencyResponseChart.setTitle(messageSource.getMessage("editFFTSampleFilter.graphTitle"));
-
-		}
-		return frequencyResponseChart;
-
+	public void setCurrentSamplingFrequency(float currentSamplingFrequency) {
+		super.setCurrentSamplingFrequency(currentSamplingFrequency);
+		getGraphsPanel().setSamplingFrequency(currentSamplingFrequency);
 	}
 
 	@Override
-	public FrequencyResponseChartPanel getFrequencyResponseChartPanel() {
+	public FFTFilterResponseChartGroupPanel getGraphsPanel() {
+		if (graphsPanel == null) {
+			graphsPanel = new FFTFilterResponseChartGroupPanel(messageSource, currentFilter);
+			graphsPanel.setSamplingFrequency(getCurrentSamplingFrequency());
 
-		if (frequencyResponseChartPanel == null) {
-
-			frequencyResponseChartPanel = new FFTFrequencyResponseChartPanel(getFrequencyResponseChart());
-			frequencyResponseChartPanel.setBackground(Color.WHITE);
-			frequencyResponseChartPanel.setPreferredSize(new Dimension(500, 150));
-
+			graphsPanel.addSelectionChangedListener(this);
 		}
-		return frequencyResponseChartPanel;
-
-	}
-
-	protected class FFTFrequencyResponseChartPanel extends FrequencyResponseChartPanel {
-
-		public FFTFrequencyResponseChartPanel(JFreeChart chart) {
-			super(chart);
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent ev) {
-			startFrequency = null;
-			hideSelectionHighlight = false;
-			clearDragHighlight();
-			repaint();
-
-			JSpinner spinner = getCoefficientSpinner();
-			// XXX ugly hack - this class is utterly hopeless...
-			JTextField editor = ((JTextField) ((JSpinner.NumberEditor) spinner.getEditor()).getComponent(0));
-			editor.selectAll();
-			editor.requestFocusInWindow();
-		}
-
-		@Override
-		public void mouseClicked(MouseEvent ev) {
-
-			double frequency = getFrequency(ev.getPoint());
-			if (frequency >= getGraphFrequencyMax()) {
-				return;
-			}
-
-			getFromFrequencySpinner().setValue(frequency);
-			getToFrequencySpinner().setValue(frequency + FREQUENCY_SPINNER_STEP_SIZE);
-
-		}
-
-		@Override
-		public void mouseDragged(MouseEvent ev) {
-
-			if (startFrequency == null) {
-				return;
-			}
-
-			double startFrequency = this.startFrequency;
-			double endFrequency = getFrequency(ev.getPoint());
-
-			if (startFrequency == endFrequency) {
-				clearDragHighlight();
-				return;
-			}
-
-			if (startFrequency > endFrequency) {
-				double temp = startFrequency;
-				startFrequency = endFrequency;
-				endFrequency = temp;
-			}
-
-			getFromFrequencySpinner().setValue(startFrequency);
-			if (endFrequency >= getGraphFrequencyMax()) {
-				getToFrequencySpinner().setValue(getGraphFrequencyMax());
-				getUnlimitedCheckBox().setSelected(true);
-				setDragHighlight(startFrequency, getGraphFrequencyMax());
-			} else {
-				getUnlimitedCheckBox().setSelected(false);
-				getToFrequencySpinner().setValue(endFrequency);
-				setDragHighlight(startFrequency, endFrequency);
-			}
-
-		}
-
+		return graphsPanel;
 	}
 
 }
