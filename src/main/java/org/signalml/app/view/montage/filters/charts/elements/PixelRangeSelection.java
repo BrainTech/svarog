@@ -7,7 +7,7 @@ package org.signalml.app.view.montage.filters.charts.elements;
  * This class represents a selection made on a chart.
  * @author Piotr Szachewicz
  */
-class Selection {
+class PixelRangeSelection {
 
 	/**
 	 * The beginning position of this selection (in pixels).
@@ -30,7 +30,7 @@ class Selection {
 	 */
 	private boolean dragging;
 
-	public Selection() {
+	public PixelRangeSelection() {
 		visible = false;
 	}
 
@@ -39,7 +39,7 @@ class Selection {
 	 * @param point1 beginning position of the selection
 	 * @param point2 end position of the selection
 	 */
-	public Selection(int point1, int point2) {
+	public PixelRangeSelection(int point1, int point2) {
 
 		startPosition = point1;
 		endPosition = point2;

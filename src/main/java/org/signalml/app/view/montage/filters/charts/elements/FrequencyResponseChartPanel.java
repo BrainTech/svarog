@@ -104,4 +104,13 @@ public abstract class FrequencyResponseChartPanel extends ResponseChartPanel imp
 		repaint();
 	}
 
+	@Override
+	public void setMaximumDomainAxisValue(double maximum) {
+		super.setMaximumDomainAxisValue(maximum);
+		if (selectionHighlightRenderer != null)
+			selectionHighlightRenderer.updateSelectionToScaleChange();
+	}
+
+
+
 }

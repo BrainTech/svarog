@@ -49,9 +49,14 @@ public class SelectionHighlightRenderer {
 	private FrequencyResponseChartPanel chartPanel;
 
 	/**
-	 * The currently made selection.
+	 * The currently selected frequency range.
 	 */
-	private Selection selection;
+	private FrequencyRangeSelection frequencyRangeSelection;
+
+	/**
+	 * The currently made selection in pixels.
+	 */
+	private PixelRangeSelection pixelRangeSelection;
 
 	/**
 	 * Constructor.
@@ -59,7 +64,7 @@ public class SelectionHighlightRenderer {
 	 */
 	public SelectionHighlightRenderer(FrequencyResponseChartPanel chartPanel) {
 		this.chartPanel = chartPanel;
-		selection = new Selection();
+		pixelRangeSelection = new PixelRangeSelection();
 	}
 
 	/**
@@ -119,13 +124,7 @@ public class SelectionHighlightRenderer {
 	 * @return the highlighted frequency range
 	 */
 	public FrequencyRangeSelection getFrequencyRangeSelection() {
-		int lowerPosition = selection.getLowerPosition();
-		int higherPosition = selection.getHigherPosition();
-
-		double lowerFrequency = convertPositionToFrequency(lowerPosition);
-		double higherFrequency = convertPositionToFrequency(higherPosition);
-
-		return new FrequencyRangeSelection(lowerFrequency, higherFrequency);
+		return convertPixelSelectionToFrequencyRangeSelection(pixelRangeSelection);
 	}
 
 	/**
@@ -134,18 +133,46 @@ public class SelectionHighlightRenderer {
 	 */
 	public void setFrequencyRangeSelection(FrequencyRangeSelection frequencyRangeSelection) {
 
-		if (selection.isDragging()) {
+		if (pixelRangeSelection.isDragging()) {
 			return;
 		}
 
+		this.frequencyRangeSelection = frequencyRangeSelection;
+		pixelRangeSelection = convertFrequencyRangeSelectionToPixelSelection(frequencyRangeSelection);
+		fireSelectionChanged();
+	}
+
+	/**
+	 * Converts a selection given in the frequency domain to one given
+	 * in the pixel domain.
+	 * @param frequencyRangeSelection selection to be converted
+	 * @return the result of the conversion
+	 */
+	private PixelRangeSelection convertFrequencyRangeSelectionToPixelSelection(FrequencyRangeSelection frequencyRangeSelection) {
 		double startFrequency = frequencyRangeSelection.getLowerFrequency();
 		double endFrequency = frequencyRangeSelection.getHigherFrequency();
 
 		int startPosition = convertFrequencyToPosition(startFrequency);
 		int endPosition = convertFrequencyToPosition(endFrequency);
-		selection = new Selection(startPosition, endPosition);
 
-		fireSelectionChanged();
+		PixelRangeSelection pixelSelection = new PixelRangeSelection(startPosition, endPosition);
+		return pixelSelection;
+	}
+
+	/**
+	 * Converts a selection in the pixel domain to a selection in the
+	 * frequency domain.
+	 * @param pixelSelection selection to be converted
+	 * @return the result of the conversion
+	 */
+	private FrequencyRangeSelection convertPixelSelectionToFrequencyRangeSelection(PixelRangeSelection pixelSelection) {
+		int lowerPosition = pixelSelection.getLowerPosition();
+		int higherPosition = pixelSelection.getHigherPosition();
+
+		double lowerFrequency = convertPositionToFrequency(lowerPosition);
+		double higherFrequency = convertPositionToFrequency(higherPosition);
+
+		return new FrequencyRangeSelection(lowerFrequency, higherFrequency);
 	}
 
 	/**
@@ -165,7 +192,6 @@ public class SelectionHighlightRenderer {
 	  * on the chart
 	  */
 	protected double convertPositionToFrequency(double xPosition) {
-		Rectangle2D area = getChartArea();
 
 		int xMin = getMinimumChartPosition();
 		int xMax = getMaximumChartPosition();
@@ -214,7 +240,7 @@ public class SelectionHighlightRenderer {
 	public void mousePressed(MouseEvent ev) {
 		int xPosition = ev.getPoint().x;
 		if (xPosition >= getMinimumChartPosition() && xPosition <= getMaximumChartPosition()) {
-			selection.startDragging(ev.getPoint().x);
+			pixelRangeSelection.startDragging(ev.getPoint().x);
 			fireSelectionChanged();
 		}
 	}
@@ -228,7 +254,8 @@ public class SelectionHighlightRenderer {
 	public void mouseReleased(MouseEvent ev) {
 		int xPosition = ev.getPoint().x;
 		xPosition = constrainPositionWithRegardToChartSize(xPosition);
-		selection.stopDragging(xPosition);
+		pixelRangeSelection.stopDragging(xPosition);
+		frequencyRangeSelection = convertPixelSelectionToFrequencyRangeSelection(pixelRangeSelection);
 		fireSelectionChanged();
 	}
 
@@ -241,8 +268,20 @@ public class SelectionHighlightRenderer {
 	public void mouseDragged(MouseEvent ev) {
 		int xPosition = ev.getPoint().x;
 		xPosition = constrainPositionWithRegardToChartSize(xPosition);
-		selection.dragTo(xPosition);
+		pixelRangeSelection.dragTo(xPosition);
 		fireSelectionChanged();
+	}
+
+	/**
+	 * This method should be called by the chart panel to which this renderer
+	 * is connected whenever the chart scale changes in order to keep the
+	 * same frequency range selected.
+	 */
+	public void updateSelectionToScaleChange() {
+		if (frequencyRangeSelection != null) {
+			pixelRangeSelection = convertFrequencyRangeSelectionToPixelSelection(frequencyRangeSelection);
+			fireSelectionChanged();
+		}
 	}
 
 	/**
@@ -251,17 +290,17 @@ public class SelectionHighlightRenderer {
 	 */
 	public void paintComponent(Graphics gOrig) {
 
-		if (!selection.isVisible()) {
+		if (!pixelRangeSelection.isVisible()) {
 			return;
 		}
 
 		Graphics2D g = (Graphics2D) gOrig;
 		Rectangle2D area = getChartArea();
 
-		int selectionHighlightStart = selection.getLowerPosition();
-		int selectionHighlightEnd = selection.getHigherPosition();
+		int selectionHighlightStart = pixelRangeSelection.getLowerPosition();
+		int selectionHighlightEnd = pixelRangeSelection.getHigherPosition();
 
-		if (selection.isDragging()) {
+		if (pixelRangeSelection.isDragging()) {
 			g.setColor(draggingColor);
 		} else {
 			g.setColor(normalColor);
@@ -296,4 +335,5 @@ public class SelectionHighlightRenderer {
 		FrequencyRangeSelection currentSelection = getFrequencyRangeSelection();
 		pcSupport.firePropertyChange(SELECTION_CHANGED_PROPERTY, null, currentSelection);
 	}
+
 }
