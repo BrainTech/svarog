@@ -832,7 +832,6 @@
 	<entry key="montageFilters.filterChannelExclusionTitle">Filter channel exclusion</entry>
 
 	<entry key="editSampleFilter.descriptionTitle">Filter description</entry>
-	<entry key="editSampleFilter.graphPanelTitle">Filter design graph</entry>
 
 	<entry key="editSampleFilter.graphFrequencySpinnerLabel">Maximum graph frequency [Hz]</entry>
 	<entry key="editSampleFilter.graphFrequencyLabel">Frequency [Hz]</entry>
@@ -841,6 +840,7 @@
 	<entry key="error.editSampleFilter.descriptionBadChars">Filter description must not contain control characters</entry>
 
 	<entry key="editFFTSampleFilter.title">Edit FFT sample filter</entry>
+	<entry key="editFFTSampleFilter.graphPanelTitle">Filter design graph</entry>
 	<entry key="editFFTSampleFilter.tableToolTip">Double click a row to copy parameters to new range parameters panel</entry>
 
 	<entry key="editFFTSampleFilter.addNewRangeTitle">New range parameters</entry>
@@ -862,6 +862,7 @@
 	<entry key="editFFTSampleFilter.table.coefficient">Coefficient</entry>
 
 	<entry key="editTimeDomainSampleFilter.title">Edit time domain filter</entry>
+	<entry key="editTimeDomainSampleFilter.graphPanelTitle">Filter design graphs</entry>
 	<entry key="editTimeDomainSampleFilter.filterParametersTitle">Filter parameters</entry>
 
 	<entry key="editTimeDomainSampleFilter.frequencyResponseGraphTitle">Filter frequency response [decibels]</entry>

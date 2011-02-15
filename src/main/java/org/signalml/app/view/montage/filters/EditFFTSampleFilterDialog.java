@@ -52,6 +52,7 @@ import org.signalml.app.view.TablePopupMenuProvider;
 import org.signalml.app.view.element.FFTWindowTypePanel;
 import org.signalml.app.view.montage.filters.charts.FFTFilterResponseChartGroupPanel;
 import org.signalml.app.view.montage.filters.charts.FrequencyRangeSelection;
+import org.signalml.app.view.montage.filters.charts.elements.SelectionHighlightRenderer;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
 import org.signalml.plugin.export.SignalMLException;
@@ -543,18 +544,19 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 	public void propertyChange(PropertyChangeEvent evt) {
 		String propertyName = evt.getPropertyName();
 
-		FrequencyRangeSelection selection = (FrequencyRangeSelection)evt.getNewValue();
-		double lowerFrequency = selection.getLowerFrequency();
-		double higherFrequency = selection.getHigherFrequency();
-		System.out.println("selection : " + lowerFrequency + " .. " + higherFrequency);
+		if (propertyName.equals(SelectionHighlightRenderer.SELECTION_CHANGED_PROPERTY)) {
+			FrequencyRangeSelection selection = (FrequencyRangeSelection)evt.getNewValue();
+			double lowerFrequency = selection.getLowerFrequency();
+			double higherFrequency = selection.getHigherFrequency();
 
-		getFromFrequencySpinner().setValue(lowerFrequency);
-		getToFrequencySpinner().setValue(higherFrequency);
+			getFromFrequencySpinner().setValue(lowerFrequency);
+			getToFrequencySpinner().setValue(higherFrequency);
 
-		if (higherFrequency == getMaximumFrequency())
-			getUnlimitedCheckBox().setSelected(true);
-		else
-			getUnlimitedCheckBox().setSelected(false);
+			if (higherFrequency == getMaximumFrequency())
+				getUnlimitedCheckBox().setSelected(true);
+			else
+				getUnlimitedCheckBox().setSelected(false);
+		}
 
 	}
 

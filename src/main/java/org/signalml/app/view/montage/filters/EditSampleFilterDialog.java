@@ -112,16 +112,16 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 	 */
 	public JPanel getChartGroupPanelWithABorder() {
 
-		JPanel chartGroupPanel = new JPanel(new BorderLayout(6, 6));
+		/*JPanel chartGroupPanel = new JPanel(new BorderLayout(6, 6));
 
 		CompoundBorder border = new CompoundBorder(
 			new TitledBorder(messageSource.getMessage("editSampleFilter.graphPanelTitle")),
 			new EmptyBorder(3, 3, 3, 3));
 		chartGroupPanel.setBorder(border);
 
-		chartGroupPanel.add(getChartGroupPanel());
+		chartGroupPanel.add(getChartGroupPanel());*/
 
-		return chartGroupPanel;
+		return getChartGroupPanel();
 
 	}
 

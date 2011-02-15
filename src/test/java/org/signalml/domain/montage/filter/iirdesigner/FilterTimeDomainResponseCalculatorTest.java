@@ -8,6 +8,7 @@ import org.junit.Test;
 import static org.signalml.domain.montage.filter.iirdesigner.IIRDesignerAssert.*;
 
 /**
+ * This class performs unit tests on {@link FilterTimeDomainResponseCalculator} class.
  *
  * @author Piotr Szachewicz
  */

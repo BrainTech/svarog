@@ -4,7 +4,11 @@
 
 package org.signalml.app.view.montage.filters.charts;
 
+import java.awt.BorderLayout;
 import javax.swing.JPanel;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.springframework.context.support.MessageSourceAccessor;
 
@@ -70,6 +74,42 @@ public abstract class FilterResponseChartGroupPanel<T extends SampleFilterDefini
 	/**
 	 * Creates and configures all components for this panel.
 	 */
-	protected abstract void createInterface();
+	protected void createInterface() {
+		this.setLayout(new BorderLayout());
+		JPanel chartsPanel = createChartGroupPanel();
+		JPanel chartsPanelWithBorder = addBorderToThePanel(chartsPanel, getChartGroupPanelTitle());
+		this.add(chartsPanelWithBorder);
+	}
+
+	/**
+	 * Adds a titled border to the given panel.
+	 * @param panel a panel to which the border will be added
+	 * @param title title of the border
+	 * @return the panel with a border
+	 */
+	protected JPanel addBorderToThePanel(JPanel panel, String title) {
+		JPanel borderedPanel = new JPanel(new BorderLayout(6, 6));
+
+		CompoundBorder border = new CompoundBorder(
+			new TitledBorder(title),
+			new EmptyBorder(3, 3, 3, 3));
+		borderedPanel.setBorder(border);
+
+		borderedPanel.add(panel);
+		return borderedPanel;
+	}
+
+	/**
+	 * Creates a panel containing all charts and controls but without
+	 * a border.
+	 * @return a panel containing all charts and controls
+	 */
+	protected abstract JPanel createChartGroupPanel();
+
+	/**
+	 * Returns the title for the chart group.
+	 * @return the title for the chart group
+	 */
+	protected abstract String getChartGroupPanelTitle();
 
 }

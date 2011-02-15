@@ -11,6 +11,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import javax.swing.JPanel;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -48,7 +49,7 @@ public class FFTFilterResponseChartGroupPanel extends FilterResponseChartGroupPa
 	}
 
 	@Override
-	public void createInterface() {
+	protected JPanel createChartGroupPanel() {
 		frequencyResponseChartPanel = new FFTFrequencyResponseChartPanel(messageSource);
 
 		List<ResponseChartPanel> chartsList = new ArrayList<ResponseChartPanel>();
@@ -56,7 +57,7 @@ public class FFTFilterResponseChartGroupPanel extends FilterResponseChartGroupPa
 
 		chartPanelWithSpinner = new FilterResponseChartPanelsWithGraphScaleSpinner(chartsList, messageSource.getMessage("editSampleFilter.graphFrequencySpinnerLabel"));
 
-		this.add(chartPanelWithSpinner);
+		return chartPanelWithSpinner;
 	}
 
 	@Override
@@ -164,5 +165,9 @@ public class FFTFilterResponseChartGroupPanel extends FilterResponseChartGroupPa
 		frequencyResponseChartPanel.setData(frequencies, coefficients);
 	}
 
+	@Override
+	protected String getChartGroupPanelTitle() {
+		return messageSource.getMessage("editFFTSampleFilter.graphPanelTitle");
+	}
 
 }

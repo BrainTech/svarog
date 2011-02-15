@@ -13,6 +13,7 @@ import org.signalml.app.view.montage.filters.charts.elements.ResponseChartPanel;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JPanel;
 
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.iirdesigner.ArrayOperations;
@@ -95,14 +96,17 @@ public class TimeDomainFilterResponseChartGroupPanel extends FilterResponseChart
 	}
 
 	@Override
-	protected void createInterface() {
+	protected JPanel createChartGroupPanel() {
 
-		this.setLayout(new GridLayout(1, 2, 5, 5));
+		JPanel panel = new JPanel(new GridLayout(1, 2, 5, 5));
+
 		frequencyResponseChartPanelWithSpinner = createFrequencyResponsesPanel();
 		timeDomainResponseChartPanelWithSpinner = createTimeDomainResponsesPanel();
 
-		this.add(frequencyResponseChartPanelWithSpinner);
-		this.add(timeDomainResponseChartPanelWithSpinner);
+		panel.add(frequencyResponseChartPanelWithSpinner);
+		panel.add(timeDomainResponseChartPanelWithSpinner);
+
+		return panel;
 
 	}
 
@@ -223,6 +227,11 @@ public class TimeDomainFilterResponseChartGroupPanel extends FilterResponseChart
 	 */
 	protected int getNumberOfPointsForTimeDomainResponse() {
 		return (int) (4 * samplingFrequency);
+	}
+
+	@Override
+	protected String getChartGroupPanelTitle() {
+		return messageSource.getMessage("editTimeDomainSampleFilter.graphPanelTitle");
 	}
 
 }
