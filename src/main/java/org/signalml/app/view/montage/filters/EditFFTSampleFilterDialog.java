@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.app.view.montage;
+package org.signalml.app.view.montage.filters;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -40,6 +40,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -49,8 +50,8 @@ import org.signalml.app.montage.FFTSampleFilterTableModel;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.TablePopupMenuProvider;
 import org.signalml.app.view.element.FFTWindowTypePanel;
-import org.signalml.app.view.montage.charts.FFTFilterResponseChartGroupPanel;
-import org.signalml.app.view.montage.charts.FrequencyRangeSelection;
+import org.signalml.app.view.montage.filters.charts.FFTFilterResponseChartGroupPanel;
+import org.signalml.app.view.montage.filters.charts.FrequencyRangeSelection;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
 import org.signalml.plugin.export.SignalMLException;
@@ -120,7 +121,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 		JPanel interfacePanel = new JPanel(new BorderLayout());
 
 		JPanel descriptionPanel = getDescriptionPanel();
-		JPanel graphPanel = getGraphPanel();
+		JPanel graphPanel = getChartGroupPanelWithABorder();
 
 		JPanel addNewRangePanel = new JPanel(new BorderLayout(3, 3));
 
@@ -340,12 +341,10 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 			fromFrequencySpinner = new JSpinner(new SpinnerNumberModel(0.0, 0.0, 4096.0, FREQUENCY_SPINNER_STEP_SIZE));
 			fromFrequencySpinner.setPreferredSize(new Dimension(80, 25));
 
-			fromFrequencySpinner.addChangeListener(new SpinnerRoundingChangeListener(FREQUENCY_SPINNER_STEP_SIZE) {
+			fromFrequencySpinner.addChangeListener(new ChangeListener() {
 
 				@Override
 				public void stateChanged(ChangeEvent e) {
-					super.stateChanged(e);
-
 					double value = ((Number) fromFrequencySpinner.getValue()).doubleValue();
 
 					double otherValue = ((Number) getToFrequencySpinner().getValue()).doubleValue();
@@ -356,7 +355,6 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 
 					updateHighlights();
 				}
-
 			});
 
 			fromFrequencySpinner.setEditor(new JSpinner.NumberEditor(fromFrequencySpinner, "0.00"));
@@ -373,12 +371,10 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 			toFrequencySpinner = new JSpinner(new SpinnerNumberModel(FREQUENCY_SPINNER_STEP_SIZE, FREQUENCY_SPINNER_STEP_SIZE, 4096.0, FREQUENCY_SPINNER_STEP_SIZE));
 			toFrequencySpinner.setPreferredSize(new Dimension(80, 25));
 
-			toFrequencySpinner.addChangeListener(new SpinnerRoundingChangeListener(FREQUENCY_SPINNER_STEP_SIZE) {
+			toFrequencySpinner.addChangeListener(new ChangeListener() {
 
 				@Override
 				public void stateChanged(ChangeEvent e) {
-					super.stateChanged(e);
-
 					double value = ((Number) toFrequencySpinner.getValue()).doubleValue();
 
 					double otherValue = ((Number) getFromFrequencySpinner().getValue()).doubleValue();
@@ -389,8 +385,8 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 
 					updateHighlights();
 				}
-
 			});
+
 
 			toFrequencySpinner.setEditor(new JSpinner.NumberEditor(toFrequencySpinner, "0.00"));
 			toFrequencySpinner.setFont(toFrequencySpinner.getFont().deriveFont(Font.PLAIN));
@@ -473,7 +469,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 
 	@Override
 	protected void updateGraph() {
-		getGraphsPanel().updateGraphs(currentFilter);
+		getChartGroupPanel().updateGraphs(currentFilter);
 	}
 
 	/**
@@ -486,7 +482,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 		double endFrequency = getSpinnerDoubleValue(getToFrequencySpinner());
 		FrequencyRangeSelection selection = new FrequencyRangeSelection(startFrequency, endFrequency);
 
-		getGraphsPanel().setHighlightedSelection(selection);
+		getChartGroupPanel().setHighlightedSelection(selection);
 
 	}
 
@@ -682,11 +678,11 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 	@Override
 	public void setCurrentSamplingFrequency(float currentSamplingFrequency) {
 		super.setCurrentSamplingFrequency(currentSamplingFrequency);
-		getGraphsPanel().setSamplingFrequency(currentSamplingFrequency);
+		getChartGroupPanel().setSamplingFrequency(currentSamplingFrequency);
 	}
 
 	@Override
-	public FFTFilterResponseChartGroupPanel getGraphsPanel() {
+	public FFTFilterResponseChartGroupPanel getChartGroupPanel() {
 		if (graphsPanel == null) {
 			graphsPanel = new FFTFilterResponseChartGroupPanel(messageSource, currentFilter);
 			graphsPanel.setSamplingFrequency(getCurrentSamplingFrequency());

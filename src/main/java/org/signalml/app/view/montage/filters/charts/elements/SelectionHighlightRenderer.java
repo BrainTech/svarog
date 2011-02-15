@@ -1,7 +1,7 @@
 /* SelectionHighlight.java created 2011-02-13
  *
  */
-package org.signalml.app.view.montage.charts.elements;
+package org.signalml.app.view.montage.filters.charts.elements;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -11,7 +11,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import org.signalml.app.view.montage.charts.FrequencyRangeSelection;
+import org.signalml.app.view.montage.filters.charts.FrequencyRangeSelection;
 
 /**
  *

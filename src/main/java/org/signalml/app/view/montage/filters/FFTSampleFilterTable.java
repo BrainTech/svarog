@@ -1,7 +1,7 @@
 /* FFTSampleFilterTable.java created 2008-02-03
  *
  */
-package org.signalml.app.view.montage;
+package org.signalml.app.view.montage.filters;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

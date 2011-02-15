@@ -1,7 +1,7 @@
 /* EditSampleFilterDialog.java created 2010-09-22
  *
  */
-package org.signalml.app.view.montage;
+package org.signalml.app.view.montage.filters;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -14,12 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.plot.XYPlot;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.dialog.AbstractPresetDialog;
@@ -39,46 +34,16 @@ import org.springframework.validation.Errors;
 abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 
 	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Contains the sampling frequency of the currently edited signal.
 	 */
-	private float currentSamplingFrequency;
+	private float samplingFrequency;
+
 	/**
 	 * A {@link JTextField} which can be used to edit the filter's description.
 	 */
 	private JTextField descriptionTextField;
-	/**
-	 * The value of the maximum frequency which should be shown on the
-	 * {@link EditSampleFilterDialog#frequencyResponsePlot}.
-	 */
-	protected double graphFrequencyMax;
-	/**
-	 * A {@link JSpinner} used to set the value of the
-	 * {@link EditSampleFilterDialog#graphFrequencyMax} field.
-	 */
-	protected JSpinner graphScaleSpinner;
-	/**
-	 * A {@link JPanel} containing filter-related plots.
-	 */
-	protected JPanel filterGraphsPanel;
-	/**
-	 * The filter's frequency response plot.
-	 */
-	protected XYPlot frequencyResponsePlot;
-	/**
-	 * A {@link JFreeChart} containing the filter's
-	 * {@link EditSampleFilterDialog#frequencyResponsePlot},
-	 * a plot title etc.
-	 */
-	protected JFreeChart frequencyResponseChart;
-	/**
-	 * The frequency axis for the {@link EditSampleFilterDialog#frequencyResponsePlot}.
-	 */
-	protected NumberAxis frequencyAxis;
-	/**
-	 * The gain axis for the {@link EditSampleFilterDialog#frequencyResponsePlot}.
-	 */
-	protected NumberAxis gainAxis;
 
 	/**
 	 * Constructor. Sets the message source, parent window, preset manager
@@ -145,22 +110,27 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 	 * @return the {@link JPanel} containing a fiter response
 	 * graph (graphs)
 	 */
-	public JPanel getGraphPanel() {
+	public JPanel getChartGroupPanelWithABorder() {
 
-		JPanel graphPanel = new JPanel(new BorderLayout(6, 6));
+		JPanel chartGroupPanel = new JPanel(new BorderLayout(6, 6));
 
 		CompoundBorder border = new CompoundBorder(
 			new TitledBorder(messageSource.getMessage("editSampleFilter.graphPanelTitle")),
 			new EmptyBorder(3, 3, 3, 3));
-		graphPanel.setBorder(border);
+		chartGroupPanel.setBorder(border);
 
-		graphPanel.add(getGraphsPanel());
+		chartGroupPanel.add(getChartGroupPanel());
 
-		return graphPanel;
+		return chartGroupPanel;
 
 	}
 
-	public abstract JPanel getGraphsPanel();
+	/**
+	 * Returns a JPanel containing a group of charts (or maybe just one graph)
+	 * to be shown in this dialog.
+	 * @return a group of charts with a maximum graph scale spinner.
+	 */
+	public abstract JPanel getChartGroupPanel();
 
 	/**
 	 * Returns the {@link JTextField} which is shown in this dialog and
@@ -178,28 +148,11 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 	}
 
 	/**
-	 * Returns the frequency axis of the filter's frequency response plot.
-	 * @return the frequency axis of the filter's frequency response plot
-	 */
-	public NumberAxis getFrequencyAxis() {
-
-		if (frequencyAxis == null) {
-
-			frequencyAxis = new NumberAxis();
-			frequencyAxis.setAutoRange(false);
-			frequencyAxis.setLabel(messageSource.getMessage("editSampleFilter.graphFrequencyLabel"));
-
-		}
-		return frequencyAxis;
-
-	}
-
-	/**
 	 * Returns the sampling frequency for which the filter is being designed.
 	 * @return the sampling frequency for the currently edited filter
 	 */
 	public float getCurrentSamplingFrequency() {
-		return currentSamplingFrequency;
+		return samplingFrequency;
 	}
 
 	/**
@@ -208,9 +161,13 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 	 * currently edited filter
 	 */
 	public void setCurrentSamplingFrequency(float currentSamplingFrequency) {
-		this.currentSamplingFrequency = currentSamplingFrequency;
+		this.samplingFrequency = currentSamplingFrequency;
 	}
 
+	/**
+	 * Returns the maximum frequency which can be set for these filters.
+	 * @return maximum frequency for all controls in this dialog
+	 */
 	protected double getMaximumFrequency() {
 		return getCurrentSamplingFrequency() / 2;
 	}
@@ -226,6 +183,11 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 	 */
 	protected abstract void updateHighlights();
 
+	/**
+	 * Gets a double value from a spinner.
+	 * @param spinner the spinner from which the value should be taken
+	 * @return
+	 */
 	protected double getSpinnerDoubleValue(JSpinner spinner) {
 		return ((Number) spinner.getValue()).doubleValue();
 	}
@@ -253,40 +215,4 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 	@Override
 	public abstract boolean supportsModelClass(Class<?> clazz);
 
-	/**
-	 * A class representing a {@link ChangeListener} to be used to round
-	 * the values set in the {@link JSpinner JSpinners} used in this dialog.
-	 */
-	protected class SpinnerRoundingChangeListener implements ChangeListener {
-
-		protected boolean lock = false;
-		double spinnerStepSize;
-
-		public SpinnerRoundingChangeListener(double spinnerStepSize) {
-			this.spinnerStepSize = spinnerStepSize;
-		}
-
-		@Override
-		public void stateChanged(ChangeEvent e) {
-
-			if (lock) {
-				return;
-			}
-
-			try {
-				lock = true;
-
-				JSpinner spinner = (JSpinner) e.getSource();
-				double doubleValue = ((Number) spinner.getValue()).doubleValue();
-				double newDoubleValue = ((double) Math.round(doubleValue / spinnerStepSize)) * spinnerStepSize;
-				if (newDoubleValue != doubleValue) {
-					spinner.setValue(newDoubleValue);
-				}
-
-			} finally {
-				lock = false;
-			}
-
-		}
-	}
 }

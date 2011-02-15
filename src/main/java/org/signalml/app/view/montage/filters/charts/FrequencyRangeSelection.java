@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.app.view.montage.charts;
+package org.signalml.app.view.montage.filters.charts;
 
 /**
  *

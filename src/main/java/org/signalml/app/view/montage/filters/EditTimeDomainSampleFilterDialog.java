@@ -1,7 +1,7 @@
 /* EditTimeDomainSampleFilterDialog.java created 2010-09-23
  *
  */
-package org.signalml.app.view.montage;
+package org.signalml.app.view.montage.filters;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -38,7 +38,7 @@ import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.element.ResolvableComboBox;
-import org.signalml.app.view.montage.charts.TimeDomainFilterResponseChartGroupPanel;
+import org.signalml.app.view.montage.filters.charts.TimeDomainFilterResponseChartGroupPanel;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.iirdesigner.ApproximationFunctionType;
 import org.signalml.domain.montage.filter.iirdesigner.BadFilterParametersException;
@@ -180,7 +180,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	public JComponent createInterface() {
 
 		JPanel descriptionPanel = getDescriptionPanel();
-		JPanel graphPanel = getGraphPanel();
+		JPanel graphPanel = getChartGroupPanelWithABorder();
 
 		JPanel editFilterParametersPanel = new JPanel(new BorderLayout(3, 3));
 
@@ -349,12 +349,10 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 			passbandEdgeFrequency1Spinner.setEditor(new JSpinner.NumberEditor(passbandEdgeFrequency1Spinner, "0.00"));
 			passbandEdgeFrequency1Spinner.setFont(passbandEdgeFrequency1Spinner.getFont().deriveFont(Font.PLAIN));
 
-			passbandEdgeFrequency1Spinner.addChangeListener(new SpinnerRoundingChangeListener(FREQUENCY_SPINNER_STEP_SIZE) {
+			passbandEdgeFrequency1Spinner.addChangeListener(new ChangeListener() {
 
 				@Override
 				public void stateChanged(ChangeEvent e) {
-
-					super.stateChanged(e);
 
 					FilterType filterType = (FilterType) getFilterTypeComboBox().getSelectedItem();
 					double value = ((Number) passbandEdgeFrequency1Spinner.getValue()).doubleValue();
@@ -422,11 +420,10 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 			passbandEdgeFrequency2Spinner.setFont(passbandEdgeFrequency2Spinner.getFont().deriveFont(Font.PLAIN));
 
 
-			passbandEdgeFrequency2Spinner.addChangeListener(new SpinnerRoundingChangeListener(FREQUENCY_SPINNER_STEP_SIZE) {
+			passbandEdgeFrequency2Spinner.addChangeListener(new ChangeListener() {
 
 				@Override
 				public void stateChanged(ChangeEvent e) {
-					super.stateChanged(e);
 
 					FilterType filterType = (FilterType) getFilterTypeComboBox().getSelectedItem();
 					double value = ((Number) passbandEdgeFrequency2Spinner.getValue()).doubleValue();
@@ -492,12 +489,10 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 			stopbandEdgeFrequency1Spinner.setEditor(new JSpinner.NumberEditor(stopbandEdgeFrequency1Spinner, "0.00"));
 			stopbandEdgeFrequency1Spinner.setFont(stopbandEdgeFrequency1Spinner.getFont().deriveFont(Font.PLAIN));
 
-			stopbandEdgeFrequency1Spinner.addChangeListener(new SpinnerRoundingChangeListener(FREQUENCY_SPINNER_STEP_SIZE) {
+			stopbandEdgeFrequency1Spinner.addChangeListener(new ChangeListener() {
 
 				@Override
 				public void stateChanged(ChangeEvent e) {
-
-					super.stateChanged(e);
 
 					FilterType filterType = (FilterType) getFilterTypeComboBox().getSelectedItem();
 					double value = ((Number) stopbandEdgeFrequency1Spinner.getValue()).doubleValue();
@@ -564,11 +559,10 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 			stopbandEdgeFrequency2Spinner.setEditor(new JSpinner.NumberEditor(stopbandEdgeFrequency2Spinner, "0.00"));
 			stopbandEdgeFrequency2Spinner.setFont(stopbandEdgeFrequency2Spinner.getFont().deriveFont(Font.PLAIN));
 
-			stopbandEdgeFrequency2Spinner.addChangeListener(new SpinnerRoundingChangeListener(FREQUENCY_SPINNER_STEP_SIZE) {
+			stopbandEdgeFrequency2Spinner.addChangeListener(new ChangeListener() {
 
 				@Override
 				public void stateChanged(ChangeEvent e) {
-					super.stateChanged(e);
 
 					FilterType filterType = (FilterType) getFilterTypeComboBox().getSelectedItem();
 					double value = ((Number) stopbandEdgeFrequency2Spinner.getValue()).doubleValue();
@@ -690,7 +684,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	@Override
 	protected void updateGraph() {
 		try {
-			getGraphsPanel().updateGraphs(currentFilter);
+			getChartGroupPanel().updateGraphs(currentFilter);
 		} catch (BadFilterParametersException ex) {
 			JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
@@ -770,7 +764,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	}
 
 	@Override
-	public TimeDomainFilterResponseChartGroupPanel getGraphsPanel() {
+	public TimeDomainFilterResponseChartGroupPanel getChartGroupPanel() {
 		if (graphsPanel == null) {
 			graphsPanel = new TimeDomainFilterResponseChartGroupPanel(messageSource, currentFilter);
 			graphsPanel.setSamplingFrequency(getCurrentSamplingFrequency());

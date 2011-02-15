@@ -1,7 +1,7 @@
 /* GroupDelayFrequencyResponseChartPanel.java created 2011-02-12
  *
  */
-package org.signalml.app.view.montage.charts.elements;
+package org.signalml.app.view.montage.filters.charts.elements;
 
 import org.jfree.chart.axis.NumberAxis;
 import org.springframework.context.support.MessageSourceAccessor;

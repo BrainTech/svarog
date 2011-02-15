@@ -1,14 +1,14 @@
 /* FilterResponseChartPanel.java created 2011-02-06
  *
  */
-package org.signalml.app.view.montage.charts.elements;
+package org.signalml.app.view.montage.filters.charts.elements;
 
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import org.jfree.chart.ChartPanel;
-import org.signalml.app.view.montage.charts.FrequencyRangeSelection;
+import org.signalml.app.view.montage.filters.charts.FrequencyRangeSelection;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**

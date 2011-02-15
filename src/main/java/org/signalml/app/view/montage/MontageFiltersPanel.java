@@ -3,6 +3,8 @@
  */
 package org.signalml.app.view.montage;
 
+import org.signalml.app.view.montage.filters.EditTimeDomainSampleFilterDialog;
+import org.signalml.app.view.montage.filters.EditFFTSampleFilterDialog;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;

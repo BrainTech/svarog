@@ -2,14 +2,14 @@
  *
  */
 
-package org.signalml.app.view.montage.charts;
+package org.signalml.app.view.montage.filters.charts;
 
-import org.signalml.app.view.montage.charts.elements.StepResponseChartPanel;
-import org.signalml.app.view.montage.charts.elements.ImpulseResponseChartPanel;
-import org.signalml.app.view.montage.charts.elements.FilterResponseChartPanelsWithGraphScaleSpinner;
-import org.signalml.app.view.montage.charts.elements.TimeDomainFilterFrequencyResponseChartPanel;
-import org.signalml.app.view.montage.charts.elements.GroupDelayResponseChartPanel;
-import org.signalml.app.view.montage.charts.elements.ResponseChartPanel;
+import org.signalml.app.view.montage.filters.charts.elements.StepResponseChartPanel;
+import org.signalml.app.view.montage.filters.charts.elements.ImpulseResponseChartPanel;
+import org.signalml.app.view.montage.filters.charts.elements.FilterResponseChartPanelsWithGraphScaleSpinner;
+import org.signalml.app.view.montage.filters.charts.elements.TimeDomainFilterFrequencyResponseChartPanel;
+import org.signalml.app.view.montage.filters.charts.elements.GroupDelayResponseChartPanel;
+import org.signalml.app.view.montage.filters.charts.elements.ResponseChartPanel;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +85,7 @@ public class TimeDomainFilterResponseChartGroupPanel extends FilterResponseChart
 		chartsList.add(impulseResponseChartPanel);
 		chartsList.add(stepResponseChartPanel);
 		FilterResponseChartPanelsWithGraphScaleSpinner chartPanel = new FilterResponseChartPanelsWithGraphScaleSpinner(chartsList, messageSource.getMessage("editTimeDomainSampleFilter.graphTimeSpinnerLabel"));
-		chartPanel.setMaximumSpinnerValue(5.0);
+		chartPanel.setMaximumSpinnerValue(4.0);
 		return chartPanel;
 
 	}

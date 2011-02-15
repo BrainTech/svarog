@@ -1,7 +1,7 @@
 /* TimeDomainFrequencyResponseChartPanel.java created 2011-02-06
  *
  */
-package org.signalml.app.view.montage.charts.elements;
+package org.signalml.app.view.montage.filters.charts.elements;
 
 import java.awt.Color;
 import java.awt.event.MouseEvent;
