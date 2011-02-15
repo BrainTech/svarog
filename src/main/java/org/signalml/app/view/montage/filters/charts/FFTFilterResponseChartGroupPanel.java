@@ -16,14 +16,33 @@ import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
+ * This panel represents a panel containing all chart-connected components
+ * for visualizing the FFTSampleFilter. That is: an FFT frequency response graph
+ * and a spinner which controls the maximum frequency shown on the graph.
  *
  * @author Piotr Szachewicz
  */
 public class FFTFilterResponseChartGroupPanel extends FilterResponseChartGroupPanel<FFTSampleFilter> {
 
-	protected FilterResponseChartPanelsWithGraphScaleSpinner chartPanelWithSpinner;
+	/**
+	 * The chart panel containing the ideal frequency response of the
+	 * FFT filter.
+	 */
 	protected FFTFrequencyResponseChartPanel frequencyResponseChartPanel;
 
+	/**
+	 * This panel contains the frequencyResponseChartPanel and an
+	 * associated graph scale spinner to controls maximum frequency
+	 * shown on the chart.
+	 */
+	protected FilterResponseChartPanelsWithGraphScaleSpinner chartPanelWithSpinner;
+
+	/**
+	 * Constructor.
+	 * @param messageSource message source capable of resolving localized
+	 * messages
+	 * @param currentFilter the filter to be visualized
+	 */
 	public FFTFilterResponseChartGroupPanel(MessageSourceAccessor messageSource, FFTSampleFilter currentFilter) {
 		super(messageSource, currentFilter);
 	}
@@ -40,23 +59,42 @@ public class FFTFilterResponseChartGroupPanel extends FilterResponseChartGroupPa
 		this.add(chartPanelWithSpinner);
 	}
 
+	@Override
 	public void setSamplingFrequency(double samplingFrequency) {
-		this.samplingFrequency = samplingFrequency;
+		super.setSamplingFrequency(samplingFrequency);
 		chartPanelWithSpinner.setMaximumSpinnerValue(samplingFrequency / 2);
 	}
 
+	/**
+	 * Sets the frequency range to be highlighted on the frequency response
+	 * chart.
+	 * @param selection selection to be highlighted
+	 */
 	public void setHighlightedSelection(FrequencyRangeSelection selection) {
 		frequencyResponseChartPanel.setHighlightedSelection(selection);
 	}
 
+	/**
+	 * Adds a listener which will be notified whenever the highlighted selection
+	 * on the frequency response chart changes.
+	 * @param listener listener to be notified
+	 */
 	public void addSelectionChangedListener(PropertyChangeListener listener) {
 		frequencyResponseChartPanel.addSelectionChangedListener(listener);
 	}
 
+	/**
+	 * Removes the listener.
+	 * @param listener listener to be removed
+	 */
 	public void removeSelectionChangedListener(PropertyChangeListener listener) {
 		frequencyResponseChartPanel.removeSelectionChangedListener(listener);
 	}
 
+	/**
+	 * Updates the FFT frequency response graph.
+	 * @param filter a filter to be visualized on the graph
+	 */
 	public void updateGraphs(FFTSampleFilter filter) {
 
 		currentFilter = filter;

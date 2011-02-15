@@ -124,6 +124,12 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	 * {@link EditTimeDomainSampleFilterDialog#filterParametersPanel}.
 	 */
 	private JButton drawFrequencyResponseButton;
+
+	/**
+	 * A panel for drawing and controling the filter responses.
+	 * It contains all the charts visualizing the filter and associated
+	 * spinners to control the maximum value shown on the x-axis.
+	 */
 	protected TimeDomainFilterResponseChartGroupPanel graphsPanel;
 
 	/**

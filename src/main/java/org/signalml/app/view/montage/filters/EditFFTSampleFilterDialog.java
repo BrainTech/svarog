@@ -90,6 +90,11 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 
 	private FFTWindowTypePanel fftWindowTypePanel;
 
+	/**
+	 * A panel for drawing and controling the filter responses.
+	 * It contains all the charts visualizing the filter and associated
+	 * spinners to control the maximum value shown on the x-axis.
+	 */
 	protected FFTFilterResponseChartGroupPanel graphsPanel;
 
 	public EditFFTSampleFilterDialog(MessageSourceAccessor messageSource, PresetManager presetManager, Window w, boolean isModal) {

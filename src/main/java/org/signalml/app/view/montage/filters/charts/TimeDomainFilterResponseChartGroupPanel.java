@@ -26,28 +26,71 @@ import org.signalml.domain.montage.filter.iirdesigner.IIRDesigner;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
+ * This class represents a panel containing all the components needed for visualizing
+ * a {@link TimeDomainSampleFilter}, that is: filter frequency response, group
+ * delay response, impulse response, step response and associated spinners
+ * to control the maximum x-axis values shown on the charts.
  *
  * @author Piotr Szachewicz
  */
 public class TimeDomainFilterResponseChartGroupPanel extends FilterResponseChartGroupPanel<TimeDomainSampleFilter> {
 
-	protected FilterResponseChartPanelsWithGraphScaleSpinner frequencyResponseChartPanelWithSpinner;
-	protected FilterResponseChartPanelsWithGraphScaleSpinner timeDomainResponseChartPanelWithSpinner;
-
+	/**
+	 * A chart panel containing the filter frequency response chart.
+	 */
 	protected TimeDomainFilterFrequencyResponseChartPanel frequencyResponseChartPanel;
+
+	/**
+	 * A chart panel containing the filter group delay response chart.
+	 */
 	protected GroupDelayResponseChartPanel groupDelayResponseChartPanel;
+
+	/**
+	 * A chart panel containing the filter impulse response chart.
+	 */
 	protected ImpulseResponseChartPanel impulseResponseChartPanel;
+
+	/**
+	 * A chart panel containing the filter step response chart.
+	 */
 	protected StepResponseChartPanel stepResponseChartPanel;
 
+	/**
+	 * A panel containing frequency response chart panels (frequencyResponseChartPanel
+	 * and groupDelayResponseChartPanel) with an associated spinner.
+	 */
+	protected FilterResponseChartPanelsWithGraphScaleSpinner frequencyResponseChartPanelWithSpinner;
+
+	/**
+	 * A panel containing time domain response chart panels
+	 * (impulseResponseChartPanel and stepResponseChartPanel) with
+	 * with an associated spinner.
+	 */
+	protected FilterResponseChartPanelsWithGraphScaleSpinner timeDomainResponseChartPanelWithSpinner;
+
+	/**
+	 * Calculator for calculating the frequency responses of a filter.
+	 */
 	protected FilterFrequencyResponseCalculator frequencyResponseCalculator;
+
+	/**
+	 * Calculator for calculating the time domain responses of a filter.
+	 */
 	protected FilterTimeDomainResponseCalculator timeDomainResponseCalculator;
 
+	/**
+	 * Constructor.
+	 * @param messageSource message source capable of resolving localized
+	 * messages
+	 * @param currentFilter the filter to be visualized
+	 */
 	public TimeDomainFilterResponseChartGroupPanel(MessageSourceAccessor messageSource, TimeDomainSampleFilter currentFilter) {
 		super(messageSource, currentFilter);
 	}
 
+	@Override
 	public void setSamplingFrequency(double samplingFrequency) {
-		this.samplingFrequency = samplingFrequency;
+		super.setSamplingFrequency(samplingFrequency);
 		frequencyResponseChartPanelWithSpinner.setMaximumSpinnerValue(samplingFrequency / 2);
 	}
 
@@ -63,6 +106,11 @@ public class TimeDomainFilterResponseChartGroupPanel extends FilterResponseChart
 
 	}
 
+	/**
+	 * Creates the panel containing the filter frequency responses
+	 * (frequency response and group delay).
+	 * @return panel containing the filter frequency responses
+	 */
 	protected FilterResponseChartPanelsWithGraphScaleSpinner createFrequencyResponsesPanel() {
 
 		frequencyResponseChartPanel = new TimeDomainFilterFrequencyResponseChartPanel(messageSource);
@@ -76,6 +124,11 @@ public class TimeDomainFilterResponseChartGroupPanel extends FilterResponseChart
 
 	}
 
+	/**
+	 * Creates a panel containing the filter time domain responses
+	 * (impulse response and step response).
+	 * @return panel containing time domain responses
+	 */
 	protected FilterResponseChartPanelsWithGraphScaleSpinner createTimeDomainResponsesPanel() {
 
 		impulseResponseChartPanel = new ImpulseResponseChartPanel(messageSource);
@@ -90,6 +143,12 @@ public class TimeDomainFilterResponseChartGroupPanel extends FilterResponseChart
 
 	}
 
+	/**
+	 * Updates the filter responses shown on the charts.
+	 * @param currentFilter the filter to be visualized
+	 * @throws BadFilterParametersException thrown when the filter cannot
+	 * be designed
+	 */
 	public void updateGraphs(TimeDomainSampleFilter currentFilter) throws BadFilterParametersException {
 
 		FilterCoefficients coeffs = coeffs = IIRDesigner.designDigitalFilter(currentFilter);
@@ -104,6 +163,9 @@ public class TimeDomainFilterResponseChartGroupPanel extends FilterResponseChart
 
 	}
 
+	/**
+	 * Calculates and plots current filter frequency response.
+	 */
 	protected void calculateAndDrawFilterFrequencyResponse() {
 
 		FilterFrequencyResponse frequencyResponse = frequencyResponseCalculator.getMagnitudeResponse();
@@ -120,6 +182,9 @@ public class TimeDomainFilterResponseChartGroupPanel extends FilterResponseChart
 
 	}
 
+	/**
+	 * Calculates and plots current filter group delay response.
+	 */
 	protected void calculateAndDrawGroupDelayResponse() {
 
 		FilterFrequencyResponse groupDelayResponse = frequencyResponseCalculator.getGroupDelayResponse();
@@ -134,17 +199,29 @@ public class TimeDomainFilterResponseChartGroupPanel extends FilterResponseChart
 
 	}
 
+	/**
+	 * Calculates and plots current filter impulse response.
+	 */
 	protected void calculateAndDrawImpulseResponse() {
 		FilterTimeDomainResponse impulseResponse = timeDomainResponseCalculator.getImpulseResponse(getNumberOfPointsForTimeDomainResponse());
 		impulseResponseChartPanel.setData(impulseResponse);
 	}
 
+	/**
+	 * Calculates and plots current filter step response.
+	 */
 	protected void calculateAndDrawStepResponse() {
 		FilterTimeDomainResponse stepResponse = timeDomainResponseCalculator.getStepResponse(getNumberOfPointsForTimeDomainResponse());
 		stepResponseChartPanel.setData(stepResponse);
 	}
 
-	public int getNumberOfPointsForTimeDomainResponse() {
+	/**
+	 * Returns the number of points for which the time domain responses
+	 * should be calculated.
+	 * @return number of points which should be calculated for the time
+	 * domain responses
+	 */
+	protected int getNumberOfPointsForTimeDomainResponse() {
 		return (int) (4 * samplingFrequency);
 	}
 
