@@ -87,32 +87,32 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	 * The spinner controlling the value of the first passband edge
 	 * frequency of the filter.
 	 */
-	private JSpinner passbandEdgeFrequency1Spinner;
+	private DoubleSpinner passbandEdgeFrequency1Spinner;
 	/**
 	 * A {@link JSpinner} controlling the value of the second passband edge
 	 * frequency of the filter.
 	 */
-	private JSpinner passbandEdgeFrequency2Spinner;
+	private DoubleSpinner passbandEdgeFrequency2Spinner;
 	/**
 	 * A {@link JSpinner} controlling the value of the first stopband edge
 	 * frequency of the filter.
 	 */
-	private JSpinner stopbandEdgeFrequency1Spinner;
+	private DoubleSpinner stopbandEdgeFrequency1Spinner;
 	/**
 	 * A spinner controlling the value of the second stopband edge
 	 * frequency of the filter.
 	 */
-	private JSpinner stopbandEdgeFrequency2Spinner;
+	private DoubleSpinner stopbandEdgeFrequency2Spinner;
 	/**
 	 * A {@link JSpinner} controlling the value of filter's maximum ripple
 	 * in the passband.
 	 */
-	private JSpinner passbandRippleSpinner;
+	private DoubleSpinner passbandRippleSpinner;
 	/**
 	 * A {@link JSpinner} controlling the value of filter's minimum
 	 * attenuation in the stopband.
 	 */
-	private JSpinner stopbandAttenuationSpinner;
+	private DoubleSpinner stopbandAttenuationSpinner;
 	/**
 	 * An action called after pressing the
 	 * {@link EditTimeDomainSampleFilterDialog#drawFrequencyResponseButton}.
@@ -339,11 +339,11 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	 * @return the {@link JSpinner} allowing to set the first passband
 	 * edge frequency of this filter
 	 */
-	public JSpinner getPassbandEdgeFrequency1Spinner() {
+	public DoubleSpinner getPassbandEdgeFrequency1Spinner() {
 
 		if (passbandEdgeFrequency1Spinner == null) {
 
-			passbandEdgeFrequency1Spinner = new JSpinner(createFrequencySpinnerNumberModel());
+			passbandEdgeFrequency1Spinner = new DoubleSpinner(createFrequencySpinnerNumberModel());
 			passbandEdgeFrequency1Spinner.setPreferredSize(new Dimension(80, 25));
 
 			passbandEdgeFrequency1Spinner.setEditor(new JSpinner.NumberEditor(passbandEdgeFrequency1Spinner, "0.00"));
@@ -355,7 +355,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 				public void stateChanged(ChangeEvent e) {
 
 					FilterType filterType = (FilterType) getFilterTypeComboBox().getSelectedItem();
-					double value = ((Number) passbandEdgeFrequency1Spinner.getValue()).doubleValue();
+					double value = passbandEdgeFrequency1Spinner.getValue();
 					double otherValue;
 
 
@@ -409,11 +409,11 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	 * @return the {@link JSpinner} allowing to set the second passband
 	 * edge frequency of this filter
 	 */
-	public JSpinner getPassbandEdgeFrequency2Spinner() {
+	public DoubleSpinner getPassbandEdgeFrequency2Spinner() {
 
 		if (passbandEdgeFrequency2Spinner == null) {
 
-			passbandEdgeFrequency2Spinner = new JSpinner(createFrequencySpinnerNumberModel());
+			passbandEdgeFrequency2Spinner = new DoubleSpinner(createFrequencySpinnerNumberModel());
 			passbandEdgeFrequency2Spinner.setPreferredSize(new Dimension(80, 25));
 
 			passbandEdgeFrequency2Spinner.setEditor(new JSpinner.NumberEditor(passbandEdgeFrequency2Spinner, "0.00"));
@@ -426,7 +426,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 				public void stateChanged(ChangeEvent e) {
 
 					FilterType filterType = (FilterType) getFilterTypeComboBox().getSelectedItem();
-					double value = ((Number) passbandEdgeFrequency2Spinner.getValue()).doubleValue();
+					double value = passbandEdgeFrequency2Spinner.getValue();
 					double otherValue;
 
 
@@ -479,11 +479,11 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	 * @return the {@link JSpinner} allowing to set the first stopband
 	 * edge frequency of this filter
 	 */
-	public JSpinner getStopbandEdgeFrequency1Spinner() {
+	public DoubleSpinner getStopbandEdgeFrequency1Spinner() {
 
 		if (stopbandEdgeFrequency1Spinner == null) {
 
-			stopbandEdgeFrequency1Spinner = new JSpinner(createFrequencySpinnerNumberModel());
+			stopbandEdgeFrequency1Spinner = new DoubleSpinner(createFrequencySpinnerNumberModel());
 			stopbandEdgeFrequency1Spinner.setPreferredSize(new Dimension(80, 25));
 
 			stopbandEdgeFrequency1Spinner.setEditor(new JSpinner.NumberEditor(stopbandEdgeFrequency1Spinner, "0.00"));
@@ -495,7 +495,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 				public void stateChanged(ChangeEvent e) {
 
 					FilterType filterType = (FilterType) getFilterTypeComboBox().getSelectedItem();
-					double value = ((Number) stopbandEdgeFrequency1Spinner.getValue()).doubleValue();
+					double value = stopbandEdgeFrequency1Spinner.getValue();
 					double otherValue;
 
 
@@ -549,11 +549,11 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	 * @return the {@link JSpinner} allowing to set the second stopband
 	 * edge frequency of this filter
 	 */
-	public JSpinner getStopbandEdgeFrequency2Spinner() {
+	public DoubleSpinner getStopbandEdgeFrequency2Spinner() {
 
 		if (stopbandEdgeFrequency2Spinner == null) {
 
-			stopbandEdgeFrequency2Spinner = new JSpinner(createFrequencySpinnerNumberModel());
+			stopbandEdgeFrequency2Spinner = new DoubleSpinner(createFrequencySpinnerNumberModel());
 			stopbandEdgeFrequency2Spinner.setPreferredSize(new Dimension(80, 25));
 
 			stopbandEdgeFrequency2Spinner.setEditor(new JSpinner.NumberEditor(stopbandEdgeFrequency2Spinner, "0.00"));
@@ -565,7 +565,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 				public void stateChanged(ChangeEvent e) {
 
 					FilterType filterType = (FilterType) getFilterTypeComboBox().getSelectedItem();
-					double value = ((Number) stopbandEdgeFrequency2Spinner.getValue()).doubleValue();
+					double value = stopbandEdgeFrequency2Spinner.getValue();
 					double otherValue;
 
 
@@ -618,11 +618,11 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	 * @return the {@link JSpinner} for this window, which can be used
 	 * to control the passband ripple of this filter
 	 */
-	public JSpinner getPassbandRippleSpinner() {
+	public DoubleSpinner getPassbandRippleSpinner() {
 
 		if (passbandRippleSpinner == null) {
 
-			passbandRippleSpinner = new JSpinner(new SpinnerNumberModel(3.0, DECIBELS_SPINNER_STEP_SIZE, 10.0, DECIBELS_SPINNER_STEP_SIZE));
+			passbandRippleSpinner = new DoubleSpinner(new SpinnerNumberModel(3.0, DECIBELS_SPINNER_STEP_SIZE, 10.0, DECIBELS_SPINNER_STEP_SIZE));
 			passbandRippleSpinner.setPreferredSize(new Dimension(80, 25));
 
 			passbandRippleSpinner.setEditor(new JSpinner.NumberEditor(passbandRippleSpinner, "0.00"));
@@ -640,11 +640,11 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	 * @return the {@link JSpinner} for this window, which can be used
 	 * to control the passband ripple of this filter
 	 */
-	public JSpinner getStopbandAttenuationSpinner() {
+	public DoubleSpinner getStopbandAttenuationSpinner() {
 
 		if (stopbandAttenuationSpinner == null) {
 
-			stopbandAttenuationSpinner = new JSpinner(new SpinnerNumberModel(30.0, 10.0 + DECIBELS_SPINNER_STEP_SIZE, 100.0, DECIBELS_SPINNER_STEP_SIZE));
+			stopbandAttenuationSpinner = new DoubleSpinner(new SpinnerNumberModel(30.0, 10.0 + DECIBELS_SPINNER_STEP_SIZE, 100.0, DECIBELS_SPINNER_STEP_SIZE));
 			stopbandAttenuationSpinner.setPreferredSize(new Dimension(80, 25));
 
 			stopbandAttenuationSpinner.setEditor(new JSpinner.NumberEditor(stopbandAttenuationSpinner, "0.00"));

@@ -76,9 +76,9 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 
 	private JPanel newRangePanel;
 
-	private JSpinner fromFrequencySpinner;
-	private JSpinner toFrequencySpinner;
-	private JSpinner coefficientSpinner;
+	private FloatSpinner fromFrequencySpinner;
+	private FloatSpinner toFrequencySpinner;
+	private DoubleSpinner coefficientSpinner;
 	private JCheckBox unlimitedCheckBox;
 	private JCheckBox multiplyCheckBox;
 
@@ -335,19 +335,19 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 
 	}
 
-	public JSpinner getFromFrequencySpinner() {
+	public FloatSpinner getFromFrequencySpinner() {
 
 		if (fromFrequencySpinner == null) {
-			fromFrequencySpinner = new JSpinner(new SpinnerNumberModel(0.0, 0.0, 4096.0, FREQUENCY_SPINNER_STEP_SIZE));
+			fromFrequencySpinner = new FloatSpinner(new SpinnerNumberModel(0.0, 0.0, 4096.0, FREQUENCY_SPINNER_STEP_SIZE));
 			fromFrequencySpinner.setPreferredSize(new Dimension(80, 25));
 
 			fromFrequencySpinner.addChangeListener(new ChangeListener() {
 
 				@Override
 				public void stateChanged(ChangeEvent e) {
-					double value = ((Number) fromFrequencySpinner.getValue()).doubleValue();
+					double value = fromFrequencySpinner.getValue();
 
-					double otherValue = ((Number) getToFrequencySpinner().getValue()).doubleValue();
+					double otherValue = getToFrequencySpinner().getValue();
 
 					if (value >= otherValue) {
 						getToFrequencySpinner().setValue(value + FREQUENCY_SPINNER_STEP_SIZE);
@@ -365,10 +365,10 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 
 	}
 
-	public JSpinner getToFrequencySpinner() {
+	public FloatSpinner getToFrequencySpinner() {
 
 		if (toFrequencySpinner == null) {
-			toFrequencySpinner = new JSpinner(new SpinnerNumberModel(FREQUENCY_SPINNER_STEP_SIZE, FREQUENCY_SPINNER_STEP_SIZE, 4096.0, FREQUENCY_SPINNER_STEP_SIZE));
+			toFrequencySpinner = new FloatSpinner(new SpinnerNumberModel(FREQUENCY_SPINNER_STEP_SIZE, FREQUENCY_SPINNER_STEP_SIZE, 4096.0, FREQUENCY_SPINNER_STEP_SIZE));
 			toFrequencySpinner.setPreferredSize(new Dimension(80, 25));
 
 			toFrequencySpinner.addChangeListener(new ChangeListener() {
@@ -417,10 +417,10 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 
 	}
 
-	public JSpinner getCoefficientSpinner() {
+	public DoubleSpinner getCoefficientSpinner() {
 
 		if (coefficientSpinner == null) {
-			coefficientSpinner = new JSpinner(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.1));
+			coefficientSpinner = new DoubleSpinner(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.1));
 			coefficientSpinner.setPreferredSize(new Dimension(80, 25));
 
 			final JTextField editor = ((JTextField) ((JSpinner.NumberEditor) coefficientSpinner.getEditor()).getComponent(0));
@@ -568,28 +568,28 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 				return;
 			}
 
-			JSpinner coefficientSpinner = getCoefficientSpinner();
+			DoubleSpinner coefficientSpinner = getCoefficientSpinner();
 			try {
 				coefficientSpinner.commitEdit();
 			} catch (ParseException pe) {
 				UIManager.getLookAndFeel().provideErrorFeedback(coefficientSpinner);
 			}
 
-			JSpinner fromFrequencySpinner = getFromFrequencySpinner();
+			FloatSpinner fromFrequencySpinner = getFromFrequencySpinner();
 			try {
 				fromFrequencySpinner.commitEdit();
 			} catch (ParseException pe) {
 				UIManager.getLookAndFeel().provideErrorFeedback(fromFrequencySpinner);
 			}
 
-			JSpinner toFrequencySpinner = getToFrequencySpinner();
+			FloatSpinner toFrequencySpinner = getToFrequencySpinner();
 			try {
 				toFrequencySpinner.commitEdit();
 			} catch (ParseException pe) {
 				UIManager.getLookAndFeel().provideErrorFeedback(toFrequencySpinner);
 			}
 
-			float fromFrequency = ((Number) fromFrequencySpinner.getValue()).floatValue();
+			float fromFrequency = fromFrequencySpinner.getValue();
 			boolean unlimited = getUnlimitedCheckBox().isSelected();
 			float toFrequency;
 			if (!unlimited) {

@@ -8,11 +8,17 @@ import org.jfree.chart.axis.NumberTickUnit;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
- *
+ * A chart panel containing the FFT frequency response chart panel
+ * (i.e. coefficients for each frequency).
  * @author Piotr Szachewicz
  */
 public class FFTFrequencyResponseChartPanel extends FrequencyResponseChartPanel {
 
+	/**
+	 * Constructor.
+	 * @param messageSource message source capable of resolving localized
+	 * messages
+	 */
 	public FFTFrequencyResponseChartPanel(MessageSourceAccessor messageSource) {
 		super(messageSource);
 		setTitle(messageSource.getMessage("editFFTSampleFilter.graphTitle"));
@@ -20,8 +26,9 @@ public class FFTFrequencyResponseChartPanel extends FrequencyResponseChartPanel 
 
 	@Override
 	public NumberAxis createRangeAxis() {
-		NumberAxis axis = createAxis(0, 1);
+		NumberAxis axis = createNonLogarithmicAxis(0, 1);
 		axis.setTickUnit(new NumberTickUnit(1));
 		return axis;
 	}
+
 }

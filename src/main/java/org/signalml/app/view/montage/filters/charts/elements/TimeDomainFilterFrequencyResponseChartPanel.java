@@ -21,6 +21,11 @@ import org.springframework.context.support.MessageSourceAccessor;
  */
 public class TimeDomainFilterFrequencyResponseChartPanel extends FrequencyResponseChartPanel {
 
+	/**
+	 * Constructor.
+	 * @param messageSource message source capable of resolving localized
+	 * messages
+	 */
 	public TimeDomainFilterFrequencyResponseChartPanel(MessageSourceAccessor messageSource) {
 		super(messageSource);
 		setTitle(messageSource.getMessage("editTimeDomainSampleFilter.frequencyResponseGraphTitle"));
@@ -31,6 +36,10 @@ public class TimeDomainFilterFrequencyResponseChartPanel extends FrequencyRespon
 		return createLogarithmicAxis(-100, 0);
 	}
 
+	/**
+	 * Sets a subitle for this plot. Used to show the filter order.
+	 * @param subtitleText he text of the subtitle
+	 */
 	public void setSubtitle(String subtitleText) {
 		JFreeChart chart = this.getChart();
 
@@ -47,10 +56,14 @@ public class TimeDomainFilterFrequencyResponseChartPanel extends FrequencyRespon
 
 	@Override
 	public void mouseReleased(MouseEvent ev) {
+		/* TODO: not implemented yet.
+		 * these methods could be used to handle the selections made
+		 * on the frequency response chart.
+		 */
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent ev) {
+	public void mousePressed(MouseEvent e) {
 	}
 
 	@Override

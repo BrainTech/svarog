@@ -19,8 +19,17 @@ import org.springframework.context.support.MessageSourceAccessor;
  */
 public abstract class FrequencyResponseChartPanel extends ResponseChartPanel implements PropertyChangeListener {
 
+	/**
+	 * This object handles highlighting the frequency selections made
+	 * on the plot.
+	 */
 	protected SelectionHighlightRenderer selectionHighlightRenderer;
 
+	/**
+	 * Constructor.
+	 * @param messageSource message source capable of resolving localized
+	 * messages
+	 */
 	public FrequencyResponseChartPanel(MessageSourceAccessor messageSource) {
 		super(messageSource);
 		selectionHighlightRenderer = new SelectionHighlightRenderer(this);
@@ -32,18 +41,35 @@ public abstract class FrequencyResponseChartPanel extends ResponseChartPanel imp
 		return messageSource.getMessage("editSampleFilter.graphFrequencyLabel");
 	}
 
+	/**
+	 * Adds a new listener which will be notified whenever the selection on
+	 * the chart have been changed.
+	 * @param listener a listener to be added
+	 */
 	public void addSelectionChangedListener(PropertyChangeListener listener) {
 		selectionHighlightRenderer.addSelectionChangedListener(listener);
 	}
 
+	/**
+	 * Removes the listener.
+	 * @param listener listener to be removed
+	 */
 	public void removeSelectionChangedListener(PropertyChangeListener listener) {
 		selectionHighlightRenderer.removeSelectionChangedListener(listener);
 	}
 
+	/**
+	 * Returns the maximum frequency to be shown on the chart.
+	 * @return maximum frequency to be shown
+	 */
 	public double getMaximumChartFrequency() {
 		return getMaximumDomainAxisValue();
 	}
 
+	/**
+	 * Sets a range of frequncies to be highlighted.
+	 * @param frequencyRangeSelection range of frequencies to be highlighted
+	 */
 	public void setHighlightedSelection(FrequencyRangeSelection frequencyRangeSelection) {
 		selectionHighlightRenderer.setFrequencyRangeSelection(frequencyRangeSelection);
 	}
@@ -77,4 +103,5 @@ public abstract class FrequencyResponseChartPanel extends ResponseChartPanel imp
 	public void propertyChange(PropertyChangeEvent evt) {
 		repaint();
 	}
+
 }

@@ -65,7 +65,7 @@ public class FFTFilterResponseChartGroupPanel extends FilterResponseChartGroupPa
 			return;
 		}
 
-		double graphFrequencyMax = chartPanelWithSpinner.getSpinnerValue();
+		double graphFrequencyMax = chartPanelWithSpinner.getGraphScaleSpinnerValue();
 		double frequencyStepSize = FilterResponseChartPanelsWithGraphScaleSpinner.SPINNER_STEP_SIZE;
 		int frequencyCnt = (int) Math.ceil(graphFrequencyMax / frequencyStepSize) + 1;
 		double[] frequencies = new double[frequencyCnt];
