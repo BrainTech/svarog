@@ -200,8 +200,9 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 		JPanel interfacePanel = new JPanel(new BorderLayout());
 
-		interfacePanel.add(descriptionPanel, BorderLayout.NORTH);
-		interfacePanel.add(graphPanel, BorderLayout.CENTER);
+
+		interfacePanel.add(graphPanel, BorderLayout.NORTH);
+		interfacePanel.add(descriptionPanel, BorderLayout.CENTER);
 		interfacePanel.add(editFilterParametersPanel, BorderLayout.SOUTH);
 
 		return interfacePanel;

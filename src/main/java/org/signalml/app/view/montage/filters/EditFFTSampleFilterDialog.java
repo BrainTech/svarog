@@ -141,8 +141,8 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 
 		JPanel leftPanel = new JPanel(new BorderLayout());
 
-		leftPanel.add(descriptionPanel, BorderLayout.NORTH);
-		leftPanel.add(graphPanel, BorderLayout.CENTER);
+		leftPanel.add(graphPanel, BorderLayout.NORTH);
+		leftPanel.add(descriptionPanel, BorderLayout.CENTER);
 		leftPanel.add(addNewRangePanel, BorderLayout.SOUTH);
 
 		JPanel rightPanel = new JPanel(new BorderLayout(3, 3));
