@@ -37,6 +37,18 @@ import org.springframework.context.support.MessageSourceAccessor;
 public class TimeDomainFilterResponseChartGroupPanel extends FilterResponseChartGroupPanel<TimeDomainSampleFilter> {
 
 	/**
+	 * The size of the calculated time domain responses (impulse and step responses)
+	 * in seconds. Impulse and step response is calculated for the given
+	 * number of seconds.
+	 */
+	protected static int TIME_DOMAIN_RESPONSES_SIZE_IN_SECONDS = 100;
+
+	/**
+	 * The initial value of the impulse and step response graph scale spinner.
+	 */
+	protected static int INITIAL_TIME_DOMAIN_RESPONSES_MAXIMUM_TIME_VALUE_IN_SECONDS = 4;
+
+	/**
 	 * A chart panel containing the filter frequency response chart.
 	 */
 	protected TimeDomainFilterFrequencyResponseChartPanel frequencyResponseChartPanel;
@@ -93,6 +105,8 @@ public class TimeDomainFilterResponseChartGroupPanel extends FilterResponseChart
 	public void setSamplingFrequency(double samplingFrequency) {
 		super.setSamplingFrequency(samplingFrequency);
 		frequencyResponseChartPanelWithSpinner.setMaximumSpinnerValue(samplingFrequency / 2);
+		frequencyResponseChartPanelWithSpinner.setCurrentSpinnerValue(samplingFrequency / 2);
+
 	}
 
 	@Override
@@ -142,7 +156,8 @@ public class TimeDomainFilterResponseChartGroupPanel extends FilterResponseChart
 		chartsList.add(impulseResponseChartPanel);
 		chartsList.add(stepResponseChartPanel);
 		FilterResponseChartPanelsWithGraphScaleSpinner chartPanel = new FilterResponseChartPanelsWithGraphScaleSpinner(chartsList, messageSource.getMessage("editTimeDomainSampleFilter.graphTimeSpinnerLabel"));
-		chartPanel.setMaximumSpinnerValue(4.0);
+		chartPanel.setMaximumSpinnerValue(TIME_DOMAIN_RESPONSES_SIZE_IN_SECONDS);
+		chartPanel.setCurrentSpinnerValue(INITIAL_TIME_DOMAIN_RESPONSES_MAXIMUM_TIME_VALUE_IN_SECONDS);
 		return chartPanel;
 
 	}
@@ -226,7 +241,7 @@ public class TimeDomainFilterResponseChartGroupPanel extends FilterResponseChart
 	 * domain responses
 	 */
 	protected int getNumberOfPointsForTimeDomainResponse() {
-		return (int) (4 * samplingFrequency);
+		return (int) (TIME_DOMAIN_RESPONSES_SIZE_IN_SECONDS * samplingFrequency);
 	}
 
 	@Override

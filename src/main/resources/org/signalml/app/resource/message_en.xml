@@ -882,7 +882,7 @@
 	<entry key="editTimeDomainSampleFilter.stopbandEdgeFrequency2">Stopband edge frequency 2 [Hz]</entry>
 	<entry key="editTimeDomainSampleFilter.passbandRipple">Passband ripple [dB]</entry>
 	<entry key="editTimeDomainSampleFilter.stopbandAttenuation">Stopband attenuation [dB]</entry>
-	<entry key="editTimeDomainSampleFilter.drawFilterFrequencyResponse">Draw filter frequency response</entry>
+	<entry key="editTimeDomainSampleFilter.drawFilterFrequencyResponse">Draw filter responses</entry>
 
 	<entry key="error.editTimeDomainSampleFilter.badFilterParameters">The filter cannot be designed for the given parameters - please correct them.</entry>
 	<entry key="error.editTimeDomainSampleFilter.badFilterParametersFilterOrderTooBig">The order of the filter designed for the given parameters is too big - please correct the parameters.</entry>

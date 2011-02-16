@@ -64,6 +64,7 @@ public class FFTFilterResponseChartGroupPanel extends FilterResponseChartGroupPa
 	public void setSamplingFrequency(double samplingFrequency) {
 		super.setSamplingFrequency(samplingFrequency);
 		chartPanelWithSpinner.setMaximumSpinnerValue(samplingFrequency / 2);
+		chartPanelWithSpinner.setCurrentSpinnerValue(samplingFrequency / 2);
 	}
 
 	/**

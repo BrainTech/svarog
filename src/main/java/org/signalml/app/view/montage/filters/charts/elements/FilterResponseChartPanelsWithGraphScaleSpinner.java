@@ -88,6 +88,14 @@ public class FilterResponseChartPanelsWithGraphScaleSpinner extends JPanel {
 	}
 
 	/**
+	 * Sets the current value which is set on the graph scale spinner.
+	 * @param spinnerValue current spinner value
+	 */
+	public void setCurrentSpinnerValue(double spinnerValue) {
+		getGraphScaleSpinner().setValue(spinnerValue);
+	}
+
+	/**
 	 * Returns the value set on the graph scale spinner.
 	 * @return the value set on the graph scale spinner
 	 */
@@ -159,8 +167,7 @@ public class FilterResponseChartPanelsWithGraphScaleSpinner extends JPanel {
 	 * @return a number model for the graph scale spinner
 	 */
 	public SpinnerNumberModel createSpinnerNumberModel() {
-		double currentSpinnerValue = maximumSpinnerValue;
-		return new SpinnerNumberModel(currentSpinnerValue, MINIMUM_SPINNER_VALUE, maximumSpinnerValue, SPINNER_STEP_SIZE);
+		return new SpinnerNumberModel(MINIMUM_SPINNER_VALUE, MINIMUM_SPINNER_VALUE, maximumSpinnerValue, SPINNER_STEP_SIZE);
 	}
 
 	/**
