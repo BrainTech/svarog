@@ -4,48 +4,35 @@
 package org.signalml.app.view.montage.filters;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.AbstractAction;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.element.ResolvableComboBox;
 import org.signalml.app.view.montage.filters.charts.TimeDomainFilterResponseChartGroupPanel;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
-import org.signalml.domain.montage.filter.iirdesigner.ApproximationFunctionType;
+import org.signalml.domain.montage.filter.TimeDomainSampleFilterValidator;
 import org.signalml.domain.montage.filter.iirdesigner.BadFilterParametersException;
-import org.signalml.domain.montage.filter.iirdesigner.FilterType;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.validation.Errors;
 
 /**
  * This class represents a dialog for {@link TimeDomainSampleFilter
@@ -56,16 +43,6 @@ import org.springframework.core.io.ClassPathResource;
 public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 	/**
-	 * A value of step size for passband and stop band edge frequency
-	 * spinners.
-	 */
-	private final double FREQUENCY_SPINNER_STEP_SIZE = 0.1;
-	/**
-	 * The value of step size for passband ripple and stopband attenuation
-	 * spinners.
-	 */
-	private final double DECIBELS_SPINNER_STEP_SIZE = 0.1;
-	/**
 	 * represents the currently edited filter
 	 */
 	private TimeDomainSampleFilter currentFilter;
@@ -73,46 +50,8 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	 * A panel containing controls allowing to change the filter's
 	 * parameters.
 	 */
-	private JPanel filterParametersPanel;
-	/**
-	 * A {@link ResolvableComboBox} to select filter's {@link FilterType} from.
-	 */
-	private ResolvableComboBox filterTypeComboBox;
-	/**
-	 * A {@link ResolvableComboBox} which can be used  to select filter's
-	 * {@link ApproximationFunctionType} from.
-	 */
-	private ResolvableComboBox filterFamilyComboBox;
-	/**
-	 * The spinner controlling the value of the first passband edge
-	 * frequency of the filter.
-	 */
-	private DoubleSpinner passbandEdgeFrequency1Spinner;
-	/**
-	 * A {@link JSpinner} controlling the value of the second passband edge
-	 * frequency of the filter.
-	 */
-	private DoubleSpinner passbandEdgeFrequency2Spinner;
-	/**
-	 * A {@link JSpinner} controlling the value of the first stopband edge
-	 * frequency of the filter.
-	 */
-	private DoubleSpinner stopbandEdgeFrequency1Spinner;
-	/**
-	 * A spinner controlling the value of the second stopband edge
-	 * frequency of the filter.
-	 */
-	private DoubleSpinner stopbandEdgeFrequency2Spinner;
-	/**
-	 * A {@link JSpinner} controlling the value of filter's maximum ripple
-	 * in the passband.
-	 */
-	private DoubleSpinner passbandRippleSpinner;
-	/**
-	 * A {@link JSpinner} controlling the value of filter's minimum
-	 * attenuation in the stopband.
-	 */
-	private DoubleSpinner stopbandAttenuationSpinner;
+	private TimeDomainFilterParametersPanel filterParametersPanel;
+
 	/**
 	 * An action called after pressing the
 	 * {@link EditTimeDomainSampleFilterDialog#drawFrequencyResponseButton}.
@@ -124,6 +63,11 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	 * {@link EditTimeDomainSampleFilterDialog#filterParametersPanel}.
 	 */
 	private JButton drawFrequencyResponseButton;
+
+	/**
+	 * A label used to show filer-not-valid messages.
+	 */
+	private JLabel filterNotValidLabel;
 
 	/**
 	 * A panel for drawing and controling the filter responses.
@@ -167,19 +111,6 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 		super.initialize();
 
-		addComponentListener(new ComponentAdapter() {
-
-			@Override
-			public void componentShown(ComponentEvent e) {
-
-				if (((FilterType) filterTypeComboBox.getSelectedItem()).isHighpass() || ((FilterType) filterTypeComboBox.getSelectedItem()).isLowpass()) {
-					getPassbandEdgeFrequency2Spinner().setEnabled(false);
-					getStopbandEdgeFrequency2Spinner().setEnabled(false);
-				}
-
-			}
-		});
-
 	}
 
 	@Override
@@ -189,17 +120,18 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 		JPanel graphPanel = getChartGroupPanelWithABorder();
 
 		JPanel editFilterParametersPanel = new JPanel(new BorderLayout(3, 3));
-
 		editFilterParametersPanel.setBorder(new TitledBorder(messageSource.getMessage("editTimeDomainSampleFilter.filterParametersTitle")));
+
+		JPanel filterNotValidPanel = createFilterNotValidPanel();
 
 		JPanel drawFrequencyResponseButtonPanel = new JPanel(new FlowLayout(FlowLayout.TRAILING, 3, 3));
 		drawFrequencyResponseButtonPanel.add(getDrawFrequencyResponseButton());
 
-		editFilterParametersPanel.add(getFilterParametersPanel(), BorderLayout.CENTER);
+		editFilterParametersPanel.add(getFilterParametersPanel(), BorderLayout.NORTH);
+		editFilterParametersPanel.add(filterNotValidPanel, BorderLayout.CENTER);
 		editFilterParametersPanel.add(drawFrequencyResponseButtonPanel, BorderLayout.SOUTH);
 
 		JPanel interfacePanel = new JPanel(new BorderLayout());
-
 
 		interfacePanel.add(graphPanel, BorderLayout.NORTH);
 		interfacePanel.add(descriptionPanel, BorderLayout.CENTER);
@@ -210,457 +142,43 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	}
 
 	/**
-	 * Returns the {@link ResolvableComboBox} which can be used to set
-	 * the type of the filter (i.e. whether the filter is low-pass, high-pass,
-	 * band-pass or band-stop).
-	 * @return a {@link ResolvableComboBox} used to set the type of this
-	 * filter
-	 */
-	public ResolvableComboBox getFilterTypeComboBox() {
-
-		if (filterTypeComboBox == null) {
-
-			filterTypeComboBox = new ResolvableComboBox(messageSource);
-			filterTypeComboBox.setPreferredSize(new Dimension(200, 25));
-
-			FilterType[] filterTypes = FilterType.values();
-
-			DefaultComboBoxModel model = new DefaultComboBoxModel(filterTypes);
-			filterTypeComboBox.setModel(model);
-
-			filterTypeComboBox.addItemListener(new ItemListener() {
-
-				@Override
-				public void itemStateChanged(ItemEvent e) {
-
-					if (((FilterType) filterTypeComboBox.getSelectedItem()).isHighpass() || ((FilterType) filterTypeComboBox.getSelectedItem()).isLowpass()) {
-						getPassbandEdgeFrequency2Spinner().setEnabled(false);
-						getStopbandEdgeFrequency2Spinner().setEnabled(false);
-					} else {
-						getPassbandEdgeFrequency2Spinner().setEnabled(true);
-						getStopbandEdgeFrequency2Spinner().setEnabled(true);
-					}
-
-					getPassbandEdgeFrequency1Spinner().getListeners(ChangeListener.class)[0].stateChanged(new ChangeEvent(getStopbandEdgeFrequency1Spinner()));
-					getStopbandEdgeFrequency1Spinner().getListeners(ChangeListener.class)[0].stateChanged(new ChangeEvent(getStopbandEdgeFrequency1Spinner()));
-					getPassbandEdgeFrequency2Spinner().getListeners(ChangeListener.class)[0].stateChanged(new ChangeEvent(getStopbandEdgeFrequency2Spinner()));
-					getStopbandEdgeFrequency2Spinner().getListeners(ChangeListener.class)[0].stateChanged(new ChangeEvent(getPassbandEdgeFrequency2Spinner()));
-
-				}
-			});
-
-		}
-
-		return filterTypeComboBox;
-
-	}
-
-	/**
-	 * Returns the {@link ResolvableComboBox} which can be used to set the
-	 * filter family ({@link ApproximationFunctionType}).
-	 * @return the {@link ResolvableComboBox} which can be used to set the
-	 * filter family
-	 */
-	public ResolvableComboBox getFilterFamilyComboBox() {
-
-		if (filterFamilyComboBox == null) {
-			filterFamilyComboBox = new ResolvableComboBox(messageSource);
-			filterFamilyComboBox.setPreferredSize(new Dimension(200, 25));
-
-			ApproximationFunctionType[] filterFamilyTypes = ApproximationFunctionType.values();
-
-			DefaultComboBoxModel model = new DefaultComboBoxModel(filterFamilyTypes);
-			filterFamilyComboBox.setModel(model);
-
-		}
-		return filterFamilyComboBox;
-
-	}
-
-	/**
 	 * Returns the {@link JPanel} containing controls allowing to set the
 	 * filter's parameters.
 	 * @return the {@link JPanel} used in this dialog, containing spinners
 	 * allowing to control the filter's parameters
 	 */
-	public JPanel getFilterParametersPanel() {
+	public TimeDomainFilterParametersPanel getFilterParametersPanel() {
 
 		if (filterParametersPanel == null) {
-			filterParametersPanel = new JPanel(null);
-
-			filterParametersPanel.setBorder(new EmptyBorder(3, 3, 3, 3));
-
-			GroupLayout layout = new GroupLayout(filterParametersPanel);
-			filterParametersPanel.setLayout(layout);
-			layout.setAutoCreateContainerGaps(false);
-			layout.setAutoCreateGaps(true);
-
-			JLabel filterTypeLabel = new JLabel(messageSource.getMessage("editTimeDomainSampleFilter.filterType"));
-			JLabel filterFamilyLabel = new JLabel(messageSource.getMessage("editTimeDomainSampleFilter.filterFamily"));
-			JLabel passbandEdgeFrequency1Label = new JLabel(messageSource.getMessage("editTimeDomainSampleFilter.passbandEdgeFrequency1"));
-			JLabel passbandEdgeFrequency2Label = new JLabel(messageSource.getMessage("editTimeDomainSampleFilter.passbandEdgeFrequency2"));
-			JLabel stopbandEdgeFrequency1Label = new JLabel(messageSource.getMessage("editTimeDomainSampleFilter.stopbandEdgeFrequency1"));
-			JLabel stopbandEdgeFrequency2Label = new JLabel(messageSource.getMessage("editTimeDomainSampleFilter.stopbandEdgeFrequency2"));
-			JLabel passbandRippleLabel = new JLabel(messageSource.getMessage("editTimeDomainSampleFilter.passbandRipple"));
-			JLabel stopbandAttenuationLabel = new JLabel(messageSource.getMessage("editTimeDomainSampleFilter.stopbandAttenuation"));
-
-			GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
-
-			hGroup.addGroup(
-				layout.createParallelGroup().addComponent(filterTypeLabel).addComponent(passbandEdgeFrequency1Label).addComponent(stopbandEdgeFrequency1Label).addComponent(passbandRippleLabel));
-
-			hGroup.addGroup(
-				layout.createParallelGroup().addComponent(getFilterTypeComboBox()).addComponent(getPassbandEdgeFrequency1Spinner()).addComponent(getStopbandEdgeFrequency1Spinner()).addComponent(getPassbandRippleSpinner()));
-
-			hGroup.addGroup(
-				layout.createParallelGroup().addComponent(filterFamilyLabel).addComponent(passbandEdgeFrequency2Label).addComponent(stopbandEdgeFrequency2Label).addComponent(stopbandAttenuationLabel));
-
-			hGroup.addGroup(
-				layout.createParallelGroup().addComponent(getFilterFamilyComboBox()).addComponent(getPassbandEdgeFrequency2Spinner()).addComponent(getStopbandEdgeFrequency2Spinner()).addComponent(getStopbandAttenuationSpinner()));
-
-			layout.setHorizontalGroup(hGroup);
-
-			GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
-
-			vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE).addComponent(filterTypeLabel).addComponent(getFilterTypeComboBox()).addComponent(filterFamilyLabel).addComponent(getFilterFamilyComboBox()));
-
-			vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE).addComponent(passbandEdgeFrequency1Label).addComponent(getPassbandEdgeFrequency1Spinner()).addComponent(passbandEdgeFrequency2Label).addComponent(getPassbandEdgeFrequency2Spinner()));
-			vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE).addComponent(stopbandEdgeFrequency1Label).addComponent(getStopbandEdgeFrequency1Spinner()).addComponent(stopbandEdgeFrequency2Label).addComponent(getStopbandEdgeFrequency2Spinner()));
-			vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE).addComponent(passbandRippleLabel).addComponent(getPassbandRippleSpinner()).addComponent(stopbandAttenuationLabel).addComponent(getStopbandAttenuationSpinner()));
-
-			layout.setVerticalGroup(vGroup);
-
+			filterParametersPanel = new TimeDomainFilterParametersPanel(messageSource);
 		}
 
 		return filterParametersPanel;
 
 	}
 
-	/**
-	 * Returns the {@link JSpinner} allowing to set the first passband
-	 * edge frequency of this filter.
-	 * @return the {@link JSpinner} allowing to set the first passband
-	 * edge frequency of this filter
-	 */
-	public DoubleSpinner getPassbandEdgeFrequency1Spinner() {
-
-		if (passbandEdgeFrequency1Spinner == null) {
-
-			passbandEdgeFrequency1Spinner = new DoubleSpinner(createFrequencySpinnerNumberModel());
-			passbandEdgeFrequency1Spinner.setPreferredSize(new Dimension(80, 25));
-
-			passbandEdgeFrequency1Spinner.setEditor(new JSpinner.NumberEditor(passbandEdgeFrequency1Spinner, "0.00"));
-			passbandEdgeFrequency1Spinner.setFont(passbandEdgeFrequency1Spinner.getFont().deriveFont(Font.PLAIN));
-
-			passbandEdgeFrequency1Spinner.addChangeListener(new ChangeListener() {
-
-				@Override
-				public void stateChanged(ChangeEvent e) {
-
-					FilterType filterType = (FilterType) getFilterTypeComboBox().getSelectedItem();
-					double value = passbandEdgeFrequency1Spinner.getValue();
-					double otherValue;
-
-
-					if (filterType.isLowpass() || filterType.isBandstop()) {
-
-						otherValue = ((Number) getStopbandEdgeFrequency1Spinner().getValue()).doubleValue();
-
-						if (value >= otherValue) {
-							getStopbandEdgeFrequency1Spinner().setValue(value + FREQUENCY_SPINNER_STEP_SIZE);
-						}
-
-					} else if (filterType.isHighpass() || filterType.isBandpass()) {
-
-						otherValue = ((Number) getStopbandEdgeFrequency1Spinner().getValue()).doubleValue();
-
-						if (value <= otherValue) {
-							getStopbandEdgeFrequency1Spinner().setValue(value - FREQUENCY_SPINNER_STEP_SIZE);
-						}
-
-					}
-
-					if (filterType.isBandpass()) {
-
-						otherValue = ((Number) getPassbandEdgeFrequency2Spinner().getValue()).doubleValue();
-
-						if (value >= otherValue) {
-							getPassbandEdgeFrequency2Spinner().setValue(value + FREQUENCY_SPINNER_STEP_SIZE);
-						}
-
-					}
-
-					if (value < 0) {
-						passbandEdgeFrequency1Spinner.setValue(0.0);
-					}
-
-					updateHighlights();
-
-				}
-			});
-
-
-		}
-
-		return passbandEdgeFrequency1Spinner;
-
-	}
-
-	/**
-	 * Returns the {@link JSpinner} allowing to set the second passband
-	 * edge frequency of this filter.
-	 * @return the {@link JSpinner} allowing to set the second passband
-	 * edge frequency of this filter
-	 */
-	public DoubleSpinner getPassbandEdgeFrequency2Spinner() {
-
-		if (passbandEdgeFrequency2Spinner == null) {
-
-			passbandEdgeFrequency2Spinner = new DoubleSpinner(createFrequencySpinnerNumberModel());
-			passbandEdgeFrequency2Spinner.setPreferredSize(new Dimension(80, 25));
-
-			passbandEdgeFrequency2Spinner.setEditor(new JSpinner.NumberEditor(passbandEdgeFrequency2Spinner, "0.00"));
-			passbandEdgeFrequency2Spinner.setFont(passbandEdgeFrequency2Spinner.getFont().deriveFont(Font.PLAIN));
-
-
-			passbandEdgeFrequency2Spinner.addChangeListener(new ChangeListener() {
-
-				@Override
-				public void stateChanged(ChangeEvent e) {
-
-					FilterType filterType = (FilterType) getFilterTypeComboBox().getSelectedItem();
-					double value = passbandEdgeFrequency2Spinner.getValue();
-					double otherValue;
-
-
-					if (filterType.isBandstop()) {
-
-						otherValue = ((Number) getStopbandEdgeFrequency2Spinner().getValue()).doubleValue();
-
-						if (value <= otherValue) {
-							getStopbandEdgeFrequency2Spinner().setValue(value - FREQUENCY_SPINNER_STEP_SIZE);
-						}
-
-					} else if (filterType.isBandpass()) {
-
-						otherValue = ((Number) getStopbandEdgeFrequency2Spinner().getValue()).doubleValue();
-
-						if (value >= otherValue) {
-							getStopbandEdgeFrequency2Spinner().setValue(value + FREQUENCY_SPINNER_STEP_SIZE);
-						}
-
-					}
-
-					if (filterType.isBandpass()) {
-
-						otherValue = ((Number) getPassbandEdgeFrequency1Spinner().getValue()).doubleValue();
-
-						if (value <= otherValue) {
-							getPassbandEdgeFrequency1Spinner().setValue(value - FREQUENCY_SPINNER_STEP_SIZE);
-						}
-
-					}
-
-					if (value > getCurrentSamplingFrequency() / 2) {
-						passbandEdgeFrequency2Spinner.setValue(getCurrentSamplingFrequency() / 2);
-					}
-
-					updateHighlights();
-
-				}
-			});
-
-		}
-
-		return passbandEdgeFrequency2Spinner;
-
-	}
-
-	/**
-	 * Returns the {@link JSpinner} allowing to set the first stopband
-	 * edge frequency of this filter.
-	 * @return the {@link JSpinner} allowing to set the first stopband
-	 * edge frequency of this filter
-	 */
-	public DoubleSpinner getStopbandEdgeFrequency1Spinner() {
-
-		if (stopbandEdgeFrequency1Spinner == null) {
-
-			stopbandEdgeFrequency1Spinner = new DoubleSpinner(createFrequencySpinnerNumberModel());
-			stopbandEdgeFrequency1Spinner.setPreferredSize(new Dimension(80, 25));
-
-			stopbandEdgeFrequency1Spinner.setEditor(new JSpinner.NumberEditor(stopbandEdgeFrequency1Spinner, "0.00"));
-			stopbandEdgeFrequency1Spinner.setFont(stopbandEdgeFrequency1Spinner.getFont().deriveFont(Font.PLAIN));
-
-			stopbandEdgeFrequency1Spinner.addChangeListener(new ChangeListener() {
-
-				@Override
-				public void stateChanged(ChangeEvent e) {
-
-					FilterType filterType = (FilterType) getFilterTypeComboBox().getSelectedItem();
-					double value = stopbandEdgeFrequency1Spinner.getValue();
-					double otherValue;
-
-
-					if (filterType.isLowpass() || filterType.isBandstop()) {
-
-						otherValue = ((Number) getPassbandEdgeFrequency1Spinner().getValue()).doubleValue();
-
-						if (value <= otherValue) {
-							getPassbandEdgeFrequency1Spinner().setValue(value - FREQUENCY_SPINNER_STEP_SIZE);
-						}
-
-					} else if (filterType.isHighpass() || filterType.isBandpass()) {
-
-						otherValue = ((Number) getPassbandEdgeFrequency1Spinner().getValue()).doubleValue();
-
-						if (value >= otherValue) {
-							getPassbandEdgeFrequency1Spinner().setValue(value + FREQUENCY_SPINNER_STEP_SIZE);
-						}
-
-					}
-
-					if (filterType.isBandstop()) {
-
-						otherValue = ((Number) getStopbandEdgeFrequency2Spinner().getValue()).doubleValue();
-
-						if (value >= otherValue) {
-							getStopbandEdgeFrequency2Spinner().setValue(value + FREQUENCY_SPINNER_STEP_SIZE);
-						}
-
-					}
-
-					if (value < 0) {
-						stopbandEdgeFrequency1Spinner.setValue(0.0);
-					}
-
-					updateHighlights();
-
-				}
-			});
-
-
-		}
-
-		return stopbandEdgeFrequency1Spinner;
-
-	}
-
-	/**
-	 * Returns the {@link JSpinner} allowing to set the second stopband
-	 * edge frequency of this filter.
-	 * @return the {@link JSpinner} allowing to set the second stopband
-	 * edge frequency of this filter
-	 */
-	public DoubleSpinner getStopbandEdgeFrequency2Spinner() {
-
-		if (stopbandEdgeFrequency2Spinner == null) {
-
-			stopbandEdgeFrequency2Spinner = new DoubleSpinner(createFrequencySpinnerNumberModel());
-			stopbandEdgeFrequency2Spinner.setPreferredSize(new Dimension(80, 25));
-
-			stopbandEdgeFrequency2Spinner.setEditor(new JSpinner.NumberEditor(stopbandEdgeFrequency2Spinner, "0.00"));
-			stopbandEdgeFrequency2Spinner.setFont(stopbandEdgeFrequency2Spinner.getFont().deriveFont(Font.PLAIN));
-
-			stopbandEdgeFrequency2Spinner.addChangeListener(new ChangeListener() {
-
-				@Override
-				public void stateChanged(ChangeEvent e) {
-
-					FilterType filterType = (FilterType) getFilterTypeComboBox().getSelectedItem();
-					double value = stopbandEdgeFrequency2Spinner.getValue();
-					double otherValue;
-
-
-					if (filterType.isBandstop()) {
-
-						otherValue = ((Number) getPassbandEdgeFrequency2Spinner().getValue()).doubleValue();
-
-						if (value >= otherValue) {
-							getPassbandEdgeFrequency2Spinner().setValue(value + FREQUENCY_SPINNER_STEP_SIZE);
-						}
-
-					} else if (filterType.isBandpass()) {
-
-						otherValue = ((Number) getPassbandEdgeFrequency2Spinner().getValue()).doubleValue();
-
-						if (value <= otherValue) {
-							getPassbandEdgeFrequency2Spinner().setValue(value - FREQUENCY_SPINNER_STEP_SIZE);
-						}
-
-					}
-
-					if (filterType.isBandstop()) {
-
-						otherValue = ((Number) getStopbandEdgeFrequency1Spinner().getValue()).doubleValue();
-
-						if (value <= otherValue) {
-							getStopbandEdgeFrequency1Spinner().setValue(value - FREQUENCY_SPINNER_STEP_SIZE);
-						}
-
-					}
-
-					if (value > getCurrentSamplingFrequency() / 2) {
-						stopbandEdgeFrequency2Spinner.setValue(getCurrentSamplingFrequency() / 2);
-					}
-
-					updateHighlights();
-
-				}
-			});
-
-		}
-
-		return stopbandEdgeFrequency2Spinner;
-
-	}
-
-	/**
-	 * Returns the {@link JSpinner} used in this window to control the
-	 * maximum passband ripple for this filter.
-	 * @return the {@link JSpinner} for this window, which can be used
-	 * to control the passband ripple of this filter
-	 */
-	public DoubleSpinner getPassbandRippleSpinner() {
-
-		if (passbandRippleSpinner == null) {
-
-			passbandRippleSpinner = new DoubleSpinner(new SpinnerNumberModel(3.0, DECIBELS_SPINNER_STEP_SIZE, 10.0, DECIBELS_SPINNER_STEP_SIZE));
-			passbandRippleSpinner.setPreferredSize(new Dimension(80, 25));
-
-			passbandRippleSpinner.setEditor(new JSpinner.NumberEditor(passbandRippleSpinner, "0.00"));
-			passbandRippleSpinner.setFont(passbandRippleSpinner.getFont().deriveFont(Font.PLAIN));
-
-		}
-
-		return passbandRippleSpinner;
-
-	}
-
-	/**
-	 * Returns the {@link JSpinner} used in this window to control the
-	 * maximum passband ripple for this filter.
-	 * @return the {@link JSpinner} for this window, which can be used
-	 * to control the passband ripple of this filter
-	 */
-	public DoubleSpinner getStopbandAttenuationSpinner() {
-
-		if (stopbandAttenuationSpinner == null) {
-
-			stopbandAttenuationSpinner = new DoubleSpinner(new SpinnerNumberModel(30.0, 10.0 + DECIBELS_SPINNER_STEP_SIZE, 100.0, DECIBELS_SPINNER_STEP_SIZE));
-			stopbandAttenuationSpinner.setPreferredSize(new Dimension(80, 25));
-
-			stopbandAttenuationSpinner.setEditor(new JSpinner.NumberEditor(stopbandAttenuationSpinner, "0.00"));
-			stopbandAttenuationSpinner.setFont(stopbandAttenuationSpinner.getFont().deriveFont(Font.PLAIN));
-
-		}
-
-		return stopbandAttenuationSpinner;
-
+	protected JPanel createFilterNotValidPanel() {
+		JPanel filterNotValidPanel = new JPanel(new BorderLayout());
+		GroupLayout layout = new GroupLayout(filterNotValidPanel);
+		filterNotValidPanel.setLayout(layout);
+
+		filterNotValidLabel = new JLabel();
+		filterNotValidLabel.setForeground(Color.red);
+		filterNotValidLabel.setHorizontalAlignment(JLabel.CENTER);
+		filterNotValidLabel.setMinimumSize(new Dimension(1050, 13)); //making sure that the error messages will have enough space
+
+		layout.setHorizontalGroup(
+		   layout.createSequentialGroup()
+		      .addComponent(filterNotValidLabel)
+		);
+		layout.setVerticalGroup(
+		   layout.createSequentialGroup()
+		      .addComponent(filterNotValidLabel)
+		);
+
+		filterNotValidPanel.add(filterNotValidLabel);
+
+		return filterNotValidPanel;
 	}
 
 	/**
@@ -678,22 +196,17 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 	}
 
-	/**
-	 * Returns a {@link SpinnerNumberModel} which should be used for
-	 * passband and stopband edge frequency spinners.
-	 * @return a {@link SpinnerNumberModel} to be used with frequency
-	 * spinners
-	 */
-	protected SpinnerNumberModel createFrequencySpinnerNumberModel() {
-		return new SpinnerNumberModel(0.0, 0.0, getCurrentSamplingFrequency() / 2, FREQUENCY_SPINNER_STEP_SIZE);
-	}
-
 	@Override
 	protected void updateGraph() {
+
+		if(!validateCurrentFilterAndShowErrorMessage())
+				return;
+
 		try {
-			getChartGroupPanel().updateGraphs(currentFilter);
+			getChartGroupPanelWithABorder().updateGraphs(currentFilter);
+			clearFilterNotValidMessage();
 		} catch (BadFilterParametersException ex) {
-			JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			showFilterNotValidMessage(ex.getMessage());
 		}
 	}
 
@@ -703,15 +216,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 		currentFilter = new TimeDomainSampleFilter((TimeDomainSampleFilter) model);
 		currentFilter.setSamplingFrequency(getCurrentSamplingFrequency());
 
-		getFilterTypeComboBox().setSelectedItem(currentFilter.getFilterType());
-		getFilterFamilyComboBox().setSelectedItem(currentFilter.getApproximationFunctionType());
-		getPassbandEdgeFrequency1Spinner().setValue((double) currentFilter.getPassbandEdgeFrequencies()[0]);
-		getPassbandEdgeFrequency2Spinner().setValue((double) currentFilter.getPassbandEdgeFrequencies()[1]);
-		getStopbandEdgeFrequency1Spinner().setValue((double) currentFilter.getStopbandEdgeFrequencies()[0]);
-		getStopbandEdgeFrequency2Spinner().setValue((double) currentFilter.getStopbandEdgeFrequencies()[1]);
-		getPassbandRippleSpinner().setValue((double) currentFilter.getPassbandRipple());
-		getStopbandAttenuationSpinner().setValue((double) currentFilter.getStopbandAttenuation());
-
+		getFilterParametersPanel().fillPanelFromModel(currentFilter);
 		getDescriptionTextField().setText(currentFilter.getDescription());
 
 		updateGraph();
@@ -722,21 +227,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	public void fillModelFromDialog(Object model) throws SignalMLException {
 
 		currentFilter.setDescription(getDescriptionTextField().getText());
-		currentFilter.setFilterType((FilterType) getFilterTypeComboBox().getSelectedItem());
-		currentFilter.setApproximationFunctionType((ApproximationFunctionType) getFilterFamilyComboBox().getSelectedItem());
-		currentFilter.setPassbandEdgeFrequencies(
-			new double[]{
-				((Number) getPassbandEdgeFrequency1Spinner().getValue()).doubleValue(),
-				((Number) getPassbandEdgeFrequency2Spinner().getValue()).doubleValue()
-			});
-		currentFilter.setStopbandEdgeFrequencies(
-			new double[]{
-				((Number) getStopbandEdgeFrequency1Spinner().getValue()).doubleValue(),
-				((Number) getStopbandEdgeFrequency2Spinner().getValue()).doubleValue()
-			});
-		currentFilter.setPassbandRipple(((Number) getPassbandRippleSpinner().getValue()).doubleValue());
-		currentFilter.setStopbandAttenuation(((Number) getStopbandAttenuationSpinner().getValue()).doubleValue());
-
+		getFilterParametersPanel().fillModelFromPanel(currentFilter);
 		currentFilter.setSamplingFrequency(getCurrentSamplingFrequency());
 
 		((TimeDomainSampleFilter) model).copyFrom(currentFilter);
@@ -771,7 +262,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	}
 
 	@Override
-	public TimeDomainFilterResponseChartGroupPanel getChartGroupPanel() {
+	public TimeDomainFilterResponseChartGroupPanel getChartGroupPanelWithABorder() {
 		if (graphsPanel == null) {
 			graphsPanel = new TimeDomainFilterResponseChartGroupPanel(messageSource, currentFilter);
 			graphsPanel.setSamplingFrequency(getCurrentSamplingFrequency());
@@ -809,4 +300,53 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 		}
 	}
+
+	@Override
+	public void setCurrentSamplingFrequency(float currentSamplingFrequency) {
+		super.setCurrentSamplingFrequency(currentSamplingFrequency);
+		getFilterParametersPanel().setSamplingFrequency(currentSamplingFrequency);
+	}
+
+	/**
+	 * Validates if the current filter is correct and if not, displays an
+	 * error message.
+	 * @return true if the filter is correct, false otherwise
+	 */
+	protected boolean validateCurrentFilterAndShowErrorMessage() {
+		TimeDomainSampleFilterValidator validator = new TimeDomainSampleFilterValidator(messageSource, currentFilter);
+		boolean isValid;
+		isValid = validator.isValid();
+
+		if (!isValid)
+			showFilterNotValidMessage(validator.getErrorMessage());
+		else
+			clearFilterNotValidMessage();
+
+		return isValid;
+	}
+
+	/**
+	 * Shows a filter-not-valid message.
+	 * @param message text of the message
+	 */
+	protected void showFilterNotValidMessage(String message) {
+		filterNotValidLabel.setText(message);
+	}
+
+	/**
+	 * Clears the filter-not-valid message so that no message is shown.
+	 */
+	protected void clearFilterNotValidMessage() {
+		showFilterNotValidMessage(" ");
+	}
+
+	@Override
+	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+		super.validateDialog(model, errors);
+
+		fillModelFromDialog(currentFilter);
+		if (!validateCurrentFilterAndShowErrorMessage())
+			errors.reject("timeDomainFilter.badFilterParameters");
+	}
+
 }

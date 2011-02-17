@@ -73,6 +73,11 @@
 
 	<entry key="timeDomainFilter">Time domain filter</entry>
 	<entry key="timeDomainFilter.effect">{0} ({1}), {2}</entry>
+	<entry key="timeDomainFilter.badFilterParameters">Bad filter parameters, please correct them.</entry>
+	<entry key="timeDomainFilter.highpassFilterNotValidMessage">For high-pass filters the frequencies must fulfill: stopband frequency 1 &lt; passband frequency 1.</entry>
+	<entry key="timeDomainFilter.lowpassFilterNotValidMessage">For low-pass filters the frequencies must fulfill: passband frequency 1 &lt; stopband frequency 1.</entry>
+	<entry key="timeDomainFilter.bandpassFilterNotValidMessage">For band-pass filters the frequencies must fulfill: stopband frequency 1 &lt; passband frequency 1 &lt; passband frequency 2 &lt; stopband frequency 2.</entry>
+	<entry key="timeDomainFilter.bandstopFilterNotValidMessage">For band-stop filters the frequencies must fulfill: passband frequency 1 &lt; stopband frequency 1 &lt; stopband frequency 2 &lt; passband frequency 2.</entry>
 
 	<entry key="signalSelectionType.page">Page</entry>
 	<entry key="signalSelectionType.block">Block</entry>

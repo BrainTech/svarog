@@ -475,7 +475,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 
 	@Override
 	protected void updateGraph() {
-		getChartGroupPanel().updateGraphs(currentFilter);
+		getChartGroupPanelWithABorder().updateGraphs(currentFilter);
 	}
 
 	/**
@@ -484,11 +484,11 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 	@Override
 	protected void updateHighlights() {
 
-		double startFrequency = getSpinnerDoubleValue(getFromFrequencySpinner());
-		double endFrequency = getSpinnerDoubleValue(getToFrequencySpinner());
+		double startFrequency = getFromFrequencySpinner().getValue();
+		double endFrequency = getToFrequencySpinner().getValue();
 		FrequencyRangeSelection selection = new FrequencyRangeSelection(startFrequency, endFrequency);
 
-		getChartGroupPanel().setHighlightedSelection(selection);
+		getChartGroupPanelWithABorder().setHighlightedSelection(selection);
 
 	}
 
@@ -685,11 +685,11 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 	@Override
 	public void setCurrentSamplingFrequency(float currentSamplingFrequency) {
 		super.setCurrentSamplingFrequency(currentSamplingFrequency);
-		getChartGroupPanel().setSamplingFrequency(currentSamplingFrequency);
+		getChartGroupPanelWithABorder().setSamplingFrequency(currentSamplingFrequency);
 	}
 
 	@Override
-	public FFTFilterResponseChartGroupPanel getChartGroupPanel() {
+	public FFTFilterResponseChartGroupPanel getChartGroupPanelWithABorder() {
 		if (graphsPanel == null) {
 			graphsPanel = new FFTFilterResponseChartGroupPanel(messageSource, currentFilter);
 			graphsPanel.setSamplingFrequency(getCurrentSamplingFrequency());

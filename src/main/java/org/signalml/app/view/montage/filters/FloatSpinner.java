@@ -27,4 +27,5 @@ public class FloatSpinner extends JSpinner {
 	public Float getValue() {
 		return ((Number) super.getValue()).floatValue();
 	}
+
 }

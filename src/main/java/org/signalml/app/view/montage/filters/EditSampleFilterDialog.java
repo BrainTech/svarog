@@ -9,7 +9,6 @@ import java.awt.Window;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -107,30 +106,9 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 	 * Returns the {@link JPanel} containing the filter response plot
 	 * (or plots), maximum graph frequency spinner etc. surrounded by
 	 * a labeled border.
-	 * @return the {@link JPanel} containing a fiter response
-	 * graph (graphs)
-	 */
-	public JPanel getChartGroupPanelWithABorder() {
-
-		/*JPanel chartGroupPanel = new JPanel(new BorderLayout(6, 6));
-
-		CompoundBorder border = new CompoundBorder(
-			new TitledBorder(messageSource.getMessage("editSampleFilter.graphPanelTitle")),
-			new EmptyBorder(3, 3, 3, 3));
-		chartGroupPanel.setBorder(border);
-
-		chartGroupPanel.add(getChartGroupPanel());*/
-
-		return getChartGroupPanel();
-
-	}
-
-	/**
-	 * Returns a JPanel containing a group of charts (or maybe just one graph)
-	 * to be shown in this dialog.
 	 * @return a group of charts with a maximum graph scale spinner.
 	 */
-	public abstract JPanel getChartGroupPanel();
+	public abstract JPanel getChartGroupPanelWithABorder();
 
 	/**
 	 * Returns the {@link JTextField} which is shown in this dialog and
@@ -182,15 +160,6 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 	 * Updates the rectangle which highlights the selected frequency range.
 	 */
 	protected abstract void updateHighlights();
-
-	/**
-	 * Gets a double value from a spinner.
-	 * @param spinner the spinner from which the value should be taken
-	 * @return
-	 */
-	protected double getSpinnerDoubleValue(JSpinner spinner) {
-		return ((Number) spinner.getValue()).doubleValue();
-	}
 
 	@Override
 	public abstract void fillDialogFromModel(Object model) throws SignalMLException;

@@ -27,4 +27,14 @@ public class DoubleSpinner extends JSpinner {
 	public Double getValue() {
 		return ((Number) super.getValue()).doubleValue();
 	}
+
+	/**
+	 * Sets the maximum value which can be set using this spinner.
+	 * @param maximum the maximum value which can be set using this spinner
+	 */
+	public void setMaximumValue(double maximum) {
+		SpinnerNumberModel model = (SpinnerNumberModel) super.getModel();
+		model.setMaximum(maximum);
+		this.setModel(model);
+	}
 }
