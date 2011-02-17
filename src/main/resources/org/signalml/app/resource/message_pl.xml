@@ -873,8 +873,8 @@
 	<entry key="editTimeDomainSampleFilter.frequencyResponseGraphTitle">Filter frequency response [decibels]</entry>
 	<entry key="editTimeDomainSampleFilter.graphTimeSpinnerLabel">Maximum graph time value [s]</entry>
 	<entry key="editTimeDomainSampleFilter.graphTimeLabel">Time [s]</entry>
-	<entry key="editTimeDomainSampleFilter.impulseResponseGrapTitle">Impulse response</entry>
-	<entry key="editTimeDomainSampleFilter.stepResponseGrapTitle">Step response</entry>
+	<entry key="editTimeDomainSampleFilter.impulseResponseGrapTitle">Impulse response [amplitude]</entry>
+	<entry key="editTimeDomainSampleFilter.stepResponseGrapTitle">Step response [amplitude]</entry>
 
 	<entry key="editTimeDomainSampleFilter.filterOrderSubtitle">filter order = {0}</entry>
 	<entry key="editTimeDomainSampleFilter.groupDelayGraphTitle">Group delay [samples]</entry>
