@@ -305,6 +305,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	public void setCurrentSamplingFrequency(float currentSamplingFrequency) {
 		super.setCurrentSamplingFrequency(currentSamplingFrequency);
 		getFilterParametersPanel().setSamplingFrequency(currentSamplingFrequency);
+		getChartGroupPanelWithABorder().setSamplingFrequency(currentSamplingFrequency);
 	}
 
 	/**
