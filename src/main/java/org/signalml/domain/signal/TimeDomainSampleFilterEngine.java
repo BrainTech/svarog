@@ -59,13 +59,12 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 			coeffs = IIRDesigner.designDigitalFilter(definition);
 			aCoefficients = coeffs.getACoefficients();
 			bCoefficients = coeffs.getBCoefficients();
+			filterOrder = coeffs.getFilterOrder();
+			filtered = null;
 
 		} catch (BadFilterParametersException ex) {
 			java.util.logging.Logger.getLogger(TimeDomainSampleFilterEngine.class.getName()).log(Level.SEVERE, null, ex);
 		}
-
-		filterOrder = coeffs.getFilterOrder();
-		filtered = null;
 
 	}
 

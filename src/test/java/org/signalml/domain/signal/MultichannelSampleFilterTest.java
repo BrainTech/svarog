@@ -53,6 +53,7 @@ public class MultichannelSampleFilterTest {
 	@Before
 	public void setUp() {
 		source = new RoundBufferMultichannelSampleSource(TEST_CHANNEL_COUNT, TEST_SAMPLE_COUNT);
+		source.setSamplingFrequency(128.0F);
 		mfilter = new MultichannelSampleFilter(source, source);
 	}
 
