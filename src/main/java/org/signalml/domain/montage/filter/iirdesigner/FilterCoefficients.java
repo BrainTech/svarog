@@ -16,14 +16,14 @@ import java.util.Arrays;
 public class FilterCoefficients {
 
 	/**
-	 * an array of feeback coefficients
-	 */
-	private double[] aCoefficients;
-
-	/**
 	 * an array of feedforward coefficients
 	 */
 	private double[] bCoefficients;
+
+	/**
+	 * an array of feeback coefficients
+	 */
+	private double[] aCoefficients;
 
 	/**
 	 * Constructor. Creates an instance of {@link FilterCoefficients} which will
