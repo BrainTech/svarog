@@ -7,8 +7,10 @@ package org.signalml.app.view.element;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-/** AnyChangeDocumentAdapter
- *
+/**
+ * Abstract DocumentListener which calls {@link #anyUpdate(DocumentEvent)}
+ * function on every change.
+ * This function must be implemented in the sub-class.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -29,6 +31,12 @@ public abstract class AnyChangeDocumentAdapter implements DocumentListener {
 		anyUpdate(e);
 	}
 
+	/**
+	 * Function called when any change associated with the DocumentListener
+	 * is performed.
+	 * This function must be implemented in the sub-class.
+	 * @param e the document event
+	 */
 	public abstract void anyUpdate(DocumentEvent e);
 
 }

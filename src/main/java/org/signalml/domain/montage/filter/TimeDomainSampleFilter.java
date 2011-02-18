@@ -9,6 +9,7 @@ import org.signalml.util.ResolvableString;
 import org.springframework.context.MessageSourceResolvable;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import java.text.DecimalFormat;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.domain.montage.filter.iirdesigner.ApproximationFunctionType;
 import org.signalml.domain.montage.filter.iirdesigner.FilterType;
@@ -279,19 +280,34 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 	 */
 	public String getEffectString() {
 
-		String effectString = "(";
+		String passbandEdgeFrequency0 = convertDoubleToString(passbandEdgeFrequencies[0]);
+		String passbandEdgeFrequency1 = convertDoubleToString(passbandEdgeFrequencies[1]);
+		String stopbandEdgeFrequency0 = convertDoubleToString(stopbandEdgeFrequencies[0]);
+		String stopbandEdgeFrequency1 = convertDoubleToString(stopbandEdgeFrequencies[1]);
+
+		String effectString = "";
 		if (filterType.isLowpass())
-			effectString += "0 - " + passbandEdgeFrequencies[0];
+			effectString += "0 - " + passbandEdgeFrequency0;
 		else if (filterType.isHighpass())
-			effectString += passbandEdgeFrequencies[0] + " - Fn";
+			effectString += passbandEdgeFrequency0 + " - Fn";
 		else if (filterType.isBandpass())
-			effectString += passbandEdgeFrequencies[0] + " - " + passbandEdgeFrequencies[1];
+			effectString += passbandEdgeFrequency0 + " - " + passbandEdgeFrequency1;
 		else if (filterType.isBandstop())
-			effectString += stopbandEdgeFrequencies[0] + " - " + stopbandEdgeFrequencies[1];
-		effectString += ")";
+			effectString += stopbandEdgeFrequency0 + " - " + stopbandEdgeFrequency1;
+		effectString += " Hz";
 
 		return effectString;
 
+	}
+
+	/**
+	 * Converts a given double value to a string.
+	 * @param value a double value to be converted
+	 * @return the result of the conversion
+	 */
+	protected String convertDoubleToString(double value) {
+		DecimalFormat decimalFormat = new DecimalFormat("######.##");
+		return decimalFormat.format(value);
 	}
 
 	@Override
@@ -311,7 +327,7 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 
 	@Override
 	public Object[] getArguments() {
-		return new Object[] {filterType, getEffectString()};
+		return new Object[] {filterType, getEffectString(), approximationFunctionType};
 	}
 
 	@Override

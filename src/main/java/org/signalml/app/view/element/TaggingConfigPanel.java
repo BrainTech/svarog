@@ -14,12 +14,20 @@ import javax.swing.border.TitledBorder;
 
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.model.PagingParameterDescriptor;
+import org.signalml.domain.montage.Montage;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
-/** TaggingConfigPanel
- *
+/**
+ * The panel with options for tags.
+ * Contains two sub-panels:
+ * <ul>
+ * <li>the panel with a {@link #getSaveFullMontageWithTagCheckBox()
+ * check-box} to select if the montage should be saved in the tag file,</li>
+ * <li>the {@link PagingParametersPanel panel} which allows to select the
+ * sizes of a block and a page.</li>
+ * </ul>
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -27,17 +35,41 @@ public class TaggingConfigPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * the {@link MessageSourceAccessor source} of messages (labels)
+	 */
 	private MessageSourceAccessor messageSource;
 
+	/**
+	 * the panel which allows to set the size of a block and a page
+	 */
 	private PagingParametersPanel pagingParametersPanel;
+	/**
+	 * the check-box which tells if the full {@link Montage montage} should
+	 * be saved in the tag file 
+	 */
 	private JCheckBox saveFullMontageWithTagCheckBox;
 
+	/**
+	 * Constructor. Sets the {@link MessageSourceAccessor message source} and
+	 * initializes this panel.
+	 * @param messageSource the source of messages (labels)
+	 */
 	public TaggingConfigPanel(MessageSourceAccessor messageSource) {
 		super();
 		this.messageSource = messageSource;
 		initialize();
 	}
 
+	/**
+	 * Initializes this panel with BorderLayout and two sub-panels:
+	 * <ul>
+	 * <li>the panel with a {@link #getSaveFullMontageWithTagCheckBox()
+	 * check-box} to select if the montage should be saved in the tag file,</li>
+	 * <li>the {@link PagingParametersPanel panel} which allows to select the
+	 * sizes of a block and a page.</li>
+	 * </ul>
+	 */
 	private void initialize() {
 
 		setBorder(new EmptyBorder(3,3,3,3));
@@ -59,6 +91,13 @@ public class TaggingConfigPanel extends JPanel {
 
 	}
 
+	/**
+	 * Returns the check-box which tells if the full {@link Montage montage}
+	 * should be saved in the tag file.
+	 * If the check-box doesn't exist it is created.  
+	 * @return the check-box which tells if the full montage should
+	 * be saved in the tag file 
+	 */
 	public JCheckBox getSaveFullMontageWithTagCheckBox() {
 		if (saveFullMontageWithTagCheckBox == null) {
 			saveFullMontageWithTagCheckBox = new JCheckBox(messageSource.getMessage("preferences.tagging.saveFullMontageWithTag"));
@@ -66,6 +105,16 @@ public class TaggingConfigPanel extends JPanel {
 		return saveFullMontageWithTagCheckBox;
 	}
 
+	/**
+	 * Fills the fields of this panel from the given
+	 * {@link ApplicationConfiguration configuration}:
+	 * <ul>
+	 * <li>the check-box if the {@link Montage} should be saved in the tag file,</li>
+	 * <li>the {@link PagingParametersPanel panel} with the size of a block and
+	 * a page of the signal.</li>
+	 * </ul>
+	 * @param applicationConfig the configuration of Svarog
+	 */
 	public void fillPanelFromModel(ApplicationConfiguration applicationConfig) {
 
 		getSaveFullMontageWithTagCheckBox().setSelected(applicationConfig.isSaveFullMontageWithTag());
@@ -80,6 +129,17 @@ public class TaggingConfigPanel extends JPanel {
 
 	}
 
+	/**
+	 * Writes the values of the fields from this panel to the
+	 * {@link ApplicationConfiguration configuration} of Svarog:
+	 * <ul>
+	 * <li>the information if the {@link Montage} should be saved in the tag
+	 * file,</li>
+	 * <li> the size of a block and a page of the signal.</li></ul>
+	 * @param applicationConfig the configuration of Svarog
+	 * @throws SignalMLException if the numbers in the fields in {@link
+	 * PagingParametersPanel} have invalid format
+	 */
 	public void fillModelFromPanel(ApplicationConfiguration applicationConfig) throws SignalMLException {
 
 		applicationConfig.setSaveFullMontageWithTag(getSaveFullMontageWithTagCheckBox().isSelected());
@@ -93,6 +153,12 @@ public class TaggingConfigPanel extends JPanel {
 
 	}
 
+	/**
+	 * Validates this panel.
+	 * This panel is valid if {@link PagingParametersPanel} is
+	 * {@link PagingParametersPanel#validatePanel(Errors) valid}.
+	 * @param errors the variable in which errors are stored.
+	 */
 	public void validate(Errors errors) {
 
 		pagingParametersPanel.validatePanel(errors);

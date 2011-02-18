@@ -7,26 +7,80 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.signalml.util.MinMaxRange;
 import org.springframework.context.support.MessageSourceAccessor;
 
+/**
+ * Panel with two radio buttons, one spinner and one slider.
+ * The buttons tell if the spinner (slider) should be enabled or the
+ * {@link #AUTO_VALUE default value} should be used instead of it.
+ * <p>
+ * The value of this panel (either of the spinner/slider or auto) can be stored
+ * in the {@link MinMaxRange min-max range} as the maximum or minimum value.
+ * Also these values can be set as the value of the spinner/slider.
+ *
+ */
 public class AutoSpinnerWithSliderPanel extends AutoSpinnerPanel {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * the slider
+	 */
 	private JSlider slider;
 
+	/**
+	 * the variable used to disable updating spinner when the slider is updated
+	 * and vice versa
+	 */
 	private boolean lock = false;
 
+	/**
+	 * Constructor. Sets the source of messages, if this panel should be
+	 * compact (thinner), creates the spinner and initializes this panel.
+	 * @param messageSource the source of messages (labels)
+	 * @param value the value of the spinner
+	 * @param min the minimum value that can be used in spinner
+	 * @param max the maximum value that can be used in spinner
+	 * @param step the step of the spinner (the difference between consecutive
+	 * values of the spinner)
+	 * @param compact @code true} if this panel should be thinner (60 pixel),
+	 * {@code false} otherwise (150 pixel)
+	 */
 	public AutoSpinnerWithSliderPanel(MessageSourceAccessor messageSource, double value, double min, double max,
 	                                  double step, boolean compact) {
 		super(messageSource, value, min, max, step, compact);
 	}
 
+	/**
+	 * Constructor. Sets the source of messages, if this panel should be
+	 * compact (thinner), creates the spinner and initializes this panel.
+	 * @param messageSource the source of messages (labels)
+	 * @param value the value of the spinner
+	 * @param min the minimum value that can be used in spinner
+	 * @param max the maximum value that can be used in spinner
+	 * @param step the step of the spinner (the difference between consecutive
+	 * values of the spinner)
+	 * @param compact @code true} if this panel should be thinner (60 pixel),
+	 * {@code false} otherwise (150 pixel)
+	 */
 	public AutoSpinnerWithSliderPanel(MessageSourceAccessor messageSource, float value, float min, float max,
 	                                  float step, boolean compact) {
 		super(messageSource, value, min, max, step, compact);
 	}
 
+	/**
+	 * Constructor. Sets the source of messages, if this panel should be
+	 * compact (thinner), creates the spinner and initializes this panel.
+	 * @param messageSource the source of messages (labels)
+	 * @param value the value of the spinner
+	 * @param min the minimum value that can be used in spinner
+	 * @param max the maximum value that can be used in spinner
+	 * @param step the step of the spinner (the difference between consecutive
+	 * values of the spinner)
+	 * @param compact @code true} if this panel should be thinner (60 pixel),
+	 * {@code false} otherwise (150 pixel)
+	 */
 	public AutoSpinnerWithSliderPanel(MessageSourceAccessor messageSource, int value, int min, int max, int step,
 	                                  boolean compact) {
 		super(messageSource, value, min, max, step, compact);
@@ -34,6 +88,20 @@ public class AutoSpinnerWithSliderPanel extends AutoSpinnerPanel {
 
 
 
+	/**
+	 * Performs the same {@link AutoSpinnerPanel#commonInit(double, double,
+	 * double, double) initialization} as the {@link AutoSpinnerPanel parent}
+	 * and:
+	 * <ul>
+	 * <li>creates the slider with the given {@code value}, {@code minimum},
+	 * {@code maximum} and {@code step},</li>
+	 * <li>sets the ticks of the slider,</li>
+	 * <li>adds the change listener to the slider which updates the value of
+	 * the spinner,</li>
+	 * <li>adds the change listener to the spinner which updates the value of
+	 * the slider.</li>
+	 * </ul>
+	 */
 	@Override
 	protected void commonInit(double value, double min, double max, double step) {
 		super.commonInit(value, min, max, step);
@@ -95,17 +163,28 @@ public class AutoSpinnerWithSliderPanel extends AutoSpinnerPanel {
 
 	}
 
+	/**
+	 * Enables ({@code enabled = true}) or disables the spinner and the
+	 * slider.
+	 * @param enabled {@code true} if the spinner and the slider should be
+	 * enabled, {@code false} otherwise
+	 */
 	@Override
 	protected void setNonAutoControlsEnabled(boolean enabled) {
 		super.setNonAutoControlsEnabled(enabled);
 		if (slider != null) slider.setEnabled(enabled);
 	}
 
-
+	/**
+	 * Returns the value of this panel (the slider and the spinner).
+	 */
 	public double getValue() {
 		return super.getValueWithAuto();
 	}
 
+	/**
+	 * Sets the value of this panel  (the slider and the spinner).
+	 */
 	public void setValue(double value) {
 		super.setValueWithAuto(value);
 	}

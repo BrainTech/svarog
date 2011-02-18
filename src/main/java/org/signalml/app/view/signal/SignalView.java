@@ -107,7 +107,6 @@ import org.signalml.app.view.monitor.StartMonitorRecordingDialog;
 import org.signalml.app.view.montage.SignalMontageDialog;
 import org.signalml.app.view.signal.popup.CompareTagsPopupDialog;
 import org.signalml.app.view.signal.popup.SignalPlotOptionsPopupDialog;
-import org.signalml.app.view.signal.popup.SignalFFTSettingsPopupDialog;
 import org.signalml.app.view.signal.popup.SlavePlotSettingsPopupDialog;
 import org.signalml.app.view.signal.popup.ZoomSettingsPopupDialog;
 import org.signalml.app.view.tag.TagIconProducer;
@@ -204,7 +203,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	private JToggleButton tagBlockToolButton;
 	private JToggleButton tagChannelToolButton;
 	private JToggleButton zoomSignalToolButton;
-	private JToggleButton signalFFTToolButton;
 
 	private SignalTool currentSignalTool;
 
@@ -218,7 +216,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	private TagBlockSignalTool tagBlockSignalTool;
 	private TagChannelSignalTool tagChannelSignalTool;
 	private ZoomSignalTool zoomSignalTool;
-	private SignalFFTTool signalFFTTool;
 
 	private Map<ButtonModel,SignalTool> toolMap = new HashMap<ButtonModel,SignalTool>();
 
@@ -269,7 +266,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 	private SignalPlotOptionsPopupDialog signalPlotOptionsPopupDialog;
 	private ZoomSettingsPopupDialog zoomSettingsDialog;
-	private SignalFFTSettingsPopupDialog signalFFTSettingsDialog;
 	private SlavePlotSettingsPopupDialog slavePlotSettingsPopupDialog;
 
 	private CardLayout tagToolBarLayout;
@@ -784,9 +780,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		tagChannelSignalTool = new TagChannelSignalTool(this);
 		zoomSignalTool = new ZoomSignalTool(this);
 		zoomSignalTool.setSettings(applicationConfig.getZoomSignalSettings());
-		signalFFTTool = new SignalFFTTool(this);
-		signalFFTTool.setSettings(applicationConfig.getSignalFFTSettings());
-
+		
 		toolMouseAdapter.setSelectTagSignalTool(selectTagTool);
 		columnToolMouseAdapter.setSelectTagSignalTool(selectTagTool);
 
@@ -806,7 +800,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		toolMap.put(tagBlockToolButton.getModel(), tagBlockSignalTool);
 		toolMap.put(tagChannelToolButton.getModel(), tagChannelSignalTool);
 		toolMap.put(zoomSignalToolButton.getModel(), zoomSignalTool);
-		toolMap.put(signalFFTToolButton.getModel(), signalFFTTool);
 
 		toolButtonGroup = new ButtonGroup();
 		toolButtonGroup.add(selectToolButton);
@@ -819,7 +812,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		toolButtonGroup.add(tagBlockToolButton);
 		toolButtonGroup.add(tagChannelToolButton);
 		toolButtonGroup.add(zoomSignalToolButton);
-		toolButtonGroup.add(signalFFTToolButton);
 
 		ActionListener toolSelectionListener = new ToolSelectionListener();
 		selectToolButton.addActionListener(toolSelectionListener);
@@ -832,7 +824,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		tagBlockToolButton.addActionListener(toolSelectionListener);
 		tagChannelToolButton.addActionListener(toolSelectionListener);
 		zoomSignalToolButton.addActionListener(toolSelectionListener);
-		signalFFTToolButton.addActionListener(toolSelectionListener);
 
 		PluginAccessClass.getGUIImpl().registerSignalTools(toolMap, toolButtonGroup, toolSelectionListener, this);
 
@@ -923,10 +914,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		zoomSignalToolButton.setToolTipText(messageSource.getMessage("signalView.zoomSignalToolToolTip"));
 		zoomSignalToolButton.addMouseListener(new ZoomSignalToolButtonMouseListener());
 
-		signalFFTToolButton = new JToggleButton(IconUtils.loadClassPathIcon("org/signalml/app/icon/fft.png"));
-		signalFFTToolButton.setToolTipText(messageSource.getMessage("signalView.signalFFTToolToolTip"));
-		signalFFTToolButton.addMouseListener(new SignalFFTToolButtonMouseListener());
-
 		rulerToolButton = new JToggleButton(IconUtils.loadClassPathIcon("org/signalml/app/icon/ruler.png"));
 		rulerToolButton.setToolTipText(messageSource.getMessage("signalView.rulerToolToolTip"));
 
@@ -937,7 +924,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		mainToolBar.add(selectBlockToolButton);
 		mainToolBar.add(selectChannelToolButton);
 		mainToolBar.add(zoomSignalToolButton);
-		mainToolBar.add(signalFFTToolButton);
 		mainToolBar.add(rulerToolButton);
 
 		PluginAccessClass.getGUIImpl().toolsToMainMenu(mainToolBar, this);
@@ -1315,10 +1301,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		return zoomSignalTool;
 	}
 
-	public SignalFFTTool getSignalFFTTool() {
-		return signalFFTTool;
-	}
-
 	public ErrorsDialog getErrorsDialog() {
 		return errorsDialog;
 	}
@@ -1470,13 +1452,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 			zoomSettingsDialog = new ZoomSettingsPopupDialog(messageSource, (Window) getTopLevelAncestor(), true);
 		}
 		return zoomSettingsDialog;
-	}
-
-	private SignalFFTSettingsPopupDialog getSignalFFTSettingsDialog() {
-		if (signalFFTSettingsDialog == null) {
-			signalFFTSettingsDialog = new SignalFFTSettingsPopupDialog(messageSource, (Window) getTopLevelAncestor(), true);
-		}
-		return signalFFTSettingsDialog;
 	}
 
 	@Override
@@ -2058,52 +2033,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 			setTagSelection(signalPlot, new PositionedTag(tagSelection));
 		}
 		else throw new InvalidClassException("only plot got from Svarog can be used");
-
-	}
-
-	private class SignalFFTToolButtonMouseListener extends MouseAdapter {
-
-		private Timer timer;
-
-		ActionListener timerListener = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				SignalFFTSettingsPopupDialog dialog = getSignalFFTSettingsDialog();
-				Container ancestor = getTopLevelAncestor();
-				Point containerLocation = ancestor.getLocation();
-				Point location = SwingUtilities.convertPoint(signalFFTToolButton, new Point(0,0), ancestor);
-				location.translate(containerLocation.x, containerLocation.y);
-				dialog.setLocation(location);
-				signalFFTToolButton.doClick();
-				dialog.showDialog(signalFFTTool);
-			}
-		};
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-
-			if (timer == null) {
-				timer = new Timer(400, timerListener); // popup after 400 ms
-				timer.setRepeats(false);
-			}
-
-			timer.start();
-
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			if (timer != null) {
-				timer.stop();
-			}
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			if (timer != null) {
-				timer.stop();
-			}
-		}
 
 	}
 

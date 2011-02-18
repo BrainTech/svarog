@@ -666,7 +666,6 @@ public class SourceMontage {
 		}
 	}
 
-
         /**
          * Fires an event of removing a {@link SourceChannel channel}.
          * @param source the object on which the Event initially occurred.

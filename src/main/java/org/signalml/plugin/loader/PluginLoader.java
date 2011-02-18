@@ -262,7 +262,8 @@ public class PluginLoader {
 	private URL[] scanPluginDirectories() {
 		ArrayList<URL> urls = new ArrayList<URL>();
 		for (File plDir : pluginDirs) {
-			urls.addAll(scanPluginDirectory(plDir));
+			if (plDir.exists() && plDir.canRead() && plDir.isDirectory())
+				urls.addAll(scanPluginDirectory(plDir));
 		}
 
 		boolean repeat = true;

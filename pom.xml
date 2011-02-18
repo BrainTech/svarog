@@ -34,6 +34,11 @@
 		  <name>ActiveQuant Repository</name>
 		  <url>http://activequant.org/m2/external/</url>
 		</repository>
+		<repository>
+		  <id>apache</id>
+		  <name>Apache Commons</name>
+		  <url>http://mirrors.ibiblio.org/pub/mirrors/maven2/</url>
+		</repository>
 	</repositories>
 
     <pluginRepositories>
@@ -230,6 +235,11 @@
 			<version>1.0.3</version>
 		</dependency>
 		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-math</artifactId>
+			<version>2.1</version>
+		</dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.5</version>
@@ -386,11 +396,6 @@
 			<version>1.0.0</version>
 		</dependency>
 		<dependency>
-			<groupId>flanagan.uk.ac.ucl.ee</groupId>
-			<artifactId>flanagan-math-fft</artifactId>
-			<version>1.0.0</version>
-		</dependency>
-		<dependency>
 			<groupId>org.signalml</groupId>
 			<artifactId>svarog-launcher</artifactId>
 			<version>1.0.0</version>
@@ -434,6 +439,11 @@
 			<groupId>multiplexer</groupId>
 			<artifactId>jmx</artifactId>
 			<version>0.9</version>
+		</dependency>
+		<dependency>
+			<groupId>edu.emory.mathcs</groupId>
+			<artifactId>jtransforms</artifactId>
+			<version>2.3</version>
 		</dependency>
 	</dependencies>
 

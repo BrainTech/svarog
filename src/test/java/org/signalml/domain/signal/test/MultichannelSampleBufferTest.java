@@ -25,7 +25,7 @@ public class MultichannelSampleBufferTest {
 	@Before
 	public void setUp() throws Exception {
 
-		source = new TestMultichannelSampleSource(20,2000000);
+		source = new MultichannelSampleSourceMock(20,2000000);
 		buffer = new MultichannelSampleBuffer(source,32);
 
 	}

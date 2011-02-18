@@ -87,7 +87,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration {
 	private int toolTipDismissDelay;
 
 	private ZoomSignalSettings zoomSignalSettings = new ZoomSignalSettings();
-	private SignalFFTSettings signalFFTSettings = new SignalFFTSettings();
 
 	private ArtifactConfiguration artifactConfig = new ArtifactConfiguration();
 	private StagerConfiguration stagerConfig = new StagerConfiguration();
@@ -430,14 +429,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration {
 
 	public void setZoomSignalSettings(ZoomSignalSettings zoomSignalSettings) {
 		this.zoomSignalSettings = zoomSignalSettings;
-	}
-
-	public SignalFFTSettings getSignalFFTSettings() {
-		return signalFFTSettings;
-	}
-
-	public void setSignalFFTSettings(SignalFFTSettings signalFFTSettings) {
-		this.signalFFTSettings = signalFFTSettings;
 	}
 
 	public String getLastChartSaveAsPngPath() {

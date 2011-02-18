@@ -17,8 +17,15 @@ import javax.swing.border.EmptyBorder;
 
 import org.springframework.context.support.MessageSourceAccessor;
 
-/** ChannelSignalSelectionPanel
- *
+/**
+ * Panel which allows to select the parameters of the channel (custom)
+ * selection:
+ * <ul>
+ * <li>the {@link #getStartTimeSpinner() point in time} (seconds) where the
+ * selection starts,</li>
+ * <li>the {@link #getLengthSpinner() length} in seconds of the selection,</li>
+ * <li>if this panel should allow to select the channel - the {@link
+ * #getChannelComboBox() channel} for the selection.</li></ul>
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -26,16 +33,36 @@ public class ChannelSignalSelectionPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * the source of messages (labels)
+	 */
 	private MessageSourceAccessor messageSource;
 
+	/**
+	 * the spinner with the point in time (seconds) where the selection starts
+	 */
 	private JSpinner startTimeSpinner;
+	/**
+	 * the spinner with the length in seconds of the selection
+	 */
 	private JSpinner lengthSpinner;
+	/**
+	 * the combo-box which allows to select the channel for the selection
+	 * (from the list of names)
+	 */
 	private JComboBox channelComboBox;
 
+	/**
+	 * boolean which tells if {@link #channelComboBox} should be included in
+	 * this panel
+	 */
 	private boolean withChannelSelection;
 
 	/**
-	 * This is the default constructor
+	 * Constructor. Sets the source of messages and initializes this panel.
+	 * @param messageSource the source of messages
+	 * @param withChannelSelection {@code true} if this panel should allow to
+	 * select a channel, {@code false} otherwise
 	 */
 	public ChannelSignalSelectionPanel(MessageSourceAccessor messageSource, boolean withChannelSelection) {
 		super();
@@ -45,9 +72,21 @@ public class ChannelSignalSelectionPanel extends JPanel {
 	}
 
 	/**
-	 * This method initializes this
-	 *
-	 *
+	 * Initializes this panel with GroupLayout and two groups:
+	 * <ul>
+	 * <li>horizontal group which has two sub-groups: one for labels and one
+	 * for spinners. This group positions the elements in two columns.</li>
+	 * <li>vertical group which has 3 sub-groups - one for every row:
+	 * <ul>
+	 * <li>label and {@link #getStartTimeSpinner() spinner} which contains the
+	 * the point in time (seconds) where the selection starts,</li>
+	 * <li>label and {@link #getLengthSpinner() spinner} which contains the
+	 * length in seconds of the selection,
+	 * <li>if {@link #withChannelSelection} is set - label and {@link
+	 * #getChannelComboBox() combo-box} which allows to select the channel
+	 * for the selection (from the list of names)</li></ul>
+	 * This group positions elements in rows.</li>
+	 * </ul>
 	 */
 	private void initialize() {
 
@@ -110,6 +149,14 @@ public class ChannelSignalSelectionPanel extends JPanel {
 
 	}
 
+	/**
+	 * Returns the spinner with the point in time (seconds) where the
+	 * selection starts.
+	 * If the spinner doesn't exist it is created.
+	 * <p>NOTE: the parameters of the spinner must be filled outside this
+	 * panel.
+	 * @return the spinner with the point in time where the selection starts
+	 */
 	public JSpinner getStartTimeSpinner() {
 		if (startTimeSpinner == null) {
 			/* model is set by the dialog */
@@ -120,6 +167,13 @@ public class ChannelSignalSelectionPanel extends JPanel {
 		return startTimeSpinner;
 	}
 
+	/**
+	 * Returns the spinner with the length in seconds of the selection.
+	 * If the spinner doesn't exist it is created.
+	 * <p>NOTE: the parameters of the spinner must be filled outside this
+	 * panel.
+	 * @return the spinner with the length of the selection
+	 */
 	public JSpinner getLengthSpinner() {
 		if (lengthSpinner == null) {
 			/* model is set by the dialog */
@@ -130,6 +184,14 @@ public class ChannelSignalSelectionPanel extends JPanel {
 		return lengthSpinner;
 	}
 
+	/**
+	 * Returns the combo-box which contains the names (labels) of channels and
+	 * allows to select the channel for the selection.
+	 * If the combo-box doesn't exist it is created.
+	 * <p>NOTE: the combo-box must be filled outside this panel.
+	 * @return the combo-box which contains the names (labels) of channels and
+	 * allows to select the channel for the selection
+	 */
 	public JComboBox getChannelComboBox() {
 		if (channelComboBox == null) {
 			/* model is set by the dialog */

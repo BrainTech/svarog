@@ -24,7 +24,6 @@ import org.signalml.app.model.SignalMLCodecListModel;
 import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.element.CodecManagerConfigPanel;
 import org.signalml.app.view.element.MiscellaneousConfigPanel;
-import org.signalml.app.view.element.SignalFFTSettingsPanel;
 import org.signalml.app.view.element.SignalViewingConfigPanel;
 import org.signalml.app.view.element.SignalZoomSettingsPanel;
 import org.signalml.app.view.element.TaggingConfigPanel;
@@ -50,9 +49,7 @@ import org.springframework.validation.Errors;
  * <li>the {@link MiscellaneousConfigPanel panel} with various "other"
  * options,</li>
  * <li>the {@link SignalZoomSettingsPanel panel} which allows to select
- * how the zoomed signal should be displayed,</li>
- * <li>the {@link SignalFFTSettingsPanel panel} which allows to select the
- * default parameters of the FFT tool,</li></ul>
+ * how the zoomed signal should be displayed,</li></ul>
  * and if Svarog is running in {@link SignalMLOperationMode#APPLICATION
  * APPLICATION mode}:<ul>
  * <li>the {@link CodecManagerConfigPanel panel} which allows the management
@@ -109,11 +106,6 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 	 * zoomed signal should be displayed
 	 */
 	private SignalZoomSettingsPanel signalZoomSettingsPanel;
-	/**
-	 * the {@link SignalFFTSettingsPanel panel} which allows to select the
-	 * default parameters of the FFT tool
-	 */
-	private SignalFFTSettingsPanel signalFFTSettingsPanel;
 
 	/**
 	 * the {@link ToolsConfigPanel panel} which allows to configure some
@@ -235,9 +227,7 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 	 * <li>the {@link MiscellaneousConfigPanel panel} with various "other"
 	 * options,</li>
 	 * <li>the {@link SignalZoomSettingsPanel panel} which allows to select
-	 * how the zoomed signal should be displayed,</li>
-	 * <li>the {@link SignalFFTSettingsPanel panel} which allows to select the
-	 * default parameters of the FFT tool,</li></ul>
+	 * how the zoomed signal should be displayed,</li></ul>
 	 * and if Svarog is running in {@link SignalMLOperationMode#APPLICATION
 	 * APPLICATION mode}:<ul>
 	 * <li>the {@link CodecManagerConfigPanel panel} which allows the management
@@ -255,7 +245,6 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 		taggingConfigPanel = new TaggingConfigPanel(messageSource);
 		miscellaneousConfigPanel = new MiscellaneousConfigPanel(messageSource, mode);
 		signalZoomSettingsPanel = new SignalZoomSettingsPanel(messageSource, false);
-		signalFFTSettingsPanel = new SignalFFTSettingsPanel(messageSource, false);
 
 		JPanel signalViewingContainPanel = new JPanel(new BorderLayout());
 		signalViewingContainPanel.add(signalViewingConfigPanel, BorderLayout.NORTH);
@@ -273,13 +262,8 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 		zoomSettingsContainPanel.add(signalZoomSettingsPanel, BorderLayout.NORTH);
 		zoomSettingsContainPanel.add(Box.createVerticalGlue(), BorderLayout.CENTER);
 
-		JPanel signalFFTSettingsContainPanel = new JPanel(new BorderLayout());
-		signalFFTSettingsContainPanel.add(signalFFTSettingsPanel, BorderLayout.NORTH);
-		signalFFTSettingsContainPanel.add(Box.createVerticalGlue(), BorderLayout.CENTER);
-
 		tabbedPane.addTab(messageSource.getMessage("preferences.signalViewing"), signalViewingContainPanel);
 		tabbedPane.addTab(messageSource.getMessage("preferences.zoomSettings"), zoomSettingsContainPanel);
-		tabbedPane.addTab(messageSource.getMessage("preferences.signalFFTSettings"), signalFFTSettingsContainPanel);
 		tabbedPane.addTab(messageSource.getMessage("preferences.tagging"), taggingContainPanel);
 		tabbedPane.addTab(messageSource.getMessage("preferences.miscellaneous"), miscellaneousContainPanel);
 
@@ -320,8 +304,6 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 	 * ApplicationConfiguration) panel} with "other" options,</li>
 	 * <li>the {@link SignalZoomSettingsPanel#fillPanelFromModel(
 	 * org.signalml.app.config.ZoomSignalSettings) signal zooming panel},</li>
-	 * <li>the {@link SignalFFTSettingsPanel#fillPanelFromModel(
-	 * org.signalml.app.config.SignalFFTSettings) FFT settings panel}.</li>
 	 * </ul>
 	 * @param model the configuration of Svarog
 	 */
@@ -342,7 +324,6 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 		taggingConfigPanel.fillPanelFromModel(config);
 		miscellaneousConfigPanel.fillPanelFromModel(config);
 		signalZoomSettingsPanel.fillPanelFromModel(config.getZoomSignalSettings());
-		signalFFTSettingsPanel.fillPanelFromModel(config.getSignalFFTSettings());
 
 	}
 
@@ -358,8 +339,6 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 	 * ApplicationConfiguration) panel} with "other" options,</li>
 	 * <li>the {@link SignalZoomSettingsPanel#fillModelFromPanel(
 	 * org.signalml.app.config.ZoomSignalSettings) signal zooming panel},</li>
-	 * <li>the {@link SignalFFTSettingsPanel#fillModelFromPanel(
-	 * org.signalml.app.config.SignalFFTSettings) FFT settings panel}.</li>
 	 * </ul>
 	 * @param model the configuration of Svarog
 	 */
@@ -372,7 +351,6 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 		taggingConfigPanel.fillModelFromPanel(config);
 		miscellaneousConfigPanel.fillModelFromPanel(config);
 		signalZoomSettingsPanel.fillModelFromPanel(config.getZoomSignalSettings());
-		signalFFTSettingsPanel.fillModelFromPanel(config.getSignalFFTSettings());
 
 		config.applySystemSettings();
 
@@ -427,10 +405,6 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 
 		errors.pushNestedPath("zoomSignalSettings");
 		signalZoomSettingsPanel.validate(errors);
-		errors.popNestedPath();
-
-		errors.pushNestedPath("signalFFTSettings");
-		signalFFTSettingsPanel.validatePanel(errors);
 		errors.popNestedPath();
 
 		if (mode == SignalMLOperationMode.APPLICATION) {

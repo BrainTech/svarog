@@ -10,8 +10,15 @@ import javax.swing.JPanel;
 import org.apache.log4j.Logger;
 import org.springframework.context.support.MessageSourceAccessor;
 
-/** SignalParametersPanel
- *
+/**
+ * Panel which allows to select some parameters of the signal. Contains two
+ * sub-panels:
+ * <ul>
+ * <li>the {@link #getRequiredSignalParamersPanel() panel} with standard
+ * parameters of the signal (sampling frequency, number of channels,
+ * calibration),</li>
+ * <li>the {@link #getPagingSignalParamersPanel() panel} with sizes of
+ * a block and a page of the signal.</li></ul>
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -21,13 +28,25 @@ public class SignalParametersPanel extends JPanel {
 
 	protected static final Logger logger = Logger.getLogger(SignalParametersPanel.class);
 
+	/**
+	 * the source of messages (labels)
+	 */
 	private MessageSourceAccessor messageSource;
 
+	/**
+	 * the {@link RequiredSignalParametersPanel panel} with standard parameters
+	 * of the signal (sampling frequency, number of channels, calibration)
+	 */
 	private RequiredSignalParametersPanel requiredSignalParametersPanel;
+	/**
+	 * the {@link PagingParametersPanel panel} with sizes of a block and a
+	 * page of the signal
+	 */
 	private PagingParametersPanel pagingParametersPanel;
 
 	/**
-	 * This is the default constructor
+	 * Constructor. Sets the source of messages and initializes this panel.
+	 * @param messageSource the source of messages
 	 */
 	public SignalParametersPanel(MessageSourceAccessor messageSource) {
 		super();
@@ -36,9 +55,13 @@ public class SignalParametersPanel extends JPanel {
 	}
 
 	/**
-	 * This method initializes this
-	 *
-	 *
+	 * Initializes this panel with BorderLayout and two sub-panels:
+	 * <ul>
+	 * <li>the {@link #getRequiredSignalParamersPanel() panel} with standard
+	 * parameters of the signal (sampling frequency, number of channels,
+	 * calibration),</li>
+	 * <li>the {@link #getPagingSignalParamersPanel() panel} with sizes of
+	 * a block and a page of the signal.</li></ul>
 	 */
 	private void initialize() {
 
@@ -49,6 +72,12 @@ public class SignalParametersPanel extends JPanel {
 
 	}
 
+	/**
+	 * Returns the {@link RequiredSignalParametersPanel panel} with standard parameters
+	 * of the signal (sampling frequency, number of channels, calibration).
+	 * If the panel doesn't exist it is created.
+	 * @return the panel with standard parameters of the signal
+	 */
 	public RequiredSignalParametersPanel getRequiredSignalParamersPanel() {
 		if (requiredSignalParametersPanel == null) {
 			requiredSignalParametersPanel = new RequiredSignalParametersPanel(messageSource);
@@ -56,6 +85,12 @@ public class SignalParametersPanel extends JPanel {
 		return requiredSignalParametersPanel;
 	}
 
+	/**
+	 * Returns the {@link PagingParametersPanel panel} with sizes of a block and a
+	 * page of the signal
+	 * If the panel doesn't exist it is created.
+	 * @return the panel with sizes of a block and a page of the signal
+	 */
 	public PagingParametersPanel getPagingSignalParamersPanel() {
 		if (pagingParametersPanel == null) {
 			pagingParametersPanel = new PagingParametersPanel(messageSource);

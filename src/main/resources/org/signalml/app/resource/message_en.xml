@@ -72,7 +72,12 @@
 	<entry key="fftFilter.effect">{0}</entry>
 
 	<entry key="timeDomainFilter">Time domain filter</entry>
-	<entry key="timeDomainFilter.effect">{0} {1}</entry>
+	<entry key="timeDomainFilter.effect">{0} ({1}), {2}</entry>
+	<entry key="timeDomainFilter.badFilterParameters">Bad filter parameters, please correct them.</entry>
+	<entry key="timeDomainFilter.highpassFilterNotValidMessage">For high-pass filters the frequencies must fulfill: stopband frequency 1 &lt; passband frequency 1.</entry>
+	<entry key="timeDomainFilter.lowpassFilterNotValidMessage">For low-pass filters the frequencies must fulfill: passband frequency 1 &lt; stopband frequency 1.</entry>
+	<entry key="timeDomainFilter.bandpassFilterNotValidMessage">For band-pass filters the frequencies must fulfill: stopband frequency 1 &lt; passband frequency 1 &lt; passband frequency 2 &lt; stopband frequency 2.</entry>
+	<entry key="timeDomainFilter.bandstopFilterNotValidMessage">For band-stop filters the frequencies must fulfill: passband frequency 1 &lt; stopband frequency 1 &lt; stopband frequency 2 &lt; passband frequency 2.</entry>
 
 	<entry key="signalSelectionType.page">Page</entry>
 	<entry key="signalSelectionType.block">Block</entry>
@@ -841,15 +846,15 @@
 	<entry key="montageFilters.filterChannelExclusionTitle">Filter channel exclusion</entry>
 
 	<entry key="editSampleFilter.descriptionTitle">Filter description</entry>
-	<entry key="editSampleFilter.graphSpinnerLabel">Maximum graph frequency [Hz]</entry>
-	<entry key="editSampleFilter.graphPanelTitle">Filter design graph</entry>
+
+	<entry key="editSampleFilter.graphFrequencySpinnerLabel">Maximum graph frequency [Hz]</entry>
 	<entry key="editSampleFilter.graphFrequencyLabel">Frequency [Hz]</entry>
-	<entry key="editSampleFilter.graphTitle">Filter frequency response [decibels]</entry>
 
 	<entry key="error.editSampleFilter.descriptionEmpty">A filter must have a description</entry>
 	<entry key="error.editSampleFilter.descriptionBadChars">Filter description must not contain control characters</entry>
 
 	<entry key="editFFTSampleFilter.title">Edit FFT sample filter</entry>
+	<entry key="editFFTSampleFilter.graphPanelTitle">Filter design graph</entry>
 	<entry key="editFFTSampleFilter.tableToolTip">Double click a row to copy parameters to new range parameters panel</entry>
 
 	<entry key="editFFTSampleFilter.addNewRangeTitle">New range parameters</entry>
@@ -871,9 +876,16 @@
 	<entry key="editFFTSampleFilter.table.coefficient">Coefficient</entry>
 
 	<entry key="editTimeDomainSampleFilter.title">Edit time domain filter</entry>
+	<entry key="editTimeDomainSampleFilter.graphPanelTitle">Filter design graphs</entry>
 	<entry key="editTimeDomainSampleFilter.filterParametersTitle">Filter parameters</entry>
 
-	<entry key="editTimeDomainSampleFilter.graphSubtitle">filter order = {0}</entry>
+	<entry key="editTimeDomainSampleFilter.frequencyResponseGraphTitle">Filter frequency response [decibels]</entry>
+	<entry key="editTimeDomainSampleFilter.graphTimeSpinnerLabel">Maximum graph time value [s]</entry>
+	<entry key="editTimeDomainSampleFilter.graphTimeLabel">Time [s]</entry>
+	<entry key="editTimeDomainSampleFilter.impulseResponseGrapTitle">Impulse response [amplitude]</entry>
+	<entry key="editTimeDomainSampleFilter.stepResponseGrapTitle">Step response [amplitude]</entry>
+
+	<entry key="editTimeDomainSampleFilter.filterOrderSubtitle">filter order = {0}</entry>
 	<entry key="editTimeDomainSampleFilter.groupDelayGraphTitle">Group delay [samples]</entry>
 
 	<entry key="editTimeDomainSampleFilter.filterType">Filter type</entry>
@@ -884,7 +896,7 @@
 	<entry key="editTimeDomainSampleFilter.stopbandEdgeFrequency2">Stopband edge frequency 2 [Hz]</entry>
 	<entry key="editTimeDomainSampleFilter.passbandRipple">Passband ripple [dB]</entry>
 	<entry key="editTimeDomainSampleFilter.stopbandAttenuation">Stopband attenuation [dB]</entry>
-	<entry key="editTimeDomainSampleFilter.drawFilterFrequencyResponse">Draw filter frequency response</entry>
+	<entry key="editTimeDomainSampleFilter.drawFilterFrequencyResponse">Draw filter responses</entry>
 
 	<entry key="error.editTimeDomainSampleFilter.badFilterParameters">The filter cannot be designed for the given parameters - please correct them.</entry>
 	<entry key="error.editTimeDomainSampleFilter.badFilterParametersFilterOrderTooBig">The order of the filter designed for the given parameters is too big - please correct the parameters.</entry>

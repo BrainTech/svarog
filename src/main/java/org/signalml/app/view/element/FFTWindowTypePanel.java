@@ -22,8 +22,17 @@ import org.signalml.fft.WindowType;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
-/** FFTWindowTypePanel
- *
+/**
+ * Panel to select the {@link WindowType type} of the FFT Window and the
+ * parameter for it.
+ * Contains two types of elements:
+ * <ul>
+ * <li>{@link #windowTypeRadioButtons radio buttons} for every {@link
+ * #windowTypes possible type} of FFT window,</li>
+ * <li>the text field in which the parameters for the selected type of the
+ * window can be entered.</li></ul>
+ * This panel can be either wide (3 columns, 3 rows) or high (2 columns,
+ * 5 rows).
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -31,19 +40,58 @@ public class FFTWindowTypePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * the array with possible {@link WindowType types} of FFT window
+	 */
 	private WindowType[] windowTypes = WindowType.values();
+	/**
+	 * the array with radio buttons for {@link #windowTypes possible types}
+	 * of a FFT window
+	 */
 	private JRadioButton[] windowTypeRadioButtons;
+	/**
+	 * the text field in which the parameters for the selected type of the
+	 * window can be entered
+	 */
 	private JTextField windowParameterTextField;
+	
+	/**
+	 * the group containing the buttons for different {@link WindowType types}
+	 * of windows
+	 */
 	private ButtonGroup windowTypeButtonGroup;
 
+	/**
+	 * the {@link MessageSourceAccessor source} of messages (labels)
+	 */
 	private MessageSourceAccessor messageSource;
 
+	/**
+	 * Constructor. Sets the {@link MessageSourceAccessor message source} and
+	 * initializes this panel.
+	 * @param messageSource the source of messages (labels)
+	 * @param wide {@code true} if this panel should be wide (have 3 columns)
+	 * or {@code false} if high (2 columns, 5 rows)
+	 */
 	public FFTWindowTypePanel(MessageSourceAccessor messageSource, boolean wide) {
 		super();
 		this.messageSource = messageSource;
 		initialize(wide);
 	}
 
+	/**
+	 * Initializes this panel with GridLayout (with two or three columns
+	 * depending on {@code wide}) and two types of elements:
+	 * <ul>
+	 * <li>{@link #windowTypeRadioButtons radio buttons} for every {@link
+	 * #windowTypes possible type} of FFT window,</li>
+	 * <li>the text field in which the parameters for the selected type of the
+	 * window can be entered.</li></ul>
+	 * Adds listeners to the all buttons, which activate (or deactivate)
+	 * the text field and set the default value for selected window type.
+	 * @param wide  {@code true} if this panel should be wide (have 3 columns)
+	 * or {@code false} if high (2 columns, 5 rows)
+	 */
 	private void initialize(boolean wide) {
 
 		windowTypeButtonGroup = new ButtonGroup();
@@ -114,6 +162,11 @@ public class FFTWindowTypePanel extends JPanel {
 
 	}
 
+	/**
+	 * Returns the {@link WindowType window type} for the given radio button.
+	 * @param source the button
+	 * @return the type which is represented by this radio button
+	 */
 	private WindowType getWindowTypeForRadio(JRadioButton source) {
 		for (int i=0; i<windowTypes.length; i++) {
 			if (windowTypeRadioButtons[i] == source) {
@@ -123,6 +176,15 @@ public class FFTWindowTypePanel extends JPanel {
 		return null;
 	}
 
+	/**
+	 * Sets as selected the radio button for the
+	 * {@link FFTWindowTypeSettings#getWindowType() type} of the
+	 * FFT window and if this {@link WindowType type}
+	 * {@link WindowType#isParametrized() is parameterized}
+	 * the {@link FFTWindowTypeSettings#getWindowParameter() parameter}.
+	 * @param settings the FFT window type {@link FFTWindowTypeSettings
+	 * settings}
+	 */
 	public void fillPanelFromModel(FFTWindowTypeSettings settings) {
 
 		WindowType windowType = settings.getWindowType();
@@ -140,6 +202,14 @@ public class FFTWindowTypePanel extends JPanel {
 
 	}
 
+	/**
+	 * Stores in the setting the selected {@link WindowType type} of FFT
+	 * window and if this type {@link WindowType#isParametrized() is
+	 * parameterized} the {@link FFTWindowTypeSettings#setWindowParameter(double)
+	 * parameter}.
+	 * @param settings the FFT window type {@link FFTWindowTypeSettings
+	 * settings}
+	 */
 	public void fillModelFromPanel(FFTWindowTypeSettings settings) {
 
 		for (int i=0; i<windowTypes.length; i++) {
@@ -153,6 +223,13 @@ public class FFTWindowTypePanel extends JPanel {
 
 	}
 
+	/**
+	 * Validates this panel.
+	 * This panel is valid if the parameter for the selected {@link WindowType
+	 * type} of the FFT window is a valid double and within the range
+	 * {@code [WindowType#getParameterMin(), WindowType#getParameterMax()]}.
+	 * @param errors the object in which the errors are stored
+	 */
 	public void validatePanel(Errors errors) {
 
 		for (int i=0; i<windowTypes.length; i++) {

@@ -9,9 +9,9 @@ import java.util.Iterator;
 
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
+import org.signalml.fft.FourierTransform;
 
 import flanagan.complex.Complex;
-import flanagan.math.FourierTransform;
 
 /**
  * This class represents a FFT filter of samples.
@@ -66,7 +66,7 @@ public class FFTSampleFilterEngine extends SampleFilterEngine {
 		this.definition = new FFTSampleFilter(definition);
 		fourierTransform = new FourierTransform();
 		
-		definition.getWindowType().apply(fourierTransform, definition.getWindowParameter());		
+		fourierTransform.setWindowType(definition.getWindowType(), definition.getWindowParameter());	
 	}
 
 	@Override
@@ -112,7 +112,7 @@ public class FFTSampleFilterEngine extends SampleFilterEngine {
 								
 			} else {
 
-				fourierTransform.setDeltaT(1.0 / samplingFrequency);
+			//	fourierTransform.setDeltaT(1.0 / samplingFrequency);
 				
 				// normalize count to power of 2 with offset
 				int minCount = Math.max(6 * intSamplingFrequency, count + 2 * intSamplingFrequency);
@@ -146,15 +146,19 @@ public class FFTSampleFilterEngine extends SampleFilterEngine {
 				}
 				
 				// transform			
-				fourierTransform.setData(cache);
-				fourierTransform.transform();
+		//		fourierTransform.setData(cache);
+		//		fourierTransform.transform();
+				
+				double[] transformed2 = fourierTransform.forwardFFTReal(cache);
 				
 				// apply range coefficients
-				Complex[] transformed = fourierTransform.getTransformedDataAsComplex();
+				//Complex[] transformed = fourierTransform.getTransformedDataAsComplex();
 				
 				// we know an even number of points was used
-				int segCount = (transformed.length/2) + 1;
-				double hzPerSegment = samplingFrequency / transformed.length;
+				//int segCount = (transformed.length/2) + 1;
+				int segCount = (transformed2.length/4) + 1;
+			//	double hzPerSegment = samplingFrequency / transformed.length;
+				double hzPerSegment = samplingFrequency / (transformed2.length/2);
 				
 				Iterator<Range> it = ((FFTSampleFilter)definition).getRangeIterator();
 				int lowSeg;
@@ -193,28 +197,37 @@ public class FFTSampleFilterEngine extends SampleFilterEngine {
 					}
 					
 					if(lowSeg == 0) {
-						transformed[0].timesEquals(coefficient);
+						//transformed[0].timesEquals(coefficient);
+						transformed2[0] *= coefficient;
+						transformed2[1] *= coefficient;
 						lowSeg++;
 					}
 					
 					if(highSeg == segCount) {
-						transformed[segCount - 1].timesEquals(coefficient);
+						//transformed[segCount - 1].timesEquals(coefficient);
+						transformed2[2*(segCount - 1)] *= coefficient;
+						transformed2[2*(segCount - 1) + 1] *= coefficient;
 						highSeg--;
 					}
 					
 					// max extent of i is from 1 to N/2-1
 					for(i = lowSeg; i < highSeg; i++) {
-						transformed[i].timesEquals(coefficient);
-						transformed[transformed.length - i].timesEquals(coefficient);
+						transformed2[2*i] *= coefficient;
+						transformed2[2*i+1] *= coefficient;
+						transformed2[transformed2.length - 2*i] *= coefficient;
+						transformed2[transformed2.length - 2*i +1] *= coefficient;
+					//	transformed[i].timesEquals(coefficient);
+					//	transformed[transformed.length - i].timesEquals(coefficient);
 					}
 									
 				}
 				
 				// inverse
-				fourierTransform.setData(transformed);
-				fourierTransform.inverse();
+				//fourierTransform.setData(transformed);
+				//fourierTransform.inverse();
 				
-				filtered = fourierTransform.getTransformedDataAsAlternate();
+				//filtered = fourierTransform.getTransformedDataAsAlternate();
+				filtered = fourierTransform.inverseFFTComplex(transformed2);
 
 				minFilteredSample = signalOffset - leftPadding;
 				minFilteredSampleAt = leftOffsetToCopy - leftPadding;

@@ -67,7 +67,6 @@ public class WorkspaceSignal extends WorkspaceDocument {
 	private boolean snapToPageMode;
 
 	private ZoomSignalSettings zoomSignalSettings = new ZoomSignalSettings();
-	private SignalFFTSettings signalFFTSettings = new SignalFFTSettings();
 
 	protected WorkspaceSignal() {
 		super();
@@ -111,7 +110,6 @@ public class WorkspaceSignal extends WorkspaceDocument {
 		SignalPlot masterSignalPlot = view.getMasterPlot();
 
 		zoomSignalSettings = view.getZoomSignalTool().getSettings();
-		signalFFTSettings = view.getSignalFFTTool().getSettings();
 
 		montage = document.getMontage();
 
@@ -188,9 +186,6 @@ public class WorkspaceSignal extends WorkspaceDocument {
 
 		if (zoomSignalSettings != null) {
 			view.getZoomSignalTool().setSettings(zoomSignalSettings);
-		}
-		if (signalFFTSettings != null) {
-			view.getSignalFFTTool().setSettings(signalFFTSettings);
 		}
 
 		if (montage != null) {
