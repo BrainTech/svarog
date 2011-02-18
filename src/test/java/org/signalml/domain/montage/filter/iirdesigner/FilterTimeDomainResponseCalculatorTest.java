@@ -9,6 +9,8 @@ import static org.signalml.domain.montage.filter.iirdesigner.IIRDesignerAssert.*
 
 /**
  * This class performs unit tests on {@link FilterTimeDomainResponseCalculator} class.
+ * The results obtained from the FilterTimeDomainResponseCalculator are compared
+ * with MATLAB results given by the stepz(b,a,n) and impz(b,a,n) function.
  *
  * @author Piotr Szachewicz
  */
@@ -87,7 +89,7 @@ public class FilterTimeDomainResponseCalculatorTest {
 
 	/**
 	 * Test method for {@link FilterTimeDomainResponseCalculator#getStepResponse(int)}.
-	 * Comparing with MATLAB results given by the stepz(b,a) function.
+	 * 
 	 */
 	@Test
 	public void testGetStepResponse2() {
@@ -121,7 +123,6 @@ public class FilterTimeDomainResponseCalculatorTest {
 
 	/**
 	 * Test method for {@link FilterTimeDomainResponseCalculator#getImpulseResponse(int)}.
-	 * Comparing with MATLAB's impz function results.
 	 */
 	@Test
 	public void testGetImpulseResponse2() {
@@ -139,7 +140,6 @@ public class FilterTimeDomainResponseCalculatorTest {
 
 	/**
 	 * Test method for {@link FilterTimeDomainResponseCalculator#getImpulseResponse(int)}.
-	 * Comparing with MATLAB's impz function results.
 	 */
 	@Test
 	public void testGetImpulseResponse3() {
@@ -158,7 +158,6 @@ public class FilterTimeDomainResponseCalculatorTest {
 
 	/**
 	 * Test method for {@link FilterTimeDomainResponseCalculator#getImpulseResponse(int)}.
-	 * Comparing with MATLAB's impz function results.
 	 */
 	@Test
 	public void testGetStepResponse3() {
@@ -177,7 +176,6 @@ public class FilterTimeDomainResponseCalculatorTest {
 
 	/**
 	 * Test method for {@link FilterTimeDomainResponseCalculator#getImpulseResponse(int)}.
-	 * Comparing with MATLAB's impz function results.
 	 */
 	@Test
 	public void testGetImpulseResponse4() {
@@ -196,7 +194,6 @@ public class FilterTimeDomainResponseCalculatorTest {
 
 	/**
 	 * Test method for {@link FilterTimeDomainResponseCalculator#getImpulseResponse(int)}.
-	 * Comparing with MATLAB's impz function results.
 	 */
 	@Test
 	public void testGetStepResponse4() {
