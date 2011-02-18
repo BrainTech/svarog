@@ -13,12 +13,12 @@ import org.signalml.domain.signal.MultichannelSampleSource;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class TestMultichannelSampleSource implements MultichannelSampleSource {
+public class MultichannelSampleSourceMock implements MultichannelSampleSource {
 
 	private int channelCount;
 	private int sampleCount;
 
-	public TestMultichannelSampleSource(int channelCount, int sampleCount) {
+	public MultichannelSampleSourceMock(int channelCount, int sampleCount) {
 		super();
 		this.channelCount = channelCount;
 		this.sampleCount = sampleCount;
