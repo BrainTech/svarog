@@ -1,0 +1,16 @@
+<plugin>
+	<name>FFT Signal Tool</name>
+	<version> 0.1 </version>
+	<jar-file>FFTSignalTool.jar</jar-file>
+	<starting-class>
+    org.signalml.plugin.fftsignaltool.FFTSignalTool    </starting-class>
+	<dependencies>
+		<dependency>
+			<name>Svarog</name>
+			<version>0.5</version>
+		</dependency>
+		<dependency>
+			<name>FFT</name>
+			<version>0.1</version></dependency>
+	</dependencies>
+</plugin>
