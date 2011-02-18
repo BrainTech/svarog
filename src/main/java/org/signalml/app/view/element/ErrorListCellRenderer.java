@@ -23,8 +23,8 @@ import org.signalml.app.util.IconUtils;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.support.MessageSourceAccessor;
 
-/** ErrorListCellRenderer
- *
+/**
+ * TODO not used; should it be commented?
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

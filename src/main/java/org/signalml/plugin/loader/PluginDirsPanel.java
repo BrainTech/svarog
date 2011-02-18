@@ -81,7 +81,7 @@ public class PluginDirsPanel extends JPanel {
 		for (String path : paths){
 			File dir;
 			if (path!=null) {
-				dir = new File(path);
+				dir = new File(path.trim());
 				pluginDirs.add(dir);
 			}
 				

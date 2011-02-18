@@ -5,8 +5,12 @@ package org.signalml.plugin.export.view;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 import java.io.InvalidClassException;
+
+import javax.swing.JRootPane;
+import javax.swing.JViewport;
 
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
@@ -323,14 +327,14 @@ public interface ExportedSignalPlot {
 	double getPixelPerPage();
 
 	/**
-	 * Returns the height (in pixels) of one 
-	 * @return
+	 * Returns the height (in pixels) of one point of value.
+	 * @return the height (in pixels) of one point of value
 	 */
 	double getPixelPerValue();
 
 	/**
-	 * 
-	 * @return
+	 * Returns the maximal value of the signal.
+	 * @return the maximal value of the signal.
 	 */
 	double getDetectedMaxValue();
 
@@ -407,5 +411,35 @@ public interface ExportedSignalPlot {
 	 * @return the width and height of this component
 	 */
 	Dimension getSize();
+	
+	/**
+	 * Returns the number of pixels per sample.
+	 * @return the number of pixels per sample
+	 */
+	double getTimeZoomFactor();
+	
+	/**
+     * Forwards the <code>scrollRectToVisible()</code> message to the
+     * parent. Components that can service
+     * the request, such as <code>JViewport</code>,
+     * override this method and perform the scrolling.
+     *
+     * @param aRect the visible <code>Rectangle</code>
+     * @see JViewport
+     */
+	public void scrollRectToVisible(Rectangle aRect);
 
+	/**
+     * Returns the <code>JRootPane</code> ancestor for this component.
+     *
+     * @return the <code>JRootPane</code> that contains this component,
+     *		or <code>null</code> if no <code>JRootPane</code> is found
+     */
+    public JRootPane getRootPane();
+    
+    /**
+     * Returns the number of samples per second.
+     * @return the number of samples per second
+     */
+    public float getSamplingFrequency();
 }

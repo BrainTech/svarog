@@ -13,10 +13,16 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import org.signalml.app.util.IconUtils;
+import org.signalml.app.view.dialog.RegisterCodecDialog;
+import org.signalml.codec.SignalMLCodec;
 import org.springframework.context.support.MessageSourceAccessor;
 
-/** RegisterCodecStepTwoPanel
- *
+
+/**
+ * Panel for the second step of {@link RegisterCodecDialog}.
+ * Allows to {@link #getFormatNamePanel() select} the format name for the
+ * opened {@link SignalMLCodec codec} and {@link #getWarningLabel() informs}
+ * user if such name already exists. 
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -24,14 +30,31 @@ public class RegisterCodecStepTwoPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * the source of messages (labels)
+	 */
 	private MessageSourceAccessor messageSource;
 
+	/**
+	 * the panel with the desired {@link #getNameField() format name} of the
+	 * {@link SignalMLCodec codec} and the {@link #getWarningLabel() warning
+	 * label}
+	 */
 	private JPanel formatNamePanel = null;
+	/**
+	 * the text field with the desired format name
+	 */
 	private JTextField nameField = null;
+	/**
+	 * the label which warns that the {@link SignalMLCodec codec} of this name
+	 * already exists
+	 */
 	private JLabel warningLabel = null;
 
 	/**
-	 * This is the default constructor
+	 * Constructor. Sets the {@link MessageSourceAccessor message source} and
+	 * initializes this panel.
+	 * @param messageSource the source of messages (labels)
 	 */
 	public RegisterCodecStepTwoPanel(MessageSourceAccessor messageSource) {
 		super();
@@ -40,9 +63,10 @@ public class RegisterCodecStepTwoPanel extends JPanel {
 	}
 
 	/**
-	 * This method initializes this
-	 *
-	 *
+	 * Initializes this panel with the {@link BorderLayout} and
+	 * adds to it the {@link #getFormatNamePanel() panel} with the
+	 * desired {@link #getNameField() format name} of the {@link SignalMLCodec
+	 * codec} and the {@link #getWarningLabel() warning label}.
 	 */
 	private void initialize() {
 
@@ -52,6 +76,18 @@ public class RegisterCodecStepTwoPanel extends JPanel {
 
 	}
 
+	/**
+	 * Returns the panel with the desired {@link #getNameField() format name}
+	 * of the {@link SignalMLCodec codec} and the {@link #getWarningLabel()
+	 * warning label}.
+	 * If the panel doesn't exist, it is created.
+	 * The panel contains two elements (from top to bottom):
+	 * <ul><li>the panel with the {@link #getNameField() field} with the
+	 * desired format name,</li>
+	 * <li>the {@link #getWarningLabel() warning label}.</li>
+	 * </ul>
+	 * @return the panel with the desired format name and the warning label
+	 */
 	private JPanel getFormatNamePanel() {
 		if (formatNamePanel == null) {
 			formatNamePanel = new JPanel();
@@ -66,6 +102,12 @@ public class RegisterCodecStepTwoPanel extends JPanel {
 		return formatNamePanel;
 	}
 
+	/**
+	 * Returns the text field with the desired format name of the
+	 * {@link SignalMLCodec codec}.
+	 * If the field doens't exist it is created.
+	 * @return the text field with the desired format name of the codec
+	 */
 	public JTextField getNameField() {
 		if (nameField == null) {
 			nameField = new JTextField();
@@ -74,6 +116,15 @@ public class RegisterCodecStepTwoPanel extends JPanel {
 		return nameField;
 	}
 
+	/**
+	 * Returns the label which warns that the {@link SignalMLCodec codec} of
+	 * the name selected in the {@link #getNameField() name field} already
+	 * exists.
+	 * If the label doesn't exist it is created and the icon and tex for it
+	 * is set.
+	 * @return the label which warns that the codec of the name selected in the
+	 * name field already exists
+	 */
 	public JLabel getWarningLabel() {
 		if (warningLabel == null) {
 			warningLabel = new JLabel(messageSource.getMessage("registerCodec.nameExistsWarning"));

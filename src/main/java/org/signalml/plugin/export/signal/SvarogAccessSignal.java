@@ -10,11 +10,13 @@ import java.nio.ByteOrder;
 import java.util.List;
 import java.util.Set;
 
+import org.signalml.app.document.TagDocument;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.domain.signal.space.SignalSourceLevel;
 import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.ExportedSignalPlot;
+import org.signalml.plugin.impl.ChannelSamplesImpl;
 
 /**
  * This interface allows to access a part of Svarog logic, namely:
@@ -52,7 +54,7 @@ public interface SvarogAccessSignal {
 	
 	/**
 	 * Returns the processed signal samples (output of the SignalProcessingChain)
-	 * for the active signal and the selected channel.
+	 * for the active signal and the given channel.
 	 * @param channel the index of the channel
 	 * (range from 0 to {@code getActiveSignalDocument().getChannelCount()-1})
 	 * @return the signal samples
@@ -78,7 +80,7 @@ public interface SvarogAccessSignal {
 	
 	/**
 	 * Returns the unprocessed signal samples (raw from the source)
-	 * for the active signal and the selected channel.
+	 * for the active signal and the given channel.
 	 * @param channel the index of the channel
 	 * (range from 0 to {@code getActiveSignalDocument().getChannelCount()-1})
 	 * @return the signal samples
@@ -89,10 +91,10 @@ public interface SvarogAccessSignal {
 
     /**
      * Returns the unprocessed signal samples (raw from the source)
-     * for the active signal and the selected channel.
+     * for the active signal and the given channel.
      * @param channel the index of the channel
      * (range from 0 to {@code getActiveSignalDocument().getChannelCount()-1})
-     * @param signalOffset the position (in time) in the signal starting
+     * @param signalOffset the number of the sample in the signal starting
      * from which samples will be returned
      * @param count the number of samples to be returned
      * @return the signal samples
@@ -119,7 +121,7 @@ public interface SvarogAccessSignal {
 	
 	/**
 	 * Returns the unprocessed signal samples (raw from the source)
-	 * for the signal from the given document and the selected channel.
+	 * for the signal from the given document and the given channel.
 	 * @param document the document with the signal. Must be returned from this
 	 * SvarogAcces (actually be of type SignalDocument - internal to Svarog).
 	 * @param channel the index of the channel
@@ -143,8 +145,8 @@ public interface SvarogAccessSignal {
 	SignalSamples getRawSignalSamplesFromDocument(ExportedSignalDocument document) throws InvalidClassException;
 	
 	/**
-	 * Returns the processed signal samples (raw from the source)
-	 * for the signal from the given document and the selected channel.
+	 * Returns the processed signal samples
+	 * for the signal from the given document and the given channel.
 	 * @param document the document with the signal. Must be returned from this
 	 * SvarogAcces (actually be of type SignalDocument - internal to Svarog).
 	 * @param channel the index of the channel
@@ -157,7 +159,7 @@ public interface SvarogAccessSignal {
 	ChannelSamples getProcessedSignalSamplesFromDocument(ExportedSignalDocument document, int channel) throws InvalidClassException, IndexOutOfBoundsException;
 	
 	/**
-	 * Returns the processed signal samples (raw from the source)
+	 * Returns the processed signal samples
 	 * for all channels of the signal from the given document.
 	 * @param document the document with the signal. Must be returned from this
 	 * SvarogAcces (actually be of type SignalDocument - internal to Svarog).
@@ -166,6 +168,106 @@ public interface SvarogAccessSignal {
 	 * this SvarogAccess (not of type SignalDocument - internal to Svarog)
 	 */
 	SignalSamples getProcessedSignalSamplesFromDocument(ExportedSignalDocument document) throws InvalidClassException;
+	
+	 /**
+     * Returns the processed signal samples
+     * for the active signal and the given channel.
+     * @param channel the index of the channel
+     * (range from 0 to {@code getActiveSignalDocument().getChannelCount()-1})
+     * @param signalOffset the number of the sample in the signal starting
+     * from which samples will be returned
+     * @param count the number of samples to be returned
+     * @return the signal samples
+     * @throws NoActiveObjectException if there is no active signal
+     * @throws IndexOutOfBoundsException if the index of a channel is out of range
+     */
+	ChannelSamplesImpl getActiveProcessedSignalSamples(int channel, int signalOffset, int count) throws NoActiveObjectException, IndexOutOfBoundsException;
+	
+	 /**
+     * Returns the unprocessed signal samples (raw from the source)
+     * for the signal from the given document and the given channel.
+     * @param channel the index of the channel
+     * (range from 0 to {@code getActiveSignalDocument().getChannelCount()-1})
+     * @param signalOffset the number of the sample in the signal starting
+     * from which samples will be returned
+     * @param count the number of samples to be returned
+     * @return the signal samples
+     * @throws NoActiveObjectException if there is no active signal
+     * @throws IndexOutOfBoundsException if the index of a channel is out of range
+     */
+	ChannelSamplesImpl getRawSignalSamplesFromDocument(ExportedSignalDocument document, int channel, int signalOffset, int count) throws InvalidClassException, IndexOutOfBoundsException;
+	
+	 /**
+     * Returns the processed signal samples
+     * for the signal from the given document and the given channel.
+     * @param channel the index of the channel
+     * (range from 0 to {@code getActiveSignalDocument().getChannelCount()-1})
+     * @param signalOffset the number of the sample in the signal starting
+     * from which samples will be returned
+     * @param count the number of samples to be returned
+     * @return the signal samples
+     * @throws NoActiveObjectException if there is no active signal
+     * @throws IndexOutOfBoundsException if the index of a channel is out of range
+     */
+	ChannelSamplesImpl getProcessedSignalSamplesFromDocument(ExportedSignalDocument document, int channel, int signalOffset, int count) throws InvalidClassException, IndexOutOfBoundsException;
+	
+	/**
+     * Returns the processed signal samples
+     * for the active signal and the given channel.
+     * @param channel the index of the channel
+     * (range from 0 to {@code getActiveSignalDocument().getChannelCount()-1})
+     * @param signalOffsetTime the position in the signal (in time domain) starting
+     * from which samples will be returned
+     * @param length the length of the part of the signal which should be returned
+     * @return the signal samples
+     * @throws NoActiveObjectException if there is no active signal
+     * @throws IndexOutOfBoundsException if the index of a channel is out of range
+     */
+	ChannelSamplesImpl getActiveProcessedSignalSamples(int channel, float signalOffsetTime, float length) throws NoActiveObjectException, IndexOutOfBoundsException;
+	
+	/**
+     * Returns the unprocessed signal samples (raw from the source)
+     * for the active signal and the given channel.
+     * @param channel the index of the channel
+     * (range from 0 to {@code getActiveSignalDocument().getChannelCount()-1})
+     * @param signalOffsetTime the position in the signal (in time domain) starting
+     * from which samples will be returned
+     * @param length the length of the part of the signal which should be returned
+     * @return the signal samples
+     * @throws NoActiveObjectException if there is no active signal
+     * @throws IndexOutOfBoundsException if the index of a channel is out of range
+     */
+	ChannelSamplesImpl getActiveRawSignalSamples(int channel, float signalOffsetTime, float length) throws NoActiveObjectException, IndexOutOfBoundsException;
+	
+	/**
+     * Returns the unprocessed signal samples (raw from the source)
+     * for the signal from the given document and the given channel.
+     * @param channel the index of the channel
+     * (range from 0 to {@code getActiveSignalDocument().getChannelCount()-1})
+     * @param signalOffsetTime the position in the signal (in time domain) starting
+     * from which samples will be returned
+     * @param length the length of the part of the signal which should be returned
+     * @return the signal samples
+     * @throws NoActiveObjectException if there is no active signal
+     * @throws IndexOutOfBoundsException if the index of a channel is out of range
+     */
+	ChannelSamplesImpl getRawSignalSamplesFromDocument(ExportedSignalDocument document, int channel, float signalOffsetTime, float length) throws InvalidClassException, IndexOutOfBoundsException;
+	
+	/**
+     * Returns the processed signal samples
+     * for the signal from the given document and the given channel.
+     * @param channel the index of the channel
+     * (range from 0 to {@code getActiveSignalDocument().getChannelCount()-1})
+     * @param signalOffsetTime the position in the signal (in time domain) starting
+     * from which samples will be returned
+     * @param length the length of the part of the signal which should be returned
+     * @return the signal samples
+     * @throws NoActiveObjectException if there is no active signal
+     * @throws IndexOutOfBoundsException if the index of a channel is out of range
+     */
+	ChannelSamplesImpl getProcessedSignalSamplesFromDocument(ExportedSignalDocument document, int channel, float signalOffsetTime, float length) throws InvalidClassException, IndexOutOfBoundsException;
+	
+	
 	
 	/**
 	 * Returns all {@link Tag tags} associated with the active tag
@@ -376,11 +478,11 @@ public interface SvarogAccessSignal {
 	 * NOTE: it would be a good practice if you removed your temporary files
 	 * when you finish using them. Especially if you use a lot of them or
 	 * big ones.
-	 * @param extension the extension to the file (for example {@code "bin",
-	 * "xml"})
+	 * @param extension the suffix to the file name (for example {@code ".bin",
+	 * ".xml"})
 	 * @return the created temporary file
 	 * @throws IOException if the file couldn't be created
 	 */
-	public File getTemporaryFile(String extension) throws IOException;
+	File getTemporaryFile(String extension) throws IOException;
 	
 }

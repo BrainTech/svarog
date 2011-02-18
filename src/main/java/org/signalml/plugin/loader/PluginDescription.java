@@ -78,21 +78,20 @@ public class PluginDescription extends PluginState{
 		Document document = documentBuilder.parse(new File(fileName));
 		Element element = document.getDocumentElement();
 		element.normalize();
-		System.out.println(element.getNodeName());
 	//	if (!element.hasChildNodes()) throw
 		NodeList nodeList = element.getChildNodes();
 		for (int i = 0; i < nodeList.getLength(); ++i){
 			Node node = nodeList.item(i);
 			if (node.getNodeName().equals("name"))
-				name = node.getFirstChild().getNodeValue();
+				name = node.getFirstChild().getNodeValue().trim();
 			else if (node.getNodeName().equals("jar-file"))
-				jarFile = node.getFirstChild().getNodeValue();
+				jarFile = node.getFirstChild().getNodeValue().trim();
 			else if (node.getNodeName().equals("version"))
-				setVersion(node.getFirstChild().getNodeValue());
+				setVersion(node.getFirstChild().getNodeValue().trim());
 			else if (node.getNodeName().equals("starting-class"))
-				startingClass = node.getFirstChild().getNodeValue();
+				startingClass = node.getFirstChild().getNodeValue().trim();
 			else if (node.getNodeName().equals("export-package"))
-				exportPackage =node.getFirstChild().getNodeValue();
+				exportPackage =node.getFirstChild().getNodeValue().trim();
 			else if (node.getNodeName().equals("dependencies"))
 				parseDependencies(node);
 		}
@@ -113,9 +112,9 @@ public class PluginDescription extends PluginState{
 				for (int j = 0; j < dependencyNodeList.getLength(); ++j){
 					Node nodeTmp = dependencyNodeList.item(j);
 					if (nodeTmp.getNodeName().equals("name"))
-						name = nodeTmp.getFirstChild().getNodeValue();
+						name = nodeTmp.getFirstChild().getNodeValue().trim();
 					else if (nodeTmp.getNodeName().equals("version"))
-						minimumVersion = nodeTmp.getFirstChild().getNodeValue();
+						minimumVersion = nodeTmp.getFirstChild().getNodeValue().trim();
 				}
 				if (name != null && minimumVersion != null){
 					PluginDependency dependency = new PluginDependency(name, minimumVersion);

@@ -5,7 +5,6 @@ package org.signalml.plugin.impl;
 
 import java.awt.Component;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +28,7 @@ import org.signalml.app.view.ViewerTabbedPane;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.signal.SignalTool;
+import org.signalml.plugin.export.signal.SignalToolButtonListener;
 import org.signalml.plugin.export.view.DocumentView;
 import org.signalml.plugin.export.view.ExportedSignalPlot;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
@@ -543,7 +543,7 @@ public class GUIAccessImpl implements SvarogAccessGUI {
 	 * @see org.signalml.plugin.export.PluginAccessGUI#addSignalTool(javax.swing.JToggleButton, org.signalml.plugin.export.SignalTool)
 	 */
 	@Override
-	public void addSignalTool(SignalTool tool, Icon icon, String toolTipText, MouseListener buttonListener) throws UnsupportedOperationException {
+	public void addSignalTool(SignalTool tool, Icon icon, String toolTipText, SignalToolButtonListener buttonListener) throws UnsupportedOperationException {
 		if (!initializationPhase) throw new UnsupportedOperationException("operation can be performed only during initialization phase");
 		signalTools.add(tool);
 		ToolButtonParameters parameters = new ToolButtonParameters(toolTipText, icon, buttonListener);
@@ -551,6 +551,33 @@ public class GUIAccessImpl implements SvarogAccessGUI {
 		buttonsForTools.put(tool, new HashMap<SignalView, JToggleButton>());
 	}
 
+	/**
+	 * Returns the button for a given {@link SignalTool tool} and a given
+	 * {@link SignalView view}.
+	 * <p>
+	 * If the button doesn't exist it is created with {@link
+	 * ToolButtonParameters#getIcon() icon} and {@link ToolButtonParameters#
+	 * getToolTipText() tool-tip} obtained from the {@link ToolButtonParameters
+	 * parameters} for this tool.
+	 * The created button is added to the {@link #buttonsForTools appropriate
+	 * collection}.
+	 * @param tool the signal tool
+	 * @param view the signal view
+	 * @return the button
+	 */
+	private JToggleButton getButtonForView(SignalTool tool, SignalView view){
+		HashMap<SignalView, JToggleButton> buttonsForViews = buttonsForTools.get(tool);
+		JToggleButton button = buttonsForViews.get(view);
+		if (null == button){
+			ToolButtonParameters parameters = parametersForToolButtons.get(tool);
+			button = new JToggleButton(parameters.getIcon());
+			if (parameters.getToolTipText() != null)
+				button.setToolTipText(parameters.getToolTipText());
+			buttonsForViews.put(view, button);
+		}
+		return button;
+	}
+	
 	/**
 	 * Performs all operations necessary to register signal tools for a signal view:
 	 * <ul>
@@ -570,14 +597,11 @@ public class GUIAccessImpl implements SvarogAccessGUI {
 				try{
 					SignalTool signalTool = tool.createCopy();
 					signalTool.setSignalView(view);
+					JToggleButton button = getButtonForView(tool, view);
 					ToolButtonParameters parameters = parametersForToolButtons.get(tool);
-					JToggleButton button = new JToggleButton(parameters.getIcon());
-					if (parameters.getToolTipText() != null)
-						button.setToolTipText(parameters.getToolTipText());
-					if (parameters.getListener() != null)
-						button.addMouseListener(parameters.getListener());
-					HashMap<SignalView, JToggleButton> buttonsForViews = buttonsForTools.get(tool);
-					buttonsForViews.put(view, button);
+					if (parameters.getListener() != null){
+						button.addMouseListener(parameters.getListener().createCopy(signalTool, button));
+					}
 					toolMap.put(button.getModel(), signalTool);
 					toolButtonGroup.add(button);
 					button.addActionListener(toolSelectionListener);
@@ -598,8 +622,8 @@ public class GUIAccessImpl implements SvarogAccessGUI {
 	 */
 	public void toolsToMainMenu(JToolBar mainToolBar, SignalView view){
 		try{
-			for (HashMap<SignalView, JToggleButton> buttonsForViews : buttonsForTools.values()){
-				JToggleButton button = buttonsForViews.get(view);
+			for (SignalTool tool: signalTools){
+				JToggleButton button = getButtonForView(tool, view);
 				mainToolBar.add(button);
 			}
 		} catch (Exception e) {

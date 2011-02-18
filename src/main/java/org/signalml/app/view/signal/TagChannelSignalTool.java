@@ -8,16 +8,18 @@ import java.awt.Cursor;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
+import java.io.InvalidClassException;
+import java.util.logging.Level;
 
 import javax.swing.SwingUtilities;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.document.TagDocument;
 import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.export.signal.AbstractSignalTool;
+import org.signalml.plugin.export.signal.ExportedTagDocument;
+import org.signalml.plugin.export.signal.ExportedTagStyle;
 import org.signalml.plugin.export.signal.SignalSelection;
 import org.signalml.plugin.export.signal.SignalSelectionType;
-import org.signalml.plugin.export.signal.TagStyle;
 
 /** TagChannelSignalTool
  *
@@ -36,7 +38,7 @@ public class TagChannelSignalTool extends AbstractSignalTool implements TaggingS
 	private Integer channel = null;
 
 	private SignalPlot plot;
-	private TagStyle style;
+	private ExportedTagStyle style;
 
 	public TagChannelSignalTool(SignalView signalView) {
 		super(signalView);
@@ -82,7 +84,11 @@ public class TagChannelSignalTool extends AbstractSignalTool implements TaggingS
 			style = getSignalView().getCurrentTagStyle(SignalSelectionType.CHANNEL);
 
 			if (startPosition != null) {
-				tagTo(e.getPoint());
+				try {
+					tagTo(e.getPoint());
+				} catch (InvalidClassException ex) {
+					java.util.logging.Logger.getLogger(TagChannelSignalTool.class.getName()).log(Level.SEVERE, null, ex);
+				}
 			}
 			startPosition = null;
 			setEngaged(false);
@@ -96,13 +102,17 @@ public class TagChannelSignalTool extends AbstractSignalTool implements TaggingS
 	public void mouseDragged(MouseEvent e) {
 		if (startPosition != null && SwingUtilities.isLeftMouseButton(e)) {
 			Point point = e.getPoint();
-			selectTo(point);
+			try {
+				selectTo(point);
+			} catch (InvalidClassException ex) {
+				java.util.logging.Logger.getLogger(TagChannelSignalTool.class.getName()).log(Level.SEVERE, null, ex);
+			}
 			Rectangle r = new Rectangle(point.x, point.y, 1, 1);
 			((SignalPlot)e.getSource()).scrollRectToVisible(r);
 		}
 	}
 
-	private void selectTo(Point point) {
+	private void selectTo(Point point) throws InvalidClassException {
 		if (startPosition != null) {
 			Float endPosition = plot.toTimeSpace(point);
 			if (endPosition != null) {
@@ -124,7 +134,7 @@ public class TagChannelSignalTool extends AbstractSignalTool implements TaggingS
 		}
 	}
 
-	private void tagTo(Point point) {
+	private void tagTo(Point point) throws InvalidClassException {
 		if (startPosition != null) {
 			Float endPosition = plot.toTimeSpace(point);
 			if (endPosition != null) {
@@ -133,7 +143,7 @@ public class TagChannelSignalTool extends AbstractSignalTool implements TaggingS
 					Integer currentChannel = plot.toChannelSpace(point);
 					if (currentChannel != null) {
 
-						TagDocument tagDocument = getSignalView().getDocument().getActiveTag();
+						ExportedTagDocument tagDocument = getSignalView().getDocument().getActiveTag();
 						if (tagDocument != null) {
 
 							if (Math.abs((currentChannel - channel)) > 0)

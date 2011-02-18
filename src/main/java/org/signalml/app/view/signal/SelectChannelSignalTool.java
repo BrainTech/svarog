@@ -8,6 +8,9 @@ import java.awt.Cursor;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
+import java.io.InvalidClassException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.SwingUtilities;
 
@@ -104,7 +107,11 @@ public class SelectChannelSignalTool extends AbstractSignalTool implements Selec
 						else
 							currentChannel = channel;
 
-						getSignalView().setSignalSelection(plot,plot.getChannelSelection(startPosition, endPosition, currentChannel));
+						try {
+							getSignalView().setSignalSelection(plot, plot.getChannelSelection(startPosition, endPosition, currentChannel));
+						} catch (InvalidClassException ex) {
+							//ignore
+						}
 
 					}
 				}

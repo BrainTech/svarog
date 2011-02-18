@@ -12,6 +12,7 @@ import java.util.Locale;
 import java.util.prefs.Preferences;
 
 import javax.swing.SwingUtilities;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.GnuParser;
@@ -26,7 +27,6 @@ import org.signalml.app.config.ConfigurationDefaults;
 import org.signalml.app.config.GeneralConfiguration;
 import org.signalml.app.config.MRUDConfiguration;
 import org.signalml.app.config.MainFrameConfiguration;
-import org.signalml.app.config.SignalFFTSettings;
 import org.signalml.app.config.SignalMLCodecConfiguration;
 import org.signalml.app.config.SignalMLCodecDescriptor;
 import org.signalml.app.config.ZoomSignalSettings;
@@ -36,6 +36,7 @@ import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
 import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.config.preset.SignalExportPresetManager;
+import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
 import org.signalml.app.document.DefaultDocumentManager;
 import org.signalml.app.document.DefaultMRUDRegistry;
 import org.signalml.app.document.DocumentDetector;
@@ -495,29 +496,29 @@ public class SvarogApplication {
 
 		streamer = XMLUtils.getDefaultStreamer();
 		Annotations.configureAliases(
-			streamer,
-			ApplicationConfiguration.class,
-			ZoomSignalSettings.class,
-			SignalFFTSettings.class,
-			GeneralConfiguration.class,
-			MainFrameConfiguration.class,
-			SignalMLCodecConfiguration.class,
-			SignalMLCodecDescriptor.class,
-			MRUDConfiguration.class,
-			MRUDEntry.class,
-			SignalMLMRUDEntry.class,
-			RawSignalMRUDEntry.class,
-			RawSignalDescriptor.class,
-			EegChannel.class,
-			MethodPresetManager.class,
-			MP5Parameters.class,
-			MP5Data.class,
-			MP5ApplicationData.class,
-			EvokedPotentialParameters.class,
-			ArtifactApplicationData.class,
-			ArtifactData.class,
-			ArtifactParameters.class,
-			StagerParameters.class);
+		        streamer,
+		        ApplicationConfiguration.class,
+		        ZoomSignalSettings.class,
+		        GeneralConfiguration.class,
+		        MainFrameConfiguration.class,
+		        SignalMLCodecConfiguration.class,
+		        SignalMLCodecDescriptor.class,
+		        MRUDConfiguration.class,
+		        MRUDEntry.class,
+		        SignalMLMRUDEntry.class,
+		        RawSignalMRUDEntry.class,
+		        RawSignalDescriptor.class,
+		        EegChannel.class,
+		        MethodPresetManager.class,
+		        MP5Parameters.class,
+		        MP5Data.class,
+		        MP5ApplicationData.class,
+		        EvokedPotentialParameters.class,
+		        ArtifactApplicationData.class,
+		        ArtifactData.class,
+		        ArtifactParameters.class,
+		        StagerParameters.class
+		);
 
 		streamer.setMode(XStream.NO_REFERENCES);
 

@@ -19,8 +19,12 @@ import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-/** DashListCellRenderer
- *
+import org.signalml.app.view.element.TagStylePropertiesPanel.Dash;
+
+/**
+ * Cell renderer for the cells which has values of the type {@link Dash}.
+ * The dashing pattern {@link Dash#dash obtained} from this values is used
+ * to draw the horizontal line in the cell.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -28,11 +32,33 @@ public class DashListCellRenderer extends JComponent implements ListCellRenderer
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * the border that is used when the cell is not focused
+	 */
 	private static final Border NO_FOCUS_BORDER = new EmptyBorder(1, 1, 1, 1);
+	/**
+	 * the preferred size of this component
+	 */
 	private static final Dimension PREFERRED_SIZE = new Dimension(100,18);
 
+	/**
+	 * the dashing pattern
+	 */
 	private float[] dash;
 
+	/**
+	 * Returns this component to be used for drawing the cell.
+	 * This component has:
+	 * <ul>
+	 * <li>different borders for cell:<ul>
+	 * <li>focused and selected,</li>
+	 * <li>focused but not selected,</li>
+	 * <li>not focused,</li></ul></li>
+	 * <li>different background and foreground color for cell:<ul>
+	 * <li>focused,</li><li>unfocused.</li></ul></li></ul>
+	 * From the {@code value} of the cell dashing pattern is extracted, stored
+	 * and later it is used for drawing this component. 
+	 */
 	@Override
 	public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 
@@ -68,6 +94,12 @@ public class DashListCellRenderer extends JComponent implements ListCellRenderer
 
 	}
 
+	/**
+	 * Paints this component.
+	 * This component contains one blue horizontal line which is drawn using
+	 * the stroke created with the stored {@link #dash dashing pattern}.
+	 * @see JComponent#paintComponent(Graphics)
+	 */
 	@Override
 	protected void paintComponent(Graphics gOrig) {
 		super.paintComponent(gOrig);

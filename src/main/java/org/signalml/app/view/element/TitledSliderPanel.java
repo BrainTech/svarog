@@ -10,13 +10,18 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Insets;
 
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.border.EmptyBorder;
 
-/** TitledSliderPanel
- *
+/**
+ * Panel with the slider and the title above it.
+ * Contains two elements:
+ * <ul>
+ * <li>the label with the title; the label has the bottom border,</li>
+ * <li>the slider.</li></ul>
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -24,9 +29,25 @@ public class TitledSliderPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * the slider
+	 */
 	private JSlider slider;
+	/**
+	 * the label with the title; the label has the bottom border
+	 */
 	private JLabel label;
 
+	/**
+	 * Constructor.
+	 * Creates this panel with {@link BorderLayout} and two elements (from top
+	 * to bottom):
+	 * <ul>
+	 * <li>the label with the title; the label has the bottom border,</li>
+	 * <li>the slider.</li></ul>
+	 * @param title the title of this panel
+	 * @param slider the slider to be used
+	 */
 	public TitledSliderPanel(String title, JSlider slider) {
 		super();
 		this.slider = slider;
@@ -43,10 +64,18 @@ public class TitledSliderPanel extends JPanel {
 
 	}
 
+	/**
+	 * Returns the slider for this panel.
+	 * @return the slider
+	 */
 	public JSlider getSlider() {
 		return slider;
 	}
 
+	/**
+	 * Returns that the slider is not opaque.
+	 * @see JComponent#isOpaque()
+	 */
 	@Override
 	public boolean isOpaque() {
 		return false;
@@ -56,6 +85,14 @@ public class TitledSliderPanel extends JPanel {
 	protected void paintComponent(Graphics g) {
 	}
 
+	/**
+	 * Returns the preferred size of this panel.
+	 * <ul>
+	 * <li>The preferred width is the width of the wider element (slider and
+	 * label)+ the width of the border.</li>
+	 * <li>The preferred height is the sum of heights of the slider, the label
+	 * and the border.</li></ul>
+	 */
 	@Override
 	public Dimension getPreferredSize() {
 		Dimension d = slider.getPreferredSize();
@@ -70,11 +107,19 @@ public class TitledSliderPanel extends JPanel {
 		return pref;
 	}
 
+	/**
+	 * The minimum size of this panel is equal to the {@link
+	 * #getPreferredSize() preferred size}.
+	 */
 	@Override
 	public Dimension getMinimumSize() {
 		return getPreferredSize();
 	}
 
+	/**
+	 * The maximum size of this panel is equal to the {@link
+	 * #getPreferredSize() preferred size}.
+	 */
 	@Override
 	public Dimension getMaximumSize() {
 		return getPreferredSize();

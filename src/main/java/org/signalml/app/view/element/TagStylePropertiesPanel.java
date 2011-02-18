@@ -38,16 +38,34 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 
+import org.signalml.app.view.dialog.KeyStrokeCaptureDialog;
 import org.signalml.app.view.tag.TagRenderer;
 import org.signalml.plugin.export.signal.SignalSelectionType;
+import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 
-/** TagStylePropertiesPanel
- *
+/**
+ * Panel with the properties of the tag style.
+ * Contains the following sub-panels:
+ * <ul>
+ * <li>on the left:<ul>
+ * <li>the {@link #getOutlineTopPanel() panel} which allows to select the
+ * parameters of the outline of a {@link Tag tag} of the currently edited
+ * {@link TagStyle style},</li>
+ * <li>the {@link #getOutlineColorPanel() panel} which allows to select the
+ * color of the outline,</li>
+ * <li>the {@link #getFillColorPanel() panel} which allows to select the
+ * color of the fill,</li></ul></li>
+ * <li>on the right:
+ * <ul>
+ * <li>the {@link #getPropertiesPanel() panel} with the properties of the
+ * currently edited {@link TagStyle style},</li>
+ * <li>the {@link #getPreviewPanel() panel} with the preview of a tag
+ * of the currently edited style.</li></ul></li></ul>
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -57,46 +75,152 @@ public class TagStylePropertiesPanel extends JPanel {
 
 	public static final String CHANGED_PROPERTY = "changed";
 
+	/**
+	 * the source of messages (labels)
+	 */
 	private MessageSourceAccessor messageSource;
 
+	/**
+	 * the chooser of the color of the outline of a {@link Tag} of the selected
+	 * {@link TagStyle style}
+	 */
 	private JColorChooser outlineColorChooser;
+	/**
+	 * the chooser of the color of the fill of a {@link Tag} of the selected
+	 * {@link TagStyle style}
+	 */
 	private JColorChooser fillColorChooser;
 
+	/**
+	 * the spinner which allows to choose the width of the outline of a {@link
+	 * Tag} of the selected {@link TagStyle style}
+	 */
 	private JSpinner widthSpinner;
+	/**
+	 * the combo-box which allows to choose the outline dashing style of a
+	 * {@link Tag} of the selected {@link TagStyle style}
+	 */
 	private JComboBox dashComboBox;
 
+	/**
+	 * the text field with the name of the {@link TagStyle style}
+	 */
 	private JTextField nameTextField;
+	/**
+	 * the text pane with the description of the {@link TagStyle style}
+	 */
 	private JTextPane descriptionTextPane;
+	/**
+	 * the scroll pane in which {@link #descriptionTextPane} is located
+	 */
 	private JScrollPane descriptionScrollPane;
+	/**
+	 * the text field in which the captured key is displayed
+	 * @see #captureKeyButton
+	 */
 	private JTextField keyTextField;
+	/**
+	 * the button which displays the {@link KeyStrokeCaptureDialog dialog}
+	 * which captures the key stroke;
+	 * this key stroke is used to select the {@link TagStyle style}
+	 */
 	private JButton captureKeyButton;
+	/**
+	 * the check-box which tells if the {@link TagStyle style} should be a
+	 * marker style of the regular one
+	 */
 	private JCheckBox markerCheckBox;
 
+	/**
+	 * the panel which allows to select the outline of a {@link
+	 * Tag tag} of the selected {@link TagStyle style}
+	 */
 	private JPanel outlineTopPanel;
+	/**
+	 * the panel which allows to select the properties of the {@link TagStyle
+	 * style}
+	 */
 	private JPanel propertiesPanel;
 
+	/**
+	 * the renderer of {@link Tag tags}
+	 */
 	private TagRenderer tagRenderer;
 
+	/**
+	 * the currently edited {@link TagStyle style}
+	 */
 	private TagStyle currentStyle;
+	/**
+	 * the boolean which tells if the current {@link TagStyle style} was
+	 * changed
+	 */
 	private boolean changed = false;
 
+	/**
+	 * the model for {@link #dashComboBox}
+	 */
 	private DefaultComboBoxModel dashComboBoxModel;
 
+	/**
+	 * the layout for {@link #fillColorPanel}
+	 */
 	private CardLayout fillColorLayout;
+	/**
+	 * the panel which allows to select the color of the fill of a {@link Tag}
+	 * of the currently edited {@link TagStyle style}
+	 */
 	private JPanel fillColorPanel;
 
+	/**
+	 * the layout for {@link #outlineColorPanel}
+	 */
 	private CardLayout outlineColorLayout;
+	/**
+	 * the panel which allows to select the color of the outline of a {@link Tag}
+	 * of the currently edited {@link TagStyle style}
+	 */
 	private JPanel outlineColorPanel;
 
+	/**
+	 * the layout for {@link #previewPanel}
+	 */
 	private CardLayout previewLayout;
+	/**
+	 * the panel with the preview of a {@link Tag} of the currently edited
+	 * {@link TagStyle style}
+	 */
 	private JPanel previewPanel;
 
+	/**
+	 * Constructor. Sets the source of messages (labels) and initializes this
+	 * panel.
+	 * @param messageSource the source of messages (labels)
+	 */
 	public TagStylePropertiesPanel(MessageSourceAccessor messageSource) {
 		super();
 		this.messageSource = messageSource;
 		initialize();
 	}
 
+	/**
+	 * Initializes this panel with BorderLayout and following panels:
+	 * <ul>
+	 * <li>on the left:<ul>
+	 * <li>the {@link #getOutlineTopPanel() panel} which allows to select the
+	 * parameters of the outline of a {@link Tag tag} of the currently edited
+	 * {@link TagStyle style},</li>
+	 * <li>the {@link #getOutlineColorPanel() panel} which allows to select the
+	 * color of the outline,</li>
+	 * <li>the {@link #getFillColorPanel() panel} which allows to select the
+	 * color of the fill,</li></ul></li>
+	 * <li>on the right:
+	 * <ul>
+	 * <li>the {@link #getPropertiesPanel() panel} with the properties of the
+	 * currently edited {@link TagStyle style},</li>
+	 * <li>the {@link #getPreviewPanel() panel} with the preview of a tag
+	 * of the currently edited style.</li></ul></li></ul>
+	 */
 	private void initialize() {
 
 		setLayout(new BorderLayout());
@@ -131,6 +255,11 @@ public class TagStylePropertiesPanel extends JPanel {
 
 	}
 
+	/**
+	 * Returns the layout for the {@link #getFillColorPanel() fillColorPanel}. 
+	 * If the layout doesn't exist it is created.
+	 * @return the layout for the fillColorPanel
+	 */
 	public CardLayout getFillColorLayout() {
 		if (fillColorLayout == null) {
 			fillColorLayout = new CardLayout();
@@ -138,6 +267,18 @@ public class TagStylePropertiesPanel extends JPanel {
 		return fillColorLayout;
 	}
 
+	/**
+	 * Returns the panel which allows to select the color of the fill of
+	 * a {@link Tag tag} of the currently edited {@link TagStyle style}.
+	 * If the panel doesn't exist it is created with:
+	 * <ul>
+	 * <li>the {@link #getFillColorChooser() chooser} of the color of the
+	 * fill, which is shown if a style is selected,</li>
+	 * </ul>the label which tells that the style must be created or chosen,
+	 * which is shown if no style is selected</li></ul>
+	 * @return the panel which allows to select the color of the fill of
+	 * a tag of the currently edited style.
+	 */
 	public JPanel getFillColorPanel() {
 		if (fillColorPanel == null) {
 			fillColorPanel = new JPanel(getFillColorLayout());
@@ -147,6 +288,12 @@ public class TagStylePropertiesPanel extends JPanel {
 		return fillColorPanel;
 	}
 
+	/**
+	 * Returns the layout for the {@link #getOutlineColorPanel()
+	 * outlineColorPanel}. 
+	 * If the layout doesn't exist it is created.
+	 * @return the layout for the outlineColorPanel
+	 */
 	public CardLayout getOutlineColorLayout() {
 		if (outlineColorLayout == null) {
 			outlineColorLayout = new CardLayout();
@@ -154,6 +301,18 @@ public class TagStylePropertiesPanel extends JPanel {
 		return outlineColorLayout;
 	}
 
+	/**
+	 * Returns the panel which allows to select the color of the outline of
+	 * a {@link Tag tag} of the currently edited {@link TagStyle style}.
+	 * If the panel doesn't exist it is created with:
+	 * <ul>
+	 * <li>the {@link #getOutlineColorChooser() chooser} of the color of the
+	 * outline, which is shown if a style is selected,</li>
+	 * </ul>the label which tells that the style must be created or chosen,
+	 * which is shown if no style is selected</li></ul>
+	 * @return the panel which allows to select the color of the outline of
+	 * a tag of the currently edited style.
+	 */
 	public JPanel getOutlineColorPanel() {
 		if (outlineColorPanel == null) {
 			outlineColorPanel = new JPanel(getOutlineColorLayout());
@@ -163,6 +322,11 @@ public class TagStylePropertiesPanel extends JPanel {
 		return outlineColorPanel;
 	}
 
+	/**
+	 * Returns the layout for the {@link #getPreviewPanel() previewPanel}. 
+	 * If the layout doesn't exist it is created.
+	 * @return the layout for the previewPanel
+	 */
 	public CardLayout getPreviewLayout() {
 		if (previewLayout == null) {
 			previewLayout = new CardLayout();
@@ -170,6 +334,18 @@ public class TagStylePropertiesPanel extends JPanel {
 		return previewLayout;
 	}
 
+	/**
+	 * Returns the panel with the preview of a {@link Tag} of the currently
+	 * edited {@link TagStyle style}.
+	 * If the panel doesn't exist it is created with:
+	 * <ul>
+	 * <li>the {@link #getTagRenderer() tag renderer}, which is shown if
+	 * a style is selected,</li>
+	 * </ul>the label which tells that the style must be created or chosen,
+	 * which is shown if no style is selected</li></ul>
+	 * @return the panel with the preview of a tag of the currently
+	 * edited style
+	 */
 	public JPanel getPreviewPanel() {
 		if (previewPanel == null) {
 			previewPanel = new JPanel(getPreviewLayout());
@@ -180,6 +356,12 @@ public class TagStylePropertiesPanel extends JPanel {
 		return previewPanel;
 	}
 
+	/**
+	 * Creates the label, which informs that there is no {@link TagStyle style}
+	 * selected and the user should create or select a style to proceed.
+	 * @return the label, which informs that there is no style
+	 * selected and the user should create or select a style to proceed.
+	 */
 	private JLabel createNoStyleLabel() {
 		JLabel noStyleLabel = new JLabel(messageSource.getMessage("tagStylePalette.noStyle"));
 		noStyleLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -187,6 +369,16 @@ public class TagStylePropertiesPanel extends JPanel {
 		return noStyleLabel;
 	}
 
+	/**
+	 * Returns the panel with the parameters of the outline of a {@link
+	 * Tag tag} of the selected {@link TagStyle style}:
+	 * <ul>
+	 * <li>the {@link #getWidthSpinner() width} of the outline,</li>
+	 * <li>the {@link #getDashComboBox() dashing style} of the outline.</li>
+	 * </ul>
+	 * If the panel doesn't exist it is created.
+	 * @return the panel with the parameters of the outline
+	 */
 	public JPanel getOutlineTopPanel() {
 		if (outlineTopPanel == null) {
 
@@ -237,6 +429,17 @@ public class TagStylePropertiesPanel extends JPanel {
 		return outlineTopPanel;
 	}
 
+	/**
+	 * Returns the panel with the properties of the currently edited
+	 * {@link TagStyle style}:
+	 * <ul>
+	 * <li>the {@link #getNameTextField() name},</li>
+	 * <li>the {@link #getDescriptionTextPane() description},</li>
+	 * <li>the {@link #getCaptureKeyButton() key stroke} used to select
+	 * the style.</li>
+	 * </ul>
+	 * @return the panel with the properties of the currently edited style
+	 */
 	public JPanel getPropertiesPanel() {
 		if (propertiesPanel == null) {
 
@@ -315,6 +518,14 @@ public class TagStylePropertiesPanel extends JPanel {
 
 	}
 
+	/**
+	 * Returns the chooser of the color of the outline of a {@link Tag} of
+	 * the selected {@link TagStyle style}.
+	 * If the chooser doesn't exist it is created and a change listener is
+	 * added to it. This listener changes the color in the {@link
+	 * #getTagRenderer() tag renderer} when the selected color is changed.
+	 * @return the chooser of the color of the outline
+	 */
 	public JColorChooser getOutlineColorChooser() {
 		if (outlineColorChooser == null) {
 			outlineColorChooser = new JColorChooser();
@@ -336,6 +547,14 @@ public class TagStylePropertiesPanel extends JPanel {
 		return outlineColorChooser;
 	}
 
+	/**
+	 * Returns the chooser of the color of the fill of a {@link Tag} of
+	 * the selected {@link TagStyle style}.
+	 * If the chooser doesn't exist it is created and a change listener is
+	 * added to it. This listener changes the color in the {@link
+	 * #getTagRenderer() tag renderer} when the selected color is changed.
+	 * @return the chooser of the color of the fill
+	 */
 	public JColorChooser getFillColorChooser() {
 		if (fillColorChooser == null) {
 			fillColorChooser = new JColorChooser();
@@ -357,6 +576,14 @@ public class TagStylePropertiesPanel extends JPanel {
 		return fillColorChooser;
 	}
 
+	/**
+	 * Returns the spinner which allows to choose the width of the outline of a
+	 * {@link Tag tag} of the selected {@link TagStyle style}.
+	 * If the spinner doesn't exist it is created and a change listener is
+	 * added to it. This listener changes the width in the {@link
+	 * #getTagRenderer() tag renderer} when the selected value changes.
+	 * @return the spinner which allows to choose the width of the outline
+	 */
 	public JSpinner getWidthSpinner() {
 		if (widthSpinner == null) {
 
@@ -379,6 +606,11 @@ public class TagStylePropertiesPanel extends JPanel {
 		return widthSpinner;
 	}
 
+	/**
+	 * Returns the model for {@link #getDashComboBox() dashComboBox}.
+	 * If the model doesn't exist it is created.
+	 * @return the model for dashComboBox.
+	 */
 	public DefaultComboBoxModel getDashComboBoxModel() {
 		if (dashComboBoxModel == null) {
 			dashComboBoxModel = new DefaultComboBoxModel(new Dash[] {
@@ -392,6 +624,14 @@ public class TagStylePropertiesPanel extends JPanel {
 		return dashComboBoxModel;
 	}
 
+	/**
+	 * Returns the combo-box which allows to choose the outline dashing style
+	 * of a {@link Tag tag} of the selected {@link TagStyle style}.
+	 * If the combo-box doesn't exist it is created and a change listener is
+	 * added to it. This listener changes the outline style in the {@link
+	 * #getTagRenderer() tag renderer} when the selected value changes.
+	 * @return the combo-box which allows to choose the outline dashing style
+	 */
 	public JComboBox getDashComboBox() {
 		if (dashComboBox == null) {
 
@@ -416,6 +656,13 @@ public class TagStylePropertiesPanel extends JPanel {
 		return dashComboBox;
 	}
 
+	/**
+	 * Returns the text field with the name of the {@link TagStyle style}.
+	 * If the text field doesn't exist it is created and the listener is added
+	 * to it. If the contents of the text field changes the style is {@link
+	 * #setChanged(boolean) marked} as changed
+	 * @return the text field with the name of the style
+	 */
 	public JTextField getNameTextField() {
 		if (nameTextField == null) {
 
@@ -435,6 +682,13 @@ public class TagStylePropertiesPanel extends JPanel {
 		return nameTextField;
 	}
 
+	/**
+	 * Returns the text pane with the description of the {@link TagStyle style}.
+	 * If the text field doesn't exist it is created and the listener is added
+	 * to it. If the contents of the text field changes the style is {@link
+	 * #setChanged(boolean) marked} as changed
+	 * @return the text pane with the description of the style
+	 */
 	public JTextPane getDescriptionTextPane() {
 		if (descriptionTextPane == null) {
 
@@ -453,6 +707,14 @@ public class TagStylePropertiesPanel extends JPanel {
 		return descriptionTextPane;
 	}
 
+	/**
+	 * Returns the scroll pane which contains the {@link
+	 * #getDescriptionTextPane() text pane} with the description of the {@link
+	 * TagStyle style.}
+	 * If the scroll pane doesn't exist it is created.
+	 * @return the scroll pane which contains the text pane with the
+	 * description of the style
+	 */
 	public JScrollPane getDescriptionScrollPane() {
 		if (descriptionScrollPane == null) {
 			descriptionScrollPane = new JScrollPane(getDescriptionTextPane());
@@ -461,6 +723,14 @@ public class TagStylePropertiesPanel extends JPanel {
 		return descriptionScrollPane;
 	}
 
+	/**
+	 * Returns the text field in which the captured key is displayed.
+	 * If the text field doesn't exist it is created and the listener is added
+	 * to it. If the contents of the text field changes the style is {@link
+	 * #setChanged(boolean) marked} as changed.
+	 * @return the text field in which the captured key is displayed
+	 * @see #getCaptureKeyButton()
+	 */
 	public JTextField getKeyTextField() {
 		if (keyTextField == null) {
 			keyTextField = new JTextField();
@@ -480,6 +750,14 @@ public class TagStylePropertiesPanel extends JPanel {
 		return keyTextField;
 	}
 
+	/**
+	 * Returns the button which displays the {@link KeyStrokeCaptureDialog
+	 * dialog} which captures the key stroke.
+	 * This key stroke is used to select the {@link TagStyle style}.
+	 * If the button doesn't exist it is created.
+	 * @return the button which displays the dialog which captures the
+	 * key stroke
+	 */
 	public JButton getCaptureKeyButton() {
 		if (captureKeyButton == null) {
 			captureKeyButton = new JButton();
@@ -487,6 +765,15 @@ public class TagStylePropertiesPanel extends JPanel {
 		return captureKeyButton;
 	}
 
+	/**
+	 * Returns the check-box which tells if the {@link TagStyle style} should
+	 * be a marker style of the regular one.
+	 * If the check-box doesn't exist it is created and a change listener is
+	 * added to it. This listener updates the outlook of the tag in the {@link
+	 * #getTagRenderer() tag renderer} when the state of the check-box changes.
+	 * @return the check-box which tells if the style should be a
+	 * marker style of the regular one
+	 */
 	public JCheckBox getMarkerCheckBox() {
 		if (markerCheckBox == null) {
 			markerCheckBox = new JCheckBox();
@@ -507,6 +794,11 @@ public class TagStylePropertiesPanel extends JPanel {
 		return markerCheckBox;
 	}
 
+	/**
+	 * Returns the {@link TagRenderer tag renderer}.
+	 * If the renderer doesn't exist it is created.
+	 * @return the tag renderer.
+	 */
 	public TagRenderer getTagRenderer() {
 		if (tagRenderer == null) {
 			tagRenderer = new TagRenderer();
@@ -515,10 +807,18 @@ public class TagStylePropertiesPanel extends JPanel {
 		return tagRenderer;
 	}
 
+	/**
+	 * Returns the currently edited {@link TagStyle style}.
+	 * @return the currently edited style
+	 */
 	public TagStyle getCurrentStyle() {
 		return currentStyle;
 	}
 
+	/**
+	 * Sets the currently edited {@link TagStyle style}.
+	 * @param style the currently edited style
+	 */
 	public void setCurrentStyle(TagStyle style) {
 		if (style == null) {
 			currentStyle = null;
@@ -528,6 +828,14 @@ public class TagStylePropertiesPanel extends JPanel {
 		updatePanel();
 	}
 
+	/**
+	 * Updates the fields of this panel to using the {@link #currentStyle}.
+	 * If there is no current style the fields are set to default values or
+	 * to inform that the style has to be selected.
+	 * <p>
+	 * After this update the state is {@link #setChanged(boolean) set} to
+	 * be unchanged.
+	 */
 	private void updatePanel() {
 
 		boolean enabled;
@@ -626,6 +934,12 @@ public class TagStylePropertiesPanel extends JPanel {
 
 	}
 
+	/**
+	 * Validates the changes in this panel.
+	 * The changes are valid if the name is not empty and doesn't contain
+	 * any bad characters.
+	 * @return the object in which errors are stored
+	 */
 	public Errors validateChanges() {
 		Errors errors = new BindException(currentStyle, "data");
 		String name = getNameTextField().getText();
@@ -638,6 +952,9 @@ public class TagStylePropertiesPanel extends JPanel {
 		return errors;
 	}
 
+	/**
+	 * Stores the changes (user input) in the {@link TagStyle style}.
+	 */
 	public void applyChanges() {
 
 		if (currentStyle != null) {
@@ -667,10 +984,21 @@ public class TagStylePropertiesPanel extends JPanel {
 
 	}
 
+	/**
+	 * Returns if the changes are saved.
+	 * @return {@code false} if there were no changes or changes were saved,
+	 * {@code true} otherwise
+	 */
 	public boolean isChanged() {
 		return changed;
 	}
 
+	/**
+	 * Sets if the changes are saved.
+	 * @param changed value to be set:
+	 * {@code false} if there were no changes or changes were saved,
+	 * {@code true} otherwise
+	 */
 	public void setChanged(boolean changed) {
 		if (this.changed != changed) {
 			this.changed = changed;
@@ -678,14 +1006,31 @@ public class TagStylePropertiesPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Class which represents the dashing pattern.
+	 * Contains the dashing pattern in the form of the array of floats and allows
+	 * to check if two dashing patterns are equal.
+	 */
 	class Dash {
 
+		/**
+		 * the dashing pattern in the form of the array of floats
+		 */
 		float[] dash;
 
+		/**
+		 * Constructor. Sets the dashing pattern.
+		 * @param dash the dashing pattern in the form of the array of floats
+		 */
 		Dash(float[] dash) {
 			this.dash = dash;
 		}
 
+		/**
+		 * Compares this dashing pattern with another object.
+		 * The object is equal with this if it of type {@link Dash} and has the
+		 * same elements in {@code dash} array
+		 */
 		@Override
 		public boolean equals(Object obj) {
 			if (!(obj instanceof Dash)) {

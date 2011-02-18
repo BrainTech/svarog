@@ -20,8 +20,15 @@ import org.signalml.app.config.ZoomSignalSettings;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
-/** ZoomSettingsPanel
- *
+/**
+ * Panel which allows to select how the zoomed signal should be displayed.
+ * Contains 3 sub-panels:
+ * <ul>
+ * <li>the panel with radio buttons which allows to select the zoom factor,
+ * </li><li>the panel with radio buttons which allows to select the size of
+ * the window with zoomed signal,</li>
+ * <li>the panel with the check-box which tells if the displayed channel
+ * should be changed when mouse goes up or down.</li></ul>
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -31,20 +38,56 @@ public class SignalZoomSettingsPanel extends JPanel {
 
 	protected static final Logger logger = Logger.getLogger(SignalZoomSettingsPanel.class);
 
+	/**
+	 * the {@link MessageSourceAccessor source} of messages (labels)
+	 */
 	private MessageSourceAccessor messageSource;
 
+	/**
+	 * the possible zoom factors
+	 */
 	private float[] possibleZoomFactors = new float[] { 2, 4, 6, 8 };
+	/**
+	 * the possible sizes of the zoom window
+	 */
 	private int[] possibleZoomSizes = new int[] { 100, 200, 400, 600 };
 
+	/**
+	 * the array with radio buttons for possible zoom factors
+	 */
 	private JRadioButton[] zoomFactorRadioButtons;
+	/**
+	 * the array with radio buttons for possible sizes of the zoom window
+	 */
 	private JRadioButton[] zoomSizeRadioButtons;
+	/**
+	 * the check-box which tells if the displayed channel should be changed
+	 * when mouse goes up or down
+	 */
 	private JCheckBox channelSwitchingCheckBox;
 
+	/**
+	 * the group of radio buttons with possible zoom factors
+	 */
 	private ButtonGroup factorButtonGroup;
+	/**
+	 * the group of radio buttons with possible sizes of the zoom window 
+	 */
 	private ButtonGroup sizeButtonGroup;
 
+	/**
+	 * {@code true} if the panel has a cross which closes it,
+	 * {@code false} otherwise
+	 */
 	private boolean hasCloseCross;
 
+	/**
+	 * Constructor. Sets the {@link MessageSourceAccessor message source} and
+	 * initializes this panel.
+	 * @param messageSource the source of messages (labels)
+	 * @param hasCloseCross {@code true} if the panel should has a cross which
+	 * closes it, {@code false} otherwise
+	 */
 	public SignalZoomSettingsPanel(MessageSourceAccessor messageSource, boolean hasCloseCross) {
 		super();
 		this.messageSource = messageSource;
@@ -52,6 +95,16 @@ public class SignalZoomSettingsPanel extends JPanel {
 		initialize();
 	}
 
+	/**
+	 * Initializes this panel with GridLayout and 3 sub-panels (from top to
+	 * bottom):
+	 * <ul>
+	 * <li>the panel with radio buttons which allows to select the zoom factor,
+	 * </li><li>the panel with radio buttons which allows to select the size of
+	 * the window with zoomed signal,</li>
+	 * <li>the panel with the check-box which tells if the displayed channel
+	 * should be changed when mouse goes up or down.</li></ul>
+	 */
 	private void initialize() {
 
 		factorButtonGroup = new ButtonGroup();
@@ -121,6 +174,17 @@ public class SignalZoomSettingsPanel extends JPanel {
 
 	}
 
+	/**
+	 * Fills the fields of this panel using given {@link ZoomSignalSettings
+	 * settings}:
+	 * <ul>
+	 * <li>the {@link ZoomSignalSettings#getFactor() zoom factor},</li>
+	 * <li>the {@link ZoomSignalSettings#getZoomSize() size} of a window
+	 * with a zoomed signal,</li>
+	 * <li>the boolean if the channel should be {@link ZoomSignalSettings#
+	 * isChannelSwitching() switched} when the mouse goes up or down.</li>
+	 * @param settings the settings of signal zooming
+	 */
 	public void fillPanelFromModel(ZoomSignalSettings settings) {
 
 		float factor = settings.getFactor();
@@ -142,6 +206,16 @@ public class SignalZoomSettingsPanel extends JPanel {
 
 	}
 
+	/**
+	 * Stores the user input in the given {@link ZoomSignalSettings settings}:
+	 * <ul>
+	 * <li>the {@link ZoomSignalSettings#getFactor() zoom factor},</li>
+	 * <li>the {@link ZoomSignalSettings#getZoomSize() size} of a window
+	 * with a zoomed signal,</li>
+	 * <li>the boolean if the channel should be {@link ZoomSignalSettings#
+	 * isChannelSwitching() switched} when the mouse goes up or down.</li>
+	 * @param settings the settings of signal zooming
+	 */
 	public void fillModelFromPanel(ZoomSignalSettings settings) {
 
 		int i;
@@ -162,6 +236,10 @@ public class SignalZoomSettingsPanel extends JPanel {
 
 	}
 
+	/**
+	 * Validates this panel. This panel is always valid.
+	 * @param errors the object in which the errors should be stored
+	 */
 	public void validate(Errors errors) {
 		// do nothing
 	}

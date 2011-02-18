@@ -14,7 +14,6 @@ import javax.swing.SwingUtilities;
 import org.apache.log4j.Logger;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.util.IconUtils;
-import org.signalml.plugin.export.signal.AbstractSignalTool;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.TagStyle;
 

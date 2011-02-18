@@ -22,9 +22,14 @@ import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
-/** RequiredSignalParametersPanel
- *
- *
+/**
+ * Panel which allows displays the parameters of the signal, such as:
+ * <ul>
+ * <li>the {@link #getSamplingFrequencyField() sampling frequency},</li>
+ * <li>the {@link #getChannelCountField() number of channels},</li>
+ * <li>the {@link #getCalibrationField() value of calibration}</li></ul>
+ * and if these fields should be editable, to these values them.
+ * 
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class RequiredSignalParametersPanel extends JPanel implements FocusListener {
@@ -33,12 +38,28 @@ public class RequiredSignalParametersPanel extends JPanel implements FocusListen
 
 	protected static final Logger logger = Logger.getLogger(RequiredSignalParametersPanel.class);
 
+	/**
+	 * the source of messages (labels)
+	 */
 	private MessageSourceAccessor messageSource;
 
+	/**
+	 * the text field with the sampling frequency (Hz)
+	 */
 	private JTextField samplingFrequencyField;
+	/**
+	 * the text field with the number of channels
+	 */
 	private JTextField channelCountField;
 
+	/**
+	 * A text field allwing to change the calibration gain.
+	 */
 	private JTextField calibrationGainField;
+
+	/**
+	 * A text field allwing to change the calibration offset.
+	 */
 	private JTextField calibrationOffsetField;
 
 	/**
@@ -59,7 +80,8 @@ public class RequiredSignalParametersPanel extends JPanel implements FocusListen
 	private boolean wasCalibrationOffsetFocused = false;
 
 	/**
-	 * This is the default constructor
+	 * Constructor. Sets the source of messages and initializes this panel.
+	 * @param messageSource the source of messages
 	 */
 	public RequiredSignalParametersPanel(MessageSourceAccessor messageSource) {
 		super();
@@ -68,9 +90,20 @@ public class RequiredSignalParametersPanel extends JPanel implements FocusListen
 	}
 
 	/**
-	 * This method initializes this
-	 *
-	 *
+	 * Initializes this panel with GroupLayout and two groups:
+	 * <ul>
+	 * <li>horizontal group which has two sub-groups: one for labels and one
+	 * for spinners. This group positions the elements in two columns.</li>
+	 * <li>vertical group which has 3 sub-groups - one for every row:
+	 * <ul>
+	 * <li>label and {@link #getSamplingFrequencyField() text field} which
+	 * contains sampling frequency (Hz),</li>
+	 * <li>label and {@link #getChannelCountField() text field} which contains
+	 * the number of channels,</li>
+	 * <li>label and {@link #getCalibrationField() text field} which contains
+	 * the value of calibration.</li></ul>
+	 * This group positions elements in rows.</li>
+	 * </ul>
 	 */
 	private void initialize() {
 
@@ -141,6 +174,11 @@ public class RequiredSignalParametersPanel extends JPanel implements FocusListen
 
 	}
 
+	/**
+	 * Returns the text field with the sampling frequency (in Hz).
+	 * If the text field doesn't exist it is created.
+	 * @return the text field with the sampling frequency
+	 */
 	public JTextField getSamplingFrequencyField() {
 		if (samplingFrequencyField == null) {
 			samplingFrequencyField = new JTextField();
@@ -149,6 +187,11 @@ public class RequiredSignalParametersPanel extends JPanel implements FocusListen
 		return samplingFrequencyField;
 	}
 
+	/**
+	 * Returns the text field with the number of channels in the signal.
+	 * If the text field doesn't exist it is created.
+	 * @return the text field with the number of channels
+	 */
 	public JTextField getChannelCountField() {
 		if (channelCountField == null) {
 			channelCountField = new JTextField();
@@ -157,6 +200,11 @@ public class RequiredSignalParametersPanel extends JPanel implements FocusListen
 		return channelCountField;
 	}
 
+	/**
+	 * Returns the text field allowing to change the calibration gain
+	 * of the signal.
+	 * @return a text filed allowing to set the calibration gain
+	 */
 	public JTextField getCalibrationGainField() {
 		if (calibrationGainField == null) {
 			calibrationGainField = new JTextField();
@@ -166,6 +214,11 @@ public class RequiredSignalParametersPanel extends JPanel implements FocusListen
 		return calibrationGainField;
 	}
 
+	/**
+	 * Returns the text field allowing to change the calibration offset
+	 * of the signal.
+	 * @return a text filed allowing to set the calibration offset
+	 */
 	public JTextField getCalibrationOffsetField() {
 		if (calibrationOffsetField == null) {
 			calibrationOffsetField = new JTextField();
@@ -175,6 +228,17 @@ public class RequiredSignalParametersPanel extends JPanel implements FocusListen
 		return calibrationOffsetField;
 	}
 
+	/**
+	 * Using the given {@link SignalParameterDescriptor model} sets:
+	 * <ul>
+	 * <li>the sampling frequency,</li>
+	 * <li>the number of channels,</li>
+	 * <li>the value of calibration</li></ul>
+	 * in appropriate text field and sets if these text fields should be
+	 * editable.
+	 * @param spd the model for this panel
+	 * @throws SignalMLException never thrown
+	 */
 	public void fillPanelFromModel(SignalParameterDescriptor spd) throws SignalMLException {
 
 		Float samplingFrequency = spd.getSamplingFrequency();
@@ -235,6 +299,17 @@ public class RequiredSignalParametersPanel extends JPanel implements FocusListen
 
 	}
 
+	/**
+	 * Stores the user input in the {@link SignalParameterDescriptor model},
+	 * namely:
+	 * <ul>
+	 * <li>the sampling frequency,</li>
+	 * <li>the number of channels,</li>
+	 * <li>the value of calibration.</li></ul>
+	 * @param spd the model for this panel
+	 * @throws SignalMLException if the value the text fields has an invalid
+	 * format
+	 */
 	public void fillModelFromPanel(SignalParameterDescriptor spd) throws SignalMLException {
 		try {
 			if (spd.isSamplingFrequencyEditable()) {
@@ -261,6 +336,14 @@ public class RequiredSignalParametersPanel extends JPanel implements FocusListen
 		}
 	}
 
+	/**
+	 * Validates this panel.
+	 * This panel is valid if all numbers in text fields have valid format and
+	 * are positive.
+	 * @param spd the {@link SignalParameterDescriptor model} for this panel
+	 * @param errors the object in which errors are stored
+	 * @throws SignalMLException never thrown
+	 */
 	public void validatePanel(SignalParameterDescriptor spd, Errors errors) throws SignalMLException {
 		if (spd.isSamplingFrequencyEditable()) {
 			try {

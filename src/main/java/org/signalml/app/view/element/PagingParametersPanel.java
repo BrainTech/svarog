@@ -21,8 +21,15 @@ import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
-/** PagingParametersPanel
- *
+
+/**
+ * Panel with two text fields (with labels):
+ * <ul>
+ * <li>the text field with the size of the page of signal in seconds,</li>
+ * <li>the text field with the number of blocks that fit into one page of
+ * the signal.</li>
+ * </ul>
+ * Depending on the model these fields may be or may be not editable.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -32,13 +39,26 @@ public class PagingParametersPanel extends JPanel {
 
 	protected static final Logger logger = Logger.getLogger(PagingParametersPanel.class);
 
+	/**
+	 * the {@link MessageSourceAccessor source} of messages (labels)
+	 */
 	private MessageSourceAccessor messageSource;
 
+	/**
+	 * the text field with the size of the page of signal in seconds
+	 */
 	private JTextField pageSizeField;
+	
+	/**
+	 * the text field with the number of blocks that fit into one page of
+	 * the signal
+	 */
 	private JTextField blocksPerPageField;
 
 	/**
-	 * This is the default constructor
+	 * Constructor. Sets the {@link MessageSourceAccessor message source} and
+	 * initializes this panel.
+	 * @param messageSource the source of messages (labels)
 	 */
 	public PagingParametersPanel(MessageSourceAccessor messageSource) {
 		super();
@@ -47,9 +67,20 @@ public class PagingParametersPanel extends JPanel {
 	}
 
 	/**
-	 * This method initializes this
-	 *
-	 *
+	 * Initializes this panel.
+	 * This panel contains two groups:
+	 * <ul>
+	 * <li>horizontal group which has two sub-groups: one for labels and one
+	 * for text fields. This group positions the elements in two columns.</li>
+	 * <li>vertical group which has 2 sub-groups - one for every row:
+	 * <ul>
+	 * <li>the label and the text field with the size of the page of signal in
+	 * seconds,</li>
+	 * <li>the label and the text field with the number of blocks that fit into
+	 * one page of the signal.</li>
+	 * </ul>
+	 * This group positions elements in rows.</li>
+	 * </ul>
 	 */
 	private void initialize() {
 
@@ -102,6 +133,11 @@ public class PagingParametersPanel extends JPanel {
 
 	}
 
+	/**
+	 * Returns the text field with the size of the page of signal in seconds.
+	 * If it doesn't exist it is created.
+	 * @return the text field with the size of the page of signal in seconds
+	 */
 	public JTextField getPageSizeField() {
 		if (pageSizeField == null) {
 			pageSizeField = new JTextField();
@@ -110,6 +146,13 @@ public class PagingParametersPanel extends JPanel {
 		return pageSizeField;
 	}
 
+	/**
+	 * Returns the text field with the number of blocks that fit into one page
+	 * of the signal.
+	 * If it doesn't exist it is created.
+	 * @return the text field with the number of blocks that fit into one page
+	 * of the signal
+	 */
 	public JTextField getBlocksPerPageField() {
 		if (blocksPerPageField == null) {
 			blocksPerPageField = new JTextField();
@@ -118,6 +161,19 @@ public class PagingParametersPanel extends JPanel {
 		return blocksPerPageField;
 	}
 
+	/**
+	 * Fills the fields of this dialog using the given
+	 * {@link PagingParameterDescriptor descriptor}:
+	 * <ul>
+	 * <li>the {@link PagingParameterDescriptor#getPageSize() page size},</li>
+	 * <li>the {@link PagingParameterDescriptor#getBlocksPerPage() number}
+	 * of blocks in a single page of signal,</li>
+	 * <li>if the {@link PagingParameterDescriptor#isPageSizeEditable() page
+	 * size} and {@link PagingParameterDescriptor#isBlocksPerPageEditable()
+	 * blocks per page} text fields should be editable,</li>
+	 * </ul>
+	 * @param spd the descriptor
+	 */
 	public void fillPanelFromModel(PagingParameterDescriptor spd) {
 
 		Float pageSize = spd.getPageSize();
@@ -152,6 +208,17 @@ public class PagingParametersPanel extends JPanel {
 
 	}
 
+	/**
+	 * Fills the {@link PagingParameterDescriptor descriptor} with the user
+	 * input from this panel:
+	 * <ul><li>the {@link PagingParameterDescriptor#setPageSize(Float) page
+	 * size},</li>
+	 * <li>the {@link PagingParameterDescriptor#setBlocksPerPage(Integer)
+	 * number} of block in a page of the signal.</li>
+	 * </ul>
+	 * @param spd the descriptor
+	 * @throws SignalMLException if the numbers in fields have invalid format
+	 */
 	public void fillModelFromPanel(PagingParameterDescriptor spd) throws SignalMLException {
 		try {
 			if (spd.isPageSizeEditable()) {
@@ -165,6 +232,16 @@ public class PagingParametersPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Fills the fields of this panel using the given
+	 * {@link RawSignalDescriptor descriptor}:
+	 * <ul>
+	 * <li>the {@link RawSignalDescriptor#getPageSize() page size},</li>
+	 * <li>the {@link RawSignalDescriptor#getBlocksPerPage() number}
+	 * of blocks in a single page of signal,</li>
+	 * </ul>
+	 * @param descriptor the descriptor
+	 */
 	public void fillPanelFromModel(RawSignalDescriptor descriptor) {
 
 		getPageSizeField().setText(Float.toString(descriptor.getPageSize()));
@@ -172,6 +249,20 @@ public class PagingParametersPanel extends JPanel {
 
 	}
 
+	/**
+	 * Fills the {@link RawSignalDescriptor descriptor} with the user
+	 * input from this panel:
+	 * <ul><li>the {@link RawSignalDescriptor#setPageSize(float) page
+	 * size},</li>
+	 * <li>the {@link RawSignalDescriptor#setBlocksPerPage(int)
+	 * number} of block in a page of the signal.</li>
+	 * </ul>
+	 * @param descriptor the descriptor
+	 * @throws NumberFormatException if the numbers in fields have invalid
+	 * format
+	 * TODO method {@link #fillModelFromPanel(PagingParameterDescriptor)}
+	 * catches this exception, maybe this also should?
+	 */
 	public void fillModelFromPanel(RawSignalDescriptor descriptor) {
 
 		descriptor.setPageSize(Float.parseFloat(getPageSizeField().getText()));
@@ -179,6 +270,12 @@ public class PagingParametersPanel extends JPanel {
 
 	}
 
+	/**
+	 * Validates this panel.
+	 * Dialog is valid if the numbers in the text fields have valid format and
+	 * are positive.
+	 * @param errors the object in which the errors are stored
+	 */
 	public void validatePanel(Errors errors) {
 		try {
 			float pageSize = Float.parseFloat(getPageSizeField().getText());

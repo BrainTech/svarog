@@ -13,10 +13,16 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import org.signalml.app.document.SignalDocument;
+import org.signalml.app.document.TagDocument;
 import org.springframework.context.support.MessageSourceAccessor;
 
-/** OpenTagOptionsPanel
- *
+
+/**
+ * Panel which allows to {@link #getSignalDocumentComboBox() select} which the
+ * {@link SignalDocument signal document} to which the opened
+ * {@link TagDocument tag document} should be attached.
+ * 
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -24,12 +30,21 @@ public class OpenTagOptionsPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * the combo-box which allows to select the signal document to which
+	 * the opened tag document should be attached
+	 */
 	private JComboBox signalDocumentComboBox;
 
+	/**
+	 * the {@link MessageSourceAccessor source} of messages (labels)
+	 */
 	private MessageSourceAccessor messageSource;
 
 	/**
-	 * This is the default constructor
+	 * Constructor. Sets the {@link MessageSourceAccessor message source} and
+	 * initializes this panel.
+	 * @param messageSource the source of messages (labels)
 	 */
 	public OpenTagOptionsPanel(MessageSourceAccessor messageSource) {
 		super();
@@ -38,9 +53,18 @@ public class OpenTagOptionsPanel extends JPanel {
 	}
 
 	/**
-	 * This method initializes this
-	 *
-	 *
+	 * Initializes this panel with {@link GroupLayout} and two groups:
+	 * <ul>
+	 * <li>horizontal group which has two sub-groups: one for label and one
+	 * for combo box. This group positions the elements in two columns.</li>
+	 * <li>vertical group with only one sub-group:
+	 * <ul>
+	 * <li>label and {@link #getSignalDocumentComboBox() combo-box} which
+	 * allows to select the signal document to which the opened tag document
+	 * will be attached.</li>
+	 * </ul>
+	 * This group positions elements in the same row.</li>
+	 * </ul>
 	 */
 	private void initialize() {
 
@@ -84,6 +108,14 @@ public class OpenTagOptionsPanel extends JPanel {
 
 	}
 
+	/**
+	 * Returns the combo-box which allows to select the signal document to
+	 * which the opened tag document should be attached.
+	 * If the combo-box doesn't exist it is created.
+	 * <p>NOTE: the combo-box must be filed in by parent
+	 * @return the combo-box which allows to select the signal document to
+	 * which the opened tag document should be attached
+	 */
 	public JComboBox getSignalDocumentComboBox() {
 		if (signalDocumentComboBox == null) {
 			// model must be filled in by parent
