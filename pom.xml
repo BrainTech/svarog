@@ -477,19 +477,19 @@
 				</reportSets>
 			</plugin>
 
-<!--			<plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+			</plugin>
+
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jxr-plugin</artifactId>
 				<configuration>
 					<aggregate>true</aggregate>
 					<linkJavadoc>true</linkJavadoc>
-					<javadocDir>/apidocs</javadocDir>
-					<docTitle>Svarog Code</docTitle>
-					<windowTitle>Svarog Code</windowTitle>
-					<outputEncoding>UTF-8</outputEncoding>
-					<inputEncoding>UTF-8</inputEncoding>
 				</configuration>
-			</plugin> -->
+			</plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
