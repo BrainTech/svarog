@@ -285,7 +285,7 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
      * @param source the source of samples
      * @param channel the number of the channel (from 0 to {@code
      * source.getChannelCount()-1})
-     * @param signalOffset the position (in time in seconds) in the signal
+     * @param signalOffsetTime the position (in time in seconds) in the signal
      * starting from which samples will be returned
      * @param length the length of the part of the signal which should be returned
      * @return samples for the given source of samples and the given channel
@@ -366,7 +366,7 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 	 * of samples (source of raw samples) for a given
 	 * {@link ExportedSignalDocument signal document}.
 	 * @param document the signal document
-	 * @return the origina source of samples
+	 * @return the original source of samples
 	 * @throws InvalidClassException if document is not of type {@link SignalDocument}
 	 */
 	private MultichannelSampleSource getOriginalSourceFromDocument(ExportedSignalDocument document) throws InvalidClassException{
@@ -533,7 +533,7 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 	 * {@link Tag tags} by splitting it to separate blocks/pages (only if
 	 * exported tag has a {@link ExportedSignalSelectionType type}
 	 * {@code BLOCK} or {@code PAGE}).
-	 * If the exported tag has a type {@code CHANNEL} the collection conatins
+	 * If the exported tag has a type {@code CHANNEL} the collection contains
 	 * only one tag created from it
 	 * @param tag the tag to be converted
 	 * @param tagDocument the document to which the tag will be added;

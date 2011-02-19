@@ -78,7 +78,6 @@ public class PluginDescription extends PluginState{
 		Document document = documentBuilder.parse(new File(fileName));
 		Element element = document.getDocumentElement();
 		element.normalize();
-	//	if (!element.hasChildNodes()) throw
 		NodeList nodeList = element.getChildNodes();
 		for (int i = 0; i < nodeList.getLength(); ++i){
 			Node node = nodeList.item(i);

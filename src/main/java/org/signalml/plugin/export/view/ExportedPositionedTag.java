@@ -33,7 +33,7 @@ public interface ExportedPositionedTag {
 
 	/**
 	 * Compares the given positioned tag to this positioned tag.
-	 * @param o the positioned tag to be comapred to this one
+	 * @param o the positioned tag to be compared to this one
 	 * @return difference between indexes of tag documents or,
 	 * if indexes are the same, the result of comparison between
 	 * tags.

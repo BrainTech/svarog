@@ -31,9 +31,10 @@ public abstract class AbstractSignalTool extends MouseInputAdapter implements Si
 	}
 	
 	/**
-	 * Constructs a new SignalTool and associates it with the specified {@link SignalView}.
-	 * 
-	 * @param signalView {@link SignalView} this signal tool is to be associated with.
+	 * Constructs a new SignalTool and associates it with the specified {@link
+	 * ExportedSignalView SignalView}.
+	 * @param signalView {@link ExportedSignalView signal view} this signal
+	 * tool is to be associated with
 	 */
 	protected AbstractSignalTool(ExportedSignalView signalView) {
 		super();

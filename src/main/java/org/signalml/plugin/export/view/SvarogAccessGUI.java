@@ -378,7 +378,7 @@ public interface SvarogAccessGUI {
 	 * DocumentView should be able to return a document.
 	 * @param tab the panel (view) to be added as tab
 	 * @param title the title of the tab, if no title provided
-	 * {@cod tab.getName()} is used
+	 * {@code tab.getName()} is used
 	 * @param icon the icon of the tab, null if no icon should be used
 	 * @param tip the tool tip for the tab
 	 */
@@ -405,7 +405,7 @@ public interface SvarogAccessGUI {
 	 * Adds the new tab to the tree panel (the panel on the left).
 	 * @param treePane the tree panel to be added
 	 * @param title the title of the tab, if no title provided
-	 * {@cod tab.getName()} is used
+	 * {@code tab.getName()} is used
 	 * @param icon the icon of the tab, null if no icon should be used
 	 * @param tip the tool tip for the tab
 	 */

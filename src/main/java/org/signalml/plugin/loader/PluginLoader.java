@@ -99,7 +99,7 @@ public class PluginLoader {
 	private HashMap<String, PluginDescription> descriptionsByName = new HashMap<String, PluginDescription>();
 	/**
 	 * list of {@link PluginState states} of plug-ins.
-	 * On this list are states stored in an {@link #pluginsStateFileName XML file}
+	 * On this list are states stored in an {@link #pluginsStateFile XML file}
 	 * with plug-in states.
 	 */
 	private ArrayList<PluginState> states = new ArrayList<PluginState>();
@@ -229,9 +229,6 @@ public class PluginLoader {
 	 * create a dialog window which will be activated after clicking this button.
 	 */
 	private void addPluginOptions() {
-		/*
-		 * wyświetlać na czerwono pluginy niekatywne, w hincie wyświetlać czego brakuje
-		 */
 		ViewerElementManager manager = PluginAccessClass.getSharedInstance().getManager();
 		ArrayList<PluginState> existingPluginStates = new ArrayList<PluginState>();
 		for (PluginDescription descr : descriptions) {
@@ -382,7 +379,7 @@ public class PluginLoader {
 					readPluginState(node);
 			}
 		} catch (Exception e) {
-			logger.error("failed to load states of plug-ins, all plug-ins with unloaded states will be set acitve");
+			logger.error("Failed to load states of plug-ins. All plug-ins with unloaded states will be set inacitve");
 			e.printStackTrace();
 		}
 
