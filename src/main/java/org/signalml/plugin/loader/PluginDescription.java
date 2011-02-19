@@ -213,9 +213,9 @@ public class PluginDescription extends PluginState{
 	}
 	
 	/**
-	 * Returns true if this plug-in is dependent from given plug-in.
+	 * Returns true if this plug-in depends on the given plug-in.
 	 * @param description the description of the plug-in
-	 * @return true if this plug-in is dependent from given plug-in,
+	 * @return true if this plug-in depends on the given plug-in,
 	 * false otherwise
 	 */
 	public boolean dependentFrom(PluginDescription description){

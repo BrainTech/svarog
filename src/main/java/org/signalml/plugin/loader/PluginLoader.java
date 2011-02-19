@@ -379,7 +379,7 @@ public class PluginLoader {
 					readPluginState(node);
 			}
 		} catch (Exception e) {
-			logger.error("Failed to load states of plug-ins. All plug-ins with unloaded states will be set inacitve");
+			logger.error("Failed to load states of plug-ins from file. All plug-ins with unloaded states will be set inacitve.");
 			e.printStackTrace();
 		}
 
@@ -390,14 +390,9 @@ public class PluginLoader {
 	 * Writes the desired state of plug-ins to an XML file.
 	 */
 	public void onClose() {
-		try {
-			rememberPluginsState();
-			savePluginDirectories();
-			PluginAccessClass.getSharedInstance().onClose();
-		} catch (Exception e) {
-			logger.error("Error in plug-in interface while closing the application");
-			e.printStackTrace();
-		}
+		rememberPluginsState();
+		savePluginDirectories();
+		PluginAccessClass.getSharedInstance().onClose();
 	}
 
 	/**

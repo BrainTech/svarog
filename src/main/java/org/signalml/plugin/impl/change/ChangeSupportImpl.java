@@ -658,7 +658,12 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 	 */
 	public void onClose(){
 		for (SvarogCloseListener listener : closeListeners)
-			listener.applicationClosing();
+			try{
+				listener.applicationClosing();
+			} catch (Exception e) {
+				logger.error("Unhandled exception in plugin on application closing");
+				e.printStackTrace();
+			}
 	}
 
 	/* (non-Javadoc)
