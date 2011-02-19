@@ -6,7 +6,7 @@
 	<export-package>org.signalml.plugin.fft.export</export-package>
 	<dependencies>
 		<dependency>
-			<name>Svarog</name>
+			<name>Svarog API</name>
 			<version>0.5</version>
 		</dependency>
 	</dependencies>
