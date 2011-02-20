@@ -4,7 +4,7 @@
 
 package org.signalml.domain.montage.filter.iirdesigner;
 
-import flanagan.complex.Complex;
+import org.apache.commons.math.complex.Complex;
 import flanagan.math.Fmath;
 import java.util.ArrayList;
 
@@ -48,16 +48,17 @@ class Chebyshev2IIRDesigner extends ChebyshevIIRDesigner {
 		//calculate poles and zeros
 		for (int i = 1; i < 2*filterOrder; i += 2) {
 
-			Complex pole = Complex.exp(new Complex(0, Math.PI * i / (2 * filterOrder) + Math.PI / 2.0));
-			pole.reset(pole.getReal() * Fmath.sinh(mu), pole.getImag() * Fmath.cosh(mu));
-			pole = Complex.over(1.0, pole);
+			Complex pole = (new Complex(0, Math.PI * i / (2 * filterOrder) + Math.PI / 2.0)).exp();
+			pole = new Complex(pole.getReal() * Fmath.sinh(mu), pole.getImaginary() * Fmath.cosh(mu));
+			pole = new Complex(1.0, 0.0).divide(pole);
 			polesList.add(pole);
 
 			if (Fmath.isOdd(filterOrder))
 				if (i >= filterOrder-1 && i < filterOrder+2)
 					continue;
 
-			zerosList.add(Complex.conjugate(Complex.over(imaginaryUnit, Math.cos(i * Math.PI / (2 * filterOrder)))));
+			Complex denominator = new Complex(Math.cos(i * Math.PI / (2 * filterOrder)), 0.0);
+			zerosList.add((imaginaryUnit.divide(denominator)).conjugate());
 
 		}
 
@@ -71,13 +72,13 @@ class Chebyshev2IIRDesigner extends ChebyshevIIRDesigner {
 			poles[i] = polesList.get(i);
 
 		//calculate gain
-		Complex numerator = new Complex(1.0);
+		Complex numerator = new Complex(1.0, 0.0);
 		for (int i = 0; i < poles.length; i++)
-			numerator = numerator.times(poles[i].times(-1.0));
-		Complex denominator = new Complex(1.0);
+			numerator = numerator.multiply(poles[i].multiply(-1.0));
+		Complex denominator = new Complex(1.0, 0.0);
 		for (int i = 0; i < zeros.length; i++)
-			denominator = denominator.times(zeros[i].times(-1.0));
-		double gain = (numerator.over(denominator)).getReal();
+			denominator = denominator.multiply(zeros[i].multiply(-1.0));
+		double gain = (numerator.divide(denominator)).getReal();
 
 		//return zeros, poles & gain
 		FilterZerosPolesGain zpk = new FilterZerosPolesGain(zeros, poles, gain);

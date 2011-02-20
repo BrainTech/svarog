@@ -4,7 +4,7 @@
 
 package org.signalml.domain.montage.filter.iirdesigner;
 
-import flanagan.complex.Complex;
+import org.apache.commons.math.complex.Complex;
 import flanagan.math.Fmath;
 import flanagan.math.MinimisationFunction;
 import java.util.ArrayList;
@@ -150,11 +150,11 @@ class EllipticIIRDesigner extends AbstractIIRDesigner {
 			}
 
 			Complex pole = new Complex(-ellip[1] * ellip[2] * ellipv[0] * ellipv[1], -ellip[0] * ellipv[2]);
-			pole = pole.over(1 - Math.pow(ellip[2] * ellipv[0], 2));
+			pole = pole.divide(new Complex(1 - Math.pow(ellip[2] * ellipv[0], 2), 0));
 
 			if (Fmath.isOdd(filterOrder)) {
 				polesList.add(pole);
-				if (Math.abs(pole.getImag()) > EPSILON * Math.sqrt(pole.times(pole.conjugate()).getReal())) {
+				if (Math.abs(pole.getImaginary()) > EPSILON * Math.sqrt(pole.multiply(pole.conjugate()).getReal())) {
 					polesList.add(pole.conjugate());
 				}
 			}
@@ -176,14 +176,14 @@ class EllipticIIRDesigner extends AbstractIIRDesigner {
 
 		//calculating gain
 		int i;
-		Complex numerator = new Complex(1.0);
+		Complex numerator = new Complex(1.0, 0.0);
 		for (i = 0; i < poles.length; i++)
-			numerator = numerator.times(poles[i].times(-1.0));
-		Complex denominator = new Complex(1.0);
+			numerator = numerator.multiply(poles[i].multiply(-1.0));
+		Complex denominator = new Complex(1.0, 0.0);
 		for (i = 0; i < zeros.length; i++)
-			denominator = denominator.times(zeros[i].times(-1.0));
+			denominator = denominator.multiply(zeros[i].multiply(-1.0));
 
-		gain = (numerator.over(denominator)).getReal();
+		gain = (numerator.divide(denominator)).getReal();
 
 		if (Fmath.isEven(filterOrder))
 			gain = gain/Math.sqrt((1 + epsilon * epsilon));

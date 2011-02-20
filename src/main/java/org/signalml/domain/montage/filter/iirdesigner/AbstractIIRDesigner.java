@@ -4,7 +4,7 @@
 
 package org.signalml.domain.montage.filter.iirdesigner;
 
-import flanagan.complex.Complex;
+import org.apache.commons.math.complex.Complex;
 import flanagan.math.MinimisationFunction;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;

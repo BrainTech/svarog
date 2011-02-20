@@ -4,7 +4,7 @@
 
 package org.signalml.domain.montage.filter.iirdesigner;
 
-import flanagan.complex.*;
+import org.apache.commons.math.complex.Complex;
 
 import static org.signalml.domain.montage.filter.iirdesigner.IIRDesignerAssert.*;
 import org.junit.Test;

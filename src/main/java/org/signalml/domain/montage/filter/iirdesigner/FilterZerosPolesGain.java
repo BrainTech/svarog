@@ -4,9 +4,9 @@
 
 package org.signalml.domain.montage.filter.iirdesigner;
 
-import flanagan.complex.Complex;
-import flanagan.complex.ComplexPoly;
+import org.apache.commons.math.complex.Complex;
 import java.util.Arrays;
+import org.signalml.domain.montage.filter.iirdesigner.math.ComplexPolynomial;
 
 /**
  * This class contains the values the ZPK (zeros, poles and gain) representation of a filter.
@@ -81,32 +81,32 @@ class FilterZerosPolesGain {
 	 */
 	protected FilterCoefficients convertToBACoefficients() {
 
-		ComplexPoly numeratorPoly;
-		ComplexPoly denominatorPoly;
+		ComplexPolynomial numeratorPoly;
+		ComplexPolynomial denominatorPoly;
 		Complex[] complexNumeratorCoeffs;
 		Complex[] complexDenominatorCoeffs;
 		double[] realNumeratorCoeffs;
 		double[] realDenominatorCoeffs;
 
 		if (getZeros().length > 0) {
-			numeratorPoly = ComplexPoly.rootsToPoly(getZeros());
-			complexNumeratorCoeffs = numeratorPoly.polyNomCopy();
+			numeratorPoly = ComplexPolynomial.rootsToPolynomial(getZeros());
+			complexNumeratorCoeffs = numeratorPoly.getCoefficients();
 		}
 		else
 			complexNumeratorCoeffs = new Complex[] {
 			        new Complex(1.0, 0)
 			};
 
-		denominatorPoly = ComplexPoly.rootsToPoly(getPoles());
-		complexDenominatorCoeffs = denominatorPoly.polyNomCopy();
+		denominatorPoly = ComplexPolynomial.rootsToPolynomial(getPoles());
+		complexDenominatorCoeffs = denominatorPoly.getCoefficients();
 
 		realNumeratorCoeffs = new double[complexNumeratorCoeffs.length];
 		realDenominatorCoeffs = new double[complexDenominatorCoeffs.length];
 
 		for (int i = 0; i < complexNumeratorCoeffs.length; i++)
-			realNumeratorCoeffs[i] = gain * complexNumeratorCoeffs[complexNumeratorCoeffs.length - i - 1].getReal();
+			realNumeratorCoeffs[i] = gain * complexNumeratorCoeffs[i].getReal();
 		for (int i = 0; i < complexDenominatorCoeffs.length; i ++)
-			realDenominatorCoeffs[i] = complexDenominatorCoeffs[complexDenominatorCoeffs.length - i - 1].getReal();
+			realDenominatorCoeffs[i] = complexDenominatorCoeffs[i].getReal();
 
 		FilterCoefficients coeffs = new FilterCoefficients(realNumeratorCoeffs, realDenominatorCoeffs);
 		return coeffs;

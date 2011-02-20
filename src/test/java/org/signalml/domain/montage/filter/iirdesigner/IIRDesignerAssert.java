@@ -4,7 +4,7 @@
 
 package org.signalml.domain.montage.filter.iirdesigner;
 
-import flanagan.complex.Complex;
+import org.apache.commons.math.complex.Complex;
 import org.signalml.SignalMLAssert;
 
 /**
@@ -13,7 +13,7 @@ import org.signalml.SignalMLAssert;
  *
  * @author Piotr Szachewicz
  */
-class IIRDesignerAssert extends SignalMLAssert {
+public class IIRDesignerAssert extends SignalMLAssert {
 
 	/**
 	 * Asserts that the two zeros, poles, gain representations of a filter

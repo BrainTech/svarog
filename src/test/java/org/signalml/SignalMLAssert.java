@@ -4,7 +4,7 @@
 
 package org.signalml;
 
-import flanagan.complex.Complex;
+import org.apache.commons.math.complex.Complex;
 import org.junit.Assert;
 
 /**
@@ -26,7 +26,7 @@ public class SignalMLAssert extends Assert {
 	public static void assertEquals(Complex expected, Complex actual, Complex delta) {
 
 		assertEquals(expected.getReal(), actual.getReal(), delta.getReal());
-		assertEquals(expected.getImag(), actual.getImag(), delta.getImag());
+		assertEquals(expected.getImaginary(), actual.getImaginary(), delta.getImaginary());
 
 	}
 

@@ -66,7 +66,7 @@ public class FFTSampleFilterEngine extends SampleFilterEngine {
 		this.definition = new FFTSampleFilter(definition);
 		fourierTransform = new FourierTransform();
 		
-		fourierTransform.setWindowType(definition.getWindowType(), definition.getWindowParameter());	
+		fourierTransform.setWindowType(definition.getWindowType(), definition.getWindowParameter());
 	}
 
 	@Override

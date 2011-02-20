@@ -4,8 +4,8 @@
 
 package org.signalml.domain.montage.filter.iirdesigner;
 
-import flanagan.complex.Complex;
-import flanagan.complex.ComplexPoly;
+import org.apache.commons.math.complex.Complex;
+import org.signalml.domain.montage.filter.iirdesigner.math.ComplexPolynomial;
 
 /**
  * This class represents a complex frequency response of a filter. Contains two
@@ -39,7 +39,7 @@ public class TransferFunction {
 	 * @param numberOfPoints number of frequencies at which the frequency response
 	 * will be computed
 	 */
-	TransferFunction(int numberOfPoints, FilterCoefficients filterCoefficients) {
+	public TransferFunction(int numberOfPoints, FilterCoefficients filterCoefficients) {
 		frequencies = new double[numberOfPoints];
 		gain = new Complex[numberOfPoints];
 		this.filterCoefficients = filterCoefficients;
@@ -52,15 +52,23 @@ public class TransferFunction {
 	 */
 	protected void calculateTransferFunction() {
 
-		ComplexPoly numerator = new ComplexPoly(filterCoefficients.getBCoefficients());
-		ComplexPoly denominator = new ComplexPoly(filterCoefficients.getACoefficients());
+		double[] numeratorCoefficients = ArrayOperations.reverse(filterCoefficients.getBCoefficients());
+		double[] denominatorCoefficients = ArrayOperations.reverse(filterCoefficients.getACoefficients());
+
+		ComplexPolynomial numerator = new ComplexPolynomial(numeratorCoefficients);
+		ComplexPolynomial denominator = new ComplexPolynomial(denominatorCoefficients);
 
 		double frequency;
-		Complex exponent = new Complex();
+		Complex exponent;
 		for (int i = 0; i < frequencies.length; i++) {
 			frequency = i * Math.PI / frequencies.length;
-			exponent = Complex.exp(new Complex(0, -frequency));
-			setValue(i, frequency, Complex.over(numerator.evaluate(exponent), denominator.evaluate(exponent)));
+			exponent = (new Complex(0, -frequency)).exp();
+
+			Complex numeratorValue = numerator.evaluate(exponent);
+			Complex denominatorValue = denominator.evaluate(exponent);
+			Complex value = numeratorValue.divide(denominatorValue);
+
+			setValue(i, frequency,	value);
 		}
 
 	}

@@ -3,8 +3,6 @@
  */
 package org.signalml.domain.montage.filter.iirdesigner;
 
-import flanagan.complex.Complex;
-import flanagan.complex.ComplexPoly;
 import java.util.Arrays;
 
 /**
