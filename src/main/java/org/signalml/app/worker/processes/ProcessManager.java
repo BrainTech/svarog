@@ -1,5 +1,6 @@
 package org.signalml.app.worker.processes;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,6 +27,11 @@ public class ProcessManager {
         private HashMap<String, ProcessSubject> runningProcesses;
 
         /**
+         * Listeners list
+         */
+        private List<ProcessEndListener> listeners;
+
+        /**
          * Default constructor.
          */
         public ProcessManager() {
@@ -33,6 +39,8 @@ public class ProcessManager {
                 createdProcesses = new HashMap<String, ProcessSubject>();
                 preparedProcesses = new HashMap<String, ProcessSubject>();
                 runningProcesses = new HashMap<String, ProcessSubject>();
+
+                listeners = new ArrayList<ProcessEndListener>();
         }
 
         /**
@@ -106,5 +114,28 @@ public class ProcessManager {
 
                 runningProcesses.remove(id);
                 killAll();
+
+                for (ProcessEndListener listener : listeners)
+                        listener.processEnded(id, exitCode);
+        }
+
+        /**
+         * Adds a process end listener.
+         *
+         * @param listener the listener
+         */
+        public void addProcessEndListener(ProcessEndListener listener) {
+
+                listeners.add(listener);
+        }
+
+        /**
+         * Removes a process end listener.
+         *
+         * @param listener the listener
+         */
+        public void removeProcessEndListener(ProcessEndListener listener) {
+
+                listeners.remove(listener);
         }
 }
