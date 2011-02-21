@@ -35,7 +35,7 @@ public class LegacyTagImporterTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		Resource r = new ClassPathResource("org/signalml/domain/tag/test/ZCB02A.TAG");
+		Resource r = new ClassPathResource("tag/ZCB02A.TAG");
 		legacyTagFile = r.getFile();
 
 		lti = new LegacyTagImporter();
