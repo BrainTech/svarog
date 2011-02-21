@@ -210,7 +210,7 @@ public class ButterworthIIRDesignerTest {
 		                new double[] {0.6, 0.7},
 		                3, 40);
 
-		assertEquals(-3.546182557211913, bo.function(new double[] {1.0}), 1e-8);
+		assertEquals(-3.546182557211913, bo.value(1.0), 1e-8);
 
 		//butterworth test 2
 		bo = iirdesigner.new BandstopObjectiveFunction(0,
@@ -218,14 +218,14 @@ public class ButterworthIIRDesignerTest {
 		                new double[] {2.0, 3.0},
 		                3, 20);
 
-		assertEquals(7.9947088019182813, bo.function(new double[] {0.0}), 1e-8);
-		assertEquals(14.920040569147393, bo.function(new double[] {1.9}), 1e-8);
+		assertEquals(7.9947088019182813, bo.value(0.0), 1e-8);
+		assertEquals(14.920040569147393, bo.value(1.9), 1e-8);
 
 		//butterworth test 3
 		bo = iirdesigner.new BandstopObjectiveFunction(0, new double[] {1.0, 4.0}, new double[] {2.0, 3.0}, 3, 20);
 
 		//double wp0 = SpecialMath.minimizeFunctionConstrained(objectiveFunction, 1.0, 2.0-1e-12);
-		assertEquals(2.5100487397489273, bo.function(new double[] {1.5}), 1e-4);
+		assertEquals(2.5100487397489273, bo.value(1.5), 1e-4);
 
 	}
 

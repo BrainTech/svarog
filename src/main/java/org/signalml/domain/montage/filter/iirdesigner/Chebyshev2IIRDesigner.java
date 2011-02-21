@@ -5,8 +5,8 @@
 package org.signalml.domain.montage.filter.iirdesigner;
 
 import org.apache.commons.math.complex.Complex;
-import flanagan.math.Fmath;
 import java.util.ArrayList;
+import org.signalml.domain.montage.filter.iirdesigner.math.SpecialMath;
 
 /**
  * This class represents a designer which is capable of designing a Chebyshev II.
@@ -40,7 +40,7 @@ class Chebyshev2IIRDesigner extends ChebyshevIIRDesigner {
 	protected FilterZerosPolesGain calculatePrototype(int filterOrder, double gstop) {
 
 		double de = 1.0 / Math.sqrt(Math.pow(10, 0.1 * gstop) - 1);
-		double mu = Fmath.asinh(1.0 / de) / filterOrder;
+		double mu = SpecialMath.asinh(1.0 / de) / filterOrder;
 
 		ArrayList<Complex> zerosList = new ArrayList<Complex>();
 		ArrayList<Complex> polesList = new ArrayList<Complex>();
@@ -49,11 +49,11 @@ class Chebyshev2IIRDesigner extends ChebyshevIIRDesigner {
 		for (int i = 1; i < 2*filterOrder; i += 2) {
 
 			Complex pole = (new Complex(0, Math.PI * i / (2 * filterOrder) + Math.PI / 2.0)).exp();
-			pole = new Complex(pole.getReal() * Fmath.sinh(mu), pole.getImaginary() * Fmath.cosh(mu));
+			pole = new Complex(pole.getReal() * StrictMath.sinh(mu), pole.getImaginary() * StrictMath.cosh(mu));
 			pole = new Complex(1.0, 0.0).divide(pole);
 			polesList.add(pole);
 
-			if (Fmath.isOdd(filterOrder))
+			if (SpecialMath.isOdd(filterOrder))
 				if (i >= filterOrder-1 && i < filterOrder+2)
 					continue;
 
@@ -115,7 +115,7 @@ class Chebyshev2IIRDesigner extends ChebyshevIIRDesigner {
 		double GSTOP = Math.pow(10.0, 0.1*Math.abs(gstop));
 		double GPASS = Math.pow(10.0, 0.1*Math.abs(gpass));
 
-		double newFrequency = Math.cosh(1.0 / (double)(filterOrder) * Fmath.acosh(Math.sqrt((GSTOP - 1.0) / (GPASS - 1.0))));
+		double newFrequency = Math.cosh(1.0 / (double)(filterOrder) * SpecialMath.acosh(Math.sqrt((GSTOP - 1.0) / (GPASS - 1.0))));
 		newFrequency = 1.0 / newFrequency;
 
 		double[] wn = new double[2];

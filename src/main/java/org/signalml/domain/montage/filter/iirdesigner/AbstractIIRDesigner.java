@@ -4,8 +4,9 @@
 
 package org.signalml.domain.montage.filter.iirdesigner;
 
+import org.signalml.domain.montage.filter.iirdesigner.math.FunctionOptimizer;
 import org.apache.commons.math.complex.Complex;
-import flanagan.math.MinimisationFunction;
+import org.apache.commons.math.analysis.UnivariateRealFunction;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -368,11 +369,11 @@ abstract class AbstractIIRDesigner {
 		double[] passbCopy = passb.clone();
 
 		BandstopObjectiveFunction objectiveFunction = new BandstopObjectiveFunction(0, passbCopy, stopb, gpass, gstop);
-		double passb0 = SpecialMath.minimizeFunctionConstrained(objectiveFunction, passbCopy[0], stopb[0]-1e-12);
+		double passb0 = FunctionOptimizer.minimizeFunctionConstrained(objectiveFunction, passbCopy[0], stopb[0]-1e-12, 500);
 		passbCopy[0] = passb0;
 
 		objectiveFunction = new BandstopObjectiveFunction(1, passbCopy, stopb, gpass, gstop);
-		double passb1 = SpecialMath.minimizeFunctionConstrained(objectiveFunction, stopb[1]+1e-12, passbCopy[1]);
+		double passb1 = FunctionOptimizer.minimizeFunctionConstrained(objectiveFunction, stopb[1]+1e-12, passbCopy[1], 500);
 		passbCopy[1] = passb1;
 
 		return new double[] {passbCopy[0], passbCopy[1]};
@@ -413,7 +414,7 @@ abstract class AbstractIIRDesigner {
 	/**
 	 * This class is used for bandstop filter order minimization.
 	 */
-	protected class BandstopObjectiveFunction implements MinimisationFunction {
+	protected class BandstopObjectiveFunction implements UnivariateRealFunction {
 
 		/**
 		 * specyfies which passband edge to vary
@@ -468,8 +469,7 @@ abstract class AbstractIIRDesigner {
 		 * @return the filter order (possibly non-integer)
 		 */
 		@Override
-		public double function(double[] param) {
-			double argument = param[0];
+		public double value(double argument) {
 			return calculateBandstopObjectiveFunctionValue(argument, this);
 		}
 

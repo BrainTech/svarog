@@ -58,7 +58,7 @@ public class ChebyshevIIRDesignerTest {
 		                               new double[] {0.1, 0.8},
 		                               new double[] {0.4, 0.6},
 		                               3, 20);
-		assertEquals(3.7599806708583481, bo.function(new double[] {0.0}), 1e-8);
+		assertEquals(3.7599806708583481, bo.value(0.0), 1e-8);
 
 	}
 

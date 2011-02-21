@@ -3,6 +3,7 @@
  */
 package org.signalml.domain.montage.filter.iirdesigner;
 
+import org.signalml.domain.montage.filter.iirdesigner.math.SpecialMath;
 import java.util.Arrays;
 
 /**

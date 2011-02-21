@@ -5,7 +5,7 @@
 package org.signalml.domain.montage.filter.iirdesigner;
 
 import org.apache.commons.math.complex.Complex;
-import flanagan.math.Fmath;
+import org.signalml.domain.montage.filter.iirdesigner.math.SpecialMath;
 
 /**
  * This class represents a designer which is capable of designing a Chebyshev I filter.
@@ -56,7 +56,7 @@ class Chebyshev1IIRDesigner extends ChebyshevIIRDesigner {
 			product = product.multiply(poles[i].negate());
 		double gain = product.getReal();
 
-		if (Fmath.isEven(filterOrder))
+		if (SpecialMath.isEven(filterOrder))
 			gain = gain / Math.sqrt(1 + epsilon * epsilon);
 
 		//return zeros, poles & gain

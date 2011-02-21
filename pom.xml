@@ -30,11 +30,6 @@
 		  <url>http://repository.jboss.org/maven2/</url>
 		</repository>
 		<repository>
-		  <id>flanagan</id>
-		  <name>ActiveQuant Repository</name>
-		  <url>http://activequant.org/m2/external/</url>
-		</repository>
-		<repository>
 		  <id>apache</id>
 		  <name>Apache Commons</name>
 		  <url>http://mirrors.ibiblio.org/pub/mirrors/maven2/</url>
@@ -229,11 +224,6 @@
 	</build>
 
 	<dependencies>
-		<dependency>
-			<groupId>flanagan</groupId>
-			<artifactId>flanagan</artifactId>
-			<version>1.0.3</version>
-		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-math</artifactId>

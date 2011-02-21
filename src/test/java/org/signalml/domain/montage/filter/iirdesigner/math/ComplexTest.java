@@ -9,11 +9,15 @@ import static org.signalml.domain.montage.filter.iirdesigner.IIRDesignerAssert.*
 import org.junit.Test;
 
 /**
+ * This class performes unit tests on {@link org.apache.commons.math.complex.Complex}.
  *
  * @author Piotr Szachewicz
  */
 public class ComplexTest {
 
+	/**
+	 * Test method for {@link org.apache.commons.math.complex.Complex#exp() }.
+	 */
 	@Test
 	public void testExp() {
 		Complex actual = (new Complex(1.0, 2.0)).exp();

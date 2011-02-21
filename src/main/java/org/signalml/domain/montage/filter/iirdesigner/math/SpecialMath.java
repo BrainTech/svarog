@@ -2,10 +2,8 @@
  *
  */
 
-package org.signalml.domain.montage.filter.iirdesigner;
+package org.signalml.domain.montage.filter.iirdesigner.math;
 
-import flanagan.math.Minimisation;
-import flanagan.math.MinimisationFunction;
 import org.apache.log4j.Logger;
 
 /**
@@ -215,138 +213,7 @@ public class SpecialMath {
 
 	}
 
-	/**
-	 * Returns the value of the parameter found by the Nelder and Mead simplex
-	 * algorithm which minimizes the value of the given function.
-	 *
-	 * @param function the function to minimize
-	 * @param start the initial estimate of the function parameter
-	 * @param nmax the maximum number of iterations allowed by the simplex procedure
-	 * @return the value of the parameter at which the value of the function is minimum
-	 */
-	public static double minimizeFunction(MinimisationFunction function, double start, int nmax) {
-		return minimizeFunction(function, new double[] {start}, nmax)[0];
-	}
 
-	/**
-	 * Returns the values of the parameters found by the Nelder and Mead simplex
-	 * algorithm which minimizes the value of the given function.
-	 *
-	 * @param function the function to minimize
-	 * @param start the initial estimates of the function parameters
-	 * @param nmax the maximum number of iterations allowed by the simplex procedure
-	 * @return the value of the parameters at which the value of the function is minimum
-	 */
-	public static double[] minimizeFunction(MinimisationFunction function, double[] start, int nmax) {
-
-		Minimisation min = new Minimisation();
-		//min.suppressNoConvergenceMessage();
-		min.nelderMead(function, start, nmax);
-		return min.getParamValues();
-
-	}
-
-	/**
-	 * Returns the value of the parameter found by the Nelder and Mead simplex
-	 * algorithm which minimizes the value of the given function with its
-	 * parameter constrained.
-	 *
-	 * @param function the function to minimize
-	 * @param lowerBounds the lower boundary value for the function parameter
-	 * @param higherBounds the higher boundary value for the function parameter
-	 * @param nmax the maximum number of iterations allowed by the simplex procedure
-	 * @return the value of the parameter at which the value of the function is minimum
-	 * (at the given constraints).
-	 */
-	public static double  minimizeFunctionConstrained(MinimisationFunction function, double lowerBounds, double higherBounds, int nmax) {
-		return minimizeFunctionConstrained(function, new double[] {lowerBounds}, new double[] {higherBounds}, nmax)[0];
-	}
-
-	/**
-	 * Returns the value of the parameter found by the Nelder and Mead simplex
-	 * algorithm which minimizes the value of the given function with its
-	 * parameter constrained.
-	 *
-	 * @param function the function to minimize
-	 * @param lowerBounds the lower boundary value for the function parameter
-	 * @param higherBounds the higher boundary value for the function parameter
-	 * @return the value of the parameter at which the value of the function is minimum
-	 * (at the given constraints).
-	 */
-	public static double  minimizeFunctionConstrained(MinimisationFunction function, double lowerBounds, double higherBounds) {
-		return minimizeFunctionConstrained(function, new double[] {lowerBounds}, new double[] {higherBounds})[0];
-	}
-
-	/**
-	 * Returns the values of the parameters found by the Nelder and Mead simplex
-	 * algorithm which minimizes the value of the given function with its
-	 * parameters constrained.
-	 *
-	 * @param function the function to minimize
-	 * @param lowerBounds the lower boundary value for the function parameters
-	 * @param higherBounds the higher boundary value for the function parameters
-	 * @param nmax the maximum number of iterations allowed by the simplex procedure
-	 * (if the number is less or equal to 1, there are no limitations at the number
-	 * of iterations)
-	 * @return the values of the parameters at which the value of the function is minimum
-	 * (at the given constraints).
-	 */
-	public static double[]  minimizeFunctionConstrained(MinimisationFunction function, double[] lowerBounds, double[] higherBounds, int nmax) {
-
-		if (lowerBounds.length != higherBounds.length)
-			throw new IllegalArgumentException("lowerBounds and higherBounds arrays must have equal sizes");
-
-		double[] start = new double[lowerBounds.length];
-
-		for (int i = 0; i < start.length; i++)
-			start[i] = (higherBounds[i] + lowerBounds[i]) / 2;
-
-		Minimisation min = new Minimisation();
-
-		for (int i = 0; i < start.length; i++) {
-			min.addConstraint(i, -1, lowerBounds[i]);
-			min.addConstraint(i, 1, higherBounds[i]);
-		}
-
-		//min.suppressNoConvergenceMessage();
-		min.nelderMead(function, start, nmax);
-		return min.getParamValues();
-
-	}
-
-	/**
-	 * Returns the values of the parameters found by the Nelder and Mead simplex
-	 * algorithm which minimizes the value of the given function with its
-	 * parameters constrained.
-	 *
-	 * @param function the function to minimize
-	 * @param lowerBounds the lower boundary value for the function parameter
-	 * @param higherBounds the higher boundary value for the function parameter
-	 * @return the value of the parameters at which the value of the function is minimum
-	 * (at the given constraints).
-	 */
-	public static double[]  minimizeFunctionConstrained(MinimisationFunction function, double[] lowerBounds, double[] higherBounds) {
-
-		if (lowerBounds.length != higherBounds.length)
-			throw new IllegalArgumentException("lowerBounds and higherBounds arrays must have equal sizes");
-
-		double[] start = new double[lowerBounds.length];
-
-		for (int i = 0; i < start.length; i++)
-			start[i] = (higherBounds[i] + lowerBounds[i]) / 2;
-
-		Minimisation min = new Minimisation();
-
-		for (int i = 0; i < start.length; i++) {
-			min.addConstraint(i, -1, lowerBounds[i]);
-			min.addConstraint(i, 1, higherBounds[i]);
-		}
-
-		//min.suppressNoConvergenceMessage();
-		min.nelderMead(function, start);
-		return min.getParamValues();
-
-	}
 
 	/**
 	 * Returns the value of the factorial n!
@@ -436,6 +303,82 @@ public class SpecialMath {
 				unwrapped[i] = angles[i];
 		}
 		return unwrapped;
+
+	}
+
+	/**
+	 * Returns if the given number is odd.
+	 * @param x the number to be checked
+	 * @return true if the number is odd, false otherwise
+	 */
+	public static boolean isOdd(int x) {
+		if (x % 2 == 1)
+			return true;
+		return false;
+	}
+
+	/**
+	 * Returns if the given number is even.
+	 * @param x the number to be checked
+	 * @return true if the number is even, false otherwise
+	 */
+	public static boolean isEven(int x) {
+		if (x % 2 == 0)
+			return true;
+		return false;
+	}
+
+	/** Compute the inverse hyperbolic cosine of a number.
+	 * * (Note: This method is copy-pasted from
+	 * apache.commons.math.util.FastMath under Apache License v2.0.
+	 * After releasing version 3.0 of commons.math library
+	 * this code should be deleted and all calls to this method
+	 * should substituted by calls to apache.commons.math.util.FastMath
+	 * equivalent method).
+	 *
+	 * @param a number on which evaluation is done
+	 * @return inverse hyperbolic cosine of a
+	 */
+	public static double acosh(final double a) {
+		return Math.log(a + Math.sqrt(a * a - 1));
+	}
+
+	 /** Compute the inverse hyperbolic sine of a number.
+	 * (Note: This method is copy-pasted from
+	 * apache.commons.math.util.FastMath under Apache License v2.0.
+	 * After releasing version 3.0 of commons.math library
+	 * this code should be deleted and all calls to this method
+	 * should substituted by calls to apache.commons.math.util.FastMath
+	 * equivalent method).
+	 *
+	 * @param a number on which evaluation is done
+	 * @return inverse hyperbolic sine of a
+	 */
+	public static double asinh(double a) {
+
+		boolean negative = false;
+		if (a < 0) {
+			negative = true;
+			a = -a;
+		}
+
+		double absAsinh;
+		if (a > 0.167) {
+			absAsinh = Math.log(Math.sqrt(a * a + 1) + a);
+		} else {
+			final double a2 = a * a;
+			if (a > 0.097) {
+				absAsinh = a * (1 - a2 * (1 / 3.0 - a2 * (1 / 5.0 - a2 * (1 / 7.0 - a2 * (1 / 9.0 - a2 * (1.0 / 11.0 - a2 * (1.0 / 13.0 - a2 * (1.0 / 15.0 - a2 * (1.0 / 17.0) * 15.0 / 16.0) * 13.0 / 14.0) * 11.0 / 12.0) * 9.0 / 10.0) * 7.0 / 8.0) * 5.0 / 6.0) * 3.0 / 4.0) / 2.0);
+			} else if (a > 0.036) {
+				absAsinh = a * (1 - a2 * (1 / 3.0 - a2 * (1 / 5.0 - a2 * (1 / 7.0 - a2 * (1 / 9.0 - a2 * (1.0 / 11.0 - a2 * (1.0 / 13.0) * 11.0 / 12.0) * 9.0 / 10.0) * 7.0 / 8.0) * 5.0 / 6.0) * 3.0 / 4.0) / 2.0);
+			} else if (a > 0.0036) {
+				absAsinh = a * (1 - a2 * (1 / 3.0 - a2 * (1 / 5.0 - a2 * (1 / 7.0 - a2 * (1 / 9.0) * 7.0 / 8.0) * 5.0 / 6.0) * 3.0 / 4.0) / 2.0);
+			} else {
+				absAsinh = a * (1 - a2 * (1 / 3.0 - a2 * (1 / 5.0) * 3.0 / 4.0) / 2.0);
+			}
+		}
+
+		return negative ? -absAsinh : absAsinh;
 
 	}
 
