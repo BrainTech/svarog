@@ -4,7 +4,7 @@
 
 package org.signalml.domain.montage.filter.iirdesigner;
 
-import flanagan.complex.Complex;
+import org.apache.commons.math.complex.Complex;
 
 /**
  * This class represents a designer which is capable of designing a Butterworth filter.
@@ -39,7 +39,7 @@ class ButterworthIIRDesigner extends AbstractIIRDesigner {
 		Complex[] poles = new Complex[filterOrder];
 
 		for (int i = 0; i < filterOrder; i++)
-			poles[i] = Complex.exp(new Complex(0, Math.PI * (2 * i + 1) / (2 * filterOrder))).times(imaginaryUnit);
+			poles[i] = (new Complex(0, Math.PI * (2 * i + 1) / (2 * filterOrder))).exp().multiply(imaginaryUnit);
 
 		FilterZerosPolesGain zpk = new FilterZerosPolesGain(new Complex[0], poles, 1.0);
 		return zpk;

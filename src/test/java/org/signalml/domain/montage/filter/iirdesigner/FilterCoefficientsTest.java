@@ -4,7 +4,7 @@
 
 package org.signalml.domain.montage.filter.iirdesigner;
 
-import flanagan.complex.Complex;
+import org.apache.commons.math.complex.Complex;
 import org.junit.Test;
 
 import static org.signalml.domain.montage.filter.iirdesigner.IIRDesignerAssert.*;
@@ -27,27 +27,6 @@ public class FilterCoefficientsTest {
 
 		assertEquals(5, coeffs.getFilterOrder());
 	}
-
-	@Test
-	public void testGetComplexFrequencyResponse() {
-
-		//b,a=signal.iirdesign(0.4,0.6,5,30, ftype='butter')
-		FilterCoefficients coeffs = new FilterCoefficients(
-		        new double[] {0.01875398, 0.0937699, 0.18753981, 0.18753981, 0.0937699, 0.01875398},
-		        new double[] {1.0, -1.13877891, 1.08854509, -0.46710982, 0.13151932, -0.0140483});
-
-		TransferFunction response = new TransferFunction(512, coeffs);
-
-		assertEquals(new Complex(1,0), response.getGain()[0], new Complex(1e-6, 1e-6));
-		assertEquals(new Complex(9.89651405e-01, -1.43492499e-01), response.getGain()[10], new Complex(1e-6, 1e-6));
-		assertEquals(new Complex(2.94416493e-16, -4.24775580e-14), response.getGain()[511], new Complex(1e-6, 1e-6));
-
-		assertEquals(0, response.getFrequencies()[0], 1e-6);
-		assertEquals(0.02454369, response.getFrequencies()[4], 1e-6);
-		assertEquals(3.12932081, response.getFrequencies()[510], 1e-6);
-
-	}
-
 
 	/**
 	 * Test method for {@link FilterCoefficients#normalize() }.

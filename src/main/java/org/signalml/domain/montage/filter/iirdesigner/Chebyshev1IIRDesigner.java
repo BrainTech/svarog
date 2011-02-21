@@ -4,7 +4,7 @@
 
 package org.signalml.domain.montage.filter.iirdesigner;
 
-import flanagan.complex.Complex;
+import org.apache.commons.math.complex.Complex;
 import flanagan.math.Fmath;
 
 /**
@@ -51,9 +51,9 @@ class Chebyshev1IIRDesigner extends ChebyshevIIRDesigner {
 		}
 
 		//calculate gain
-		Complex product = new Complex(1.0);
+		Complex product = new Complex(1.0, 0.0);
 		for (int i = 0; i < poles.length; i++)
-			product = product.times(poles[i].times(-1.0));
+			product = product.multiply(poles[i].negate());
 		double gain = product.getReal();
 
 		if (Fmath.isEven(filterOrder))

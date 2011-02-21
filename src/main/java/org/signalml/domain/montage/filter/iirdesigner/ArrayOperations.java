@@ -3,6 +3,8 @@
  */
 package org.signalml.domain.montage.filter.iirdesigner;
 
+import org.apache.commons.math.complex.Complex;
+
 /**
  * This class contains various methods operating on arrays for
  * convolution, reversing the order of elements in array etc.
@@ -124,4 +126,14 @@ public class ArrayOperations {
 		return trimmedArray;
 
 	}
+
+	public static Complex[] convertDoubleArrayToComplex(double[] input) {
+		Complex[] result = new Complex[input.length];
+
+		for (int i = 0; i < result.length; i++)
+			result[i] = new Complex(input[i], 0.0);
+
+		return result;
+	}
+
 }

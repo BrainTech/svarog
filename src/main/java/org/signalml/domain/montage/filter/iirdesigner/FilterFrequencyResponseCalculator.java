@@ -5,8 +5,8 @@ package org.signalml.domain.montage.filter.iirdesigner;
 
 import org.apache.log4j.Logger;
 
-import flanagan.complex.Complex;
-import flanagan.math.FourierTransform;
+import org.apache.commons.math.complex.Complex;
+import org.signalml.fft.FourierTransform;
 
 /**
  * This class represents a calculator capable of computing various filter
@@ -104,7 +104,7 @@ public class FilterFrequencyResponseCalculator extends FilterResponseCalculator 
 
 		frequencyResponse.setFrequencies(frequencies);
 		for (int i = 0; i < transferFunction.getSize(); i++) {
-			phaseDelay = Math.toDegrees(transferFunction.getGain(i).arg());
+			phaseDelay = Math.toDegrees(transferFunction.getGain(i).getArgument());
 			frequencyResponse.setValue(i, phaseDelay);
 		}
 
@@ -152,29 +152,29 @@ public class FilterFrequencyResponseCalculator extends FilterResponseCalculator 
 		}
 
 		cr = ArrayOperations.padWithZeros(cr, fftSize);
-		FourierTransform fourierTransform = new FourierTransform(cr);
-		fourierTransform.transform();
-		Complex[] num = fourierTransform.getTransformedDataAsComplex();
+		FourierTransform fourierTransform = new FourierTransform();
+		Complex[] fftInput = ArrayOperations.convertDoubleArrayToComplex(cr);
+		Complex[] num = fourierTransform.forwardFFTComplex(fftInput);
 
 		c = ArrayOperations.padWithZeros(c, fftSize);
-		FourierTransform fourierTransform2 = new FourierTransform(c);
-		fourierTransform2.transform();
-		Complex[] den = fourierTransform2.getTransformedDataAsComplex();
+		FourierTransform fourierTransform2 = new FourierTransform();
+		Complex[] fftInput2 = ArrayOperations.convertDoubleArrayToComplex(c);
+		Complex[] den = fourierTransform2.forwardFFTComplex(fftInput2);
 
 		double minmag = SpecialMath.getMachineEpsilon() * 10;
 
 		for (i = 0; i < den.length; i++) {
 			if (den[i].abs() < minmag) {
 				logger.debug("group delay singular - setting to 0");
-				num[i].reset(0, 0);
-				den[i].reset(1, 0);
+				num[i] = new Complex(0, 0);
+				den[i] = new Complex(1, 0);
 			}
 		}
 
 		double[] groupDelay = new double[c.length];
 
 		for (i = 0; i < groupDelay.length; i++) {
-			groupDelay[i] = (num[i].over(den[i])).getReal() - oa;
+			groupDelay[i] = (num[i].divide(den[i])).getReal() - oa;
 		}
 
 		groupDelay = ArrayOperations.trimArrayToSize(groupDelay, fftSize / 2);
