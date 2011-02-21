@@ -4,10 +4,12 @@
 
 package org.signalml.domain.montage.filter.iirdesigner;
 
+import org.signalml.domain.montage.filter.iirdesigner.math.SpecialMath;
+import org.signalml.domain.montage.filter.iirdesigner.math.FunctionOptimizer;
 import org.apache.commons.math.complex.Complex;
 import flanagan.math.Fmath;
-import flanagan.math.MinimisationFunction;
 import java.util.ArrayList;
+import org.apache.commons.math.analysis.UnivariateRealFunction;
 
 /**
  * This class represents a designer which is capable of designing an Elliptic filter.
@@ -18,7 +20,7 @@ class EllipticIIRDesigner extends AbstractIIRDesigner {
 
 	private static final double EPSILON = 2e-16;
 
-	protected static class VRatio implements MinimisationFunction {
+	protected static class VRatio implements UnivariateRealFunction {
 
 		private double ineps;
 		private double mp;
@@ -34,17 +36,14 @@ class EllipticIIRDesigner extends AbstractIIRDesigner {
 		}
 
 		@Override
-		public double function(double[] param) {
-
-			double u = param[0];
+		public double value(double u) {
 			double[] jacob = SpecialMath.calculateJacobianEllipticFunctionsValues(u, mp);
 			return Math.abs(ineps - jacob[0] / jacob[1]);
-
 		}
 
 	}
 
-	protected static class KRatio implements MinimisationFunction {
+	protected static class KRatio implements UnivariateRealFunction {
 
 		private double kRatio;
 
@@ -56,8 +55,7 @@ class EllipticIIRDesigner extends AbstractIIRDesigner {
 		}
 
 		@Override
-		public double function(double[] param) {
-			double m = param[0];
+		public double value(double m) {
 			double ratio;
 
 			if (m < 0)
@@ -124,16 +122,14 @@ class EllipticIIRDesigner extends AbstractIIRDesigner {
 			krat = filterOrder * val[0] / val[1];
 
 		KRatio kRatio = new KRatio(krat);
-		double m = SpecialMath.minimizeFunction(kRatio, new double[] {0.5}, 250)[0];
-
-		if (m < 0 || m > 1)
-			m = SpecialMath.minimizeFunctionConstrained(kRatio, new double[] {0.0}, new double[] {1.0}, 250)[0];
+		double m = FunctionOptimizer.minimizeFunctionConstrained(kRatio, 0.0, 1.0, 250);
 
 		double capk = SpecialMath.calculateCompleteEllipticIntegralOfTheFirstKind(m);
 
 		//calculate poles & zeros
 		VRatio vRatio = new VRatio(1.0 / epsilon, ck1p * ck1p);
-		double r = SpecialMath.minimizeFunction(vRatio, new double[] {SpecialMath.calculateCompleteEllipticIntegralOfTheFirstKind(m)}, 250)[0];
+		double startValue = SpecialMath.calculateCompleteEllipticIntegralOfTheFirstKind(m);
+		double r = FunctionOptimizer.minimizeFunction(vRatio, startValue, 250);
 		double v0 = capk * r / (filterOrder * val[0]);
 		double[] ellipv = SpecialMath.calculateJacobianEllipticFunctionsValues(v0, 1 - m);
 

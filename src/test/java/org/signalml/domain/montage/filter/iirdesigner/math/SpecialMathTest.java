@@ -2,10 +2,10 @@
  *
  */
 
-package org.signalml.domain.montage.filter.iirdesigner;
+package org.signalml.domain.montage.filter.iirdesigner.math;
 
+import org.signalml.domain.montage.filter.iirdesigner.math.SpecialMath;
 import org.junit.Test;
-import org.signalml.domain.montage.filter.iirdesigner.EllipticIIRDesigner.KRatio;
 
 import static org.junit.Assert.*;
 
@@ -58,34 +58,6 @@ public class SpecialMathTest {
 		assertEquals(0.8841030379585475, result[1], 1e-16);//cn
 		assertEquals(0.92040574053472368, result[2], 1e-16);//dn
 		assertEquals(0.48622530445618917, result[3], 1e-16);//phi
-
-	}
-
-	/**
-	 * Test method for {@link SpecialMath#minimizeFunction(flanagan.math.MinimisationFunction, double[], int) }.
-	 */
-	@Test
-	public void testMinimizeFunction() {
-
-		EllipticIIRDesigner.KRatio kRatio = new KRatio();
-		kRatio.setKRatio(0.6);
-		double[] m = SpecialMath.minimizeFunction(kRatio, new double[] {0.5}, 250);
-		assertEquals(0.08164062, m[0], 0.001);
-
-	}
-
-	/**
-	 * Test method for {@link SpecialMath#minimizeFunctionConstrained(flanagan.math.MinimisationFunction, double[], double[], int) }.
-	 */
-	@Test
-	public void testMinimizeFunctionConstrained() {
-
-		EllipticIIRDesigner.KRatio kRatio = new KRatio();
-
-		kRatio.setKRatio(0.5);
-		double[] m = SpecialMath.minimizeFunctionConstrained(kRatio, new double[] {0.0}, new double[] {1.0}, 250);
-
-		assertEquals(0.02943873, m[0], 1e-4);
 
 	}
 

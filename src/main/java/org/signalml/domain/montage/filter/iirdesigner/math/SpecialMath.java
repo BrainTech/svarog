@@ -2,10 +2,8 @@
  *
  */
 
-package org.signalml.domain.montage.filter.iirdesigner;
+package org.signalml.domain.montage.filter.iirdesigner.math;
 
-import flanagan.math.Minimisation;
-import flanagan.math.MinimisationFunction;
 import org.apache.log4j.Logger;
 
 /**
@@ -215,138 +213,7 @@ public class SpecialMath {
 
 	}
 
-	/**
-	 * Returns the value of the parameter found by the Nelder and Mead simplex
-	 * algorithm which minimizes the value of the given function.
-	 *
-	 * @param function the function to minimize
-	 * @param start the initial estimate of the function parameter
-	 * @param nmax the maximum number of iterations allowed by the simplex procedure
-	 * @return the value of the parameter at which the value of the function is minimum
-	 */
-	public static double minimizeFunction(MinimisationFunction function, double start, int nmax) {
-		return minimizeFunction(function, new double[] {start}, nmax)[0];
-	}
 
-	/**
-	 * Returns the values of the parameters found by the Nelder and Mead simplex
-	 * algorithm which minimizes the value of the given function.
-	 *
-	 * @param function the function to minimize
-	 * @param start the initial estimates of the function parameters
-	 * @param nmax the maximum number of iterations allowed by the simplex procedure
-	 * @return the value of the parameters at which the value of the function is minimum
-	 */
-	public static double[] minimizeFunction(MinimisationFunction function, double[] start, int nmax) {
-
-		Minimisation min = new Minimisation();
-		//min.suppressNoConvergenceMessage();
-		min.nelderMead(function, start, nmax);
-		return min.getParamValues();
-
-	}
-
-	/**
-	 * Returns the value of the parameter found by the Nelder and Mead simplex
-	 * algorithm which minimizes the value of the given function with its
-	 * parameter constrained.
-	 *
-	 * @param function the function to minimize
-	 * @param lowerBounds the lower boundary value for the function parameter
-	 * @param higherBounds the higher boundary value for the function parameter
-	 * @param nmax the maximum number of iterations allowed by the simplex procedure
-	 * @return the value of the parameter at which the value of the function is minimum
-	 * (at the given constraints).
-	 */
-	public static double  minimizeFunctionConstrained(MinimisationFunction function, double lowerBounds, double higherBounds, int nmax) {
-		return minimizeFunctionConstrained(function, new double[] {lowerBounds}, new double[] {higherBounds}, nmax)[0];
-	}
-
-	/**
-	 * Returns the value of the parameter found by the Nelder and Mead simplex
-	 * algorithm which minimizes the value of the given function with its
-	 * parameter constrained.
-	 *
-	 * @param function the function to minimize
-	 * @param lowerBounds the lower boundary value for the function parameter
-	 * @param higherBounds the higher boundary value for the function parameter
-	 * @return the value of the parameter at which the value of the function is minimum
-	 * (at the given constraints).
-	 */
-	public static double  minimizeFunctionConstrained(MinimisationFunction function, double lowerBounds, double higherBounds) {
-		return minimizeFunctionConstrained(function, new double[] {lowerBounds}, new double[] {higherBounds})[0];
-	}
-
-	/**
-	 * Returns the values of the parameters found by the Nelder and Mead simplex
-	 * algorithm which minimizes the value of the given function with its
-	 * parameters constrained.
-	 *
-	 * @param function the function to minimize
-	 * @param lowerBounds the lower boundary value for the function parameters
-	 * @param higherBounds the higher boundary value for the function parameters
-	 * @param nmax the maximum number of iterations allowed by the simplex procedure
-	 * (if the number is less or equal to 1, there are no limitations at the number
-	 * of iterations)
-	 * @return the values of the parameters at which the value of the function is minimum
-	 * (at the given constraints).
-	 */
-	public static double[]  minimizeFunctionConstrained(MinimisationFunction function, double[] lowerBounds, double[] higherBounds, int nmax) {
-
-		if (lowerBounds.length != higherBounds.length)
-			throw new IllegalArgumentException("lowerBounds and higherBounds arrays must have equal sizes");
-
-		double[] start = new double[lowerBounds.length];
-
-		for (int i = 0; i < start.length; i++)
-			start[i] = (higherBounds[i] + lowerBounds[i]) / 2;
-
-		Minimisation min = new Minimisation();
-
-		for (int i = 0; i < start.length; i++) {
-			min.addConstraint(i, -1, lowerBounds[i]);
-			min.addConstraint(i, 1, higherBounds[i]);
-		}
-
-		//min.suppressNoConvergenceMessage();
-		min.nelderMead(function, start, nmax);
-		return min.getParamValues();
-
-	}
-
-	/**
-	 * Returns the values of the parameters found by the Nelder and Mead simplex
-	 * algorithm which minimizes the value of the given function with its
-	 * parameters constrained.
-	 *
-	 * @param function the function to minimize
-	 * @param lowerBounds the lower boundary value for the function parameter
-	 * @param higherBounds the higher boundary value for the function parameter
-	 * @return the value of the parameters at which the value of the function is minimum
-	 * (at the given constraints).
-	 */
-	public static double[]  minimizeFunctionConstrained(MinimisationFunction function, double[] lowerBounds, double[] higherBounds) {
-
-		if (lowerBounds.length != higherBounds.length)
-			throw new IllegalArgumentException("lowerBounds and higherBounds arrays must have equal sizes");
-
-		double[] start = new double[lowerBounds.length];
-
-		for (int i = 0; i < start.length; i++)
-			start[i] = (higherBounds[i] + lowerBounds[i]) / 2;
-
-		Minimisation min = new Minimisation();
-
-		for (int i = 0; i < start.length; i++) {
-			min.addConstraint(i, -1, lowerBounds[i]);
-			min.addConstraint(i, 1, higherBounds[i]);
-		}
-
-		//min.suppressNoConvergenceMessage();
-		min.nelderMead(function, start);
-		return min.getParamValues();
-
-	}
 
 	/**
 	 * Returns the value of the factorial n!

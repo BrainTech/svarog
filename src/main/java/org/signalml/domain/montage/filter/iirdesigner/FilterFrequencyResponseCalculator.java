@@ -3,6 +3,7 @@
  */
 package org.signalml.domain.montage.filter.iirdesigner;
 
+import org.signalml.domain.montage.filter.iirdesigner.math.SpecialMath;
 import org.apache.log4j.Logger;
 
 import org.apache.commons.math.complex.Complex;
