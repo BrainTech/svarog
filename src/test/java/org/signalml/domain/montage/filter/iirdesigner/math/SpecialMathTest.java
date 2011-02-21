@@ -92,8 +92,8 @@ public class SpecialMathTest {
 	 */
 	@Test
 	public void testIsOdd() {
-		assertTrue(isOdd(2));
-		assertFalse(isOdd(13));
+		assertTrue(isOdd(3));
+		assertFalse(isOdd(12));
 	}
 
 	/**
