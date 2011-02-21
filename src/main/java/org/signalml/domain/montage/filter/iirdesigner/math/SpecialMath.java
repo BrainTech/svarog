@@ -306,4 +306,80 @@ public class SpecialMath {
 
 	}
 
+	/**
+	 * Returns if the given number is odd.
+	 * @param x the number to be checked
+	 * @return true if the number is odd, false otherwise
+	 */
+	public static boolean isOdd(int x) {
+		if (x % 2 == 1)
+			return true;
+		return false;
+	}
+
+	/**
+	 * Returns if the given number is even.
+	 * @param x the number to be checked
+	 * @return true if the number is even, false otherwise
+	 */
+	public static boolean isEven(int x) {
+		if (x % 2 == 0)
+			return true;
+		return false;
+	}
+
+	/** Compute the inverse hyperbolic cosine of a number.
+	 * * (Note: This method is copy-pasted from
+	 * apache.commons.math.util.FastMath under Apache License v2.0.
+	 * After releasing version 3.0 of commons.math library
+	 * this code should be deleted and all calls to this method
+	 * should substituted by calls to apache.commons.math.util.FastMath
+	 * equivalent method).
+	 *
+	 * @param a number on which evaluation is done
+	 * @return inverse hyperbolic cosine of a
+	 */
+	public static double acosh(final double a) {
+		return Math.log(a + Math.sqrt(a * a - 1));
+	}
+
+	 /** Compute the inverse hyperbolic sine of a number.
+	 * (Note: This method is copy-pasted from
+	 * apache.commons.math.util.FastMath under Apache License v2.0.
+	 * After releasing version 3.0 of commons.math library
+	 * this code should be deleted and all calls to this method
+	 * should substituted by calls to apache.commons.math.util.FastMath
+	 * equivalent method).
+	 *
+	 * @param a number on which evaluation is done
+	 * @return inverse hyperbolic sine of a
+	 */
+	public static double asinh(double a) {
+
+		boolean negative = false;
+		if (a < 0) {
+			negative = true;
+			a = -a;
+		}
+
+		double absAsinh;
+		if (a > 0.167) {
+			absAsinh = Math.log(Math.sqrt(a * a + 1) + a);
+		} else {
+			final double a2 = a * a;
+			if (a > 0.097) {
+				absAsinh = a * (1 - a2 * (1 / 3.0 - a2 * (1 / 5.0 - a2 * (1 / 7.0 - a2 * (1 / 9.0 - a2 * (1.0 / 11.0 - a2 * (1.0 / 13.0 - a2 * (1.0 / 15.0 - a2 * (1.0 / 17.0) * 15.0 / 16.0) * 13.0 / 14.0) * 11.0 / 12.0) * 9.0 / 10.0) * 7.0 / 8.0) * 5.0 / 6.0) * 3.0 / 4.0) / 2.0);
+			} else if (a > 0.036) {
+				absAsinh = a * (1 - a2 * (1 / 3.0 - a2 * (1 / 5.0 - a2 * (1 / 7.0 - a2 * (1 / 9.0 - a2 * (1.0 / 11.0 - a2 * (1.0 / 13.0) * 11.0 / 12.0) * 9.0 / 10.0) * 7.0 / 8.0) * 5.0 / 6.0) * 3.0 / 4.0) / 2.0);
+			} else if (a > 0.0036) {
+				absAsinh = a * (1 - a2 * (1 / 3.0 - a2 * (1 / 5.0 - a2 * (1 / 7.0 - a2 * (1 / 9.0) * 7.0 / 8.0) * 5.0 / 6.0) * 3.0 / 4.0) / 2.0);
+			} else {
+				absAsinh = a * (1 - a2 * (1 / 3.0 - a2 * (1 / 5.0) * 3.0 / 4.0) / 2.0);
+			}
+		}
+
+		return negative ? -absAsinh : absAsinh;
+
+	}
+
 }

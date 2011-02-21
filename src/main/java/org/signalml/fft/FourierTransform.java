@@ -220,6 +220,12 @@ public class FourierTransform {
 		return transformed;
 	}
 
+	/**
+	 * Calculates the FFT of complex data. Also: if a window is set,
+	 * it is applied to the given data.
+	 * @param data the data to be transformed
+	 * @return the result of FFT
+	 */
 	public Complex[] forwardFFTComplex(Complex[] data) {
 		double[] interleaved = convertComplexToInterleaved(data);
 		double[] transformedInterleaved = forwardFFTComplex(interleaved);
@@ -227,6 +233,15 @@ public class FourierTransform {
 		return transformedComplex;
 	}
 
+	/**
+	 * Converts complex number array to a double array in which
+	 * real and imaginary parts of the complex numbers are interleaved
+	 * that is:
+	 * result[2*k] - the real part of k-th element and
+	 * result[2*k+1] - the imaginary part of k-th element.
+	 * @param complex the complex array to be converted
+	 * @return interleaved complex data
+	 */
 	private double[] convertComplexToInterleaved(Complex[] complex) {
 		double[] interleaved = new double[2 * complex.length];
 
@@ -238,6 +253,12 @@ public class FourierTransform {
 		return interleaved;
 	}
 
+	/**
+	 * Converts an array in which real and imaginary parts of the complex
+	 * numbers are interleaved to an equivalent array of complex numbers.
+	 * @param interleaved interleaved data to be converted
+	 * @return converted array
+	 */
 	private Complex[] convertInterleavedToComplex(double[] interleaved) {
 		Complex[] complex = new Complex[interleaved.length / 2];
 

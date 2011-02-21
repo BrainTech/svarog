@@ -7,35 +7,71 @@ package org.signalml.domain.montage.filter.iirdesigner.math;
 import org.apache.commons.math.complex.Complex;
 
 /**
+ * This class represents a polynomial with complex coefficients.
  *
  * @author Piotr Szachewicz
  */
 public class ComplexPolynomial {
 
+	/**
+	 * Coefficients of the polynomial.
+	 * The first (zero) element is the coefficient beside the highest
+	 * exponent.
+	 */
 	private Complex[] coefficients;
 
+	/**
+	 * Constructor.
+	 * @param coefficients the coefficients of this polynomial. The first
+	 * (coefficients[0]) element should be the coefficient beside the highest
+	 * exponent.
+	 */
 	public ComplexPolynomial(Complex[] coefficients) {
 		this.coefficients = coefficients.clone();
 	}
 
+	/**
+	 * Constructor.
+	 * @param coefficients the coefficients of the created polynomial. The first
+	 * (coefficients[0]) element of this array should be the coefficient
+	 * beside the highest exponent.
+	 */
 	public ComplexPolynomial(double[] coefficients) {
 		this.coefficients = new Complex[coefficients.length];
 		for (int i = 0; i < coefficients.length; i++)
 			this.coefficients[i] = new Complex(coefficients[i], 0.0);
 	}
 
+	/**
+	 * Returns the degree of this polynomial.
+	 * @return the degree of this polynomial
+	 */
 	public int getDegree() {
 		return coefficients.length - 1;
 	}
 
+	/**
+	 * Returns the coefficients of this polynomial.
+	 * @return the coefficients of this polynomial
+	 */
 	public Complex[] getCoefficients() {
 		return coefficients.clone();
 	}
 
+	/**
+	 * Returns the i-th coefficient of this polynomial.
+	 * @param i the index of the coefficient (from 0 to degree).
+	 * @return the i-th coefficients of this polynomial
+	 */
 	protected Complex getCoefficient(int i) {
 		return coefficients[i];
 	}
 
+	/**
+	 * Returns the value of this polynomial for a given argument.
+	 * @param argument an argument for which the value will be calculated
+	 * @return the value of this polynomial for x = argument
+	 */
 	public Complex evaluate(Complex argument) {
 		Complex value;
 		value = coefficients[0];

@@ -31,6 +31,16 @@ public class SignalMLAssert extends Assert {
 	}
 
 	/**
+	 * Asserts that two Complex numbers are equal concerning a delta equal to 1e-5.
+	 *
+	 * @param expected the expected value
+	 * @param actual the actual value
+	 */
+	public static void assertEquals(Complex expected, Complex actual) {
+		assertEquals(expected, actual, new Complex(1e-5, 1e-5));
+	}
+
+	/**
 	 * Asserts that the elements of two Complex number arrays are equal concerning
 	 * a delta.
 	 *

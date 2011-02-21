@@ -4,7 +4,7 @@
 
 package org.signalml.domain.montage.filter.iirdesigner;
 
-import flanagan.math.Fmath;
+import org.signalml.domain.montage.filter.iirdesigner.math.SpecialMath;
 
 /**
  * This abstract class represents a designer which is capable of designing a Chebyshev filter.
@@ -43,7 +43,7 @@ abstract class ChebyshevIIRDesigner extends AbstractIIRDesigner {
 		double GSTOP = Math.pow(10.0, 0.1*Math.abs(gstop));
 		double GPASS = Math.pow(10.0, 0.1*Math.abs(gpass));
 
-		int filterOrder = (int)(Math.ceil(Fmath.acosh(Math.sqrt((GSTOP - 1.0) / (GPASS - 1.0))) / Fmath.acosh(frequencyRatio)));
+		int filterOrder = (int)(Math.ceil(SpecialMath.acosh(Math.sqrt((GSTOP - 1.0) / (GPASS - 1.0))) / SpecialMath.acosh(frequencyRatio)));
 
 		if (filterOrder == 0)
 			throw new BadFilterParametersException("Filter order is zero - check the input parameters!");
@@ -79,7 +79,7 @@ abstract class ChebyshevIIRDesigner extends AbstractIIRDesigner {
 		double GSTOP = Math.pow(10, 0.1 * Math.abs(gstop));
 		double GPASS = Math.pow(10, 0.1 * Math.abs(gpass));
 
-		double filterOrder = Fmath.acosh(Math.sqrt((GSTOP - 1.0) / (GPASS - 1.0))) / Fmath.acosh(nat);
+		double filterOrder = SpecialMath.acosh(Math.sqrt((GSTOP - 1.0) / (GPASS - 1.0))) / SpecialMath.acosh(nat);
 
 		return filterOrder;
 

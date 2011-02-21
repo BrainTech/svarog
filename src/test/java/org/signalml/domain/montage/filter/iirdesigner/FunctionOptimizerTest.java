@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
 public class FunctionOptimizerTest {
 
 	/**
-	 * Test method for {@link FunctionOptimizer#minimizeFunction(flanagan.math.MinimisationFunction, double[], int) }.
+	 * Test method for {@link FunctionOptimizer#minimizeFunction(org.apache.commons.math.analysis.UnivariateRealFunction, double, int) }.
 	 */
 	@Test
 	public void testMinimizeFunction() {
@@ -32,7 +32,7 @@ public class FunctionOptimizerTest {
 	}
 
 	/**
-	 * Test method for {@link FunctionOptimizer#minimizeFunctionConstrained(flanagan.math.MinimisationFunction, double[], double[], int) }.
+	 * Test method for {@link FunctionOptimizer#minimizeFunctionConstrained(org.apache.commons.math.analysis.UnivariateRealFunction, double, double, int) }.
 	 */
 	@Test
 	public void testMinimizeFunctionConstrained() {

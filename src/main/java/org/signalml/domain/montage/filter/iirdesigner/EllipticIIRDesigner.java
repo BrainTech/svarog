@@ -7,7 +7,6 @@ package org.signalml.domain.montage.filter.iirdesigner;
 import org.signalml.domain.montage.filter.iirdesigner.math.SpecialMath;
 import org.signalml.domain.montage.filter.iirdesigner.math.FunctionOptimizer;
 import org.apache.commons.math.complex.Complex;
-import flanagan.math.Fmath;
 import java.util.ArrayList;
 import org.apache.commons.math.analysis.UnivariateRealFunction;
 
@@ -148,7 +147,7 @@ class EllipticIIRDesigner extends AbstractIIRDesigner {
 			Complex pole = new Complex(-ellip[1] * ellip[2] * ellipv[0] * ellipv[1], -ellip[0] * ellipv[2]);
 			pole = pole.divide(new Complex(1 - Math.pow(ellip[2] * ellipv[0], 2), 0));
 
-			if (Fmath.isOdd(filterOrder)) {
+			if (SpecialMath.isOdd(filterOrder)) {
 				polesList.add(pole);
 				if (Math.abs(pole.getImaginary()) > EPSILON * Math.sqrt(pole.multiply(pole.conjugate()).getReal())) {
 					polesList.add(pole.conjugate());
@@ -181,7 +180,7 @@ class EllipticIIRDesigner extends AbstractIIRDesigner {
 
 		gain = (numerator.divide(denominator)).getReal();
 
-		if (Fmath.isEven(filterOrder))
+		if (SpecialMath.isEven(filterOrder))
 			gain = gain/Math.sqrt((1 + epsilon * epsilon));
 
 		//return zeros, poles & gain

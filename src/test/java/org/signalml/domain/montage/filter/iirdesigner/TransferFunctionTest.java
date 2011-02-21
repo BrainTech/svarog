@@ -9,13 +9,17 @@ import org.junit.Test;
 import static org.signalml.domain.montage.filter.iirdesigner.IIRDesignerAssert.*;
 
 /**
+ * This class performs unit tests on {@link TransferFunction}.
  *
  * @author Piotr Szachewicz
  */
 public class TransferFunctionTest {
 
+	/**
+	 * Test method for {@link TransferFunction#calculateTransferFunction() }.
+	 */
 	@Test
-	public void testCalculateTransferFunction() {		
+	public void testCalculateTransferFunction() {
 		double[] bCoefficients = new double[] {0.2, 0.11};
 		double[] aCoefficients = new double[] {1.0, 0.5};
 		FilterCoefficients coefficients = new FilterCoefficients(bCoefficients, aCoefficients);
@@ -33,6 +37,9 @@ public class TransferFunctionTest {
 		assertArrayEquals(expectedGain, calculatedGain, new Complex(1e-6, 1e-6));
 	}
 
+	/**
+	 * Test method for {@link TransferFunction#calculateTransferFunction() }.
+	 */
 	@Test
 	public void testCalculateTransferFunction2() {
 
