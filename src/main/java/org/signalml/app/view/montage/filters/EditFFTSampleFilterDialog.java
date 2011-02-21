@@ -56,6 +56,7 @@ import org.signalml.app.view.montage.filters.charts.elements.SelectionHighlightR
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
@@ -70,6 +71,11 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 	private static final double FREQUENCY_SPINNER_STEP_SIZE = 0.25;
 
 	private FFTSampleFilter currentFilter;
+
+	/**
+	 * A {@link JTextField} which can be used to edit the filter's description.
+	 */
+	private JTextField descriptionTextField;
 
 	private FFTSampleFilterTableModel tableModel;
 	private FFTSampleFilterTable table;
@@ -164,6 +170,41 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 		interfacePanel.add(getFFTWindowTypePanel(), BorderLayout.SOUTH);
 
 		return interfacePanel;
+
+	}
+
+	/**
+	 * Returns the {@link JPanel} containing a {@link JTextField} for setting
+	 * the description for the currently edited filter.
+	 * @return the {@link JPanel} with controls to edit the filter's
+	 * description
+	 */
+	public JPanel getDescriptionPanel() {
+
+		JPanel descriptionPanel = new JPanel(new BorderLayout());
+		CompoundBorder border = new CompoundBorder(
+			new TitledBorder(messageSource.getMessage("editSampleFilter.descriptionTitle")),
+			new EmptyBorder(3, 3, 3, 3));
+		descriptionPanel.setBorder(border);
+
+		descriptionPanel.add(getDescriptionTextField());
+
+		return descriptionPanel;
+
+	}
+
+	/**
+	 * Returns the {@link JTextField} which is shown in this dialog and
+	 * can be used to edit the filter's description.
+	 * @return the {@link JTextField} to edit the filter's description
+	 */
+	public JTextField getDescriptionTextField() {
+
+		if (descriptionTextField == null) {
+			descriptionTextField = new JTextField();
+			descriptionTextField.setPreferredSize(new Dimension(200, 25));
+		}
+		return descriptionTextField;
 
 	}
 
@@ -533,6 +574,14 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 	public void validateDialog(Object model, Errors errors) throws SignalMLException {
 		super.validateDialog(model, errors);
 		getFFTWindowTypePanel().validatePanel(errors);
+
+		String description = getDescriptionTextField().getText();
+		if (description == null || description.isEmpty()) {
+			errors.rejectValue("description", "error.editSampleFilter.descriptionEmpty");
+		} else if (!Util.validateString(description)) {
+			errors.rejectValue("description", "error.editSampleFilter.descriptionBadChars");
+		}
+
 	}
 
 	@Override

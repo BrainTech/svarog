@@ -1,7 +1,6 @@
 /* TimeDomainFilterParametersPanel.java created 2011-02-17
  *
  */
-
 package org.signalml.app.view.montage.filters;
 
 import java.awt.Dimension;
@@ -17,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -26,7 +26,9 @@ import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.iirdesigner.ApproximationFunctionType;
 import org.signalml.domain.montage.filter.iirdesigner.FilterType;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
+import org.springframework.validation.Errors;
 
 /**
  * Panel consisting of a controls capable of editing the time domain filter parameters
@@ -35,47 +37,43 @@ import org.springframework.context.support.MessageSourceAccessor;
  *
  * @author Piotr Szachewicz
  */
-public class TimeDomainFilterParametersPanel extends JPanel  {
+public class TimeDomainFilterParametersPanel extends JPanel {
 
 	/**
 	 * the {@link MessageSourceAccessor source} of messages (labels).
 	 */
 	protected MessageSourceAccessor messageSource;
-
 	/**
 	 * A value of step size for passband and stop band edge frequency
 	 * spinners.
 	 */
 	private final double FREQUENCY_SPINNER_STEP_SIZE = 0.1;
-
 	/**
 	 * The value of step size for passband ripple and stopband attenuation
 	 * spinners.
 	 */
 	private final double DECIBELS_SPINNER_STEP_SIZE = 0.1;
-
 	/**
 	 * The maximum value which can be set using the decibels spinners
 	 * (passband ripple and stopband attenuation spinners).
 	 */
 	private final double DECIBELS_SPINNER_MAXIMUM_VALUE = 100.0;
-
 	/**
 	 * The minimum value which can be set using the decibels spinners.
 	 */
 	private final double DECIBELS_SPINNER_MINIMUM_VALUE = 0.0;
-
 	/**
 	 * The currently edited filter.
 	 */
 	private TimeDomainSampleFilter currentFilter;
-
 	/**
 	 * The sampling frequency of the signal.
 	 */
 	private double samplingFrequency;
-
-
+	/**
+	 * A {@link JTextField} which can be used to edit the filter's description.
+	 */
+	private JTextField descriptionTextField;
 	/**
 	 * A {@link ResolvableComboBox} to select filter's {@link FilterType} from.
 	 */
@@ -138,6 +136,7 @@ public class TimeDomainFilterParametersPanel extends JPanel  {
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
+		JLabel descriptionLabel = new JLabel(messageSource.getMessage("editSampleFilter.descriptionTitle"));
 		JLabel filterTypeLabel = new JLabel(messageSource.getMessage("editTimeDomainSampleFilter.filterType"));
 		JLabel filterFamilyLabel = new JLabel(messageSource.getMessage("editTimeDomainSampleFilter.filterFamily"));
 		JLabel passbandEdgeFrequency1Label = new JLabel(messageSource.getMessage("editTimeDomainSampleFilter.passbandEdgeFrequency1"));
@@ -150,10 +149,10 @@ public class TimeDomainFilterParametersPanel extends JPanel  {
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
-			layout.createParallelGroup().addComponent(filterTypeLabel).addComponent(passbandEdgeFrequency1Label).addComponent(stopbandEdgeFrequency1Label).addComponent(passbandRippleLabel));
+			layout.createParallelGroup().addComponent(descriptionLabel).addComponent(filterTypeLabel).addComponent(passbandEdgeFrequency1Label).addComponent(stopbandEdgeFrequency1Label).addComponent(passbandRippleLabel));
 
 		hGroup.addGroup(
-			layout.createParallelGroup().addComponent(getFilterTypeComboBox()).addComponent(getPassbandEdgeFrequency1Spinner()).addComponent(getStopbandEdgeFrequency1Spinner()).addComponent(getPassbandRippleSpinner()));
+			layout.createParallelGroup().addComponent(getDescriptionTextField()).addComponent(getFilterTypeComboBox()).addComponent(getPassbandEdgeFrequency1Spinner()).addComponent(getStopbandEdgeFrequency1Spinner()).addComponent(getPassbandRippleSpinner()));
 
 		hGroup.addGroup(
 			layout.createParallelGroup().addComponent(filterFamilyLabel).addComponent(passbandEdgeFrequency2Label).addComponent(stopbandEdgeFrequency2Label).addComponent(stopbandAttenuationLabel));
@@ -164,6 +163,9 @@ public class TimeDomainFilterParametersPanel extends JPanel  {
 		layout.setHorizontalGroup(hGroup);
 
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
+
+		vGroup.addGroup(
+			layout.createParallelGroup(Alignment.BASELINE).addComponent(descriptionLabel).addComponent(getDescriptionTextField()));
 
 		vGroup.addGroup(
 			layout.createParallelGroup(Alignment.BASELINE).addComponent(filterTypeLabel).addComponent(getFilterTypeComboBox()).addComponent(filterFamilyLabel).addComponent(getFilterFamilyComboBox()));
@@ -179,6 +181,21 @@ public class TimeDomainFilterParametersPanel extends JPanel  {
 
 		this.setLayout(new GridLayout(1, 1));
 		this.add(filterParametersPanel);
+	}
+
+	/**
+	 * Returns the {@link JTextField} which is shown in this panel and
+	 * can be used to edit the filter's description.
+	 * @return the {@link JTextField} to edit the filter's description
+	 */
+	public JTextField getDescriptionTextField() {
+
+		if (descriptionTextField == null) {
+			descriptionTextField = new JTextField();
+			descriptionTextField.setPreferredSize(new Dimension(200, 25));
+		}
+		return descriptionTextField;
+
 	}
 
 	/**
@@ -359,8 +376,7 @@ public class TimeDomainFilterParametersPanel extends JPanel  {
 
 					if (rippleValue > DECIBELS_SPINNER_MAXIMUM_VALUE) {
 						getPassbandRippleSpinner().setValue(DECIBELS_SPINNER_MAXIMUM_VALUE);
-					}
-					else if (rippleValue < DECIBELS_SPINNER_MINIMUM_VALUE) {
+					} else if (rippleValue < DECIBELS_SPINNER_MINIMUM_VALUE) {
 						getPassbandRippleSpinner().setValue(DECIBELS_SPINNER_MINIMUM_VALUE);
 					}
 				}
@@ -400,8 +416,7 @@ public class TimeDomainFilterParametersPanel extends JPanel  {
 
 					if (attenuationValue > DECIBELS_SPINNER_MAXIMUM_VALUE) {
 						getStopbandAttenuationSpinner().setValue(DECIBELS_SPINNER_MAXIMUM_VALUE);
-					}
-					else if (attenuationValue < DECIBELS_SPINNER_MINIMUM_VALUE) {
+					} else if (attenuationValue < DECIBELS_SPINNER_MINIMUM_VALUE) {
 						getStopbandAttenuationSpinner().setValue(DECIBELS_SPINNER_MINIMUM_VALUE);
 					}
 				}
@@ -432,6 +447,7 @@ public class TimeDomainFilterParametersPanel extends JPanel  {
 		currentFilter = new TimeDomainSampleFilter(model);
 		currentFilter.setSamplingFrequency(getCurrentSamplingFrequency());
 
+		getDescriptionTextField().setText(currentFilter.getDescription());
 		getFilterTypeComboBox().setSelectedItem(currentFilter.getFilterType());
 		getFilterFamilyComboBox().setSelectedItem(currentFilter.getApproximationFunctionType());
 		getPassbandEdgeFrequency1Spinner().setValue((double) currentFilter.getPassbandEdgeFrequencies()[0]);
@@ -450,6 +466,7 @@ public class TimeDomainFilterParametersPanel extends JPanel  {
 	 */
 	public void fillModelFromPanel(TimeDomainSampleFilter model) {
 
+		currentFilter.setDescription(getDescriptionTextField().getText());
 		currentFilter.setFilterType((FilterType) getFilterTypeComboBox().getSelectedItem());
 		currentFilter.setApproximationFunctionType((ApproximationFunctionType) getFilterFamilyComboBox().getSelectedItem());
 		currentFilter.setPassbandEdgeFrequencies(
@@ -511,4 +528,19 @@ public class TimeDomainFilterParametersPanel extends JPanel  {
 		return samplingFrequency;
 	}
 
+	/**
+	 * Validates if data entered in this panel is correct.
+	 * @param model the model for this dialog
+	 * @param errors the object in which errors are stored
+	 */
+	public void validatePanel(Object model, Errors errors) {
+
+		String description = getDescriptionTextField().getText();
+		if (description == null || description.isEmpty()) {
+			errors.rejectValue("description", "error.editSampleFilter.descriptionEmpty");
+		} else if (!Util.validateString(description)) {
+			errors.rejectValue("description", "error.editSampleFilter.descriptionBadChars");
+		}
+
+	}
 }

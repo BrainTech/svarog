@@ -116,7 +116,6 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	@Override
 	public JComponent createInterface() {
 
-		JPanel descriptionPanel = getDescriptionPanel();
 		JPanel graphPanel = getChartGroupPanelWithABorder();
 
 		JPanel editFilterParametersPanel = new JPanel(new BorderLayout(3, 3));
@@ -134,7 +133,6 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 		JPanel interfacePanel = new JPanel(new BorderLayout());
 
 		interfacePanel.add(graphPanel, BorderLayout.NORTH);
-		interfacePanel.add(descriptionPanel, BorderLayout.CENTER);
 		interfacePanel.add(editFilterParametersPanel, BorderLayout.SOUTH);
 
 		return interfacePanel;
@@ -217,7 +215,6 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 		currentFilter.setSamplingFrequency(getCurrentSamplingFrequency());
 
 		getFilterParametersPanel().fillPanelFromModel(currentFilter);
-		getDescriptionTextField().setText(currentFilter.getDescription());
 
 		updateGraph();
 
@@ -226,7 +223,6 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
 
-		currentFilter.setDescription(getDescriptionTextField().getText());
 		getFilterParametersPanel().fillModelFromPanel(currentFilter);
 		currentFilter.setSamplingFrequency(getCurrentSamplingFrequency());
 
@@ -344,6 +340,8 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	@Override
 	public void validateDialog(Object model, Errors errors) throws SignalMLException {
 		super.validateDialog(model, errors);
+
+		getFilterParametersPanel().validatePanel(model, errors);
 
 		fillModelFromDialog(currentFilter);
 		if (!validateCurrentFilterAndShowErrorMessage())

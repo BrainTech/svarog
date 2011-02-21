@@ -3,16 +3,10 @@
  */
 package org.signalml.app.view.montage.filters;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Window;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.TitledBorder;
 
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.util.IconUtils;
@@ -38,11 +32,6 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 	 * Contains the sampling frequency of the currently edited signal.
 	 */
 	private float samplingFrequency;
-
-	/**
-	 * A {@link JTextField} which can be used to edit the filter's description.
-	 */
-	private JTextField descriptionTextField;
 
 	/**
 	 * Constructor. Sets the message source, parent window, preset manager
@@ -83,47 +72,12 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 	public abstract JComponent createInterface();
 
 	/**
-	 * Returns the {@link JPanel} containing a {@link JTextField} for setting
-	 * the description for the currently edited filter.
-	 * @return the {@link JPanel} with controls to edit the filter's
-	 * description
-	 */
-	public JPanel getDescriptionPanel() {
-
-		JPanel descriptionPanel = new JPanel(new BorderLayout());
-		CompoundBorder border = new CompoundBorder(
-			new TitledBorder(messageSource.getMessage("editSampleFilter.descriptionTitle")),
-			new EmptyBorder(3, 3, 3, 3));
-		descriptionPanel.setBorder(border);
-
-		descriptionPanel.add(getDescriptionTextField());
-
-		return descriptionPanel;
-
-	}
-
-	/**
 	 * Returns the {@link JPanel} containing the filter response plot
 	 * (or plots), maximum graph frequency spinner etc. surrounded by
 	 * a labeled border.
 	 * @return a group of charts with a maximum graph scale spinner.
 	 */
 	public abstract JPanel getChartGroupPanelWithABorder();
-
-	/**
-	 * Returns the {@link JTextField} which is shown in this dialog and
-	 * can be used to edit the filter's description.
-	 * @return the {@link JTextField} to edit the filter's description
-	 */
-	public JTextField getDescriptionTextField() {
-
-		if (descriptionTextField == null) {
-			descriptionTextField = new JTextField();
-			descriptionTextField.setPreferredSize(new Dimension(200, 25));
-		}
-		return descriptionTextField;
-
-	}
 
 	/**
 	 * Returns the sampling frequency for which the filter is being designed.
@@ -166,20 +120,6 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 
 	@Override
 	public abstract void fillModelFromDialog(Object model) throws SignalMLException;
-
-	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
-
-		super.validateDialog(model, errors);
-
-		String description = getDescriptionTextField().getText();
-		if (description == null || description.isEmpty()) {
-			errors.rejectValue("description", "error.editSampleFilter.descriptionEmpty");
-		} else if (!Util.validateString(description)) {
-			errors.rejectValue("description", "error.editSampleFilter.descriptionBadChars");
-		}
-
-	}
 
 	@Override
 	public abstract boolean supportsModelClass(Class<?> clazz);
