@@ -26,6 +26,7 @@ public class BluetoothDeviceDiscovererTest implements PropertyChangeListener {
                         discoverer.startSearch();
                 } catch (Exception ex) {
                         System.out.println(ex.getMessage());
+                        return;
                 }
                 
                 synchronized(event) {
