@@ -4,6 +4,8 @@
 
 package org.signalml.domain.montage.filter;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.signalml.domain.montage.filter.iirdesigner.FilterType;
 import org.springframework.context.support.MessageSourceAccessor;
 
@@ -31,9 +33,9 @@ public final class TimeDomainSampleFilterValidator {
 	private boolean isValid;
 
 	/**
-	 * This message describes the problem if the filter is not valid.
+	 * This errorMessages describes the problems if the filter is not valid.
 	 */
-	private String errorMessage = "";
+	private List<String> errorMessages = new ArrayList<String>();
 
 	/**
 	 * Creates a new validator for the given filter.
@@ -52,6 +54,10 @@ public final class TimeDomainSampleFilterValidator {
 			case BANDPASS: isValid = isBandpassValid(); break;
 			case BANDSTOP: isValid = isBandstopValid(); break;
 		}
+
+		boolean isRippleValid = isRippleAndAttenuationValid();
+		if (!isRippleValid)
+			isValid = false;
 	}
 
 	/**
@@ -70,8 +76,16 @@ public final class TimeDomainSampleFilterValidator {
 	 * the problem. Otherwise, it returns an empty String.
 	 * @return
 	 */
-	public String getErrorMessage() {
-		return errorMessage;
+	public List<String> getErrorMessages() {
+		return errorMessages;
+	}
+
+	/**
+	 * Adds a new error message to the list of error messages.
+	 * @param message a message to be added
+	 */
+	protected void addErrorMessage(String message) {
+		errorMessages.add(message);
 	}
 
 	/**
@@ -85,7 +99,7 @@ public final class TimeDomainSampleFilterValidator {
 			return true;
 		}
 		else {
-			errorMessage = messageSource.getMessage("timeDomainFilter.highpassFilterNotValidMessage");
+			addErrorMessage(messageSource.getMessage("timeDomainFilter.highpassFilterNotValidMessage"));
 			return false;
 		}
 	}
@@ -101,7 +115,7 @@ public final class TimeDomainSampleFilterValidator {
 			return true;
 		}
 		else {
-			errorMessage = messageSource.getMessage("timeDomainFilter.lowpassFilterNotValidMessage");
+			addErrorMessage(messageSource.getMessage("timeDomainFilter.lowpassFilterNotValidMessage"));
 			return false;
 		}
 	}
@@ -119,7 +133,7 @@ public final class TimeDomainSampleFilterValidator {
 			return true;
 		}
 		else {
-			errorMessage = messageSource.getMessage("timeDomainFilter.bandpassFilterNotValidMessage");
+			addErrorMessage(messageSource.getMessage("timeDomainFilter.bandpassFilterNotValidMessage"));
 			return false;
 		}
 	}
@@ -137,7 +151,21 @@ public final class TimeDomainSampleFilterValidator {
 			return true;
 		}
 		else {
-			errorMessage = messageSource.getMessage("timeDomainFilter.bandstopFilterNotValidMessage");
+			addErrorMessage(messageSource.getMessage("timeDomainFilter.bandstopFilterNotValidMessage"));
+			return false;
+		}
+	}
+
+	/**
+	 * Checks if the passband ripple and stopband attenuation values are
+	 * correct.
+	 * @return true if the values are correct, false otherwise
+	 */
+	private boolean isRippleAndAttenuationValid() {
+		if (filter.getPassbandRipple() < filter.getStopbandAttenuation())
+			return true;
+		else {
+			addErrorMessage(messageSource.getMessage("timeDomainFilter.rippleShouldBeLessThanAttenuationMessage"));
 			return false;
 		}
 	}

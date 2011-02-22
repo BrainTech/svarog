@@ -4,8 +4,6 @@
 package org.signalml.app.view.montage.filters;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -15,9 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.AbstractAction;
-import javax.swing.GroupLayout;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.border.TitledBorder;
@@ -65,9 +61,9 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	private JButton drawFrequencyResponseButton;
 
 	/**
-	 * A label used to show filer-not-valid messages.
+	 * A panel used to show filer-not-valid messages.
 	 */
-	private JLabel filterNotValidLabel;
+	private FilterNotValidPanel filterNotValidPanel;
 
 	/**
 	 * A panel for drawing and controling the filter responses.
@@ -121,7 +117,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 		JPanel editFilterParametersPanel = new JPanel(new BorderLayout(3, 3));
 		editFilterParametersPanel.setBorder(new TitledBorder(messageSource.getMessage("editTimeDomainSampleFilter.filterParametersTitle")));
 
-		JPanel filterNotValidPanel = createFilterNotValidPanel();
+		filterNotValidPanel = getFilterNotValidPanel();
 
 		JPanel drawFrequencyResponseButtonPanel = new JPanel(new FlowLayout(FlowLayout.TRAILING, 3, 3));
 		drawFrequencyResponseButtonPanel.add(getDrawFrequencyResponseButton());
@@ -155,27 +151,9 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 	}
 
-	protected JPanel createFilterNotValidPanel() {
-		JPanel filterNotValidPanel = new JPanel(new BorderLayout());
-		GroupLayout layout = new GroupLayout(filterNotValidPanel);
-		filterNotValidPanel.setLayout(layout);
-
-		filterNotValidLabel = new JLabel();
-		filterNotValidLabel.setForeground(Color.red);
-		filterNotValidLabel.setHorizontalAlignment(JLabel.CENTER);
-		filterNotValidLabel.setMinimumSize(new Dimension(1050, 13)); //making sure that the error messages will have enough space
-
-		layout.setHorizontalGroup(
-		   layout.createSequentialGroup()
-		      .addComponent(filterNotValidLabel)
-		);
-		layout.setVerticalGroup(
-		   layout.createSequentialGroup()
-		      .addComponent(filterNotValidLabel)
-		);
-
-		filterNotValidPanel.add(filterNotValidLabel);
-
+	protected FilterNotValidPanel getFilterNotValidPanel() {
+		if (filterNotValidPanel == null)
+			filterNotValidPanel = new FilterNotValidPanel();
 		return filterNotValidPanel;
 	}
 
@@ -202,9 +180,9 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 		try {
 			getChartGroupPanelWithABorder().updateGraphs(currentFilter);
-			clearFilterNotValidMessage();
+			getFilterNotValidPanel().clearMessages();
 		} catch (BadFilterParametersException ex) {
-			showFilterNotValidMessage(ex.getMessage());
+			getFilterNotValidPanel().addMessage(ex.getMessage());
 		}
 	}
 
@@ -315,26 +293,9 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 		isValid = validator.isValid();
 
 		if (!isValid)
-			showFilterNotValidMessage(validator.getErrorMessage());
-		else
-			clearFilterNotValidMessage();
+			getFilterNotValidPanel().setMessages(validator.getErrorMessages());
 
 		return isValid;
-	}
-
-	/**
-	 * Shows a filter-not-valid message.
-	 * @param message text of the message
-	 */
-	protected void showFilterNotValidMessage(String message) {
-		filterNotValidLabel.setText(message);
-	}
-
-	/**
-	 * Clears the filter-not-valid message so that no message is shown.
-	 */
-	protected void clearFilterNotValidMessage() {
-		showFilterNotValidMessage(" ");
 	}
 
 	@Override

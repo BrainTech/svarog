@@ -18,14 +18,11 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import org.signalml.app.view.element.ResolvableComboBox;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.iirdesigner.ApproximationFunctionType;
 import org.signalml.domain.montage.filter.iirdesigner.FilterType;
-import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
@@ -363,24 +360,6 @@ public class TimeDomainFilterParametersPanel extends JPanel {
 			passbandRippleSpinner.setEditor(new JSpinner.NumberEditor(passbandRippleSpinner, "0.00"));
 			passbandRippleSpinner.setFont(passbandRippleSpinner.getFont().deriveFont(Font.PLAIN));
 
-			passbandRippleSpinner.addChangeListener(new ChangeListener() {
-
-				@Override
-				public void stateChanged(ChangeEvent e) {
-					double rippleValue = getPassbandRippleSpinner().getValue();
-					double attenuationValue = getStopbandAttenuationSpinner().getValue();
-
-					if (rippleValue >= attenuationValue) {
-						getStopbandAttenuationSpinner().setValue(rippleValue + DECIBELS_SPINNER_STEP_SIZE);
-					}
-
-					if (rippleValue > DECIBELS_SPINNER_MAXIMUM_VALUE) {
-						getPassbandRippleSpinner().setValue(DECIBELS_SPINNER_MAXIMUM_VALUE);
-					} else if (rippleValue < DECIBELS_SPINNER_MINIMUM_VALUE) {
-						getPassbandRippleSpinner().setValue(DECIBELS_SPINNER_MINIMUM_VALUE);
-					}
-				}
-			});
 		}
 
 		return passbandRippleSpinner;
@@ -402,25 +381,6 @@ public class TimeDomainFilterParametersPanel extends JPanel {
 
 			stopbandAttenuationSpinner.setEditor(new JSpinner.NumberEditor(stopbandAttenuationSpinner, "0.00"));
 			stopbandAttenuationSpinner.setFont(stopbandAttenuationSpinner.getFont().deriveFont(Font.PLAIN));
-
-			stopbandAttenuationSpinner.addChangeListener(new ChangeListener() {
-
-				@Override
-				public void stateChanged(ChangeEvent e) {
-					double rippleValue = getPassbandRippleSpinner().getValue();
-					double attenuationValue = getStopbandAttenuationSpinner().getValue();
-
-					if (rippleValue >= attenuationValue) {
-						getPassbandRippleSpinner().setValue(attenuationValue - DECIBELS_SPINNER_STEP_SIZE);
-					}
-
-					if (attenuationValue > DECIBELS_SPINNER_MAXIMUM_VALUE) {
-						getStopbandAttenuationSpinner().setValue(DECIBELS_SPINNER_MAXIMUM_VALUE);
-					} else if (attenuationValue < DECIBELS_SPINNER_MINIMUM_VALUE) {
-						getStopbandAttenuationSpinner().setValue(DECIBELS_SPINNER_MINIMUM_VALUE);
-					}
-				}
-			});
 
 		}
 

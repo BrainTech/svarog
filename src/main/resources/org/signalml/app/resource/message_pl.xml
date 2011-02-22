@@ -78,6 +78,7 @@
 	<entry key="timeDomainFilter.lowpassFilterNotValidMessage">For low-pass filters the frequencies must fulfill: passband frequency 1 &lt; stopband frequency 1.</entry>
 	<entry key="timeDomainFilter.bandpassFilterNotValidMessage">For band-pass filters the frequencies must fulfill: stopband frequency 1 &lt; passband frequency 1 &lt; passband frequency 2 &lt; stopband frequency 2.</entry>
 	<entry key="timeDomainFilter.bandstopFilterNotValidMessage">For band-stop filters the frequencies must fulfill: passband frequency 1 &lt; stopband frequency 1 &lt; stopband frequency 2 &lt; passband frequency 2.</entry>
+	<entry key="timeDomainFilter.rippleShouldBeLessThanAttenuationMessage">Passband ripple should be less than stopband attenuation.</entry>
 
 	<entry key="signalSelectionType.page">Page</entry>
 	<entry key="signalSelectionType.block">Block</entry>
