@@ -87,6 +87,7 @@ public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentMan
 			}
 
 			setTitleAt(index, title);
+			setToolTipTextAt(index, title);
 
 		}
 
@@ -131,7 +132,8 @@ public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentMan
 		}
 
 		document.setDocumentView(documentViewPanel);
-		addTab(title, icon, documentViewPanel);
+		String tabTooltip = title;
+		addTab(title, icon, documentViewPanel, tabTooltip);
 
 	}
 
