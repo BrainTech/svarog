@@ -100,6 +100,7 @@ import org.springframework.util.Log4jConfigurer;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.Annotations;
+import org.signalml.app.worker.amplifiers.AmplifierDefinitionPresetManager;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 
 /** SvarogApplication
@@ -127,6 +128,7 @@ public class SvarogApplication {
 	private static BookFilterPresetManager bookFilterPresetManager = null;
 	private static SignalExportPresetManager signalExportPresetManager = null;
 	private static FFTSampleFilterPresetManager fftFilterPresetManager = null;
+        private static AmplifierDefinitionPresetManager amplifierDefinitionPresetManager = null;
 
 	/**
 	 * A {@link PresetManager} managing the user-defined
@@ -656,6 +658,17 @@ public class SvarogApplication {
 			logger.error("Failed to read FFT sample filter configuration - will use defaults", ex);
 		}
 
+                amplifierDefinitionPresetManager = new AmplifierDefinitionPresetManager();
+                amplifierDefinitionPresetManager.setProfileDir(profileDir);
+                
+                try {
+                        amplifierDefinitionPresetManager.readFromPersistence(null);
+                } catch (FileNotFoundException ex) {
+			logger.debug("Amplifier definition preset config not found - will use defaults");
+		} catch (Exception ex) {
+			logger.error("Failed to read amplifier definition configuration - will use defaults", ex);
+		}
+
 		timeDomainSampleFilterPresetManager = new TimeDomainSampleFilterPresetManager();
 		timeDomainSampleFilterPresetManager.setProfileDir(profileDir);
 
@@ -865,6 +878,7 @@ public class SvarogApplication {
 		elementManager.setBookFilterPresetManager(bookFilterPresetManager);
 		elementManager.setSignalExportPresetManager(signalExportPresetManager);
 		elementManager.setFftFilterPresetManager(fftFilterPresetManager);
+                elementManager.setAmplifierDefinitionPresetManager(amplifierDefinitionPresetManager);
 		elementManager.setTimeDomainSampleFilterPresetManager(timeDomainSampleFilterPresetManager);
 		elementManager.setPredefinedTimeDomainFiltersPresetManager(predefinedTimeDomainSampleFilterPresetManager);
 
@@ -970,6 +984,12 @@ public class SvarogApplication {
 			fftFilterPresetManager.writeToPersistence(null);
 		} catch (Exception ex) {
 			logger.error("Failed to write FFT sample filter configuration", ex);
+		}
+
+		try {
+			amplifierDefinitionPresetManager.writeToPersistence(null);
+		} catch (Exception ex) {
+			logger.error("Failed to write amplifier definition configuration", ex);
 		}
 
 		try {

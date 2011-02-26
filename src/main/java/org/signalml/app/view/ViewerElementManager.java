@@ -138,11 +138,14 @@ import org.signalml.util.SvarogConstants;
 import org.springframework.context.support.MessageSourceAccessor;
 
 import com.thoughtworks.xstream.XStream;
+import org.signalml.app.action.AmplifierConfigAction;
 import org.signalml.app.action.ChooseActiveTagAction;
 import org.signalml.app.action.CompareTagsAction;
 import org.signalml.app.action.StartMonitorRecordingAction;
 import org.signalml.app.action.StopMonitorRecordingAction;
+import org.signalml.app.view.monitor.AmplifierDefinitionConfigDialog;
 import org.signalml.app.view.monitor.StartMonitorRecordingDialog;
+import org.signalml.app.worker.amplifiers.AmplifierDefinitionPresetManager;
 
 
 
@@ -179,6 +182,7 @@ public class ViewerElementManager {
 	private BookFilterPresetManager bookFilterPresetManager;
 	private SignalExportPresetManager signalExportPresetManager;
 	private FFTSampleFilterPresetManager fftFilterPresetManager;
+        private AmplifierDefinitionPresetManager amplifierDefinitionPresetManager;
 
 	/**
 	 * A {@link PresetManager} managing the user-defined
@@ -246,6 +250,7 @@ public class ViewerElementManager {
 	private ViewerTabbedPane propertyTabbedPane;
 
 	/* Dialogs */
+        private AmplifierDefinitionConfigDialog amplifierDefinitionConfigDialog;
         private EEGLabExportDialog eeglabExportDialog;
         private CheckSignalDialog checkSignalDialog;
 	private ErrorsDialog errorsDialog;
@@ -287,6 +292,7 @@ public class ViewerElementManager {
 	private BookFilterDialog bookFilterDialog;
 
 	/* Actions */
+        private AmplifierConfigAction amplifierConfigAction;
         private EEGLabExportAction eeglabExportAction;
         private CheckSignalAction checkSignalAction;
 	private CloseWindowAction closeWindowAction;
@@ -533,6 +539,14 @@ public class ViewerElementManager {
 		this.fftFilterPresetManager = fftFilterPresetManager;
 	}
 
+        public AmplifierDefinitionPresetManager getAmplifierDefinitionPresetManager() {
+                return amplifierDefinitionPresetManager;
+        }
+
+        public void setAmplifierDefinitionPresetManager(AmplifierDefinitionPresetManager amplifierDefinitionPresetManager) {
+                this.amplifierDefinitionPresetManager = amplifierDefinitionPresetManager;
+        }
+
 	/**
 	 * Returns a {@link TimeDomainSampleFilterPresetManager} used by this
 	 * ViewerElementManager.
@@ -752,6 +766,8 @@ public class ViewerElementManager {
 			monitorMenu.addSeparator();
 			monitorMenu.add(getStartMonitorRecordingAction());
 			monitorMenu.add(getStopMonitorRecordingAction());
+                        monitorMenu.addSeparator();
+                        monitorMenu.add(getAmplifierConfigAction());
 		}
 		return monitorMenu;
 	}
@@ -1268,6 +1284,15 @@ public class ViewerElementManager {
                 return eeglabExportDialog;
         }
 
+        public AmplifierDefinitionConfigDialog getAmplifierDefinitionConfigDialog() {
+                if (amplifierDefinitionConfigDialog == null) {
+                        amplifierDefinitionConfigDialog = new AmplifierDefinitionConfigDialog(messageSource, getAmplifierDefinitionPresetManager(), getDialogParent(), true);
+			amplifierDefinitionConfigDialog.setApplicationConfig(getApplicationConfig());
+			amplifierDefinitionConfigDialog.setFileChooser(getFileChooser());
+                }
+                return amplifierDefinitionConfigDialog;
+        }
+
 	public EditFFTSampleFilterDialog getEditFFTSampleFilterDialog() {
 		if (editFFTSampleFilterDialog == null) {
 			editFFTSampleFilterDialog = new EditFFTSampleFilterDialog(messageSource, getFftFilterPresetManager(), getDialogParent(), true);
@@ -1664,6 +1689,14 @@ public class ViewerElementManager {
 		}
 		return exportBookAction;
 	}
+
+        public AmplifierConfigAction getAmplifierConfigAction() {
+                if (amplifierConfigAction == null) {
+                        amplifierConfigAction = new AmplifierConfigAction(messageSource);
+                        amplifierConfigAction.setConfigDialog(getAmplifierDefinitionConfigDialog());
+                }
+                return amplifierConfigAction;
+        }
 
         public EEGLabExportAction getEEGLabExportAction() {
                 if (eeglabExportAction == null) {

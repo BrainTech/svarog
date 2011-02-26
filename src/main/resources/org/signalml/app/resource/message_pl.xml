@@ -433,6 +433,8 @@
 	<entry key="action.exportBookToolTip">Export book to file</entry>
 	<entry key="action.exportEEGLab">Export to EEGLab...</entry>
 	<entry key="action.exportEEGLabToolTip">Export signal in EEGLab format</entry>
+        <entry key="action.amplifierDefinitionConfig">Amplifier definition config</entry>
+	<entry key="action.amplifierDefinitionConfigToolTip">Allows to change the amplifier definition config</entry>
 
 	<entry key="action.signalParameters">Signal parameters</entry>
 	<entry key="action.signalParametersToolTip">Change signal parameters</entry>
@@ -589,9 +591,23 @@
         <entry key="eeglabExport.chooseFileLabel">Output file name: </entry>
         <entry key="eegLabExport.fileNameExists">File already exists! Do you want to overwrite?</entry>
         <entry key="eeglabExport.datasetFiles">Dateset files</entry>
-
         <entry key="error.eeglabExport.incorrectFileName">Please input a filename</entry>
         <entry key="error.eeglabExport.cantWrite">File cannot be written</entry>
+
+        <entry key="amplifierDefinitionConfig.title">Amplifier definition config</entry>
+        <entry key="amplifierDefinitionConfig.driverData">Driver data</entry>
+        <entry key="amplifierDefinitionConfig.protocol">Protocol: </entry>
+        <entry key="amplifierDefinitionConfig.match">Match: </entry>
+        <entry key="amplifierDefinitionConfig.driverPath">Driver Path: </entry>
+        <entry key="amplifierDefinitionConfig.channelno">Channel no.: </entry>
+        <entry key="amplifierDefinitionConfig.channelDefinitions">Channel definitions</entry>
+        <entry key="amplifierDefinitionConfig.gain">Gain: </entry>
+        <entry key="amplifierDefinitionConfig.offset">Offset: </entry>
+        <entry key="amplifierDefinitionConfig.availableFrequencies">Available frequencies</entry>
+        <entry key="amplifierDefinitionConfig.addButton">Add</entry>
+        <entry key="amplifierDefinitionConfig.removeButton">Remove</entry>
+        <entry key="error.amplifierDefinitionConfig.integer">Please insert an integer value</entry>
+        <entry key="error.amplifierDefinitionConfig.rational">Please insert a rational value</entry>
 
 	<entry key="profilePath.title">Choose profile path</entry>
 	<entry key="profilePath.welcome">Welcome to signalml viewer</entry>
