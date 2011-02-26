@@ -1,10 +1,13 @@
 package org.signalml.app.view.monitor;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Window;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -12,10 +15,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.view.dialog.AbstractPresetDialog;
+import org.signalml.app.view.element.FileSelectPanel;
 import org.signalml.app.worker.amplifiers.AmplifierDefinition;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractDialog;
@@ -49,14 +54,9 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
         private JTextField matchTextField = null;
 
         /**
-         * Path label.
+         * File select panel.
          */
-        private JLabel pathLabel = null;
-
-        /**
-         * Path text field.
-         */
-        private JTextField pathTextField = null;
+        private FileSelectPanel fileSelectPanel = null;
 
         /**
          * Available frequencies panel.
@@ -104,7 +104,7 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
                 CompoundBorder border = new CompoundBorder(
 			new TitledBorder(messageSource.getMessage("amplifierDefinitionConfig.driverData")),
 			new EmptyBorder(3, 3, 3, 3));
-                                
+
                 JPanel textFieldsPanel = new JPanel(new GridBagLayout());
                 textFieldsPanel.setBorder(border);
 
@@ -115,7 +115,7 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
                 constraints.gridx = 0;
                 constraints.gridy = 0;
                 constraints.gridwidth = 1;
-                constraints.weightx = 0;
+                constraints.weightx = 0;               
                 textFieldsPanel.add(getProtocolLabel(), constraints);
 
                 constraints.gridx = 1;
@@ -130,23 +130,26 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
                 constraints.weightx = 0;
                 textFieldsPanel.add(getMatchLabel(), constraints);
 
+                JPanel textPanel = new JPanel(new GridBagLayout());
+                constraints.gridx = 0;
+                constraints.gridy = 0;
+                constraints.weightx = 1;
+                constraints.weighty = 1;
+                textPanel.setBorder(new EmptyBorder(3, 3, 3, 3));
+                textPanel.add(getMatchTextField(), constraints);
+
                 constraints.gridx = 1;
                 constraints.gridy = 1;
                 constraints.gridwidth = 2;
                 constraints.weightx = 1;
-                textFieldsPanel.add(getMatchTextField(), constraints);
+                constraints.weighty = 0;
+                textFieldsPanel.add(textPanel, constraints);
 
                 constraints.gridx = 0;
                 constraints.gridy = 2;
-                constraints.gridwidth = 1;
-                constraints.weightx = 0;
-                textFieldsPanel.add(getPathLabel(), constraints);
-
-                constraints.gridx = 1;
-                constraints.gridy = 2;
-                constraints.gridwidth = 2;
+                constraints.gridwidth = 3;
                 constraints.weightx = 1;
-                textFieldsPanel.add(getPathTextField(), constraints);
+                textFieldsPanel.add(getFileSelectPanel(), constraints);
 
                 mainPanel.add(textFieldsPanel, BorderLayout.PAGE_START);
 
@@ -166,7 +169,7 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
 
                 getProtocolComboBox().setSelectedItem(definition.getProtocol());
                 getMatchTextField().setText(definition.getMatch());
-                getPathTextField().setText(definition.getDriverPath());
+                getFileSelectPanel().setFileName(definition.getDriverPath());
                 getAvailableFrequenciesPanel().setFrequencies(definition.getAvailableFrequencies());
                 getChannelDefinitionPanel().setData(definition.getChannelNumbers(),
                                                     definition.getChannelGain(),
@@ -180,7 +183,7 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
 
                 definition.setProtocol((String) getProtocolComboBox().getSelectedItem());
                 definition.setMatch(getMatchTextField().getText());
-                definition.setDriverPath(getPathTextField().getText());
+                definition.setDriverPath(getFileSelectPanel().getFileName());
                 definition.setAvailableFrequencies(getAvailableFrequenciesPanel().getFrequencies());
                 definition.setChannelNumbers(getChannelDefinitionPanel().getChannelNumbers());
                 definition.setChannelGain(getChannelDefinitionPanel().getGainValues());
@@ -236,6 +239,7 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
 
                 if (protocolComboBox == null) {
                         protocolComboBox = new JComboBox(new String[] { AmplifierDefinition.USB, AmplifierDefinition.BLUETOOTH });
+                        protocolComboBox.setBorder(new EmptyBorder(3, 3, 3, 3));
                 }
                 return protocolComboBox;
         }
@@ -267,31 +271,12 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
                 return matchTextField;
         }
 
-        /**
-         * Gets the path label.
-         *
-         * @return the path label
-         */
-        private JLabel getPathLabel() {
+        private FileSelectPanel getFileSelectPanel() {
 
-                if (pathLabel == null) {
-                        pathLabel = new JLabel();
-                        pathLabel.setText(messageSource.getMessage("amplifierDefinitionConfig.driverPath"));
+                if (fileSelectPanel == null) {
+                        fileSelectPanel = new FileSelectPanel(messageSource, messageSource.getMessage("amplifierDefinitionConfig.driverPath"));
                 }
-                return pathLabel;
-        }
-
-        /**
-         * Gets the path text field.
-         *
-         * @return the path text field
-         */
-        private JTextField getPathTextField() {
-
-                if (pathTextField == null) {
-                        pathTextField = new JTextField();
-                }
-                return pathTextField;
+                return fileSelectPanel;
         }
 
         /**
