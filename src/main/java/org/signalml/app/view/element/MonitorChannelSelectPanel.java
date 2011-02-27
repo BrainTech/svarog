@@ -26,6 +26,7 @@ public class MonitorChannelSelectPanel extends JPanel {
 
 	/**
 	 * This is the default constructor
+	 * @param messageSource the source of messages (labels)
 	 */
 	public MonitorChannelSelectPanel( MessageSourceAccessor messageSource) {
 		super();
@@ -35,8 +36,6 @@ public class MonitorChannelSelectPanel extends JPanel {
 
 	/**
 	 * This method initializes this
-	 * 
-	 * @return void
 	 */
 	private void initialize() {
 		JLabel label = new JLabel( messageSource.getMessage( "openMonitor.channelsListLabel"));

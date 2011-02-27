@@ -52,9 +52,6 @@ public class MultiplexerConnectionPanel extends JPanel {
 	private JButton disonnectButton;
 	private ConnectMultiplexerAction connectAction;
 
-	/**
-	 * This is the default constructor
-	 */
 	public MultiplexerConnectionPanel( ViewerElementManager elementManager) {
 		super();
 		this.elementManager = elementManager;
@@ -65,11 +62,6 @@ public class MultiplexerConnectionPanel extends JPanel {
 		return elementManager.getMessageSource();
 	}
 
-	/**
-	 * This method initializes this
-	 * 
-	 * @return void
-	 */
 	private void initialize() {
 
 		setLayout( new BorderLayout());

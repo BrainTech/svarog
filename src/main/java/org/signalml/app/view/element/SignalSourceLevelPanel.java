@@ -148,8 +148,9 @@ public class SignalSourceLevelPanel extends JPanel {
 	}
 
 	/**
-	 * Depending on the {@link SignalSourceLevel level} {@link SignalSpace#
-	 * getSignalSourceLevel() obtained} from the {@link SignalSpace model}
+	 * Depending on the {@link SignalSourceLevel level}
+	 * {@link SignalSpace#getSignalSourceLevel() obtained} from the
+	 * {@link SignalSpace model}
 	 * sets the appropriate button to be active.
 	 * @param space the signal space
 	 */

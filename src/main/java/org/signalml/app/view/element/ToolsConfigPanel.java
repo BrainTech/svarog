@@ -154,8 +154,8 @@ public class ToolsConfigPanel extends JPanel {
 	}
 
 	/**
-	 * Fills the dependent panels ({@link ArtifactToolConfigPanel#
-	 * fillPanelFromModel(org.signalml.app.method.artifact.ArtifactConfiguration)
+	 * Fills the dependent panels ({@link
+	 * ArtifactToolConfigPanel#fillPanelFromModel(org.signalml.app.method.artifact.ArtifactConfiguration)
 	 * artifact} and {@link StagerToolConfigPanel#fillPanelFromModel(
 	 * org.signalml.app.method.stager.StagerConfiguration) stager}) using the
 	 * given {@link ApplicationConfiguration configuration} of Svarog.
@@ -169,8 +169,8 @@ public class ToolsConfigPanel extends JPanel {
 	}
 
 	/**
-	 * Stores the data from dependent panels ({@link ArtifactToolConfigPanel#
-	 * fillModelFromPanel(org.signalml.app.method.artifact.ArtifactConfiguration)
+	 * Stores the data from dependent panels
+	 * ({@link ArtifactToolConfigPanel#fillModelFromPanel(org.signalml.app.method.artifact.ArtifactConfiguration)
 	 * artifact} and {@link StagerToolConfigPanel#fillModelFromPanel(
 	 * org.signalml.app.method.stager.StagerConfiguration) stager}) in the
 	 * given {@link ApplicationConfiguration configuration} of Svarog.

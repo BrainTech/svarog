@@ -390,8 +390,6 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 	 * <li>the {@link MiscellaneousConfigPanel#validate(Errors) panel} with
 	 * "other" options,</li>
 	 * <li>the {@link SignalZoomSettingsPanel#validate(Errors) signal zooming
-	 * panel},</li>
-	 * <li>the {@link SignalFFTSettingsPanel#validatePanel(Errors) FFT settings
 	 * panel}.</li>
 	 * </ul>
 	 */

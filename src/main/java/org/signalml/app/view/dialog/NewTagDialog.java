@@ -155,8 +155,9 @@ public class NewTagDialog extends AbstractDialog {
 	/**
 	 * Using the user input fills the given {@link NewTagDescriptor model}:
 	 * <ul>
-	 * <li>depending on the selected radio button {@link NewTagDescriptor#
-	 * setMode(NewTagTypeMode) sets} the {@link NewTagTypeMode mode},</li>
+	 * <li>depending on the selected radio button
+	 * {@link NewTagDescriptor#setMode(NewTagTypeMode) sets} the
+	 * {@link NewTagTypeMode mode},</li>
 	 * <li>sets the file - if {@link NewTagPanel#getFromFileRadio() from file
 	 * radio button} is selected using the {@link NewTagPanel#getFileChooser()
 	 * file chooser} otherwise {@code null},</li>
@@ -190,8 +191,8 @@ public class NewTagDialog extends AbstractDialog {
 	 * Validates this dialog.
 	 * This dialog is valid if:
 	 * <ul>
-	 * <li>the {@link PagingParametersPanel} is {@link PagingParametersPanel#
-	 * validatePanel(Errors) valid} and</li>
+	 * <li>the {@link PagingParametersPanel} is
+	 * {@link PagingParametersPanel#validatePanel(Errors) valid} and</li>
 	 * <li>if the {@link NewTagPanel#getFromFileRadio() from file radio button}
 	 * is selected - if the file is valid.</li></ul>
 	 */

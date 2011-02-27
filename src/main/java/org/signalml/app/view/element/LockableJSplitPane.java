@@ -175,8 +175,8 @@ public class LockableJSplitPane extends JSplitPane {
 	 * <ul>
 	 * <li>if this panel is locked stores the size in the field {@code
 	 * lockedDividerSize} and uses it when the panel will be unlocked,</li>
-	 * <li>otherwise sets the size of the divider - {@link JSplitPane#
-	 * setDividerSize(int)}</li></ul>
+	 * <li>otherwise sets the size of the divider -
+	 * {@link JSplitPane#setDividerSize(int)}</li></ul>
 	 */
 	@Override
 	public void setDividerSize(int newSize) {
@@ -192,8 +192,8 @@ public class LockableJSplitPane extends JSplitPane {
 	 * <ul>
 	 * <li>if the panel is locked the size stored in the field {@code
 	 * lockedDividerSize},</li>
-	 * <li>otherwise the real size of the divider - {@link JSplitPane#
-	 * setDividerSize(int)}</li></ul>
+	 * <li>otherwise the real size of the divider -
+	 * {@link JSplitPane#setDividerSize(int)}</li></ul>
 	 */
 	@Override
 	public int getDividerSize() {

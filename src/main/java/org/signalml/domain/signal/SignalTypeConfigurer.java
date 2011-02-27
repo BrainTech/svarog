@@ -33,7 +33,7 @@ public interface SignalTypeConfigurer {
 
         /**
          * Creates montage based on document with a signal.
-         * @param signalDocument
+         * @param signalDocument the document with the signal
          * @return created montage
          */
 	Montage createMontage(SignalDocument signalDocument);

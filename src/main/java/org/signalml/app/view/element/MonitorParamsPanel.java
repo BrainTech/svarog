@@ -27,6 +27,7 @@ public class MonitorParamsPanel extends JPanel {
 
 	/**
 	 * This is the default constructor
+	 * @param messageSource the source of messages (labels)
 	 */
 	public MonitorParamsPanel( MessageSourceAccessor messageSource) {
 		super();
@@ -36,8 +37,6 @@ public class MonitorParamsPanel extends JPanel {
 
 	/**
 	 * This method initializes this
-	 * 
-	 * @return void
 	 */
 	private void initialize() {
 

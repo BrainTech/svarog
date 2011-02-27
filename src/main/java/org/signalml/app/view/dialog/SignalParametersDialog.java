@@ -79,10 +79,10 @@ public class SignalParametersDialog extends AbstractDialog {
 
 	/**
 	 * Fills the sub-panels of this dialog using the given {@link
-	 * SignalParameterDescriptor model} ({@link RequiredSignalParametersPanel#
-	 * fillPanelFromModel(SignalParameterDescriptor)
-	 * RequiredSignalParametersPanel} and {@link PagingParametersPanel#
-	 * fillPanelFromModel(org.signalml.app.model.PagingParameterDescriptor)
+	 * SignalParameterDescriptor model}
+	 * ({@link RequiredSignalParametersPanel#fillPanelFromModel(SignalParameterDescriptor)
+	 * RequiredSignalParametersPanel} and
+	 * {@link PagingParametersPanel#fillPanelFromModel(org.signalml.app.model.PagingParameterDescriptor)
 	 * PagingParametersPanel}).
 	 */
 	@Override
@@ -96,10 +96,10 @@ public class SignalParametersDialog extends AbstractDialog {
 
 	/**
 	 * Fills the the given {@link SignalParameterDescriptor model} from
-	 * sub-panels ({@link RequiredSignalParametersPanel#
-	 * fillPanelFromModel(SignalParameterDescriptor)
-	 * RequiredSignalParametersPanel} and {@link PagingParametersPanel#
-	 * fillPanelFromModel(org.signalml.app.model.PagingParameterDescriptor)
+	 * sub-panels
+	 * ({@link RequiredSignalParametersPanel#fillPanelFromModel(SignalParameterDescriptor)
+	 * RequiredSignalParametersPanel} and
+	 * {@link PagingParametersPanel#fillPanelFromModel(org.signalml.app.model.PagingParameterDescriptor)
 	 * PagingParametersPanel}).
 	 */
 	@Override
@@ -111,8 +111,8 @@ public class SignalParametersDialog extends AbstractDialog {
 
 	/**
 	 * Validates this dialog. This dialog is valid if sub-panels are valid
-	 * ({@link RequiredSignalParametersPanel#validatePanel(
-	 * SignalParameterDescriptor, Errors) RequiredSignalParametersPanel}
+	 * ({@link RequiredSignalParametersPanel#validatePanel(SignalParameterDescriptor, Errors)
+	 * RequiredSignalParametersPanel}
 	 * and {@link PagingParametersPanel#validatePanel(Errors)
 	 * PagingParametersPanel}).
 	 */

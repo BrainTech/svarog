@@ -116,8 +116,8 @@ public class ErrorsDialog extends AbstractDialog {
 	}
 
 	/**
-	 * Sets the title and the icon and calls the {@link AbstractDialog#
-	 * initialize() initialization} in parent.
+	 * Sets the title and the icon and calls the {@link AbstractDialog#initialize()
+	 * initialization} in parent.
 	 * The title is obtained using the {@code titleCode} or if it is {@code
 	 * null} the default one is used.
 	 */

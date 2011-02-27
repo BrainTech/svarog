@@ -24,8 +24,8 @@ import org.springframework.context.support.MessageSourceAccessor;
  * Dialog which allows to specify the description of a {@link TagDocument}.
  * Contains two panels:
  * <ul>
- * <li>the {@link TextPanePanel text panel} for the {@link StyledTagSet#
- * setInfo(String) description} of the document,</li>
+ * <li>the {@link TextPanePanel text panel} for the
+ * {@link StyledTagSet#setInfo(String) description} of the document,</li>
  * <li>the text panel for the {@link StyledTagSet#setMontageInfo(String)
  * description} of the {@link Montage montage}.</li>
  * </ul>
@@ -37,14 +37,14 @@ public class EditTagDescriptionDialog extends AbstractDialog {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * the {@link TextPanePanel text panel} for the {@link StyledTagSet#
-	 * setInfo(String) description} of the {@link StyledTagSet tag set} for
+	 * the {@link TextPanePanel text panel} for the {@link StyledTagSet#setInfo(String)
+	 * description} of the {@link StyledTagSet tag set} for
 	 * a specified {@link TagDocument}
 	 */
 	private TextPanePanel textInfoPanel;
 	/**
-	 * the {@link TextPanePanel text panel} for the {@link StyledTagSet#
-	 * setMontageInfo(String) description} of the {@link Montage montage} for
+	 * the {@link TextPanePanel text panel} for the {@link StyledTagSet#setMontageInfo(String)
+	 * description} of the {@link Montage montage} for
 	 * a specified {@link TagDocument}
 	 */
 	private TextPanePanel montageInfoPanel;
@@ -94,8 +94,8 @@ public class EditTagDescriptionDialog extends AbstractDialog {
 
 	/**
 	 * Using the user input sets the {@link StyledTagSet#getInfo() description}
-	 * of the {@link StyledTagSet tag set} and the {@link StyledTagSet#
-	 * getMontageInfo() information} about the {@link Montage} in the
+	 * of the {@link StyledTagSet tag set} and the
+	 * {@link StyledTagSet#getMontageInfo() information} about the {@link Montage} in the
 	 * tag set for the {@link TagDocument} provided as a model.
 	 */
 	@Override
@@ -122,8 +122,8 @@ public class EditTagDescriptionDialog extends AbstractDialog {
 	/**
 	 * Creates the interface for this dialog, which consists of two panels:
 	 * <ul>
-	 * <li>the {@link TextPanePanel text panel} for the {@link StyledTagSet#
-	 * setInfo(String) description} of the {@link StyledTagSet tag set},</li>
+	 * <li>the {@link TextPanePanel text panel} for the {@link StyledTagSet#setInfo(String)
+	 * description} of the {@link StyledTagSet tag set},</li>
 	 * <li>the text panel for the {@link StyledTagSet#setMontageInfo(String)
 	 * description} of the {@link Montage montage}.</li>
 	 * </ul>

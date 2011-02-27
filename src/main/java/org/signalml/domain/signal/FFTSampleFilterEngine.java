@@ -11,8 +11,6 @@ import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
 import org.signalml.fft.FourierTransform;
 
-import flanagan.complex.Complex;
-
 /**
  * This class represents a FFT filter of samples.
  * Allows to return the filtered samples based on the given 

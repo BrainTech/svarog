@@ -6,6 +6,7 @@ package org.signalml.domain.montage.eeg;
 
 import org.signalml.domain.montage.BipolarReferenceMontageGenerator;
 import org.signalml.domain.montage.Channel;
+import org.signalml.domain.montage.MontageChannel;
 import org.springframework.validation.Errors;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;

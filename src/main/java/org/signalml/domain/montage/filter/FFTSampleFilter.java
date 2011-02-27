@@ -468,7 +468,7 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
                  * Creates a range of frequencies with given ends and coefficient.
                  * @param lowFrequency the left end of frequencies interval
                  * @param highFrequency the right end of frequencies interval
-                 * @param coefficient
+                 * @param coefficient the coefficient
                  */
 		public Range(float lowFrequency, float highFrequency, double coefficient) {
 			this.lowFrequency = lowFrequency;

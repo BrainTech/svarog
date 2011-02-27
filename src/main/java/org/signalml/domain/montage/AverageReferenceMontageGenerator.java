@@ -11,7 +11,7 @@ import org.springframework.validation.Errors;
  * In the average reference montage the outputs of all of the amplifiers are
  * summed and averaged, and this averaged signal is used as the common reference
  * for each channel.
- * (source: {@link http://en.wikipedia.org/wiki/Electroencephalography})
+ * (source: {@code http://en.wikipedia.org/wiki/Electroencephalography})
  * 
  * This class generates montage of that type from the given "raw" montage and checks if
  * the given {@link SourceMontage montages} are valid average reference montages.
@@ -37,7 +37,7 @@ public abstract class AverageReferenceMontageGenerator implements MontageGenerat
          * {@link SourceChannel source channels} that will be used as
          * reference channels in created {@link Montage montage}
          * (actually in {@link MontageChannel montage channels} in a montage)
-         * @throws NullPointerException
+         * @throws NullPointerException if the array of channels is null or empty
          */
 	protected AverageReferenceMontageGenerator(Channel[] refChannels) {
 		if (refChannels == null || refChannels.length == 0) {

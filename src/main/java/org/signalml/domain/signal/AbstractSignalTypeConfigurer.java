@@ -17,8 +17,8 @@ import org.signalml.domain.montage.filter.iirdesigner.FilterType;
 
 /**
  * This abstract class represents a configurer of {@link Montage montages}.
- * Contains 3 predefined filters ({@link LowPassSampleFilter low-}, 
- * {@link BandPassSampleFilter band-} and {@link HighPassSampleFilter high}-pass).
+ * Contains 3 predefined filters ({@link FilterType#LOWPASS low-} and
+ * {@link FilterType#HIGHPASS high}-pass).
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

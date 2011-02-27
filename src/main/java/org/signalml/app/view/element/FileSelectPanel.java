@@ -31,6 +31,7 @@ public class FileSelectPanel extends JPanel {
 
 	/**
 	 * This is the default constructor
+	 * @param messageSource the source of messages (labels)
 	 */
 	public FileSelectPanel( MessageSourceAccessor messageSource) {
 		super();
@@ -38,11 +39,6 @@ public class FileSelectPanel extends JPanel {
 		initialize();
 	}
 
-	/**
-	 * This method initializes this
-	 * 
-	 * @return void
-	 */
 	private void initialize() {
 		JLabel label = new JLabel( messageSource.getMessage( "openMonitor.saveDataLabel"));
 		setLayout( new FlowLayout());

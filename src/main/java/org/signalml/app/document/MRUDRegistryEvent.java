@@ -59,10 +59,7 @@ public class MRUDRegistryEvent extends EventObject {
 		this.inTypeIndex = inTypeIndex;
 	}
 
-	/**
-	 * FIXME there is no manager in this event - probably instead of this function there should be a function {@code getMRUDRegistry()}
-	 * @return
-	 */
+	//FIXME there is no manager in this event - probably instead of this function there should be a function {@code getMRUDRegistry()}
 	public DocumentManager getDocumentManager() {
 		return (DocumentManager) source;
 	}

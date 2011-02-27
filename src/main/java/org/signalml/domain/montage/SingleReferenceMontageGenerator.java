@@ -15,7 +15,7 @@ import org.springframework.validation.Errors;
  * they do not amplify the signal in one hemisphere vs. the other.
  * Another popular reference is "linked ears," which is a physical or mathematical
  * average of electrodes attached to both earlobes or mastoids.
- * (source: {@link http://en.wikipedia.org/wiki/Electroencephalography})
+ * (source: {@code http://en.wikipedia.org/wiki/Electroencephalography})
  * 
  * This class generates montage of that type from the given "raw" montage and checks if
  * the given {@link SourceMontage montages} are valid single reference montages.
