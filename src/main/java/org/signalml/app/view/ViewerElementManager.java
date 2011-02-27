@@ -138,14 +138,17 @@ import org.signalml.util.SvarogConstants;
 import org.springframework.context.support.MessageSourceAccessor;
 
 import com.thoughtworks.xstream.XStream;
-import org.signalml.app.action.AmplifierConfigAction;
+import org.signalml.app.action.AmplifierDefinitionConfigAction;
 import org.signalml.app.action.ChooseActiveTagAction;
 import org.signalml.app.action.CompareTagsAction;
+import org.signalml.app.action.OpenBCIModuleConfigAction;
 import org.signalml.app.action.StartMonitorRecordingAction;
 import org.signalml.app.action.StopMonitorRecordingAction;
 import org.signalml.app.view.monitor.AmplifierDefinitionConfigDialog;
+import org.signalml.app.view.monitor.OpenBCIModuleConfigDialog;
 import org.signalml.app.view.monitor.StartMonitorRecordingDialog;
 import org.signalml.app.worker.amplifiers.AmplifierDefinitionPresetManager;
+import org.signalml.app.worker.processes.OpenBCIModulePresetManager;
 
 
 
@@ -183,6 +186,7 @@ public class ViewerElementManager {
 	private SignalExportPresetManager signalExportPresetManager;
 	private FFTSampleFilterPresetManager fftFilterPresetManager;
         private AmplifierDefinitionPresetManager amplifierDefinitionPresetManager;
+        private OpenBCIModulePresetManager openBCIModulePresetManager;
 
 	/**
 	 * A {@link PresetManager} managing the user-defined
@@ -251,6 +255,7 @@ public class ViewerElementManager {
 
 	/* Dialogs */
         private AmplifierDefinitionConfigDialog amplifierDefinitionConfigDialog;
+        private OpenBCIModuleConfigDialog openBCIModuleConfigDialog;
         private EEGLabExportDialog eeglabExportDialog;
         private CheckSignalDialog checkSignalDialog;
 	private ErrorsDialog errorsDialog;
@@ -292,7 +297,8 @@ public class ViewerElementManager {
 	private BookFilterDialog bookFilterDialog;
 
 	/* Actions */
-        private AmplifierConfigAction amplifierConfigAction;
+        private AmplifierDefinitionConfigAction amplifierDefinitionConfigAction;
+        private OpenBCIModuleConfigAction openBCIModuleConfigAction;
         private EEGLabExportAction eeglabExportAction;
         private CheckSignalAction checkSignalAction;
 	private CloseWindowAction closeWindowAction;
@@ -547,6 +553,14 @@ public class ViewerElementManager {
                 this.amplifierDefinitionPresetManager = amplifierDefinitionPresetManager;
         }
 
+        public OpenBCIModulePresetManager getOpenBCIModulePresetManager() {
+                return openBCIModulePresetManager;
+        }
+
+        public void setOpenBCIModulePresetManager (OpenBCIModulePresetManager openBCIModulePresetManager) {
+                this.openBCIModulePresetManager = openBCIModulePresetManager;
+        }
+
 	/**
 	 * Returns a {@link TimeDomainSampleFilterPresetManager} used by this
 	 * ViewerElementManager.
@@ -767,7 +781,8 @@ public class ViewerElementManager {
 			monitorMenu.add(getStartMonitorRecordingAction());
 			monitorMenu.add(getStopMonitorRecordingAction());
                         monitorMenu.addSeparator();
-                        monitorMenu.add(getAmplifierConfigAction());
+                        monitorMenu.add(getamplifierDefinitionConfigAction());
+                        monitorMenu.add(getopenBCIModuleConfigAction());
 		}
 		return monitorMenu;
 	}
@@ -1293,6 +1308,15 @@ public class ViewerElementManager {
                 return amplifierDefinitionConfigDialog;
         }
 
+        public OpenBCIModuleConfigDialog getopenBCIModuleConfigDialog() {
+                if (openBCIModuleConfigDialog == null) {
+                        openBCIModuleConfigDialog = new OpenBCIModuleConfigDialog(messageSource, getOpenBCIModulePresetManager(), getDialogParent(), true);
+                        openBCIModuleConfigDialog.setApplicationConfig(getApplicationConfig());
+                        openBCIModuleConfigDialog.setFileChooser(getFileChooser());
+                }
+                return openBCIModuleConfigDialog;
+        }
+
 	public EditFFTSampleFilterDialog getEditFFTSampleFilterDialog() {
 		if (editFFTSampleFilterDialog == null) {
 			editFFTSampleFilterDialog = new EditFFTSampleFilterDialog(messageSource, getFftFilterPresetManager(), getDialogParent(), true);
@@ -1690,12 +1714,20 @@ public class ViewerElementManager {
 		return exportBookAction;
 	}
 
-        public AmplifierConfigAction getAmplifierConfigAction() {
-                if (amplifierConfigAction == null) {
-                        amplifierConfigAction = new AmplifierConfigAction(messageSource);
-                        amplifierConfigAction.setConfigDialog(getAmplifierDefinitionConfigDialog());
+        public AmplifierDefinitionConfigAction getamplifierDefinitionConfigAction() {
+                if (amplifierDefinitionConfigAction == null) {
+                        amplifierDefinitionConfigAction = new AmplifierDefinitionConfigAction(messageSource);
+                        amplifierDefinitionConfigAction.setConfigDialog(getAmplifierDefinitionConfigDialog());
                 }
-                return amplifierConfigAction;
+                return amplifierDefinitionConfigAction;
+        }
+
+        public OpenBCIModuleConfigAction getopenBCIModuleConfigAction() {
+                if (openBCIModuleConfigAction == null) {
+                        openBCIModuleConfigAction = new OpenBCIModuleConfigAction(messageSource);
+                        openBCIModuleConfigAction.setConfigDialog(getopenBCIModuleConfigDialog());
+                }
+                return openBCIModuleConfigAction;
         }
 
         public EEGLabExportAction getEEGLabExportAction() {

@@ -44,10 +44,13 @@ import com.thoughtworks.xstream.converters.reflection.FieldDictionary;
 import com.thoughtworks.xstream.converters.reflection.NativeFieldKeySorter;
 import com.thoughtworks.xstream.converters.reflection.PureJavaReflectionProvider;
 import com.thoughtworks.xstream.io.xml.DomDriver;
+import org.codehaus.janino.Java.AnonymousClassDeclaration;
 import org.signalml.app.config.preset.PredefinedFiltersConfiguration;
 import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
 import org.signalml.app.worker.amplifiers.AmplifierDefinition;
 import org.signalml.app.worker.amplifiers.AmplifierDefinitionPresetManager;
+import org.signalml.app.worker.processes.OpenBCIModule;
+import org.signalml.app.worker.processes.OpenBCIModulePresetManager;
 
 /** XMLUtils
  *
@@ -118,6 +121,19 @@ public abstract class XMLUtils {
                         streamer,
                         AmplifierDefinitionPresetManager.class,
                         AmplifierDefinition.class
+                );
+        }
+
+	/**
+	 * Configures the given {@link XStream XStreamer} for {@link OpenBCIModule}
+	 * streaming.
+	 * @param streamer a streamer to be configured
+	 */
+        public static void configureStreamerForOpenBCIModule(XStream streamer) {
+                Annotations.configureAliases(
+                        streamer,
+                        OpenBCIModulePresetManager.class,
+                        OpenBCIModule.class
                 );
         }
 

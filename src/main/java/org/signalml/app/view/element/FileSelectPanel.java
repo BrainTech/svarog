@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -61,6 +62,11 @@ public class FileSelectPanel extends JPanel {
          * Indicates if the "All files" filter is available
          */
         private boolean allFilters;
+
+        /**
+         * Browse button action.
+         */
+        private BrowseButtonAction browseButtonAction;
 
 	/**
 	 * This is the default constructor
@@ -127,9 +133,10 @@ public class FileSelectPanel extends JPanel {
 		if (browseButton == null) {
 			browseButton = new JButton(messageSource.getMessage("fileSelectPanel.browseButtonLabel"));
                         if (filters == null)
-                                browseButton.addActionListener(new BrowseButtonAction());
+                                browseButtonAction = new BrowseButtonAction();
                         else
-                                browseButton.addActionListener(new BrowseButtonAction(filters, allFilters));
+                                browseButtonAction = new BrowseButtonAction(filters, allFilters);
+                        browseButton.addActionListener(browseButtonAction);
 		}
 		return browseButton;
 	}
@@ -149,6 +156,15 @@ public class FileSelectPanel extends JPanel {
 	public String getFileName() {
 		return this.fileNameField.getText();
 	}
+
+        /**
+         * Whether the file chooser should return a relative path.
+         *
+         * @param ret if true, a relative path will be returned
+         */
+        public void returnRelativePath(boolean ret) {
+                browseButtonAction.setReturnRelativePath(ret);
+        }
 
 	/**
 	 * Returns whether a file was selected using this panel or not.
@@ -194,6 +210,11 @@ public class FileSelectPanel extends JPanel {
                  */
                 private HashMap<String, String[]> filters;
 
+                /**
+                 * If true the file chooser will return a relative path.
+                 */
+                private boolean returnRelativePath = false;
+
 		/**
 		 * Creates a new BrowseButtonAction and initializes it.
 		 */
@@ -203,6 +224,12 @@ public class FileSelectPanel extends JPanel {
 			fileChooser.setApproveButtonText(messageSource.getMessage("ok"));
 		}
 
+                /**
+                 * Creates a new BrowseButtonAction and initializes it with filters.
+                 *
+                 * @param filters filter collection
+                 * @param allFilters wheter the all files filter should be included
+                 */
 		public BrowseButtonAction(HashMap<String, String[]> filters, boolean allFilters) {
 			super();
 			fileChooser = new JFileChooser();
@@ -218,6 +245,65 @@ public class FileSelectPanel extends JPanel {
 
                         this.filters = filters;
 		}
+
+                /**
+                 * Wheter the file chooser should return a relative path.
+                 *
+                 * @param ret if true a relative path will be returned
+                 */
+                public void setReturnRelativePath(boolean ret) {
+                        returnRelativePath = ret;
+                }
+
+                /**
+                 * Gets a relative path.
+                 *
+                 * @param absolutePath the absolute path
+                 * @return the relative path
+                 */
+                private String getRelativePath(String absolutePath) {
+                        
+                        String basePath = (new File(".")).getAbsolutePath();                        
+                        String pathSeparator = "/";
+
+                        File f = new File(absolutePath);
+                        boolean isDir = f.isDirectory();
+
+                        String[] base = basePath.split(Pattern.quote(pathSeparator), -1);
+                        String[] target = absolutePath.split(Pattern.quote(pathSeparator), 0);
+
+                        String common = "";
+                        int commonIndex = 0;
+
+                        for (int i = 0; i < target.length && i < base.length; i++) {
+                                if (target[i].equals(base[i])) {
+                                        common += target[i] + pathSeparator;
+                                        commonIndex++;
+                                }
+                                else break;
+                        }
+
+                        if (commonIndex == 0)
+                        {
+                                return absolutePath;
+                        }
+
+                        String relative = "";
+                        if (base.length == commonIndex) {
+                                relative = "." + pathSeparator;
+                        } else {
+                                int numDirsUp = base.length - commonIndex - (isDir ? 0 : 1);
+                                for (int i = 1; i <= numDirsUp; i++) {
+                                        relative += ".." + pathSeparator;
+                                }
+                        }
+
+                        if (absolutePath.length() > common.length()) {
+                                relative += absolutePath.substring(common.length());
+                        }
+
+                        return relative;
+                }
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -240,6 +326,10 @@ public class FileSelectPanel extends JPanel {
 
                                         if (!getFileNameField().getText().endsWith(extension))
                                                 getFileNameField().setText(getFileNameField().getText() + "." + extension);
+                                }
+
+                                if (returnRelativePath) {
+                                        getFileNameField().setText(getRelativePath(getFileNameField().getText()));
                                 }
 			}
 

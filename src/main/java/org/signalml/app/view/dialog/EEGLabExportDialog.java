@@ -5,7 +5,6 @@
 package org.signalml.app.view.dialog;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Window;
 import java.io.File;
 import java.io.IOException;
@@ -19,7 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.model.MontageDescriptor;
@@ -78,7 +77,7 @@ public class EEGLabExportDialog extends AbstractDialog  {
         protected JComponent createInterface() {
 
                 JPanel interfacePanel = new JPanel(new BorderLayout());                
-                CompoundBorder panelBorder = new CompoundBorder(new LineBorder(Color.BLACK), new EmptyBorder(3, 3, 3, 3));
+                CompoundBorder panelBorder = new CompoundBorder(new TitledBorder(""), new EmptyBorder(3, 3, 3, 3));
                 interfacePanel.setBorder(panelBorder);
                 interfacePanel.add(getFileSelectPanel(), BorderLayout.CENTER);
                 return interfacePanel;

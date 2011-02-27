@@ -101,6 +101,7 @@ import org.springframework.util.Log4jConfigurer;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.Annotations;
 import org.signalml.app.worker.amplifiers.AmplifierDefinitionPresetManager;
+import org.signalml.app.worker.processes.OpenBCIModulePresetManager;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 
 /** SvarogApplication
@@ -129,6 +130,7 @@ public class SvarogApplication {
 	private static SignalExportPresetManager signalExportPresetManager = null;
 	private static FFTSampleFilterPresetManager fftFilterPresetManager = null;
         private static AmplifierDefinitionPresetManager amplifierDefinitionPresetManager = null;
+        private static OpenBCIModulePresetManager openBCIModulePresetManager = null;
 
 	/**
 	 * A {@link PresetManager} managing the user-defined
@@ -669,6 +671,17 @@ public class SvarogApplication {
 			logger.error("Failed to read amplifier definition configuration - will use defaults", ex);
 		}
 
+                openBCIModulePresetManager = new OpenBCIModulePresetManager();
+                openBCIModulePresetManager.setProfileDir(profileDir);
+
+                try {
+                        openBCIModulePresetManager.readFromPersistence(null);
+                } catch (FileNotFoundException ex) {
+			logger.debug("OpenBCI modules preset config not found - will use defaults");
+		} catch (Exception ex) {
+			logger.error("Failed to read OpenBCI modules configuration - will use defaults", ex);
+		}
+
 		timeDomainSampleFilterPresetManager = new TimeDomainSampleFilterPresetManager();
 		timeDomainSampleFilterPresetManager.setProfileDir(profileDir);
 
@@ -879,6 +892,7 @@ public class SvarogApplication {
 		elementManager.setSignalExportPresetManager(signalExportPresetManager);
 		elementManager.setFftFilterPresetManager(fftFilterPresetManager);
                 elementManager.setAmplifierDefinitionPresetManager(amplifierDefinitionPresetManager);
+                elementManager.setOpenBCIModulePresetManager(openBCIModulePresetManager);
 		elementManager.setTimeDomainSampleFilterPresetManager(timeDomainSampleFilterPresetManager);
 		elementManager.setPredefinedTimeDomainFiltersPresetManager(predefinedTimeDomainSampleFilterPresetManager);
 
@@ -990,6 +1004,12 @@ public class SvarogApplication {
 			amplifierDefinitionPresetManager.writeToPersistence(null);
 		} catch (Exception ex) {
 			logger.error("Failed to write amplifier definition configuration", ex);
+		}
+
+		try {
+			openBCIModulePresetManager.writeToPersistence(null);
+		} catch (Exception ex) {
+			logger.error("Failed to write OpenBCI modules configuration", ex);
 		}
 
 		try {

@@ -1,13 +1,10 @@
 package org.signalml.app.view.monitor;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Window;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -15,7 +12,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
@@ -275,6 +271,7 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
 
                 if (fileSelectPanel == null) {
                         fileSelectPanel = new FileSelectPanel(messageSource, messageSource.getMessage("amplifierDefinitionConfig.driverPath"));
+                        fileSelectPanel.returnRelativePath(true);
                 }
                 return fileSelectPanel;
         }

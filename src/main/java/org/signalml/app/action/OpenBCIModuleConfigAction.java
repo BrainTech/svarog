@@ -1,40 +1,39 @@
 package org.signalml.app.action;
 
 import java.awt.event.ActionEvent;
-import org.apache.log4j.Logger;
-
-import org.signalml.app.view.monitor.AmplifierDefinitionConfigDialog;
-import org.signalml.app.worker.amplifiers.AmplifierDefinition;
+import org.signalml.app.view.monitor.OpenBCIModuleConfigDialog;
+import org.signalml.app.worker.processes.OpenBCIModule;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
+import org.apache.log4j.Logger;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
- * Opens {@link AmplifierDefinitionConfigDialog}.
+ * Open an {@link OpenBCIModulesConfigDialog}.
  *
  * @author Tomasz Sawicki
  */
-public class AmplifierConfigAction extends AbstractSignalMLAction {
+public class OpenBCIModuleConfigAction extends AbstractSignalMLAction {
 
         /**
 	 * Logger to save history of execution at.
 	 */
-        protected static final Logger logger = Logger.getLogger(AmplifierConfigAction.class);
+        protected static final Logger logger = Logger.getLogger(OpenBCIModuleConfigAction.class);
 
         /**
 	 * The dialog which is shown after evoking this action.
 	 */
-        private AmplifierDefinitionConfigDialog configDialog;
+        private OpenBCIModuleConfigDialog configDialog;
 
         /**
          * Constructor sets text and tooltip.
          *
          * @param messageSource the message source
          */
-        public AmplifierConfigAction(MessageSourceAccessor messageSource) {
-                
+        public OpenBCIModuleConfigAction(MessageSourceAccessor messageSource) {
+
                 super(messageSource);
-                setText("action.amplifierDefinitionConfig");
-                setToolTip("action.amplifierDefinitionConfigToolTip");
+                setText("action.openBCIModulesConfig");
+                setToolTip("action.openBCIModulesConfigToolTip");
         }
 
         /**
@@ -44,7 +43,7 @@ public class AmplifierConfigAction extends AbstractSignalMLAction {
         public void actionPerformed(ActionEvent e) {
 
                 logger.debug("Amplifier config");
-                configDialog.showDialog(new AmplifierDefinition());
+                configDialog.showDialog(new OpenBCIModule());
         }
 
         /**
@@ -52,7 +51,7 @@ public class AmplifierConfigAction extends AbstractSignalMLAction {
          *
          * @return the {@link #eeglabExportDialog}
          */
-        public AmplifierDefinitionConfigDialog getConfigDialog() {
+        public OpenBCIModuleConfigDialog getConfigDialog() {
 
                 return configDialog;
         }
@@ -62,7 +61,7 @@ public class AmplifierConfigAction extends AbstractSignalMLAction {
          *
          * @param configDialog  an {@link AmplifierDefinitionConfigDialog} object
          */
-        public void setConfigDialog(AmplifierDefinitionConfigDialog configDialog) {
+        public void setConfigDialog(OpenBCIModuleConfigDialog configDialog) {
 
                 if(configDialog == null) {
 			throw new NullPointerException();

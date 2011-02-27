@@ -435,6 +435,8 @@
 	<entry key="action.exportEEGLabToolTip">Export signal in EEGLab format</entry>
         <entry key="action.amplifierDefinitionConfig">Amplifier definition config</entry>
 	<entry key="action.amplifierDefinitionConfigToolTip">Allows to change the amplifier definition config</entry>
+        <entry key="action.openBCIModulesConfig">OpenBCI modules config</entry>
+	<entry key="action.openBCIModulesConfigToolTip">Allows to change the OpenBCI modules config</entry>
 
 	<entry key="action.signalParameters">Signal parameters</entry>
 	<entry key="action.signalParametersToolTip">Change signal parameters</entry>
@@ -594,7 +596,7 @@
         <entry key="error.eeglabExport.incorrectFileName">Please input a filename</entry>
         <entry key="error.eeglabExport.cantWrite">File cannot be written</entry>
 
-        <entry key="amplifierDefinitionConfig.title">Amplifier definition config</entry>
+        <entry key="amplifierDefinitionConfig.title">Amplifier definitions config</entry>
         <entry key="amplifierDefinitionConfig.driverData">Driver data</entry>
         <entry key="amplifierDefinitionConfig.protocol">Protocol: </entry>
         <entry key="amplifierDefinitionConfig.match">Match: </entry>
@@ -608,6 +610,9 @@
         <entry key="amplifierDefinitionConfig.removeButton">Remove</entry>
         <entry key="error.amplifierDefinitionConfig.integer">Please insert an integer value</entry>
         <entry key="error.amplifierDefinitionConfig.rational">Please insert a rational value</entry>
+
+        <entry key="openBCIModuleConfig.title">OpenBCI modules config</entry>
+        <entry key="openBCIModuleConfig.path">Module path: </entry>
 
 	<entry key="profilePath.title">Choose profile path</entry>
 	<entry key="profilePath.welcome">Welcome to signalml viewer</entry>
