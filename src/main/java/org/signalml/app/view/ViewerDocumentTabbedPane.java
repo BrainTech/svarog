@@ -1,7 +1,6 @@
 /* ViewerDocumentTabbedPane.java created 2007-09-17
  *
  */
-
 package org.signalml.app.view;
 
 import java.awt.event.ActionEvent;
@@ -38,12 +37,14 @@ import org.springframework.context.support.MessageSourceAccessor;
 public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentManagerListener, ActionFocusListener {
 
 	private static final long serialVersionUID = 1L;
-
 	protected static final Logger logger = Logger.getLogger(ViewerDocumentTabbedPane.class);
-
+	/**
+	 * The maximum length a tab title can have. Document names that are longer
+	 * than this will be shortened.
+	 */
+	private static int MAXIMUM_TAB_TITLE_LENGTH = 35;
 	private MessageSourceAccessor messageSource;
 	private ActionFocusManager actionFocusManager;
-
 	private View view;
 
 	public ViewerDocumentTabbedPane() {
@@ -51,7 +52,7 @@ public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentMan
 	}
 
 	public void initialize() {
-		setBorder(new EmptyBorder(3,3,3,3));
+		setBorder(new EmptyBorder(3, 3, 3, 3));
 
 		KeyStroke ctrlTab = KeyStroke.getKeyStroke("ctrl TAB");
 		getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(ctrlTab, "nextDocument");
@@ -65,9 +66,9 @@ public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentMan
 	@Override
 	public void documentAdded(DocumentManagerEvent e) {
 		Document document = e.getDocument();
-		if ((document instanceof SignalDocument) 
-				|| (document instanceof BookDocument)
-				|| (document instanceof MonitorSignalDocument)) {
+		if ((document instanceof SignalDocument)
+			|| (document instanceof BookDocument)
+			|| (document instanceof MonitorSignalDocument)) {
 			addDocumentTab(document);
 		}
 	}
@@ -79,17 +80,30 @@ public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentMan
 		int index = indexOfComponent(document.getDocumentView());
 		if (index >= 0) {
 
-			String title = null;
-			if (document instanceof MessageSourceResolvable) {
-				title = messageSource.getMessage((MessageSourceResolvable) document);
-			} else {
-				title = document.toString();
-			}
-
-			setTitleAt(index, title);
-			setToolTipTextAt(index, title);
+			String tabTitle = getTabTitle(document);
+			String tabTooltip = getTabTooltip(document);
+			setTitleAt(index, tabTitle);
+			setToolTipTextAt(index, tabTooltip);
 
 		}
+
+	}
+
+	/**
+	 * Returns the document name of the given document.
+	 * @param document the document
+	 * @return the name of the document
+	 */
+	protected String getDocumentName(Document document) {
+
+		String documentName = null;
+		if (document instanceof MessageSourceResolvable) {
+			documentName = messageSource.getMessage((MessageSourceResolvable) document);
+		} else {
+			documentName = document.toString();
+		}
+
+		return documentName;
 
 	}
 
@@ -97,7 +111,6 @@ public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentMan
 	public void documentRemoved(DocumentManagerEvent e) {
 		removeDocumentTab(e.getDocument());
 	}
-
 
 	@Override
 	public void actionFocusChanged(ActionFocusEvent e) {
@@ -118,13 +131,6 @@ public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentMan
 			return;
 		}
 
-		String title = null;
-		if (document instanceof MessageSourceResolvable) {
-			title = messageSource.getMessage((MessageSourceResolvable) document);
-		} else {
-			title = document.toString();
-		}
-
 		ManagedDocumentType type = ManagedDocumentType.getForClass(document.getClass());
 		Icon icon = null;
 		if (type != null) {
@@ -132,9 +138,48 @@ public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentMan
 		}
 
 		document.setDocumentView(documentViewPanel);
-		String tabTooltip = title;
-		addTab(title, icon, documentViewPanel, tabTooltip);
 
+		String tabTitle = getTabTitle(document);
+		String tabTooltip = getTabTooltip(document);
+		addTab(tabTitle, icon, documentViewPanel, tabTooltip);
+
+	}
+
+	/**
+	 * Returns a tab title for a given document.
+	 * @param document a document for which the tab title will be returned
+	 * @return a tab title for the document.
+	 */
+	private String getTabTitle(Document document) {
+
+		String documentName = getDocumentName(document);
+		String tabTitle;
+
+		if (documentName.length() > MAXIMUM_TAB_TITLE_LENGTH) {
+
+			String dots = "...";
+			int substringLengthWithoutDots = MAXIMUM_TAB_TITLE_LENGTH - dots.length();
+
+			tabTitle = documentName.substring(0, substringLengthWithoutDots);
+			tabTitle += dots;
+
+		} else {
+			tabTitle = documentName;
+		}
+
+		return tabTitle;
+
+	}
+
+	/**
+	 * Returns a tab tooltip for a given document.
+	 * @param document a document for which the tooltip will be returned
+	 * @return a tooltip for the document
+	 */
+	private String getTabTooltip(Document document) {
+		String documentName = getDocumentName(document);
+		String tabTooltip = documentName;
+		return tabTooltip;
 	}
 
 	public void removeDocumentTab(Document document) {
@@ -193,7 +238,6 @@ public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentMan
 			setSelectedIndex(index);
 
 		}
-
 	}
 
 	private class PreviousDocumentAction extends AbstractAction {
@@ -208,7 +252,5 @@ public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentMan
 			setSelectedIndex(index);
 
 		}
-
 	}
-
 }
