@@ -41,7 +41,7 @@ import org.springframework.validation.Errors;
  * <p>
  * Contains a {@link #showImmediateExceptionDialog(Window, Throwable) static
  * function} which displays the dialog with the provided exception.
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ErrorsDialog extends AbstractDialog {
@@ -49,6 +49,11 @@ public class ErrorsDialog extends AbstractDialog {
 	private static final long serialVersionUID = 1L;
 
 	protected static final Logger logger = Logger.getLogger(ErrorsDialog.class);
+
+	/**
+	 * The preferred size of the scroll pane which contains the errors jlist.
+	 */
+	private static Dimension scrollPanePreferredDimensions = new Dimension(420, 250);
 
 	/**
 	 * the static source of messages (labels)
@@ -59,7 +64,7 @@ public class ErrorsDialog extends AbstractDialog {
 	 * the list on which errors are displayed
 	 */
 	private JList errorList = null;
-	
+
 	/**
 	 * the code to obtain the title for this dialog from the source of messages;
 	 * if the code is {@code null} the default title is used
@@ -143,6 +148,8 @@ public class ErrorsDialog extends AbstractDialog {
 	@Override
 	public JComponent createInterface() {
 
+		this.setResizable(false);
+
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.setBorder(new EmptyBorder(3,3,3,3));
 
@@ -150,8 +157,8 @@ public class ErrorsDialog extends AbstractDialog {
 		errorList.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		errorList.setFont(new Font("Dialog", Font.PLAIN, 12));
 
-		JScrollPane scrollPane = new JScrollPane(errorList, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPane.setPreferredSize(new Dimension(420,250));
+		JScrollPane scrollPane = new JScrollPane(errorList, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setPreferredSize(scrollPanePreferredDimensions);
 
 		panel.add(scrollPane, BorderLayout.CENTER);
 
@@ -165,21 +172,37 @@ public class ErrorsDialog extends AbstractDialog {
 				JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
 				label.setIcon(icon);
-				label.setText(messageSource.getMessage((MessageSourceResolvable) value));
+				String text = messageSource.getMessage((MessageSourceResolvable) value);
+
+				int maximumTextWidth = getMaximumTextWidth();
+				text = wrapTextForLabelIfNecessary(text, maximumTextWidth);
+				label.setText(text);
 
 				return label;
 			}
 
-		});
+			/**
+			 * Returns the maximum width a label text can have.
+			 * @return the maximum width a label text can have
+			 */
+			private int getMaximumTextWidth() {
+				return (int) scrollPanePreferredDimensions.getWidth() - icon.getIconWidth() - errorList.getInsets().left - errorList.getInsets().right;
+			}
 
-		/*
-		ErrorListCellRenderer renderer = new ErrorListCellRenderer(scrollPane.getPreferredSize());
-		renderer.setMessageSource(messageSource);
-		errorList.setCellRenderer(renderer);
-		*/
+		});
 
 		return panel;
 
+	}
+
+	/**
+	 * Wraps the given text so that it its width is less than maximum width.
+	 * @param text the text to be shown
+	 * @param maximumWidth the maximum width that the text can have
+	 * @return the wrapped text
+	 */
+	private String wrapTextForLabelIfNecessary(String text, int maximumWidth) {
+		return "<html><table><tr><td width=" + maximumWidth + ">" + text + "</td></tr></table></html>";
 	}
 
 	/**
