@@ -20,7 +20,7 @@ public class FilterCoefficients {
 	private double[] bCoefficients;
 
 	/**
-	 * an array of feeback coefficients
+	 * an array of feedback coefficients
 	 */
 	private double[] aCoefficients;
 

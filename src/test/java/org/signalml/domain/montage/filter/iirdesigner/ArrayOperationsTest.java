@@ -21,11 +21,34 @@ public class ArrayOperationsTest {
 	@Test
 	public void testPadWithZeros() {
 
-		double[] array = {1, 2, 5, 4};
+		double[] array;
 		double[] paddedArray;
 
-		paddedArray = ArrayOperations.padWithZeros(array, 10);
+		array = new double[] {};
+		paddedArray = ArrayOperations.padArrayWithZerosToSize(array, 0);
+		assertEquals(0, paddedArray.length);
 
+		paddedArray = ArrayOperations.padArrayWithZerosToSize(array, 2);
+		assertEquals(2, paddedArray.length);
+		assertArrayEquals(new double[] {0.0, 0.0}, paddedArray, 1e-10);
+
+		array = new double[] {1.0};
+		paddedArray = ArrayOperations.padArrayWithZerosToSize(array, 1);
+		assertEquals(1, paddedArray.length);
+		assertArrayEquals(new double[] {1.0}, paddedArray, 1e-10);
+
+		paddedArray = ArrayOperations.padArrayWithZerosToSize(array, 4);
+		assertEquals(4, paddedArray.length);
+		assertArrayEquals(new double[] {1.0, 0.0, 0.0, 0.0}, paddedArray, 1e-10);
+
+		array = new double[] {1.0, 0.2, 0.3};
+		paddedArray = ArrayOperations.padArrayWithZerosToSize(array, 5);
+		assertEquals(5, paddedArray.length);
+		assertArrayEquals(new double[] {1.0, 0.2, 0.3, 0.0, 0.0}, paddedArray, 1e-10);
+
+		array = new double[] {1, 2, 5, 4};
+		paddedArray = ArrayOperations.padArrayWithZerosToSize(array, 10);
+		assertEquals(10, paddedArray.length);
 		assertArrayEquals(paddedArray, new double[] {1, 2, 5, 4, 0, 0, 0, 0, 0, 0}, 0.01);
 
 	}

@@ -254,23 +254,6 @@ public class SpecialMath {
 	}
 
 	/**
-	 * Inverts the order of the elements in the array.
-	 *
-	 * @param array an array to be inverted
-	 * @return an inverted array
-	 */
-	public static double[] invertArray(double[] array) {
-
-		double[] newArray = new double[array.length];
-
-		for (int i = 0; i < array.length; i++)
-			newArray[i] = array[array.length - i - 1];
-
-		return newArray;
-
-	}
-
-	/**
 	 * Returns the given angle changed to a 360 degrees complement.
 	 * @param angle an angle to complement
 	 * @return the 360 degrees complement of the angle

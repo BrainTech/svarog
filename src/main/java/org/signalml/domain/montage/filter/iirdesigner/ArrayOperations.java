@@ -21,7 +21,7 @@ public class ArrayOperations {
 	 * @param newSize the new size for the array
 	 * @return the resized array
 	 */
-	protected static double[] padWithZeros(double[] array, int newSize) {
+	protected static double[] padArrayWithZerosToSize(double[] array, int newSize) {
 
 		assert (newSize >= array.length);
 
@@ -49,8 +49,8 @@ public class ArrayOperations {
 
 		int n = array1.length + array2.length - 1;
 		double[] result = new double[n];
-		double[] f = padWithZeros(array1, n);
-		double[] g = padWithZeros(array2, n);
+		double[] f = padArrayWithZerosToSize(array1, n);
+		double[] g = padArrayWithZerosToSize(array2, n);
 
 		int i;
 		int fpos, gpos;

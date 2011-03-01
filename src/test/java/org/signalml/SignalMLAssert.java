@@ -5,6 +5,8 @@
 package org.signalml;
 
 import org.apache.commons.math.complex.Complex;
+import org.apache.commons.math.linear.RealMatrix;
+import org.apache.commons.math.linear.RealVector;
 import org.junit.Assert;
 
 /**
@@ -72,6 +74,53 @@ public class SignalMLAssert extends Assert {
 		for (int i = 0; i < expected.length; i++)
 			assertEquals(expected[i],actual[i], delta);
 
+	}
+
+	/**
+	 * Asserts that the elements of two double arrays are equal concerning
+	 * a delta.
+	 *
+	 * @param expected the expected values
+	 * @param actual the actual values
+	 * @param delta determines how much the actual value can be different from the expected
+	 * value for the assertion to hold true
+	 */
+	public static void assertArrayEquals(double[][] expected, double[][] actual, double delta) {
+		assertEquals(expected.length, actual.length);
+
+		for (int i = 0; i < expected.length; i++)
+			assertArrayEquals(expected[i], actual[i], delta);
+	}
+
+	/**
+	 * Asserts that the elements of two double matrices are equal concerning
+	 * a delta.
+	 *
+	 * @param expected the expected values
+	 * @param actual the actual values
+	 * @param delta determines how much the actual value can be different from the expected
+	 * value for the assertion to hold true
+	 */
+	public static void assertMatrixEquals(RealMatrix expected, RealMatrix actual, double delta) {
+		double[][] expectedData = expected.getData();
+		double[][] actualData = actual.getData();
+		assertArrayEquals(expectedData, actualData, delta);
+	}
+
+	/**
+	 * Asserts that the elements of two vectors are equal concerning
+	 * a delta.
+	 *
+	 * @param expected the expected values
+	 * @param actual the actual values
+	 * @param delta determines how much the actual value can be different from the expected
+	 * value for the assertion to hold true
+	 */
+	public static void assertVectorEquals(RealVector expected, RealVector actual, double delta) {
+		double[] expectedData = expected.getData();
+		double[] actualData = actual.getData();
+
+		assertArrayEquals(expectedData, actualData, delta);
 	}
 
 }

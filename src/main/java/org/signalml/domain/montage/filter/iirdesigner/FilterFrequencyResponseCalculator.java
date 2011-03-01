@@ -152,12 +152,12 @@ public class FilterFrequencyResponseCalculator extends FilterResponseCalculator 
 			cr[i] = c[i] * i;
 		}
 
-		cr = ArrayOperations.padWithZeros(cr, fftSize);
+		cr = ArrayOperations.padArrayWithZerosToSize(cr, fftSize);
 		FourierTransform fourierTransform = new FourierTransform();
 		Complex[] fftInput = ArrayOperations.convertDoubleArrayToComplex(cr);
 		Complex[] num = fourierTransform.forwardFFTComplex(fftInput);
 
-		c = ArrayOperations.padWithZeros(c, fftSize);
+		c = ArrayOperations.padArrayWithZerosToSize(c, fftSize);
 		FourierTransform fourierTransform2 = new FourierTransform();
 		Complex[] fftInput2 = ArrayOperations.convertDoubleArrayToComplex(c);
 		Complex[] den = fourierTransform2.forwardFFTComplex(fftInput2);
