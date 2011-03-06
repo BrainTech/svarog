@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
+import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.element.TitledPanelWithABorder;
 import org.springframework.context.support.MessageSourceAccessor;
 
@@ -24,13 +25,20 @@ import org.springframework.context.support.MessageSourceAccessor;
  */
 abstract public class AbstractSignalSourcePanel extends JPanel implements PropertyChangeListener {
 
+	protected ViewerElementManager viewerElementManager;
+
 	private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 	private MessageSourceAccessor messageSource;
 	private SignalSourceSelectionPanel signalSourceSelectionPanel;
 
-	public AbstractSignalSourcePanel(MessageSourceAccessor messageSource) {
+	public AbstractSignalSourcePanel(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager) {
 		this.messageSource = messageSource;
+		this.viewerElementManager = viewerElementManager;
 		createInterface();
+	}
+
+	public ViewerElementManager getViewerElementManager() {
+		return viewerElementManager;
 	}
 
 	private void createInterface() {

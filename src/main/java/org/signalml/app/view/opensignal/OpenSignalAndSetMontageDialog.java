@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
 import org.signalml.app.model.OpenSignalDescriptor;
 import org.signalml.app.montage.MontagePresetManager;
+import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.montage.SignalMontageDialog;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -20,11 +21,15 @@ import org.springframework.context.support.MessageSourceAccessor;
  */
 public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 
+	private ViewerElementManager viewerElementManager;
 	private SignalSourcePanel signalSourcePanel;
 
-	public OpenSignalAndSetMontageDialog(MessageSourceAccessor messageSource, MontagePresetManager montagePresetManager,
-		PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainSampleFilterPresetManager, Window f, boolean isModal) {
-		super(messageSource, montagePresetManager, predefinedTimeDomainSampleFilterPresetManager, f, isModal);
+	public OpenSignalAndSetMontageDialog(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager,
+			Window f, boolean isModal) {
+
+		super(messageSource, viewerElementManager.getMontagePresetManager(), viewerElementManager.getPredefinedTimeDomainFiltersPresetManager(), f, isModal);
+		this.viewerElementManager = viewerElementManager;
+
 	}
 
 	@Override
@@ -38,7 +43,7 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 
 	protected JPanel getSignalSourcePanel() {
 		if (signalSourcePanel == null)
-			signalSourcePanel = new SignalSourcePanel(messageSource);
+			signalSourcePanel = new SignalSourcePanel(messageSource, viewerElementManager);
 		return signalSourcePanel;
 	}
 
