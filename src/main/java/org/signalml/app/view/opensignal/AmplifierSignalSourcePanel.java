@@ -25,7 +25,6 @@ public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel {
 		JPanel leftColumnPanel = new JPanel();
 		leftColumnPanel.setLayout(new BorderLayout());
 
-		leftColumnPanel.add(getSignalSourceSelectionPanel(), BorderLayout.NORTH);
 		return leftColumnPanel;
 	}
 
