@@ -1,4 +1,4 @@
-package org.signalml.app.view.monitor;
+package org.signalml.app.view.opensignal;
 
 import org.signalml.app.worker.amplifiers.AmplifierInstance;
 
