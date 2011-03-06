@@ -7,6 +7,7 @@ package org.signalml.app.view.opensignal;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import org.signalml.app.view.ViewerElementManager;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
@@ -15,8 +16,8 @@ import org.springframework.context.support.MessageSourceAccessor;
  */
 public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel {
 
-	public AmplifierSignalSourcePanel(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public AmplifierSignalSourcePanel(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager) {
+		super(messageSource, viewerElementManager);
 	}
 
 	@Override

@@ -1220,8 +1220,7 @@ public class ViewerElementManager {
 
 	public OpenSignalAndSetMontageDialog getOpenSignalAndSetMontageDialog() {
 		if (openSignalAndSetMontageDialog == null) {
-			openSignalAndSetMontageDialog = new OpenSignalAndSetMontageDialog(messageSource, getMontagePresetManager(),
-				getPredefinedTimeDomainFiltersPresetManager(), getDialogParent(), true);
+			openSignalAndSetMontageDialog = new OpenSignalAndSetMontageDialog(messageSource, this, getDialogParent(), true);
 			openSignalAndSetMontageDialog.setFileChooser(getFileChooser());
 			openSignalAndSetMontageDialog.setApplicationConfig(getApplicationConfig());
 			openSignalAndSetMontageDialog.setFftFilterPresetManager(getFftFilterPresetManager());

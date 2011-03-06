@@ -9,6 +9,7 @@ import java.beans.PropertyChangeListener;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
+import org.signalml.app.view.ViewerElementManager;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
@@ -17,14 +18,17 @@ import org.springframework.context.support.MessageSourceAccessor;
  */
 public class SignalSourcePanel extends JPanel implements PropertyChangeListener {
 
+	private ViewerElementManager viewerElementManager;
+
 	private MessageSourceAccessor messageSource;
 	private ComboBoxModel signalSourceSelectionComboBoxModel;
 	private FileSignalSourcePanel fileSignalSourcePanel;
 	private OpenBCISignalSourcePanel openBCISignalSourcePanel;
 	private AmplifierSignalSourcePanel amplifierSignalSourcePanel;
 
-	public SignalSourcePanel(MessageSourceAccessor messageSource) {
+	public SignalSourcePanel(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager) {
 		this.messageSource = messageSource;
+		this.viewerElementManager = viewerElementManager;
 		createInterface();
 	}
 
@@ -32,9 +36,9 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 		CardLayout cardLayout = new CardLayout();
 		this.setLayout(cardLayout);
 
-		fileSignalSourcePanel = new FileSignalSourcePanel(messageSource);
-		openBCISignalSourcePanel = new OpenBCISignalSourcePanel(messageSource);
-		amplifierSignalSourcePanel = new AmplifierSignalSourcePanel(messageSource);
+		fileSignalSourcePanel = new FileSignalSourcePanel(messageSource, viewerElementManager);
+		openBCISignalSourcePanel = new OpenBCISignalSourcePanel(messageSource, viewerElementManager);
+		amplifierSignalSourcePanel = new AmplifierSignalSourcePanel(messageSource, viewerElementManager);
 
 		fileSignalSourcePanel.setSignalSourceSelectionComboBoxModel(getSignalSourceSelectionComboBoxModel());
 		openBCISignalSourcePanel.setSignalSourceSelectionComboBoxModel(getSignalSourceSelectionComboBoxModel());

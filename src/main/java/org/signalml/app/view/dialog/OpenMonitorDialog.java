@@ -1,4 +1,4 @@
-/* OpenMonitorDialog.java created 2010-11-09
+		/* OpenMonitorDialog.java created 2010-11-09
  *
  */
 package org.signalml.app.view.dialog;
