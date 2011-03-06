@@ -30,4 +30,9 @@ public class AmplifierInstance {
         public AmplifierDefinition getDefinition() {
                 return definition;
         }
+
+        @Override
+        public String toString() {
+                return definition.getName() + " (" + address + ")";
+        }
 }

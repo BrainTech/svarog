@@ -102,6 +102,7 @@ public class AmplifierDiscoveryWorker implements PropertyChangeListener {
                 }
         }
 
+        @Override
         public void propertyChange(PropertyChangeEvent evt) {
 
                 if ("deviceFound".equals(evt.getPropertyName())) {
