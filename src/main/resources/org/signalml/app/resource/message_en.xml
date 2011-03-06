@@ -725,6 +725,19 @@
 
 <!-- ================================= -->
 
+        <entry key="amplifierSelection.amplifiersList">Amplifiers List</entry>
+        <entry key="amplifierSelection.config">Config</entry>
+        <entry key="amplifierSelection.openBCI">OpenBCI</entry>
+        <entry key="amplifierSelection.refresh">Refresh</entry>
+        <entry key="amplifierSelection.start">Start</entry>
+        <entry key="amplifierSelection.stop">Stop</entry>
+        <entry key="amplifierSelection.consistency">Amplifier Definitions not consistent</entry>
+        <entry key="amplifierSelection.search">Searching for devices...</entry>
+        <entry key="amplifierSelection.bluetoothSearchFailed">Bluetooth search failed: </entry>
+        <entry key="amplifierSelection.usbSearchFailed">USB search failed: </entry>
+
+<!-- ================================= -->
+
 	<entry key="openSignal.options.title">Choose options for signal</entry>
 	<entry key="openSignal.options.methodTitle">Choose signal loading method</entry>
 	<entry key="openSignal.options.methodSignalML">Load using SignalML codec</entry>
