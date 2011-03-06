@@ -1,89 +1,27 @@
-/* OpenSignalDescriptor.java created 2007-09-18
+/* OpenSignalDescriptor.java created 2011-03-06
  *
  */
 
 package org.signalml.app.model;
 
-import org.signalml.codec.SignalMLCodec;
-import org.signalml.domain.signal.SignalType;
-import org.signalml.domain.signal.raw.RawSignalByteOrder;
-import org.signalml.domain.signal.raw.RawSignalDescriptor;
-import org.signalml.domain.signal.raw.RawSignalSampleType;
+import org.signalml.domain.montage.Montage;
 
-/** OpenSignalDescriptor
+/**
  *
- *
- * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
+ * @author Piotr Szachewicz
  */
 public class OpenSignalDescriptor {
 
-	public enum OpenSignalMethod {
-		USE_SIGNALML,
-		RAW
-	};
+	private OpenFileSignalDescriptor openFileSignalDescriptor;
+	private OpenMonitorDescriptor openMonitorDescriptor;
+	private Montage montage;
 
-	private SignalType type;
-
-	private OpenSignalMethod method;
-
-	// for signalML signals
-	private SignalMLCodec codec;
-	private SignalParameterDescriptor parameters = new SignalParameterDescriptor();
-
-	// for raw signals
-	private RawSignalDescriptor rawSignalDescriptor = new RawSignalDescriptor();
-
-	public OpenSignalDescriptor() {
-		// XXX currently all signals are treated as EEG - there is no way to change this in the GUI
-		type = SignalType.EEG_10_20;
-
-		rawSignalDescriptor.setSamplingFrequency(128F);
-		rawSignalDescriptor.setChannelCount(1);
-		rawSignalDescriptor.setSampleType(RawSignalSampleType.DOUBLE);
-		rawSignalDescriptor.setByteOrder(RawSignalByteOrder.LITTLE_ENDIAN);
-		rawSignalDescriptor.setCalibrationGain(1F);
-		rawSignalDescriptor.setCalibrationOffset(0.0F);
-
+	public void setMontage(Montage montage) {
+		this.montage = montage;
 	}
 
-	public SignalType getType() {
-		return type;
-	}
-
-	public void setType(SignalType type) {
-		this.type = type;
-	}
-
-	public OpenSignalMethod getMethod() {
-		return method;
-	}
-
-	public void setMethod(OpenSignalMethod method) {
-		this.method = method;
-	}
-
-	public SignalMLCodec getCodec() {
-		return codec;
-	}
-
-	public void setCodec(SignalMLCodec codec) {
-		this.codec = codec;
-	}
-
-	public SignalParameterDescriptor getParameters() {
-		return parameters;
-	}
-
-	public void setParameters(SignalParameterDescriptor parameters) {
-		this.parameters = parameters;
-	}
-
-	public RawSignalDescriptor getRawSignalDescriptor() {
-		return rawSignalDescriptor;
-	}
-
-	public void setRawSignalDescriptor(RawSignalDescriptor rawSignalDescriptor) {
-		this.rawSignalDescriptor = rawSignalDescriptor;
+	public Montage getMontage() {
+		return montage;
 	}
 
 }

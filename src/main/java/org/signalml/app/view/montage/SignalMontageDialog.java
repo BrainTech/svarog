@@ -69,7 +69,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	private MontageFiltersPanel filtersPanel;
 	private MontageMiscellaneousPanel miscellaneousPanel;
 
-	private JTabbedPane tabbedPane;
+	protected JTabbedPane tabbedPane;
 
 	private SignalDocument signalDocument;
 	private Montage currentMontage;
@@ -134,7 +134,6 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 		tabbedPane.addTab(messageSource.getMessage("signalMontage.matrixTabTitle"), matrixReferenceEditorPanel);
 		tabbedPane.addTab(messageSource.getMessage("signalMontage.filtersTabTitle"), filtersPanel);
 		tabbedPane.addTab(messageSource.getMessage("signalMontage.miscellaneousTabTitle"), miscellaneousPanel);
-
 		tabbedPane.addChangeListener(new ChangeListener() {
 
 			@Override

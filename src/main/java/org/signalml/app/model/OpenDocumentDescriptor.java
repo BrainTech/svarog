@@ -19,7 +19,7 @@ public class OpenDocumentDescriptor {
 	private ManagedDocumentType type;
 	private boolean makeActive;
 
-	private OpenSignalDescriptor signalOptions = new OpenSignalDescriptor();
+	private OpenFileSignalDescriptor signalOptions = new OpenFileSignalDescriptor();
 	private OpenMonitorDescriptor monitorOptions = new OpenMonitorDescriptor();
 	private OpenTagDescriptor tagOptions = new OpenTagDescriptor();
 	private OpenBookDescriptor bookOptions = new OpenBookDescriptor();
@@ -48,7 +48,7 @@ public class OpenDocumentDescriptor {
 		this.makeActive = makeActive;
 	}
 
-	public OpenSignalDescriptor getSignalOptions() {
+	public OpenFileSignalDescriptor getSignalOptions() {
 		return signalOptions;
 	}
 

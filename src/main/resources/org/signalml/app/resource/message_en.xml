@@ -301,6 +301,8 @@
 	<entry key="action.helpContentsToolTip">Display help contents</entry>
 	<entry key="action.openDocument">Open...</entry>
 	<entry key="action.openDocumentToolTip">Open a document from file</entry>
+	<entry key="action.openSignalAndSetMontageLabel">Open signal</entry>
+	<entry key="action.openSignalAndSetMontageToolTip">Open signal and set montage for it</entry>
 	<entry key="action.saveDocument">Save</entry>
 	<entry key="action.saveDocumentToolTip">Save the active document</entry>
 	<entry key="action.saveDocumentAs">Save As...</entry>
@@ -692,6 +694,10 @@
 	<entry key="openDocument.signalChosen">Signal document chosen</entry>
 	<entry key="openDocument.bookChosen">Book document chosen</entry>
 	<entry key="openDocument.tagChosen">Tag document chosen</entry>
+
+	<entry key="opensignal.signalsource.FILE">File</entry>
+	<entry key="opensignal.signalsource.OPENBCI">OpenBCI</entry>
+	<entry key="opensignal.signalsource.AMPLIFIER">Amplifier</entry>
 
 	<entry key="checkSignal.title">Check Signal</entry>
         <entry key="checkSignal.label">Channels</entry>

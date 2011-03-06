@@ -27,10 +27,10 @@ import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.model.MonitorRecordingDescriptor;
 import org.signalml.app.model.OpenDocumentDescriptor;
 import org.signalml.app.model.OpenMonitorDescriptor;
-import org.signalml.app.model.OpenSignalDescriptor;
+import org.signalml.app.model.OpenFileSignalDescriptor;
 import org.signalml.app.model.OpenTagDescriptor;
 import org.signalml.app.model.SignalParameterDescriptor;
-import org.signalml.app.model.OpenSignalDescriptor.OpenSignalMethod;
+import org.signalml.app.model.OpenFileSignalDescriptor.OpenSignalMethod;
 import org.signalml.app.montage.MontagePresetManager;
 import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.dialog.ErrorsDialog;
@@ -555,7 +555,7 @@ public class DocumentFlowIntegrator {
 
 		if (type.equals(ManagedDocumentType.SIGNAL)) {
 
-			OpenSignalDescriptor signalOptions = odd.getSignalOptions();
+			OpenFileSignalDescriptor signalOptions = odd.getSignalOptions();
 			if (mrud instanceof SignalMLMRUDEntry) {
 
 				SignalMLMRUDEntry smlEntry = (SignalMLMRUDEntry) mrud;
@@ -653,7 +653,7 @@ public class DocumentFlowIntegrator {
 			return null;
 		}
 
-		OpenSignalDescriptor signalOptions = descriptor.getSignalOptions();
+		OpenFileSignalDescriptor signalOptions = descriptor.getSignalOptions();
 		OpenSignalMethod method = signalOptions.getMethod();
 		if (method == null) {
 			logger.error("No method");

@@ -24,8 +24,8 @@ import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.OpenDocumentDescriptor;
-import org.signalml.app.model.OpenSignalDescriptor;
-import org.signalml.app.model.OpenSignalDescriptor.OpenSignalMethod;
+import org.signalml.app.model.OpenFileSignalDescriptor;
+import org.signalml.app.model.OpenFileSignalDescriptor.OpenSignalMethod;
 import org.signalml.app.model.SignalExportDescriptor;
 import org.signalml.app.model.SignalParameterDescriptor;
 import org.signalml.app.view.ViewerElementManager;
@@ -623,7 +623,7 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 		if (!file.canRead()) throw new IOException("can not access file");
 		ofd.setFile(file);
 		ofd.setType(ManagedDocumentType.SIGNAL);
-		OpenSignalDescriptor osd = ofd.getSignalOptions();
+		OpenFileSignalDescriptor osd = ofd.getSignalOptions();
 		osd.setMethod(OpenSignalMethod.RAW);
 		RawSignalDescriptor descriptor = new RawSignalDescriptor();
 		descriptor.setSamplingFrequency(samplingFrequency);
@@ -757,7 +757,7 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 		ofd.setMakeActive(true);
 		ofd.setFile(file);
 		ofd.setType(ManagedDocumentType.SIGNAL);
-		OpenSignalDescriptor osd = ofd.getSignalOptions();
+		OpenFileSignalDescriptor osd = ofd.getSignalOptions();
 		osd.setMethod(OpenSignalMethod.USE_SIGNALML);
 		SignalParameterDescriptor spd = osd.getParameters();
 		SignalMLCodecManager codecManager = manager.getCodecManager();

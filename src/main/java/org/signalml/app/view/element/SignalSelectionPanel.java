@@ -47,14 +47,11 @@ import org.springframework.validation.Errors;
 public class SignalSelectionPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-
 	protected static final Logger logger = Logger.getLogger(SignalSelectionPanel.class);
-
 	/**
 	 * the source of messages (labels)
 	 */
 	private MessageSourceAccessor messageSource;
-
 	/**
 	 * the card layout for {@link #cardPanel} 
 	 */
@@ -71,13 +68,11 @@ public class SignalSelectionPanel extends JPanel {
 	 * </ul>
 	 */
 	private JPanel cardPanel;
-
 	/**
 	 * the {@link SignalSelectionTypePanel panel} which allows to select
 	 * the {@link SignalSelectionType type} of the selection
 	 */
 	private SignalSelectionTypePanel signalSelectionTypePanel;
-
 	/**
 	 * The {@link PageSignalSelectionPanel panel} which allows to select
 	 * the options of a page signal selection.
@@ -99,18 +94,15 @@ public class SignalSelectionPanel extends JPanel {
 	 * type is selected.
 	 */
 	private ChannelSignalSelectionPanel channelSignalSelectionPanel;
-
 	/**
 	 * the {@link SignalSpaceConstraints parameters} of the signal
 	 */
 	private SignalSpaceConstraints currentConstraints;
-
 	/**
 	 * the selection created from the current status of the fields in this
 	 * dialog
 	 */
 	private BoundedSignalSelection currentBss;
-
 	/**
 	 * {@code true} if this panel should allow to
 	 * select a channel (for a channel selection), {@code false} otherwise
@@ -169,6 +161,7 @@ public class SignalSelectionPanel extends JPanel {
 		cardPanel.add(channelSignalSelectionPanel, "channel");
 
 		signalSelectionTypePanel.getPageRadio().addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cardLayout.show(cardPanel, "page");
@@ -176,6 +169,7 @@ public class SignalSelectionPanel extends JPanel {
 		});
 
 		signalSelectionTypePanel.getBlockRadio().addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cardLayout.show(cardPanel, "block");
@@ -183,6 +177,7 @@ public class SignalSelectionPanel extends JPanel {
 		});
 
 		signalSelectionTypePanel.getChannelRadio().addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cardLayout.show(cardPanel, "channel");
@@ -278,18 +273,16 @@ public class SignalSelectionPanel extends JPanel {
 		PageSelectionModelProvider pageSelectionModelProvider;
 		if (type != null && type.isPage()) {
 			pageSelectionModelProvider = new PageSelectionModelProvider(
-			        bss.getMaxPage(),
-			        selection.getStartSegment(bss.getPageSize())+1,
-			        selection.getSegmentLength(bss.getPageSize())
-			);
+				bss.getMaxPage(),
+				selection.getStartSegment(bss.getPageSize()) + 1,
+				selection.getSegmentLength(bss.getPageSize()));
 			signalSelectionTypePanel.getPageRadio().setSelected(true);
 			cardLayout.show(cardPanel, "page");
 		} else {
 			pageSelectionModelProvider = new PageSelectionModelProvider(
-			        bss.getMaxPage(),
-			        1,
-			        1
-			);
+				bss.getMaxPage(),
+				1,
+				1);
 		}
 
 		startPageSpinner = pageSignalSelectionPanel.getStartPageSpinner();
@@ -306,24 +299,22 @@ public class SignalSelectionPanel extends JPanel {
 			float blockSize = ((float) bss.getPageSize()) / bss.getBlocksPerPage();
 			int startSegment = selection.getStartSegment(blockSize);
 			blockSelectionModelProvider = new BlockSelectionModelProvider(
-			        bss.getMaxPage(),
-			        bss.getMaxBlock(),
-			        bss.getBlocksPerPage(),
-			        (startSegment/bss.getBlocksPerPage())+1,
-			        (startSegment%bss.getBlocksPerPage())+1,
-			        selection.getSegmentLength(blockSize)
-			);
+				bss.getMaxPage(),
+				bss.getMaxBlock(),
+				bss.getBlocksPerPage(),
+				(startSegment / bss.getBlocksPerPage()) + 1,
+				(startSegment % bss.getBlocksPerPage()) + 1,
+				selection.getSegmentLength(blockSize));
 			signalSelectionTypePanel.getBlockRadio().setSelected(true);
 			cardLayout.show(cardPanel, "block");
 		} else {
 			blockSelectionModelProvider = new BlockSelectionModelProvider(
-			        bss.getMaxPage(),
-			        bss.getMaxBlock(),
-			        bss.getBlocksPerPage(),
-			        1,
-			        1,
-			        1
-			);
+				bss.getMaxPage(),
+				bss.getMaxBlock(),
+				bss.getBlocksPerPage(),
+				1,
+				1,
+				1);
 		}
 
 		startPageSpinner = blockSignalSelectionPanel.getStartPageSpinner();
@@ -342,24 +333,23 @@ public class SignalSelectionPanel extends JPanel {
 		ChannelSelectionModelProvider channelSelectionModelProvider;
 		if (type != null && type.isChannel()) {
 			channelSelectionModelProvider = new ChannelSelectionModelProvider(
-			        bss.getMaxTime(),
-			        bss.getSamplingFrequency(),
-			        bss.getChannels(),
-			        selection.getPosition(),
-			        selection.getLength(),
-			        selection.getChannel()
-			);
+				bss.getMaxTime(),
+				bss.getSamplingFrequency(),
+				bss.getChannels(),
+				selection.getPosition(),
+				selection.getLength(),
+				selection.getChannel());
 			signalSelectionTypePanel.getChannelRadio().setSelected(true);
 			cardLayout.show(cardPanel, "channel");
 		} else {
 			channelSelectionModelProvider = new ChannelSelectionModelProvider(
-			        bss.getMaxTime(),
-			        bss.getSamplingFrequency(),
-			        bss.getChannels(),
-			        0,
-			        1,
-			        0 //select first channel
-			);
+				bss.getMaxTime(),
+				bss.getSamplingFrequency(),
+				bss.getChannels(),
+				0,
+				1,
+				0 //select first channel
+				);
 		}
 
 		JSpinner startTimeSpinner = channelSignalSelectionPanel.getStartTimeSpinner();
@@ -432,8 +422,8 @@ public class SignalSelectionPanel extends JPanel {
 			int length = (Integer) pageSignalSelectionPanel.getLengthSpinner().getValue();
 
 			selection = new SignalSelection(SignalSelectionType.PAGE);
-			selection.setPosition((startPage-1)*bss.getPageSize());
-			selection.setLength(length*bss.getPageSize());
+			selection.setPosition((startPage - 1) * bss.getPageSize());
+			selection.setLength(length * bss.getPageSize());
 			selection.setChannel(SignalSelection.CHANNEL_NULL);
 
 		} else if (signalSelectionTypePanel.getBlockRadio().isSelected()) {
@@ -444,8 +434,8 @@ public class SignalSelectionPanel extends JPanel {
 			float blockSize = ((float) bss.getPageSize()) / bss.getBlocksPerPage();
 
 			selection = new SignalSelection(SignalSelectionType.BLOCK);
-			selection.setPosition((startPage-1)*bss.getPageSize()+(startBlock-1)*blockSize);
-			selection.setLength(length*blockSize);
+			selection.setPosition((startPage - 1) * bss.getPageSize() + (startBlock - 1) * blockSize);
+			selection.setLength(length * blockSize);
 			selection.setChannel(SignalSelection.CHANNEL_NULL);
 
 		} else if (signalSelectionTypePanel.getChannelRadio().isSelected()) {
@@ -533,5 +523,4 @@ public class SignalSelectionPanel extends JPanel {
 	public void validatePanel(Errors errors) {
 		// there is no validation - the dialog elements enforce valid values themselves
 	}
-
 }

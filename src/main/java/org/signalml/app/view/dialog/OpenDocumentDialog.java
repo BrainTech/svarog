@@ -25,11 +25,11 @@ import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.OpenDocumentDescriptor;
-import org.signalml.app.model.OpenSignalDescriptor;
+import org.signalml.app.model.OpenFileSignalDescriptor;
 import org.signalml.app.model.OpenTagDescriptor;
 import org.signalml.app.model.SignalMLCodecListModel;
 import org.signalml.app.model.SignalParameterDescriptor;
-import org.signalml.app.model.OpenSignalDescriptor.OpenSignalMethod;
+import org.signalml.app.model.OpenFileSignalDescriptor.OpenSignalMethod;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.element.EmbeddedFileChooser;
@@ -486,7 +486,7 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 		}
 		getStepOnePanel().getFileChooser().setSelectedFile(f);
 
-		OpenSignalDescriptor osd = ofd.getSignalOptions();
+		OpenFileSignalDescriptor osd = ofd.getSignalOptions();
 		SignalParameterDescriptor spd = osd.getParameters();
 
 		getStepTwoPanel().getSignalOptionsPanel().getPagingSignalParamersPanel().fillPanelFromModel(spd);
@@ -543,7 +543,7 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 		ofd.setType(targetType);
 		if (targetType.equals(ManagedDocumentType.SIGNAL)) {
 
-			OpenSignalDescriptor osd = ofd.getSignalOptions();
+			OpenFileSignalDescriptor osd = ofd.getSignalOptions();
 
 			OpenSignalOptionsPanel signalOptionsPanel = getStepTwoPanel().getSignalOptionsPanel();
 

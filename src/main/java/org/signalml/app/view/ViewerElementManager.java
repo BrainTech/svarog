@@ -142,8 +142,10 @@ import org.signalml.app.action.AmplifierDefinitionConfigAction;
 import org.signalml.app.action.ChooseActiveTagAction;
 import org.signalml.app.action.CompareTagsAction;
 import org.signalml.app.action.OpenBCIModuleConfigAction;
+import org.signalml.app.action.OpenSignalAndSetMontageAction;
 import org.signalml.app.action.StartMonitorRecordingAction;
 import org.signalml.app.action.StopMonitorRecordingAction;
+import org.signalml.app.view.opensignal.OpenSignalAndSetMontageDialog;
 import org.signalml.app.view.monitor.AmplifierDefinitionConfigDialog;
 import org.signalml.app.view.monitor.OpenBCIModuleConfigDialog;
 import org.signalml.app.view.monitor.StartMonitorRecordingDialog;
@@ -267,6 +269,7 @@ public class ViewerElementManager {
 	private RegisterCodecDialog registerCodecDialog;
 	private SignalParametersDialog signalParametersDialog;
 	private SignalMontageDialog signalMontageDialog;
+	private OpenSignalAndSetMontageDialog openSignalAndSetMontageDialog;
 	private SignalSelectionDialog signalSelectionDialog;
 	private NewTagDialog newTagDialog;
 	private EditTagAnnotationDialog editTagAnnotationDialog;
@@ -338,6 +341,7 @@ public class ViewerElementManager {
 
 	private EditSignalParametersAction editSignalParametersAction;
 	private EditSignalMontageAction editSignalMontageAction;
+	private OpenSignalAndSetMontageAction openSignalAndSetMontageAction;
 	private ApplyDefaultMontageAction applyDefaultMontageAction;
 	private PreciseSelectionAction preciseSelectionAction;
 	private EditTagStylesAction editTagStylesAction;
@@ -715,6 +719,7 @@ public class ViewerElementManager {
 
 			fileMenu = new JMenu(messageSource.getMessage("menu.file"));
 
+			fileMenu.add(getOpenSignalAndSetMontageAction());
 			fileMenu.add(getOpenDocumentAction());
 			fileMenu.add(getSaveActiveDocumentAction());
 			fileMenu.add(getSaveActiveDocumentAsAction());
@@ -1213,6 +1218,18 @@ public class ViewerElementManager {
 		return signalMontageDialog;
 	}
 
+	public OpenSignalAndSetMontageDialog getOpenSignalAndSetMontageDialog() {
+		if (openSignalAndSetMontageDialog == null) {
+			openSignalAndSetMontageDialog = new OpenSignalAndSetMontageDialog(messageSource, getMontagePresetManager(),
+				getPredefinedTimeDomainFiltersPresetManager(), getDialogParent(), true);
+			openSignalAndSetMontageDialog.setFileChooser(getFileChooser());
+			openSignalAndSetMontageDialog.setApplicationConfig(getApplicationConfig());
+			openSignalAndSetMontageDialog.setFftFilterPresetManager(getFftFilterPresetManager());
+			openSignalAndSetMontageDialog.setTimeDomainSampleFilterPresetManager(getTimeDomainSampleFilterPresetManager());
+		}
+		return openSignalAndSetMontageDialog;
+	}
+
 	public SignalSelectionDialog getSignalSelectionDialog() {
 		if (signalSelectionDialog == null) {
 			signalSelectionDialog = new SignalSelectionDialog(messageSource, getDialogParent(), true);
@@ -1652,6 +1669,14 @@ public class ViewerElementManager {
 			editSignalMontageAction.setSignalMontageDialog(getSignalMontageDialog());
 		}
 		return editSignalMontageAction;
+	}
+
+	public OpenSignalAndSetMontageAction getOpenSignalAndSetMontageAction() {
+		if (openSignalAndSetMontageAction == null) {
+			openSignalAndSetMontageAction = new OpenSignalAndSetMontageAction(this);
+			openSignalAndSetMontageAction.setOpenSignalAndSetMontageDialog(getOpenSignalAndSetMontageDialog());
+		}
+		return openSignalAndSetMontageAction;
 	}
 
 	public EditStoredMontagesAction getEditStoredMontagesAction() {
