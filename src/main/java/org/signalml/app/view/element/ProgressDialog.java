@@ -49,6 +49,7 @@ public class ProgressDialog extends AbstractDialog implements PropertyChangeList
          * @param messageSource the message source
          * @param w parent window
          * @param isModal if this window is modal
+         * @param caption window's caption
          */
         public ProgressDialog(MessageSourceAccessor messageSource, Window w, boolean isModal, String caption) {
 
