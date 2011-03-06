@@ -781,8 +781,8 @@ public class ViewerElementManager {
 			monitorMenu.add(getStartMonitorRecordingAction());
 			monitorMenu.add(getStopMonitorRecordingAction());
                         monitorMenu.addSeparator();
-                        monitorMenu.add(getamplifierDefinitionConfigAction());
-                        monitorMenu.add(getopenBCIModuleConfigAction());
+                        monitorMenu.add(getAmplifierDefinitionConfigAction());
+                        monitorMenu.add(getOpenBCIModuleConfigAction());
 		}
 		return monitorMenu;
 	}
@@ -1308,7 +1308,7 @@ public class ViewerElementManager {
                 return amplifierDefinitionConfigDialog;
         }
 
-        public OpenBCIModuleConfigDialog getopenBCIModuleConfigDialog() {
+        public OpenBCIModuleConfigDialog getOpenBCIModuleConfigDialog() {
                 if (openBCIModuleConfigDialog == null) {
                         openBCIModuleConfigDialog = new OpenBCIModuleConfigDialog(messageSource, getOpenBCIModulePresetManager(), getDialogParent(), true);
                         openBCIModuleConfigDialog.setApplicationConfig(getApplicationConfig());
@@ -1714,7 +1714,7 @@ public class ViewerElementManager {
 		return exportBookAction;
 	}
 
-        public AmplifierDefinitionConfigAction getamplifierDefinitionConfigAction() {
+        public AmplifierDefinitionConfigAction getAmplifierDefinitionConfigAction() {
                 if (amplifierDefinitionConfigAction == null) {
                         amplifierDefinitionConfigAction = new AmplifierDefinitionConfigAction(messageSource);
                         amplifierDefinitionConfigAction.setConfigDialog(getAmplifierDefinitionConfigDialog());
@@ -1722,10 +1722,10 @@ public class ViewerElementManager {
                 return amplifierDefinitionConfigAction;
         }
 
-        public OpenBCIModuleConfigAction getopenBCIModuleConfigAction() {
+        public OpenBCIModuleConfigAction getOpenBCIModuleConfigAction() {
                 if (openBCIModuleConfigAction == null) {
                         openBCIModuleConfigAction = new OpenBCIModuleConfigAction(messageSource);
-                        openBCIModuleConfigAction.setConfigDialog(getopenBCIModuleConfigDialog());
+                        openBCIModuleConfigAction.setConfigDialog(getOpenBCIModuleConfigDialog());
                 }
                 return openBCIModuleConfigAction;
         }
