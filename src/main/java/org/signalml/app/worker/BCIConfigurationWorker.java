@@ -1,11 +1,10 @@
 package org.signalml.app.worker;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-
 import javax.swing.SwingWorker;
-
 import multiplexer.jmx.client.JmxClient;
 import multiplexer.protocol.Protocol.MultiplexerMessage;
 import multiplexer.jmx.client.SendingMethod;
@@ -26,13 +25,6 @@ public class BCIConfigurationWorker extends SwingWorker<WorkerResult, Integer> {
 
         protected static final Logger logger = Logger.getLogger(BCIConfigurationWorker.class);
 
-        public static final String NUMBER_OF_CHANNELS = "NumOfChannels";
-        public static final String GAIN = "Gain";
-        public static final String OFFSET = "Offset";
-        public static final String SAMPLING_RATE = "SamplingRate";
-        public static final String CHANNELS_TO_RECORD = "AmplifierChannelsToRecord";
-        public static final String CHANNELS_NAMES = "ChannelsNames";
-
         /**
          * The message source.
          */
@@ -44,59 +36,31 @@ public class BCIConfigurationWorker extends SwingWorker<WorkerResult, Integer> {
 	private JmxClient client;
 
         /**
-         * The {@link ConfigurationData} object.
-         */
-	private ConfigurationData configurationData;
-
-        /**
-         * String representation of the number of channels.
-         */
-        private String numberOfChannels = "";
-
-        /**
-         * String representation of the gain.
-         */
-        private String gain = "";
-
-        /**
-         * String representation of the offset.
-         */
-        private String offset = "";
-
-        /**
-         * String representation of the sampling rate.
-         */
-        private String samplingRate = "";
-
-        /**
-         * String representation of selected channels.
-         */
-        private String selectedChannels = "";
-
-        /**
-         * String representation of channel labels.
-         */
-        private String channelLabels = "";
-
-        /**
          * Current state.
          */
 	private Integer state;
+
+        /**
+         * Data to be sent.
+         * The key is OpenBCI key, e.g. "AmplifierChannelsToRecord".
+         * The value is Message String, e.g. "Fp1;Fp2;Fz".
+         */
+        private HashMap<String, String> data;
 
         /**
          * Default constructor.
          *
          * @param messageSource {@link #messageSource}
          * @param client {@link #client}
-         * @param openMonitorDescriptor {@link #openMonitorDescriptor}        
+         * @param data {@link #data}
          */
         public BCIConfigurationWorker(MessageSourceAccessor messageSource,
                                       JmxClient client,
-                                      ConfigurationData configurationData) {
+                                      HashMap<String, String> data) {
 
                 this.messageSource = messageSource;
                 this.client = client;
-                this.configurationData = configurationData;
+                this.data = data;
         }
 
         /**
@@ -124,54 +88,24 @@ public class BCIConfigurationWorker extends SwingWorker<WorkerResult, Integer> {
 			sendingOperation.await(1, TimeUnit.SECONDS);
 			if (!sendingOperation.isSuccess()) {
 				logger.info("Sending " + dataId + " data failed!");
-				String info = messageSource.getMessage("action.openMonitor.configurationWorker." + dataId + ".sendingFailedMsg");
+				String info = messageSource.getMessage("action.openMonitor.configurationWorker.failed");
 				return new WorkerResult(false, info);
 			}
 		}
 		catch (NoPeerForTypeException e) {
 
 			logger.info("Sending " + dataId + " data failed!");
-			String info = messageSource.getMessage("action.openMonitor.configurationWorker." + dataId + ".sendingFailedMsg");
+			String info = messageSource.getMessage("action.openMonitor.configurationWorker.failed");
 			return new WorkerResult(false, info);
 		}
 		catch (InterruptedException e) {
 
 			logger.info("Sending " + dataId + " data failed!");
-			String info = messageSource.getMessage("action.openMonitor.configurationWorker." + dataId + ".sendingFailedMsg");
+			String info = messageSource.getMessage("action.openMonitor.configurationWorker.failed");
 			return new WorkerResult(false, info);
 		}
 
                 return new WorkerResult(true, null);
-        }
-
-        /**
-         * Extracts all necessary data from the {@link #openMonitorDescriptor}.
-         */
-        private void extractData() {
-
-                numberOfChannels = configurationData.getChannelCount().toString();
-                samplingRate = configurationData.getSamplingFrequency().toString();
-
-                float[] gainArray = configurationData.getCalibrationGain();
-                float[] offsetArray = configurationData.getCalibrationOffset();
-                int[] selected = configurationData.getSelectedChannelsIndecies();
-                String[] labels = configurationData.getChannelLabels();
-
-                for (int i = 0; i < configurationData.getChannelCount(); i++) {
-
-                        gain += String.valueOf(gainArray[i]);
-                        offset += String.valueOf(offsetArray[i]);
-                        selectedChannels += String.valueOf(selected[i]);
-                        channelLabels += labels[i];
-
-                        if (i < (configurationData.getChannelCount() - 1)) {
-
-                                gain += " ";
-                                offset += " ";
-                                selectedChannels += " ";
-                                channelLabels += ";";
-                        }
-                }
         }
 
         /**
@@ -186,39 +120,15 @@ public class BCIConfigurationWorker extends SwingWorker<WorkerResult, Integer> {
                 int step = 0;
                 WorkerResult result;
 
-                extractData();
+                for (String key : data.keySet()) {
 
-                result = sendConfigurationData(NUMBER_OF_CHANNELS, numberOfChannels);
-                if (!result.success)
-                        return result;
-                publish(++step);
+                        result = sendConfigurationData(key, data.get(key));
+                        if (!result.success)
+                                return result;
+                        publish(++step);
+                }
 
-                result = sendConfigurationData(GAIN, gain);
-                if (!result.success)
-                        return result;
-                publish(++step);
-
-                result = sendConfigurationData(OFFSET, offset);
-                if (!result.success)
-                        return result;
-                publish(++step);
-
-                result = sendConfigurationData(SAMPLING_RATE, samplingRate);
-                if (!result.success)
-                        return result;
-                publish(++step);
-
-                result = sendConfigurationData(CHANNELS_TO_RECORD, selectedChannels);
-                if (!result.success)
-                        return result;
-                publish(++step);
-
-                result = sendConfigurationData(CHANNELS_NAMES, channelLabels);
-                if (!result.success)
-                        return result;
-                publish(++step);
-
-                return new WorkerResult(true, messageSource.getMessage("action.openMonitor.configurationWorker.Success"));
+                return new WorkerResult(true, messageSource.getMessage("action.openMonitor.configurationWorker.success"));
         }
 
         /**
@@ -246,7 +156,7 @@ public class BCIConfigurationWorker extends SwingWorker<WorkerResult, Integer> {
         @Override
         protected void done() {
 
-                WorkerResult result = new WorkerResult(false, messageSource.getMessage("action.openMonitor.configurationWorker.GeneralError"));
+                WorkerResult result = new WorkerResult(false, messageSource.getMessage("action.openMonitor.configurationWorker.failed"));
                 
 		try {
 			result = get();

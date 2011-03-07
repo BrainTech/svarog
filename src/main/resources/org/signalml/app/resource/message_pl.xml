@@ -379,14 +379,8 @@
 
 	<entry key="action.openMonitor.metadataWorker.receivedMetadata">Metadata retrieved!</entry>
 
-	<entry key="action.openMonitor.configurationWorker.NumOfChannels.sendingFailedMsg">Failed while sending number of channels!</entry>
-        <entry key="action.openMonitor.configurationWorker.Gain.sendingFailedMsg">Failed while sending gain!</entry>
-        <entry key="action.openMonitor.configurationWorker.Offset.sendingFailedMsg">Failed while sending offset!</entry>
-        <entry key="action.openMonitor.configurationWorker.Sampling Rate.sendingFailedMsg">Failed while sending sampling rate!</entry>
-        <entry key="action.openMonitor.configurationWorker.AmplifierChannelsToRecord.sendingFailedMsg">Failed while sending channels to record!</entry>
-        <entry key="action.openMonitor.configurationWorker.ChannelsNames.sendingFailedMsg">Failed while sending channels names!</entry>
-        <entry key="action.openMonitor.configurationWorker.GeneralError">Sending failed!</entry>
-        <entry key="action.openMonitor.configurationWorker.Success">Configuration sent!</entry>
+        <entry key="action.openMonitor.configurationWorker.failed">Sending failed!</entry>
+        <entry key="action.openMonitor.configurationWorker.success">Configuration sent!</entry>
 
 	<entry key="action.editPreferences">Preferences...</entry>
 	<entry key="action.editPreferencesToolTip">Edit preferences</entry>
