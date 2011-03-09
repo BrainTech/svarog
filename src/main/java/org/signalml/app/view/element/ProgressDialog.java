@@ -2,18 +2,23 @@ package org.signalml.app.view.element;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Font;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Window;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ListCellRenderer;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
@@ -30,13 +35,10 @@ import org.springframework.context.support.MessageSourceAccessor;
  */
 public class ProgressDialog extends AbstractDialog implements PropertyChangeListener {
 
-        private final int TEXT_AREA_ROWS = 10;
-        private final int TEXT_AREA_COLS = 30;
-
         /**
          * The text area.
          */
-        private JTextArea textArea = null;
+        private ProgressStateList progressStateList = null;
 
         /**
          * The progress bar.
@@ -54,13 +56,13 @@ public class ProgressDialog extends AbstractDialog implements PropertyChangeList
         public ProgressDialog(MessageSourceAccessor messageSource, Window w, boolean isModal, String caption) {
 
                 super(messageSource, w, isModal);
-                setTitle(caption);                
+                setTitle(caption);
         }
 
         /**
          * Creates the interface.
          *
-         * @return the interface
+         * @return the interfacesize
          */
         @Override
         protected JComponent createInterface() {
@@ -69,7 +71,7 @@ public class ProgressDialog extends AbstractDialog implements PropertyChangeList
                 CompoundBorder panelBorder = new CompoundBorder(new TitledBorder(""), new EmptyBorder(3, 3, 3, 3));
                 interfacePanel.setBorder(panelBorder);
 
-                interfacePanel.add(new JScrollPane(getTextArea()), BorderLayout.CENTER);
+                interfacePanel.add(new JScrollPane(getProgressStateList()), BorderLayout.CENTER);
                 interfacePanel.add(getProgressBar(), BorderLayout.PAGE_END);
 
                 return interfacePanel;
@@ -80,13 +82,12 @@ public class ProgressDialog extends AbstractDialog implements PropertyChangeList
          *
          * @return the text area
          */
-        private JTextArea getTextArea() {
+        private ProgressStateList getProgressStateList() {
                 
-                if (textArea == null) {
-                        textArea = new JTextArea(TEXT_AREA_ROWS, TEXT_AREA_COLS);                        
-                        textArea.setEditable(false);
+                if (progressStateList == null) {
+                        progressStateList = new ProgressStateList();
                 }
-                return textArea;
+                return progressStateList;
         }
 
         /**
@@ -128,7 +129,7 @@ public class ProgressDialog extends AbstractDialog implements PropertyChangeList
                 boolean error = (state.getCurrentProgress() < 0);
                 boolean end = (state.getCurrentProgress() == state.getMaxProgress());
 
-                getTextArea().setText(state.getProgressMsg());
+                getProgressStateList().add(state);
                 getProgressBar().setValue(state.getCurrentProgress());
                 getProgressBar().setMaximum(state.getMaxProgress());
 
@@ -138,14 +139,6 @@ public class ProgressDialog extends AbstractDialog implements PropertyChangeList
                 } else {
                         getOkButton().setEnabled(false);
                         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-                }
-
-                if (error) {
-                        getTextArea().setForeground(Color.RED);
-                } else if (end) {
-                        getTextArea().setForeground(Color.GREEN);
-                } else {
-                        getTextArea().setForeground(Color.BLACK);
                 }
         }
 
@@ -212,4 +205,64 @@ public class ProgressDialog extends AbstractDialog implements PropertyChangeList
         public void showDialog() {
                 showDialog(new ProgressState());
         }
+}
+
+/**
+ * Class responsible for showing the progress.
+ *
+ * @author Tomasz Sawicki
+ */
+class ProgressStateList extends JList {
+
+        /**
+         * Default constructor
+         */
+        public ProgressStateList() {
+
+                setCellRenderer(new ProgressStateListCellRenderer());
+                setSelectionMode(ListSelectionModel.SINGLE_SELECTION);                
+        }
+
+        /**
+         * Adds an element to the list.
+         *
+         * @param state progress state
+         */
+        public void add(ProgressState state) {
+
+                Dimension size = getSize();
+                ArrayList<ProgressState> list = new ArrayList<ProgressState>();
+                for (int i = 0; i < getModel().getSize(); i++)
+                        list.add((ProgressState) getModel().getElementAt(i));
+                list.add(state);
+                setListData(list.toArray());
+                setSize(size);
+        }
+}
+
+/**
+ * Renderer for {@link ProgressStateList}
+ *
+ * @author Tomasz Sawicki
+ */
+class ProgressStateListCellRenderer implements ListCellRenderer {
+
+        @Override
+        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+
+                ProgressState state = (ProgressState) value;
+                JTextArea textArea = new JTextArea(state.getProgressMsg());
+                textArea.setBackground(Color.WHITE);
+
+                if (state.getCurrentProgress() < 0) {
+                        textArea.setForeground(Color.RED);
+                } else if (state.getCurrentProgress() == state.getMaxProgress()) {
+                        textArea.setForeground(Color.GREEN);
+                } else {
+                        textArea.setForeground(Color.BLACK);
+                }
+                
+                return textArea;
+        }
+
 }
