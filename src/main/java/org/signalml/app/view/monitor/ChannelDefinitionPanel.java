@@ -1,20 +1,25 @@
 package org.signalml.app.view.monitor;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -451,5 +456,86 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
                 channelTextField.setText("");
                 gainTextField.setText("");
                 offsetTextField.setText("");
+        }
+}
+
+/**
+ * List responsible for showing channel definition objects.
+ *
+ * @author Tomasz Sawicki
+ */
+class ChannelDefinitionList extends JList {
+
+        /**
+         * Default constructor creates the list.
+         */
+        public ChannelDefinitionList() {
+
+                super();
+                setCellRenderer(new ChannelDefinitionListRenderer());
+                setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        }
+}
+
+/**
+ * Renderer for a {@link ChannelDefinitionList}.
+ *
+ * @author Tomasz Sawicki
+ */
+class ChannelDefinitionListRenderer extends JComponent implements ListCellRenderer {
+
+        /**
+         * Renderer showing the number.
+         */
+        private DefaultListCellRenderer number;
+
+        /**
+         * Renderer showing the gain.
+         */
+        private DefaultListCellRenderer gain;
+
+        /**
+         * Renderer showing the offset.
+         */
+        private DefaultListCellRenderer offset;
+
+        /**
+         * Default constructor.
+         */
+        public ChannelDefinitionListRenderer() {
+
+                number = new DefaultListCellRenderer();
+                gain = new DefaultListCellRenderer();
+                offset = new DefaultListCellRenderer();
+
+                setLayout(new GridLayout(1, 3));
+                add(number);
+                add(gain);
+                add(offset);
+        }
+
+        /**
+	 * Returns a component that has been configured to display the specified
+	 * value.
+	 * @param list the JList we're painting.
+	 * @param value the value returned by list.getModel().getElementAt(index).
+	 * @param index the cells index.
+	 * @param isSelected true if the specified cell was selected.
+	 * @param cellHasFocus true if the specified cell has the focus.
+	 * @return a component for displaying the specified value
+	 */
+        @Override
+        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+
+                ChannelDefinition definition = (ChannelDefinition) value;
+                String noVal = "No: " + definition.getNumber();
+                String gainVal = "Gain: " + definition.getGain();
+                String offsetVal = "Offset: " + definition.getOffset();
+
+                number.getListCellRendererComponent(list, noVal, index, isSelected, cellHasFocus);
+                gain.getListCellRendererComponent(list, gainVal, index, isSelected, cellHasFocus);
+                offset.getListCellRendererComponent(list, offsetVal, index, isSelected, cellHasFocus);
+
+                return this;
         }
 }
