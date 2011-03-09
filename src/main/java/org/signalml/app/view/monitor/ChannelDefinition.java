@@ -40,13 +40,15 @@ public class ChannelDefinition {
                 return offset;
         }
 
-        @Override
-        public String toString() {
+        public void setGain(double gain) {
+                this.gain = gain;
+        }
 
-                String retval = "no.: " + String.valueOf(number) + "; ";
-                retval += "gain: " + String.valueOf(gain) + "; ";
-                retval += "offset: " + String.valueOf(offset);
+        public void setNumber(int number) {
+                this.number = number;
+        }
 
-                return retval;
+        public void setOffset(double offset) {
+                this.offset = offset;
         }
 }

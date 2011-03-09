@@ -76,7 +76,7 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
         /**
          * Message source.
          */
-        private MessageSourceAccessor messageSource;
+        protected MessageSourceAccessor messageSource;
 
         /**
          * Default constructor.
@@ -85,7 +85,14 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
 
                 super();
                 this.messageSource = messageSource;
+                createInterface();
+        }
 
+        /**
+         * Creates the interface.
+         */
+        private void createInterface() {
+                
                 CompoundBorder border = new CompoundBorder(
 			new TitledBorder(messageSource.getMessage("amplifierDefinitionConfig.channelDefinitions")),
 			new EmptyBorder(3, 3, 3, 3));
@@ -159,38 +166,11 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
 
                 if (addButton.equals(e.getSource())) {
 
-                        Integer channelno;
-                        try {
-                                channelno = Integer.parseInt(channelTextField.getText());
-                        } catch (NumberFormatException ex) {
-                                String errorMsg = messageSource.getMessage("amplifierDefinitionConfig.channelno") +
-                                                  messageSource.getMessage("error.amplifierDefinitionConfig.integer");
-                                JOptionPane.showMessageDialog(this, errorMsg);
-                                return;
-                        }
-
-                        Double gain;
-                        try {
-                                gain = Double.parseDouble(gainTextField.getText());
-                        } catch (NumberFormatException ex) {
-                                String errorMsg = messageSource.getMessage("amplifierDefinitionConfig.gain") +
-                                                  messageSource.getMessage("error.amplifierDefinitionConfig.rational");
-                                JOptionPane.showMessageDialog(this, errorMsg);
-                                return;
-                        }
-
-                        Double offset;
-                        try {
-                                offset = Double.parseDouble(offsetTextField.getText());
-                        } catch (NumberFormatException ex) {
-                                String errorMsg = messageSource.getMessage("amplifierDefinitionConfig.offset") +
-                                                  messageSource.getMessage("error.amplifierDefinitionConfig.rational");
-                                JOptionPane.showMessageDialog(this, errorMsg);
-                                return;
-                        }
+                        ChannelDefinition definition = validateFields();
+                        if (definition == null) return;
 
                         List<ChannelDefinition> definitions = getChannelDefinitions();
-                        definitions.add(new ChannelDefinition(channelno, gain, offset));
+                        definitions.add(definition);
                         definitionsList.setListData(definitions.toArray());
 
                         clearTextFields();
@@ -211,15 +191,54 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
         }
 
         /**
+         * Validates fields and if they are OK: returns a ChannelDefinition object.
+         *
+         * @return ChannelDefition object, or null if fields are not ok
+         */
+        protected ChannelDefinition validateFields() {
+
+                Integer channelno;
+                try {
+                        channelno = Integer.parseInt(channelTextField.getText());
+                } catch (NumberFormatException ex) {
+                        String errorMsg = messageSource.getMessage("amplifierDefinitionConfig.channelno") +
+                        messageSource.getMessage("error.amplifierDefinitionConfig.integer");
+                        JOptionPane.showMessageDialog(this, errorMsg);
+                        return null;
+                }
+
+                Double gain;
+                try {
+                        gain = Double.parseDouble(gainTextField.getText());
+                } catch (NumberFormatException ex) {
+                        String errorMsg = messageSource.getMessage("amplifierDefinitionConfig.gain") +
+                        messageSource.getMessage("error.amplifierDefinitionConfig.rational");
+                        JOptionPane.showMessageDialog(this, errorMsg);
+                        return null;
+                }
+
+                Double offset;
+                try {
+                        offset = Double.parseDouble(offsetTextField.getText());
+                } catch (NumberFormatException ex) {
+                        String errorMsg = messageSource.getMessage("amplifierDefinitionConfig.offset") +
+                        messageSource.getMessage("error.amplifierDefinitionConfig.rational");
+                        JOptionPane.showMessageDialog(this, errorMsg);
+                        return null;
+                }
+
+                return new ChannelDefinition(channelno, gain, offset);
+        }
+
+        /**
          * Gets the frequencies list
          *
          * @return the frequencies list
          */
-        private JList getDefinitionsList() {
+        protected JList getDefinitionsList() {
 
                 if (definitionsList == null) {
-                        definitionsList = new JList();
-                        definitionsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                        definitionsList = new ChannelDefinitionList();
                 }
                 return definitionsList;
         }
@@ -229,7 +248,7 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
          *
          * @return the add button
          */
-        private JButton getAddButton() {
+        protected JButton getAddButton() {
 
                 if (addButton == null) {
                         addButton = new JButton();
@@ -244,7 +263,7 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
          *
          * @return the remove button
          */
-        private JButton getRemoveButton() {
+        protected JButton getRemoveButton() {
 
                 if (removeButton == null) {
                         removeButton = new JButton();
@@ -259,7 +278,7 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
          *
          * @return the channel label
          */
-        private JLabel getChannelLabel() {
+        protected JLabel getChannelLabel() {
                 
                 if (channelLabel == null) {
                         channelLabel = new JLabel();
@@ -273,7 +292,7 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
          *
          * @return the channel text field
          */
-        private JTextField getChannelTextField() {
+        protected JTextField getChannelTextField() {
 
                 if (channelTextField == null) {
                         channelTextField = new JTextField();
@@ -286,7 +305,7 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
          * 
          * @return the gain label
          */
-        private JLabel getGainLabel() {
+        protected JLabel getGainLabel() {
                 
                 if (gainLabel == null) {
                         gainLabel = new JLabel();
@@ -300,7 +319,7 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
          *
          * @return the gain text field
          */
-        private JTextField getGainTextField() {
+        protected JTextField getGainTextField() {
 
                 if (gainTextField == null) {
                         gainTextField = new JTextField();
@@ -313,7 +332,7 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
          * 
          * @return the offset label
          */
-        private JLabel getOffsetLabel() {
+        protected JLabel getOffsetLabel() {
                 
                 if (offsetLabel == null) {
                         offsetLabel = new JLabel();
@@ -327,7 +346,7 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
          *
          * @return the offset text field
          */
-        private JTextField getOffsetTextField() {
+        protected JTextField getOffsetTextField() {
 
                 if (offsetTextField == null) {
                         offsetTextField = new JTextField();
@@ -340,7 +359,7 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
          *
          * @return list of frequencies
          */
-        private List<ChannelDefinition> getChannelDefinitions() {
+        protected List<ChannelDefinition> getChannelDefinitions() {
 
                 ArrayList<ChannelDefinition> definitions = new ArrayList<ChannelDefinition>();
 
