@@ -58,8 +58,8 @@ public class AmplifierDefinitionPresetManager extends AbstractPresetManager {
                         AmplifierDefinition definition = (AmplifierDefinition) preset;
 
                         int channelNoSize = definition.getChannelNumbers().size();
-                        int channelGainSize = definition.getChannelGain().size();
-                        int channelOffsetSize = definition.getChannelOffset().size();
+                        int channelGainSize = definition.getCalibrationGain().size();
+                        int channelOffsetSize = definition.getCalibrationOffset().size();
 
                         if (channelNoSize != channelGainSize) {
                                 throw new Exception();

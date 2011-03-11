@@ -15,20 +15,20 @@ public class ChannelDefinition {
         /**
          * Channel gain.
          */
-        private double gain;
+        private float gain;
 
         /**
          * Channel offset.
          */
-        private double offset;
+        private float offset;
 
-        public ChannelDefinition(int number, double gain, double offset) {
+        public ChannelDefinition(int number, float gain, float offset) {
                 this.number = number;
                 this.gain = gain;
                 this.offset = offset;
         }
 
-        public double getGain() {
+        public float getGain() {
                 return gain;
         }
 
@@ -36,11 +36,11 @@ public class ChannelDefinition {
                 return number;
         }
 
-        public double getOffset() {
+        public float getOffset() {
                 return offset;
         }
 
-        public void setGain(double gain) {
+        public void setGain(float gain) {
                 this.gain = gain;
         }
 
@@ -48,7 +48,7 @@ public class ChannelDefinition {
                 this.number = number;
         }
 
-        public void setOffset(double offset) {
+        public void setOffset(float offset) {
                 this.offset = offset;
         }
 }

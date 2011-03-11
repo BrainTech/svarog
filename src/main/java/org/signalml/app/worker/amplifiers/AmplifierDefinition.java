@@ -35,7 +35,7 @@ public class AmplifierDefinition implements Preset {
         /**
          * Available sampling frequencies.
          */
-        private List<Integer> availableFrequencies;
+        private List<Float> availableFrequencies;
         
         /**
          * Available channel numbers.
@@ -45,12 +45,12 @@ public class AmplifierDefinition implements Preset {
         /**
          * Channels' gain.
          */
-        private List<Double> channelGain;
+        private List<Float> calibrationGain;
 
         /**
          * Channels' offset.
          */
-        private List<Double> channelOffset;
+        private List<Float> calibrationOffset;
 
         /**
          * Driver path.
@@ -71,9 +71,9 @@ public class AmplifierDefinition implements Preset {
          */
         public AmplifierDefinition() {
 
-                this.availableFrequencies = new ArrayList<Integer>();
-                this.channelGain = new ArrayList<Double>();
-                this.channelOffset = new ArrayList<Double>();
+                this.availableFrequencies = new ArrayList<Float>();
+                this.calibrationGain = new ArrayList<Float>();
+                this.calibrationOffset = new ArrayList<Float>();
                 this.channelNumbers = new ArrayList<Integer>();
                 this.driverPath = "";
                 this.match = "";
@@ -91,20 +91,20 @@ public class AmplifierDefinition implements Preset {
                 return name;
         }
 
-        public List<Integer> getAvailableFrequencies() {
+        public List<Float> getAvailableFrequencies() {
                 return availableFrequencies;
         }
 
-        public List<Double> getChannelGain() {
-                return channelGain;
+        public List<Float> getCalibrationGain() {
+                return calibrationGain;
+        }
+
+        public List<Float> getCalibrationOffset() {
+                return calibrationOffset;
         }
 
         public List<Integer> getChannelNumbers() {
                 return channelNumbers;
-        }
-
-        public List<Double> getChannelOffset() {
-                return channelOffset;
         }
 
         public String getDriverPath() {
@@ -124,20 +124,20 @@ public class AmplifierDefinition implements Preset {
                 this.name = name;
         }
 
-        public void setAvailableFrequencies(List<Integer> availableFrequencies) {
+        public void setAvailableFrequencies(List<Float> availableFrequencies) {
                 this.availableFrequencies = availableFrequencies;
         }
 
-        public void setChannelGain(List<Double> channelGain) {
-                this.channelGain = channelGain;
+        public void setCalibrationGain(List<Float> calibrationGain) {
+                this.calibrationGain = calibrationGain;
+        }
+
+        public void setCalibrationOffset(List<Float> calibrationOffset) {
+                this.calibrationOffset = calibrationOffset;
         }
 
         public void setChannelNumbers(List<Integer> channelNumbers) {
                 this.channelNumbers = channelNumbers;
-        }
-
-        public void setChannelOffset(List<Double> channelOffset) {
-                this.channelOffset = channelOffset;
         }
 
         public void setDriverPath(String driverPath) {
