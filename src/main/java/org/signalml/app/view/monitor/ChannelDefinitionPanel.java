@@ -212,9 +212,9 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
                         return null;
                 }
 
-                Double gain;
+                Float gain;
                 try {
-                        gain = Double.parseDouble(gainTextField.getText());
+                        gain = Float.parseFloat(gainTextField.getText());
                 } catch (NumberFormatException ex) {
                         String errorMsg = messageSource.getMessage("amplifierDefinitionConfig.gain") +
                         messageSource.getMessage("error.amplifierDefinitionConfig.rational");
@@ -222,9 +222,9 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
                         return null;
                 }
 
-                Double offset;
+                Float offset;
                 try {
-                        offset = Double.parseDouble(offsetTextField.getText());
+                        offset = Float.parseFloat(offsetTextField.getText());
                 } catch (NumberFormatException ex) {
                         String errorMsg = messageSource.getMessage("amplifierDefinitionConfig.offset") +
                         messageSource.getMessage("error.amplifierDefinitionConfig.rational");
@@ -399,9 +399,9 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
          *
          * @return list of gain values
          */
-        public List<Double> getGainValues() {
+        public List<Float> getGainValues() {
 
-                ArrayList<Double> gain = new ArrayList<Double>();
+                ArrayList<Float> gain = new ArrayList<Float>();
 
                 for (ChannelDefinition definition : getChannelDefinitions()) {
 
@@ -416,9 +416,9 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
          *
          * @return list of channel numbers
          */
-        public List<Double> getOffsetValues() {
+        public List<Float> getOffsetValues() {
 
-                ArrayList<Double> offset = new ArrayList<Double>();
+                ArrayList<Float> offset = new ArrayList<Float>();
 
                 for (ChannelDefinition definition : getChannelDefinitions()) {
 
@@ -435,7 +435,7 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
          * @param gainValues list of gain values
          * @param offsetValues list of offset values
          */
-        public void setData(List<Integer> numbers, List<Double> gainValues, List<Double> offsetValues) {
+        public void setData(List<Integer> numbers, List<Float> gainValues, List<Float> offsetValues) {
 
                 ArrayList<ChannelDefinition> definitions = new ArrayList<ChannelDefinition>();
 

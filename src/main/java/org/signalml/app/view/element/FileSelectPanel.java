@@ -98,14 +98,16 @@ public class FileSelectPanel extends JPanel {
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 
+                c.fill = GridBagConstraints.HORIZONTAL;
 		c.anchor = GridBagConstraints.WEST;
 		c.gridx = 0;
 		c.weightx = 100;
 		c.insets = new Insets(0, 2, 0, 2);
 		add(selectFileLabel, c);
-		c.weightx = 0;
+		c.weightx = 1;
 		c.gridx = 1;
 		add(getFileNameField(), c);
+                c.weightx = 0;
 		c.gridx = 2;
 		add(getChangeButton(), c);
 
@@ -118,7 +120,7 @@ public class FileSelectPanel extends JPanel {
 	 */
 	protected JTextField getFileNameField() {
 		if (fileNameField == null) {
-			fileNameField = new JTextField(20);
+			fileNameField = new JTextField(18);
 		}
 		return fileNameField;
 	}
