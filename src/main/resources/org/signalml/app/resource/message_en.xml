@@ -693,10 +693,36 @@
 	<entry key="opensignal.signalsource.OPENBCI">OpenBCI</entry>
 	<entry key="opensignal.signalsource.AMPLIFIER">Amplifier</entry>
 
+        <entry key="opensignal.signalParametersPanelTitle">Signal parameters</entry>
+	<entry key="opensignal.parameters.samplingFrequency">Sampling frequency: </entry>
+	<entry key="opensignal.parameters.channelCount">Channel count: </entry>
+	<entry key="opensignal.parameters.byteOrder">Byte order: </entry>
+	<entry key="opensignal.parameters.sampleType">Sample type: </entry>
+	<entry key="opensignal.parameters.pageSize">Page size: </entry>
+	<entry key="opensignal.parameters.blocksPerPage">Number of blocks per page: </entry>
+        <entry key="opensignal.parameters.editGainAndOffset">Edit gain and offset</entry>        
+        <entry key="opensignal.parameters.editGainAndOffsetDialog.edit">Edit</entry>
+        <entry key="opensignal.parameters.editGainAndOffsetDialog.all">All channels</entry>        
+
+<!-- ============================ -->
+
+        <entry key="amplifierSelection.amplifiersList">Amplifiers List</entry>
+        <entry key="amplifierSelection.config">Config</entry>
+        <entry key="amplifierSelection.openBCI">OpenBCI</entry>
+        <entry key="amplifierSelection.refresh">Refresh</entry>
+        <entry key="amplifierSelection.start">Start</entry>
+        <entry key="amplifierSelection.stop">Stop</entry>
+        <entry key="amplifierSelection.consistency">Amplifier Definitions not consistent</entry>
+        <entry key="amplifierSelection.search">Searching for devices...</entry>
+        <entry key="amplifierSelection.bluetoothSearchFailed">Bluetooth search failed: </entry>
+        <entry key="amplifierSelection.usbSearchFailed">USB search failed: </entry>
+
+<!-- ================================= -->
+
 	<entry key="checkSignal.title">Check Signal</entry>
         <entry key="checkSignal.label">Channels</entry>
 
-<!-- ============================ -->
+<!-- ================================= -->
 
 	<entry key="openMonitor.title">Open monitor</entry>
 	<entry key="openMonitor.multiplexerAddressLabel">Multiplexer address</entry>
@@ -722,19 +748,6 @@
 	<entry key="openDocument.signalChosen">Signal document chosen</entry>
 	<entry key="openDocument.bookChosen">Book document chosen</entry>
 	<entry key="openDocument.tagChosen">Tag document chosen</entry>
-
-<!-- ================================= -->
-
-        <entry key="amplifierSelection.amplifiersList">Amplifiers List</entry>
-        <entry key="amplifierSelection.config">Config</entry>
-        <entry key="amplifierSelection.openBCI">OpenBCI</entry>
-        <entry key="amplifierSelection.refresh">Refresh</entry>
-        <entry key="amplifierSelection.start">Start</entry>
-        <entry key="amplifierSelection.stop">Stop</entry>
-        <entry key="amplifierSelection.consistency">Amplifier Definitions not consistent</entry>
-        <entry key="amplifierSelection.search">Searching for devices...</entry>
-        <entry key="amplifierSelection.bluetoothSearchFailed">Bluetooth search failed: </entry>
-        <entry key="amplifierSelection.usbSearchFailed">USB search failed: </entry>
 
 <!-- ================================= -->
 

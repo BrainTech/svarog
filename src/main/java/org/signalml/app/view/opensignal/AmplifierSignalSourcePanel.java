@@ -1,46 +1,101 @@
-/* AmplifierSignalSourcePanel.java created 2011-03-06
- *
- */
-
 package org.signalml.app.view.opensignal;
 
 import java.awt.BorderLayout;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import org.signalml.app.view.ViewerElementManager;
+import org.signalml.app.worker.amplifiers.AmplifierInstance;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
+ * Panel enabling configuring, starting and connecting to OpenBCI.
  *
- * @author Piotr Szachewicz
+ * @author Tomasz Sawicki
  */
-public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel {
+public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel implements AmplifierSelectionListener {
 
-	public AmplifierSignalSourcePanel(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager) {
-		super(messageSource, viewerElementManager);
-	}
+        /**
+         * Signal parameters panel.
+         */
+        private SignalParametersPanel signalParametersPanel = null;
+        /**
+         * Amplifier selection panel.
+         */
+        private AmplifierSelectionPanel amplifierSelectionPanel = null;
 
-	@Override
-	protected JPanel createLeftColumnPanel() {
-		JPanel leftColumnPanel = new JPanel();
-		leftColumnPanel.setLayout(new BorderLayout());
+        /**
+         * Default constructor.
+         *
+         * @param messageSource message source
+         * @param viewerElementManager viewer element manager
+         */
+        public AmplifierSignalSourcePanel(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager) {
 
-		return leftColumnPanel;
-	}
+                super(messageSource, viewerElementManager);
+        }
 
-	@Override
-	protected JPanel createRightColumnPanel() {
-		//return new JPanel();
-		JPanel rightColumnPanel = new JPanel(new BorderLayout());
-		rightColumnPanel.add(getTestPanel(), BorderLayout.CENTER);
-		return rightColumnPanel;
-	}
+        /**
+         * Creates left panel.
+         *
+         * @return the left panel
+         */
+        @Override
+        protected JPanel createLeftColumnPanel() {
 
-	protected JPanel getTestPanel() {
-		JPanel panel = new JPanel();
-		panel.add(new JLabel("amplifier signal"));
-		return panel;
-	}
+                JPanel leftColumnPanel = new JPanel(new BorderLayout());
+                leftColumnPanel.add(getAmplifierSelectionPanel(), BorderLayout.CENTER);
+                return leftColumnPanel;
+        }
 
+        /**
+         * Creates right panel.
+         *
+         * @return the right panel
+         */
+        @Override
+        protected JPanel createRightColumnPanel() {
 
+                JPanel rightColumnPanel = new JPanel(new BorderLayout());
+                rightColumnPanel.add(getSignalParametersPanel(), BorderLayout.NORTH);
+                return rightColumnPanel;
+        }
+
+        /**
+         * Creates the model.
+         */
+        @Override
+        protected void createModel() {
+                
+                currentModel = new Object();
+        }
+
+        /**
+         * Gets the signal parameters panel.
+         *
+         * @return the signal parameters panel
+         */
+        private SignalParametersPanel getSignalParametersPanel() {
+
+                if (signalParametersPanel == null) {
+                        signalParametersPanel = new SignalParametersPanel(messageSource, currentModel);
+                }
+                return signalParametersPanel;
+        }
+
+        /**
+         * Gets the amplifier selection panel.
+         *
+         * @return the amplifier selection panel
+         */
+        private AmplifierSelectionPanel getAmplifierSelectionPanel() {
+
+                if (amplifierSelectionPanel == null) {
+                        amplifierSelectionPanel = new AmplifierSelectionPanel(messageSource, viewerElementManager, this, null, null);
+                }
+                return amplifierSelectionPanel;
+        }
+
+        @Override
+        public void amplifierChosen(AmplifierInstance instance) {
+
+        }
 }

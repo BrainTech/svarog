@@ -42,4 +42,9 @@ public class OpenBCISignalSourcePanel extends AbstractSignalSourcePanel {
 		return panel;
 	}
 
+        @Override
+        protected void createModel() {
+                currentModel = new Object();
+        }
+
 }

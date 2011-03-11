@@ -5,18 +5,13 @@ package org.signalml.app.view.opensignal;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import javax.swing.BoxLayout;
 import javax.swing.ComboBoxModel;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import org.signalml.app.view.ViewerElementManager;
-import org.signalml.app.view.element.TitledPanelWithABorder;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
@@ -28,12 +23,14 @@ abstract public class AbstractSignalSourcePanel extends JPanel implements Proper
 	protected ViewerElementManager viewerElementManager;
 
 	private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+        private SignalSourceSelectionPanel signalSourceSelectionPanel;
 	protected MessageSourceAccessor messageSource;
-	private SignalSourceSelectionPanel signalSourceSelectionPanel;
+        protected Object currentModel;
 
 	public AbstractSignalSourcePanel(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager) {
 		this.messageSource = messageSource;
 		this.viewerElementManager = viewerElementManager;
+                createModel();
 		createInterface();
 	}
 
@@ -41,8 +38,9 @@ abstract public class AbstractSignalSourcePanel extends JPanel implements Proper
 		return viewerElementManager;
 	}
 
-	private void createInterface() {
-		this.setLayout(new GridLayout(1, 2));
+	private void createInterface() {                
+		this.setLayout(new GridLayout(1, 2, 5, 0));
+                this.setBorder(new EmptyBorder(5, 5, 5, 5));
 
                 JPanel absoluteLeftColumnPanel = new JPanel(new BorderLayout());
                 absoluteLeftColumnPanel.add(getSignalSourceSelectionPanel(), BorderLayout.NORTH);
@@ -51,6 +49,8 @@ abstract public class AbstractSignalSourcePanel extends JPanel implements Proper
 		this.add(absoluteLeftColumnPanel);
 		this.add(createRightColumnPanel());
 	}
+
+        abstract protected void createModel();
 
 	abstract protected JPanel createLeftColumnPanel();
 

@@ -41,4 +41,9 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 		panel.add(new JLabel("file signal"));
 		return panel;
 	}
+
+        @Override
+        protected void createModel() {
+                currentModel = new Object();
+        }
 }
