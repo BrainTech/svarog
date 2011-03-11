@@ -57,8 +57,6 @@ abstract public class AbstractSignalSourcePanel extends JPanel implements Proper
 
         abstract public void fillModelFromPanel(Object model) throws SignalMLException;
 
-	abstract public int getNumberOfChannels();
-
 	protected SignalSourceSelectionPanel getSignalSourceSelectionPanel() {
 		if (signalSourceSelectionPanel == null) {
 			signalSourceSelectionPanel = new SignalSourceSelectionPanel(messageSource);

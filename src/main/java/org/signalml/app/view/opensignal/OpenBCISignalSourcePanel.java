@@ -53,9 +53,4 @@ public class OpenBCISignalSourcePanel extends AbstractSignalSourcePanel {
                 throw new UnsupportedOperationException("Not supported yet.");
         }
 
-	@Override
-	public int getNumberOfChannels() {
-		return 4;
-	}
-
 }

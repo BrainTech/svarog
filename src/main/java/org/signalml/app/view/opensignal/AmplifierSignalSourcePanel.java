@@ -227,8 +227,4 @@ public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel {
                 }
         }
 
-	@Override
-	public int getNumberOfChannels() {
-		return 3;
-	}
 }

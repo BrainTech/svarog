@@ -53,8 +53,4 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
                 throw new UnsupportedOperationException("Not supported yet.");
         }
 
-	@Override
-	public int getNumberOfChannels() {
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
 }
