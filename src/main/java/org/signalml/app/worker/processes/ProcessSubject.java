@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Runs a process and notifies the {@link ProcessManager} when it ends.
@@ -35,11 +33,6 @@ public class ProcessSubject extends Thread {
         private String id;
 
         /**
-         * Process delay.
-         */
-        private long delay;
-
-        /**
          * Constructor prepares the process.
          *
          * @param id the process id
@@ -58,16 +51,6 @@ public class ProcessSubject extends Thread {
                 this.processManager = processManager;
                 this.processBuilder = new ProcessBuilder(command);
                 this.processBuilder.directory(new File(directory));
-        }
-
-        /**
-         * Sets the delay.
-         *
-         * @param delay the delay
-         */
-        public void setDelay(long delay) {
-
-                this.delay = delay;
         }
 
         /**
@@ -97,24 +80,25 @@ public class ProcessSubject extends Thread {
         }
 
         /**
-         * Sleeps for {@link #delay} miliseconds, then starts the process,
-         * and waits for it to finish. The {@link #processManager} is notified
-         * again afterwards.
+         * Starts the process, and waits for it to finish.
+         * The {@link #processManager} is notified afterwards.
          */
         @Override
         public void run() {
 
                 try {
-                        Thread.sleep(delay);
-
                         try {
                                 process = processBuilder.start();
                         } catch (IOException ex) {
-                                Logger.getLogger(ProcessSubject.class.getName()).log(Level.SEVERE, null, ex);
+                                process = null;
                         }
 
-                        process.waitFor();
-                        processManager.processEnded(id, process.exitValue());
+                        if (process != null) {
+                                process.waitFor();
+                                processManager.processEnded(id, process.exitValue());
+                        } else {
+                                processManager.processEnded(id, null);
+                        }
 
                 } catch (InterruptedException ex) {
 

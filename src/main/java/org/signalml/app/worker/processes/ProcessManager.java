@@ -1,5 +1,7 @@
 package org.signalml.app.worker.processes;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,74 +14,36 @@ import java.util.List;
 public class ProcessManager {
 
         /**
-         * Created {@link ProcessSubject} objects.
-         */
-        private HashMap<String, ProcessSubject> createdProcesses;
-
-        /**
-         * Prepared processes.
-         */
-        private HashMap<String, ProcessSubject> preparedProcesses;
-
-        /**
-         * Running processes.
+         * Currently running processes.
          */
         private HashMap<String, ProcessSubject> runningProcesses;
 
         /**
          * Listeners list
          */
-        private List<ProcessEndListener> listeners;
+        private List<PropertyChangeListener> listeners;
 
         /**
          * Default constructor.
          */
         public ProcessManager() {
 
-                createdProcesses = new HashMap<String, ProcessSubject>();
-                preparedProcesses = new HashMap<String, ProcessSubject>();
                 runningProcesses = new HashMap<String, ProcessSubject>();
-
-                listeners = new ArrayList<ProcessEndListener>();
+                listeners = new ArrayList<PropertyChangeListener>();
         }
 
         /**
-         * Creates a new {@link ProcessSubject} object.
+         * Creates a new {@link ProcessSubject} object and runs it.
          *
          * @param id process id
          * @param path path to the executable file
          * @param parameters command line parameters
          */
-        public void createProcess(String id, String path, List<String> parameters) {
+        public synchronized void runProcess(String id, String path, List<String> parameters) {
 
-                createdProcesses.put(id, new ProcessSubject(id, path, parameters, this));
-        }
-
-        /**
-         * Prepares a process.
-         *
-         * @param id process id
-         * @param delay process delay
-         */
-        public void prepareProcess(String id, long delay) {
-
-                ProcessSubject process = createdProcesses.remove(id);
-                process.setDelay(delay);
-                preparedProcesses.put(id, process);
-        }
-
-        /**
-         * Runs all prepared processes.
-         */
-        public void runProcesses() {
-
-                for (String id : preparedProcesses.keySet()) {
-
-                        preparedProcesses.get(id).startProcess();
-                        runningProcesses.put(id, preparedProcesses.get(id));
-                }
-
-                preparedProcesses.clear();
+                ProcessSubject newProcess = new ProcessSubject(id, path, parameters, this);
+                runningProcesses.put(id, newProcess);
+                newProcess.startProcess();
         }
 
         /**
@@ -107,34 +71,37 @@ public class ProcessManager {
         /**
          * Raised when a process ends in a different way then via the {@link #killAll()} of
          * {@link #killProcess(java.lang.String)} methods. Kills all other running processes.
+         * Notifies attached listeners with a "processEnded" property change. The new value
+         * is a {@link ProcessExitData} object. If exitCode == null then the process didn't
+         * event start (executable file didn't exist).
          *
          * @param id process id
          */
-        public void processEnded(String id, int exitCode) {
+        public void processEnded(String id, Integer exitCode) {
 
                 runningProcesses.remove(id);
                 killAll();
 
-                for (ProcessEndListener listener : listeners)
-                        listener.processEnded(id, exitCode);
+                for (PropertyChangeListener listener : listeners)
+                        listener.propertyChange(new PropertyChangeEvent(this, "processEnded", null, new ProcessExitData(id, exitCode)));
         }
 
         /**
-         * Adds a process end listener.
+         * Adds a property change listener.
          *
          * @param listener the listener
          */
-        public void addProcessEndListener(ProcessEndListener listener) {
+        public void addPropertyChangeListener(PropertyChangeListener listener) {
 
                 listeners.add(listener);
         }
 
         /**
-         * Removes a process end listener.
+         * Removes a property change listner.
          *
          * @param listener the listener
          */
-        public void removeProcessEndListener(ProcessEndListener listener) {
+        public void removePropertyChangeListener(PropertyChangeListener listener) {
 
                 listeners.remove(listener);
         }
