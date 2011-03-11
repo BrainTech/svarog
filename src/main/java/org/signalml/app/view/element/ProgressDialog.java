@@ -35,6 +35,8 @@ import org.springframework.context.support.MessageSourceAccessor;
  */
 public class ProgressDialog extends AbstractDialog implements PropertyChangeListener {
 
+        public static final String PROGRESS_STATE = "progressState";
+
         /**
          * The text area.
          */
@@ -160,7 +162,7 @@ public class ProgressDialog extends AbstractDialog implements PropertyChangeList
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
 
-                if ("progressState".equals(evt.getPropertyName())) {
+                if (PROGRESS_STATE.equals(evt.getPropertyName())) {
                         try {
                                 fillDialogFromModel(evt.getNewValue());
                         } catch (SignalMLException ex) {

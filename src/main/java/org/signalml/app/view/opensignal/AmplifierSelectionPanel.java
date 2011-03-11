@@ -131,12 +131,8 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
 
                 createInterface();
 
-                currentDescriptor = new AmplifierConnectionDescriptor();
-                currentDescriptor.setOpenMonitorDescriptor(new OpenMonitorDescriptor());
-                try {
-                        fillPanelFromModel(currentDescriptor);
-                } catch (SignalMLException ex) {
-                }
+                currentDescriptor = new AmplifierConnectionDescriptor();                
+                amplifierSelected();
         }
 
         /**
@@ -207,7 +203,7 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
 
-                if ("endOfSearch".equals(evt.getPropertyName())) {
+                if (AmplifierDiscoveryWorker.END_OF_SEARCH.equals(evt.getPropertyName())) {
 
                         DeviceSearchResult result = (DeviceSearchResult) evt.getNewValue();
 
@@ -313,15 +309,14 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
                                 currentDescriptor.setOpenMonitorDescriptor(new OpenMonitorDescriptor());
                         currentDescriptor.getOpenMonitorDescriptor().fillFromAnAmplifierDefinition(
                                 currentDescriptor.getAmplifierInstance().getDefinition());
-                        monitorRecordingPanel.setEnabled(true);                        
+                        monitorRecordingPanel.setEnabledAll(true);
                 } else {
-                        monitorRecordingPanel.setEnabled(false);
+                        monitorRecordingPanel.setEnabledAll(false);
                 }
                 try {
                         signalParametersPanel.fillPanelFromModel(currentDescriptor);
                 } catch (SignalMLException ex) {
-                }
-                monitorRecordingPanel.fillModelFromPanel(currentDescriptor.getOpenMonitorDescriptor());
+                }                
         }
 
         /**

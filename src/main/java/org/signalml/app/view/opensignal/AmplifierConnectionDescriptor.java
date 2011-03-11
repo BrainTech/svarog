@@ -35,4 +35,8 @@ public class AmplifierConnectionDescriptor {
         public void setOpenMonitorDescriptor(OpenMonitorDescriptor openMonitorDescriptor) {
                 this.openMonitorDescriptor = openMonitorDescriptor;
         }
+
+        public AmplifierConnectionDescriptor() {
+                openMonitorDescriptor = new OpenMonitorDescriptor();
+        }
 }

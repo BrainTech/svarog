@@ -15,6 +15,9 @@ import java.util.List;
  */
 public abstract class AbstractDeviceDiscoverer {
 
+        public static final String DEVICE_FOUND = "deviceFound";
+        public static final String END_OF_SEARCH = "endOfSearch";
+
         /**
          * List of listeners that will be notified when a device is found
          * and when the search is over.
@@ -80,7 +83,7 @@ public abstract class AbstractDeviceDiscoverer {
          */
         protected void deviceFound(DeviceInfo info) {
 
-                firePropertyChange("deviceFound", null, info);
+                firePropertyChange(DEVICE_FOUND, null, info);
         }
 
         /**
@@ -88,6 +91,6 @@ public abstract class AbstractDeviceDiscoverer {
          */
         protected void endOfSearch() {
 
-                firePropertyChange("endOfSearch", null, null);
+                firePropertyChange(END_OF_SEARCH, null, null);
         }
 }

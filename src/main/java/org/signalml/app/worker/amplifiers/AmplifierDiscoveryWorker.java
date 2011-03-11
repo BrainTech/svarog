@@ -16,6 +16,8 @@ import java.util.regex.Pattern;
  */
 public class AmplifierDiscoveryWorker implements PropertyChangeListener {
 
+        public static final String END_OF_SEARCH = "endOfSearch";
+
         /**
          * Bluetooth device discoverer.
          */
@@ -105,12 +107,12 @@ public class AmplifierDiscoveryWorker implements PropertyChangeListener {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
 
-                if ("deviceFound".equals(evt.getPropertyName())) {
+                if (AbstractDeviceDiscoverer.DEVICE_FOUND.equals(evt.getPropertyName())) {
 
                         DeviceInfo info = (DeviceInfo) evt.getNewValue();
                         compareAll(info);
                 }
-                else if ("endOfSearch".equals(evt.getPropertyName())) {
+                else if (AbstractDeviceDiscoverer.END_OF_SEARCH.equals(evt.getPropertyName())) {
 
                         AbstractDeviceDiscoverer discoverer = (AbstractDeviceDiscoverer) evt.getSource();
 
@@ -204,6 +206,6 @@ public class AmplifierDiscoveryWorker implements PropertyChangeListener {
          */
         private void endOfSearch() {
 
-                firePropertyChange("endOfSearch", null, result);
+                firePropertyChange(END_OF_SEARCH, null, result);
         }
 }

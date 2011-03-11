@@ -23,6 +23,9 @@ import org.signalml.multiplexer.protocol.SvarogProtocol.Variable;
  */
 public class BCIConfigurationWorker extends SwingWorker<WorkerResult, Integer> {
 
+        public static final String CURRENT_STATE = "currentState";
+        public static final String SENDING_DONE = "sendingDone";
+
         protected static final Logger logger = Logger.getLogger(BCIConfigurationWorker.class);
 
         /**
@@ -144,7 +147,7 @@ public class BCIConfigurationWorker extends SwingWorker<WorkerResult, Integer> {
 		for (Integer i : states) {
 			Integer oldState = state;
 			state = i;
-			firePropertyChange("currentState", oldState, state);
+			firePropertyChange(CURRENT_STATE, oldState, state);
 		}
         }
 
@@ -170,6 +173,6 @@ public class BCIConfigurationWorker extends SwingWorker<WorkerResult, Integer> {
 			e.printStackTrace();
 		}
 
-		firePropertyChange("sendingDone", null, result);
+		firePropertyChange(SENDING_DONE, null, result);
         }
 }

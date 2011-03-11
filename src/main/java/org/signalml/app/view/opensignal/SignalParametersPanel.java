@@ -7,7 +7,6 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.AbstractAction;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -23,8 +22,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.plaf.basic.BasicSliderUI.ChangeHandler;
-import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.view.element.IntegerSpinner;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.view.element.ResolvableComboBox;
@@ -162,8 +159,7 @@ public class SignalParametersPanel extends JPanel {
                                 descriptor.getAmplifierInstance().getDefinition().getAvailableFrequencies().toArray()));
 
                         getChannelCountSpinner().setEnabled(false);
-                        getChannelCountSpinner().setValue(String.valueOf(
-                                descriptor.getOpenMonitorDescriptor().getChannelCount()));
+                        getChannelCountSpinner().setValue(descriptor.getOpenMonitorDescriptor().getChannelCount());
 
                         getByteOrderComboBox().setModel(new DefaultComboBoxModel());
                         getByteOrderComboBox().setEnabled(false);
@@ -216,7 +212,7 @@ public class SignalParametersPanel extends JPanel {
         public void clearAllFields() {
                 
                 getSamplingFrequencyComboBox().getModel().setSelectedItem("");
-                getChannelCountSpinner().setValue("");
+                getChannelCountSpinner().setValue(0);
                 getByteOrderComboBox().getModel().setSelectedItem("");
                 getSampleTypeComboBox().getModel().setSelectedItem("");
                 getPageSizeField().setText("");
@@ -315,7 +311,7 @@ public class SignalParametersPanel extends JPanel {
                 add(fieldsPanel, BorderLayout.NORTH);
                 add(buttonPanel, BorderLayout.SOUTH);
 
-                //setEnabledAll(false);
+                setEnabledAll(false);
         }
 
         /**

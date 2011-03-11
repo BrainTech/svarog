@@ -40,12 +40,12 @@ public class BluetoothDeviceDiscovererTest implements PropertyChangeListener {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
 
-                if ("deviceFound".equals(evt.getPropertyName())) {
+                if (AbstractDeviceDiscoverer.DEVICE_FOUND.equals(evt.getPropertyName())) {
 
                         DeviceInfo info = (DeviceInfo) evt.getNewValue();
                         System.out.println("Device found: " + info.getName() + " " + info.getAddress() + " (" + info.getDeviceType() + ")");
                 }
-                else if ("endOfSearch".equals(evt.getPropertyName())) {
+                else if (AbstractDeviceDiscoverer.END_OF_SEARCH.equals(evt.getPropertyName())) {
 
                         System.out.println("End of search!");
                         

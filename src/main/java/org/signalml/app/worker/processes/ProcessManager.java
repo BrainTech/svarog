@@ -13,6 +13,8 @@ import java.util.List;
  */
 public class ProcessManager {
 
+        public static final String PROCESS_ENDED = "processEnded";
+
         /**
          * Currently running processes.
          */
@@ -83,7 +85,7 @@ public class ProcessManager {
                 killAll();
 
                 for (PropertyChangeListener listener : listeners)
-                        listener.propertyChange(new PropertyChangeEvent(this, "processEnded", null, new ProcessExitData(id, exitCode)));
+                        listener.propertyChange(new PropertyChangeEvent(this, PROCESS_ENDED, null, new ProcessExitData(id, exitCode)));
         }
 
         /**
