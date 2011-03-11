@@ -43,62 +43,50 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
          * List of frequencies.
          */
         private JList amplifiersList = null;
-
         /**
          * Refresh button.
          */
         private JButton refreshButton = null;
-
         /**
          * Configure modules button.
          */
         private JButton configureModulesButton = null;
-
         /**
          * Configure definitions button.
          */
         private JButton configureDefinitionsButton = null;
-
         /**
          * Start button.
          */
         private JButton startButton = null;
-
         /**
          * Stop button.
          */
         private JButton stopButton = null;
-
         /**
          * Message source.
          */
         private MessageSourceAccessor messageSource;
-
         /**
          * Viewer element manager.
          */
         private ViewerElementManager elementManager;
-
         /**
          * The signal parameters panel to modify when an amp is chosen.
          */
         private SignalParametersPanel signalParametersPanel;
-
         /**
          * The monitor recording panel to modify when an amp is chosen.
          */
         private MonitorRecordingPanel monitorRecordingPanel;
-
         /**
          * Start action.
          */
         private AbstractAction startAction;
-        
         /**
          * Stop action.
          */
         private AbstractAction stopAction;
-
         /**
          * Current descriptor.
          */
@@ -114,11 +102,11 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
          * @param stopAction {@link #stopAction}
          */
         public AmplifierSelectionPanel(MessageSourceAccessor messageSource,
-                                       ViewerElementManager elementManager,
-                                       SignalParametersPanel signalParametersPanel,
-                                       MonitorRecordingPanel monitorRecordingPanel,
-                                       AbstractAction startAction,
-                                       AbstractAction stopAction) {
+                ViewerElementManager elementManager,
+                SignalParametersPanel signalParametersPanel,
+                MonitorRecordingPanel monitorRecordingPanel,
+                AbstractAction startAction,
+                AbstractAction stopAction) {
 
                 super();
 
@@ -131,7 +119,7 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
 
                 createInterface();
 
-                currentDescriptor = new AmplifierConnectionDescriptor();                
+                currentDescriptor = new AmplifierConnectionDescriptor();
                 amplifierSelected();
         }
 
@@ -146,8 +134,7 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
 
                 if (selectedIndex < 0) {
                         amplifierConnectionDescriptor.setAmplifierInstance(null);
-                }
-                else {
+                } else {
                         AmplifierInstance selectedInstance;
                         selectedInstance = (AmplifierInstance) getAmplifiersList().getModel().getElementAt(selectedIndex);
                         amplifierConnectionDescriptor.setAmplifierInstance(selectedInstance);
@@ -163,7 +150,7 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
         public final void fillPanelFromModel(AmplifierConnectionDescriptor amplifierConnectionDescriptor) throws SignalMLException {
 
                 // TODO: refresh amp list and try to find the one from the descriptor
-                
+
                 currentDescriptor = amplifierConnectionDescriptor;
         }
 
@@ -173,11 +160,11 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
         private void refresh() {
 
                 amplifierSelected();
-                
+
                 getAmplifiersList().setEnabled(false);
                 getRefreshButton().setEnabled(false);
 
-                getAmplifiersList().setListData(new String[] { messageSource.getMessage("amplifierSelection.search")});
+                getAmplifiersList().setListData(new String[]{messageSource.getMessage("amplifierSelection.search")});
 
                 List<AmplifierDefinition> definitions;
 
@@ -186,7 +173,7 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
                 } catch (Exception ex) {
                         JOptionPane.showMessageDialog(this, messageSource.getMessage("amplifierSelection.consistency"));
                         setEnabled(true);
-                        getAmplifiersList().setListData(new String[] { });
+                        getAmplifiersList().setListData(new String[]{});
                         return;
                 }
 
@@ -220,19 +207,19 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
                         getAmplifiersList().setEnabled(true);
                         getRefreshButton().setEnabled(true);
                 }
-        }        
+        }
 
         /**
          * Creates the interface.
          */
         private void createInterface() {
-                
+
                 setLayout(new BorderLayout(10, 10));
 
 
                 CompoundBorder amplifiersListBorder = new CompoundBorder(
-			new TitledBorder(messageSource.getMessage("amplifierSelection.amplifiersList")),
-			new EmptyBorder(3, 3, 3, 3));
+                        new TitledBorder(messageSource.getMessage("amplifierSelection.amplifiersList")),
+                        new EmptyBorder(3, 3, 3, 3));
 
                 JPanel amplifiersListPanel = new JPanel(new BorderLayout(10, 10));
                 amplifiersListPanel.setLayout(new BorderLayout(10, 10));
@@ -245,30 +232,30 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
                 amplifiersListPanel.add(refreshPanel, BorderLayout.PAGE_END);
 
                 add(amplifiersListPanel, BorderLayout.CENTER);
-                
+
 
                 JPanel buttonsPanel = new JPanel(new BorderLayout(10, 5));
 
                 CompoundBorder configBorder = new CompoundBorder(
-			new TitledBorder(messageSource.getMessage("amplifierSelection.config")),
-			new EmptyBorder(3, 3, 3, 3));
+                        new TitledBorder(messageSource.getMessage("amplifierSelection.config")),
+                        new EmptyBorder(3, 3, 3, 3));
 
                 JPanel configPanel = new JPanel();
                 configPanel.setLayout(new BoxLayout(configPanel, BoxLayout.Y_AXIS));
                 configPanel.setBorder(configBorder);
                 configPanel.add(getConfigureDefinitionsButton());
-                configPanel.add(Box.createRigidArea(new Dimension(0,5)));
+                configPanel.add(Box.createRigidArea(new Dimension(0, 5)));
                 configPanel.add(getConfigureModulesButton());
 
                 CompoundBorder openBCIBorder = new CompoundBorder(
-			new TitledBorder(messageSource.getMessage("amplifierSelection.openBCI")),
-			new EmptyBorder(3, 3, 3, 3));
+                        new TitledBorder(messageSource.getMessage("amplifierSelection.openBCI")),
+                        new EmptyBorder(3, 3, 3, 3));
 
                 JPanel openBCIPanel = new JPanel();
                 openBCIPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
                 openBCIPanel.setBorder(openBCIBorder);
                 openBCIPanel.add(getStartButton());
-                openBCIPanel.add(Box.createRigidArea(new Dimension(5,0)));
+                openBCIPanel.add(Box.createRigidArea(new Dimension(5, 0)));
                 openBCIPanel.add(getStopButton());
 
                 buttonsPanel.add(configPanel, BorderLayout.PAGE_START);
@@ -282,7 +269,7 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
          *
          * @return the amplifiers list
          */
-        private JList getAmplifiersList () {
+        private JList getAmplifiersList() {
 
                 if (amplifiersList == null) {
                         amplifiersList = new JList();
@@ -305,8 +292,9 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
 
                 fillModelFromPanel(currentDescriptor);
                 if (currentDescriptor.getAmplifierInstance() != null) {
-                        if (currentDescriptor.getOpenMonitorDescriptor() == null)
+                        if (currentDescriptor.getOpenMonitorDescriptor() == null) {
                                 currentDescriptor.setOpenMonitorDescriptor(new OpenMonitorDescriptor());
+                        }
                         currentDescriptor.getOpenMonitorDescriptor().fillFromAnAmplifierDefinition(
                                 currentDescriptor.getAmplifierInstance().getDefinition());
                         monitorRecordingPanel.setEnabledAll(true);
@@ -316,7 +304,7 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
                 try {
                         signalParametersPanel.fillPanelFromModel(currentDescriptor);
                 } catch (SignalMLException ex) {
-                }                
+                }
         }
 
         /**
@@ -334,7 +322,7 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
                                         refresh();
                                 }
                         });
-                        refreshButton.setText(messageSource.getMessage("amplifierSelection.refresh"));                        
+                        refreshButton.setText(messageSource.getMessage("amplifierSelection.refresh"));
                 }
                 return refreshButton;
         }
@@ -378,7 +366,7 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
 
                 if (startButton == null) {
                         startButton = new JButton(startAction);
-                        startButton.setText(messageSource.getMessage("amplifierSelection.start"));                                           
+                        startButton.setText(messageSource.getMessage("amplifierSelection.start"));
                 }
                 return startButton;
         }
@@ -392,7 +380,7 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
 
                 if (stopButton == null) {
                         stopButton = new JButton(stopAction);
-                        stopButton.setText(messageSource.getMessage("amplifierSelection.stop"));                                            
+                        stopButton.setText(messageSource.getMessage("amplifierSelection.stop"));
                 }
                 return stopButton;
         }

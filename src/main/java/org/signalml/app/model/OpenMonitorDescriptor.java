@@ -334,19 +334,25 @@ public class OpenMonitorDescriptor {
          */
         public void fillFromAnAmplifierDefinition(AmplifierDefinition definition) {
 
-                float[] gain = new float[definition.getChannelCount()];
-                float[] offset = new float[definition.getChannelCount()];
+                channelCount = definition.getChannelCount();
+
+                samplingFrequency = definition.getAvailableFrequencies().get(0);
+
+                channelLabels = new String[channelCount];
+                selectedChannelList = new String[channelCount];
+                selectedChannelsIndecies = new int[channelCount];
+                calibrationGain = new float[definition.getChannelCount()];
+                calibrationOffset = new float[definition.getChannelCount()];
 
                 for (int i = 0; i < definition.getChannelCount(); i++) {
 
-                        gain[i] = definition.getCalibrationGain().get(i);
-                        offset[i] = definition.getCalibrationOffset().get(i);
-                }
+                        calibrationGain[i] = definition.getCalibrationGain().get(i);
+                        calibrationOffset[i] = definition.getCalibrationOffset().get(i);
 
-                setCalibrationGain(gain);
-                setCalibrationOffset(offset);
-                setChannelCount(definition.getChannelCount());
-                setSamplingFrequency(definition.getAvailableFrequencies().get(0));
+                        selectedChannelsIndecies[i] = i;
+                        channelLabels[i] = Integer.toBinaryString(i);
+                        selectedChannelList[i] = channelLabels[i];
+                }                
         }
 
 }

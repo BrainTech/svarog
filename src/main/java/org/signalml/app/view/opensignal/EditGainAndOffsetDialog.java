@@ -2,6 +2,7 @@ package org.signalml.app.view.opensignal;
 
 import java.awt.Window;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.event.ListSelectionEvent;
@@ -218,7 +219,32 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
                  * @throws SignalMLException when model is not uspported
                  */
                 public void fillPanelFromModel(Object model) throws SignalMLException {
-                                
+
+                        if (model instanceof AmplifierConnectionDescriptor) {
+                                fillPanelForAmplifierConnection((AmplifierConnectionDescriptor) model);
+                        } else {
+                                throw new SignalMLException(messageSource.getMessage("error.modelNotSupported"));
+                        }
+                }
+
+                /**
+                 * Fills the panel for amplifier connection
+                 *
+                 * @param descriptor the descriptor
+                 */
+                private void fillPanelForAmplifierConnection(AmplifierConnectionDescriptor descriptor) {
+
+                        setAllGainAndOffsetEditable(true);
+                        List<ChannelDefinition> definitions = new ArrayList<ChannelDefinition>();
+                        for (int i = 0; i < descriptor.getOpenMonitorDescriptor().getChannelCount(); i++) {
+
+                                definitions.add(new ChannelDefinition(
+                                        descriptor.getOpenMonitorDescriptor().getSelectedChannelsIndecies()[i],
+                                        descriptor.getOpenMonitorDescriptor().getCalibrationGain()[i],
+                                        descriptor.getOpenMonitorDescriptor().getCalibrationOffset()[i]
+                                        ));
+                        }
+                        getDefinitionsList().setListData(definitions.toArray());
                 }
 
                 /**
@@ -229,7 +255,36 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
                  * @throws SignalMLException when input data is invalid or model is not supported
                  */
                 public void fillModelFromPanel(Object model) throws SignalMLException {
+                        if (model instanceof AmplifierConnectionDescriptor) {
+                                fillModelForAmplifierConnection((AmplifierConnectionDescriptor) model);
+                        } else {
+                                throw new SignalMLException(messageSource.getMessage("error.modelNotSupported"));
+                        }
+                }
 
+                /**
+                 * Fills the model for amplifier connection
+                 *
+                 * @param descriptor the descriptor
+                 * @throws SignalMLException when input data is invalid
+                */
+                private void fillModelForAmplifierConnection(AmplifierConnectionDescriptor amplifierConnectionDescriptor) throws SignalMLException {
+
+                        Float[] gainFromList = getGainValues().toArray(new Float[0]);
+                        Float[] offsetFromList = getOffsetValues().toArray(new Float[0]);
+
+                        int length = gainFromList.length;
+
+                        float[] gain = new float[length];
+                        float[] offset = new float[length];
+
+                        for (int i = 0; i < length; i++) {
+                                gain[i] = gainFromList[i];
+                                offset[i] = offsetFromList[i];
+                        }
+
+                        amplifierConnectionDescriptor.getOpenMonitorDescriptor().setCalibrationGain(gain);
+                        amplifierConnectionDescriptor.getOpenMonitorDescriptor().setCalibrationOffset(offset);
                 }
         }
 }
