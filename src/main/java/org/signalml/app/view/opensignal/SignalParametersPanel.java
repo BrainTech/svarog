@@ -84,20 +84,22 @@ public class SignalParametersPanel extends JPanel {
          * 
          * @param messageSource {@link #messageSource}
          */
-        public SignalParametersPanel(MessageSourceAccessor messageSource, Object model) {
+        public SignalParametersPanel(MessageSourceAccessor messageSource) {
 
                 super();
                 this.messageSource = messageSource;                
                 createInterface();
-                fillPanelFromModel(model);
         }
 
         /**
          * Fills this panel from a model
          *
          * @param model the model
+         * @throws SignalMLException when model is not supported
          */
-        public void fillPanelFromModel(Object model) {
+        public final void fillPanelFromModel(Object model) throws SignalMLException {
+
+                // TODO
 
                 currentModel = model;
         }
@@ -108,8 +110,9 @@ public class SignalParametersPanel extends JPanel {
          * @param model the model
          * @throws SignalMLException when input data is invalid
          */
-        public void fillModelFromPanel(Object model) throws SignalMLException {
-                
+        public final void fillModelFromPanel(Object model) throws SignalMLException {
+
+                // TODO
         }
 
         /**
@@ -200,6 +203,8 @@ public class SignalParametersPanel extends JPanel {
 
                 add(fieldsPanel, BorderLayout.NORTH);
                 add(buttonPanel, BorderLayout.SOUTH);
+
+                setEnabledAll(false);
         }
 
         /**

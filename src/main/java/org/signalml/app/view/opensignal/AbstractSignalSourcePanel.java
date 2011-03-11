@@ -12,6 +12,7 @@ import javax.swing.ComboBoxModel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import org.signalml.app.view.ViewerElementManager;
+import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
@@ -30,7 +31,6 @@ abstract public class AbstractSignalSourcePanel extends JPanel implements Proper
 	public AbstractSignalSourcePanel(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager) {
 		this.messageSource = messageSource;
 		this.viewerElementManager = viewerElementManager;
-                createModel();
 		createInterface();
 	}
 
@@ -50,11 +50,13 @@ abstract public class AbstractSignalSourcePanel extends JPanel implements Proper
 		this.add(createRightColumnPanel());
 	}
 
-        abstract protected void createModel();
-
 	abstract protected JPanel createLeftColumnPanel();
 
 	abstract protected JPanel createRightColumnPanel();
+
+        abstract public void fillPanelFromModel(Object model) throws SignalMLException;
+
+        abstract public void fillModelFromPanel(Object model) throws SignalMLException;
 
 	protected SignalSourceSelectionPanel getSignalSourceSelectionPanel() {
 		if (signalSourceSelectionPanel == null) {

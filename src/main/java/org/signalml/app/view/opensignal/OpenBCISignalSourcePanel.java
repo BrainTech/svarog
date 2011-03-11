@@ -8,6 +8,7 @@ import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import org.signalml.app.view.ViewerElementManager;
+import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
@@ -43,8 +44,13 @@ public class OpenBCISignalSourcePanel extends AbstractSignalSourcePanel {
 	}
 
         @Override
-        protected void createModel() {
-                currentModel = new Object();
+        public void fillPanelFromModel(Object model) throws SignalMLException {
+                throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public void fillModelFromPanel(Object model) throws SignalMLException {
+                throw new UnsupportedOperationException("Not supported yet.");
         }
 
 }

@@ -5,7 +5,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
@@ -28,6 +27,7 @@ import org.signalml.app.worker.amplifiers.AmplifierDefinition;
 import org.signalml.app.worker.amplifiers.AmplifierDiscoveryWorker;
 import org.signalml.app.worker.amplifiers.AmplifierInstance;
 import org.signalml.app.worker.amplifiers.DeviceSearchResult;
+import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
@@ -35,7 +35,7 @@ import org.springframework.context.support.MessageSourceAccessor;
  *
  * @author Tomasz Sawicki
  */
-public class AmplifierSelectionPanel extends JPanel implements PropertyChangeListener, ListSelectionListener {
+public class AmplifierSelectionPanel extends JPanel implements PropertyChangeListener {
 
         /**
          * List of frequencies.
@@ -78,10 +78,9 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
         private ViewerElementManager elementManager;
 
         /**
-         * Amplifier selection listener. When an amplifier is chosen it's instance
-         * is passed to this listener. If list is being refreshed, null is passed.
+         * The main panel.
          */
-        private AmplifierSelectionListener selectionListener;
+        private AmplifierSignalSourcePanel sourcePanel;
 
         /**
          * Start action.
@@ -94,11 +93,22 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
         private AbstractAction stopAction;
 
         /**
-         * Default Constructor creates interface.
+         * Current descriptor.
+         */
+        private AmplifierConnectionDescriptor currentDescriptor;
+
+        /**
+         * Default constructor.
+         *
+         * @param messageSource {@link #messageSource}
+         * @param elementManager {@link #elementManager}
+         * @param sourcePanel {@link #sourcePanel}
+         * @param startAction {@link #startAction}
+         * @param stopAction {@link #stopAction}
          */
         public AmplifierSelectionPanel(MessageSourceAccessor messageSource,
                                        ViewerElementManager elementManager,
-                                       AmplifierSelectionListener selectionListener,
+                                       AmplifierSignalSourcePanel sourcePanel,
                                        AbstractAction startAction,
                                        AbstractAction stopAction) {
 
@@ -106,58 +116,49 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
 
                 this.messageSource = messageSource;
                 this.elementManager = elementManager;
-                this.selectionListener = selectionListener;
+                this.sourcePanel = sourcePanel;
                 this.startAction = startAction;
                 this.stopAction = stopAction;
 
-                setLayout(new BorderLayout(10, 10));
+                createInterface();
 
+                currentDescriptor = new AmplifierConnectionDescriptor();
+                try {
+                        fillPanelFromModel(currentDescriptor);
+                } catch (SignalMLException ex) {
+                }
+        }
 
-                CompoundBorder amplifiersListBorder = new CompoundBorder(
-			new TitledBorder(messageSource.getMessage("amplifierSelection.amplifiersList")),
-			new EmptyBorder(3, 3, 3, 3));
+        /**
+         * Fills an {@link AmplifierConnectionDescriptor} from this panel.
+         * 
+         * @param amplifierConnectionDescriptor the descriptor
+         */
+        public final void fillModelFromPanel(AmplifierConnectionDescriptor amplifierConnectionDescriptor) {
 
-                JPanel amplifiersListPanel = new JPanel(new BorderLayout(10, 10));
-                amplifiersListPanel.setLayout(new BorderLayout(10, 10));
-                amplifiersListPanel.setBorder(amplifiersListBorder);
+                int selectedIndex = getAmplifiersList().getSelectedIndex();
 
-                amplifiersListPanel.add(new JScrollPane(getAmplifiersList()), BorderLayout.CENTER);
+                if (selectedIndex < 0) {
+                        amplifierConnectionDescriptor.setAmplifierInstance(null);
+                }
+                else {
+                        AmplifierInstance selectedInstance;
+                        selectedInstance = (AmplifierInstance) getAmplifiersList().getModel().getElementAt(selectedIndex);
+                        amplifierConnectionDescriptor.setAmplifierInstance(selectedInstance);
+                }
+        }
 
-                JPanel refreshPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-                refreshPanel.add(getRefreshButton());
-                amplifiersListPanel.add(refreshPanel, BorderLayout.PAGE_END);
+        /**
+         * Fills this panel from an {@link AmplifierConnectionDescriptor}.
+         *
+         * @param amplifierConnectionDescriptor the descriptor
+         * @throws AmplifierNotFoundException when the amplifier from the descriptor cannot be found
+         */
+        public final void fillPanelFromModel(AmplifierConnectionDescriptor amplifierConnectionDescriptor) throws SignalMLException {
 
-                add(amplifiersListPanel, BorderLayout.CENTER);
+                // TODO: refresh amp list and try to find the one from the descriptor
                 
-
-                JPanel buttonsPanel = new JPanel(new BorderLayout(10, 5));
-
-                CompoundBorder configBorder = new CompoundBorder(
-			new TitledBorder(messageSource.getMessage("amplifierSelection.config")),
-			new EmptyBorder(3, 3, 3, 3));
-
-                JPanel configPanel = new JPanel();
-                configPanel.setLayout(new BoxLayout(configPanel, BoxLayout.Y_AXIS));
-                configPanel.setBorder(configBorder);
-                configPanel.add(getConfigureDefinitionsButton());
-                configPanel.add(Box.createRigidArea(new Dimension(0,5)));
-                configPanel.add(getConfigureModulesButton());
-
-                CompoundBorder openBCIBorder = new CompoundBorder(
-			new TitledBorder(messageSource.getMessage("amplifierSelection.openBCI")),
-			new EmptyBorder(3, 3, 3, 3));
-
-                JPanel openBCIPanel = new JPanel();
-                openBCIPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
-                openBCIPanel.setBorder(openBCIBorder);
-                openBCIPanel.add(getStartButton());
-                openBCIPanel.add(Box.createRigidArea(new Dimension(5,0)));
-                openBCIPanel.add(getStopButton());
-
-                buttonsPanel.add(configPanel, BorderLayout.PAGE_START);
-                buttonsPanel.add(openBCIPanel, BorderLayout.PAGE_END);
-
-                add(buttonsPanel, BorderLayout.PAGE_END);
+                currentDescriptor = amplifierConnectionDescriptor;
         }
 
         /**
@@ -211,26 +212,61 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
                         getAmplifiersList().setEnabled(true);
                         getRefreshButton().setEnabled(true);
                 }
-        }
+        }        
 
         /**
-         * Called when list selection changes.
-         *
-         * @param e list selection event
+         * Creates the interface.
          */
-        @Override
-        public void valueChanged(ListSelectionEvent e) {
+        private void createInterface() {
+                
+                setLayout(new BorderLayout(10, 10));
 
-                int selectedIndex = getAmplifiersList().getSelectedIndex();
 
-                if (selectedIndex < 0) {
-                        selectionListener.amplifierChosen(null);
-                }
-                else {
-                        AmplifierInstance selectedInstance;
-                        selectedInstance = (AmplifierInstance) getAmplifiersList().getModel().getElementAt(selectedIndex);
-                        selectionListener.amplifierChosen(selectedInstance);
-                }
+                CompoundBorder amplifiersListBorder = new CompoundBorder(
+			new TitledBorder(messageSource.getMessage("amplifierSelection.amplifiersList")),
+			new EmptyBorder(3, 3, 3, 3));
+
+                JPanel amplifiersListPanel = new JPanel(new BorderLayout(10, 10));
+                amplifiersListPanel.setLayout(new BorderLayout(10, 10));
+                amplifiersListPanel.setBorder(amplifiersListBorder);
+
+                amplifiersListPanel.add(new JScrollPane(getAmplifiersList()), BorderLayout.CENTER);
+
+                JPanel refreshPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+                refreshPanel.add(getRefreshButton());
+                amplifiersListPanel.add(refreshPanel, BorderLayout.PAGE_END);
+
+                add(amplifiersListPanel, BorderLayout.CENTER);
+                
+
+                JPanel buttonsPanel = new JPanel(new BorderLayout(10, 5));
+
+                CompoundBorder configBorder = new CompoundBorder(
+			new TitledBorder(messageSource.getMessage("amplifierSelection.config")),
+			new EmptyBorder(3, 3, 3, 3));
+
+                JPanel configPanel = new JPanel();
+                configPanel.setLayout(new BoxLayout(configPanel, BoxLayout.Y_AXIS));
+                configPanel.setBorder(configBorder);
+                configPanel.add(getConfigureDefinitionsButton());
+                configPanel.add(Box.createRigidArea(new Dimension(0,5)));
+                configPanel.add(getConfigureModulesButton());
+
+                CompoundBorder openBCIBorder = new CompoundBorder(
+			new TitledBorder(messageSource.getMessage("amplifierSelection.openBCI")),
+			new EmptyBorder(3, 3, 3, 3));
+
+                JPanel openBCIPanel = new JPanel();
+                openBCIPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
+                openBCIPanel.setBorder(openBCIBorder);
+                openBCIPanel.add(getStartButton());
+                openBCIPanel.add(Box.createRigidArea(new Dimension(5,0)));
+                openBCIPanel.add(getStopButton());
+
+                buttonsPanel.add(configPanel, BorderLayout.PAGE_START);
+                buttonsPanel.add(openBCIPanel, BorderLayout.PAGE_END);
+
+                add(buttonsPanel, BorderLayout.PAGE_END);
         }
 
         /**
@@ -243,7 +279,17 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
                 if (amplifiersList == null) {
                         amplifiersList = new JList();
                         amplifiersList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-                        amplifiersList.addListSelectionListener(this);
+                        amplifiersList.addListSelectionListener(new ListSelectionListener() {
+
+                                @Override
+                                public void valueChanged(ListSelectionEvent e) {
+                                        fillModelFromPanel(currentDescriptor);
+                                        try {
+                                                sourcePanel.fillPanelFromModel(currentDescriptor, true);
+                                        } catch (SignalMLException ex) {
+                                        }
+                                }
+                        });
                 }
                 return amplifiersList;
         }

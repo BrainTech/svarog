@@ -3,7 +3,7 @@ package org.signalml.app.view.opensignal;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import org.signalml.app.view.ViewerElementManager;
-import org.signalml.app.worker.amplifiers.AmplifierInstance;
+import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
@@ -11,12 +11,13 @@ import org.springframework.context.support.MessageSourceAccessor;
  *
  * @author Tomasz Sawicki
  */
-public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel implements AmplifierSelectionListener {
+public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel {
 
         /**
          * Signal parameters panel.
          */
         private SignalParametersPanel signalParametersPanel = null;
+
         /**
          * Amplifier selection panel.
          */
@@ -60,15 +61,6 @@ public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel implem
         }
 
         /**
-         * Creates the model.
-         */
-        @Override
-        protected void createModel() {
-                
-                currentModel = new Object();
-        }
-
-        /**
          * Gets the signal parameters panel.
          *
          * @return the signal parameters panel
@@ -76,7 +68,7 @@ public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel implem
         private SignalParametersPanel getSignalParametersPanel() {
 
                 if (signalParametersPanel == null) {
-                        signalParametersPanel = new SignalParametersPanel(messageSource, currentModel);
+                        signalParametersPanel = new SignalParametersPanel(messageSource);
                 }
                 return signalParametersPanel;
         }
@@ -89,13 +81,53 @@ public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel implem
         private AmplifierSelectionPanel getAmplifierSelectionPanel() {
 
                 if (amplifierSelectionPanel == null) {
-                        amplifierSelectionPanel = new AmplifierSelectionPanel(messageSource, viewerElementManager, this, null, null);
+                        amplifierSelectionPanel = new AmplifierSelectionPanel(
+                                messageSource,
+                                viewerElementManager,
+                                this,
+                                null,
+                                null);
                 }
                 return amplifierSelectionPanel;
         }
 
+        /**
+         * Fills this panel from a model.
+         *
+         * @param model the model
+         * @throws SignalMLException when model is not supported or an amplifier
+         * cannot be found (check {@link SignalMLException#getMessage()}
+         */
         @Override
-        public void amplifierChosen(AmplifierInstance instance) {
+        public void fillPanelFromModel(Object model) throws SignalMLException {
 
+                fillPanelFromModel(model, false);
+        }
+
+        /**
+         * Fills a model from this panel.
+         *
+         * @param model the model
+         * @throws SignalMLException when model is not supported or input data
+         * is not valid (check {@link SignalMLException#getMessage()}
+         */
+        @Override
+        public void fillModelFromPanel(Object model) throws SignalMLException {
+
+                // TODO
+        }
+
+        /**
+         * Fills this panel from a model with an option to omit the {@link #amplifierSelectionPanel}.
+         *
+         * @param model the model
+         * @param omitAmplifierSelectionPanel wheter to omit the {@link #amplifierSelectionPanel}
+         * @throws SignalMLException when model is not supported or an amplifier
+         * cannot be found (check {@link SignalMLException#getMessage()}
+         */
+        public void fillPanelFromModel(Object model, boolean omitAmplifierSelectionPanel) throws SignalMLException {
+
+                getSignalParametersPanel().fillPanelFromModel(model);
+                if (!omitAmplifierSelectionPanel) getAmplifierSelectionPanel().fillPanelFromModel((AmplifierConnectionDescriptor) model);
         }
 }
