@@ -79,4 +79,5 @@ public class SignalSourceSelectionPanel extends TitledPanelWithABorder implement
 		SignalSource currentSignalSource = (SignalSource) getSelectionComboBox().getSelectedItem();
 		propertyChangeSupport.firePropertyChange(SIGNAL_SOURCE_SELECTION_CHANGED_PROPERTY, null, currentSignalSource);
 	}
+
 }

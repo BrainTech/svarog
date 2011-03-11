@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.app.view.montage.filters;
+package org.signalml.app.view.element;
 
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;

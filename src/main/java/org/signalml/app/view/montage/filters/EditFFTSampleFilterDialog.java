@@ -4,6 +4,8 @@
 
 package org.signalml.app.view.montage.filters;
 
+import org.signalml.app.view.element.FloatSpinner;
+import org.signalml.app.view.element.DoubleSpinner;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;

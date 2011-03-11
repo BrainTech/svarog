@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -14,9 +15,15 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.plaf.basic.BasicSliderUI.ChangeHandler;
+import org.signalml.app.action.selector.ActionFocusManager;
+import org.signalml.app.view.element.IntegerSpinner;
 import org.signalml.app.view.element.ResolvableComboBox;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -27,6 +34,8 @@ import org.springframework.context.support.MessageSourceAccessor;
  * @author Tomasz Sawicki
  */
 public class SignalParametersPanel extends JPanel {
+
+	public static String NUMBER_OF_CHANNELS_CHANGED_PROPERTY = "numberOfChannelsChangedProperty";
 
 	/**
 	 * the {@link MessageSourceAccessor source} of messages (labels).
@@ -46,7 +55,7 @@ public class SignalParametersPanel extends JPanel {
 	/**
 	 * the text field with the number of channels.
 	 */
-	private JTextField channelCountField;
+	private IntegerSpinner channelCountSpinner;
 
 	/**
 	 * A text field allwing to change byte order.
@@ -176,7 +185,7 @@ public class SignalParametersPanel extends JPanel {
                 fillConstraints(constraints, 0, 1, 0, 0, 1);
                 fieldsPanel.add(channelCountLabel, constraints);
                 fillConstraints(constraints, 1, 1, 1, 0, 1);
-                fieldsPanel.add(createWrapperPanel(getChannelCountField(), 8), constraints);
+                fieldsPanel.add(createWrapperPanel(getChannelCountSpinner(), 8), constraints);
 
                 fillConstraints(constraints, 0, 2, 0, 0, 1);
                 fieldsPanel.add(byteOrderLabel, constraints);
@@ -204,7 +213,7 @@ public class SignalParametersPanel extends JPanel {
                 add(fieldsPanel, BorderLayout.NORTH);
                 add(buttonPanel, BorderLayout.SOUTH);
 
-                setEnabledAll(false);
+                //setEnabledAll(false);
         }
 
         /**
@@ -266,11 +275,21 @@ public class SignalParametersPanel extends JPanel {
          *
          * @return the channel count field
 	 */
-	public JTextField getChannelCountField() {
-		if (channelCountField == null) {
-			channelCountField = new JTextField();
+	public IntegerSpinner getChannelCountSpinner() {
+		if (channelCountSpinner == null) {
+			channelCountSpinner = new IntegerSpinner(new SpinnerNumberModel(4, 1, 50, 1));
+			channelCountSpinner.addChangeListener(new ChangeListener() {
+
+				@Override
+				public void stateChanged(ChangeEvent e) {
+					System.out.println("spinner changed!");
+					int numberOfChannels = getChannelCountSpinner().getValue();
+					firePropertyChange(NUMBER_OF_CHANNELS_CHANGED_PROPERTY, 0, numberOfChannels);
+				}
+			});
+
 		}
-		return channelCountField;
+		return channelCountSpinner;
 	}
 
 	/**

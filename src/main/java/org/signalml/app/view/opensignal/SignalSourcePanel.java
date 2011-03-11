@@ -66,9 +66,16 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		SignalSource newSignalSource = (SignalSource) evt.getNewValue();
-		showPanelForSignalSource(newSignalSource);
-		System.out.println("changed;");
+		String propertyName = evt.getPropertyName();
+
+		if (propertyName.equals(SignalSourceSelectionPanel.SIGNAL_SOURCE_SELECTION_CHANGED_PROPERTY)) {
+			SignalSource newSignalSource = (SignalSource) evt.getNewValue();
+			showPanelForSignalSource(newSignalSource);
+			System.out.println("changed signal source type");
+		}
+		else if (propertyName.equals(SignalParametersPanel.NUMBER_OF_CHANNELS_CHANGED_PROPERTY)) {
+			firePropertyChange(propertyName, 0, evt.getNewValue());
+		}
 	}
 
 	protected void showPanelForSignalSource(SignalSource signalSource) {

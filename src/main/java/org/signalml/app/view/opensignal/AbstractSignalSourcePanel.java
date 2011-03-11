@@ -19,7 +19,7 @@ import org.springframework.context.support.MessageSourceAccessor;
  *
  * @author Piotr Szachewicz
  */
-abstract public class AbstractSignalSourcePanel extends JPanel implements PropertyChangeListener {
+abstract public class AbstractSignalSourcePanel extends JPanel implements PropertyChangeListener {	
 
 	protected ViewerElementManager viewerElementManager;
 
@@ -58,6 +58,8 @@ abstract public class AbstractSignalSourcePanel extends JPanel implements Proper
 
         abstract public void fillModelFromPanel(Object model) throws SignalMLException;
 
+	abstract public int getNumberOfChannels();
+
 	protected SignalSourceSelectionPanel getSignalSourceSelectionPanel() {
 		if (signalSourceSelectionPanel == null) {
 			signalSourceSelectionPanel = new SignalSourceSelectionPanel(messageSource);
@@ -79,4 +81,9 @@ abstract public class AbstractSignalSourcePanel extends JPanel implements Proper
 	public void propertyChange(PropertyChangeEvent evt) {
 		propertyChangeSupport.firePropertyChange(evt);
 	}
+
+	protected void fireNumberOfChannelsChangedProperty(int newNumberOfChannels) {
+		propertyChangeSupport.firePropertyChange(SignalParametersPanel.NUMBER_OF_CHANNELS_CHANGED_PROPERTY, null, newNumberOfChannels);
+	}
+
 }

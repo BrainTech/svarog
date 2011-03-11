@@ -54,7 +54,7 @@ public abstract class AbstractSignal extends AbstractDocument implements SignalD
 	 * the currently active (selected) {@link TagDocument tag document}
 	 */
 	protected TagDocument activeTag;
-	
+
 	/**
 	 * list of all {@link TagDocument tag documents} for this signal 
 	 */

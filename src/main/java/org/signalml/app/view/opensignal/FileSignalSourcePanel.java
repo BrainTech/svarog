@@ -52,4 +52,9 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
         public void fillModelFromPanel(Object model) throws SignalMLException {
                 throw new UnsupportedOperationException("Not supported yet.");
         }
+
+	@Override
+	public int getNumberOfChannels() {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 }

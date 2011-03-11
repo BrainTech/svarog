@@ -1164,7 +1164,6 @@ public class DocumentFlowIntegrator {
 	 */
 	private void onBookDocumentAdded(BookDocument document, boolean makeActive) {
 
-
 	}
 
 	/**

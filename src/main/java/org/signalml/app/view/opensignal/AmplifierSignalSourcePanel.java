@@ -69,6 +69,7 @@ public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel {
 
                 if (signalParametersPanel == null) {
                         signalParametersPanel = new SignalParametersPanel(messageSource);
+			signalParametersPanel.addPropertyChangeListener(this);
                 }
                 return signalParametersPanel;
         }
@@ -130,4 +131,9 @@ public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel {
                 getSignalParametersPanel().fillPanelFromModel(model);
                 if (!omitAmplifierSelectionPanel) getAmplifierSelectionPanel().fillPanelFromModel((AmplifierConnectionDescriptor) model);
         }
+
+	@Override
+	public int getNumberOfChannels() {
+		return 3;
+	}
 }

@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.montage.filters;
 
+import org.signalml.app.view.element.DoubleSpinner;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;

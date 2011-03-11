@@ -17,7 +17,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import org.jfree.chart.ChartPanel;
-import org.signalml.app.view.montage.filters.DoubleSpinner;
+import org.signalml.app.view.element.DoubleSpinner;
 
 /**
  * This class represents a panel which contains one or few filter response charts
