@@ -26,7 +26,6 @@ abstract public class AbstractSignalSourcePanel extends JPanel implements Proper
 	private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
         private SignalSourceSelectionPanel signalSourceSelectionPanel;
 	protected MessageSourceAccessor messageSource;
-        protected Object currentModel;
 
 	public AbstractSignalSourcePanel(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager) {
 		this.messageSource = messageSource;
@@ -38,7 +37,7 @@ abstract public class AbstractSignalSourcePanel extends JPanel implements Proper
 		return viewerElementManager;
 	}
 
-	private void createInterface() {                
+	protected final void createInterface() {
 		this.setLayout(new GridLayout(1, 2, 5, 0));
                 this.setBorder(new EmptyBorder(5, 5, 5, 5));
 

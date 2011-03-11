@@ -67,8 +67,10 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
         @Override
         public boolean supportsModelClass(Class<?> clazz) {
 
-                //return SignalParametersDescriptor.class.isAssignableFrom(clazz);
-                return true;
+                boolean isAmpConnection = AmplifierConnectionDescriptor.class.isAssignableFrom(clazz);
+                // TODO: add other classes
+                
+                return isAmpConnection;
         }
 
         /**
@@ -78,7 +80,7 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
          * @param model the descriptor
          */
         @Override
-        public void fillDialogFromModel(Object model) {
+        public void fillDialogFromModel(Object model) throws SignalMLException {
 
                 getEditDefinitionPanel().fillPanelFromModel(model);
         }
@@ -213,8 +215,9 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
                  * Fills this panel from a model
                  *
                  * @param model the model
+                 * @throws SignalMLException when model is not uspported
                  */
-                public void fillPanelFromModel(Object model) {
+                public void fillPanelFromModel(Object model) throws SignalMLException {
                                 
                 }
 
@@ -223,7 +226,7 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
                  * Sets channel numbers, gain and offset.
                  *
                  * @param model the model
-                 * @throws SignalMLException when input data is invalid
+                 * @throws SignalMLException when input data is invalid or model is not supported
                  */
                 public void fillModelFromPanel(Object model) throws SignalMLException {
 

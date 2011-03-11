@@ -168,8 +168,8 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
                 getFileSelectPanel().setFileName(definition.getDriverPath());
                 getAvailableFrequenciesPanel().setFrequencies(definition.getAvailableFrequencies());
                 getChannelDefinitionPanel().setData(definition.getChannelNumbers(),
-                                                    definition.getChannelGain(),
-                                                    definition.getChannelOffset());
+                                                    definition.getCalibrationGain(),
+                                                    definition.getCalibrationOffset());
         }
 
         @Override
@@ -182,8 +182,8 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
                 definition.setDriverPath(getFileSelectPanel().getFileName());
                 definition.setAvailableFrequencies(getAvailableFrequenciesPanel().getFrequencies());
                 definition.setChannelNumbers(getChannelDefinitionPanel().getChannelNumbers());
-                definition.setChannelGain(getChannelDefinitionPanel().getGainValues());
-                definition.setChannelOffset(getChannelDefinitionPanel().getOffsetValues());
+                definition.setCalibrationGain(getChannelDefinitionPanel().getGainValues());
+                definition.setCalibrationOffset(getChannelDefinitionPanel().getOffsetValues());
         }
 
         @Override

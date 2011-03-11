@@ -160,16 +160,16 @@ public class AvailableFrequenciesPanel extends JPanel implements ActionListener 
 
                 if (addButton.equals(e.getSource())) {
 
-                        Integer result;
+                        Float result;
 
                         try {
-                                result = Integer.parseInt(textField.getText());
+                                result = Float.parseFloat(textField.getText());
                         } catch (NumberFormatException ex) {
                                 JOptionPane.showMessageDialog(this, messageSource.getMessage("error.amplifierDefinitionConfig.integer"));
                                 return;
                         }
 
-                        List<Integer> frequencies = getFrequencies();
+                        List<Float> frequencies = getFrequencies();
                         frequencies.add(result);
                         frequenciesList.setListData(frequencies.toArray());
 
@@ -182,7 +182,7 @@ public class AvailableFrequenciesPanel extends JPanel implements ActionListener 
                         if (selectedIndex == -1 )
                                 return;
 
-                        List<Integer> frequencies = getFrequencies();
+                        List<Float> frequencies = getFrequencies();
                         frequencies.remove(selectedIndex);
                         frequenciesList.setListData(frequencies.toArray());
 
@@ -195,13 +195,13 @@ public class AvailableFrequenciesPanel extends JPanel implements ActionListener 
          *
          * @return list of frequencies
          */
-        public List<Integer> getFrequencies() {
+        public List<Float> getFrequencies() {
 
-                ArrayList<Integer> frequencies = new ArrayList<Integer>();
+                ArrayList<Float> frequencies = new ArrayList<Float>();
 
                 for (int i = 0; i < frequenciesList.getModel().getSize(); i++) {
 
-                        Integer frequency = (Integer) frequenciesList.getModel().getElementAt(i);
+                        Float frequency = (Float) frequenciesList.getModel().getElementAt(i);
                         frequencies.add(frequency);
                 }
 
@@ -213,7 +213,7 @@ public class AvailableFrequenciesPanel extends JPanel implements ActionListener 
          *
          * @param frequencies list of frequencies
          */
-        public void setFrequencies(List<Integer> frequencies) {
+        public void setFrequencies(List<Float> frequencies) {
 
                 frequenciesList.setListData(frequencies.toArray());
         }

@@ -704,6 +704,8 @@
         <entry key="opensignal.parameters.editGainAndOffsetDialog.edit">Edit</entry>
         <entry key="opensignal.parameters.editGainAndOffsetDialog.all">All channels</entry>        
 
+        <entry key="error.modelNotSupported">Model not supported</entry>
+
 <!-- ============================ -->
 
         <entry key="amplifierSelection.amplifiersList">Amplifiers List</entry>

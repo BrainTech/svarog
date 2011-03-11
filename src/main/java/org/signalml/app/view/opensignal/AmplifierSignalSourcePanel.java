@@ -1,8 +1,11 @@
 package org.signalml.app.view.opensignal;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
 import javax.swing.JPanel;
 import org.signalml.app.view.ViewerElementManager;
+import org.signalml.app.view.element.MonitorRecordingPanel;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 
@@ -22,6 +25,21 @@ public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel {
          * Amplifier selection panel.
          */
         private AmplifierSelectionPanel amplifierSelectionPanel = null;
+
+        /**
+         * Monitor recording panel.
+         */
+        private MonitorRecordingPanel monitorRecordingPanel = null;
+
+        /**
+         * The start action.
+         */
+        private AbstractAction startAction = null;
+        
+        /**
+         * The stop action.
+         */
+        private AbstractAction stopAction = null;
 
         /**
          * Default constructor.
@@ -56,7 +74,8 @@ public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel {
         protected JPanel createRightColumnPanel() {
 
                 JPanel rightColumnPanel = new JPanel(new BorderLayout());
-                rightColumnPanel.add(getSignalParametersPanel(), BorderLayout.NORTH);
+                rightColumnPanel.add(getSignalParametersPanel(), BorderLayout.CENTER);
+                rightColumnPanel.add(getMonitorRecordingPanel(), BorderLayout.PAGE_END);
                 return rightColumnPanel;
         }
 
@@ -68,8 +87,8 @@ public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel {
         private SignalParametersPanel getSignalParametersPanel() {
 
                 if (signalParametersPanel == null) {
-                        signalParametersPanel = new SignalParametersPanel(messageSource);
-			signalParametersPanel.addPropertyChangeListener(this);
+                        signalParametersPanel = new SignalParametersPanel(messageSource, viewerElementManager.getApplicationConfig());
+                        signalParametersPanel.addPropertyChangeListener(this);                        
                 }
                 return signalParametersPanel;
         }
@@ -85,11 +104,52 @@ public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel {
                         amplifierSelectionPanel = new AmplifierSelectionPanel(
                                 messageSource,
                                 viewerElementManager,
-                                this,
-                                null,
-                                null);
+                                getSignalParametersPanel(),
+                                getMonitorRecordingPanel(),
+                                getStartAction(),
+                                getStopAction());
                 }
                 return amplifierSelectionPanel;
+        }
+
+        /**
+         * Gets the monitor recording panel.
+         *
+         * @return the monitor recording panel
+         */
+        private MonitorRecordingPanel getMonitorRecordingPanel() {
+                
+                if (monitorRecordingPanel == null) {
+                        monitorRecordingPanel = new MonitorRecordingPanel(messageSource);
+                        monitorRecordingPanel.setEnabled(false);
+                }
+                return monitorRecordingPanel;
+        }
+
+        /**
+         * Gets the start action.
+         *
+         * @return the start action
+         */
+        private AbstractAction getStartAction() {
+                
+                if (startAction == null) {
+                        startAction = new StartAction();
+                }
+                return startAction;
+        }
+
+        /**
+         * Gets the stop action.
+         *
+         * @return the stop action
+         */
+        private AbstractAction getStopAction() {
+
+                if (stopAction == null) {
+                        stopAction = new StopAction();
+                }
+                return stopAction;
         }
 
         /**
@@ -102,7 +162,9 @@ public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel {
         @Override
         public void fillPanelFromModel(Object model) throws SignalMLException {
 
-                fillPanelFromModel(model, false);
+                getSignalParametersPanel().fillPanelFromModel(model);
+                getAmplifierSelectionPanel().fillPanelFromModel((AmplifierConnectionDescriptor) model);
+                getMonitorRecordingPanel().fillModelFromPanel(((AmplifierConnectionDescriptor) model).getOpenMonitorDescriptor());
         }
 
         /**
@@ -115,21 +177,54 @@ public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel {
         @Override
         public void fillModelFromPanel(Object model) throws SignalMLException {
 
-                // TODO
+                getSignalParametersPanel().fillModelFromPanel(model);
+                getAmplifierSelectionPanel().fillModelFromPanel((AmplifierConnectionDescriptor) model);
+                getMonitorRecordingPanel().fillModelFromPanel(((AmplifierConnectionDescriptor) model).getOpenMonitorDescriptor());
         }
 
         /**
-         * Fills this panel from a model with an option to omit the {@link #amplifierSelectionPanel}.
+         * Responsible for starting the OpenBCI.
          *
-         * @param model the model
-         * @param omitAmplifierSelectionPanel wheter to omit the {@link #amplifierSelectionPanel}
-         * @throws SignalMLException when model is not supported or an amplifier
-         * cannot be found (check {@link SignalMLException#getMessage()}
+         * @author Tomasz Sawicki
          */
-        public void fillPanelFromModel(Object model, boolean omitAmplifierSelectionPanel) throws SignalMLException {
+        private class StartAction extends AbstractAction {
 
-                getSignalParametersPanel().fillPanelFromModel(model);
-                if (!omitAmplifierSelectionPanel) getAmplifierSelectionPanel().fillPanelFromModel((AmplifierConnectionDescriptor) model);
+                /**
+                 * When the action is performed.
+                 *
+                 * @param e action event
+                 */
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                }
+
+        }
+
+        /**
+         * Responsible for stoping the OpenBCI.
+         *
+         * @author Tomasz Sawicki
+         */
+        private class StopAction extends AbstractAction {
+
+                /**
+                 * Default constructor.
+                 */
+                public StopAction() {
+                        
+                        setEnabled(false);
+                }
+
+                /**
+                 * When the action is performed.
+                 *
+                 * @param e action event
+                 */
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                }
         }
 
 	@Override

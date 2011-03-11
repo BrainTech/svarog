@@ -9,10 +9,12 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.AbstractAction;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
@@ -24,7 +26,9 @@ import javax.swing.event.ChangeListener;
 import javax.swing.plaf.basic.BasicSliderUI.ChangeHandler;
 import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.view.element.IntegerSpinner;
+import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.view.element.ResolvableComboBox;
+import org.signalml.codec.SignalMLCodecException;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 
@@ -84,19 +88,25 @@ public class SignalParametersPanel extends JPanel {
         private JButton editGainAndOffsetButton;
 
         /**
-         * Open dialog action.
+         * Application configuration.
          */
-        private OpenEditGainAndOffsetDialogAction action;
+        private ApplicationConfiguration applicationConfiguration;
+
+        /**
+         * Edit gain and offset dialog.
+         */
+        private EditGainAndOffsetDialog editGainAndOffsetDialog;
 
         /**
          * Default constructor. Creates the interface.
          * 
          * @param messageSource {@link #messageSource}
          */
-        public SignalParametersPanel(MessageSourceAccessor messageSource) {
+        public SignalParametersPanel(MessageSourceAccessor messageSource, ApplicationConfiguration applicationConfiguration) {
 
                 super();
-                this.messageSource = messageSource;                
+                this.messageSource = messageSource;
+                this.applicationConfiguration = applicationConfiguration;
                 createInterface();
         }
 
@@ -108,7 +118,12 @@ public class SignalParametersPanel extends JPanel {
          */
         public final void fillPanelFromModel(Object model) throws SignalMLException {
 
-                // TODO
+                if (model instanceof AmplifierConnectionDescriptor) {
+                        fillPanelForAmplifierConnection((AmplifierConnectionDescriptor) model);
+                } else {
+                        setEnabledAll(false);
+                        throw new SignalMLCodecException(messageSource.getMessage("error.modelNotSupported"));
+                }
 
                 currentModel = model;
         }
@@ -117,21 +132,108 @@ public class SignalParametersPanel extends JPanel {
          * Fills a model from this panel.
          *
          * @param model the model
-         * @throws SignalMLException when input data is invalid
+         * @throws SignalMLException when input data is invalid or model is
+         * not supported.
          */
         public final void fillModelFromPanel(Object model) throws SignalMLException {
 
-                // TODO
+                if (model instanceof AmplifierConnectionDescriptor) {
+                        fillModelForAmplifierConnection((AmplifierConnectionDescriptor) model);
+                } else {
+                        setEnabledAll(false);
+                        throw new SignalMLCodecException(messageSource.getMessage("error.modelNotSupported"));
+                }
+        }
+
+        /**
+         * Fills this panel for amplifier connection
+         *
+         * @param descriptor the descriptor
+         */
+        private void fillPanelForAmplifierConnection(AmplifierConnectionDescriptor descriptor) {
+                
+                if (descriptor.getAmplifierInstance() == null) {
+                        setEnabledAll(false);
+                } else {
+                        setEnabledAll(true);
+
+                        getSamplingFrequencyComboBox().setEditable(false);
+                        getSamplingFrequencyComboBox().setModel(new DefaultComboBoxModel(
+                                descriptor.getAmplifierInstance().getDefinition().getAvailableFrequencies().toArray()));
+
+                        getChannelCountSpinner().setEnabled(false);
+                        getChannelCountSpinner().setValue(String.valueOf(
+                                descriptor.getOpenMonitorDescriptor().getChannelCount()));
+
+                        getByteOrderComboBox().setModel(new DefaultComboBoxModel());
+                        getByteOrderComboBox().setEnabled(false);
+
+                        getSampleTypeComboBox().setModel(new DefaultComboBoxModel());
+                        getSampleTypeComboBox().setEnabled(false);
+
+                        double pageSize = applicationConfiguration.getPageSize();
+                        try {
+                                pageSize = descriptor.getOpenMonitorDescriptor().getPageSize();
+                        } catch (Exception ex) {
+                        }
+                        getPageSizeField().setText(String.valueOf(pageSize));
+
+                        getBlocksPerPageField().setText("");
+                        getBlocksPerPageField().setEditable(false);
+                }
+        }
+
+        /**
+         * Fills the model for amplifier connection
+         *
+         * @param descriptor the descriptor
+         * @throws SignalMLException when input data is invalid
+         */
+        private void fillModelForAmplifierConnection(AmplifierConnectionDescriptor descriptor) throws SignalMLException {
+
+                Float samplingFrequency;
+                Double pageSize;
+
+                try {
+                        samplingFrequency = Float.parseFloat(getSamplingFrequencyComboBox().getModel().getSelectedItem().toString());
+                } catch (NumberFormatException ex) {
+                        throw new SignalMLException(messageSource.getMessage("error.invalidData"));
+                }
+
+                try {
+                        pageSize = Double.parseDouble(getPageSizeField().getText());
+                } catch (NumberFormatException ex) {
+                        throw new SignalMLException(messageSource.getMessage("error.invalidData"));
+                }
+
+                descriptor.getOpenMonitorDescriptor().setSamplingFrequency(samplingFrequency);
+                descriptor.getOpenMonitorDescriptor().setPageSize(pageSize);
+        }
+
+        /**
+         * Clears all fields
+         */
+        public void clearAllFields() {
+                
+                getSamplingFrequencyComboBox().getModel().setSelectedItem("");
+                getChannelCountSpinner().setValue("");
+                getByteOrderComboBox().getModel().setSelectedItem("");
+                getSampleTypeComboBox().getModel().setSelectedItem("");
+                getPageSizeField().setText("");
+                getBlocksPerPageField().setText("");
         }
 
         /**
          * Sets enabled to this panel and all it's children.
+         * Clears all fields if enabled == false.
          *
          * @param enabled true or false
          */
         public void setEnabledAll(boolean enabled) {
                 
                 setEnabledToChildren(this, enabled);
+                if (!enabled)
+                        clearAllFields();
         }
 
         /**
@@ -263,7 +365,7 @@ public class SignalParametersPanel extends JPanel {
          *
          * @return the sampling frequency combo box
 	 */
-	public JComboBox getSamplingFrequencyComboBox() {
+	private JComboBox getSamplingFrequencyComboBox() {
 		if (samplingFrequencyComboBox == null) {
 			samplingFrequencyComboBox = new JComboBox();
 		}
@@ -297,7 +399,7 @@ public class SignalParametersPanel extends JPanel {
          *
          * @return the byte order combo box
 	 */
-	public ResolvableComboBox getByteOrderComboBox() {
+	private ResolvableComboBox getByteOrderComboBox() {
 
                 if (byteOrderComboBox == null) {
 			byteOrderComboBox = new ResolvableComboBox(messageSource);			
@@ -310,7 +412,7 @@ public class SignalParametersPanel extends JPanel {
          *
          * @return the sample type combo box
 	 */
-        public ResolvableComboBox getSampleTypeComboBox() {
+        private ResolvableComboBox getSampleTypeComboBox() {
 
                 if (sampleTypeComboBox == null) {
 			sampleTypeComboBox = new ResolvableComboBox(messageSource);			
@@ -323,7 +425,7 @@ public class SignalParametersPanel extends JPanel {
          *
          * @return the page size field
 	 */
-	public JTextField getPageSizeField() {
+	private JTextField getPageSizeField() {
 		if (pageSizeField == null) {
 			pageSizeField = new JTextField();
 		}
@@ -335,7 +437,7 @@ public class SignalParametersPanel extends JPanel {
          *
          * @return the blocks per page field
 	 */
-	public JTextField getBlocksPerPageField() {
+	private JTextField getBlocksPerPageField() {
 		if (blocksPerPageField == null) {
 			blocksPerPageField = new JTextField();
 		}
@@ -347,9 +449,20 @@ public class SignalParametersPanel extends JPanel {
          *
          * @return the edit gain and offset button
          */
-        public JButton getEditGainAndOffsetButton() {
+        private JButton getEditGainAndOffsetButton() {
                 if (editGainAndOffsetButton == null) {
-                        editGainAndOffsetButton = new JButton(getOpenEditGainAndOffsetDialogAction());
+                        editGainAndOffsetButton = new JButton(new AbstractAction() {
+
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                        try {
+                                                fillModelFromPanel(currentModel);
+                                                getEditGainAndOffsetDialog().showDialog(currentModel);
+                                        } catch (SignalMLException ex) {
+                                                JOptionPane.showMessageDialog(null, ex.getMessage(), messageSource.getMessage("error"), JOptionPane.ERROR_MESSAGE);
+                                        }                                        
+                                }
+                        });
                         editGainAndOffsetButton.setText(messageSource.getMessage("opensignal.parameters.editGainAndOffset"));
                 }
                 return editGainAndOffsetButton;
@@ -360,49 +473,11 @@ public class SignalParametersPanel extends JPanel {
          *
          * @return the action
          */
-        private OpenEditGainAndOffsetDialogAction getOpenEditGainAndOffsetDialogAction() {
+        private EditGainAndOffsetDialog getEditGainAndOffsetDialog() {
                 
-                if (action == null) {
-                        action = new OpenEditGainAndOffsetDialogAction(messageSource, currentModel);
+                if (editGainAndOffsetDialog == null) {
+                        editGainAndOffsetDialog = new EditGainAndOffsetDialog(messageSource, null, true);
                 }
-                return action;
-        }
-
-        /**
-         * Open EditGainAndOffsetDialog action.
-         */
-        private class OpenEditGainAndOffsetDialogAction extends AbstractAction {
-
-                /**
-                 * Edit gain and offset dialog.
-                 */
-                private EditGainAndOffsetDialog dialog;
-
-                /**
-                 * Signal parameters descriptor.
-                 */
-                private Object currentModel;
-
-                /**
-                 * Default construcot.
-                 *
-                 * @param messageSource the message source
-                 */
-                public OpenEditGainAndOffsetDialogAction(MessageSourceAccessor messageSource, Object model) {
-
-                        this.dialog = new EditGainAndOffsetDialog(messageSource, null, true);
-                        this.currentModel = model;
-                }
-
-                /**
-                 * Shows the dialog.
-                 *
-                 * @param e action event
-                 */
-                @Override
-                public void actionPerformed(ActionEvent e) {
-
-                        dialog.showDialog(currentModel);
-                }
+                return editGainAndOffsetDialog;
         }
 }
