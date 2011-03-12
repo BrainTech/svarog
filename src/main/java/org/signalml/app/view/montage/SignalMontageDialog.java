@@ -413,5 +413,4 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	public Montage getCurrentMontage() {
 		return currentMontage;
 	}
-
 }

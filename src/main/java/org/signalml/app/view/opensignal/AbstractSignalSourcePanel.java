@@ -78,4 +78,7 @@ abstract public class AbstractSignalSourcePanel extends JPanel implements Proper
 		propertyChangeSupport.firePropertyChange(SignalParametersPanel.NUMBER_OF_CHANNELS_PROPERTY, null, newNumberOfChannels);
 	}
 
+        abstract public void fillPanelFromModel(Object model) throws SignalMLException;
+
+        abstract public void fillModelFromPanel(Object model) throws SignalMLException;
 }
