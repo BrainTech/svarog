@@ -29,7 +29,6 @@ import org.signalml.app.model.OpenFileSignalDescriptor;
 import org.signalml.app.model.OpenTagDescriptor;
 import org.signalml.app.model.SignalMLCodecListModel;
 import org.signalml.app.model.SignalParameterDescriptor;
-import org.signalml.app.model.OpenFileSignalDescriptor.OpenSignalMethod;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.element.EmbeddedFileChooser;
@@ -41,6 +40,7 @@ import org.signalml.app.view.element.OpenTagOptionsPanel;
 import org.signalml.app.view.element.PagingParametersPanel;
 import org.signalml.app.view.element.RawSignalOptionsPanel;
 import org.signalml.app.view.element.SignalMLOptionsPanel;
+import org.signalml.app.view.opensignal.FileOpenSignalMethod;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.codec.SignalMLCodecSelector;
@@ -550,7 +550,7 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 			int method = signalOptionsPanel.getMethodComboBox().getSelectedIndex();
 			if (method == 0) {
 
-				osd.setMethod(OpenSignalMethod.USE_SIGNALML);
+				osd.setMethod(FileOpenSignalMethod.SIGNALML);
 
 				SignalParameterDescriptor spd = osd.getParameters();
 
@@ -559,7 +559,7 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 
 			} else if (method == 1) {
 
-				osd.setMethod(OpenSignalMethod.RAW);
+				osd.setMethod(FileOpenSignalMethod.RAW);
 
 				RawSignalDescriptor descriptor = currentRawSignalDescriptor;
 				if (descriptor == null) {

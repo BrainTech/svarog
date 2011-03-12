@@ -5,31 +5,15 @@
 package org.signalml.app.view.opensignal;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyEvent;
-import java.io.File;
+import java.awt.CardLayout;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.KeyStroke;
-import javax.swing.filechooser.FileFilter;
 
-import org.apache.log4j.Logger;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.view.ViewerElementManager;
-import org.signalml.app.view.dialog.OpenDocumentDialog;
-import org.signalml.app.view.element.EmbeddedFileChooser;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.signal.Document;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.signalml.app.view.element.FileChooserPanel;
 import org.signalml.app.view.element.SignalMLOptionsPanel;
@@ -42,7 +26,9 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 
 	private FileChooserPanel fileChooserPanel;
 	private FileOpenMethodPanel fileOpenMethodPanel;
-	private SignalParametersPanelForRawSignalFile signalParametersPanel;
+
+	private JPanel cardPanelForSignalParameters;
+	private SignalParametersPanelForRawSignalFile rawSignalParametersPanel;
 	private SignalMLOptionsPanel signalMLOptionsPanel;
 
 	public FileSignalSourcePanel(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager) {
@@ -62,7 +48,8 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 	protected JPanel createRightColumnPanel() {
 		JPanel rightColumnPanel = new JPanel(new BorderLayout());
 		rightColumnPanel.add(getFileOpenMethodPanel(), BorderLayout.NORTH);
-		rightColumnPanel.add(getSignalParametersPanel(), BorderLayout.CENTER);
+		//rightColumnPanel.add(getRawSignalParametersPanel(), BorderLayout.CENTER);
+		rightColumnPanel.add(getCardPanelForSignalParameters(), BorderLayout.CENTER);
 		return rightColumnPanel;
 	}
 
@@ -84,16 +71,27 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 	}
 
 	protected FileOpenMethodPanel getFileOpenMethodPanel() {
-		if (fileOpenMethodPanel == null)
+		if (fileOpenMethodPanel == null) {
 			fileOpenMethodPanel = new FileOpenMethodPanel(messageSource);
+			fileOpenMethodPanel.addPropertyChangeListener(this);
+		}
 		return fileOpenMethodPanel;
 	}
 
-	public SignalParametersPanelForRawSignalFile getSignalParametersPanel() {
-		if (signalParametersPanel == null) {
-			signalParametersPanel = new SignalParametersPanelForRawSignalFile(messageSource, viewerElementManager.getApplicationConfig());
+	public JPanel getCardPanelForSignalParameters() {
+		if (cardPanelForSignalParameters == null) {
+			cardPanelForSignalParameters = new JPanel(new CardLayout());
+			cardPanelForSignalParameters.add(getRawSignalParametersPanel(), FileOpenSignalMethod.RAW.toString());
+			cardPanelForSignalParameters.add(getSignalMLOptionsPanel(), FileOpenSignalMethod.SIGNALML.toString());
 		}
-		return signalParametersPanel;
+		return cardPanelForSignalParameters;
+	}
+
+	public SignalParametersPanelForRawSignalFile getRawSignalParametersPanel() {
+		if (rawSignalParametersPanel == null) {
+			rawSignalParametersPanel = new SignalParametersPanelForRawSignalFile(messageSource, viewerElementManager.getApplicationConfig());
+		}
+		return rawSignalParametersPanel;
 	}
 
 	public SignalMLOptionsPanel getSignalMLOptionsPanel() {
@@ -101,6 +99,22 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 			signalMLOptionsPanel = new SignalMLOptionsPanel(messageSource);
 		}
 		return signalMLOptionsPanel;
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		String propertyName = evt.getPropertyName();
+
+		if (propertyName.equals(FileOpenMethodPanel.FILE_OPEN_METHOD_PROPERTY_CHANGED)) {
+			FileOpenSignalMethod method = (FileOpenSignalMethod) evt.getNewValue();
+			System.out.println("file open method changed to " + method);
+
+			CardLayout cl = (CardLayout)(cardPanelForSignalParameters.getLayout());
+			cl.show(cardPanelForSignalParameters, method.toString());
+		}
+		else
+			super.propertyChange(evt);
+
 	}
 
 }

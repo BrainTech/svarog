@@ -5,11 +5,14 @@
 package org.signalml.app.view.opensignal;
 
 import java.awt.BorderLayout;
-import javax.swing.JComboBox;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import org.signalml.app.view.element.ResolvableComboBox;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
@@ -18,13 +21,15 @@ import org.springframework.context.support.MessageSourceAccessor;
  */
 public class FileOpenMethodPanel extends JPanel {
 
+	public static String FILE_OPEN_METHOD_PROPERTY_CHANGED = "fileOpenMethodPropertyChanged";
+
 	protected MessageSourceAccessor messageSource;
 
 	/**
 	 * the combo-box which allows to select the method using which the signal
 	 * document will be opened (raw or signalML)
 	 */
-	private JComboBox methodComboBox;
+	private ResolvableComboBox methodComboBox;
 
 	public FileOpenMethodPanel(MessageSourceAccessor messageSource) {
 		this.messageSource = messageSource;
@@ -40,7 +45,6 @@ public class FileOpenMethodPanel extends JPanel {
 			add(getMethodComboBox(),BorderLayout.CENTER);
 	}
 
-
 	/**
 	 * Returns the combo-box allows to select the method which will be used
 	 * to open a document with the signal (SignalML or RAW).
@@ -51,11 +55,29 @@ public class FileOpenMethodPanel extends JPanel {
 	 * @return the combo-box allows to select the method which will be used
 	 * to open a document with the signal
 	 */
-	public JComboBox getMethodComboBox() {
+	public ResolvableComboBox getMethodComboBox() {
 		if (methodComboBox == null) {
-			methodComboBox = new JComboBox();
-			methodComboBox.addItem(messageSource.getMessage("openSignal.options.methodSignalML"));
-			methodComboBox.addItem(messageSource.getMessage("openSignal.options.methodRaw"));
+			methodComboBox = new ResolvableComboBox(messageSource);
+
+			FileOpenSignalMethod[] allAvailableMethods = FileOpenSignalMethod.values();
+			DefaultComboBoxModel model = new DefaultComboBoxModel(allAvailableMethods);
+			methodComboBox.setModel(model);
+
+			methodComboBox.addItemListener(new ItemListener() {
+
+				private int previouslySelectedIndex = -1;
+				@Override
+				public void itemStateChanged(ItemEvent e) {
+					int currentlySelectedIndex = methodComboBox.getSelectedIndex();
+					if (currentlySelectedIndex != previouslySelectedIndex) {
+						fireFileOpenMethodPropertyChanged();
+						previouslySelectedIndex = currentlySelectedIndex;
+					}
+				}
+			});
+
+			//methodComboBox.addItem(messageSource.getMessage("openSignal.options.methodSignalML"));
+			//methodComboBox.addItem(messageSource.getMessage("openSignal.options.methodRaw"));
 
 			/*methodComboBox.addItemListener(new ItemListener() {
 
@@ -85,5 +107,9 @@ public class FileOpenMethodPanel extends JPanel {
 			});*/
 		}
 		return methodComboBox;
+	}
+
+	protected void fireFileOpenMethodPropertyChanged() {
+		firePropertyChange(FILE_OPEN_METHOD_PROPERTY_CHANGED, null, methodComboBox.getSelectedItem());
 	}
 }

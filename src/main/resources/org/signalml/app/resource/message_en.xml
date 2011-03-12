@@ -755,8 +755,9 @@
 
 	<entry key="openSignal.options.title">Choose options for signal</entry>
 	<entry key="openSignal.options.methodTitle">Choose signal loading method</entry>
-	<entry key="openSignal.options.methodSignalML">Load using SignalML codec</entry>
-	<entry key="openSignal.options.methodRaw">Load raw signal</entry>
+
+	<entry key="openSignal.options.method.SIGNALML">Load using SignalML codec</entry>
+	<entry key="openSignal.options.method.RAW">Load raw signal</entry>
 
 	<entry key="openSignal.options.signalml.title">SignalML codec options</entry>
 	<entry key="openSignal.options.signalml.driver">Select codec</entry>

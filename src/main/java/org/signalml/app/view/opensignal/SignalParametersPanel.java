@@ -24,8 +24,11 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import org.signalml.app.view.element.IntegerSpinner;
 import org.signalml.app.config.ApplicationConfiguration;
+import org.signalml.app.view.element.DoubleSpinner;
 import org.signalml.app.view.element.ResolvableComboBox;
 import org.signalml.codec.SignalMLCodecException;
+import org.signalml.domain.signal.raw.RawSignalByteOrder;
+import org.signalml.domain.signal.raw.RawSignalSampleType;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 
@@ -71,13 +74,13 @@ public class SignalParametersPanel extends JPanel {
 	/**
 	 * the text field with the size of the page of signal in seconds.
 	 */
-	private JTextField pageSizeField;
+	private DoubleSpinner pageSizeSpinner;
 
 	/**
 	 * the text field with the number of blocks that fit into one page of
 	 * the signal.
 	 */
-	private JTextField blocksPerPageField;
+	private IntegerSpinner blocksPerPageSpinner;
 
         /**
          * Button that opens a dialog allowing to edit gain and offset.
@@ -172,10 +175,9 @@ public class SignalParametersPanel extends JPanel {
                                 pageSize = descriptor.getOpenMonitorDescriptor().getPageSize();
                         } catch (Exception ex) {
                         }
-                        getPageSizeField().setText(String.valueOf(pageSize));
+                        getPageSizeSpinner().setValue(pageSize);
 
-                        getBlocksPerPageField().setText("");
-                        getBlocksPerPageField().setEditable(false);
+			getBlocksPerPageSpinner().setEnabled(false);
                 }
         }
 
@@ -197,7 +199,7 @@ public class SignalParametersPanel extends JPanel {
                 }
 
                 try {
-                        pageSize = Double.parseDouble(getPageSizeField().getText());
+                        pageSize = getPageSizeSpinner().getValue();
                 } catch (NumberFormatException ex) {
                         throw new SignalMLException(messageSource.getMessage("error.invalidData"));
                 }
@@ -212,11 +214,10 @@ public class SignalParametersPanel extends JPanel {
         public void clearAllFields() {
                 
                 getSamplingFrequencyComboBox().getModel().setSelectedItem("");
-                getChannelCountSpinner().setValue(0);
-                getByteOrderComboBox().getModel().setSelectedItem("");
-                getSampleTypeComboBox().getModel().setSelectedItem("");
-                getPageSizeField().setText("");
-                getBlocksPerPageField().setText("");
+                getChannelCountSpinner().setValue(1);
+                //getByteOrderComboBox().getModel().setSelectedItem("");
+                //getSampleTypeComboBox().getModel().setSelectedItem("");
+                //getBlocksPerPageField().setValue(currentModel);
         }
 
         /**
@@ -298,12 +299,12 @@ public class SignalParametersPanel extends JPanel {
                 fillConstraints(constraints, 0, 4, 0, 0, 1);
                 fieldsPanel.add(pageSizeLabel, constraints);
                 fillConstraints(constraints, 1, 4, 1, 0, 1);
-                fieldsPanel.add(createWrapperPanel(getPageSizeField(), 8), constraints);
+                fieldsPanel.add(createWrapperPanel(getPageSizeSpinner(), 8), constraints);
 
                 fillConstraints(constraints, 0, 5, 0, 0, 1);
                 fieldsPanel.add(blocksPerPageLabel, constraints);
                 fillConstraints(constraints, 1, 5, 1, 0, 1);
-                fieldsPanel.add(createWrapperPanel(getBlocksPerPageField(), 8), constraints);
+                fieldsPanel.add(createWrapperPanel(getBlocksPerPageSpinner(), 8), constraints);
 
                 JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
                 buttonPanel.add(getEditGainAndOffsetButton());
@@ -361,7 +362,7 @@ public class SignalParametersPanel extends JPanel {
          *
          * @return the sampling frequency combo box
 	 */
-	private JComboBox getSamplingFrequencyComboBox() {
+	protected JComboBox getSamplingFrequencyComboBox() {
 		if (samplingFrequencyComboBox == null) {
 			samplingFrequencyComboBox = new JComboBox();
 		}
@@ -373,7 +374,7 @@ public class SignalParametersPanel extends JPanel {
          *
          * @return the channel count field
 	 */
-	public IntegerSpinner getChannelCountSpinner() {
+	protected IntegerSpinner getChannelCountSpinner() {
 		if (channelCountSpinner == null) {
 			channelCountSpinner = new IntegerSpinner(new SpinnerNumberModel(4, 1, 50, 1));
 			channelCountSpinner.addChangeListener(new ChangeListener() {
@@ -395,10 +396,11 @@ public class SignalParametersPanel extends JPanel {
          *
          * @return the byte order combo box
 	 */
-	private ResolvableComboBox getByteOrderComboBox() {
+	protected ResolvableComboBox getByteOrderComboBox() {
 
                 if (byteOrderComboBox == null) {
-			byteOrderComboBox = new ResolvableComboBox(messageSource);			
+			byteOrderComboBox = new ResolvableComboBox(messageSource);
+			byteOrderComboBox.setModel(new DefaultComboBoxModel(RawSignalByteOrder.values()));
 		}
 		return byteOrderComboBox;
 	}
@@ -408,10 +410,11 @@ public class SignalParametersPanel extends JPanel {
          *
          * @return the sample type combo box
 	 */
-        private ResolvableComboBox getSampleTypeComboBox() {
+        protected ResolvableComboBox getSampleTypeComboBox() {
 
                 if (sampleTypeComboBox == null) {
-			sampleTypeComboBox = new ResolvableComboBox(messageSource);			
+			sampleTypeComboBox = new ResolvableComboBox(messageSource);
+			sampleTypeComboBox.setModel(new DefaultComboBoxModel(RawSignalSampleType.values()));
 		}
 		return sampleTypeComboBox;
 	}
@@ -421,11 +424,11 @@ public class SignalParametersPanel extends JPanel {
          *
          * @return the page size field
 	 */
-	private JTextField getPageSizeField() {
-		if (pageSizeField == null) {
-			pageSizeField = new JTextField();
+	protected DoubleSpinner getPageSizeSpinner() {
+		if (pageSizeSpinner == null) {
+			pageSizeSpinner = new DoubleSpinner(new SpinnerNumberModel(20.0, 0.1, 100000.0, 0.1));
 		}
-		return pageSizeField;
+		return pageSizeSpinner;
 	}
 
 	/**
@@ -433,11 +436,11 @@ public class SignalParametersPanel extends JPanel {
          *
          * @return the blocks per page field
 	 */
-	private JTextField getBlocksPerPageField() {
-		if (blocksPerPageField == null) {
-			blocksPerPageField = new JTextField();
+	protected IntegerSpinner getBlocksPerPageSpinner() {
+		if (blocksPerPageSpinner == null) {
+			blocksPerPageSpinner = new IntegerSpinner(new SpinnerNumberModel(4, 1, 200, 1));
 		}
-		return blocksPerPageField;
+		return blocksPerPageSpinner;
 	}
 
         /**

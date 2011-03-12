@@ -30,13 +30,13 @@ import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.app.model.OpenFileSignalDescriptor;
 import org.signalml.app.model.OpenTagDescriptor;
 import org.signalml.app.model.SignalParameterDescriptor;
-import org.signalml.app.model.OpenFileSignalDescriptor.OpenSignalMethod;
 import org.signalml.app.montage.MontagePresetManager;
 import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.app.view.dialog.PleaseWaitDialog;
 import org.signalml.app.view.dialog.SignalParametersDialog;
+import org.signalml.app.view.opensignal.FileOpenSignalMethod;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.worker.OpenBookDocumentWorker;
 import org.signalml.app.worker.OpenSignalMLDocumentWorker;
@@ -559,7 +559,7 @@ public class DocumentFlowIntegrator {
 			if (mrud instanceof SignalMLMRUDEntry) {
 
 				SignalMLMRUDEntry smlEntry = (SignalMLMRUDEntry) mrud;
-				signalOptions.setMethod(OpenSignalMethod.USE_SIGNALML);
+				signalOptions.setMethod(FileOpenSignalMethod.SIGNALML);
 				SignalMLCodec codec = codecManager.getCodecByUID(smlEntry.getCodecUID());
 				if (codec == null) {
 					logger.warn("Mrud codec not found for uid [" + smlEntry.getCodecUID() + "]");
@@ -577,7 +577,7 @@ public class DocumentFlowIntegrator {
 			else if (mrud instanceof RawSignalMRUDEntry) {
 
 				RawSignalMRUDEntry rawEntry = (RawSignalMRUDEntry) mrud;
-				signalOptions.setMethod(OpenSignalMethod.RAW);
+				signalOptions.setMethod(FileOpenSignalMethod.RAW);
 				signalOptions.setRawSignalDescriptor(rawEntry.getDescriptor());
 
 			} else {
@@ -654,13 +654,13 @@ public class DocumentFlowIntegrator {
 		}
 
 		OpenFileSignalDescriptor signalOptions = descriptor.getSignalOptions();
-		OpenSignalMethod method = signalOptions.getMethod();
+		FileOpenSignalMethod method = signalOptions.getMethod();
 		if (method == null) {
 			logger.error("No method");
 			throw new NullPointerException();
 		}
 
-		if (method.equals(OpenSignalMethod.USE_SIGNALML)) {
+		if (method.equals(FileOpenSignalMethod.SIGNALML)) {
 
 			logger.debug("Opening as signal with SignalML");
 			final SignalMLCodec codec = signalOptions.getCodec();
@@ -738,7 +738,7 @@ public class DocumentFlowIntegrator {
 
 			return signalMLDocument;
 
-		} else if (method.equals(OpenSignalMethod.RAW)) {
+		} else if (method.equals(FileOpenSignalMethod.RAW)) {
 
 			logger.debug("Opening as raw signal");
 

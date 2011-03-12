@@ -4,6 +4,7 @@
 
 package org.signalml.app.model;
 
+import org.signalml.app.view.opensignal.FileOpenSignalMethod;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.domain.signal.SignalType;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
@@ -17,14 +18,9 @@ import org.signalml.domain.signal.raw.RawSignalSampleType;
  */
 public class OpenFileSignalDescriptor {
 
-	public enum OpenSignalMethod {
-		USE_SIGNALML,
-		RAW
-	};
-
 	private SignalType type;
 
-	private OpenSignalMethod method;
+	private FileOpenSignalMethod method;
 
 	// for signalML signals
 	private SignalMLCodec codec;
@@ -54,11 +50,11 @@ public class OpenFileSignalDescriptor {
 		this.type = type;
 	}
 
-	public OpenSignalMethod getMethod() {
+	public FileOpenSignalMethod getMethod() {
 		return method;
 	}
 
-	public void setMethod(OpenSignalMethod method) {
+	public void setMethod(FileOpenSignalMethod method) {
 		this.method = method;
 	}
 

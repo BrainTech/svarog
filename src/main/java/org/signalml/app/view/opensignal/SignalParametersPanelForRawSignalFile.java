@@ -15,5 +15,7 @@ public class SignalParametersPanelForRawSignalFile extends SignalParametersPanel
 
 	public SignalParametersPanelForRawSignalFile(MessageSourceAccessor messageSource, ApplicationConfiguration applicationConfiguration) {
 		super(messageSource, applicationConfiguration);
+		setEnabledAll(true);
+		getSamplingFrequencyComboBox().setEditable(true);
 	}
 }
