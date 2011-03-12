@@ -407,4 +407,8 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 		return editTimeDomainSampleFilterDialog;
 	}
 
+	public void setSamplingFrequency(float samplingFrequency) {
+		filtersPanel.setCurrentSamplingFrequency(samplingFrequency);
+	}
+
 }

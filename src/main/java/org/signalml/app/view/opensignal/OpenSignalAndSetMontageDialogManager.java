@@ -32,9 +32,13 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 	public void propertyChange(PropertyChangeEvent evt) {
 		String propertyName = evt.getPropertyName();
 
-		if (propertyName.equals(SignalParametersPanel.NUMBER_OF_CHANNELS_CHANGED_PROPERTY)) {
+		if (propertyName.equals(SignalParametersPanel.NUMBER_OF_CHANNELS_PROPERTY)) {
 			int numberOfChannels = Integer.parseInt(evt.getNewValue().toString());
 			numberOfChannelsChangedTo(numberOfChannels);
+		}
+		else if (propertyName.equals(SignalParametersPanel.SAMPLING_FREQUENCY_PROPERTY)){
+			float samplingFrequency = Float.parseFloat(evt.getNewValue().toString());
+			samplingFrequencyChangedTo(samplingFrequency);
 		}
 	}
 
@@ -46,6 +50,10 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 			Logger.getLogger(OpenSignalAndSetMontageDialogManager.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		System.out.println("Number of channels = " + newNumberOfChannels);
+	}
+
+	protected void samplingFrequencyChangedTo(float newSamplingFrequency) {
+		openSignalAndSetMontageDialog.setSamplingFrequency(newSamplingFrequency);
 	}
 
 }

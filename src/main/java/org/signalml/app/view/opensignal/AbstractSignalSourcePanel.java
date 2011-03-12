@@ -56,29 +56,30 @@ abstract public class AbstractSignalSourcePanel extends JPanel implements Proper
 
         abstract public void fillModelFromPanel(Object model) throws SignalMLException;
 
-        protected SignalSourceSelectionPanel getSignalSourceSelectionPanel() {
-                if (signalSourceSelectionPanel == null) {
-                        signalSourceSelectionPanel = new SignalSourceSelectionPanel(messageSource);
-                        signalSourceSelectionPanel.addPropertyChangeListener(this);
-                }
-                return signalSourceSelectionPanel;
-        }
+	protected SignalSourceSelectionPanel getSignalSourceSelectionPanel() {
+		if (signalSourceSelectionPanel == null) {
+			signalSourceSelectionPanel = new SignalSourceSelectionPanel(messageSource);
+			signalSourceSelectionPanel.addPropertyChangeListener(this);
+		}
+		return signalSourceSelectionPanel;
+	}
 
-        public void setSignalSourceSelectionComboBoxModel(ComboBoxModel model) {
-                getSignalSourceSelectionPanel().setSelectionComboBoxModel(model);
-        }
+	public void setSignalSourceSelectionComboBoxModel(ComboBoxModel model) {
+		getSignalSourceSelectionPanel().setSelectionComboBoxModel(model);
+	}
 
-        @Override
-        public void addPropertyChangeListener(PropertyChangeListener listener) {
-                propertyChangeSupport.addPropertyChangeListener(listener);
-        }
+	@Override
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
+		propertyChangeSupport.addPropertyChangeListener(listener);
+	}
 
-        @Override
-        public void propertyChange(PropertyChangeEvent evt) {
-                propertyChangeSupport.firePropertyChange(evt);
-        }
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		propertyChangeSupport.firePropertyChange(evt);
+	}
 
-        protected void fireNumberOfChannelsChangedProperty(int newNumberOfChannels) {
-                propertyChangeSupport.firePropertyChange(SignalParametersPanel.NUMBER_OF_CHANNELS_CHANGED_PROPERTY, null, newNumberOfChannels);
-        }
+	protected void fireNumberOfChannelsChangedProperty(int newNumberOfChannels) {
+		propertyChangeSupport.firePropertyChange(SignalParametersPanel.NUMBER_OF_CHANNELS_PROPERTY, null, newNumberOfChannels);
+	}
+
 }

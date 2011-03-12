@@ -58,6 +58,9 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
+		if (model instanceof Montage) {
+			super.fillModelFromDialog(model);
+		}
 //		super.fillModelFromDialog(model);
 	}
 

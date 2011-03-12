@@ -8,6 +8,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.AbstractAction;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -40,7 +41,8 @@ import org.springframework.context.support.MessageSourceAccessor;
  */
 public class SignalParametersPanel extends JPanel {
 
-	public static String NUMBER_OF_CHANNELS_CHANGED_PROPERTY = "numberOfChannelsChangedProperty";
+	public static String NUMBER_OF_CHANNELS_PROPERTY = "numberOfChannelsChangedProperty";
+	public static String SAMPLING_FREQUENCY_PROPERTY = "samplingFrequencyChanged";
 
 	/**
 	 * the {@link MessageSourceAccessor source} of messages (labels).
@@ -350,6 +352,21 @@ public class SignalParametersPanel extends JPanel {
 
                 if (samplingFrequencyComboBox == null) {
 			samplingFrequencyComboBox = new JComboBox();
+			samplingFrequencyComboBox.addActionListener(new ActionListener() {
+				private float previousSamplingFrequency = -1;
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					String selectedItemString = samplingFrequencyComboBox.getSelectedItem().toString();
+
+					if (!selectedItemString.isEmpty()) {
+						float currentSamplingFrequency = Float.parseFloat(selectedItemString);
+						if (currentSamplingFrequency != previousSamplingFrequency) {
+							firePropertyChange(SAMPLING_FREQUENCY_PROPERTY, previousSamplingFrequency, currentSamplingFrequency);
+							System.out.println("sampling frequency changed to " + currentSamplingFrequency);
+						}
+					}
+				}
+			});
 		}
 		return samplingFrequencyComboBox;
 	}
@@ -369,7 +386,7 @@ public class SignalParametersPanel extends JPanel {
 				public void stateChanged(ChangeEvent e) {
 					System.out.println("spinner changed!");
 					int numberOfChannels = getChannelCountSpinner().getValue();
-					firePropertyChange(NUMBER_OF_CHANNELS_CHANGED_PROPERTY, 0, numberOfChannels);
+					firePropertyChange(NUMBER_OF_CHANNELS_PROPERTY, 0, numberOfChannels);
 				}
 			});
 
