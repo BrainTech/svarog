@@ -44,7 +44,7 @@ public class SignalParametersPanel extends JPanel {
 	/**
 	 * the {@link MessageSourceAccessor source} of messages (labels).
 	 */
-	private MessageSourceAccessor messageSource;
+	protected MessageSourceAccessor messageSource;
 
         /**
          * Current model.
@@ -306,14 +306,19 @@ public class SignalParametersPanel extends JPanel {
                 fillConstraints(constraints, 1, 5, 1, 0, 1);
                 fieldsPanel.add(createWrapperPanel(getBlocksPerPageSpinner(), 8), constraints);
 
-                JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-                buttonPanel.add(getEditGainAndOffsetButton());
+                JPanel buttonPanel = createButtonPanel();
 
                 add(fieldsPanel, BorderLayout.NORTH);
                 add(buttonPanel, BorderLayout.SOUTH);
 
                 setEnabledAll(false);
         }
+
+	protected JPanel createButtonPanel() {
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+                buttonPanel.add(getEditGainAndOffsetButton());
+		return buttonPanel;
+	}
 
         /**
          * Method fills a {@link GridBagConstraints} object with data.

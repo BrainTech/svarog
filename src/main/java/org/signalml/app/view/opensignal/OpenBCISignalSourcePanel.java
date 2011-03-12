@@ -31,7 +31,6 @@ public class OpenBCISignalSourcePanel extends AbstractSignalSourcePanel {
 
 	@Override
 	protected JPanel createRightColumnPanel() {
-		//return new JPanel();
 		JPanel rightColumnPanel = new JPanel(new BorderLayout());
 		rightColumnPanel.add(getTestPanel(), BorderLayout.CENTER);
 		return rightColumnPanel;

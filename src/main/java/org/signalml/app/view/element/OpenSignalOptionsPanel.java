@@ -184,8 +184,8 @@ public class OpenSignalOptionsPanel extends JPanel {
 	public JComboBox getMethodComboBox() {
 		if (methodComboBox == null) {
 			methodComboBox = new JComboBox();
-			methodComboBox.addItem(messageSource.getMessage("openSignal.options.methodSignalML"));
-			methodComboBox.addItem(messageSource.getMessage("openSignal.options.methodRaw"));
+			methodComboBox.addItem(messageSource.getMessage("openSignal.options.method.SIGNALML"));
+			methodComboBox.addItem(messageSource.getMessage("openSignal.options.method.RAW"));
 
 			methodComboBox.addItemListener(new ItemListener() {
 
