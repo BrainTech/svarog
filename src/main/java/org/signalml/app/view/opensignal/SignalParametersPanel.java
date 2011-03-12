@@ -40,7 +40,7 @@ import org.springframework.context.support.MessageSourceAccessor;
  */
 public class SignalParametersPanel extends JPanel {
 
-	public static String NUMBER_OF_CHANNELS_CHANGED_PROPERTY = "numberOfChannelsChangedProperty";
+	public static String NUMBER_OF_CHANNELS_PROPERTY = "numberOfChannelsChangedProperty";
 	public static String SAMPLING_FREQUENCY_PROPERTY = "samplingFrequencyChanged";
 
 	/**
@@ -385,7 +385,7 @@ public class SignalParametersPanel extends JPanel {
 				public void stateChanged(ChangeEvent e) {
 					System.out.println("spinner changed!");
 					int numberOfChannels = getChannelCountSpinner().getValue();
-					firePropertyChange(NUMBER_OF_CHANNELS_CHANGED_PROPERTY, 0, numberOfChannels);
+					firePropertyChange(NUMBER_OF_CHANNELS_PROPERTY, 0, numberOfChannels);
 				}
 			});
 
