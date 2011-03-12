@@ -6,6 +6,7 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.DefaultComboBoxModel;
@@ -275,36 +276,37 @@ public class SignalParametersPanel extends JPanel {
                 GridBagConstraints constraints = new GridBagConstraints();
                 constraints.anchor = GridBagConstraints.CENTER;
                 constraints.fill = GridBagConstraints.HORIZONTAL;
+                constraints.insets = new Insets(8, 8, 8, 8);
 
                 fillConstraints(constraints, 0, 0, 0, 0, 1);
                 fieldsPanel.add(samplingFrequencyLabel, constraints);
                 fillConstraints(constraints, 1, 0, 1, 0, 1);
-                fieldsPanel.add(createWrapperPanel(getSamplingFrequencyComboBox(), 8), constraints);
+                fieldsPanel.add(getSamplingFrequencyComboBox(), constraints);
 
                 fillConstraints(constraints, 0, 1, 0, 0, 1);
                 fieldsPanel.add(channelCountLabel, constraints);
                 fillConstraints(constraints, 1, 1, 1, 0, 1);
-                fieldsPanel.add(createWrapperPanel(getChannelCountSpinner(), 8), constraints);
+                fieldsPanel.add(getChannelCountSpinner(), constraints);
 
                 fillConstraints(constraints, 0, 2, 0, 0, 1);
                 fieldsPanel.add(byteOrderLabel, constraints);
                 fillConstraints(constraints, 1, 2, 1, 0, 1);
-                fieldsPanel.add(createWrapperPanel(getByteOrderComboBox(), 8), constraints);
+                fieldsPanel.add(getByteOrderComboBox(), constraints);
 
                 fillConstraints(constraints, 0, 3, 0, 0, 1);
                 fieldsPanel.add(sampleTypeLabel, constraints);
                 fillConstraints(constraints, 1, 3, 1, 0, 1);
-                fieldsPanel.add(createWrapperPanel(getSampleTypeComboBox(), 8), constraints);
+                fieldsPanel.add(getSampleTypeComboBox(), constraints);
 
                 fillConstraints(constraints, 0, 4, 0, 0, 1);
                 fieldsPanel.add(pageSizeLabel, constraints);
                 fillConstraints(constraints, 1, 4, 1, 0, 1);
-                fieldsPanel.add(createWrapperPanel(getPageSizeSpinner(), 8), constraints);
+                fieldsPanel.add(getPageSizeSpinner(), constraints);
 
                 fillConstraints(constraints, 0, 5, 0, 0, 1);
                 fieldsPanel.add(blocksPerPageLabel, constraints);
                 fillConstraints(constraints, 1, 5, 1, 0, 1);
-                fieldsPanel.add(createWrapperPanel(getBlocksPerPageSpinner(), 8), constraints);
+                fieldsPanel.add(getBlocksPerPageSpinner(), constraints);
 
                 JPanel buttonPanel = createButtonPanel();
 
@@ -340,35 +342,13 @@ public class SignalParametersPanel extends JPanel {
         }
 
         /**
-         * Creates a wrapper panel with an empty border.
-         * Inside component is stretched horizontaly.
-         *
-         * @param component inside component
-         * @param border border size
-         * @return the wrapper panel
-         */
-        private JPanel createWrapperPanel(JComponent component, int border) {
-
-                JPanel wrapperPanel = new JPanel(new GridBagLayout());
-                wrapperPanel.setBorder(new EmptyBorder(border, border, border, border));
-
-                GridBagConstraints constraints = new GridBagConstraints();
-                constraints.anchor = GridBagConstraints.CENTER;
-                constraints.fill = GridBagConstraints.HORIZONTAL;
-                fillConstraints(constraints, 0, 0, 1, 1, 1);
-
-                wrapperPanel.add(component, constraints);
-
-                return wrapperPanel;
-        }
-
-        /**
 	 * Returns the sampling frequency combo box.
          *
          * @return the sampling frequency combo box
 	 */
 	protected JComboBox getSamplingFrequencyComboBox() {
-		if (samplingFrequencyComboBox == null) {
+
+                if (samplingFrequencyComboBox == null) {
 			samplingFrequencyComboBox = new JComboBox();
 		}
 		return samplingFrequencyComboBox;
@@ -380,7 +360,8 @@ public class SignalParametersPanel extends JPanel {
          * @return the channel count field
 	 */
 	protected IntegerSpinner getChannelCountSpinner() {
-		if (channelCountSpinner == null) {
+
+                if (channelCountSpinner == null) {
 			channelCountSpinner = new IntegerSpinner(new SpinnerNumberModel(4, 1, 50, 1));
 			channelCountSpinner.addChangeListener(new ChangeListener() {
 
@@ -430,7 +411,8 @@ public class SignalParametersPanel extends JPanel {
          * @return the page size field
 	 */
 	protected DoubleSpinner getPageSizeSpinner() {
-		if (pageSizeSpinner == null) {
+
+                if (pageSizeSpinner == null) {
 			pageSizeSpinner = new DoubleSpinner(new SpinnerNumberModel(20.0, 0.1, 100000.0, 0.1));
 		}
 		return pageSizeSpinner;
@@ -442,7 +424,8 @@ public class SignalParametersPanel extends JPanel {
          * @return the blocks per page field
 	 */
 	protected IntegerSpinner getBlocksPerPageSpinner() {
-		if (blocksPerPageSpinner == null) {
+
+                if (blocksPerPageSpinner == null) {
 			blocksPerPageSpinner = new IntegerSpinner(new SpinnerNumberModel(4, 1, 200, 1));
 		}
 		return blocksPerPageSpinner;
@@ -453,7 +436,8 @@ public class SignalParametersPanel extends JPanel {
          *
          * @return the edit gain and offset button
          */
-        private JButton getEditGainAndOffsetButton() {
+        protected JButton getEditGainAndOffsetButton() {
+
                 if (editGainAndOffsetButton == null) {
                         editGainAndOffsetButton = new JButton(new AbstractAction() {
 
@@ -473,9 +457,9 @@ public class SignalParametersPanel extends JPanel {
         }
 
         /**
-         * Returns the edit gain and offset dialog action
+         * Returns the edit gain and offset dialog
          *
-         * @return the action
+         * @return the edit gain and offset dialog
          */
         private EditGainAndOffsetDialog getEditGainAndOffsetDialog() {
 
