@@ -62,12 +62,12 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	 */
 	private EditTimeDomainSampleFilterDialog editTimeDomainSampleFilterDialog;
 
-	private MontageChannelsPanel channelsPanel;
-	private MontageGeneratorPanel generatorPanel;
-	private MatrixReferenceEditorPanel matrixReferenceEditorPanel;
-	private VisualReferenceEditorPanel visualReferenceEditorPanel;
-	private MontageFiltersPanel filtersPanel;
-	private MontageMiscellaneousPanel miscellaneousPanel;
+	protected MontageChannelsPanel channelsPanel;
+	protected MontageGeneratorPanel generatorPanel;
+	protected MatrixReferenceEditorPanel matrixReferenceEditorPanel;
+	protected VisualReferenceEditorPanel visualReferenceEditorPanel;
+	protected MontageFiltersPanel filtersPanel;
+	protected MontageMiscellaneousPanel miscellaneousPanel;
 
 	protected JTabbedPane tabbedPane;
 

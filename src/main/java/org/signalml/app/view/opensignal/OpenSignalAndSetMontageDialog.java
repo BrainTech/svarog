@@ -66,4 +66,7 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 		return OpenSignalDescriptor.class.isAssignableFrom(clazz);
 	}
 
+        public Montage getChannelTabSourceMontage() {
+                return channelsPanel.getMontage();
+        }
 }

@@ -182,6 +182,14 @@ public class MonitorRecordingPanel extends JPanel {
         public void setEnabledAll(boolean enabled) {
 
                 setEnabledToChildren(this, enabled);
+
+                if (true) {
+                        if (isRecordingEnabled()) {
+                                getChooseFilesForMonitorRecordingPanel().setEnabled(true);
+                        } else {
+                                getChooseFilesForMonitorRecordingPanel().setEnabled(false);
+                        }
+                }
         }
 
         /**

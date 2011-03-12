@@ -6,6 +6,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JPanel;
 import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.element.MonitorRecordingPanel;
+import org.signalml.domain.montage.Montage;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 
@@ -180,6 +181,14 @@ public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel {
                 getSignalParametersPanel().fillModelFromPanel(model);
                 getAmplifierSelectionPanel().fillModelFromPanel((AmplifierConnectionDescriptor) model);
                 getMonitorRecordingPanel().fillModelFromPanel(((AmplifierConnectionDescriptor) model).getOpenMonitorDescriptor());
+
+                Montage channelTabMotntage = viewerElementManager.getOpenSignalAndSetMontageDialog().getChannelTabSourceMontage();
+                String[] labels = new String[channelTabMotntage.getSourceChannelCount()];
+                for (int i = 0; i < labels.length; i++) {
+                        labels[i] = channelTabMotntage.getSourceChannelLabelAt(i);
+                }
+                AmplifierConnectionDescriptor descriptor = (AmplifierConnectionDescriptor) model;
+                descriptor.getOpenMonitorDescriptor().setChannelLabels(labels);
         }
 
         /**
