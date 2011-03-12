@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import org.signalml.app.view.opensignal.AmplifierConnectionDescriptor;
 
 /**
  * Represents a panel in the {@link OpenMonitorDialog} used to enable/disable
@@ -32,148 +33,159 @@ import javax.swing.border.TitledBorder;
  */
 public class MonitorRecordingPanel extends JPanel {
 
-	/**
-	 * A message source accessor capable of resolving localized message codes.
-	 */
-	private final MessageSourceAccessor messageSource;
+        /**
+         * A message source accessor capable of resolving localized message codes.
+         */
+        private final MessageSourceAccessor messageSource;
+        /**
+         * A panel for choosing signal and tags recording target files for this
+         * recording.
+         */
+        private ChooseFilesForMonitorRecordingPanel chooseFilesForMonitorRecordingPanel = null;
+        /**
+         * A panel containing the {@link MonitorRecordingPanel#enableRecordingCheckbox}.
+         */
+        private JPanel enableRecordingPanel = null;
+        /**
+         * A {@link JCheckBox} for enabling/disabling signal and tags recording.
+         */
+        private JCheckBox enableRecordingCheckbox = null;
 
-	/**
-	 * A panel for choosing signal and tags recording target files for this
-	 * recording.
-	 */
-	private ChooseFilesForMonitorRecordingPanel chooseFilesForMonitorRecordingPanel = null;
+        /**
+         * Constructor. Creates a new {@link MonitorRecordingPanel}.
+         * @param messageSource the message source accessor capable of resolving
+         * localized message codes
+         */
+        public MonitorRecordingPanel(MessageSourceAccessor messageSource) {
+                super();
+                this.messageSource = messageSource;
+                initialize();
+        }
 
-	/**
-	 * A panel containing the {@link MonitorRecordingPanel#enableRecordingCheckbox}.
-	 */
-	private JPanel enableRecordingPanel = null;
+        /**
+         * Initializes all components.
+         */
+        private void initialize() {
 
-	/**
-	 * A {@link JCheckBox} for enabling/disabling signal and tags recording.
-	 */
-	private JCheckBox enableRecordingCheckbox = null;
+                setLayout(new BorderLayout(10, 10));
 
-	/**
-	 * Constructor. Creates a new {@link MonitorRecordingPanel}.
-	 * @param messageSource the message source accessor capable of resolving
-	 * localized message codes
-	 */
-	public MonitorRecordingPanel(MessageSourceAccessor messageSource) {
-		super();
-		this.messageSource = messageSource;
-		initialize();
-	}
+                CompoundBorder border = new CompoundBorder(
+                        new TitledBorder(messageSource.getMessage("openMonitor.monitorRecordingPanelTitle")),
+                        new EmptyBorder(3, 3, 3, 3));
+                setBorder(border);
 
-	/**
-	 * Initializes all components.
-	 */
-	private void initialize() {
+                add(getEnableRecordingPanel(), BorderLayout.NORTH);
+                add(getChooseFilesForMonitorRecordingPanel(), BorderLayout.CENTER);
 
-		setLayout(new BorderLayout(10, 10));
+                getEnableRecordingCheckbox().setSelected(false);
+                getChooseFilesForMonitorRecordingPanel().setEnabled(false);
 
-		CompoundBorder border = new CompoundBorder(
-			new TitledBorder(messageSource.getMessage("openMonitor.monitorRecordingPanelTitle")),
-			new EmptyBorder(3, 3, 3, 3));
-		setBorder(border);
+        }
 
-		add(getEnableRecordingPanel(), BorderLayout.NORTH);
-		add(getChooseFilesForMonitorRecordingPanel(), BorderLayout.CENTER);
+        /**
+         * Returns the panel for choosing signal and tags recording target files
+         * used in this {@link MonitorRecordingPanel}
+         * @return the {@link ChooseFilesForMonitorRecordingPanel} used
+         */
+        protected ChooseFilesForMonitorRecordingPanel getChooseFilesForMonitorRecordingPanel() {
+                if (chooseFilesForMonitorRecordingPanel == null) {
+                        chooseFilesForMonitorRecordingPanel = new ChooseFilesForMonitorRecordingPanel(messageSource);
+                }
+                return chooseFilesForMonitorRecordingPanel;
+        }
 
-		getEnableRecordingCheckbox().setSelected(false);
-		getChooseFilesForMonitorRecordingPanel().setEnabled(false);
+        /**
+         * Returns the panel for enabling/disabling signal and tags recording
+         * used in this {@link MonitorRecordingPanel}
+         * @return the panel for enabling/disabling monitor recording
+         */
+        protected JPanel getEnableRecordingPanel() {
+                if (enableRecordingPanel == null) {
+                        enableRecordingPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+                        enableRecordingPanel.add(getEnableRecordingCheckbox());
+                        enableRecordingPanel.add(new JLabel("enable recording"));
+                }
+                return enableRecordingPanel;
+        }
 
-	}
+        /**
+         * Returns the {@link JCheckBox} for enabling/disabling monitor recording
+         * used in this panel.
+         * @return a {@link JCheckBox} for enabling/disabling monitor recording
+         */
+        protected JCheckBox getEnableRecordingCheckbox() {
+                if (enableRecordingCheckbox == null) {
+                        enableRecordingCheckbox = new JCheckBox();
+                        enableRecordingCheckbox.addItemListener(new ItemListener() {
 
-	/**
-	 * Returns the panel for choosing signal and tags recording target files
-	 * used in this {@link MonitorRecordingPanel}
-	 * @return the {@link ChooseFilesForMonitorRecordingPanel} used
-	 */
-	protected ChooseFilesForMonitorRecordingPanel getChooseFilesForMonitorRecordingPanel() {
-		if (chooseFilesForMonitorRecordingPanel == null) {
-			chooseFilesForMonitorRecordingPanel = new ChooseFilesForMonitorRecordingPanel(messageSource);
-		}
-		return chooseFilesForMonitorRecordingPanel;
-	}
+                                @Override
+                                public void itemStateChanged(ItemEvent e) {
+                                        if (enableRecordingCheckbox.isSelected()) {
+                                                getChooseFilesForMonitorRecordingPanel().setEnabled(true);
+                                        } else {
+                                                getChooseFilesForMonitorRecordingPanel().setEnabled(false);
+                                        }
+                                }
+                        });
+                }
+                return enableRecordingCheckbox;
+        }
 
-	/**
-	 * Returns the panel for enabling/disabling signal and tags recording
-	 * used in this {@link MonitorRecordingPanel}
-	 * @return the panel for enabling/disabling monitor recording
-	 */
-	protected JPanel getEnableRecordingPanel() {
-		if (enableRecordingPanel == null) {
-			enableRecordingPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-			enableRecordingPanel.add(getEnableRecordingCheckbox());
-			enableRecordingPanel.add(new JLabel("enable recording"));
-		}
-		return enableRecordingPanel;
-	}
+        /**
+         * Returns whether recording was enabled on this panel.
+         * @return true if recording was enabled, false otherwise.
+         */
+        public boolean isRecordingEnabled() {
+                return enableRecordingCheckbox.isSelected();
+        }
 
-	/**
-	 * Returns the {@link JCheckBox} for enabling/disabling monitor recording
-	 * used in this panel.
-	 * @return a {@link JCheckBox} for enabling/disabling monitor recording
-	 */
-	protected JCheckBox getEnableRecordingCheckbox() {
-		if (enableRecordingCheckbox == null) {
-			enableRecordingCheckbox = new JCheckBox();
-			enableRecordingCheckbox.addItemListener(new ItemListener() {
+        /**
+         * Fills the model with the data from this panel (user input).
+         * @param openMonitorDescriptor the model to be filled.
+         */
+        public void fillModelFromPanel(OpenMonitorDescriptor openMonitorDescriptor) {
+                if (isRecordingEnabled()) {
+                        openMonitorDescriptor.getMonitorRecordingDescriptor().setRecordingEnabled(true);
+                        getChooseFilesForMonitorRecordingPanel().fillModelFromPanel(openMonitorDescriptor);
+                } else {
+                        openMonitorDescriptor.getMonitorRecordingDescriptor().setRecordingEnabled(false);
+                }
+        }
 
-				@Override
-				public void itemStateChanged(ItemEvent e) {
-					if (enableRecordingCheckbox.isSelected()) {
-						getChooseFilesForMonitorRecordingPanel().setEnabled(true);
-					} else {
-						getChooseFilesForMonitorRecordingPanel().setEnabled(false);
-					}
-				}
-			});
-		}
-		return enableRecordingCheckbox;
-	}
+        /**
+         * Fills a {@link AmplifierConnectionDescriptor}.
+         * @param amplifierConnectionDescriptor the model to be filled.
+         */
+        public void fillModelFromPanel(AmplifierConnectionDescriptor descriptor) {
+                OpenMonitorDescriptor openMonitorDescriptor = descriptor.getOpenMonitorDescriptor();
+                if (isRecordingEnabled()) {
+                        openMonitorDescriptor.getMonitorRecordingDescriptor().setRecordingEnabled(true);
+                        getChooseFilesForMonitorRecordingPanel().fillModelFromPanel(openMonitorDescriptor);
+                } else {
+                        openMonitorDescriptor.getMonitorRecordingDescriptor().setRecordingEnabled(false);
+                }
+        }
 
-	/**
-	 * Returns whether recording was enabled on this panel.
-	 * @return true if recording was enabled, false otherwise.
-	 */
-	public boolean isRecordingEnabled() {
-		return enableRecordingCheckbox.isSelected();
-	}
+        /**
+         * Checks if this dialog is properly filled.
+         * @param model the model for this dialog
+         * @param errors the object in which errors are stored
+         */
+        public void validatePanel(Object model, Errors errors) {
+                if (isRecordingEnabled()) {
+                        getChooseFilesForMonitorRecordingPanel().validatePanel(model, errors);
+                }
+        }
 
-	/**
-	 * Fills the model with the data from this panel (user input).
-	 * @param openMonitorDescriptor the model to be filled.
-	 */
-	public void fillModelFromPanel(OpenMonitorDescriptor openMonitorDescriptor) {
-		if (isRecordingEnabled()) {
-			openMonitorDescriptor.getMonitorRecordingDescriptor().setRecordingEnabled(true);
-			getChooseFilesForMonitorRecordingPanel().fillModelFromPanel(openMonitorDescriptor);
-		} else {
-			openMonitorDescriptor.getMonitorRecordingDescriptor().setRecordingEnabled(false);
-		}
-	}
+        /**
+         * Resets the signal and tag filenames entered in the panel to an empty
+         * string.
+         */
+        public void resetFileNames() {
+                getChooseFilesForMonitorRecordingPanel().resetFileNames();
+        }
 
-	/**
-	 * Checks if this dialog is properly filled.
-	 * @param model the model for this dialog
-	 * @param errors the object in which errors are stored
-	 */
-	public void validatePanel(Object model, Errors errors) {
-		if (isRecordingEnabled()) {
-			getChooseFilesForMonitorRecordingPanel().validatePanel(model, errors);
-		}
-	}
-
-	/**
-	 * Resets the signal and tag filenames entered in the panel to an empty
-	 * string.
-	 */
-	public void resetFileNames() {
-		getChooseFilesForMonitorRecordingPanel().resetFileNames();
-	}
-
-/**
+        /**
          * Sets enabled to this panel and all it's children.
          * Clears all fields if enabled == false.
          *

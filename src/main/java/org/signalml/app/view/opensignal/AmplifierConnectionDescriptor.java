@@ -14,7 +14,6 @@ public class AmplifierConnectionDescriptor {
          * The open monitor descriptor.
          */
         private OpenMonitorDescriptor openMonitorDescriptor;
-
         /**
          * The amplifier instance.
          */

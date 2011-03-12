@@ -56,14 +56,6 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
          */
         private JButton configureDefinitionsButton = null;
         /**
-         * Start button.
-         */
-        private JButton startButton = null;
-        /**
-         * Stop button.
-         */
-        private JButton stopButton = null;
-        /**
          * Message source.
          */
         private MessageSourceAccessor messageSource;
@@ -79,14 +71,6 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
          * The monitor recording panel to modify when an amp is chosen.
          */
         private MonitorRecordingPanel monitorRecordingPanel;
-        /**
-         * Start action.
-         */
-        private AbstractAction startAction;
-        /**
-         * Stop action.
-         */
-        private AbstractAction stopAction;
         /**
          * Current descriptor.
          */
@@ -104,9 +88,7 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
         public AmplifierSelectionPanel(MessageSourceAccessor messageSource,
                 ViewerElementManager elementManager,
                 SignalParametersPanel signalParametersPanel,
-                MonitorRecordingPanel monitorRecordingPanel,
-                AbstractAction startAction,
-                AbstractAction stopAction) {
+                MonitorRecordingPanel monitorRecordingPanel) {
 
                 super();
 
@@ -114,13 +96,8 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
                 this.elementManager = elementManager;
                 this.signalParametersPanel = signalParametersPanel;
                 this.monitorRecordingPanel = monitorRecordingPanel;
-                this.startAction = startAction;
-                this.stopAction = stopAction;
 
                 createInterface();
-
-                currentDescriptor = new AmplifierConnectionDescriptor();
-                amplifierSelected();
         }
 
         /**
@@ -128,30 +105,30 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
          * 
          * @param amplifierConnectionDescriptor the descriptor
          */
-        public final void fillModelFromPanel(AmplifierConnectionDescriptor amplifierConnectionDescriptor) {
+        public void fillModelFromPanel(AmplifierConnectionDescriptor descriptor) {
 
                 int selectedIndex = getAmplifiersList().getSelectedIndex();
 
                 if (selectedIndex < 0) {
-                        amplifierConnectionDescriptor.setAmplifierInstance(null);
+                        descriptor.setAmplifierInstance(null);
                 } else {
                         AmplifierInstance selectedInstance;
                         selectedInstance = (AmplifierInstance) getAmplifiersList().getModel().getElementAt(selectedIndex);
-                        amplifierConnectionDescriptor.setAmplifierInstance(selectedInstance);
+                        descriptor.setAmplifierInstance(selectedInstance);
                 }
         }
 
         /**
          * Fills this panel from an {@link AmplifierConnectionDescriptor}.
          *
-         * @param amplifierConnectionDescriptor the descriptor
+         * @param descriptor the descriptor
          * @throws AmplifierNotFoundException when the amplifier from the descriptor cannot be found
          */
-        public final void fillPanelFromModel(AmplifierConnectionDescriptor amplifierConnectionDescriptor) throws SignalMLException {
+        public void fillPanelFromModel(AmplifierConnectionDescriptor descriptor) throws SignalMLException {
 
                 // TODO: refresh amp list and try to find the one from the descriptor
 
-                currentDescriptor = amplifierConnectionDescriptor;
+                currentDescriptor = descriptor;
         }
 
         /**
@@ -234,8 +211,6 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
                 add(amplifiersListPanel, BorderLayout.CENTER);
 
 
-                JPanel buttonsPanel = new JPanel(new BorderLayout(10, 5));
-
                 CompoundBorder configBorder = new CompoundBorder(
                         new TitledBorder(messageSource.getMessage("amplifierSelection.config")),
                         new EmptyBorder(3, 3, 3, 3));
@@ -247,21 +222,8 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
                 configPanel.add(Box.createRigidArea(new Dimension(0, 5)));
                 configPanel.add(getConfigureModulesButton());
 
-                CompoundBorder openBCIBorder = new CompoundBorder(
-                        new TitledBorder(messageSource.getMessage("amplifierSelection.openBCI")),
-                        new EmptyBorder(3, 3, 3, 3));
 
-                JPanel openBCIPanel = new JPanel();
-                openBCIPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
-                openBCIPanel.setBorder(openBCIBorder);
-                openBCIPanel.add(getStartButton());
-                openBCIPanel.add(Box.createRigidArea(new Dimension(5, 0)));
-                openBCIPanel.add(getStopButton());
-
-                buttonsPanel.add(configPanel, BorderLayout.PAGE_START);
-                buttonsPanel.add(openBCIPanel, BorderLayout.PAGE_END);
-
-                add(buttonsPanel, BorderLayout.PAGE_END);
+                add(configPanel, BorderLayout.PAGE_END);
         }
 
         /**
@@ -355,33 +317,5 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
                         configureModulesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
                 }
                 return configureModulesButton;
-        }
-
-        /**
-         * Gets the start button.
-         *
-         * @return the start button
-         */
-        private JButton getStartButton() {
-
-                if (startButton == null) {
-                        startButton = new JButton(startAction);
-                        startButton.setText(messageSource.getMessage("amplifierSelection.start"));
-                }
-                return startButton;
-        }
-
-        /**
-         * Gets the stop button.
-         *
-         * @return the stop button
-         */
-        private JButton getStopButton() {
-
-                if (stopButton == null) {
-                        stopButton = new JButton(stopAction);
-                        stopButton.setText(messageSource.getMessage("amplifierSelection.stop"));
-                }
-                return stopButton;
         }
 }

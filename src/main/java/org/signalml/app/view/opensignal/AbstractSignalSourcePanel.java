@@ -19,68 +19,66 @@ import org.springframework.context.support.MessageSourceAccessor;
  *
  * @author Piotr Szachewicz
  */
-abstract public class AbstractSignalSourcePanel extends JPanel implements PropertyChangeListener {	
+abstract public class AbstractSignalSourcePanel extends JPanel implements PropertyChangeListener {
 
-	protected ViewerElementManager viewerElementManager;
-
-	private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+        protected MessageSourceAccessor messageSource;
+        protected ViewerElementManager viewerElementManager;
+        private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
         private SignalSourceSelectionPanel signalSourceSelectionPanel;
-	protected MessageSourceAccessor messageSource;
 
-	public AbstractSignalSourcePanel(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager) {
-		this.messageSource = messageSource;
-		this.viewerElementManager = viewerElementManager;
-		createInterface();
-	}
+        public AbstractSignalSourcePanel(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager) {
+                this.messageSource = messageSource;
+                this.viewerElementManager = viewerElementManager;
+                createInterface();
+        }
 
-	public ViewerElementManager getViewerElementManager() {
-		return viewerElementManager;
-	}
+        public ViewerElementManager getViewerElementManager() {
+                return viewerElementManager;
+        }
 
-	protected final void createInterface() {
-		this.setLayout(new GridLayout(1, 2, 5, 0));
+        protected final void createInterface() {
+                this.setLayout(new GridLayout(1, 2, 5, 0));
                 this.setBorder(new EmptyBorder(5, 5, 5, 5));
 
                 JPanel absoluteLeftColumnPanel = new JPanel(new BorderLayout());
                 absoluteLeftColumnPanel.add(getSignalSourceSelectionPanel(), BorderLayout.NORTH);
                 absoluteLeftColumnPanel.add(createLeftColumnPanel(), BorderLayout.CENTER);
 
-		this.add(absoluteLeftColumnPanel);
-		this.add(createRightColumnPanel());
-	}
+                this.add(absoluteLeftColumnPanel);
+                this.add(createRightColumnPanel());
+        }
 
-	abstract protected JPanel createLeftColumnPanel();
+        abstract protected JPanel createLeftColumnPanel();
 
-	abstract protected JPanel createRightColumnPanel();
+        abstract protected JPanel createRightColumnPanel();
 
         abstract public void fillPanelFromModel(Object model) throws SignalMLException;
 
         abstract public void fillModelFromPanel(Object model) throws SignalMLException;
 
-	protected SignalSourceSelectionPanel getSignalSourceSelectionPanel() {
-		if (signalSourceSelectionPanel == null) {
-			signalSourceSelectionPanel = new SignalSourceSelectionPanel(messageSource);
-			signalSourceSelectionPanel.addPropertyChangeListener(this);
-		}
-		return signalSourceSelectionPanel;
-	}
+        protected SignalSourceSelectionPanel getSignalSourceSelectionPanel() {
+                if (signalSourceSelectionPanel == null) {
+                        signalSourceSelectionPanel = new SignalSourceSelectionPanel(messageSource);
+                        signalSourceSelectionPanel.addPropertyChangeListener(this);
+                }
+                return signalSourceSelectionPanel;
+        }
 
-	public void setSignalSourceSelectionComboBoxModel(ComboBoxModel model) {
-		getSignalSourceSelectionPanel().setSelectionComboBoxModel(model);
-	}
+        public void setSignalSourceSelectionComboBoxModel(ComboBoxModel model) {
+                getSignalSourceSelectionPanel().setSelectionComboBoxModel(model);
+        }
 
-	@Override
-	public void addPropertyChangeListener(PropertyChangeListener listener) {
-		propertyChangeSupport.addPropertyChangeListener(listener);
-	}
+        @Override
+        public void addPropertyChangeListener(PropertyChangeListener listener) {
+                propertyChangeSupport.addPropertyChangeListener(listener);
+        }
 
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		propertyChangeSupport.firePropertyChange(evt);
-	}
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+                propertyChangeSupport.firePropertyChange(evt);
+        }
 
-	protected void fireNumberOfChannelsChangedProperty(int newNumberOfChannels) {
-		propertyChangeSupport.firePropertyChange(SignalParametersPanel.NUMBER_OF_CHANNELS_CHANGED_PROPERTY, null, newNumberOfChannels);
-	}
-
+        protected void fireNumberOfChannelsChangedProperty(int newNumberOfChannels) {
+                propertyChangeSupport.firePropertyChange(SignalParametersPanel.NUMBER_OF_CHANNELS_CHANGED_PROPERTY, null, newNumberOfChannels);
+        }
 }
