@@ -32,7 +32,7 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 	public void propertyChange(PropertyChangeEvent evt) {
 		String propertyName = evt.getPropertyName();
 
-		if (propertyName.equals(SignalParametersPanel.NUMBER_OF_CHANNELS_CHANGED_PROPERTY)) {
+		if (propertyName.equals(SignalParametersPanel.NUMBER_OF_CHANNELS_PROPERTY)) {
 			int numberOfChannels = Integer.parseInt(evt.getNewValue().toString());
 			numberOfChannelsChangedTo(numberOfChannels);
 		}
