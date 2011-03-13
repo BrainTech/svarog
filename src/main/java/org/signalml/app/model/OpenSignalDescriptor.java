@@ -4,7 +4,6 @@
 
 package org.signalml.app.model;
 
-import org.signalml.app.view.opensignal.AmplifierConnectionDescriptor;
 import org.signalml.app.view.opensignal.FileOpenSignalMethod;
 import org.signalml.app.view.opensignal.SignalSource;
 import org.signalml.domain.montage.Montage;

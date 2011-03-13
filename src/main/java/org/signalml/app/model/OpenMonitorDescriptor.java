@@ -1,7 +1,6 @@
 package org.signalml.app.model;
 
 import multiplexer.jmx.client.JmxClient;
-import org.signalml.app.worker.amplifiers.AmplifierDefinition;
 
 import org.signalml.domain.signal.SignalType;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
@@ -12,26 +11,26 @@ import org.signalml.domain.signal.raw.RawSignalSampleType;
  */
 public class OpenMonitorDescriptor {
 
-	private SignalType type;
+	protected SignalType type;
 
-	private String multiplexerAddress;
-	private int multiplexerPort = -1;
-	private JmxClient jmxClient;
-	private JmxClient tagClient;
-	private boolean metadataReceived = false;
-	private String metadataInfo;
+	protected String multiplexerAddress;
+	protected int multiplexerPort = -1;
+	protected JmxClient jmxClient;
+	protected JmxClient tagClient;
+	protected boolean metadataReceived = false;
+	protected String metadataInfo;
 
-	private Integer channelCount;
-	private String[] channelLabels;
-	private Object[] selectedChannelList;
-	private int[] selectedChannelsIndecies;
-	private float pageSize;
+	protected Integer channelCount;
+	protected String[] channelLabels;
+	protected Object[] selectedChannelList;
+	protected int[] selectedChannelsIndecies;
+	protected float pageSize;
 
-	private Float samplingFrequency;
-	private float[] calibrationGain;
-	private float[] calibrationOffset;
-	private Float minimumValue;
-	private Float maximumValue;
+	protected Float samplingFrequency;
+	protected float[] calibrationGain;
+	protected float[] calibrationOffset;
+	protected Float minimumValue;
+	protected Float maximumValue;
 
 	/**
 	 * An integer value representing amplifier`s channel value for non-connected channel.
