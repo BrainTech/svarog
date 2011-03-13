@@ -647,13 +647,18 @@ public class DocumentFlowIntegrator {
 	 */
 	private SignalDocument openSignalDocument(final OpenDocumentDescriptor descriptor) throws IOException, SignalMLException {
 
-		final File file = descriptor.getFile();
+		//File file = descriptor.getFile();
+
+		//if (file == null)
+		File file = descriptor.getOpenSignalDescriptor().getOpenFileSignalDescriptor().getFile();
+
 		boolean fileOk = checkOpenedFile(file);
 		if (!fileOk) {
 			return null;
 		}
 
-		OpenFileSignalDescriptor signalOptions = descriptor.getSignalOptions();
+		//OpenFileSignalDescriptor signalOptions = descriptor.getSignalOptions();
+		OpenFileSignalDescriptor signalOptions = descriptor.getOpenSignalDescriptor().getOpenFileSignalDescriptor();
 		FileOpenSignalMethod method = signalOptions.getMethod();
 		if (method == null) {
 			logger.error("No method");
@@ -753,7 +758,7 @@ public class DocumentFlowIntegrator {
 			        rawDescriptor
 			);
 
-			rawSignalDocument.setBackingFile(descriptor.getFile());
+			rawSignalDocument.setBackingFile(file);
 			rawSignalDocument.openDocument();
 
 			rawSignalDocument.setPageSize(rawDescriptor.getPageSize());

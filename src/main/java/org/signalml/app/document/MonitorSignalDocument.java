@@ -459,7 +459,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		rsd.setCalibrationOffset(monitorOptions.getSelectedChannelsCalibrationOffset());
 		rsd.setChannelCount(monitorOptions.getSelectedChannelsCount());
 		rsd.setChannelLabels(monitorOptions.getSelectedChannelsLabels());
-		rsd.setPageSize(monitorOptions.getPageSize().floatValue());
+		rsd.setPageSize(monitorOptions.getPageSize());
 		rsd.setSampleCount(sampleCount);
 		rsd.setSampleType(monitorOptions.getSampleType());
 		rsd.setSamplingFrequency(monitorOptions.getSamplingFrequency());

@@ -9,6 +9,7 @@ import java.beans.PropertyChangeListener;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
+import org.signalml.app.model.OpenFileSignalDescriptor;
 import org.signalml.app.model.OpenSignalDescriptor;
 import org.signalml.app.view.ViewerElementManager;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -96,4 +97,12 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 		if (signalSource.isFile())
 			fileSignalSourcePanel.fillPanelFromModel(openSignalDescriptor.getOpenFileSignalDescriptor());
 	}
+
+	public void fillModelFromPanel(OpenSignalDescriptor openSignalDescriptor) {
+		SignalSource signalSource = openSignalDescriptor.getSignalSource();
+		if (signalSource.isFile()) {
+			OpenFileSignalDescriptor openFileSignalDescriptor = openSignalDescriptor.getOpenFileSignalDescriptor();
+			fileSignalSourcePanel.fillModelFromPanel(openFileSignalDescriptor);		}
+	}
+
 }

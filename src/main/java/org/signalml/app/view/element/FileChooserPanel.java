@@ -101,4 +101,8 @@ public class FileChooserPanel extends JPanel {
 		}
 		return fileChooser;
 	}
+
+	public File getSelectedFile() {
+		return fileChooser.getSelectedFile();
+	}
 }

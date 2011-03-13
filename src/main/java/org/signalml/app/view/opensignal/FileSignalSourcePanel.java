@@ -8,6 +8,7 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
 
 import javax.swing.JPanel;
 
@@ -63,6 +64,18 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 			rawSignalParametersPanel.fillPanelFromModel(openFileSignalDescriptor.getRawSignalDescriptor());
 		}
         }
+
+	public void fillModelFromPanel(OpenFileSignalDescriptor descriptor) {
+		FileOpenSignalMethod method = fileOpenMethodPanel.getSelectedOpenSignalMethod();
+		if (method.isRaw()) {
+			RawSignalDescriptor rawSignalDescriptor = descriptor.getRawSignalDescriptor();
+			rawSignalParametersPanel.fillModelFromPanel(rawSignalDescriptor);
+			
+			File selectedFile = fileChooserPanel.getSelectedFile();
+			
+			descriptor.setFile(selectedFile);
+		}
+	}
 
 	public FileChooserPanel getFileChooserPanel() {
 		if (fileChooserPanel == null) {

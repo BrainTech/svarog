@@ -25,6 +25,7 @@ import javax.swing.event.ChangeListener;
 import org.signalml.app.view.element.IntegerSpinner;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.view.element.DoubleSpinner;
+import org.signalml.app.view.element.FloatSpinner;
 import org.signalml.app.view.element.ResolvableComboBox;
 import org.signalml.codec.SignalMLCodecException;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
@@ -75,7 +76,7 @@ public class SignalParametersPanel extends JPanel {
 	/**
 	 * the text field with the size of the page of signal in seconds.
 	 */
-	private DoubleSpinner pageSizeSpinner;
+	private FloatSpinner pageSizeSpinner;
 
 	/**
 	 * the text field with the number of blocks that fit into one page of
@@ -171,7 +172,7 @@ public class SignalParametersPanel extends JPanel {
                         getSampleTypeComboBox().setModel(new DefaultComboBoxModel());
                         getSampleTypeComboBox().setEnabled(false);
 
-                        double pageSize = applicationConfiguration.getPageSize();
+                        float pageSize = applicationConfiguration.getPageSize();
                         try {
                                 pageSize = descriptor.getOpenMonitorDescriptor().getPageSize();
                         } catch (Exception ex) {
@@ -191,7 +192,7 @@ public class SignalParametersPanel extends JPanel {
         private void fillModelForAmplifierConnection(AmplifierConnectionDescriptor descriptor) throws SignalMLException {
 
                 Float samplingFrequency;
-                Double pageSize;
+                Float pageSize;
 
                 try {
                         samplingFrequency = Float.parseFloat(getSamplingFrequencyComboBox().getModel().getSelectedItem().toString());
@@ -425,10 +426,10 @@ public class SignalParametersPanel extends JPanel {
          *
          * @return the page size field
 	 */
-	protected DoubleSpinner getPageSizeSpinner() {
+	protected FloatSpinner getPageSizeSpinner() {
 
                 if (pageSizeSpinner == null) {
-			pageSizeSpinner = new DoubleSpinner(new SpinnerNumberModel(20.0, 0.1, 100000.0, 0.1));
+			pageSizeSpinner = new FloatSpinner(new SpinnerNumberModel(20.0F, 0.1F, 100000.0F, 0.1F));
 		}
 		return pageSizeSpinner;
 	}

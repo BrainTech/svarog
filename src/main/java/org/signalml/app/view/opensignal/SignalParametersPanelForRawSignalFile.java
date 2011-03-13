@@ -45,8 +45,12 @@ public class SignalParametersPanelForRawSignalFile extends SignalParametersPanel
 		descriptor.setChannelCount(getChannelCountSpinner().getValue());
 		descriptor.setByteOrder((RawSignalByteOrder) getByteOrderComboBox().getSelectedItem());
 		descriptor.setSampleType((RawSignalSampleType) getSampleTypeComboBox().getSelectedItem());
-		//descriptor.setPageSize(getPageSizeSpinner().getValue());
+		descriptor.setPageSize(getPageSizeSpinner().getValue());
+		descriptor.setBlocksPerPage(getBlocksPerPageSpinner().getValue());
+		descriptor.setSourceSignalType(RawSignalDescriptor.SourceSignalType.RAW);
 
+		descriptor.setCalibrationGain(1.0F);
+		descriptor.setCalibrationOffset(0.0F);
 	}
 
 }

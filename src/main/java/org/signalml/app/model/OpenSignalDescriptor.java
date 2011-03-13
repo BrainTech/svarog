@@ -5,8 +5,10 @@
 package org.signalml.app.model;
 
 import org.signalml.app.view.opensignal.AmplifierConnectionDescriptor;
+import org.signalml.app.view.opensignal.FileOpenSignalMethod;
 import org.signalml.app.view.opensignal.SignalSource;
 import org.signalml.domain.montage.Montage;
+import org.signalml.domain.signal.SignalType;
 
 /**
  *
@@ -21,6 +23,14 @@ public class OpenSignalDescriptor {
 	private AmplifierConnectionDescriptor amplifierConnectionDescriptor;
 
 	private Montage montage;
+
+	public OpenSignalDescriptor() {
+		signalSource = SignalSource.FILE;
+		openFileSignalDescriptor = new OpenFileSignalDescriptor();
+		openFileSignalDescriptor.setMethod(FileOpenSignalMethod.RAW);
+
+		montage = SignalType.EEG_10_20.getConfigurer().createMontage(openFileSignalDescriptor.getRawSignalDescriptor().getChannelCount());
+	}
 
 	public void setMontage(Montage montage) {
 		this.montage = montage;

@@ -4,6 +4,7 @@
 
 package org.signalml.app.model;
 
+import com.sun.org.apache.xpath.internal.compiler.OpCodes;
 import java.io.File;
 
 import org.signalml.app.document.ManagedDocumentType;
@@ -19,6 +20,7 @@ public class OpenDocumentDescriptor {
 	private ManagedDocumentType type;
 	private boolean makeActive;
 
+	private OpenSignalDescriptor openSignalDescriptor = new OpenSignalDescriptor();
 	private OpenFileSignalDescriptor signalOptions = new OpenFileSignalDescriptor();
 	private OpenMonitorDescriptor monitorOptions = new OpenMonitorDescriptor();
 	private OpenTagDescriptor tagOptions = new OpenTagDescriptor();
@@ -46,6 +48,10 @@ public class OpenDocumentDescriptor {
 
 	public void setMakeActive(boolean makeActive) {
 		this.makeActive = makeActive;
+	}
+
+	public OpenSignalDescriptor getOpenSignalDescriptor() {
+		return openSignalDescriptor;
 	}
 
 	public OpenFileSignalDescriptor getSignalOptions() {

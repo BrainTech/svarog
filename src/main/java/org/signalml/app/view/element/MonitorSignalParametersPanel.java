@@ -112,7 +112,7 @@ public class MonitorSignalParametersPanel extends JPanel {
 	 */
 	public void fillPanelFromModel(OpenMonitorDescriptor openMonitorDescriptor) {
 
-		Double pageSize = openMonitorDescriptor.getPageSize();
+		Float pageSize = openMonitorDescriptor.getPageSize();
 
 		if (getPageSizeField().getText().isEmpty() && applicationConfiguration != null)
 			pageSize = applicationConfiguration.getMonitorPageSize();
@@ -139,7 +139,7 @@ public class MonitorSignalParametersPanel extends JPanel {
 	 * @param openMonitorDescriptor the model to be filled.
 	 */
 	public void fillModelFromPanel(OpenMonitorDescriptor openMonitorDescriptor) {
-		openMonitorDescriptor.setPageSize(Double.parseDouble(getPageSizeField().getText()));
+		openMonitorDescriptor.setPageSize(Float.parseFloat(getPageSizeField().getText()));
 	}
 
 	/**

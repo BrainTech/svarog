@@ -6,6 +6,8 @@ package org.signalml.app.view.element;
 
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  * Spinner which more conveniently returns its current value which
@@ -21,6 +23,21 @@ public class FloatSpinner extends JSpinner {
 	 */
 	public FloatSpinner(SpinnerNumberModel model) {
 		super(model);
+
+		/*
+		 * This change listener is responsible for taking the
+		 * current float value of this spinner, convert it to
+		 * double and then set this value for this spinner.
+		 * SpinnerNumberModel doesn't support float values
+		 * so in the background this spinner operates on double.
+		 */
+		this.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				double value = getValue();
+				setValue(value);
+			}
+		});
 	}
 
 	@Override

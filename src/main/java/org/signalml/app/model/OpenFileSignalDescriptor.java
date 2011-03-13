@@ -4,6 +4,7 @@
 
 package org.signalml.app.model;
 
+import java.io.File;
 import org.signalml.app.view.opensignal.FileOpenSignalMethod;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.domain.signal.SignalType;
@@ -17,6 +18,8 @@ import org.signalml.domain.signal.raw.RawSignalSampleType;
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class OpenFileSignalDescriptor {
+
+	private File file;
 
 	private SignalType type;
 
@@ -82,6 +85,14 @@ public class OpenFileSignalDescriptor {
 
 	public void setRawSignalDescriptor(RawSignalDescriptor rawSignalDescriptor) {
 		this.rawSignalDescriptor = rawSignalDescriptor;
+	}
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
 	}
 
 }

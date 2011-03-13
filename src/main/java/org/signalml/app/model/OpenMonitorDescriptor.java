@@ -25,7 +25,7 @@ public class OpenMonitorDescriptor {
 	private String[] channelLabels;
 	private Object[] selectedChannelList;
 	private int[] selectedChannelsIndecies;
-	private Double pageSize;
+	private float pageSize;
 
 	private Float samplingFrequency;
 	private float[] calibrationGain;
@@ -284,11 +284,11 @@ public class OpenMonitorDescriptor {
 		return selectedChannelsIndecies;
 	}
 
-	public Double getPageSize() {
+	public float getPageSize() {
 		return pageSize;
 	}
 
-	public void setPageSize(Double pageSize) {
+	public void setPageSize(float pageSize) {
 		this.pageSize = pageSize;
 	}
 

@@ -127,7 +127,7 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration {
 	private String multiplexerAddress;
 	private int multiplexerPort;
 
-	private float  monitorPageSize;
+	private float monitorPageSize;
 
 	public void applySystemSettings() {
 
@@ -756,7 +756,7 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration {
 		this.multiplexerPort = this.defaultMultiplexerPort;
 	}
 
-	public double getMonitorPageSize() {
+	public float getMonitorPageSize() {
 		return monitorPageSize;
 	}
 

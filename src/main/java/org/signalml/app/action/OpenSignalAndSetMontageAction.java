@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import multiplexer.jmx.client.ConnectException;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.model.OpenDocumentDescriptor;
@@ -55,20 +56,25 @@ public class OpenSignalAndSetMontageAction extends AbstractSignalMLAction {
 
 		logger.debug("OpenSignalAndSetMontageAction");
 
-		OpenSignalDescriptor descriptor = new OpenSignalDescriptor();
+		OpenDocumentDescriptor ofd = new OpenDocumentDescriptor();
+		ofd.setMakeActive(true);
+		ofd.setType(ManagedDocumentType.SIGNAL);
+		/*OpenSignalDescriptor descriptor = new OpenSignalDescriptor();
 		descriptor.setSignalSource(SignalSource.FILE);
 		OpenFileSignalDescriptor fileDescriptor = new OpenFileSignalDescriptor();
 		fileDescriptor.setMethod(FileOpenSignalMethod.RAW);
-		descriptor.setOpenFileSignalDescriptor(fileDescriptor);
+		descriptor.setOpenFileSignalDescriptor(fileDescriptor);*/ /*Montage montage = SignalType.EEG_10_20.getConfigurer().createMontage(fileDescriptor.getRawSignalDescriptor().getChannelCount());
+		descriptor.setMontage(montage);*/ 
+		
+		OpenSignalDescriptor openSignalDescriptor = ofd.getOpenSignalDescriptor();
 
-		Montage montage = SignalType.EEG_10_20.getConfigurer().createMontage(fileDescriptor.getRawSignalDescriptor().getChannelCount());
-		descriptor.setMontage(montage);
-
-		boolean ok = openSignalAndSetMontageDialog.showDialog(descriptor, true);
+		boolean ok = openSignalAndSetMontageDialog.showDialog(openSignalDescriptor, true);
 		if (!ok) {
 			return;
 		}
-
+		
+		DocumentFlowIntegrator documentFlowIntegrator = viewerElementManager.getDocumentFlowIntegrator();
+		documentFlowIntegrator.maybeOpenDocument(ofd);
 
 		/*OpenDocumentDescriptor ofd = new OpenDocumentDescriptor();
 
