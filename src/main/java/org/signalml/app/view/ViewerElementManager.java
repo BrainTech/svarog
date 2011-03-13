@@ -151,6 +151,7 @@ import org.signalml.app.view.monitor.OpenBCIModuleConfigDialog;
 import org.signalml.app.view.monitor.StartMonitorRecordingDialog;
 import org.signalml.app.worker.amplifiers.AmplifierDefinitionPresetManager;
 import org.signalml.app.worker.processes.OpenBCIModulePresetManager;
+import org.signalml.app.worker.processes.ProcessManager;
 
 
 
@@ -189,6 +190,7 @@ public class ViewerElementManager {
 	private FFTSampleFilterPresetManager fftFilterPresetManager;
         private AmplifierDefinitionPresetManager amplifierDefinitionPresetManager;
         private OpenBCIModulePresetManager openBCIModulePresetManager;
+        private ProcessManager processManager;
 
 	/**
 	 * A {@link PresetManager} managing the user-defined
@@ -1901,6 +1903,14 @@ public class ViewerElementManager {
 	public void setTagClient(JmxClient tagClient) {
 		this.tagClient = tagClient;
 	}
+
+        public ProcessManager getProcessManager() {
+                return processManager;
+        }
+        
+        public void setProcessManager(ProcessManager processManager) {
+                this.processManager = processManager;
+        }
 
 	public DocumentView createDocumentViewPanel(Document document) throws SignalMLException {
 
