@@ -8,10 +8,7 @@ import java.awt.Window;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JComponent;
-import javax.swing.JDialog;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -22,7 +19,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 
@@ -36,16 +32,22 @@ import org.springframework.context.support.MessageSourceAccessor;
 public class ProgressDialog extends AbstractDialog implements PropertyChangeListener {
 
         public static final String PROGRESS_STATE = "progressState";
-
         /**
          * The text area.
          */
         private ProgressStateList progressStateList = null;
-
         /**
          * The progress bar.
          */
-        private JProgressBar progressBar = null;               
+        private JProgressBar progressBar = null;
+        /**
+         * If there was an error.
+         */
+        private boolean error;
+        /**
+         * If there was a success.
+         */
+        private boolean success;
 
         /**
          * Default constructor.
@@ -55,10 +57,9 @@ public class ProgressDialog extends AbstractDialog implements PropertyChangeList
          * @param isModal if this window is modal
          * @param caption window's caption
          */
-        public ProgressDialog(MessageSourceAccessor messageSource, Window w, boolean isModal, String caption) {
+        public ProgressDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
 
                 super(messageSource, w, isModal);
-                setTitle(caption);
         }
 
         /**
@@ -85,7 +86,7 @@ public class ProgressDialog extends AbstractDialog implements PropertyChangeList
          * @return the text area
          */
         private ProgressStateList getProgressStateList() {
-                
+
                 if (progressStateList == null) {
                         progressStateList = new ProgressStateList();
                 }
@@ -98,7 +99,7 @@ public class ProgressDialog extends AbstractDialog implements PropertyChangeList
          * @return the progress bar
          */
         private JProgressBar getProgressBar() {
-                
+
                 if (progressBar == null) {
                         progressBar = new JProgressBar();
                 }
@@ -121,26 +122,25 @@ public class ProgressDialog extends AbstractDialog implements PropertyChangeList
          * Fills all components from a {@link ProgressState} object.
          *
          * @param model a {@link ProgressState} object
-         * @throws SignalMLException never thrown
          */
         @Override
-        public void fillDialogFromModel(Object model) throws SignalMLException {
+        public void fillDialogFromModel(Object model) {
 
                 ProgressState state = (ProgressState) model;
 
-                boolean error = (state.getCurrentProgress() < 0);
-                boolean end = (state.getCurrentProgress() == state.getMaxProgress());
+                error = (state.getCurrentProgress() < 0);
+                success = (state.getCurrentProgress() == state.getMaxProgress());
 
                 getProgressStateList().add(state);
                 getProgressBar().setValue(state.getCurrentProgress());
                 getProgressBar().setMaximum(state.getMaxProgress());
 
-                if (error || end) {
+                if (error || success) {
                         getOkButton().setEnabled(true);
-                        setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+                        getCancelButton().setEnabled(false);
                 } else {
                         getOkButton().setEnabled(false);
-                        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                        getCancelButton().setEnabled(true);
                 }
         }
 
@@ -148,10 +148,9 @@ public class ProgressDialog extends AbstractDialog implements PropertyChangeList
          * Dialog is read only.
          *
          * @param model not used
-         * @throws SignalMLException never thrown
          */
         @Override
-        public void fillModelFromDialog(Object model) throws SignalMLException {                
+        public void fillModelFromDialog(Object model) {
         }
 
         /**
@@ -163,34 +162,10 @@ public class ProgressDialog extends AbstractDialog implements PropertyChangeList
         public void propertyChange(PropertyChangeEvent evt) {
 
                 if (PROGRESS_STATE.equals(evt.getPropertyName())) {
-                        try {
-                                fillDialogFromModel(evt.getNewValue());
-                        } catch (SignalMLException ex) {
-                                Logger.getLogger(ProgressDialog.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                        fillDialogFromModel(evt.getNewValue());
                 }
         }
-
-        /**
-         * Dialog can't be canceled.
-         * 
-         * @return false
-         */
-        @Override
-        protected boolean onCancel() {
-                return false;
-        }
-
-        /**
-         * No cancel button.
-         *
-         * @return false
-         */
-        @Override
-        public boolean isCancellable() {
-                return false;
-        }
-
+       
         /**
          * No cancel on escape.
          *
@@ -198,14 +173,36 @@ public class ProgressDialog extends AbstractDialog implements PropertyChangeList
          */
         @Override
         public boolean isCancelOnEscape() {
+
                 return false;
         }
 
         /**
          * Shows an empty dialog.
          */
-        public void showDialog() {
-                showDialog(new ProgressState());
+        public boolean showDialog() {
+                
+                return showDialog(new ProgressState());
+        }
+
+        /**
+         * Resets dialog.
+         */
+        @Override
+        protected void resetDialog() {
+
+                super.resetDialog();
+                getProgressStateList().removeAll();
+        }
+
+        /**
+         * Returns true if the window was cancelled.
+         *
+         * @return true if the window was cancelled
+         */
+        public boolean wasCancelled() {
+
+                return (!(error || success));
         }
 }
 
@@ -222,7 +219,7 @@ class ProgressStateList extends JList {
         public ProgressStateList() {
 
                 setCellRenderer(new ProgressStateListCellRenderer());
-                setSelectionMode(ListSelectionModel.SINGLE_SELECTION);                
+                setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         }
 
         /**
@@ -232,10 +229,12 @@ class ProgressStateList extends JList {
          */
         public void add(ProgressState state) {
 
+                if (state.getProgressMsg().equals("")) return;
                 Dimension size = getSize();
                 ArrayList<ProgressState> list = new ArrayList<ProgressState>();
-                for (int i = 0; i < getModel().getSize(); i++)
+                for (int i = 0; i < getModel().getSize(); i++) {
                         list.add((ProgressState) getModel().getElementAt(i));
+                }
                 list.add(state);
                 setListData(list.toArray());
                 setSize(size);
@@ -263,8 +262,7 @@ class ProgressStateListCellRenderer implements ListCellRenderer {
                 } else {
                         textArea.setForeground(Color.BLACK);
                 }
-                
+
                 return textArea;
         }
-
 }

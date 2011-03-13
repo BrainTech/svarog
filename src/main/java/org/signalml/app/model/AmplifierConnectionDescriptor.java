@@ -1,6 +1,5 @@
-package org.signalml.app.view.opensignal;
+package org.signalml.app.model;
 
-import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.app.worker.amplifiers.AmplifierInstance;
 
 /**
@@ -13,7 +12,7 @@ public class AmplifierConnectionDescriptor {
         /**
          * The open monitor descriptor.
          */
-        private OpenMonitorDescriptor openMonitorDescriptor;
+        private AmplifierConnectionOpenMonitorDescriptor openMonitorDescriptor;
         /**
          * The amplifier instance.
          */
@@ -23,7 +22,7 @@ public class AmplifierConnectionDescriptor {
                 return amplifierInstance;
         }
 
-        public OpenMonitorDescriptor getOpenMonitorDescriptor() {
+        public AmplifierConnectionOpenMonitorDescriptor getOpenMonitorDescriptor() {
                 return openMonitorDescriptor;
         }
 
@@ -31,11 +30,11 @@ public class AmplifierConnectionDescriptor {
                 this.amplifierInstance = amplifierInstance;
         }
 
-        public void setOpenMonitorDescriptor(OpenMonitorDescriptor openMonitorDescriptor) {
+        public void setOpenMonitorDescriptor(AmplifierConnectionOpenMonitorDescriptor openMonitorDescriptor) {
                 this.openMonitorDescriptor = openMonitorDescriptor;
         }
 
         public AmplifierConnectionDescriptor() {
-                openMonitorDescriptor = new OpenMonitorDescriptor();
+                openMonitorDescriptor = new AmplifierConnectionOpenMonitorDescriptor();
         }
 }

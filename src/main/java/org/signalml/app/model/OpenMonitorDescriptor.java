@@ -36,16 +36,16 @@ public class OpenMonitorDescriptor {
 	/**
 	 * An integer value representing amplifier`s channel value for non-connected channel.
 	 */
-	private double amplifierNull;
+	protected double amplifierNull;
 
-	private RawSignalSampleType sampleType;
-	private RawSignalByteOrder byteOrder;
+	protected RawSignalSampleType sampleType;
+	protected RawSignalByteOrder byteOrder;
 
 	/**
 	 * This {@link MonitorRecordingDescriptor} represents the parameters of
 	 * the recording which can be performed on this monitor.
 	 */
-	private MonitorRecordingDescriptor monitorRecordingDescriptor;
+	protected MonitorRecordingDescriptor monitorRecordingDescriptor;
 
 	public OpenMonitorDescriptor() {
 		// XXX currently all signals are treated as EEG - there is no way to change this in the GUI
@@ -326,33 +326,4 @@ public class OpenMonitorDescriptor {
 	public MonitorRecordingDescriptor getMonitorRecordingDescriptor() {
 		return monitorRecordingDescriptor;
 	}
-
-        /**
-         * Fills this object from an {@link AmplifierDefinition} object.
-         * 
-         * @param definition the definition
-         */
-        public void fillFromAnAmplifierDefinition(AmplifierDefinition definition) {
-
-                channelCount = definition.getChannelCount();
-
-                samplingFrequency = definition.getAvailableFrequencies().get(0);
-
-                channelLabels = new String[channelCount];
-                selectedChannelList = new String[channelCount];
-                selectedChannelsIndecies = new int[channelCount];
-                calibrationGain = new float[definition.getChannelCount()];
-                calibrationOffset = new float[definition.getChannelCount()];
-
-                for (int i = 0; i < definition.getChannelCount(); i++) {
-
-                        calibrationGain[i] = definition.getCalibrationGain().get(i);
-                        calibrationOffset[i] = definition.getCalibrationOffset().get(i);
-
-                        selectedChannelsIndecies[i] = i;
-                        channelLabels[i] = Integer.toBinaryString(i);
-                        selectedChannelList[i] = channelLabels[i];
-                }                
-        }
-
 }

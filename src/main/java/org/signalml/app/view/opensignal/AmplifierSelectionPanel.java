@@ -1,5 +1,6 @@
 package org.signalml.app.view.opensignal;
 
+import org.signalml.app.model.AmplifierConnectionDescriptor;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -22,7 +23,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.element.MonitorRecordingPanel;
 import org.signalml.app.worker.amplifiers.AmplifierDefinition;
@@ -98,6 +98,8 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
                 this.monitorRecordingPanel = monitorRecordingPanel;
 
                 createInterface();
+
+                currentDescriptor = new AmplifierConnectionDescriptor();
         }
 
         /**
@@ -254,9 +256,6 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
 
                 fillModelFromPanel(currentDescriptor);
                 if (currentDescriptor.getAmplifierInstance() != null) {
-                        if (currentDescriptor.getOpenMonitorDescriptor() == null) {
-                                currentDescriptor.setOpenMonitorDescriptor(new OpenMonitorDescriptor());
-                        }
                         currentDescriptor.getOpenMonitorDescriptor().fillFromAnAmplifierDefinition(
                                 currentDescriptor.getAmplifierInstance().getDefinition());
                         monitorRecordingPanel.setEnabledAll(true);

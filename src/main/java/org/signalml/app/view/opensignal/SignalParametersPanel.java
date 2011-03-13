@@ -1,5 +1,6 @@
 package org.signalml.app.view.opensignal;
 
+import org.signalml.app.model.AmplifierConnectionDescriptor;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
@@ -40,60 +41,50 @@ import org.springframework.context.support.MessageSourceAccessor;
  */
 public class SignalParametersPanel extends JPanel {
 
-	public static String NUMBER_OF_CHANNELS_PROPERTY = "numberOfChannelsChangedProperty";
-	public static String SAMPLING_FREQUENCY_PROPERTY = "samplingFrequencyChanged";
-
-	/**
-	 * the {@link MessageSourceAccessor source} of messages (labels).
-	 */
-	protected MessageSourceAccessor messageSource;
-
+        public static String NUMBER_OF_CHANNELS_PROPERTY = "numberOfChannelsChangedProperty";
+        public static String SAMPLING_FREQUENCY_PROPERTY = "samplingFrequencyChanged";
+        /**
+         * the {@link MessageSourceAccessor source} of messages (labels).
+         */
+        protected MessageSourceAccessor messageSource;
         /**
          * Current model.
          */
         private Object currentModel;
-
         /**
-	 * the combo box with the sampling frequency.
-	 */
-	private JComboBox samplingFrequencyComboBox;
-
-	/**
-	 * the text field with the number of channels.
-	 */
-	private IntegerSpinner channelCountSpinner;
-
-	/**
-	 * A text field allwing to change byte order.
-	 */
-	private ResolvableComboBox byteOrderComboBox;
-
-	/**
-	 * A text field allwing to change the sample type.
-	 */
-	private ResolvableComboBox sampleTypeComboBox;
-
-	/**
-	 * the text field with the size of the page of signal in seconds.
-	 */
-	private FloatSpinner pageSizeSpinner;
-
-	/**
-	 * the text field with the number of blocks that fit into one page of
-	 * the signal.
-	 */
-	private IntegerSpinner blocksPerPageSpinner;
-
+        <<<<<<< HEAD
+         * the combo box with the sampling frequency.
+         */
+        private JComboBox samplingFrequencyComboBox;
+        /**
+         * the text field with the number of channels.
+         */
+        private IntegerSpinner channelCountSpinner;
+        /**
+         * A text field allwing to change byte order.
+         */
+        private ResolvableComboBox byteOrderComboBox;
+        /**
+         * A text field allwing to change the sample type.
+         */
+        private ResolvableComboBox sampleTypeComboBox;
+        /**
+         * the text field with the size of the page of signal in seconds.
+         */
+        private FloatSpinner pageSizeSpinner;
+        /**
+         * the text field with the number of blocks that fit into one page of
+         * the signal.
+         */
+        private IntegerSpinner blocksPerPageSpinner;
         /**
          * Button that opens a dialog allowing to edit gain and offset.
          */
         private JButton editGainAndOffsetButton;
-
         /**
          * Application configuration.
          */
         private ApplicationConfiguration applicationConfiguration;
-
         /**
          * Edit gain and offset dialog.
          */
@@ -179,7 +170,7 @@ public class SignalParametersPanel extends JPanel {
                         }
                         getPageSizeSpinner().setValue(pageSize);
 
-			getBlocksPerPageSpinner().setEnabled(false);
+                        getBlocksPerPageSpinner().setEnabled(false);
                 }
         }
 
@@ -231,8 +222,9 @@ public class SignalParametersPanel extends JPanel {
         public void setEnabledAll(boolean enabled) {
 
                 setEnabledToChildren(this, enabled);
-                if (!enabled)
+                if (!enabled) {
                         clearAllFields();
+                }
         }
 
         /**
@@ -266,9 +258,8 @@ public class SignalParametersPanel extends JPanel {
                 JLabel blocksPerPageLabel = new JLabel(messageSource.getMessage("opensignal.parameters.blocksPerPage"));
 
                 setBorder(new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("opensignal.signalParametersPanelTitle")),
-		        new EmptyBorder(3,3,3,3)
-		));
+                        new TitledBorder(messageSource.getMessage("opensignal.signalParametersPanelTitle")),
+                        new EmptyBorder(3, 3, 3, 3)));
 
                 setLayout(new BorderLayout(0, 10));
 
@@ -317,11 +308,11 @@ public class SignalParametersPanel extends JPanel {
                 setEnabledAll(false);
         }
 
-	protected JPanel createButtonPanel() {
-		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        protected JPanel createButtonPanel() {
+                JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
                 buttonPanel.add(getEditGainAndOffsetButton());
-		return buttonPanel;
-	}
+                return buttonPanel;
+        }
 
         /**
          * Method fills a {@link GridBagConstraints} object with data.
@@ -343,109 +334,111 @@ public class SignalParametersPanel extends JPanel {
         }
 
         /**
-	 * Returns the sampling frequency combo box.
+         * Returns the sampling frequency combo box.
          *
          * @return the sampling frequency combo box
-	 */
-	protected JComboBox getSamplingFrequencyComboBox() {
+         */
+        protected JComboBox getSamplingFrequencyComboBox() {
 
                 if (samplingFrequencyComboBox == null) {
-			samplingFrequencyComboBox = new JComboBox();
-			samplingFrequencyComboBox.addActionListener(new ActionListener() {
-				private float previousSamplingFrequency = -1;
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					String selectedItemString = samplingFrequencyComboBox.getSelectedItem().toString();
+                        samplingFrequencyComboBox = new JComboBox();
+                        samplingFrequencyComboBox.addActionListener(new ActionListener() {
 
-					if (!selectedItemString.isEmpty()) {
-						float currentSamplingFrequency = Float.parseFloat(selectedItemString);
-						if (currentSamplingFrequency != previousSamplingFrequency) {
-							firePropertyChange(SAMPLING_FREQUENCY_PROPERTY, previousSamplingFrequency, currentSamplingFrequency);
-							System.out.println("sampling frequency changed to " + currentSamplingFrequency);
-						}
-					}
-				}
-			});
-		}
-		return samplingFrequencyComboBox;
-	}
+                                private float previousSamplingFrequency = -1;
 
-	/**
-	 * Returns the channel count field
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                        String selectedItemString = samplingFrequencyComboBox.getSelectedItem().toString();
+
+                                        if (!selectedItemString.isEmpty()) {
+                                                float currentSamplingFrequency = Float.parseFloat(selectedItemString);
+                                                if (currentSamplingFrequency != previousSamplingFrequency) {
+                                                        firePropertyChange(SAMPLING_FREQUENCY_PROPERTY, previousSamplingFrequency, currentSamplingFrequency);
+                                                        System.out.println("sampling frequency changed to " + currentSamplingFrequency);
+                                                }
+                                        }
+                                }
+                        });
+                }
+                return samplingFrequencyComboBox;
+        }
+
+        /**
+         * Returns the channel count field
          *
          * @return the channel count field
-	 */
-	protected IntegerSpinner getChannelCountSpinner() {
+         */
+        protected IntegerSpinner getChannelCountSpinner() {
 
                 if (channelCountSpinner == null) {
-			channelCountSpinner = new IntegerSpinner(new SpinnerNumberModel(4, 1, 50, 1));
-			channelCountSpinner.addChangeListener(new ChangeListener() {
+                        channelCountSpinner = new IntegerSpinner(new SpinnerNumberModel(4, 1, 50, 1));
+                        channelCountSpinner.addChangeListener(new ChangeListener() {
 
-				@Override
-				public void stateChanged(ChangeEvent e) {
-					System.out.println("spinner changed!");
-					int numberOfChannels = getChannelCountSpinner().getValue();
-					firePropertyChange(NUMBER_OF_CHANNELS_PROPERTY, 0, numberOfChannels);
-				}
-			});
+                                @Override
+                                public void stateChanged(ChangeEvent e) {
+                                        System.out.println("spinner changed!");
+                                        int numberOfChannels = getChannelCountSpinner().getValue();
+                                        firePropertyChange(NUMBER_OF_CHANNELS_PROPERTY, 0, numberOfChannels);
+                                }
+                        });
 
-		}
-		return channelCountSpinner;
-	}
+                }
+                return channelCountSpinner;
+        }
 
-	/**
-	 * Returns the byte order combo box.
+        /**
+         * Returns the byte order combo box.
          *
          * @return the byte order combo box
-	 */
-	protected ResolvableComboBox getByteOrderComboBox() {
+         */
+        protected ResolvableComboBox getByteOrderComboBox() {
 
                 if (byteOrderComboBox == null) {
-			byteOrderComboBox = new ResolvableComboBox(messageSource);
-			byteOrderComboBox.setModel(new DefaultComboBoxModel(RawSignalByteOrder.values()));
-		}
-		return byteOrderComboBox;
-	}
+                        byteOrderComboBox = new ResolvableComboBox(messageSource);
+                        byteOrderComboBox.setModel(new DefaultComboBoxModel(RawSignalByteOrder.values()));
+                }
+                return byteOrderComboBox;
+        }
 
-	/**
-	 * Returns the sample type combo box.
+        /**
+         * Returns the sample type combo box.
          *
          * @return the sample type combo box
-	 */
+         */
         protected ResolvableComboBox getSampleTypeComboBox() {
 
                 if (sampleTypeComboBox == null) {
-			sampleTypeComboBox = new ResolvableComboBox(messageSource);
-			sampleTypeComboBox.setModel(new DefaultComboBoxModel(RawSignalSampleType.values()));
-		}
-		return sampleTypeComboBox;
-	}
+                        sampleTypeComboBox = new ResolvableComboBox(messageSource);
+                        sampleTypeComboBox.setModel(new DefaultComboBoxModel(RawSignalSampleType.values()));
+                }
+                return sampleTypeComboBox;
+        }
 
-	/**
-	 * Returns the page size field.
+        /**
+         * Returns the page size spinner.
          *
-         * @return the page size field
-	 */
-	protected FloatSpinner getPageSizeSpinner() {
+         * @return the page size spinner
+         */
+        protected FloatSpinner getPageSizeSpinner() {
 
                 if (pageSizeSpinner == null) {
-			pageSizeSpinner = new FloatSpinner(new SpinnerNumberModel(20.0F, 0.1F, 100000.0F, 0.1F));
-		}
-		return pageSizeSpinner;
-	}
+                        pageSizeSpinner = new FloatSpinner(new SpinnerNumberModel(20.0F, 0.1F, 100000.0F, 0.1F));
+                }
+                return pageSizeSpinner;
+        }
 
-	/**
-	 * Returns the blocks per page field.
+        /**
+         * Returns the blocks per page field.
          *
          * @return the blocks per page field
-	 */
-	protected IntegerSpinner getBlocksPerPageSpinner() {
+         */
+        protected IntegerSpinner getBlocksPerPageSpinner() {
 
                 if (blocksPerPageSpinner == null) {
-			blocksPerPageSpinner = new IntegerSpinner(new SpinnerNumberModel(4, 1, 200, 1));
-		}
-		return blocksPerPageSpinner;
-	}
+                        blocksPerPageSpinner = new IntegerSpinner(new SpinnerNumberModel(4, 1, 200, 1));
+                }
+                return blocksPerPageSpinner;
+        }
 
         /**
          * Returns the edit gain and offset button.

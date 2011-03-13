@@ -22,7 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-import org.signalml.app.view.opensignal.AmplifierConnectionDescriptor;
+import org.signalml.app.model.AmplifierConnectionDescriptor;
 
 /**
  * Represents a panel in the {@link OpenMonitorDialog} used to enable/disable

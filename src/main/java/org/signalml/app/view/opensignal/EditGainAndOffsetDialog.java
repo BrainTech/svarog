@@ -1,5 +1,6 @@
 package org.signalml.app.view.opensignal;
 
+import org.signalml.app.model.AmplifierConnectionDescriptor;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;

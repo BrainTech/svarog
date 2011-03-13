@@ -1,5 +1,6 @@
 package org.signalml.app.view.opensignal;
 
+import org.signalml.app.model.AmplifierConnectionDescriptor;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import org.signalml.app.view.ViewerElementManager;
