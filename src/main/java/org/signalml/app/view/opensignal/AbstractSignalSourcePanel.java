@@ -50,11 +50,7 @@ abstract public class AbstractSignalSourcePanel extends JPanel implements Proper
 
         abstract protected JPanel createLeftColumnPanel();
 
-        abstract protected JPanel createRightColumnPanel();
-
-        abstract public void fillPanelFromModel(Object model) throws SignalMLException;
-
-        abstract public void fillModelFromPanel(Object model) throws SignalMLException;
+        abstract protected JPanel createRightColumnPanel();       
 
 	protected SignalSourceSelectionPanel getSignalSourceSelectionPanel() {
 		if (signalSourceSelectionPanel == null) {

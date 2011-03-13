@@ -140,7 +140,6 @@ public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel {
          * @throws SignalMLException when model is not supported or an amplifier
          * cannot be found (check {@link SignalMLException#getMessage()}
          */
-        @Override
         public void fillPanelFromModel(Object model) throws SignalMLException {
 
                 getSignalParametersPanel().fillPanelFromModel(model);
@@ -156,7 +155,6 @@ public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel {
          * @throws SignalMLException when model is not supported or input data
          * is not valid (check {@link SignalMLException#getMessage()}
          */
-        @Override
         public void fillModelFromPanel(Object model) throws SignalMLException {
 
                 getSignalParametersPanel().fillModelFromPanel(model);

@@ -288,7 +288,7 @@ public class OpenMonitorDescriptor {
 		return pageSize;
 	}
 
-	public void setPageSize( Double pageSize) {
+	public void setPageSize(Double pageSize) {
 		this.pageSize = pageSize;
 	}
 

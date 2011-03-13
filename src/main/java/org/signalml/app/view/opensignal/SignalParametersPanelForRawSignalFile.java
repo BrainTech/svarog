@@ -7,7 +7,9 @@ package org.signalml.app.view.opensignal;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import org.signalml.app.config.ApplicationConfiguration;
+import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
+import org.signalml.domain.signal.raw.RawSignalSampleType;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
@@ -36,6 +38,15 @@ public class SignalParametersPanelForRawSignalFile extends SignalParametersPanel
 		getSampleTypeComboBox().setSelectedItem(descriptor.getSampleType());
 		getPageSizeSpinner().setValue(descriptor.getPageSize());
 		getBlocksPerPageSpinner().setValue(descriptor.getBlocksPerPage());
+	}
+
+	public void fillModelFromPanel(RawSignalDescriptor descriptor) {
+		descriptor.setSamplingFrequency(Float.parseFloat(getSamplingFrequencyComboBox().getSelectedItem().toString()));
+		descriptor.setChannelCount(getChannelCountSpinner().getValue());
+		descriptor.setByteOrder((RawSignalByteOrder) getByteOrderComboBox().getSelectedItem());
+		descriptor.setSampleType((RawSignalSampleType) getSampleTypeComboBox().getSelectedItem());
+		//descriptor.setPageSize(getPageSizeSpinner().getValue());
+
 	}
 
 }

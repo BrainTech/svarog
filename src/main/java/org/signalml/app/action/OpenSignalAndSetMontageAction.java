@@ -14,13 +14,18 @@ import org.apache.log4j.Logger;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.model.OpenDocumentDescriptor;
+import org.signalml.app.model.OpenFileSignalDescriptor;
 import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.app.model.OpenSignalDescriptor;
 import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.dialog.OpenMonitorDialog;
+import org.signalml.app.view.opensignal.FileOpenSignalMethod;
 import org.signalml.app.view.opensignal.OpenSignalAndSetMontageDialog;
+import org.signalml.app.view.opensignal.SignalSource;
 import org.signalml.domain.montage.Montage;
+import org.signalml.domain.signal.SignalType;
+import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
@@ -51,6 +56,13 @@ public class OpenSignalAndSetMontageAction extends AbstractSignalMLAction {
 		logger.debug("OpenSignalAndSetMontageAction");
 
 		OpenSignalDescriptor descriptor = new OpenSignalDescriptor();
+		descriptor.setSignalSource(SignalSource.FILE);
+		OpenFileSignalDescriptor fileDescriptor = new OpenFileSignalDescriptor();
+		fileDescriptor.setMethod(FileOpenSignalMethod.RAW);
+		descriptor.setOpenFileSignalDescriptor(fileDescriptor);
+
+		Montage montage = SignalType.EEG_10_20.getConfigurer().createMontage(fileDescriptor.getRawSignalDescriptor().getChannelCount());
+		descriptor.setMontage(montage);
 
 		boolean ok = openSignalAndSetMontageDialog.showDialog(descriptor, true);
 		if (!ok) {

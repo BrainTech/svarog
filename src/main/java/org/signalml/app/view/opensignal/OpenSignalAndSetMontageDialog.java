@@ -53,6 +53,10 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 		if (model instanceof Montage) {
 			super.fillDialogFromModel(model);
 		}
+		else if (model instanceof OpenSignalDescriptor) {
+			OpenSignalDescriptor openSignalDescriptor = (OpenSignalDescriptor) model;
+			signalSourcePanel.fillPanelFromModel(openSignalDescriptor);
+		}
 		//OpenSignalDescriptor descriptor = (OpenSignalDescriptor) model;
 	}
 

@@ -42,12 +42,10 @@ public class OpenBCISignalSourcePanel extends AbstractSignalSourcePanel {
 		return panel;
 	}
 
-        @Override
         public void fillPanelFromModel(Object model) throws SignalMLException {
                 throw new UnsupportedOperationException("Not supported yet.");
         }
 
-        @Override
         public void fillModelFromPanel(Object model) throws SignalMLException {
                 throw new UnsupportedOperationException("Not supported yet.");
         }

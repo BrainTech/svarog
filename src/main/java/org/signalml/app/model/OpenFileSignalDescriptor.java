@@ -34,11 +34,13 @@ public class OpenFileSignalDescriptor {
 		type = SignalType.EEG_10_20;
 
 		rawSignalDescriptor.setSamplingFrequency(128F);
-		rawSignalDescriptor.setChannelCount(1);
+		rawSignalDescriptor.setChannelCount(2);
 		rawSignalDescriptor.setSampleType(RawSignalSampleType.DOUBLE);
 		rawSignalDescriptor.setByteOrder(RawSignalByteOrder.LITTLE_ENDIAN);
 		rawSignalDescriptor.setCalibrationGain(1F);
 		rawSignalDescriptor.setCalibrationOffset(0.0F);
+		rawSignalDescriptor.setPageSize(20.0F);
+		rawSignalDescriptor.setBlocksPerPage(5);
 
 	}
 

@@ -12,11 +12,13 @@ import java.beans.PropertyChangeListener;
 import javax.swing.JPanel;
 
 import org.signalml.app.document.ManagedDocumentType;
+import org.signalml.app.model.OpenFileSignalDescriptor;
 import org.signalml.app.view.ViewerElementManager;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.signalml.app.view.element.FileChooserPanel;
 import org.signalml.app.view.element.SignalMLOptionsPanel;
+import org.signalml.domain.signal.raw.RawSignalDescriptor;
 
 /**
  *
@@ -53,14 +55,13 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 		return rightColumnPanel;
 	}
 
-        @Override
-        public void fillPanelFromModel(Object model) throws SignalMLException {
-                throw new UnsupportedOperationException("Not supported yet.");
-        }
+        public void fillPanelFromModel(OpenFileSignalDescriptor openFileSignalDescriptor) {
+		FileOpenSignalMethod method = openFileSignalDescriptor.getMethod();
 
-        @Override
-        public void fillModelFromPanel(Object model) throws SignalMLException {
-                throw new UnsupportedOperationException("Not supported yet.");
+		fileOpenMethodPanel.setSelectedOpenSignalMethod(method);
+		if (method.isRaw()) {
+			rawSignalParametersPanel.fillPanelFromModel(openFileSignalDescriptor.getRawSignalDescriptor());
+		}
         }
 
 	public FileChooserPanel getFileChooserPanel() {

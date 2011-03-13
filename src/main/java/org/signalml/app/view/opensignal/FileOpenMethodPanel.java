@@ -109,6 +109,14 @@ public class FileOpenMethodPanel extends JPanel {
 		return methodComboBox;
 	}
 
+	public FileOpenSignalMethod getSelectedOpenSignalMethod() {
+		return (FileOpenSignalMethod) methodComboBox.getSelectedItem();
+	}
+
+	public void setSelectedOpenSignalMethod(FileOpenSignalMethod method) {
+		methodComboBox.setSelectedItem(method);
+	}
+
 	protected void fireFileOpenMethodPropertyChanged() {
 		firePropertyChange(FILE_OPEN_METHOD_PROPERTY_CHANGED, null, methodComboBox.getSelectedItem());
 	}
