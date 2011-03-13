@@ -251,7 +251,6 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 		MontageDescriptor descriptor = (MontageDescriptor) model;
 
 		// montage was edited immediately for the most part
-
 		descriptor.setMontage(currentMontage);
 
 	}
@@ -409,6 +408,10 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 
 	public void setSamplingFrequency(float samplingFrequency) {
 		filtersPanel.setCurrentSamplingFrequency(samplingFrequency);
+	}
+
+	public Montage getCurrentMontage() {
+		return currentMontage;
 	}
 
 }
