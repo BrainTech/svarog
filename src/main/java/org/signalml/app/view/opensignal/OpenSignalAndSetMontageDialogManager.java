@@ -6,9 +6,11 @@ package org.signalml.app.view.opensignal;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.nio.channels.Channel;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.signalml.domain.montage.Montage;
+import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.signal.SignalType;
 import org.signalml.plugin.export.SignalMLException;
 
@@ -44,6 +46,7 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 
 	protected void numberOfChannelsChangedTo(int newNumberOfChannels) {
 		Montage createdMontage = SignalType.EEG_10_20.getConfigurer().createMontage(newNumberOfChannels);
+
 		try {
 			openSignalAndSetMontageDialog.fillDialogFromModel(createdMontage);
 		} catch (SignalMLException ex) {

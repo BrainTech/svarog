@@ -797,7 +797,8 @@ public class DocumentFlowIntegrator {
 
 	private SignalDocument openMonitorDocument(final OpenDocumentDescriptor descriptor) throws IOException, SignalMLException, ConnectException {
 
-		OpenMonitorDescriptor monitorOptions = descriptor.getMonitorOptions();
+		//OpenMonitorDescriptor monitorOptions = descriptor.getMonitorOptions();
+		OpenMonitorDescriptor monitorOptions = descriptor.getOpenSignalDescriptor().getOpenMonitorDescriptor();
 		
 		MonitorSignalDocument monitorSignalDocument = new MonitorSignalDocument(monitorOptions);
 

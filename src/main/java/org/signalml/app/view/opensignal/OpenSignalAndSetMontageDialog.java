@@ -71,6 +71,7 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 			signalSourcePanel.fillModelFromPanel(openSignalDescriptor);
 
 			openSignalDescriptor.setMontage(getCurrentMontage());
+
 			//super.fillModelFromDialog(openSignalDescriptor.getMontage());
 		}
 //		super.fillModelFromDialog(model);

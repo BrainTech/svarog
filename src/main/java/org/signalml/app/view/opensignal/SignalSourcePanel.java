@@ -10,6 +10,7 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
 import org.signalml.app.model.OpenFileSignalDescriptor;
+import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.app.model.OpenSignalDescriptor;
 import org.signalml.app.view.ViewerElementManager;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -103,10 +104,16 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 	}
 
 	public void fillModelFromPanel(OpenSignalDescriptor openSignalDescriptor) {
-		SignalSource signalSource = openSignalDescriptor.getSignalSource();
+		SignalSource signalSource = (SignalSource) signalSourceSelectionComboBoxModel.getSelectedItem();
+		openSignalDescriptor.setSignalSource(signalSource);
 		if (signalSource.isFile()) {
 			OpenFileSignalDescriptor openFileSignalDescriptor = openSignalDescriptor.getOpenFileSignalDescriptor();
-			fileSignalSourcePanel.fillModelFromPanel(openFileSignalDescriptor);		}
+			fileSignalSourcePanel.fillModelFromPanel(openFileSignalDescriptor);
+		}
+		else if (signalSource.isOpenBCI()) {
+			OpenMonitorDescriptor openMonitorDescriptor = openSignalDescriptor.getOpenMonitorDescriptor();
+			openBCISignalSourcePanel.fillModelFromPanel(openMonitorDescriptor);
+		}
 	}
 
 }
