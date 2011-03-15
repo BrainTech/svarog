@@ -24,7 +24,6 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import org.signalml.app.view.ViewerElementManager;
-import org.signalml.app.view.element.MonitorRecordingPanel;
 import org.signalml.app.worker.amplifiers.AmplifierDefinition;
 import org.signalml.app.worker.amplifiers.AmplifierDiscoveryWorker;
 import org.signalml.app.worker.amplifiers.AmplifierInstance;
@@ -64,13 +63,9 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
          */
         private ViewerElementManager elementManager;
         /**
-         * The signal parameters panel to modify when an amp is chosen.
+         * Amplifier signal source panel.
          */
-        private SignalParametersPanel signalParametersPanel;
-        /**
-         * The monitor recording panel to modify when an amp is chosen.
-         */
-        private MonitorRecordingPanel monitorRecordingPanel;
+        private AmplifierSignalSourcePanel sourcePanel;
         /**
          * Current descriptor.
          */
@@ -81,21 +76,17 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
          *
          * @param messageSource {@link #messageSource}
          * @param elementManager {@link #elementManager}
-         * @param signalParametersPanel {@link #signalParametersPanel}
-         * @param startAction {@link #startAction}
-         * @param stopAction {@link #stopAction}
+         * @param sourcePanel {@link #sourcePanel}
          */
         public AmplifierSelectionPanel(MessageSourceAccessor messageSource,
                 ViewerElementManager elementManager,
-                SignalParametersPanel signalParametersPanel,
-                MonitorRecordingPanel monitorRecordingPanel) {
+                AmplifierSignalSourcePanel sourcePanel) {
 
                 super();
 
                 this.messageSource = messageSource;
                 this.elementManager = elementManager;
-                this.signalParametersPanel = signalParametersPanel;
-                this.monitorRecordingPanel = monitorRecordingPanel;
+                this.sourcePanel = sourcePanel;
 
                 createInterface();
 
@@ -255,15 +246,11 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
         private void amplifierSelected() {
 
                 fillModelFromPanel(currentDescriptor);
-                if (currentDescriptor.getAmplifierInstance() != null) {
+                if (currentDescriptor.getAmplifierInstance() != null)
                         currentDescriptor.getOpenMonitorDescriptor().fillFromAnAmplifierDefinition(
                                 currentDescriptor.getAmplifierInstance().getDefinition());
-                        monitorRecordingPanel.setEnabledAll(true);
-                } else {
-                        monitorRecordingPanel.setEnabledAll(false);
-                }
                 try {
-                        signalParametersPanel.fillPanelFromModel(currentDescriptor);
+                        sourcePanel.fillPanelFromModel(currentDescriptor, true);
                 } catch (SignalMLException ex) {
                 }
         }

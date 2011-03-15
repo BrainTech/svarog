@@ -1,6 +1,7 @@
 package org.signalml.app.model;
 
 import multiplexer.jmx.client.JmxClient;
+import org.signalml.app.worker.amplifiers.AmplifierDefinition;
 
 import org.signalml.domain.signal.SignalType;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
@@ -11,318 +12,343 @@ import org.signalml.domain.signal.raw.RawSignalSampleType;
  */
 public class OpenMonitorDescriptor {
 
-	protected SignalType type;
+        protected SignalType type;
+        protected String multiplexerAddress;
+        protected int multiplexerPort = -1;
+        protected JmxClient jmxClient;
+        protected JmxClient tagClient;
+        protected boolean metadataReceived = false;
+        protected String metadataInfo;
+        protected Integer channelCount;
+        protected String[] channelLabels;
+        protected Object[] selectedChannelList;
+        protected int[] selectedChannelsIndecies;
+        protected float pageSize;
+        protected Float samplingFrequency;
+        protected float[] calibrationGain;
+        protected float[] calibrationOffset;
+        protected Float minimumValue;
+        protected Float maximumValue;
+        /**
+         * An integer value representing amplifier`s channel value for non-connected channel.
+         */
+        protected double amplifierNull;
+        protected RawSignalSampleType sampleType;
+        protected RawSignalByteOrder byteOrder;
+        /**
+         * This {@link MonitorRecordingDescriptor} represents the parameters of
+         * the recording which can be performed on this monitor.
+         */
+        protected MonitorRecordingDescriptor monitorRecordingDescriptor;
 
-	protected String multiplexerAddress;
-	protected int multiplexerPort = -1;
-	protected JmxClient jmxClient;
-	protected JmxClient tagClient;
-	protected boolean metadataReceived = false;
-	protected String metadataInfo;
+        public OpenMonitorDescriptor() {
+                // XXX currently all signals are treated as EEG - there is no way to change this in the GUI
+                type = SignalType.EEG_10_20;
+                channelCount = 0;
+                sampleType = RawSignalSampleType.DOUBLE;
+                byteOrder = RawSignalByteOrder.LITTLE_ENDIAN;
 
-	protected Integer channelCount;
-	protected String[] channelLabels;
-	protected Object[] selectedChannelList;
-	protected int[] selectedChannelsIndecies;
-	protected float pageSize;
+                monitorRecordingDescriptor = new MonitorRecordingDescriptor();
+        }
 
-	protected Float samplingFrequency;
-	protected float[] calibrationGain;
-	protected float[] calibrationOffset;
-	protected Float minimumValue;
-	protected Float maximumValue;
+        public String getMultiplexerAddress() {
+                return multiplexerAddress;
+        }
 
-	/**
-	 * An integer value representing amplifier`s channel value for non-connected channel.
-	 */
-	protected double amplifierNull;
+        public void setMultiplexerAddress(String multiplexerAddress) {
+                this.multiplexerAddress = multiplexerAddress;
+        }
 
-	protected RawSignalSampleType sampleType;
-	protected RawSignalByteOrder byteOrder;
+        public int getMultiplexerPort() {
+                return multiplexerPort;
+        }
 
-	/**
-	 * This {@link MonitorRecordingDescriptor} represents the parameters of
-	 * the recording which can be performed on this monitor.
-	 */
-	protected MonitorRecordingDescriptor monitorRecordingDescriptor;
+        public void setMultiplexerPort(int multiplexerPort) {
+                this.multiplexerPort = multiplexerPort;
+        }
 
-	public OpenMonitorDescriptor() {
-		// XXX currently all signals are treated as EEG - there is no way to change this in the GUI
-		type = SignalType.EEG_10_20;
-		channelCount = 0;
-		sampleType = RawSignalSampleType.DOUBLE;
-		byteOrder = RawSignalByteOrder.LITTLE_ENDIAN;
+        public JmxClient getJmxClient() {
+                return jmxClient;
+        }
 
-		monitorRecordingDescriptor = new MonitorRecordingDescriptor();
-	}
+        public void setJmxClient(JmxClient jmxClient) {
+                this.jmxClient = jmxClient;
+        }
 
-	public String getMultiplexerAddress() {
-		return multiplexerAddress;
-	}
+        public JmxClient getTagClient() {
+                return tagClient;
+        }
 
-	public void setMultiplexerAddress(String multiplexerAddress) {
-		this.multiplexerAddress = multiplexerAddress;
-	}
+        public void setTagClient(JmxClient tagClient) {
+                this.tagClient = tagClient;
+        }
 
-	public int getMultiplexerPort() {
-		return multiplexerPort;
-	}
+        public boolean isMetadataReceived() {
+                return metadataReceived;
+        }
 
-	public void setMultiplexerPort(int multiplexerPort) {
-		this.multiplexerPort = multiplexerPort;
-	}
+        public void setMetadataReceived(boolean metadataReceived) {
+                this.metadataReceived = metadataReceived;
+        }
 
-	public JmxClient getJmxClient() {
-		return jmxClient;
-	}
+        public String getMetadataInfo() {
+                return metadataInfo;
+        }
 
-	public void setJmxClient(JmxClient jmxClient) {
-		this.jmxClient = jmxClient;
-	}
+        public void setMetadataInfo(String metadataInfo) {
+                this.metadataInfo = metadataInfo;
+        }
 
-	public JmxClient getTagClient() {
-		return tagClient;
-	}
+        public SignalType getType() {
+                return type;
+        }
 
-	public void setTagClient(JmxClient tagClient) {
-		this.tagClient = tagClient;
-	}
+        public void setType(SignalType type) {
+                this.type = type;
+        }
 
-	public boolean isMetadataReceived() {
-		return metadataReceived;
-	}
+        public Float getSamplingFrequency() {
+                return samplingFrequency;
+        }
 
-	public void setMetadataReceived(boolean metadataReceived) {
-		this.metadataReceived = metadataReceived;
-	}
+        public void setSamplingFrequency(Float samplingFrequency) {
+                this.samplingFrequency = samplingFrequency;
+        }
 
-	public String getMetadataInfo() {
-		return metadataInfo;
-	}
+        public Integer getChannelCount() {
+                return channelCount;
+        }
 
-	public void setMetadataInfo(String metadataInfo) {
-		this.metadataInfo = metadataInfo;
-	}
+        /**
+         * Returns the number of channels to be monitored (selected in the
+         * Open Monitor dialog).
+         *
+         * @return how many channels are to be monitored.
+         */
+        public Integer getSelectedChannelsCount() {
+                return selectedChannelList.length;
+        }
 
-	public SignalType getType() {
-		return type;
-	}
+        public void setChannelCount(Integer channelCount) {
+                this.channelCount = channelCount;
+        }
 
-	public void setType(SignalType type) {
-		this.type = type;
-	}
+        public float[] getCalibrationGain() {
+                return calibrationGain;
+        }
 
-	public Float getSamplingFrequency() {
-		return samplingFrequency;
-	}
+        /**
+         * Returns the values of calibration gain for the channels selected in the
+         * Open Monitor dialog.
+         *
+         * @return calibration gain for the selected channels.
+         */
+        public float[] getSelectedChannelsCalibrationGain() {
+                float[] selectedChannelsCalibrationGain = new float[getSelectedChannelList().length];
+                int j = 0;
 
-	public void setSamplingFrequency( Float samplingFrequency) {
-		this.samplingFrequency = samplingFrequency;
-	}
+                for (int i : getSelectedChannelsIndecies()) {
+                        selectedChannelsCalibrationGain[j] = calibrationGain[i];
+                        j++;
+                }
 
-	public Integer getChannelCount() {
-		return channelCount;
-	}
+                return selectedChannelsCalibrationGain;
+        }
 
-	/**
-	 * Returns the number of channels to be monitored (selected in the
-	 * Open Monitor dialog).
-	 *
-	 * @return how many channels are to be monitored.
-	 */
-	public Integer getSelectedChannelsCount() {
-		return selectedChannelList.length;
-	}
+        public double[] getGain() {
+                double[] result = new double[calibrationGain.length];
+                for (int i = 0; i < calibrationGain.length; i++) {
+                        result[i] = (double) calibrationGain[i];
+                }
+                return result;
+        }
 
-	public void setChannelCount(Integer channelCount) {
-		this.channelCount = channelCount;
-	}
+        public void setCalibrationGain(float[] calibrationGain) {
+                this.calibrationGain = calibrationGain;
+        }
 
-	public float[] getCalibrationGain() {
-		return calibrationGain;
-	}
+        public float[] getCalibrationOffset() {
+                return calibrationOffset;
+        }
 
-	/**
-	 * Returns the values of calibration gain for the channels selected in the
-	 * Open Monitor dialog.
-	 *
-	 * @return calibration gain for the selected channels.
-	 */
-	public float[] getSelectedChannelsCalibrationGain() {
-		float [] selectedChannelsCalibrationGain = new float[getSelectedChannelList().length];
-		int j = 0;
+        /**
+         * Returns the values of calibration offset for the channels selected in the
+         * Open Monitor dialog.
+         *
+         * @return calibration offset for the selected channels.
+         */
+        public float[] getSelectedChannelsCalibrationOffset() {
+                float[] selectedChannelsCalibrationOffset = new float[getSelectedChannelList().length];
+                int j = 0;
 
-		for(int i: getSelectedChannelsIndecies()) {
-			selectedChannelsCalibrationGain[j] = calibrationGain[i];
-			j++;
-		}
+                for (int i : getSelectedChannelsIndecies()) {
+                        selectedChannelsCalibrationOffset[j] = calibrationOffset[i];
+                        j++;
+                }
 
-		return selectedChannelsCalibrationGain;
-	}
+                return selectedChannelsCalibrationOffset;
+        }
 
-	public double[] getGain() {
-		double[] result = new double[calibrationGain.length];
-		for (int i=0; i<calibrationGain.length; i++)
-			result[i] = (double) calibrationGain[i];
-		return result;
-	}
+        public double[] getOffset() {
+                double[] result = new double[calibrationOffset.length];
+                for (int i = 0; i < calibrationOffset.length; i++) {
+                        result[i] = (double) calibrationOffset[i];
+                }
+                return result;
+        }
 
-	public void setCalibrationGain( float[] calibrationGain) {
-		this.calibrationGain = calibrationGain;
-	}
+        public void setCalibrationOffset(float[] calibrationOffset) {
+                this.calibrationOffset = calibrationOffset;
+        }
 
-	public float[] getCalibrationOffset() {
-		return calibrationOffset;
-	}
+        public Float getMinimumValue() {
+                return minimumValue;
+        }
 
-	/**
-	 * Returns the values of calibration offset for the channels selected in the
-	 * Open Monitor dialog.
-	 *
-	 * @return calibration offset for the selected channels.
-	 */
-	public float[] getSelectedChannelsCalibrationOffset() {
-		float [] selectedChannelsCalibrationOffset = new float[getSelectedChannelList().length];
-		int j = 0;
+        public void setMinimumValue(Float minimumValue) {
+                this.minimumValue = minimumValue;
+        }
 
-		for(int i: getSelectedChannelsIndecies()) {
-			selectedChannelsCalibrationOffset[j] = calibrationOffset[i];
-			j++;
-		}
+        /**
+         * Returns an integer value representing amplifier`s channel value for non-connected channel
+         * @return an integer value representing amplifier`s channel value for non-connected channel
+         */
+        public double getAmplifierNull() {
+                return this.amplifierNull;
+        }
 
-		return selectedChannelsCalibrationOffset;
-	}
+        public void setAmplifierNull(double ampNull) {
+                this.amplifierNull = ampNull;
+        }
 
-	public double[] getOffset() {
-		double[] result = new double[calibrationOffset.length];
-		for (int i=0; i<calibrationOffset.length; i++)
-			result[i] = (double) calibrationOffset[i];
-		return result;
-	}
+        public Float getMaximumValue() {
+                return maximumValue;
+        }
 
-	public void setCalibrationOffset( float[] calibrationOffset) {
-		this.calibrationOffset = calibrationOffset;
-	}
+        public void setMaximumValue(Float maximumValue) {
+                this.maximumValue = maximumValue;
+        }
 
-	public Float getMinimumValue() {
-		return minimumValue;
-	}
+        public String[] getChannelLabels() {
+                return channelLabels;
+        }
 
-	public void setMinimumValue(Float minimumValue) {
-		this.minimumValue = minimumValue;
-	}
+        /**
+         * Returns the labels for the channels selected to be monitored in the
+         * Open Monitor dialog.
+         *
+         * @return labels of the selected channels.
+         */
+        public String[] getSelectedChannelsLabels() {
+                String[] selectedChannelLabels = new String[getSelectedChannelList().length];
+                int j = 0;
 
-	/**
-	 * Returns an integer value representing amplifier`s channel value for non-connected channel
-	 * @return an integer value representing amplifier`s channel value for non-connected channel
-	 */
-	public double getAmplifierNull() {
-		return this.amplifierNull;
-	}
+                for (int i : getSelectedChannelsIndecies()) {
+                        selectedChannelLabels[j] = channelLabels[i];
+                        j++;
+                }
 
-	public void setAmplifierNull(double ampNull) {
-		this.amplifierNull = ampNull;
-	}
-	public Float getMaximumValue() {
-		return maximumValue;
-	}
+                return selectedChannelLabels;
+        }
 
-	public void setMaximumValue(Float maximumValue) {
-		this.maximumValue = maximumValue;
-	}
+        public void setChannelLabels(String[] channelLabels) {
+                this.channelLabels = channelLabels;
+        }
 
-	public String[] getChannelLabels() {
-		return channelLabels;
-	}
+        public Object[] getSelectedChannelList() {
+                return selectedChannelList;
+        }
 
-	/**
-	 * Returns the labels for the channels selected to be monitored in the
-	 * Open Monitor dialog.
-	 *
-	 * @return labels of the selected channels.
-	 */
-	public String[] getSelectedChannelsLabels() {
-		String [] selectedChannelLabels = new String[getSelectedChannelList().length];
-		int j = 0;
+        private int findLabelIndex(Object label) throws Exception {
+                if (label == null) {
+                        throw new NullPointerException();
+                }
+                for (int i = 0; i < channelLabels.length; i++) {
+                        if (label.equals(channelLabels[i])) {
+                                return i;
+                        }
+                }
+                throw new Exception("Bad argument value: " + label);
+        }
 
-		for(int i: getSelectedChannelsIndecies()) {
-			selectedChannelLabels[j] = channelLabels[i];
-			j++;
-		}
+        public void setSelectedChannelList(Object[] selectedChannelList) throws Exception {
+                this.selectedChannelList = selectedChannelList;
+                selectedChannelsIndecies = new int[selectedChannelList.length];
+                for (int i = 0; i < selectedChannelList.length; i++) {
+                        int n = findLabelIndex(selectedChannelList[i]);
+                        selectedChannelsIndecies[i] = n;
+                }
+        }
 
-		return selectedChannelLabels;
-	}
+        public int[] getSelectedChannelsIndecies() {
+                return selectedChannelsIndecies;
+        }
 
-	public void setChannelLabels(String[] channelLabels) {
-		this.channelLabels = channelLabels;
-	}
+        public float getPageSize() {
+                return pageSize;
+        }
 
-	public Object[] getSelectedChannelList() {
-		return selectedChannelList;
-	}
+        public void setPageSize(float pageSize) {
+                this.pageSize = pageSize;
+        }
 
-	private int findLabelIndex( Object label) throws Exception {
-		if (label == null)
-			throw new NullPointerException();
-		for (int i=0; i<channelLabels.length; i++)
-			if (label.equals( channelLabels[i]))
-				return i;
-		throw new Exception( "Bad argument value: " + label);
-	}
+        public RawSignalSampleType getSampleType() {
+                return sampleType;
+        }
 
-	public void setSelectedChannelList(Object[] selectedChannelList) throws Exception {
-		this.selectedChannelList = selectedChannelList;
-		selectedChannelsIndecies = new int[selectedChannelList.length];
-		for (int i=0; i<selectedChannelList.length; i++) {
-			int n = findLabelIndex( selectedChannelList[i]);
-			selectedChannelsIndecies[i] = n;
-		}
-	}
+        public void setSampleType(RawSignalSampleType sampleType) {
+                this.sampleType = sampleType;
+        }
 
-	public int[] getSelectedChannelsIndecies() {
-		return selectedChannelsIndecies;
-	}
+        public RawSignalByteOrder getByteOrder() {
+                return byteOrder;
+        }
 
-	public float getPageSize() {
-		return pageSize;
-	}
+        public void setByteOrder(RawSignalByteOrder byteOrder) {
+                this.byteOrder = byteOrder;
+        }
 
-	public void setPageSize(float pageSize) {
-		this.pageSize = pageSize;
-	}
+        /**
+         * Sets the parameters for this monitor recording.
+         * @param monitorRecordingDescriptor an object describing the parameters
+         * used to record this monitor.
+         */
+        public void setMonitorRecordingDescriptor(MonitorRecordingDescriptor monitorRecordingDescriptor) {
+                this.monitorRecordingDescriptor = monitorRecordingDescriptor;
+        }
 
-	public RawSignalSampleType getSampleType() {
-		return sampleType;
-	}
+        /**
+         * Returns the parameters of the recording which can be performed on this
+         * monitor.
+         * @return the parameters decribing a recording which can be made
+         * on this monitor.
+         */
+        public MonitorRecordingDescriptor getMonitorRecordingDescriptor() {
+                return monitorRecordingDescriptor;
+        }
 
-	public void setSampleType(RawSignalSampleType sampleType) {
-		this.sampleType = sampleType;
-	}
+        /**
+         * Fills this object from an {@link AmplifierDefinition} object.
+         *
+         * @param definition the definition
+         */
+        public void fillFromAnAmplifierDefinition(AmplifierDefinition definition) {
 
-	public RawSignalByteOrder getByteOrder() {
-		return byteOrder;
-	}
+                channelCount = definition.getChannelCount();
+                samplingFrequency = definition.getAvailableFrequencies().get(0);
 
-	public void setByteOrder(RawSignalByteOrder byteOrder) {
-		this.byteOrder = byteOrder;
-	}
+                channelLabels = new String[channelCount];
+                selectedChannelList = new String[channelCount];
+                calibrationGain = new float[definition.getChannelCount()];
+                calibrationOffset = new float[definition.getChannelCount()];
 
-	/**
-	 * Sets the parameters for this monitor recording.
-	 * @param monitorRecordingDescriptor an object describing the parameters
-	 * used to record this monitor.
-	 */
-	public void setMonitorRecordingDescriptor(MonitorRecordingDescriptor monitorRecordingDescriptor) {
-		this.monitorRecordingDescriptor = monitorRecordingDescriptor;
-	}
+                for (int i = 0; i < definition.getChannelCount(); i++) {
 
-	/**
-	 * Returns the parameters of the recording which can be performed on this
-	 * monitor.
-	 * @return the parameters decribing a recording which can be made
-	 * on this monitor.
-	 */
-	public MonitorRecordingDescriptor getMonitorRecordingDescriptor() {
-		return monitorRecordingDescriptor;
-	}
+                        calibrationGain[i] = definition.getCalibrationGain().get(i);
+                        calibrationOffset[i] = definition.getCalibrationOffset().get(i);
+
+                        channelLabels[i] = Integer.toBinaryString(i);
+                        selectedChannelList[i] = channelLabels[i];
+                }
+        }
 }

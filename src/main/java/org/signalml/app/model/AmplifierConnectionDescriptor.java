@@ -12,7 +12,7 @@ public class AmplifierConnectionDescriptor {
         /**
          * The open monitor descriptor.
          */
-        private AmplifierConnectionOpenMonitorDescriptor openMonitorDescriptor;
+        private OpenMonitorDescriptor openMonitorDescriptor;
         /**
          * The amplifier instance.
          */
@@ -22,7 +22,7 @@ public class AmplifierConnectionDescriptor {
                 return amplifierInstance;
         }
 
-        public AmplifierConnectionOpenMonitorDescriptor getOpenMonitorDescriptor() {
+        public OpenMonitorDescriptor getOpenMonitorDescriptor() {
                 return openMonitorDescriptor;
         }
 
@@ -30,11 +30,11 @@ public class AmplifierConnectionDescriptor {
                 this.amplifierInstance = amplifierInstance;
         }
 
-        public void setOpenMonitorDescriptor(AmplifierConnectionOpenMonitorDescriptor openMonitorDescriptor) {
+        public void setOpenMonitorDescriptor(OpenMonitorDescriptor openMonitorDescriptor) {
                 this.openMonitorDescriptor = openMonitorDescriptor;
         }
 
         public AmplifierConnectionDescriptor() {
-                openMonitorDescriptor = new AmplifierConnectionOpenMonitorDescriptor();
+                openMonitorDescriptor = new OpenMonitorDescriptor();
         }
 }

@@ -25,6 +25,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import org.signalml.app.view.element.IntegerSpinner;
 import org.signalml.app.config.ApplicationConfiguration;
+import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.app.view.element.DoubleSpinner;
 import org.signalml.app.view.element.FloatSpinner;
 import org.signalml.app.view.element.ResolvableComboBox;
@@ -50,9 +51,8 @@ public class SignalParametersPanel extends JPanel {
         /**
          * Current model.
          */
-        private Object currentModel;
-        /**
-        <<<<<<< HEAD
+        protected Object currentModel;
+        /**        
          * the combo box with the sampling frequency.
          */
         private JComboBox samplingFrequencyComboBox;
@@ -84,7 +84,7 @@ public class SignalParametersPanel extends JPanel {
         /**
          * Application configuration.
          */
-        private ApplicationConfiguration applicationConfiguration;
+        protected ApplicationConfiguration applicationConfiguration;
         /**
          * Edit gain and offset dialog.
          */
@@ -113,6 +113,8 @@ public class SignalParametersPanel extends JPanel {
 
                 if (model instanceof AmplifierConnectionDescriptor) {
                         fillPanelForAmplifierConnection((AmplifierConnectionDescriptor) model);
+                } else if (model instanceof OpenMonitorDescriptor) {
+                        fillPanelForOpenBCIConnection((OpenMonitorDescriptor) model);
                 } else {
                         setEnabledAll(false);
                         throw new SignalMLCodecException(messageSource.getMessage("error.modelNotSupported"));
@@ -132,6 +134,8 @@ public class SignalParametersPanel extends JPanel {
 
                 if (model instanceof AmplifierConnectionDescriptor) {
                         fillModelForAmplifierConnection((AmplifierConnectionDescriptor) model);
+                } else if (model instanceof OpenMonitorDescriptor) {
+                        fillModelForOpenBCIConnection((OpenMonitorDescriptor) model);
                 } else {
                         setEnabledAll(false);
                         throw new SignalMLCodecException(messageSource.getMessage("error.modelNotSupported"));
@@ -163,11 +167,8 @@ public class SignalParametersPanel extends JPanel {
                         getSampleTypeComboBox().setModel(new DefaultComboBoxModel());
                         getSampleTypeComboBox().setEnabled(false);
 
-                        float pageSize = applicationConfiguration.getPageSize();
-                        try {
-                                pageSize = descriptor.getOpenMonitorDescriptor().getPageSize();
-                        } catch (Exception ex) {
-                        }
+                        Float pageSize = descriptor.getOpenMonitorDescriptor().getPageSize();
+                        if (pageSize == null) pageSize = applicationConfiguration.getPageSize();
                         getPageSizeSpinner().setValue(pageSize);
 
                         getBlocksPerPageSpinner().setEnabled(false);
@@ -199,6 +200,25 @@ public class SignalParametersPanel extends JPanel {
 
                 descriptor.getOpenMonitorDescriptor().setSamplingFrequency(samplingFrequency);
                 descriptor.getOpenMonitorDescriptor().setPageSize(pageSize);
+        }
+
+        /**
+         * Fills this panel for amplifier connection
+         *
+         * @param descriptor the descriptor
+         */
+        private void fillPanelForOpenBCIConnection(OpenMonitorDescriptor descriptor) {
+
+        }
+
+        /**
+         * Fills the model for openbci connection.
+         *
+         * @param descriptor the descriptor
+         * @throws SignalMLException when input data is invalid
+         */
+        private void fillModelForOpenBCIConnection(OpenMonitorDescriptor descriptor) throws SignalMLException {
+
         }
 
         /**

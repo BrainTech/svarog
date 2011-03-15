@@ -240,7 +240,7 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
                         for (int i = 0; i < descriptor.getOpenMonitorDescriptor().getChannelCount(); i++) {
 
                                 definitions.add(new ChannelDefinition(
-                                        descriptor.getOpenMonitorDescriptor().getSelectedChannelsIndecies()[i],
+                                        descriptor.getAmplifierInstance().getDefinition().getChannelNumbers().get(i),
                                         descriptor.getOpenMonitorDescriptor().getCalibrationGain()[i],
                                         descriptor.getOpenMonitorDescriptor().getCalibrationOffset()[i]
                                         ));
