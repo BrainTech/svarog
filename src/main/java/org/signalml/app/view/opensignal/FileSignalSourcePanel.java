@@ -15,7 +15,6 @@ import javax.swing.JPanel;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.model.OpenFileSignalDescriptor;
 import org.signalml.app.view.ViewerElementManager;
-import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.signalml.app.view.element.FileChooserPanel;
 import org.signalml.app.view.element.SignalMLOptionsPanel;
