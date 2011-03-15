@@ -18,17 +18,24 @@ public class OpenSignalDescriptor {
 	private SignalSource signalSource;
 
 	private OpenFileSignalDescriptor openFileSignalDescriptor;
-	private OpenMonitorDescriptor openMonitorDescriptor;
+	private OpenMonitorDescriptor openMonitorDescriptor = new OpenMonitorDescriptor();
 	private AmplifierConnectionDescriptor amplifierConnectionDescriptor;
 
 	private Montage montage;
 
 	public OpenSignalDescriptor() {
-		signalSource = SignalSource.FILE;
+		//signalSource = SignalSource.FILE;
+		signalSource = signalSource.OPENBCI;
 		openFileSignalDescriptor = new OpenFileSignalDescriptor();
 		openFileSignalDescriptor.setMethod(FileOpenSignalMethod.RAW);
 
 		montage = SignalType.EEG_10_20.getConfigurer().createMontage(openFileSignalDescriptor.getRawSignalDescriptor().getChannelCount());
+
+
+		openMonitorDescriptor.setSamplingFrequency(33.3F);
+		openMonitorDescriptor.setPageSize(33.3F);
+		openMonitorDescriptor.setMultiplexerAddress("127.0.0.1");
+		openMonitorDescriptor.setMultiplexerPort(39393);
 	}
 
 	public void setMontage(Montage montage) {

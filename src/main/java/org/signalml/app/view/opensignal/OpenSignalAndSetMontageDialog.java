@@ -29,7 +29,7 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 		super(messageSource, viewerElementManager.getMontagePresetManager(), viewerElementManager.getPredefinedTimeDomainFiltersPresetManager(), f, isModal);
 		this.viewerElementManager = viewerElementManager;
 
-		dialogManager = new OpenSignalAndSetMontageDialogManager(this, getSignalSourcePanel());
+		dialogManager = new OpenSignalAndSetMontageDialogManager(this, getSignalSourcePanel());		
 
 	}
 
@@ -38,6 +38,7 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 		JComponent interfacePanel = super.createInterface();
 
 		tabbedPane.insertTab("Signal source", null, getSignalSourcePanel(), "", 0);
+		tabbedPane.setSelectedIndex(0);
 
 		return interfacePanel;
 	}

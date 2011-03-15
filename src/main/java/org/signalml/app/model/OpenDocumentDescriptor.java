@@ -4,7 +4,6 @@
 
 package org.signalml.app.model;
 
-import com.sun.org.apache.xpath.internal.compiler.OpCodes;
 import java.io.File;
 
 import org.signalml.app.document.ManagedDocumentType;

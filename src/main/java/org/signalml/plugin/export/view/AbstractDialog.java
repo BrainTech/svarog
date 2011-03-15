@@ -470,7 +470,6 @@ public abstract class AbstractDialog extends JDialog {
 		// if the dialog was modal then closedWithOk may have been changed
 		// otherwise, the method always returns false
 		return closedWithOk;
-
 	}
 
 	/**

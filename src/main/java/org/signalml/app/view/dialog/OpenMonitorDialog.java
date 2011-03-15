@@ -186,7 +186,7 @@ public class OpenMonitorDialog extends AbstractDialog implements PropertyChangeL
 	 */
 	protected MultiplexerConnectionPanel getMultiplexerConnectionPanel() {
 		if (multiplexerConnectionPanel == null) {
-			multiplexerConnectionPanel = new MultiplexerConnectionPanel(viewerElementManager, applicationConfig);
+			multiplexerConnectionPanel = new MultiplexerConnectionPanel(viewerElementManager);
 			multiplexerConnectionPanel.getConnectAction().addPropertyChangeListener(this);
 			multiplexerConnectionPanel.getDisconnectAction().addPropertyChangeListener(this);
 		}

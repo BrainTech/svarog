@@ -94,8 +94,12 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 		SignalSource signalSource = openSignalDescriptor.getSignalSource();
 		signalSourceSelectionComboBoxModel.setSelectedItem(signalSource);
 
-		if (signalSource.isFile())
+		if (openSignalDescriptor.getOpenFileSignalDescriptor() != null)
 			fileSignalSourcePanel.fillPanelFromModel(openSignalDescriptor.getOpenFileSignalDescriptor());
+
+		openBCISignalSourcePanel.fillPanelFromModel(openSignalDescriptor.getOpenMonitorDescriptor());
+		//if (openSignalDescriptor.getOpenMonitorDescriptor() != null)
+			//openBCISignalSourcePanel.fillPanelFromModel(openSignalDescriptor.getOpenMonitorDescriptor());
 	}
 
 	public void fillModelFromPanel(OpenSignalDescriptor openSignalDescriptor) {

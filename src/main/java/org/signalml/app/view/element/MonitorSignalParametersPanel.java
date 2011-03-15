@@ -114,10 +114,14 @@ public class MonitorSignalParametersPanel extends JPanel {
 
 		Float pageSize = openMonitorDescriptor.getPageSize();
 
-		if (getPageSizeField().getText().isEmpty() && applicationConfiguration != null)
+		if (
+			(getPageSizeField().getText().isEmpty() && applicationConfiguration != null)
+			|| (pageSize == 0))
 			pageSize = applicationConfiguration.getMonitorPageSize();
-		if (pageSize != null)
-			getPageSizeField().setText(Double.toString(pageSize));
+		if (pageSize != null) {
+			String pageString = Double.toString(pageSize);
+			getPageSizeField().setText(pageString);
+		}
 
 		Float freq = openMonitorDescriptor.getSamplingFrequency();
 		if (freq != null) {

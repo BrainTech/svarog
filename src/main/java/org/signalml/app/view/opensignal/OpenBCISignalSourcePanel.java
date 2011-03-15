@@ -4,18 +4,29 @@
 
 package org.signalml.app.view.opensignal;
 
+import org.signalml.app.model.OpenFileSignalDescriptor;
 import java.awt.BorderLayout;
-import javax.swing.JLabel;
+import java.beans.PropertyChangeEvent;
 import javax.swing.JPanel;
 import org.signalml.app.view.ViewerElementManager;
-import org.signalml.plugin.export.SignalMLException;
+import org.signalml.app.view.element.MonitorChannelSelectPanel;
+import org.signalml.app.view.element.MultiplexerConnectionPanel;
 import org.springframework.context.support.MessageSourceAccessor;
+import org.signalml.app.view.element.MonitorRecordingPanel;
+import org.signalml.app.model.OpenMonitorDescriptor;
 
 /**
  *
  * @author Piotr Szachewicz
  */
 public class OpenBCISignalSourcePanel extends AbstractSignalSourcePanel {
+
+	private OpenMonitorDescriptor currentModel;
+
+	private MultiplexerConnectionPanel multiplexerConnectionPanel;
+	private MonitorChannelSelectPanel monitorChannelSelectPanel = null;
+	private MonitorRecordingPanel monitorRecordingPanel = null;
+	private SignalParametersPanelForOpenMonitor signalParametersPanel;
 
 	public OpenBCISignalSourcePanel(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager) {
 		super(messageSource, viewerElementManager);
@@ -25,29 +36,79 @@ public class OpenBCISignalSourcePanel extends AbstractSignalSourcePanel {
 	protected JPanel createLeftColumnPanel() {
 		JPanel leftColumnPanel = new JPanel();
 		leftColumnPanel.setLayout(new BorderLayout());
-
+		leftColumnPanel.add(getMultiplexerConnectionPanel(), BorderLayout.NORTH);
 		return leftColumnPanel;
 	}
 
 	@Override
 	protected JPanel createRightColumnPanel() {
 		JPanel rightColumnPanel = new JPanel(new BorderLayout());
-		rightColumnPanel.add(getTestPanel(), BorderLayout.CENTER);
+		rightColumnPanel.add(getSignalParametersPanel(), BorderLayout.CENTER);
+		rightColumnPanel.add(getMonitorRecordingPanel(), BorderLayout.SOUTH);
 		return rightColumnPanel;
 	}
 
-	protected JPanel getTestPanel() {
-		JPanel panel = new JPanel();
-		panel.add(new JLabel("open bci signal"));
-		return panel;
+        public void fillPanelFromModel(OpenMonitorDescriptor descriptor) {
+
+		currentModel = descriptor;
+
+		getMultiplexerConnectionPanel().fillPanelFromModel(currentModel);
+		signalParametersPanel.fillPanelFromModel(currentModel);
+		getMonitorRecordingPanel().setEnabledAll(true);
+        }
+
+	public void fillModelFromPanel(OpenFileSignalDescriptor descriptor) {
 	}
 
-        public void fillPanelFromModel(Object model) throws SignalMLException {
-                throw new UnsupportedOperationException("Not supported yet.");
-        }
+	protected MultiplexerConnectionPanel getMultiplexerConnectionPanel() {
+		if (multiplexerConnectionPanel == null) {
+			multiplexerConnectionPanel = new MultiplexerConnectionPanel(viewerElementManager);
+			multiplexerConnectionPanel.getConnectAction().addPropertyChangeListener(this);
+			multiplexerConnectionPanel.getDisconnectAction().addPropertyChangeListener(this);
+		}
+		return multiplexerConnectionPanel;
+	}
 
-        public void fillModelFromPanel(Object model) throws SignalMLException {
-                throw new UnsupportedOperationException("Not supported yet.");
-        }
+	public SignalParametersPanelForOpenMonitor getSignalParametersPanel() {
+		if (signalParametersPanel == null) {
+			signalParametersPanel = new SignalParametersPanelForOpenMonitor(messageSource, viewerElementManager.getApplicationConfig());
+			signalParametersPanel.addPropertyChangeListener(this);
+		}
+		return signalParametersPanel;
+	}
+
+	protected MonitorRecordingPanel getMonitorRecordingPanel() {
+		if (monitorRecordingPanel == null) {
+			monitorRecordingPanel = new MonitorRecordingPanel(messageSource);
+		}
+		return monitorRecordingPanel;
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		String propertyName = evt.getPropertyName();
+
+		if ("metadataRetrieved".equals(propertyName)) {
+			System.out.println("Metadata retrieved");
+			/* model was changed by the connectAction in the
+			multiplexerConnectionPanel */
+			fillPanelFromModel(currentModel);
+		}
+		else if ("disconnected".equals(propertyName)) {
+			/*try {
+				OpenMonitorDescriptor m = ((OpenMonitorDescriptor) getCurrentModel());
+				m.setSamplingFrequency(null);
+				m.setChannelCount(null);
+				m.setChannelLabels(null);
+
+
+				fillDialogFromModel(getCurrentModel());
+			} catch (SignalMLException ex) {
+				Logger.getLogger(OpenMonitorDialog.class.getName()).log(Level.SEVERE, null, ex);
+			}*/
+		}
+		else
+			super.propertyChange(evt);
+	}
 
 }

@@ -72,10 +72,10 @@ public class MultiplexerConnectionPanel extends JPanel {
 	/**
 	 * This is the default constructor
 	 */
-	public MultiplexerConnectionPanel(ViewerElementManager elementManager, ApplicationConfiguration applicationConfiguration) {
+	public MultiplexerConnectionPanel(ViewerElementManager elementManager) {
 		super();
 		this.elementManager = elementManager;
-		this.applicationConfiguration = applicationConfiguration;
+		this.applicationConfiguration = elementManager.getApplicationConfig();
 		initialize();
 	}
 
@@ -219,7 +219,7 @@ public class MultiplexerConnectionPanel extends JPanel {
 	protected void setOpenMonitorDescriptor(OpenMonitorDescriptor openMonitorDescriptor) {
 		this.openMonitorDescriptor = openMonitorDescriptor;
 		if (connectAction != null)
-			connectAction.setOpenMonitorDescriptor( openMonitorDescriptor);
+			connectAction.setOpenMonitorDescriptor(openMonitorDescriptor);
 	}
 
 	public JTextField getMultiplexerAddressField() {
@@ -352,10 +352,14 @@ public class MultiplexerConnectionPanel extends JPanel {
 			port = applicationConfiguration.getMultiplexerPort();
 		}
 
-		if (address != null)
+		if (address != null) {
 			getMultiplexerAddressField().setText(address);
-		if (port != -1)
+			System.out.println("address = " + address);
+		}
+		if (port != -1) {
 			getMultiplexerPortField().setText(Integer.toString(port));
+			System.out.println("port = " + port);
+		}
 
 	}
 
