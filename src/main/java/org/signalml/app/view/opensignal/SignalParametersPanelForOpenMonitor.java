@@ -11,6 +11,8 @@ import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
+import org.signalml.app.config.ApplicationConfiguration;
+import org.signalml.app.model.OpenMonitorDescriptor;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
@@ -28,8 +30,7 @@ public class SignalParametersPanelForOpenMonitor extends SignalParametersPanel {
 		getChannelCountSpinner().setEnabled(false);
 		getByteOrderComboBox().setEnabled(false);
 		getSampleTypeComboBox().setEnabled(false);
-		
-	}
+        }
 
 	public void fillPanelFromModel(OpenMonitorDescriptor descriptor) {
 		getSamplingFrequencyComboBox().setSelectedItem(descriptor.getSamplingFrequency());
@@ -72,6 +73,5 @@ public class SignalParametersPanelForOpenMonitor extends SignalParametersPanel {
 		int[] selectedChannelsIndices = new int[channelCount];
 		for(int i = 0; i < selectedChannelsIndices.length; i++)
 			selectedChannelsIndices[i] = i;
-
 	}
 }
