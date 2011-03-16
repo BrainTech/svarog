@@ -1,60 +1,60 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <groupId>FFTSignalTool</groupId>
-  <artifactId>FFTSignalTool</artifactId>
-  <version>0.1</version>
-  <packaging>jar</packaging>
+	<groupId>org.signalml.plugin</groupId>
+	<artifactId>FFTSignalTool</artifactId>
+	<version>0.1</version>
+	<packaging>jar</packaging>
 
-  <name>FFTSignalTool</name>
+	<name>FFTSignalTool</name>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.final.name>FFTSignalTool</maven.final.name>
-  </properties>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.final.name>FFTSignalTool</maven.final.name>
+	</properties>
 
-  <build>
-  	<finalName>${artifactId}</finalName>
-  	<plugins>
-  		<plugin>
-  			<groupId>org.apache.maven.plugins</groupId>
-  			<artifactId>maven-compiler-plugin</artifactId>
-  			<configuration>
+	<build>
+		<finalName>${artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
 				<source>1.6</source>
 				<target>1.6</target>
 				<encoding>UTF-8</encoding>
 			</configuration>
-  		</plugin>
-  	</plugins>
-  </build>
-  <repositories>
-  	<repository>
-  		<id>signalml.org</id>
-  		<name>SignalML Maven Repository</name>
-  		<url>http://signalml.org/maven/repository</url>
-  	</repository>
-  </repositories>
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-    	<groupId>org.signalml</groupId>
-    	<artifactId>svarog</artifactId>
-    	<version>0.5.0-SNAPSHOT</version>
-    	<type>jar</type>
-    	<scope>compile</scope>
-    </dependency>
-    <dependency>
-    	<groupId>FFT</groupId>
-    	<artifactId>FFT</artifactId>
-    	<version>0.1</version>
-    	<type>jar</type>
-    	<scope>compile</scope>
-    </dependency>
-  </dependencies>
+			</plugin>
+		</plugins>
+	</build>
+	<repositories>
+		<repository>
+			<id>signalml.org</id>
+			<name>SignalML Maven Repository</name>
+			<url>http://signalml.org/maven/repository</url>
+		</repository>
+	</repositories>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.signalml</groupId>
+			<artifactId>svarog</artifactId>
+			<version>0.5.0-SNAPSHOT</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.signalml.plugin</groupId>
+			<artifactId>FFT</artifactId>
+			<version>0.1</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
 </project>
