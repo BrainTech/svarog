@@ -25,6 +25,8 @@ import com.google.protobuf.ByteString;
  */
 public class MultiplexerConnectionTestWorker extends SwingWorker< WorkerResult, Integer> {
 
+        public static final String CONNECTION_TEST_RESULT = "connectionTestResult";
+
 	protected static final Logger logger = Logger.getLogger( MultiplexerConnectionTestWorker.class);
 
 	private MessageSourceAccessor messageSource;
@@ -148,7 +150,7 @@ public class MultiplexerConnectionTestWorker extends SwingWorker< WorkerResult, 
 			logger.debug("get failed! " + e.getMessage());
 			e.printStackTrace();
 		}
-		firePropertyChange( "connectionTestResult", null, result);
+		firePropertyChange( CONNECTION_TEST_RESULT, null, result);
 	}
 
 }

@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.Window;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -32,6 +33,8 @@ import org.springframework.context.support.MessageSourceAccessor;
 public class ProgressDialog extends AbstractDialog implements PropertyChangeListener {
 
         public static final String PROGRESS_STATE = "progressState";
+        public final int DIALOG_WIDTH = 380;
+        public final int DIALOG_HEIGHT = 270;
         /**
          * The text area.
          */
@@ -57,9 +60,13 @@ public class ProgressDialog extends AbstractDialog implements PropertyChangeList
          * @param isModal if this window is modal
          * @param caption window's caption
          */
-        public ProgressDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
+        public ProgressDialog(MessageSourceAccessor messageSource, Window w, boolean isModal, String title) {
 
                 super(messageSource, w, isModal);
+                setTitle(title);
+                setPreferredSize(new Dimension(DIALOG_WIDTH, DIALOG_HEIGHT));
+                setLocation();
+                
         }
 
         /**
@@ -165,7 +172,7 @@ public class ProgressDialog extends AbstractDialog implements PropertyChangeList
                         fillDialogFromModel(evt.getNewValue());
                 }
         }
-       
+
         /**
          * No cancel on escape.
          *
@@ -181,7 +188,7 @@ public class ProgressDialog extends AbstractDialog implements PropertyChangeList
          * Shows an empty dialog.
          */
         public boolean showDialog() {
-                
+
                 return showDialog(new ProgressState());
         }
 
@@ -203,6 +210,23 @@ public class ProgressDialog extends AbstractDialog implements PropertyChangeList
         public boolean wasCancelled() {
 
                 return (!(error || success));
+        }
+
+        /**
+         * Sets the location to center of the parent window.
+         */
+        private void setLocation() {
+
+                Point parentLocation = getParent().getLocation();
+                Dimension parentSize = getParent().getSize();
+
+                Point myLocation = new Point(parentLocation);
+                Dimension mySize = getSize();
+
+                myLocation.move((parentSize.width - mySize.width) / 2,
+                                (parentSize.height - mySize.height) / 2);
+
+                setLocation(myLocation);
         }
 }
 
@@ -229,7 +253,9 @@ class ProgressStateList extends JList {
          */
         public void add(ProgressState state) {
 
-                if (state.getProgressMsg().equals("")) return;
+                if (state.getProgressMsg().equals("")) {
+                        return;
+                }
                 Dimension size = getSize();
                 ArrayList<ProgressState> list = new ArrayList<ProgressState>();
                 for (int i = 0; i < getModel().getSize(); i++) {

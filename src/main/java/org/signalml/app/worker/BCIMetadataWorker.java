@@ -28,6 +28,8 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 
 	protected static final Logger logger = Logger.getLogger( BCIMetadataWorker.class);
 
+        public static final String METADATA_RECEIVED = "metadataRetrieved";
+
 	public static final String SAMPLING_RATE	  = "SamplingRate";
 	public static final String NUMBER_OF_CHANNELS = "NumOfChannels";
 	public static final String CHANNEL_NAMES	  = "ChannelsNames";
@@ -252,7 +254,7 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 			logger.debug("get failed! " + e.getMessage());
 			e.printStackTrace();
 		}
-		firePropertyChange( "metadataRetrieved", null, result);
+		firePropertyChange( METADATA_RECEIVED, null, result);
 	}
 
 }

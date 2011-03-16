@@ -30,13 +30,13 @@ public class ConfigurationDataFormatter {
         /**
          * Sampling frequency.
          */
-        private Float samplingFrequency;
+        private Integer samplingFrequency;
         private final String SAMPLING_RATE = "SamplingRate";
 
         /**
          * Selected channels indecies.
          */
-        private Integer[] selectedChannelsIndecies;
+        private Integer[] channelsToRecord;
         private final String CHANNELS_TO_RECORD = "AmplifierChannelsToRecord";
 
         /**
@@ -52,21 +52,21 @@ public class ConfigurationDataFormatter {
          * @param calibrationGain {@link #calibrationGain}
          * @param calibrationOffset {@link #calibrationOffset}
          * @param samplingFrequency {@link #samplingFrequency}
-         * @param selectedChannelsIndecies {@link #selectedChannelsIndecies}
+         * @param channelsToRecord {@link #channelsToRecord}
          * @param channelLabels {@link #channelLabels}
          */
         public ConfigurationDataFormatter(Integer channelCount,
                                           Float[] calibrationGain,
                                           Float[] calibrationOffset,
-                                          Float samplingFrequency,
-                                          Integer[] selectedChannelsIndecies,
+                                          Integer samplingFrequency,
+                                          Integer[] channelsToRecord,
                                           String[] channelLabels) {
 
                 this.channelCount = channelCount;
                 this.calibrationGain = calibrationGain;
                 this.calibrationOffset = calibrationOffset;
                 this.samplingFrequency = samplingFrequency;
-                this.selectedChannelsIndecies = selectedChannelsIndecies;
+                this.channelsToRecord = channelsToRecord;
                 this.channelLabels = channelLabels;
         }
 
@@ -83,7 +83,7 @@ public class ConfigurationDataFormatter {
                 retval.put(GAIN, objectArrayToString(calibrationGain, " "));
                 retval.put(OFFSET, objectArrayToString(calibrationOffset, " "));
                 retval.put(SAMPLING_RATE, objectToString(samplingFrequency));
-                retval.put(CHANNELS_TO_RECORD, objectArrayToString(selectedChannelsIndecies, " "));
+                retval.put(CHANNELS_TO_RECORD, objectArrayToString(channelsToRecord, " "));
                 retval.put(CHANNELS_NAMES, objectArrayToString(channelLabels, ";"));
 
                 return retval;
@@ -96,7 +96,7 @@ public class ConfigurationDataFormatter {
          * @param separator the separator (" " or ";" ...)
          * @return output string
          */
-        public String objectArrayToString(Object[] input, String separator) {
+        private String objectArrayToString(Object[] input, String separator) {
 
                 String output = "";
 
@@ -116,7 +116,7 @@ public class ConfigurationDataFormatter {
          * @param input input object
          * @return outpu string
          */
-        public String objectToString(Object input) {
+        private String objectToString(Object input) {
 
                 return String.valueOf(input);
         }

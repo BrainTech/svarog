@@ -9,6 +9,8 @@
 	<entry key="cancel">Cancel</entry>
 	<entry key="name">Name</entry>
 	<entry key="error">Error!</entry>
+        <entry key="success">Success!</entry>
+        <entry key="failed">Failed</entry>
 	<entry key="warning">Warning!</entry>
 	<entry key="message">Message</entry>
 	<entry key="open">Open</entry>
@@ -703,8 +705,24 @@
         <entry key="opensignal.parameters.editGainAndOffset">Edit gain and offset</entry>        
         <entry key="opensignal.parameters.editGainAndOffsetDialog.edit">Edit</entry>
         <entry key="opensignal.parameters.editGainAndOffsetDialog.all">All channels</entry>        
+       
+        <entry key="opensignal.amplifier.selectAmplifier">Select an amplifier first</entry>       
+        <entry key="opensignal.amplifier.startingBCI">Starting OpenBCI</entry>
 
-        <entry key="error.modelNotSupported">Model not supported</entry>
+        <entry key="opensignal.amplifier.startingMultiplexer">Starting multiplexer...</entry>
+        <entry key="opensignal.amplifier.startingHashtable">Starting hashtable...</entry>
+        <entry key="opensignal.amplifier.startingPinger">Starting pinger...</entry>
+        <entry key="opensignal.amplifier.connecting">Connecting to OpenBCI...</entry>
+        <entry key="opensignal.amplifier.testingConnection">Testing connection...</entry>
+        <entry key="opensignal.amplifier.sendingConfigData">Sending configuration data...</entry>
+        <entry key="opensignal.amplifier.startingAmplifier">Starting amplifier driver...</entry>
+
+        <entry key="opensignal.amplifier.missingModulesData">Modules data missing</entry>
+        <entry key="opensignal.amplifier.processFailed">Failed to start process (file missing?)! ID: </entry>
+        <entry key="opensignal.amplifier.processEnded">Process ended! ID and exit code: </entry>
+        <entry key="opensignal.amplifier.connectionFailed">Connection failed</entry>
+        <entry key="opensignal.amplifier.testFailed">Test failed</entry>
+        <entry key="opensignal.amplifier.sendingFailed">Sending failed</entry>
 
 <!-- ============================ -->
 

@@ -360,7 +360,7 @@ public abstract class AbstractSignalParametersPanel extends JPanel {
          *
          * @return the edit gain and offset dialog
          */
-        private EditGainAndOffsetDialog getEditGainAndOffsetDialog() {
+        protected EditGainAndOffsetDialog getEditGainAndOffsetDialog() {
 
                 if (editGainAndOffsetDialog == null) {
                         editGainAndOffsetDialog = new EditGainAndOffsetDialog(messageSource, null, true);

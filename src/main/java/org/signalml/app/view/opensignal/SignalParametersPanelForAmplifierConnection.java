@@ -60,6 +60,7 @@ public class SignalParametersPanelForAmplifierConnection extends AbstractSignalP
                         getBlocksPerPageSpinner().setEnabled(false);
                 }
 
+                getEditGainAndOffsetDialog().fillDialogFromModel(descriptor);
                 currentModel = descriptor;
         }
 
@@ -76,21 +77,24 @@ public class SignalParametersPanelForAmplifierConnection extends AbstractSignalP
 
                 try {
                         samplingFrequency = Float.parseFloat(getSamplingFrequencyComboBox().getModel().getSelectedItem().toString());
-                } catch (NumberFormatException ex) {
+                } catch (Exception ex) {
                         throw new SignalMLException(messageSource.getMessage("error.invalidData"));
                 }
 
                 try {
                         pageSize = getPageSizeSpinner().getValue();
                         if (pageSize <= 0) throw new NumberFormatException();
-                } catch (NumberFormatException ex) {
+                } catch (Exception ex) {
                         throw new SignalMLException(messageSource.getMessage("error.invalidData"));
                 }
-
+                
                 descriptor.getOpenMonitorDescriptor().setSamplingFrequency(samplingFrequency);
+                descriptor.getOpenMonitorDescriptor().setChannelCount(getChannelCountSpinner().getValue());
                 descriptor.getOpenMonitorDescriptor().setPageSize(pageSize);
                 descriptor.getOpenMonitorDescriptor().setByteOrder((RawSignalByteOrder) getByteOrderComboBox().getSelectedItem());
                 descriptor.getOpenMonitorDescriptor().setSampleType((RawSignalSampleType) getSampleTypeComboBox().getSelectedItem());
+
+                getEditGainAndOffsetDialog().fillModelFromDialog(descriptor);
         }
 
         /**

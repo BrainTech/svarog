@@ -69,4 +69,7 @@ public class OpenDocumentDescriptor {
 		return bookOptions;
 	}
 
+        public void setMonitorOptions(OpenMonitorDescriptor monitorOptions) {
+                this.monitorOptions = monitorOptions;
+        }
 }

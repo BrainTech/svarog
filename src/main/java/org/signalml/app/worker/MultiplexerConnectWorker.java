@@ -19,6 +19,8 @@ import org.signalml.multiplexer.protocol.SvarogConstants;
  */
 public class MultiplexerConnectWorker extends SwingWorker< WorkerResult, Integer> {
 
+        public static final String JMX_CONNECTION = "jmxConnection";
+
 	protected static final Logger logger = Logger.getLogger( MultiplexerConnectWorker.class);
 	
 	public static final int TIMEOUT_MILIS = 50;
@@ -123,7 +125,7 @@ public class MultiplexerConnectWorker extends SwingWorker< WorkerResult, Integer
 		else {
 			elementManager.setJmxClient( client);
 		}
-		firePropertyChange( "jmxConnection", null, result);
+		firePropertyChange( JMX_CONNECTION, null, result);
 	}
 
 }
