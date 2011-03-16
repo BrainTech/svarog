@@ -7,7 +7,6 @@ package org.signalml.app.view.opensignal;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 
 import javax.swing.JPanel;
