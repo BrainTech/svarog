@@ -5,7 +5,6 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.CancellationException;
 import javax.swing.SwingWorker;
 import multiplexer.jmx.client.JmxClient;
 import org.signalml.app.action.ConnectMultiplexerActionNoMetadata;
@@ -159,6 +158,9 @@ public class OpenBCIManager extends SwingWorker<ProgressState, ProgressState> im
         @Override
         protected ProgressState doInBackground() throws Exception {
 
+                // Kill all running modules first
+                processManager.killAll();
+
                 // Get modules data
                 HashMap<String, String> modulesData;
                 try {
@@ -210,7 +212,7 @@ public class OpenBCIManager extends SwingWorker<ProgressState, ProgressState> im
                 processManager.runProcess(amp_id, descriptor.getAmplifierInstance().getDefinition().getDriverPath(), ampParameters);
                 Thread.sleep(PROCESS_SLEEP);
 
-                // return success                
+                
                 return new ProgressState(messageSource.getMessage("success"), MAX_PROGRESS, MAX_PROGRESS);
         }
 
