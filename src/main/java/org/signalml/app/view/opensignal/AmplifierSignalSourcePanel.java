@@ -32,7 +32,11 @@ public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel {
          * Monitor recording panel.
          */
         private MonitorRecordingPanel monitorRecordingPanel;
-
+        /**
+         * Current descriptor.
+         */
+        private AmplifierConnectionDescriptor currentDescriptor;
+        
         /**
          * Default constructor.
          *
@@ -42,11 +46,6 @@ public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel {
         public AmplifierSignalSourcePanel(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager) {
 
                 super(messageSource, viewerElementManager);
-
-                try {
-                        fillPanelFromModel(new AmplifierConnectionDescriptor());
-                } catch (SignalMLException ex) {
-                }
         }
 
         /**
@@ -157,6 +156,10 @@ public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel {
                 getSignalParametersPanel().fillPanelFromModel(descriptor);
                 getMonitorRecordingPanel().fillPanelFromModel(descriptor);
                 if (!omitSelectionPanel) getAmplifierSelectionPanel().fillPanelFromModel(descriptor);
+
+                getSignalSourceSelectionPanel().getSelectionComboBox().setEnabled(!descriptor.isBciStarted());
+
+                currentDescriptor = descriptor;
         }
 
         /**
@@ -181,5 +184,17 @@ public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel {
                         descriptor.getOpenMonitorDescriptor().setSelectedChannelList(labels);
                 } catch (Exception ex) {
                 }
+        }
+
+        /**
+         * Fills {@link #currentDescriptor}, then returns it.
+         *
+         * @return filled {@link #currentDescriptor}
+         * @throws SignalMLException when input data is invalid
+         */
+        public AmplifierConnectionDescriptor getFilledDescriptor() throws SignalMLException {
+
+                fillModelFromPanel(currentDescriptor);
+                return currentDescriptor;
         }
 }

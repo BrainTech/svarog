@@ -28,7 +28,7 @@ public class OpenBCIManager extends SwingWorker<ProgressState, ProgressState> im
         public static final String HASHTABLE_ID = "hashtable";
         public static final String PINGER_ID = "pinger";
         public final int MAX_PROGRESS = 7;
-        public final int PROCESS_SLEEP = 1500;
+        public final int PROCESS_SLEEP = 1000;
         /**
          * The message source.
          */

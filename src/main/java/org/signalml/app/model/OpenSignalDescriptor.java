@@ -36,6 +36,8 @@ public class OpenSignalDescriptor {
 		openMonitorDescriptor.setPageSize(33.3F);
 		openMonitorDescriptor.setMultiplexerAddress("127.0.0.1");
 		openMonitorDescriptor.setMultiplexerPort(39393);
+
+                amplifierConnectionDescriptor = new AmplifierConnectionDescriptor();
 	}
 
 	public void setMontage(Montage montage) {

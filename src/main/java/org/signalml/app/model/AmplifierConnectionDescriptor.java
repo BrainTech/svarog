@@ -17,6 +17,10 @@ public class AmplifierConnectionDescriptor {
          * The amplifier instance.
          */
         private AmplifierInstance amplifierInstance;
+        /**
+         * Wheter bci was started.
+         */
+        private boolean bciStarted;
 
         public AmplifierInstance getAmplifierInstance() {
                 return amplifierInstance;
@@ -28,6 +32,7 @@ public class AmplifierConnectionDescriptor {
 
         public void setAmplifierInstance(AmplifierInstance amplifierInstance) {
                 this.amplifierInstance = amplifierInstance;
+                bciStarted = false;
         }
 
         public void setOpenMonitorDescriptor(OpenMonitorDescriptor openMonitorDescriptor) {
@@ -36,5 +41,13 @@ public class AmplifierConnectionDescriptor {
 
         public AmplifierConnectionDescriptor() {
                 openMonitorDescriptor = new OpenMonitorDescriptor();
+        }
+
+        public boolean isBciStarted() {
+                return bciStarted;
+        }
+
+        public void setBciStarted(boolean bciStarted) {
+                this.bciStarted = bciStarted;
         }
 }

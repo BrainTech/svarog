@@ -171,7 +171,7 @@ public class MonitorRecordingPanel extends JPanel {
          * @param amplifierConnectionDescriptor the descriptor
          */
         public void fillPanelFromModel(AmplifierConnectionDescriptor descriptor) {
-                if (descriptor.getAmplifierInstance() == null)
+                if (descriptor.getAmplifierInstance() == null || descriptor.isBciStarted())
                         setEnabledAll(false);
                 else
                         setEnabledAll(true);

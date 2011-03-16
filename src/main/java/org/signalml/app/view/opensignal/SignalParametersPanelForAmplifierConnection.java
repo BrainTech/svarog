@@ -18,7 +18,7 @@ public class SignalParametersPanelForAmplifierConnection extends AbstractSignalP
         /**
          * Default constructor.
          *
-         * @param messageSource {@link #messageSource}
+         * @param messageSource {@link #messageSource}                                        
          * @param applicationConfiguration {@link #applicationConfiguration}
          */
         public SignalParametersPanelForAmplifierConnection(MessageSourceAccessor messageSource, ApplicationConfiguration applicationConfiguration) {
@@ -33,7 +33,7 @@ public class SignalParametersPanelForAmplifierConnection extends AbstractSignalP
          */
         public void fillPanelFromModel(AmplifierConnectionDescriptor descriptor) {
 
-                if (descriptor.getAmplifierInstance() == null) {
+                if (descriptor.getAmplifierInstance() == null || descriptor.isBciStarted()) {
                         setEnabledAll(false);
                 } else {
                         setEnabledAll(true);
@@ -58,9 +58,10 @@ public class SignalParametersPanelForAmplifierConnection extends AbstractSignalP
                         Integer blocksPerPage = applicationConfiguration.getBlocksPerPage();
                         getBlocksPerPageSpinner().setValue(blocksPerPage);
                         getBlocksPerPageSpinner().setEnabled(false);
+
+                        getEditGainAndOffsetDialog().fillDialogFromModel(descriptor);
                 }
 
-                getEditGainAndOffsetDialog().fillDialogFromModel(descriptor);
                 currentModel = descriptor;
         }
 

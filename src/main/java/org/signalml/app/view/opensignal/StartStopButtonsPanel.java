@@ -2,9 +2,7 @@ package org.signalml.app.view.opensignal;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -13,19 +11,12 @@ import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-import multiplexer.jmx.client.ConnectException;
 import multiplexer.jmx.client.JmxClient;
-import org.signalml.app.document.ManagedDocumentType;
-import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.model.AmplifierConnectionDescriptor;
-import org.signalml.app.model.OpenDocumentDescriptor;
-import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.app.view.ViewerElementManager;
-import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.element.ProgressDialog;
 import org.signalml.app.worker.OpenBCIManager;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.signal.Document;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
@@ -55,7 +46,7 @@ public class StartStopButtonsPanel extends JPanel {
          * The start action.
          */
         private StartAction startAction;
-        /**
+        /**false
          * The stop button.
          */
         private JButton stopButton;
@@ -63,6 +54,14 @@ public class StartStopButtonsPanel extends JPanel {
          * The stop action.
          */
         private StopAction stopAction;
+        /**
+         * BCI started.
+         */
+        private boolean bciStarted;
+        /**
+         * Current descriptor.
+         */
+        private AmplifierConnectionDescriptor currentDescriptor;
 
         /**
          * Default constructor.
@@ -150,6 +149,25 @@ public class StartStopButtonsPanel extends JPanel {
         }
 
         /**
+         * Fills an {@link AmplifierConnectionDescriptor} from this panel.
+         *
+         * @param descriptor the descriptor
+         */
+        public void fillModelFromPanel(AmplifierConnectionDescriptor descriptor) {
+
+                descriptor.setBciStarted(bciStarted);
+                if (bciStarted) {
+                        descriptor.getOpenMonitorDescriptor().setJmxClient(elementManager.getJmxClient());
+                        descriptor.getOpenMonitorDescriptor().setTagClient(elementManager.getTagClient());
+                        descriptor.getOpenMonitorDescriptor().setMetadataReceived(true);
+                } else {
+                        descriptor.getOpenMonitorDescriptor().setJmxClient(null);
+                        descriptor.getOpenMonitorDescriptor().setTagClient(null);
+                        descriptor.getOpenMonitorDescriptor().setMetadataReceived(false);
+                }
+        }
+
+        /**
          * Action responsible for starting openbci.
          */
         private class StartAction extends AbstractAction {
@@ -158,34 +176,26 @@ public class StartStopButtonsPanel extends JPanel {
                  * Tries to get a filled {@link AmplifierConnectionDescriptor},
                  * then starts a {@link OpenBCIManager} and shows {@link ProgressDialog}.
                  * After the work is done, if it was a success, the stop action is enabled,
-                 * and a new document is opened.
+                 * and all other panels are disabled.
                  *
                  * @param e action event
                  */
                 @Override
                 public void actionPerformed(ActionEvent e) {
 
-                        OpenDocumentDescriptor ofd = new OpenDocumentDescriptor();
-                        ofd.setType(ManagedDocumentType.MONITOR);
-                        ofd.setMakeActive(true);
-                        OpenMonitorDescriptor model = ofd.getMonitorOptions();
-
-                        AmplifierConnectionDescriptor descriptor = new AmplifierConnectionDescriptor();
-                        descriptor.setOpenMonitorDescriptor(model);
-
                         try {
-                                signalSourcePanel.fillModelFromPanel(descriptor);
+                                currentDescriptor = signalSourcePanel.getFilledDescriptor();
                         } catch (SignalMLException ex) {
                                 JOptionPane.showMessageDialog(null, ex.getMessage(), messageSource.getMessage("error"), JOptionPane.ERROR_MESSAGE);
                                 return;
                         }
-                        if (descriptor.getAmplifierInstance() == null) {
+                        if (currentDescriptor.getAmplifierInstance() == null) {
                                 JOptionPane.showMessageDialog(null, messageSource.getMessage("opensignal.amplifier.selectAmplifier"),
                                         messageSource.getMessage("error"), JOptionPane.ERROR_MESSAGE);
                                 return;
                         }
 
-                        OpenBCIManager manager = new OpenBCIManager(messageSource, elementManager, descriptor);
+                        OpenBCIManager manager = new OpenBCIManager(messageSource, elementManager, currentDescriptor);
                         ProgressDialog progressDialog = new ProgressDialog(messageSource,
                                 signalSourcePanel.getViewerElementManager().getOpenSignalAndSetMontageDialog(),
                                 true, messageSource.getMessage("opensignal.amplifier.startingBCI"));
@@ -202,39 +212,16 @@ public class StartStopButtonsPanel extends JPanel {
                                 return;
                         }
 
-                        model.setMultiplexerAddress(elementManager.getApplicationConfig().getMultiplexerAddress());
-                        model.setMultiplexerPort(elementManager.getApplicationConfig().getMultiplexerPort());
-                        model.setJmxClient(elementManager.getJmxClient());
-                        model.setTagClient(elementManager.getTagClient());
-                        model.setMetadataReceived(true);
+                        bciStarted = true;
 
-                        //stop previous signal recording
-                        Document document = elementManager.getActionFocusManager().getActiveDocument();
-                        if (document instanceof MonitorSignalDocument) {
-                                try {
-                                        ((MonitorSignalDocument) document).stopMonitorRecording();
-                                } catch (IOException ex) {
-                                }
-                        }
-
-
+                        fillModelFromPanel(currentDescriptor);
                         try {
-                                elementManager.getDocumentFlowIntegrator().openDocument(ofd);
+                                signalSourcePanel.fillPanelFromModel(currentDescriptor);
                         } catch (SignalMLException ex) {
-                                ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-                                return;
-                        } catch (IOException ex) {
-                                ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-                                return;
-                        } catch (ConnectException ex) {
-                                ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-                                return;
                         }
 
                         getStopAction().setEnabled(true);
                         setEnabled(false);
-
-                        // TODO open the document?
                 }
         }
 
@@ -253,7 +240,8 @@ public class StartStopButtonsPanel extends JPanel {
 
                 /**
                  * Disconnects from multiplexer and kills all processes
-                 * created during the connection.
+                 * created during the connection. Enables start action
+                 * and all other panels.
                  *
                  * @param e action event
                  */
@@ -273,6 +261,14 @@ public class StartStopButtonsPanel extends JPanel {
 
                         getStartAction().setEnabled(true);
                         setEnabled(false);
+
+                        bciStarted = false;
+                        
+                        fillModelFromPanel(currentDescriptor);
+                        try {
+                                signalSourcePanel.fillPanelFromModel(currentDescriptor);
+                        } catch (SignalMLException ex) {
+                        }
 
                         // TODO close the document?
                 }

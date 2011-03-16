@@ -3,6 +3,7 @@ package org.signalml.app.view.opensignal;
 import org.signalml.app.model.AmplifierConnectionDescriptor;
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -118,6 +119,11 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
          * @throws AmplifierNotFoundException when the amplifier from the descriptor cannot be found
          */
         public void fillPanelFromModel(AmplifierConnectionDescriptor descriptor) throws SignalMLException {
+
+                if (descriptor.isBciStarted())
+                        setEnabledAll(false);
+                else
+                        setEnabledAll(true);
 
                 // TODO: refresh amp list and try to find the one from the descriptor
 
@@ -303,5 +309,34 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
                         configureModulesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
                 }
                 return configureModulesButton;
+        }
+
+        /**
+         * Sets enabled to this panel and all it's children.
+         * Clears all fields if enabled == false.
+         *
+         * @param enabled true or false
+         */
+        public void setEnabledAll(boolean enabled) {
+
+                setEnabledToChildren(this, enabled);
+        }
+
+        /**
+         * Sets enabled to a component and all of it's children.
+         *
+         * @param component target component
+         * @param enabled true or false
+         * @param omit wheter to omit component
+         */
+        private void setEnabledToChildren(Component component, boolean enabled) {
+
+                component.setEnabled(enabled);
+                if (component instanceof Container) {
+                        Component[] children = ((Container) component).getComponents();
+                        for (Component child : children) {
+                                setEnabledToChildren(child, enabled);
+                        }
+                }
         }
 }

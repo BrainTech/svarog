@@ -6,13 +6,17 @@ package org.signalml.app.view.opensignal;
 import java.awt.CardLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
+import org.signalml.app.model.AmplifierConnectionDescriptor;
 import org.signalml.app.model.OpenFileSignalDescriptor;
 import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.app.model.OpenSignalDescriptor;
 import org.signalml.app.view.ViewerElementManager;
+import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
@@ -99,8 +103,12 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 			fileSignalSourcePanel.fillPanelFromModel(openSignalDescriptor.getOpenFileSignalDescriptor());
 
 		openBCISignalSourcePanel.fillPanelFromModel(openSignalDescriptor.getOpenMonitorDescriptor());
-		//if (openSignalDescriptor.getOpenMonitorDescriptor() != null)
-			//openBCISignalSourcePanel.fillPanelFromModel(openSignalDescriptor.getOpenMonitorDescriptor());
+
+                try {
+                        amplifierSignalSourcePanel.fillPanelFromModel(openSignalDescriptor.getAmplifierConnectionDescriptor());
+                } catch (SignalMLException ex) {
+                        // TODO: when amp cannot be found
+                }
 	}
 
 	public void fillModelFromPanel(OpenSignalDescriptor openSignalDescriptor) {
@@ -113,7 +121,13 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 		else if (signalSource.isOpenBCI()) {
 			OpenMonitorDescriptor openMonitorDescriptor = openSignalDescriptor.getOpenMonitorDescriptor();
 			openBCISignalSourcePanel.fillModelFromPanel(openMonitorDescriptor);
-		}
+		} else if (signalSource.isAmplifier()) {
+                        AmplifierConnectionDescriptor connectionDescriptor = openSignalDescriptor.getAmplifierConnectionDescriptor();
+                        try {
+                                amplifierSignalSourcePanel.fillModelFromPanel(connectionDescriptor);
+                        } catch (SignalMLException ex) {
+                        }
+                }
 	}
 
 }
