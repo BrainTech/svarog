@@ -62,6 +62,7 @@ public class SignalParametersPanelForAmplifierConnection extends AbstractSignalP
                         getEditGainAndOffsetDialog().fillDialogFromModel(descriptor);
                 }
 
+                getEditGainAndOffsetDialog().fillDialogFromModel(descriptor);
                 currentModel = descriptor;
         }
 
