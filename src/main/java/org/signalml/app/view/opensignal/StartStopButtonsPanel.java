@@ -2,7 +2,9 @@ package org.signalml.app.view.opensignal;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -11,13 +13,19 @@ import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import multiplexer.jmx.client.ConnectException;
 import multiplexer.jmx.client.JmxClient;
+import org.signalml.app.document.ManagedDocumentType;
+import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.model.AmplifierConnectionDescriptor;
+import org.signalml.app.model.OpenDocumentDescriptor;
 import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.app.view.ViewerElementManager;
+import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.element.ProgressDialog;
 import org.signalml.app.worker.OpenBCIManager;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.Document;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
@@ -157,23 +165,25 @@ public class StartStopButtonsPanel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
 
+                        OpenDocumentDescriptor ofd = new OpenDocumentDescriptor();
+                        ofd.setType(ManagedDocumentType.MONITOR);
+                        ofd.setMakeActive(true);
+                        OpenMonitorDescriptor model = ofd.getMonitorOptions();
+
                         AmplifierConnectionDescriptor descriptor = new AmplifierConnectionDescriptor();
+                        descriptor.setOpenMonitorDescriptor(model);
+
                         try {
                                 signalSourcePanel.fillModelFromPanel(descriptor);
                         } catch (SignalMLException ex) {
                                 JOptionPane.showMessageDialog(null, ex.getMessage(), messageSource.getMessage("error"), JOptionPane.ERROR_MESSAGE);
                                 return;
                         }
-
                         if (descriptor.getAmplifierInstance() == null) {
                                 JOptionPane.showMessageDialog(null, messageSource.getMessage("opensignal.amplifier.selectAmplifier"),
                                         messageSource.getMessage("error"), JOptionPane.ERROR_MESSAGE);
                                 return;
                         }
-
-                        OpenMonitorDescriptor monitorDescriptor = descriptor.getOpenMonitorDescriptor();
-                        monitorDescriptor.setMultiplexerAddress(elementManager.getApplicationConfig().getMultiplexerAddress());
-                        monitorDescriptor.setMultiplexerPort(elementManager.getApplicationConfig().getMultiplexerPort());
 
                         OpenBCIManager manager = new OpenBCIManager(messageSource, elementManager, descriptor);
                         ProgressDialog progressDialog = new ProgressDialog(messageSource,
@@ -192,8 +202,34 @@ public class StartStopButtonsPanel extends JPanel {
                                 return;
                         }
 
-                        monitorDescriptor.setJmxClient(elementManager.getJmxClient());
-                        monitorDescriptor.setTagClient(elementManager.getTagClient());
+                        model.setMultiplexerAddress(elementManager.getApplicationConfig().getMultiplexerAddress());
+                        model.setMultiplexerPort(elementManager.getApplicationConfig().getMultiplexerPort());
+                        model.setJmxClient(elementManager.getJmxClient());
+                        model.setTagClient(elementManager.getTagClient());
+                        model.setMetadataReceived(true);
+
+                        //stop previous signal recording
+                        Document document = elementManager.getActionFocusManager().getActiveDocument();
+                        if (document instanceof MonitorSignalDocument) {
+                                try {
+                                        ((MonitorSignalDocument) document).stopMonitorRecording();
+                                } catch (IOException ex) {
+                                }
+                        }
+
+
+                        try {
+                                elementManager.getDocumentFlowIntegrator().openDocument(ofd);
+                        } catch (SignalMLException ex) {
+                                ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+                                return;
+                        } catch (IOException ex) {
+                                ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+                                return;
+                        } catch (ConnectException ex) {
+                                ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+                                return;
+                        }
 
                         getStopAction().setEnabled(true);
                         setEnabled(false);
@@ -226,11 +262,11 @@ public class StartStopButtonsPanel extends JPanel {
 
                         try {
                                 JmxClient jmxClient = elementManager.getJmxClient();
-                                if (jmxClient != null)
+                                if (jmxClient != null) {
                                         jmxClient.shutdown();
-                                elementManager.setJmxClient( null);
-                        }
-                        catch (InterruptedException ex) {
+                                }
+                                elementManager.setJmxClient(null);
+                        } catch (InterruptedException ex) {
                         }
 
                         elementManager.getProcessManager().killAll();

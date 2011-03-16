@@ -168,8 +168,8 @@ public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel {
         public void fillModelFromPanel(AmplifierConnectionDescriptor descriptor) throws SignalMLException {
 
                 getSignalParametersPanel().fillModelFromPanel(descriptor);
-                getAmplifierSelectionPanel().fillModelFromPanel(descriptor);
                 getMonitorRecordingPanel().fillModelFromPanel(descriptor);
+                getAmplifierSelectionPanel().fillModelFromPanel(descriptor);
 
                 Montage channelTabMotntage = viewerElementManager.getOpenSignalAndSetMontageDialog().getChannelTabSourceMontage();
                 String[] labels = new String[channelTabMotntage.getSourceChannelCount()];
@@ -177,5 +177,9 @@ public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel {
                         labels[i] = channelTabMotntage.getSourceChannelLabelAt(i);
                 }
                 descriptor.getOpenMonitorDescriptor().setChannelLabels(labels);
+                try {
+                        descriptor.getOpenMonitorDescriptor().setSelectedChannelList(labels);
+                } catch (Exception ex) {
+                }
         }
 }
