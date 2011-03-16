@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.opensignal;
 
+
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.beans.PropertyChangeEvent;
