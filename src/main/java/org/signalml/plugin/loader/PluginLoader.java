@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.net.JarURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -220,6 +221,21 @@ public class PluginLoader {
 			pluginDir.mkdir();
 		if (pluginDir.exists() && pluginDir.isDirectory() && pluginDir.canRead()) {
 			this.pluginDirs.add(pluginDir);
+		}
+		//hack to get the location of the jar file and add the global plugin directory
+		try{
+			URL jarURL = getClass().getProtectionDomain().getCodeSource().getLocation();
+			JarURLConnection connection = (JarURLConnection) jarURL.openConnection();
+			jarURL = connection.getJarFileURL();
+			File jarDirFile = new File(jarURL.toURI());
+			jarDirFile = jarDirFile.getParentFile();
+			File pluginDirGlobal = new File(jarDirFile + File.separator + "plugins");
+			if (pluginDirGlobal.exists() && pluginDirGlobal.isDirectory() && pluginDirGlobal.canRead()) {
+				this.pluginDirs.add(pluginDirGlobal);
+			}
+		} catch (Exception ex){
+			logger.error("Failed to add global plugin directory");
+			ex.printStackTrace();
 		}
 	}
 
