@@ -13,13 +13,14 @@ import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.model.OpenMonitorDescriptor;
+import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  *
  * @author Piotr Szachewicz
  */
-public class SignalParametersPanelForOpenMonitor extends SignalParametersPanel {
+public class SignalParametersPanelForOpenMonitor extends AbstractSignalParametersPanel {
 
 	public SignalParametersPanelForOpenMonitor(MessageSourceAccessor messageSource, ApplicationConfiguration applicationConfiguration) {
 		super(messageSource, applicationConfiguration);
@@ -74,4 +75,9 @@ public class SignalParametersPanelForOpenMonitor extends SignalParametersPanel {
 		for(int i = 0; i < selectedChannelsIndices.length; i++)
 			selectedChannelsIndices[i] = i;
 	}
+
+        @Override
+        protected void fillCurrentModelFromPanel() throws SignalMLException {
+                throw new UnsupportedOperationException("Not supported yet.");
+        }
 }

@@ -34,11 +34,11 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 	public void propertyChange(PropertyChangeEvent evt) {
 		String propertyName = evt.getPropertyName();
 
-		if (propertyName.equals(SignalParametersPanel.NUMBER_OF_CHANNELS_PROPERTY)) {
+		if (propertyName.equals(AbstractSignalParametersPanel.NUMBER_OF_CHANNELS_PROPERTY)) {
 			int numberOfChannels = Integer.parseInt(evt.getNewValue().toString());
 			numberOfChannelsChangedTo(numberOfChannels);
 		}
-		else if (propertyName.equals(SignalParametersPanel.SAMPLING_FREQUENCY_PROPERTY)){
+		else if (propertyName.equals(AbstractSignalParametersPanel.SAMPLING_FREQUENCY_PROPERTY)){
 			float samplingFrequency = Float.parseFloat(evt.getNewValue().toString());
 			samplingFrequencyChangedTo(samplingFrequency);
 		}

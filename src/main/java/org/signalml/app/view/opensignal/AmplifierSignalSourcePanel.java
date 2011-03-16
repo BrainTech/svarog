@@ -27,15 +27,11 @@ public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel {
         /**
          * Signal parameters panel.
          */
-        private SignalParametersPanel signalParametersPanel;
+        private SignalParametersPanelForAmplifierConnection signalParametersPanel;
         /**
          * Monitor recording panel.
          */
         private MonitorRecordingPanel monitorRecordingPanel;
-        /**
-         * Current descriptor.
-         */
-        private AmplifierConnectionDescriptor currentDescriptor;
 
         /**
          * Default constructor.
@@ -115,10 +111,10 @@ public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel {
          *
          * @return the signal parameters panel
          */
-        public SignalParametersPanel getSignalParametersPanel() {
+        public SignalParametersPanelForAmplifierConnection getSignalParametersPanel() {
 
                 if (signalParametersPanel == null) {
-                        signalParametersPanel = new SignalParametersPanel(messageSource, viewerElementManager.getApplicationConfig());
+                        signalParametersPanel = new SignalParametersPanelForAmplifierConnection(messageSource, viewerElementManager.getApplicationConfig());
                         signalParametersPanel.addPropertyChangeListener(this);
                 }
                 return signalParametersPanel;
@@ -142,8 +138,7 @@ public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel {
          * Fills this panel from a model.
          *
          * @param descriptor the descriptor
-         * @throws SignalMLException when model is not supported or an amplifier
-         * cannot be found (check {@link SignalMLException#getMessage()}
+         * @throws SignalMLException when amplifier cannot be found
          */
         public void fillPanelFromModel(AmplifierConnectionDescriptor descriptor) throws SignalMLException {
 
@@ -155,24 +150,20 @@ public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel {
          *
          * @param descriptor the descriptor
          * @param omitSelectionPanel wheter to omit the panel
-         * @throws SignalMLException  when model is not supported or an amplifier
-         * cannot be found (check {@link SignalMLException#getMessage()}
+         * @throws SignalMLException when amplifier cannot be found
          */
         public void fillPanelFromModel(AmplifierConnectionDescriptor descriptor, boolean omitSelectionPanel) throws SignalMLException {
 
                 getSignalParametersPanel().fillPanelFromModel(descriptor);
                 getMonitorRecordingPanel().fillPanelFromModel(descriptor);
                 if (!omitSelectionPanel) getAmplifierSelectionPanel().fillPanelFromModel(descriptor);
-
-                currentDescriptor = descriptor;
         }
 
         /**
          * Fills a model from this panel.
          *
          * @param descriptor the descriptor
-         * @throws SignalMLException when model is not supported or input data
-         * is not valid (check {@link SignalMLException#getMessage()}
+         * @throws SignalMLException when input data is not valid
          */
         public void fillModelFromPanel(AmplifierConnectionDescriptor descriptor) throws SignalMLException {
 

@@ -76,8 +76,8 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 			showPanelForSignalSource(newSignalSource);
 			System.out.println("changed signal source type");
 		}
-		else if (propertyName.equals(SignalParametersPanel.NUMBER_OF_CHANNELS_PROPERTY) ||
-			propertyName.equals(SignalParametersPanel.SAMPLING_FREQUENCY_PROPERTY)) {
+		else if (propertyName.equals(AbstractSignalParametersPanel.NUMBER_OF_CHANNELS_PROPERTY) ||
+			propertyName.equals(AbstractSignalParametersPanel.SAMPLING_FREQUENCY_PROPERTY)) {
 			firePropertyChange(propertyName, 0, evt.getNewValue());
 		}
 	}

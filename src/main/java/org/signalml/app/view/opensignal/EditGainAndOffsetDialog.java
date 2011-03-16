@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.app.view.monitor.ChannelDefinition;
 import org.signalml.app.view.monitor.ChannelDefinitionPanel;
 import org.signalml.plugin.export.SignalMLException;
@@ -70,9 +71,10 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
         public boolean supportsModelClass(Class<?> clazz) {
 
                 boolean isAmpConnection = AmplifierConnectionDescriptor.class.isAssignableFrom(clazz);
-                // TODO: add other classes
+                boolean isBCIConnection = OpenMonitorDescriptor.class.isAssignableFrom(clazz);
+                // TODO: class for file opening
                 
-                return isAmpConnection;
+                return isAmpConnection || isBCIConnection;
         }
 
         /**
@@ -82,7 +84,7 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
          * @param model the descriptor
          */
         @Override
-        public void fillDialogFromModel(Object model) throws SignalMLException {
+        public void fillDialogFromModel(Object model) {
 
                 getEditDefinitionPanel().fillPanelFromModel(model);
         }
@@ -217,14 +219,13 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
                  * Fills this panel from a model
                  *
                  * @param model the model
-                 * @throws SignalMLException when model is not uspported
                  */
-                public void fillPanelFromModel(Object model) throws SignalMLException {
+                public void fillPanelFromModel(Object model) {
 
                         if (model instanceof AmplifierConnectionDescriptor) {
                                 fillPanelForAmplifierConnection((AmplifierConnectionDescriptor) model);
                         } else {
-                                throw new SignalMLException(messageSource.getMessage("error.modelNotSupported"));
+                                // TODO
                         }
                 }
 
@@ -253,13 +254,13 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
                  * Sets channel numbers, gain and offset.
                  *
                  * @param model the model
-                 * @throws SignalMLException when input data is invalid or model is not supported
+                 * @throws SignalMLException when input data is invalid
                  */
                 public void fillModelFromPanel(Object model) throws SignalMLException {
                         if (model instanceof AmplifierConnectionDescriptor) {
                                 fillModelForAmplifierConnection((AmplifierConnectionDescriptor) model);
                         } else {
-                                throw new SignalMLException(messageSource.getMessage("error.modelNotSupported"));
+                                // TODO
                         }
                 }
 

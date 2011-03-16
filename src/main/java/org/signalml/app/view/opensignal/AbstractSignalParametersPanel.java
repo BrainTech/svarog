@@ -1,6 +1,5 @@
 package org.signalml.app.view.opensignal;
 
-import org.signalml.app.model.AmplifierConnectionDescriptor;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
@@ -25,11 +24,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import org.signalml.app.view.element.IntegerSpinner;
 import org.signalml.app.config.ApplicationConfiguration;
-import org.signalml.app.model.OpenMonitorDescriptor;
-import org.signalml.app.view.element.DoubleSpinner;
 import org.signalml.app.view.element.FloatSpinner;
 import org.signalml.app.view.element.ResolvableComboBox;
-import org.signalml.codec.SignalMLCodecException;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
 import org.signalml.plugin.export.SignalMLException;
@@ -40,7 +36,7 @@ import org.springframework.context.support.MessageSourceAccessor;
  *
  * @author Tomasz Sawicki
  */
-public class SignalParametersPanel extends JPanel {
+public abstract class AbstractSignalParametersPanel extends JPanel {
 
         public static String NUMBER_OF_CHANNELS_PROPERTY = "numberOfChannelsChangedProperty";
         public static String SAMPLING_FREQUENCY_PROPERTY = "samplingFrequencyChanged";
@@ -95,143 +91,20 @@ public class SignalParametersPanel extends JPanel {
          *
          * @param messageSource {@link #messageSource}
          */
-        public SignalParametersPanel(MessageSourceAccessor messageSource, ApplicationConfiguration applicationConfiguration) {
+        public AbstractSignalParametersPanel(MessageSourceAccessor messageSource, ApplicationConfiguration applicationConfiguration) {
 
                 super();
                 this.messageSource = messageSource;
                 this.applicationConfiguration = applicationConfiguration;
                 createInterface();
         }
-
+        
         /**
-         * Fills this panel from a model
+         * Fills {@link #currentModel} from this panel.
          *
-         * @param model the model
-         * @throws SignalMLException when model is not supported
-         */
-        public final void fillPanelFromModel(Object model) throws SignalMLException {
-
-                if (model instanceof AmplifierConnectionDescriptor) {
-                        fillPanelForAmplifierConnection((AmplifierConnectionDescriptor) model);
-                } else if (model instanceof OpenMonitorDescriptor) {
-                        fillPanelForOpenBCIConnection((OpenMonitorDescriptor) model);
-                } else {
-                        setEnabledAll(false);
-                        throw new SignalMLCodecException(messageSource.getMessage("error.modelNotSupported"));
-                }
-
-                currentModel = model;
-        }
-
-        /**
-         * Fills a model from this panel.
-         *
-         * @param model the model
-         * @throws SignalMLException when input data is invalid or model is
-         * not supported.
-         */
-        public final void fillModelFromPanel(Object model) throws SignalMLException {
-
-                if (model instanceof AmplifierConnectionDescriptor) {
-                        fillModelForAmplifierConnection((AmplifierConnectionDescriptor) model);
-                } else if (model instanceof OpenMonitorDescriptor) {
-                        fillModelForOpenBCIConnection((OpenMonitorDescriptor) model);
-                } else {
-                        setEnabledAll(false);
-                        throw new SignalMLCodecException(messageSource.getMessage("error.modelNotSupported"));
-                }
-        }
-
-        /**
-         * Fills this panel for amplifier connection
-         *
-         * @param descriptor the descriptor
-         */
-        private void fillPanelForAmplifierConnection(AmplifierConnectionDescriptor descriptor) {
-
-                if (descriptor.getAmplifierInstance() == null) {
-                        setEnabledAll(false);
-                } else {
-                        setEnabledAll(true);
-
-                        getSamplingFrequencyComboBox().setEditable(false);
-                        getSamplingFrequencyComboBox().setModel(new DefaultComboBoxModel(
-                                descriptor.getAmplifierInstance().getDefinition().getAvailableFrequencies().toArray()));
-
-                        getChannelCountSpinner().setEnabled(false);
-                        getChannelCountSpinner().setValue(descriptor.getOpenMonitorDescriptor().getChannelCount());
-
-                        getByteOrderComboBox().setModel(new DefaultComboBoxModel());
-                        getByteOrderComboBox().setEnabled(false);
-
-                        getSampleTypeComboBox().setModel(new DefaultComboBoxModel());
-                        getSampleTypeComboBox().setEnabled(false);
-
-                        Float pageSize = descriptor.getOpenMonitorDescriptor().getPageSize();
-                        if (pageSize == null) pageSize = applicationConfiguration.getPageSize();
-                        getPageSizeSpinner().setValue(pageSize);
-
-                        getBlocksPerPageSpinner().setEnabled(false);
-                }
-        }
-
-        /**
-         * Fills the model for amplifier connection
-         *
-         * @param descriptor the descriptor
          * @throws SignalMLException when input data is invalid
          */
-        private void fillModelForAmplifierConnection(AmplifierConnectionDescriptor descriptor) throws SignalMLException {
-
-                Float samplingFrequency;
-                Float pageSize;
-
-                try {
-                        samplingFrequency = Float.parseFloat(getSamplingFrequencyComboBox().getModel().getSelectedItem().toString());
-                } catch (NumberFormatException ex) {
-                        throw new SignalMLException(messageSource.getMessage("error.invalidData"));
-                }
-
-                try {
-                        pageSize = getPageSizeSpinner().getValue();
-                } catch (NumberFormatException ex) {
-                        throw new SignalMLException(messageSource.getMessage("error.invalidData"));
-                }
-
-                descriptor.getOpenMonitorDescriptor().setSamplingFrequency(samplingFrequency);
-                descriptor.getOpenMonitorDescriptor().setPageSize(pageSize);
-        }
-
-        /**
-         * Fills this panel for amplifier connection
-         *
-         * @param descriptor the descriptor
-         */
-        private void fillPanelForOpenBCIConnection(OpenMonitorDescriptor descriptor) {
-
-        }
-
-        /**
-         * Fills the model for openbci connection.
-         *
-         * @param descriptor the descriptor
-         * @throws SignalMLException when input data is invalid
-         */
-        private void fillModelForOpenBCIConnection(OpenMonitorDescriptor descriptor) throws SignalMLException {
-
-        }
-
-        /**
-         * Clears all fields
-         */
-        public void clearAllFields() {
-
-                getSamplingFrequencyComboBox().getModel().setSelectedItem("");
-                getChannelCountSpinner().setValue(1);
-                //getByteOrderComboBox().getModel().setSelectedItem("");
-                //getSampleTypeComboBox().getModel().setSelectedItem("");
-                //getBlocksPerPageField().setValue(currentModel);
-        }
+        protected abstract void fillCurrentModelFromPanel() throws SignalMLException;
 
         /**
          * Sets enabled to this panel and all it's children.
@@ -242,9 +115,6 @@ public class SignalParametersPanel extends JPanel {
         public void setEnabledAll(boolean enabled) {
 
                 setEnabledToChildren(this, enabled);
-                if (!enabled) {
-                        clearAllFields();
-                }
         }
 
         /**
@@ -473,7 +343,7 @@ public class SignalParametersPanel extends JPanel {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
                                         try {
-                                                fillModelFromPanel(currentModel);
+                                                fillCurrentModelFromPanel();
                                                 getEditGainAndOffsetDialog().showDialog(currentModel);
                                         } catch (SignalMLException ex) {
                                                 JOptionPane.showMessageDialog(null, ex.getMessage(), messageSource.getMessage("error"), JOptionPane.ERROR_MESSAGE);

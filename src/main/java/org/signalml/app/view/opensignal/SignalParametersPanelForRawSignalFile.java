@@ -10,13 +10,14 @@ import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
+import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  *
  * @author Piotr Szachewicz
  */
-public class SignalParametersPanelForRawSignalFile extends SignalParametersPanel {
+public class SignalParametersPanelForRawSignalFile extends AbstractSignalParametersPanel {
 
 	public SignalParametersPanelForRawSignalFile(MessageSourceAccessor messageSource, ApplicationConfiguration applicationConfiguration) {
 		super(messageSource, applicationConfiguration);
@@ -52,5 +53,10 @@ public class SignalParametersPanelForRawSignalFile extends SignalParametersPanel
 		descriptor.setCalibrationGain(1.0F);
 		descriptor.setCalibrationOffset(0.0F);
 	}
+
+        @Override
+        protected void fillCurrentModelFromPanel() throws SignalMLException {
+                throw new UnsupportedOperationException("Not supported yet.");
+        }
 
 }
