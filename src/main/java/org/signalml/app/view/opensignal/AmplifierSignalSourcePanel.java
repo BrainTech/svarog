@@ -32,6 +32,10 @@ public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel {
          * Monitor recording panel.
          */
         private MonitorRecordingPanel monitorRecordingPanel;
+        /**
+         * Current descriptor.
+         */
+        private AmplifierConnectionDescriptor currentDescriptor;
         
         /**
          * Default constructor.
@@ -152,8 +156,10 @@ public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel {
                 getSignalParametersPanel().fillPanelFromModel(descriptor);
                 getMonitorRecordingPanel().fillPanelFromModel(descriptor);
                 if (!omitSelectionPanel) getAmplifierSelectionPanel().fillPanelFromModel(descriptor);
+
                 getSignalSourceSelectionPanel().getSelectionComboBox().setEnabled(!descriptor.isBciStarted());
 
+                currentDescriptor = descriptor;
         }
 
         /**
