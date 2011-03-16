@@ -33,8 +33,8 @@ import org.springframework.context.support.MessageSourceAccessor;
 public class ProgressDialog extends AbstractDialog implements PropertyChangeListener {
 
         public static final String PROGRESS_STATE = "progressState";
-        public final int DIALOG_WIDTH = 380;
-        public final int DIALOG_HEIGHT = 270;
+        public final int DIALOG_WIDTH = 400;
+        public final int DIALOG_HEIGHT = 280;
         /**
          * The text area.
          */
@@ -210,6 +210,16 @@ public class ProgressDialog extends AbstractDialog implements PropertyChangeList
         public boolean wasCancelled() {
 
                 return (!(error || success));
+        }
+
+        /**
+         * Returns true if there was a success.
+         *
+         * @return true if there was a success
+         */
+        public boolean wasSuccess() {
+                
+                return success;
         }
 
         /**

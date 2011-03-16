@@ -5,6 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.CancellationException;
 import javax.swing.SwingWorker;
 import multiplexer.jmx.client.JmxClient;
 import org.signalml.app.action.ConnectMultiplexerActionNoMetadata;
@@ -137,7 +138,6 @@ public class OpenBCIManager extends SwingWorker<ProgressState, ProgressState> im
                         configurationWorker.cancel(true);
                 }
                 processManager.killAll();
-                processManager.removePropertyChangeListener(this);
                 try {
                         JmxClient jmxClient = elementManager.getJmxClient();
                         if (jmxClient != null) {
@@ -210,8 +210,7 @@ public class OpenBCIManager extends SwingWorker<ProgressState, ProgressState> im
                 processManager.runProcess(amp_id, descriptor.getAmplifierInstance().getDefinition().getDriverPath(), ampParameters);
                 Thread.sleep(PROCESS_SLEEP);
 
-                // Remove self from list of process manager's listeners and return success
-                processManager.removePropertyChangeListener(this);
+                // return success                
                 return new ProgressState(messageSource.getMessage("success"), MAX_PROGRESS, MAX_PROGRESS);
         }
 
@@ -300,10 +299,11 @@ public class OpenBCIManager extends SwingWorker<ProgressState, ProgressState> im
 
                 try {
                         ProgressState result = get();
-                        firePropertyChange(ProgressDialog.PROGRESS_STATE, null, result);
+                        firePropertyChange(ProgressDialog.PROGRESS_STATE, null, result);                        
                 } catch (Exception ex) {
-                        ProgressState result = new ProgressState(messageSource.getMessage("error"), -1, MAX_PROGRESS);
-                        firePropertyChange(ProgressDialog.PROGRESS_STATE, null, result);
+                        ProgressState result = new ProgressState(messageSource.getMessage("failed"), -1, MAX_PROGRESS);
+                        firePropertyChange(ProgressDialog.PROGRESS_STATE, null, result);                        
                 }
+                processManager.removePropertyChangeListener(this);
         }
 }

@@ -85,7 +85,10 @@ public class ProcessManager {
                 killAll();
 
                 for (PropertyChangeListener listener : listeners)
-                        listener.propertyChange(new PropertyChangeEvent(this, PROCESS_ENDED, null, new ProcessExitData(id, exitCode)));
+                        try {
+                                listener.propertyChange(new PropertyChangeEvent(this, PROCESS_ENDED, null, new ProcessExitData(id, exitCode)));
+                        } catch (Exception ex) {
+                        }
         }
 
         /**

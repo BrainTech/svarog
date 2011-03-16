@@ -188,6 +188,10 @@ public class StartStopButtonsPanel extends JPanel {
                                 return;
                         }
 
+                        if (!progressDialog.wasSuccess()) {
+                                return;
+                        }
+
                         monitorDescriptor.setJmxClient(elementManager.getJmxClient());
                         monitorDescriptor.setTagClient(elementManager.getTagClient());
 

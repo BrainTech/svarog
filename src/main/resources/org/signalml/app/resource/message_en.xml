@@ -718,7 +718,7 @@
         <entry key="opensignal.amplifier.startingAmplifier">Starting amplifier driver...</entry>
 
         <entry key="opensignal.amplifier.missingModulesData">Modules data missing</entry>
-        <entry key="opensignal.amplifier.processFailed">Failed to start process (file missing?)! ID: </entry>
+        <entry key="opensignal.amplifier.processFailed">Error while starting process (file missing?)! ID: </entry>
         <entry key="opensignal.amplifier.processEnded">Process ended! ID and exit code: </entry>
         <entry key="opensignal.amplifier.connectionFailed">Connection failed</entry>
         <entry key="opensignal.amplifier.testFailed">Test failed</entry>
