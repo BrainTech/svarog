@@ -4,6 +4,8 @@
 
 package org.signalml.app.view.opensignal;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import org.signalml.app.config.ApplicationConfiguration;
@@ -39,6 +41,10 @@ public class SignalParametersPanelForRawSignalFile extends AbstractSignalParamet
 		getSampleTypeComboBox().setSelectedItem(descriptor.getSampleType());
 		getPageSizeSpinner().setValue(descriptor.getPageSize());
 		getBlocksPerPageSpinner().setValue(descriptor.getBlocksPerPage());
+
+		String[] channelLabels = descriptor.getChannelLabels();
+		if (channelLabels != null)
+			firePropertyChange(AbstractSignalParametersPanel.CHANNEL_LABELS_PROPERTY, null, channelLabels);
 	}
 
 	public void fillModelFromPanel(RawSignalDescriptor descriptor) {
@@ -52,6 +58,7 @@ public class SignalParametersPanelForRawSignalFile extends AbstractSignalParamet
 
 		descriptor.setCalibrationGain(1.0F);
 		descriptor.setCalibrationOffset(0.0F);
+
 	}
 
         @Override

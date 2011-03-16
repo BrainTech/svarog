@@ -64,6 +64,10 @@ public class SignalParametersPanelForAmplifierConnection extends AbstractSignalP
 
                 getEditGainAndOffsetDialog().fillDialogFromModel(descriptor);
                 currentModel = descriptor;
+
+		String[] channelLabels = descriptor.getOpenMonitorDescriptor().getChannelLabels();
+		if (channelLabels != null)
+			firePropertyChange(AbstractSignalParametersPanel.CHANNEL_LABELS_PROPERTY, null, channelLabels);
         }
 
         /**

@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import org.apache.log4j.Logger;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.ManagedDocumentType;
+import org.signalml.app.document.SignalDocument;
 import org.signalml.app.model.OpenDocumentDescriptor;
 import org.signalml.app.model.OpenSignalDescriptor;
 import org.signalml.app.view.ViewerElementManager;
@@ -66,7 +67,8 @@ public class OpenSignalAndSetMontageAction extends AbstractSignalMLAction {
 		DocumentFlowIntegrator documentFlowIntegrator = viewerElementManager.getDocumentFlowIntegrator();
 		if (documentFlowIntegrator.maybeOpenDocument(ofd) == true) {
 			Montage montage = openSignalDescriptor.getMontage();
-			documentFlowIntegrator.getActionFocusManager().getActiveSignalDocument().setMontage(montage);
+			SignalDocument activeSignalDocument = documentFlowIntegrator.getActionFocusManager().getActiveSignalDocument();
+			//documentFlowIntegrator.getActionFocusManager().getActiveSignalDocument().setMontage(montage);
 		}
 
 		/*OpenDocumentDescriptor ofd = new OpenDocumentDescriptor();

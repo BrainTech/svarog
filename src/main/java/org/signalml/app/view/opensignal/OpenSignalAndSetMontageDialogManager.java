@@ -42,6 +42,26 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 			float samplingFrequency = Float.parseFloat(evt.getNewValue().toString());
 			samplingFrequencyChangedTo(samplingFrequency);
 		}
+		else if (propertyName.equals(AbstractSignalParametersPanel.CHANNEL_LABELS_PROPERTY)) {
+
+			Montage currentMontage = openSignalAndSetMontageDialog.getCurrentMontage();
+			String[] channelLabels = (String[]) evt.getNewValue();
+
+			try {
+				for (int i = 0; i < channelLabels.length; i++) {
+					currentMontage.setSourceChannelLabelAt(i, channelLabels[i]);
+					currentMontage.setMontageChannelLabelAt(i, channelLabels[i]);
+				}
+				openSignalAndSetMontageDialog.fillDialogFromModel(currentMontage);
+			} catch (MontageException ex) {
+				Logger.getLogger(OpenSignalAndSetMontageDialogManager.class.getName()).log(Level.SEVERE, null, ex);
+			}
+			catch (SignalMLException ex) {
+				Logger.getLogger(OpenSignalAndSetMontageDialogManager.class.getName()).log(Level.SEVERE, null, ex);
+			}
+
+
+		}
 	}
 
 	protected void numberOfChannelsChangedTo(int newNumberOfChannels) {

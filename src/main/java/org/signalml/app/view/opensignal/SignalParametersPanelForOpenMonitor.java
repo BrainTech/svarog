@@ -40,6 +40,11 @@ public class SignalParametersPanelForOpenMonitor extends AbstractSignalParameter
 		getSampleTypeComboBox().setSelectedItem(descriptor.getSampleType());
 		getPageSizeSpinner().setValue(descriptor.getPageSize());
 		//getBlocksPerPageSpinner().setValue(4);
+
+
+		String[] channelLabels = descriptor.getChannelLabels();
+		if (channelLabels != null)
+			firePropertyChange(AbstractSignalParametersPanel.CHANNEL_LABELS_PROPERTY, null, channelLabels);
 	}
 
 	public void fillModelFromPanel(OpenMonitorDescriptor descriptor) {
