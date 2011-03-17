@@ -11,6 +11,7 @@ import javax.swing.event.ListSelectionListener;
 import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.app.view.monitor.ChannelDefinition;
 import org.signalml.app.view.monitor.ChannelDefinitionPanel;
+import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -62,7 +63,8 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
         }
 
         /**
-         * Only supported model is a {@link SignalParametersDescriptor}.
+         * Dialog can be filled from {@link OpenMonitorDescriptor}, {@link RawSignalDescriptor}
+         * or {@link AmplifierConnectionDescriptor}.
          *
          * @param clazz checked model
          * @return true if SignalParametersDescriptor is assignable from clazz
@@ -72,9 +74,9 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
 
                 boolean isAmpConnection = AmplifierConnectionDescriptor.class.isAssignableFrom(clazz);
                 boolean isBCIConnection = OpenMonitorDescriptor.class.isAssignableFrom(clazz);
-                // TODO: class for file opening
+                boolean isFile = RawSignalDescriptor.class.isAssignableFrom(clazz);
                 
-                return isAmpConnection || isBCIConnection;
+                return isAmpConnection || isBCIConnection || isFile;
         }
 
         /**
@@ -216,7 +218,7 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
                 }
 
                 /**
-                 * Fills this panel from a model
+                 * Fills this panel from a model.
                  *
                  * @param model the model
                  */
@@ -224,13 +226,15 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
 
                         if (model instanceof AmplifierConnectionDescriptor) {
                                 fillPanelForAmplifierConnection((AmplifierConnectionDescriptor) model);
-                        } else {
-                                // TODO
+                        } else if (model instanceof OpenMonitorDescriptor) {
+                                fillPanelForOpenBCIConnection((OpenMonitorDescriptor) model);
+                        } else if (model instanceof RawSignalDescriptor) {
+                                fillPanelForFileOpening((RawSignalDescriptor) model);
                         }
                 }
 
                 /**
-                 * Fills the panel for amplifier connection
+                 * Fills the panel for amplifier connection.
                  *
                  * @param descriptor the descriptor
                  */
@@ -250,6 +254,24 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
                 }
 
                 /**
+                 * Fills the panel for BCI connection.
+                 *
+                 * @param descriptor the descriptor
+                 */
+                private void fillPanelForOpenBCIConnection(OpenMonitorDescriptor openMonitorDescriptor) {
+                        throw new UnsupportedOperationException("Not yet implemented");
+                }
+
+                /**
+                 * Fills the panel for file opening.
+                 *
+                 * @param descriptor the descriptor
+                 */                
+                private void fillPanelForFileOpening(RawSignalDescriptor rawSignalDescriptor) {
+                        throw new UnsupportedOperationException("Not yet implemented");
+                }
+
+                /**
                  * Fills a model object from this panel.
                  * Sets channel numbers, gain and offset.
                  *
@@ -259,18 +281,18 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
                 public void fillModelFromPanel(Object model) throws SignalMLException {
                         if (model instanceof AmplifierConnectionDescriptor) {
                                 fillModelForAmplifierConnection((AmplifierConnectionDescriptor) model);
-                        } else {
-                                // TODO
-                        }
+                        } else if (model instanceof OpenMonitorDescriptor) {
+                                fillModelForOpenBCIConnection((OpenMonitorDescriptor) model);
+                        } else if (model instanceof RawSignalDescriptor) {
+                                fillModelForFileOpening((RawSignalDescriptor) model);                        }
                 }
 
                 /**
-                 * Fills the model for amplifier connection
+                 * Fills the model for amplifier connection.
                  *
                  * @param descriptor the descriptor
-                 * @throws SignalMLException when input data is invalid
-                */
-                private void fillModelForAmplifierConnection(AmplifierConnectionDescriptor amplifierConnectionDescriptor) throws SignalMLException {
+                 */
+                private void fillModelForAmplifierConnection(AmplifierConnectionDescriptor amplifierConnectionDescriptor) {
 
                         Float[] gainFromList = getGainValues().toArray(new Float[0]);
                         Float[] offsetFromList = getOffsetValues().toArray(new Float[0]);
@@ -287,6 +309,24 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
 
                         amplifierConnectionDescriptor.getOpenMonitorDescriptor().setCalibrationGain(gain);
                         amplifierConnectionDescriptor.getOpenMonitorDescriptor().setCalibrationOffset(offset);
+                }
+
+                /**
+                 * Fills the model for BCI connection.
+                 *
+                 * @param descriptor the descriptor
+                 */
+                private void fillModelForOpenBCIConnection(OpenMonitorDescriptor openMonitorDescriptor) {
+                        throw new UnsupportedOperationException("Not yet implemented");
+                }
+
+                /**
+                 * Fills the model for file opening.
+                 *
+                 * @param descriptor the descriptor
+                 */
+                private void fillModelForFileOpening(RawSignalDescriptor rawSignalDescriptor) {
+                        throw new UnsupportedOperationException("Not yet implemented");
                 }
         }
 }
