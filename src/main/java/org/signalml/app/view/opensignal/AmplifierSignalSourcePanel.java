@@ -32,6 +32,11 @@ public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel {
          * Monitor recording panel.
          */
         private MonitorRecordingPanel monitorRecordingPanel;
+	
+	/**
+	 * Current descriptor.
+	 */
+	private AmplifierConnectionDescriptor currentDescriptor;
         
         /**
          * Default constructor.
