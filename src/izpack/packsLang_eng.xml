@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<langpack>
+
+	<str id="svarog.pack.windows" txt="Core (required)"/>
+	<str id="svarog.pack.windows.description" txt="Core files (required)"/>
+	<str id="svarog.pack.linux" txt="Core (required)"/>
+	<str id="svarog.pack.linux.description" txt="Core files (required)"/>
+	<str id="svarog.pack.mac" txt="Core (required)"/>
+	<str id="svarog.pack.mac.description" txt="Core files (required)"/>
+	
+	<str id="svarog.pack.windows_mp5" txt="MP5"/>
+	<str id="svarog.pack.windows_mp5.description" txt="mp5 is the fifth version of the matching pursuit algorithm implemented at the University of Warsaw in C as a command-line program"/>
+	<str id="svarog.pack.linux_mp5" txt="MP5"/>
+	<str id="svarog.pack.linux_mp5.description" txt="mp5 is the fifth version of the matching pursuit algorithm implemented at the University of Warsaw in C as a command-line program"/>
+	<str id="svarog.pack.mac_mp5" txt="MP5"/>
+	<str id="svarog.pack.mac_mp5.description" txt="mp5 is the fifth version of the matching pursuit algorithm implemented at the University of Warsaw in C as a command-line program"/>
+	
+	<str id="svarog.pack.plugins" txt="Plugins"/>
+	<str id="svarog.pack.plugins.description" txt="Currently there are two default plugins: FFTSignalTool - the tool which displays a FFT over a signal plot,	FFT - the library to calculate FFT needed by FFTSignalTool"/>
+	
+	<str id="svarog.pack.sources" txt="Sources"/>
+	<str id="svarog.pack.sources.description" txt="The source code"/>
+   
+	 
+	 
+    
+</langpack>
