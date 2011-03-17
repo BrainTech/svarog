@@ -72,10 +72,12 @@ abstract public class AbstractSignalSourcePanel extends JPanel implements Proper
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		propertyChangeSupport.firePropertyChange(evt);
+		PropertyChangeEvent newEvent = new PropertyChangeEvent(this, evt.getPropertyName(), null, evt.getNewValue());
+		propertyChangeSupport.firePropertyChange(newEvent);
 	}
 
 	protected void fireNumberOfChannelsChangedProperty(int newNumberOfChannels) {
 		propertyChangeSupport.firePropertyChange(AbstractSignalParametersPanel.NUMBER_OF_CHANNELS_PROPERTY, null, newNumberOfChannels);
 	}
+
 }

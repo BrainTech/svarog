@@ -116,7 +116,7 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		String propertyName = evt.getPropertyName();
+		String propertyName = evt.getPropertyName();		
 
 		if (propertyName.equals(FileOpenMethodPanel.FILE_OPEN_METHOD_PROPERTY_CHANGED)) {
 			FileOpenSignalMethod method = (FileOpenSignalMethod) evt.getNewValue();

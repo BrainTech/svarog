@@ -68,7 +68,7 @@ public class OpenSignalAndSetMontageAction extends AbstractSignalMLAction {
 		if (documentFlowIntegrator.maybeOpenDocument(ofd) == true) {
 			Montage montage = openSignalDescriptor.getMontage();
 			SignalDocument activeSignalDocument = documentFlowIntegrator.getActionFocusManager().getActiveSignalDocument();
-			//documentFlowIntegrator.getActionFocusManager().getActiveSignalDocument().setMontage(montage);
+			activeSignalDocument.setMontage(montage);
 		}
 
 		/*OpenDocumentDescriptor ofd = new OpenDocumentDescriptor();

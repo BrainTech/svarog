@@ -408,6 +408,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 
 	public void setSamplingFrequency(float samplingFrequency) {
 		filtersPanel.setCurrentSamplingFrequency(samplingFrequency);
+		
 	}
 
 	public Montage getCurrentMontage() {

@@ -24,8 +24,7 @@ public class OpenSignalDescriptor {
 	private Montage montage;
 
 	public OpenSignalDescriptor() {
-		//signalSource = SignalSource.FILE;
-		signalSource = signalSource.OPENBCI;
+		signalSource = SignalSource.FILE;
 		openFileSignalDescriptor = new OpenFileSignalDescriptor();
 		openFileSignalDescriptor.setMethod(FileOpenSignalMethod.RAW);
 

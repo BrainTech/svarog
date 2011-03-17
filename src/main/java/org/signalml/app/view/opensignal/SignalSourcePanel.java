@@ -83,7 +83,11 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 		else if (propertyName.equals(AbstractSignalParametersPanel.NUMBER_OF_CHANNELS_PROPERTY) ||
 			propertyName.equals(AbstractSignalParametersPanel.SAMPLING_FREQUENCY_PROPERTY) ||
 			propertyName.equals(AbstractSignalParametersPanel.CHANNEL_LABELS_PROPERTY)) {
-			firePropertyChange(propertyName, 0, evt.getNewValue());
+			Object source = evt.getSource();
+			if ( (source == fileSignalSourcePanel && getSelectedSignalSource().isFile()) ||
+				(source == openBCISignalSourcePanel && getSelectedSignalSource().isOpenBCI()) ||
+				source == amplifierSignalSourcePanel && getSelectedSignalSource().isAmplifier())
+				firePropertyChange(propertyName, 0, evt.getNewValue());
 		}
 	}
 

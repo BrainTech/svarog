@@ -77,6 +77,8 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 
 	protected void samplingFrequencyChangedTo(float newSamplingFrequency) {
 		openSignalAndSetMontageDialog.setSamplingFrequency(newSamplingFrequency);
+		//Montage currentMontage = openSignalAndSetMontageDialog.getCurrentMontage();
+		
 	}
 
 }

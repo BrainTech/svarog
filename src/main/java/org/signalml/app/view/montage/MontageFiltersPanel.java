@@ -490,20 +490,7 @@ public class MontageFiltersPanel extends JPanel {
 			getFilterExclusionTableModel().setMontage(montage);
 
 			if (montage != null) {
-				List<SampleFilterDefinition> predefinedFilters = predefinedTimeDomainSampleFilterPresetManager.getPredefinedFilters(getCurrentSamplingFrequency());
-
-				if (predefinedFilters == null) {
-					//ErrorsDialog.showImmediateExceptionDialog(this, new ResolvableException("error.noPredefinedFiltersForThisSamplingFrequency"));
-					return;
-				}
-
-				SampleFilterDefinition[] arr = new SampleFilterDefinition[predefinedFilters.size()];
-				predefinedFilters.toArray(arr);
-				DefaultComboBoxModel model = new DefaultComboBoxModel(arr);
-				ResolvableComboBox comboBox = getTimeDomainFilterTypeComboBox();
-				comboBox.setModel(model);
-				comboBox.setSelectedIndex(0);
-				comboBox.repaint();
+				updatePredefinedTimeDomainFiltersComboBox();
 
 				getFilteringEnabledCheckBox().setSelected(montage.isFilteringEnabled());
 			} else {
@@ -511,6 +498,24 @@ public class MontageFiltersPanel extends JPanel {
 				getFilteringEnabledCheckBox().setSelected(false);
 			}
 		}
+	}
+
+	protected void updatePredefinedTimeDomainFiltersComboBox() {
+		List<SampleFilterDefinition> predefinedFilters = predefinedTimeDomainSampleFilterPresetManager.getPredefinedFilters(getCurrentSamplingFrequency());
+
+		if (predefinedFilters == null) {
+			//ErrorsDialog.showImmediateExceptionDialog(this, new ResolvableException("error.noPredefinedFiltersForThisSamplingFrequency"));
+			getTimeDomainFilterTypeComboBox().setModel(new DefaultComboBoxModel(new Object[0]));
+			return;
+		}
+
+		SampleFilterDefinition[] arr = new SampleFilterDefinition[predefinedFilters.size()];
+		predefinedFilters.toArray(arr);
+		DefaultComboBoxModel model = new DefaultComboBoxModel(arr);
+		ResolvableComboBox comboBox = getTimeDomainFilterTypeComboBox();
+		comboBox.setModel(model);
+		comboBox.setSelectedIndex(0);
+		comboBox.repaint();
 	}
 
 	public boolean isSignalBound() {
@@ -531,6 +536,7 @@ public class MontageFiltersPanel extends JPanel {
 		this.currentSamplingFrequency = currentSamplingFrequency;
 		editFFTSampleFilterDialog.setCurrentSamplingFrequency(currentSamplingFrequency);
 		editTimeDomainSampleFilterDialog.setCurrentSamplingFrequency(currentSamplingFrequency);
+		updatePredefinedTimeDomainFiltersComboBox();
 	}
 
 	/**
