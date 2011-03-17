@@ -159,6 +159,7 @@ public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel {
                 if (!omitSelectionPanel) getAmplifierSelectionPanel().fillPanelFromModel(descriptor);
                 getSignalSourceSelectionPanel().getSelectionComboBox().setEnabled(!descriptor.isBciStarted());
 
+                currentDescriptor = descriptor;
         }
 
         /**
