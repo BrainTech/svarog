@@ -62,8 +62,20 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 
 
 		}
-		else if (propertyName.equals(SignalSourceSelectionPanel.SIGNAL_SOURCE_SELECTION_CHANGED_PROPERTY) ||
-			propertyName.equals(AbstractMonitorSourcePanel.OPENBCI_CONNECTED_PROPERTY)) {
+		else if (propertyName.equals(SignalSourceSelectionPanel.SIGNAL_SOURCE_SELECTION_CHANGED_PROPERTY)) {
+			Montage currentMontage = openSignalAndSetMontageDialog.getCurrentMontage();
+
+			int montageSourceChannelCount = currentMontage.getSourceChannelCount();
+			int signalSourcePanelChannelCount = signalSourcePanel.getCurrentSignalSourcePanel().getChannelCount();
+
+			if (montageSourceChannelCount != signalSourcePanelChannelCount)
+				numberOfChannelsChangedTo(signalSourcePanelChannelCount);
+
+			samplingFrequencyChangedTo(signalSourcePanel.getCurrentSignalSourcePanel().getSamplingFrequency());
+
+			enableTabsAndOKButtonAsNeeded();
+		}
+		else if (propertyName.equals(AbstractMonitorSourcePanel.OPENBCI_CONNECTED_PROPERTY)) {
 			enableTabsAndOKButtonAsNeeded();
 		}
 	}

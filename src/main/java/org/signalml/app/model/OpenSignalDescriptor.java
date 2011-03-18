@@ -31,7 +31,7 @@ public class OpenSignalDescriptor {
 		montage = SignalType.EEG_10_20.getConfigurer().createMontage(openFileSignalDescriptor.getRawSignalDescriptor().getChannelCount());
 
 
-		openMonitorDescriptor.setSamplingFrequency(33.3F);
+		openMonitorDescriptor.setSamplingFrequency(256.0F);
 		openMonitorDescriptor.setPageSize(33.3F);
 		openMonitorDescriptor.setMultiplexerAddress("127.0.0.1");
 		openMonitorDescriptor.setMultiplexerPort(39393);

@@ -99,6 +99,9 @@ public abstract class AbstractSignalParametersPanel extends JPanel {
                 this.messageSource = messageSource;
                 this.applicationConfiguration = applicationConfiguration;
                 createInterface();
+
+		getSamplingFrequencyComboBox().setEditable(true);
+		getSamplingFrequencyComboBox().setSelectedItem(1024.0F);
         }
         
         /**
