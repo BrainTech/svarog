@@ -24,7 +24,7 @@ abstract public class AbstractSignalSourcePanel extends JPanel implements Proper
 
         protected MessageSourceAccessor messageSource;
         protected ViewerElementManager viewerElementManager;
-        private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+        protected PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
         private SignalSourceSelectionPanel signalSourceSelectionPanel;
 
         public AbstractSignalSourcePanel(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager) {
@@ -79,5 +79,9 @@ abstract public class AbstractSignalSourcePanel extends JPanel implements Proper
 	protected void fireNumberOfChannelsChangedProperty(int newNumberOfChannels) {
 		propertyChangeSupport.firePropertyChange(AbstractSignalParametersPanel.NUMBER_OF_CHANNELS_PROPERTY, null, newNumberOfChannels);
 	}
+
+	abstract public boolean isMetadataFilled();
+	abstract public int getChannelCount();
+	abstract public float getSamplingFrequency();
 
 }

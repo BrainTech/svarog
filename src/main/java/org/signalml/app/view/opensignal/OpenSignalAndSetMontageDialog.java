@@ -82,4 +82,12 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
         public Montage getChannelTabSourceMontage() {
                 return channelsPanel.getMontage();
         }
+
+	public void setMontageTabsEnabled(boolean enable) {
+		int tabCount = tabbedPane.getTabCount();
+
+		for (int i = 1; i < tabCount - 1; i++)
+			tabbedPane.setEnabledAt(i, enable);
+	}
+
 }

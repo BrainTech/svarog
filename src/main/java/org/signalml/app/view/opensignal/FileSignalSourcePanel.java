@@ -129,4 +129,20 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 			super.propertyChange(evt);
 
 	}
+
+	@Override
+	public boolean isMetadataFilled() {
+		return true;
+	}
+
+	@Override
+	public int getChannelCount() {
+		return rawSignalParametersPanel.getChannelCount();
+	}
+
+	@Override
+	public float getSamplingFrequency() {
+		return rawSignalParametersPanel.getSamplingFrequency();
+	}
+
 }

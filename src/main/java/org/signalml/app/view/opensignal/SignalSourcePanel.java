@@ -79,15 +79,21 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 			SignalSource newSignalSource = (SignalSource) evt.getNewValue();
 			showPanelForSignalSource(newSignalSource);
 			System.out.println("changed signal source type");
+			firePropertyChange(SignalSourceSelectionPanel.SIGNAL_SOURCE_SELECTION_CHANGED_PROPERTY, null, newSignalSource);
 		}
 		else if (propertyName.equals(AbstractSignalParametersPanel.NUMBER_OF_CHANNELS_PROPERTY) ||
 			propertyName.equals(AbstractSignalParametersPanel.SAMPLING_FREQUENCY_PROPERTY) ||
-			propertyName.equals(AbstractSignalParametersPanel.CHANNEL_LABELS_PROPERTY)) {
+			propertyName.equals(AbstractSignalParametersPanel.CHANNEL_LABELS_PROPERTY)
+			) {
 			Object source = evt.getSource();
-			if ( (source == fileSignalSourcePanel && getSelectedSignalSource().isFile()) ||
-				(source == openBCISignalSourcePanel && getSelectedSignalSource().isOpenBCI()) ||
-				source == amplifierSignalSourcePanel && getSelectedSignalSource().isAmplifier())
+			SignalSource selectedSignalSource = getSelectedSignalSource();
+			if ( (source == fileSignalSourcePanel && selectedSignalSource.isFile()) ||
+				(source == openBCISignalSourcePanel && selectedSignalSource.isOpenBCI()) ||
+				source == amplifierSignalSourcePanel && selectedSignalSource.isAmplifier())
 				firePropertyChange(propertyName, 0, evt.getNewValue());
+		}
+		else if (propertyName.equals(AbstractMonitorSourcePanel.OPENBCI_CONNECTED_PROPERTY)) {
+			firePropertyChange(propertyName, evt.getOldValue(), evt.getNewValue());
 		}
 	}
 
@@ -133,6 +139,17 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
                         } catch (SignalMLException ex) {
                         }
                 }
+	}
+
+	public AbstractSignalSourcePanel getCurrentSignalSourcePanel() {
+		SignalSource signalSource = getSelectedSignalSource();
+
+		if (signalSource.isFile())
+			return fileSignalSourcePanel;
+		else if (signalSource.isOpenBCI())
+			return openBCISignalSourcePanel;
+		else
+			return amplifierSignalSourcePanel;
 	}
 
 }

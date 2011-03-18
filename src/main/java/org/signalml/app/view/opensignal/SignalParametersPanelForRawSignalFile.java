@@ -48,7 +48,7 @@ public class SignalParametersPanelForRawSignalFile extends AbstractSignalParamet
 	}
 
 	public void fillModelFromPanel(RawSignalDescriptor descriptor) {
-		descriptor.setSamplingFrequency(Float.parseFloat(getSamplingFrequencyComboBox().getSelectedItem().toString()));
+		descriptor.setSamplingFrequency(getSamplingFrequency());
 		descriptor.setChannelCount(getChannelCountSpinner().getValue());
 		descriptor.setByteOrder((RawSignalByteOrder) getByteOrderComboBox().getSelectedItem());
 		descriptor.setSampleType((RawSignalSampleType) getSampleTypeComboBox().getSelectedItem());

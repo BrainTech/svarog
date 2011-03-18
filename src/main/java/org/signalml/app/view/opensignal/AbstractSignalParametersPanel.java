@@ -369,4 +369,14 @@ public abstract class AbstractSignalParametersPanel extends JPanel {
                 }
                 return editGainAndOffsetDialog;
         }
+
+
+	public int getChannelCount() {
+		return getChannelCountSpinner().getValue();
+	}
+
+	public float getSamplingFrequency() {
+		return Float.parseFloat(getSamplingFrequencyComboBox().getSelectedItem().toString());
+	}
+
 }

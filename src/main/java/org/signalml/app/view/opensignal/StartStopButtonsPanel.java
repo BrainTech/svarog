@@ -148,6 +148,10 @@ public class StartStopButtonsPanel extends JPanel {
                 return stopAction;
         }
 
+	public boolean isBCIStarted() {
+		return bciStarted;
+	}
+
         /**
          * Fills an {@link AmplifierConnectionDescriptor} from this panel.
          *
@@ -213,6 +217,7 @@ public class StartStopButtonsPanel extends JPanel {
                         }
 
                         bciStarted = true;
+			signalSourcePanel.setConnected(true);
 
                         fillModelFromPanel(currentDescriptor);
                         try {
@@ -263,6 +268,7 @@ public class StartStopButtonsPanel extends JPanel {
                         setEnabled(false);
 
                         bciStarted = false;
+			signalSourcePanel.setConnected(false);
                         
                         fillModelFromPanel(currentDescriptor);
                         try {

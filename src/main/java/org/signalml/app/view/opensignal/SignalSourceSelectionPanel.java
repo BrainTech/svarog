@@ -80,4 +80,8 @@ public class SignalSourceSelectionPanel extends TitledPanelWithABorder implement
 		propertyChangeSupport.firePropertyChange(SIGNAL_SOURCE_SELECTION_CHANGED_PROPERTY, null, currentSignalSource);
 	}
 
+	public void setEnabled(boolean enabled) {
+		getSelectionComboBox().setEnabled(enabled);
+	}
+
 }

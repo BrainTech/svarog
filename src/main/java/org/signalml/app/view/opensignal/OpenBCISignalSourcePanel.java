@@ -4,12 +4,10 @@
 
 package org.signalml.app.view.opensignal;
 
-import org.signalml.app.model.OpenFileSignalDescriptor;
 import java.awt.BorderLayout;
 import java.beans.PropertyChangeEvent;
 import javax.swing.JPanel;
 import org.signalml.app.view.ViewerElementManager;
-import org.signalml.app.view.element.MonitorChannelSelectPanel;
 import org.signalml.app.view.element.MultiplexerConnectionPanel;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.signalml.app.view.element.MonitorRecordingPanel;
@@ -19,12 +17,11 @@ import org.signalml.app.model.OpenMonitorDescriptor;
  *
  * @author Piotr Szachewicz
  */
-public class OpenBCISignalSourcePanel extends AbstractSignalSourcePanel {
+public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 
 	private OpenMonitorDescriptor currentModel;
 
 	private MultiplexerConnectionPanel multiplexerConnectionPanel;
-	private MonitorChannelSelectPanel monitorChannelSelectPanel = null;
 	private MonitorRecordingPanel monitorRecordingPanel = null;
 	private SignalParametersPanelForOpenMonitor signalParametersPanel;
 
@@ -98,8 +95,10 @@ public class OpenBCISignalSourcePanel extends AbstractSignalSourcePanel {
 			/* model was changed by the connectAction in the
 			multiplexerConnectionPanel */
 			fillPanelFromModel(currentModel);
+			setConnected(true);
 		}
 		else if ("disconnected".equals(propertyName)) {
+			setConnected(false);
 			/*try {
 				OpenMonitorDescriptor m = ((OpenMonitorDescriptor) getCurrentModel());
 				m.setSamplingFrequency(null);
@@ -114,6 +113,16 @@ public class OpenBCISignalSourcePanel extends AbstractSignalSourcePanel {
 		}
 		else
 			super.propertyChange(evt);
+	}
+
+	@Override
+	public int getChannelCount() {
+		return signalParametersPanel.getChannelCount();
+	}
+
+	@Override
+	public float getSamplingFrequency() {
+		return signalParametersPanel.getSamplingFrequency();
 	}
 
 }

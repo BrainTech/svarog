@@ -14,7 +14,7 @@ import org.springframework.context.support.MessageSourceAccessor;
  *
  * @author Tomasz Sawicki
  */
-public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel {
+public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
 
         /**
          * Amplifier selection panel.
@@ -197,4 +197,19 @@ public class AmplifierSignalSourcePanel extends AbstractSignalSourcePanel {
                 fillModelFromPanel(currentDescriptor);
                 return currentDescriptor;
         }
+
+	@Override
+	public boolean isMetadataFilled() {
+		return startStopButtonsPanel.isBCIStarted();
+	}
+
+	@Override
+	public int getChannelCount() {
+		return signalParametersPanel.getChannelCount();
+	}
+
+	@Override
+	public float getSamplingFrequency() {
+		return signalParametersPanel.getSamplingFrequency();
+	}
 }
