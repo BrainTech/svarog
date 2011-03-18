@@ -6,6 +6,7 @@ package org.signalml.app.view.opensignal;
 import java.awt.CardLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
@@ -18,6 +19,7 @@ import org.signalml.app.model.OpenSignalDescriptor;
 import org.signalml.app.view.ViewerElementManager;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
+import org.springframework.validation.Errors;
 
 /**
  *
@@ -150,6 +152,14 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 			return openBCISignalSourcePanel;
 		else
 			return amplifierSignalSourcePanel;
+	}
+
+	public void validatePanel(Object model, Errors errors) {
+		if (getSelectedSignalSource().isFile()) {
+			File selectedFile = fileSignalSourcePanel.getFileChooserPanel().getSelectedFile();
+			if (selectedFile == null)
+					errors.reject("opensignal.error.noFileSelected");
+		}
 	}
 
 }

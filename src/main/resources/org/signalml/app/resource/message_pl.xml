@@ -724,6 +724,8 @@
         <entry key="opensignal.amplifier.testFailed">Test failed</entry>
         <entry key="opensignal.amplifier.sendingFailed">Sending failed</entry>
 
+	<entry key="opensignal.error.noFileSelected">Please select a signal file</entry>
+
 <!-- ============================ -->
 
         <entry key="amplifierSelection.amplifiersList">Amplifiers List</entry>

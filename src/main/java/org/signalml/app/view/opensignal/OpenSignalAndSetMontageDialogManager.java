@@ -64,15 +64,16 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 		}
 		else if (propertyName.equals(SignalSourceSelectionPanel.SIGNAL_SOURCE_SELECTION_CHANGED_PROPERTY) ||
 			propertyName.equals(AbstractMonitorSourcePanel.OPENBCI_CONNECTED_PROPERTY)) {
-			enableTabsIfNeeded();
+			enableTabsAndOKButtonAsNeeded();
 		}
 	}
 
-	public void enableTabsIfNeeded() {
+	public void enableTabsAndOKButtonAsNeeded() {
 		AbstractSignalSourcePanel currentSignalSourcePanel = signalSourcePanel.getCurrentSignalSourcePanel();
 		boolean metadataFilled = currentSignalSourcePanel.isMetadataFilled();
 
 		openSignalAndSetMontageDialog.setMontageTabsEnabled(metadataFilled);
+		openSignalAndSetMontageDialog.setOKButtoneEnabled(metadataFilled);
 	}
 
 	protected void numberOfChannelsChangedTo(int newNumberOfChannels) {

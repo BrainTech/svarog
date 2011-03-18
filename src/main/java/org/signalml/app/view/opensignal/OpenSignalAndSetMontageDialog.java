@@ -12,6 +12,7 @@ import org.signalml.app.view.montage.SignalMontageDialog;
 import org.signalml.domain.montage.Montage;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
+import org.springframework.validation.Errors;
 
 /**
  *
@@ -29,8 +30,7 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 		super(messageSource, viewerElementManager.getMontagePresetManager(), viewerElementManager.getPredefinedTimeDomainFiltersPresetManager(), f, isModal);
 		this.viewerElementManager = viewerElementManager;
 
-		dialogManager = new OpenSignalAndSetMontageDialogManager(this, getSignalSourcePanel());		
-
+		dialogManager = new OpenSignalAndSetMontageDialogManager(this, getSignalSourcePanel());
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 		return interfacePanel;
 	}
 
-	protected SignalSourcePanel getSignalSourcePanel() {
+	private SignalSourcePanel getSignalSourcePanel() {
 		if (signalSourcePanel == null)
 			signalSourcePanel = new SignalSourcePanel(messageSource, viewerElementManager);
 		return signalSourcePanel;
@@ -89,5 +89,16 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 		for (int i = 1; i < tabCount - 1; i++)
 			tabbedPane.setEnabledAt(i, enable);
 	}
+
+	public void setOKButtoneEnabled(boolean enabled) {
+		getOkButton().setEnabled(enabled);
+	}
+
+	@Override
+	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+		signalSourcePanel.validatePanel(model, errors);
+		super.validateDialog(model, errors);
+	}
+
 
 }
