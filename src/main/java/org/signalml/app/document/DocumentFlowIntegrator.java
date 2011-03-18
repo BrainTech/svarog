@@ -37,6 +37,7 @@ import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.app.view.dialog.PleaseWaitDialog;
 import org.signalml.app.view.dialog.SignalParametersDialog;
 import org.signalml.app.view.opensignal.FileOpenSignalMethod;
+import org.signalml.app.view.opensignal.SignalSource;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.worker.OpenBookDocumentWorker;
 import org.signalml.app.worker.OpenSignalMLDocumentWorker;
@@ -797,8 +798,13 @@ public class DocumentFlowIntegrator {
 
 	private SignalDocument openMonitorDocument(final OpenDocumentDescriptor descriptor) throws IOException, SignalMLException, ConnectException {
 
-		//OpenMonitorDescriptor monitorOptions = descriptor.getMonitorOptions();
-		OpenMonitorDescriptor monitorOptions = descriptor.getOpenSignalDescriptor().getOpenMonitorDescriptor();
+		OpenMonitorDescriptor monitorOptions = null;
+                
+                if (descriptor.getOpenSignalDescriptor().getSignalSource().equals(SignalSource.OPENBCI)) {
+                        monitorOptions = descriptor.getOpenSignalDescriptor().getOpenMonitorDescriptor();
+                } else if (descriptor.getOpenSignalDescriptor().getSignalSource().equals(SignalSource.AMPLIFIER)) {
+                        monitorOptions = descriptor.getOpenSignalDescriptor().getAmplifierConnectionDescriptor().getOpenMonitorDescriptor();
+                }
 		
 		MonitorSignalDocument monitorSignalDocument = new MonitorSignalDocument(monitorOptions);
 
