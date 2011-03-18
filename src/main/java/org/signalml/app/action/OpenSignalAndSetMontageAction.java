@@ -59,7 +59,8 @@ public class OpenSignalAndSetMontageAction extends AbstractSignalMLAction {
 			return;
 		}
 
-		if (openSignalDescriptor.getSignalSource().isOpenBCI())
+		if (openSignalDescriptor.getSignalSource().isOpenBCI() ||
+			openSignalDescriptor.getSignalSource().isAmplifier())
 			ofd.setType(ManagedDocumentType.MONITOR);
 		else if (openSignalDescriptor.getSignalSource().isFile())
 			ofd.setType(ManagedDocumentType.SIGNAL);
