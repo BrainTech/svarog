@@ -60,7 +60,6 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 				Logger.getLogger(OpenSignalAndSetMontageDialogManager.class.getName()).log(Level.SEVERE, null, ex);
 			}
 
-
 		}
 		else if (propertyName.equals(SignalSourceSelectionPanel.SIGNAL_SOURCE_SELECTION_CHANGED_PROPERTY)) {
 			Montage currentMontage = openSignalAndSetMontageDialog.getCurrentMontage();

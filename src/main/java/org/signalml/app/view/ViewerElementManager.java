@@ -722,7 +722,7 @@ public class ViewerElementManager {
 			fileMenu = new JMenu(messageSource.getMessage("menu.file"));
 
 			fileMenu.add(getOpenSignalAndSetMontageAction());
-			fileMenu.add(getOpenDocumentAction());
+			//fileMenu.add(getOpenDocumentAction());
 			fileMenu.add(getSaveActiveDocumentAction());
 			fileMenu.add(getSaveActiveDocumentAsAction());
 			fileMenu.add(getSaveAllDocumentsAction());
@@ -782,7 +782,7 @@ public class ViewerElementManager {
 	public JMenu getMonitorMenu() {
 		if (monitorMenu == null) {
 			monitorMenu = new JMenu(messageSource.getMessage("menu.monitor"));
-			monitorMenu.add(getOpenMonitorAction());
+			//monitorMenu.add(getOpenMonitorAction());
                         monitorMenu.add(getCheckSignalAction());
 			monitorMenu.addSeparator();
 			monitorMenu.add(getStartMonitorRecordingAction());
@@ -887,7 +887,8 @@ public class ViewerElementManager {
 
 			mainToolBar.setFloatable(false);
 
-			mainToolBar.add(getOpenDocumentAction());
+			//mainToolBar.add(getOpenDocumentAction());
+			mainToolBar.add(getOpenSignalAndSetMontageAction());
 			mainToolBar.add(getSaveActiveDocumentAction());
 			mainToolBar.add(getSaveActiveDocumentAsAction());
 			mainToolBar.add(getSaveAllDocumentsAction());

@@ -33,7 +33,7 @@ public class OpenSignalAndSetMontageAction extends AbstractSignalMLAction {
 		super(viewerElementManager.getMessageSource());
 		this.viewerElementManager = viewerElementManager;
 		setText("action.openSignalAndSetMontageLabel");
-//		setIconPath("org/signalml/app/icon/connect.png");
+		setIconPath("org/signalml/app/icon/fileopen.png");
 		setToolTip("action.openSignalAndSetMontageToolTip");
 	}
 

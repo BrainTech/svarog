@@ -34,6 +34,8 @@ public class FileOpenMethodPanel extends JPanel {
 	public FileOpenMethodPanel(MessageSourceAccessor messageSource) {
 		this.messageSource = messageSource;
 		createInterface();
+
+		methodComboBox.setEnabled(false);
 	}
 
 	private void createInterface() {
