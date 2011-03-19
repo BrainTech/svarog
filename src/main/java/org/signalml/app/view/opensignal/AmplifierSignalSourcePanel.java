@@ -184,11 +184,15 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
                         descriptor.getOpenMonitorDescriptor().setSelectedChannelList(labels);
                 } catch (Exception ex) {
                 }
+
+                descriptor.getOpenMonitorDescriptor().setMinimumValue(-1000f);
+                descriptor.getOpenMonitorDescriptor().setMaximumValue(1000f);
+                descriptor.getOpenMonitorDescriptor().setAmplifierNull(8388608.0);
         }
 
         /**
          * Fills {@link #currentDescriptor}, then returns it.
-         *
+         *ttylko
          * @return filled {@link #currentDescriptor}
          * @throws SignalMLException when input data is invalid
          */
