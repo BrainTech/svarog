@@ -22,7 +22,7 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 	private OpenMonitorDescriptor currentModel;
 
 	private MultiplexerConnectionPanel multiplexerConnectionPanel;
-	private MonitorRecordingPanel monitorRecordingPanel = null;
+	private MonitorRecordingPanel monitorRecordingPanel;
 	private SignalParametersPanelForOpenMonitor signalParametersPanel;
 
 	public OpenBCISignalSourcePanel(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager) {
@@ -60,6 +60,8 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 
 		descriptor.setJmxClient(viewerElementManager.getJmxClient());
 		descriptor.setTagClient(viewerElementManager.getTagClient());
+
+		getMonitorRecordingPanel().fillModelFromPanel(descriptor);
 	}
 
 	protected MultiplexerConnectionPanel getMultiplexerConnectionPanel() {
