@@ -32,12 +32,11 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
          * Monitor recording panel.
          */
         private MonitorRecordingPanel monitorRecordingPanel;
-	
-	/**
-	 * Current descriptor.
-	 */
-	private AmplifierConnectionDescriptor currentDescriptor;
-        
+        /**
+         * Current descriptor.
+         */
+        private AmplifierConnectionDescriptor currentDescriptor;
+
         /**
          * Default constructor.
          *
@@ -156,7 +155,9 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
 
                 getSignalParametersPanel().fillPanelFromModel(descriptor);
                 getMonitorRecordingPanel().fillPanelFromModel(descriptor);
-                if (!omitSelectionPanel) getAmplifierSelectionPanel().fillPanelFromModel(descriptor);
+                if (!omitSelectionPanel) {
+                        getAmplifierSelectionPanel().fillPanelFromModel(descriptor);
+                }
                 getSignalSourceSelectionPanel().getSelectionComboBox().setEnabled(!descriptor.isBciStarted());
 
                 currentDescriptor = descriptor;
@@ -192,7 +193,7 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
 
         /**
          * Fills {@link #currentDescriptor}, then returns it.
-         *ttylko
+         *
          * @return filled {@link #currentDescriptor}
          * @throws SignalMLException when input data is invalid
          */
@@ -202,18 +203,33 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
                 return currentDescriptor;
         }
 
-	@Override
-	public boolean isMetadataFilled() {
-		return startStopButtonsPanel.isBCIStarted();
-	}
+        /**
+         * Wheter metadata is filled.
+         *
+         * @return if metadata is filled.
+         */
+        @Override
+        public boolean isMetadataFilled() {
+                return getStartStopButtonsPanel().isBCIStarted();
+        }
 
-	@Override
-	public int getChannelCount() {
-		return signalParametersPanel.getChannelCount();
-	}
+        /**
+         * Gets the channel count from the {@link #signalParametersPanel}.
+         *
+         * @return the channel count
+         */
+        @Override
+        public int getChannelCount() {
+                return getSignalParametersPanel().getChannelCount();
+        }
 
-	@Override
-	public float getSamplingFrequency() {
-		return signalParametersPanel.getSamplingFrequency();
-	}
+        /**
+         * Gets the sampling frequency from the {@link #signalParametersPanel}.
+         *
+         * @return the sampling frequency
+         */
+        @Override
+        public float getSamplingFrequency() {
+                return getSignalParametersPanel().getSamplingFrequency();
+        }
 }
