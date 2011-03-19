@@ -23,6 +23,8 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import org.signalml.app.model.AmplifierConnectionDescriptor;
+import org.signalml.plugin.export.SignalMLException;
+import org.springframework.validation.BindException;
 
 /**
  * Represents a panel in the {@link OpenMonitorDialog} used to enable/disable
@@ -155,8 +157,16 @@ public class MonitorRecordingPanel extends JPanel {
         /**
          * Fills a {@link AmplifierConnectionDescriptor}.
          * @param amplifierConnectionDescriptor the model to be filled.
+         * @throws SignalMLException when input data is invalid
          */
-        public void fillModelFromPanel(AmplifierConnectionDescriptor descriptor) {
+        public void fillModelFromPanel(AmplifierConnectionDescriptor descriptor) throws SignalMLException {
+                
+                Errors errors = new BindException(this, "data");
+                validatePanel(this, errors);
+                if (errors.hasErrors())
+                        throw new SignalMLException(messageSource.getMessage("error.invalidData"));
+                        
+
                 OpenMonitorDescriptor openMonitorDescriptor = descriptor.getOpenMonitorDescriptor();
                 if (isRecordingEnabled()) {
                         openMonitorDescriptor.getMonitorRecordingDescriptor().setRecordingEnabled(true);
@@ -171,10 +181,11 @@ public class MonitorRecordingPanel extends JPanel {
          * @param amplifierConnectionDescriptor the descriptor
          */
         public void fillPanelFromModel(AmplifierConnectionDescriptor descriptor) {
-                if (descriptor.getAmplifierInstance() == null || descriptor.isBciStarted())
+                if (descriptor.getAmplifierInstance() == null || descriptor.isBciStarted()) {
                         setEnabledAll(false);
-                else
+                } else {
                         setEnabledAll(true);
+                }
         }
 
         /**

@@ -153,12 +153,13 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
          */
         public void fillPanelFromModel(AmplifierConnectionDescriptor descriptor, boolean omitSelectionPanel) throws SignalMLException {
 
+                descriptor.setBciStarted(getStartStopButtonsPanel().isBCIStarted());
+
                 getSignalParametersPanel().fillPanelFromModel(descriptor);
                 getMonitorRecordingPanel().fillPanelFromModel(descriptor);
                 if (!omitSelectionPanel) {
                         getAmplifierSelectionPanel().fillPanelFromModel(descriptor);
                 }
-                getSignalSourceSelectionPanel().getSelectionComboBox().setEnabled(!descriptor.isBciStarted());
 
                 currentDescriptor = descriptor;
         }

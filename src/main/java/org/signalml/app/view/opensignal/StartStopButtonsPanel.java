@@ -3,6 +3,7 @@ package org.signalml.app.view.opensignal;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -12,11 +13,13 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import multiplexer.jmx.client.JmxClient;
+import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.model.AmplifierConnectionDescriptor;
 import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.element.ProgressDialog;
 import org.signalml.app.worker.OpenBCIManager;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.Document;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
@@ -148,9 +151,9 @@ public class StartStopButtonsPanel extends JPanel {
                 return stopAction;
         }
 
-	public boolean isBCIStarted() {
-		return bciStarted;
-	}
+        public boolean isBCIStarted() {
+                return bciStarted;
+        }
 
         /**
          * Fills an {@link AmplifierConnectionDescriptor} from this panel.
@@ -211,13 +214,12 @@ public class StartStopButtonsPanel extends JPanel {
                                 manager.cancel();
                                 return;
                         }
-
                         if (!progressDialog.wasSuccess()) {
                                 return;
                         }
 
                         bciStarted = true;
-			signalSourcePanel.setConnected(true);
+                        signalSourcePanel.setConnected(true);
 
                         fillModelFromPanel(currentDescriptor);
                         try {
@@ -245,8 +247,8 @@ public class StartStopButtonsPanel extends JPanel {
 
                 /**
                  * Disconnects from multiplexer and kills all processes
-                 * created during the connection. Enables start action
-                 * and all other panels.
+                 * created during the connection. Stop the recording.
+                 * Enables start action and all other panels.
                  *
                  * @param e action event
                  */
@@ -268,15 +270,21 @@ public class StartStopButtonsPanel extends JPanel {
                         setEnabled(false);
 
                         bciStarted = false;
-			signalSourcePanel.setConnected(false);
-                        
+                        signalSourcePanel.setConnected(false);
+
                         fillModelFromPanel(currentDescriptor);
                         try {
                                 signalSourcePanel.fillPanelFromModel(currentDescriptor);
                         } catch (SignalMLException ex) {
                         }
 
-                        // TODO close the document?
+                        Document document = elementManager.getActionFocusManager().getActiveDocument();
+                        if (document instanceof MonitorSignalDocument) {
+                                try {
+                                        ((MonitorSignalDocument) document).stopMonitorRecording();
+                                } catch (IOException ex) {
+                                }
+                        }
                 }
         }
 }
