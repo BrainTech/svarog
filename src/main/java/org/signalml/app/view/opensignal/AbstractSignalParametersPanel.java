@@ -349,7 +349,7 @@ public abstract class AbstractSignalParametersPanel extends JPanel {
                                 public void actionPerformed(ActionEvent e) {
                                         try {
                                                 fillCurrentModelFromPanel();
-                                                getEditGainAndOffsetDialog().showDialog(currentModel);
+                                                getEditGainAndOffsetDialog().showDialog(currentModel, true);
                                         } catch (SignalMLException ex) {
                                                 JOptionPane.showMessageDialog(null, ex.getMessage(), messageSource.getMessage("error"), JOptionPane.ERROR_MESSAGE);
                                         }

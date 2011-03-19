@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Point;
 import java.awt.Window;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -64,9 +63,7 @@ public class ProgressDialog extends AbstractDialog implements PropertyChangeList
 
                 super(messageSource, w, isModal);
                 setTitle(title);
-                setPreferredSize(new Dimension(DIALOG_WIDTH, DIALOG_HEIGHT));
-                setLocation();
-                
+                setPreferredSize(new Dimension(DIALOG_WIDTH, DIALOG_HEIGHT));                
         }
 
         /**
@@ -189,7 +186,7 @@ public class ProgressDialog extends AbstractDialog implements PropertyChangeList
          */
         public boolean showDialog() {
 
-                return showDialog(new ProgressState());
+                return showDialog(new ProgressState(), true);
         }
 
         /**
@@ -220,23 +217,6 @@ public class ProgressDialog extends AbstractDialog implements PropertyChangeList
         public boolean wasSuccess() {
                 
                 return success;
-        }
-
-        /**
-         * Sets the location to center of the parent window.
-         */
-        private void setLocation() {
-
-                Point parentLocation = getParent().getLocation();
-                Dimension parentSize = getParent().getSize();
-
-                Point myLocation = new Point(parentLocation);
-                Dimension mySize = getSize();
-
-                myLocation.move((parentSize.width - mySize.width) / 2,
-                                (parentSize.height - mySize.height) / 2);
-
-                setLocation(myLocation);
         }
 }
 

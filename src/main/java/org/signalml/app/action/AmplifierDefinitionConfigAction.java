@@ -44,7 +44,7 @@ public class AmplifierDefinitionConfigAction extends AbstractSignalMLAction {
         public void actionPerformed(ActionEvent e) {
 
                 logger.debug("Amplifier config");
-                configDialog.showDialog(new AmplifierDefinition());
+                configDialog.showDialog(new AmplifierDefinition(), true);
         }
 
         /**

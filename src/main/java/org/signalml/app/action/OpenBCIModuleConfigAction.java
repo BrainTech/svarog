@@ -43,7 +43,7 @@ public class OpenBCIModuleConfigAction extends AbstractSignalMLAction {
         public void actionPerformed(ActionEvent e) {
 
                 logger.debug("Amplifier config");
-                configDialog.showDialog(new OpenBCIModule());
+                configDialog.showDialog(new OpenBCIModule(), true);
         }
 
         /**
