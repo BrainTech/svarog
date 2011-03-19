@@ -75,7 +75,7 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
                 boolean isAmpConnection = AmplifierConnectionDescriptor.class.isAssignableFrom(clazz);
                 boolean isBCIConnection = OpenMonitorDescriptor.class.isAssignableFrom(clazz);
                 boolean isFile = RawSignalDescriptor.class.isAssignableFrom(clazz);
-                
+
                 return isAmpConnection || isBCIConnection || isFile;
         }
 
@@ -96,10 +96,9 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
          * Only calls {@link EditDefinitionPanel#fillModelFromPanel()}
          *
          * @param model the descriptor
-         * @throws SignalMLException when input data is invalid
          */
         @Override
-        public void fillModelFromDialog(Object model) throws SignalMLException {
+        public void fillModelFromDialog(Object model) {
 
                 getEditDefinitionPanel().fillModelFromPanel(model);
         }
@@ -107,17 +106,19 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
         /**
          * Validates the dialog by trying to fill the model from it.
          *
-         * @param model current model
+         * @param model model
          * @param errors errors
          * @throws SignalMLException thrown when data is invalid
          */
         @Override
         public void validateDialog(Object model, Errors errors) throws SignalMLException {
 
-                try {
-                        fillModelFromDialog(model);
-                } catch (SignalMLException ex) {
-                        if (ex.getMessage().equals(messageSource.getMessage("error.invalidData"))) {
+                if (!getEditDefinitionPanel().isAllGainAndOffsetEditable()) {
+
+                        try {
+                                Float.parseFloat(getEditDefinitionPanel().getChannelGainVaule());
+                                Float.parseFloat(getEditDefinitionPanel().getChannelOffsetValue());
+                        } catch (NumberFormatException ex) {
                                 errors.reject("error.invalidData");
                         }
                 }
@@ -125,9 +126,14 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
 
         /**
          * Panel that allows the definition of gain and offset, it's derived
-         * from {@link ChannelDefinitionPanel}.
+         * from {@link ChannelDefinigaintionPanel}.
          */
         private class EditDefinitionPanel extends ChannelDefinitionPanel implements ListSelectionListener {
+
+                /**
+                 * If all gain and offset are editable.gain
+                 */
+                private boolean allGainAndOffsetEditable;
 
                 /**
                  * Default constructor.
@@ -149,6 +155,7 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
                         getAddButton().setText(messageSource.getMessage("opensignal.parameters.editGainAndOffsetDialog.edit"));
                         getChannelTextField().setEditable(false);
                         getDefinitionsList().addListSelectionListener(this);
+                        setAllGainAndOffsetEditable(true);
                 }
 
                 /**
@@ -160,7 +167,9 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
                 public void valueChanged(ListSelectionEvent e) {
 
                         int selectedIndex = getDefinitionsList().getSelectedIndex();
-                        if (selectedIndex < 0) return;
+                        if (selectedIndex < 0) {
+                                return;
+                        }
                         ChannelDefinition definition = (ChannelDefinition) getDefinitionsList().getModel().getElementAt(selectedIndex);
                         getChannelTextField().setText(String.valueOf(definition.getNumber()));
                         getGainTextField().setText(String.valueOf(definition.getGain()));
@@ -178,7 +187,9 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
                         if (getAddButton().equals(e.getSource())) {
 
                                 ChannelDefinition definition = validateFields();
-                                if (definition == null) return;
+                                if (definition == null) {
+                                        return;
+                                }
 
                                 List<ChannelDefinition> definitions = getChannelDefinitions();
 
@@ -211,10 +222,41 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
                                 getChannelTextField().setText("");
                         } else {
                                 getAddButton().setVisible(false);
-                                getDefinitionsList().setListData(new String[] { "" });
+                                getDefinitionsList().setListData(new String[]{""});
                                 getDefinitionsList().setEnabled(false);
                                 getChannelTextField().setText(messageSource.getMessage("opensignal.parameters.editGainAndOffsetDialog.all"));
                         }
+                        allGainAndOffsetEditable = editable;
+                }
+
+                /**
+                 * Returns {@link #allGainAndOffsetEditable}.
+                 *
+                 * @return {@link #allGainAndOffsetEditable}
+                 */
+                public boolean isAllGainAndOffsetEditable() {
+                 
+                        return allGainAndOffsetEditable;
+                }
+
+                /**
+                 * Returns gain textfield value.
+                 *
+                 * @return gain textfield value
+                 */
+                public String getChannelGainVaule() {
+
+                        return getGainTextField().getText();
+                }
+
+                /**
+                 * Returns offset textfield value.
+                 *
+                 * @return offset textfield value.
+                 */
+                public String getChannelOffsetValue() {
+
+                        return getOffsetTextField().getText();
                 }
 
                 /**
@@ -247,8 +289,7 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
                                 definitions.add(new ChannelDefinition(
                                         descriptor.getAmplifierInstance().getDefinition().getChannelNumbers().get(i),
                                         descriptor.getOpenMonitorDescriptor().getCalibrationGain()[i],
-                                        descriptor.getOpenMonitorDescriptor().getCalibrationOffset()[i]
-                                        ));
+                                        descriptor.getOpenMonitorDescriptor().getCalibrationOffset()[i]));
                         }
                         getDefinitionsList().setListData(definitions.toArray());
                 }
@@ -258,17 +299,37 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
                  *
                  * @param descriptor the descriptor
                  */
-                private void fillPanelForOpenBCIConnection(OpenMonitorDescriptor openMonitorDescriptor) {
-                        throw new UnsupportedOperationException("Not yet implemented");
+                private void fillPanelForOpenBCIConnection(OpenMonitorDescriptor descriptor) {
+
+                        setAllGainAndOffsetEditable(true);
+                        List<ChannelDefinition> definitions = new ArrayList<ChannelDefinition>();
+                        for (int i = 0; i < descriptor.getChannelCount(); i++) {
+
+                                definitions.add(new ChannelDefinition(
+                                        i,
+                                        descriptor.getCalibrationGain()[i],
+                                        descriptor.getCalibrationOffset()[i]));
+                        }
+                        getDefinitionsList().setListData(definitions.toArray());
                 }
 
                 /**
                  * Fills the panel for file opening.
                  *
                  * @param descriptor the descriptor
-                 */                
-                private void fillPanelForFileOpening(RawSignalDescriptor rawSignalDescriptor) {
-                        throw new UnsupportedOperationException("Not yet implemented");
+                 */
+                private void fillPanelForFileOpening(RawSignalDescriptor descriptor) {
+
+                        setAllGainAndOffsetEditable(true);
+                        List<ChannelDefinition> definitions = new ArrayList<ChannelDefinition>();
+                        for (int i = 0; i < descriptor.getChannelCount(); i++) {
+
+                                definitions.add(new ChannelDefinition(
+                                        i,
+                                        descriptor.getCalibrationGain()[i],
+                                        descriptor.getCalibrationOffset()[i]));
+                        }
+                        getDefinitionsList().setListData(definitions.toArray());
                 }
 
                 /**
@@ -278,13 +339,15 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
                  * @param model the model
                  * @throws SignalMLException when input data is invalid
                  */
-                public void fillModelFromPanel(Object model) throws SignalMLException {
+                public void fillModelFromPanel(Object model) {
+
                         if (model instanceof AmplifierConnectionDescriptor) {
                                 fillModelForAmplifierConnection((AmplifierConnectionDescriptor) model);
                         } else if (model instanceof OpenMonitorDescriptor) {
                                 fillModelForOpenBCIConnection((OpenMonitorDescriptor) model);
                         } else if (model instanceof RawSignalDescriptor) {
-                                fillModelForFileOpening((RawSignalDescriptor) model);                        }
+                                fillModelForFileOpening((RawSignalDescriptor) model);
+                        }
                 }
 
                 /**
@@ -292,23 +355,10 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
                  *
                  * @param descriptor the descriptor
                  */
-                private void fillModelForAmplifierConnection(AmplifierConnectionDescriptor amplifierConnectionDescriptor) {
-
-                        Float[] gainFromList = getGainValues().toArray(new Float[0]);
-                        Float[] offsetFromList = getOffsetValues().toArray(new Float[0]);
-
-                        int length = gainFromList.length;
-
-                        float[] gain = new float[length];
-                        float[] offset = new float[length];
-
-                        for (int i = 0; i < length; i++) {
-                                gain[i] = gainFromList[i];
-                                offset[i] = offsetFromList[i];
-                        }
-
-                        amplifierConnectionDescriptor.getOpenMonitorDescriptor().setCalibrationGain(gain);
-                        amplifierConnectionDescriptor.getOpenMonitorDescriptor().setCalibrationOffset(offset);
+                private void fillModelForAmplifierConnection(AmplifierConnectionDescriptor descriptor) {
+                       
+                        descriptor.getOpenMonitorDescriptor().setCalibrationGain(getGainArray());
+                        descriptor.getOpenMonitorDescriptor().setCalibrationOffset(getOffsetArray());
                 }
 
                 /**
@@ -316,8 +366,10 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
                  *
                  * @param descriptor the descriptor
                  */
-                private void fillModelForOpenBCIConnection(OpenMonitorDescriptor openMonitorDescriptor) {
-                        throw new UnsupportedOperationException("Not yet implemented");
+                private void fillModelForOpenBCIConnection(OpenMonitorDescriptor descriptor) {
+
+                        descriptor.setCalibrationGain(getGainArray());
+                        descriptor.setCalibrationOffset(getOffsetArray());
                 }
 
                 /**
@@ -325,8 +377,40 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
                  *
                  * @param descriptor the descriptor
                  */
-                private void fillModelForFileOpening(RawSignalDescriptor rawSignalDescriptor) {
-                        throw new UnsupportedOperationException("Not yet implemented");
+                private void fillModelForFileOpening(RawSignalDescriptor descriptor) {
+
+                        descriptor.setCalibrationGain(getGainArray());
+                        descriptor.setCalibrationOffset(getOffsetArray());
+                }
+
+                /**
+                 * Gets gain as a float array.
+                 *
+                 * @return gain as a float array
+                 */
+                private float[] getGainArray() {
+
+                        Float[] gainFromList = getGainValues().toArray(new Float[0]);
+                        float[] gain = new float[gainFromList.length];
+                        for (int i = 0; i < gainFromList.length; i++) {
+                                gain[i] = gainFromList[i];
+                        }
+                        return gain;
+                }
+
+                /**
+                 * Gets offset as a float array.
+                 *
+                 * @return offset as a float array
+                 */
+                private float[] getOffsetArray() {
+
+                        Float[] offsetFromList = getOffsetValues().toArray(new Float[0]);
+                        float[] offset = new float[offsetFromList.length];
+                        for (int i = 0; i < offsetFromList.length; i++) {
+                                offset[i] = offsetFromList[i];
+                        }
+                        return offset;
                 }
         }
 }

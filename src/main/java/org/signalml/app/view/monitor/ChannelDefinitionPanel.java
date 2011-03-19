@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -111,6 +112,7 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
                 GridBagConstraints constraints = new GridBagConstraints();
                 constraints.anchor = GridBagConstraints.CENTER;
                 constraints.fill = GridBagConstraints.BOTH;
+                constraints.insets = new Insets(3, 3, 3, 3);
 
                 constraints.gridx = 0;
                 constraints.gridy = 0;

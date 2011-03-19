@@ -45,6 +45,9 @@ public class SignalParametersPanelForOpenMonitor extends AbstractSignalParameter
 		String[] channelLabels = descriptor.getChannelLabels();
 		if (channelLabels != null)
 			firePropertyChange(AbstractSignalParametersPanel.CHANNEL_LABELS_PROPERTY, null, channelLabels);
+
+                getEditGainAndOffsetDialog().fillDialogFromModel(descriptor);
+                currentModel = descriptor;
 	}
 
 	public void fillModelFromPanel(OpenMonitorDescriptor descriptor) {
@@ -55,16 +58,6 @@ public class SignalParametersPanelForOpenMonitor extends AbstractSignalParameter
 		descriptor.setSampleType((RawSignalSampleType) getSampleTypeComboBox().getSelectedItem());
 		descriptor.setPageSize(getPageSizeSpinner().getValue());
 		//descriptor.setBlocksPerPage(getBlocksPerPageSpinner().getValue());
-
-		/* gains and offset are not changed yet - should be connected
-		 * to the edit gain&offset dialog
-		 */
-		float[] gains = new float[channelCount];
-		Arrays.fill(gains, 1.0F);
-		descriptor.setCalibrationGain(gains);
-		float[] offsets = new float[channelCount];
-		Arrays.fill(offsets, 0.0F);
-		descriptor.setCalibrationOffset(offsets);
 
 		/**
 		 * all channels are selected channels
@@ -79,10 +72,12 @@ public class SignalParametersPanelForOpenMonitor extends AbstractSignalParameter
 		int[] selectedChannelsIndices = new int[channelCount];
 		for(int i = 0; i < selectedChannelsIndices.length; i++)
 			selectedChannelsIndices[i] = i;
+
+                getEditGainAndOffsetDialog().fillModelFromDialog(descriptor);
 	}
 
         @Override
         protected void fillCurrentModelFromPanel() throws SignalMLException {
-                throw new UnsupportedOperationException("Not supported yet.");
+                fillModelFromPanel((OpenMonitorDescriptor) currentModel);
         }
 }

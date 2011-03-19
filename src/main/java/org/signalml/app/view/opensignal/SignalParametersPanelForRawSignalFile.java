@@ -45,6 +45,9 @@ public class SignalParametersPanelForRawSignalFile extends AbstractSignalParamet
 		String[] channelLabels = descriptor.getChannelLabels();
 		if (channelLabels != null)
 			firePropertyChange(AbstractSignalParametersPanel.CHANNEL_LABELS_PROPERTY, null, channelLabels);
+
+                getEditGainAndOffsetDialog().fillDialogFromModel(descriptor);
+                currentModel = descriptor;
 	}
 
 	public void fillModelFromPanel(RawSignalDescriptor descriptor) {
@@ -56,14 +59,12 @@ public class SignalParametersPanelForRawSignalFile extends AbstractSignalParamet
 		descriptor.setBlocksPerPage(getBlocksPerPageSpinner().getValue());
 		descriptor.setSourceSignalType(RawSignalDescriptor.SourceSignalType.RAW);
 
-		descriptor.setCalibrationGain(1.0F);
-		descriptor.setCalibrationOffset(0.0F);
-
+                getEditGainAndOffsetDialog().fillModelFromDialog(descriptor);
 	}
 
         @Override
         protected void fillCurrentModelFromPanel() throws SignalMLException {
-                throw new UnsupportedOperationException("Not supported yet.");
+                fillModelFromPanel((RawSignalDescriptor) currentModel);
         }
 
 }
