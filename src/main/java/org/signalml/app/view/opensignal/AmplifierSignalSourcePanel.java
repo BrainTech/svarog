@@ -190,7 +190,6 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
                 descriptor.getOpenMonitorDescriptor().setMaximumValue(1000f);
                 descriptor.getOpenMonitorDescriptor().setAmplifierNull(8388608.0);
 
-		getMonitorRecordingPanel().fillModelFromPanel(descriptor);
         }
 
         /**
