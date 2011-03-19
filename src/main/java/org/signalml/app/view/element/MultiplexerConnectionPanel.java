@@ -313,10 +313,14 @@ public class MultiplexerConnectionPanel extends JPanel {
 		if (connectAction != null) {
 			connectAction.cancel();
 		}
-		getConnectButton().setEnabled( true);
-		getDisconnectButton().setEnabled( false);
-		getProgressBar().setValue( 0);
-		getStatusArea().setText( "");
+		setInterfaceInUnconnectedState();
+	}
+
+	public void setInterfaceInUnconnectedState() {
+		getConnectButton().setEnabled(true);
+		getDisconnectButton().setEnabled(false);
+		getProgressBar().setValue(0);
+		getStatusArea().setText("");
 	}
 
 	/**

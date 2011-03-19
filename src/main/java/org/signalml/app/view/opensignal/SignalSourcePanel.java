@@ -116,12 +116,20 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 			fileSignalSourcePanel.fillPanelFromModel(openSignalDescriptor.getOpenFileSignalDescriptor());
 
 		openBCISignalSourcePanel.fillPanelFromModel(openSignalDescriptor.getOpenMonitorDescriptor());
-
                 try {
                         amplifierSignalSourcePanel.fillPanelFromModel(openSignalDescriptor.getAmplifierConnectionDescriptor());
                 } catch (SignalMLException ex) {
                         // TODO: when amp cannot be found
                 }
+
+		clearPreviousConnections();
+	}
+
+	protected void clearPreviousConnections() {
+		openBCISignalSourcePanel.setConnected(false);
+		openBCISignalSourcePanel.getMultiplexerConnectionPanel().setInterfaceInUnconnectedState();
+
+		amplifierSignalSourcePanel.setConnected(false);
 	}
 
 	public void fillModelFromPanel(OpenSignalDescriptor openSignalDescriptor) {

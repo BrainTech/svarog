@@ -100,5 +100,4 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 		super.validateDialog(model, errors);
 	}
 
-
 }

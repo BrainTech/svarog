@@ -80,6 +80,7 @@ public class SignalParametersPanelForOpenMonitor extends AbstractSignalParameter
 		for(int i = 0; i < selectedChannelsIndices.length; i++)
 			selectedChannelsIndices[i] = i;
 	}
+
         @Override
         protected void fillCurrentModelFromPanel() throws SignalMLException {
                 throw new UnsupportedOperationException("Not supported yet.");
