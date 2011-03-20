@@ -12,6 +12,7 @@ import org.signalml.app.model.AmplifierConnectionDescriptor;
 import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.element.ProgressDialog;
 import org.signalml.app.view.element.ProgressState;
+import org.signalml.app.worker.processes.OpenBCIModuleData;
 import org.signalml.app.worker.processes.ProcessExitData;
 import org.signalml.app.worker.processes.ProcessManager;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -28,7 +29,7 @@ public class OpenBCIManager extends SwingWorker<ProgressState, ProgressState> im
         public static final String HASHTABLE_ID = "hashtable";
         public static final String PINGER_ID = "pinger";
         public final int MAX_PROGRESS = 7;
-        public final int PROCESS_SLEEP = 1000;
+        public final int PROCESS_SLEEP = 2000;
         /**
          * The message source.
          */
@@ -115,9 +116,9 @@ public class OpenBCIManager extends SwingWorker<ProgressState, ProgressState> im
          * @return openBCI modules data
          * @throws Exception when some data is missing
          */
-        private HashMap<String, String> getModulesData() throws Exception {
+        private HashMap<String, OpenBCIModuleData> getModulesData() throws Exception {
 
-                HashMap<String, String> modulesData = elementManager.getOpenBCIModulePresetManager().getModulesConfiguration();
+                HashMap<String, OpenBCIModuleData> modulesData = elementManager.getOpenBCIModulePresetManager().getAllModulesData();
 
                 if (!modulesData.containsKey(MX_ID) || !modulesData.containsKey(HASHTABLE_ID) || !modulesData.containsKey(PINGER_ID)) {
                         throw new Exception();
@@ -162,7 +163,7 @@ public class OpenBCIManager extends SwingWorker<ProgressState, ProgressState> im
                 processManager.killAll();
 
                 // Get modules data
-                HashMap<String, String> modulesData;
+                HashMap<String, OpenBCIModuleData> modulesData;
                 try {
                         modulesData = getModulesData();
                 } catch (Exception ex) {
@@ -170,27 +171,24 @@ public class OpenBCIManager extends SwingWorker<ProgressState, ProgressState> im
                 }
 
                 // Start multiplexer
-                publish(new ProgressState(messageSource.getMessage("opensignal.amplifier.startingMultiplexer"), 0, MAX_PROGRESS));
-                List<String> mxParameters = new ArrayList<String>();
-                mxParameters.add("run_multiplexer");
-                mxParameters.add(elementManager.getApplicationConfig().getMultiplexerAddress() + ":"
-                        + String.valueOf(elementManager.getApplicationConfig().getMultiplexerPort()));
-                processManager.runProcess(MX_ID, modulesData.get(MX_ID), mxParameters);
-                Thread.sleep(PROCESS_SLEEP);
+                publish(new ProgressState(messageSource.getMessage("opensignal.amplifier.startingMultiplexer"), 0, MAX_PROGRESS));                
+                processManager.runProcess(MX_ID, modulesData.get(MX_ID).getPath(), modulesData.get(MX_ID).getParameters());
+                Thread.sleep(modulesData.get(MX_ID).getDelay());
 
                 // Start hashtable
                 publish(new ProgressState(messageSource.getMessage("opensignal.amplifier.startingHashtable"), 1, MAX_PROGRESS));
-                processManager.runProcess(HASHTABLE_ID, modulesData.get(HASHTABLE_ID), new ArrayList<String>());
-                Thread.sleep(PROCESS_SLEEP);
+                processManager.runProcess(HASHTABLE_ID, modulesData.get(HASHTABLE_ID).getPath(), modulesData.get(HASHTABLE_ID).getParameters());
+                Thread.sleep(modulesData.get(HASHTABLE_ID).getDelay());
 
                 // Start pinger
                 publish(new ProgressState(messageSource.getMessage("opensignal.amplifier.startingPinger"), 2, MAX_PROGRESS));
-                processManager.runProcess(PINGER_ID, modulesData.get(PINGER_ID), new ArrayList<String>());
-                Thread.sleep(PROCESS_SLEEP);
+                processManager.runProcess(PINGER_ID, modulesData.get(PINGER_ID).getPath(), modulesData.get(PINGER_ID).getParameters());
+                Thread.sleep(modulesData.get(PINGER_ID).getDelay());
 
                 // Connect to openBCI
                 publish(new ProgressState(messageSource.getMessage("opensignal.amplifier.connecting"), 3, MAX_PROGRESS));
                 synchronized (lock) {
+                        connectAction.setMultiplexerAddressAndPort(modulesData.get(MX_ID).getParameters().get(1));
                         connectAction.actionPerformed(null);
                         lock.wait();
                 }
@@ -212,7 +210,7 @@ public class OpenBCIManager extends SwingWorker<ProgressState, ProgressState> im
                 processManager.runProcess(amp_id, descriptor.getAmplifierInstance().getDefinition().getDriverPath(), ampParameters);
                 Thread.sleep(PROCESS_SLEEP);
 
-                
+
                 return new ProgressState(messageSource.getMessage("success"), MAX_PROGRESS, MAX_PROGRESS);
         }
 
@@ -301,10 +299,10 @@ public class OpenBCIManager extends SwingWorker<ProgressState, ProgressState> im
 
                 try {
                         ProgressState result = get();
-                        firePropertyChange(ProgressDialog.PROGRESS_STATE, null, result);                        
+                        firePropertyChange(ProgressDialog.PROGRESS_STATE, null, result);
                 } catch (Exception ex) {
                         ProgressState result = new ProgressState(messageSource.getMessage("failed"), -1, MAX_PROGRESS);
-                        firePropertyChange(ProgressDialog.PROGRESS_STATE, null, result);                        
+                        firePropertyChange(ProgressDialog.PROGRESS_STATE, null, result);
                 }
                 processManager.removePropertyChangeListener(this);
         }

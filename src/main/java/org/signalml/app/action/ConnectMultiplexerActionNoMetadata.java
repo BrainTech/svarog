@@ -25,15 +25,24 @@ public class ConnectMultiplexerActionNoMetadata extends ConnectMultiplexerAction
 
                 super(elementManager);
                 metadataWorker = null;
-
-                String address = elementManager.getApplicationConfig().getDefaultMultiplexerAddress();
-                int port = elementManager.getApplicationConfig().getDefaultMultiplexerPort();
-
-                setMultiplexerAddressField(new JTextField(address));
-                setMultiplexerPortField(new JTextField(String.valueOf(port)));
-
                 setTimeoutMilis(TIMEOUT_MILIS);
                 setTryoutCount(TRYOUT_COUNT);
+        }
+
+        /**
+         * Sets the multiplexer address and port
+         * 
+         * @param addressAndPort multiplexer address and port in a form:
+         * xxx.xxx.xxx.xxx:yyyy
+         */
+        public void setMultiplexerAddressAndPort(String addressAndPort) {
+
+                String[] splitted = addressAndPort.split(":");
+                String address = splitted[0];
+                int port = Integer.parseInt(splitted[1]);
+                
+                setMultiplexerAddressField(new JTextField(address));
+                setMultiplexerPortField(new JTextField(String.valueOf(port)));
         }
 
         /**

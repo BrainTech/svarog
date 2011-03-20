@@ -48,14 +48,14 @@ public class OpenBCIModulePresetManager extends AbstractPresetManager {
          *
          * @return a HashMap - the key is module's name, value: module's path.
          */
-        public HashMap<String, String> getModulesConfiguration() {
+        public HashMap<String, OpenBCIModuleData> getAllModulesData() {
 
-                HashMap<String, String> modulesConfiguration = new HashMap<String, String>();
+                HashMap<String, OpenBCIModuleData> modulesConfiguration = new HashMap<String, OpenBCIModuleData>();
 
                 for (Preset preset : presets) {
 
                         OpenBCIModule module = (OpenBCIModule) preset;
-                        modulesConfiguration.put(module.getName(), module.getPath());
+                        modulesConfiguration.put(module.getName(), new OpenBCIModuleData(module));
                 }
 
                 return modulesConfiguration;
@@ -68,13 +68,13 @@ public class OpenBCIModulePresetManager extends AbstractPresetManager {
          * @return the path
          * @throws Exception when module's name can't be found
          */
-        public String getModulePath(String name) throws Exception {
+        public OpenBCIModuleData getModuleData(String name) throws Exception {
 
                 for (Preset preset : presets) {
 
                         OpenBCIModule module = (OpenBCIModule) preset;
                         if (module.getName().equals(name)) {
-                                return module.getPath();
+                                return new OpenBCIModuleData(module);
                         }
                 }
 

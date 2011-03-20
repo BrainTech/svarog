@@ -21,9 +21,21 @@ public class OpenBCIModule implements Preset {
          */
         private String path;
 
+        /**
+         * Module delay in miliseconds.
+         */
+        private Integer delay;
+
+        /**
+         * Module parameters.
+         */
+        private String parameters;
+
         public OpenBCIModule() {
                 this.path = "";
                 this.name = "";
+                this.delay = 1000;
+                this.parameters = "";
         }
 
         @Override
@@ -42,6 +54,22 @@ public class OpenBCIModule implements Preset {
 
         public void setPath(String path) {
                 this.path = path;
+        }
+
+        public Integer getDelay() {
+                return delay;
+        }
+
+        public void setDelay(Integer delay) {
+                this.delay = delay;
+        }
+
+        public String getParameters() {
+                return parameters;
+        }
+
+        public void setParameters(String parameters) {
+                this.parameters = parameters;
         }
 
         @Override

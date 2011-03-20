@@ -613,6 +613,8 @@
 
         <entry key="openBCIModuleConfig.title">OpenBCI modules config</entry>
         <entry key="openBCIModuleConfig.path">Module path: </entry>
+        <entry key="openBCIModuleConfig.delay">Delay [ms]: </entry>
+        <entry key="openBCIModuleConfig.parameters">Parameters: </entry>
 
 	<entry key="profilePath.title">Choose profile path</entry>
 	<entry key="profilePath.welcome">Welcome to signalml viewer</entry>
