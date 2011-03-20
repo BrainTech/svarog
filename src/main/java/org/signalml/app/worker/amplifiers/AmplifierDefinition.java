@@ -58,6 +58,11 @@ public class AmplifierDefinition implements Preset {
         private String driverPath;
 
         /**
+         * Amplifier null.
+         */
+        private Double amplifierNull;
+
+        /**
          * Returns the number of channels.
          *
          * @return number of channels
@@ -79,6 +84,7 @@ public class AmplifierDefinition implements Preset {
                 this.match = "";
                 this.name = "";
                 this.protocol = USB;
+                this.amplifierNull = 0.0;
         }
 
         @Override
@@ -119,6 +125,10 @@ public class AmplifierDefinition implements Preset {
                 return protocol;
         }
 
+        public Double getAmplifierNull() {
+                return amplifierNull;
+        }
+
         @Override
         public void setName(String name) {
                 this.name = name;
@@ -150,5 +160,9 @@ public class AmplifierDefinition implements Preset {
 
         public void setProtocol(String protocol) {
                 this.protocol = protocol;
+        }
+
+        public void setAmplifierNull(Double amplifierNull) {
+                this.amplifierNull = amplifierNull;
         }
 }

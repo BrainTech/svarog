@@ -37,47 +37,47 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
         /**
          * List of definitions.
          */
-        private JList definitionsList = null;
+        private JList definitionsList;
 
         /**
          * Channel no. label.
          */
-        private JLabel channelLabel = null;
+        private JLabel channelLabel;
 
         /**
          * Channel no. textfield.
          */
-        private JTextField channelTextField = null;
+        private JTextField channelTextField;
 
         /**
          * Gain label.
          */
-        private JLabel gainLabel = null;
+        private JLabel gainLabel;
 
         /**
          * Gain textfield.
          */
-        private JTextField gainTextField = null;
+        private JTextField gainTextField;
 
         /**
          * Offset label.
          */
-        private JLabel offsetLabel = null;
+        private JLabel offsetLabel;
 
         /**
          * Offset textfield.
          */
-        private JTextField offsetTextField = null;
+        private JTextField offsetTextField;
 
         /**
          * Insert button.
          */
-        private JButton addButton = null;
+        private JButton addButton;
 
         /**
          * Remove button.
          */
-        private JButton removeButton = null;
+        private JButton removeButton;
 
         /**
          * Message source.

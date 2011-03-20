@@ -599,6 +599,8 @@
         <entry key="amplifierDefinitionConfig.protocol">Protocol: </entry>
         <entry key="amplifierDefinitionConfig.match">Match: </entry>
         <entry key="amplifierDefinitionConfig.driverPath">Driver Path: </entry>
+        <entry key="amplifierDefinitionConfig.otherData">Other data</entry>
+        <entry key="amplifierDefinitionConfig.amplifierNull">Amplifier null: </entry>
         <entry key="amplifierDefinitionConfig.channelno">Channel no.: </entry>
         <entry key="amplifierDefinitionConfig.channelDefinitions">Channel definitions</entry>
         <entry key="amplifierDefinitionConfig.gain">Gain: </entry>

@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.Window;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -32,37 +33,39 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
         /**
          * Protocol label
          */
-        private JLabel protocolLabel = null;
-
+        private JLabel protocolLabel;
         /**
          * Protocol combo box.
          */
-        private JComboBox protocolComboBox = null;
-
+        private JComboBox protocolComboBox;
         /**
          * Match label.
          */
-        private JLabel matchLabel = null;
-
+        private JLabel matchLabel;
         /**
          * Match text field.
          */
-        private JTextField matchTextField = null;
-
+        private JTextField matchTextField;
         /**
          * File select panel.
          */
-        private FileSelectPanel fileSelectPanel = null;
-
+        private FileSelectPanel fileSelectPanel;
+        /**
+         * Amplifier null label.
+         */
+        private JLabel amplifierNullLabel;
+        /**
+         * Amplifier null text field.
+         */
+        private JTextField amplifierNullTextField;
         /**
          * Available frequencies panel.
          */
-        private AvailableFrequenciesPanel availableFrequenciesPanel = null;
-        
+        private AvailableFrequenciesPanel availableFrequenciesPanel;
         /**
          * Channel definition panel.
          */
-        private ChannelDefinitionPanel channelDefinitionPanel = null;
+        private ChannelDefinitionPanel channelDefinitionPanel;
 
         /**
          * Default constructor.
@@ -80,8 +83,8 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
         /**
          * Sets window's title then calls {@link AbstractDialog#initialize()}.
          */
-	@Override
-	protected void initialize() {
+        @Override
+        protected void initialize() {
 
                 setTitle(messageSource.getMessage("amplifierDefinitionConfig.title"));
                 super.initialize();
@@ -97,21 +100,25 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
 
                 JPanel mainPanel = new JPanel(new BorderLayout(15, 15));
 
-                CompoundBorder border = new CompoundBorder(
-			new TitledBorder(messageSource.getMessage("amplifierDefinitionConfig.driverData")),
-			new EmptyBorder(3, 3, 3, 3));
-
-                JPanel textFieldsPanel = new JPanel(new GridBagLayout());
-                textFieldsPanel.setBorder(border);
-
                 GridBagConstraints constraints = new GridBagConstraints();
                 constraints.anchor = GridBagConstraints.CENTER;
                 constraints.fill = GridBagConstraints.HORIZONTAL;
+                constraints.insets = new Insets(3, 3, 3, 3);
+                constraints.weighty = 0;
+
+
+
+                CompoundBorder borderDriver = new CompoundBorder(
+                        new TitledBorder(messageSource.getMessage("amplifierDefinitionConfig.driverData")),
+                        new EmptyBorder(3, 3, 3, 3));
+
+                JPanel textFieldsPanel = new JPanel(new GridBagLayout());
+                textFieldsPanel.setBorder(borderDriver);
 
                 constraints.gridx = 0;
                 constraints.gridy = 0;
                 constraints.gridwidth = 1;
-                constraints.weightx = 0;               
+                constraints.weightx = 0;
                 textFieldsPanel.add(getProtocolLabel(), constraints);
 
                 constraints.gridx = 1;
@@ -126,20 +133,11 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
                 constraints.weightx = 0;
                 textFieldsPanel.add(getMatchLabel(), constraints);
 
-                JPanel textPanel = new JPanel(new GridBagLayout());
-                constraints.gridx = 0;
-                constraints.gridy = 0;
-                constraints.weightx = 1;
-                constraints.weighty = 1;
-                textPanel.setBorder(new EmptyBorder(3, 3, 3, 3));
-                textPanel.add(getMatchTextField(), constraints);
-
                 constraints.gridx = 1;
                 constraints.gridy = 1;
                 constraints.gridwidth = 2;
                 constraints.weightx = 1;
-                constraints.weighty = 0;
-                textFieldsPanel.add(textPanel, constraints);
+                textFieldsPanel.add(getMatchTextField(), constraints);
 
                 constraints.gridx = 0;
                 constraints.gridy = 2;
@@ -147,17 +145,54 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
                 constraints.weightx = 1;
                 textFieldsPanel.add(getFileSelectPanel(), constraints);
 
-                mainPanel.add(textFieldsPanel, BorderLayout.PAGE_START);
 
-                JPanel listsPanel = new JPanel(new GridLayout(2, 1, 10, 10));
-                listsPanel.add(getAvailableFrequenciesPanel());
-                listsPanel.add(getChannelDefinitionPanel());
 
-                mainPanel.add(listsPanel, BorderLayout.CENTER);
+                CompoundBorder borderOther = new CompoundBorder(
+                        new TitledBorder(messageSource.getMessage("amplifierDefinitionConfig.otherData")),
+                        new EmptyBorder(3, 3, 3, 3));
+
+                JPanel otherPanel = new JPanel(new BorderLayout());
+                otherPanel.setBorder(borderOther);
+                JPanel otherTopPanel = new JPanel(new GridBagLayout());
+
+                constraints.gridx = 0;
+                constraints.gridy = 0;
+                constraints.gridwidth = 1;
+                constraints.weightx = 0;
+                otherTopPanel.add(getAmplifierNullLabel(), constraints);
+
+                constraints.gridx = 1;
+                constraints.gridy = 0;
+                constraints.gridwidth = 2;
+                constraints.weightx = 1;
+                otherTopPanel.add(getAmplifierNullTextField(), constraints);
+
+                otherPanel.add(otherTopPanel, BorderLayout.PAGE_START);
+
+
+
+                JPanel topPanel = new JPanel(new GridLayout(1, 2, 10, 0));
+                topPanel.add(textFieldsPanel);
+                topPanel.add(otherPanel);
+
+                JPanel bottomPanel = new JPanel(new GridLayout(1, 2, 10, 0));
+                bottomPanel.add(getAvailableFrequenciesPanel());
+                bottomPanel.add(getChannelDefinitionPanel());
+
+
+
+                mainPanel.add(topPanel, BorderLayout.PAGE_START);
+                mainPanel.add(bottomPanel, BorderLayout.CENTER);
 
                 return mainPanel;
         }
 
+        /**
+         * Fills this dialog from an {@link AmplifierDefinition} object.
+         *
+         * @param model the model
+         * @throws SignalMLException never thrown
+         */
         @Override
         public void fillDialogFromModel(Object model) throws SignalMLException {
 
@@ -166,12 +201,19 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
                 getProtocolComboBox().setSelectedItem(definition.getProtocol());
                 getMatchTextField().setText(definition.getMatch());
                 getFileSelectPanel().setFileName(definition.getDriverPath());
+                getAmplifierNullTextField().setText(definition.getAmplifierNull().toString());
                 getAvailableFrequenciesPanel().setFrequencies(definition.getAvailableFrequencies());
                 getChannelDefinitionPanel().setData(definition.getChannelNumbers(),
-                                                    definition.getCalibrationGain(),
-                                                    definition.getCalibrationOffset());
+                        definition.getCalibrationGain(),
+                        definition.getCalibrationOffset());
         }
 
+        /**
+         * Fills an {@link AmplifierDefinition} object from this dialog.
+         *
+         * @param model the model
+         * @throws SignalMLException never thrown
+         */
         @Override
         public void fillModelFromDialog(Object model) throws SignalMLException {
 
@@ -184,6 +226,14 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
                 definition.setChannelNumbers(getChannelDefinitionPanel().getChannelNumbers());
                 definition.setCalibrationGain(getChannelDefinitionPanel().getGainValues());
                 definition.setCalibrationOffset(getChannelDefinitionPanel().getOffsetValues());
+
+                try {
+                        Double amplifierNull = Double.parseDouble(getAmplifierNullTextField().getText());
+                        definition.setAmplifierNull(amplifierNull);
+                } catch (NumberFormatException ex) {
+                        throw new SignalMLException(messageSource.getMessage("amplifierDefinitionConfig.amplifierNull")
+                                + messageSource.getMessage("error.amplifierDefinitionConfig.rational"));
+                }
         }
 
         @Override
@@ -234,8 +284,7 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
         private JComboBox getProtocolComboBox() {
 
                 if (protocolComboBox == null) {
-                        protocolComboBox = new JComboBox(new String[] { AmplifierDefinition.USB, AmplifierDefinition.BLUETOOTH });
-                        protocolComboBox.setBorder(new EmptyBorder(3, 3, 3, 3));
+                        protocolComboBox = new JComboBox(new String[]{AmplifierDefinition.USB, AmplifierDefinition.BLUETOOTH});
                 }
                 return protocolComboBox;
         }
@@ -267,6 +316,11 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
                 return matchTextField;
         }
 
+        /**
+         * Gets the file select panel.
+         *
+         * @return the file select panel
+         */
         private FileSelectPanel getFileSelectPanel() {
 
                 if (fileSelectPanel == null) {
@@ -274,6 +328,33 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
                         fileSelectPanel.returnRelativePath(true);
                 }
                 return fileSelectPanel;
+        }
+
+        /**
+         * Gets the amplifier null label.
+         * 
+         * @return the amplifier null label
+         */
+        public JLabel getAmplifierNullLabel() {
+
+                if (amplifierNullLabel == null) {
+                        amplifierNullLabel = new JLabel();
+                        amplifierNullLabel.setText(messageSource.getMessage("amplifierDefinitionConfig.amplifierNull"));
+                }
+                return amplifierNullLabel;
+        }
+
+        /**
+         * Gets the amplifier null text field.
+         *
+         * @return the amplifier null text field
+         */
+        public JTextField getAmplifierNullTextField() {
+
+                if (amplifierNullTextField == null) {
+                        amplifierNullTextField = new JTextField();
+                }
+                return amplifierNullTextField;
         }
 
         /**

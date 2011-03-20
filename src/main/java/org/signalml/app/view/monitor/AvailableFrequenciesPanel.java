@@ -30,22 +30,22 @@ public class AvailableFrequenciesPanel extends JPanel implements ActionListener 
         /**
          * List of frequencies.
          */
-        private JList frequenciesList = null;
+        private JList frequenciesList;
 
         /**
          * Insert text field.
          */
-        private JTextField textField = null;
+        private JTextField textField;
 
         /**
          * Insert button.
          */
-        private JButton addButton = null;
+        private JButton addButton;
 
         /**
          * Remove button.
          */
-        private JButton removeButton = null;
+        private JButton removeButton;
 
         /**
          * Message source.

@@ -24,7 +24,7 @@ public class OpenBCIModuleConfigDialog extends AbstractPresetDialog {
         /**
          * File select panel
          */
-        private FileSelectPanel fileSelectPanel = null;
+        private FileSelectPanel fileSelectPanel;
 
         /**
          * Default constructor.
