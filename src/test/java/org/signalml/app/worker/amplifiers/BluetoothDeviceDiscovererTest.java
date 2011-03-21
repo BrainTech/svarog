@@ -21,15 +21,16 @@ public class BluetoothDeviceDiscovererTest implements PropertyChangeListener {
                 discoverer = new BluetoothDeviceDiscoverer();
                 discoverer.addPropertyChangeListener(this);
 
-                try {
-                        System.out.println("Searching...");
-                        discoverer.startSearch();
-                } catch (Exception ex) {
-                        System.out.println(ex.getMessage());
-                        return;
-                }
-                
-                synchronized(event) {
+                synchronized (event) {
+
+                        try {
+                                System.out.println("Searching...");
+                                discoverer.startSearch();
+                        } catch (Exception ex) {
+                                System.out.println(ex.getMessage());
+                                return;
+                        }
+
                         try {
                                 event.wait();
                         } catch (InterruptedException ex) {
@@ -44,12 +45,11 @@ public class BluetoothDeviceDiscovererTest implements PropertyChangeListener {
 
                         DeviceInfo info = (DeviceInfo) evt.getNewValue();
                         System.out.println("Device found: " + info.getName() + " " + info.getAddress() + " (" + info.getDeviceType() + ")");
-                }
-                else if (AbstractDeviceDiscoverer.END_OF_SEARCH.equals(evt.getPropertyName())) {
+                } else if (AbstractDeviceDiscoverer.END_OF_SEARCH.equals(evt.getPropertyName())) {
 
                         System.out.println("End of search!");
-                        
-                        synchronized(event) {
+
+                        synchronized (event) {
                                 event.notify();
                         }
                 }

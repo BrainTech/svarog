@@ -34,7 +34,7 @@ public class BluetoothDeviceDiscoverer extends AbstractDeviceDiscoverer implemen
                 } catch (IOException ex) {
                 }
 
-                DeviceInfo info = new DeviceInfo(address, name, DeviceInfo.BLUETOOTH);
+                DeviceInfo info = new DeviceInfo(formatAddress(address), name, DeviceInfo.BLUETOOTH);
 
                 deviceFound(info);
         }
@@ -58,7 +58,6 @@ public class BluetoothDeviceDiscoverer extends AbstractDeviceDiscoverer implemen
          */
         @Override
         public void servicesDiscovered(int i, ServiceRecord[] srs) {
-
         }
 
         /**
@@ -69,7 +68,6 @@ public class BluetoothDeviceDiscoverer extends AbstractDeviceDiscoverer implemen
          */
         @Override
         public void serviceSearchCompleted(int i, int i1) {
-
         }
 
         /**
@@ -82,5 +80,28 @@ public class BluetoothDeviceDiscoverer extends AbstractDeviceDiscoverer implemen
         public void startSearch() throws Exception {
 
                 LocalDevice.getLocalDevice().getDiscoveryAgent().startInquiry(DiscoveryAgent.GIAC, this);
+        }
+
+        /**
+         * Formats address to xx:xx:xx:xx:xx:xx form
+         *
+         * @param input input address
+         * @return formatted address
+         */
+        private String formatAddress(String input) {
+
+                if (input.length() == 17) {
+                        return input;
+                }
+
+                String retval = "";
+                for (int i = 0; i < 12; i += 2) {
+                        retval += input.charAt(i);
+                        retval += input.charAt(i + 1);
+                        if (i < 10)
+                                retval += ":";
+                }
+
+                return retval;
         }
 }
