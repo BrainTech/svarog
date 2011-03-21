@@ -234,8 +234,7 @@ public class PluginLoader {
 				this.pluginDirs.add(pluginDirGlobal);
 			}
 		} catch (Exception ex){
-			logger.error("Failed to add global plugin directory");
-			ex.printStackTrace();
+			logger.error("Failed to add global plugin directory - maybe not started from a jar file");
 		}
 	}
 
@@ -387,12 +386,16 @@ public class PluginLoader {
 	 */
 	private void readPluginsState(File fileName) {
 		try {
-			Element element = openXMLDocument(fileName);
-			NodeList nodeList = element.getChildNodes();
-			for (int i = 0; i < nodeList.getLength(); ++i) {
-				Node node = nodeList.item(i);
-				if (node.getNodeName().equals(XMLStatesPluginNode))
-					readPluginState(node);
+			if (fileName.exists() && fileName.canRead()){
+				Element element = openXMLDocument(fileName);
+				NodeList nodeList = element.getChildNodes();
+				for (int i = 0; i < nodeList.getLength(); ++i) {
+					Node node = nodeList.item(i);
+					if (node.getNodeName().equals(XMLStatesPluginNode))
+						readPluginState(node);
+				}
+			} else {
+				logger.debug("File with states of plugins doesn't exist. Default states are used");
 			}
 		} catch (Exception e) {
 			logger.error("Failed to load states of plug-ins from file. All plug-ins with unloaded states will be set inacitve.");
