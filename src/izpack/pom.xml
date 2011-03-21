@@ -1,22 +1,44 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.signalml</groupId>
-  <artifactId>junk-do-not-use</artifactId>
-  <version>1.0</version>
+	<groupId>org.signalml</groupId>
+	<artifactId>junk-do-not-use</artifactId>
+	<version>1.0</version>
 
-  <name>svarog-installer</name>
+	<name>svarog-installer</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <svarog.version>0.5.0-SNAPSHOT</svarog.version>
+		<svarog.version>0.5.0-SNAPSHOT</svarog.version>
 		<FFT.plugin.version>0.1</FFT.plugin.version>
 		<FFTSignalTool.plugin.version>0.1</FFTSignalTool.plugin.version>
-  </properties>
+	</properties>
 
-  <build>
-  	<plugins>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>compile</id>
+						<phase>compile</phase>
+						<configuration>
+							<tasks>
+								<mkdir dir="${basedir}/bin"/>
+								<mkdir dir="${basedir}/bin/customActions"/>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		
+		
+		
 			<plugin>
 				<!--we also need to clean imported elements - svarog and plugins-->
 				<artifactId>maven-clean-plugin</artifactId>
@@ -30,6 +52,8 @@
 								<include>plugins/FFTSignalTool.jar</include>
 								<include>svarog.jar</include>
 								<include>bin/customActions/Uninstaller.jar</include>
+								<include>bin/customActions</include>
+								<include>bin</include>
 							</includes>
 						</fileset>
 					</filesets>
@@ -38,53 +62,53 @@
 			
 			<plugin>
 			
-        <groupId>org.apache.maven.plugins</groupId>
+				<groupId>org.apache.maven.plugins</groupId>
 				<!--importing artifacts needed to create an installer-->
-        <artifactId>maven-dependency-plugin</artifactId>
-        <version>2.2</version>
-        <executions>
-          <execution>
-            <id>copy</id>
-            <phase>prepare-package</phase>
-            <goals>
-              <goal>copy</goal>
-            </goals>
-            <configuration>
-              <artifactItems>
-                <artifactItem>
-                  <groupId>org.signalml</groupId>
-                  <artifactId>svarog</artifactId>
-                  <version>${svarog.version}</version>
-                  <type>jar</type>
-                  <classifier>onejar</classifier>
-                  <overWrite>true</overWrite>
-                  <outputDirectory>${basedir}</outputDirectory>
-                  <destFileName>svarog.jar</destFileName>
-                </artifactItem>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.2</version>
+				<executions>
+					<execution>
+						<id>copy</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
 								<artifactItem>
-                  <groupId>org.signalml.plugin</groupId>
+									<groupId>org.signalml</groupId>
+									<artifactId>svarog</artifactId>
+									<version>${svarog.version}</version>
+									<type>jar</type>
+									<classifier>onejar</classifier>
+									<overWrite>true</overWrite>
+									<outputDirectory>${basedir}</outputDirectory>
+									<destFileName>svarog.jar</destFileName>
+								</artifactItem>
+								<artifactItem>
+									<groupId>org.signalml.plugin</groupId>
 									<version>${FFT.plugin.version}</version>
-                  <artifactId>FFT</artifactId>
-                  <type>jar</type>
-                  <classifier>shade</classifier>
-                  <overWrite>true</overWrite>
-                  <outputDirectory>${basedir}/plugins</outputDirectory>
-                  <destFileName>FFT.jar</destFileName>
-                </artifactItem>
+									<artifactId>FFT</artifactId>
+									<type>jar</type>
+									<classifier>shade</classifier>
+									<overWrite>true</overWrite>
+									<outputDirectory>${basedir}/plugins</outputDirectory>
+									<destFileName>FFT.jar</destFileName>
+								</artifactItem>
 								<artifactItem>
-                  <groupId>org.signalml.plugin</groupId>
+									<groupId>org.signalml.plugin</groupId>
 									<version>${FFTSignalTool.plugin.version}</version>
-                  <artifactId>FFTSignalTool</artifactId>
-                  <type>jar</type>
-                  <overWrite>true</overWrite>
-                  <outputDirectory>${basedir}/plugins</outputDirectory>
-                  <destFileName>FFTSignalTool.jar</destFileName>
-                </artifactItem>
-              </artifactItems>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
+									<artifactId>FFTSignalTool</artifactId>
+									<type>jar</type>
+									<overWrite>true</overWrite>
+									<outputDirectory>${basedir}/plugins</outputDirectory>
+									<destFileName>FFTSignalTool.jar</destFileName>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			
 			<plugin>
 				<groupId>org.codehaus.izpack</groupId>
@@ -136,24 +160,24 @@
 				</executions>
 			</plugin>
 			
-      <plugin>
+			<plugin>
 				<!--creation of the custom uninstaller which will be attached to default izpack uninstaller-->
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>2.3.1</version>
-        <executions>
-          <execution>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.1</version>
+				<executions>
+					<execution>
 						<phase>prepare-package</phase>
-            <goals>
-              <goal>jar</goal>
-            </goals>
+						<goals>
+							<goal>jar</goal>
+						</goals>
 						<configuration>
 							<finalName>Uninstaller</finalName>
 							<outputDirectory>${basedir}/bin/customActions</outputDirectory>
 						</configuration>
-          </execution>
-        </executions>
-      </plugin>
+					</execution>
+				</executions>
+			</plugin>
 			
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -163,15 +187,15 @@
 				</configuration>
 			</plugin>
 			
-  	</plugins>
-  </build>
+		</plugins>
+	</build>
 	
-  <repositories>
-  </repositories>
-  <pluginRepositories>
+	<repositories>
+	</repositories>
+	<pluginRepositories>
 	
-  </pluginRepositories>
-  <dependencies>
+	</pluginRepositories>
+	<dependencies>
 		<dependency>
 			<groupId>org.bluestemsoftware.open.maven.plugin</groupId>
 			<artifactId>launch4j-plugin</artifactId>
@@ -182,5 +206,5 @@
 			<artifactId>izpack-standalone-compiler</artifactId>
 			<version>4.3.2</version>
 		</dependency>
-  </dependencies>
+	</dependencies>
 </project>
