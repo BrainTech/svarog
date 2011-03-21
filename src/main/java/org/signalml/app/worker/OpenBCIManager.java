@@ -120,9 +120,14 @@ public class OpenBCIManager extends SwingWorker<ProgressState, ProgressState> im
                 String driverModuleName = descriptor.getAmplifierInstance().getDefinition().getModuleName();
                 String address = descriptor.getAmplifierInstance().getAddress();
 
-                if (!modulesData.containsKey(MX_ID) || !modulesData.containsKey(HASHTABLE_ID)
-                        || !modulesData.containsKey(PINGER_ID) || !modulesData.containsKey(driverModuleName)) {
-                        throw new Exception();
+                if (!modulesData.containsKey(MX_ID)) {
+                        throw new Exception(MX_ID);
+                } else if (!modulesData.containsKey(HASHTABLE_ID)) {
+                        throw new Exception(HASHTABLE_ID);
+                } else if (!modulesData.containsKey(PINGER_ID)) {
+                        throw new Exception(PINGER_ID);
+                } else if (!modulesData.containsKey(driverModuleName)) {
+                        throw new Exception(driverModuleName);
                 }
 
                 modulesData.get(driverModuleName).replaceAddress(address);
@@ -169,7 +174,7 @@ public class OpenBCIManager extends SwingWorker<ProgressState, ProgressState> im
                 try {
                         modulesData = getModulesData();
                 } catch (Exception ex) {
-                        return new ProgressState(messageSource.getMessage("opensignal.amplifier.missingModulesData"), -1, MAX_PROGRESS);
+                        return new ProgressState(messageSource.getMessage("opensignal.amplifier.missingModulesData") + ": " + ex.getMessage(), -1, MAX_PROGRESS);
                 }
 
                 // Start multiplexer
