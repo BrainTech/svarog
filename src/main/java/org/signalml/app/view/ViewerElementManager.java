@@ -1320,7 +1320,7 @@ public class ViewerElementManager {
 
         public AmplifierDefinitionConfigDialog getAmplifierDefinitionConfigDialog() {
                 if (amplifierDefinitionConfigDialog == null) {
-                        amplifierDefinitionConfigDialog = new AmplifierDefinitionConfigDialog(messageSource, getAmplifierDefinitionPresetManager(), getDialogParent(), true);
+                        amplifierDefinitionConfigDialog = new AmplifierDefinitionConfigDialog(messageSource, getAmplifierDefinitionPresetManager(), getDialogParent(), true, this);
 			amplifierDefinitionConfigDialog.setApplicationConfig(getApplicationConfig());
 			amplifierDefinitionConfigDialog.setFileChooser(getFileChooser());
                 }

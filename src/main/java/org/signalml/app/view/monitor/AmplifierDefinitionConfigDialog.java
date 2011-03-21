@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Window;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -16,8 +17,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
+import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.dialog.AbstractPresetDialog;
-import org.signalml.app.view.element.FileSelectPanel;
 import org.signalml.app.worker.amplifiers.AmplifierDefinition;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractDialog;
@@ -47,9 +48,13 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
          */
         private JTextField matchTextField;
         /**
-         * File select panel.
+         * Module name label.
          */
-        private FileSelectPanel fileSelectPanel;
+        private JLabel moduleNameLabel;
+        /**
+         * Module name text field.
+         */
+        private JComboBox moduleNameComboBox;
         /**
          * Amplifier null label.
          */
@@ -66,6 +71,10 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
          * Channel definition panel.
          */
         private ChannelDefinitionPanel channelDefinitionPanel;
+        /**
+         * The viewer element manager.
+         */
+        private ViewerElementManager elementManager;
 
         /**
          * Default constructor.
@@ -75,9 +84,10 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
          * @param w parent window
          * @param isModal if this window is modal
          */
-        public AmplifierDefinitionConfigDialog(MessageSourceAccessor messageSource, PresetManager presetManager, Window w, boolean isModal) {
+        public AmplifierDefinitionConfigDialog(MessageSourceAccessor messageSource, PresetManager presetManager, Window w, boolean isModal, ViewerElementManager elementManager) {
 
                 super(messageSource, presetManager, w, isModal);
+                this.elementManager = elementManager;
         }
 
         /**
@@ -141,9 +151,15 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
 
                 constraints.gridx = 0;
                 constraints.gridy = 2;
-                constraints.gridwidth = 3;
+                constraints.gridwidth = 1;
+                constraints.weightx = 0;
+                textFieldsPanel.add(getModuleNameLabel(), constraints);
+
+                constraints.gridx = 1;
+                constraints.gridy = 2;
+                constraints.gridwidth = 2;
                 constraints.weightx = 1;
-                textFieldsPanel.add(getFileSelectPanel(), constraints);
+                textFieldsPanel.add(getModuleNameComboBox(), constraints);
 
 
 
@@ -200,7 +216,7 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
 
                 getProtocolComboBox().setSelectedItem(definition.getProtocol());
                 getMatchTextField().setText(definition.getMatch());
-                getFileSelectPanel().setFileName(definition.getDriverPath());
+                getModuleNameComboBox().setSelectedItem(definition.getModuleName());
                 getAmplifierNullTextField().setText(definition.getAmplifierNull().toString());
                 getAvailableFrequenciesPanel().setFrequencies(definition.getAvailableFrequencies());
                 getChannelDefinitionPanel().setData(definition.getChannelNumbers(),
@@ -221,7 +237,7 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
 
                 definition.setProtocol((String) getProtocolComboBox().getSelectedItem());
                 definition.setMatch(getMatchTextField().getText());
-                definition.setDriverPath(getFileSelectPanel().getFileName());
+                definition.setModuleName(getModuleNameComboBox().getSelectedItem().toString());
                 definition.setAvailableFrequencies(getAvailableFrequenciesPanel().getFrequencies());
                 definition.setChannelNumbers(getChannelDefinitionPanel().getChannelNumbers());
                 definition.setCalibrationGain(getChannelDefinitionPanel().getGainValues());
@@ -317,17 +333,31 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
         }
 
         /**
-         * Gets the file select panel.
+         * Gets the module name label.
          *
-         * @return the file select panel
+         * @return the module name label
          */
-        private FileSelectPanel getFileSelectPanel() {
+        public JLabel getModuleNameLabel() {
 
-                if (fileSelectPanel == null) {
-                        fileSelectPanel = new FileSelectPanel(messageSource, messageSource.getMessage("amplifierDefinitionConfig.driverPath"));
-                        fileSelectPanel.returnRelativePath(true);
+                if (moduleNameLabel == null) {
+                        moduleNameLabel = new JLabel();
+                        moduleNameLabel.setText(messageSource.getMessage("amplifierDefinitionConfig.moduleName"));
                 }
-                return fileSelectPanel;
+                return moduleNameLabel;
+        }
+
+        /**
+         * Gets the module name combo box.
+         *
+         * @return the module name combo box
+         */
+        public JComboBox getModuleNameComboBox() {
+
+                if (moduleNameComboBox == null) {
+                        moduleNameComboBox = new JComboBox();
+                        moduleNameComboBox.setEditable(true);
+                }
+                return moduleNameComboBox;
         }
 
         /**
@@ -392,5 +422,17 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
                 super.onDialogClose();
                 getChannelDefinitionPanel().clearTextFields();
                 getAvailableFrequenciesPanel().clearTextField();
+        }
+
+        /**
+         * On dialog reset add module names to the combo box.
+         */
+        @Override
+        protected void resetDialog() {
+
+                super.resetDialog();
+                getModuleNameComboBox().setModel(new DefaultComboBoxModel(
+                        elementManager.getOpenBCIModulePresetManager().getAllModulesData().keySet().toArray()));
+
         }
 }

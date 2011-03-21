@@ -2,7 +2,6 @@ package org.signalml.app.worker;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.SwingWorker;
@@ -29,7 +28,6 @@ public class OpenBCIManager extends SwingWorker<ProgressState, ProgressState> im
         public static final String HASHTABLE_ID = "hashtable";
         public static final String PINGER_ID = "pinger";
         public final int MAX_PROGRESS = 7;
-        public final int PROCESS_SLEEP = 2000;
         /**
          * The message source.
          */
@@ -119,11 +117,15 @@ public class OpenBCIManager extends SwingWorker<ProgressState, ProgressState> im
         private HashMap<String, OpenBCIModuleData> getModulesData() throws Exception {
 
                 HashMap<String, OpenBCIModuleData> modulesData = elementManager.getOpenBCIModulePresetManager().getAllModulesData();
+                String driverModuleName = descriptor.getAmplifierInstance().getDefinition().getModuleName();
+                String address = descriptor.getAmplifierInstance().getAddress();
 
-                if (!modulesData.containsKey(MX_ID) || !modulesData.containsKey(HASHTABLE_ID) || !modulesData.containsKey(PINGER_ID)) {
+                if (!modulesData.containsKey(MX_ID) || !modulesData.containsKey(HASHTABLE_ID)
+                        || !modulesData.containsKey(PINGER_ID) || !modulesData.containsKey(driverModuleName)) {
                         throw new Exception();
                 }
 
+                modulesData.get(driverModuleName).replaceAddress(address);
                 return modulesData;
         }
 
@@ -171,7 +173,7 @@ public class OpenBCIManager extends SwingWorker<ProgressState, ProgressState> im
                 }
 
                 // Start multiplexer
-                publish(new ProgressState(messageSource.getMessage("opensignal.amplifier.startingMultiplexer"), 0, MAX_PROGRESS));                
+                publish(new ProgressState(messageSource.getMessage("opensignal.amplifier.startingMultiplexer"), 0, MAX_PROGRESS));
                 processManager.runProcess(MX_ID, modulesData.get(MX_ID).getPath(), modulesData.get(MX_ID).getParameters());
                 Thread.sleep(modulesData.get(MX_ID).getDelay());
 
@@ -203,13 +205,10 @@ public class OpenBCIManager extends SwingWorker<ProgressState, ProgressState> im
                 }
 
                 // Start driver
+                String driverModuleName = descriptor.getAmplifierInstance().getDefinition().getModuleName();
                 publish(new ProgressState(messageSource.getMessage("opensignal.amplifier.startingAmplifier"), 6, MAX_PROGRESS));
-                String amp_id = descriptor.getAmplifierInstance().getDefinition().getName();
-                List<String> ampParameters = new ArrayList<String>();
-                ampParameters.add(descriptor.getAmplifierInstance().getAddress());                
-                processManager.runProcess(amp_id, descriptor.getAmplifierInstance().getDefinition().getDriverPath(), ampParameters);
-                Thread.sleep(PROCESS_SLEEP);
-
+                processManager.runProcess(driverModuleName, modulesData.get(driverModuleName).getPath(), modulesData.get(driverModuleName).getParameters());
+                Thread.sleep(modulesData.get(driverModuleName).getDelay());
 
                 return new ProgressState(messageSource.getMessage("success"), MAX_PROGRESS, MAX_PROGRESS);
         }
@@ -303,6 +302,7 @@ public class OpenBCIManager extends SwingWorker<ProgressState, ProgressState> im
                 } catch (Exception ex) {
                         ProgressState result = new ProgressState(messageSource.getMessage("failed"), -1, MAX_PROGRESS);
                         firePropertyChange(ProgressDialog.PROGRESS_STATE, null, result);
+                        cancel();
                 }
                 processManager.removePropertyChangeListener(this);
         }

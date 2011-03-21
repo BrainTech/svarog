@@ -5,6 +5,7 @@ import java.util.List;
 import org.signalml.app.config.preset.Preset;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.util.ArrayList;
+import org.signalml.app.worker.processes.OpenBCIModule;
 
 /**
  * Definition of an amplifier.
@@ -53,9 +54,9 @@ public class AmplifierDefinition implements Preset {
         private List<Float> calibrationOffset;
 
         /**
-         * Driver path.
+         * Driver {@link OpenBCIModule} name.
          */
-        private String driverPath;
+        private String moduleName;
 
         /**
          * Amplifier null.
@@ -80,7 +81,7 @@ public class AmplifierDefinition implements Preset {
                 this.calibrationGain = new ArrayList<Float>();
                 this.calibrationOffset = new ArrayList<Float>();
                 this.channelNumbers = new ArrayList<Integer>();
-                this.driverPath = "";
+                this.moduleName = "";
                 this.match = "";
                 this.name = "";
                 this.protocol = USB;
@@ -113,8 +114,8 @@ public class AmplifierDefinition implements Preset {
                 return channelNumbers;
         }
 
-        public String getDriverPath() {
-                return driverPath;
+        public String getModuleName() {
+                return moduleName;
         }
 
         public String getMatch() {
@@ -150,8 +151,8 @@ public class AmplifierDefinition implements Preset {
                 this.channelNumbers = channelNumbers;
         }
 
-        public void setDriverPath(String driverPath) {
-                this.driverPath = driverPath;
+        public void setModuleName(String moduleName) {
+                this.moduleName = moduleName;
         }
 
         public void setMatch(String match) {
