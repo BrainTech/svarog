@@ -10,6 +10,7 @@ import java.beans.PropertyChangeEvent;
 import java.io.File;
 
 import javax.swing.JPanel;
+import org.signalml.app.config.ApplicationConfiguration;
 
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.model.OpenFileSignalDescriptor;
@@ -34,6 +35,7 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 
 	public FileSignalSourcePanel(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager) {
 		super(messageSource, viewerElementManager);
+
 	}
 
 	@Override
@@ -49,12 +51,12 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 	protected JPanel createRightColumnPanel() {
 		JPanel rightColumnPanel = new JPanel(new BorderLayout());
 		rightColumnPanel.add(getFileOpenMethodPanel(), BorderLayout.NORTH);
-		//rightColumnPanel.add(getRawSignalParametersPanel(), BorderLayout.CENTER);
 		rightColumnPanel.add(getCardPanelForSignalParameters(), BorderLayout.CENTER);
 		return rightColumnPanel;
 	}
 
         public void fillPanelFromModel(OpenFileSignalDescriptor openFileSignalDescriptor) {
+
 		FileOpenSignalMethod method = openFileSignalDescriptor.getMethod();
 
 		fileOpenMethodPanel.setSelectedOpenSignalMethod(method);
@@ -73,11 +75,18 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 			
 			descriptor.setFile(selectedFile);
 		}
+
+		getApplicationConfiguration().setLastOpenDocumentPath(getFileChooserPanel().getFileChooser().getCurrentDirectory().getAbsolutePath());
 	}
 
 	public FileChooserPanel getFileChooserPanel() {
 		if (fileChooserPanel == null) {
 			fileChooserPanel = new FileChooserPanel(messageSource, ManagedDocumentType.SIGNAL);
+
+			String lastOpenedDocumentPath = getApplicationConfiguration().getLastOpenDocumentPath();
+			if (lastOpenedDocumentPath != null) {
+				getFileChooserPanel().getFileChooser().setCurrentDirectory(new File(lastOpenedDocumentPath));
+			}
 		}
 		return fileChooserPanel;
 	}
@@ -101,8 +110,9 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 
 	public SignalParametersPanelForRawSignalFile getRawSignalParametersPanel() {
 		if (rawSignalParametersPanel == null) {
-			rawSignalParametersPanel = new SignalParametersPanelForRawSignalFile(messageSource, viewerElementManager.getApplicationConfig());
+			rawSignalParametersPanel = new SignalParametersPanelForRawSignalFile(messageSource, getApplicationConfiguration());
 			rawSignalParametersPanel.addPropertyChangeListener(this);
+			rawSignalParametersPanel.setSignalFileChooserPanel(getFileChooserPanel());
 		}
 		return rawSignalParametersPanel;
 	}
@@ -143,6 +153,10 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 	@Override
 	public float getSamplingFrequency() {
 		return rawSignalParametersPanel.getSamplingFrequency();
+	}
+
+	protected ApplicationConfiguration getApplicationConfiguration() {
+		return viewerElementManager.getApplicationConfig();
 	}
 
 }

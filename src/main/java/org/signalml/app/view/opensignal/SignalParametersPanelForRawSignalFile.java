@@ -13,6 +13,7 @@ import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.app.view.element.FileChooserPanel;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
@@ -21,8 +22,11 @@ import org.springframework.context.support.MessageSourceAccessor;
  */
 public class SignalParametersPanelForRawSignalFile extends AbstractSignalParametersPanel {
 
+	private ReadXMLManifestAction readManifestAction;
+
 	public SignalParametersPanelForRawSignalFile(MessageSourceAccessor messageSource, ApplicationConfiguration applicationConfiguration) {
 		super(messageSource, applicationConfiguration);
+
 		setEnabledAll(true);
 		getSamplingFrequencyComboBox().setEditable(true);
 	}
@@ -30,8 +34,14 @@ public class SignalParametersPanelForRawSignalFile extends AbstractSignalParamet
 	@Override
 	protected JPanel createButtonPanel() {
 		JPanel buttonPanel = super.createButtonPanel();
-		buttonPanel.add(new JButton(new ReadXMLManifestAction(messageSource, this)));
+		buttonPanel.add(new JButton(getReadManifestAction()));
 		return buttonPanel;
+	}
+
+	protected ReadXMLManifestAction getReadManifestAction() {
+		if (readManifestAction == null)
+			readManifestAction = new ReadXMLManifestAction(messageSource, this);
+		return readManifestAction;
 	}
 
 	public void fillPanelFromModel(RawSignalDescriptor descriptor) {
@@ -66,5 +76,9 @@ public class SignalParametersPanelForRawSignalFile extends AbstractSignalParamet
         protected void fillCurrentModelFromPanel() throws SignalMLException {
                 fillModelFromPanel((RawSignalDescriptor) currentModel);
         }
+
+	public void setSignalFileChooserPanel(FileChooserPanel fileChooserPanel) {
+		getReadManifestAction().setSignalFileChooserPanel(fileChooserPanel);
+	}
 
 }

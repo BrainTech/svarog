@@ -3,6 +3,7 @@
  */
 
 package org.signalml.app.view.element;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -104,5 +105,9 @@ public class FileChooserPanel extends JPanel {
 
 	public File getSelectedFile() {
 		return fileChooser.getSelectedFile();
+	}
+
+	public File getCurrentDirectory() {
+		return fileChooser.getCurrentDirectory();
 	}
 }

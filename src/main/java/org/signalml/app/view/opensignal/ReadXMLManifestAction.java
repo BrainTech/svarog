@@ -12,12 +12,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
+import org.signalml.app.action.SignalFilterSwitchAction;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.ViewerFileChooser;
+import org.signalml.app.view.element.FileChooserPanel;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalDescriptorReader;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.util.Util;
+
 import org.springframework.context.support.MessageSourceAccessor;
+
 
 /**
  * The actions which {@link RawSignalDescriptorReader#readDocument(File)
@@ -40,13 +45,18 @@ public class ReadXMLManifestAction extends AbstractAction {
 
 	private SignalParametersPanelForRawSignalFile parentSignalParametersPanel;
 
+	private FileChooserPanel signalFileChooserPanel;
+
 	/**
 	 * Constructor. Sets the icon and description.
 	 */
-	public ReadXMLManifestAction(MessageSourceAccessor messageSource, SignalParametersPanelForRawSignalFile parentSignalParametersPanel) {
+	public ReadXMLManifestAction(MessageSourceAccessor messageSource,
+		SignalParametersPanelForRawSignalFile parentSignalParametersPanel) {
+
 		super(messageSource.getMessage("openSignal.options.raw.readXMLManifest"));
 		this.messageSource = messageSource;
 		this.parentSignalParametersPanel = parentSignalParametersPanel;
+		this.signalFileChooserPanel = signalFileChooserPanel;
 		putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/script_load.png"));
 		putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("openSignal.options.raw.readXMLManifestToolTip"));
 		//putValue(AbstractAction.ACCELERATOR_KEY, KeyStroke.getKeyStroke("F1"));
@@ -67,7 +77,7 @@ public class ReadXMLManifestAction extends AbstractAction {
 	 */
 	public void actionPerformed(ActionEvent ev) {
 
-		/*File selectedFile = getStepOnePanel().getFileChooser().getSelectedFile();
+		File selectedFile = signalFileChooserPanel.getSelectedFile();
 		File directory = null;
 		File fileSuggestion = null;
 		if (selectedFile != null) {
@@ -75,11 +85,13 @@ public class ReadXMLManifestAction extends AbstractAction {
 
 			fileSuggestion = Util.changeOrAddFileExtension(selectedFile, "xml");
 
+			if (!fileSuggestion.exists())
+				fileSuggestion = Util.changeOrAddFileExtension(selectedFile, "svarog.info");
 		}
 
 		if (directory == null) {
-			directory = new File(System.getProperty("user.dir"));
-		}*/
+			directory = signalFileChooserPanel.getCurrentDirectory();
+		}
 
 		//File xmlFile = fileChooser.chooseReadXMLManifest(null, null, this);
 		/*fileChooser = new ViewerFileChooser();
@@ -89,6 +101,8 @@ public class ReadXMLManifestAction extends AbstractAction {
 		 */
 
 		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setCurrentDirectory(directory);
+		fileChooser.setSelectedFile(fileSuggestion);
 		int showOpenDialog = fileChooser.showOpenDialog(parentSignalParametersPanel);
 		File xmlFile = fileChooser.getSelectedFile();
 
@@ -108,6 +122,10 @@ public class ReadXMLManifestAction extends AbstractAction {
 			Logger.getLogger(ReadXMLManifestAction.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
+	}
+
+	void setSignalFileChooserPanel(FileChooserPanel fileChooserPanel) {
+		this.signalFileChooserPanel = fileChooserPanel;
 	}
 
 }

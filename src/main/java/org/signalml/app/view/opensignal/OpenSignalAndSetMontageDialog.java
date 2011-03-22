@@ -8,6 +8,7 @@ import java.awt.Window;
 import javax.swing.JComponent;
 import org.signalml.app.model.OpenSignalDescriptor;
 import org.signalml.app.view.ViewerElementManager;
+import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.montage.SignalMontageDialog;
 import org.signalml.domain.montage.Montage;
 import org.signalml.plugin.export.SignalMLException;
