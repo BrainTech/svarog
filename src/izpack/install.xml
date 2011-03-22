@@ -19,7 +19,6 @@
 	<resources>
     <res src="shortcutSpec.xml" id="shortcutSpec.xml"/>
 		<res src="RegistrySpec.xml" id="RegistrySpec.xml"/>
-		<res id="LicencePanel.licence" src="LICENSE.txt"/>
 		<res id="packsLang.xml_eng" src="packsLang_eng.xml"/>
 	</resources>
 	
@@ -46,7 +45,6 @@
 	</native>
 
   <panels>
-		<panel classname="LicencePanel"/>
     <panel classname="TargetPanel"/>
     <panel classname="PacksPanel"/>
 		<panel classname="ShortcutPanel"/>
