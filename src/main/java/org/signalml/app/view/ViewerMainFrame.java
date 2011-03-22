@@ -164,9 +164,9 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 
 		SvarogApplication.splash(messageSource.getMessage("startup.restoringWorkspace"), false);
 
-		/*if (elementManager.getApplicationConfig().isRestoreWorkspace()) {
+		if (elementManager.getApplicationConfig().isRestoreWorkspace()) {
 			restoreWorkspace();
-		}*/
+		}
 
 		Iterator<MainWindowBootstrapTask> it = bootstrapList.iterator();
 		while (it.hasNext()) {

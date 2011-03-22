@@ -474,7 +474,7 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 	@Override
 	public void fillDialogFromModel(Object model) {
 
-		String path = applicationConfig.getLastOpenDocumentPath();
+		/*String path = applicationConfig.getLastOpenDocumentPath();
 		if (path != null) {
 			getStepOnePanel().getFileChooser().setCurrentDirectory(new File(path));
 		}
@@ -495,7 +495,7 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 		if (rawSignalDescriptor != null) {
 			getStepTwoPanel().getSignalOptionsPanel().getRawSignalOptionsPanel().fillPanelFromModel(rawSignalDescriptor);
 		}
-
+*/
 	}
 
 	/**
@@ -534,7 +534,7 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
 
-		OpenDocumentDescriptor ofd = (OpenDocumentDescriptor) model;
+		/*OpenDocumentDescriptor ofd = (OpenDocumentDescriptor) model;
 		ofd.setFile(getStepOnePanel().getFileChooser().getSelectedFile());
 		if (targetType == null) {
 			logger.error("Target type null");
@@ -618,7 +618,7 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 		}
 
 		applicationConfig.setLastOpenDocumentPath(getStepOnePanel().getFileChooser().getCurrentDirectory().getAbsolutePath());
-
+*/
 	}
 
 	/**

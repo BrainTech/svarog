@@ -29,9 +29,9 @@ public class OpenSignalMLDocumentWorker extends SwingWorker<SignalMLDocument, Vo
 	@Override
 	protected SignalMLDocument doInBackground() throws Exception {
 
-		SignalMLCodecReader reader = descriptor.getSignalOptions().getCodec().createReader();
+		SignalMLCodecReader reader = descriptor.getOpenSignalDescriptor().getOpenFileSignalDescriptor().getCodec().createReader();
 
-		SignalMLDocument signalMLDocument = new SignalMLDocument(reader, descriptor.getSignalOptions().getType());
+		SignalMLDocument signalMLDocument = new SignalMLDocument(reader, descriptor.getOpenSignalDescriptor().getOpenFileSignalDescriptor().getType());
 		signalMLDocument.setBackingFile(descriptor.getFile());
 
 		signalMLDocument.openDocument();

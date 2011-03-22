@@ -49,7 +49,7 @@ public class OpenMonitorAction extends AbstractSignalMLAction {
 		ofd.setType( ManagedDocumentType.MONITOR);
 		ofd.setMakeActive(true);
 
-		OpenMonitorDescriptor model = ofd.getMonitorOptions();
+		OpenMonitorDescriptor model = ofd.getOpenSignalDescriptor().getOpenMonitorDescriptor();
 
 		//stop previous signal recording
 		Document document = viewerElementManager.getActionFocusManager().getActiveDocument();

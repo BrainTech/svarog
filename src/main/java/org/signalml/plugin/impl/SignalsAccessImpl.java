@@ -623,7 +623,7 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 		if (!file.canRead()) throw new IOException("can not access file");
 		ofd.setFile(file);
 		ofd.setType(ManagedDocumentType.SIGNAL);
-		OpenFileSignalDescriptor osd = ofd.getSignalOptions();
+		OpenFileSignalDescriptor osd = ofd.getOpenSignalDescriptor().getOpenFileSignalDescriptor();
 		osd.setMethod(FileOpenSignalMethod.RAW);
 		RawSignalDescriptor descriptor = new RawSignalDescriptor();
 		descriptor.setSamplingFrequency(samplingFrequency);
@@ -757,7 +757,7 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 		ofd.setMakeActive(true);
 		ofd.setFile(file);
 		ofd.setType(ManagedDocumentType.SIGNAL);
-		OpenFileSignalDescriptor osd = ofd.getSignalOptions();
+		OpenFileSignalDescriptor osd = ofd.getOpenSignalDescriptor().getOpenFileSignalDescriptor();
 		osd.setMethod(FileOpenSignalMethod.SIGNALML);
 		SignalParameterDescriptor spd = osd.getParameters();
 		SignalMLCodecManager codecManager = manager.getCodecManager();

@@ -556,18 +556,22 @@ public class DocumentFlowIntegrator {
 
 		if (type.equals(ManagedDocumentType.SIGNAL)) {
 
-			OpenFileSignalDescriptor signalOptions = odd.getSignalOptions();
+			OpenFileSignalDescriptor openFileSignalDescriptor = odd.getOpenSignalDescriptor().getOpenFileSignalDescriptor();
+			openFileSignalDescriptor.setFile(mrud.getFile());
 			if (mrud instanceof SignalMLMRUDEntry) {
 
 				SignalMLMRUDEntry smlEntry = (SignalMLMRUDEntry) mrud;
-				signalOptions.setMethod(FileOpenSignalMethod.SIGNALML);
+				openFileSignalDescriptor.setMethod(FileOpenSignalMethod.SIGNALML);
 				SignalMLCodec codec = codecManager.getCodecByUID(smlEntry.getCodecUID());
 				if (codec == null) {
 					logger.warn("Mrud codec not found for uid [" + smlEntry.getCodecUID() + "]");
 					throw new MissingCodecException("error.mrudMissingCodecException");
 				}
-				signalOptions.setCodec(codec);
-				SignalParameterDescriptor spd = odd.getSignalOptions().getParameters();
+				openFileSignalDescriptor.setCodec(codec);
+
+				odd.getOpenSignalDescriptor().setSignalSource(SignalSource.FILE);
+				SignalParameterDescriptor spd = openFileSignalDescriptor.getParameters();
+
 				spd.setPageSize(smlEntry.getPageSize());
 				spd.setBlocksPerPage(smlEntry.getBlocksPerPage());
 				spd.setSamplingFrequency(smlEntry.getSamplingFrequency());
@@ -578,8 +582,8 @@ public class DocumentFlowIntegrator {
 			else if (mrud instanceof RawSignalMRUDEntry) {
 
 				RawSignalMRUDEntry rawEntry = (RawSignalMRUDEntry) mrud;
-				signalOptions.setMethod(FileOpenSignalMethod.RAW);
-				signalOptions.setRawSignalDescriptor(rawEntry.getDescriptor());
+				openFileSignalDescriptor.setMethod(FileOpenSignalMethod.RAW);
+				openFileSignalDescriptor.setRawSignalDescriptor(rawEntry.getDescriptor());
 
 			} else {
 				logger.error("Don't know how to open this kind of mrud [" + mrud.getClass().getName() + "]");
