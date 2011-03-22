@@ -71,7 +71,7 @@
 			<file src="svarog.jar" targetdir="${INSTALL_PATH}"/>
 			<file src="svarog.ico" targetdir="${INSTALL_PATH}"/>
 			<file src="trashcan_full.ico" targetdir="${INSTALL_PATH}"/>
-			<file src="LICENSE.txt" targetdir="${INSTALL_PATH}"/>
+			<file src="../../LICENSE.txt" targetdir="${INSTALL_PATH}"/>
     </pack>
 		
 		<!--the default pack for linux; contains jar with main application,
@@ -82,7 +82,7 @@
 			<file src="svarog.jar" targetdir="${INSTALL_PATH}"/>
 			<file src="svarog.png" targetdir="${INSTALL_PATH}" />
 			<file src="linux/svarog.sh" targetdir="${INSTALL_PATH}" />
-			<file src="LICENSE.txt" targetdir="${INSTALL_PATH}"/>
+			<file src="../../LICENSE.txt" targetdir="${INSTALL_PATH}"/>
 			
 			<parsable targetfile="${INSTALL_PATH}${FILE_SEPARATOR}svarog.sh" />
 			<executable targetfile="${INSTALL_PATH}${FILE_SEPARATOR}svarog.sh" stage="never" keep="yes" />
@@ -95,7 +95,7 @@
 			<description>MacOSX</description>
 			<file src="svarog.jar" targetdir="${INSTALL_PATH}"/>
 			<file src="svarog.png" targetdir="$INSTALL_PATH" />
-			<file src="LICENSE.txt" targetdir="${INSTALL_PATH}"/>
+			<file src="../../LICENSE.txt" targetdir="${INSTALL_PATH}"/>
 			
 			<file src="mac/svarog.sh" targetdir="$INSTALL_PATH" />
 			<parsable targetfile="${INSTALL_PATH}${FILE_SEPARATOR}svarog.sh" />
