@@ -82,6 +82,10 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
          * Current discovery worker.
          */
         private AmplifierDiscoveryWorker currentWorker;
+        /**
+         * The selection listener for amp list.
+         */
+        private ListSelectionListener selectionListener;
 
         /**
          * Default constructor.
@@ -159,8 +163,9 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
                         return;
                 }
 
-                if (currentWorker != null)
+                if (currentWorker != null) {
                         currentWorker.cancelSearch();
+                }
 
                 currentWorker = new AmplifierDiscoveryWorker(messageSource, definitions);
                 currentWorker.addPropertyChangeListener(this);
@@ -180,15 +185,7 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
                         DiscoveryState discoveryState = (DiscoveryState) evt.getNewValue();
 
                         if (discoveryState.getInstance() != null) {
-                                AmplifierInstance instance = discoveryState.getInstance();
-
-                                List<AmplifierInstance> instances = new ArrayList<AmplifierInstance>();
-                                for (int i = 0; i < getAmplifiersList().getModel().getSize(); i++) {
-                                        instances.add((AmplifierInstance) getAmplifiersList().getModel().getElementAt(i));
-                                }
-                                instances.add(instance);
-
-                                getAmplifiersList().setListData(instances.toArray());
+                                addToList(discoveryState.getInstance());
                         }
 
                         if (discoveryState.getMessage() != null) {
@@ -241,7 +238,7 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
 
 
                 add(configPanel, BorderLayout.PAGE_END);
-        }
+        }        
 
         /**
          * Gets the amplifiers list.
@@ -253,15 +250,30 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
                 if (amplifiersList == null) {
                         amplifiersList = new JList();
                         amplifiersList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-                        amplifiersList.addListSelectionListener(new ListSelectionListener() {
-
-                                @Override
-                                public void valueChanged(ListSelectionEvent e) {
-                                        amplifierSelected();
-                                }
-                        });
+                        amplifiersList.addListSelectionListener(getSelectionListener());
                 }
                 return amplifiersList;
+        }
+
+        /**
+         * Adds an amplifier instance to the list.
+         *
+         * @param instance instance to be added
+         */
+        private void addToList(AmplifierInstance instance) {
+
+                getAmplifiersList().removeListSelectionListener(getSelectionListener());
+                int selectedIndex = getAmplifiersList().getSelectedIndex();                
+
+                List<AmplifierInstance> instances = new ArrayList<AmplifierInstance>();
+                for (int i = 0; i < getAmplifiersList().getModel().getSize(); i++) {
+                        instances.add((AmplifierInstance) getAmplifiersList().getModel().getElementAt(i));
+                }
+                instances.add(instance);
+
+                getAmplifiersList().setListData(instances.toArray());                
+                getAmplifiersList().setSelectedIndex(selectedIndex);
+                getAmplifiersList().addListSelectionListener(getSelectionListener());
         }
 
         /**
@@ -270,7 +282,7 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
          * @return the message text area
          */
         private JTextArea getMessageTextArea() {
-                
+
                 if (messagesTextArea == null) {
                         messagesTextArea = new JTextArea(2, 1);
                         messagesTextArea.setEditable(false);
@@ -285,8 +297,9 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
          */
         private void addMessage(String message) {
 
-                if (!getMessageTextArea().getText().equals(""))
+                if (!getMessageTextArea().getText().equals("")) {
                         message = "\n" + message;
+                }
                 getMessageTextArea().append(message);
         }
 
@@ -354,6 +367,25 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
                         configureModulesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
                 }
                 return configureModulesButton;
+        }
+
+        /**
+         * Gets the selection listener.
+         *
+         * @return the selection listener
+         */
+        private ListSelectionListener getSelectionListener() {
+
+                if (selectionListener == null) {
+                        selectionListener = new ListSelectionListener() {
+
+                                @Override
+                                public void valueChanged(ListSelectionEvent e) {
+                                        amplifierSelected();
+                                }
+                        };
+                }
+                return selectionListener;
         }
 
         /**
