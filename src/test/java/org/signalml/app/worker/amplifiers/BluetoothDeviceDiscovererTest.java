@@ -2,7 +2,6 @@ package org.signalml.app.worker.amplifiers;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -25,6 +24,7 @@ public class BluetoothDeviceDiscovererTest implements PropertyChangeListener {
 
                         try {
                                 System.out.println("Searching...");
+                                discoverer.initializeSearch();
                                 discoverer.startSearch();
                         } catch (Exception ex) {
                                 System.out.println(ex.getMessage());

@@ -12,6 +12,28 @@ public class USBDeviceDiscoverer extends AbstractDeviceDiscoverer {
         private static final String DIRECTORY = "/dev";
 
         /**
+         * Does nothing.
+         */
+        @Override
+        public void initializeSearch() {
+        }
+
+        /**
+         * Begins the search.
+         */
+        @Override
+        public void startSearch() {
+                search();
+        }
+
+        /**
+         * Does nothing.
+         */
+        @Override
+        public void cancelSearch() {
+        }
+
+        /**
          * Searches for amplifiers in devices directory.
          */
         private void search() {
@@ -28,11 +50,5 @@ public class USBDeviceDiscoverer extends AbstractDeviceDiscoverer {
                 }
 
                 endOfSearch();
-        }
-
-        @Override
-        public void startSearch() {
-
-                search();
         }
 }

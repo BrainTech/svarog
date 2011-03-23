@@ -740,8 +740,11 @@
         <entry key="amplifierSelection.stop">Stop</entry>
         <entry key="amplifierSelection.consistency">Amplifier Definitions not consistent</entry>
         <entry key="amplifierSelection.search">Searching for devices...</entry>
-        <entry key="amplifierSelection.bluetoothSearchFailed">Bluetooth search failed: </entry>
-        <entry key="amplifierSelection.usbSearchFailed">USB search failed: </entry>
+        <entry key="amplifierSelection.searchFinished">Search finished.</entry>
+        <entry key="amplifierSelection.bluetoothInitializeError">Error while initializing bluetooth search: </entry>
+        <entry key="amplifierSelection.bluetoothStartError">Error while starting bluetooth search: </entry>
+        <entry key="amplifierSelection.usbInitializeError">Error while initializing usb search: </entry>
+        <entry key="amplifierSelection.usbStartError">Error while starting usb search: </entry>
 
 <!-- ================================= -->
 

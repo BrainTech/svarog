@@ -9,6 +9,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Box;
@@ -18,7 +19,9 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
@@ -28,7 +31,7 @@ import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.worker.amplifiers.AmplifierDefinition;
 import org.signalml.app.worker.amplifiers.AmplifierDiscoveryWorker;
 import org.signalml.app.worker.amplifiers.AmplifierInstance;
-import org.signalml.app.worker.amplifiers.DeviceSearchResult;
+import org.signalml.app.worker.amplifiers.DiscoveryState;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 
@@ -42,19 +45,23 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
         /**
          * List of frequencies.
          */
-        private JList amplifiersList = null;
+        private JList amplifiersList;
+        /**
+         * Messages text area.
+         */
+        private JTextArea messagesTextArea;
         /**
          * Refresh button.
          */
-        private JButton refreshButton = null;
+        private JButton refreshButton;
         /**
          * Configure modules button.
          */
-        private JButton configureModulesButton = null;
+        private JButton configureModulesButton;
         /**
          * Configure definitions button.
          */
-        private JButton configureDefinitionsButton = null;
+        private JButton configureDefinitionsButton;
         /**
          * Message source.
          */
@@ -71,6 +78,10 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
          * Current descriptor.
          */
         private AmplifierConnectionDescriptor currentDescriptor;
+        /**
+         * Current discovery worker.
+         */
+        private AmplifierDiscoveryWorker currentWorker;
 
         /**
          * Default constructor.
@@ -120,10 +131,11 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
          */
         public void fillPanelFromModel(AmplifierConnectionDescriptor descriptor) throws SignalMLException {
 
-                if (descriptor.isBciStarted())
+                if (descriptor.isBciStarted()) {
                         setEnabledAll(false);
-                else
+                } else {
                         setEnabledAll(true);
+                }
 
                 // TODO: refresh amp list and try to find the one from the descriptor
 
@@ -135,27 +147,24 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
          */
         private void refresh() {
 
+                getAmplifiersList().setListData(new String[]{});
+                getMessageTextArea().setText("");
                 amplifierSelected();
 
-                getAmplifiersList().setEnabled(false);
-                getRefreshButton().setEnabled(false);
-
-                getAmplifiersList().setListData(new String[]{messageSource.getMessage("amplifierSelection.search")});
-
                 List<AmplifierDefinition> definitions;
-
                 try {
                         definitions = elementManager.getAmplifierDefinitionPresetManager().getDefinitionList();
                 } catch (Exception ex) {
                         JOptionPane.showMessageDialog(this, messageSource.getMessage("amplifierSelection.consistency"));
-                        setEnabled(true);
-                        getAmplifiersList().setListData(new String[]{});
                         return;
                 }
 
-                AmplifierDiscoveryWorker discoveryWorker = new AmplifierDiscoveryWorker(definitions);
-                discoveryWorker.addPropertyChangeListener(this);
-                discoveryWorker.startSearch();
+                if (currentWorker != null)
+                        currentWorker.cancelSearch();
+
+                currentWorker = new AmplifierDiscoveryWorker(messageSource, definitions);
+                currentWorker.addPropertyChangeListener(this);
+                currentWorker.execute();
         }
 
         /**
@@ -166,22 +175,25 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
 
-                if (AmplifierDiscoveryWorker.END_OF_SEARCH.equals(evt.getPropertyName())) {
+                if (AmplifierDiscoveryWorker.DISCOVERY_STATE.equals(evt.getPropertyName())) {
 
-                        DeviceSearchResult result = (DeviceSearchResult) evt.getNewValue();
+                        DiscoveryState discoveryState = (DiscoveryState) evt.getNewValue();
 
-                        if (!result.isBluetoothOK()) {
-                                JOptionPane.showMessageDialog(this, messageSource.getMessage("amplifierSelection.bluetoothSearchFailed") + result.getBluetoothErrorMsg());
+                        if (discoveryState.getInstance() != null) {
+                                AmplifierInstance instance = discoveryState.getInstance();
+
+                                List<AmplifierInstance> instances = new ArrayList<AmplifierInstance>();
+                                for (int i = 0; i < getAmplifiersList().getModel().getSize(); i++) {
+                                        instances.add((AmplifierInstance) getAmplifiersList().getModel().getElementAt(i));
+                                }
+                                instances.add(instance);
+
+                                getAmplifiersList().setListData(instances.toArray());
                         }
 
-                        if (!result.isUsbOK()) {
-                                JOptionPane.showMessageDialog(this, messageSource.getMessage("amplifierSelection.usbSearchFailed") + result.getUsbErrorMsg());
+                        if (discoveryState.getMessage() != null) {
+                                addMessage(discoveryState.getMessage());
                         }
-
-                        getAmplifiersList().setListData(result.getResults().toArray());
-
-                        getAmplifiersList().setEnabled(true);
-                        getRefreshButton().setEnabled(true);
                 }
         }
 
@@ -203,10 +215,16 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
 
                 amplifiersListPanel.add(new JScrollPane(getAmplifiersList()), BorderLayout.CENTER);
 
+                JPanel bottomPanel = new JPanel(new BorderLayout(10, 10));
+                JScrollPane scrollPane = new JScrollPane(getMessageTextArea());
+                scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+                bottomPanel.add(scrollPane, BorderLayout.CENTER);
+
                 JPanel refreshPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
                 refreshPanel.add(getRefreshButton());
-                amplifiersListPanel.add(refreshPanel, BorderLayout.PAGE_END);
+                bottomPanel.add(refreshPanel, BorderLayout.PAGE_END);
 
+                amplifiersListPanel.add(bottomPanel, BorderLayout.PAGE_END);
                 add(amplifiersListPanel, BorderLayout.CENTER);
 
 
@@ -247,14 +265,41 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
         }
 
         /**
+         * Gets the message text area.
+         * 
+         * @return the message text area
+         */
+        private JTextArea getMessageTextArea() {
+                
+                if (messagesTextArea == null) {
+                        messagesTextArea = new JTextArea(2, 1);
+                        messagesTextArea.setEditable(false);
+                }
+                return messagesTextArea;
+        }
+
+        /**
+         * Adds a message to the message text area.
+         *
+         * @param message the message
+         */
+        private void addMessage(String message) {
+
+                if (!getMessageTextArea().getText().equals(""))
+                        message = "\n" + message;
+                getMessageTextArea().append(message);
+        }
+
+        /**
          * Called when an amplifier is selected.
          */
         private void amplifierSelected() {
 
                 fillModelFromPanel(currentDescriptor);
-                if (currentDescriptor.getAmplifierInstance() != null)
+                if (currentDescriptor.getAmplifierInstance() != null) {
                         currentDescriptor.getOpenMonitorDescriptor().fillFromAnAmplifierDefinition(
                                 currentDescriptor.getAmplifierInstance().getDefinition());
+                }
                 try {
                         sourcePanel.fillPanelFromModel(currentDescriptor, true);
                 } catch (SignalMLException ex) {

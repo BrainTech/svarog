@@ -53,11 +53,23 @@ public abstract class AbstractDeviceDiscoverer {
         }
 
         /**
+         * Initializes the search.
+         *
+         * @throws Exception when search cannot be initialized.
+         */
+        public abstract void initializeSearch() throws Exception;
+
+        /**
          * Begins the search.
          *
-         * @throws Exception when needed
+         * @throws Exception when search cannot be started.
          */
         public abstract void startSearch() throws Exception;
+
+        /**
+         * Cancels the search
+         */
+        public abstract void cancelSearch();
 
         /**
          * Fires property change.

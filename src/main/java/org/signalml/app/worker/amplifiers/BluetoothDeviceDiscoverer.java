@@ -1,6 +1,7 @@
 package org.signalml.app.worker.amplifiers;
 
 import java.io.IOException;
+import javax.bluetooth.BluetoothStateException;
 
 import javax.bluetooth.DeviceClass;
 import javax.bluetooth.DiscoveryAgent;
@@ -16,6 +17,48 @@ import javax.bluetooth.ServiceRecord;
  * @author Tomasz Sawicki
  */
 public class BluetoothDeviceDiscoverer extends AbstractDeviceDiscoverer implements DiscoveryListener {
+
+        /**
+         * The bluetooth local device.
+         */
+        private LocalDevice localDevice;
+        
+        /**
+         * The bluetooth discovery agent.
+         */
+        private DiscoveryAgent discoveryAgent;
+
+        /**
+         * Initializes the search.
+         *
+         * @throws BluetoothStateException when search cannot be initialized.
+         */
+        @Override
+        public void initializeSearch() throws BluetoothStateException {
+                
+                localDevice = LocalDevice.getLocalDevice();
+        }
+
+        /**
+         * Starts the search.
+         *
+         * @throws BluetoothStateException when search cannot be started.
+         */
+        @Override
+        public void startSearch() throws BluetoothStateException {
+
+                discoveryAgent = localDevice.getDiscoveryAgent();
+                discoveryAgent.startInquiry(DiscoveryAgent.GIAC, this);
+        }
+
+        /**
+         * Cancels the search.
+         */
+        @Override
+        public void cancelSearch() {
+
+                discoveryAgent.cancelInquiry(this);
+        }
 
         /**
          * Calls {@link #deviceFound()}.
@@ -68,18 +111,6 @@ public class BluetoothDeviceDiscoverer extends AbstractDeviceDiscoverer implemen
          */
         @Override
         public void serviceSearchCompleted(int i, int i1) {
-        }
-
-        /**
-         * Begins the search.
-         *
-         * @throws Exception when there is a problem with local
-         * bluetooth device, i.e. it is off.
-         */
-        @Override
-        public void startSearch() throws Exception {
-
-                LocalDevice.getLocalDevice().getDiscoveryAgent().startInquiry(DiscoveryAgent.GIAC, this);
         }
 
         /**

@@ -2,7 +2,6 @@ package org.signalml.app.worker.amplifiers;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -14,17 +13,12 @@ public class UsbDeviceDiscovererTest implements PropertyChangeListener {
 
         private USBDeviceDiscoverer discoverer;
 
-        @BeforeClass
-        public static void setUp() {
-
-                (new UsbDeviceDiscovererTest()).test();
-        }
-
         @Test
         public void test() {
 
                 discoverer = new USBDeviceDiscoverer();
                 discoverer.addPropertyChangeListener(this);
+                discoverer.initializeSearch();
                 discoverer.startSearch();
         }
 
