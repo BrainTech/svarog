@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -18,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
@@ -86,6 +88,10 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
          * The selection listener for amp list.
          */
         private ListSelectionListener selectionListener;
+        /**
+         * The progress bar.
+         */
+        private JProgressBar progressBar;
 
         /**
          * Default constructor.
@@ -167,6 +173,8 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
                         currentWorker.cancelSearch();
                 }
 
+                getProgressBar().setVisible(true);
+
                 currentWorker = new AmplifierDiscoveryWorker(messageSource, definitions);
                 currentWorker.addPropertyChangeListener(this);
                 currentWorker.execute();
@@ -190,6 +198,8 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
 
                         if (discoveryState.getMessage() != null) {
                                 addMessage(discoveryState.getMessage());
+                                if (discoveryState.getMessage().equals(messageSource.getMessage("amplifierSelection.searchCompleted")))
+                                        getProgressBar().setVisible(false);
                         }
                 }
         }
@@ -201,7 +211,6 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
 
                 setLayout(new BorderLayout(10, 10));
 
-
                 CompoundBorder amplifiersListBorder = new CompoundBorder(
                         new TitledBorder(messageSource.getMessage("amplifierSelection.amplifiersList")),
                         new EmptyBorder(3, 3, 3, 3));
@@ -209,7 +218,6 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
                 JPanel amplifiersListPanel = new JPanel(new BorderLayout(10, 10));
                 amplifiersListPanel.setLayout(new BorderLayout(10, 10));
                 amplifiersListPanel.setBorder(amplifiersListBorder);
-
                 amplifiersListPanel.add(new JScrollPane(getAmplifiersList()), BorderLayout.CENTER);
 
                 JPanel bottomPanel = new JPanel(new BorderLayout(10, 10));
@@ -217,13 +225,18 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
                 scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
                 bottomPanel.add(scrollPane, BorderLayout.CENTER);
 
+                JPanel bottomMostPanel = new JPanel(new GridLayout(1, 2));
+                JPanel progressPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+                progressPanel.add(getProgressBar());
                 JPanel refreshPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
                 refreshPanel.add(getRefreshButton());
-                bottomPanel.add(refreshPanel, BorderLayout.PAGE_END);
+                bottomMostPanel.add(progressPanel);
+                bottomMostPanel.add(refreshPanel);
+
+                bottomPanel.add(bottomMostPanel, BorderLayout.PAGE_END);
 
                 amplifiersListPanel.add(bottomPanel, BorderLayout.PAGE_END);
                 add(amplifiersListPanel, BorderLayout.CENTER);
-
 
                 CompoundBorder configBorder = new CompoundBorder(
                         new TitledBorder(messageSource.getMessage("amplifierSelection.config")),
@@ -235,7 +248,6 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
                 configPanel.add(getConfigureDefinitionsButton());
                 configPanel.add(Box.createRigidArea(new Dimension(0, 5)));
                 configPanel.add(getConfigureModulesButton());
-
 
                 add(configPanel, BorderLayout.PAGE_END);
         }        
@@ -367,6 +379,21 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
                         configureModulesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
                 }
                 return configureModulesButton;
+        }
+
+        /**
+         * Gets the progress bar.
+         *
+         * @return the progress bar
+         */
+        public JProgressBar getProgressBar() {
+                
+                if (progressBar == null) {
+                        progressBar = new JProgressBar();
+                        progressBar.setIndeterminate(true);
+                        progressBar.setVisible(false);
+                }
+                return progressBar;
         }
 
         /**
