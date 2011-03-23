@@ -208,7 +208,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 			if (signalBound) {
 				filtersPanel.setCurrentSamplingFrequency(signalDocument.getSamplingFrequency());
 			} else {
-				filtersPanel.setCurrentSamplingFrequency(-1);
+				filtersPanel.setCurrentSamplingFrequency(128.0F);
 			}
 
 		}
