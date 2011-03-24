@@ -123,9 +123,8 @@ public class AmplifierDiscoveryWorker extends SwingWorker<DiscoveryState, Discov
                         if (!(bluetoothSearchOver && usbSearchOver)) {
                                 lock.wait();
                         }
-                }
-
-                return new DiscoveryState(messageSource.getMessage("amplifierSelection.searchFinished"));
+                }                
+                return new DiscoveryState(messageSource.getMessage("amplifierSelection.searchCompleted"));
         }
 
         /**
@@ -164,7 +163,7 @@ public class AmplifierDiscoveryWorker extends SwingWorker<DiscoveryState, Discov
         protected void done() {
                 try {
                         DiscoveryState state = get();
-                        firePropertyChange(DISCOVERY_STATE, null, state);
+                        firePropertyChange(DISCOVERY_STATE, null, state);                        
                 } catch (Exception ex) {
                 }
         }
@@ -199,7 +198,7 @@ public class AmplifierDiscoveryWorker extends SwingWorker<DiscoveryState, Discov
                                 }
 
                                 if (usbSearchOver && bluetoothSearchOver) {
-
+                                        
                                         lock.notify();
                                 }
                         }
