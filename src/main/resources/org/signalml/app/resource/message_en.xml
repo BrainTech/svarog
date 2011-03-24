@@ -765,7 +765,7 @@
 	<entry key="openMonitor.multiplexerConnectionPanelTitle">Connect to the multiplexer</entry>
 	<entry key="openMonitor.channelSelectPanelTitle">Select channels to be monitored</entry>
 	<entry key="openMonitor.channelSelectPanel.selectAll">Select all</entry>
-	<entry key="openMonitor.channelSelectPanel.clearSelection">Clear selection</entry>
+	<entry key="openMonitor.channelSelectPanel.clearSelection">Clear all</entry>
 	<entry key="openMonitor.signalParametersPanelTitle">Signal parameters</entry>
 	<entry key="openMonitor.monitorRecordingPanelTitle">Monitor recording</entry>
 

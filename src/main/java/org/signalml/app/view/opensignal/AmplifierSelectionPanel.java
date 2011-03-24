@@ -56,14 +56,7 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
          * Refresh button.
          */
         private JButton refreshButton;
-        /**
-         * Configure modules button.
-         */
-        private JButton configureModulesButton;
-        /**
-         * Configure definitions button.
-         */
-        private JButton configureDefinitionsButton;
+
         /**
          * Message source.
          */
@@ -237,19 +230,6 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
 
                 amplifiersListPanel.add(bottomPanel, BorderLayout.PAGE_END);
                 add(amplifiersListPanel, BorderLayout.CENTER);
-
-                CompoundBorder configBorder = new CompoundBorder(
-                        new TitledBorder(messageSource.getMessage("amplifierSelection.config")),
-                        new EmptyBorder(3, 3, 3, 3));
-
-                JPanel configPanel = new JPanel();
-                configPanel.setLayout(new BoxLayout(configPanel, BoxLayout.Y_AXIS));
-                configPanel.setBorder(configBorder);
-                configPanel.add(getConfigureDefinitionsButton());
-                configPanel.add(Box.createRigidArea(new Dimension(0, 5)));
-                configPanel.add(getConfigureModulesButton());
-
-                add(configPanel, BorderLayout.PAGE_END);
         }        
 
         /**
@@ -352,33 +332,6 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
         }
 
         /**
-         * Gets the configure definitions button.
-         *
-         * @return the configure definitions button
-         */
-        private JButton getConfigureDefinitionsButton() {
-
-                if (configureDefinitionsButton == null) {
-                        configureDefinitionsButton = new JButton(elementManager.getAmplifierDefinitionConfigAction());
-                        configureDefinitionsButton.setText(messageSource.getMessage("action.amplifierDefinitionConfig"));
-                        configureDefinitionsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-                }
-                return configureDefinitionsButton;
-        }
-
-        /**
-         * Gets the configure modules button.
-         *
-         * @return the configure modules button
-         */
-        private JButton getConfigureModulesButton() {
-
-                if (configureModulesButton == null) {
-                        configureModulesButton = new JButton(elementManager.getOpenBCIModuleConfigAction());
-                        configureModulesButton.setText(messageSource.getMessage("action.openBCIModulesConfig"));
-                        configureModulesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-                }
-                return configureModulesButton;
         }
 
         /**
