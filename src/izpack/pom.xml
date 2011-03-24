@@ -155,6 +155,11 @@
 							<jre>
 								<minVersion>1.6.0</minVersion>
 							</jre>
+							<splash>
+								<file>${basedir}/splash.bmp</file>
+								<timeout>3</timeout>
+								<waitForWindow>false</waitForWindow>
+							</splash>
 						</configuration>
 					</execution>
 				</executions>

@@ -17,6 +17,7 @@
   </locale>
 
 	<resources>
+		<res id="installer.langsel.img" src="../main/resources/org/signalml/app/icon/splash.png"/>
     <res src="shortcutSpec.xml" id="shortcutSpec.xml"/>
 		<res src="RegistrySpec.xml" id="RegistrySpec.xml"/>
 		<res id="packsLang.xml_eng" src="packsLang_eng.xml"/>
@@ -24,7 +25,6 @@
 	</resources>
 	
   <guiprefs width="800" height="600" resizable="no">
-		<splash>splash.png</splash>
     <laf name="liquid">
       <os family="windows" />
 			<os family="unix" />
