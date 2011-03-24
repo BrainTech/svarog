@@ -20,6 +20,7 @@
     <res src="shortcutSpec.xml" id="shortcutSpec.xml"/>
 		<res src="RegistrySpec.xml" id="RegistrySpec.xml"/>
 		<res id="packsLang.xml_eng" src="packsLang_eng.xml"/>
+		<res id="InfoPanel.info" src="license-notice.txt"/>
 	</resources>
 	
   <guiprefs width="800" height="600" resizable="no">
@@ -45,6 +46,7 @@
 	</native>
 
   <panels>
+		<panel classname="InfoPanel"/>
     <panel classname="TargetPanel"/>
     <panel classname="PacksPanel"/>
 		<panel classname="ShortcutPanel"/>
