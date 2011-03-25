@@ -60,5 +60,6 @@
 	<entry key="fftWindowTypeSettings.error.windowParameterOutOfRange">Bad window parameter. Allowed range {0}-{1}</entry>
 	
 	<entry key="signalFFTSettings.buttonTitle">Signal FFT Settings</entry>
+	<entry key="signalView.signalFFTToolToolTip">Signal FFT (for settings press and hold the mouse button here)</entry>
 	
 </properties>
