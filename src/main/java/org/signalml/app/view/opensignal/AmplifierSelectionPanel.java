@@ -445,6 +445,7 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
 
                         if (compare(info, definition)) {
                                 addToList(new AmplifierInstance(definition.copy(), info.getAddress()));
+                                System.out.println("Device found: " + definition.getName() + " " + info.getAddress());
                         }
                 }
         }
