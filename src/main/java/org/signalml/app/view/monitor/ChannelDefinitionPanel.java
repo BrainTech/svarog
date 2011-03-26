@@ -70,6 +70,16 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
         private JTextField offsetTextField;
 
         /**
+         * Offset label.
+         */
+        private JLabel defaultNameLabel;
+
+        /**
+         * Offset textfield.
+         */
+        private JTextField defaultNameTextField;
+
+        /**
          * Insert button.
          */
         private JButton addButton;
@@ -150,12 +160,24 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
                 constraints.weightx = 1;
                 bottomPanel.add(getOffsetTextField(), constraints);
 
+                constraints.gridx = 0;
+                constraints.gridy = 3;
+                constraints.gridwidth = 1;
+                constraints.weightx = 0;
+                bottomPanel.add(getDefaultNameLabel(), constraints);
+
+                constraints.gridx = 1;
+                constraints.gridy = 3;
+                constraints.gridwidth = 2;
+                constraints.weightx = 1;
+                bottomPanel.add(getDefaultNameTextField(), constraints);
+
                 JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
                 buttonsPanel.add(getAddButton());
                 buttonsPanel.add(getRemoveButton());
 
                 constraints.gridx = 2;
-                constraints.gridy = 3;
+                constraints.gridy = 4;
                 constraints.gridwidth = 1;
                 constraints.weightx = 0;
                 bottomPanel.add(buttonsPanel, constraints);
@@ -234,7 +256,7 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
                         return null;
                 }
 
-                return new ChannelDefinition(channelno, gain, offset);
+                return new ChannelDefinition(channelno, gain, offset, getDefaultNameTextField().getText());
         }
 
         /**
@@ -362,6 +384,33 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
         }
 
         /**
+         * Gets the default name label.
+         *
+         * @return the default name label
+         */
+        public JLabel getDefaultNameLabel() {
+
+                if (defaultNameLabel == null) {
+                        defaultNameLabel = new JLabel();
+                        defaultNameLabel.setText(messageSource.getMessage("amplifierDefinitionConfig.defaultName"));
+                }
+                return defaultNameLabel;
+        }
+
+        /**
+         * Gets the default name text field.
+         *
+         * @return the default name text field
+         */
+        public JTextField getDefaultNameTextField() {
+
+                if (defaultNameTextField == null) {
+                        defaultNameTextField = new JTextField();
+                }
+                return defaultNameTextField;
+        }
+
+        /**
          * Gets the list of frequencies.
          *
          * @return list of frequencies
@@ -431,19 +480,36 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
         }
 
         /**
+         * Gets the the default names.
+         *
+         * @return list of default names
+         */
+        List<String> getDefaultNames() {
+
+                ArrayList<String> names = new ArrayList<String>();
+
+                for (ChannelDefinition definition : getChannelDefinitions()) {
+
+                        names.add(definition.getDefaultName());
+                }
+
+                return names;
+        }
+
+        /**
          * Sets the data
          *
          * @param numbers list od channel numbers
          * @param gainValues list of gain values
          * @param offsetValues list of offset values
          */
-        public void setData(List<Integer> numbers, List<Float> gainValues, List<Float> offsetValues) {
+        public void setData(List<Integer> numbers, List<Float> gainValues, List<Float> offsetValues, List<String> names) {
 
                 ArrayList<ChannelDefinition> definitions = new ArrayList<ChannelDefinition>();
 
                 for (int i = 0; i < numbers.size(); i++) {
 
-                        ChannelDefinition definition = new ChannelDefinition(numbers.get(i), gainValues.get(i), offsetValues.get(i));
+                        ChannelDefinition definition = new ChannelDefinition(numbers.get(i), gainValues.get(i), offsetValues.get(i), names.get(i));
                         definitions.add(definition);
                 }
 
@@ -502,6 +568,11 @@ class ChannelDefinitionListRenderer extends JComponent implements ListCellRender
         private DefaultListCellRenderer offset;
 
         /**
+         * Renderer showing the offset.
+         */
+        private DefaultListCellRenderer name;
+
+        /**
          * Default constructor.
          */
         public ChannelDefinitionListRenderer() {
@@ -509,11 +580,13 @@ class ChannelDefinitionListRenderer extends JComponent implements ListCellRender
                 number = new DefaultListCellRenderer();
                 gain = new DefaultListCellRenderer();
                 offset = new DefaultListCellRenderer();
+                name = new DefaultListCellRenderer();
 
-                setLayout(new GridLayout(1, 3));
+                setLayout(new GridLayout(1, 4));
                 add(number);
                 add(gain);
                 add(offset);
+                add(name);
         }
 
         /**
@@ -533,10 +606,12 @@ class ChannelDefinitionListRenderer extends JComponent implements ListCellRender
                 String noVal = "No: " + definition.getNumber();
                 String gainVal = "Gain: " + definition.getGain();
                 String offsetVal = "Offset: " + definition.getOffset();
+                String nameVal = "Name: " + definition.getDefaultName();
 
                 number.getListCellRendererComponent(list, noVal, index, isSelected, cellHasFocus);
                 gain.getListCellRendererComponent(list, gainVal, index, isSelected, cellHasFocus);
                 offset.getListCellRendererComponent(list, offsetVal, index, isSelected, cellHasFocus);
+                name.getListCellRendererComponent(list, nameVal, index, isSelected, cellHasFocus);
 
                 return this;
         }

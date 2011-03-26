@@ -346,9 +346,7 @@ public class OpenMonitorDescriptor {
 
                         calibrationGain[i] = definition.getCalibrationGain().get(i);
                         calibrationOffset[i] = definition.getCalibrationOffset().get(i);
-
-                        channelLabels[i] = "L" + Integer.toString(i);
-                        selectedChannelList[i] = channelLabels[i];
+                        channelLabels[i] = definition.getDefaultNames().get(i);
                 }
         }
 }

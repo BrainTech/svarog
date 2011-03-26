@@ -22,10 +22,20 @@ public class ChannelDefinition {
          */
         private float offset;
 
-        public ChannelDefinition(int number, float gain, float offset) {
+        /**
+         * Default name.
+         */
+        private String defaultName;
+
+        public ChannelDefinition(int number, float gain, float offset, String defaultName) {
                 this.number = number;
                 this.gain = gain;
                 this.offset = offset;
+                this.defaultName = defaultName;
+        }
+
+        public String getDefaultName() {
+                return defaultName;
         }
 
         public float getGain() {
@@ -38,6 +48,10 @@ public class ChannelDefinition {
 
         public float getOffset() {
                 return offset;
+        }
+
+        public void setDefaultName(String defaultName) {
+                this.defaultName = defaultName;
         }
 
         public void setGain(float gain) {

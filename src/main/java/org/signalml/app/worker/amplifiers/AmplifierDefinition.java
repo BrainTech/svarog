@@ -54,6 +54,11 @@ public class AmplifierDefinition implements Preset {
         private List<Float> calibrationOffset;
 
         /**
+         * Channels' default names.
+         */
+        private List<String> defaultNames;
+
+        /**
          * Driver {@link OpenBCIModule} name.
          */
         private String moduleName;
@@ -81,6 +86,7 @@ public class AmplifierDefinition implements Preset {
                 this.calibrationGain = new ArrayList<Float>();
                 this.calibrationOffset = new ArrayList<Float>();
                 this.channelNumbers = new ArrayList<Integer>();
+                this.defaultNames = new ArrayList<String>();
                 this.moduleName = "";
                 this.match = "";
                 this.name = "";
@@ -107,6 +113,7 @@ public class AmplifierDefinition implements Preset {
                 List<Float> newCalibrationGain = new ArrayList<Float>();
                 List<Float> newCalibrationOffset = new ArrayList<Float>();
                 List<Integer> newChannelNumbers = new ArrayList<Integer>();
+                List<String> newDefaultNames = new ArrayList<String>();
 
                 for (int i = 0; i < availableFrequencies.size(); i++)
                         newFrequencies.add(new Float(availableFrequencies.get(i).floatValue()));
@@ -115,6 +122,7 @@ public class AmplifierDefinition implements Preset {
                         newChannelNumbers.add(new Integer(channelNumbers.get(i).intValue()));
                         newCalibrationGain.add(new Float(calibrationGain.get(i).floatValue()));
                         newCalibrationOffset.add(new Float(calibrationOffset.get(i).floatValue()));
+                        newDefaultNames.add("" + defaultNames.get(i));
                 }
 
                 retval.setAmplifierNull(newAmpNull);
@@ -122,6 +130,7 @@ public class AmplifierDefinition implements Preset {
                 retval.setCalibrationGain(newCalibrationGain);
                 retval.setCalibrationOffset(newCalibrationOffset);
                 retval.setChannelNumbers(newChannelNumbers);
+                retval.setDefaultNames(newDefaultNames);
                 retval.setMatch(newMatch);
                 retval.setModuleName(newModuleName);
                 retval.setName(newName);
@@ -154,6 +163,10 @@ public class AmplifierDefinition implements Preset {
 
         public List<Integer> getChannelNumbers() {
                 return channelNumbers;
+        }
+
+        public List<String> getDefaultNames() {
+                return defaultNames;
         }
 
         public String getModuleName() {
@@ -207,5 +220,9 @@ public class AmplifierDefinition implements Preset {
 
         public void setAmplifierNull(Double amplifierNull) {
                 this.amplifierNull = amplifierNull;
+        }
+
+        public void setDefaultNames(List<String> defaultNames) {
+                this.defaultNames = defaultNames;
         }
 }

@@ -607,6 +607,7 @@
         <entry key="amplifierDefinitionConfig.channelDefinitions">Channel definitions</entry>
         <entry key="amplifierDefinitionConfig.gain">Gain: </entry>
         <entry key="amplifierDefinitionConfig.offset">Offset: </entry>
+        <entry key="amplifierDefinitionConfig.defaultName">Default name: </entry>
         <entry key="amplifierDefinitionConfig.availableFrequencies">Available frequencies</entry>
         <entry key="amplifierDefinitionConfig.addButton">Add</entry>
         <entry key="amplifierDefinitionConfig.removeButton">Remove</entry>

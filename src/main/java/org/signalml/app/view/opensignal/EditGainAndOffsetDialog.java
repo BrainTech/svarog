@@ -156,6 +156,8 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
                         getChannelTextField().setEditable(false);
                         getDefinitionsList().addListSelectionListener(this);
                         setAllGainAndOffsetEditable(true);
+                        getDefaultNameLabel().setVisible(false);
+                        getDefaultNameTextField().setVisible(false);
                 }
 
                 /**
@@ -235,7 +237,7 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
                  * @return {@link #allGainAndOffsetEditable}
                  */
                 public boolean isAllGainAndOffsetEditable() {
-                 
+
                         return allGainAndOffsetEditable;
                 }
 
@@ -289,7 +291,8 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
                                 definitions.add(new ChannelDefinition(
                                         descriptor.getAmplifierInstance().getDefinition().getChannelNumbers().get(i),
                                         descriptor.getOpenMonitorDescriptor().getCalibrationGain()[i],
-                                        descriptor.getOpenMonitorDescriptor().getCalibrationOffset()[i]));
+                                        descriptor.getOpenMonitorDescriptor().getCalibrationOffset()[i],
+                                        descriptor.getAmplifierInstance().getDefinition().getDefaultNames().get(i)));
                         }
                         getDefinitionsList().setListData(definitions.toArray());
                 }
@@ -308,7 +311,8 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
                                 definitions.add(new ChannelDefinition(
                                         i,
                                         descriptor.getCalibrationGain()[i],
-                                        descriptor.getCalibrationOffset()[i]));
+                                        descriptor.getCalibrationOffset()[i],
+                                        descriptor.getChannelLabels()[i]));
                         }
                         getDefinitionsList().setListData(definitions.toArray());
                 }
@@ -320,16 +324,19 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
                  */
                 private void fillPanelForFileOpening(RawSignalDescriptor descriptor) {
 
-                        setAllGainAndOffsetEditable(true);
-                        List<ChannelDefinition> definitions = new ArrayList<ChannelDefinition>();
-                        for (int i = 0; i < descriptor.getChannelCount(); i++) {
+                        if (descriptor.getChannelLabels() != null) {
+                                setAllGainAndOffsetEditable(true);
+                                List<ChannelDefinition> definitions = new ArrayList<ChannelDefinition>();
+                                for (int i = 0; i < descriptor.getChannelCount(); i++) {
 
-                                definitions.add(new ChannelDefinition(
-                                        i,
-                                        descriptor.getCalibrationGain()[i],
-                                        descriptor.getCalibrationOffset()[i]));
+                                        definitions.add(new ChannelDefinition(
+                                                i,
+                                                descriptor.getCalibrationGain()[i],
+                                                descriptor.getCalibrationOffset()[i],
+                                                descriptor.getChannelLabels()[i]));
+                                }
+                                getDefinitionsList().setListData(definitions.toArray());
                         }
-                        getDefinitionsList().setListData(definitions.toArray());
                 }
 
                 /**
@@ -356,7 +363,7 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
                  * @param descriptor the descriptor
                  */
                 private void fillModelForAmplifierConnection(AmplifierConnectionDescriptor descriptor) {
-                       
+
                         descriptor.getOpenMonitorDescriptor().setCalibrationGain(getGainArray());
                         descriptor.getOpenMonitorDescriptor().setCalibrationOffset(getOffsetArray());
                 }

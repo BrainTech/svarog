@@ -221,7 +221,8 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
                 getAvailableFrequenciesPanel().setFrequencies(definition.getAvailableFrequencies());
                 getChannelDefinitionPanel().setData(definition.getChannelNumbers(),
                         definition.getCalibrationGain(),
-                        definition.getCalibrationOffset());
+                        definition.getCalibrationOffset(),
+                        definition.getDefaultNames());
         }
 
         /**
@@ -242,6 +243,7 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
                 definition.setChannelNumbers(getChannelDefinitionPanel().getChannelNumbers());
                 definition.setCalibrationGain(getChannelDefinitionPanel().getGainValues());
                 definition.setCalibrationOffset(getChannelDefinitionPanel().getOffsetValues());
+                definition.setDefaultNames(getChannelDefinitionPanel().getDefaultNames());
 
                 try {
                         Double amplifierNull = Double.parseDouble(getAmplifierNullTextField().getText());
