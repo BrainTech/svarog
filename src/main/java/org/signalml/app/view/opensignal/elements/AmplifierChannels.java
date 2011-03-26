@@ -18,12 +18,13 @@ public class AmplifierChannels {
 	public AmplifierChannels() {
 	}
 
-	public AmplifierChannels(List<Integer> channelNumbers) {
+	public AmplifierChannels(List<Integer> channelNumbers, String[] channelLabels) {
 		Integer number;
-
+                String label;
 		for (int i = 0; i < channelNumbers.size(); i++) {
 			number = channelNumbers.get(i);
-			channels.add(new AmplifierChannel(number, ("L"+i)));
+                        label = channelLabels[i];
+			channels.add(new AmplifierChannel(number, label));
 		}
 	}
 

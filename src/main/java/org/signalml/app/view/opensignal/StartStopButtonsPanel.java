@@ -4,6 +4,10 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -202,6 +206,8 @@ public class StartStopButtonsPanel extends JPanel {
                                 return;
                         }
 
+                        removeUnusedChannels(currentDescriptor);
+
                         OpenBCIManager manager = new OpenBCIManager(messageSource, elementManager, currentDescriptor);
                         ProgressDialog progressDialog = new ProgressDialog(messageSource,
                                 signalSourcePanel.getViewerElementManager().getOpenSignalAndSetMontageDialog(),
@@ -223,12 +229,51 @@ public class StartStopButtonsPanel extends JPanel {
 
                         fillModelFromPanel(currentDescriptor);
                         try {
-                                signalSourcePanel.fillPanelFromModel(currentDescriptor);
+                                signalSourcePanel.fillPanelFromModel(currentDescriptor, true);
                         } catch (SignalMLException ex) {
                         }
 
                         getStopAction().setEnabled(true);
                         setEnabled(false);
+                }
+
+                /**
+                 * Removes all unused channels from an {@link AmplifierConnectionDescriptor}.
+                 * 
+                 * @param currentDescriptor the descriptor
+                 */
+                private void removeUnusedChannels(AmplifierConnectionDescriptor descriptor) {
+
+                        float[] descrGain = descriptor.getOpenMonitorDescriptor().getCalibrationGain();
+                        float[] descrOffset = descriptor.getOpenMonitorDescriptor().getCalibrationOffset();
+                        List<Integer> descrNumbers = descriptor.getAmplifierInstance().getDefinition().getChannelNumbers();                        
+
+                        int[] selectedChannels = descriptor.getOpenMonitorDescriptor().getSelectedChannelsIndecies();
+                        Integer selectedChannelsCount = new Integer(selectedChannels.length);
+                        String[] selectedChannelsLabels = descriptor.getOpenMonitorDescriptor().getSelectedChannelsLabels();
+                        
+                        float[] selectedChannelsGain = new float[selectedChannels.length];
+                        float[] selectedChannelsOffset = new float[selectedChannels.length];
+                        List<Integer> selectedChannelNumbers = new ArrayList<Integer>();
+                        
+
+                        for (int i = 0; i < selectedChannelsCount; i++) {
+
+                                selectedChannelsGain[i] = descrGain[selectedChannels[i]];
+                                selectedChannelsOffset[i] = descrGain[selectedChannels[i]];
+                                selectedChannelNumbers.add(descrNumbers.get(selectedChannels[i]));
+                        }
+
+                        descriptor.getAmplifierInstance().getDefinition().setChannelNumbers(selectedChannelNumbers);
+                        descriptor.getOpenMonitorDescriptor().setCalibrationGain(selectedChannelsGain);
+                        descriptor.getOpenMonitorDescriptor().setCalibrationOffset(selectedChannelsOffset);
+                        descriptor.getOpenMonitorDescriptor().setChannelCount(selectedChannelsCount);
+                        descriptor.getOpenMonitorDescriptor().setChannelLabels(selectedChannelsLabels);
+                        try {
+                                descriptor.getOpenMonitorDescriptor().setSelectedChannelList(selectedChannelsLabels);
+                        } catch (Exception ex) {
+                                Logger.getLogger(StartStopButtonsPanel.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                 }
         }
 
@@ -274,7 +319,7 @@ public class StartStopButtonsPanel extends JPanel {
 
                         fillModelFromPanel(currentDescriptor);
                         try {
-                                signalSourcePanel.fillPanelFromModel(currentDescriptor);
+                                signalSourcePanel.fillPanelFromModel(currentDescriptor, true);
                         } catch (SignalMLException ex) {
                         }
 

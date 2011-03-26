@@ -190,17 +190,16 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
          *
          * @param descriptor the descriptor
          * @param omitSelectionPanel wheter to omit the panel
+         * @param omitAmpList wheter to omit the amp list
          * @throws SignalMLException when amplifier cannot be found
          */
-        public void fillPanelFromModel(AmplifierConnectionDescriptor descriptor, boolean omitSelectionPanel) throws SignalMLException {
+        public void fillPanelFromModel(AmplifierConnectionDescriptor descriptor, boolean omitAmpList) throws SignalMLException {
 
                 descriptor.setBciStarted(getStartStopButtonsPanel().isBCIStarted());
 
+                getSignalParametersPanel().fillPanelFromModel(descriptor);
 		getChannelSelectPanel().fillPanelFromModel(descriptor);
-                getSignalParametersPanel().fillPanelFromModel(descriptor);                
-                if (!omitSelectionPanel) {
-                        getAmplifierSelectionPanel().fillPanelFromModel(descriptor);
-                }
+                getAmplifierSelectionPanel().fillPanelFromModel(descriptor, omitAmpList);
 
                 currentDescriptor = descriptor;
         }

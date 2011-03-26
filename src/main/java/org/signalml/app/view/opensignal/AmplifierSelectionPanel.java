@@ -131,13 +131,28 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
          */
         public void fillPanelFromModel(AmplifierConnectionDescriptor descriptor) throws SignalMLException {
 
+                fillPanelFromModel(descriptor, false);
+        }
+
+        /**
+         * Fills this panel from an {@link AmplifierConnectionDescriptor}.
+         *
+         * @param descriptor the descriptor
+         * @param omitAmpList wheter to omit the amp list
+         * @throws SignalMLException when the amplifier from the descriptor cannot be found
+         */
+        public void fillPanelFromModel(AmplifierConnectionDescriptor descriptor, boolean omitAmpList) throws SignalMLException {
+
                 if (descriptor.isBciStarted()) {
                         setEnabledAll(false);
                 } else {
                         setEnabledAll(true);
                 }
 
-                // TODO: refresh amp list and try to find the one from the descriptor
+                if (!omitAmpList) {
+                
+                        // TODO: refresh amp list and try to find the one from the descriptor
+                }
 
                 currentDescriptor = descriptor;
         }
