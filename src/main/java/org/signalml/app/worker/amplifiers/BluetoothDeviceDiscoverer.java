@@ -9,6 +9,7 @@ import javax.bluetooth.DiscoveryListener;
 import javax.bluetooth.LocalDevice;
 import javax.bluetooth.RemoteDevice;
 import javax.bluetooth.ServiceRecord;
+import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Concrete {@link AbstractDeviceDiscoverer} discovering bluetooth devices
@@ -19,45 +20,55 @@ import javax.bluetooth.ServiceRecord;
 public class BluetoothDeviceDiscoverer extends AbstractDeviceDiscoverer implements DiscoveryListener {
 
         /**
-         * The bluetooth local device.
-         */
-        private LocalDevice localDevice;
-        
-        /**
          * The bluetooth discovery agent.
          */
         private DiscoveryAgent discoveryAgent;
+        /**
+         * The lock used to synchronize the execution.
+         */
+        private final Object lock = new Object();
 
         /**
-         * Initializes the search.
+         * Default constructor.
          *
-         * @throws BluetoothStateException when search cannot be initialized.
+         * @param messageSource {@link #messageSource}
          */
-        @Override
-        public void initializeSearch() throws BluetoothStateException {
-                
-                localDevice = LocalDevice.getLocalDevice();
+        public BluetoothDeviceDiscoverer(MessageSourceAccessor messageSource) {
+
+                super(messageSource);
         }
 
         /**
-         * Starts the search.
+         * Does the background work.
          *
-         * @throws BluetoothStateException when search cannot be started.
+         * @return execution info message
+         * @throws Exception when needed
          */
         @Override
-        public void startSearch() throws BluetoothStateException {
+        protected String doInBackground() throws Exception {
+                
+                LocalDevice localDevice;
+
+                try {
+                        localDevice = LocalDevice.getLocalDevice();
+                } catch (BluetoothStateException ex) {
+                        return messageSource.getMessage("amplifierSelection.bluetoothInitializeError") + ex.getMessage();
+                }
 
                 discoveryAgent = localDevice.getDiscoveryAgent();
-                discoveryAgent.startInquiry(DiscoveryAgent.GIAC, this);
-        }
 
-        /**
-         * Cancels the search.
-         */
-        @Override
-        public void cancelSearch() {
+                synchronized(lock) {
 
-                discoveryAgent.cancelInquiry(this);
+                        try {
+                                discoveryAgent.startInquiry(DiscoveryAgent.GIAC, this);
+                        } catch (BluetoothStateException ex) {
+                                return messageSource.getMessage("amplifierSelection.bluetoothStartError") + ex.getMessage();
+                        }
+
+                        lock.wait();
+                }
+
+                return messageSource.getMessage("amplifierSelection.bluetoothSearchCompleted");
         }
 
         /**
@@ -78,7 +89,6 @@ public class BluetoothDeviceDiscoverer extends AbstractDeviceDiscoverer implemen
                 }
 
                 DeviceInfo info = new DeviceInfo(formatAddress(address), name, DeviceInfo.BLUETOOTH);
-
                 deviceFound(info);
         }
 
@@ -90,7 +100,9 @@ public class BluetoothDeviceDiscoverer extends AbstractDeviceDiscoverer implemen
         @Override
         public void inquiryCompleted(int i) {
 
-                endOfSearch();
+                synchronized(lock) {
+                        lock.notify();
+                }
         }
 
         /**
@@ -135,4 +147,17 @@ public class BluetoothDeviceDiscoverer extends AbstractDeviceDiscoverer implemen
 
                 return retval;
         }
+
+        /**
+         * Cancels the search.
+         */
+        @Override
+        protected void cancel() {
+
+                if (discoveryAgent != null)
+                        discoveryAgent.cancelInquiry(this);
+                super.cancel();
+        }
+
+
 }

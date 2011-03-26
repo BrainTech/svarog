@@ -93,5 +93,4 @@ public class ChannelSelectTableModel extends AbstractTableModel {
 		channels.setAllSelected(selected);
 		fireTableDataChanged();
 	}
-
 }

@@ -70,59 +70,20 @@ public class AmplifierDiscoveryWorker extends SwingWorker<DiscoveryState, Discov
 
                 publish(new DiscoveryState(messageSource.getMessage("amplifierSelection.search")));
 
-                usbDeviceDiscoverer = new USBDeviceDiscoverer();
+                usbDeviceDiscoverer = new USBDeviceDiscoverer(messageSource);
                 usbDeviceDiscoverer.addPropertyChangeListener(this);
                 usbSearchOver = false;
 
-                bluetoothDeviceDiscoverer = new BluetoothDeviceDiscoverer();
+                bluetoothDeviceDiscoverer = new BluetoothDeviceDiscoverer(messageSource);
                 bluetoothDeviceDiscoverer.addPropertyChangeListener(this);
                 bluetoothSearchOver = false;
 
                 synchronized (lock) {
 
-                        try {
-                                usbDeviceDiscoverer.initializeSearch();
-                        } catch (Exception ex) {
-                                String errorMsg = messageSource.getMessage("amplifierSelection.usbInitializeError");
-                                errorMsg += ex.getMessage();
-                                publish(new DiscoveryState(errorMsg));
-                                usbSearchOver = true;
-                        }
+                        usbDeviceDiscoverer.execute();
+                        bluetoothDeviceDiscoverer.execute();
+                        lock.wait();
 
-                        if (!usbSearchOver) {
-                                try {
-                                        usbDeviceDiscoverer.startSearch();
-                                } catch (Exception ex) {
-                                        String errorMsg = messageSource.getMessage("amplifierSelection.usbStartError");
-                                        errorMsg += ex.getMessage();
-                                        publish(new DiscoveryState(errorMsg));
-                                        usbSearchOver = true;
-                                }
-                        }
-
-                        try {
-                                bluetoothDeviceDiscoverer.initializeSearch();
-                        } catch (Exception ex) {
-                                String errorMsg = messageSource.getMessage("amplifierSelection.bluetoothInitializeError");
-                                errorMsg += ex.getMessage();
-                                publish(new DiscoveryState(errorMsg));
-                                bluetoothSearchOver = true;
-                        }
-
-                        if (!bluetoothSearchOver) {
-                                try {
-                                        bluetoothDeviceDiscoverer.startSearch();
-                                } catch (Exception ex) {
-                                        String errorMsg = messageSource.getMessage("amplifierSelection.bluetoothStartError");
-                                        errorMsg += ex.getMessage();
-                                        publish(new DiscoveryState(errorMsg));
-                                        bluetoothSearchOver = true;
-                                }
-                        }
-
-                        if (!(bluetoothSearchOver && usbSearchOver)) {
-                                lock.wait();
-                        }
                 }                
                 return new DiscoveryState(messageSource.getMessage("amplifierSelection.searchCompleted"));
         }
@@ -132,14 +93,8 @@ public class AmplifierDiscoveryWorker extends SwingWorker<DiscoveryState, Discov
          */
         public void cancelSearch() {
 
-                try {
-                        usbDeviceDiscoverer.cancelSearch();
-                } catch (Exception ex) {
-                }
-                try {
-                        bluetoothDeviceDiscoverer.cancelSearch();
-                } catch (Exception ex) {
-                }
+                usbDeviceDiscoverer.cancel();
+                bluetoothDeviceDiscoverer.cancel();
                 this.cancel(true);
         }
 
@@ -181,6 +136,7 @@ public class AmplifierDiscoveryWorker extends SwingWorker<DiscoveryState, Discov
 
                         DeviceInfo info = (DeviceInfo) evt.getNewValue();
                         for (AmplifierDefinition definition : definitions) {
+
                                 if (compare(info, definition)) {
                                         publish(new DiscoveryState(new AmplifierInstance(definition.copy(), info.getAddress())));
                                 }
@@ -189,7 +145,9 @@ public class AmplifierDiscoveryWorker extends SwingWorker<DiscoveryState, Discov
                 } else if (AbstractDeviceDiscoverer.END_OF_SEARCH.equals(evt.getPropertyName())) {
 
                         synchronized (lock) {
+
                                 AbstractDeviceDiscoverer discoverer = (AbstractDeviceDiscoverer) evt.getSource();
+                                publish(new DiscoveryState((String) evt.getNewValue()));
 
                                 if (discoverer.equals(bluetoothDeviceDiscoverer)) {
                                         bluetoothSearchOver = true;

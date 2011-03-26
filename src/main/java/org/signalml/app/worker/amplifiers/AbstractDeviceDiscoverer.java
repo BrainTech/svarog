@@ -1,108 +1,79 @@
 package org.signalml.app.worker.amplifiers;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 import java.util.List;
+import javax.swing.SwingWorker;
+import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Abstract class representing a device discoverer.
  * Property change listeners can be attached. Two property changes will be
  * fired: "deviceFound" - the new value represents latest device found, and
- * "endOfSearch" - when the search is over (both values are null).
+ * "endOfSearch" - when the search is over (new value is a String containing
+ * search info - an error message, or a success message).
  *
  * @author Tomasz Sawicki
  */
-public abstract class AbstractDeviceDiscoverer {
+public abstract class AbstractDeviceDiscoverer extends SwingWorker<String, DeviceInfo> {
 
         public static final String DEVICE_FOUND = "deviceFound";
         public static final String END_OF_SEARCH = "endOfSearch";
-
+        
         /**
-         * List of listeners that will be notified when a device is found
-         * and when the search is over.
+         * The message source.
          */
-        protected List<PropertyChangeListener> listeners;
+        protected MessageSourceAccessor messageSource;
 
         /**
          * Default constructor.
-         */
-        public AbstractDeviceDiscoverer() {
-
-                listeners = new ArrayList<PropertyChangeListener>();
-        }
-
-        /**
-         * Adds a property change listener.
          *
-         * @param listener the listener
+         * @param messageSource {@link #messageSource}
          */
-        public void addPropertyChangeListener(PropertyChangeListener listener) {
+        public AbstractDeviceDiscoverer(MessageSourceAccessor messageSource) {
 
-                listeners.add(listener);
-        }
-
-        /**
-         * Removes a property change listener.
-         *
-         * @param listener the listener
-         */
-        public void removePropertyChangeListener(PropertyChangeListener listener) {
-
-                listeners.remove(listener);
-        }
-
-        /**
-         * Initializes the search.
-         *
-         * @throws Exception when search cannot be initialized.
-         */
-        public abstract void initializeSearch() throws Exception;
-
-        /**
-         * Begins the search.
-         *
-         * @throws Exception when search cannot be started.
-         */
-        public abstract void startSearch() throws Exception;
-
-        /**
-         * Cancels the search
-         */
-        public abstract void cancelSearch();
-
-        /**
-         * Fires property change.
-         *
-         * @param propertyName property name
-         * @param oldValue the old value
-         * @param newValue the new value
-         */
-        protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
-
-                PropertyChangeEvent event = new PropertyChangeEvent(this, propertyName, oldValue, newValue);
-
-                for (PropertyChangeListener listener : listeners) {
-
-                        listener.propertyChange(event);
-                }
+                this.messageSource = messageSource;
         }
 
         /**
          * Should be called when a device is found.
-         *
-         * @param info the device info
+         * 
+         * @param info info about the found device
          */
         protected void deviceFound(DeviceInfo info) {
 
-                firePropertyChange(DEVICE_FOUND, null, info);
+                publish(info);
         }
 
         /**
-         * Should be called when the search if over.
+         * When devices are being found.
+         *
+         * @param chunks devices
          */
-        protected void endOfSearch() {
+        @Override
+        protected final void process(List<DeviceInfo> chunks) {
 
-                firePropertyChange(END_OF_SEARCH, null, null);
+                for (DeviceInfo info : chunks) {
+                        firePropertyChange(DEVICE_FOUND, null, info);
+                }
+        }
+
+        /**
+         * When the search is over.
+         */
+        @Override
+        protected final void done() {
+
+                try {
+                        String result = get();
+                        firePropertyChange(END_OF_SEARCH, null, result);
+                } catch (Exception ex) {
+                }
+        }
+
+        /**
+         * Cancels the search.
+         */
+        protected void cancel() {
+
+                cancel(true);
         }
 }

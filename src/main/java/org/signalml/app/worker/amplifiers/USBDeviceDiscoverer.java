@@ -1,6 +1,7 @@
 package org.signalml.app.worker.amplifiers;
 
 import java.io.File;
+import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Concrete {@link AbstractDeviceDiscoverer} discovering USB devices
@@ -12,31 +13,23 @@ public class USBDeviceDiscoverer extends AbstractDeviceDiscoverer {
         private static final String DIRECTORY = "/dev";
 
         /**
-         * Does nothing.
+         * Default constructor.
+         *
+         * @param messageSource {@link #messageSource}
          */
-        @Override
-        public void initializeSearch() {
+        public USBDeviceDiscoverer(MessageSourceAccessor messageSource) {
+                
+                super(messageSource);
         }
 
         /**
-         * Begins the search.
+         * Does the background work.
+         *
+         * @return execution info message
+         * @throws Exception when needed
          */
         @Override
-        public void startSearch() {
-                search();
-        }
-
-        /**
-         * Does nothing.
-         */
-        @Override
-        public void cancelSearch() {
-        }
-
-        /**
-         * Searches for amplifiers in devices directory.
-         */
-        private void search() {
+        protected String doInBackground() throws Exception {
 
                 File dev = new File(DIRECTORY);
                 String[] files = dev.list();
@@ -49,6 +42,6 @@ public class USBDeviceDiscoverer extends AbstractDeviceDiscoverer {
                         deviceFound(info);
                 }
 
-                endOfSearch();
+                return messageSource.getMessage("amplifierSelection.usbSearchCompleted");
         }
 }
