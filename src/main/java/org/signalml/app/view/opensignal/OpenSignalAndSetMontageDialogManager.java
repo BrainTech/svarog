@@ -67,7 +67,6 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 			int montageSourceChannelCount = currentMontage.getSourceChannelCount();
 			int signalSourcePanelChannelCount = signalSourcePanel.getCurrentSignalSourcePanel().getChannelCount();
 
-			if (montageSourceChannelCount != signalSourcePanelChannelCount)
 			numberOfChannelsChangedTo(signalSourcePanelChannelCount);
 
 			samplingFrequencyChangedTo(signalSourcePanel.getCurrentSignalSourcePanel().getSamplingFrequency());
