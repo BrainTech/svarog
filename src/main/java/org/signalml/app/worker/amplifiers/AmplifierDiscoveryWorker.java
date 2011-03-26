@@ -182,7 +182,7 @@ public class AmplifierDiscoveryWorker extends SwingWorker<DiscoveryState, Discov
                         DeviceInfo info = (DeviceInfo) evt.getNewValue();
                         for (AmplifierDefinition definition : definitions) {
                                 if (compare(info, definition)) {
-                                        publish(new DiscoveryState(new AmplifierInstance(definition, info.getAddress())));
+                                        publish(new DiscoveryState(new AmplifierInstance(definition.copy(), info.getAddress())));
                                 }
                         }
 

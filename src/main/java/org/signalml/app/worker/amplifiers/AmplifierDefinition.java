@@ -88,6 +88,48 @@ public class AmplifierDefinition implements Preset {
                 this.amplifierNull = 0.0;
         }
 
+        /**
+         * Creates and returnes a copy of this object.
+         *
+         * @return copy of this object
+         */
+        public AmplifierDefinition copy() {
+
+                AmplifierDefinition retval = new AmplifierDefinition();
+
+                String newModuleName = "" + moduleName;
+                String newMatch = "" + match;
+                String newName = "" + name;
+                String newProtocol = "" + protocol;
+                Double newAmpNull = new Double(amplifierNull.doubleValue());
+
+                List<Float> newFrequencies = new ArrayList<Float>();
+                List<Float> newCalibrationGain = new ArrayList<Float>();
+                List<Float> newCalibrationOffset = new ArrayList<Float>();
+                List<Integer> newChannelNumbers = new ArrayList<Integer>();
+
+                for (int i = 0; i < availableFrequencies.size(); i++)
+                        newFrequencies.add(new Float(availableFrequencies.get(i).floatValue()));
+
+                for (int i = 0; i < getChannelCount(); i++) {
+                        newChannelNumbers.add(new Integer(channelNumbers.get(i).intValue()));
+                        newCalibrationGain.add(new Float(calibrationGain.get(i).floatValue()));
+                        newCalibrationOffset.add(new Float(calibrationOffset.get(i).floatValue()));
+                }
+
+                retval.setAmplifierNull(newAmpNull);
+                retval.setAvailableFrequencies(newFrequencies);
+                retval.setCalibrationGain(newCalibrationGain);
+                retval.setCalibrationOffset(newCalibrationOffset);
+                retval.setChannelNumbers(newChannelNumbers);
+                retval.setMatch(newMatch);
+                retval.setModuleName(newModuleName);
+                retval.setName(newName);
+                retval.setProtocol(newProtocol);
+
+                return retval;
+        }
+
         @Override
         public String toString() {
                 return name;
