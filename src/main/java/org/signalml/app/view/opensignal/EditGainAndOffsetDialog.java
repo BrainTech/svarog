@@ -1,21 +1,22 @@
 package org.signalml.app.view.opensignal;
 
+import java.awt.BorderLayout;
 import org.signalml.app.model.AmplifierConnectionDescriptor;
 import java.awt.Window;
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComponent;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.app.view.monitor.ChannelDefinition;
-import org.signalml.app.view.monitor.ChannelDefinitionPanel;
+import org.signalml.app.view.monitor.ChannelDefinitionsTable;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
-import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
-import org.springframework.validation.Errors;
 
 /**
  * A dialog that allows to edit gain and offset.
@@ -25,9 +26,9 @@ import org.springframework.validation.Errors;
 public class EditGainAndOffsetDialog extends AbstractDialog {
 
         /**
-         * The main panel.
+         * The definition table.
          */
-        private EditDefinitionPanel editDefinitionPanel;
+        private ChannelDefinitionsTable definitionsTable;
 
         /**
          * Default constructor sets window's title.
@@ -36,30 +37,6 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
 
                 super(messageSource, w, m);
                 setTitle(messageSource.getMessage("opensignal.parameters.editGainAndOffset"));
-        }
-
-        /**
-         * Creates the interface (the {@link #editDefinitionPanel}
-         *
-         * @return the interface panel
-         */
-        @Override
-        protected JComponent createInterface() {
-
-                return getEditDefinitionPanel();
-        }
-
-        /**
-         * Returns the edit definition panel.
-         *
-         * @return the edit definiiton panel
-         */
-        private EditDefinitionPanel getEditDefinitionPanel() {
-
-                if (editDefinitionPanel == null) {
-                        editDefinitionPanel = new EditDefinitionPanel(messageSource);
-                }
-                return editDefinitionPanel;
         }
 
         /**
@@ -81,229 +58,88 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
 
         /**
          * Fills the dialog from a {@link SignalParametersDescriptor} object.
-         * Only calls {@link EditDefinitionPanel#fillPanelFromModel()}
          *
          * @param model the descriptor
          */
         @Override
         public void fillDialogFromModel(Object model) {
 
-                getEditDefinitionPanel().fillPanelFromModel(model);
+                if (model instanceof AmplifierConnectionDescriptor) {
+                        fillDialogForAmplifierConnection((AmplifierConnectionDescriptor) model);
+                } else if (model instanceof OpenMonitorDescriptor) {
+                        fillDialogForOpenBCIConnection((OpenMonitorDescriptor) model);
+                } else if (model instanceof RawSignalDescriptor) {
+                        fillDialogForFileOpening((RawSignalDescriptor) model);
+                }
         }
 
         /**
          * Fills a {@link SignalParametersDescriptor} from the dialog.
-         * Only calls {@link EditDefinitionPanel#fillModelFromPanel()}
          *
          * @param model the descriptor
          */
         @Override
         public void fillModelFromDialog(Object model) {
 
-                getEditDefinitionPanel().fillModelFromPanel(model);
+                if (model instanceof AmplifierConnectionDescriptor) {
+                        fillModelForAmplifierConnection((AmplifierConnectionDescriptor) model);
+                } else if (model instanceof OpenMonitorDescriptor) {
+                        fillModelForOpenBCIConnection((OpenMonitorDescriptor) model);
+                } else if (model instanceof RawSignalDescriptor) {
+                        fillModelForFileOpening((RawSignalDescriptor) model);
+                }
         }
 
         /**
-         * Validates the dialog by trying to fill the model from it.
+         * Fills the dialog for amplifier connection.
          *
-         * @param model model
-         * @param errors errors
-         * @throws SignalMLException thrown when data is invalid
+         * @param descriptor the descriptor
          */
-        @Override
-        public void validateDialog(Object model, Errors errors) throws SignalMLException {
+        private void fillDialogForAmplifierConnection(AmplifierConnectionDescriptor descriptor) {
 
-                if (!getEditDefinitionPanel().isAllGainAndOffsetEditable()) {
+                setAllGainAndOffsetEditable(true);
+                List<ChannelDefinition> definitions = new ArrayList<ChannelDefinition>();
+                for (int i = 0; i < descriptor.getOpenMonitorDescriptor().getChannelCount(); i++) {
 
-                        try {
-                                Float.parseFloat(getEditDefinitionPanel().getChannelGainVaule());
-                                Float.parseFloat(getEditDefinitionPanel().getChannelOffsetValue());
-                        } catch (NumberFormatException ex) {
-                                errors.reject("error.invalidData");
-                        }
+                        definitions.add(new ChannelDefinition(
+                                descriptor.getAmplifierInstance().getDefinition().getChannelNumbers().get(i),
+                                descriptor.getOpenMonitorDescriptor().getCalibrationGain()[i],
+                                descriptor.getOpenMonitorDescriptor().getCalibrationOffset()[i],
+                                descriptor.getAmplifierInstance().getDefinition().getDefaultNames().get(i)));
                 }
+
+                getDefinitionsTable().setData(definitions);
         }
 
         /**
-         * Panel that allows the definition of gain and offset, it's derived
-         * from {@link ChannelDefinigaintionPanel}.
+         * Fills the dialog for BCI connection.
+         *
+         * @param descriptor the descriptor
          */
-        private class EditDefinitionPanel extends ChannelDefinitionPanel implements ListSelectionListener {
+        private void fillDialogForOpenBCIConnection(OpenMonitorDescriptor descriptor) {
 
-                /**
-                 * If all gain and offset are editable.gain
-                 */
-                private boolean allGainAndOffsetEditable;
+                setAllGainAndOffsetEditable(true);
+                List<ChannelDefinition> definitions = new ArrayList<ChannelDefinition>();
+                for (int i = 0; i < descriptor.getChannelCount(); i++) {
 
-                /**
-                 * Default constructor.
-                 *
-                 * @param messageSource the message source
-                 */
-                public EditDefinitionPanel(MessageSourceAccessor messageSource) {
-
-                        super(messageSource);
-                        initialize();
+                        definitions.add(new ChannelDefinition(
+                                i,
+                                descriptor.getCalibrationGain()[i],
+                                descriptor.getCalibrationOffset()[i],
+                                descriptor.getChannelLabels()[i]));
                 }
 
-                /**
-                 * Initializes the panel.
-                 */
-                private void initialize() {
+                getDefinitionsTable().setData(definitions);
+        }
 
-                        getRemoveButton().setVisible(false);
-                        getAddButton().setText(messageSource.getMessage("opensignal.parameters.editGainAndOffsetDialog.edit"));
-                        getChannelTextField().setEditable(false);
-                        getDefinitionsList().addListSelectionListener(this);
-                        setAllGainAndOffsetEditable(true);
-                        getDefaultNameLabel().setVisible(false);
-                        getDefaultNameTextField().setVisible(false);
-                }
+        /**
+         * Fills the dialog for file opening.
+         *
+         * @param descriptor the descriptor
+         */
+        private void fillDialogForFileOpening(RawSignalDescriptor descriptor) {
 
-                /**
-                 * When a list item is selected fill the fields.
-                 *
-                 * @param e list selection event
-                 */
-                @Override
-                public void valueChanged(ListSelectionEvent e) {
-
-                        int selectedIndex = getDefinitionsList().getSelectedIndex();
-                        if (selectedIndex < 0) {
-                                return;
-                        }
-                        ChannelDefinition definition = (ChannelDefinition) getDefinitionsList().getModel().getElementAt(selectedIndex);
-                        getChannelTextField().setText(String.valueOf(definition.getNumber()));
-                        getGainTextField().setText(String.valueOf(definition.getGain()));
-                        getOffsetTextField().setText(String.valueOf(definition.getOffset()));
-                }
-
-                /**
-                 * When edit button is clicked edit the list.
-                 *
-                 * @param e action event
-                 */
-                @Override
-                public void actionPerformed(ActionEvent e) {
-
-                        if (getAddButton().equals(e.getSource())) {
-
-                                ChannelDefinition definition = validateFields();
-                                if (definition == null) {
-                                        return;
-                                }
-
-                                List<ChannelDefinition> definitions = getChannelDefinitions();
-
-                                for (int i = 0; i < definitions.size(); i++) {
-
-                                        if (definitions.get(i).getNumber() == definition.getNumber()) {
-
-                                                definitions.get(i).setGain(definition.getGain());
-                                                definitions.get(i).setOffset(definition.getOffset());
-                                                break;
-                                        }
-                                }
-
-                                getDefinitionsList().setListData(definitions.toArray());
-                                clearTextFields();
-                        }
-                }
-
-                /**
-                 * Wheter all gain and offset values can be edited.
-                 *
-                 * @param editable if true, all values can be edited. If false,
-                 * only one value can be edited and will be applied to all channels.
-                 */
-                private void setAllGainAndOffsetEditable(boolean editable) {
-
-                        if (editable) {
-                                getAddButton().setVisible(true);
-                                getDefinitionsList().setEnabled(true);
-                                getChannelTextField().setText("");
-                        } else {
-                                getAddButton().setVisible(false);
-                                getDefinitionsList().setListData(new String[]{""});
-                                getDefinitionsList().setEnabled(false);
-                                getChannelTextField().setText(messageSource.getMessage("opensignal.parameters.editGainAndOffsetDialog.all"));
-                        }
-                        allGainAndOffsetEditable = editable;
-                }
-
-                /**
-                 * Returns {@link #allGainAndOffsetEditable}.
-                 *
-                 * @return {@link #allGainAndOffsetEditable}
-                 */
-                public boolean isAllGainAndOffsetEditable() {
-
-                        return allGainAndOffsetEditable;
-                }
-
-                /**
-                 * Returns gain textfield value.
-                 *
-                 * @return gain textfield value
-                 */
-                public String getChannelGainVaule() {
-
-                        return getGainTextField().getText();
-                }
-
-                /**
-                 * Returns offset textfield value.
-                 *
-                 * @return offset textfield value.
-                 */
-                public String getChannelOffsetValue() {
-
-                        return getOffsetTextField().getText();
-                }
-
-                /**
-                 * Fills this panel from a model.
-                 *
-                 * @param model the model
-                 */
-                public void fillPanelFromModel(Object model) {
-
-                        if (model instanceof AmplifierConnectionDescriptor) {
-                                fillPanelForAmplifierConnection((AmplifierConnectionDescriptor) model);
-                        } else if (model instanceof OpenMonitorDescriptor) {
-                                fillPanelForOpenBCIConnection((OpenMonitorDescriptor) model);
-                        } else if (model instanceof RawSignalDescriptor) {
-                                fillPanelForFileOpening((RawSignalDescriptor) model);
-                        }
-                }
-
-                /**
-                 * Fills the panel for amplifier connection.
-                 *
-                 * @param descriptor the descriptor
-                 */
-                private void fillPanelForAmplifierConnection(AmplifierConnectionDescriptor descriptor) {
-
-                        setAllGainAndOffsetEditable(true);
-                        List<ChannelDefinition> definitions = new ArrayList<ChannelDefinition>();
-                        for (int i = 0; i < descriptor.getOpenMonitorDescriptor().getChannelCount(); i++) {
-
-                                definitions.add(new ChannelDefinition(
-                                        descriptor.getAmplifierInstance().getDefinition().getChannelNumbers().get(i),
-                                        descriptor.getOpenMonitorDescriptor().getCalibrationGain()[i],
-                                        descriptor.getOpenMonitorDescriptor().getCalibrationOffset()[i],
-                                        descriptor.getAmplifierInstance().getDefinition().getDefaultNames().get(i)));
-                        }
-                        getDefinitionsList().setListData(definitions.toArray());
-                }
-
-                /**
-                 * Fills the panel for BCI connection.
-                 *
-                 * @param descriptor the descriptor
-                 */
-                private void fillPanelForOpenBCIConnection(OpenMonitorDescriptor descriptor) {
-
+                if (descriptor.getChannelLabels() != null) {
                         setAllGainAndOffsetEditable(true);
                         List<ChannelDefinition> definitions = new ArrayList<ChannelDefinition>();
                         for (int i = 0; i < descriptor.getChannelCount(); i++) {
@@ -314,110 +150,168 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
                                         descriptor.getCalibrationOffset()[i],
                                         descriptor.getChannelLabels()[i]));
                         }
-                        getDefinitionsList().setListData(definitions.toArray());
+                        getDefinitionsTable().setData(definitions);
                 }
+        }
 
-                /**
-                 * Fills the panel for file opening.
-                 *
-                 * @param descriptor the descriptor
-                 */
-                private void fillPanelForFileOpening(RawSignalDescriptor descriptor) {
+        /**
+         * Fills the model for amplifier connection.
+         *
+         * @param descriptor the descriptor
+         */
+        private void fillModelForAmplifierConnection(AmplifierConnectionDescriptor descriptor) {
 
-                        if (descriptor.getChannelLabels() != null) {
-                                setAllGainAndOffsetEditable(true);
-                                List<ChannelDefinition> definitions = new ArrayList<ChannelDefinition>();
-                                for (int i = 0; i < descriptor.getChannelCount(); i++) {
+                descriptor.getOpenMonitorDescriptor().setCalibrationGain(getGainArray());
+                descriptor.getOpenMonitorDescriptor().setCalibrationOffset(getOffsetArray());
+        }
 
-                                        definitions.add(new ChannelDefinition(
-                                                i,
-                                                descriptor.getCalibrationGain()[i],
-                                                descriptor.getCalibrationOffset()[i],
-                                                descriptor.getChannelLabels()[i]));
-                                }
-                                getDefinitionsList().setListData(definitions.toArray());
-                        }
+        /**
+         * Fills the model for BCI connection.
+         *
+         * @param descriptor the descriptor
+         */
+        private void fillModelForOpenBCIConnection(OpenMonitorDescriptor descriptor) {
+
+                descriptor.setCalibrationGain(getGainArray());
+                descriptor.setCalibrationOffset(getOffsetArray());
+        }
+
+        /**
+         * Fills the model for file opening.
+         *
+         * @param descriptor the descriptor
+         */
+        private void fillModelForFileOpening(RawSignalDescriptor descriptor) {
+
+                descriptor.setCalibrationGain(getGainArray());
+                descriptor.setCalibrationOffset(getOffsetArray());
+        }
+
+        /**
+         * Gets gain as a float array.
+         *
+         * @return gain as a float array
+         */
+        private float[] getGainArray() {
+
+                Float[] gainFromList = getDefinitionsTable().getGainValues().toArray(new Float[0]);
+                float[] gain = new float[gainFromList.length];
+                for (int i = 0; i < gainFromList.length; i++) {
+                        gain[i] = gainFromList[i];
                 }
+                return gain;
+        }
 
-                /**
-                 * Fills a model object from this panel.
-                 * Sets channel numbers, gain and offset.
-                 *
-                 * @param model the model
-                 * @throws SignalMLException when input data is invalid
-                 */
-                public void fillModelFromPanel(Object model) {
+        /**
+         * Gets offset as a float array.
+         *
+         * @return offset as a float array
+         */
+        private float[] getOffsetArray() {
 
-                        if (model instanceof AmplifierConnectionDescriptor) {
-                                fillModelForAmplifierConnection((AmplifierConnectionDescriptor) model);
-                        } else if (model instanceof OpenMonitorDescriptor) {
-                                fillModelForOpenBCIConnection((OpenMonitorDescriptor) model);
-                        } else if (model instanceof RawSignalDescriptor) {
-                                fillModelForFileOpening((RawSignalDescriptor) model);
-                        }
+                Float[] offsetFromList = getDefinitionsTable().getOffsetValues().toArray(new Float[0]);
+                float[] offset = new float[offsetFromList.length];
+                for (int i = 0; i < offsetFromList.length; i++) {
+                        offset[i] = offsetFromList[i];
                 }
+                return offset;
+        }
 
-                /**
-                 * Fills the model for amplifier connection.
-                 *
-                 * @param descriptor the descriptor
-                 */
-                private void fillModelForAmplifierConnection(AmplifierConnectionDescriptor descriptor) {
+        /**
+         * Creates the interface (the {@link #editDefinitionPanel}
+         *
+         * @return the interface panel
+         */
+        @Override
+        protected JComponent createInterface() {
 
-                        descriptor.getOpenMonitorDescriptor().setCalibrationGain(getGainArray());
-                        descriptor.getOpenMonitorDescriptor().setCalibrationOffset(getOffsetArray());
+                JPanel mainPanel = new JPanel(new BorderLayout());
+                CompoundBorder border = new CompoundBorder(
+                        new TitledBorder(""),
+                        new EmptyBorder(3, 3, 3, 3));
+                mainPanel.setBorder(border);
+                mainPanel.setLayout(new BorderLayout(10, 10));
+                mainPanel.add(new JScrollPane(getDefinitionsTable()), BorderLayout.CENTER);
+
+                return mainPanel;
+        }
+
+        /**
+         * Returns the edit definition panel.
+         *
+         * @return the edit definiiton panel
+         */
+        private ChannelDefinitionsTable getDefinitionsTable() {
+
+                if (definitionsTable == null) {
+                        definitionsTable = new ChannelDefinitionsTable(messageSource, true);
                 }
+                return definitionsTable;
+        }
 
-                /**
-                 * Fills the model for BCI connection.
-                 *
-                 * @param descriptor the descriptor
-                 */
-                private void fillModelForOpenBCIConnection(OpenMonitorDescriptor descriptor) {
-
-                        descriptor.setCalibrationGain(getGainArray());
-                        descriptor.setCalibrationOffset(getOffsetArray());
+        /**
+         * Wheter all gain and offset values can be edited.
+         *
+         * @param editable if true, all values can be edited. If false,
+         * only one value can be edited and will be applied to all channels.
+         */
+        private void setAllGainAndOffsetEditable(boolean editable) {
+                
+                if (!editable) {
+                        List<ChannelDefinition> list = new ArrayList<ChannelDefinition>();
+                        list.add(new ChannelDefinition(0, 0.0f, 0.0f, "0"));
+                        getDefinitionsTable().setData(list);
                 }
+                getDefinitionsTable().setAllEditable(editable);
+        }
 
-                /**
-                 * Fills the model for file opening.
-                 *
-                 * @param descriptor the descriptor
-                 */
-                private void fillModelForFileOpening(RawSignalDescriptor descriptor) {
+        /**
+         * Gets the gain. Used only if only one gain and offset is editable.
+         *
+         * @return the gain
+         */
+        private float getGain() {
 
-                        descriptor.setCalibrationGain(getGainArray());
-                        descriptor.setCalibrationOffset(getOffsetArray());
-                }
+                return getDefinitionsTable().getData().get(0).getGain();
+        }
 
-                /**
-                 * Gets gain as a float array.
-                 *
-                 * @return gain as a float array
-                 */
-                private float[] getGainArray() {
+        /**
+         * Gets the offset. Used only if only one gain and offset is editable.
+         *
+         * @return the offset
+         */
+        private float getOffset() {
 
-                        Float[] gainFromList = getGainValues().toArray(new Float[0]);
-                        float[] gain = new float[gainFromList.length];
-                        for (int i = 0; i < gainFromList.length; i++) {
-                                gain[i] = gainFromList[i];
-                        }
-                        return gain;
-                }
+                return getDefinitionsTable().getData().get(0).getOffset();
+        }
 
-                /**
-                 * Gets offset as a float array.
-                 *
-                 * @return offset as a float array
-                 */
-                private float[] getOffsetArray() {
+        /**
+         * Sets the gain. Used only if only one gain and offset is editable.
+         *
+         * @param gain the gain
+         */
+        private void setGain(float gain) {
 
-                        Float[] offsetFromList = getOffsetValues().toArray(new Float[0]);
-                        float[] offset = new float[offsetFromList.length];
-                        for (int i = 0; i < offsetFromList.length; i++) {
-                                offset[i] = offsetFromList[i];
-                        }
-                        return offset;
-                }
+                ChannelDefinition definition = getDefinitionsTable().getData().get(0);
+                definition.setGain(gain);
+                List<ChannelDefinition> list = new ArrayList<ChannelDefinition>();
+                list.add(definition);
+                getDefinitionsTable().setData(list);
+                getDefinitionsTable().setAllEditable(false);
+        }
+
+        /**
+         * Sets the offset. Used only if only one gain and offset is editable.
+         *
+         * @param offset the offset
+         */
+        private void setOffset(float offset) {
+
+                ChannelDefinition definition = getDefinitionsTable().getData().get(0);
+                definition.setOffset(offset);
+                List<ChannelDefinition> list = new ArrayList<ChannelDefinition>();
+                list.add(definition);
+                getDefinitionsTable().setData(list);
+                getDefinitionsTable().setAllEditable(false);
         }
 }

@@ -1,27 +1,20 @@
 package org.signalml.app.view.monitor;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.ListCellRenderer;
-import javax.swing.ListSelectionModel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
@@ -37,7 +30,7 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
         /**
          * List of definitions.
          */
-        private JList definitionsList;
+        private ChannelDefinitionsTable definitionsTable;
 
         /**
          * Channel no. label.
@@ -116,7 +109,7 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
 
                 setLayout(new BorderLayout(10, 10));
 
-                add(new JScrollPane(getDefinitionsList()), BorderLayout.CENTER);
+                add(new JScrollPane(getDefinitionsTable()), BorderLayout.CENTER);
 
                 JPanel bottomPanel = new JPanel(new GridBagLayout());
                 GridBagConstraints constraints = new GridBagConstraints();
@@ -193,29 +186,16 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-                if (addButton.equals(e.getSource())) {
+                if (getAddButton().equals(e.getSource())) {
 
                         ChannelDefinition definition = validateFields();
                         if (definition == null) return;
-
-                        List<ChannelDefinition> definitions = getChannelDefinitions();
-                        definitions.add(definition);
-                        definitionsList.setListData(definitions.toArray());
-
+                        getDefinitionsTable().add(definition);
                         clearTextFields();
                 }
-                else if (removeButton.equals(e.getSource())) {
+                else if (getRemoveButton().equals(e.getSource())) {
 
-                        int selectedIndex = definitionsList.getSelectedIndex();
-
-                        if (selectedIndex == -1 )
-                                return;
-
-                        List<ChannelDefinition> definitions = getChannelDefinitions();
-                        definitions.remove(selectedIndex);
-                        definitionsList.setListData(definitions.toArray());
-
-                        definitionsList.setSelectedIndex(-1);
+                        getDefinitionsTable().removeSelected();
                 }
         }
 
@@ -228,7 +208,7 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
 
                 Integer channelno;
                 try {
-                        channelno = Integer.parseInt(channelTextField.getText());
+                        channelno = Integer.parseInt(getChannelTextField().getText());
                 } catch (NumberFormatException ex) {
                         String errorMsg = messageSource.getMessage("amplifierDefinitionConfig.channelno") +
                         messageSource.getMessage("error.amplifierDefinitionConfig.integer");
@@ -238,7 +218,7 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
 
                 Float gain;
                 try {
-                        gain = Float.parseFloat(gainTextField.getText());
+                        gain = Float.parseFloat(getGainTextField().getText());
                 } catch (NumberFormatException ex) {
                         String errorMsg = messageSource.getMessage("amplifierDefinitionConfig.gain") +
                         messageSource.getMessage("error.amplifierDefinitionConfig.rational");
@@ -248,7 +228,7 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
 
                 Float offset;
                 try {
-                        offset = Float.parseFloat(offsetTextField.getText());
+                        offset = Float.parseFloat(getOffsetTextField().getText());
                 } catch (NumberFormatException ex) {
                         String errorMsg = messageSource.getMessage("amplifierDefinitionConfig.offset") +
                         messageSource.getMessage("error.amplifierDefinitionConfig.rational");
@@ -264,12 +244,12 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
          *
          * @return the frequencies list
          */
-        protected JList getDefinitionsList() {
+        protected ChannelDefinitionsTable getDefinitionsTable() {
 
-                if (definitionsList == null) {
-                        definitionsList = new ChannelDefinitionList();
+                if (definitionsTable == null) {
+                        definitionsTable = new ChannelDefinitionsTable(messageSource, false);
                 }
-                return definitionsList;
+                return definitionsTable;
         }
 
         /**
@@ -411,38 +391,13 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
         }
 
         /**
-         * Gets the list of frequencies.
-         *
-         * @return list of frequencies
-         */
-        protected List<ChannelDefinition> getChannelDefinitions() {
-
-                ArrayList<ChannelDefinition> definitions = new ArrayList<ChannelDefinition>();
-
-                for (int i = 0; i < definitionsList.getModel().getSize(); i++) {
-
-                        ChannelDefinition definition = (ChannelDefinition) definitionsList.getModel().getElementAt(i);
-                        definitions.add(definition);
-                }
-
-                return definitions;
-        }
-
-        /**
          * Gets the channel number
          *
          * @return list of channel numbers
          */
         public List<Integer> getChannelNumbers() {
 
-                ArrayList<Integer> numbers = new ArrayList<Integer>();
-
-                for (ChannelDefinition definition : getChannelDefinitions()) {
-
-                        numbers.add(definition.getNumber());
-                }
-
-                return numbers;
+                return getDefinitionsTable().getChannelNumbers();
         }
 
         /**
@@ -452,14 +407,7 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
          */
         public List<Float> getGainValues() {
 
-                ArrayList<Float> gain = new ArrayList<Float>();
-
-                for (ChannelDefinition definition : getChannelDefinitions()) {
-
-                        gain.add(definition.getGain());
-                }
-
-                return gain;
+                return getDefinitionsTable().getGainValues();
         }
 
         /**
@@ -469,14 +417,7 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
          */
         public List<Float> getOffsetValues() {
 
-                ArrayList<Float> offset = new ArrayList<Float>();
-
-                for (ChannelDefinition definition : getChannelDefinitions()) {
-
-                        offset.add(definition.getOffset());
-                }
-
-                return offset;
+                return getDefinitionsTable().getOffsetValues();
         }
 
         /**
@@ -484,16 +425,9 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
          *
          * @return list of default names
          */
-        List<String> getDefaultNames() {
+        public List<String> getDefaultNames() {
 
-                ArrayList<String> names = new ArrayList<String>();
-
-                for (ChannelDefinition definition : getChannelDefinitions()) {
-
-                        names.add(definition.getDefaultName());
-                }
-
-                return names;
+                return getDefinitionsTable().getDefaultNames();
         }
 
         /**
@@ -513,7 +447,7 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
                         definitions.add(definition);
                 }
 
-                definitionsList.setListData(definitions.toArray());
+                getDefinitionsTable().setData(definitions);
         }
 
         /**
@@ -521,98 +455,8 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
          */
         public void clearTextFields() {
 
-                channelTextField.setText("");
-                gainTextField.setText("");
-                offsetTextField.setText("");
-        }
-}
-
-/**
- * List responsible for showing channel definition objects.
- *
- * @author Tomasz Sawicki
- */
-class ChannelDefinitionList extends JList {
-
-        /**
-         * Default constructor creates the list.
-         */
-        public ChannelDefinitionList() {
-
-                super();
-                setCellRenderer(new ChannelDefinitionListRenderer());
-                setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        }
-}
-
-/**
- * Renderer for a {@link ChannelDefinitionList}.
- *
- * @author Tomasz Sawicki
- */
-class ChannelDefinitionListRenderer extends JComponent implements ListCellRenderer {
-
-        /**
-         * Renderer showing the number.
-         */
-        private DefaultListCellRenderer number;
-
-        /**
-         * Renderer showing the gain.
-         */
-        private DefaultListCellRenderer gain;
-
-        /**
-         * Renderer showing the offset.
-         */
-        private DefaultListCellRenderer offset;
-
-        /**
-         * Renderer showing the offset.
-         */
-        private DefaultListCellRenderer name;
-
-        /**
-         * Default constructor.
-         */
-        public ChannelDefinitionListRenderer() {
-
-                number = new DefaultListCellRenderer();
-                gain = new DefaultListCellRenderer();
-                offset = new DefaultListCellRenderer();
-                name = new DefaultListCellRenderer();
-
-                setLayout(new GridLayout(1, 4));
-                add(number);
-                add(gain);
-                add(offset);
-                add(name);
-        }
-
-        /**
-	 * Returns a component that has been configured to display the specified
-	 * value.
-	 * @param list the JList we're painting.
-	 * @param value the value returned by list.getModel().getElementAt(index).
-	 * @param index the cells index.
-	 * @param isSelected true if the specified cell was selected.
-	 * @param cellHasFocus true if the specified cell has the focus.
-	 * @return a component for displaying the specified value
-	 */
-        @Override
-        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-
-                ChannelDefinition definition = (ChannelDefinition) value;
-                String noVal = "No: " + definition.getNumber();
-                String gainVal = "Gain: " + definition.getGain();
-                String offsetVal = "Offset: " + definition.getOffset();
-                String nameVal = "Name: " + definition.getDefaultName();
-
-                number.getListCellRendererComponent(list, noVal, index, isSelected, cellHasFocus);
-                gain.getListCellRendererComponent(list, gainVal, index, isSelected, cellHasFocus);
-                offset.getListCellRendererComponent(list, offsetVal, index, isSelected, cellHasFocus);
-                name.getListCellRendererComponent(list, nameVal, index, isSelected, cellHasFocus);
-
-                return this;
+                getChannelTextField().setText("");
+                getGainTextField().setText("");
+                getOffsetTextField().setText("");
         }
 }

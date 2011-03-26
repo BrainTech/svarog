@@ -107,16 +107,12 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
          */
         @Override
         protected JComponent createInterface() {
-
-                JPanel mainPanel = new JPanel(new BorderLayout(15, 15));
-
+                
                 GridBagConstraints constraints = new GridBagConstraints();
                 constraints.anchor = GridBagConstraints.CENTER;
                 constraints.fill = GridBagConstraints.HORIZONTAL;
                 constraints.insets = new Insets(3, 3, 3, 3);
                 constraints.weighty = 0;
-
-
 
                 CompoundBorder borderDriver = new CompoundBorder(
                         new TitledBorder(messageSource.getMessage("amplifierDefinitionConfig.driverData")),
@@ -162,43 +158,38 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
                 textFieldsPanel.add(getModuleNameComboBox(), constraints);
 
 
-
                 CompoundBorder borderOther = new CompoundBorder(
                         new TitledBorder(messageSource.getMessage("amplifierDefinitionConfig.otherData")),
                         new EmptyBorder(3, 3, 3, 3));
 
-                JPanel otherPanel = new JPanel(new BorderLayout());
+                JPanel otherPanel = new JPanel(new GridBagLayout());
                 otherPanel.setBorder(borderOther);
-                JPanel otherTopPanel = new JPanel(new GridBagLayout());
 
                 constraints.gridx = 0;
                 constraints.gridy = 0;
                 constraints.gridwidth = 1;
                 constraints.weightx = 0;
-                otherTopPanel.add(getAmplifierNullLabel(), constraints);
+                otherPanel.add(getAmplifierNullLabel(), constraints);
 
                 constraints.gridx = 1;
                 constraints.gridy = 0;
                 constraints.gridwidth = 2;
                 constraints.weightx = 1;
-                otherTopPanel.add(getAmplifierNullTextField(), constraints);
+                otherPanel.add(getAmplifierNullTextField(), constraints);
 
-                otherPanel.add(otherTopPanel, BorderLayout.PAGE_START);
+                
 
-
-
-                JPanel topPanel = new JPanel(new GridLayout(1, 2, 10, 0));
-                topPanel.add(textFieldsPanel);
-                topPanel.add(otherPanel);
-
-                JPanel bottomPanel = new JPanel(new GridLayout(1, 2, 10, 0));
-                bottomPanel.add(getAvailableFrequenciesPanel());
-                bottomPanel.add(getChannelDefinitionPanel());
-
-
-
-                mainPanel.add(topPanel, BorderLayout.PAGE_START);
-                mainPanel.add(bottomPanel, BorderLayout.CENTER);
+                JPanel leftPanel = new JPanel(new BorderLayout(10, 10));
+                JPanel leftTopPanel = new JPanel(new BorderLayout(10, 10));
+                leftTopPanel.add(textFieldsPanel, BorderLayout.NORTH);
+                leftTopPanel.add(otherPanel, BorderLayout.SOUTH);
+                leftPanel.add(leftTopPanel, BorderLayout.NORTH);
+                leftPanel.add(getAvailableFrequenciesPanel(), BorderLayout.CENTER);
+                
+                
+                JPanel mainPanel = new JPanel(new GridLayout(1, 2, 15, 15));
+                mainPanel.add(leftPanel);
+                mainPanel.add(getChannelDefinitionPanel());
 
                 return mainPanel;
         }
