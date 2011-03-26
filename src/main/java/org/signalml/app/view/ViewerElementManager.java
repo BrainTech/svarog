@@ -142,6 +142,7 @@ import org.signalml.app.action.AmplifierDefinitionConfigAction;
 import org.signalml.app.action.ChooseActiveTagAction;
 import org.signalml.app.action.CompareTagsAction;
 import org.signalml.app.action.OpenBCIModuleConfigAction;
+import org.signalml.app.action.OpenBookDocumentAction;
 import org.signalml.app.action.OpenSignalAndSetMontageAction;
 import org.signalml.app.action.StartMonitorRecordingAction;
 import org.signalml.app.action.StopMonitorRecordingAction;
@@ -315,6 +316,7 @@ public class ViewerElementManager {
 	private ShowLeftPanelAction showLeftPanelAction;
 	private ShowBottomPanelAction showBottomPanelAction;
 	private OpenDocumentAction openDocumentAction;
+	private OpenBookDocumentAction openBookDocumentAction;
 	private OpenMonitorAction openMonitorAction;
 	private CloseDocumentAction closeActiveDocumentAction;
 	private SaveAllDocumentsAction saveAllDocumentsAction;
@@ -722,7 +724,7 @@ public class ViewerElementManager {
 			fileMenu = new JMenu(messageSource.getMessage("menu.file"));
 
 			fileMenu.add(getOpenSignalAndSetMontageAction());
-			//fileMenu.add(getOpenDocumentAction());
+			fileMenu.add(getOpenBookDocumentAction());
 			fileMenu.add(getSaveActiveDocumentAction());
 			fileMenu.add(getSaveActiveDocumentAsAction());
 			fileMenu.add(getSaveAllDocumentsAction());
@@ -1490,6 +1492,14 @@ public class ViewerElementManager {
 			openDocumentAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 		}
 		return openDocumentAction;
+	}
+
+	public OpenBookDocumentAction getOpenBookDocumentAction() {
+		if (openBookDocumentAction == null) {
+			openBookDocumentAction = new OpenBookDocumentAction(messageSource);
+			openBookDocumentAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
+		}
+		return openBookDocumentAction;
 	}
 
 	public OpenMonitorAction getOpenMonitorAction() {

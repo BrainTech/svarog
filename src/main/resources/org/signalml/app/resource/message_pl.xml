@@ -303,6 +303,8 @@
 	<entry key="action.helpContentsToolTip">Display help contents</entry>
 	<entry key="action.openDocument">Open...</entry>
 	<entry key="action.openDocumentToolTip">Open a document from file</entry>
+	<entry key="action.openBookDocument">Open book</entry>
+	<entry key="action.openBookDocumentToolTip">Open a book document from a file</entry>
 	<entry key="action.openSignalAndSetMontageLabel">Open signal</entry>
 	<entry key="action.openSignalAndSetMontageToolTip">Open signal and set montage for it</entry>
 	<entry key="action.saveDocument">Save</entry>
