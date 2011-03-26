@@ -11,6 +11,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JList;
@@ -28,8 +30,9 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.worker.amplifiers.AmplifierDefinition;
-import org.signalml.app.worker.amplifiers.AmplifierDiscoveryWorker;
+import org.signalml.app.worker.amplifiers.DeviceDiscoveryWorker;
 import org.signalml.app.worker.amplifiers.AmplifierInstance;
+import org.signalml.app.worker.amplifiers.DeviceInfo;
 import org.signalml.app.worker.amplifiers.DiscoveryState;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -53,7 +56,6 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
          * Refresh button.
          */
         private JButton refreshButton;
-
         /**
          * Message source.
          */
@@ -73,11 +75,15 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
         /**
          * Current discovery worker.
          */
-        private AmplifierDiscoveryWorker currentWorker;
+        private DeviceDiscoveryWorker currentWorker;
         /**
          * The selection listener for amp list.
          */
         private ListSelectionListener selectionListener;
+        /**
+         * Current definitions list.
+         */
+        private List<AmplifierDefinition> currentDefinitions;
         /**
          * The progress bar.
          */
@@ -150,7 +156,6 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
                 }
 
                 if (!omitAmpList) {
-                
                         // TODO: refresh amp list and try to find the one from the descriptor
                 }
 
@@ -166,9 +171,8 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
                 getMessageTextArea().setText("");
                 amplifierSelected();
 
-                List<AmplifierDefinition> definitions;
                 try {
-                        definitions = elementManager.getAmplifierDefinitionPresetManager().getDefinitionList();
+                        currentDefinitions = elementManager.getAmplifierDefinitionPresetManager().getDefinitionList();
                 } catch (Exception ex) {
                         JOptionPane.showMessageDialog(this, messageSource.getMessage("amplifierSelection.consistency"));
                         return;
@@ -180,7 +184,7 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
 
                 getProgressBar().setVisible(true);
 
-                currentWorker = new AmplifierDiscoveryWorker(messageSource, definitions);
+                currentWorker = new DeviceDiscoveryWorker(messageSource);
                 currentWorker.addPropertyChangeListener(this);
                 currentWorker.execute();
         }
@@ -193,19 +197,22 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
 
-                if (AmplifierDiscoveryWorker.DISCOVERY_STATE.equals(evt.getPropertyName())) {
+                if (DeviceDiscoveryWorker.DISCOVERY_STATE.equals(evt.getPropertyName())) {
 
                         DiscoveryState discoveryState = (DiscoveryState) evt.getNewValue();
 
-                        if (discoveryState.getInstance() != null) {
-                                addToList(discoveryState.getInstance());
+                        if (discoveryState.getInfo() != null) {
+                                compareAll(discoveryState.getInfo());
                         }
 
                         if (discoveryState.getMessage() != null) {
                                 addMessage(discoveryState.getMessage());
-                                if (discoveryState.getMessage().equals(messageSource.getMessage("amplifierSelection.searchCompleted")))
-                                        getProgressBar().setVisible(false);
                         }
+
+                } else if (DeviceDiscoveryWorker.END_OF_SEARCH.equals(evt.getPropertyName())) {
+
+                        addMessage((String) evt.getNewValue());
+                        getProgressBar().setVisible(false);
                 }
         }
 
@@ -240,7 +247,7 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
 
                 amplifiersListPanel.add(bottomPanel, BorderLayout.PAGE_END);
                 add(amplifiersListPanel, BorderLayout.CENTER);
-        }        
+        }
 
         /**
          * Gets the amplifiers list.
@@ -265,7 +272,7 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
         private void addToList(AmplifierInstance instance) {
 
                 getAmplifiersList().removeListSelectionListener(getSelectionListener());
-                int selectedIndex = getAmplifiersList().getSelectedIndex();                
+                int selectedIndex = getAmplifiersList().getSelectedIndex();
 
                 List<AmplifierInstance> instances = new ArrayList<AmplifierInstance>();
                 for (int i = 0; i < getAmplifiersList().getModel().getSize(); i++) {
@@ -273,7 +280,7 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
                 }
                 instances.add(instance);
 
-                getAmplifiersList().setListData(instances.toArray());                
+                getAmplifiersList().setListData(instances.toArray());
                 getAmplifiersList().setSelectedIndex(selectedIndex);
                 getAmplifiersList().addListSelectionListener(getSelectionListener());
         }
@@ -350,7 +357,7 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
          * @return the progress bar
          */
         public JProgressBar getProgressBar() {
-                
+
                 if (progressBar == null) {
                         progressBar = new JProgressBar();
                         progressBar.setIndeterminate(true);
@@ -404,6 +411,40 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
                         Component[] children = ((Container) component).getComponents();
                         for (Component child : children) {
                                 setEnabledToChildren(child, enabled);
+                        }
+                }
+        }
+
+        /**
+         * Compares a {@link DeviceInfo} object with an {@link AmplifierDefinition} object
+         *
+         * @param info device info object
+         * @param definition amplifier definition object
+         * @return true if they match, false if they don't
+         */
+        private boolean compare(DeviceInfo info, AmplifierDefinition definition) {
+
+                Pattern pattern = Pattern.compile(definition.getMatch());
+                Matcher matcher = pattern.matcher(info.getName());
+
+                boolean regexMatch = matcher.find();
+                boolean protocolMatch = info.getDeviceType().equals(definition.getProtocol());
+
+                return (regexMatch && protocolMatch);
+        }
+
+        /**
+         * Compares a {@link DeviceInfo} object with all definitions, and 
+         * if there is a match it is added to the amp list.
+         * 
+         * @param info device info object
+         */
+        private void compareAll(DeviceInfo info) {
+
+                for (AmplifierDefinition definition : currentDefinitions) {
+
+                        if (compare(info, definition)) {
+                                addToList(new AmplifierInstance(definition.copy(), info.getAddress()));
                         }
                 }
         }

@@ -3,21 +3,22 @@ package org.signalml.app.worker.amplifiers;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.swing.SwingWorker;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
- * Searches for all types of amplifiers. Property listeners can be attached,
- * one property change will be fired: {@link #DISCOVERY_STATE} when a device
- * is found, or some message is passed.
+ * Searches for all types of devices. Property listeners can be attached.
+ * Two property changes will be fired: {@link #DISCOVERY_STATE} when a device
+ * is found or some message is passed (the new value is a {@link DiscoveryState}
+ * object, and {@link #END_OF_SEARCH} when the search is over (the new value is
+ * a String containing result info).
  *
  * @author Tomasz Sawicki
  */
-public class AmplifierDiscoveryWorker extends SwingWorker<DiscoveryState, DiscoveryState> implements PropertyChangeListener {
+public class DeviceDiscoveryWorker extends SwingWorker<String, DiscoveryState> implements PropertyChangeListener {
 
         public static final String DISCOVERY_STATE = "discoveryState";
+        public static final String END_OF_SEARCH = "endOfSearch";
         /**
          * Bluetooth device discoverer.
          */
@@ -35,10 +36,6 @@ public class AmplifierDiscoveryWorker extends SwingWorker<DiscoveryState, Discov
          */
         private boolean usbSearchOver;
         /**
-         * List of amplifier definitions.
-         */
-        private List<AmplifierDefinition> definitions;
-        /**
          * Message source.
          */
         private MessageSourceAccessor messageSource;
@@ -53,10 +50,9 @@ public class AmplifierDiscoveryWorker extends SwingWorker<DiscoveryState, Discov
          * @param messageSource {@link #messageSource}
          * @param definitions {@link #definitions}
          */
-        public AmplifierDiscoveryWorker(MessageSourceAccessor messageSource, List<AmplifierDefinition> definitions) {
+        public DeviceDiscoveryWorker(MessageSourceAccessor messageSource) {
 
                 this.messageSource = messageSource;
-                this.definitions = definitions;
         }
 
         /**
@@ -66,7 +62,7 @@ public class AmplifierDiscoveryWorker extends SwingWorker<DiscoveryState, Discov
          * @throws Exception when needed
          */
         @Override
-        protected DiscoveryState doInBackground() throws Exception {
+        protected String doInBackground() throws Exception {
 
                 publish(new DiscoveryState(messageSource.getMessage("amplifierSelection.search")));
 
@@ -85,7 +81,7 @@ public class AmplifierDiscoveryWorker extends SwingWorker<DiscoveryState, Discov
                         lock.wait();
 
                 }                
-                return new DiscoveryState(messageSource.getMessage("amplifierSelection.searchCompleted"));
+                return messageSource.getMessage("amplifierSelection.searchCompleted");
         }
 
         /**
@@ -116,9 +112,10 @@ public class AmplifierDiscoveryWorker extends SwingWorker<DiscoveryState, Discov
          */
         @Override
         protected void done() {
+                
                 try {
-                        DiscoveryState state = get();
-                        firePropertyChange(DISCOVERY_STATE, null, state);                        
+                        String result = get();
+                        firePropertyChange(END_OF_SEARCH, null, result);
                 } catch (Exception ex) {
                 }
         }
@@ -135,12 +132,7 @@ public class AmplifierDiscoveryWorker extends SwingWorker<DiscoveryState, Discov
                 if (AbstractDeviceDiscoverer.DEVICE_FOUND.equals(evt.getPropertyName())) {
 
                         DeviceInfo info = (DeviceInfo) evt.getNewValue();
-                        for (AmplifierDefinition definition : definitions) {
-
-                                if (compare(info, definition)) {
-                                        publish(new DiscoveryState(new AmplifierInstance(definition.copy(), info.getAddress())));
-                                }
-                        }
+                        publish(new DiscoveryState(info));
 
                 } else if (AbstractDeviceDiscoverer.END_OF_SEARCH.equals(evt.getPropertyName())) {
 
@@ -161,23 +153,5 @@ public class AmplifierDiscoveryWorker extends SwingWorker<DiscoveryState, Discov
                                 }
                         }
                 }
-        }
-
-        /**
-         * Compares a {@link DeviceInfo} object with an {@link AmplifierDefinition} object
-         *
-         * @param info device info object
-         * @param definition amplifier definition object
-         * @return true if they match, false if they don't
-         */
-        private boolean compare(DeviceInfo info, AmplifierDefinition definition) {
-
-                Pattern pattern = Pattern.compile(definition.getMatch());
-                Matcher matcher = pattern.matcher(info.getName());
-
-                boolean regexMatch = matcher.find();
-                boolean protocolMatch = info.getDeviceType().equals(definition.getProtocol());
-
-                return (regexMatch && protocolMatch);
         }
 }

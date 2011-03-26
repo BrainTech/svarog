@@ -8,9 +8,9 @@ package org.signalml.app.worker.amplifiers;
 public class DiscoveryState {
 
         /**
-         * Amplifier instance.
+         * Device info.
          */
-        private AmplifierInstance instance;
+        private DeviceInfo info;
 
         /**
          * Message.
@@ -22,9 +22,9 @@ public class DiscoveryState {
          *
          * @param instance discovered device.
          */
-        public DiscoveryState(AmplifierInstance instance) {
+        public DiscoveryState(DeviceInfo info) {
 
-                this.instance = instance;
+                this.info = info;
                 this.message = null;
         }
 
@@ -35,12 +35,12 @@ public class DiscoveryState {
          */
         public DiscoveryState(String message) {
 
-                this.instance = null;
+                this.info = null;
                 this.message = message;
         }
 
-        public AmplifierInstance getInstance() {
-                return instance;
+        public DeviceInfo getInfo() {
+                return info;
         }
 
         public String getMessage() {
