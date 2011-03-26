@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.opensignal.elements;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
@@ -46,8 +47,14 @@ public class ChannelSelectTable extends JTable {
 
 	public void fillTableFromModel(AmplifierConnectionDescriptor descriptor) {
 
-		if (descriptor == null || descriptor.getAmplifierInstance() == null)
-			return;
+		if (descriptor == null || descriptor.getAmplifierInstance() == null) {
+                        AmplifierChannels channels = new AmplifierChannels(new ArrayList<Integer>());
+                        ChannelSelectTableModel model = new ChannelSelectTableModel();
+                        model.setChannels(channels);
+                        setModel(model);
+                        setColumnsPreferredSizes();
+                        return;
+                }
 
 		AmplifierDefinition amplifierDefinition = descriptor.getAmplifierInstance().getDefinition();
 

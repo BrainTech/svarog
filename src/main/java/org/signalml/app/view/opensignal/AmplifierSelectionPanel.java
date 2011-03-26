@@ -4,7 +4,6 @@ import org.signalml.app.model.AmplifierConnectionDescriptor;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -13,8 +12,6 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.AbstractAction;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -219,11 +216,9 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
                 bottomPanel.add(scrollPane, BorderLayout.CENTER);
 
                 JPanel bottomMostPanel = new JPanel(new GridLayout(1, 2));
-                JPanel progressPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-                progressPanel.add(getProgressBar());
                 JPanel refreshPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
                 refreshPanel.add(getRefreshButton());
-                bottomMostPanel.add(progressPanel);
+                bottomMostPanel.add(getProgressBar());
                 bottomMostPanel.add(refreshPanel);
 
                 bottomPanel.add(bottomMostPanel, BorderLayout.PAGE_END);
@@ -345,6 +340,7 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
                         progressBar = new JProgressBar();
                         progressBar.setIndeterminate(true);
                         progressBar.setVisible(false);
+                        progressBar.setBorder(new EmptyBorder(10, 0, 10, 0));
                 }
                 return progressBar;
         }

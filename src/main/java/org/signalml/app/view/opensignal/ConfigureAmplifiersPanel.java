@@ -1,7 +1,3 @@
-/* ConfigureAmplifiersPanel.java created 2011-03-23
- *
- */
-
 package org.signalml.app.view.opensignal;
 
 import java.awt.Component;
@@ -17,14 +13,21 @@ import org.signalml.app.view.ViewerElementManager;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
+ * Panel containing amp config and open bci modules config buttons.
  *
  * @author Piotr Szachewicz
  */
 public class ConfigureAmplifiersPanel extends JPanel {
 
-	private MessageSourceAccessor messageSource;
-	private ViewerElementManager viewerElementManager;
-	/**
+        /**
+         * The message source.
+         */
+        private MessageSourceAccessor messageSource;
+        /**
+         * The viewer element manager.
+         */
+        private ViewerElementManager viewerElementManager;
+        /**
          * Configure modules button.
          */
         private JButton configureModulesButton = null;
@@ -33,15 +36,24 @@ public class ConfigureAmplifiersPanel extends JPanel {
          */
         private JButton configureDefinitionsButton = null;
 
-	public ConfigureAmplifiersPanel(MessageSourceAccessor messageSource,
-		ViewerElementManager viewerElementManager) {
-		this.messageSource = messageSource;
-		this.viewerElementManager = viewerElementManager;
-		initialize();
-	}
+        /**
+         * Default constructor.
+         *
+         * @param messageSource {@link #messageSource}
+         * @param viewerElementManager {@link #viewerElementManager}
+         */
+        public ConfigureAmplifiersPanel(MessageSourceAccessor messageSource,
+                ViewerElementManager viewerElementManager) {
+                this.messageSource = messageSource;
+                this.viewerElementManager = viewerElementManager;
+                initialize();
+        }
 
-	private void initialize() {
-		CompoundBorder configBorder = new CompoundBorder(
+        /**
+         * Creates the interface.
+         */
+        private void initialize() {
+                CompoundBorder configBorder = new CompoundBorder(
                         new TitledBorder(messageSource.getMessage("amplifierSelection.config")),
                         new EmptyBorder(3, 3, 3, 3));
 
@@ -51,9 +63,9 @@ public class ConfigureAmplifiersPanel extends JPanel {
                 add(Box.createRigidArea(new Dimension(0, 5)));
                 add(getConfigureModulesButton());
 
-	}
+        }
 
-	/**
+        /**
          * Gets the configure definitions button.
          *
          * @return the configure definitions button
@@ -82,5 +94,4 @@ public class ConfigureAmplifiersPanel extends JPanel {
                 }
                 return configureModulesButton;
         }
-
 }

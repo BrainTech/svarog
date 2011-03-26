@@ -6,7 +6,6 @@ import java.awt.GridLayout;
 import javax.swing.JPanel;
 import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.element.MonitorRecordingPanel;
-import org.signalml.domain.montage.Montage;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 
@@ -68,17 +67,14 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
 
                 JPanel leftColumnPanel = new JPanel(new BorderLayout());
 
-		//north panels
 		JPanel amplifierSelectionAndChannelSelectionPanel = new JPanel(new GridLayout(1, 2));
 		amplifierSelectionAndChannelSelectionPanel.add(getAmplifierSelectionPanel());
 		amplifierSelectionAndChannelSelectionPanel.add(getChannelSelectPanel());
-
                 leftColumnPanel.add(amplifierSelectionAndChannelSelectionPanel, BorderLayout.CENTER);
 
-		//south panels
 		JPanel southPanels = new JPanel(new BorderLayout());
-		southPanels.add(getConfigureAmplifiersPanel(), BorderLayout.NORTH);
-                southPanels.add(getStartStopButtonsPanel(), BorderLayout.SOUTH);
+		southPanels.add(getStartStopButtonsPanel(), BorderLayout.NORTH);
+                southPanels.add(getConfigureAmplifiersPanel(), BorderLayout.SOUTH);
 		leftColumnPanel.add(southPanels, BorderLayout.SOUTH);
                 return leftColumnPanel;
         }
@@ -113,6 +109,11 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
                 return amplifierSelectionPanel;
         }
 
+        /**
+         * Gets the channel select panel.
+         *
+         * @return the channel select panel.
+         */
 	public ChannelSelectPanel getChannelSelectPanel() {
 		if (channelSelectPanel == null) {
 			channelSelectPanel = new ChannelSelectPanel(messageSource);
@@ -120,6 +121,11 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
 		return channelSelectPanel;
 	}
 
+        /**
+         * Gets the configure amplifiers panel.
+         *
+         * @return the configure amplifiers panel
+         */
 	public ConfigureAmplifiersPanel getConfigureAmplifiersPanel() {
 		if (configureAmplifiersPanel == null) {
 			configureAmplifiersPanel = new ConfigureAmplifiersPanel(messageSource, viewerElementManager);
@@ -191,8 +197,7 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
                 descriptor.setBciStarted(getStartStopButtonsPanel().isBCIStarted());
 
 		getChannelSelectPanel().fillPanelFromModel(descriptor);
-                getSignalParametersPanel().fillPanelFromModel(descriptor);
-                getMonitorRecordingPanel().fillPanelFromModel(descriptor);
+                getSignalParametersPanel().fillPanelFromModel(descriptor);                
                 if (!omitSelectionPanel) {
                         getAmplifierSelectionPanel().fillPanelFromModel(descriptor);
                 }
@@ -212,17 +217,6 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
                 getSignalParametersPanel().fillModelFromPanel(descriptor);
                 getMonitorRecordingPanel().fillModelFromPanel(descriptor);
                 getAmplifierSelectionPanel().fillModelFromPanel(descriptor);
-
-                /*Montage channelTabMotntage = viewerElementManager.getOpenSignalAndSetMontageDialog().getChannelTabSourceMontage();
-                String[] labels = new String[channelTabMotntage.getSourceChannelCount()];
-                for (int i = 0; i < labels.length; i++) {
-                        labels[i] = channelTabMotntage.getSourceChannelLabelAt(i);
-                }
-                descriptor.getOpenMonitorDescriptor().setChannelLabels(labels);
-                try {
-                        descriptor.getOpenMonitorDescriptor().setSelectedChannelList(labels);
-                } catch (Exception ex) {
-                }*/
 
                 descriptor.getOpenMonitorDescriptor().setMinimumValue(-1000f);
                 descriptor.getOpenMonitorDescriptor().setMaximumValue(1000f);

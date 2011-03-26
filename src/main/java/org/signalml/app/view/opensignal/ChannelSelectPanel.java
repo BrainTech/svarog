@@ -1,10 +1,8 @@
-/* ChannelSelectPanel.java created 2011-03-23
- *
- */
-
 package org.signalml.app.view.opensignal;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
@@ -28,118 +26,160 @@ import org.springframework.context.support.MessageSourceAccessor;
  */
 public class ChannelSelectPanel extends JPanel {
 
-	private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
+        /**
+         * Logger to save history of execution at.
+         */
+        protected static final Logger logger = Logger.getLogger(ChannelSelectPanel.class);
+        /**
+         * The {@link MessageSourceAccessor source} of messages (labels) for elements.
+         */
+        private MessageSourceAccessor messageSource;
+        /**
+         * A list on which selections can be made.
+         */
+        private ChannelSelectTable channelSelectTable;
+        /**
+         * Button for selecting all channels on the list.
+         */
+        private JButton selectAllButton;
+        /**
+         * Button for deselecting all channels on the list.
+         */
+        private JButton clearSelectionButton;
 
-	/**
-	 * Logger to save history of execution at.
-	 */
-	protected static final Logger logger = Logger.getLogger(ChannelSelectPanel.class);
+        /**
+         * This is the default constructor.
+         * @param messageSource {@link #messageSource}
+         */
+        public ChannelSelectPanel(MessageSourceAccessor messageSource) {
+                super();
+                this.messageSource = messageSource;
+                initialize();
+        }
 
-	/**
-	 * The {@link MessageSourceAccessor source} of messages (labels) for elements.
-	 */
-	private MessageSourceAccessor messageSource;
+        /**
+         * This method initializes this panel.
+         */
+        private void initialize() {
+                setLayout(new BorderLayout());
+                add(new JScrollPane(getChannelSelectTable()), BorderLayout.CENTER);
 
-	/**
-	 * A list on which selections can be made.
-	 */
-	private ChannelSelectTable channelSelectTable;
+                CompoundBorder border = new CompoundBorder(
+                        new TitledBorder(messageSource.getMessage("openMonitor.channelSelectPanelTitle")),
+                        new EmptyBorder(3, 3, 3, 3));
+                setBorder(border);
 
-	/**
-	 * Button for selecting all channels on the list.
-	 */
-	private JButton selectAllButton;
+                JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+                buttonPanel.add(getSelectAllButton());
+                buttonPanel.add(getClearSelectionButton());
 
-	/**
-	 * Button for deselecting all channels on the list.
-	 */
-	private JButton clearSelectionButton;
+                add(buttonPanel, BorderLayout.SOUTH);
 
-	/**
-	 * This is the default constructor
-	 */
-	public ChannelSelectPanel(MessageSourceAccessor messageSource) {
-		super();
-		this.messageSource = messageSource;
-		initialize();
-	}
+        }
 
-	/**
-	 * This method initializes this
-	 */
-	private void initialize() {
-		setLayout(new BorderLayout());
-		add(new JScrollPane(getChannelSelectTable()), BorderLayout.CENTER);
+        /**
+         * Returns the list of channels which were selected using this panel.
+         * @return the list of selected channels
+         */
+        public ChannelSelectTable getChannelSelectTable() {
+                if (channelSelectTable == null) {
+                        channelSelectTable = new ChannelSelectTable();
+                }
+                return channelSelectTable;
+        }
 
-		CompoundBorder border = new CompoundBorder(
-			new TitledBorder(messageSource.getMessage("openMonitor.channelSelectPanelTitle")),
-			new EmptyBorder(3, 3, 3, 3));
-		setBorder(border);
+        /**
+         * Returns the button for selecting all channels.
+         * @return the button which is useful for selecting all channels from
+         * the list.
+         */
+        public JButton getSelectAllButton() {
+                if (selectAllButton == null) {
+                        selectAllButton = new JButton(new AbstractAction(messageSource.getMessage("openMonitor.channelSelectPanel.selectAll")) {
 
-		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		buttonPanel.add(getSelectAllButton());
-		buttonPanel.add(getClearSelectionButton());
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                        setAllSelected(true);
+                                }
+                        });
+                }
+                return selectAllButton;
+        }
 
-		add(buttonPanel, BorderLayout.SOUTH);
+        /**
+         * Returns the button for deselecting all positions in the list.
+         * @return the button which can be used to clear all selections made
+         * on the list.
+         */
+        public JButton getClearSelectionButton() {
+                if (clearSelectionButton == null) {
+                        clearSelectionButton = new JButton(new AbstractAction(messageSource.getMessage("openMonitor.channelSelectPanel.clearSelection")) {
 
-	}
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                        setAllSelected(false);
+                                }
+                        });
+                }
+                return clearSelectionButton;
+        }
 
-	/**
-	 * Returns the list of channels which were selected using this panel.
-	 * @return the list of selected channels
-	 */
-	public ChannelSelectTable getChannelSelectTable() {
-		if (channelSelectTable == null)
-			channelSelectTable = new ChannelSelectTable();
-		return channelSelectTable;
-	}
+        /**
+         * Fills this panel from an {@link AmplifierConnectionDescriptor} object.
+         * @param descriptor
+         */
+        public void fillPanelFromModel(AmplifierConnectionDescriptor descriptor) {
+                if (descriptor.getAmplifierInstance() == null || descriptor.isBciStarted()) {
+                        setEnabledAll(false);
+                } else {
+                        setEnabledAll(true);
+                }
+                getChannelSelectTable().fillTableFromModel(descriptor);
+        }
 
-	/**
-	 * Returns the button for selecting all channels.
-	 * @return the button which is useful for selecting all channels from
-	 * the list.
-	 */
-	public JButton getSelectAllButton() {
-		if (selectAllButton == null) {
-			selectAllButton = new JButton(new AbstractAction(messageSource.getMessage("openMonitor.channelSelectPanel.selectAll")) {
+        /**
+         * Sets all channels to be selected or not.
+         * @param selected selected
+         */
+        protected void setAllSelected(boolean selected) {
+                getChannelSelectTable().setAllSelected(selected);
+        }
 
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					setAllSelected(true);
-				}
-			});
-		}
-		return selectAllButton;
-	}
+        /**
+         * Fills an {@link AmplifierConnectionDescriptor} object from this panel.
+         * @param descriptor
+         */
+        public void fillModelFromPanel(AmplifierConnectionDescriptor descriptor) {
+                getChannelSelectTable().fillModelFromTable(descriptor);
+        }
 
-	/**
-	 * Returns the button for deselecting all positions in the list.
-	 * @return the button which can be used to clear all selections made
-	 * on the list.
-	 */
-	public JButton getClearSelectionButton() {
-		if (clearSelectionButton == null) {
-			clearSelectionButton = new JButton(new AbstractAction(messageSource.getMessage("openMonitor.channelSelectPanel.clearSelection")) {
+        /**
+         * Sets enabled to this panel and all it's children.
+         * Clears all fields if enabled == false.
+         *
+         * @param enabled true or false
+         */
+        public void setEnabledAll(boolean enabled) {
 
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					setAllSelected(false);
-				}
-			});
-		}
-		return clearSelectionButton;
-	}
+                setEnabledToChildren(this, enabled);
+        }
 
-	public void fillPanelFromModel(AmplifierConnectionDescriptor descriptor) {
-		getChannelSelectTable().fillTableFromModel(descriptor);
-	}
+        /**
+         * Sets enabled to a component and all of it's children.
+         *
+         * @param component target component
+         * @param enabled true or false
+         * @param omit wheter to omit component
+         */
+        private void setEnabledToChildren(Component component, boolean enabled) {
 
-	protected void setAllSelected(boolean selected) {
-		getChannelSelectTable().setAllSelected(selected);
-	}
-
-	public void fillModelFromPanel(AmplifierConnectionDescriptor descriptor) {
-		getChannelSelectTable().fillModelFromTable(descriptor);
-	}
-
+                component.setEnabled(enabled);
+                if (component instanceof Container) {
+                        Component[] children = ((Container) component).getComponents();
+                        for (Component child : children) {
+                                setEnabledToChildren(child, enabled);
+                        }
+                }
+        }
 }

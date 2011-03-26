@@ -177,18 +177,6 @@ public class MonitorRecordingPanel extends JPanel {
         }
 
         /**
-         * Fills this panel from a {@link AmplifierConnectionDescriptor}.
-         * @param amplifierConnectionDescriptor the descriptor
-         */
-        public void fillPanelFromModel(AmplifierConnectionDescriptor descriptor) {
-                if (descriptor.getAmplifierInstance() == null || descriptor.isBciStarted()) {
-                        setEnabledAll(false);
-                } else {
-                        setEnabledAll(true);
-                }
-        }
-
-        /**
          * Checks if this dialog is properly filled.
          * @param model the model for this dialog
          * @param errors the object in which errors are stored
@@ -216,14 +204,6 @@ public class MonitorRecordingPanel extends JPanel {
         public void setEnabledAll(boolean enabled) {
 
                 setEnabledToChildren(this, enabled);
-
-                if (true) {
-                        if (isRecordingEnabled()) {
-                                getChooseFilesForMonitorRecordingPanel().setEnabled(true);
-                        } else {
-                                getChooseFilesForMonitorRecordingPanel().setEnabled(false);
-                        }
-                }
         }
 
         /**
