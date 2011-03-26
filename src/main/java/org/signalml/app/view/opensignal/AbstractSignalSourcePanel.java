@@ -53,7 +53,7 @@ abstract public class AbstractSignalSourcePanel extends JPanel implements Proper
 
         abstract protected JPanel createRightColumnPanel();       
 
-	protected SignalSourceSelectionPanel getSignalSourceSelectionPanel() {
+	public SignalSourceSelectionPanel getSignalSourceSelectionPanel() {
 		if (signalSourceSelectionPanel == null) {
 			signalSourceSelectionPanel = new SignalSourceSelectionPanel(messageSource);
 			signalSourceSelectionPanel.addPropertyChangeListener(this);

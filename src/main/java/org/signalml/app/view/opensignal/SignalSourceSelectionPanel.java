@@ -76,12 +76,16 @@ public class SignalSourceSelectionPanel extends TitledPanelWithABorder implement
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		SignalSource currentSignalSource = (SignalSource) getSelectionComboBox().getSelectedItem();
-		propertyChangeSupport.firePropertyChange(SIGNAL_SOURCE_SELECTION_CHANGED_PROPERTY, null, currentSignalSource);
+		fireSignalSourceSelectionChanged();
 	}
 
 	public void setEnabled(boolean enabled) {
 		getSelectionComboBox().setEnabled(enabled);
+	}
+
+	public void fireSignalSourceSelectionChanged() {
+		SignalSource currentSignalSource = (SignalSource) getSelectionComboBox().getSelectedItem();
+		propertyChangeSupport.firePropertyChange(SIGNAL_SOURCE_SELECTION_CHANGED_PROPERTY, null, currentSignalSource);
 	}
 
 }
