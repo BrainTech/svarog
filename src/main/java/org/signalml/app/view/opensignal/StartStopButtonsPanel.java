@@ -260,7 +260,7 @@ public class StartStopButtonsPanel extends JPanel {
                         for (int i = 0; i < selectedChannelsCount; i++) {
 
                                 selectedChannelsGain[i] = descrGain[selectedChannels[i]];
-                                selectedChannelsOffset[i] = descrGain[selectedChannels[i]];
+                                selectedChannelsOffset[i] = descrOffset[selectedChannels[i]];
                                 selectedChannelNumbers.add(descrNumbers.get(selectedChannels[i]));
                         }
 
