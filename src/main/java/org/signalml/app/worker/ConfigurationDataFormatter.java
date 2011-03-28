@@ -46,6 +46,12 @@ public class ConfigurationDataFormatter {
         private final String CHANNELS_NAMES = "ChannelsNames";
 
         /**
+         * Amplifier null.
+         */
+        private Double amplifierNull;
+        private final String AMPLIFIER_NULL = "AmplifierNull";
+
+        /**
          * Constructor sets all the values.
          *
          * @param channelCount {@link #channelCount}
@@ -60,7 +66,8 @@ public class ConfigurationDataFormatter {
                                           Float[] calibrationOffset,
                                           Integer samplingFrequency,
                                           Integer[] channelsToRecord,
-                                          String[] channelLabels) {
+                                          String[] channelLabels,
+                                          Double amplifierNull) {
 
                 this.channelCount = channelCount;
                 this.calibrationGain = calibrationGain;
@@ -68,6 +75,7 @@ public class ConfigurationDataFormatter {
                 this.samplingFrequency = samplingFrequency;
                 this.channelsToRecord = channelsToRecord;
                 this.channelLabels = channelLabels;
+                this.amplifierNull = amplifierNull;
         }
 
         /**
@@ -85,6 +93,7 @@ public class ConfigurationDataFormatter {
                 retval.put(SAMPLING_RATE, objectToString(samplingFrequency));
                 retval.put(CHANNELS_TO_RECORD, objectArrayToString(channelsToRecord, " "));
                 retval.put(CHANNELS_NAMES, objectArrayToString(channelLabels, ";"));
+                retval.put(AMPLIFIER_NULL, objectToString(amplifierNull));
 
                 return retval;
         }

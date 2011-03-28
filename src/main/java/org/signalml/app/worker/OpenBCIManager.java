@@ -103,7 +103,8 @@ public class OpenBCIManager extends SwingWorker<ProgressState, ProgressState> im
                         gain, offset,
                         new Integer((int) descriptor.getOpenMonitorDescriptor().getSamplingFrequency().floatValue()),
                         descriptor.getAmplifierInstance().getDefinition().getChannelNumbers().toArray(new Integer[0]),
-                        descriptor.getOpenMonitorDescriptor().getChannelLabels());
+                        descriptor.getOpenMonitorDescriptor().getChannelLabels(),
+                        descriptor.getAmplifierInstance().getDefinition().getAmplifierNull());
 
                 return dataFormatter.formatData();
         }

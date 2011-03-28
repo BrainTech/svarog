@@ -354,6 +354,8 @@ public class OpenMonitorDescriptor {
                         calibrationOffset[i] = definition.getCalibrationOffset().get(i);
                         channelLabels[i] = definition.getDefaultNames().get(i);
                 }
+
+                amplifierNull = definition.getAmplifierNull();
         }
 
         public SignalSource getSignalSource() {
