@@ -60,6 +60,7 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 
 		descriptor.setJmxClient(viewerElementManager.getJmxClient());
 		descriptor.setTagClient(viewerElementManager.getTagClient());
+                descriptor.setSignalSource(SignalSource.OPENBCI);
 
 		getMonitorRecordingPanel().fillModelFromPanel(descriptor);
 	}

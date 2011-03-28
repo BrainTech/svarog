@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * Manager responsible for starting and killing processes.
+ * It's a singleton.
  *
  * @author Tomasz Sawicki
  */
@@ -26,9 +27,27 @@ public class ProcessManager {
         private List<PropertyChangeListener> listeners;
 
         /**
-         * Default constructor.
+         * The only instance of this object.
          */
-        public ProcessManager() {
+        private static ProcessManager instance;
+
+        /**
+         * Static method returning the instance of this object.
+         * 
+         * @return instance of this object.
+         */
+        public static ProcessManager getInstance() {
+                
+                if (instance == null) {
+                        instance = new ProcessManager();
+                }
+                return instance;
+        }
+
+        /**
+         * Default constructor. It's private because this class is a singleton.
+         */
+        private ProcessManager() {
 
                 runningProcesses = new HashMap<String, ProcessSubject>();
                 listeners = new ArrayList<PropertyChangeListener>();

@@ -145,11 +145,6 @@ public class SvarogApplication {
 	 */
 	private static PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainSampleFilterPresetManager = null;
 
-        /**
-         * The process manager responsible for starting and killing processes.
-         */
-        private static ProcessManager processManager = null;
-
 	private static MP5ExecutorManager mp5ExecutorManager = null;
 	private static ViewerMainFrame viewerMainFrame = null;
 	private static XStream streamer = null;
@@ -709,8 +704,6 @@ public class SvarogApplication {
 			logger.error("Failed to read predefined time domain sample filters", ex);
 		}
 
-                processManager = new ProcessManager();
-
 		splash(null, true);
 
 	}
@@ -903,7 +896,6 @@ public class SvarogApplication {
                 elementManager.setOpenBCIModulePresetManager(openBCIModulePresetManager);
 		elementManager.setTimeDomainSampleFilterPresetManager(timeDomainSampleFilterPresetManager);
 		elementManager.setPredefinedTimeDomainFiltersPresetManager(predefinedTimeDomainSampleFilterPresetManager);
-                elementManager.setProcessManager(processManager);
 
 		elementManager.setMp5ExecutorManager(mp5ExecutorManager);
 		elementManager.setPreferences(preferences);
@@ -1042,7 +1034,7 @@ public class SvarogApplication {
 			logger.error("Failed to write MP5 executor manager configuration", ex);
 		}
 
-                processManager.killAll();
+                ProcessManager.getInstance().killAll();
 
 		Method[] methods = methodManager.getMethods();
 		ApplicationMethodDescriptor descriptor;

@@ -1,6 +1,7 @@
 package org.signalml.app.model;
 
 import multiplexer.jmx.client.JmxClient;
+import org.signalml.app.view.opensignal.SignalSource;
 import org.signalml.app.worker.amplifiers.AmplifierDefinition;
 
 import org.signalml.domain.signal.SignalType;
@@ -12,34 +13,39 @@ import org.signalml.domain.signal.raw.RawSignalSampleType;
  */
 public class OpenMonitorDescriptor {
 
-        protected SignalType type;
-        protected String multiplexerAddress;
-        protected int multiplexerPort = -1;
-        protected JmxClient jmxClient;
-        protected JmxClient tagClient;
-        protected boolean metadataReceived = false;
-        protected String metadataInfo;
-        protected Integer channelCount;
-        protected String[] channelLabels;
-        protected Object[] selectedChannelList;
-        protected int[] selectedChannelsIndecies;
-        protected float pageSize;
-        protected Float samplingFrequency;
-        protected float[] calibrationGain;
-        protected float[] calibrationOffset;
-        protected Float minimumValue;
-        protected Float maximumValue;
+        private SignalType type;
+        private String multiplexerAddress;
+        private int multiplexerPort = -1;
+        private JmxClient jmxClient;
+        private JmxClient tagClient;
+        private boolean metadataReceived = false;
+        private String metadataInfo;
+        private Integer channelCount;
+        private String[] channelLabels;
+        private Object[] selectedChannelList;
+        private int[] selectedChannelsIndecies;
+        private float pageSize;
+        private Float samplingFrequency;
+        private float[] calibrationGain;
+        private float[] calibrationOffset;
+        private Float minimumValue;
+        private Float maximumValue;
         /**
          * An integer value representing amplifier`s channel value for non-connected channel.
          */
-        protected double amplifierNull;
-        protected RawSignalSampleType sampleType;
-        protected RawSignalByteOrder byteOrder;
+        private double amplifierNull;
+        private RawSignalSampleType sampleType;
+        private RawSignalByteOrder byteOrder;
         /**
          * This {@link MonitorRecordingDescriptor} represents the parameters of
          * the recording which can be performed on this monitor.
          */
-        protected MonitorRecordingDescriptor monitorRecordingDescriptor;
+        private MonitorRecordingDescriptor monitorRecordingDescriptor;
+        /**
+         * The signal source - openBCI or amplifier.
+         */
+        private SignalSource signalSource;
+
 
         public OpenMonitorDescriptor() {
                 // XXX currently all signals are treated as EEG - there is no way to change this in the GUI
@@ -348,5 +354,13 @@ public class OpenMonitorDescriptor {
                         calibrationOffset[i] = definition.getCalibrationOffset().get(i);
                         channelLabels[i] = definition.getDefaultNames().get(i);
                 }
+        }
+
+        public SignalSource getSignalSource() {
+                return signalSource;
+        }
+
+        public void setSignalSource(SignalSource signalSource) {
+                this.signalSource = signalSource;
         }
 }

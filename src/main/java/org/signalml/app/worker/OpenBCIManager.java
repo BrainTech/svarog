@@ -71,7 +71,7 @@ public class OpenBCIManager extends SwingWorker<ProgressState, ProgressState> im
                 this.elementManager = elementManager;
                 this.descriptor = descriptor;
 
-                processManager = elementManager.getProcessManager();
+                processManager = ProcessManager.getInstance();
                 processManager.addPropertyChangeListener(this);
 
                 connectAction = new ConnectMultiplexerActionNoMetadata(elementManager);

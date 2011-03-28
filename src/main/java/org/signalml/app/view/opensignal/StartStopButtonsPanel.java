@@ -3,11 +3,8 @@ package org.signalml.app.view.opensignal;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -16,7 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-import multiplexer.jmx.client.JmxClient;
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.model.AmplifierConnectionDescriptor;
 import org.signalml.app.view.ViewerElementManager;
@@ -24,6 +20,7 @@ import org.signalml.app.view.element.ProgressDialog;
 import org.signalml.app.worker.OpenBCIManager;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Document;
+import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
@@ -137,6 +134,7 @@ public class StartStopButtonsPanel extends JPanel {
 
                 if (stopButton == null) {
                         stopButton = new JButton(getStopAction());
+                        stopButton.addActionListener(elementManager.getCloseActiveDocumentAction());
                         stopButton.setText(messageSource.getMessage("amplifierSelection.stop"));
                 }
                 return stopButton;
@@ -272,7 +270,6 @@ public class StartStopButtonsPanel extends JPanel {
                         try {
                                 descriptor.getOpenMonitorDescriptor().setSelectedChannelList(selectedChannelsLabels);
                         } catch (Exception ex) {
-                                Logger.getLogger(StartStopButtonsPanel.class.getName()).log(Level.SEVERE, null, ex);
                         }
                 }
         }
@@ -280,16 +277,8 @@ public class StartStopButtonsPanel extends JPanel {
         /**
          * Action responsible for stopping openbci.
          */
-        private class StopAction extends AbstractAction {
-
-                /**
-                 * Default constructor.
-                 */
-                public StopAction() {
-                        super();
-                        setEnabled(false);
-                }
-
+        private class StopAction extends AbstractSignalMLAction {
+                
                 /**
                  * Disconnects from multiplexer and kills all processes
                  * created during the connection. Stop the recording.
@@ -300,36 +289,6 @@ public class StartStopButtonsPanel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
 
-                        try {
-                                JmxClient jmxClient = elementManager.getJmxClient();
-                                if (jmxClient != null) {
-                                        jmxClient.shutdown();
-                                }
-                                elementManager.setJmxClient(null);
-                        } catch (InterruptedException ex) {
-                        }
-
-                        elementManager.getProcessManager().killAll();
-
-                        getStartAction().setEnabled(true);
-                        setEnabled(false);
-
-                        bciStarted = false;
-                        signalSourcePanel.setConnected(false);
-
-                        fillModelFromPanel(currentDescriptor);
-                        try {
-                                signalSourcePanel.fillPanelFromModel(currentDescriptor, true);
-                        } catch (SignalMLException ex) {
-                        }
-
-                        Document document = elementManager.getActionFocusManager().getActiveDocument();
-                        if (document instanceof MonitorSignalDocument) {
-                                try {
-                                        ((MonitorSignalDocument) document).stopMonitorRecording();
-                                } catch (IOException ex) {
-                                }
-                        }
                 }
         }
 }
