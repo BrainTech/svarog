@@ -4,9 +4,12 @@ import org.signalml.app.model.AmplifierConnectionDescriptor;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import javax.swing.JPanel;
+import org.signalml.app.document.DocumentManager;
+import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.element.MonitorRecordingPanel;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.Document;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
@@ -20,15 +23,15 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
          * Amplifier selection panel.
          */
         private AmplifierSelectionPanel amplifierSelectionPanel;
-
-	/**
-	 * Panel to select which channels should be sent by
-	 * an OpenBCI system to Svarog.
-	 */
-	private ChannelSelectPanel channelSelectPanel;
-
-
-	private ConfigureAmplifiersPanel configureAmplifiersPanel;
+        /**
+         * Panel to select which channels should be sent by
+         * an OpenBCI system to Svarog.
+         */
+        private ChannelSelectPanel channelSelectPanel;
+        /**
+         * Panel containing buttons used to configure amps and modules.
+         */
+        private ConfigureAmplifiersPanel configureAmplifiersPanel;
         /**
          * Start stop buttons panel.
          */
@@ -67,15 +70,15 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
 
                 JPanel leftColumnPanel = new JPanel(new BorderLayout());
 
-		JPanel amplifierSelectionAndChannelSelectionPanel = new JPanel(new GridLayout(1, 2));
-		amplifierSelectionAndChannelSelectionPanel.add(getAmplifierSelectionPanel());
-		amplifierSelectionAndChannelSelectionPanel.add(getChannelSelectPanel());
+                JPanel amplifierSelectionAndChannelSelectionPanel = new JPanel(new GridLayout(1, 2));
+                amplifierSelectionAndChannelSelectionPanel.add(getAmplifierSelectionPanel());
+                amplifierSelectionAndChannelSelectionPanel.add(getChannelSelectPanel());
                 leftColumnPanel.add(amplifierSelectionAndChannelSelectionPanel, BorderLayout.CENTER);
 
-		JPanel southPanels = new JPanel(new BorderLayout());
-		southPanels.add(getStartStopButtonsPanel(), BorderLayout.NORTH);
+                JPanel southPanels = new JPanel(new BorderLayout());
+                southPanels.add(getStartStopButtonsPanel(), BorderLayout.NORTH);
                 southPanels.add(getConfigureAmplifiersPanel(), BorderLayout.SOUTH);
-		leftColumnPanel.add(southPanels, BorderLayout.SOUTH);
+                leftColumnPanel.add(southPanels, BorderLayout.SOUTH);
                 return leftColumnPanel;
         }
 
@@ -114,24 +117,24 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
          *
          * @return the channel select panel.
          */
-	public ChannelSelectPanel getChannelSelectPanel() {
-		if (channelSelectPanel == null) {
-			channelSelectPanel = new ChannelSelectPanel(messageSource);
-		}
-		return channelSelectPanel;
-	}
+        public ChannelSelectPanel getChannelSelectPanel() {
+                if (channelSelectPanel == null) {
+                        channelSelectPanel = new ChannelSelectPanel(messageSource);
+                }
+                return channelSelectPanel;
+        }
 
         /**
          * Gets the configure amplifiers panel.
          *
          * @return the configure amplifiers panel
          */
-	public ConfigureAmplifiersPanel getConfigureAmplifiersPanel() {
-		if (configureAmplifiersPanel == null) {
-			configureAmplifiersPanel = new ConfigureAmplifiersPanel(messageSource, viewerElementManager);
-		}
-		return configureAmplifiersPanel;
-	}
+        public ConfigureAmplifiersPanel getConfigureAmplifiersPanel() {
+                if (configureAmplifiersPanel == null) {
+                        configureAmplifiersPanel = new ConfigureAmplifiersPanel(messageSource, viewerElementManager);
+                }
+                return configureAmplifiersPanel;
+        }
 
         /**
          * Gets the start stop buttons panel.
@@ -195,12 +198,12 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
          */
         public void fillPanelFromModel(AmplifierConnectionDescriptor descriptor, boolean omitAmpList) throws SignalMLException {
 
-                descriptor.setBciStarted(getStartStopButtonsPanel().isBCIStarted());
+                setEnabledToPanels(!isMetadataFilled() && getAmplifierSignalDocument() == null);
 
                 getSignalParametersPanel().fillPanelFromModel(descriptor);
-		getChannelSelectPanel().fillPanelFromModel(descriptor);
+                getChannelSelectPanel().fillPanelFromModel(descriptor);
                 getAmplifierSelectionPanel().fillPanelFromModel(descriptor, omitAmpList);
-
+                
                 currentDescriptor = descriptor;
         }
 
@@ -212,15 +215,27 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
          */
         public void fillModelFromPanel(AmplifierConnectionDescriptor descriptor) throws SignalMLException {
 
-		getChannelSelectPanel().fillModelFromPanel(descriptor);
+                getChannelSelectPanel().fillModelFromPanel(descriptor);
                 getSignalParametersPanel().fillModelFromPanel(descriptor);
                 getMonitorRecordingPanel().fillModelFromPanel(descriptor);
                 getAmplifierSelectionPanel().fillModelFromPanel(descriptor);
 
                 descriptor.getOpenMonitorDescriptor().setSignalSource(SignalSource.AMPLIFIER);
-
                 descriptor.getOpenMonitorDescriptor().setMinimumValue(-1000f);
                 descriptor.getOpenMonitorDescriptor().setMaximumValue(1000f);
+        }
+
+        /**
+         * Sets enabled to all subpanels.
+         *
+         * @param enabled enabled
+         */
+        private void setEnabledToPanels(boolean enabled) {
+
+                getAmplifierSelectionPanel().setEnabledAll(enabled);
+                getChannelSelectPanel().setEnabledAll(enabled);
+                getSignalParametersPanel().setEnabledAll(enabled);
+                getStartStopButtonsPanel().setEnabledAll(enabled);
         }
 
         /**
@@ -236,13 +251,28 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
         }
 
         /**
+         * Gets {@link #currentDescriptor} without filling it.
+         *
+         * @return {@link #currentDescriptor}
+         */
+        public AmplifierConnectionDescriptor getDescriptor() {
+
+                return currentDescriptor;
+        }
+
+        /**
          * Wheter metadata is filled.
          *
          * @return if metadata is filled.
          */
         @Override
         public boolean isMetadataFilled() {
-                return getStartStopButtonsPanel().isBCIStarted();
+
+                if (currentDescriptor == null) {
+                        return false;
+                }
+
+                return currentDescriptor.isBciStarted();
         }
 
         /**
@@ -252,6 +282,7 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
          */
         @Override
         public int getChannelCount() {
+
                 return getSignalParametersPanel().getChannelCount();
         }
 
@@ -262,6 +293,25 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
          */
         @Override
         public float getSamplingFrequency() {
+
                 return getSignalParametersPanel().getSamplingFrequency();
+        }
+
+        /**
+         * Gets the signal document created during amp connection.
+         *
+         * @return the document, or null if it doesn't exist
+         */
+        public MonitorSignalDocument getAmplifierSignalDocument() {
+
+                DocumentManager manager = viewerElementManager.getDocumentManager();
+                for (int i = 0; i < manager.getDocumentCount(); i++) {
+                        Document document = manager.getDocumentAt(i);
+                        if (document instanceof MonitorSignalDocument
+                                && ((MonitorSignalDocument) document).getOpenMonitorDescriptor().getSignalSource().isAmplifier()) {
+                                return ((MonitorSignalDocument) document);
+                        }
+                }
+                return null;
         }
 }

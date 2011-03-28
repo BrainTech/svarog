@@ -145,6 +145,7 @@ import org.signalml.app.action.OpenBCIModuleConfigAction;
 import org.signalml.app.action.OpenBookDocumentAction;
 import org.signalml.app.action.OpenSignalAndSetMontageAction;
 import org.signalml.app.action.StartMonitorRecordingAction;
+import org.signalml.app.action.StopBCIAction;
 import org.signalml.app.action.StopMonitorRecordingAction;
 import org.signalml.app.view.opensignal.OpenSignalAndSetMontageDialog;
 import org.signalml.app.view.monitor.AmplifierDefinitionConfigDialog;
@@ -316,6 +317,7 @@ public class ViewerElementManager {
 	private OpenBookDocumentAction openBookDocumentAction;
 	private OpenMonitorAction openMonitorAction;
 	private CloseDocumentAction closeActiveDocumentAction;
+        private StopBCIAction stopBCIAction;
 	private SaveAllDocumentsAction saveAllDocumentsAction;
 	private SaveDocumentAction saveActiveDocumentAction;
 	private SaveDocumentAsAction saveActiveDocumentAsAction;
@@ -1541,6 +1543,13 @@ public class ViewerElementManager {
 		return stopMonitorRecordingAction;
 	}
 
+        public StopBCIAction getStopBCIAction() {
+
+                if (stopBCIAction == null) {
+                        stopBCIAction = new StopBCIAction(messageSource, getActionFocusManager(), this);
+                }
+                return stopBCIAction;
+        }
 
 	public CloseDocumentAction getCloseActiveDocumentAction() {
 		if (closeActiveDocumentAction == null) {

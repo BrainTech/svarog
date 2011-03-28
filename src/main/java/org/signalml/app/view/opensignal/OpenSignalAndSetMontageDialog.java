@@ -6,9 +6,9 @@ package org.signalml.app.view.opensignal;
 
 import java.awt.Window;
 import javax.swing.JComponent;
+import org.signalml.app.model.AmplifierConnectionDescriptor;
 import org.signalml.app.model.OpenSignalDescriptor;
 import org.signalml.app.view.ViewerElementManager;
-import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.montage.SignalMontageDialog;
 import org.signalml.domain.montage.Montage;
 import org.signalml.plugin.export.SignalMLException;
@@ -101,4 +101,26 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 		super.validateDialog(model, errors);
 	}
 
+        /**
+         * On cancel, if current model is an OpenSignalDescriptor and
+         * {@link AmplifierConnectionDescriptor#isBciStarted()} is set to true,
+         * set it to false and disconnect from openbci (isBciStarted set to true
+         * means that someone clicked start, connected succesfully and then
+         * clicked cancel).
+         *
+         * @return super.onCancel();
+         */
+        @Override
+        protected boolean onCancel() {
+
+                if (currentModel instanceof OpenSignalDescriptor) {
+
+                        OpenSignalDescriptor descriptor = (OpenSignalDescriptor) currentModel;
+                        if (descriptor.getAmplifierConnectionDescriptor().isBciStarted()) {
+                                descriptor.getAmplifierConnectionDescriptor().setBciStarted(false);
+                                viewerElementManager.getStopBCIAction().actionPerformed(null);
+                        }
+                }
+                return super.onCancel();
+        }
 }

@@ -149,14 +149,8 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
          */
         public void fillPanelFromModel(AmplifierConnectionDescriptor descriptor, boolean omitAmpList) throws SignalMLException {
 
-                if (descriptor.isBciStarted()) {
-                        setEnabledAll(false);
-                } else {
-                        setEnabledAll(true);
-                }
-
                 if (!omitAmpList) {
-                        // TODO: refresh amp list and try to find the one from the descriptor
+                        clearAmplifierList();
                 }
 
                 currentDescriptor = descriptor;
@@ -448,5 +442,24 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
                                 System.out.println("Device found: " + definition.getName() + " " + info.getAddress());
                         }
                 }
+        }
+
+        /**
+         * Clears the amplifier list.
+         */
+        public void clearAmplifierList() {
+
+                getAmplifiersList().setListData(new Object[] { });
+                amplifierSelected();
+        }
+
+        /**
+         * Stops the refresh.
+         */
+        public void stopRefreshing() {
+
+                getProgressBar().setVisible(false);
+                if (currentWorker != null)
+                        currentWorker.cancelSearch();
         }
 }

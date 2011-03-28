@@ -36,8 +36,6 @@ public class SignalParametersPanelForAmplifierConnection extends AbstractSignalP
                 if (descriptor.getAmplifierInstance() == null) {
                         setEnabledAll(false);
                 } else {
-                        setEnabledAll(!descriptor.isBciStarted());
-
                         getSamplingFrequencyComboBox().setEditable(false);
                         getSamplingFrequencyComboBox().setModel(new DefaultComboBoxModel(
                                 descriptor.getAmplifierInstance().getDefinition().getAvailableFrequencies().toArray()));

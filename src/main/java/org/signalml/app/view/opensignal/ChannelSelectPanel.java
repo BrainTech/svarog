@@ -130,7 +130,7 @@ public class ChannelSelectPanel extends JPanel {
          * @param descriptor
          */
         public void fillPanelFromModel(AmplifierConnectionDescriptor descriptor) {
-                if (descriptor.getAmplifierInstance() == null || descriptor.isBciStarted()) {
+                if (descriptor.getAmplifierInstance() == null) {
                         setEnabledAll(false);
                 } else {
                         setEnabledAll(true);

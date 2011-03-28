@@ -73,7 +73,7 @@ public abstract class AbstractDialog extends JDialog {
 	 * the model with data from which this dialog is filled and in which
 	 * the results of this dialog are stored
 	 */
-	Object currentModel;
+	protected Object currentModel;
 	
 	/**
 	 * true if this dialog was closed with the OK button
