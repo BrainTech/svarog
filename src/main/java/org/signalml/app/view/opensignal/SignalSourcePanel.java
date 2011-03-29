@@ -12,7 +12,10 @@ import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
+import org.signalml.app.action.OpenDocumentAction;
+import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.model.AmplifierConnectionDescriptor;
+import org.signalml.app.model.OpenDocumentDescriptor;
 import org.signalml.app.model.OpenFileSignalDescriptor;
 import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.app.model.OpenSignalDescriptor;
@@ -108,7 +111,9 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 		return (SignalSource) getSignalSourceSelectionComboBoxModel().getSelectedItem();
 	}
 
-	public void fillPanelFromModel(OpenSignalDescriptor openSignalDescriptor) {
+	public void fillPanelFromModel(OpenDocumentDescriptor openDocumentDescriptor) {
+		OpenSignalDescriptor openSignalDescriptor = openDocumentDescriptor.getOpenSignalDescriptor();
+
 		SignalSource signalSource = openSignalDescriptor.getSignalSource();
 		signalSourceSelectionComboBoxModel.setSelectedItem(signalSource);
 
@@ -134,9 +139,17 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 		amplifierSignalSourcePanel.setConnected(false);
 	}
 
-	public void fillModelFromPanel(OpenSignalDescriptor openSignalDescriptor) {
+	public void fillModelFromPanel(OpenDocumentDescriptor openDocumentDescriptor) {
+		OpenSignalDescriptor openSignalDescriptor = openDocumentDescriptor.getOpenSignalDescriptor();
+
 		SignalSource signalSource = (SignalSource) signalSourceSelectionComboBoxModel.getSelectedItem();
 		openSignalDescriptor.setSignalSource(signalSource);
+
+		if (signalSource.isFile())
+			openDocumentDescriptor.setType(ManagedDocumentType.SIGNAL);
+		else
+			openDocumentDescriptor.setType(ManagedDocumentType.MONITOR);
+
 		if (signalSource.isFile()) {
 			OpenFileSignalDescriptor openFileSignalDescriptor = openSignalDescriptor.getOpenFileSignalDescriptor();
 			fileSignalSourcePanel.fillModelFromPanel(openFileSignalDescriptor);

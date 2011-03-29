@@ -1,4 +1,4 @@
-/* OpenSignalDescriptor.java created 2007-09-18
+/* OpenFileSignalDescriptor.java created 2007-09-18
  *
  */
 
@@ -12,17 +12,26 @@ import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
 
-/** OpenSignalDescriptor
+/**
  *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class OpenFileSignalDescriptor {
 
+	/**
+	 * The file containing the signal.
+	 */
 	private File file;
 
+	/**
+	 * Describes the type of the signal (EEG_10_20 or other).
+	 */
 	private SignalType type;
 
+	/**
+	 * The method used to open the file (RAW or using a SignalML codec).
+	 */
 	private FileOpenSignalMethod method;
 
 	// for signalML signals
@@ -35,6 +44,7 @@ public class OpenFileSignalDescriptor {
 	public OpenFileSignalDescriptor() {
 		// XXX currently all signals are treated as EEG - there is no way to change this in the GUI
 		type = SignalType.EEG_10_20;
+		method = FileOpenSignalMethod.RAW;
 
 		rawSignalDescriptor.setSamplingFrequency(128F);
 		rawSignalDescriptor.setChannelCount(2);
@@ -87,10 +97,18 @@ public class OpenFileSignalDescriptor {
 		this.rawSignalDescriptor = rawSignalDescriptor;
 	}
 
+	/**
+	 * Returns the file to be opened.
+	 * @return the file to be opened
+	 */
 	public File getFile() {
 		return file;
 	}
 
+	/**
+	 * Sets the file to be opened.
+	 * @param file the file to be opened
+	 */
 	public void setFile(File file) {
 		this.file = file;
 	}

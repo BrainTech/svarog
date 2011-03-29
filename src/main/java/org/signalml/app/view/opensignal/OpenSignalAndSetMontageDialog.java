@@ -7,6 +7,7 @@ package org.signalml.app.view.opensignal;
 import java.awt.Window;
 import javax.swing.JComponent;
 import org.signalml.app.model.AmplifierConnectionDescriptor;
+import org.signalml.app.model.OpenDocumentDescriptor;
 import org.signalml.app.model.OpenSignalDescriptor;
 import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.montage.SignalMontageDialog;
@@ -16,21 +17,42 @@ import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
 /**
+ * The dialog for opening signal and setting montage for the signal in the same
+ * dialog.
  *
  * @author Piotr Szachewicz
  */
 public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 
+	/**
+	 * ViewerElementManager used by this dialog.
+	 */
 	private ViewerElementManager viewerElementManager;
+
+	/**
+	 * The panel for selecting the source of the signal.
+	 */
 	private SignalSourcePanel signalSourcePanel;
+
+	/**
+	 * A manager used to coordinate the signal selection tab with
+	 * the montage tabs.
+	 */
 	private OpenSignalAndSetMontageDialogManager dialogManager;
 
+	/**
+	 * Constructor.
+	 * @param messageSource message source capable of resolving localized messages
+	 * @param viewerElementManager ViewerElementManager to be used
+	 * @param f the parent window
+	 * @param isModal whether this dialog should be modal
+	 */
 	public OpenSignalAndSetMontageDialog(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager,
 			Window f, boolean isModal) {
 
 		super(messageSource, viewerElementManager.getMontagePresetManager(), viewerElementManager.getPredefinedTimeDomainFiltersPresetManager(), f, isModal);
-		this.viewerElementManager = viewerElementManager;
 
+		this.viewerElementManager = viewerElementManager;
 		dialogManager = new OpenSignalAndSetMontageDialogManager(this, getSignalSourcePanel());
 	}
 
@@ -38,12 +60,17 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 	public JComponent createInterface() {
 		JComponent interfacePanel = super.createInterface();
 
-		tabbedPane.insertTab("Signal source", null, getSignalSourcePanel(), "", 0);
+		String tabTitle = messageSource.getMessage("opensignal.signalSourceTabTitle");
+		tabbedPane.insertTab(tabTitle, null, getSignalSourcePanel(), "", 0);
 		tabbedPane.setSelectedIndex(0);
 
 		return interfacePanel;
 	}
 
+	/**
+	 * Returns the panel for selecting a signal source.
+	 * @return the panel for selecting the source of the signal
+	 */
 	private SignalSourcePanel getSignalSourcePanel() {
 		if (signalSourcePanel == null)
 			signalSourcePanel = new SignalSourcePanel(messageSource, viewerElementManager);
@@ -55,9 +82,9 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 		if (model instanceof Montage) {
 			super.fillDialogFromModel(model);
 		}
-		else if (model instanceof OpenSignalDescriptor) {
-			OpenSignalDescriptor openSignalDescriptor = (OpenSignalDescriptor) model;
-			signalSourcePanel.fillPanelFromModel(openSignalDescriptor);
+		else if (model instanceof OpenDocumentDescriptor) {
+			OpenDocumentDescriptor openDocumentDescriptor = (OpenDocumentDescriptor) model;
+			signalSourcePanel.fillPanelFromModel(openDocumentDescriptor);
 		}
 	}
 
@@ -66,24 +93,23 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 		if (model instanceof Montage) {
 			super.fillModelFromDialog(model);
 		}
-		else if (model instanceof OpenSignalDescriptor) {
-			OpenSignalDescriptor openSignalDescriptor = (OpenSignalDescriptor) model;
-			signalSourcePanel.fillModelFromPanel(openSignalDescriptor);
+		else if (model instanceof OpenDocumentDescriptor) {
+			OpenDocumentDescriptor openDocumentDescriptor = (OpenDocumentDescriptor) model;
+			signalSourcePanel.fillModelFromPanel(openDocumentDescriptor);
 
-			openSignalDescriptor.setMontage(getCurrentMontage());
-
+			openDocumentDescriptor.getOpenSignalDescriptor().setMontage(getCurrentMontage());
 		}
 	}
 
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
-		return OpenSignalDescriptor.class.isAssignableFrom(clazz);
+		return OpenDocumentDescriptor.class.isAssignableFrom(clazz);
 	}
 
-        public Montage getChannelTabSourceMontage() {
-                return channelsPanel.getMontage();
-        }
-
+	/**
+	 * Sets the montage-related tabs in enabled/disbled state.
+	 * @param enable true if the montage tabs should be enabled, false otherwise
+	 */
 	public void setMontageTabsEnabled(boolean enable) {
 		int tabCount = tabbedPane.getTabCount();
 
@@ -91,6 +117,10 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 			tabbedPane.setEnabledAt(i, enable);
 	}
 
+	/**
+	 * Sets the OK button enabled state.
+	 * @param enabled true if the OK button should be enabled, false otherwise
+	 */
 	public void setOKButtoneEnabled(boolean enabled) {
 		getOkButton().setEnabled(enabled);
 	}
@@ -123,4 +153,5 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
                 }
                 return super.onCancel();
         }
+
 }

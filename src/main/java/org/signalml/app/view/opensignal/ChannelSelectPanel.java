@@ -182,4 +182,5 @@ public class ChannelSelectPanel extends JPanel {
                         }
                 }
         }
+
 }

@@ -160,12 +160,12 @@ public class MonitorRecordingPanel extends JPanel {
          * @throws SignalMLException when input data is invalid
          */
         public void fillModelFromPanel(AmplifierConnectionDescriptor descriptor) throws SignalMLException {
-                
+
                 Errors errors = new BindException(this, "data");
                 validatePanel(this, errors);
                 if (errors.hasErrors())
                         throw new SignalMLException(messageSource.getMessage("error.invalidData"));
-                        
+
 
                 OpenMonitorDescriptor openMonitorDescriptor = descriptor.getOpenMonitorDescriptor();
                 if (isRecordingEnabled()) {

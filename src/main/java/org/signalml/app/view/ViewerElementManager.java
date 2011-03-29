@@ -190,7 +190,7 @@ public class ViewerElementManager {
 	private FFTSampleFilterPresetManager fftFilterPresetManager;
         private AmplifierDefinitionPresetManager amplifierDefinitionPresetManager;
         private OpenBCIModulePresetManager openBCIModulePresetManager;
-        
+
 	/**
 	 * A {@link PresetManager} managing the user-defined
 	 * {@link TimeDomainSampleFilter} presets.
@@ -1493,6 +1493,11 @@ public class ViewerElementManager {
 		return openDocumentAction;
 	}
 
+	/**
+	 * Returns the action performed when the user chooses an option to
+	 * open a book.
+	 * @return the action performed when the user wants a book to be opened
+	 */
 	public OpenBookDocumentAction getOpenBookDocumentAction() {
 		if (openBookDocumentAction == null) {
 			openBookDocumentAction = new OpenBookDocumentAction(messageSource);
@@ -1691,7 +1696,7 @@ public class ViewerElementManager {
 
 	public OpenSignalAndSetMontageAction getOpenSignalAndSetMontageAction() {
 		if (openSignalAndSetMontageAction == null) {
-			openSignalAndSetMontageAction = new OpenSignalAndSetMontageAction(this);
+			openSignalAndSetMontageAction = new OpenSignalAndSetMontageAction(getDocumentFlowIntegrator());
 			openSignalAndSetMontageAction.setOpenSignalAndSetMontageDialog(getOpenSignalAndSetMontageDialog());
 		}
 		return openSignalAndSetMontageAction;

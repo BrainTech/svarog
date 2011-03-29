@@ -63,7 +63,7 @@ public class ProgressDialog extends AbstractDialog implements PropertyChangeList
 
                 super(messageSource, w, isModal);
                 setTitle(title);
-                setPreferredSize(new Dimension(DIALOG_WIDTH, DIALOG_HEIGHT));                
+                setPreferredSize(new Dimension(DIALOG_WIDTH, DIALOG_HEIGHT));
         }
 
         /**
@@ -215,7 +215,7 @@ public class ProgressDialog extends AbstractDialog implements PropertyChangeList
          * @return true if there was a success
          */
         public boolean wasSuccess() {
-                
+
                 return success;
         }
 }

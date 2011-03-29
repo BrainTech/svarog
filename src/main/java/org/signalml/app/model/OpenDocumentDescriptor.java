@@ -19,6 +19,9 @@ public class OpenDocumentDescriptor {
 	private ManagedDocumentType type;
 	private boolean makeActive;
 
+	/**
+	 * Descriptor determining a signal to be opened.
+	 */
 	private OpenSignalDescriptor openSignalDescriptor = new OpenSignalDescriptor();
 	private OpenTagDescriptor tagOptions = new OpenTagDescriptor();
 	private OpenBookDescriptor bookOptions = new OpenBookDescriptor();
@@ -47,6 +50,11 @@ public class OpenDocumentDescriptor {
 		this.makeActive = makeActive;
 	}
 
+	/**
+	 * Returns a descriptor describing the signal to be opened
+	 * (from a file or monitor)
+	 * @return descriptor of the signal to be opened
+	 */
 	public OpenSignalDescriptor getOpenSignalDescriptor() {
 		return openSignalDescriptor;
 	}

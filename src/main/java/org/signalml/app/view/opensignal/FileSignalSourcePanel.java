@@ -21,18 +21,47 @@ import org.signalml.app.view.element.SignalMLOptionsPanel;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 
 /**
+ * The panel for choosing a file and setting parameters using which the signal
+ * file should be opened.
  *
  * @author Piotr Szachewicz
  */
 public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 
+	/**
+	 * The panel for choosing a file to be opened.
+	 */
 	private FileChooserPanel fileChooserPanel;
+
+	/**
+	 * The panel for selecting using which method the file should be
+	 * opened (is it a raw signal or should a SignalML codec be used).
+	 */
 	private FileOpenMethodPanel fileOpenMethodPanel;
 
+	/**
+	 * A card panel for showing different signal parameters for each
+	 * fileOpenMethod.
+	 */
 	private JPanel cardPanelForSignalParameters;
+
+	/**
+	 * The panel for changing parameters for a raw signal document.
+	 */
 	private SignalParametersPanelForRawSignalFile rawSignalParametersPanel;
+
+	/**
+	 * The panel for changing parameters for a SignalML document.
+	 */
 	private SignalMLOptionsPanel signalMLOptionsPanel;
 
+	/**
+	 * Constructor.
+	 * @param messageSource message source capable of resolving localized
+	 * messages
+	 * @param viewerElementManager ViewerElementManager to be used by this
+	 * panel
+	 */
 	public FileSignalSourcePanel(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager) {
 		super(messageSource, viewerElementManager);
 
@@ -55,6 +84,11 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 		return rightColumnPanel;
 	}
 
+	/**
+	 * Fills the given descriptor using the data set in the components
+	 * contained in this panel.
+	 * @param openFileSignalDescriptor the descriptor to be filled
+	 */
         public void fillPanelFromModel(OpenFileSignalDescriptor openFileSignalDescriptor) {
 
 		FileOpenSignalMethod method = openFileSignalDescriptor.getMethod();
@@ -65,20 +99,29 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 		}
         }
 
+	/**
+	 * Fills the components in this panel using the data contained in the
+	 * given descriptor.
+	 * @param descriptor descriptor to be used to filled this panel
+	 */
 	public void fillModelFromPanel(OpenFileSignalDescriptor descriptor) {
 		FileOpenSignalMethod method = fileOpenMethodPanel.getSelectedOpenSignalMethod();
 		if (method.isRaw()) {
 			RawSignalDescriptor rawSignalDescriptor = descriptor.getRawSignalDescriptor();
 			rawSignalParametersPanel.fillModelFromPanel(rawSignalDescriptor);
-			
+
 			File selectedFile = fileChooserPanel.getSelectedFile();
-			
+
 			descriptor.setFile(selectedFile);
 		}
 
 		getApplicationConfiguration().setLastOpenDocumentPath(getFileChooserPanel().getFileChooser().getCurrentDirectory().getAbsolutePath());
 	}
 
+	/**
+	 * Returns the panel for choosing which signal file should be opened.
+	 * @return the panel for choosing which signal file should be opened
+	 */
 	public FileChooserPanel getFileChooserPanel() {
 		if (fileChooserPanel == null) {
 			fileChooserPanel = new FileChooserPanel(messageSource, ManagedDocumentType.SIGNAL);
@@ -91,6 +134,12 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 		return fileChooserPanel;
 	}
 
+	/**
+	 * Returns the panel for choosing which method should be used to open
+	 * the selected signal file.
+	 * @return the panel for choosing which method should be used to open
+	 * the selected signal file.
+	 */
 	protected FileOpenMethodPanel getFileOpenMethodPanel() {
 		if (fileOpenMethodPanel == null) {
 			fileOpenMethodPanel = new FileOpenMethodPanel(messageSource);
@@ -99,6 +148,12 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 		return fileOpenMethodPanel;
 	}
 
+	/**
+	 * Returns the card panel for showing different signal parameters for each
+	 * fileOpenMethod.
+	 * @return the card panel for showing different signal parameters for each
+	 * fileOpenMethod
+	 */
 	public JPanel getCardPanelForSignalParameters() {
 		if (cardPanelForSignalParameters == null) {
 			cardPanelForSignalParameters = new JPanel(new CardLayout());
@@ -108,6 +163,10 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 		return cardPanelForSignalParameters;
 	}
 
+	/**
+	 * Returns the panel for setting parameters for a raw signal.
+	 * @return the panel for setting parameters for a raw signal
+	 */
 	public SignalParametersPanelForRawSignalFile getRawSignalParametersPanel() {
 		if (rawSignalParametersPanel == null) {
 			rawSignalParametersPanel = new SignalParametersPanelForRawSignalFile(messageSource, getApplicationConfiguration());
@@ -117,6 +176,10 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 		return rawSignalParametersPanel;
 	}
 
+	/**
+	 * Returns the panel for setting parameters for a SignalML document.
+	 * @return the panel for setting parameters for a SignalML document
+	 */
 	public SignalMLOptionsPanel getSignalMLOptionsPanel() {
 		if (signalMLOptionsPanel == null) {
 			signalMLOptionsPanel = new SignalMLOptionsPanel(messageSource);
@@ -126,18 +189,16 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		String propertyName = evt.getPropertyName();		
+		String propertyName = evt.getPropertyName();
 
 		if (propertyName.equals(FileOpenMethodPanel.FILE_OPEN_METHOD_PROPERTY_CHANGED)) {
 			FileOpenSignalMethod method = (FileOpenSignalMethod) evt.getNewValue();
-			System.out.println("file open method changed to " + method);
 
 			CardLayout cl = (CardLayout)(cardPanelForSignalParameters.getLayout());
 			cl.show(cardPanelForSignalParameters, method.toString());
 		}
 		else
 			super.propertyChange(evt);
-
 	}
 
 	@Override
@@ -155,6 +216,10 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 		return rawSignalParametersPanel.getSamplingFrequency();
 	}
 
+	/**
+	 * Returns the Svarog application configuration.
+	 * @return the Svarog application configuration
+	 */
 	protected ApplicationConfiguration getApplicationConfiguration() {
 		return viewerElementManager.getApplicationConfig();
 	}

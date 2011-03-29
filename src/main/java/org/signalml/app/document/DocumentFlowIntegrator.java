@@ -8,7 +8,6 @@ import java.awt.Component;
 import java.awt.Window;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Iterator;
@@ -21,10 +20,8 @@ import javax.swing.filechooser.FileFilter;
 import multiplexer.jmx.client.ConnectException;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.action.MonitorRecordingAction;
 import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.config.ApplicationConfiguration;
-import org.signalml.app.model.MonitorRecordingDescriptor;
 import org.signalml.app.model.OpenDocumentDescriptor;
 import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.app.model.OpenFileSignalDescriptor;
@@ -652,9 +649,6 @@ public class DocumentFlowIntegrator {
 	 */
 	private SignalDocument openSignalDocument(final OpenDocumentDescriptor descriptor) throws IOException, SignalMLException {
 
-		//File file = descriptor.getFile();
-
-		//if (file == null)
 		File file = descriptor.getOpenSignalDescriptor().getOpenFileSignalDescriptor().getFile();
 
 		boolean fileOk = checkOpenedFile(file);
@@ -662,7 +656,6 @@ public class DocumentFlowIntegrator {
 			return null;
 		}
 
-		//OpenFileSignalDescriptor signalOptions = descriptor.getSignalOptions();
 		OpenFileSignalDescriptor signalOptions = descriptor.getOpenSignalDescriptor().getOpenFileSignalDescriptor();
 		FileOpenSignalMethod method = signalOptions.getMethod();
 		if (method == null) {
@@ -803,7 +796,7 @@ public class DocumentFlowIntegrator {
 	private SignalDocument openMonitorDocument(final OpenDocumentDescriptor descriptor) throws IOException, SignalMLException, ConnectException {
 
 		OpenMonitorDescriptor monitorOptions = null;
-                
+
                 if (descriptor.getOpenSignalDescriptor().getSignalSource().equals(SignalSource.OPENBCI)) {
                         monitorOptions = descriptor.getOpenSignalDescriptor().getOpenMonitorDescriptor();
                 } else if (descriptor.getOpenSignalDescriptor().getSignalSource().equals(SignalSource.AMPLIFIER)) {

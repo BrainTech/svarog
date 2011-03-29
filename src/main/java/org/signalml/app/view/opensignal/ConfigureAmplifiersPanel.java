@@ -94,4 +94,5 @@ public class ConfigureAmplifiersPanel extends JPanel {
                 }
                 return configureModulesButton;
         }
+
 }

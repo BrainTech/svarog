@@ -50,7 +50,7 @@ public abstract class AbstractSignalParametersPanel extends JPanel {
          * Current model.
          */
         protected Object currentModel;
-        /**        
+        /**
          * the combo box with the sampling frequency.
          */
         private JComboBox samplingFrequencyComboBox;
@@ -103,7 +103,7 @@ public abstract class AbstractSignalParametersPanel extends JPanel {
 		getSamplingFrequencyComboBox().setEditable(true);
 		getSamplingFrequencyComboBox().setSelectedItem(1024.0F);
         }
-        
+
         /**
          * Fills {@link #currentModel} from this panel.
          *

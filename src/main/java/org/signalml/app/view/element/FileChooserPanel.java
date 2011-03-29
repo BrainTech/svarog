@@ -4,52 +4,71 @@
 
 package org.signalml.app.view.element;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 
-import org.apache.log4j.Logger;
 import org.signalml.app.document.ManagedDocumentType;
-import org.signalml.app.view.dialog.OpenDocumentDialog;
-import org.signalml.plugin.export.signal.Document;
 import org.springframework.context.support.MessageSourceAccessor;
 
-
 /**
+ * A panel containing an EmbeddedFileChooser. Allows to select a given type of
+ * file documents.
  *
  * @author Piotr Szachewicz
  */
 public class FileChooserPanel extends JPanel {
 
+	/**
+	 * Message source capable of resolving localized messages.
+	 */
 	protected MessageSourceAccessor messageSource;
+
+	/**
+	 * The document types managed by this file chooser panel.
+	 */
 	private ManagedDocumentType[] managedDocumentTypes;
 
+	/**
+	 * The file chooser embedded in this panel.
+	 */
 	private EmbeddedFileChooser fileChooser;
 
+	/**
+	 * Creates a new file chooser panel.
+	 * @param messageSource message source capable of resolving localized
+	 * messages
+	 * @param managedDocumentTypes the types of documents which will be
+	 * chosen using this panel
+	 */
 	public FileChooserPanel(MessageSourceAccessor messageSource, ManagedDocumentType[] managedDocumentTypes) {
 		this.messageSource = messageSource;
 		this.managedDocumentTypes = managedDocumentTypes.clone();
 		createInterface();
 	}
 
+	/**
+	 * Creates this file chooser panel.
+	 * @param messageSource message source capable of resolving localized
+	 * messages
+	 * @param singleManagedDocumentType the type of document which will
+	 * be chosen using this panel
+	 */
 	public FileChooserPanel(MessageSourceAccessor messageSource, ManagedDocumentType singleManagedDocumentType) {
 		this(messageSource, new ManagedDocumentType[] {singleManagedDocumentType});
 	}
 
+	/**
+	 * Creates the GUI for this panel.
+	 */
 	private void createInterface() {
 		setBorder(BorderFactory.createTitledBorder(messageSource.getMessage("openDocument.chooseFile")));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -103,11 +122,20 @@ public class FileChooserPanel extends JPanel {
 		return fileChooser;
 	}
 
+	/**
+	 * Returns the file selected by this file chooser.
+	 * @return the selected file
+	 */
 	public File getSelectedFile() {
 		return fileChooser.getSelectedFile();
 	}
 
+	/**
+	 * Returns the directory currently shown by this file chooser.
+	 * @return directory shown by this file chooser
+	 */
 	public File getCurrentDirectory() {
 		return fileChooser.getCurrentDirectory();
 	}
+
 }

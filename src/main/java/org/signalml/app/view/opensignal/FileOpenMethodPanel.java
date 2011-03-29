@@ -16,21 +16,33 @@ import org.signalml.app.view.element.ResolvableComboBox;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
+ * A panel for selecting the file open method (RAW or using SignalML codec).
  *
  * @author Piotr Szachewicz
  */
 public class FileOpenMethodPanel extends JPanel {
 
+	/**
+	 * Property telling whether the fileOpenMethod has changed.
+	 */
 	public static String FILE_OPEN_METHOD_PROPERTY_CHANGED = "fileOpenMethodPropertyChanged";
 
+	/**
+	 * Message source capable of resolving localized messages.
+	 */
 	protected MessageSourceAccessor messageSource;
 
 	/**
-	 * the combo-box which allows to select the method using which the signal
-	 * document will be opened (raw or signalML)
+	 * The combo-box which allows to select the method using which the signal
+	 * document will be opened (raw or signalML).
 	 */
 	private ResolvableComboBox methodComboBox;
 
+	/**
+	 * Constructor.
+	 * @param messageSource message source capable of resolving localized
+	 * messages
+	 */
 	public FileOpenMethodPanel(MessageSourceAccessor messageSource) {
 		this.messageSource = messageSource;
 		createInterface();
@@ -38,6 +50,9 @@ public class FileOpenMethodPanel extends JPanel {
 		methodComboBox.setEnabled(false);
 	}
 
+	/**
+	 * Creates the GUI for this panel.
+	 */
 	private void createInterface() {
 			CompoundBorder cb = new CompoundBorder(
 			        new TitledBorder(messageSource.getMessage("openSignal.options.methodTitle")),
@@ -77,49 +92,31 @@ public class FileOpenMethodPanel extends JPanel {
 					}
 				}
 			});
-
-			//methodComboBox.addItem(messageSource.getMessage("openSignal.options.methodSignalML"));
-			//methodComboBox.addItem(messageSource.getMessage("openSignal.options.methodRaw"));
-
-			/*methodComboBox.addItemListener(new ItemListener() {
-
-				@Override
-				public void itemStateChanged(ItemEvent e) {
-					if (e.getStateChange() == ItemEvent.SELECTED) {
-
-						int index = methodComboBox.getSelectedIndex();
-						switch (index) {
-
-						case 0 :
-							getCardLayout().show(getOptionsPanel(), "signalml");
-							break;
-
-						case 1 :
-							getCardLayout().show(getOptionsPanel(), "raw");
-							break;
-
-						default :
-							throw new SanityCheckException("Bad setting [" + index + "]");
-
-						}
-
-					}
-				}
-
-			});*/
 		}
 		return methodComboBox;
 	}
 
+	/**
+	 * Returns the selected method for opening the signal file.
+	 * @return the selected method for opening the signal file
+	 */
 	public FileOpenSignalMethod getSelectedOpenSignalMethod() {
 		return (FileOpenSignalMethod) methodComboBox.getSelectedItem();
 	}
 
+	/**
+	 * Sets the open file method to be selected.
+	 * @param method the method to be selected in this panel
+	 */
 	public void setSelectedOpenSignalMethod(FileOpenSignalMethod method) {
 		methodComboBox.setSelectedItem(method);
 	}
 
+	/**
+	 * Fires the propertyChange telling that the fileOpenMethod has changed.
+	 */
 	protected void fireFileOpenMethodPropertyChanged() {
 		firePropertyChange(FILE_OPEN_METHOD_PROPERTY_CHANGED, null, methodComboBox.getSelectedItem());
 	}
+
 }

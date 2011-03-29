@@ -41,7 +41,6 @@ import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.SwingUtils;
 import org.signalml.app.view.TablePopupMenuProvider;
 import org.signalml.app.view.dialog.SeriousWarningDialog;
-import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.element.ResolvableComboBox;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
@@ -49,7 +48,6 @@ import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.montage.filter.SampleFilterType;
 import org.signalml.exception.SanityCheckException;
-import org.signalml.exception.ResolvableException;
 
 import org.springframework.context.support.MessageSourceAccessor;
 
@@ -500,11 +498,16 @@ public class MontageFiltersPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Updates the combo box used for the selection of predefined filters
+	 * regarding the current sampling frequency.
+	 */
 	protected void updatePredefinedTimeDomainFiltersComboBox() {
 		List<SampleFilterDefinition> predefinedFilters = predefinedTimeDomainSampleFilterPresetManager.getPredefinedFilters(getCurrentSamplingFrequency());
 
 		if (predefinedFilters == null) {
 			//ErrorsDialog.showImmediateExceptionDialog(this, new ResolvableException("error.noPredefinedFiltersForThisSamplingFrequency"));
+			logger.debug("No predefined filters for the current sampling frequency " + getCurrentSamplingFrequency());
 			getTimeDomainFilterTypeComboBox().setModel(new DefaultComboBoxModel(new Object[0]));
 			return;
 		}

@@ -19,14 +19,29 @@ import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
+ * An action performed when the user chooses an option to open a book document.
+ * Opens a new dialog for selecting a book file and after that opens
+ * the file.
  *
  * @author Piotr Szachewicz
  */
 public class OpenBookDocumentAction extends AbstractSignalMLAction {
 
+	/**
+	 * Used for opening documents.
+	 */
 	private DocumentFlowIntegrator documentFlowIntegrator;
+
+	/**
+	 * A component used to choose a book file to be opened.
+	 */
 	private JFileChooser fileChooser;
 
+	/**
+	 * Creates this action.
+	 * @param messageSource message source capable of resolving localized
+	 * messages
+	 */
 	public OpenBookDocumentAction(MessageSourceAccessor messageSource) {
 		super(messageSource);
 		setText("action.openBookDocument");
@@ -60,6 +75,10 @@ public class OpenBookDocumentAction extends AbstractSignalMLAction {
 		}
 	}
 
+	/**
+	 * Returns the file chooser used in this action.
+	 * @return the file chooser to be used.
+	 */
 	protected JFileChooser getFileChooser() {
 		if (fileChooser == null) {
 			String lastOpenDocumentPath = documentFlowIntegrator.getApplicationConfig().getLastOpenDocumentPath();
@@ -77,14 +96,24 @@ public class OpenBookDocumentAction extends AbstractSignalMLAction {
 		return fileChooser;
 	}
 
+	/**
+	 * Returns the DocumentFlowIntegrator used by this action.
+	 * @return the DocumentFlowIntegrator used by this action
+	 */
 	public DocumentFlowIntegrator getDocumentFlowIntegrator() {
 		return documentFlowIntegrator;
 	}
 
+	/**
+	 * Sets the DocumentFlowIntegrator to be used by this action to
+	 * open documents.
+	 * @param documentFlowIntegrator DocumentFlowIntegrator to be used.
+	 */
 	public void setDocumentFlowIntegrator(DocumentFlowIntegrator documentFlowIntegrator) {
 		if (documentFlowIntegrator == null) {
 			throw new NullPointerException();
 		}
 		this.documentFlowIntegrator = documentFlowIntegrator;
 	}
+
 }

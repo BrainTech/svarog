@@ -7,6 +7,9 @@ package org.signalml.app.view.opensignal;
 import org.springframework.context.MessageSourceResolvable;
 
 /**
+ * This class represents a method which should be used to open a file signal
+ * determining whether it is a raw signal or a SignalML codec should be used
+ * to open it.
  *
  * @author Piotr Szachewicz
  */
@@ -15,10 +18,18 @@ public enum FileOpenSignalMethod implements MessageSourceResolvable {
 	RAW,
 	SIGNALML;
 
+	/**
+	 * Returns whether the signal is SignalML.
+	 * @return true if the signal is a SignalML document.
+	 */
 	public boolean isSignalML() {
 		return (this == SIGNALML);
 	}
 
+	/**
+	 * Returns whether the signal is a raw document.
+	 * @return true if the signal is a raw signal document, false otherwise.
+	 */
 	public boolean isRaw() {
 		return (this == RAW);
 	}
@@ -37,4 +48,5 @@ public enum FileOpenSignalMethod implements MessageSourceResolvable {
 	public String getDefaultMessage() {
 		return this.toString();
 	}
+
 };

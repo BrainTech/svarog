@@ -406,11 +406,18 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 		return editTimeDomainSampleFilterDialog;
 	}
 
+	/**
+	 * Sets the sampling frequency used by the filters in this montage.
+	 * @param samplingFrequency sampling frequency to be used
+	 */
 	public void setSamplingFrequency(float samplingFrequency) {
 		filtersPanel.setCurrentSamplingFrequency(samplingFrequency);
-		
 	}
 
+	/**
+	 * Returns the current montage.
+	 * @return the current montage
+	 */
 	public Montage getCurrentMontage() {
 		return currentMontage;
 	}

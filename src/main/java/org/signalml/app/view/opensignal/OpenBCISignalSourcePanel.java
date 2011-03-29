@@ -14,17 +14,40 @@ import org.signalml.app.view.element.MonitorRecordingPanel;
 import org.signalml.app.model.OpenMonitorDescriptor;
 
 /**
+ * The panel for choosing setting a connection to an openBCI system and
+ * setting parameters using which the signal should be opened.
  *
  * @author Piotr Szachewicz
  */
 public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 
+	/**
+	 * The current OpenMonitorDescriptor.
+	 */
 	private OpenMonitorDescriptor currentModel;
 
+	/**
+	 * A panel used to connect or disconnect to a multiplexer.
+	 */
 	private MultiplexerConnectionPanel multiplexerConnectionPanel;
+
+	/**
+	 * A panel used to specify monitor recording options.
+	 */
 	private MonitorRecordingPanel monitorRecordingPanel;
+
+	/**
+	 * A panel used to specify parameters for the monitor to be opened.
+	 */
 	private SignalParametersPanelForOpenMonitor signalParametersPanel;
 
+	/**
+	 * Constructor.
+	 * @param messageSource message source capable of resolving localized
+	 * messages
+	 * @param viewerElementManager ViewerElementManager to be used by this
+	 * panel
+	 */
 	public OpenBCISignalSourcePanel(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager) {
 		super(messageSource, viewerElementManager);
 	}
@@ -45,6 +68,11 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 		return rightColumnPanel;
 	}
 
+	/**
+	 * Fills the components in this panel using the data contained in the
+	 * given descriptor.
+	 * @param descriptor descriptor to be used to filled this panel
+	 */
         public void fillPanelFromModel(OpenMonitorDescriptor descriptor) {
 
 		currentModel = descriptor;
@@ -54,6 +82,11 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 
         }
 
+	/**
+	 * Fills the given descriptor using the data set in the components
+	 * contained in this panel.
+	 * @param openMonitorDescriptor the descriptor to be filled
+	 */
 	public void fillModelFromPanel(OpenMonitorDescriptor descriptor) {
 		signalParametersPanel.fillModelFromPanel(descriptor);
 		getMultiplexerConnectionPanel().fillModelFromPanel(descriptor);
@@ -65,6 +98,10 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 		getMonitorRecordingPanel().fillModelFromPanel(descriptor);
 	}
 
+	/**
+	 * Returns the panel for connecting/disconnecting to the multiplexer.
+	 * @return the panel for connecting/disconnecting to the multiplexer
+	 */
 	protected MultiplexerConnectionPanel getMultiplexerConnectionPanel() {
 		if (multiplexerConnectionPanel == null) {
 			multiplexerConnectionPanel = new MultiplexerConnectionPanel(viewerElementManager);
@@ -74,6 +111,10 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 		return multiplexerConnectionPanel;
 	}
 
+	/**
+	 * Returns the panel for setting the parameters for the monitor to be opened.
+	 * @return the panel for setting the parameters for the monitor to be opened
+	 */
 	public SignalParametersPanelForOpenMonitor getSignalParametersPanel() {
 		if (signalParametersPanel == null) {
 			signalParametersPanel = new SignalParametersPanelForOpenMonitor(messageSource, viewerElementManager.getApplicationConfig());
@@ -82,6 +123,10 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 		return signalParametersPanel;
 	}
 
+	/**
+	 * Returns the panel used to set the monitor recording options.
+	 * @return the panel used to set the monitor recording options
+	 */
 	protected MonitorRecordingPanel getMonitorRecordingPanel() {
 		if (monitorRecordingPanel == null) {
 			monitorRecordingPanel = new MonitorRecordingPanel(messageSource);
@@ -102,17 +147,6 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 		}
 		else if ("disconnected".equals(propertyName)) {
 			setConnected(false);
-			/*try {
-				OpenMonitorDescriptor m = ((OpenMonitorDescriptor) getCurrentModel());
-				m.setSamplingFrequency(null);
-				m.setChannelCount(null);
-				m.setChannelLabels(null);
-
-
-				fillDialogFromModel(getCurrentModel());
-			} catch (SignalMLException ex) {
-				Logger.getLogger(OpenMonitorDialog.class.getName()).log(Level.SEVERE, null, ex);
-			}*/
 		}
 		else
 			super.propertyChange(evt);

@@ -316,6 +316,10 @@ public class MultiplexerConnectionPanel extends JPanel {
 		setInterfaceInUnconnectedState();
 	}
 
+	/**
+	 * Sets this interface to be in an unconnected state. After calling this
+	 * method new connections can be made.
+	 */
 	public void setInterfaceInUnconnectedState() {
 		getConnectButton().setEnabled(true);
 		getDisconnectButton().setEnabled(false);
@@ -358,11 +362,9 @@ public class MultiplexerConnectionPanel extends JPanel {
 
 		if (address != null) {
 			getMultiplexerAddressField().setText(address);
-			System.out.println("address = " + address);
 		}
 		if (port != -1) {
 			getMultiplexerPortField().setText(Integer.toString(port));
-			System.out.println("port = " + port);
 		}
 
 	}

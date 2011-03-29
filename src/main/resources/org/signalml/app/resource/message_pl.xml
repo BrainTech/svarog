@@ -698,6 +698,8 @@
 	<entry key="openDocument.bookChosen">Book document chosen</entry>
 	<entry key="openDocument.tagChosen">Tag document chosen</entry>
 
+	<entry key="opensignal.dialogTitle">Open signal</entry>
+	<entry key="opensignal.signalSourceTabTitle">Signal source</entry>
 	<entry key="opensignal.signalsource.FILE">File</entry>
 	<entry key="opensignal.signalsource.OPENBCI">OpenBCI</entry>
 	<entry key="opensignal.signalsource.AMPLIFIER">Amplifier</entry>
