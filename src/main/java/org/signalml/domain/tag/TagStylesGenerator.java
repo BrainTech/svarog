@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Stack;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.document.TagDocument;
@@ -21,6 +22,7 @@ public class TagStylesGenerator {
 	protected static String STYLES_PATH = "org/signalml/domain/tag/sample/default_sleep_styles.xml";
 	protected HashMap<String,TagStyle> styles;
 	protected HashMap<String,TagStyle> tempStyles;
+	protected Stack<Color> colors;
 
 	private double pageSize;
 	private double blockSize;
@@ -35,6 +37,17 @@ public class TagStylesGenerator {
 			styles.put(style.getName(), style);
 		}
 		
+		this.colors = new Stack<Color>();
+		colors.push(Color.WHITE);
+		colors.push(Color.CYAN);
+		colors.push(Color.GRAY);
+		colors.push(Color.MAGENTA);
+		colors.push(Color.ORANGE);
+		colors.push(Color.PINK);
+		colors.push(Color.YELLOW);
+		colors.push(Color.GREEN);
+		colors.push(Color.BLUE);
+
 	}
 
 	/**
@@ -86,15 +99,11 @@ public class TagStylesGenerator {
 			signalSelectionType = SignalSelectionType.CHANNEL;
 
 		//generating new style for the tag
-		TagStyle style;
-		if(signalSelectionType.isBlock())
-			style = new TagStyle(signalSelectionType, name, "", Color.GREEN, Color.RED, 1);
-		else if (signalSelectionType.isPage())
-			style = new TagStyle(signalSelectionType, name, "", Color.YELLOW, Color.BLACK, 1);
-		else
-			style = new TagStyle(signalSelectionType, name, "", Color.ORANGE, Color.BLUE, 1);
-
-		if (tagLength < 0.01)
+		Color c = this.colors.pop();
+		TagStyle style = new TagStyle(signalSelectionType, name, "", 
+				c, Color.RED, 1);
+		logger.info("Generated color for:"+name+" = "+c);
+		if (tagLength < 0.001)
 			style.setMarker(true);
 		else
 			style.setMarker(false);
