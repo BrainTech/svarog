@@ -17,6 +17,25 @@
 		<finalName>${artifactId}-DO-NOT-USE</finalName>
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>compile</id>
+						<phase>verify</phase>
+						<configuration>
+							<tasks>
+								<copy file="FFT.xml" tofile="target/FFT.xml"/>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<source>1.6</source>
@@ -46,6 +65,7 @@
 							</artifactSet>
 							<shadedArtifactAttached>true</shadedArtifactAttached>
 							<shadedClassifierName>shade</shadedClassifierName>
+							<finalName>FFT</finalName>
 						</configuration>
 					</execution>
 				</executions>

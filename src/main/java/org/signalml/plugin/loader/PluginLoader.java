@@ -208,12 +208,39 @@ public class PluginLoader {
 		}
 		return urls;
 	}
+	
+	/**
+	 * Adds plug-in directories for all default plug-ins, namely
+	 * the directories {@code src/plugins/}*{@code /target}	
+	 * @param svarogDir the svarog base directory
+	 */
+	private void startFromSourcesAddPluginDirs(File svarogDir){
+		File pluginsDir = new File(svarogDir + File.separator + "src" + File.separator + "plugins");
+		if (pluginsDir.exists() && pluginsDir.canRead() && pluginsDir.isDirectory()){
+			String[] pluginSrcDirsNames = pluginsDir.list();
+			for (String dirName : pluginSrcDirsNames){
+				File dir = new File(pluginsDir, dirName);
+				if (dir.isDirectory()){
+					File pluginDir = new File(dir + File.separator + "target");
+					if (pluginDir.exists() && pluginDir.isDirectory() && pluginDir.canRead()) {
+						this.pluginDirs.add(pluginDir);
+					}
+				}
+			}
+		}
+	}
 
 	/**
-	 * Adds the default plug-in directory based on
-	 * given profile directory.
-	 * @param profileDir profile directory where default
-	 * plug-in folder is located
+	 * Adds the default plug-in directory based on given profile directory.
+	 * Also:
+	 * <ul>
+	 * <li>adds plug-in directories for all default plug-ins if Svarog is
+	 * started from sources,</li>
+	 * <li>adds the global plug-in directory if Svarog is started from jar
+	 * created during the installation,</li>
+	 * </ul>
+	 * @param profileDir profile directory where default plug-in folder
+	 * is located
 	 */
 	private void setDefaultPluginDir(File profileDir) {
 		File pluginDir = new File(profileDir + File.separator + "plugins");
@@ -223,18 +250,25 @@ public class PluginLoader {
 			this.pluginDirs.add(pluginDir);
 		}
 		//hack to get the location of the jar file and add the global plugin directory
+		File pluginDirGlobal = null;
 		try{
-			URL jarURL = getClass().getProtectionDomain().getCodeSource().getLocation();
-			JarURLConnection connection = (JarURLConnection) jarURL.openConnection();
-			jarURL = connection.getJarFileURL();
-			File jarDirFile = new File(jarURL.toURI());
-			jarDirFile = jarDirFile.getParentFile();
-			File pluginDirGlobal = new File(jarDirFile + File.separator + "plugins");
-			if (pluginDirGlobal.exists() && pluginDirGlobal.isDirectory() && pluginDirGlobal.canRead()) {
-				this.pluginDirs.add(pluginDirGlobal);
+			URL srcURL = getClass().getProtectionDomain().getCodeSource().getLocation();
+			if (srcURL.toString().endsWith("/target/classes/")){
+				File svarogDirFile = new File(srcURL.toURI());
+				svarogDirFile = svarogDirFile.getParentFile().getParentFile();
+				startFromSourcesAddPluginDirs(svarogDirFile);
+			} else {
+				JarURLConnection connection = (JarURLConnection) srcURL.openConnection();
+				URL jarURL = connection.getJarFileURL();
+				File jarDirFile = new File(jarURL.toURI());
+				jarDirFile = jarDirFile.getParentFile();
+				pluginDirGlobal = new File(jarDirFile + File.separator + "plugins");
+				if (pluginDirGlobal.exists() && pluginDirGlobal.isDirectory() && pluginDirGlobal.canRead()) {
+					this.pluginDirs.add(pluginDirGlobal);
+				}
 			}
 		} catch (Exception ex){
-			logger.error("Failed to add global plugin directory - maybe not started from a jar file");
+			logger.error("Failed to add global plugin directory - maybe started neither from a jar file nor from sources");
 		}
 	}
 
