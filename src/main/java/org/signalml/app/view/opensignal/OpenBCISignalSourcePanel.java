@@ -51,7 +51,7 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 
 		getMultiplexerConnectionPanel().fillPanelFromModel(currentModel);
 		signalParametersPanel.fillPanelFromModel(currentModel);
-		getMonitorRecordingPanel().setEnabledAll(true);
+
         }
 
 	public void fillModelFromPanel(OpenMonitorDescriptor descriptor) {
