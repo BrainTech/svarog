@@ -474,7 +474,7 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 	@Override
 	public void fillDialogFromModel(Object model) {
 
-		/*String path = applicationConfig.getLastOpenDocumentPath();
+		String path = applicationConfig.getLastOpenDocumentPath();
 		if (path != null) {
 			getStepOnePanel().getFileChooser().setCurrentDirectory(new File(path));
 		}
@@ -486,7 +486,7 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 		}
 		getStepOnePanel().getFileChooser().setSelectedFile(f);
 
-		OpenFileSignalDescriptor osd = ofd.getSignalOptions();
+		OpenFileSignalDescriptor osd = ofd.getOpenSignalDescriptor().getOpenFileSignalDescriptor();
 		SignalParameterDescriptor spd = osd.getParameters();
 
 		getStepTwoPanel().getSignalOptionsPanel().getPagingSignalParamersPanel().fillPanelFromModel(spd);
@@ -495,7 +495,7 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 		if (rawSignalDescriptor != null) {
 			getStepTwoPanel().getSignalOptionsPanel().getRawSignalOptionsPanel().fillPanelFromModel(rawSignalDescriptor);
 		}
-*/
+
 	}
 
 	/**
@@ -534,8 +534,10 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
 
-		/*OpenDocumentDescriptor ofd = (OpenDocumentDescriptor) model;
-		ofd.setFile(getStepOnePanel().getFileChooser().getSelectedFile());
+		OpenDocumentDescriptor ofd = (OpenDocumentDescriptor) model;
+		File selectedFile = getStepOnePanel().getFileChooser().getSelectedFile();
+		ofd.getOpenSignalDescriptor().getOpenFileSignalDescriptor().setFile(selectedFile);
+
 		if (targetType == null) {
 			logger.error("Target type null");
 			throw new SignalMLException("error.invalidValue");
@@ -543,7 +545,7 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 		ofd.setType(targetType);
 		if (targetType.equals(ManagedDocumentType.SIGNAL)) {
 
-			OpenFileSignalDescriptor osd = ofd.getSignalOptions();
+			OpenFileSignalDescriptor osd = ofd.getOpenSignalDescriptor().getOpenFileSignalDescriptor();
 
 			OpenSignalOptionsPanel signalOptionsPanel = getStepTwoPanel().getSignalOptionsPanel();
 
@@ -618,7 +620,7 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 		}
 
 		applicationConfig.setLastOpenDocumentPath(getStepOnePanel().getFileChooser().getCurrentDirectory().getAbsolutePath());
-*/
+
 	}
 
 	/**

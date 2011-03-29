@@ -722,6 +722,7 @@ public class ViewerElementManager {
 
 			fileMenu = new JMenu(messageSource.getMessage("menu.file"));
 
+			fileMenu.add(getOpenDocumentAction());
 			fileMenu.add(getOpenSignalAndSetMontageAction());
 			fileMenu.add(getOpenBookDocumentAction());
 			fileMenu.add(getSaveActiveDocumentAction());
@@ -888,7 +889,6 @@ public class ViewerElementManager {
 
 			mainToolBar.setFloatable(false);
 
-			//mainToolBar.add(getOpenDocumentAction());
 			mainToolBar.add(getOpenSignalAndSetMontageAction());
 			mainToolBar.add(getSaveActiveDocumentAction());
 			mainToolBar.add(getSaveActiveDocumentAsAction());
