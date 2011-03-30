@@ -4,8 +4,6 @@
 
 package org.signalml.app.view.opensignal;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import org.signalml.app.config.ApplicationConfiguration;
@@ -17,13 +15,24 @@ import org.signalml.app.view.element.FileChooserPanel;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
+ * Signal parameters panel adapted to the needs of the open file signal source panel.
  *
  * @author Piotr Szachewicz
  */
 public class SignalParametersPanelForRawSignalFile extends AbstractSignalParametersPanel {
 
+	/**
+	 * The action called when the user chooses an option to read signal parameters
+	 * from an XML file.
+	 */
 	private ReadXMLManifestAction readManifestAction;
 
+	/**
+	 * Constructor.
+	 * @param messageSource message source capable of resolving localized
+	 * messages
+	 * @param applicationConfiguration the current application configuration
+	 */
 	public SignalParametersPanelForRawSignalFile(MessageSourceAccessor messageSource, ApplicationConfiguration applicationConfiguration) {
 		super(messageSource, applicationConfiguration);
 
@@ -38,12 +47,21 @@ public class SignalParametersPanelForRawSignalFile extends AbstractSignalParamet
 		return buttonPanel;
 	}
 
+	/**
+	 * Returns the action called when the user chooses an option to
+	 * read signal parameters from an XML manifest file.
+	 * @return the action performed to read an XML manifest
+	 */
 	protected ReadXMLManifestAction getReadManifestAction() {
 		if (readManifestAction == null)
 			readManifestAction = new ReadXMLManifestAction(messageSource, this);
 		return readManifestAction;
 	}
 
+	/**
+	 * Fills this panel with the data contained in the descriptor.
+	 * @param descriptor the descriptor containing data
+	 */
 	public void fillPanelFromModel(RawSignalDescriptor descriptor) {
 		getSamplingFrequencyComboBox().setSelectedItem(descriptor.getSamplingFrequency());
 		getChannelCountSpinner().setValue(descriptor.getChannelCount());
@@ -60,6 +78,10 @@ public class SignalParametersPanelForRawSignalFile extends AbstractSignalParamet
                 currentModel = descriptor;
 	}
 
+	/**
+	 * Fills the descriptor with the data contained in this panel.
+	 * @param descriptor the descriptor to be filled
+	 */
 	public void fillModelFromPanel(RawSignalDescriptor descriptor) {
 		descriptor.setSamplingFrequency(getSamplingFrequency());
 		descriptor.setChannelCount(getChannelCountSpinner().getValue());
@@ -77,6 +99,12 @@ public class SignalParametersPanelForRawSignalFile extends AbstractSignalParamet
                 fillModelFromPanel((RawSignalDescriptor) currentModel);
         }
 
+	/**
+	 * Sets the fileChooser responsible for choosing a signal file.
+	 * Used for opening the same directory in both signal file fileChooser
+	 * and XML manifest fileChooser.
+	 * @param fileChooserPanel the file chooser for choosing a signal file
+	 */
 	public void setSignalFileChooserPanel(FileChooserPanel fileChooserPanel) {
 		getReadManifestAction().setSignalFileChooserPanel(fileChooserPanel);
 	}

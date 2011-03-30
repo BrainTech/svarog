@@ -7,12 +7,9 @@ import java.awt.CardLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
-import org.signalml.app.action.OpenDocumentAction;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.model.AmplifierConnectionDescriptor;
 import org.signalml.app.model.OpenDocumentDescriptor;
@@ -25,25 +22,63 @@ import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
 /**
+ * This panel is composed of an signal source combo box which can be used to
+ * select an appropriate signal source. If the signal source is choosen this
+ * panel shows the available parameters and option for the chosen signal source.
  *
  * @author Piotr Szachewicz
  */
 public class SignalSourcePanel extends JPanel implements PropertyChangeListener {
 
+	/**
+	 * The ViewerElementManager to be used by this panel.
+	 */
 	private ViewerElementManager viewerElementManager;
 
+	/**
+	 * Message source capable of resolving localized messages.
+	 */
 	private MessageSourceAccessor messageSource;
+
+	/**
+	 * The model of the signal source combo box. It holds the currently
+	 * selected signal source option and changing it results in changing
+	 * an option selected by the signal source combo box.
+	 */
 	private ComboBoxModel signalSourceSelectionComboBoxModel;
+
+	/**
+	 * A panel containing options for a file signal source.
+	 */
 	private FileSignalSourcePanel fileSignalSourcePanel;
+
+	/**
+	 * A panel containing options for receiving signal from a running openBCI
+	 * system.
+	 */
 	private OpenBCISignalSourcePanel openBCISignalSourcePanel;
+
+	/**
+	 * A panel for setting options for an amplifier signal source.
+	 */
 	private AmplifierSignalSourcePanel amplifierSignalSourcePanel;
 
+	/**
+	 * Constructor.
+	 * @param messageSource message source capable of resolving localized
+	 * messages
+	 * @param viewerElementManager ViewerElementManager to be used by this
+	 * panel
+	 */
 	public SignalSourcePanel(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager) {
 		this.messageSource = messageSource;
 		this.viewerElementManager = viewerElementManager;
 		createInterface();
 	}
 
+	/**
+	 * Creates the GUI components for this panel.
+	 */
 	private void createInterface() {
 		CardLayout cardLayout = new CardLayout();
 		this.setLayout(cardLayout);
@@ -65,6 +100,10 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 		this.add(amplifierSignalSourcePanel, SignalSource.AMPLIFIER.toString());
 	}
 
+	/**
+	 * Returns the model of the combo box for signal source selection.
+	 * @return the model of the combo box for signal source selection
+	 */
 	protected ComboBoxModel getSignalSourceSelectionComboBoxModel() {
 		if (signalSourceSelectionComboBoxModel == null) {
 			SignalSource[] signalSources = new SignalSource[3];
@@ -83,7 +122,6 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 		if (propertyName.equals(SignalSourceSelectionPanel.SIGNAL_SOURCE_SELECTION_CHANGED_PROPERTY)) {
 			SignalSource newSignalSource = (SignalSource) evt.getNewValue();
 			showPanelForSignalSource(newSignalSource);
-			System.out.println("changed signal source type");
 			firePropertyChange(SignalSourceSelectionPanel.SIGNAL_SOURCE_SELECTION_CHANGED_PROPERTY, null, newSignalSource);
 		}
 		else if (propertyName.equals(AbstractSignalParametersPanel.NUMBER_OF_CHANNELS_PROPERTY) ||
@@ -102,15 +140,28 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 		}
 	}
 
+	/**
+	 * Changes a panel visible to a panel for setting options for the given
+	 * signal source.
+	 * @param signalSource the current signal source
+	 */
 	protected void showPanelForSignalSource(SignalSource signalSource) {
 		CardLayout cardLayout = (CardLayout) (this.getLayout());
 		cardLayout.show(this, signalSource.toString());
 	}
 
+	/**
+	 * Returns the signal source selected by this panel.
+	 * @return the selected signal source
+	 */
 	public SignalSource getSelectedSignalSource() {
 		return (SignalSource) getSignalSourceSelectionComboBoxModel().getSelectedItem();
 	}
 
+	/**
+	 * Fills this panel using the data contained in the descriptor.
+	 * @param openDocumentDescriptor descriptor to be used
+	 */
 	public void fillPanelFromModel(OpenDocumentDescriptor openDocumentDescriptor) {
 		OpenSignalDescriptor openSignalDescriptor = openDocumentDescriptor.getOpenSignalDescriptor();
 
@@ -132,6 +183,10 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 		clearPreviousConnections();
 	}
 
+	/**
+	 * Sets all components in an unconnected state so that new connections
+	 * can be made.
+	 */
 	protected void clearPreviousConnections() {
 		openBCISignalSourcePanel.setConnected(false);
 		openBCISignalSourcePanel.getMultiplexerConnectionPanel().setInterfaceInUnconnectedState();
@@ -139,6 +194,10 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 		amplifierSignalSourcePanel.setConnected(false);
 	}
 
+	/**
+	 * Fills the given descriptor with the data set using this panel.
+	 * @param openDocumentDescriptor the descriptor to be filled
+	 */
 	public void fillModelFromPanel(OpenDocumentDescriptor openDocumentDescriptor) {
 		OpenSignalDescriptor openSignalDescriptor = openDocumentDescriptor.getOpenSignalDescriptor();
 
@@ -166,6 +225,10 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
                 }
 	}
 
+	/**
+	 * Returns the currently visible signal source panel.
+	 * @return the currently visible signal source panel
+	 */
 	public AbstractSignalSourcePanel getCurrentSignalSourcePanel() {
 		SignalSource signalSource = getSelectedSignalSource();
 
@@ -177,6 +240,11 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 			return amplifierSignalSourcePanel;
 	}
 
+	/**
+	 * Validates if the data set using this panel is correct.
+	 * @param model the model for this dialog
+	 * @param errors the object in which errors are stored
+	 */
 	public void validatePanel(Object model, Errors errors) {
 		if (getSelectedSignalSource().isFile()) {
 			File selectedFile = fileSignalSourcePanel.getFileChooserPanel().getSelectedFile();

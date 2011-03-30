@@ -4,7 +4,6 @@
 
 package org.signalml.app.view.opensignal;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
@@ -12,30 +11,24 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
-import org.signalml.app.action.SignalFilterSwitchAction;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.element.FileChooserPanel;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalDescriptorReader;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.util.Util;
 
 import org.springframework.context.support.MessageSourceAccessor;
-
 
 /**
  * The actions which {@link RawSignalDescriptorReader#readDocument(File)
  * reads} the parameters of a (RAW) signal from an XML file.
  */
-public class ReadXMLManifestAction extends AbstractAction {
+public class ReadXMLManifestAction extends AbstractSignalMLAction {
 
 	private static final long serialVersionUID = 1L;
-
-	protected MessageSourceAccessor messageSource;
-	ViewerFileChooser fileChooser;
-
-	protected RawSignalDescriptor rawSignalDescriptor;
 
 	/**
 	 * the {@link RawSignalDescriptorReader reader} used to read the
@@ -43,23 +36,33 @@ public class ReadXMLManifestAction extends AbstractAction {
 	 */
 	private RawSignalDescriptorReader reader;
 
+	/**
+	 * The panel containing parameters for the signal. It is filled with
+	 * the data from the manifest that will be read in response to this action.
+	 */
 	private SignalParametersPanelForRawSignalFile parentSignalParametersPanel;
 
+	/**
+	 * The panel containing a file chooser of a signal file. Used to open
+	 * the same directory as in the fileChooser opened by this action.
+	 */
 	private FileChooserPanel signalFileChooserPanel;
 
 	/**
-	 * Constructor. Sets the icon and description.
+	 * Constructor.
+	 * @param messageSource message source capable of resolving localized messages
+	 * @param parentSignalParametersPanel the signal parameters panel which
+	 * should be filled after calling this action.
 	 */
 	public ReadXMLManifestAction(MessageSourceAccessor messageSource,
 		SignalParametersPanelForRawSignalFile parentSignalParametersPanel) {
+		super(messageSource);
 
-		super(messageSource.getMessage("openSignal.options.raw.readXMLManifest"));
-		this.messageSource = messageSource;
+		this.setText("openSignal.options.raw.readXMLManifest");
 		this.parentSignalParametersPanel = parentSignalParametersPanel;
-		this.signalFileChooserPanel = signalFileChooserPanel;
+
 		putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/script_load.png"));
 		putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("openSignal.options.raw.readXMLManifestToolTip"));
-		//putValue(AbstractAction.ACCELERATOR_KEY, KeyStroke.getKeyStroke("F1"));
 	}
 
 	/**
@@ -75,6 +78,7 @@ public class ReadXMLManifestAction extends AbstractAction {
 	 * {@link PagingParametersPanel#fillModelFromPanel(RawSignalDescriptor)
 	 * PagingParametersPanel}.</li><ul>
 	 */
+	@Override
 	public void actionPerformed(ActionEvent ev) {
 
 		File selectedFile = signalFileChooserPanel.getSelectedFile();
@@ -93,17 +97,10 @@ public class ReadXMLManifestAction extends AbstractAction {
 			directory = signalFileChooserPanel.getCurrentDirectory();
 		}
 
-		//File xmlFile = fileChooser.chooseReadXMLManifest(null, null, this);
-		/*fileChooser = new ViewerFileChooser();
-		fileChooser.setMessageSource(messageSource);
-		fileChooser.initialize();
-		 *
-		 */
-
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setCurrentDirectory(directory);
 		fileChooser.setSelectedFile(fileSuggestion);
-		int showOpenDialog = fileChooser.showOpenDialog(parentSignalParametersPanel);
+		fileChooser.showOpenDialog(parentSignalParametersPanel);
 		File xmlFile = fileChooser.getSelectedFile();
 
 		if (xmlFile == null) {
@@ -114,7 +111,7 @@ public class ReadXMLManifestAction extends AbstractAction {
 			reader = new RawSignalDescriptorReader();
 		}
 		try {
-			rawSignalDescriptor = reader.readDocument(xmlFile);
+			RawSignalDescriptor rawSignalDescriptor = reader.readDocument(xmlFile);
 			parentSignalParametersPanel.fillPanelFromModel(rawSignalDescriptor);
 		} catch (IOException ex) {
 			Logger.getLogger(ReadXMLManifestAction.class.getName()).log(Level.SEVERE, null, ex);
@@ -124,6 +121,11 @@ public class ReadXMLManifestAction extends AbstractAction {
 
 	}
 
+	/**
+	 * Sets the fileChooser for the signal file which should be used to check
+	 * its currently opened directory.
+	 * @param fileChooserPanel file chooser to be used by this panel
+	 */
 	void setSignalFileChooserPanel(FileChooserPanel fileChooserPanel) {
 		this.signalFileChooserPanel = fileChooserPanel;
 	}

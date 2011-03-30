@@ -684,8 +684,8 @@
 	<entry key="preferences.tools.artifact">Artifact working directory</entry>
 
 	<entry key="openDocument.title">Open document</entry>
-	<entry key="openDocument.chooseFile">Choose file</entry>
-	<entry key="openDocument.chooseFileType">Choose file type</entry>
+	<entry key="openDocument.chooseFile">Choose a file</entry>
+	<entry key="openDocument.chooseFileType">Choose the file type</entry>
 	<entry key="openDocument.fileType.autodetect">Attempt to autodetect file type</entry>
 	<entry key="openDocument.fileType.choose">Select manually from a list</entry>
 	<entry key="openDocument.fileType.signal">Signal</entry>
@@ -700,6 +700,8 @@
 
 	<entry key="opensignal.dialogTitle">Open signal</entry>
 	<entry key="opensignal.signalSourceTabTitle">Signal source</entry>
+	<entry key="opensignal.signalSourceSelectionPanel.title">Select signal source</entry>
+	<entry key="opensignal.signalSourceSelectionPanel.label">Signal source</entry>
 	<entry key="opensignal.signalsource.FILE">File</entry>
 	<entry key="opensignal.signalsource.OPENBCI">OpenBCI</entry>
 	<entry key="opensignal.signalsource.AMPLIFIER">Amplifier</entry>
@@ -714,7 +716,11 @@
         <entry key="opensignal.parameters.editGainAndOffset">Edit gain and offset</entry>        
         <entry key="opensignal.parameters.editGainAndOffsetDialog.edit">Edit</entry>
         <entry key="opensignal.parameters.editGainAndOffsetDialog.all">All channels</entry>        
-       
+
+       <entry key="opensignal.amplifier.channelSelectTable.channelSelectedColumnTitle"></entry>
+       <entry key="opensignal.amplifier.channelSelectTable.channelNumberColumnTitle">number</entry>
+       <entry key="opensignal.amplifier.channelSelectTable.channelLabelColumnTitle">label</entry>
+
         <entry key="opensignal.amplifier.selectAmplifier">Select an amplifier first</entry>       
         <entry key="opensignal.amplifier.startingBCI">Starting OpenBCI</entry>
 

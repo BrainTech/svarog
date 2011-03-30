@@ -84,7 +84,7 @@ public class ChannelSelectPanel extends JPanel {
          */
         public ChannelSelectTable getChannelSelectTable() {
                 if (channelSelectTable == null) {
-                        channelSelectTable = new ChannelSelectTable();
+                        channelSelectTable = new ChannelSelectTable(messageSource);
                 }
                 return channelSelectTable;
         }

@@ -39,7 +39,7 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 	/**
 	 * A panel used to specify parameters for the monitor to be opened.
 	 */
-	private SignalParametersPanelForOpenMonitor signalParametersPanel;
+	private SignalParametersPanelForOpenBCI signalParametersPanel;
 
 	/**
 	 * Constructor.
@@ -115,9 +115,9 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 	 * Returns the panel for setting the parameters for the monitor to be opened.
 	 * @return the panel for setting the parameters for the monitor to be opened
 	 */
-	public SignalParametersPanelForOpenMonitor getSignalParametersPanel() {
+	public SignalParametersPanelForOpenBCI getSignalParametersPanel() {
 		if (signalParametersPanel == null) {
-			signalParametersPanel = new SignalParametersPanelForOpenMonitor(messageSource, viewerElementManager.getApplicationConfig());
+			signalParametersPanel = new SignalParametersPanelForOpenBCI(messageSource, viewerElementManager.getApplicationConfig());
 			signalParametersPanel.addPropertyChangeListener(this);
 		}
 		return signalParametersPanel;

@@ -53,7 +53,7 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 		super(messageSource, viewerElementManager.getMontagePresetManager(), viewerElementManager.getPredefinedTimeDomainFiltersPresetManager(), f, isModal);
 
 		this.viewerElementManager = viewerElementManager;
-		dialogManager = new OpenSignalAndSetMontageDialogManager(this, getSignalSourcePanel());
+		dialogManager = new OpenSignalAndSetMontageDialogManager(this);
 	}
 
 	@Override
@@ -71,7 +71,7 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 	 * Returns the panel for selecting a signal source.
 	 * @return the panel for selecting the source of the signal
 	 */
-	private SignalSourcePanel getSignalSourcePanel() {
+	public SignalSourcePanel getSignalSourcePanel() {
 		if (signalSourcePanel == null)
 			signalSourcePanel = new SignalSourcePanel(messageSource, viewerElementManager);
 		return signalSourcePanel;
