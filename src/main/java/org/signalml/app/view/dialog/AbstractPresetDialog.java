@@ -5,6 +5,7 @@
 package org.signalml.app.view.dialog;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -1427,6 +1428,16 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 			return (clazz == null);
 		}
 
+	}
+
+	/**
+	 * Enables/disables all components in the preset pane.
+	 * @param enabled true if all components in the preset pane should be
+	 * enabled, false if all components should be disabled
+	 */
+	protected void setPresetPaneEnabled(boolean enabled) {
+		for (Component component: presetPane.getComponents())
+			component.setEnabled(false);
 	}
 
 }
