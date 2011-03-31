@@ -270,7 +270,6 @@ public abstract class AbstractSignalParametersPanel extends JPanel {
 
                                 @Override
                                 public void stateChanged(ChangeEvent e) {
-                                        System.out.println("spinner changed!");
                                         int numberOfChannels = getChannelCountSpinner().getValue();
                                         firePropertyChange(NUMBER_OF_CHANNELS_PROPERTY, 0, numberOfChannels);
                                 }
