@@ -134,6 +134,14 @@
         <include name="**" />
       </fileset>
 		</pack>
+		
+		<!--the default codecs that are shipped with Svarog-->
+		<pack name="Codecs" required="no" id="svarog.pack.codecs">
+			<description>Codecs</description>
+			<fileset dir="../../specs" targetdir="${INSTALL_PATH}${FILE_SEPARATOR}specs">
+				<include name="*.xml"/>
+			</fileset>
+		</pack>
   </packs>
 
 </installation>
