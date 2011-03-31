@@ -39,6 +39,7 @@ public class SignalParametersPanelForAmplifierConnection extends AbstractSignalP
                         getSamplingFrequencyComboBox().setEditable(false);
                         getSamplingFrequencyComboBox().setModel(new DefaultComboBoxModel(
                                 descriptor.getAmplifierInstance().getDefinition().getAvailableFrequencies().toArray()));
+			getSamplingFrequencyComboBox().setSelectedIndex(0); //called to fire an action notifying that this combo box has changed
 
                         getChannelCountSpinner().setEnabled(false);
                         getChannelCountSpinner().setValue(descriptor.getOpenMonitorDescriptor().getChannelCount());

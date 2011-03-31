@@ -139,7 +139,6 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 		String propertyName = evt.getPropertyName();
 
 		if ("metadataRetrieved".equals(propertyName)) {
-			System.out.println("Metadata retrieved");
 			/* model was changed by the connectAction in the
 			multiplexerConnectionPanel */
 			fillPanelFromModel(currentModel);

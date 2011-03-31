@@ -249,7 +249,6 @@ public abstract class AbstractSignalParametersPanel extends JPanel {
                                                 float currentSamplingFrequency = Float.parseFloat(selectedItemString);
                                                 if (currentSamplingFrequency != previousSamplingFrequency) {
                                                         firePropertyChange(SAMPLING_FREQUENCY_PROPERTY, previousSamplingFrequency, currentSamplingFrequency);
-                                                        System.out.println("sampling frequency changed to " + currentSamplingFrequency);
                                                 }
                                         }
                                 }
