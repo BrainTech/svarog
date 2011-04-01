@@ -109,4 +109,26 @@ public class SignalParametersPanelForRawSignalFile extends AbstractSignalParamet
 		getReadManifestAction().setSignalFileChooserPanel(fileChooserPanel);
 	}
 
+	@Override
+	protected void fireNumberOfChannelsChanged(int numberOfChannels) {
+		RawSignalDescriptor rawSignalDescriptor = new RawSignalDescriptor();
+		rawSignalDescriptor.setChannelCount(numberOfChannels);
+
+		float[] gain = new float[numberOfChannels];
+		float[] offset = new float[numberOfChannels];
+		String[] labels = new String[numberOfChannels];
+		for (int i = 0; i < numberOfChannels; i++) {
+			gain[i] = 1.0F;
+			offset[i] = 0.0F;
+			labels[i] = "";
+		}
+
+		rawSignalDescriptor.setCalibrationGain(gain);
+		rawSignalDescriptor.setCalibrationOffset(offset);
+		rawSignalDescriptor.setChannelLabels(labels);
+
+		getEditGainAndOffsetDialog().fillDialogFromModel(rawSignalDescriptor);
+		super.fireNumberOfChannelsChanged(numberOfChannels);
+	}
+
 }

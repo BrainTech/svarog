@@ -33,6 +33,7 @@ public class SignalParametersPanelForOpenBCI extends AbstractSignalParametersPan
 		getChannelCountSpinner().setEnabled(false);
 		getByteOrderComboBox().setEnabled(false);
 		getSampleTypeComboBox().setEnabled(false);
+		getEditGainAndOffsetButton().setEnabled(false);
 	}
 
 	/**

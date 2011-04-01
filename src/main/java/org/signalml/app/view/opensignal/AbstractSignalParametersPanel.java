@@ -271,13 +271,21 @@ public abstract class AbstractSignalParametersPanel extends JPanel {
                                 @Override
                                 public void stateChanged(ChangeEvent e) {
                                         int numberOfChannels = getChannelCountSpinner().getValue();
-                                        firePropertyChange(NUMBER_OF_CHANNELS_PROPERTY, 0, numberOfChannels);
+                                        fireNumberOfChannelsChanged(numberOfChannels);
                                 }
                         });
 
                 }
                 return channelCountSpinner;
         }
+
+	/**
+	 * Notifies all listeners that the number of channels has changed.
+	 * @param numberOfChannels the new number of channels
+	 */
+	protected void fireNumberOfChannelsChanged(int numberOfChannels) {
+		firePropertyChange(NUMBER_OF_CHANNELS_PROPERTY, 0, numberOfChannels);
+	}
 
         /**
          * Returns the byte order combo box.
