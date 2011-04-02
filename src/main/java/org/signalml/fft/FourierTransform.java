@@ -299,7 +299,7 @@ public class FourierTransform {
 	 * @return the result
 	 */
 	public double[] inverseFFTComplex(double[] data) {
-		DoubleFFT_1D fft = new DoubleFFT_1D(data.length);
+		DoubleFFT_1D fft = new DoubleFFT_1D(data.length/2);
 		double[] transformed = new double[data.length];
 		for (int i = 0; i < data.length; ++i) {
 			transformed[i] = data[i];
