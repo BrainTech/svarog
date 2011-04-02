@@ -424,7 +424,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 		pixelPerSecond = samplingFrequency * timeZoomFactor;
 		pixelPerPage = pixelPerSecond * pageSize;
-		pixelPerBlock = pixelPerPage / blocksPerPage;
+	pixelPerBlock = pixelPerPage / blocksPerPage;
 
 		channelCount = signalChain.getChannelCount();
 		sampleCount = new int[channelCount];

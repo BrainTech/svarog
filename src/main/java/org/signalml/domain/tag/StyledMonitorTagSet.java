@@ -16,11 +16,13 @@ public class StyledMonitorTagSet extends StyledTagSet {
 	private static final long serialVersionUID = 1L;
 
 	protected double lastSampleTimestamp;
+	protected float samplingFrequency;
 	protected Semaphore semaphore;
 	protected RoundBufferSampleSource timestamps_source;
 
-	public StyledMonitorTagSet(float pageSize, int blocksPerPage) {
+	public StyledMonitorTagSet(float pageSize, int blocksPerPage, float samplingFrequency) {
 		super(pageSize, blocksPerPage);
+		this.samplingFrequency = samplingFrequency;
 		this.semaphore = new Semaphore(1);
 
 	}
@@ -51,8 +53,6 @@ public class StyledMonitorTagSet extends StyledTagSet {
 		double[] timestamps = new double[ts_count];
 		timestamps_source.getSamples(timestamps, 0, ts_count, 0);
 		double startingSample = -1000000.0;
-		double samplingFrequency;
-		samplingFrequency = 128;
 
 		for (int i = 0; i < ts_count; i++) {
 			if (tag_position < timestamps[i]) {

@@ -815,6 +815,7 @@ public class DocumentFlowIntegrator {
 		if(monitorOptions.getMonitorRecordingDescriptor().isRecordingEnabled())
 			monitorSignalDocument.startMonitorRecording();
 
+		((SignalView) monitorSignalDocument.getDocumentView()).setSnapToPageMode(true);
 		logger.debug("monitor openned");
 		
 		return monitorSignalDocument;

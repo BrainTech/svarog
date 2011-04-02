@@ -54,8 +54,8 @@ public class OpenMonitorDescriptor {
                 sampleType = RawSignalSampleType.DOUBLE;
                 byteOrder = RawSignalByteOrder.LITTLE_ENDIAN;
 
-		samplingFrequency = 256.0F;
-		pageSize = 33.0F;
+		samplingFrequency = 128.0F;
+		pageSize = 20.0F;
 
                 monitorRecordingDescriptor = new MonitorRecordingDescriptor();
         }

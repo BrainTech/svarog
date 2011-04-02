@@ -192,7 +192,8 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		}
 
 		logger.info("Start initializing monitor data.");
-		tagSet = new StyledMonitorTagSet((float) 20.0, 5);//TODO - pobierac rozmiar strony w init
+		tagSet = new StyledMonitorTagSet(monitorOptions.getPageSize(), 5, 
+						 monitorOptions.getSamplingFrequency());
 		TagDocument tagDoc = new TagDocument(tagSet);
 		tagDoc.setParent(this);
 		monitorWorker = new MonitorWorker(monitorOptions.getJmxClient(), monitorOptions, (RoundBufferMultichannelSampleSource) sampleSource, timestampsSource, tagSet);
