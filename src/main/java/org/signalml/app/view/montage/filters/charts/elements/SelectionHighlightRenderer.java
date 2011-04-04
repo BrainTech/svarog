@@ -242,6 +242,7 @@ public class SelectionHighlightRenderer {
 		int xPosition = ev.getPoint().x;
 		if (xPosition >= getMinimumChartPosition() && xPosition <= getMaximumChartPosition()) {
 			pixelRangeSelection.startDragging(ev.getPoint().x);
+			frequencyRangeSelection = convertPixelSelectionToFrequencyRangeSelection(pixelRangeSelection);
 			fireSelectionChanged();
 		}
 	}
