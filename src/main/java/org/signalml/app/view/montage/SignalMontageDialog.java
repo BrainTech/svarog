@@ -415,6 +415,14 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	}
 
 	/**
+	 * Returns the current sampling frequency used by the filters in this montage.
+	 * @return the sampling frequency
+	 */
+	public float getSamplingFrequency() {
+		return filtersPanel.getCurrentSamplingFrequency();
+	}
+
+	/**
 	 * Returns the current montage.
 	 * @return the current montage
 	 */

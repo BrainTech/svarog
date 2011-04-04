@@ -138,6 +138,7 @@ public class SelectionHighlightRenderer {
 		}
 
 		this.frequencyRangeSelection = frequencyRangeSelection;
+
 		pixelRangeSelection = convertFrequencyRangeSelectionToPixelSelection(frequencyRangeSelection);
 		fireSelectionChanged();
 	}
@@ -241,6 +242,7 @@ public class SelectionHighlightRenderer {
 		int xPosition = ev.getPoint().x;
 		if (xPosition >= getMinimumChartPosition() && xPosition <= getMaximumChartPosition()) {
 			pixelRangeSelection.startDragging(ev.getPoint().x);
+			frequencyRangeSelection = convertPixelSelectionToFrequencyRangeSelection(pixelRangeSelection);
 			fireSelectionChanged();
 		}
 	}
@@ -269,6 +271,7 @@ public class SelectionHighlightRenderer {
 		int xPosition = ev.getPoint().x;
 		xPosition = constrainPositionWithRegardToChartSize(xPosition);
 		pixelRangeSelection.dragTo(xPosition);
+		frequencyRangeSelection = convertPixelSelectionToFrequencyRangeSelection(pixelRangeSelection);
 		fireSelectionChanged();
 	}
 
@@ -332,8 +335,7 @@ public class SelectionHighlightRenderer {
 	 * Notifies all listeners that the selection has changed.
 	 */
 	protected void fireSelectionChanged() {
-		FrequencyRangeSelection currentSelection = getFrequencyRangeSelection();
-		pcSupport.firePropertyChange(SELECTION_CHANGED_PROPERTY, null, currentSelection);
+		pcSupport.firePropertyChange(SELECTION_CHANGED_PROPERTY, null, frequencyRangeSelection);
 	}
 
 }

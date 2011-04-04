@@ -161,4 +161,9 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 		return signalParametersPanel.getSamplingFrequency();
 	}
 
+	@Override
+	public void setSamplingFrequency(float samplingFrequency) {
+		getSignalParametersPanel().getSamplingFrequencyComboBox().setSelectedItem(samplingFrequency);
+	}
+
 }

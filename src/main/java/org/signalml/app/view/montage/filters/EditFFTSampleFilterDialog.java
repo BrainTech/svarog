@@ -737,6 +737,11 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 	public void setCurrentSamplingFrequency(float currentSamplingFrequency) {
 		super.setCurrentSamplingFrequency(currentSamplingFrequency);
 		getChartGroupPanelWithABorder().setSamplingFrequency(currentSamplingFrequency);
+
+		if (getToFrequencySpinner().getValue() >= getMaximumFrequency())
+			getToFrequencySpinner().setValue(FREQUENCY_SPINNER_STEP_SIZE);
+		if (this.getFromFrequencySpinner().getValue() >= getMaximumFrequency())
+			getFromFrequencySpinner().setValue(0.0);
 	}
 
 	@Override

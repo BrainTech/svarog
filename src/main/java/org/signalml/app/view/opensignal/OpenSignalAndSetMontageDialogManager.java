@@ -8,10 +8,12 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.signal.SignalType;
 import org.signalml.plugin.export.SignalMLException;
+import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * This manager controls the flow of information between the montage part
@@ -25,6 +27,11 @@ import org.signalml.plugin.export.SignalMLException;
 public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListener {
 
 	/**
+	 * Message source to resolve localized messages.
+	 */
+	private MessageSourceAccessor messageSource;
+
+	/**
 	 * The OpenSignalAndSetMontageDialog to which this manager is connected.
 	 */
 	private OpenSignalAndSetMontageDialog openSignalAndSetMontageDialog;
@@ -36,13 +43,22 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 	private SignalSourcePanel signalSourcePanel;
 
 	/**
+	 * This boolean variables tells whether the next sampling frequency
+	 * property change should be ignored (it is needed to distinguish
+	 * the changes made by this manager from the changes made by the other
+	 * parts of the program).
+	 */
+	private boolean ignoreNextSamplingFrequencyChange = false;
+
+	/**
 	 * Constructor.
 	 * @param openSignalAndSetMontageDialog the dialog to which this manager
 	 * should be connected.
 	 */
-	public OpenSignalAndSetMontageDialogManager(OpenSignalAndSetMontageDialog openSignalAndSetMontageDialog) {
+	public OpenSignalAndSetMontageDialogManager(OpenSignalAndSetMontageDialog openSignalAndSetMontageDialog, MessageSourceAccessor messageSource) {
 		this.openSignalAndSetMontageDialog = openSignalAndSetMontageDialog;
 		this.signalSourcePanel = openSignalAndSetMontageDialog.getSignalSourcePanel();
+		this.messageSource = messageSource;
 
 		signalSourcePanel.addPropertyChangeListener(this);
 	}
@@ -56,8 +72,8 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 			numberOfChannelsChangedTo(numberOfChannels);
 		}
 		else if (propertyName.equals(AbstractSignalParametersPanel.SAMPLING_FREQUENCY_PROPERTY)){
-			float samplingFrequency = Float.parseFloat(evt.getNewValue().toString());
-			samplingFrequencyChangedTo(samplingFrequency);
+			float newSamplingFrequency = Float.parseFloat(evt.getNewValue().toString());
+			samplingFrequencyChangedTo(newSamplingFrequency);
 		}
 		else if (propertyName.equals(AbstractSignalParametersPanel.CHANNEL_LABELS_PROPERTY)) {
 			String[] channelLabels = (String[]) evt.getNewValue();
@@ -67,7 +83,8 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 			int signalSourcePanelChannelCount = signalSourcePanel.getCurrentSignalSourcePanel().getChannelCount();
 
 			numberOfChannelsChangedTo(signalSourcePanelChannelCount);
-			samplingFrequencyChangedTo(signalSourcePanel.getCurrentSignalSourcePanel().getSamplingFrequency());
+			float samplingFrequency = signalSourcePanel.getCurrentSignalSourcePanel().getSamplingFrequency();
+			samplingFrequencyChangedTo(samplingFrequency);
 			enableTabsAndOKButtonAsNeeded();
 		}
 		else if (propertyName.equals(AbstractMonitorSourcePanel.OPENBCI_CONNECTED_PROPERTY)) {
@@ -107,7 +124,55 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 	 * @param newSamplingFrequency the current sampling frequency
 	 */
 	protected void samplingFrequencyChangedTo(float newSamplingFrequency) {
-		openSignalAndSetMontageDialog.setSamplingFrequency(newSamplingFrequency);
+
+		if (ignoreNextSamplingFrequencyChange) {
+			ignoreNextSamplingFrequencyChange = false;
+			return;
+		}
+
+		Montage currentMontage = getCurrentMontage();
+		int numberOfFilters = (currentMontage != null) ? currentMontage.getSampleFilterCount() : 0;
+
+		if (numberOfFilters > 0) {
+			showSamplingFrequencyChangedFiltersWillBeDeletedDialog(newSamplingFrequency);
+		}
+		else {
+			openSignalAndSetMontageDialog.setSamplingFrequency(newSamplingFrequency);
+		}
+
+	}
+
+	/**
+	 * Returns the current montage set in the montage tabs.
+	 * @return the montage set in the montage tabs
+	 */
+	private Montage getCurrentMontage() {
+		return openSignalAndSetMontageDialog.getCurrentMontage();
+	}
+
+	/**
+	 * Shows a dialog that warns that there are filters added and changing
+	 * the sampling frequency will result in deleting all the filters.
+	 * Performs appropriate actions depending on the user response.
+	 * @param newSamplingFrequency the value to which the sampling frequency
+	 * has been changed
+	 */
+	private void showSamplingFrequencyChangedFiltersWillBeDeletedDialog(float newSamplingFrequency) {
+		String dialogText = messageSource.getMessage("opensignal.warning.samplingFrequencyChangedFiltersWillBeDeleted");
+		String dialogTitle = messageSource.getMessage("warning");
+		int response = JOptionPane.showConfirmDialog(null, dialogText, dialogTitle, JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+		switch (response) {
+			case JOptionPane.YES_OPTION:
+				openSignalAndSetMontageDialog.setSamplingFrequency(newSamplingFrequency);
+				getCurrentMontage().clearFilters();
+				break;
+			case JOptionPane.NO_OPTION:
+				float oldSamplingFrequency = openSignalAndSetMontageDialog.getSamplingFrequency();
+				signalSourcePanel.getCurrentSignalSourcePanel().setSamplingFrequency(oldSamplingFrequency);
+				ignoreNextSamplingFrequencyChange = true;
+				break;
+		}
 	}
 
 	/**
