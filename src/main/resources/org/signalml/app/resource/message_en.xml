@@ -740,6 +740,7 @@
         <entry key="opensignal.amplifier.sendingFailed">Sending failed</entry>
 
 	<entry key="opensignal.error.noFileSelected">Please select a signal file</entry>
+	<entry key="opensignal.warning.samplingFrequencyChangedFiltersWillBeDeleted">Do you really want to change the sampling frequency? All filters will be deleted.</entry>
 
 <!-- ============================ -->
 

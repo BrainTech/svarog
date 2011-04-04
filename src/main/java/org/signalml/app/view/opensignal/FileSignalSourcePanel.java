@@ -224,4 +224,9 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 		return viewerElementManager.getApplicationConfig();
 	}
 
+	@Override
+	public void setSamplingFrequency(float samplingFrequency) {
+		getRawSignalParametersPanel().getSamplingFrequencyComboBox().setSelectedItem(samplingFrequency);
+	}
+
 }

@@ -314,4 +314,9 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
                 }
                 return null;
         }
+
+	@Override
+	public void setSamplingFrequency(float samplingFrequency) {
+		getSignalParametersPanel().getSamplingFrequencyComboBox().setSelectedItem(samplingFrequency);
+	}
 }

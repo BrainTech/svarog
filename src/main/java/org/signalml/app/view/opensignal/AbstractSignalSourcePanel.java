@@ -154,4 +154,10 @@ abstract public class AbstractSignalSourcePanel extends JPanel implements Proper
 	 */
 	abstract public float getSamplingFrequency();
 
+	/**
+	 * Sets the sampling frequency for this signal source.
+	 * @param samplingFrequency the sampling frequency to be set
+	 */
+	abstract public void setSamplingFrequency(float samplingFrequency);
+
 }

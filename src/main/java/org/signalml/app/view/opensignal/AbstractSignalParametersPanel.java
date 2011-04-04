@@ -243,12 +243,14 @@ public abstract class AbstractSignalParametersPanel extends JPanel {
 
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
+
                                         String selectedItemString = samplingFrequencyComboBox.getSelectedItem().toString();
 
                                         if (!selectedItemString.isEmpty()) {
                                                 float currentSamplingFrequency = Float.parseFloat(selectedItemString);
                                                 if (currentSamplingFrequency != previousSamplingFrequency) {
-                                                        firePropertyChange(SAMPLING_FREQUENCY_PROPERTY, previousSamplingFrequency, currentSamplingFrequency);
+							fireSamplingFrequencyChanged(previousSamplingFrequency, currentSamplingFrequency);
+							previousSamplingFrequency = currentSamplingFrequency;
                                                 }
                                         }
                                 }
@@ -256,6 +258,15 @@ public abstract class AbstractSignalParametersPanel extends JPanel {
                 }
                 return samplingFrequencyComboBox;
         }
+
+	/**
+	 * Notifies all listeners that the sampling frequency has changed.
+	 * @param previousSamplingFrequency the old sampling frequency
+	 * @param currentSamplingFrequency the new sampling frequency
+	 */
+	protected void fireSamplingFrequencyChanged(double previousSamplingFrequency, double currentSamplingFrequency) {
+		firePropertyChange(SAMPLING_FREQUENCY_PROPERTY, previousSamplingFrequency, currentSamplingFrequency);
+	}
 
         /**
          * Returns the channel count field

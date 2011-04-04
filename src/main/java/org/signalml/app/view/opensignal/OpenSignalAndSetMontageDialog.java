@@ -53,7 +53,7 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 		super(messageSource, viewerElementManager.getMontagePresetManager(), viewerElementManager.getPredefinedTimeDomainFiltersPresetManager(), f, isModal);
 
 		this.viewerElementManager = viewerElementManager;
-		dialogManager = new OpenSignalAndSetMontageDialogManager(this);
+		dialogManager = new OpenSignalAndSetMontageDialogManager(this, messageSource);
 	}
 
 	@Override
