@@ -684,6 +684,10 @@ public class GUIAccessImpl implements SvarogAccessGUI {
 	public void setManager(ViewerElementManager manager) {
 		this.manager = manager;
 	}
+	
+	public ViewerElementManager getManager() {
+		return this.manager;
+	}
 
 	/**
 	 * @param initializationPhase true if it is an initialization phase,
