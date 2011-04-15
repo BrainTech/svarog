@@ -640,10 +640,10 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.signalml.plugin.export.PluginAccessSignal#openTagDocument(java.lang.String, org.signalml.plugin.export.ExportedSignalDocument)
+	 * @see org.signalml.plugin.export.PluginAccessSignal#openTagDocument(java.lang.String, org.signalml.plugin.export.ExportedSignalDocument, boolean)
 	 */
 	@Override
-	public void openTagDocument(File file, ExportedSignalDocument document)
+	public void openTagDocument(File file, ExportedSignalDocument document, boolean activeFlag)
 	throws SignalMLException, IOException {
 		if (file == null) throw new NullPointerException("file can not be null");
 		if (!(document instanceof SignalDocument)) throw new InvalidClassException("document is not of type SignalDocument = was not returned from Svarog");
@@ -652,7 +652,7 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 		if (!file.canRead()) throw new IOException("can not access file");
 		OpenDocumentDescriptor ofd = new OpenDocumentDescriptor();
 		ofd.setType(ManagedDocumentType.TAG);
-		ofd.setMakeActive(true);
+		ofd.setMakeActive(activeFlag);
 		
 		boolean legTag = true;
 		LegacyTagImporter importer = new LegacyTagImporter();

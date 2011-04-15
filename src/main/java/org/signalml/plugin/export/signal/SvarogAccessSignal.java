@@ -432,12 +432,13 @@ public interface SvarogAccessSignal {
 	 * @param file file with the tag
 	 * @param signalDocument the signal document. Must be returned from this
 	 * SvarogAcces (actually be of type SignalDocument - internal to Svarog).
+	 * @param activeFlag flag indicating if opened document should be active
 	 * @throws InvalidClassException if document is not returned from
 	 * this SvarogAccess (not of type SignalDocument - internal to Svarog)
 	 * @throws SignalMLException if opening the file fails
 	 * @throws IOException if opening the file fails due to IO error
 	 */
-	void openTagDocument(File file, ExportedSignalDocument signalDocument) throws InvalidClassException, SignalMLException, IOException;
+	void openTagDocument(File file, ExportedSignalDocument signalDocument, boolean activeFlag) throws InvalidClassException, SignalMLException, IOException;
 	
 	/**
 	 * Opens the book from the given file.
