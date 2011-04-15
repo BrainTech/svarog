@@ -11,6 +11,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.log4j.Logger;
 import org.signalml.plugin.export.Plugin;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -39,6 +40,8 @@ import org.xml.sax.SAXException;
  */
 public class PluginDescription extends PluginState{
 	
+	private static final Logger logger = Logger.getLogger(PluginDescription.class);
+
 	/**
 	 * the string with the full name of the class,
 	 * that will be loaded to register the plug-in
@@ -73,6 +76,7 @@ public class PluginDescription extends PluginState{
 	 * @throws IOException if an error while parsing the file occurs
 	 */
 	public PluginDescription(String fileName) throws ParserConfigurationException, SAXException, IOException{
+		logger.info("loading description from " + fileName);
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 		Document document = documentBuilder.parse(new File(fileName));
