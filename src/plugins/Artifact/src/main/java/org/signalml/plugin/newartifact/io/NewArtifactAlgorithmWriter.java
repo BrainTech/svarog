@@ -50,7 +50,7 @@ public class NewArtifactAlgorithmWriter implements INewArtifactAlgorithmWriter {
 					  this.byteBuffer.capacity() - this.byteBuffer.remaining());
 		}
 
-		this.stream.flush();	//TODO
+		//this.stream.flush();
 	}
 
 	public void close() throws IOException {

@@ -16,12 +16,14 @@ public class FastMultichannelSampleSource implements MultichannelSampleSource {
 	private short buffer[];
 	private int offset;
 
+	private String names[];
 
 
 	public FastMultichannelSampleSource(SignalMLCodecReader codec) {
 		this.delegate = codec;
 		this.buffer = null;
 		this.offset = -BUFFER_SIZE - 1;
+		this.names = null;
 	}
 
 	@Override
@@ -55,8 +57,19 @@ public class FastMultichannelSampleSource implements MultichannelSampleSource {
 
 	@Override
 	public String getLabel(int channel) {
-		// TODO Auto-generated method stub
-		return null;
+		if (this.names == null) {
+			try {
+				this.names = this.delegate.get_channel_names();
+			} catch (SignalMLCodecException e) {
+				//do nothing
+			}
+		}
+
+		try {
+			return this.names == null ? null : this.names[channel];
+		} catch (ArrayIndexOutOfBoundsException e) {
+			return null;
+		}
 	}
 
 	@Override
