@@ -45,7 +45,7 @@ public class NewArtifactMgrTagStep extends AbstractPluginComputationMgrStep<NewA
 		this.taggerRoutines = new HashMap<NewArtifactComputationType, TagCreatorRoutine>();
 		this.futureTasks = new LinkedList<Future<NewArtifactTagResult>>();
 		this.executorService = new ExecutorCompletionService<NewArtifactTagResult>(
-			Executors.newCachedThreadPool());
+			Executors.newCachedThreadPool(data.threadFactory));
 
 		this.readers = null;
 	}

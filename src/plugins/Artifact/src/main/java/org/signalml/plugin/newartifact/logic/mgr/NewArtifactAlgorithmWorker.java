@@ -3,6 +3,7 @@ package org.signalml.plugin.newartifact.logic.mgr;
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
+import org.signalml.plugin.exception.PluginThreadRuntimeException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.io.IPluginDataSourceReader;
 import org.signalml.plugin.newartifact.data.NewArtifactAlgorithmWorkerData;
@@ -11,7 +12,7 @@ import org.signalml.plugin.newartifact.logic.algorithm.INewArtifactAlgorithm;
 import org.signalml.plugin.newartifact.logic.algorithm.NewArtifactAlgorithmData;
 import org.signalml.plugin.newartifact.method.NewArtifactMethod;
 
-public class NewArtifactAlgorithmWorker extends Thread {
+public class NewArtifactAlgorithmWorker implements Runnable {
 	protected static final Logger logger = Logger
 					       .getLogger(NewArtifactMethod.class);
 
@@ -25,8 +26,6 @@ public class NewArtifactAlgorithmWorker extends Thread {
 		NewArtifactAlgorithmFactory algorithmFactory,
 		INewArtifactAlgorithmWriter resultWriter,
 		NewArtifactAlgorithmWorkerData workerData) {
-		super();
-		this.setName("ArtifactAlgorithmWorker");
 		this.algorithmFactory = algorithmFactory;
 		this.dataSource = dataSource;
 		this.resultWriter = resultWriter;
@@ -53,12 +52,12 @@ public class NewArtifactAlgorithmWorker extends Thread {
 				this.resultWriter.write(algorithm.compute(data));
 			}
 			this.resultWriter.write(algorithm.computeTail(data));
-		} catch (InterruptedException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new PluginThreadRuntimeException(e);
 		} catch (SignalMLException e) {
-			e.printStackTrace();
+			throw new PluginThreadRuntimeException(e);
+		} catch (InterruptedException e) {
+			throw new PluginThreadRuntimeException(e);
 		}
 	}
 }

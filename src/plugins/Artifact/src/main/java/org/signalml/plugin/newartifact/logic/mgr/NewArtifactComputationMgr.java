@@ -106,7 +106,7 @@ public class NewArtifactComputationMgr extends
 	}
 
 	protected NewArtifactResult doCompute(NewArtifactMgrData data,
-					      MethodExecutionTracker tracker) throws ComputationException,
+					      MethodExecutionTracker tracker) throws ComputationException, InterruptedException,
 		PluginToolAbortException {
 		Collection<IPluginComputationMgrStep<NewArtifactMgrStepResult>> steps = new LinkedList<IPluginComputationMgrStep<NewArtifactMgrStepResult>>();
 		steps.add(new NewArtifactMgrPreprocessStep(this.makeStepData(data,
@@ -134,6 +134,6 @@ public class NewArtifactComputationMgr extends
 		return new NewArtifactMgrStepData(data.artifactData, data.constants,
 						  new NewArtifactIntermediateFilesPathConstructor(
 								  data.artifactData), new TrackerProxy(tracker,
-										  stepNumber));
+										  stepNumber), this.getThreadFactory());
 	}
 }

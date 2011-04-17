@@ -7,13 +7,11 @@ import org.signalml.plugin.newartifact.data.INewArtifactSignalReaderWorkerData;
 import org.signalml.plugin.newartifact.data.NewArtifactConstants;
 
 
-public class NewArtifactSignalReaderWorker extends Thread {
+public class NewArtifactSignalReaderWorker implements Runnable {
 	private INewArtifactSignalReaderWorkerData data;
 
 	public NewArtifactSignalReaderWorker(INewArtifactSignalReaderWorkerData data) {
-		super();
 		this.data = data;
-		this.setName("NewArtifactSignalReaderWorker");
 	}
 
 	@Override

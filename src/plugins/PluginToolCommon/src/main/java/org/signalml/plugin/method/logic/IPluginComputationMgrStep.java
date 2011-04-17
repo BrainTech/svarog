@@ -7,5 +7,5 @@ import org.signalml.plugin.exception.PluginToolAbortException;
 public interface IPluginComputationMgrStep<Result extends PluginComputationMgrStepResult> {
 	public int getStepNumberEstimate();
 
-	public Result run() throws ComputationException, PluginToolAbortException;
+	public Result run() throws ComputationException, InterruptedException, PluginToolAbortException;
 }

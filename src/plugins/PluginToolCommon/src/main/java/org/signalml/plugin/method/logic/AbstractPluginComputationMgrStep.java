@@ -14,7 +14,8 @@ public abstract class AbstractPluginComputationMgrStep<Data extends PluginComput
 	}
 
 	@Override
-	public Result run() throws ComputationException, PluginToolAbortException {
+	public Result run() throws ComputationException, InterruptedException,
+		PluginToolAbortException {
 		try {
 			return this.doRun();
 		} finally {
@@ -24,7 +25,7 @@ public abstract class AbstractPluginComputationMgrStep<Data extends PluginComput
 
 	protected abstract Result prepareStepResult();
 
-	protected abstract Result doRun() throws PluginToolAbortException,
+	protected abstract Result doRun() throws PluginToolAbortException, InterruptedException,
 		ComputationException;
 
 	protected void cleanup() {

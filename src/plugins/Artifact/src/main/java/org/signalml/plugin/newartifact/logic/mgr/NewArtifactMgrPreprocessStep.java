@@ -307,7 +307,7 @@ public class NewArtifactMgrPreprocessStep
 	}
 
 	@Override
-	public NewArtifactMgrStepResult doRun() throws ComputationException,
+	public NewArtifactMgrStepResult doRun() throws ComputationException, InterruptedException,
 		PluginToolAbortException {
 		final IPluginComputationMgrStepTrackerProxy<NewArtifactProgressPhase> tracker = this.data.tracker;
 
@@ -331,12 +331,9 @@ public class NewArtifactMgrPreprocessStep
 
 		double buffer[][] = null;
 		do {
-			try {
-				buffer = this.readyBuffersQueue.take();
-				this.synchronizer.addBuffer(buffer);
-			} catch (InterruptedException e) {
-				break;
-			}
+			buffer = this.readyBuffersQueue.take();
+			this.synchronizer.addBuffer(buffer);
+
 			current++;
 			if (current % 100 == 0) {
 				this.checkAbortState();
@@ -375,15 +372,20 @@ public class NewArtifactMgrPreprocessStep
 							     .createResultWriterForAlgorithm(algorithmType);
 			if (writer != null) {
 				this.writers.add(writer);
-				this.workers.add(new NewArtifactAlgorithmWorker(
-							 new NewArtifactAlgorithmDataSource(synchronizer),
-							 new NewArtifactAlgorithmFactory(algorithmType,
-									 this.data.constants), writer,
-							 new NewArtifactAlgorithmWorkerData(
-								 this.data.artifactData, this.data.constants)));
+				this.workers
+				.add(this.data.threadFactory
+				     .newThread(new NewArtifactAlgorithmWorker(
+							new NewArtifactAlgorithmDataSource(
+								synchronizer),
+							new NewArtifactAlgorithmFactory(
+								algorithmType,
+								this.data.constants), writer,
+							new NewArtifactAlgorithmWorkerData(
+								this.data.artifactData,
+								this.data.constants))));
 			}
 		}
-		this.workers.add(reader);
+		this.workers.add(this.data.threadFactory.newThread(reader));
 
 		this.updater = new TrackerUpdater(this.data.tracker,
 						  this.getBlockCount());
@@ -508,8 +510,9 @@ public class NewArtifactMgrPreprocessStep
 	}
 
 	private int getBlockCount() {
-		return PluginSignalHelper.GetBlockCount(this.data.artifactData
-							.getSampleSource(), this.data.constants.getBlockLength());
+		return PluginSignalHelper.GetBlockCount(
+			       this.data.artifactData.getSampleSource(),
+			       this.data.constants.getBlockLength());
 	}
 
 }
