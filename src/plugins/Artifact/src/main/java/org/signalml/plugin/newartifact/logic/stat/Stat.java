@@ -1,9 +1,14 @@
 package org.signalml.plugin.newartifact.logic.stat;
 
+import org.apache.commons.math.stat.descriptive.moment.StandardDeviation;
+
 public class Stat {
 
 
+	private StandardDeviation devAlgorithm;
+
 	public Stat() {
+		this.devAlgorithm = new StandardDeviation();
 	}
 
 	public double computeCorrelation(double x[], double y[]) {
@@ -32,6 +37,11 @@ public class Stat {
 			mean += x[i];
 		}
 		return mean / x.length;
+	}
+
+	public double standardDeviation(double x[]) {
+		this.devAlgorithm.clear();
+		return this.devAlgorithm.evaluate(x);
 	}
 
 }

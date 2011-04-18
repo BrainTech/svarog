@@ -7,8 +7,7 @@ import java.util.TreeSet;
 import org.signalml.plugin.newartifact.data.NewArtifactType;
 import org.signalml.plugin.newartifact.data.tag.NewArtifactTagData;
 import org.signalml.plugin.newartifact.data.tag.NewArtifactTagResult;
-
-import flanagan.analysis.Stat;
+import org.signalml.plugin.newartifact.logic.stat.Stat;
 
 public class TechnicalTagCreator extends AbstractNewArtifactTagCreator
 	implements INewArtifactTagCreator {
@@ -22,6 +21,13 @@ public class TechnicalTagCreator extends AbstractNewArtifactTagCreator
 
 	private static final double TRESHOLDS_A = 6D;
 	private static final double TRESHOLDS_B = 1D;
+
+	private Stat stdDeviationAlgorithm;
+
+	public TechnicalTagCreator() {
+		super();
+		this.stdDeviationAlgorithm = new Stat();
+	}
 
 	@Override
 	protected String getTagName() {
@@ -86,8 +92,8 @@ public class TechnicalTagCreator extends AbstractNewArtifactTagCreator
 								    channelDataCopy[k].length);
 				Arrays.sort(sortedData);
 				median[k] = sortedData[blockCount >> 1];
-				std[k] = Stat.standardDeviation(Arrays.copyOfRange(sortedData,
-								tailLength - 1, blockCount - tailLength - 1))
+				std[k] = this.stdDeviationAlgorithm.standardDeviation(Arrays.copyOfRange(sortedData,
+						tailLength - 1, blockCount - tailLength - 1))
 					 / TechnicalTagCreator.FACTOR;
 			}
 
