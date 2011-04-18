@@ -123,12 +123,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>flanagan</groupId>
-			<artifactId>flanagan</artifactId>
-			<version>1.0.3</version>
-		</dependency>
-
-		<dependency>
 			<groupId>multiplexer</groupId>
 			<artifactId>jmx</artifactId>
 			<version>0.9</version>
