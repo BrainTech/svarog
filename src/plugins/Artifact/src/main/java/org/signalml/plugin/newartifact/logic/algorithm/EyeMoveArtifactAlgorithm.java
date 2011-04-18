@@ -3,8 +3,7 @@ package org.signalml.plugin.newartifact.logic.algorithm;
 import java.util.Arrays;
 
 import org.signalml.plugin.newartifact.data.NewArtifactConstants;
-
-import flanagan.analysis.Stat;
+import org.signalml.plugin.newartifact.logic.stat.Stat;
 
 public class EyeMoveArtifactAlgorithm extends NewArtifactAlgorithmBase {
 
@@ -12,9 +11,14 @@ public class EyeMoveArtifactAlgorithm extends NewArtifactAlgorithmBase {
 	private static double DEFAULT_F78_CORRELATION = 8.0D;
 	private static double DEFAULT_T34_CORRELATION = 9.0D;
 
+	private Stat correlationAlgorithm;
+
 	public EyeMoveArtifactAlgorithm(NewArtifactConstants constants) {
 		super(constants);
+
 		this.resultBuffer = new double[4][this.constants.channelCount];
+
+		this.correlationAlgorithm = new Stat();
 	}
 
 	@Override
@@ -66,7 +70,7 @@ public class EyeMoveArtifactAlgorithm extends NewArtifactAlgorithmBase {
 			return defaultValue;
 		} else {
 			this.computeSingleCorrelation(signal, channel1, channel2, resultColumn);
-			return Stat.corrCoeff(signal[channel1], signal[channel2]);
+			return this.correlationAlgorithm.computeCorrelation(signal[channel1], signal[channel2]);
 		}
 	}
 
@@ -78,8 +82,8 @@ public class EyeMoveArtifactAlgorithm extends NewArtifactAlgorithmBase {
 
 		for (int i = 0; i < signal.length; ++i) {
 			if (i != channel1 && i != channel2) {
-				double c1 = Stat.corrCoeff(channel1Data, signal[i]);
-				double c2 = Stat.corrCoeff(channel2Data, signal[i]);
+				double c1 = this.correlationAlgorithm.computeCorrelation(channel1Data, signal[i]);
+				double c2 = this.correlationAlgorithm.computeCorrelation(channel2Data, signal[i]);
 				resultBuffer[i] = Math.max(Math.abs(c1), Math.abs(c2));
 			} else {
 				resultBuffer[i] = 0;

@@ -3,14 +3,18 @@ package org.signalml.plugin.newartifact.logic.algorithm;
 import java.util.Arrays;
 
 import org.signalml.plugin.newartifact.data.NewArtifactConstants;
-
-import flanagan.analysis.Stat;
+import org.signalml.plugin.newartifact.logic.stat.Stat;
 
 public class ECGArtifactAlgorithm  extends NewArtifactAlgorithmBase {
 
+	private Stat correlationAlgorithm;
+
 	public ECGArtifactAlgorithm(NewArtifactConstants constants) {
 		super(constants);
+
 		this.resultBuffer = new double[1][constants.channelCount];
+
+		this.correlationAlgorithm = new Stat();
 	}
 
 	@Override
@@ -36,7 +40,7 @@ public class ECGArtifactAlgorithm  extends NewArtifactAlgorithmBase {
 				      tailLength, tailLength + blockLength);
 		for (int i = 0; i < data.constants.channelCount; ++i) {
 			double channelData[] = Arrays.copyOfRange(signal[i], tailLength, tailLength + blockLength);
-			buffer[i] = Math.abs(Stat.corrCoeff(channelData, ecgChannel));
+			buffer[i] = Math.abs(this.correlationAlgorithm.computeCorrelation(channelData, ecgChannel));
 		}
 
 		return this.resultBuffer;

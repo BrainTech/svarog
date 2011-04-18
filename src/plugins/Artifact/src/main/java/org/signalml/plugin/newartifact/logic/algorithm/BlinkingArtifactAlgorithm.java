@@ -2,15 +2,18 @@ package org.signalml.plugin.newartifact.logic.algorithm;
 
 
 import org.signalml.plugin.newartifact.data.NewArtifactConstants;
-
-import flanagan.analysis.Stat;
+import org.signalml.plugin.newartifact.logic.stat.Stat;
 
 public class BlinkingArtifactAlgorithm extends NewArtifactAlgorithmBase {
+
+	private Stat correlationAlgorithm;
 
 	public BlinkingArtifactAlgorithm(NewArtifactConstants constants) {
 		super(constants);
 
 		this.resultBuffer = new double[constants.getBlockCapacity()][2];
+
+		this.correlationAlgorithm = new Stat();
 	}
 
 	@Override
@@ -42,8 +45,8 @@ public class BlinkingArtifactAlgorithm extends NewArtifactAlgorithmBase {
 				corr1 = 1.0;
 				corr2 = 1.0;
 			} else {
-				corr1 = Stat.corrCoeff(d1, d2);
-				corr2 = Stat.corrCoeff(d3, d4);
+				corr1 = this.correlationAlgorithm.computeCorrelation(d1, d2);
+				corr2 = this.correlationAlgorithm.computeCorrelation(d3, d4);
 			}
 
 			this.resultBuffer[k][0] = corr1;
