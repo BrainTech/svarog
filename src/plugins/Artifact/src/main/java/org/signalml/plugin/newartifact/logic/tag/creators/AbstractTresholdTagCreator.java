@@ -14,6 +14,11 @@ public abstract class AbstractTresholdTagCreator extends AbstractNewArtifactTagC
 		int eegChannels[] = data.eegChannels;
 
 		List<Integer> tags = new LinkedList<Integer>();
+
+		if (eegChannels == null || eegChannels.length == 0) {
+			return tags;
+		}
+
 		for (int j = 0; j < source[eegChannels[0]].length; ++j) {
 			for (int i = 0; i < eegChannels.length; ++i) {
 				int channel = eegChannels[i];
