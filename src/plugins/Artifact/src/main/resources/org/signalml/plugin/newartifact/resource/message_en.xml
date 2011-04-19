@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="newArtifactMethod.runMethodString">Artifact detection (new!)</entry>
+
+	<entry key="newArtifactMethod.config.title">Artifact configuration</entry>
+
+	<entry key="newArtifactMethod.config.workingDirectoryTitle">Artifact working directory</entry>
+	<entry key="newArtifactMethod.config.workingDirectory">Working directory</entry>
+	<entry key="newArtifactMethod.config.chooseWorkingDirectory">Choose...</entry>
+	<entry key="newArtifactMethod.config.chooseWorkingDirectoryToolTip">Choose a directory for artifact projects</entry>
+
+	<entry key="newArtifactMethod.dialog.result.title">Artifact result</entry>
+	
+	<entry key="newArtifactMethod.dialog.result.actionTitle">Choose primary result targets</entry>
+	<entry key="newArtifactMethod.dialog.result.openInWindow">Open in the viewer</entry>
+	<entry key="newArtifactMethod.dialog.result.saveToFile">Save to file</entry>
+
+	<entry key="newArtifactMethod.dialog.result.choosePrimaryTagTitle">Choose primary result tag file</entry>
+	<entry key="newArtifactMethod.dialog.result.primaryTagFile">Primary tag file</entry>
+	<entry key="newArtifactMethod.dialog.result.choosePrimaryTagFile">Choose...</entry>
+	<entry key="newArtifactMethod.dialog.result.choosePrimaryTagFileToolTip">Choose a tag file to save</entry>
+
+	<entry key="newArtifactMethod.dialog.result.additionalTitle">Additional result tags</entry>
+	<entry key="newArtifactMethod.dialog.result.additionalOpenInWindow">Open selected additional tags in the viewer</entry>
+	<entry key="newArtifactMethod.dialog.result.additionalSaveToFile">Save selected additional tag to files</entry>
+
+	<entry key="newArtifactMethod.dialog.result.choosePrimaryTagTitle">Choose primary result tag file</entry>
+	<entry key="newArtifactMethod.dialog.result.primaryTagFile">Primary tag file</entry>
+	<entry key="newArtifactMethod.dialog.result.choosePrimaryTagFile">Choose...</entry>
+	<entry key="newArtifactMethod.dialog.result.choosePrimaryTagFileToolTip">Choose a tag file to save</entry>
+
+	<entry key="error.newArtifact.result.badTagFile">Tag file not chosen</entry>
+	<entry key="error.newArtifact.result.tagFileNotWritable">Tag file parent directory doesn't exist or not writable</entry>
+
+<entry key="newArtifactMethod.dialog.title">Artifact detection configuration</entry>
+
+	<entry key="newArtifactMethod.stepTicker">Processing step</entry>
+	<entry key="newArtifactMethod.progressTicker">Step progress</entry>
+
+	<entry key="newArtifactMethod.signalFormat.FLOAT">Float</entry>
+
+	<entry key="newArtifactMethod.artifactType.BREATHING">Breathing</entry>
+	<entry key="newArtifactMethod.artifactType.EYE_MOVEMENT">Eye movement</entry>
+	<entry key="newArtifactMethod.artifactType.MUSCLE_ACTIVITY">Muscle activity</entry>
+	<entry key="newArtifactMethod.artifactType.EYEBLINKS">Eyeblinks</entry>
+	<entry key="newArtifactMethod.artifactType.TECHNICAL">Technical</entry>
+	<entry key="newArtifactMethod.artifactType.POWER_SUPPLY">Power supply</entry>
+	<entry key="newArtifactMethod.artifactType.ECG">ECG</entry>
+	<entry key="newArtifactMethod.artifactType.UNKNOWN">Unknown</entry>
+
+	<entry key="newArtifactMethod.iterableSensitivity.BREATHING">Sensitivity for breathing artifacts</entry>
+	<entry key="newArtifactMethod.iterableSensitivity.EYE_MOVEMENT">Sensitivity for eye movement artifacts</entry>
+	<entry key="newArtifactMethod.iterableSensitivity.MUSCLE_ACTIVITY">Sensitivity for muscle activity artifacts</entry>
+	<entry key="newArtifactMethod.iterableSensitivity.EYEBLINKS">Sensitivity for eyeblinks artifacts</entry>
+	<entry key="newArtifactMethod.iterableSensitivity.TECHNICAL">Sensitivity for technical artifacts</entry>
+	<entry key="newArtifactMethod.iterableSensitivity.POWER_SUPPLY">Sensitivity for power supply artifacts</entry>
+	<entry key="newArtifactMethod.iterableSensitivity.ECG">Sensitivity for ECG artifacts</entry>
+	<entry key="newArtifactMethod.iterableSensitivity.UNKNOWN">Sensitivity for unknown artifacts</entry>
+
+	<entry key="newArtifactMethod.powerGridFrequency.EUROPE">50 Hz (Europe)</entry>
+	<entry key="newArtifactMethod.powerGridFrequency.USA">60 Hz (United States)</entry>
+
+	<entry key="newArtifactMethod.dialog.chooseArtifactTypes">Artifact types &amp; sensitivity</entry>
+	<entry key="newArtifactMethod.dialog.options">Options</entry>
+	<entry key="newArtifactMethod.dialog.excludeSomeDerivations">Exclude some derivations</entry>
+	<entry key="newArtifactMethod.dialog.powerFrequency">Power frequency</entry>
+	<entry key="newArtifactMethod.dialog.editMontage">Edit montage</entry>
+	<entry key="newArtifactMethod.dialog.editMontageToolTip">Edit channel labels and functions</entry>
+	<entry key="newArtifactMethod.dialog.editExclusion">Select excluded derivations</entry>
+	<entry key="newArtifactMethod.dialog.editExclusionToolTip">Select excluded derivations</entry>
+
+	<entry key="newArtifactMethod.dialog.exclusionTable">Exclusion</entry>
+
+	<entry key="newArtifactMethod.situation.artifactProjectExists">Project [{0}] exists. Reuse or replace?</entry>
+
+	<entry key="newArtifactMethod.dialog.iteration.title">Iteration result</entry>
+
+	<entry key="newArtifactMethod.dialog.iteration.expertTagTitle">Compare with expert tag</entry>
+	<entry key="newArtifactMethod.dialog.iteration.expertTag">Expert artifact tag</entry>
+	<entry key="newArtifactMethod.dialog.iteration.choose">Choose...</entry>
+	<entry key="newArtifactMethod.dialog.iteration.expertTagToolTip">Choose reference tag with artifacts</entry>
+
+	<entry key="newArtifactMethod.runMethodString">Artifact detection (new!)</entry>
+
+	<entry key="newArtifactMethod.step.precompute">Preparing</entry>
+	<entry key="newArtifactMethod.step.readSource">Reading source data</entry>
+	<entry key="newArtifactMethod.step.computeBin">Computing intermediate data (block {0} of {1})</entry>
+
+	<entry key="newArtifactMethod.step.prepareTags">Preparing tagger</entry>
+	<entry key="newArtifactMethod.step.tagging">Tagging artifacts</entry>
+	<entry key="newArtifactMethod.step.tagMerging">Merging tag files</entry>
+
+	<entry key="newArtifactMethod.step.abort">Aborting</entry>
+
+
+</properties>
