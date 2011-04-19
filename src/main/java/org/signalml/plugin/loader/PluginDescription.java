@@ -11,6 +11,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.commons.cli.ParseException;
 import org.signalml.plugin.export.Plugin;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -43,11 +44,11 @@ public class PluginDescription extends PluginState{
 	 * the string with the full name of the class,
 	 * that will be loaded to register the plug-in
 	 */
-	private String startingClass;
+	private String startingClass = null;
 	/**
 	 * the name of the jar file with the plug-in
 	 */
-	private String jarFile;
+	private String jarFile =  null;
 	/**
 	 * the name of the package that is exported by the plug-in
 	 */
@@ -68,11 +69,13 @@ public class PluginDescription extends PluginState{
 	 * @param fileName the path to an XML file with the
 	 * description of the plug-in 
 	 * @throws ParserConfigurationException if a DocumentBuilder
-     *   cannot be created
+     * cannot be created
 	 * @throws SAXException if the creation of document builder fails
 	 * @throws IOException if an error while parsing the file occurs
+	 * @throws ParseException if the xml file doesn't contain all necessary
+	 * values
 	 */
-	public PluginDescription(String fileName) throws ParserConfigurationException, SAXException, IOException{
+	public PluginDescription(String fileName) throws ParserConfigurationException, SAXException, IOException, ParseException{
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 		Document document = documentBuilder.parse(new File(fileName));
@@ -94,6 +97,9 @@ public class PluginDescription extends PluginState{
 			else if (node.getNodeName().equals("dependencies"))
 				parseDependencies(node);
 		}
+		
+		if ((name == null) || (version == null) || (jarFile == null) || (startingClass == null))
+			throw new ParseException("the xml (" + fileName + ") file doesn't contain all necessary values");
 	}
 	
 	/**

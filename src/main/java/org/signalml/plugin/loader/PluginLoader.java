@@ -85,6 +85,11 @@ public class PluginLoader {
 	 * the list of directories in which plug-ins are stored
 	 */
 	private ArrayList<File> pluginDirs = new ArrayList<File>();
+	
+	/**
+	 * the directory where default plug-ins are stored
+	 */
+	private ArrayList<File> globalPluginDirectories = new ArrayList<File>();
 
 	/**
 	 * list of descriptions of plug-ins.
@@ -144,8 +149,7 @@ public class PluginLoader {
 		try {
 			return new PluginDescription(fileName);
 		} catch (Exception e) {
-			logger.error("failed do read description of a plug-in from file "+fileName);
-			e.printStackTrace();
+			logger.warn("failed do read description of a plug-in from file "+fileName);
 			return null;
 		}
 
@@ -162,6 +166,7 @@ public class PluginLoader {
 		try {
 			if (!readPluginDirectories())
 				setDefaultPluginDir(profileDir);
+			setGlobalPluginDir();
 			readPluginsState(this.pluginsStateFile);
 		} catch (Exception e) {
 			logger.error("Failed to create loader of plug-ins");
@@ -223,13 +228,46 @@ public class PluginLoader {
 				if (dir.isDirectory()){
 					File pluginDir = new File(dir + File.separator + "target");
 					if (pluginDir.exists() && pluginDir.isDirectory() && pluginDir.canRead()) {
-						this.pluginDirs.add(pluginDir);
+						globalPluginDirectories.add(pluginDir);
 					}
 				}
 			}
 		}
 	}
 
+	
+	/**
+	 * Sets the directory where the default plug-ins are stored.
+	 * The location of the file depends on the fact if Svarog was started:
+	 * <ul>
+	 * <li>from sources,</li>
+	 * <li>from jar file.</li>
+	 * </ul>
+	 */
+	private void setGlobalPluginDir(){
+		//hack to get the location of the jar file and add the global plugin directory
+		File pluginDirGlobal = null;
+		try{
+			URL srcURL = getClass().getProtectionDomain().getCodeSource().getLocation();
+			if (srcURL.toString().endsWith("/target/classes/")){
+				File svarogDirFile = new File(srcURL.toURI());
+				svarogDirFile = svarogDirFile.getParentFile().getParentFile();
+				startFromSourcesAddPluginDirs(svarogDirFile);
+			} else {
+				JarURLConnection connection = (JarURLConnection) srcURL.openConnection();
+				URL jarURL = connection.getJarFileURL();
+				File jarDirFile = new File(jarURL.toURI());
+				jarDirFile = jarDirFile.getParentFile();
+				pluginDirGlobal = new File(jarDirFile + File.separator + "plugins");
+				if (pluginDirGlobal.exists() && pluginDirGlobal.isDirectory() && pluginDirGlobal.canRead()) {
+					globalPluginDirectories.add(pluginDirGlobal);
+				}
+			}
+		} catch (Exception ex){
+			logger.error("Failed to add global plugin directory - maybe started neither from a jar file nor from sources");
+		}
+	}
+	
 	/**
 	 * Adds the default plug-in directory based on given profile directory.
 	 * Also:
@@ -248,27 +286,6 @@ public class PluginLoader {
 			pluginDir.mkdir();
 		if (pluginDir.exists() && pluginDir.isDirectory() && pluginDir.canRead()) {
 			this.pluginDirs.add(pluginDir);
-		}
-		//hack to get the location of the jar file and add the global plugin directory
-		File pluginDirGlobal = null;
-		try{
-			URL srcURL = getClass().getProtectionDomain().getCodeSource().getLocation();
-			if (srcURL.toString().endsWith("/target/classes/")){
-				File svarogDirFile = new File(srcURL.toURI());
-				svarogDirFile = svarogDirFile.getParentFile().getParentFile();
-				startFromSourcesAddPluginDirs(svarogDirFile);
-			} else {
-				JarURLConnection connection = (JarURLConnection) srcURL.openConnection();
-				URL jarURL = connection.getJarFileURL();
-				File jarDirFile = new File(jarURL.toURI());
-				jarDirFile = jarDirFile.getParentFile();
-				pluginDirGlobal = new File(jarDirFile + File.separator + "plugins");
-				if (pluginDirGlobal.exists() && pluginDirGlobal.isDirectory() && pluginDirGlobal.canRead()) {
-					this.pluginDirs.add(pluginDirGlobal);
-				}
-			}
-		} catch (Exception ex){
-			logger.error("Failed to add global plugin directory - maybe started neither from a jar file nor from sources");
 		}
 	}
 
@@ -308,6 +325,10 @@ public class PluginLoader {
 	private URL[] scanPluginDirectories() {
 		ArrayList<URL> urls = new ArrayList<URL>();
 		for (File plDir : pluginDirs) {
+			if (plDir.exists() && plDir.canRead() && plDir.isDirectory())
+				urls.addAll(scanPluginDirectory(plDir));
+		}
+		for (File plDir : globalPluginDirectories) {
 			if (plDir.exists() && plDir.canRead() && plDir.isDirectory())
 				urls.addAll(scanPluginDirectory(plDir));
 		}
