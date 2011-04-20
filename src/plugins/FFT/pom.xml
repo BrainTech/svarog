@@ -22,7 +22,7 @@
 				<executions>
 					<execution>
 						<id>compile</id>
-						<phase>verify</phase>
+						<phase>package</phase>
 						<configuration>
 							<tasks>
 								<copy file="FFT.xml" tofile="target/FFT.xml"/>

@@ -23,7 +23,7 @@
 				<executions>
 					<execution>
 						<id>compile</id>
-						<phase>verify</phase>
+						<phase>package</phase>
 						<configuration>
 							<tasks>
 								<copy file="FFTSignalTool.xml" tofile="target/FFTSignalTool.xml"/>
