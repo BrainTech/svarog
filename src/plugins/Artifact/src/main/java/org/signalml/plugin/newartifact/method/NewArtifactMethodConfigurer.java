@@ -19,6 +19,7 @@ import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.method.Method;
+import org.signalml.plugin.data.PluginConfigForMethod;
 import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
@@ -55,8 +56,9 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 
 	private NewArtifactToolConfigDialog configDialog;
 
+	private boolean firstRunFlag;
+
 	@Override
-	// TODO
 	public void initialize(PluginMethodManager manager) {
 		ViewerElementManager viewerManager = manager.getSvarogAccess()
 						     .getGUIAccess().getManager();
@@ -77,16 +79,25 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 		this.dialog = new NewArtifactMethodDialog(messageSource,
 				this.presetManager, this.dialogParent);
 		this.dialog.setApplicationConfig(viewerManager.getApplicationConfig());
+
+		this.firstRunFlag = true;
 	}
 
 	private void createPresetManager(PluginMethodManager manager) {
 		if (this.presetManager == null) {
 			ViewerElementManager elementManager = manager.getSvarogAccess()
 							      .getGUIAccess().getManager();
-			MethodPresetManager presetManager = new MethodPresetManager(
-				"newartifact", // TODO
-				// methodName
-				NewArtifactParameters.class);
+			MethodPresetManager presetManager;
+			try {
+				presetManager = new MethodPresetManager(
+					((PluginConfigForMethod) PluginResourceRepository
+					 .GetResource("config")).getMethodConfig()
+					.getMethodName(),
+					NewArtifactParameters.class);
+			} catch (PluginException e) {
+				logger.error("Failed to get method name", e);
+				return;
+			}
 			presetManager.setProfileDir(elementManager.getProfileDir());
 			try {
 				presetManager.setStreamer((XStream) PluginResourceRepository
@@ -131,43 +142,12 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 	public boolean configure(Method method, Object methodDataObj)
 	throws SignalMLException {
 
-		boolean workingDirectoryOk = false;
-		String workingDirectoryPath;
-		File workingDirectory = null;
-
-		NewArtifactConfiguration artifactConfig = new NewArtifactConfiguration();
-		// applicationConfig
-		// .getNewArtifactConfig();
-
-		do {
-			workingDirectoryPath = artifactConfig.getWorkingDirectoryPath();
-			if (workingDirectoryPath != null) {
-
-				workingDirectory = (new File(workingDirectoryPath))
-						   .getAbsoluteFile();
-
-				if (workingDirectory.exists()) {
-					if (workingDirectory.isDirectory()
-							&& workingDirectory.canRead()
-							&& workingDirectory.canWrite()) {
-						workingDirectoryOk = true;
-					}
-				}
-			}
-
-			if (!workingDirectoryOk) {
-
-				artifactConfig.setWorkingDirectoryPath(null);
-				boolean ok = getConfigDialog().showDialog(artifactConfig, true);
-				if (!ok) {
-					return false;
-				}
-
-			}
-
-		} while (!workingDirectoryOk);
-
 		NewArtifactApplicationData data = (NewArtifactApplicationData) methodDataObj;
+
+		File workingDirectory = this.configureWorkDir();
+		if (workingDirectory == null) {
+			return false;
+		}
 
 		ExportedSignalDocument signalDocument = data.getSignalDocument();
 		String name = signalDocument.getName();
@@ -270,6 +250,69 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 		}
 
 		return true;
+	}
+
+	private File configureWorkDir() {
+		File workingDirectory = null;
+		String workingDirectoryPath;
+
+		boolean workingDirectoryOk = false;
+		boolean needsPreset = false;
+
+		NewArtifactConfiguration artifactConfig = null;
+
+		if (this.presetManager != null) {
+			try {
+				artifactConfig = (NewArtifactConfiguration) this.presetManager
+						 .getPresetByName(NewArtifactConfiguration.NAME);
+			} catch (ClassCastException e) {
+				logger.warn("Incorrect artifact config type", e);
+
+			}
+		}
+
+		if (artifactConfig == null) {
+			artifactConfig = new NewArtifactConfiguration();
+			needsPreset = true;
+		}
+
+		do {
+			workingDirectoryPath = artifactConfig.getWorkingDirectoryPath();
+			if (workingDirectoryPath != null) {
+
+				workingDirectory = (new File(workingDirectoryPath))
+						   .getAbsoluteFile();
+
+				if (workingDirectory.exists()) {
+					if (workingDirectory.isDirectory()
+							&& workingDirectory.canRead()
+							&& workingDirectory.canWrite()) {
+						workingDirectoryOk = true;
+					}
+				}
+			}
+
+			if (!workingDirectoryOk || this.firstRunFlag) {
+
+				if (!this.firstRunFlag) {
+					artifactConfig.setWorkingDirectoryPath(null);
+				}
+				boolean ok = getConfigDialog().showDialog(artifactConfig, true);
+				if (!ok) {
+					return null;
+				}
+				needsPreset = true;
+			}
+
+			this.firstRunFlag = false;
+
+		} while (!workingDirectoryOk);
+
+		if (needsPreset && this.presetManager != null) {
+			this.presetManager.setPreset(artifactConfig);
+		}
+
+		return workingDirectory;
 	}
 
 	@Override

@@ -169,34 +169,27 @@ public class NewArtifactMethod extends PluginAbstractMethod implements
 	}
 
 	/*
-	@Override
-	public Object createData(PluginMethodManager manager) {
-		ExportedSignalDocument signalDocument;
-		try {
-			signalDocument = manager.getSvarogAccess()
-					.getSignalAccess().getActiveSignalDocument();
-		} catch (NoActiveObjectException e) {
-			signalDocument = null;
-		}
-
-		if (signalDocument == null) {
-			OptionPane.showNoActiveSignal(manager.getSvarogAccess()
-					.getGUIAccess().getManager().getOptionPaneParent());
-			return null;
-		}
-
-		NewArtifactApplicationData data = new NewArtifactApplicationData();
-		data.setSignalDocument(signalDocument);
-		data.setSignalAccess(manager.getSvarogAccess().getSignalAccess());
-
-		return data;
-	}
-	*/
+	 * @Override public Object createData(PluginMethodManager manager) {
+	 * ExportedSignalDocument signalDocument; try { signalDocument =
+	 * manager.getSvarogAccess() .getSignalAccess().getActiveSignalDocument(); }
+	 * catch (NoActiveObjectException e) { signalDocument = null; }
+	 *
+	 * if (signalDocument == null) {
+	 * OptionPane.showNoActiveSignal(manager.getSvarogAccess()
+	 * .getGUIAccess().getManager().getOptionPaneParent()); return null; }
+	 *
+	 * NewArtifactApplicationData data = new NewArtifactApplicationData();
+	 * data.setSignalDocument(signalDocument);
+	 * data.setSignalAccess(manager.getSvarogAccess().getSignalAccess());
+	 *
+	 * return data; }
+	 */
 
 	@Override
 	public String getName() {
 		try {
-			return ((PluginConfigForMethod) PluginResourceRepository.GetResource("config")).getMethodConfig().getMethodName();
+			return ((PluginConfigForMethod) PluginResourceRepository
+				.GetResource("config")).getMethodConfig().getMethodName();
 		} catch (PluginException e) {
 			return "";
 		}

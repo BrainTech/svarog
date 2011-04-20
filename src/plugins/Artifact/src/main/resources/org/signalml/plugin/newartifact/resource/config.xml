@@ -66,6 +66,7 @@
 		<constructor-arg>
 			<list>
 				<value>org.signalml.plugin.newartifact.data.NewArtifactApplicationData</value>
+				<value>org.signalml.plugin.newartifact.data.NewArtifactConfiguration</value>
 				<value>org.signalml.plugin.newartifact.data.NewArtifactData</value>
 				<value>org.signalml.plugin.newartifact.data.NewArtifactParameters</value>
 				<value>org.signalml.app.method.MethodPresetManager</value>

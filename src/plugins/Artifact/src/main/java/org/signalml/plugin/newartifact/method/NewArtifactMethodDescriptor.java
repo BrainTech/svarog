@@ -28,14 +28,6 @@ public class NewArtifactMethodDescriptor extends PluginAbstractMethodDescriptor 
 	protected static final Logger logger = Logger
 					       .getLogger(NewArtifactMethodDescriptor.class);
 
-	/*
-	 * public static final String ICON_PATH =
-	 * "org/signalml/app/icon/runmethod.png"; public static final String
-	 * ITERATION_ICON_PATH = "org/signalml/app/icon/iteratemethod.png"; public
-	 * static final String RUN_METHOD_STRING =
-	 * "newArtifactMethod.runMethodString";
-	 */
-
 	private NewArtifactMethodConfigurer configurer;
 	private MethodPresetManager presetManager;
 
@@ -49,13 +41,12 @@ public class NewArtifactMethodDescriptor extends PluginAbstractMethodDescriptor 
 
 	@Override
 	public String getIterationIconPath() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String getIterationNameCode() {
-		return "newArtifactMethod.iterateMethodString";
+		return null;
 	}
 
 	@Override
@@ -101,8 +92,7 @@ public class NewArtifactMethodDescriptor extends PluginAbstractMethodDescriptor 
 
 	@Override
 	public String getIconPath() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.methodManager.getMethodConfig().getIconPath();
 	}
 
 	@Override

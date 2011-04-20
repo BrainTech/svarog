@@ -170,7 +170,6 @@ public class NewArtifactMethodDialog extends AbstractPresetDialog {
 			}
 		}
 
-		//configureAvailableTypes(signalDocument);
 		configureAvailableTypes();
 	}
 
@@ -278,44 +277,6 @@ public class NewArtifactMethodDialog extends AbstractPresetDialog {
 		}
 
 	}
-
-	/*
-	 * private void configureAvailableTypes(ExportedSignalDocument
-	 * signalDocument) {
-	 *
-	 * List<String> sourceChannelLabels = signalDocument
-	 * .getSourceChannelLabels(); int f3 = findChannel(sourceChannelLabels,
-	 * EegChannel.F3); int f4 = findChannel(sourceChannelLabels, EegChannel.F4);
-	 * int c3 = findChannel(sourceChannelLabels, EegChannel.C3); int c4 =
-	 * findChannel(sourceChannelLabels, EegChannel.C4); int fp1 =
-	 * findChannel(sourceChannelLabels, EegChannel.FP1); int fp2 =
-	 * findChannel(sourceChannelLabels, EegChannel.FP2); int f7 =
-	 * findChannel(sourceChannelLabels, EegChannel.F7); int f8 =
-	 * findChannel(sourceChannelLabels, EegChannel.F8); int t3 =
-	 * findChannel(sourceChannelLabels, EegChannel.T3); int t4 =
-	 * findChannel(sourceChannelLabels, EegChannel.T4); int eogl =
-	 * findChannel(sourceChannelLabels, EegChannel.EOGL); int eogp =
-	 * findChannel(sourceChannelLabels, EegChannel.EOGP); int ecg =
-	 * findChannel(sourceChannelLabels, EegChannel.ECG);
-	 *
-	 * typesPanel.setLockOnType(NewArtifactType.ECG, (ecg < 0));
-	 *
-	 * if ((f3 < 0) || (f4 < 0) || (c3 < 0) || (c4 < 0) || (fp1 < 0) || (fp2 <
-	 * 0)) { typesPanel.setLockOnType(NewArtifactType.EYEBLINKS, true); } else {
-	 * typesPanel.setLockOnType(NewArtifactType.EYEBLINKS, false); }
-	 *
-	 * if (((f7 < 0) || (f8 < 0)) && ((t3 < 0) || (t4 < 0)) && ((eogl < 0) ||
-	 * (eogp < 0))) { typesPanel.setLockOnType(NewArtifactType.EYE_MOVEMENT,
-	 * true); } else { typesPanel.setLockOnType(NewArtifactType.EYE_MOVEMENT,
-	 * false); }
-	 *
-	 * }
-
-
-	private int findChannel(List<String> sourceChannelLabels, EegChannel channel) {
-		return sourceChannelLabels.indexOf(channel.getName());
-	}
-	*/
 
 	@Override
 	protected void onDialogClose() {
