@@ -1,0 +1,12 @@
+<plugin>
+	<name>Plugin Common Tools</name>
+	<version>0.1</version>
+	<jar-file>PluginToolCommon.jar</jar-file>
+	<starting-class>org.signalml.plugin.tool.PluginToolCommon</starting-class>
+	<dependencies>
+		<dependency>
+			<name>Svarog API</name>
+			<version>0.5</version>
+		</dependency>
+	</dependencies>
+</plugin>

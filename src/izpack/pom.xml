@@ -13,6 +13,8 @@
 		<svarog.version>0.5.0-SNAPSHOT</svarog.version>
 		<FFT.plugin.version>0.1</FFT.plugin.version>
 		<FFTSignalTool.plugin.version>0.1</FFTSignalTool.plugin.version>
+		<PluginToolCommon.plugin.version>0.1</PluginToolCommon.plugin.version>
+		<Artifact.plugin.version>0.1</Artifact.plugin.version>
 	</properties>
 
 	<build>
@@ -50,6 +52,8 @@
 							<includes>
 								<include>plugins/FFT.jar</include>
 								<include>plugins/FFTSignalTool.jar</include>
+								<include>plugins/PluginToolCommon.jar</include>
+								<include>plugins/Artifact.jar</include>
 								<include>svarog.jar</include>
 								<include>bin/customActions/Uninstaller.jar</include>
 								<include>bin/customActions</include>
@@ -103,6 +107,24 @@
 									<overWrite>true</overWrite>
 									<outputDirectory>${basedir}/plugins</outputDirectory>
 									<destFileName>FFTSignalTool.jar</destFileName>
+								</artifactItem>
+								<artifactItem>
+									<groupId>org.signalml.plugin</groupId>
+									<version>${PluginToolCommon.plugin.version}</version>
+									<artifactId>PluginToolCommon</artifactId>
+									<type>jar</type>
+									<overWrite>true</overWrite>
+									<outputDirectory>${basedir}/plugins</outputDirectory>
+									<destFileName>PluginToolCommon.jar</destFileName>
+								</artifactItem>
+								<artifactItem>
+									<groupId>org.signalml.plugin</groupId>
+									<version>${Artifact.plugin.version}</version>
+									<artifactId>Artifact</artifactId>
+									<type>jar</type>
+									<overWrite>true</overWrite>
+									<outputDirectory>${basedir}/plugins</outputDirectory>
+									<destFileName>Artifact.jar</destFileName>
 								</artifactItem>
 							</artifactItems>
 						</configuration>
