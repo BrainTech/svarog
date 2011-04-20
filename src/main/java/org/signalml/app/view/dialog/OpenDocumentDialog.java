@@ -14,7 +14,6 @@ import javax.swing.AbstractAction;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JFileChooser;
 
 import org.signalml.app.action.RegisterCodecAction;
 import org.signalml.app.config.ApplicationConfiguration;
@@ -202,9 +201,6 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 		signalMLOptionsPanel.getSignalMLDriverComboBox().setModel(codecListModel);
 		signalMLOptionsPanel.getRegisterCodecButton().setAction(registerCodecAction);
 
-		ReadXMLManifestAction readXMLManifestAction = new ReadXMLManifestAction();
-		getStepTwoPanel().getSignalOptionsPanel().getRawSignalOptionsPanel().getReadXMLManifestButton().setAction(readXMLManifestAction);
-
 	}
 
 	/**
@@ -241,11 +237,12 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 	@Override
 	protected boolean onStepChange(int toStep, int fromStep, Object model) {
 		if (fromStep == 0) {
-			JFileChooser fileChooser = getStepOnePanel().getFileChooser();
+			EmbeddedFileChooser stepOneFileChooser = getStepOnePanel().getFileChooser();
+			getStepTwoPanel().getSignalOptionsPanel().getRawSignalOptionsPanel().setSignalFileChooser(stepOneFileChooser);
 
 			boolean autodetect = getStepOnePanel().getAutodetectRadio().isSelected();
 			if (autodetect) {
-				File file = fileChooser.getSelectedFile();
+				File file = stepOneFileChooser.getSelectedFile();
 				try {
 					targetType = documentDetector.detectDocumentType(file);
 				} catch (IOException ex) {
@@ -423,9 +420,7 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 				errors.rejectValue("signalOptions.codec", "error.codecMustBeSet");
 			}
 		} else if (method == 1) {
-			errors.pushNestedPath("signalOptions.rawSignalDescriptor");
-			optionsPanel.getRawSignalOptionsPanel().validatePanel(errors);
-			errors.popNestedPath();
+			// the panel for method 1 doesn't need any validation
 		} else {
 			throw new SignalMLException("error.invalidValue");
 		}
@@ -570,7 +565,6 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 					descriptor.setCalibrationOffset(0.0F);
 				}
 				signalOptionsPanel.getRawSignalOptionsPanel().fillModelFromPanel(descriptor);
-				signalOptionsPanel.getPagingSignalParamersPanel().fillModelFromPanel(descriptor);
 
 				osd.setRawSignalDescriptor(descriptor);
 

@@ -13,6 +13,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.ViewerFileChooser;
+import org.signalml.app.view.element.EmbeddedFileChooser;
 import org.signalml.app.view.element.FileChooserPanel;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalDescriptorReader;
@@ -43,10 +44,10 @@ public class ReadXMLManifestAction extends AbstractSignalMLAction {
 	private SignalParametersPanelForRawSignalFile parentSignalParametersPanel;
 
 	/**
-	 * The panel containing a file chooser of a signal file. Used to open
+	 * The file chooser for a signal file. Used to open
 	 * the same directory as in the fileChooser opened by this action.
 	 */
-	private FileChooserPanel signalFileChooserPanel;
+	private EmbeddedFileChooser signalFileChooser;
 
 	/**
 	 * Constructor.
@@ -81,7 +82,7 @@ public class ReadXMLManifestAction extends AbstractSignalMLAction {
 	@Override
 	public void actionPerformed(ActionEvent ev) {
 
-		File selectedFile = signalFileChooserPanel.getSelectedFile();
+		File selectedFile = signalFileChooser.getSelectedFile();
 		File directory = null;
 		File fileSuggestion = null;
 		if (selectedFile != null) {
@@ -94,7 +95,7 @@ public class ReadXMLManifestAction extends AbstractSignalMLAction {
 		}
 
 		if (directory == null) {
-			directory = signalFileChooserPanel.getCurrentDirectory();
+			directory = signalFileChooser.getCurrentDirectory();
 		}
 
 		JFileChooser fileChooser = new JFileChooser();
@@ -124,10 +125,10 @@ public class ReadXMLManifestAction extends AbstractSignalMLAction {
 	/**
 	 * Sets the fileChooser for the signal file which should be used to check
 	 * its currently opened directory.
-	 * @param fileChooserPanel file chooser to be used by this panel
+	 * @param fileChooser file chooser to be used by this panel
 	 */
-	void setSignalFileChooserPanel(FileChooserPanel fileChooserPanel) {
-		this.signalFileChooserPanel = fileChooserPanel;
+	public void setSignalFileChooser(EmbeddedFileChooser fileChooser) {
+		this.signalFileChooser = fileChooser;
 	}
 
 }

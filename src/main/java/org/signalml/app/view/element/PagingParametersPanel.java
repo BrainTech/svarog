@@ -7,7 +7,6 @@ import java.awt.Dimension;
 
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.CompoundBorder;
@@ -33,16 +32,11 @@ import org.springframework.validation.Errors;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class PagingParametersPanel extends JPanel {
+public class PagingParametersPanel extends AbstractSignalMLPanel {
 
 	private static final long serialVersionUID = 1L;
 
 	protected static final Logger logger = Logger.getLogger(PagingParametersPanel.class);
-
-	/**
-	 * the {@link MessageSourceAccessor source} of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
 
 	/**
 	 * the text field with the size of the page of signal in seconds
@@ -61,8 +55,7 @@ public class PagingParametersPanel extends JPanel {
 	 * @param messageSource the source of messages (labels)
 	 */
 	public PagingParametersPanel(MessageSourceAccessor messageSource) {
-		super();
-		this.messageSource = messageSource;
+		super(messageSource);
 		initialize();
 	}
 
@@ -294,6 +287,5 @@ public class PagingParametersPanel extends JPanel {
 			errors.rejectValue("blocksPerPage", "error.invalidNumber");
 		}
 	}
-
 
 }

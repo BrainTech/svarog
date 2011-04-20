@@ -11,8 +11,6 @@ import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -33,12 +31,8 @@ import org.springframework.validation.BindException;
  *
  * @author Piotr Szachewicz
  */
-public class MonitorRecordingPanel extends JPanel {
+public class MonitorRecordingPanel extends AbstractSignalMLPanel {
 
-        /**
-         * A message source accessor capable of resolving localized message codes.
-         */
-        private final MessageSourceAccessor messageSource;
         /**
          * A panel for choosing signal and tags recording target files for this
          * recording.
@@ -59,8 +53,7 @@ public class MonitorRecordingPanel extends JPanel {
          * localized message codes
          */
         public MonitorRecordingPanel(MessageSourceAccessor messageSource) {
-                super();
-                this.messageSource = messageSource;
+                super(messageSource);
                 initialize();
         }
 
@@ -195,32 +188,4 @@ public class MonitorRecordingPanel extends JPanel {
                 getChooseFilesForMonitorRecordingPanel().resetFileNames();
         }
 
-        /**
-         * Sets enabled to this panel and all it's children.
-         * Clears all fields if enabled == false.
-         *
-         * @param enabled true or false
-         */
-        public void setEnabledAll(boolean enabled) {
-
-                setEnabledToChildren(this, enabled);
-        }
-
-        /**
-         * Sets enabled to a component and all of it's children.
-         *
-         * @param component target component
-         * @param enabled true or false
-         * @param omit wheter to omit component
-         */
-        private void setEnabledToChildren(Component component, boolean enabled) {
-
-                component.setEnabled(enabled);
-                if (component instanceof Container) {
-                        Component[] children = ((Container) component).getComponents();
-                        for (Component child : children) {
-                                setEnabledToChildren(child, enabled);
-                        }
-                }
-        }
 }

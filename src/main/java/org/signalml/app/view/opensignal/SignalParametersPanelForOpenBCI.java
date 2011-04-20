@@ -24,8 +24,8 @@ public class SignalParametersPanelForOpenBCI extends AbstractSignalParametersPan
 	 * @param messageSource message source capable of resolving localized messages
 	 * @param applicationConfiguration the configuration to be used
 	 */
-	public SignalParametersPanelForOpenBCI(MessageSourceAccessor messageSource, ApplicationConfiguration applicationConfiguration) {
-		super(messageSource, applicationConfiguration);
+	public SignalParametersPanelForOpenBCI(MessageSourceAccessor messageSource) {
+		super(messageSource);
 		getSamplingFrequencyComboBox().setEditable(true);
 
 		setEnabledAll(true);
