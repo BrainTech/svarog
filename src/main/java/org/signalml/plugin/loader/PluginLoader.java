@@ -150,6 +150,7 @@ public class PluginLoader {
 			return new PluginDescription(fileName);
 		} catch (Exception e) {
 			logger.warn("failed do read description of a plug-in from file "+fileName);
+			e.printStackTrace();
 			return null;
 		}
 
@@ -182,6 +183,7 @@ public class PluginLoader {
 	 * @return an array of URLs to jar files with plug-ins
 	 */
 	private ArrayList<URL> scanPluginDirectory(File directory) {
+		ArrayList<PluginDescription> tmpDescriptions = new ArrayList<PluginDescription>();
 		FilenameFilter filter = new FilesystemFilter("xml", "Xml File", false);
 		String[] filenames = directory.list(filter);
 		for (String filename: filenames) {
@@ -189,12 +191,13 @@ public class PluginLoader {
 			                                  + File.separator + filename);
 			if (descr != null) {
 				descriptions.add(descr);
+				tmpDescriptions.add(descr);
 				descriptionsByName.put(descr.getName(), descr);
 			}
 		}
 
 		ArrayList<URL> urls = new ArrayList<URL>();
-		for (PluginDescription descr : descriptions) {
+		for (PluginDescription descr : tmpDescriptions) {
 			PluginState state = statesByName.get(descr.getName());
 			if (state!= null && descr.isActive()) {
 				descr.setActive(state.isActive());
@@ -203,8 +206,12 @@ public class PluginLoader {
 			if (descr.isActive()) {
 				try {
 					name = directory.toURI().toString();
+					File jarFileTmp = new File(directory, descr.getJarFile());
 					name = name.concat(descr.getJarFile());
-					urls.add(new URL(name));
+					if (jarFileTmp.exists() && jarFileTmp.canRead())
+						urls.add(new URL(name));
+					else
+						logger.error("File (" + jarFileTmp.getAbsolutePath() + ") does not exist or can not be read.");
 				} catch (MalformedURLException e) {
 					logger.error("failed to create URL for file "+name);
 					e.printStackTrace();

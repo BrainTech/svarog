@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.loader;
 
@@ -12,6 +12,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.cli.ParseException;
+import org.apache.log4j.Logger;
 import org.signalml.plugin.export.Plugin;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -39,7 +40,10 @@ import org.xml.sax.SAXException;
  * @author Marcin Szumski
  */
 public class PluginDescription extends PluginState{
-	
+
+
+	private static final Logger logger = Logger.getLogger(PluginDescription.class);
+
 	/**
 	 * the string with the full name of the class,
 	 * that will be loaded to register the plug-in
@@ -54,7 +58,7 @@ public class PluginDescription extends PluginState{
 	 */
 	private String exportPackage;
 	/**
-	 * the loaded {@link #startingClass starting class} 
+	 * the loaded {@link #startingClass starting class}
 	 */
 	private Plugin plugin = null;
 	/**
@@ -62,12 +66,28 @@ public class PluginDescription extends PluginState{
 	 * of the plug-in
 	 */
 	private ArrayList<PluginDependency> dependencies = new ArrayList<PluginDependency>();
-	
+
+	/**
+	 * Functions which checks if a variable is null and (if it is) adds its
+	 * name to the string.
+	 * @param missingValues the string enlisting missing values
+	 * @param variable the variable to be checked
+	 * @param variableName the name of the variable
+	 */
+	private String addMissing(String missingValues, Object variable, String variableName){
+		if (variable == null){
+			if (missingValues.length() != 0)
+				missingValues += ", ";
+			missingValues += variableName;
+		}
+		return missingValues;
+	}
+
 	/**
 	 * Constructor. Parses the XML file of a given path, which
 	 * contains the description of the plug-in.
 	 * @param fileName the path to an XML file with the
-	 * description of the plug-in 
+	 * description of the plug-in
 	 * @throws ParserConfigurationException if a DocumentBuilder
      * cannot be created
 	 * @throws SAXException if the creation of document builder fails
@@ -85,23 +105,40 @@ public class PluginDescription extends PluginState{
 		for (int i = 0; i < nodeList.getLength(); ++i){
 			Node node = nodeList.item(i);
 			if (node.getNodeName().equals("name"))
-				name = node.getFirstChild().getNodeValue().trim();
+				if (name == null)
+					name = node.getFirstChild().getNodeValue().trim();
+				else
+					logger.warn("duplicate plugin name node in xml file: " + fileName + " Used only first node.");
 			else if (node.getNodeName().equals("jar-file"))
-				jarFile = node.getFirstChild().getNodeValue().trim();
+				if (jarFile == null)
+					jarFile = node.getFirstChild().getNodeValue().trim();
+				else
+					logger.warn("duplicate plugin jar-file node in xml file: " + fileName + " Used only first node.");
 			else if (node.getNodeName().equals("version"))
-				setVersion(node.getFirstChild().getNodeValue().trim());
+				if (version == null)
+					setVersion(node.getFirstChild().getNodeValue().trim());
+				else
+					logger.warn("duplicate plugin version node in xml file: " + fileName + " Used only first node.");
 			else if (node.getNodeName().equals("starting-class"))
-				startingClass = node.getFirstChild().getNodeValue().trim();
+				if (startingClass == null)
+					startingClass = node.getFirstChild().getNodeValue().trim();
+				else
+					logger.warn("duplicate plugin starting-class node in xml file: " + fileName + " Used only first node.");
 			else if (node.getNodeName().equals("export-package"))
 				exportPackage =node.getFirstChild().getNodeValue().trim();
 			else if (node.getNodeName().equals("dependencies"))
 				parseDependencies(node);
 		}
-		
-		if ((name == null) || (version == null) || (jarFile == null) || (startingClass == null))
-			throw new ParseException("the xml (" + fileName + ") file doesn't contain all necessary values");
+
+		String missingValues = new String();
+		missingValues = addMissing(missingValues, name, "name");
+		missingValues = addMissing(missingValues, version, "version");
+		missingValues = addMissing(missingValues, jarFile, "jar-file");
+		missingValues = addMissing(missingValues, startingClass, "starting-class");
+		if (missingValues.length() > 0)
+			throw new ParseException("the xml file (" + fileName + ") doesn't contain all necessary values. Missing values: " + missingValues + ".");
 	}
-	
+
 	/**
 	 * Parses the subtree with dependencies starting from the given node.
 	 * @param node XML node containing the dependencies of the plug-in
@@ -136,7 +173,7 @@ public class PluginDescription extends PluginState{
 	public String getStartingClass() {
 		return startingClass;
 	}
-	
+
 
 	/**
 	 * @return the name of the jar file with this plug-in
@@ -144,7 +181,7 @@ public class PluginDescription extends PluginState{
 	public String getJarFile() {
 		return jarFile;
 	}
-	
+
 	/**
 	 * @return the name of the package exported by this plug-in
 	 */
@@ -165,7 +202,7 @@ public class PluginDescription extends PluginState{
 	public Plugin getPlugin() {
 		return plugin;
 	}
-	
+
 	/**
 	 * Tells if all dependencies of the described plug-in are
 	 * satisfied by any of the plug-ins on the list
@@ -182,10 +219,10 @@ public class PluginDescription extends PluginState{
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Creates an arrayList containing the dependencies that are not
-	 * satisfied. 
+	 * satisfied.
 	 * @param descriptions the list of all descriptions of plug-ins
 	 * @return the created array
 	 */
@@ -198,18 +235,18 @@ public class PluginDescription extends PluginState{
 		}
 		return missingDependencies;
 	}
-	
+
 	@Override
 	public String toString(){
 		return name.concat(" v").concat(versionToString());
 	}
-	
+
 	/**
 	 * Returns true if this plug-in is not dependent from any plug-in from the
 	 * list.
 	 * @param descriptions the list of plug-ins
 	 * @return true if this plug-in is not dependent from any plug-in from the
-	 * list, false otherwise 
+	 * list, false otherwise
 	 */
 	public boolean notDependentFrom(ArrayList<PluginDescription> descriptions){
 		for (PluginDescription descr : descriptions){
@@ -217,7 +254,7 @@ public class PluginDescription extends PluginState{
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Returns true if this plug-in depends on the given plug-in.
 	 * @param description the description of the plug-in
