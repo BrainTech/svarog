@@ -36,11 +36,6 @@ public class FastMultichannelSampleSource implements MultichannelSampleSource {
 	}
 
 	@Override
-	public float getCalibration() {
-		return this.calibration;
-	}
-
-	@Override
 	public int getChannelCount() {
 		try {
 			return this.delegate.get_number_of_channels();
@@ -123,12 +118,6 @@ public class FastMultichannelSampleSource implements MultichannelSampleSource {
 		} catch (SignalMLCodecException e) {
 			return 128.0f;
 		}
-	}
-
-	@Override
-	public boolean isCalibrationCapable() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override

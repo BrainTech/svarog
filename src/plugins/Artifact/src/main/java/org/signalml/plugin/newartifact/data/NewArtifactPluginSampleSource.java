@@ -52,12 +52,6 @@ public class NewArtifactPluginSampleSource implements MultichannelSampleSource {
 	}
 
 	@Override
-	public boolean isCalibrationCapable() {
-		return this.delegate != null ? this.delegate.isCalibrationCapable()
-		       : false;
-	}
-
-	@Override
 	public float getSamplingFrequency() {
 		return this.delegate == null ? this.signalDocument
 		       .getSamplingFrequency() : this.delegate.getSamplingFrequency();
@@ -67,11 +61,6 @@ public class NewArtifactPluginSampleSource implements MultichannelSampleSource {
 	public int getChannelCount() {
 		return this.delegate == null ? this.signalDocument.getChannelCount()
 		       : this.delegate.getChannelCount();
-	}
-
-	@Override
-	public float getCalibration() {
-		return this.delegate == null ? 0 : this.delegate.getCalibration();
 	}
 
 	@Override
