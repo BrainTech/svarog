@@ -85,7 +85,7 @@ public class PluginLoader {
 	 * the list of directories in which plug-ins are stored
 	 */
 	private ArrayList<File> pluginDirs = new ArrayList<File>();
-	
+
 	/**
 	 * the directory where default plug-ins are stored
 	 */
@@ -213,10 +213,10 @@ public class PluginLoader {
 		}
 		return urls;
 	}
-	
+
 	/**
 	 * Adds plug-in directories for all default plug-ins, namely
-	 * the directories {@code src/plugins/}*{@code /target}	
+	 * the directories {@code src/plugins/}*{@code /target}
 	 * @param svarogDir the svarog base directory
 	 */
 	private void startFromSourcesAddPluginDirs(File svarogDir){
@@ -235,7 +235,7 @@ public class PluginLoader {
 		}
 	}
 
-	
+
 	/**
 	 * Sets the directory where the default plug-ins are stored.
 	 * The location of the file depends on the fact if Svarog was started:
@@ -267,7 +267,7 @@ public class PluginLoader {
 			logger.error("Failed to add global plugin directory - maybe started neither from a jar file nor from sources");
 		}
 	}
-	
+
 	/**
 	 * Adds the default plug-in directory based on given profile directory.
 	 * Also:
@@ -370,6 +370,7 @@ public class PluginLoader {
 							descr.setActive(false);
 							descr.setFailedToLoad(true);
 							setDependentInactive(descr);
+							logger.error("Failed to load plugin " + descr.getName()+ " from file " + descr.getJarFile());
 							e.printStackTrace();
 						}
 					}
