@@ -12,6 +12,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 import javax.swing.ImageIcon;
+import org.apache.log4j.Logger;
 
 import org.signalml.plugin.export.Plugin;
 import org.signalml.plugin.export.SvarogAccess;
@@ -40,6 +41,7 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
  * @author Marcin Szumski
  */
 public class FFTSignalTool implements Plugin, SvarogCloseListener {
+	protected static final Logger log = Logger.getLogger(FFTSignalTool.class);
 
 	/**
 	 * the {@link SvarogAccessSignal access} to Svarog logic
@@ -126,15 +128,15 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 			resourceDirectory = signalAccess.getTemporaryFile("");
 			resourceDirectory.delete();
 			resourceDirectory.mkdir();
-			File file = null;
+			temporaryFiles.add(resourceDirectory);
 			for (File directory : directories){
-				file = new File(directory, "FFTSignalTool.jar");
+				final File file = new File(directory, "FFTSignalTool.jar");
+				log.debug("looking for " + file);
 				if (file.exists()){
 					extractFiles(resourceDirectory, file);
 					break;
 				}
 			}
-			temporaryFiles.add(resourceDirectory);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -173,7 +175,9 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 		tool.setSettings(signalFFTSettings);
 		tool.setSvarogAccess(access);
 		listener = new SignalFFTToolButtonMouseListener(messageSource);
-		ImageIcon icon = new ImageIcon(resourceDirectory.getAbsolutePath()+File.separator + "fft.png");
+		final String iconpath = resourceDirectory.getAbsolutePath()+File.separator + "fft.png";
+		log.debug("trying to load " + iconpath);
+		final ImageIcon icon = new ImageIcon(iconpath);
 		guiAccess.addSignalTool(tool, icon,	messageSource.getMessage("signalView.signalFFTToolToolTip"), listener);
 		
 		//creates and adds the action which shows the 
