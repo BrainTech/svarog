@@ -611,6 +611,8 @@ public class PluginLoader {
 	 * @return the pluginDirs
 	 */
 	public ArrayList<File> getPluginDirs() {
-		return pluginDirs;
+		ArrayList<File> tmpPluginDirs = new ArrayList<File>(pluginDirs);
+		tmpPluginDirs.addAll(globalPluginDirectories);
+		return tmpPluginDirs;
 	}
 }
