@@ -77,10 +77,16 @@ public class SignalPlotRowHeader extends JComponent {
 		pixelPerRowUnit = pixelPerValue;
 
 		StringBuilder sb = new StringBuilder("1");
-		while (pixelPerRowUnit <= 5) {
-			pixelPerRowUnit *= 10;
-			sb.append("0");
-		}
+		if (pixelPerRowUnit == 0.0)
+			sb.append("000...");
+		else {
+			
+			while (pixelPerRowUnit <= 5) {
+				pixelPerRowUnit *= 10;
+				sb.append("0");
+			}
+		};
+
 		sb.append(" uV");
 		rowUnitLabel = sb.toString();
 
