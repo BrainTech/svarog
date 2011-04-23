@@ -80,10 +80,6 @@ public abstract class AbstractSignalParametersPanel extends JPanel {
          */
         private JButton editGainAndOffsetButton;
         /**
-         * Application configuration.
-         */
-        protected ApplicationConfiguration applicationConfiguration;
-        /**
          * Edit gain and offset dialog.
          */
         private EditGainAndOffsetDialog editGainAndOffsetDialog;
@@ -93,11 +89,10 @@ public abstract class AbstractSignalParametersPanel extends JPanel {
          *
          * @param messageSource {@link #messageSource}
          */
-        public AbstractSignalParametersPanel(MessageSourceAccessor messageSource, ApplicationConfiguration applicationConfiguration) {
+        public AbstractSignalParametersPanel(MessageSourceAccessor messageSource) {
 
                 super();
                 this.messageSource = messageSource;
-                this.applicationConfiguration = applicationConfiguration;
                 createInterface();
 
 		getSamplingFrequencyComboBox().setEditable(true);

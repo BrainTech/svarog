@@ -169,9 +169,9 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 	 */
 	public SignalParametersPanelForRawSignalFile getRawSignalParametersPanel() {
 		if (rawSignalParametersPanel == null) {
-			rawSignalParametersPanel = new SignalParametersPanelForRawSignalFile(messageSource, getApplicationConfiguration());
+			rawSignalParametersPanel = new SignalParametersPanelForRawSignalFile(messageSource);
 			rawSignalParametersPanel.addPropertyChangeListener(this);
-			rawSignalParametersPanel.setSignalFileChooserPanel(getFileChooserPanel());
+			rawSignalParametersPanel.setSignalFileChooser(getFileChooserPanel().getFileChooser());
 		}
 		return rawSignalParametersPanel;
 	}

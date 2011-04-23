@@ -6,13 +6,13 @@ package org.signalml.app.view.opensignal;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import org.signalml.app.config.ApplicationConfiguration;
+import org.signalml.app.view.element.EmbeddedFileChooser;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.app.view.element.FileChooserPanel;
 import org.springframework.context.support.MessageSourceAccessor;
+import org.springframework.validation.Errors;
 
 /**
  * Signal parameters panel adapted to the needs of the open file signal source panel.
@@ -33,8 +33,8 @@ public class SignalParametersPanelForRawSignalFile extends AbstractSignalParamet
 	 * messages
 	 * @param applicationConfiguration the current application configuration
 	 */
-	public SignalParametersPanelForRawSignalFile(MessageSourceAccessor messageSource, ApplicationConfiguration applicationConfiguration) {
-		super(messageSource, applicationConfiguration);
+	public SignalParametersPanelForRawSignalFile(MessageSourceAccessor messageSource) {
+		super(messageSource);
 
 		setEnabledAll(true);
 		getSamplingFrequencyComboBox().setEditable(true);
@@ -105,8 +105,8 @@ public class SignalParametersPanelForRawSignalFile extends AbstractSignalParamet
 	 * and XML manifest fileChooser.
 	 * @param fileChooserPanel the file chooser for choosing a signal file
 	 */
-	public void setSignalFileChooserPanel(FileChooserPanel fileChooserPanel) {
-		getReadManifestAction().setSignalFileChooserPanel(fileChooserPanel);
+	public void setSignalFileChooser(EmbeddedFileChooser signalFileChooser) {
+		getReadManifestAction().setSignalFileChooser(signalFileChooser);
 	}
 
 	@Override

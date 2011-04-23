@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import org.signalml.app.view.opensignal.SignalParametersPanelForRawSignalFile;
 
 import org.signalml.exception.SanityCheckException;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -64,7 +65,7 @@ public class OpenSignalOptionsPanel extends JPanel {
 	/**
 	 * the {@link RawSignalOptionsPanel panel} with options for a raw signal
 	 */
-	private RawSignalOptionsPanel rawSignalOptionsPanel;
+	private SignalParametersPanelForRawSignalFile rawSignalOptionsPanel;
 
 	/**
 	 * the combo-box which allows to select the method using which the signal
@@ -198,10 +199,12 @@ public class OpenSignalOptionsPanel extends JPanel {
 
 						case 0 :
 							getCardLayout().show(getOptionsPanel(), "signalml");
+							getPagingSignalParamersPanel().setEnabledAll(true);
 							break;
 
 						case 1 :
 							getCardLayout().show(getOptionsPanel(), "raw");
+							getPagingSignalParamersPanel().setEnabledAll(false);
 							break;
 
 						default :
@@ -236,9 +239,9 @@ public class OpenSignalOptionsPanel extends JPanel {
 	 * If the panel doesn't exist it is created.
 	 * @return the panel with the parameters of the RAW method
 	 */
-	public RawSignalOptionsPanel getRawSignalOptionsPanel() {
+	public SignalParametersPanelForRawSignalFile getRawSignalOptionsPanel() {
 		if (rawSignalOptionsPanel == null) {
-			rawSignalOptionsPanel = new RawSignalOptionsPanel(messageSource);
+			rawSignalOptionsPanel = new SignalParametersPanelForRawSignalFile(messageSource);
 		}
 		return rawSignalOptionsPanel;
 	}

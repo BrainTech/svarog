@@ -117,7 +117,7 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 	 */
 	public SignalParametersPanelForOpenBCI getSignalParametersPanel() {
 		if (signalParametersPanel == null) {
-			signalParametersPanel = new SignalParametersPanelForOpenBCI(messageSource, viewerElementManager.getApplicationConfig());
+			signalParametersPanel = new SignalParametersPanelForOpenBCI(messageSource);
 			signalParametersPanel.addPropertyChangeListener(this);
 		}
 		return signalParametersPanel;

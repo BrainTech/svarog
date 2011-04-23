@@ -15,6 +15,11 @@ import org.springframework.context.support.MessageSourceAccessor;
  */
 public class SignalParametersPanelForAmplifierConnection extends AbstractSignalParametersPanel {
 
+	/**
+         * Application configuration.
+         */
+        protected ApplicationConfiguration applicationConfiguration;
+
         /**
          * Default constructor.
          *
@@ -23,7 +28,8 @@ public class SignalParametersPanelForAmplifierConnection extends AbstractSignalP
          */
         public SignalParametersPanelForAmplifierConnection(MessageSourceAccessor messageSource, ApplicationConfiguration applicationConfiguration) {
 
-                super(messageSource, applicationConfiguration);
+                super(messageSource);
+		this.applicationConfiguration = applicationConfiguration;
         }
 
        /**
