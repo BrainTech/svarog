@@ -40,6 +40,7 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 	 * the order of the {@link TimeDomainSampleFilter filter}.
 	 */
 	protected int filterOrder;
+	protected boolean use_cache=true;
 
 	/**
 	 * Constructor. Creates an engine of a filter for provided
@@ -92,7 +93,7 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 	 * (size of the array = newSamples+ order of the filter).
 	 */
 	protected double[] getUnfilteredSamplesCache(int newSamples) {
-
+		System.out.println("getUnFilteredSamplesCache "+newSamples);
 		int unfilteredSamplesNeeded = newSamples + filterOrder;
 		int zeroPaddingSize = 0;
 		double[] unfilteredSamplesCache = new double[unfilteredSamplesNeeded];
@@ -121,7 +122,6 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 	 * the array is filled with zeros).
 	 */
 	protected double[] getFilteredSamplesCache(int newSamples) {
-
 		int filteredCacheSize = newSamples + filterOrder;
 		int zeroPaddingSize = 0;
 		double[] filteredSamplesCache = new double[filteredCacheSize];
@@ -225,12 +225,16 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 	 * of this method
 	 */
 	public synchronized void updateCache(int newSamples) {
-
-		double[] unfilteredSamplesCache = getUnfilteredSamplesCache(newSamples);
-		double[] filteredSamplesCache = getFilteredSamplesCache(newSamples);
-		double[] newFilteredSamples = calculateNewFilteredSamples(bCoefficients, aCoefficients, filterOrder, unfilteredSamplesCache, filteredSamplesCache, newSamples);
-
-		filtered.addSamples(newFilteredSamples);
+		if (newSamples == 0)
+			use_cache = false;
+		else {
+			use_cache = true;
+			double[] unfilteredSamplesCache = getUnfilteredSamplesCache(newSamples);
+			double[] filteredSamplesCache = getFilteredSamplesCache(newSamples);
+			double[] newFilteredSamples = calculateNewFilteredSamples(bCoefficients, aCoefficients, filterOrder, unfilteredSamplesCache, filteredSamplesCache, newSamples);
+			
+			filtered.addSamples(newFilteredSamples);
+		}
 
 	}
 
@@ -259,7 +263,32 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 	 */
 	@Override
 	public synchronized void getSamples(double[] target, int signalOffset, int count, int arrayOffset) {
-		filtered.getSamples(target, signalOffset, count, arrayOffset);
+		if (use_cache) { //check updateCache
+			System.out.println("Count: "+filtered.getSampleCount());
+			filtered.getSamples(target, signalOffset, count, arrayOffset);
+		} else {
+
+			//filter signal from prefixCount samples before requested starting point (IIR filters are unstable at the beginning)
+			int prefixCount = 10240; //1024*10 - 10secs for 1024 samplingFreq
+			if (signalOffset < prefixCount) //fix prefix if some starting area of the signal is requested
+				prefixCount = signalOffset;
+
+			int filteredCount = count + prefixCount;//samples to filter
+
+			//get data from source and filter it
+			double[] input = new double[filteredCount];
+			source.getSamples(input, signalOffset-prefixCount, filteredCount, 0);
+			double[] newFilteredSamples = filter(bCoefficients, aCoefficients, input);
+
+			//get last filteredCount - prefixCount = count samples and return it
+			filtered = new RoundBufferSampleSource(count);
+			for (int i = 0; i < count; i++)
+				filtered.addSample(newFilteredSamples[i+prefixCount]);
+
+			filtered.getSamples(target, 0, count, arrayOffset);
+
+			
+		}
 	}
 
 }

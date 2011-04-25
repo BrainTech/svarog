@@ -403,7 +403,7 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 		}
 
 		if (!(originalSource instanceof ChangeableMultichannelSampleSource)) {
-			updateTimeDomainSampleFilterEnginesCache(source.getSampleCount(0));
+			updateTimeDomainSampleFilterEnginesCache(0);
 		}
 
 	}
