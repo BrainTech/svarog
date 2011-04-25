@@ -394,7 +394,7 @@ public class SignalViewingConfigPanel extends JPanel {
 	 */
 	public JSpinner getMinChannelHeightSpinner() {
 		if (minChannelHeightSpinner == null) {
-			minChannelHeightSpinner = new JSpinner(new SpinnerNumberModel(20, 20, 1000, 10));
+			minChannelHeightSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 1000, 10));
 			minChannelHeightSpinner.setPreferredSize(new Dimension(80,25));
 		}
 		return minChannelHeightSpinner;
@@ -409,7 +409,7 @@ public class SignalViewingConfigPanel extends JPanel {
 	 */
 	public JSpinner getMaxChannelHeightSpinner() {
 		if (maxChannelHeightSpinner == null) {
-			maxChannelHeightSpinner = new JSpinner(new SpinnerNumberModel(20, 20, 1000, 10));
+			maxChannelHeightSpinner = new JSpinner(new SpinnerNumberModel(20, 1, 1000, 10));
 			maxChannelHeightSpinner.setPreferredSize(new Dimension(80,25));
 		}
 		return maxChannelHeightSpinner;

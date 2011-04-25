@@ -35,8 +35,11 @@ public class DeviceInfo {
         public DeviceInfo(String address, String name, String deviceType) {
 
                 this.address = address;
-                this.name = name;
                 this.deviceType = deviceType;
+		if (name == null) 
+			this.name = "[Unrecognised Device Name]";
+		else
+			this.name = name;
         }
 
         public String getAddress() {
