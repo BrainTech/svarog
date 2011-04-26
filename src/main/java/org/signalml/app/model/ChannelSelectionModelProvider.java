@@ -85,7 +85,7 @@ public class ChannelSelectionModelProvider {
 	protected class StartTimeSpinnerModel extends AbstractSpinnerModel implements BoundedSpinnerModel {
 
 		@Override
-		public Object getNextValue() {
+		public Double getNextValue() {
 			if (currentTime >= maxTime) {
 				return null;
 			}
@@ -94,7 +94,7 @@ public class ChannelSelectionModelProvider {
 		}
 
 		@Override
-		public Object getPreviousValue() {
+		public Double getPreviousValue() {
 			if (currentTime <= 0) {
 				return null;
 			}
@@ -103,13 +103,13 @@ public class ChannelSelectionModelProvider {
 		}
 
 		@Override
-		public Object getValue() {
-			return new Float(currentTime);
+		public Double getValue() {
+			return currentTime;
 		}
 
 		@Override
 		public void setValue(Object value) throws IllegalArgumentException {
-			float time = ((Float) value).floatValue();
+			double time = (Double) value;
 			if (time < 0 || time > maxTime) {
 				throw new IllegalArgumentException();
 			}
@@ -121,13 +121,13 @@ public class ChannelSelectionModelProvider {
 		}
 
 		@Override
-		public Comparable<? extends Number> getMaximum() {
-			return new Float(maxTime);
+		public Double getMaximum() {
+			return maxTime;
 		}
 
 		@Override
-		public Comparable<? extends Number> getMinimum() {
-			return new Float(0);
+		public Double getMinimum() {
+			return 0.0;
 		}
 
 	}
@@ -135,7 +135,7 @@ public class ChannelSelectionModelProvider {
 	protected class LengthSpinnerModel extends AbstractSpinnerModel implements BoundedSpinnerModel {
 
 		@Override
-		public Object getNextValue() {
+		public Double getNextValue() {
 			if (currentTime + currentLength >= maxTime) {
 				return null;
 			}
@@ -144,7 +144,7 @@ public class ChannelSelectionModelProvider {
 		}
 
 		@Override
-		public Object getPreviousValue() {
+		public Double getPreviousValue() {
 			if (currentLength <= minTime) {
 				return null;
 			}
@@ -153,13 +153,13 @@ public class ChannelSelectionModelProvider {
 		}
 
 		@Override
-		public Object getValue() {
-			return new Float(currentLength);
+		public Double getValue() {
+			return currentLength;
 		}
 
 		@Override
 		public void setValue(Object value) {
-			float length = ((Float) value).floatValue();
+			double length = (Double) value;
 			if (length < minTime || length > (maxTime+1-currentTime)) {
 				throw new IllegalArgumentException();
 			}
@@ -170,20 +170,20 @@ public class ChannelSelectionModelProvider {
 		}
 
 		public void update() {
-			if (currentLength > (maxTime-currentTime)) {
-				setValue(new Float(maxTime-currentTime));
+			if (currentLength > maxTime-currentTime) {
+				setValue(maxTime-currentTime);
 			}
 			fireStateChanged();
 		}
 
 		@Override
-		public Comparable<? extends Number> getMaximum() {
-			return new Float(maxTime-currentTime);
+		public Double getMaximum() {
+			return maxTime-currentTime;
 		}
 
 		@Override
-		public Comparable<? extends Number> getMinimum() {
-			return new Float(minTime);
+		public Double getMinimum() {
+			return minTime;
 		}
 
 	}
