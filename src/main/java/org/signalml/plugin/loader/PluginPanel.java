@@ -77,12 +77,6 @@ public class PluginPanel extends JPanel {
 	public void fillPanelFromModel(ArrayList<PluginState> pluginDescriptions){
 		pluginListPanel.fillPanelFromModel(pluginDescriptions);
 		pluginDirsPanel.fillPanelFromModel();
-		//add(new JCheckBox(descriptions.get(0).toString()));
-		/*JCheckBox checkBoxes[] = new JCheckBox[descriptions.size()];
-		for (int i = 0; i < checkBoxes.length; ++i){
-			checkBoxes[i] = new JCheckBox(descriptions.get(i).toString());
-		}
-		list = new JList(checkBoxes);*/
 	}
 
 	/**

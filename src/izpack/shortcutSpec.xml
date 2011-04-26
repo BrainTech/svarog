@@ -1,0 +1,44 @@
+<shortcuts>
+	<skipIfNotSupported/>
+
+	<programGroup defaultName="Svarog" location="applications"/>
+	<shortcut
+		name="Svarog"
+		programGroup="yes"
+		desktop="yes"
+		applications="no"
+		startMenu="yes"
+		startup="no"
+		target="%JAVA_HOME%${FILE_SEPARATOR}bin${FILE_SEPARATOR}javaw.exe"
+		commandLine="-jar &quot;${INSTALL_PATH}${FILE_SEPARATOR}svarog.jar"
+		workingDirectory="${INSTALL_PATH}"
+		description="Svarog Signal Viewer"
+		iconFile="$INSTALL_PATH${FILE_SEPARATOR}svarog.ico"
+		iconIndex="0"
+		type="Application"
+		encoding="UTF-8"
+		terminal="true"
+		KdeSubstUID="false"
+		initialState="normal">
+	</shortcut>
+	
+	<shortcut
+		name="Uninstaller"
+		programGroup="yes"
+		desktop="no"
+		applications="no"
+		startMenu="no"
+		startup="no"
+		target="%JAVA_HOME%${FILE_SEPARATOR}bin${FILE_SEPARATOR}javaw.exe"
+		commandLine="-jar &quot;${INSTALL_PATH}${FILE_SEPARATOR}Uninstaller${FILE_SEPARATOR}uninstaller.jar&quot;"
+		initialState="noShow"
+		iconFile="$INSTALL_PATH${FILE_SEPARATOR}trashcan_full.ico"
+		iconIndex="0"
+		workingDirectory=""
+		type="Application"
+		encoding="UTF-8"
+		description="IzPack uninstaller">
+	</shortcut>
+	
+	
+</shortcuts>

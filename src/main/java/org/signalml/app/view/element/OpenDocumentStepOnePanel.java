@@ -227,8 +227,8 @@ public class OpenDocumentStepOnePanel extends JPanel {
 	 * <ul>
 	 * <li>as open dialog,</li>
 	 * <li>without multi-selection and hiding files,</li>
-	 * <li>to open files of given {@link ManagedDocumentType#
-	 * getFileFilterExtensions() types} or all,</li>
+	 * <li>to open files of given
+	 * {@link ManagedDocumentType#getFileFilterExtensions() types} or all,</li>
 	 * <li>with the user directory as the current directory.</li>
 	 * </ul>
 	 * @return the embedded file chooser

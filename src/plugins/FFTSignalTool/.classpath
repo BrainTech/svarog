@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="resources"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="FFT.jar"/>
-	<classpathentry kind="lib" path="svarog-0.5.0-SNAPSHOT.jar" sourcepath="/svarog"/>
-	<classpathentry kind="lib" path="jfreechart.jar" sourcepath="C:/Users/Marcin/.m2/repository/jfree/jfreechart/1.0.8a/jfreechart-1.0.8a-sources.jar"/>
-	<classpathentry kind="lib" path="log4j.jar"/>
-	<classpathentry kind="lib" path="jcommon.jar"/>
-	<classpathentry kind="lib" path="spring-context.jar" sourcepath="C:/Users/Marcin/Desktop/spring-context-2.5.5-sources.jar"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="src" output="target/classes" path="src/main/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
+	<classpathentry kind="con" path="org.maven.ide.eclipse.MAVEN2_CLASSPATH_CONTAINER"/>
+	<classpathentry kind="output" path="target/classes"/>
 </classpath>

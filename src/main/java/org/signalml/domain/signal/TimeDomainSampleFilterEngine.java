@@ -73,7 +73,8 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 	 * Constructor. Creates an engine of a filter for provided
 	 * {@link FilterCoefficients filter coefficients}.
 	 * @param source the source of samples
-	 * @param coefficients the {@link FilterCoefficients coefficients} for which the engine will operate
+	 * @param coefficients the {@link FilterCoefficients coefficients} for which
+	 * the engine will operate
 	 */
 	public TimeDomainSampleFilterEngine(SampleSource source, FilterCoefficients coefficients) {
 
@@ -87,8 +88,8 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 	/**
 	 * Returns an array containing newly added unfiltered samples which can be used to
 	 * calculate a specified number of new filtered samples using the filters definition.
-	 * @param newSamples the number of samples which were added to the signal since the last call
-	 * of this method
+	 * @param newSamples number of samples which were added to the signal since
+	 * the last call of this method
 	 * @return an array containing enough unfiltered samples to filter newSamples of new samples
 	 * (size of the array = newSamples+ order of the filter).
 	 */

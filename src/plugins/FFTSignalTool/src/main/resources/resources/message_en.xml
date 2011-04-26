@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="yesCapital">Yes</entry>
+	<entry key="noCapital">No</entry>
+	<entry key="ok">Ok</entry>
+	<entry key="apply">Apply</entry>
+	<entry key="cancel">Cancel</entry>
+	<entry key="name">Name</entry>
+	<entry key="error">Error!</entry>
+	<entry key="warning">Warning!</entry>
+	<entry key="message">Message</entry>
+	<entry key="open">Open</entry>
+	<entry key="import">Import</entry>
+	<entry key="read">Read</entry>
+	<entry key="export">Export</entry>
+	<entry key="choose">Choose</entry>
+	<entry key="save">Save</entry>
+	<entry key="load">Load</entry>
+	<entry key="close">Close</entry>
+
+	<entry key="fft.chartTitle">FFT over {0} points {1} - {2} ({3})</entry>
+	<entry key="fft.notEnoughSignalPoints">Not enough signal points</entry>
+	
+	<entry key="fft.windowType.RECTANGULAR">None (rectangular, box-car)</entry>
+	<entry key="fft.windowType.BARTLETT">Bartlett (triangular)</entry>
+	<entry key="fft.windowType.WELCH">Welch</entry>
+	<entry key="fft.windowType.HANN">Hann (Hanning)</entry>
+	<entry key="fft.windowType.HAMMING">Hamming</entry>
+	<entry key="fft.windowType.KAISER">Kaiser</entry>
+	<entry key="fft.windowType.GAUSSIAN">Gaussian</entry>
+
+	<entry key="signalFFTSettings.windowWidthTitle">FFT window width</entry>
+	<entry key="signalFFTSettings.customWindowWidth">Custom</entry>
+	<entry key="signalFFTSettings.plotWidthTitle">Plot window width</entry>
+	<entry key="signalFFTSettings.plotHeightTitle">Plot window height</entry>
+	<entry key="signalFFTSettings.fftViewTitle">FFT view</entry>
+	<entry key="signalFFTSettings.fftViewRange">Show fq range [Hz]</entry>
+	<entry key="signalFFTSettings.fftViewLabelCountTitle">X-axis label count</entry>
+	<entry key="signalFFTSettings.fftPositiveIntegerRequired">Positive integer required</entry>
+	<entry key="signalFFTSettings.fftAutoScaleToView">Scale Y-axis to view</entry>
+	
+		
+	<entry key="signalFFTSettings.optionsTitle">Options</entry>
+	<entry key="signalFFTSettings.channelSwitching">Sticky channel</entry>
+	<entry key="signalFFTSettings.logarithmic">Logarithmic</entry>
+	<entry key="signalFFTSettings.antialias">Antialias</entry>
+	<entry key="signalFFTSettings.spline">Use splines (experimental)</entry>
+	<entry key="signalFFTSettings.titleVisible">Title</entry>
+	<entry key="signalFFTSettings.frequencyAxisLabelsVisible">Freq. lables</entry>
+	<entry key="signalFFTSettings.powerAxisLabelsVisible">Power labels</entry>
+
+	<entry key="signalFFTSettings.error.badWindowWidth">Bad window width. Must be an integer greater than 7</entry>
+	
+	<entry key="fftWindowTypeSettings.windowTypeTitle">Window type</entry>
+	<entry key="fftWindowTypeSettings.windowParameter">Window parameter</entry>
+
+	<entry key="fftWindowTypeSettings.error.badWindowParameter">Bad window parameter. Must be a double precision value</entry>
+	<entry key="fftWindowTypeSettings.error.windowParameterOutOfRange">Bad window parameter. Allowed range {0}-{1}</entry>
+	
+	<entry key="signalFFTSettings.buttonTitle">Signal FFT Settings</entry>
+	<entry key="signalView.signalFFTToolToolTip">Signal FFT (for settings press and hold the mouse button here)</entry>
+	
+</properties>

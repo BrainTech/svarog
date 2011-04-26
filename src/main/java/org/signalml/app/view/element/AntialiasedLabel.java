@@ -21,8 +21,8 @@ public class AntialiasedLabel extends JLabel {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Sets that this component should be anti-aliased and {@link JComponent#
-	 * paintComponent(Graphics) paints} it.
+	 * Sets that this component should be anti-aliased and
+	 * {@link JComponent#paintComponent(Graphics) paints} it.
 	 */
 	@Override
 	protected void paintComponent(Graphics g) {

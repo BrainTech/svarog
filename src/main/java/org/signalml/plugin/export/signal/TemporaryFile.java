@@ -13,7 +13,7 @@ public class TemporaryFile extends File {
 	/**
 	 * See {@link File#File(File, String)}
 	 * @param parent the parent abstract pathname
-	 * @param pathname the pathname string
+	 * @param child the child pathname string
 	 */
 	public TemporaryFile(File parent, String child) {
 		super(parent, child);

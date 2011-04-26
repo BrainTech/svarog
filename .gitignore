@@ -6,3 +6,6 @@ log
 /signal.raw
 /signal.xml
 /test.xml
+
+# If a jar is really needed, it can be explicitely whitelisted.
+*.jar

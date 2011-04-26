@@ -36,12 +36,12 @@
 		</repository>
 	</repositories>
 
-    <pluginRepositories>
-        <pluginRepository>
-            <id>onejar-maven-plugin.googlecode.com</id>
-            <url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>
-        </pluginRepository>
-    </pluginRepositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>onejar-maven-plugin.googlecode.com</id>
+			<url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>
+		</pluginRepository>
+	</pluginRepositories>
 
 	<profiles>
 		<profile>
@@ -184,22 +184,23 @@
 					<mainClass>org.signalml.app.SvarogApplication</mainClass>
 				</configuration>
 			</plugin>
+
 			<plugin>
-            <groupId>org.dstovall</groupId>
-                <artifactId>onejar-maven-plugin</artifactId>
-                <version>1.4.1</version>
-                <executions>
-                    <execution>
-                        <configuration>
-                            <!-- Optional, default is false -->
-                            <attachToBuild>true</attachToBuild>
-                        </configuration>
-                        <goals>
-                            <goal>one-jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+				<groupId>org.dstovall</groupId>
+				<artifactId>onejar-maven-plugin</artifactId>
+				<version>1.4.1</version>
+				<executions>
+					<execution>
+						<configuration>
+							<!-- Optional, default is false -->
+							<attachToBuild>true</attachToBuild>
+						</configuration>
+						<goals>
+							<goal>one-jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -450,8 +451,8 @@
 	</dependencies>
 
 	<scm>
-		<connection>scm:git:git://escher.fuw.edu.pl/git/svarog</connection>
-		<developerConnection>scm:git:ssh://escher.fuw.edu.pl/git/svarog</developerConnection>
+		<connection>scm:git://escher.fuw.edu.pl/git/svarog</connection>
+		<developerConnection>scm:ssh://escher.fuw.edu.pl/git/svarog</developerConnection>
 		<url>http://escher.fuw.edu.pl/git/svarog</url>
 	</scm>
 
@@ -494,19 +495,19 @@
 				</reportSets>
 			</plugin>
 
-<!--			<plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+			</plugin>
+
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jxr-plugin</artifactId>
 				<configuration>
 					<aggregate>true</aggregate>
 					<linkJavadoc>true</linkJavadoc>
-					<javadocDir>/apidocs</javadocDir>
-					<docTitle>Svarog Code</docTitle>
-					<windowTitle>Svarog Code</windowTitle>
-					<outputEncoding>UTF-8</outputEncoding>
-					<inputEncoding>UTF-8</inputEncoding>
 				</configuration>
-			</plugin> -->
+			</plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -532,6 +533,12 @@
 					<link>http://static.springsource.org/spring/docs/2.0.7/api</link>
 				    </links>
 				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<version>2.4</version>
 			</plugin>
 
 		</plugins>

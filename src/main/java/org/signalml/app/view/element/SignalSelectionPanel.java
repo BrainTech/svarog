@@ -189,11 +189,12 @@ public class SignalSelectionPanel extends JPanel {
 	}
 
 	/**
-	 * Fills this panel (acutally the sub-panels) with the data form the given
+	 * Fills this panel (actually the sub-panels) with the data form the given
 	 * {@link BoundedSignalSelection model}:
 	 * <ul>
-	 * <li>Sets the model for {@link PageSelectionModelProvider#
-	 * getStartPageSpinnerModel() start page spinner} and
+	 * <li>Sets the model for
+	 * {@link PageSelectionModelProvider#getStartPageSpinnerModel() start
+	 * page spinner} and
 	 * {@link PageSelectionModelProvider#getLengthSpinnerModel() length spinner}.
 	 * <br>If it is a {@link SignalSelectionType#PAGE PAGE} selection the
 	 * {@link PageSelectionModelProvider provider} for the model is created
@@ -209,8 +210,9 @@ public class SignalSelectionPanel extends JPanel {
 	 * </li>
 	 * <li>Sets the model for spinners in {@link BlockSignalSelectionPanel}
 	 * ({@link BlockSelectionModelProvider#getStartPageSpinnerModel() start
-	 * page spinner}, {@link BlockSelectionModelProvider#
-	 * getStartBlockSpinnerModel() start block spinner} and {@link
+	 * page spinner},
+	 * {@link BlockSelectionModelProvider#getStartBlockSpinnerModel()
+	 * start block spinner} and {@link
 	 * BlockSelectionModelProvider#getLengthSpinnerModel() length spinner}).
 	 * <br>If it is a {@link SignalSelectionType#BLOCK BLOCK} selection the
 	 * {@link BlockSelectionModelProvider provider} for the model is created

@@ -55,6 +55,7 @@ public class MonitorChannelSelectPanel extends JPanel {
 
 	/**
 	 * This is the default constructor
+	 * @param messageSource the source of messages (labels)
 	 */
 	public MonitorChannelSelectPanel(MessageSourceAccessor messageSource) {
 		super();

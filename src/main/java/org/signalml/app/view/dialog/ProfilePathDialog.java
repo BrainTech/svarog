@@ -47,8 +47,8 @@ public class ProfilePathDialog extends AbstractDialog {
 	}
 
 	/**
-	 * Sets the title of this dialog and calls the {@link AbstractDialog#
-	 * initialize() initialization} in parent.
+	 * Sets the title of this dialog and calls the {@link AbstractDialog#initialize()
+	 * initialization} in parent.
 	 */
 	@Override
 	protected void initialize() {
@@ -126,8 +126,8 @@ public class ProfilePathDialog extends AbstractDialog {
 	/**
 	 * Sets in the {@link GeneralConfiguration model} if the {@link
 	 * GeneralConfiguration#setProfileDefault(boolean) default directory}
-	 * should be used and if not, sets {@link GeneralConfiguration#
-	 * setProfilePath(String)} path to it.
+	 * should be used and if not, sets {@link
+	 * GeneralConfiguration#setProfilePath(String)} path to it.
 	 */
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {

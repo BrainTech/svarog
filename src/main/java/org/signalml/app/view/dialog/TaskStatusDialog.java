@@ -714,8 +714,9 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 	 * Called when the task has been finished.
 	 * Changes the status of progress bars and buttons:
 	 * <ul>
-	 * <li>if Svarog is running in {@link SignalMLOperationMode#
-	 * APPLICATION APPLICATION} mode changes the state of {@link
+	 * <li>if Svarog is running in
+	 * {@link SignalMLOperationMode#APPLICATION APPLICATION}
+	 * mode changes the state of {@link
 	 * #suspendAndResumeButton} to suspend,</li>
 	 * <li>for all progress bars if the bar is not trackable sets it as
 	 * determinate and with value maximum (100),</li>
@@ -733,10 +734,11 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 	 * Called when the task has been resumed.
 	 * Changes the status of progress bars and buttons:
 	 * <ul>
-	 * <li>changes the state of {@link #abortAndResultButton} to {@link
-	 * #abortTaskAction abort},</li>
-	 * <li>if Svarog is running in {@link SignalMLOperationMode#
-	 * APPLICATION APPLICATION} mode and task is suspendable changes the state
+	 * <li>changes the state of {@link #abortAndResultButton} to
+	 * {@link #abortTaskAction abort},</li>
+	 * <li>if Svarog is running in
+	 * {@link SignalMLOperationMode#APPLICATION APPLICATION}
+	 * mode and task is suspendable changes the state
 	 * of {@link #suspendAndResumeButton} to suspend,</li>
 	 * <li>for all progress bars if the bar is not trackable sets it as
 	 * indeterminate and with value maximum,</li>
@@ -754,8 +756,9 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 	 * <ul>
 	 * <li>changes the state of {@link #abortAndResultButton} to {@link
 	 * #abortTaskAction abort},</li>
-	 * <li>if Svarog is running in {@link SignalMLOperationMode#
-	 * APPLICATION APPLICATION} mode and task is suspendable changes the state
+	 * <li>if Svarog is running in
+	 * {@link SignalMLOperationMode#APPLICATION APPLICATION} mode and
+	 * task is suspendable changes the state
 	 * of {@link #suspendAndResumeButton} to suspend,</li>
 	 * <li>for all progress bars if the bar is not trackable sets it as
 	 * indeterminate and with value maximum,</li>
@@ -771,8 +774,9 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 	 * Called when the task has been suspended.
 	 * Changes the status of progress bars and buttons:
 	 * <ul>
-	 * <li>if Svarog is running in {@link SignalMLOperationMode#
-	 * APPLICATION APPLICATION} mode changes the state of {@link
+	 * <li>if Svarog is running in
+	 * {@link SignalMLOperationMode#APPLICATION APPLICATION}
+	 * mode changes the state of {@link
 	 * #suspendAndResumeButton} to suspend,</li>
 	 * <li>for all progress bars if the bar is not trackable sets it as
 	 * determinate and with value 0,</li>
@@ -790,8 +794,9 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 	 * <ul>
 	 * <li>changes the state of {@link #abortAndResultButton} to {@link
 	 * #abortTaskAction abort},</li>
-	 * <li>if Svarog is running in {@link SignalMLOperationMode#
-	 * APPLICATION APPLICATION} mode and task is suspendable changes the state
+	 * <li>if Svarog is running in
+	 * {@link SignalMLOperationMode#APPLICATION APPLICATION} mode and
+	 * task is suspendable changes the state
 	 * of {@link #suspendAndResumeButton} to suspend,</li>
 	 * <li>for all progress bars if the bar is not trackable sets it as
 	 * indeterminate and with value maximum,</li>
@@ -895,18 +900,18 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 	 * aborted,</li></ul></li>
 	 * <li>for status {@link TaskStatus#SUSPENDED SUSPENDED}:
 	 * <ul>
-	 * <li>if Svarog is running in {@link SignalMLOperationMode#
-	 * APPLICATION APPLICATION} mode changes the state of {@link
-	 * #suspendAndResumeButton} to suspend,</li>
+	 * <li>if Svarog is running in
+	 * {@link SignalMLOperationMode#APPLICATION APPLICATION} mode changes
+	 * the state of {@link #suspendAndResumeButton} to suspend,</li>
 	 * <li>for all progress bars if the bar is not trackable sets it as
 	 * determinate and with value 0,</li>
 	 * <li>paints the string on the status bar informing that the task was
 	 * suspended,</li></ul></li>
 	 * <li>for status {@link TaskStatus#FINISHED FINISHED}:
 	 * <ul>
-	 * <li>if Svarog is running in {@link SignalMLOperationMode#
-	 * APPLICATION APPLICATION} mode changes the state of {@link
-	 * #suspendAndResumeButton} to suspend,</li>
+	 * <li>if Svarog is running in
+	 * {@link SignalMLOperationMode#APPLICATION APPLICATION} mode changes
+	 * the state of {@link #suspendAndResumeButton} to suspend,</li>
 	 * <li>for all progress bars if the bar is not trackable sets it as
 	 * determinate and with value maximum (100),</li>
 	 * <li>for all progress bars if the bar is trackable and its maximum is
@@ -915,9 +920,9 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 	 * finished,</li></ul></li>
 	 * <li>for status {@link TaskStatus#ERROR ERROR}:
 	 * <ul>
-	 * <li>if Svarog is running in {@link SignalMLOperationMode#
-	 * APPLICATION APPLICATION} mode changes the state of {@link
-	 * #suspendAndResumeButton} to suspend,</li>
+	 * <li>if Svarog is running in
+	 * {@link SignalMLOperationMode#APPLICATION APPLICATION} mode changes
+	 * the state of {@link #suspendAndResumeButton} to suspend,</li>
 	 * <li>changes the state of {@link #abortAndResultButton} to {@link
 	 * #getTaskErrorAction error},</li>
 	 * <li>for all progress bars if the bar is not trackable sets it as
@@ -928,9 +933,10 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 	 * <ul>
 	 * <li>changes the state of {@link #abortAndResultButton} to {@link
 	 * #abortTaskAction abort},</li>
-	 * <li>if Svarog is running in {@link SignalMLOperationMode#
-	 * APPLICATION APPLICATION} mode and task is suspendable changes the state
-	 * of {@link #suspendAndResumeButton} to suspend,</li>
+	 * <li>if Svarog is running in
+	 * {@link SignalMLOperationMode#APPLICATION APPLICATION} mode and task
+	 * is suspendable changes the state of {@link #suspendAndResumeButton}
+	 * to suspend,</li>
 	 * <li>for all progress bars if the bar is not trackable sets it as
 	 * indeterminate and with value maximum,</li>
 	 * <li>for all progress bars if the bar is trackable sets its value,</li>

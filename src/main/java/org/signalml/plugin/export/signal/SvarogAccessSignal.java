@@ -186,13 +186,16 @@ public interface SvarogAccessSignal {
 	 /**
      * Returns the unprocessed signal samples (raw from the source)
      * for the signal from the given document and the given channel.
+	 * @param document the document with the signal. Must be returned from this
+	 * SvarogAcces (actually be of type SignalDocument - internal to Svarog).
      * @param channel the index of the channel
      * (range from 0 to {@code getActiveSignalDocument().getChannelCount()-1})
      * @param signalOffset the number of the sample in the signal starting
      * from which samples will be returned
      * @param count the number of samples to be returned
      * @return the signal samples
-     * @throws NoActiveObjectException if there is no active signal
+	 * @throws InvalidClassException  if document is not returned from
+	 * this SvarogAccess (not of type SignalDocument - internal to Svarog)
      * @throws IndexOutOfBoundsException if the index of a channel is out of range
      */
 	ChannelSamplesImpl getRawSignalSamplesFromDocument(ExportedSignalDocument document, int channel, int signalOffset, int count) throws InvalidClassException, IndexOutOfBoundsException;
@@ -200,13 +203,16 @@ public interface SvarogAccessSignal {
 	 /**
      * Returns the processed signal samples
      * for the signal from the given document and the given channel.
+	 * @param document the document with the signal. Must be returned from this
+	 * SvarogAcces (actually be of type SignalDocument - internal to Svarog).
      * @param channel the index of the channel
      * (range from 0 to {@code getActiveSignalDocument().getChannelCount()-1})
      * @param signalOffset the number of the sample in the signal starting
      * from which samples will be returned
      * @param count the number of samples to be returned
      * @return the signal samples
-     * @throws NoActiveObjectException if there is no active signal
+	 * @throws InvalidClassException  if document is not returned from
+	 * this SvarogAccess (not of type SignalDocument - internal to Svarog)
      * @throws IndexOutOfBoundsException if the index of a channel is out of range
      */
 	ChannelSamplesImpl getProcessedSignalSamplesFromDocument(ExportedSignalDocument document, int channel, int signalOffset, int count) throws InvalidClassException, IndexOutOfBoundsException;
@@ -242,13 +248,16 @@ public interface SvarogAccessSignal {
 	/**
      * Returns the unprocessed signal samples (raw from the source)
      * for the signal from the given document and the given channel.
+	 * @param document the document with the signal. Must be returned from this
+	 * SvarogAcces (actually be of type SignalDocument - internal to Svarog).
      * @param channel the index of the channel
      * (range from 0 to {@code getActiveSignalDocument().getChannelCount()-1})
      * @param signalOffsetTime the position in the signal (in time domain) starting
      * from which samples will be returned
      * @param length the length of the part of the signal which should be returned
      * @return the signal samples
-     * @throws NoActiveObjectException if there is no active signal
+	 * @throws InvalidClassException  if document is not returned from
+	 * this SvarogAccess (not of type SignalDocument - internal to Svarog)
      * @throws IndexOutOfBoundsException if the index of a channel is out of range
      */
 	ChannelSamplesImpl getRawSignalSamplesFromDocument(ExportedSignalDocument document, int channel, float signalOffsetTime, float length) throws InvalidClassException, IndexOutOfBoundsException;
@@ -256,13 +265,16 @@ public interface SvarogAccessSignal {
 	/**
      * Returns the processed signal samples
      * for the signal from the given document and the given channel.
+	 * @param document the document with the signal. Must be returned from this
+	 * SvarogAcces (actually be of type SignalDocument - internal to Svarog).
      * @param channel the index of the channel
      * (range from 0 to {@code getActiveSignalDocument().getChannelCount()-1})
      * @param signalOffsetTime the position in the signal (in time domain) starting
      * from which samples will be returned
      * @param length the length of the part of the signal which should be returned
      * @return the signal samples
-     * @throws NoActiveObjectException if there is no active signal
+	 * @throws InvalidClassException  if document is not returned from
+	 * this SvarogAccess (not of type SignalDocument - internal to Svarog)
      * @throws IndexOutOfBoundsException if the index of a channel is out of range
      */
 	ChannelSamplesImpl getProcessedSignalSamplesFromDocument(ExportedSignalDocument document, int channel, float signalOffsetTime, float length) throws InvalidClassException, IndexOutOfBoundsException;
@@ -420,12 +432,13 @@ public interface SvarogAccessSignal {
 	 * @param file file with the tag
 	 * @param signalDocument the signal document. Must be returned from this
 	 * SvarogAcces (actually be of type SignalDocument - internal to Svarog).
+	 * @param activeFlag flag indicating if opened document should be active
 	 * @throws InvalidClassException if document is not returned from
 	 * this SvarogAccess (not of type SignalDocument - internal to Svarog)
 	 * @throws SignalMLException if opening the file fails
 	 * @throws IOException if opening the file fails due to IO error
 	 */
-	void openTagDocument(File file, ExportedSignalDocument signalDocument) throws InvalidClassException, SignalMLException, IOException;
+	void openTagDocument(File file, ExportedSignalDocument signalDocument, boolean activeFlag) throws InvalidClassException, SignalMLException, IOException;
 	
 	/**
 	 * Opens the book from the given file.

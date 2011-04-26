@@ -1,0 +1,147 @@
+﻿<installation version="1.0">
+
+  <info>
+    <appname>Svarog</appname>
+    <appversion>${project.version}</appversion>
+    <appsubpath>svarog</appsubpath>
+    <javaversion>1.6</javaversion>
+		<url>http://svarog.pl/</url>
+		<run-privileged/>
+  </info>
+	
+	<!--currently only english
+		To add another languages add the langpack node below and the resource with
+		id "packsLang.xml_{locale}"-->
+  <locale>
+    <langpack iso3="eng"/>
+  </locale>
+
+	<resources>
+		<res id="installer.langsel.img" src="../main/resources/org/signalml/app/icon/splash.png"/>
+    <res src="shortcutSpec.xml" id="shortcutSpec.xml"/>
+		<res src="RegistrySpec.xml" id="RegistrySpec.xml"/>
+		<res id="packsLang.xml_eng" src="packsLang_eng.xml"/>
+		<res id="InfoPanel.info" src="license-notice.txt"/>
+	</resources>
+	
+  <guiprefs width="800" height="600" resizable="no">
+    <laf name="liquid">
+      <os family="windows" />
+			<os family="unix" />
+			<os family="mac" />
+      <param name="variant" value="liquid" />
+    </laf>
+  </guiprefs>
+	
+	<!--libraries to create shortcuts under windows-->
+	<native type="izpack" name="ShellLink.dll"/>
+	<native type="izpack" name="ShellLink_x64.dll"/>
+	<!--libraries to add registry keys under windows; needed to register
+		uninstaller-->
+	<native type="3rdparty" name="COIOSHelper.dll" stage="both">
+	 <os family="windows" />
+	</native>
+	<native type="3rdparty" name="COIOSHelper_x64.dll" stage="both">
+	 <os family="windows" />
+	</native>
+
+  <panels>
+		<panel classname="InfoPanel"/>
+    <panel classname="TargetPanel"/>
+    <panel classname="PacksPanel"/>
+		<panel classname="ShortcutPanel"/>
+    <panel classname="InstallPanel"/>
+  </panels>
+	
+	<listeners>
+		<!--the listener which adds and removes registry values-->
+    <listener installer="RegistryInstallerListener" uninstaller="RegistryUninstallerListener">
+      <os family="windows" />
+    </listener>
+		<!--the custom listener which removes the directories with configuration
+			files during the uninstallation; the jar for this listener is located in
+			bin/customActions directory-->
+		<listener uninstaller="Uninstaller" />
+  </listeners>
+
+  <packs>
+		<!--the default pack for windows; contains jar with main application,
+			licence and icons-->
+    <pack name="Windows" required="yes" id="svarog.pack.windows">
+			<description>Windows</description>
+			<os family="windows" />
+			<file src="svarog.jar" targetdir="${INSTALL_PATH}"/>
+			<file src="svarog.ico" targetdir="${INSTALL_PATH}"/>
+			<file src="trashcan_full.ico" targetdir="${INSTALL_PATH}"/>
+			<file src="../../LICENSE.txt" targetdir="${INSTALL_PATH}"/>
+    </pack>
+		
+		<!--the default pack for linux; contains jar with main application,
+			licence, icon and script which starts the application-->
+		<pack name="Linux" required="yes" id="svarog.pack.linux">
+			<description>Linux</description>
+			<os family="unix"/>
+			<file src="svarog.jar" targetdir="${INSTALL_PATH}"/>
+			<file src="svarog.png" targetdir="${INSTALL_PATH}" />
+			<file src="linux/svarog.sh" targetdir="${INSTALL_PATH}" />
+			<file src="../../LICENSE.txt" targetdir="${INSTALL_PATH}"/>
+			
+			<parsable targetfile="${INSTALL_PATH}${FILE_SEPARATOR}svarog.sh" />
+			<executable targetfile="${INSTALL_PATH}${FILE_SEPARATOR}svarog.sh" stage="never" keep="yes" />
+		</pack>
+		
+		<!--the default pack for mac; contains jar with main application,
+			licence, icon and script which starts the application-->
+		<pack name="MacOSX" required="yes" id="svarog.pack.mac">
+			<os family="mac"/>
+			<description>MacOSX</description>
+			<file src="svarog.jar" targetdir="${INSTALL_PATH}"/>
+			<file src="svarog.png" targetdir="$INSTALL_PATH" />
+			<file src="../../LICENSE.txt" targetdir="${INSTALL_PATH}"/>
+			
+			<file src="mac/svarog.sh" targetdir="$INSTALL_PATH" />
+			<parsable targetfile="${INSTALL_PATH}${FILE_SEPARATOR}svarog.sh" />
+			<executable targetfile="${INSTALL_PATH}${FILE_SEPARATOR}svarog.sh" stage="never" keep="yes" />
+		</pack>
+		
+		<!--the mp5 executable for windows-->
+		<pack name="Windows_MP5Library" required="no" id="svarog.pack.windows_mp5">
+			<os family="windows" />
+			<description>Windows_MP5Library</description>
+			<file src="windows/mp5.exe" targetdir="${INSTALL_PATH}${FILE_SEPARATOR}bin" />
+		</pack>
+		
+		<!--the mp5 executable for linux-->
+		<pack name="Linux_MP5Library" required="no" id="svarog.pack.linux_mp5">
+			<os family="unix"/>
+			<description>Linux_MP5Library</description>
+			<file src="linux/mp5" targetdir="${INSTALL_PATH}${FILE_SEPARATOR}bin" />
+			<executable targetfile="${INSTALL_PATH}${FILE_SEPARATOR}bin${FILE_SEPARATOR}mp5" stage="never" keep="true" />
+		</pack>
+		
+		<!--the mp5 executable for mac-->
+		<pack name="Mac_MP5Library" required="no" id="svarog.pack.mac_mp5">
+			<os family="mac"/>
+			<description>Mac_MP5Library</description>
+			<file src="mac/mp5" targetdir="${INSTALL_PATH}${FILE_SEPARATOR}bin" />
+			<executable targetfile="${INSTALL_PATH}${FILE_SEPARATOR}bin${FILE_SEPARATOR}mp5" stage="never" keep="true" />
+		</pack>
+		
+		<!--the default pluigns that are shipped with Svarog-->
+		<pack name="Plugins" required="no" id="svarog.pack.plugins">
+			<description>Plugins</description>
+			<fileset dir="plugins" targetdir="${INSTALL_PATH}${FILE_SEPARATOR}plugins" defaultexcludes="yes">
+        <include name="**" />
+      </fileset>
+		</pack>
+		
+		<!--the default codecs that are shipped with Svarog-->
+		<pack name="Codecs" required="no" id="svarog.pack.codecs">
+			<description>Codecs</description>
+			<fileset dir="../../specs" targetdir="${INSTALL_PATH}${FILE_SEPARATOR}specs">
+				<include name="*.xml"/>
+			</fileset>
+		</pack>
+  </packs>
+
+</installation>

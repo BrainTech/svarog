@@ -181,8 +181,9 @@ public class SignalZoomSettingsPanel extends JPanel {
 	 * <li>the {@link ZoomSignalSettings#getFactor() zoom factor},</li>
 	 * <li>the {@link ZoomSignalSettings#getZoomSize() size} of a window
 	 * with a zoomed signal,</li>
-	 * <li>the boolean if the channel should be {@link ZoomSignalSettings#
-	 * isChannelSwitching() switched} when the mouse goes up or down.</li>
+	 * <li>the boolean if the channel should be
+	 * {@link ZoomSignalSettings#isChannelSwitching() switched}
+	 * when the mouse goes up or down.</li>
 	 * @param settings the settings of signal zooming
 	 */
 	public void fillPanelFromModel(ZoomSignalSettings settings) {
@@ -212,8 +213,9 @@ public class SignalZoomSettingsPanel extends JPanel {
 	 * <li>the {@link ZoomSignalSettings#getFactor() zoom factor},</li>
 	 * <li>the {@link ZoomSignalSettings#getZoomSize() size} of a window
 	 * with a zoomed signal,</li>
-	 * <li>the boolean if the channel should be {@link ZoomSignalSettings#
-	 * isChannelSwitching() switched} when the mouse goes up or down.</li>
+	 * <li>the boolean if the channel should be
+	 * {@link ZoomSignalSettings#isChannelSwitching() switched} when the mouse
+	 * goes up or down.</li>
 	 * @param settings the settings of signal zooming
 	 */
 	public void fillModelFromPanel(ZoomSignalSettings settings) {

@@ -1,0 +1,12 @@
+<plugin>
+	<name>Example plugin</name>
+	<version>0.1</version>
+	<jar-file>ExamplePlugin.jar</jar-file>
+	<starting-class>org.signalml.plugin.exampleplugin.ExamplePlugin</starting-class>
+	<dependencies>
+		<dependency>
+			<name>Svarog API</name>
+			<version>0.5</version>
+		</dependency>
+	</dependencies>
+</plugin>

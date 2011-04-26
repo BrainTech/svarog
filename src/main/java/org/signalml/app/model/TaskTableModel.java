@@ -21,14 +21,18 @@ import org.signalml.task.TaskManagerListener;
 import org.signalml.task.TaskStatus;
 import org.signalml.task.TaskStatusImportanceComparator;
 import org.springframework.context.MessageSourceResolvable;
+import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.support.MessageSourceAccessor;
 
-/** TaskTableModel
- *
- *
- * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
+/**
+ * TaskTableModel
+ * 
+ * 
+ * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
+ *         Sp. z o.o.
  */
-public class TaskTableModel extends AbstractTableModel implements TaskManagerListener, TaskEventListener {
+public class TaskTableModel extends AbstractTableModel implements
+		TaskManagerListener, TaskEventListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -38,18 +42,21 @@ public class TaskTableModel extends AbstractTableModel implements TaskManagerLis
 	public static final int PROGRESS_COLUMN = 3;
 	public static final int MESSAGE_COLUMN = 4;
 
-	private MessageSourceAccessor messageSource;
+	private MessageSourceAccessor defaultMessageSource;
 	private ApplicationTaskManager taskManager;
 
 	private TableRowSorter<TaskTableModel> sorter = null;
 
-	private Map<Task,AggregateTaskProgressInfo> taskToProgressMap = new HashMap<Task,AggregateTaskProgressInfo>();
+	private Map<Task, AggregateTaskProgressInfo> taskToProgressMap = new HashMap<Task, AggregateTaskProgressInfo>();
+	private Map<Task, MessageSourceAccessor> taskToMessageSourceMap = new HashMap<Task, MessageSourceAccessor>();
 
 	public TableRowSorter<TaskTableModel> getSorter() {
 		if (sorter == null) {
 			sorter = new TableRowSorter<TaskTableModel>(this);
-			sorter.setComparator(TaskTableModel.STATUS_COLUMN, new TaskStatusImportanceComparator());
-			sorter.setComparator(TaskTableModel.PROGRESS_COLUMN, new AggregateTaskProgressComparator());
+			sorter.setComparator(TaskTableModel.STATUS_COLUMN,
+					new TaskStatusImportanceComparator());
+			sorter.setComparator(TaskTableModel.PROGRESS_COLUMN,
+					new AggregateTaskProgressComparator());
 			sorter.setSortsOnUpdates(true);
 		}
 		return sorter;
@@ -60,19 +67,19 @@ public class TaskTableModel extends AbstractTableModel implements TaskManagerLis
 
 		switch (col) {
 
-		case STATUS_COLUMN :
-				return TaskStatus.class;
+		case STATUS_COLUMN:
+			return TaskStatus.class;
 
-		case METHOD_NAME_COLUMN :
+		case METHOD_NAME_COLUMN:
 			return String.class;
 
-		case CREATE_TIME_COLUMN :
+		case CREATE_TIME_COLUMN:
 			return Date.class;
 
-		case PROGRESS_COLUMN :
+		case PROGRESS_COLUMN:
 			return AggregateTaskProgressInfo.class;
 
-		case MESSAGE_COLUMN :
+		case MESSAGE_COLUMN:
 			return String.class;
 
 		default:
@@ -87,20 +94,22 @@ public class TaskTableModel extends AbstractTableModel implements TaskManagerLis
 
 		switch (col) {
 
-		case STATUS_COLUMN :
-			return messageSource.getMessage("viewer.taskTable.status");
+		case STATUS_COLUMN:
+			return defaultMessageSource.getMessage("viewer.taskTable.status");
 
-		case METHOD_NAME_COLUMN :
-			return messageSource.getMessage("viewer.taskTable.methodName");
+		case METHOD_NAME_COLUMN:
+			return defaultMessageSource
+					.getMessage("viewer.taskTable.methodName");
 
-		case CREATE_TIME_COLUMN :
-			return messageSource.getMessage("viewer.taskTable.createTime");
+		case CREATE_TIME_COLUMN:
+			return defaultMessageSource
+					.getMessage("viewer.taskTable.createTime");
 
-		case PROGRESS_COLUMN :
-			return messageSource.getMessage("viewer.taskTable.progress");
+		case PROGRESS_COLUMN:
+			return defaultMessageSource.getMessage("viewer.taskTable.progress");
 
-		case MESSAGE_COLUMN :
-			return messageSource.getMessage("viewer.taskTable.message");
+		case MESSAGE_COLUMN:
+			return defaultMessageSource.getMessage("viewer.taskTable.message");
 
 		default:
 			return "???";
@@ -127,16 +136,16 @@ public class TaskTableModel extends AbstractTableModel implements TaskManagerLis
 
 		switch (col) {
 
-		case STATUS_COLUMN :
+		case STATUS_COLUMN:
 			return task.getStatus();
 
-		case METHOD_NAME_COLUMN :
+		case METHOD_NAME_COLUMN:
 			return task.getMethod().getName();
 
-		case CREATE_TIME_COLUMN :
+		case CREATE_TIME_COLUMN:
 			return task.getTaskInfo().getCreateTime();
 
-		case PROGRESS_COLUMN :
+		case PROGRESS_COLUMN:
 			AggregateTaskProgressInfo atpi = taskToProgressMap.get(task);
 			if (atpi == null) {
 				atpi = new AggregateTaskProgressInfo(task);
@@ -146,10 +155,18 @@ public class TaskTableModel extends AbstractTableModel implements TaskManagerLis
 			}
 			return atpi;
 
-		case MESSAGE_COLUMN :
+		case MESSAGE_COLUMN:
 			MessageSourceResolvable message = task.getMessage();
 			if (message != null) {
-				return messageSource.getMessage(message);
+				MessageSourceAccessor source = taskToMessageSourceMap.get(task);
+				if (source != null) {
+					try {
+						return source.getMessage(message);
+					} catch (NoSuchMessageException e) {
+						// fall through
+					}
+				}
+				return defaultMessageSource.getMessage(message);
 			} else {
 				return "";
 			}
@@ -161,12 +178,16 @@ public class TaskTableModel extends AbstractTableModel implements TaskManagerLis
 
 	}
 
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
+	public MessageSourceAccessor getDefaultMessageSource() {
+		return defaultMessageSource;
 	}
 
-	public void setMessageSource(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
+	public void setDefaultMessageSource(MessageSourceAccessor defaultMessageSource) {
+		this.defaultMessageSource = defaultMessageSource;
+	}
+	
+	public void setMessageSourceForTask(Task task, MessageSourceAccessor messageSource) {
+		this.taskToMessageSourceMap.put(task, messageSource);
 	}
 
 	public ApplicationTaskManager getTaskManager() {
@@ -185,9 +206,10 @@ public class TaskTableModel extends AbstractTableModel implements TaskManagerLis
 
 	@Override
 	public void taskAdded(TaskManagerEvent e) {
-		taskManager.getEventProxyForTask(e.getTask()).addTaskEventListener(this);
+		taskManager.getEventProxyForTask(e.getTask())
+				.addTaskEventListener(this);
 		int index = e.getIndex();
-		fireTableRowsInserted(index,index);
+		fireTableRowsInserted(index, index);
 	}
 
 	@Override
@@ -195,8 +217,9 @@ public class TaskTableModel extends AbstractTableModel implements TaskManagerLis
 		Task task = e.getTask();
 		taskManager.getEventProxyForTask(task).removeTaskEventListener(this);
 		taskToProgressMap.remove(task);
+		taskToMessageSourceMap.remove(task);
 		int index = e.getIndex();
-		fireTableRowsDeleted(index,index);
+		fireTableRowsDeleted(index, index);
 	}
 
 	@Override
@@ -259,12 +282,15 @@ public class TaskTableModel extends AbstractTableModel implements TaskManagerLis
 	public void taskTickerUpdated(TaskEvent ev) {
 		int index = taskManager.getIndexOfTask(ev.getTask());
 		if (index >= 0) {
-			//fireTableCellUpdated( index, PROGRESS_COLUMN );
+			// fireTableCellUpdated( index, PROGRESS_COLUMN );
 
-			// XXX for unknown reason firing the event for just one column causes the sorter
-			// to mix rows (only the progres column gets sorted in the view). Cause of
-			// problem unknown, changes to other rows seem to sort whole rows as expected
-			fireTableRowsUpdated(index,index);
+			// XXX for unknown reason firing the event for just one column
+			// causes the sorter
+			// to mix rows (only the progres column gets sorted in the view).
+			// Cause of
+			// problem unknown, changes to other rows seem to sort whole rows as
+			// expected
+			fireTableRowsUpdated(index, index);
 		}
 	}
 

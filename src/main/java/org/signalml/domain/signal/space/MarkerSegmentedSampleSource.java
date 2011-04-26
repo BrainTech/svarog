@@ -65,7 +65,7 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 
         /**
          * Constructor. Creates a source without segments
-         * @param source
+         * @param source the actual source of samples
          */
 	protected MarkerSegmentedSampleSource(MultichannelSampleSource source) {
 		super(source);

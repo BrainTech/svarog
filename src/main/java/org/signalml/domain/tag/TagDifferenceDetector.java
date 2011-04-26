@@ -23,7 +23,7 @@ import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
 
 /**
- * This class represents the detector of {@link TagDifference diferences}
+ * This class represents the detector of {@link TagDifference differences}
  * between {@link Tag tags} from two sets. Allows to compare two sets of
  * tags and find their difference (that is set of differences between tags).
  *

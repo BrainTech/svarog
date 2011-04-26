@@ -35,6 +35,6 @@
  * Single montage contains Channels which are composed
  * of SourceChannels (as primary and reference channels).
  * There are also definitions of filters of montage samples. <br>
- * source: {@link http://en.wikipedia.org/wiki/Electroencephalography}
+ * source: {@code http://en.wikipedia.org/wiki/Electroencephalography}
  */
 package org.signalml.domain.montage;

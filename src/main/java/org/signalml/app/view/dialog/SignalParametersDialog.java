@@ -11,6 +11,7 @@ import javax.swing.JComponent;
 import org.omg.CORBA.Request;
 
 import org.signalml.app.model.SignalParameterDescriptor;
+import org.signalml.app.model.PagingParameterDescriptor;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.element.PagingParametersPanel;
 import org.signalml.app.view.element.RequiredSignalParametersPanel;
@@ -79,12 +80,9 @@ public class SignalParametersDialog extends AbstractDialog {
 	}
 
 	/**
-	 * Fills the sub-panels of this dialog using the given {@link
-	 * SignalParameterDescriptor model} (
-	 * {@link RequiredSignalParametersPanel#fillPanelFromModel(org.signalml.app.model.SignalParameterDescriptor)
-	 * RequiredSignalParamatersPanel} and
-	 * {@link PagingParametersPanel#fillPanelFromModel(org.signalml.app.model.PagingParameterDescriptor)
-	 * PagingParametersPanel}.
+	 * Fills the sub-panels of this dialog using the given {@link SignalParameterDescriptor model}
+	 * ({@link RequiredSignalParametersPanel#fillPanelFromModel(SignalParameterDescriptor) RequiredSignalParametersPanel}
+	 * and {@link PagingParametersPanel#fillPanelFromModel(PagingParameterDescriptor) PagingParametersPanel}).
 	 */
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
@@ -97,10 +95,10 @@ public class SignalParametersDialog extends AbstractDialog {
 
 	/**
 	 * Fills the the given {@link SignalParameterDescriptor model} from
-	 * sub-panels ({@link RequiredSignalParametersPanel#fillPanelFromModel(org.signalml.app.model.SignalParameterDescriptor)
-	 * RequiredSignalParamatersPanel} and
-	 * {@link PagingParametersPanel#fillPanelFromModel(org.signalml.app.model.PagingParameterDescriptor)
-	 * PagingParametersPanel}).
+	 * sub-panels
+	 * ({@link RequiredSignalParametersPanel#fillPanelFromModel(SignalParameterDescriptor)
+	 * RequiredSignalParametersPanel} and
+	 * {@link PagingParametersPanel#fillPanelFromModel(PagingParameterDescriptor) PagingParametersPanel}).
 	 */
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
@@ -111,8 +109,8 @@ public class SignalParametersDialog extends AbstractDialog {
 
 	/**
 	 * Validates this dialog. This dialog is valid if sub-panels are valid
-	 * ({@link RequiredSignalParametersPanel#validatePanel(
-	 * SignalParameterDescriptor, Errors) RequiredSignalParametersPanel}
+	 * ({@link RequiredSignalParametersPanel#validatePanel(SignalParameterDescriptor, Errors)
+	 * RequiredSignalParametersPanel}
 	 * and {@link PagingParametersPanel#validatePanel(Errors)
 	 * PagingParametersPanel}).
 	 */

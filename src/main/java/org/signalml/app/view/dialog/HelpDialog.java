@@ -443,8 +443,8 @@ public class HelpDialog extends AbstractDialog {
 		}
 
 		/**
-		 * When the action is performed the current page is {@link HelpDialog#
-		 * reload() reloaded}
+		 * When the action is performed the current page is
+		 * {@link HelpDialog#reload() reloaded}
 		 */
 		public void actionPerformed(ActionEvent ev) {
 			try {

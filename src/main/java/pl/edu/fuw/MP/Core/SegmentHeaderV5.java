@@ -44,7 +44,7 @@ public class SegmentHeaderV5 extends FormatComponentV5 implements StandardBookSe
 		case OFFSET_SEGMENT_IDENTITY:
 		{
 			offsetNumber=stream.readShort();
-			offsetDimension=stream.readShort();
+			offsetDimension=stream.readInt(); //short->int
 
 			parent.setDimBase(offsetDimension);
 
@@ -115,7 +115,7 @@ public class SegmentHeaderV5 extends FormatComponentV5 implements StandardBookSe
 		case OFFSET_SEGMENT_IDENTITY:
 		{
 			offsetNumber=stream.readShort();
-			offsetDimension=stream.readShort();
+			offsetDimension=stream.readInt(); //short->int
 
 			parent.setDimBase(offsetDimension);
 

@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.net.JarURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -86,6 +87,11 @@ public class PluginLoader {
 	private ArrayList<File> pluginDirs = new ArrayList<File>();
 
 	/**
+	 * the directory where default plug-ins are stored
+	 */
+	private ArrayList<File> globalPluginDirectories = new ArrayList<File>();
+
+	/**
 	 * list of descriptions of plug-ins.
 	 * On this list are only plug-ins that has an XML description
 	 * file in one of the {@link #pluginDirs directories}.
@@ -99,7 +105,7 @@ public class PluginLoader {
 	private HashMap<String, PluginDescription> descriptionsByName = new HashMap<String, PluginDescription>();
 	/**
 	 * list of {@link PluginState states} of plug-ins.
-	 * On this list are states stored in an {@link #pluginsStateFileName XML file}
+	 * On this list are states stored in an {@link #pluginsStateFile XML file}
 	 * with plug-in states.
 	 */
 	private ArrayList<PluginState> states = new ArrayList<PluginState>();
@@ -143,7 +149,7 @@ public class PluginLoader {
 		try {
 			return new PluginDescription(fileName);
 		} catch (Exception e) {
-			logger.error("failed do read description of a plug-in from file "+fileName);
+			logger.warn("failed do read description of a plug-in from file "+fileName);
 			e.printStackTrace();
 			return null;
 		}
@@ -161,6 +167,7 @@ public class PluginLoader {
 		try {
 			if (!readPluginDirectories())
 				setDefaultPluginDir(profileDir);
+			setGlobalPluginDir();
 			readPluginsState(this.pluginsStateFile);
 		} catch (Exception e) {
 			logger.error("Failed to create loader of plug-ins");
@@ -176,6 +183,7 @@ public class PluginLoader {
 	 * @return an array of URLs to jar files with plug-ins
 	 */
 	private ArrayList<URL> scanPluginDirectory(File directory) {
+		ArrayList<PluginDescription> tmpDescriptions = new ArrayList<PluginDescription>();
 		FilenameFilter filter = new FilesystemFilter("xml", "Xml File", false);
 		String[] filenames = directory.list(filter);
 		for (String filename: filenames) {
@@ -183,12 +191,13 @@ public class PluginLoader {
 			                                  + File.separator + filename);
 			if (descr != null) {
 				descriptions.add(descr);
+				tmpDescriptions.add(descr);
 				descriptionsByName.put(descr.getName(), descr);
 			}
 		}
 
 		ArrayList<URL> urls = new ArrayList<URL>();
-		for (PluginDescription descr : descriptions) {
+		for (PluginDescription descr : tmpDescriptions) {
 			PluginState state = statesByName.get(descr.getName());
 			if (state!= null && descr.isActive()) {
 				descr.setActive(state.isActive());
@@ -197,8 +206,12 @@ public class PluginLoader {
 			if (descr.isActive()) {
 				try {
 					name = directory.toURI().toString();
+					File jarFileTmp = new File(directory, descr.getJarFile());
 					name = name.concat(descr.getJarFile());
-					urls.add(new URL(name));
+					if (jarFileTmp.exists() && jarFileTmp.canRead())
+						urls.add(new URL(name));
+					else
+						logger.error("File (" + jarFileTmp.getAbsolutePath() + ") does not exist or can not be read.");
 				} catch (MalformedURLException e) {
 					logger.error("failed to create URL for file "+name);
 					e.printStackTrace();
@@ -209,10 +222,70 @@ public class PluginLoader {
 	}
 
 	/**
-	 * Adds the default plug-in directory based on
-	 * given profile directory.
-	 * @param profileDir profile directory where default
-	 * plug-in folder is located
+	 * Adds plug-in directories for all default plug-ins, namely
+	 * the directories {@code src/plugins/}*{@code /target}
+	 * @param svarogDir the svarog base directory
+	 */
+	private void startFromSourcesAddPluginDirs(File svarogDir){
+		File pluginsDir = new File(svarogDir + File.separator + "src" + File.separator + "plugins");
+		if (pluginsDir.exists() && pluginsDir.canRead() && pluginsDir.isDirectory()){
+			String[] pluginSrcDirsNames = pluginsDir.list();
+			for (String dirName : pluginSrcDirsNames){
+				File dir = new File(pluginsDir, dirName);
+				if (dir.isDirectory()){
+					File pluginDir = new File(dir + File.separator + "target");
+					if (pluginDir.exists() && pluginDir.isDirectory() && pluginDir.canRead()) {
+						globalPluginDirectories.add(pluginDir);
+					}
+				}
+			}
+		}
+	}
+
+
+	/**
+	 * Sets the directory where the default plug-ins are stored.
+	 * The location of the file depends on the fact if Svarog was started:
+	 * <ul>
+	 * <li>from sources,</li>
+	 * <li>from jar file.</li>
+	 * </ul>
+	 */
+	private void setGlobalPluginDir(){
+		//hack to get the location of the jar file and add the global plugin directory
+		File pluginDirGlobal = null;
+		try{
+			URL srcURL = getClass().getProtectionDomain().getCodeSource().getLocation();
+			if (srcURL.toString().endsWith("/target/classes/")){
+				File svarogDirFile = new File(srcURL.toURI());
+				svarogDirFile = svarogDirFile.getParentFile().getParentFile();
+				startFromSourcesAddPluginDirs(svarogDirFile);
+			} else {
+				JarURLConnection connection = (JarURLConnection) srcURL.openConnection();
+				URL jarURL = connection.getJarFileURL();
+				File jarDirFile = new File(jarURL.toURI());
+				jarDirFile = jarDirFile.getParentFile();
+				pluginDirGlobal = new File(jarDirFile + File.separator + "plugins");
+				if (pluginDirGlobal.exists() && pluginDirGlobal.isDirectory() && pluginDirGlobal.canRead()) {
+					globalPluginDirectories.add(pluginDirGlobal);
+				}
+			}
+		} catch (Exception ex){
+			logger.error("Failed to add global plugin directory - maybe started neither from a jar file nor from sources");
+		}
+	}
+
+	/**
+	 * Adds the default plug-in directory based on given profile directory.
+	 * Also:
+	 * <ul>
+	 * <li>adds plug-in directories for all default plug-ins if Svarog is
+	 * started from sources,</li>
+	 * <li>adds the global plug-in directory if Svarog is started from jar
+	 * created during the installation,</li>
+	 * </ul>
+	 * @param profileDir profile directory where default plug-in folder
+	 * is located
 	 */
 	private void setDefaultPluginDir(File profileDir) {
 		File pluginDir = new File(profileDir + File.separator + "plugins");
@@ -229,9 +302,6 @@ public class PluginLoader {
 	 * create a dialog window which will be activated after clicking this button.
 	 */
 	private void addPluginOptions() {
-		/*
-		 * wyświetlać na czerwono pluginy niekatywne, w hincie wyświetlać czego brakuje
-		 */
 		ViewerElementManager manager = PluginAccessClass.getSharedInstance().getManager();
 		ArrayList<PluginState> existingPluginStates = new ArrayList<PluginState>();
 		for (PluginDescription descr : descriptions) {
@@ -262,6 +332,10 @@ public class PluginLoader {
 	private URL[] scanPluginDirectories() {
 		ArrayList<URL> urls = new ArrayList<URL>();
 		for (File plDir : pluginDirs) {
+			if (plDir.exists() && plDir.canRead() && plDir.isDirectory())
+				urls.addAll(scanPluginDirectory(plDir));
+		}
+		for (File plDir : globalPluginDirectories) {
 			if (plDir.exists() && plDir.canRead() && plDir.isDirectory())
 				urls.addAll(scanPluginDirectory(plDir));
 		}
@@ -303,6 +377,7 @@ public class PluginLoader {
 							descr.setActive(false);
 							descr.setFailedToLoad(true);
 							setDependentInactive(descr);
+							logger.error("Failed to load plugin " + descr.getName()+ " from file " + descr.getJarFile());
 							e.printStackTrace();
 						}
 					}
@@ -374,15 +449,19 @@ public class PluginLoader {
 	 */
 	private void readPluginsState(File fileName) {
 		try {
-			Element element = openXMLDocument(fileName);
-			NodeList nodeList = element.getChildNodes();
-			for (int i = 0; i < nodeList.getLength(); ++i) {
-				Node node = nodeList.item(i);
-				if (node.getNodeName().equals(XMLStatesPluginNode))
-					readPluginState(node);
+			if (fileName.exists() && fileName.canRead()){
+				Element element = openXMLDocument(fileName);
+				NodeList nodeList = element.getChildNodes();
+				for (int i = 0; i < nodeList.getLength(); ++i) {
+					Node node = nodeList.item(i);
+					if (node.getNodeName().equals(XMLStatesPluginNode))
+						readPluginState(node);
+				}
+			} else {
+				logger.debug("File with states of plugins doesn't exist. Default states are used");
 			}
 		} catch (Exception e) {
-			logger.error("failed to load states of plug-ins, all plug-ins with unloaded states will be set acitve");
+			logger.error("Failed to load states of plug-ins from file. All plug-ins with unloaded states will be set inacitve.");
 			e.printStackTrace();
 		}
 
@@ -393,14 +472,9 @@ public class PluginLoader {
 	 * Writes the desired state of plug-ins to an XML file.
 	 */
 	public void onClose() {
-		try {
-			rememberPluginsState();
-			savePluginDirectories();
-			PluginAccessClass.getSharedInstance().onClose();
-		} catch (Exception e) {
-			logger.error("Error in plug-in interface while closing the application");
-			e.printStackTrace();
-		}
+		rememberPluginsState();
+		savePluginDirectories();
+		PluginAccessClass.getSharedInstance().onClose();
 	}
 
 	/**
@@ -537,6 +611,8 @@ public class PluginLoader {
 	 * @return the pluginDirs
 	 */
 	public ArrayList<File> getPluginDirs() {
-		return pluginDirs;
+		ArrayList<File> tmpPluginDirs = new ArrayList<File>(pluginDirs);
+		tmpPluginDirs.addAll(globalPluginDirectories);
+		return tmpPluginDirs;
 	}
 }
