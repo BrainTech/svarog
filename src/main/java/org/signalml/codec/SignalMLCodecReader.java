@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 
 import org.apache.log4j.Logger;
+import org.signalml.codec.generator.xml.XMLCodecException;
 
 /** SignalMLCodecReader
  *
@@ -32,6 +33,8 @@ public class SignalMLCodecReader {
 
 	private String currentFilename = null;
 
+	private short cached_data_offset = -1;
+	
 	public SignalMLCodecReader(Class<?> cobj, SignalMLCodec codec) throws SignalMLCodecException {
 		this.codec = codec;
 		this.delegateClass = cobj;
@@ -346,7 +349,26 @@ public class SignalMLCodecReader {
 			throw new SignalMLCodecException("object is null");
 		}
 	}
+	
+	public short[] getSamples(long offset, int length) throws SignalMLCodecException {
+		if (delegate != null) {
+			try {
+				return delegate.read_short_array(16 * this.get_data_offset() + 2 * offset, length);
+			} catch (Exception e) {
+				throw new SignalMLCodecException(e);
+			}
+		} else {
+			throw new SignalMLCodecException("object is null");
+		}
+	}
 
+	private short get_data_offset() throws XMLCodecException {
+	    if( cached_data_offset < 0 ) {
+	        cached_data_offset = this.delegate.read_short(28);
+	    }
+	    return cached_data_offset;
+	}
+	
 	public String getCurrentFilename() {
 		return currentFilename;
 	}

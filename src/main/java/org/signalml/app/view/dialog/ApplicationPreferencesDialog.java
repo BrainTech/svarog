@@ -283,8 +283,8 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 			toolsContainPanel.add(toolsConfigPanel, BorderLayout.NORTH);
 			toolsContainPanel.add(Box.createVerticalGlue(), BorderLayout.CENTER);
 
-			tabbedPane.insertTab(messageSource.getMessage("preferences.tools"), null, toolsContainPanel, null, 4);
-			tabbedPane.insertTab(messageSource.getMessage("preferences.codecs"), null, codecManagerContainPanel, null, 6);
+			tabbedPane.insertTab(messageSource.getMessage("preferences.tools"), null, toolsContainPanel, null, 3);
+			tabbedPane.insertTab(messageSource.getMessage("preferences.codecs"), null, codecManagerContainPanel, null, 5);
 
 		}
 

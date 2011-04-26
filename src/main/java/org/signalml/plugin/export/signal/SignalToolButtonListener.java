@@ -21,7 +21,7 @@ import org.signalml.plugin.export.view.SvarogAccessGUI;
 public interface SignalToolButtonListener extends MouseListener {
 	
 	/**
-	 * Creates the copy of this listener with the {@link SignalTooln tool} for
+	 * Creates the copy of this listener with the {@link SignalTool tool} for
 	 * which it should be created and the button on which it will listen. 
 	 * @param tool the tool with which this listener should be associated
 	 * @param button the button on which this listener will listen

@@ -164,7 +164,7 @@ public interface ExportedSignalPlot {
 	/**
 	 * Returns the second coordinate of the pixel that represents the point
 	 * in the middle between channels {@code channel-1} and {@code channel}.
-	 * @param channel the number of the channle
+	 * @param channel the number of the channel
 	 * @return the second coordinate of the pixel
 	 */
 	int channelToPixel(int channel);

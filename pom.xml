@@ -36,12 +36,12 @@
 		</repository>
 	</repositories>
 
-    <pluginRepositories>
-        <pluginRepository>
-            <id>onejar-maven-plugin.googlecode.com</id>
-            <url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>
-        </pluginRepository>
-    </pluginRepositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>onejar-maven-plugin.googlecode.com</id>
+			<url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>
+		</pluginRepository>
+	</pluginRepositories>
 
 	<profiles>
 		<profile>
@@ -184,22 +184,23 @@
 					<mainClass>org.signalml.app.SvarogApplication</mainClass>
 				</configuration>
 			</plugin>
+
 			<plugin>
-            <groupId>org.dstovall</groupId>
-                <artifactId>onejar-maven-plugin</artifactId>
-                <version>1.4.1</version>
-                <executions>
-                    <execution>
-                        <configuration>
-                            <!-- Optional, default is false -->
-                            <attachToBuild>true</attachToBuild>
-                        </configuration>
-                        <goals>
-                            <goal>one-jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+				<groupId>org.dstovall</groupId>
+				<artifactId>onejar-maven-plugin</artifactId>
+				<version>1.4.1</version>
+				<executions>
+					<execution>
+						<configuration>
+							<!-- Optional, default is false -->
+							<attachToBuild>true</attachToBuild>
+						</configuration>
+						<goals>
+							<goal>one-jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -430,11 +431,16 @@
 			<artifactId>jtransforms</artifactId>
 			<version>2.3</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-math</artifactId>
+			<version>2.1</version>
+		</dependency>
 	</dependencies>
 
 	<scm>
-		<connection>scm:git:git://escher.fuw.edu.pl/git/svarog</connection>
-		<developerConnection>scm:git:ssh://escher.fuw.edu.pl/git/svarog</developerConnection>
+		<connection>scm:git://escher.fuw.edu.pl/git/svarog</connection>
+		<developerConnection>scm:ssh://escher.fuw.edu.pl/git/svarog</developerConnection>
 		<url>http://escher.fuw.edu.pl/git/svarog</url>
 	</scm>
 

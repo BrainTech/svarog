@@ -24,7 +24,7 @@ public class PluginState {
 	/**
 	 * the name of the plug-in
 	 */
-	protected String name;
+	protected String name = null;
 	/**
 	 * boolean if the plug-in is active
 	 */
@@ -32,7 +32,7 @@ public class PluginState {
 	/**
 	 * the version of the plug-in,
 	 */
-	protected int[] version;
+	protected int[] version = null;
 	/**
 	 * a list of dependencies that can't be loaded
 	 * (either are missing, inactive or their loading

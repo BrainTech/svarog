@@ -19,6 +19,7 @@ import org.signalml.plugin.export.view.DocumentView;
  * <li>dependent documents - can be get, removed and added</li>
  * <li>a {@link DocumentView view} for this document - can be get and set</li>
  * <li>a support for property changes - allows to add and remove listeners</li>
+ * </ul>
  * 
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

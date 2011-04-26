@@ -10,6 +10,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.signal.SelectTagSignalTool;
 import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.Plugin;
@@ -378,7 +379,7 @@ public interface SvarogAccessGUI {
 	 * DocumentView should be able to return a document.
 	 * @param tab the panel (view) to be added as tab
 	 * @param title the title of the tab, if no title provided
-	 * {@cod tab.getName()} is used
+	 * {@code tab.getName()} is used
 	 * @param icon the icon of the tab, null if no icon should be used
 	 * @param tip the tool tip for the tab
 	 */
@@ -398,14 +399,17 @@ public interface SvarogAccessGUI {
 	 */
 	DocumentView getSelectedMainTab() throws NoActiveObjectException;
 	
-	
+	/*
+	 * 
+	 */
+	ViewerElementManager getManager();
 	
 	
 	/**
 	 * Adds the new tab to the tree panel (the panel on the left).
 	 * @param treePane the tree panel to be added
 	 * @param title the title of the tab, if no title provided
-	 * {@cod tab.getName()} is used
+	 * {@code tab.getName()} is used
 	 * @param icon the icon of the tab, null if no icon should be used
 	 * @param tip the tool tip for the tab
 	 */

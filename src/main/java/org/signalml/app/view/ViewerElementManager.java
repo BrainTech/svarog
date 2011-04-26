@@ -543,7 +543,7 @@ public class ViewerElementManager {
 	public TaskTableModel getTaskTableModel() {
 		if (taskTableModel == null) {
 			taskTableModel = new TaskTableModel();
-			taskTableModel.setMessageSource(messageSource);
+			taskTableModel.setDefaultMessageSource(messageSource);
 			taskTableModel.setTaskManager(getTaskManager());
 		}
 		return taskTableModel;

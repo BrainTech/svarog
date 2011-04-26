@@ -556,9 +556,9 @@ public class GUIAccessImpl implements SvarogAccessGUI {
 	 * {@link SignalView view}.
 	 * <p>
 	 * If the button doesn't exist it is created with {@link
-	 * ToolButtonParameters#getIcon() icon} and {@link ToolButtonParameters#
-	 * getToolTipText() tool-tip} obtained from the {@link ToolButtonParameters
-	 * parameters} for this tool.
+	 * ToolButtonParameters#getIcon() icon} and {@link
+	 * ToolButtonParameters#getToolTipText() tool-tip} obtained from the
+	 * {@link ToolButtonParameters parameters} for this tool.
 	 * The created button is added to the {@link #buttonsForTools appropriate
 	 * collection}.
 	 * @param tool the signal tool
@@ -683,6 +683,10 @@ public class GUIAccessImpl implements SvarogAccessGUI {
 	 */
 	public void setManager(ViewerElementManager manager) {
 		this.manager = manager;
+	}
+	
+	public ViewerElementManager getManager() {
+		return this.manager;
 	}
 
 	/**
