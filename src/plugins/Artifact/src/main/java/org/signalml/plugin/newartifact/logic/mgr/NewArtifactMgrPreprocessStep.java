@@ -18,6 +18,7 @@ import java.util.TimerTask;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.signalml.domain.signal.MultichannelSampleSource;
 import org.signalml.method.ComputationException;
@@ -53,6 +54,7 @@ public class NewArtifactMgrPreprocessStep
 	private INewArtifactAlgorithmBufferSynchronizer synchronizer;
 	private final BlockingQueue<double[][]> readyBuffersQueue;
 	private final BlockingQueue<double[][]> freeBuffersQueue;
+	private final AtomicBoolean shutdownFlag;
 	private Timer timer;
 	private TrackerUpdater updater;
 
@@ -73,10 +75,13 @@ public class NewArtifactMgrPreprocessStep
 		private final Map<Object, Integer> nextBuffer = new HashMap<Object, Integer>();
 		private final Map<Object, Semaphore> waitSemaphore = new HashMap<Object, Semaphore>();
 		private final BlockingQueue<double[][]> freeBuffersQueue;
+		private final AtomicBoolean shutdownFlag;
 
 		public NewArtifactAlgorithmBufferSynchronizer(
-			BlockingQueue<double[][]> freeBuffersQueue) {
+			BlockingQueue<double[][]> freeBuffersQueue,
+			AtomicBoolean shutdownFlag) {
 			this.freeBuffersQueue = freeBuffersQueue;
+			this.shutdownFlag = shutdownFlag;
 		}
 
 		@Override
@@ -143,7 +148,7 @@ public class NewArtifactMgrPreprocessStep
 				}
 			}
 
-			if (count == 1) {
+			if (count == 1 && !this.shutdownFlag.get()) {
 				try {
 					this.freeBuffersQueue.put(buffer);
 				} catch (InterruptedException e) {
@@ -296,6 +301,8 @@ public class NewArtifactMgrPreprocessStep
 		this.readyBuffersQueue = new ArrayBlockingQueue<double[][]>(
 			this.INPUT_BUFFER_QUEUE_SIZE);
 
+		this.shutdownFlag = new AtomicBoolean(false);
+
 		this.workers = new LinkedList<Thread>();
 		this.writers = new LinkedList<INewArtifactAlgorithmWriter>();
 		this.timer = new Timer();
@@ -358,7 +365,7 @@ public class NewArtifactMgrPreprocessStep
 		}
 
 		this.synchronizer = new NewArtifactAlgorithmBufferSynchronizer(
-			this.freeBuffersQueue);
+			this.freeBuffersQueue, this.shutdownFlag);
 
 		NewArtifactSignalReaderWorker reader = new NewArtifactSignalReaderWorker(
 			new NewArtifactSignalReaderWorkerData(
@@ -406,6 +413,8 @@ public class NewArtifactMgrPreprocessStep
 			if (this.synchronizer != null) {
 				this.synchronizer.addBuffer(null);
 			}
+
+			this.shutdownFlag.set(true);
 
 			this.freeBuffersQueue.clear();
 			this.freeBuffersQueue.add(new double[0][]);
