@@ -6,7 +6,14 @@
 	<artifactId>svarog</artifactId>
 	<packaging>jar</packaging>
 	<version>0.5.0-SNAPSHOT</version>
+
 	<name>Svarog</name>
+	<parent>
+		<groupId>org.signalml</groupId>
+		<artifactId>svarog-top</artifactId>
+		<version>1.0</version>
+	</parent>
+
 	<description>Signal Viewer, Analyzer and Recorder on GPL</description>
 	<organization>
 		<name>Department of Biomedical Physics, Warsaw University and The Svarog Team</name>
@@ -14,34 +21,6 @@
 	</organization>
 	<url>http://signalml.org/svarog/</url>
 	<inceptionYear>2007</inceptionYear>
-
-	<repositories>
-		<repository>
-			<id>signalml.org</id>
-			<name>SignalML Maven Repository</name>
-			<url>http://signalml.org/maven/repository</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-		<repository>
-		  <id>JBOSS</id>
-		  <name>JBoss Repository</name>
-		  <url>http://repository.jboss.org/maven2/</url>
-		</repository>
-		<repository>
-		  <id>apache</id>
-		  <name>Apache Commons</name>
-		  <url>http://mirrors.ibiblio.org/pub/mirrors/maven2/</url>
-		</repository>
-	</repositories>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>onejar-maven-plugin.googlecode.com</id>
-			<url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>
-		</pluginRepository>
-	</pluginRepositories>
 
 	<profiles>
 		<profile>
@@ -230,12 +209,7 @@
 			<artifactId>commons-math</artifactId>
 			<version>2.1</version>
 		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.5</version>
-			<scope>test</scope>
-		</dependency>
+
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
@@ -447,7 +421,12 @@
 			<version>2.1.0</version>
 			<scope>runtime</scope>
 		</dependency>
-		
+
+		<!-- dependencies below are specified in util/maven/pom.xml -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
 	</dependencies>
 
 	<scm>
