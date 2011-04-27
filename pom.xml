@@ -23,9 +23,9 @@
 		<module>plugins/FFTSignalTool</module>
 		<module>plugins/PluginToolCommon</module>
 		<module>plugins/Artifact</module>
-	<!--	<module>izpack</module> -->
-    <module>plugin-interface-tutorial</module>
-  </modules>
+		<module>doc/plugin-interface-tutorial</module>
+		<!--	<module>izpack</module> -->
+	</modules>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
