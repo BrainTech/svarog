@@ -4,8 +4,8 @@ import org.signalml.method.ComputationException;
 import org.signalml.plugin.data.logic.PluginComputationMgrStepResult;
 import org.signalml.plugin.exception.PluginToolAbortException;
 
-public abstract class AbstractPluginComputationMgrStep<Data extends PluginComputationMgrStepData<?>, Result extends PluginComputationMgrStepResult>
-	implements IPluginComputationMgrStep<Result> {
+public abstract class AbstractPluginComputationMgrStep<Data extends PluginComputationMgrStepData<?>>
+	implements IPluginComputationMgrStep {
 
 	protected final Data data;
 
@@ -14,18 +14,32 @@ public abstract class AbstractPluginComputationMgrStep<Data extends PluginComput
 	}
 
 	@Override
-	public Result run() throws ComputationException, InterruptedException,
+	public PluginComputationMgrStepResult run(PluginComputationMgrStepResult prevStepResult) throws ComputationException, InterruptedException,
 		PluginToolAbortException {
 		try {
-			return this.doRun();
+			return this.doRun(prevStepResult);
 		} finally {
 			this.cleanup();
 		}
 	}
 
-	protected abstract Result prepareStepResult();
+	@Override
+	public void initialize() throws ComputationException {
+		try {
+			this.doInitialize();
+		} catch (Exception e) {
+			this.cleanup();
+			throw new ComputationException("Error in step initialization", e);
+		}
+	}
 
-	protected abstract Result doRun() throws PluginToolAbortException, InterruptedException,
+	protected abstract PluginComputationMgrStepResult prepareStepResult();
+
+	protected void doInitialize() {
+
+	}
+
+	protected abstract PluginComputationMgrStepResult doRun(PluginComputationMgrStepResult prevStepResult) throws PluginToolAbortException, InterruptedException,
 		ComputationException;
 
 	protected void cleanup() {

@@ -13,6 +13,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import org.signalml.method.ComputationException;
+import org.signalml.plugin.data.logic.PluginComputationMgrStepResult;
 import org.signalml.plugin.exception.PluginToolAbortException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.method.logic.AbstractPluginComputationMgrStep;
@@ -32,7 +33,7 @@ import org.signalml.plugin.newartifact.logic.tag.NewArtifactTagMerger;
 import org.signalml.plugin.newartifact.logic.tag.TagCreatorFactory;
 import org.signalml.plugin.newartifact.logic.tag.TagCreatorRoutine;
 
-public class NewArtifactMgrTagStep extends AbstractPluginComputationMgrStep<NewArtifactMgrStepData, NewArtifactMgrStepResult> {
+public class NewArtifactMgrTagStep extends AbstractPluginComputationMgrStep<NewArtifactMgrStepData> {
 
 	private final ExecutorCompletionService<NewArtifactTagResult> executorService;
 	private final Map<NewArtifactComputationType, TagCreatorRoutine> taggerRoutines;
@@ -66,7 +67,7 @@ public class NewArtifactMgrTagStep extends AbstractPluginComputationMgrStep<NewA
 	}
 
 	@Override
-	public NewArtifactMgrStepResult doRun() throws PluginToolAbortException,
+	public PluginComputationMgrStepResult doRun(PluginComputationMgrStepResult prevStepResult) throws PluginToolAbortException,
 		ComputationException {
 
 		final IPluginComputationMgrStepTrackerProxy<NewArtifactProgressPhase> tracker = this.data.tracker;
@@ -292,21 +293,21 @@ public class NewArtifactMgrTagStep extends AbstractPluginComputationMgrStep<NewA
 		NewArtifactComputationType taggerType) {
 		switch (taggerType) {
 		case GALV:
-			return new String[] { "galw_4ss" };
+			return new String[] { "galw_4s" };
 		case MUSCLE_ACTIVITY:
-			return new String[] { "mies_4ss" };
+			return new String[] { "mies_4s" };
 		case POWER:
-			return new String[] { "siec_1ss" };
+			return new String[] { "siec_1s" };
 		case EYE_MOVEMENT:
-			return new String[] { "rugo_4ss" };
+			return new String[] { "rugo_4s" };
 		case ECG:
-			return new String[] { "EKG__4ss" };
+			return new String[] { "EKG__4s" };
 		case EYEBLINKS:
-			return new String[] { "mrug_1ss" };
+			return new String[] { "mrug_1s" };
 		case TECHNICAL:
-			return new String[] { "apar_4ss" };
+			return new String[] { "apar_4s" };
 		case UNKNOWN:
-			return new String[] { "elpo_4ss" };
+			return new String[] { "elpo_4s" };
 		case MUSCLE_PLUS_POWER:
 		default:
 			return null;
