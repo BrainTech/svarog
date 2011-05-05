@@ -14,19 +14,20 @@
 
       <p>
 	Test release of Svarog-0.5:
-	<ul>
-	  <li><a href="svarog-0.5.0-SNAPSHOT.one-jar.jar">one-jar</a>
-	  (everything packed in one jar, ready to run),
-	  + <a href="svarog-plugins-0.5.0-SNAPSHOT.zip">plugins</a>
-	  (unzip and put in <tt>~/signalml/plugins</tt>),
-	  </li>
 
-	  <li><a href="svarog-0.5.0-SNAPSHOT-installer.jar">jar-installer</a>
-	  (an installer packaged as a jar file),</li>
+	<a href="svarog-0.5.0-SNAPSHOT.one-jar.jar">one-jar</a>
+	(everything packed in one jar, ready to run),
+	+ <a href="svarog-plugins-0.5.0-SNAPSHOT.zip">plugins</a>
+	(unzip and put in <tt>~/signalml/plugins</tt>),
+	<br/>
 
-	  <li><a href="svarog-0.5.0-SNAPSHOT-installer.exe">exe-installer</a>
-	  (an installer packaged as a Microsoft Windows executable).</li>
-	</ul>
+	<a href="svarog-0.5.0-SNAPSHOT-installer.jar">jar-installer</a>
+	(an installer packaged as a jar file),
+	<br/>
+
+	<a href="svarog-0.5.0-SNAPSHOT-installer.exe">exe-installer</a>
+	(an installer packaged as a Microsoft Windows executable).
+	<br/>
 
 	Alternatively you can compile from the source in the
 	<a href="http://escher.fuw.edu.pl/git/svarog">git repository</a>.
