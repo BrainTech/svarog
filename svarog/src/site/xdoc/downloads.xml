@@ -15,17 +15,17 @@
       <p>
 	Test release of Svarog-0.5:
 
-	<a href="svarog-0.5.0-SNAPSHOT.one-jar.jar">one-jar</a>
+	<a href="downloads/svarog-0.5.0-SNAPSHOT.one-jar.jar">one-jar</a>
 	(everything packed in one jar, ready to run),
-	+ <a href="svarog-plugins-0.5.0-SNAPSHOT.zip">plugins</a>
+	+ <a href="downloads/svarog-plugins-0.5.0-SNAPSHOT.zip">plugins</a>
 	(unzip and put in <tt>~/signalml/plugins</tt>),
 	<br/>
 
-	<a href="svarog-0.5.0-SNAPSHOT-installer.jar">jar-installer</a>
+	<a href="downloads/svarog-0.5.0-SNAPSHOT-installer.jar">jar-installer</a>
 	(an installer packaged as a jar file),
 	<br/>
 
-	<a href="svarog-0.5.0-SNAPSHOT-installer.exe">exe-installer</a>
+	<a href="downloads/svarog-0.5.0-SNAPSHOT-installer.exe">exe-installer</a>
 	(an installer packaged as a Microsoft Windows executable).
 	<br/>
 
