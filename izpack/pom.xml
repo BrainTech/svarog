@@ -4,7 +4,7 @@
 
 	<groupId>org.signalml</groupId>
 	<artifactId>svarog-installer</artifactId>
-	<version>1.0</version>
+	<version>0.5.0-SNAPSHOT</version>
 
 	<name>svarog-installer</name>
 	<parent>
@@ -15,7 +15,6 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<svarog.version>0.5.0-SNAPSHOT</svarog.version>
 		<FFT.plugin.version>0.1</FFT.plugin.version>
 		<FFTSignalTool.plugin.version>0.1</FFTSignalTool.plugin.version>
 		<PluginToolCommon.plugin.version>0.1</PluginToolCommon.plugin.version>
@@ -87,7 +86,7 @@
 								<artifactItem>
 									<groupId>org.signalml</groupId>
 									<artifactId>svarog</artifactId>
-									<version>${svarog.version}</version>
+									<version>${project.version}</version>
 									<type>jar</type>
 									<classifier>onejar</classifier>
 									<overWrite>true</overWrite>
@@ -148,7 +147,7 @@
 						</goals>
 						<configuration>
 							<izpackBasedir>${basedir}</izpackBasedir>
-							<installerFile>${project.build.directory}/svarog-${svarog.version}-installer.jar</installerFile>
+							<installerFile>${project.build.directory}/svarog-${project.version}-installer.jar</installerFile>
 							<descriptorEncoding>UTF-8</descriptorEncoding>
 						</configuration>
 					</execution>
@@ -175,8 +174,8 @@
 						</goals>
 						<configuration>
 							<headerType>gui</headerType>
-							<outfile>${project.build.directory}/svarog-${svarog.version}-installer.exe</outfile>
-							<jar>${project.build.directory}/svarog-${svarog.version}-installer.jar</jar>
+							<outfile>${project.build.directory}/svarog-${project.version}-installer.exe</outfile>
+							<jar>${project.build.directory}/svarog-${project.version}-installer.jar</jar>
 							<errTitle>svarog</errTitle>
 							<jre>
 								<minVersion>1.6.0</minVersion>
