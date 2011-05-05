@@ -496,6 +496,7 @@
 				    <version>2.7</version>
 				    <show>private</show>
 				    <nohelp>false</nohelp>
+				    <stylesheetfile>javadoc.css</stylesheetfile>
 				    <javaApiLinks>
 					<property>
 					    <name>api_1.6</name>

@@ -1,0 +1,26 @@
+/* copy maven colors */
+th {
+    color: #666666;
+    background-color: #CCCCCC;
+}
+
+a {
+    text-decoration: none;
+}
+a:link {
+    color: #4477AA;
+}
+a:visited {
+    color: #6688AA;
+}
+a:active, a:hover {
+    color: #990000;
+}
+
+/* This strange selector is here to avoid adding the image to navigation frames
+   on the left side: they contain no headings. */
+body h2:first-of-type:after, body h1:after {
+    content: url("../images/orzelekUWsm.gif");
+    float: right;
+    margin-top: -10px;
+}
