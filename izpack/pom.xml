@@ -99,7 +99,6 @@
 									<version>${FFT.plugin.version}</version>
 									<artifactId>FFT</artifactId>
 									<type>jar</type>
-									<classifier>shade</classifier>
 									<overWrite>true</overWrite>
 									<outputDirectory>${basedir}/plugins</outputDirectory>
 									<destFileName>FFT.jar</destFileName>
