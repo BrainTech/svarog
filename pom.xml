@@ -30,6 +30,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>		
+
+		<springframework.version>2.0.7</springframework.version>
 	</properties>
 
 	<repositories>
@@ -134,7 +136,7 @@
 						</property>
 					</javaApiLinks>
 					<links>
-						<link>http://static.springsource.org/spring/docs/2.0.7/api</link>
+						<link>http://static.springsource.org/spring/docs/${springframework.version}/api</link>
 					</links>
 				</configuration>
 			</plugin>
