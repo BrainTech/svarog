@@ -19,8 +19,12 @@ a:active, a:hover {
 
 /* This strange selector is here to avoid adding the image to navigation frames
    on the left side: they contain no headings. */
-body h2:first-of-type:after, body h1:after {
+body h2:first-of-type:after, body h1:first-of-type:after {
     content: url("../images/orzelekUWsm.gif");
     float: right;
     margin-top: -10px;
+}
+
+.NavBarCell1 {
+    background-color: #CCCCCC;
 }
