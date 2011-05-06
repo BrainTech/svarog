@@ -24,7 +24,7 @@
 		<module>plugins/PluginToolCommon</module>
 		<module>plugins/Artifact</module>
 		<module>doc/plugin-interface-tutorial</module>
-		<!--	<module>izpack</module> -->
+		<module>izpack</module>
 	</modules>
 
 	<properties>
@@ -279,4 +279,25 @@
 			</roles>
 		</developer>
 	</developers>
+
+	<distributionManagement>
+		<repository>
+			<id>signalml.org</id>
+			<url>scpexe://escher.fuw.edu.pl/home/srv/www/signalml-site/maven/repository</url>
+		</repository>
+		<snapshotRepository>
+			<id>signalml.org</id>
+			<url>scpexe://escher.fuw.edu.pl/home/srv/www/signalml-site/maven/repository</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<build>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ssh-external</artifactId>
+				<version>1.0-beta-6</version>
+			</extension>
+		</extensions>
+	</build>
 </project>

@@ -216,6 +216,7 @@
 									<type>jar</type>
 									<overWrite>true</overWrite>
 									<outputDirectory>target/site/downloads/</outputDirectory>
+									<destFileName>svarog-${project.version}.jar</destFileName>
 								</artifactItem>
 								<artifactItem>
 									<groupId>${project.groupId}</groupId>
@@ -225,6 +226,7 @@
 									<classifier>onejar</classifier>
 									<overWrite>true</overWrite>
 									<outputDirectory>target/site/downloads/</outputDirectory>
+									<destFileName>svarog-${project.version}-onejar.jar</destFileName>
 								</artifactItem>
 
 								<artifactItem>
@@ -234,6 +236,7 @@
 									<type>jar</type>
 									<overWrite>true</overWrite>
 									<outputDirectory>target/site/downloads/</outputDirectory>
+									<destFileName>svarog-${project.version}-installer.jar</destFileName>
 								</artifactItem>
 								<artifactItem>
 									<groupId>${project.groupId}</groupId>
@@ -242,6 +245,7 @@
 									<type>exe</type>
 									<overWrite>true</overWrite>
 									<outputDirectory>target/site/downloads/</outputDirectory>
+									<destFileName>svarog-${project.version}-installer.exe</destFileName>
 								</artifactItem>
 							</artifactItems>
 						</configuration>
@@ -643,4 +647,10 @@
 	<contributors>
 	</contributors>
 
+	<distributionManagement>
+		<site>
+			<id>signalml.org</id>
+			<url>scpexe://escher.fuw.edu.pl/home/srv/www/signalml-site/svarog</url>
+		</site>
+	</distributionManagement>
 </project>

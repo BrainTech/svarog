@@ -34,6 +34,7 @@
 		<menu name="${project.name}">
 			<item name="Overview" href="/index.html" />
 			<item name="Downloads" href="/downloads.html" />
+			<item name="Maven repository" href="../maven/repository/" />
 			<item name="Screenshots" href="/screenshots.html" />
 			<item name="FAQ" href="/faq.html" />
 		</menu>
