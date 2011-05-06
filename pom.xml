@@ -44,13 +44,13 @@
 		<repository>
 			<id>JBOSS</id>
 			<name>JBoss Repository</name>
-			<url>http://repository.jboss.org/maven2/</url>
+			<url>http://repository.jboss.org/maven2</url>
 		</repository>
 
 		<repository>
 			<id>apache</id>
 			<name>Apache Commons</name>
-			<url>http://mirrors.ibiblio.org/pub/mirrors/maven2/</url>
+			<url>http://mirrors.ibiblio.org/pub/mirrors/maven2</url>
 		</repository>
 	</repositories>
 
