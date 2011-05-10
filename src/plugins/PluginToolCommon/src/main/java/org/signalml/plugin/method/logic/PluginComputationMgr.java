@@ -1,5 +1,8 @@
 package org.signalml.plugin.method.logic;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ThreadFactory;
 
 import org.apache.log4j.Logger;
@@ -9,7 +12,7 @@ import org.signalml.plugin.data.logic.PluginComputationMgrStepResult;
 import org.signalml.plugin.data.logic.PluginMgrData;
 import org.signalml.plugin.exception.PluginToolAbortException;
 
-public abstract class PluginComputationMgr<Data extends PluginMgrData, Result extends PluginComputationMgrStepResult> {
+public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
 
 	protected static final Logger logger = Logger
 					       .getLogger(PluginComputationMgr.class);
@@ -79,20 +82,27 @@ public abstract class PluginComputationMgr<Data extends PluginMgrData, Result ex
 
 	}
 
+	protected Data data;
+	protected MethodExecutionTracker tracker;
+	protected Map<IPluginComputationMgrStep, PluginComputationMgrStepResult> stepResults;
+
 	private ThreadFactory threadFactory;
 	private CheckedThreadGroup threadGroup;
 
 	public Result compute(Data data, MethodExecutionTracker tracker)
 	throws ComputationException {
 		try {
-			return this.doCompute(data, tracker);
+			this.data = data;
+			this.tracker = tracker;
+			return this.doCompute();
 		} catch (PluginToolAbortException e) {
 			return null;
 		} catch (InterruptedException e) {
 			if (this.threadGroup != null) {
 				Throwable cause = this.threadGroup.getCause();
 				if (cause != null) {
-					logger.error("Error in worker thread " + this.threadGroup.getCausingThread().getId());
+					logger.error("Error in worker thread "
+						     + this.threadGroup.getCausingThread().getId());
 					throw new ComputationException(cause);
 				}
 			}
@@ -118,8 +128,35 @@ public abstract class PluginComputationMgr<Data extends PluginMgrData, Result ex
 		return this.threadGroup;
 	}
 
-	protected abstract Result doCompute(Data data,
-					    MethodExecutionTracker tracker) throws ComputationException,
-		InterruptedException, PluginToolAbortException; // TODO
+	protected Result doCompute() throws ComputationException,
+		InterruptedException, PluginToolAbortException {
 
+		this.stepResults = new HashMap<IPluginComputationMgrStep, PluginComputationMgrStepResult>();
+
+		Collection<IPluginComputationMgrStep> steps = this.prepareStepChain();
+
+		int ticks = 0;
+		for (IPluginComputationMgrStep step : steps) {
+			step.initialize();
+			ticks += step.getStepNumberEstimate();
+		}
+
+		this.initializeRun(steps, ticks);
+
+		PluginComputationMgrStepResult stepResult = null;
+		for (IPluginComputationMgrStep step : steps) {
+			stepResult = step.run(stepResult);
+			this.stepResults.put(step, stepResult);
+		}
+
+		return this.prepareComputationResult();
+	}
+
+	protected abstract Collection<IPluginComputationMgrStep> prepareStepChain();
+
+	protected void initializeRun(Collection<IPluginComputationMgrStep> steps, int ticks) {
+
+	}
+
+	protected abstract Result prepareComputationResult();
 }

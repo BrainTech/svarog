@@ -3,11 +3,11 @@ package org.signalml.plugin.newartifact.logic.mgr;
 import java.io.File;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;
-import org.signalml.plugin.exception.PluginToolAbortException;
+import org.signalml.plugin.data.logic.PluginComputationMgrStepResult;
 import org.signalml.plugin.method.logic.IPluginComputationMgrStep;
 import org.signalml.plugin.method.logic.IPluginComputationMgrStepTrackerProxy;
 import org.signalml.plugin.method.logic.PluginComputationMgr;
@@ -71,7 +71,10 @@ public class NewArtifactComputationMgr extends
 			}
 			if (result) {
 				this.setProgressPhase(NewArtifactProgressPhase.ABORT_PHASE);
-				this.tracker.setTicker(this.index, this.tracker.getTickerLimits()[this.index]);
+				synchronized (this.tracker) {
+					this.tracker.setTicker(this.index,
+							       this.tracker.getTickerLimits()[this.index]);
+				}
 			}
 			return result;
 		}
@@ -105,27 +108,41 @@ public class NewArtifactComputationMgr extends
 
 	}
 
-	protected NewArtifactResult doCompute(NewArtifactMgrData data,
-					      MethodExecutionTracker tracker) throws ComputationException, InterruptedException,
-		PluginToolAbortException {
-		Collection<IPluginComputationMgrStep<NewArtifactMgrStepResult>> steps = new LinkedList<IPluginComputationMgrStep<NewArtifactMgrStepResult>>();
-		steps.add(new NewArtifactMgrPreprocessStep(this.makeStepData(data,
-				tracker, 0)));
-		steps.add(new NewArtifactMgrTagStep(this.makeStepData(data, tracker, 0)));
+	private List<IPluginComputationMgrStep> steps;
 
-		int ticks = 0;
-		for (IPluginComputationMgrStep<NewArtifactMgrStepResult> step : steps) {
-			ticks += step.getStepNumberEstimate();
+	@Override
+	protected Collection<IPluginComputationMgrStep> prepareStepChain() {
+		this.steps = new LinkedList<IPluginComputationMgrStep>();
+		this.steps.add(new NewArtifactMgrPreprocessStep(this.makeStepData(
+					this.data, this.tracker, 0)));
+		this.steps.add(new NewArtifactMgrTagStep(this.makeStepData(this.data,
+				this.tracker, 0)));
+		return this.steps;
+	}
+
+	@Override
+	protected void initializeRun(Collection<IPluginComputationMgrStep> steps,
+				     int ticks) {
+		this.tracker.setTickerLimit(0, ticks);
+	}
+
+	@Override
+	protected NewArtifactResult prepareComputationResult() {
+		PluginComputationMgrStepResult lastStepResult = this.stepResults.get(this.steps.get(this.steps.size() - 1));
+		if (lastStepResult == null) {
+			return null;
 		}
-		tracker.setTickerLimit(0, ticks);
 
-		NewArtifactMgrStepResult stepResult = null;
-		for (IPluginComputationMgrStep<NewArtifactMgrStepResult> step : steps) {
-			stepResult = step.run();
+		NewArtifactMgrStepResult castedLastStepResult;
+		try {
+			castedLastStepResult = (NewArtifactMgrStepResult) lastStepResult;
+		} catch (ClassCastException e) {
+			logger.error("Unexpected step result class");
+			return null;
 		}
 
 		NewArtifactResult result = new NewArtifactResult();
-		result.setTagFile(new File(stepResult.resultTagPath));
+		result.setTagFile(new File(castedLastStepResult.resultTagPath));
 		return result;
 	}
 
@@ -136,4 +153,5 @@ public class NewArtifactComputationMgr extends
 								  data.artifactData), new TrackerProxy(tracker,
 										  stepNumber), this.getThreadFactory());
 	}
+
 }
