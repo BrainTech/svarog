@@ -499,7 +499,7 @@ public class TimeDomainFilterParametersPanel extends JPanel {
 		String description = getDescriptionTextField().getText();
 		if (description == null || description.isEmpty()) {
 			errors.rejectValue("description", "error.editSampleFilter.descriptionEmpty");
-		} else if (!Util.validateString(description)) {
+		} else if (Util.hasSpecialChars(description)) {
 			errors.rejectValue("description", "error.editSampleFilter.descriptionBadChars");
 		}
 

@@ -431,7 +431,7 @@ public abstract class Util {
 	 * Unicode class Cc (control characters) or s contains
 	 * truncated codepoints or the first code point is combining.
 	 */
-	public static boolean validateString(String s) {
+	public static boolean hasSpecialChars(String s) {
 		final int length = s.length();
 		for (int offset = 0; offset < length; ) {
 			final int codepoint = s.codePointAt(offset);
@@ -442,17 +442,17 @@ public abstract class Util {
 			case Character.PRIVATE_USE:
 				logger.warn(String.format("string '%s' failed validation at offset %d",
 							  s, offset));
-				return false;
+				return true;
 			case Character.SURROGATE:
 				logger.warn(String.format("truncated string '%s' failed validation", s));
-				return false;
+				return true;
 			default:
 				if (offset == 0 && isCombining(codepoint))
-					return false;
+					return true;
 			}
 			offset += Character.charCount(codepoint);
 		}
-		return true;
+		return false;
 	}
 
 	/**

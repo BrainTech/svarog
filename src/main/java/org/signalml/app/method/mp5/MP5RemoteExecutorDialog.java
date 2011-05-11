@@ -459,7 +459,7 @@ public class MP5RemoteExecutorDialog extends AbstractDialog {
 	public void validateDialog(Object model, Errors errors) throws SignalMLException {
 		super.validateDialog(model, errors);
 
-		if (!Util.validateString(getNameTextField().getText())) {
+		if (Util.hasSpecialChars(getNameTextField().getText())) {
 			errors.rejectValue("name", "error.nameBadCharacters");
 		}
 
@@ -469,12 +469,12 @@ public class MP5RemoteExecutorDialog extends AbstractDialog {
 			errors.rejectValue("url", "error.badUrl");
 		}
 
-		if (!Util.validateString(getUserNameTextField().getText())) {
+		if (Util.hasSpecialChars(getUserNameTextField().getText())) {
 			errors.rejectValue("userName", "error.userNameBadCharacters");
 		}
 
 		String password = new String(getPasswordField().getPassword());
-		if (!Util.validateString(password)) {
+		if (Util.hasSpecialChars(password)) {
 			errors.rejectValue("password", "error.passwordBadCharacters");
 		}
 		if (passwordOnly && password.isEmpty()) {

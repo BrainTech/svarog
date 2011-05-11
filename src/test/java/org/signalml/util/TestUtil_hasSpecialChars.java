@@ -2,15 +2,15 @@ package org.signalml.util;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
-import static org.signalml.util.Util.validateString;
+import static org.signalml.util.Util.hasSpecialChars;
 
-public class TestUtil_validateString {
+public class TestUtil_hasSpecialChars {
 	@Test public void test_text_with_spaces() {
-		assertTrue(validateString("goo goo goo"));
+		assertFalse(hasSpecialChars("goo goo goo"));
 	}
 
 	@Test public void test_text_with_lf() {
-		assertFalse(validateString("goo\ngoo"));
+		assertTrue(hasSpecialChars("goo\ngoo"));
 	}
 
 	final static String[] opisy_jarka = {
@@ -22,19 +22,19 @@ public class TestUtil_validateString {
 
 	@Test public void test_opisy_jarka() {
 		for(String s: opisy_jarka)
-			assertTrue(s, validateString(s));
+			assertFalse(s, hasSpecialChars(s));
 		// TODO: convert to parametric tests when junit is changed to something better
 	}
 
 	@Test public void test_combining_in_front() {
-		assertFalse("combining grave accent", validateString("\u0300"));
+		assertTrue("combining grave accent", hasSpecialChars("\u0300"));
 	}
 
 	@Test public void test_combining_at_end() {
-		assertTrue("a + combining grave accent", validateString("a\u0300"));
+		assertFalse("a + combining grave accent", hasSpecialChars("a\u0300"));
 	}
 
 	@Test public void test_surrogate() {
-		assertFalse("surrogate", validateString("\uD800"));
+		assertTrue("surrogate", hasSpecialChars("\uD800"));
 	}
 }

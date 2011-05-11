@@ -264,7 +264,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 		}
 		String description = miscellaneousPanel.getEditDescriptionPanel().getTextPane().getText();
 		if (description != null && !description.isEmpty()) {
-			if (!Util.validateString(description)) {
+			if (Util.hasSpecialChars(description)) {
 				errors.rejectValue("montage.description", "error.descriptionBadChars");
 			}
 		}
