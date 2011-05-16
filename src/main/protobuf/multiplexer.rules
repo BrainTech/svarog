@@ -142,126 +142,12 @@ peer {
 # packages and routing rules definitions
 #
 #   PACKAGES 1 - 99 reserved for Multiplexer meta packages
-type {
-    type: 1
-    name: "PING"
-    comment: "I'm alive packet; it never carries any significant message."
-    to {
-	peer: "PINGER"
-        whom: ALL
-    }
-}
-
-type {
-    type: 2
-    name: "CONNECTION_WELCOME"
-    comment: "message interchange by peers just after connecting to each other"
-}
-
-type {
-    type: 3
-    name: "BACKEND_FOR_PACKET_SEARCH"
-    comment: "message used by MX client in query() for finding a backend that would handle its request"
-}
-
-type {
-    type: 4
-    name: "HEARTBIT"
-    comment: "packet to be sent by every peer on every channel when nothing sent through the given channel for certain period of time"
-}
-
-type {
-    type: 5
-    name: "DELIVERY_ERROR"
-    comment: "packet could not be delivered to one or more recipients"
-}
-
-type {
-    type: 99
-    name: "MAX_MULTIPLEXER_META_PACKET"
-    comment: "this only defines a constant"
-}
 
 # PACKAGES 100 - 999 normal package
 
 # types 100-109 reserved
 
-type {
-    type: 110
-    name: "PYTHON_TEST_REQUEST"
-    to {
-	peer: "PYTHON_TEST_SERVER"
-    }
-}
-
-type {
-    type: 111
-    name: "PYTHON_TEST_RESPONSE"
-}
-
-type {
-    type: 112
-    name: "PICKLE_RESPONSE"
-}
-
-type {
-    type: 113
-    name: "REQUEST_RECEIVED"
-    comment: "packet sent by the backend immediatelly after receiving a request and stright to the requesting peer"
-}
-
-type {
-    type: 114
-    name: "BACKEND_ERROR"
-    comment: "packet sent by the backend when request handling function finishes and no packet response packet is sent"
-}
-
-type {
-    type: 115
-    name: "LOGS_STREAM"
-    comment: "payload is LogEntriesMessage"
-    to {
-	peer: "LOG_COLLECTOR"
-        whom: ALL
-    }
-    to {
-	peer: "LOG_RECEIVER_EXAMPLE"
-	whom: ALL
-    }
-}
-
-type {
-    type: 116
-    name: "LOGS_STREAM_RESPONSE"
-    # currently unused
-}
-
-type {
-    type: 117
-    name: "SEARCH_COLLECTED_LOGS_REQUEST"
-    comment: "payload is SearchCollectedLogs; logs are returned in LogEntriesMessage"
-    to {
-	peer: "LOG_COLLECTOR"
-	whom: ANY
-    }
-}
-
-type {
-    type: 118
-    name: "SEARCH_COLLECTED_LOGS_RESPONSE"
-}
-
-# types 119-125 reserved
-
-type {
-    type: 126
-    name: "REPLAY_EVENTS_REQUEST"
-    comment: "this is a no-response request"
-    to {
-	peer: "EVENTS_COLLECTOR"
-	whom: ANY
-    }
-}
+# some types specified in jmx
 
 # types 127-128 reserverd
 

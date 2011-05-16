@@ -104,6 +104,12 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>		
 		<maven.test.skip>true</maven.test.skip>
+
+		<protobuf.source_dir>src/main/protobuf</protobuf.source_dir>
+		<protobuf.proto_file>variables.proto</protobuf.proto_file>
+		<protobuf.rules_file>multiplexer.rules</protobuf.rules_file>
+
+		<multiplexer.jmx.version>0.9.1</multiplexer.jmx.version>
 	</properties>
 
 	<build>
@@ -207,6 +213,37 @@
 				<artifactId>maven-antrun-plugin</artifactId>
 				<executions>
 					<execution>
+						<id>generate-sources</id>
+						<phase>generate-sources</phase>
+						<configuration>
+							<tasks>
+								<mkdir dir="target/generated-sources"/>
+								<exec executable="protoc" failonerror="true">
+									<arg value="-I" />
+									<arg value="${protobuf.source_dir}" />
+									<arg value="--java_out=target/generated-sources"/>
+									<arg value="${protobuf.source_dir}/${protobuf.proto_file}" />
+								</exec>
+
+								<java classname="multiplexer.jmx.tools.CompileConstants">
+									<arg value="-input"/>
+									<arg value="${protobuf.source_dir}/${protobuf.rules_file}"/>
+									<arg value="-outdir"/>
+									<arg value="target/generated-sources/org/signalml/multiplexer/protocol"/>
+									<arg value="-class"/>
+									<arg value="SvarogConstants"/>
+									<arg value="-package"/>
+									<arg value="org.signalml.multiplexer.protocol"/>
+								</java>
+							</tasks>
+							<sourceRoot>target/generated-sources</sourceRoot>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+
+					<execution>
 						<id>compile</id>
 						<phase>compile</phase>
 						<configuration>
@@ -220,6 +257,13 @@
 						</goals>
 					</execution>
 				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>multiplexer</groupId>
+						<artifactId>jmx</artifactId>
+						<version>${multiplexer.jmx.version}</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
@@ -429,7 +473,7 @@
 		<dependency>
 			<groupId>multiplexer</groupId>
 			<artifactId>jmx</artifactId>
-			<version>0.9.1</version>
+			<version>${multiplexer.jmx.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>edu.emory.mathcs</groupId>
