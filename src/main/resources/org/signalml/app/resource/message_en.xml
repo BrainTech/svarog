@@ -346,40 +346,7 @@
 	<entry key="action.openMonitor.testMultiplexerConnection.receivingFailedMsg">Receiving failed!</entry>
 	<entry key="action.openMonitor.testMultiplexerConnection.connectionOkMsg">Connection ok!</entry>
 
-	<entry key="action.openMonitor.metadataWorker.samplingRate.sendingFailedMsg">Sending failed!</entry>
-	<entry key="action.openMonitor.metadataWorker.samplingRate.receivedBadReplyMsg">Received bad reply!</entry>
-	<entry key="action.openMonitor.metadataWorker.samplingRate.receiveTimedout">Receive timed out!</entry>
-	<entry key="action.openMonitor.metadataWorker.samplingRate.receivingFailedMsg">Receiving failed!</entry>
-
-	<entry key="action.openMonitor.metadataWorker.channelCount.sendingFailedMsg">Sending failed!</entry>
-	<entry key="action.openMonitor.metadataWorker.channelCount.receivedBadReplyMsg">Received bad reply!</entry>
-	<entry key="action.openMonitor.metadataWorker.channelCount.receiveTimedout">Receive timed out!</entry>
-	<entry key="action.openMonitor.metadataWorker.channelCount.receivingFailedMsg">Receiving failed!</entry>
-
-	<entry key="action.openMonitor.metadataWorker.channelNames.sendingFailedMsg">Sending failed!</entry>
-	<entry key="action.openMonitor.metadataWorker.channelNames.receivedBadReplyMsg">Received bad reply!</entry>
-	<entry key="action.openMonitor.metadataWorker.channelNames.receiveTimedout">Receive timed out!</entry>
-	<entry key="action.openMonitor.metadataWorker.channelNames.receivingFailedMsg">Receiving failed!</entry>
-
-	<entry key="action.openMonitor.metadataWorker.calibrationGain.sendingFailedMsg">Sending failed!</entry>
-	<entry key="action.openMonitor.metadataWorker.calibrationGain.receivedBadReplyMsg">Received bad reply!</entry>
-	<entry key="action.openMonitor.metadataWorker.calibrationGain.receiveTimedout">Receive timed out!</entry>
-	<entry key="action.openMonitor.metadataWorker.calibrationGain.receivingFailedMsg">Receiving failed!</entry>
-
-	<entry key="action.openMonitor.metadataWorker.calibrationOffset.sendingFailedMsg">Sending failed!</entry>
-	<entry key="action.openMonitor.metadataWorker.calibrationOffset.receivedBadReplyMsg">Received bad reply!</entry>
-	<entry key="action.openMonitor.metadataWorker.calibrationOffset.receiveTimedout">Receive timed out!</entry>
-	<entry key="action.openMonitor.metadataWorker.calibrationOffset.receivingFailedMsg">Receiving failed!</entry>
-
-	<entry key="action.openMonitor.metadataWorker.minimumValue.sendingFailedMsg">Sending failed!</entry>
-	<entry key="action.openMonitor.metadataWorker.minimumValue.receivedBadReplyMsg">Received bad reply!</entry>
-	<entry key="action.openMonitor.metadataWorker.minimumValue.receiveTimedout">Receive timed out!</entry>
-	<entry key="action.openMonitor.metadataWorker.minimumValue.receivingFailedMsg">Receiving failed!</entry>
-
-	<entry key="action.openMonitor.metadataWorker.maximumValue.sendingFailedMsg">Sending failed!</entry>
-	<entry key="action.openMonitor.metadataWorker.maximumValue.receivedBadReplyMsg">Received bad reply!</entry>
-	<entry key="action.openMonitor.metadataWorker.maximumValue.receiveTimedout">Receive timed out!</entry>
-	<entry key="action.openMonitor.metadataWorker.maximumValue.receivingFailedMsg">Receiving failed!</entry>
+	<entry key="action.openMonitor.metadataWorker.communicationFailedMsg">Receiving failed!</entry>
 
 	<entry key="action.openMonitor.metadataWorker.receivedMetadata">Metadata retrieved!</entry>
 

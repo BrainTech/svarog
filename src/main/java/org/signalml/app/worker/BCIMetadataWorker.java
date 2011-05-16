@@ -62,7 +62,7 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 	 * problems occur
 	 * @return 
 	 */
-	protected String queryMetaData(String dataId, String failMsg) {
+	protected String queryMetaData(String dataId) {
 		logger.debug("Requesting " + dataId);
 
 		// create message
@@ -73,7 +73,7 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 			reply = client.query(question, MessageTypes.DICT_GET_REQUEST_MESSAGE, 1000 /* ms */);
 		} catch(JmxException e) {
 			logger.error("request " + dataId + ": " + e.getMessage());
-			String info = messageSource.getMessage(failMsg + ".receivingFailedMsg");
+			String info = messageSource.getMessage("action.openMonitor.metadataWorker.communicationFailedMsg");
 			openMonitorDescriptor.setMetadataInfo(info);
 			return null;
 		}
@@ -95,7 +95,7 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 		logger.info("Gathering metadata...");
 
 		// sampling freq
-		value = queryMetaData(SAMPLING_RATE, "action.openMonitor.metadataWorker.samplingRate");
+		value = queryMetaData(SAMPLING_RATE);
 		if (value == null)
 			return openMonitorDescriptor;
 		Float freq = new Float(value);
@@ -103,7 +103,7 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 		publish(++step);
 
 		// channel count
-		value = queryMetaData(NUMBER_OF_CHANNELS, "action.openMonitor.metadataWorker.channelCount");
+		value = queryMetaData(NUMBER_OF_CHANNELS);
 		if (value == null)
 			return openMonitorDescriptor;
 		channelCount = Integer.parseInt(value);
@@ -111,7 +111,7 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 		publish(++step);
 
 		// channel labels
-		value = queryMetaData(CHANNEL_NAMES, "action.openMonitor.metadataWorker.channelNames");
+		value = queryMetaData(CHANNEL_NAMES);
 		if (value == null)
 			return openMonitorDescriptor;
 		StringTokenizer st2 = new StringTokenizer(value, ";");
@@ -122,7 +122,7 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 		publish(++step);
 
 		// calibration gain
-		value = queryMetaData(CALIBRATION_GAIN, "action.openMonitor.metadataWorker.calibrationGain");
+		value = queryMetaData(CALIBRATION_GAIN);
 		if (value == null)
 			return openMonitorDescriptor;
 		StringTokenizer st3 = new StringTokenizer(value, " ");
@@ -135,7 +135,7 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 		publish( ++step);
 
 		// calibration offset
-		value = queryMetaData(CALIBRATION_OFFSET, "action.openMonitor.metadataWorker.calibrationOffset");
+		value = queryMetaData(CALIBRATION_OFFSET);
 		if (value == null)
 			return openMonitorDescriptor;
 		StringTokenizer st4 = new StringTokenizer(value, " ");
@@ -148,7 +148,7 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 		publish(++step);
 
 		// minimum value
-		value = queryMetaData(MINIMUM_VALUE, "action.openMonitor.metadataWorker.minimumValue");
+		value = queryMetaData(MINIMUM_VALUE);
 		if (value == null)
 			return openMonitorDescriptor;
 		float minVal = Float.parseFloat(value);
@@ -156,7 +156,7 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 		publish(++step);
 
 		// maximum value
-		value = queryMetaData(MAXIMUM_VALUE, "action.openMonitor.metadataWorker.maximumValue");
+		value = queryMetaData(MAXIMUM_VALUE);
 		if (value == null)
 			return openMonitorDescriptor;
 		float maxVal = Float.parseFloat(value);
@@ -164,15 +164,14 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 		publish(++step);
 		
 		// amplifier null value
-		value = queryMetaData(AMPLIFIER_NULL, "action.openMonitor.metadataWorker.amplifierNull");
+		value = queryMetaData(AMPLIFIER_NULL);
 		if (value == null)
 			return openMonitorDescriptor;
 		double ampNull = Double.parseDouble(value);
 		openMonitorDescriptor.setAmplifierNull(ampNull);
 		publish(++step);
 
-		String info = messageSource.getMessage( 
-				"action.openMonitor.metadataWorker.receivedMetadata");
+		String info = messageSource.getMessage("action.openMonitor.metadataWorker.receivedMetadata");
 		openMonitorDescriptor.setMetadataReceived( true);
 		openMonitorDescriptor.setMetadataInfo(info);
 		return openMonitorDescriptor;
