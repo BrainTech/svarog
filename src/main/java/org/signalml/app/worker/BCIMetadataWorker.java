@@ -3,20 +3,18 @@ package org.signalml.app.worker;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 
 import javax.swing.SwingWorker;
 
 import multiplexer.jmx.client.IncomingMessageData;
 import multiplexer.jmx.client.JmxClient;
-import multiplexer.jmx.client.SendingMethod;
-import multiplexer.jmx.exceptions.NoPeerForTypeException;
+import multiplexer.jmx.exceptions.JmxException;
 import multiplexer.protocol.Protocol.MultiplexerMessage;
 
 import org.apache.log4j.Logger;
 import org.jboss.netty.channel.ChannelFuture;
 import org.signalml.app.model.OpenMonitorDescriptor;
-import org.signalml.multiplexer.protocol.SvarogConstants;
+import org.signalml.multiplexer.protocol.SvarogConstants.MessageTypes;
 import org.springframework.context.support.MessageSourceAccessor;
 
 import com.google.protobuf.ByteString;
@@ -65,78 +63,28 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 	 * @return 
 	 */
 	protected String queryMetaData(String dataId, String failMsg) {
-		logger.info("Sending "+dataId+" request...");
+		logger.debug("Requesting " + dataId);
 
 		// create message
-		MultiplexerMessage.Builder builder = MultiplexerMessage.newBuilder();
-		ByteString msgBody = ByteString.copyFromUtf8(dataId);
-		builder.setType( SvarogConstants.MessageTypes.DICT_GET_REQUEST_MESSAGE).setMessage(msgBody);
-		MultiplexerMessage msg = client.createMessage(builder);
+		final ByteString question = ByteString.copyFromUtf8(dataId);
+		final IncomingMessageData reply;
 
-		// send message
 		try {
-			ChannelFuture sendingOperation = client.send( msg, SendingMethod.THROUGH_ONE);
-			sendingOperation.await(1, TimeUnit.SECONDS);
-			if (!sendingOperation.isSuccess()) {
-				logger.info("sending "+dataId+" request failed!");
-				String info = messageSource.getMessage( 
-						failMsg+".sendingFailedMsg");
-				openMonitorDescriptor.setMetadataInfo( info);
-				return null;
-			}
-		}
-		catch (NoPeerForTypeException e) {
-			logger.error("sending failed! " + e.getMessage());
-			String info = messageSource.getMessage( 
-					failMsg+".sendingFailedMsg");
-			openMonitorDescriptor.setMetadataInfo( info);
-			return null;
-		}
-		catch (InterruptedException e) {
-			logger.error("sending failed! " + e.getMessage());
-			String info = messageSource.getMessage( 
-					failMsg+".sendingFailedMsg");
-			openMonitorDescriptor.setMetadataInfo( info);
+			reply = client.query(question, MessageTypes.DICT_GET_REQUEST_MESSAGE, 1000 /* ms */);
+		} catch(JmxException e) {
+			logger.error("request " + dataId + ": " + e.getMessage());
+			String info = messageSource.getMessage(failMsg + ".receivingFailedMsg");
+			openMonitorDescriptor.setMetadataInfo(info);
 			return null;
 		}
 
-
-		logger.debug( "Receiving "+dataId+"...");
-
-		// receive message
-		IncomingMessageData msgData = null;
-		try {
-		    while (true) {
-			msgData = client.receive(timeout);
-			if (msgData != null) {
-				MultiplexerMessage reply = msgData.getMessage();
-				if (reply.getType() != SvarogConstants.MessageTypes.DICT_GET_RESPONSE_MESSAGE) {
-				    logger.info("Got message, but not DICT_GET_RESPONSE_MESSAGE. Still waiting ...");
-				}
-				else {
-					ByteString bs = reply.getMessage();
-					String val = bs.toStringUtf8();
-					return val;
-				}
-			}
-			else {
-				logger.info("receive timed out!");
-				String info = messageSource.getMessage( 
-						failMsg+".receiveTimedout");
-				openMonitorDescriptor.setMetadataInfo( info);
-				return null;
-			}
-		    }
-		} 
-		catch (InterruptedException e) {
-			logger.error("receiveing failed! " + e.getMessage());
-			String info = messageSource.getMessage( 
-					failMsg+".receivingFailedMsg");
-			openMonitorDescriptor.setMetadataInfo( info);
-			return null;
-		}
-		
+		final MultiplexerMessage message = reply.getMessage();
+		assert message.getType() == MessageTypes.DICT_GET_RESPONSE_MESSAGE;
+		final String val = message.getMessage().toStringUtf8();
+		logger.debug("Received " + dataId + "=" + val);
+		return val;
 	}
+
 	@Override
 	protected OpenMonitorDescriptor doInBackground() throws Exception {
 
