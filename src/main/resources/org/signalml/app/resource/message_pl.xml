@@ -347,6 +347,7 @@
 	<entry key="action.openMonitor.testMultiplexerConnection.connectionOkMsg">Connection ok!</entry>
 
 	<entry key="action.openMonitor.metadataWorker.communicationFailedMsg">Receiving failed!</entry>
+	<entry key="action.openMonitor.metadataWorker.unknownFieldMsg">Source doesn't provide this field</entry>
 
 	<entry key="action.openMonitor.metadataWorker.receivedMetadata">Metadata retrieved!</entry>
 

@@ -82,6 +82,13 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 		assert message.getType() == MessageTypes.DICT_GET_RESPONSE_MESSAGE;
 		final String val = message.getMessage().toStringUtf8();
 		logger.debug("Received " + dataId + "=" + val);
+		if (val.length() == 0) {
+			logger.error("request " + dataId + " is empty");
+			String info = messageSource.getMessage("action.openMonitor.metadataWorker.unknownFieldMsg");
+			openMonitorDescriptor.setMetadataInfo(info);
+			return null;
+		}
+
 		return val;
 	}
 
