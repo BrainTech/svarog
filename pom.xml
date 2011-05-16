@@ -409,7 +409,7 @@
 		<dependency>
 				<groupId>com.google.protobuf</groupId>
 				<artifactId>protobuf-java</artifactId>
-				<version>2.1.0</version>
+				<version>2.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -429,7 +429,7 @@
 		<dependency>
 			<groupId>multiplexer</groupId>
 			<artifactId>jmx</artifactId>
-			<version>0.9</version>
+			<version>0.9.1</version>
 		</dependency>
 		<dependency>
 			<groupId>edu.emory.mathcs</groupId>
