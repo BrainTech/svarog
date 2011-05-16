@@ -47,7 +47,10 @@ public class MultiplexerConnectWorker extends SwingWorker< WorkerResult, Integer
 	@Override
 	protected WorkerResult doInBackground() throws Exception {
 
-		logger.info( "Worker: start...");
+		logger.info( "Worker: starting connection to"
+			     + " host=" + multiplexerSocket.getHostName()
+			     + "/" + multiplexerSocket.getAddress().getHostAddress()
+			     + " port=" + multiplexerSocket.getPort());
 
 		client = new JmxClient( SvarogConstants.PeerTypes.STREAM_RECEIVER);
 		ChannelFuture connectFuture = client.asyncConnect( multiplexerSocket);
