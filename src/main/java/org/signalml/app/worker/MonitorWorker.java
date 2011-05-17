@@ -22,7 +22,7 @@ import org.signalml.domain.signal.RoundBufferMultichannelSampleSource;
 import org.signalml.domain.tag.MonitorTag;
 import org.signalml.domain.tag.StyledMonitorTagSet;
 import org.signalml.domain.tag.TagStylesGenerator;
-import org.signalml.multiplexer.protocol.SvarogConstants;
+import org.signalml.multiplexer.protocol.SvarogConstants.MessageTypes;
 import org.signalml.multiplexer.protocol.SvarogProtocol;
 import org.signalml.multiplexer.protocol.SvarogProtocol.Sample;
 import org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector;
@@ -97,7 +97,7 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 
 		logger.info("Worker: start...");
 
-		if (!sendRequest(SvarogConstants.MessageTypes.SIGNAL_STREAMER_START))
+		if (!sendRequest(MessageTypes.SIGNAL_STREAMER_START))
 			return null;
 		logger.info("Worker: sent streaming request!");
 
@@ -141,7 +141,7 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 			logger.debug("Worker: received message type: " + sampleType);
 
 			switch (sampleType){
-			case SvarogConstants.MessageTypes.AMPLIFIER_SIGNAL_MESSAGE:
+			case MessageTypes.AMPLIFIER_SIGNAL_MESSAGE:
 				logger.debug("Worker: reading chunk!");
 
 				final SampleVector sampleVector;
@@ -185,7 +185,7 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 
 				publish(condChunk);
 				break;
-			case SvarogConstants.MessageTypes.TAG:
+			case MessageTypes.TAG:
 				logger.info("Tag recorder: got a tag!");
 
 				final SvarogProtocol.Tag tagMsg;
@@ -219,12 +219,14 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 					publish(tag);
 				}
 			default:
-				logger.error("received unknown reply: " + sampleMsg.getType());
+				final int type = sampleMsg.getType();
+				final String name = MessageTypes.instance.getConstantsNames().get(type);
+				logger.error("received unknown reply: " +  type + "/" + name);
 			}
 		}
 
 		logger.debug("stopping server...");
-		sendRequest(SvarogConstants.MessageTypes.SIGNAL_STREAMER_STOP);
+		sendRequest(MessageTypes.SIGNAL_STREAMER_STOP);
 		// ignore return value
 
 		return null;
