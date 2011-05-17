@@ -548,10 +548,10 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 		boolean hasDefault = (presetManager.getDefaultPreset() != null);
 		boolean hasPresets = (presetManager.getPresetCount() > 0);
 
+		presetComboBox.setEnabled(hasPresets);
 		removePresetAction.setEnabled(hasPresets);
 		loadDefaultPresetAction.setEnabled(hasDefault);
 		removeDefaultPresetAction.setEnabled(hasDefault);
-
 	}
 
 	/**
@@ -1429,15 +1429,4 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 		}
 
 	}
-
-	/**
-	 * Enables/disables all components in the preset pane.
-	 * @param enabled true if all components in the preset pane should be
-	 * enabled, false if all components should be disabled
-	 */
-	protected void setPresetPaneEnabled(boolean enabled) {
-		for (Component component: presetPane.getComponents())
-			component.setEnabled(false);
-	}
-
 }
