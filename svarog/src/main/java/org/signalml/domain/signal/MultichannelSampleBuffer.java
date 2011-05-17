@@ -17,7 +17,7 @@ import org.apache.log4j.Logger;
  */
 public class MultichannelSampleBuffer extends MultichannelSampleProcessor {
 
-	public static final int INITIAL_BUFFER_SIZE = (128*60*3); // buffer 3 minutes of signal @ 128Hz
+	public static final int INITIAL_BUFFER_SIZE = 128*60*3; // buffer 3 minutes of signal @ 128Hz
 
 	protected static final Logger logger = Logger.getLogger(MultichannelSampleBuffer.class);
 
@@ -77,6 +77,8 @@ public class MultichannelSampleBuffer extends MultichannelSampleProcessor {
 		reinitializeBuffers();
 	}
 
+	private static int _buffer_too_small_count = 0;
+
         /**
          * Returns the given number of samples for a given channel starting
          * from a given position in time.
@@ -92,9 +94,11 @@ public class MultichannelSampleBuffer extends MultichannelSampleProcessor {
          */
 	@Override
 	public void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
-
 		if (count > bufferLength) {
-			logger.warn("Unable to use buffer - buffer too small)");
+			logger.warn(String.format("Unable to use buffer - buffer too small: count=%d bufferLength=%d",
+						  count, bufferLength));
+			if(this._buffer_too_small_count++ == 0)
+				logger.debug("Buffer too small here, writing traceback once", new Throwable());
 			source.getSamples(channel, target, signalOffset, count, arrayOffset);
 			return;
 		}

@@ -183,7 +183,7 @@ public class RegisterCodecDialog extends AbstractWizardDialog {
 			if (name == null || name.length() == 0) {
 				errors.rejectValue("formatName", "error.formatNameMustBeSet");
 			}
-			if (!Util.validateString(name)) {
+			if (Util.hasSpecialChars(name)) {
 				errors.rejectValue("formatName", "error.badCharactersInFormatName");
 			}
 		}

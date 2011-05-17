@@ -125,7 +125,7 @@ public class MP5LocalExecutorDialog extends AbstractDialog {
 	public void validateDialog(Object model, Errors errors) throws SignalMLException {
 		super.validateDialog(model, errors);
 
-		if (!Util.validateString(getNameTextField().getText())) {
+		if (Util.hasSpecialChars(getNameTextField().getText())) {
 			errors.rejectValue("name", "error.nameBadCharacters");
 		}
 

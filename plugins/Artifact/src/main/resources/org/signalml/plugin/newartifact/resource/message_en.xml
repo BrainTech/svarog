@@ -82,8 +82,6 @@
 	<entry key="newArtifactMethod.dialog.iteration.choose">Choose...</entry>
 	<entry key="newArtifactMethod.dialog.iteration.expertTagToolTip">Choose reference tag with artifacts</entry>
 
-	<entry key="newArtifactMethod.runMethodString">Artifact detection (new!)</entry>
-
 	<entry key="newArtifactMethod.step.precompute">Preparing</entry>
 	<entry key="newArtifactMethod.step.readSource">Reading source data</entry>
 	<entry key="newArtifactMethod.step.computeBin">Computing intermediate data (block {0} of {1})</entry>

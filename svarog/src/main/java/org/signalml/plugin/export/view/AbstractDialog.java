@@ -191,7 +191,7 @@ public abstract class AbstractDialog extends JDialog {
 				if (isCancellable()) {
 					getCancelAction().actionPerformed(new ActionEvent(this,0,"cancel"));
 				} else {
-					okAction.actionPerformed(new ActionEvent(this,0,"cancel"));
+					getOkAction().actionPerformed(new ActionEvent(this,0,"cancel"));
 				}
 			}
 		});

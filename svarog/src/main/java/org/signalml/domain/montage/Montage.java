@@ -508,7 +508,7 @@ public class Montage extends SourceMontage implements Preset {
 		if (label == null || label.isEmpty()) {
 			throw new MontageException("error.montageChannelLabelEmpty");
 		}
-		if (!Util.validateString(label)) {
+		if (Util.hasSpecialChars(label)) {
 			throw new MontageException("error.montageChannelLabelBadChars");
 		}
 

@@ -946,7 +946,7 @@ public class TagStylePropertiesPanel extends JPanel {
 		if (name == null || name.isEmpty())
 			errors.rejectValue("name", "error.style.nameEmpty");
 
-		if (!Util.validateString(name))
+		if (Util.hasSpecialChars(name))
 			errors.rejectValue("name", "error.style.nameBadCharacters");
 
 		return errors;

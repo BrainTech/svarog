@@ -397,7 +397,7 @@ public class SourceMontage {
 		if (label == null || label.isEmpty()) {
 			throw new MontageException("error.sourceChannelLabelEmpty");
 		}
-		if (!Util.validateString(label)) {
+		if (Util.hasSpecialChars(label)) {
 			throw new MontageException("error.sourceChannelLabelBadChars");
 		}
 

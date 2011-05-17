@@ -4,8 +4,10 @@ import org.signalml.method.ComputationException;
 import org.signalml.plugin.data.logic.PluginComputationMgrStepResult;
 import org.signalml.plugin.exception.PluginToolAbortException;
 
-public interface IPluginComputationMgrStep<Result extends PluginComputationMgrStepResult> {
+public interface IPluginComputationMgrStep {
 	public int getStepNumberEstimate();
 
-	public Result run() throws ComputationException, InterruptedException, PluginToolAbortException;
+	public void initialize() throws ComputationException;
+
+	public PluginComputationMgrStepResult run(PluginComputationMgrStepResult prevStepResult) throws ComputationException, InterruptedException, PluginToolAbortException;
 }

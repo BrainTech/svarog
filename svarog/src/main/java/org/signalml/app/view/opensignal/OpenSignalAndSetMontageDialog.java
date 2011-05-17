@@ -64,8 +64,6 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 		tabbedPane.insertTab(tabTitle, null, getSignalSourcePanel(), "", 0);
 		tabbedPane.setSelectedIndex(0);
 
-		setPresetPaneEnabled(false);
-
 		return interfacePanel;
 	}
 

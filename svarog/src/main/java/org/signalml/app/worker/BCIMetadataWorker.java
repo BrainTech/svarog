@@ -3,20 +3,18 @@ package org.signalml.app.worker;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 
 import javax.swing.SwingWorker;
 
 import multiplexer.jmx.client.IncomingMessageData;
 import multiplexer.jmx.client.JmxClient;
-import multiplexer.jmx.client.SendingMethod;
-import multiplexer.jmx.exceptions.NoPeerForTypeException;
+import multiplexer.jmx.exceptions.JmxException;
 import multiplexer.protocol.Protocol.MultiplexerMessage;
 
 import org.apache.log4j.Logger;
 import org.jboss.netty.channel.ChannelFuture;
 import org.signalml.app.model.OpenMonitorDescriptor;
-import org.signalml.multiplexer.protocol.SvarogConstants;
+import org.signalml.multiplexer.protocol.SvarogConstants.MessageTypes;
 import org.springframework.context.support.MessageSourceAccessor;
 
 import com.google.protobuf.ByteString;
@@ -64,79 +62,36 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 	 * problems occur
 	 * @return 
 	 */
-	protected String queryMetaData(String dataId, String failMsg) {
-		logger.info("Sending "+dataId+" request...");
+	protected String queryMetaData(String dataId) {
+		logger.debug("Requesting " + dataId);
 
 		// create message
-		MultiplexerMessage.Builder builder = MultiplexerMessage.newBuilder();
-		ByteString msgBody = ByteString.copyFromUtf8(dataId);
-		builder.setType( SvarogConstants.MessageTypes.DICT_GET_REQUEST_MESSAGE).setMessage(msgBody);
-		MultiplexerMessage msg = client.createMessage(builder);
+		final ByteString question = ByteString.copyFromUtf8(dataId);
+		final IncomingMessageData reply;
 
-		// send message
 		try {
-			ChannelFuture sendingOperation = client.send( msg, SendingMethod.THROUGH_ONE);
-			sendingOperation.await(1, TimeUnit.SECONDS);
-			if (!sendingOperation.isSuccess()) {
-				logger.info("sending "+dataId+" request failed!");
-				String info = messageSource.getMessage( 
-						failMsg+".sendingFailedMsg");
-				openMonitorDescriptor.setMetadataInfo( info);
-				return null;
-			}
-		}
-		catch (NoPeerForTypeException e) {
-			logger.error("sending failed! " + e.getMessage());
-			String info = messageSource.getMessage( 
-					failMsg+".sendingFailedMsg");
-			openMonitorDescriptor.setMetadataInfo( info);
-			return null;
-		}
-		catch (InterruptedException e) {
-			logger.error("sending failed! " + e.getMessage());
-			String info = messageSource.getMessage( 
-					failMsg+".sendingFailedMsg");
-			openMonitorDescriptor.setMetadataInfo( info);
+			reply = client.query(question, MessageTypes.DICT_GET_REQUEST_MESSAGE, 1000 /* ms */);
+		} catch(JmxException e) {
+			logger.error("request " + dataId + ": " + e.getMessage());
+			String info = messageSource.getMessage("action.openMonitor.metadataWorker.communicationFailedMsg");
+			openMonitorDescriptor.setMetadataInfo(info);
 			return null;
 		}
 
-
-		logger.debug( "Receiving "+dataId+"...");
-
-		// receive message
-		IncomingMessageData msgData = null;
-		try {
-		    while (true) {
-			msgData = client.receive(timeout);
-			if (msgData != null) {
-				MultiplexerMessage reply = msgData.getMessage();
-				if (reply.getType() != SvarogConstants.MessageTypes.DICT_GET_RESPONSE_MESSAGE) {
-				    logger.info("Got message, but not DICT_GET_RESPONSE_MESSAGE. Still waiting ...");
-				}
-				else {
-					ByteString bs = reply.getMessage();
-					String val = bs.toStringUtf8();
-					return val;
-				}
-			}
-			else {
-				logger.info("receive timed out!");
-				String info = messageSource.getMessage( 
-						failMsg+".receiveTimedout");
-				openMonitorDescriptor.setMetadataInfo( info);
-				return null;
-			}
-		    }
-		} 
-		catch (InterruptedException e) {
-			logger.error("receiveing failed! " + e.getMessage());
-			String info = messageSource.getMessage( 
-					failMsg+".receivingFailedMsg");
-			openMonitorDescriptor.setMetadataInfo( info);
+		final MultiplexerMessage message = reply.getMessage();
+		assert message.getType() == MessageTypes.DICT_GET_RESPONSE_MESSAGE;
+		final String val = message.getMessage().toStringUtf8();
+		logger.debug("Received " + dataId + "=" + val);
+		if (val.length() == 0) {
+			logger.error("request " + dataId + " is empty");
+			String info = messageSource.getMessage("action.openMonitor.metadataWorker.unknownFieldMsg");
+			openMonitorDescriptor.setMetadataInfo(info);
 			return null;
 		}
-		
+
+		return val;
 	}
+
 	@Override
 	protected OpenMonitorDescriptor doInBackground() throws Exception {
 
@@ -147,7 +102,7 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 		logger.info("Gathering metadata...");
 
 		// sampling freq
-		value = queryMetaData(SAMPLING_RATE, "action.openMonitor.metadataWorker.samplingRate");
+		value = queryMetaData(SAMPLING_RATE);
 		if (value == null)
 			return openMonitorDescriptor;
 		Float freq = new Float(value);
@@ -155,7 +110,7 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 		publish(++step);
 
 		// channel count
-		value = queryMetaData(NUMBER_OF_CHANNELS, "action.openMonitor.metadataWorker.channelCount");
+		value = queryMetaData(NUMBER_OF_CHANNELS);
 		if (value == null)
 			return openMonitorDescriptor;
 		channelCount = Integer.parseInt(value);
@@ -163,7 +118,7 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 		publish(++step);
 
 		// channel labels
-		value = queryMetaData(CHANNEL_NAMES, "action.openMonitor.metadataWorker.channelNames");
+		value = queryMetaData(CHANNEL_NAMES);
 		if (value == null)
 			return openMonitorDescriptor;
 		StringTokenizer st2 = new StringTokenizer(value, ";");
@@ -174,7 +129,7 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 		publish(++step);
 
 		// calibration gain
-		value = queryMetaData(CALIBRATION_GAIN, "action.openMonitor.metadataWorker.calibrationGain");
+		value = queryMetaData(CALIBRATION_GAIN);
 		if (value == null)
 			return openMonitorDescriptor;
 		StringTokenizer st3 = new StringTokenizer(value, " ");
@@ -187,7 +142,7 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 		publish( ++step);
 
 		// calibration offset
-		value = queryMetaData(CALIBRATION_OFFSET, "action.openMonitor.metadataWorker.calibrationOffset");
+		value = queryMetaData(CALIBRATION_OFFSET);
 		if (value == null)
 			return openMonitorDescriptor;
 		StringTokenizer st4 = new StringTokenizer(value, " ");
@@ -200,7 +155,7 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 		publish(++step);
 
 		// minimum value
-		value = queryMetaData(MINIMUM_VALUE, "action.openMonitor.metadataWorker.minimumValue");
+		value = queryMetaData(MINIMUM_VALUE);
 		if (value == null)
 			return openMonitorDescriptor;
 		float minVal = Float.parseFloat(value);
@@ -208,7 +163,7 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 		publish(++step);
 
 		// maximum value
-		value = queryMetaData(MAXIMUM_VALUE, "action.openMonitor.metadataWorker.maximumValue");
+		value = queryMetaData(MAXIMUM_VALUE);
 		if (value == null)
 			return openMonitorDescriptor;
 		float maxVal = Float.parseFloat(value);
@@ -216,15 +171,14 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 		publish(++step);
 		
 		// amplifier null value
-		value = queryMetaData(AMPLIFIER_NULL, "action.openMonitor.metadataWorker.amplifierNull");
+		value = queryMetaData(AMPLIFIER_NULL);
 		if (value == null)
 			return openMonitorDescriptor;
 		double ampNull = Double.parseDouble(value);
 		openMonitorDescriptor.setAmplifierNull(ampNull);
 		publish(++step);
 
-		String info = messageSource.getMessage( 
-				"action.openMonitor.metadataWorker.receivedMetadata");
+		String info = messageSource.getMessage("action.openMonitor.metadataWorker.receivedMetadata");
 		openMonitorDescriptor.setMetadataReceived( true);
 		openMonitorDescriptor.setMetadataInfo(info);
 		return openMonitorDescriptor;

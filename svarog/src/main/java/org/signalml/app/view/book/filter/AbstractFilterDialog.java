@@ -83,7 +83,7 @@ public abstract class AbstractFilterDialog extends AbstractDialog {
 		String name = getNameTextField().getText();
 		if (name == null || name.isEmpty()) {
 			errors.rejectValue("name", "error.atomFilter.nameEmpty");
-		} else if (!Util.validateString(name)) {
+		} else if (Util.hasSpecialChars(name)) {
 			errors.rejectValue("name", "error.atomFilter.nameBadChars");
 		}
 

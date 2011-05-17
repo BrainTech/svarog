@@ -203,38 +203,3 @@ message ReplayCollectedEvents {
     repeated uint32 event_type = 3;
 }
 
-// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-message Variable {
-    required string key = 1;
-    required string value = 2;
-}
-message Blink {
-    required int32 index = 1;
-    required float timestamp = 2;
-}
-
-message BlinkVector {
-    repeated Blink blinks = 1;
-    
-}
-message Sample {
-    required double value = 1;
-    required double timestamp = 2;
-}
-
-message SampleVector {
-    repeated Sample samples = 1;
-}
-message Decision {
-    required int32 decision = 1;
-    optional int32 type = 2;
-}
-
-message SamplingFrequency {
-	required double frequency = 1;
-}
-message Calibration {
-	required double bias = 1;
-	required double offset = 2;
-}

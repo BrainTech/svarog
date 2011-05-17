@@ -1,12 +1,12 @@
 package org.signalml.app.worker;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import javax.swing.SwingWorker;
 
 import multiplexer.jmx.client.IncomingMessageData;
 import multiplexer.jmx.client.JmxClient;
+import multiplexer.jmx.client.ChannelFutureGroup;
 import multiplexer.jmx.client.SendingMethod;
 import multiplexer.jmx.exceptions.NoPeerForTypeException;
 import multiplexer.protocol.Protocol.MultiplexerMessage;
@@ -22,7 +22,7 @@ import org.signalml.domain.signal.RoundBufferMultichannelSampleSource;
 import org.signalml.domain.tag.MonitorTag;
 import org.signalml.domain.tag.StyledMonitorTagSet;
 import org.signalml.domain.tag.TagStylesGenerator;
-import org.signalml.multiplexer.protocol.SvarogConstants;
+import org.signalml.multiplexer.protocol.SvarogConstants.MessageTypes;
 import org.signalml.multiplexer.protocol.SvarogProtocol;
 import org.signalml.multiplexer.protocol.SvarogProtocol.Sample;
 import org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector;
@@ -37,11 +37,11 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 	protected static final Logger logger = Logger.getLogger(MonitorWorker.class);
 	public static final int TIMEOUT_MILIS = 50;
 	private static int TS_DIVIDER = 100000;
-	private JmxClient jmxClient;
-	private OpenMonitorDescriptor monitorDescriptor;
-	private RoundBufferMultichannelSampleSource sampleSource;
-	private RoundBufferSampleSource timestampsSource;
-	private StyledMonitorTagSet tagSet;
+	private final JmxClient client;
+	private final OpenMonitorDescriptor monitorDescriptor;
+	private final RoundBufferMultichannelSampleSource sampleSource;
+	private final RoundBufferSampleSource timestampsSource;
+	private final StyledMonitorTagSet tagSet;
 	private volatile boolean finished;
 
 	/**
@@ -58,8 +58,8 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 	 */
 	private SignalRecorderWorker signalRecorderWorker;
 
-	public MonitorWorker(JmxClient jmxClient, OpenMonitorDescriptor monitorDescriptor, RoundBufferMultichannelSampleSource sampleSource, RoundBufferSampleSource timestampsSource, StyledMonitorTagSet tagSet) {
-		this.jmxClient = jmxClient;
+	public MonitorWorker(JmxClient client, OpenMonitorDescriptor monitorDescriptor, RoundBufferMultichannelSampleSource sampleSource, RoundBufferSampleSource timestampsSource, StyledMonitorTagSet tagSet) {
+		this.client = client;
 		this.monitorDescriptor = monitorDescriptor;
 		this.sampleSource = sampleSource;
 		this.timestampsSource = timestampsSource;
@@ -68,231 +68,177 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 		logger.setLevel((Level) Level.INFO);
 	}
 
+	private boolean sendRequest(final int type) {
+		final MultiplexerMessage.Builder builder = MultiplexerMessage.newBuilder();
+		builder.setType(type);
+		final MultiplexerMessage msg = client.createMessage(builder);
+		final ChannelFutureGroup operation;
+		try {
+			operation = client.send(msg, SendingMethod.THROUGH_ONE);
+		} catch(NoPeerForTypeException e) {
+			logger.error("nobody to send the message to", e);
+			return false;
+		}
+		try {
+			operation.await(1000 /* ms */);
+		} catch(InterruptedException e) {
+			logger.error("interrupted while sending", e);
+			return false;
+		}
+		if(!operation.isSuccess()) {
+			logger.error("sending request " + type + " failed", operation.getCause());
+			return false;
+		}
+		return true;
+	}
+
 	@Override
-	protected Void doInBackground() throws Exception {
+	protected Void doInBackground() {
 
 		logger.info("Worker: start...");
 
-
-		MultiplexerMessage.Builder builder = MultiplexerMessage.newBuilder();
-		builder.setType(SvarogConstants.MessageTypes.SIGNAL_STREAMER_START);
-
-		MultiplexerMessage msg = jmxClient.createMessage(builder);
-
-		// send message
-		try {
-			ChannelFuture sendingOperation = jmxClient.send(msg, SendingMethod.THROUGH_ONE);
-			sendingOperation.await(1, TimeUnit.SECONDS);
-			if (!sendingOperation.isSuccess()) {
-				logger.error("sending failed!");
-				return null;
-			}
-		} catch (NoPeerForTypeException e) {
-			logger.error("sending failed! " + e.getMessage());
+		if (!sendRequest(MessageTypes.SIGNAL_STREAMER_START))
 			return null;
-		} catch (InterruptedException e) {
-			logger.error("sending failed! " + e.getMessage());
-			return null;
-		}
-
 		logger.info("Worker: sent streaming request!");
-		int channelCount = monitorDescriptor.getChannelCount();
-		int plotCount = monitorDescriptor.getSelectedChannelList().length;
-		int[] selectedChannels = monitorDescriptor.getSelectedChannelsIndecies();
-		double[] gain = monitorDescriptor.getGain();
-		double[] offset = monitorDescriptor.getOffset();
-		logger.info("Worker: got what wanted!");
 
-		//DEBUG
-		SvarogProtocol.Tag xxx_tagMsg = null;
-		int xxx_debug = 0;//just print timestamp of current tag and sample when got tag
-		//xxx_debu = 2 - modify first channel when got tag
-		//DEBUG
+		final int channelCount = monitorDescriptor.getChannelCount();
+		final int plotCount = monitorDescriptor.getSelectedChannelList().length;
+		final int[] selectedChannels = monitorDescriptor.getSelectedChannelsIndecies();
+		final double[] gain = monitorDescriptor.getGain();
+		final double[] offset = monitorDescriptor.getOffset();
+		logger.debug("Worker: got what wanted!");
 
-		IncomingMessageData msgData = null;
-		MultiplexerMessage sampleMsg = null;
-		ByteString sampleMsgString;
-		SampleVector sampleVector = null;
-		SvarogProtocol.Tag tagMsg = null;
-
-		List<Sample> samples;
-		double[] chunk = new double[channelCount];
+		final double[] chunk = new double[channelCount];
 		//TODO blocksPerPage - is that information sent to the monitor worker? Can we substitute default PagingParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE
 		//with a real value?
-		TagStylesGenerator stylesGenerator = new TagStylesGenerator(monitorDescriptor.getPageSize(), PagingParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE);
-		int sampleType = 0;
-		MonitorTag tag;
-		double tagLen;
-		SvarogProtocol.VariableVector tagDesc;
+		final TagStylesGenerator stylesGenerator
+			= new TagStylesGenerator(monitorDescriptor.getPageSize(),
+						 PagingParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE);
+
 		logger.info("Start receiving ...");
 		while (!isCancelled()) {
-
 			logger.debug("Worker: receiving!");
+
+			// Receive message
+			final IncomingMessageData msgData;
 			try {
-				// Receive message
-				msgData = jmxClient.receive(TIMEOUT_MILIS, TimeUnit.MILLISECONDS);
-				if (msgData == null) {
+				msgData = client.receive(TIMEOUT_MILIS);
+				if (msgData == null) /* timeout */
+					continue;
+			} catch (InterruptedException e) {
+				logger.error("receive failed", e);
+				return null;
+			}
+
+			final MultiplexerMessage sampleMsg;
+			final ByteString sampleMsgString;
+
+			// Unpack message
+			sampleMsg = msgData.getMessage();
+			sampleMsgString = sampleMsg.getMessage();
+
+			final int sampleType = sampleMsg.getType();
+			logger.debug("Worker: received message type: " + sampleType);
+
+			switch (sampleType){
+			case MessageTypes.AMPLIFIER_SIGNAL_MESSAGE:
+				logger.debug("Worker: reading chunk!");
+
+				final SampleVector sampleVector;
+				try {
+					sampleVector = SampleVector.parseFrom(sampleMsgString);
+				} catch (Exception e) {
+					e.printStackTrace();
+					continue;
+				}
+				final List<Sample> samples = sampleVector.getSamplesList();
+
+				//DEBUG
+				timestampsSource.addSample(samples.get(0).getTimestamp());
+				this.tagSet.newSample(samples.get(0).getTimestamp());
+				//DEBUG
+
+				// Get values from samples to chunk
+				for (int i = 0; i < channelCount; i++)
+					chunk[i] = samples.get(i).getValue();
+
+				// Transform chunk using gain and offset
+				double[] condChunk = new double[plotCount];
+				double[] selectedChunk = new double[plotCount];
+				for (int i = 0; i < plotCount; i++) {
+					int n = selectedChannels[i];
+					condChunk[i] = gain[n] * chunk[n] + offset[n];
+					selectedChunk[i] = chunk[n];
+				}
+
+				// set first sample timestamp for the tag recorder
+				if (tagRecorderWorker != null && !tagRecorderWorker.isStartRecordingTimestampSet()) {
+					tagRecorderWorker.setStartRecordingTimestamp(samples.get(0).getTimestamp());
+				}
+
+				// sends chunks to the signal recorder
+				if (signalRecorderWorker != null) {
+					signalRecorderWorker.offer(selectedChunk.clone());
+					if (!signalRecorderWorker.isFirstSampleTimestampSet())
+						signalRecorderWorker.setFirstSampleTimestamp(samples.get(0).getTimestamp());
+				}
+
+				publish(condChunk);
+				break;
+			case MessageTypes.TAG:
+				logger.info("Tag recorder: got a tag!");
+
+				final SvarogProtocol.Tag tagMsg;
+				try {
+					tagMsg = SvarogProtocol.Tag.parseFrom(sampleMsgString);
+				} catch (Exception e) {
+					e.printStackTrace();
 					continue;
 				}
 
-				// Unpack message
-				sampleMsg = msgData.getMessage();
-				sampleMsgString = sampleMsg.getMessage();
-				sampleType = sampleMsg.getType();
+				// Create MonitorTag Object, define its style and attributes
 
-				logger.debug("Worker: received message type: " + sampleType);
+				// String channels = tagMsg.getChannels();
+				// By now we ignore field channels and assume that tag if for all channels
 
+				final double tagLen = tagMsg.getEndTimestamp() - tagMsg.getStartTimestamp();
+				final MonitorTag tag
+					= new MonitorTag(stylesGenerator.getSmartStyleFor(tagMsg.getName(), tagLen, -1),
+							 tagMsg.getStartTimestamp(),
+							 tagLen,
+							 -1);
 
-				//DEBUG
-				if (sampleType == SvarogConstants.MessageTypes.TAG && xxx_debug > 0) {
-					xxx_tagMsg = SvarogProtocol.Tag.parseFrom(sampleMsgString);
+				for (SvarogProtocol.Variable v : tagMsg.getDesc().getVariablesList())
+					tag.setAttribute(v.getKey(), v.getValue());
+
+				if(isChannelSelected(tag.getChannel(), selectedChannels)) {
+					if (tagRecorderWorker != null) {
+						tagRecorderWorker.offer(tag);
+					}
+
+					publish(tag);
 				}
-				//DEBUG
-
-
-				if (sampleType == SvarogConstants.MessageTypes.AMPLIFIER_SIGNAL_MESSAGE) {
-
-					logger.debug("Worker: reading chunk!");
-
-					try {
-						sampleVector = SampleVector.parseFrom(sampleMsgString);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					samples = sampleVector.getSamplesList();
-
-					//DEBUG
-					timestampsSource.addSample(samples.get(0).getTimestamp());
-					this.tagSet.newSample(samples.get(0).getTimestamp());
-					//DEBUG
-
-					// Get values from samples to chunk
-					for (int i = 0; i < channelCount; i++) {
-						chunk[i] = samples.get(i).getValue();
-					}
-
-					// Transform chunk using gain and offset
-					double[] condChunk = new double[plotCount];
-					double[] selectedChunk = new double[plotCount];
-					for (int i = 0; i < plotCount; i++) {
-						int n = selectedChannels[i];
-						condChunk[i] = gain[n] * chunk[n] + offset[n];
-						selectedChunk[i] = chunk[n];
-					}
-
-					// set first sample timestamp for the tag recorder
-					if (tagRecorderWorker != null && !tagRecorderWorker.isStartRecordingTimestampSet()) {
-						tagRecorderWorker.setStartRecordingTimestamp(samples.get(0).getTimestamp());
-					}
-
-					// sends chunks to the signal recorder
-					if (signalRecorderWorker != null) {
-						signalRecorderWorker.offer(selectedChunk.clone());
-						if (!signalRecorderWorker.isFirstSampleTimestampSet())
-							signalRecorderWorker.setFirstSampleTimestamp(samples.get(0).getTimestamp());
-					}
-
-					//DEBUG
-					if (xxx_debug > 1 && xxx_tagMsg != null) {
-						for (int i = 0; i < plotCount; i++) {
-							double a = condChunk[i];
-							condChunk[i] = 0.0;
-							double b = condChunk[i];
-							logger.info("Zmieniam chunka z" + a + " na " + b);
-						}
-					}
-					if (xxx_debug > 0 && xxx_tagMsg != null) {
-						double y = xxx_tagMsg.getStartTimestamp();
-						logger.info("Received tag VS sample timestamp: " + y + " VS " + samples.get(0).getTimestamp());
-						//xxx_tagMsg = null;
-					}
-					//DEBUG
-
-
-					publish(condChunk);
-
-				} else if (sampleMsg.getType() == SvarogConstants.MessageTypes.TAG) {
-
-					logger.info("Tag recorder: got a tag!");
-
-					try {
-						tagMsg = SvarogProtocol.Tag.parseFrom(sampleMsgString);
-					} catch (Exception e) {
-						e.printStackTrace();
-						continue;
-					}
-
-					// Create MonitorTag Object, define its style and attributes
-
-					// String channels = tagMsg.getChannels();
-					// By now we ignore field channels and assume that tag if for all channels
-
-					tagLen = tagMsg.getEndTimestamp() - tagMsg.getStartTimestamp();
-					tag = new MonitorTag(stylesGenerator.getSmartStyleFor(tagMsg.getName(), tagLen, -1),
-						tagMsg.getStartTimestamp(),
-						tagLen,
-						-1);
-
-					for (SvarogProtocol.Variable v : tagMsg.getDesc().getVariablesList()) {
-						tag.setAttribute(v.getKey(), v.getValue());
-					}
-
-					boolean isChannelSelected = false;
-
-					if (tag.getChannel() == -1) {
-						isChannelSelected = true;
-					} else {
-						for (int channel : selectedChannels) {
-							if (selectedChannels[channel] == tag.getChannel()) {
-								isChannelSelected = true;
-								break;
-							}
-						}
-					}
-
-					if (isChannelSelected) {
-						if (tagRecorderWorker != null) {
-							tagRecorderWorker.offer(tag);
-						}
-
-						publish(tag);
-					}
-
-				} else {
-					logger.error("received bad reply! " + sampleMsg.getMessage());
-					//logger.debug("Worker: receive failed!");
-					//return null;
-				}
-
-			} catch (InterruptedException e) {
-				logger.error("receiveing failed! " + e.getMessage());
-				return null;
+			default:
+				final int type = sampleMsg.getType();
+				final String name = MessageTypes.instance.getConstantsNames().get(type);
+				logger.error("received unknown reply: " +  type + "/" + name);
 			}
 		}
 
-		logger.debug("Worker: stopping serwer...");
-
-		builder = MultiplexerMessage.newBuilder();
-		builder.setType(SvarogConstants.MessageTypes.SIGNAL_STREAMER_STOP);
-		msg = jmxClient.createMessage(builder);
-
-		// send message
-		try {
-			ChannelFuture sendingOperation = jmxClient.send(msg, SendingMethod.THROUGH_ONE);
-			sendingOperation.await(1, TimeUnit.SECONDS);
-			if (!sendingOperation.isSuccess()) {
-				logger.error("sending failed!");
-				return null;
-			}
-		} catch (NoPeerForTypeException e) {
-			logger.error("sending failed! " + e.getMessage());
-			return null;
-		} catch (InterruptedException e) {
-			logger.error("sending failed! " + e.getMessage());
-			return null;
-		}
+		logger.debug("stopping server...");
+		sendRequest(MessageTypes.SIGNAL_STREAMER_STOP);
+		// ignore return value
 
 		return null;
+	}
+
+	private boolean isChannelSelected(final int channel, final int selectedChannels[]) {
+		if (channel == -1)
+			return true;
+		for (int selected : selectedChannels)
+			if (channel == selected)
+				return true;
+		return false;
 	}
 
 	private double convertTs(double ts) {

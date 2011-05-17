@@ -22,11 +22,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.signalml.domain.signal.MultichannelSampleSource;
 import org.signalml.method.ComputationException;
+import org.signalml.plugin.data.logic.PluginComputationMgrStepResult;
 import org.signalml.plugin.exception.PluginToolAbortException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.io.IPluginDataSourceReader;
 import org.signalml.plugin.method.logic.AbstractPluginComputationMgrStep;
 import org.signalml.plugin.method.logic.IPluginComputationMgrStepTrackerProxy;
+import org.signalml.plugin.method.logic.PluginWorkerSet;
 import org.signalml.plugin.newartifact.data.INewArtifactSignalReaderWorkerData;
 import org.signalml.plugin.newartifact.data.NewArtifactAlgorithmWorkerData;
 import org.signalml.plugin.newartifact.data.NewArtifactComputationType;
@@ -43,13 +45,12 @@ import org.signalml.plugin.signal.PluginSignalHelper;
  * @author kdr
  *
  */
-public class NewArtifactMgrPreprocessStep
-	extends
-	AbstractPluginComputationMgrStep<NewArtifactMgrStepData, NewArtifactMgrStepResult> {
+public class NewArtifactMgrPreprocessStep extends
+	AbstractPluginComputationMgrStep<NewArtifactMgrStepData> {
 
 	private final int INPUT_BUFFER_QUEUE_SIZE = 40;
 
-	private Collection<Thread> workers;
+	private PluginWorkerSet workers;
 	private Collection<INewArtifactAlgorithmWriter> writers;
 	private INewArtifactAlgorithmBufferSynchronizer synchronizer;
 	private final BlockingQueue<double[][]> readyBuffersQueue;
@@ -303,7 +304,7 @@ public class NewArtifactMgrPreprocessStep
 
 		this.shutdownFlag = new AtomicBoolean(false);
 
-		this.workers = new LinkedList<Thread>();
+		this.workers = new PluginWorkerSet(this.data.threadFactory);
 		this.writers = new LinkedList<INewArtifactAlgorithmWriter>();
 		this.timer = new Timer();
 	}
@@ -314,7 +315,9 @@ public class NewArtifactMgrPreprocessStep
 	}
 
 	@Override
-	public NewArtifactMgrStepResult doRun() throws ComputationException, InterruptedException,
+	public PluginComputationMgrStepResult doRun(
+		PluginComputationMgrStepResult prevStepResult)
+	throws ComputationException, InterruptedException,
 		PluginToolAbortException {
 		final IPluginComputationMgrStepTrackerProxy<NewArtifactProgressPhase> tracker = this.data.tracker;
 
@@ -329,9 +332,7 @@ public class NewArtifactMgrPreprocessStep
 
 		this.timer.scheduleAtFixedRate(this.updater, new Date(), 1500);
 
-		for (Thread worker : this.workers) {
-			worker.start();
-		}
+		this.workers.startAll();
 
 		this.checkAbortState();
 		tracker.setProgressPhase(NewArtifactProgressPhase.SOURCE_FILE_INITIAL_READ_PHASE);
@@ -379,20 +380,15 @@ public class NewArtifactMgrPreprocessStep
 							     .createResultWriterForAlgorithm(algorithmType);
 			if (writer != null) {
 				this.writers.add(writer);
-				this.workers
-				.add(this.data.threadFactory
-				     .newThread(new NewArtifactAlgorithmWorker(
-							new NewArtifactAlgorithmDataSource(
-								synchronizer),
-							new NewArtifactAlgorithmFactory(
-								algorithmType,
-								this.data.constants), writer,
-							new NewArtifactAlgorithmWorkerData(
-								this.data.artifactData,
-								this.data.constants))));
+				this.workers.add(new NewArtifactAlgorithmWorker(
+							 new NewArtifactAlgorithmDataSource(synchronizer),
+							 new NewArtifactAlgorithmFactory(algorithmType,
+									 this.data.constants), writer,
+							 new NewArtifactAlgorithmWorkerData(
+								 this.data.artifactData, this.data.constants)));
 			}
 		}
-		this.workers.add(this.data.threadFactory.newThread(reader));
+		this.workers.add(reader);
 
 		this.updater = new TrackerUpdater(this.data.tracker,
 						  this.getBlockCount());
@@ -405,6 +401,7 @@ public class NewArtifactMgrPreprocessStep
 
 	@Override
 	protected void cleanup() {
+		super.cleanup();
 		this.stopWorkers();
 	}
 
@@ -429,47 +426,12 @@ public class NewArtifactMgrPreprocessStep
 				this.data.tracker.advance(advance);
 			}
 		} finally {
-			terminateWorkers();
+			this.terminateWorkers();
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	private void terminateWorkers() {
-		boolean loop = true;
-		int retryCount = 20;
-
-		while (loop) {
-			loop = false;
-			for (Thread worker : this.workers) {
-				if (worker.isAlive()) {
-					try {
-						worker.join(1000);
-					} catch (InterruptedException e) {
-
-					}
-
-					if (worker.isAlive()) {
-						retryCount--;
-						if (retryCount > 0) {
-							loop = true;
-							continue;
-						}
-						worker.interrupt();
-						try {
-							worker.join(1000);
-						} catch (InterruptedException e) {
-
-						}
-
-						if (worker.isAlive()) {
-							worker.stop();
-						}
-					}
-				}
-			}
-		}
-
-		this.workers.clear();
+		this.workers.terminateAll();
 
 		for (INewArtifactAlgorithmWriter writer : this.writers) {
 			try {
