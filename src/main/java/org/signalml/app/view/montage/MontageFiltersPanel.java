@@ -569,6 +569,8 @@ public class MontageFiltersPanel extends JPanel {
 
 			int index = getTimeDomainFilterTypeComboBox().getSelectedIndex();
 			TimeDomainSampleFilter filter = predefinedTimeDomainSampleFilterPresetManager.getPredefinedFilterAt(currentSamplingFrequency, index);
+			if (filter == null)
+				return;
 			filter.setDescription(messageSource.getMessage("montageFilters.newTimeDomainFilter"));
 			filter.setSamplingFrequency(currentSamplingFrequency);
 			montage.addSampleFilter(filter);
