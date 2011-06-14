@@ -9,16 +9,35 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 
-/** MontageTransferable
- *
+import org.signalml.domain.montage.MontageChannel;
+
+/**
+ * Wrapper used to transport {@link MontageChannelIndices}.
+ * The transferred data have flavor {@link MontageChannelsDataFlavor}.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class MontageTransferable implements Transferable {
 
+	/**
+	 * the "collection" of {@link MontageChannelIndices indexes} of
+	 * {@link MontageChannel montage channels}
+	 */
 	private MontageChannelIndices indices;
+	/**
+	 * the {@link MontageChannelsDataFlavor flavor} the transferred data can
+	 * be provided in (the array contains only one flavor
+	 * - MontageChannelsDataFlavor)
+	 */
 	private DataFlavor[] dataFlavors;
 
+	/**
+	 * Constructor. Stores the {@link MontageChannelIndices indices},
+	 * checks if they are continuous and creates the {@link
+	 * MontageChannelsDataFlavor flavor} for them.
+	 * @param indices the indices to be transferred
+	 * @see MontageChannelsDataFlavor#isContinuous()
+	 */
 	public MontageTransferable(MontageChannelIndices indices) {
 
 		if (indices == null) {

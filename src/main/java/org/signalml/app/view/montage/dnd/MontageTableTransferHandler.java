@@ -18,26 +18,78 @@ import javax.swing.TransferHandler;
 import org.apache.log4j.Logger;
 import org.signalml.app.view.montage.MontageTable;
 import org.signalml.domain.montage.Montage;
+import org.signalml.domain.montage.MontageChannel;
+import org.signalml.domain.montage.SourceChannel;
 
-/** MontageTableTransferHandler
- *
+/**
+ * The {@link TransferHandler} for {@link MontageTable}.
+ * If {@link MontageChannel montage} (actually the {@link MontageChannelIndices})
+ * or {@link SourceChannel source} (actually the {@link SourceChannelIndices})
+ * channels are dragged and dropped on the element to which this transfer
+ * handler is assigned, then the operation is performed according to the type
+ * of the transferred object:
+ * <ul>
+ * <li>If transferred are {@link SourceChannelIndices}:
+ * <ul>
+ * <li>checks if the collection is of proper type and not empty,</li>
+ * <li>{@link Montage#addMontageChannels(int[], int) adds} the new
+ * {@link MontageChannel montage channels} (created on the basis of the
+ * {@link SourceChannel source channels} from the collection) to the
+ * {@link Montage montage} that is the model for the montage table.</li>
+ * </ul></li>
+ * <li>If transferred are {@link MontageChannelIndices}:
+ * <ul>
+ * <li>checks if the collection is of proper type and not empty,</li>
+ * <li>checks if the collection is continuous (see
+ * {@link MontageChannelsDataFlavor#isContinuous()})),</li>
+ * <li>{@link Montage#moveMontageChannelRange(int, int, int) moves} the
+ * specified channels to the specified position,</li>
+ * <li>updates the selection in the montage table.</li></ul></li></ul>
+ * <p>
+ * The element to which this transfer handler is assigned can also be the
+ * source of the transferable object. If the method {@link
+ * #createTransferable(JComponent)} is called the {@link MontageTransferable}
+ * is created with the channels selected in the table.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class MontageTableTransferHandler extends TransferHandler {
 
+	/**
+	 * the serialization constant
+	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * the logger
+	 */
 	protected static final Logger logger = Logger.getLogger(MontageTableTransferHandler.class);
 
+	/**
+	 * the {@link SourceMontageChannelsDataFlavor flavor} for
+	 * {@link SourceChannelIndices}
+	 */
 	private SourceMontageChannelsDataFlavor sourceFlavor = new SourceMontageChannelsDataFlavor();
+	
+	/**
+	 * the {@link MontageChannelsDataFlavor flavor} for
+	 * {@link MontageChannelIndices}
+	 */
 	private MontageChannelsDataFlavor montageFlavor = new MontageChannelsDataFlavor(false);
 
+	/**
+	 * @return {@link TransferHandler#MOVE}
+	 */
 	@Override
 	public int getSourceActions(JComponent c) {
 		return MOVE;
 	}
 
+	/**
+	 * Checks which channels are selected and creates the array with their
+	 * indexes. This array is used to create {@link MontageChannelIndices}
+	 * and on the basis of it the {@link MontageTransferable}.
+	 */
 	@Override
 	protected Transferable createTransferable(JComponent c) {
 
@@ -75,6 +127,11 @@ public class MontageTableTransferHandler extends TransferHandler {
 
 	}
 
+	/**
+	 * Returns <code>true</code> if at least one of the flavors in
+	 * {@code transferFlavors} is either {@link SourceMontageChannelsDataFlavor}
+	 * or {@link MontageChannelsDataFlavor} and <code>false</code> otherwise.
+	 */
 	@Override
 	public boolean canImport(JComponent comp, DataFlavor[] transferFlavors) {
 
@@ -102,6 +159,26 @@ public class MontageTableTransferHandler extends TransferHandler {
 
 	}
 
+	/**
+	 * Performs the operation according to the type of the transferred object:
+	 * <ul>
+	 * <li>If transferred are {@link SourceChannelIndices}:
+	 * <ul>
+	 * <li>checks if the collection is of proper type and not empty,</li>
+	 * <li>{@link Montage#addMontageChannels(int[], int) adds} the new
+	 * {@link MontageChannel montage channels} (created on the basis of the
+	 * {@link SourceChannel source channels} from the collection) to the
+	 * {@link Montage montage} that is the model for the montage table.</li>
+	 * </ul></li>
+	 * <li>If transferred are {@link MontageChannelIndices}:
+	 * <ul>
+	 * <li>checks if the collection is of proper type and not empty,</li>
+	 * <li>checks if the collection is continuous (see
+	 * {@link MontageChannelsDataFlavor#isContinuous()})),</li>
+	 * <li>{@link Montage#moveMontageChannelRange(int, int, int) moves} the
+	 * specified channels to the specified position,</li>
+	 * <li>updates the selection in the montage table.</li></ul></li></ul>
+	 */
 	@Override
 	public boolean importData(TransferSupport support) {
 
