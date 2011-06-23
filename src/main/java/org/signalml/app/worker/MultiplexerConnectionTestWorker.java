@@ -98,8 +98,6 @@ public class MultiplexerConnectionTestWorker extends SwingWorker< WorkerResult, 
 				if (msgData != null) {
 					publish( tryoutCount);
 					MultiplexerMessage reply = msgData.getMessage();
-					System.out.println("msg.getType() "+msg.getType()+" / msg.getMessage() "+msg.getMessage());
-					System.out.println("replay.getType() "+reply.getType()+" / replay.getMessage() "+reply.getMessage());
 					/*if (!(reply.getType() == msg.getType() && reply.getMessage().equals( msg.getMessage()))) {
 						logger.error("received bad reply! " + reply.getMessage());
 						return new WorkerResult( 
