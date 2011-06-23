@@ -944,26 +944,29 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		mainToolBar.add(Box.createHorizontalGlue());
 
 		//mainToolBar.add(getPreciseSelectionAction());
+		mainToolBar.addSeparator();
+
+		mainToolBar.add(new TitledSliderPanel(messageSource.getMessage("signalView.timeScale"), timeScaleSlider));
+		JToggleButton snapToPageButton = new JToggleButton(getSnapToPageAction());
+		snapToPageButton.setHideActionText(true);
+		mainToolBar.add(snapToPageButton);
+		mainToolBar.addSeparator();
+
+		mainToolBar.add(new TitledSliderPanel(messageSource.getMessage("signalView.valueScale"), valueScaleSlider));
+		mainToolBar.add(new TitledSliderPanel(messageSource.getMessage("signalView.channelHeight"), channelHeightSlider));
+		mainToolBar.addSeparator();
+		mainToolBar.addSeparator();
+
+
 		mainToolBar.add(getEditSignalParametersAction());
 		mainToolBar.add(getEditSignalMontageAction());
 		mainToolBar.add(getApplyDefaultMontageAction());
-		mainToolBar.addSeparator();
 		mainToolBar.add(plotOptionsButton);
-
-		mainToolBar.add(new TitledSliderPanel(messageSource.getMessage("signalView.timeScale"), timeScaleSlider));
-		mainToolBar.add(new TitledSliderPanel(messageSource.getMessage("signalView.valueScale"), valueScaleSlider));
-		mainToolBar.add(new TitledSliderPanel(messageSource.getMessage("signalView.channelHeight"), channelHeightSlider));
-
-		mainToolBar.addSeparator();
-
 		JToggleButton filterSwitchButton = new JToggleButton(getFilterSwitchAction());
 		filterSwitchButton.setHideActionText(true);
 		filterSwitchButton.setSelectedIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/filteron.png"));
 		mainToolBar.add(filterSwitchButton);
 
-		JToggleButton snapToPageButton = new JToggleButton(getSnapToPageAction());
-		snapToPageButton.setHideActionText(true);
-		mainToolBar.add(snapToPageButton);
 
 	}
 
