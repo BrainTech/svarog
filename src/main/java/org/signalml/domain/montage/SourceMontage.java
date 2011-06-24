@@ -490,6 +490,25 @@ public class SourceMontage {
 		return indices;
 	}
 
+	public int[] getSourceChannelsByTypes(ChannelType[] types) {
+		LinkedList<SourceChannel> list = getSourceChannelsByFunctionList(null);
+		int indSize = 0;
+		for (int i = 0; i < this.getSourceChannelCount(); i++)
+			for (int j = 0; j < types.length; j++)
+				if (this.getSourceChannelFunctionAt(i).getType() == types[j])
+					indSize ++;
+
+		int[] indices = new int[indSize];
+		int ind = 0;
+		for (int i = 0; i < this.getSourceChannelCount(); i++)
+			for (int j = 0; j < types.length; j++)
+				if (this.getSourceChannelFunctionAt(i).getType() == types[j]) {
+					indices[ind] = i;
+					ind ++;
+				}
+		return indices;
+	}
+
         /**
          * Returns an index of a first {@link SourceChannel source channel}
          * with a given {@link Channel function}.

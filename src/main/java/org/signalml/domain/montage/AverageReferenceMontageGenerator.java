@@ -40,7 +40,7 @@ public abstract class AverageReferenceMontageGenerator implements MontageGenerat
          * @throws NullPointerException if the array of channels is null or empty
          */
 	protected AverageReferenceMontageGenerator(Channel[] refChannels) {
-		if (refChannels == null || refChannels.length == 0) {
+		if (refChannels == null) {
 			throw new NullPointerException("Channels cannot be null or empty");
 		}
 		this.refChannels = refChannels;
@@ -54,24 +54,20 @@ public abstract class AverageReferenceMontageGenerator implements MontageGenerat
          */
 	@Override
 	public void createMontage(Montage montage) throws MontageException {
-
 		int[] refChannelIndices = new int[refChannels.length];
 		int[] temp;
-		int i,e;
-
-		for (i=0; i<refChannels.length; i++) {
-
+		for (int i=0; i<refChannels.length; i++) {
+			
 			temp = montage.getSourceChannelsByFunction(refChannels[i]);
 			if (temp == null || temp.length != 1) {
 				throw new MontageException("Bad refChannel count [" + temp.length + "]  for channel [" + refChannels[i] + "]");
 			}
-
+			
 			refChannelIndices[i] = temp[0];
-
+			
 		}
 
-		String token = "-1/" + Integer.toString(refChannels.length);
-
+		String token = "-1/" + Integer.toString(refChannelIndices.length);
 		boolean oldMajorChange = montage.isMajorChange();
 
 		try {
@@ -81,10 +77,10 @@ public abstract class AverageReferenceMontageGenerator implements MontageGenerat
 
 			int size = montage.getSourceChannelCount();
 			int index;
-			for (i=0; i<size; i++) {
+			for (int i=0; i<size; i++) {
 				index = montage.addMontageChannel(i);
 				if (montage.getSourceChannelFunctionAt(i).getType() == ChannelType.PRIMARY) {
-					for (e=0; e<refChannelIndices.length; e++) {
+					for (int e=0; e<refChannelIndices.length; e++) {
 						montage.setReference(index, refChannelIndices[e], token);
 					}
 				}

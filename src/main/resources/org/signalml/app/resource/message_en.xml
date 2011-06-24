@@ -2151,6 +2151,7 @@
 	<entry key="montageGenerator.leftEar">Left ear montage</entry>
 	<entry key="montageGenerator.rightEar">Right ear montage</entry>
 	<entry key="montageGenerator.linkedEars">Linked ears montage</entry>
+	<entry key="montageGenerator.ca">Common average montage</entry>
 	<entry key="montageGenerator.longitudinalI">Longitudinal I</entry>
 	<entry key="montageGenerator.longitudinalII">Longitudinal II</entry>
 	<entry key="montageGenerator.transverseI">Transverse I</entry>
