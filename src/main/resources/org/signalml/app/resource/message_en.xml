@@ -862,6 +862,7 @@
 	<entry key="montageTable.label">Label</entry>
 	<entry key="montageTable.clear">Clear montage</entry>
 	<entry key="montageTable.addChannels">Add channels</entry>
+	<entry key="montageTable.addEmptyChannel">Add empty channel</entry>
 	<entry key="montageTable.removeChannels">Remove channels</entry>
 	<entry key="montageTable.moveUp">Move up</entry>
 	<entry key="montageTable.moveDown">Move down</entry>

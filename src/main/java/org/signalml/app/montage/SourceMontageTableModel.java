@@ -16,6 +16,7 @@ import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.montage.SourceMontageEvent;
 import org.signalml.domain.montage.SourceMontageListener;
 import org.springframework.context.support.MessageSourceAccessor;
+import org.signalml.domain.montage.ChannelType;
 
 /** SourceMontageTableModel
  *
@@ -79,10 +80,14 @@ public class SourceMontageTableModel extends AbstractTableModel implements Sourc
 
 	@Override
 	public int getRowCount() {
-		if (montage == null) {
+		if (montage == null)
 			return 0;
-		}
-		return montage.getSourceChannelCount();
+		else if (montage.getSourceChannelCount() == 0)
+			return montage.getSourceChannelCount();
+		else if (montage.getSourceChannelFunctionAt(montage.getSourceChannelCount()-1).getType() == ChannelType.EMPTY)
+			return montage.getSourceChannelCount() - 1;
+		else
+			return montage.getSourceChannelCount();
 	}
 
 	@Override

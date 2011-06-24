@@ -398,7 +398,7 @@ public class VisualReferenceEditor extends VisualReferenceDisplay {
 
 			// this rotates the arrows slightly so that they superimpose less
 
-			arrowOrder = Math.min(10, arrowOrder);   // limit to 10 to prevent reaching anything close 90 deg
+			arrowOrder = Math.min(10, arrowOrder);   // limit to 10 to prevent reahing anything close 90 deg
 			double angle = Math.toRadians(10*((arrowOrder+1)/2) * ((arrowOrder % 2) == 0 ? -1 : 1));
 			Point centerPoint = (Point) arrowTarget.getLocation().clone();
 			centerPoint.translate(VisualReferenceSourceChannel.CIRCLE_DIAMETER / 2, VisualReferenceSourceChannel.CIRCLE_DIAMETER / 2);

@@ -16,6 +16,8 @@ import org.apache.log4j.Logger;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.domain.signal.MultichannelSampleSource;
 import org.signalml.domain.signal.SignalType;
+import org.signalml.domain.montage.ChannelType;
+import org.signalml.domain.montage.eeg.EegChannel;
 import org.signalml.domain.signal.SignalTypeConfigurer;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.util.Util;
@@ -246,10 +248,11 @@ public class SourceMontage {
 			}
 		} else if (dCnt < mCnt) {
 			for (int i=mCnt; i>dCnt; i--) {
+				if (this.getSourceChannelFunctionAt(this.getSourceChannelCount()-1).getType() == ChannelType.EMPTY)
+					break;
 				removeSourceChannel();
 			}
 		}
-
 	}
 
         /**

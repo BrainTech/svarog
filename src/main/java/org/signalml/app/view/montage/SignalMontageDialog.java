@@ -223,12 +223,10 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 				if (!ok) {
 					return;
 				}
-
 				currentMontage.adapt(signalDocument);
 
 			}
 		}
-
 		setMontageToPanels(currentMontage);
 		setChanged(false);
 

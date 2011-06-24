@@ -81,7 +81,7 @@ public class MontageTableModel extends AbstractTableModel implements SourceMonta
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		if (columnIndex == INDEX_COLUMN || columnIndex == PRIMARY_LABEL_COLUMN) {
+		if (columnIndex == INDEX_COLUMN) {
 			return false;
 		}
 		return true;
@@ -133,12 +133,12 @@ public class MontageTableModel extends AbstractTableModel implements SourceMonta
 	public Object getValueAt(int rowIndex, int columnIndex) {
 
 		switch (columnIndex) {
-
+			
 		case INDEX_COLUMN :
 			return (rowIndex+1);
 
 		case PRIMARY_LABEL_COLUMN :
-			return montage.getSourceChannelLabelAt(montage.getMontagePrimaryChannelAt(rowIndex));
+			return montage.getReferenceReadable(rowIndex);
 
 		case LABEL_COLUMN :
 			return montage.getMontageChannelLabelAt(rowIndex);
@@ -153,11 +153,11 @@ public class MontageTableModel extends AbstractTableModel implements SourceMonta
 	@Override
 	public void setValueAt(Object value, int rowIndex, int columnIndex) {
 
-		if (columnIndex == INDEX_COLUMN || columnIndex == PRIMARY_LABEL_COLUMN) {
+		if (columnIndex == INDEX_COLUMN) {
 			return;
 		}
 
-		if (columnIndex == LABEL_COLUMN) {
+		if (columnIndex == LABEL_COLUMN || columnIndex == PRIMARY_LABEL_COLUMN) { //TODO - mati - parse reference, set reference
 			try {
 				montage.setMontageChannelLabelAt(rowIndex, (String) value);
 			} catch (MontageException ex) {

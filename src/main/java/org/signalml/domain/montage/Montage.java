@@ -641,6 +641,38 @@ public class Montage extends SourceMontage implements Preset {
 
         /**
          * For a {@link MontageChannel montage channel} of a given index,
+         * returns a string representing its references
+         * @param index an index of the montage channel
+         * @return a string representing channel`s references
+         */
+
+	public String getReferenceReadable(int index) {
+		String[] references = new String[sourceChannels.size()];
+		montageChannels.get(index).getReferences(references);
+		String result = ""; // start with the first element
+		String ONE = "1", MINUS = "-";
+		for (int i=0; i<references.length; i++) {
+			if (references[i] == null) 
+				// null means that no reference for given sourceChannel is present
+				continue;
+			else {
+				// combine current reference with other - inster '*' chars etc
+				String pre = "";
+				if ((references[i].startsWith(MINUS)) || (result.length() == 0))
+					pre = "";
+				else
+					pre = "+";
+				if (!references[i].equals(ONE))
+					pre = pre + references[i] + "*";
+				result = result + pre +sourceChannels.get(i).getLabel();
+			}
+		}
+		return result;
+	}
+
+
+        /**
+         * For a {@link MontageChannel montage channel} of a given index,
          * returns an array of references in the form of floats
          * (converted from Strings).
          * @param index an index of MontageChannel object

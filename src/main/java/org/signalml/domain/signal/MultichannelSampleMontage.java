@@ -248,7 +248,14 @@ public class MultichannelSampleMontage extends MultichannelSampleProcessor {
 		int primaryChannel = montage[channel].primaryChannel;
 		int i, e;
 
-		source.getSamples(primaryChannel, target, signalOffset, count, arrayOffset);
+		//In case we have 'fake' primaryChannel (eg. in montage there is a channel added by 'add empty channel'
+		//we need to immitate source samples as 0
+		if (source.getChannelCount() > primaryChannel)
+			source.getSamples(primaryChannel, target, signalOffset, count, arrayOffset);
+		else
+			for (i=arrayOffset;i<arrayOffset+count;i++)
+				target[i] = (double) 0.0;
+
 		float coeff = matrixData[channel][primaryChannel];
 		int idx;
 		if (coeff != 1) {
@@ -361,9 +368,9 @@ public class MultichannelSampleMontage extends MultichannelSampleProcessor {
 
 		int srcCnt = montage.getSourceChannelCount();
 
-		if (srcCnt != source.getChannelCount()) {
+		/*if (srcCnt != source.getChannelCount()) {
 			throw new MontageMismatchException("error.badChannelCount");
-		}
+			}*/
 
 		int cnt = montage.getMontageChannelCount();
 

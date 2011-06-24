@@ -26,6 +26,11 @@ public enum ChannelType implements MessageSourceResolvable {
 	 */
 	OTHER,
 	/**
+	 * an empty (fake) channel
+	 */
+	EMPTY,
+
+	/**
 	 * unknown type
 	 */
 	UNKNOWN

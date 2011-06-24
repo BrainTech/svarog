@@ -5,7 +5,7 @@
 package org.signalml.domain.montage;
 
 import org.springframework.validation.Errors;
-
+import org.signalml.domain.montage.ChannelType;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
@@ -39,6 +39,8 @@ public class RawMontageGenerator implements MontageGenerator {
 
 			int size = montage.getSourceChannelCount();
 			for (int i=0; i<size; i++) {
+				if (montage.getSourceChannelFunctionAt(i).getType() == ChannelType.EMPTY)
+					continue;
 				montage.addMontageChannel(i);
 			}
 		} finally {
