@@ -652,11 +652,12 @@ public class Montage extends SourceMontage implements Preset {
 		String result = ""; // start with the first element
 		String ONE = "1", MINUS = "-";
 		for (int i=0; i<references.length; i++) {
-			if (references[i] == null) 
+			if ((references[i] == null) || (this.getSourceChannelFunctionAt(i).getType() == ChannelType.EMPTY))
 				// null means that no reference for given sourceChannel is present
+				// empty is 0 - also ignore
 				continue;
 			else {
-				// combine current reference with other - inster '*' chars etc
+				// combine current reference with other - insert '*' chars etc
 				String pre = "";
 				if ((references[i].startsWith(MINUS)) || (result.length() == 0))
 					pre = "";

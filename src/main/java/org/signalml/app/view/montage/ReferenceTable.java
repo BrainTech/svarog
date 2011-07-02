@@ -9,12 +9,22 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JViewport;
+import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.event.TableColumnModelEvent;
@@ -28,7 +38,7 @@ import org.signalml.app.view.element.CenteringTableCellRenderer;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class ReferenceTable extends JTable {
+public class ReferenceTable extends JTable implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -42,14 +52,17 @@ public class ReferenceTable extends JTable {
 
 		setTableHeader(null);
 		setDefaultRenderer(String.class, new ReferenceTableCellRenderer());
-		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		setCellSelectionEnabled(true);
 		setAutoResizeMode(AUTO_RESIZE_OFF);
 
 		setRowHeight(CELL_SIZE);
 
 		setToolTipText("");
-
+		
+		//hook on 'paste' action
+	    KeyStroke paste = KeyStroke.getKeyStroke(KeyEvent.VK_V,ActionEvent.CTRL_MASK,false);
+	    this.registerKeyboardAction(this,"Paste",paste,JComponent.WHEN_FOCUSED);
 	}
 
 	@Override
@@ -187,6 +200,27 @@ public class ReferenceTable extends JTable {
 			return getPreferredSize();
 		}
 
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent evt) {
+		//If current action is 'paste' then copy string from the clipboard and paste it to current cell
+		if (evt.getActionCommand().compareTo("Paste")==0) {
+			Clipboard system = Toolkit.getDefaultToolkit().getSystemClipboard();
+            String trstring="";
+			try {
+				trstring = (String)(system.getContents(this).getTransferData(DataFlavor.stringFlavor));
+			} catch (UnsupportedFlavorException e) {
+				return;
+			} catch (IOException e) {
+				return;
+			}
+	        int[] cols = this.getSelectedColumns();
+	        int[] rows = this.getSelectedRows();
+	        for (int i = 0; i < rows.length; i++)
+	        	for (int j = 0; j < cols.length; j++)
+	        		this.setValueAt(trstring, rows[i], cols[j]);
+		}
 	}
 
 }
