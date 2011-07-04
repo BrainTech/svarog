@@ -76,9 +76,10 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>		
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
 
-		<protobuf.source_dir>src/main/protobuf</protobuf.source_dir>
+		<protobuf.source_dir>${project.basedir}/src/main/protobuf</protobuf.source_dir>
 		<protobuf.proto_file>variables.proto</protobuf.proto_file>
 		<protobuf.rules_file>multiplexer.rules</protobuf.rules_file>
+		<protobuf.generated_sources_dir>${project.build.directory}/generated-sources</protobuf.generated_sources_dir>
 
 		<multiplexer.jmx.version>0.9.1</multiplexer.jmx.version>
 		<springframework.version>2.0.7</springframework.version>
@@ -188,11 +189,11 @@
 						<phase>generate-sources</phase>
 						<configuration>
 							<tasks>
-								<mkdir dir="target/generated-sources"/>
+								<mkdir dir="${protobuf.generated_sources_dir}"/>
 								<exec executable="protoc" failonerror="true">
 									<arg value="-I" />
 									<arg value="${protobuf.source_dir}" />
-									<arg value="--java_out=target/generated-sources"/>
+									<arg value="--java_out=${protobuf.generated_sources_dir}"/>
 									<arg value="${protobuf.source_dir}/${protobuf.proto_file}" />
 								</exec>
 
@@ -200,14 +201,14 @@
 									<arg value="-input"/>
 									<arg value="${protobuf.source_dir}/${protobuf.rules_file}"/>
 									<arg value="-outdir"/>
-									<arg value="target/generated-sources/org/signalml/multiplexer/protocol"/>
+									<arg value="${protobuf.generated_sources_dir}/org/signalml/multiplexer/protocol"/>
 									<arg value="-class"/>
 									<arg value="SvarogConstants"/>
 									<arg value="-package"/>
 									<arg value="org.signalml.multiplexer.protocol"/>
 								</java>
 							</tasks>
-							<sourceRoot>target/generated-sources</sourceRoot>
+							<sourceRoot>${protobuf.generated_sources_dir}</sourceRoot>
 						</configuration>
 						<goals>
 							<goal>run</goal>
@@ -220,7 +221,7 @@
 						<configuration>
 							<tasks>
 								<property name="runtime_classpath" refid="maven.runtime.classpath"/>
-								<echo message="runtime classpath: ${runtime_classpath}"/>
+								<echo message="runtime CLASSPATH=${runtime_classpath}"/>
 							</tasks>
 						</configuration>
 						<goals>
