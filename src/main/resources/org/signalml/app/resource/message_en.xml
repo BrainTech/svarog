@@ -674,6 +674,16 @@
 	<entry key="opensignal.signalsource.OPENBCI">OpenBCI</entry>
 	<entry key="opensignal.signalsource.AMPLIFIER">Amplifier</entry>
 
+        <entry key="opensignal.fileChooser.showFavorities">Show favorities</entry>	
+        <entry key="opensignal.fileChooser.hideFavorities">Hide favorities</entry>	
+        <entry key="opensignal.fileChooser.favorities">Favorities</entry>	
+        <entry key="opensignal.fileChooser.removeFromFavorities">Remove from favorities</entry>
+        <entry key="opensignal.fileChooser.addToFavorities">Add current directory from favorities</entry>
+        <entry key="opensignal.fileChooser.goToFavorities">Choose location</entry>
+        <entry key="opensignal.fileChooser.history">History</entry>
+        <entry key="opensignal.fileChooser.lastDirs">Last directories</entry>
+        <entry key="opensignal.fileChooser.lastFiles">Last files</entry>
+
         <entry key="opensignal.signalParametersPanelTitle">Signal parameters</entry>
 	<entry key="opensignal.parameters.samplingFrequency">Sampling frequency: </entry>
 	<entry key="opensignal.parameters.channelCount">Channel count: </entry>

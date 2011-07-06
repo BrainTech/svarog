@@ -25,6 +25,8 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration {
 
 	private boolean dontShowDynamicCompilationWarning;
 
+	private String[] favouriteDirs;
+	private String[] lastDirs;
 	private String lastOpenTagPath;
 	private String lastImportTagPath;
 	private String lastExportTagPath;
@@ -141,6 +143,22 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration {
 	@Override
 	public String getStandardFilename() {
 		return "application-config.xml";
+	}
+
+	public String[] getFavouriteDirs() {
+		return favouriteDirs;
+	}
+
+	public void setFavouriteDirs(String[] dirs) {
+		this.favouriteDirs = dirs;
+	}
+
+	public String[] getLastDirs() {
+		return lastDirs;
+	}
+
+	public void setLastDirs(String[] dirs) {
+		this.lastDirs = dirs;
 	}
 
 	public String getLastOpenTagPath() {

@@ -6,6 +6,7 @@ package org.signalml.app.view.opensignal;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import java.awt.GridBagConstraints;
 import org.signalml.app.view.element.EmbeddedFileChooser;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
@@ -40,12 +41,17 @@ public class SignalParametersPanelForRawSignalFile extends AbstractSignalParamet
 		getSamplingFrequencyComboBox().setEditable(true);
 	}
 
+
 	@Override
-	protected JPanel createButtonPanel() {
-		JPanel buttonPanel = super.createButtonPanel();
-		buttonPanel.add(new JButton(getReadManifestAction()));
-		return buttonPanel;
+	protected int createFieldsPanelElements(JPanel fieldsPanel, GridBagConstraints constraints, int startingRow) {
+		int row = startingRow;
+                fillConstraints(constraints, 0, row, 0, 0, 1);
+                fieldsPanel.add(new JButton(getReadManifestAction()), constraints);
+		row++;
+		return super.createFieldsPanelElements(fieldsPanel, constraints, row);
 	}
+
+
 
 	/**
 	 * Returns the action called when the user chooses an option to
