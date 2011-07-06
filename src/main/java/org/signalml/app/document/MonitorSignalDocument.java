@@ -54,7 +54,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	/**
 	 * The name of this document.
 	 */
-	private String name;
+	private String name="Signal online";
 
 	/**
 	 * Describes the parameters of the monitor connected to this {@link MonitorSignalDocument}.
@@ -529,5 +529,6 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	public OpenMonitorDescriptor getOpenMonitorDescriptor() {
 		return monitorOptions;
 	}
+
 
 }
