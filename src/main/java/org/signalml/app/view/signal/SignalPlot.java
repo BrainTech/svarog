@@ -44,6 +44,7 @@ import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
+import org.signalml.app.model.ChannelsPlotOptionsModel;
 import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.tag.TagPaintMode;
 import org.signalml.app.view.tag.TagRenderer;
@@ -145,6 +146,8 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	private DefaultBoundedRangeModel timeScaleRangeModel;
 	private DefaultBoundedRangeModel valueScaleRangeModel;
 	private DefaultBoundedRangeModel channelHeightRangeModel;
+	
+	private ChannelsPlotOptionsModel channelsPlotOptionsModel;
 
 	// the plot must be aware of its own viewport to draw fixed-position elements properly
 	private JViewport viewport;
@@ -272,6 +275,9 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 		signalPlotColumnHeader = new SignalPlotColumnHeader(this);
 		signalPlotRowHeader = new SignalPlotRowHeader(this);
+		channelsPlotOptionsModel = new ChannelsPlotOptionsModel(this);
+		channelsPlotOptionsModel.setVoltageScale(-1, valueScaleRangeModel.getValue());
+		signalPlotRowHeader.setChannelOptionsPopupDialog(view.getChannelOptionsPopupDialog());
 
 		if (masterPlot == null) {
 
@@ -465,7 +471,6 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		if( signalPlotColumnHeader != null ) {
 			signalPlotRowHeader.reset();
 		}
-
 	}
 
 	public void destroy() {
@@ -793,7 +798,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		}
 
 		int channel;
-
+		System.out.println("CHANNEL COUNT PAINT "+channelCount);
 		int startChannel = (int) Math.max( 0, Math.floor( ((double) clip.y) / pixelPerChannel ) );
 		int endChannel = (int) Math.min( channelCount-1, Math.ceil( ((double) clipEndY) / pixelPerChannel ) );
 
@@ -2101,6 +2106,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 	public void setSignalChain(SignalProcessingChain signalChain) {
 		this.signalChain = signalChain;
+
 	}
 
 	public OriginalMultichannelSampleSource getSignalSource() {
@@ -2299,6 +2305,10 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	public double getVoltageZoomFactor() {
 		return voltageZoomFactor;
 	}
+	
+	public double getVoltageZoomFactorRatio() {
+		return voltageZoomFactorRatio;
+	}
 
 	public void setVoltageZoomFactor(double voltageZoomFactor) {
 		if (this.voltageZoomFactor != voltageZoomFactor) {
@@ -2324,6 +2334,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 				signalPlotRowHeader.repaint();
 			}
 			repaint();
+			this.channelsPlotOptionsModel.setVoltageScale(-1, valueScaleRangeModel.getValue());
 			firePropertyChange(VOLTAGE_ZOOM_FACTOR_PROPERTY, oldValue, voltageZoomFactor);
 		}
 	}
@@ -2788,7 +2799,9 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		if (tagDocument instanceof TagDocument)
 			tagChannelSelection((TagDocument) tagDocument, new TagStyle(style), new SignalSelection(selection), selectNew);
 		else throw new InvalidClassException("only document got from SvarogAccess can be used");
-
 	}
-
+	
+	public ChannelsPlotOptionsModel getChannelsPlotOptionsModel() {
+		return this.channelsPlotOptionsModel;
+	}
 }

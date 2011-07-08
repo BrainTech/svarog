@@ -105,6 +105,7 @@ import org.signalml.app.view.element.LockableJSplitPane;
 import org.signalml.app.view.element.TitledSliderPanel;
 import org.signalml.app.view.monitor.StartMonitorRecordingDialog;
 import org.signalml.app.view.montage.SignalMontageDialog;
+import org.signalml.app.view.signal.popup.ChannelOptionsPopupDialog;
 import org.signalml.app.view.signal.popup.CompareTagsPopupDialog;
 import org.signalml.app.view.signal.popup.SignalPlotOptionsPopupDialog;
 import org.signalml.app.view.signal.popup.SlavePlotSettingsPopupDialog;
@@ -267,6 +268,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	private SignalPlotOptionsPopupDialog signalPlotOptionsPopupDialog;
 	private ZoomSettingsPopupDialog zoomSettingsDialog;
 	private SlavePlotSettingsPopupDialog slavePlotSettingsPopupDialog;
+	private ChannelOptionsPopupDialog channelOptionsPopupDialog;
 
 	private CardLayout tagToolBarLayout;
 	private JPanel tagToolBarPanel;
@@ -1439,6 +1441,13 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 	public void setSlavePlotSettingsPopupDialog(SlavePlotSettingsPopupDialog slavePlotSettingsPopupDialog) {
 		this.slavePlotSettingsPopupDialog = slavePlotSettingsPopupDialog;
+	}
+	
+	public ChannelOptionsPopupDialog getChannelOptionsPopupDialog() {
+		return this.channelOptionsPopupDialog;
+	}
+	public void setChannelOptionsPopupDialog(ChannelOptionsPopupDialog channelOptionsPopupDialog) {
+		this.channelOptionsPopupDialog = channelOptionsPopupDialog;
 	}
 
 	private SignalPlotOptionsPopupDialog getPlotOptionsDialog() {

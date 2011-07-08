@@ -122,6 +122,7 @@ import org.signalml.app.view.montage.filters.EditFFTSampleFilterDialog;
 import org.signalml.app.view.montage.filters.EditTimeDomainSampleFilterDialog;
 import org.signalml.app.view.montage.SignalMontageDialog;
 import org.signalml.app.view.signal.SignalView;
+import org.signalml.app.view.signal.popup.ChannelOptionsPopupDialog;
 import org.signalml.app.view.signal.popup.SlavePlotSettingsPopupDialog;
 import org.signalml.app.view.tag.comparison.TagComparisonDialog;
 import org.signalml.codec.SignalMLCodecManager;
@@ -275,6 +276,7 @@ public class ViewerElementManager {
 	private NewTagDialog newTagDialog;
 	private EditTagAnnotationDialog editTagAnnotationDialog;
 	private SlavePlotSettingsPopupDialog slavePlotSettingsPopupDialog;
+	private ChannelOptionsPopupDialog channelOptionsPopupDialog;
 	private TagStylePaletteDialog tagStylePaletteDialog;
 	private HelpDialog helpDialog;
 	private TagComparisonDialog tagComparisonDialog;
@@ -1265,6 +1267,17 @@ public class ViewerElementManager {
 		}
 		return slavePlotSettingsPopupDialog;
 	}
+	
+	public ChannelOptionsPopupDialog getChannelOptionsPopupDialog() {
+		if (channelOptionsPopupDialog == null) {
+			channelOptionsPopupDialog = new ChannelOptionsPopupDialog(messageSource, getDialogParent(), true);
+			// XXX this dialog reuses the main window's instance of the montage dialog
+			// this seems to work and since the dialog is very big we try to keep it
+			// like this if it works
+			//channelOptionsPopupDialog.setSignalMontageDialog(getSignalMontageDialog());
+		}
+		return channelOptionsPopupDialog;
+	}
 
 	public TagStylePaletteDialog getTagStylePaletteDialog() {
 		if (tagStylePaletteDialog == null) {
@@ -1938,6 +1951,7 @@ public class ViewerElementManager {
 			signalView.setMessageSource(messageSource);
 			signalView.setActionFocusManager(getActionFocusManager());
 			signalView.setSlavePlotSettingsPopupDialog(getSlavePlotSettingsPopupDialog());
+			signalView.setChannelOptionsPopupDialog(getChannelOptionsPopupDialog());
 			signalView.setErrorsDialog(getErrorsDialog());
 			signalView.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 			signalView.setMontagePresetManager(getMontagePresetManager());
