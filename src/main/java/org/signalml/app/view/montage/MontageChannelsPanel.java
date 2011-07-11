@@ -36,6 +36,7 @@ import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.dialog.SeriousWarningDialog;
 import org.signalml.app.view.montage.dnd.MontageWasteBasket;
 import org.signalml.app.view.montage.dnd.MontageWasteBasketTransferHandler;
+import org.signalml.domain.montage.GenericChannel;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.ChannelType;
 import org.signalml.domain.montage.eeg.EegChannel;
@@ -74,10 +75,10 @@ public class MontageChannelsPanel extends JPanel {
 	private Action moveUpAction;
 	private Action moveDownAction;
 	private Action addChannelsAction;
-	private Action addEmptyChannelAction;
 	private Action removeChannelsAction;
 
-	private Action addSourceChannelAction;
+	private Action addZeroChannelAction;
+	private Action addOneChannelAction;
 	private Action removeSourceChannelAction;
 	private Action clearMontageAction;
 
@@ -85,10 +86,10 @@ public class MontageChannelsPanel extends JPanel {
 	private JButton moveDownButton;
 
 	private JButton addChannelsButton;
-	private JButton addEmptyChannelButton;
 	private JButton removeChannelsButton;
 
-	private JButton addSourceChannelButton;
+	private JButton addZeroChannelButton;
+	private JButton addOneChannelButton;
 	private JButton removeSourceChannelButton;
 
 	private JButton clearMontageButton;
@@ -107,10 +108,10 @@ public class MontageChannelsPanel extends JPanel {
 		moveDownAction = new MoveDownAction();
 
 		addChannelsAction = new AddChannelsAction();
-		addEmptyChannelAction = new AddEmptyChannelAction();
 		removeChannelsAction = new RemoveChannelsAction();
 
-		addSourceChannelAction = new AddSourceChannelAction();
+		addZeroChannelAction = new AddSourceChannelAction(0, messageSource.getMessage("sourceMontageTable.addZeroChannel"));
+		addOneChannelAction = new AddSourceChannelAction(1, messageSource.getMessage("sourceMontageTable.addOneChannel"));
 		removeSourceChannelAction = new RemoveSourceChannelAction();
 
 		clearMontageAction = new ClearMontageAction();
@@ -124,15 +125,13 @@ public class MontageChannelsPanel extends JPanel {
 		addChannelsButton = new JButton(addChannelsAction);
 		addChannelsButton.setHorizontalAlignment(SwingConstants.LEFT);
 
-		addEmptyChannelButton = new JButton(addEmptyChannelAction);
-		addEmptyChannelButton.setHorizontalAlignment(SwingConstants.LEFT);
-
 		removeChannelsButton = new JButton(removeChannelsAction);
 		removeChannelsButton.setHorizontalAlignment(SwingConstants.LEFT);
 
-		SwingUtils.makeButtonsSameSize(new JButton[] { moveUpButton, moveDownButton, addChannelsButton, addEmptyChannelButton, removeChannelsButton });
+		SwingUtils.makeButtonsSameSize(new JButton[] { moveUpButton, moveDownButton, addChannelsButton, removeChannelsButton });
 
-		addSourceChannelButton = new JButton(addSourceChannelAction);
+		addZeroChannelButton = new JButton(addZeroChannelAction);
+		addOneChannelButton = new JButton(addOneChannelAction);
 		removeSourceChannelButton = new JButton(removeSourceChannelAction);
 
 		clearMontageButton = new JButton(clearMontageAction);
@@ -146,7 +145,6 @@ public class MontageChannelsPanel extends JPanel {
 		buttonPanel.add(moveDownButton);
 		buttonPanel.add(Box.createVerticalStrut(6));
 		buttonPanel.add(addChannelsButton);
-		buttonPanel.add(addEmptyChannelButton);
 		buttonPanel.add(Box.createVerticalStrut(3));
 		buttonPanel.add(removeChannelsButton);
 		buttonPanel.add(Box.createVerticalStrut(6));
@@ -203,7 +201,6 @@ public class MontageChannelsPanel extends JPanel {
 		moveDownAction.setEnabled(montageSelectionContiguous);
 
 		addChannelsAction.setEnabled(sourceSelection);
-		addEmptyChannelAction.setEnabled(true);
 		removeChannelsAction.setEnabled(montageSelection);
 
 	}
@@ -222,7 +219,9 @@ public class MontageChannelsPanel extends JPanel {
 			sourceButtonPanel.setLayout(new BoxLayout(sourceButtonPanel, BoxLayout.X_AXIS));
 			sourceButtonPanel.setBorder(new EmptyBorder(5,0,0,0));
 
-			sourceButtonPanel.add(addSourceChannelButton);
+			sourceButtonPanel.add(addZeroChannelButton);
+			sourceButtonPanel.add(Box.createHorizontalStrut(5));
+			sourceButtonPanel.add(addOneChannelButton);
 			sourceButtonPanel.add(Box.createHorizontalStrut(5));
 			sourceButtonPanel.add(removeSourceChannelButton);
 			sourceButtonPanel.add(Box.createHorizontalGlue());
@@ -353,8 +352,6 @@ public class MontageChannelsPanel extends JPanel {
 	public void setSignalBound(boolean signalBound) {
 		if (this.signalBound != signalBound) {
 			this.signalBound = signalBound;
-			addSourceChannelAction.setEnabled(!signalBound);
-			removeSourceChannelAction.setEnabled(!signalBound);
 		}
 	}
 
@@ -463,31 +460,6 @@ public class MontageChannelsPanel extends JPanel {
 
 	}
 
-	protected class AddEmptyChannelAction extends AbstractAction {
-
-		private static final long serialVersionUID = 1L;
-
-		public AddEmptyChannelAction() {
-			super(messageSource.getMessage("montageTable.addEmptyChannel"));
-			//putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/addchannels.png"));
-		}
-
-		public void actionPerformed(ActionEvent ev) {
-			String lb = montage.getNewMontageChannelLabel("EMPTY");
-			try {
-				if (montage.getSourceChannelFunctionAt(montage.getSourceChannelCount()-1).getType() != ChannelType.EMPTY)
-					montage.addSourceChannel(lb, EegChannel.EMPTY);
-				int[] inds = montage.addMontageChannels(montage.getSourceChannelCount()-1, 1);				
-			} catch (MontageException ex) {
-				logger.error("Failed to add empty channel", ex);
-				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-				return;
-			}
-
-		}
-
-	}
-
 	protected class RemoveChannelsAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
@@ -507,7 +479,7 @@ public class MontageChannelsPanel extends JPanel {
 			}
 			int lastRow = selectionModel.getMaxSelectionIndex();
 
-			int[] selection = new int[getSourceMontageTable().getRowCount()];
+			int[] selection = new int[getMontageTable().getRowCount()];
 			int cnt = 0;
 
 			for (int i=firstRow; i<=lastRow; i++) {
@@ -528,20 +500,28 @@ public class MontageChannelsPanel extends JPanel {
 	protected class AddSourceChannelAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
-
-		public AddSourceChannelAction() {
-			super(messageSource.getMessage("sourceMontageTable.addChannel"));
+		private int channelType;
+		public AddSourceChannelAction(int t, String msg) {
+			super(msg);
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/addsourcechannel.png"));
+			this.channelType = t;
 		}
 
 		public void actionPerformed(ActionEvent ev) {
 
-			if (signalBound) {
+			/*if (signalBound) {
 				return;
-			}
+			}*/
 
 			try {
-				montage.addSourceChannel(montage.getNewSourceChannelLabel(messageSource.getMessage("new")), montage.getSignalTypeConfigurer().genericChannel());
+				if (this.channelType == 0) {
+					String lb = montage.getNewSourceChannelLabel(messageSource.getMessage("sourceMontageTable.ZERO"));
+					montage.addSourceChannel(lb, EegChannel.ZERO);
+				} else {//assumed ONE
+					String lb = montage.getNewSourceChannelLabel(messageSource.getMessage("sourceMontageTable.ONE"));
+					montage.addSourceChannel(lb, EegChannel.ONE);
+				}
+				
 			} catch (MontageException ex) {
 				logger.error("Failed to add source channel", ex);
 				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);

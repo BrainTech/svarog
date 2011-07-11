@@ -863,8 +863,12 @@
 	<entry key="sourceMontageTable.index">Index</entry>
 	<entry key="sourceMontageTable.label">Label</entry>
 	<entry key="sourceMontageTable.function">Function</entry>
+	<entry key="sourceMontageTable.ONE">ONE</entry>
+	<entry key="sourceMontageTable.ZERO">ZERO</entry>
 	<entry key="sourceMontageTable.addChannel">More channels</entry>
-	<entry key="sourceMontageTable.removeChannel">Less channels</entry>
+	<entry key="sourceMontageTable.addZeroChannel">ZEROs channel</entry>
+	<entry key="sourceMontageTable.addOneChannel">ONEs channel</entry>
+	<entry key="sourceMontageTable.removeChannel">Remove</entry>
 
 	<entry key="montageTable.title">Target montage</entry>
 	<entry key="montageTable.index">Index</entry>
@@ -1681,6 +1685,7 @@
 	<entry key="error.sourceChannelLabelBadChars">Source channel label must not contain control characters</entry>
 	<entry key="error.sourceChannelLabelDuplicate">Source channel label duplicate</entry>
 	<entry key="error.sourceChannelFunctionDuplicate">This channel function is declared as unique and is already marked in the source</entry>
+	<entry key="error.sourceChannelFunctionImmutable">This channel function is immutable. To alter the channel You need to remove it and create a new one.</entry>
 	<entry key="error.montageChannelLabelEmpty">Target channel label empty</entry>
 	<entry key="error.montageChannelLabelBadChars">Target channel label must not contain control characters</entry>
 	<entry key="error.montageChannelLabelDuplicate">Target channel label duplicate</entry>

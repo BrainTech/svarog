@@ -37,6 +37,13 @@ public interface Channel extends MessageSourceResolvable, Serializable {
          * @return true if this channel is unique, false otherwise
          */
 	boolean isUnique();
+	
+    /**
+     * Returns if this channel is mutable
+     * @return true if this channel is mutable, false otherwise
+     */
+	boolean isMutable();
+
 
         /**
          * Returns the number of a column in the matrix in which

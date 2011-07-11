@@ -665,7 +665,11 @@ public class Montage extends SourceMontage implements Preset {
 					pre = "+";
 				if (!references[i].equals(ONE))
 					pre = pre + references[i] + "*";
-				result = result + pre +sourceChannels.get(i).getLabel();
+				
+				if (this.getSourceChannelFunctionAt(i).getType() == ChannelType.ONE)
+					result = result + pre + "1";
+				else
+					result = result + pre + sourceChannels.get(i).getLabel();
 			}
 		}
 		return result;

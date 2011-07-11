@@ -71,13 +71,13 @@ public enum EegChannel implements Channel {
 	// EOG
 	EOGL("EOGL", ChannelType.OTHER, true, "[Ee][Oo][Gg]\\s*[Ll]"),
 	EOGP("EOGP", ChannelType.OTHER, true, "[Ee][Oo][Gg]\\s*[Pp]"),
-	ZERO("ZERO", ChannelType.ZERO, true, "ZERO"),
-	ONE("ONE", ChannelType.ONE, true, "ONE"),
 	// The rest
 	ECG("ECG", ChannelType.OTHER, true, "[Ee][CcKk][Gg]"),
 	EMG("EMG", ChannelType.OTHER, true, "[Ee][Mm][Gg]"),
 	RESP("RESP", ChannelType.OTHER, true, "[Rr][Ee][Ss][Pp]"),
-	SAO2("SaO2", ChannelType.OTHER, true, "[Ss][Aa]\\s*[Oo]2")
+	SAO2("SaO2", ChannelType.OTHER, true, "[Ss][Aa]\\s*[Oo]2"),
+	ZERO("ZERO", ChannelType.ZERO, true, false, "ZERO"),
+	ONE("ONE", ChannelType.ONE, true, false, "ONE")
 
 	;
 
@@ -101,6 +101,12 @@ public enum EegChannel implements Channel {
          * a variable telling if this channel is unique
          */
 	private boolean unique;
+    /**
+     * a variable telling if this channel is mutable
+     */
+	private boolean mutable;
+
+
 
         /**
          * the number of a column in which this channel is located
@@ -156,6 +162,7 @@ public enum EegChannel implements Channel {
          * is located
          */
 	private EegChannel(String name, ChannelType type, boolean unique, String pattern, int matrixCol, int matrixRow) {
+		this.mutable=true;
 		this.name = name;
 		this.type = type;
 		this.unique = unique;
@@ -183,6 +190,19 @@ public enum EegChannel implements Channel {
 		}
 		this.matrixCol = -1;
 		this.matrixRow = -1;
+	}
+    /**
+     * Constructor.
+     * @param name the name of the channel
+     * @param type the type of the channel
+     * @param unique is the channel unique?
+     * @param unique is the channel mutable?
+     * @param pattern the regular expression which will be used to search
+     * channel by name
+     */
+	private EegChannel(String name, ChannelType type, boolean unique, boolean mutable, String pattern) {
+		this(name, type, unique, pattern);
+		this.mutable=mutable;
 	}
 
         /**
@@ -408,6 +428,11 @@ public enum EegChannel implements Channel {
 	@Override
 	public String getDefaultMessage() {
 		return name;
+	}
+
+	@Override
+	public boolean isMutable() {
+		return this.mutable;
 	}
 
 }

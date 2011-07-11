@@ -352,8 +352,8 @@ public class RawSignalSampleSource extends AbstractMultichannelSampleSource impl
 		synchronized (this) {
 
 			if (channel < 0 || channel >= channelCount) {
-				throw new IndexOutOfBoundsException("Bad channel number [" + channel + "]");
-			}
+					throw new IndexOutOfBoundsException("Bad channel number [" + channel + "]");
+					}
 			if ((signalOffset < 0) || ((signalOffset + count) > sampleCount)) {
 				throw new IndexOutOfBoundsException("Signal range [" + signalOffset + ":" + count + "] doesn't fit in the signal");
 			}

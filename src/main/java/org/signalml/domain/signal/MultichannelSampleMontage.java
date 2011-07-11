@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import org.apache.log4j.Logger;
+import org.signalml.domain.montage.ChannelType;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageChannel;
 import org.signalml.domain.montage.MontageMismatchException;
@@ -243,18 +244,20 @@ public class MultichannelSampleMontage extends MultichannelSampleProcessor {
          */
 	@Override
 	public void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
-
-		int channelCnt = source.getChannelCount();
+		
+		int channelCnt = this.currentMontage.getSourceChannelCount();
 		int primaryChannel = montage[channel].primaryChannel;
 		int i, e;
 
 		//In case we have 'fake' primaryChannel (eg. in montage there is a channel added by 'add empty channel'
 		//we need to immitate source samples as 0
-		if (source.getChannelCount() > primaryChannel)
+		if (currentMontage.getSourceChannelFunctionAt(primaryChannel).getType() == ChannelType.ZERO) {
+			this.fillSamplesWith((double) 0.0, target, signalOffset, count, arrayOffset);
+		} else if (currentMontage.getSourceChannelFunctionAt(primaryChannel).getType() == ChannelType.ONE) {
+			this.fillSamplesWith((double) 1.0, target, signalOffset, count, arrayOffset);
+		} else {
 			source.getSamples(primaryChannel, target, signalOffset, count, arrayOffset);
-		else
-			for (i=arrayOffset;i<arrayOffset+count;i++)
-				target[i] = (double) 0.0;
+		}
 
 		float coeff = matrixData[channel][primaryChannel];
 		int idx;
@@ -275,7 +278,12 @@ public class MultichannelSampleMontage extends MultichannelSampleProcessor {
 				if (auxSamples == null || auxSamples.length < count) {
 					auxSamples = new double[count];
 				}
-				source.getSamples(i, auxSamples, signalOffset, count, 0);
+				if (currentMontage.getSourceChannelFunctionAt(i).getType() == ChannelType.ZERO)
+					this.fillSamplesWith((double) 0.0, auxSamples, signalOffset, count, 0);
+				else if (currentMontage.getSourceChannelFunctionAt(i).getType() == ChannelType.ONE)
+					this.fillSamplesWith((double) 1.0, auxSamples, signalOffset, count, 0);
+				else
+					source.getSamples(i, auxSamples, signalOffset, count, 0);
 				idx = arrayOffset;
 				if (coeff != 1) {
 					for (e=0; e<count; e++) {
@@ -292,7 +300,12 @@ public class MultichannelSampleMontage extends MultichannelSampleProcessor {
 		}
 
 	}
-
+	protected void fillSamplesWith(double value, double[] target, int signalOffset, int count, int arrayOffset) {
+			for (int i=arrayOffset;i<arrayOffset+count;i++)
+				target[i] = value;
+	}	
+			
+			
         /**
          * Returns an array of entries holding information about
          * {@link MontageChannel montage channels}. Indexes in the array are the

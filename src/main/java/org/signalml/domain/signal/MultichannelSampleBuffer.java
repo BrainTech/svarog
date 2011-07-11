@@ -93,7 +93,7 @@ public class MultichannelSampleBuffer extends MultichannelSampleProcessor {
          * from which samples will be written
          */
 	@Override
-	public void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
+	public void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {		
 		if (count > bufferLength) {
 			logger.warn(String.format("Unable to use buffer - buffer too small: count=%d bufferLength=%d",
 						  count, bufferLength));

@@ -247,10 +247,10 @@ public class SourceMontage {
 				}
 			}
 		} else if (dCnt < mCnt) {
-			for (int i=mCnt; i>dCnt; i--) {
-				if ((this.getSourceChannelFunctionAt(this.getSourceChannelCount()-1).getType() == ChannelType.ZERO)
-					|| (this.getSourceChannelFunctionAt(this.getSourceChannelCount()-1).getType() == ChannelType.ONE))
-					break;
+			for (int i=mCnt-1; i>=dCnt; i--) {
+				if ((this.getSourceChannelFunctionAt(i).getType() == ChannelType.ZERO)
+					|| (this.getSourceChannelFunctionAt(i).getType() == ChannelType.ONE))
+					continue;
 				removeSourceChannel();
 			}
 		}
@@ -464,6 +464,9 @@ public class SourceMontage {
 			if (function.isUnique() && !list.isEmpty()) {
 				throw new MontageException("error.sourceChannelFunctionDuplicate");
 			}
+			if (!function.isMutable()) {
+				throw new MontageException("error.sourceChannelFunctionImmutable");
+			}
 			LinkedList<SourceChannel> oldList = getSourceChannelsByFunctionList(oldFunction);
 			oldList.remove(channel);
 			channel.setFunction(function);
@@ -588,7 +591,7 @@ public class SourceMontage {
 		getSourceChannelsByLabel().remove(channel.getLabel());
 		getSourceChannelsByFunctionList(channel.getFunction()).remove(channel);
 		sourceChannels.remove(index);
-		fireSourceMontageChannelAdded(this, index);
+		fireSourceMontageChannelRemoved(this, index);
 		setChanged(true);
 
 		return channel;
