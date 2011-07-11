@@ -2,12 +2,11 @@ package org.signalml.plugin.newartifact.logic.tag.creators;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.TreeSet;
 
 import org.signalml.plugin.newartifact.data.NewArtifactType;
 import org.signalml.plugin.newartifact.data.tag.NewArtifactTagData;
 import org.signalml.plugin.newartifact.data.tag.NewArtifactTagResult;
-import org.signalml.plugin.newartifact.logic.tag.VerticalMaxHelper;
+import org.signalml.plugin.newartifact.logic.tag.NewArtifactVerticalMaxHelper;
 
 public class EyeBlinksTagCreator extends AbstractNewArtifactTagCreator
 	implements INewArtifactTagCreator {
@@ -52,9 +51,8 @@ public class EyeBlinksTagCreator extends AbstractNewArtifactTagCreator
 		double channelMax[] = new double[blockCount];
 		List<Integer> tags = new LinkedList<Integer>();
 
-
 		for (int i = 0; i < blockCount; ++i) {
-			channelMax[i] = VerticalMaxHelper.GetVMax(data.source, i);
+			channelMax[i] = NewArtifactVerticalMaxHelper.GetVMax(data.source, i);
 		}
 
 		for (int i = 0; i < blockCount; ++i) {
@@ -73,7 +71,7 @@ public class EyeBlinksTagCreator extends AbstractNewArtifactTagCreator
 			}
 		}
 
-		return this.constructResult(new TreeSet<Integer>(tags));
+		return this.constructResult(tags);
 	}
 
 }

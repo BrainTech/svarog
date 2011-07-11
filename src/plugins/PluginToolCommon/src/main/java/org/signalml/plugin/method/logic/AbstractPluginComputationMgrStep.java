@@ -3,6 +3,7 @@ package org.signalml.plugin.method.logic;
 import org.signalml.method.ComputationException;
 import org.signalml.plugin.data.logic.PluginComputationMgrStepResult;
 import org.signalml.plugin.exception.PluginToolAbortException;
+import org.signalml.plugin.exception.PluginToolInterruptedException;
 
 public abstract class AbstractPluginComputationMgrStep<Data extends PluginComputationMgrStepData<?>>
 	implements IPluginComputationMgrStep {
@@ -14,7 +15,9 @@ public abstract class AbstractPluginComputationMgrStep<Data extends PluginComput
 	}
 
 	@Override
-	public PluginComputationMgrStepResult run(PluginComputationMgrStepResult prevStepResult) throws ComputationException, InterruptedException,
+	public PluginComputationMgrStepResult run(
+		PluginComputationMgrStepResult prevStepResult)
+	throws ComputationException, PluginToolInterruptedException,
 		PluginToolAbortException {
 		try {
 			return this.doRun(prevStepResult);
@@ -39,16 +42,22 @@ public abstract class AbstractPluginComputationMgrStep<Data extends PluginComput
 
 	}
 
-	protected abstract PluginComputationMgrStepResult doRun(PluginComputationMgrStepResult prevStepResult) throws PluginToolAbortException, InterruptedException,
+	protected abstract PluginComputationMgrStepResult doRun(
+		PluginComputationMgrStepResult prevStepResult)
+	throws PluginToolAbortException, PluginToolInterruptedException,
 		ComputationException;
 
 	protected void cleanup() {
 
 	}
 
-	protected void checkAbortState() throws PluginToolAbortException {
+	protected void checkAbortState() throws PluginToolAbortException,
+		PluginToolInterruptedException {
 		if (this.data.tracker.isRequestingAbort()) {
 			throw new PluginToolAbortException();
+		}
+		if (this.data.tracker.isInterrupted()) {
+			throw new PluginToolInterruptedException();
 		}
 	}
 

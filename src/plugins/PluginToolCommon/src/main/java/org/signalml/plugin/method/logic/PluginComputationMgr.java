@@ -11,13 +11,14 @@ import org.signalml.method.MethodExecutionTracker;
 import org.signalml.plugin.data.logic.PluginComputationMgrStepResult;
 import org.signalml.plugin.data.logic.PluginMgrData;
 import org.signalml.plugin.exception.PluginToolAbortException;
+import org.signalml.plugin.exception.PluginToolInterruptedException;
 
 public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
 
 	protected static final Logger logger = Logger
 					       .getLogger(PluginComputationMgr.class);
 
-	private class CheckedThreadGroup extends ThreadGroup {
+	protected class CheckedThreadGroup extends ThreadGroup {
 
 		private Thread parentThread;
 
@@ -50,6 +51,10 @@ public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
 				}
 
 			}
+		}
+
+		public boolean isShutdownStarted() {
+			return this.isShutdownStarted;
 		}
 
 		public Throwable getCause() {
@@ -97,15 +102,8 @@ public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
 			return this.doCompute();
 		} catch (PluginToolAbortException e) {
 			return null;
-		} catch (InterruptedException e) {
-			if (this.threadGroup != null) {
-				Throwable cause = this.threadGroup.getCause();
-				if (cause != null) {
-					logger.error("Error in worker thread "
-						     + this.threadGroup.getCausingThread().getId());
-					throw new ComputationException(cause);
-				}
-			}
+		} catch (PluginToolInterruptedException e) {
+			this.handleInterrupt();
 			return null;
 		} finally {
 			tracker.setMessage(null);
@@ -120,7 +118,7 @@ public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
 		return this.threadFactory;
 	}
 
-	protected ThreadGroup getThreadGroup() {
+	protected CheckedThreadGroup getThreadGroup() {
 		if (this.threadGroup == null) {
 			this.threadGroup = new CheckedThreadGroup();
 		}
@@ -129,7 +127,7 @@ public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
 	}
 
 	protected Result doCompute() throws ComputationException,
-		InterruptedException, PluginToolAbortException {
+		PluginToolInterruptedException, PluginToolAbortException {
 
 		this.stepResults = new HashMap<IPluginComputationMgrStep, PluginComputationMgrStepResult>();
 
@@ -159,4 +157,15 @@ public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
 	}
 
 	protected abstract Result prepareComputationResult();
+
+	private void handleInterrupt() throws ComputationException {
+		if (this.threadGroup != null) {
+			Throwable cause = this.threadGroup.getCause();
+			if (cause != null) {
+				logger.error("Error in worker thread "
+					     + this.threadGroup.getCausingThread().getId());
+				throw new ComputationException(cause);
+			}
+		}
+	}
 }

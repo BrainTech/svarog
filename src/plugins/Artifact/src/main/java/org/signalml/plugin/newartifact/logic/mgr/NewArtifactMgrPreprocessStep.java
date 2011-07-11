@@ -24,6 +24,7 @@ import org.signalml.domain.signal.MultichannelSampleSource;
 import org.signalml.method.ComputationException;
 import org.signalml.plugin.data.logic.PluginComputationMgrStepResult;
 import org.signalml.plugin.exception.PluginToolAbortException;
+import org.signalml.plugin.exception.PluginToolInterruptedException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.io.IPluginDataSourceReader;
 import org.signalml.plugin.method.logic.AbstractPluginComputationMgrStep;
@@ -317,7 +318,7 @@ public class NewArtifactMgrPreprocessStep extends
 	@Override
 	public PluginComputationMgrStepResult doRun(
 		PluginComputationMgrStepResult prevStepResult)
-	throws ComputationException, InterruptedException,
+	throws ComputationException, PluginToolInterruptedException,
 		PluginToolAbortException {
 		final IPluginComputationMgrStepTrackerProxy<NewArtifactProgressPhase> tracker = this.data.tracker;
 
@@ -339,7 +340,11 @@ public class NewArtifactMgrPreprocessStep extends
 
 		double buffer[][] = null;
 		do {
-			buffer = this.readyBuffersQueue.take();
+			try {
+				buffer = this.readyBuffersQueue.take();
+			} catch (InterruptedException e) {
+				throw new PluginToolInterruptedException(e);
+			}
 			this.synchronizer.addBuffer(buffer);
 
 			current++;
