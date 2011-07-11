@@ -4,7 +4,7 @@
 
 	<groupId>org.signalml.plugin</groupId>
 	<artifactId>Artifact</artifactId>
-	<version>0.1</version>
+	<version>1.0</version>
 	<packaging>jar</packaging>
 
 	<name>Artifact</name>
@@ -137,7 +137,7 @@
 		<dependency>
 			<groupId>org.signalml.plugin</groupId>
 			<artifactId>PluginToolCommon</artifactId>
-			<version>0.1</version>
+			<version>1.0</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
