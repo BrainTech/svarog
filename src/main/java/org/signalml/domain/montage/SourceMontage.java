@@ -248,7 +248,8 @@ public class SourceMontage {
 			}
 		} else if (dCnt < mCnt) {
 			for (int i=mCnt; i>dCnt; i--) {
-				if (this.getSourceChannelFunctionAt(this.getSourceChannelCount()-1).getType() == ChannelType.EMPTY)
+				if ((this.getSourceChannelFunctionAt(this.getSourceChannelCount()-1).getType() == ChannelType.ZERO)
+					|| (this.getSourceChannelFunctionAt(this.getSourceChannelCount()-1).getType() == ChannelType.ONE))
 					break;
 				removeSourceChannel();
 			}

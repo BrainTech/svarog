@@ -71,7 +71,8 @@ public enum EegChannel implements Channel {
 	// EOG
 	EOGL("EOGL", ChannelType.OTHER, true, "[Ee][Oo][Gg]\\s*[Ll]"),
 	EOGP("EOGP", ChannelType.OTHER, true, "[Ee][Oo][Gg]\\s*[Pp]"),
-	EMPTY("EMPTY", ChannelType.EMPTY, true, "EMPTY"),
+	ZERO("ZERO", ChannelType.ZERO, true, "ZERO"),
+	ONE("ONE", ChannelType.ONE, true, "ONE"),
 	// The rest
 	ECG("ECG", ChannelType.OTHER, true, "[Ee][CcKk][Gg]"),
 	EMG("EMG", ChannelType.OTHER, true, "[Ee][Mm][Gg]"),

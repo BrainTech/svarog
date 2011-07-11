@@ -82,12 +82,7 @@ public class SourceMontageTableModel extends AbstractTableModel implements Sourc
 	public int getRowCount() {
 		if (montage == null)
 			return 0;
-		else if (montage.getSourceChannelCount() == 0)
-			return montage.getSourceChannelCount();
-		else if (montage.getSourceChannelFunctionAt(montage.getSourceChannelCount()-1).getType() == ChannelType.EMPTY)
-			return montage.getSourceChannelCount() - 1;
-		else
-			return montage.getSourceChannelCount();
+		return montage.getSourceChannelCount();
 	}
 
 	@Override
