@@ -54,7 +54,7 @@ public class EmbeddedFileChooserFavorites extends JPanel implements
 	/*
 	 * length (in chars) of file path visible in combo boxes
 	 */
-	static int LEN_OF_PATH=25;
+	static int LEN_OF_PATH=20;
 	/*
 	 * number of remembered last-visited directories
 	 */
@@ -189,6 +189,7 @@ public class EmbeddedFileChooserFavorites extends JPanel implements
 			new_dirs[0] = dir;
 			}
  		this.updateCurrentDirectories(new_dirs);
+ 		this.favoritiesCombo.setSelectedItem(dir);
 	}
  	
  	/*
