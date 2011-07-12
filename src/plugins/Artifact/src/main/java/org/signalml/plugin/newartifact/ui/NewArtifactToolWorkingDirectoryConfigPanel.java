@@ -19,7 +19,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.ViewerFileChooser;
+import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.plugin.newartifact.data.NewArtifactConfiguration;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
@@ -38,11 +38,11 @@ public class NewArtifactToolWorkingDirectoryConfigPanel extends JPanel {
 	private JTextField directoryTextField;
 	private JButton chooseDirectoryButton;
 
-	private ViewerFileChooser fileChooser;
+	private FileChooser fileChooser;
 
 	private File directory;
 
-	public NewArtifactToolWorkingDirectoryConfigPanel(MessageSourceAccessor messageSource, ViewerFileChooser fileChooser) {
+	public NewArtifactToolWorkingDirectoryConfigPanel(MessageSourceAccessor messageSource, FileChooser fileChooser) {
 		super();
 		this.messageSource = messageSource;
 		this.fileChooser = fileChooser;

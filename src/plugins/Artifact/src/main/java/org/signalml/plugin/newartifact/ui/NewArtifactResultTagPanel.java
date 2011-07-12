@@ -19,7 +19,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.ViewerFileChooser;
+import org.signalml.plugin.export.view.FileChooser;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
@@ -37,11 +37,11 @@ public class NewArtifactResultTagPanel extends JPanel {
 	private JTextField tagTextField;
 	private JButton chooseTagButton;
 
-	private ViewerFileChooser fileChooser;
+	private FileChooser fileChooser;
 
 	private File tagFile;
 
-	public NewArtifactResultTagPanel(MessageSourceAccessor messageSource, ViewerFileChooser fileChooser) {
+	public NewArtifactResultTagPanel(MessageSourceAccessor messageSource, FileChooser fileChooser) {
 		super();
 		this.messageSource = messageSource;
 		this.fileChooser = fileChooser;

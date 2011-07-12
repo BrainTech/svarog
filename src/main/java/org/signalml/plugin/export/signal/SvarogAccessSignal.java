@@ -449,18 +449,6 @@ public interface SvarogAccessSignal {
 	void openBook(File file) throws IOException, SignalMLException;
 	
 	/**
-	 * Returns the new file object pointing to profile directory.
-	 * @return the profile directory
-	 */
-	File getProfileDirectory();
-	
-	/**
-	 * Returns an array containing plug-in directories.
-	 * @return an array containing plug-in directories
-	 */
-	File[] getPluginDirectories();
-	
-	/**
 	 * Export the part of the signal to the given file.
 	 * @param position the position in signal (seconds) where the exported
 	 * part starts
@@ -497,5 +485,5 @@ public interface SvarogAccessSignal {
 	 * @throws IOException if the file couldn't be created
 	 */
 	File getTemporaryFile(String extension) throws IOException;
-	
+
 }

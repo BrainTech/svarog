@@ -220,6 +220,7 @@ public class ViewerElementManager {
 
 	/* Window interface elements */
 	private Component optionPaneParent;
+	/** A parent for new {@link java.awt.Dialog}s. */
 	private Window dialogParent;
 	private View view;
 

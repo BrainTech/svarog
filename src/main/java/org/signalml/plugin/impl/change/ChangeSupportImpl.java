@@ -43,6 +43,7 @@ import org.signalml.plugin.export.signal.ExportedTag;
 import org.signalml.plugin.export.signal.ExportedTagDocument;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.view.DocumentView;
+import org.signalml.plugin.impl.PluginAccessClass;
 
 
 /**
@@ -154,13 +155,10 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 	 */
 	private HashMap<SignalView, Tag> activeTags = new HashMap<SignalView, Tag>();
 	
-	
-	/**
-	 * Constructor.
-	 */
-	public ChangeSupportImpl(){		
-	}
-		
+    public ChangeSupportImpl(PluginAccessClass parent) {
+        super(parent);
+    }
+    
 	/**
 	 * Informs listeners that focus changed, that is:
 	 * <ul>
@@ -286,8 +284,8 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 		
 		
 		if (document instanceof TagDocument || document instanceof SignalDocument){
-			ChangeSupportDocumentImpl tagDocumentListener = new ChangeSupportDocumentImpl();
-			tagDocumentListener.setManager(manager);
+			ChangeSupportDocumentImpl tagDocumentListener = new ChangeSupportDocumentImpl(getParent());
+			tagDocumentListener.setViewerElementManager(getViewerElementManager());
 			
 			if (document instanceof TagDocument){
 				TagDocument tagDocument = (TagDocument) document;
@@ -552,7 +550,8 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 	 * @param elementManager the element manager to set
 	 */
 	public void setManager(ViewerElementManager elementManager){
-		manager = elementManager;
+		super.setViewerElementManager(elementManager);
+		ViewerElementManager manager = getViewerElementManager();
 		ActionFocusManager focusManager = manager.getActionFocusManager();
 		if (focusManager != null) {
 			focusManager.addActionFocusListener(this);
@@ -566,10 +565,10 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 		SignalMLCodecManager codecManager = manager.getCodecManager();
 		if (codecManager != null) codecManager.addSignalMLCodecManagerListener(this);
 		for (ChangeSupportDocumentImpl listener : listenersOnSignalDocument.values()){
-			listener.setManager(manager);
+			listener.setViewerElementManager(manager);
 		}
 		for (ChangeSupportDocumentImpl listener : listenersOnTagDocument.values()){
-			listener.setManager(manager);
+			listener.setViewerElementManager(manager);
 		}
 	}
 

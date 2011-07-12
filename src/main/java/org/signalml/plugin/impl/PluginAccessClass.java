@@ -4,6 +4,8 @@ import org.apache.log4j.Logger;
 import org.signalml.app.view.ViewerElementManager;
 import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.change.SvarogAccessChangeSupport;
+import org.signalml.plugin.export.config.SvarogAccessConfig;
+import org.signalml.plugin.export.method.SvarogAccessMethod;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
 import org.signalml.plugin.impl.change.ChangeSupportImpl;
@@ -19,8 +21,9 @@ import org.springframework.context.support.MessageSourceAccessor;
  * to {@link ChangeSupportImpl change support}. 
  * 
  * @author Marcin Szumski
+ * @author Stanislaw Findeisen
  */
-public class PluginAccessClass implements SvarogAccess{
+public class PluginAccessClass implements SvarogAccess {
 	
 	private static final Logger logger = Logger.getLogger(PluginAccessClass.class);
 	
@@ -38,6 +41,13 @@ public class PluginAccessClass implements SvarogAccess{
 	 * access to GUI features of Svarog
 	 */
 	protected GUIAccessImpl guiAccess;
+	
+	/** Svarog methods and tasks facade. */
+	private MethodAccessImpl methodAccessImpl;
+	
+	/** Svarog configuration facade. */
+	private ConfigAccessImpl configAccessImpl;
+	
 	/**
 	 * access to ordinary features of Svarog
 	 */
@@ -52,9 +62,11 @@ public class PluginAccessClass implements SvarogAccess{
 	 * Constructor. Creates child accesses.
 	 */
 	private PluginAccessClass(){
-		guiAccess = new GUIAccessImpl();
-		signalsAccess = new SignalsAccessImpl();
-		changeSupport = new ChangeSupportImpl();
+		guiAccess = new GUIAccessImpl(this);
+		methodAccessImpl = new MethodAccessImpl(this);
+		configAccessImpl = new ConfigAccessImpl(this);
+		signalsAccess = new SignalsAccessImpl(this);
+		changeSupport = new ChangeSupportImpl(this);
 	}
 	
 	/**
@@ -82,9 +94,11 @@ public class PluginAccessClass implements SvarogAccess{
 	public void setManager(ViewerElementManager manager) {
 		try {
 			this.manager = manager;
-			signalsAccess.setManager(manager);
-			guiAccess.setManager(manager);
-			changeSupport.setManager(manager);
+			signalsAccess.setViewerElementManager(manager);
+			guiAccess.setViewerElementManager(manager);
+			changeSupport.setViewerElementManager(manager);
+			configAccessImpl.setViewerElementManager(manager);
+			methodAccessImpl.setViewerElementManager(manager);
 		} catch (Exception e) {
 			logger.error("error in plug-in interface while setting element manager");
 			e.printStackTrace();
@@ -121,7 +135,7 @@ public class PluginAccessClass implements SvarogAccess{
 	@Override
 	public SvarogAccessChangeSupport getChangeSupport() {
 		if (changeSupport == null)
-			changeSupport = new ChangeSupportImpl();
+			changeSupport = new ChangeSupportImpl(this);
 		return changeSupport;
 	}
 
@@ -147,7 +161,14 @@ public class PluginAccessClass implements SvarogAccess{
 	public MessageSourceAccessor getMessageSource(){
 		return manager.getMessageSource();
 	}
-	
-	
 
+    @Override
+    public SvarogAccessMethod getMethodAccess() {
+        return methodAccessImpl;
+    }
+
+    @Override
+    public SvarogAccessConfig getConfigAccess() {
+        return configAccessImpl;
+    }
 }

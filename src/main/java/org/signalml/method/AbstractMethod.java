@@ -3,6 +3,7 @@
  */
 package org.signalml.method;
 
+import org.signalml.plugin.export.method.SvarogMethod;
 import org.springframework.validation.Errors;
 
 /**
@@ -15,7 +16,7 @@ import org.springframework.validation.Errors;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public abstract class AbstractMethod implements Method {
+public abstract class AbstractMethod implements SvarogMethod {
 
 	/**
          * {@inheritDoc}

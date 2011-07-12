@@ -24,7 +24,7 @@ import org.springframework.context.support.MessageSourceAccessor;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class ViewerFileChooser extends JFileChooser {
+public class ViewerFileChooser extends JFileChooser implements org.signalml.plugin.export.view.FileChooser {
 
 	private static final long serialVersionUID = 1L;
 
@@ -58,7 +58,7 @@ public class ViewerFileChooser extends JFileChooser {
 	private MessageSourceAccessor messageSource;
 	private ApplicationConfiguration applicationConfig;
 
-	public void initialize() {
+	protected synchronized void initialize() {
 
 		Vector<FileFilter> filters = new Vector<FileFilter>(20);
 
@@ -352,12 +352,12 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public int showDialog(Component parent, OptionSet options) {
+	protected synchronized int showDialog(Component parent, OptionSet options) {
 		options.use();
 		return showDialog(parent, options.okButton);
 	}
 
-	public File chooseFileForRead(Component parent, OptionSet options) {
+	public synchronized File chooseFileForRead(Component parent, OptionSet options) {
 
 		File file = null;
 
@@ -388,7 +388,7 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File[] chooseFilesForRead(Component parent, OptionSet options) {
+	public synchronized File[] chooseFilesForRead(Component parent, OptionSet options) {
 
 		File[] files = null;
 
@@ -422,7 +422,7 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File[] chooseDirectoriesForRead(Component parent, OptionSet options) {
+	public synchronized File[] chooseDirectoriesForRead(Component parent, OptionSet options) {
 
 		File[] files = null;
 
@@ -456,7 +456,7 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File chooseFileForExecute(Component parent, OptionSet options) {
+	public synchronized File chooseFileForExecute(Component parent, OptionSet options) {
 
 		File file = null;
 
@@ -487,7 +487,7 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File chooseFileForWrite(Component parent, OptionSet options) {
+	public synchronized File chooseFileForWrite(Component parent, OptionSet options) {
 
 		File file = null;
 
@@ -520,7 +520,7 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File chooseDirectory(Component parent, OptionSet options) {
+	public synchronized File chooseDirectory(Component parent, OptionSet options) {
 
 		File file;
 
@@ -567,7 +567,7 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File chooseConsoleSaveAsTextFile(Component parent) {
+	public synchronized File chooseConsoleSaveAsTextFile(Component parent) {
 
 		File file = null;
 
@@ -586,7 +586,7 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File chooseTableSaveAsTextFile(Component parent) {
+	public synchronized File chooseTableSaveAsTextFile(Component parent) {
 
 		File file = null;
 
@@ -605,7 +605,7 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File chooseSamplesSaveAsTextFile(Component parent) {
+	public synchronized File chooseSamplesSaveAsTextFile(Component parent) {
 
 		File file = null;
 
@@ -624,7 +624,7 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File chooseSamplesSaveAsFloatFile(Component parent) {
+	public synchronized File chooseSamplesSaveAsFloatFile(Component parent) {
 
 		File file = null;
 
@@ -643,7 +643,7 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File chooseExportSignalFile(Component parent, File fileSuggestion) {
+	public synchronized File chooseExportSignalFile(Component parent, File fileSuggestion) {
 
 		File file = null;
 
@@ -666,7 +666,7 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File chooseExportBookFile(Component parent, File fileSuggestion) {
+	public synchronized File chooseExportBookFile(Component parent, File fileSuggestion) {
 
 		File file = null;
 
@@ -689,7 +689,7 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File chooseChartSaveAsPngFile(Component parent) {
+	public synchronized File chooseChartSaveAsPngFile(Component parent) {
 
 		File file = null;
 
@@ -708,7 +708,7 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File chooseSaveMP5ConfigFile(Component parent) {
+	public synchronized File chooseSaveMP5ConfigFile(Component parent) {
 
 		File file = null;
 
@@ -727,7 +727,7 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File chooseSaveMP5SignalFile(Component parent) {
+	public synchronized File chooseSaveMP5SignalFile(Component parent) {
 
 		File file = null;
 
@@ -750,7 +750,7 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File chooseSaveDocument(Component parent, FileFilter[] filters) {
+	public synchronized File chooseSaveDocument(Component parent, FileFilter[] filters) {
 
 		File file = null;
 
@@ -770,7 +770,7 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File chooseSaveTag(Component parent) {
+	public synchronized File chooseSaveTag(Component parent) {
 
 		File file = null;
 
@@ -789,7 +789,7 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File chooseOpenTag(Component parent) {
+	public synchronized File chooseOpenTag(Component parent) {
 
 		File file = null;
 
@@ -808,7 +808,7 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File chooseExpertTag(Component parent) {
+	public synchronized File chooseExpertTag(Component parent) {
 
 		File file = null;
 
@@ -827,7 +827,7 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File chooseImportTag(Component parent) {
+	public synchronized File chooseImportTag(Component parent) {
 
 		File file = null;
 
@@ -846,7 +846,7 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File chooseExportTag(Component parent) {
+	public synchronized File chooseExportTag(Component parent) {
 
 		File file = null;
 
@@ -865,7 +865,7 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File chooseReadXMLManifest(File directory, File fileSuggestion, Component parent) {
+	public synchronized File chooseReadXMLManifest(File directory, File fileSuggestion, Component parent) {
 
 		File file = null;
 
@@ -882,7 +882,7 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File chooseSavePresetFile(Component parent) {
+	public synchronized File chooseSavePresetFile(Component parent) {
 
 		File file = null;
 
@@ -901,7 +901,7 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File chooseLoadPresetFile(Component parent) {
+	public synchronized File chooseLoadPresetFile(Component parent) {
 
 		File file = null;
 
@@ -920,7 +920,7 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File chooseArtifactProjectDirectory(Component parent) {
+	public synchronized File chooseArtifactProjectDirectory(Component parent) {
 
 		File file = null;
 
@@ -939,7 +939,7 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File chooseExecutableFile(Component parent) {
+	public synchronized File chooseExecutableFile(Component parent) {
 
 		File file = null;
 
@@ -952,7 +952,7 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File chooseBookFile(Component parent) {
+	public synchronized File chooseBookFile(Component parent) {
 
 		File file = null;
 
@@ -971,7 +971,7 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File chooseBookFileForWrite(Component parent) {
+	public synchronized File chooseBookFileForWrite(Component parent) {
 
 		File file = null;
 
@@ -990,7 +990,8 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File chooseWorkingDirectory(Component parent, File currentDirectory) {
+	@Override
+	public synchronized File chooseWorkingDirectory(Component parent, File currentDirectory) {
 
 		File file = null;
 
@@ -1020,7 +1021,7 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File[] chooseClassPathDirectories(Component parent) {
+	public synchronized File[] chooseClassPathDirectories(Component parent) {
 
 		File[] files = null;
 
@@ -1039,7 +1040,7 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File[] chooseJarFiles(Component parent) {
+	public synchronized File[] chooseJarFiles(Component parent) {
 
 		File[] files = null;
 
@@ -1058,7 +1059,7 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public File chooseCodeFile(Component parent) {
+	public synchronized File chooseCodeFile(Component parent) {
 
 		File file = null;
 
@@ -1077,15 +1078,15 @@ public class ViewerFileChooser extends JFileChooser {
 
 	}
 
-	public void setMessageSource(MessageSourceAccessor messageSource) {
+	protected synchronized void setMessageSource(MessageSourceAccessor messageSource) {
 		this.messageSource = messageSource;
 	}
 
-	public ApplicationConfiguration getApplicationConfig() {
+	public synchronized ApplicationConfiguration getApplicationConfig() {
 		return applicationConfig;
 	}
 
-	public void setApplicationConfig(ApplicationConfiguration applicationConfig) {
+	protected synchronized void setApplicationConfig(ApplicationConfiguration applicationConfig) {
 		this.applicationConfig = applicationConfig;
 	}
 
