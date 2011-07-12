@@ -1397,6 +1397,9 @@
 	<entry key="signalView.timeScaleToolTip">{0} pixels/sample</entry>
 	<entry key="signalView.valueScale">Value scale</entry>
 	<entry key="signalView.valueScaleToolTip">{0} %</entry>
+	<entry key="signalView.ignoreGlobalScale">Ignore global scale</entry>
+	<entry key="signalView.channelLocalScale">Value scale</entry>
+	<entry key="signalView.editChannelOptions">Edit channel`s options</entry>
 	<entry key="signalView.channelHeight">Channel height</entry>
 	<entry key="signalView.channelHeightToolTip">{0} px</entry>
 	<entry key="signalView.antialias">Antialiasing</entry>

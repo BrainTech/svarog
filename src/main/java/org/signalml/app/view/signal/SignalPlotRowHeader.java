@@ -75,8 +75,23 @@ public class SignalPlotRowHeader extends JComponent {
 	    this.channelOptionsIcon = ic;
 	}
 
+	/*
+	 * Sets calculated to false and creates ChannelOptions Buttons.
+	 */
 	public void reset() {
 		calculated = false;
+		
+		if (channelOptionsButtons != null) {
+			for (int i = 0; i < channelOptionsButtons.length; i++)
+				if (channelOptionsButtons[i] != null)
+					this.remove(channelOptionsButtons[i]);
+		}
+		channelOptionsButtons = new CompactButton[this.plot.getChannelCount()];
+		for(int i = 0; i < this.plot.getChannelCount();i++) {
+			CompactButton b = new CompactButton(new ChannelOptionsAction(this.channelOptionsIcon, this.plot.getMessageSource().getMessage("signalView.editChannelOptions"), i));//new JButton(this.channelOptionsIcon);
+			channelOptionsButtons[i] = b;
+			this.add(b);
+		}
 	}
 
 	private void calculate(Graphics2D g) {
@@ -117,13 +132,6 @@ public class SignalPlotRowHeader extends JComponent {
 		double max = 0;
 		channelLabelBounds = new Rectangle2D[channelCount];
 		
-		{if (channelOptionsButtons != null) {
-			for (i = 0; i < channelOptionsButtons.length; i++)
-				if (channelOptionsButtons[i] != null)
-					this.remove(channelOptionsButtons[i]);
-		}}
-		
-		channelOptionsButtons = new CompactButton[channelCount];
 		for (i=0; i < channelCount; i++) {
 			channelLabelBounds[i] = normalFont.getStringBounds(labelSource.getLabel(i), g.getFontRenderContext());
 			if (max < channelLabelBounds[i].getWidth())  {
@@ -176,13 +184,9 @@ public class SignalPlotRowHeader extends JComponent {
 		} else {
 			g.setColor(Color.GRAY);
 		}
-		System.out.println("DRAW");
 		for (i=startChannel; i <= endChannel; i++) {
 			g.drawString(labelSource.getLabel(i), 12, channelLevel[i] + ((int) -channelLabelBounds[i].getY()/2));
-			CompactButton b = new CompactButton(new ChannelOptionsAction(this.channelOptionsIcon, "xxx", i));//new JButton(this.channelOptionsIcon);
-			b.setBounds(1, channelLevel[i]-2, 10, 10);
-			channelOptionsButtons[i] = b;
-			this.add(b);
+			channelOptionsButtons[i].setBounds(1, channelLevel[i]-2, 10, 10);
 			
 			
 		}
@@ -235,11 +239,19 @@ public class SignalPlotRowHeader extends JComponent {
 		}
 	}
 	protected class ChannelOptionsAction extends AbstractAction {
+		/*
+		 * An action performed on ChannelOptionsButton clicked.
+		 */
 
 		private static final long serialVersionUID = 1L;
 		private int channel;
-		private int voltageScale=-1;
 
+		/*
+		 * Creates an action for ChannelOptions button.
+		 * @param ic button`s icon
+		 * @param tooltip button`s tooltip
+		 * @param channel index of channel the action is connected to
+		 */
 		public ChannelOptionsAction(ImageIcon ic, String tooltip, int channel) {
 			super();
 			this.channel = channel;
@@ -247,6 +259,10 @@ public class SignalPlotRowHeader extends JComponent {
 			putValue(AbstractAction.SHORT_DESCRIPTION, tooltip);
 		}
 
+		/*
+		 * Initializes channelOptions dialog and set it to appropriate channel.
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		 */
 		public void actionPerformed(ActionEvent ev) {
 
 			Container ancestor = getTopLevelAncestor();
@@ -268,6 +284,11 @@ public class SignalPlotRowHeader extends JComponent {
 		}
 
 	}
+	
+	/*
+	 * Sets pop-up dialog for channelDisplay options.
+	 * @param channelOptionsPopupDialog channelDisplay options dialog
+	 */
 	public void setChannelOptionsPopupDialog(
 			ChannelOptionsPopupDialog channelOptionsPopupDialog) {
 		this.channelOptionsPopupDialog = channelOptionsPopupDialog;

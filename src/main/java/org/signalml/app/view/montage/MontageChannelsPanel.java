@@ -543,9 +543,6 @@ public class MontageChannelsPanel extends JPanel {
 
 		public void actionPerformed(ActionEvent ev) {
 
-			if (signalBound) {
-				return;
-			}
 			int cnt = montage.getSourceChannelCount();
 			if (cnt == 0) {
 				return;
