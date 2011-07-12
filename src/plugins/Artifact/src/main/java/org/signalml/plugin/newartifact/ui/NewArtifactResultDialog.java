@@ -24,12 +24,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.ViewerFileChooser;
+//import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.plugin.data.PluginConfigForMethod;
 import org.signalml.plugin.data.PluginConfigMethodData;
 import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractDialog;
+import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.plugin.tool.PluginResourceRepository;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
@@ -45,7 +46,7 @@ public class NewArtifactResultDialog extends AbstractDialog {
 
 	private static final long serialVersionUID = 1L;
 
-	private ViewerFileChooser fileChooser;
+	private FileChooser fileChooser;
 
 	private JCheckBox primaryOpenInWindowCheckBox;
 	private JCheckBox primarySaveToFileCheckBox;
@@ -351,11 +352,11 @@ public class NewArtifactResultDialog extends AbstractDialog {
 		return NewArtifactResultTargetDescriptor.class.isAssignableFrom(clazz);
 	}
 
-	public ViewerFileChooser getFileChooser() {
+	public FileChooser getFileChooser() {
 		return fileChooser;
 	}
 
-	public void setFileChooser(ViewerFileChooser fileChooser) {
+	public void setFileChooser(FileChooser fileChooser) {
 		this.fileChooser = fileChooser;
 	}
 

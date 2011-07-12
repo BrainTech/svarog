@@ -31,6 +31,7 @@ import org.signalml.plugin.export.signal.SignalTool;
 import org.signalml.plugin.export.signal.SignalToolButtonListener;
 import org.signalml.plugin.export.view.DocumentView;
 import org.signalml.plugin.export.view.ExportedSignalPlot;
+import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
 import org.signalml.plugin.export.view.ViewerTreePane;
 
@@ -52,15 +53,10 @@ import org.signalml.plugin.export.view.ViewerTreePane;
  * </ul>
  * @author Marcin Szumski
  */
-public class GUIAccessImpl implements SvarogAccessGUI {
+public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	
 	private static final Logger logger = Logger.getLogger(GUIAccessImpl.class);
 
-	/**
-	 * the manager of the elements of Svarog
-	 */
-	private ViewerElementManager manager;
-	
 	/**
 	 * informs whether plug-in interface is in the initialization phase 
 	 */
@@ -355,7 +351,10 @@ public class GUIAccessImpl implements SvarogAccessGUI {
 	 * the buttons that will be added to main toolbar in signalView
 	 */
 	private ArrayList<Action> actionsToMainSignalToolbar = new ArrayList<Action>();
-	
+
+    protected GUIAccessImpl(PluginAccessClass parent) {
+        super(parent);
+    }
 	
 	/* (non-Javadoc)
 	 * @see org.signalml.plugin.export.PluginAccessGUI#addButtonToToolsMenu(javax.swing.AbstractAction)
@@ -363,7 +362,7 @@ public class GUIAccessImpl implements SvarogAccessGUI {
 	@Override
 	public JMenuItem addButtonToToolsMenu(Action action) throws UnsupportedOperationException {
 		if (!initializationPhase) throw new UnsupportedOperationException("operation can be performed only during initialization phase");
-		JMenu toolsMenu = manager.getToolsMenu();
+		JMenu toolsMenu = getViewerElementManager().getToolsMenu();
 		return toolsMenu.add(action);
 	}
 
@@ -373,7 +372,7 @@ public class GUIAccessImpl implements SvarogAccessGUI {
 	@Override
 	public JMenuItem addSubmenuToToolsMenu(JMenu menu){
 		if (!initializationPhase) throw new UnsupportedOperationException("operation can be performed only during initialization phase");
-		JMenu toolsMenu = manager.getToolsMenu();
+		JMenu toolsMenu = getViewerElementManager().getToolsMenu();
 		return toolsMenu.add(menu);
 	}
 
@@ -383,7 +382,7 @@ public class GUIAccessImpl implements SvarogAccessGUI {
 	@Override
 	public JMenuItem addButtonToEditMenu(Action action) throws UnsupportedOperationException {
 		if (!initializationPhase) throw new UnsupportedOperationException("operation can be performed only during initialization phase");
-		JMenu editMenu = manager.getEditMenu();
+		JMenu editMenu = getViewerElementManager().getEditMenu();
 		return editMenu.add(action);
 	}
 
@@ -393,7 +392,7 @@ public class GUIAccessImpl implements SvarogAccessGUI {
 	@Override
 	public JMenuItem addSubmenuToEditMenu(JMenu menu) throws UnsupportedOperationException {
 		if (!initializationPhase) throw new UnsupportedOperationException("operation can be performed only during initialization phase");
-		JMenu editMenu = manager.getEditMenu();
+		JMenu editMenu = getViewerElementManager().getEditMenu();
 		return editMenu.add(menu);
 	}
 
@@ -661,7 +660,7 @@ public class GUIAccessImpl implements SvarogAccessGUI {
 	 */
 	@Override
 	public void addTreeTab(ViewerTreePane treePane, String title, Icon icon, String tip) {
-		ViewerTabbedPane pane = manager.getTreeTabbedPane();
+		ViewerTabbedPane pane = getViewerElementManager().getTreeTabbedPane();
 		String tabTitle = (title == null ? treePane.getName() : title);
 		if (tip != null)
 			pane.addTab(tabTitle, icon, treePane, tip);
@@ -674,19 +673,8 @@ public class GUIAccessImpl implements SvarogAccessGUI {
 	 */
 	@Override
 	public void addPropertyTab(JPanel panel) {
-		ViewerTabbedPane pane = manager.getPropertyTabbedPane();
+		ViewerTabbedPane pane = getViewerElementManager().getPropertyTabbedPane();
 		pane.addTab(panel.getName(), null, panel, panel.getToolTipText());
-	}
-
-	/**
-	 * @param manager the element manager to set
-	 */
-	public void setManager(ViewerElementManager manager) {
-		this.manager = manager;
-	}
-	
-	public ViewerElementManager getManager() {
-		return this.manager;
 	}
 
 	/**
@@ -703,8 +691,8 @@ public class GUIAccessImpl implements SvarogAccessGUI {
 	 */
 	@Override
 	public ExportedSignalPlot getActiveSignalPlot() throws NoActiveObjectException {
-		if (manager == null) return null;
-		ActionFocusManager focusManager = manager.getActionFocusManager();
+		if (! hasViewerElementManager()) return null;
+		ActionFocusManager focusManager = getViewerElementManager().getActionFocusManager();
 		if (focusManager == null) return null;
 		return focusManager.getActiveSignalPlot();
 	}
@@ -973,14 +961,14 @@ public class GUIAccessImpl implements SvarogAccessGUI {
 
 	@Override
 	public void removePropertyTab(JPanel panel) throws IllegalArgumentException {
-		ViewerTabbedPane pane = manager.getPropertyTabbedPane();
+		ViewerTabbedPane pane = getViewerElementManager().getPropertyTabbedPane();
 		if (pane.indexOfComponent(panel) == -1) throw new IllegalArgumentException("tab with this panel doesn't exist");
 		pane.remove(panel);
 	}
 
 	@Override
 	public void addMainTab(DocumentView tab, String title, Icon icon, String tip) {
-		ViewerDocumentTabbedPane documentTabbedPane = manager.getDocumentTabbedPane();
+		ViewerDocumentTabbedPane documentTabbedPane = getViewerElementManager().getDocumentTabbedPane();
 		String tabTitle = (title == null ? tab.getName() : title);
 		if (tip == null){
 			documentTabbedPane.addTab(tabTitle, icon, tab);
@@ -991,7 +979,7 @@ public class GUIAccessImpl implements SvarogAccessGUI {
 
 	@Override
 	public void removeMainTab(DocumentView tab) throws IllegalArgumentException {
-		ViewerDocumentTabbedPane documentTabbedPane = manager.getDocumentTabbedPane();
+		ViewerDocumentTabbedPane documentTabbedPane = getViewerElementManager().getDocumentTabbedPane();
 		if (documentTabbedPane.indexOfComponent(tab) != -1){
 			documentTabbedPane.remove(tab);
 		} else
@@ -1000,7 +988,7 @@ public class GUIAccessImpl implements SvarogAccessGUI {
 
 	@Override
 	public DocumentView getSelectedMainTab() throws NoActiveObjectException {
-		ViewerDocumentTabbedPane documentTabbedPane = manager.getDocumentTabbedPane();
+		ViewerDocumentTabbedPane documentTabbedPane = getViewerElementManager().getDocumentTabbedPane();
 		Component component = documentTabbedPane.getSelectedComponent();
 		if (component instanceof DocumentView)
 			return (DocumentView) component;
@@ -1010,7 +998,7 @@ public class GUIAccessImpl implements SvarogAccessGUI {
 
 	@Override
 	public void removeTreeTab(ViewerTreePane tab) throws IllegalArgumentException {
-		ViewerTabbedPane viewerTreePane = manager.getTreeTabbedPane();
+		ViewerTabbedPane viewerTreePane = getViewerElementManager().getTreeTabbedPane();
 		if (viewerTreePane.indexOfComponent(tab) != -1){
 			viewerTreePane.remove(tab);
 		} else
@@ -1019,7 +1007,7 @@ public class GUIAccessImpl implements SvarogAccessGUI {
 
 	@Override
 	public ViewerTreePane getSelectedTreeTab() throws NoActiveObjectException {
-		ViewerTabbedPane viewerTabbedPane = manager.getTreeTabbedPane();
+		ViewerTabbedPane viewerTabbedPane = getViewerElementManager().getTreeTabbedPane();
 		Component component = viewerTabbedPane.getSelectedComponent();
 		if (component instanceof ViewerTreePane)
 			return (ViewerTreePane) component;
@@ -1029,13 +1017,22 @@ public class GUIAccessImpl implements SvarogAccessGUI {
 
 	@Override
 	public JPanel getSelectedPropertyTab() throws NoActiveObjectException {
-		ViewerTabbedPane viewerTabbedPane = manager.getPropertyTabbedPane();
+		ViewerTabbedPane viewerTabbedPane = getViewerElementManager().getPropertyTabbedPane();
 		Component component = viewerTabbedPane.getSelectedComponent();
 		if (component instanceof JPanel)
 			return (JPanel) component;
 		else
 			throw new NoActiveObjectException("no active property tab");
 	}
-	
+
+	@Override
+    public java.awt.Window getDialogParent() {
+        return getViewerElementManager().getDialogParent();
+    }
+
+    @Override
+    public FileChooser getFileChooser() {
+        return getViewerElementManager().getFileChooser();
+    }
 
 }

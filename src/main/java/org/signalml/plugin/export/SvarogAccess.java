@@ -4,6 +4,8 @@
 package org.signalml.plugin.export;
 
 import org.signalml.plugin.export.change.SvarogAccessChangeSupport;
+import org.signalml.plugin.export.config.SvarogAccessConfig;
+import org.signalml.plugin.export.method.SvarogAccessMethod;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
 
@@ -26,6 +28,18 @@ public interface SvarogAccess {
 	 * @return the interface to access GUI features
 	 */
 	SvarogAccessGUI getGUIAccess();
+	
+	/**
+	 * Returns Svarog configuration facade.
+	 * @return Svarog configuration facade 
+	 */
+	SvarogAccessConfig getConfigAccess();
+
+    /**
+     * Returns the methods and tasks in Svarog core facade.
+     * @return the methods and tasks in Svarog core facade
+     */
+	SvarogAccessMethod getMethodAccess();
 	
 	/**
 	 * Returns the interface to access logic features.

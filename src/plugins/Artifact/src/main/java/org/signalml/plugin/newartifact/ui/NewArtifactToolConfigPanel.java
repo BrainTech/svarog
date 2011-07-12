@@ -7,7 +7,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
 
-import org.signalml.app.view.ViewerFileChooser;
+import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.plugin.newartifact.data.NewArtifactConfiguration;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
@@ -22,11 +22,11 @@ public class NewArtifactToolConfigPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	private MessageSourceAccessor messageSource;
-	private ViewerFileChooser fileChooser;
+	private FileChooser fileChooser;
 
 	private NewArtifactToolWorkingDirectoryConfigPanel workingDirectoryPanel;
 
-	public NewArtifactToolConfigPanel(MessageSourceAccessor messageSource, ViewerFileChooser fileChooser) {
+	public NewArtifactToolConfigPanel(MessageSourceAccessor messageSource, FileChooser fileChooser) {
 		super();
 		this.messageSource = messageSource;
 		this.fileChooser = fileChooser;

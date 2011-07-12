@@ -6,40 +6,47 @@ package org.signalml.task;
 import org.signalml.method.Method;
 import org.signalml.method.MethodExecutionTracker;
 
-/** This interface must be implemented by classes used to control method execution.
+/**
+ * Task is a computation in progress. This interface must be implemented by classes used to control method execution.
  *
  * @see Method#compute
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
+ * @author Stanislaw Findeisen
  */
 public interface Task extends MethodExecutionTracker {
 
-	/** Returns this task's unique identifier (must be unique for all tasks of all types
-	 *  AND accross VMs).
+	/**
+	 * Returns this task's unique identifier (must be unique for all tasks of all types
+	 * and across VMs).
 	 *
 	 * @return the unique identifier.
 	 */
 	String getUID();
 
-	/** Returns task information object.
+	/**
+	 * Returns the task information object.
 	 *
 	 * @return the task information object.
 	 */
 	TaskInfo getTaskInfo();
 
-	/** Returns the method that is being executed by this task.
+	/**
+	 * Returns the method executed by this task.
 	 *
-	 * @return the method
+	 * @return the method executed by this task
 	 */
 	Method getMethod();
 
-	/** Returns task status.
+	/**
+	 * Returns the task status.
 	 *
-	 * @return the status
+	 * @return the task status
 	 */
 	TaskStatus getStatus();
 
-	/** Returns the result of the execution. Note that "result" here may also mean
+	/**
+	 *  Returns the result of the execution. Note that "result" here may also mean
 	 *  an exception that resulted from the execution. Tasks that did not yet finish
 	 *  (either normally or with exception), including those that were aborted and will
 	 *  never finish do not have a result to return and will throw an exception. Use
@@ -51,47 +58,51 @@ public interface Task extends MethodExecutionTracker {
 	 */
 	TaskResult getResult() throws InvalidTaskStateException;
 
-	/** Returns the data object used as input data for the computation.
+	/**
+	 * Returns the data object used as input data for the computation.
 	 *
-	 * @return the data object used as input data for the computation.
+	 * @return the data object used as input data for the computation
 	 */
 	Object getData();
 
-	/** Starts or resumes the execution of the task (the computation) on the <b>current thread</b>
+	/**
+	 *  Starts or resumes the execution of the task (the computation) on the <b>current thread</b>
 	 *  if the task is currently startable or resumable. The method returns only when the computation
-	 *  has finished (due to being completed, aborted, suspeneded or due to an exception).
+	 *  has finished (due to being completed, aborted, suspended or due to an exception).
 	 */
 	void doIfPossible();
 
-	/** Aborts the execution of this task. The task must be running or exceptions will be thrown. Note that
-	 *  "aborting" in this case menas only to post a request for abortion by setting the status to
-	 *  REQUESTING_ABORT. It is up to the method's compute implementation to check for this status and exit
-	 *  when it is detected.
+	/**
+	 *  Aborts the execution of this task. The task must be running or exceptions will be thrown. Note that
+	 *  "aborting" in this case means only to post a request for abortion by setting the status to
+	 *  REQUESTING_ABORT. It is up to this task method's {@link Method#compute(Object, MethodExecutionTracker)}
+	 *  implementation to check for this status and exit when it is detected.
 	 *
 	 *  <p>This method may also wait for the task to abort, but this may lead to the calling thread being
-	 *  permanently locked if the compute method never finishes.
+	 *  permanently locked if the compute method never quits.
 	 *
 	 * @param wait whether to wait for the task to abort
-	 * @throws InvalidTaskStateException thrown when the task status doesn't allow aborting
+	 * @throws InvalidTaskStateException thrown if the task status does not allow aborting
 	 */
 	void abort(boolean wait)  throws InvalidTaskStateException;
 
-	/** Suspends the execution of this task. The task must be running and the method it runs
-	 *  must be suspendalbe or exceptions will be thrown. Note that "suspending" in this case menas
+	/**
+	 *  Suspends the execution of this task. The task must be running and the method it runs
+	 *  must be suspendable or {@link InvalidTaskStateException} will be thrown. Note that "suspending" in this case means
 	 *  only to post a request for suspension by setting the status to REQUESTING_SUSPEND.
-	 *  It is up to the method's compute implementation to check for this status and exit
+	 *  It is up to this task method's {@link Method#compute(Object, MethodExecutionTracker)} implementation to check for this status and exit
 	 *  when it is detected.
 	 *
 	 *  <p>This method may also wait for the task to suspend, but this may lead to the calling thread being
-	 *  permanently locked if the compute method never finishes.
+	 *  permanently locked if the compute method never quits.
 	 *
 	 * @param wait whether to wait for the task to suspend
-	 * @throws InvalidTaskStateException thrown when the task status doesn't allow suspending or the method
-	 * 		isn't suspendable
+	 * @throws InvalidTaskStateException thrown if the task status does not allow suspending or the method
+	 * 		is not suspendable
 	 */
 	void suspend(boolean wait) throws InvalidTaskStateException;
 
-	/** Adds a listener which will be notified of task events.
+	/** Adds a listener to get notified of task events.
 	 *
 	 * @param listener the listener to add
 	 */
@@ -102,5 +113,4 @@ public interface Task extends MethodExecutionTracker {
 	 * @param listener the listener to remove
 	 */
 	void removeTaskEventListener(TaskEventListener listener);
-
 }

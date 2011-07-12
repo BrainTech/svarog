@@ -15,13 +15,14 @@ import org.signalml.domain.book.WignerMapScaleType;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
-/** ApplicationConfiguration
- *
+/**
+ * ApplicationConfiguration
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
+ * @author Stanislaw Findeisen
  */
 @XStreamAlias("application")
-public class ApplicationConfiguration extends AbstractXMLConfiguration {
+public class ApplicationConfiguration extends AbstractXMLConfiguration implements org.signalml.plugin.export.config.SvarogConfiguration {
 
 	private boolean dontShowDynamicCompilationWarning;
 
