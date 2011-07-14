@@ -1398,6 +1398,8 @@
 	<entry key="signalView.valueScale">Value scale</entry>
 	<entry key="signalView.valueScaleToolTip">{0} %</entry>
 	<entry key="signalView.ignoreGlobalScale">Ignore global scale</entry>
+	<entry key="signalView.hideChannel">Hide</entry>
+	<entry key="signalView.channelVisibility">Visibility</entry>
 	<entry key="signalView.channelLocalScale">Value scale</entry>
 	<entry key="signalView.editChannelOptions">Edit channel`s options</entry>
 	<entry key="signalView.channelHeight">Channel height</entry>

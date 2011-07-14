@@ -679,7 +679,7 @@
         <entry key="opensignal.fileChooser.favorities">Favorites</entry>	
         <entry key="opensignal.fileChooser.removeFromFavorities">Remove from favorites</entry>
         <entry key="opensignal.fileChooser.addToFavorities">Add current directory to favorites</entry>
-        <entry key="opensignal.fileChooser.goToFavorites">Choose location</entry>
+        <entry key="opensignal.fileChooser.goToFavorities">Choose location</entry>
         <entry key="opensignal.fileChooser.history">History</entry>
         <entry key="opensignal.fileChooser.lastDirs">Last directories</entry>
         <entry key="opensignal.fileChooser.lastFiles">Last files</entry>
@@ -1398,6 +1398,8 @@
 	<entry key="signalView.valueScale">Value scale</entry>
 	<entry key="signalView.valueScaleToolTip">{0} %</entry>
 	<entry key="signalView.ignoreGlobalScale">Ignore global scale</entry>
+	<entry key="signalView.hideChannel">Hide</entry>
+	<entry key="signalView.channelVisibility">Visibility</entry>
 	<entry key="signalView.channelLocalScale">Value scale</entry>
 	<entry key="signalView.editChannelOptions">Edit channel`s options</entry>
 	<entry key="signalView.channelHeight">Channel height</entry>
