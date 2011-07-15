@@ -607,8 +607,8 @@
 		</mailingList>
         <mailingList>
           <name>svarog-dev</name>
-          <post>svarog-dev@eisenbits.homelinux.net</post>
-          <archive>https://eisenbits.homelinux.net/cgi-bin/mailman/private/svarog-dev/</archive>
+          <post>svarog-dev@lists.eisenbits.com</post>
+          <archive>https://lists.eisenbits.com/cgi-bin/mailman/private/svarog-dev/</archive>
         </mailingList>
 	</mailingLists>
 
