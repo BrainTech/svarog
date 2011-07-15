@@ -126,7 +126,6 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 		if (method == null || !(method instanceof MP5Method)) {
 			throw new SanityCheckException("No mp5 method");
 		}
-		((MP5Method) method).setExecutorConfigurer(elementManager.getMp5ExecutorConfigurer());
 
 		setJMenuBar(elementManager.getMenuBar());
 

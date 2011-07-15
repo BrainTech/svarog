@@ -29,8 +29,6 @@ import org.signalml.app.util.SwingUtils;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.method.mp5.MP5Executor;
 import org.signalml.method.mp5.MP5LocalProcessExecutor;
-import org.signalml.method.mp5.MP5RemoteExecutor;
-import org.signalml.method.mp5.MP5RemotePasswordExecutor;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** ArtifactToolWorkingDirectoryConfigPanel
@@ -47,16 +45,13 @@ public class MP5ToolExecutorConfigPanel extends JPanel {
 	private MP5ExecutorManager executorManager;
 
 	private MP5LocalExecutorDialog localExecutorDialog;
-	private MP5RemoteExecutorDialog remoteExecutorDialog;
 
 	private AddLocalExecutorAction addLocalExecutorAction;
-	private AddRemoteExecutorAction addRemoteExecutorAction;
 	private ConfigureExecutorAction configureExecutorAction;
 	private RemoveExecutorAction removeExecutorAction;
 	private MakeDefaultAction makeDefaultAction;
 
 	private JButton addLocalExecutorButton;
-	private JButton addRemoteExecutorButton;
 	private JButton configureExecutorButton;
 	private JButton removeExecutorButton;
 	private JButton makeDefaultButton;
@@ -89,7 +84,6 @@ public class MP5ToolExecutorConfigPanel extends JPanel {
 	private void initialize() {
 
 		addLocalExecutorAction = new AddLocalExecutorAction();
-		addRemoteExecutorAction = new AddRemoteExecutorAction();
 		configureExecutorAction = new ConfigureExecutorAction();
 		removeExecutorAction = new RemoveExecutorAction();
 		makeDefaultAction = new MakeDefaultAction();
@@ -105,7 +99,7 @@ public class MP5ToolExecutorConfigPanel extends JPanel {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
 
-		SwingUtils.makeButtonsSameSize(new JButton[] { getMakeDefaultButton(), getConfigureExecutorButton(), getRemoveExecutorButton(), getAddLocalExecutorButton(), getAddRemoteExecutorButton() });
+		SwingUtils.makeButtonsSameSize(new JButton[] { getMakeDefaultButton(), getConfigureExecutorButton(), getRemoveExecutorButton(), getAddLocalExecutorButton() });
 
 		buttonPanel.add(getMakeDefaultButton());
 		buttonPanel.add(Box.createVerticalStrut(3));
@@ -116,7 +110,6 @@ public class MP5ToolExecutorConfigPanel extends JPanel {
 		buttonPanel.add(Box.createVerticalGlue());
 		buttonPanel.add(getAddLocalExecutorButton());
 		buttonPanel.add(Box.createVerticalStrut(3));
-		buttonPanel.add(getAddRemoteExecutorButton());
 
 		add(getExecutorScrollPane(), BorderLayout.CENTER);
 		add(buttonPanel, BorderLayout.EAST);
@@ -195,13 +188,6 @@ public class MP5ToolExecutorConfigPanel extends JPanel {
 		return configureExecutorButton;
 	}
 
-	public JButton getAddRemoteExecutorButton() {
-		if (addRemoteExecutorButton == null) {
-			addRemoteExecutorButton = new JButton(addRemoteExecutorAction);
-		}
-		return addRemoteExecutorButton;
-	}
-
 	public JButton getRemoveExecutorButton() {
 		if (removeExecutorButton == null) {
 			removeExecutorButton = new JButton(removeExecutorAction);
@@ -225,14 +211,6 @@ public class MP5ToolExecutorConfigPanel extends JPanel {
 		this.localExecutorDialog = localExecutorDialog;
 	}
 
-	public MP5RemoteExecutorDialog getRemoteExecutorDialog() {
-		return remoteExecutorDialog;
-	}
-
-	public void setRemoteExecutorDialog(MP5RemoteExecutorDialog remoteExecutorDialog) {
-		this.remoteExecutorDialog = remoteExecutorDialog;
-	}
-
 	protected class AddLocalExecutorAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
@@ -248,31 +226,6 @@ public class MP5ToolExecutorConfigPanel extends JPanel {
 			MP5LocalProcessExecutor executor = new MP5LocalProcessExecutor();
 
 			boolean ok = localExecutorDialog.showDialog(executor, true);
-			if (!ok) {
-				return;
-			}
-
-			executorManager.addExecutor(executor);
-
-		}
-
-	}
-
-	protected class AddRemoteExecutorAction extends AbstractAction {
-
-		private static final long serialVersionUID = 1L;
-
-		public AddRemoteExecutorAction() {
-			super(messageSource.getMessage("mp5Method.config.addRemoteExecutor"));
-			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/addremote.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("mp5Method.config.addRemoteExecutorToolTip"));
-		}
-
-		public void actionPerformed(ActionEvent ev) {
-
-			MP5RemotePasswordExecutor executor = new MP5RemotePasswordExecutor();
-
-			boolean ok = remoteExecutorDialog.showDialog(executor, true);
 			if (!ok) {
 				return;
 			}
@@ -333,9 +286,6 @@ public class MP5ToolExecutorConfigPanel extends JPanel {
 			boolean ok;
 			if (executor instanceof MP5LocalProcessExecutor) {
 				ok = localExecutorDialog.showDialog(executor, true);
-			}
-			else if (executor instanceof MP5RemoteExecutor) {
-				ok = remoteExecutorDialog.showDialog(executor, true);
 			} else {
 				throw new SanityCheckException("Unsupported executor type [" + executor.getClass() + "]");
 			}

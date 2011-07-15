@@ -81,10 +81,8 @@ import org.signalml.app.document.MRUDRegistry;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.iterate.IterationSetupDialog;
-import org.signalml.app.method.mp5.MP5ApplicationExecutorConfigurer;
 import org.signalml.app.method.mp5.MP5ExecutorManager;
 import org.signalml.app.method.mp5.MP5LocalExecutorDialog;
-import org.signalml.app.method.mp5.MP5RemoteExecutorDialog;
 import org.signalml.app.model.BookTreeModel;
 import org.signalml.app.model.MonitorTreeModel;
 import org.signalml.app.model.PropertySheetModel;
@@ -298,7 +296,6 @@ public class ViewerElementManager {
 	private StartMonitorRecordingDialog startMonitorRecordingDialog;
 
 	private MP5LocalExecutorDialog mp5LocalExecutorDialog;
-	private MP5RemoteExecutorDialog mp5RemoteExecutorDialog;
 	private DynamicCompilationWarningDialog dynamicCompilationWarningDialog;
 	private AtomTableDialog atomTableDialog;
 	private BookFilterDialog bookFilterDialog;
@@ -403,7 +400,6 @@ public class ViewerElementManager {
 
 	/* Other */
 	private TableToTextExporter tableToTextExporter;
-	private MP5ApplicationExecutorConfigurer mp5ExecutorConfigurer;
 	private JmxClient jmxClient;
 	private JmxClient tagClient;
 
@@ -1394,13 +1390,6 @@ public class ViewerElementManager {
 		return mp5LocalExecutorDialog;
 	}
 
-	public MP5RemoteExecutorDialog getMp5RemoteExecutorDialog() {
-		if (mp5RemoteExecutorDialog == null) {
-			mp5RemoteExecutorDialog = new MP5RemoteExecutorDialog(messageSource, getDialogParent(), true);
-		}
-		return mp5RemoteExecutorDialog;
-	}
-
 	public DynamicCompilationWarningDialog getDynamicCompilationWarningDialog() {
 		if (dynamicCompilationWarningDialog == null) {
 			dynamicCompilationWarningDialog = new DynamicCompilationWarningDialog(messageSource, getDialogParent(), true);
@@ -1914,14 +1903,6 @@ public class ViewerElementManager {
 			tableToTextExporter = new TableToTextExporter();
 		}
 		return tableToTextExporter;
-	}
-
-	public MP5ApplicationExecutorConfigurer getMp5ExecutorConfigurer() {
-		if (mp5ExecutorConfigurer == null) {
-			mp5ExecutorConfigurer = new MP5ApplicationExecutorConfigurer();
-			mp5ExecutorConfigurer.setRemoteExecutorDialog(getMp5RemoteExecutorDialog());
-		}
-		return mp5ExecutorConfigurer;
 	}
 
 	public JmxClient getJmxClient() {

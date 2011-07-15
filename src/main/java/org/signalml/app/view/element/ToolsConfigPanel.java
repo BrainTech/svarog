@@ -12,7 +12,6 @@ import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.method.artifact.ArtifactToolConfigPanel;
 import org.signalml.app.method.mp5.MP5ExecutorManager;
 import org.signalml.app.method.mp5.MP5LocalExecutorDialog;
-import org.signalml.app.method.mp5.MP5RemoteExecutorDialog;
 import org.signalml.app.method.mp5.MP5ToolConfigPanel;
 import org.signalml.app.method.stager.StagerToolConfigPanel;
 import org.signalml.app.view.ViewerFileChooser;
@@ -51,11 +50,6 @@ public class ToolsConfigPanel extends JPanel {
 	 * {@link MP5Executor executor} for MP5
 	 */
 	private MP5LocalExecutorDialog mp5LocalExecutorDialog;
-	/**
-	 * the {@link MP5RemoteExecutorDialog dialog} to select the remote
-	 * {@link MP5Executor executor} for MP5
-	 */
-	private MP5RemoteExecutorDialog mp5RemoteExecutorDialog;
 
 	/**
 	 * the {@link MP5ToolConfigPanel panel} to configure the mp5 tool
@@ -120,7 +114,6 @@ public class ToolsConfigPanel extends JPanel {
 		if (mp5Panel == null) {
 			mp5Panel = new MP5ToolConfigPanel(messageSource, mp5ExecutorManager);
 			mp5Panel.setLocalExecutorDialog(mp5LocalExecutorDialog);
-			mp5Panel.setRemoteExecutorDialog(mp5RemoteExecutorDialog);
 		}
 		return mp5Panel;
 	}
@@ -221,27 +214,5 @@ public class ToolsConfigPanel extends JPanel {
 		this.mp5LocalExecutorDialog = mp5LocalExecutorDialog;
 		getMp5Panel().setLocalExecutorDialog(mp5LocalExecutorDialog);
 	}
-
-	/**
-	 * Returns the {@link MP5RemoteExecutorDialog dialog} to select the remote
-	 * {@link MP5Executor executor} for MP5.
-	 * @return the dialog to select the remote executor for MP5
-	 */
-	public MP5RemoteExecutorDialog getMp5RemoteExecutorDialog() {
-		return mp5RemoteExecutorDialog;
-	}
-
-	/**
-	 * Sets the {@link MP5RemoteExecutorDialog dialog} to select the remote
-	 * {@link MP5Executor executor} for MP5
-	 * @param mp5RemoteExecutorDialog the dialog to select the remote executor
-	 * for MP5
-	 */
-	public void setMp5RemoteExecutorDialog(MP5RemoteExecutorDialog mp5RemoteExecutorDialog) {
-		this.mp5RemoteExecutorDialog = mp5RemoteExecutorDialog;
-		getMp5Panel().setRemoteExecutorDialog(mp5RemoteExecutorDialog);
-	}
-
-
 
 }

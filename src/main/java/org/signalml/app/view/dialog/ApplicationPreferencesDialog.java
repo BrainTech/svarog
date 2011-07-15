@@ -19,7 +19,6 @@ import org.signalml.app.action.RemoveCodecAction;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.method.mp5.MP5ExecutorManager;
 import org.signalml.app.method.mp5.MP5LocalExecutorDialog;
-import org.signalml.app.method.mp5.MP5RemoteExecutorDialog;
 import org.signalml.app.model.SignalMLCodecListModel;
 import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.element.CodecManagerConfigPanel;
@@ -77,11 +76,6 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 	 * {@link MP5Executor executor} for MP5
 	 */
 	private MP5LocalExecutorDialog mp5LocalExecutorDialog;
-	/**
-	 * the {@link MP5RemoteExecutorDialog dialog} to select the remote
-	 * {@link MP5Executor executor} for MP5
-	 */
-	private MP5RemoteExecutorDialog mp5RemoteExecutorDialog;
 
 	/**
 	 * the {@link CodecManagerConfigPanel panel} which allows the management
@@ -273,7 +267,6 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 
 			toolsConfigPanel = new ToolsConfigPanel(messageSource, fileChooser, mp5ExecutorManager);
 			toolsConfigPanel.setMp5LocalExecutorDialog(getMp5LocalExecutorDialog());
-			toolsConfigPanel.setMp5RemoteExecutorDialog(getMp5RemoteExecutorDialog());
 
 			JPanel codecManagerContainPanel = new JPanel(new BorderLayout());
 			codecManagerContainPanel.add(codecManagerPanel, BorderLayout.NORTH);
@@ -529,19 +522,6 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 			mp5LocalExecutorDialog.setFileChooser(fileChooser);
 		}
 		return mp5LocalExecutorDialog;
-	}
-
-	/**
-	 * Returns the {@link MP5RemoteExecutorDialog dialog} to select the remote
-	 * {@link MP5Executor executor} for MP5.
-	 * If the dialog doesn't exist it is created.
-	 * @return the dialog to select the remote executor for MP5
-	 */
-	protected MP5RemoteExecutorDialog getMp5RemoteExecutorDialog() {
-		if (mp5RemoteExecutorDialog == null) {
-			mp5RemoteExecutorDialog = new MP5RemoteExecutorDialog(messageSource,this,true);
-		}
-		return mp5RemoteExecutorDialog;
 	}
 
 }

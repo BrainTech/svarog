@@ -113,7 +113,6 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 	private MP5ExecutorManager executorManager;
 
 	private MP5LocalExecutorDialog localExecutorDialog;
-	private MP5RemoteExecutorDialog remoteExecutorDialog;
 	private MP5ToolConfigDialog configDialog;
 
 	private SignalSpacePanel signalSpacePanel;
@@ -181,7 +180,6 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 			configDialog = new MP5ToolConfigDialog(messageSource,dialogParent,true);
 			configDialog.setExecutorManager(executorManager);
 			configDialog.setLocalExecutorDialog(getLocalExecutorDialog());
-			configDialog.setRemoteExecutorDialog(getRemoteExecutorDialog());
 		}
 		return configDialog;
 	}
@@ -631,13 +629,6 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 			localExecutorDialog.setFileChooser(getFileChooser());
 		}
 		return localExecutorDialog;
-	}
-
-	protected MP5RemoteExecutorDialog getRemoteExecutorDialog() {
-		if (remoteExecutorDialog == null) {
-			remoteExecutorDialog = new MP5RemoteExecutorDialog(messageSource,this,true);
-		}
-		return remoteExecutorDialog;
 	}
 
 	protected PleaseWaitDialog getPleaseWaitDialog() {

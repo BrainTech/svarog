@@ -21,7 +21,6 @@ public class MP5ToolConfigPanel extends JPanel {
 	private MessageSourceAccessor messageSource;
 	private MP5ExecutorManager mp5ExecutorManager;
 	private MP5LocalExecutorDialog localExecutorDialog;
-	private MP5RemoteExecutorDialog remoteExecutorDialog;
 
 	private MP5ToolExecutorConfigPanel executorConfigPanel;
 
@@ -44,7 +43,6 @@ public class MP5ToolConfigPanel extends JPanel {
 		if (executorConfigPanel == null) {
 			executorConfigPanel = new MP5ToolExecutorConfigPanel(messageSource,mp5ExecutorManager);
 			executorConfigPanel.setLocalExecutorDialog(localExecutorDialog);
-			executorConfigPanel.setRemoteExecutorDialog(remoteExecutorDialog);
 		}
 		return executorConfigPanel;
 	}
@@ -56,15 +54,6 @@ public class MP5ToolConfigPanel extends JPanel {
 	public void setLocalExecutorDialog(MP5LocalExecutorDialog localExecutorDialog) {
 		this.localExecutorDialog = localExecutorDialog;
 		getExecutorConfigPanel().setLocalExecutorDialog(localExecutorDialog);
-	}
-
-	public MP5RemoteExecutorDialog getRemoteExecutorDialog() {
-		return remoteExecutorDialog;
-	}
-
-	public void setRemoteExecutorDialog(MP5RemoteExecutorDialog remoteExecutorDialog) {
-		this.remoteExecutorDialog = remoteExecutorDialog;
-		getExecutorConfigPanel().setRemoteExecutorDialog(remoteExecutorDialog);
 	}
 
 }

@@ -15,8 +15,6 @@ import org.signalml.exception.SanityCheckException;
 import org.signalml.method.mp5.MP5Executor;
 import org.signalml.method.mp5.MP5ExecutorLocator;
 import org.signalml.method.mp5.MP5LocalProcessExecutor;
-import org.signalml.method.mp5.MP5RemoteExecutor;
-import org.signalml.method.mp5.MP5RemotePasswordExecutor;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.Annotations;
@@ -54,9 +52,9 @@ public class MP5ExecutorManager extends AbstractXMLConfiguration implements MP5E
 		Annotations.configureAliases(
 		        streamer,
 		        MP5ExecutorManager.class,
-		        MP5LocalProcessExecutor.class,
-		        MP5RemoteExecutor.class,
-		        MP5RemotePasswordExecutor.class
+		        MP5LocalProcessExecutor.class
+		        //MP5RemoteExecutor.class,
+		        //MP5RemotePasswordExecutor.class
 		);
 		streamer.setMode(XStream.ID_REFERENCES);
 
