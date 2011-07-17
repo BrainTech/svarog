@@ -126,13 +126,17 @@ public class PluginLoader {
 	 * @param profileDir the profile directory
 	 */
 	public static void createInstance(File profileDir) {
-		if (sharedInstance == null)
-			sharedInstance = new PluginLoader(profileDir);
+		if (null == sharedInstance) {
+		    synchronized (PluginLoader.class) {
+		        if (null == sharedInstance)
+		            sharedInstance = new PluginLoader(profileDir);
+		    }
+		}
 	}
 
 	/**
 	 * Returns the shared instance of this loader.
-	 * @return the shared instance of this loader
+	 * @return the shared instance of this loader or null (if it is not initialized yet).
 	 */
 	public static PluginLoader getInstance() {
 		return sharedInstance;
@@ -384,7 +388,7 @@ public class PluginLoader {
 				}
 			}
 			addPluginOptions();
-			PluginAccessClass.getSharedInstance().setInitializationPhase(false);
+			PluginAccessClass.getSharedInstance().setInitializationPhaseEnd();
 		} catch (Exception e) {
 			logger.error("Unknown error while loading plug-ins");
 			e.printStackTrace();

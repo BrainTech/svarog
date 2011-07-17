@@ -37,11 +37,14 @@ public class ProcessManager {
          * @return instance of this object.
          */
         public static ProcessManager getInstance() {
-                
-                if (instance == null) {
+            if (null == instance) {
+                synchronized (ProcessManager.class) {
+                    if (null == instance)
                         instance = new ProcessManager();
                 }
-                return instance;
+            }
+
+            return instance;
         }
 
         /**

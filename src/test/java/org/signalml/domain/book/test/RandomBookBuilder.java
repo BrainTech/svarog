@@ -34,9 +34,13 @@ public class RandomBookBuilder implements BookBuilder {
 	}
 
 	public static RandomBookBuilder getInstance() {
-		if (sharedInstance == null) {
-			sharedInstance = new RandomBookBuilder();
+		if (null == sharedInstance) {
+		    synchronized (RandomBookBuilder.class) {
+		        if (null == sharedInstance)
+		            sharedInstance = new RandomBookBuilder();
+		    }
 		}
+
 		return sharedInstance;
 	}
 

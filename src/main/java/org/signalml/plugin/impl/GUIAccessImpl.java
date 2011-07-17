@@ -677,14 +677,10 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 		pane.addTab(panel.getName(), null, panel, panel.getToolTipText());
 	}
 
-	/**
-	 * @param initializationPhase true if it is an initialization phase,
-	 * false otherwise
-	 */
-	public void setInitializationPhase(boolean initializationPhase) {
-		this.initializationPhase = initializationPhase;
+	/** Sets {@link #initializationPhase} to false. */
+	public void setInitializationPhaseEnd() {
+		this.initializationPhase = false;
 	}
-
 
 	/* (non-Javadoc)
 	 * @see org.signalml.plugin.export.view.PluginAccessGUI#getActiveSignalPlot()

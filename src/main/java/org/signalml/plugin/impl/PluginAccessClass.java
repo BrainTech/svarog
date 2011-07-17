@@ -15,7 +15,7 @@ import org.springframework.context.support.MessageSourceAccessor;
  * Implementation of {@link SvarogAccess} interface.
  * Allows to return only one, {@link #getSharedInstance() shared instance}
  * of this class.
- * Passes the information that the {@link #setInitializationPhase(boolean)
+ * Passes the information that the {@link #setInitializationPhaseEnd
  * initialization phase} has finished to the {@link GUIAccessImpl GUI access}
  * and the information that the application is {@link #onClose() closing}
  * to {@link ChangeSupportImpl change support}. 
@@ -75,8 +75,13 @@ public class PluginAccessClass implements SvarogAccess {
 	 */
 	public static PluginAccessClass getSharedInstance()
 	{
-		if (null == sharedInstance)
-			sharedInstance = new PluginAccessClass();
+		if (null == sharedInstance) {
+		    synchronized (PluginAccessClass.class) {
+		        if (null == sharedInstance)
+		            sharedInstance = new PluginAccessClass();
+		    }
+		}
+
 		return sharedInstance;
 	}
 
@@ -84,8 +89,8 @@ public class PluginAccessClass implements SvarogAccess {
 	 * Returns the implementation of {@link SvarogAccessGUI}.
 	 * @return the implementation of GUI access
 	 */
-	public static GUIAccessImpl getGUIImpl(){
-		return sharedInstance.guiAccess;
+	public static GUIAccessImpl getGUIImpl() {
+		return getSharedInstance().guiAccess;
 	}
 
 	/**
@@ -143,8 +148,8 @@ public class PluginAccessClass implements SvarogAccess {
 	 * @param initializationPhase true if it is an initialization phase,
 	 * false otherwise
 	 */
-	public void setInitializationPhase(boolean initializationPhase) {
-		guiAccess.setInitializationPhase(initializationPhase);
+	public void setInitializationPhaseEnd() {
+		guiAccess.setInitializationPhaseEnd();
 	}
 	
 	/**
