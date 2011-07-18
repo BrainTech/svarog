@@ -17,7 +17,6 @@ import org.signalml.app.document.SignalDocument;
 import org.signalml.domain.signal.MultichannelSampleSource;
 import org.signalml.domain.signal.SignalType;
 import org.signalml.domain.montage.ChannelType;
-import org.signalml.domain.montage.eeg.EegChannel;
 import org.signalml.domain.signal.SignalTypeConfigurer;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.util.Util;
@@ -27,7 +26,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 /**
  * This class represents a source montage.
  * Source montage consists of a list of {@link SourceChannel source channels},
- * from which every has an assigned {@link Channel function (location)}.
+ * out of which every one has an assigned {@link Channel function (location)}.
  * This class has also assigned listeners informing about changes in it.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.

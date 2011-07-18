@@ -1,17 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" output="target/classes" path="src/main/java"/>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/plugins/SFTestPlugin/src/main/java"/>
 	<classpathentry kind="src" path="src/plugins/FFT/src/main/java"/>
-	<classpathentry kind="src" path="src/plugins/Artifact/src/main/resources"/>
 	<classpathentry kind="src" path="src/plugins/PluginToolCommon/src/main/java"/>
 	<classpathentry kind="src" path="src/plugins/Artifact/src/main/java"/>
 	<classpathentry kind="src" path="src/plugins/FFTSignalTool/src/main/java"/>
-	<classpathentry kind="src" path="src/plugins/FFTSignalTool/src/main/resources"/>
 	<classpathentry kind="src" path="generated-sources"/>
-	<classpathentry excluding="**" kind="src" output="target/classes" path="src/main/resources"/>
-	<classpathentry kind="src" output="target/test-classes" path="src/test/java"/>
-	<classpathentry excluding="**" kind="src" output="target/test-classes" path="src/test/resources"/>
+	<classpathentry excluding="**" kind="src" path="src/main/resources"/>
+	<classpathentry kind="src" path="src/test/java"/>
+	<classpathentry excluding="**" kind="src" path="src/test/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
-	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER"/>
-	<classpathentry kind="output" path="target/classes"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/ant-1.7.1.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/ant-launcher-1.7.1.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/args4j-2.0.10.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/artifact-mbfj-1.0.0-x86.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/asm-3.2.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/asm-analysis-3.2.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/asm-commons-3.2.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/asm-tree-3.2.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/asm-util-3.2.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/bluecove-2.1.0.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/bluecove-gpl-2.1.0.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/castor-1.1.1.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/commons-cli-1.0.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/commons-cli-1.1.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/commons-io-1.3.1.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/commons-io-1.3.2.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/commons-lang-2.1.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/commons-logging-1.1.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/commons-math-2.1.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/doxia-sink-api-1.0-alpha-7.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/eega-tag-library-1.0.0.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/exec-maven-plugin-1.1.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/exec-maven-plugin-1.2.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/file-management-1.1.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/freemarker-2.3.15.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/google-collections-1.0-rc2.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/janino-2.5.10.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/javabuilder-1.0.0.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/jcommon-1.0.12.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/jdependency-0.6.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/jdom-1.1.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/jfreechart-1.0.8a.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/jmatio-0.1-alpha.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/jmx-0.9.1.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/jmx-0.9.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/jtransforms-2.3.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/junit-3.8.1.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/junit-4.5.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/log4j-1.2.14.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/maven-antrun-plugin-1.3.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/maven-archiver-2.3.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/maven-archiver-2.4.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/maven-assembly-plugin-2.2-beta-4.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/maven-common-artifact-filters-1.1.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/maven-compiler-plugin-2.0.2.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/maven-compiler-plugin-2.3.2.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/maven-dependency-tree-1.1.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/maven-filtering-1.0-beta-2.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/maven-filtering-1.0-beta-4.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/maven-jar-plugin-2.2.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/maven-plugin-testing-harness-1.1.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/maven-reporting-api-2.0.6.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/maven-repository-builder-1.0-alpha-2.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/maven-resources-plugin-2.3.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/maven-resources-plugin-2.4.3.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/maven-shade-plugin-1.4.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/maven-shared-io-1.1.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/maven-site-plugin-2.1.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/maven-source-plugin-2.0.4.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/maven-source-plugin-2.1.2.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/maven-surefire-plugin-2.4.3.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/netty-3.1.0.GA.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/onejar-maven-plugin-1.4.1.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/org-openide-awt-RELEASE70.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/org-openide-filesystems-RELEASE70.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/org-openide-util-lookup-RELEASE70.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/org-openide-util-RELEASE70.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/plexus-active-collections-1.0-beta-2.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/plexus-archiver-1.0-alpha-9.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/plexus-archiver-1.0-alpha-12.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/plexus-build-api-0.0.4.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/plexus-compiler-api-1.5.3.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/plexus-compiler-api-1.8.1.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/plexus-compiler-javac-1.5.3.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/plexus-compiler-javac-1.8.1.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/plexus-compiler-manager-1.5.3.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/plexus-compiler-manager-1.8.1.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/plexus-interactivity-api-1.0-alpha-4.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/plexus-interpolation-1.6.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/plexus-interpolation-1.7.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/plexus-interpolation-1.13.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/plexus-io-1.0-alpha-1.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/plexus-io-1.0-alpha-4.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/plexus-utils-1.0.4.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/plexus-utils-1.4.9.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/plexus-utils-1.5.1.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/plexus-utils-1.5.5.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/plexus-utils-1.5.6.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/plexus-utils-1.5.12.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/plexus-utils-1.5.15.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/plexus-utils-2.0.5.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/protobuf-java-2.3.0.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/slf4j-api-1.5.8.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/slf4j-jdk14-1.5.8.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/spring-beans-2.0.7.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/spring-context-2.0.7.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/spring-core-2.0.7.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/spring-oxm-1.0.3.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/spring-ws-core-1.0.3.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/spring-xml-1.0.3.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/stager-mbfj-1.0.0-x86.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/surefire-api-2.4.3.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/surefire-booter-2.4.3.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/trove-2.1.1.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/xercesImpl-2.9.1.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/xml-apis-1.3.04.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/xstream-1.2.2.jar"/>
+	<classpathentry kind="lib" path="/home/svarog/m2-eclipse/svarog-launcher-1.0.0.jar"/>
+	<classpathentry kind="output" path="target/classes.eclipse"/>
 </classpath>

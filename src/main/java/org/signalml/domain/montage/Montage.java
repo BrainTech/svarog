@@ -26,7 +26,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  * Every montage channel is a difference between the voltage of the electrode
  * and voltage of some reference (may be another electrode or average of electrodes).
  * 
- * This class contains a list of {@link MontageChannel mongate channels} and
+ * This class contains a list of {@link MontageChannel montage channels} and
  * a list of {@link MontageSampleFilter filters}.
  * Filters can be excluded either for selected channels or for all of them.
  * This class has also assigned listeners informing about changes in a montage.
