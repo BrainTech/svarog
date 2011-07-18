@@ -105,7 +105,7 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 
 	public void initialize() {
 
-		SvarogApplication.splash(messageSource.getMessage("startup.initializingMainFrame"), false);
+		SvarogApplication.getSharedInstance().splash(messageSource.getMessage("startup.initializingMainFrame"), false);
 
 		setTitle(messageSource.getMessage("viewer.title", new Object[] {SvarogConstants.VERSION}));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/mainframe.png"));
@@ -120,7 +120,7 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 		elementManager.setOptionPaneParent(getRootPane());
 		elementManager.setDialogParent(this);
 
-		SvarogApplication.splash(messageSource.getMessage("startup.creatingInterface"), true);
+		SvarogApplication.getSharedInstance().splash(messageSource.getMessage("startup.creatingInterface"), true);
 
 		Method method = elementManager.getMethodManager().getMethodByName("mp5");
 		if (method == null || !(method instanceof MP5Method)) {
@@ -141,11 +141,11 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 
 		addWindowListeners();
 
-		SvarogApplication.splash(messageSource.getMessage("startup.restoringTasks"), true);
+		SvarogApplication.getSharedInstance().splash(messageSource.getMessage("startup.restoringTasks"), true);
 
 		restoreTasks();
 
-		SvarogApplication.splash(messageSource.getMessage("startup.finishingMainFrameInitialization"), true);
+		SvarogApplication.getSharedInstance().splash(messageSource.getMessage("startup.finishingMainFrameInitialization"), true);
 
 		pack();
 
@@ -155,13 +155,13 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 
 		logger.debug("Main window initialized");
 
-		SvarogApplication.splash(null, true);
+		SvarogApplication.getSharedInstance().splash(null, true);
 
 	}
 
 	public void bootstrap() {
 
-		SvarogApplication.splash(messageSource.getMessage("startup.restoringWorkspace"), false);
+		SvarogApplication.getSharedInstance().splash(messageSource.getMessage("startup.restoringWorkspace"), false);
 
 		if (elementManager.getApplicationConfig().isRestoreWorkspace()) {
 			restoreWorkspace();
@@ -194,7 +194,7 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 
 		}
 
-		SvarogApplication.splash(null, true);
+		SvarogApplication.getSharedInstance().splash(null, true);
 
 	}
 
@@ -459,7 +459,7 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 		setVisible(false);
 		dispose();
 
-		SvarogApplication.exit(0);
+		SvarogApplication.getSharedInstance().exit(0);
 
 	}
 

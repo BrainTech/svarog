@@ -36,7 +36,7 @@ import org.signalml.plugin.export.signal.SignalToolButtonListener;
  * to use only buttons in these menus.
  *
  * @author Marcin Szumski
- * @author Stanislaw Findeisen
+ * @author Stanislaw Findeisen (Eisenbits)
  */
 public interface SvarogAccessGUI {
 

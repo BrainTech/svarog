@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.concurrent.ThreadFactory;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.logging.SvarogLogger;
 import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;
 import org.signalml.plugin.data.logic.PluginComputationMgrStepResult;
@@ -38,6 +39,8 @@ public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
 
 		@Override
 		public void uncaughtException(Thread t, Throwable e) {
+		    SvarogLogger.getSharedInstance().debug("PluginComputationMgr.CheckedThreadGroup.uncaughtException: " + t + ", " + e);
+
 			synchronized (this) {
 				if (this.isShutdownStarted) {
 					super.uncaughtException(t, e);

@@ -119,7 +119,7 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 		if (mrud instanceof SignalMLMRUDEntry) {
 
 			SignalMLMRUDEntry smlEntry = (SignalMLMRUDEntry) mrud;
-			SignalMLCodec codec = SvarogApplication.getSignalMLCodecManager().getCodecByUID(smlEntry.getCodecUID());
+			SignalMLCodec codec = SvarogApplication.getSharedInstance().getSignalMLCodecManager().getCodecByUID(smlEntry.getCodecUID());
 			if (codec == null) {
 				logger.warn("Mrud codec not found for uid [" + smlEntry.getCodecUID() + "]");
 				throw new MissingCodecException("error.mrudMissingCodecException");
