@@ -44,6 +44,7 @@ import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
+import org.signalml.app.model.ChannelsPlotOptionsModel;
 import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.tag.TagPaintMode;
 import org.signalml.app.view.tag.TagRenderer;
@@ -52,7 +53,6 @@ import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageMismatchException;
 import org.signalml.domain.signal.MultichannelSampleSource;
 import org.signalml.domain.signal.OriginalMultichannelSampleSource;
-import org.signalml.domain.signal.RoundBufferSampleSource;
 import org.signalml.domain.signal.SignalProcessingChain;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.domain.tag.TagDifference;
@@ -145,6 +145,8 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	private DefaultBoundedRangeModel timeScaleRangeModel;
 	private DefaultBoundedRangeModel valueScaleRangeModel;
 	private DefaultBoundedRangeModel channelHeightRangeModel;
+	
+	private ChannelsPlotOptionsModel channelsPlotOptionsModel;
 
 	// the plot must be aware of its own viewport to draw fixed-position elements properly
 	private JViewport viewport;
@@ -272,6 +274,8 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 		signalPlotColumnHeader = new SignalPlotColumnHeader(this);
 		signalPlotRowHeader = new SignalPlotRowHeader(this);
+		channelsPlotOptionsModel = new ChannelsPlotOptionsModel(this);
+		signalPlotRowHeader.setChannelOptionsPopupDialog(view.getChannelOptionsPopupDialog());
 
 		if (masterPlot == null) {
 
@@ -378,6 +382,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 			timeScaleRangeModel.addChangeListener(this);
 			valueScaleRangeModel.addChangeListener(this);
+			valueScaleRangeModel.addChangeListener(this.channelsPlotOptionsModel);
 			channelHeightRangeModel.addChangeListener(this);
 
 		} else {
@@ -388,9 +393,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			masterPlot.addPropertyChangeListener(this);
 
 		}
-
 		calculateParameters();
-
 	}
 
 	/**
@@ -426,6 +429,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		pixelPerPage = pixelPerSecond * pageSize;
 	pixelPerBlock = pixelPerPage / blocksPerPage;
 
+		int oldChannelCount = channelCount;
 		channelCount = signalChain.getChannelCount();
 		sampleCount = new int[channelCount];
 		int i;
@@ -465,7 +469,8 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		if( signalPlotColumnHeader != null ) {
 			signalPlotRowHeader.reset();
 		}
-
+		if (oldChannelCount != channelCount)
+			this.channelsPlotOptionsModel.reset(channelCount);
 	}
 
 	public void destroy() {
@@ -793,7 +798,6 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		}
 
 		int channel;
-
 		int startChannel = (int) Math.max( 0, Math.floor( ((double) clip.y) / pixelPerChannel ) );
 		int endChannel = (int) Math.min( channelCount-1, Math.ceil( ((double) clipEndY) / pixelPerChannel ) );
 
@@ -1201,8 +1205,11 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	/* Listener implementations */
 
 	public void reset() {
+		System.out.println("RESET");	
 		calculateParameters();
 		revalidateAndRepaintAll();
+		
+		
 	}
 
 	public void revalidateAndRepaintAll() {
@@ -1269,23 +1276,9 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 		if (source == document) {
 			if (name.equals(SignalDocument.MONTAGE_PROPERTY)) {
-				try {
-					if (localMontage == null) {
-						signalChain.applyMontageDefinition((Montage) evt.getNewValue());
-						if (view.getSignalSelection(this) != null) {
-							view.clearSignalSelection();
-						}
-						if (view.getTagSelection(this) != null) {
-							view.clearTagSelection();
-						}
-					}
-				} catch (MontageMismatchException ex) {
-					logger.error("Failed to set montage", ex);
-					ErrorsDialog.showImmediateExceptionDialog(this, ex);
-					return;
-				}
+				this.setLocalMontage((Montage) evt.getNewValue());
+				this.channelsPlotOptionsModel.reset(this.getChannelCount());
 			}
-			reset();
 		}
 		else if (masterPlot != null && source == masterPlot) {
 			if (TIME_ZOOM_FACTOR_PROPERTY.equals(name)) {
@@ -1334,6 +1327,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			}
 			else if (source == valueScaleRangeModel) {
 				double voltageZoomFactor = ((double) valueScaleRangeModel.getValue()) * voltageZoomFactorRatio;
+				//this.channelsPlotOptionsModel.globalScaleChanged(valueScaleRangeModel.getValue());
 				updateScales(-1, voltageZoomFactor, -1, false);
 			}
 			else if (source == channelHeightRangeModel) {
@@ -2101,6 +2095,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 	public void setSignalChain(SignalProcessingChain signalChain) {
 		this.signalChain = signalChain;
+
 	}
 
 	public OriginalMultichannelSampleSource getSignalSource() {
@@ -2299,6 +2294,10 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	public double getVoltageZoomFactor() {
 		return voltageZoomFactor;
 	}
+	
+	public double getVoltageZoomFactorRatio() {
+		return voltageZoomFactorRatio;
+	}
 
 	public void setVoltageZoomFactor(double voltageZoomFactor) {
 		if (this.voltageZoomFactor != voltageZoomFactor) {
@@ -2316,6 +2315,9 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 						valueScaleRangeModel.setMinimum(rangeModelValue);
 					}
 					valueScaleRangeModel.setValue(rangeModelValue);
+					this.channelsPlotOptionsModel.globalScaleChanged(valueScaleRangeModel.getValue());
+					//todo mati - rebuild gui in side panel
+
 				} finally {
 					ignoreSliderEvents = false;
 				}
@@ -2788,7 +2790,9 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		if (tagDocument instanceof TagDocument)
 			tagChannelSelection((TagDocument) tagDocument, new TagStyle(style), new SignalSelection(selection), selectNew);
 		else throw new InvalidClassException("only document got from SvarogAccess can be used");
-
 	}
-
+	
+	public ChannelsPlotOptionsModel getChannelsPlotOptionsModel() {
+		return this.channelsPlotOptionsModel;
+	}
 }

@@ -105,14 +105,13 @@ import org.signalml.app.view.element.LockableJSplitPane;
 import org.signalml.app.view.element.TitledSliderPanel;
 import org.signalml.app.view.monitor.StartMonitorRecordingDialog;
 import org.signalml.app.view.montage.SignalMontageDialog;
-import org.signalml.app.view.signal.popup.CompareTagsPopupDialog;
+import org.signalml.app.view.signal.popup.ChannelOptionsPopupDialog;
 import org.signalml.app.view.signal.popup.SignalPlotOptionsPopupDialog;
 import org.signalml.app.view.signal.popup.SlavePlotSettingsPopupDialog;
 import org.signalml.app.view.signal.popup.ZoomSettingsPopupDialog;
 import org.signalml.app.view.tag.TagIconProducer;
 import org.signalml.app.view.tag.TagStyleSelector;
 import org.signalml.app.view.tag.TagStyleToolBar;
-import org.signalml.app.view.tag.comparison.TagComparisonDialog;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.signal.MultichannelSampleSource;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
@@ -267,6 +266,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	private SignalPlotOptionsPopupDialog signalPlotOptionsPopupDialog;
 	private ZoomSettingsPopupDialog zoomSettingsDialog;
 	private SlavePlotSettingsPopupDialog slavePlotSettingsPopupDialog;
+	private ChannelOptionsPopupDialog channelOptionsPopupDialog;
 
 	private CardLayout tagToolBarLayout;
 	private JPanel tagToolBarPanel;
@@ -944,26 +944,29 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		mainToolBar.add(Box.createHorizontalGlue());
 
 		//mainToolBar.add(getPreciseSelectionAction());
+		mainToolBar.addSeparator();
+
+		mainToolBar.add(new TitledSliderPanel(messageSource.getMessage("signalView.timeScale"), timeScaleSlider));
+		JToggleButton snapToPageButton = new JToggleButton(getSnapToPageAction());
+		snapToPageButton.setHideActionText(true);
+		mainToolBar.add(snapToPageButton);
+		mainToolBar.addSeparator();
+
+		mainToolBar.add(new TitledSliderPanel(messageSource.getMessage("signalView.valueScale"), valueScaleSlider));
+		mainToolBar.add(new TitledSliderPanel(messageSource.getMessage("signalView.channelHeight"), channelHeightSlider));
+		mainToolBar.addSeparator();
+		mainToolBar.addSeparator();
+
+
 		mainToolBar.add(getEditSignalParametersAction());
 		mainToolBar.add(getEditSignalMontageAction());
 		mainToolBar.add(getApplyDefaultMontageAction());
-		mainToolBar.addSeparator();
 		mainToolBar.add(plotOptionsButton);
-
-		mainToolBar.add(new TitledSliderPanel(messageSource.getMessage("signalView.timeScale"), timeScaleSlider));
-		mainToolBar.add(new TitledSliderPanel(messageSource.getMessage("signalView.valueScale"), valueScaleSlider));
-		mainToolBar.add(new TitledSliderPanel(messageSource.getMessage("signalView.channelHeight"), channelHeightSlider));
-
-		mainToolBar.addSeparator();
-
 		JToggleButton filterSwitchButton = new JToggleButton(getFilterSwitchAction());
 		filterSwitchButton.setHideActionText(true);
 		filterSwitchButton.setSelectedIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/filteron.png"));
 		mainToolBar.add(filterSwitchButton);
 
-		JToggleButton snapToPageButton = new JToggleButton(getSnapToPageAction());
-		snapToPageButton.setHideActionText(true);
-		mainToolBar.add(snapToPageButton);
 
 	}
 
@@ -1436,6 +1439,13 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 	public void setSlavePlotSettingsPopupDialog(SlavePlotSettingsPopupDialog slavePlotSettingsPopupDialog) {
 		this.slavePlotSettingsPopupDialog = slavePlotSettingsPopupDialog;
+	}
+	
+	public ChannelOptionsPopupDialog getChannelOptionsPopupDialog() {
+		return this.channelOptionsPopupDialog;
+	}
+	public void setChannelOptionsPopupDialog(ChannelOptionsPopupDialog channelOptionsPopupDialog) {
+		this.channelOptionsPopupDialog = channelOptionsPopupDialog;
 	}
 
 	private SignalPlotOptionsPopupDialog getPlotOptionsDialog() {

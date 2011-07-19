@@ -16,6 +16,7 @@ import org.signalml.method.Method;
 import org.signalml.method.MethodExecutionTracker;
 import org.signalml.method.SuspendableMethod;
 import org.signalml.method.TrackableMethod;
+import org.signalml.plugin.export.method.SvarogTask;
 import org.signalml.task.TaskEvent.TaskEventType;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.core.task.TaskExecutor;
@@ -26,7 +27,7 @@ import org.springframework.core.task.TaskExecutor;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class LocalTask implements Task, MethodExecutionTracker, Runnable {
+public class LocalTask implements SvarogTask, MethodExecutionTracker, Runnable {
 
 	/**
 	 *  Logger for debug info.

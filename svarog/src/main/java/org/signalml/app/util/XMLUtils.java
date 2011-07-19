@@ -31,6 +31,7 @@ import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.montage.eeg.EegChannel;
 import org.signalml.domain.montage.eeg.LeftEarMontageGenerator;
+import org.signalml.domain.montage.eeg.CAMontageGenerator;
 import org.signalml.domain.montage.eeg.LinkedEarsMontageGenerator;
 import org.signalml.domain.montage.eeg.RightEarMontageGenerator;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
@@ -76,6 +77,7 @@ public abstract class XMLUtils {
 				LeftEarMontageGenerator.class,
 				RightEarMontageGenerator.class,
 				LinkedEarsMontageGenerator.class,
+				CAMontageGenerator.class,
 				MontageSampleFilter.class,
 				SampleFilterDefinition.class,
 				FFTSampleFilter.class,

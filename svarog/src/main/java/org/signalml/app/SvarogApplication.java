@@ -6,7 +6,6 @@ package org.signalml.app;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.Thread.UncaughtExceptionHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Locale;
 import java.util.prefs.Preferences;
@@ -36,7 +35,6 @@ import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
 import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.config.preset.SignalExportPresetManager;
-import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
 import org.signalml.app.document.DefaultDocumentManager;
 import org.signalml.app.document.DefaultMRUDRegistry;
 import org.signalml.app.document.DocumentDetector;
@@ -44,6 +42,7 @@ import org.signalml.app.document.ExtensionBasedDocumentDetector;
 import org.signalml.app.document.MRUDEntry;
 import org.signalml.app.document.RawSignalMRUDEntry;
 import org.signalml.app.document.SignalMLMRUDEntry;
+import org.signalml.app.logging.SvarogLogger;
 import org.signalml.app.method.ApplicationMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.MethodPresetManager;
@@ -73,7 +72,6 @@ import org.signalml.codec.DefaultSignalMLCodecManager;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.domain.montage.eeg.EegChannel;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
-import org.signalml.exception.ResolvableException;
 import org.signalml.method.DisposableMethod;
 import org.signalml.method.Method;
 import org.signalml.method.artifact.ArtifactData;
@@ -105,60 +103,171 @@ import org.signalml.app.worker.processes.OpenBCIModulePresetManager;
 import org.signalml.app.worker.processes.ProcessManager;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 
-/** SvarogApplication
- *
+/** 
+ * The Svarog application.
+ * 
+ * This is a singleton.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
+ * @author Stanislaw Findeisen (Eisenbits)
  */
-public class SvarogApplication {
+public class SvarogApplication implements java.lang.Runnable {
+    
+    private static SvarogApplication Instance = null;
 
-	private static Preferences preferences = null;
-	private static Locale locale = null;
-	private static MessageSourceAccessor messageSource = null;
+	private Preferences preferences = null;
+	private Locale locale = null;
+	private MessageSourceAccessor messageSource = null;
 	protected static final Logger logger = Logger.getLogger(SvarogApplication.class);
 	public static final int INITIALIZATION_STEP_COUNT = 5;
-	private static File profileDir = null;
-	private static ApplicationConfiguration applicationConfig = null;
-	private static DefaultSignalMLCodecManager signalMLCodecManager = null;
-	private static DefaultDocumentManager documentManager = null;
-	private static DefaultMRUDRegistry mrudRegistry = null;
-	private static DocumentDetector documentDetector = null;
-	private static ApplicationMethodManager methodManager = null;
-	private static ApplicationTaskManager taskManager = null;
-	private static ActionFocusManager actionFocusManager = null;
-	private static MontagePresetManager montagePresetManager = null;
-	private static BookFilterPresetManager bookFilterPresetManager = null;
-	private static SignalExportPresetManager signalExportPresetManager = null;
-	private static FFTSampleFilterPresetManager fftFilterPresetManager = null;
-        private static AmplifierDefinitionPresetManager amplifierDefinitionPresetManager = null;
-        private static OpenBCIModulePresetManager openBCIModulePresetManager = null;
+	private File profileDir = null;
+	private ApplicationConfiguration applicationConfig = null;
+	private DefaultSignalMLCodecManager signalMLCodecManager = null;
+	private DefaultDocumentManager documentManager = null;
+	private DefaultMRUDRegistry mrudRegistry = null;
+	private DocumentDetector documentDetector = null;
+	private ApplicationMethodManager methodManager = null;
+	private ApplicationTaskManager taskManager = null;
+	private ActionFocusManager actionFocusManager = null;
+	private MontagePresetManager montagePresetManager = null;
+	private BookFilterPresetManager bookFilterPresetManager = null;
+	private SignalExportPresetManager signalExportPresetManager = null;
+	private FFTSampleFilterPresetManager fftFilterPresetManager = null;
+        private AmplifierDefinitionPresetManager amplifierDefinitionPresetManager = null;
+        private OpenBCIModulePresetManager openBCIModulePresetManager = null;
 
 	/**
 	 * A {@link PresetManager} managing the user-defined
 	 * {@link TimeDomainSampleFilter} presets.
 	 */
-	private static TimeDomainSampleFilterPresetManager timeDomainSampleFilterPresetManager = null;
+	private TimeDomainSampleFilterPresetManager timeDomainSampleFilterPresetManager = null;
 
 	/**
 	 * A {@link PresetManager} managing the predefined
 	 * {@link TimeDomainSampleFilter TimeDomainSampleFilters}.
 	 */
-	private static PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainSampleFilterPresetManager = null;
+	private PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainSampleFilterPresetManager = null;
 
-	private static MP5ExecutorManager mp5ExecutorManager = null;
-	private static ViewerMainFrame viewerMainFrame = null;
-	private static XStream streamer = null;
-	private static SplashScreen splashScreen = null;
-	private static String startupDir = null;
+	private MP5ExecutorManager mp5ExecutorManager = null;
+	private ViewerMainFrame viewerMainFrame = null;
+	private XStream streamer = null;
+	private SplashScreen splashScreen = null;
+	private String startupDir = null;
 	// this needs to be a field to allow for invokeAndWait
-	private static GeneralConfiguration initialConfig = null;
-	private static boolean molTest = false;
+	private GeneralConfiguration initialConfig = null;
+	private boolean molTest = false;
+	
+	/** This static boolean indicates whether {@link #main(String[]) static void main(String[])} was already called. */
+	private static boolean mainCalled = false;
+    /** This boolean Indicates whether {@link #run() void run()} was already called. */
+	private boolean runCalled = false;
+	/** Command line arguments (as passed to {@link #main(String[]) static void main(String[])}). */
+	private String[] cmdLineArgs;
+	
+	/**
+	 * Returns the single SvarogApplication instance.
+	 */
+	public static SvarogApplication getSharedInstance() {
+	    return Instance;
+	}
 
 	/**
+	 * The Svarog main method.
+	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
+	    final String errorMsg = "You will not trick Svarog this easily, hahaha! Not this time!";
+	    
+	    if (mainCalled) {
+	        throw new IllegalStateException(errorMsg);
+	    } else {
+	        synchronized (SvarogApplication.class) {
+	            if (mainCalled)
+	                throw new IllegalStateException(errorMsg);
+	            mainCalled = true;
+	        }
+	    }
 
+	    SvarogLogger.getSharedInstance().debug("Preparing Svarog...");
+        SvarogLogger.getSharedInstance().debugThreads();
+        
+        // install security manager
+        SvarogSecurityManager.install();
+
+        // install dead thread exception handler...
+	    SvarogExceptionHandler.install();
+	    
+        // replace AWT event queue
+        SvarogAWTEventQueue.install();
+
+        // Launch Svarog
+	    launchSvarog(args);
+
+	    SvarogLogger.getSharedInstance().debug("SvarogApplication.main complete!");
+	}
+	
+	/**
+	 * Creates the shared instance, starts it in a separate thread and waits for it to complete.
+	 * 
+	 * @see Thread#join() 
+	 */
+	private static void launchSvarog(String[] args) {
+	    // init the shared instance...
+        Instance = new SvarogApplication(args);
+
+        // start the svarog thread!
+	    Thread t = SvarogThreadGroup.getSharedInstance().createNewThread(getSharedInstance(), "Svarog app");
+	    t.start();
+	    
+	    while (true) {
+	        try {
+	            SvarogLogger.getSharedInstance().debug("Waiting for main Svarog thread to complete...");
+	            t.join();
+	            break;
+	        } catch (java.lang.InterruptedException e) {
+	            SvarogLogger.getSharedInstance().warning("Top level: interrupted: " + e + "; looping back...");
+	        }
+	    }
+	    
+	    SvarogLogger.getSharedInstance().debug("SvarogApplication.launchSvarog complete!");
+	}
+	
+	/**
+	 * A private constructor.
+	 * 
+	 * @param args the command line arguments.
+	 */
+	private SvarogApplication(String[] args) {
+	    super();
+	    this.cmdLineArgs = args;
+	}
+	
+	@Override
+	/**
+	 * This makes some simple checks, prints some debug information to
+	 * standard error and calls {@link #mainPart2}.
+	 */
+	public void run() {
+       final String errorMsg = "run() already called!";
+        
+        if (runCalled) {
+            throw new IllegalStateException(errorMsg);
+        } else {
+            synchronized (this) {
+                if (runCalled)
+                    throw new IllegalStateException(errorMsg);
+                runCalled = true;
+            }
+        }
+        
+        SvarogLogger.getSharedInstance().debug("Starting Svarog...");
+        SvarogLogger.getSharedInstance().debugThreads();
+
+	    mainPart2(cmdLineArgs);
+	}
+
+	private void mainPart2(String[] args) {
 		startupDir = System.getProperty("user.dir");
 
 		Options options = new Options();
@@ -237,7 +346,7 @@ public class SvarogApplication {
 		}
 
 		// TODO check nested modal dialogs
-		setupGUIExceptionHandler();
+		// setupGUIExceptionHandler();
 
 		if (!line.hasOption("nosplash")) {
 			try {
@@ -294,9 +403,10 @@ public class SvarogApplication {
 			}
 		});
 
+		SvarogLogger.getSharedInstance().debug("SvarogApplication.mainPart2 complete!");
 	}
 
-	private static void initializeFirstTime(final GeneralConfiguration suggested) {
+	private void initializeFirstTime(final GeneralConfiguration suggested) {
 
 		if (locale == null) {
 			try {
@@ -362,7 +472,7 @@ public class SvarogApplication {
 
 	}
 
-	private static void initialize() {
+	private void initialize() {
 
 		GeneralConfiguration config = new GeneralConfiguration();
 		ConfigurationDefaults.setGeneralConfigurationDefaults(config);
@@ -409,7 +519,7 @@ public class SvarogApplication {
 
 	}
 
-	private static void createMessageSource() {
+	private void createMessageSource() {
 		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
 		messageSource.setCacheSeconds(-1);
 		messageSource.setBasenames(new String[]{
@@ -418,12 +528,12 @@ public class SvarogApplication {
 				"classpath:org/signalml/resource/wsmessage"
 			});
 
-		SvarogApplication.messageSource = new MessageSourceAccessor(messageSource, locale);
-		OptionPane.setMessageSource(SvarogApplication.messageSource);
-		ErrorsDialog.setStaticMessageSource(SvarogApplication.messageSource);
+		this.messageSource = new MessageSourceAccessor(messageSource, locale);
+		OptionPane.setMessageSource(this.messageSource);
+		ErrorsDialog.setStaticMessageSource(this.messageSource);
 	}
 
-	private static boolean setProfileDir(GeneralConfiguration config, boolean firstTime) {
+	private boolean setProfileDir(GeneralConfiguration config, boolean firstTime) {
 
 		String profilePath = null;
 		if (config.isProfileDefault()) {
@@ -469,7 +579,7 @@ public class SvarogApplication {
 
 	}
 
-	private static GeneralConfiguration askForProfilePath(GeneralConfiguration suggested) {
+	private GeneralConfiguration askForProfilePath(GeneralConfiguration suggested) {
 
 		ProfilePathDialog dialog = new ProfilePathDialog(messageSource, null, true);
 
@@ -491,13 +601,13 @@ public class SvarogApplication {
 
 	}
 
-	public static void splash(String newMessage, boolean doStep) {
+	public void splash(String newMessage, boolean doStep) {
 		if (splashScreen != null) {
 			splashScreen.updateSplash(newMessage, doStep);
 		}
 	}
 
-	private static void createMainStreamer() {
+	private void createMainStreamer() {
 
 		streamer = XMLUtils.getDefaultStreamer();
 		Annotations.configureAliases(
@@ -529,7 +639,7 @@ public class SvarogApplication {
 
 	}
 
-	private static void createApplication() {
+	private void createApplication() {
 
 		splash(messageSource.getMessage("startup.restoringConfiguration"), false);
 
@@ -708,7 +818,7 @@ public class SvarogApplication {
 
 	}
 
-	private static void createMethods() {
+	private void createMethods() {
 
 		// Prevent Matlab from replacing L&F
 		MatlabUtil.initialize();
@@ -872,7 +982,7 @@ public class SvarogApplication {
 
 	}
 
-	private static void createMainFrame() {
+	private void createMainFrame() {
 
 		splash(messageSource.getMessage("startup.creatingMainFrame"), false);
 
@@ -913,47 +1023,49 @@ public class SvarogApplication {
 
 	}
 
-	private static void setupGUIExceptionHandler() {
+//	private void setupGUIExceptionHandler() {
+//
+//		final UncaughtExceptionHandler prevHandler = Thread.getDefaultUncaughtExceptionHandler();
+//
+//		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler() {
+//
+//			@Override
+//			public void uncaughtException(final Thread t, final Throwable e) {
+//
+//				logger.error("Exception caught", e);
+//
+//				Runnable job = new Runnable() {
+//
+//					@Override
+//					public void run() {
+//						try {
+//						    SvarogLogger.getInstance().debug("Default Uncaught Exception Handler!");
+//						    
+//							// prevent the splash screen from staying on top
+//							if (splashScreen != null && splashScreen.isVisible()) {
+//								splashScreen.setVisible(false);
+//								splashScreen.dispose();
+//								splashScreen = null;
+//							}
+//
+//							ErrorsDialog errorsDialog = new ErrorsDialog(messageSource, null, true, "error.exception");
+//							ResolvableException ex = new ResolvableException(e);
+//							errorsDialog.showDialog(ex, true);
+//						} catch (Throwable ex1) {
+//							// fallback to previous handler to prevent exception loss
+//							logger.error("Failed to display error dialog", ex1);
+//							prevHandler.uncaughtException(t, e);
+//						}
+//					}
+//				};
+//
+//				SwingUtilities.invokeLater(job);
+//
+//			}
+//		});
+//	}
 
-		final UncaughtExceptionHandler prevHandler = Thread.getDefaultUncaughtExceptionHandler();
-
-		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler() {
-
-			@Override
-			public void uncaughtException(final Thread t, final Throwable e) {
-
-				logger.error("Exception caught", e);
-
-				Runnable job = new Runnable() {
-
-					@Override
-					public void run() {
-						try {
-							// prevent the splash screen from staying on top
-							if (splashScreen != null && splashScreen.isVisible()) {
-								splashScreen.setVisible(false);
-								splashScreen.dispose();
-								splashScreen = null;
-							}
-
-							ErrorsDialog errorsDialog = new ErrorsDialog(messageSource, null, true, "error.exception");
-							ResolvableException ex = new ResolvableException(e);
-							errorsDialog.showDialog(ex, true);
-						} catch (Throwable ex1) {
-							// fallback to previous handler to prevent exception loss
-							logger.error("Failed to display error dialog", ex1);
-							prevHandler.uncaughtException(t, e);
-						}
-					}
-				};
-
-				SwingUtilities.invokeLater(job);
-
-			}
-		});
-	}
-
-	public static void exit(int code) {
+	public void exit(int code) {
 
 		logger.debug("Application stopping");
 
@@ -1067,17 +1179,22 @@ public class SvarogApplication {
 	}
 
 	// this is guaranteed not to be used in applet context
-	public static File getProfileDir() {
+	public File getProfileDir() {
 		return profileDir;
 	}
 
 	// this is guaranteed not to be used in applet context
-	public static SignalMLCodecManager getSignalMLCodecManager() {
+	public SignalMLCodecManager getSignalMLCodecManager() {
 		return signalMLCodecManager;
 	}
 
 	// this is guaranteed not to be used in applet context
-	public static String getStartupDir() {
+	public String getStartupDir() {
 		return startupDir;
+	}
+	
+	/** {@link #messageSource} getter. */
+	public MessageSourceAccessor getMessageSourceAccessor() {
+	    return messageSource;
 	}
 }

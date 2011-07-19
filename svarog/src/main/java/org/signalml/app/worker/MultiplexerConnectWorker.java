@@ -79,11 +79,11 @@ public class MultiplexerConnectWorker extends SwingWorker< WorkerResult, Integer
 						elementManager.getMessageSource().getMessage( "action.connectingMultiplexer.connectionOkMsg"));
 			}
 			else {
-				logger.error("connection failed!");
 				Throwable cause = connectFuture.getCause();
+				logger.error("connection failed! Cause: "+cause);
 				return new WorkerResult( Boolean.FALSE, 
-						elementManager.getMessageSource().getMessage( "action.connectingMultiplexer.connectionFailedMsg") + 
-								"; " + cause);
+							 elementManager.getMessageSource().getMessage( "action.connectingMultiplexer.connectionFailedMsg")
+							 );
 			}
 		}
 		else {

@@ -51,6 +51,11 @@ public enum GenericChannel implements Channel {
          * a variable telling if this channel is unique
          */
 	private boolean unique;
+	
+    /**
+     * a variable telling if this channel is mutable
+     */
+	private boolean mutable=true;
 
 
         /**
@@ -68,6 +73,19 @@ public enum GenericChannel implements Channel {
 		if (pattern != null) {
 			this.matchingPattern = Pattern.compile(pattern);
 		}
+	}
+    /**
+     * Constructor.
+     * @param name the name of the channel
+     * @param type the type of the channel
+     * @param unique is the channel unique?
+     * @param unique is the channel mutable?
+     * @param pattern the regular expression which will be used to search
+     * channel by name
+     */
+	private GenericChannel(String name, ChannelType type, boolean unique, boolean mutable, String pattern) {
+		this(name, type, unique, pattern);
+		this.mutable=mutable;
 	}
 
         /**
@@ -103,6 +121,7 @@ public enum GenericChannel implements Channel {
 	public boolean isUnique() {
 		return unique;
 	}
+	
 
         /**
          * Returns the pattern which is used to search this channel by name
@@ -246,6 +265,10 @@ public enum GenericChannel implements Channel {
 	@Override
 	public String getDefaultMessage() {
 		return name;
+	}
+	@Override
+	public boolean isMutable() {
+		return this.mutable;
 	}
 
 }

@@ -75,7 +75,6 @@ import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.plugin.export.signal.TemporaryFile;
 import org.signalml.plugin.export.view.DocumentView;
 import org.signalml.plugin.export.view.ExportedSignalPlot;
-import org.signalml.plugin.loader.PluginLoader;
 
 /**
  * Implementation of {@link SvarogAccessSignal} interface.
@@ -91,18 +90,18 @@ import org.signalml.plugin.loader.PluginLoader;
  * </ul>
  * @author Marcin Szumski
  */
-public class SignalsAccessImpl implements SvarogAccessSignal {
+public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSignal {
 
 	protected static final Logger logger = Logger.getLogger(SignalsAccessImpl.class);
 	
 	/**
-	 * the manager of the elements of Svarog
-	 */
-	private ViewerElementManager manager;
-	/**
 	 * informs which objects are focused
 	 */
 	private ActionFocusManager focusManager;
+	
+    protected SignalsAccessImpl(PluginAccessClass parent) {
+        super(parent);
+    }
 	
 	/**
 	 * Returns the output of signal samples.
@@ -193,7 +192,7 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 	 * @return the list of documents in the signal. may be empty
 	 */
 	private ArrayList<SignalDocument> getSignalDocuments(){
-		DocumentManager documentManager = manager.getDocumentManager();
+		DocumentManager documentManager = getViewerElementManager().getDocumentManager();
 		int numberOfDocuments = documentManager.getDocumentCount();
 		ArrayList<SignalDocument> documents = new ArrayList<SignalDocument>();
 		for (int i = 0; i < numberOfDocuments; ++i ){
@@ -634,7 +633,7 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 		descriptor.setPageSize(pageSize);
 		descriptor.setBlocksPerPage(blocksPerPage);
 		osd.setRawSignalDescriptor(descriptor);
-		DocumentFlowIntegrator documentFlowIntegrator = manager.getDocumentFlowIntegrator();
+		DocumentFlowIntegrator documentFlowIntegrator = getViewerElementManager().getDocumentFlowIntegrator();
 		if (!documentFlowIntegrator.maybeOpenDocument(ofd))
 			throw new SignalMLException("failed to open document");
 	}
@@ -678,20 +677,12 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 
 		ofd.getTagOptions().setParent(signalDocument);
 
-		DocumentFlowIntegrator documentFlowIntegrator = manager.getDocumentFlowIntegrator();
+		DocumentFlowIntegrator documentFlowIntegrator = getViewerElementManager().getDocumentFlowIntegrator();
 		//if (documentFlowIntegrator == null) return false;
 		if (!documentFlowIntegrator.maybeOpenDocument(ofd))
 			throw new SignalMLException("failed to open document");
 	}
 
-
-	/**
-	 * @param manager the manager to set
-	 */
-	public void setManager(ViewerElementManager manager) {
-		this.manager = manager;
-	}
-	
 	/**
 	 * Returns a {@link SignalPlot signal plot} for a {@link SignalView view}
 	 * associated with a given document. 
@@ -760,7 +751,7 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 		OpenFileSignalDescriptor osd = ofd.getOpenSignalDescriptor().getOpenFileSignalDescriptor();
 		osd.setMethod(FileOpenSignalMethod.SIGNALML);
 		SignalParameterDescriptor spd = osd.getParameters();
-		SignalMLCodecManager codecManager = manager.getCodecManager();
+		SignalMLCodecManager codecManager = getViewerElementManager().getCodecManager();
 		if (file == null) throw new NullPointerException("file can not be null");
 		if (!file.exists()) throw new IOException("file doesn't exist");
 		if (!file.canRead()) throw new IOException("can not access file");
@@ -773,7 +764,7 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 		if (spd.isPageSizeEditable()){
 			spd.setPageSize(pageSize);
 		}
-		DocumentFlowIntegrator documentFlowIntegrator = manager.getDocumentFlowIntegrator();
+		DocumentFlowIntegrator documentFlowIntegrator = getViewerElementManager().getDocumentFlowIntegrator();
 		if (!documentFlowIntegrator.maybeOpenDocument(ofd))
 			throw new SignalMLException("failed to open document");
 	}
@@ -783,13 +774,13 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 	 */
 	@Override
 	public void addCodec(File codecFile, String codecFormatName) throws IOException {
-		SignalMLCodecManager codecManager = manager.getCodecManager();
+		SignalMLCodecManager codecManager = getViewerElementManager().getCodecManager();
 		if (codecFile == null) throw new NullPointerException("file can not be null");
 		if (!codecFile.exists()) throw new IOException("file doesn't exist");
 		if (!codecFile.canRead()) throw new IOException("can not access file");
 		SignalMLCodec codec;
 		try {
-			codec = new XMLSignalMLCodec(codecFile, getProfileDirectory());
+			codec = new XMLSignalMLCodec(codecFile, getParent().getConfigAccess().getProfileDirectory());
 		} catch (XMLCodecException e) {
 			throw new IOException("failed to read codec");
 		}
@@ -809,40 +800,16 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 		ofd.setMakeActive(true);
 		ofd.setFile(file);
 		ofd.setType(ManagedDocumentType.BOOK);
-		DocumentFlowIntegrator documentFlowIntegrator = manager.getDocumentFlowIntegrator();
+		DocumentFlowIntegrator documentFlowIntegrator = getViewerElementManager().getDocumentFlowIntegrator();
 		if (!documentFlowIntegrator.maybeOpenDocument(ofd))
 			throw new SignalMLException("failed to open book document");
-	}
-
-	/* (non-Javadoc)
-	 * @see org.signalml.plugin.export.signal.PluginAccessSignal#getProfileDirectory()
-	 */
-	@Override
-	public File getProfileDirectory() {
-		return new File(manager.getProfileDir().getAbsolutePath());
-	}
-
-	/* (non-Javadoc)
-	 * @see org.signalml.plugin.export.signal.PluginAccessSignal#getPluginDirectory()
-	 */
-	@Override
-	public File[] getPluginDirectories() {
-		PluginLoader loader = PluginLoader.getInstance();
-		ArrayList<File> files = loader.getPluginDirs();
-		if (files == null) throw new RuntimeException("no profile directories stored");
-		File[] filesArray = new File[files.size()];
-		int i = 0;
-		for (File file : files){
-			filesArray[i++] = new File(file.getAbsolutePath());
-		}
-		return filesArray;
 	}
 
 	/**
 	 * @return the focusManager
 	 */
 	private ActionFocusManager getFocusManager() {
-		if (focusManager == null) focusManager = manager.getActionFocusManager();
+		if (focusManager == null) focusManager = getViewerElementManager().getActionFocusManager();
 		return focusManager;
 	}
 
@@ -935,7 +902,7 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 		SegmentedSampleSourceFactory factory = SegmentedSampleSourceFactory.getSharedInstance();
 		MultichannelSampleSource sampleSource = factory.getContinuousSampleSource(signalChain, signalSpace, descriptor.getTagSet(), descriptor.getPageSize(), descriptor.getBlockSize());
 		
-		PleaseWaitDialog pleaseWaitDialog = new PleaseWaitDialog(manager.getMessageSource(), manager.getDialogParent());
+		PleaseWaitDialog pleaseWaitDialog = new PleaseWaitDialog(getViewerElementManager().getMessageSource(), getViewerElementManager().getDialogParent());
 		pleaseWaitDialog.initializeNow();
 		
 		if (rawSignalSampleType == RawSignalSampleType.INT || rawSignalSampleType == RawSignalSampleType.SHORT) {
@@ -944,9 +911,9 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 
 			scanWorker.execute();
 
-			pleaseWaitDialog.setActivity(manager.getMessageSource().getMessage("activity.scanningSignal"));
+			pleaseWaitDialog.setActivity(getViewerElementManager().getMessageSource().getMessage("activity.scanningSignal"));
 			pleaseWaitDialog.configureForDeterminate(0, SampleSourceUtils.getMaxSampleCount(sampleSource), 0);
-			pleaseWaitDialog.waitAndShowDialogIn(manager.getDialogParent(), 500, scanWorker);
+			pleaseWaitDialog.waitAndShowDialogIn(getViewerElementManager().getDialogParent(), 500, scanWorker);
 
 			SignalScanResult signalScanResult = null;
 			try {
@@ -974,7 +941,7 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 				// check if normalization needs to be forced
 				if (maxTypeAbsValue < Math.ceil(maxSignalAbsValue)) {
 
-					int ans = OptionPane.showNormalizationUnavoidable(manager.getOptionPaneParent());
+					int ans = OptionPane.showNormalizationUnavoidable(getViewerElementManager().getOptionPaneParent());
 					if (ans != OptionPane.OK_OPTION) {
 						return;
 					}
@@ -1000,9 +967,9 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 
 		worker.execute();
 
-		pleaseWaitDialog.setActivity(manager.getMessageSource().getMessage("activity.exportingSignal"));
+		pleaseWaitDialog.setActivity(getViewerElementManager().getMessageSource().getMessage("activity.exportingSignal"));
 		pleaseWaitDialog.configureForDeterminate(0, minSampleCount, 0);
-		pleaseWaitDialog.waitAndShowDialogIn(manager.getOptionPaneParent(), 500, worker);
+		pleaseWaitDialog.waitAndShowDialogIn(getViewerElementManager().getOptionPaneParent(), 500, worker);
 
 		try {
 			worker.get();
@@ -1018,7 +985,7 @@ public class SignalsAccessImpl implements SvarogAccessSignal {
 	
 	@Override
 	public File getTemporaryFile(String extension) throws IOException {
-		File profileDirectory = manager.getProfileDir().getAbsoluteFile();
+		File profileDirectory = getViewerElementManager().getProfileDir().getAbsoluteFile();
 		File tempDirectory = new File(profileDirectory, "temp");
 		if (tempDirectory.exists() && !tempDirectory.isDirectory())
 			throw new IOException("can not create the directory for temporary files");

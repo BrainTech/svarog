@@ -50,9 +50,13 @@ public class RainbowMapPalette implements WignerMapPalette {
 	}
 
 	public static RainbowMapPalette getInstance() {
-		if (sharedInstance == null) {
-			sharedInstance = new RainbowMapPalette();
+		if (null == sharedInstance) {
+		    synchronized (RainbowMapPalette.class) {
+		        if (null == sharedInstance)
+		            sharedInstance = new RainbowMapPalette();
+		    }
 		}
+
 		return sharedInstance;
 	}
 

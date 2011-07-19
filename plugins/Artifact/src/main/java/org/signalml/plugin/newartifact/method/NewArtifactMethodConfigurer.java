@@ -11,18 +11,18 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.method.MethodPresetManager;
 import org.signalml.app.method.PresetEquippedMethodConfigurer;
 import org.signalml.app.util.XMLUtils;
-import org.signalml.app.view.ViewerElementManager;
-import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.method.Method;
 import org.signalml.plugin.data.PluginConfigForMethod;
 import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
+import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.plugin.i18n.PluginMessageSourceManager;
 import org.signalml.plugin.method.IPluginMethodConfigurer;
 import org.signalml.plugin.method.PluginMethodManager;
@@ -49,7 +49,7 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 	protected static final Logger logger = Logger
 					       .getLogger(NewArtifactMethodConfigurer.class);
 
-	private ViewerFileChooser fileChooser;
+	private FileChooser fileChooser;
 	private NewArtifactMethodDialog dialog;
 	private PresetManager presetManager;
 	private Window dialogParent;
@@ -60,14 +60,10 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 
 	@Override
 	public void initialize(PluginMethodManager manager) {
-		ViewerElementManager viewerManager = manager.getSvarogAccess()
-						     .getGUIAccess().getManager();
-
-		this.dialogParent = viewerManager.getDialogParent();
+		this.dialogParent = manager.getSvarogAccess().getGUIAccess().getDialogParent();
 
 		this.createPresetManager(manager);
-		this.fileChooser = manager.getSvarogAccess().getGUIAccess()
-				   .getManager().getFileChooser();
+		this.fileChooser = manager.getSvarogAccess().getGUIAccess().getFileChooser();
 
 		MessageSourceAccessor messageSource;
 		try {
@@ -76,17 +72,15 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 			this.dialog = null;
 			return;
 		}
-		this.dialog = new NewArtifactMethodDialog(messageSource,
-				this.presetManager, this.dialogParent);
-		this.dialog.setApplicationConfig(viewerManager.getApplicationConfig());
 
+		this.dialog = new NewArtifactMethodDialog(messageSource, this.presetManager, this.dialogParent);
+		// TODO remove this nasty cast
+		this.dialog.setApplicationConfig((ApplicationConfiguration) manager.getSvarogAccess().getConfigAccess().getSvarogConfiguration());
 		this.firstRunFlag = true;
 	}
 
 	private void createPresetManager(PluginMethodManager manager) {
 		if (this.presetManager == null) {
-			ViewerElementManager elementManager = manager.getSvarogAccess()
-							      .getGUIAccess().getManager();
 			MethodPresetManager presetManager;
 			try {
 				presetManager = new MethodPresetManager(
@@ -98,7 +92,7 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 				logger.error("Failed to get method name", e);
 				return;
 			}
-			presetManager.setProfileDir(elementManager.getProfileDir());
+			presetManager.setProfileDir(manager.getSvarogAccess().getConfigAccess().getProfileDirectory());
 			try {
 				presetManager.setStreamer((XStream) PluginResourceRepository
 							  .GetResource("streamer"));

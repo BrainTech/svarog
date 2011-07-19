@@ -81,10 +81,8 @@ import org.signalml.app.document.MRUDRegistry;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.iterate.IterationSetupDialog;
-import org.signalml.app.method.mp5.MP5ApplicationExecutorConfigurer;
 import org.signalml.app.method.mp5.MP5ExecutorManager;
 import org.signalml.app.method.mp5.MP5LocalExecutorDialog;
-import org.signalml.app.method.mp5.MP5RemoteExecutorDialog;
 import org.signalml.app.model.BookTreeModel;
 import org.signalml.app.model.MonitorTreeModel;
 import org.signalml.app.model.PropertySheetModel;
@@ -122,6 +120,7 @@ import org.signalml.app.view.montage.filters.EditFFTSampleFilterDialog;
 import org.signalml.app.view.montage.filters.EditTimeDomainSampleFilterDialog;
 import org.signalml.app.view.montage.SignalMontageDialog;
 import org.signalml.app.view.signal.SignalView;
+import org.signalml.app.view.signal.popup.ChannelOptionsPopupDialog;
 import org.signalml.app.view.signal.popup.SlavePlotSettingsPopupDialog;
 import org.signalml.app.view.tag.comparison.TagComparisonDialog;
 import org.signalml.codec.SignalMLCodecManager;
@@ -220,6 +219,7 @@ public class ViewerElementManager {
 
 	/* Window interface elements */
 	private Component optionPaneParent;
+	/** A parent for new {@link java.awt.Dialog}s. */
 	private Window dialogParent;
 	private View view;
 
@@ -275,6 +275,7 @@ public class ViewerElementManager {
 	private NewTagDialog newTagDialog;
 	private EditTagAnnotationDialog editTagAnnotationDialog;
 	private SlavePlotSettingsPopupDialog slavePlotSettingsPopupDialog;
+	private ChannelOptionsPopupDialog channelOptionsPopupDialog;
 	private TagStylePaletteDialog tagStylePaletteDialog;
 	private HelpDialog helpDialog;
 	private TagComparisonDialog tagComparisonDialog;
@@ -295,7 +296,6 @@ public class ViewerElementManager {
 	private StartMonitorRecordingDialog startMonitorRecordingDialog;
 
 	private MP5LocalExecutorDialog mp5LocalExecutorDialog;
-	private MP5RemoteExecutorDialog mp5RemoteExecutorDialog;
 	private DynamicCompilationWarningDialog dynamicCompilationWarningDialog;
 	private AtomTableDialog atomTableDialog;
 	private BookFilterDialog bookFilterDialog;
@@ -400,7 +400,6 @@ public class ViewerElementManager {
 
 	/* Other */
 	private TableToTextExporter tableToTextExporter;
-	private MP5ApplicationExecutorConfigurer mp5ExecutorConfigurer;
 	private JmxClient jmxClient;
 	private JmxClient tagClient;
 
@@ -1265,6 +1264,17 @@ public class ViewerElementManager {
 		}
 		return slavePlotSettingsPopupDialog;
 	}
+	
+	public ChannelOptionsPopupDialog getChannelOptionsPopupDialog() {
+		if (channelOptionsPopupDialog == null) {
+			channelOptionsPopupDialog = new ChannelOptionsPopupDialog(messageSource, getDialogParent(), true);
+			// XXX this dialog reuses the main window's instance of the montage dialog
+			// this seems to work and since the dialog is very big we try to keep it
+			// like this if it works
+			//channelOptionsPopupDialog.setSignalMontageDialog(getSignalMontageDialog());
+		}
+		return channelOptionsPopupDialog;
+	}
 
 	public TagStylePaletteDialog getTagStylePaletteDialog() {
 		if (tagStylePaletteDialog == null) {
@@ -1378,13 +1388,6 @@ public class ViewerElementManager {
 			mp5LocalExecutorDialog.setFileChooser(getFileChooser());
 		}
 		return mp5LocalExecutorDialog;
-	}
-
-	public MP5RemoteExecutorDialog getMp5RemoteExecutorDialog() {
-		if (mp5RemoteExecutorDialog == null) {
-			mp5RemoteExecutorDialog = new MP5RemoteExecutorDialog(messageSource, getDialogParent(), true);
-		}
-		return mp5RemoteExecutorDialog;
 	}
 
 	public DynamicCompilationWarningDialog getDynamicCompilationWarningDialog() {
@@ -1902,14 +1905,6 @@ public class ViewerElementManager {
 		return tableToTextExporter;
 	}
 
-	public MP5ApplicationExecutorConfigurer getMp5ExecutorConfigurer() {
-		if (mp5ExecutorConfigurer == null) {
-			mp5ExecutorConfigurer = new MP5ApplicationExecutorConfigurer();
-			mp5ExecutorConfigurer.setRemoteExecutorDialog(getMp5RemoteExecutorDialog());
-		}
-		return mp5ExecutorConfigurer;
-	}
-
 	public JmxClient getJmxClient() {
 		return jmxClient;
 	}
@@ -1938,6 +1933,7 @@ public class ViewerElementManager {
 			signalView.setMessageSource(messageSource);
 			signalView.setActionFocusManager(getActionFocusManager());
 			signalView.setSlavePlotSettingsPopupDialog(getSlavePlotSettingsPopupDialog());
+			signalView.setChannelOptionsPopupDialog(getChannelOptionsPopupDialog());
 			signalView.setErrorsDialog(getErrorsDialog());
 			signalView.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 			signalView.setMontagePresetManager(getMontagePresetManager());

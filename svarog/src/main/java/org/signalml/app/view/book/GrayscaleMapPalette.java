@@ -39,9 +39,13 @@ public class GrayscaleMapPalette implements WignerMapPalette {
 	}
 
 	public static GrayscaleMapPalette getInstance() {
-		if (sharedInstance == null) {
-			sharedInstance = new GrayscaleMapPalette();
+		if (null == sharedInstance) {
+		    synchronized (GrayscaleMapPalette.class) {
+		        if (null == sharedInstance)
+		            sharedInstance = new GrayscaleMapPalette();
+		    }
 		}
+
 		return sharedInstance;
 	}
 

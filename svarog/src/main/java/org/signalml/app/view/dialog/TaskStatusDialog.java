@@ -46,6 +46,7 @@ import org.signalml.method.SuspendableMethod;
 import org.signalml.method.TrackableMethod;
 import org.signalml.method.iterator.MethodIteratorMethod;
 import org.signalml.method.stager.StagerMethod;
+import org.signalml.plugin.export.method.SvarogTaskStatusDialog;
 import org.signalml.task.Task;
 import org.signalml.task.TaskEvent;
 import org.signalml.task.TaskEventListener;
@@ -60,7 +61,7 @@ import org.springframework.context.support.MessageSourceAccessor;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class TaskStatusDialog extends JDialog implements TaskEventListener, TaskFocusSelector {
+public class TaskStatusDialog extends JDialog implements TaskEventListener, TaskFocusSelector, SvarogTaskStatusDialog {
 
 	private static final long serialVersionUID = 1L;
 

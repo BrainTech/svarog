@@ -140,12 +140,75 @@ public abstract class AbstractSignalParametersPanel extends JPanel {
          */
         private void createInterface() {
 
+
+                JPanel buttonPanel = createButtonPanel();
+		JPanel fieldsPanel = createFieldsPanel();
+
+                add(fieldsPanel, BorderLayout.NORTH);
+                add(buttonPanel, BorderLayout.SOUTH);
+
+                setEnabledAll(false);
+        }
+
+        /**
+         * Fills a {@link JPanel} object with component, regarding {@link GridBagConstraints} object.
+         *
+         * @param fieldsPanel an object to be filled with components
+         * @param constraints an object regarding to which components should be placed in fieldsPanel
+         * @param startingRow a row to start from
+
+         * @return a number of rows that fieldsPanel contains after performing all operations
+         */
+
+	protected int createFieldsPanelElements(JPanel fieldsPanel, GridBagConstraints constraints, int startingRow) {
                 JLabel samplingFrequencyLabel = new JLabel(messageSource.getMessage("opensignal.parameters.samplingFrequency"));
                 JLabel channelCountLabel = new JLabel(messageSource.getMessage("opensignal.parameters.channelCount"));
                 JLabel byteOrderLabel = new JLabel(messageSource.getMessage("opensignal.parameters.byteOrder"));
                 JLabel sampleTypeLabel = new JLabel(messageSource.getMessage("opensignal.parameters.sampleType"));
                 JLabel pageSizeLabel = new JLabel(messageSource.getMessage("opensignal.parameters.pageSize"));
                 JLabel blocksPerPageLabel = new JLabel(messageSource.getMessage("opensignal.parameters.blocksPerPage"));
+
+		int row = startingRow;
+                fillConstraints(constraints, 0, row, 0, 0, 1);
+                fieldsPanel.add(samplingFrequencyLabel, constraints);
+                fillConstraints(constraints, 1, row, 1, 0, 1);
+                fieldsPanel.add(getSamplingFrequencyComboBox(), constraints);
+		row++;
+
+                fillConstraints(constraints, 0, row, 0, 0, 1);
+                fieldsPanel.add(channelCountLabel, constraints);
+                fillConstraints(constraints, 1, row, 1, 0, 1);
+                fieldsPanel.add(getChannelCountSpinner(), constraints);
+		row++;
+
+                fillConstraints(constraints, 0, row, 0, 0, 1);
+                fieldsPanel.add(byteOrderLabel, constraints);
+                fillConstraints(constraints, 1, row, 1, 0, 1);
+                fieldsPanel.add(getByteOrderComboBox(), constraints);
+		row++;
+
+                fillConstraints(constraints, 0, row, 0, 0, 1);
+                fieldsPanel.add(sampleTypeLabel, constraints);
+                fillConstraints(constraints, 1, row, 1, 0, 1);
+                fieldsPanel.add(getSampleTypeComboBox(), constraints);
+		row++;
+
+                fillConstraints(constraints, 0, row, 0, 0, 1);
+                fieldsPanel.add(pageSizeLabel, constraints);
+                fillConstraints(constraints, 1, row, 1, 0, 1);
+                fieldsPanel.add(getPageSizeSpinner(), constraints);
+		row++;
+
+                fillConstraints(constraints, 0, row, 0, 0, 1);
+                fieldsPanel.add(blocksPerPageLabel, constraints);
+                fillConstraints(constraints, 1, row, 1, 0, 1);
+                fieldsPanel.add(getBlocksPerPageSpinner(), constraints);
+		row++;
+		return row;
+
+	}
+
+	protected JPanel createFieldsPanel() {
 
                 setBorder(new CompoundBorder(
                         new TitledBorder(messageSource.getMessage("opensignal.signalParametersPanelTitle")),
@@ -160,43 +223,11 @@ public abstract class AbstractSignalParametersPanel extends JPanel {
                 constraints.fill = GridBagConstraints.HORIZONTAL;
                 constraints.insets = new Insets(8, 8, 8, 8);
 
-                fillConstraints(constraints, 0, 0, 0, 0, 1);
-                fieldsPanel.add(samplingFrequencyLabel, constraints);
-                fillConstraints(constraints, 1, 0, 1, 0, 1);
-                fieldsPanel.add(getSamplingFrequencyComboBox(), constraints);
+		this.createFieldsPanelElements(fieldsPanel, constraints, 0);
 
-                fillConstraints(constraints, 0, 1, 0, 0, 1);
-                fieldsPanel.add(channelCountLabel, constraints);
-                fillConstraints(constraints, 1, 1, 1, 0, 1);
-                fieldsPanel.add(getChannelCountSpinner(), constraints);
+		return fieldsPanel;
 
-                fillConstraints(constraints, 0, 2, 0, 0, 1);
-                fieldsPanel.add(byteOrderLabel, constraints);
-                fillConstraints(constraints, 1, 2, 1, 0, 1);
-                fieldsPanel.add(getByteOrderComboBox(), constraints);
-
-                fillConstraints(constraints, 0, 3, 0, 0, 1);
-                fieldsPanel.add(sampleTypeLabel, constraints);
-                fillConstraints(constraints, 1, 3, 1, 0, 1);
-                fieldsPanel.add(getSampleTypeComboBox(), constraints);
-
-                fillConstraints(constraints, 0, 4, 0, 0, 1);
-                fieldsPanel.add(pageSizeLabel, constraints);
-                fillConstraints(constraints, 1, 4, 1, 0, 1);
-                fieldsPanel.add(getPageSizeSpinner(), constraints);
-
-                fillConstraints(constraints, 0, 5, 0, 0, 1);
-                fieldsPanel.add(blocksPerPageLabel, constraints);
-                fillConstraints(constraints, 1, 5, 1, 0, 1);
-                fieldsPanel.add(getBlocksPerPageSpinner(), constraints);
-
-                JPanel buttonPanel = createButtonPanel();
-
-                add(fieldsPanel, BorderLayout.NORTH);
-                add(buttonPanel, BorderLayout.SOUTH);
-
-                setEnabledAll(false);
-        }
+	}
 
         protected JPanel createButtonPanel() {
                 JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -214,7 +245,7 @@ public abstract class AbstractSignalParametersPanel extends JPanel {
          * @param weighty {@link GridBagConstraints#weighty}
          * @param gridwidth {@link GridBagConstraints#gridwidth}
          */
-        private void fillConstraints(GridBagConstraints constraints, int gridx, int gridy, int weightx, int weighty, int gridwidth) {
+        protected void fillConstraints(GridBagConstraints constraints, int gridx, int gridy, int weightx, int weighty, int gridwidth) {
 
                 constraints.gridx = gridx;
                 constraints.gridy = gridy;

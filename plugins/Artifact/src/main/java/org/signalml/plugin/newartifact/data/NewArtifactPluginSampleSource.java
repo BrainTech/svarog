@@ -9,7 +9,7 @@ import org.signalml.domain.signal.OriginalMultichannelSampleSource;
 import org.signalml.domain.signal.SignalMLCodecSampleSource;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
-import org.signalml.plugin.impl.ChannelSamplesImpl;
+import org.signalml.plugin.export.signal.ChannelSamples;
 import org.signalml.plugin.io.FastMultichannelSampleSource;
 
 public class NewArtifactPluginSampleSource implements MultichannelSampleSource {
@@ -75,7 +75,7 @@ public class NewArtifactPluginSampleSource implements MultichannelSampleSource {
 	public void getSamples(int channel, double[] target, int signalOffset,
 			       int count, int arrayOffset) {
 		if (this.delegate == null) {
-			ChannelSamplesImpl samples;
+			ChannelSamples samples;
 			try {
 				samples = this.signalAccess.getRawSignalSamplesFromDocument(
 						  this.signalDocument, channel, signalOffset, count);

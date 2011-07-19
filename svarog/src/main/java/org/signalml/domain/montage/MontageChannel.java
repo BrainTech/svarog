@@ -213,18 +213,12 @@ public class MontageChannel implements Serializable {
 		int primaryIndex = primaryChannel.getChannel();
 		int i;
 		for (i=0; i<references.length; i++) {
-			if (i == primaryIndex) {
-				continue;
-			}
 			// validate reference without saving the result
 			parseReference(references[i]);
 		}
 		bipolarCache = null;
 		referenceMap.clear();
 		for (i=0; i<references.length; i++) {
-			if (i == primaryIndex) {
-				continue;
-			}
 			if (references[i] == null || references[i].isEmpty()) {
 				continue;
 			}

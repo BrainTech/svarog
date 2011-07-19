@@ -9,8 +9,6 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.document.TagDocument;
-import org.signalml.app.view.ViewerElementManager;
-import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.domain.tag.StyledTagSet;
@@ -20,6 +18,7 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.export.signal.ExportedTagDocument;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
+import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.plugin.i18n.PluginMessageSourceManager;
 import org.signalml.plugin.method.IPluginMethodResultConsumer;
 import org.signalml.plugin.method.PluginMethodManager;
@@ -42,7 +41,7 @@ public class NewArtifactMethodConsumer implements IPluginMethodResultConsumer {
 					       .getLogger(NewArtifactMethodConsumer.class);
 
 	private Window dialogParent;
-	private ViewerFileChooser fileChooser;
+	private FileChooser fileChooser;
 
 	private NewArtifactResultDialog resultDialog;
 
@@ -51,12 +50,8 @@ public class NewArtifactMethodConsumer implements IPluginMethodResultConsumer {
 	@Override
 	public void initialize(PluginMethodManager manager) {
 		this.manager = manager;
-
-		ViewerElementManager viewerManager = manager.getSvarogAccess()
-						     .getGUIAccess().getManager();
-
-		this.dialogParent = viewerManager.getDialogParent();
-		this.fileChooser = viewerManager.getFileChooser();
+		this.dialogParent = manager.getSvarogAccess().getGUIAccess().getDialogParent();
+		this.fileChooser = manager.getSvarogAccess().getGUIAccess().getFileChooser();
 
 		try {
 			this.resultDialog = new NewArtifactResultDialog(

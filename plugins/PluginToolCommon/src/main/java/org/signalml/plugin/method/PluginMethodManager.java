@@ -2,22 +2,20 @@ package org.signalml.plugin.method;
 
 import java.awt.Window;
 
-import org.signalml.app.method.ApplicationMethodDescriptor;
-import org.signalml.app.method.ApplicationMethodManager;
-import org.signalml.app.method.MethodConfigurer;
-import org.signalml.app.task.ApplicationTaskManager;
-import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.dialog.ErrorsDialog;
-import org.signalml.app.view.dialog.TaskStatusDialog;
 import org.signalml.method.TrackableMethod;
 import org.signalml.plugin.data.PluginConfigForMethod;
 import org.signalml.plugin.data.PluginConfigMethodData;
 import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.SvarogAccess;
+import org.signalml.plugin.export.method.SvarogAccessMethod;
+import org.signalml.plugin.export.method.SvarogMethodConfigurer;
+import org.signalml.plugin.export.method.SvarogMethodDescriptor;
+import org.signalml.plugin.export.method.SvarogTask;
+import org.signalml.plugin.export.method.SvarogTaskStatusDialog;
 import org.signalml.plugin.i18n.PluginMessageSourceManager;
 import org.signalml.task.LocalTask;
-import org.signalml.task.Task;
 import org.springframework.context.support.MessageSourceAccessor;
 
 public class PluginMethodManager {
@@ -38,24 +36,20 @@ public class PluginMethodManager {
 				.getMethodDescriptor();
 		methodDescriptor.setPluginMethodManager(this);
 
-		ApplicationMethodManager methodManager = this.svarogAccess
-				.getGUIAccess().getManager().getMethodManager();
+		SvarogAccessMethod methodManager = this.svarogAccess.getMethodAccess();
 		methodManager.registerMethod(method);
-		methodManager.setMethodData(method, methodDescriptor);
+		methodManager.setMethodDescriptor(method, methodDescriptor);
 	}
 
 	public void runMethod() {
-
-		ApplicationMethodManager methodManager = this.svarogAccess
-				.getGUIAccess().getManager().getMethodManager();
-		ApplicationMethodDescriptor descriptor = methodManager
-				.getMethodData(this.method);
-		MethodConfigurer configurer = null;
+		SvarogAccessMethod methodManager = this.svarogAccess.getMethodAccess();
+		SvarogMethodDescriptor descriptor = methodManager.getMethodDescriptor(this.method);
+		SvarogMethodConfigurer configurer = null;
 		Object data = null;
 
 		if (descriptor != null) {
-			configurer = descriptor.getConfigurer(methodManager);
-			data = descriptor.createData(methodManager);
+			configurer = methodManager.getConfigurer(descriptor);
+			data = methodManager.createData(descriptor);
 			if (data == null) {
 				return;
 			}
@@ -82,19 +76,15 @@ public class PluginMethodManager {
 			return;
 		}
 
-		Task task = new LocalTask(this.method, data,
+		SvarogTask task = new LocalTask(this.method, data,
 					  (method instanceof TrackableMethod));
 
-		ViewerElementManager viewerManager = this.svarogAccess.getGUIAccess()
-						     .getManager();
-		viewerManager.getTaskTableModel().setMessageSourceForTask(task, source);
-		ApplicationTaskManager taskManager = viewerManager.getTaskManager();
+		SvarogAccessMethod svarogMethods = this.svarogAccess.getMethodAccess();
+		svarogMethods.setTaskMessageSource(task, source);
+		svarogMethods.addTask(task);
+		svarogMethods.startTask(task);
 
-		taskManager.addTask(task);
-		taskManager.startTask(task);
-
-		TaskStatusDialog dialog = taskManager.getStatusDialogForTask(task);
-
+		SvarogTaskStatusDialog dialog = svarogMethods.getTaskStatusDialog(task);
 		dialog.setMessageSource(source);
 		dialog.showDialog(true);
 	}

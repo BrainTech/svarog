@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 import org.signalml.plugin.export.Plugin;
 import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.change.SvarogCloseListener;
+import org.signalml.plugin.export.config.SvarogAccessConfig;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
 import org.signalml.plugin.fft.FFT;
@@ -44,13 +45,17 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 	protected static final Logger log = Logger.getLogger(FFTSignalTool.class);
 
 	/**
-	 * the {@link SvarogAccessSignal access} to Svarog logic
+	 * the {@link SvarogAccessSignal} access to Svarog logic
 	 */
 	private SvarogAccessSignal signalAccess;
 	/**
-	 * the {@link SvarogAccessGUI access} to Svarog GUI
+	 * the {@link SvarogAccessGUI} access to Svarog GUI
 	 */
 	private SvarogAccessGUI guiAccess;
+	
+	/** Svarog configuration facade reference. */
+    private SvarogAccessConfig configAccess;
+    	
 	/**
 	 * the tool that is registered by this plug-in
 	 */
@@ -84,7 +89,7 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 	 * the button which activates {@link SignalFFTTool}
 	 */
 	private SignalFFTToolButtonMouseListener listener;
-	
+
 	/**
 	 * Extracts the files from the specified jar archive (from {@code
 	 * resources/} sub-directory) to the specified directory.
@@ -123,7 +128,7 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 	 * {@link #messageSource source of messages} using the extracted data.
 	 */
 	private void createMessageSource() {
-		File[] directories = signalAccess.getPluginDirectories();
+		File[] directories = configAccess.getPluginDirectories();
 		try {
 			resourceDirectory = signalAccess.getTemporaryFile("");
 			resourceDirectory.delete();
@@ -163,11 +168,12 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 		
 		guiAccess = access.getGUIAccess();
 		signalAccess = access.getSignalAccess();
+		configAccess = access.getConfigAccess();
 		access.getChangeSupport().addCloseListener(this);
 		createMessageSource();
 		
 		signalFFTSettings = new SignalFFTSettings();
-		settingsFile = new File(signalAccess.getProfileDirectory(), "signalFFTSettings.xml");
+		settingsFile = new File(configAccess.getProfileDirectory(), "signalFFTSettings.xml");
 		if (settingsFile.exists()) signalFFTSettings.readFromXMLFile(settingsFile);
 		
 		//creates and adds the signal tool

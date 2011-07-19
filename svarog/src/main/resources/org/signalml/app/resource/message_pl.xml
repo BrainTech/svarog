@@ -674,6 +674,16 @@
 	<entry key="opensignal.signalsource.OPENBCI">OpenBCI</entry>
 	<entry key="opensignal.signalsource.AMPLIFIER">Amplifier</entry>
 
+        <entry key="opensignal.fileChooser.showFavorities">Show favorites</entry>	
+        <entry key="opensignal.fileChooser.hideFavorities">Hide favorites</entry>	
+        <entry key="opensignal.fileChooser.favorities">Favorites</entry>	
+        <entry key="opensignal.fileChooser.removeFromFavorities">Remove from favorites</entry>
+        <entry key="opensignal.fileChooser.addToFavorities">Add current directory to favorites</entry>
+        <entry key="opensignal.fileChooser.goToFavorities">Choose location</entry>
+        <entry key="opensignal.fileChooser.history">History</entry>
+        <entry key="opensignal.fileChooser.lastDirs">Last directories</entry>
+        <entry key="opensignal.fileChooser.lastFiles">Last files</entry>
+
         <entry key="opensignal.signalParametersPanelTitle">Signal parameters</entry>
 	<entry key="opensignal.parameters.samplingFrequency">Sampling frequency: </entry>
 	<entry key="opensignal.parameters.channelCount">Channel count: </entry>
@@ -853,8 +863,12 @@
 	<entry key="sourceMontageTable.index">Index</entry>
 	<entry key="sourceMontageTable.label">Label</entry>
 	<entry key="sourceMontageTable.function">Function</entry>
+	<entry key="sourceMontageTable.ONE">ONE</entry>
+	<entry key="sourceMontageTable.ZERO">ZERO</entry>
 	<entry key="sourceMontageTable.addChannel">More channels</entry>
-	<entry key="sourceMontageTable.removeChannel">Less channels</entry>
+	<entry key="sourceMontageTable.addZeroChannel">ZEROs channel</entry>
+	<entry key="sourceMontageTable.addOneChannel">ONEs channel</entry>
+	<entry key="sourceMontageTable.removeChannel">Remove</entry>
 
 	<entry key="montageTable.title">Target montage</entry>
 	<entry key="montageTable.index">Index</entry>
@@ -862,6 +876,7 @@
 	<entry key="montageTable.label">Label</entry>
 	<entry key="montageTable.clear">Clear montage</entry>
 	<entry key="montageTable.addChannels">Add channels</entry>
+	<entry key="montageTable.addEmptyChannel">Add empty channel</entry>
 	<entry key="montageTable.removeChannels">Remove channels</entry>
 	<entry key="montageTable.moveUp">Move up</entry>
 	<entry key="montageTable.moveDown">Move down</entry>
@@ -1382,6 +1397,11 @@
 	<entry key="signalView.timeScaleToolTip">{0} pixels/sample</entry>
 	<entry key="signalView.valueScale">Value scale</entry>
 	<entry key="signalView.valueScaleToolTip">{0} %</entry>
+	<entry key="signalView.ignoreGlobalScale">Ignore global scale</entry>
+	<entry key="signalView.hideChannel">Hide</entry>
+	<entry key="signalView.channelVisibility">Visibility</entry>
+	<entry key="signalView.channelLocalScale">Value scale</entry>
+	<entry key="signalView.editChannelOptions">Edit channel`s options</entry>
 	<entry key="signalView.channelHeight">Channel height</entry>
 	<entry key="signalView.channelHeightToolTip">{0} px</entry>
 	<entry key="signalView.antialias">Antialiasing</entry>
@@ -1670,6 +1690,7 @@
 	<entry key="error.sourceChannelLabelBadChars">Source channel label must not contain control characters</entry>
 	<entry key="error.sourceChannelLabelDuplicate">Source channel label duplicate</entry>
 	<entry key="error.sourceChannelFunctionDuplicate">This channel function is declared as unique and is already marked in the source</entry>
+	<entry key="error.sourceChannelFunctionImmutable">This channel function is immutable. To alter the channel You need to remove it and create a new one.</entry>
 	<entry key="error.montageChannelLabelEmpty">Target channel label empty</entry>
 	<entry key="error.montageChannelLabelBadChars">Target channel label must not contain control characters</entry>
 	<entry key="error.montageChannelLabelDuplicate">Target channel label duplicate</entry>
@@ -2151,6 +2172,7 @@
 	<entry key="montageGenerator.leftEar">Left ear montage</entry>
 	<entry key="montageGenerator.rightEar">Right ear montage</entry>
 	<entry key="montageGenerator.linkedEars">Linked ears montage</entry>
+	<entry key="montageGenerator.ca">Common average montage</entry>
 	<entry key="montageGenerator.longitudinalI">Longitudinal I</entry>
 	<entry key="montageGenerator.longitudinalII">Longitudinal II</entry>
 	<entry key="montageGenerator.transverseI">Transverse I</entry>

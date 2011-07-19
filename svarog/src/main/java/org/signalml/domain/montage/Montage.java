@@ -26,7 +26,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  * Every montage channel is a difference between the voltage of the electrode
  * and voltage of some reference (may be another electrode or average of electrodes).
  * 
- * This class contains a list of {@link MontageChannel mongate channels} and
+ * This class contains a list of {@link MontageChannel montage channels} and
  * a list of {@link MontageSampleFilter filters}.
  * Filters can be excluded either for selected channels or for all of them.
  * This class has also assigned listeners informing about changes in a montage.
@@ -638,6 +638,43 @@ public class Montage extends SourceMontage implements Preset {
 		montageChannels.get(index).getReferences(references);
 		return references;
 	}
+
+        /**
+         * For a {@link MontageChannel montage channel} of a given index,
+         * returns a string representing its references
+         * @param index an index of the montage channel
+         * @return a string representing channel`s references
+         */
+
+	public String getReferenceReadable(int index) {
+		String[] references = new String[sourceChannels.size()];
+		montageChannels.get(index).getReferences(references);
+		String result = ""; // start with the first element
+		String ONE = "1", MINUS = "-";
+		for (int i=0; i<references.length; i++) {
+			if ((references[i] == null) || (this.getSourceChannelFunctionAt(i).getType() == ChannelType.ZERO))
+				// null means that no reference for given sourceChannel is present
+				// empty is 0 - also ignore
+				continue;
+			else {
+				// combine current reference with other - insert '*' chars etc
+				String pre = "";
+				if ((references[i].startsWith(MINUS)) || (result.length() == 0))
+					pre = "";
+				else
+					pre = "+";
+				if (!references[i].equals(ONE))
+					pre = pre + references[i] + "*";
+				
+				if (this.getSourceChannelFunctionAt(i).getType() == ChannelType.ONE)
+					result = result + pre + "1";
+				else
+					result = result + pre + sourceChannels.get(i).getLabel();
+			}
+		}
+		return result;
+	}
+
 
         /**
          * For a {@link MontageChannel montage channel} of a given index,

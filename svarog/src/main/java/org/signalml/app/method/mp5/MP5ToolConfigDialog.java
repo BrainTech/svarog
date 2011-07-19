@@ -26,7 +26,6 @@ public class MP5ToolConfigDialog extends AbstractDialog {
 	private MP5ExecutorManager executorManager;
 
 	private MP5LocalExecutorDialog localExecutorDialog;
-	private MP5RemoteExecutorDialog remoteExecutorDialog;
 
 	private MP5ToolConfigPanel configPanel;
 
@@ -55,7 +54,6 @@ public class MP5ToolConfigDialog extends AbstractDialog {
 		if (configPanel == null) {
 			configPanel = new MP5ToolConfigPanel(messageSource,executorManager);
 			configPanel.setLocalExecutorDialog(localExecutorDialog);
-			configPanel.setRemoteExecutorDialog(remoteExecutorDialog);
 		}
 		return configPanel;
 	}
@@ -106,14 +104,6 @@ public class MP5ToolConfigDialog extends AbstractDialog {
 
 	public void setLocalExecutorDialog(MP5LocalExecutorDialog localExecutorDialog) {
 		this.localExecutorDialog = localExecutorDialog;
-	}
-
-	public MP5RemoteExecutorDialog getRemoteExecutorDialog() {
-		return remoteExecutorDialog;
-	}
-
-	public void setRemoteExecutorDialog(MP5RemoteExecutorDialog remoteExecutorDialog) {
-		this.remoteExecutorDialog = remoteExecutorDialog;
 	}
 
 }

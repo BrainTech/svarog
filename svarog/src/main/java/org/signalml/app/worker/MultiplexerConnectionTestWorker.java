@@ -98,13 +98,13 @@ public class MultiplexerConnectionTestWorker extends SwingWorker< WorkerResult, 
 				if (msgData != null) {
 					publish( tryoutCount);
 					MultiplexerMessage reply = msgData.getMessage();
-					if (!(reply.getType() == msg.getType() && reply.getMessage().equals( msg.getMessage()))) {
+					/*if (!(reply.getType() == msg.getType() && reply.getMessage().equals( msg.getMessage()))) {
 						logger.error("received bad reply! " + reply.getMessage());
 						return new WorkerResult( 
 								Boolean.TRUE, 
 								messageSource.getMessage( 
 										"action.openMonitor.testMultiplexerConnection.receivedBadReplyMsg") + "; " + reply.getMessage());
-					}
+										}*/
 					return new WorkerResult( 
 							Boolean.TRUE, 
 							messageSource.getMessage( 

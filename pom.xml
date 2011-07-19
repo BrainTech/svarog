@@ -159,11 +159,6 @@
 			<subscribe>signalml-subscribe@googlegroups.com</subscribe>
 			<unsubscribe>signalml-unsubscribe@googlegroups.com</unsubscribe>
 		</mailingList>
-		<mailingList>
-			<name>svarog-dev</name>
-			<post>svarog-dev@eisenbits.homelinux.net</post>
-			<archive>https://eisenbits.homelinux.net/cgi-bin/mailman/private/svarog-dev/</archive>
-		</mailingList>
 	</mailingLists>
 
 	<issueManagement>

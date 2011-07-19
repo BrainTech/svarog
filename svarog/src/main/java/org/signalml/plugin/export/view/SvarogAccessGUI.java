@@ -10,7 +10,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.signal.SelectTagSignalTool;
 import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.Plugin;
@@ -18,7 +17,7 @@ import org.signalml.plugin.export.signal.SignalTool;
 import org.signalml.plugin.export.signal.SignalToolButtonListener;
 
 /**
- * This interface that allows to:
+ * This is an interface that allows to:
  * <ul>
  * <li>add buttons and sub-menus,</li>
  * <li>add and remove tabs,</li>
@@ -37,6 +36,7 @@ import org.signalml.plugin.export.signal.SignalToolButtonListener;
  * to use only buttons in these menus.
  *
  * @author Marcin Szumski
+ * @author Stanislaw Findeisen (Eisenbits)
  */
 public interface SvarogAccessGUI {
 
@@ -399,12 +399,6 @@ public interface SvarogAccessGUI {
 	 */
 	DocumentView getSelectedMainTab() throws NoActiveObjectException;
 	
-	/*
-	 * 
-	 */
-	ViewerElementManager getManager();
-	
-	
 	/**
 	 * Adds the new tab to the tree panel (the panel on the left).
 	 * @param treePane the tree panel to be added
@@ -458,5 +452,13 @@ public interface SvarogAccessGUI {
 	 */
 	JPanel getSelectedPropertyTab() throws NoActiveObjectException;
 
-	
+    /**
+     * Returns a reference to the parent for all new {@link java.awt.Dialog}s.
+     */
+    java.awt.Window getDialogParent();
+
+    /**
+     * A specialized subclass of {@link javax.swing.JFileChooser} to be used by plugins.
+     */
+    FileChooser getFileChooser();
 }

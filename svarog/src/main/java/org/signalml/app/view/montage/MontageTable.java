@@ -60,7 +60,6 @@ public class MontageTable extends JTable {
 
 			tc = new TableColumn(MontageTableModel.PRIMARY_LABEL_COLUMN, 200);
 			tc.setHeaderValue(model.getColumnName(tc.getModelIndex()));
-			tc.setCellRenderer(grayIneditableTableCellRenderer);
 			columnModel.addColumn(tc);
 		}
 

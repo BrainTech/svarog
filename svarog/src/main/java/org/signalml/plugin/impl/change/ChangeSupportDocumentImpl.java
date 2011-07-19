@@ -24,6 +24,8 @@ import org.signalml.plugin.export.signal.ExportedTag;
 import org.signalml.plugin.export.signal.ExportedTagStyle;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
+import org.signalml.plugin.impl.AbstractAccess;
+import org.signalml.plugin.impl.PluginAccessClass;
 
 /**
  * A part of the implementation of {@link SvarogAccessChangeSupport}.
@@ -39,7 +41,7 @@ import org.signalml.plugin.export.signal.TagStyle;
  * 
  * @author Marcin Szumski
  */
-public class ChangeSupportDocumentImpl implements TagListener, TagStyleListener {
+public class ChangeSupportDocumentImpl extends AbstractAccess implements TagListener, TagStyleListener {
 
 	protected static final Logger logger = Logger.getLogger(ChangeSupportImpl.class);
 	
@@ -55,17 +57,10 @@ public class ChangeSupportDocumentImpl implements TagListener, TagStyleListener 
 	 */
 	protected ArrayList<SvarogTagStyleListener> tagStyleListeners = new ArrayList<SvarogTagStyleListener>();
 	
-	/**
-	 * the manager of elements of Svarog
-	 */
-	protected ViewerElementManager manager;
-	
-	/**
-	 * Constructor.
-	 */
-	public ChangeSupportDocumentImpl(){
-	}
-	
+    protected ChangeSupportDocumentImpl(PluginAccessClass parent) {
+        super(parent);
+    }
+
 	/**
 	 * Adds a {@link SvarogTagListener} to the list of tag listeners.
 	 * @param listener the listener to add
@@ -93,7 +88,7 @@ public class ChangeSupportDocumentImpl implements TagListener, TagStyleListener 
 		TagDocument document = null;
 		if (e.getSource() instanceof StyledTagSet){
 			StyledTagSet tagSet = (StyledTagSet) e.getSource();
-			TagTreeModel treeModel = manager.getTagTreeModel();
+			TagTreeModel treeModel = getViewerElementManager().getTagTreeModel();
 			document = treeModel.getDocumentFromSet(tagSet);
 		}
 		TagEventImpl tagEvent = new TagEventImpl(tag, document);
@@ -270,13 +265,9 @@ public class ChangeSupportDocumentImpl implements TagListener, TagStyleListener 
 			ex.printStackTrace();
 		}
 	}
-	
-	/**
-	 * Sets the element manager, stores active documents and
-	 * adds listeners for codec manager and document manager. 
-	 * @param elementManager the element manager to set
-	 */
-	public void setManager(ViewerElementManager elementManager){
-		manager = elementManager;
-	}
+
+    public void setViewerElementManager(ViewerElementManager manager) {
+        super.setViewerElementManager(manager);
+    }
+
 }

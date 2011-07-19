@@ -27,6 +27,7 @@ import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.montage.eeg.EegChannel;
 import org.signalml.domain.montage.eeg.LeftEarMontageGenerator;
 import org.signalml.domain.montage.eeg.LinkedEarsMontageGenerator;
+import org.signalml.domain.montage.eeg.CAMontageGenerator;
 import org.signalml.domain.montage.eeg.LongitudinalIIMontageGenerator;
 import org.signalml.domain.montage.eeg.LongitudinalIMontageGenerator;
 import org.signalml.domain.montage.eeg.RightEarMontageGenerator;
@@ -81,6 +82,7 @@ public class EegSignalTypeConfigurer implements SignalTypeConfigurer {
 		generators.add(new LeftEarMontageGenerator());
 		generators.add(new RightEarMontageGenerator());
 		generators.add(new LinkedEarsMontageGenerator());
+		generators.add(new CAMontageGenerator());		
 		generators.add(new LongitudinalIMontageGenerator());
 		generators.add(new LongitudinalIIMontageGenerator());
 		generators.add(new TransverseIMontageGenerator());

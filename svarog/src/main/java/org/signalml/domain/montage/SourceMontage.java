@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.domain.signal.MultichannelSampleSource;
 import org.signalml.domain.signal.SignalType;
+import org.signalml.domain.montage.ChannelType;
 import org.signalml.domain.signal.SignalTypeConfigurer;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.util.Util;
@@ -25,7 +26,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 /**
  * This class represents a source montage.
  * Source montage consists of a list of {@link SourceChannel source channels},
- * from which every has an assigned {@link Channel function (location)}.
+ * out of which every one has an assigned {@link Channel function (location)}.
  * This class has also assigned listeners informing about changes in it.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
@@ -245,11 +246,13 @@ public class SourceMontage {
 				}
 			}
 		} else if (dCnt < mCnt) {
-			for (int i=mCnt; i>dCnt; i--) {
+			for (int i=mCnt-1; i>=dCnt; i--) {
+				if ((this.getSourceChannelFunctionAt(i).getType() == ChannelType.ZERO)
+					|| (this.getSourceChannelFunctionAt(i).getType() == ChannelType.ONE))
+					continue;
 				removeSourceChannel();
 			}
 		}
-
 	}
 
         /**
@@ -460,6 +463,9 @@ public class SourceMontage {
 			if (function.isUnique() && !list.isEmpty()) {
 				throw new MontageException("error.sourceChannelFunctionDuplicate");
 			}
+			if (!function.isMutable()) {
+				throw new MontageException("error.sourceChannelFunctionImmutable");
+			}
 			LinkedList<SourceChannel> oldList = getSourceChannelsByFunctionList(oldFunction);
 			oldList.remove(channel);
 			channel.setFunction(function);
@@ -487,6 +493,25 @@ public class SourceMontage {
 			indices[i] = channel.getChannel();
 			i++;
 		}
+		return indices;
+	}
+
+	public int[] getSourceChannelsByTypes(ChannelType[] types) {
+		LinkedList<SourceChannel> list = getSourceChannelsByFunctionList(null);
+		int indSize = 0;
+		for (int i = 0; i < this.getSourceChannelCount(); i++)
+			for (int j = 0; j < types.length; j++)
+				if (this.getSourceChannelFunctionAt(i).getType() == types[j])
+					indSize ++;
+
+		int[] indices = new int[indSize];
+		int ind = 0;
+		for (int i = 0; i < this.getSourceChannelCount(); i++)
+			for (int j = 0; j < types.length; j++)
+				if (this.getSourceChannelFunctionAt(i).getType() == types[j]) {
+					indices[ind] = i;
+					ind ++;
+				}
 		return indices;
 	}
 
@@ -565,7 +590,7 @@ public class SourceMontage {
 		getSourceChannelsByLabel().remove(channel.getLabel());
 		getSourceChannelsByFunctionList(channel.getFunction()).remove(channel);
 		sourceChannels.remove(index);
-		fireSourceMontageChannelAdded(this, index);
+		fireSourceMontageChannelRemoved(this, index);
 		setChanged(true);
 
 		return channel;

@@ -70,6 +70,8 @@ public class CheckSignalDisplay extends VisualReferenceDisplay {
                         while (it.hasNext()) {
 
                                 channel = it.next();
+                                if (!channels.containsKey(channel.getLabel()))
+                                	continue;
                                 if (channels.get(channel.getLabel()))
                                         paintValidChannel(channel, g);
                                 else

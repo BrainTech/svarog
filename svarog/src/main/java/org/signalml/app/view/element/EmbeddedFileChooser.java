@@ -14,6 +14,8 @@ import javax.swing.filechooser.FileSystemView;
 import javax.swing.plaf.FileChooserUI;
 import javax.swing.plaf.basic.BasicFileChooserUI;
 
+import org.signalml.app.config.ApplicationConfiguration;
+import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
 /**
@@ -53,6 +55,21 @@ public class EmbeddedFileChooser extends JFileChooser {
      */
 	public EmbeddedFileChooser() {
 		super();
+	}
+	
+
+	/**
+     * Constructs a <code>EmbeddedFileChooser</code> pointing to the user's
+     * default directory. This default depends on the operating system.
+     * It is typically the "My Documents" folder on Windows, and the
+     * user's home directory on Unix.
+     * @param messageSource an object capable of resolving localized messages
+     */
+	public EmbeddedFileChooser(MessageSourceAccessor messageSource, ApplicationConfiguration applicationConfiguration) {
+		super();
+		EmbeddedFileChooserFavorites f = new EmbeddedFileChooserFavorites(this, messageSource, applicationConfiguration);
+		this.setAccessory(f);
+		this.addPropertyChangeListener(f);
 	}
 
 	/**
