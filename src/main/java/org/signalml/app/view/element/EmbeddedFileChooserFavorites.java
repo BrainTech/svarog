@@ -16,7 +16,6 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-import org.openide.awt.DropDownButtonFactory;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.util.IconUtils;
 import org.springframework.context.support.MessageSourceAccessor;
