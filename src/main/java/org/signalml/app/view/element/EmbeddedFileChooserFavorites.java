@@ -7,13 +7,10 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.ListCellRenderer;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -25,19 +22,13 @@ import org.signalml.app.util.IconUtils;
 import org.springframework.context.support.MessageSourceAccessor;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -54,7 +45,7 @@ public class EmbeddedFileChooserFavorites extends JPanel implements
 	/*
 	 * length (in chars) of file path visible in combo boxes
 	 */
-	static int LEN_OF_PATH=20;
+	static int LEN_OF_PATH=15;
 	/*
 	 * number of remembered last-visited directories
 	 */
@@ -339,7 +330,7 @@ public class EmbeddedFileChooserFavorites extends JPanel implements
  		JPanel fieldsPanel = new JPanel();
  		fieldsPanel.setLayout(new GridLayout(0, 1));      
       
-      //buttons prepating
+      //buttons preparing
  		JComboBox locationsButton = this.getDropDownList();
  		this.favoritiesCombo = locationsButton;
  		this.favoritiesCombo.setMaximumRowCount(10);
@@ -427,8 +418,8 @@ public class EmbeddedFileChooserFavorites extends JPanel implements
 			private static final long serialVersionUID = 1L;
 			public ComboBoxRenderer() {
  				setOpaque(true);
- 				setHorizontalAlignment(CENTER);
- 				setVerticalAlignment(CENTER);
+ 				setHorizontalAlignment(LEFT);
+ 				setBorder(new EmptyBorder(0, 3, 0, 3));
  			}
  			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
  				if (isSelected) {
@@ -441,11 +432,19 @@ public class EmbeddedFileChooserFavorites extends JPanel implements
  				String oldText = ((String) value);
  				String newText = oldText;
  				String tooltip = oldText;
- 				if (oldText == null) {
+ 				if (oldText == null || (oldText.length() == 0)) {
  					newText = "";
  					tooltip = "";
- 				} else if (oldText.length() > LEN_OF_PATH) {
- 					newText = "..."+oldText.substring(oldText.length()-LEN_OF_PATH);
+ 				} else {
+ 					int lastInd = oldText.length();
+ 					int firstInd = oldText.lastIndexOf("/")+1;
+ 					if (lastInd == firstInd) {
+ 						lastInd--;
+ 						firstInd = oldText.substring(0, lastInd).lastIndexOf("/")+1;
+ 					}
+ 					newText = oldText.substring(firstInd, lastInd);
+ 					if (newText.length() > LEN_OF_PATH)
+ 						newText = "..."+newText.substring(newText.length()-LEN_OF_PATH);
  				}
  				setText(newText);
  				this.setToolTipText(tooltip);
