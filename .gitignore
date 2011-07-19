@@ -10,6 +10,7 @@ log
 # If a jar is really needed, it can be explicitely whitelisted.
 *.jar
 
-/.classpath
-/.project
-/.settings
+# Eclipse configuration
+.classpath
+.project
+.settings
