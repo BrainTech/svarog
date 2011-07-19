@@ -32,12 +32,6 @@
 		</repository>
 
 		<repository>
-		  <id>OPENIDE</id>
-		  <name>Openide Repository</name>
-		  <url>http://bits.netbeans.org/maven2/</url>
-		</repository>
-
-		<repository>
 		  <id>apache</id>
 		  <name>Apache Commons</name>
 		  <url>http://mirrors.ibiblio.org/pub/mirrors/maven2</url>
@@ -321,11 +315,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
 			<version>2.0.7</version>
-		</dependency>
-		<dependency>
-				<groupId>org.netbeans.api</groupId>
-				<artifactId>org-openide-awt</artifactId>
-				<version>RELEASE70</version>
 		</dependency>
 
 		<dependency>
