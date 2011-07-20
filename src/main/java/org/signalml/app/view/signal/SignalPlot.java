@@ -44,6 +44,7 @@ import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
+import org.signalml.app.model.ChannelPlotOptionsModel;
 import org.signalml.app.model.ChannelsPlotOptionsModel;
 import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.tag.TagPaintMode;
@@ -431,8 +432,10 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 		int oldChannelCount = channelCount;
 		channelCount = signalChain.getChannelCount();
+		if (oldChannelCount != channelCount)
+			this.channelsPlotOptionsModel.reset(channelCount);
 		sampleCount = new int[channelCount];
-		int i;
+		int i, j, k;
 
 		maxSampleCount = 0;
 		for( i=0; i<channelCount; i++ ) {
@@ -456,11 +459,38 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		pixelPerValue = pixelPerChannel * voltageZoomFactor;
 		clampLimit =  (pixelPerChannel / 2) - 2;
 
+		ChannelPlotOptionsModel m;
 		channelLevel = new int[channelCount];
-
+		
+		j = 0;
+		int prevVisibleLevel = 0, prevVisibleIndex = -1, invisibleCount = 0;
 		for( i=0; i<channelCount; i++ ) {
-			channelLevel[i] = i * pixelPerChannel + pixelPerChannel / 2;
+			m = this.channelsPlotOptionsModel.getModelAt(i);
+			//recalculate channel levels
+			if (!m.getVisible()) {
+				invisibleCount ++;
+			} else {
+				//determine positions of last invisibleCount channels
+				if (invisibleCount > 0) {
+					if (prevVisibleIndex == -1)
+						for (k=1; k<=invisibleCount;k++)
+							channelLevel[prevVisibleIndex+k] = prevVisibleLevel + k*((pixelPerChannel/2) / (invisibleCount+1));
+					else 
+						for (k=1; k<=invisibleCount;k++)
+							channelLevel[prevVisibleIndex+k] = prevVisibleLevel + k*(pixelPerChannel / (invisibleCount+1));
+					invisibleCount = 0;
+				}
+				
+				//determine position of the current i-th channel
+				channelLevel[i] = j * pixelPerChannel + pixelPerChannel / 2;
+				j++;
+				prevVisibleLevel = channelLevel[i];
+				prevVisibleIndex = i;
+			}
 		}
+		for (k=1; k<=invisibleCount;k++)
+			channelLevel[prevVisibleIndex+k] = prevVisibleLevel + k*((pixelPerChannel/2) / (invisibleCount+1));
+		
 
 		if( signalPlotColumnHeader != null ) {
 			signalPlotColumnHeader.reset();
@@ -469,8 +499,6 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		if( signalPlotColumnHeader != null ) {
 			signalPlotRowHeader.reset();
 		}
-		if (oldChannelCount != channelCount)
-			this.channelsPlotOptionsModel.reset(channelCount);
 	}
 
 	public void destroy() {
@@ -751,7 +779,6 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	protected void paintComponent(Graphics gOrig) {
 
 		int i;
-
 		Graphics2D g = (Graphics2D)gOrig;
 		Rectangle clip = g.getClipBounds();
 
@@ -797,14 +824,20 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			}
 		}
 
-		int channel;
+		int channel, visibleCount;
 		int startChannel = (int) Math.max( 0, Math.floor( ((double) clip.y) / pixelPerChannel ) );
 		int endChannel = (int) Math.min( channelCount-1, Math.ceil( ((double) clipEndY) / pixelPerChannel ) );
 
 		if( channelLinesVisible && pixelPerChannel > 10 ) {
 			g.setColor(Color.BLUE);
-			for( channel=startChannel; channel<=endChannel; channel++ ) {
-				g.drawLine(clip.x, channelLevel[channel], clipEndX, channelLevel[channel]);
+			visibleCount = 0;
+			channel=startChannel;
+			while (visibleCount <= (endChannel - startChannel) && channel<channelCount) {
+				if (this.channelsPlotOptionsModel.getModelAt(channel).getVisible()) {
+					visibleCount ++;
+					g.drawLine(clip.x, channelLevel[channel], clipEndX, channelLevel[channel]);
+				}
+				channel++;
 			}
 		}
 
@@ -845,8 +878,14 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		double lastX = 0;
 		double lastY = 0;
 
-		for( channel=startChannel; channel<=endChannel; channel++ ) {
-
+		visibleCount = 0;
+		channel=startChannel;
+		while (visibleCount <= (endChannel - startChannel) && channel<channelCount) {
+			if (!this.channelsPlotOptionsModel.getModelAt(channel).getVisible()) {
+				channel++;
+				continue;
+			}
+			visibleCount ++;
 			// those must be offset by one to get correct partial redraw
 			// offset again by one, this time in terms of samples
 			firstSample = (int) Math.max( 0, Math.floor( ((double) (clip.x-1)) / timeZoomFactor ) - 1 );
@@ -944,7 +983,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			}
 
 			g.draw(generalPath);
-
+			channel++;
 		}
 
 		if( signalXOR ) {
@@ -974,7 +1013,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 	@Override
 	public Dimension getPreferredSize() {
-		return new Dimension((int)(maxSampleCount*timeZoomFactor),channelCount*pixelPerChannel);
+		return new Dimension((int)(maxSampleCount*timeZoomFactor),this.channelsPlotOptionsModel.getVisibleChannelsCount()*pixelPerChannel);
 	}
 
 	@Override
@@ -2329,7 +2368,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			firePropertyChange(VOLTAGE_ZOOM_FACTOR_PROPERTY, oldValue, voltageZoomFactor);
 		}
 	}
-
+	
 	public double getTimeZoomFactor() {
 		return timeZoomFactor;
 	}
@@ -2369,8 +2408,10 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 	@Override
 	public int getPixelPerChannel() {
+		
 		return pixelPerChannel;
 	}
+	
 
 	public void setPixelPerChannel(int pixelPerChannel) {
 		if (this.pixelPerChannel != pixelPerChannel) {

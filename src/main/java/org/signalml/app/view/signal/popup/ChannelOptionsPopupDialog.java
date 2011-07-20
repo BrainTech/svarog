@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
@@ -43,7 +44,7 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractPopupDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 
-public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements ChangeListener {
+public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements ChangeListener, ActionListener {
 
 	public ChannelOptionsPopupDialog(MessageSourceAccessor messageSource,
 			Window w, boolean isModal) {
@@ -63,22 +64,29 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 
 		JPanel interfacePanel = new JPanel(new BorderLayout());
 
-		JPanel synchronizationPanel = new JPanel();
-		synchronizationPanel.setLayout(new BoxLayout(synchronizationPanel, BoxLayout.Y_AXIS));
-
+		JPanel valueScalePanel = new JPanel();
+		valueScalePanel.setLayout(new BoxLayout(valueScalePanel, BoxLayout.Y_AXIS));
 		CompoundBorder border = new CompoundBorder(
-		        new TitledCrossBorder(messageSource.getMessage("signalView.channelLocalScale"), true),
+		        new TitledBorder(messageSource.getMessage("signalView.channelLocalScale")),
 		        new EmptyBorder(3,3,3,3)
 		);
-		synchronizationPanel.setBorder(border);
+		valueScalePanel.setBorder(border);
+		valueScalePanel.add(getIgnoreGlobalPanel());
+		valueScalePanel.add(Box.createVerticalStrut(3));
+		valueScalePanel.add(getValueScalePanel());
+		
+		JPanel visibilityPanel = new JPanel();
+		visibilityPanel.setLayout(new BoxLayout(visibilityPanel, BoxLayout.Y_AXIS));
+		border = new CompoundBorder(
+		        new TitledCrossBorder(messageSource.getMessage("signalView.channelVisibility"), true),
+		        new EmptyBorder(3,3,3,3)
+		);
+		visibilityPanel.setBorder(border);
+		visibilityPanel.add(getVisibilityPanel());
 
-		synchronizationPanel.add(getHorizontalLockCheckBox());
-		synchronizationPanel.add(Box.createVerticalStrut(3));
-		synchronizationPanel.add(getValueScaleSlider());
-
-
-		interfacePanel.add(synchronizationPanel, BorderLayout.NORTH);
-
+		
+		interfacePanel.add(visibilityPanel, BorderLayout.NORTH);
+		interfacePanel.add(valueScalePanel, BorderLayout.SOUTH);
 		return interfacePanel;
 
 	}
@@ -87,14 +95,21 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 		currentPlot = plot;
 	}
 	
-	public JPanel getHorizontalLockCheckBox() {
+	private JPanel getIgnoreGlobalPanel() {
 		ignoreGlobalScale =  new JCheckBox(messageSource.getMessage("signalView.ignoreGlobalScale"));
 		JPanel p = new JPanel(new BorderLayout());
 		p.add(ignoreGlobalScale, BorderLayout.NORTH);
 		return p;
 	}
+	private JPanel getVisibilityPanel() {
+		JButton hideChannel =  new JButton(messageSource.getMessage("signalView.hideChannel"));
+		hideChannel.addActionListener(this);
+		JPanel p = new JPanel(new BorderLayout());
+		p.add(hideChannel, BorderLayout.NORTH);
+		return p;
+	}
 	
-	private JPanel getValueScaleSlider() {
+	private JPanel getValueScalePanel() {
 		
 		JSlider valueScaleSlider = new JSlider(new DefaultBoundedRangeModel()) {
 			private static final long serialVersionUID = 1L;
@@ -135,7 +150,10 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 		SignalPlot plot = (SignalPlot) model; 
-		this.model = plot.getChannelsPlotOptionsModel().getChannelPlotOptionsModelAt(this.channel);
+		this.model = plot.getChannelsPlotOptionsModel().getModelAt(this.channel);
+		if (!this.model.getVisible())
+			this.model.setVisible(true);
+		
 		this.setInitialVoltageScale(this.model.getVoltageScale());
 		this.ignoreGlobalScale.getModel().setSelected(this.model.getIgnoreGlobalScale());
 	}
@@ -143,8 +161,7 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
 
-		this.model.setIgnoreGlobalScale(this.ignoreGlobalScale.getModel().isSelected());
-		
+		this.model.setIgnoreGlobalScale(this.ignoreGlobalScale.getModel().isSelected());		
 	}
 
 	@Override
@@ -174,6 +191,14 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 			this.model.setVoltageScale(this.valueScaleModel.getValue());
 
 		}
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		//assumed 'hide' performed
+		this.model.setVisible(false);
+		this.getOkAction().actionPerformed(null);
 		
 	}
 

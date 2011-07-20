@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -60,6 +61,7 @@ public class SignalPlotRowHeader extends JComponent {
 
 	private SignalPlot plot;
 	private ImageIcon channelOptionsIcon;
+
 	private MultichannelSampleSource labelSource;
 	private ChannelOptionsPopupDialog channelOptionsPopupDialog;
 
@@ -88,7 +90,11 @@ public class SignalPlotRowHeader extends JComponent {
 		}
 		channelOptionsButtons = new CompactButton[this.plot.getChannelCount()];
 		for(int i = 0; i < this.plot.getChannelCount();i++) {
-			CompactButton b = new CompactButton(new ChannelOptionsAction(this.channelOptionsIcon, this.plot.getMessageSource().getMessage("signalView.editChannelOptions"), i));//new JButton(this.channelOptionsIcon);
+			CompactButton b = new CompactButton(
+					new ChannelOptionsAction(this.channelOptionsIcon, 
+									this.plot.getMessageSource().getMessage("signalView.editChannelOptions"), 
+									this.plot.getMessageSource().getMessage("signalView.editChannelOptions")+" DUPA",
+									i));
 			channelOptionsButtons[i] = b;
 			this.add(b);
 		}
@@ -155,7 +161,6 @@ public class SignalPlotRowHeader extends JComponent {
 		Dimension size = getSize();
 
 		Rectangle clip = g.getClipBounds();
-
 		g.setColor(getBackground());
 		g.fillRect(clip.x,clip.y,clip.width,clip.height);
 
@@ -174,6 +179,8 @@ public class SignalPlotRowHeader extends JComponent {
 			y = viewportPoint.y + ((int)(i*pixelPerRowUnit));
 			g.drawLine(size.width-3, y, size.width-1, y);
 		}
+		System.out.println("GLOBAL TICK COUNT"+tickCnt);
+		this.drawChannelsValueTicks(g, size, viewportSize, viewportPoint);
 
 		// this draws channel labels
 		int startChannel = (int) Math.max(0, Math.floor(clip.y / pixelPerChannel));
@@ -184,11 +191,25 @@ public class SignalPlotRowHeader extends JComponent {
 		} else {
 			g.setColor(Color.GRAY);
 		}
-		for (i=startChannel; i <= endChannel; i++) {
-			g.drawString(labelSource.getLabel(i), 12, channelLevel[i] + ((int) -channelLabelBounds[i].getY()/2));
+		boolean visible;
+		i=startChannel;
+		int visibleCount=0;
+		i=startChannel;
+		while(visibleCount<=(endChannel-startChannel) && i<=channelCount-1){
+			visible = this.plot.getChannelsPlotOptionsModel().getModelAt(i).getVisible();
+			if (visible) {
+				visibleCount ++;
+				if (active)
+					g.setColor(Color.BLUE);
+				g.drawString(labelSource.getLabel(i), 12, channelLevel[i] + ((int) -channelLabelBounds[i].getY()/2));
+			} else {
+				g.setColor(Color.GRAY);//todo - make font smaller
+				g.drawString(labelSource.getLabel(i), 12, channelLevel[i] + ((int) -channelLabelBounds[i].getY()/2));
+			}
 			channelOptionsButtons[i].setBounds(1, channelLevel[i]-2, 10, 10);
-			
-			
+			((ChannelOptionsAction) channelOptionsButtons[i].getAction()).setButtonVisible(visible);
+			i++;
+		
 		}
 
 		g.setColor(Color.GRAY);
@@ -196,10 +217,34 @@ public class SignalPlotRowHeader extends JComponent {
 		g.drawString(rowUnitLabel, size.width+((float)unitLabelBounds.getY())-5, viewportPoint.y+3);
 
 	}
+	private void drawChannelsValueTicks(Graphics2D g, Dimension size, Dimension viewportSize, Point viewportPoint) {
+		//g.setColor(Color.GRAY);
+		int k = 10;
+		for (int j = 0; j < this.channelCount; j++) {
+			int v = this.plot.getChannelsPlotOptionsModel().getModelAt(j).getVoltageScale();
+			if ((v != this.plot.getValueScaleRangeModel().getValue()) && (this.plot.getChannelsPlotOptionsModel().getModelAt(j).getVisible())) {
+				//k+=5;
+				double pixelPerRowUnit = this.plot.getPixelPerChannel() * v * this.plot.getVoltageZoomFactorRatio();
+				while (pixelPerRowUnit <= 5)
+					pixelPerRowUnit *= 10;
+				g.drawLine(size.width-4-k, channelLevel[j]-(channelLevel[j]-channelLevel[j-1])/2, size.width-4-k, channelLevel[j]+ (channelLevel[j+1]-channelLevel[j])/2);
+				int tickCnt = 1 + ((int)(((float)(channelLevel[j+1]-channelLevel[j-1])/2)  / pixelPerRowUnit));
+				int y;
+				for (int i=0; i<tickCnt/2; i++) {
+					y = channelLevel[j] - ((int)(i*pixelPerRowUnit));
+					g.drawLine(size.width-3-k, y, size.width-1-k, y);
+				}
+				for (int i=0; i<tickCnt/2; i++) {
+					y = channelLevel[j] + ((int)(i*pixelPerRowUnit));
+					g.drawLine(size.width-3-k, y, size.width-1-k, y);
+				}
+			}
+		}
+	}
 
 	public int getPreferredWidth() {
 		calculate((Graphics2D) getGraphics());
-		return maxChannelLabelWidth + (int) Math.ceil(unitLabelBounds.getHeight() + SignalPlot.SCALE_TO_SIGNAL_GAP + 3 + 3 + 2);
+		return maxChannelLabelWidth + (int) Math.ceil(unitLabelBounds.getHeight() + SignalPlot.SCALE_TO_SIGNAL_GAP + 3 + 3 + 2) + 30;
 	}
 
 	@Override
@@ -245,6 +290,8 @@ public class SignalPlotRowHeader extends JComponent {
 
 		private static final long serialVersionUID = 1L;
 		private int channel;
+		private String visibleTooltip;
+		private String invisibleTooltip;
 
 		/*
 		 * Creates an action for ChannelOptions button.
@@ -252,13 +299,21 @@ public class SignalPlotRowHeader extends JComponent {
 		 * @param tooltip button`s tooltip
 		 * @param channel index of channel the action is connected to
 		 */
-		public ChannelOptionsAction(ImageIcon ic, String tooltip, int channel) {
+		public ChannelOptionsAction(ImageIcon ic, String visibleTooltip, String invisibleTooltip, int channel) {
 			super();
 			this.channel = channel;
+			this.visibleTooltip = visibleTooltip;
+			this.invisibleTooltip = invisibleTooltip;
 			putValue(AbstractAction.SMALL_ICON, ic);
-			putValue(AbstractAction.SHORT_DESCRIPTION, tooltip);
+			putValue(AbstractAction.SHORT_DESCRIPTION, visibleTooltip);
 		}
 
+		public void setButtonVisible(boolean visible) {
+			if (visible)
+				putValue(AbstractAction.SHORT_DESCRIPTION, this.visibleTooltip);
+			else
+				putValue(AbstractAction.SHORT_DESCRIPTION, this.invisibleTooltip);
+		}
 		/*
 		 * Initializes channelOptions dialog and set it to appropriate channel.
 		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
