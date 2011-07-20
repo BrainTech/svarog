@@ -144,6 +144,14 @@ public class ViewerConsolePane extends JPanel implements Console {
 		}
 	}
 
+	/** Passes text to {@link #addText} first appending '\n' at the end if it isn't there. */
+	public void addTextNL(String text) {
+	    if (text.endsWith("\n"))
+	        addText(text);
+	    else
+	        addText(text + "\n");
+	}
+
 	public void saveToFile(File file) throws IOException {
 		Writer w = null;
 		try {
