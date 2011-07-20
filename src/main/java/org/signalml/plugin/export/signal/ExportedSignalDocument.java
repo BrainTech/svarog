@@ -128,6 +128,10 @@ public interface ExportedSignalDocument extends Document {
 	
 	/**
 	 * Returns the array of labels of source channels.
+	 * 
+	 * Normalnie montaż składa się z 'source channels' i 'montage channels'. Pierwsze to kanały ze źródła, czyli np. z pliku. Drugie, to kanały jakie user sobie sam zdefiniuje 'do oglądania' i np. założy na nich jakąś kombinację liniową. W szczególności tych 'montage channels' może być więcej niż 'source channel' no i mogą się inaczej nazywać. W obu kolekcjach 'label' powinno być unikalne, tzn. jak dwa kanały mają taką samą wartość 'label' to gdzieś tam podnoszony jest wyjątek. Ta funkcja zwraca właśnie labelki dla tych źródłowych kanałów.
+	 * 
+	 * Returns the array of labels of source channels.
 	 * At a given index there is a label for the channel of this index. 
 	 * @return the array of labels of source channels
 	 */
