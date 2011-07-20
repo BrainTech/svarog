@@ -157,6 +157,9 @@ public class SvarogApplication implements java.lang.Runnable {
 	private GeneralConfiguration initialConfig = null;
 	private boolean molTest = false;
 	
+	/** {@link ViewerElementManager} shared instance. */
+	private ViewerElementManager viewerElementManager;
+	
 	/** This static boolean indicates whether {@link #main(String[]) static void main(String[])} was already called. */
 	private static boolean mainCalled = false;
     /** This boolean Indicates whether {@link #run() void run()} was already called. */
@@ -1015,6 +1018,7 @@ public class SvarogApplication implements java.lang.Runnable {
 		viewerMainFrame.setMessageSource(messageSource);
 		viewerMainFrame.setElementManager(elementManager);
 
+		this.setViewerElementManager(elementManager);
 		PluginAccessClass.getSharedInstance().setManager(elementManager);
 
 		splash(null, true);
@@ -1197,4 +1201,14 @@ public class SvarogApplication implements java.lang.Runnable {
 	public MessageSourceAccessor getMessageSourceAccessor() {
 	    return messageSource;
 	}
+	
+    /** {@link #elementManager} getter. */
+    public ViewerElementManager getViewerElementManager() {
+        return viewerElementManager;
+    }
+    
+    /** {@link #elementManager} setter. */
+    private void setViewerElementManager(ViewerElementManager m) {
+        this.viewerElementManager = m;
+    }
 }

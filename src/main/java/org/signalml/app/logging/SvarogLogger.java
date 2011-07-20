@@ -4,6 +4,10 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.security.Permission;
 
+import org.signalml.app.SvarogApplication;
+import org.signalml.app.view.ViewerConsolePane;
+import org.signalml.app.view.ViewerElementManager;
+
 /**
  * Svarog logger aware of multithreading.
  * 
@@ -25,13 +29,27 @@ public class SvarogLogger {
 
     private SvarogLogger() {
     }
+    
+    private synchronized void appendMsgToConsole(String msg) {
+        SvarogApplication sa = SvarogApplication.getSharedInstance();
+        if (null != sa) {
+            ViewerElementManager mgr = sa.getViewerElementManager();
+            if (null != mgr) {
+                ViewerConsolePane console = mgr.getConsole();
+                if (null != console)
+                    console.addTextNL(msg);
+            }
+        }
+    }
 
     /** The actual stderr printer (therefore synchronized). */
     private synchronized void printMsg(String prefix, String msg) {
         Thread t = Thread.currentThread();
-        System.err.println("SvarogLogger [" + (t.getId()) + "/" + (t.getName()) + "] " + prefix + ": " + msg);
+        String logMsg = "[" + (t.getId()) + "/" + (t.getName()) + "] " + prefix + ": " + msg;
+        System.err.println(logMsg);
+        appendMsgToConsole(logMsg);
     }
-    
+
     /** Provides an exception string containing the stack trace etc. */
     private String getExceptionMessage(Throwable t) {
         StringWriter ws = new StringWriter();
