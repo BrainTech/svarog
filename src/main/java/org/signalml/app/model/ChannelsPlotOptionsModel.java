@@ -50,6 +50,9 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 		this.modelChanged();
 	}
 	
+	/*
+	 * Fired by parent`s plot on its montage change event
+	 */
 	public void globalMontageChanged() {
 		this.modelChanged();
 	}
@@ -102,6 +105,10 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 		return this.channelsOptions[index];
 	}
 
+	/*
+	 * Calculate and return number of channels that are visible
+	 * @returns a number of visible channels
+	 */
 	public int getVisibleChannelsCount() {
 		int cnt = 0;
 		for (int i = 0; i < this.channelsOptions.length; i++)

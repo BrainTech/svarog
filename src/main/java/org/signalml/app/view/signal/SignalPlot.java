@@ -775,6 +775,22 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 	}
 
+	/*
+	 * For given top x-value (in pixels) computes start channel index.
+	 * @param topBoundary top x-value (in pixels) of the plot
+	 */
+	public int computePaintStartChannel(int topBoundary) {
+		int startChannel = 0;
+		int prevChannelsPix = 0;
+		while (prevChannelsPix <= topBoundary && startChannel<channelCount) {
+			if (this.getChannelsPlotOptionsModel().getModelAt(startChannel).getVisible())
+				prevChannelsPix += pixelPerChannel;
+			startChannel++;
+		}
+		startChannel--;
+		return startChannel;
+	}
+	
 	@Override
 	protected void paintComponent(Graphics gOrig) {
 
@@ -825,14 +841,14 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		}
 
 		int channel, visibleCount;
-		int startChannel = (int) Math.max( 0, Math.floor( ((double) clip.y) / pixelPerChannel ) );
-		int endChannel = (int) Math.min( channelCount-1, Math.ceil( ((double) clipEndY) / pixelPerChannel ) );
+		int startChannel = this.computePaintStartChannel(clip.y);
+		int maxNumberOfChannels = (int) Math.min( channelCount, Math.ceil( ((double) (clip.height - 1)) / pixelPerChannel ) );
 
 		if( channelLinesVisible && pixelPerChannel > 10 ) {
 			g.setColor(Color.BLUE);
 			visibleCount = 0;
 			channel=startChannel;
-			while (visibleCount <= (endChannel - startChannel) && channel<channelCount) {
+			while (visibleCount < maxNumberOfChannels && channel<channelCount) {
 				if (this.channelsPlotOptionsModel.getModelAt(channel).getVisible()) {
 					visibleCount ++;
 					g.drawLine(clip.x, channelLevel[channel], clipEndX, channelLevel[channel]);
@@ -850,15 +866,15 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			if( offscreenChannelsDrawn ) {
 				// draw all
 				startChannel = 0;
-				endChannel = channelCount-1;
+				maxNumberOfChannels = channelCount;
 			} else {
 				// determine on screen channels
 				// NOTE: not the channels within the clip, the channels within the viewport
 				Point viewportPoint = viewport.getViewPosition();
 				Dimension viewportSize = viewport.getExtentSize();
 
-				startChannel = (int) Math.max( 0, Math.floor( ((double) viewportPoint.y) / pixelPerChannel ) );
-				endChannel = (int) Math.min( channelCount-1, Math.ceil( ((double) (viewportPoint.y + viewportSize.height)) / pixelPerChannel ) );
+				startChannel = this.computePaintStartChannel(viewportPoint.y);
+				maxNumberOfChannels = (int) Math.min( channelCount, Math.ceil( ((double) (viewportSize.height-1)) / pixelPerChannel ) );
 			}
 		}
 
@@ -880,7 +896,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 		visibleCount = 0;
 		channel=startChannel;
-		while (visibleCount <= (endChannel - startChannel) && channel<channelCount) {
+		while (visibleCount < maxNumberOfChannels && channel<channelCount) {
 			if (!this.channelsPlotOptionsModel.getModelAt(channel).getVisible()) {
 				channel++;
 				continue;
@@ -1244,7 +1260,6 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	/* Listener implementations */
 
 	public void reset() {
-		System.out.println("RESET");	
 		calculateParameters();
 		revalidateAndRepaintAll();
 		

@@ -43,7 +43,9 @@ import org.signalml.domain.montage.Montage;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractPopupDialog;
 import org.springframework.context.support.MessageSourceAccessor;
-
+/*
+ * A pop-up that handles single channel`s display options, eg.visibility, value scale.
+ */
 public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements ChangeListener, ActionListener {
 
 	public ChannelOptionsPopupDialog(MessageSourceAccessor messageSource,
@@ -53,10 +55,25 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 
 	private static final long serialVersionUID = 1L;
 
+	/*
+	 * parent`s plot (self`s model)
+	 */
 	private SignalPlot currentPlot;
+	/*
+	 * value scale model for current channel
+	 */
 	private DefaultBoundedRangeModel valueScaleModel;
+	/*
+	 * ignore-global-scale value for current channel
+	 */
 	private JCheckBox ignoreGlobalScale;
+	/*
+	 * current channel index
+	 */
 	private int channel;
+	/*
+	 * a model for all channels`es display options (eg. visibility, value scale etc.)
+	 */
 	private ChannelPlotOptionsModel model;
 
 	@Override
@@ -65,6 +82,8 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 		JPanel interfacePanel = new JPanel(new BorderLayout());
 
 		JPanel valueScalePanel = new JPanel();
+		
+		//value scale
 		valueScalePanel.setLayout(new BoxLayout(valueScalePanel, BoxLayout.Y_AXIS));
 		CompoundBorder border = new CompoundBorder(
 		        new TitledBorder(messageSource.getMessage("signalView.channelLocalScale")),
@@ -75,6 +94,7 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 		valueScalePanel.add(Box.createVerticalStrut(3));
 		valueScalePanel.add(getValueScalePanel());
 		
+		//visibility
 		JPanel visibilityPanel = new JPanel();
 		visibilityPanel.setLayout(new BoxLayout(visibilityPanel, BoxLayout.Y_AXIS));
 		border = new CompoundBorder(
@@ -95,12 +115,21 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 		currentPlot = plot;
 	}
 	
+	/*
+	 * Creates and returns a component for ignoreGlobalScale checkbox.
+	 * @returns JPanel with checkbox
+	 */
 	private JPanel getIgnoreGlobalPanel() {
 		ignoreGlobalScale =  new JCheckBox(messageSource.getMessage("signalView.ignoreGlobalScale"));
 		JPanel p = new JPanel(new BorderLayout());
 		p.add(ignoreGlobalScale, BorderLayout.NORTH);
 		return p;
 	}
+	
+	/*
+	 * Creates and returns a component for HideChannel button.
+	 * @returns JPanel with HideChannel button.
+	 */
 	private JPanel getVisibilityPanel() {
 		JButton hideChannel =  new JButton(messageSource.getMessage("signalView.hideChannel"));
 		hideChannel.addActionListener(this);
@@ -109,6 +138,10 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 		return p;
 	}
 	
+	/*
+	 * Creates and returns an component for ValueScale scrollBar.
+	 * @returns JPanel with ValueScale scrollBar.
+	 */
 	private JPanel getValueScalePanel() {
 		
 		JSlider valueScaleSlider = new JSlider(new DefaultBoundedRangeModel()) {
@@ -139,14 +172,27 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 		return p;
 	}
 
+	/*
+	 * Sets scrollBar`s initial value.
+	 * @param scale initial value to be set
+	 */
 	private void setInitialVoltageScale(int scale) {
 		this.valueScaleModel.setValue(scale);
 	}
 	
+	/*
+	 * Sets channel number for which the panel will be shown.
+	 * @param ch channel number for which the panel will be shown
+	 */
 	public void setChannel(int ch) {
 		this.channel = ch;
 	}
 	
+	/*
+	 * Fills the panel with data from its parent plot. Fired on panel`s appearance.
+	 * @see org.signalml.plugin.export.view.AbstractDialog#fillDialogFromModel(java.lang.Object)
+	 * @param model parent`s plot
+	 */
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 		SignalPlot plot = (SignalPlot) model; 
@@ -158,6 +204,11 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 		this.ignoreGlobalScale.getModel().setSelected(this.model.getIgnoreGlobalScale());
 	}
 
+	/*
+	 * Fills model with data from the panel. Fired on panel`s disappearance.
+	 * @see org.signalml.plugin.export.view.AbstractDialog#fillModelFromDialog(java.lang.Object)
+	 * @param model parent`s plot
+	 */
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
 
@@ -184,6 +235,10 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 		return true;
 	}
 
+	/*
+	 * Fired on valueScale changed. Changes model`s value scale.
+	 * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
+	 */
 	@Override
 	public void stateChanged(ChangeEvent e) {
 		Object source = e.getSource();
@@ -194,6 +249,10 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 		
 	}
 
+	/*
+	 * Fired on 'hide' button pressed. Sets channel`s visibility and hides the panel.
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		//assumed 'hide' performed

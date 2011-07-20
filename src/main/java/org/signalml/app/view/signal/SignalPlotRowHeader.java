@@ -8,7 +8,6 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -19,12 +18,11 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
 import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 
+import org.signalml.app.model.ChannelPlotOptionsModel;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.element.CompactButton;
 import org.signalml.app.view.signal.popup.ChannelOptionsPopupDialog;
@@ -40,6 +38,22 @@ public class SignalPlotRowHeader extends JComponent {
 	private static final long serialVersionUID = 1L;
 
 	private static final Dimension MINIMUM_SIZE = new Dimension(0,0);
+	/*
+	 * width of channel`s options button (for every channel) in pixels
+	 */
+	private static final int CHANNEL_BUTTON_WIDTH = 10;
+	/*
+	 * width of value scale`s tick (horizontal line) in pixels
+	 */
+	private static final int SCALE_HORIZONTAL_LINE_WIDTH = 4;
+	/*
+	 * Infinity value for pixel per row unit
+	 */
+	private static final double PIXEL_PER_ROW_UNIT_INF = -1.0;
+	/*
+	 * distance (in pixels) from value scale to its label
+	 */
+	private static final int LABEL_LINE_DISTANCE = 5;
 
 	private boolean calculated = false;
 
@@ -52,7 +66,9 @@ public class SignalPlotRowHeader extends JComponent {
 	private int[] channelLevel;
 
 	private double pixelPerRowUnit;
+	private double[] pixelPerRowUnitForChannels;
 	private String rowUnitLabel;
+	private String[] rowUnitLabelForChannels;
 
 	private Rectangle2D unitLabelBounds;
 	private Rectangle2D[] channelLabelBounds;
@@ -60,7 +76,8 @@ public class SignalPlotRowHeader extends JComponent {
 	private int maxChannelLabelWidth = 0;
 
 	private SignalPlot plot;
-	private ImageIcon channelOptionsIcon;
+	private ImageIcon channelOptionsVisibleIcon;
+	private ImageIcon channelOptionsInvisibleIcon;
 
 	private MultichannelSampleSource labelSource;
 	private ChannelOptionsPopupDialog channelOptionsPopupDialog;
@@ -72,9 +89,15 @@ public class SignalPlotRowHeader extends JComponent {
 		this.plot = plot;
 	    Image iconImage;
 	    ImageIcon ic;
-	    iconImage = IconUtils.loadClassPathImage("org/signalml/app/icon/channelOptions.png");
+	    iconImage = IconUtils.loadClassPathImage("org/signalml/app/icon/channelOptionsVisible.png");
 	    ic = new ImageIcon(iconImage);
-	    this.channelOptionsIcon = ic;
+	    this.channelOptionsVisibleIcon = ic;
+	    
+	    iconImage = IconUtils.loadClassPathImage("org/signalml/app/icon/channelOptionsInvisible.png");
+	    ic = new ImageIcon(iconImage);
+	    this.channelOptionsInvisibleIcon = ic;
+	    
+	    
 	}
 
 	/*
@@ -91,22 +114,70 @@ public class SignalPlotRowHeader extends JComponent {
 		channelOptionsButtons = new CompactButton[this.plot.getChannelCount()];
 		for(int i = 0; i < this.plot.getChannelCount();i++) {
 			CompactButton b = new CompactButton(
-					new ChannelOptionsAction(this.channelOptionsIcon, 
+					new ChannelOptionsAction(this.channelOptionsVisibleIcon,
+									this.channelOptionsInvisibleIcon,
 									this.plot.getMessageSource().getMessage("signalView.editChannelOptions"), 
-									this.plot.getMessageSource().getMessage("signalView.editChannelOptions")+" DUPA",
+									this.plot.getMessageSource().getMessage("signalView.showChannel"),
 									i));
 			channelOptionsButtons[i] = b;
 			this.add(b);
 		}
 	}
-
+	/*
+	 * Determine if there is some channel with its own value scale
+	 * @returns true if there exists a channel with its own value scale, false otherwise
+	 */
+	private boolean hasSpecialChannels() {
+		for (int i = 0; i < channelCount; i++)
+			if (pixelPerRowUnitForChannels[i] >= 0)
+				return true;
+		return false;
+	}
+	
+	/*
+	 * Fill channels`es data structures: channelLabelBounds,
+	 * pixelPerRowUnitForChannels, rowUnitLabelForChannels.
+	 */
+	private void calculateChannelsData(Graphics2D g) {
+		StringBuilder sb;
+		ChannelPlotOptionsModel m;
+		int globalScale = this.plot.getValueScaleRangeModel().getValue();
+		double max = 0;
+		
+		for(int i = 0; i < channelCount; i++) {
+			//calculate label bound
+			channelLabelBounds[i] = normalFont.getStringBounds(labelSource.getLabel(i), g.getFontRenderContext());
+			if (max < channelLabelBounds[i].getWidth())  {
+				max = channelLabelBounds[i].getWidth();
+			}
+			
+			//calculate scaling
+			m = this.plot.getChannelsPlotOptionsModel().getModelAt(i);
+			if ((m.getVoltageScale() != globalScale) && (m.getVisible())) {
+				pixelPerRowUnitForChannels[i] = this.plot.getPixelPerChannel() * m.getVoltageScale() * this.plot.getVoltageZoomFactorRatio();
+				sb = new StringBuilder("1");
+				if (pixelPerRowUnitForChannels[i] <= 0.0) {
+					sb.append("000...");
+					pixelPerRowUnitForChannels[i] = 0.0;
+				} else {
+					while (pixelPerRowUnitForChannels[i] <= 5) {
+						pixelPerRowUnitForChannels[i] *= 10;
+						sb.append("0");
+					}
+				};
+				sb.append(" uV");
+				rowUnitLabelForChannels[i] = sb.toString();
+			} else 
+				pixelPerRowUnitForChannels[i] = PIXEL_PER_ROW_UNIT_INF;
+		}
+		maxChannelLabelWidth = (int) Math.ceil(max);
+	}
+	
 	private void calculate(Graphics2D g) {
 
 		if (calculated) {
 			return;
 		}
-
-		int i;
 
 		channelCount = plot.getChannelCount();
 		pixelPerValue = plot.getPixelPerValue();
@@ -117,35 +188,28 @@ public class SignalPlotRowHeader extends JComponent {
 		pixelPerRowUnit = pixelPerValue;
 
 		StringBuilder sb = new StringBuilder("1");
-		if (pixelPerRowUnit == 0.0)
+		if (pixelPerRowUnit <= 0.0) {
+			pixelPerRowUnit = 0.0;
 			sb.append("000...");
-		else {
+		} else {
 			
 			while (pixelPerRowUnit <= 5) {
 				pixelPerRowUnit *= 10;
 				sb.append("0");
 			}
 		};
-
 		sb.append(" uV");
 		rowUnitLabel = sb.toString();
-
+		
 		normalFont = g.getFont();
 		verticalFont = normalFont.deriveFont(AffineTransform.getQuadrantRotateInstance(1));
-
 		unitLabelBounds = verticalFont.getStringBounds(rowUnitLabel, g.getFontRenderContext());
 
-		double max = 0;
+		rowUnitLabelForChannels = new String[channelCount];
+		pixelPerRowUnitForChannels = new double[channelCount];
 		channelLabelBounds = new Rectangle2D[channelCount];
+		this.calculateChannelsData(g);
 		
-		for (i=0; i < channelCount; i++) {
-			channelLabelBounds[i] = normalFont.getStringBounds(labelSource.getLabel(i), g.getFontRenderContext());
-			if (max < channelLabelBounds[i].getWidth())  {
-				max = channelLabelBounds[i].getWidth();
-			}
-		}
-		maxChannelLabelWidth = (int) Math.ceil(max);
-
 		calculated = true;
 
 	}
@@ -164,8 +228,6 @@ public class SignalPlotRowHeader extends JComponent {
 		g.setColor(getBackground());
 		g.fillRect(clip.x,clip.y,clip.width,clip.height);
 
-		int clipEndY = clip.y + clip.height - 1;
-
 		size.width -= SignalPlot.SCALE_TO_SIGNAL_GAP;
 
 		int i;
@@ -173,40 +235,53 @@ public class SignalPlotRowHeader extends JComponent {
 
 		// this draws value ticks
 		g.setColor(Color.GRAY);
-		g.drawLine(size.width-4, viewportPoint.y, size.width-4, viewportPoint.y + viewportSize.height);
+		g.drawLine(size.width-SCALE_HORIZONTAL_LINE_WIDTH, viewportPoint.y, 
+				size.width-SCALE_HORIZONTAL_LINE_WIDTH, viewportPoint.y + viewportSize.height);
 		int tickCnt = 1 + ((int)(((float)(viewportSize.height+1))  / pixelPerRowUnit));
 		for (i=0; i<tickCnt; i++) {
 			y = viewportPoint.y + ((int)(i*pixelPerRowUnit));
-			g.drawLine(size.width-3, y, size.width-1, y);
+			g.drawLine(size.width-SCALE_HORIZONTAL_LINE_WIDTH+1, y, size.width-1, y);
 		}
-		System.out.println("GLOBAL TICK COUNT"+tickCnt);
-		this.drawChannelsValueTicks(g, size, viewportSize, viewportPoint);
+		this.drawChannelsValueTicks(g, size);
 
-		// this draws channel labels
-		int startChannel = (int) Math.max(0, Math.floor(clip.y / pixelPerChannel));
-		int endChannel = (int) Math.min(channelCount-1, Math.ceil(clipEndY / pixelPerChannel));
+		
+		
+		//determine start channel number and number of channels to draw (to be precise - theirs labels)
+		int startChannel = this.plot.computePaintStartChannel(clip.y);
+		
+		//take care of invisible labels above first visible drawable channel...
+		for (i=startChannel-1;i>=0;i--)
+			if (!this.plot.getChannelsPlotOptionsModel().getModelAt(i).getVisible())
+				startChannel--;
+			else
+				break;
 
+		int maxNumberOfChannels = (int) Math.min(channelCount, Math.ceil(((double)clip.height-1) / pixelPerChannel));
+
+		//initialise canvas
 		if (active) {
 			g.setColor(Color.BLUE);
 		} else {
 			g.setColor(Color.GRAY);
 		}
+		g.setFont(normalFont);
+		
+		//draw visible labels and channel`s buttons
 		boolean visible;
-		i=startChannel;
 		int visibleCount=0;
 		i=startChannel;
-		while(visibleCount<=(endChannel-startChannel) && i<=channelCount-1){
+		while(visibleCount<= maxNumberOfChannels && i<=channelCount-1){
 			visible = this.plot.getChannelsPlotOptionsModel().getModelAt(i).getVisible();
 			if (visible) {
 				visibleCount ++;
 				if (active)
 					g.setColor(Color.BLUE);
-				g.drawString(labelSource.getLabel(i), 12, channelLevel[i] + ((int) -channelLabelBounds[i].getY()/2));
+				g.drawString(labelSource.getLabel(i), CHANNEL_BUTTON_WIDTH+2, channelLevel[i] + ((int) -channelLabelBounds[i].getY()/2));
 			} else {
 				g.setColor(Color.GRAY);//todo - make font smaller
-				g.drawString(labelSource.getLabel(i), 12, channelLevel[i] + ((int) -channelLabelBounds[i].getY()/2));
+				g.drawString(labelSource.getLabel(i), CHANNEL_BUTTON_WIDTH+2, channelLevel[i] + ((int) -channelLabelBounds[i].getY()/2));
 			}
-			channelOptionsButtons[i].setBounds(1, channelLevel[i]-2, 10, 10);
+			channelOptionsButtons[i].setBounds(1, channelLevel[i]-2, CHANNEL_BUTTON_WIDTH, CHANNEL_BUTTON_WIDTH);
 			((ChannelOptionsAction) channelOptionsButtons[i].getAction()).setButtonVisible(visible);
 			i++;
 		
@@ -214,37 +289,63 @@ public class SignalPlotRowHeader extends JComponent {
 
 		g.setColor(Color.GRAY);
 		g.setFont(verticalFont);
-		g.drawString(rowUnitLabel, size.width+((float)unitLabelBounds.getY())-5, viewportPoint.y+3);
+		g.drawString(rowUnitLabel, size.width+((float)unitLabelBounds.getY())-LABEL_LINE_DISTANCE, viewportPoint.y+3);
 
 	}
-	private void drawChannelsValueTicks(Graphics2D g, Dimension size, Dimension viewportSize, Point viewportPoint) {
-		//g.setColor(Color.GRAY);
-		int k = 10;
-		for (int j = 0; j < this.channelCount; j++) {
-			int v = this.plot.getChannelsPlotOptionsModel().getModelAt(j).getVoltageScale();
-			if ((v != this.plot.getValueScaleRangeModel().getValue()) && (this.plot.getChannelsPlotOptionsModel().getModelAt(j).getVisible())) {
-				//k+=5;
-				double pixelPerRowUnit = this.plot.getPixelPerChannel() * v * this.plot.getVoltageZoomFactorRatio();
-				while (pixelPerRowUnit <= 5)
-					pixelPerRowUnit *= 10;
-				g.drawLine(size.width-4-k, channelLevel[j]-(channelLevel[j]-channelLevel[j-1])/2, size.width-4-k, channelLevel[j]+ (channelLevel[j+1]-channelLevel[j])/2);
-				int tickCnt = 1 + ((int)(((float)(channelLevel[j+1]-channelLevel[j-1])/2)  / pixelPerRowUnit));
-				int y;
-				for (int i=0; i<tickCnt/2; i++) {
-					y = channelLevel[j] - ((int)(i*pixelPerRowUnit));
-					g.drawLine(size.width-3-k, y, size.width-1-k, y);
+	
+	/*
+	 * For every channel that have its individual value scale draws it.
+	 * @param g graphics on which scales will be drawn
+	 * @param size panel`s size needed to determine value scale X position 
+	 */
+	private void drawChannelsValueTicks(Graphics2D g, Dimension size) {
+		//prepare canvas to draw labels
+		g.setColor(Color.GRAY);
+		g.setFont(verticalFont);
+		
+		int i=0, tp=0, bt=0, x=0, y=0;
+		for (int j = 0; j < channelCount; j++) {
+			if (pixelPerRowUnitForChannels[j] >= 0) { // if channel has its own value scale
+
+				tp = channelLevel[j] - pixelPerChannel/2 + 3; //scale`s top position
+				bt = channelLevel[j] + pixelPerChannel/2 - 3; //scale`s bottom position
+				x = size.width - this.getScaleWidth(); // scale`s x position
+				//draw scale`s line...
+				g.drawLine(x-SCALE_HORIZONTAL_LINE_WIDTH, tp, x-SCALE_HORIZONTAL_LINE_WIDTH, bt);
+				
+				//determine number of ticks (scales horizontal lines)
+				int tickCnt = 1 + ((int)(((double)(bt - tp))  / pixelPerRowUnitForChannels[j]));
+				
+				//draw half of tick obove the channel, half below
+				for (i=0; i<tickCnt/2; i++) {
+					y = channelLevel[j] + ((int)(i*pixelPerRowUnitForChannels[j]));
+					g.drawLine(x-SCALE_HORIZONTAL_LINE_WIDTH+1, y, x-1, y);
 				}
-				for (int i=0; i<tickCnt/2; i++) {
-					y = channelLevel[j] + ((int)(i*pixelPerRowUnit));
-					g.drawLine(size.width-3-k, y, size.width-1-k, y);
+				for (i=0; i<tickCnt/2; i++) {
+					y = channelLevel[j] - ((int)(i*pixelPerRowUnitForChannels[j]));
+					g.drawLine(x-SCALE_HORIZONTAL_LINE_WIDTH+1, y, x-1, y);
 				}
+				//draw informative label, eg. 100uV
+				g.drawString(rowUnitLabelForChannels[j], x-SCALE_HORIZONTAL_LINE_WIDTH + ((float)unitLabelBounds.getY()), tp+3);
+
 			}
 		}
 	}
 
+	/*
+	 * Returns width (in pixels) of single channel value scale (often presented in uV).
+	 * @returns width (in pixels) of single channel value scale (often presented in uV)
+	 */
+	private int getScaleWidth() {
+		return (int) Math.ceil(unitLabelBounds.getHeight() + SignalPlot.SCALE_TO_SIGNAL_GAP + LABEL_LINE_DISTANCE + SCALE_HORIZONTAL_LINE_WIDTH);
+	}
+	
 	public int getPreferredWidth() {
 		calculate((Graphics2D) getGraphics());
-		return maxChannelLabelWidth + (int) Math.ceil(unitLabelBounds.getHeight() + SignalPlot.SCALE_TO_SIGNAL_GAP + 3 + 3 + 2) + 30;
+		if (this.hasSpecialChannels()) //we have individual scales for some channels
+			return maxChannelLabelWidth + this.getScaleWidth()*2 + CHANNEL_BUTTON_WIDTH;
+		else
+			return maxChannelLabelWidth + this.getScaleWidth() + CHANNEL_BUTTON_WIDTH;
 	}
 
 	@Override
@@ -292,27 +393,40 @@ public class SignalPlotRowHeader extends JComponent {
 		private int channel;
 		private String visibleTooltip;
 		private String invisibleTooltip;
+		private ImageIcon visibleIcon;
+		private ImageIcon invisibleIcon;
 
 		/*
 		 * Creates an action for ChannelOptions button.
-		 * @param ic button`s icon
-		 * @param tooltip button`s tooltip
+		 * @param visibleIcon button`s visible icon
+		 * @param invisibleIcon button`s invisible icon
+		 * @param visibleTooltip button`s visible tooltip
+		 * @param invisible button`s invisible tooltip
 		 * @param channel index of channel the action is connected to
 		 */
-		public ChannelOptionsAction(ImageIcon ic, String visibleTooltip, String invisibleTooltip, int channel) {
+		public ChannelOptionsAction(ImageIcon visibleIcon, ImageIcon invisibleIcon, String visibleTooltip, String invisibleTooltip, int channel) {
 			super();
 			this.channel = channel;
 			this.visibleTooltip = visibleTooltip;
 			this.invisibleTooltip = invisibleTooltip;
-			putValue(AbstractAction.SMALL_ICON, ic);
+			this.visibleIcon = visibleIcon;
+			this.invisibleIcon = invisibleIcon;
+			putValue(AbstractAction.SMALL_ICON, visibleIcon);
 			putValue(AbstractAction.SHORT_DESCRIPTION, visibleTooltip);
 		}
 
+		/*
+		 * Sets button`s visibility attributes - icon and tooltip.
+		 * @param visible ...
+		 */
 		public void setButtonVisible(boolean visible) {
-			if (visible)
+			if (visible) {
 				putValue(AbstractAction.SHORT_DESCRIPTION, this.visibleTooltip);
-			else
+				putValue(AbstractAction.SMALL_ICON, this.visibleIcon);
+			} else {
 				putValue(AbstractAction.SHORT_DESCRIPTION, this.invisibleTooltip);
+				putValue(AbstractAction.SMALL_ICON, this.invisibleIcon);
+			};
 		}
 		/*
 		 * Initializes channelOptions dialog and set it to appropriate channel.
