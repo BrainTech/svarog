@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import org.signalml.plugin.export.config.SvarogAccessConfig;
 import org.signalml.plugin.export.config.SvarogConfiguration;
-import org.signalml.plugin.loader.PluginLoader;
+import org.signalml.plugin.loader.PluginLoaderHi;
 
 /**
  * Svarog configuration facade (for plugins).
@@ -30,7 +30,7 @@ public class ConfigAccessImpl extends AbstractAccess implements SvarogAccessConf
 
     @Override
     public File[] getPluginDirectories() {
-        PluginLoader loader = PluginLoader.getInstance();
+        PluginLoaderHi loader = PluginLoaderHi.getInstance();
         ArrayList<File> files = loader.getPluginDirs();
         if (files == null) throw new RuntimeException("no profile directories stored");
         File[] filesArray = new File[files.size()];

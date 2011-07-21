@@ -60,7 +60,7 @@ import org.signalml.method.mp5.MP5Method;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.view.DocumentView;
-import org.signalml.plugin.loader.PluginLoader;
+import org.signalml.plugin.loader.PluginLoaderHi;
 import org.signalml.task.LocalTask;
 import org.signalml.task.Task;
 import org.signalml.task.TaskStatus;
@@ -453,7 +453,7 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 			return;
 		}
 		
-		PluginLoader.getInstance().onClose();
+		PluginLoaderHi.getInstance().onClose();
 
 		saveViewPreferences();
 		setVisible(false);
