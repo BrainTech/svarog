@@ -51,18 +51,10 @@ public class SvarogExceptionHandler implements java.lang.Thread.UncaughtExceptio
 
     private void displayUserMessage(Throwable t) {
         ErrorsDialog.showImmediateExceptionDialog((Window) null, t);
-        // String message = t.getMessage();
-        //
-        // if (message == null || message.length() == 0) {
-        // message = "Fatal: " + t.getClass();
-        // }
-        //
-        // JOptionPane.showMessageDialog(null, "General Error", message,
-        // JOptionPane.ERROR_MESSAGE);
     }
 
     protected void handleAWT(Throwable t) {
-        SvarogLogger.getSharedInstance().error("SvarogExceptionHandler.handleAWT: " + t);
+        SvarogLogger.getSharedInstance().error("AWT exception handler: " + t);
         t.printStackTrace();
         displayUserMessage(t);
     }

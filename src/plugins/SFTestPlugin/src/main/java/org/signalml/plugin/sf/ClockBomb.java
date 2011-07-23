@@ -23,7 +23,8 @@ class ClockBomb extends Timer implements java.lang.Runnable {
         
         SvarogLogger sl = SvarogLogger.getSharedInstance();
         sl.debug("ClockBomb: explode");
-        sl.debug("Thread.getDefaultUncaughtExceptionHandler: " + Thread.getDefaultUncaughtExceptionHandler());
+        sl.debug("ClockBomb: getDefaultUncaughtExceptionHandler: " + Thread.getDefaultUncaughtExceptionHandler());
         throw new RuntimeException("ClockBomb explode (" + getMillis() + " millis)");
+        // throw new OutOfMemoryError("ClockBomb explode (" + getMillis() + " millis)");
     }
 }

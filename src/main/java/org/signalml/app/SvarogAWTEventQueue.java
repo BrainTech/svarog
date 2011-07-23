@@ -2,6 +2,8 @@ package org.signalml.app;
 
 import java.awt.AWTEvent;
 
+import org.signalml.app.logging.SvarogLoggerStdErr;
+
 /**
  * Svarog AWT event queue.
  * 
@@ -41,7 +43,15 @@ public class SvarogAWTEventQueue extends java.awt.EventQueue {
     protected void dispatchEvent(AWTEvent newEvent) {
         try {
             super.dispatchEvent(newEvent);
-        } catch (Throwable t) {
+        } catch (Error t) {
+            try {
+                SvarogExceptionHandler.getSharedInstance().handleAWT(t);
+            } catch (RuntimeException e) {
+                SvarogLoggerStdErr.getInstance().error("Error in exception handler!", e);
+            }
+
+            throw t;
+        } catch (Exception t) {
             SvarogExceptionHandler.getSharedInstance().handleAWT(t);
         }
     }
