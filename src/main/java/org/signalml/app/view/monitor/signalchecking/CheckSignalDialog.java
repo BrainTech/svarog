@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.app.view.monitor;
+package org.signalml.app.view.monitor.signalchecking;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -20,6 +20,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.EnumMap;
 
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.MonitorSignalDocument;
@@ -29,8 +32,6 @@ import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.app.model.MontageDescriptor;
 import org.signalml.app.view.montage.VisualReferenceModel;
-import org.signalml.util.SvarogConstants;
-
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
@@ -42,19 +43,9 @@ import org.springframework.context.support.MessageSourceAccessor;
 public class CheckSignalDialog extends AbstractDialog {
 
         /**
-         * The delay between each check in miliseconds.
-         */
-        private static final int DELAY = 1000;
-
-        /**
          * Minimum windows size.
          */
-        private static final int WINDOW_SIZE = 500;
-
-        /**
-         * Amplifier type.
-         */
-        private static final String AMP_TYPE = "TMSI-porti7";
+        private static final int WINDOW_SIZE = 900;
 
         /**
          * The current montage.
@@ -98,10 +89,10 @@ public class CheckSignalDialog extends AbstractDialog {
 	@Override
 	protected void initialize() {
 
-		setTitle(messageSource.getMessage("checkSignal.title"));
-		setPreferredSize(SvarogConstants.MIN_ASSUMED_DESKTOP_SIZE);
+		setTitle(messageSource.getMessage("checkSignal.title"));		
 		super.initialize();
 		setMinimumSize(new Dimension(WINDOW_SIZE, WINDOW_SIZE));
+                setPreferredSize(new Dimension(WINDOW_SIZE, WINDOW_SIZE));
 	}
 
         /**
@@ -156,10 +147,12 @@ public class CheckSignalDialog extends AbstractDialog {
 
                 monitorSignalDocument = (MonitorSignalDocument) signalDocument;
 
-                timerClass = new TimerClass(checkSignalDisplay, monitorSignalDocument, AMP_TYPE);
+                AmplifierValidationRules validationRules = getAmplifierValidationRules();
+
+                timerClass = new TimerClass(checkSignalDisplay, monitorSignalDocument, validationRules);
                 timerClass.actionPerformed(null);
 
-                timer = new Timer(DELAY, timerClass);
+                timer = new Timer(validationRules.getDelay(), timerClass);
                 timer.start();
 	}
 
@@ -183,6 +176,35 @@ public class CheckSignalDialog extends AbstractDialog {
 	}
 
         /**
+         * Returns validation rules of current signal.
+         * 
+         * @return validation rules of current signal.
+         */
+        private AmplifierValidationRules getAmplifierValidationRules() {
+
+                // TODO currently returning a constant object, should obtain
+                // the rules from signal or something
+
+                EnumMap<SignalCheckingMethod, HashMap<String, Object>> methodList =
+                        new EnumMap<SignalCheckingMethod, HashMap<String, Object>>(SignalCheckingMethod.class);
+
+                HashMap<String, Object> ampNullParameters = new HashMap<String, Object>();
+                ampNullParameters.put(GenericAmplifierDiagnosis.SAMPLES_TESTED_FACTOR, 0.5);
+                ampNullParameters.put(AmplifierNullDiagnosis.TEST_TOLERANCE, 0.99);                
+                methodList.put(SignalCheckingMethod.AMPNULL, ampNullParameters);
+                
+                HashMap<String, Object> dcNullParameters = new HashMap<String, Object>();
+                dcNullParameters.put(GenericAmplifierDiagnosis.SAMPLES_TESTED_FACTOR, 0.5);
+                methodList.put(SignalCheckingMethod.DC, dcNullParameters);
+
+                HashMap<String, Object> fftNullParameters = new HashMap<String, Object>();
+                fftNullParameters.put(GenericAmplifierDiagnosis.SAMPLES_TESTED_FACTOR, 0.5);
+                methodList.put(SignalCheckingMethod.FFT, fftNullParameters);
+
+                return new AmplifierValidationRules("TMSI-porti7", methodList, 3000);
+        }
+
+        /**
          * Stops the timer on dialog close. Then calls {@link AbstractDialog#onDialogClose()}.
          */
         @Override
@@ -193,12 +215,21 @@ public class CheckSignalDialog extends AbstractDialog {
 		setMontage(null);
 	}
 
+        /**
+         * Is not cancellable.
+         * @return false
+         */
         @Override
         public boolean isCancellable() {
 
 		return false;
 	}
 
+        /**
+         * Whether the model is a montage object.
+         * @param clazz model's class
+         * @return true if clazz is montage
+         */
         @Override
 	public boolean supportsModelClass(Class<?> clazz) {
 
@@ -210,10 +241,15 @@ public class CheckSignalDialog extends AbstractDialog {
          * It gets a {@link GenericAmplifierDiagnosis} object and calls it's {@link GenericAmplifierDiagnosis#signalState()} method
          * constantly in a seperate thread with a given delay.
          */
-        private class TimerClass implements ActionListener, Runnable {
+        private class TimerClass implements ActionListener {
 
-                private HashMap<String, Boolean> channels;
-                private GenericAmplifierDiagnosis amplifierDiagnosis;
+                /**
+                 * Amplifier diagnosis' list.
+                 */
+                private List<GenericAmplifierDiagnosis> amplifierDiagnosis;
+                /**
+                 * The display to update.
+                 */
                 private CheckSignalDisplay checkSignalDisplay;
 
                 /**
@@ -222,39 +258,15 @@ public class CheckSignalDialog extends AbstractDialog {
                  *
                  * @param checkSignalDisplay A {@link CheckSignalDisplay} object to which the information from a amplifier diagnosis will be passed
                  * @param monitorSignalDocument A document representing the signal from an amplifier
-                 * @param ampType Name of an amplifier model
+                 * @param validationRules amplifier validation rules
                  */
-                public TimerClass(CheckSignalDisplay checkSignalDisplay, MonitorSignalDocument monitorSignalDocument, String ampType) {
+                public TimerClass(CheckSignalDisplay checkSignalDisplay, MonitorSignalDocument monitorSignalDocument, AmplifierValidationRules validationRules) {
 
                         this.checkSignalDisplay = checkSignalDisplay;
-                        amplifierDiagnosis = AmplifierDignosisManufacture.getAmplifierDiagnosis(ampType, monitorSignalDocument);
-                }
+                        amplifierDiagnosis = new ArrayList<GenericAmplifierDiagnosis>();
 
-                /**
-                 * Compares given channel state to {@link #channels}.
-                 *
-                 * @param newChannelState Given channel state
-                 * @return false if the state is the same, true if there is a difference
-                 */
-                private boolean compareChannels(HashMap<String, Boolean> newChannelState) {
-
-                        if (channels == null || newChannelState == null) {
-
-                                if (channels == null && newChannelState == null)
-                                        return false;
-                                else
-                                        return true;
-
-                        } else {
-
-                                for (String s : monitorSignalDocument.getSourceChannelLabels()) {
-
-                                        if (channels.get(s) != newChannelState.get(s))
-                                                return true;
-                                }
-                        }
-
-                        return false;
+                        for (SignalCheckingMethod method : validationRules.getMethods().keySet())
+                                amplifierDiagnosis.add(AmplifierDignosisManufacture.getAmplifierDiagnosis(method, monitorSignalDocument, validationRules.getMethods().get(method)));
                 }
 
                 /**
@@ -265,22 +277,11 @@ public class CheckSignalDialog extends AbstractDialog {
                 @Override
                 public void actionPerformed(ActionEvent e) {
 
-                        (new Thread(this)).start();
-                }
-
-                /**
-                 * Gets the signal state, compares it with the old signal state and if there
-                 * is a difference: redraws the signal display component.
-                 */
-                @Override
-                public void run() {
-
-                        HashMap<String, Boolean> channels2 = amplifierDiagnosis.signalState();
-                        if (compareChannels(channels2)) {
-
-                                channels = channels2;
-                                checkSignalDisplay.setChannelsState(channels);
-                        }
+                        List<HashMap<String, ChannelState>> channels = new ArrayList<HashMap<String, ChannelState>>();
+                        for (GenericAmplifierDiagnosis diagnosis : amplifierDiagnosis)
+                                channels.add(diagnosis.signalState());
+                                
+                        checkSignalDisplay.setChannelsState(channels);
                 }
         }
 }

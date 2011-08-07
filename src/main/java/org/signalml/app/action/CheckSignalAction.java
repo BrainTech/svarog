@@ -4,7 +4,7 @@
 
 package org.signalml.app.action;
 
-import org.signalml.app.view.monitor.CheckSignalDialog;
+import org.signalml.app.view.monitor.signalchecking.CheckSignalDialog;
 import java.awt.event.ActionEvent;
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;

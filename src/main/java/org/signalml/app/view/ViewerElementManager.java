@@ -115,7 +115,7 @@ import org.signalml.app.view.dialog.SignalParametersDialog;
 import org.signalml.app.view.dialog.SignalSelectionDialog;
 import org.signalml.app.view.dialog.TagStylePaletteDialog;
 import org.signalml.app.view.element.LockableJSplitPane;
-import org.signalml.app.view.monitor.CheckSignalDialog;
+import org.signalml.app.view.monitor.signalchecking.CheckSignalDialog;
 import org.signalml.app.view.montage.filters.EditFFTSampleFilterDialog;
 import org.signalml.app.view.montage.filters.EditTimeDomainSampleFilterDialog;
 import org.signalml.app.view.montage.SignalMontageDialog;
