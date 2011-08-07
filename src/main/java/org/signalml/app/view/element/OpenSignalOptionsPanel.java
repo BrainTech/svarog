@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.element;
 
+import org.signalml.app.view.opensignal.SignalMLOptionsPanel;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.event.ItemEvent;

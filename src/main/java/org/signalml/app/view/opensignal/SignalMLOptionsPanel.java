@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.app.view.element;
+package org.signalml.app.view.opensignal;
 
 import javax.swing.Action;
 import javax.swing.GroupLayout;

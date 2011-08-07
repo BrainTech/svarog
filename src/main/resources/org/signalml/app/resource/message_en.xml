@@ -809,6 +809,7 @@
 	<entry key="registerCodec.formatName">Format name</entry>
 	<entry key="registerCodec.nameExistsWarning">Name exists. Current codec will be replaced!</entry>
 
+        <entry key="pagingParameters.title">Paging parameters:</entry>
 	<entry key="pagingParameters.pageSize">Page size (s)</entry>
 	<entry key="pagingParameters.blocksPerPage">Number of blocks per page</entry>
 

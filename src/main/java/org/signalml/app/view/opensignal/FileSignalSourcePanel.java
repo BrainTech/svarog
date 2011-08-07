@@ -17,7 +17,6 @@ import org.signalml.app.model.OpenFileSignalDescriptor;
 import org.signalml.app.view.ViewerElementManager;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.signalml.app.view.element.FileChooserPanel;
-import org.signalml.app.view.element.SignalMLOptionsPanel;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 
 /**
@@ -53,7 +52,7 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 	/**
 	 * The panel for changing parameters for a SignalML document.
 	 */
-	private SignalMLOptionsPanel signalMLOptionsPanel;
+	private SignalParametersPanelForSignalMLSignalFile signalMLSignalParametersPanel;
 
 	/**
 	 * Constructor.
@@ -96,7 +95,9 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 		fileOpenMethodPanel.setSelectedOpenSignalMethod(method);
 		if (method.isRaw()) {
 			rawSignalParametersPanel.fillPanelFromModel(openFileSignalDescriptor.getRawSignalDescriptor());
-		}
+		} else if (method.isSignalML()) {
+                        getSignalMLSignalParametersPanel().fillPanelFromModel(openFileSignalDescriptor);
+                }
         }
 
 	/**
@@ -107,13 +108,18 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 	public void fillModelFromPanel(OpenFileSignalDescriptor descriptor) {
 		FileOpenSignalMethod method = fileOpenMethodPanel.getSelectedOpenSignalMethod();
 		if (method.isRaw()) {
-			RawSignalDescriptor rawSignalDescriptor = descriptor.getRawSignalDescriptor();
+
+                        RawSignalDescriptor rawSignalDescriptor = descriptor.getRawSignalDescriptor();
 			rawSignalParametersPanel.fillModelFromPanel(rawSignalDescriptor);
 
-			File selectedFile = fileChooserPanel.getSelectedFile();
+		} else if (method.isSignalML()) {
 
-			descriptor.setFile(selectedFile);
-		}
+                       descriptor.setMethod(FileOpenSignalMethod.SIGNALML);
+                       getSignalMLSignalParametersPanel().fillModelFromPanel(descriptor);
+                }
+
+		File selectedFile = fileChooserPanel.getSelectedFile();
+		descriptor.setFile(selectedFile);
 
 		getApplicationConfiguration().setLastOpenDocumentPath(getFileChooserPanel().getFileChooser().getCurrentDirectory().getAbsolutePath());
 	}
@@ -158,7 +164,7 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 		if (cardPanelForSignalParameters == null) {
 			cardPanelForSignalParameters = new JPanel(new CardLayout());
 			cardPanelForSignalParameters.add(getRawSignalParametersPanel(), FileOpenSignalMethod.RAW.toString());
-			cardPanelForSignalParameters.add(getSignalMLOptionsPanel(), FileOpenSignalMethod.SIGNALML.toString());
+			cardPanelForSignalParameters.add(getSignalMLSignalParametersPanel(), FileOpenSignalMethod.SIGNALML.toString());
 		}
 		return cardPanelForSignalParameters;
 	}
@@ -177,14 +183,14 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 	}
 
 	/**
-	 * Returns the panel for setting parameters for a SignalML document.
-	 * @return the panel for setting parameters for a SignalML document
+	 * Returns the panel for choosing codec for a SignalML document.
+	 * @return the panel for choosing codec for a SignalML document
 	 */
-	public SignalMLOptionsPanel getSignalMLOptionsPanel() {
-		if (signalMLOptionsPanel == null) {
-			signalMLOptionsPanel = new SignalMLOptionsPanel(messageSource);
+	public SignalParametersPanelForSignalMLSignalFile getSignalMLSignalParametersPanel() {
+		if (signalMLSignalParametersPanel == null) {
+			signalMLSignalParametersPanel = new SignalParametersPanelForSignalMLSignalFile(messageSource, getViewerElementManager());
 		}
-		return signalMLOptionsPanel;
+		return signalMLSignalParametersPanel;
 	}
 
 	@Override

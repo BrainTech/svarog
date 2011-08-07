@@ -721,7 +721,6 @@ public class ViewerElementManager {
 
 			fileMenu = new JMenu(messageSource.getMessage("menu.file"));
 
-			fileMenu.add(getOpenDocumentAction());
 			fileMenu.add(getOpenSignalAndSetMontageAction());
 			fileMenu.add(getOpenBookDocumentAction());
 			fileMenu.add(getSaveActiveDocumentAction());
@@ -1999,7 +1998,7 @@ public class ViewerElementManager {
 		getCloseWindowAction().setAccelerator("ctrl X");
 		getHelpContentsAction().setAccelerator("F1");
 		getViewModeAction().setAccelerator("F11");
-		getOpenDocumentAction().setAccelerator("ctrl O");
+		getOpenSignalAndSetMontageAction().setAccelerator("ctrl O");
 		getCloseActiveDocumentAction().setAccelerator("ctrl F4");
 		getOpenTagAction().setAccelerator("alt O");
 		getCloseTagAction().setAccelerator("ctrl alt F4");
