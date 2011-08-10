@@ -809,6 +809,7 @@
 	<entry key="registerCodec.formatName">Format name</entry>
 	<entry key="registerCodec.nameExistsWarning">Name exists. Current codec will be replaced!</entry>
 
+        <entry key="pagingParameters.title">Paging parameters:</entry>
 	<entry key="pagingParameters.pageSize">Page size (s)</entry>
 	<entry key="pagingParameters.blocksPerPage">Number of blocks per page</entry>
 
@@ -1402,6 +1403,7 @@
 	<entry key="signalView.channelVisibility">Visibility</entry>
 	<entry key="signalView.channelLocalScale">Value scale</entry>
 	<entry key="signalView.editChannelOptions">Edit channel`s options</entry>
+	<entry key="signalView.showChannel">Show channel</entry>
 	<entry key="signalView.channelHeight">Channel height</entry>
 	<entry key="signalView.channelHeightToolTip">{0} px</entry>
 	<entry key="signalView.antialias">Antialiasing</entry>

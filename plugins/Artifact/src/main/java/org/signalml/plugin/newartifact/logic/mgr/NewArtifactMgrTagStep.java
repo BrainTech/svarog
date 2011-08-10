@@ -2,6 +2,7 @@ package org.signalml.plugin.newartifact.logic.mgr;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -13,37 +14,39 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import org.signalml.method.ComputationException;
+import org.signalml.plugin.data.io.PluginTagWriterConfig;
 import org.signalml.plugin.data.logic.PluginComputationMgrStepResult;
 import org.signalml.plugin.exception.PluginToolAbortException;
+import org.signalml.plugin.exception.PluginToolInterruptedException;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.io.IPluginTagWriter;
+import org.signalml.plugin.io.PluginTagWriter;
 import org.signalml.plugin.method.logic.AbstractPluginComputationMgrStep;
 import org.signalml.plugin.method.logic.IPluginComputationMgrStepTrackerProxy;
 import org.signalml.plugin.newartifact.data.NewArtifactComputationType;
 import org.signalml.plugin.newartifact.data.NewArtifactParameters;
-import org.signalml.plugin.newartifact.data.NewArtifactTagWriterConfig;
 import org.signalml.plugin.newartifact.data.mgr.NewArtifactMgrStepData;
 import org.signalml.plugin.newartifact.data.mgr.NewArtifactMgrStepResult;
 import org.signalml.plugin.newartifact.data.tag.NewArtifactTagResult;
 import org.signalml.plugin.newartifact.data.tag.NewArtifactTagRoutineData;
 import org.signalml.plugin.newartifact.io.INewArtifactDataReader;
-import org.signalml.plugin.newartifact.io.INewArtifactTagWriter;
 import org.signalml.plugin.newartifact.io.NewArtifactDataReader;
-import org.signalml.plugin.newartifact.io.NewArtifactTagWriter;
+import org.signalml.plugin.newartifact.logic.tag.NewArtifactTagCreatorFactory;
+import org.signalml.plugin.newartifact.logic.tag.NewArtifactTagCreatorRoutine;
 import org.signalml.plugin.newartifact.logic.tag.NewArtifactTagMerger;
-import org.signalml.plugin.newartifact.logic.tag.TagCreatorFactory;
-import org.signalml.plugin.newartifact.logic.tag.TagCreatorRoutine;
 
-public class NewArtifactMgrTagStep extends AbstractPluginComputationMgrStep<NewArtifactMgrStepData> {
+public class NewArtifactMgrTagStep extends
+	AbstractPluginComputationMgrStep<NewArtifactMgrStepData> {
 
 	private final ExecutorCompletionService<NewArtifactTagResult> executorService;
-	private final Map<NewArtifactComputationType, TagCreatorRoutine> taggerRoutines;
+	private final Map<NewArtifactComputationType, NewArtifactTagCreatorRoutine> taggerRoutines;
 	private final Collection<Future<NewArtifactTagResult>> futureTasks;
 	private Map<NewArtifactComputationType, INewArtifactDataReader> readers;
 
 	public NewArtifactMgrTagStep(NewArtifactMgrStepData data) {
 		super(data);
 
-		this.taggerRoutines = new HashMap<NewArtifactComputationType, TagCreatorRoutine>();
+		this.taggerRoutines = new HashMap<NewArtifactComputationType, NewArtifactTagCreatorRoutine>();
 		this.futureTasks = new LinkedList<Future<NewArtifactTagResult>>();
 		this.executorService = new ExecutorCompletionService<NewArtifactTagResult>(
 			Executors.newCachedThreadPool(data.threadFactory));
@@ -67,8 +70,10 @@ public class NewArtifactMgrTagStep extends AbstractPluginComputationMgrStep<NewA
 	}
 
 	@Override
-	public PluginComputationMgrStepResult doRun(PluginComputationMgrStepResult prevStepResult) throws PluginToolAbortException,
-		ComputationException {
+	public PluginComputationMgrStepResult doRun(
+		PluginComputationMgrStepResult prevStepResult)
+	throws PluginToolAbortException, ComputationException,
+		PluginToolInterruptedException {
 
 		final IPluginComputationMgrStepTrackerProxy<NewArtifactProgressPhase> tracker = this.data.tracker;
 
@@ -81,7 +86,7 @@ public class NewArtifactMgrTagStep extends AbstractPluginComputationMgrStep<NewA
 		Future<NewArtifactTagResult> future = null;
 
 		this.checkAbortState();
-		for (Entry<NewArtifactComputationType, TagCreatorRoutine> entry : this.taggerRoutines
+		for (Entry<NewArtifactComputationType, NewArtifactTagCreatorRoutine> entry : this.taggerRoutines
 				.entrySet()) {
 			future = this.executorService.submit(entry.getValue());
 			futureMap.put(future, entry.getKey());
@@ -94,18 +99,21 @@ public class NewArtifactMgrTagStep extends AbstractPluginComputationMgrStep<NewA
 		for (int j = 0; j < this.taggerRoutines.size(); ++j) {
 			this.checkAbortState();
 			try {
-				future = executorService.take();
+				future = this.executorService.take();
 				if (future != null) {
 					NewArtifactTagResult result = future.get();
 					merger.addTag(result);
 
-					NewArtifactComputationType taggerType = futureMap.get(future);
+					NewArtifactComputationType taggerType = futureMap
+										.get(future);
 					if (taggerType != null) {
-						tracker.advance((int) this.readers.get(taggerType).getDataSize() / this.data.constants.getBlockLength());
+						tracker.advance((int) this.readers.get(taggerType)
+								.getDataSize()
+								/ this.data.constants.getBlockLength());
 					}
 				}
 			} catch (InterruptedException e) {
-				throw new ComputationException(e);
+				throw new PluginToolInterruptedException(e);
 			} catch (ExecutionException e) {
 				throw new ComputationException(e);
 			} catch (IOException e) {
@@ -139,7 +147,7 @@ public class NewArtifactMgrTagStep extends AbstractPluginComputationMgrStep<NewA
 	private void prepareWorkers() {
 		this.prepareReadersIfNeeded();
 
-		TagCreatorFactory factory = new TagCreatorFactory();
+		NewArtifactTagCreatorFactory factory = new NewArtifactTagCreatorFactory();
 
 		Collection<Integer> channelsList = this.data.artifactData
 						   .getEegChannels();
@@ -158,16 +166,23 @@ public class NewArtifactMgrTagStep extends AbstractPluginComputationMgrStep<NewA
 			}
 
 			INewArtifactDataReader reader = this.readers.get(taggerType);
-			INewArtifactTagWriter writer = this.createTagWriterForTagger(
-							       taggerType, this.data);
+			IPluginTagWriter writer = this.createTagWriterForTagger(taggerType,
+						  this.data);
 
 			if (reader != null && writer != null) {
-				this.taggerRoutines.put(taggerType, new TagCreatorRoutine(
-								new NewArtifactTagRoutineData(this.data.constants,
-										this.data.artifactData.getParameters(),
-										eegChannels, this.getExcludedChannelsForTagger(
-												taggerType, this.data)), reader,
-								factory.createTagger(taggerType), writer));
+				this.taggerRoutines
+				.put(taggerType,
+				     new NewArtifactTagCreatorRoutine(
+					     new NewArtifactTagRoutineData(
+						     this.data.constants,
+						     this.data.artifactData
+						     .getParameters(),
+						     eegChannels,
+						     this.getExcludedChannelsForTagger(
+							     taggerType, this.data)),
+					     reader, factory
+					     .createTagger(taggerType),
+					     writer));
 			}
 		}
 
@@ -179,10 +194,10 @@ public class NewArtifactMgrTagStep extends AbstractPluginComputationMgrStep<NewA
 			this.data.pathConstructor.getPathToWorkDir(),
 			this.data.artifactData.getPatientName()
 			+ this.data.pathConstructor.getTagFileExtension());
-		NewArtifactTagWriter writer = new NewArtifactTagWriter(targetFile,
-				new NewArtifactTagWriterConfig());
+		PluginTagWriter writer = new PluginTagWriter(targetFile,
+				new PluginTagWriterConfig());
 		try {
-			writer.writeTag(merger.merge());
+			writer.writeTags(Arrays.asList(merger.merge().tagGroup));
 		} catch (IOException e) {
 			throw new ComputationException(e);
 		} catch (SignalMLException e) {
@@ -214,16 +229,16 @@ public class NewArtifactMgrTagStep extends AbstractPluginComputationMgrStep<NewA
 		}
 	}
 
-	private INewArtifactTagWriter createTagWriterForTagger(
+	private IPluginTagWriter createTagWriterForTagger(
 		NewArtifactComputationType taggerType, NewArtifactMgrStepData data) {
 		switch (taggerType) {
 		case MUSCLE_PLUS_POWER:
 			return null;
 		default:
-			return new NewArtifactTagWriter(new File(data.pathConstructor
-							.getPathToWorkDir(), this
-							.getResultFileNameForAlgorithm(taggerType)[0]),
-							new NewArtifactTagWriterConfig());
+			return new PluginTagWriter(new File(
+							   data.pathConstructor.getPathToWorkDir(),
+							   this.getResultFileNameForAlgorithm(taggerType)[0]),
+						   new PluginTagWriterConfig());
 		}
 	}
 
@@ -236,10 +251,12 @@ public class NewArtifactMgrTagStep extends AbstractPluginComputationMgrStep<NewA
 		case EYEBLINKS:
 			channelCount = 2;
 		default:
-			return new NewArtifactDataReader(new File(data.pathConstructor
-							 .getPathToWorkDir(), data.pathConstructor
-							 .getIntermediateFileNamesForAlgorithm(taggerType)[0]),
-							 channelCount);
+			return new NewArtifactDataReader(
+				       new File(
+					       data.pathConstructor.getPathToWorkDir(),
+					       data.pathConstructor
+					       .getIntermediateFileNamesForAlgorithm(taggerType)[0]),
+				       channelCount);
 		}
 	}
 

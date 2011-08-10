@@ -26,7 +26,6 @@ public class OpenBCIManager extends SwingWorker<ProgressState, ProgressState> im
 
         public static final String MX_ID = "mx";
         public static final String HASHTABLE_ID = "hashtable";
-        public static final String PINGER_ID = "pinger";
         public final int MAX_PROGRESS = 7;
         /**
          * The message source.
@@ -124,9 +123,7 @@ public class OpenBCIManager extends SwingWorker<ProgressState, ProgressState> im
                 if (!modulesData.containsKey(MX_ID)) {
                         throw new Exception(MX_ID);
                 } else if (!modulesData.containsKey(HASHTABLE_ID)) {
-                        throw new Exception(HASHTABLE_ID);
-                } else if (!modulesData.containsKey(PINGER_ID)) {
-                        throw new Exception(PINGER_ID);
+                        throw new Exception(HASHTABLE_ID);               
                 } else if (!modulesData.containsKey(driverModuleName)) {
                         throw new Exception(driverModuleName);
                 }
@@ -187,11 +184,6 @@ public class OpenBCIManager extends SwingWorker<ProgressState, ProgressState> im
                 publish(new ProgressState(messageSource.getMessage("opensignal.amplifier.startingHashtable"), 1, MAX_PROGRESS));
                 processManager.runProcess(HASHTABLE_ID, modulesData.get(HASHTABLE_ID).getPath(), modulesData.get(HASHTABLE_ID).getParameters());
                 Thread.sleep(modulesData.get(HASHTABLE_ID).getDelay());
-
-                // Start pinger
-                publish(new ProgressState(messageSource.getMessage("opensignal.amplifier.startingPinger"), 2, MAX_PROGRESS));
-                processManager.runProcess(PINGER_ID, modulesData.get(PINGER_ID).getPath(), modulesData.get(PINGER_ID).getParameters());
-                Thread.sleep(modulesData.get(PINGER_ID).getDelay());
 
                 // Connect to openBCI
                 publish(new ProgressState(messageSource.getMessage("opensignal.amplifier.connecting"), 3, MAX_PROGRESS));

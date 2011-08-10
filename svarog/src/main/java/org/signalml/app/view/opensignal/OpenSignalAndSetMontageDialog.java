@@ -138,7 +138,12 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
          * means that someone clicked start, connected succesfully and then
          * clicked cancel).
          *
-         * @return super.onCancel();
+         * @return super.onCancel();neousPanel.getEditDescriptionPanel().getTextPane().getText();
+		if (description != null && !description.isEmpty()) {
+			if (Util.hasSpecialChars(description)) {
+				errors.rejectValue("montage.description", "error.descriptionBadChars");
+			}
+		
          */
         @Override
         protected boolean onCancel() {

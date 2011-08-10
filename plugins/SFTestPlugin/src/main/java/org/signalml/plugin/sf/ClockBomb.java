@@ -8,31 +8,23 @@ import org.signalml.app.logging.SvarogLogger;
  * 
  * @author Stanislaw Findeisen (Eisenbits)
  */
-class ClockBomb implements java.lang.Runnable {
-    private int millis;
-    
+class ClockBomb extends Timer implements java.lang.Runnable {
     public ClockBomb() {
         this(0);
     }
 
     public ClockBomb(int millis) {
-        this.millis = millis;
+        super(millis);
     }
 
     @Override
     public void run() {
+        super.run();
+        
         SvarogLogger sl = SvarogLogger.getSharedInstance();
-
-        try {
-            sl.debug("ClockBomb: sleep " + millis);
-            Thread.sleep(millis);
-            sl.debug("ClockBomb: explode");
-            sl.debug("Thread.getDefaultUncaughtExceptionHandler: " + Thread.getDefaultUncaughtExceptionHandler());
-        } catch (InterruptedException e) {
-            sl.debug("ClockBomb: interrupted: " + e);
-            throw new RuntimeException(e);
-        }
-
-        throw new RuntimeException("ClockBomb explode (" + millis + " millis)");
+        sl.debug("ClockBomb: explode");
+        sl.debug("ClockBomb: getDefaultUncaughtExceptionHandler: " + Thread.getDefaultUncaughtExceptionHandler());
+        throw new RuntimeException("ClockBomb explode (" + getMillis() + " millis)");
+        // throw new OutOfMemoryError("ClockBomb explode (" + getMillis() + " millis)");
     }
 }

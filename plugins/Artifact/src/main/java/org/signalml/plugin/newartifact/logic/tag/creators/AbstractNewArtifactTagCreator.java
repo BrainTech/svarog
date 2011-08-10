@@ -1,18 +1,33 @@
 package org.signalml.plugin.newartifact.logic.tag.creators;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.SortedSet;
 
+import org.signalml.plugin.data.tag.IPluginTagDef;
+import org.signalml.plugin.data.tag.PluginChannelTagDef;
+import org.signalml.plugin.data.tag.PluginTagGroup;
+import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.newartifact.data.tag.NewArtifactTagData;
 import org.signalml.plugin.newartifact.data.tag.NewArtifactTagResult;
 
 public abstract class AbstractNewArtifactTagCreator {
 
-	protected NewArtifactTagResult constructResult(SortedSet<Integer> tags) {
-		return new NewArtifactTagResult(this.getTagName(), tags, this
-						.getTagStretch(), this.getTagDescription());
+	protected NewArtifactTagResult constructResult(Collection<Integer> offsets) {
+		int stretch = this.getTagStretch();
+
+		Collection<IPluginTagDef> tags = new LinkedList<IPluginTagDef>();
+		for (Integer offset : offsets) {
+			tags.add(new PluginChannelTagDef((double) stretch * offset, (double) stretch, -1));
+		}
+
+		return new NewArtifactTagResult(new PluginTagGroup(
+							this.getTagName(),
+							SignalSelectionType.BLOCK,
+							tags,
+							this.getTagStretch(),
+							this.getTagDescription()));
 	}
 
 	protected boolean[] getExclusionMatrix(NewArtifactTagData data) {

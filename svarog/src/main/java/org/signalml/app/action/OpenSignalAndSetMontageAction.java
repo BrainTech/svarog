@@ -9,7 +9,9 @@ import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.model.OpenDocumentDescriptor;
+import org.signalml.app.view.opensignal.FileOpenSignalMethod;
 import org.signalml.app.view.opensignal.OpenSignalAndSetMontageDialog;
+import org.signalml.app.view.opensignal.SignalSource;
 import org.signalml.domain.montage.Montage;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 
@@ -62,6 +64,13 @@ public class OpenSignalAndSetMontageAction extends AbstractSignalMLAction {
 		}
 
 		if (documentFlowIntegrator.maybeOpenDocument(openDocumentDescriptor) == true) {
+
+                        // HACK todo, setting montage doesn't seem to work with signalml files...
+                        if (openDocumentDescriptor.getOpenSignalDescriptor().getSignalSource().equals(SignalSource.FILE) &&
+                            openDocumentDescriptor.getOpenSignalDescriptor().getOpenFileSignalDescriptor().getMethod().equals(FileOpenSignalMethod.SIGNALML)) {
+                                return;
+                        }
+
 			Montage montage = openDocumentDescriptor.getOpenSignalDescriptor().getMontage();
 			SignalDocument activeSignalDocument = documentFlowIntegrator.getActionFocusManager().getActiveSignalDocument();
 			activeSignalDocument.setMontage(montage);

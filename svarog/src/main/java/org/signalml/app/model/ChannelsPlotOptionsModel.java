@@ -50,6 +50,9 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 		this.modelChanged();
 	}
 	
+	/*
+	 * Fired by parent`s plot on its montage change event
+	 */
 	public void globalMontageChanged() {
 		this.modelChanged();
 	}
@@ -59,9 +62,11 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 	 */
 	public void modelChanged() {
 		Montage localMontage = new Montage(plot.getDocument().getMontage()); 
-		
+		double voltageScale, globalVoltageScale, mult;
+		globalVoltageScale = (double) plot.getValueScaleRangeModel().getValue();
+
 		for (int i = 0; i < channelsOptions.length; i++) {
-			int voltageScale = channelsOptions[i].getVoltageScale();
+			voltageScale = (double) channelsOptions[i].getVoltageScale();
 			//While computing multiplier we must take into consideration 'global' multiplier from
 			//main plot`s ValueScaleFactor. In fact if we want to 'neutralize' this 'global' multiplier
 			//we need to set mult to (my multiplier)/(global multiplier) so that in the end
@@ -71,7 +76,8 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 			//global multiplier = range_model_value*zoom_ratio*pixel_per_sth
 			//my multiplier = my_range_model_value*zoom_ratio*pixel_per_sth
 			//thats why (my multiplier)/(global multiplier) is:
-			double mult = voltageScale/((double) plot.getValueScaleRangeModel().getValue());
+		
+			mult = voltageScale/globalVoltageScale;
 		
 			//Get references from plot`s local montage from a moment of opening current dialog
 			//Do this so that we always want to apply new reference to this initial-plot montage,
@@ -84,8 +90,10 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 			for (int j = 0; j < refs.length; j++)
 				newRefsStr[j] = (new Double(refs[j]*mult)).toString();
 				localMontage.setReference(i, newRefsStr);
+				
 		}
-		plot.setLocalMontage(localMontage);	
+		this.plot.setLocalMontage(localMontage);
+		
 	}
 	
 	/*
@@ -93,10 +101,21 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 	 * @param index channel`s index for which the model will be returned
 	 * @returns channel options model
 	 */
-	public ChannelPlotOptionsModel getChannelPlotOptionsModelAt(int index) {
+	public ChannelPlotOptionsModel getModelAt(int index) {
 		return this.channelsOptions[index];
 	}
 
+	/*
+	 * Calculate and return number of channels that are visible
+	 * @returns a number of visible channels
+	 */
+	public int getVisibleChannelsCount() {
+		int cnt = 0;
+		for (int i = 0; i < this.channelsOptions.length; i++)
+			if (this.channelsOptions[i].getVisible())
+				cnt ++;
+		return cnt;
+	}
 	/*
 	 * Fired by parent plot`s value scale model. Updates child models.
 	 * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)

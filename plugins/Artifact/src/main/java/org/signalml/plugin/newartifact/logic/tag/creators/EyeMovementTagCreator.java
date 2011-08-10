@@ -2,12 +2,11 @@ package org.signalml.plugin.newartifact.logic.tag.creators;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.TreeSet;
 
 import org.signalml.plugin.newartifact.data.NewArtifactType;
 import org.signalml.plugin.newartifact.data.tag.NewArtifactTagData;
 import org.signalml.plugin.newartifact.data.tag.NewArtifactTagResult;
-import org.signalml.plugin.newartifact.logic.tag.VerticalMaxHelper;
+import org.signalml.plugin.newartifact.logic.tag.NewArtifactVerticalMaxHelper;
 
 public class EyeMovementTagCreator extends AbstractNewArtifactTagCreator
 	implements INewArtifactTagCreator {
@@ -78,7 +77,7 @@ public class EyeMovementTagCreator extends AbstractNewArtifactTagCreator
 			prevIdx = idx;
 		}
 
-		return this.constructResult(new TreeSet<Integer>(tags));
+		return this.constructResult(tags);
 	}
 
 	private int findLocalMin(double source[][], int i, int begin, int end) {
@@ -98,7 +97,7 @@ public class EyeMovementTagCreator extends AbstractNewArtifactTagCreator
 					  double treshold, double absTreshold) {
 		double parameterMin = source[channel][(block << 2) + 3];
 		return (parameterMin < treshold &&
-			VerticalMaxHelper.GetVMax(source, channel + (block << 2)) > absTreshold);
+			NewArtifactVerticalMaxHelper.GetVMax(source, channel + (block << 2)) > absTreshold);
 	}
 
 }

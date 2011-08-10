@@ -1,8 +1,5 @@
 package org.signalml.plugin.newartifact.logic.tag.creators;
 
-import java.util.List;
-import java.util.TreeSet;
-
 import org.signalml.plugin.newartifact.data.NewArtifactType;
 import org.signalml.plugin.newartifact.data.tag.NewArtifactTagData;
 import org.signalml.plugin.newartifact.data.tag.NewArtifactTagResult;
@@ -39,9 +36,7 @@ public class ECGTagCreator extends AbstractNewArtifactTagCreator implements
 		boolean exclusion[] = this.getExclusionMatrix(data);
 		double tresholdMatrix[] = this.getTresholdMatrix(data, exclusion, treshold);
 
-		List<Integer> tags = this.createTagsUsingTreshold(data, tresholdMatrix, exclusion);
-
-		return this.constructResult(new TreeSet<Integer>(tags));
+		return this.constructResult(this.createTagsUsingTreshold(data, tresholdMatrix, exclusion));
 	}
 
 	protected double[] getTresholdMatrix(NewArtifactTagData data,

@@ -94,7 +94,6 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 	 * (size of the array = newSamples+ order of the filter).
 	 */
 	protected double[] getUnfilteredSamplesCache(int newSamples) {
-		System.out.println("getUnFilteredSamplesCache "+newSamples);
 		int unfilteredSamplesNeeded = newSamples + filterOrder;
 		int zeroPaddingSize = 0;
 		double[] unfilteredSamplesCache = new double[unfilteredSamplesNeeded];
@@ -265,7 +264,6 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 	@Override
 	public synchronized void getSamples(double[] target, int signalOffset, int count, int arrayOffset) {
 		if (use_cache) { //check updateCache
-			System.out.println("Count: "+filtered.getSampleCount());
 			filtered.getSamples(target, signalOffset, count, arrayOffset);
 		} else {
 

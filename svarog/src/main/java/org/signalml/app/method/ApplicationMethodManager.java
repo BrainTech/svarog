@@ -49,11 +49,11 @@ public class ApplicationMethodManager extends DefaultMethodManager {
 
 	private Window dialogParent;
 
-	public ApplicationMethodDescriptor getMethodData(Method method) {
+	public synchronized ApplicationMethodDescriptor getMethodData(Method method) {
 		return methodData.get(method);
 	}
 
-	public void setMethodData(Method method, ApplicationMethodDescriptor descriptor) {
+	public synchronized void setMethodData(Method method, ApplicationMethodDescriptor descriptor) {
 		if (!methods.contains(method)) {
 			return;
 		}
@@ -61,108 +61,108 @@ public class ApplicationMethodManager extends DefaultMethodManager {
 	}
 
 	@Override
-	public void removeMethod(Method method) {
+	public synchronized void removeMethod(Method method) {
 		super.removeMethod(method);
 		methodData.remove(method);
 	}
 
-	public int getUnavailableMethodCount() {
+	public synchronized int getUnavailableMethodCount() {
 		return unavailableMethods.size();
 	}
 
-	public UnavailableMethodDescriptor getUnavailableMethodAt(int index) {
+	public synchronized UnavailableMethodDescriptor getUnavailableMethodAt(int index) {
 		return unavailableMethods.get(index);
 	}
 
-	public void addUnavailableMethod(UnavailableMethodDescriptor method) {
+	public synchronized void addUnavailableMethod(UnavailableMethodDescriptor method) {
 		unavailableMethods.add(method);
 	}
 
-	public MessageSourceAccessor getMessageSource() {
+	public synchronized MessageSourceAccessor getMessageSource() {
 		return messageSource;
 	}
 
-	public void setMessageSource(MessageSourceAccessor messageSource) {
+	public synchronized void setMessageSource(MessageSourceAccessor messageSource) {
 		this.messageSource = messageSource;
 	}
 
-	public File getProfileDir() {
+	public synchronized File getProfileDir() {
 		return profileDir;
 	}
 
-	public void setProfileDir(File profileDir) {
+	public synchronized void setProfileDir(File profileDir) {
 		this.profileDir = profileDir;
 	}
 
-	public XStream getStreamer() {
+	public synchronized XStream getStreamer() {
 		return streamer;
 	}
 
-	public void setStreamer(XStream streamer) {
+	public synchronized void setStreamer(XStream streamer) {
 		this.streamer = streamer;
 	}
 
-	public DocumentManager getDocumentManager() {
+	public synchronized DocumentManager getDocumentManager() {
 		return documentManager;
 	}
 
-	public void setDocumentManager(DocumentManager documentManager) {
+	public synchronized void setDocumentManager(DocumentManager documentManager) {
 		this.documentManager = documentManager;
 	}
 
-	public ActionFocusManager getActionFocusManager() {
+	public synchronized ActionFocusManager getActionFocusManager() {
 		return actionFocusManager;
 	}
 
-	public void setActionFocusManager(ActionFocusManager actionFocusManager) {
+	public synchronized void setActionFocusManager(ActionFocusManager actionFocusManager) {
 		this.actionFocusManager = actionFocusManager;
 	}
 
-	public Window getDialogParent() {
+	public synchronized Window getDialogParent() {
 		return dialogParent;
 	}
 
-	public void setDialogParent(Window dialogParent) {
+	public synchronized void setDialogParent(Window dialogParent) {
 		this.dialogParent = dialogParent;
 	}
 
-	public ViewerFileChooser getFileChooser() {
+	public synchronized ViewerFileChooser getFileChooser() {
 		return fileChooser;
 	}
 
-	public void setFileChooser(ViewerFileChooser fileChooser) {
+	public synchronized void setFileChooser(ViewerFileChooser fileChooser) {
 		this.fileChooser = fileChooser;
 	}
 
-	public DocumentFlowIntegrator getDocumentFlowIntegrator() {
+	public synchronized DocumentFlowIntegrator getDocumentFlowIntegrator() {
 		return documentFlowIntegrator;
 	}
 
-	public void setDocumentFlowIntegrator(DocumentFlowIntegrator documentFlowIntegrator) {
+	public synchronized void setDocumentFlowIntegrator(DocumentFlowIntegrator documentFlowIntegrator) {
 		this.documentFlowIntegrator = documentFlowIntegrator;
 	}
 
-	public ApplicationConfiguration getApplicationConfig() {
+	public synchronized ApplicationConfiguration getApplicationConfig() {
 		return applicationConfig;
 	}
 
-	public void setApplicationConfig(ApplicationConfiguration applicationConfig) {
+	public synchronized void setApplicationConfig(ApplicationConfiguration applicationConfig) {
 		this.applicationConfig = applicationConfig;
 	}
 
-	public MP5ExecutorManager getMp5ExecutorManager() {
+	public synchronized MP5ExecutorManager getMp5ExecutorManager() {
 		return mp5ExecutorManager;
 	}
 
-	public void setMp5ExecutorManager(MP5ExecutorManager mp5ExecutorManager) {
+	public synchronized void setMp5ExecutorManager(MP5ExecutorManager mp5ExecutorManager) {
 		this.mp5ExecutorManager = mp5ExecutorManager;
 	}
 
-	public TableToTextExporter getTableToTextExporter() {
+	public synchronized TableToTextExporter getTableToTextExporter() {
 		return tableToTextExporter;
 	}
 
-	public void setTableToTextExporter(TableToTextExporter tableToTextExporter) {
+	public synchronized void setTableToTextExporter(TableToTextExporter tableToTextExporter) {
 		this.tableToTextExporter = tableToTextExporter;
 	}
 

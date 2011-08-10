@@ -20,41 +20,40 @@ import org.signalml.plugin.export.SignalMLException;
  */
 public class DefaultMethodManager implements MethodManager {
 
-	protected static final Logger logger = Logger.getLogger(DefaultMethodManager.class);
-
+	private static final Logger logger = Logger.getLogger(DefaultMethodManager.class);
 	protected ArrayList<Method> methods = new ArrayList<Method>();
-	protected Map<String,Method> methodsByName = new HashMap<String,Method>();
-	protected Map<String,Method> methodsByUID = new HashMap<String, Method>();
+	private Map<String,Method> methodsByName = new HashMap<String,Method>();
+	private Map<String,Method> methodsByUID = new HashMap<String, Method>();
 
 	@Override
-	public int getMethodCount() {
+	public synchronized int getMethodCount() {
 		return methods.size();
 	}
 
 	@Override
-	public Method[] getMethods() {
+	public synchronized Method[] getMethods() {
 		Method[] arr = new Method[methods.size()];
 		methods.toArray(arr);
 		return arr;
 	}
 
 	@Override
-	public Method getMethodAt(int index) {
+	public synchronized Method getMethodAt(int index) {
 		return methods.get(index);
 	}
 
 	@Override
-	public Method getMethodByName(String name) {
+	public synchronized Method getMethodByName(String name) {
 		return methodsByName.get(name);
 	}
 
 	@Override
-	public Method getMethodByUID(String uid) {
+	public synchronized Method getMethodByUID(String uid) {
 		return methodsByUID.get(uid);
 	}
 
 	@Override
-	public void registerMethod(Method method) {
+	public synchronized void registerMethod(Method method) {
 		if (methods.contains(method)) {
 			return;
 		}
@@ -74,7 +73,7 @@ public class DefaultMethodManager implements MethodManager {
 	}
 
 	@Override
-	public Method registerMethod(Class<?> clazz) throws SignalMLException {
+	public synchronized Method registerMethod(Class<?> clazz) throws SignalMLException {
 		if (!Method.class.isAssignableFrom(clazz)) {
 			throw new ClassCastException("Class is not a method");
 		}
@@ -96,7 +95,7 @@ public class DefaultMethodManager implements MethodManager {
 	}
 
 	@Override
-	public void removeMethod(Method method) {
+	public synchronized void removeMethod(Method method) {
 		if (!methods.contains(method)) {
 			return;
 		}

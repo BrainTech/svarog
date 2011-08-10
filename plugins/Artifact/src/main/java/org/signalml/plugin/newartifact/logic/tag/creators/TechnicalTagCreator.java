@@ -1,8 +1,8 @@
 package org.signalml.plugin.newartifact.logic.tag.creators;
 
 import java.util.Arrays;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.signalml.plugin.newartifact.data.NewArtifactType;
 import org.signalml.plugin.newartifact.data.tag.NewArtifactTagData;
@@ -65,7 +65,7 @@ public class TechnicalTagCreator extends AbstractNewArtifactTagCreator
 		int blockCount = data.source[0].length / 3;
 		int tailLength = blockCount >> 2;
 
-		SortedSet<Integer> tags = new TreeSet<Integer>();
+		List<Integer> tags = new LinkedList<Integer>();
 
 		for (int j = 0; j < eegChannels.length; ++j) {
 			double channelData[] = data.source[eegChannels[j]];

@@ -1,0 +1,16 @@
+<plugin>
+	<name>Sleep Staging</name>
+	<version>0.1</version>
+	<jar-file>Stager.jar</jar-file>
+	<starting-class>org.signalml.plugin.newstager.NewStagerPlugin</starting-class>
+	<dependencies>
+		<dependency>
+			<name>Svarog API</name>
+			<version>0.5</version>
+		</dependency>
+		<dependency>
+			<name>Plugin Common Tools</name>
+			<version>1.0</version>
+		</dependency>
+	</dependencies>
+</plugin>

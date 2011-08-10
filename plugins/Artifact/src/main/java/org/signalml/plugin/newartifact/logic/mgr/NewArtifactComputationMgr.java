@@ -27,12 +27,16 @@ public class NewArtifactComputationMgr extends
 	private class TrackerProxy implements
 		IPluginComputationMgrStepTrackerProxy<NewArtifactProgressPhase> {
 
+		private final CheckedThreadGroup threadGroup;
+
 		private final MethodExecutionTracker tracker;
 		private final int index;
 
 		private NewArtifactProgressPhase phase;
 
-		public TrackerProxy(MethodExecutionTracker tracker, int index) {
+		public TrackerProxy(CheckedThreadGroup threadGroup,
+				    MethodExecutionTracker tracker, int index) {
+			this.threadGroup = threadGroup;
 			this.tracker = tracker;
 			this.index = index;
 		}
@@ -77,6 +81,11 @@ public class NewArtifactComputationMgr extends
 				}
 			}
 			return result;
+		}
+
+		@Override
+		public boolean isInterrupted() {
+			return this.threadGroup.isShutdownStarted() || Thread.interrupted();
 		}
 
 		private String getMessageForPhase(NewArtifactProgressPhase phase) {
@@ -128,7 +137,8 @@ public class NewArtifactComputationMgr extends
 
 	@Override
 	protected NewArtifactResult prepareComputationResult() {
-		PluginComputationMgrStepResult lastStepResult = this.stepResults.get(this.steps.get(this.steps.size() - 1));
+		PluginComputationMgrStepResult lastStepResult = this.stepResults
+				.get(this.steps.get(this.steps.size() - 1));
 		if (lastStepResult == null) {
 			return null;
 		}
@@ -150,8 +160,9 @@ public class NewArtifactComputationMgr extends
 			MethodExecutionTracker tracker, int stepNumber) {
 		return new NewArtifactMgrStepData(data.artifactData, data.constants,
 						  new NewArtifactIntermediateFilesPathConstructor(
-								  data.artifactData), new TrackerProxy(tracker,
-										  stepNumber), this.getThreadFactory());
+								  data.artifactData), new TrackerProxy(
+										  this.getThreadGroup(), tracker, stepNumber),
+						  this.getThreadFactory());
 	}
 
 }

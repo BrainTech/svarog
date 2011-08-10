@@ -38,6 +38,10 @@ public class ChannelPlotOptionsModel {
 		this.visible = visible;
 		this.parent.modelChanged();
 	}
+	public boolean getVisible() {
+		return this.visible;
+	}
+	
 	public int getVoltageScale() {
 		return voltageScale;
 	}

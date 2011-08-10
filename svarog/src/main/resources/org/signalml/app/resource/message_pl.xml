@@ -1402,6 +1402,7 @@
 	<entry key="signalView.channelVisibility">Visibility</entry>
 	<entry key="signalView.channelLocalScale">Value scale</entry>
 	<entry key="signalView.editChannelOptions">Edit channel`s options</entry>
+	<entry key="signalView.showChannel">Show channel</entry>
 	<entry key="signalView.channelHeight">Channel height</entry>
 	<entry key="signalView.channelHeightToolTip">{0} px</entry>
 	<entry key="signalView.antialias">Antialiasing</entry>

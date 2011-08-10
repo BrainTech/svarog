@@ -1,6 +1,6 @@
 <plugin>
 	<name>Plugin Common Tools</name>
-	<version>0.1</version>
+	<version>1.0</version>
 	<jar-file>PluginToolCommon.jar</jar-file>
 	<starting-class>org.signalml.plugin.tool.PluginToolCommon</starting-class>
 	<dependencies>

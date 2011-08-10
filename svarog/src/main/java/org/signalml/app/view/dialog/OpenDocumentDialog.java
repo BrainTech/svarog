@@ -38,7 +38,7 @@ import org.signalml.app.view.element.OpenSignalOptionsPanel;
 import org.signalml.app.view.element.OpenTagOptionsPanel;
 import org.signalml.app.view.element.PagingParametersPanel;
 import org.signalml.app.view.element.RawSignalOptionsPanel;
-import org.signalml.app.view.element.SignalMLOptionsPanel;
+import org.signalml.app.view.opensignal.SignalMLOptionsPanel;
 import org.signalml.app.view.opensignal.FileOpenSignalMethod;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecManager;

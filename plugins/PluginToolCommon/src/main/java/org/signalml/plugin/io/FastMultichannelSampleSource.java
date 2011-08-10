@@ -6,10 +6,11 @@ import org.signalml.codec.SignalMLCodecException;
 import org.signalml.codec.SignalMLCodecReader;
 import org.signalml.domain.signal.MultichannelSampleSource;
 
-
 public class FastMultichannelSampleSource implements MultichannelSampleSource {
 
-	private static int BUFFER_SIZE = 1 * (1 << 20);
+	private static int BUFFER_SIZE = Math.max(1 << 20, Integer
+					 .highestOneBit(Math.min((int) Runtime.getRuntime().maxMemory(),
+							 Integer.MAX_VALUE) / 20));
 
 	private SignalMLCodecReader delegate;
 	private float calibration;
@@ -17,7 +18,6 @@ public class FastMultichannelSampleSource implements MultichannelSampleSource {
 	private int offset;
 
 	private String names[];
-
 
 	public FastMultichannelSampleSource(SignalMLCodecReader codec) {
 		this.delegate = codec;
@@ -56,7 +56,7 @@ public class FastMultichannelSampleSource implements MultichannelSampleSource {
 			try {
 				this.names = this.delegate.get_channel_names();
 			} catch (SignalMLCodecException e) {
-				//do nothing
+				// do nothing
 			}
 		}
 
@@ -103,7 +103,8 @@ public class FastMultichannelSampleSource implements MultichannelSampleSource {
 
 			this.offset = signalOffset;
 			try {
-				this.buffer = this.delegate.getSamples(signalOffset, BUFFER_SIZE);
+				this.buffer = this.delegate.getSamples(signalOffset,
+								       BUFFER_SIZE);
 			} catch (SignalMLCodecException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -89,7 +89,7 @@ import org.signalml.method.stager.StagerMethod;
 import org.signalml.method.stager.StagerParameters;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.impl.PluginAccessClass;
-import org.signalml.plugin.loader.PluginLoader;
+import org.signalml.plugin.loader.PluginLoaderHi;
 import org.signalml.util.Util;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -157,6 +157,9 @@ public class SvarogApplication implements java.lang.Runnable {
 	private GeneralConfiguration initialConfig = null;
 	private boolean molTest = false;
 	
+	/** {@link ViewerElementManager} shared instance. */
+	private ViewerElementManager viewerElementManager;
+	
 	/** This static boolean indicates whether {@link #main(String[]) static void main(String[])} was already called. */
 	private static boolean mainCalled = false;
     /** This boolean Indicates whether {@link #run() void run()} was already called. */
@@ -191,6 +194,7 @@ public class SvarogApplication implements java.lang.Runnable {
 
 	    SvarogLogger.getSharedInstance().debug("Preparing Svarog...");
         SvarogLogger.getSharedInstance().debugThreads();
+        SvarogLogger.getSharedInstance().debugCL();
         
         // install security manager
         SvarogSecurityManager.install();
@@ -387,7 +391,7 @@ public class SvarogApplication implements java.lang.Runnable {
 
 		logger.debug("Application successfully created - main window is showing and should be visible soon");
 
-		PluginLoader.getInstance().loadPlugins();
+		PluginLoaderHi.getInstance().loadPlugins();
 
 		SwingUtilities.invokeLater(new Runnable() {
 
@@ -573,10 +577,8 @@ public class SvarogApplication implements java.lang.Runnable {
 
 		profileDir = file;
 
-		PluginLoader.createInstance(profileDir);
-
+		PluginLoaderHi.createInstance(profileDir);
 		return true;
-
 	}
 
 	private GeneralConfiguration askForProfilePath(GeneralConfiguration suggested) {
@@ -1015,6 +1017,7 @@ public class SvarogApplication implements java.lang.Runnable {
 		viewerMainFrame.setMessageSource(messageSource);
 		viewerMainFrame.setElementManager(elementManager);
 
+		this.setViewerElementManager(elementManager);
 		PluginAccessClass.getSharedInstance().setManager(elementManager);
 
 		splash(null, true);
@@ -1197,4 +1200,14 @@ public class SvarogApplication implements java.lang.Runnable {
 	public MessageSourceAccessor getMessageSourceAccessor() {
 	    return messageSource;
 	}
+	
+    /** {@link #elementManager} getter. */
+    public ViewerElementManager getViewerElementManager() {
+        return viewerElementManager;
+    }
+    
+    /** {@link #elementManager} setter. */
+    private void setViewerElementManager(ViewerElementManager m) {
+        this.viewerElementManager = m;
+    }
 }
