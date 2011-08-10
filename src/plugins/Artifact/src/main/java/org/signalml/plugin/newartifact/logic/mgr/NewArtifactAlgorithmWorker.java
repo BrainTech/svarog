@@ -10,11 +10,10 @@ import org.signalml.plugin.newartifact.data.NewArtifactAlgorithmWorkerData;
 import org.signalml.plugin.newartifact.io.INewArtifactAlgorithmWriter;
 import org.signalml.plugin.newartifact.logic.algorithm.INewArtifactAlgorithm;
 import org.signalml.plugin.newartifact.logic.algorithm.NewArtifactAlgorithmData;
-import org.signalml.plugin.newartifact.method.NewArtifactMethod;
 
 public class NewArtifactAlgorithmWorker implements Runnable {
 	protected static final Logger logger = Logger
-					       .getLogger(NewArtifactMethod.class);
+					       .getLogger(NewArtifactAlgorithmWorker.class);
 
 	private final NewArtifactAlgorithmFactory algorithmFactory;
 	private final IPluginDataSourceReader dataSource;
@@ -47,8 +46,8 @@ public class NewArtifactAlgorithmWorker implements Runnable {
 							     buffer);
 
 			this.resultWriter.write(algorithm.computeHead(data));
-			while (dataSource.hasMoreSamples()) {
-				dataSource.getSample(buffer);
+			while (this.dataSource.hasMoreSamples()) {
+				this.dataSource.getSample(buffer);
 				this.resultWriter.write(algorithm.compute(data));
 			}
 			this.resultWriter.write(algorithm.computeTail(data));
@@ -57,7 +56,8 @@ public class NewArtifactAlgorithmWorker implements Runnable {
 		} catch (SignalMLException e) {
 			throw new PluginThreadRuntimeException(e);
 		} catch (InterruptedException e) {
-			throw new PluginThreadRuntimeException(e);
+			logger.warn("Worker thread interrupted", e);
+			return;
 		}
 	}
 }

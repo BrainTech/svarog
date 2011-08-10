@@ -1,8 +1,5 @@
 package org.signalml.plugin.newartifact.logic.tag.creators;
 
-import java.util.Collection;
-import java.util.TreeSet;
-
 import org.signalml.plugin.newartifact.data.NewArtifactType;
 import org.signalml.plugin.newartifact.data.tag.NewArtifactTagData;
 import org.signalml.plugin.newartifact.data.tag.NewArtifactTagResult;
@@ -38,10 +35,7 @@ public class UnknownTagCreator extends AbstractTresholdTagCreator implements
 		double treshold = UnknownTagCreator.TRESHOLD_A + sensitivity
 				  * (UnknownTagCreator.TRESHOLD_B - UnknownTagCreator.TRESHOLD_A);
 
-		Collection<Integer> tags = this.getTagsFromTreshold(data, treshold);
-
-		return this.constructResult(new TreeSet<Integer>(tags));
-
+		return this.constructResult(this.getTagsFromTreshold(data, treshold));
 	}
 
 }

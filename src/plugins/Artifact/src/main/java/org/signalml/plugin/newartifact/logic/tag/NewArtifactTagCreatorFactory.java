@@ -11,7 +11,8 @@ import org.signalml.plugin.newartifact.logic.tag.creators.PowerTagCreator;
 import org.signalml.plugin.newartifact.logic.tag.creators.TechnicalTagCreator;
 import org.signalml.plugin.newartifact.logic.tag.creators.UnknownTagCreator;
 
-public class TagCreatorFactory {
+
+public class NewArtifactTagCreatorFactory {
 	public INewArtifactTagCreator createTagger(NewArtifactComputationType taggerType) {
 		switch (taggerType) {
 		case GALV:

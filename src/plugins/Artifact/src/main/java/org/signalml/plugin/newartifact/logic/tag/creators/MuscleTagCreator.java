@@ -2,8 +2,6 @@ package org.signalml.plugin.newartifact.logic.tag.creators;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import org.signalml.plugin.newartifact.data.NewArtifactType;
 import org.signalml.plugin.newartifact.data.tag.NewArtifactTagData;
@@ -50,16 +48,15 @@ public class MuscleTagCreator extends AbstractNewArtifactTagCreator implements
 		double factorMatrix[] = new double[eegChannels.length];
 		Arrays.fill(factorMatrix, MuscleTagCreator.TRESHOLD_A + sensitivity
 			    *(MuscleTagCreator.TRESHOLD_B - MuscleTagCreator.TRESHOLD_A));
-		List<Integer> tags = this.createTagsUsingTreshold(data, factorMatrix, exclusion);
 
-		SortedSet<Integer> sortedTags = new TreeSet<Integer>(tags);
+		List<Integer> tags = this.createTagsUsingTreshold(data, factorMatrix, exclusion);
 
 		double tresholdMatrix[] = this.getTresholdMatrix(data, exclusion, treshold);
 		for (Integer tag : this.createTagsUsingTreshold(data, tresholdMatrix, exclusion)) {
-			sortedTags.add(tag);
+			tags.add(tag);
 		}
 
-		return this.constructResult(sortedTags);
+		return this.constructResult(tags);
 	}
 
 	@Override
