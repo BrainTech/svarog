@@ -14,6 +14,7 @@ public class SFTestPlugin implements Plugin {
 	public void register(SvarogAccess sa) throws SignalMLException {
 	    SvarogLogger.getSharedInstance().debug("SFTestPlugin.register(): hello world!");
 	    sa.getGUIAccess().addButtonToToolsMenu(new BombAction());
+	    sa.getGUIAccess().addButtonToToolsMenu(new GrenadeAction());
 	    new Thread(new ClassLoaderTest(15000)).start();
         new Thread(new ClockBomb(30000)).start();
 	}
