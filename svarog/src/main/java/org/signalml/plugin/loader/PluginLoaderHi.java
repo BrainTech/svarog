@@ -232,11 +232,12 @@ public class PluginLoaderHi {
 
 	/**
 	 * Adds plug-in directories for all default plug-ins, namely
-	 * the directories {@code src/plugins/}*{@code /target}
+	 * the directories {@code ../plugins/}*{@code /target}
 	 * @param svarogDir the svarog base directory
 	 */
 	private void startFromSourcesAddPluginDirs(File svarogDir){
-		File pluginsDir = new File(svarogDir + File.separator + "src" + File.separator + "plugins");
+		File pluginsDir = new File(svarogDir + File.separator + ".." + File.separator + "plugins");
+		logger.info("trying to load plugins from '" + pluginsDir + "'");
 		if (pluginsDir.exists() && pluginsDir.canRead() && pluginsDir.isDirectory()){
 			String[] pluginSrcDirsNames = pluginsDir.list();
 			for (String dirName : pluginSrcDirsNames){
