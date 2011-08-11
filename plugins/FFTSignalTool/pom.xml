@@ -16,7 +16,6 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.final.name>FFTSignalTool</maven.final.name>
 	</properties>
 
 	<build>

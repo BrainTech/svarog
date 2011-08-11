@@ -8,9 +8,15 @@
 	<packaging>jar</packaging>
 
 	<name>SFTestPlugin</name>
+	<parent>
+		<groupId>org.signalml</groupId>
+		<artifactId>svarog-top</artifactId>
+		<version>0.5.0-SNAPSHOT</version>
+	</parent>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.final.name>SFTestPlugin</maven.final.name>
 	</properties>
 
 	<build>
@@ -25,7 +31,7 @@
 						<phase>package</phase>
 						<configuration>
 							<tasks>
-								<copy file="SFTestPlugin.xml" tofile="target/SFTestPlugin.xml"/>
+								<copy file="SFTestPlugin.xml" tofile="target/SFTestPlugin.xml" />
 							</tasks>
 						</configuration>
 						<goals>
@@ -34,8 +40,9 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<source>1.6</source>
@@ -43,36 +50,43 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>compile</id>
+						<phase>compile</phase>
+						<configuration>
+							<tasks>
+								<property name="runtime_classpath" refid="maven.runtime.classpath" />
+								<echo message="runtime classpath: ${runtime_classpath}" />
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
-
-	<repositories>
-		<repository>
-			<id>signalml.org</id>
-			<name>SignalML Maven Repository</name>
-			<url>http://signalml.org/maven/repository</url>
-		</repository>
-		<repository>
-			<id>localhost</id>
-			<name>localhost repo</name>
-			<url>file:///home/svarog/.m2/repository/</url>
-		</repository>
-	</repositories>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>onejar-maven-plugin.googlecode.com</id>
-			<url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>
-		</pluginRepository>
-	</pluginRepositories>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.signalml</groupId>
 			<artifactId>svarog</artifactId>
-			<version>0.5.5-SNAPSHOT</version>
+			<version>0.5.0-SNAPSHOT</version>
 			<type>jar</type>
-			<scope>compile</scope>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.signalml.plugin</groupId>
+			<artifactId>PluginToolCommon</artifactId>
+			<version>1.0</version>
+			<type>jar</type>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 </project>
