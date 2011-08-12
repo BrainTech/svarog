@@ -23,6 +23,7 @@ import org.signalml.app.model.SignalMLCodecListModel;
 import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.element.CodecManagerConfigPanel;
 import org.signalml.app.view.element.MiscellaneousConfigPanel;
+import org.signalml.app.view.element.SignalRecordingConfigPanel;
 import org.signalml.app.view.element.SignalViewingConfigPanel;
 import org.signalml.app.view.element.SignalZoomSettingsPanel;
 import org.signalml.app.view.element.TaggingConfigPanel;
@@ -87,6 +88,11 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 	 * the signal should be displayed by default
 	 */
 	private SignalViewingConfigPanel signalViewingConfigPanel;
+        /**
+         * the {@link SignalRecordingConfigPanel} which allows to configurate
+         * signal recording options
+         */
+        private SignalRecordingConfigPanel signalRecordingConfigPanel;
 	/**
 	 * the {@link TaggingConfigPanel panel} with options for {@link Tag tags}
 	 */
@@ -218,6 +224,8 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 	 * the signal should be displayed by default,</li>
 	 * <li>the {@link TaggingConfigPanel panel} with options for {@link Tag
 	 * tags},</li>
+         * <li>the {@link SignalRecordingConfigPanel} with options for
+         * signal recording,</li>
 	 * <li>the {@link MiscellaneousConfigPanel panel} with various "other"
 	 * options,</li>
 	 * <li>the {@link SignalZoomSettingsPanel panel} which allows to select
@@ -239,6 +247,7 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 		taggingConfigPanel = new TaggingConfigPanel(messageSource);
 		miscellaneousConfigPanel = new MiscellaneousConfigPanel(messageSource, mode);
 		signalZoomSettingsPanel = new SignalZoomSettingsPanel(messageSource, false);
+                signalRecordingConfigPanel = new SignalRecordingConfigPanel(messageSource);
 
 		JPanel signalViewingContainPanel = new JPanel(new BorderLayout());
 		signalViewingContainPanel.add(signalViewingConfigPanel, BorderLayout.NORTH);
@@ -256,9 +265,14 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 		zoomSettingsContainPanel.add(signalZoomSettingsPanel, BorderLayout.NORTH);
 		zoomSettingsContainPanel.add(Box.createVerticalGlue(), BorderLayout.CENTER);
 
+                JPanel signalRecordingContainPanel = new JPanel(new BorderLayout());
+		signalRecordingContainPanel.add(signalRecordingConfigPanel, BorderLayout.NORTH);
+		signalRecordingContainPanel.add(Box.createVerticalGlue(), BorderLayout.CENTER);
+
 		tabbedPane.addTab(messageSource.getMessage("preferences.signalViewing"), signalViewingContainPanel);
 		tabbedPane.addTab(messageSource.getMessage("preferences.zoomSettings"), zoomSettingsContainPanel);
 		tabbedPane.addTab(messageSource.getMessage("preferences.tagging"), taggingContainPanel);
+                tabbedPane.addTab(messageSource.getMessage("preferences.signalRecording"), signalRecordingContainPanel);
 		tabbedPane.addTab(messageSource.getMessage("preferences.miscellaneous"), miscellaneousContainPanel);
 
 		if (mode == SignalMLOperationMode.APPLICATION) {
@@ -291,7 +305,9 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 	 * <ul>
 	 * <li>the {@link SignalViewingConfigPanel#fillPanelFromModel(
 	 * ApplicationConfiguration) signal viewing panel},</li>
-	 * <li>the {@link TaggingConfigPanel#fillPanelFromModel(
+         * <li>the {@link SignalViewingConfigPanel#fillPanelFromModel(
+	 * ApplicationConfiguration) signal viewing panel},</li>
+	 * <li>the {@link SignalRecordingConfigPanel#fillPanelFromModel(
 	 * ApplicationConfiguration) tagging configuration panel},</li>
 	 * <li>the {@link MiscellaneousConfigPanel#fillPanelFromModel(
 	 * ApplicationConfiguration) panel} with "other" options,</li>
@@ -317,7 +333,7 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 		taggingConfigPanel.fillPanelFromModel(config);
 		miscellaneousConfigPanel.fillPanelFromModel(config);
 		signalZoomSettingsPanel.fillPanelFromModel(config.getZoomSignalSettings());
-
+                signalRecordingConfigPanel.fillPanelFromModel(config);
 	}
 
 	/**
@@ -325,6 +341,8 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 	 * configuration} of Svarog (model) stores the user input from:
 	 * <ul>
 	 * <li>the {@link SignalViewingConfigPanel#fillModelFromPanel(
+	 * ApplicationConfiguration) signal viewing panel},</li>
+         * <li>the {@link SignalRecordingConfigPanel#fillModelFromPanel(
 	 * ApplicationConfiguration) signal viewing panel},</li>
 	 * <li>the {@link TaggingConfigPanel#fillModelFromPanel(
 	 * ApplicationConfiguration) tagging configuration panel},</li>
@@ -344,6 +362,7 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 		taggingConfigPanel.fillModelFromPanel(config);
 		miscellaneousConfigPanel.fillModelFromPanel(config);
 		signalZoomSettingsPanel.fillModelFromPanel(config.getZoomSignalSettings());
+                signalRecordingConfigPanel.fillModelFromPanel(config);
 
 		config.applySystemSettings();
 
@@ -393,6 +412,7 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 		signalViewingConfigPanel.validate(errors);
 		taggingConfigPanel.validate(errors);
 		miscellaneousConfigPanel.validate(errors);
+                signalRecordingConfigPanel.validate(errors);
 
 		errors.pushNestedPath("zoomSignalSettings");
 		signalZoomSettingsPanel.validate(errors);

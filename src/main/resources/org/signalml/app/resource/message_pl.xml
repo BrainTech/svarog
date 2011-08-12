@@ -627,6 +627,10 @@
 	<entry key="preferences.zoomSettings">Signal zooming</entry>
 	<entry key="preferences.signalFFTSettings">Signal FFT</entry>
 
+        <entry key="preferences.signalRecording">Signal recording</entry>
+        <entry key="preferences.signalRecording.general">General</entry>
+        <entry key="preferences.signalRecording.frequency">Backup frequency</entry>
+
 	<entry key="preferences.tagging">Tagging</entry>
 	<entry key="preferences.tagging.general">General</entry>
 	<entry key="preferences.tagging.saveFullMontageWithTag">Save full montage with tag file</entry>
@@ -792,6 +796,7 @@
 
 	<entry key="openSignal.options.raw.readXMLManifest">Read manifest...</entry>
 	<entry key="openSignal.options.raw.readXMLManifestToolTip">Read signal parameters from XML manifest</entry>
+        <entry key="openSignal.options.raw.backup">The signal you are about to load is only a backup!</entry>
 
 	<entry key="newTag.title">Choose new tag type</entry>
 	<entry key="newTag.emptyRadio">An empty tag with no styles</entry>
@@ -809,6 +814,7 @@
 	<entry key="registerCodec.formatName">Format name</entry>
 	<entry key="registerCodec.nameExistsWarning">Name exists. Current codec will be replaced!</entry>
 
+        <entry key="pagingParameters.title">Paging parameters:</entry>
 	<entry key="pagingParameters.pageSize">Page size (s)</entry>
 	<entry key="pagingParameters.blocksPerPage">Number of blocks per page</entry>
 
@@ -863,9 +869,9 @@
 	<entry key="sourceMontageTable.index">Index</entry>
 	<entry key="sourceMontageTable.label">Label</entry>
 	<entry key="sourceMontageTable.function">Function</entry>
+	<entry key="sourceMontageTable.addChannel">More channels</entry>
 	<entry key="sourceMontageTable.ONE">ONE</entry>
 	<entry key="sourceMontageTable.ZERO">ZERO</entry>
-	<entry key="sourceMontageTable.addChannel">More channels</entry>
 	<entry key="sourceMontageTable.addZeroChannel">ZEROs channel</entry>
 	<entry key="sourceMontageTable.addOneChannel">ONEs channel</entry>
 	<entry key="sourceMontageTable.removeChannel">Remove</entry>

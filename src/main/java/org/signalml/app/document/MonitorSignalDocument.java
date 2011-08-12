@@ -466,6 +466,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		rsd.setSamplingFrequency(monitorOptions.getSamplingFrequency());
 		rsd.setSourceSignalType(SourceSignalType.RAW);
 		rsd.setFirstSampleTimestamp(firstSampleTimestamp);
+                rsd.setIsBackup(true);
 		RawSignalDescriptorWriter descrWriter = new RawSignalDescriptorWriter();
 		descrWriter.writeDocument(rsd, metadataFile);
 

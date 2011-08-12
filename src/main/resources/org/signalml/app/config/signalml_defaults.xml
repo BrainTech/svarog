@@ -77,6 +77,8 @@
     <entry key="application.signalFFTSettings.powerAxisLabelsVisible">true</entry>
     <entry key="application.signalFFTSettings.maxLabelCount">20</entry>
 
+        <entry key="application.signalRecording.frequency">10</entry>
+
 	<entry key="stager.rules">RK</entry>	
 
 	<entry key="stager.deltaAmplitudeMin">65</entry>	

@@ -627,6 +627,10 @@
 	<entry key="preferences.zoomSettings">Signal zooming</entry>
 	<entry key="preferences.signalFFTSettings">Signal FFT</entry>
 
+        <entry key="preferences.signalRecording">Signal recording</entry>
+        <entry key="preferences.signalRecording.general">General</entry>
+        <entry key="preferences.signalRecording.frequency">Backup frequency</entry>
+
 	<entry key="preferences.tagging">Tagging</entry>
 	<entry key="preferences.tagging.general">General</entry>
 	<entry key="preferences.tagging.saveFullMontageWithTag">Save full montage with tag file</entry>
@@ -792,6 +796,7 @@
 
 	<entry key="openSignal.options.raw.readXMLManifest">Read manifest...</entry>
 	<entry key="openSignal.options.raw.readXMLManifestToolTip">Read signal parameters from XML manifest</entry>
+        <entry key="openSignal.options.raw.backup">The signal you are about to load is only a backup!</entry>
 
 	<entry key="newTag.title">Choose new tag type</entry>
 	<entry key="newTag.emptyRadio">An empty tag with no styles</entry>

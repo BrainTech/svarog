@@ -129,6 +129,12 @@ public class RawSignalDescriptor {
 	private double firstSampleTimestamp = Double.NaN;
 
         /**
+         * Whether the signal is a backup and was not saved as a result
+         * of a proper recording stop.
+         */
+        private boolean isBackup;
+
+        /**
          * Constructor. Creates an empty descriptor of a raw signal.
          */
 	public RawSignalDescriptor() {
@@ -166,6 +172,22 @@ public class RawSignalDescriptor {
 	public void setSourceFileName(String sourceFileName) {
 		this.sourceFileName = sourceFileName;
 	}
+
+        /**
+         * Whether the signal is a backup.
+         * @return true if signal is a backup
+         */
+        public boolean isBackup() {
+                return isBackup;
+        }
+
+        /**
+         * Set backup info.
+         * @param isBackup backup info
+         */
+        public void setIsBackup(boolean isBackup) {
+                this.isBackup = isBackup;
+        }
 
         /**
          * Returns the {@link SourceSignalType type} of a source signal
