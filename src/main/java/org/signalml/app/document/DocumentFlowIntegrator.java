@@ -802,9 +802,10 @@ public class DocumentFlowIntegrator {
                 } else if (descriptor.getOpenSignalDescriptor().getSignalSource().equals(SignalSource.AMPLIFIER)) {
                         monitorOptions = descriptor.getOpenSignalDescriptor().getAmplifierConnectionDescriptor().getOpenMonitorDescriptor();
                 }
-		
-		MonitorSignalDocument monitorSignalDocument = new MonitorSignalDocument(monitorOptions);
 
+                monitorOptions.setBackupFrequency(getApplicationConfig().getBackupFrequency());
+
+		MonitorSignalDocument monitorSignalDocument = new MonitorSignalDocument(monitorOptions);
 		monitorSignalDocument.openDocument();
 
 		onSignalDocumentAdded(monitorSignalDocument, descriptor.isMakeActive());
