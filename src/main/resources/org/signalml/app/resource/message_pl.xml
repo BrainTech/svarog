@@ -629,7 +629,7 @@
 
         <entry key="preferences.signalRecording">Signal recording</entry>
         <entry key="preferences.signalRecording.general">General</entry>
-        <entry key="preferences.signalRecording.frequency">Backup frequency</entry>
+        <entry key="preferences.signalRecording.frequency">Backup frequency [s]</entry>
 
 	<entry key="preferences.tagging">Tagging</entry>
 	<entry key="preferences.tagging.general">General</entry>
