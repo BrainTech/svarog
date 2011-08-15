@@ -2,12 +2,10 @@ package org.signalml.app.document;
 
 import java.beans.IntrospectionException;
 import java.beans.PropertyChangeListener;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.model.LabelledPropertyDescriptor;
@@ -24,11 +22,8 @@ import org.signalml.domain.signal.RoundBufferMultichannelSampleSource;
 import org.signalml.domain.signal.RoundBufferSampleSource;
 import org.signalml.domain.signal.SignalChecksum;
 import org.signalml.domain.signal.SignalProcessingChain;
-import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.domain.tag.StyledMonitorTagSet;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.signal.TagStyle;
-import org.signalml.util.FileUtils;
 
 /**
  * @author Mariusz Podsiadło
@@ -77,13 +72,14 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	 */
 	private TagRecorder tagRecorderWorker = null;
 
-	/**
-	 * This is the file, to which tags are written.
-	 */
-	private File tagRecorderOutputFile;
+        /**
+         * Tag set to which the {@link MonitorWorker} saves tags.
+         */
+	private StyledMonitorTagSet tagSet;
 
-	StyledMonitorTagSet tagSet;
-
+        /**
+         * Whether the signal was saved.
+         */
 	private boolean saved = true;
 
 	public MonitorSignalDocument(OpenMonitorDescriptor monitorOptions) {
@@ -335,17 +331,19 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	public void startMonitorRecording() throws FileNotFoundException {
 
 		MonitorRecordingDescriptor monitorRecordingDescriptor = monitorOptions.getMonitorRecordingDescriptor();
-               
-		if(!monitorRecordingDescriptor.isTagsRecordingDisabled())
-			tagRecorderOutputFile = new File(monitorRecordingDescriptor.getTagsRecordingFilePath());
+                boolean tagsRecordingEnabled = !monitorRecordingDescriptor.isTagsRecordingDisabled();
 
 		//starting signal recorder
 		String dataPath = monitorRecordingDescriptor.getSignalRecordingFilePath();
                 signalRecorderWorker = new SignalRecorderWorker(dataPath, monitorOptions);
 
-		//starting tag recorder
-                if (tagRecorderOutputFile != null)
-                        tagRecorderWorker = new TagRecorder();
+                //if tags recording is enabled: starting tag recorder and connecting it to signal recorder
+		if(tagsRecordingEnabled) {
+
+                        String tagsPath = monitorRecordingDescriptor.getTagsRecordingFilePath();
+			tagRecorderWorker = new TagRecorder(tagsPath);
+                        signalRecorderWorker.setTagRecorder(tagRecorderWorker);
+                }
 
 		//connecting recorders to the monitor worker
 		monitorWorker.connectSignalRecorderWorker(signalRecorderWorker);
@@ -371,52 +369,16 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		//stops the recorderWorker and saves the recorded samples
 		if (signalRecorderWorker != null) {
 			signalRecorderWorker.save();
-			do {
-				try {
-					Thread.sleep(1);
-				}
-				catch (InterruptedException e) {}
-			} while (!signalRecorderWorker.isFinished());
 		}
 
 		if (tagRecorderWorker != null) {
-			saveRecordedTags();
+			tagRecorderWorker.save(tagSet.getStyles());
 		}
 
 		tagRecorderWorker = null;
 		signalRecorderWorker = null;
 
 		pcSupport.firePropertyChange(IS_RECORDING_PROPERTY, true, false);
-
-	}
-
-	/**
-	 * Saves the recorded tags to the file specified in the
-	 * {@link OpenMonitorDescriptor}.
-	 *
-	 * @throws IOException thrown where an error while writing the recorded data to the given files occurs
-	 */
-	private void saveRecordedTags() {
-
-		StyledTagSet toBeSavedTagSet = tagRecorderWorker.getRecordedTagSet();
-
-		TagDocument tagDocument;
-		try {
-			for(TagStyle tagStyle: tagSet.getStyles())
-				toBeSavedTagSet.addStyle(tagStyle);
-			tagDocument = new TagDocument(toBeSavedTagSet);
-
-			String tagsPath = tagRecorderOutputFile.getCanonicalPath();
-			if (!tagsPath.endsWith(".tag"))
-				tagsPath += ".tag";
-
-			tagDocument.setBackingFile(new File(tagsPath));
-			tagDocument.saveDocument();
-		} catch (IOException ex) {
-			java.util.logging.Logger.getLogger(MonitorSignalDocument.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (SignalMLException ex) {
-			java.util.logging.Logger.getLogger(MonitorSignalDocument.class.getName()).log(Level.SEVERE, null, ex);
-		}
 
 	}
 

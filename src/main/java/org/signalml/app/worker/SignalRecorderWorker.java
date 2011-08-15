@@ -84,9 +84,15 @@ public class SignalRecorderWorker {
         private long timeElapsed;
 
         /**
+         * Tags recorder related to current recording.
+         * This object calls the backup method, so it is synchronized.
+         */
+        private TagRecorder tagRecorder;
+
+        /**
          * Default constructor.
          * @param dataPath path to output file
-         * @param monitorDescriptor object describing the signal
+         * @param monitorDescriptor object describing the signal        
          * @throws FileNotFoundException when output stream cannot be initialized
          */
 	public SignalRecorderWorker(String dataPath, OpenMonitorDescriptor monitorDescriptor) throws FileNotFoundException {
@@ -113,6 +119,8 @@ public class SignalRecorderWorker {
 		this.savedSampleCount = 0;
                 this.firstSampleTimestamp = Double.NaN;
 
+                this.tagRecorder = null;
+
 		logger.setLevel((Level) Level.INFO);
 	}
 
@@ -120,7 +128,7 @@ public class SignalRecorderWorker {
 	 * Adds samples to the list, and if it is time for a backup - saves them.
 	 * @param samples samples to be recorded
 	 */
-	public void offer(double[] samples) {
+	public void offerChunk(double[] samples) {
 
                 synchronized (this) {
 
@@ -135,10 +143,11 @@ public class SignalRecorderWorker {
                                 if (timeElapsed > backupFrequencyInMiliseconds) {
 
                                         timeElapsed = 0;
-                                        try {
-                                                flush();
-                                                saveMetadata(true);
-                                        } catch (IOException ex) { }
+                                        doSave(true);
+
+                                        // it's time for a backup - let the TagRecorder know
+                                        if (tagRecorder != null)
+                                                tagRecorder.doBackup();
                                 }                                
                         }
                 }
@@ -147,20 +156,31 @@ public class SignalRecorderWorker {
         /**
          * Saves all remaining samples.
          */
-        public void save() throws IOException {
+        public void save() {
 
                 synchronized(this) {
                         
-                        flush();
-                        saveMetadata(false);                       
+                        doSave(false);
                         finished = true;
                 }
         }
 
         /**
+         * Saves all data to the disk.
+         * @param isBackup whether the save is a backup
+         */
+        private void doSave(boolean isBackup) {
+                
+                try {
+                        flushSamples();
+                        saveMetadata(isBackup);
+                } catch (IOException ex) { }
+        }
+
+        /**
          * Saves all samples from the list to the output.
          */
-        private void flush() throws IOException {
+        private void flushSamples() throws IOException {
 
                 if (outputStream == null)
                         outputStream = new FileOutputStream(dataFilePath);
@@ -262,10 +282,12 @@ public class SignalRecorderWorker {
 	}
 
         /**
-         * Whether the worker is finished.
-         * @return {@link #finished}
+         * Sets {@link #tagRecorder}.
+         * @param tagRecorder {@link #tagRecorder}
          */
-        public boolean isFinished() {
-                return finished;
+        public void setTagRecorder(TagRecorder tagRecorder) {
+                this.tagRecorder = tagRecorder;
         }
+
+
 }
