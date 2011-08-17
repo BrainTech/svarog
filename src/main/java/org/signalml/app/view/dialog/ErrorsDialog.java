@@ -157,7 +157,7 @@ public class ErrorsDialog extends AbstractDialog {
 		errorList.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		errorList.setFont(new Font("Dialog", Font.PLAIN, 12));
 
-		JScrollPane scrollPane = new JScrollPane(errorList, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		JScrollPane scrollPane = new JScrollPane(errorList, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setPreferredSize(scrollPanePreferredDimensions);
 
 		panel.add(scrollPane, BorderLayout.CENTER);
