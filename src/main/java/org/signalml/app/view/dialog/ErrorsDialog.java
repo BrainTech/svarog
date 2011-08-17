@@ -228,7 +228,7 @@ public class ErrorsDialog extends AbstractDialog {
 	 * </ul>
 	 */
 	@Override
-	public void fillDialogFromModel(Object model) throws SignalMLException {
+	protected void fillDialogFromModel(Object model) throws SignalMLException {
 		if (model instanceof Errors) {
 			Errors errors = (Errors) model;
 			Object[] errArr = errors.getAllErrors().toArray();
