@@ -9,7 +9,6 @@ import org.signalml.plugin.export.method.SvarogAccessMethod;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
 import org.signalml.plugin.impl.change.ChangeSupportImpl;
-import org.signalml.plugin.impl.config.ConfigAccessImpl;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**

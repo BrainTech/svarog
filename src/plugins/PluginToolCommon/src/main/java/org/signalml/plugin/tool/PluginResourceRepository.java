@@ -1,4 +1,4 @@
-package org.signalml.plugin.impl.config;
+package org.signalml.plugin.tool;
 
 import java.io.IOException;
 import java.security.CodeSource;
@@ -15,9 +15,6 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-/**
- * This class has been moved from PluginToolCommon (2011-08-18).
- */
 public class PluginResourceRepository {
 
 	private static Map<Class<? extends Plugin>, BeanFactory> beanFactoryMap = new HashMap<Class<? extends Plugin>, BeanFactory>();

@@ -19,10 +19,11 @@ import org.signalml.app.util.XMLUtils;
 import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.method.Method;
 import org.signalml.plugin.data.PluginConfigForMethod;
+import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.export.view.FileChooser;
+import org.signalml.plugin.i18n.PluginMessageSourceManager;
 import org.signalml.plugin.method.IPluginMethodConfigurer;
 import org.signalml.plugin.method.PluginMethodManager;
 import org.signalml.plugin.newartifact.data.NewArtifactApplicationData;
@@ -30,6 +31,7 @@ import org.signalml.plugin.newartifact.data.NewArtifactConfiguration;
 import org.signalml.plugin.newartifact.data.NewArtifactParameters;
 import org.signalml.plugin.newartifact.ui.NewArtifactMethodDialog;
 import org.signalml.plugin.newartifact.ui.NewArtifactToolConfigDialog;
+import org.signalml.plugin.tool.PluginResourceRepository;
 import org.springframework.context.support.MessageSourceAccessor;
 
 import com.thoughtworks.xstream.XStream;
@@ -55,25 +57,23 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 	private NewArtifactToolConfigDialog configDialog;
 
 	private boolean firstRunFlag;
-	private SvarogAccess svarogAccess;
 
 	@Override
 	public void initialize(PluginMethodManager manager) {
-	    this.svarogAccess = manager.getSvarogAccess();
-		this.dialogParent = getSvarogAccess().getGUIAccess().getDialogParent();
+		this.dialogParent = manager.getSvarogAccess().getGUIAccess().getDialogParent();
 
 		this.createPresetManager(manager);
-		this.fileChooser = getSvarogAccess().getGUIAccess().getFileChooser();
+		this.fileChooser = manager.getSvarogAccess().getGUIAccess().getFileChooser();
 
 		MessageSourceAccessor messageSource;
 		try {
-			messageSource = getSvarogAccess().getConfigAccess().getMessageSource();
-		} catch (SignalMLException e) {
+			messageSource = PluginMessageSourceManager.GetMessageSource();
+		} catch (PluginException e) {
 			this.dialog = null;
 			return;
 		}
 
-		this.dialog = new NewArtifactMethodDialog(getSvarogAccess(), messageSource, this.presetManager, this.dialogParent);
+		this.dialog = new NewArtifactMethodDialog(messageSource, this.presetManager, this.dialogParent);
 		// TODO remove this nasty cast
 		this.dialog.setApplicationConfig((ApplicationConfiguration) manager.getSvarogAccess().getConfigAccess().getSvarogConfiguration());
 		this.firstRunFlag = true;
@@ -84,19 +84,19 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 			MethodPresetManager presetManager;
 			try {
 				presetManager = new MethodPresetManager(
-					((PluginConfigForMethod) getSvarogAccess().getConfigAccess()
-					 .getResource("config")).getMethodConfig()
+					((PluginConfigForMethod) PluginResourceRepository
+					 .GetResource("config")).getMethodConfig()
 					.getMethodName(),
 					NewArtifactParameters.class);
-			} catch (SignalMLException e) {
+			} catch (PluginException e) {
 				logger.error("Failed to get method name", e);
 				return;
 			}
 			presetManager.setProfileDir(manager.getSvarogAccess().getConfigAccess().getProfileDirectory());
 			try {
-				presetManager.setStreamer((XStream) getSvarogAccess().getConfigAccess()
-							  .getResource("streamer"));
-			} catch (SignalMLException e) {
+				presetManager.setStreamer((XStream) PluginResourceRepository
+							  .GetResource("streamer"));
+			} catch (PluginException e) {
 				manager.handleException(e);
 				logger.error("Can't get proper streamer");
 				return;
@@ -120,12 +120,12 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 		if (configDialog == null) {
 			MessageSourceAccessor messageSource;
 			try {
-				messageSource = getSvarogAccess().getConfigAccess().getMessageSource();
-			} catch (SignalMLException e) {
+				messageSource = PluginMessageSourceManager.GetMessageSource();
+			} catch (PluginException e) {
 				return null;
 			}
 
-			configDialog = new NewArtifactToolConfigDialog(getSvarogAccess(), messageSource,
+			configDialog = new NewArtifactToolConfigDialog(messageSource,
 					dialogParent, true);
 			configDialog.setFileChooser(fileChooser);
 		}
@@ -217,8 +217,8 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 		if (projectFile.exists()) {
 			try {
 				XMLUtils.objectFromFile(data, projectFile,
-							(XStream) getSvarogAccess().getConfigAccess()
-							.getResource("streamer"));
+							(XStream) PluginResourceRepository
+							.GetResource("streamer"));
 				existingProject = data.isExistingProject();
 			} catch (IOException ex) {
 				logger.error("Failed to read project", ex);
@@ -237,7 +237,7 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 
 		try {
 			XMLUtils.objectToFile(data, projectFile,
-					      (XStream) getSvarogAccess().getConfigAccess().getResource("streamer"));
+					      (XStream) PluginResourceRepository.GetResource("streamer"));
 		} catch (IOException ex) {
 			logger.error("Failed to write project", ex);
 			throw new SignalMLException(ex);
@@ -313,8 +313,5 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 	public void setPresetManager(PresetManager presetManager) {
 		this.presetManager = presetManager;
 	}
-	
-	private SvarogAccess getSvarogAccess() {
-	    return svarogAccess;
-	}
+
 }

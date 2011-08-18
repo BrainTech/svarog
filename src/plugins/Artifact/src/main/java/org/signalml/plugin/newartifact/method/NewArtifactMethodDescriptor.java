@@ -12,13 +12,13 @@ import org.signalml.app.method.MethodPresetManager;
 import org.signalml.app.method.MethodResultConsumer;
 import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.method.Method;
+import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.NoActiveObjectException;
-import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.method.PluginAbstractMethodDescriptor;
 import org.signalml.plugin.newartifact.data.NewArtifactApplicationData;
 import org.signalml.plugin.newartifact.data.NewArtifactParameters;
+import org.signalml.plugin.tool.PluginResourceRepository;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -32,12 +32,6 @@ public class NewArtifactMethodDescriptor extends PluginAbstractMethodDescriptor 
 	private MethodPresetManager presetManager;
 
 	private NewArtifactMethodConsumer consumer;
-
-    private SvarogAccess svarogAccess;
-	
-	NewArtifactMethodDescriptor(SvarogAccess svarogAccess) {
-	    this.svarogAccess = svarogAccess;
-	}
 
 	@Override
 	public MethodIterationResultConsumer getIterationConsumer(
@@ -119,9 +113,9 @@ public class NewArtifactMethodDescriptor extends PluginAbstractMethodDescriptor 
 								NewArtifactParameters.class);
 			presetManager.setProfileDir(methodManager.getProfileDir());
 			try {
-				presetManager.setStreamer((XStream) getSvarogAccess().getConfigAccess()
-							  .getResource("streamer"));
-			} catch (SignalMLException e) {
+				presetManager.setStreamer((XStream) PluginResourceRepository
+							  .GetResource("streamer"));
+			} catch (PluginException e) {
 				logger.error("Can't get proper streamer", e);
 				return presetManager;
 			}
@@ -139,7 +133,4 @@ public class NewArtifactMethodDescriptor extends PluginAbstractMethodDescriptor 
 		return presetManager;
 	}
 
-    private SvarogAccess getSvarogAccess() {
-        return svarogAccess;
-    }
 }

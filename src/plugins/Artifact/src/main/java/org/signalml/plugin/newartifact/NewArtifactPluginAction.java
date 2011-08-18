@@ -3,8 +3,9 @@ package org.signalml.plugin.newartifact;
 import java.awt.event.ActionEvent;
 
 import org.signalml.plugin.data.PluginConfigMethodData;
-import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
+import org.signalml.plugin.i18n.PluginMessageSourceManager;
 import org.signalml.plugin.method.PluginMethodManager;
 
 public class NewArtifactPluginAction extends AbstractSignalMLAction {
@@ -16,8 +17,8 @@ public class NewArtifactPluginAction extends AbstractSignalMLAction {
 
 	private PluginMethodManager mgr;
 
-	public NewArtifactPluginAction(PluginMethodManager mgr) throws SignalMLException {
-		super(mgr.getSvarogAccess().getConfigAccess().getMessageSource());
+	public NewArtifactPluginAction(PluginMethodManager mgr) throws PluginException {
+		super(PluginMessageSourceManager.GetMessageSource());
 		this.mgr = mgr;
 		PluginConfigMethodData config = mgr.getMethodConfig();
 		this.setText(config.getRunMethodString());

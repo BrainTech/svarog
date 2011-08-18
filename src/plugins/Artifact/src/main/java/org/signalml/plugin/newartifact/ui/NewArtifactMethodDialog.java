@@ -26,14 +26,15 @@ import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.montage.eeg.EegChannel;
 import org.signalml.plugin.data.PluginConfigForMethod;
+import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.newartifact.data.NewArtifactApplicationData;
 import org.signalml.plugin.newartifact.data.NewArtifactExclusionDescriptor;
 import org.signalml.plugin.newartifact.data.NewArtifactParameters;
 import org.signalml.plugin.newartifact.data.NewArtifactPowerGridFrequency;
 import org.signalml.plugin.newartifact.data.NewArtifactType;
+import org.signalml.plugin.tool.PluginResourceRepository;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.validation.Errors;
@@ -63,12 +64,9 @@ public class NewArtifactMethodDialog extends AbstractPresetDialog {
 	private SourceMontage currentMontage;
 	private int[][] currentExclusion;
 
-    private SvarogAccess svarogAccess;
-
-	public NewArtifactMethodDialog(SvarogAccess svarogAccess, MessageSourceAccessor messageSource,
+	public NewArtifactMethodDialog(MessageSourceAccessor messageSource,
 				       PresetManager presetManager, Window w) {
 		super(messageSource, presetManager, w, true);
-		this.svarogAccess = svarogAccess;
 	}
 
 	@Override
@@ -76,8 +74,8 @@ public class NewArtifactMethodDialog extends AbstractPresetDialog {
 		setTitle(messageSource.getMessage("newArtifactMethod.dialog.title"));
 		PluginConfigForMethod config;
 		try {
-			config = (PluginConfigForMethod) getSvarogAccess().getConfigAccess().getResource("config");
-		} catch (SignalMLException e) {
+			config = (PluginConfigForMethod) PluginResourceRepository.GetResource("config");
+		} catch (PluginException e) {
 			config = null;
 		}
 		if (config != null) {
@@ -365,8 +363,5 @@ public class NewArtifactMethodDialog extends AbstractPresetDialog {
 		}
 
 	}
-	
-    private SvarogAccess getSvarogAccess() {
-        return svarogAccess;
-    }
+
 }

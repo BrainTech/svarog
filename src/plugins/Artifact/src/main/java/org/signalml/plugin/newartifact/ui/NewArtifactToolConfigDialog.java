@@ -12,11 +12,12 @@ import javax.swing.JComponent;
 import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.data.PluginConfigForMethod;
 import org.signalml.plugin.data.PluginConfigMethodData;
+import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.view.AbstractDialog;
 import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.plugin.newartifact.data.NewArtifactConfiguration;
+import org.signalml.plugin.tool.PluginResourceRepository;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
@@ -35,17 +36,13 @@ public class NewArtifactToolConfigDialog extends AbstractDialog {
 
 	private NewArtifactToolConfigPanel configPanel;
 
-    private SvarogAccess svarogAccess;
-
-	public NewArtifactToolConfigDialog(SvarogAccess svarogAccess, MessageSourceAccessor messageSource) {
+	public NewArtifactToolConfigDialog(MessageSourceAccessor messageSource) {
 		super(messageSource);
-		this.svarogAccess = svarogAccess;
 	}
 
-	public NewArtifactToolConfigDialog(SvarogAccess svarogAccess, MessageSourceAccessor messageSource,
+	public NewArtifactToolConfigDialog(MessageSourceAccessor messageSource,
 					   Window w, boolean isModal) {
 		super(messageSource, w, isModal);
-		this.svarogAccess = svarogAccess;
 	}
 
 	@Override
@@ -53,9 +50,9 @@ public class NewArtifactToolConfigDialog extends AbstractDialog {
 		setTitle(messageSource.getMessage("newArtifactMethod.config.title"));
 		PluginConfigMethodData config;
 		try {
-			config = ((PluginConfigForMethod) getSvarogAccess().getConfigAccess()
-				  .getResource("config")).getMethodConfig();
-		} catch (SignalMLException e) {
+			config = ((PluginConfigForMethod) PluginResourceRepository
+				  .GetResource("config")).getMethodConfig();
+		} catch (PluginException e) {
 			config = null;
 		}
 		if (config != null) {
@@ -65,11 +62,7 @@ public class NewArtifactToolConfigDialog extends AbstractDialog {
 		super.initialize();
 	}
 
-	private SvarogAccess getSvarogAccess() {
-	    return svarogAccess;
-    }
-
-    @Override
+	@Override
 	public JComponent createInterface() {
 		return getConfigPanel();
 	}
