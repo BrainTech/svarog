@@ -375,7 +375,7 @@ public abstract class AbstractDialog extends JDialog {
 	 * @param model the model from which this dialog will be filled.
 	 * @throws SignalMLException TODO when it is thrown
 	 */
-	public abstract void fillDialogFromModel(Object model) throws SignalMLException;
+	protected abstract void fillDialogFromModel(Object model) throws SignalMLException;
 
 	/**
 	 * Fills the model with the data from this dialog (user input).
