@@ -27,11 +27,10 @@ import org.signalml.app.util.IconUtils;
 //import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.plugin.data.PluginConfigForMethod;
 import org.signalml.plugin.data.PluginConfigMethodData;
-import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.view.AbstractDialog;
 import org.signalml.plugin.export.view.FileChooser;
-import org.signalml.plugin.tool.PluginResourceRepository;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
@@ -63,13 +62,17 @@ public class NewArtifactResultDialog extends AbstractDialog {
 	@SuppressWarnings("unused")
 	private NewArtifactResultTargetDescriptor currentDescriptor = null;
 
-	public NewArtifactResultDialog(MessageSourceAccessor messageSource) {
+    private SvarogAccess svarogAccess;
+
+	public NewArtifactResultDialog(SvarogAccess svarogAccess, MessageSourceAccessor messageSource) {
 		super(messageSource);
+		this.svarogAccess = svarogAccess;
 	}
 
-	public NewArtifactResultDialog(MessageSourceAccessor messageSource,
+	public NewArtifactResultDialog(SvarogAccess svarogAccess, MessageSourceAccessor messageSource,
 				       Window w, boolean isModal) {
 		super(messageSource, w, isModal);
+		this.svarogAccess = svarogAccess;
 	}
 
 	// TODO remove stub support if review not needed for artifact
@@ -86,9 +89,9 @@ public class NewArtifactResultDialog extends AbstractDialog {
 			 .getMessage("newArtifactMethod.dialog.result.title"));
 		PluginConfigMethodData config;
 		try {
-			config = ((PluginConfigForMethod) PluginResourceRepository
-				  .GetResource("config")).getMethodConfig();
-		} catch (PluginException e) {
+			config = ((PluginConfigForMethod) getSvarogAccess().getConfigAccess()
+				  .getResource("config")).getMethodConfig();
+		} catch (SignalMLException e) {
 			config = null;
 		}
 		if (config != null) {
@@ -386,5 +389,8 @@ public class NewArtifactResultDialog extends AbstractDialog {
 	 *
 	 * }
 	 */
-
+	
+    private SvarogAccess getSvarogAccess() {
+        return svarogAccess;
+    }
 }

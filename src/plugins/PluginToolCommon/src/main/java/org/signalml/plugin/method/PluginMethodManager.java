@@ -6,7 +6,6 @@ import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.method.TrackableMethod;
 import org.signalml.plugin.data.PluginConfigForMethod;
 import org.signalml.plugin.data.PluginConfigMethodData;
-import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.method.SvarogAccessMethod;
@@ -14,7 +13,6 @@ import org.signalml.plugin.export.method.SvarogMethodConfigurer;
 import org.signalml.plugin.export.method.SvarogMethodDescriptor;
 import org.signalml.plugin.export.method.SvarogTask;
 import org.signalml.plugin.export.method.SvarogTaskStatusDialog;
-import org.signalml.plugin.i18n.PluginMessageSourceManager;
 import org.signalml.task.LocalTask;
 import org.springframework.context.support.MessageSourceAccessor;
 
@@ -70,8 +68,8 @@ public class PluginMethodManager {
 
 		MessageSourceAccessor source;
 		try {
-			source = PluginMessageSourceManager.GetMessageSource();
-		} catch (PluginException e) {
+			source = getSvarogAccess().getConfigAccess().getMessageSource();
+		} catch (SignalMLException e) {
 			this.handleException(e);
 			return;
 		}

@@ -16,7 +16,8 @@ import org.signalml.method.TrackableMethod;
 import org.signalml.method.iterator.IterableMethod;
 import org.signalml.method.iterator.IterableParameter;
 import org.signalml.plugin.data.PluginConfigForMethod;
-import org.signalml.plugin.exception.PluginException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.method.PluginAbstractMethod;
 import org.signalml.plugin.newartifact.data.NewArtifactConstants;
 import org.signalml.plugin.newartifact.data.NewArtifactData;
@@ -26,7 +27,6 @@ import org.signalml.plugin.newartifact.data.NewArtifactType;
 import org.signalml.plugin.newartifact.data.NewIterableSensitivity;
 import org.signalml.plugin.newartifact.data.mgr.NewArtifactMgrData;
 import org.signalml.plugin.newartifact.logic.mgr.NewArtifactComputationMgr;
-import org.signalml.plugin.tool.PluginResourceRepository;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
@@ -42,6 +42,13 @@ public class NewArtifactMethod extends PluginAbstractMethod implements
 	private final int TAIL_LENGTH_IN_SECONDS = 2;
 	private final float SMALL_TAIL_LENGTH_IN_SECONDS = 0.25f;
 	private final float SLOPE_LENGTH_IN_SECONDS = 0.033f;
+
+    private SvarogAccess svarogAccess;
+	
+	public NewArtifactMethod(SvarogAccess svarogAccess) {
+	    super();
+	    this.svarogAccess = svarogAccess;
+	}
 
 	@Override
 	public Object doComputation(Object data, MethodExecutionTracker tracker)
@@ -188,14 +195,18 @@ public class NewArtifactMethod extends PluginAbstractMethod implements
 	@Override
 	public String getName() {
 		try {
-			return ((PluginConfigForMethod) PluginResourceRepository
-				.GetResource("config")).getMethodConfig().getMethodName();
-		} catch (PluginException e) {
+			return ((PluginConfigForMethod) getSvarogAccess().getConfigAccess()
+				.getResource("config")).getMethodConfig().getMethodName();
+		} catch (SignalMLException e) {
 			return "";
 		}
 	}
 
-	@Override
+	private SvarogAccess getSvarogAccess() {
+	    return svarogAccess;
+    }
+
+    @Override
 	public Class<?> getResultClass() {
 		return NewArtifactResult.class;
 	}

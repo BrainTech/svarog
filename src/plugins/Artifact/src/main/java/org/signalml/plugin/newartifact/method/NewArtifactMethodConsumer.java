@@ -13,13 +13,11 @@ import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.method.Method;
-import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.export.signal.ExportedTagDocument;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.FileChooser;
-import org.signalml.plugin.i18n.PluginMessageSourceManager;
 import org.signalml.plugin.method.IPluginMethodResultConsumer;
 import org.signalml.plugin.method.PluginMethodManager;
 import org.signalml.plugin.newartifact.data.NewArtifactApplicationData;
@@ -54,10 +52,10 @@ public class NewArtifactMethodConsumer implements IPluginMethodResultConsumer {
 		this.fileChooser = manager.getSvarogAccess().getGUIAccess().getFileChooser();
 
 		try {
-			this.resultDialog = new NewArtifactResultDialog(
-				PluginMessageSourceManager.GetMessageSource(),
+			this.resultDialog = new NewArtifactResultDialog(manager.getSvarogAccess(),
+				manager.getSvarogAccess().getConfigAccess().getMessageSource(),
 				this.dialogParent, true);
-		} catch (PluginException e) {
+		} catch (SignalMLException e) {
 			manager.handleException(e);
 			return;
 		}

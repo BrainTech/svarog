@@ -4,6 +4,8 @@ import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Methods and tasks in Svarog core (facade for Svarog plugins).
+ * 
+ * Currently this is a piece of junk as those parts of Svarog need to be rewritten. :-(
  *
  * @author Stanislaw Findeisen
  */
