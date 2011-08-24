@@ -7,9 +7,11 @@ package org.signalml.domain.signal;
 import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
+import org.signalml.domain.montage.filter.iirdesigner.ArrayOperations;
 import org.signalml.domain.montage.filter.iirdesigner.BadFilterParametersException;
 import org.signalml.domain.montage.filter.iirdesigner.FilterCoefficients;
 import org.signalml.domain.montage.filter.iirdesigner.IIRDesigner;
+import org.signalml.domain.montage.filter.iirdesigner.InitalStateCalculator;
 
 /**
  * This class represents a Time Domain (IIR or FIR) filter of samples.
@@ -40,7 +42,8 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 	 * the order of the {@link TimeDomainSampleFilter filter}.
 	 */
 	protected int filterOrder;
-	protected boolean use_cache=true;
+	protected boolean use_cache = true;
+        protected boolean useFiltFilt = true;
 
 	/**
 	 * Constructor. Creates an engine of a filter for provided
@@ -194,22 +197,39 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 		return newFilteredSamples;
 	}
 
-	/**
+        /**
 	 * Filters the given data using the specified digital filter.
 	 * @param bCoefficients feedforward coefficients of the filter
 	 * @param aCoefficients feedback coeffcients of the filter
 	 * @param input the input signal to be filtered
 	 * @return the input signal after filtering
 	 */
-	public static double[] filter(double[] bCoefficients, double[] aCoefficients, double[] input) {
+        public static double[] filter(double[] bCoefficients, double[] aCoefficients, double[] input) {
+               return filter(bCoefficients, aCoefficients, input, null);
+        }
+
+	/**
+	 * Filters the given data using the specified digital filter.
+	 * @param bCoefficients feedforward coefficients of the filter
+	 * @param aCoefficients feedback coeffcients of the filter
+	 * @param input the input signal to be filtered
+         * @param initialState initial conditions for the filter delays. If is null, then initial rest
+         * is assumed.
+	 * @return the input signal after filtering
+	 */
+	public static double[] filter(double[] bCoefficients, double[] aCoefficients, double[] input, double[] initialState) {
 
 		int filterOrder = Math.max(aCoefficients.length - 1, bCoefficients.length - 1);
 		int cacheSize = filterOrder + input.length;
 		double[] unfilteredSamplesCache = new double[cacheSize];
 		double[] filteredSamplesCache = new double[cacheSize];
 
-		for (int i = 0; i < filterOrder; i++)
+		for (int i = 0; i < filterOrder; i++) {
+                    if (initialState == null)
 			unfilteredSamplesCache[i] = 0.0;
+                    else
+                        unfilteredSamplesCache[i] = initialState[i];
+                }
 		for (int i = filterOrder; i < unfilteredSamplesCache.length; i++)
 			unfilteredSamplesCache[i] = input[i - filterOrder];
 
@@ -266,28 +286,73 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 		if (use_cache) { //check updateCache
 			filtered.getSamples(target, signalOffset, count, arrayOffset);
 		} else {
-
-			//filter signal from prefixCount samples before requested starting point (IIR filters are unstable at the beginning)
-			int prefixCount = 10240; //1024*10 - 10secs for 1024 samplingFreq
-			if (signalOffset < prefixCount) //fix prefix if some starting area of the signal is requested
-				prefixCount = signalOffset;
-
-			int filteredCount = count + prefixCount;//samples to filter
-
-			//get data from source and filter it
-			double[] input = new double[filteredCount];
-			source.getSamples(input, signalOffset-prefixCount, filteredCount, 0);
-			double[] newFilteredSamples = filter(bCoefficients, aCoefficients, input);
-
-			//get last filteredCount - prefixCount = count samples and return it
-			filtered = new RoundBufferSampleSource(count);
-			for (int i = 0; i < count; i++)
-				filtered.addSample(newFilteredSamples[i+prefixCount]);
-
-			filtered.getSamples(target, 0, count, arrayOffset);
-
-			
+			filterOffline(target, signalOffset, count, arrayOffset);
 		}
 	}
+
+        private synchronized void filterOffline(double[] target, int signalOffset, int count, int arrayOffset) {
+
+            //filter signal from prefixCount samples before requested starting point (IIR filters are unstable at the beginning)
+                int leftPrefixCount = 10240; //1024*10 - 10secs for 1024 samplingFreq
+                if (signalOffset - leftPrefixCount < 0) //fix prefix if some starting area of the signal is requested
+                        leftPrefixCount = signalOffset;
+
+                int rightPrefixCount = 0;
+                if (useFiltFilt) {//for filt filt right prefix is also needed
+                    rightPrefixCount = 10240;
+                    if (signalOffset + count + rightPrefixCount > source.getSampleCount())
+                        rightPrefixCount = source.getSampleCount() - signalOffset - count;
+                }
+
+                int filteredCount = leftPrefixCount + count + rightPrefixCount;//samples to filter
+
+                //get data from source and filter it
+                double[] input = new double[filteredCount];
+                source.getSamples(input, signalOffset-leftPrefixCount, filteredCount, 0);
+
+                double[] newFilteredSamples = null;
+                if (useFiltFilt) {
+                    newFilteredSamples = filterFiltFilt(input);
+                }
+                else {
+                    newFilteredSamples = filter(bCoefficients, aCoefficients, input, null);
+                }
+
+                //get last filteredCount - prefixCount = count samples and return it
+                filtered = new RoundBufferSampleSource(count);
+                for (int i = 0; i < count; i++)
+                        filtered.addSample(newFilteredSamples[i+leftPrefixCount]);
+
+                filtered.getSamples(target, 0, count, arrayOffset);
+        }
+
+        private double[] filterFiltFilt(double[] signal) {
+            InitalStateCalculator initalStateCalculator = new InitalStateCalculator(new FilterCoefficients(bCoefficients, aCoefficients));
+            double[] initialState = initalStateCalculator.getInitialState();
+            double[] grownSignal = initalStateCalculator.growSignal(signal);
+            double[] filteredSamples;
+
+            //right-wise
+            double[] initialStateRightwise = new double[initialState.length];
+            for (int i = 0; i < initialStateRightwise.length; i++)
+                initialStateRightwise[i] = initialState[i] * grownSignal[0];
+            filteredSamples = filter(bCoefficients, aCoefficients, grownSignal, initialStateRightwise);
+
+            filteredSamples = ArrayOperations.reverse(filteredSamples);
+
+            //left-wise
+            double[] initialStateLeftwise = new double[initialState.length];
+            for (int i = 0; i < initialStateLeftwise.length; i++)
+                initialStateLeftwise[i] = initialState[i] * filteredSamples[0];
+            filteredSamples = filter(bCoefficients, aCoefficients, filteredSamples, initialStateLeftwise);
+
+            filteredSamples = ArrayOperations.reverse(filteredSamples);
+
+            //shorten
+            int padding = (grownSignal.length - signal.length) / 2;
+            double[] result = new double[signal.length];
+            System.arraycopy(filteredSamples, padding, result, 0, signal.length);
+            return result;
+        }
 
 }
