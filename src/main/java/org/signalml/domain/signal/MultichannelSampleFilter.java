@@ -300,7 +300,9 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 						else
 							input = chain.getLast();
 
-						addFilter(new TimeDomainSampleFilterEngine(input, tdsFilter), e);
+						TimeDomainSampleFilterEngine timeDomainSampleFilterEngine = new TimeDomainSampleFilterEngine(input, tdsFilter);
+						timeDomainSampleFilterEngine.setFiltfiltEnabled(montage.isFiltfiltEnabled());
+						addFilter(timeDomainSampleFilterEngine, e);
 
 					}
 

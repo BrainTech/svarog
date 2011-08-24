@@ -896,6 +896,9 @@
 	<entry key="montageFilters.masterSwitchTitle">Filtering master switch</entry>
 	<entry key="montageFilters.filteringEnabled">Enable signal filtering</entry>
 
+	<entry key="montageFilters.enableFiltfiltTitle">Filtfilt filtering switch</entry>
+	<entry key="montageFilters.enableFiltfiltLabel">Enable filtfilt filtering (only for offline signals)</entry>
+
 	<entry key="montageFilters.filtersTableTitle">Filters</entry>
 	<entry key="montageFilters.newFFT">New FFT filter</entry>
 	<entry key="montageFilters.newTimeDomainFilter">New time domain filter</entry>

@@ -355,4 +355,8 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
             return result;
         }
 
+	public void setFiltfiltEnabled(boolean filtfiltEnabled) {
+		this.useFiltFilt = filtfiltEnabled;
+	}
+
 }

@@ -82,6 +82,7 @@ public class MontageFiltersPanel extends JPanel {
 	private float currentSamplingFrequency;
 
 	private JCheckBox filteringEnabledCheckBox;
+	private JCheckBox filtfiltEnabledCheckBox;
 
 	private MontageFiltersTableModel filtersTableModel;
 	private MontageFiltersTable filtersTable;
@@ -181,21 +182,16 @@ public class MontageFiltersPanel extends JPanel {
 
 		setLayout(new GridLayout(1, 2, 3, 3));
 
-		JPanel masterSwitchPanel = new JPanel(new BorderLayout(3, 3));
+		JPanel masterSwitchPanel = createMasterSwitchPanel();
+		JPanel enableFiltfiltPanel = createEnableFiltfiltPanel();
 
-		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("montageFilters.masterSwitchTitle")),
-		        new EmptyBorder(3, 3, 3, 3)
-		);
-		masterSwitchPanel.setBorder(border);
+		JPanel filteringOptionsPanel = new JPanel(new BorderLayout(3, 3));
+		filteringOptionsPanel.add(masterSwitchPanel, BorderLayout.NORTH);
+		filteringOptionsPanel.add(enableFiltfiltPanel, BorderLayout.SOUTH);
 
-		JLabel filteringEnabledLabel = new JLabel(messageSource.getMessage("montageFilters.filteringEnabled"));
-
-		masterSwitchPanel.add(filteringEnabledLabel, BorderLayout.CENTER);
-		masterSwitchPanel.add(getFilteringEnabledCheckBox(), BorderLayout.EAST);
-
+                //filters table panel
 		JPanel filtersTablePanel = new JPanel(new BorderLayout(3, 3));
-		border = new CompoundBorder(
+		CompoundBorder border = new CompoundBorder(
 		        new TitledBorder(messageSource.getMessage("montageFilters.filtersTableTitle")),
 		        new EmptyBorder(3, 3, 3, 3)
 		);
@@ -243,7 +239,7 @@ public class MontageFiltersPanel extends JPanel {
 
 		JPanel leftPanel = new JPanel(new BorderLayout());
 
-		leftPanel.add(masterSwitchPanel, BorderLayout.NORTH);
+		leftPanel.add(filteringOptionsPanel, BorderLayout.NORTH);
 		leftPanel.add(filtersTablePanel, BorderLayout.CENTER);
 		leftPanel.add(bottomLeftPanel, BorderLayout.SOUTH);
 
@@ -266,6 +262,38 @@ public class MontageFiltersPanel extends JPanel {
 
 	}
 
+	private JPanel createMasterSwitchPanel() {
+		JPanel masterSwitchPanel = new JPanel(new BorderLayout(3, 3));
+
+		CompoundBorder border = new CompoundBorder(
+			new TitledBorder(messageSource.getMessage("montageFilters.masterSwitchTitle")),
+			new EmptyBorder(3, 3, 3, 3));
+		masterSwitchPanel.setBorder(border);
+
+		JLabel filteringEnabledLabel = new JLabel(messageSource.getMessage("montageFilters.filteringEnabled"));
+
+		masterSwitchPanel.add(filteringEnabledLabel, BorderLayout.CENTER);
+		masterSwitchPanel.add(getFilteringEnabledCheckBox(), BorderLayout.EAST);
+
+		return masterSwitchPanel;
+	}
+
+	private JPanel createEnableFiltfiltPanel() {
+		JPanel enableFiltfiltPanel = new JPanel(new BorderLayout(3, 3));
+
+		CompoundBorder border = new CompoundBorder(
+			new TitledBorder(messageSource.getMessage("montageFilters.enableFiltfiltTitle")),
+			new EmptyBorder(3, 3, 3, 3));
+		enableFiltfiltPanel.setBorder(border);
+
+		JLabel filtfiltEnabledLabel = new JLabel(messageSource.getMessage("montageFilters.enableFiltfiltLabel"));
+
+		enableFiltfiltPanel.add(filtfiltEnabledLabel, BorderLayout.CENTER);
+		enableFiltfiltPanel.add(getFiltfiltEnabledCheckBox(), BorderLayout.EAST);
+
+		return enableFiltfiltPanel;
+	}
+
 	public JCheckBox getFilteringEnabledCheckBox() {
 		if (filteringEnabledCheckBox == null) {
 			filteringEnabledCheckBox = new JCheckBox();
@@ -282,6 +310,23 @@ public class MontageFiltersPanel extends JPanel {
 			});
 		}
 		return filteringEnabledCheckBox;
+	}
+
+	public JCheckBox getFiltfiltEnabledCheckBox() {
+		if (filtfiltEnabledCheckBox == null) {
+			filtfiltEnabledCheckBox = new JCheckBox();
+
+			filtfiltEnabledCheckBox.addItemListener(new ItemListener() {
+
+				@Override
+				public void itemStateChanged(ItemEvent e) {
+					if (montage != null) {
+						montage.setFiltfiltEnabled(getFiltfiltEnabledCheckBox().isSelected());
+					}
+				}
+			});
+		}
+		return filtfiltEnabledCheckBox;
 	}
 
 	public MontageFiltersTableModel getFiltersTableModel() {
@@ -491,9 +536,11 @@ public class MontageFiltersPanel extends JPanel {
 				updatePredefinedTimeDomainFiltersComboBox();
 
 				getFilteringEnabledCheckBox().setSelected(montage.isFilteringEnabled());
+                                getFiltfiltEnabledCheckBox().setSelected(montage.isFiltfiltEnabled());
 			} else {
 				getTimeDomainFilterTypeComboBox().setModel(new DefaultComboBoxModel(new Object[0]));
 				getFilteringEnabledCheckBox().setSelected(false);
+                                getFiltfiltEnabledCheckBox().setSelected(false);
 			}
 		}
 	}
