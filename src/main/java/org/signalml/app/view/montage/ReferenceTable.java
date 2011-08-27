@@ -32,20 +32,50 @@ import javax.swing.table.TableModel;
 
 import org.signalml.app.montage.ReferenceTableModel;
 import org.signalml.app.view.element.CenteringTableCellRenderer;
+import org.signalml.domain.montage.MontageChannel;
 
-/** ReferenceTable
- *
+/**
+ * The table which displays the reference between {@link MontageChannel montage
+ * channels} and original channels.
+ * This table has: 
+ * <ul>
+ * <li>no header,</li>
+ * <li>{@link ListSelectionModel#SINGLE_SELECTION single selection}
+ * mode,</li>
+ * <li>{@link #CELL_SIZE} height and width of the cells,</li>
+ * <li>{@link HeaderTable} at the headers of rows and columns,</li>
+ * <li>{@link CornerPanel} at the upper left corner,</li>
+ * <li>{@link ReferenceTableModel} as the model.</li></ul>
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ReferenceTable extends JTable implements ActionListener {
 
+	/**
+	 * the default serialization constant
+	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * the color used if the cell is not editable
+	 */
 	public static final Color DISABLED_COLOR = new Color(220,220,220);
 
+	/**
+	 * the height of the row
+	 */
 	private static final int CELL_SIZE = 35;
 
+	/**
+	 * Constructor. Creates the table:
+	 * <ul>
+	 * <li>without header,</li>
+	 * <li>with the {@link ListSelectionModel#SINGLE_SELECTION single selection}
+	 * mode,</li>
+	 * <li>with the {@link #CELL_SIZE} height of the row,</li>
+	 * <li>without autoresize.</li></ul>
+	 * @param model data {@link ReferenceTableModel model} for this table
+	 */
 	public ReferenceTable(ReferenceTableModel model) {
 
 		super(model);
@@ -65,6 +95,15 @@ public class ReferenceTable extends JTable implements ActionListener {
 	    this.registerKeyboardAction(this,"Paste",paste,JComponent.WHEN_FOCUSED);
 	}
 
+	/**
+	 * Does almost the same as {@link JTable#configureEnclosingScrollPane()
+	 * parent method} but:
+	 * <ul>
+	 * <li>sets {@link HeaderTable} as a column and row header view,</li>
+	 * <li>sets the {@link CornerPanel} in the
+	 * {@link ScrollPaneConstants#UPPER_LEFT_CORNER upper left corner}.</li>
+	 * </ul>
+	 */
 	@Override
 	protected void configureEnclosingScrollPane() {
 		super.configureEnclosingScrollPane();
@@ -91,6 +130,16 @@ public class ReferenceTable extends JTable implements ActionListener {
 		}
 	}
 
+	/**
+	 * Does almost the same as {@link JTable#configureEnclosingScrollPane()
+	 * parent method} but:
+	 * <ul>
+	 * <li>sets the row and column headers to {@code null},</li>
+	 * <li>sets the corner in
+	 * {@link ScrollPaneConstants#UPPER_LEFT_CORNER upper left corner}
+	 * to {@code null}.</li>
+	 * </ul>
+	 */
 	@Override
 	protected void unconfigureEnclosingScrollPane() {
 		super.unconfigureEnclosingScrollPane();
@@ -110,6 +159,10 @@ public class ReferenceTable extends JTable implements ActionListener {
 		}
 	}
 
+	/**
+	 * Does the same as {@link JTable#columnAdded(TableColumnModelEvent)} and
+	 * sets the preferred width of the cell to {@link #CELL_SIZE}.
+	 */
 	@Override
 	public void columnAdded(TableColumnModelEvent e) {
 		super.columnAdded(e);
@@ -117,6 +170,9 @@ public class ReferenceTable extends JTable implements ActionListener {
 		getColumnModel().getColumn(index).setPreferredWidth(CELL_SIZE);
 	}
 
+	/**
+	 * Returns the value of the cell as the text for the tool-tip.
+	 */
 	@Override
 	public String getToolTipText(MouseEvent event) {
 		Point p = event.getPoint();
@@ -129,16 +185,35 @@ public class ReferenceTable extends JTable implements ActionListener {
 		}
 	}
 
+	/**
+	 * The panel used at the corner of the {@link ReferenceTable}.
+	 * It is a square with {@link ReferenceTable#DISABLED_COLOR} background
+	 * and two lines that separate it from other cells.
+	 */
 	private class CornerPanel extends JPanel {
 
+		/**
+		 * the default serialization constant
+		 */
 		private static final long serialVersionUID = 1L;
 
+		/**
+		 * Constructor. Sets:
+		 * <ul><li> the background color to {@link
+		 * ReferenceTable#DISABLED_COLOR},</li>
+		 * <li>the width and height both to {@link ReferenceTable#CELL_SIZE}.
+		 * </li></ul> 
+		 */
 		public CornerPanel() {
 			super();
 			setBackground(DISABLED_COLOR);
 			setPreferredSize(new Dimension(CELL_SIZE,CELL_SIZE));
 		}
 
+		/**
+		 * {@link JPanel#paintComponents(Graphics) Paints} this component
+		 * and two lines that separate it from other cells.
+		 */
 		@Override
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
@@ -152,10 +227,36 @@ public class ReferenceTable extends JTable implements ActionListener {
 
 	}
 
+	/**
+	 * The table used at the row and column headers in {@link ReferenceTable}.
+	 * It has:
+	 * <ul>
+	 * <li>{@link ReferenceTable#DISABLED_COLOR} as background color,</li>
+	 * <li>{@link ListSelectionModel#SINGLE_SELECTION single selection}
+	 * mode,</li>
+	 * <li>{@link ReferenceTable#CELL_SIZE CELL_SIZE} as the row height and
+	 * width,</li>
+	 * <li>the values centered in the cell.</li></ul> 
+	 */
 	private class HeaderTable extends JTable {
 
+		/**
+		 * the default serialization constant
+		 */
 		private static final long serialVersionUID = 1L;
 
+		/**
+		 * Constructor. Sets:
+		 * <ul>
+		 * <li>{@link ReferenceTable#DISABLED_COLOR} as background color,</li>
+		 * <li>{@link ListSelectionModel#SINGLE_SELECTION single selection}
+		 * mode,</li>
+		 * <li>that the values are centered,</li>
+		 * <li>the row height to {@link ReferenceTable#CELL_SIZE} and no
+		 * autoresize.</li>
+		 * </ul>
+		 * @param dm the data model for the table
+		 */
 		public HeaderTable(TableModel dm) {
 			super(dm);
 
@@ -171,6 +272,10 @@ public class ReferenceTable extends JTable implements ActionListener {
 			setToolTipText("");
 		}
 
+		/**
+		 * Returns the value of the cell (the name of the column or the row)
+		 * as the tooltip text.
+		 */
 		@Override
 		public String getToolTipText(MouseEvent event) {
 			Point p = event.getPoint();
@@ -183,6 +288,11 @@ public class ReferenceTable extends JTable implements ActionListener {
 			}
 		}
 
+		/**
+		 * Does the same as {@link JTable#columnAdded(TableColumnModelEvent)} and
+		 * sets the preferred width of the cell to {@link
+		 * ReferenceTable#CELL_SIZE}.
+		 */
 		@Override
 		public void columnAdded(TableColumnModelEvent e) {
 			super.columnAdded(e);
@@ -190,6 +300,11 @@ public class ReferenceTable extends JTable implements ActionListener {
 			getColumnModel().getColumn(index).setPreferredWidth(CELL_SIZE);
 		}
 
+		/**
+		 * Returns the preferred size of this table as:
+		 * {@link ReferenceTable#CELL_SIZE CELL_SIZE}{@code
+		 * *column_count x CELL_SIZE*row_count}
+		 */
 		@Override
 		public Dimension getPreferredSize() {
 			return new Dimension(getColumnCount()*CELL_SIZE, getRowCount()*CELL_SIZE);

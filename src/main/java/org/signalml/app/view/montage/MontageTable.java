@@ -20,21 +20,67 @@ import org.signalml.app.montage.MontageTableModel;
 import org.signalml.app.view.TablePopupMenuProvider;
 import org.signalml.app.view.element.GrayTableCellRenderer;
 import org.signalml.app.view.montage.dnd.MontageTableTransferHandler;
+import org.signalml.domain.montage.MontageChannel;
+import org.signalml.domain.montage.SourceChannel;
 import org.springframework.context.support.MessageSourceAccessor;
 
-/** MontageTable
- *
+/**
+ * The table which allows to edit the labels and the order (the indexes) of
+ * {@link MontageChannel montage channels}.
+ * This table has 3 columns:
+ * <ul>
+ * <li>the column with the index of the {@link MontageChannel montage
+ * channel}; the column is gray and ineditable,</li>
+ * <li>the column with the label of the {@link SourceChannel source channel}
+ * which is the base for the motage channel; the column is gray and
+ * ineditable,</li>
+ * <li>the column with the label of the montage channel (default type),</li>
+ * </ul>
+ * Multiple rows of this table can be selected but the columns
+ * can not be selected at all.
+ * <p>
+ * The order (and the indexes) of the channels can be changed with
+ * drag and drop.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class MontageTable extends JTable {
 
+	/**
+	 * the default serialization constant
+	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * the logger
+	 */
 	protected static final Logger logger = Logger.getLogger(MontageTable.class);
 
+	/**
+	 * the {@link TablePopupMenuProvider popup menu provider} for this table
+	 */
 	private TablePopupMenuProvider popupMenuProvider;
 
+	/**
+	 * Creates the table with 3 columns:
+	 * <ul>
+	 * <li>the column with the index of the {@link MontageChannel montage
+	 * channel}; the column is gray and ineditable,</li>
+	 * <li>the column with the label of the {@link SourceChannel source channel}
+	 * which is the base for the motage channel; the column is gray and
+	 * ineditable,</li>
+	 * <li>the column with the label of the montage channel (default type),</li>
+	 * </ul>
+	 * Multiple rows of this table can be selected but the columns
+	 * can not be selected at all.
+	 * <p>
+	 * The order (and the indexes) of the channels can be changed with
+	 * drag and drop.
+	 * @param model the {@link MontageTableModel model} for this table
+	 * @param messageSource the source of messages (labels)
+	 * @param simplified <code>true</code> if the index column should be
+	 * omitted, <code>false</code> otherwise
+	 */
 	public MontageTable(MontageTableModel model, MessageSourceAccessor messageSource, boolean simplified) {
 		super(model, (TableColumnModel) null);
 
@@ -97,11 +143,18 @@ public class MontageTable extends JTable {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.JTable#getModel()
+	 */
 	@Override
 	public MontageTableModel getModel() {
 		return (MontageTableModel) super.getModel();
 	}
 
+	/**
+	 * Returns a {@link TablePopupMenuProvider#getPopupMenu(int, int) popup
+	 * menu} for a selected row from {@link #popupMenuProvider}.
+	 */
 	@Override
 	public JPopupMenu getComponentPopupMenu() {
 		if (popupMenuProvider == null) {
@@ -110,10 +163,25 @@ public class MontageTable extends JTable {
 		return popupMenuProvider.getPopupMenu(-1, getSelectedRow());
 	}
 
+	/**
+	 * Gets the {@link TablePopupMenuProvider popup menu provider} for this
+	 * table.
+	 * 
+	 * @return the {@link TablePopupMenuProvider popup menu provider} for this
+	 *         table
+	 */
 	public TablePopupMenuProvider getPopupMenuProvider() {
 		return popupMenuProvider;
 	}
 
+	/**
+	 * Sets the {@link TablePopupMenuProvider popup menu provider} for this
+	 * table.
+	 * 
+	 * @param popupMenuProvider
+	 *            the new {@link TablePopupMenuProvider popup menu provider} for
+	 *            this table
+	 */
 	public void setPopupMenuProvider(TablePopupMenuProvider popupMenuProvider) {
 		this.popupMenuProvider = popupMenuProvider;
 	}
