@@ -134,6 +134,11 @@ public class MontageFiltersPanel extends JPanel {
 	 * {@link Montage#isFiltered() filtered}.
 	 */
 	private JCheckBox filteringEnabledCheckBox;
+
+	/**
+	 * checkbox which can be used to enable/disable forward-backward
+	 * (filtfilt) filtering ({@link Montage#setFiltfiltEnabled(boolean)}).
+	 */
 	private JCheckBox filtfiltEnabledCheckBox;
 
 	/**
@@ -393,6 +398,10 @@ public class MontageFiltersPanel extends JPanel {
 
 	}
 
+	/**
+	 * Creates and returns the panel containing the master switch (filters on/off).
+	 * @return the filters on/off panel
+	 */
 	private JPanel createMasterSwitchPanel() {
 		JPanel masterSwitchPanel = new JPanel(new BorderLayout(3, 3));
 
@@ -409,6 +418,11 @@ public class MontageFiltersPanel extends JPanel {
 		return masterSwitchPanel;
 	}
 
+	/**
+	 * Creates and returns the panel containing the checkbox for enabling/disabling
+	 * filtfilt.
+	 * @return the panel with the filtfilt enable checkbox
+	 */
 	private JPanel createEnableFiltfiltPanel() {
 		JPanel enableFiltfiltPanel = new JPanel(new BorderLayout(3, 3));
 
@@ -450,6 +464,14 @@ public class MontageFiltersPanel extends JPanel {
 		return filteringEnabledCheckBox;
 	}
 
+	/**
+	 * Gets the check box which states if the signal should be
+	 * filtered using filtfilt algorithm
+	 * ({@link Montage#isFiltfiltEnabled()}.
+	 *
+	 * @return the check box which states if the signal should be
+	 *         filtered using filtfilt algorithm
+	 */
 	public JCheckBox getFiltfiltEnabledCheckBox() {
 		if (filtfiltEnabledCheckBox == null) {
 			filtfiltEnabledCheckBox = new JCheckBox();
@@ -771,11 +793,11 @@ public class MontageFiltersPanel extends JPanel {
 				updatePredefinedTimeDomainFiltersComboBox();
 
 				getFilteringEnabledCheckBox().setSelected(montage.isFilteringEnabled());
-                                getFiltfiltEnabledCheckBox().setSelected(montage.isFiltfiltEnabled());
+				getFiltfiltEnabledCheckBox().setSelected(montage.isFiltfiltEnabled());
 			} else {
 				getTimeDomainFilterTypeComboBox().setModel(new DefaultComboBoxModel(new Object[0]));
 				getFilteringEnabledCheckBox().setSelected(false);
-                                getFiltfiltEnabledCheckBox().setSelected(false);
+				getFiltfiltEnabledCheckBox().setSelected(false);
 			}
 		}
 	}

@@ -40,6 +40,9 @@ public class TimeDomainSampleFilterEngineTest {
 	 */
 	private TimeDomainSampleFilterEngine engine;
 
+	/**
+	 * A few samples which can be used as an input data.
+	 */
 	private double[] shortSignal = new double[] {
 			-0.84293027, -0.92374498, -0.88684131, -0.84391936, -0.87729384,
 		       -0.76973675, -0.77477867, -0.77924067, -0.68329653, -0.68361526,
@@ -375,12 +378,12 @@ public class TimeDomainSampleFilterEngineTest {
 	 * Test method for {@link TimeDomainSampleFilterEngine#filter(double[], double[], double[])}.
 	 */
 	@Test
-	public void testFilter() {
+	public void testFilterUsingCache() {
 		//test1
 		double[] bCoefficients = new double[] {0.6, 0.22};
 		double[] aCoefficients = new double[] {1, 0.3,  0.4};
 		double[] input = new double[] {1, 2, 3, 4, 5, 6, 7, 8};
-		double[] filtered = TimeDomainSampleFilterEngine.filter(bCoefficients, aCoefficients, input);
+		double[] filtered = TimeDomainSampleFilterEngine.filterUsingCache(bCoefficients, aCoefficients, input);
 
 		assertArrayEquals(new double[] {0.6, 1.24, 1.628, 2.0756, 2.60612, 3.087924,
 		3.5511748, 4.03947796}, filtered, 0.0001);
@@ -405,10 +408,13 @@ public class TimeDomainSampleFilterEngineTest {
 			-5.55987815e-01,  -5.25304624e-01
 		};
 
-		filtered = TimeDomainSampleFilterEngine.filter(bCoefficients, aCoefficients, shortSignal);
+		filtered = TimeDomainSampleFilterEngine.filterUsingCache(bCoefficients, aCoefficients, shortSignal);
 		assertArrayEquals(expected, filtered, 1e-4);
 	}
 
+	/**
+	 * Test method for {@link TimeDomainSampleFilterEngine#filter(double[], double[], double[], double[]) }
+	 */
 	@Test
 	public void testFilterWithInitialState() {
 
@@ -435,6 +441,10 @@ public class TimeDomainSampleFilterEngineTest {
 
 	}
 
+	/**
+	 * Test method for {@link TimeDomainSampleFilterEngine#filterOffline(int, int) }
+	 * (with filtfilt enabled).
+	 */
 	@Test
 	public void testFiltfiltFilter() {
 
@@ -538,7 +548,8 @@ public class TimeDomainSampleFilterEngineTest {
 		engine.setFiltfiltEnabled(true);
 
 		double[] actualFilteringResult = new double[expectedFilteringResult.length];
-		engine.filterOffline(actualFilteringResult, 0, actualFilteringResult.length, 0);
+		engine.filterOffline(0, actualFilteringResult.length);
+		actualFilteringResult = engine.filtered.getSamples();
 
 		assertArrayEquals(expectedFilteringResult, actualFilteringResult, 1e-1);
 

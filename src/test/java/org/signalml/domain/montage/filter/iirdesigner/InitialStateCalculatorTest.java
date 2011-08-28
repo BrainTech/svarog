@@ -4,7 +4,6 @@
 
 package org.signalml.domain.montage.filter.iirdesigner;
 
-import org.apache.commons.math.complex.Complex;
 import org.apache.commons.math.linear.Array2DRowRealMatrix;
 import org.apache.commons.math.linear.ArrayRealVector;
 import org.apache.commons.math.linear.RealMatrix;
@@ -152,28 +151,32 @@ public class InitialStateCalculatorTest {
 
 	}
 
-        /**
-	 * Test method for {@link InitalStateCalculator#getInitialState() }.
+	/**
+	 * Test method for {@link InitalStateCalculator#growSignal(double[])  }.
 	 */
 	@Test
 	public void testGrowSignal() {
-            double[] signal = new double[20]; //1, 2, 3, ...., 20
-            for (int i = 0; i < 20; i++) {
-                signal[i] = i + 1;
-            }
+		double[] signal = new double[20]; //1, 2, 3, ...., 20
+		for (int i = 0; i < 20; i++) {
+			signal[i] = i + 1;
+		}
 
-            InitalStateCalculator calculator = new InitalStateCalculator(getSampleFilterCoefficients1());
-            double[] grownSignal = calculator.growSignal(signal);
-            double[] expected = new double[]
-                {-10, -9, -8, -7, -6,  -5,  -4,  -3,  -2,  -1,   0, 1,   2,
-                3,   4,   5,   6,   7,   8,   9,  10,  11,  12,  13,  14,  15,
-                16,  17,  18,  19,  20,  21,  22,  23,  24,  25,  26,  27,  28,
-                29,  30,  31 };
+		InitalStateCalculator calculator = new InitalStateCalculator(getSampleFilterCoefficients1());
+		double[] grownSignal = calculator.growSignal(signal);
+		double[] expected = new double[]{-10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2,
+			3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+			16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28,
+			29, 30, 31};
 
-            assertEquals(42, grownSignal.length);
-            assertArrayEquals(expected, grownSignal, 1e-4);
-        }
+		assertEquals(42, grownSignal.length);
+		assertArrayEquals(expected, grownSignal, 1e-4);
+	}
 
+	/**
+	 * This method tests the whole procedure for the InitialStateCalculator:
+	 * it calculates the initial state and then grows the signal, each step
+	 * is verified.
+	 */
 	@Test
 	public void wholeProcedureTest() {
 		double[] signal = new double[] {
@@ -201,17 +204,16 @@ public class InitialStateCalculatorTest {
 			{0.00041655,  0.00124964,  0.00124964,  0.00041655};
 		double[] aCoefficients = new double[]
 			{1.        , -2.6861574 ,  2.41965511, -0.73016535};
-		InitalStateCalculator calculator = new InitalStateCalculator(new FilterCoefficients(bCoefficients, aCoefficients));
-		double[] actual = calculator.getInitialState();
 
+		InitalStateCalculator calculator = new InitalStateCalculator(new FilterCoefficients(bCoefficients, aCoefficients));
+
+		double[] actual = calculator.getInitialState();
 		double[] expected = new double[] {0.99958345, -1.68782358, 0.73058189};
 		assertArrayEquals(expected, actual, 1e-4);
 
 		double[] actualGrownSignal = calculator.growSignal(signal);
 		assertArrayEquals(grownSignal, actualGrownSignal, 1e-4);
 
-
 	}
-
 
 }
