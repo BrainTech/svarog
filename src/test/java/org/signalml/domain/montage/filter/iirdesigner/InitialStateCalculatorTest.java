@@ -4,6 +4,7 @@
 
 package org.signalml.domain.montage.filter.iirdesigner;
 
+import org.apache.commons.math.complex.Complex;
 import org.apache.commons.math.linear.Array2DRowRealMatrix;
 import org.apache.commons.math.linear.ArrayRealVector;
 import org.apache.commons.math.linear.RealMatrix;
@@ -148,6 +149,7 @@ public class InitialStateCalculatorTest {
 		expected = new double[] {3.17868852, 3.13934426, 1.2, 1.1, 0.4};
 
 		assertArrayEquals(expected, actual, 1e-4);
+
 	}
 
         /**
@@ -171,6 +173,45 @@ public class InitialStateCalculatorTest {
             assertEquals(42, grownSignal.length);
             assertArrayEquals(expected, grownSignal, 1e-4);
         }
+
+	@Test
+	public void wholeProcedureTest() {
+		double[] signal = new double[] {
+			-0.84293027, -0.92374498, -0.88684131, -0.84391936, -0.87729384,
+		       -0.76973675, -0.77477867, -0.77924067, -0.68329653, -0.68361526,
+		       -0.58494503, -0.73579347, -0.72676736, -0.61426226, -0.7348077 ,
+		       -0.63514914, -0.61154161, -0.5558349 , -0.53932159, -0.51812691,
+		       -0.47357742, -0.45951363, -0.48207101, -0.40786034, -0.36886221,
+		       -0.32913236, -0.22319939, -0.30716421, -0.29695674, -0.30282762,
+		       -0.1731335 , -0.29801377, -0.04960099, -0.10052872, -0.05416476};
+
+		double[] grownSignal = new double[] {
+			-0.95006707, -1.10091551, -1.00224528, -1.00256401, -0.90661987, -0.91108187,
+			 -0.91612379, -0.8085667,  -0.84194118, -0.79901923, -0.76211556, -0.84293027,
+			 -0.92374498, -0.88684131, -0.84391936, -0.87729384, -0.76973675, -0.77477867,
+			 -0.77924067, -0.68329653, -0.68361526, -0.58494503, -0.73579347, -0.72676736,
+			 -0.61426226, -0.7348077,  -0.63514914, -0.61154161, -0.5558349,  -0.53932159,
+			 -0.51812691, -0.47357742, -0.45951363, -0.48207101, -0.40786034, -0.36886221,
+			 -0.32913236, -0.22319939, -0.30716421, -0.29695674, -0.30282762, -0.1731335,
+			 -0.29801377, -0.04960099, -0.10052872, -0.05416476, -0.0078008,  -0.05872853,
+			  0.18968425,  0.06480398,  0.1944981,   0.18862722,  0.19883469,  0.11486987,
+			  0.22080284,  0.26053269,  0.29953082};
+
+		double[] bCoefficients = new double[]
+			{0.00041655,  0.00124964,  0.00124964,  0.00041655};
+		double[] aCoefficients = new double[]
+			{1.        , -2.6861574 ,  2.41965511, -0.73016535};
+		InitalStateCalculator calculator = new InitalStateCalculator(new FilterCoefficients(bCoefficients, aCoefficients));
+		double[] actual = calculator.getInitialState();
+
+		double[] expected = new double[] {0.99958345, -1.68782358, 0.73058189};
+		assertArrayEquals(expected, actual, 1e-4);
+
+		double[] actualGrownSignal = calculator.growSignal(signal);
+		assertArrayEquals(grownSignal, actualGrownSignal, 1e-4);
+
+
+	}
 
 
 }

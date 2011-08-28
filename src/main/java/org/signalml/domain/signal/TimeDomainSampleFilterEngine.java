@@ -204,8 +204,38 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 	 * @param input the input signal to be filtered
 	 * @return the input signal after filtering
 	 */
-        public static double[] filter(double[] bCoefficients, double[] aCoefficients, double[] input) {
-               return filter(bCoefficients, aCoefficients, input, null);
+        public static double[] filter(double[] bCoefficients, double[] aCoefficients, double[] input, double[] initialState) {
+
+		int bi, ai, zi; //arrays indexes
+		double[] filtered = new double[input.length];
+
+		for (int n = 0; n < input.length; n++) {
+			bi = 0;
+			ai = 0;
+			zi = 0;
+
+			if (bCoefficients.length > 1) {
+				filtered[n] = initialState[zi] + bCoefficients[bi] / aCoefficients[0] * input[n];
+				bi++;
+				ai++;
+
+				for (; zi < bCoefficients.length - 2; zi++) {
+					initialState[zi] = initialState[zi + 1] +
+						input[n] * bCoefficients[bi] / aCoefficients[0]
+						- filtered[n] * aCoefficients[ai] / aCoefficients[0];
+
+					bi++;
+					ai++;
+				}
+				initialState[zi] = input[n] * bCoefficients[bi] / aCoefficients[0]
+					- filtered[n] * aCoefficients[ai] / aCoefficients[0];
+			}
+			else {
+				filtered[n] = input[n] * bCoefficients[bi] / aCoefficients[0];
+			}
+		}
+
+		return filtered;
         }
 
 	/**
@@ -213,11 +243,10 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 	 * @param bCoefficients feedforward coefficients of the filter
 	 * @param aCoefficients feedback coeffcients of the filter
 	 * @param input the input signal to be filtered
-         * @param initialState initial conditions for the filter delays. If is null, then initial rest
          * is assumed.
 	 * @return the input signal after filtering
 	 */
-	public static double[] filter(double[] bCoefficients, double[] aCoefficients, double[] input, double[] initialState) {
+	public static double[] filter(double[] bCoefficients, double[] aCoefficients, double[] input) {
 
 		int filterOrder = Math.max(aCoefficients.length - 1, bCoefficients.length - 1);
 		int cacheSize = filterOrder + input.length;
@@ -225,10 +254,7 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 		double[] filteredSamplesCache = new double[cacheSize];
 
 		for (int i = 0; i < filterOrder; i++) {
-                    if (initialState == null)
 			unfilteredSamplesCache[i] = 0.0;
-                    else
-                        unfilteredSamplesCache[i] = initialState[i];
                 }
 		for (int i = filterOrder; i < unfilteredSamplesCache.length; i++)
 			unfilteredSamplesCache[i] = input[i - filterOrder];
@@ -290,7 +316,7 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 		}
 	}
 
-        private synchronized void filterOffline(double[] target, int signalOffset, int count, int arrayOffset) {
+        protected synchronized void filterOffline(double[] target, int signalOffset, int count, int arrayOffset) {
 
             //filter signal from prefixCount samples before requested starting point (IIR filters are unstable at the beginning)
                 int leftPrefixCount = 10240; //1024*10 - 10secs for 1024 samplingFreq
@@ -315,7 +341,7 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
                     newFilteredSamples = filterFiltFilt(input);
                 }
                 else {
-                    newFilteredSamples = filter(bCoefficients, aCoefficients, input, null);
+                    newFilteredSamples = filter(bCoefficients, aCoefficients, input);
                 }
 
                 //get last filteredCount - prefixCount = count samples and return it
@@ -334,16 +360,18 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 
             //right-wise
             double[] initialStateRightwise = new double[initialState.length];
-            for (int i = 0; i < initialStateRightwise.length; i++)
+            for (int i = 0; i < initialStateRightwise.length; i++) {
                 initialStateRightwise[i] = initialState[i] * grownSignal[0];
+	    }
             filteredSamples = filter(bCoefficients, aCoefficients, grownSignal, initialStateRightwise);
 
             filteredSamples = ArrayOperations.reverse(filteredSamples);
 
             //left-wise
             double[] initialStateLeftwise = new double[initialState.length];
-            for (int i = 0; i < initialStateLeftwise.length; i++)
-                initialStateLeftwise[i] = initialState[i] * filteredSamples[0];
+            for (int i = 0; i < initialStateLeftwise.length; i++) {
+                initialStateLeftwise[i] = initialState[i] * filteredSamples[filteredSamples.length - 1];
+	    }
             filteredSamples = filter(bCoefficients, aCoefficients, filteredSamples, initialStateLeftwise);
 
             filteredSamples = ArrayOperations.reverse(filteredSamples);
