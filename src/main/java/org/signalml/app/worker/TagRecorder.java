@@ -4,19 +4,23 @@
 
 package org.signalml.app.worker;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
+import java.util.SortedSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.signalml.app.document.TagDocument;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Tag;
-
 import org.signalml.domain.tag.MonitorTag;
-import org.signalml.plugin.export.signal.TagStyle;
+import org.signalml.domain.tag.StyledTagSetConverter;
 
 /**
  * This class allows to record tags from a {@link MonitorWorker}. To start recording
@@ -48,6 +52,16 @@ public class TagRecorder {
          * Whether the worker is finished.
          */
         private volatile boolean finished;
+
+        /**
+         * Ending of the file (everything after last tag).
+         */
+        private String fileEnding;
+        
+        /**
+         * Length of {@link #fileEnding} in bytes.
+         */
+        private int endingLength;
 
         /**
          * Default constructor.
@@ -85,23 +99,19 @@ public class TagRecorder {
 
                 synchronized (this) {
 
-                        doSave(getRecordedTagSet());
+                        doSave();
                 }
         }
 
         /**
-         * Saves all received tags and styles to the output file.
+         * Saves all received tags to the output file.
          * @param styles styles to be saved
          */
-        public void save(LinkedHashSet<TagStyle> styles) {
+        public void save() {
 
                 synchronized (this) {
 
-                        StyledTagSet tagSet = getRecordedTagSet();
-                        for(TagStyle tagStyle: styles)
-				tagSet.addStyle(tagStyle);
-
-                        doSave(tagSet);
+                        doSave();
                         finished = true;
                 }
         }
@@ -110,23 +120,76 @@ public class TagRecorder {
          * Does the saving.
          * @param tagSet tag set to savetagSet
          */
-        public void doSave(StyledTagSet tagSet) {
+        public void doSave() {
 
                 File backingFile = new File(filePath);
-                if (backingFile.exists()) {
-                        backingFile.delete();
-                }
-        
+                StyledTagSet tagSet = getRecordedTagSet();
+
                 try {
-                        TagDocument tagDocument;
-                        tagDocument = new TagDocument(tagSet);
-                        tagDocument.setBackingFile(backingFile);
-                        tagDocument.saveDocument();
-                } catch (SignalMLException ex) {
-                        Logger.getLogger(TagRecorder.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IOException ex) {
+                        // if this is the first backup - create the file normally
+                        if (!backingFile.exists()) {
+                                TagDocument tagDocument = new TagDocument(tagSet);
+                                tagDocument.setBackingFile(backingFile);
+                                tagDocument.saveDocument();
+                                findEnding(backingFile);
+                        // else - add tags at the end
+                        } else {
+                                addTags(backingFile, tagSet.getTags());
+                        }
+                        
+                        removeAllTags();
+
+                } catch (Exception ex) {
                         Logger.getLogger(TagRecorder.class.getName()).log(Level.SEVERE, null, ex);
                 }
+        }
+
+        /**
+         * Finds {@link #fileEnding}.
+         * @param backingFile the file containing the tag document
+         */
+        private void findEnding(File backingFile) throws FileNotFoundException, IOException {
+
+                // this is only called once, so we can load the entire file into a single String
+                byte[] buffer = new byte[(int)backingFile.length()];
+                BufferedInputStream stream = new BufferedInputStream(new FileInputStream(backingFile));
+                stream.read(buffer);
+                stream.close();
+                String content = new String(buffer, TagDocument.CHAR_SET);
+
+                // closing of the tag section
+                String tagSectionClosing = "</" + StyledTagSetConverter.TAG_NODE_NAME + ">";
+
+                // get position of tag section closing, and save everything from that point to fileEnding
+                int start = content.indexOf(tagSectionClosing);
+                fileEnding = content.substring(start);
+
+                // length of ending in bytes
+                int lengthOfSingleChar = (int)Charset.forName(TagDocument.CHAR_SET).newEncoder().averageBytesPerChar();
+                endingLength = lengthOfSingleChar * fileEnding.length();
+
+        }
+
+        /**
+         * Adds given tag set to end of tag section of given file.
+         * @param backingFile file to add tags to
+         * @param tags tags to add
+         */
+        private void addTags(File backingFile, SortedSet<Tag> tags) throws IOException {
+
+                // get tags to save, and add fileEnding at the end
+                String toSave = StyledTagSetConverter.marshalTagsToString(tags);
+                if (!toSave.endsWith("\n")) {
+                        toSave += "\n";
+                }
+                toSave += fileEnding;
+
+                // Add tags to the file
+                int bytesToSkip = (int)backingFile.length() - endingLength;
+                RandomAccessFile file = new RandomAccessFile(backingFile, "rwd");
+                file.skipBytes(bytesToSkip);
+                file.write(toSave.getBytes(TagDocument.CHAR_SET));
+                file.close();
         }
 
 	/**
@@ -151,6 +214,14 @@ public class TagRecorder {
 
 		return styledTagSet;
 	}
+
+        /**
+         * Should be called to remove all tags after they were saved to a file.
+         */
+        private void removeAllTags() {
+
+                tagList.clear();
+        }
 
 	/**
 	 * Sets the timestamp relatively to which the positions of the recorded tags
@@ -184,5 +255,4 @@ public class TagRecorder {
 			return false;
 		return true;
 	}
-
 }

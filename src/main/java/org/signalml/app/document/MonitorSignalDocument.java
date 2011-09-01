@@ -366,13 +366,12 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		monitorWorker.disconnectTagRecorderWorker();
 		monitorWorker.disconnectSignalRecorderWorker();
 
-		//stops the recorderWorker and saves the recorded samples
 		if (signalRecorderWorker != null) {
 			signalRecorderWorker.save();
 		}
 
 		if (tagRecorderWorker != null) {
-			tagRecorderWorker.save(tagSet.getStyles());
+			tagRecorderWorker.save();
 		}
 
 		tagRecorderWorker = null;

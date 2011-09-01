@@ -65,6 +65,11 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
          */
 	protected static final Logger logger = Logger.getLogger(TagDocument.class);
 
+        /**
+         * Charset used to save this document. Probably shouldn't be changed.
+         */
+        public static final String CHAR_SET = "UTF-8";
+
 	/**
 	 * the {@link StyledTagSet set} in which the {@link Tag tags} and
 	 * {@link TagStyle styles} are stored
@@ -268,7 +273,7 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 
 		XStream streamer = new XStream(
 		        new PureJavaReflectionProvider(new FieldDictionary(new NativeFieldKeySorter())),
-		new DomDriver("UTF-8", new XmlFriendlyReplacer() {
+		new DomDriver(CHAR_SET, new XmlFriendlyReplacer() {
 
 			// the classes in question don't have $'s in their names and the
 			// format specifies single underscores, so disregard replacing
