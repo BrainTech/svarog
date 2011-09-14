@@ -23,6 +23,7 @@ import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.view.dialog.ErrorsDialog;
+import org.signalml.app.view.element.ViewerDocumentTabbedPaneTabComponent;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.view.DocumentView;
@@ -142,6 +143,8 @@ public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentMan
 		String tabTitle = getTabTitle(document);
 		String tabTooltip = getTabTooltip(document);
 		addTab(tabTitle, icon, documentViewPanel, tabTooltip);
+
+		this.setTabComponentAt(this.getTabCount()-1, new ViewerDocumentTabbedPaneTabComponent(this));
 
 	}
 
