@@ -36,7 +36,6 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 		for (int i = 0; i < channelsOptions.length; i++) {
 				channelsOptions[i] = new ChannelPlotOptionsModel(this, this.plot.getValueScaleRangeModel().getValue());
 		}
-		this.plot.setLocalMontage(null);
 	}
 	
 	/*

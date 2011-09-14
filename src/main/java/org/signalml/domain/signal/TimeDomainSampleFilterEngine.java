@@ -93,6 +93,7 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 		aCoefficients = coefficients.getACoefficients();
 		bCoefficients = coefficients.getBCoefficients();
 		filterOrder = coefficients.getFilterOrder();
+		filtered = null;
 
 	}
 

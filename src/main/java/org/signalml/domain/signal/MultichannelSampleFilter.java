@@ -19,6 +19,9 @@ import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
+import org.signalml.domain.montage.filter.iirdesigner.BadFilterParametersException;
+import org.signalml.domain.montage.filter.iirdesigner.FilterCoefficients;
+import org.signalml.domain.montage.filter.iirdesigner.IIRDesigner;
 
 /**
  * This abstract class represents a filter of samples for multichannel signal.
@@ -290,6 +293,14 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 				tdsFilter = (TimeDomainSampleFilter) definitions[i];
 				tdsFilter.setSamplingFrequency(source.getSamplingFrequency());
 
+				FilterCoefficients filterCoefficients = null;
+				try {
+					filterCoefficients = IIRDesigner.designDigitalFilter(tdsFilter);
+				} catch (BadFilterParametersException ex) {
+					java.util.logging.Logger.getLogger(TimeDomainSampleFilterEngine.class.getName()).log(Level.SEVERE, null, ex);
+					continue;
+				}
+
 				for (e = 0; e < channelCount; e++) {
 					if (!montage.isFilteringExcluded(i, e)) {
 
@@ -300,7 +311,7 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 						else
 							input = chain.getLast();
 
-						TimeDomainSampleFilterEngine timeDomainSampleFilterEngine = new TimeDomainSampleFilterEngine(input, tdsFilter);
+						TimeDomainSampleFilterEngine timeDomainSampleFilterEngine = new TimeDomainSampleFilterEngine(input, filterCoefficients);
 						timeDomainSampleFilterEngine.setFiltfiltEnabled(montage.isFiltfiltEnabled());
 						addFilter(timeDomainSampleFilterEngine, e);
 
