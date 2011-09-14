@@ -39,10 +39,7 @@ import org.springframework.validation.Errors;
  * <li>to select {@link #getChannelSelectNoneButton() no} channels,</li>
  * <li>to {@link #getChannelSelectInvertButton() invert} the selection
  * of channels.</li></ul></li></ul>
- * Channels can be selected either from the list of {@link #getSourceChannels()
- * source} or {@link #getChannels() montage} channels depending on the
- * currently {@link #getCurrentLevel() selected}
- * {@link SignalSourceLevel level}.
+ * Channels can be selected from the list of {@link #getSourceChannels()}.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -53,7 +50,7 @@ public class ChannelSpacePanel extends JPanel {
 	protected static final Logger logger = Logger.getLogger(ChannelSpacePanel.class);
 
 	/**
-	 * the source of messages (labels0
+	 * the source of messages (labels)
 	 */
 	private MessageSourceAccessor messageSource;
 
@@ -82,24 +79,9 @@ public class ChannelSpacePanel extends JPanel {
 	private JButton channelSelectNoneButton;
 
 	/**
-	 * the array of names (labels) of source channels
-	 */
-	private String[] sourceChannels;
-	/**
-	 * the array of names (labels) of montage channels
+	 * the array of names (labels) of all montage channels available
 	 */
 	private String[] channels;
-
-	/**
-	 * the currently selected {@link SignalSourceLevel level} of signal
-	 * processing
-	 */
-	private SignalSourceLevel currentLevel;
-	/**
-	 * the list of names (labels) of channels of the currently
-	 * {@link #currentLevel selected} {@link SignalSourceLevel level}
-	 */
-	private String[] currentChannels;
 
 	/**
 	 * Constructor. Sets the source of messages and initializes this panel.
@@ -148,11 +130,8 @@ public class ChannelSpacePanel extends JPanel {
 	 */
 	public JList getChannelList() {
 		if (channelList == null) {
-
 			channelList = new JList();
-
 			channelList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-
 		}
 		return channelList;
 	}
@@ -238,6 +217,9 @@ public class ChannelSpacePanel extends JPanel {
 			}
 
 		}
+		//previously this panel allowed to select the signal source level
+		//now it is always set to assembled
+		space.setSignalSourceLevel(SignalSourceLevel.ASSEMBLED);
 
 	}
 
@@ -290,66 +272,6 @@ public class ChannelSpacePanel extends JPanel {
 	}
 
 	/**
-	 * Returns the array of names (labels) of source channels.
-	 * @return the array of names (labels) of source channels
-	 */
-	public String[] getSourceChannels() {
-		return sourceChannels;
-	}
-
-	/**
-	 * Sets the array of names (labels) of source channels.
-	 * If the {@link #getCurrentLevel() current level} is RAW, sets this
-	 * channels as {@link #setCurrentChannels(String[]) current channels}.
-	 * @param sourceChannels the array of names (labels) of source channels
-	 */
-	public void setSourceChannels(String[] sourceChannels) {
-		if (this.sourceChannels != sourceChannels) {
-
-			this.sourceChannels = sourceChannels;
-
-			if (currentLevel == SignalSourceLevel.RAW) {
-				setCurrentChannels(sourceChannels);
-			}
-		}
-	}
-
-	/**
-	 * Returns the list of names (labels) of channels of the currently
-	 * {@link #getCurrentLevel() selected} {@link SignalSourceLevel level}.
-	 * @return the list of names (labels) of channels of the currently
-	 * selected level
-	 */
-	public String[] getCurrentChannels() {
-		return currentChannels;
-	}
-
-	/**
-	 * Sets the list of names (labels) of channels of the currently
-	 * {@link #getCurrentLevel() selected} {@link SignalSourceLevel level}.
-	 * This list is encapsulated in the model and set as the model to
-	 * {@link #getChannelList() channel list}.
-	 * @param currentChannels the list of names (labels) of channels of the
-	 * currently selected level
-	 */
-	public void setCurrentChannels(String[] currentChannels) {
-		if (this.currentChannels != currentChannels) {
-
-			this.currentChannels = currentChannels;
-
-			DefaultListModel listModel = new DefaultListModel();
-			for (int i=0; i<currentChannels.length; i++) {
-				listModel.addElement(currentChannels[i]);
-			}
-
-			JList list = getChannelList();
-			list.setModel(listModel);
-			list.clearSelection();
-
-		}
-	}
-
-	/**
 	 * Returns the array of names (labels) of montage channels.
 	 * @return the array of names (labels) of montage channels
 	 */
@@ -359,49 +281,20 @@ public class ChannelSpacePanel extends JPanel {
 
 	/**
 	 * Sets the array of names (labels) of montage channels.
-	 * If the {@link #getCurrentLevel() current level} is  different then RAW,
-	 * sets this channels as {@link #setCurrentChannels(String[]) current
-	 * channels}.
 	 * @param channels the array of names (labels) of montage channels
 	 */
 	public void setChannels(String[] channels) {
 		if (this.channels != channels) {
 			this.channels = channels;
 
-			if (currentLevel != SignalSourceLevel.RAW) {
-				setCurrentChannels(channels);
+			DefaultListModel listModel = new DefaultListModel();
+			for (int i=0; i<channels.length; i++) {
+				listModel.addElement(channels[i]);
 			}
 
-		}
-	}
-
-	/**
-	 * Returns the currently selected {@link SignalSourceLevel level} of signal
-	 * processing.
-	 * @return the currently selected level of signal processing
-	 */
-	public SignalSourceLevel getCurrentLevel() {
-		return currentLevel;
-	}
-
-	/**
-	 * Sets the currently selected {@link SignalSourceLevel level} of signal
-	 * processing.
-	 * According to this level sets appropriate channels as
-	 * {@link #setCurrentChannels(String[]) current channels}.
-	 * @param currentLevel the currently selected level of signal processing
-	 */
-	public void setCurrentLevel(SignalSourceLevel currentLevel) {
-		if (this.currentLevel != currentLevel) {
-
-			this.currentLevel = currentLevel;
-
-			if (currentLevel == SignalSourceLevel.RAW) {
-				setCurrentChannels(sourceChannels);
-			} else {
-				setCurrentChannels(channels);
-			}
-
+			JList list = getChannelList();
+			list.setModel(listModel);
+			list.clearSelection();
 		}
 	}
 
@@ -412,10 +305,7 @@ public class ChannelSpacePanel extends JPanel {
 	 * @param constraints the parameters of the signal
 	 */
 	public void setConstraints(SignalSpaceConstraints constraints) {
-
-		setSourceChannels(constraints.getSourceChannels());
 		setChannels(constraints.getChannels());
-
 	}
 
 	/**

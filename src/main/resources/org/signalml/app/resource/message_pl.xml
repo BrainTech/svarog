@@ -998,11 +998,6 @@
 
 	<entry key="fileSelectPanel.browseButtonLabel">Browse</entry>
 
-	<entry key="signalSpace.signalLevelType.title">Signal source level</entry>
-	<entry key="signalSpace.signalLevelType.rawSignal">Raw signal</entry>
-	<entry key="signalSpace.signalLevelType.assembledSignal">Assembled signal</entry>
-	<entry key="signalSpace.signalLevelType.filteredSignal">Filtered signal</entry>
-
 	<entry key="signalSpace.channelSpace.title">Channel selection</entry>
 
 	<entry key="signalSpace.timeSpace.title">Time fragment selection</entry>
