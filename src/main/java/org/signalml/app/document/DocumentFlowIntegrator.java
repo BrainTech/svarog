@@ -264,6 +264,27 @@ public class DocumentFlowIntegrator {
 
 	}
 
+	/**
+	 * Closes the document and if unsuccessful - shows a dialog explaining
+	 * the error.
+	 * @param document document to be closed
+	 * @return true if the document was closed successfully
+	 */
+	public boolean closeDocumentAndHandleExceptions(Document document) {
+		try {
+			closeDocument(document, false, false);
+			return true;
+		} catch (SignalMLException ex) {
+			logger.error("Failed to close document", ex);
+			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+			return false;
+		} catch (IOException ex) {
+			logger.error("Failed to close document - i/o exception", ex);
+			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+			return false;
+		}
+	}
+
 
 	/**
 	 * Checks if all {@link Document documents} stored in {@link DocumentManager

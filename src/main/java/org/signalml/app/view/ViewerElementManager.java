@@ -1123,6 +1123,7 @@ public class ViewerElementManager {
 			documentTabbedPane.setMessageSource(messageSource);
 			documentTabbedPane.setActionFocusManager(getActionFocusManager());
 			documentTabbedPane.setView(getView());
+			documentTabbedPane.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 			documentTabbedPane.initialize();
 		}
 		return documentTabbedPane;

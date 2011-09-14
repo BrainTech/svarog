@@ -17,6 +17,7 @@ import org.signalml.app.action.selector.ActionFocusEvent;
 import org.signalml.app.action.selector.ActionFocusListener;
 import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.document.BookDocument;
+import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.DocumentManagerEvent;
 import org.signalml.app.document.DocumentManagerListener;
 import org.signalml.app.document.ManagedDocumentType;
@@ -47,6 +48,12 @@ public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentMan
 	private MessageSourceAccessor messageSource;
 	private ActionFocusManager actionFocusManager;
 	private View view;
+
+	/**
+	 * DocumentFlowIntegrator for closing documents using the cross
+	 * on the tabs.
+	 */
+	private DocumentFlowIntegrator documentFlowIntegrator;
 
 	public ViewerDocumentTabbedPane() {
 		super(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
@@ -227,6 +234,24 @@ public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentMan
 
 	public void setView(View view) {
 		this.view = view;
+	}
+
+	/**
+	 * Sets the DocumentFlowIntegrator to be used for closing documents
+	 * using the cross on the tabs.
+	 * @param documentFlowIntegrator
+	 */
+	public void setDocumentFlowIntegrator(DocumentFlowIntegrator documentFlowIntegrator) {
+		this.documentFlowIntegrator = documentFlowIntegrator;
+	}
+
+	/**
+	 * Returns the DocumentFlowIntegrator which is used for closing documents
+	 * using the cross on the tabs.
+	 * @return
+	 */
+	public DocumentFlowIntegrator getDocumentFlowIntegrator() {
+		return documentFlowIntegrator;
 	}
 
 	private class NextDocumentAction extends AbstractAction {

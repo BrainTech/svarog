@@ -34,6 +34,8 @@ import javax.swing.*;
 import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
 import java.awt.event.*;
+import org.signalml.plugin.export.signal.Document;
+import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.view.ViewerDocumentTabbedPane;
 
 /**
@@ -42,8 +44,16 @@ import org.signalml.app.view.ViewerDocumentTabbedPane;
  */
 public class ViewerDocumentTabbedPaneTabComponent extends JPanel {
 
+	/**
+	 * The ViewerDocumentTabbedPane in which this component is used.
+	 */
 	private final ViewerDocumentTabbedPane pane;
 
+	/**
+	 * Creates this tab component.
+	 * @param pane the ViewerDocumentTabbedPane in which this component is
+	 * used.
+	 */
 	public ViewerDocumentTabbedPaneTabComponent(final ViewerDocumentTabbedPane pane) {
 		//unset default FlowLayout' gaps
 		super(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -75,6 +85,9 @@ public class ViewerDocumentTabbedPaneTabComponent extends JPanel {
 		setBorder(BorderFactory.createEmptyBorder(2, 0, 0, 0));
 	}
 
+	/**
+	 * The button used for closing the current tab.
+	 */
 	private class TabButton extends JButton implements ActionListener {
 
 		public TabButton() {
@@ -99,7 +112,9 @@ public class ViewerDocumentTabbedPaneTabComponent extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			int i = pane.indexOfTabComponent(ViewerDocumentTabbedPaneTabComponent.this);
 			if (i != -1) {
-				pane.removeDocumentTab(pane.getDocumentInTab(i));
+				DocumentFlowIntegrator documentFlowIntegrator = pane.getDocumentFlowIntegrator();
+				Document document = pane.getDocumentInTab(i);
+				documentFlowIntegrator.closeDocumentAndHandleExceptions(document);
 			}
 		}
 
@@ -126,6 +141,10 @@ public class ViewerDocumentTabbedPaneTabComponent extends JPanel {
 			g2.dispose();
 		}
 	}
+
+	/**
+	 * Mouse listener for this TabButton.
+	 */
 	private final static MouseListener buttonMouseListener = new MouseAdapter() {
 
 		public void mouseEntered(MouseEvent e) {
