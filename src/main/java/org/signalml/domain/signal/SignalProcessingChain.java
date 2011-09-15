@@ -840,6 +840,24 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 
 	}
 
+	/**
+         * Changes the actual {@link Montage montage} in the
+         * {@link MultichannelSampleMontage source} of samples for the montage
+         * but doesn't change it in the {@link MultichannelSampleFilter source}
+	 * of samples for the filter.
+	 *
+	 * Therefore, it should only be used when filters did not change.
+	 *
+         * @param montageDef the new montage to be set
+         * @throws MontageMismatchException if the number of source channels in
+         * the montage is different then the number of channels in the source
+         */
+	public void applyMontageDefinitionWithoutfilters(Montage montageDef) throws MontageMismatchException {
+		if (montage != null) {
+			montage.setCurrentMontage(montageDef);
+		}
+	}
+
         /**
          * Returns indexes of {@link MontageChannel montage channels} in the
          * {@link Montage montage} in which the given

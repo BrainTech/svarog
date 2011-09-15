@@ -5,6 +5,7 @@ import javax.swing.event.ChangeListener;
 
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.domain.montage.Montage;
+import org.signalml.domain.montage.MontageMismatchException;
 /*
  * A model aggregating single channel`s display options
  * @author Mateusz Kruszyński &copy; 2011 CC Titanis
@@ -60,7 +61,7 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 	 * Fired by child models. Sets local montage to parent plot regarding child models.
 	 */
 	public void modelChanged() {
-		Montage localMontage = new Montage(plot.getDocument().getMontage()); 
+		Montage localMontage = new Montage(plot.getDocument().getMontage());
 		double voltageScale, globalVoltageScale, mult;
 		globalVoltageScale = (double) plot.getValueScaleRangeModel().getValue();
 
@@ -91,8 +92,14 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 				localMontage.setReference(i, newRefsStr);
 				
 		}
-		this.plot.setLocalMontage(localMontage);
-		
+
+		try {
+			this.plot.getSignalChain().applyMontageDefinitionWithoutfilters(localMontage);
+		} catch (MontageMismatchException ex) {
+			ex.printStackTrace();
+			return;
+		}
+		this.plot.revalidateAndRepaintAll();
 	}
 	
 	/*
@@ -126,6 +133,5 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 			this.globalScaleChanged(plot.getValueScaleRangeModel().getValue());
 		
 	}
-	
 	
 }
