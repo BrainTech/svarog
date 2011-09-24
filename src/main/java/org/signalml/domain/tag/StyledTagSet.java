@@ -29,6 +29,7 @@ import org.signalml.plugin.export.signal.TagStyle;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
+import org.signalml.app.config.preset.Preset;
 
 /**
  * This class represents a set of t
@@ -45,7 +46,7 @@ import com.thoughtworks.xstream.annotations.XStreamConverter;
  */
 @XStreamAlias("tagFile")
 @XStreamConverter(StyledTagSetConverter.class)
-public class StyledTagSet implements Serializable {
+public class StyledTagSet implements Serializable, Preset {
 
 	private static final long serialVersionUID = 1L;
 
@@ -143,6 +144,7 @@ public class StyledTagSet implements Serializable {
          * list of listeners associated with the current object
          */
 	private EventListenerList listenerList = new EventListenerList();
+	private String name; // preset name
 
         /**
          * Constructor. Creates a default StyledTagSet without any tags or
@@ -1643,6 +1645,21 @@ public class StyledTagSet implements Serializable {
 			}
 		}
 		this.maxTagLength = maxTagLength;
+	}
+
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return name;
 	}
 
 }

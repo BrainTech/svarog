@@ -540,6 +540,9 @@ public class TagStylePaletteDialog extends AbstractDialog {
 
 		currentTagSet = descriptor.getTagSet();
 
+		if (currentTagSet == null)
+			currentTagSet = new StyledTagSet();
+
 		tagStyleTreeModel.setTagSet(currentTagSet);
 
 		TagStyle initialStyle = descriptor.getStyle();

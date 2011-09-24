@@ -116,6 +116,12 @@ public class StyledTagSetConverter implements Converter {
 
 		writer.startNode("tagDefinitions");
 
+		if (sts.getName() != null) {
+			writer.startNode("name");
+			writer.setValue(sts.getName());
+			writer.endNode();
+		}
+
 		writer.startNode("defGroup");
 		writer.addAttribute("name", "pageTags");
 		styles = sts.getPageStyles();
@@ -235,6 +241,7 @@ public class StyledTagSetConverter implements Converter {
 		TagSignalIdentification ident = null;
 		String info = null;
 		String montageInfo = null;
+		String presetName = null;
 
 		TagStyle style;
 		Tag tag;
@@ -300,7 +307,11 @@ public class StyledTagSetConverter implements Converter {
 				while (reader.hasMoreChildren()) {
 					reader.moveDown();
 					String type = reader.getAttribute("name");
-					if ("pageTags".equals(type)) {
+					if (type == null) {
+						if ("name".equals(reader.getNodeName())) {
+							presetName = reader.getValue();
+						}
+					} else if ("pageTags".equals(type)) {
 						while (reader.hasMoreChildren()) {
 							reader.moveDown();
 							if ("tagItem".equals(reader.getNodeName())) {
@@ -331,6 +342,7 @@ public class StyledTagSetConverter implements Converter {
 							reader.moveUp();
 						}
 					}
+
 					reader.moveUp();
 				}
 			} else if ("tagData".equals(reader.getNodeName())) {
@@ -394,6 +406,7 @@ public class StyledTagSetConverter implements Converter {
 		StyledTagSet sts = new StyledTagSet(styles,tags,pageSize,blocksPerPage);
 		sts.setTagSignalIdentification(ident);
 		sts.setInfo(info);
+		sts.setName(presetName);
 		if (montage != null) {
 			sts.setMontage(montage);
 		} else {

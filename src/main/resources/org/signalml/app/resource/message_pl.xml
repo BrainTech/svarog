@@ -424,6 +424,8 @@
 	<entry key="action.editTagDescriptionToolTip">Edit tag description</entry>
 	<entry key="action.editTagStyles">Tag styles</entry>
 	<entry key="action.editTagStylesToolTip">Edit tag styles</entry>
+	<entry key="action.editTagStylePresets">Edit tag style templates</entry>
+	<entry key="action.editTagStylePresetsToolTip">Edit tag style templates</entry>
 	<entry key="action.compareTags">Compare tags</entry>
 	<entry key="action.compareTagsToolTip">Compare tags (2 or more must be open)</entry>
 

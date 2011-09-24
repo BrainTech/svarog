@@ -140,12 +140,14 @@ import com.thoughtworks.xstream.XStream;
 import org.signalml.app.action.AmplifierDefinitionConfigAction;
 import org.signalml.app.action.ChooseActiveTagAction;
 import org.signalml.app.action.CompareTagsAction;
+import org.signalml.app.action.EditTagStylePresetsAction;
 import org.signalml.app.action.OpenBCIModuleConfigAction;
 import org.signalml.app.action.OpenBookDocumentAction;
 import org.signalml.app.action.OpenSignalAndSetMontageAction;
 import org.signalml.app.action.StartMonitorRecordingAction;
 import org.signalml.app.action.StopBCIAction;
 import org.signalml.app.action.StopMonitorRecordingAction;
+import org.signalml.app.config.preset.StyledTagSetPresetManager;
 import org.signalml.app.view.opensignal.OpenSignalAndSetMontageDialog;
 import org.signalml.app.view.monitor.AmplifierDefinitionConfigDialog;
 import org.signalml.app.view.monitor.OpenBCIModuleConfigDialog;
@@ -201,6 +203,8 @@ public class ViewerElementManager {
 	 * {@link TimeDomainSampleFilter TimeDomainSampleFilters}.
 	 */
 	private PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainFiltersPresetManager;
+
+	private StyledTagSetPresetManager styledTagSetPresetManager;
 
 	private MP5ExecutorManager mp5ExecutorManager;
 	private Preferences preferences;
@@ -348,6 +352,7 @@ public class ViewerElementManager {
 	private ApplyDefaultMontageAction applyDefaultMontageAction;
 	private PreciseSelectionAction preciseSelectionAction;
 	private EditTagStylesAction editTagStylesAction;
+	private EditTagStylePresetsAction editTagStylePresetsAction;
 	private EditTagDescriptionAction editTagDescriptionAction;
 	private EditStoredMontagesAction editStoredMontagesAction;
 	private ExportSignalAction exportSignalAction;
@@ -607,6 +612,14 @@ public class ViewerElementManager {
 		this.predefinedTimeDomainFiltersPresetManager = predefinedTimeDomainFiltersPresetManager;
 	}
 
+	public StyledTagSetPresetManager getStyledTagSetPresetManager() {
+		return styledTagSetPresetManager;
+	}
+
+	public void setStyledTagSetPresetManager(StyledTagSetPresetManager styledTagSetPresetManager) {
+		this.styledTagSetPresetManager = styledTagSetPresetManager;
+	}
+
 	public MP5ExecutorManager getMp5ExecutorManager() {
 		return mp5ExecutorManager;
 	}
@@ -824,6 +837,7 @@ public class ViewerElementManager {
 			tagsMenu.add(getChooseActiveTagAction());
 			tagsMenu.add(getEditTagDescriptionAction());
 			tagsMenu.add(getEditTagStylesAction());
+			tagsMenu.add(getEditTagStylePresetsAction());
 			tagsMenu.addSeparator();
 
 			tagsMenu.add(getCompareTagsAction());
@@ -1734,6 +1748,14 @@ public class ViewerElementManager {
 			editTagStylesAction.setTagStylePaletteDialog(getTagStylePaletteDialog());
 		}
 		return editTagStylesAction;
+	}
+
+	public EditTagStylePresetsAction getEditTagStylePresetsAction() {
+		if (editTagStylePresetsAction == null) {
+			editTagStylePresetsAction = new EditTagStylePresetsAction(messageSource, getActionFocusManager());
+			editTagStylePresetsAction.setTagStylePaletteDialog(getTagStylePaletteDialog());
+		}
+		return editTagStylePresetsAction;
 	}
 
 	public EditTagDescriptionAction getEditTagDescriptionAction() {
