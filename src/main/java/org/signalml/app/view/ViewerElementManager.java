@@ -148,6 +148,7 @@ import org.signalml.app.action.StartMonitorRecordingAction;
 import org.signalml.app.action.StopBCIAction;
 import org.signalml.app.action.StopMonitorRecordingAction;
 import org.signalml.app.config.preset.StyledTagSetPresetManager;
+import org.signalml.app.view.dialog.TagStylePresetDialog;
 import org.signalml.app.view.opensignal.OpenSignalAndSetMontageDialog;
 import org.signalml.app.view.monitor.AmplifierDefinitionConfigDialog;
 import org.signalml.app.view.monitor.OpenBCIModuleConfigDialog;
@@ -281,6 +282,7 @@ public class ViewerElementManager {
 	private SlavePlotSettingsPopupDialog slavePlotSettingsPopupDialog;
 	private ChannelOptionsPopupDialog channelOptionsPopupDialog;
 	private TagStylePaletteDialog tagStylePaletteDialog;
+	private TagStylePresetDialog tagStylePresetDialog;
 	private HelpDialog helpDialog;
 	private TagComparisonDialog tagComparisonDialog;
 	private EditTagDescriptionDialog editTagDescriptionDialog;
@@ -1292,9 +1294,19 @@ public class ViewerElementManager {
 
 	public TagStylePaletteDialog getTagStylePaletteDialog() {
 		if (tagStylePaletteDialog == null) {
-			tagStylePaletteDialog = new TagStylePaletteDialog(messageSource, getDialogParent(), true);
+			tagStylePaletteDialog = new TagStylePaletteDialog(messageSource, getStyledTagSetPresetManager(), getDialogParent(), true);
+			tagStylePaletteDialog.setApplicationConfig(getApplicationConfig());
+
 		}
 		return tagStylePaletteDialog;
+	}
+
+	public TagStylePresetDialog getTagStylePresetDialog() {
+		if (tagStylePresetDialog == null) {
+			tagStylePresetDialog = new TagStylePresetDialog(messageSource, getStyledTagSetPresetManager(), getDialogParent(), true);
+			tagStylePresetDialog.setApplicationConfig(getApplicationConfig());
+		}
+		return tagStylePresetDialog;
 	}
 
 	public HelpDialog getHelpDialog() {
@@ -1753,7 +1765,7 @@ public class ViewerElementManager {
 	public EditTagStylePresetsAction getEditTagStylePresetsAction() {
 		if (editTagStylePresetsAction == null) {
 			editTagStylePresetsAction = new EditTagStylePresetsAction(messageSource, getActionFocusManager());
-			editTagStylePresetsAction.setTagStylePaletteDialog(getTagStylePaletteDialog());
+			editTagStylePresetsAction.setTagStylePaletteDialog(getTagStylePresetDialog());
 		}
 		return editTagStylePresetsAction;
 	}

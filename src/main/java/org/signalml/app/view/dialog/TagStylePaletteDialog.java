@@ -27,6 +27,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreePath;
+import org.signalml.app.config.preset.Preset;
+import org.signalml.app.config.preset.PresetManager;
 
 import org.signalml.app.model.TagStylePaletteDescriptor;
 import org.signalml.app.model.TagStyleTreeModel;
@@ -54,7 +56,7 @@ import org.springframework.validation.Errors;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class TagStylePaletteDialog extends AbstractDialog {
+public class TagStylePaletteDialog extends AbstractPresetDialog {
 
 	private static final long serialVersionUID = 1L;
 
@@ -168,7 +170,7 @@ public class TagStylePaletteDialog extends AbstractDialog {
 	/**
 	 * the {@link StyledTagSet set} of tag styles that is currently used
 	 */
-	private StyledTagSet currentTagSet;
+	protected StyledTagSet currentTagSet;
 	/**
 	 * the currently selected {@link TagStyle style}
 	 */
@@ -185,8 +187,8 @@ public class TagStylePaletteDialog extends AbstractDialog {
 	 * Constructor. Sets message source.
 	 * @param messageSource message source to set
 	 */
-	public TagStylePaletteDialog(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public TagStylePaletteDialog(MessageSourceAccessor messageSource, PresetManager presetManager) {
+		super(messageSource, presetManager);
 	}
 
 	/**
@@ -196,8 +198,8 @@ public class TagStylePaletteDialog extends AbstractDialog {
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public TagStylePaletteDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public TagStylePaletteDialog(MessageSourceAccessor messageSource, PresetManager presetManager, Window w, boolean isModal) {
+		super(messageSource, presetManager, w, isModal);
 	}
 
 	/**
@@ -281,22 +283,31 @@ public class TagStylePaletteDialog extends AbstractDialog {
 
 	}
 
+	@Override
+	protected JPanel createPresetPane() {
+		if (arePresetsActive())
+			return super.createPresetPane();
+		else
+			return new JPanel();
+	}
+
+
 	/**
 	 * Creates the control pane.
 	 * Adds OK button, the CANCEL button and the button which calls the
 	 * {@link ApplyChangesActionAction action} which applies changes.  
 	 */
 	@Override
-	protected JPanel createControlPane() {
+	protected JPanel createButtonPane() {
 
-		JPanel controlPane =  super.createControlPane();
+		JPanel buttonPane =  super.createButtonPane();
 
 		applyChangesActionAction = new ApplyChangesActionAction();
 		applyChangesButton = new JButton(applyChangesActionAction);
-		controlPane.add(Box.createHorizontalStrut(5), 1);
-		controlPane.add(applyChangesButton, 1);
+		buttonPane.add(Box.createHorizontalStrut(5), 1);
+		buttonPane.add(applyChangesButton, 1);
 
-		return controlPane;
+		return buttonPane;
 
 	}
 
@@ -676,7 +687,7 @@ public class TagStylePaletteDialog extends AbstractDialog {
 	/**
 	 * Stores the changes (user input) in the {@link TagStyle tag style}.
 	 */
-	private void applyChanges() {
+	protected void applyChanges() {
 
 		boolean changed = false;
 		TagStyle style = tagStylePropertiesPanel.getCurrentStyle();
@@ -753,6 +764,20 @@ public class TagStylePaletteDialog extends AbstractDialog {
 	@Override
 	protected void resetDialog() {
 		changed = false;
+	}
+
+	@Override
+	public Preset getPreset() throws SignalMLException {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void setPreset(Preset preset) throws SignalMLException {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	public boolean arePresetsActive() {
+		return false;
 	}
 
 	/**

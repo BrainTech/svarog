@@ -1662,4 +1662,8 @@ public class StyledTagSet implements Serializable, Preset {
 		return name;
 	}
 
+	public LinkedHashMap<String, TagStyle> getStylesWithNames() {
+		return styles;
+	}
+
 }

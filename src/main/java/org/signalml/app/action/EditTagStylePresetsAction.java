@@ -25,7 +25,7 @@ public class EditTagStylePresetsAction extends AbstractFocusableSignalMLAction<T
 		setToolTip("action.editTagStylePresetsToolTip");
 		setIconPath("org/signalml/app/icon/palette.png");
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
