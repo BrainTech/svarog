@@ -1257,7 +1257,7 @@ public class ViewerElementManager {
 
 	public NewTagDialog getNewTagDialog() {
 		if (newTagDialog == null) {
-			newTagDialog = new NewTagDialog(messageSource, getDialogParent(), true);
+			newTagDialog = new NewTagDialog(messageSource, getStyledTagSetPresetManager(), getDialogParent(), true);
 			newTagDialog.setApplicationConfig(getApplicationConfig());
 		}
 		return newTagDialog;

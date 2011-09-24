@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.element;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ItemEvent;
@@ -11,10 +12,13 @@ import java.awt.event.ItemListener;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileFilter;
+import org.signalml.app.config.preset.StyledTagSetPresetManager;
 
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.TagDocument;
@@ -62,6 +66,8 @@ public class NewTagPanel extends JPanel {
 	 */
 	private JRadioButton fromFileRadio = null;
 
+	private JRadioButton presetRadio;
+
 	/**
 	 * the group of radio buttons which allows to select the {@link TagStyle
 	 * styles} that should be located in the created {@link TagDocument tag
@@ -75,14 +81,19 @@ public class NewTagPanel extends JPanel {
 	 */
 	private EmbeddedFileChooser fileChooser = null;
 
+	private JComboBox presetComboBox;
+
+	private StyledTagSetPresetManager styledTagSetPresetManager;
+
 	/**
 	 * Constructor. Sets the {@link MessageSourceAccessor message source} and
 	 * initializes this panel.
 	 * @param messageSource the source of messages (labels)
 	 */
-	public NewTagPanel(MessageSourceAccessor messageSource) {
+	public NewTagPanel(MessageSourceAccessor messageSource, StyledTagSetPresetManager styledTagSetPresetManager) {
 		super();
 		this.messageSource = messageSource;
+		this.styledTagSetPresetManager = styledTagSetPresetManager;
 		initialize();
 	}
 
@@ -109,9 +120,11 @@ public class NewTagPanel extends JPanel {
 
 		add(getEmptyRadio());
 		add(getDefaultSleepRadio());
+		add(getPresetRadioPanel());
 		add(getFromFileRadio());
 
 		getDefaultSleepRadio().setSelected(true);
+		getPresetComboBox().setEnabled(false);
 
 		getFileChooser().setVisible(false);
 		add(getFileChooser());
@@ -150,6 +163,33 @@ public class NewTagPanel extends JPanel {
 			radioGroup.add(defaultSleepRadio);
 		}
 		return defaultSleepRadio;
+	}
+
+	public JPanel getPresetRadioPanel() {
+		JPanel panel = new JPanel(new BorderLayout(5, 5));
+		panel.setBorder(new EmptyBorder(0, 0, 0, 6));
+		panel.add(getPresetRadio(), BorderLayout.WEST);
+		panel.add(getPresetComboBox(), BorderLayout.CENTER);
+		panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		return panel;
+	}
+
+	public JRadioButton getPresetRadio() {
+		if (presetRadio == null) {
+			presetRadio = new JRadioButton();
+			presetRadio.setText(messageSource.getMessage("newTag.presetRadio"));
+			presetRadio.setAlignmentX(Component.LEFT_ALIGNMENT);
+			radioGroup.add(presetRadio);
+
+			presetRadio.addItemListener(new ItemListener() {
+
+				public void itemStateChanged(ItemEvent e) {
+					getPresetComboBox().setEnabled(e.getStateChange() == ItemEvent.SELECTED);
+				}
+
+			});
+		}
+		return presetRadio;
 	}
 
 	/**
@@ -213,6 +253,15 @@ public class NewTagPanel extends JPanel {
 
 		}
 		return fileChooser;
+	}
+
+	public JComboBox getPresetComboBox() {
+		if (presetComboBox == null) {
+			presetComboBox = new JComboBox(styledTagSetPresetManager.getPresets());
+			presetComboBox.setAlignmentX(Component.LEFT_ALIGNMENT);
+			presetComboBox.setPreferredSize(new Dimension(200, 10));
+		}
+		return presetComboBox;
 	}
 
 }

@@ -804,6 +804,8 @@
 	<entry key="newTag.emptyRadio">An empty tag with no styles</entry>
 	<entry key="newTag.defaultSleepRadio">Use standard sleep staging styles</entry>
 	<entry key="newTag.fromFileRadio">Use styles from selected file</entry>
+	<entry key="newTag.presetRadio">Use styles from selected styles preset</entry>
+	<entry key="newTag.choosePreset">Choose tag styles preset</entry>
 
 	<entry key="openTag.options.title">Choose options for tag</entry>
 	<entry key="openTag.options.signalDocument">Select signal document</entry>

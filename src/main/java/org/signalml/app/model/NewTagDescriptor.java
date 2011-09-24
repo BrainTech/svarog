@@ -5,6 +5,7 @@
 package org.signalml.app.model;
 
 import java.io.File;
+import org.signalml.domain.tag.StyledTagSet;
 
 /** NewTagDescriptor
  *
@@ -16,11 +17,13 @@ public class NewTagDescriptor extends PagingParameterDescriptor {
 	public enum NewTagTypeMode {
 		EMPTY,
 		DEFAULT_SLEEP,
+		PRESET,
 		FROM_FILE
 	}
 
 	private NewTagTypeMode mode = NewTagTypeMode.DEFAULT_SLEEP;
 	private File file;
+	private StyledTagSet tagStylesPreset;
 
 	public NewTagDescriptor() {}
 
@@ -43,6 +46,14 @@ public class NewTagDescriptor extends PagingParameterDescriptor {
 
 	public void setFile(File file) {
 		this.file = file;
+	}
+
+	public void setTagStylesPreset(StyledTagSet tagStylesPreset) {
+		this.tagStylesPreset = tagStylesPreset;
+	}
+
+	public StyledTagSet getTagStylesPreset() {
+		return tagStylesPreset;
 	}
 
 }
