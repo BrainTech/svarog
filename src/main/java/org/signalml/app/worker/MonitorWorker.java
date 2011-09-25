@@ -208,8 +208,9 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 							 tagLen,
 							 -1);
 
-				for (SvarogProtocol.Variable v : tagMsg.getDesc().getVariablesList())
-					tag.setAttribute(v.getKey(), v.getValue());
+				/* TODO: temporary disabled monitor attributes
+				 for (SvarogProtocol.Variable v : tagMsg.getDesc().getVariablesList())
+					tag.setAttribute(v.getKey(), v.getValue());*/
 
 				if(isChannelSelected(tag.getChannel(), selectedChannels)) {
 					if (tagRecorderWorker != null) {

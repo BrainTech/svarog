@@ -20,6 +20,9 @@ import static org.junit.Assert.*;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.plugin.export.signal.Tag;
+import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
+import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributeDefinition;
+import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributes;
 
 /** StyledTagSetConverterTest
  *
@@ -105,7 +108,9 @@ public class TagDocumentTest {
 		sts.addTag(tag);
 
 		tag = new Tag(sts.getStyle("Y"), 300F, 400F, 5, "test");
-		tag.setAttribute("testAttributeKey", "testAttributeValue");
+		TagStyleAttributeDefinition attributeDefinition = new TagStyleAttributeDefinition("testAttributeKey", "ble", true);
+		sts.getStyle("Y").getAttributesDefinitions().addAttributeDefinition(attributeDefinition);
+		tag.setAttribute(new TagAttributeValue(attributeDefinition, "testAttributeValue"));
 		sts.addTag(tag);
 
 		assertEquals(12, sts.getTagStyleCount());
@@ -150,8 +155,9 @@ public class TagDocumentTest {
 		assertEquals(300F, tag.getPosition(), 0);
 		assertEquals(400F, tag.getLength(), 0);
 		assertEquals(5, tag.getChannel());
-		assertEquals("test", tag.getAnnotation());		
-		assertEquals("testAttributeValue", tag.getAttribute("testAttributeKey"));
+		assertEquals("test", tag.getAnnotation());
+		assertEquals(1, tag.getAttributes().getAttributes().size());
+		assertEquals("testAttributeValue", tag.getAttributes().getAttribute("testAttributeKey").getAttributeValue());
 
 	}
 

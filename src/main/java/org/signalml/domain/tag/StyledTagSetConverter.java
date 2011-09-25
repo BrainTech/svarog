@@ -35,6 +35,8 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
 import java.io.StringWriter;
 import java.util.SortedSet;
+import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
+import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributeDefinition;
 
 /**
  * This class is responsible for marshaling/unmarshaling {@link StyledTagSet}
@@ -198,14 +200,16 @@ public class StyledTagSetConverter implements Converter {
 	 */
 	private void marshalTagAttributes(HierarchicalStreamWriter writer, Tag tag) {
 
-		String attributeValue;
-		for (String key: tag.getAttributes().keySet()) {
-			attributeValue = tag.getAttribute(key);
-			if(attributeValue != null) {
-				writer.startNode(key);
-				writer.setValue(tag.getAttribute(key));
-				writer.endNode();
-			}
+		if (tag.getAnnotation() != null) {
+			writer.startNode("annotation");
+			writer.setValue(tag.getAnnotation());
+			writer.endNode();
+		}
+
+		for (TagAttributeValue attribute: tag.getAttributes().getAttributes()) {
+			writer.startNode(attribute.getAttributeDefinition().getCode());
+			writer.setValue(attribute.getAttributeValue());
+			writer.endNode();
 		}
 
 	}
@@ -226,6 +230,21 @@ public class StyledTagSetConverter implements Converter {
 		writer.addAttribute("outlineDash", floatArrayConverter.toString(style.getOutlineDash()));
 		writer.addAttribute("keyShortcut", keyStrokeConverter.toString(style.getKeyStroke()));
 		writer.addAttribute("marker", booleanConverter.toString(style.isMarker()));
+
+		if (style.getAttributesDefinitions().getSize() > 0) {
+			writer.startNode("attributes");
+			for (TagStyleAttributeDefinition definition:
+				style.getAttributesDefinitions().getAttributesDefinitionsList()) {
+
+				writer.startNode("attribute");
+				writer.addAttribute("code", definition.getCode());
+				writer.addAttribute("displayName", definition.getDisplayName());
+				writer.addAttribute("visible", definition.isVisible() ? "true" : "false");
+				writer.endNode();
+			}
+			writer.endNode();
+		}
+
 		writer.endNode();
 	}
 
@@ -388,7 +407,22 @@ public class StyledTagSetConverter implements Converter {
 
 								while (reader.hasMoreChildren()) {
 									reader.moveDown();
-									tag.setAttribute(reader.getNodeName(), reader.getValue());
+
+									String attributeCode = reader.getNodeName();
+
+									if ("annotation".equals(attributeCode)) {
+										tag.setAnnotation(reader.getValue());
+									}
+									else {
+										TagStyleAttributeDefinition attributeDefinition = style.getAttributesDefinitions().getAttributeDefinition(attributeCode);
+
+
+										if (attributeDefinition != null) {
+											TagAttributeValue attributeValue = new TagAttributeValue(attributeDefinition, reader.getValue());
+											tag.setAttribute(attributeValue);
+										}
+									}
+
 									reader.moveUp();
 								}
 
@@ -438,6 +472,28 @@ public class StyledTagSetConverter implements Converter {
 
 		if (name == null || fillColor == null || outlineColor == null) {
 			throw new NullPointerException("Bad tag file format");
+		}
+
+		if (reader.hasMoreChildren()) {
+			reader.moveDown();
+			while ("attributes".equals(reader.getNodeName()) && reader.hasMoreChildren()) {
+				reader.moveDown();
+				if ("attribute".equals(reader.getNodeName())) {
+
+					String code = reader.getAttribute("code");
+					String displayName = reader.getAttribute("displayName");
+					String visibleStr = reader.getAttribute("visible");
+					boolean visible = true;
+
+					if ("false".equals(visibleStr))
+						visible = false;
+
+					TagStyleAttributeDefinition attributeDefinition = new TagStyleAttributeDefinition(code, displayName, visible);
+					style.getAttributesDefinitions().addAttributeDefinition(attributeDefinition);
+				}
+				reader.moveUp();
+			}
+			reader.moveUp();
 		}
 
 		style.setParameters(name, description, fillColor, outlineColor, outlineWidth, outlineDash, keyStroke, marker);

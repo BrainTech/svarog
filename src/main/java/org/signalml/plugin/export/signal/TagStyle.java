@@ -17,6 +17,7 @@ import javax.swing.KeyStroke;
 import org.signalml.app.model.LabelledPropertyDescriptor;
 import org.signalml.app.model.PropertyProvider;
 import org.signalml.domain.montage.MontageChannel;
+import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributes;
 import org.springframework.context.MessageSourceResolvable;
 
 /**
@@ -101,6 +102,8 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
          */
 	private static final TagStyle defaultChannelStyle = new TagStyle(SignalSelectionType.CHANNEL, "?", "Unknown", Color.RED, Color.RED.darker(), 1F, null, null, false);
 
+	private TagStyleAttributes attributesDefinitions = new TagStyleAttributes();
+
         /**
          * Constructor. Creates a style of a {@link Tag tagged selection}
          * for a selection of a given {@link SignalSelectionType type}.
@@ -124,6 +127,7 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 		this.outlineDash = style.outlineDash;
 		this.keyStroke = style.keyStroke;
 		this.marker = style.marker;
+		this.attributesDefinitions = style.attributesDefinitions;
 	}
 	
 	/**
@@ -508,6 +512,14 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 		if (this.keyStroke != style.getKeyStroke()) return false;
 		if (this.marker != style.isMarker()) return false;
 		return true;
+	}
+
+	public TagStyleAttributes getAttributesDefinitions() {
+		return attributesDefinitions;
+	}
+
+	public void setAttributesDefinitions(TagStyleAttributes attributes) {
+		this.attributesDefinitions = attributes;
 	}
 
 }
