@@ -113,6 +113,8 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	private int reconstructionHeight;
 
+        private float backupFrequency;
+
 	/**
 	 * Default value for the multiplexer address. If the user changes
 	 * multiplexer address value in the Open monitor dialog, it can be
@@ -153,6 +155,14 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 	public void setFavouriteDirs(String[] dirs) {
 		this.favouriteDirs = dirs;
 	}
+
+        public float getBackupFrequency() {
+                return backupFrequency;
+        }
+
+        public void setBackupFrequency(float backupFrequency) {
+                this.backupFrequency = backupFrequency;
+        }
 
 	public String[] getLastDirs() {
 		return lastDirs;

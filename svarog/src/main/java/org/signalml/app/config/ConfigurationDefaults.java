@@ -138,6 +138,8 @@ public class ConfigurationDefaults {
 		config.setMapAspectRatioDown( Integer.parseInt(properties.getProperty("application.mapAspectRatioDown")) );
 		config.setReconstructionHeight( Integer.parseInt(properties.getProperty("application.reconstructionHeight")) );
 		
+                config.setBackupFrequency( Float.parseFloat(properties.getProperty("application.signalRecording.frequency")));
+
 		setMultiplexerDefaultParameters( config);
 		setMonitorDefaultParameters( config);
 	}

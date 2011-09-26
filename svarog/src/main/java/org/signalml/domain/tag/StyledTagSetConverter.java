@@ -5,6 +5,7 @@
 package org.signalml.domain.tag;
 
 import java.awt.Color;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.TreeSet;
@@ -31,6 +32,9 @@ import com.thoughtworks.xstream.converters.basic.FloatConverter;
 import com.thoughtworks.xstream.converters.basic.IntConverter;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
+import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
+import java.io.StringWriter;
+import java.util.SortedSet;
 
 /**
  * This class is responsible for marshaling/unmarshaling {@link StyledTagSet}
@@ -49,6 +53,11 @@ public class StyledTagSetConverter implements Converter {
 	 * the file tag document given to it has a different format version.
 	 */
 	private static final double formatVersion = 1.0;
+
+        /**
+         * Name of the section containing tags.
+         */
+        public static final String TAG_NODE_NAME = "tags";
 
 	private FloatConverter floatConverter = new FloatConverter();
 	private IntConverter intConverter = new IntConverter();
@@ -152,7 +161,7 @@ public class StyledTagSetConverter implements Converter {
 			writer.endNode();
 		}
 
-		writer.startNode("tags");
+		writer.startNode(TAG_NODE_NAME);
 		for (Tag tag : sts.getTags())
 			marshalTag(writer, tag);
 		writer.endNode();
@@ -345,7 +354,7 @@ public class StyledTagSetConverter implements Converter {
 						montage = (Montage) context.convertAnother(null, Montage.class);
 					} else if ("montageInfo".equals(reader.getNodeName())) {
 						montageInfo = reader.getValue();
-					} else if ("tags".equals(reader.getNodeName())) {
+					} else if (TAG_NODE_NAME.equals(reader.getNodeName())) {
 						while (reader.hasMoreChildren()) {
 							reader.moveDown();
 							if ("tag".equals(reader.getNodeName())) {
@@ -434,4 +443,23 @@ public class StyledTagSetConverter implements Converter {
 		return (StyledTagSet.class.equals(clazz));
 	}
 
+        /**
+         * Static method that marshals given tag set and returns it as a string
+         * @param tags tags to marshal
+         * @return marshaled tag set
+         */
+        public static String marshalTagsToString(SortedSet<Tag> tags) throws IOException {
+
+                StringWriter stringWriter = new StringWriter();
+                PrettyPrintWriter writer = new PrettyPrintWriter(stringWriter);
+
+                StyledTagSetConverter converter = new StyledTagSetConverter();
+                for (Tag tag : tags)
+                        converter.marshalTag(writer, tag);
+
+                writer.close();
+                stringWriter.close();
+
+                return stringWriter.toString();
+        }
 }

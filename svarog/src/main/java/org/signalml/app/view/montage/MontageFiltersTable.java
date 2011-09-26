@@ -17,21 +17,43 @@ import javax.swing.table.TableColumnModel;
 import org.apache.log4j.Logger;
 import org.signalml.app.montage.MontageFiltersTableModel;
 import org.signalml.app.view.TablePopupMenuProvider;
+import org.signalml.domain.montage.Montage;
+import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.springframework.context.support.MessageSourceAccessor;
 
-/** MontageFiltersTable
- *
+/**
+ * Table with the list of {@link SampleFilterDefinition sample filters}
+ * associated with a {@link Montage}.
+ * Contains three columns:
+ * <ul>
+ * <li>the index of the filter in the montage,</li> 
+ * <li>the custom name of the filter (description),</li>
+ * <li>the description of the effect of the filter.</li></ul>
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class MontageFiltersTable extends JTable {
 
+	/** the default serialization constant. */
 	private static final long serialVersionUID = 1L;
 
+	/** the logger. */
 	protected static final Logger logger = Logger.getLogger(MontageFiltersTable.class);
 
+	/** the popup menu provider for this table. */
 	private TablePopupMenuProvider popupMenuProvider;
 
+	/**
+	 * Creates the table with three columns:
+	 * <ul>
+	 * <li>the index of the filter in the montage (20 pixel),</li>
+	 * <li>the custom name of the filter (200 pixel),</li>
+	 * <li>the description of the effect of the filter (200 pixel).</li></ul>
+	 * Adds the mouse listener which changes the selected row, when it is
+	 * clicked with a right mouse button.
+	 * @param model the model for this table
+	 * @param messageSource the source of messages (labels)
+	 */
 	public MontageFiltersTable(MontageFiltersTableModel model, MessageSourceAccessor messageSource) {
 		super(model, (TableColumnModel) null);
 
@@ -75,11 +97,17 @@ public class MontageFiltersTable extends JTable {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.JTable#getModel()
+	 */
 	@Override
 	public MontageFiltersTableModel getModel() {
 		return (MontageFiltersTableModel) super.getModel();
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.JComponent#getComponentPopupMenu()
+	 */
 	@Override
 	public JPopupMenu getComponentPopupMenu() {
 		if (popupMenuProvider == null) {
@@ -88,10 +116,20 @@ public class MontageFiltersTable extends JTable {
 		return popupMenuProvider.getPopupMenu(-1, getSelectedRow());
 	}
 
+	/**
+	 * Gets the popup menu provider for this table.
+	 *
+	 * @return the popup menu provider for this table
+	 */
 	public TablePopupMenuProvider getPopupMenuProvider() {
 		return popupMenuProvider;
 	}
 
+	/**
+	 * Sets the popup menu provider for this table.
+	 *
+	 * @param popupMenuProvider the new popup menu provider for this table
+	 */
 	public void setPopupMenuProvider(TablePopupMenuProvider popupMenuProvider) {
 		this.popupMenuProvider = popupMenuProvider;
 	}

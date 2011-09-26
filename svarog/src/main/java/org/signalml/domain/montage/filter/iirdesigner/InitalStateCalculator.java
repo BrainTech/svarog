@@ -147,4 +147,31 @@ public class InitalStateCalculator {
 		return new Array2DRowRealMatrix(subtrahendData);
 	}
 
+	/**
+	 * Grows the signal to have edges for stabilizing the filter with
+	 * inverted replicas of the signal.
+	 * @param signal the signal to be grown.
+	 * @return the grown version of the signal
+	 */
+	public double[] growSignal(double[] signal) {
+		int ntaps = Math.max(aCoefficients.length, bCoefficients.length);
+		int edge = ntaps * 3 - 1;
+
+		int grownSignalSize = edge + signal.length + edge;
+		double[] grownSignal = new double[grownSignalSize];
+
+		System.arraycopy(signal, 0, grownSignal, edge, signal.length);
+
+		for (int i = 0; i < edge; i++) {
+			grownSignal[i] = 2 * signal[0] - signal[edge - i];
+		}
+
+		for (int i = 0; i < edge; i++) {
+			grownSignal[edge + signal.length + i] = 2 * signal[signal.length - 1]
+				- signal[signal.length - 2 - i];
+		}
+
+		return grownSignal;
+	}
+
 }

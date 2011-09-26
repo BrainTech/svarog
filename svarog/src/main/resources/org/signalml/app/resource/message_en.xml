@@ -627,6 +627,10 @@
 	<entry key="preferences.zoomSettings">Signal zooming</entry>
 	<entry key="preferences.signalFFTSettings">Signal FFT</entry>
 
+        <entry key="preferences.signalRecording">Signal recording</entry>
+        <entry key="preferences.signalRecording.general">General</entry>
+        <entry key="preferences.signalRecording.frequency">Backup frequency [s]</entry>
+
 	<entry key="preferences.tagging">Tagging</entry>
 	<entry key="preferences.tagging.general">General</entry>
 	<entry key="preferences.tagging.saveFullMontageWithTag">Save full montage with tag file</entry>
@@ -792,6 +796,7 @@
 
 	<entry key="openSignal.options.raw.readXMLManifest">Read manifest...</entry>
 	<entry key="openSignal.options.raw.readXMLManifestToolTip">Read signal parameters from XML manifest</entry>
+        <entry key="openSignal.options.raw.backup">The signal you are about to load is only a backup!</entry>
 
 	<entry key="newTag.title">Choose new tag type</entry>
 	<entry key="newTag.emptyRadio">An empty tag with no styles</entry>
@@ -891,6 +896,9 @@
 	<entry key="montageFilters.masterSwitchTitle">Filtering master switch</entry>
 	<entry key="montageFilters.filteringEnabled">Enable signal filtering</entry>
 
+	<entry key="montageFilters.enableFiltfiltTitle">Filtfilt filtering switch</entry>
+	<entry key="montageFilters.enableFiltfiltLabel">Enable filtfilt filtering (only for offline signals)</entry>
+
 	<entry key="montageFilters.filtersTableTitle">Filters</entry>
 	<entry key="montageFilters.newFFT">New FFT filter</entry>
 	<entry key="montageFilters.newTimeDomainFilter">New time domain filter</entry>
@@ -989,11 +997,6 @@
 	<entry key="error.startMonitorRecording.incorrectTagFile">Please input a correct tag filename</entry>
 
 	<entry key="fileSelectPanel.browseButtonLabel">Browse</entry>
-
-	<entry key="signalSpace.signalLevelType.title">Signal source level</entry>
-	<entry key="signalSpace.signalLevelType.rawSignal">Raw signal</entry>
-	<entry key="signalSpace.signalLevelType.assembledSignal">Assembled signal</entry>
-	<entry key="signalSpace.signalLevelType.filteredSignal">Filtered signal</entry>
 
 	<entry key="signalSpace.channelSpace.title">Channel selection</entry>
 

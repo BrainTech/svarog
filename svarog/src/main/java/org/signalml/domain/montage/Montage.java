@@ -43,6 +43,7 @@ public class Montage extends SourceMontage implements Preset {
 	public static final String DESCRIPTION_PROPERTY = "description";
 	public static final String MAJOR_CHANGE_PROPERTY = "majorChange";
 	public static final String FILTERING_ENABLED_PROPERTY = "filteringEnabled";
+	public static final String FILTFILT_ENABLED_PROPERTY = "filtfiltEnabled";
 
         /**
          * string representing the name of the montage
@@ -86,6 +87,11 @@ public class Montage extends SourceMontage implements Preset {
          * tells whether the signal is being filtered
          */
 	private boolean filteringEnabled = true;
+
+	/**
+	 * tells whether the signal should be filtered using filtfilt
+	 */
+	private boolean filtfiltEnabled = true;
 
         /**
          * tells whether montage is undergoing a major change
@@ -176,6 +182,7 @@ public class Montage extends SourceMontage implements Preset {
 			filters = new ArrayList<MontageSampleFilter>();
 		}
 		filteringEnabled = montage.filteringEnabled;
+                filtfiltEnabled = montage.filtfiltEnabled;
 
 		setName(montage.name);
 		setDescription(montage.description);
@@ -391,6 +398,26 @@ public class Montage extends SourceMontage implements Preset {
 		if (this.filteringEnabled != filteringEnabled) {
 			this.filteringEnabled = filteringEnabled;
 			pcSupport.firePropertyChange(FILTERING_ENABLED_PROPERTY, !filteringEnabled, filteringEnabled);
+		}
+	}
+
+	/**
+	 * Tells whether the signal should be filtered using filtfilt.
+	 * @return true if the signal should be filtered using filtfilt, false
+	 * otherwise
+	 */
+	public boolean isFiltfiltEnabled() {
+		return filtfiltEnabled;
+	}
+
+	/**
+	 * Sets the filtfiltEnabled property to a given value.
+	 * @param filtfiltEnabled the value to be set
+	 */
+	public void setFiltfiltEnabled(boolean filtfiltEnabled) {
+		if (this.filtfiltEnabled != filtfiltEnabled) {
+			this.filtfiltEnabled = filtfiltEnabled;
+			pcSupport.firePropertyChange(FILTFILT_ENABLED_PROPERTY, !filtfiltEnabled, filtfiltEnabled);
 		}
 	}
 
@@ -1778,6 +1805,5 @@ public class Montage extends SourceMontage implements Preset {
 			}
 		}
 	}
-
 
 }

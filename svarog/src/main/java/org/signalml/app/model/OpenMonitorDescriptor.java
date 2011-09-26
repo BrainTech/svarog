@@ -30,6 +30,7 @@ public class OpenMonitorDescriptor {
         private float[] calibrationOffset;
         private Float minimumValue;
         private Float maximumValue;
+        private Float backupFrequency;
         /**
          * An integer value representing amplifier`s channel value for non-connected channel.
          */
@@ -53,9 +54,9 @@ public class OpenMonitorDescriptor {
                 channelCount = 0;
                 sampleType = RawSignalSampleType.DOUBLE;
                 byteOrder = RawSignalByteOrder.LITTLE_ENDIAN;
-
 		samplingFrequency = 128.0F;
 		pageSize = 20.0F;
+                backupFrequency = 10.0F;
 
                 monitorRecordingDescriptor = new MonitorRecordingDescriptor();
         }
@@ -367,5 +368,13 @@ public class OpenMonitorDescriptor {
 
         public void setSignalSource(SignalSource signalSource) {
                 this.signalSource = signalSource;
+        }
+
+        public Float getBackupFrequency() {
+                return backupFrequency;
+        }
+
+        public void setBackupFrequency(Float backupFrequency) {
+                this.backupFrequency = backupFrequency;
         }
 }

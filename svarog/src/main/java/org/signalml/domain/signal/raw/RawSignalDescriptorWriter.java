@@ -221,6 +221,10 @@ public class RawSignalDescriptorWriter {
 			root.appendChild(element);
 		}
 
+                element = document.createElement(RawSignalDocumentBuilder.IS_BACKUP);
+                element.setTextContent(descriptor.isBackup() ? "1" : "0");
+                root.appendChild(element);
+
 		return document;
 
 	}

@@ -178,7 +178,7 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 
 				// sends chunks to the signal recorder
 				if (signalRecorderWorker != null) {
-					signalRecorderWorker.offer(selectedChunk.clone());
+					signalRecorderWorker.offerChunk(selectedChunk.clone());
 					if (!signalRecorderWorker.isFirstSampleTimestampSet())
 						signalRecorderWorker.setFirstSampleTimestamp(samples.get(0).getTimestamp());
 				}
@@ -213,7 +213,7 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 
 				if(isChannelSelected(tag.getChannel(), selectedChannels)) {
 					if (tagRecorderWorker != null) {
-						tagRecorderWorker.offer(tag);
+						tagRecorderWorker.offerTag(tag);
 					}
 
 					publish(tag);

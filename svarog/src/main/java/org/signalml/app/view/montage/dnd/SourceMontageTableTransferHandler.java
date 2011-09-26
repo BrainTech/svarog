@@ -15,22 +15,41 @@ import javax.swing.TransferHandler;
 import org.apache.log4j.Logger;
 import org.signalml.app.view.montage.SourceMontageTable;
 
-/** SourceMontageTableTransferHandler
- *
+/**
+ * The {@link TransferHandler} for {@link SourceMontageTable}.
+ * <ul>
+ * <li>It doesn't allow to import data.</li>
+ * <li>If the {@link #createTransferable(JComponent)} method is called
+ * the {@link SourceMontageTransferable} with selected channels is created.</li>
+ * </ul>
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class SourceMontageTableTransferHandler extends TransferHandler {
 
+	/**
+	 * the default serialization constant
+	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * the logger
+	 */
 	protected static final Logger logger = Logger.getLogger(SourceMontageTableTransferHandler.class);
 
+	/**
+	 * @return {@link TransferHandler#COPY}
+	 */
 	@Override
 	public int getSourceActions(JComponent c) {
 		return COPY;
 	}
 
+	/**
+	 * Checks which channels are selected and creates the array with their
+	 * indexes. This array is used to create {@link SourceChannelIndices}
+	 * and on the basis of it the {@link SourceMontageTransferable}.
+	 */
 	@Override
 	protected Transferable createTransferable(JComponent c) {
 
@@ -70,6 +89,9 @@ public class SourceMontageTableTransferHandler extends TransferHandler {
 
 	}
 
+	/**
+	 * This transfer handler allows no import.
+	 */
 	@Override
 	public boolean canImport(JComponent comp, DataFlavor[] transferFlavors) {
 		// imports nothing

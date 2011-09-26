@@ -217,6 +217,12 @@ public class RawSignalDescriptorReader {
 				descriptor.setFirstSampleTimestamp(Double.parseDouble(firstSampleTimestamp));
 			}
 
+                        String backup = path.evaluate(RawSignalDocumentBuilder.IS_BACKUP, rawSignalEl);
+                        if (backup != null && !backup.isEmpty() && backup.equals("1")) {
+                                descriptor.setIsBackup(true);
+                        } else {
+                                descriptor.setIsBackup(false);
+                        }
 
 		} catch (XPathExpressionException ex) {
 			throw new SignalMLException("error.invalidRawSignalXML", ex);

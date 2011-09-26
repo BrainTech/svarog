@@ -48,23 +48,7 @@ public class CloseDocumentAction extends AbstractFocusableSignalMLAction<Documen
 			return;
 		}
 
-		try {
-			documentFlowIntegrator.closeDocument(document, false, false);
-                        if (document instanceof MonitorSignalDocument) {
-                                MonitorSignalDocument signalDocument = (MonitorSignalDocument) document;
-                                if (signalDocument.getOpenMonitorDescriptor().getSignalSource().isAmplifier()) {
-                                        ProcessManager.getInstance().killAll();
-                                }
-                        }
-		} catch (SignalMLException ex) {
-			logger.error("Failed to close document", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-			return;
-		} catch (IOException ex) {
-			logger.error("Failed to close document - i/o exception", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-			return;
-		}
+		documentFlowIntegrator.closeDocumentAndHandleExceptions(document);
 
 	}
 

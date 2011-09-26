@@ -11,10 +11,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.element.EmbeddedFileChooser;
-import org.signalml.app.view.element.FileChooserPanel;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalDescriptorReader;
 import org.signalml.plugin.export.SignalMLException;
@@ -113,6 +113,14 @@ public class ReadXMLManifestAction extends AbstractSignalMLAction {
 		}
 		try {
 			RawSignalDescriptor rawSignalDescriptor = reader.readDocument(xmlFile);
+
+                        if (rawSignalDescriptor.isBackup())
+                        {
+                                String msg = messageSource.getMessage("openSignal.options.raw.backup");
+                                String title = messageSource.getMessage("warning");
+                                JOptionPane.showMessageDialog(null, msg, title, JOptionPane.WARNING_MESSAGE);
+                        }
+
 			parentSignalParametersPanel.fillPanelFromModel(rawSignalDescriptor);
 		} catch (IOException ex) {
 			Logger.getLogger(ReadXMLManifestAction.class.getName()).log(Level.SEVERE, null, ex);
