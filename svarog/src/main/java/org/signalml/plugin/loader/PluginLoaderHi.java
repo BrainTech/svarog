@@ -369,39 +369,58 @@ public class PluginLoaderHi {
 	 */
 	public void loadPlugins()
 	{
-		try {
-			URL[] urls = scanPluginDirectories();
-			if (urls != null && urls.length > 0) {
-				ClassLoader prevCl = Thread.currentThread().getContextClassLoader();
-				synchronized (this) {
-				    myLoader = new PluginLoaderLo(urls, prevCl);
-				}
-				sortActivePlugins();
-				for (PluginDescription descr : descriptions) {
-					if (descr.dependenciesSatisfied(descriptions) && descr.isActive()) {
-						Plugin pl;
-						try {
-							pl = (Plugin)(myLoader.loadClass(descr.getStartingClass())).newInstance();
-							pl.register(PluginAccessClass.getSharedInstance());
-							descr.setPlugin(pl);
-							plugins.add(pl);
-						} catch (Exception e) {
-							descr.setActive(false);
-							descr.setFailedToLoad(true);
-							setDependentInactive(descr);
-							String errorMsg = "Failed to load plugin " + descr.getName()+ " from file " + descr.getJarFile();
-							SvarogLogger.getSharedInstance().warning(errorMsg, e);
-							logger.error(errorMsg);
-						}
-					}
+		URL[] urls = scanPluginDirectories();
+		if (urls != null && urls.length > 0) {
+			ClassLoader prevCl = Thread.currentThread().getContextClassLoader();
+			synchronized (this) {
+				myLoader = new PluginLoaderLo(urls, prevCl);
+			}
+			sortActivePlugins();
+			for (PluginDescription descr : descriptions) {
+				if (descr.dependenciesSatisfied(descriptions) && descr.isActive()) {
+					Plugin pl = loadPlugin(descr);
+					if (pl != null)
+						plugins.add(pl);
+					else
+						setDependentInactive(descr);
 				}
 			}
-			addPluginOptions();
-			PluginAccessClass.getSharedInstance().setInitializationPhaseEnd();
-		} catch (Exception e) {
-			logger.error("Unknown error while loading plug-ins");
-			e.printStackTrace();
 		}
+		addPluginOptions();
+		PluginAccessClass.getSharedInstance().setInitializationPhaseEnd();
+	}
+
+	/**
+	 * Try to load a plugin.
+	 * @returns null on error
+	 */
+	protected Plugin loadPlugin(PluginDescription descr)
+	{
+		Plugin plugin = null;
+		try {
+			plugin = (Plugin)(myLoader.loadClass(descr.getStartingClass())).newInstance();
+		} catch(Exception exc) {
+			String errorMsg = "Failed to load plugin " + descr.getName() +
+					  " from file " + descr.getJarFile();
+			SvarogLogger.getSharedInstance().warning(errorMsg, exc);
+			logger.error(errorMsg, exc);
+		}
+
+		if (plugin != null) {
+			try {
+				plugin.register(PluginAccessClass.getSharedInstance());
+			} catch(Throwable exc) {
+				String errorMsg = "Failed to initialize plugin " + descr.getName() +
+					" from file " + descr.getJarFile();
+				SvarogLogger.getSharedInstance().warning(errorMsg, exc);
+				logger.error(errorMsg, exc);
+			}
+			descr.setPlugin(plugin);
+		} else {
+			descr.setActive(false);
+			descr.setFailedToLoad(true);
+		}
+		return plugin;
 	}
 
 	/**

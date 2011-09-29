@@ -23,7 +23,6 @@
 		<module>plugins/FFTSignalTool</module>
 		<module>plugins/PluginToolCommon</module>
 		<module>plugins/Artifact</module>
-		<module>doc/plugin-interface-tutorial</module>
 		<module>izpack</module>
 	</modules>
 
