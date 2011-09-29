@@ -482,16 +482,9 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 
 		ApplicationWorkspace workspace = new ApplicationWorkspace();
 		workspace.setProfileDir(elementManager.getProfileDir());
-
-		try {
-			workspace.readFromPersistence(null);
-		} catch (IOException ex) {
-			if (ex instanceof FileNotFoundException) {
-				logger.debug("Seems like workspace doesn't exist - workspace will not be restored");
-			} else {
-				logger.error("Failed to read workspace configuration - workspace lost", ex);
-			}
-		}
+		workspace.maybeReadFromPersistence(
+			"Seems like workspace doesn't exist - workspace will not be restored",
+			"Failed to read workspace configuration - workspace lost");
 
 		workspace.configureIntegrator(elementManager.getDocumentFlowIntegrator());
 
@@ -691,21 +684,11 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 	public void restoreViewPreferences() {
 
 		config = new MainFrameConfiguration();
-		ConfigurationDefaults.setMainFrameConfigurationDefaults(config);
 		config.setProfileDir(elementManager.getProfileDir());
 		config.setStreamer(elementManager.getStreamer());
-
-		try {
-			config.readFromPersistence(null);
-		} catch (IOException ex) {
-			if (ex instanceof FileNotFoundException) {
-				logger.debug("No mainframe configuration, will use defaults");
-				return;
-			} else {
-				logger.error("Bad mainframe configuration, will use defaults", ex);
-				return;
-			}
-		}
+		ConfigurationDefaults.setMainFrameConfigurationDefaults(config);
+		config.maybeReadFromPersistence("No mainframe configuration, will use defaults",
+						"Bad mainframe configuration, will use defaults");
 
 		setSize(new Dimension(config.getXSize(),config.getYSize()));
 

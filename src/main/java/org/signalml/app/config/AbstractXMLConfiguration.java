@@ -5,6 +5,7 @@ package org.signalml.app.config;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.FileNotFoundException;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.util.XMLUtils;
@@ -67,6 +68,17 @@ public abstract class AbstractXMLConfiguration {
 
 	public void readFromPersistence(File file) throws IOException {
 		readFromXML(getUsableFile(file), getStreamer());
+	}
+
+	public void maybeReadFromPersistence(String fnf, String oth) {
+		try {
+			this.readFromPersistence(null);
+		} catch (IOException ex) {
+			if (ex instanceof FileNotFoundException)
+				logger.debug(fnf);
+			else
+				logger.error(oth, ex);
+		}
 	}
 
 	/**

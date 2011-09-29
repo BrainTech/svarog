@@ -645,18 +645,12 @@ public class SvarogApplication implements java.lang.Runnable {
 		splash(messageSource.getMessage("startup.restoringConfiguration"), false);
 
 		applicationConfig = new ApplicationConfiguration();
-		ConfigurationDefaults.setApplicationConfigurationDefaults(applicationConfig);
 		applicationConfig.setProfileDir(profileDir);
 		applicationConfig.setStreamer(streamer);
-
-		try {
-			applicationConfig.readFromPersistence(null);
-		} catch (FileNotFoundException ex) {
-			logger.debug("Application config not found - will use defaults");
-		} catch (Exception ex) {
-			logger.error("Failed to read application configuration - will use defaults", ex);
-		}
-
+		ConfigurationDefaults.setApplicationConfigurationDefaults(applicationConfig);
+		applicationConfig.maybeReadFromPersistence(
+				"Application config not found - will use defaults",
+				"Failed to read application configuration - will use defaults");
 		applicationConfig.applySystemSettings();
 
 		splash(messageSource.getMessage("startup.initializingCodecs"), true);
