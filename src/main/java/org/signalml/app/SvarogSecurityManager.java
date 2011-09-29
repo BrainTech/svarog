@@ -17,6 +17,14 @@ import org.signalml.plugin.loader.PluginLoaderHi;
  * defined by the system administrator, as well as all operations that are
  * being requested <b>outside</b> of Svarog plugin context.
  *
+ * This security manager can be configured to enforcing/permissive/off.
+ * Set java property (e.g. mvn exec:java -Dsvarog.security_manager=permissive")
+ * to change the mode. The default is enforcing.
+ *
+ * In enforcing mode, disallowed access causes a RuntimeException.
+ * In permissive mode, disallowed access only causes a message to be printed.
+ * When mode is off, this security manager is not installed at all.
+ *
  * @see java.lang.SecurityManager
  * @author Stanislaw Findeisen (Eisenbits)
  */
@@ -26,7 +34,7 @@ public class SvarogSecurityManager extends java.lang.SecurityManager {
 
 	private HashMap<Thread,org.signalml.util.FastMutableInt> recLevel =
 		new HashMap<Thread,org.signalml.util.FastMutableInt>();
-	private static SvarogSecurityManager instance;
+	public final boolean enforcing;
 
 	/**
 	 * Installs this security manager as the security manager for the application
@@ -35,27 +43,34 @@ public class SvarogSecurityManager extends java.lang.SecurityManager {
 	 * @see java.lang.System.setSecurityManager
 	 */
 	protected static void install() {
+		final String mode = System.getProperties().getProperty("svarog.security_manager",
+								       "enforcing");
+		final boolean enforcing;
+		if (mode.equals("off")) {
+			SvarogSecurityLogger.getInstance().debug("SvarogSecurityManager is off");
+			return;
+		} else if (mode.equals("permissive")) {
+			enforcing = false;
+		} else {
+			if (!mode.equals("enforcing"))
+				SvarogSecurityLogger.getInstance().error(
+					"svarog.security_manager has invalid value " +
+					"'" + mode + "', ignoring");
+			enforcing = true;
+		}
+
 		// Force class initialization
 		new FastMutableInt(5);
 		SvarogSecurityLogger.getInstance().debug("SvarogSecurityManager init...");
 		PluginLoaderHi.getInstance();
 
 		// create and install
-		java.lang.System.setSecurityManager(getSharedInstance());
+		System.setSecurityManager(new SvarogSecurityManager(enforcing));
 	}
 
-	public static SvarogSecurityManager getSharedInstance() {
-		if (null == instance) {
-			synchronized (SvarogSecurityManager.class) {
-				if (null == instance)
-					instance = new SvarogSecurityManager();
-			}
-		}
-		return instance;
-	}
-
-	private SvarogSecurityManager() {
+	private SvarogSecurityManager(boolean enforcing) {
 		super();
+		this.enforcing = enforcing;
 	}
 
 	private synchronized void incRecLevel(Thread t) {
@@ -200,7 +215,8 @@ public class SvarogSecurityManager extends java.lang.SecurityManager {
 				if (frame != null)
 					errMsg += "; plugin ctx: " + toString(frame);
 				sl.permissionDenied(t, p, e, frame);
-				throw new SecurityException(errMsg, e);
+				if (this.enforcing)
+					throw new SecurityException(errMsg, e);
 			}
 		} finally {
 			//            if (permit)
