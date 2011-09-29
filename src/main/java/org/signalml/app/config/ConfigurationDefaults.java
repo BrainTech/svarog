@@ -34,16 +34,15 @@ public class ConfigurationDefaults {
 
 	protected static final Logger logger = Logger.getLogger(ConfigurationDefaults.class);
 
-	private static Properties properties = null;
+	private static final Properties properties;
 
 	private static final String GREYSCALE_PALETTE = "greyscale";
 
 	static {
 		properties = new Properties();
-		Resource res = new ClassPathResource("org/signalml/app/config/signalml_defaults.xml");
 		try {
-			InputStream is = new BufferedInputStream(res.getInputStream());
-			properties.loadFromXML(is);
+			InputStream is = ConfigurationDefaults.class.getResourceAsStream("signalml_defaults.properties");
+			properties.load(is);
 		} catch (IOException ex) {
 			logger.error("Failed to load default properties - i/o exception", ex);
 			throw new RuntimeException(ex);
