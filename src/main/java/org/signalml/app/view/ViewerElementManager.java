@@ -16,6 +16,7 @@ import javax.swing.Box;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
@@ -40,6 +41,7 @@ import org.signalml.app.action.EEGLabExportAction;
 import org.signalml.app.action.ExportBookAction;
 import org.signalml.app.action.ExportSignalAction;
 import org.signalml.app.action.ExportTagAction;
+import org.signalml.app.action.ExportEEGLabTagAction;
 import org.signalml.app.action.HelpContentsAction;
 import org.signalml.app.action.IterateMethodAction;
 import org.signalml.app.action.NewTagAction;
@@ -328,6 +330,7 @@ public class ViewerElementManager {
 	private SaveTagAsAction saveTagAsAction;
 	private OpenTagAction importTagAction;
 	private ExportTagAction exportTagAction;
+	private ExportEEGLabTagAction exportEEGLabTagAction;
 
 	/**
 	 * Represents an {@link Action action} responsible for showing a dialog
@@ -807,6 +810,7 @@ public class ViewerElementManager {
 
 			JMenu exportSubmenu = new JMenu(messageSource.getMessage("menu.export"));
 			exportSubmenu.add(getExportTagAction());
+			exportSubmenu.add(getExportEEGLabTagAction());
 
 			tagsMenu = new JMenu(messageSource.getMessage("menu.tags"));
 
@@ -832,6 +836,7 @@ public class ViewerElementManager {
 		return tagsMenu;
 	}
 
+	
 	public JMenu getToolsMenu() {
 		if (toolsMenu == null) {
 			toolsMenu = new JMenu(messageSource.getMessage("menu.tools"));
@@ -1679,6 +1684,14 @@ public class ViewerElementManager {
 			exportTagAction.setOptionPaneParent(getOptionPaneParent());
 		}
 		return exportTagAction;
+	}
+	public ExportEEGLabTagAction getExportEEGLabTagAction() {
+		if (exportEEGLabTagAction == null) {
+			exportEEGLabTagAction = new ExportEEGLabTagAction(messageSource, getActionFocusManager());
+			exportEEGLabTagAction.setFileChooser(getFileChooser());
+			exportEEGLabTagAction.setOptionPaneParent(getOptionPaneParent());
+		}
+		return exportEEGLabTagAction;
 	}
 
 	public EditSignalParametersAction getEditSignalParametersAction() {

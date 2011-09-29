@@ -373,6 +373,8 @@
 	<entry key="action.importTagToolTip">Import a tag in legacy format</entry>
 	<entry key="action.exportTag">Export Legacy Tag...</entry>
 	<entry key="action.exportTagToolTip">Export a tag in legacy format</entry>
+	<entry key="action.exportEEGLabTag">Export to EEGLab...</entry>
+    <entry key="action.exportEEGLabTagToolTip">Export tags to EEGLab events ASCII file format</entry>
 	<entry key="action.closeTag">Close Tag</entry>
 	<entry key="action.closeTagToolTip">Close active tag</entry>
 	<entry key="action.removeTag">Remove tag</entry>
