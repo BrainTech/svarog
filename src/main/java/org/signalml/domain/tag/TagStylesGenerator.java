@@ -11,7 +11,10 @@ import org.apache.log4j.Logger;
 import org.signalml.app.document.TagDocument;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.SignalSelectionType;
+import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
+import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
+import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributeDefinition;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
@@ -134,6 +137,19 @@ public class TagStylesGenerator {
 		else 
 			return generateNewStyleFor(name, tagLength, channel);
 
+	}
+
+        public static void addAttributeToTag(TagStyle style, Tag tag, String attributeCode, String value) {
+
+		TagStyleAttributeDefinition attributeDefinition = style.getAttributesDefinitions().getAttributeDefinition(attributeCode);
+
+		if (attributeDefinition == null) {
+			attributeDefinition = new TagStyleAttributeDefinition(attributeCode, attributeCode, true);
+			style.getAttributesDefinitions().addAttributeDefinition(attributeDefinition);
+		}
+
+		TagAttributeValue attributeValue = new TagAttributeValue(attributeDefinition, value);
+		tag.setAttribute(attributeValue);
 	}
 
 }

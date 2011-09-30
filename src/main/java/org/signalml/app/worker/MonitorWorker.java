@@ -28,6 +28,7 @@ import org.signalml.multiplexer.protocol.SvarogProtocol.Sample;
 import org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector;
 
 import com.google.protobuf.ByteString;
+import org.signalml.plugin.export.signal.TagStyle;
 
 /** MonitorWorker
  *
@@ -202,15 +203,22 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 				// By now we ignore field channels and assume that tag if for all channels
 
 				final double tagLen = tagMsg.getEndTimestamp() - tagMsg.getStartTimestamp();
+
+                                TagStyle style = tagSet.getStyle(tagMsg.getName());
+
+                                if (style == null) {
+                                    style = stylesGenerator.getSmartStyleFor(tagMsg.getName(), tagLen, -1);
+                                    tagSet.addStyle(style);
+                                }
+
 				final MonitorTag tag
-					= new MonitorTag(stylesGenerator.getSmartStyleFor(tagMsg.getName(), tagLen, -1),
+					= new MonitorTag(style,
 							 tagMsg.getStartTimestamp(),
 							 tagLen,
 							 -1);
 
-				/* TODO: temporary disabled monitor attributes
-				 for (SvarogProtocol.Variable v : tagMsg.getDesc().getVariablesList())
-					tag.setAttribute(v.getKey(), v.getValue());*/
+				for (SvarogProtocol.Variable v : tagMsg.getDesc().getVariablesList())
+					TagStylesGenerator.addAttributeToTag(style, tag, v.getKey(), v.getValue());
 
 				if(isChannelSelected(tag.getChannel(), selectedChannels)) {
 					if (tagRecorderWorker != null) {

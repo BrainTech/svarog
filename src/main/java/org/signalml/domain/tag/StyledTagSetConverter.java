@@ -414,13 +414,7 @@ public class StyledTagSetConverter implements Converter {
 										tag.setAnnotation(reader.getValue());
 									}
 									else {
-										TagStyleAttributeDefinition attributeDefinition = style.getAttributesDefinitions().getAttributeDefinition(attributeCode);
-
-
-										if (attributeDefinition != null) {
-											TagAttributeValue attributeValue = new TagAttributeValue(attributeDefinition, reader.getValue());
-											tag.setAttribute(attributeValue);
-										}
+										TagStylesGenerator.addAttributeToTag(style, tag, attributeCode, reader.getValue());										
 									}
 
 									reader.moveUp();
