@@ -24,6 +24,10 @@ public class TagStyleAttributes {
 		attributes.add(definition);
 	}
 
+	public TagStyleAttributeDefinition getAttributeDefinition(int index) {
+		return attributes.get(index);
+	}
+
 	public TagStyleAttributeDefinition getAttributeDefinition(String attributeCode) {
 		for (TagStyleAttributeDefinition attribute: attributes) {
 			if (attribute.getCode().equals(attributeCode))

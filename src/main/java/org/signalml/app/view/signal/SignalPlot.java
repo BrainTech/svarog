@@ -67,6 +67,8 @@ import org.signalml.plugin.export.signal.SignalSelection;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
+import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
+import org.signalml.plugin.export.signal.tagStyle.TagAttributes;
 import org.signalml.plugin.export.view.ExportedSignalPlot;
 import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -590,13 +592,12 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			return;
 		}
 
-		TagStyle style = tag.getStyle();
 		Component rendererComponent;
 
 		if (selectionOnly) {
 			rendererComponent = tagRenderer.getTagSelectionRendererComponent();
 		} else {
-			rendererComponent = tagRenderer.getTagRendererComponent(style, active, selected);
+			rendererComponent = tagRenderer.getTagRendererComponent(tag, active, selected);
 		}
 
 		if (type == SignalSelectionType.BLOCK) {
@@ -2110,6 +2111,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		String annotation;
 
 		PositionedTag tagSelection = view.getTagSelection(this);
+		TagAttributes tagAttributes = null;
 
 		if (tagSelection != null && tags.contains(tagSelection)) {
 			buffer.append("<b>");
@@ -2118,6 +2120,8 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			if (annotation != null && !annotation.isEmpty()) {
 				buffer.append("<div style=\"padding-left: 20px; width: 300px; font-style: italic;\">").append(annotation).append("</div>");
 			}
+			tagAttributes = tagSelection.tag.getAttributes();
+
 		}
 		for (PositionedTag tag : tags) {
 			if (tagSelection != null && tag.tag == tagSelection.tag) {
@@ -2128,6 +2132,15 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			if (annotation != null && !annotation.isEmpty()) {
 				buffer.append("<div style=\"padding-left: 20px; width: 300px; font-style: italic;\">").append(annotation).append("</div>");
 			}
+			tagAttributes = tag.tag.getAttributes();
+		}
+
+		for (TagAttributeValue attributeValue: tagAttributes.getAttributesList()) {
+			String value = attributeValue.getAttributeValue();
+			if (value.length() > 15)
+				value = value.substring(0, 15);
+			String code = attributeValue.getAttributeDefinition().getCode();
+			buffer.append("<div style=\"padding-left: 20px; width: 300px; font-style: italic;\">").append(code).append(": ").append(value).append("</div>");
 		}
 		buffer.append("</body></html>");
 

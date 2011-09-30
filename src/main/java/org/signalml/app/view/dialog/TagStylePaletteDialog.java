@@ -35,6 +35,7 @@ import org.signalml.app.model.TagStyleTreeModel;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.element.TagStylePropertiesPanel;
 import org.signalml.app.view.element.TagStyleTree;
+import org.signalml.app.view.tag.styles.attributes.TagAttributesDefinitionsEditPanel;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.SignalSelectionType;

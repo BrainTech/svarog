@@ -22,7 +22,7 @@ public class TagAttributes {
 		attributes.add(value);
 	}
 
-	public List<TagAttributeValue> getAttributes() {
+	public List<TagAttributeValue> getAttributesList() {
 		return attributes;
 	}
 

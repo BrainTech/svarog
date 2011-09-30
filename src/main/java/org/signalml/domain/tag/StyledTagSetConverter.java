@@ -206,7 +206,7 @@ public class StyledTagSetConverter implements Converter {
 			writer.endNode();
 		}
 
-		for (TagAttributeValue attribute: tag.getAttributes().getAttributes()) {
+		for (TagAttributeValue attribute: tag.getAttributes().getAttributesList()) {
 			writer.startNode(attribute.getAttributeDefinition().getCode());
 			writer.setValue(attribute.getAttributeValue());
 			writer.endNode();

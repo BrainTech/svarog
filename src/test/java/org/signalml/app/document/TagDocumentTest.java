@@ -156,7 +156,7 @@ public class TagDocumentTest {
 		assertEquals(400F, tag.getLength(), 0);
 		assertEquals(5, tag.getChannel());
 		assertEquals("test", tag.getAnnotation());
-		assertEquals(1, tag.getAttributes().getAttributes().size());
+		assertEquals(1, tag.getAttributes().getAttributesList().size());
 		assertEquals("testAttributeValue", tag.getAttributes().getAttribute("testAttributeKey").getAttributeValue());
 
 	}

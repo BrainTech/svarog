@@ -40,6 +40,7 @@ import javax.swing.event.DocumentEvent;
 
 import org.signalml.app.view.dialog.KeyStrokeCaptureDialog;
 import org.signalml.app.view.tag.TagRenderer;
+import org.signalml.app.view.tag.styles.attributes.TagAttributesDefinitionsEditPanel;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
@@ -182,6 +183,8 @@ public class TagStylePropertiesPanel extends JPanel {
 	 */
 	private JPanel outlineColorPanel;
 
+	private TagAttributesDefinitionsEditPanel tagAttributesDefinitionsEditPanel;
+
 	/**
 	 * the layout for {@link #previewPanel}
 	 */
@@ -247,7 +250,7 @@ public class TagStylePropertiesPanel extends JPanel {
 		JPanel sidePanel = new JPanel(new BorderLayout());
 
 		sidePanel.add(getPropertiesPanel(), BorderLayout.NORTH);
-		sidePanel.add(Box.createGlue(), BorderLayout.CENTER);
+		sidePanel.add(getTagAttributesDefinitionsEditPanel(), BorderLayout.CENTER);
 		sidePanel.add(getPreviewPanel(), BorderLayout.SOUTH);
 
 		add(graphicsPanel, BorderLayout.CENTER);
@@ -332,6 +335,13 @@ public class TagStylePropertiesPanel extends JPanel {
 			previewLayout = new CardLayout();
 		}
 		return previewLayout;
+	}
+
+	private TagAttributesDefinitionsEditPanel getTagAttributesDefinitionsEditPanel() {
+		if (tagAttributesDefinitionsEditPanel == null) {
+			tagAttributesDefinitionsEditPanel = new TagAttributesDefinitionsEditPanel(messageSource);
+		}
+		return tagAttributesDefinitionsEditPanel;
 	}
 
 	/**
@@ -929,6 +939,8 @@ public class TagStylePropertiesPanel extends JPanel {
 		}
 		getWidthSpinner().setEnabled(enabled);
 		getDashComboBox().setEnabled(enabled);
+
+		getTagAttributesDefinitionsEditPanel().fillPanelFromModel(currentStyle);
 
 		setChanged(false);
 

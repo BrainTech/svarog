@@ -1,7 +1,6 @@
 /* TagRenderer.java created 2007-10-10
  *
  */
-
 package org.signalml.app.view.tag;
 
 import java.awt.AlphaComposite;
@@ -18,7 +17,10 @@ import java.awt.Stroke;
 
 import javax.swing.JComponent;
 
+import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
+import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
+import org.signalml.plugin.export.signal.tagStyle.TagAttributes;
 
 /** TagRenderer
  *
@@ -28,22 +30,21 @@ import org.signalml.plugin.export.signal.TagStyle;
 public class TagRenderer extends JComponent {
 
 	private static final long serialVersionUID = 1L;
-
 	// 2 * tg(30 deg)
-	private static final double DOUBLE_TG30 = 2*Math.tan(Math.toRadians(30));
-
+	private static final double DOUBLE_TG30 = 2 * Math.tan(Math.toRadians(30));
+	private Tag tag;
 	private TagStyle tagStyle;
 	private boolean selected;
 	private boolean selectionOnly;
 	private boolean active;
+	private static final BasicStroke WHITE_SELECTION_STROKE = new BasicStroke(1F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10F, new float[]{3, 3}, 0F);
+	private static final BasicStroke BLACK_SELECTION_STROKE = new BasicStroke(1F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10F, new float[]{3, 3}, 3F);
 
-	private static final BasicStroke WHITE_SELECTION_STROKE = new BasicStroke(1F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10F, new float[] {3,3}, 0F);
-	private static final BasicStroke BLACK_SELECTION_STROKE = new BasicStroke(1F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10F, new float[] {3,3}, 3F);
-
-	public Component getTagRendererComponent(TagStyle style, boolean isActive, boolean isSelected) {
+	public Component getTagRendererComponent(Tag tag, boolean isActive, boolean isSelected) {
 
 		this.selectionOnly = false;
-		this.tagStyle = style;
+		this.tag = tag;
+		this.tagStyle = tag.getStyle();
 		this.active = isActive;
 		this.selected = isSelected;
 
@@ -62,7 +63,7 @@ public class TagRenderer extends JComponent {
 
 	protected void drawNormal(Graphics2D g) {
 
-		Rectangle rect = new Rectangle(new Point(0,0), getSize());
+		Rectangle rect = new Rectangle(new Point(0, 0), getSize());
 
 		if (!selectionOnly) {
 			g.setColor(tagStyle.getFillColor());
@@ -74,16 +75,16 @@ public class TagRenderer extends JComponent {
 			int offset = (int) width;
 			g.setStroke(new BasicStroke(width, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10F, tagStyle.getOutlineDash(), 0F));
 
-			g.drawRect(rect.x+(offset/2), rect.y+(offset/2), rect.width-offset, rect.height-offset);
+			g.drawRect(rect.x + (offset / 2), rect.y + (offset / 2), rect.width - offset, rect.height - offset);
 		}
 
 		if (selected) {
 			g.setColor(Color.WHITE);
 			g.setStroke(WHITE_SELECTION_STROKE);
-			g.drawRect(rect.x, rect.y, rect.width-1, rect.height-1);
+			g.drawRect(rect.x, rect.y, rect.width - 1, rect.height - 1);
 			g.setColor(Color.BLACK);
 			g.setStroke(BLACK_SELECTION_STROKE);
-			g.drawRect(rect.x, rect.y, rect.width-1, rect.height-1);
+			g.drawRect(rect.x, rect.y, rect.width - 1, rect.height - 1);
 		}
 
 		if (!selectionOnly && active) {
@@ -91,16 +92,42 @@ public class TagRenderer extends JComponent {
 			g.fillOval(2, 2, 4, 4);
 		}
 
+		if (tag == null) {
+			return;
+		}
+
+		int y = rect.y + 20;
+		g.setColor(Color.BLACK);
+		/*if (tag.getAnnotation() != null) {
+		g.drawString(tag.getAnnotation(), rect.x + 20, y);
+		y += 20;
+		}*/
+
+		for (TagAttributeValue a : tag.getAttributes().getAttributesList()) {
+			if (!a.getAttributeDefinition().isVisible()) {
+				continue;
+			}
+
+			String code = a.getAttributeDefinition().getCode();
+			String value = a.getAttributeValue();
+			if (value.length() > 15) {
+				value = value.substring(0, 15);
+			}
+
+			g.drawString(code + ": " + value, rect.x + 4, y);
+			y += 20;
+		}
+
 	}
 
 	protected void drawMarker(Graphics2D g) {
 
-		Rectangle rect = new Rectangle(new Point(0,0), getSize());
+		Rectangle rect = new Rectangle(new Point(0, 0), getSize());
 
 		int rWidth = Math.min(50, rect.width);
 		rWidth = Math.min(rWidth, rect.height / 3);
 		rWidth = Math.max(rWidth, 5);
-		int offset = (rWidth < rect.width ? (rect.width-rWidth)/2 : 0);
+		int offset = (rWidth < rect.width ? (rect.width - rWidth) / 2 : 0);
 
 		int rHeight = (int) Math.round(((double) rWidth) / DOUBLE_TG30);
 
@@ -109,8 +136,8 @@ public class TagRenderer extends JComponent {
 		Polygon triangle = new Polygon();
 
 		triangle.addPoint(offset, 0);
-		triangle.addPoint(offset+rWidth-1, 0);
-		triangle.addPoint(offset+rWidthDiv2, rHeight-1);
+		triangle.addPoint(offset + rWidth - 1, 0);
+		triangle.addPoint(offset + rWidthDiv2, rHeight - 1);
 
 		if (!selectionOnly) {
 			g.setColor(tagStyle.getFillColor());
@@ -124,7 +151,7 @@ public class TagRenderer extends JComponent {
 			g.setStroke(new BasicStroke(width, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10F, tagStyle.getOutlineDash(), 0F));
 			g.draw(triangle);
 			g.setStroke(oldStroke);
-			g.drawLine(offset+rWidthDiv2, rHeight, offset+rWidthDiv2, rect.height-1);
+			g.drawLine(offset + rWidthDiv2, rHeight, offset + rWidthDiv2, rect.height - 1);
 
 		}
 
@@ -140,7 +167,7 @@ public class TagRenderer extends JComponent {
 
 		if (!selectionOnly && active) {
 			g.setColor(Color.RED);
-			g.fillOval(offset+rWidthDiv2-2, 2, 4, 4);
+			g.fillOval(offset + rWidthDiv2 - 2, 2, 4, 4);
 		}
 
 	}
@@ -152,7 +179,7 @@ public class TagRenderer extends JComponent {
 		Composite origComp = g.getComposite();
 
 		if (!selectionOnly && tagStyle == null) {
-			Rectangle rect = new Rectangle(new Point(0,0), getSize());
+			Rectangle rect = new Rectangle(new Point(0, 0), getSize());
 			g.setComposite(AlphaComposite.SrcOver);
 			g.setColor(getBackground());
 			g.fill(rect);
@@ -201,5 +228,4 @@ public class TagRenderer extends JComponent {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-
 }

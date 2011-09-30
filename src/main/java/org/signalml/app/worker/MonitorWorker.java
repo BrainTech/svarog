@@ -217,8 +217,14 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 							 tagLen,
 							 -1);
 
-				for (SvarogProtocol.Variable v : tagMsg.getDesc().getVariablesList())
-					TagStylesGenerator.addAttributeToTag(style, tag, v.getKey(), v.getValue());
+				for (SvarogProtocol.Variable v : tagMsg.getDesc().getVariablesList()) {
+					if (v.getKey().equals("annotation")) {
+						tag.setAnnotation(v.getValue());
+					}
+					else {
+						TagStylesGenerator.addAttributeToTag(style, tag, v.getKey(), v.getValue());
+					}
+				}
 
 				if(isChannelSelected(tag.getChannel(), selectedChannels)) {
 					if (tagRecorderWorker != null) {
