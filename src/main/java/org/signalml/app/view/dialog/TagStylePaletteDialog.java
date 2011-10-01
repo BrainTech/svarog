@@ -14,6 +14,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Collection;
 
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -35,13 +38,14 @@ import org.signalml.app.model.TagStyleTreeModel;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.element.TagStylePropertiesPanel;
 import org.signalml.app.view.element.TagStyleTree;
-import org.signalml.app.view.tag.styles.attributes.TagAttributesDefinitionsEditPanel;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.plugin.export.view.AbstractDialog;
+import org.springframework.context.MessageSourceResolvable;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
@@ -141,7 +145,7 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 	 * the {@link ApplyChangesActionAction action} which applies changes
 	 */
 	private ApplyChangesActionAction applyChangesActionAction;
-	
+
 	/**
 	 * the button which calls the {@link ApplyChangesActionAction action}
 	 * which applies changes
@@ -296,7 +300,7 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 	/**
 	 * Creates the control pane.
 	 * Adds OK button, the CANCEL button and the button which calls the
-	 * {@link ApplyChangesActionAction action} which applies changes.  
+	 * {@link ApplyChangesActionAction action} which applies changes.
 	 */
 	@Override
 	protected JPanel createButtonPane() {
@@ -704,6 +708,7 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 		this.changed |= changed;
 		currentTagSet.updateStyle(currentStyle.getName(), style);
 
+
 	}
 
 	/**
@@ -769,16 +774,44 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 
 	@Override
 	public Preset getPreset() throws SignalMLException {
-		throw new UnsupportedOperationException("Not supported yet.");
+		applyChanges();
+		LinkedHashMap<String, TagStyle> stylesWithNames = (LinkedHashMap<String, TagStyle>) currentTagSet.getStylesWithNames().clone();
+
+		StyledTagSet sts = new StyledTagSet(stylesWithNames);
+		return sts;
 	}
 
 	@Override
 	public void setPreset(Preset preset) throws SignalMLException {
-		throw new UnsupportedOperationException("Not supported yet.");
+		StyledTagSet newStyles = ((StyledTagSet) preset).clone();
+
+		List<String> stylesThatCouldNotBeDeleted = currentTagSet.copyStylesFrom(newStyles);
+
+		if (stylesThatCouldNotBeDeleted.size() > 0) {
+
+			String styles = "";
+			for (int i = 0; i < stylesThatCouldNotBeDeleted.size(); i++) {
+				styles += stylesThatCouldNotBeDeleted.get(i);
+				if (i < stylesThatCouldNotBeDeleted.size() - 1)
+					styles += ", ";
+			}
+
+			ErrorsDialog errorsDialog = new ErrorsDialog(messageSource, this, true);
+			MessageSourceResolvable messageSourceResolvable = new DefaultMessageSourceResolvable(new String[] {"tagStylePalette.preset.stylesCouldNotBeDeleted"}, new Object[] {styles});
+			errorsDialog.showDialog(messageSourceResolvable, true);
+		}
+
+		currentStyle = null;
+
+                tagStyleTreeModel.setTagSet(null);
+
+		TagStylePaletteDescriptor descriptor = new TagStylePaletteDescriptor(currentTagSet, null);
+		fillDialogFromModel(descriptor);
+
 	}
 
 	public boolean arePresetsActive() {
-		return false;
+		return true;
 	}
 
 	/**

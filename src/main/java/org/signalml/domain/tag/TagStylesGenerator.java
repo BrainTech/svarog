@@ -33,13 +33,13 @@ public class TagStylesGenerator {
 	private TagStylesGenerator() {
 
 		this.tempStyles = new HashMap<String, TagStyle>();
-		
+
 		this.styles = new HashMap<String, TagStyle>();
 		Collection<TagStyle> templateStyles = this.getStylesFromDataBase();
 		for (TagStyle style : templateStyles) {
 			styles.put(style.getName(), style);
 		}
-		
+
 		this.colors = new Stack<Color>();
 		colors.push(Color.WHITE);
 		colors.push(Color.CYAN);
@@ -67,7 +67,7 @@ public class TagStylesGenerator {
 	}
 
 	protected Collection<TagStyle> getStylesFromDataBase(){
-		
+
 		//Create for a moment TagDocument so that it'll read-in database styles
 		Resource r = new ClassPathResource(STYLES_PATH);
 		TagDocument templateDocument;
@@ -103,7 +103,7 @@ public class TagStylesGenerator {
 
 		//generating new style for the tag
 		Color c = this.colors.pop();
-		TagStyle style = new TagStyle(signalSelectionType, name, "", 
+		TagStyle style = new TagStyle(signalSelectionType, name, "",
 				c, Color.RED, 1);
 		logger.info("Generated color for:"+name+" = "+c);
 		if (tagLength < 0.001)
@@ -120,7 +120,7 @@ public class TagStylesGenerator {
 		TagStyle style = this.styles.get(name);
 		if (style != null)
 			return style;
-		else 
+		else
 			return this.tempStyles.get(name);
 
 	}
@@ -134,7 +134,7 @@ public class TagStylesGenerator {
 		TagStyle style = this.getTempOrRealStyleFor(name);
 		if (style != null)
 			return style;
-		else 
+		else
 			return generateNewStyleFor(name, tagLength, channel);
 
 	}

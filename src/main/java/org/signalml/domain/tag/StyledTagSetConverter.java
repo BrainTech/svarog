@@ -42,7 +42,7 @@ import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributeDefinition;
  * This class is responsible for marshaling/unmarshaling {@link StyledTagSet}
  * objects to/from textual data.
  * Doesn't seem to be used.
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class StyledTagSetConverter implements Converter {
@@ -414,10 +414,11 @@ public class StyledTagSetConverter implements Converter {
 										tag.setAnnotation(reader.getValue());
 									}
 									else {
-										TagStylesGenerator.addAttributeToTag(style, tag, attributeCode, reader.getValue());										
+										TagStylesGenerator.addAttributeToTag(style, tag, attributeCode, reader.getValue());
 									}
 
 									reader.moveUp();
+
 								}
 
 								tags.add(tag);

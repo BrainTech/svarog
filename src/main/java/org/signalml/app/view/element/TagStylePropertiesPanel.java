@@ -39,6 +39,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 
 import org.signalml.app.view.dialog.KeyStrokeCaptureDialog;
+import org.signalml.app.view.element.TagStylePropertiesPanel;
 import org.signalml.app.view.tag.TagRenderer;
 import org.signalml.app.view.tag.styles.attributes.TagAttributesDefinitionsEditPanel;
 import org.signalml.plugin.export.signal.SignalSelectionType;
@@ -339,7 +340,7 @@ public class TagStylePropertiesPanel extends JPanel {
 
 	private TagAttributesDefinitionsEditPanel getTagAttributesDefinitionsEditPanel() {
 		if (tagAttributesDefinitionsEditPanel == null) {
-			tagAttributesDefinitionsEditPanel = new TagAttributesDefinitionsEditPanel(messageSource);
+			tagAttributesDefinitionsEditPanel = new TagAttributesDefinitionsEditPanel(messageSource, this);
 		}
 		return tagAttributesDefinitionsEditPanel;
 	}
@@ -989,6 +990,7 @@ public class TagStylePropertiesPanel extends JPanel {
 			if (currentStyle.getType() == SignalSelectionType.CHANNEL) {
 				currentStyle.setMarker(getMarkerCheckBox().isSelected());
 			}
+			getTagAttributesDefinitionsEditPanel().fillModelFromPanel(currentStyle);
 
 			setChanged(false);
 

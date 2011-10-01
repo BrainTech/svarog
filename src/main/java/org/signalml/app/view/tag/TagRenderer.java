@@ -20,7 +20,6 @@ import javax.swing.JComponent;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
-import org.signalml.plugin.export.signal.tagStyle.TagAttributes;
 
 /** TagRenderer
  *
@@ -108,13 +107,13 @@ public class TagRenderer extends JComponent {
 				continue;
 			}
 
-			String code = a.getAttributeDefinition().getCode();
+			String displayValue = a.getAttributeDefinition().getDisplayName();
 			String value = a.getAttributeValue();
 			if (value.length() > 15) {
 				value = value.substring(0, 15);
 			}
 
-			g.drawString(code + ": " + value, rect.x + 4, y);
+			g.drawString(displayValue + ": " + value, rect.x + 4, y);
 			y += 20;
 		}
 

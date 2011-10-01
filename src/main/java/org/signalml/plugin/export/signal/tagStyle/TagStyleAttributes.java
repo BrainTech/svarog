@@ -20,6 +20,10 @@ public class TagStyleAttributes {
 		attributes = new ArrayList<TagStyleAttributeDefinition>();
 	}
 
+	public void removeAttributeDefinition(int index) {
+		attributes.remove(index);
+	}
+
 	public void addAttributeDefinition(TagStyleAttributeDefinition definition) {
 		attributes.add(definition);
 	}
@@ -48,6 +52,16 @@ public class TagStyleAttributes {
 
 	public int getSize() {
 		return attributes.size();
+	}
+
+	@Override
+	public TagStyleAttributes clone() {
+
+		TagStyleAttributes newStyleAttributes = new TagStyleAttributes();
+		for (TagStyleAttributeDefinition definition: attributes) {
+			newStyleAttributes.addAttributeDefinition(definition.clone());
+		}
+		return newStyleAttributes;
 	}
 
 }

@@ -121,6 +121,10 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
 		return style;
 	}
 
+	public void setStyle(TagStyle style) {
+		this.style = style;
+	}
+
 	/**
 	 * Returns the annotation of this tagged selection.
 	 * @return the annotation of this tagged selection

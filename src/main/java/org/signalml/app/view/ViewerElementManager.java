@@ -1280,7 +1280,7 @@ public class ViewerElementManager {
 		}
 		return slavePlotSettingsPopupDialog;
 	}
-	
+
 	public ChannelOptionsPopupDialog getChannelOptionsPopupDialog() {
 		if (channelOptionsPopupDialog == null) {
 			channelOptionsPopupDialog = new ChannelOptionsPopupDialog(messageSource, getDialogParent(), true);
@@ -1296,7 +1296,7 @@ public class ViewerElementManager {
 		if (tagStylePaletteDialog == null) {
 			tagStylePaletteDialog = new TagStylePaletteDialog(messageSource, getStyledTagSetPresetManager(), getDialogParent(), true);
 			tagStylePaletteDialog.setApplicationConfig(getApplicationConfig());
-
+			tagStylePaletteDialog.setFileChooser(getFileChooser());
 		}
 		return tagStylePaletteDialog;
 	}
@@ -1305,6 +1305,7 @@ public class ViewerElementManager {
 		if (tagStylePresetDialog == null) {
 			tagStylePresetDialog = new TagStylePresetDialog(messageSource, getStyledTagSetPresetManager(), getDialogParent(), true);
 			tagStylePresetDialog.setApplicationConfig(getApplicationConfig());
+			tagStylePresetDialog.setFileChooser(getFileChooser());
 		}
 		return tagStylePresetDialog;
 	}

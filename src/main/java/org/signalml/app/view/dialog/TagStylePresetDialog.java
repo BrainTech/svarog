@@ -6,13 +6,7 @@
 package org.signalml.app.view.dialog;
 
 import java.awt.Window;
-import java.util.LinkedHashMap;
-import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
-import org.signalml.app.model.TagStylePaletteDescriptor;
-import org.signalml.domain.tag.StyledTagSet;
-import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.signal.TagStyle;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
@@ -43,25 +37,6 @@ public class TagStylePresetDialog extends TagStylePaletteDialog {
 	@Override
 	public boolean arePresetsActive() {
 		return true;
-	}
-
-	@Override
-	public Preset getPreset() throws SignalMLException {
-		applyChanges();
-		LinkedHashMap<String, TagStyle> stylesWithNames = (LinkedHashMap<String, TagStyle>) currentTagSet.getStylesWithNames().clone();
-
-		StyledTagSet sts = new StyledTagSet(stylesWithNames);
-		return sts;
-	}
-
-	@Override
-	public void setPreset(Preset preset) throws SignalMLException {
-
-		StyledTagSet newStyles = (StyledTagSet) preset;
-		TagStylePaletteDescriptor descriptor = new TagStylePaletteDescriptor(newStyles, null);
-
-		fillDialogFromModel(descriptor);
-
 	}
 
 }

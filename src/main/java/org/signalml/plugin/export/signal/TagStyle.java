@@ -129,7 +129,7 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 		this.marker = style.marker;
 		this.attributesDefinitions = style.attributesDefinitions;
 	}
-	
+
 	/**
 	 * Copy constructor. Creates a tag style
 	 * based on an object of a given interface
@@ -232,6 +232,7 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 		this.outlineDash = style.outlineDash;
 		this.keyStroke = style.keyStroke;
 		this.marker = style.marker;
+		this.attributesDefinitions = style.attributesDefinitions;
 
 		outlineStroke = null;
 	}
@@ -373,7 +374,7 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 	}
 
         /**
-         * Returns the key that will be used to start creation of a 
+         * Returns the key that will be used to start creation of a
          * {@link Tag selection} of this style.
          * @return the key that will be used to start creation of a selection of
          * this style
@@ -500,7 +501,7 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 	public String toString() {
 		return getName();
 	}
-	
+
 	public boolean equals(ExportedTagStyle style){
 		if (this.type != SignalSelectionType.typeByName(style.getType().getName())) return false;
 		if (this.name != style.getName()) return false;

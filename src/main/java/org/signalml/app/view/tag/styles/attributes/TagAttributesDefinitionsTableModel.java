@@ -1,6 +1,7 @@
 package org.signalml.app.view.tag.styles.attributes;
 
 import javax.swing.table.AbstractTableModel;
+import org.signalml.app.view.element.TagStylePropertiesPanel;
 import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributeDefinition;
 import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributes;
 
@@ -10,10 +11,15 @@ import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributes;
  */
 public class TagAttributesDefinitionsTableModel extends AbstractTableModel {
 
+	private TagStylePropertiesPanel tagStylePropertiesPanel;
 	private TagStyleAttributes tagStyleAttributes;
 
 	public TagStyleAttributes getTagStyleAttributes() {
 		return tagStyleAttributes;
+	}
+
+	public void setTagStylePropertiesPanel(TagStylePropertiesPanel tagStylePropertiesPanel) {
+		this.tagStylePropertiesPanel = tagStylePropertiesPanel;
 	}
 
 	public void setData(TagStyleAttributes attributes) {
@@ -45,6 +51,7 @@ public class TagAttributesDefinitionsTableModel extends AbstractTableModel {
 			case 2:
 				return attributeDefinition.isVisible();
 		}
+
 		return null;
 	}
 
@@ -54,6 +61,12 @@ public class TagAttributesDefinitionsTableModel extends AbstractTableModel {
 			Boolean b = (Boolean) aValue;
 			tagStyleAttributes.getAttributeDefinition(rowIndex).setVisible(b);
 		}
+		else if (columnIndex == 1) {
+			String s = (String) aValue;
+			tagStyleAttributes.getAttributeDefinition(rowIndex).setDisplayName(s);
+		}
+		if (tagStylePropertiesPanel != null)
+			tagStylePropertiesPanel.setChanged(true);
 	}
 
 	@Override
@@ -80,7 +93,7 @@ public class TagAttributesDefinitionsTableModel extends AbstractTableModel {
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		if (columnIndex == 2) {
+		if (columnIndex == 2 || columnIndex == 1) {
 			return true;
 		} else {
 			return false;
