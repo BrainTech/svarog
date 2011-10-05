@@ -47,6 +47,7 @@ import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.ChannelPlotOptionsModel;
 import org.signalml.app.model.ChannelsPlotOptionsModel;
 import org.signalml.app.view.dialog.ErrorsDialog;
+import org.signalml.app.view.tag.TagAttributesRenderer;
 import org.signalml.app.view.tag.TagPaintMode;
 import org.signalml.app.view.tag.TagRenderer;
 import org.signalml.app.view.tag.comparison.TagDifferenceRenderer;
@@ -93,6 +94,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	private Montage localMontage;
 
 	private TagRenderer tagRenderer;
+	private TagAttributesRenderer tagAttributesRenderer;
 	private TagDifferenceRenderer tagDifferenceRenderer;
 
 	private float samplingFrequency;
@@ -543,6 +545,9 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		if (tagRenderer == null) {
 			tagRenderer = new TagRenderer();
 		}
+		if (tagAttributesRenderer == null) {
+			tagAttributesRenderer = new TagAttributesRenderer();
+		}
 
 		tempViewportLocation = viewport.getViewPosition();
 		tempViewportSize = viewport.getExtentSize();
@@ -593,17 +598,21 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		}
 
 		Component rendererComponent;
+		Component attributesRendererComponent;
 
 		if (selectionOnly) {
 			rendererComponent = tagRenderer.getTagSelectionRendererComponent();
 		} else {
 			rendererComponent = tagRenderer.getTagRendererComponent(tag, active, selected);
 		}
+		attributesRendererComponent = tagAttributesRenderer.getTagAttributesRendererComponent(tag);
 
 		if (type == SignalSelectionType.BLOCK) {
 			Rectangle tagBounds = getPixelBlockTagBounds(tag, tag.isMarker(), tempTagCnt, tagNumber, tempViewportLocation, tempViewportSize, tempPlotSize, tempComparing, tempBounds);
 			rendererComponent.setBounds(tagBounds);
 			rendererComponent.paint(g.create(tagBounds.x, tagBounds.y, tagBounds.width, tagBounds.height));
+			attributesRendererComponent.setBounds(tagBounds);
+			attributesRendererComponent.paint(g.create(tagBounds.x, tagBounds.y, 400, tagBounds.height));
 		}
 		else if (type == SignalSelectionType.CHANNEL) {
 			Rectangle[] tagBoundsArr = getPixelChannelTagBounds(tag, tag.isMarker(), tempTagCnt, tagNumber, tempComparing);
@@ -611,6 +620,8 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 				if (tagBoundsArr[i].intersects(g.getClipBounds())) {
 					rendererComponent.setBounds(tagBoundsArr[i]);
 					rendererComponent.paint(g.create(tagBoundsArr[i].x, tagBoundsArr[i].y, tagBoundsArr[i].width, tagBoundsArr[i].height));
+					attributesRendererComponent.setBounds(tagBoundsArr[i]);
+					attributesRendererComponent.paint(g.create(tagBoundsArr[i].x, tagBoundsArr[i].y, 400, tagBoundsArr[i].height));
 				}
 			}
 		} else {

@@ -90,33 +90,6 @@ public class TagRenderer extends JComponent {
 			g.setColor(Color.RED);
 			g.fillOval(2, 2, 4, 4);
 		}
-
-		if (tag == null) {
-			return;
-		}
-
-		int y = rect.y + 20;
-		g.setColor(Color.BLACK);
-		/*if (tag.getAnnotation() != null) {
-		g.drawString(tag.getAnnotation(), rect.x + 20, y);
-		y += 20;
-		}*/
-
-		for (TagAttributeValue a : tag.getAttributes().getAttributesList()) {
-			if (!a.getAttributeDefinition().isVisible()) {
-				continue;
-			}
-
-			String displayValue = a.getAttributeDefinition().getDisplayName();
-			String value = a.getAttributeValue();
-			if (value.length() > 15) {
-				value = value.substring(0, 15);
-			}
-
-			g.drawString(displayValue + ": " + value, rect.x + 4, y);
-			y += 20;
-		}
-
 	}
 
 	protected void drawMarker(Graphics2D g) {
@@ -126,6 +99,7 @@ public class TagRenderer extends JComponent {
 		int rWidth = Math.min(50, rect.width);
 		rWidth = Math.min(rWidth, rect.height / 3);
 		rWidth = Math.max(rWidth, 5);
+
 		int offset = (rWidth < rect.width ? (rect.width - rWidth) / 2 : 0);
 
 		int rHeight = (int) Math.round(((double) rWidth) / DOUBLE_TG30);
