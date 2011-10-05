@@ -139,17 +139,4 @@ public class TagStylesGenerator {
 
 	}
 
-        public static void addAttributeToTag(TagStyle style, Tag tag, String attributeCode, String value) {
-
-		TagStyleAttributeDefinition attributeDefinition = style.getAttributesDefinitions().getAttributeDefinition(attributeCode);
-
-		if (attributeDefinition == null) {
-			attributeDefinition = new TagStyleAttributeDefinition(attributeCode, attributeCode, true);
-			style.getAttributesDefinitions().addAttributeDefinition(attributeDefinition);
-		}
-
-		TagAttributeValue attributeValue = new TagAttributeValue(attributeDefinition, value);
-		tag.setAttribute(attributeValue);
-	}
-
 }

@@ -8,24 +8,54 @@ import org.signalml.app.config.preset.PresetManagerListener;
 import org.signalml.app.config.preset.StyledTagSetPresetManager;
 
 /**
+ * A model for handling a combo box containing the list of available tag style
+ * presets.
+ *
+ * It is available to add an empty preset option to the list through
+ * appropriate calling {@link TagPresetComboBoxModel#setShowEmptyOption(boolean)}.
+ * Currently it shows the empty option by default.
  *
  * @author Piotr Szachewicz
  */
 public class TagPresetComboBoxModel extends AbstractListModel implements ComboBoxModel, PresetManagerListener {
 
+	/**
+	 * The {@link PresetManager} handling tag style presets.
+	 */
 	private final StyledTagSetPresetManager styledTagSetPresetManager;
+	/**
+	 * Decides whether a special empty preset should be added to the preset list.
+	 */
 	private boolean showEmptyOption = true;
+	/**
+	 * The currently selected preset.
+	 */
 	private Object selectedOption;
 
+	/**
+	 * Constructor.
+	 * @param styledTagSetPresetManager the {@link PresetManager} from which
+	 * the model's data will taken.
+	 */
 	public TagPresetComboBoxModel(StyledTagSetPresetManager styledTagSetPresetManager) {
 		this.styledTagSetPresetManager = styledTagSetPresetManager;
 		styledTagSetPresetManager.addPresetManagerListener(this);
 	}
 
+	/**
+	 * Sets whether a special empty option should be added to the preset list
+	 * (a preset containing no styles).
+	 * @param showEmptyOption true, if an empty preset should be added, false
+	 * otherwise
+	 */
 	public void setShowEmptyOption(boolean showEmptyOption) {
 		this.showEmptyOption = showEmptyOption;
 	}
 
+	/**
+	 * Returns the options available on the list.
+	 * @return the options available
+	 */
 	protected Preset[] getAvailableOptions() {
 		if (showEmptyOption) {
 			return styledTagSetPresetManager.getPresetsWithEmptyOption();
@@ -81,6 +111,9 @@ public class TagPresetComboBoxModel extends AbstractListModel implements ComboBo
 		refreshList();
 	}
 
+	/**
+	 * Informs all listeners that the model has changed.
+	 */
 	protected void refreshList() {
 		fireContentsChanged(this, -1, -1);
 	}

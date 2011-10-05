@@ -39,7 +39,6 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 
 import org.signalml.app.view.dialog.KeyStrokeCaptureDialog;
-import org.signalml.app.view.element.TagStylePropertiesPanel;
 import org.signalml.app.view.tag.TagRenderer;
 import org.signalml.app.view.tag.styles.attributes.TagAttributesDefinitionsEditPanel;
 import org.signalml.plugin.export.signal.SignalSelectionType;
@@ -183,7 +182,9 @@ public class TagStylePropertiesPanel extends JPanel {
 	 * of the currently edited {@link TagStyle style}
 	 */
 	private JPanel outlineColorPanel;
-
+	/**
+	 * The panel for viewing and editing tag style attributes.
+	 */
 	private TagAttributesDefinitionsEditPanel tagAttributesDefinitionsEditPanel;
 
 	/**
@@ -338,6 +339,11 @@ public class TagStylePropertiesPanel extends JPanel {
 		return previewLayout;
 	}
 
+	/**
+	 * Returns the panel for viewing and editing tag attributes for the selected
+	 * tag style.
+	 * @return panel for editing tag style attributes
+	 */
 	private TagAttributesDefinitionsEditPanel getTagAttributesDefinitionsEditPanel() {
 		if (tagAttributesDefinitionsEditPanel == null) {
 			tagAttributesDefinitionsEditPanel = new TagAttributesDefinitionsEditPanel(messageSource, this);

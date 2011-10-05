@@ -65,7 +65,11 @@ public class NewTagPanel extends JPanel {
 	 * should contain the same {@link TagStyle styles} as in the selected file
 	 */
 	private JRadioButton fromFileRadio = null;
-
+	/**
+	 * the radio button that indicates that the {@link TagDocument tag document}
+	 * should contain the same {@link TagStyle styles} as in the selected
+	 * tag styles preset.
+	 */
 	private JRadioButton presetRadio;
 
 	/**
@@ -80,15 +84,21 @@ public class NewTagPanel extends JPanel {
 	 * {@link #fromFileRadio} is selected
 	 */
 	private EmbeddedFileChooser fileChooser = null;
-
+	/**
+	 * ComboBox for selecting the tag style preset to be used in the tag document.
+	 */
 	private JComboBox presetComboBox;
-
+	/**
+	 * {@link PresetManager} that handles the tag styles presets.
+	 */
 	private StyledTagSetPresetManager styledTagSetPresetManager;
 
 	/**
 	 * Constructor. Sets the {@link MessageSourceAccessor message source} and
 	 * initializes this panel.
 	 * @param messageSource the source of messages (labels)
+	 * @param styledTagSetPresetManager the {@link PresetManager} which handles
+	 * the tag styles presets.
 	 */
 	public NewTagPanel(MessageSourceAccessor messageSource, StyledTagSetPresetManager styledTagSetPresetManager) {
 		super();
@@ -165,6 +175,12 @@ public class NewTagPanel extends JPanel {
 		return defaultSleepRadio;
 	}
 
+	/**
+	 * Returns the panel containing the radio button that indicated that
+	 * the tag document should use the tag styles from the selected preset
+	 * and a ComboBox for preset selection.
+	 * @return a radio button plus ComboBox for preset selection
+	 */
 	public JPanel getPresetRadioPanel() {
 		JPanel panel = new JPanel(new BorderLayout(5, 5));
 		panel.setBorder(new EmptyBorder(0, 0, 0, 6));
@@ -174,6 +190,11 @@ public class NewTagPanel extends JPanel {
 		return panel;
 	}
 
+	/**
+	 * Returns the radio button that indicates that the tag document
+	 * should use styles from the selected tag styles presets.
+	 * @return the "use tag styles preset" radio button
+	 */
 	public JRadioButton getPresetRadio() {
 		if (presetRadio == null) {
 			presetRadio = new JRadioButton();
@@ -255,6 +276,10 @@ public class NewTagPanel extends JPanel {
 		return fileChooser;
 	}
 
+	/**
+	 * Returns a ComboBox containing available tag style presets.
+	 * @return ComboBox for tag style preset selection
+	 */
 	public JComboBox getPresetComboBox() {
 		if (presetComboBox == null) {
 			presetComboBox = new JComboBox(styledTagSetPresetManager.getPresets());

@@ -205,6 +205,9 @@ public class ViewerElementManager {
 	 */
 	private PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainFiltersPresetManager;
 
+	/**
+	 * A {@link PresetManager} managing the stored tag styles presets.
+	 */
 	private StyledTagSetPresetManager styledTagSetPresetManager;
 
 	private MP5ExecutorManager mp5ExecutorManager;
@@ -282,6 +285,9 @@ public class ViewerElementManager {
 	private SlavePlotSettingsPopupDialog slavePlotSettingsPopupDialog;
 	private ChannelOptionsPopupDialog channelOptionsPopupDialog;
 	private TagStylePaletteDialog tagStylePaletteDialog;
+	/**
+	 * A dialog for editing tag style presets.
+	 */
 	private TagStylePresetDialog tagStylePresetDialog;
 	private HelpDialog helpDialog;
 	private TagComparisonDialog tagComparisonDialog;
@@ -354,6 +360,9 @@ public class ViewerElementManager {
 	private ApplyDefaultMontageAction applyDefaultMontageAction;
 	private PreciseSelectionAction preciseSelectionAction;
 	private EditTagStylesAction editTagStylesAction;
+	/**
+	 * An action performed when the user wants tag style presets to be edited or created.
+	 */
 	private EditTagStylePresetsAction editTagStylePresetsAction;
 	private EditTagDescriptionAction editTagDescriptionAction;
 	private EditStoredMontagesAction editStoredMontagesAction;
@@ -614,10 +623,18 @@ public class ViewerElementManager {
 		this.predefinedTimeDomainFiltersPresetManager = predefinedTimeDomainFiltersPresetManager;
 	}
 
+	/**
+	 * Returns the {@link PresetManager} for handling tag styles presets
+	 * @return the {@link PresetManager} for handling tag styles presets
+	 */
 	public StyledTagSetPresetManager getStyledTagSetPresetManager() {
 		return styledTagSetPresetManager;
 	}
 
+	/**
+	 * Sets the {@link PresetManager} for handling tag styles presets.
+	 * @param styledTagSetPresetManager
+	 */
 	public void setStyledTagSetPresetManager(StyledTagSetPresetManager styledTagSetPresetManager) {
 		this.styledTagSetPresetManager = styledTagSetPresetManager;
 	}
@@ -1301,6 +1318,10 @@ public class ViewerElementManager {
 		return tagStylePaletteDialog;
 	}
 
+	/**
+	 * Returns the dialog for creating/editing tag styles presets.
+	 * @return
+	 */
 	public TagStylePresetDialog getTagStylePresetDialog() {
 		if (tagStylePresetDialog == null) {
 			tagStylePresetDialog = new TagStylePresetDialog(messageSource, getStyledTagSetPresetManager(), getDialogParent(), true);
@@ -1763,6 +1784,10 @@ public class ViewerElementManager {
 		return editTagStylesAction;
 	}
 
+	/**
+	 * Returns the action called when tag styles presets are to be created/edited.
+	 * @return
+	 */
 	public EditTagStylePresetsAction getEditTagStylePresetsAction() {
 		if (editTagStylePresetsAction == null) {
 			editTagStylePresetsAction = new EditTagStylePresetsAction(messageSource, getActionFocusManager());

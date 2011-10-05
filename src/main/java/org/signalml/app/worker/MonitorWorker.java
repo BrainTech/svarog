@@ -222,7 +222,7 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 						tag.setAnnotation(v.getValue());
 					}
 					else {
-						TagStylesGenerator.addAttributeToTag(style, tag, v.getKey(), v.getValue());
+						tag.addAttributeToTag(v.getKey(), v.getValue());
 					}
 				}
 

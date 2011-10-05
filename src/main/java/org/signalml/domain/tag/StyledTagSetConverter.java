@@ -414,7 +414,7 @@ public class StyledTagSetConverter implements Converter {
 										tag.setAnnotation(reader.getValue());
 									}
 									else {
-										TagStylesGenerator.addAttributeToTag(style, tag, attributeCode, reader.getValue());
+										tag.addAttributeToTag(attributeCode, reader.getValue());
 									}
 
 									reader.moveUp();

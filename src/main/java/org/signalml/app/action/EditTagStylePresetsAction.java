@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package org.signalml.app.action;
 
 import java.awt.event.ActionEvent;
@@ -12,13 +7,23 @@ import org.signalml.app.view.dialog.TagStylePaletteDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
+ * An action opening the dialog for creating and editing tag styles presets.
  *
  * @author Piotr Szachewicz
  */
 public class EditTagStylePresetsAction extends AbstractFocusableSignalMLAction<TagStyleFocusSelector> {
 
+	/**
+	 * Dialog for tag styles preset editon.
+	 */
 	private TagStylePaletteDialog tagStylePaletteDialog;
 
+	/**
+	 * Constructor.
+	 * @param messageSource messageSource to be used for localization.
+	 * @param tagStyleFocusSelector selector determining which tag
+	 * document is now opened
+	 */
 	public EditTagStylePresetsAction(MessageSourceAccessor messageSource, TagStyleFocusSelector tagStyleFocusSelector) {
 		super(messageSource, tagStyleFocusSelector);
 		setText("action.editTagStylePresets");
@@ -28,15 +33,14 @@ public class EditTagStylePresetsAction extends AbstractFocusableSignalMLAction<T
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
 		TagStylePaletteDescriptor descriptor = new TagStylePaletteDescriptor(null, null);
 		tagStylePaletteDialog.showDialog(descriptor, true);
 	}
 
-	public TagStylePaletteDialog getTagStylePaletteDialog() {
-		return tagStylePaletteDialog;
-	}
-
+	/**
+	 * Sets the dialog opened when this action is called.
+	 * @param tagStylePaletteDialog dialog to be opened.
+	 */
 	public void setTagStylePaletteDialog(TagStylePaletteDialog tagStylePaletteDialog) {
 		this.tagStylePaletteDialog = tagStylePaletteDialog;
 	}

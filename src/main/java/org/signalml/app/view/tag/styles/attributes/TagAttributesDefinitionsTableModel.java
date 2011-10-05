@@ -6,22 +6,43 @@ import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributeDefinition;
 import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributes;
 
 /**
+ * The table model for tag attributes table.
  *
  * @author Piotr Szachewicz
  */
 public class TagAttributesDefinitionsTableModel extends AbstractTableModel {
 
+	/**
+	 * The panel for editing tag style properties.
+	 */
 	private TagStylePropertiesPanel tagStylePropertiesPanel;
+	/**
+	 * The attributes definitions of the current tag style.
+	 */
 	private TagStyleAttributes tagStyleAttributes;
 
+	/**
+	 * Returns the tag style attributes definitions which are used by this
+	 * model.
+	 * @return tag style attributes definitions used by this model
+	 */
 	public TagStyleAttributes getTagStyleAttributes() {
 		return tagStyleAttributes;
 	}
 
+	/**
+	 * Sets the tag style properties panel to be used by this model. It is
+	 * informed whenever the tag attributes definitions are changed.
+	 * @param tagStylePropertiesPanel
+	 */
 	public void setTagStylePropertiesPanel(TagStylePropertiesPanel tagStylePropertiesPanel) {
 		this.tagStylePropertiesPanel = tagStylePropertiesPanel;
 	}
 
+	/**
+	 * Sets the data that will be used by this model.
+	 * @param attributes attributes definitions that will be used by this model
+	 */
 	public void setData(TagStyleAttributes attributes) {
 		this.tagStyleAttributes = attributes;
 		fireTableDataChanged();
@@ -99,4 +120,5 @@ public class TagAttributesDefinitionsTableModel extends AbstractTableModel {
 			return false;
 		}
 	}
+
 }

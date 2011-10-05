@@ -148,7 +148,10 @@ public class StyledTagSet implements Serializable, Preset {
          * list of listeners associated with the current object
          */
 	private EventListenerList listenerList = new EventListenerList();
-	private String name; // preset name
+	/**
+	 * StyledTagSet preset name.
+	 */
+	private String name; 
 
         /**
          * Constructor. Creates a default StyledTagSet without any tags or
@@ -877,11 +880,6 @@ public class StyledTagSet implements Serializable, Preset {
 			invalidateStyleCache(style.getType());
 			fireTagStyleRemoved(style,inTypeIndex);
 		}
-	}
-
-	public void removeAllStyles() {
-		styles.clear();
-		stylesByKeyStrokes = null;
 	}
 
         /**
@@ -1671,6 +1669,12 @@ public class StyledTagSet implements Serializable, Preset {
 		return name;
 	}
 
+	/**
+	 * Returns the hashmap containing the available styles names with
+	 * the styles definitions.
+	 * @return the hashmap of tag styles names connected with an appropriate
+	 * tag style.
+	 */
 	public LinkedHashMap<String, TagStyle> getStylesWithNames() {
 		return styles;
 	}
@@ -1681,11 +1685,21 @@ public class StyledTagSet implements Serializable, Preset {
 		return newTagSet;
 	}
 
+	/**
+	 * Copies all styles from the given {@link StyledTagSet} into this tag set.
+	 * Deletes all styles that are not defined in the given StyledTagSet
+	 * unless some tags exist in this StyledTagSet which use the mentioned
+	 * style. In that case the style is not removed.
+	 * @param tagSet the tag set from which styles should be removed.
+	 * @return the list of tag styles names which couldn't be removed from
+	 * this tag set.
+	 */
 	public List<String> copyStylesFrom(StyledTagSet tagSet) {
 
 		List<String> stylesThatCouldNotBeDeleted = new ArrayList<String>();
 		Set<String> keySet = styles.keySet();
 
+		//create the list of tag styles names from both StyledTagSets.
 		List<String> keyList = new ArrayList<String>();
 
 		Iterator<String> iterator = keySet.iterator();
@@ -1700,12 +1714,12 @@ public class StyledTagSet implements Serializable, Preset {
 				keyList.add(value);
 		}
 
+		//for each tag check if it should be removed, updated or deleted
 		for (String key: keyList) {
 			TagStyle newStyle = tagSet.getStyle(key);
 			TagStyle oldStyle = this.getStyle(key);
 
 			if (newStyle != null && oldStyle != null) {
-				logger.debug("Updated " + newStyle.getName());
 				updateStyle(oldStyle.getName(), newStyle);
 			}
 			else if (newStyle == null && oldStyle != null) {
@@ -1721,7 +1735,6 @@ public class StyledTagSet implements Serializable, Preset {
 				}
 
 				if (!doTagsWithThisStyleExist) {
-					logger.debug("deleted " + oldStyle.getName());
 					removeStyle(oldStyle.getName());
 				}
 				else {
@@ -1729,11 +1742,11 @@ public class StyledTagSet implements Serializable, Preset {
 				}
 			}
 			else if (newStyle != null && oldStyle == null) {
-				logger.debug("Added " + newStyle.getName());
 				addStyle(newStyle);
 			}
 		}
 
+		//invalidate all caches
 		invalidateStyleCache(SignalSelectionType.PAGE);
 		invalidateStyleCache(SignalSelectionType.BLOCK);
 		invalidateStyleCache(SignalSelectionType.CHANNEL);
@@ -1743,6 +1756,8 @@ public class StyledTagSet implements Serializable, Preset {
 		invalidateTagCache(SignalSelectionType.CHANNEL);
 		stylesByKeyStrokes = null;
 
+		//connect tags with appropriate tag styles (after update the reference
+		//may be not correct any more
 		Iterator<Tag> tagIterator = tags.iterator();
 		while(tagIterator.hasNext()) {
 			Tag tag = tagIterator.next();

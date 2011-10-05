@@ -17,14 +17,15 @@ import com.thoughtworks.xstream.converters.reflection.PureJavaReflectionProvider
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.io.xml.XmlFriendlyReplacer;
 
-/** TimeDomainSampleFilterPresetManager
+/**
+ * {@link PresetManager} that stores and loads {@link StyledTagSet StyledTagSets}.
+ * StyledTagSets are saved only for the future use of {@link TagStyle TagStyles}
+ * that are defined inside of them.
  *
  * @author Piotr Szachewicz
  */
 @XStreamAlias("styledTagSets")
 public class StyledTagSetPresetManager extends AbstractPresetManager {
-
-	private static final long serialVersionUID = 1L;
 
 	@Override
 	public String getStandardFilename() {
@@ -45,6 +46,10 @@ public class StyledTagSetPresetManager extends AbstractPresetManager {
 
 	}
 
+	/**
+	 * Creates a streamer capable of saving/loading the {@link StyledTagSet}.
+	 * @return
+	 */
 	private XStream createStreamer() {
 
 		XStream streamer = new XStream(
@@ -72,14 +77,14 @@ public class StyledTagSetPresetManager extends AbstractPresetManager {
 
 		return streamer;
 
-		/*XStream streamer = XMLUtils.getDefaultStreamer();
-		XMLUtils.configureStreamerForTimeDomainSampleFilter(streamer);
-		streamer.setMode(XStream.XPATH_RELATIVE_REFERENCES);
-
-		return streamer;*/
-
 	}
 
+	/**
+	 * Returns all presets that are stored using this PresetManager plus
+	 * an empty preset in which no styles are defined.
+	 * @return empty preset plus all presets that are returned by the
+	 * {@link StyledTagSetPresetManager#getPresets()} method.
+	 */
 	public Preset[] getPresetsWithEmptyOption() {
 
 		StyledTagSet emptyPreset = new StyledTagSet();

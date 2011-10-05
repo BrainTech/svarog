@@ -14,7 +14,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Collection;
 
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import javax.swing.AbstractAction;
@@ -287,15 +286,6 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 		});
 
 	}
-
-	@Override
-	protected JPanel createPresetPane() {
-		if (arePresetsActive())
-			return super.createPresetPane();
-		else
-			return new JPanel();
-	}
-
 
 	/**
 	 * Creates the control pane.
@@ -792,26 +782,23 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 			String styles = "";
 			for (int i = 0; i < stylesThatCouldNotBeDeleted.size(); i++) {
 				styles += stylesThatCouldNotBeDeleted.get(i);
-				if (i < stylesThatCouldNotBeDeleted.size() - 1)
+				if (i < stylesThatCouldNotBeDeleted.size() - 1) {
 					styles += ", ";
+				}
 			}
 
 			ErrorsDialog errorsDialog = new ErrorsDialog(messageSource, this, true);
-			MessageSourceResolvable messageSourceResolvable = new DefaultMessageSourceResolvable(new String[] {"tagStylePalette.preset.stylesCouldNotBeDeleted"}, new Object[] {styles});
+			MessageSourceResolvable messageSourceResolvable = new DefaultMessageSourceResolvable(new String[]{"tagStylePalette.preset.stylesCouldNotBeDeleted"}, new Object[]{styles});
 			errorsDialog.showDialog(messageSourceResolvable, true);
 		}
 
 		currentStyle = null;
 
-                tagStyleTreeModel.setTagSet(null);
+		tagStyleTreeModel.setTagSet(null);
 
 		TagStylePaletteDescriptor descriptor = new TagStylePaletteDescriptor(currentTagSet, null);
 		fillDialogFromModel(descriptor);
 
-	}
-
-	public boolean arePresetsActive() {
-		return true;
 	}
 
 	/**

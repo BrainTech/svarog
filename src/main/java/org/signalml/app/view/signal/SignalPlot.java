@@ -94,6 +94,10 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	private Montage localMontage;
 
 	private TagRenderer tagRenderer;
+	/**
+	 * Renderer capable of rendering the list of visible tag attributes on
+	 * a tag.
+	 */
 	private TagAttributesRenderer tagAttributesRenderer;
 	private TagDifferenceRenderer tagDifferenceRenderer;
 
@@ -603,7 +607,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		if (selectionOnly) {
 			rendererComponent = tagRenderer.getTagSelectionRendererComponent();
 		} else {
-			rendererComponent = tagRenderer.getTagRendererComponent(tag, active, selected);
+			rendererComponent = tagRenderer.getTagRendererComponent(tag.getStyle(), active, selected);
 		}
 		attributesRendererComponent = tagAttributesRenderer.getTagAttributesRendererComponent(tag);
 

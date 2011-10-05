@@ -4,7 +4,6 @@ import org.signalml.app.model.AmplifierConnectionDescriptor;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import javax.swing.JPanel;
-import org.signalml.app.config.preset.StyledTagSetPresetManager;
 import org.signalml.app.document.DocumentManager;
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.view.ViewerElementManager;

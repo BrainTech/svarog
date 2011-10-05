@@ -101,7 +101,9 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
          * {@link MontageChannel channel}
          */
 	private static final TagStyle defaultChannelStyle = new TagStyle(SignalSelectionType.CHANNEL, "?", "Unknown", Color.RED, Color.RED.darker(), 1F, null, null, false);
-
+	/**
+	 * The definitions of the attributes which can be set for tags having this style.
+	 */
 	private TagStyleAttributes attributesDefinitions = new TagStyleAttributes();
 
         /**
@@ -515,10 +517,20 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 		return true;
 	}
 
+	/**
+	 * Returns the definitions of the attributes which can be set for tags
+	 * having this style.
+	 * @return the tag style attributes definitions
+	 */
 	public TagStyleAttributes getAttributesDefinitions() {
 		return attributesDefinitions;
 	}
 
+	/**
+	 * Sets the definitions of the attributes which can be set for tags
+	 * having this style.
+	 * @param attributes the attributes definitions for this tag style.
+	 */
 	public void setAttributesDefinitions(TagStyleAttributes attributes) {
 		this.attributesDefinitions = attributes;
 	}

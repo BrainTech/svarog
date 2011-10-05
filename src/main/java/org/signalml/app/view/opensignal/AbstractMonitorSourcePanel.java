@@ -25,6 +25,10 @@ abstract public class AbstractMonitorSourcePanel extends AbstractSignalSourcePan
 	 */
 	protected boolean isConnected = false;
 
+	/**
+	 * A panel for selecting a tag style preset to be used by the monitor to
+	 * be opened.
+	 */
 	protected TagPresetSelectionPanel tagPresetSelectionPanel;
 
 	/**
@@ -69,6 +73,11 @@ abstract public class AbstractMonitorSourcePanel extends AbstractSignalSourcePan
 		propertyChangeSupport.firePropertyChange(OPENBCI_CONNECTED_PROPERTY, true, false);
 	}
 
+	/**
+	 * Returns the panel for selecting tag style preset to be used by the
+	 * monitor to be opened.
+	 * @return panel for selecting tag style preset
+	 */
 	public TagPresetSelectionPanel getTagPresetSelectionPanel() {
 		if (tagPresetSelectionPanel == null) {
 			tagPresetSelectionPanel = new TagPresetSelectionPanel(messageSource, viewerElementManager.getStyledTagSetPresetManager());

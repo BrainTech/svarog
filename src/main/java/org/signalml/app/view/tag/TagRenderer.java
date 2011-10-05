@@ -17,9 +17,7 @@ import java.awt.Stroke;
 
 import javax.swing.JComponent;
 
-import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
-import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
 
 /** TagRenderer
  *
@@ -31,7 +29,6 @@ public class TagRenderer extends JComponent {
 	private static final long serialVersionUID = 1L;
 	// 2 * tg(30 deg)
 	private static final double DOUBLE_TG30 = 2 * Math.tan(Math.toRadians(30));
-	private Tag tag;
 	private TagStyle tagStyle;
 	private boolean selected;
 	private boolean selectionOnly;
@@ -39,11 +36,10 @@ public class TagRenderer extends JComponent {
 	private static final BasicStroke WHITE_SELECTION_STROKE = new BasicStroke(1F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10F, new float[]{3, 3}, 0F);
 	private static final BasicStroke BLACK_SELECTION_STROKE = new BasicStroke(1F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10F, new float[]{3, 3}, 3F);
 
-	public Component getTagRendererComponent(Tag tag, boolean isActive, boolean isSelected) {
+	public Component getTagRendererComponent(TagStyle tagStyle, boolean isActive, boolean isSelected) {
 
 		this.selectionOnly = false;
-		this.tag = tag;
-		this.tagStyle = tag.getStyle();
+		this.tagStyle = tagStyle;
 		this.active = isActive;
 		this.selected = isSelected;
 

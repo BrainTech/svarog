@@ -48,6 +48,9 @@ public class OpenMonitorDescriptor {
          */
         private SignalSource signalSource;
 
+	/**
+	 * Styles from this {@link StyledTagSet} are used for the new monitor tags.
+	 */
 	private StyledTagSet tagStyles;
 
 
@@ -381,10 +384,18 @@ public class OpenMonitorDescriptor {
                 this.backupFrequency = backupFrequency;
         }
 
+	/**
+	 * Sets the tag styles that should be used by the new monitor.
+	 * @param tagStyles tag styles that should be used
+	 */
 	public void setTagStyles(StyledTagSet tagStyles) {
 		this.tagStyles = tagStyles;
 	}
 
+	/**
+	 * Returns the tags styles that should be used by the new monitor.
+	 * @return tag styles that should be used
+	 */
 	public StyledTagSet getTagStyles() {
 		return tagStyles;
 	}

@@ -23,6 +23,10 @@ public class NewTagDescriptor extends PagingParameterDescriptor {
 
 	private NewTagTypeMode mode = NewTagTypeMode.DEFAULT_SLEEP;
 	private File file;
+
+	/**
+	 * Styles from this {@link StyledTagSet} are used for the new tag.
+	 */
 	private StyledTagSet tagStylesPreset;
 
 	public NewTagDescriptor() {}
@@ -48,10 +52,20 @@ public class NewTagDescriptor extends PagingParameterDescriptor {
 		this.file = file;
 	}
 
+	/**
+	 * Sets the {@link StyledTagSet} from which tag styles are copied into
+	 * the new tag.
+	 * @param tagStylesPreset
+	 */
 	public void setTagStylesPreset(StyledTagSet tagStylesPreset) {
 		this.tagStylesPreset = tagStylesPreset;
 	}
 
+	/**
+	 * Returns the {@link StyledTagSet} from which tag styles are copied
+	 * into the new tag document.
+	 * @return the StyledTagSet with styles to be copied
+	 */
 	public StyledTagSet getTagStylesPreset() {
 		return tagStylesPreset;
 	}

@@ -12,6 +12,7 @@ import org.signalml.app.model.LabelledPropertyDescriptor;
 import org.signalml.app.model.PropertyProvider;
 import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
 import org.signalml.plugin.export.signal.tagStyle.TagAttributes;
+import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributeDefinition;
 import org.springframework.context.MessageSourceResolvable;
 
 /**
@@ -31,9 +32,13 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
 	 * {@link TagStyle style} of this tagged selection
 	 */
 	private TagStyle style;
-
+	/**
+	 * The annotation of the tag.
+	 */
 	private String annotation;
-
+	/**
+	 * The attributes which are assigned to this tag (annotation is not included).
+	 */
 	private TagAttributes tagAttributes = new TagAttributes();
 
 	/**
@@ -121,6 +126,10 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
 		return style;
 	}
 
+	/**
+	 * Sets the style of this tag.
+	 * @param style the style to be used by this tag
+	 */
 	public void setStyle(TagStyle style) {
 		this.style = style;
 	}
@@ -143,6 +152,10 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
 		this.annotation = annotation;
 	}
 
+	/**
+	 * Adds an attribute to this tag.
+	 * @param attributeValue the object describing the attribute
+	 */
 	public void setAttribute(TagAttributeValue attributeValue) {
 		tagAttributes.addAttribute(attributeValue);
 	}
@@ -283,8 +296,30 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
 		return (int) Math.signum(test);
 	}
 
+	/**
+	 * Returns the attributes set for this tag.
+	 * @return attributes set for this tag
+	 */
 	public TagAttributes getAttributes() {
 		return tagAttributes;
+	}
+
+	/**
+	 * Adds an attribute to the tag. If a tag attribute definition for the
+	 * attribute doesn't exist, it is created.
+	 * @param attributeCode tag attribute code (name)
+	 * @param value the value of the attribute
+	 */
+	public void addAttributeToTag(String attributeCode, String value) {
+		TagStyleAttributeDefinition attributeDefinition = style.getAttributesDefinitions().getAttributeDefinition(attributeCode);
+
+		if (attributeDefinition == null) {
+			attributeDefinition = new TagStyleAttributeDefinition(attributeCode, attributeCode, true);
+			style.getAttributesDefinitions().addAttributeDefinition(attributeDefinition);
+		}
+
+		TagAttributeValue attributeValue = new TagAttributeValue(attributeDefinition, value);
+		setAttribute(attributeValue);
 	}
 
 }
