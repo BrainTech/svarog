@@ -7,6 +7,7 @@ import org.signalml.app.worker.amplifiers.AmplifierDefinition;
 import org.signalml.domain.signal.SignalType;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
+import org.signalml.domain.tag.StyledTagSet;
 
 /**
  * @author Mariusz Podsiadło
@@ -46,6 +47,8 @@ public class OpenMonitorDescriptor {
          * The signal source - openBCI or amplifier.
          */
         private SignalSource signalSource;
+
+	private StyledTagSet tagStyles;
 
 
         public OpenMonitorDescriptor() {
@@ -377,4 +380,13 @@ public class OpenMonitorDescriptor {
         public void setBackupFrequency(Float backupFrequency) {
                 this.backupFrequency = backupFrequency;
         }
+
+	public void setTagStyles(StyledTagSet tagStyles) {
+		this.tagStyles = tagStyles;
+	}
+
+	public StyledTagSet getTagStyles() {
+		return tagStyles;
+	}
+
 }

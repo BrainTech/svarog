@@ -4,6 +4,7 @@ import org.signalml.app.model.AmplifierConnectionDescriptor;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import javax.swing.JPanel;
+import org.signalml.app.config.preset.StyledTagSetPresetManager;
 import org.signalml.app.document.DocumentManager;
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.view.ViewerElementManager;
@@ -77,7 +78,9 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
 
                 JPanel southPanels = new JPanel(new BorderLayout());
                 southPanels.add(getStartStopButtonsPanel(), BorderLayout.NORTH);
-                southPanels.add(getConfigureAmplifiersPanel(), BorderLayout.SOUTH);
+                southPanels.add(getConfigureAmplifiersPanel(), BorderLayout.CENTER);
+		southPanels.add(getTagPresetSelectionPanel(), BorderLayout.SOUTH);
+
                 leftColumnPanel.add(southPanels, BorderLayout.SOUTH);
                 return leftColumnPanel;
         }
@@ -203,6 +206,7 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
                 getSignalParametersPanel().fillPanelFromModel(descriptor);
                 getChannelSelectPanel().fillPanelFromModel(descriptor);
                 getAmplifierSelectionPanel().fillPanelFromModel(descriptor, omitAmpList);
+		getTagPresetSelectionPanel().fillModelFromPanel(descriptor.getOpenMonitorDescriptor());
                 
                 currentDescriptor = descriptor;
         }

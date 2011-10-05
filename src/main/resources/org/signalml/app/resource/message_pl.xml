@@ -690,6 +690,7 @@
         <entry key="opensignal.fileChooser.lastDirs">Last directories</entry>
         <entry key="opensignal.fileChooser.lastFiles">Last files</entry>
 
+	<entry key="opensignal.tagPresetSelectionPanelTitle">Select tag styles preset for monitor</entry>
         <entry key="opensignal.signalParametersPanelTitle">Signal parameters</entry>
 	<entry key="opensignal.parameters.samplingFrequency">Sampling frequency: </entry>
 	<entry key="opensignal.parameters.channelCount">Channel count: </entry>

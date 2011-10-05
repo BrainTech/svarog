@@ -80,4 +80,19 @@ public class StyledTagSetPresetManager extends AbstractPresetManager {
 
 	}
 
+	public Preset[] getPresetsWithEmptyOption() {
+
+		StyledTagSet emptyPreset = new StyledTagSet();
+		emptyPreset.setName("< Empty preset - no styles defined >");
+
+		Preset[] nonEmptyPresets = getPresets();
+		Preset[] allPresets = new Preset[nonEmptyPresets.length + 1];
+		allPresets[0] = emptyPreset;
+
+		for (int i = 0; i < nonEmptyPresets.length; i++)
+			allPresets[i + 1] = nonEmptyPresets[i];
+
+		return allPresets;
+	}
+
 }
