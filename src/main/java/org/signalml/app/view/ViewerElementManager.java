@@ -142,12 +142,15 @@ import com.thoughtworks.xstream.XStream;
 import org.signalml.app.action.AmplifierDefinitionConfigAction;
 import org.signalml.app.action.ChooseActiveTagAction;
 import org.signalml.app.action.CompareTagsAction;
+import org.signalml.app.action.EditTagStylePresetsAction;
 import org.signalml.app.action.OpenBCIModuleConfigAction;
 import org.signalml.app.action.OpenBookDocumentAction;
 import org.signalml.app.action.OpenSignalAndSetMontageAction;
 import org.signalml.app.action.StartMonitorRecordingAction;
 import org.signalml.app.action.StopBCIAction;
 import org.signalml.app.action.StopMonitorRecordingAction;
+import org.signalml.app.config.preset.StyledTagSetPresetManager;
+import org.signalml.app.view.dialog.TagStylePresetDialog;
 import org.signalml.app.view.opensignal.OpenSignalAndSetMontageDialog;
 import org.signalml.app.view.monitor.AmplifierDefinitionConfigDialog;
 import org.signalml.app.view.monitor.OpenBCIModuleConfigDialog;
@@ -203,6 +206,11 @@ public class ViewerElementManager {
 	 * {@link TimeDomainSampleFilter TimeDomainSampleFilters}.
 	 */
 	private PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainFiltersPresetManager;
+
+	/**
+	 * A {@link PresetManager} managing the stored tag styles presets.
+	 */
+	private StyledTagSetPresetManager styledTagSetPresetManager;
 
 	private MP5ExecutorManager mp5ExecutorManager;
 	private Preferences preferences;
@@ -279,6 +287,10 @@ public class ViewerElementManager {
 	private SlavePlotSettingsPopupDialog slavePlotSettingsPopupDialog;
 	private ChannelOptionsPopupDialog channelOptionsPopupDialog;
 	private TagStylePaletteDialog tagStylePaletteDialog;
+	/**
+	 * A dialog for editing tag style presets.
+	 */
+	private TagStylePresetDialog tagStylePresetDialog;
 	private HelpDialog helpDialog;
 	private TagComparisonDialog tagComparisonDialog;
 	private EditTagDescriptionDialog editTagDescriptionDialog;
@@ -351,6 +363,10 @@ public class ViewerElementManager {
 	private ApplyDefaultMontageAction applyDefaultMontageAction;
 	private PreciseSelectionAction preciseSelectionAction;
 	private EditTagStylesAction editTagStylesAction;
+	/**
+	 * An action performed when the user wants tag style presets to be edited or created.
+	 */
+	private EditTagStylePresetsAction editTagStylePresetsAction;
 	private EditTagDescriptionAction editTagDescriptionAction;
 	private EditStoredMontagesAction editStoredMontagesAction;
 	private ExportSignalAction exportSignalAction;
@@ -610,6 +626,22 @@ public class ViewerElementManager {
 		this.predefinedTimeDomainFiltersPresetManager = predefinedTimeDomainFiltersPresetManager;
 	}
 
+	/**
+	 * Returns the {@link PresetManager} for handling tag styles presets
+	 * @return the {@link PresetManager} for handling tag styles presets
+	 */
+	public StyledTagSetPresetManager getStyledTagSetPresetManager() {
+		return styledTagSetPresetManager;
+	}
+
+	/**
+	 * Sets the {@link PresetManager} for handling tag styles presets.
+	 * @param styledTagSetPresetManager
+	 */
+	public void setStyledTagSetPresetManager(StyledTagSetPresetManager styledTagSetPresetManager) {
+		this.styledTagSetPresetManager = styledTagSetPresetManager;
+	}
+
 	public MP5ExecutorManager getMp5ExecutorManager() {
 		return mp5ExecutorManager;
 	}
@@ -828,6 +860,7 @@ public class ViewerElementManager {
 			tagsMenu.add(getChooseActiveTagAction());
 			tagsMenu.add(getEditTagDescriptionAction());
 			tagsMenu.add(getEditTagStylesAction());
+			tagsMenu.add(getEditTagStylePresetsAction());
 			tagsMenu.addSeparator();
 
 			tagsMenu.add(getCompareTagsAction());
@@ -1246,7 +1279,7 @@ public class ViewerElementManager {
 
 	public NewTagDialog getNewTagDialog() {
 		if (newTagDialog == null) {
-			newTagDialog = new NewTagDialog(messageSource, getDialogParent(), true);
+			newTagDialog = new NewTagDialog(messageSource, getStyledTagSetPresetManager(), getDialogParent(), true);
 			newTagDialog.setApplicationConfig(getApplicationConfig());
 		}
 		return newTagDialog;
@@ -1269,7 +1302,7 @@ public class ViewerElementManager {
 		}
 		return slavePlotSettingsPopupDialog;
 	}
-	
+
 	public ChannelOptionsPopupDialog getChannelOptionsPopupDialog() {
 		if (channelOptionsPopupDialog == null) {
 			channelOptionsPopupDialog = new ChannelOptionsPopupDialog(messageSource, getDialogParent(), true);
@@ -1283,9 +1316,24 @@ public class ViewerElementManager {
 
 	public TagStylePaletteDialog getTagStylePaletteDialog() {
 		if (tagStylePaletteDialog == null) {
-			tagStylePaletteDialog = new TagStylePaletteDialog(messageSource, getDialogParent(), true);
+			tagStylePaletteDialog = new TagStylePaletteDialog(messageSource, getStyledTagSetPresetManager(), getDialogParent(), true);
+			tagStylePaletteDialog.setApplicationConfig(getApplicationConfig());
+			tagStylePaletteDialog.setFileChooser(getFileChooser());
 		}
 		return tagStylePaletteDialog;
+	}
+
+	/**
+	 * Returns the dialog for creating/editing tag styles presets.
+	 * @return
+	 */
+	public TagStylePresetDialog getTagStylePresetDialog() {
+		if (tagStylePresetDialog == null) {
+			tagStylePresetDialog = new TagStylePresetDialog(messageSource, getStyledTagSetPresetManager(), getDialogParent(), true);
+			tagStylePresetDialog.setApplicationConfig(getApplicationConfig());
+			tagStylePresetDialog.setFileChooser(getFileChooser());
+		}
+		return tagStylePresetDialog;
 	}
 
 	public HelpDialog getHelpDialog() {
@@ -1747,6 +1795,18 @@ public class ViewerElementManager {
 			editTagStylesAction.setTagStylePaletteDialog(getTagStylePaletteDialog());
 		}
 		return editTagStylesAction;
+	}
+
+	/**
+	 * Returns the action called when tag styles presets are to be created/edited.
+	 * @return
+	 */
+	public EditTagStylePresetsAction getEditTagStylePresetsAction() {
+		if (editTagStylePresetsAction == null) {
+			editTagStylePresetsAction = new EditTagStylePresetsAction(messageSource, getActionFocusManager());
+			editTagStylePresetsAction.setTagStylePaletteDialog(getTagStylePresetDialog());
+		}
+		return editTagStylePresetsAction;
 	}
 
 	public EditTagDescriptionAction getEditTagDescriptionAction() {

@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.opensignal;
 
+import org.signalml.app.config.preset.StyledTagSetPresetManager;
 import org.signalml.app.view.ViewerElementManager;
 import org.springframework.context.support.MessageSourceAccessor;
 
@@ -23,6 +24,12 @@ abstract public class AbstractMonitorSourcePanel extends AbstractSignalSourcePan
 	 * True if Svarog is connected to openBCI, false otherwise.
 	 */
 	protected boolean isConnected = false;
+
+	/**
+	 * A panel for selecting a tag style preset to be used by the monitor to
+	 * be opened.
+	 */
+	protected TagPresetSelectionPanel tagPresetSelectionPanel;
 
 	/**
 	 * Constructor.
@@ -64,6 +71,18 @@ abstract public class AbstractMonitorSourcePanel extends AbstractSignalSourcePan
 	 */
 	protected void fireOpenBCIDisconnected() {
 		propertyChangeSupport.firePropertyChange(OPENBCI_CONNECTED_PROPERTY, true, false);
+	}
+
+	/**
+	 * Returns the panel for selecting tag style preset to be used by the
+	 * monitor to be opened.
+	 * @return panel for selecting tag style preset
+	 */
+	public TagPresetSelectionPanel getTagPresetSelectionPanel() {
+		if (tagPresetSelectionPanel == null) {
+			tagPresetSelectionPanel = new TagPresetSelectionPanel(messageSource, viewerElementManager.getStyledTagSetPresetManager());
+		}
+		return tagPresetSelectionPanel;
 	}
 
 }

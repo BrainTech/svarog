@@ -12,6 +12,7 @@ import org.springframework.context.support.MessageSourceAccessor;
  * All panels in Svarog should extend this panel. Contains an instance of
  * MessageSourceAccessor and methods for enabling/disabling all components
  * within the panel.
+ * 
  * @author Piotr Szachewicz
  */
 public class AbstractSignalMLPanel extends JPanel {

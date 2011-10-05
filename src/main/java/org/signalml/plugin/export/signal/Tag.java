@@ -4,14 +4,15 @@
 package org.signalml.plugin.export.signal;
 
 import java.beans.IntrospectionException;
-import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.signalml.app.model.ChannelPropertyEditor;
 import org.signalml.app.model.LabelledPropertyDescriptor;
 import org.signalml.app.model.PropertyProvider;
+import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
+import org.signalml.plugin.export.signal.tagStyle.TagAttributes;
+import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributeDefinition;
 import org.springframework.context.MessageSourceResolvable;
 
 /**
@@ -31,11 +32,14 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
 	 * {@link TagStyle style} of this tagged selection
 	 */
 	private TagStyle style;
-
 	/**
-	 * A string -> string map of Tag attributes (like 'annotation').
+	 * The annotation of the tag.
 	 */
-	private HashMap<String, String> attributes;
+	private String annotation;
+	/**
+	 * The attributes which are assigned to this tag (annotation is not included).
+	 */
+	private TagAttributes tagAttributes = new TagAttributes();
 
 	/**
 	 * Constructor. Creates a tagged selection from a given
@@ -48,8 +52,7 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
 	public Tag(TagStyle style, SignalSelection signalSelection, String annotation) {
 		super(style.getType(), signalSelection.getPosition(), signalSelection.getLength(), signalSelection.getChannel());
 		this.style = style;
-		this.attributes = new HashMap<String, String>();
-		this.setAnnotation(annotation);
+		this.annotation = annotation;
 	}
 
 	/**
@@ -66,8 +69,7 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
 	public Tag(TagStyle style, double d, double e, int channel, String annotation) {
 		super(style.getType(), d, e, channel);
 		this.style = style;
-		this.attributes = new HashMap<String, String>();
-		this.setAnnotation(annotation);
+		this.annotation = annotation;
 	}
 
 	/**
@@ -81,8 +83,6 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
 	public Tag(TagStyle style, double position, double length) {
 		super((style != null ? style.getType() : SignalSelectionType.CHANNEL), position, length);
 		this.style = style;
-		this.attributes = new HashMap<String, String>();
-
 	}
 
 	/**
@@ -97,7 +97,6 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
 	public Tag(TagStyle style, double position, double length, int channel) {
 		super(style.getType(), position, length, channel);
 		this.style = style;
-		this.attributes = new HashMap<String, String>();
 
 	}
 
@@ -116,7 +115,6 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
 	 */
 	public Tag(ExportedTag tag) {
 		this(new TagStyle(tag.getStyle()), tag.getPosition(), tag.getLength(), tag.getChannel(), tag.getAnnotation());
-		this.attributes = new HashMap<String, String>();
 	}
 
 	/**
@@ -129,12 +127,20 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
 	}
 
 	/**
+	 * Sets the style of this tag.
+	 * @param style the style to be used by this tag
+	 */
+	public void setStyle(TagStyle style) {
+		this.style = style;
+	}
+
+	/**
 	 * Returns the annotation of this tagged selection.
 	 * @return the annotation of this tagged selection
 	 */
 	@Override
 	public String getAnnotation() {
-		return this.attributes.get("annotation");
+		return annotation;
 	}
 
 	/**
@@ -143,35 +149,15 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
 	 */
 	@Override
 	public void setAnnotation(String annotation) {
-		this.setAttribute("annotation", annotation);
+		this.annotation = annotation;
 	}
 
 	/**
-	 * Returns a string-string HashMap of tag attributes.
-	 * @return a string-string HashMap of tag attributes.
+	 * Adds an attribute to this tag.
+	 * @param attributeValue the object describing the attribute
 	 */
-	public HashMap<String, String> getAttributes() {
-		return attributes;
-	}
-
-	/**
-	 * Returns a string representation of 'key' tag's attribute or null
-	 * if there is no attribute with key 'key'.
-	 * @param key a string-key for the attribute to be returned
-	 * @return a string representation of 'key' attribute or null
-	 * if there is no attribute with key 'key'
-	 */
-	public String getAttribute(String key) {
-		return this.attributes.get(key);
-	}
-
-	/**
-	 * Set tag's attribute with string key 'key' and string value 'value'.
-	 * @param key a key for the attribute to be set
-	 * @param value a value for the attribute to be set
-	 */
-	public void setAttribute(String key, String value) {
-		this.attributes.put(key, value);
+	public void setAttribute(TagAttributeValue attributeValue) {
+		tagAttributes.addAttribute(attributeValue);
 	}
 
 	/**
@@ -236,7 +222,7 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
 	@Override
 	public Tag clone() {
 		Tag tag = new Tag(style, position, length, channel, this.getAnnotation());
-		tag.attributes = (HashMap<String, String>) this.attributes.clone();
+		tag.tagAttributes = tagAttributes.clone();
 		return tag;
 	}
 
@@ -308,6 +294,32 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
 			}
 		}
 		return (int) Math.signum(test);
+	}
+
+	/**
+	 * Returns the attributes set for this tag.
+	 * @return attributes set for this tag
+	 */
+	public TagAttributes getAttributes() {
+		return tagAttributes;
+	}
+
+	/**
+	 * Adds an attribute to the tag. If a tag attribute definition for the
+	 * attribute doesn't exist, it is created.
+	 * @param attributeCode tag attribute code (name)
+	 * @param value the value of the attribute
+	 */
+	public void addAttributeToTag(String attributeCode, String value) {
+		TagStyleAttributeDefinition attributeDefinition = style.getAttributesDefinitions().getAttributeDefinition(attributeCode);
+
+		if (attributeDefinition == null) {
+			attributeDefinition = new TagStyleAttributeDefinition(attributeCode, attributeCode, true);
+			style.getAttributesDefinitions().addAttributeDefinition(attributeDefinition);
+		}
+
+		TagAttributeValue attributeValue = new TagAttributeValue(attributeDefinition, value);
+		setAttribute(attributeValue);
 	}
 
 }

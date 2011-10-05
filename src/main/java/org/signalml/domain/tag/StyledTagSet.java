@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -29,6 +30,10 @@ import org.signalml.plugin.export.signal.TagStyle;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
+import java.util.List;
+import org.signalml.app.config.preset.Preset;
+import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
+import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributeDefinition;
 
 /**
  * This class represents a set of t
@@ -36,16 +41,16 @@ import com.thoughtworks.xstream.annotations.XStreamConverter;
  * Contains map associating styles with {@link KeyStroke key strokes}.
  * Two tagged selections with the same type can not intersect so this class
  * splits, merges and replaces them while adding.
- * 
+ *
  * This class contains additional information such as a size of a page, a number
  * of blocks per page and a length of a block (in seconds).
- * 
+ *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 @XStreamAlias("tagFile")
 @XStreamConverter(StyledTagSetConverter.class)
-public class StyledTagSet implements Serializable {
+public class StyledTagSet implements Serializable, Preset {
 
 	private static final long serialVersionUID = 1L;
 
@@ -143,6 +148,10 @@ public class StyledTagSet implements Serializable {
          * list of listeners associated with the current object
          */
 	private EventListenerList listenerList = new EventListenerList();
+	/**
+	 * StyledTagSet preset name.
+	 */
+	private String name; 
 
         /**
          * Constructor. Creates a default StyledTagSet without any tags or
@@ -1644,5 +1653,129 @@ public class StyledTagSet implements Serializable {
 		}
 		this.maxTagLength = maxTagLength;
 	}
+
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return name;
+	}
+
+	/**
+	 * Returns the hashmap containing the available styles names with
+	 * the styles definitions.
+	 * @return the hashmap of tag styles names connected with an appropriate
+	 * tag style.
+	 */
+	public LinkedHashMap<String, TagStyle> getStylesWithNames() {
+		return styles;
+	}
+
+	@Override
+	public StyledTagSet clone() {
+		StyledTagSet newTagSet = new StyledTagSet(styles);
+		return newTagSet;
+	}
+
+	/**
+	 * Copies all styles from the given {@link StyledTagSet} into this tag set.
+	 * Deletes all styles that are not defined in the given StyledTagSet
+	 * unless some tags exist in this StyledTagSet which use the mentioned
+	 * style. In that case the style is not removed.
+	 * @param tagSet the tag set from which styles should be removed.
+	 * @return the list of tag styles names which couldn't be removed from
+	 * this tag set.
+	 */
+	public List<String> copyStylesFrom(StyledTagSet tagSet) {
+
+		List<String> stylesThatCouldNotBeDeleted = new ArrayList<String>();
+		Set<String> keySet = styles.keySet();
+
+		//create the list of tag styles names from both StyledTagSets.
+		List<String> keyList = new ArrayList<String>();
+
+		Iterator<String> iterator = keySet.iterator();
+		while (iterator.hasNext()) {
+			keyList.add(iterator.next());
+		}
+
+		iterator = tagSet.getStylesWithNames().keySet().iterator();
+		while (iterator.hasNext()) {
+			String value = iterator.next();
+			if (!keyList.contains(value))
+				keyList.add(value);
+		}
+
+		//for each tag check if it should be removed, updated or deleted
+		for (String key: keyList) {
+			TagStyle newStyle = tagSet.getStyle(key);
+			TagStyle oldStyle = this.getStyle(key);
+
+			if (newStyle != null && oldStyle != null) {
+				updateStyle(oldStyle.getName(), newStyle);
+			}
+			else if (newStyle == null && oldStyle != null) {
+
+				boolean doTagsWithThisStyleExist = false;
+				Iterator<Tag> tagIterator = tags.iterator();
+				while(tagIterator.hasNext()) {
+					Tag tag = tagIterator.next();
+					if (tag.getStyle().getName().equals(oldStyle.getName())) {
+						doTagsWithThisStyleExist = true;
+						break;
+					}
+				}
+
+				if (!doTagsWithThisStyleExist) {
+					removeStyle(oldStyle.getName());
+				}
+				else {
+					stylesThatCouldNotBeDeleted.add(oldStyle.getName());
+				}
+			}
+			else if (newStyle != null && oldStyle == null) {
+				addStyle(newStyle);
+			}
+		}
+
+		//invalidate all caches
+		invalidateStyleCache(SignalSelectionType.PAGE);
+		invalidateStyleCache(SignalSelectionType.BLOCK);
+		invalidateStyleCache(SignalSelectionType.CHANNEL);
+
+		invalidateTagCache(SignalSelectionType.PAGE);
+		invalidateTagCache(SignalSelectionType.BLOCK);
+		invalidateTagCache(SignalSelectionType.CHANNEL);
+		stylesByKeyStrokes = null;
+
+		//connect tags with appropriate tag styles (after update the reference
+		//may be not correct any more
+		Iterator<Tag> tagIterator = tags.iterator();
+		while(tagIterator.hasNext()) {
+			Tag tag = tagIterator.next();
+
+			String styleName = tag.getStyle().getName();
+			TagStyle style = getStyle(styleName);
+			tag.setStyle(style);
+
+			for (TagAttributeValue value: tag.getAttributes().getAttributesList()) {
+				TagStyleAttributeDefinition oldAttributeDefinition = value.getAttributeDefinition();
+				TagStyleAttributeDefinition newAttributeDefinition = style.getAttributesDefinitions().getAttributeDefinition(oldAttributeDefinition.getCode());
+				value.setAttributeDefinition(newAttributeDefinition);
+			}
+		}
+		return stylesThatCouldNotBeDeleted;
+
+	}
+
+
 
 }

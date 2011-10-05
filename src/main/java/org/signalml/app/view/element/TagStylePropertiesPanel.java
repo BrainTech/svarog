@@ -40,6 +40,7 @@ import javax.swing.event.DocumentEvent;
 
 import org.signalml.app.view.dialog.KeyStrokeCaptureDialog;
 import org.signalml.app.view.tag.TagRenderer;
+import org.signalml.app.view.tag.styles.attributes.TagAttributesDefinitionsEditPanel;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
@@ -181,6 +182,10 @@ public class TagStylePropertiesPanel extends JPanel {
 	 * of the currently edited {@link TagStyle style}
 	 */
 	private JPanel outlineColorPanel;
+	/**
+	 * The panel for viewing and editing tag style attributes.
+	 */
+	private TagAttributesDefinitionsEditPanel tagAttributesDefinitionsEditPanel;
 
 	/**
 	 * the layout for {@link #previewPanel}
@@ -247,7 +252,7 @@ public class TagStylePropertiesPanel extends JPanel {
 		JPanel sidePanel = new JPanel(new BorderLayout());
 
 		sidePanel.add(getPropertiesPanel(), BorderLayout.NORTH);
-		sidePanel.add(Box.createGlue(), BorderLayout.CENTER);
+		sidePanel.add(getTagAttributesDefinitionsEditPanel(), BorderLayout.CENTER);
 		sidePanel.add(getPreviewPanel(), BorderLayout.SOUTH);
 
 		add(graphicsPanel, BorderLayout.CENTER);
@@ -332,6 +337,18 @@ public class TagStylePropertiesPanel extends JPanel {
 			previewLayout = new CardLayout();
 		}
 		return previewLayout;
+	}
+
+	/**
+	 * Returns the panel for viewing and editing tag attributes for the selected
+	 * tag style.
+	 * @return panel for editing tag style attributes
+	 */
+	private TagAttributesDefinitionsEditPanel getTagAttributesDefinitionsEditPanel() {
+		if (tagAttributesDefinitionsEditPanel == null) {
+			tagAttributesDefinitionsEditPanel = new TagAttributesDefinitionsEditPanel(messageSource, this);
+		}
+		return tagAttributesDefinitionsEditPanel;
 	}
 
 	/**
@@ -930,6 +947,8 @@ public class TagStylePropertiesPanel extends JPanel {
 		getWidthSpinner().setEnabled(enabled);
 		getDashComboBox().setEnabled(enabled);
 
+		getTagAttributesDefinitionsEditPanel().fillPanelFromModel(currentStyle);
+
 		setChanged(false);
 
 	}
@@ -977,6 +996,7 @@ public class TagStylePropertiesPanel extends JPanel {
 			if (currentStyle.getType() == SignalSelectionType.CHANNEL) {
 				currentStyle.setMarker(getMarkerCheckBox().isSelected());
 			}
+			getTagAttributesDefinitionsEditPanel().fillModelFromPanel(currentStyle);
 
 			setChanged(false);
 

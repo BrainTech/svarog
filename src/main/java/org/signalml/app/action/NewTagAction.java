@@ -7,8 +7,6 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 
-import multiplexer.jmx.client.ConnectException;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.DocumentFlowIntegrator;
@@ -77,6 +75,9 @@ public class NewTagAction extends AbstractFocusableSignalMLAction<SignalDocument
 			}
 			else if (mode == NewTagTypeMode.DEFAULT_SLEEP) {
 				tagDocument = TagDocument.getNewSleepDefaultDocument(descriptor.getPageSize(), descriptor.getBlocksPerPage());
+			}
+			else if (mode == NewTagTypeMode.PRESET) {
+				tagDocument = new TagDocument(descriptor.getTagStylesPreset());
 			}
 			else if (mode == NewTagTypeMode.FROM_FILE) {
 				tagDocument = TagDocument.getStylesFromFileDocument(descriptor.getFile(), descriptor.getPageSize(), descriptor.getBlocksPerPage());

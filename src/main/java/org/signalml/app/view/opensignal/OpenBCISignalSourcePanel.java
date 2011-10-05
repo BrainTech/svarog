@@ -7,6 +7,7 @@ package org.signalml.app.view.opensignal;
 import java.awt.BorderLayout;
 import java.beans.PropertyChangeEvent;
 import javax.swing.JPanel;
+import org.signalml.app.config.preset.StyledTagSetPresetManager;
 import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.element.MultiplexerConnectionPanel;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -57,6 +58,11 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 		JPanel leftColumnPanel = new JPanel();
 		leftColumnPanel.setLayout(new BorderLayout());
 		leftColumnPanel.add(getMultiplexerConnectionPanel(), BorderLayout.NORTH);
+
+		JPanel southPanel = new JPanel(new BorderLayout());
+		southPanel.add(getTagPresetSelectionPanel(), BorderLayout.NORTH);
+
+		leftColumnPanel.add(southPanel);
 		return leftColumnPanel;
 	}
 
@@ -96,6 +102,7 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
                 descriptor.setSignalSource(SignalSource.OPENBCI);
 
 		getMonitorRecordingPanel().fillModelFromPanel(descriptor);
+		getTagPresetSelectionPanel().fillModelFromPanel(descriptor);
 	}
 
 	/**

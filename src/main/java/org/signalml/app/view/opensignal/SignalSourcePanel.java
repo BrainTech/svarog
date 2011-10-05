@@ -10,6 +10,7 @@ import java.io.File;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
+import org.signalml.app.config.preset.StyledTagSetPresetManager;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.model.AmplifierConnectionDescriptor;
 import org.signalml.app.model.OpenDocumentDescriptor;

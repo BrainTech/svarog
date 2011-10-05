@@ -47,6 +47,7 @@ import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.ChannelPlotOptionsModel;
 import org.signalml.app.model.ChannelsPlotOptionsModel;
 import org.signalml.app.view.dialog.ErrorsDialog;
+import org.signalml.app.view.tag.TagAttributesRenderer;
 import org.signalml.app.view.tag.TagPaintMode;
 import org.signalml.app.view.tag.TagRenderer;
 import org.signalml.app.view.tag.comparison.TagDifferenceRenderer;
@@ -67,6 +68,8 @@ import org.signalml.plugin.export.signal.SignalSelection;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
+import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
+import org.signalml.plugin.export.signal.tagStyle.TagAttributes;
 import org.signalml.plugin.export.view.ExportedSignalPlot;
 import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -91,6 +94,11 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	private Montage localMontage;
 
 	private TagRenderer tagRenderer;
+	/**
+	 * Renderer capable of rendering the list of visible tag attributes on
+	 * a tag.
+	 */
+	private TagAttributesRenderer tagAttributesRenderer;
 	private TagDifferenceRenderer tagDifferenceRenderer;
 
 	private float samplingFrequency;
@@ -541,6 +549,9 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		if (tagRenderer == null) {
 			tagRenderer = new TagRenderer();
 		}
+		if (tagAttributesRenderer == null) {
+			tagAttributesRenderer = new TagAttributesRenderer();
+		}
 
 		tempViewportLocation = viewport.getViewPosition();
 		tempViewportSize = viewport.getExtentSize();
@@ -590,19 +601,22 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			return;
 		}
 
-		TagStyle style = tag.getStyle();
 		Component rendererComponent;
+		Component attributesRendererComponent;
 
 		if (selectionOnly) {
 			rendererComponent = tagRenderer.getTagSelectionRendererComponent();
 		} else {
-			rendererComponent = tagRenderer.getTagRendererComponent(style, active, selected);
+			rendererComponent = tagRenderer.getTagRendererComponent(tag.getStyle(), active, selected);
 		}
+		attributesRendererComponent = tagAttributesRenderer.getTagAttributesRendererComponent(tag);
 
 		if (type == SignalSelectionType.BLOCK) {
 			Rectangle tagBounds = getPixelBlockTagBounds(tag, tag.isMarker(), tempTagCnt, tagNumber, tempViewportLocation, tempViewportSize, tempPlotSize, tempComparing, tempBounds);
 			rendererComponent.setBounds(tagBounds);
 			rendererComponent.paint(g.create(tagBounds.x, tagBounds.y, tagBounds.width, tagBounds.height));
+			attributesRendererComponent.setBounds(tagBounds);
+			attributesRendererComponent.paint(g.create(tagBounds.x, tagBounds.y, 400, tagBounds.height));
 		}
 		else if (type == SignalSelectionType.CHANNEL) {
 			Rectangle[] tagBoundsArr = getPixelChannelTagBounds(tag, tag.isMarker(), tempTagCnt, tagNumber, tempComparing);
@@ -610,6 +624,8 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 				if (tagBoundsArr[i].intersects(g.getClipBounds())) {
 					rendererComponent.setBounds(tagBoundsArr[i]);
 					rendererComponent.paint(g.create(tagBoundsArr[i].x, tagBoundsArr[i].y, tagBoundsArr[i].width, tagBoundsArr[i].height));
+					attributesRendererComponent.setBounds(tagBoundsArr[i]);
+					attributesRendererComponent.paint(g.create(tagBoundsArr[i].x, tagBoundsArr[i].y, 400, tagBoundsArr[i].height));
 				}
 			}
 		} else {
@@ -2110,6 +2126,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		String annotation;
 
 		PositionedTag tagSelection = view.getTagSelection(this);
+		TagAttributes tagAttributes = null;
 
 		if (tagSelection != null && tags.contains(tagSelection)) {
 			buffer.append("<b>");
@@ -2118,6 +2135,8 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			if (annotation != null && !annotation.isEmpty()) {
 				buffer.append("<div style=\"padding-left: 20px; width: 300px; font-style: italic;\">").append(annotation).append("</div>");
 			}
+			tagAttributes = tagSelection.tag.getAttributes();
+
 		}
 		for (PositionedTag tag : tags) {
 			if (tagSelection != null && tag.tag == tagSelection.tag) {
@@ -2128,6 +2147,15 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			if (annotation != null && !annotation.isEmpty()) {
 				buffer.append("<div style=\"padding-left: 20px; width: 300px; font-style: italic;\">").append(annotation).append("</div>");
 			}
+			tagAttributes = tag.tag.getAttributes();
+		}
+
+		for (TagAttributeValue attributeValue: tagAttributes.getAttributesList()) {
+			String value = attributeValue.getAttributeValue();
+			if (value.length() > 15)
+				value = value.substring(0, 15);
+			String code = attributeValue.getAttributeDefinition().getCode();
+			buffer.append("<div style=\"padding-left: 20px; width: 300px; font-style: italic;\">").append(code).append(": ").append(value).append("</div>");
 		}
 		buffer.append("</body></html>");
 
