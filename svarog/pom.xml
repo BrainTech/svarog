@@ -384,26 +384,6 @@
 			<version>2.9.1</version>
 		</dependency>
 		<dependency>
-			<groupId>org.codehaus.castor</groupId>
-			<artifactId>castor</artifactId>
-			<version>1.1.1</version>
-			<type>jar</type>
-			<exclusions>
-				<exclusion>
-					<groupId>javax.transaction</groupId>
-					<artifactId>jta</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>cglib</groupId>
-					<artifactId>cglib-full</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>xerces</groupId>
-					<artifactId>xerces</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
 			<groupId>jmatio</groupId>
 			<artifactId>jmatio</artifactId>
 			<version>0.1-alpha</version>
