@@ -18,9 +18,6 @@ import org.signalml.app.view.signal.SignalColor;
 import org.signalml.app.view.tag.TagPaintMode;
 import org.signalml.domain.book.WignerMapScaleType;
 import org.signalml.fft.WindowType;
-import org.signalml.method.stager.SleepStagingRules;
-import org.signalml.method.stager.StagerFixedParameters;
-import org.signalml.method.stager.StagerParameters;
 import org.signalml.util.MinMaxRange;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -177,129 +174,6 @@ public class ConfigurationDefaults {
 
 		settings.setFactor(getFloat("application.zoomSettings.factor"));
 		settings.setChannelSwitching(getBoolean("application.zoomSettings.channelSwitching"));
-
-	}
-
-	public static void setStagerParameters(StagerParameters parameters) {
-
-		parameters.setRules(SleepStagingRules.valueOf(getString("stager.rules")));
-
-		MinMaxRange range;
-
-		range = parameters.getDeltaAmplitude();
-		range.setMin(getDouble("stager.deltaAmplitudeMin"));
-		range.setMinUnlimited(getBoolean("stager.deltaAmplitudeMinUnlimited"));
-		range.setMax(getDouble("stager.deltaAmplitudeMax"));
-		range.setMaxUnlimited(getBoolean("stager.deltaAmplitudeMaxUnlimited"));
-
-		range = parameters.getDeltaFrequency();
-		range.setMin(getDouble("stager.deltaFrequencyMin"));
-		range.setMinUnlimited(getBoolean("stager.deltaFrequencyMinUnlimited"));
-		range.setMax(getDouble("stager.deltaFrequencyMax"));
-		range.setMaxUnlimited(getBoolean("stager.deltaFrequencyMaxUnlimited"));
-
-		range = parameters.getDeltaScale();
-		range.setMin(getDouble("stager.deltaScaleMin"));
-		range.setMinUnlimited(getBoolean("stager.deltaScaleMinUnlimited"));
-		range.setMax(getDouble("stager.deltaScaleMax"));
-		range.setMaxUnlimited(getBoolean("stager.deltaScaleMaxUnlimited"));
-
-		range = parameters.getThetaAmplitude();
-		range.setMin(getDouble("stager.thetaAmplitudeMin"));
-		range.setMinUnlimited(getBoolean("stager.thetaAmplitudeMinUnlimited"));
-		range.setMax(getDouble("stager.thetaAmplitudeMax"));
-		range.setMaxUnlimited(getBoolean("stager.thetaAmplitudeMaxUnlimited"));
-
-		range = parameters.getThetaFrequency();
-		range.setMin(getDouble("stager.thetaFrequencyMin"));
-		range.setMinUnlimited(getBoolean("stager.thetaFrequencyMinUnlimited"));
-		range.setMax(getDouble("stager.thetaFrequencyMax"));
-		range.setMaxUnlimited(getBoolean("stager.thetaFrequencyMaxUnlimited"));
-
-		range = parameters.getThetaScale();
-		range.setMin(getDouble("stager.thetaScaleMin"));
-		range.setMinUnlimited(getBoolean("stager.thetaScaleMinUnlimited"));
-		range.setMax(getDouble("stager.thetaScaleMax"));
-		range.setMaxUnlimited(getBoolean("stager.thetaScaleMaxUnlimited"));
-
-		range = parameters.getAlphaAmplitude();
-		range.setMin(getDouble("stager.alphaAmplitudeMin"));
-		range.setMinUnlimited(getBoolean("stager.alphaAmplitudeMinUnlimited"));
-		range.setMax(getDouble("stager.alphaAmplitudeMax"));
-		range.setMaxUnlimited(getBoolean("stager.alphaAmplitudeMaxUnlimited"));
-
-		range = parameters.getAlphaFrequency();
-		range.setMin(getDouble("stager.alphaFrequencyMin"));
-		range.setMinUnlimited(getBoolean("stager.alphaFrequencyMinUnlimited"));
-		range.setMax(getDouble("stager.alphaFrequencyMax"));
-		range.setMaxUnlimited(getBoolean("stager.alphaFrequencyMaxUnlimited"));
-
-		range = parameters.getAlphaScale();
-		range.setMin(getDouble("stager.alphaScaleMin"));
-		range.setMinUnlimited(getBoolean("stager.alphaScaleMinUnlimited"));
-		range.setMax(getDouble("stager.alphaScaleMax"));
-		range.setMaxUnlimited(getBoolean("stager.alphaScaleMaxUnlimited"));
-
-		range = parameters.getSpindleAmplitude();
-		range.setMin(getDouble("stager.spindleAmplitudeMin"));
-		range.setMinUnlimited(getBoolean("stager.spindleAmplitudeMinUnlimited"));
-		range.setMax(getDouble("stager.spindleAmplitudeMax"));
-		range.setMaxUnlimited(getBoolean("stager.spindleAmplitudeMaxUnlimited"));
-
-		range = parameters.getSpindleFrequency();
-		range.setMin(getDouble("stager.spindleFrequencyMin"));
-		range.setMinUnlimited(getBoolean("stager.spindleFrequencyMinUnlimited"));
-		range.setMax(getDouble("stager.spindleFrequencyMax"));
-		range.setMaxUnlimited(getBoolean("stager.spindleFrequencyMaxUnlimited"));
-
-		range = parameters.getSpindleScale();
-		range.setMin(getDouble("stager.spindleScaleMin"));
-		range.setMinUnlimited(getBoolean("stager.spindleScaleMinUnlimited"));
-		range.setMax(getDouble("stager.spindleScaleMax"));
-		range.setMaxUnlimited(getBoolean("stager.spindleScaleMaxUnlimited"));
-
-		range = parameters.getKComplexAmplitude();
-		range.setMin(getDouble("stager.kComplexAmplitudeMin"));
-		range.setMinUnlimited(getBoolean("stager.kComplexAmplitudeMinUnlimited"));
-		range.setMax(getDouble("stager.kComplexAmplitudeMax"));
-		range.setMaxUnlimited(getBoolean("stager.kComplexAmplitudeMaxUnlimited"));
-
-		range = parameters.getKComplexFrequency();
-		range.setMin(getDouble("stager.kComplexFrequencyMin"));
-		range.setMinUnlimited(getBoolean("stager.kComplexFrequencyMinUnlimited"));
-		range.setMax(getDouble("stager.kComplexFrequencyMax"));
-		range.setMaxUnlimited(getBoolean("stager.kComplexFrequencyMaxUnlimited"));
-
-		range = parameters.getKComplexScale();
-		range.setMin(getDouble("stager.kComplexScaleMin"));
-		range.setMinUnlimited(getBoolean("stager.kComplexScaleMinUnlimited"));
-		range.setMax(getDouble("stager.kComplexScaleMax"));
-		range.setMaxUnlimited(getBoolean("stager.kComplexScaleMaxUnlimited"));
-
-		range = parameters.getKComplexPhase();
-		range.setMin(getDouble("stager.kComplexPhaseMin"));
-		range.setMinUnlimited(getBoolean("stager.kComplexPhaseMinUnlimited"));
-		range.setMax(getDouble("stager.kComplexPhaseMax"));
-		range.setMaxUnlimited(getBoolean("stager.kComplexPhaseMaxUnlimited"));
-
-		parameters.setEmgToneThreshold(getDouble("stager.emgToneThreshold"));
-		parameters.setMtEegThreshold(getDouble("stager.mtEegThreshold"));
-		parameters.setMtEegThresholdEnabled(getBoolean("stager.mtEegThresholdEnabled"));
-		parameters.setMtArtifactsThresholdEnabled(getBoolean("stager.mtArtifactsThresholdEnabled"));
-		parameters.setMtEmgThreshold(getDouble("stager.mtEmgThreshold"));
-		parameters.setMtToneEmgThreshold(getDouble("stager.mtToneEmgThreshold"));
-		parameters.setRemEogDeflectionThreshold(getDouble("stager.remEogDeflectionThreshold"));
-		parameters.setSemEogDeflectionThreshold(getDouble("stager.semEogDeflectionThreshold"));
-
-	}
-
-	public static void setStagerFixedParameters(StagerFixedParameters parameters) {
-
-		parameters.setSwaWidthCoeff(getDouble("stager.fixed.swaWidthCoeff"));
-		parameters.setAlphaPerc1(getDouble("stager.fixed.alphaPerc1"));
-		parameters.setAlphaPerc2(getDouble("stager.fixed.alphaPerc2"));
-		parameters.setCorrCoeffRems(getDouble("stager.fixed.corrCoeffRems"));
-		parameters.setCorrCoeffSems(getDouble("stager.fixed.corrCoeffSems"));
 
 	}
 	

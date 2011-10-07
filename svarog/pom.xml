@@ -389,23 +389,6 @@
 			<version>0.1-alpha</version>
 		</dependency>
 		<dependency>
-			<groupId>com.mathworks</groupId>
-			<artifactId>javabuilder</artifactId>
-			<version>1.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.signalml</groupId>
-			<artifactId>artifact-mbfj</artifactId>
-			<version>1.0.0</version>
-			<classifier>${org.signalml.mbfj.platform}</classifier>
-		</dependency>
-		<dependency>
-			<groupId>org.signalml</groupId>
-			<artifactId>stager-mbfj</artifactId>
-			<version>1.0.0</version>
-			<classifier>${org.signalml.mbfj.platform}</classifier>
-		</dependency>
-		<dependency>
 			<groupId>org.signalml</groupId>
 			<artifactId>eega-tag-library</artifactId>
 			<version>1.0.0</version>

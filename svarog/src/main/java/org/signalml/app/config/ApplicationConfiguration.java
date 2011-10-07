@@ -6,8 +6,6 @@ package org.signalml.app.config;
 
 import javax.swing.ToolTipManager;
 
-import org.signalml.app.method.artifact.ArtifactConfiguration;
-import org.signalml.app.method.stager.StagerConfiguration;
 import org.signalml.app.view.book.WignerMapPalette;
 import org.signalml.app.view.signal.SignalColor;
 import org.signalml.app.view.tag.TagPaintMode;
@@ -41,7 +39,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 	private String lastSamplesSaveAsFloatPath;
 	private String lastChartSaveAsPngPath;
 	private String lastPresetPath;
-	private String lastArtifactProjectPath;
 	private String lastSaveMP5ConfigPath;
 	private String lastBookFilePath;
 	private String lastSaveTagPath;
@@ -90,9 +87,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 	private int toolTipDismissDelay;
 
 	private ZoomSignalSettings zoomSignalSettings = new ZoomSignalSettings();
-
-	private ArtifactConfiguration artifactConfig = new ArtifactConfiguration();
-	private StagerConfiguration stagerConfig = new StagerConfiguration();
 
 	private boolean disableSeriousWarnings;
 
@@ -234,14 +228,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	public void setLastPresetPath(String lastPresetPath) {
 		this.lastPresetPath = lastPresetPath;
-	}
-
-	public String getLastArtifactProjectPath() {
-		return lastArtifactProjectPath;
-	}
-
-	public void setLastArtifactProjectPath(String lastArtifactProjectPath) {
-		this.lastArtifactProjectPath = lastArtifactProjectPath;
 	}
 
 	public String getLastSaveMP5ConfigPath() {
@@ -538,22 +524,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	public void setMaxTimeScale(double maxTimeScale) {
 		this.maxTimeScale = maxTimeScale;
-	}
-
-	public ArtifactConfiguration getArtifactConfig() {
-		return artifactConfig;
-	}
-
-	public void setArtifactConfig(ArtifactConfiguration artifactConfig) {
-		this.artifactConfig = artifactConfig;
-	}
-
-	public StagerConfiguration getStagerConfig() {
-		return stagerConfig;
-	}
-
-	public void setStagerConfig(StagerConfiguration stagerConfig) {
-		this.stagerConfig = stagerConfig;
 	}
 
 	public boolean isDisableSeriousWarnings() {

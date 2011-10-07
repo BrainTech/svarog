@@ -9,22 +9,19 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import org.signalml.app.config.ApplicationConfiguration;
-import org.signalml.app.method.artifact.ArtifactToolConfigPanel;
 import org.signalml.app.method.mp5.MP5ExecutorManager;
 import org.signalml.app.method.mp5.MP5LocalExecutorDialog;
 import org.signalml.app.method.mp5.MP5ToolConfigPanel;
-import org.signalml.app.method.stager.StagerToolConfigPanel;
 import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.method.mp5.MP5Executor;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
 /**
- * The panel which allows to configure 3 tools for Svarog:
+ * The panel which allows to configure 1 tool for Svarog:
  * <ul>
  * <li>the {@link MP5ToolConfigPanel mp5 tool},</li>
- * <li>the {@link ArtifactToolConfigPanel artifact detection tool},</li>
- * <li>the {@link StagerToolConfigPanel automatic sleep stager tool}.</li></ul>
+ * </ul>
  * 
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -55,16 +52,6 @@ public class ToolsConfigPanel extends JPanel {
 	 * the {@link MP5ToolConfigPanel panel} to configure the mp5 tool
 	 */
 	private MP5ToolConfigPanel mp5Panel;
-	/**
-	 * the {@link ArtifactToolConfigPanel panel} to configure artifact
-	 * detection tool
-	 */
-	private ArtifactToolConfigPanel artifactPanel;
-	/**
-	 * the {@link StagerToolConfigPanel panel} to configure automatic
-	 * sleep stager tool
-	 */
-	private StagerToolConfigPanel stagerPanel;
 
 	/**
 	 * Constructor. Sets the parameters and initializes this panel.
@@ -82,14 +69,11 @@ public class ToolsConfigPanel extends JPanel {
 	}
 
 	/**
-	 * Initializes this panel with border layout and 3 sub-panels (from top to
+	 * Initializes this panel with border layout and 1 sub-panel (from top to
 	 * bottom:
 	 * <ul>
-	 * <li>the {@link MP5ToolConfigPanel panel} to configure the mp5 tool,</li>
-	 * <li>the {@link ArtifactToolConfigPanel panel} to configure artifact
-	 * detection tool,</li>
-	 * <li>the {@link StagerToolConfigPanel panel} to configure automatic
-	 * sleep stager tool.</li></ul>
+	 * <li>the {@link MP5ToolConfigPanel panel} to configure the mp5 tool</li>
+	 * </ul>
 	 */
 	private void initialize() {
 
@@ -97,9 +81,6 @@ public class ToolsConfigPanel extends JPanel {
 		setBorder(new EmptyBorder(3,3,3,3));
 
 		add(getMp5Panel(), BorderLayout.NORTH);
-		add(getArtifactPanel(), BorderLayout.CENTER);
-		add(getStagerPanel(), BorderLayout.SOUTH);
-
 	}
 
 	/**
@@ -118,82 +99,15 @@ public class ToolsConfigPanel extends JPanel {
 		return mp5Panel;
 	}
 
-	/**
-	 * Returns the {@link ArtifactToolConfigPanel panel} to configure artifact
-	 * detection tool.
-	 * If the panel doesn't exist it is created and
-	 * the {@link ViewerFileChooser file chooser} is set to it.
-	 * @return the panel to configure artifact detection tool
-	 */
-	public ArtifactToolConfigPanel getArtifactPanel() {
-		if (artifactPanel == null) {
-			artifactPanel = new ArtifactToolConfigPanel(messageSource,fileChooser);
-		}
-		return artifactPanel;
-	}
 
-	/**
-	 * Returns the {@link StagerToolConfigPanel panel} to configure automatic
-	 * sleep stager tool.
-	 * If the panel doesn't exist it is created and
-	 * the {@link ViewerFileChooser file chooser} is set to it.
-	 * @return the panel to configure automatic sleep stager tool
-	 */
-	public StagerToolConfigPanel getStagerPanel() {
-		if (stagerPanel == null) {
-			stagerPanel = new StagerToolConfigPanel(messageSource,fileChooser);
-		}
-		return stagerPanel;
-	}
+	@Deprecated
+	public void fillPanelFromModel(ApplicationConfiguration applicationConfig) { }
 
-	/**
-	 * Fills the dependent panels ({@link
-	 * ArtifactToolConfigPanel#fillPanelFromModel(org.signalml.app.method.artifact.ArtifactConfiguration)
-	 * artifact} and {@link StagerToolConfigPanel#fillPanelFromModel(
-	 * org.signalml.app.method.stager.StagerConfiguration) stager}) using the
-	 * given {@link ApplicationConfiguration configuration} of Svarog.
-	 * @param applicationConfig the configuration of Svarog
-	 */
-	public void fillPanelFromModel(ApplicationConfiguration applicationConfig) {
+	@Deprecated
+	public void fillModelFromPanel(ApplicationConfiguration applicationConfig) { }
 
-		getArtifactPanel().fillPanelFromModel(applicationConfig.getArtifactConfig());
-		getStagerPanel().fillPanelFromModel(applicationConfig.getStagerConfig());
-
-	}
-
-	/**
-	 * Stores the data from dependent panels
-	 * ({@link ArtifactToolConfigPanel#fillModelFromPanel(org.signalml.app.method.artifact.ArtifactConfiguration)
-	 * artifact} and {@link StagerToolConfigPanel#fillModelFromPanel(
-	 * org.signalml.app.method.stager.StagerConfiguration) stager}) in the
-	 * given {@link ApplicationConfiguration configuration} of Svarog.
-	 * @param applicationConfig the configuration of Svarog
-	 */
-	public void fillModelFromPanel(ApplicationConfiguration applicationConfig) {
-
-		getArtifactPanel().fillModelFromPanel(applicationConfig.getArtifactConfig());
-		getStagerPanel().fillModelFromPanel(applicationConfig.getStagerConfig());
-
-	}
-
-	/**
-	 * Validates this panel.
-	 * This panel is valid {@link ArtifactToolConfigPanel#validatePanel(Errors)
-	 * artifact} and {@link StagerToolConfigPanel#validatePanel(Errors) stager}
-	 * panels are valid.
-	 * @param errors the object in which errors are stored
-	 */
-	public void validatePanel(Errors errors) {
-
-		errors.pushNestedPath("artifactConfig");
-		getArtifactPanel().validatePanel(errors);
-		errors.popNestedPath();
-
-		errors.pushNestedPath("stagerConfig");
-		getStagerPanel().validatePanel(errors);
-		errors.popNestedPath();
-
-	}
+	@Deprecated
+	public void validatePanel(Errors errors) { }
 
 	/**
 	 * Returns the {@link MP5LocalExecutorDialog dialog} to select the local

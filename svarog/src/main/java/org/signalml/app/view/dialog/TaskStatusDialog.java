@@ -45,7 +45,6 @@ import org.signalml.method.Method;
 import org.signalml.method.SuspendableMethod;
 import org.signalml.method.TrackableMethod;
 import org.signalml.method.iterator.MethodIteratorMethod;
-import org.signalml.method.stager.StagerMethod;
 import org.signalml.plugin.export.method.SvarogTaskStatusDialog;
 import org.signalml.task.Task;
 import org.signalml.task.TaskEvent;
@@ -1088,10 +1087,6 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 				if (suspendable) {
 					suspendAndResumeButton.setAction(suspendTaskAction);
 				}
-			}
-
-			if (task.getMethod() instanceof StagerMethod) {
-				forceNotTrackable = ((StagerMethod)task.getMethod()).getForceNotTrackable();
 			}
 
 			if (trackable) {

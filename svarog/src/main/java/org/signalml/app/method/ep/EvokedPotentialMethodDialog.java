@@ -12,7 +12,6 @@ import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
-import org.signalml.app.method.artifact.ArtifactMethodDescriptor;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.dialog.AbstractPresetDialog;
 import org.signalml.app.view.element.SignalSpacePanel;
@@ -36,6 +35,7 @@ import org.springframework.validation.Errors;
 public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 
 	private static final long serialVersionUID = 1L;
+	public static final String ICON_PATH = "org/signalml/app/icon/runmethod.png";
 
 	private SignalSpacePanel signalSpacePanel;
 
@@ -46,7 +46,7 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 	@Override
 	protected void initialize() {
 		setTitle(messageSource.getMessage("evokedPotentialMethod.dialog.title"));
-		setIconImage(IconUtils.loadClassPathImage(ArtifactMethodDescriptor.ICON_PATH));
+		setIconImage(IconUtils.loadClassPathImage(ICON_PATH));
 		setResizable(false);
 		super.initialize();
 	}

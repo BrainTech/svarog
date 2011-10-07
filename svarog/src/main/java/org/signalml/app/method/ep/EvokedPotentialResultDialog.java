@@ -18,7 +18,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.border.EmptyBorder;
 
-import org.signalml.app.method.artifact.ArtifactMethodDescriptor;
 import org.signalml.app.model.PropertySheetModel;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.ViewerFileChooser;
@@ -70,7 +69,7 @@ public class EvokedPotentialResultDialog extends AbstractDialog {
 	@Override
 	protected void initialize() {
 		setTitle(messageSource.getMessage("evokedPotentialResult.dialog.title"));
-		setIconImage(IconUtils.loadClassPathImage(ArtifactMethodDescriptor.ICON_PATH));
+		setIconImage(IconUtils.loadClassPathImage(EvokedPotentialMethodDialog.ICON_PATH));
 		setResizable(true);
 		super.initialize();
 	}

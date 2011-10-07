@@ -40,45 +40,6 @@
 	in the <a href="archive.html">archive</a>.
       </p>
 
-      <subsection name="Matlab Component Runtime redistributables">
-
-	<p>
-	  If you downloaded the packaged versions and intend to use signal analysis
-	  methods which use Matlab, you will have to have the Matlab Component
-	  Runtime (or Matlab itself) installed.
-	</p>
-
-	<p>
-	  Lack of MCR doesn't affect remaining functionality and may be ignored if not
-	  needed.
-	</p>
-
-	<p>
-	  For details about the Matlab Component Runtime see the
-	  <a href="http://www.mathworks.com/products/javabuilder/">Mathworks site</a>.
-	</p>
-
-	<table><tbody>
-	  <tr>
-	    <th>
-	      Platform/format
-	    </th>
-	    <th>
-	      URL
-	    </th>
-	  </tr>
-	  <tr>
-	    <td>MCR for Microsoft Windows (installer)</td>
-	    <td><span style="color: red;">add files</span></td>
-	  </tr>
-	  <tr>
-	    <td>MCR for GNU/Linux (installer)</td>
-	    <td><span style="color: red;">add files</span></td>
-	  </tr>
-	</tbody></table>
-
-      </subsection>
-
       <subsection name="Old versions">
 
 	<p>

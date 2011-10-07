@@ -46,7 +46,6 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 	private OptionSet executablePreset;
 	private OptionSet bookPreset;
 	private OptionSet bookSavePreset;
-	private OptionSet artifactProjectPreset;
 	private OptionSet exportSignal;
 	private OptionSet exportBook;
 	private OptionSet readXMLManifest;
@@ -304,13 +303,6 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 		filters.add(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.bookFiles"), "b"));
 
 		bookSavePreset.fileFilters = filters.toArray(new FileFilter[filters.size()]);
-
-		artifactProjectPreset = new OptionSet();
-		artifactProjectPreset.title = messageSource.getMessage("filechooser.artifactProjectPreset.title");
-		artifactProjectPreset.okButton = messageSource.getMessage("choose");
-		artifactProjectPreset.acceptAllUsed = false;
-		artifactProjectPreset.multiSelectionEnabled = false;
-		artifactProjectPreset.fileSelectionMode = DIRECTORIES_ONLY;
 
 		workingDirectoryPreset = new OptionSet();
 		workingDirectoryPreset.title = messageSource.getMessage("filechooser.workingDirectoryPreset.title");
@@ -914,25 +906,6 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 		file = chooseFileForRead(parent, loadPreset);
 		if (file != null) {
 			applicationConfig.setLastPresetPath(getCurrentDirectory().getAbsolutePath());
-		}
-
-		return file;
-
-	}
-
-	public synchronized File chooseArtifactProjectDirectory(Component parent) {
-
-		File file = null;
-
-		setSelectedFile(new File(""));
-		String path = applicationConfig.getLastArtifactProjectPath();
-		if (path != null) {
-			setCurrentDirectory(new File(path));
-		}
-
-		file = chooseFileForWrite(parent, artifactProjectPreset);
-		if (file != null) {
-			applicationConfig.setLastArtifactProjectPath(getCurrentDirectory().getAbsolutePath());
 		}
 
 		return file;

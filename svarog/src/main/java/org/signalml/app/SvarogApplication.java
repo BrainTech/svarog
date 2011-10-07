@@ -47,8 +47,6 @@ import org.signalml.app.method.ApplicationMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.MethodPresetManager;
 import org.signalml.app.method.UnavailableMethodDescriptor;
-import org.signalml.app.method.artifact.ArtifactApplicationData;
-import org.signalml.app.method.artifact.ArtifactMethodDescriptor;
 import org.signalml.app.method.bookaverage.BookAverageMethodDescriptor;
 import org.signalml.app.method.booktotag.BookToTagMethodDescriptor;
 import org.signalml.app.method.ep.EvokedPotentialMethodDescriptor;
@@ -56,7 +54,6 @@ import org.signalml.app.method.example.ExampleMethodDescriptor;
 import org.signalml.app.method.mp5.MP5ApplicationData;
 import org.signalml.app.method.mp5.MP5ExecutorManager;
 import org.signalml.app.method.mp5.MP5MethodDescriptor;
-import org.signalml.app.method.stager.StagerMethodDescriptor;
 import org.signalml.app.montage.MontagePresetManager;
 import org.signalml.app.task.ApplicationTaskManager;
 import org.signalml.app.util.MatlabUtil;
@@ -74,9 +71,6 @@ import org.signalml.domain.montage.eeg.EegChannel;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.method.DisposableMethod;
 import org.signalml.method.Method;
-import org.signalml.method.artifact.ArtifactData;
-import org.signalml.method.artifact.ArtifactMethod;
-import org.signalml.method.artifact.ArtifactParameters;
 import org.signalml.method.bookaverage.BookAverageMethod;
 import org.signalml.method.booktotag.BookToTagMethod;
 import org.signalml.method.ep.EvokedPotentialMethod;
@@ -85,8 +79,6 @@ import org.signalml.method.example.ExampleMethod;
 import org.signalml.method.mp5.MP5Data;
 import org.signalml.method.mp5.MP5Method;
 import org.signalml.method.mp5.MP5Parameters;
-import org.signalml.method.stager.StagerMethod;
-import org.signalml.method.stager.StagerParameters;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.impl.PluginAccessClass;
 import org.signalml.plugin.loader.PluginLoaderHi;
@@ -632,11 +624,7 @@ public class SvarogApplication implements java.lang.Runnable {
 					     MP5Parameters.class,
 					     MP5Data.class,
 					     MP5ApplicationData.class,
-					     EvokedPotentialParameters.class,
-					     ArtifactApplicationData.class,
-					     ArtifactData.class,
-					     ArtifactParameters.class,
-					     StagerParameters.class
+					     EvokedPotentialParameters.class
 					     );
 
 		streamer.setMode(XStream.NO_REFERENCES);
@@ -876,63 +864,6 @@ public class SvarogApplication implements java.lang.Runnable {
 		} catch (Throwable t) {
 			UnavailableMethodDescriptor descriptor =
 				new UnavailableMethodDescriptor(MP5MethodDescriptor.RUN_METHOD_STRING, t);
-			methodManager.addUnavailableMethod(descriptor);
-		}
-
-		ArtifactMethod artifactMethod = null;
-		try {
-
-			try {
-				artifactMethod = (ArtifactMethod) methodManager.registerMethod(ArtifactMethod.class);
-				artifactMethod.setStreamer(streamer);
-				ArtifactMethodDescriptor artifactDescriptor =
-					new ArtifactMethodDescriptor(artifactMethod);
-				methodManager.setMethodData(artifactMethod, artifactDescriptor);
-			} catch (NoClassDefFoundError er) {
-				logger.error("No class def found error - is Matlab installed properly?", er);
-				throw er;
-			} catch (UnsatisfiedLinkError er) {
-				logger.error("No libraries error - is Matlab installed properly?", er);
-				throw er;
-			} catch (SignalMLException ex) {
-				logger.error("Failed to create artifact method", ex);
-				throw ex;
-			} catch (Throwable t) {
-				logger.error("Serious error - failed to create artifact method", t);
-				throw t;
-			}
-
-		} catch (Throwable t) {
-			UnavailableMethodDescriptor descriptor =
-				new UnavailableMethodDescriptor(ArtifactMethodDescriptor.RUN_METHOD_STRING, t);
-			methodManager.addUnavailableMethod(descriptor);
-		}
-
-		StagerMethod stagerMethod = null;
-		try {
-
-			try {
-				stagerMethod = (StagerMethod) methodManager.registerMethod(StagerMethod.class);
-				StagerMethodDescriptor stagerDescriptor =
-					new StagerMethodDescriptor(stagerMethod);
-				methodManager.setMethodData(stagerMethod, stagerDescriptor);
-			} catch (NoClassDefFoundError er) {
-				logger.error("No class def found error - is Matlab installed properly?", er);
-				throw er;
-			} catch (UnsatisfiedLinkError er) {
-				logger.error("No libraries error - is Matlab installed properly?", er);
-				throw er;
-			} catch (SignalMLException ex) {
-				logger.error("Failed to create stager method", ex);
-				throw ex;
-			} catch (Throwable t) {
-				logger.error("Serious error - failed to create stager method", t);
-				throw t;
-			}
-
-		} catch (Throwable t) {
-			UnavailableMethodDescriptor descriptor =
-				new UnavailableMethodDescriptor(StagerMethodDescriptor.RUN_METHOD_STRING, t);
 			methodManager.addUnavailableMethod(descriptor);
 		}
 
