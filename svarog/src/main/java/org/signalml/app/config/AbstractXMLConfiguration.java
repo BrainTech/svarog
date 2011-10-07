@@ -12,6 +12,7 @@ import org.signalml.app.util.XMLUtils;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import com.thoughtworks.xstream.converters.ConversionException;
 import java.io.InputStream;
 
 /** AbstractXMLConfiguration
@@ -78,6 +79,8 @@ public abstract class AbstractXMLConfiguration {
 				logger.debug(fnf);
 			else
 				logger.error(oth, ex);
+		} catch (ConversionException ex) {
+			logger.error(oth, ex);
 		}
 	}
 
