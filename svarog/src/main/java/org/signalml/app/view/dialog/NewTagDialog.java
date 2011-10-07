@@ -11,12 +11,14 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import org.signalml.app.config.ApplicationConfiguration;
+import org.signalml.app.config.preset.StyledTagSetPresetManager;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.NewTagDescriptor;
 import org.signalml.app.model.NewTagDescriptor.NewTagTypeMode;
 import org.signalml.app.view.element.EmbeddedFileChooser;
 import org.signalml.app.view.element.NewTagPanel;
 import org.signalml.app.view.element.PagingParametersPanel;
+import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.TagStyle;
@@ -60,14 +62,21 @@ public class NewTagDialog extends AbstractDialog {
 	private ApplicationConfiguration applicationConfig;
 
 	/**
+	 * {@link PresetManager} for handling tag styles presets.
+	 */
+	private final StyledTagSetPresetManager styledTagSetPresetManager;
+
+	/**
 	 * Constructor. Sets message source, parent window and if this dialog
 	 * blocks top-level windows.
 	 * @param messageSource message source to set
+	 * @param styledTagSetPresetManager {@link PresetManager} handling tag style presets
 	 * @param f the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public NewTagDialog(MessageSourceAccessor messageSource, Window f, boolean isModal) {
+	public NewTagDialog(MessageSourceAccessor messageSource, StyledTagSetPresetManager styledTagSetPresetManager, Window f, boolean isModal) {
 		super(messageSource, f, isModal);
+		this.styledTagSetPresetManager = styledTagSetPresetManager;
 	}
 
 	/**
@@ -98,7 +107,7 @@ public class NewTagDialog extends AbstractDialog {
 
 		JPanel interfacePanel = new JPanel(new BorderLayout());
 
-		newTagPanel = new NewTagPanel(messageSource);
+		newTagPanel = new NewTagPanel(messageSource, styledTagSetPresetManager);
 		pagingParametersPanel = new PagingParametersPanel(messageSource);
 
 		interfacePanel.add(newTagPanel, BorderLayout.CENTER);
@@ -130,6 +139,9 @@ public class NewTagDialog extends AbstractDialog {
 		}
 		else if (mode == NewTagTypeMode.DEFAULT_SLEEP) {
 			newTagPanel.getDefaultSleepRadio().setSelected(true);
+		}
+		else if (mode == NewTagTypeMode.PRESET) {
+			newTagPanel.getPresetRadio().setSelected(true);
 		}
 		else if (mode == NewTagTypeMode.FROM_FILE) {
 			newTagPanel.getFromFileRadio().setSelected(true);
@@ -177,6 +189,10 @@ public class NewTagDialog extends AbstractDialog {
 		else if (newTagPanel.getDefaultSleepRadio().isSelected()) {
 			descriptor.setMode(NewTagTypeMode.DEFAULT_SLEEP);
 			descriptor.setFile(null);
+		}
+		else if (newTagPanel.getPresetRadio().isSelected()) {
+			descriptor.setMode(NewTagTypeMode.PRESET);
+			descriptor.setTagStylesPreset((StyledTagSet) newTagPanel.getPresetComboBox().getSelectedItem());
 		}
 		else if (newTagPanel.getFromFileRadio().isSelected()) {
 			descriptor.setMode(NewTagTypeMode.FROM_FILE);

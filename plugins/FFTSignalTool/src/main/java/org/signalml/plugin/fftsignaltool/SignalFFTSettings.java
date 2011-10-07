@@ -118,7 +118,7 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 		windowType = WindowType.RECTANGULAR;
 		windowParameter = 0;
 		logarithmic = false;
-		spline = true;
+		spline = false;
 		antialias = true;
 	}
 

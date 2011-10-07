@@ -18,7 +18,7 @@ public class PresetManagerEvent extends EventObject {
 	private Preset newPreset;
 	private Preset oldPreset;
 
-	public PresetManagerEvent(Object source, Preset newPreset, Preset oldPreset) {
+	public PresetManagerEvent(Object source, Preset oldPreset, Preset newPreset) {
 		super(source);
 		this.newPreset = newPreset;
 		this.oldPreset = oldPreset;

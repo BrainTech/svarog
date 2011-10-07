@@ -98,6 +98,7 @@ import org.springframework.util.Log4jConfigurer;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.Annotations;
+import org.signalml.app.config.preset.StyledTagSetPresetManager;
 import org.signalml.app.worker.amplifiers.AmplifierDefinitionPresetManager;
 import org.signalml.app.worker.processes.OpenBCIModulePresetManager;
 import org.signalml.app.worker.processes.ProcessManager;
@@ -147,6 +148,8 @@ public class SvarogApplication implements java.lang.Runnable {
 	 * {@link TimeDomainSampleFilter TimeDomainSampleFilters}.
 	 */
 	private PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainSampleFilterPresetManager = null;
+
+	private StyledTagSetPresetManager styledTagSetPresetManager;
 
 	private MP5ExecutorManager mp5ExecutorManager = null;
 	private ViewerMainFrame viewerMainFrame = null;
@@ -809,6 +812,17 @@ public class SvarogApplication implements java.lang.Runnable {
 			logger.error("Failed to read predefined time domain sample filters", ex);
 		}
 
+		styledTagSetPresetManager = new StyledTagSetPresetManager();
+		styledTagSetPresetManager.setProfileDir(profileDir);
+
+		try {
+			styledTagSetPresetManager.readFromPersistence(null);
+		} catch (FileNotFoundException ex) {
+			logger.debug("Styled tag set preset config not found - will use defaults");
+		} catch (Exception ex) {
+			logger.error("Failed to read styled tag set configuration - will use defaults", ex);
+		}
+
 		splash(null, true);
 
 	}
@@ -1014,6 +1028,7 @@ public class SvarogApplication implements java.lang.Runnable {
 		elementManager.setOpenBCIModulePresetManager(openBCIModulePresetManager);
 		elementManager.setTimeDomainSampleFilterPresetManager(timeDomainSampleFilterPresetManager);
 		elementManager.setPredefinedTimeDomainFiltersPresetManager(predefinedTimeDomainSampleFilterPresetManager);
+		elementManager.setStyledTagSetPresetManager(styledTagSetPresetManager);
 
 		elementManager.setMp5ExecutorManager(mp5ExecutorManager);
 		elementManager.setPreferences(preferences);
@@ -1148,6 +1163,12 @@ public class SvarogApplication implements java.lang.Runnable {
 		  } catch (Exception ex) {
 		  logger.error("Failed to write predefined time domain sample filters configuration", ex);
 		  }*/
+
+		try {
+			styledTagSetPresetManager.writeToPersistence(null);
+		} catch (Exception ex) {
+			logger.error("Failed to write styled tag set configuration", ex);
+		}
 
 		try {
 			mp5ExecutorManager.writeToPersistence(null);

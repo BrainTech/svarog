@@ -3,6 +3,10 @@ package org.signalml.domain.signal.eeglab;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import com.jmatio.io.MatFileWriter;
 import com.jmatio.types.MLArray;
@@ -11,7 +15,9 @@ import com.jmatio.types.MLDouble;
 import com.jmatio.types.MLInt64;
 import com.jmatio.types.MLStructure;
 import org.signalml.app.document.SignalDocument;
+import org.signalml.app.document.TagDocument;
 import org.signalml.domain.signal.MultichannelSampleSource;
+import org.signalml.plugin.export.signal.Tag;
 
 /**
  * Exports signal to EEGLab format.
@@ -60,6 +66,7 @@ public class EEGLabSignalWriter {
          *
          * @param signalDocument currently open signal document
          */
+        private SortedSet<Tag> allTags;
 	public EEGLabSignalWriter(SignalDocument signalDocument) {
 
                 extractData(signalDocument);
@@ -97,9 +104,23 @@ public class EEGLabSignalWriter {
                 samplesTimes[0] = 0;
                 for (int i = 1; i < sampleCount; i++)
                         samplesTimes[i] = i * (1 / samplingRate);
+                allTags=extractTags(signalDocument);
         }
-
         /**
+         * Extracts all the tags from signal document
+         * @param signalDocument the signal document which has tags
+         * @return SortedSet<Tag> all tags from this signal document
+         * @author Maciej Pawlisz
+         */
+        private SortedSet<Tag> extractTags(SignalDocument signalDocument) {
+        	List<TagDocument> tagDocuments = signalDocument.getTagDocuments();
+        	SortedSet<Tag> tags=new TreeSet<Tag>();
+        	for (int d = 0;d < tagDocuments.size();d++)
+        		tags.addAll(tagDocuments.get(d).getTagSet().getTags());
+        	return tags;
+		}
+
+		/**
          * Writes the signal to a file in EEGLab format.
          *
          * @param outputPath output file path
@@ -124,7 +145,7 @@ public class EEGLabSignalWriter {
                 eegStruct.setField("ref", new MLInt64("ref", new long[]{ referenceChannel }, 1));
                 eegStruct.setField("saved", new MLChar("saved", "no"));
                 eegStruct.setField("data", new MLDouble("data", data));
-		
+                eegStruct.setField("event",getEventStruct());
                 eegStruct.setField("icawinv", new MLDouble("icawinv", new double[][] { { } } ));
                 eegStruct.setField("icaweights", new MLDouble("icaweights", new double[][] { { } } ));
                 eegStruct.setField("icasphere", new MLDouble("icasphere", new double[][] { { } } ));
@@ -132,5 +153,31 @@ public class EEGLabSignalWriter {
 		ArrayList<MLArray> list = new ArrayList<MLArray>();
 		list.add(eegStruct);
 		new MatFileWriter(output, list);
+	}
+	/** 
+	 * Returns event EEGLab event structure 
+	 * 
+	 * @return MLStructure event structure
+	 * @author Maciej Pawlisz
+	 */
+	private MLStructure getEventStruct() {
+		MLStructure eventStruct = new MLStructure("event", new int[] { 1,
+				allTags.size() });
+		int i = 0;
+		for (Iterator<Tag> it = allTags.iterator(); it.hasNext();) {
+			Tag tag = it.next();
+			eventStruct.setField("type", 
+					new MLChar("type", tag.getStyle().getName()), 0, i);
+			eventStruct.setField("latency", 
+							new MLDouble("latency",
+									new double[] { tag.getPosition() * samplingRate },1),
+									0, i);
+			eventStruct.setField("duration", new MLDouble("duration",
+					new double[] { tag.getLength() * samplingRate }, 1), 0, i);
+			eventStruct.setField("tag_type", new MLChar("tag_type",tag.getType().getName()),0,i);
+			eventStruct.setField("channel", new MLInt64("channel", new long[]{tag.getChannel()},1),0,i);
+			i++;
+		}
+		return eventStruct;
 	}
 }

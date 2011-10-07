@@ -11,6 +11,8 @@ import org.signalml.app.action.selector.TagStyleFocusSelector;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.TagStylePaletteDescriptor;
 import org.signalml.app.view.dialog.TagStylePaletteDialog;
+import org.signalml.domain.tag.StyledTagSet;
+import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.springframework.context.support.MessageSourceAccessor;
 

@@ -16,6 +16,7 @@ import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.domain.tag.LegacyTagExporter;
+import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 
@@ -70,17 +71,26 @@ public class ExportTagAction extends AbstractFocusableSignalMLAction<TagDocument
 			}
 
 		} while (!hasFile);
-
-
+		doExport(tagDocument.getTagSet(),file,signalDocument);
+	}
+	
+	/**
+	 * Perform export to a given file. This method should be overridden in subclasses
+	 * @param tagSet Tags to export
+	 * @param file target file
+	 * @param signalDocument
+	 * @author Maciej Pawlisz
+	 */
+	protected void doExport(StyledTagSet tagSet,File file, SignalDocument signalDocument)
+	{
 		LegacyTagExporter exporter = new LegacyTagExporter();
 		try {
-			exporter.exportLegacyTags(tagDocument.getTagSet(), file, signalDocument.getChannelCount(), signalDocument.getSamplingFrequency());
+			exporter.exportLegacyTags(tagSet, file, signalDocument.getChannelCount(), signalDocument.getSamplingFrequency());
 		} catch (SignalMLException ex) {
 			logger.error("Failed to import tags", ex);
 			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
 			return;
 		}
-
 	}
 
 	@Override

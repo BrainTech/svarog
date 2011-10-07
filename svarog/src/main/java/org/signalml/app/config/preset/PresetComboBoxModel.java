@@ -72,6 +72,4 @@ public class PresetComboBoxModel extends AbstractListModel implements ComboBoxMo
 		fireContentsChanged(this, 1, presetManager.getPresetCount()+1);
 	}
 
-
-
 }

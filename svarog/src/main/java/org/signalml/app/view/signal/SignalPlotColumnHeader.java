@@ -262,7 +262,7 @@ public class SignalPlotColumnHeader extends JComponent {
 					continue;
 				}
 
-				tagRendererComponent = tagRenderer.getTagRendererComponent(style, active, false);
+				tagRendererComponent = tagRenderer.getTagRendererComponent(tag.getStyle(), active, false);
 				tagRendererComponent.setBounds(tagBounds);
 				tagRendererComponent.paint(g.create(tagBounds.x, tagBounds.y, tagBounds.width, tagBounds.height));
 			}

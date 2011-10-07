@@ -14,6 +14,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Collection;
 
+import java.util.LinkedHashMap;
+import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -27,6 +29,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreePath;
+import org.signalml.app.config.preset.Preset;
+import org.signalml.app.config.preset.PresetManager;
 
 import org.signalml.app.model.TagStylePaletteDescriptor;
 import org.signalml.app.model.TagStyleTreeModel;
@@ -39,6 +43,8 @@ import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.plugin.export.view.AbstractDialog;
+import org.springframework.context.MessageSourceResolvable;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
@@ -54,7 +60,7 @@ import org.springframework.validation.Errors;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class TagStylePaletteDialog extends AbstractDialog {
+public class TagStylePaletteDialog extends AbstractPresetDialog {
 
 	private static final long serialVersionUID = 1L;
 
@@ -138,7 +144,7 @@ public class TagStylePaletteDialog extends AbstractDialog {
 	 * the {@link ApplyChangesActionAction action} which applies changes
 	 */
 	private ApplyChangesActionAction applyChangesActionAction;
-	
+
 	/**
 	 * the button which calls the {@link ApplyChangesActionAction action}
 	 * which applies changes
@@ -168,7 +174,7 @@ public class TagStylePaletteDialog extends AbstractDialog {
 	/**
 	 * the {@link StyledTagSet set} of tag styles that is currently used
 	 */
-	private StyledTagSet currentTagSet;
+	protected StyledTagSet currentTagSet;
 	/**
 	 * the currently selected {@link TagStyle style}
 	 */
@@ -185,8 +191,8 @@ public class TagStylePaletteDialog extends AbstractDialog {
 	 * Constructor. Sets message source.
 	 * @param messageSource message source to set
 	 */
-	public TagStylePaletteDialog(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public TagStylePaletteDialog(MessageSourceAccessor messageSource, PresetManager presetManager) {
+		super(messageSource, presetManager);
 	}
 
 	/**
@@ -196,8 +202,8 @@ public class TagStylePaletteDialog extends AbstractDialog {
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public TagStylePaletteDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public TagStylePaletteDialog(MessageSourceAccessor messageSource, PresetManager presetManager, Window w, boolean isModal) {
+		super(messageSource, presetManager, w, isModal);
 	}
 
 	/**
@@ -284,19 +290,19 @@ public class TagStylePaletteDialog extends AbstractDialog {
 	/**
 	 * Creates the control pane.
 	 * Adds OK button, the CANCEL button and the button which calls the
-	 * {@link ApplyChangesActionAction action} which applies changes.  
+	 * {@link ApplyChangesActionAction action} which applies changes.
 	 */
 	@Override
-	protected JPanel createControlPane() {
+	protected JPanel createButtonPane() {
 
-		JPanel controlPane =  super.createControlPane();
+		JPanel buttonPane =  super.createButtonPane();
 
 		applyChangesActionAction = new ApplyChangesActionAction();
 		applyChangesButton = new JButton(applyChangesActionAction);
-		controlPane.add(Box.createHorizontalStrut(5), 1);
-		controlPane.add(applyChangesButton, 1);
+		buttonPane.add(Box.createHorizontalStrut(5), 1);
+		buttonPane.add(applyChangesButton, 1);
 
-		return controlPane;
+		return buttonPane;
 
 	}
 
@@ -540,6 +546,9 @@ public class TagStylePaletteDialog extends AbstractDialog {
 
 		currentTagSet = descriptor.getTagSet();
 
+		if (currentTagSet == null)
+			currentTagSet = new StyledTagSet();
+
 		tagStyleTreeModel.setTagSet(currentTagSet);
 
 		TagStyle initialStyle = descriptor.getStyle();
@@ -673,7 +682,7 @@ public class TagStylePaletteDialog extends AbstractDialog {
 	/**
 	 * Stores the changes (user input) in the {@link TagStyle tag style}.
 	 */
-	private void applyChanges() {
+	protected void applyChanges() {
 
 		boolean changed = false;
 		TagStyle style = tagStylePropertiesPanel.getCurrentStyle();
@@ -688,6 +697,7 @@ public class TagStylePaletteDialog extends AbstractDialog {
 
 		this.changed |= changed;
 		currentTagSet.updateStyle(currentStyle.getName(), style);
+
 
 	}
 
@@ -750,6 +760,45 @@ public class TagStylePaletteDialog extends AbstractDialog {
 	@Override
 	protected void resetDialog() {
 		changed = false;
+	}
+
+	@Override
+	public Preset getPreset() throws SignalMLException {
+		applyChanges();
+		LinkedHashMap<String, TagStyle> stylesWithNames = (LinkedHashMap<String, TagStyle>) currentTagSet.getStylesWithNames().clone();
+
+		StyledTagSet sts = new StyledTagSet(stylesWithNames);
+		return sts;
+	}
+
+	@Override
+	public void setPreset(Preset preset) throws SignalMLException {
+		StyledTagSet newStyles = ((StyledTagSet) preset).clone();
+
+		List<String> stylesThatCouldNotBeDeleted = currentTagSet.copyStylesFrom(newStyles);
+
+		if (stylesThatCouldNotBeDeleted.size() > 0) {
+
+			String styles = "";
+			for (int i = 0; i < stylesThatCouldNotBeDeleted.size(); i++) {
+				styles += stylesThatCouldNotBeDeleted.get(i);
+				if (i < stylesThatCouldNotBeDeleted.size() - 1) {
+					styles += ", ";
+				}
+			}
+
+			ErrorsDialog errorsDialog = new ErrorsDialog(messageSource, this, true);
+			MessageSourceResolvable messageSourceResolvable = new DefaultMessageSourceResolvable(new String[]{"tagStylePalette.preset.stylesCouldNotBeDeleted"}, new Object[]{styles});
+			errorsDialog.showDialog(messageSourceResolvable, true);
+		}
+
+		currentStyle = null;
+
+		tagStyleTreeModel.setTagSet(null);
+
+		TagStylePaletteDescriptor descriptor = new TagStylePaletteDescriptor(currentTagSet, null);
+		fillDialogFromModel(descriptor);
+
 	}
 
 	/**

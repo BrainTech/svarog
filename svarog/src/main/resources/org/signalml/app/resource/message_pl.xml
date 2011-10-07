@@ -373,6 +373,8 @@
 	<entry key="action.importTagToolTip">Import a tag in legacy format</entry>
 	<entry key="action.exportTag">Export Legacy Tag...</entry>
 	<entry key="action.exportTagToolTip">Export a tag in legacy format</entry>
+	<entry key="action.exportEEGLabTag">Export to EEGLab...</entry>
+    <entry key="action.exportEEGLabTagToolTip">Export tags to EEGLab events ASCII file format</entry>
 	<entry key="action.closeTag">Close Tag</entry>
 	<entry key="action.closeTagToolTip">Close active tag</entry>
 	<entry key="action.removeTag">Remove tag</entry>
@@ -424,6 +426,8 @@
 	<entry key="action.editTagDescriptionToolTip">Edit tag description</entry>
 	<entry key="action.editTagStyles">Tag styles</entry>
 	<entry key="action.editTagStylesToolTip">Edit tag styles</entry>
+	<entry key="action.editTagStylePresets">Edit tag style templates</entry>
+	<entry key="action.editTagStylePresetsToolTip">Edit tag style templates</entry>
 	<entry key="action.compareTags">Compare tags</entry>
 	<entry key="action.compareTagsToolTip">Compare tags (2 or more must be open)</entry>
 
@@ -678,9 +682,9 @@
 	<entry key="opensignal.signalsource.OPENBCI">OpenBCI</entry>
 	<entry key="opensignal.signalsource.AMPLIFIER">Amplifier</entry>
 
-        <entry key="opensignal.fileChooser.showFavorities">Show favorites</entry>	
-        <entry key="opensignal.fileChooser.hideFavorities">Hide favorites</entry>	
-        <entry key="opensignal.fileChooser.favorities">Favorites</entry>	
+        <entry key="opensignal.fileChooser.showFavorities">Show favorites</entry>
+        <entry key="opensignal.fileChooser.hideFavorities">Hide favorites</entry>
+        <entry key="opensignal.fileChooser.favorities">Favorites</entry>
         <entry key="opensignal.fileChooser.removeFromFavorities">Remove from favorites</entry>
         <entry key="opensignal.fileChooser.addToFavorities">Add current directory to favorites</entry>
         <entry key="opensignal.fileChooser.goToFavorities">Choose location</entry>
@@ -688,6 +692,7 @@
         <entry key="opensignal.fileChooser.lastDirs">Last directories</entry>
         <entry key="opensignal.fileChooser.lastFiles">Last files</entry>
 
+	<entry key="opensignal.tagPresetSelectionPanelTitle">Select tag styles preset for monitor</entry>
         <entry key="opensignal.signalParametersPanelTitle">Signal parameters</entry>
 	<entry key="opensignal.parameters.samplingFrequency">Sampling frequency: </entry>
 	<entry key="opensignal.parameters.channelCount">Channel count: </entry>
@@ -695,15 +700,15 @@
 	<entry key="opensignal.parameters.sampleType">Sample type: </entry>
 	<entry key="opensignal.parameters.pageSize">Page size: </entry>
 	<entry key="opensignal.parameters.blocksPerPage">Number of blocks per page: </entry>
-        <entry key="opensignal.parameters.editGainAndOffset">Edit gain and offset</entry>        
+        <entry key="opensignal.parameters.editGainAndOffset">Edit gain and offset</entry>
         <entry key="opensignal.parameters.editGainAndOffsetDialog.edit">Edit</entry>
-        <entry key="opensignal.parameters.editGainAndOffsetDialog.all">All channels</entry>        
+        <entry key="opensignal.parameters.editGainAndOffsetDialog.all">All channels</entry>
 
        <entry key="opensignal.amplifier.channelSelectTable.channelSelectedColumnTitle"></entry>
        <entry key="opensignal.amplifier.channelSelectTable.channelNumberColumnTitle">number</entry>
        <entry key="opensignal.amplifier.channelSelectTable.channelLabelColumnTitle">label</entry>
 
-        <entry key="opensignal.amplifier.selectAmplifier">Select an amplifier first</entry>       
+        <entry key="opensignal.amplifier.selectAmplifier">Select an amplifier first</entry>
         <entry key="opensignal.amplifier.startingBCI">Starting OpenBCI</entry>
 
         <entry key="opensignal.amplifier.startingMultiplexer">Starting multiplexer...</entry>
@@ -802,6 +807,8 @@
 	<entry key="newTag.emptyRadio">An empty tag with no styles</entry>
 	<entry key="newTag.defaultSleepRadio">Use standard sleep staging styles</entry>
 	<entry key="newTag.fromFileRadio">Use styles from selected file</entry>
+	<entry key="newTag.presetRadio">Use styles from selected styles preset</entry>
+	<entry key="newTag.choosePreset">Choose tag styles preset</entry>
 
 	<entry key="openTag.options.title">Choose options for tag</entry>
 	<entry key="openTag.options.signalDocument">Select signal document</entry>
@@ -1064,6 +1071,7 @@
 	<entry key="tagStylePalette.captureKeyStrokeToolTip">Change the key stroke associated with this style</entry>
 
 	<entry key="tagStylePalette.noStyle">Select or add a style</entry>
+	<entry key="tagStylePalette.preset.stylesCouldNotBeDeleted">The following styles could not be deleted: {0}</entry>
 
 	<entry key="compareTags.graphicalCompareTitle">Graphical comparison</entry>
 	<entry key="compareTags.chooseTagsTitle">Choose tag documents (2 required)</entry>

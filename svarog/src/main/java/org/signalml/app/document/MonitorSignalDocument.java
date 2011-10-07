@@ -169,6 +169,10 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		logger.info("Start initializing monitor data.");
 		tagSet = new StyledMonitorTagSet(monitorOptions.getPageSize(), 5, 
 						 monitorOptions.getSamplingFrequency());
+		if (monitorOptions.getTagStyles() != null) {
+			tagSet.copyStylesFrom(monitorOptions.getTagStyles());
+		}
+
 		TagDocument tagDoc = new TagDocument(tagSet);
 		tagDoc.setParent(this);
 		monitorWorker = new MonitorWorker(monitorOptions.getJmxClient(), monitorOptions, (RoundBufferMultichannelSampleSource) sampleSource, timestampsSource, tagSet);

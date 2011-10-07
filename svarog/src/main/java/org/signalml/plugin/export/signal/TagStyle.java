@@ -17,6 +17,7 @@ import javax.swing.KeyStroke;
 import org.signalml.app.model.LabelledPropertyDescriptor;
 import org.signalml.app.model.PropertyProvider;
 import org.signalml.domain.montage.MontageChannel;
+import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributes;
 import org.springframework.context.MessageSourceResolvable;
 
 /**
@@ -100,6 +101,10 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
          * {@link MontageChannel channel}
          */
 	private static final TagStyle defaultChannelStyle = new TagStyle(SignalSelectionType.CHANNEL, "?", "Unknown", Color.RED, Color.RED.darker(), 1F, null, null, false);
+	/**
+	 * The definitions of the attributes which can be set for tags having this style.
+	 */
+	private TagStyleAttributes attributesDefinitions = new TagStyleAttributes();
 
         /**
          * Constructor. Creates a style of a {@link Tag tagged selection}
@@ -124,8 +129,9 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 		this.outlineDash = style.outlineDash;
 		this.keyStroke = style.keyStroke;
 		this.marker = style.marker;
+		this.attributesDefinitions = style.attributesDefinitions;
 	}
-	
+
 	/**
 	 * Copy constructor. Creates a tag style
 	 * based on an object of a given interface
@@ -228,6 +234,7 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 		this.outlineDash = style.outlineDash;
 		this.keyStroke = style.keyStroke;
 		this.marker = style.marker;
+		this.attributesDefinitions = style.attributesDefinitions;
 
 		outlineStroke = null;
 	}
@@ -369,7 +376,7 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 	}
 
         /**
-         * Returns the key that will be used to start creation of a 
+         * Returns the key that will be used to start creation of a
          * {@link Tag selection} of this style.
          * @return the key that will be used to start creation of a selection of
          * this style
@@ -496,7 +503,7 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 	public String toString() {
 		return getName();
 	}
-	
+
 	public boolean equals(ExportedTagStyle style){
 		if (this.type != SignalSelectionType.typeByName(style.getType().getName())) return false;
 		if (this.name != style.getName()) return false;
@@ -508,6 +515,24 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 		if (this.keyStroke != style.getKeyStroke()) return false;
 		if (this.marker != style.isMarker()) return false;
 		return true;
+	}
+
+	/**
+	 * Returns the definitions of the attributes which can be set for tags
+	 * having this style.
+	 * @return the tag style attributes definitions
+	 */
+	public TagStyleAttributes getAttributesDefinitions() {
+		return attributesDefinitions;
+	}
+
+	/**
+	 * Sets the definitions of the attributes which can be set for tags
+	 * having this style.
+	 * @param attributes the attributes definitions for this tag style.
+	 */
+	public void setAttributesDefinitions(TagStyleAttributes attributes) {
+		this.attributesDefinitions = attributes;
 	}
 
 }
