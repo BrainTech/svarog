@@ -1,0 +1,44 @@
+Source: svarog
+Section: java
+Priority: optional
+Maintainer: Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
+Build-Depends: debhelper (>= 8.0.0),
+               maven-debian-helper,
+               libmaven-antrun-plugin-java,
+               maven2,
+               protobuf-compiler (>= 2.4)
+Build-Depends-Indep:
+	libnetty-java (>= 3.2.3.Final),
+        libjmx-java,
+        libeega-tag-library-java,
+	libjmatio-java,
+	libcommons-math-java,
+	libfreemarker-java,
+	libjfreechart-java (>= 1.0.13-4),
+	libjtransforms-java,
+	libjcommon-java,
+	libgoogle-collections-java (>= 1.0),
+	libjmx-java,
+	libprotobuf-java (>= 2.4),
+	libslf4j-java,
+	libspring-core-java
+Standards-Version: 3.9.1
+
+Package: svarog
+Architecture: all
+Depends: ${misc:Depends},
+        libnetty-java (>= 3.2.3.Final),
+        libjmx-java,
+        libeega-tag-library-java,
+	libjmatio-java,
+	libcommons-math-java,
+	libfreemarker-java,
+	libjfreechart-java (>= 1.0.13-4),
+	libjtransforms-java,
+	libjcommon-java,
+	libgoogle-collections-java (>= 1.0),
+	libjmx-java,
+	libprotobuf-java (>= 2.4),
+	libslf4j-java,
+	libspring-core-java
+Description: Svarog

@@ -1,0 +1,6 @@
+/.mh/
+/*.debhelper.log
+/*.substvars
+/files
+/maven-repo/
+/svarog/
