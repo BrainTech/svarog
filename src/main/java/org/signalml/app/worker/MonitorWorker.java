@@ -14,10 +14,8 @@ import multiplexer.protocol.Protocol.MultiplexerMessage;
 import org.apache.log4j.Logger;
 import org.apache.log4j.Level;
 
-import org.jboss.netty.channel.ChannelFuture;
 import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.app.model.PagingParameterDescriptor;
-import org.signalml.domain.signal.RoundBufferSampleSource;
 import org.signalml.domain.signal.RoundBufferMultichannelSampleSource;
 import org.signalml.domain.tag.MonitorTag;
 import org.signalml.domain.tag.StyledMonitorTagSet;
@@ -37,11 +35,9 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 
 	protected static final Logger logger = Logger.getLogger(MonitorWorker.class);
 	public static final int TIMEOUT_MILIS = 50;
-	private static int TS_DIVIDER = 100000;
 	private final JmxClient client;
 	private final OpenMonitorDescriptor monitorDescriptor;
 	private final RoundBufferMultichannelSampleSource sampleSource;
-	private final RoundBufferSampleSource timestampsSource;
 	private final StyledMonitorTagSet tagSet;
 	private volatile boolean finished;
 
@@ -59,13 +55,11 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 	 */
 	private SignalRecorderWorker signalRecorderWorker;
 
-	public MonitorWorker(JmxClient client, OpenMonitorDescriptor monitorDescriptor, RoundBufferMultichannelSampleSource sampleSource, RoundBufferSampleSource timestampsSource, StyledMonitorTagSet tagSet) {
+	public MonitorWorker(JmxClient client, OpenMonitorDescriptor monitorDescriptor, RoundBufferMultichannelSampleSource sampleSource, StyledMonitorTagSet tagSet) {
 		this.client = client;
 		this.monitorDescriptor = monitorDescriptor;
 		this.sampleSource = sampleSource;
-		this.timestampsSource = timestampsSource;
 		this.tagSet = tagSet;
-		this.tagSet.setTs(timestampsSource);
 		logger.setLevel((Level) Level.INFO);
 	}
 
@@ -154,11 +148,6 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 				}
 				final List<Sample> samples = sampleVector.getSamplesList();
 
-				//DEBUG
-				timestampsSource.addSample(samples.get(0).getTimestamp());
-				this.tagSet.newSample(samples.get(0).getTimestamp());
-				//DEBUG
-
 				// Get values from samples to chunk
 				for (int i = 0; i < channelCount; i++)
 					chunk[i] = samples.get(i).getValue();
@@ -172,19 +161,10 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 					selectedChunk[i] = chunk[n];
 				}
 
-				// set first sample timestamp for the tag recorder
-				if (tagRecorderWorker != null && !tagRecorderWorker.isStartRecordingTimestampSet()) {
-					tagRecorderWorker.setStartRecordingTimestamp(samples.get(0).getTimestamp());
-				}
+				double samplesTimestamp = samples.get(0).getTimestamp();
+				NewSamplesData newSamplesPackage = new NewSamplesData(condChunk, samplesTimestamp);
 
-				// sends chunks to the signal recorder
-				if (signalRecorderWorker != null) {
-					signalRecorderWorker.offerChunk(selectedChunk.clone());
-					if (!signalRecorderWorker.isFirstSampleTimestampSet())
-						signalRecorderWorker.setFirstSampleTimestamp(samples.get(0).getTimestamp());
-				}
-
-				publish(condChunk);
+				publish(newSamplesPackage);
 				break;
 			case MessageTypes.TAG:
 				logger.info("Tag recorder: got a tag!");
@@ -227,10 +207,6 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 				}
 
 				if(isChannelSelected(tag.getChannel(), selectedChannels)) {
-					if (tagRecorderWorker != null) {
-						tagRecorderWorker.offerTag(tag);
-					}
-
 					publish(tag);
 				}
 			default:
@@ -256,25 +232,47 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 		return false;
 	}
 
-	private double convertTs(double ts) {
-		double tmp_s_ts = ((double) ((((int) ts) / this.TS_DIVIDER) * this.TS_DIVIDER));
-		double ret_ts = ts - tmp_s_ts;
-		return ret_ts;
-
-	}
-
 	@Override
 	protected void process(List<Object> objs) {
 		for (Object o : objs) {
-			if (o instanceof double[]) {
+			if (o instanceof NewSamplesData) {
+
+				NewSamplesData data = (NewSamplesData) o;
+
 				sampleSource.lock();
-				sampleSource.addSamples((double[]) o);
-				sampleSource.unlock();
-			} else {
-				logger.info("got TAG ");
 				tagSet.lock();
-				tagSet.addTag((MonitorTag) o);
+					sampleSource.addSamples(data.getSampleValues());
+					tagSet.newSample(data.getSamplesTimestamp());
 				tagSet.unlock();
+				sampleSource.unlock();
+
+				// set first sample timestamp for the tag recorder
+				if (tagRecorderWorker != null && !tagRecorderWorker.isStartRecordingTimestampSet()) {
+					tagRecorderWorker.setStartRecordingTimestamp(data.getSamplesTimestamp());
+				}
+
+				// sends chunks to the signal recorder
+				if (signalRecorderWorker != null) {
+					signalRecorderWorker.offerChunk(data.getSampleValues());
+					if (!signalRecorderWorker.isFirstSampleTimestampSet())
+						signalRecorderWorker.setFirstSampleTimestamp(data.getSamplesTimestamp());
+				}
+
+			} else {
+				MonitorTag tag = (MonitorTag) o;
+
+				tagSet.lock();
+				tagSet.addTag(tag);
+				tagSet.unlock();
+
+				//record tag
+				int[] selectedChannels = monitorDescriptor.getSelectedChannelsIndecies();
+				if(isChannelSelected(tag.getChannel(), selectedChannels)) {
+					if (tagRecorderWorker != null) {
+						tagRecorderWorker.offerTag(tag);
+					}
+				}
+
 				firePropertyChange("newTag", null, (MonitorTag) o);
 			}
 		}
@@ -337,4 +335,63 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 	public void disconnectSignalRecorderWorker() {
 		this.signalRecorderWorker = null;
 	}
+
+	/**
+	 * Converts milliseconds to a String representing date
+	 * - for debugging purposes
+	public static String msToDate(double timestamp) {
+		long mili = (long) (timestamp * 1000);
+		SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm:ss,SSS");
+
+		Date resultdate = new Date(mili);
+		return(sdf.format(resultdate));
+	}*/
+}
+
+/**
+ * This class holds information about the newest samples package that was received
+ * by Svarog and published by the doInTheBackground method.
+ *
+ * The data consists of the sample values (a sample value for each channel)
+ * and a timestamp of these samples.
+ * @author Piotr Szachewicz
+ */
+class NewSamplesData {
+	/**
+	 * The values of the samples. The size of the array is equal to the number
+	 * of channels in the signal.
+	 */
+	private double[] sampleValues;
+
+	/**
+	 * The timestamp of the samples represented by the sampleValues array.
+	 */
+	private double samplesTimestamp;
+
+	/**
+	 * Constructor. Creates an object containing samples data.
+	 * @param sampleValues the values of the samples for each channel
+	 * @param samplesTimestamp the timestamp of the samples
+	 */
+	public NewSamplesData(double[] sampleValues, double samplesTimestamp) {
+		this.sampleValues = sampleValues;
+		this.samplesTimestamp = samplesTimestamp;
+	}
+
+	public double[] getSampleValues() {
+		return sampleValues;
+	}
+
+	public void setSampleValues(double[] sampleValues) {
+		this.sampleValues = sampleValues;
+	}
+
+	public double getSamplesTimestamp() {
+		return samplesTimestamp;
+	}
+
+	public void setSamplesTimestamp(double samplesTimestamp) {
+		this.samplesTimestamp = samplesTimestamp;
+	}
+
 }
