@@ -1,4 +1,4 @@
-/usr/share/java/svarog.jar /usr/share/java/svarog/svarog.jar
+/usr/share/java/svarog.jar /usr/bin/svarog
 
 /usr/share/maven-repo/org/signalml/plugin/FFTSignalTool/0.1/FFTSignalTool-0.1.jar /usr/share/java/svarog/plugins/FFTSignalTool/FFTSignalTool.jar
 /usr/share/maven-repo/org/signalml/plugin/FFT/0.1/FFT-0.1.jar /usr/share/java/svarog/plugins/FFT/FFT.jar

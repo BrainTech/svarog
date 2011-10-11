@@ -1,4 +1,3 @@
-util/svarog usr/bin/
 plugins/FFTSignalTool/FFTSignalTool.xml /usr/share/java/svarog/plugins/FFTSignalTool/
 plugins/FFT/FFT.xml /usr/share/java/svarog/plugins/FFT/
 plugins/PluginToolCommon/PluginToolCommon.xml /usr/share/java/svarog/plugins/PluginToolCommon/

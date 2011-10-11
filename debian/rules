@@ -28,6 +28,8 @@ override_dh_auto_build:
 override_dh_install:
 	dh_install
 	mh_install -v
+	jh_classpath -v
+	jh_exec -v
 
 override_dh_auto_clean:
 	rm -rf target
