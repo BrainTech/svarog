@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.net.URLConnection;
 import java.net.JarURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -178,8 +179,8 @@ public class PluginLoaderHi {
 			setGlobalPluginDir();
 			readPluginsState(this.pluginsStateFile);
 		} catch (Exception e) {
-		    final String errorMsg = "Failed to create loader of plug-ins";
-		    SvarogLogger.getSharedInstance().error(errorMsg, e);
+			final String errorMsg = "Failed to create loader of plug-ins";
+			SvarogLogger.getSharedInstance().error(errorMsg, e);
 			logger.error(errorMsg);
 		}
 	}
@@ -192,10 +193,12 @@ public class PluginLoaderHi {
 	 * @return an array of URLs to jar files with plug-ins
 	 */
 	private ArrayList<URL> scanPluginDirectory(File directory) {
+		logger.debug("scanning over dir '" + directory + "'");
 		ArrayList<PluginDescription> tmpDescriptions = new ArrayList<PluginDescription>();
 		FilenameFilter filter = new FilesystemFilter("xml", "Xml File", false);
 		String[] filenames = directory.list(filter);
 		for (String filename: filenames) {
+			logger.debug("scanning over '" + filename + "'");
 			PluginDescription descr = readXml(directory
 			                                  + File.separator + filename);
 			if (descr != null) {
@@ -263,25 +266,43 @@ public class PluginLoaderHi {
 	 */
 	private void setGlobalPluginDir(){
 		//hack to get the location of the jar file and add the global plugin directory
-		File pluginDirGlobal = null;
-		try{
-			URL srcURL = getClass().getProtectionDomain().getCodeSource().getLocation();
-			if (srcURL.toString().endsWith("/target/classes/")){
-				File svarogDirFile = new File(srcURL.toURI());
-				svarogDirFile = svarogDirFile.getParentFile().getParentFile();
-				startFromSourcesAddPluginDirs(svarogDirFile);
-			} else {
-				JarURLConnection connection = (JarURLConnection) srcURL.openConnection();
-				URL jarURL = connection.getJarFileURL();
-				File jarDirFile = new File(jarURL.toURI());
-				jarDirFile = jarDirFile.getParentFile();
-				pluginDirGlobal = new File(jarDirFile + File.separator + "plugins");
-				if (pluginDirGlobal.exists() && pluginDirGlobal.isDirectory() && pluginDirGlobal.canRead()) {
-					globalPluginDirectories.add(pluginDirGlobal);
-				}
+		URL srcURL = getClass().getProtectionDomain().getCodeSource().getLocation();
+		logger.debug("svarog is loaded from '" + srcURL + "'");
+		if (srcURL.toString().endsWith("/target/classes/")){
+			File svarogDirFile = _urlToFile(srcURL);
+			svarogDirFile = svarogDirFile.getParentFile().getParentFile();
+			startFromSourcesAddPluginDirs(svarogDirFile);
+		} else {
+			final URLConnection connection;
+			try {
+				connection = srcURL.openConnection();
+			} catch(IOException ex) {
+				logger.error("failed to open connection to jar", ex);
+				return;
 			}
-		} catch (Exception ex){
-			logger.error("Failed to add global plugin directory - maybe started neither from a jar file nor from sources");
+
+			final File jarFile;
+			if (connection instanceof JarURLConnection) {
+				URL jarURL = ((JarURLConnection) connection).getJarFileURL();
+				jarFile = _urlToFile(jarURL);
+			} else {
+				// e.g. file:/usr/share/java/svarog-0.5.0-SNAPSHOT.jar
+				jarFile = new File(srcURL.getPath());
+			}
+
+			File pluginsDir = new File(jarFile.getParentFile() + File.separator + "plugins");
+			logger.info("trying to load plugins from '" + pluginsDir + "'");
+
+			if (pluginsDir.exists() && pluginsDir.isDirectory() && pluginsDir.canRead())
+				globalPluginDirectories.add(pluginsDir);
+		}
+	}
+
+	private File _urlToFile(URL url) {
+		try {
+			return new File(url.toURI());
+		} catch(java.net.URISyntaxException ex) {
+			throw new RuntimeException(ex);
 		}
 	}
 
