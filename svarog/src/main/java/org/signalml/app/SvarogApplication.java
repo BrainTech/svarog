@@ -263,7 +263,15 @@ public class SvarogApplication implements java.lang.Runnable {
 		SvarogLogger.getSharedInstance().debug("Starting Svarog...");
 		SvarogLogger.getSharedInstance().debugThreads();
 
-		_run(cmdLineArgs);
+		try {
+			_run(cmdLineArgs);
+		} catch(Throwable e) {
+			SvarogLogger.getSharedInstance().error("uncaught exception", e);
+
+			// also log directly to stderr in case of problems with logging
+			System.err.println("unable to initialize svarog: " + e);
+			System.exit(11);
+		}
 	}
 
 	private void _run(String[] args) {
