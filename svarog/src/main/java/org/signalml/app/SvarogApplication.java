@@ -245,7 +245,7 @@ public class SvarogApplication implements java.lang.Runnable {
 	@Override
 	/**
 	 * This makes some simple checks, prints some debug information to
-	 * standard error and calls {@link #mainPart2}.
+	 * standard error and calls {@link #_run}.
 	 */
 	public void run() {
 		final String errorMsg = "run() already called!";
@@ -263,10 +263,10 @@ public class SvarogApplication implements java.lang.Runnable {
 		SvarogLogger.getSharedInstance().debug("Starting Svarog...");
 		SvarogLogger.getSharedInstance().debugThreads();
 
-		mainPart2(cmdLineArgs);
+		_run(cmdLineArgs);
 	}
 
-	private void mainPart2(String[] args) {
+	private void _run(String[] args) {
 		startupDir = System.getProperty("user.dir");
 
 		Options options = new Options();
@@ -402,7 +402,7 @@ public class SvarogApplication implements java.lang.Runnable {
 				}
 			});
 
-		SvarogLogger.getSharedInstance().debug("SvarogApplication.mainPart2 complete!");
+		SvarogLogger.getSharedInstance().debug("SvarogApplication._run complete!");
 	}
 
 	private void initializeFirstTime(final GeneralConfiguration suggested) {
