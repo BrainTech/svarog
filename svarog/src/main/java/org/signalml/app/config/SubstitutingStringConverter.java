@@ -6,6 +6,7 @@ package org.signalml.app.config;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.io.File;
 
 import org.signalml.app.SvarogApplication;
 import org.signalml.util.Util;
@@ -23,12 +24,13 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
  */
 public class SubstitutingStringConverter implements Converter {
 
-	private Map<String,String> tokens;
-	private Map<String,String> invTokens;
+	private final Map<String,String> tokens, invTokens;
 
 	public SubstitutingStringConverter() {
 		tokens = new HashMap<String,String>();
-		tokens.put("profile", SvarogApplication.getSharedInstance().getProfileDir().getAbsolutePath());
+		File dir = SvarogApplication.getSharedInstance().getProfileDir();
+		if (dir != null)
+			tokens.put("profile", dir.getAbsolutePath());
 
 		invTokens = Util.invertStringMap(tokens);
 	}
