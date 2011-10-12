@@ -31,9 +31,9 @@
 						<id>compile</id>
 						<phase>package</phase>
 						<configuration>
-							<tasks>
+							<target>
 								<copy file="PluginToolCommon.xml" tofile="target/PluginToolCommon.xml"/>
-							</tasks>
+							</target>
 						</configuration>
 						<goals>
 							<goal>run</goal>
@@ -60,10 +60,10 @@
 						<id>compile</id>
 						<phase>compile</phase>
 						<configuration>
-							<tasks>
+							<target>
 								<property name="runtime_classpath" refid="maven.runtime.classpath"/>
 								<echo message="runtime classpath: ${runtime_classpath}"/>
-							</tasks>
+							</target>
 						</configuration>
 						<goals>
 							<goal>run</goal>

@@ -189,7 +189,7 @@
 						<id>generate-sources</id>
 						<phase>generate-sources</phase>
 						<configuration>
-							<tasks>
+							<target>
 								<mkdir dir="${protobuf.generated_sources_dir}"/>
 								<exec executable="protoc" failonerror="true">
 									<arg value="-I" />
@@ -208,7 +208,7 @@
 									<arg value="-package"/>
 									<arg value="org.signalml.multiplexer.protocol"/>
 								</java>
-							</tasks>
+							</target>
 							<sourceRoot>${protobuf.generated_sources_dir}</sourceRoot>
 						</configuration>
 						<goals>
@@ -220,10 +220,10 @@
 						<id>compile</id>
 						<phase>compile</phase>
 						<configuration>
-							<tasks>
+							<target>
 								<property name="runtime_classpath" refid="maven.runtime.classpath"/>
 								<echo message="runtime CLASSPATH=${runtime_classpath}"/>
-							</tasks>
+							</target>
 						</configuration>
 						<goals>
 							<goal>run</goal>

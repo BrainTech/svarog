@@ -31,9 +31,9 @@
 						<id>compile</id>
 						<phase>package</phase>
 						<configuration>
-							<tasks>
+							<target>
 								<copy file="FFT.xml" tofile="target/FFT.xml"/>
-							</tasks>
+							</target>
 						</configuration>
 						<goals>
 							<goal>run</goal>

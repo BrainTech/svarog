@@ -30,9 +30,9 @@
 						<id>compile</id>
 						<phase>package</phase>
 						<configuration>
-							<tasks>
+							<target>
 								<copy file="FFTSignalTool.xml" tofile="target/FFTSignalTool.xml"/>
-							</tasks>
+							</target>
 						</configuration>
 						<goals>
 							<goal>run</goal>

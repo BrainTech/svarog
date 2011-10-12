@@ -31,10 +31,10 @@
 						<id>compile</id>
 						<phase>compile</phase>
 						<configuration>
-							<tasks>
+							<target>
 								<mkdir dir="${basedir}/bin"/>
 								<mkdir dir="${basedir}/bin/customActions"/>
-							</tasks>
+							</target>
 						</configuration>
 						<goals>
 							<goal>run</goal>
