@@ -20,20 +20,17 @@ public class NewArtifactPlugin extends AbstractPluginTool {
 
 	@Override
 	public void register(SvarogAccess access) throws SignalMLException {
-		PluginAccessHelper
-		.SetupConfig(this,
-			     "classpath:org/signalml/plugin/newartifact/resource/config.xml");
+		PluginAccessHelper.SetupConfig(this,
+			"classpath:org/signalml/plugin/newartifact/resource/config.xml");
 
 		this.manager = new PluginMethodManager(access,
-						       (PluginConfigForMethod) PluginResourceRepository
-						       .GetResource("config"));
+			(PluginConfigForMethod) PluginResourceRepository.GetResource("config", this.getClass()));
 
 		this.setupGUI(access.getGUIAccess());
 	}
 
 	private void setupGUI(SvarogAccessGUI guiAccess)
-	throws UnsupportedOperationException, PluginException {
-		guiAccess
-		.addButtonToToolsMenu(new NewArtifactPluginAction(this.manager));
+		throws UnsupportedOperationException, PluginException {
+		guiAccess.addButtonToToolsMenu(new NewArtifactPluginAction(this.manager));
 	}
 }
