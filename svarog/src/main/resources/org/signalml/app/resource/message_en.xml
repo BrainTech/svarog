@@ -249,7 +249,6 @@
 	<entry key="filechooser.executablePreset.title">Choose executable</entry>
 	<entry key="filechooser.bookFilePreset.title">Choose a book file</entry>
 	<entry key="filechooser.bookSavePreset.title">Choose a book file to save</entry>
-	<entry key="filechooser.artifactProjectPreset.title">Choose artifact project (or an empty directory)</entry>
 	<entry key="filechooser.workingDirectoryPreset.title">Choose working directory</entry>
 	<entry key="filechooser.classPathDirectoryPreset.title">Choose class path directories</entry>
 	<entry key="filechooser.jarFilePreset.title">Choose jar files</entry>
@@ -657,7 +656,6 @@
 	<entry key="preferences.miscellaneous.dontShowCompilationWarning">Do not show dynamic compilation warnings</entry>
 
 	<entry key="preferences.tools">Tools</entry>
-	<entry key="preferences.tools.artifact">Artifact working directory</entry>
 
 	<entry key="openDocument.title">Open document</entry>
 	<entry key="openDocument.chooseFile">Choose a file</entry>
@@ -1929,245 +1927,12 @@
 
 	<entry key="method.dialog.inputData">Input data</entry>
 
-	<entry key="artifactMethod.runMethodString">Artifact detection</entry>
-	<entry key="artifactMethod.iterateMethodString">Iterate artifact detection</entry>
-
-	<entry key="artifactMethod.dialog.title">Artifact detection configuration</entry>
-
-	<entry key="artifactMethod.stepTicker">Processing step</entry>
-	<entry key="artifactMethod.progressTicker">Step progress</entry>
-
-	<entry key="artifactMethod.signalFormat.FLOAT">Float</entry>
-
-	<entry key="artifactMethod.artifactType.BREATHING">Breathing</entry>
-	<entry key="artifactMethod.artifactType.EYE_MOVEMENT">Eye movement</entry>
-	<entry key="artifactMethod.artifactType.MUSCLE_ACTIVITY">Muscle activity</entry>
-	<entry key="artifactMethod.artifactType.EYEBLINKS">Eyeblinks</entry>
-	<entry key="artifactMethod.artifactType.TECHNICAL">Technical</entry>
-	<entry key="artifactMethod.artifactType.POWER_SUPPLY">Power supply</entry>
-	<entry key="artifactMethod.artifactType.ECG">ECG</entry>
-	<entry key="artifactMethod.artifactType.UNKNOWN">Unknown</entry>
-
-	<entry key="artifactMethod.iterableSensitivity.BREATHING">Sensitivity for breathing artifacts</entry>
-	<entry key="artifactMethod.iterableSensitivity.EYE_MOVEMENT">Sensitivity for eye movement artifacts</entry>
-	<entry key="artifactMethod.iterableSensitivity.MUSCLE_ACTIVITY">Sensitivity for muscle activity artifacts</entry>
-	<entry key="artifactMethod.iterableSensitivity.EYEBLINKS">Sensitivity for eyeblinks artifacts</entry>
-	<entry key="artifactMethod.iterableSensitivity.TECHNICAL">Sensitivity for technical artifacts</entry>
-	<entry key="artifactMethod.iterableSensitivity.POWER_SUPPLY">Sensitivity for power supply artifacts</entry>
-	<entry key="artifactMethod.iterableSensitivity.ECG">Sensitivity for ECG artifacts</entry>
-	<entry key="artifactMethod.iterableSensitivity.UNKNOWN">Sensitivity for unknown artifacts</entry>
-
-	<entry key="artifactMethod.powerGridFrequency.EUROPE">50 Hz (Europe)</entry>
-	<entry key="artifactMethod.powerGridFrequency.USA">60 Hz (United States)</entry>
-
-	<entry key="artifactMethod.dialog.chooseArtifactTypes">Artifact types &amp; sensitivity</entry>
-	<entry key="artifactMethod.dialog.options">Options</entry>
-	<entry key="artifactMethod.dialog.excludeSomeDerivations">Exclude some derivations</entry>
-	<entry key="artifactMethod.dialog.powerFrequency">Power frequency</entry>
-	<entry key="artifactMethod.dialog.editMontage">Edit montage</entry>
-	<entry key="artifactMethod.dialog.editMontageToolTip">Edit channel labels and functions</entry>
-	<entry key="artifactMethod.dialog.editExclusion">Select excluded derivations</entry>
-	<entry key="artifactMethod.dialog.editExclusionToolTip">Select excluded derivations</entry>
-
-	<entry key="artifactMethod.dialog.exclusionTable">Exclusion</entry>
-
-	<entry key="artifactMethod.situation.artifactProjectExists">Project [{0}] exists. Reuse or replace?</entry>
-
-	<entry key="artifactMethod.message.creatingFiles">Creating files</entry>
-	<entry key="artifactMethod.message.writingSignalFile">Writing signal file</entry>
-	<entry key="artifactMethod.message.processing">Processing</entry>
-	<entry key="artifactMethod.message.tagging">Tagging</entry>
-	<entry key="artifactMethod.message.finishing">Finishing</entry>
-	<entry key="artifactMethod.message.finished">Finished</entry>
-
-	<entry key="error.artifact.failedToCreateProjectDirectory">Failed to create directory</entry>
-	<entry key="error.artifact.failedToClearProjectDirectory">Failed to clear project directory of old files</entry>
-	<entry key="error.artifact.noWorkingDirectory">Working directory not set or unusable</entry>
-	<entry key="error.artifact.projectDirectoryLocked">A lockfile exists in [{0}] directory. Wait for current processing to complete.</entry>
-
-	<entry key="artifactMethod.config.title">Artifact configuration</entry>
-
-	<entry key="artifactMethod.config.workingDirectoryTitle">Artifact working directory</entry>
-	<entry key="artifactMethod.config.workingDirectory">Working directory</entry>
-	<entry key="artifactMethod.config.chooseWorkingDirectory">Choose...</entry>
-	<entry key="artifactMethod.config.chooseWorkingDirectoryToolTip">Choose a directory for artifact projects</entry>
-
-	<entry key="artifactMethod.dialog.result.title">Artifact result</entry>
-
-	<entry key="artifactMethod.dialog.result.actionTitle">Choose primary result targets</entry>
-	<entry key="artifactMethod.dialog.result.openInWindow">Open in the viewer</entry>
-	<entry key="artifactMethod.dialog.result.saveToFile">Save to file</entry>
-
-	<entry key="artifactMethod.dialog.result.choosePrimaryTagTitle">Choose primary result tag file</entry>
-	<entry key="artifactMethod.dialog.result.primaryTagFile">Primary tag file</entry>
-	<entry key="artifactMethod.dialog.result.choosePrimaryTagFile">Choose...</entry>
-	<entry key="artifactMethod.dialog.result.choosePrimaryTagFileToolTip">Choose a tag file to save</entry>
-
-	<entry key="artifactMethod.dialog.result.additionalTitle">Additional result tags</entry>
-	<entry key="artifactMethod.dialog.result.additionalOpenInWindow">Open selected additional tags in the viewer</entry>
-	<entry key="artifactMethod.dialog.result.additionalSaveToFile">Save selected additional tag to files</entry>
-
-	<entry key="artifactMethod.dialog.result.choosePrimaryTagTitle">Choose primary result tag file</entry>
-	<entry key="artifactMethod.dialog.result.primaryTagFile">Primary tag file</entry>
-	<entry key="artifactMethod.dialog.result.choosePrimaryTagFile">Choose...</entry>
-	<entry key="artifactMethod.dialog.result.choosePrimaryTagFileToolTip">Choose a tag file to save</entry>
-
-	<entry key="error.artifact.result.badTagFile">Tag file not chosen</entry>
-	<entry key="error.artifact.result.tagFileNotWritable">Tag file parent directory doesn't exist or not writable</entry>
-
-	<entry key="artifactMethod.dialog.iteration.title">Iteration result</entry>
-	<entry key="error.artifact.badTagFilePath">You must select a tag file</entry>
-
-	<entry key="artifactMethod.dialog.iteration.expertTagTitle">Compare with expert tag</entry>
-	<entry key="artifactMethod.dialog.iteration.expertTag">Expert artifact tag</entry>
-	<entry key="artifactMethod.dialog.iteration.choose">Choose...</entry>
-	<entry key="artifactMethod.dialog.iteration.expertTagToolTip">Choose refrerence tag with artifacts</entry>
-
 	<entry key="unlimitedSpinnerPanel.unlimited">unlimited</entry>
 	<entry key="unlimitedSpinnerPanel.auto">auto</entry>
 	<entry key="unlimitedSpinnerPanel.unlimitedCompact">un.</entry>
 
-	<entry key="stagerMethod.runMethodString">Automatic sleep staging</entry>
-
-	<entry key="stagerMethod.dialog.title">Stager configuration</entry>
-
-	<entry key="stagerMethod.dialog.basicTab">Basic config</entry>
-	<entry key="stagerMethod.dialog.advancedTab">Advanced config</entry>
-	<entry key="stagerMethod.dialog.thresholdTab">Threshold config</entry>
-
-	<entry key="stagerMethod.dialog.editMontage">Edit montage</entry>
-	<entry key="stagerMethod.dialog.editMontageToolTip">Edit channel labels and functions</entry>
-	<entry key="stagerMethod.dialog.restoreDefaults">Restore defaults</entry>
-	<entry key="stagerMethod.dialog.restoreDefaultsToolTip">Restore default method configuration</entry>
-
-	<entry key="stagerMethod.dialog.chooseBookTitle">Choose book file</entry>
-	<entry key="stagerMethod.dialog.bookFile">Book file</entry>
-	<entry key="stagerMethod.dialog.chooseBookFile">Choose...</entry>
-	<entry key="stagerMethod.dialog.chooseBookFileToolTip">Choose a book file for this signal</entry>
-
-	<entry key="stagerMethod.dialog.enableAdvancedConfigTitle">Advanced config</entry>
-	<entry key="stagerMethod.dialog.enableAdvancedConfig">Enable advanced config</entry>
-
-	<entry key="stagerMethod.dialog.basicParametersTitle">Key parameters</entry>
-	<entry key="stagerMethod.dialog.rules">Scoring criteria</entry>
-	<entry key="stagerMethod.dialog.deltaMinAmplitude">Amplitude threshold  for delta waves [uV]</entry>
-	<entry key="stagerMethod.dialog.alphaMinAmplitude">Amplitude threshold  for alpha waves [uV]</entry>
-	<entry key="stagerMethod.dialog.spindleMinAmplitude">Amplitude threshold  for sleep spindles [uV]</entry>
-	<entry key="stagerMethod.dialog.primaryHypnogram">Show primary hypnogram and markers of waveforms  in result</entry>
-
-	<entry key="stagerMethod.dialog.advancedParametersTitle">Parameters</entry>
-	<entry key="stagerMethod.dialog.delta">Delta waves</entry>
-	<entry key="stagerMethod.dialog.theta">Theta waves</entry>
-	<entry key="stagerMethod.dialog.alpha">Alpha waves</entry>
-	<entry key="stagerMethod.dialog.spindle">Sleep spindles</entry>
-	<entry key="stagerMethod.dialog.kComplex">K-Compl</entry>
-
-	<entry key="stagerMethod.dialog.amplitude">Amplitude [uv]&lt;br /&gt;min/max</entry>
-	<entry key="stagerMethod.dialog.frequency">Frequency [Hz]&lt;br /&gt;min/max</entry>
-	<entry key="stagerMethod.dialog.scale">Scale [s]&lt;br /&gt;min/max</entry>
-	<entry key="stagerMethod.dialog.phase">Phase&lt;br /&gt;min/max</entry>
-
-	<entry key="stagerMethod.dialog.thresholdsTitle">Thresholds</entry>
-	<entry key="stagerMethod.dialog.emgToneThreshold">EMG tone</entry>
-	<entry key="stagerMethod.dialog.mtEegThreshold">MT artifacts in EEG</entry>
-	<entry key="stagerMethod.dialog.mtEmgThreshold">MT artifacts in EMG</entry>
-	<entry key="stagerMethod.dialog.mtToneEmgThreshold">MT artifacts in tone EMG</entry>
-	<entry key="stagerMethod.dialog.remEogDeflectionThreshold">EOG deflection for rapid eye movement [%]</entry>
-	<entry key="stagerMethod.dialog.semEogDeflectionThreshold">EOG deflection for slow eye movement [%]</entry>
-
-	<entry key="stagerMethod.dialog.result.title">Stager result</entry>
-
-	<entry key="stagerMethod.dialog.result.actionTitle">Choose primary result targets</entry>
-	<entry key="stagerMethod.dialog.result.openInWindow">Open in the viewer</entry>
-	<entry key="stagerMethod.dialog.result.saveToFile">Save to file</entry>
-
-	<entry key="stagerMethod.dialog.result.choosePrimaryTagTitle">Choose primary result tag file</entry>
-	<entry key="stagerMethod.dialog.result.primaryTagFile">Primary tag file</entry>
-	<entry key="stagerMethod.dialog.result.choosePrimaryTagFile">Choose...</entry>
-	<entry key="stagerMethod.dialog.result.choosePrimaryTagFileToolTip">Choose a tag file to save</entry>
-
-	<entry key="stagerMethod.dialog.result.additionalTitle">Additional result tags</entry>
-	<entry key="stagerMethod.dialog.result.additionalOpenInWindow">Open selected additional tags in the viewer</entry>
-	<entry key="stagerMethod.dialog.result.additionalSaveToFile">Save selected additional tag to files</entry>
-
-	<entry key="stagerMethod.dialog.result.reviewResult">Review staging result</entry>
-	<entry key="stagerMethod.dialog.result.reviewResultToolTip">Inspect the results</entry>
-
-	<entry key="stagerMethod.dialog.resultReview.title">Stager result review</entry>
-
-	<entry key="stagerMethod.dialog.resultReview.expertTitle">Compare with expert tag</entry>
-	<entry key="stagerMethod.dialog.resultReview.chooseExpertTagFile">Choose...</entry>
-
-	<entry key="stagerMethod.dialog.resultReview.expertStageTag">Expert stages tag</entry>
-	<entry key="stagerMethod.dialog.resultReview.expertStageTagToolTip">Choose refrerence tag with stages</entry>
-	<entry key="stagerMethod.dialog.resultReview.expertArtifactTag">Expert artifacts tag</entry>
-	<entry key="stagerMethod.dialog.resultReview.expertArtifactTagToolTip">Choose refrerence tag with artifacts</entry>
-
-	<entry key="stagerMethod.dialog.resultReview.compare">Compare</entry>
-	<entry key="stagerMethod.dialog.resultReview.compareToolTip">Compare staging result with expert tag</entry>
-	<entry key="stagerMethod.dialog.resultReview.compareExcludingArtifacts">Compare no artifacts</entry>
-	<entry key="stagerMethod.dialog.resultReview.compareExcludingArtifactsToolTip">Compare staging result with expert tag (pages without artifacts only)</entry>
-
-	<entry key="stagerMethod.dialog.resultReview.statisticsTitle">Result statistics</entry>
-
-	<entry key="stagerMethod.dialog.resultReview.totalTab">Totals</entry>
-	<entry key="stagerMethod.dialog.resultReview.stageTab">Stages</entry>
-
-	<entry key="stagerMethod.dialog.resultReview.stageTable.stage">Stage</entry>
-	<entry key="stagerMethod.dialog.resultReview.stageTable.epochs">Epochs</entry>
-	<entry key="stagerMethod.dialog.resultReview.stageTable.minutes">Minutes</entry>
-	<entry key="stagerMethod.dialog.resultReview.stageTable.tst">%TST</entry>
-	<entry key="stagerMethod.dialog.resultReview.stageTable.spt">%SPT</entry>
-
-	<entry key="stagerMethod.dialog.resultReview.stageTable.sws">SWS</entry>
-	<entry key="stagerMethod.dialog.resultReview.otherStyle">Other</entry>
-
-	<entry key="stagerMethod.dialog.sleepComparison.title">Sleep staging comparison</entry>
-	<entry key="stagerMethod.dialog.sleepComparison.frameTitle">Comparison data</entry>
-
-	<entry key="stagerMethod.dialog.sleepComparison.comparisonTab">Comparison</entry>
-	<entry key="stagerMethod.dialog.sleepComparison.comparisonFrameTitle">Stager (row) vs. expert (column) comparison</entry>
-
-	<entry key="stagerMethod.dialog.sleepComparison.statisticsTab">Statistics</entry>
-	<entry key="stagerMethod.dialog.sleepComparison.stageFrameTitle">Stages</entry>
-	<entry key="stagerMethod.dialog.sleepComparison.propertyFrameTitle">Other</entry>
-
-	<entry key="stagerMethod.dialog.resultReview.comparison.stage">Stage</entry>
-	<entry key="stagerMethod.dialog.resultReview.comparison.concordance">Concordance %</entry>
-	<entry key="stagerMethod.dialog.resultReview.comparison.sensitivity">Sensitivity %</entry>
-	<entry key="stagerMethod.dialog.resultReview.comparison.selectivity">Selectivity %</entry>
-
-	<entry key="stagerMethod.stepTicker">Processing step</entry>
-        <entry key="stagerMethod.progressTicker">Step progress</entry>
-        <entry key="stagerMethod.message.processing">Processing</entry>
-
 	<entry key="property.sleepComparison.totalConcordance">Total concordance %</entry>
 	<entry key="property.sleepComparison.cohensKappa">Cohen's Kappa</entry>
-
-	<entry key="error.stager.result.badTagFile">Tag file not chosen</entry>
-	<entry key="error.stager.result.tagFileNotWritable">Tag file parent directory doesn't exist or not writable</entry>
-	<entry key="error.stager.result.resultTagUnknownRules">The resulting tag uses unknown staging rules</entry>
-	<entry key="error.stager.result.expertTagNotCompatibleRK">The expert tag doesn't use the R&amp;K system or has misnamed tags. Tag names w, 1, 2, 3, 4, r and m are required.</entry>
-	<entry key="error.stager.result.expertTagNotCompatibleAASM">The expert tag doesn't use the AASM system or has misnamed tags. Tag names nw, n1, n2, n3 and nr are required.</entry>
-
-	<entry key="stagerMethod.situation.stagerProjectExists">Project [{0}] exists. Reuse or replace?</entry>
-
-	<entry key="stagerMethod.message.staging">Detecting sleep stages</entry>
-
-	<entry key="error.stager.failedToCreateProjectDirectory">Failed to create directory</entry>
-	<entry key="error.stager.failedToClearProjectDirectory">Failed to clear project directory of old files</entry>
-	<entry key="error.stager.badBookFilePath">Book file not chosen, doesn't exist or unreadable</entry>
-	<entry key="error.stager.noWorkingDirectory">Working directory not set or unusable</entry>
-
-	<entry key="stagerMethod.config.title">Artifact configuration</entry>
-
-	<entry key="stagerMethod.config.workingDirectoryTitle">Stager working directory</entry>
-	<entry key="stagerMethod.config.workingDirectory">Working directory</entry>
-	<entry key="stagerMethod.config.chooseWorkingDirectory">Choose...</entry>
-	<entry key="stagerMethod.config.chooseWorkingDirectoryToolTip">Choose a directory for stager projects</entry>
-
-	<entry key="sleepStagingRules.RK">Rechtshaffen and Kales (R&amp;K 1967) rules</entry>
-	<entry key="sleepStagingRules.AASM">AASM (2007) rules</entry>
 
 	<entry key="iterableNumericProperty">Property [{0}]</entry>
 
