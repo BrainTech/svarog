@@ -22,7 +22,7 @@ public class NewArtifactPlugin extends AbstractPluginTool {
 	public void register(SvarogAccess access) throws SignalMLException {
 		PluginAccessHelper
 		.SetupConfig(this,
-			     "classpath:resources/org/signalml/plugin/newartifact/resource/config.xml");
+			     "classpath:org/signalml/plugin/newartifact/resource/config.xml");
 
 		this.manager = new PluginMethodManager(access,
 						       (PluginConfigForMethod) PluginResourceRepository
