@@ -444,7 +444,6 @@ public class PluginLoaderHi {
 			} catch(Throwable exc) {
 				String errorMsg = "Failed to initialize plugin " + descr.getName() +
 					" from file " + descr.getJarFile();
-				SvarogLogger.getSharedInstance().warning(errorMsg, exc);
 				logger.error(errorMsg, exc);
 			}
 			descr.setPlugin(plugin);
