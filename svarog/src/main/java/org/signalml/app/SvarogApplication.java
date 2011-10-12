@@ -274,33 +274,38 @@ public class SvarogApplication implements java.lang.Runnable {
 		}
 	}
 
+	private void _print_help_and_exit(Options options) {
+		HelpFormatter hf = new HelpFormatter();
+		hf.printHelp("/usr/bin/svarog <options>", options);
+		System.exit(0);
+	}
+
 	private void _run(String[] args) {
 		startupDir = System.getProperty("user.dir");
 
-		Options options = new Options();
+		final Options options = new Options();
 		options.addOption("h", "help", false, "display help");
 		options.addOption("R", "reset", false, "reset workspace settings");
 		options.addOption("s", "nosplash", false, "don't display splash screen");
 		options.addOption("m", "moltest", false, "include test method");
 
-		CommandLineParser parser = new GnuParser();
+		for (String arg: args)
+			if (arg.equals("-h") || arg.equals("--help"))
+				_print_help_and_exit(options);
+
 		CommandLine line = null;
 		try {
-			line = parser.parse(options, args);
+			line = new GnuParser().parse(options, args);
 		} catch (ParseException exp) {
 			System.err.println("Parsing failed. Reason: " + exp.getMessage());
 			System.exit(1);
 		}
 
-		if (line.hasOption("help")) {
-			HelpFormatter hf = new HelpFormatter();
-			hf.printHelp("java -jar singnalml.jar <options>", options);
-			System.exit(0);
-		}
+		if (line.hasOption("help"))
+			_print_help_and_exit(options);
 
-		if (line.hasOption("moltest")) {
+		if (line.hasOption("moltest"))
 			molTest = true;
-		}
 
 		Log4jConfigurer.setWorkingDirSystemProperty("signalml.root");
 
