@@ -8,7 +8,7 @@ import javax.swing.table.AbstractTableModel;
 
 import org.apache.log4j.Logger;
 import org.signalml.domain.montage.SourceMontage;
-import org.signalml.method.artifact.ArtifactType;
+import org.signalml.plugin.newartifact.method.ArtifactType;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /** ArtifactExclusionTableModel
