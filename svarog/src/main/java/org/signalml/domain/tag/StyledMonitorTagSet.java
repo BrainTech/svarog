@@ -2,8 +2,6 @@ package org.signalml.domain.tag;
 
 import java.util.SortedSet;
 import java.util.concurrent.Semaphore;
-
-import org.signalml.domain.signal.RoundBufferSampleSource;
 import org.signalml.plugin.export.signal.Tag;
 
 /** StyledTagSet
@@ -15,10 +13,13 @@ public class StyledMonitorTagSet extends StyledTagSet {
 
 	private static final long serialVersionUID = 1L;
 
-	protected double lastSampleTimestamp;
+	/**
+	 * The timestamp of the first visible sample on the left (the 'oldest'
+	 * visible sample).
+	 */
+	protected double firstSampleTimestamp;
 	protected float samplingFrequency;
 	protected Semaphore semaphore;
-	protected RoundBufferSampleSource timestamps_source;
 
 	public StyledMonitorTagSet(float pageSize, int blocksPerPage, float samplingFrequency) {
 		super(pageSize, blocksPerPage);
@@ -27,12 +28,8 @@ public class StyledMonitorTagSet extends StyledTagSet {
 
 	}
 
-	public void setTs(RoundBufferSampleSource ts) {
-		this.timestamps_source = ts;
-	}
-
 	public void newSample(double newestSampleTimestamp) {
-		this.lastSampleTimestamp = newestSampleTimestamp - this.getPageSize();
+		this.firstSampleTimestamp = newestSampleTimestamp - this.getPageSize();
 
 	}
 
@@ -45,32 +42,7 @@ public class StyledMonitorTagSet extends StyledTagSet {
 	}
 
 	public double computePosition(double position) {
-		//return position - this.lastSampleTimestamp;
-
-		double tag_position = position;
-
-		int ts_count = timestamps_source.getSampleCount();
-		double[] timestamps = new double[ts_count];
-		timestamps_source.getSamples(timestamps, 0, ts_count, 0);
-		double startingSample = -1000000.0;
-
-		for (int i = 0; i < ts_count; i++) {
-			if (tag_position < timestamps[i]) {
-				startingSample = i;
-				break;
-			}
-		}
-		return startingSample / samplingFrequency;
-		/*logger.info("###################################################################");
-		logger.info("sampling: "+samplingFrequency);
-		logger.info("ts.count: "+timestamp_source.getSampleCount());
-		logger.info("oldest ts: "+((int) timestamps[0]))
-		logger.info("tag ts: "+ ((int)tag_position));
-		logger.info("tag len: "+tag.getLength());
-		logger.info("similar sample ts number: "+startingSample);
-		logger.info("###################################################################");*/
-
-
+		return position - firstSampleTimestamp;
 	}
 
 	public void addTag(MonitorTag tag) {
