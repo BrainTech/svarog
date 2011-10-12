@@ -15,11 +15,6 @@
 			<outputFileNameMapping>
 				${artifact.artifactId}.${artifact.extension}
 			</outputFileNameMapping>
-			<excludes>
-				<exclude>org.signalml:artifact-mbfj
-				</exclude>
-				<exclude>org.signalml:stager-mbfj</exclude>
-			</excludes>
 		</dependencySet>
 	</dependencySets>
 
