@@ -8,24 +8,34 @@ public class MonitorTag extends Tag {
 	private static final long serialVersionUID = 1L;
 
 	protected StyledMonitorTagSet parent;
+	private double timestamp;
 
-	public MonitorTag(TagStyle style, double position, double length,
+	public MonitorTag(TagStyle style, double timestamp, double length,
 		int channel) {
-		super(style, position, length, channel);
-		// TODO Auto-generated constructor stub
+		super(style, 0, length, channel); //the position argument doesn't realy matter
+		this.timestamp = timestamp;
 	}
 
 	@Override
 	public double getPosition() {
-		return this.parent.computePosition(this.position);
+		return this.parent.computePosition(this.timestamp);
 	}
 
-	public double getRealPosition() {
-		return this.position;
+	@Override
+	public double getTimestamp() {
+		return this.timestamp;
 	}
 
 	public void setParent(StyledMonitorTagSet parent) {
 		this.parent = parent;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null || !(obj instanceof MonitorTag) ) {
+			return false;
+		}
+		return (this.compareTo((Tag) obj) == 0);
 	}
 
 }

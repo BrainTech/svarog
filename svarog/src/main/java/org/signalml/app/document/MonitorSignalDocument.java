@@ -19,7 +19,6 @@ import org.signalml.app.worker.MonitorWorker;
 import org.signalml.app.worker.SignalRecorderWorker;
 import org.signalml.app.worker.TagRecorder;
 import org.signalml.domain.signal.RoundBufferMultichannelSampleSource;
-import org.signalml.domain.signal.RoundBufferSampleSource;
 import org.signalml.domain.signal.SignalChecksum;
 import org.signalml.domain.signal.SignalProcessingChain;
 import org.signalml.domain.tag.StyledMonitorTagSet;
@@ -195,6 +194,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 			} while (!monitorWorker.isFinished());
 			monitorWorker = null;
 		}
+		tagSet.stopTagsRemoving();
 
 		//close document
 		super.closeDocument();

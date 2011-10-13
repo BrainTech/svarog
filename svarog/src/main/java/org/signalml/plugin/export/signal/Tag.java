@@ -182,7 +182,7 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
 	 */
 	public int compareTo(Tag t) {
 
-		double test = position - t.position;
+		double test = this.getTimestamp() - t.getTimestamp();
 		if (test == 0) {
 			test = length - t.length;
 			if (test == 0) {
@@ -278,7 +278,7 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
 	 */
 	@Override
 	public int compareTo(ExportedTag t) {
-		double test = position - t.getPosition();
+		double test = this.getTimestamp() - t.getTimestamp();
 		if (test == 0) {
 			test = length - t.getLength();
 			if (test == 0) {

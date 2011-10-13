@@ -1,7 +1,10 @@
 package org.signalml.domain.tag;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.SortedSet;
 import java.util.concurrent.Semaphore;
+import javax.swing.Timer;
 import org.signalml.plugin.export.signal.Tag;
 
 /** StyledTagSet
@@ -9,7 +12,7 @@ import org.signalml.plugin.export.signal.Tag;
  * 
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class StyledMonitorTagSet extends StyledTagSet {
+public class StyledMonitorTagSet extends StyledTagSet implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -21,16 +24,29 @@ public class StyledMonitorTagSet extends StyledTagSet {
 	protected float samplingFrequency;
 	protected Semaphore semaphore;
 
+	/**
+	 * Number of milliseconds between each call for old tags cleanup action.
+	 */
+	private int oldTagsCleanupTimeInterval = 30000;
+	/**
+	 * The timer calling the old tags cleanup action at a specified intervals
+	 * of time.
+	 */
+	private Timer oldTagsRemoverTimer;
+
 	public StyledMonitorTagSet(float pageSize, int blocksPerPage, float samplingFrequency) {
 		super(pageSize, blocksPerPage);
 		this.samplingFrequency = samplingFrequency;
 		this.semaphore = new Semaphore(1);
 
+		this.oldTagsRemoverTimer = new Timer(oldTagsCleanupTimeInterval, this);
+		oldTagsRemoverTimer.setInitialDelay(oldTagsCleanupTimeInterval);
+		oldTagsRemoverTimer.start();
+
 	}
 
 	public void newSample(double newestSampleTimestamp) {
 		this.firstSampleTimestamp = newestSampleTimestamp - this.getPageSize();
-
 	}
 
 	public SortedSet<Tag> getTagsBetween(double start, double end) {
@@ -60,5 +76,26 @@ public class StyledMonitorTagSet extends StyledTagSet {
 
 	public void unlock() {
 		this.semaphore.release();
+	}
+
+	public void stopTagsRemoving() {
+		oldTagsRemoverTimer.stop();
+	}
+
+	/**
+	 * Action performed when the oldTagsRemoverTimer decides to perform an
+	 * action of deleting old tags.
+	 * @param e
+	 */
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		//search through all tags to find those that are not visible anymore
+		Object[] tagArray = getTags().toArray();
+		for (Object o: tagArray) {
+			Tag tag = (MonitorTag) o;
+			if (tag.getPosition() + tag.getLength() < 0)
+				this.removeTag(tag);
+		}
+		logger.debug("Old tags removing action performed - number of tags after removal: " + getTags().size());
 	}
 }

@@ -32,9 +32,18 @@ public interface ExportedSignalSelection {
 
 	/**
 	 *
-	 * @return position where selection starts
+	 * @return position where selection starts on the current signal
 	 */
 	double getPosition();
+
+	/**
+	 *
+	 * @return the timestamp of the tag. For monitor tags it is the timestamp
+	 * of the tag, for offline signal selections - equal to getPosition().
+	 * For future purposes also offline signal selections may have their
+	 * timestamp saved in the tag file.
+	 */
+	double getTimestamp();
 
 	/**
 	 *
