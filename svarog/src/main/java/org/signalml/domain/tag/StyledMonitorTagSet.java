@@ -27,7 +27,7 @@ public class StyledMonitorTagSet extends StyledTagSet implements ActionListener 
 	/**
 	 * Number of milliseconds between each call for old tags cleanup action.
 	 */
-	private int oldTagsCleanupTimeInterval = 30000;
+	private int oldTagsCleanupTimeInterval = 3000;
 	/**
 	 * The timer calling the old tags cleanup action at a specified intervals
 	 * of time.
@@ -95,6 +95,8 @@ public class StyledMonitorTagSet extends StyledTagSet implements ActionListener 
 			Tag tag = (MonitorTag) o;
 			if (tag.getPosition() + tag.getLength() < 0)
 				this.removeTag(tag);
+			else
+				break;
 		}
 		logger.debug("Old tags removing action performed - number of tags after removal: " + getTags().size());
 	}
