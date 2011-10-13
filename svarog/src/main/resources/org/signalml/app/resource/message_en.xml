@@ -1052,6 +1052,7 @@
 	<entry key="tagStylePalette.description">Description</entry>
 	<entry key="tagStylePalette.key">Key</entry>
 	<entry key="tagStylePalette.marker">Marker style</entry>
+	<entry key="tagStylePalette.visibility">Visible</entry>
 	<entry key="tagStylePalette.previewTitle">Preview</entry>
 	<entry key="tagStylePalette.apply">Apply changes</entry>
 
@@ -1634,6 +1635,7 @@
 	<entry key="property.tagStyle.outlineDash">Outline dash</entry>
 	<entry key="property.tagStyle.keyStroke">Shortcut key</entry>
 	<entry key="property.tagStyle.marker">Marker style</entry>
+	<entry key="property.tagStyle.visibility">Visible</entry>
 
 	<entry key="property.tag.style">Style</entry>
 	<entry key="property.tag.position">Position</entry>

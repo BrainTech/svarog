@@ -2042,6 +2042,8 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			// use a 1 s margin to capture any marker tags
 			tagSet = tagDocument.getTagSet().getTagsBetween(time-1, time+1);
 			for (Tag tag : tagSet) {
+				if (!tag.getStyle().isVisible())
+					continue;
 
 				if (tag.getStyle().getType() == SignalSelectionType.BLOCK) {
 					if (time >= tag.getPosition() && time < (tag.getPosition() + tag.getLength())) {

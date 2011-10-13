@@ -144,6 +144,9 @@ public class TagRenderer extends JComponent {
 	@Override
 	protected void paintComponent(Graphics gOrig) {
 
+		if (!tagStyle.isVisible())
+			return;
+
 		Graphics2D g = (Graphics2D) gOrig;
 		Composite origComp = g.getComposite();
 

@@ -230,6 +230,7 @@ public class StyledTagSetConverter implements Converter {
 		writer.addAttribute("outlineDash", floatArrayConverter.toString(style.getOutlineDash()));
 		writer.addAttribute("keyShortcut", keyStrokeConverter.toString(style.getKeyStroke()));
 		writer.addAttribute("marker", booleanConverter.toString(style.isMarker()));
+		writer.addAttribute("visible", booleanConverter.toString(style.isVisible()));
 
 		if (style.getAttributesDefinitions().getSize() > 0) {
 			writer.startNode("attributes");
@@ -464,6 +465,11 @@ public class StyledTagSetConverter implements Converter {
 		if (markerAttr != null && !markerAttr.isEmpty()) {
 			marker = ((Boolean) booleanConverter.fromString(markerAttr)).booleanValue();
 		}
+		boolean visible = true;
+		String visibleAttr = reader.getAttribute("visible");
+		if (visibleAttr != null && !visibleAttr.isEmpty()) {
+			visible = ((Boolean) booleanConverter.fromString(visibleAttr)).booleanValue();
+		}
 
 		if (name == null || fillColor == null || outlineColor == null) {
 			throw new NullPointerException("Bad tag file format");
@@ -478,12 +484,12 @@ public class StyledTagSetConverter implements Converter {
 					String code = reader.getAttribute("code");
 					String displayName = reader.getAttribute("displayName");
 					String visibleStr = reader.getAttribute("visible");
-					boolean visible = true;
+					boolean attributeVisible = true;
 
 					if ("false".equals(visibleStr))
-						visible = false;
+						attributeVisible = false;
 
-					TagStyleAttributeDefinition attributeDefinition = new TagStyleAttributeDefinition(code, displayName, visible);
+					TagStyleAttributeDefinition attributeDefinition = new TagStyleAttributeDefinition(code, displayName, attributeVisible);
 					style.getAttributesDefinitions().addAttributeDefinition(attributeDefinition);
 				}
 				reader.moveUp();
@@ -491,7 +497,7 @@ public class StyledTagSetConverter implements Converter {
 			reader.moveUp();
 		}
 
-		style.setParameters(name, description, fillColor, outlineColor, outlineWidth, outlineDash, keyStroke, marker);
+		style.setParameters(name, description, fillColor, outlineColor, outlineWidth, outlineDash, keyStroke, marker, visible);
 
 	}
 

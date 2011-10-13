@@ -939,6 +939,11 @@ public class StyledTagSet implements Serializable, Preset {
 		if (!verifyTag(tag)) {
 			throw new SanityCheckException("Tag not compatible");
 		}
+
+		TagStyle style = this.getStyle(tag.getStyle().getName());
+		if (style != null)
+			tag.setStyle(style);
+
 		tags.add(tag);
 		invalidateTagCache(tag.getStyle().getType());
 		if (maxTagLength < tag.getLength()) {

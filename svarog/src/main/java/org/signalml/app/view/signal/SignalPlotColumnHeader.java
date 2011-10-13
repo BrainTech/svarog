@@ -557,6 +557,8 @@ public class SignalPlotColumnHeader extends JComponent {
 
 			tagSet = tagDocument.getTagSet().getTagsBetween(time, time);
 			for (Tag tag : tagSet) {
+				if (!tag.getStyle().isVisible())
+					continue;
 				if (tag.getStyle().getType() == SignalSelectionType.PAGE) {
 					if (time >= tag.getPosition() && time < tag.getEndPosition()) {
 						tagBounds = getPixelPageTagBounds(tag, tagCnt, cnt, comparing, tempBounds);
