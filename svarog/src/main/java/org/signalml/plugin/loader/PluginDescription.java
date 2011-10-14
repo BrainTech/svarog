@@ -43,6 +43,11 @@ public class PluginDescription extends PluginState{
 	private static final Logger logger = Logger.getLogger(PluginDescription.class);
 
 	/**
+	 * File this description has been loaded from.
+	 */
+	private File descriptionFile;
+	
+	/**
 	 * the string with the full name of the class,
 	 * that will be loaded to register the plug-in
 	 */
@@ -96,10 +101,12 @@ public class PluginDescription extends PluginState{
 	public PluginDescription(String fileName) throws ParserConfigurationException,
 							 SAXException, IOException, ParseException {
 		logger.info("loading description from " + fileName);
+        File descFile = new File(fileName);
+        setDescriptionFile(descFile);
 
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-		Document document = documentBuilder.parse(new File(fileName));
+		Document document = documentBuilder.parse(descFile);
 		Element element = document.getDocumentElement();
 		element.normalize();
 		NodeList nodeList = element.getChildNodes();
@@ -239,6 +246,8 @@ public class PluginDescription extends PluginState{
 
 	@Override
 	public String toString(){
+	    // TODO where is this used? can you modify this string
+	    // to include description file name?
 		return name.concat(" v").concat(versionToString());
 	}
 
@@ -269,4 +278,15 @@ public class PluginDescription extends PluginState{
 		return false;
 	}
 
+	private void setDescriptionFile(File f) {
+	    this.descriptionFile = f;
+	}
+	
+	/**
+	 * Returns the file this description has been loaded from. May be null.
+	 * @return file this description has been loaded from (null if none)
+	 */
+	public File getDescriptionFile() {
+	    return descriptionFile;
+	}
 }

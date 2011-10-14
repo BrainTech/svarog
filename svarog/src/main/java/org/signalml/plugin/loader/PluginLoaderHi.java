@@ -202,9 +202,15 @@ public class PluginLoaderHi {
 			PluginDescription descr = readXml(directory
 			                                  + File.separator + filename);
 			if (descr != null) {
-				descriptions.add(descr);
-				tmpDescriptions.add(descr);
-				descriptionsByName.put(descr.getName(), descr);
+			    String pluginName = descr.getName();
+			    if (descriptionsByName.containsKey(pluginName)) {
+			        PluginDescription pd = descriptionsByName.get(pluginName);
+			        logger.warn("Duplicate plugin: (" + pd + ") and (" + descr + "). Skipping the latter.");
+			    } else {
+    				descriptions.add(descr);
+    				tmpDescriptions.add(descr);
+    				descriptionsByName.put(pluginName, descr);
+			    }
 			}
 		}
 
