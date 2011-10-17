@@ -41,5 +41,6 @@ Depends: ${misc:Depends},
 	libprotobuf-java (>= 2.4),
 	libslf4j-java,
 	libspring-core-java,
-	libasm-java
+	libasm-java,
+	jarwrapper
 Description: Svarog
