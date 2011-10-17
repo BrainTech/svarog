@@ -318,4 +318,12 @@ public class SignalSelection implements Serializable, ExportedSignalSelection {
 			return true;
 		}
 
+	@Override
+	public double getTimestamp() {
+		//now - for offline signal selections, their timestamp is
+		//equal to their position - this may be changed in the
+		//future
+		return getPosition();
+	}
+
 }

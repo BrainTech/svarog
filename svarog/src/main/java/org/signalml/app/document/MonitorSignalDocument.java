@@ -19,7 +19,6 @@ import org.signalml.app.worker.MonitorWorker;
 import org.signalml.app.worker.SignalRecorderWorker;
 import org.signalml.app.worker.TagRecorder;
 import org.signalml.domain.signal.RoundBufferMultichannelSampleSource;
-import org.signalml.domain.signal.RoundBufferSampleSource;
 import org.signalml.domain.signal.SignalChecksum;
 import org.signalml.domain.signal.SignalProcessingChain;
 import org.signalml.domain.tag.StyledMonitorTagSet;
@@ -57,12 +56,6 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	private MonitorWorker monitorWorker;
 
 	/**
-	 * This {@link RoundBufferMultichannelSampleSource} stores the timestamps
-	 * of each sample in the sample sample source
-	 */
-	private RoundBufferSampleSource timestampsSource;
-
-	/**
 	 * This worker is responsible for recording the samples to a file.
 	 */
 	private SignalRecorderWorker signalRecorderWorker = null;
@@ -90,15 +83,10 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		double ps = monitorOptions.getPageSize();
 		int sampleCount = (int) Math.ceil(ps * freq);
 		sampleSource = new RoundBufferMultichannelSampleSource(monitorOptions.getSelectedChannelList().length, sampleCount);
-		timestampsSource = new RoundBufferSampleSource(sampleCount);
 		((RoundBufferMultichannelSampleSource) sampleSource).setLabels(monitorOptions.getSelectedChannelsLabels());
 		((RoundBufferMultichannelSampleSource) sampleSource).setDocumentView(getDocumentView());
 		((RoundBufferMultichannelSampleSource) sampleSource).setSamplingFrequency(freq);
 
-	}
-
-	public RoundBufferSampleSource getTimestampSource() {
-		return timestampsSource;
 	}
 
 	public void setName(String name) {
@@ -175,7 +163,11 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 
 		TagDocument tagDoc = new TagDocument(tagSet);
 		tagDoc.setParent(this);
-		monitorWorker = new MonitorWorker(monitorOptions.getJmxClient(), monitorOptions, (RoundBufferMultichannelSampleSource) sampleSource, timestampsSource, tagSet);
+		monitorWorker = new MonitorWorker(monitorOptions.getJmxClient(), monitorOptions, (RoundBufferMultichannelSampleSource) sampleSource, tagSet);
+
+		if (monitorOptions.getMonitorRecordingDescriptor().isRecordingEnabled())
+			startMonitorRecording();
+
 		monitorWorker.execute();
 		logger.info("Monitor executed.");
 
@@ -202,6 +194,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 			} while (!monitorWorker.isFinished());
 			monitorWorker = null;
 		}
+		tagSet.stopTagsRemoving();
 
 		//close document
 		super.closeDocument();

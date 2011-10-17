@@ -208,7 +208,7 @@ public class TagRecorder {
 
 		for (MonitorTag monitorTag: tagList) {
 			temporaryTag = monitorTag.clone();
-			temporaryTag.setPosition(monitorTag.getRealPosition() - getStartRecordingTimestamp());
+			temporaryTag.setPosition(monitorTag.getTimestamp() - getStartRecordingTimestamp());
 			styledTagSet.addTag(temporaryTag);
 		}
 

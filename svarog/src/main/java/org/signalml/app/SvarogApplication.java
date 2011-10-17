@@ -15,7 +15,6 @@ import java.util.regex.Matcher;
 import javax.swing.SwingUtilities;
 
 import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.GnuParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;

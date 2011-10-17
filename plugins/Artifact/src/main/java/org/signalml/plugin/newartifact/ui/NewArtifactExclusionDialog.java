@@ -12,7 +12,7 @@ import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.export.view.AbstractDialog;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.method.artifact.ArtifactType;
+import org.signalml.plugin.newartifact.method.ArtifactType;
 import org.signalml.plugin.newartifact.data.NewArtifactExclusionDescriptor;
 import org.springframework.context.support.MessageSourceAccessor;
 

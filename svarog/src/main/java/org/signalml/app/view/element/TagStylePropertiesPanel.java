@@ -131,6 +131,11 @@ public class TagStylePropertiesPanel extends JPanel {
 	 * marker style of the regular one
 	 */
 	private JCheckBox markerCheckBox;
+	/**
+	 * the check-box which tells if the {@link TagStyle style} should be
+	 * visible (whether it should be rendered in the signal view).
+	 */
+	private JCheckBox visibilityCheckBox;
 
 	/**
 	 * the panel which allows to select the outline of a {@link
@@ -475,6 +480,7 @@ public class TagStylePropertiesPanel extends JPanel {
 			JLabel descriptionLabel = new JLabel(messageSource.getMessage("tagStylePalette.description"));
 			JLabel keyLabel = new JLabel(messageSource.getMessage("tagStylePalette.key"));
 			JLabel markerLabel = new JLabel(messageSource.getMessage("tagStylePalette.marker"));
+			JLabel visibilityLabel = new JLabel(messageSource.getMessage("tagStylePalette.visibility"));
 
 			JPanel keyPanel = new JPanel();
 			keyPanel.setLayout(new BoxLayout(keyPanel, BoxLayout.X_AXIS));
@@ -490,6 +496,7 @@ public class TagStylePropertiesPanel extends JPanel {
 			        .addComponent(descriptionLabel)
 			        .addComponent(keyLabel)
 			        .addComponent(markerLabel)
+				.addComponent(visibilityLabel)
 			);
 
 			hGroup.addGroup(
@@ -498,6 +505,7 @@ public class TagStylePropertiesPanel extends JPanel {
 			        .addComponent(getDescriptionScrollPane())
 			        .addComponent(keyPanel)
 			        .addComponent(getMarkerCheckBox())
+				.addComponent(getVisiblityCheckbox())
 			);
 
 			layout.setHorizontalGroup(hGroup);
@@ -527,8 +535,13 @@ public class TagStylePropertiesPanel extends JPanel {
 					.addComponent(markerLabel)
 					.addComponent(getMarkerCheckBox())
 				);
+			vGroup.addGroup(
+					layout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(visibilityLabel)
+					.addComponent(getVisiblityCheckbox())
+				);
 
-			layout.setVerticalGroup(vGroup);													
+			layout.setVerticalGroup(vGroup);
 
 		}
 		return propertiesPanel;
@@ -812,6 +825,31 @@ public class TagStylePropertiesPanel extends JPanel {
 	}
 
 	/**
+	 * Returns the check-box which tells whether this tag style should
+	 * be rendered in the signal view.
+	 * @return the check-box which tells if this tag style should be visible
+	 */
+	public JCheckBox getVisiblityCheckbox() {
+		if (visibilityCheckBox == null) {
+			visibilityCheckBox = new JCheckBox();
+
+			visibilityCheckBox.addItemListener(new ItemListener() {
+
+				@Override
+				public void itemStateChanged(ItemEvent e) {
+					if (currentStyle != null) {
+						currentStyle.setVisible(visibilityCheckBox.isSelected());
+						getTagRenderer().repaint();
+						setChanged(true);
+					}
+				}
+
+			});
+		}
+		return visibilityCheckBox;
+	}
+
+	/**
 	 * Returns the {@link TagRenderer tag renderer}.
 	 * If the renderer doesn't exist it is created.
 	 * @return the tag renderer.
@@ -906,6 +944,9 @@ public class TagStylePropertiesPanel extends JPanel {
 				markerCheckBox.setEnabled(false);
 			}
 
+			getVisiblityCheckbox().setEnabled(true);
+			getVisiblityCheckbox().setSelected(currentStyle.isVisible());
+
 			getTagRenderer().setTagStyle(currentStyle);
 
 			enabled = true;
@@ -925,6 +966,7 @@ public class TagStylePropertiesPanel extends JPanel {
 			JCheckBox markerCheckBox = getMarkerCheckBox();
 			markerCheckBox.setSelected(false);
 			markerCheckBox.setEnabled(false);
+			getVisiblityCheckbox().setEnabled(false);
 
 			enabled = false;
 
@@ -996,6 +1038,7 @@ public class TagStylePropertiesPanel extends JPanel {
 			if (currentStyle.getType() == SignalSelectionType.CHANNEL) {
 				currentStyle.setMarker(getMarkerCheckBox().isSelected());
 			}
+			currentStyle.setVisible(getVisiblityCheckbox().isSelected());
 			getTagAttributesDefinitionsEditPanel().fillModelFromPanel(currentStyle);
 
 			setChanged(false);

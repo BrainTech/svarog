@@ -76,6 +76,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>		
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
 
+		<protobuf.protoc>protoc</protobuf.protoc>
 		<protobuf.source_dir>${project.basedir}/src/main/protobuf</protobuf.source_dir>
 		<protobuf.proto_file>variables.proto</protobuf.proto_file>
 		<protobuf.rules_file>multiplexer.rules</protobuf.rules_file>
@@ -191,7 +192,7 @@
 						<configuration>
 							<target>
 								<mkdir dir="${protobuf.generated_sources_dir}"/>
-								<exec executable="protoc" failonerror="true">
+								<exec executable="${protobuf.protoc}" failonerror="true">
 									<arg value="-I" />
 									<arg value="${protobuf.source_dir}" />
 									<arg value="--java_out=${protobuf.generated_sources_dir}"/>

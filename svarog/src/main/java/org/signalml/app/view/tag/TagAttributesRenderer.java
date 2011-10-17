@@ -75,7 +75,7 @@ public class TagAttributesRenderer extends JComponent {
 	@Override
 	protected void paintComponent(Graphics gOrig) {
 
-		if (tag == null || !doesTagHaveVisibleAttributes(tag))
+		if (tag == null || !tag.getStyle().isVisible() || !doesTagHaveVisibleAttributes(tag))
 			return;
 
 		Graphics2D g = (Graphics2D) gOrig;

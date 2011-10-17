@@ -1,9 +1,10 @@
 package org.signalml.domain.tag;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.SortedSet;
 import java.util.concurrent.Semaphore;
-
-import org.signalml.domain.signal.RoundBufferSampleSource;
+import javax.swing.Timer;
 import org.signalml.plugin.export.signal.Tag;
 
 /** StyledTagSet
@@ -11,29 +12,41 @@ import org.signalml.plugin.export.signal.Tag;
  * 
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class StyledMonitorTagSet extends StyledTagSet {
+public class StyledMonitorTagSet extends StyledTagSet implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 
-	protected double lastSampleTimestamp;
+	/**
+	 * The timestamp of the first visible sample on the left (the 'oldest'
+	 * visible sample).
+	 */
+	protected double firstSampleTimestamp;
 	protected float samplingFrequency;
 	protected Semaphore semaphore;
-	protected RoundBufferSampleSource timestamps_source;
+
+	/**
+	 * Number of milliseconds between each call for old tags cleanup action.
+	 */
+	private int oldTagsCleanupTimeInterval = 3000;
+	/**
+	 * The timer calling the old tags cleanup action at a specified intervals
+	 * of time.
+	 */
+	private Timer oldTagsRemoverTimer;
 
 	public StyledMonitorTagSet(float pageSize, int blocksPerPage, float samplingFrequency) {
 		super(pageSize, blocksPerPage);
 		this.samplingFrequency = samplingFrequency;
 		this.semaphore = new Semaphore(1);
 
-	}
+		this.oldTagsRemoverTimer = new Timer(oldTagsCleanupTimeInterval, this);
+		oldTagsRemoverTimer.setInitialDelay(oldTagsCleanupTimeInterval);
+		oldTagsRemoverTimer.start();
 
-	public void setTs(RoundBufferSampleSource ts) {
-		this.timestamps_source = ts;
 	}
 
 	public void newSample(double newestSampleTimestamp) {
-		this.lastSampleTimestamp = newestSampleTimestamp - this.getPageSize();
-
+		this.firstSampleTimestamp = newestSampleTimestamp - this.getPageSize();
 	}
 
 	public SortedSet<Tag> getTagsBetween(double start, double end) {
@@ -45,32 +58,7 @@ public class StyledMonitorTagSet extends StyledTagSet {
 	}
 
 	public double computePosition(double position) {
-		//return position - this.lastSampleTimestamp;
-
-		double tag_position = position;
-
-		int ts_count = timestamps_source.getSampleCount();
-		double[] timestamps = new double[ts_count];
-		timestamps_source.getSamples(timestamps, 0, ts_count, 0);
-		double startingSample = -1000000.0;
-
-		for (int i = 0; i < ts_count; i++) {
-			if (tag_position < timestamps[i]) {
-				startingSample = i;
-				break;
-			}
-		}
-		return startingSample / samplingFrequency;
-		/*logger.info("###################################################################");
-		logger.info("sampling: "+samplingFrequency);
-		logger.info("ts.count: "+timestamp_source.getSampleCount());
-		logger.info("oldest ts: "+((int) timestamps[0]))
-		logger.info("tag ts: "+ ((int)tag_position));
-		logger.info("tag len: "+tag.getLength());
-		logger.info("similar sample ts number: "+startingSample);
-		logger.info("###################################################################");*/
-
-
+		return position - firstSampleTimestamp;
 	}
 
 	public void addTag(MonitorTag tag) {
@@ -88,5 +76,28 @@ public class StyledMonitorTagSet extends StyledTagSet {
 
 	public void unlock() {
 		this.semaphore.release();
+	}
+
+	public void stopTagsRemoving() {
+		oldTagsRemoverTimer.stop();
+	}
+
+	/**
+	 * Action performed when the oldTagsRemoverTimer decides to perform an
+	 * action of deleting old tags.
+	 * @param e
+	 */
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		//search through all tags to find those that are not visible anymore
+		Object[] tagArray = getTags().toArray();
+		for (Object o: tagArray) {
+			Tag tag = (MonitorTag) o;
+			if (tag.getPosition() + tag.getLength() < 0)
+				this.removeTag(tag);
+			else
+				break;
+		}
+		logger.debug("Old tags removing action performed - number of tags after removal: " + getTags().size());
 	}
 }

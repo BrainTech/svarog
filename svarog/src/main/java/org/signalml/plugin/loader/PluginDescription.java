@@ -5,7 +5,10 @@ package org.signalml.plugin.loader;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -13,7 +16,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.cli.ParseException;
 import org.apache.log4j.Logger;
-import org.signalml.plugin.export.Plugin;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -43,6 +45,11 @@ public class PluginDescription extends PluginState{
 	private static final Logger logger = Logger.getLogger(PluginDescription.class);
 
 	/**
+	 * File this description has been loaded from.
+	 */
+	private File descriptionFile;
+	
+	/**
 	 * the string with the full name of the class,
 	 * that will be loaded to register the plug-in
 	 */
@@ -51,19 +58,26 @@ public class PluginDescription extends PluginState{
 	 * the name of the jar file with the plug-in
 	 */
 	private String jarFile =  null;
+	
+	/**
+	 * {@link #jarFile} URL.
+	 */
+	private URL jarFileURL;
 	/**
 	 * the name of the package that is exported by the plug-in
 	 */
 	private String exportPackage;
-	/**
-	 * the loaded {@link #startingClass starting class}
-	 */
-	private Plugin plugin = null;
+
 	/**
 	 * the list of {@link PluginDependency dependencies}
 	 * of the plug-in
 	 */
 	private ArrayList<PluginDependency> dependencies = new ArrayList<PluginDependency>();
+	
+	/**
+	 * Plugin descriptor. This helps with dependency management during loading.
+	 */
+	private PluginHead pluginHead;
 
 	/**
 	 * Functions which checks if a variable is null and (if it is) adds its
@@ -96,10 +110,12 @@ public class PluginDescription extends PluginState{
 	public PluginDescription(String fileName) throws ParserConfigurationException,
 							 SAXException, IOException, ParseException {
 		logger.info("loading description from " + fileName);
+        File descFile = new File(fileName);
+        setDescriptionFile(descFile);
 
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-		Document document = documentBuilder.parse(new File(fileName));
+		Document document = documentBuilder.parse(descFile);
 		Element element = document.getDocumentElement();
 		element.normalize();
 		NodeList nodeList = element.getChildNodes();
@@ -191,20 +207,6 @@ public class PluginDescription extends PluginState{
 	}
 
 	/**
-	 * @param plugin the loaded plug-in
-	 */
-	public void setPlugin(Plugin plugin) {
-		this.plugin = plugin;
-	}
-
-	/**
-	 * @return the loaded plug-in
-	 */
-	public Plugin getPlugin() {
-		return plugin;
-	}
-
-	/**
 	 * Tells if all dependencies of the described plug-in are
 	 * satisfied by any of the plug-ins on the list
 	 * @param descriptions the list of all descriptions of plug-ins
@@ -239,6 +241,8 @@ public class PluginDescription extends PluginState{
 
 	@Override
 	public String toString(){
+	    // TODO where is this used? can you modify this string
+	    // to include description file name?
 		return name.concat(" v").concat(versionToString());
 	}
 
@@ -269,4 +273,38 @@ public class PluginDescription extends PluginState{
 		return false;
 	}
 
+	private void setDescriptionFile(File f) {
+	    this.descriptionFile = f;
+	}
+	
+	protected void setJarFileURL(URL u) {
+	    this.jarFileURL = u;
+	}
+	
+	/**
+	 * Returns the file this description has been loaded from. May be null.
+	 * @return file this description has been loaded from (null if none)
+	 */
+	public File getDescriptionFile() {
+	    return descriptionFile;
+	}
+	
+	/**
+	 * Returns the URL of this plugin JAR file.
+	 * @return URL of this plugin JAR file (or null)
+	 */
+	public URL getJarFileURL() {
+	    return jarFileURL;
+	}
+	
+	protected List<PluginDependency> getDependencies() {
+	    return Collections.unmodifiableList(dependencies);
+	}
+	
+	protected PluginHead getHead() {
+	    return pluginHead;
+	}
+	protected void setHead(PluginHead h) {
+	    this.pluginHead = h;
+	}
 }

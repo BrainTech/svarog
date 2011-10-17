@@ -834,9 +834,6 @@ public class DocumentFlowIntegrator {
 
 		actionFocusManager.setActiveDocument( monitorSignalDocument);
 
-		if(monitorOptions.getMonitorRecordingDescriptor().isRecordingEnabled())
-			monitorSignalDocument.startMonitorRecording();
-
 		((SignalView) monitorSignalDocument.getDocumentView()).setSnapToPageMode(true);
 		logger.debug("monitor openned");
 		

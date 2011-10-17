@@ -106,6 +106,12 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 	 */
 	private TagStyleAttributes attributesDefinitions = new TagStyleAttributes();
 
+	/**
+	 * Defines if this tag style should be visible - if so, it will be
+	 * rendered in the signal view.
+	 */
+	private boolean visible = true;
+
         /**
          * Constructor. Creates a style of a {@link Tag tagged selection}
          * for a selection of a given {@link SignalSelectionType type}.
@@ -130,6 +136,7 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 		this.keyStroke = style.keyStroke;
 		this.marker = style.marker;
 		this.attributesDefinitions = style.attributesDefinitions;
+		this.visible = style.visible;
 	}
 
 	/**
@@ -208,7 +215,7 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
          * of a selection of this style
          * @param marker true if the selection is a marker, false otherwise
          */
-	public void setParameters(String name, String description, Color fillColor, Color outlineColor, float outlineWidth, float[] outlineDash, KeyStroke keyStroke, boolean marker) {
+	public void setParameters(String name, String description, Color fillColor, Color outlineColor, float outlineWidth, float[] outlineDash, KeyStroke keyStroke, boolean marker, boolean visible) {
 		this.name = name;
 		this.description = description;
 		this.fillColor = fillColor;
@@ -217,6 +224,7 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 		this.outlineDash = outlineDash;
 		this.keyStroke = keyStroke;
 		this.marker = marker;
+		this.visible = visible;
 
 		outlineStroke = null;
 	}
@@ -235,6 +243,7 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 		this.keyStroke = style.keyStroke;
 		this.marker = style.marker;
 		this.attributesDefinitions = style.attributesDefinitions;
+		this.visible = style.visible;
 
 		outlineStroke = null;
 	}
@@ -474,6 +483,7 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 		list.add(new LabelledPropertyDescriptor("property.tagStyle.outlineWidth", "outlineWidth", TagStyle.class));
 		list.add(new LabelledPropertyDescriptor("property.tagStyle.outlineDash", "outlineDash", TagStyle.class));
 		list.add(new LabelledPropertyDescriptor("property.tagStyle.keyStroke", "keyStroke", TagStyle.class));
+		list.add(new LabelledPropertyDescriptor("property.tagStyle.visibility", "visibility", TagStyle.class));
 
 		if (getType() == SignalSelectionType.CHANNEL) {
 
@@ -533,6 +543,24 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 	 */
 	public void setAttributesDefinitions(TagStyleAttributes attributes) {
 		this.attributesDefinitions = attributes;
+	}
+
+	/**
+	 * Sets the tag style visibility in the signal view.
+	 * @param visible determines if the tags described by this tag style
+	 * should be rendered in the signal view.
+	 */
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
+
+	/**
+	 * Returns if tags having this tag style should be visible or not.
+	 * @return true if this tags described by this tag style should
+	 * be rendered in the signal view, false otherwise.
+	 */
+	public boolean isVisible() {
+		return visible;
 	}
 
 }
