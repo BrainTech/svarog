@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eegSystems>
+  <presets>
+    <eegSystem>
+      <name>EEG 10_20</name>
+      <electrodes>
+        <eegElectrode>
+          <label>Fpz</label>
+          <polarPosition>
+            <theta>0.1</theta>
+            <radius>0.4</radius>
+            <asimuth>0.6</asimuth>
+          </polarPosition>
+        </eegElectrode>
+        <eegElectrode>
+          <label>A1</label>
+          <polarPosition>
+            <theta>0.44</theta>
+            <radius>0.22</radius>
+            <asimuth>0.34</asimuth>
+          </polarPosition>
+        </eegElectrode>
+      </electrodes>
+    </eegSystem>
+    <eegSystem>
+      <name>EEG 10_10</name>
+      <electrodes>
+        <eegElectrode>
+          <label>Fpz</label>
+          <polarPosition>
+            <theta>0.1</theta>
+            <radius>0.4</radius>
+            <asimuth>0.6</asimuth>
+          </polarPosition>
+        </eegElectrode>
+        <eegElectrode>
+          <label>A1</label>
+          <polarPosition>
+            <theta>0.44</theta>
+            <radius>0.22</radius>
+            <asimuth>0.34</asimuth>
+          </polarPosition>
+        </eegElectrode>
+      </electrodes>
+    </eegSystem>
+  </presets>
+</eegSystems>
