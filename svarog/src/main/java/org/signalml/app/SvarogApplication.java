@@ -1002,6 +1002,8 @@ public class SvarogApplication implements java.lang.Runnable {
 		elementManager.setTimeDomainSampleFilterPresetManager(timeDomainSampleFilterPresetManager);
 		elementManager.setPredefinedTimeDomainFiltersPresetManager(predefinedTimeDomainSampleFilterPresetManager);
 		elementManager.setStyledTagSetPresetManager(styledTagSetPresetManager);
+		elementManager.setChannelFunctionsPresetManager(channelFunctionsPresetManager);
+		elementManager.setEegSystemsPresetManager(eegSystemsPresetManager);
 
 		elementManager.setMp5ExecutorManager(mp5ExecutorManager);
 		elementManager.setPreferences(preferences);

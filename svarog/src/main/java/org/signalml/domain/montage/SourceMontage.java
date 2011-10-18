@@ -22,6 +22,7 @@ import org.signalml.exception.SanityCheckException;
 import org.signalml.util.Util;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import org.signalml.domain.montage.system.EegSystem;
 
 /**
  * This class represents a source montage.
@@ -42,7 +43,10 @@ public class SourceMontage {
          * a {@link SignalType type} of a signal for this SourceMontage
          */
 	protected SignalType signalType;
+	
+	private transient EegSystem eegSystem;
 
+	private String eegSystemName;
 
         /**
          * a list of SourceChannels in this SourceMontage
@@ -184,6 +188,8 @@ public class SourceMontage {
 	protected void copyFrom(SourceMontage montage) {
 		setChanged(montage.changed);
 		signalType = montage.signalType;
+		setEegSystem(montage.eegSystem);
+
 		sourceChannels = new ArrayList<SourceChannel>(montage.sourceChannels.size());
 		HashMap<String, SourceChannel> map = getSourceChannelsByLabel();
 		map.clear();
@@ -262,6 +268,16 @@ public class SourceMontage {
          */
 	public SignalType getSignalType() {
 		return signalType;
+	}
+
+	public EegSystem getEegSystem() {
+		return eegSystem;
+	}
+
+	public void setEegSystem(EegSystem eegSystem) {
+		this.eegSystem = eegSystem;
+		if (eegSystem != null)
+			this.eegSystemName = eegSystem.getName();
 	}
 
         /**

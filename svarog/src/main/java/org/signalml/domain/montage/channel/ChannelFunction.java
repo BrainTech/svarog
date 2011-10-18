@@ -59,4 +59,9 @@ public class ChannelFunction implements Preset {
 		this.name = name;
 	}
 
+	@Override
+	public String toString() {
+		return getName();
+	}
+
 }
