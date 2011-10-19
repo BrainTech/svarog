@@ -8,6 +8,7 @@ import org.signalml.plugin.export.PluginAuth;
 import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.change.SvarogAccessChangeSupport;
 import org.signalml.plugin.export.config.SvarogAccessConfig;
+import org.signalml.plugin.export.i18n.SvarogAccessI18n;
 import org.signalml.plugin.export.method.SvarogAccessMethod;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
@@ -25,7 +26,7 @@ import org.springframework.context.support.MessageSourceAccessor;
  * to {@link ChangeSupportImpl change support}. 
  * 
  * @author Marcin Szumski
- * @author Stanislaw Findeisen
+ * @author Stanislaw Findeisen (Eisenbits)
  */
 public class PluginAccessClass implements SvarogAccess {
 	
@@ -40,6 +41,8 @@ public class PluginAccessClass implements SvarogAccess {
 	 * the manager of Svarog elements
 	 */
 	private ViewerElementManager manager;
+	
+	private SvarogAccessI18nImpl i18nAccessImpl;
 	
 	/**
 	 * access to GUI features of Svarog
@@ -70,6 +73,7 @@ public class PluginAccessClass implements SvarogAccess {
 	 * Constructor. Creates child accesses.
 	 */
 	private PluginAccessClass(){
+	    i18nAccessImpl = new SvarogAccessI18nImpl(this);
 		guiAccess = new GUIAccessImpl(this);
 		methodAccessImpl = new MethodAccessImpl(this);
 		configAccessImpl = new ConfigAccessImpl(this);
@@ -93,6 +97,10 @@ public class PluginAccessClass implements SvarogAccess {
 		return sharedInstance;
 	}
 	
+	/**
+	 * Adds given plugin to {@link #pluginMap}.
+	 * @param head plugin to add
+	 */
 	public synchronized void addPlugin(PluginHead head) {
 	    PluginAuth auth = head.getPluginAuth();
 	    if (pluginMap.containsKey(auth)) {
@@ -100,6 +108,19 @@ public class PluginAccessClass implements SvarogAccess {
 	    }
 	    pluginMap.put(auth, head);
 	    logger.debug("addPlugin: " + auth + " --> " + head);
+	}
+	
+    /**
+     * Looks up {@link #pluginMap} for the given plugin based on its key.
+     * @param auth plugin key
+     * @return the plugin head found
+     * @throws IllegalArgumentException if there is no mapping for this key
+     */
+	public synchronized PluginHead getPluginHead(PluginAuth auth) {
+	    PluginHead head = pluginMap.get(auth);
+	    if (null != head)
+	        return head;
+	    throw new IllegalArgumentException("No such plugin! (" + auth + ")");
 	}
 
 	/**
@@ -192,5 +213,10 @@ public class PluginAccessClass implements SvarogAccess {
     @Override
     public SvarogAccessConfig getConfigAccess() {
         return configAccessImpl;
+    }
+
+    @Override
+    public SvarogAccessI18n getI18nAccess() {
+        return i18nAccessImpl;
     }
 }
