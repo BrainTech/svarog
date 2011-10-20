@@ -62,6 +62,7 @@ public class PresetComboBoxModel extends AbstractListModel implements ComboBoxMo
 	@Override
 	public void setSelectedItem(Object anItem) {
 		selectedItem = anItem;
+		fireContentsChanged(this, 0, getSize());
 	}
 
 	@Override

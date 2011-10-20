@@ -7,6 +7,7 @@ package org.signalml.domain.montage;
 import java.io.Serializable;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import org.signalml.domain.montage.system.EegElectrode;
 
 /**
  * This class represents a source channel. It has a certain number, name
@@ -33,6 +34,8 @@ public class SourceChannel implements Serializable {
          * the function of this SourceChannel
          */
 	private IChannelFunction function;
+
+	private EegElectrode eegElectrode;
 
         /**
          * Constructor. Creates an empty SourceChannel.
@@ -110,6 +113,14 @@ public class SourceChannel implements Serializable {
 			throw new NullPointerException("Null function");
 		}
 		this.function = function;
+	}
+
+	public void setEegElectrode(EegElectrode eegElectrode) {
+		this.eegElectrode = eegElectrode;
+	}
+
+	public EegElectrode getEegElectrode() {
+		return eegElectrode;
 	}
 
 }

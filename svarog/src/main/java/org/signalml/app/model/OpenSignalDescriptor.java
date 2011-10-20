@@ -7,6 +7,7 @@ package org.signalml.app.model;
 import org.signalml.app.view.opensignal.FileOpenSignalMethod;
 import org.signalml.app.view.opensignal.SignalSource;
 import org.signalml.domain.montage.Montage;
+import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.domain.signal.SignalType;
 
 /**
@@ -37,6 +38,8 @@ public class OpenSignalDescriptor {
 	 * amplifier.
 	 */
 	private AmplifierConnectionDescriptor amplifierConnectionDescriptor;
+
+	private EegSystem eegSystem;
 
 	/**
 	 * Montage to be applied to the signal directly after opening.
@@ -134,6 +137,14 @@ public class OpenSignalDescriptor {
 	 */
 	public void setSignalSource(SignalSource signalSource) {
 		this.signalSource = signalSource;
+	}
+
+	public EegSystem getEegSystem() {
+		return eegSystem;
+	}
+
+	public void setEegSystem(EegSystem eegSystem) {
+		this.eegSystem = eegSystem;
 	}
 
 }

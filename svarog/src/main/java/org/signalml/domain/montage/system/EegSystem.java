@@ -41,4 +41,16 @@ public class EegSystem implements Preset {
 		return getName();
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if ( this == obj ) return true;
+		if ( !(obj instanceof EegSystem) ) return false;
+
+		EegSystem other = (EegSystem) obj;
+		if (other.getName().compareTo(this.name) == 0)
+			return true;
+		return false;
+
+	}
+
 }

@@ -107,6 +107,8 @@ public class RawSignalDescriptor {
          */
 	private int blocksPerPage;
 
+	private String eegSystemName;
+
         /**
          * an array of labels of signal channels
          */
@@ -413,6 +415,14 @@ public class RawSignalDescriptor {
          */
 	public void setBlocksPerPage(int blocksPerPage) {
 		this.blocksPerPage = blocksPerPage;
+	}
+
+	public String getEegSystemName() {
+		return eegSystemName;
+	}
+
+	public void setEegSystemName(String eegSystemName) {
+		this.eegSystemName = eegSystemName;
 	}
 
         /**

@@ -41,6 +41,7 @@ public abstract class AbstractSignalParametersPanel extends JPanel {
         public static String NUMBER_OF_CHANNELS_PROPERTY = "numberOfChannelsChangedProperty";
         public static String SAMPLING_FREQUENCY_PROPERTY = "samplingFrequencyChanged";
 	public static String CHANNEL_LABELS_PROPERTY = "channelLabelsPropertyChanged";
+	public static String EEG_SYSTEM_PROPERTY = "eegSystemPropertyChanged";
 
         /**
          * the {@link MessageSourceAccessor source} of messages (labels).

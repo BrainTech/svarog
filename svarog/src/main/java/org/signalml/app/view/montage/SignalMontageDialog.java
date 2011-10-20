@@ -445,4 +445,8 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	public Montage getCurrentMontage() {
 		return currentMontage;
 	}
+
+	public EegSystemsPresetManager getEegSystemsPresetManager() {
+		return eegSystemsPresetManager;
+	}
 }

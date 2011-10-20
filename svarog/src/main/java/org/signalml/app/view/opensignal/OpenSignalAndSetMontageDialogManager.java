@@ -9,8 +9,10 @@ import java.beans.PropertyChangeListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import org.signalml.app.config.preset.EegSystemsPresetManager;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
+import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.domain.signal.SignalType;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -56,6 +58,7 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 	 * should be connected.
 	 */
 	public OpenSignalAndSetMontageDialogManager(OpenSignalAndSetMontageDialog openSignalAndSetMontageDialog, MessageSourceAccessor messageSource) {
+
 		this.openSignalAndSetMontageDialog = openSignalAndSetMontageDialog;
 		this.signalSourcePanel = openSignalAndSetMontageDialog.getSignalSourcePanel();
 		this.messageSource = messageSource;
@@ -89,6 +92,27 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 		}
 		else if (propertyName.equals(AbstractMonitorSourcePanel.OPENBCI_CONNECTED_PROPERTY)) {
 			enableTabsAndOKButtonAsNeeded();
+		}
+		else if (propertyName.equals(AbstractSignalParametersPanel.EEG_SYSTEM_PROPERTY)) {
+
+			String newEegSystemName = evt.getNewValue().toString();
+
+			EegSystemsPresetManager eegSystemsPresetManager = openSignalAndSetMontageDialog.getEegSystemsPresetManager();
+
+			EegSystem eegSystem = (EegSystem) eegSystemsPresetManager.getPresetByName(newEegSystemName);
+			Montage currentMontage = getCurrentMontage();
+			currentMontage.setEegSystem(eegSystem);
+			try {
+				openSignalAndSetMontageDialog.fillDialogFromModel(currentMontage);
+				//getCurrentMontage().setEe
+				/*currentMontage.setSourceChannelLabelAt(i, channelLabels[i]);
+				currentMontage.setMontageChannelLabelAt(i, channelLabels[i]);
+				}
+				openSignalAndSetMontageDialog.fillDialogFromModel(currentMontage);*/
+			} catch (SignalMLException ex) {
+				Logger.getLogger(OpenSignalAndSetMontageDialogManager.class.getName()).log(Level.SEVERE, null, ex);
+			}
+
 		}
 	}
 

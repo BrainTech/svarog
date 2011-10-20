@@ -1,28 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <eegSystems>
   <presets>
-    <eegSystem>
-      <name>EEG 10_20</name>
-      <electrodes>
-        <eegElectrode>
-          <label>Fpz</label>
-          <polarPosition>
-            <theta>0.1</theta>
-            <radius>0.4</radius>
-            <asimuth>0.6</asimuth>
-          </polarPosition>
-        </eegElectrode>
-        <eegElectrode>
-          <label>A1</label>
-          <polarPosition>
-            <theta>0.44</theta>
-            <radius>0.22</radius>
-            <asimuth>0.34</asimuth>
-          </polarPosition>
-        </eegElectrode>
-      </electrodes>
-    </eegSystem>
-    <eegSystem>
+	  <eegSystem>
       <name>EEG 10_10</name>
       <electrodes>
         <eegElectrode>
@@ -43,5 +22,106 @@
         </eegElectrode>
       </electrodes>
     </eegSystem>
+    <eegSystem>
+      <name>system piotrka</name>
+      <electrodes>
+        <eegElectrode>
+          <label>Fpz</label>
+          <polarPosition>
+            <theta>0.1</theta>
+            <radius>0.4</radius>
+            <asimuth>0.6</asimuth>
+          </polarPosition>
+        </eegElectrode>
+      </electrodes>
+    </eegSystem>
+    <eegSystem>
+      <name>EEG 10_20</name>
+      <electrodes>
+        <eegElectrode>
+          <label>Fp1</label>
+          <polarPosition>
+            <theta>0.1</theta>
+            <radius>0.4</radius>
+            <asimuth>0.6</asimuth>
+          </polarPosition>
+        </eegElectrode>
+        <eegElectrode>
+          <label>Fpz</label>
+          <polarPosition>
+            <theta>0.44</theta>
+            <radius>0.22</radius>
+            <asimuth>0.34</asimuth>
+          </polarPosition>
+        </eegElectrode>
+	<eegElectrode>
+          <label>Fp2</label>
+	</eegElectrode>
+	<eegElectrode>
+          <label>F7</label>
+	</eegElectrode>
+	<eegElectrode>
+          <label>F3</label>
+	</eegElectrode>
+	<eegElectrode>
+          <label>Fz</label>
+	</eegElectrode>
+	<eegElectrode>
+          <label>F4</label>
+	</eegElectrode>
+	<eegElectrode>
+          <label>F8</label>
+	</eegElectrode>
+	<eegElectrode>
+          <label>A1</label>
+	</eegElectrode>
+	<eegElectrode>
+          <label>T3</label>
+	</eegElectrode>
+	<eegElectrode>
+          <label>C3</label>
+	</eegElectrode>
+	<eegElectrode>
+          <label>Cz</label>
+	</eegElectrode>
+	<eegElectrode>
+          <label>C4</label>
+	</eegElectrode>
+	<eegElectrode>
+          <label>T4</label>
+	</eegElectrode>
+	<eegElectrode>
+          <label>A2</label>
+	</eegElectrode>
+	<eegElectrode>
+          <label>T5</label>
+	</eegElectrode>
+	<eegElectrode>
+          <label>P3</label>
+	</eegElectrode>
+	<eegElectrode>
+          <label>Pz</label>
+	</eegElectrode>
+	<eegElectrode>
+          <label>P4</label>
+	</eegElectrode>
+	<eegElectrode>
+          <label>T6</label>
+	</eegElectrode>
+	<eegElectrode>
+          <label>O1</label>
+	</eegElectrode>
+	<eegElectrode>
+          <label>Oz</label>
+	</eegElectrode>
+	<eegElectrode>
+          <label>O2</label>
+	</eegElectrode>
+	<eegElectrode>
+          <label>T5</label>
+	</eegElectrode>
+      </electrodes>
+    </eegSystem>
+    
   </presets>
 </eegSystems>

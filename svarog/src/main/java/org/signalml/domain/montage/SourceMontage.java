@@ -46,8 +46,6 @@ public class SourceMontage {
 	
 	private transient EegSystem eegSystem;
 
-	private String eegSystemName;
-
         /**
          * a list of SourceChannels in this SourceMontage
          */
@@ -276,8 +274,6 @@ public class SourceMontage {
 
 	public void setEegSystem(EegSystem eegSystem) {
 		this.eegSystem = eegSystem;
-		if (eegSystem != null)
-			this.eegSystemName = eegSystem.getName();
 	}
 
         /**

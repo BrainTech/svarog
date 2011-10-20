@@ -74,8 +74,11 @@ public class EegSystemSelectionPanel extends AbstractSignalMLPanel {
 
 	public void setMontage(Montage montage) {
 		this.montage = montage;
-		if (montage != null)
-			montage.setEegSystem(getSelectedEegSystem());
+		if (montage != null) {
+			//montage.setEegSystem(getSelectedEegSystem());
+			if (montage.getEegSystem() != null)
+				presetComboBoxModel.setSelectedItem(montage.getEegSystem());
+		}
 	}
 
 }

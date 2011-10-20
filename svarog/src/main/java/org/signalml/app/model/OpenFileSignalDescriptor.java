@@ -7,6 +7,7 @@ package org.signalml.app.model;
 import java.io.File;
 import org.signalml.app.view.opensignal.FileOpenSignalMethod;
 import org.signalml.codec.SignalMLCodec;
+import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.domain.signal.SignalType;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
