@@ -19,8 +19,7 @@ public final class PluginAuthImpl implements PluginAuth {
     }
 
     public PluginAuthImpl(UUID id) {
-        super();
-        this.pluginID = id.toString();
+        this(id.toString());
     }
     
     @Override
