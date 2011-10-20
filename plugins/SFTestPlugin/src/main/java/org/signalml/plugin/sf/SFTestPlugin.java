@@ -31,6 +31,7 @@ public class SFTestPlugin implements Plugin {
 	    SvarogLogger.getSharedInstance().debug("SFTestPlugin.register()");
 	    sa.getGUIAccess().addButtonToToolsMenu(new BombAction());
 	    sa.getGUIAccess().addButtonToToolsMenu(new GrenadeAction());
+	    sa.getGUIAccess().addButtonToToolsMenu(new I18NAction(sa));
 	    new Thread(new ClassLoaderTest(15000)).start();
         new Thread(new ClockBomb(30000)).start();
 
