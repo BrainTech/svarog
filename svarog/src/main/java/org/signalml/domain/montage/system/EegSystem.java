@@ -36,6 +36,15 @@ public class EegSystem implements Preset {
 		electrodes.add(electrode);
 	}
 
+	public EegElectrode getElectrode(String electrodeName) {
+		for (EegElectrode electrode: electrodes) {
+			if (electrode.getLabel().equals(electrodeName)) {
+				return electrode;
+			}
+		}
+		return null;
+	}
+
 	@Override
 	public String toString() {
 		return getName();

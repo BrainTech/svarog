@@ -22,6 +22,8 @@ import org.signalml.exception.SanityCheckException;
 import org.signalml.util.Util;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import org.signalml.domain.montage.eeg.ChannelFunction;
+import org.signalml.domain.montage.system.EegElectrode;
 import org.signalml.domain.montage.system.EegSystem;
 
 /**
@@ -186,7 +188,6 @@ public class SourceMontage {
 	protected void copyFrom(SourceMontage montage) {
 		setChanged(montage.changed);
 		signalType = montage.signalType;
-		setEegSystem(montage.eegSystem);
 
 		sourceChannels = new ArrayList<SourceChannel>(montage.sourceChannels.size());
 		HashMap<String, SourceChannel> map = getSourceChannelsByLabel();
@@ -201,6 +202,8 @@ public class SourceMontage {
 			map.put(newChannel.getLabel(), newChannel);
 			list.add(newChannel);
 		}
+
+		setEegSystem(montage.eegSystem);
 	}
 
         /**
@@ -274,6 +277,30 @@ public class SourceMontage {
 
 	public void setEegSystem(EegSystem eegSystem) {
 		this.eegSystem = eegSystem;
+
+		if (eegSystem == null)
+			return;
+
+		for (SourceChannel sourceChannel: sourceChannels) {
+			refreshElectrodeAndFunctionForSourceChannel(sourceChannel);
+			fireSourceMontageChannelChanged(this, sourceChannel.getChannel());
+		}
+	}
+
+	protected void refreshElectrodeAndFunctionForSourceChannel(SourceChannel sourceChannel) {
+		if (sourceChannel == null)
+			return;
+		if (eegSystem == null)
+			return;
+		EegElectrode electrodeForChannel = eegSystem.getElectrode(sourceChannel.getLabel());
+		if (electrodeForChannel != null) {
+			sourceChannel.setEegElectrode(electrodeForChannel);
+			sourceChannel.setFunction(ChannelFunction.EEG);
+		}
+		else {
+			sourceChannel.setEegElectrode(null);
+			sourceChannel.setFunction(ChannelFunction.UNKNOWN);
+		}
 	}
 
         /**
@@ -431,7 +458,8 @@ public class SourceMontage {
 			map.put(label, channel);
 
 			// see about function update
-			IChannelFunction function = channel.getFunction();
+			refreshElectrodeAndFunctionForSourceChannel(channel);
+			/*IChannelFunction function = channel.getFunction();
 			if (function.getType() == ChannelType.UNKNOWN) {
 				// function is unknown, we can update, let's see what we get
 				IChannelFunction newFunctionCandidate = getSignalTypeConfigurer().channelForName(label);
@@ -445,7 +473,7 @@ public class SourceMontage {
 					}
 
 				}
-			}
+			}*/
 
 			fireSourceMontageChannelChanged(this, channel.getChannel());
 			setChanged(true);
