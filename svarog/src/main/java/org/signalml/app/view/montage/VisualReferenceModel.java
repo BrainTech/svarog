@@ -12,7 +12,7 @@ import java.util.LinkedList;
 
 import javax.swing.event.EventListenerList;
 
-import org.signalml.domain.montage.Channel;
+import org.signalml.domain.montage.IChannelFunction;
 import org.signalml.domain.montage.ChannelType;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageEvent;
@@ -111,7 +111,7 @@ public class VisualReferenceModel implements SourceMontageListener, MontageListe
 			VisualReferenceChannel channel;
 			sourceChannels.ensureCapacity(cnt);
 			channelLists.ensureCapacity(cnt);
-			Channel function;
+			IChannelFunction function;
 			ChannelType functionType;
 
 			for (i=0; i<cnt; i++) {

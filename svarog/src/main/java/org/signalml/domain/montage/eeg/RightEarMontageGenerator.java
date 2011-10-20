@@ -8,7 +8,7 @@ import org.signalml.domain.montage.SingleReferenceMontageGenerator;
 import org.springframework.validation.Errors;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import org.signalml.domain.montage.Channel;
+import org.signalml.domain.montage.IChannelFunction;
 import org.signalml.domain.montage.MontageGenerator;
 import org.signalml.domain.montage.SourceChannel;
 
@@ -32,7 +32,8 @@ public class RightEarMontageGenerator extends SingleReferenceMontageGenerator {
          * Constructor. Creates a generator for a right ear montage.
          */
 	public RightEarMontageGenerator() {
-		super(EegChannel.A2);
+		//super(ChannelFunction.A2);
+		super(ChannelFunction.EEG);
 	}
 
         /**

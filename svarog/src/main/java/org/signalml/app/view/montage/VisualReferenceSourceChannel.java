@@ -8,7 +8,7 @@ import java.awt.Point;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 
-import org.signalml.domain.montage.Channel;
+import org.signalml.domain.montage.IChannelFunction;
 import org.signalml.util.Util;
 
 /** VisualReferenceSourceChannel
@@ -22,7 +22,7 @@ public class VisualReferenceSourceChannel {
 
 	private int channel;
 	private String label;
-	private Channel function;
+	private IChannelFunction function;
 
 	private Point location;
 
@@ -45,11 +45,11 @@ public class VisualReferenceSourceChannel {
 		this.label = label;
 	}
 
-	public Channel getFunction() {
+	public IChannelFunction getFunction() {
 		return function;
 	}
 
-	public void setFunction(Channel function) {
+	public void setFunction(IChannelFunction function) {
 		this.function = function;
 	}
 

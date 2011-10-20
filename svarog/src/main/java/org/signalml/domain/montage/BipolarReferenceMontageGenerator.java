@@ -34,7 +34,7 @@ public abstract class BipolarReferenceMontageGenerator implements MontageGenerat
          * Each pair is used to create one {@link MontageChannel montage channel}.
          * First element as primary channel, second as reference.
          */
-	protected transient Channel[][] definition;
+	protected transient IChannelFunction[][] definition;
 
         /**
          * Constructor. Creates a generator for an bipolar reference montage
@@ -44,7 +44,7 @@ public abstract class BipolarReferenceMontageGenerator implements MontageGenerat
          * Each pair is used to create one {@link MontageChannel montage channel}.
          * First element as primary channel, second as reference.
          */
-	protected BipolarReferenceMontageGenerator(Channel[][] definition) {
+	protected BipolarReferenceMontageGenerator(IChannelFunction[][] definition) {
 		if (definition == null || definition.length == 0) {
 			throw new NullPointerException("Definition cannot be null or empty");
 		}
@@ -126,7 +126,7 @@ public abstract class BipolarReferenceMontageGenerator implements MontageGenerat
 	@Override
 	public boolean validateSourceMontage(SourceMontage sourceMontage, Errors errors) {
 
-		HashMap<Channel, Integer> map = new HashMap<Channel, Integer>();
+		HashMap<IChannelFunction, Integer> map = new HashMap<IChannelFunction, Integer>();
 		boolean ok = true;
 
 		for (int i=0; i<definition.length; i++) {
@@ -153,7 +153,7 @@ public abstract class BipolarReferenceMontageGenerator implements MontageGenerat
          * @return true if there is exactly one SourceChannel with a given
          * function or function already in the map, false otherwise
          */
-	private boolean check(SourceMontage sourceMontage, HashMap<Channel, Integer> map, Channel channel, Errors errors) {
+	private boolean check(SourceMontage sourceMontage, HashMap<IChannelFunction, Integer> map, IChannelFunction channel, Errors errors) {
 
 		int[] channelIndices;
 
@@ -181,7 +181,7 @@ public abstract class BipolarReferenceMontageGenerator implements MontageGenerat
          * @param refChannel the channel that was not found
          * @param errors the Errors object used to report errors
          */
-	protected abstract void onNotFound(Channel refChannel, Errors errors);
+	protected abstract void onNotFound(IChannelFunction refChannel, Errors errors);
 
         /**
          * Reports an error, that the {@link Channel channel} (the function of
@@ -189,6 +189,6 @@ public abstract class BipolarReferenceMontageGenerator implements MontageGenerat
          * @param refChannel the channel that was not found
          * @param errors the Errors object used to report errors
          */
-	protected abstract void onDuplicate(Channel refChannel, Errors errors);
+	protected abstract void onDuplicate(IChannelFunction refChannel, Errors errors);
 
 }

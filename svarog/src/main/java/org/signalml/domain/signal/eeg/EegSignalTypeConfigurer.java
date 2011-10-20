@@ -19,12 +19,12 @@ import java.util.Collections;
 import java.util.List;
 
 import org.signalml.app.document.SignalDocument;
-import org.signalml.domain.montage.Channel;
+import org.signalml.domain.montage.IChannelFunction;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageGenerator;
 import org.signalml.domain.montage.RawMontageGenerator;
 import org.signalml.domain.montage.SourceMontage;
-import org.signalml.domain.montage.eeg.EegChannel;
+import org.signalml.domain.montage.eeg.ChannelFunction;
 import org.signalml.domain.montage.eeg.LeftEarMontageGenerator;
 import org.signalml.domain.montage.eeg.LinkedEarsMontageGenerator;
 import org.signalml.domain.montage.eeg.CAMontageGenerator;
@@ -121,8 +121,8 @@ public class EegSignalTypeConfigurer implements SignalTypeConfigurer {
 	}
 
 	@Override
-	public Channel[] allChannels() {
-		return EegChannel.values();
+	public IChannelFunction[] allChannels() {
+		return ChannelFunction.values();
 	}
 
         /**
@@ -130,8 +130,8 @@ public class EegSignalTypeConfigurer implements SignalTypeConfigurer {
          * @return EegChannel.UNKNOWN
          */
 	@Override
-	public Channel genericChannel() {
-		return EegChannel.UNKNOWN;
+	public IChannelFunction genericChannel() {
+		return ChannelFunction.UNKNOWN;
 	}
 
         /**
@@ -140,13 +140,13 @@ public class EegSignalTypeConfigurer implements SignalTypeConfigurer {
          * @return the channel of a given name
          */
 	@Override
-	public Channel channelForName(String name) {
+	public IChannelFunction channelForName(String name) {
 		if (name == null || name.isEmpty()) {
-			return EegChannel.UNKNOWN;
+			return ChannelFunction.UNKNOWN;
 		}
-		Channel channel = EegChannel.forName(name);
+		IChannelFunction channel = ChannelFunction.forName(name);
 		if (channel == null) {
-			return EegChannel.UNKNOWN;
+			return ChannelFunction.UNKNOWN;
 		}
 		return channel;
 	}
@@ -206,7 +206,7 @@ public class EegSignalTypeConfigurer implements SignalTypeConfigurer {
          */
 	@Override
 	public int getMatrixHeight() {
-		return EegChannel.MATRIX_HEIGHT;
+		return ChannelFunction.MATRIX_HEIGHT;
 	}
 
         /**
@@ -215,7 +215,7 @@ public class EegSignalTypeConfigurer implements SignalTypeConfigurer {
          */
 	@Override
 	public int getMatrixWidth() {
-		return EegChannel.MATRIX_WIDTH;
+		return ChannelFunction.MATRIX_WIDTH;
 	}
 
         /**

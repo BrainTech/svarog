@@ -8,7 +8,7 @@ import java.awt.Image;
 import java.util.Collection;
 
 import org.signalml.app.document.SignalDocument;
-import org.signalml.domain.montage.Channel;
+import org.signalml.domain.montage.IChannelFunction;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageGenerator;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
@@ -42,14 +42,14 @@ public interface SignalTypeConfigurer {
          * Returns an array with {@link Channel channels} of possible types.
          * @return an array with Channels of possible types
          */
-	Channel[] allChannels();
+	IChannelFunction[] allChannels();
 
         /**
          * Returns the {@link Channel channel} that is generic for a montage
          * of this type.
          * @return the channel that is generic for a montage of this type
          */
-	Channel genericChannel();
+	IChannelFunction genericChannel();
 
         /**
          * Finds a {@link Channel channel} of a given name from list of possible
@@ -57,7 +57,7 @@ public interface SignalTypeConfigurer {
          * @param name type of a channel name
          * @return the channel of a given name
          */
-	Channel channelForName(String name);
+	IChannelFunction channelForName(String name);
 
         /**
          * Returns the width of a {@link Channel channels} matrix.

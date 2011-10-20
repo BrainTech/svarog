@@ -5,7 +5,7 @@
 package org.signalml.domain.montage.eeg;
 
 import org.signalml.domain.montage.BipolarReferenceMontageGenerator;
-import org.signalml.domain.montage.Channel;
+import org.signalml.domain.montage.IChannelFunction;
 import org.signalml.domain.montage.MontageChannel;
 import org.springframework.validation.Errors;
 
@@ -35,28 +35,29 @@ public class LongitudinalIMontageGenerator extends BipolarReferenceMontageGenera
          * Each pair is used to create one {@link MontageChannel montage channel}.
          * First element as primary channel, second as reference.
          */
-	private static final Channel[][] MATRIX = new Channel[][] {
+	private static final IChannelFunction[][] MATRIX = new IChannelFunction[][] {
 
-	{ EegChannel.FP1, EegChannel.F7 },
-	{ EegChannel.F7, EegChannel.T3 },
-	{ EegChannel.T3, EegChannel.T5 },
-	{ EegChannel.T5, EegChannel.O1 },
-	{ EegChannel.FP1, EegChannel.F3 },
-	{ EegChannel.F3, EegChannel.C3 },
-	{ EegChannel.C3, EegChannel.P3 },
-	{ EegChannel.P3, EegChannel.O1 },
-	{ EegChannel.FPZ, EegChannel.FZ },
-	{ EegChannel.FZ, EegChannel.CZ },
-	{ EegChannel.CZ, EegChannel.PZ },
-	{ EegChannel.PZ, EegChannel.OZ },
-	{ EegChannel.FP2, EegChannel.F4 },
-	{ EegChannel.F4, EegChannel.C4 },
-	{ EegChannel.C4, EegChannel.P4 },
-	{ EegChannel.P4, EegChannel.O2 },
-	{ EegChannel.FP2, EegChannel.F8 },
-	{ EegChannel.F8, EegChannel.T4 },
-	{ EegChannel.T4, EegChannel.T6 },
-	{ EegChannel.T6, EegChannel.O2 }
+	/*{ ChannelFunction.FP1, ChannelFunction.F7 },
+	{ ChannelFunction.F7, ChannelFunction.T3 },
+	{ ChannelFunction.T3, ChannelFunction.T5 },
+	{ ChannelFunction.T5, ChannelFunction.O1 },
+	{ ChannelFunction.FP1, ChannelFunction.F3 },
+	{ ChannelFunction.F3, ChannelFunction.C3 },
+	{ ChannelFunction.C3, ChannelFunction.P3 },
+	{ ChannelFunction.P3, ChannelFunction.O1 },
+	{ ChannelFunction.FPZ, ChannelFunction.FZ },
+	{ ChannelFunction.FZ, ChannelFunction.CZ },
+	{ ChannelFunction.CZ, ChannelFunction.PZ },
+	{ ChannelFunction.PZ, ChannelFunction.OZ },
+	{ ChannelFunction.FP2, ChannelFunction.F4 },
+	{ ChannelFunction.F4, ChannelFunction.C4 },
+	{ ChannelFunction.C4, ChannelFunction.P4 },
+	{ ChannelFunction.P4, ChannelFunction.O2 },
+	{ ChannelFunction.FP2, ChannelFunction.F8 },
+	{ ChannelFunction.F8, ChannelFunction.T4 },
+	{ ChannelFunction.T4, ChannelFunction.T6 },
+	{ ChannelFunction.T6, ChannelFunction.O2 }*/
+	{ ChannelFunction.EEG, ChannelFunction.EEG }
 
 	};
 
@@ -68,12 +69,12 @@ public class LongitudinalIMontageGenerator extends BipolarReferenceMontageGenera
 	}
 
 	@Override
-	protected void onDuplicate(Channel refChannel, Errors errors) {
+	protected void onDuplicate(IChannelFunction refChannel, Errors errors) {
 		errors.reject("montageGenerator.error.duplicateChannel", new Object[] { refChannel }, "montageGenerator.error.duplicateChannel");
 	}
 
 	@Override
-	protected void onNotFound(Channel refChannel, Errors errors) {
+	protected void onNotFound(IChannelFunction refChannel, Errors errors) {
 		errors.reject("montageGenerator.error.missingChannel", new Object[] { refChannel }, "montageGenerator.error.missingChannel");
 
 	}

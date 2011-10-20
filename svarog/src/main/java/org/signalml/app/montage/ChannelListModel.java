@@ -7,7 +7,7 @@ package org.signalml.app.montage;
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 
-import org.signalml.domain.montage.Channel;
+import org.signalml.domain.montage.IChannelFunction;
 import org.signalml.domain.signal.SignalTypeConfigurer;
 
 /** ChannelListModel
@@ -20,7 +20,7 @@ public class ChannelListModel extends AbstractListModel implements ComboBoxModel
 	private static final long serialVersionUID = 1L;
 
 	private SignalTypeConfigurer configurer;
-	private Channel[] values;
+	private IChannelFunction[] values;
 
 	private Object selectedItem;
 

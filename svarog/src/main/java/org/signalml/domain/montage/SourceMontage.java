@@ -62,7 +62,7 @@ public class SourceMontage {
          * HashMap associating {@link SourceChannel source channels}
          * with their function
          */
-	private transient HashMap<Channel,LinkedList<SourceChannel>> sourceChannelsByFunction;
+	private transient HashMap<IChannelFunction,LinkedList<SourceChannel>> sourceChannelsByFunction;
 
         /**
          * HashMap associating {@link SourceChannel source channels}
@@ -148,7 +148,7 @@ public class SourceMontage {
 		String label;
 		SignalTypeConfigurer configurer = getSignalTypeConfigurer();
 		HashMap<String, SourceChannel> map = getSourceChannelsByLabel();
-		Channel function;
+		IChannelFunction function;
 		for (int i=0; i<channelCount; i++) {
 			label = mss.getLabel(i);
 			function = configurer.channelForName(label);
@@ -321,9 +321,9 @@ public class SourceMontage {
          * If doesn't exists it is created as empty and returned.
          * @return a HashMap associating source channels with their function.
          */
-	protected HashMap<Channel, LinkedList<SourceChannel>> getSourceChannelsByFunction() {
+	protected HashMap<IChannelFunction, LinkedList<SourceChannel>> getSourceChannelsByFunction() {
 		if (sourceChannelsByFunction == null) {
-			sourceChannelsByFunction = new HashMap<Channel, LinkedList<SourceChannel>>();
+			sourceChannelsByFunction = new HashMap<IChannelFunction, LinkedList<SourceChannel>>();
 		}
 		return sourceChannelsByFunction;
 	}
@@ -334,8 +334,8 @@ public class SourceMontage {
          * @param function a function that source channels should fulfil
          * @return list of source channels with a given function
          */
-	protected LinkedList<SourceChannel> getSourceChannelsByFunctionList(Channel function) {
-		HashMap<Channel, LinkedList<SourceChannel>> map = getSourceChannelsByFunction();
+	protected LinkedList<SourceChannel> getSourceChannelsByFunctionList(IChannelFunction function) {
+		HashMap<IChannelFunction, LinkedList<SourceChannel>> map = getSourceChannelsByFunction();
 		LinkedList<SourceChannel> list = map.get(function);
 		if (list == null) {
 			list = new LinkedList<SourceChannel>();
@@ -398,7 +398,7 @@ public class SourceMontage {
          * @param index an index of a source channel to be found
          * @return the function of a source channel of a given index
          */
-	public Channel getSourceChannelFunctionAt(int index) {
+	public IChannelFunction getSourceChannelFunctionAt(int index) {
 		return sourceChannels.get(index).getFunction();
 	}
 
@@ -435,10 +435,10 @@ public class SourceMontage {
 			map.put(label, channel);
 
 			// see about function update
-			Channel function = channel.getFunction();
+			IChannelFunction function = channel.getFunction();
 			if (function.getType() == ChannelType.UNKNOWN) {
 				// function is unknown, we can update, let's see what we get
-				Channel newFunctionCandidate = getSignalTypeConfigurer().channelForName(label);
+				IChannelFunction newFunctionCandidate = getSignalTypeConfigurer().channelForName(label);
 				if (newFunctionCandidate.getType() != ChannelType.UNKNOWN) {
 					// the function is known, check if we could use it
 					if (!newFunctionCandidate.isUnique() || getSourceChannelsByFunctionList(newFunctionCandidate).isEmpty()) {
@@ -468,10 +468,10 @@ public class SourceMontage {
          * @return old a function of found source channel
          * @throws MontageException if the function is not unique
          */
-	public Channel setSourceChannelFunctionAt(int index, Channel function) throws MontageException {
+	public IChannelFunction setSourceChannelFunctionAt(int index, IChannelFunction function) throws MontageException {
 
 		SourceChannel channel = sourceChannels.get(index);
-		Channel oldFunction = channel.getFunction();
+		IChannelFunction oldFunction = channel.getFunction();
 
 		if (oldFunction != function) {
 
@@ -501,7 +501,7 @@ public class SourceMontage {
          * @param function a function that source channels should fulfil
          * @return an array of indexes of source channels with a given function
          */
-	public int[] getSourceChannelsByFunction(Channel function) {
+	public int[] getSourceChannelsByFunction(IChannelFunction function) {
 		LinkedList<SourceChannel> list = getSourceChannelsByFunctionList(function);
 		int[] indices = new int[list.size()];
 		int i = 0;
@@ -538,7 +538,7 @@ public class SourceMontage {
          * @return an index of a first source channel with a given function,
          * -1 if doesn't exist
          */
-	public int getFirstSourceChannelWithFunction(Channel function) {
+	public int getFirstSourceChannelWithFunction(IChannelFunction function) {
 		LinkedList<SourceChannel> list = getSourceChannelsByFunctionList(function);
 		if (list.isEmpty()) {
 			return -1;
@@ -568,9 +568,9 @@ public class SourceMontage {
          * @param function a unique function for new source channel
          * @throws MontageException thrown when label or function not unique
          */
-        public void addSourceChannel(String label, Channel function) throws MontageException {
+        public void addSourceChannel(String label, IChannelFunction function) throws MontageException {
 
-		Channel nonNullChannel = (function != null ? function : getSignalTypeConfigurer().genericChannel());
+		IChannelFunction nonNullChannel = (function != null ? function : getSignalTypeConfigurer().genericChannel());
 
 		HashMap<String, SourceChannel> map = getSourceChannelsByLabel();
 		if (map.containsKey(label)) {

@@ -8,7 +8,7 @@ import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.Point;
 
-import org.signalml.domain.montage.Channel;
+import org.signalml.domain.montage.IChannelFunction;
 
 /** VisualReferencePositionedBin
  *
@@ -91,7 +91,7 @@ public class VisualReferencePositionedBin extends VisualReferenceBin {
 			float x;
 			float y;
 
-			Channel function;
+			IChannelFunction function;
 			int gridX, gridY;
 
 			Dimension d;

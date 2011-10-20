@@ -30,7 +30,7 @@ public abstract class SingleReferenceMontageGenerator implements MontageGenerato
          * the {@link Channel function} of a {@link SourceChannel source channel}
          * which will be a reference channel
          */
-	protected transient Channel refChannel;
+	protected transient IChannelFunction refChannel;
 
         /**
          * Constructor. Creates a new generator based on {@link Channel function}
@@ -39,7 +39,7 @@ public abstract class SingleReferenceMontageGenerator implements MontageGenerato
          * that will be used as reference channel in a created
          * {@link Montage montage}
          */
-	protected SingleReferenceMontageGenerator(Channel refChannel) {
+	protected SingleReferenceMontageGenerator(IChannelFunction refChannel) {
 		if (refChannel == null) {
 			throw new NullPointerException("Channel cannot be null");
 		}

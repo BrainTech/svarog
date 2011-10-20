@@ -32,7 +32,7 @@ public class SourceChannel implements Serializable {
         /**
          * the function of this SourceChannel
          */
-	private Channel function;
+	private IChannelFunction function;
 
         /**
          * Constructor. Creates an empty SourceChannel.
@@ -47,7 +47,7 @@ public class SourceChannel implements Serializable {
          * @param label a label of a SourceChannel
          * @param function a function of a SourceChannel
          */
-	public SourceChannel(int channel, String label, Channel function) {
+	public SourceChannel(int channel, String label, IChannelFunction function) {
 		this.channel = channel;
 		setLabel(label);
 		setFunction(function);
@@ -83,7 +83,7 @@ public class SourceChannel implements Serializable {
          * Returns a function of this SourceChannel.
          * @return a function of this SourceChannel
          */
-	public Channel getFunction() {
+	public IChannelFunction getFunction() {
 		return function;
 	}
 
@@ -105,7 +105,7 @@ public class SourceChannel implements Serializable {
          * Sets a function of this SourceChannel.
          * @param function a function to be set
          */
-	public void setFunction(Channel function) {
+	public void setFunction(IChannelFunction function) {
 		if (function == null) {
 			throw new NullPointerException("Null function");
 		}

@@ -18,7 +18,7 @@ import org.springframework.context.MessageSourceResolvable;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public interface Channel extends MessageSourceResolvable, Serializable {
+public interface IChannelFunction extends MessageSourceResolvable, Serializable {
 
         /**
          * Returns the name of this channel.
@@ -67,7 +67,7 @@ public interface Channel extends MessageSourceResolvable, Serializable {
          * @return the object which is the left neighbour of a given channel
          * or null if doesn't exist or given channel is not in the matrix
          */
-	Channel getLeftNeighbour(Channel channel);
+	IChannelFunction getLeftNeighbour(IChannelFunction channel);
 
         /**
          * Finds the right neighbour of a given channel.
@@ -75,7 +75,7 @@ public interface Channel extends MessageSourceResolvable, Serializable {
          * @return the object which is the right neighbour of a given channel
          * or null if doesn't exist or given channel is not in the matrix
          */
-	Channel getRightNeighbour(Channel channel);
+	IChannelFunction getRightNeighbour(IChannelFunction channel);
 
         /**
          * Finds the top neighbour of a given channel.
@@ -83,7 +83,7 @@ public interface Channel extends MessageSourceResolvable, Serializable {
          * @return the object which is the top neighbour of a given channel
          * or null if doesn't exist or given channel is not in the matrix
          */
-	Channel getTopNeighbour(Channel channel);
+	IChannelFunction getTopNeighbour(IChannelFunction channel);
 
         /**
          * Finds the bottom neighbour of a given channel
@@ -91,7 +91,7 @@ public interface Channel extends MessageSourceResolvable, Serializable {
          * @return the object which is the bottom neighbour of a given channel
          * or null if doesn't exist or given channel is not in the matrix
          */
-	Channel getBottomNeighbour(Channel channel);
+	IChannelFunction getBottomNeighbour(IChannelFunction channel);
 
         /**
          * Finds all channels that satisfies all following conditions:
@@ -101,7 +101,7 @@ public interface Channel extends MessageSourceResolvable, Serializable {
          * @return the array of found channels. An empty array if such channels
          * don't exist or null if given channel is not in the matrix
          */
-	Channel[] getLeftNeighbours(Channel channel);
+	IChannelFunction[] getLeftNeighbours(IChannelFunction channel);
 
         /**
          * Finds all channels that satisfies all following conditions:
@@ -111,7 +111,7 @@ public interface Channel extends MessageSourceResolvable, Serializable {
          * @return the array of found channels. An empty array if such channels
          * don't exist or null if given channel is not in the matrix
          */
-	Channel[] getRightNeighbours(Channel channel);
+	IChannelFunction[] getRightNeighbours(IChannelFunction channel);
 
         /**
          * Finds all channels that satisfies all following conditions:
@@ -121,7 +121,7 @@ public interface Channel extends MessageSourceResolvable, Serializable {
          * @return the array of found channels. An empty array if such channels
          * don't exist or null if given channel is not in the matrix
          */
-	Channel[] getTopNeighbours(Channel channel);
+	IChannelFunction[] getTopNeighbours(IChannelFunction channel);
 
         /**
          * Finds all channels that satisfies all following conditions:
@@ -131,7 +131,7 @@ public interface Channel extends MessageSourceResolvable, Serializable {
          * @return the array of found channels. An empty array if such channels
          * don't exist or null if given channel is not in the matrix
          */
-	Channel[] getBottomNeighbours(Channel channel);
+	IChannelFunction[] getBottomNeighbours(IChannelFunction channel);
 
         /**
          * Returns an array which consists of top, left, bottom and right
@@ -139,6 +139,6 @@ public interface Channel extends MessageSourceResolvable, Serializable {
          * @param channel the channel for which we are looking for neighbours
          * @return Created array or null if given channel is not in the matrix
          */
-	Channel[] getNearestNeighbours(Channel channel);
+	IChannelFunction[] getNearestNeighbours(IChannelFunction channel);
 
 }

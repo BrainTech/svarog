@@ -5,7 +5,7 @@
 package org.signalml.domain.montage.eeg;
 
 import org.signalml.domain.montage.AverageReferenceMontageGenerator;
-import org.signalml.domain.montage.Channel;
+import org.signalml.domain.montage.IChannelFunction;
 import org.springframework.validation.Errors;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
@@ -32,7 +32,8 @@ public class LinkedEarsMontageGenerator extends AverageReferenceMontageGenerator
          * Constructor.
          */
 	public LinkedEarsMontageGenerator() {
-		super(new Channel[] { EegChannel.A1, EegChannel.A2 });
+		//super(new IChannelFunction[] { ChannelFunction.A1, ChannelFunction.A2 });
+		super(new IChannelFunction[] { ChannelFunction.EEG, ChannelFunction.EEG }); //temporary!!
 	}
 
 	/*
@@ -49,7 +50,7 @@ public class LinkedEarsMontageGenerator extends AverageReferenceMontageGenerator
          * @param errors the Errors object used to report errors
          */
 	@Override
-	protected void onDuplicate(Channel refChannel, Errors errors) {
+	protected void onDuplicate(IChannelFunction refChannel, Errors errors) {
 		errors.reject("montageGenerator.error.duplicateEarChannel", new Object[] { refChannel }, "montageGenerator.error.duplicateEarChannel");
 	}
 
@@ -60,7 +61,7 @@ public class LinkedEarsMontageGenerator extends AverageReferenceMontageGenerator
          * @param errors the Errors object used to report errors
          */
 	@Override
-	protected void onNotFound(Channel refChannel, Errors errors) {
+	protected void onNotFound(IChannelFunction refChannel, Errors errors) {
 		errors.reject("montageGenerator.error.missingEarChannel", new Object[] { refChannel }, "montageGenerator.error.missingEarChannel");
 
 	}

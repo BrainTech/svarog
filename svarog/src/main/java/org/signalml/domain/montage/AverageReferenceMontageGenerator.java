@@ -28,7 +28,7 @@ public abstract class AverageReferenceMontageGenerator implements MontageGenerat
          * {@link Montage montages} (actually in the
          * {@link MontageChannel montage channels} in a montage)
          */
-	protected transient Channel[] refChannels;
+	protected transient IChannelFunction[] refChannels;
 
         /**
          * Constructor. Creates a generator for an average reference montage
@@ -39,7 +39,7 @@ public abstract class AverageReferenceMontageGenerator implements MontageGenerat
          * (actually in {@link MontageChannel montage channels} in a montage)
          * @throws NullPointerException if the array of channels is null or empty
          */
-	protected AverageReferenceMontageGenerator(Channel[] refChannels) {
+	protected AverageReferenceMontageGenerator(IChannelFunction[] refChannels) {
 		if (refChannels == null) {
 			throw new NullPointerException("Channels cannot be null or empty");
 		}
@@ -129,7 +129,7 @@ public abstract class AverageReferenceMontageGenerator implements MontageGenerat
          * @param refChannel the channel that was not found
          * @param errors the Errors object used to report errors
          */
-	protected abstract void onNotFound(Channel refChannel, Errors errors);
+	protected abstract void onNotFound(IChannelFunction refChannel, Errors errors);
 
         /**
          * Reports an error, that the {@link Channel channel} (the function of
@@ -137,6 +137,6 @@ public abstract class AverageReferenceMontageGenerator implements MontageGenerat
          * @param refChannel the channel that was not found
          * @param errors the Errors object used to report errors
          */
-	protected abstract void onDuplicate(Channel refChannel, Errors errors);
+	protected abstract void onDuplicate(IChannelFunction refChannel, Errors errors);
 
 }

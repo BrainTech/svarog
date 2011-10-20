@@ -41,7 +41,7 @@ import org.signalml.domain.montage.GenericChannel;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.ChannelType;
 import org.signalml.domain.montage.MontageChannel;
-import org.signalml.domain.montage.eeg.EegChannel;
+import org.signalml.domain.montage.eeg.ChannelFunction;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.SourceChannel;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -866,10 +866,10 @@ public class MontageChannelsPanel extends JPanel {
 			try {
 				if (this.channelType == 0) {
 					String lb = montage.getNewSourceChannelLabel(messageSource.getMessage("sourceMontageTable.ZERO"));
-					montage.addSourceChannel(lb, EegChannel.ZERO);
+					montage.addSourceChannel(lb, ChannelFunction.ZERO);
 				} else {//assumed ONE
 					String lb = montage.getNewSourceChannelLabel(messageSource.getMessage("sourceMontageTable.ONE"));
-					montage.addSourceChannel(lb, EegChannel.ONE);
+					montage.addSourceChannel(lb, ChannelFunction.ONE);
 				}
 				
 			} catch (MontageException ex) {

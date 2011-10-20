@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.signalml.app.document.SignalDocument;
-import org.signalml.domain.montage.Channel;
+import org.signalml.domain.montage.IChannelFunction;
 import org.signalml.domain.montage.GenericChannel;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageGenerator;
@@ -88,7 +88,7 @@ public class GenericSignalTypeConfigurer implements SignalTypeConfigurer {
          * @return an array of generic channels of possible types
          */
 	@Override
-	public Channel[] allChannels() {
+	public IChannelFunction[] allChannels() {
 		return GenericChannel.values();
 	}
 
@@ -98,7 +98,7 @@ public class GenericSignalTypeConfigurer implements SignalTypeConfigurer {
          * @return GenericChannel.UNKNOWN
          */
 	@Override
-	public Channel genericChannel() {
+	public IChannelFunction genericChannel() {
 		return GenericChannel.UNKNOWN;
 	}
 
@@ -108,11 +108,11 @@ public class GenericSignalTypeConfigurer implements SignalTypeConfigurer {
          * @return the {@link Channel channel} of a given name
          */
 	@Override
-	public Channel channelForName(String name) {
+	public IChannelFunction channelForName(String name) {
 		if (name == null || name.isEmpty()) {
 			return GenericChannel.UNKNOWN;
 		}
-		Channel channel = GenericChannel.forName(name);
+		IChannelFunction channel = GenericChannel.forName(name);
 		if (channel == null) {
 			return GenericChannel.UNKNOWN;
 		}

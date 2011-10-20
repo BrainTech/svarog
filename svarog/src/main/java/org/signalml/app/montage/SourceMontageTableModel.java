@@ -10,7 +10,7 @@ import javax.swing.table.AbstractTableModel;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.view.dialog.ErrorsDialog;
-import org.signalml.domain.montage.Channel;
+import org.signalml.domain.montage.IChannelFunction;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.montage.SourceMontageEvent;
@@ -126,7 +126,7 @@ public class SourceMontageTableModel extends AbstractTableModel implements Sourc
 			return String.class;
 
 		case FUNCTION_COLUMN :
-			return Channel.class;
+			return IChannelFunction.class;
 
 		default :
 			throw new IndexOutOfBoundsException();
@@ -180,7 +180,7 @@ public class SourceMontageTableModel extends AbstractTableModel implements Sourc
 		case FUNCTION_COLUMN :
 
 			try {
-				montage.setSourceChannelFunctionAt(rowIndex, (Channel) value);
+				montage.setSourceChannelFunctionAt(rowIndex, (IChannelFunction) value);
 			} catch (MontageException ex) {
 				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
 				fireTableCellUpdated(rowIndex, columnIndex);

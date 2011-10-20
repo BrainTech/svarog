@@ -66,7 +66,7 @@ import org.signalml.app.view.dialog.ProfilePathDialog;
 import org.signalml.app.view.dialog.SplashScreen;
 import org.signalml.codec.DefaultSignalMLCodecManager;
 import org.signalml.codec.SignalMLCodecManager;
-import org.signalml.domain.montage.eeg.EegChannel;
+import org.signalml.domain.montage.eeg.ChannelFunction;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.method.DisposableMethod;
 import org.signalml.method.Method;
@@ -636,7 +636,7 @@ public class SvarogApplication implements java.lang.Runnable {
 					     SignalMLMRUDEntry.class,
 					     RawSignalMRUDEntry.class,
 					     RawSignalDescriptor.class,
-					     EegChannel.class,
+					     ChannelFunction.class,
 					     MethodPresetManager.class,
 					     MP5Parameters.class,
 					     MP5Data.class,

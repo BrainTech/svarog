@@ -7,7 +7,7 @@ package org.signalml.domain.montage.eeg;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.AverageReferenceMontageGenerator;
-import org.signalml.domain.montage.Channel;
+import org.signalml.domain.montage.IChannelFunction;
 import org.signalml.domain.montage.ChannelType;
 import org.springframework.validation.Errors;
 
@@ -35,7 +35,7 @@ public class CAMontageGenerator extends AverageReferenceMontageGenerator {
          * Constructor.
          */
 	public CAMontageGenerator() {
-		super(new Channel[] {});
+		super(new IChannelFunction[] {});
 	}
 
         /**
@@ -79,7 +79,7 @@ public class CAMontageGenerator extends AverageReferenceMontageGenerator {
          * @param errors the Errors object used to report errors
          */
 	@Override
-	protected void onDuplicate(Channel refChannel, Errors errors) {
+	protected void onDuplicate(IChannelFunction refChannel, Errors errors) {
 		errors.reject("montageGenerator.error.duplicateEarChannel", new Object[] { refChannel }, "montageGenerator.error.duplicateEarChannel");
 	}
 
@@ -90,7 +90,7 @@ public class CAMontageGenerator extends AverageReferenceMontageGenerator {
          * @param errors the Errors object used to report errors
          */
 	@Override
-	protected void onNotFound(Channel refChannel, Errors errors) {
+	protected void onNotFound(IChannelFunction refChannel, Errors errors) {
 		errors.reject("montageGenerator.error.missingEarChannel", new Object[] { refChannel }, "montageGenerator.error.missingEarChannel");
 
 	}

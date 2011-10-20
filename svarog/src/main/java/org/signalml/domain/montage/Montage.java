@@ -808,7 +808,7 @@ public class Montage extends SourceMontage implements Preset {
          * @throws MontageException if a label or function not unique
          */
 	@Override
-	public void addSourceChannel(String label, Channel function) throws MontageException {
+	public void addSourceChannel(String label, IChannelFunction function) throws MontageException {
 		super.addSourceChannel(label, function);
 		setMontageGenerator(null);
 	}

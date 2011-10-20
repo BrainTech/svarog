@@ -17,7 +17,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 @XStreamAlias("genericchannel")
-public enum GenericChannel implements Channel {
+public enum GenericChannel implements IChannelFunction {
 
 	/**
          * the default type of the channel
@@ -159,7 +159,7 @@ public enum GenericChannel implements Channel {
          * @return the channel is not in the matrix so null
          */
         @Override
-	public Channel getLeftNeighbour(Channel chn) {
+	public IChannelFunction getLeftNeighbour(IChannelFunction chn) {
 		return null;
 	}
 
@@ -169,7 +169,7 @@ public enum GenericChannel implements Channel {
          * @return the channel is not in the matrix so null
          */
         @Override
-	public Channel getRightNeighbour(Channel chn) {
+	public IChannelFunction getRightNeighbour(IChannelFunction chn) {
 		return null;
 	}
 
@@ -179,7 +179,7 @@ public enum GenericChannel implements Channel {
          * @return the channel is not in the matrix so null
          */
         @Override
-	public Channel getTopNeighbour(Channel chn) {
+	public IChannelFunction getTopNeighbour(IChannelFunction chn) {
 		return null;
 	}
 
@@ -189,7 +189,7 @@ public enum GenericChannel implements Channel {
          * @return the channel is not in the matrix so null
          */
         @Override
-	public Channel getBottomNeighbour(Channel chn) {
+	public IChannelFunction getBottomNeighbour(IChannelFunction chn) {
 		return null;
 	}
 
@@ -201,7 +201,7 @@ public enum GenericChannel implements Channel {
          * @return the channel is not in the matrix so null
          */
     @Override
-	public Channel[] getLeftNeighbours(Channel chn) {
+	public IChannelFunction[] getLeftNeighbours(IChannelFunction chn) {
 		return null;
 	}
 
@@ -213,7 +213,7 @@ public enum GenericChannel implements Channel {
          * @return the channel is not in the matrix so null
          */
     @Override
-	public Channel[] getRightNeighbours(Channel chn) {
+	public IChannelFunction[] getRightNeighbours(IChannelFunction chn) {
 		return null;
 	}
 
@@ -225,7 +225,7 @@ public enum GenericChannel implements Channel {
          * @return the channel is not in the matrix so null
          */
     @Override
-	public Channel[] getTopNeighbours(Channel chn) {
+	public IChannelFunction[] getTopNeighbours(IChannelFunction chn) {
 		return null;
 	}
 
@@ -237,7 +237,7 @@ public enum GenericChannel implements Channel {
          * @return the channel is not in the matrix so null
          */
     @Override
-	public Channel[] getBottomNeighbours(Channel chn) {
+	public IChannelFunction[] getBottomNeighbours(IChannelFunction chn) {
 		return null;
 	}
 
@@ -248,7 +248,7 @@ public enum GenericChannel implements Channel {
          * @return the channel is not in the matrix so null
          */
     @Override
-	public Channel[] getNearestNeighbours(Channel chn) {
+	public IChannelFunction[] getNearestNeighbours(IChannelFunction chn) {
 		return null;
 	}
 

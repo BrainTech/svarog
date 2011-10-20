@@ -29,7 +29,7 @@ import org.signalml.domain.montage.MontageSampleFilter;
 import org.signalml.domain.montage.RawMontageGenerator;
 import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.SourceMontage;
-import org.signalml.domain.montage.eeg.EegChannel;
+import org.signalml.domain.montage.eeg.ChannelFunction;
 import org.signalml.domain.montage.eeg.LeftEarMontageGenerator;
 import org.signalml.domain.montage.eeg.CAMontageGenerator;
 import org.signalml.domain.montage.eeg.LinkedEarsMontageGenerator;
@@ -67,7 +67,7 @@ public abstract class XMLUtils {
 	public static void configureStreamerForMontage(XStream streamer) {
 		Annotations.configureAliases(
 				streamer,
-				EegChannel.class,
+				ChannelFunction.class,
 				MontagePresetManager.class,
 				SourceChannel.class,
 				MontageChannel.class,
