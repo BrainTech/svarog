@@ -17,7 +17,6 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import org.signalml.app.config.preset.ChannelFunctionsPresetManager;
 import org.signalml.app.config.preset.EegSystemsPresetManager;
 import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
 
@@ -94,14 +93,12 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	 * {@link TimeDomainSampleFilter TimeDomainSampleFilters}.
 	 */
 	private PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainSampleFilterPresetManager;
-	private ChannelFunctionsPresetManager channelFunctionsPresetManager;
 	private EegSystemsPresetManager eegSystemsPresetManager;
 
 	public SignalMontageDialog(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager,
 		Window f, boolean isModal) {
 		super(messageSource, viewerElementManager.getMontagePresetManager(), f, isModal);
 		this.predefinedTimeDomainSampleFilterPresetManager = viewerElementManager.getPredefinedTimeDomainFiltersPresetManager();
-		this.channelFunctionsPresetManager = viewerElementManager.getChannelFunctionsPresetManager();
 		this.eegSystemsPresetManager = viewerElementManager.getEegSystemsPresetManager();
 	}
 
@@ -298,6 +295,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	public Preset getPreset() throws SignalMLException {
 
 		Montage preset = new Montage(currentMontage);
+
 
 		Errors errors = new BindException(preset, "data");
 		validateDialog(preset, errors);

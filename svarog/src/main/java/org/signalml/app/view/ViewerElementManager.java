@@ -149,7 +149,6 @@ import org.signalml.app.action.OpenSignalAndSetMontageAction;
 import org.signalml.app.action.StartMonitorRecordingAction;
 import org.signalml.app.action.StopBCIAction;
 import org.signalml.app.action.StopMonitorRecordingAction;
-import org.signalml.app.config.preset.ChannelFunctionsPresetManager;
 import org.signalml.app.config.preset.EegSystemsPresetManager;
 import org.signalml.app.config.preset.StyledTagSetPresetManager;
 import org.signalml.app.view.dialog.TagStylePresetDialog;
@@ -214,7 +213,6 @@ public class ViewerElementManager {
 	 */
 	private StyledTagSetPresetManager styledTagSetPresetManager;
 
-	private ChannelFunctionsPresetManager channelFunctionsPresetManager;
 	private EegSystemsPresetManager eegSystemsPresetManager;
 
 	private MP5ExecutorManager mp5ExecutorManager;
@@ -645,14 +643,6 @@ public class ViewerElementManager {
 	 */
 	public void setStyledTagSetPresetManager(StyledTagSetPresetManager styledTagSetPresetManager) {
 		this.styledTagSetPresetManager = styledTagSetPresetManager;
-	}
-
-	public ChannelFunctionsPresetManager getChannelFunctionsPresetManager() {
-		return channelFunctionsPresetManager;
-	}
-
-	public void setChannelFunctionsPresetManager(ChannelFunctionsPresetManager channelFunctionsPresetManager) {
-		this.channelFunctionsPresetManager = channelFunctionsPresetManager;
 	}
 
 	public EegSystemsPresetManager getEegSystemsPresetManager() {

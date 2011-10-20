@@ -89,13 +89,11 @@ import org.springframework.util.Log4jConfigurer;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.Annotations;
-import org.signalml.app.config.preset.ChannelFunctionsPresetManager;
 import org.signalml.app.config.preset.EegSystemsPresetManager;
 import org.signalml.app.config.preset.StyledTagSetPresetManager;
 import org.signalml.app.worker.amplifiers.AmplifierDefinitionPresetManager;
 import org.signalml.app.worker.processes.OpenBCIModulePresetManager;
 import org.signalml.app.worker.processes.ProcessManager;
-import org.signalml.domain.montage.channel.ChannelFunction;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.system.EegElectrode;
 import org.signalml.domain.montage.system.EegSystem;
@@ -147,7 +145,6 @@ public class SvarogApplication implements java.lang.Runnable {
 	private PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainSampleFilterPresetManager = null;
 
 	private StyledTagSetPresetManager styledTagSetPresetManager;
-	private ChannelFunctionsPresetManager channelFunctionsPresetManager;
 	private EegSystemsPresetManager eegSystemsPresetManager;
 
 	private MP5ExecutorManager mp5ExecutorManager = null;
@@ -831,17 +828,6 @@ public class SvarogApplication implements java.lang.Runnable {
 			logger.error("Failed to read styled tag set configuration - will use defaults", ex);
 		}
 
-		channelFunctionsPresetManager = new ChannelFunctionsPresetManager();
-		channelFunctionsPresetManager.setProfileDir(profileDir);
-
-		try {
-			channelFunctionsPresetManager.readFromPersistence(null);
-		} catch (FileNotFoundException ex) {
-			logger.debug("Channel functions config not found - will use defaults");
-		} catch (Exception ex) {
-			logger.error("Failed to read channel functions configuration - will use defaults", ex);
-		}
-
 		eegSystemsPresetManager = new EegSystemsPresetManager();
 		eegSystemsPresetManager.setProfileDir(profileDir);
 
@@ -1002,7 +988,6 @@ public class SvarogApplication implements java.lang.Runnable {
 		elementManager.setTimeDomainSampleFilterPresetManager(timeDomainSampleFilterPresetManager);
 		elementManager.setPredefinedTimeDomainFiltersPresetManager(predefinedTimeDomainSampleFilterPresetManager);
 		elementManager.setStyledTagSetPresetManager(styledTagSetPresetManager);
-		elementManager.setChannelFunctionsPresetManager(channelFunctionsPresetManager);
 		elementManager.setEegSystemsPresetManager(eegSystemsPresetManager);
 
 		elementManager.setMp5ExecutorManager(mp5ExecutorManager);
