@@ -88,7 +88,7 @@ public class GenericSignalTypeConfigurer implements SignalTypeConfigurer {
          * @return an array of generic channels of possible types
          */
 	@Override
-	public IChannelFunction[] allChannels() {
+	public IChannelFunction[] getAvailableFunctions() {
 		return GenericChannel.values();
 	}
 

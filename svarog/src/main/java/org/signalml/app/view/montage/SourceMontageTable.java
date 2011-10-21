@@ -76,25 +76,43 @@ public class SourceMontageTable extends JTable {
 		ChannelTableCellRenderer channelTableCellRenderer = new ChannelTableCellRenderer();
 		channelTableCellRenderer.setMessageSource(messageSource);
 
+		//index
 		tc = new TableColumn(SourceMontageTableModel.INDEX_COLUMN, 100);
 		tc.setHeaderValue(model.getColumnName(tc.getModelIndex()));
 		tc.setCellRenderer(grayIneditableTableCellRenderer);
 		columnModel.addColumn(tc);
 
+
+		//label
+		{
 		tc = new TableColumn(SourceMontageTableModel.LABEL_COLUMN, 200);
 		tc.setHeaderValue(model.getColumnName(tc.getModelIndex()));
-		columnModel.addColumn(tc);
 
+		ChannelComboBox channelLabelComboBox = new ChannelComboBox(messageSource);
+		channelLabelComboBox.setModel(model.getChannelsListModel());
+		channelLabelComboBox.setEditable(true);
+		
+		DefaultCellEditor channelLabelCellEditor = new DefaultCellEditor(channelLabelComboBox);
+		channelLabelCellEditor.setClickCountToStart(2);
+		tc.setCellEditor(channelLabelCellEditor);
+
+		columnModel.addColumn(tc);
+		}
+
+
+		//function
+		{
 		tc = new TableColumn(SourceMontageTableModel.FUNCTION_COLUMN, 200);
 		tc.setHeaderValue(model.getColumnName(tc.getModelIndex()));
 		tc.setCellRenderer(channelTableCellRenderer);
 		ChannelComboBox channelComboBox = new ChannelComboBox(messageSource);
-		channelComboBox.setModel(model.getChannelListModel());
+		channelComboBox.setModel(model.getChannelFunctionsListModel());
 		DefaultCellEditor channelCellEditor = new DefaultCellEditor(channelComboBox);
 		channelCellEditor.setClickCountToStart(2);
 		tc.setCellEditor(channelCellEditor);
 		columnModel.addColumn(tc);
 
+		}
 		setColumnModel(columnModel);
 
 		setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);

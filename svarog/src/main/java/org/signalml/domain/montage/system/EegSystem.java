@@ -32,6 +32,14 @@ public class EegSystem implements Preset {
 		this.name = name;
 	}
 
+	public int getNumberOfElectrodes() {
+		return electrodes.size();
+	}
+
+	public EegElectrode getElectrodeAt(int index) {
+		return electrodes.get(index);
+	}
+
 	public void addElectrode(EegElectrode electrode) {
 		electrodes.add(electrode);
 	}

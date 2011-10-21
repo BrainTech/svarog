@@ -717,4 +717,8 @@ public class VisualReferenceModel implements SourceMontageListener, MontageListe
 		}
 	}
 
+	@Override
+	public void sourceMontageEegSystemChanged(SourceMontageEvent ev) {
+	}
+
 }

@@ -35,10 +35,12 @@ public class SourceMontageTableModel extends AbstractTableModel implements Sourc
 
 	private SourceMontage montage;
 	private MessageSourceAccessor messageSource;
-	private ChannelListModel channelListModel;
+	private ChannelFunctionsListModel functionsListModel;
+	private ChannelsListModel channelsListModel;
 
 	public SourceMontageTableModel() {
-		channelListModel = new ChannelListModel();
+		functionsListModel = new ChannelFunctionsListModel();
+		channelsListModel = new ChannelsListModel();
 	}
 
 	public MessageSourceAccessor getMessageSource() {
@@ -49,8 +51,12 @@ public class SourceMontageTableModel extends AbstractTableModel implements Sourc
 		this.messageSource = messageSource;
 	}
 
-	public ChannelListModel getChannelListModel() {
-		return channelListModel;
+	public ChannelFunctionsListModel getChannelFunctionsListModel() {
+		return functionsListModel;
+	}
+
+	public ChannelsListModel getChannelsListModel() {
+		return channelsListModel;
 	}
 
 	public SourceMontage getMontage() {
@@ -65,10 +71,13 @@ public class SourceMontageTableModel extends AbstractTableModel implements Sourc
 			this.montage = montage;
 			if (montage != null) {
 				montage.addSourceMontageListener(this);
-				channelListModel.setConfigurer(montage.getSignalTypeConfigurer());
+				functionsListModel.setConfigurer(montage.getSignalTypeConfigurer());
+				channelsListModel.setEegSystem(montage.getEegSystem());
 			} else {
-				channelListModel.setConfigurer(null);
+				functionsListModel.setConfigurer(null);
+				channelsListModel.setEegSystem(null);
 			}
+			
 			fireTableDataChanged();
 		}
 	}
@@ -211,6 +220,11 @@ public class SourceMontageTableModel extends AbstractTableModel implements Sourc
 	public void sourceMontageChannelRemoved(SourceMontageEvent ev) {
 		int channel = ev.getChannel();
 		fireTableRowsDeleted(channel, channel);
+	}
+
+	@Override
+	public void sourceMontageEegSystemChanged(SourceMontageEvent ev) {
+		channelsListModel.setEegSystem(montage.getEegSystem());
 	}
 
 }

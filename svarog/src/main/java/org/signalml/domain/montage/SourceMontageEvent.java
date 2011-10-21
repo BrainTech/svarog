@@ -23,6 +23,10 @@ public class SourceMontageEvent extends EventObject {
          */
 	private int channel;
 
+	public SourceMontageEvent(Object source) {
+		super(source);
+	}
+
         /**
          * Creates an event associated with change, removal or addition of
          * a {@link SourceChannel source channel}.

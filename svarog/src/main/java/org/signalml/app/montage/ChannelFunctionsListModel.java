@@ -15,7 +15,7 @@ import org.signalml.domain.signal.SignalTypeConfigurer;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class ChannelListModel extends AbstractListModel implements ComboBoxModel {
+public class ChannelFunctionsListModel extends AbstractListModel implements ComboBoxModel {
 
 	private static final long serialVersionUID = 1L;
 
@@ -24,7 +24,7 @@ public class ChannelListModel extends AbstractListModel implements ComboBoxModel
 
 	private Object selectedItem;
 
-	public ChannelListModel() {
+	public ChannelFunctionsListModel() {
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class ChannelListModel extends AbstractListModel implements ComboBoxModel
 		if (this.configurer != configurer) {
 			this.configurer = configurer;
 			if (configurer != null) {
-				values = configurer.allChannels();
+				values = configurer.getAvailableFunctions();
 			}
 			selectedItem = null;
 			fireContentsChanged(this, 0, getSize()-1);

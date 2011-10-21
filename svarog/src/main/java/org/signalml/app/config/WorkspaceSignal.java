@@ -36,6 +36,8 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Document;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import org.signalml.app.config.preset.EegSystemsPresetManager;
+import org.signalml.domain.montage.system.EegSystem;
 
 /** WorkspaceSignal
  *
@@ -179,13 +181,19 @@ public class WorkspaceSignal extends WorkspaceDocument {
 
 	}
 
-	public void configureSignal(SignalDocument document, DocumentFlowIntegrator integrator) throws IOException, SignalMLException, ConnectException {
+	public void configureSignal(SignalDocument document, DocumentFlowIntegrator integrator, EegSystemsPresetManager eegSystemsPresetManager) throws IOException, SignalMLException, ConnectException {
 
 		SignalView view = (SignalView) document.getDocumentView();
 		SignalPlot masterSignalPlot = view.getMasterPlot();
 
 		if (zoomSignalSettings != null) {
 			view.getZoomSignalTool().setSettings(zoomSignalSettings);
+		}
+
+		if (eegSystemsPresetManager != null) {
+			String eegSystemName = montage.getEegSystemName();
+			EegSystem eegSystem = (EegSystem) eegSystemsPresetManager.getPresetByName(eegSystemName);
+			montage.setEegSystem(eegSystem);
 		}
 
 		if (montage != null) {

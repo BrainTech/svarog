@@ -9,6 +9,7 @@ import org.signalml.app.view.opensignal.SignalSource;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.domain.signal.SignalType;
+import org.signalml.domain.signal.raw.RawSignalDescriptor;
 
 /**
  * Describes the signal to be opened and the montage to be applied to the signal
@@ -39,8 +40,6 @@ public class OpenSignalDescriptor {
 	 */
 	private AmplifierConnectionDescriptor amplifierConnectionDescriptor;
 
-	private EegSystem eegSystem;
-
 	/**
 	 * Montage to be applied to the signal directly after opening.
 	 */
@@ -62,6 +61,13 @@ public class OpenSignalDescriptor {
 	 */
 	public void setMontage(Montage montage) {
 		this.montage = montage;
+
+		if (openFileSignalDescriptor != null) {
+			RawSignalDescriptor rawSignalDescriptor = openFileSignalDescriptor.getRawSignalDescriptor();
+			EegSystem eegSystem = montage.getEegSystem();
+			if (eegSystem != null && rawSignalDescriptor != null)
+				rawSignalDescriptor.setEegSystemName(eegSystem.getName());
+		}
 	}
 
 	/**
@@ -137,14 +143,6 @@ public class OpenSignalDescriptor {
 	 */
 	public void setSignalSource(SignalSource signalSource) {
 		this.signalSource = signalSource;
-	}
-
-	public EegSystem getEegSystem() {
-		return eegSystem;
-	}
-
-	public void setEegSystem(EegSystem eegSystem) {
-		this.eegSystem = eegSystem;
 	}
 
 }

@@ -36,4 +36,6 @@ public interface SourceMontageListener extends EventListener {
          */
 	void sourceMontageChannelChanged(SourceMontageEvent ev);
 
+	void sourceMontageEegSystemChanged(SourceMontageEvent ev);
+
 }

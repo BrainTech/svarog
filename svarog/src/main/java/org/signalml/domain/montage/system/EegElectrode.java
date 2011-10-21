@@ -29,4 +29,9 @@ public class EegElectrode {
 		this.polarPosition = polarPosition;
 	}
 
+	@Override
+	public String toString() {
+		return label;
+	}
+
 }

@@ -45,7 +45,8 @@ public class SourceMontage {
          * a {@link SignalType type} of a signal for this SourceMontage
          */
 	protected SignalType signalType;
-	
+
+	private String eegSystemName;
 	private transient EegSystem eegSystem;
 
         /**
@@ -278,13 +279,18 @@ public class SourceMontage {
 	public void setEegSystem(EegSystem eegSystem) {
 		this.eegSystem = eegSystem;
 
-		if (eegSystem == null)
+		if (eegSystem == null) {
+			eegSystemName = null;
 			return;
+		}
+		else {
+			eegSystemName = eegSystem.getName();
+		}
 
 		for (SourceChannel sourceChannel: sourceChannels) {
 			refreshElectrodeAndFunctionForSourceChannel(sourceChannel);
-			fireSourceMontageChannelChanged(this, sourceChannel.getChannel());
 		}
+		fireSourceMontageEegSystemChanged(this);
 	}
 
 	protected void refreshElectrodeAndFunctionForSourceChannel(SourceChannel sourceChannel) {
@@ -301,6 +307,7 @@ public class SourceMontage {
 			sourceChannel.setEegElectrode(null);
 			sourceChannel.setFunction(ChannelFunction.UNKNOWN);
 		}
+		fireSourceMontageChannelChanged(this, sourceChannel.getChannel());
 	}
 
         /**
@@ -765,6 +772,23 @@ public class SourceMontage {
 				((SourceMontageListener)listeners[i+1]).sourceMontageChannelChanged(e);
 			}
 		}
+	}
+
+	protected void fireSourceMontageEegSystemChanged(Object source) {
+		Object[] listeners = listenerList.getListenerList();
+		SourceMontageEvent e = null;
+		for (int i = listeners.length-2; i>=0; i-=2) {
+			if (listeners[i]==SourceMontageListener.class) {
+				if (e == null) {
+					e = new SourceMontageEvent(source);
+				}
+				((SourceMontageListener)listeners[i+1]).sourceMontageEegSystemChanged(e);
+			}
+		}
+	}
+
+	public String getEegSystemName() {
+		return eegSystemName;
 	}
 
 }

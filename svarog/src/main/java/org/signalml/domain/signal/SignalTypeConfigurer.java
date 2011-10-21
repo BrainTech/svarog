@@ -42,7 +42,7 @@ public interface SignalTypeConfigurer {
          * Returns an array with {@link Channel channels} of possible types.
          * @return an array with Channels of possible types
          */
-	IChannelFunction[] allChannels();
+	IChannelFunction[] getAvailableFunctions();
 
         /**
          * Returns the {@link Channel channel} that is generic for a montage

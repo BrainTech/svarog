@@ -694,6 +694,10 @@ public class MontageGeneratorPanel extends JPanel {
 			onChange();
 		}
 
+		@Override
+		public void sourceMontageEegSystemChanged(SourceMontageEvent ev) {
+		}
+
 	}
 
 }

@@ -121,7 +121,7 @@ public class EegSignalTypeConfigurer implements SignalTypeConfigurer {
 	}
 
 	@Override
-	public IChannelFunction[] allChannels() {
+	public IChannelFunction[] getAvailableFunctions() {
 		return ChannelFunction.values();
 	}
 
