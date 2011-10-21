@@ -1,0 +1,28 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-10-19 12:52+0200\n"
+"PO-Revision-Date: 2011-10-19 11:23+0200\n"
+"Last-Translator: SF <stf@eisenbits.com>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: org/signalml/plugin/sf/SFTestPlugin.java:21
+#, java-format
+msgid "Deleted one file"
+msgid_plural "Deleted {0} files"
+msgstr[0] "Deleted one file (english translation)"
+msgstr[1] "Deleted {0} files (english translation)"
+
+#: org/signalml/plugin/sf/SFTestPlugin.java:37
+msgid "This is an i18n test. Hello, world!"
+msgstr "This is an i18n test (english translation). Hello, world!"

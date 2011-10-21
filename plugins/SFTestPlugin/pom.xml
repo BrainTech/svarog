@@ -17,6 +17,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.build.i18n.resources>src/main/resources/</project.build.i18n.resources>
 		<maven.final.name>SFTestPlugin</maven.final.name>
 	</properties>
 
@@ -72,6 +73,27 @@
 					</execution>
 				</executions>
 			</plugin>
+
+            <plugin>
+                <groupId>org.xnap.commons</groupId>
+                <artifactId>maven-gettext-plugin</artifactId>
+                <version>1.2.3</version>
+
+                <configuration>
+                    <poDirectory>${project.build.i18n.resources}</poDirectory>
+                    <targetBundle>org.signalml.plugin.sf.I18nBundle</targetBundle>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <id>generate-i18n</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>dist</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 	</build>
 
