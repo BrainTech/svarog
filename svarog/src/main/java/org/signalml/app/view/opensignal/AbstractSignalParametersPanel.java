@@ -23,7 +23,6 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import org.signalml.app.view.element.IntegerSpinner;
-import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.view.element.FloatSpinner;
 import org.signalml.app.view.element.ResolvableComboBox;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;

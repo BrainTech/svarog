@@ -63,25 +63,25 @@ public class EmbeddedFileChooserFavorites extends JPanel implements
 	private ApplicationConfiguration applicationConfiguration;
 	
 	/*
-	 * favorities and history components panel
+	 * favorites and history components panel
 	 */
 	private JPanel mainPanel;
 	/*
 	 * button to show and hide Favorites
 	 */
-	private JButton favoritiesButton;
+	private JButton favoritesButton;
 	/*
 	 * indicates whether the panel is hidden or not. By default hidden
 	 */
 	private int hidden=1;
 	/*
-	 * an icon for 'show' mode of {@code favoritiesButton} button
+	 * an icon for 'show' mode of {@code favoritesButton} button
 	 */
-	private ImageIcon showFavoritiesIcon;
+	private ImageIcon showFavoritesIcon;
 	/*
-	 * an icon fo 'hide' mode or {@code favoritiesButton} button
+	 * an icon fo 'hide' mode or {@code favoritesButton} button
 	 */
-	private ImageIcon hideFavoritiesIcon;
+	private ImageIcon hideFavoritesIcon;
 	/*
 	 * combo box with recently visited directories
 	 */
@@ -89,7 +89,7 @@ public class EmbeddedFileChooserFavorites extends JPanel implements
 	/*
 	 * combo box with favourities directories
 	 */
-	private JComboBox favoritiesCombo;
+	private JComboBox favoritesCombo;
   
 	/* Creates panel and all its gui components.
 	 * 
@@ -114,7 +114,7 @@ public class EmbeddedFileChooserFavorites extends JPanel implements
 	
 	    this.mainPanel = new JPanel();
 	    this.mainPanel.setLayout(new BoxLayout(this.mainPanel, BoxLayout.Y_AXIS));
-	    this.mainPanel.add(getFavoritiesGui());
+	    this.mainPanel.add(getFavoritesGui());
 	    this.mainPanel.add(new JLabel(" "));
 	    this.mainPanel.add(new JLabel(" "));
 	    this.mainPanel.add(getHistoryGui());
@@ -151,12 +151,12 @@ public class EmbeddedFileChooserFavorites extends JPanel implements
  	public void showHide() {
  		this.hidden = (this.hidden + 1) % 2;
 		if (this.hidden == 1) {
-			this.favoritiesButton.setIcon(this.hideFavoritiesIcon);
-			this.favoritiesButton.setToolTipText(this.messageSource.getMessage("opensignal.fileChooser.hideFavorities"));
+			this.favoritesButton.setIcon(this.hideFavoritesIcon);
+			this.favoritesButton.setToolTipText(this.messageSource.getMessage("opensignal.fileChooser.hideFavorites"));
 			this.mainPanel.show();
 		} else {
-			this.favoritiesButton.setIcon(this.showFavoritiesIcon);
-			this.favoritiesButton.setToolTipText(this.messageSource.getMessage("opensignal.fileChooser.showFavorities"));
+			this.favoritesButton.setIcon(this.showFavoritesIcon);
+			this.favoritesButton.setToolTipText(this.messageSource.getMessage("opensignal.fileChooser.showFavorites"));
 	  		this.mainPanel.hide();
 	  		}
 		this.updateUI();
@@ -179,7 +179,7 @@ public class EmbeddedFileChooserFavorites extends JPanel implements
 			new_dirs[0] = dir;
 			}
  		this.updateCurrentDirectories(new_dirs);
- 		this.favoritiesCombo.setSelectedItem(dir);
+ 		this.favoritesCombo.setSelectedItem(dir);
 	}
  	
  	/*
@@ -195,9 +195,9 @@ public class EmbeddedFileChooserFavorites extends JPanel implements
  			new_dirs[0] = "";
  			this.applicationConfiguration.setFavouriteDirs(dirs);
 		  
- 			this.favoritiesCombo.removeAllItems();
+ 			this.favoritesCombo.removeAllItems();
  			DefaultComboBoxModel model = new DefaultComboBoxModel(new_dirs);  
- 			this.favoritiesCombo.setModel(model); 
+ 			this.favoritesCombo.setModel(model); 
  		}
  	}
  	
@@ -205,7 +205,7 @@ public class EmbeddedFileChooserFavorites extends JPanel implements
  	 * Gets current directory from favorites combo and remove it from favorites.
  	 */
  	public void removeCurrentDirectory() {
- 		String dir = (String) this.favoritiesCombo.getSelectedItem();
+ 		String dir = (String) this.favoritesCombo.getSelectedItem();
  		String[] dirs = this.applicationConfiguration.getFavouriteDirs();
  		if (dirs == null || dir == null)
  			return;
@@ -291,18 +291,18 @@ public class EmbeddedFileChooserFavorites extends JPanel implements
 	        	fcf.showHide();
 	        }
 	      });
-	    this.favoritiesButton = b;
+	    this.favoritesButton = b;
 	    
 	    //Prepare icons for button
 	    Image iconImage;
 	    ImageIcon ic;
-	    iconImage = IconUtils.loadClassPathImage("org/signalml/app/icon/favorities.png");
+	    iconImage = IconUtils.loadClassPathImage("org/signalml/app/icon/favorites.png");
 	    ic = new ImageIcon(iconImage);
-	    this.showFavoritiesIcon = ic;
+	    this.showFavoritesIcon = ic;
 	    
-	    iconImage = IconUtils.loadClassPathImage("org/signalml/app/icon/favorities_crossed.png");
+	    iconImage = IconUtils.loadClassPathImage("org/signalml/app/icon/favorites_crossed.png");
 	    ic = new ImageIcon(iconImage);
-	    this.hideFavoritiesIcon = ic;
+	    this.hideFavoritesIcon = ic;
 	    
 	    
 	    JPanel p = new JPanel();
@@ -317,12 +317,12 @@ public class EmbeddedFileChooserFavorites extends JPanel implements
  	 * 
  	 * @returns panel containing favorites GUI
  	 */
- 	protected JPanel getFavoritiesGui() {
+ 	protected JPanel getFavoritesGui() {
 	    
 	  //layout settings
  		JPanel p = new JPanel();
  		p.setBorder(new CompoundBorder(
- 				new TitledBorder(messageSource.getMessage("opensignal.fileChooser.favorities")),
+ 				new TitledBorder(messageSource.getMessage("opensignal.fileChooser.favorites")),
  				new EmptyBorder(3, 3, 3, 3)));
  		p.setLayout(new BorderLayout(0, 10));
  		
@@ -331,15 +331,15 @@ public class EmbeddedFileChooserFavorites extends JPanel implements
       
       //buttons preparing
  		JComboBox locationsButton = this.getDropDownList();
- 		this.favoritiesCombo = locationsButton;
- 		this.favoritiesCombo.setMaximumRowCount(10);
+ 		this.favoritesCombo = locationsButton;
+ 		this.favoritesCombo.setMaximumRowCount(10);
  		this.updateCurrentDirectories(this.applicationConfiguration.getFavouriteDirs());
  		final EmbeddedFileChooserFavorites fcf = this;
       
  		ImageIcon ic = new ImageIcon(IconUtils.loadClassPathImage("org/signalml/app/icon/add.png"));
  		JButton addFavsButton = new JButton(ic);  
  		addFavsButton.setContentAreaFilled(false);
- 		addFavsButton.setToolTipText(this.messageSource.getMessage("opensignal.fileChooser.addToFavorities"));
+ 		addFavsButton.setToolTipText(this.messageSource.getMessage("opensignal.fileChooser.addToFavorites"));
  		addFavsButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
  		addFavsButton.addActionListener(new ActionListener() {
  			public void actionPerformed(ActionEvent e) {
@@ -349,7 +349,7 @@ public class EmbeddedFileChooserFavorites extends JPanel implements
  		ic = new ImageIcon(IconUtils.loadClassPathImage("org/signalml/app/icon/remove.png"));
  		JButton removeFavsButton = new JButton(ic);
  		removeFavsButton.setContentAreaFilled(false);
- 		removeFavsButton.setToolTipText(this.messageSource.getMessage("opensignal.fileChooser.removeFromFavorities"));
+ 		removeFavsButton.setToolTipText(this.messageSource.getMessage("opensignal.fileChooser.removeFromFavorites"));
  		removeFavsButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
  		removeFavsButton.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
@@ -360,7 +360,7 @@ public class EmbeddedFileChooserFavorites extends JPanel implements
  		//layout filling
  		JPanel p2 = new JPanel();
  		p2.setLayout(new BorderLayout());
- 		JLabel locationsLabel = new JLabel(messageSource.getMessage("opensignal.fileChooser.goToFavorities"));      
+ 		JLabel locationsLabel = new JLabel(messageSource.getMessage("opensignal.fileChooser.goToFavorites"));      
  		p2.add(locationsLabel, BorderLayout.WEST);
  		p2.add(new JLabel(" "), BorderLayout.CENTER);
       
@@ -370,7 +370,7 @@ public class EmbeddedFileChooserFavorites extends JPanel implements
  		p2.add(p3, BorderLayout.EAST);
         
  		fieldsPanel.add(p2);
- 		fieldsPanel.add(this.favoritiesCombo);
+ 		fieldsPanel.add(this.favoritesCombo);
                              
  		p.add(fieldsPanel);
  		return p;  

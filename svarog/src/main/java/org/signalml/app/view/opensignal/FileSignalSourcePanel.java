@@ -119,6 +119,8 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
                 }
 
 		File selectedFile = fileChooserPanel.getSelectedFile();
+		if(selectedFile.exists())		
+			fileChooserPanel.getFileChooser().lastDirectoryChanged(selectedFile.getParentFile().getPath());
 		descriptor.setFile(selectedFile);
 
 		getApplicationConfiguration().setLastOpenDocumentPath(getFileChooserPanel().getFileChooser().getCurrentDirectory().getAbsolutePath());
@@ -176,6 +178,7 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 	public SignalParametersPanelForRawSignalFile getRawSignalParametersPanel() {
 		if (rawSignalParametersPanel == null) {
 			rawSignalParametersPanel = new SignalParametersPanelForRawSignalFile(messageSource);
+			rawSignalParametersPanel.setApplicationConfiguration(getApplicationConfiguration());
 			rawSignalParametersPanel.addPropertyChangeListener(this);
 			rawSignalParametersPanel.setSignalFileChooser(getFileChooserPanel().getFileChooser());
 		}
