@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.signalml.plugin.export.Plugin;
+import org.signalml.plugin.impl.PluginAuthImpl;
 
 /**
  * Plugin descriptor in Svarog.
@@ -18,6 +19,7 @@ public class PluginHead {
     private PluginLoaderLo loader;
     /** Plugin object. */
     private Plugin pluginFacade;
+    private PluginAuthImpl pluginAuth;
     
     protected PluginHead(PluginDescription desc) {
         this.description = desc;
@@ -51,6 +53,16 @@ public class PluginHead {
         this.loader = cl;
     }
     
+    public PluginAuthImpl getPluginAuth() {
+        return pluginAuth;
+    }
+    protected void setPluginAuth(PluginAuthImpl auth) {
+        this.pluginAuth = auth;
+    }
+
+    public Plugin getPluginObj() {
+        return pluginFacade;
+    }
     protected void setPluginObj(Plugin p) {
         this.pluginFacade = p;
     }
@@ -59,5 +71,13 @@ public class PluginHead {
         if (null == loader)
             return false;
         return loader.hasLoaded(className);
+    }
+    
+    public String toString() {
+        if (null == description) {
+            return super.toString();
+        } else {
+            return description.getName();
+        }
     }
 }

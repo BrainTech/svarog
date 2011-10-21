@@ -2,6 +2,7 @@ package org.signalml.plugin.sf;
 
 import org.signalml.app.logging.SvarogLogger;
 import org.signalml.plugin.export.Plugin;
+import org.signalml.plugin.export.PluginAuth;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.SvarogAccess;
 
@@ -11,7 +12,7 @@ import org.signalml.plugin.export.SvarogAccess;
  * @author Stanislaw Findeisen (Eisenbits)
  */
 public class SFTestPlugin implements Plugin {
-	public void register(SvarogAccess sa) throws SignalMLException {
+	public void register(SvarogAccess sa, PluginAuth auth) throws SignalMLException {
 	    SvarogLogger.getSharedInstance().debug("SFTestPlugin.register(): hello world!");
 	    sa.getGUIAccess().addButtonToToolsMenu(new BombAction());
 	    sa.getGUIAccess().addButtonToToolsMenu(new GrenadeAction());

@@ -1,7 +1,10 @@
 package org.signalml.plugin.impl;
 
+import java.util.HashMap;
+
 import org.apache.log4j.Logger;
 import org.signalml.app.view.ViewerElementManager;
+import org.signalml.plugin.export.PluginAuth;
 import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.change.SvarogAccessChangeSupport;
 import org.signalml.plugin.export.config.SvarogAccessConfig;
@@ -9,6 +12,7 @@ import org.signalml.plugin.export.method.SvarogAccessMethod;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
 import org.signalml.plugin.impl.change.ChangeSupportImpl;
+import org.signalml.plugin.loader.PluginHead;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
@@ -57,6 +61,10 @@ public class PluginAccessClass implements SvarogAccess {
 	 */
 	private ChangeSupportImpl changeSupport;
 
+	/**
+	 * The plugin map.
+	 */
+	private HashMap<PluginAuth,PluginHead> pluginMap = new HashMap<PluginAuth,PluginHead>();
 	
 	/**
 	 * Constructor. Creates child accesses.
@@ -83,6 +91,15 @@ public class PluginAccessClass implements SvarogAccess {
 		}
 
 		return sharedInstance;
+	}
+	
+	public synchronized void addPlugin(PluginHead head) {
+	    PluginAuth auth = head.getPluginAuth();
+	    if (pluginMap.containsKey(auth)) {
+	        throw new IllegalArgumentException("Duplicate plugin auth! (" + (auth.getID()) + ")");
+	    }
+	    pluginMap.put(auth, head);
+	    logger.debug("addPlugin: " + auth + " --> " + head);
 	}
 
 	/**
