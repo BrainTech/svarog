@@ -678,12 +678,12 @@
 	<entry key="opensignal.signalsource.OPENBCI">OpenBCI</entry>
 	<entry key="opensignal.signalsource.AMPLIFIER">Amplifier</entry>
 
-        <entry key="opensignal.fileChooser.showFavorities">Show favorites</entry>	
-        <entry key="opensignal.fileChooser.hideFavorities">Hide favorites</entry>	
-        <entry key="opensignal.fileChooser.favorities">Favorites</entry>	
-        <entry key="opensignal.fileChooser.removeFromFavorities">Remove from favorites</entry>
-        <entry key="opensignal.fileChooser.addToFavorities">Add current directory to favorites</entry>
-        <entry key="opensignal.fileChooser.goToFavorities">Choose location</entry>
+        <entry key="opensignal.fileChooser.showFavorites">Show favorites</entry>	
+        <entry key="opensignal.fileChooser.hideFavorites">Hide favorites</entry>	
+        <entry key="opensignal.fileChooser.favorites">Favorites</entry>	
+        <entry key="opensignal.fileChooser.removeFromFavorites">Remove from favorites</entry>
+        <entry key="opensignal.fileChooser.addToFavorites">Add current directory to favorites</entry>
+        <entry key="opensignal.fileChooser.goToFavorites">Choose location</entry>
         <entry key="opensignal.fileChooser.history">History</entry>
         <entry key="opensignal.fileChooser.lastDirs">Last directories</entry>
         <entry key="opensignal.fileChooser.lastFiles">Last files</entry>
