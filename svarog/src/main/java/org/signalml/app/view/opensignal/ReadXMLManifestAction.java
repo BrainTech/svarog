@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.element.EmbeddedFileChooser;
+import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalDescriptorReader;
 import org.signalml.plugin.export.SignalMLException;
@@ -49,6 +50,14 @@ public class ReadXMLManifestAction extends AbstractSignalMLAction {
 	 */
 	private EmbeddedFileChooser signalFileChooser;
 
+	private MessageSourceAccessor messageSource;
+
+	private ApplicationConfiguration applicationConfig;
+
+	public void setApplicationConfiguration(ApplicationConfiguration applicationConfig){
+		this.applicationConfig = applicationConfig;
+	}
+
 	/**
 	 * Constructor.
 	 * @param messageSource message source capable of resolving localized messages
@@ -58,7 +67,7 @@ public class ReadXMLManifestAction extends AbstractSignalMLAction {
 	public ReadXMLManifestAction(MessageSourceAccessor messageSource,
 		SignalParametersPanelForRawSignalFile parentSignalParametersPanel) {
 		super(messageSource);
-
+		this.messageSource = messageSource;
 		this.setText("openSignal.options.raw.readXMLManifest");
 		this.parentSignalParametersPanel = parentSignalParametersPanel;
 
@@ -98,7 +107,11 @@ public class ReadXMLManifestAction extends AbstractSignalMLAction {
 			directory = signalFileChooser.getCurrentDirectory();
 		}
 
-		JFileChooser fileChooser = new JFileChooser();
+		JFileChooser fileChooser;		
+		if(applicationConfig == null)
+			fileChooser = new JFileChooser();
+		else		
+			fileChooser = new EmbeddedFileChooser(messageSource, applicationConfig);
 		fileChooser.setCurrentDirectory(directory);
 		fileChooser.setSelectedFile(fileSuggestion);
 		fileChooser.showOpenDialog(parentSignalParametersPanel);
@@ -107,7 +120,8 @@ public class ReadXMLManifestAction extends AbstractSignalMLAction {
 		if (xmlFile == null) {
 			return;
 		}
-
+		if (xmlFile.exists() && applicationConfig != null)
+			((EmbeddedFileChooser)fileChooser).lastDirectoryChanged(xmlFile.getParentFile().getPath());
 		if (reader == null) {
 			reader = new RawSignalDescriptorReader();
 		}

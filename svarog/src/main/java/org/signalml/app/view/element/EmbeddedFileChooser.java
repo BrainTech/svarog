@@ -57,6 +57,10 @@ public class EmbeddedFileChooser extends JFileChooser {
 		super();
 	}
 	
+	public void lastDirectoryChanged(String dir){
+		if(getAccessory() != null)
+			getAccessory().lastDirectoryChanged(dir);
+	}
 
 	/**
      * Constructs a <code>EmbeddedFileChooser</code> pointing to the user's
@@ -69,7 +73,6 @@ public class EmbeddedFileChooser extends JFileChooser {
 		super();
 		EmbeddedFileChooserFavorites f = new EmbeddedFileChooserFavorites(this, messageSource, applicationConfiguration);
 		this.setAccessory(f);
-		this.addPropertyChangeListener(f);
 	}
 
 	/**
@@ -306,4 +309,9 @@ public class EmbeddedFileChooser extends JFileChooser {
 		}
 	}
 
+	@Override
+	public EmbeddedFileChooserFavorites getAccessory(){
+		return (EmbeddedFileChooserFavorites) super.getAccessory();
+	}
+	
 }

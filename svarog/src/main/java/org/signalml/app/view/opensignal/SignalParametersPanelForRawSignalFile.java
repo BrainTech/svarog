@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.awt.GridBagConstraints;
 import org.signalml.app.view.element.EmbeddedFileChooser;
+import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
@@ -27,6 +28,10 @@ public class SignalParametersPanelForRawSignalFile extends AbstractSignalParamet
 	 * from an XML file.
 	 */
 	private ReadXMLManifestAction readManifestAction;
+
+	public void setApplicationConfiguration(ApplicationConfiguration applicationConfig){	
+		readManifestAction.setApplicationConfiguration(applicationConfig);
+	}
 
 	/**
 	 * Constructor.
