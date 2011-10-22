@@ -1,0 +1,36 @@
+#!/bin/sh
+
+set -ex
+
+name=generated-sources
+branch="refs/heads/$name"
+directory=svarog/target/generated-sources
+commit_prefix="Generated sources for "
+
+git_describe="$(git describe --always --tags --dirty=+)"
+protoc_version="$(protoc --version || true)" # fuck protoc
+
+export GIT_INDEX_FILE=.git/$name-tmp-index
+cleanup() { rm -vf $GIT_INDEX_FILE; }
+trap cleanup EXIT
+
+case "$1" in
+(commit)
+	if ! git rev-parse --verify "$branch" > /dev/null ; then
+	    echo "Fatal: no local branch '$branch' exists!"
+	    exit 2
+	fi
+
+	git add -f "$directory"
+	tree=$(git write-tree)
+	commit=$(/bin/echo -e "$commit_prefix$git_describe\n\n$protoc_version" | git commit-tree $tree -p "$branch")
+
+	git update-ref "$branch" $commit
+	git log -1 --oneline $branch
+	;;
+("")
+	git read-tree -m -u "$branch"
+	;;
+esac
+
+rm $GIT_INDEX_FILE

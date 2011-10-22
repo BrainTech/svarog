@@ -17,6 +17,8 @@ import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.view.dialog.OptionPane;
 import org.springframework.context.support.MessageSourceAccessor;
+import org.signalml.app.view.element.EmbeddedFileChooser;
+import org.signalml.app.view.element.EmbeddedFileChooserFavorites;
 
 /** ViewerFileChooser
  *
@@ -794,7 +796,10 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 		file = chooseFileForRead(parent, openTag);
 		if (file != null) {
 			applicationConfig.setLastOpenTagPath(getCurrentDirectory().getAbsolutePath());
+			if(file.exists() && getAccessory() != null)
+				getAccessory().lastDirectoryChanged(file.getParent());
 		}
+
 
 		return file;
 
@@ -1061,6 +1066,13 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 
 	protected synchronized void setApplicationConfig(ApplicationConfiguration applicationConfig) {
 		this.applicationConfig = applicationConfig;
+		EmbeddedFileChooserFavorites f = new EmbeddedFileChooserFavorites(this, messageSource, applicationConfig);
+		this.setAccessory(f);
+	}
+
+	@Override
+	public EmbeddedFileChooserFavorites getAccessory(){
+		return (EmbeddedFileChooserFavorites) super.getAccessory();
 	}
 
 	protected class OptionSet {
