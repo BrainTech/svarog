@@ -201,24 +201,6 @@ public class EegSignalTypeConfigurer implements SignalTypeConfigurer {
 	}
 
         /**
-         * Returns the height of the matrix of {@link EegChannel EEG channels}.
-         * @return the height of the matrix of EEG channels
-         */
-	@Override
-	public int getMatrixHeight() {
-		return ChannelFunction.MATRIX_HEIGHT;
-	}
-
-        /**
-         * Returns the width of the matrix of {@link EegChannel EEG channels}.
-         * @return the width of the matrix of EEG channels
-         */
-	@Override
-	public int getMatrixWidth() {
-		return ChannelFunction.MATRIX_WIDTH;
-	}
-
-        /**
          * Returns the number of predefined
          * {@link MontageGenerator montage generators}.
          * @return the number of predefined montage generators

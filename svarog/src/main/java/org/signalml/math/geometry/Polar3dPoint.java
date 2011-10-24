@@ -1,6 +1,7 @@
 package org.signalml.math.geometry;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import java.awt.geom.Point2D;
 
 /**
  *
@@ -11,23 +12,23 @@ public class Polar3dPoint {
 
 	private double theta;
 	private double radius;
-	private double asimuth;
+	private double fi;
 
 	public Polar3dPoint() {
 	}
 
-	public Polar3dPoint(double theta, double radius, double asimuth) {
+	public Polar3dPoint(double theta, double radius, double fi) {
 		this.theta = theta;
 		this.radius = radius;
-		this.asimuth = asimuth;
+		this.fi = fi;
 	}
 
-	public double getAsimuth() {
-		return asimuth;
+	public double getFi() {
+		return fi;
 	}
 
-	public void setAsimuth(double asimuth) {
-		this.asimuth = asimuth;
+	public void setFi(double fi) {
+		this.fi = fi;
 	}
 
 	public double getRadius() {
@@ -44,6 +45,15 @@ public class Polar3dPoint {
 
 	public void setTheta(double theta) {
 		this.theta = theta;
+	}
+
+	public Point2D convertTo2DPoint(Point2D center, float maxRadius) {
+		double radiusProjectionLength= Math.abs(Math.cos(getFi()) * getRadius());
+
+		double x = center.getX() - Math.sin(getTheta()) * radiusProjectionLength * (maxRadius);
+		double y = center.getY() - Math.cos(getTheta()) * radiusProjectionLength * (maxRadius);
+
+		return new Point2D.Double(x,y);
 	}
 
 }

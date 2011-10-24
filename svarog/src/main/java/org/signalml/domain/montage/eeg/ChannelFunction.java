@@ -60,48 +60,6 @@ public enum ChannelFunction implements IChannelFunction {
      */
 	private boolean mutable;
 
-
-
-        /**
-         * the number of a column in which this channel is located
-         */
-	private int matrixCol;
-
-        /**
-         * the number of a row in which this channel is located
-         */
-	private int matrixRow;
-
-        /**
-         * the width of channels matrix
-         */
-	public static final int MATRIX_WIDTH = 7;
-
-        /**
-         * the height of channels matrix
-         */
-	public static final int MATRIX_HEIGHT = 6;
-
-        /**
-         * the static matrix of channels
-         */
-	private static ChannelFunction[][] matrix;
-
-        /**
-         * Creates channels matrix.
-         */
-	static {
-
-		matrix = new ChannelFunction[MATRIX_WIDTH][MATRIX_HEIGHT];
-		ChannelFunction[] all = values();
-		for (ChannelFunction c : all) {
-			if (c.matrixCol >= 0 && c.matrixRow >= 0) {
-				matrix[c.matrixCol][c.matrixRow] = c;
-			}
-		}
-
-	}
-
         /**
          * Constructor. Creates a channel of a given {@link ChannelType type}
          * and puts it at given location.
@@ -115,7 +73,7 @@ public enum ChannelFunction implements IChannelFunction {
          * @param matrixRow the row of the matrix in which this channel
          * is located
          */
-	private ChannelFunction(String name, ChannelType type, boolean unique, String pattern, int matrixCol, int matrixRow) {
+	private ChannelFunction(String name, ChannelType type, boolean unique, String pattern) {
 		this.mutable=true;
 		this.name = name;
 		this.type = type;
@@ -123,28 +81,8 @@ public enum ChannelFunction implements IChannelFunction {
 		if (pattern != null) {
 			this.matchingPattern = Pattern.compile(pattern);
 		}
-		this.matrixCol = matrixCol;
-		this.matrixRow = matrixRow;
 	}
 
-        /**
-         * Constructor. Creates a channel of a given type and puts outside of
-         * the matrix.
-         * @param name the name of the channel
-         * @param type the type of the channel
-         * @param unique is the channel unique?
-         * @param pattern the regular expression which will be used to search channel by name
-         */
-	private ChannelFunction(String name, ChannelType type, boolean unique, String pattern) {
-		this.name = name;
-		this.type = type;
-		this.unique = unique;
-		if (pattern != null) {
-			this.matchingPattern = Pattern.compile(pattern);
-		}
-		this.matrixCol = -1;
-		this.matrixRow = -1;
-	}
     /**
      * Constructor.
      * @param name the name of the channel
@@ -199,174 +137,6 @@ public enum ChannelFunction implements IChannelFunction {
          */
 	public Pattern getMatchingPattern() {
 		return matchingPattern;
-	}
-
-	@Override
-	public int getMatrixCol() {
-		return matrixCol;
-	}
-
-	@Override
-	public int getMatrixRow() {
-		return matrixRow;
-	}
-
-        /**
-         * Returns the matrix of channels.
-         * @return the matrix of channels
-         */
-	public static IChannelFunction[][] getMatrix() {
-		return matrix;
-	}
-
-        @Override
-	public IChannelFunction getLeftNeighbour(IChannelFunction chn) {
-		if (!(chn instanceof ChannelFunction)) {
-			return null;
-		}
-		ChannelFunction channel = (ChannelFunction) chn;
-		if (channel.matrixCol < 0 || channel.matrixRow < 0) {
-			return null;
-		}
-		if (channel.matrixCol <= 0) {
-			return null;
-		}
-		return matrix[channel.matrixCol-1][channel.matrixRow];
-	}
-
-        @Override
-	public IChannelFunction getRightNeighbour(IChannelFunction chn) {
-		if (!(chn instanceof ChannelFunction)) {
-			return null;
-		}
-		ChannelFunction channel = (ChannelFunction) chn;
-		if (channel.matrixCol < 0 || channel.matrixRow < 0) {
-			return null;
-		}
-		if (channel.matrixCol >= MATRIX_WIDTH-1) {
-			return null;
-		}
-		return matrix[channel.matrixCol+1][channel.matrixRow];
-	}
-
-        @Override
-	public IChannelFunction getTopNeighbour(IChannelFunction chn) {
-		if (!(chn instanceof ChannelFunction)) {
-			return null;
-		}
-		ChannelFunction channel = (ChannelFunction) chn;
-		if (channel.matrixCol < 0 || channel.matrixRow < 0) {
-			return null;
-		}
-		if (channel.matrixRow <= 0) {
-			return null;
-		}
-		return matrix[channel.matrixCol][channel.matrixRow-1];
-	}
-
-        @Override
-	public IChannelFunction getBottomNeighbour(IChannelFunction chn) {
-		if (!(chn instanceof ChannelFunction)) {
-			return null;
-		}
-		ChannelFunction channel = (ChannelFunction) chn;
-		if (channel.matrixCol < 0 || channel.matrixRow < 0) {
-			return null;
-		}
-		if (channel.matrixRow >= MATRIX_HEIGHT-1) {
-			return null;
-		}
-		return matrix[channel.matrixCol][channel.matrixRow+1];
-	}
-
-        @Override
-	public IChannelFunction[] getLeftNeighbours(IChannelFunction chn) {
-		if (!(chn instanceof ChannelFunction)) {
-			return null;
-		}
-		ChannelFunction channel = (ChannelFunction) chn;
-		if (channel.matrixCol < 0 || channel.matrixRow < 0) {
-			return null;
-		}
-		IChannelFunction[] neighbours = new IChannelFunction[channel.matrixCol];
-		for (int i=channel.matrixCol-1; i>=0; i--) {
-			neighbours[i] = matrix[i][channel.matrixRow];
-		}
-		return neighbours;
-	}
-
-        @Override
-	public IChannelFunction[] getRightNeighbours(IChannelFunction chn) {
-		if (!(chn instanceof ChannelFunction)) {
-			return null;
-		}
-		ChannelFunction channel = (ChannelFunction) chn;
-		if (channel.matrixCol < 0 || channel.matrixRow < 0) {
-			return null;
-		}
-		IChannelFunction[] neighbours = new IChannelFunction[MATRIX_WIDTH-(channel.matrixCol+1)];
-		for (int i=channel.matrixCol+1; i<MATRIX_WIDTH; i++) {
-			neighbours[i] = matrix[i][channel.matrixRow];
-		}
-		return neighbours;
-	}
-
-        @Override
-	public IChannelFunction[] getTopNeighbours(IChannelFunction chn) {
-		if (!(chn instanceof ChannelFunction)) {
-			return null;
-		}
-		ChannelFunction channel = (ChannelFunction) chn;
-		if (channel.matrixCol < 0 || channel.matrixRow < 0) {
-			return null;
-		}
-		IChannelFunction[] neighbours = new IChannelFunction[channel.matrixRow];
-		for (int i=channel.matrixRow-1; i>=0; i--) {
-			neighbours[i] = matrix[channel.matrixCol][i];
-		}
-		return neighbours;
-	}
-
-        @Override
-	public IChannelFunction[] getBottomNeighbours(IChannelFunction chn) {
-		if (!(chn instanceof ChannelFunction)) {
-			return null;
-		}
-		ChannelFunction channel = (ChannelFunction) chn;
-		if (channel.matrixCol < 0 || channel.matrixRow < 0) {
-			return null;
-		}
-		IChannelFunction[] neighbours = new IChannelFunction[MATRIX_HEIGHT-(channel.matrixRow+1)];
-		for (int i=channel.matrixRow+1; i<MATRIX_HEIGHT; i++) {
-			neighbours[i] = matrix[i][channel.matrixRow];
-		}
-		return neighbours;
-	}
-
-        @Override
-	public IChannelFunction[] getNearestNeighbours(IChannelFunction chn) {
-		if (!(chn instanceof ChannelFunction)) {
-			return null;
-		}
-		ChannelFunction channel = (ChannelFunction) chn;
-		if (channel.matrixCol < 0 || channel.matrixRow < 0) {
-			return null;
-		}
-		IChannelFunction[] neighbours = new IChannelFunction[4];
-		if (channel.matrixRow > 0) {
-			neighbours[0] = matrix[channel.matrixCol][channel.matrixRow-1];
-		}
-		if (channel.matrixCol > 0) {
-			neighbours[1] = matrix[channel.matrixCol-1][channel.matrixRow];
-		}
-		if (channel.matrixRow < MATRIX_HEIGHT-1) {
-			neighbours[2] = matrix[channel.matrixCol][channel.matrixRow+1];
-		}
-		if (channel.matrixCol < MATRIX_WIDTH-1) {
-			neighbours[3] = matrix[channel.matrixCol+1][channel.matrixRow];
-		}
-
-		return neighbours;
 	}
 
 	@Override

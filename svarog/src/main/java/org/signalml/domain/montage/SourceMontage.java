@@ -422,6 +422,10 @@ public class SourceMontage {
 		return sourceChannels.get(index).getLabel();
 	}
 
+	public SourceChannel getSourceChannelAt(int index) {
+		return sourceChannels.get(index);
+	}
+
         /**
          * Returns the function of a {@link SourceChannel source channel} of
          * a given index.

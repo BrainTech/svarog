@@ -60,18 +60,6 @@ public interface SignalTypeConfigurer {
 	IChannelFunction channelForName(String name);
 
         /**
-         * Returns the width of a {@link Channel channels} matrix.
-         * @return the width of a channels matrix, 0 if matrix doesn't exist
-         */
-	int getMatrixWidth();
-
-        /**
-         * Returns the height of a {@link Channel channels} matrix.
-         * @return the height of a channels matrix, 0 if matrix doesn't exist
-         */
-	int getMatrixHeight();
-
-        /**
          * Creates backdrop for signal positions matrix.
          * @param width width of a backdrop
          * @param height height of a backdrop

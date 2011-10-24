@@ -7,8 +7,8 @@ package org.signalml.app.view.montage;
 import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.Point;
-
-import org.signalml.domain.montage.IChannelFunction;
+import java.awt.geom.Point2D;
+import org.signalml.math.geometry.Polar3dPoint;
 
 /** VisualReferencePositionedBin
  *
@@ -20,15 +20,11 @@ public class VisualReferencePositionedBin extends VisualReferenceBin {
 	// this requires max height
 
 	private Insets backdropMargin;
-	private int matrixWidth;
-	private int matrixHeight;
 	private int hOffset;
 	private int vOffset;
 	private int avHeight;
 
-	public VisualReferencePositionedBin(int matrixWidth, int matrixHeight) {
-		this.matrixWidth = matrixWidth;
-		this.matrixHeight = matrixHeight;
+	public VisualReferencePositionedBin() {
 	}
 
 	public Insets getBackdropMargin() {
@@ -81,34 +77,29 @@ public class VisualReferencePositionedBin extends VisualReferenceBin {
 
 		if (location != null) {
 
-			// calculate grid size
 			int avHeight = this.avHeight - (2*vOffset);
 			int avWidth = this.avHeight - (2*hOffset);
 
-			float hSize = ((float) avWidth) / (matrixWidth-1);
-			float vSize = ((float) avHeight) / (matrixHeight-1);
-
-			float x;
-			float y;
-
-			IChannelFunction function;
-			int gridX, gridY;
+			double absoluteX;
+			double absoluteY;
 
 			Dimension d;
 
 			// position channels
 			for (VisualReferenceSourceChannel channel : channels) {
-				function = channel.getFunction();
-				gridX = function.getMatrixCol();
-				gridY = function.getMatrixRow();
+
+				Polar3dPoint polar3dPoint = channel.getSourceChannel().getEegElectrode().getPolarPosition();
 				d = channel.getShape().getBounds().getSize();
-				if (gridX < 0 || gridY < 0) {
-					channel.setLocation(new Point(0,0));
-					continue;
-				}
-				x = location.x + margin.left + hOffset + gridX*hSize - d.width / 2;
-				y = location.y + HEADER_HEIGHT + margin.top + vOffset + gridY*vSize - d.height / 2;
-				channel.setLocation(new Point((int) Math.round(x), (int) Math.round(y)));
+
+				double centerX = location.x + margin.left + hOffset + avWidth / 2;
+				double centerY = location.y + HEADER_HEIGHT + margin.top + vOffset + avHeight / 2;
+				Point2D center = new Point2D.Double(centerX, centerY);
+
+				Point2D point2d = polar3dPoint.convertTo2DPoint(center, avWidth/2);
+
+				absoluteX = point2d.getX() - d.width / 2;
+				absoluteY = point2d.getY() - d.height / 2;
+				channel.setLocation(new Point((int) Math.round(absoluteX), (int) Math.round(absoluteY)));
 			}
 
 			positioned = true;

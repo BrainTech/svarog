@@ -53,7 +53,6 @@ public abstract class VisualReferenceDisplay extends JComponent implements Visua
 
 	protected Dimension requiredSize = null;
 
-
 	public VisualReferenceDisplay(VisualReferenceModel model) {
 
 		super();

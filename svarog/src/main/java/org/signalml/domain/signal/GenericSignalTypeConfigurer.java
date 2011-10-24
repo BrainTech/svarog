@@ -130,24 +130,6 @@ public class GenericSignalTypeConfigurer implements SignalTypeConfigurer {
 		return null;
 	}
 
-        /**
-         * Returns the height of a {@link Channel channels} matrix.
-         * @return 0 because matrix doesn't exist
-         */
-	@Override
-	public int getMatrixHeight() {
-		return 0;
-	}
-
-        /**
-         * Returns the width of a {@link Channel channels} matrix.
-         * @return 0 because matrix doesn't exist
-         */
-	@Override
-	public int getMatrixWidth() {
-		return 0;
-	}
-
 	@Override
 	public int getMontageGeneratorCount() {
 		return montageGenerators.size();
