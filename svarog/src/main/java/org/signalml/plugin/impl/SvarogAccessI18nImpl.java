@@ -1,7 +1,9 @@
 package org.signalml.plugin.impl;
 
+import org.signalml.app.SvarogI18n;
 import org.signalml.plugin.export.PluginAuth;
 import org.signalml.plugin.export.i18n.SvarogAccessI18n;
+import org.signalml.util.SvarogConstants;
 import org.xnap.commons.i18n.I18n;
 import org.xnap.commons.i18n.I18nFactory;
 
@@ -10,24 +12,39 @@ import org.xnap.commons.i18n.I18nFactory;
  * 
  * @author Stanislaw Findeisen (Eisenbits)
  */
-public class SvarogAccessI18nImpl implements SvarogAccessI18n {
+public class SvarogAccessI18nImpl implements SvarogI18n, SvarogAccessI18n {
     
+    /**
+     * Returns the shared instance.
+     * @return
+     */
+    public static SvarogAccessI18nImpl getInstance() {
+        if (null == Instance) {
+            synchronized (SvarogAccessI18nImpl.class) {
+                if (null == Instance)
+                    Instance = new SvarogAccessI18nImpl();
+            }
+        }
+        return Instance;
+    }
+    
+    private static SvarogAccessI18nImpl Instance;
+    private static final String SvarogCatalogId = SvarogConstants.I18nCatalogId;
     private PluginAccessClass pluginAccessClass;
     
-    protected SvarogAccessI18nImpl(PluginAccessClass pac) {
+    private SvarogAccessI18nImpl() {
         super();
-        this.pluginAccessClass = pac;
     }
     
     private Class<?> getClass(PluginAuth auth) {
-        if (null == auth)
-            return SvarogAccessI18nImpl.class;
-        else
-            return (pluginAccessClass.getPluginHead(auth).getPluginObj().getClass());
+        return (pluginAccessClass.getPluginHead(auth).getPluginObj().getClass());
     }
     
     private I18n getI18n(PluginAuth auth, String catalogId) {
-        return I18nFactory.getI18n(getClass(auth), catalogId);
+    	if (null == auth)
+    		return I18nFactory.getI18n(SvarogAccessI18nImpl.class, SvarogCatalogId);
+    	else
+    		return I18nFactory.getI18n(getClass(auth), catalogId);
     }
 
     /**
@@ -47,12 +64,16 @@ public class SvarogAccessI18nImpl implements SvarogAccessI18n {
     }
 
     @Override
-    public String _(PluginAuth auth, String catalogId, String key) {
-        return translate(auth, catalogId, key);
+    public String _(String key) {
+        return translate(null, SvarogCatalogId, key);
     }
 
     @Override
-    public String N_(PluginAuth auth, String catalogId, String key, String keyPlural, long n) {
-        return translateN(auth, catalogId, key, keyPlural, n);
+    public String N_(String key, String keyPlural, long n) {
+        return translateN(null, SvarogCatalogId, key, keyPlural, n);
+    }
+
+    protected void setPluginAccessClass(PluginAccessClass pac) {
+        this.pluginAccessClass = pac;
     }
 }

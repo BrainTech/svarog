@@ -73,12 +73,13 @@ public class PluginAccessClass implements SvarogAccess {
 	 * Constructor. Creates child accesses.
 	 */
 	private PluginAccessClass(){
-	    i18nAccessImpl = new SvarogAccessI18nImpl(this);
 		guiAccess = new GUIAccessImpl(this);
 		methodAccessImpl = new MethodAccessImpl(this);
 		configAccessImpl = new ConfigAccessImpl(this);
 		signalsAccess = new SignalsAccessImpl(this);
 		changeSupport = new ChangeSupportImpl(this);
+		i18nAccessImpl = SvarogAccessI18nImpl.getInstance();
+		i18nAccessImpl.setPluginAccessClass(this);
 	}
 	
 	/**
