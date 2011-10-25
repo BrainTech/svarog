@@ -128,31 +128,7 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<version>1.1</version>
-				<executions>
-					<execution>
-						<id>git-describe</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<configuration>
-							<executable>git</executable>
-							<arguments>
-								<argument>describe</argument>
-								<argument>--always</argument>
-								<argument>--tags</argument>
-								<argument>--dirty=+</argument>
-							</arguments>
-							<outputFile>${generated_resources_dir}/git-version</outputFile>
-						</configuration>
-					</execution>
-					<execution>
-						<id>execute</id>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-					</execution>
-				</executions>
+
 				<configuration>
 					<mainClass>org.signalml.app.SvarogApplication</mainClass>
 				</configuration>
@@ -203,6 +179,33 @@
 									<arg value="-package"/>
 									<arg value="org.signalml.multiplexer.protocol"/>
 								</java>
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>git-describe</id>
+						<phase>generate-resources</phase>
+						<configuration>
+							<target>
+								<exec executable="git"
+								      outputproperty="git-describe.output"
+								      resultproperty="git-describe.result">
+									<arg value="describe" />
+									<arg value="--always" />
+									<arg value="--tags" />
+									<arg value="--dirty=+" />
+								</exec>
+								<condition property="svarog.git-version"
+									   value="${git-describe.output}"
+									   else="${project.version}">
+									<equals arg1="${git-describe.result}" arg2="0" />
+								</condition>
+								<echo message="svarog.git-version=${svarog.git-version}" />
+								<echo message="${svarog.git-version}" output="${generated_resources_dir}/git-version" />
 							</target>
 						</configuration>
 						<goals>
