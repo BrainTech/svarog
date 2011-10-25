@@ -21,23 +21,6 @@ public final class PluginAuthImpl implements PluginAuth {
     public PluginAuthImpl(UUID id) {
         this(id.toString());
     }
-    
-    @Override
-    public boolean equals(Object another) {
-        if (null == another)
-            return false;
-        if (another == this)
-            return true;
-        if (another instanceof PluginAuthImpl) {
-            return (getID().equals(((PluginAuthImpl) another).getID()));
-        }
-        return false;
-    }
-    
-    @Override
-    public int hashCode() {
-        return pluginID.hashCode();
-    }
 
     @Override
     public String getID() {
