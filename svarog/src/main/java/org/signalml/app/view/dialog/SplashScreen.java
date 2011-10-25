@@ -284,19 +284,25 @@ public class SplashScreen extends JDialog {
 			fontMetrics = g.getFontMetrics(font);
 			g.setFont(font);
 
-			String title = messageSource.getMessage("splash.loading", new Object[] {SvarogConstants.VERSION });
+			final String title = messageSource.getMessage("splash.loading");
 
 			Rectangle2D stringBounds = fontMetrics.getStringBounds(title, g);
 			int width = (int) stringBounds.getWidth();
 			int height = (int) stringBounds.getHeight();
 
 			g.drawString(title, (size.width-width)/2, offset + fontMetrics.getAscent());
-
-			offset += (height + 95);
+			final int version_height = offset + fontMetrics.getAscent() * 2;
 
 			font = new Font(Font.DIALOG, Font.PLAIN, 10);
 			fontMetrics = g.getFontMetrics(font);
 			g.setFont(font);
+
+			stringBounds = fontMetrics.getStringBounds(SvarogConstants.VERSION, g);
+			width = (int) stringBounds.getWidth();
+			g.drawString(SvarogConstants.VERSION,
+				     (size.width-width)/2, version_height);
+
+			offset += (height + 95);
 
 			String url = messageSource.getMessage("splash.url");
 
