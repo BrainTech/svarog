@@ -2,8 +2,16 @@
  *
  */
 
-package org.signalml.domain.montage;
+package org.signalml.domain.montage.generators;
 
+import java.util.ArrayList;
+import java.util.List;
+import org.signalml.domain.montage.ChannelType;
+import org.signalml.domain.montage.Montage;
+import org.signalml.domain.montage.MontageException;
+import org.signalml.domain.montage.SourceChannel;
+import org.signalml.domain.montage.SourceMontage;
+import org.signalml.domain.montage.generators.AbstractMontageGenerator;
 import org.springframework.validation.Errors;
 
 /**
@@ -12,13 +20,13 @@ import org.springframework.validation.Errors;
  * summed and averaged, and this averaged signal is used as the common reference
  * for each channel.
  * (source: {@code http://en.wikipedia.org/wiki/Electroencephalography})
- * 
+ *
  * This class generates montage of that type from the given "raw" montage and checks if
  * the given {@link SourceMontage montages} are valid average reference montages.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public abstract class AverageReferenceMontageGenerator implements MontageGenerator {
+public class AverageReferenceMontageGenerator extends AbstractMontageGenerator {
 
 	private static final long serialVersionUID = 1L;
 
@@ -28,7 +36,7 @@ public abstract class AverageReferenceMontageGenerator implements MontageGenerat
          * {@link Montage montages} (actually in the
          * {@link MontageChannel montage channels} in a montage)
          */
-	protected transient IChannelFunction[] refChannels;
+	protected String[] referenceChannelsNames;
 
         /**
          * Constructor. Creates a generator for an average reference montage
@@ -39,35 +47,24 @@ public abstract class AverageReferenceMontageGenerator implements MontageGenerat
          * (actually in {@link MontageChannel montage channels} in a montage)
          * @throws NullPointerException if the array of channels is null or empty
          */
-	protected AverageReferenceMontageGenerator(IChannelFunction[] refChannels) {
-		if (refChannels == null) {
+	public AverageReferenceMontageGenerator(String[] refChannelsNames) {
+		if (refChannelsNames == null) {
 			throw new NullPointerException("Channels cannot be null or empty");
 		}
-		this.refChannels = refChannels;
+		this.referenceChannelsNames = refChannelsNames;
 	}
 
         /**
          * Creates an average reference montage from a given montage.
-         * @param montage the montage to be used
+         * @param sourceMontage the montage to be used
          * @throws MontageException thrown if two channels have the same function
          * or there is no channel with some function
          */
 	@Override
 	public void createMontage(Montage montage) throws MontageException {
-		int[] refChannelIndices = new int[refChannels.length];
-		int[] temp;
-		for (int i=0; i<refChannels.length; i++) {
-			
-			temp = montage.getSourceChannelsByFunction(refChannels[i]);
-			if (temp == null || temp.length != 1) {
-				throw new MontageException("Bad refChannel count [" + temp.length + "]  for channel [" + refChannels[i] + "]");
-			}
-			
-			refChannelIndices[i] = temp[0];
-			
-		}
+		List<SourceChannel> sourceChannels = getReferenceSourceChannels(montage);
 
-		String token = "-1/" + Integer.toString(refChannelIndices.length);
+		String token = "-1/" + Integer.toString(sourceChannels.size());
 		boolean oldMajorChange = montage.isMajorChange();
 
 		try {
@@ -79,10 +76,10 @@ public abstract class AverageReferenceMontageGenerator implements MontageGenerat
 			int index;
 			for (int i=0; i<size; i++) {
 				index = montage.addMontageChannel(i);
-				if (montage.getSourceChannelFunctionAt(i).getType() == ChannelType.PRIMARY) {
-					for (int e=0; e<refChannelIndices.length; e++) {
-						montage.setReference(index, refChannelIndices[e], token);
-					}
+				for (SourceChannel sourceChannel: sourceChannels) {
+					if (sourceChannel.getEegElectrode() != null
+						&& sourceChannel.getEegElectrode().getChannelType() == ChannelType.PRIMARY)
+					montage.setReference(index, sourceChannel.getChannel(), token);
 				}
 			}
 		} finally {
@@ -92,6 +89,16 @@ public abstract class AverageReferenceMontageGenerator implements MontageGenerat
 		montage.setMontageGenerator(this);
 		montage.setChanged(false);
 
+	}
+
+	protected List<SourceChannel> getReferenceSourceChannels(SourceMontage sourceMontage) {
+		List<SourceChannel> sourceChannels = new ArrayList<SourceChannel>();
+		for (int i = 0; i < referenceChannelsNames.length; i++) {
+			SourceChannel sourceChannel = sourceMontage.getSourceChannelByLabel(referenceChannelsNames[i]);
+			if (sourceChannel != null)
+				sourceChannels.add(sourceChannel);
+		}
+		return sourceChannels;
 	}
 
         /**
@@ -104,39 +111,22 @@ public abstract class AverageReferenceMontageGenerator implements MontageGenerat
 	@Override
 	public boolean validateSourceMontage(SourceMontage sourceMontage, Errors errors) {
 
-		int[] refChannelIndices;
 		boolean ok = true;
 
-		for (int i=0; i<refChannels.length; i++) {
-			refChannelIndices = sourceMontage.getSourceChannelsByFunction(refChannels[i]);
-			if (refChannelIndices == null || refChannelIndices.length == 0) {
-				onNotFound(refChannels[i], errors);
+		List<SourceChannel> sourceChannels = new ArrayList<SourceChannel>();
+		for (int i = 0; i < referenceChannelsNames.length; i++) {
+			SourceChannel sourceChannel = sourceMontage.getSourceChannelByLabel(referenceChannelsNames[i]);
+			if (sourceChannel != null)
+				sourceChannels.add(sourceChannel);
+			else {
+				onNotFound(referenceChannelsNames[i], errors);
 				ok = false;
 			}
-			else if (refChannelIndices.length > 1) {
-				onDuplicate(refChannels[i], errors);
-				ok = false;
-			}
+
 		}
 
 		return ok;
 
 	}
-
-        /**
-         * Reports an error, that the {@link Channel channel} (the function of
-         * a source channel) was not found.
-         * @param refChannel the channel that was not found
-         * @param errors the Errors object used to report errors
-         */
-	protected abstract void onNotFound(IChannelFunction refChannel, Errors errors);
-
-        /**
-         * Reports an error, that the {@link Channel channel} (the function of
-         * a source channel) was not unique.
-         * @param refChannel the channel that was not found
-         * @param errors the Errors object used to report errors
-         */
-	protected abstract void onDuplicate(IChannelFunction refChannel, Errors errors);
 
 }

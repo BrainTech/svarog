@@ -1,6 +1,7 @@
 package org.signalml.domain.montage.system;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import org.signalml.domain.montage.ChannelType;
 import org.signalml.math.geometry.Polar3dPoint;
 
 /**
@@ -11,6 +12,7 @@ import org.signalml.math.geometry.Polar3dPoint;
 public class EegElectrode {
 
 	private String label;
+	private ChannelType channelType = ChannelType.PRIMARY;
 	private Polar3dPoint polarPosition;
 
 	public String getLabel() {
@@ -32,6 +34,14 @@ public class EegElectrode {
 	@Override
 	public String toString() {
 		return label;
+	}
+
+	public ChannelType getChannelType() {
+		return channelType;
+	}
+
+	public void setChannelType(ChannelType channelType) {
+		this.channelType = channelType;
 	}
 
 }

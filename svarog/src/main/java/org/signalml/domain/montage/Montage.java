@@ -4,6 +4,7 @@
 
 package org.signalml.domain.montage;
 
+import org.signalml.domain.montage.generators.IMontageGenerator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -59,7 +60,7 @@ public class Montage extends SourceMontage implements Preset {
         /**
          * {@link MontageGenerator generator} for the current object
          */
-	private MontageGenerator montageGenerator;
+	private IMontageGenerator montageGenerator;
 
         /**
          * {@link MontageChannel montaged channels} of a signal in the montage
@@ -339,7 +340,7 @@ public class Montage extends SourceMontage implements Preset {
          * Returns the generator for the this montage.
          * @return the generator for the this montage
          */
-	public MontageGenerator getMontageGenerator() {
+	public IMontageGenerator getMontageGenerator() {
 		return montageGenerator;
 	}
 
@@ -347,9 +348,9 @@ public class Montage extends SourceMontage implements Preset {
          * Sets the new {@link MontageGenerator generator} for this montage.
          * @param montageGenerator generator to be set
          */
-	public void setMontageGenerator(MontageGenerator montageGenerator) {
+	public void setMontageGenerator(IMontageGenerator montageGenerator) {
 		if (!Util.equalsWithNulls(this.montageGenerator, montageGenerator)) {
-			MontageGenerator oldGenerator = this.montageGenerator;
+			IMontageGenerator oldGenerator = this.montageGenerator;
 			this.montageGenerator = montageGenerator;
 			pcSupport.firePropertyChange(MONTAGE_GENERATOR_PROPERTY, oldGenerator, montageGenerator);
 			setChanged(true);

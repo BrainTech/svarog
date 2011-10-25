@@ -22,6 +22,7 @@ import org.signalml.exception.SanityCheckException;
 import org.signalml.util.Util;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import java.util.List;
 import org.signalml.domain.montage.eeg.ChannelFunction;
 import org.signalml.domain.montage.system.EegElectrode;
 import org.signalml.domain.montage.system.EegSystem;
@@ -365,18 +366,15 @@ public class SourceMontage {
          * @return list of source channels with a given function
          */
 	protected LinkedList<SourceChannel> getSourceChannelsByFunctionList(IChannelFunction function) {
-		HashMap<IChannelFunction, LinkedList<SourceChannel>> map = getSourceChannelsByFunction();
-		LinkedList<SourceChannel> list = map.get(function);
-		if (list == null) {
-			list = new LinkedList<SourceChannel>();
-			map.put(function, list);
-			for (SourceChannel channel : sourceChannels) {
-				if (channel.getFunction() == function) {
-					list.add(channel);
-				}
-			}
+		LinkedList<SourceChannel> list = new LinkedList<SourceChannel>();
+
+		for (SourceChannel channel: sourceChannels) {
+			if (channel.getFunction() == function)
+				list.add(channel);
 		}
+
 		return list;
+
 	}
 
         /**
@@ -400,7 +398,7 @@ public class SourceMontage {
          * @param label a label of source channel to be found
          * @return the found source channel
          */
-	protected SourceChannel getSourceChannelByLabel(String label) {
+	public SourceChannel getSourceChannelByLabel(String label) {
 		return getSourceChannelsByLabel().get(label);
 	}
 

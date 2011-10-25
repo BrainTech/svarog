@@ -128,6 +128,7 @@
 				</eegElectrode>
 				<eegElectrode>
 					<label>A1</label>
+					<channelType>REFERENCE</channelType>
 					<polarPosition>
 						<radius>1.0</radius>
 						<theta>1.57</theta>
@@ -176,6 +177,7 @@
 				</eegElectrode>
 				<eegElectrode>
 					<label>A2</label>
+					<channelType>REFERENCE</channelType>
 					<polarPosition>
 						<radius>1.0</radius>
 						<theta>-1.57</theta>
@@ -247,6 +249,106 @@
 					</polarPosition>
 				</eegElectrode>
 			</electrodes>
+			<montageGenerators>
+				<montageGenerator>
+					<name>montageGenerator.leftEar</name>
+					<type>SINGLE_REFERENCE</type>
+					<channels>
+						<channel>A1</channel>
+					</channels>
+				</montageGenerator>
+				<montageGenerator>
+					<name>montageGenerator.rightEar</name>
+					<type>SINGLE_REFERENCE</type>
+					<channels>
+						<channel>A2</channel>
+					</channels>
+				</montageGenerator>
+				<montageGenerator>
+					<name>montageGenerator.linkedEars</name>
+					<type>AVERAGE_REFERENCE</type>
+					<channels>
+						<channel>A1</channel>
+						<channel>A2</channel>
+					</channels>
+				</montageGenerator>
+				<montageGenerator>
+					<name>montageGenerator.longitudinalI</name>
+					<type>BIPOLAR_REFERENCE</type>
+					<channels>
+						<pair><channel>Fp1</channel><channel>F7</channel></pair>
+						<pair><channel>F7</channel><channel>T3</channel></pair>
+						<pair><channel>T3</channel><channel>T5</channel></pair>
+						<pair><channel>T5</channel><channel>O1</channel></pair>
+						<pair><channel>Fp1</channel><channel>F3</channel></pair>
+						<pair><channel>F3</channel><channel>C3</channel></pair>
+						<pair><channel>C3</channel><channel>P3</channel></pair>
+						<pair><channel>P3</channel><channel>O1</channel></pair>
+						<pair><channel>Fpz</channel><channel>Fz</channel></pair>
+						<pair><channel>Fz</channel><channel>Cz</channel></pair>
+						<pair><channel>Cz</channel><channel>Pz</channel></pair>
+						<pair><channel>Pz</channel><channel>Oz</channel></pair>
+						<pair><channel>Fp2</channel><channel>F4</channel></pair>
+						<pair><channel>F4</channel><channel>C4</channel></pair>
+						<pair><channel>C4</channel><channel>P4</channel></pair>
+						<pair><channel>P4</channel><channel>O2</channel></pair>
+						<pair><channel>Fp2</channel><channel>F8</channel></pair>
+						<pair><channel>F8</channel><channel>T4</channel></pair>
+						<pair><channel>T4</channel><channel>T6</channel></pair>
+						<pair><channel>T6</channel><channel>O2</channel></pair>
+					</channels>
+				</montageGenerator>
+				<montageGenerator>
+					<name>montageGenerator.longitudinalII</name>
+					<type>BIPOLAR_REFERENCE</type>
+					<channels>
+						<pair><channel>Fp1</channel><channel>F7</channel></pair>
+						<pair><channel>F7</channel><channel>T3</channel></pair>
+						<pair><channel>T3</channel><channel>T5</channel></pair>
+						<pair><channel>T5</channel><channel>O1</channel></pair>
+						<pair><channel>Fp2</channel><channel>F8</channel></pair>
+						<pair><channel>F8</channel><channel>T4</channel></pair>
+						<pair><channel>T4</channel><channel>T6</channel></pair>
+						<pair><channel>T6</channel><channel>O2</channel></pair>
+						<pair><channel>Fp1</channel><channel>F3</channel></pair>
+						<pair><channel>F3</channel><channel>C3</channel></pair>
+						<pair><channel>C3</channel><channel>P3</channel></pair>
+						<pair><channel>P3</channel><channel>O1</channel></pair>
+						<pair><channel>Fp2</channel><channel>F4</channel></pair>
+						<pair><channel>F4</channel><channel>C4</channel></pair>
+						<pair><channel>C4</channel><channel>P4</channel></pair>
+						<pair><channel>P4</channel><channel>O2</channel></pair>
+						<pair><channel>Fpz</channel><channel>Fz</channel></pair>
+						<pair><channel>Fz</channel><channel>Cz</channel></pair>
+						<pair><channel>Cz</channel><channel>Pz</channel></pair>
+						<pair><channel>Pz</channel><channel>Oz</channel></pair>
+					</channels>
+				</montageGenerator>
+				<montageGenerator>
+					<name>montageGenerator.transverseI</name>
+					<type>BIPOLAR_REFERENCE</type>
+					<channels>
+						<pair><channel>F7</channel><channel>Fp1</channel></pair>
+						<pair><channel>Fp1</channel><channel>Fp2</channel></pair>
+						<pair><channel>Fp2</channel><channel>F8</channel></pair>
+						<pair><channel>F7</channel><channel>F3</channel></pair>
+						<pair><channel>F3</channel><channel>Fz</channel></pair>
+						<pair><channel>Fz</channel><channel>F4</channel></pair>
+						<pair><channel>F4</channel><channel>F8</channel></pair>
+						<pair><channel>T3</channel><channel>C3</channel></pair>
+						<pair><channel>C3</channel><channel>Cz</channel></pair>
+						<pair><channel>Cz</channel><channel>C4</channel></pair>
+						<pair><channel>C4</channel><channel>T4</channel></pair>
+						<pair><channel>T5</channel><channel>P3</channel></pair>
+						<pair><channel>P3</channel><channel>Pz</channel></pair>
+						<pair><channel>Pz</channel><channel>P4</channel></pair>
+						<pair><channel>P4</channel><channel>T6</channel></pair>
+						<pair><channel>T5</channel><channel>O1</channel></pair>
+						<pair><channel>O1</channel><channel>O2</channel></pair>
+						<pair><channel>O2</channel><channel>T6</channel></pair>
+					</channels>
+				</montageGenerator>
+			</montageGenerators>
 		</eegSystem>
 	</presets>
 </eegSystems>

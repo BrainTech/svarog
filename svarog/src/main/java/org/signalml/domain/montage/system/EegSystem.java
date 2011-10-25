@@ -1,9 +1,12 @@
 package org.signalml.domain.montage.system;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamConverter;
 import java.util.ArrayList;
 import java.util.List;
 import org.signalml.app.config.preset.Preset;
+import org.signalml.domain.montage.generators.IMontageGenerator;
+import org.signalml.domain.montage.generators.MontageGeneratorsConverter;
 
 /**
  *
@@ -13,7 +16,12 @@ import org.signalml.app.config.preset.Preset;
 public class EegSystem implements Preset {
 
 	private String name;
+
 	private List<EegElectrode> electrodes = new ArrayList<EegElectrode>();
+
+	@XStreamAlias("montageGenerators")
+	@XStreamConverter(MontageGeneratorsConverter.class)
+	private List<IMontageGenerator> montageGenerators = new ArrayList<IMontageGenerator>();
 
 	public EegSystem() {
 	}
@@ -68,6 +76,14 @@ public class EegSystem implements Preset {
 			return true;
 		return false;
 
+	}
+
+	public IMontageGenerator getMontageGeneratorAt(int i) {
+		return montageGenerators.get(i);
+	}
+
+	public int getNumberOfMontageGenerators() {
+		return montageGenerators.size();
 	}
 
 }

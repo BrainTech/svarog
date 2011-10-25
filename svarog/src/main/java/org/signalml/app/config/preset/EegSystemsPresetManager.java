@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.IOException;
 import org.signalml.app.config.AbstractXMLConfiguration;
 import org.signalml.app.util.XMLUtils;
+import org.signalml.domain.montage.ChannelType;
+import org.signalml.domain.montage.generators.IMontageGenerator;
 import org.signalml.domain.montage.system.EegElectrode;
 import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.math.geometry.Polar3dPoint;
@@ -37,7 +39,7 @@ public class EegSystemsPresetManager extends AbstractResourceXMLConfiguration {
 
 	protected XStream createStreamer() {
 		streamer = XMLUtils.getDefaultStreamer();
-		Annotations.configureAliases(streamer, EegSystemsPresetManager.class, EegSystem.class, EegElectrode.class, Polar3dPoint.class);
+		Annotations.configureAliases(streamer, EegSystemsPresetManager.class, EegSystem.class, EegElectrode.class, Polar3dPoint.class, ChannelType.class, IMontageGenerator.class);
 		return streamer;
 	}
 

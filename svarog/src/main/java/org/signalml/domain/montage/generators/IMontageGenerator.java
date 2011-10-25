@@ -2,9 +2,13 @@
  *
  */
 
-package org.signalml.domain.montage;
+package org.signalml.domain.montage.generators;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.io.Serializable;
+import org.signalml.domain.montage.Montage;
+import org.signalml.domain.montage.MontageException;
+import org.signalml.domain.montage.SourceMontage;
 
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.validation.Errors;
@@ -15,7 +19,8 @@ import org.springframework.validation.Errors;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public interface MontageGenerator extends MessageSourceResolvable, Serializable {
+@XStreamAlias("montageGenerator")
+public interface IMontageGenerator extends MessageSourceResolvable, Serializable {
 
         /**
          * Creates a {@link Montage montage} of a specified type
@@ -35,5 +40,7 @@ public interface MontageGenerator extends MessageSourceResolvable, Serializable 
          * false otherwise
          */
 	boolean validateSourceMontage(SourceMontage sourceMontage, Errors errors);
+
+	void setCode(String code);
 
 }

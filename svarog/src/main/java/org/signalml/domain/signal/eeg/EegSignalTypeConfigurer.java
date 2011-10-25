@@ -21,17 +21,10 @@ import java.util.List;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.domain.montage.IChannelFunction;
 import org.signalml.domain.montage.Montage;
-import org.signalml.domain.montage.MontageGenerator;
-import org.signalml.domain.montage.RawMontageGenerator;
+import org.signalml.domain.montage.generators.IMontageGenerator;
+import org.signalml.domain.montage.generators.RawMontageGenerator;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.montage.eeg.ChannelFunction;
-import org.signalml.domain.montage.eeg.LeftEarMontageGenerator;
-import org.signalml.domain.montage.eeg.LinkedEarsMontageGenerator;
-import org.signalml.domain.montage.eeg.CAMontageGenerator;
-import org.signalml.domain.montage.eeg.LongitudinalIIMontageGenerator;
-import org.signalml.domain.montage.eeg.LongitudinalIMontageGenerator;
-import org.signalml.domain.montage.eeg.RightEarMontageGenerator;
-import org.signalml.domain.montage.eeg.TransverseIMontageGenerator;
 import org.signalml.domain.signal.SignalType;
 import org.signalml.domain.signal.SignalTypeConfigurer;
 
@@ -55,7 +48,7 @@ public class EegSignalTypeConfigurer implements SignalTypeConfigurer {
         /**
          * the constant list of predefined montageGenerators
          */
-	private static final List<MontageGenerator> montageGenerators = getAllMontageGenerators();
+	private static final List<IMontageGenerator> montageGenerators = getAllMontageGenerators();
 
         /**
          * the cached backdrop
@@ -76,16 +69,9 @@ public class EegSignalTypeConfigurer implements SignalTypeConfigurer {
          * @return the constant list of predefined montageGenerators for
          * an EEG signal
          */
-	private static List<MontageGenerator> getAllMontageGenerators() {
-		ArrayList<MontageGenerator> generators = new ArrayList<MontageGenerator>();
+	private static List<IMontageGenerator> getAllMontageGenerators() {
+		ArrayList<IMontageGenerator> generators = new ArrayList<IMontageGenerator>();
 		generators.add(rawMontageGenerator);
-		generators.add(new LeftEarMontageGenerator());
-		generators.add(new RightEarMontageGenerator());
-		generators.add(new LinkedEarsMontageGenerator());
-		generators.add(new CAMontageGenerator());		
-		generators.add(new LongitudinalIMontageGenerator());
-		generators.add(new LongitudinalIIMontageGenerator());
-		generators.add(new TransverseIMontageGenerator());
 
 		return Collections.unmodifiableList(generators);
 	}
@@ -216,7 +202,7 @@ public class EegSignalTypeConfigurer implements SignalTypeConfigurer {
          * @return the collection of predefined montage generators
          */
 	@Override
-	public Collection<MontageGenerator> getMontageGenerators() {
+	public Collection<IMontageGenerator> getMontageGenerators() {
 		return montageGenerators;
 	}
 
@@ -227,7 +213,7 @@ public class EegSignalTypeConfigurer implements SignalTypeConfigurer {
          * @return the found MontageGenerator
          */
 	@Override
-	public MontageGenerator getMontageGeneratorAt(int index) {
+	public IMontageGenerator getMontageGeneratorAt(int index) {
 		return montageGenerators.get(index);
 	}
 

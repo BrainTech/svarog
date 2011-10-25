@@ -90,6 +90,7 @@ import org.springframework.util.Log4jConfigurer;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.Annotations;
 import org.signalml.app.config.preset.EegSystemsPresetManager;
+import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.StyledTagSetPresetManager;
 import org.signalml.app.worker.amplifiers.AmplifierDefinitionPresetManager;
 import org.signalml.app.worker.processes.OpenBCIModulePresetManager;

@@ -14,8 +14,8 @@ import org.signalml.app.document.SignalDocument;
 import org.signalml.domain.montage.IChannelFunction;
 import org.signalml.domain.montage.GenericChannel;
 import org.signalml.domain.montage.Montage;
-import org.signalml.domain.montage.MontageGenerator;
-import org.signalml.domain.montage.RawMontageGenerator;
+import org.signalml.domain.montage.generators.IMontageGenerator;
+import org.signalml.domain.montage.generators.RawMontageGenerator;
 import org.signalml.domain.montage.SourceMontage;
 
 /**
@@ -37,7 +37,7 @@ public class GenericSignalTypeConfigurer implements SignalTypeConfigurer {
         /**
          * the constant list of predefined montageGenerators
          */
-	private static final List<MontageGenerator> montageGenerators = getAllMontageGenerators();
+	private static final List<IMontageGenerator> montageGenerators = getAllMontageGenerators();
 
         /**
          * Returns the constant list of predefined
@@ -45,8 +45,8 @@ public class GenericSignalTypeConfigurer implements SignalTypeConfigurer {
          * It consists of one element - <code>rawMontageGenerator</code>.
          * @return constant list of predefined montageGenerators
          */
-	private static List<MontageGenerator> getAllMontageGenerators() {
-		ArrayList<MontageGenerator> generators = new ArrayList<MontageGenerator>();
+	private static List<IMontageGenerator> getAllMontageGenerators() {
+		ArrayList<IMontageGenerator> generators = new ArrayList<IMontageGenerator>();
 		generators.add(rawMontageGenerator);
 
 		return Collections.unmodifiableList(generators);
@@ -136,12 +136,12 @@ public class GenericSignalTypeConfigurer implements SignalTypeConfigurer {
 	}
 
 	@Override
-	public Collection<MontageGenerator> getMontageGenerators() {
+	public Collection<IMontageGenerator> getMontageGenerators() {
 		return montageGenerators;
 	}
 
 	@Override
-	public MontageGenerator getMontageGeneratorAt(int index) {
+	public IMontageGenerator getMontageGeneratorAt(int index) {
 		return montageGenerators.get(index);
 	}
 

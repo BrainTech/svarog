@@ -2,8 +2,13 @@
  *
  */
 
-package org.signalml.domain.montage;
+package org.signalml.domain.montage.generators;
 
+import org.signalml.domain.montage.ChannelType;
+import org.signalml.domain.montage.Montage;
+import org.signalml.domain.montage.MontageException;
+import org.signalml.domain.montage.SourceChannel;
+import org.signalml.domain.montage.SourceMontage;
 import org.springframework.validation.Errors;
 
 /**
@@ -22,7 +27,7 @@ import org.springframework.validation.Errors;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public abstract class SingleReferenceMontageGenerator implements MontageGenerator {
+public class SingleReferenceMontageGenerator extends AbstractMontageGenerator {
 
 	private static final long serialVersionUID = 1L;
 
@@ -30,7 +35,7 @@ public abstract class SingleReferenceMontageGenerator implements MontageGenerato
          * the {@link Channel function} of a {@link SourceChannel source channel}
          * which will be a reference channel
          */
-	protected transient IChannelFunction refChannel;
+	protected transient String referenceChannelName;
 
         /**
          * Constructor. Creates a new generator based on {@link Channel function}
@@ -39,11 +44,11 @@ public abstract class SingleReferenceMontageGenerator implements MontageGenerato
          * that will be used as reference channel in a created
          * {@link Montage montage}
          */
-	protected SingleReferenceMontageGenerator(IChannelFunction refChannel) {
-		if (refChannel == null) {
+	public SingleReferenceMontageGenerator(String referenceChannelName) {
+		if (referenceChannelName == null) {
 			throw new NullPointerException("Channel cannot be null");
 		}
-		this.refChannel = refChannel;
+		this.referenceChannelName = referenceChannelName;
 	}
 
         /**
@@ -56,9 +61,10 @@ public abstract class SingleReferenceMontageGenerator implements MontageGenerato
 	@Override
 	public void createMontage(Montage montage) throws MontageException {
 
-		int[] refChannelIndices = montage.getSourceChannelsByFunction(refChannel);
-		if (refChannelIndices == null || refChannelIndices.length != 1) {
-			throw new MontageException("Bad refChannel count [" + refChannelIndices.length + "]");
+		SourceChannel referenceSourceChannel = montage.getSourceChannelByLabel(referenceChannelName);
+
+		if (referenceSourceChannel == null) {
+			throw new MontageException("Cannot find " + referenceChannelName + " source channel for single reference montage generator ");
 		}
 
 		boolean oldMajorChange = montage.isMajorChange();
@@ -72,8 +78,10 @@ public abstract class SingleReferenceMontageGenerator implements MontageGenerato
 			int index;
 			for (int i=0; i<size; i++) {
 				index = montage.addMontageChannel(i);
-				if (montage.getSourceChannelFunctionAt(i).getType() == ChannelType.PRIMARY) {
-					montage.setReference(index, refChannelIndices[0], "-1");
+				SourceChannel sourceChannel = montage.getSourceChannelAt(i);
+				if (sourceChannel.getEegElectrode() != null &&
+					sourceChannel.getEegElectrode().getChannelType() == ChannelType.PRIMARY) {
+					montage.setReference(index, referenceSourceChannel.getChannel(), "-1");
 				}
 			}
 		} finally {
@@ -95,31 +103,17 @@ public abstract class SingleReferenceMontageGenerator implements MontageGenerato
          */
 	@Override
 	public boolean validateSourceMontage(SourceMontage sourceMontage, Errors errors) {
-		int[] refChannelIndices = sourceMontage.getSourceChannelsByFunction(refChannel);
-		if (refChannelIndices == null || refChannelIndices.length == 0) {
-			onNotFound(errors);
+		SourceChannel sourceChannel = sourceMontage.getSourceChannelByLabel(referenceChannelName);
+
+		if (sourceChannel == null) {
+			onNotFound(referenceChannelName, errors);
 			return false;
 		}
-		else if (refChannelIndices.length > 1) {
+		/*else if (refChannelIndices.length > 1) {
 			onDuplicate(errors);
 			return false;
-		}
+		}*/
 		return true;
 	}
-
-        /**
-         * Reports error, that a {@link SourceChannel source channel}
-         * with <i>refChannel</i> {@link Channel function} was not found.
-         * @param errors an Errors object used to report errors
-         */
-	protected abstract void onNotFound(Errors errors);
-
-        /**
-         * Reports an error, that there was more then one
-         * {@link SourceChannel source channel} with <i>refChannel</i>
-         * {@link Channel function}.
-         * @param errors an Errors object used to report errors
-         */
-	protected abstract void onDuplicate(Errors errors);
 
 }

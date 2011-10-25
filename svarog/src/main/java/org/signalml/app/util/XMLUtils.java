@@ -26,14 +26,10 @@ import org.signalml.domain.book.filter.TagBasedAtomFilter;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageChannel;
 import org.signalml.domain.montage.MontageSampleFilter;
-import org.signalml.domain.montage.RawMontageGenerator;
+import org.signalml.domain.montage.generators.RawMontageGenerator;
 import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.montage.eeg.ChannelFunction;
-import org.signalml.domain.montage.eeg.LeftEarMontageGenerator;
-import org.signalml.domain.montage.eeg.CAMontageGenerator;
-import org.signalml.domain.montage.eeg.LinkedEarsMontageGenerator;
-import org.signalml.domain.montage.eeg.RightEarMontageGenerator;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
@@ -74,10 +70,6 @@ public abstract class XMLUtils {
 				SourceMontage.class,
 				Montage.class,
 				RawMontageGenerator.class,
-				LeftEarMontageGenerator.class,
-				RightEarMontageGenerator.class,
-				LinkedEarsMontageGenerator.class,
-				CAMontageGenerator.class,
 				MontageSampleFilter.class,
 				SampleFilterDefinition.class,
 				FFTSampleFilter.class,

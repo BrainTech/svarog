@@ -10,7 +10,7 @@ import java.util.Collection;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.domain.montage.IChannelFunction;
 import org.signalml.domain.montage.Montage;
-import org.signalml.domain.montage.MontageGenerator;
+import org.signalml.domain.montage.generators.IMontageGenerator;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
 
 /**
@@ -80,13 +80,13 @@ public interface SignalTypeConfigurer {
          * {@link MontageGenerator montage generators}.
          * @return the collection of predefined montage generators
          */
-	Collection<MontageGenerator> getMontageGenerators();
+	Collection<IMontageGenerator> getMontageGenerators();
 
         /**
          * Finds the {@link MontageGenerator montage generator} of a given index
          * @param index the index of MontageGenerator to be found
          * @return the found montage generator
          */
-	MontageGenerator getMontageGeneratorAt(int index);
+	IMontageGenerator getMontageGeneratorAt(int index);
 
 }

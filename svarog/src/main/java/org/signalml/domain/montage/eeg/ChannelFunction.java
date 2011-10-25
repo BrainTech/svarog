@@ -26,7 +26,6 @@ public enum ChannelFunction implements IChannelFunction {
 
 	UNKNOWN("Unknown", ChannelType.UNKNOWN, false, null),
 	EEG("EEG", ChannelType.PRIMARY, false, null),
-	REFERENCE("Reference", ChannelType.REFERENCE, false, null),
 	ECG("ECG", ChannelType.OTHER, true, "[Ee][CcKk][Gg]"),
 	EMG("EMG", ChannelType.OTHER, true, "[Ee][Mm][Gg]"),
 	RESP("RESP", ChannelType.OTHER, true, "[Rr][Ee][Ss][Pp]"),
