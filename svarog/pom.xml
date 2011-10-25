@@ -153,6 +153,23 @@
 				<version>1.1</version>
 				<executions>
 					<execution>
+						<id>git-describe</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>git</executable>
+							<arguments>
+								<argument>describe</argument>
+								<argument>--always</argument>
+								<argument>--tags</argument>
+								<argument>--dirty=+</argument>
+							</arguments>
+							<outputFile>src/main/resources/git-version</outputFile>
+						</configuration>
+					</execution>
+					<execution>
 						<id>execute</id>
 						<goals>
 							<goal>exec</goal>
