@@ -16,6 +16,15 @@ public interface SvarogAccessI18n {
      *         or key if not found
      */
     public String translate(PluginAuth auth, String catalogId, String key);
+    
+    /**
+     * {@link #translate(PluginAuth, String, String)} alias.
+     * @param auth
+     * @param catalogId
+     * @param key
+     * @return
+     */
+    public String _(PluginAuth auth, String catalogId, String key);
 
     /**
      * Translates the message for the specified key using the current Svarog locale.
@@ -32,4 +41,15 @@ public interface SvarogAccessI18n {
      *         or keyPlural if not found
      */
     public String translateN(PluginAuth auth, String catalogId, String key, String keyPlural, long n);
+    
+    /**
+     * {@link #translateN(PluginAuth, String, String, String, long)} alias.
+     * @param auth
+     * @param catalogId
+     * @param key
+     * @param keyPlural
+     * @param n
+     * @return
+     */
+    public String N_(PluginAuth auth, String catalogId, String key, String keyPlural, long n);
 }

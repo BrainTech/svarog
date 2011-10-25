@@ -45,4 +45,14 @@ public class SvarogAccessI18nImpl implements SvarogAccessI18n {
     public String translateN(PluginAuth auth, String catalogId, String key, String keyPlural, long n) {
         return getI18n(auth, catalogId).trn(key, keyPlural, n);
     }
+
+    @Override
+    public String _(PluginAuth auth, String catalogId, String key) {
+        return translate(auth, catalogId, key);
+    }
+
+    @Override
+    public String N_(PluginAuth auth, String catalogId, String key, String keyPlural, long n) {
+        return translateN(auth, catalogId, key, keyPlural, n);
+    }
 }
