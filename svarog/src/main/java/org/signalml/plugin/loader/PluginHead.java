@@ -22,10 +22,12 @@ public class PluginHead {
     private PluginAuthImpl pluginAuth;
     
     protected PluginHead(PluginDescription desc) {
-        this.description = desc;
+        this(desc, null, null);
     }
     
     protected PluginHead(PluginDescription desc, PluginLoaderLo ld, Plugin pluginObj) {
+        if (null == desc)
+            throw new IllegalArgumentException("desc is null!");
         this.description = desc;
         this.loader = ld;
         this.pluginFacade = pluginObj;
@@ -74,10 +76,6 @@ public class PluginHead {
     }
     
     public String toString() {
-        if (null == description) {
-            return super.toString();
-        } else {
-            return description.getName();
-        }
+        return description.getName();
     }
 }
