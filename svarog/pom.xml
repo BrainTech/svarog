@@ -23,7 +23,8 @@
 		<protobuf.source_dir>${project.basedir}/src/main/protobuf</protobuf.source_dir>
 		<protobuf.proto_file>variables.proto</protobuf.proto_file>
 		<protobuf.rules_file>multiplexer.rules</protobuf.rules_file>
-		<protobuf.generated_sources_dir>${project.build.directory}/generated-sources</protobuf.generated_sources_dir>
+		<generated_sources_dir>${project.build.directory}/generated-sources</generated_sources_dir>
+		<generated_resources_dir>${project.build.directory}/generated-resources</generated_resources_dir>
 
 		<multiplexer.jmx.version>0.9.1</multiplexer.jmx.version>
 		<springframework.version>2.0.7</springframework.version>
@@ -64,8 +65,23 @@
 						</goals>
 						<configuration>
 							<sources>
-								<source>${protobuf.generated_sources_dir}</source>
+								<source>${generated_sources_dir}</source>
 							</sources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>add-resource</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>add-resource</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>${generated_resources_dir}</directory>
+									<targetPath>svarog</targetPath>
+								</resource>
+							</resources>
 						</configuration>
 					</execution>
 				</executions>
@@ -115,7 +131,7 @@
 				<executions>
 					<execution>
 						<id>git-describe</id>
-						<phase>compile</phase>
+						<phase>generate-resources</phase>
 						<goals>
 							<goal>exec</goal>
 						</goals>
@@ -127,7 +143,7 @@
 								<argument>--tags</argument>
 								<argument>--dirty=+</argument>
 							</arguments>
-							<outputFile>src/main/resources/git-version</outputFile>
+							<outputFile>${generated_resources_dir}/git-version</outputFile>
 						</configuration>
 					</execution>
 					<execution>
@@ -169,11 +185,11 @@
 						<phase>generate-sources</phase>
 						<configuration>
 							<target>
-								<mkdir dir="${protobuf.generated_sources_dir}"/>
+								<mkdir dir="${generated_sources_dir}"/>
 								<exec executable="${protobuf.protoc}" failonerror="true">
 									<arg value="-I" />
 									<arg value="${protobuf.source_dir}" />
-									<arg value="--java_out=${protobuf.generated_sources_dir}"/>
+									<arg value="--java_out=${generated_sources_dir}"/>
 									<arg value="${protobuf.source_dir}/${protobuf.proto_file}" />
 								</exec>
 
@@ -181,7 +197,7 @@
 									<arg value="-input"/>
 									<arg value="${protobuf.source_dir}/${protobuf.rules_file}"/>
 									<arg value="-outdir"/>
-									<arg value="${protobuf.generated_sources_dir}/org/signalml/multiplexer/protocol"/>
+									<arg value="${generated_sources_dir}/org/signalml/multiplexer/protocol"/>
 									<arg value="-class"/>
 									<arg value="SvarogConstants"/>
 									<arg value="-package"/>

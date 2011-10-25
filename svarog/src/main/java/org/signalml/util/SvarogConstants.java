@@ -23,7 +23,8 @@ public abstract class SvarogConstants {
 	 * Actual version of the project. This is generated using git-describe.
 	 * The format is {lastest-tag}[-{commits-since-the-tag}-{sha1}[{+ if dirty}]].
 	 */
-	public static final String VERSION = new Scanner(SvarogConstants.class.getResourceAsStream("/git-version")).next();
+	public static final String VERSION =
+	    new Scanner(SvarogConstants.class.getResourceAsStream("/svarog/git-version")).next();
 
 	/**
 	 * Recommended minimal dimension of the screen
