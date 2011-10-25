@@ -110,6 +110,24 @@
 				</executions>
 			</plugin>
 			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>add-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>${protobuf.generated_sources_dir}</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<!-- <version>2.2</version> -->
@@ -227,7 +245,6 @@
 									<arg value="org.signalml.multiplexer.protocol"/>
 								</java>
 							</target>
-							<sourceRoot>${protobuf.generated_sources_dir}</sourceRoot>
 						</configuration>
 						<goals>
 							<goal>run</goal>
