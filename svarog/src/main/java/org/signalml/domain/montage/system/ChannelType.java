@@ -1,7 +1,7 @@
 /* ChannelType.java created 2007-10-20
  *
  */
-package org.signalml.domain.montage;
+package org.signalml.domain.montage.system;
 
 import org.springframework.context.MessageSourceResolvable;
 

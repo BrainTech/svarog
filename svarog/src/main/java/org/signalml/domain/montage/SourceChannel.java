@@ -4,6 +4,7 @@
 
 package org.signalml.domain.montage;
 
+import org.signalml.domain.montage.system.IChannelFunction;
 import java.io.Serializable;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;

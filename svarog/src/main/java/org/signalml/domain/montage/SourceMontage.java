@@ -4,6 +4,8 @@
 
 package org.signalml.domain.montage;
 
+import org.signalml.domain.montage.system.IChannelFunction;
+import org.signalml.domain.montage.system.ChannelFunction;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
@@ -15,15 +17,10 @@ import javax.swing.event.EventListenerList;
 import org.apache.log4j.Logger;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.domain.signal.MultichannelSampleSource;
-import org.signalml.domain.signal.SignalType;
-import org.signalml.domain.montage.ChannelType;
-import org.signalml.domain.signal.SignalTypeConfigurer;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.util.Util;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import java.util.List;
-import org.signalml.domain.montage.eeg.ChannelFunction;
 import org.signalml.domain.montage.system.EegElectrode;
 import org.signalml.domain.montage.system.EegSystem;
 
@@ -42,23 +39,18 @@ public class SourceMontage {
 
 	protected static final Logger logger = Logger.getLogger(SourceMontage.class);
 
-        /**
-         * a {@link SignalType type} of a signal for this SourceMontage
-         */
-	protected SignalType signalType;
-
 	private String eegSystemName;
 	private transient EegSystem eegSystem;
 
         /**
          * a list of SourceChannels in this SourceMontage
          */
-	protected ArrayList<SourceChannel> sourceChannels;
+	protected ArrayList<SourceChannel> sourceChannels = new ArrayList<SourceChannel>();;
 
         /**
          * {@link SignalTypeConfigurer configurer} for a signal type
          */
-	private transient SignalTypeConfigurer signalTypeConfigurer;
+	private transient SignalConfigurer signalConfigurer = new SignalConfigurer();
 
         /**
          * HashMap associating {@link SourceChannel source channels}
@@ -87,24 +79,8 @@ public class SourceMontage {
          */
 	private transient boolean changed = false;
 
-        /**
-         * Constructor. Creates an empty SourceMontage.
-         */
-	protected SourceMontage() {
-	}
+	public SourceMontage() {
 
-        /**
-         * Constructor. Creates a SourceMontage for a given
-         * {@link SignalType type} of a signal, but without channels.
-         * @param signalType a type of a signal for which a SourceMontage
-         * is to be created
-         */
-	public SourceMontage(SignalType signalType) {
-		if (signalType == null) {
-			throw new NullPointerException("Signal type null");
-		}
-		this.signalType = signalType;
-		sourceChannels = new ArrayList<SourceChannel>();
 	}
 
         /**
@@ -117,14 +93,11 @@ public class SourceMontage {
          * Means there is an error in code
          */
         //TODO moim zdaniem ten wyjątek nie ma prawa być wyrzucony
-	public SourceMontage(SignalType signalType, int channelCount) {
+	public SourceMontage(int channelCount) {
 
-		this(signalType);
-
-		SignalTypeConfigurer configurer = getSignalTypeConfigurer();
 		try {
 			for (int i=0; i<channelCount; i++) {
-				addSourceChannel("L" + (i+1), configurer.genericChannel());
+				addSourceChannel("L" + (i+1), signalConfigurer.genericChannel());
 			}
 		} catch (MontageException ex) {
 			throw new SanityCheckException("Failed to build default source montage", ex);
@@ -142,13 +115,11 @@ public class SourceMontage {
          */
 	public SourceMontage(SignalDocument document) {
 
-		this(document.getType());
-
 		MultichannelSampleSource mss = document.getSampleSource();
 		int channelCount = mss.getChannelCount();
 
 		String label;
-		SignalTypeConfigurer configurer = getSignalTypeConfigurer();
+		SignalConfigurer configurer = getSignalTypeConfigurer();
 		HashMap<String, SourceChannel> map = getSourceChannelsByLabel();
 		IChannelFunction function;
 		for (int i=0; i<channelCount; i++) {
@@ -189,7 +160,6 @@ public class SourceMontage {
          */
 	protected void copyFrom(SourceMontage montage) {
 		setChanged(montage.changed);
-		signalType = montage.signalType;
 
 		sourceChannels = new ArrayList<SourceChannel>(montage.sourceChannels.size());
 
@@ -258,15 +228,6 @@ public class SourceMontage {
 		}
 	}
 
-        /**
-         * Returns the {@link SignalType type} of a signal for this source
-         * montage.
-         * @return the type of a signal for current object
-         */
-	public SignalType getSignalType() {
-		return signalType;
-	}
-
 	public EegSystem getEegSystem() {
 		return eegSystem;
 	}
@@ -333,14 +294,8 @@ public class SourceMontage {
          * this source montage.
          * @return the configurer for this source montage
          */
-	public SignalTypeConfigurer getSignalTypeConfigurer() {
-		if (signalTypeConfigurer == null) {
-			signalTypeConfigurer = signalType.getConfigurer();
-			if (signalTypeConfigurer == null) {
-				throw new NullPointerException("Configurer null");
-			}
-		}
-		return signalTypeConfigurer;
+	public SignalConfigurer getSignalTypeConfigurer() {
+		return signalConfigurer;
 	}
 
         /**

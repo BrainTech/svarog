@@ -31,7 +31,7 @@ public class OpenSignalMLDocumentWorker extends SwingWorker<SignalMLDocument, Vo
 
 		SignalMLCodecReader reader = descriptor.getOpenSignalDescriptor().getOpenFileSignalDescriptor().getCodec().createReader();
 
-		SignalMLDocument signalMLDocument = new SignalMLDocument(reader, descriptor.getOpenSignalDescriptor().getOpenFileSignalDescriptor().getType());
+		SignalMLDocument signalMLDocument = new SignalMLDocument(reader);
 		signalMLDocument.setBackingFile(descriptor.getOpenSignalDescriptor().getOpenFileSignalDescriptor().getFile());
 
 		signalMLDocument.openDocument();

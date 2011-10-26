@@ -8,7 +8,6 @@ import java.io.File;
 import org.signalml.app.view.opensignal.FileOpenSignalMethod;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.domain.montage.system.EegSystem;
-import org.signalml.domain.signal.SignalType;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
@@ -26,11 +25,6 @@ public class OpenFileSignalDescriptor {
 	private File file;
 
 	/**
-	 * Describes the type of the signal (EEG_10_20 or other).
-	 */
-	private SignalType type;
-
-	/**
 	 * The method used to open the file (RAW or using a SignalML codec).
 	 */
 	private FileOpenSignalMethod method;
@@ -43,8 +37,6 @@ public class OpenFileSignalDescriptor {
 	private RawSignalDescriptor rawSignalDescriptor = new RawSignalDescriptor();
 
 	public OpenFileSignalDescriptor() {
-		// XXX currently all signals are treated as EEG - there is no way to change this in the GUI
-		type = SignalType.EEG_10_20;
 		method = FileOpenSignalMethod.RAW;
 
 		rawSignalDescriptor.setSamplingFrequency(128F);
@@ -56,14 +48,6 @@ public class OpenFileSignalDescriptor {
 		rawSignalDescriptor.setPageSize(20.0F);
 		rawSignalDescriptor.setBlocksPerPage(5);
 
-	}
-
-	public SignalType getType() {
-		return type;
-	}
-
-	public void setType(SignalType type) {
-		this.type = type;
 	}
 
 	public FileOpenSignalMethod getMethod() {

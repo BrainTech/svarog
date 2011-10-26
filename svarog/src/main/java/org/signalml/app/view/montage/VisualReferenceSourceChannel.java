@@ -8,7 +8,7 @@ import java.awt.Point;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 
-import org.signalml.domain.montage.IChannelFunction;
+import org.signalml.domain.montage.system.IChannelFunction;
 import org.signalml.domain.montage.SourceChannel;
 import org.signalml.util.Util;
 

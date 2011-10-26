@@ -29,7 +29,7 @@ import org.signalml.domain.montage.MontageSampleFilter;
 import org.signalml.domain.montage.generators.RawMontageGenerator;
 import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.SourceMontage;
-import org.signalml.domain.montage.eeg.ChannelFunction;
+import org.signalml.domain.montage.system.ChannelFunction;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;

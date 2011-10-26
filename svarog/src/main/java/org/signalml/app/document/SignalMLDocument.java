@@ -13,7 +13,6 @@ import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecReader;
 import org.signalml.domain.signal.MultichannelSampleSource;
 import org.signalml.domain.signal.SignalMLCodecSampleSource;
-import org.signalml.domain.signal.SignalType;
 import org.signalml.plugin.export.SignalMLException;
 
 /**
@@ -48,8 +47,8 @@ public class SignalMLDocument extends AbstractFileSignal {
 	 * @param reader the reader of the signal
 	 * @param type the type of the signal
 	 */
-	public SignalMLDocument(SignalMLCodecReader reader, SignalType type) {
-		super(type);
+	public SignalMLDocument(SignalMLCodecReader reader) {
+		super();
 		this.reader = reader;
 	}
 

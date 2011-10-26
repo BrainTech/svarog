@@ -4,6 +4,8 @@
 
 package org.signalml.domain.montage;
 
+import org.signalml.domain.montage.system.IChannelFunction;
+import org.signalml.domain.montage.system.ChannelFunction;
 import org.signalml.domain.montage.generators.IMontageGenerator;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,7 +22,6 @@ import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.util.Util;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import org.signalml.domain.montage.eeg.ChannelFunction;
 import org.signalml.domain.montage.system.EegSystem;
 
 /**

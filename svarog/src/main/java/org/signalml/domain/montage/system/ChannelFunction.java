@@ -1,10 +1,9 @@
 /* EegChannel.java created 2007-10-20
  *
  */
-package org.signalml.domain.montage.eeg;
+package org.signalml.domain.montage.system;
 
-import org.signalml.domain.montage.IChannelFunction;
-import org.signalml.domain.montage.ChannelType;
+import org.signalml.domain.montage.system.ChannelType;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 

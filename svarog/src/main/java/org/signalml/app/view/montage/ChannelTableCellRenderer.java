@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import org.signalml.domain.montage.IChannelFunction;
+import org.signalml.domain.montage.system.IChannelFunction;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**

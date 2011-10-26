@@ -13,7 +13,7 @@ import org.signalml.app.config.preset.EegSystemsPresetManager;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.system.EegSystem;
-import org.signalml.domain.signal.SignalType;
+import org.signalml.domain.montage.SignalConfigurer;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 
@@ -134,7 +134,7 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 	 * @param newNumberOfChannels the current number of channels
 	 */
 	protected void numberOfChannelsChangedTo(int newNumberOfChannels) {
-		Montage createdMontage = SignalType.EEG_10_20.getConfigurer().createMontage(newNumberOfChannels);
+		Montage createdMontage = SignalConfigurer.createMontage(newNumberOfChannels);
 
 		try {
 			openSignalAndSetMontageDialog.fillDialogFromModel(createdMontage);

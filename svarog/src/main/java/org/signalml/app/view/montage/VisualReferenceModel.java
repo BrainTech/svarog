@@ -12,8 +12,8 @@ import java.util.LinkedList;
 
 import javax.swing.event.EventListenerList;
 
-import org.signalml.domain.montage.IChannelFunction;
-import org.signalml.domain.montage.ChannelType;
+import org.signalml.domain.montage.system.IChannelFunction;
+import org.signalml.domain.montage.system.ChannelType;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageEvent;
 import org.signalml.domain.montage.MontageException;
@@ -21,8 +21,7 @@ import org.signalml.domain.montage.MontageListener;
 import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.SourceMontageEvent;
 import org.signalml.domain.montage.SourceMontageListener;
-import org.signalml.domain.montage.eeg.ChannelFunction;
-import org.signalml.domain.signal.SignalTypeConfigurer;
+import org.signalml.domain.montage.system.ChannelFunction;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;

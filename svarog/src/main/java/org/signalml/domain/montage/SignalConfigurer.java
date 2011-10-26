@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.domain.signal.eeg;
+package org.signalml.domain.montage;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -13,20 +13,11 @@ import java.awt.RenderingHints;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 import org.signalml.app.document.SignalDocument;
-import org.signalml.domain.montage.IChannelFunction;
-import org.signalml.domain.montage.Montage;
-import org.signalml.domain.montage.generators.IMontageGenerator;
+import org.signalml.domain.montage.system.IChannelFunction;
 import org.signalml.domain.montage.generators.RawMontageGenerator;
-import org.signalml.domain.montage.SourceMontage;
-import org.signalml.domain.montage.eeg.ChannelFunction;
-import org.signalml.domain.signal.SignalType;
-import org.signalml.domain.signal.SignalTypeConfigurer;
+import org.signalml.domain.montage.system.ChannelFunction;
 
 /**
  * This class represents the {@link SignalTypeConfigurer configurer} for
@@ -38,17 +29,12 @@ import org.signalml.domain.signal.SignalTypeConfigurer;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class EegSignalTypeConfigurer implements SignalTypeConfigurer {
+public class SignalConfigurer {
 
         /**
          * the predefined raw MontageGenerator
          */
 	private static final RawMontageGenerator rawMontageGenerator = new RawMontageGenerator();
-
-        /**
-         * the constant list of predefined montageGenerators
-         */
-	private static final List<IMontageGenerator> montageGenerators = getAllMontageGenerators();
 
         /**
          * the cached backdrop
@@ -63,29 +49,15 @@ public class EegSignalTypeConfigurer implements SignalTypeConfigurer {
          */
 	private int cachedBackdropHeight;
 
-        /**
-         * Creates the constant list of predefined
-         * {@link MontageGenerator montageGenerators} for an EEG signal
-         * @return the constant list of predefined montageGenerators for
-         * an EEG signal
-         */
-	private static List<IMontageGenerator> getAllMontageGenerators() {
-		ArrayList<IMontageGenerator> generators = new ArrayList<IMontageGenerator>();
-		generators.add(rawMontageGenerator);
-
-		return Collections.unmodifiableList(generators);
-	}
-
          /**
          * Creates the {@link Montage montage} with channelCount channels for
           * a EEG signal
          * @param channelCount the desired number of channels for the montage
          * @return the created montage
          */
-	@Override
-	public Montage createMontage(int channelCount) {
+	public static Montage createMontage(int channelCount) {
 
-		Montage montage = new Montage(new SourceMontage(SignalType.EEG_10_20, channelCount));
+		Montage montage = new Montage(new SourceMontage(channelCount));
 		rawMontageGenerator.createMontage(montage);
 		return montage;
 
@@ -94,11 +66,9 @@ public class EegSignalTypeConfigurer implements SignalTypeConfigurer {
         /**
          * Creates the {@link Montage montage} based on the
          * {@link SignalDocument document} with a signal
-         * @param signalDocument the document with a signal
          * @return the created montage
          */
-	@Override
-	public Montage createMontage(SignalDocument signalDocument) {
+	public static Montage createMontage(SignalDocument signalDocument) {
 
 		Montage montage = new Montage(new SourceMontage(signalDocument));
 		rawMontageGenerator.createMontage(montage);
@@ -106,17 +76,11 @@ public class EegSignalTypeConfigurer implements SignalTypeConfigurer {
 
 	}
 
-	@Override
-	public IChannelFunction[] getAvailableFunctions() {
-		return ChannelFunction.values();
-	}
-
         /**
          * Returns an {@link EegChannel eegChannel} of type 'UNKNOWN'
          * @return EegChannel.UNKNOWN
          */
-	@Override
-	public IChannelFunction genericChannel() {
+	public static IChannelFunction genericChannel() {
 		return ChannelFunction.UNKNOWN;
 	}
 
@@ -125,8 +89,7 @@ public class EegSignalTypeConfigurer implements SignalTypeConfigurer {
          * @param name the name of the type of the channel
          * @return the channel of a given name
          */
-	@Override
-	public IChannelFunction channelForName(String name) {
+	public static IChannelFunction channelForName(String name) {
 		if (name == null || name.isEmpty()) {
 			return ChannelFunction.UNKNOWN;
 		}
@@ -145,7 +108,6 @@ public class EegSignalTypeConfigurer implements SignalTypeConfigurer {
          * @param height the height of the backdrop
          * @return an Image with backdrop for electrodes positions matrix
          */
-	@Override
 	public Image getMatrixBackdrop(int width, int height) {
 
 		if (width < 60 || height < 60) {
@@ -184,37 +146,6 @@ public class EegSignalTypeConfigurer implements SignalTypeConfigurer {
 
 		return cachedBackdrop;
 
-	}
-
-        /**
-         * Returns the number of predefined
-         * {@link MontageGenerator montage generators}.
-         * @return the number of predefined montage generators
-         */
-	@Override
-	public int getMontageGeneratorCount() {
-		return montageGenerators.size();
-	}
-
-        /**
-         * Returns the collection of predefined
-         * {@link MontageGenerator montage generators}.
-         * @return the collection of predefined montage generators
-         */
-	@Override
-	public Collection<IMontageGenerator> getMontageGenerators() {
-		return montageGenerators;
-	}
-
-        /**
-         * Finds the {@link MontageGenerator montage generator} of
-         * a certain index
-         * @param index index of MontageGenerator to be found
-         * @return the found MontageGenerator
-         */
-	@Override
-	public IMontageGenerator getMontageGeneratorAt(int index) {
-		return montageGenerators.get(index);
 	}
 
 }

@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import org.signalml.app.config.AbstractXMLConfiguration;
 import org.signalml.app.util.XMLUtils;
-import org.signalml.domain.montage.ChannelType;
+import org.signalml.domain.montage.system.ChannelType;
 import org.signalml.domain.montage.generators.IMontageGenerator;
 import org.signalml.domain.montage.system.EegElectrode;
 import org.signalml.domain.montage.system.EegSystem;

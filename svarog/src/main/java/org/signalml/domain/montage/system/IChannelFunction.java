@@ -1,7 +1,7 @@
 /* Channel.java created 2007-10-23
  *
  */
-package org.signalml.domain.montage;
+package org.signalml.domain.montage.system;
 
 import java.io.Serializable;
 

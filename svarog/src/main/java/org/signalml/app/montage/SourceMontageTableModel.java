@@ -10,13 +10,12 @@ import javax.swing.table.AbstractTableModel;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.view.dialog.ErrorsDialog;
-import org.signalml.domain.montage.IChannelFunction;
+import org.signalml.domain.montage.system.IChannelFunction;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.montage.SourceMontageEvent;
 import org.signalml.domain.montage.SourceMontageListener;
 import org.springframework.context.support.MessageSourceAccessor;
-import org.signalml.domain.montage.ChannelType;
 
 /** SourceMontageTableModel
  *
@@ -71,10 +70,8 @@ public class SourceMontageTableModel extends AbstractTableModel implements Sourc
 			this.montage = montage;
 			if (montage != null) {
 				montage.addSourceMontageListener(this);
-				functionsListModel.setConfigurer(montage.getSignalTypeConfigurer());
 				channelsListModel.setEegSystem(montage.getEegSystem());
 			} else {
-				functionsListModel.setConfigurer(null);
 				channelsListModel.setEegSystem(null);
 			}
 			

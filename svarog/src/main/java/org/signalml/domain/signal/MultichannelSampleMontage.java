@@ -10,12 +10,13 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import org.apache.log4j.Logger;
-import org.signalml.domain.montage.ChannelType;
+import org.signalml.domain.montage.system.ChannelType;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageChannel;
 import org.signalml.domain.montage.MontageMismatchException;
 import org.signalml.domain.montage.SourceChannel;
-import org.signalml.domain.montage.eeg.ChannelFunction;
+import org.signalml.domain.montage.system.ChannelFunction;
+import org.signalml.domain.montage.SignalConfigurer;
 import org.signalml.exception.SanityCheckException;
 
 /**
@@ -64,11 +65,6 @@ public class MultichannelSampleMontage extends MultichannelSampleProcessor {
 	private double[] auxSamples;
 
         /**
-         * the type of a signal in the montage
-         */
-	private SignalType signalType;
-
-        /**
          * the montage used to set parameters of this source
          */
 	private Montage currentMontage = null;
@@ -91,9 +87,8 @@ public class MultichannelSampleMontage extends MultichannelSampleProcessor {
          * in <code>source</code> is different then the number of source
          * channels in the montage.
          */
-	public MultichannelSampleMontage(SignalType signalType, MultichannelSampleSource source, Montage montage) throws MontageMismatchException {
+	public MultichannelSampleMontage(MultichannelSampleSource source, Montage montage) throws MontageMismatchException {
 		super(source);
-		this.signalType = signalType;
 		setCurrentMontage(montage);
 	}
 
@@ -105,9 +100,8 @@ public class MultichannelSampleMontage extends MultichannelSampleProcessor {
          * @param source the source of (source) samples
          * @throws SanityCheckException must not happen, means error in code.
          */
-	public MultichannelSampleMontage(SignalType signalType, MultichannelSampleSource source) {
+	public MultichannelSampleMontage(MultichannelSampleSource source) {
 		super(source);
-		this.signalType = signalType;
 		this.currentMontage = getFailsafeMontage();
 		try {
 			applyMontage(this.currentMontage);
@@ -122,7 +116,7 @@ public class MultichannelSampleMontage extends MultichannelSampleProcessor {
          * @return an empty montage for a given type of signal.
          */
 	private Montage getFailsafeMontage() {
-		return signalType.getConfigurer().createMontage(source.getChannelCount());
+		return SignalConfigurer.createMontage(source.getChannelCount());
 	}
 
         /**

@@ -1,7 +1,6 @@
 package org.signalml.domain.montage.system;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import org.signalml.domain.montage.ChannelType;
 import org.signalml.math.geometry.Polar3dPoint;
 
 /**

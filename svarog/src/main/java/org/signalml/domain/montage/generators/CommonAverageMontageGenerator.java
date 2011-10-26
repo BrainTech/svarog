@@ -7,7 +7,7 @@ package org.signalml.domain.montage.generators;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
-import org.signalml.domain.montage.eeg.ChannelFunction;
+import org.signalml.domain.montage.system.ChannelFunction;
 
 /**
  * This class represents a generator for a common average montage.

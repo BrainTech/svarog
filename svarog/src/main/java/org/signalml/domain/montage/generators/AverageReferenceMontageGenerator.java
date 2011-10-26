@@ -6,7 +6,7 @@ package org.signalml.domain.montage.generators;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.signalml.domain.montage.ChannelType;
+import org.signalml.domain.montage.system.ChannelType;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.SourceChannel;

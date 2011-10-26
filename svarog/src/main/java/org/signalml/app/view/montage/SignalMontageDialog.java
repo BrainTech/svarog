@@ -35,7 +35,6 @@ import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.SourceMontage;
-import org.signalml.domain.signal.SignalType;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.SvarogConstants;
 import org.signalml.util.Util;
@@ -204,7 +203,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 				if (signalBound) {
 					currentMontage = new Montage(new SourceMontage(signalDocument));
 				} else {
-					currentMontage = new Montage(new SourceMontage(SignalType.EEG_10_20));
+					currentMontage = new Montage(new SourceMontage());
 				}
 			} else {
 				currentMontage = new Montage(montage);
