@@ -1,7 +1,6 @@
 /* Channel.java created 2007-10-23
  *
  */
-
 package org.signalml.domain.montage;
 
 import java.io.Serializable;
@@ -20,28 +19,21 @@ import org.springframework.context.MessageSourceResolvable;
  */
 public interface IChannelFunction extends MessageSourceResolvable, Serializable {
 
-        /**
-         * Returns the name of this channel.
-         * @return the name of this channel
-         */
+	/**
+	 * Returns the name of this channel.
+	 * @return the name of this channel
+	 */
 	String getName();
 
-        /**
-         * Returns the type of this channel.
-         * @return the type of this channel
-         */
-	ChannelType getType();
-
-        /**
-         * Returns if this channel is unique.
-         * @return true if this channel is unique, false otherwise
-         */
+	/**
+	 * Returns if this channel is unique.
+	 * @return true if this channel is unique, false otherwise
+	 */
 	boolean isUnique();
-	
-    /**
-     * Returns if this channel is mutable
-     * @return true if this channel is mutable, false otherwise
-     */
-	boolean isMutable();
 
+	/**
+	 * Returns if this channel is mutable
+	 * @return true if this channel is mutable, false otherwise
+	 */
+	boolean isMutable();
 }

@@ -130,7 +130,7 @@ public class EegSignalTypeConfigurer implements SignalTypeConfigurer {
 		if (name == null || name.isEmpty()) {
 			return ChannelFunction.UNKNOWN;
 		}
-		IChannelFunction channel = ChannelFunction.forName(name);
+		IChannelFunction channel = null;// = ChannelFunction.forName(name);
 		if (channel == null) {
 			return ChannelFunction.UNKNOWN;
 		}

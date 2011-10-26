@@ -26,6 +26,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.apache.log4j.Logger;
+import org.codehaus.janino.WarningHandler;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.model.SeriousWarningDescriptor;
 import org.signalml.app.montage.MontageTableModel;
@@ -40,10 +41,12 @@ import org.signalml.app.view.montage.dnd.MontageWasteBasketTransferHandler;
 import org.signalml.domain.montage.GenericChannel;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.ChannelType;
+import org.signalml.domain.montage.IChannelFunction;
 import org.signalml.domain.montage.MontageChannel;
 import org.signalml.domain.montage.eeg.ChannelFunction;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.SourceChannel;
+import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.support.MessageSourceAccessor;
 
 
@@ -923,6 +926,11 @@ public class MontageChannelsPanel extends JPanel {
 				return;
 			}
 
+			IChannelFunction function = montage.getSourceChannelAt(cnt -1 ).getFunction();
+			if (function != ChannelFunction.ONE && function != ChannelFunction.ZERO) {
+				ErrorsDialog.showError("error.sourceMontageTable.canOnlyRemoveZerosAndOnesChannels");
+				return;
+			}
 			if (montage.isSourceChannelInUse(cnt -  1)) {
 
 				String warning =  messageSource.getMessage("montageTable.onDeleteUsed");

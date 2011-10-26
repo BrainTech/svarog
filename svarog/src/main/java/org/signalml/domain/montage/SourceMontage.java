@@ -192,20 +192,14 @@ public class SourceMontage {
 		signalType = montage.signalType;
 
 		sourceChannels = new ArrayList<SourceChannel>(montage.sourceChannels.size());
-		HashMap<String, SourceChannel> map = getSourceChannelsByLabel();
-		map.clear();
-		getSourceChannelsByFunction().clear();
-		SourceChannel newChannel;
-		LinkedList<SourceChannel> list;
+
 		for (SourceChannel channel : montage.sourceChannels) {
-			newChannel = new SourceChannel(channel);
-			list = getSourceChannelsByFunctionList(newChannel.getFunction());
+			SourceChannel newChannel = new SourceChannel(channel);
 			sourceChannels.add(newChannel);
-			map.put(newChannel.getLabel(), newChannel);
-			list.add(newChannel);
 		}
 
-		setEegSystem(montage.eegSystem);
+		this.eegSystem = montage.eegSystem;
+		this.eegSystemName = montage.eegSystemName;
 	}
 
         /**
@@ -256,8 +250,8 @@ public class SourceMontage {
 			}
 		} else if (dCnt < mCnt) {
 			for (int i=mCnt-1; i>=dCnt; i--) {
-				if ((this.getSourceChannelFunctionAt(i).getType() == ChannelType.ZERO)
-					|| (this.getSourceChannelFunctionAt(i).getType() == ChannelType.ONE))
+				IChannelFunction function = this.getSourceChannelAt(i).getFunction();
+				if (function == ChannelFunction.ONE || function == ChannelFunction.ZERO)
 					continue;
 				removeSourceChannel();
 			}
@@ -278,8 +272,11 @@ public class SourceMontage {
 	}
 
 	public void setEegSystem(EegSystem eegSystem) {
-		this.eegSystem = eegSystem;
 
+		if (this.eegSystem == eegSystem)
+			return;
+
+		this.eegSystem = eegSystem;
 		if (eegSystem == null) {
 			eegSystemName = null;
 			return;
@@ -543,55 +540,6 @@ public class SourceMontage {
 			i++;
 		}
 		return indices;
-	}
-
-	public int[] getSourceChannelsByTypes(ChannelType[] types) {
-		LinkedList<SourceChannel> list = getSourceChannelsByFunctionList(null);
-		int indSize = 0;
-		for (int i = 0; i < this.getSourceChannelCount(); i++)
-			for (int j = 0; j < types.length; j++)
-				if (this.getSourceChannelFunctionAt(i).getType() == types[j])
-					indSize ++;
-
-		int[] indices = new int[indSize];
-		int ind = 0;
-		for (int i = 0; i < this.getSourceChannelCount(); i++)
-			for (int j = 0; j < types.length; j++)
-				if (this.getSourceChannelFunctionAt(i).getType() == types[j]) {
-					indices[ind] = i;
-					ind ++;
-				}
-		return indices;
-	}
-
-        /**
-         * Returns an index of a first {@link SourceChannel source channel}
-         * with a given {@link Channel function}.
-         * @param function a function that source channel should fulfil
-         * @return an index of a first source channel with a given function,
-         * -1 if doesn't exist
-         */
-	public int getFirstSourceChannelWithFunction(IChannelFunction function) {
-		LinkedList<SourceChannel> list = getSourceChannelsByFunctionList(function);
-		if (list.isEmpty()) {
-			return -1;
-		}
-		return list.getFirst().getChannel();
-	}
-
-        /**
-         * Returns an index of a first {@link SourceChannel source channel} with
-         * a given label.
-         * @param label a String with a label to be found
-         * @return an index of a first source channel with a given label,
-         * -1 if doesn't exist
-         */
-	public int getSourceChannelForLabel(String label) {
-		SourceChannel channel = getSourceChannelsByLabel().get(label);
-		if (channel == null) {
-			return -1;
-		}
-		return channel.getChannel();
 	}
 
 	/**

@@ -880,6 +880,7 @@
 	<entry key="sourceMontageTable.addZeroChannel">ZEROs channel</entry>
 	<entry key="sourceMontageTable.addOneChannel">ONEs channel</entry>
 	<entry key="sourceMontageTable.removeChannel">Remove</entry>
+	<entry key="error.sourceMontageTable.canOnlyRemoveZerosAndOnesChannels">This channel cannot be removed - can only remove ZEROs and ONEs channels.</entry>
 
 	<entry key="montageTable.title">Target montage</entry>
 	<entry key="montageTable.index">Index</entry>

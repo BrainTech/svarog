@@ -20,6 +20,7 @@ import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.util.Util;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import org.signalml.domain.montage.eeg.ChannelFunction;
 import org.signalml.domain.montage.system.EegSystem;
 
 /**
@@ -681,7 +682,7 @@ public class Montage extends SourceMontage implements Preset {
 		String result = ""; // start with the first element
 		String ONE = "1", MINUS = "-";
 		for (int i=0; i<references.length; i++) {
-			if ((references[i] == null) || (this.getSourceChannelFunctionAt(i).getType() == ChannelType.ZERO))
+			if ((references[i] == null) || (this.getSourceChannelAt(i).getFunction() == ChannelFunction.ZERO))
 				// null means that no reference for given sourceChannel is present
 				// empty is 0 - also ignore
 				continue;
@@ -694,8 +695,8 @@ public class Montage extends SourceMontage implements Preset {
 					pre = "+";
 				if (!references[i].equals(ONE))
 					pre = pre + references[i] + "*";
-				
-				if (this.getSourceChannelFunctionAt(i).getType() == ChannelType.ONE)
+
+				if (this.getSourceChannelAt(i).getFunction() == ChannelFunction.ONE)
 					result = result + pre + "1";
 				else
 					result = result + pre + sourceChannels.get(i).getLabel();

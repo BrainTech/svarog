@@ -15,6 +15,7 @@ import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageChannel;
 import org.signalml.domain.montage.MontageMismatchException;
 import org.signalml.domain.montage.SourceChannel;
+import org.signalml.domain.montage.eeg.ChannelFunction;
 import org.signalml.exception.SanityCheckException;
 
 /**
@@ -251,9 +252,9 @@ public class MultichannelSampleMontage extends MultichannelSampleProcessor {
 
 		//In case we have 'fake' primaryChannel (eg. in montage there is a channel added by 'add empty channel'
 		//we need to immitate source samples as 0
-		if (currentMontage.getSourceChannelFunctionAt(primaryChannel).getType() == ChannelType.ZERO) {
+		if (currentMontage.getSourceChannelAt(primaryChannel).getFunction() == ChannelFunction.ZERO) {
 			this.fillSamplesWith((double) 0.0, target, signalOffset, count, arrayOffset);
-		} else if (currentMontage.getSourceChannelFunctionAt(primaryChannel).getType() == ChannelType.ONE) {
+		} else if (currentMontage.getSourceChannelAt(primaryChannel).getFunction() == ChannelFunction.ONE) {
 			this.fillSamplesWith((double) 1.0, target, signalOffset, count, arrayOffset);
 		} else {
 			source.getSamples(primaryChannel, target, signalOffset, count, arrayOffset);
@@ -278,9 +279,9 @@ public class MultichannelSampleMontage extends MultichannelSampleProcessor {
 				if (auxSamples == null || auxSamples.length < count) {
 					auxSamples = new double[count];
 				}
-				if (currentMontage.getSourceChannelFunctionAt(i).getType() == ChannelType.ZERO)
+				if (currentMontage.getSourceChannelAt(i).getFunction() == ChannelFunction.ZERO)
 					this.fillSamplesWith((double) 0.0, auxSamples, signalOffset, count, 0);
-				else if (currentMontage.getSourceChannelFunctionAt(i).getType() == ChannelType.ONE)
+				else if (currentMontage.getSourceChannelAt(i).getFunction() == ChannelFunction.ONE)
 					this.fillSamplesWith((double) 1.0, auxSamples, signalOffset, count, 0);
 				else
 					source.getSamples(i, auxSamples, signalOffset, count, 0);

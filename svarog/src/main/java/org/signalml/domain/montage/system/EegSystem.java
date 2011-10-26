@@ -5,8 +5,10 @@ import com.thoughtworks.xstream.annotations.XStreamConverter;
 import java.util.ArrayList;
 import java.util.List;
 import org.signalml.app.config.preset.Preset;
+import org.signalml.domain.montage.generators.CommonAverageMontageGenerator;
 import org.signalml.domain.montage.generators.IMontageGenerator;
 import org.signalml.domain.montage.generators.MontageGeneratorsConverter;
+import org.signalml.domain.montage.generators.RawMontageGenerator;
 
 /**
  *
@@ -24,9 +26,11 @@ public class EegSystem implements Preset {
 	private List<IMontageGenerator> montageGenerators = new ArrayList<IMontageGenerator>();
 
 	public EegSystem() {
+		MontageGeneratorsConverter.addDefaultMontageGenerators(montageGenerators);
 	}
 
 	public EegSystem(String name) {
+		super();
 		this.name = name;
 	}
 

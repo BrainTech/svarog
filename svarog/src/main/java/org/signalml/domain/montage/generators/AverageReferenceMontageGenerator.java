@@ -62,9 +62,9 @@ public class AverageReferenceMontageGenerator extends AbstractMontageGenerator {
          */
 	@Override
 	public void createMontage(Montage montage) throws MontageException {
-		List<SourceChannel> sourceChannels = getReferenceSourceChannels(montage);
+		List<SourceChannel> referenceSourceChannels = getReferenceSourceChannels(montage);
 
-		String token = "-1/" + Integer.toString(sourceChannels.size());
+		String token = "-1/" + Integer.toString(referenceSourceChannels.size());
 		boolean oldMajorChange = montage.isMajorChange();
 
 		try {
@@ -76,10 +76,10 @@ public class AverageReferenceMontageGenerator extends AbstractMontageGenerator {
 			int index;
 			for (int i=0; i<size; i++) {
 				index = montage.addMontageChannel(i);
-				for (SourceChannel sourceChannel: sourceChannels) {
-					if (sourceChannel.getEegElectrode() != null
-						&& sourceChannel.getEegElectrode().getChannelType() == ChannelType.PRIMARY)
-					montage.setReference(index, sourceChannel.getChannel(), token);
+				for (SourceChannel referenceSourceChannel: referenceSourceChannels) {
+					if (montage.getSourceChannelAt(i).getEegElectrode() != null &&
+						montage.getSourceChannelAt(i).getEegElectrode().getChannelType() == ChannelType.PRIMARY)
+					montage.setReference(index, referenceSourceChannel.getChannel(), token);
 				}
 			}
 		} finally {

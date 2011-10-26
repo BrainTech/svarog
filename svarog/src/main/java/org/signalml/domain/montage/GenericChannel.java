@@ -22,12 +22,12 @@ public enum GenericChannel implements IChannelFunction {
 	/**
          * the default type of the channel
          */
-	UNKNOWN("Unknown", ChannelType.UNKNOWN, false, null),
+	UNKNOWN("Unknown", false, null),
 
 	// Generics
-	SIGNAL("Signal", ChannelType.PRIMARY, false, null),
-	REFERENCE("Reference", ChannelType.REFERENCE, false, null),
-	OTHER("Other", ChannelType.OTHER, false, null),
+	SIGNAL("Signal", false, null),
+	REFERENCE("Reference", false, null),
+	OTHER("Other", false, null),
 
 	;
 
@@ -35,12 +35,6 @@ public enum GenericChannel implements IChannelFunction {
          * the name of this channel
          */
 	private String name;
-
-        /**
-         * type of this channel. Possible types:
-         * UNKNOWN, PRIMARY, REFERENCE, OTHER
-         */
-	private ChannelType type;
 
         /**
          * the pattern which will be used to search this channel by name.
@@ -66,9 +60,8 @@ public enum GenericChannel implements IChannelFunction {
          * @param pattern the regular expression which will be used to search
          * channel by name
          */
-	private GenericChannel(String name, ChannelType type, boolean unique, String pattern) {
+	private GenericChannel(String name, boolean unique, String pattern) {
 		this.name = name;
-		this.type = type;
 		this.unique = unique;
 		if (pattern != null) {
 			this.matchingPattern = Pattern.compile(pattern);
@@ -83,8 +76,8 @@ public enum GenericChannel implements IChannelFunction {
      * @param pattern the regular expression which will be used to search
      * channel by name
      */
-	private GenericChannel(String name, ChannelType type, boolean unique, boolean mutable, String pattern) {
-		this(name, type, unique, pattern);
+	private GenericChannel(String name, boolean unique, boolean mutable, String pattern) {
+		this(name, unique, pattern);
 		this.mutable=mutable;
 	}
 
@@ -110,11 +103,6 @@ public enum GenericChannel implements IChannelFunction {
         @Override
 	public String getName() {
 		return name;
-	}
-
-        @Override
-	public ChannelType getType() {
-		return type;
 	}
 
 	@Override

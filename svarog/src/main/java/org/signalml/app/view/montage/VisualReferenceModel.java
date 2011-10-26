@@ -120,16 +120,21 @@ public class VisualReferenceModel implements SourceMontageListener, MontageListe
 				sourceChannels.add(visualSourceChannel);
 				channelLists.add(new LinkedList<VisualReferenceChannel>());
 
-				function = montage.getSourceChannelFunctionAt(i);
-				if (sourceChannel.getFunction().getName().equals(ChannelFunction.EEG.getName())) {
+				if (
+					sourceChannel.getFunction().getName().equals(ChannelFunction.EEG.getName())
+					&& sourceChannel.getEegElectrode() != null
+				) {
 					// the channel is positioned
 					positionedBin.add(visualSourceChannel);
 				} else {
+					othersBin.add(visualSourceChannel);
+					/* TODO: check if the primaries, reference etc. bins
+					 * are necessary
+					 function = montage.getSourceChannelFunctionAt(i);
 					functionType = function.getType();
 					switch (functionType) {
 
 					case PRIMARY :
-					case UNKNOWN : // unknowns are treated as assorted primaries
 						primariesBin.add(visualSourceChannel);
 						break;
 
@@ -141,7 +146,7 @@ public class VisualReferenceModel implements SourceMontageListener, MontageListe
 						othersBin.add(visualSourceChannel);
 						break;
 
-					}
+					}*/
 				}
 			}
 

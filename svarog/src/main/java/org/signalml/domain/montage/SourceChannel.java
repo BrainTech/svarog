@@ -64,6 +64,7 @@ public class SourceChannel implements Serializable {
 		this.channel = sourceChannel.channel;
 		this.label = sourceChannel.label;
 		this.function = sourceChannel.function;
+		this.eegElectrode = sourceChannel.eegElectrode;
 	}
 
         /**

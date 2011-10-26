@@ -16,13 +16,19 @@ import org.apache.log4j.Logger;
  */
 public class MontageGeneratorsConverter implements Converter {
 
-	protected static final Logger logger = Logger.getLogger(MontageGeneratorsConverter.class);
 	private static final RawMontageGenerator rawMontageGenerator = new RawMontageGenerator();
 	private static final CommonAverageMontageGenerator commonAverageMontageGenerator = new CommonAverageMontageGenerator();
+
+	protected static final Logger logger = Logger.getLogger(MontageGeneratorsConverter.class);
 
 	@Override
 	public void marshal(Object o, HierarchicalStreamWriter writer, MarshallingContext mc) {
 		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	public static void addDefaultMontageGenerators(List<IMontageGenerator> montageGenerators) {
+		montageGenerators.add(rawMontageGenerator);
+		montageGenerators.add(commonAverageMontageGenerator);
 	}
 
 	@Override
@@ -30,9 +36,7 @@ public class MontageGeneratorsConverter implements Converter {
 
 		List<IMontageGenerator> montageGenerators = new ArrayList<IMontageGenerator>();
 
-		//add default montage generators (for all systems).
-		montageGenerators.add(rawMontageGenerator);
-		montageGenerators.add(commonAverageMontageGenerator);
+		addDefaultMontageGenerators(montageGenerators);
 
 		while (reader.hasMoreChildren()) {
 			reader.moveDown();
