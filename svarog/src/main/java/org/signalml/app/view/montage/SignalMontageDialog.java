@@ -231,16 +231,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 
 		if (signalDocument != null) {
 			if (!currentMontage.isCompatible(signalDocument)) {
-
-				String warning =  messageSource.getMessage("montageDialog.onIncompatible");
-				SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 3);
-
-				boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
-				if (!ok) {
-					return;
-				}
 				currentMontage.adapt(signalDocument);
-
 			}
 		}
 		setMontageToPanels(currentMontage);

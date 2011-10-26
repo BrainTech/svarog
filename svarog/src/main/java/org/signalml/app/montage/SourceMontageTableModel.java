@@ -168,7 +168,7 @@ public class SourceMontageTableModel extends AbstractTableModel implements Sourc
 	@Override
 	public void setValueAt(Object value, int rowIndex, int columnIndex) {
 
-		if (columnIndex == INDEX_COLUMN) {
+		if (columnIndex == INDEX_COLUMN || value == null) {
 			return;
 		}
 

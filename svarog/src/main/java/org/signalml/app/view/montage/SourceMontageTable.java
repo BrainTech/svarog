@@ -44,11 +44,11 @@ public class SourceMontageTable extends JTable {
 	 * the default serialization constant
 	 */
 	private static final long serialVersionUID = 1L;
-
 	/**
 	 * the {@link TablePopupMenuProvider popup menu provider} for this table
 	 */
 	private TablePopupMenuProvider popupMenuProvider;
+	private MessageSourceAccessor messageSource;
 
 	/**
 	 * Creates the table with 3 columns:
@@ -66,55 +66,23 @@ public class SourceMontageTable extends JTable {
 	 */
 	public SourceMontageTable(SourceMontageTableModel model, MessageSourceAccessor messageSource) {
 		super(model, (TableColumnModel) null);
+		this.messageSource = messageSource;
 
 		DefaultTableColumnModel columnModel = new DefaultTableColumnModel();
 		columnModel.setColumnSelectionAllowed(false);
 
 		TableColumn tc;
 
-		GrayTableCellRenderer grayIneditableTableCellRenderer = new GrayTableCellRenderer();
-		ChannelTableCellRenderer channelTableCellRenderer = new ChannelTableCellRenderer();
-		channelTableCellRenderer.setMessageSource(messageSource);
-
-		//index
-		tc = new TableColumn(SourceMontageTableModel.INDEX_COLUMN, 100);
-		tc.setHeaderValue(model.getColumnName(tc.getModelIndex()));
-		tc.setCellRenderer(grayIneditableTableCellRenderer);
+		tc = getIndexTableColumn(model);
 		columnModel.addColumn(tc);
 
-
-		//label
-		{
-		tc = new TableColumn(SourceMontageTableModel.LABEL_COLUMN, 200);
-		tc.setHeaderValue(model.getColumnName(tc.getModelIndex()));
-
-		ChannelComboBox channelLabelComboBox = new ChannelComboBox(messageSource);
-		channelLabelComboBox.setModel(model.getChannelsListModel());
-		channelLabelComboBox.setEditable(true);
-		
-		DefaultCellEditor channelLabelCellEditor = new DefaultCellEditor(channelLabelComboBox);
-		channelLabelCellEditor.setClickCountToStart(2);
-		tc.setCellEditor(channelLabelCellEditor);
-
-		columnModel.addColumn(tc);
-		}
-
-
-		//function
-		{
-		tc = new TableColumn(SourceMontageTableModel.FUNCTION_COLUMN, 200);
-		tc.setHeaderValue(model.getColumnName(tc.getModelIndex()));
-		tc.setCellRenderer(channelTableCellRenderer);
-		ChannelComboBox channelComboBox = new ChannelComboBox(messageSource);
-		channelComboBox.setModel(model.getChannelFunctionsListModel());
-		DefaultCellEditor channelCellEditor = new DefaultCellEditor(channelComboBox);
-		channelCellEditor.setClickCountToStart(2);
-		tc.setCellEditor(channelCellEditor);
+		tc = getLabelTableColumn(model);
 		columnModel.addColumn(tc);
 
-		}
+		tc = getFunctionTableColumn(model);
+		columnModel.addColumn(tc);
+
 		setColumnModel(columnModel);
-
 		setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
 		addMouseListener(new MouseAdapter() {
@@ -129,7 +97,6 @@ public class SourceMontageTable extends JTable {
 					}
 				}
 			}
-
 		});
 
 		getTableHeader().setReorderingAllowed(false);
@@ -138,6 +105,47 @@ public class SourceMontageTable extends JTable {
 		setDragEnabled(true);
 		setFillsViewportHeight(true);
 
+	}
+
+	protected TableColumn getIndexTableColumn(SourceMontageTableModel model) {
+		TableColumn tc = new TableColumn(SourceMontageTableModel.INDEX_COLUMN, 100);
+		tc.setHeaderValue(model.getColumnName(tc.getModelIndex()));
+
+		GrayTableCellRenderer grayIneditableTableCellRenderer = new GrayTableCellRenderer();
+		tc.setCellRenderer(grayIneditableTableCellRenderer);
+		return tc;
+	}
+
+	protected TableColumn getLabelTableColumn(SourceMontageTableModel model) {
+		TableColumn tc = new TableColumn(SourceMontageTableModel.LABEL_COLUMN, 200);
+		tc.setHeaderValue(model.getColumnName(tc.getModelIndex()));
+
+		ChannelComboBox channelLabelComboBox = new ChannelComboBox(messageSource);
+		channelLabelComboBox.setModel(model.getChannelsListModel());
+		channelLabelComboBox.setEditable(true);
+
+		DefaultCellEditor channelLabelCellEditor = new DefaultCellEditor(channelLabelComboBox);
+		channelLabelCellEditor.setClickCountToStart(2);
+		tc.setCellEditor(channelLabelCellEditor);
+
+		return tc;
+	}
+
+	protected TableColumn getFunctionTableColumn(SourceMontageTableModel model) {
+		TableColumn tc = new TableColumn(SourceMontageTableModel.FUNCTION_COLUMN, 200);
+		tc.setHeaderValue(model.getColumnName(tc.getModelIndex()));
+
+		ChannelTableCellRenderer channelTableCellRenderer = new ChannelTableCellRenderer();
+		channelTableCellRenderer.setMessageSource(messageSource);
+		tc.setCellRenderer(channelTableCellRenderer);
+
+		ChannelComboBox channelComboBox = new ChannelComboBox(messageSource);
+		channelComboBox.setModel(model.getChannelFunctionsListModel());
+		DefaultCellEditor channelCellEditor = new DefaultCellEditor(channelComboBox);
+		channelCellEditor.setClickCountToStart(2);
+		tc.setCellEditor(channelCellEditor);
+
+		return tc;
 	}
 
 	/* (non-Javadoc)
@@ -182,5 +190,4 @@ public class SourceMontageTable extends JTable {
 	public void setPopupMenuProvider(TablePopupMenuProvider popupMenuProvider) {
 		this.popupMenuProvider = popupMenuProvider;
 	}
-
 }
