@@ -36,4 +36,8 @@ public interface IChannelFunction extends MessageSourceResolvable, Serializable 
 	 * @return true if this channel is mutable, false otherwise
 	 */
 	boolean isMutable();
+
+	int getMinValueScale();
+	int getMaxValueScale();
+	String getUnitOfMeasurementSymbol();
 }

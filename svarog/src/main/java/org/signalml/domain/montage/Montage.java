@@ -472,6 +472,12 @@ public class Montage extends SourceMontage implements Preset {
 		return list;
 	}
 
+	public SourceChannel getSourceChannelForMontageChannel(int index) {
+		int primaryChannelIndex = getMontagePrimaryChannelAt(index);
+		SourceChannel sourceChannel = getSourceChannelAt(primaryChannelIndex);
+		return sourceChannel;
+	}
+
         /**
          * Returns HashMap associating {@link MontageChannel montage channels}
          * with their labels.

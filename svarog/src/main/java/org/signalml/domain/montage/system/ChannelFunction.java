@@ -19,14 +19,14 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("eegchannel")
 public enum ChannelFunction implements IChannelFunction {
 
-	UNKNOWN("Unknown", false),
-	EEG("EEG", false),
-	ECG("ECG", false),
-	EMG("EMG", false),
-	RESP("RESP", false),
-	SAO2("SaO2", false),
-	ZERO("ZERO", true),
-	ONE("ONE", true);
+	UNKNOWN("Unknown", false, true, "", 20, 800),
+	EEG("EEG", false, true, "uV", 20, 800),
+	ECG("ECG", false, true, "uV", 20, 40),
+	EMG("EMG", false, true, "e", 20, 800),
+	RESP("RESP", false, true, "", 20, 800),
+	SAO2("SaO2", false, true, "", 20, 800),
+	ZERO("ZERO", true, true, "bit", 20, 800),
+	ONE("ONE", true, true, "bit", 20, 800);
 	/**
 	 * a name of this channel
 	 */
@@ -40,17 +40,10 @@ public enum ChannelFunction implements IChannelFunction {
 	 */
 	private boolean mutable;
 
-	/**
-	 * Constructor. Creates a channel of a given {@link ChannelType type}
-	 * and puts it at given location.
-	 * @param name the name of the channel
-	 * @param unique is this channel unique?
-	 */
-	private ChannelFunction(String name, boolean unique) {
-		this.mutable = true;
-		this.name = name;
-		this.unique = unique;
-	}
+	private String unitOfMeasurementSymbol;
+	private int minValueScale;
+	private int maxValueScale;
+
 
 	/**
 	 * Constructor.
@@ -59,9 +52,13 @@ public enum ChannelFunction implements IChannelFunction {
 	 * @param unique is the channel unique?
 	 * @param mutable is the channel mutable?
 	 */
-	private ChannelFunction(String name, boolean unique, boolean mutable) {
-		this(name, unique);
+	private ChannelFunction(String name, boolean unique, boolean mutable, String unitOfMeasurementSymbol, int minValueScale, int maxValueScale) {
+		this.name = name;
+		this.unique = unique;
 		this.mutable = mutable;
+		this.unitOfMeasurementSymbol = unitOfMeasurementSymbol;
+		this.minValueScale = minValueScale;
+		this.maxValueScale = maxValueScale;
 	}
 
 	@Override
@@ -93,4 +90,20 @@ public enum ChannelFunction implements IChannelFunction {
 	public boolean isMutable() {
 		return this.mutable;
 	}
+
+	@Override
+	public int getMinValueScale() {
+		return minValueScale;
+	}
+
+	@Override
+	public int getMaxValueScale() {
+		return maxValueScale;
+	}
+
+	@Override
+	public String getUnitOfMeasurementSymbol() {
+		return unitOfMeasurementSymbol;
+	}
+
 }

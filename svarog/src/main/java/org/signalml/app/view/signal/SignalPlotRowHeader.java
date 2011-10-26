@@ -26,6 +26,8 @@ import org.signalml.app.model.ChannelPlotOptionsModel;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.element.CompactButton;
 import org.signalml.app.view.signal.popup.ChannelOptionsPopupDialog;
+import org.signalml.domain.montage.SourceChannel;
+import org.signalml.domain.montage.system.ChannelFunction;
 import org.signalml.domain.signal.MultichannelSampleSource;
 
 /** SignalPlotRowHeader
@@ -198,6 +200,7 @@ public class SignalPlotRowHeader extends JComponent {
 				sb.append("0");
 			}
 		};
+
 		sb.append(" uV");
 		rowUnitLabel = sb.toString();
 		
@@ -272,14 +275,16 @@ public class SignalPlotRowHeader extends JComponent {
 		i=startChannel;
 		while(visibleCount<= maxNumberOfChannels && i<=channelCount-1){
 			visible = this.plot.getChannelsPlotOptionsModel().getModelAt(i).getVisible();
+			String channelLabelAndUnitString = getChannelLabelAndUnitString(i);
+
 			if (visible) {
 				visibleCount ++;
 				if (active)
 					g.setColor(Color.BLUE);
-				g.drawString(labelSource.getLabel(i), CHANNEL_BUTTON_WIDTH+2, channelLevel[i] + ((int) -channelLabelBounds[i].getY()/2));
+				g.drawString(channelLabelAndUnitString, CHANNEL_BUTTON_WIDTH+2, channelLevel[i] + ((int) -channelLabelBounds[i].getY()/2));
 			} else {
 				g.setColor(Color.GRAY);//todo - make font smaller
-				g.drawString(labelSource.getLabel(i), CHANNEL_BUTTON_WIDTH+2, channelLevel[i] + ((int) -channelLabelBounds[i].getY()/2));
+				g.drawString(channelLabelAndUnitString, CHANNEL_BUTTON_WIDTH+2, channelLevel[i] + ((int) -channelLabelBounds[i].getY()/2));
 			}
 			channelOptionsButtons[i].setBounds(1, channelLevel[i]-2, CHANNEL_BUTTON_WIDTH, CHANNEL_BUTTON_WIDTH);
 			((ChannelOptionsAction) channelOptionsButtons[i].getAction()).setButtonVisible(visible);
@@ -292,7 +297,18 @@ public class SignalPlotRowHeader extends JComponent {
 		g.drawString(rowUnitLabel, size.width+((float)unitLabelBounds.getY())-LABEL_LINE_DISTANCE, viewportPoint.y+3);
 
 	}
-	
+
+	protected String getChannelLabelAndUnitString(int montageChannelNumber) {
+		String channelLabelAndUnitString = labelSource.getLabel(montageChannelNumber);
+		SourceChannel sourceChannel = this.plot.getDocument().getMontage().getSourceChannelForMontageChannel(montageChannelNumber);
+
+		String units = sourceChannel.getFunction().getUnitOfMeasurementSymbol();
+		if (units != null && !units.isEmpty() && !(sourceChannel.getFunction() == ChannelFunction.EEG))
+			channelLabelAndUnitString += " [" + units + "]";
+
+		return channelLabelAndUnitString;
+	}
+
 	/*
 	 * For every channel that have its individual value scale draws it.
 	 * @param g graphics on which scales will be drawn
