@@ -160,7 +160,7 @@ public class EmbeddedFileChooser extends JFileChooser {
 	protected void setup(FileSystemView view) {
 		super.setup(view);
 
-		super.setControlButtonsAreShown(false);
+		super.setControlButtonsAreShown(true);
 	}
 
 	/**
