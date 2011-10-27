@@ -90,15 +90,11 @@ import org.springframework.util.Log4jConfigurer;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.Annotations;
 import org.signalml.app.config.preset.EegSystemsPresetManager;
-import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.StyledTagSetPresetManager;
 import org.signalml.app.worker.amplifiers.AmplifierDefinitionPresetManager;
 import org.signalml.app.worker.processes.OpenBCIModulePresetManager;
 import org.signalml.app.worker.processes.ProcessManager;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
-import org.signalml.domain.montage.system.EegElectrode;
-import org.signalml.domain.montage.system.EegSystem;
-import org.signalml.math.geometry.Polar3dPoint;
 
 /**
  * The Svarog application.
@@ -144,8 +140,13 @@ public class SvarogApplication implements java.lang.Runnable {
 	 * {@link TimeDomainSampleFilter TimeDomainSampleFilters}.
 	 */
 	private PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainSampleFilterPresetManager = null;
-
+	/**
+	 * A preset manager managing the StyledTagSet presets.
+	 */
 	private StyledTagSetPresetManager styledTagSetPresetManager;
+	/**
+	 * A {@link PresetManager} managing the {@link EegSystem EegSystems}.
+	 */
 	private EegSystemsPresetManager eegSystemsPresetManager;
 
 	private MP5ExecutorManager mp5ExecutorManager = null;
@@ -835,9 +836,9 @@ public class SvarogApplication implements java.lang.Runnable {
 		try {
 			eegSystemsPresetManager.readFromPersistence(null);
 		} catch (FileNotFoundException ex) {
-			logger.debug("Eeg systems config not found - will use defaults");
+			logger.debug("Eeg systems config not found");
 		} catch (Exception ex) {
-			logger.error("Failed to read eeg systems configuration - will use defaults", ex);
+			logger.error("Failed to read eeg systems configuration", ex);
 		}
 
 		splash(null, true);

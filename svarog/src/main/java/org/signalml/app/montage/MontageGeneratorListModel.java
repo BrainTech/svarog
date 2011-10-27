@@ -6,6 +6,7 @@ package org.signalml.app.montage;
 
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
+import org.signalml.domain.montage.generators.IMontageGenerator;
 import org.signalml.domain.montage.system.EegSystem;
 
 import org.signalml.util.ResolvableString;
@@ -21,8 +22,13 @@ public class MontageGeneratorListModel extends AbstractListModel implements Comb
 
 	public static final ResolvableString NO_GENERATOR = new ResolvableString("montageGenerator.none");
 
-	private EegSystem eegSystem;
 	private Object selectedItem = NO_GENERATOR;
+	/**
+	 * The currently selected {@link EegSystem} for which the list of
+	 * {@link IMontageGenerator MontageGenerators} is shown.
+	 */
+	private EegSystem eegSystem;
+	
 
 	public MontageGeneratorListModel() {
 	}
@@ -53,6 +59,11 @@ public class MontageGeneratorListModel extends AbstractListModel implements Comb
 		return eegSystem.getMontageGeneratorAt(index-1);
 	}
 
+	/**
+	 * Sets the {@link EegSystem} for which the list of available
+	 * {@link IMontageGenerator MontageGenerators} will be shown.
+	 * @param eegSystem the new {@link EegSystem}
+	 */
 	public void setEegSystem(EegSystem eegSystem) {
 		if (this.eegSystem != eegSystem) {
 			this.eegSystem = eegSystem;

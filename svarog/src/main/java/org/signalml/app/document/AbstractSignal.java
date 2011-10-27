@@ -87,8 +87,7 @@ public abstract class AbstractSignal extends AbstractDocument implements SignalD
 	private int namelessTagCounter = 1;
 
 	/**
-	 * Constructor. Sets the {@link SignalType type} of the signal.
-	 * @param type the type of the signal to set
+	 * Constructor.
 	 */
 	public AbstractSignal() {
 	}

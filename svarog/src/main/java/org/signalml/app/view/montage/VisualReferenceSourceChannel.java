@@ -21,6 +21,9 @@ public class VisualReferenceSourceChannel {
 
 	public static final int CIRCLE_DIAMETER = 40;
 
+	/**
+	 * The {@link SourceChannel} for this {@link VisualReferenceSourceChannel}.
+	 */
 	private SourceChannel sourceChannel;
 	private Point location;
 
@@ -39,6 +42,10 @@ public class VisualReferenceSourceChannel {
 		return sourceChannel.getLabel();
 	}
 
+	/**
+	 * Returns the {@link SourceChannel} connected with this {@link VisualReferenceSourceChannel}.
+	 * @return the {@link SourceChannel} connected with this {@link VisualReferenceSourceChannel}
+	 */
 	public SourceChannel getSourceChannel() {
 		return sourceChannel;
 	}

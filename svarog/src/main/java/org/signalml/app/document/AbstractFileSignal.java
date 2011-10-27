@@ -46,8 +46,7 @@ public abstract class AbstractFileSignal extends AbstractSignal implements FileB
 	protected volatile SignalChecksumWorker precalculatingWorker;
 
 	/**
-	 * Constructor. Sets the {@link SignalType type} of the signal.
-	 * @param type the type of the signal to set
+	 * Constructor.
 	 */
 	public AbstractFileSignal() {
 		super();

@@ -1,6 +1,9 @@
 package org.signalml.domain.montage.generators;
 
 /**
+ * An enum holding the types of {@link IMontageGenerator MontageGenerators} available
+ * in Svarog. ({@link GeneratorType#AVERAGE_REFERENCE} corresponds to the
+ * {@link AverageReferenceMontageGenerator}.
  *
  * @author Piotr Szachewicz
  */

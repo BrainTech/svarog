@@ -12,7 +12,7 @@ import org.signalml.domain.montage.system.EegElectrode;
 
 /**
  * This class represents a source channel. It has a certain number, name
- * and {@link Channel function}.
+ * and {@link IChannelFunction function}.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -36,6 +36,11 @@ public class SourceChannel implements Serializable {
          */
 	private IChannelFunction function;
 
+	/**
+	 * An {@link EegElectrode} associated with this {@link SourceChannel}.
+	 * If the channel function is different than EEG, then this field
+	 * will be null.
+	 */
 	private EegElectrode eegElectrode;
 
         /**
@@ -117,10 +122,22 @@ public class SourceChannel implements Serializable {
 		this.function = function;
 	}
 
+	/**
+	 * Sets an {@link EegElectrode} that will be associated with this
+	 * {@link SourceChannel}.
+	 * @param eegElectrode an {@link EegElectrode} that will be associated with this
+	 * {@link SourceChannel}
+	 */
 	public void setEegElectrode(EegElectrode eegElectrode) {
 		this.eegElectrode = eegElectrode;
 	}
 
+	/**
+	 * Returns the {@link EegElectrode} that is associated with this
+	 * {@link SourceChannel}.
+	 * @return the {@link EegElectrode} that is associated with this
+	 * {@link SourceChannel}
+	 */
 	public EegElectrode getEegElectrode() {
 		return eegElectrode;
 	}

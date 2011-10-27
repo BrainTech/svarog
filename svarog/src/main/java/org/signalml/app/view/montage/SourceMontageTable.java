@@ -73,10 +73,10 @@ public class SourceMontageTable extends JTable {
 
 		TableColumn tc;
 
-		tc = getIndexTableColumn(model);
+		tc = createIndexTableColumn(model);
 		columnModel.addColumn(tc);
 
-		tc = getLabelTableColumn(model);
+		tc = createLabelTableColumn(model);
 		columnModel.addColumn(tc);
 
 		tc = getFunctionTableColumn(model);
@@ -107,7 +107,13 @@ public class SourceMontageTable extends JTable {
 
 	}
 
-	protected TableColumn getIndexTableColumn(SourceMontageTableModel model) {
+	/**
+	 * Creates and returns a {@link TableColumn} in which channels indices
+	 * are shown.
+	 * @param model the model of this {@link JTable}
+	 * @return the {@link TableColumn} showing the channel indices
+	 */
+	protected TableColumn createIndexTableColumn(SourceMontageTableModel model) {
 		TableColumn tc = new TableColumn(SourceMontageTableModel.INDEX_COLUMN, 100);
 		tc.setHeaderValue(model.getColumnName(tc.getModelIndex()));
 
@@ -116,7 +122,13 @@ public class SourceMontageTable extends JTable {
 		return tc;
 	}
 
-	protected TableColumn getLabelTableColumn(SourceMontageTableModel model) {
+	/**
+	 * Creates and returns a {@link TableColumn} in which channels labels
+	 * are shown.
+	 * @param model the model of this {@link JTable}
+	 * @return the {@link TableColumn} showing the channel labels
+	 */
+	protected TableColumn createLabelTableColumn(SourceMontageTableModel model) {
 		TableColumn tc = new TableColumn(SourceMontageTableModel.LABEL_COLUMN, 200);
 		tc.setHeaderValue(model.getColumnName(tc.getModelIndex()));
 
@@ -131,6 +143,12 @@ public class SourceMontageTable extends JTable {
 		return tc;
 	}
 
+	/**
+	 * Creates and returns a {@link TableColumn} in which channels functions
+	 * are shown.
+	 * @param model the model of this {@link JTable}
+	 * @return the {@link TableColumn} showing the channel functions
+	 */
 	protected TableColumn getFunctionTableColumn(SourceMontageTableModel model) {
 		TableColumn tc = new TableColumn(SourceMontageTableModel.FUNCTION_COLUMN, 200);
 		tc.setHeaderValue(model.getColumnName(tc.getModelIndex()));

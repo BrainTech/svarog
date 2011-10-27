@@ -2,16 +2,23 @@ package org.signalml.app.montage;
 
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
-import org.signalml.domain.montage.system.EegElectrode;
 import org.signalml.domain.montage.system.EegSystem;
 
 /**
+ * A ListModel which handles showing and selecting the list of available
+ * channel labels for the current EEG system.
  *
  * @author Piotr Szachewicz
  */
 public class ChannelsListModel extends AbstractListModel implements ComboBoxModel {
 
+	/**
+	 * The {@link EegSystem} for which the list of channel labels is shown.
+	 */
 	private EegSystem eegSystem;
+	/**
+	 * The item currently selected on the list.
+	 */
 	private Object selectedItem;
 
 	@Override
@@ -39,11 +46,16 @@ public class ChannelsListModel extends AbstractListModel implements ComboBoxMode
 	public Object getSelectedItem() {
 		return selectedItem;
 	}
-	
+
+	/**
+	 * Sets the {@link EegSystem} for which the list of channels lables
+	 * will be shown.
+	 * @param eegSystem the new {@link EegSystem} for this ListModel.
+	 */
 	public void setEegSystem(EegSystem eegSystem) {
 		if (this.eegSystem == eegSystem)
 			return;
-		
+
 		this.eegSystem = eegSystem;
 		fireContentsChanged(this, 0, getSize()-1);
 	}

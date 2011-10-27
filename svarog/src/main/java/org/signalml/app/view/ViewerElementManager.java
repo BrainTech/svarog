@@ -212,7 +212,9 @@ public class ViewerElementManager {
 	 * A {@link PresetManager} managing the stored tag styles presets.
 	 */
 	private StyledTagSetPresetManager styledTagSetPresetManager;
-
+	/**
+	 * A {@link PresetManager} managing the {@link EegSystem EegSystems}.
+	 */
 	private EegSystemsPresetManager eegSystemsPresetManager;
 
 	private MP5ExecutorManager mp5ExecutorManager;
@@ -645,10 +647,18 @@ public class ViewerElementManager {
 		this.styledTagSetPresetManager = styledTagSetPresetManager;
 	}
 
+	/**
+	 * Returns the {@link PresetManger} handling stored EEG systems definitions.
+	 * @return the PresetManager for EEG systems
+	 */
 	public EegSystemsPresetManager getEegSystemsPresetManager() {
 		return eegSystemsPresetManager;
 	}
 
+	/**
+	 * Sets the {@link PresetManager} handling stored EEG systems.
+	 * @param eegSystemsPresetManager the PresetManager for EEG systems
+	 */
 	public void setEegSystemsPresetManager(EegSystemsPresetManager eegSystemsPresetManager) {
 		this.eegSystemsPresetManager = eegSystemsPresetManager;
 	}

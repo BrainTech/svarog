@@ -34,7 +34,16 @@ public class SourceMontageTableModel extends AbstractTableModel implements Sourc
 
 	private SourceMontage montage;
 	private MessageSourceAccessor messageSource;
+
+	/**
+	 * The ListModel managing the list of {@link ChannelFunction ChannelFunctions}
+	 * available in the current EEG system.
+	 */
 	private ChannelFunctionsListModel functionsListModel;
+	/**
+	 * The ListModel managing the list of channels labels
+	 * available in the current EEG system.
+	 */
 	private ChannelsListModel channelsListModel;
 
 	public SourceMontageTableModel() {
@@ -50,10 +59,20 @@ public class SourceMontageTableModel extends AbstractTableModel implements Sourc
 		this.messageSource = messageSource;
 	}
 
+	/**
+	 * Returns the ListModel managing the list of {@link ChannelFunction ChannelFunctions}
+	 * available in the current EEG system.
+	 * @return the ListModel for channel functions
+	 */
 	public ChannelFunctionsListModel getChannelFunctionsListModel() {
 		return functionsListModel;
 	}
 
+	/**
+	 * Returns the ListModel managing the list of channels labels
+	 * available in the current EEG system.
+	 * @return the model for channels labels
+	 */
 	public ChannelsListModel getChannelsListModel() {
 		return channelsListModel;
 	}

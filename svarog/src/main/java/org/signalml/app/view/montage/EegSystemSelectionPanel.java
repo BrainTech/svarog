@@ -14,16 +14,36 @@ import org.signalml.domain.montage.system.EegSystem;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
+ * A panel containing a {@link JComboBox} for selecting which {@link EegSystem}
+ * should be used for the current montage.
  *
  * @author Piotr Szachewicz
  */
 public class EegSystemSelectionPanel extends AbstractSignalMLPanel {
 
+	/**
+	 * The current montage.
+	 */
 	private Montage montage;
+	/**
+	 * The {@link PresetManager} that manages available {@link EegSystem EEG Systems}.
+	 */
 	private EegSystemsPresetManager eegSystemsPresetManager;
+	/**
+	 * The {@link JComboBox} for EEG system selection.
+	 */
 	private JComboBox presetComboBox;
+	/**
+	 * The model for the {@link EegSystemSelectionPanel#presetComboBox}.
+	 */
 	private PresetComboBoxModel presetComboBoxModel;
 
+	/**
+	 * Constructor.
+	 * @param messageSource MessageSourceAccessor for resolving localized messages
+	 * @param eegSystemsPresetManager {@link PresetManager} for managing
+	 * available EEG systems
+	 */
 	public EegSystemSelectionPanel(MessageSourceAccessor messageSource, EegSystemsPresetManager eegSystemsPresetManager) {
 		super(messageSource);
 		this.eegSystemsPresetManager = eegSystemsPresetManager;
@@ -41,6 +61,11 @@ public class EegSystemSelectionPanel extends AbstractSignalMLPanel {
 
 	}
 
+	/**
+	 * Returns (and if necessary - creates) the combo box for EEG system
+	 * selection.
+	 * @return the combo box for EEG system selection
+	 */
 	protected JComboBox getPresetComboBox() {
 		if (presetComboBox == null) {
 			presetComboBox = new JComboBox(getPresetComboBoxModel());
@@ -58,6 +83,11 @@ public class EegSystemSelectionPanel extends AbstractSignalMLPanel {
 		return presetComboBox;
 	}
 
+	/**
+	 * Returns (and if necessary - creates) a ComboBoxModel for EEG system
+	 * selection.
+	 * @return the ComboBoxModel for EEG system selection
+	 */
 	protected PresetComboBoxModel getPresetComboBoxModel() {
 		if (presetComboBoxModel == null) {
 			presetComboBoxModel = new PresetComboBoxModel(null, eegSystemsPresetManager);
@@ -68,10 +98,18 @@ public class EegSystemSelectionPanel extends AbstractSignalMLPanel {
 		return presetComboBoxModel;
 	}
 
+	/**
+	 * Returns the EEG system selected using this panel.
+	 * @return the selected EEG system
+	 */
 	protected EegSystem getSelectedEegSystem() {
 		return (EegSystem) presetComboBoxModel.getSelectedItem();
 	}
 
+	/**
+	 * Sets the current {@link Montage}.
+	 * @param montage the current Montage
+	 */
 	public void setMontage(Montage montage) {
 		this.montage = montage;
 		if (montage != null && montage.getEegSystem() != null) {

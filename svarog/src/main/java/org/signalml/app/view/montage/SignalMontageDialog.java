@@ -35,6 +35,7 @@ import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.SourceMontage;
+import org.signalml.domain.montage.generators.IMontageGenerator;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.SvarogConstants;
 import org.signalml.util.Util;
@@ -163,14 +164,20 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 
 		});
 
-		interfacePanel.add(getNorthPanel(), BorderLayout.NORTH);
+		interfacePanel.add(createNorthPanel(), BorderLayout.NORTH);
 		interfacePanel.add(tabbedPane, BorderLayout.CENTER);
 
 		return interfacePanel;
 
 	}
 
-	protected JPanel getNorthPanel() {
+	/**
+	 * Creates and returns a {@link JPanel} containing the ComboBoxes
+	 * for selecting a {@link IMontageGenerator} and {@link EegSystem}.
+	 * @return a {@link JPanel} which is in the upper side of the SignalMontage
+	 * dialog.
+	 */
+	protected JPanel createNorthPanel() {
 		JPanel northPanel = new JPanel(new GridLayout(1, 2));
 
 		generatorPanel = new MontageGeneratorPanel(messageSource);
@@ -436,6 +443,10 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 		return currentMontage;
 	}
 
+	/**
+	 * Returns the {@link EegSystemsPresetManager} used by this dialog.
+	 * @return the {@link EegSystemsPresetManager} used by this dialog
+	 */
 	public EegSystemsPresetManager getEegSystemsPresetManager() {
 		return eegSystemsPresetManager;
 	}

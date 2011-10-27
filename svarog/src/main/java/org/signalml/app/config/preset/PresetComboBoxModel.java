@@ -28,6 +28,11 @@ public class PresetComboBoxModel extends AbstractListModel implements ComboBoxMo
 		this.presetManager.addPresetManagerListener(this);
 	}
 
+	/**
+	 * Returns if the first element (e.g. 'choose an item') is showed
+	 * in the combo box.
+	 * @return true if it should be shown, false otherwise
+	 */
 	protected boolean isChooseTitleShowed() {
 		if (chooseTitle == null)
 			return false;

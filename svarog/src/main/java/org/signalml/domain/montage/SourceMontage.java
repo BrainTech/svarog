@@ -39,8 +39,16 @@ public class SourceMontage {
 
 	protected static final Logger logger = Logger.getLogger(SourceMontage.class);
 
-	private String eegSystemName;
+	/**
+	 * The {@link EegSystem} used by this {@link SourceMontage}.
+	 */
 	private transient EegSystem eegSystem;
+
+	/**
+	 * The name of the {@link EegSystem} used by this SourceMontage.
+	 * It is used only for reading/storing the SourceMontage in files.
+	 */
+	private String eegSystemName;
 
         /**
          * a list of SourceChannels in this SourceMontage
@@ -228,10 +236,18 @@ public class SourceMontage {
 		}
 	}
 
+	/**
+	 * Returns the {@link EegSystem} used by this Montage.
+	 * @return the {@link EegSystem} used by this Montage
+	 */
 	public EegSystem getEegSystem() {
 		return eegSystem;
 	}
 
+	/**
+	 * Sets the {@link EegSystem} to be used by this Montage.
+	 * @param eegSystem the {@link EegSystem} to be used by this Montage
+	 */
 	public void setEegSystem(EegSystem eegSystem) {
 
 		if (this.eegSystem == eegSystem)
@@ -252,6 +268,13 @@ public class SourceMontage {
 		fireSourceMontageEegSystemChanged(this);
 	}
 
+	/**
+	 * Checks if an {@link EegElectrode} having the same name is available
+	 * in the current {@link EegSystem}. If so, it sets the channel function
+	 * to {@link ChannelFunction#EEG} and associates the electrode with the channel.
+	 * Otherwise the channel function is set to {@link ChannelFunction#UNKNOWN}.
+	 * @param sourceChannel the {@link SourceChannel} to be refreshed
+	 */
 	protected void refreshElectrodeAndFunctionForSourceChannel(SourceChannel sourceChannel) {
 		if (sourceChannel == null)
 			return;
@@ -679,6 +702,11 @@ public class SourceMontage {
 		}
 	}
 
+	/**
+         * Fires an event informing all listeners that the Montage {@link EegSystem}
+	 * has been changed.
+         * @param source the object on which the Event initially occurred.
+         */
 	protected void fireSourceMontageEegSystemChanged(Object source) {
 		Object[] listeners = listenerList.getListenerList();
 		SourceMontageEvent e = null;
@@ -692,6 +720,10 @@ public class SourceMontage {
 		}
 	}
 
+	/**
+	 * Returns the name of the  {@link EegSystem} used by this Montage.
+	 * @return the name of the  {@link EegSystem} used by this Montage
+	 */
 	public String getEegSystemName() {
 		return eegSystemName;
 	}

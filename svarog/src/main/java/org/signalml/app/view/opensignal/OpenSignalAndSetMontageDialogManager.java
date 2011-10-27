@@ -203,6 +203,10 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 		}
 	}
 
+	/**
+	 * Changes the EEG system in the current montage.
+	 * @param newEegSystemName the EEG system name that was selected
+	 */
 	protected void eegSystemChangedTo(String newEegSystemName) {
 		EegSystemsPresetManager eegSystemsPresetManager = openSignalAndSetMontageDialog.getEegSystemsPresetManager();
 

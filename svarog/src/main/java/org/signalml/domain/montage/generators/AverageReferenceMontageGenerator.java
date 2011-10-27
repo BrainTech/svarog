@@ -91,6 +91,12 @@ public class AverageReferenceMontageGenerator extends AbstractMontageGenerator {
 
 	}
 
+	/**
+	 * Returns the list of the {@link SourceChannel SourceChannels} from
+	 * given sourceMontage that will be used as the reference channels.
+	 * @param sourceMontage the source montage to be search through
+	 * @return the list of reference {@link SourceChannel SourceChannels}.
+	 */
 	protected List<SourceChannel> getReferenceSourceChannels(SourceMontage sourceMontage) {
 		List<SourceChannel> sourceChannels = new ArrayList<SourceChannel>();
 		for (int i = 0; i < referenceChannelsNames.length; i++) {

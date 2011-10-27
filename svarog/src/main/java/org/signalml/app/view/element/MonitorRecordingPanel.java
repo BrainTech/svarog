@@ -61,7 +61,7 @@ public class MonitorRecordingPanel extends AbstractSignalMLPanel {
          * Initializes all components.
          */
 	@Override
-        protected void initialize() {
+	protected void initialize() {
 
                 setLayout(new BorderLayout(10, 10));
 

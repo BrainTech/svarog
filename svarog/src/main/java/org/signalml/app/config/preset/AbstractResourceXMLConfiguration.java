@@ -2,7 +2,6 @@ package org.signalml.app.config.preset;
 
 import java.io.File;
 
-
 import com.thoughtworks.xstream.XStream;
 import java.io.BufferedInputStream;
 
@@ -13,6 +12,9 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
 /**
+ * A {@link PresetManager} that can be used for read-only presets stored
+ * in the class path resource (that is - the /src/main/resources/org/signalml
+ * directory).
  *
  * @author Piotr Szachewicz
  */

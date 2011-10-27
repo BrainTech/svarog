@@ -11,14 +11,27 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 /**
+ * A {@link Converter} for unmarshalling the list of {@link IMontageGenerator
+ * montage generators} definitions from XML.
  *
  * @author Piotr Szachewicz
  */
 public class MontageGeneratorsConverter implements Converter {
 
+	/**
+	 * The {@link RawMontageGenerator} which will be added to every
+	 * Montage Generators list.
+	 */
 	private static final RawMontageGenerator rawMontageGenerator = new RawMontageGenerator();
+	/**
+	 * The {@link CommonAverageMontageGenerator} which will be added to every
+	 * Montage Generators list.
+	 */
 	private static final CommonAverageMontageGenerator commonAverageMontageGenerator = new CommonAverageMontageGenerator();
 
+	/**
+	 * Logger for recording the history of execution.
+	 */
 	protected static final Logger logger = Logger.getLogger(MontageGeneratorsConverter.class);
 
 	@Override
@@ -53,6 +66,12 @@ public class MontageGeneratorsConverter implements Converter {
 		return montageGenerators;
 	}
 
+	/**
+	 * Unmarshalls a {@link IMontageGenerator} from XML.
+	 * @param reader the reader reading the current XML stream
+	 * @return the montage generator that has been read (null if an error
+	 * occured)
+	 */
 	private IMontageGenerator unmarshallMontageGenerator(HierarchicalStreamReader reader) {
 		String montageGeneratorName = "";
 		GeneratorType generatorType = null;
@@ -100,6 +119,11 @@ public class MontageGeneratorsConverter implements Converter {
 		return montageGenerator;
 	}
 
+	/**
+	 * Unmarshalls the single channel (used for {@link SingleReferenceMontageGenerator}.
+	 * @param reader the reader reading the current XML stream
+	 * @return the reference channel name
+	 */
 	private String unmarshallSingleChannel(HierarchicalStreamReader reader) {
 		reader.moveDown();
 		String channelName = null;
@@ -110,6 +134,11 @@ public class MontageGeneratorsConverter implements Converter {
 		return channelName;
 	}
 
+	/**
+	 * Unmarshalls a vector of channel names from XML file.
+	 * @param reader the reader reading the current XML stream
+	 * @return the vector of channels
+	 */
 	private String[] unmarshallVectorOfChannels(HierarchicalStreamReader reader) {
 
 		List<String> channels = new ArrayList<String>();
@@ -125,6 +154,11 @@ public class MontageGeneratorsConverter implements Converter {
 		return result;
 	}
 
+	/**
+	 * Unmarshalls pairs of channel labels using the XML reader.
+	 * @param reader the reader reading the current XML stream
+	 * @return the pairs of channel labels.
+	 */
 	private String[][] unmarshallPairsOfChannels(HierarchicalStreamReader reader) {
 		List<String[]> channels = new ArrayList<String[]>();
 		while (reader.hasMoreChildren()) {

@@ -39,6 +39,10 @@ public class ApplicationWorkspace extends AbstractXMLConfiguration {
 
 	private LinkedList<WorkspaceDocument> documents = new LinkedList<WorkspaceDocument>();
 	private WorkspaceDocument activeDocument;
+
+	/**
+	 * A {@link PresetManager} for managing the available {@link EegSystem EegSystems}.
+	 */
 	private EegSystemsPresetManager eegSystemsPresetManager;
 
 	public ApplicationWorkspace() {
@@ -212,6 +216,10 @@ public class ApplicationWorkspace extends AbstractXMLConfiguration {
 		return streamer;
 	}
 
+	/**
+	 * Sets the Eeg systems preset manager for this ApplicationWorkspace.
+	 * @param eegSystemsPresetManager
+	 */
 	public void setEegSystemsPresetManager(EegSystemsPresetManager eegSystemsPresetManager) {
 		this.eegSystemsPresetManager = eegSystemsPresetManager;
 	}

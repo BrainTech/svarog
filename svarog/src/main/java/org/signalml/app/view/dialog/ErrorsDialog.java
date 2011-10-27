@@ -244,6 +244,10 @@ public class ErrorsDialog extends AbstractDialog {
 		}
 	}
 
+	/**
+	 * Shows a simple dialog with OK button showing the specified error message.
+	 * @param errorCode the errorCode in the {@link MessageSourceAccessor}
+	 */
 	public static void showError(String errorCode) {
 		JOptionPane.showMessageDialog(null, staticMessageSource.getMessage(errorCode), staticMessageSource.getMessage("error"), JOptionPane.ERROR_MESSAGE);
 	}

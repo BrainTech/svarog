@@ -1,20 +1,14 @@
-/* EegChannel.java created 2007-10-20
- *
- */
 package org.signalml.domain.montage.system;
-
-import org.signalml.domain.montage.system.ChannelType;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
- * This class represents an eeg channel.
- * Contains a static matrix 6x7 in which channels are held.
- * Allows to find channels by name and location and
- * to find neighbours for a given channel.
- * @see Channel
+ * This class represents a function of a channel - that is what kind of signal
+ * it 'transfers', what is the unit of measurement of the signal and its
+ * minimum and maximum values.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
+ * @author Piotr Szachewicz
  */
 @XStreamAlias("eegchannel")
 public enum ChannelFunction implements IChannelFunction {
@@ -40,8 +34,18 @@ public enum ChannelFunction implements IChannelFunction {
 	 */
 	private boolean mutable;
 
+	/**
+	 * The String representing a unit of measurement for the channel
+	 * (e.g. 'uV' or 'mV').
+	 */
 	private String unitOfMeasurementSymbol;
+	/**
+	 * The minimum value that should be set on the value scale for the signal.
+	 */
 	private int minValueScale;
+	/**
+	 * The maximum value that should be set on the value scale for the signal.
+	 */
 	private int maxValueScale;
 
 

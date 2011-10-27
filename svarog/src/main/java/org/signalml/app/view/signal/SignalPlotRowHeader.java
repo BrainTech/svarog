@@ -298,6 +298,13 @@ public class SignalPlotRowHeader extends JComponent {
 
 	}
 
+	/**
+	 * Returns a String containing the channel label and a unit of measurement
+	 * for the channel (e.g. "SD3 [uV]). If the channel function is EEG,
+	 * then the unit of measurement is not shown.
+	 * @param montageChannelNumber the channel number in the current montage.
+	 * @return a String describing the current channel
+	 */
 	protected String getChannelLabelAndUnitString(int montageChannelNumber) {
 		String channelLabelAndUnitString = labelSource.getLabel(montageChannelNumber);
 		SourceChannel sourceChannel = this.plot.getDocument().getMontage().getSourceChannelForMontageChannel(montageChannelNumber);

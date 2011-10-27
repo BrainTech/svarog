@@ -1,15 +1,12 @@
-/* ChannelListModel.java created 2007-11-24
- *
- */
-
 package org.signalml.app.montage;
 
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 import org.signalml.domain.montage.system.ChannelFunction;
 
-/** ChannelListModel
- *
+/**
+ * A ListModel that handles showing and selecting the list of available
+ * {@link ChannelFunction ChannelFunctions}.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

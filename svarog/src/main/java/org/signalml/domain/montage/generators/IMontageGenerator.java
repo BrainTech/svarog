@@ -11,6 +11,7 @@ import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.SourceMontage;
 
 import org.springframework.context.MessageSourceResolvable;
+import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
 /**
@@ -41,6 +42,11 @@ public interface IMontageGenerator extends MessageSourceResolvable, Serializable
          */
 	boolean validateSourceMontage(SourceMontage sourceMontage, Errors errors);
 
+	/**
+	 * Sets the code used to get the generator name from the
+	 * {@link MessageSourceAccessor}.
+	 * @param code the code to be used
+	 */
 	void setCode(String code);
 
 }

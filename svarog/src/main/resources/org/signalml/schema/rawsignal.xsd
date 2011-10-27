@@ -162,15 +162,15 @@
     </simpleType>
 
     <simpleType name="eegSystemName">
-        <annotation>
-        	<documentation>
-        		Eeg System Name
-        	</documentation>
-        </annotation>
-        <restriction base="string">
-    		<minLength value="1"></minLength>
-    		<maxLength value="256"></maxLength>
-    	</restriction>
+	<annotation>
+		<documentation>
+			Eeg System Name
+		</documentation>
+	</annotation>
+	<restriction base="string">
+		<minLength value="1"></minLength>
+		<maxLength value="256"></maxLength>
+	</restriction>
     </simpleType>
 
     <simpleType name="markerOffset">

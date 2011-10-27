@@ -34,6 +34,9 @@ public abstract class AbstractSignalMLPanel extends JPanel {
 		this.messageSource = messageSource;
 	}
 
+	/**
+	 * A method for initializing GUI components for this panel.
+	 */
 	protected abstract void initialize();
 
 	/**
@@ -65,6 +68,10 @@ public abstract class AbstractSignalMLPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Puts a border around this panel with a given title.
+	 * @param label the title to be shown on the border
+	 */
 	protected void setTitledBorder(String label) {
 		CompoundBorder cb = new CompoundBorder(
 		        new TitledBorder(label),
@@ -73,4 +80,5 @@ public abstract class AbstractSignalMLPanel extends JPanel {
 
 		setBorder(cb);
 	}
+
 }

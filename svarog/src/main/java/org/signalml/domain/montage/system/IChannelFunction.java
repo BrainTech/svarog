@@ -1,6 +1,3 @@
-/* Channel.java created 2007-10-23
- *
- */
 package org.signalml.domain.montage.system;
 
 import java.io.Serializable;
@@ -8,12 +5,9 @@ import java.io.Serializable;
 import org.springframework.context.MessageSourceResolvable;
 
 /**
- * This interface describes the types (functions) of channels and their location
- * (location of electrodes).
- * Allows to find neighbours for a given channel.
- * Its implementations are enumerators containing possible functions of channels
- * (e.g. for {@link GenericChannel GenericChannel} it will be
- * SIGNAL, REFERENCE, OTHER and UNKNOWN).
+ * This interface represents a function of a channel - that is what kind of signal
+ * it 'transfers', what is the unit of measurement of the signal and its
+ * minimum and maximum values.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -37,7 +31,22 @@ public interface IChannelFunction extends MessageSourceResolvable, Serializable 
 	 */
 	boolean isMutable();
 
+	/**
+	 * Returns the minimum value that should be set on the value scale for the signal.
+	 * @return
+	 */
 	int getMinValueScale();
+
+	/**
+	 * Returns the maximum value that should be set on the value scale for the signal.
+	 * @return
+	 */
 	int getMaxValueScale();
+
+	/**
+	 * Returns the String representing a unit of measurement for the channel
+	 * (e.g. 'uV' or 'mV').
+	 * @return
+	 */
 	String getUnitOfMeasurementSymbol();
 }
