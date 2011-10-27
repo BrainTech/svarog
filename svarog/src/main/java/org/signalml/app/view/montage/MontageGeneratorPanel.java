@@ -456,6 +456,12 @@ public class MontageGeneratorPanel extends JPanel {
 
 		if (errors.hasErrors()) {
 			errorsDialog.showErrors(errors);
+
+			if (montage.getMontageGenerator() != null)
+				montageGeneratorListModel.setSelectedItem(montage.getMontageGenerator());
+			else
+				montageGeneratorListModel.setSelectedItem(MontageGeneratorListModel.NO_GENERATOR);
+
 			return;
 		}
 
@@ -556,9 +562,7 @@ public class MontageGeneratorPanel extends JPanel {
 			generator.validateSourceMontage(montage, errors);
 
 			if (errors.hasErrors()) {
-
 				errorsDialog.showErrors(errors);
-
 			}
 
 		}

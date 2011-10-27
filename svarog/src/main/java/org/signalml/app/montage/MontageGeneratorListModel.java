@@ -19,7 +19,7 @@ public class MontageGeneratorListModel extends AbstractListModel implements Comb
 
 	private static final long serialVersionUID = 1L;
 
-	private static final ResolvableString NO_GENERATOR = new ResolvableString("montageGenerator.none");
+	public static final ResolvableString NO_GENERATOR = new ResolvableString("montageGenerator.none");
 
 	private EegSystem eegSystem;
 	private Object selectedItem;
