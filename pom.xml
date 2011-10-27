@@ -57,6 +57,11 @@
 			<id>onejar-maven-plugin.googlecode.com</id>
 			<url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>
 		</pluginRepository>
+		<pluginRepository>
+			<id>signalml.org</id>
+			<name>SignalML Maven Repository</name>
+			<url>http://signalml.org/maven/repository</url>
+		</pluginRepository>
 	</pluginRepositories>
 
 	<dependencyManagement>

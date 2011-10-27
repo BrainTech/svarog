@@ -81,6 +81,7 @@ import org.signalml.method.mp5.MP5Parameters;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.impl.PluginAccessClass;
 import org.signalml.plugin.loader.PluginLoaderHi;
+import org.signalml.util.SvarogConstants;
 import org.signalml.util.Util;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -186,7 +187,7 @@ public class SvarogApplication implements java.lang.Runnable {
 			}
 		}
 
-		SvarogLogger.getSharedInstance().debug("Preparing Svarog...");
+		SvarogLogger.getSharedInstance().debug("Preparing Svarog " + SvarogConstants.VERSION);
 		SvarogLogger.getSharedInstance().debugThreads();
 		SvarogLogger.getSharedInstance().debugCL();
 
