@@ -2,64 +2,6 @@
 <eegSystems>
 	<presets>
 		<eegSystem>
-			<name>EEG 10_10</name>
-			<electrodes>
-				<eegElectrode>
-					<label>Fpz</label>
-					<polarPosition>
-						<theta>0.1</theta>
-						<radius>0.4</radius>
-						<fi>0.6</fi>
-					</polarPosition>
-				</eegElectrode>
-				<eegElectrode>
-					<label>A1</label>
-					<polarPosition>
-						<theta>0.44</theta>
-						<radius>0.22</radius>
-						<fi>0.34</fi>
-					</polarPosition>
-				</eegElectrode>
-			</electrodes>
-		</eegSystem>
-		<eegSystem>
-			<name>system piotrka</name>
-			<electrodes>
-				<eegElectrode>
-					<label>Fpz</label>
-					<polarPosition>
-						<theta>0.0</theta>
-						<radius>1.0</radius>
-						<fi>0.0</fi>
-					</polarPosition>
-				</eegElectrode>
-				<eegElectrode>
-					<label>Fp1</label>
-					<polarPosition>
-						<theta>3.14</theta>
-						<radius>1.0</radius>
-						<fi>0.0</fi>
-					</polarPosition>
-				</eegElectrode>
-				<eegElectrode>
-					<label>Fp2</label>
-					<polarPosition>
-						<theta>1.62</theta>
-						<radius>1.0</radius>
-						<fi>0.0</fi>
-					</polarPosition>
-				</eegElectrode>
-				<eegElectrode>
-					<label>F7</label>
-					<polarPosition>
-						<theta>0.0</theta>
-						<radius>0.0</radius>
-						<fi>0.0</fi>
-					</polarPosition>
-				</eegElectrode>
-			</electrodes>
-		</eegSystem>
-		<eegSystem>
 			<name>EEG 10_20</name>
 			<electrodes>
 				<eegElectrode>
@@ -349,6 +291,43 @@
 					</channels>
 				</montageGenerator>
 			</montageGenerators>
+		</eegSystem>
+		<eegSystem>
+			<name>EEG 10_10</name>
+			<electrodes>
+				<eegElectrode>
+					<label>Fpz</label>
+					<polarPosition>
+						<theta>0.0</theta>
+						<radius>1.0</radius>
+						<fi>0.0</fi>
+					</polarPosition>
+				</eegElectrode>
+				<eegElectrode>
+					<label>Fp1</label>
+					<polarPosition>
+						<theta>3.14</theta>
+						<radius>1.0</radius>
+						<fi>0.0</fi>
+					</polarPosition>
+				</eegElectrode>
+				<eegElectrode>
+					<label>Fp2</label>
+					<polarPosition>
+						<theta>1.62</theta>
+						<radius>1.0</radius>
+						<fi>0.0</fi>
+					</polarPosition>
+				</eegElectrode>
+				<eegElectrode>
+					<label>F7</label>
+					<polarPosition>
+						<theta>0.0</theta>
+						<radius>0.0</radius>
+						<fi>0.0</fi>
+					</polarPosition>
+				</eegElectrode>
+			</electrodes>
 		</eegSystem>
 	</presets>
 </eegSystems>

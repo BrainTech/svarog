@@ -94,25 +94,8 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 			enableTabsAndOKButtonAsNeeded();
 		}
 		else if (propertyName.equals(AbstractSignalParametersPanel.EEG_SYSTEM_PROPERTY)) {
-
-			String newEegSystemName = evt.getNewValue().toString();
-
-			EegSystemsPresetManager eegSystemsPresetManager = openSignalAndSetMontageDialog.getEegSystemsPresetManager();
-
-			EegSystem eegSystem = (EegSystem) eegSystemsPresetManager.getPresetByName(newEegSystemName);
-			Montage currentMontage = getCurrentMontage();
-			currentMontage.setEegSystem(eegSystem);
-			try {
-				openSignalAndSetMontageDialog.fillDialogFromModel(currentMontage);
-				//getCurrentMontage().setEe
-				/*currentMontage.setSourceChannelLabelAt(i, channelLabels[i]);
-				currentMontage.setMontageChannelLabelAt(i, channelLabels[i]);
-				}
-				openSignalAndSetMontageDialog.fillDialogFromModel(currentMontage);*/
-			} catch (SignalMLException ex) {
-				Logger.getLogger(OpenSignalAndSetMontageDialogManager.class.getName()).log(Level.SEVERE, null, ex);
-			}
-
+			String newEegSystemName = evt.getNewValue() != null ? evt.getNewValue().toString() : null;
+			eegSystemChangedTo(newEegSystemName);
 		}
 	}
 
@@ -216,6 +199,24 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 			Logger.getLogger(OpenSignalAndSetMontageDialogManager.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		catch (SignalMLException ex) {
+			Logger.getLogger(OpenSignalAndSetMontageDialogManager.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+
+	protected void eegSystemChangedTo(String newEegSystemName) {
+		EegSystemsPresetManager eegSystemsPresetManager = openSignalAndSetMontageDialog.getEegSystemsPresetManager();
+
+		EegSystem eegSystem = (EegSystem) eegSystemsPresetManager.getPresetByName(newEegSystemName);
+		Montage currentMontage = getCurrentMontage();
+
+		if (eegSystem == null) {
+			eegSystem = (EegSystem) eegSystemsPresetManager.getPresetAt(0);
+		}
+
+		currentMontage.setEegSystem(eegSystem);
+		try {
+			openSignalAndSetMontageDialog.fillDialogFromModel(currentMontage);
+		} catch (SignalMLException ex) {
 			Logger.getLogger(OpenSignalAndSetMontageDialogManager.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}

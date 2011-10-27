@@ -22,7 +22,7 @@ public class MontageGeneratorListModel extends AbstractListModel implements Comb
 	public static final ResolvableString NO_GENERATOR = new ResolvableString("montageGenerator.none");
 
 	private EegSystem eegSystem;
-	private Object selectedItem;
+	private Object selectedItem = NO_GENERATOR;
 
 	public MontageGeneratorListModel() {
 	}

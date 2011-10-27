@@ -298,7 +298,7 @@ public class MontageGeneratorPanel extends JPanel {
 	 * @return the {@link MontageGeneratorListModel model} for the
 	 *         {@link #generatorComboBox}
 	 */
-	public MontageGeneratorListModel getMontageGeneratorListModel() {
+	protected MontageGeneratorListModel getMontageGeneratorListModel() {
 		if (montageGeneratorListModel == null) {
 			montageGeneratorListModel = new MontageGeneratorListModel();
 		}

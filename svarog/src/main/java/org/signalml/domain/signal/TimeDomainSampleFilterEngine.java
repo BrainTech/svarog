@@ -87,14 +87,17 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 	 * @param coefficients the {@link FilterCoefficients coefficients} for which
 	 * the engine will operate
 	 */
-	public TimeDomainSampleFilterEngine(SampleSource source, FilterCoefficients coefficients) {
+	public TimeDomainSampleFilterEngine(SampleSource source, TimeDomainSampleFilter definition, FilterCoefficients coefficients) {
+		this(source, coefficients);
+		this.definition = definition;
+	}
 
+	public TimeDomainSampleFilterEngine(SampleSource source, FilterCoefficients coefficients) {
 		super(source);
 		aCoefficients = coefficients.getACoefficients();
 		bCoefficients = coefficients.getBCoefficients();
 		filterOrder = coefficients.getFilterOrder();
 		filtered = null;
-
 	}
 
 	/**
