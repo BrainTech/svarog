@@ -62,12 +62,6 @@ public class SourceMontage {
 
         /**
          * HashMap associating {@link SourceChannel source channels}
-         * with their function
-         */
-	private transient HashMap<IChannelFunction,LinkedList<SourceChannel>> sourceChannelsByFunction;
-
-        /**
-         * HashMap associating {@link SourceChannel source channels}
          * with their labels
          */
 	private transient HashMap<String,SourceChannel> sourceChannelsByLabel;
@@ -322,19 +316,6 @@ public class SourceMontage {
 	}
 
         /**
-         * Returns a HashMap associating {@link SourceChannel source channels}
-         * with their function.
-         * If doesn't exists it is created as empty and returned.
-         * @return a HashMap associating source channels with their function.
-         */
-	protected HashMap<IChannelFunction, LinkedList<SourceChannel>> getSourceChannelsByFunction() {
-		if (sourceChannelsByFunction == null) {
-			sourceChannelsByFunction = new HashMap<IChannelFunction, LinkedList<SourceChannel>>();
-		}
-		return sourceChannelsByFunction;
-	}
-
-        /**
          * Returns list of {@link SourceChannel source channels} with a
          * given {@link Channel function}.
          * @param function a function that source channels should fulfil
@@ -441,23 +422,7 @@ public class SourceMontage {
 			map.remove(oldLabel);
 			map.put(label, channel);
 
-			// see about function update
 			refreshElectrodeAndFunctionForSourceChannel(channel);
-			/*IChannelFunction function = channel.getFunction();
-			if (function.getType() == ChannelType.UNKNOWN) {
-				// function is unknown, we can update, let's see what we get
-				IChannelFunction newFunctionCandidate = getSignalTypeConfigurer().channelForName(label);
-				if (newFunctionCandidate.getType() != ChannelType.UNKNOWN) {
-					// the function is known, check if we could use it
-					if (!newFunctionCandidate.isUnique() || getSourceChannelsByFunctionList(newFunctionCandidate).isEmpty()) {
-						// we could, do it
-						getSourceChannelsByFunctionList(function).remove(channel);
-						channel.setFunction(newFunctionCandidate);
-						getSourceChannelsByFunctionList(newFunctionCandidate).add(channel);
-					}
-
-				}
-			}*/
 
 			fireSourceMontageChannelChanged(this, channel.getChannel());
 			setChanged(true);

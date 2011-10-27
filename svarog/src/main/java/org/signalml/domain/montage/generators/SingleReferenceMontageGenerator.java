@@ -12,7 +12,7 @@ import org.signalml.domain.montage.SourceMontage;
 import org.springframework.validation.Errors;
 
 /**
- * This abstract class represents a generator for a single reference montage.
+ * This class represents a generator for a single reference montage.
  * In single reference montage each channel represents the difference between
  * a certain electrode and a designated reference electrode.
  * There is no standard position for this reference; it is, however, at a different
@@ -32,15 +32,15 @@ public class SingleReferenceMontageGenerator extends AbstractMontageGenerator {
 	private static final long serialVersionUID = 1L;
 
         /**
-         * the {@link Channel function} of a {@link SourceChannel source channel}
+         * the label of a {@link SourceChannel source channel}
          * which will be a reference channel
          */
 	protected transient String referenceChannelName;
 
         /**
-         * Constructor. Creates a new generator based on {@link Channel function}
+         * Constructor. Creates a new generator based on label
          * of a reference channel.
-         * @param refChannel function of a {@link SourceChannel source channel}
+         * @param refChannel label of a {@link SourceChannel source channel}
          * that will be used as reference channel in a created
          * {@link Montage montage}
          */
@@ -55,8 +55,8 @@ public class SingleReferenceMontageGenerator extends AbstractMontageGenerator {
          * Creates a single channel reference montage from a given
          * {@link Montage montage}.
          * @param montage a montage to be used
-         * @throws MontageException thrown if there are two channels with
-         * function <i>refChannel</i>
+         * @throws MontageException thrown if there is no channel having the
+	 * label equal to the reference channel label
          */
 	@Override
 	public void createMontage(Montage montage) throws MontageException {
@@ -109,10 +109,6 @@ public class SingleReferenceMontageGenerator extends AbstractMontageGenerator {
 			onNotFound(referenceChannelName, errors);
 			return false;
 		}
-		/*else if (refChannelIndices.length > 1) {
-			onDuplicate(errors);
-			return false;
-		}*/
 		return true;
 	}
 

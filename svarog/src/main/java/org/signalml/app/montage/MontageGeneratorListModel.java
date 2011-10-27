@@ -28,7 +28,6 @@ public class MontageGeneratorListModel extends AbstractListModel implements Comb
 	 * {@link IMontageGenerator MontageGenerators} is shown.
 	 */
 	private EegSystem eegSystem;
-	
 
 	public MontageGeneratorListModel() {
 	}

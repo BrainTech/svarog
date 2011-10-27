@@ -35,15 +35,6 @@ public abstract class AbstractMontageGenerator implements IMontageGenerator {
 	}
 
 	/**
-	* Reports an error, that there was more then one
-	* {@link SourceChannel source channel} with EegChannel.A2 function.
-	* @param errors an Errors object used to report errors
-	*/
-	protected void onDuplicate(String channelName, Errors errors) {
-		errors.reject("montageGenerator.error.duplicateChannel", new Object[]{channelName}, "montageGenerator.error.duplicateChannel");
-	}
-
-	/**
 	* Reports an error, that a {@link SourceChannel source channel} with
 	* EegChannel.A2 {@link Channel function} was not found.
 	* @param errors an Errors object used to report errors

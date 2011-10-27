@@ -108,12 +108,11 @@ public class Polar3dPoint {
 	 * @return the polar point converted to a Cartesian 2D coordianate system
 	 */
 	public Point2D convertTo2DPoint(Point2D center, float maxRadius) {
-		double radiusProjectionLength= Math.abs(Math.cos(getFi()) * getRadius());
+		double radiusProjectionLength = Math.abs(Math.cos(getFi()) * getRadius());
 
 		double x = center.getX() - Math.sin(getTheta()) * radiusProjectionLength * (maxRadius);
 		double y = center.getY() - Math.cos(getTheta()) * radiusProjectionLength * (maxRadius);
 
-		return new Point2D.Double(x,y);
+		return new Point2D.Double(x, y);
 	}
-
 }

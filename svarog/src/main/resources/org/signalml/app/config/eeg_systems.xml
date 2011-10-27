@@ -15,8 +15,8 @@
 				<eegElectrode>
 					<label>Fpz</label>
 					<polarPosition>
-						<theta>0.66</theta>
-						<radius>0.0</radius>
+						<radius>0.66</radius>
+						<theta>0.0</theta>
 						<fi>0.0</fi>
 					</polarPosition>
 				</eegElectrode>

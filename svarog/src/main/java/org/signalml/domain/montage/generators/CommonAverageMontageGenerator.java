@@ -34,8 +34,7 @@ public class CommonAverageMontageGenerator extends AverageReferenceMontageGenera
         /**
          * Creates an common average reference montage from a given montage.
          * @param montage the montage to be used
-         * @throws MontageException thrown if two channels have the same function
-         * or there is no channel with some function
+         * @throws MontageException it is never thrown for this montage generator
          */
 	@Override
 	public void createMontage(Montage montage) throws MontageException {

@@ -53,9 +53,9 @@ public class EegSystemSelectionPanel extends AbstractSignalMLPanel {
 	@Override
 	protected void initialize() {
 		setLayout(new BorderLayout());
-		setTitledBorder("Select EEG system");
-		
-		JLabel comboBoxLabel = new JLabel("Current EEG system:");
+		setTitledBorder(messageSource.getMessage("signalMontage.selectEegSystem"));
+
+		JLabel comboBoxLabel = new JLabel(messageSource.getMessage("signalMontage.currentEEGSystem"));
 		add(comboBoxLabel, BorderLayout.WEST);
 		add(getPresetComboBox(), BorderLayout.EAST);
 
@@ -92,8 +92,9 @@ public class EegSystemSelectionPanel extends AbstractSignalMLPanel {
 		if (presetComboBoxModel == null) {
 			presetComboBoxModel = new PresetComboBoxModel(null, eegSystemsPresetManager);
 			Object firstElement = presetComboBoxModel.getElementAt(0);
-			if (firstElement != null)
+			if (firstElement != null) {
 				presetComboBoxModel.setSelectedItem(firstElement);
+			}
 		}
 		return presetComboBoxModel;
 	}
@@ -114,12 +115,10 @@ public class EegSystemSelectionPanel extends AbstractSignalMLPanel {
 		this.montage = montage;
 		if (montage != null && montage.getEegSystem() != null) {
 			presetComboBoxModel.setSelectedItem(montage.getEegSystem());
-		}
-		else if (montage != null) {
+		} else if (montage != null) {
 			EegSystem eegSystem = (EegSystem) eegSystemsPresetManager.getPresetAt(0);
 			presetComboBoxModel.setSelectedItem(eegSystem);
 			montage.setEegSystem(eegSystem);
 		}
 	}
-
 }

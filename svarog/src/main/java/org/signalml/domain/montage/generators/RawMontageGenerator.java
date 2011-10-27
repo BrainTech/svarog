@@ -8,7 +8,6 @@ import org.springframework.validation.Errors;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.SourceMontage;
-import org.signalml.domain.montage.generators.AbstractMontageGenerator;
 
 /**
  * This class represents a generator for a raw (without type) {@link SourceMontage montage}.

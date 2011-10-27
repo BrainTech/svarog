@@ -844,6 +844,8 @@
 
 	<entry key="signalMontage.editDescription">Edit description</entry>
 	<entry key="signalMontage.chooseGenerator">Choose generator</entry>
+	<entry key="signalMontage.selectEegSystem">Select EEG system</entry>
+	<entry key="signalMontage.currentEEGSystem">Current EEG system</entry>
 	<entry key="signalMontage.generator">Generator</entry>
 	<entry key="signalMontage.generatorErrorLabelToolTip">Click to see errors</entry>
 	<entry key="signalMontage.reloadToolTip">Generate again</entry>
@@ -1956,15 +1958,7 @@
 	<entry key="montageGenerator.longitudinalII">Longitudinal II</entry>
 	<entry key="montageGenerator.transverseI">Transverse I</entry>
 
-	<entry key="montageGenerator.error.badChannelNumber">Bad number of channels</entry>
-	<entry key="montageGenerator.error.noLeftEarChannel">Left ear channel not identified</entry>
-	<entry key="montageGenerator.error.duplicateLeftEarChannel">Left ear channel identified more than one time</entry>
-	<entry key="montageGenerator.error.noRightEarChannel">Right ear channel not identified</entry>
-	<entry key="montageGenerator.error.duplicateRightEarChannel">Right ear channel identified more than one time</entry>
-	<entry key="montageGenerator.error.missingEarChannel">One of ear channels not identified [{0}]</entry>
-	<entry key="montageGenerator.error.duplicateEarChannel">Ear channel identified more than one time [{0}]</entry>
 	<entry key="montageGenerator.error.missingChannel">One of required channels not identified [{0}]</entry>
-	<entry key="montageGenerator.error.duplicateChannel">Required channel identified more than one time [{0}]</entry>
 
 	<entry key="methodIteratorMethod.iterationTicker">Iteration progress</entry>
 

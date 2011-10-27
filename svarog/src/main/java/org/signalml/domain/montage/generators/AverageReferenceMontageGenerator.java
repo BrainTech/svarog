@@ -15,7 +15,7 @@ import org.signalml.domain.montage.generators.AbstractMontageGenerator;
 import org.springframework.validation.Errors;
 
 /**
- * This abstract class represents a generator for an average reference montage.
+ * This class represents a generator for an average reference montage.
  * In the average reference montage the outputs of all of the amplifiers are
  * summed and averaged, and this averaged signal is used as the common reference
  * for each channel.
@@ -31,7 +31,7 @@ public class AverageReferenceMontageGenerator extends AbstractMontageGenerator {
 	private static final long serialVersionUID = 1L;
 
         /**
-         * an array with functions of {@link SourceChannel source channels} that
+         * an array with names of {@link SourceChannel source channels} that
          * this generator will use as reference channels in the created
          * {@link Montage montages} (actually in the
          * {@link MontageChannel montage channels} in a montage)
@@ -41,7 +41,7 @@ public class AverageReferenceMontageGenerator extends AbstractMontageGenerator {
         /**
          * Constructor. Creates a generator for an average reference montage
          * based on the <i>refChannels</i> array.
-         * @param refChannels array with functions of
+         * @param refChannels array with labels of
          * {@link SourceChannel source channels} that will be used as
          * reference channels in created {@link Montage montage}
          * (actually in {@link MontageChannel montage channels} in a montage)
@@ -57,8 +57,7 @@ public class AverageReferenceMontageGenerator extends AbstractMontageGenerator {
         /**
          * Creates an average reference montage from a given montage.
          * @param sourceMontage the montage to be used
-         * @throws MontageException thrown if two channels have the same function
-         * or there is no channel with some function
+         * @throws MontageException thrown if there is no channel with some label
          */
 	@Override
 	public void createMontage(Montage montage) throws MontageException {
