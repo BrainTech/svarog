@@ -51,8 +51,6 @@ public class VisualReferenceModel implements SourceMontageListener, MontageListe
 	private MessageSourceAccessor messageSource;
 
 	private VisualReferenceChessboardBin othersBin;
-	private VisualReferenceChessboardBin primariesBin;
-	private VisualReferenceChessboardBin referencesBin;
 	private VisualReferencePositionedBin positionedBin;
 
 	private ArrayList<VisualReferenceSourceChannel> sourceChannels;
@@ -97,8 +95,6 @@ public class VisualReferenceModel implements SourceMontageListener, MontageListe
 		channelLists = new ArrayList<LinkedList<VisualReferenceChannel>>();
 		arrows = new ArrayList<VisualReferenceArrow>();
 		othersBin = new VisualReferenceChessboardBin();
-		primariesBin = new VisualReferenceChessboardBin();
-		referencesBin = new VisualReferenceChessboardBin();
 		positionedBin = new VisualReferencePositionedBin();
 
 		if (montage != null) {
@@ -127,25 +123,6 @@ public class VisualReferenceModel implements SourceMontageListener, MontageListe
 					positionedBin.add(visualSourceChannel);
 				} else {
 					othersBin.add(visualSourceChannel);
-					/* TODO: check if the primaries, reference etc. bins
-					 * are necessary
-					 function = montage.getSourceChannelFunctionAt(i);
-					functionType = function.getType();
-					switch (functionType) {
-
-					case PRIMARY :
-						primariesBin.add(visualSourceChannel);
-						break;
-
-					case REFERENCE :
-						referencesBin.add(visualSourceChannel);
-						break;
-
-					default : // the rest
-						othersBin.add(visualSourceChannel);
-						break;
-
-					}*/
 				}
 			}
 
@@ -166,8 +143,6 @@ public class VisualReferenceModel implements SourceMontageListener, MontageListe
 		}
 
 		othersBin.setName(messageSource.getMessage("visualReferenceEditor.bin.others"));
-		referencesBin.setName(messageSource.getMessage("visualReferenceEditor.bin.references"));
-		primariesBin.setName(messageSource.getMessage("visualReferenceEditor.bin.primaries"));
 		positionedBin.setName(messageSource.getMessage("visualReferenceEditor.bin.positioned"));
 
 		setActiveChannel(null);
@@ -386,14 +361,6 @@ public class VisualReferenceModel implements SourceMontageListener, MontageListe
 
 	public VisualReferenceBin getOthersBin() {
 		return othersBin;
-	}
-
-	public VisualReferenceBin getPrimariesBin() {
-		return primariesBin;
-	}
-
-	public VisualReferenceBin getReferencesBin() {
-		return referencesBin;
 	}
 
 	public VisualReferencePositionedBin getPositionedBin() {

@@ -200,29 +200,15 @@ public abstract class VisualReferenceDisplay extends JComponent implements Visua
 
 		VisualReferenceBin othersBin = model.getOthersBin();
 		VisualReferencePositionedBin positionedBin = model.getPositionedBin();
-		VisualReferenceBin referencesBin = model.getReferencesBin();
-		VisualReferenceBin primariesBin = model.getPrimariesBin();
 
 		paintBin(positionedBin, g);
 		if (!othersBin.isEmpty()) {
 			paintBin(othersBin, g);
 		}
-		if (!referencesBin.isEmpty()) {
-			paintBin(referencesBin, g);
-		}
-		if (!primariesBin.isEmpty()) {
-			paintBin(primariesBin, g);
-		}
 
 		paintBinContents(positionedBin, g);
 		if (!othersBin.isEmpty()) {
 			paintBinContents(othersBin, g);
-		}
-		if (!referencesBin.isEmpty()) {
-			paintBinContents(referencesBin, g);
-		}
-		if (!primariesBin.isEmpty()) {
-			paintBinContents(primariesBin, g);
 		}
 
 	}
@@ -258,8 +244,6 @@ public abstract class VisualReferenceDisplay extends JComponent implements Visua
 
 		VisualReferenceBin othersBin = model.getOthersBin();
 		VisualReferencePositionedBin positionedBin = model.getPositionedBin();
-		VisualReferenceBin referencesBin = model.getReferencesBin();
-		VisualReferenceBin primariesBin = model.getPrimariesBin();
 
 		int minimumHeight = 0;
 		int minBinHeight;
@@ -292,24 +276,6 @@ public abstract class VisualReferenceDisplay extends JComponent implements Visua
 
 		}
 
-		if (!referencesBin.isEmpty()) {
-
-			referencesBin.setMaxHeight(avHeight);
-			size = referencesBin.getSize();
-
-			width += (BIN_SPACING + size.width);
-
-		}
-
-		if (!primariesBin.isEmpty()) {
-
-			primariesBin.setMaxHeight(avHeight);
-			size = primariesBin.getSize();
-
-			width += (BIN_SPACING + size.width);
-
-		}
-
 		int centeringOffset = 0;
 		if (viewportSize.width > width) {
 			centeringOffset = (viewportSize.width - width) / 2;
@@ -325,29 +291,6 @@ public abstract class VisualReferenceDisplay extends JComponent implements Visua
 				othersBin.reposition();
 			}
 			size = othersBin.getSize();
-			topX += (size.width + BIN_SPACING);
-
-		}
-
-		if (!primariesBin.isEmpty()) {
-
-			primariesBin.setLocation(new Point(topX, BIN_SPACING));
-			if (!primariesBin.isPositioned()) {
-				primariesBin.reposition();
-			}
-			size = primariesBin.getSize();
-			topX += (size.width + BIN_SPACING);
-
-
-		}
-
-		if (!referencesBin.isEmpty()) {
-
-			referencesBin.setLocation(new Point(topX, BIN_SPACING));
-			if (!referencesBin.isPositioned()) {
-				referencesBin.reposition();
-			}
-			size = referencesBin.getSize();
 			topX += (size.width + BIN_SPACING);
 
 		}
