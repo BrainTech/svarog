@@ -342,6 +342,7 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 			rawDescriptor.setByteOrder(signalExportDescriptor.getByteOrder());
 			int channelCount = sampleSource.getChannelCount();
 			rawDescriptor.setChannelCount(channelCount);
+			rawDescriptor.setEegSystemName(signalDocument.getMontage().getEegSystemName());
 
 			if (signalExportDescriptor.isNormalize()) {
 				rawDescriptor.setCalibrationGain((float)(1 / signalExportDescriptor.getNormalizationFactor()));

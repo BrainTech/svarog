@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import org.signalml.domain.montage.Channel;
+import org.signalml.domain.montage.system.IChannelFunction;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
@@ -39,7 +39,7 @@ public class ChannelTableCellRenderer extends DefaultTableCellRenderer {
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 		JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-		label.setText(messageSource.getMessage((Channel) value));
+		label.setText(messageSource.getMessage((IChannelFunction) value));
 		return label;
 	}
 

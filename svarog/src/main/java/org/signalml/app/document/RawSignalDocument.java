@@ -11,7 +11,6 @@ import java.util.List;
 import org.signalml.app.model.LabelledPropertyDescriptor;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.domain.signal.MultichannelSampleSource;
-import org.signalml.domain.signal.SignalType;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalSampleSource;
@@ -53,8 +52,8 @@ public class RawSignalDocument extends AbstractFileSignal {
 	 * @param type the type of the signal
 	 * @param descriptor the descriptor of the signal.
 	 */
-	public RawSignalDocument(SignalType type, RawSignalDescriptor descriptor) {
-		super(type);
+	public RawSignalDocument(RawSignalDescriptor descriptor) {
+		super();
 		this.descriptor = descriptor;
 	}
 

@@ -131,6 +131,13 @@ public class RawSignalDescriptorWriter {
 
 		}
 
+		String eegSystemName = descriptor.getEegSystemName();
+		if (eegSystemName != null) {
+			element = document.createElement(RawSignalDocumentBuilder.EEG_SYSTEM_NAME);
+			element.setTextContent(eegSystemName);
+			root.appendChild(element);
+		}
+
 		String[] channelLabels = descriptor.getChannelLabels();
 		if (channelLabels != null && channelLabels.length > 0) {
 

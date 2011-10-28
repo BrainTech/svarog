@@ -9,9 +9,11 @@ import java.beans.PropertyChangeListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import org.signalml.app.config.preset.EegSystemsPresetManager;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
-import org.signalml.domain.signal.SignalType;
+import org.signalml.domain.montage.system.EegSystem;
+import org.signalml.domain.montage.SignalConfigurer;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 
@@ -56,6 +58,7 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 	 * should be connected.
 	 */
 	public OpenSignalAndSetMontageDialogManager(OpenSignalAndSetMontageDialog openSignalAndSetMontageDialog, MessageSourceAccessor messageSource) {
+
 		this.openSignalAndSetMontageDialog = openSignalAndSetMontageDialog;
 		this.signalSourcePanel = openSignalAndSetMontageDialog.getSignalSourcePanel();
 		this.messageSource = messageSource;
@@ -90,6 +93,10 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 		else if (propertyName.equals(AbstractMonitorSourcePanel.OPENBCI_CONNECTED_PROPERTY)) {
 			enableTabsAndOKButtonAsNeeded();
 		}
+		else if (propertyName.equals(AbstractSignalParametersPanel.EEG_SYSTEM_PROPERTY)) {
+			String newEegSystemName = evt.getNewValue() != null ? evt.getNewValue().toString() : null;
+			eegSystemChangedTo(newEegSystemName);
+		}
 	}
 
 	/**
@@ -110,7 +117,7 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 	 * @param newNumberOfChannels the current number of channels
 	 */
 	protected void numberOfChannelsChangedTo(int newNumberOfChannels) {
-		Montage createdMontage = SignalType.EEG_10_20.getConfigurer().createMontage(newNumberOfChannels);
+		Montage createdMontage = SignalConfigurer.createMontage(newNumberOfChannels);
 
 		try {
 			openSignalAndSetMontageDialog.fillDialogFromModel(createdMontage);
@@ -192,6 +199,28 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 			Logger.getLogger(OpenSignalAndSetMontageDialogManager.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		catch (SignalMLException ex) {
+			Logger.getLogger(OpenSignalAndSetMontageDialogManager.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+
+	/**
+	 * Changes the EEG system in the current montage.
+	 * @param newEegSystemName the EEG system name that was selected
+	 */
+	protected void eegSystemChangedTo(String newEegSystemName) {
+		EegSystemsPresetManager eegSystemsPresetManager = openSignalAndSetMontageDialog.getEegSystemsPresetManager();
+
+		EegSystem eegSystem = (EegSystem) eegSystemsPresetManager.getPresetByName(newEegSystemName);
+		Montage currentMontage = getCurrentMontage();
+
+		if (eegSystem == null) {
+			eegSystem = (EegSystem) eegSystemsPresetManager.getPresetAt(0);
+		}
+
+		currentMontage.setEegSystem(eegSystem);
+		try {
+			openSignalAndSetMontageDialog.fillDialogFromModel(currentMontage);
+		} catch (SignalMLException ex) {
 			Logger.getLogger(OpenSignalAndSetMontageDialogManager.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}

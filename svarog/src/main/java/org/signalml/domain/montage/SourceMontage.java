@@ -4,6 +4,8 @@
 
 package org.signalml.domain.montage;
 
+import org.signalml.domain.montage.system.IChannelFunction;
+import org.signalml.domain.montage.system.ChannelFunction;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
@@ -15,13 +17,12 @@ import javax.swing.event.EventListenerList;
 import org.apache.log4j.Logger;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.domain.signal.MultichannelSampleSource;
-import org.signalml.domain.signal.SignalType;
-import org.signalml.domain.montage.ChannelType;
-import org.signalml.domain.signal.SignalTypeConfigurer;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.util.Util;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import org.signalml.domain.montage.system.EegElectrode;
+import org.signalml.domain.montage.system.EegSystem;
 
 /**
  * This class represents a source montage.
@@ -38,27 +39,26 @@ public class SourceMontage {
 
 	protected static final Logger logger = Logger.getLogger(SourceMontage.class);
 
-        /**
-         * a {@link SignalType type} of a signal for this SourceMontage
-         */
-	protected SignalType signalType;
+	/**
+	 * The {@link EegSystem} used by this {@link SourceMontage}.
+	 */
+	private transient EegSystem eegSystem;
 
+	/**
+	 * The name of the {@link EegSystem} used by this SourceMontage.
+	 * It is used only for reading/storing the SourceMontage in files.
+	 */
+	private String eegSystemName;
 
         /**
          * a list of SourceChannels in this SourceMontage
          */
-	protected ArrayList<SourceChannel> sourceChannels;
+	protected ArrayList<SourceChannel> sourceChannels = new ArrayList<SourceChannel>();;
 
         /**
          * {@link SignalTypeConfigurer configurer} for a signal type
          */
-	private transient SignalTypeConfigurer signalTypeConfigurer;
-
-        /**
-         * HashMap associating {@link SourceChannel source channels}
-         * with their function
-         */
-	private transient HashMap<Channel,LinkedList<SourceChannel>> sourceChannelsByFunction;
+	private transient SignalConfigurer signalConfigurer = new SignalConfigurer();
 
         /**
          * HashMap associating {@link SourceChannel source channels}
@@ -81,24 +81,8 @@ public class SourceMontage {
          */
 	private transient boolean changed = false;
 
-        /**
-         * Constructor. Creates an empty SourceMontage.
-         */
-	protected SourceMontage() {
-	}
+	public SourceMontage() {
 
-        /**
-         * Constructor. Creates a SourceMontage for a given
-         * {@link SignalType type} of a signal, but without channels.
-         * @param signalType a type of a signal for which a SourceMontage
-         * is to be created
-         */
-	public SourceMontage(SignalType signalType) {
-		if (signalType == null) {
-			throw new NullPointerException("Signal type null");
-		}
-		this.signalType = signalType;
-		sourceChannels = new ArrayList<SourceChannel>();
 	}
 
         /**
@@ -111,14 +95,11 @@ public class SourceMontage {
          * Means there is an error in code
          */
         //TODO moim zdaniem ten wyjątek nie ma prawa być wyrzucony
-	public SourceMontage(SignalType signalType, int channelCount) {
+	public SourceMontage(int channelCount) {
 
-		this(signalType);
-
-		SignalTypeConfigurer configurer = getSignalTypeConfigurer();
 		try {
 			for (int i=0; i<channelCount; i++) {
-				addSourceChannel("L" + (i+1), configurer.genericChannel());
+				addSourceChannel("L" + (i+1), signalConfigurer.genericChannel());
 			}
 		} catch (MontageException ex) {
 			throw new SanityCheckException("Failed to build default source montage", ex);
@@ -136,15 +117,13 @@ public class SourceMontage {
          */
 	public SourceMontage(SignalDocument document) {
 
-		this(document.getType());
-
 		MultichannelSampleSource mss = document.getSampleSource();
 		int channelCount = mss.getChannelCount();
 
 		String label;
-		SignalTypeConfigurer configurer = getSignalTypeConfigurer();
+		SignalConfigurer configurer = getSignalTypeConfigurer();
 		HashMap<String, SourceChannel> map = getSourceChannelsByLabel();
-		Channel function;
+		IChannelFunction function;
 		for (int i=0; i<channelCount; i++) {
 			label = mss.getLabel(i);
 			function = configurer.channelForName(label);
@@ -183,20 +162,16 @@ public class SourceMontage {
          */
 	protected void copyFrom(SourceMontage montage) {
 		setChanged(montage.changed);
-		signalType = montage.signalType;
+
 		sourceChannels = new ArrayList<SourceChannel>(montage.sourceChannels.size());
-		HashMap<String, SourceChannel> map = getSourceChannelsByLabel();
-		map.clear();
-		getSourceChannelsByFunction().clear();
-		SourceChannel newChannel;
-		LinkedList<SourceChannel> list;
+
 		for (SourceChannel channel : montage.sourceChannels) {
-			newChannel = new SourceChannel(channel);
-			list = getSourceChannelsByFunctionList(newChannel.getFunction());
+			SourceChannel newChannel = new SourceChannel(channel);
 			sourceChannels.add(newChannel);
-			map.put(newChannel.getLabel(), newChannel);
-			list.add(newChannel);
 		}
+
+		this.eegSystem = montage.eegSystem;
+		this.eegSystemName = montage.eegSystemName;
 	}
 
         /**
@@ -247,21 +222,68 @@ public class SourceMontage {
 			}
 		} else if (dCnt < mCnt) {
 			for (int i=mCnt-1; i>=dCnt; i--) {
-				if ((this.getSourceChannelFunctionAt(i).getType() == ChannelType.ZERO)
-					|| (this.getSourceChannelFunctionAt(i).getType() == ChannelType.ONE))
+				IChannelFunction function = this.getSourceChannelAt(i).getFunction();
+				if (function == ChannelFunction.ONE || function == ChannelFunction.ZERO)
 					continue;
 				removeSourceChannel();
 			}
 		}
 	}
 
-        /**
-         * Returns the {@link SignalType type} of a signal for this source
-         * montage.
-         * @return the type of a signal for current object
-         */
-	public SignalType getSignalType() {
-		return signalType;
+	/**
+	 * Returns the {@link EegSystem} used by this Montage.
+	 * @return the {@link EegSystem} used by this Montage
+	 */
+	public EegSystem getEegSystem() {
+		return eegSystem;
+	}
+
+	/**
+	 * Sets the {@link EegSystem} to be used by this Montage.
+	 * @param eegSystem the {@link EegSystem} to be used by this Montage
+	 */
+	public void setEegSystem(EegSystem eegSystem) {
+
+		if (this.eegSystem == eegSystem)
+			return;
+
+		this.eegSystem = eegSystem;
+		if (eegSystem == null) {
+			eegSystemName = null;
+			return;
+		}
+		else {
+			eegSystemName = eegSystem.getName();
+		}
+
+		for (SourceChannel sourceChannel: sourceChannels) {
+			refreshElectrodeAndFunctionForSourceChannel(sourceChannel);
+		}
+		fireSourceMontageEegSystemChanged(this);
+	}
+
+	/**
+	 * Checks if an {@link EegElectrode} having the same name is available
+	 * in the current {@link EegSystem}. If so, it sets the channel function
+	 * to {@link ChannelFunction#EEG} and associates the electrode with the channel.
+	 * Otherwise the channel function is set to {@link ChannelFunction#UNKNOWN}.
+	 * @param sourceChannel the {@link SourceChannel} to be refreshed
+	 */
+	protected void refreshElectrodeAndFunctionForSourceChannel(SourceChannel sourceChannel) {
+		if (sourceChannel == null)
+			return;
+		if (eegSystem == null)
+			return;
+		EegElectrode electrodeForChannel = eegSystem.getElectrode(sourceChannel.getLabel());
+		if (electrodeForChannel != null) {
+			sourceChannel.setEegElectrode(electrodeForChannel);
+			sourceChannel.setFunction(ChannelFunction.EEG);
+		}
+		else {
+			sourceChannel.setEegElectrode(null);
+			sourceChannel.setFunction(ChannelFunction.UNKNOWN);
+		}
+		fireSourceMontageChannelChanged(this, sourceChannel.getChannel());
 	}
 
         /**
@@ -289,27 +311,8 @@ public class SourceMontage {
          * this source montage.
          * @return the configurer for this source montage
          */
-	public SignalTypeConfigurer getSignalTypeConfigurer() {
-		if (signalTypeConfigurer == null) {
-			signalTypeConfigurer = signalType.getConfigurer();
-			if (signalTypeConfigurer == null) {
-				throw new NullPointerException("Configurer null");
-			}
-		}
-		return signalTypeConfigurer;
-	}
-
-        /**
-         * Returns a HashMap associating {@link SourceChannel source channels}
-         * with their function.
-         * If doesn't exists it is created as empty and returned.
-         * @return a HashMap associating source channels with their function.
-         */
-	protected HashMap<Channel, LinkedList<SourceChannel>> getSourceChannelsByFunction() {
-		if (sourceChannelsByFunction == null) {
-			sourceChannelsByFunction = new HashMap<Channel, LinkedList<SourceChannel>>();
-		}
-		return sourceChannelsByFunction;
+	public SignalConfigurer getSignalTypeConfigurer() {
+		return signalConfigurer;
 	}
 
         /**
@@ -318,19 +321,16 @@ public class SourceMontage {
          * @param function a function that source channels should fulfil
          * @return list of source channels with a given function
          */
-	protected LinkedList<SourceChannel> getSourceChannelsByFunctionList(Channel function) {
-		HashMap<Channel, LinkedList<SourceChannel>> map = getSourceChannelsByFunction();
-		LinkedList<SourceChannel> list = map.get(function);
-		if (list == null) {
-			list = new LinkedList<SourceChannel>();
-			map.put(function, list);
-			for (SourceChannel channel : sourceChannels) {
-				if (channel.getFunction() == function) {
-					list.add(channel);
-				}
-			}
+	protected LinkedList<SourceChannel> getSourceChannelsByFunctionList(IChannelFunction function) {
+		LinkedList<SourceChannel> list = new LinkedList<SourceChannel>();
+
+		for (SourceChannel channel: sourceChannels) {
+			if (channel.getFunction() == function)
+				list.add(channel);
 		}
+
 		return list;
+
 	}
 
         /**
@@ -354,7 +354,7 @@ public class SourceMontage {
          * @param label a label of source channel to be found
          * @return the found source channel
          */
-	protected SourceChannel getSourceChannelByLabel(String label) {
+	public SourceChannel getSourceChannelByLabel(String label) {
 		return getSourceChannelsByLabel().get(label);
 	}
 
@@ -376,13 +376,17 @@ public class SourceMontage {
 		return sourceChannels.get(index).getLabel();
 	}
 
+	public SourceChannel getSourceChannelAt(int index) {
+		return sourceChannels.get(index);
+	}
+
         /**
          * Returns the function of a {@link SourceChannel source channel} of
          * a given index.
          * @param index an index of a source channel to be found
          * @return the function of a source channel of a given index
          */
-	public Channel getSourceChannelFunctionAt(int index) {
+	public IChannelFunction getSourceChannelFunctionAt(int index) {
 		return sourceChannels.get(index).getFunction();
 	}
 
@@ -418,22 +422,7 @@ public class SourceMontage {
 			map.remove(oldLabel);
 			map.put(label, channel);
 
-			// see about function update
-			Channel function = channel.getFunction();
-			if (function.getType() == ChannelType.UNKNOWN) {
-				// function is unknown, we can update, let's see what we get
-				Channel newFunctionCandidate = getSignalTypeConfigurer().channelForName(label);
-				if (newFunctionCandidate.getType() != ChannelType.UNKNOWN) {
-					// the function is known, check if we could use it
-					if (!newFunctionCandidate.isUnique() || getSourceChannelsByFunctionList(newFunctionCandidate).isEmpty()) {
-						// we could, do it
-						getSourceChannelsByFunctionList(function).remove(channel);
-						channel.setFunction(newFunctionCandidate);
-						getSourceChannelsByFunctionList(newFunctionCandidate).add(channel);
-					}
-
-				}
-			}
+			refreshElectrodeAndFunctionForSourceChannel(channel);
 
 			fireSourceMontageChannelChanged(this, channel.getChannel());
 			setChanged(true);
@@ -452,10 +441,10 @@ public class SourceMontage {
          * @return old a function of found source channel
          * @throws MontageException if the function is not unique
          */
-	public Channel setSourceChannelFunctionAt(int index, Channel function) throws MontageException {
+	public IChannelFunction setSourceChannelFunctionAt(int index, IChannelFunction function) throws MontageException {
 
 		SourceChannel channel = sourceChannels.get(index);
-		Channel oldFunction = channel.getFunction();
+		IChannelFunction oldFunction = channel.getFunction();
 
 		if (oldFunction != function) {
 
@@ -485,7 +474,7 @@ public class SourceMontage {
          * @param function a function that source channels should fulfil
          * @return an array of indexes of source channels with a given function
          */
-	public int[] getSourceChannelsByFunction(Channel function) {
+	public int[] getSourceChannelsByFunction(IChannelFunction function) {
 		LinkedList<SourceChannel> list = getSourceChannelsByFunctionList(function);
 		int[] indices = new int[list.size()];
 		int i = 0;
@@ -496,55 +485,6 @@ public class SourceMontage {
 		return indices;
 	}
 
-	public int[] getSourceChannelsByTypes(ChannelType[] types) {
-		LinkedList<SourceChannel> list = getSourceChannelsByFunctionList(null);
-		int indSize = 0;
-		for (int i = 0; i < this.getSourceChannelCount(); i++)
-			for (int j = 0; j < types.length; j++)
-				if (this.getSourceChannelFunctionAt(i).getType() == types[j])
-					indSize ++;
-
-		int[] indices = new int[indSize];
-		int ind = 0;
-		for (int i = 0; i < this.getSourceChannelCount(); i++)
-			for (int j = 0; j < types.length; j++)
-				if (this.getSourceChannelFunctionAt(i).getType() == types[j]) {
-					indices[ind] = i;
-					ind ++;
-				}
-		return indices;
-	}
-
-        /**
-         * Returns an index of a first {@link SourceChannel source channel}
-         * with a given {@link Channel function}.
-         * @param function a function that source channel should fulfil
-         * @return an index of a first source channel with a given function,
-         * -1 if doesn't exist
-         */
-	public int getFirstSourceChannelWithFunction(Channel function) {
-		LinkedList<SourceChannel> list = getSourceChannelsByFunctionList(function);
-		if (list.isEmpty()) {
-			return -1;
-		}
-		return list.getFirst().getChannel();
-	}
-
-        /**
-         * Returns an index of a first {@link SourceChannel source channel} with
-         * a given label.
-         * @param label a String with a label to be found
-         * @return an index of a first source channel with a given label,
-         * -1 if doesn't exist
-         */
-	public int getSourceChannelForLabel(String label) {
-		SourceChannel channel = getSourceChannelsByLabel().get(label);
-		if (channel == null) {
-			return -1;
-		}
-		return channel.getChannel();
-	}
-
 	/**
          * Adds a new {@link SourceChannel source channel} with a given label
          * and {@link Channel function}.
@@ -552,9 +492,9 @@ public class SourceMontage {
          * @param function a unique function for new source channel
          * @throws MontageException thrown when label or function not unique
          */
-        public void addSourceChannel(String label, Channel function) throws MontageException {
+        public void addSourceChannel(String label, IChannelFunction function) throws MontageException {
 
-		Channel nonNullChannel = (function != null ? function : getSignalTypeConfigurer().genericChannel());
+		IChannelFunction nonNullChannel = (function != null ? function : getSignalTypeConfigurer().genericChannel());
 
 		HashMap<String, SourceChannel> map = getSourceChannelsByLabel();
 		if (map.containsKey(label)) {
@@ -725,6 +665,32 @@ public class SourceMontage {
 				((SourceMontageListener)listeners[i+1]).sourceMontageChannelChanged(e);
 			}
 		}
+	}
+
+	/**
+         * Fires an event informing all listeners that the Montage {@link EegSystem}
+	 * has been changed.
+         * @param source the object on which the Event initially occurred.
+         */
+	protected void fireSourceMontageEegSystemChanged(Object source) {
+		Object[] listeners = listenerList.getListenerList();
+		SourceMontageEvent e = null;
+		for (int i = listeners.length-2; i>=0; i-=2) {
+			if (listeners[i]==SourceMontageListener.class) {
+				if (e == null) {
+					e = new SourceMontageEvent(source);
+				}
+				((SourceMontageListener)listeners[i+1]).sourceMontageEegSystemChanged(e);
+			}
+		}
+	}
+
+	/**
+	 * Returns the name of the  {@link EegSystem} used by this Montage.
+	 * @return the name of the  {@link EegSystem} used by this Montage
+	 */
+	public String getEegSystemName() {
+		return eegSystemName;
 	}
 
 }

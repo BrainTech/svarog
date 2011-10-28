@@ -12,6 +12,7 @@ import org.signalml.app.model.OpenSignalDescriptor;
 import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.montage.SignalMontageDialog;
 import org.signalml.domain.montage.Montage;
+import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
@@ -50,7 +51,7 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 	public OpenSignalAndSetMontageDialog(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager,
 			Window f, boolean isModal) {
 
-		super(messageSource, viewerElementManager.getMontagePresetManager(), viewerElementManager.getPredefinedTimeDomainFiltersPresetManager(), f, isModal);
+		super(messageSource, viewerElementManager, f, isModal);
 
 		this.viewerElementManager = viewerElementManager;
 		dialogManager = new OpenSignalAndSetMontageDialogManager(this, messageSource);

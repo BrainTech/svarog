@@ -6,6 +6,9 @@ package org.signalml.app.view.element;
 import java.awt.Component;
 import java.awt.Container;
 import javax.swing.JPanel;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
@@ -15,7 +18,7 @@ import org.springframework.context.support.MessageSourceAccessor;
  * 
  * @author Piotr Szachewicz
  */
-public class AbstractSignalMLPanel extends JPanel {
+public abstract class AbstractSignalMLPanel extends JPanel {
 
 	/**
 	 * the {@link MessageSourceAccessor source} of messages (labels)
@@ -30,6 +33,11 @@ public class AbstractSignalMLPanel extends JPanel {
 	public AbstractSignalMLPanel(MessageSourceAccessor messageSource) {
 		this.messageSource = messageSource;
 	}
+
+	/**
+	 * A method for initializing GUI components for this panel.
+	 */
+	protected abstract void initialize();
 
 	/**
 	 * Sets enabled to this panel and all it's children.
@@ -59,4 +67,18 @@ public class AbstractSignalMLPanel extends JPanel {
 			}
 		}
 	}
+
+	/**
+	 * Puts a border around this panel with a given title.
+	 * @param label the title to be shown on the border
+	 */
+	protected void setTitledBorder(String label) {
+		CompoundBorder cb = new CompoundBorder(
+		        new TitledBorder(label),
+		        new EmptyBorder(3,3,3,3)
+		);
+
+		setBorder(cb);
+	}
+
 }

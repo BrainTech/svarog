@@ -85,6 +85,9 @@ public class SignalParametersPanelForRawSignalFile extends AbstractSignalParamet
 		if (channelLabels != null)
 			firePropertyChange(AbstractSignalParametersPanel.CHANNEL_LABELS_PROPERTY, null, channelLabels);
 
+		String eegSystemName = descriptor.getEegSystemName();
+		firePropertyChange(AbstractSignalParametersPanel.EEG_SYSTEM_PROPERTY, null, eegSystemName);
+
                 getEditGainAndOffsetDialog().fillDialogFromModel(descriptor);
                 currentModel = descriptor;
 	}

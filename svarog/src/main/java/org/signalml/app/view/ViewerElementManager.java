@@ -149,6 +149,7 @@ import org.signalml.app.action.OpenSignalAndSetMontageAction;
 import org.signalml.app.action.StartMonitorRecordingAction;
 import org.signalml.app.action.StopBCIAction;
 import org.signalml.app.action.StopMonitorRecordingAction;
+import org.signalml.app.config.preset.EegSystemsPresetManager;
 import org.signalml.app.config.preset.StyledTagSetPresetManager;
 import org.signalml.app.view.dialog.TagStylePresetDialog;
 import org.signalml.app.view.opensignal.OpenSignalAndSetMontageDialog;
@@ -211,6 +212,10 @@ public class ViewerElementManager {
 	 * A {@link PresetManager} managing the stored tag styles presets.
 	 */
 	private StyledTagSetPresetManager styledTagSetPresetManager;
+	/**
+	 * A {@link PresetManager} managing the {@link EegSystem EegSystems}.
+	 */
+	private EegSystemsPresetManager eegSystemsPresetManager;
 
 	private MP5ExecutorManager mp5ExecutorManager;
 	private Preferences preferences;
@@ -640,6 +645,22 @@ public class ViewerElementManager {
 	 */
 	public void setStyledTagSetPresetManager(StyledTagSetPresetManager styledTagSetPresetManager) {
 		this.styledTagSetPresetManager = styledTagSetPresetManager;
+	}
+
+	/**
+	 * Returns the {@link PresetManger} handling stored EEG systems definitions.
+	 * @return the PresetManager for EEG systems
+	 */
+	public EegSystemsPresetManager getEegSystemsPresetManager() {
+		return eegSystemsPresetManager;
+	}
+
+	/**
+	 * Sets the {@link PresetManager} handling stored EEG systems.
+	 * @param eegSystemsPresetManager the PresetManager for EEG systems
+	 */
+	public void setEegSystemsPresetManager(EegSystemsPresetManager eegSystemsPresetManager) {
+		this.eegSystemsPresetManager = eegSystemsPresetManager;
 	}
 
 	public MP5ExecutorManager getMp5ExecutorManager() {
@@ -1249,8 +1270,7 @@ public class ViewerElementManager {
 
 	public SignalMontageDialog getSignalMontageDialog() {
 		if (signalMontageDialog == null) {
-			signalMontageDialog = new SignalMontageDialog(messageSource, getMontagePresetManager(),
-				getPredefinedTimeDomainFiltersPresetManager(), getDialogParent(), true);
+			signalMontageDialog = new SignalMontageDialog(messageSource, this, getDialogParent(), true);
 			signalMontageDialog.setFileChooser(getFileChooser());
 			signalMontageDialog.setApplicationConfig(getApplicationConfig());
 			signalMontageDialog.setFftFilterPresetManager(getFftFilterPresetManager());

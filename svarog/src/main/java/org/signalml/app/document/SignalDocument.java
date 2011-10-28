@@ -12,7 +12,6 @@ import org.signalml.app.view.signal.SignalView;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.signal.OriginalMultichannelSampleSource;
 import org.signalml.domain.signal.SignalChecksum;
-import org.signalml.domain.signal.SignalType;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Document;
@@ -45,12 +44,6 @@ public interface SignalDocument extends ExportedSignalDocument {
 	public static final String MONTAGE_PROPERTY = "montage";
 	public static final String ACTIVE_TAG_PROPERTY = "activeTag";
 	public static final String TAG_DOCUMENTS_PROPERTY = "tagDocuments";
-
-	/**
-	 * Returns the {@link SignalType type} of this signal.
-	 * @return the type of this signal
-	 */
-	SignalType getType();
 
 	@Override
 	String getFormatName();

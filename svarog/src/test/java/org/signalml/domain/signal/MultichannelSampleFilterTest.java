@@ -134,7 +134,7 @@ public class MultichannelSampleFilterTest {
 	public void testApplyMontage() throws MontageMismatchException {
 		int i;
 
-		SourceMontage sMontage = new SourceMontage(SignalType.EEG_10_20, TEST_CHANNEL_COUNT);
+		SourceMontage sMontage = new SourceMontage(TEST_CHANNEL_COUNT);
 		Montage montage = new Montage(sMontage);
 		for (i = 0; i < TEST_CHANNEL_COUNT; i++)
 			montage.addMontageChannel(i, i);

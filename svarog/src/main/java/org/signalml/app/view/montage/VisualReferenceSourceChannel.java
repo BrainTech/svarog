@@ -8,7 +8,8 @@ import java.awt.Point;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 
-import org.signalml.domain.montage.Channel;
+import org.signalml.domain.montage.system.IChannelFunction;
+import org.signalml.domain.montage.SourceChannel;
 import org.signalml.util.Util;
 
 /** VisualReferenceSourceChannel
@@ -20,37 +21,33 @@ public class VisualReferenceSourceChannel {
 
 	public static final int CIRCLE_DIAMETER = 40;
 
-	private int channel;
-	private String label;
-	private Channel function;
-
+	/**
+	 * The {@link SourceChannel} for this {@link VisualReferenceSourceChannel}.
+	 */
+	private SourceChannel sourceChannel;
 	private Point location;
 
 	private Shape cachedShape;
 	private Shape cachedOutlineShape;
 
-	public VisualReferenceSourceChannel(int channel) {
-		this.channel = channel;
+	public VisualReferenceSourceChannel(SourceChannel sourceChannel) {
+		this.sourceChannel = sourceChannel;
 	}
 
 	public int getChannel() {
-		return channel;
+		return sourceChannel.getChannel();
 	}
 
 	public String getLabel() {
-		return label;
+		return sourceChannel.getLabel();
 	}
 
-	public void setLabel(String label) {
-		this.label = label;
-	}
-
-	public Channel getFunction() {
-		return function;
-	}
-
-	public void setFunction(Channel function) {
-		this.function = function;
+	/**
+	 * Returns the {@link SourceChannel} connected with this {@link VisualReferenceSourceChannel}.
+	 * @return the {@link SourceChannel} connected with this {@link VisualReferenceSourceChannel}
+	 */
+	public SourceChannel getSourceChannel() {
+		return sourceChannel;
 	}
 
 	public Point getLocation() {

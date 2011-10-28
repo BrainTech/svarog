@@ -10,13 +10,12 @@ import javax.swing.table.AbstractTableModel;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.view.dialog.ErrorsDialog;
-import org.signalml.domain.montage.Channel;
+import org.signalml.domain.montage.system.IChannelFunction;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.montage.SourceMontageEvent;
 import org.signalml.domain.montage.SourceMontageListener;
 import org.springframework.context.support.MessageSourceAccessor;
-import org.signalml.domain.montage.ChannelType;
 
 /** SourceMontageTableModel
  *
@@ -35,10 +34,21 @@ public class SourceMontageTableModel extends AbstractTableModel implements Sourc
 
 	private SourceMontage montage;
 	private MessageSourceAccessor messageSource;
-	private ChannelListModel channelListModel;
+
+	/**
+	 * The ListModel managing the list of {@link ChannelFunction ChannelFunctions}
+	 * available in the current EEG system.
+	 */
+	private ChannelFunctionsListModel functionsListModel;
+	/**
+	 * The ListModel managing the list of channels labels
+	 * available in the current EEG system.
+	 */
+	private ChannelsListModel channelsListModel;
 
 	public SourceMontageTableModel() {
-		channelListModel = new ChannelListModel();
+		functionsListModel = new ChannelFunctionsListModel();
+		channelsListModel = new ChannelsListModel();
 	}
 
 	public MessageSourceAccessor getMessageSource() {
@@ -49,8 +59,22 @@ public class SourceMontageTableModel extends AbstractTableModel implements Sourc
 		this.messageSource = messageSource;
 	}
 
-	public ChannelListModel getChannelListModel() {
-		return channelListModel;
+	/**
+	 * Returns the ListModel managing the list of {@link ChannelFunction ChannelFunctions}
+	 * available in the current EEG system.
+	 * @return the ListModel for channel functions
+	 */
+	public ChannelFunctionsListModel getChannelFunctionsListModel() {
+		return functionsListModel;
+	}
+
+	/**
+	 * Returns the ListModel managing the list of channels labels
+	 * available in the current EEG system.
+	 * @return the model for channels labels
+	 */
+	public ChannelsListModel getChannelsListModel() {
+		return channelsListModel;
 	}
 
 	public SourceMontage getMontage() {
@@ -65,10 +89,11 @@ public class SourceMontageTableModel extends AbstractTableModel implements Sourc
 			this.montage = montage;
 			if (montage != null) {
 				montage.addSourceMontageListener(this);
-				channelListModel.setConfigurer(montage.getSignalTypeConfigurer());
+				channelsListModel.setEegSystem(montage.getEegSystem());
 			} else {
-				channelListModel.setConfigurer(null);
+				channelsListModel.setEegSystem(null);
 			}
+			
 			fireTableDataChanged();
 		}
 	}
@@ -126,7 +151,7 @@ public class SourceMontageTableModel extends AbstractTableModel implements Sourc
 			return String.class;
 
 		case FUNCTION_COLUMN :
-			return Channel.class;
+			return IChannelFunction.class;
 
 		default :
 			throw new IndexOutOfBoundsException();
@@ -159,7 +184,7 @@ public class SourceMontageTableModel extends AbstractTableModel implements Sourc
 	@Override
 	public void setValueAt(Object value, int rowIndex, int columnIndex) {
 
-		if (columnIndex == INDEX_COLUMN) {
+		if (columnIndex == INDEX_COLUMN || value == null) {
 			return;
 		}
 
@@ -180,7 +205,7 @@ public class SourceMontageTableModel extends AbstractTableModel implements Sourc
 		case FUNCTION_COLUMN :
 
 			try {
-				montage.setSourceChannelFunctionAt(rowIndex, (Channel) value);
+				montage.setSourceChannelFunctionAt(rowIndex, (IChannelFunction) value);
 			} catch (MontageException ex) {
 				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
 				fireTableCellUpdated(rowIndex, columnIndex);
@@ -211,6 +236,11 @@ public class SourceMontageTableModel extends AbstractTableModel implements Sourc
 	public void sourceMontageChannelRemoved(SourceMontageEvent ev) {
 		int channel = ev.getChannel();
 		fireTableRowsDeleted(channel, channel);
+	}
+
+	@Override
+	public void sourceMontageEegSystemChanged(SourceMontageEvent ev) {
+		channelsListModel.setEegSystem(montage.getEegSystem());
 	}
 
 }

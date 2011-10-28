@@ -4,6 +4,9 @@
 
 package org.signalml.domain.montage;
 
+import org.signalml.domain.montage.system.IChannelFunction;
+import org.signalml.domain.montage.system.ChannelFunction;
+import org.signalml.domain.montage.generators.IMontageGenerator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -58,7 +61,7 @@ public class Montage extends SourceMontage implements Preset {
         /**
          * {@link MontageGenerator generator} for the current object
          */
-	private MontageGenerator montageGenerator;
+	private IMontageGenerator montageGenerator;
 
         /**
          * {@link MontageChannel montaged channels} of a signal in the montage
@@ -338,7 +341,7 @@ public class Montage extends SourceMontage implements Preset {
          * Returns the generator for the this montage.
          * @return the generator for the this montage
          */
-	public MontageGenerator getMontageGenerator() {
+	public IMontageGenerator getMontageGenerator() {
 		return montageGenerator;
 	}
 
@@ -346,9 +349,9 @@ public class Montage extends SourceMontage implements Preset {
          * Sets the new {@link MontageGenerator generator} for this montage.
          * @param montageGenerator generator to be set
          */
-	public void setMontageGenerator(MontageGenerator montageGenerator) {
+	public void setMontageGenerator(IMontageGenerator montageGenerator) {
 		if (!Util.equalsWithNulls(this.montageGenerator, montageGenerator)) {
-			MontageGenerator oldGenerator = this.montageGenerator;
+			IMontageGenerator oldGenerator = this.montageGenerator;
 			this.montageGenerator = montageGenerator;
 			pcSupport.firePropertyChange(MONTAGE_GENERATOR_PROPERTY, oldGenerator, montageGenerator);
 			setChanged(true);
@@ -466,6 +469,19 @@ public class Montage extends SourceMontage implements Preset {
 			}
 		}
 		return list;
+	}
+
+	/**
+	 * Returns the {@link SourceChannel} for the montage channel having the
+	 * given index.
+	 * @param index the index of the montage channel
+	 * @return the {@link SourceChannel} associated with the given montage
+	 * channel
+	 */
+	public SourceChannel getSourceChannelForMontageChannel(int index) {
+		int primaryChannelIndex = getMontagePrimaryChannelAt(index);
+		SourceChannel sourceChannel = getSourceChannelAt(primaryChannelIndex);
+		return sourceChannel;
 	}
 
         /**
@@ -679,7 +695,7 @@ public class Montage extends SourceMontage implements Preset {
 		String result = ""; // start with the first element
 		String ONE = "1", MINUS = "-";
 		for (int i=0; i<references.length; i++) {
-			if ((references[i] == null) || (this.getSourceChannelFunctionAt(i).getType() == ChannelType.ZERO))
+			if ((references[i] == null) || (this.getSourceChannelAt(i).getFunction() == ChannelFunction.ZERO))
 				// null means that no reference for given sourceChannel is present
 				// empty is 0 - also ignore
 				continue;
@@ -692,8 +708,8 @@ public class Montage extends SourceMontage implements Preset {
 					pre = "+";
 				if (!references[i].equals(ONE))
 					pre = pre + references[i] + "*";
-				
-				if (this.getSourceChannelFunctionAt(i).getType() == ChannelType.ONE)
+
+				if (this.getSourceChannelAt(i).getFunction() == ChannelFunction.ONE)
 					result = result + pre + "1";
 				else
 					result = result + pre + sourceChannels.get(i).getLabel();
@@ -807,7 +823,7 @@ public class Montage extends SourceMontage implements Preset {
          * @throws MontageException if a label or function not unique
          */
 	@Override
-	public void addSourceChannel(String label, Channel function) throws MontageException {
+	public void addSourceChannel(String label, IChannelFunction function) throws MontageException {
 		super.addSourceChannel(label, function);
 		setMontageGenerator(null);
 	}
