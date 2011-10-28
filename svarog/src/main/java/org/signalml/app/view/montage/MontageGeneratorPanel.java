@@ -30,7 +30,7 @@ import org.signalml.app.view.element.CompactButton;
 import org.signalml.app.view.element.ResolvableComboBox;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
-import org.signalml.domain.montage.generators.IMontageGenerator;
+import org.signalml.domain.montage.MontageGenerator;
 import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.montage.SourceMontageEvent;
@@ -215,14 +215,14 @@ public class MontageGeneratorPanel extends JPanel {
 				this.montage.removeSourceMontageListener(sourceMontageChangeListener);
 			}
 			this.montage = montage;
-			IMontageGenerator generator = null;
+			MontageGenerator generator = null;
 			if (montage != null) {
 				montage.addPropertyChangeListener(Montage.MONTAGE_GENERATOR_PROPERTY, montagePropertyListener);
 				montage.addSourceMontageListener(sourceMontageChangeListener);
-				getMontageGeneratorListModel().setEegSystem(montage.getEegSystem());
+				getMontageGeneratorListModel().setConfigurer(montage.getSignalTypeConfigurer());
 				generator = montage.getMontageGenerator();
 			} else {
-				getMontageGeneratorListModel().setEegSystem(null);
+				getMontageGeneratorListModel().setConfigurer(null);
 			}
 			quietSetSelectedGenerator(generator);
 		}
@@ -298,7 +298,7 @@ public class MontageGeneratorPanel extends JPanel {
 	 * @return the {@link MontageGeneratorListModel model} for the
 	 *         {@link #generatorComboBox}
 	 */
-	protected MontageGeneratorListModel getMontageGeneratorListModel() {
+	public MontageGeneratorListModel getMontageGeneratorListModel() {
 		if (montageGeneratorListModel == null) {
 			montageGeneratorListModel = new MontageGeneratorListModel();
 		}
@@ -331,13 +331,13 @@ public class MontageGeneratorPanel extends JPanel {
 					if (montage == null) {
 						return;
 					}
-					if (!(item instanceof IMontageGenerator)) {
+					if (!(item instanceof MontageGenerator)) {
 						montage.setMontageGenerator(null);
 						setEnableds();
 						return;
 					}
 
-					IMontageGenerator generator = (IMontageGenerator) item;
+					MontageGenerator generator = (MontageGenerator) item;
 					setEnableds();
 					tryGenerate(generator);
 
@@ -413,7 +413,7 @@ public class MontageGeneratorPanel extends JPanel {
 	 * @param generator the {@link MontageGenerator montage generator} to be
 	 * selected
 	 */
-	private void quietSetSelectedGenerator(IMontageGenerator generator) {
+	private void quietSetSelectedGenerator(MontageGenerator generator) {
 
 		try {
 			lockComboEvents = true;
@@ -449,19 +449,13 @@ public class MontageGeneratorPanel extends JPanel {
 	 * @param generator the {@link MontageGenerator montage generator} to be
 	 * used
 	 */
-	public void tryGenerate(IMontageGenerator generator) {
+	public void tryGenerate(MontageGenerator generator) {
 
 		Errors errors = new BindException(montage, "montage");
 		generator.validateSourceMontage(montage, errors);
 
 		if (errors.hasErrors()) {
 			errorsDialog.showErrors(errors);
-
-			if (montage.getMontageGenerator() != null)
-				montageGeneratorListModel.setSelectedItem(montage.getMontageGenerator());
-			else
-				montageGeneratorListModel.setSelectedItem(MontageGeneratorListModel.NO_GENERATOR);
-
 			return;
 		}
 
@@ -501,22 +495,20 @@ public class MontageGeneratorPanel extends JPanel {
 	public void setEnableds() {
 
 		Object item = getGeneratorComboBox().getSelectedItem();
-		if (!(item instanceof IMontageGenerator)) {
+		if (!(item instanceof MontageGenerator)) {
 			getShowErrorsAction().setEnabled(false);
 			getReloadAction().setEnabled(false);
 			return;
 		}
 
-		IMontageGenerator generator = (IMontageGenerator) item;
+		MontageGenerator generator = (MontageGenerator) item;
 
-		if (montage != null) {
-			Errors errors = new BindException(montage, "montage");
-			generator.validateSourceMontage(montage, errors);
-			boolean hasErrors = errors.hasErrors();
+		Errors errors = new BindException(montage, "montage");
+		generator.validateSourceMontage(montage, errors);
+		boolean hasErrors = errors.hasErrors();
 
-			getShowErrorsAction().setEnabled(hasErrors);
-			getReloadAction().setEnabled(!hasErrors);
-		}
+		getShowErrorsAction().setEnabled(hasErrors);
+		getReloadAction().setEnabled(!hasErrors);
 
 	}
 
@@ -552,17 +544,19 @@ public class MontageGeneratorPanel extends JPanel {
 		public void actionPerformed(ActionEvent ev) {
 
 			Object item = getGeneratorComboBox().getSelectedItem();
-			if (!(item instanceof IMontageGenerator)) {
+			if (!(item instanceof MontageGenerator)) {
 				return;
 			}
 
-			IMontageGenerator generator = (IMontageGenerator) item;
+			MontageGenerator generator = (MontageGenerator) item;
 
 			Errors errors = new BindException(montage, "montage");
 			generator.validateSourceMontage(montage, errors);
 
 			if (errors.hasErrors()) {
+
 				errorsDialog.showErrors(errors);
+
 			}
 
 		}
@@ -600,11 +594,11 @@ public class MontageGeneratorPanel extends JPanel {
 		public void actionPerformed(ActionEvent ev) {
 
 			Object item = getGeneratorComboBox().getSelectedItem();
-			if (!(item instanceof IMontageGenerator)) {
+			if (!(item instanceof MontageGenerator)) {
 				return;
 			}
 
-			IMontageGenerator generator = (IMontageGenerator) item;
+			MontageGenerator generator = (MontageGenerator) item;
 			tryGenerate(generator);
 
 		}
@@ -641,7 +635,7 @@ public class MontageGeneratorPanel extends JPanel {
 		 */
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
-			quietSetSelectedGenerator((IMontageGenerator) evt.getNewValue());
+			quietSetSelectedGenerator((MontageGenerator) evt.getNewValue());
 		}
 
 	}
@@ -671,7 +665,7 @@ public class MontageGeneratorPanel extends JPanel {
 		 * validates} the {@link Montage montage}.</li></ul>
 		 */
 		private void onChange() {
-			if (getGeneratorComboBox().getSelectedItem() instanceof IMontageGenerator) {
+			if (getGeneratorComboBox().getSelectedItem() instanceof MontageGenerator) {
 				setEnableds();
 			}
 		}
@@ -698,11 +692,6 @@ public class MontageGeneratorPanel extends JPanel {
 		@Override
 		public void sourceMontageChannelRemoved(SourceMontageEvent ev) {
 			onChange();
-		}
-
-		@Override
-		public void sourceMontageEegSystemChanged(SourceMontageEvent ev) {
-			getMontageGeneratorListModel().setEegSystem(montage.getEegSystem());
 		}
 
 	}

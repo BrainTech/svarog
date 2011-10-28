@@ -18,7 +18,6 @@ import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -27,14 +26,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.spi.ErrorCode;
 import org.signalml.app.util.IconUtils;
 import org.signalml.exception.ResolvableException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.MessageSourceResolvable;
-import org.springframework.context.support.AbstractMessageSource;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
@@ -242,14 +238,6 @@ public class ErrorsDialog extends AbstractDialog {
 		} else {
 			throw new ClassCastException();
 		}
-	}
-
-	/**
-	 * Shows a simple dialog with OK button showing the specified error message.
-	 * @param errorCode the errorCode in the {@link MessageSourceAccessor}
-	 */
-	public static void showError(String errorCode) {
-		JOptionPane.showMessageDialog(null, staticMessageSource.getMessage(errorCode), staticMessageSource.getMessage("error"), JOptionPane.ERROR_MESSAGE);
 	}
 
 	/**

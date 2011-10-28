@@ -844,8 +844,6 @@
 
 	<entry key="signalMontage.editDescription">Edit description</entry>
 	<entry key="signalMontage.chooseGenerator">Choose generator</entry>
-	<entry key="signalMontage.selectEegSystem">Select EEG system</entry>
-	<entry key="signalMontage.currentEEGSystem">Current EEG system</entry>
 	<entry key="signalMontage.generator">Generator</entry>
 	<entry key="signalMontage.generatorErrorLabelToolTip">Click to see errors</entry>
 	<entry key="signalMontage.reloadToolTip">Generate again</entry>
@@ -866,6 +864,8 @@
 	<entry key="visualReferenceEditor.weight">Weight</entry>
 
 	<entry key="visualReferenceEditor.bin.others">Others</entry>
+	<entry key="visualReferenceEditor.bin.references">Refs</entry>
+	<entry key="visualReferenceEditor.bin.primaries">Prims</entry>
 	<entry key="visualReferenceEditor.bin.positioned">Positioned</entry>
 
 	<entry key="montageDialog.onIncompatible">The selected montage is not compatible with the current signal. It will have to be adapted.&lt;br&gt;&amp;nbsp;&lt;br&gt;This may result in a serious modification of montage structure.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;apply&lt;/b&gt; the montage?</entry>
@@ -880,7 +880,6 @@
 	<entry key="sourceMontageTable.addZeroChannel">ZEROs channel</entry>
 	<entry key="sourceMontageTable.addOneChannel">ONEs channel</entry>
 	<entry key="sourceMontageTable.removeChannel">Remove</entry>
-	<entry key="error.sourceMontageTable.canOnlyRemoveZerosAndOnesChannels">This channel cannot be removed - can only remove ZEROs and ONEs channels.</entry>
 
 	<entry key="montageTable.title">Target montage</entry>
 	<entry key="montageTable.index">Index</entry>
@@ -1958,7 +1957,15 @@
 	<entry key="montageGenerator.longitudinalII">Longitudinal II</entry>
 	<entry key="montageGenerator.transverseI">Transverse I</entry>
 
+	<entry key="montageGenerator.error.badChannelNumber">Bad number of channels</entry>
+	<entry key="montageGenerator.error.noLeftEarChannel">Left ear channel not identified</entry>
+	<entry key="montageGenerator.error.duplicateLeftEarChannel">Left ear channel identified more than one time</entry>
+	<entry key="montageGenerator.error.noRightEarChannel">Right ear channel not identified</entry>
+	<entry key="montageGenerator.error.duplicateRightEarChannel">Right ear channel identified more than one time</entry>
+	<entry key="montageGenerator.error.missingEarChannel">One of ear channels not identified [{0}]</entry>
+	<entry key="montageGenerator.error.duplicateEarChannel">Ear channel identified more than one time [{0}]</entry>
 	<entry key="montageGenerator.error.missingChannel">One of required channels not identified [{0}]</entry>
+	<entry key="montageGenerator.error.duplicateChannel">Required channel identified more than one time [{0}]</entry>
 
 	<entry key="methodIteratorMethod.iterationTicker">Iteration progress</entry>
 

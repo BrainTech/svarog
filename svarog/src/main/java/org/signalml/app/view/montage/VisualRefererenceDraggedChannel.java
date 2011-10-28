@@ -71,7 +71,10 @@ public class VisualRefererenceDraggedChannel extends JComponent {
 
 	public void setChannel(VisualReferenceSourceChannel channel) {
 		if (channel != null) {
-			this.channel = new VisualReferenceSourceChannel(channel.getSourceChannel());
+			this.channel = new VisualReferenceSourceChannel(channel.getChannel());
+			this.channel.setFunction(channel.getFunction());
+			this.channel.setLabel(channel.getLabel());
+			// position remains null, which is good
 		} else {
 			channel = null;
 		}

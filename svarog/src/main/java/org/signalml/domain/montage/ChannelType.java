@@ -1,7 +1,8 @@
 /* ChannelType.java created 2007-10-20
  *
  */
-package org.signalml.domain.montage.system;
+
+package org.signalml.domain.montage;
 
 import org.springframework.context.MessageSourceResolvable;
 
@@ -23,7 +24,21 @@ public enum ChannelType implements MessageSourceResolvable {
 	/**
 	 * other known type
 	 */
-	OTHER;
+	OTHER,
+	/**
+	 * an empty (fake) channel with 0 values
+	 */
+	ZERO,
+	/**
+	 * an empty (fake) channel with 1 values
+	 */
+	ONE,
+
+	/**
+	 * unknown type
+	 */
+	UNKNOWN
+	;
 
 	@Override
 	public Object[] getArguments() {
@@ -32,11 +47,12 @@ public enum ChannelType implements MessageSourceResolvable {
 
 	@Override
 	public String[] getCodes() {
-		return new String[]{"channelType." + this.toString()};
+		return new String[] { "channelType." + this.toString() };
 	}
 
 	@Override
 	public String getDefaultMessage() {
 		return this.toString();
 	}
+
 }

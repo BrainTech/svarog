@@ -278,13 +278,21 @@ public class VisualReferenceEditor extends VisualReferenceDisplay {
 	public VisualReferenceSourceChannel findChannelAt(Point point) {
 
 		VisualReferencePositionedBin positionedBin = model.getPositionedBin();
+		VisualReferenceBin primariesBin = model.getPrimariesBin();
 		VisualReferenceBin othersBin = model.getOthersBin();
+		VisualReferenceBin referencesBin = model.getReferencesBin();
 
 		if (positionedBin.getBounds().contains(point)) {
 			return findChannelInBinAt(positionedBin, point);
 		}
+		else if (primariesBin.getBounds().contains(point)) {
+			return findChannelInBinAt(primariesBin, point);
+		}
 		else if (othersBin.getBounds().contains(point)) {
 			return findChannelInBinAt(othersBin, point);
+		}
+		else if (referencesBin.getBounds().contains(point)) {
+			return findChannelInBinAt(referencesBin, point);
 		}
 
 		return null;

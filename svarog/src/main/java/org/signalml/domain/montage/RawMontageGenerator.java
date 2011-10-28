@@ -2,12 +2,11 @@
  *
  */
 
-package org.signalml.domain.montage.generators;
+package org.signalml.domain.montage;
 
 import org.springframework.validation.Errors;
+import org.signalml.domain.montage.ChannelType;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import org.signalml.domain.montage.Montage;
-import org.signalml.domain.montage.SourceMontage;
 
 /**
  * This class represents a generator for a raw (without type) {@link SourceMontage montage}.
@@ -18,13 +17,11 @@ import org.signalml.domain.montage.SourceMontage;
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 @XStreamAlias("rawmontage")
-public class RawMontageGenerator extends AbstractMontageGenerator {
+public class RawMontageGenerator implements MontageGenerator {
 
 	private static final long serialVersionUID = 1L;
-
-	public RawMontageGenerator() {
-		setCode("montageGenerator.raw");
-	}
+	private static final Object[] ARGUMENTS = new Object[0];
+	private static final String[] CODES = new String[] { "montageGenerator.raw" };
 
         /**
          * Creates a raw {@link Montage montage} from a given montage.
@@ -80,6 +77,22 @@ public class RawMontageGenerator extends AbstractMontageGenerator {
 			return false;
 		}
 		return (obj.getClass() == RawMontageGenerator.class);
+	}
+
+
+	@Override
+	public Object[] getArguments() {
+		return ARGUMENTS;
+	}
+
+	@Override
+	public String[] getCodes() {
+		return CODES;
+	}
+
+	@Override
+	public String getDefaultMessage() {
+		return CODES[0];
 	}
 
 }

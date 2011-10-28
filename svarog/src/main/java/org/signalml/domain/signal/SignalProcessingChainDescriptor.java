@@ -23,6 +23,11 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 public class SignalProcessingChainDescriptor {
 
         /**
+         * the {@link SignalType type} of the signal
+         */
+	private SignalType type;
+
+        /**
          * the {@link MRUDEntry entry} with the file with the signal
          */
 	private MRUDEntry document;
@@ -57,6 +62,22 @@ public class SignalProcessingChainDescriptor {
          * Constructor. Creates an empty descriptor.
          */
 	public SignalProcessingChainDescriptor() {
+	}
+
+        /**
+         * Returns the {@link SignalType type} of the signal.
+         * @return the type of the signal
+         */
+	public SignalType getType() {
+		return type;
+	}
+
+        /**
+         * Sets the {@link SignalType type} of the signal.
+         * @param type the type to be set
+         */
+	public void setType(SignalType type) {
+		this.type = type;
 	}
 
         /**

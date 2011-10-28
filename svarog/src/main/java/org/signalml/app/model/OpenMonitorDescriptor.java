@@ -4,6 +4,7 @@ import multiplexer.jmx.client.JmxClient;
 import org.signalml.app.view.opensignal.SignalSource;
 import org.signalml.app.worker.amplifiers.AmplifierDefinition;
 
+import org.signalml.domain.signal.SignalType;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
 import org.signalml.domain.tag.StyledTagSet;
@@ -13,6 +14,7 @@ import org.signalml.domain.tag.StyledTagSet;
  */
 public class OpenMonitorDescriptor {
 
+        private SignalType type;
         private String multiplexerAddress;
         private int multiplexerPort = -1;
         private JmxClient jmxClient;
@@ -53,6 +55,8 @@ public class OpenMonitorDescriptor {
 
 
         public OpenMonitorDescriptor() {
+                // XXX currently all signals are treated as EEG - there is no way to change this in the GUI
+                type = SignalType.EEG_10_20;
                 channelCount = 0;
                 sampleType = RawSignalSampleType.DOUBLE;
                 byteOrder = RawSignalByteOrder.LITTLE_ENDIAN;
@@ -109,6 +113,14 @@ public class OpenMonitorDescriptor {
 
         public void setMetadataInfo(String metadataInfo) {
                 this.metadataInfo = metadataInfo;
+        }
+
+        public SignalType getType() {
+                return type;
+        }
+
+        public void setType(SignalType type) {
+                this.type = type;
         }
 
         public Float getSamplingFrequency() {

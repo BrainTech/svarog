@@ -11,7 +11,6 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
 import org.signalml.app.config.preset.StyledTagSetPresetManager;
-import org.signalml.app.document.AbstractSignal;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.model.AmplifierConnectionDescriptor;
 import org.signalml.app.model.OpenDocumentDescriptor;
@@ -128,8 +127,7 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 		}
 		else if (propertyName.equals(AbstractSignalParametersPanel.NUMBER_OF_CHANNELS_PROPERTY) ||
 			propertyName.equals(AbstractSignalParametersPanel.SAMPLING_FREQUENCY_PROPERTY) ||
-			propertyName.equals(AbstractSignalParametersPanel.CHANNEL_LABELS_PROPERTY) ||
-			propertyName.equals(AbstractSignalParametersPanel.EEG_SYSTEM_PROPERTY)
+			propertyName.equals(AbstractSignalParametersPanel.CHANNEL_LABELS_PROPERTY)
 			) {
 			Object source = evt.getSource();
 			SignalSource selectedSignalSource = getSelectedSignalSource();

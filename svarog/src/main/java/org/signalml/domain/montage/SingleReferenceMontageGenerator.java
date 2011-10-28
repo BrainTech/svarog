@@ -2,17 +2,12 @@
  *
  */
 
-package org.signalml.domain.montage.generators;
+package org.signalml.domain.montage;
 
-import org.signalml.domain.montage.system.ChannelType;
-import org.signalml.domain.montage.Montage;
-import org.signalml.domain.montage.MontageException;
-import org.signalml.domain.montage.SourceChannel;
-import org.signalml.domain.montage.SourceMontage;
 import org.springframework.validation.Errors;
 
 /**
- * This class represents a generator for a single reference montage.
+ * This abstract class represents a generator for a single reference montage.
  * In single reference montage each channel represents the difference between
  * a certain electrode and a designated reference electrode.
  * There is no standard position for this reference; it is, however, at a different
@@ -27,44 +22,43 @@ import org.springframework.validation.Errors;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class SingleReferenceMontageGenerator extends AbstractMontageGenerator {
+public abstract class SingleReferenceMontageGenerator implements MontageGenerator {
 
 	private static final long serialVersionUID = 1L;
 
         /**
-         * the label of a {@link SourceChannel source channel}
+         * the {@link Channel function} of a {@link SourceChannel source channel}
          * which will be a reference channel
          */
-	protected transient String referenceChannelName;
+	protected transient Channel refChannel;
 
         /**
-         * Constructor. Creates a new generator based on label
+         * Constructor. Creates a new generator based on {@link Channel function}
          * of a reference channel.
-         * @param refChannel label of a {@link SourceChannel source channel}
+         * @param refChannel function of a {@link SourceChannel source channel}
          * that will be used as reference channel in a created
          * {@link Montage montage}
          */
-	public SingleReferenceMontageGenerator(String referenceChannelName) {
-		if (referenceChannelName == null) {
+	protected SingleReferenceMontageGenerator(Channel refChannel) {
+		if (refChannel == null) {
 			throw new NullPointerException("Channel cannot be null");
 		}
-		this.referenceChannelName = referenceChannelName;
+		this.refChannel = refChannel;
 	}
 
         /**
          * Creates a single channel reference montage from a given
          * {@link Montage montage}.
          * @param montage a montage to be used
-         * @throws MontageException thrown if there is no channel having the
-	 * label equal to the reference channel label
+         * @throws MontageException thrown if there are two channels with
+         * function <i>refChannel</i>
          */
 	@Override
 	public void createMontage(Montage montage) throws MontageException {
 
-		SourceChannel referenceSourceChannel = montage.getSourceChannelByLabel(referenceChannelName);
-
-		if (referenceSourceChannel == null) {
-			throw new MontageException("Cannot find " + referenceChannelName + " source channel for single reference montage generator ");
+		int[] refChannelIndices = montage.getSourceChannelsByFunction(refChannel);
+		if (refChannelIndices == null || refChannelIndices.length != 1) {
+			throw new MontageException("Bad refChannel count [" + refChannelIndices.length + "]");
 		}
 
 		boolean oldMajorChange = montage.isMajorChange();
@@ -78,10 +72,8 @@ public class SingleReferenceMontageGenerator extends AbstractMontageGenerator {
 			int index;
 			for (int i=0; i<size; i++) {
 				index = montage.addMontageChannel(i);
-				SourceChannel sourceChannel = montage.getSourceChannelAt(i);
-				if (sourceChannel.getEegElectrode() != null &&
-					sourceChannel.getEegElectrode().getChannelType() == ChannelType.PRIMARY) {
-					montage.setReference(index, referenceSourceChannel.getChannel(), "-1");
+				if (montage.getSourceChannelFunctionAt(i).getType() == ChannelType.PRIMARY) {
+					montage.setReference(index, refChannelIndices[0], "-1");
 				}
 			}
 		} finally {
@@ -103,13 +95,31 @@ public class SingleReferenceMontageGenerator extends AbstractMontageGenerator {
          */
 	@Override
 	public boolean validateSourceMontage(SourceMontage sourceMontage, Errors errors) {
-		SourceChannel sourceChannel = sourceMontage.getSourceChannelByLabel(referenceChannelName);
-
-		if (sourceChannel == null) {
-			onNotFound(referenceChannelName, errors);
+		int[] refChannelIndices = sourceMontage.getSourceChannelsByFunction(refChannel);
+		if (refChannelIndices == null || refChannelIndices.length == 0) {
+			onNotFound(errors);
+			return false;
+		}
+		else if (refChannelIndices.length > 1) {
+			onDuplicate(errors);
 			return false;
 		}
 		return true;
 	}
+
+        /**
+         * Reports error, that a {@link SourceChannel source channel}
+         * with <i>refChannel</i> {@link Channel function} was not found.
+         * @param errors an Errors object used to report errors
+         */
+	protected abstract void onNotFound(Errors errors);
+
+        /**
+         * Reports an error, that there was more then one
+         * {@link SourceChannel source channel} with <i>refChannel</i>
+         * {@link Channel function}.
+         * @param errors an Errors object used to report errors
+         */
+	protected abstract void onDuplicate(Errors errors);
 
 }

@@ -10,13 +10,11 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import org.apache.log4j.Logger;
-import org.signalml.domain.montage.system.ChannelType;
+import org.signalml.domain.montage.ChannelType;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageChannel;
 import org.signalml.domain.montage.MontageMismatchException;
 import org.signalml.domain.montage.SourceChannel;
-import org.signalml.domain.montage.system.ChannelFunction;
-import org.signalml.domain.montage.SignalConfigurer;
 import org.signalml.exception.SanityCheckException;
 
 /**
@@ -65,6 +63,11 @@ public class MultichannelSampleMontage extends MultichannelSampleProcessor {
 	private double[] auxSamples;
 
         /**
+         * the type of a signal in the montage
+         */
+	private SignalType signalType;
+
+        /**
          * the montage used to set parameters of this source
          */
 	private Montage currentMontage = null;
@@ -87,8 +90,9 @@ public class MultichannelSampleMontage extends MultichannelSampleProcessor {
          * in <code>source</code> is different then the number of source
          * channels in the montage.
          */
-	public MultichannelSampleMontage(MultichannelSampleSource source, Montage montage) throws MontageMismatchException {
+	public MultichannelSampleMontage(SignalType signalType, MultichannelSampleSource source, Montage montage) throws MontageMismatchException {
 		super(source);
+		this.signalType = signalType;
 		setCurrentMontage(montage);
 	}
 
@@ -100,8 +104,9 @@ public class MultichannelSampleMontage extends MultichannelSampleProcessor {
          * @param source the source of (source) samples
          * @throws SanityCheckException must not happen, means error in code.
          */
-	public MultichannelSampleMontage(MultichannelSampleSource source) {
+	public MultichannelSampleMontage(SignalType signalType, MultichannelSampleSource source) {
 		super(source);
+		this.signalType = signalType;
 		this.currentMontage = getFailsafeMontage();
 		try {
 			applyMontage(this.currentMontage);
@@ -116,7 +121,7 @@ public class MultichannelSampleMontage extends MultichannelSampleProcessor {
          * @return an empty montage for a given type of signal.
          */
 	private Montage getFailsafeMontage() {
-		return SignalConfigurer.createMontage(source.getChannelCount());
+		return signalType.getConfigurer().createMontage(source.getChannelCount());
 	}
 
         /**
@@ -246,9 +251,9 @@ public class MultichannelSampleMontage extends MultichannelSampleProcessor {
 
 		//In case we have 'fake' primaryChannel (eg. in montage there is a channel added by 'add empty channel'
 		//we need to immitate source samples as 0
-		if (currentMontage.getSourceChannelAt(primaryChannel).getFunction() == ChannelFunction.ZERO) {
+		if (currentMontage.getSourceChannelFunctionAt(primaryChannel).getType() == ChannelType.ZERO) {
 			this.fillSamplesWith((double) 0.0, target, signalOffset, count, arrayOffset);
-		} else if (currentMontage.getSourceChannelAt(primaryChannel).getFunction() == ChannelFunction.ONE) {
+		} else if (currentMontage.getSourceChannelFunctionAt(primaryChannel).getType() == ChannelType.ONE) {
 			this.fillSamplesWith((double) 1.0, target, signalOffset, count, arrayOffset);
 		} else {
 			source.getSamples(primaryChannel, target, signalOffset, count, arrayOffset);
@@ -273,9 +278,9 @@ public class MultichannelSampleMontage extends MultichannelSampleProcessor {
 				if (auxSamples == null || auxSamples.length < count) {
 					auxSamples = new double[count];
 				}
-				if (currentMontage.getSourceChannelAt(i).getFunction() == ChannelFunction.ZERO)
+				if (currentMontage.getSourceChannelFunctionAt(i).getType() == ChannelType.ZERO)
 					this.fillSamplesWith((double) 0.0, auxSamples, signalOffset, count, 0);
-				else if (currentMontage.getSourceChannelAt(i).getFunction() == ChannelFunction.ONE)
+				else if (currentMontage.getSourceChannelFunctionAt(i).getType() == ChannelType.ONE)
 					this.fillSamplesWith((double) 1.0, auxSamples, signalOffset, count, 0);
 				else
 					source.getSamples(i, auxSamples, signalOffset, count, 0);

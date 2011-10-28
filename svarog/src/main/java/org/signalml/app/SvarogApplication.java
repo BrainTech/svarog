@@ -66,7 +66,7 @@ import org.signalml.app.view.dialog.ProfilePathDialog;
 import org.signalml.app.view.dialog.SplashScreen;
 import org.signalml.codec.DefaultSignalMLCodecManager;
 import org.signalml.codec.SignalMLCodecManager;
-import org.signalml.domain.montage.system.ChannelFunction;
+import org.signalml.domain.montage.eeg.EegChannel;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.method.DisposableMethod;
 import org.signalml.method.Method;
@@ -90,7 +90,6 @@ import org.springframework.util.Log4jConfigurer;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.Annotations;
-import org.signalml.app.config.preset.EegSystemsPresetManager;
 import org.signalml.app.config.preset.StyledTagSetPresetManager;
 import org.signalml.app.worker.amplifiers.AmplifierDefinitionPresetManager;
 import org.signalml.app.worker.processes.OpenBCIModulePresetManager;
@@ -141,14 +140,8 @@ public class SvarogApplication implements java.lang.Runnable {
 	 * {@link TimeDomainSampleFilter TimeDomainSampleFilters}.
 	 */
 	private PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainSampleFilterPresetManager = null;
-	/**
-	 * A preset manager managing the StyledTagSet presets.
-	 */
+
 	private StyledTagSetPresetManager styledTagSetPresetManager;
-	/**
-	 * A {@link PresetManager} managing the {@link EegSystem EegSystems}.
-	 */
-	private EegSystemsPresetManager eegSystemsPresetManager;
 
 	private MP5ExecutorManager mp5ExecutorManager = null;
 	private ViewerMainFrame viewerMainFrame = null;
@@ -639,7 +632,7 @@ public class SvarogApplication implements java.lang.Runnable {
 					     SignalMLMRUDEntry.class,
 					     RawSignalMRUDEntry.class,
 					     RawSignalDescriptor.class,
-					     ChannelFunction.class,
+					     EegChannel.class,
 					     MethodPresetManager.class,
 					     MP5Parameters.class,
 					     MP5Data.class,
@@ -831,17 +824,6 @@ public class SvarogApplication implements java.lang.Runnable {
 			logger.error("Failed to read styled tag set configuration - will use defaults", ex);
 		}
 
-		eegSystemsPresetManager = new EegSystemsPresetManager();
-		eegSystemsPresetManager.setProfileDir(profileDir);
-
-		try {
-			eegSystemsPresetManager.readFromPersistence(null);
-		} catch (FileNotFoundException ex) {
-			logger.debug("Eeg systems config not found");
-		} catch (Exception ex) {
-			logger.error("Failed to read eeg systems configuration", ex);
-		}
-
 		splash(null, true);
 
 	}
@@ -991,7 +973,6 @@ public class SvarogApplication implements java.lang.Runnable {
 		elementManager.setTimeDomainSampleFilterPresetManager(timeDomainSampleFilterPresetManager);
 		elementManager.setPredefinedTimeDomainFiltersPresetManager(predefinedTimeDomainSampleFilterPresetManager);
 		elementManager.setStyledTagSetPresetManager(styledTagSetPresetManager);
-		elementManager.setEegSystemsPresetManager(eegSystemsPresetManager);
 
 		elementManager.setMp5ExecutorManager(mp5ExecutorManager);
 		elementManager.setPreferences(preferences);

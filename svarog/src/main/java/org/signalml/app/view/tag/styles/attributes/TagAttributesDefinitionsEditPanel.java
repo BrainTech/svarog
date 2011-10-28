@@ -51,8 +51,7 @@ public class TagAttributesDefinitionsEditPanel extends AbstractSignalMLPanel {
 	/**
 	 * Creates components and adds them to this panel.
 	 */
-	@Override
-	protected void initialize() {
+	private void initialize() {
 		this.setLayout(new BorderLayout(10, 10));
 		this.setBorder(new TitledBorder("Tag attributes"));
 

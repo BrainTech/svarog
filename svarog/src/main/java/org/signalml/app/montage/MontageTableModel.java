@@ -240,8 +240,4 @@ public class MontageTableModel extends AbstractTableModel implements SourceMonta
 		fireTableDataChanged();
 	}
 
-	@Override
-	public void sourceMontageEegSystemChanged(SourceMontageEvent ev) {
-	}
-
 }

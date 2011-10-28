@@ -13,6 +13,7 @@ import java.util.List;
 import org.signalml.app.model.LabelledPropertyDescriptor;
 import org.signalml.app.worker.SignalChecksumWorker;
 import org.signalml.domain.signal.SignalChecksum;
+import org.signalml.domain.signal.SignalType;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
 
@@ -46,10 +47,11 @@ public abstract class AbstractFileSignal extends AbstractSignal implements FileB
 	protected volatile SignalChecksumWorker precalculatingWorker;
 
 	/**
-	 * Constructor.
+	 * Constructor. Sets the {@link SignalType type} of the signal.
+	 * @param type the type of the signal to set
 	 */
-	public AbstractFileSignal() {
-		super();
+	public AbstractFileSignal(SignalType type) {
+		super(type);
 	}
 
 	@Override

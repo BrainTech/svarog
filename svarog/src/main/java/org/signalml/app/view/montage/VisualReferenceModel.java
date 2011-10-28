@@ -12,16 +12,15 @@ import java.util.LinkedList;
 
 import javax.swing.event.EventListenerList;
 
-import org.signalml.domain.montage.system.IChannelFunction;
-import org.signalml.domain.montage.system.ChannelType;
+import org.signalml.domain.montage.Channel;
+import org.signalml.domain.montage.ChannelType;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageEvent;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.MontageListener;
-import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.SourceMontageEvent;
 import org.signalml.domain.montage.SourceMontageListener;
-import org.signalml.domain.montage.system.ChannelFunction;
+import org.signalml.domain.signal.SignalTypeConfigurer;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.util.Util;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -51,6 +50,8 @@ public class VisualReferenceModel implements SourceMontageListener, MontageListe
 	private MessageSourceAccessor messageSource;
 
 	private VisualReferenceChessboardBin othersBin;
+	private VisualReferenceChessboardBin primariesBin;
+	private VisualReferenceChessboardBin referencesBin;
 	private VisualReferencePositionedBin positionedBin;
 
 	private ArrayList<VisualReferenceSourceChannel> sourceChannels;
@@ -95,34 +96,53 @@ public class VisualReferenceModel implements SourceMontageListener, MontageListe
 		channelLists = new ArrayList<LinkedList<VisualReferenceChannel>>();
 		arrows = new ArrayList<VisualReferenceArrow>();
 		othersBin = new VisualReferenceChessboardBin();
-		positionedBin = new VisualReferencePositionedBin();
+		primariesBin = new VisualReferenceChessboardBin();
+		referencesBin = new VisualReferenceChessboardBin();
 
 		if (montage != null) {
+
+			SignalTypeConfigurer configurer = montage.getSignalTypeConfigurer();
+			positionedBin = new VisualReferencePositionedBin(configurer.getMatrixWidth(), configurer.getMatrixHeight());
+
 			int cnt = montage.getSourceChannelCount();
 			int i;
 			int primary;
-			VisualReferenceSourceChannel visualSourceChannel;
+			VisualReferenceSourceChannel sourceChannel;
 			VisualReferenceChannel channel;
 			sourceChannels.ensureCapacity(cnt);
 			channelLists.ensureCapacity(cnt);
-			IChannelFunction function;
+			Channel function;
 			ChannelType functionType;
 
 			for (i=0; i<cnt; i++) {
-				SourceChannel sourceChannel = montage.getSourceChannelAt(i);
-				visualSourceChannel = new VisualReferenceSourceChannel(sourceChannel);
+				sourceChannel = new VisualReferenceSourceChannel(i);
+				sourceChannel.setLabel(montage.getSourceChannelLabelAt(i));
+				sourceChannel.setFunction(montage.getSourceChannelFunctionAt(i));
 
-				sourceChannels.add(visualSourceChannel);
+				sourceChannels.add(sourceChannel);
 				channelLists.add(new LinkedList<VisualReferenceChannel>());
-
-				if (
-					sourceChannel.getFunction().getName().equals(ChannelFunction.EEG.getName())
-					&& sourceChannel.getEegElectrode() != null
-				) {
+				function = montage.getSourceChannelFunctionAt(i);
+				if (function.getMatrixCol() >= 0 && function.getMatrixRow() >= 0) {
 					// the channel is positioned
-					positionedBin.add(visualSourceChannel);
+					positionedBin.add(sourceChannel);
 				} else {
-					othersBin.add(visualSourceChannel);
+					functionType = function.getType();
+					switch (functionType) {
+
+					case PRIMARY :
+					case UNKNOWN : // unknowns are treated as assorted primaries
+						primariesBin.add(sourceChannel);
+						break;
+
+					case REFERENCE :
+						referencesBin.add(sourceChannel);
+						break;
+
+					default : // the rest
+						othersBin.add(sourceChannel);
+						break;
+
+					}
 				}
 			}
 
@@ -140,9 +160,13 @@ public class VisualReferenceModel implements SourceMontageListener, MontageListe
 
 			readArrowsFromMontage();
 
+		} else {
+			positionedBin = new VisualReferencePositionedBin(0,0);
 		}
 
 		othersBin.setName(messageSource.getMessage("visualReferenceEditor.bin.others"));
+		referencesBin.setName(messageSource.getMessage("visualReferenceEditor.bin.references"));
+		primariesBin.setName(messageSource.getMessage("visualReferenceEditor.bin.primaries"));
 		positionedBin.setName(messageSource.getMessage("visualReferenceEditor.bin.positioned"));
 
 		setActiveChannel(null);
@@ -361,6 +385,14 @@ public class VisualReferenceModel implements SourceMontageListener, MontageListe
 
 	public VisualReferenceBin getOthersBin() {
 		return othersBin;
+	}
+
+	public VisualReferenceBin getPrimariesBin() {
+		return primariesBin;
+	}
+
+	public VisualReferenceBin getReferencesBin() {
+		return referencesBin;
 	}
 
 	public VisualReferencePositionedBin getPositionedBin() {
@@ -683,10 +715,6 @@ public class VisualReferenceModel implements SourceMontageListener, MontageListe
 				((VisualReferenceListener)listeners[i+1]).montageStructureChanged(e);
 			}
 		}
-	}
-
-	@Override
-	public void sourceMontageEegSystemChanged(SourceMontageEvent ev) {
 	}
 
 }

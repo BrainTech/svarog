@@ -108,11 +108,6 @@ public class RawSignalDescriptorReader {
 				descriptor.setBlocksPerPage(Integer.parseInt(blocksPerPage));
 			}
 
-			String eegSystemName = path.evaluate(RawSignalDocumentBuilder.EEG_SYSTEM_NAME, rawSignalEl);
-			if (eegSystemName != null && !eegSystemName.isEmpty()) {
-				descriptor.setEegSystemName(eegSystemName);
-			}
-
 			Element channelLabelsEl = (Element) path.evaluate(RawSignalDocumentBuilder.CHANNEL_LABELS, rawSignalEl, XPathConstants.NODE);
 			if (channelLabelsEl != null && channelLabelsEl.hasChildNodes()) {
 

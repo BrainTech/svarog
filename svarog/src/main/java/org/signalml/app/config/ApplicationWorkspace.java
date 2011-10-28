@@ -25,7 +25,6 @@ import org.signalml.plugin.export.signal.Document;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.Annotations;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import org.signalml.app.config.preset.EegSystemsPresetManager;
 
 /** ApplicationWorkspace
  *
@@ -39,11 +38,6 @@ public class ApplicationWorkspace extends AbstractXMLConfiguration {
 
 	private LinkedList<WorkspaceDocument> documents = new LinkedList<WorkspaceDocument>();
 	private WorkspaceDocument activeDocument;
-
-	/**
-	 * A {@link PresetManager} for managing the available {@link EegSystem EegSystems}.
-	 */
-	private EegSystemsPresetManager eegSystemsPresetManager;
 
 	public ApplicationWorkspace() {
 	}
@@ -163,7 +157,7 @@ public class ApplicationWorkspace extends AbstractXMLConfiguration {
 				logger.warn("WARNING: not a signal");
 				return null;
 			}
-			((WorkspaceSignal) workspaceDocument).configureSignal((SignalDocument) document, integrator, eegSystemsPresetManager);
+			((WorkspaceSignal) workspaceDocument).configureSignal((SignalDocument) document, integrator);
 
 			return document;
 
@@ -214,14 +208,6 @@ public class ApplicationWorkspace extends AbstractXMLConfiguration {
 		streamer.setMode(XStream.ID_REFERENCES);
 
 		return streamer;
-	}
-
-	/**
-	 * Sets the Eeg systems preset manager for this ApplicationWorkspace.
-	 * @param eegSystemsPresetManager
-	 */
-	public void setEegSystemsPresetManager(EegSystemsPresetManager eegSystemsPresetManager) {
-		this.eegSystemsPresetManager = eegSystemsPresetManager;
 	}
 
 }

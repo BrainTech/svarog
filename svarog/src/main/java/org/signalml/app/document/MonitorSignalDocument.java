@@ -77,7 +77,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 
 	public MonitorSignalDocument(OpenMonitorDescriptor monitorOptions) {
 
-		super();
+		super(monitorOptions.getType());
 		this.monitorOptions = monitorOptions;
 		float freq = monitorOptions.getSamplingFrequency();
 		double ps = monitorOptions.getPageSize();
@@ -131,7 +131,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		if (documentView != null) {
 			for (Iterator<SignalPlot> i = ((SignalView) documentView).getPlots().iterator(); i.hasNext();) {
 				SignalPlot signalPlot = i.next();
-				SignalProcessingChain signalChain = SignalProcessingChain.createNotBufferedFilteredChain(sampleSource);
+				SignalProcessingChain signalChain = SignalProcessingChain.createNotBufferedFilteredChain(sampleSource, getType());
 				try {
 					signalChain.applyMontageDefinition(this.getMontage());
 				} catch (MontageMismatchException ex) {

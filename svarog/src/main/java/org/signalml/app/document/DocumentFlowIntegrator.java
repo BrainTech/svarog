@@ -772,7 +772,10 @@ public class DocumentFlowIntegrator {
 				throw new NullPointerException();
 			}
 
-			RawSignalDocument rawSignalDocument = new RawSignalDocument(rawDescriptor);
+			RawSignalDocument rawSignalDocument = new RawSignalDocument(
+			        signalOptions.getType(),
+			        rawDescriptor
+			);
 
 			rawSignalDocument.setBackingFile(file);
 			rawSignalDocument.openDocument();

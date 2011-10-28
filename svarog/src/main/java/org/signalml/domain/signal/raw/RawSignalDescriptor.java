@@ -8,7 +8,6 @@ import java.util.Date;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.util.Arrays;
-import org.signalml.domain.montage.system.EegSystem;
 
 /**
  * This class represents the descriptor of a raw signal.
@@ -107,12 +106,6 @@ public class RawSignalDescriptor {
          * the number of blocks in one page
          */
 	private int blocksPerPage;
-
-	/**
-	 * The name of the {@link EegSystem EEG system} that is used
-	 * for this signal.
-	 */
-	private String eegSystemName;
 
         /**
          * an array of labels of signal channels
@@ -420,23 +413,6 @@ public class RawSignalDescriptor {
          */
 	public void setBlocksPerPage(int blocksPerPage) {
 		this.blocksPerPage = blocksPerPage;
-	}
-
-	/**
-	 * Returns the name of the {@link EegSystem EEG system} that
-	 * is used for this signal.
-	 * @return the name of the EEG system
-	 */
-	public String getEegSystemName() {
-		return eegSystemName;
-	}
-
-	/**
-	 * Sets the name of the {@link EegSystem} that is used for this signal.
-	 * @param eegSystemName the name of the EEG system
-	 */
-	public void setEegSystemName(String eegSystemName) {
-		this.eegSystemName = eegSystemName;
 	}
 
         /**

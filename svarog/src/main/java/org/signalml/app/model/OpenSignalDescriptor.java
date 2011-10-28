@@ -7,9 +7,7 @@ package org.signalml.app.model;
 import org.signalml.app.view.opensignal.FileOpenSignalMethod;
 import org.signalml.app.view.opensignal.SignalSource;
 import org.signalml.domain.montage.Montage;
-import org.signalml.domain.montage.system.EegSystem;
-import org.signalml.domain.montage.SignalConfigurer;
-import org.signalml.domain.signal.raw.RawSignalDescriptor;
+import org.signalml.domain.signal.SignalType;
 
 /**
  * Describes the signal to be opened and the montage to be applied to the signal
@@ -52,7 +50,7 @@ public class OpenSignalDescriptor {
 		openMonitorDescriptor = new OpenMonitorDescriptor();
                 amplifierConnectionDescriptor = new AmplifierConnectionDescriptor();
 
-		montage = SignalConfigurer.createMontage(openFileSignalDescriptor.getRawSignalDescriptor().getChannelCount());
+		montage = SignalType.EEG_10_20.getConfigurer().createMontage(openFileSignalDescriptor.getRawSignalDescriptor().getChannelCount());
 	}
 
 	/**
@@ -61,13 +59,6 @@ public class OpenSignalDescriptor {
 	 */
 	public void setMontage(Montage montage) {
 		this.montage = montage;
-
-		if (openFileSignalDescriptor != null) {
-			RawSignalDescriptor rawSignalDescriptor = openFileSignalDescriptor.getRawSignalDescriptor();
-			EegSystem eegSystem = montage.getEegSystem();
-			if (eegSystem != null && rawSignalDescriptor != null)
-				rawSignalDescriptor.setEegSystemName(eegSystem.getName());
-		}
 	}
 
 	/**

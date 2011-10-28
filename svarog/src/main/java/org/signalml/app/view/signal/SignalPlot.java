@@ -213,7 +213,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 		setFocusable(true);
 
-		signalChain = SignalProcessingChain.createFilteredChain(document.getSampleSource());
+		signalChain = SignalProcessingChain.createFilteredChain(document.getSampleSource(), document.getType());
 
 		Montage montage = document.getMontage();
 		if (montage != null)

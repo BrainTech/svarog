@@ -5,7 +5,6 @@
 package org.signalml.domain.montage;
 
 import java.util.EventListener;
-import org.signalml.domain.montage.system.EegSystem;
 
 /**
  * This class represents an event listener associated with a change
@@ -36,11 +35,5 @@ public interface SourceMontageListener extends EventListener {
          * @param ev an event object describing a change
          */
 	void sourceMontageChannelChanged(SourceMontageEvent ev);
-
-	/**
-         * Invoked when a {@link EegSystem} for the {@link SourceMontage} changes.
-         * @param ev an event object describing a change
-         */
-	void sourceMontageEegSystemChanged(SourceMontageEvent ev);
 
 }

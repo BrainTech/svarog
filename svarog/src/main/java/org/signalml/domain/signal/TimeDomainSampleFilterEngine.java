@@ -84,29 +84,17 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 	 * Constructor. Creates an engine of a filter for provided
 	 * {@link FilterCoefficients filter coefficients}.
 	 * @param source the source of samples
-	 * @param definition the definition of the filter for which this engine will
-	 * be created
-	 * @param coefficients the {@link FilterCoefficients coefficients} for which
-	 * the engine will operate
-	 */
-	public TimeDomainSampleFilterEngine(SampleSource source, TimeDomainSampleFilter definition, FilterCoefficients coefficients) {
-		this(source, coefficients);
-		this.definition = definition;
-	}
-
-	/**
-	 * Constructor. Creates an engine of a filter for provided
-	 * {@link FilterCoefficients filter coefficients}.
-	 * @param source the source of samples
 	 * @param coefficients the {@link FilterCoefficients coefficients} for which
 	 * the engine will operate
 	 */
 	public TimeDomainSampleFilterEngine(SampleSource source, FilterCoefficients coefficients) {
+
 		super(source);
 		aCoefficients = coefficients.getACoefficients();
 		bCoefficients = coefficients.getBCoefficients();
 		filterOrder = coefficients.getFilterOrder();
 		filtered = null;
+
 	}
 
 	/**

@@ -43,7 +43,7 @@ public class TagPresetSelectionPanel extends AbstractSignalMLPanel {
 	/**
 	 * Creates the components and adds them to this panel.
 	 */
-	protected void initialize() {
+	private void initialize() {
 
 		setLayout(new BorderLayout(10, 10));
 

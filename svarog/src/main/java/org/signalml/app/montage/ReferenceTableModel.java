@@ -190,10 +190,6 @@ public class ReferenceTableModel extends AbstractTableModel implements MontageLi
 		return (columnIndex != montage.getMontagePrimaryChannelAt(rowIndex));
 	}
 
-	@Override
-	public void sourceMontageEegSystemChanged(SourceMontageEvent ev) {
-	}
-
 	public class ColumnTableModel extends AbstractTableModel {
 
 		private static final long serialVersionUID = 1L;

@@ -75,7 +75,7 @@ public class PagingParametersPanel extends AbstractSignalMLPanel {
 	 * This group positions elements in rows.</li>
 	 * </ul>
 	 */
-	protected void initialize() {
+	private void initialize() {
 
 		CompoundBorder cb = new CompoundBorder(
 		        new TitledBorder(messageSource.getMessage("signalParameters.pagingSignalParameters")),

@@ -161,18 +161,6 @@
     	</restriction>
     </simpleType>
 
-    <simpleType name="eegSystemName">
-	<annotation>
-		<documentation>
-			Eeg System Name
-		</documentation>
-	</annotation>
-	<restriction base="string">
-		<minLength value="1"></minLength>
-		<maxLength value="256"></maxLength>
-	</restriction>
-    </simpleType>
-
     <simpleType name="markerOffset">
     	<annotation>
     		<documentation>Time offset into the signal.</documentation>
@@ -300,14 +288,6 @@
                 	<documentation>
                 		Blocks per page used by this document -
                 		optional.
-                	</documentation>
-                </annotation>
-    		</element>
-		<element name="eegSystemName" type="rs:eegSystemName"
-    			maxOccurs="1" minOccurs="0">
-                <annotation>
-                	<documentation>
-                		EEG System Name (e.g. EEG 10_20) - optional.
                 	</documentation>
                 </annotation>
     		</element>
