@@ -4,6 +4,7 @@ import org.signalml.app.SvarogI18n;
 import org.signalml.plugin.export.PluginAuth;
 import org.signalml.plugin.export.i18n.SvarogAccessI18n;
 import org.signalml.util.SvarogConstants;
+import org.springframework.context.MessageSourceResolvable;
 import org.xnap.commons.i18n.I18n;
 import org.xnap.commons.i18n.I18nFactory;
 
@@ -76,4 +77,19 @@ public class SvarogAccessI18nImpl implements SvarogI18n, SvarogAccessI18n {
     protected void setPluginAccessClass(PluginAccessClass pac) {
         this.pluginAccessClass = pac;
     }
+
+	@Override
+	public String getMessage(MessageSourceResolvable source) {
+		return source.getDefaultMessage();
+	}
+
+	@Override
+	public String getMessage(String msgKey) {
+		return msgKey;
+	}
+
+	@Override
+	public String getMessage(String msgKey, String defaultMessage) {
+		return defaultMessage;
+	}
 }
