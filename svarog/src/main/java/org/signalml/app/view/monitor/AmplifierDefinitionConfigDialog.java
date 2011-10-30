@@ -18,10 +18,10 @@ import javax.swing.border.TitledBorder;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.view.ViewerElementManager;
+import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.app.view.dialog.AbstractPresetDialog;
 import org.signalml.app.worker.amplifiers.AmplifierDefinition;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**

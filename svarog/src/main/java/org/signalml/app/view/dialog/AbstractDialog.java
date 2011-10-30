@@ -1,7 +1,7 @@
 /* AbstractDialog.java created 2007-09-11
  *
  */
-package org.signalml.plugin.export.view;
+package org.signalml.app.view.dialog;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -28,8 +28,6 @@ import javax.swing.border.EmptyBorder;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.dialog.ErrorsDialog;
-import org.signalml.app.view.dialog.HelpDialog;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.impl.PluginAccessClass;
 import org.signalml.util.SvarogConstants;

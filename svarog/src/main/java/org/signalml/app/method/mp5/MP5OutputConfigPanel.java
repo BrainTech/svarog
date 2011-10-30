@@ -16,9 +16,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.util.SwingUtils;
+import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.app.view.element.CompactButton;
 import org.signalml.method.mp5.MP5Parameters;
-import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 

@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.config.ApplicationConfiguration;
-import org.signalml.plugin.export.view.AbstractDialog;
+import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.springframework.context.support.MessageSourceAccessor;
 

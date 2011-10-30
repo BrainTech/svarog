@@ -34,7 +34,6 @@ import org.signalml.codec.SignalMLCodecSelector;
 import org.signalml.method.mp5.MP5Executor;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Tag;
-import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 

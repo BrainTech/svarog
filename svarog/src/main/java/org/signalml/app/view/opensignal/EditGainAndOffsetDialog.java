@@ -12,10 +12,10 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import org.signalml.app.model.OpenMonitorDescriptor;
+import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.app.view.monitor.ChannelDefinition;
 import org.signalml.app.view.monitor.ChannelDefinitionsTable;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
-import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**

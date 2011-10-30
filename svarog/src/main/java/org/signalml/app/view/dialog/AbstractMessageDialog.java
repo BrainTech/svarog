@@ -17,7 +17,6 @@ import javax.swing.JPanel;
 
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**

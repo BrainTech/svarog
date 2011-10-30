@@ -27,7 +27,6 @@ import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.signal.eeglab.EEGLabSignalWriter;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 

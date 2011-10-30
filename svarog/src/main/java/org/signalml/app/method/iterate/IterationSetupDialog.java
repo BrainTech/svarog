@@ -38,6 +38,7 @@ import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.MethodConfigurer;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.SwingUtils;
+import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.app.view.element.ResolvableComboBox;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.method.iterator.IterableMethod;
@@ -46,7 +47,6 @@ import org.signalml.method.iterator.IterableParameter;
 import org.signalml.method.iterator.MethodIteratorData;
 import org.signalml.method.iterator.ParameterIterationSettings;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 

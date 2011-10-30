@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.border.LineBorder;
 
+import org.signalml.app.view.dialog.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**

@@ -27,10 +27,10 @@ import java.util.EnumMap;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.app.model.MontageDescriptor;
+import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.app.view.montage.VisualReferenceModel;
 import org.springframework.context.support.MessageSourceAccessor;
 

@@ -24,12 +24,12 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.util.IconUtils;
+import org.signalml.app.view.dialog.AbstractDialog;
 //import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.plugin.data.PluginConfigForMethod;
 import org.signalml.plugin.data.PluginConfigMethodData;
 import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
 import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.plugin.tool.PluginResourceRepository;
 import org.springframework.context.support.MessageSourceAccessor;

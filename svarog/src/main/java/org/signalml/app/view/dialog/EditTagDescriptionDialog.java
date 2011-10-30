@@ -18,7 +18,6 @@ import org.signalml.app.view.element.TextPanePanel;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**

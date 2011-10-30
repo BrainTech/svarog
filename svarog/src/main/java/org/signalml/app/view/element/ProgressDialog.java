@@ -19,7 +19,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-import org.signalml.plugin.export.view.AbstractDialog;
+
+import org.signalml.app.view.dialog.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**

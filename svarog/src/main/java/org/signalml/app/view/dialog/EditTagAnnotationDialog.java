@@ -13,7 +13,6 @@ import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.element.TextPanePanel;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Tag;
-import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**

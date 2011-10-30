@@ -10,11 +10,11 @@ import java.io.File;
 import javax.swing.JComponent;
 
 import org.signalml.app.util.IconUtils;
+import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.plugin.data.PluginConfigForMethod;
 import org.signalml.plugin.data.PluginConfigMethodData;
 import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
 import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.plugin.newartifact.data.NewArtifactConfiguration;
 import org.signalml.plugin.tool.PluginResourceRepository;

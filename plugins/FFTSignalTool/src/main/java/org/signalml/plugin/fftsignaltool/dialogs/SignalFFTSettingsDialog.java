@@ -2,8 +2,8 @@ package org.signalml.plugin.fftsignaltool.dialogs;
 
 import javax.swing.JComponent;
 
+import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
 import org.signalml.plugin.fftsignaltool.SignalFFTSettings;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;

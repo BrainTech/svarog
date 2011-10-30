@@ -23,7 +23,6 @@ import org.signalml.app.view.element.MonitorRecordingPanel;
 import org.signalml.app.view.element.MonitorSignalParametersPanel;
 import org.signalml.app.view.element.MultiplexerConnectionPanel;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
 
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;

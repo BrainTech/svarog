@@ -29,7 +29,6 @@ import org.apache.log4j.Logger;
 import org.signalml.app.util.IconUtils;
 import org.signalml.exception.ResolvableException;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
