@@ -222,7 +222,14 @@
 		<developer>
 			<name>Piotr Szachewicz</name>
 			<roles>
-				<role>Developer (tags and filters?)</role>
+				<role>Developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
+			<name>Tomasz Sawicki</name>
+			<roles>
+				<role>Developer</role>
 			</roles>
 			<timezone>+1</timezone>
 		</developer>
@@ -272,6 +279,27 @@
 		<developer>
 			<name>Mateusz Dzwonek</name>
 			<organization>eisenbits</organization>
+			<timezone>+1</timezone>
+			<roles>
+				<role>Documentation</role>
+			</roles>
+		</developer>
+		<developer>
+			<name>Konrad Durnoga</name>
+			<organization>MIMUW</organization>
+			<timezone>+1</timezone>
+			<roles>
+				<role>Artifact &amp; Stager plugins</role>
+			</roles>
+		</developer>
+		<developer>
+			<name>Paweł Kordowski</name>
+			<organization>ZFB</organization>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
+			<name>Joanna Jędrzejewska-Szmek</name>
+			<organization>ZFB</organization>
 			<timezone>+1</timezone>
 			<roles>
 				<role>Documentation</role>
