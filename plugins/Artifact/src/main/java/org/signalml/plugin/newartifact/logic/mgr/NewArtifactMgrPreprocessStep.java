@@ -99,13 +99,13 @@ public class NewArtifactMgrPreprocessStep extends
 
 		@Override
 		public double[][] getNextBufferForObject(Object sender)
-		throws InterruptedException {
-			Semaphore s;
+				throws InterruptedException {
+			final Semaphore s;
 			synchronized (this) {
 				if (!waitSemaphore.containsKey(sender)) {
 					waitSemaphore.put(sender, new Semaphore(bufferList.size()));
 					nextBuffer.put(sender, 0);
-					for (double buffer[][] : bufferList) {
+					for (double[][] buffer : bufferList) {
 						useCount.put(buffer, useCount.get(buffer) + 1);
 					}
 				}
