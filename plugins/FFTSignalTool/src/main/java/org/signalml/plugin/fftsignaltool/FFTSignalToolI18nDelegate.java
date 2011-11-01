@@ -25,7 +25,7 @@ public class FFTSignalToolI18nDelegate {
 	 * @return the translated message
 	 */
 	public String _(String msg) {
-		return svarogAccess.getI18nAccess().translate(pluginAuth, "generic", msg);
+		return svarogAccess.getI18nAccess().translate(pluginAuth, "org.signalml.plugin.fftsignaltool.i18n.I18nBundle", msg);
 	}
 	
 	/**
