@@ -11,7 +11,6 @@ import org.signalml.app.action.selector.BookDocumentFocusSelector;
 import org.signalml.app.document.BookDocument;
 import org.signalml.app.model.BookFilterDescriptor;
 import org.signalml.app.view.book.filter.BookFilterDialog;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** EditBookFilterAction
  *
@@ -26,8 +25,8 @@ public class EditBookFilterAction extends AbstractFocusableSignalMLAction<BookDo
 
 	private BookFilterDialog bookFilterDialog;
 
-	public EditBookFilterAction(MessageSourceAccessor messageSource, BookDocumentFocusSelector bookDocumentFocusSelector) {
-		super(messageSource, bookDocumentFocusSelector);
+	public  EditBookFilterAction( BookDocumentFocusSelector bookDocumentFocusSelector) {
+		super( bookDocumentFocusSelector);
 		setText("action.bookFilter");
 		setIconPath("org/signalml/app/icon/editbookfilter.png");
 		setToolTip("action.bookFilterToolTip");

@@ -18,7 +18,6 @@ import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.domain.tag.LegacyTagExporter;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ExportTagAction
  *
@@ -34,8 +33,8 @@ public class ExportTagAction extends AbstractFocusableSignalMLAction<TagDocument
 	private ViewerFileChooser fileChooser;
 	private Component optionPaneParent;
 
-	public ExportTagAction(MessageSourceAccessor messageSource, TagDocumentFocusSelector tagDocumentFocusSelector) {
-		super(messageSource, tagDocumentFocusSelector);
+	public  ExportTagAction( TagDocumentFocusSelector tagDocumentFocusSelector) {
+		super( tagDocumentFocusSelector);
 		setText("action.exportTag");
 		setToolTip("action.exportTagToolTip");
 	}

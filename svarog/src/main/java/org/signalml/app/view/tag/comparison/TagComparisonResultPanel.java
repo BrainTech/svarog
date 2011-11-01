@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.tag.comparison;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -25,7 +26,6 @@ import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.tag.TagIconProducer;
 import org.signalml.domain.tag.TagComparisonResult;
 import org.signalml.domain.tag.TagComparisonResults;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** TagComparisonResultPanel
  *
@@ -37,8 +37,6 @@ public class TagComparisonResultPanel extends JPanel {
 	public static final boolean SHOW_PERCENT_DEFAULT = false;
 
 	private static final long serialVersionUID = 1L;
-
-	private MessageSourceAccessor messageSource;
 
 	private TagIconProducer tagIconProducer;
 	private TagComparisonResults results;
@@ -89,14 +87,13 @@ public class TagComparisonResultPanel extends JPanel {
 	private String cornerPanelSeconds;
 	private String cornerPanelPercent;
 
-	public TagComparisonResultPanel(MessageSourceAccessor messageSource,TableToTextExporter tableToTextExporter, ViewerFileChooser fileChooser) {
+	public  TagComparisonResultPanel(TableToTextExporter tableToTextExporter, ViewerFileChooser fileChooser) {
 		super();
-		this.messageSource = messageSource;
 		this.tableToTextExporter = tableToTextExporter;
 		this.fileChooser = fileChooser;
 
-		cornerPanelSeconds = messageSource.getMessage("tagComparison.cornerPanelSeconds");
-		cornerPanelPercent = messageSource.getMessage("tagComparison.cornerPanelPercent");
+		cornerPanelSeconds = _("[s]");
+		cornerPanelPercent = _("[%]");
 
 		initialize();
 	}
@@ -240,14 +237,14 @@ public class TagComparisonResultPanel extends JPanel {
 
 		JPanel leftPanel = new JPanel(new BorderLayout());
 		leftPanel.setBorder(new CompoundBorder(
-		                            new TitledBorder(messageSource.getMessage("tagComparison.topDocument")),
+		                            new TitledBorder(_("First document")),
 		                            new EmptyBorder(3,3,3,3)
 		                    ));
 		leftPanel.add(new JScrollPane(topTable), BorderLayout.CENTER);
 
 		JPanel rightPanel = new JPanel(new BorderLayout());
 		rightPanel.setBorder(new CompoundBorder(
-		                             new TitledBorder(messageSource.getMessage("tagComparison.bottomDocument")),
+		                             new TitledBorder(_("Second document")),
 		                             new EmptyBorder(3,3,3,3)
 		                     ));
 		rightPanel.add(new JScrollPane(bottomTable), BorderLayout.CENTER);
@@ -284,7 +281,7 @@ public class TagComparisonResultPanel extends JPanel {
 
 		JPanel comparisonPanel = new JPanel(new BorderLayout());
 		comparisonPanel.setBorder(new CompoundBorder(
-		                                  new TitledBorder(messageSource.getMessage("tagComparison.comparisonResult")),
+		                                  new TitledBorder(_("Comparison result")),
 		                                  new EmptyBorder(3,3,3,3)
 		                          ));
 		comparisonPanel.add(new JScrollPane(table), BorderLayout.CENTER);
@@ -319,12 +316,12 @@ public class TagComparisonResultPanel extends JPanel {
 
 			tabbedPane = new JTabbedPane();
 
-			tabbedPane.addTab(messageSource.getMessage("tagComparison.pageStatistic"), getPageStatisticPanel());
-			tabbedPane.addTab(messageSource.getMessage("tagComparison.pageComparison"), getPageComparisonPanel());
-			tabbedPane.addTab(messageSource.getMessage("tagComparison.blockStatistic"), getBlockStatisticPanel());
-			tabbedPane.addTab(messageSource.getMessage("tagComparison.blockComparison"), getBlockComparisonPanel());
-			tabbedPane.addTab(messageSource.getMessage("tagComparison.channelStatistic"), getChannelStatisticPanel());
-			tabbedPane.addTab(messageSource.getMessage("tagComparison.channelComparison"), getChannelComparisonPanel());
+			tabbedPane.addTab(_("Page statistic"), getPageStatisticPanel());
+			tabbedPane.addTab(_("Page comparison"), getPageComparisonPanel());
+			tabbedPane.addTab(_("Block statistic"), getBlockStatisticPanel());
+			tabbedPane.addTab(_("Block comparison"), getBlockComparisonPanel());
+			tabbedPane.addTab(_("Channel statistic"), getChannelStatisticPanel());
+			tabbedPane.addTab(_("Channel comparison"), getChannelComparisonPanel());
 
 			tabbedPane.setSelectedIndex(0);
 
@@ -424,7 +421,7 @@ public class TagComparisonResultPanel extends JPanel {
 
 	public TagStatisticTable getTopPageStatisticTable() {
 		if (topPageStatisticTable == null) {
-			topPageStatisticTable = new TagStatisticTable(getTopPageStatisticModel(), messageSource);
+			topPageStatisticTable = new TagStatisticTable(getTopPageStatisticModel());
 			topPageStatisticTable.setTableToTextExporter(tableToTextExporter);
 			topPageStatisticTable.setFileChooser(fileChooser);
 		}
@@ -433,7 +430,7 @@ public class TagComparisonResultPanel extends JPanel {
 
 	public TagStatisticTable getTopBlockStatisticTable() {
 		if (topBlockStatisticTable == null) {
-			topBlockStatisticTable = new TagStatisticTable(getTopBlockStatisticModel(), messageSource);
+			topBlockStatisticTable = new TagStatisticTable(getTopBlockStatisticModel());
 			topBlockStatisticTable.setTableToTextExporter(tableToTextExporter);
 			topBlockStatisticTable.setFileChooser(fileChooser);
 		}
@@ -442,7 +439,7 @@ public class TagComparisonResultPanel extends JPanel {
 
 	public TagStatisticTable getTopChannelStatisticTable() {
 		if (topChannelStatisticTable == null) {
-			topChannelStatisticTable = new TagStatisticTable(getTopChannelStatisticModel(), messageSource);
+			topChannelStatisticTable = new TagStatisticTable(getTopChannelStatisticModel());
 			topChannelStatisticTable.setTableToTextExporter(tableToTextExporter);
 			topChannelStatisticTable.setFileChooser(fileChooser);
 		}
@@ -451,7 +448,7 @@ public class TagComparisonResultPanel extends JPanel {
 
 	public TagStatisticTable getBottomPageStatisticTable() {
 		if (bottomPageStatisticTable == null) {
-			bottomPageStatisticTable = new TagStatisticTable(getBottomPageStatisticModel(), messageSource);
+			bottomPageStatisticTable = new TagStatisticTable(getBottomPageStatisticModel());
 			bottomPageStatisticTable.setTableToTextExporter(tableToTextExporter);
 			bottomPageStatisticTable.setFileChooser(fileChooser);
 		}
@@ -460,7 +457,7 @@ public class TagComparisonResultPanel extends JPanel {
 
 	public TagStatisticTable getBottomBlockStatisticTable() {
 		if (bottomBlockStatisticTable == null) {
-			bottomBlockStatisticTable = new TagStatisticTable(getBottomBlockStatisticModel(), messageSource);
+			bottomBlockStatisticTable = new TagStatisticTable(getBottomBlockStatisticModel());
 			bottomBlockStatisticTable.setTableToTextExporter(tableToTextExporter);
 			bottomBlockStatisticTable.setFileChooser(fileChooser);
 		}
@@ -469,7 +466,7 @@ public class TagComparisonResultPanel extends JPanel {
 
 	public TagStatisticTable getBottomChannelStatisticTable() {
 		if (bottomChannelStatisticTable == null) {
-			bottomChannelStatisticTable = new TagStatisticTable(getBottomChannelStatisticModel(), messageSource);
+			bottomChannelStatisticTable = new TagStatisticTable(getBottomChannelStatisticModel());
 			bottomChannelStatisticTable.setTableToTextExporter(tableToTextExporter);
 			bottomChannelStatisticTable.setFileChooser(fileChooser);
 		}
@@ -478,7 +475,7 @@ public class TagComparisonResultPanel extends JPanel {
 
 	public TagComparisonTable getPageComparisonTable() {
 		if (pageComparisonTable == null) {
-			pageComparisonTable = new TagComparisonTable(getPageComparisonModel(), messageSource);
+			pageComparisonTable = new TagComparisonTable(getPageComparisonModel());
 			pageComparisonTable.setTableToTextExporter(tableToTextExporter);
 			pageComparisonTable.setFileChooser(fileChooser);
 			pageComparisonTable.setCornerPanelText(cornerPanelSeconds);
@@ -488,7 +485,7 @@ public class TagComparisonResultPanel extends JPanel {
 
 	public TagComparisonTable getBlockComparisonTable() {
 		if (blockComparisonTable == null) {
-			blockComparisonTable = new TagComparisonTable(getBlockComparisonModel(), messageSource);
+			blockComparisonTable = new TagComparisonTable(getBlockComparisonModel());
 			blockComparisonTable.setTableToTextExporter(tableToTextExporter);
 			blockComparisonTable.setFileChooser(fileChooser);
 			blockComparisonTable.setCornerPanelText(cornerPanelSeconds);
@@ -498,7 +495,7 @@ public class TagComparisonResultPanel extends JPanel {
 
 	public TagComparisonTable getChannelComparisonTable() {
 		if (channelComparisonTable == null) {
-			channelComparisonTable = new TagComparisonTable(getChannelComparisonModel(), messageSource);
+			channelComparisonTable = new TagComparisonTable(getChannelComparisonModel());
 			channelComparisonTable.setTableToTextExporter(tableToTextExporter);
 			channelComparisonTable.setFileChooser(fileChooser);
 			channelComparisonTable.setCornerPanelText(cornerPanelSeconds);
@@ -531,7 +528,7 @@ public class TagComparisonResultPanel extends JPanel {
 
 	public JCheckBox getPercentCheckBox() {
 		if (percentCheckBox == null) {
-			percentCheckBox = new JCheckBox(messageSource.getMessage("tagComparison.showPercent"));
+			percentCheckBox = new JCheckBox(_("Show as percent"));
 			percentCheckBox.setSelected(SHOW_PERCENT_DEFAULT);
 
 			percentCheckBox.addActionListener(new ActionListener() {

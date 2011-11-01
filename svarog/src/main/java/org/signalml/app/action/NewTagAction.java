@@ -20,7 +20,6 @@ import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.dialog.NewTagDialog;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** NewTagAction
  *
@@ -36,8 +35,8 @@ public class NewTagAction extends AbstractFocusableSignalMLAction<SignalDocument
 	private DocumentFlowIntegrator documentFlowIntegrator;
 	private NewTagDialog newTagDialog;
 
-	public NewTagAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
-		super(messageSource, signalDocumentFocusSelector);
+	public  NewTagAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
+		super( signalDocumentFocusSelector);
 		setText("action.newTag");
 		setIconPath("org/signalml/app/icon/filenew.png");
 		setToolTip("action.newTagToolTip");

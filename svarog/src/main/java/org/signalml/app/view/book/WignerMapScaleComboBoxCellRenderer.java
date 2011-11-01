@@ -12,7 +12,6 @@ import javax.swing.JList;
 
 import org.signalml.app.util.IconUtils;
 import org.signalml.domain.book.WignerMapScaleType;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** WignerMapScaleComboBoxCellRenderer
  *
@@ -23,14 +22,11 @@ public class WignerMapScaleComboBoxCellRenderer extends DefaultListCellRenderer 
 
 	private static final long serialVersionUID = 1L;
 
-	private MessageSourceAccessor messageSource;
-
 	private Icon linearIcon;
 	private Icon logIcon;
 	private Icon sqrtIcon;
 
-	public WignerMapScaleComboBoxCellRenderer(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
+	public  WignerMapScaleComboBoxCellRenderer() {
 		linearIcon = IconUtils.loadClassPathIcon("org/signalml/app/icon/scalelinear.png");
 		logIcon = IconUtils.loadClassPathIcon("org/signalml/app/icon/scalelog.png");
 		sqrtIcon = IconUtils.loadClassPathIcon("org/signalml/app/icon/scalesqrt.png");
@@ -41,7 +37,7 @@ public class WignerMapScaleComboBoxCellRenderer extends DefaultListCellRenderer 
 		DefaultListCellRenderer renderer = (DefaultListCellRenderer) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 		if (value instanceof WignerMapScaleType) {
 			WignerMapScaleType scale = (WignerMapScaleType) value;
-			renderer.setText(messageSource.getMessage(scale));
+			renderer.setText(getSvarogI18n().getMessage(scale));
 			if (scale == WignerMapScaleType.NORMAL) {
 				renderer.setIcon(linearIcon);
 			}
@@ -59,4 +55,11 @@ public class WignerMapScaleComboBoxCellRenderer extends DefaultListCellRenderer 
 		return renderer;
 	}
 
+	/**
+	 * Returns the {@link SvarogAccessI18nImpl} instance.
+	 * @return the {@link SvarogAccessI18nImpl} singleton instance
+	 */
+	protected org.signalml.app.SvarogI18n getSvarogI18n() {
+		return org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance();
+	}
 }

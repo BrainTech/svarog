@@ -9,12 +9,11 @@ import java.awt.Window;
 import javax.swing.JComponent;
 
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.newartifact.method.ArtifactType;
 import org.signalml.plugin.newartifact.data.NewArtifactExclusionDescriptor;
-import org.springframework.context.support.MessageSourceAccessor;
+import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
 
 /**
  * ArtifactExclusionDialog
@@ -23,7 +22,7 @@ import org.springframework.context.support.MessageSourceAccessor;
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o. (dialog design based on work by Hubert Klekowicz)
  */
-public class NewArtifactExclusionDialog extends AbstractDialog {
+public class NewArtifactExclusionDialog extends org.signalml.plugin.export.view.AbstractPluginDialog  {
 
 	private static final long serialVersionUID = 1L;
 
@@ -32,19 +31,18 @@ public class NewArtifactExclusionDialog extends AbstractDialog {
 	private int[][] currentExclusion;
 	private ArtifactType[] artifactTypes = ArtifactType.values();
 
-	public NewArtifactExclusionDialog(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  NewArtifactExclusionDialog() {
+		super();
 	}
 
-	public NewArtifactExclusionDialog(MessageSourceAccessor messageSource,
+	public  NewArtifactExclusionDialog(
 					  Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+		super( w, isModal);
 	}
 
 	@Override
 	protected void initialize() {
-		setTitle(messageSource
-			 .getMessage("newArtifactMethod.dialog.exclusionTable"));
+		setTitle(_("Exclusion"));
 		setIconImage(IconUtils
 			     .loadClassPathImage("org/signalml/app/icon/editexclusion.png"));
 		setResizable(false);
@@ -54,7 +52,7 @@ public class NewArtifactExclusionDialog extends AbstractDialog {
 	@Override
 	public JComponent createInterface() {
 
-		artifactExclusionPanel = new NewArtifactExclusionPanel(messageSource);
+		artifactExclusionPanel = new NewArtifactExclusionPanel();
 
 		return artifactExclusionPanel;
 

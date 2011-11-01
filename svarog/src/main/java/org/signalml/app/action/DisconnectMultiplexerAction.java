@@ -1,5 +1,6 @@
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
@@ -20,8 +21,7 @@ public class DisconnectMultiplexerAction extends AbstractAction {
 
 	public DisconnectMultiplexerAction( ViewerElementManager elementManager) {
 		this.elementManager = elementManager;
-		this.putValue( NAME, elementManager.getMessageSource().getMessage( 
-				"action.disconnectMultiplexer.actionName"));
+		this.putValue(NAME, _("Disconnect"));
 		setEnabled( false);
 	}
 

@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
@@ -25,7 +26,7 @@ import org.signalml.domain.signal.space.MarkerTimeSpace;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
 import org.signalml.plugin.export.signal.TagStyle;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 
@@ -49,11 +50,6 @@ public class MarkedTimeSpacePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	protected static final Logger logger = Logger.getLogger(MarkedTimeSpacePanel.class);
-
-	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
 
 	/**
 	 * the panel which allows to select the
@@ -111,9 +107,8 @@ public class MarkedTimeSpacePanel extends JPanel {
 	 * Constructor. Sets the source of messages and initializes this panel.
 	 * @param messageSource the source of messages
 	 */
-	public MarkedTimeSpacePanel(MessageSourceAccessor messageSource) {
+	public  MarkedTimeSpacePanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -158,7 +153,7 @@ public class MarkedTimeSpacePanel extends JPanel {
 
 			markerPanel = new JPanel();
 			markerPanel.setBorder(new CompoundBorder(
-			                              new TitledBorder(messageSource.getMessage("signalSpace.markedTimeSpace.markerPanel.title")),
+			                              new TitledBorder(_("Marker channel & style")),
 			                              new EmptyBorder(3,3,3,3)
 			                      ));
 
@@ -167,8 +162,8 @@ public class MarkedTimeSpacePanel extends JPanel {
 			layout.setAutoCreateContainerGaps(false);
 			layout.setAutoCreateGaps(true);
 
-			JLabel markerChannelLabel = new JLabel(messageSource.getMessage("signalSpace.markedTimeSpace.markerChannel"));
-			JLabel markerStyleLabel = new JLabel(messageSource.getMessage("signalSpace.markedTimeSpace.markerStyle"));
+			JLabel markerChannelLabel = new JLabel(_("Marker channel"));
+			JLabel markerStyleLabel = new JLabel(_("Marker style"));
 
 			GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
@@ -242,7 +237,7 @@ public class MarkedTimeSpacePanel extends JPanel {
 	 */
 	public TagStyleListCellRenderer getMarkerStyleCellRenderer() {
 		if (markerStyleCellRenderer == null) {
-			markerStyleCellRenderer = new TagStyleListCellRenderer(messageSource);
+			markerStyleCellRenderer = new TagStyleListCellRenderer();
 		}
 		return markerStyleCellRenderer;
 	}
@@ -271,7 +266,7 @@ public class MarkedTimeSpacePanel extends JPanel {
 			settingsPanel = new JPanel();
 
 			settingsPanel.setBorder(new CompoundBorder(
-			                                new TitledBorder(messageSource.getMessage("signalSpace.markedTimeSpace.settingsPanel.title")),
+			                                new TitledBorder(_("Settings")),
 			                                new EmptyBorder(3,3,3,3)
 			                        ));
 
@@ -280,8 +275,8 @@ public class MarkedTimeSpacePanel extends JPanel {
 			layout.setAutoCreateContainerGaps(false);
 			layout.setAutoCreateGaps(true);
 
-			JLabel secondsBeforeLabel = new JLabel(messageSource.getMessage("signalSpace.markedTimeSpace.secondsBefore"));
-			JLabel secondsAfterLabel = new JLabel(messageSource.getMessage("signalSpace.markedTimeSpace.secondsAfter"));
+			JLabel secondsBeforeLabel = new JLabel(_("Seconds before"));
+			JLabel secondsAfterLabel = new JLabel(_("Seconds after"));
 
 			GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 

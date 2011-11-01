@@ -22,7 +22,7 @@ public class DeviceDiscoveryWorkerTest implements PropertyChangeListener {
         @Test
         public void test() throws InterruptedException {
 
-                worker = new DeviceDiscoveryWorker(getMessageSource());
+                worker = new DeviceDiscoveryWorker();
                 worker.addPropertyChangeListener(this);
 
                 synchronized(lock) {

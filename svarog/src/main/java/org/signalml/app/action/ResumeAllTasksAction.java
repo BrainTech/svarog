@@ -12,7 +12,6 @@ import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.method.SuspendableMethod;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.task.Task;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ResumeAllTasksAction
  *
@@ -28,8 +27,8 @@ public class ResumeAllTasksAction extends AbstractSignalMLAction {
 	private ApplicationTaskManager taskManager;
 	private Component optionPaneParent;
 
-	public ResumeAllTasksAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  ResumeAllTasksAction() {
+		super();
 		setText("action.resumeAllTasks");
 		setIconPath("org/signalml/app/icon/resumeall.png");
 		setToolTip("action.resumeAllTasksToolTip");

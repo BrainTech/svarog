@@ -1,0 +1,109 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-11-01 15:50+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: org/signalml/plugin/fftsignaltool/SignalFFTPlot.java:235
+#: org/signalml/plugin/fftsignaltool/SignalFFTPlot.java:239
+msgid "Not enough signal points"
+msgstr ""
+
+#: org/signalml/plugin/fftsignaltool/SignalFFTPlot.java:331
+#, java-format
+msgid "FFT over {0} points {1} - {2} ({3})"
+msgstr ""
+
+#: org/signalml/plugin/fftsignaltool/FFTSignalTool.java:152
+msgid "Signal FFT (for settings press and hold the mouse button here)"
+msgstr ""
+
+#: org/signalml/plugin/fftsignaltool/dialogs/FFTWindowTypePanel.java:111
+msgid "Window type"
+msgstr ""
+
+#: org/signalml/plugin/fftsignaltool/dialogs/FFTWindowTypePanel.java:175
+msgid "Window parameter"
+msgstr ""
+
+#: org/signalml/plugin/fftsignaltool/dialogs/SignalFFTSettingsPanel.java:271
+msgid "FFT window width"
+msgstr ""
+
+#: org/signalml/plugin/fftsignaltool/dialogs/SignalFFTSettingsPanel.java:300
+msgid "Custom"
+msgstr ""
+
+#: org/signalml/plugin/fftsignaltool/dialogs/SignalFFTSettingsPanel.java:335
+msgid "FFT view"
+msgstr ""
+
+#: org/signalml/plugin/fftsignaltool/dialogs/SignalFFTSettingsPanel.java:340
+msgid "Show fq range [Hz]"
+msgstr ""
+
+#: org/signalml/plugin/fftsignaltool/dialogs/SignalFFTSettingsPanel.java:354
+#: org/signalml/plugin/fftsignaltool/dialogs/SignalFFTSettingsPanel.java:361
+msgid "Positive integer required"
+msgstr ""
+
+#: org/signalml/plugin/fftsignaltool/dialogs/SignalFFTSettingsPanel.java:382
+msgid "X-axis label count"
+msgstr ""
+
+#: org/signalml/plugin/fftsignaltool/dialogs/SignalFFTSettingsPanel.java:392
+msgid "Scale Y-axis to view"
+msgstr ""
+
+#: org/signalml/plugin/fftsignaltool/dialogs/SignalFFTSettingsPanel.java:400
+msgid "Plot window width"
+msgstr ""
+
+#: org/signalml/plugin/fftsignaltool/dialogs/SignalFFTSettingsPanel.java:420
+msgid "Plot window height"
+msgstr ""
+
+#: org/signalml/plugin/fftsignaltool/dialogs/SignalFFTSettingsPanel.java:440
+msgid "Options"
+msgstr ""
+
+#: org/signalml/plugin/fftsignaltool/dialogs/SignalFFTSettingsPanel.java:445
+msgid "Sticky channel"
+msgstr ""
+
+#: org/signalml/plugin/fftsignaltool/dialogs/SignalFFTSettingsPanel.java:447
+msgid "Logarithmic"
+msgstr ""
+
+#: org/signalml/plugin/fftsignaltool/dialogs/SignalFFTSettingsPanel.java:449
+msgid "Antialias"
+msgstr ""
+
+#: org/signalml/plugin/fftsignaltool/dialogs/SignalFFTSettingsPanel.java:451
+msgid "Use splines (experimental)"
+msgstr ""
+
+#: org/signalml/plugin/fftsignaltool/dialogs/SignalFFTSettingsPanel.java:453
+msgid "Title"
+msgstr ""
+
+#: org/signalml/plugin/fftsignaltool/dialogs/SignalFFTSettingsPanel.java:455
+msgid "Freq. lables"
+msgstr ""
+
+#: org/signalml/plugin/fftsignaltool/dialogs/SignalFFTSettingsPanel.java:457
+msgid "Power labels"
+msgstr ""

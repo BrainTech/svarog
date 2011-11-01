@@ -21,7 +21,8 @@ import javax.swing.border.TitledBorder;
 import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.plugin.newartifact.data.NewArtifactConfiguration;
-import org.springframework.context.support.MessageSourceAccessor;
+import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
+
 import org.springframework.validation.Errors;
 
 /** ArtifactToolWorkingDirectoryConfigPanel
@@ -33,8 +34,6 @@ public class NewArtifactToolWorkingDirectoryConfigPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	private MessageSourceAccessor messageSource;
-
 	private JTextField directoryTextField;
 	private JButton chooseDirectoryButton;
 
@@ -42,9 +41,8 @@ public class NewArtifactToolWorkingDirectoryConfigPanel extends JPanel {
 
 	private File directory;
 
-	public NewArtifactToolWorkingDirectoryConfigPanel(MessageSourceAccessor messageSource, FileChooser fileChooser) {
+	public  NewArtifactToolWorkingDirectoryConfigPanel( FileChooser fileChooser) {
 		super();
-		this.messageSource = messageSource;
 		this.fileChooser = fileChooser;
 		initialize();
 	}
@@ -52,7 +50,7 @@ public class NewArtifactToolWorkingDirectoryConfigPanel extends JPanel {
 	private void initialize() {
 
 		CompoundBorder border = new CompoundBorder(
-			new TitledBorder(messageSource.getMessage("newArtifactMethod.config.workingDirectoryTitle")),
+			new TitledBorder(_("Artifact working directory")),
 			new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);
@@ -62,7 +60,7 @@ public class NewArtifactToolWorkingDirectoryConfigPanel extends JPanel {
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
-		JLabel directoryLabel = new JLabel(messageSource.getMessage("newArtifactMethod.config.workingDirectory"));
+		JLabel directoryLabel = new JLabel(_("Working directory"));
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
@@ -150,9 +148,9 @@ public class NewArtifactToolWorkingDirectoryConfigPanel extends JPanel {
 		private static final long serialVersionUID = 1L;
 
 		public ChooseDirectoryAction() {
-			super(messageSource.getMessage("newArtifactMethod.config.chooseWorkingDirectory"));
+			super(_("Choose..."));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/find.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("newArtifactMethod.config.chooseWorkingDirectoryToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Choose a directory for artifact projects"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {

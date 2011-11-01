@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.dialog;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Window;
 import java.lang.reflect.InvocationTargetException;
 import java.util.prefs.Preferences;
@@ -16,7 +17,6 @@ import javax.swing.border.TitledBorder;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.util.IconUtils;
 import org.signalml.compilation.DynamicCompilationWarning;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * The {@link AbstractMessageDialog message dialog} which warns the user that
@@ -38,8 +38,8 @@ public class DynamicCompilationWarningDialog extends AbstractMessageDialog imple
 	 * Constructor. Sets the source of messages.
 	 * @param messageSource the source of messages
 	 */
-	public DynamicCompilationWarningDialog(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  DynamicCompilationWarningDialog() {
+		super();
 	}
 
 	/**
@@ -49,8 +49,8 @@ public class DynamicCompilationWarningDialog extends AbstractMessageDialog imple
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public DynamicCompilationWarningDialog(MessageSourceAccessor messageSource,Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public  DynamicCompilationWarningDialog(Window w, boolean isModal) {
+		super( w, isModal);
 	}
 
 	/**
@@ -61,17 +61,17 @@ public class DynamicCompilationWarningDialog extends AbstractMessageDialog imple
 	 */
 	@Override
 	protected void initialize() {
-		setTitle(messageSource.getMessage("dynamicCompilationWarning.title"));
+		setTitle(_("Dynamic compilation warning"));
 		setIconImage(IconUtils.getWarningIcon().getImage());
 
 		getMessageLabel().setText(
 		        "<html><body><div style=\"width: 300px; text-align: justify;\">"
-		        + messageSource.getMessage("dynamicCompilationWarning.text")
+		        + _("<b>WARNING!</b> You are about to compile code at runtime. It is possible, however unlikely, for an attacker to exploit this in order to inject malicious code into your Java Virtual Machine. You should avoid compiling code obtained from untrustworthy sources.")
 		        + "</div></body></html>"
 		);
 
 		getMessagePanel().setBorder(new CompoundBorder(
-		                                    new TitledBorder(messageSource.getMessage("dynamicCompilationWarning.frameTitle")),
+		                                    new TitledBorder(_("Word of caution")),
 		                                    new EmptyBorder(3,3,3,3)
 		                            ));
 

@@ -21,7 +21,6 @@ import javax.swing.border.EmptyBorder;
 import org.apache.log4j.Logger;
 import org.signalml.app.util.IconUtils;
 import org.springframework.context.MessageSourceResolvable;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * TODO not used; should it be commented?
@@ -38,8 +37,6 @@ public class ErrorListCellRenderer extends JPanel implements ListCellRenderer {
 
 	private JLabel label;
 	private JTextArea textArea;
-
-	private MessageSourceAccessor messageSource;
 
 	public ErrorListCellRenderer(Dimension d) {
 		super();
@@ -83,17 +80,16 @@ public class ErrorListCellRenderer extends JPanel implements ListCellRenderer {
 			setBackground(Color.WHITE);
 		}
 
-		textArea.setText(messageSource.getMessage((MessageSourceResolvable) value));
+		textArea.setText(getSvarogI18n().getMessage((MessageSourceResolvable) value));
 
 		return this;
 	}
 
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
+	/**
+	 * Returns the {@link SvarogAccessI18nImpl} instance.
+	 * @return the {@link SvarogAccessI18nImpl} singleton instance
+	 */
+	protected org.signalml.app.SvarogI18n getSvarogI18n() {
+		return org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance();
 	}
-
-	public void setMessageSource(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
-	}
-
 }

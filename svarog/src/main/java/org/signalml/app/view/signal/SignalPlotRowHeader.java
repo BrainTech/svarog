@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.signal;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -116,8 +117,8 @@ public class SignalPlotRowHeader extends JComponent {
 			CompactButton b = new CompactButton(
 					new ChannelOptionsAction(this.channelOptionsVisibleIcon,
 									this.channelOptionsInvisibleIcon,
-									this.plot.getMessageSource().getMessage("signalView.editChannelOptions"), 
-									this.plot.getMessageSource().getMessage("signalView.showChannel"),
+									_("Edit channel`s options"), 
+									_("Show channel"),
 									i));
 			channelOptionsButtons[i] = b;
 			this.add(b);

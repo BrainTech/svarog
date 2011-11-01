@@ -12,7 +12,6 @@ import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.codec.SignalMLCodecSelector;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** RemoveCodecAction
  *
@@ -29,8 +28,8 @@ public class RemoveCodecAction extends AbstractSignalMLAction {
 	private SignalMLCodecSelector selector;
 	private ApplicationConfiguration applicationConfig;
 
-	public RemoveCodecAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  RemoveCodecAction() {
+		super();
 		setText("action.removeCodec");
 	}
 

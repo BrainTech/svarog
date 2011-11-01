@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-19 12:52+0200\n"
+"POT-Creation-Date: 2011-10-31 22:14+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,13 +18,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: org/signalml/plugin/sf/SFTestPlugin.java:21
+#: org/signalml/plugin/sf/SFTestPlugin.java:22
+#: org/signalml/plugin/sf/I18NAction.java:26
 #, java-format
 msgid "Deleted one file"
 msgid_plural "Deleted {0} files"
 msgstr[0] ""
 msgstr[1] ""
 
-#: org/signalml/plugin/sf/SFTestPlugin.java:37
+#: org/signalml/plugin/sf/SFTestPlugin.java:47
 msgid "This is an i18n test. Hello, world!"
 msgstr ""
+
+#: org/signalml/plugin/sf/SFTestPlugin.java:55
+msgid "yet another sample text"
+msgstr ""
+
+#: org/signalml/plugin/sf/SFTestPlugin.java:56
+msgid "yet another sample text (2)"
+msgstr ""
+
+#: org/signalml/plugin/sf/SFTestPlugin.java:57
+#, java-format
+msgid "One little duck"
+msgid_plural "{0} little ducks"
+msgstr[0] ""
+msgstr[1] ""

@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.TaskFocusSelector;
 import org.signalml.task.Task;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** SuspendTaskAction
  *
@@ -21,8 +20,8 @@ public class SuspendTaskAction extends AbstractFocusableSignalMLAction<TaskFocus
 
 	protected static final Logger logger = Logger.getLogger(SuspendTaskAction.class);
 
-	public SuspendTaskAction(MessageSourceAccessor messageSource, TaskFocusSelector taskFocusSelector) {
-		super(messageSource, taskFocusSelector);
+	public  SuspendTaskAction( TaskFocusSelector taskFocusSelector) {
+		super( taskFocusSelector);
 		setText("action.suspendTask");
 		setIconPath("org/signalml/app/icon/suspend.png");
 		setToolTip("action.suspendTaskToolTip");

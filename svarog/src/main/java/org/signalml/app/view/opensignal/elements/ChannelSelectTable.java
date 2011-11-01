@@ -8,7 +8,6 @@ import javax.swing.JTable;
 import javax.swing.table.TableColumn;
 import org.signalml.app.model.AmplifierConnectionDescriptor;
 import org.signalml.app.model.OpenMonitorDescriptor;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * A JTable for selecting channels to be received from an amplifier.
@@ -17,14 +16,8 @@ import org.springframework.context.support.MessageSourceAccessor;
  */
 public class ChannelSelectTable extends JTable {
 
-	/**
-	 * Message source capable of resolving localized messages.
-	 */
-	private MessageSourceAccessor messageSource;
-
-	public ChannelSelectTable(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
-		ChannelSelectTableModel tableModel = new ChannelSelectTableModel(messageSource);
+	public  ChannelSelectTable() {
+		ChannelSelectTableModel tableModel = new ChannelSelectTableModel();
 		this.setModel(tableModel);
 		setColumnsPreferredSizes();
 	}
@@ -67,7 +60,7 @@ public class ChannelSelectTable extends JTable {
 	public void fillTableFromModel(AmplifierConnectionDescriptor descriptor) {
 
 		if (descriptor == null || descriptor.getAmplifierInstance() == null) {
-                        setModel(new ChannelSelectTableModel(messageSource));
+                        setModel(new ChannelSelectTableModel());
                         setColumnsPreferredSizes();
                         return;
                 }
@@ -76,7 +69,7 @@ public class ChannelSelectTable extends JTable {
                         descriptor.getAmplifierInstance().getDefinition().getChannelNumbers(),
                         descriptor.getOpenMonitorDescriptor().getChannelLabels());
 
-		ChannelSelectTableModel model = new ChannelSelectTableModel(messageSource);
+		ChannelSelectTableModel model = new ChannelSelectTableModel();
 		model.setChannels(channels);
 
 		setModel(model);

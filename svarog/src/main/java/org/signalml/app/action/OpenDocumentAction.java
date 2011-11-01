@@ -4,18 +4,12 @@
 package org.signalml.app.action;
 
 import java.awt.event.ActionEvent;
-import java.io.IOException;
-
-import multiplexer.jmx.client.ConnectException;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.model.OpenDocumentDescriptor;
-import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.dialog.OpenDocumentDialog;
-import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** OpenDocumentAction
  *
@@ -31,8 +25,8 @@ public class OpenDocumentAction extends AbstractSignalMLAction {
 	private OpenDocumentDialog openDocumentDialog;
 	private DocumentFlowIntegrator documentFlowIntegrator;
 
-	public OpenDocumentAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  OpenDocumentAction() {
+		super();
 		setText("action.openDocument");
 		setIconPath("org/signalml/app/icon/fileopen.png");
 		setToolTip("action.openDocumentToolTip");

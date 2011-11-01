@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -41,7 +42,6 @@ import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.method.SuspendableMethod;
 import org.signalml.task.Task;
 import org.signalml.task.TaskStatus;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ViewerTaskTable
  *
@@ -53,8 +53,6 @@ public class ViewerTaskTable extends JTable implements TaskFocusSelector {
 	private static final long serialVersionUID = 1L;
 
 	private ActionFocusSupport afSupport = new ActionFocusSupport(this);
-
-	private MessageSourceAccessor messageSource;
 
 	private JPopupMenu taskPopupMenu;
 	private JPopupMenu suspendableTaskPopupMenu;
@@ -85,9 +83,8 @@ public class ViewerTaskTable extends JTable implements TaskFocusSelector {
 
 	private Task activeTask;
 
-	public ViewerTaskTable(TaskTableModel model, MessageSourceAccessor messageSource) {
+	public ViewerTaskTable(TaskTableModel model) {
 		super(model, (TableColumnModel) null);
-		this.messageSource = messageSource;
 
 		DefaultTableColumnModel columnModel = new DefaultTableColumnModel();
 
@@ -98,7 +95,6 @@ public class ViewerTaskTable extends JTable implements TaskFocusSelector {
 		tc = new TableColumn(TaskTableModel.STATUS_COLUMN, 100);
 		tc.setHeaderValue(model.getColumnName(tc.getModelIndex()));
 		TaskStatusCellRenderer taskStatusCellRenderer = new TaskStatusCellRenderer();
-		taskStatusCellRenderer.setMessageSource(messageSource);
 		tc.setCellRenderer(taskStatusCellRenderer);
 		columnModel.addColumn(tc);
 
@@ -293,7 +289,7 @@ public class ViewerTaskTable extends JTable implements TaskFocusSelector {
 
 	private JMenu createAllTasksSubmenu() {
 
-		JMenu allTasksSubmenu = new JMenu(messageSource.getMessage("viewer.taskTable.allTasks"));
+		JMenu allTasksSubmenu = new JMenu(_("All tasks"));
 
 		allTasksSubmenu.add(getSuspendAllTasksAction());
 		allTasksSubmenu.add(getResumeAllTasksAction());
@@ -343,7 +339,7 @@ public class ViewerTaskTable extends JTable implements TaskFocusSelector {
 
 	public ShowTaskDialogAction getShowTaskDialogAction() {
 		if (showTaskDialogAction == null) {
-			showTaskDialogAction = new ShowTaskDialogAction(messageSource,this);
+			showTaskDialogAction = new ShowTaskDialogAction(this);
 			showTaskDialogAction.setTaskManager(taskManager);
 		}
 		return showTaskDialogAction;
@@ -352,21 +348,21 @@ public class ViewerTaskTable extends JTable implements TaskFocusSelector {
 
 	public AbortTaskAction getAbortTaskAction() {
 		if (abortTaskAction == null) {
-			abortTaskAction = new AbortTaskAction(messageSource,this);
+			abortTaskAction = new AbortTaskAction(this);
 		}
 		return abortTaskAction;
 	}
 
 	public SuspendTaskAction getSuspendTaskAction() {
 		if (suspendTaskAction == null) {
-			suspendTaskAction = new SuspendTaskAction(messageSource,this);
+			suspendTaskAction = new SuspendTaskAction(this);
 		}
 		return suspendTaskAction;
 	}
 
 	public ResumeTaskAction getResumeTaskAction() {
 		if (resumeTaskAction == null) {
-			resumeTaskAction = new ResumeTaskAction(messageSource,this);
+			resumeTaskAction = new ResumeTaskAction(this);
 			resumeTaskAction.setTaskManager(taskManager);
 		}
 		return resumeTaskAction;
@@ -374,7 +370,7 @@ public class ViewerTaskTable extends JTable implements TaskFocusSelector {
 
 	public GetTaskResultAction getGetTaskResultAction() {
 		if (getTaskResultAction == null) {
-			getTaskResultAction = new GetTaskResultAction(messageSource,this);
+			getTaskResultAction = new GetTaskResultAction(this);
 			getTaskResultAction.setMethodManager(methodManager);
 		}
 		return getTaskResultAction;
@@ -382,7 +378,7 @@ public class ViewerTaskTable extends JTable implements TaskFocusSelector {
 
 	public GetTaskErrorAction getGetTaskErrorAction() {
 		if (getTaskErrorAction == null) {
-			getTaskErrorAction = new GetTaskErrorAction(messageSource,this);
+			getTaskErrorAction = new GetTaskErrorAction(this);
 			getTaskErrorAction.setErrorsDialog(errorsDialog);
 		}
 		return getTaskErrorAction;
@@ -390,7 +386,7 @@ public class ViewerTaskTable extends JTable implements TaskFocusSelector {
 
 	public RemoveTaskAction getRemoveTaskAction() {
 		if (removeTaskAction == null) {
-			removeTaskAction = new RemoveTaskAction(messageSource,this);
+			removeTaskAction = new RemoveTaskAction(this);
 			removeTaskAction.setTaskManager(taskManager);
 		}
 		return removeTaskAction;

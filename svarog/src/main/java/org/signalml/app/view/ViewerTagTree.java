@@ -36,7 +36,6 @@ import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.plugin.export.view.AbstractViewerTree;
 import org.signalml.plugin.impl.PluginAccessClass;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ViewerTagTree
  *
@@ -73,8 +72,8 @@ public class ViewerTagTree extends AbstractViewerTree implements TagFocusSelecto
 	private PositionedTag activeTag;
 	private TagStyle activeTagStyle;
 
-	public ViewerTagTree(TagTreeModel model, MessageSourceAccessor messageSource) {
-		super(model,messageSource);
+	public ViewerTagTree(TagTreeModel model) {
+		super(model);
 		setCellRenderer(new TagTreeCellRenderer(model.getIconProducer()));
 		expandPath(new TreePath(new Object[] {model.getRoot()}));
 		addMouseListener(new MouseEventHandler());
@@ -275,21 +274,21 @@ public class ViewerTagTree extends AbstractViewerTree implements TagFocusSelecto
 
 	public ActivateDocumentAction getActivateDocumentAction() {
 		if (activateDocumentAction == null) {
-			activateDocumentAction = new ActivateDocumentAction(messageSource,actionFocusManager,this);
+			activateDocumentAction = new ActivateDocumentAction(actionFocusManager,this);
 		}
 		return activateDocumentAction;
 	}
 
 	public ActivateTagAction getActivateTagAction() {
 		if (activateTagAction == null) {
-			activateTagAction = new ActivateTagAction(messageSource,actionFocusManager,this);
+			activateTagAction = new ActivateTagAction(actionFocusManager,this);
 		}
 		return activateTagAction;
 	}
 
 	public CloseDocumentAction getCloseDocumentAction() {
 		if (closeDocumentAction == null) {
-			closeDocumentAction = new CloseDocumentAction(messageSource,this);
+			closeDocumentAction = new CloseDocumentAction(this);
 			closeDocumentAction.setDocumentFlowIntegrator(documentFlowIntegrator);
 		}
 		return closeDocumentAction;
@@ -297,14 +296,14 @@ public class ViewerTagTree extends AbstractViewerTree implements TagFocusSelecto
 
 	public RemoveTagAction getRemoveTagAction() {
 		if (removeTagAction == null) {
-			removeTagAction = new RemoveTagAction(messageSource,this);
+			removeTagAction = new RemoveTagAction(this);
 		}
 		return removeTagAction;
 	}
 
 	public EditTagAnnotationAction getEditTagAnnotationAction() {
 		if (editTagAnnotationAction == null) {
-			editTagAnnotationAction = new EditTagAnnotationAction(messageSource,this);
+			editTagAnnotationAction = new EditTagAnnotationAction(this);
 			editTagAnnotationAction.setEditTagAnnotationDialog(editTagAnnotationDialog);
 		}
 		return editTagAnnotationAction;
@@ -312,7 +311,7 @@ public class ViewerTagTree extends AbstractViewerTree implements TagFocusSelecto
 
 	public EditTagStylesAction getEditTagStylesAction() {
 		if (editTagStylesAction == null) {
-			editTagStylesAction = new EditTagStylesAction(messageSource,this);
+			editTagStylesAction = new EditTagStylesAction(this);
 			editTagStylesAction.setTagStylePaletteDialog(tagStylePaletteDialog);
 		}
 		return editTagStylesAction;
@@ -320,7 +319,7 @@ public class ViewerTagTree extends AbstractViewerTree implements TagFocusSelecto
 
 	public EditTagDescriptionAction getEditTagDescriptionAction() {
 		if (editTagDescriptionAction == null) {
-			editTagDescriptionAction = new EditTagDescriptionAction(messageSource,this);
+			editTagDescriptionAction = new EditTagDescriptionAction(this);
 			editTagDescriptionAction.setEditTagDescriptionDialog(editTagDescriptionDialog);
 		}
 		return editTagDescriptionAction;

@@ -23,7 +23,6 @@ import org.signalml.method.iterator.MethodIteratorResult;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.task.Task;
 import org.signalml.task.TaskResult;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** GetTaskResultAction
  *
@@ -41,15 +40,15 @@ public class GetTaskResultAction extends AbstractFocusableSignalMLAction<TaskFoc
 
 
 
-	public GetTaskResultAction(MessageSourceAccessor messageSource,
+	public  GetTaskResultAction(
 	                           TaskFocusSelector actionFocusSelector,
 	                           DialogResultListener dialogResultListener) {
-		this(messageSource, actionFocusSelector);
+		this( actionFocusSelector);
 		this.dialogResultListener = dialogResultListener;
 	}
 
-	public GetTaskResultAction(MessageSourceAccessor messageSource, TaskFocusSelector taskFocusSelector) {
-		super(messageSource, taskFocusSelector);
+	public  GetTaskResultAction( TaskFocusSelector taskFocusSelector) {
+		super( taskFocusSelector);
 		setText("action.getTaskResult");
 		setIconPath("org/signalml/app/icon/getresult.png");
 		setToolTip("action.getTaskResultToolTip");

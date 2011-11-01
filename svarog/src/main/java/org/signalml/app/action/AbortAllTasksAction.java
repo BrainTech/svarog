@@ -11,7 +11,6 @@ import org.signalml.app.task.ApplicationTaskManager;
 import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.task.Task;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** AbortAllTasksAction
  *
@@ -27,8 +26,8 @@ public class AbortAllTasksAction extends AbstractSignalMLAction {
 	private ApplicationTaskManager taskManager;
 	private Component optionPaneParent;
 
-	public AbortAllTasksAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  AbortAllTasksAction() {
+		super();
 		setText("action.abortAllTasks");
 		setIconPath("org/signalml/app/icon/abortall.png");
 		setToolTip("action.abortAllTasksToolTip");

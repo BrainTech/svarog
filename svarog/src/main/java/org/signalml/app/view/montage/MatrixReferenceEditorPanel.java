@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.montage;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
@@ -14,7 +15,6 @@ import javax.swing.border.TitledBorder;
 import org.signalml.app.montage.ReferenceTableModel;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageChannel;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * The panel which displays the reference between {@link MontageChannel montage
@@ -29,11 +29,6 @@ public class MatrixReferenceEditorPanel extends JPanel {
 	 * the default serialization constant
 	 */
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
 
 	/**
 	 * the {@link Montage montage} which is the model for this panel
@@ -61,9 +56,8 @@ public class MatrixReferenceEditorPanel extends JPanel {
 	 * {@link #initialize() initializes} this panel.
 	 * @param messageSource the source of messages (labels)
 	 */
-	public MatrixReferenceEditorPanel(MessageSourceAccessor messageSource) {
+	public  MatrixReferenceEditorPanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -76,7 +70,7 @@ public class MatrixReferenceEditorPanel extends JPanel {
 		setLayout(new BorderLayout());
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("matrixReferenceEditor.editReference")),
+		        new TitledBorder(_("Edit reference")),
 		        new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);

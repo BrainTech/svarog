@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import org.signalml.app.model.TableToTextExporter;
 import org.signalml.app.model.WriterExportableTable;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ExportToClipboardAction
  *
@@ -21,8 +20,8 @@ public abstract class ExportToClipboardAction extends AbstractSignalMLAction {
 	private static final long serialVersionUID = 1L;
 	private TableToTextExporter tableToTextExporter;
 
-	public ExportToClipboardAction(MessageSourceAccessor messageSource, TableToTextExporter tableToTextExporter) {
-		super(messageSource);
+	public  ExportToClipboardAction( TableToTextExporter tableToTextExporter) {
+		super();
 		setText("action.exportTableToClipboard");
 		setIconPath("org/signalml/app/icon/clipboard.png");
 		setToolTip("action.exportTableToClipboardToolTip");

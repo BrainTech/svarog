@@ -21,7 +21,6 @@ import org.signalml.domain.signal.raw.RawSignalSampleType;
 import org.signalml.domain.signal.raw.RawSignalWriter;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ExportSamplesToMultiplexedFloatFileAction
  *
@@ -39,8 +38,8 @@ public abstract class ExportSamplesToMultiplexedFloatFileAction extends Abstract
 
 	private RawSignalWriter rawSignalWriter;
 
-	public ExportSamplesToMultiplexedFloatFileAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  ExportSamplesToMultiplexedFloatFileAction() {
+		super();
 		setText("action.exportSamplesToFloatFile");
 		setIconPath("org/signalml/app/icon/filesave.png");
 		setToolTip("action.exportSamplesToFloatFileToolTip");

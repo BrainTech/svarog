@@ -1,5 +1,6 @@
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -38,8 +39,7 @@ public class ConnectMultiplexerAction extends AbstractAction implements Property
 
         public ConnectMultiplexerAction(ViewerElementManager elementManager) {
                 this.elementManager = elementManager;
-                this.putValue(NAME, elementManager.getMessageSource().getMessage(
-                        "action.connectMultiplexer.actionName"));
+                this.putValue(NAME, _("Connect"));
         }
 
         public OpenMonitorDescriptor getOpenMonitorDescriptor() {
@@ -110,16 +110,12 @@ public class ConnectMultiplexerAction extends AbstractAction implements Property
                         multiplexerSocket = new InetSocketAddress(multiplexerAddress, multiplexerPort.intValue());
                 } catch (NumberFormatException e) {
                         logger.error("bad port number! " + e.getMessage());
-                        WorkerResult result = new WorkerResult(Boolean.FALSE,
-                                elementManager.getMessageSource().getMessage(
-                                "action.connectingMultiplexer.badPortNumberMsg"));
+                        WorkerResult result = new WorkerResult(Boolean.FALSE, _("Bad address!"));
                         firePropertyChange("connectionTestResult", null, result);
                         return;
                 } catch (IllegalArgumentException e) {
                         logger.error("bad address! " + e.getMessage());
-                        WorkerResult result = new WorkerResult(Boolean.FALSE,
-                                elementManager.getMessageSource().getMessage(
-                                "action.connectingMultiplexer.badAddressMsg"));
+                        WorkerResult result = new WorkerResult(Boolean.FALSE, _("Bad port number!"));
                         firePropertyChange("connectionTestResult", null, result);
                         return;
                 }
@@ -137,7 +133,6 @@ public class ConnectMultiplexerAction extends AbstractAction implements Property
 
         protected synchronized void executeTest() {
                 testWorker = new MultiplexerConnectionTestWorker(
-                        elementManager.getMessageSource(),
                         elementManager.getJmxClient(),
                         timeoutMilis,
                         tryoutCount);
@@ -157,7 +152,6 @@ public class ConnectMultiplexerAction extends AbstractAction implements Property
 
         protected synchronized void executeMetadata() {
                 metadataWorker = new BCIMetadataWorker(
-                        elementManager.getMessageSource(),
                         elementManager.getJmxClient(),
                         openMonitorDescriptor,
                         timeoutMilis * tryoutCount);

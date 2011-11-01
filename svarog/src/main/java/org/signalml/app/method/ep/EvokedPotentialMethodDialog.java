@@ -4,6 +4,7 @@
 
 package org.signalml.app.method.ep;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Window;
 
 import javax.swing.JComponent;
@@ -24,7 +25,7 @@ import org.signalml.method.ep.EvokedPotentialParameters;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.SignalSelection;
 import org.signalml.plugin.export.signal.Tag;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /** EvokedPotentialMethodDialog
@@ -39,13 +40,13 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 
 	private SignalSpacePanel signalSpacePanel;
 
-	public EvokedPotentialMethodDialog(MessageSourceAccessor messageSource, PresetManager presetManager, Window w) {
-		super(messageSource, presetManager, w, true);
+	public  EvokedPotentialMethodDialog( PresetManager presetManager, Window w) {
+		super( presetManager, w, true);
 	}
 
 	@Override
 	protected void initialize() {
-		setTitle(messageSource.getMessage("evokedPotentialMethod.dialog.title"));
+		setTitle(_("Evoked potential averaging configuration"));
 		setIconImage(IconUtils.loadClassPathImage(ICON_PATH));
 		setResizable(false);
 		super.initialize();
@@ -60,7 +61,7 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 
 	public SignalSpacePanel getSignalSpacePanel() {
 		if (signalSpacePanel == null) {
-			signalSpacePanel = new SignalSpacePanel(messageSource);
+			signalSpacePanel = new SignalSpacePanel();
 		}
 		return signalSpacePanel;
 	}

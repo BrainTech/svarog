@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -30,7 +31,7 @@ import org.signalml.app.view.tag.TagPaintMode;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.signal.SignalChecksum;
 import org.signalml.plugin.export.signal.Tag;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -50,11 +51,6 @@ import org.springframework.validation.Errors;
 public class SignalViewingConfigPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * the {@link MessageSourceAccessor source} of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
 
 	/**
 	 * the check-box which tells if the signal should be shifted one page
@@ -169,13 +165,12 @@ public class SignalViewingConfigPanel extends JPanel {
 	private JPanel scalesPanel;
 
 	/**
-	 * Constructor. Sets the {@link MessageSourceAccessor message source} and
+	 * Constructor. Sets the {@link SvarogI18n message source} and
 	 * initializes this panel.
 	 * @param messageSource the source of messages (labels)
 	 */
-	public SignalViewingConfigPanel(MessageSourceAccessor messageSource) {
+	public  SignalViewingConfigPanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -210,7 +205,7 @@ public class SignalViewingConfigPanel extends JPanel {
 	 */
 	public JComboBox getTagPaintModeComboBox() {
 		if (tagPaintModeComboBox == null) {
-			tagPaintModeComboBox = new ResolvableComboBox(messageSource);
+			tagPaintModeComboBox = new ResolvableComboBox();
 			tagPaintModeComboBox.setModel(new DefaultComboBoxModel(TagPaintMode.values()));
 		}
 		return tagPaintModeComboBox;
@@ -224,7 +219,7 @@ public class SignalViewingConfigPanel extends JPanel {
 	 */
 	public JComboBox getSignalColorComboBox() {
 		if (signalColorComboBox == null) {
-			signalColorComboBox = new ResolvableComboBox(messageSource);
+			signalColorComboBox = new ResolvableComboBox();
 			signalColorComboBox.setModel(new DefaultComboBoxModel(SignalColor.values()));
 		}
 		return signalColorComboBox;
@@ -239,7 +234,7 @@ public class SignalViewingConfigPanel extends JPanel {
 	 */
 	public JCheckBox getSignalXORCheckBox() {
 		if (signalXORCheckBox == null) {
-			signalXORCheckBox = new JCheckBox(messageSource.getMessage("preferences.signalViewing.signalXOR"));
+			signalXORCheckBox = new JCheckBox(_("Default signal XOR"));
 			signalXORCheckBox.setHorizontalTextPosition(SwingConstants.LEFT);
 		}
 		return signalXORCheckBox;
@@ -254,7 +249,7 @@ public class SignalViewingConfigPanel extends JPanel {
 	 */
 	public JCheckBox getRightClickPagesForwardCheckBox() {
 		if (rightClickPagesForwardCheckBox == null) {
-			rightClickPagesForwardCheckBox = new JCheckBox(messageSource.getMessage("preferences.signalViewing.rightClickPagesForward"));
+			rightClickPagesForwardCheckBox = new JCheckBox(_("Right click signal to shift page (hold down SHIFT for popup menu)"));
 		}
 		return rightClickPagesForwardCheckBox;
 	}
@@ -268,7 +263,7 @@ public class SignalViewingConfigPanel extends JPanel {
 	 */
 	public JCheckBox getAutoLoadDefaultMontageCheckBox() {
 		if (autoLoadDefaultMontageCheckBox == null) {
-			autoLoadDefaultMontageCheckBox = new JCheckBox(messageSource.getMessage("preferences.signalViewing.autoLoadDefaultMontage"));
+			autoLoadDefaultMontageCheckBox = new JCheckBox(_("Automatically load default montage when opening signals (if defined)"));
 		}
 		return autoLoadDefaultMontageCheckBox;
 	}
@@ -282,7 +277,7 @@ public class SignalViewingConfigPanel extends JPanel {
 	 */
 	public JCheckBox getPrecalculateSignalChecksumsCheckBox() {
 		if (precalculateSignalChecksumsCheckBox == null) {
-			precalculateSignalChecksumsCheckBox = new JCheckBox(messageSource.getMessage("preferences.signalViewing.precalculateSignalChecksums"));
+			precalculateSignalChecksumsCheckBox = new JCheckBox(_("Pre-calculate checksums for opened signals"));
 		}
 		return precalculateSignalChecksumsCheckBox;
 	}
@@ -296,7 +291,7 @@ public class SignalViewingConfigPanel extends JPanel {
 	 */
 	public JCheckBox getAntialiasedCheckBox() {
 		if (antialiasedCheckBox == null) {
-			antialiasedCheckBox = new JCheckBox(messageSource.getMessage("preferences.signalViewing.antialias"));
+			antialiasedCheckBox = new JCheckBox(_("Default antialiasing"));
 		}
 		return antialiasedCheckBox;
 	}
@@ -310,7 +305,7 @@ public class SignalViewingConfigPanel extends JPanel {
 	 */
 	public JCheckBox getClampedCheckBox() {
 		if (clampedCheckBox == null) {
-			clampedCheckBox = new JCheckBox(messageSource.getMessage("preferences.signalViewing.clamp"));
+			clampedCheckBox = new JCheckBox(_("Default clamp values"));
 		}
 		return clampedCheckBox;
 	}
@@ -324,7 +319,7 @@ public class SignalViewingConfigPanel extends JPanel {
 	 */
 	public JCheckBox getOffscreenChannelsDrawnCheckBox() {
 		if (offscreenChannelsDrawnCheckBox == null) {
-			offscreenChannelsDrawnCheckBox = new JCheckBox(messageSource.getMessage("preferences.signalViewing.offscreenChannelsDrawn"));
+			offscreenChannelsDrawnCheckBox = new JCheckBox(_("Default draw offscreen channels"));
 		}
 		return offscreenChannelsDrawnCheckBox;
 	}
@@ -338,7 +333,7 @@ public class SignalViewingConfigPanel extends JPanel {
 	 */
 	public JCheckBox getTagToolTipsVisibleCheckBox() {
 		if (tagToolTipsVisibleCheckBox == null) {
-			tagToolTipsVisibleCheckBox = new JCheckBox(messageSource.getMessage("preferences.signalViewing.tagToolTipsVisible"));
+			tagToolTipsVisibleCheckBox = new JCheckBox(_("Default tag tool tips"));
 		}
 		return tagToolTipsVisibleCheckBox;
 	}
@@ -352,7 +347,7 @@ public class SignalViewingConfigPanel extends JPanel {
 	 */
 	public JCheckBox getPageLinesVisibleCheckBox() {
 		if (pageLinesVisibleCheckBox == null) {
-			pageLinesVisibleCheckBox = new JCheckBox(messageSource.getMessage("preferences.signalViewing.pageLinesVisible"));
+			pageLinesVisibleCheckBox = new JCheckBox(_("Default page lines"));
 		}
 		return pageLinesVisibleCheckBox;
 	}
@@ -366,7 +361,7 @@ public class SignalViewingConfigPanel extends JPanel {
 	 */
 	public JCheckBox getBlockLinesVisibleCheckBox() {
 		if (blockLinesVisibleCheckBox == null) {
-			blockLinesVisibleCheckBox = new JCheckBox(messageSource.getMessage("preferences.signalViewing.blockLinesVisible"));
+			blockLinesVisibleCheckBox = new JCheckBox(_("Default block lines"));
 		}
 		return blockLinesVisibleCheckBox;
 	}
@@ -380,7 +375,7 @@ public class SignalViewingConfigPanel extends JPanel {
 	 */
 	public JCheckBox getChannelLinesVisibleCheckBox() {
 		if (channelLinesVisibleCheckBox == null) {
-			channelLinesVisibleCheckBox = new JCheckBox(messageSource.getMessage("preferences.signalViewing.channelLinesVisible"));
+			channelLinesVisibleCheckBox = new JCheckBox(_("Default channel lines"));
 		}
 		return channelLinesVisibleCheckBox;
 	}
@@ -484,7 +479,7 @@ public class SignalViewingConfigPanel extends JPanel {
 			generalPanel = new JPanel();
 			generalPanel.setLayout(new BoxLayout(generalPanel, BoxLayout.Y_AXIS));
 			generalPanel.setBorder(new CompoundBorder(
-			                               new TitledBorder(messageSource.getMessage("preferences.signalViewing.general")),
+			                               new TitledBorder(_("General")),
 			                               new EmptyBorder(3,3,3,3)
 			                       ));
 
@@ -538,7 +533,7 @@ public class SignalViewingConfigPanel extends JPanel {
 		if (plotOptionsPanel == null) {
 			plotOptionsPanel = new JPanel(new BorderLayout());
 			plotOptionsPanel.setBorder(new CompoundBorder(
-			                                   new TitledBorder(messageSource.getMessage("preferences.signalViewing.plotOptions")),
+			                                   new TitledBorder(_("Plot options")),
 			                                   new EmptyBorder(3,3,3,3)
 			                           ));
 
@@ -561,8 +556,8 @@ public class SignalViewingConfigPanel extends JPanel {
 			layout.setAutoCreateContainerGaps(false);
 			layout.setAutoCreateGaps(true);
 
-			JLabel tagPaintModeLabel = new JLabel(messageSource.getMessage("preferences.signalViewing.tagPaintMode"));
-			JLabel signalColorLabel = new JLabel(messageSource.getMessage("preferences.signalViewing.signalColor"));
+			JLabel tagPaintModeLabel = new JLabel(_("Default tag paint mode"));
+			JLabel signalColorLabel = new JLabel(_("Default signal color"));
 			JLabel signalXORLabel = new JLabel("");
 
 			GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
@@ -642,7 +637,7 @@ public class SignalViewingConfigPanel extends JPanel {
 
 			scalesPanel = new JPanel();
 			scalesPanel.setBorder(new CompoundBorder(
-			                              new TitledBorder(messageSource.getMessage("preferences.signalViewing.scales")),
+			                              new TitledBorder(_("Scale limits (changes do not affect signals already open)")),
 			                              new EmptyBorder(3,6,3,6)
 			                      ));
 
@@ -652,15 +647,15 @@ public class SignalViewingConfigPanel extends JPanel {
 			layout.setAutoCreateContainerGaps(false);
 			layout.setAutoCreateGaps(true);
 
-			JLabel channelHeightLabel = new JLabel(messageSource.getMessage("preferences.signalViewing.channelHeight"));
-			JLabel minChannelHeightLabel = new JLabel(messageSource.getMessage("preferences.signalViewing.min"));
-			JLabel maxChannelHeightLabel = new JLabel(messageSource.getMessage("preferences.signalViewing.max"));
-			JLabel valueScaleLabel = new JLabel(messageSource.getMessage("preferences.signalViewing.valueScale"));
-			JLabel minValueScaleLabel = new JLabel(messageSource.getMessage("preferences.signalViewing.min"));
-			JLabel maxValueScaleLabel = new JLabel(messageSource.getMessage("preferences.signalViewing.max"));
-			JLabel timeScaleLabel = new JLabel(messageSource.getMessage("preferences.signalViewing.timeScale"));
-			JLabel minTimeScaleLabel = new JLabel(messageSource.getMessage("preferences.signalViewing.min"));
-			JLabel maxTimeScaleLabel = new JLabel(messageSource.getMessage("preferences.signalViewing.max"));
+			JLabel channelHeightLabel = new JLabel(_("Channel height [px]"));
+			JLabel minChannelHeightLabel = new JLabel(_("min"));
+			JLabel maxChannelHeightLabel = new JLabel(_("max"));
+			JLabel valueScaleLabel = new JLabel(_("Value scale [%]"));
+			JLabel minValueScaleLabel = new JLabel(_("min"));
+			JLabel maxValueScaleLabel = new JLabel(_("max"));
+			JLabel timeScaleLabel = new JLabel(_("Time scale [px/sample]"));
+			JLabel minTimeScaleLabel = new JLabel(_("min"));
+			JLabel maxTimeScaleLabel = new JLabel(_("max"));
 
 			GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 

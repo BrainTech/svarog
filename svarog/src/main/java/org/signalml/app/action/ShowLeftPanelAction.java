@@ -10,7 +10,6 @@ import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.ViewFocusSelector;
 import org.signalml.app.view.View;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ShowLeftPanelAction
  *
@@ -23,8 +22,8 @@ public class ShowLeftPanelAction extends AbstractSignalMLAction {
 
 	protected static final Logger logger = Logger.getLogger(ShowLeftPanelAction.class);
 
-	public ShowLeftPanelAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  ShowLeftPanelAction() {
+		super();
 		setText("action.showLeftPanel");
 		setToolTip("action.showLeftPanelToolTip");
 		putValue(SELECTED_KEY, new Boolean(true));

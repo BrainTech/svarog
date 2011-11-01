@@ -7,7 +7,6 @@ package org.signalml.app.method.bookaverage;
 import org.signalml.app.method.MethodResultConsumer;
 import org.signalml.method.Method;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** BookAverageMethodConsumer
  *
@@ -15,20 +14,8 @@ import org.springframework.context.support.MessageSourceAccessor;
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class BookAverageMethodConsumer implements MethodResultConsumer {
-
-	private MessageSourceAccessor messageSource;
-
 	@Override
 	public boolean consumeResult(Method method, Object methodData, Object methodResult) throws SignalMLException {
 		return false;
 	}
-
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
-	}
-
-	public void setMessageSource(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
-	}
-
 }

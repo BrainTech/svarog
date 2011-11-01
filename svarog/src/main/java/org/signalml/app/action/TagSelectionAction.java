@@ -15,7 +15,6 @@ import org.signalml.app.view.tag.TagStyleSelector;
 import org.signalml.plugin.export.signal.SignalSelection;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.TagStyle;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** PreciseSelectionAction
  *
@@ -28,8 +27,8 @@ public class TagSelectionAction extends AbstractFocusableSignalMLAction<SignalPl
 
 	protected static final Logger logger = Logger.getLogger(TagSelectionAction.class);
 
-	public TagSelectionAction(MessageSourceAccessor messageSource, SignalPlotFocusSelector signalPlotFocusSelector) {
-		super(messageSource, signalPlotFocusSelector);
+	public  TagSelectionAction( SignalPlotFocusSelector signalPlotFocusSelector) {
+		super( signalPlotFocusSelector);
 		setText("action.tagSelection");
 		setToolTip("action.tagSelectionToolTip");
 	}

@@ -1,5 +1,6 @@
 package org.signalml.app.view.monitor;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -22,7 +23,6 @@ import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.app.view.dialog.AbstractPresetDialog;
 import org.signalml.app.worker.amplifiers.AmplifierDefinition;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Amplifier definition configuration can be changed here.
@@ -84,9 +84,9 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
          * @param w parent window
          * @param isModal if this window is modal
          */
-        public AmplifierDefinitionConfigDialog(MessageSourceAccessor messageSource, PresetManager presetManager, Window w, boolean isModal, ViewerElementManager elementManager) {
+        public  AmplifierDefinitionConfigDialog( PresetManager presetManager, Window w, boolean isModal, ViewerElementManager elementManager) {
 
-                super(messageSource, presetManager, w, isModal);
+                super( presetManager, w, isModal);
                 this.elementManager = elementManager;
         }
 
@@ -96,7 +96,7 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
         @Override
         protected void initialize() {
 
-                setTitle(messageSource.getMessage("amplifierDefinitionConfig.title"));
+                setTitle(_("Amplifier definitions config"));
                 super.initialize();
         }
 
@@ -115,7 +115,7 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
                 constraints.weighty = 0;
 
                 CompoundBorder borderDriver = new CompoundBorder(
-                        new TitledBorder(messageSource.getMessage("amplifierDefinitionConfig.driverData")),
+                        new TitledBorder(_("Driver data")),
                         new EmptyBorder(3, 3, 3, 3));
 
                 JPanel textFieldsPanel = new JPanel(new GridBagLayout());
@@ -159,7 +159,7 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
 
 
                 CompoundBorder borderOther = new CompoundBorder(
-                        new TitledBorder(messageSource.getMessage("amplifierDefinitionConfig.otherData")),
+                        new TitledBorder(_("Other data")),
                         new EmptyBorder(3, 3, 3, 3));
 
                 JPanel otherPanel = new JPanel(new GridBagLayout());
@@ -240,8 +240,8 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
                         Double amplifierNull = Double.parseDouble(getAmplifierNullTextField().getText());
                         definition.setAmplifierNull(amplifierNull);
                 } catch (NumberFormatException ex) {
-                        throw new SignalMLException(messageSource.getMessage("amplifierDefinitionConfig.amplifierNull")
-                                + messageSource.getMessage("error.amplifierDefinitionConfig.rational"));
+                        throw new SignalMLException(_("Amplifier null: ")
+                                + _("Please insert a rational value"));
                 }
         }
 
@@ -280,7 +280,7 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
 
                 if (protocolLabel == null) {
                         protocolLabel = new JLabel();
-                        protocolLabel.setText(messageSource.getMessage("amplifierDefinitionConfig.protocol"));
+                        protocolLabel.setText(_("Protocol: "));
                 }
                 return protocolLabel;
         }
@@ -307,7 +307,7 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
 
                 if (matchLabel == null) {
                         matchLabel = new JLabel();
-                        matchLabel.setText(messageSource.getMessage("amplifierDefinitionConfig.match"));
+                        matchLabel.setText(_("Match: "));
                 }
                 return matchLabel;
         }
@@ -334,7 +334,7 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
 
                 if (moduleNameLabel == null) {
                         moduleNameLabel = new JLabel();
-                        moduleNameLabel.setText(messageSource.getMessage("amplifierDefinitionConfig.moduleName"));
+                        moduleNameLabel.setText(_("Module name: "));
                 }
                 return moduleNameLabel;
         }
@@ -362,7 +362,7 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
 
                 if (amplifierNullLabel == null) {
                         amplifierNullLabel = new JLabel();
-                        amplifierNullLabel.setText(messageSource.getMessage("amplifierDefinitionConfig.amplifierNull"));
+                        amplifierNullLabel.setText(_("Amplifier null: "));
                 }
                 return amplifierNullLabel;
         }
@@ -388,7 +388,7 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
         private AvailableFrequenciesPanel getAvailableFrequenciesPanel() {
 
                 if (availableFrequenciesPanel == null) {
-                        availableFrequenciesPanel = new AvailableFrequenciesPanel(messageSource);
+                        availableFrequenciesPanel = new AvailableFrequenciesPanel();
                 }
                 return availableFrequenciesPanel;
         }
@@ -401,7 +401,7 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
         private ChannelDefinitionPanel getChannelDefinitionPanel() {
 
                 if (channelDefinitionPanel == null) {
-                        channelDefinitionPanel = new ChannelDefinitionPanel(messageSource);
+                        channelDefinitionPanel = new ChannelDefinitionPanel();
                 }
                 return channelDefinitionPanel;
         }

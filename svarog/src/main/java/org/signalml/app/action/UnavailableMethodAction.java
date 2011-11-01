@@ -9,7 +9,6 @@ import org.apache.log4j.Logger;
 import org.signalml.app.method.UnavailableMethodDescriptor;
 import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** UnavailableMethodAction
  *
@@ -25,8 +24,7 @@ public class UnavailableMethodAction extends AbstractSignalMLAction {
 	private UnavailableMethodDescriptor descriptor;
 	private ErrorsDialog errorsDialog;
 
-	public UnavailableMethodAction(MessageSourceAccessor messageSource, UnavailableMethodDescriptor descriptor) {
-		this.messageSource = messageSource;
+	public  UnavailableMethodAction( UnavailableMethodDescriptor descriptor) {
 		this.descriptor = descriptor;
 		String nameCode = null;
 		String iconPath = null;

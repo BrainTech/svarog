@@ -18,7 +18,6 @@ import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ExportToFileAction
  *
@@ -35,8 +34,8 @@ public abstract class ExportToFileAction extends AbstractSignalMLAction {
 	private ViewerFileChooser fileChooser;
 	private Component optionPaneParent;
 
-	public ExportToFileAction(MessageSourceAccessor messageSource, TableToTextExporter tableToTextExporter) {
-		super(messageSource);
+	public  ExportToFileAction( TableToTextExporter tableToTextExporter) {
+		super();
 		setText("action.exportTableToFile");
 		setIconPath("org/signalml/app/icon/script_save.png");
 		setToolTip("action.exportTableToFileToolTip");

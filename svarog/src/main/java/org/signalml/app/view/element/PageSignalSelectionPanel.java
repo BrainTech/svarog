@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Dimension;
 import java.awt.Font;
 
@@ -13,7 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.border.EmptyBorder;
 
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Panel which allows to select the parameters of the page selection:
@@ -30,11 +30,6 @@ public class PageSignalSelectionPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
-
-	/**
 	 * the spinner with the number of the first page that should be included
 	 * in the selection
 	 */
@@ -49,9 +44,8 @@ public class PageSignalSelectionPanel extends JPanel {
 	 * Constructor. Sets the source of messages and initializes this panel.
 	 * @param messageSource the source of messages
 	 */
-	public PageSignalSelectionPanel(MessageSourceAccessor messageSource) {
+	public  PageSignalSelectionPanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -79,8 +73,8 @@ public class PageSignalSelectionPanel extends JPanel {
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
-		JLabel startPageLabel = new JLabel(messageSource.getMessage("signalSelection.startPage"));
-		JLabel lengthLabel = new JLabel(messageSource.getMessage("signalSelection.lengthPages"));
+		JLabel startPageLabel = new JLabel(_("Start page"));
+		JLabel lengthLabel = new JLabel(_("Length (pages)"));
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 

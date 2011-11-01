@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 
 import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.plugin.newartifact.data.NewArtifactConfiguration;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /** ArtifactToolConfigPanel
@@ -20,15 +20,12 @@ import org.springframework.validation.Errors;
 public class NewArtifactToolConfigPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-
-	private MessageSourceAccessor messageSource;
 	private FileChooser fileChooser;
 
 	private NewArtifactToolWorkingDirectoryConfigPanel workingDirectoryPanel;
 
-	public NewArtifactToolConfigPanel(MessageSourceAccessor messageSource, FileChooser fileChooser) {
+	public  NewArtifactToolConfigPanel( FileChooser fileChooser) {
 		super();
-		this.messageSource = messageSource;
 		this.fileChooser = fileChooser;
 		initialize();
 	}
@@ -43,7 +40,7 @@ public class NewArtifactToolConfigPanel extends JPanel {
 
 	public NewArtifactToolWorkingDirectoryConfigPanel getWorkingDirectoryPanel() {
 		if (workingDirectoryPanel == null) {
-			workingDirectoryPanel = new NewArtifactToolWorkingDirectoryConfigPanel(messageSource,fileChooser);
+			workingDirectoryPanel = new NewArtifactToolWorkingDirectoryConfigPanel(fileChooser);
 		}
 		return workingDirectoryPanel;
 	}

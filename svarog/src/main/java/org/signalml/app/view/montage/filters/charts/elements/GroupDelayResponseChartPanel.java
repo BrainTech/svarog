@@ -3,8 +3,8 @@
  */
 package org.signalml.app.view.montage.filters.charts.elements;
 
+import static org.signalml.app.SvarogApplication._;
 import org.jfree.chart.axis.NumberAxis;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * A chart panel containing a group delay filter response.
@@ -17,9 +17,9 @@ public class GroupDelayResponseChartPanel extends ResponseChartPanel {
 	 * @param messageSource message source capable of resolving localized
 	 * messages
 	 */
-	public GroupDelayResponseChartPanel(MessageSourceAccessor messageSource) {
-		super(messageSource);
-		setTitle(messageSource.getMessage("editTimeDomainSampleFilter.groupDelayGraphTitle"));
+	public  GroupDelayResponseChartPanel() {
+		super();
+		setTitle(_("Group delay [samples]"));
 	}
 
 	@Override
@@ -29,7 +29,7 @@ public class GroupDelayResponseChartPanel extends ResponseChartPanel {
 
 	@Override
 	public String getDomainAxisName() {
-		return messageSource.getMessage("editSampleFilter.graphFrequencyLabel");
+		return _("Frequency [Hz]");
 	}
 
 }

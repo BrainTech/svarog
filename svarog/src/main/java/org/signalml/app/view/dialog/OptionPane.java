@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.dialog;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 import java.io.File;
 import java.util.Locale;
@@ -20,7 +21,6 @@ import org.signalml.domain.montage.Montage;
 import org.signalml.method.SerializableMethod;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.util.SvarogConstants;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * This class contains different static methods which show simple dialogs
@@ -39,11 +39,6 @@ public class OptionPane extends JOptionPane {
 	 */
 	private static boolean initialized = false;
 
-	/**
-	 * the static source of messages (labels)
-	 */
-	private static MessageSourceAccessor messageSource = null;
-
 	private static String errorString = null;
 	private static String messageString = null;
 	private static String okString = null;
@@ -59,40 +54,24 @@ public class OptionPane extends JOptionPane {
 	private static String createString = null;
 
 	/**
-	 * Returns the source of messages (labels).
-	 * @return the source of messages (labels)
-	 */
-	public static MessageSourceAccessor getMessageSource() {
-		return messageSource;
-	}
-
-	/**
-	 * Sets the source of messages (labels).
-	 * @param messageSource the source of messages (labels)
-	 */
-	public static void setMessageSource(MessageSourceAccessor messageSource) {
-		OptionPane.messageSource = messageSource;
-	}
-
-	/**
 	 * Obtains the messages from the source of messages and sets them to
 	 * the static variables.
 	 */
 	private static void initialize() {
 
-		okString = messageSource.getMessage("ok");
-		applyString = messageSource.getMessage("apply");
-		cancelString = messageSource.getMessage("cancel");
-		errorString = messageSource.getMessage("error");
-		messageString = messageSource.getMessage("message");
-		reloadString = messageSource.getMessage("reload");
-		overwriteString = messageSource.getMessage("overwrite");
-		openString = messageSource.getMessage("open");
-		saveString = messageSource.getMessage("save");
-		discardString = messageSource.getMessage("discard");
-		closeString = messageSource.getMessage("close");
-		warningString = messageSource.getMessage("warning");
-		createString = messageSource.getMessage("create");
+		okString = _("Ok");
+		applyString = _("Apply");
+		cancelString = _("Cancel");
+		errorString = _("Error!");
+		messageString = _("Message");
+		reloadString = _("Reload");
+		overwriteString = _("Overwrite");
+		openString = _("Open");
+		saveString = _("Save");
+		discardString = _("Discard");
+		closeString = _("Close");
+		warningString = _("Warning!");
+		createString = _("Create");
 
 		initialized = true;
 
@@ -111,7 +90,7 @@ public class OptionPane extends JOptionPane {
 		}
 		showOptionDialog(
 		        parent,
-		        messageSource.getMessage(message),
+		        getSvarogI18n().getMessage(message),
 		        errorString,
 		        JOptionPane.OK_OPTION,
 		        JOptionPane.ERROR_MESSAGE,
@@ -136,7 +115,7 @@ public class OptionPane extends JOptionPane {
 		}
 		showOptionDialog(
 		        parent,
-		        messageSource.getMessage(message, arguments),
+		        java.text.MessageFormat.format(getSvarogI18n().getMessage(message), arguments),
 		        errorString,
 		        JOptionPane.OK_OPTION,
 		        JOptionPane.ERROR_MESSAGE,
@@ -181,7 +160,7 @@ public class OptionPane extends JOptionPane {
 		}
 		showOptionDialog(
 		        parent,
-		        messageSource.getMessage(message),
+		        getSvarogI18n().getMessage(message),
 		        messageString,
 		        JOptionPane.OK_OPTION,
 		        JOptionPane.INFORMATION_MESSAGE,
@@ -226,10 +205,10 @@ public class OptionPane extends JOptionPane {
 		if (!initialized) {
 			initialize();
 		}
-		String exMessage = messageSource.getMessage("exception."+ex.getClass().getName(), ex.getMessage());
+		String exMessage = getSvarogI18n().getMessage("exception."+ex.getClass().getName(), ex.getMessage());
 		showOptionDialog(
 		        parent,
-		        messageSource.getMessage(message, new Object[] {exMessage}),
+		        java.text.MessageFormat.format(getSvarogI18n().getMessage(message), new Object[] {exMessage}),
 		        errorString,
 		        JOptionPane.OK_OPTION,
 		        JOptionPane.ERROR_MESSAGE,
@@ -256,7 +235,7 @@ public class OptionPane extends JOptionPane {
 
 		int res = showOptionDialog(
 		                  parent,
-		                  messageSource.getMessage("situation.documentAlreadyOpen"),
+		                  _("This document is already open. Reload?"),
 		                  reloadString + "?",
 		                  JOptionPane.OK_OPTION,
 		                  JOptionPane.QUESTION_MESSAGE,
@@ -307,7 +286,7 @@ public class OptionPane extends JOptionPane {
 
 		int res = showOptionDialog(
 		                  parent,
-		                  messageSource.getMessage("artifactMethod.situation.artifactProjectDoesntExist"),
+		                  _("artifactMethod.situation.artifactProjectDoesntExist"),
 		                  createString + "?",
 		                  JOptionPane.OK_OPTION,
 		                  JOptionPane.QUESTION_MESSAGE,
@@ -379,7 +358,7 @@ public class OptionPane extends JOptionPane {
 		if (path.length() > 60) {
 			path = path.substring(0, 20) + " ... " + path.substring(path.length() - 40);
 		}
-		String message = messageSource.getMessage("situation.directoryNotFoundWithNameCreate", new Object[] { path });
+		String message = java.text.MessageFormat.format(_("Directory [{0}] not found. Create?"), new Object[] { path });
 
 		int res = showOptionDialog(
 		                  parent,
@@ -426,12 +405,12 @@ public class OptionPane extends JOptionPane {
 		if (document instanceof FileBackedDocument) {
 			File file = ((FileBackedDocument) document).getBackingFile();
 			if (file != null) {
-				message = messageSource.getMessage("situation.documentUnsaved", new Object[] { file.getName() });
+				message = java.text.MessageFormat.format(_("{0} has been modified. Save?"), new Object[] { file.getName() });
 			}
 		}
 
 		if (message == null) {
-			message = messageSource.getMessage("situation.newDocumentUnsaved");
+			message = _("A new document has been created. Save?");
 		}
 
 		int res = showOptionDialog(
@@ -473,11 +452,11 @@ public class OptionPane extends JOptionPane {
 			initialize();
 		}
 
-		String normalizeString = messageSource.getMessage("normalize");
+		String normalizeString = _("Normalize");
 
 		int res = showOptionDialog(
 		                  parent,
-		                  messageSource.getMessage("situation.normalizationUnavoidable"),
+		                  _("Signal values exceed type capacity. Normalization is necessary. Normalize?"),
 		                  normalizeString + "?",
 		                  JOptionPane.OK_OPTION,
 		                  JOptionPane.QUESTION_MESSAGE,
@@ -513,11 +492,11 @@ public class OptionPane extends JOptionPane {
 			initialize();
 		}
 
-		String proceedString = messageSource.getMessage("proceed");
+		String proceedString = _("Proceed");
 
 		int res = showOptionDialog(
 		                  parent,
-		                  messageSource.getMessage(messageCode),
+		                  getSvarogI18n().getMessage(messageCode),
 		                  proceedString + "?",
 		                  JOptionPane.OK_OPTION,
 		                  JOptionPane.QUESTION_MESSAGE,
@@ -555,11 +534,11 @@ public class OptionPane extends JOptionPane {
 			initialize();
 		}
 
-		String proceedString = messageSource.getMessage("proceed");
+		String proceedString = _("Proceed");
 
 		int res = showOptionDialog(
 		                  parent,
-		                  messageSource.getMessage(messageCode, args),
+		                  java.text.MessageFormat.format(getSvarogI18n().getMessage(messageCode), args),
 		                  proceedString + "?",
 		                  JOptionPane.OK_OPTION,
 		                  JOptionPane.QUESTION_MESSAGE,
@@ -599,12 +578,12 @@ public class OptionPane extends JOptionPane {
 			initialize();
 		}
 
-		String reuseString = messageSource.getMessage("reuse");
-		String replaceString = messageSource.getMessage("replace");
+		String reuseString = _("Reuse");
+		String replaceString = _("Replace");
 
 		int res = showOptionDialog(
 		                  parent,
-		                  messageSource.getMessage(messageCode, args),
+		                  java.text.MessageFormat.format(getSvarogI18n().getMessage(messageCode), args),
 		                  reuseString + "?",
 		                  JOptionPane.OK_OPTION,
 		                  JOptionPane.QUESTION_MESSAGE,
@@ -642,12 +621,12 @@ public class OptionPane extends JOptionPane {
 			initialize();
 		}
 
-		String suspendString = messageSource.getMessage("situation.serializableTasksRunningSuspend");
-		String abortString = messageSource.getMessage("situation.serializableTasksRunningAbort");
+		String suspendString = _("Suspend & save");
+		String abortString = _("Abort (will be lost)");
 
 		int res = showOptionDialog(
 		                  parent,
-		                  messageSource.getMessage("situation.serializableTasksRunning"),
+		                  _("Some running tasks can be suspended and saved."),
 		                  suspendString + "?",
 		                  JOptionPane.OK_OPTION,
 		                  JOptionPane.QUESTION_MESSAGE,
@@ -798,7 +777,7 @@ public class OptionPane extends JOptionPane {
 
 		int res = showOptionDialog(
 		                  parent,
-		                  messageSource.getMessage("situation.fileAlreadyExists"),
+		                  _("This file already exists. Overwrite?"),
 		                  overwriteString + "?",
 		                  JOptionPane.OK_OPTION,
 		                  JOptionPane.QUESTION_MESSAGE,
@@ -836,7 +815,7 @@ public class OptionPane extends JOptionPane {
 
 		int res = showOptionDialog(
 		                  parent,
-		                  messageSource.getMessage("situation.fileAlreadyExistsWithName", new Object[] { fileName }),
+		                  java.text.MessageFormat.format(_("File {0} already exists. Overwrite?"), new Object[] { fileName }),
 		                  overwriteString + "?",
 		                  JOptionPane.OK_OPTION,
 		                  JOptionPane.QUESTION_MESSAGE,
@@ -871,12 +850,12 @@ public class OptionPane extends JOptionPane {
 			initialize();
 		}
 
-		String resumeString = messageSource.getMessage("situation.resumeRestoredTasksResume");
-		String dontResumeString = messageSource.getMessage("situation.resumeRestoredTasksDontResume");
+		String resumeString = _("Resume");
+		String dontResumeString = _("Don't resume");
 
 		int res = showOptionDialog(
 		                  parent,
-		                  messageSource.getMessage("situation.resumeRestoredTasks"),
+		                  _("Suspended tasks had been restored. Do you wish to resume them?"),
 		                  overwriteString + "?",
 		                  JOptionPane.OK_OPTION,
 		                  JOptionPane.QUESTION_MESSAGE,
@@ -913,7 +892,7 @@ public class OptionPane extends JOptionPane {
 
 		int res = showOptionDialog(
 		                  parent,
-		                  messageSource.getMessage("situation.tagNotCompatible"),
+		                  _("The signal and the tag are not compatible in terms of page and block size. Are you sure?"),
 		                  openString + "?",
 		                  JOptionPane.OK_OPTION,
 		                  JOptionPane.QUESTION_MESSAGE,
@@ -950,7 +929,7 @@ public class OptionPane extends JOptionPane {
 
 		int res = showOptionDialog(
 		                  parent,
-		                  messageSource.getMessage("situation.tagChecksumBad"),
+		                  _("This tag's signature does not match the signature of the signal. Are you sure?"),
 		                  openString + "?",
 		                  JOptionPane.OK_OPTION,
 		                  JOptionPane.QUESTION_MESSAGE,
@@ -987,7 +966,7 @@ public class OptionPane extends JOptionPane {
 
 		int res = showOptionDialog(
 		                  parent,
-		                  messageSource.getMessage("situation.otherDocumentsDepend"),
+		                  _("Other documents depend on this one. Close all?"),
 		                  closeString + "?",
 		                  JOptionPane.OK_OPTION,
 		                  JOptionPane.QUESTION_MESSAGE,
@@ -1019,7 +998,7 @@ public class OptionPane extends JOptionPane {
 		}
 		showOptionDialog(
 		        parent,
-		        messageSource.getMessage("situation.saveAsPathOpen"),
+		        _("This path is used by another open document. Choose another."),
 		        errorString,
 		        JOptionPane.OK_OPTION,
 		        JOptionPane.ERROR_MESSAGE,
@@ -1043,13 +1022,13 @@ public class OptionPane extends JOptionPane {
 
 		String message = null;
 		if (file == null) {
-			message = messageSource.getMessage("situation.fileNotFound");
+			message = _("Selected file not found or inaccessible.");
 		} else {
 			String path = file.getAbsolutePath();
 			if (path.length() > 60) {
 				path = path.substring(0, 20) + " ... " + path.substring(path.length() - 40);
 			}
-			message = messageSource.getMessage("situation.fileNotFoundWithName", new Object[] { path });
+			message = java.text.MessageFormat.format(_("File [{0}] not found or inaccessible."), new Object[] { path });
 		}
 
 		showOptionDialog(
@@ -1078,13 +1057,13 @@ public class OptionPane extends JOptionPane {
 
 		String message = null;
 		if (file == null) {
-			message = messageSource.getMessage("situation.directoryNotFound");
+			message = _("Selected directory not found or inaccessible.");
 		} else {
 			String path = file.getAbsolutePath();
 			if (path.length() > 60) {
 				path = path.substring(0, 20) + " ... " + path.substring(path.length() - 40);
 			}
-			message = messageSource.getMessage("situation.directoryNotFoundWithName", new Object[] { path });
+			message = java.text.MessageFormat.format(_("Directory [{0}] not found or inaccessible."), new Object[] { path });
 		}
 
 		showOptionDialog(
@@ -1113,13 +1092,13 @@ public class OptionPane extends JOptionPane {
 
 		String message = null;
 		if (file == null) {
-			message = messageSource.getMessage("situation.directoryNotAccessible");
+			message = _("Directory not accessible.");
 		} else {
 			String path = file.getAbsolutePath();
 			if (path.length() > 60) {
 				path = path.substring(0, 20) + " ... " + path.substring(path.length() - 40);
 			}
-			message = messageSource.getMessage("situation.directoryNotAccessibleWithName", new Object[] { path });
+			message = java.text.MessageFormat.format(_("Directory [{0}] not accessible."), new Object[] { path });
 		}
 
 		showOptionDialog(
@@ -1148,13 +1127,13 @@ public class OptionPane extends JOptionPane {
 
 		String message = null;
 		if (file == null) {
-			message = messageSource.getMessage("situation.directoryNotCreated");
+			message = _("Failed to create directory.");
 		} else {
 			String path = file.getAbsolutePath();
 			if (path.length() > 60) {
 				path = path.substring(0, 20) + " ... " + path.substring(path.length() - 40);
 			}
-			message = messageSource.getMessage("situation.directoryNotCreatedWithName", new Object[] { path });
+			message = java.text.MessageFormat.format(_("Failed to create directory [{0}]."), new Object[] { path });
 		}
 
 		showOptionDialog(
@@ -1181,7 +1160,7 @@ public class OptionPane extends JOptionPane {
 		}
 		showOptionDialog(
 		        parent,
-		        messageSource.getMessage("situation.defaultMontageNotCompatible"),
+		        _("The default montage is not compatible with this signal and cannot be loaded. Please use the montage editor."),
 		        errorString,
 		        JOptionPane.OK_OPTION,
 		        JOptionPane.ERROR_MESSAGE,
@@ -1203,7 +1182,7 @@ public class OptionPane extends JOptionPane {
 		}
 		showOptionDialog(
 		        parent,
-		        messageSource.getMessage("situation.presetNotCompatible"),
+		        _("This preset is not compatible with current signal and had to be altered accordingly. Please review settings."),
 		        errorString,
 		        JOptionPane.OK_OPTION,
 		        JOptionPane.WARNING_MESSAGE,
@@ -1225,7 +1204,7 @@ public class OptionPane extends JOptionPane {
 		}
 		showOptionDialog(
 		        parent,
-		        messageSource.getMessage("situation.tagStyleInUse"),
+		        _("This tag style is in use and cannot be removed."),
 		        errorString,
 		        JOptionPane.OK_OPTION,
 		        JOptionPane.ERROR_MESSAGE,
@@ -1253,7 +1232,7 @@ public class OptionPane extends JOptionPane {
 
 		int res = showOptionDialog(
 		                  parent,
-		                  messageSource.getMessage("situation.tagStyleModified"),
+		                  _("Tag style has been modified. Apply changes?"),
 		                  applyString + "?",
 		                  JOptionPane.OK_OPTION,
 		                  JOptionPane.QUESTION_MESSAGE,
@@ -1296,13 +1275,13 @@ public class OptionPane extends JOptionPane {
 			initialize();
 		}
 
-		String saveOriginalString = messageSource.getMessage("situation.montageDifferentOnTagSave.saveOriginal");
-		String saveCurrentString = messageSource.getMessage("situation.montageDifferentOnTagSave.saveCurrent");
+		String saveOriginalString = _("Keep original");
+		String saveCurrentString = _("Replace with current");
 
 		int res = showOptionDialog(
 		                  parent,
-		                  messageSource.getMessage("situation.montageDifferentOnTagSave"),
-		                  messageSource.getMessage("situation.montageDifferentOnTagSave.title"),
+		                  _("This tag document's montage is different from current montage"),
+		                  _("Choose montage to save"),
 		                  JOptionPane.OK_OPTION,
 		                  JOptionPane.QUESTION_MESSAGE,
 		                  IconUtils.getQuestionIcon(),
@@ -1343,13 +1322,13 @@ public class OptionPane extends JOptionPane {
 			initialize();
 		}
 
-		String loadFromTagString = messageSource.getMessage("situation.montageDifferentOnTagLoad.loadFromTag");
-		String keepCurrentString = messageSource.getMessage("situation.montageDifferentOnTagLoad.keepCurrent");
+		String loadFromTagString = _("Load montage from tag");
+		String keepCurrentString = _("Keep current");
 
 		int res = showOptionDialog(
 		                  parent,
-		                  messageSource.getMessage("situation.montageDifferentOnTagLoad"),
-		                  messageSource.getMessage("situation.montageDifferentOnTagLoad.title"),
+		                  _("This tag document's montage is different from current montage"),
+		                  _("Choose montage"),
 		                  JOptionPane.OK_OPTION,
 		                  JOptionPane.QUESTION_MESSAGE,
 		                  IconUtils.getQuestionIcon(),
@@ -1382,7 +1361,7 @@ public class OptionPane extends JOptionPane {
 		}
 		showOptionDialog(
 		        parent,
-		        messageSource.getMessage("situation.noActiveSignal"),
+		        _("No active signal. Choose a signal tab first."),
 		        warningString,
 		        JOptionPane.OK_OPTION,
 		        JOptionPane.WARNING_MESSAGE,
@@ -1404,7 +1383,7 @@ public class OptionPane extends JOptionPane {
 		}
 		showOptionDialog(
 		        parent,
-		        messageSource.getMessage("situation.noActiveBook"),
+		        _("No active book. Choose a book tab first."),
 		        warningString,
 		        JOptionPane.OK_OPTION,
 		        JOptionPane.WARNING_MESSAGE,
@@ -1426,7 +1405,7 @@ public class OptionPane extends JOptionPane {
 		}
 		showOptionDialog(
 		        parent,
-		        messageSource.getMessage("situation.noActiveTag"),
+		        _("No active tag. Open a tag document first."),
 		        warningString,
 		        JOptionPane.OK_OPTION,
 		        JOptionPane.WARNING_MESSAGE,
@@ -1448,7 +1427,7 @@ public class OptionPane extends JOptionPane {
 		}
 		showOptionDialog(
 		        parent,
-		        messageSource.getMessage("situation.noSignalSelection"),
+		        _("No signal selection. Choose a signal fragment first."),
 		        warningString,
 		        JOptionPane.OK_OPTION,
 		        JOptionPane.WARNING_MESSAGE,
@@ -1513,8 +1492,8 @@ public class OptionPane extends JOptionPane {
 
 		String s = (String) showInputDialog(
 				parent,
-				messageSource.getMessage("name"),
-				messageSource.getMessage("presetDialog.presetNameTitle"),
+				_("Name"),
+				_("Set preset name"),
 				JOptionPane.QUESTION_MESSAGE,
 				IconUtils.getQuestionIcon(),
 				null,
@@ -1525,4 +1504,11 @@ public class OptionPane extends JOptionPane {
 
 	}
 
+	/**
+	 * Returns the {@link SvarogAccessI18nImpl} instance.
+	 * @return the {@link SvarogAccessI18nImpl} singleton instance
+	 */
+	protected static org.signalml.app.SvarogI18n getSvarogI18n() {
+		return org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance();
+	}
 }

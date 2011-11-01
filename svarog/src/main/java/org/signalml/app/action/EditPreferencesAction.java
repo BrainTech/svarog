@@ -9,7 +9,6 @@ import org.apache.log4j.Logger;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** EditPreferencesAction
  *
@@ -25,8 +24,8 @@ public class EditPreferencesAction extends AbstractSignalMLAction {
 	private AbstractDialog preferencesDialog;
 	private ApplicationConfiguration config;
 
-	public EditPreferencesAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  EditPreferencesAction() {
+		super();
 		setText("action.editPreferences");
 		setToolTip("action.editPreferencesToolTip");
 	}

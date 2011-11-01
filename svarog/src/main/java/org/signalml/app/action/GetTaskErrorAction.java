@@ -10,7 +10,7 @@ import org.signalml.app.action.selector.TaskFocusSelector;
 import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.task.Task;
 import org.signalml.task.TaskResult;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /** GetTaskErrorAction
@@ -26,8 +26,8 @@ public class GetTaskErrorAction extends AbstractFocusableSignalMLAction<TaskFocu
 
 	private ErrorsDialog errorsDialog;
 
-	public GetTaskErrorAction(MessageSourceAccessor messageSource, TaskFocusSelector taskFocusSelector) {
-		super(messageSource, taskFocusSelector);
+	public  GetTaskErrorAction( TaskFocusSelector taskFocusSelector) {
+		super( taskFocusSelector);
 		setText("action.getTaskError");
 		setIconPath("org/signalml/app/icon/geterror.png");
 		setToolTip("action.getTaskErrorToolTip");

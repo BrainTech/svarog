@@ -20,9 +20,6 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-import org.signalml.app.view.dialog.AbstractDialog;
-import org.springframework.context.support.MessageSourceAccessor;
-
 /**
  * Dialog that shows progress of some time consuming operation.
  * It's a Property Change Listener, the only property it reacts to is
@@ -30,7 +27,7 @@ import org.springframework.context.support.MessageSourceAccessor;
  *
  * @author Tomasz Sawicki
  */
-public class ProgressDialog extends AbstractDialog implements PropertyChangeListener {
+public class ProgressDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  implements PropertyChangeListener {
 
         public static final String PROGRESS_STATE = "progressState";
         public final int DIALOG_WIDTH = 400;
@@ -60,9 +57,9 @@ public class ProgressDialog extends AbstractDialog implements PropertyChangeList
          * @param isModal if this window is modal
          * @param caption window's caption
          */
-        public ProgressDialog(MessageSourceAccessor messageSource, Window w, boolean isModal, String title) {
+        public  ProgressDialog( Window w, boolean isModal, String title) {
 
-                super(messageSource, w, isModal);
+                super( w, isModal);
                 setTitle(title);
                 setPreferredSize(new Dimension(DIALOG_WIDTH, DIALOG_HEIGHT));
         }

@@ -12,7 +12,6 @@ import org.signalml.app.view.element.SignalZoomSettingsPanel;
 import org.signalml.app.view.signal.ZoomSignalTool;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractPopupDialog;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ZoomSettingsPopupDialog
  *
@@ -25,18 +24,18 @@ public class ZoomSettingsPopupDialog extends AbstractPopupDialog {
 
 	private SignalZoomSettingsPanel signalZoomSettingsPanel;
 
-	public ZoomSettingsPopupDialog(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  ZoomSettingsPopupDialog() {
+		super();
 	}
 
-	public ZoomSettingsPopupDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public  ZoomSettingsPopupDialog( Window w, boolean isModal) {
+		super( w, isModal);
 	}
 
 	@Override
 	public JComponent createInterface() {
 
-		signalZoomSettingsPanel = new SignalZoomSettingsPanel(messageSource, true);
+		signalZoomSettingsPanel = new SignalZoomSettingsPanel( true);
 
 		return signalZoomSettingsPanel;
 

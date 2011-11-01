@@ -10,7 +10,6 @@ import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.ViewFocusSelector;
 import org.signalml.app.view.View;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ViewModeAction
  *
@@ -23,8 +22,8 @@ public class ViewModeAction extends AbstractSignalMLAction {
 
 	protected static final Logger logger = Logger.getLogger(ViewModeAction.class);
 
-	public ViewModeAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  ViewModeAction() {
+		super();
 		setText("action.viewMode");
 		setIconPath("org/signalml/app/icon/viewmode.png");
 		setToolTip("action.viewModeToolTip");

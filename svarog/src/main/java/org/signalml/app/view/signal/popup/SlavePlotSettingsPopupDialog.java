@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.signal.popup;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -34,7 +35,6 @@ import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.domain.montage.Montage;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractPopupDialog;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** SlavePlotSettingsPopupDialog
  *
@@ -64,8 +64,8 @@ public class SlavePlotSettingsPopupDialog extends AbstractPopupDialog {
 	private SignalMontageDialog signalMontageDialog;
 	private Montage currentMontage;
 
-	public SlavePlotSettingsPopupDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public  SlavePlotSettingsPopupDialog( Window w, boolean isModal) {
+		super( w, isModal);
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class SlavePlotSettingsPopupDialog extends AbstractPopupDialog {
 		synchronizationPanel.setLayout(new BoxLayout(synchronizationPanel, BoxLayout.Y_AXIS));
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledCrossBorder(messageSource.getMessage("signalView.slavePlot.synchronization"), true),
+		        new TitledCrossBorder(_("Synchronization"), true),
 		        new EmptyBorder(3,3,3,3)
 		);
 		synchronizationPanel.setBorder(border);
@@ -92,7 +92,7 @@ public class SlavePlotSettingsPopupDialog extends AbstractPopupDialog {
 		montagePanel.setLayout(new BoxLayout(montagePanel, BoxLayout.Y_AXIS));
 
 		border = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("signalView.slavePlot.montage")),
+		        new TitledBorder(_("Montage")),
 		        new EmptyBorder(3,3,3,3)
 		);
 		montagePanel.setBorder(border);
@@ -162,7 +162,7 @@ public class SlavePlotSettingsPopupDialog extends AbstractPopupDialog {
 
 	public JRadioButton getInheritedMontageRadioButton() {
 		if (inheritedMontageRadioButton == null) {
-			inheritedMontageRadioButton = new JRadioButton(messageSource.getMessage("signalView.slavePlot.inheritedMontage"));
+			inheritedMontageRadioButton = new JRadioButton(_("Inherited from document"));
 			getMontageButtonGroup().add(inheritedMontageRadioButton);
 			inheritedMontageRadioButton.setAlignmentX(Component.LEFT_ALIGNMENT);
 		}
@@ -171,7 +171,7 @@ public class SlavePlotSettingsPopupDialog extends AbstractPopupDialog {
 
 	public JRadioButton getLocalMontageRadioButton() {
 		if (localMontageRadioButton == null) {
-			localMontageRadioButton = new JRadioButton(messageSource.getMessage("signalView.slavePlot.localMontage"));
+			localMontageRadioButton = new JRadioButton(_("Modified"));
 			getMontageButtonGroup().add(localMontageRadioButton);
 			localMontageRadioButton.setAlignmentX(Component.LEFT_ALIGNMENT);
 			localMontageRadioButton.addItemListener(new ItemListener() {
@@ -193,7 +193,7 @@ public class SlavePlotSettingsPopupDialog extends AbstractPopupDialog {
 
 	public JCheckBox getHorizontalLockCheckBox() {
 		if (horizontalLockCheckBox == null) {
-			horizontalLockCheckBox = new JCheckBox(messageSource.getMessage("signalView.slavePlot.horizontalLock"));
+			horizontalLockCheckBox = new JCheckBox(_("Horizontal scroll lock"));
 			horizontalLockCheckBox.setAlignmentX(Component.LEFT_ALIGNMENT);
 			horizontalLockCheckBox.addItemListener(new ItemListener() {
 				@Override
@@ -207,7 +207,7 @@ public class SlavePlotSettingsPopupDialog extends AbstractPopupDialog {
 
 	public JCheckBox getVerticalLockCheckBox() {
 		if (verticalLockCheckBox == null) {
-			verticalLockCheckBox = new JCheckBox(messageSource.getMessage("signalView.slavePlot.verticalLock"));
+			verticalLockCheckBox = new JCheckBox(_("Vertical scroll lock"));
 			verticalLockCheckBox.setAlignmentX(Component.LEFT_ALIGNMENT);
 			verticalLockCheckBox.addItemListener(new ItemListener() {
 				@Override
@@ -282,9 +282,9 @@ public class SlavePlotSettingsPopupDialog extends AbstractPopupDialog {
 		private static final long serialVersionUID = 1L;
 
 		public EditMontageAction() {
-			super(messageSource.getMessage("signalView.slavePlot.editLocalMontage"));
+			super(_("Edit modified montage"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/montage.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("signalView.slavePlot.editLocalMontageToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Edit montage for this plot"));
 			setEnabled(false);
 		}
 
@@ -313,9 +313,9 @@ public class SlavePlotSettingsPopupDialog extends AbstractPopupDialog {
 		private static final long serialVersionUID = 1L;
 
 		public SynchronizeNowAction() {
-			super(messageSource.getMessage("signalView.slavePlot.synchronizeNow"));
+			super(_("Synchronize now"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/synchronizenow.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("signalView.slavePlot.synchronizeNowToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Synchronize plot with master plot"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {

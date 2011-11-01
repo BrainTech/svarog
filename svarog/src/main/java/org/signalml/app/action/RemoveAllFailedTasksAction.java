@@ -12,7 +12,6 @@ import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.task.Task;
 import org.signalml.task.TaskStatus;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** RemoveAllFailedTasksAction
  *
@@ -28,8 +27,8 @@ public class RemoveAllFailedTasksAction extends AbstractSignalMLAction {
 	private ApplicationTaskManager taskManager;
 	private Component optionPaneParent;
 
-	public RemoveAllFailedTasksAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  RemoveAllFailedTasksAction() {
+		super();
 		setText("action.removeAllFailedTasks");
 		setIconPath("org/signalml/app/icon/removeallfailedtasks.png");
 		setToolTip("action.removeAllFailedTasksToolTip");

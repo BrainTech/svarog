@@ -13,7 +13,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.TableColumnModel;
 
 import org.signalml.app.view.TablePopupMenuProvider;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** AtomTable
  *
@@ -26,7 +25,7 @@ public class AtomTable extends JTable {
 
 	private TablePopupMenuProvider popupMenuProvider;
 
-	public AtomTable(AtomTableModel model, MessageSourceAccessor messageSource) {
+	public AtomTable(AtomTableModel model) {
 		super(model, (TableColumnModel) null);
 
 		getColumnModel().setColumnSelectionAllowed(false);

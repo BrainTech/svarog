@@ -4,6 +4,7 @@
 
 package org.signalml.app.montage;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Window;
 
 import javax.swing.table.AbstractTableModel;
@@ -15,7 +16,7 @@ import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.montage.SourceMontageEvent;
 import org.signalml.domain.montage.SourceMontageListener;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.signalml.domain.montage.ChannelType;
 
 /** SourceMontageTableModel
@@ -34,19 +35,10 @@ public class SourceMontageTableModel extends AbstractTableModel implements Sourc
 	public static final int FUNCTION_COLUMN = 2;
 
 	private SourceMontage montage;
-	private MessageSourceAccessor messageSource;
 	private ChannelListModel channelListModel;
 
 	public SourceMontageTableModel() {
 		channelListModel = new ChannelListModel();
-	}
-
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
-	}
-
-	public void setMessageSource(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
 	}
 
 	public ChannelListModel getChannelListModel() {
@@ -99,13 +91,13 @@ public class SourceMontageTableModel extends AbstractTableModel implements Sourc
 		switch (column) {
 
 		case INDEX_COLUMN :
-			return messageSource.getMessage("sourceMontageTable.index");
+			return _("Index");
 
 		case LABEL_COLUMN :
-			return messageSource.getMessage("sourceMontageTable.label");
+			return _("Label");
 
 		case FUNCTION_COLUMN :
-			return messageSource.getMessage("sourceMontageTable.function");
+			return _("Function");
 
 		default :
 			throw new IndexOutOfBoundsException();

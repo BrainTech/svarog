@@ -12,7 +12,7 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractPopupDialog;
 import org.signalml.plugin.fftsignaltool.SignalFFTSettings;
 import org.signalml.plugin.fftsignaltool.SignalFFTTool;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -47,9 +47,9 @@ public class SignalFFTSettingsPopupDialog extends AbstractPopupDialog {
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public SignalFFTSettingsPopupDialog(MessageSourceAccessor messageSource,
+	public  SignalFFTSettingsPopupDialog(
 			Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+		super( w, isModal);
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class SignalFFTSettingsPopupDialog extends AbstractPopupDialog {
 	@Override
 	public JComponent createInterface() {
 
-		signalFFTSettingsPanel = new SignalFFTSettingsPanel(messageSource, true);
+		signalFFTSettingsPanel = new SignalFFTSettingsPanel( true);
 
 		return signalFFTSettingsPanel;
 

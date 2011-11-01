@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.montage.filters;
 
+import static org.signalml.app.SvarogApplication._;
 import org.signalml.app.view.element.DoubleSpinner;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -25,7 +26,7 @@ import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.iirdesigner.ApproximationFunctionType;
 import org.signalml.domain.montage.filter.iirdesigner.FilterType;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -37,10 +38,6 @@ import org.springframework.validation.Errors;
  */
 public class TimeDomainFilterParametersPanel extends JPanel {
 
-	/**
-	 * the {@link MessageSourceAccessor source} of messages (labels).
-	 */
-	protected MessageSourceAccessor messageSource;
 	/**
 	 * A value of step size for passband and stop band edge frequency
 	 * spinners.
@@ -116,8 +113,7 @@ public class TimeDomainFilterParametersPanel extends JPanel {
 	 * Constructor.
 	 * @param messageSource the source of localized messages (labels).
 	 */
-	public TimeDomainFilterParametersPanel(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
+	public  TimeDomainFilterParametersPanel() {
 		createInterface();
 	}
 
@@ -134,15 +130,15 @@ public class TimeDomainFilterParametersPanel extends JPanel {
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
-		JLabel descriptionLabel = new JLabel(messageSource.getMessage("editSampleFilter.descriptionTitle"));
-		JLabel filterTypeLabel = new JLabel(messageSource.getMessage("editTimeDomainSampleFilter.filterType"));
-		JLabel filterFamilyLabel = new JLabel(messageSource.getMessage("editTimeDomainSampleFilter.filterFamily"));
-		JLabel passbandEdgeFrequency1Label = new JLabel(messageSource.getMessage("editTimeDomainSampleFilter.passbandEdgeFrequency1"));
-		JLabel passbandEdgeFrequency2Label = new JLabel(messageSource.getMessage("editTimeDomainSampleFilter.passbandEdgeFrequency2"));
-		JLabel stopbandEdgeFrequency1Label = new JLabel(messageSource.getMessage("editTimeDomainSampleFilter.stopbandEdgeFrequency1"));
-		JLabel stopbandEdgeFrequency2Label = new JLabel(messageSource.getMessage("editTimeDomainSampleFilter.stopbandEdgeFrequency2"));
-		JLabel passbandRippleLabel = new JLabel(messageSource.getMessage("editTimeDomainSampleFilter.passbandRipple"));
-		JLabel stopbandAttenuationLabel = new JLabel(messageSource.getMessage("editTimeDomainSampleFilter.stopbandAttenuation"));
+		JLabel descriptionLabel = new JLabel(_("Filter description"));
+		JLabel filterTypeLabel = new JLabel(_("Filter type"));
+		JLabel filterFamilyLabel = new JLabel(_("Filter family"));
+		JLabel passbandEdgeFrequency1Label = new JLabel(_("Passband edge frequency 1 [Hz]"));
+		JLabel passbandEdgeFrequency2Label = new JLabel(_("Passband edge frequency 2 [Hz]"));
+		JLabel stopbandEdgeFrequency1Label = new JLabel(_("Stopband edge frequency 1 [Hz]"));
+		JLabel stopbandEdgeFrequency2Label = new JLabel(_("Stopband edge frequency 2 [Hz]"));
+		JLabel passbandRippleLabel = new JLabel(_("Passband ripple [dB]"));
+		JLabel stopbandAttenuationLabel = new JLabel(_("Stopband attenuation [dB]"));
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
@@ -207,7 +203,7 @@ public class TimeDomainFilterParametersPanel extends JPanel {
 
 		if (filterTypeComboBox == null) {
 
-			filterTypeComboBox = new ResolvableComboBox(messageSource);
+			filterTypeComboBox = new ResolvableComboBox();
 			filterTypeComboBox.setPreferredSize(new Dimension(200, 25));
 
 			FilterType[] filterTypes = FilterType.values();
@@ -244,7 +240,7 @@ public class TimeDomainFilterParametersPanel extends JPanel {
 	public ResolvableComboBox getFilterFamilyComboBox() {
 
 		if (filterFamilyComboBox == null) {
-			filterFamilyComboBox = new ResolvableComboBox(messageSource);
+			filterFamilyComboBox = new ResolvableComboBox();
 			filterFamilyComboBox.setPreferredSize(new Dimension(200, 25));
 
 			ApproximationFunctionType[] filterFamilyTypes = ApproximationFunctionType.values();

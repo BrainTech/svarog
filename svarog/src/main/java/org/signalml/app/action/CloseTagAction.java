@@ -13,7 +13,6 @@ import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** CloseTagAction
  *
@@ -28,8 +27,8 @@ public class CloseTagAction extends AbstractFocusableSignalMLAction<TagDocumentF
 
 	private DocumentFlowIntegrator documentFlowIntegrator;
 
-	public CloseTagAction(MessageSourceAccessor messageSource, TagDocumentFocusSelector tagDocumentFocusSelector) {
-		super(messageSource, tagDocumentFocusSelector);
+	public  CloseTagAction( TagDocumentFocusSelector tagDocumentFocusSelector) {
+		super( tagDocumentFocusSelector);
 		setText("action.closeTag");
 		setIconPath("org/signalml/app/icon/fileclose.png");
 		setToolTip("action.closeTagToolTip");

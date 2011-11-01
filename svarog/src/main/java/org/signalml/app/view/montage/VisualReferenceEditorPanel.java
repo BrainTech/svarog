@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.montage;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -42,7 +43,6 @@ import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.element.AnyChangeDocumentAdapter;
 import org.signalml.app.view.element.CompactButton;
 import org.signalml.domain.montage.Montage;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** EditMontageReferencePanel
  *
@@ -52,8 +52,6 @@ import org.springframework.context.support.MessageSourceAccessor;
 public class VisualReferenceEditorPanel extends JPanel implements PropertyChangeListener {
 
 	private static final long serialVersionUID = 1L;
-
-	private MessageSourceAccessor messageSource;
 
 	private Montage montage;
 
@@ -88,9 +86,8 @@ public class VisualReferenceEditorPanel extends JPanel implements PropertyChange
 	private MontageTable montageTable;
 	private JScrollPane montageTableScrollPane;
 
-	public VisualReferenceEditorPanel(MessageSourceAccessor messageSource) {
+	public  VisualReferenceEditorPanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -108,13 +105,13 @@ public class VisualReferenceEditorPanel extends JPanel implements PropertyChange
 
 		JPanel tablePanel = new JPanel(new BorderLayout());
 		tablePanel.setBorder(new CompoundBorder(
-		                             new TitledBorder(messageSource.getMessage("visualReferenceEditor.targetMontage")),
+		                             new TitledBorder(_("Target montage")),
 		                             new EmptyBorder(3,3,3,3)
 		                     ));
 
 		JPanel editorPanel = new JPanel(new BorderLayout());
 		editorPanel.setBorder(new CompoundBorder(
-		                              new TitledBorder(messageSource.getMessage("visualReferenceEditor.editReference")),
+		                              new TitledBorder(_("Edit reference")),
 		                              new EmptyBorder(3,3,3,3)
 		                      ));
 
@@ -132,7 +129,7 @@ public class VisualReferenceEditorPanel extends JPanel implements PropertyChange
 		controlPanel.add(getNextChannelButton());
 		controlPanel.add(Box.createHorizontalStrut(5));
 		controlPanel.add(Box.createHorizontalGlue());
-		controlPanel.add(new JLabel(messageSource.getMessage("visualReferenceEditor.weight")));
+		controlPanel.add(new JLabel(_("Weight")));
 		controlPanel.add(Box.createHorizontalStrut(3));
 		controlPanel.add(getWeightTextField());
 		controlPanel.add(Box.createHorizontalStrut(3));
@@ -179,14 +176,13 @@ public class VisualReferenceEditorPanel extends JPanel implements PropertyChange
 	public MontageTableModel getMontageTableModel() {
 		if (montageTableModel == null) {
 			montageTableModel = new MontageTableModel();
-			montageTableModel.setMessageSource(messageSource);
 		}
 		return montageTableModel;
 	}
 
 	public MontageTable getMontageTable() {
 		if (montageTable == null) {
-			montageTable = new MontageTable(getMontageTableModel(), messageSource, true);
+			montageTable = new MontageTable(getMontageTableModel(), true);
 			montageTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 			montageTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -221,7 +217,7 @@ public class VisualReferenceEditorPanel extends JPanel implements PropertyChange
 
 	public VisualReferenceModel getEditorModel() {
 		if (editorModel == null) {
-			editorModel = new VisualReferenceModel(messageSource);
+			editorModel = new VisualReferenceModel();
 			editorModel.addPropertyChangeListener(this);
 		}
 		return editorModel;
@@ -288,7 +284,7 @@ public class VisualReferenceEditorPanel extends JPanel implements PropertyChange
 
 	public JCheckBox getBipolarCheckBox() {
 		if (bipolarCheckBox == null) {
-			bipolarCheckBox = new JCheckBox(messageSource.getMessage("visualReferenceEditor.bipolarMode"));
+			bipolarCheckBox = new JCheckBox(_("Bipolar mode"));
 
 			bipolarCheckBox.addActionListener(new ActionListener() {
 				@Override
@@ -401,9 +397,9 @@ public class VisualReferenceEditorPanel extends JPanel implements PropertyChange
 		private static final long serialVersionUID = 1L;
 
 		public PreviousChannelAction() {
-			super(messageSource.getMessage("visualReferenceEditor.previousChannel"));
+			super(_("Previous"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/previous.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("visualReferenceEditor.previousChannelToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Previous channel (Shift-Space)"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {
@@ -419,9 +415,9 @@ public class VisualReferenceEditorPanel extends JPanel implements PropertyChange
 		private static final long serialVersionUID = 1L;
 
 		public NextChannelAction() {
-			super(messageSource.getMessage("visualReferenceEditor.nextChannel"));
+			super(_("Next"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/next.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("visualReferenceEditor.nextChannelToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Next channel (Space)"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {
@@ -437,9 +433,9 @@ public class VisualReferenceEditorPanel extends JPanel implements PropertyChange
 		private static final long serialVersionUID = 1L;
 
 		public RemoveReferenceAction() {
-			super(messageSource.getMessage("visualReferenceEditor.removeReference"));
+			super(_("Remove"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/removereference.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("visualReferenceEditor.removeReferenceToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Remove this reference (Delete)"));
 			setEnabled(false);
 		}
 
@@ -465,7 +461,7 @@ public class VisualReferenceEditorPanel extends JPanel implements PropertyChange
 		public AcceptWeightAction() {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/ok.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("visualReferenceEditor.acceptWeightToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Accept edit"));
 			setEnabled(false);
 		}
 
@@ -504,7 +500,7 @@ public class VisualReferenceEditorPanel extends JPanel implements PropertyChange
 		public RejectWeightAction() {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/cancel.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("visualReferenceEditor.rejectWeightToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Discard edit"));
 			setEnabled(false);
 		}
 

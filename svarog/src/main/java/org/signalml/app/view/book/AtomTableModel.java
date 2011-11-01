@@ -4,13 +4,13 @@
 
 package org.signalml.app.view.book;
 
+import static org.signalml.app.SvarogApplication._;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableRowSorter;
 
 import org.signalml.domain.book.SegmentReconstructionProvider;
 import org.signalml.domain.book.StandardBookSegment;
 import org.signalml.exception.SanityCheckException;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** AtomTableModel
  *
@@ -29,16 +29,12 @@ public class AtomTableModel extends AbstractTableModel {
 	private static final int FREQUENCY_COLUMN = 5;
 	private static final int PHASE_COLUMN = 6;
 	private static final int RECONSTRUCTION_COLUMN = 7;
-
-	private MessageSourceAccessor messageSource;
-
 	private StandardBookSegment segment;
 	private SegmentReconstructionProvider reconstruction;
 
 	private TableRowSorter<AtomTableModel> sorter = null;
 
-	public AtomTableModel(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
+	public  AtomTableModel() {
 	}
 
 	public TableRowSorter<AtomTableModel> getSorter() {
@@ -128,28 +124,28 @@ public class AtomTableModel extends AbstractTableModel {
 		switch (column) {
 
 		case ITERATION_COLUMN :
-			return messageSource.getMessage("bookView.atomList.iteration");
+			return _("Iteration");
 
 		case MODULUS_COLUMN :
-			return messageSource.getMessage("bookView.atomList.modulus");
+			return _("Modulus");
 
 		case AMPLITUDE_COLUMN :
-			return messageSource.getMessage("bookView.atomList.amplitude");
+			return _("Amplitude");
 
 		case POSITION_COLUMN :
-			return messageSource.getMessage("bookView.atomList.position");
+			return _("Position");
 
 		case SCALE_COLUMN :
-			return messageSource.getMessage("bookView.atomList.scale");
+			return _("Scale");
 
 		case FREQUENCY_COLUMN :
-			return messageSource.getMessage("bookView.atomList.frequency");
+			return _("Frequency");
 
 		case PHASE_COLUMN :
-			return messageSource.getMessage("bookView.atomList.phase");
+			return _("Phase");
 
 		case RECONSTRUCTION_COLUMN :
-			return messageSource.getMessage("bookView.atomList.inReconstruction");
+			return _("Reconstruct");
 
 		default :
 			throw new IllegalArgumentException("No such column [" + column + "]");

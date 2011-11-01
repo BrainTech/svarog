@@ -1,5 +1,6 @@
 package org.signalml.app.view.book;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -36,7 +37,6 @@ import org.signalml.domain.book.StandardBookSegment;
 import org.signalml.domain.book.WignerMapProvider;
 import org.signalml.domain.book.WignerMapScaleType;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** BookPlot
  *
@@ -75,8 +75,6 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 
 	private BookPlotPopupProvider popupMenuProvider;
 	private BookView view;
-
-	private MessageSourceAccessor messageSource;
 	private PleaseWaitDialog pleaseWaitDialog;
 
 	private StandardBookSegment segment;
@@ -171,8 +169,6 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 
 		setBorder(new EmptyBorder(5,5,5,5));
 		setFont(new Font(Font.DIALOG, Font.PLAIN, 10));
-
-		messageSource = view.getMessageSource();
 
 		view.addPropertyChangeListener(this);
 
@@ -1001,7 +997,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 
 		if (samples == null) {
 
-			String label = messageSource.getMessage("bookView.noSignalToPaint");
+			String label = _("(no signal to paint)");
 			Rectangle2D stringBounds;
 			int width;
 			int height;
@@ -1128,7 +1124,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 
 			level = originalSignalRectangle.y + (originalSignalRectangle.height) / 2;
 
-			label = messageSource.getMessage("bookView.originalSignal");
+			label = _("Original");
 			stringBounds = font.getStringBounds(label, fontRenderContext);
 
 			width = (int) stringBounds.getWidth();
@@ -1142,7 +1138,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 
 			level = fullReconstructionRectangle.y + (fullReconstructionRectangle.height) / 2;
 
-			label = messageSource.getMessage("bookView.reconstructionSignal");
+			label = _("Reconstruction");
 			stringBounds = font.getStringBounds(label, fontRenderContext);
 
 			width = (int) stringBounds.getWidth();
@@ -1156,7 +1152,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 
 			level = reconstructionRectangle.y + (reconstructionRectangle.height) / 2;
 
-			label = messageSource.getMessage("bookView.chosenSignal");
+			label = _("Chosen");
 			stringBounds = font.getStringBounds(label, fontRenderContext);
 
 			width = (int) stringBounds.getWidth();
@@ -1281,42 +1277,42 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 
 				StringBuilder sb = new StringBuilder("<html><body>");
 				sb.append("<b>")
-				.append(messageSource.getMessage("bookView.toolTip.atom", new Object[] { segment.indexOfAtom(nearestAtom)+1 }))
+				.append(java.text.MessageFormat.format(_("Atom {0}"), new Object[] { segment.indexOfAtom(nearestAtom)+1 }))
 				.append("</b>");
 
 				sb.append("<p><table cellpadding=\"0\">");
 				sb.append("<tr><td>")
-				.append(messageSource.getMessage("bookView.toolTip.position"))
+				.append(_("Position"))
 				.append("</td><td>&nbsp;</td><td>")
 				.append(toolTipFormat.format(nearestAtom.getTimePosition()))
 				.append("</td></tr>");
 
 				sb.append("<tr><td>")
-				.append(messageSource.getMessage("bookView.toolTip.frequency"))
+				.append(_("Frequency"))
 				.append("</td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td>")
 				.append(toolTipFormat.format(nearestAtom.getFrequency()))
 				.append("</td></tr>");
 
 				sb.append("<tr><td>")
-				.append(messageSource.getMessage("bookView.toolTip.modulus"))
+				.append(_("Modulus"))
 				.append("</td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td>")
 				.append(toolTipFormat.format(nearestAtom.getModulus()))
 				.append("</td></tr>");
 
 				sb.append("<tr><td>")
-				.append(messageSource.getMessage("bookView.toolTip.amplitude"))
+				.append(_("Amplitude"))
 				.append("</td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td>")
 				.append(toolTipFormat.format(nearestAtom.getAmplitude()))
 				.append("</td></tr>");
 
 				sb.append("<tr><td>")
-				.append(messageSource.getMessage("bookView.toolTip.scale"))
+				.append(_("Scale"))
 				.append("</td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td>")
 				.append(toolTipFormat.format(nearestAtom.getScale()))
 				.append("</td></tr>");
 
 				sb.append("<tr><td>")
-				.append(messageSource.getMessage("bookView.toolTip.phase"))
+				.append(_("Phase"))
 				.append("</td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td>")
 				.append(toolTipFormat.format(nearestAtom.getPhase()))
 				.append("</td></tr>");
@@ -1332,7 +1328,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 			return cachedToolTipText;
 
 		} else {
-			return messageSource.getMessage("bookView.toolTip.noNearbyAtom");
+			return _("No nearby atom");
 		}
 
 	}
@@ -1469,9 +1465,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 
 	/* Other getters and setters */
 
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
-	}
+	
 
 	public BookView getView() {
 		return view;

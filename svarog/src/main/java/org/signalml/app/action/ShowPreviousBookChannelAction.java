@@ -11,7 +11,6 @@ import java.beans.PropertyChangeListener;
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.BookViewFocusSelector;
 import org.signalml.app.view.book.BookView;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ShowPreviousBookChannelAction
  *
@@ -24,8 +23,8 @@ public class ShowPreviousBookChannelAction extends AbstractFocusableSignalMLActi
 
 	protected static final Logger logger = Logger.getLogger(ShowPreviousBookChannelAction.class);
 
-	public ShowPreviousBookChannelAction(MessageSourceAccessor messageSource, BookViewFocusSelector bookViewFocusSelector) {
-		super(messageSource, bookViewFocusSelector);
+	public  ShowPreviousBookChannelAction( BookViewFocusSelector bookViewFocusSelector) {
+		super( bookViewFocusSelector);
 		setText("action.showPreviousBookChannel");
 		setIconPath("org/signalml/app/icon/previousbookchannel.png");
 		setToolTip("action.showPreviousBookChannelToolTip");

@@ -22,7 +22,6 @@ import org.signalml.app.model.BookTreeModel;
 import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.view.AbstractViewerTree;
 import org.signalml.plugin.impl.PluginAccessClass;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ViewerBookTree
  *
@@ -45,8 +44,8 @@ public class ViewerBookTree extends AbstractViewerTree  implements BookDocumentF
 
 	private BookDocument activeBookDocument;
 
-	public ViewerBookTree(BookTreeModel model, MessageSourceAccessor messageSource) {
-		super(model,messageSource);
+	public ViewerBookTree(BookTreeModel model) {
+		super(model);
 		setCellRenderer(new BookTreeCellRenderer());
 		expandPath(new TreePath(new Object[] {model.getRoot()}));
 		addMouseListener(new MouseEventHandler());
@@ -135,14 +134,14 @@ public class ViewerBookTree extends AbstractViewerTree  implements BookDocumentF
 
 	public ActivateDocumentAction getActivateDocumentAction() {
 		if (activateDocumentAction == null) {
-			activateDocumentAction = new ActivateDocumentAction(messageSource,actionFocusManager,this);
+			activateDocumentAction = new ActivateDocumentAction(actionFocusManager,this);
 		}
 		return activateDocumentAction;
 	}
 
 	public CloseDocumentAction getCloseDocumentAction() {
 		if (closeDocumentAction == null) {
-			closeDocumentAction = new CloseDocumentAction(messageSource,this);
+			closeDocumentAction = new CloseDocumentAction(this);
 			closeDocumentAction.setDocumentFlowIntegrator(documentFlowIntegrator);
 		}
 		return closeDocumentAction;

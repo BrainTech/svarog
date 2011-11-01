@@ -1,7 +1,7 @@
 package org.signalml.app.worker.amplifiers;
 
+import static org.signalml.app.SvarogApplication._;
 import java.io.File;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Concrete {@link AbstractDeviceDiscoverer} discovering USB devices
@@ -17,9 +17,9 @@ public class USBDeviceDiscoverer extends AbstractDeviceDiscoverer {
          *
          * @param messageSource {@link #messageSource}
          */
-        public USBDeviceDiscoverer(MessageSourceAccessor messageSource) {
+        public  USBDeviceDiscoverer() {
                 
-                super(messageSource);
+                super();
         }
 
         /**
@@ -42,6 +42,6 @@ public class USBDeviceDiscoverer extends AbstractDeviceDiscoverer {
                         deviceFound(info);
                 }
 
-                return messageSource.getMessage("amplifierSelection.usbSearchCompleted");
+                return _("USB search completed.");
         }
 }

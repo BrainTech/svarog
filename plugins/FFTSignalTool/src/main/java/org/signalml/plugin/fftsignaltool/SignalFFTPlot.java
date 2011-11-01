@@ -36,7 +36,7 @@ import org.signalml.plugin.export.view.ExportedSignalPlot;
 import org.signalml.plugin.fft.export.FourierTransform;
 import org.signalml.plugin.fft.export.WindowType;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
+import static org.signalml.plugin.fftsignaltool.FFTSignalTool._;
 
 /**
  * Plot on which the power spectrum of the signal (fragment near cursor) is
@@ -201,17 +201,11 @@ public class SignalFFTPlot extends JComponent {
 	private String error;
 
 	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
-
-	/**
 	 * Constructor. Sets the source of messages, title font and border.
 	 * @param messageSource the source of messages (labels)
 	 */
-	public SignalFFTPlot(MessageSourceAccessor messageSource) {
+	public  SignalFFTPlot() {
 		super();
-		this.messageSource = messageSource;
 		setBorder(new LineBorder(Color.LIGHT_GRAY, 3, false));
 		titleFont = new Font(Font.DIALOG, Font.PLAIN, 12);
 	}
@@ -238,11 +232,11 @@ public class SignalFFTPlot extends JComponent {
 		int firstSample = (int) Math.floor((focusPoint.x / timeZoomFactor)
 				- windowWidth / 2);
 		if (firstSample < 0) {
-			error = messageSource.getMessage("fft.notEnoughSignalPoints");
+			error = _("Not enough signal points");
 		}
 		int lastSample = firstSample + windowWidth;
 		if (lastSample >= plot.getMaxSampleCount()) {
-			error = messageSource.getMessage("fft.notEnoughSignalPoints");
+			error = _("Not enough signal points");
 		}
 		if (error != null) {
 			return;
@@ -334,7 +328,7 @@ public class SignalFFTPlot extends JComponent {
 		StringBuilder maxTimeSb = new StringBuilder(20);
 		Util.addTime(maxTime, maxTimeSb);
 
-		String title = messageSource.getMessage("fft.chartTitle",
+		String title = java.text.MessageFormat.format(_("FFT over {0} points {1} - {2} ({3})"),
 				new Object[] { new Integer(windowWidth), minTimeSb.toString(),
 						maxTimeSb.toString(), channelSamples.getName() });
 

@@ -11,7 +11,6 @@ import org.signalml.app.action.selector.MontageFocusSelector;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.domain.montage.Montage;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ApplyDefaultMontageAction
  *
@@ -24,8 +23,8 @@ public class ApplyDefaultMontageAction extends AbstractFocusableSignalMLAction<M
 
 	protected static final Logger logger = Logger.getLogger(ApplyDefaultMontageAction.class);
 
-	public ApplyDefaultMontageAction(MessageSourceAccessor messageSource, MontageFocusSelector montageFocusSelector) {
-		super(messageSource, montageFocusSelector);
+	public  ApplyDefaultMontageAction( MontageFocusSelector montageFocusSelector) {
+		super( montageFocusSelector);
 		setText("action.applyDefaultMontage");
 		setIconPath("org/signalml/app/icon/defaultmontage.png");
 		setToolTip("action.applyDefaultMontageToolTip");

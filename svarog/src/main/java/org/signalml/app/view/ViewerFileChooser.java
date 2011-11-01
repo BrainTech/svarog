@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 import java.io.File;
 import java.util.Arrays;
@@ -16,7 +17,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.view.dialog.OptionPane;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ViewerFileChooser
  *
@@ -53,8 +53,6 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 	private OptionSet classPathDirectoryPreset;
 	private OptionSet jarFilePreset;
 	private OptionSet codeFilePreset;
-
-	private MessageSourceAccessor messageSource;
 	private ApplicationConfiguration applicationConfig;
 
 	protected synchronized void initialize() {
@@ -63,282 +61,282 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 
 		/* save console as text */
 		consoleSaveAsText = new OptionSet();
-		consoleSaveAsText.title = messageSource.getMessage("filechooser.consoleSaveAsText.title");
-		consoleSaveAsText.okButton = messageSource.getMessage("save");
+		consoleSaveAsText.title = _("Choose text file to save");
+		consoleSaveAsText.okButton = _("Save");
 		consoleSaveAsText.acceptAllUsed = true;
 		consoleSaveAsText.multiSelectionEnabled = false;
 		consoleSaveAsText.fileSelectionMode = FILES_ONLY;
 
 		filters.clear();
-		filters.add(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.textFiles"), "txt"));
+		filters.add(new FileNameExtensionFilter(_("Text files (*.txt)"), "txt"));
 
 		consoleSaveAsText.fileFilters = filters.toArray(new FileFilter[filters.size()]);
 
 		/* save table as text */
 		tableSaveAsText = new OptionSet();
-		tableSaveAsText.title = messageSource.getMessage("filechooser.tableSaveAsText.title");
-		tableSaveAsText.okButton = messageSource.getMessage("save");
+		tableSaveAsText.title = _("Choose text file to save");
+		tableSaveAsText.okButton = _("Save");
 		tableSaveAsText.acceptAllUsed = true;
 		tableSaveAsText.multiSelectionEnabled = false;
 		tableSaveAsText.fileSelectionMode = FILES_ONLY;
 
 		filters.clear();
-		filters.add(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.textFiles"), "txt"));
+		filters.add(new FileNameExtensionFilter(_("Text files (*.txt)"), "txt"));
 
 		tableSaveAsText.fileFilters = filters.toArray(new FileFilter[filters.size()]);
 
 		/* save samples as text */
 		samplesSaveAsText = new OptionSet();
-		samplesSaveAsText.title = messageSource.getMessage("filechooser.samplesSaveAsText.title");
-		samplesSaveAsText.okButton = messageSource.getMessage("save");
+		samplesSaveAsText.title = _("Choose text file to save");
+		samplesSaveAsText.okButton = _("Save");
 		samplesSaveAsText.acceptAllUsed = true;
 		samplesSaveAsText.multiSelectionEnabled = false;
 		samplesSaveAsText.fileSelectionMode = FILES_ONLY;
 
 		filters.clear();
-		filters.add(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.textFiles"), "txt"));
+		filters.add(new FileNameExtensionFilter(_("Text files (*.txt)"), "txt"));
 
 		samplesSaveAsText.fileFilters = filters.toArray(new FileFilter[filters.size()]);
 
 		/* save samples as text */
 		samplesSaveAsFloat = new OptionSet();
-		samplesSaveAsFloat.title = messageSource.getMessage("filechooser.samplesSaveAsFloat.title");
-		samplesSaveAsFloat.okButton = messageSource.getMessage("save");
+		samplesSaveAsFloat.title = _("Choose binary file to save");
+		samplesSaveAsFloat.okButton = _("Save");
 		samplesSaveAsFloat.acceptAllUsed = true;
 		samplesSaveAsFloat.multiSelectionEnabled = false;
 		samplesSaveAsFloat.fileSelectionMode = FILES_ONLY;
 
 		filters.clear();
-		filters.add(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.binaryFiles"), "bin"));
+		filters.add(new FileNameExtensionFilter(_("Binary files (*.bin)"), "bin"));
 
 		samplesSaveAsFloat.fileFilters = filters.toArray(new FileFilter[filters.size()]);
 
 		/* save chart as png */
 		chartSaveAsPng = new OptionSet();
-		chartSaveAsPng.title = messageSource.getMessage("filechooser.chartSaveAsPng.title");
-		chartSaveAsPng.okButton = messageSource.getMessage("save");
+		chartSaveAsPng.title = _("Choose png file to save");
+		chartSaveAsPng.okButton = _("Save");
 		chartSaveAsPng.acceptAllUsed = true;
 		chartSaveAsPng.multiSelectionEnabled = false;
 		chartSaveAsPng.fileSelectionMode = FILES_ONLY;
 
 		filters.clear();
-		filters.add(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.pngFiles"), "png"));
+		filters.add(new FileNameExtensionFilter(_("PNG graphic files (*.png)"), "png"));
 
 		chartSaveAsPng.fileFilters = filters.toArray(new FileFilter[filters.size()]);
 
 		/* save MP5 config */
 		saveMP5Config = new OptionSet();
-		saveMP5Config.title = messageSource.getMessage("filechooser.saveMP5Config.title");
-		saveMP5Config.okButton = messageSource.getMessage("save");
+		saveMP5Config.title = _("Choose MP5 config file to save");
+		saveMP5Config.okButton = _("Save");
 		saveMP5Config.acceptAllUsed = true;
 		saveMP5Config.multiSelectionEnabled = false;
 		saveMP5Config.fileSelectionMode = FILES_ONLY;
 
 		filters.clear();
-		filters.add(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.configFiles"), "cfg"));
+		filters.add(new FileNameExtensionFilter(_("Config files (*.cfg)"), "cfg"));
 
 		saveMP5Config.fileFilters = filters.toArray(new FileFilter[filters.size()]);
 
 		/* save MP5 config */
 		saveMP5Signal = new OptionSet();
-		saveMP5Signal.title = messageSource.getMessage("filechooser.saveMP5Signal.title");
-		saveMP5Signal.okButton = messageSource.getMessage("save");
+		saveMP5Signal.title = _("Choose MP5 signal file to save");
+		saveMP5Signal.okButton = _("Save");
 		saveMP5Signal.acceptAllUsed = true;
 		saveMP5Signal.multiSelectionEnabled = false;
 		saveMP5Signal.fileSelectionMode = FILES_ONLY;
 
 		filters.clear();
-		filters.add(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.binaryFiles"), "bin"));
+		filters.add(new FileNameExtensionFilter(_("Binary files (*.bin)"), "bin"));
 
 		saveMP5Signal.fileFilters = filters.toArray(new FileFilter[filters.size()]);
 
 		/* save document */
 		saveDocument = new OptionSet();
-		saveDocument.title = messageSource.getMessage("filechooser.saveDocument.title");
-		saveDocument.okButton = messageSource.getMessage("save");
+		saveDocument.title = _("Save document");
+		saveDocument.okButton = _("Save");
 		saveDocument.acceptAllUsed = true;
 		saveDocument.multiSelectionEnabled = false;
 		saveDocument.fileSelectionMode = FILES_ONLY;
 
 		/* save tag */
 		saveTag = new OptionSet();
-		saveTag.title = messageSource.getMessage("filechooser.saveTag.title");
-		saveTag.okButton = messageSource.getMessage("save");
+		saveTag.title = _("Save tag");
+		saveTag.okButton = _("Save");
 		saveTag.acceptAllUsed = true;
 		saveTag.multiSelectionEnabled = false;
 		saveTag.fileSelectionMode = FILES_ONLY;
 
-		saveTag.fileFilters = ManagedDocumentType.TAG.getFileFilters(messageSource);
+		saveTag.fileFilters = ManagedDocumentType.TAG.getFileFilters();
 
 		/* open tag */
 		openTag = new OptionSet();
-		openTag.title = messageSource.getMessage("filechooser.openTag.title");
-		openTag.okButton = messageSource.getMessage("open");
+		openTag.title = _("Open tag");
+		openTag.okButton = _("Open");
 		openTag.acceptAllUsed = true;
 		openTag.multiSelectionEnabled = false;
 		openTag.fileSelectionMode = FILES_ONLY;
 
-		openTag.fileFilters = ManagedDocumentType.TAG.getFileFilters(messageSource);
+		openTag.fileFilters = ManagedDocumentType.TAG.getFileFilters();
 
 		/* expert tag */
 		expertTag = new OptionSet();
-		expertTag.title = messageSource.getMessage("filechooser.expertTag.title");
-		expertTag.okButton = messageSource.getMessage("choose");
+		expertTag.title = _("Choose expert tag");
+		expertTag.okButton = _("Choose");
 		expertTag.acceptAllUsed = true;
 		expertTag.multiSelectionEnabled = false;
 		expertTag.fileSelectionMode = FILES_ONLY;
 
-		expertTag.fileFilters = ManagedDocumentType.TAG.getFileFilters(messageSource);
+		expertTag.fileFilters = ManagedDocumentType.TAG.getFileFilters();
 
 		/* import tag */
 		importTag = new OptionSet();
-		importTag.title = messageSource.getMessage("filechooser.importTag.title");
-		importTag.okButton = messageSource.getMessage("import");
+		importTag.title = _("Import legacy tag");
+		importTag.okButton = _("Import");
 		importTag.acceptAllUsed = true;
 		importTag.multiSelectionEnabled = false;
 		importTag.fileSelectionMode = FILES_ONLY;
 
 		/* read XML manifest */
 		readXMLManifest = new OptionSet();
-		readXMLManifest.title = messageSource.getMessage("filechooser.readXMLManifest.title");
-		readXMLManifest.okButton = messageSource.getMessage("read");
+		readXMLManifest.title = _("Read XML manifest");
+		readXMLManifest.okButton = _("Read");
 		readXMLManifest.acceptAllUsed = true;
 		readXMLManifest.multiSelectionEnabled = false;
 		readXMLManifest.fileSelectionMode = FILES_ONLY;
 
 		filters.clear();
-		filters.add(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.xmlFiles"), "xml"));
+		filters.add(new FileNameExtensionFilter(_("XML files (*.xml)"), "xml"));
 
 		readXMLManifest.fileFilters = filters.toArray(new FileFilter[filters.size()]);
 
 		/* export tag */
 		exportTag = new OptionSet();
-		exportTag.title = messageSource.getMessage("filechooser.exportTag.title");
-		exportTag.okButton = messageSource.getMessage("export");
+		exportTag.title = _("Export legacy tag");
+		exportTag.okButton = _("Export");
 		exportTag.acceptAllUsed = true;
 		exportTag.multiSelectionEnabled = false;
 		exportTag.fileSelectionMode = FILES_ONLY;
 
 		/* export signal */
 		exportSignal = new OptionSet();
-		exportSignal.title = messageSource.getMessage("filechooser.exportSignal.title");
-		exportSignal.okButton = messageSource.getMessage("export");
+		exportSignal.title = _("Export binary signal");
+		exportSignal.okButton = _("Export");
 		exportSignal.acceptAllUsed = true;
 		exportSignal.multiSelectionEnabled = false;
 		exportSignal.fileSelectionMode = FILES_ONLY;
 
 		filters.clear();
-		filters.add(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.binaryFiles"), "bin"));
+		filters.add(new FileNameExtensionFilter(_("Binary files (*.bin)"), "bin"));
 
 		exportSignal.fileFilters = filters.toArray(new FileFilter[filters.size()]);
 
 		/* export book */
 		exportBook = new OptionSet();
-		exportBook.title = messageSource.getMessage("filechooser.exportBook.title");
-		exportBook.okButton = messageSource.getMessage("export");
+		exportBook.title = _("Export book");
+		exportBook.okButton = _("Export");
 		exportBook.acceptAllUsed = true;
 		exportBook.multiSelectionEnabled = false;
 		exportBook.fileSelectionMode = FILES_ONLY;
 
 		filters.clear();
-		filters.add(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.bookFiles"), "b"));
+		filters.add(new FileNameExtensionFilter(_("Book files (*.b)"), "b"));
 
 		exportBook.fileFilters = filters.toArray(new FileFilter[filters.size()]);
 
 		/* save & load preset */
 		savePreset = new OptionSet();
-		savePreset.title = messageSource.getMessage("filechooser.savePreset.title");
-		savePreset.okButton = messageSource.getMessage("save");
+		savePreset.title = _("Save preset to file");
+		savePreset.okButton = _("Save");
 		savePreset.acceptAllUsed = true;
 		savePreset.multiSelectionEnabled = false;
 		savePreset.fileSelectionMode = FILES_ONLY;
 
 		loadPreset = new OptionSet();
-		loadPreset.title = messageSource.getMessage("filechooser.loadPreset.title");
-		loadPreset.okButton = messageSource.getMessage("load");
+		loadPreset.title = _("Load preset from file");
+		loadPreset.okButton = _("Load");
 		loadPreset.acceptAllUsed = true;
 		loadPreset.multiSelectionEnabled = false;
 		loadPreset.fileSelectionMode = FILES_ONLY;
 
 		filters.clear();
-		filters.add(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.xmlFiles"), "xml"));
+		filters.add(new FileNameExtensionFilter(_("XML files (*.xml)"), "xml"));
 
 		savePreset.fileFilters = filters.toArray(new FileFilter[filters.size()]);
 		loadPreset.fileFilters = filters.toArray(new FileFilter[filters.size()]);
 
 		executablePreset = new OptionSet();
-		executablePreset.title = messageSource.getMessage("filechooser.executablePreset.title");
-		executablePreset.okButton = messageSource.getMessage("choose");
+		executablePreset.title = _("Choose executable");
+		executablePreset.okButton = _("Choose");
 		executablePreset.acceptAllUsed = true;
 		executablePreset.multiSelectionEnabled = false;
 		executablePreset.fileSelectionMode = FILES_ONLY;
 
 		filters.clear();
 		if (Pattern.matches(".*[Ww]indows.*", System.getProperty("os.name"))) {
-			filters.add(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.exeFiles"), "exe"));
+			filters.add(new FileNameExtensionFilter(_("Executable files (*.exe)"), "exe"));
 		}
 
 		executablePreset.fileFilters = filters.toArray(new FileFilter[filters.size()]);
 
 		bookPreset = new OptionSet();
-		bookPreset.title = messageSource.getMessage("filechooser.bookFilePreset.title");
-		bookPreset.okButton = messageSource.getMessage("choose");
+		bookPreset.title = _("Choose a book file");
+		bookPreset.okButton = _("Choose");
 		bookPreset.acceptAllUsed = true;
 		bookPreset.multiSelectionEnabled = false;
 		bookPreset.fileSelectionMode = FILES_ONLY;
 
 		filters.clear();
-		filters.add(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.bookFiles"), "b"));
+		filters.add(new FileNameExtensionFilter(_("Book files (*.b)"), "b"));
 
 		bookPreset.fileFilters = filters.toArray(new FileFilter[filters.size()]);
 
 		bookSavePreset = new OptionSet();
-		bookSavePreset.title = messageSource.getMessage("filechooser.bookSavePreset.title");
-		bookSavePreset.okButton = messageSource.getMessage("save");
+		bookSavePreset.title = _("Choose a book file to save");
+		bookSavePreset.okButton = _("Save");
 		bookSavePreset.acceptAllUsed = true;
 		bookSavePreset.multiSelectionEnabled = false;
 		bookSavePreset.fileSelectionMode = FILES_ONLY;
 
 		filters.clear();
-		filters.add(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.bookFiles"), "b"));
+		filters.add(new FileNameExtensionFilter(_("Book files (*.b)"), "b"));
 
 		bookSavePreset.fileFilters = filters.toArray(new FileFilter[filters.size()]);
 
 		workingDirectoryPreset = new OptionSet();
-		workingDirectoryPreset.title = messageSource.getMessage("filechooser.workingDirectoryPreset.title");
-		workingDirectoryPreset.okButton = messageSource.getMessage("choose");
+		workingDirectoryPreset.title = _("Choose working directory");
+		workingDirectoryPreset.okButton = _("Choose");
 		workingDirectoryPreset.acceptAllUsed = false;
 		workingDirectoryPreset.multiSelectionEnabled = false;
 		workingDirectoryPreset.fileSelectionMode = DIRECTORIES_ONLY;
 
 		classPathDirectoryPreset = new OptionSet();
-		classPathDirectoryPreset.title = messageSource.getMessage("filechooser.classPathDirectoryPreset.title");
-		classPathDirectoryPreset.okButton = messageSource.getMessage("choose");
+		classPathDirectoryPreset.title = _("Choose class path directories");
+		classPathDirectoryPreset.okButton = _("Choose");
 		classPathDirectoryPreset.acceptAllUsed = false;
 		classPathDirectoryPreset.multiSelectionEnabled = true;
 		classPathDirectoryPreset.fileSelectionMode = DIRECTORIES_ONLY;
 
 		jarFilePreset = new OptionSet();
-		jarFilePreset.title = messageSource.getMessage("filechooser.jarFilePreset.title");
-		jarFilePreset.okButton = messageSource.getMessage("choose");
+		jarFilePreset.title = _("Choose jar files");
+		jarFilePreset.okButton = _("Choose");
 		jarFilePreset.acceptAllUsed = true;
 		jarFilePreset.multiSelectionEnabled = true;
 		jarFilePreset.fileSelectionMode = FILES_ONLY;
 
 		filters.clear();
-		filters.add(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.jarFiles"), "jar"));
+		filters.add(new FileNameExtensionFilter(_("Jar files (*.jar)"), "jar"));
 
 		jarFilePreset.fileFilters = filters.toArray(new FileFilter[filters.size()]);
 
 		codeFilePreset = new OptionSet();
-		codeFilePreset.title = messageSource.getMessage("filechooser.codeFilePreset.title");
-		codeFilePreset.okButton = messageSource.getMessage("choose");
+		codeFilePreset.title = _("Choose code file");
+		codeFilePreset.okButton = _("Choose");
 		codeFilePreset.acceptAllUsed = true;
 		codeFilePreset.multiSelectionEnabled = false;
 		codeFilePreset.fileSelectionMode = FILES_ONLY;
 
 		filters.clear();
-		filters.add(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.codeFiles"), "java", "class"));
+		filters.add(new FileNameExtensionFilter(_("Code files (*.java, *.class)"), "java", "class"));
 
 		codeFilePreset.fileFilters = filters.toArray(new FileFilter[filters.size()]);
 
@@ -1049,10 +1047,6 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 
 		return file;
 
-	}
-
-	protected synchronized void setMessageSource(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
 	}
 
 	public synchronized ApplicationConfiguration getApplicationConfig() {

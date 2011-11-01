@@ -19,7 +19,6 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.task.LocalTask;
 import org.signalml.task.Task;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** RunMethodAction
  *
@@ -36,8 +35,7 @@ public class RunMethodAction extends AbstractSignalMLAction {
 	private ApplicationMethodManager methodManager;
 	private Method method;
 
-	public RunMethodAction(MessageSourceAccessor messageSource, Method method, ApplicationMethodManager methodManager) {
-		this.messageSource = messageSource;
+	public  RunMethodAction( Method method, ApplicationMethodManager methodManager) {
 		this.method = method;
 		this.methodManager = methodManager;
 		String nameCode = null;

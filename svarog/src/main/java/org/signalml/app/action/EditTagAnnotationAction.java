@@ -13,7 +13,6 @@ import org.signalml.app.document.TagDocument;
 import org.signalml.app.view.dialog.EditTagAnnotationDialog;
 import org.signalml.app.view.signal.PositionedTag;
 import org.signalml.domain.tag.StyledTagSet;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** EditTagAnnotationAction
  *
@@ -28,8 +27,8 @@ public class EditTagAnnotationAction extends AbstractFocusableSignalMLAction<Tag
 
 	private EditTagAnnotationDialog editTagAnnotationDialog;
 
-	public EditTagAnnotationAction(MessageSourceAccessor messageSource, TagFocusSelector tagFocusSelector) {
-		super(messageSource, tagFocusSelector);
+	public  EditTagAnnotationAction( TagFocusSelector tagFocusSelector) {
+		super( tagFocusSelector);
 		setText("action.editTagAnnotation");
 		setToolTip("action.editTagAnnotationToolTip");
 		setIconPath("org/signalml/app/icon/editannotation.png");

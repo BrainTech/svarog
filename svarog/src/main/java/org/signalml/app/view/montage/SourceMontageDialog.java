@@ -4,16 +4,16 @@
 
 package org.signalml.app.view.montage;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Window;
 
 import javax.swing.JComponent;
 
 import org.signalml.app.model.SourceMontageDescriptor;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /** SourceMontageDialog
@@ -21,7 +21,7 @@ import org.springframework.validation.Errors;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class SourceMontageDialog extends AbstractDialog {
+public class SourceMontageDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
 
 	private static final long serialVersionUID = 1L;
 
@@ -29,17 +29,17 @@ public class SourceMontageDialog extends AbstractDialog {
 
 	private SourceMontage currentMontage;
 
-	public SourceMontageDialog(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  SourceMontageDialog() {
+		super();
 	}
 
-	public SourceMontageDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public  SourceMontageDialog( Window w, boolean isModal) {
+		super( w, isModal);
 	}
 
 	@Override
 	protected void initialize() {
-		setTitle(messageSource.getMessage("signalMontage.title"));
+		setTitle(_("Signal montage"));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/montage.png"));
 		setResizable(false);
 		super.initialize();
@@ -48,7 +48,7 @@ public class SourceMontageDialog extends AbstractDialog {
 	@Override
 	public JComponent createInterface() {
 
-		editMontagePanel = new SourceMontageChannelsPanel(messageSource);
+		editMontagePanel = new SourceMontageChannelsPanel();
 
 		return editMontagePanel;
 	}

@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.signal;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -72,7 +73,6 @@ import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
 import org.signalml.plugin.export.signal.tagStyle.TagAttributes;
 import org.signalml.plugin.export.view.ExportedSignalPlot;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** SignalPlot
  *
@@ -176,8 +176,6 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	private boolean compensationEnabled = true;
 	private boolean ignoreSliderEvents = false;
 
-	private MessageSourceAccessor messageSource;
-
 	private ArrayList<PositionedTag> tempTagList;
 
 	private int tempTagCnt;
@@ -207,10 +205,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		this.view = view;
 		this.masterPlot = masterPlot;
 
-		messageSource = view.getMessageSource();
-
 		setBackground(Color.WHITE);
-
 		setFocusable(true);
 
 		signalChain = SignalProcessingChain.createFilteredChain(document.getSampleSource(), document.getType());
@@ -1256,7 +1251,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			return null;
 		}
 
-		String locationMessage = messageSource.getMessage("signalView.plotToolTipSignal", new Object[] {
+		String locationMessage = java.text.MessageFormat.format(_("T: {0}, V:{1} [P: {2}, B: {3}, C: {4}]"), new Object[] {
 		                                 toTimeSpace(p),
 		                                 toValueSpace(p),
 		                                 toPageSpace(p),
@@ -2086,7 +2081,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		SignalSelectionType type = tag.getType();
 		if (type == SignalSelectionType.PAGE || type == SignalSelectionType.BLOCK
 			|| (type == SignalSelectionType.CHANNEL && tag.getChannel() == Tag.CHANNEL_NULL)) {
-			return messageSource.getMessage("tagWithoutChannel", new Object[] {
+			return java.text.MessageFormat.format(_("{0} [{1}->{3}]"), new Object[] {
 			                                        tag.getStyle().getDescriptionOrName(),
 			                                        tag.getPosition(),
 			                                        tag.getLength(),
@@ -2094,13 +2089,13 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			                                });
 		} else {
 			if (tag.isMarker()) {
-				return messageSource.getMessage("markerWithChannel", new Object[] {
+				return java.text.MessageFormat.format(_("{0} [{1} in channel {2}]"), new Object[] {
 				                                        tag.getStyle().getDescriptionOrName(),
 				                                        tag.getCenterPosition(),
 				                                        signalChain.getPrimaryLabel(tag.getChannel())
 				                                });
 			} else {
-				return messageSource.getMessage("tagWithChannel", new Object[] {
+				return java.text.MessageFormat.format(_("{0} [{1}->{3} in channel {4}]"), new Object[] {
 				                                        tag.getStyle().getDescriptionOrName(),
 				                                        tag.getPosition(),
 				                                        tag.getLength(),
@@ -2663,15 +2658,15 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 				String montageString;
 				if (localMontage == null) {
-					montageString = messageSource.getMessage("signalView.montageInherited");
+					montageString = _("montage from document");
 				} else {
-					montageString = messageSource.getMessage("signalView.montageLocal");
+					montageString = _("modified montage");
 				}
 
-				String hSynchroString = horizontalLock ? messageSource.getMessage("signalView.on") : messageSource.getMessage("signalView.off");
-				String vSynchroString = verticalLock ? messageSource.getMessage("signalView.on") : messageSource.getMessage("signalView.off");
+				String hSynchroString = horizontalLock ? _("on") : _("off");
+				String vSynchroString = verticalLock ? _("on") : _("off");
 
-				title = messageSource.getMessage("signalView.slavePlot.title", new Object[] { montageString, hSynchroString, vSynchroString });
+				title = java.text.MessageFormat.format(_("Auxiliary signal plot ({0}, horizontal synchro {1}, vertical synchro {2})"), new Object[] { montageString, hSynchroString, vSynchroString });
 
 			}
 
@@ -2715,16 +2710,16 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 				}
 
 				if (viewportPosition.x == masterViewportPosition.x) {
-					text = messageSource.getMessage("signalView.slavePlot.synchronized");
+					text = _("synchronized");
 				} else {
 					float timeDiff = toTimeSpace(viewportPosition) - masterPlot.toTimeSpace(masterViewportPosition);
 					Formatter formatter = new Formatter();
 					if (timeDiff < 0) {
 						formatter.format("%.2f", -timeDiff);
-						text = messageSource.getMessage("signalView.slavePlot.trailing", new Object[] { formatter.toString() });
+						text = java.text.MessageFormat.format(_("trailing by {0} s"), new Object[] { formatter.toString() });
 					} else {
 						formatter.format("%.2f", timeDiff);
-						text = messageSource.getMessage("signalView.slavePlot.leading", new Object[] { formatter.toString() });
+						text = java.text.MessageFormat.format(_("leading by {0} s"), new Object[] { formatter.toString() });
 					}
 				}
 
@@ -2806,9 +2801,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		signalPlotColumnHeader.setSignalViewPopupProvider(popupMenuProvider);
 	}
 
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
-	}
+	
 
 	@Override
 	public SignalPlot getMasterPlot() {

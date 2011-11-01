@@ -10,7 +10,6 @@ import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.ViewFocusSelector;
 import org.signalml.app.view.View;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ShowStatusBarAction
  *
@@ -23,8 +22,8 @@ public class ShowStatusBarAction extends AbstractSignalMLAction {
 
 	protected static final Logger logger = Logger.getLogger(ShowStatusBarAction.class);
 
-	public ShowStatusBarAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  ShowStatusBarAction() {
+		super();
 		setText("action.showStatusBar");
 		setToolTip("action.showStatusBarToolTip");
 		putValue(SELECTED_KEY, new Boolean(true));

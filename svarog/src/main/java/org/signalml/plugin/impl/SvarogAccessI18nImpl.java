@@ -7,6 +7,7 @@ import org.signalml.util.SvarogConstants;
 import org.springframework.context.MessageSourceResolvable;
 import org.xnap.commons.i18n.I18n;
 import org.xnap.commons.i18n.I18nFactory;
+import org.signalml.app.logging.SvarogLogger;
 
 /**
  * {@link SvarogAccessI18n} implementation using org.xnap.commons.i18n.* classes.
@@ -42,6 +43,7 @@ public class SvarogAccessI18nImpl implements SvarogI18n, SvarogAccessI18n {
     }
     
     private I18n getI18n(PluginAuth auth, String catalogId) {
+    	// SvarogLogger.getSharedInstance().debug("getI18n: " + auth + "/" + catalogId);
     	if (null == auth)
     		return I18nFactory.getI18n(SvarogAccessI18nImpl.class, SvarogCatalogId);
     	else
@@ -53,7 +55,9 @@ public class SvarogAccessI18nImpl implements SvarogI18n, SvarogAccessI18n {
      */
     @Override
     public String translate(PluginAuth auth, String catalogId, String key) {
-        return getI18n(auth, catalogId).tr(key);
+        String s = getI18n(auth, catalogId).tr(key);
+        // SvarogLogger.getSharedInstance().debug("translate: " + key + " --> " + s);
+        return s;
     }
 
     /**
@@ -61,7 +65,9 @@ public class SvarogAccessI18nImpl implements SvarogI18n, SvarogAccessI18n {
      */
     @Override
     public String translateN(PluginAuth auth, String catalogId, String key, String keyPlural, long n) {
-        return getI18n(auth, catalogId).trn(key, keyPlural, n);
+        String s = getI18n(auth, catalogId).trn(key, keyPlural, n);
+        SvarogLogger.getSharedInstance().debug("translateN: " + key + " --> " + s);
+        return s;
     }
 
     @Override
@@ -79,16 +85,19 @@ public class SvarogAccessI18nImpl implements SvarogI18n, SvarogAccessI18n {
     }
 
 	@Override
+	@Deprecated
 	public String getMessage(MessageSourceResolvable source) {
 		return source.getDefaultMessage();
 	}
 
 	@Override
+	@Deprecated
 	public String getMessage(String msgKey) {
 		return msgKey;
 	}
 
 	@Override
+	@Deprecated
 	public String getMessage(String msgKey, String defaultMessage) {
 		return defaultMessage;
 	}

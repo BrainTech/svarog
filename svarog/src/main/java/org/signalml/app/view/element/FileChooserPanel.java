@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
@@ -18,7 +19,6 @@ import javax.swing.filechooser.FileFilter;
 
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.document.ManagedDocumentType;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * A panel containing an EmbeddedFileChooser. Allows to select a given type of
@@ -28,11 +28,6 @@ import org.springframework.context.support.MessageSourceAccessor;
  */
 public class FileChooserPanel extends JPanel {
 
-	/**
-	 * Message source capable of resolving localized messages.
-	 */
-	protected MessageSourceAccessor messageSource;
-	
 	protected ApplicationConfiguration applicationConfiguration;
 
 
@@ -53,8 +48,7 @@ public class FileChooserPanel extends JPanel {
 	 * @param managedDocumentTypes the types of documents which will be
 	 * chosen using this panel
 	 */
-	public FileChooserPanel(MessageSourceAccessor messageSource, ManagedDocumentType[] managedDocumentTypes, ApplicationConfiguration applicationConfiguration) {
-		this.messageSource = messageSource;
+	public  FileChooserPanel( ManagedDocumentType[] managedDocumentTypes, ApplicationConfiguration applicationConfiguration) {
 		this.applicationConfiguration = applicationConfiguration;
 		this.managedDocumentTypes = managedDocumentTypes.clone();
 		createInterface();
@@ -67,15 +61,15 @@ public class FileChooserPanel extends JPanel {
 	 * @param singleManagedDocumentType the type of document which will
 	 * be chosen using this panel
 	 */
-	public FileChooserPanel(MessageSourceAccessor messageSource, ManagedDocumentType singleManagedDocumentType, ApplicationConfiguration applicationConfiguration) {
-		this(messageSource, new ManagedDocumentType[] {singleManagedDocumentType}, applicationConfiguration);
+	public  FileChooserPanel( ManagedDocumentType singleManagedDocumentType, ApplicationConfiguration applicationConfiguration) {
+		this( new ManagedDocumentType[] {singleManagedDocumentType}, applicationConfiguration);
 	}
 
 	/**
 	 * Creates the GUI for this panel.
 	 */
 	private void createInterface() {
-		setBorder(BorderFactory.createTitledBorder(messageSource.getMessage("openDocument.chooseFile")));
+		setBorder(BorderFactory.createTitledBorder(_("Choose a file")));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		add(getFileChooser());
 	}
@@ -94,7 +88,7 @@ public class FileChooserPanel extends JPanel {
 	 */
 	public EmbeddedFileChooser getFileChooser() {
 		if (fileChooser == null) {
-			fileChooser = new EmbeddedFileChooser(this.messageSource, this.applicationConfiguration);
+			fileChooser = new EmbeddedFileChooser( this.applicationConfiguration);
 			fileChooser.setDialogType(JFileChooser.OPEN_DIALOG);
 			fileChooser.setFileHidingEnabled(false);
 			fileChooser.setMultiSelectionEnabled(false);
@@ -106,7 +100,7 @@ public class FileChooserPanel extends JPanel {
 			int i;
 			int e;
 			for (i=managedDocumentTypes.length-1; i>=0; i--) {
-				filters = managedDocumentTypes[i].getFileFilters(messageSource);
+				filters = managedDocumentTypes[i].getFileFilters();
 				for (e=filters.length-1; e>=0; e--) {
 					fileChooser.addChoosableFileFilter(filters[e]);
 					fileChooser.setFileFilter(filters[e]);

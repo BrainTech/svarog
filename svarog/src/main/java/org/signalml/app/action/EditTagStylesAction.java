@@ -14,7 +14,6 @@ import org.signalml.app.view.dialog.TagStylePaletteDialog;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** EditTagStylesAction
  *
@@ -29,8 +28,8 @@ public class EditTagStylesAction extends AbstractFocusableSignalMLAction<TagStyl
 
 	private TagStylePaletteDialog tagStylePaletteDialog;
 
-	public EditTagStylesAction(MessageSourceAccessor messageSource, TagStyleFocusSelector tagStyleFocusSelector) {
-		super(messageSource, tagStyleFocusSelector);
+	public  EditTagStylesAction( TagStyleFocusSelector tagStyleFocusSelector) {
+		super( tagStyleFocusSelector);
 		setText("action.editTagStyles");
 		setToolTip("action.editTagStylesToolTip");
 		setIconPath("org/signalml/app/icon/palette.png");

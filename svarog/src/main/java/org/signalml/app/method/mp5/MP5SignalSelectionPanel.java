@@ -3,6 +3,7 @@
  */
 package org.signalml.app.method.mp5;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Dimension;
 
 import javax.swing.Box;
@@ -13,7 +14,6 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** MP5SignalSelectionPanel
  *
@@ -23,15 +23,11 @@ import org.springframework.context.support.MessageSourceAccessor;
 public class MP5SignalSelectionPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-
-	private MessageSourceAccessor messageSource;
-
 	private JTextField signalTextField;
 	private JTextField selectionTextField;
 
-	public MP5SignalSelectionPanel(MessageSourceAccessor messageSource) {
+	public  MP5SignalSelectionPanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -40,7 +36,7 @@ public class MP5SignalSelectionPanel extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("mp5Method.dialog.inputData")),
+		        new TitledBorder(_("Input data")),
 		        new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);

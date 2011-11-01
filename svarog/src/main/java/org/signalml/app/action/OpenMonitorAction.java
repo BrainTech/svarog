@@ -32,7 +32,7 @@ public class OpenMonitorAction extends AbstractSignalMLAction {
 	private ViewerElementManager viewerElementManager;
 
 	public OpenMonitorAction( ViewerElementManager viewerElementManager) {
-		super(viewerElementManager.getMessageSource());
+		super();
 		this.viewerElementManager = viewerElementManager;
 		setText( "action.openMonitorLabel");
 //		setIconPath("org/signalml/app/icon/connect.png");

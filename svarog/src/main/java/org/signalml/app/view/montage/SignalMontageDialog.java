@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.montage;
 
+import static org.signalml.app.SvarogApplication._;
 import org.signalml.app.view.montage.filters.EditTimeDomainSampleFilterDialog;
 import org.signalml.app.view.montage.filters.EditFFTSampleFilterDialog;
 import java.awt.BorderLayout;
@@ -36,7 +37,7 @@ import org.signalml.domain.signal.SignalType;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.SvarogConstants;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
@@ -90,15 +91,15 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	 */
 	private PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainSampleFilterPresetManager;
 
-	public SignalMontageDialog(MessageSourceAccessor messageSource, MontagePresetManager montagePresetManager,
+	public  SignalMontageDialog( MontagePresetManager montagePresetManager,
 		PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainSampleFilterPresetManager, Window f, boolean isModal) {
-		super(messageSource, montagePresetManager, f, isModal);
+		super( montagePresetManager, f, isModal);
 		this.predefinedTimeDomainSampleFilterPresetManager = predefinedTimeDomainSampleFilterPresetManager;
 	}
 
 	@Override
 	protected void initialize() {
-		setTitle(messageSource.getMessage("signalMontage.title"));
+		setTitle(_("Signal montage"));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/montage.png"));
 		setPreferredSize(SvarogConstants.MIN_ASSUMED_DESKTOP_SIZE);
 		super.initialize();
@@ -110,30 +111,30 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 
 		JPanel interfacePanel = new JPanel(new BorderLayout());
 
-		generatorPanel = new MontageGeneratorPanel(messageSource);
+		generatorPanel = new MontageGeneratorPanel();
 		generatorPanel.setErrorsDialog(getErrorsDialog());
 		generatorPanel.setSeriousWarningDialog(getSeriousWarningDialog());
 
-		channelsPanel = new MontageChannelsPanel(messageSource);
+		channelsPanel = new MontageChannelsPanel();
 		channelsPanel.setSeriousWarningDialog(getSeriousWarningDialog());
 
-		matrixReferenceEditorPanel = new MatrixReferenceEditorPanel(messageSource);
+		matrixReferenceEditorPanel = new MatrixReferenceEditorPanel();
 
-		visualReferenceEditorPanel = new VisualReferenceEditorPanel(messageSource);
+		visualReferenceEditorPanel = new VisualReferenceEditorPanel();
 
-		filtersPanel = new MontageFiltersPanel(messageSource, predefinedTimeDomainSampleFilterPresetManager);
+		filtersPanel = new MontageFiltersPanel( predefinedTimeDomainSampleFilterPresetManager);
 		filtersPanel.setSeriousWarningDialog(getSeriousWarningDialog());
 		filtersPanel.setEditFFTSampleFilterDialog(getEditFFTSampleFilterDialog());
 		filtersPanel.setTimeDomainSampleFilterDialog(getEditTimeDomainSampleFilterDialog());
 
-		miscellaneousPanel = new MontageMiscellaneousPanel(messageSource);
+		miscellaneousPanel = new MontageMiscellaneousPanel();
 
 		tabbedPane = new JTabbedPane();
-		tabbedPane.addTab(messageSource.getMessage("signalMontage.channelsTabTitle"), channelsPanel);
-		tabbedPane.addTab(messageSource.getMessage("signalMontage.visualTabTitle"), visualReferenceEditorPanel);
-		tabbedPane.addTab(messageSource.getMessage("signalMontage.matrixTabTitle"), matrixReferenceEditorPanel);
-		tabbedPane.addTab(messageSource.getMessage("signalMontage.filtersTabTitle"), filtersPanel);
-		tabbedPane.addTab(messageSource.getMessage("signalMontage.miscellaneousTabTitle"), miscellaneousPanel);
+		tabbedPane.addTab(_("Channels"), channelsPanel);
+		tabbedPane.addTab(_("Reference editor"), visualReferenceEditorPanel);
+		tabbedPane.addTab(_("Reference matrix"), matrixReferenceEditorPanel);
+		tabbedPane.addTab(_("Filters"), filtersPanel);
+		tabbedPane.addTab(_("Miscellaneous"), miscellaneousPanel);
 		tabbedPane.addChangeListener(new ChangeListener() {
 
 			@Override
@@ -216,7 +217,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 		if (signalDocument != null) {
 			if (!currentMontage.isCompatible(signalDocument)) {
 
-				String warning =  messageSource.getMessage("montageDialog.onIncompatible");
+				String warning =  _("The selected montage is not compatible with the current signal. It will have to be adapted.<br>&nbsp;<br>This may result in a serious modification of montage structure.<br>&nbsp;<br>Are you sure you wish to <b>apply</b> the montage?");
 				SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 3);
 
 				boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
@@ -383,7 +384,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 
 	protected EditFFTSampleFilterDialog getEditFFTSampleFilterDialog() {
 		if (editFFTSampleFilterDialog == null) {
-			editFFTSampleFilterDialog = new EditFFTSampleFilterDialog(messageSource, fftFilterPresetManager, this, true);
+			editFFTSampleFilterDialog = new EditFFTSampleFilterDialog( fftFilterPresetManager, this, true);
 			editFFTSampleFilterDialog.setApplicationConfig(getApplicationConfig());
 			editFFTSampleFilterDialog.setFileChooser(getFileChooser());
 		}
@@ -397,7 +398,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	 */
 	protected EditTimeDomainSampleFilterDialog getEditTimeDomainSampleFilterDialog() {
 		if (editTimeDomainSampleFilterDialog == null) {
-			editTimeDomainSampleFilterDialog = new EditTimeDomainSampleFilterDialog(messageSource, timeDomainSampleFilterPresetManager, this, true);
+			editTimeDomainSampleFilterDialog = new EditTimeDomainSampleFilterDialog( timeDomainSampleFilterPresetManager, this, true);
 			editTimeDomainSampleFilterDialog.setApplicationConfig(getApplicationConfig());
 			editTimeDomainSampleFilterDialog.setFileChooser(getFileChooser());
 		}

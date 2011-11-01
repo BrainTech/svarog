@@ -10,7 +10,6 @@ import org.signalml.app.document.SignalDocument;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.view.signal.popup.ActiveTagPopupDialog;
 import org.signalml.plugin.export.view.DocumentView;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * This class is responsible for action evoked when the user wants to change
@@ -28,8 +27,8 @@ public class ChooseActiveTagAction extends AbstractFocusableSignalMLAction<Signa
 	 * @param signalDocumentFocusSelector a {@link SignalDocumentFocusSelector}
 	 * used to get the active document.
 	 */
-	public ChooseActiveTagAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
-		super(messageSource, signalDocumentFocusSelector);
+	public  ChooseActiveTagAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
+		super( signalDocumentFocusSelector);
 
 		setText("action.chooseActiveTag");
 		setIconPath("org/signalml/app/icon/activetag.png");
@@ -44,7 +43,7 @@ public class ChooseActiveTagAction extends AbstractFocusableSignalMLAction<Signa
 		if (documentView instanceof SignalView)
 			signalView = (SignalView) documentView;
 
-		ActiveTagPopupDialog dialog = new ActiveTagPopupDialog(messageSource, null, true);
+		ActiveTagPopupDialog dialog = new ActiveTagPopupDialog( null, true);
 		dialog.setSignalView(signalView);
 		dialog.showDialog(null, true);
 

@@ -24,7 +24,6 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.task.LocalTask;
 import org.signalml.task.Task;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** IterateMethodAction
  *
@@ -44,9 +43,7 @@ public class IterateMethodAction extends AbstractSignalMLAction {
 	private IterationSetupDialog iterationSetupDialog;
 	private MethodIteratorMethod iteratorMethod;
 
-	public IterateMethodAction(MessageSourceAccessor messageSource, IterableMethod method, ApplicationMethodManager methodManager) {
-
-		this.messageSource = messageSource;
+	public  IterateMethodAction( IterableMethod method, ApplicationMethodManager methodManager) {
 		this.method = method;
 		this.methodManager = methodManager;
 

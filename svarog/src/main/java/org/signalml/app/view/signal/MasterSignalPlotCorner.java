@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.signal;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
@@ -43,7 +44,7 @@ public class MasterSignalPlotCorner extends SignalPlotCorner {
 		public AddSlavePlotAction() {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/addslaveplot.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("signalView.addSlavePlotToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Create new signal plot"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {

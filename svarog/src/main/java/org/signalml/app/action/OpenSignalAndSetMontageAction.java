@@ -44,7 +44,7 @@ public class OpenSignalAndSetMontageAction extends AbstractSignalMLAction {
 	 * this action.
 	 */
 	public OpenSignalAndSetMontageAction(DocumentFlowIntegrator documentFlowIntegrator) {
-		super(documentFlowIntegrator.getMessageSource());
+		super();
 		this.documentFlowIntegrator = documentFlowIntegrator;
 		setText("action.openSignalAndSetMontageLabel");
 		setIconPath("org/signalml/app/icon/fileopen.png");

@@ -12,7 +12,6 @@ import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.method.SuspendableMethod;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.task.Task;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** SuspendAllTasksAction
  *
@@ -28,8 +27,8 @@ public class SuspendAllTasksAction extends AbstractSignalMLAction {
 	private ApplicationTaskManager taskManager;
 	private Component optionPaneParent;
 
-	public SuspendAllTasksAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  SuspendAllTasksAction() {
+		super();
 		setText("action.suspendAllTasks");
 		setIconPath("org/signalml/app/icon/suspendall.png");
 		setToolTip("action.suspendAllTasksToolTip");

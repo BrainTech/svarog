@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.opensignal;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Window;
 import javax.swing.JComponent;
 import org.signalml.app.model.AmplifierConnectionDescriptor;
@@ -13,7 +14,7 @@ import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.montage.SignalMontageDialog;
 import org.signalml.domain.montage.Montage;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -47,20 +48,20 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 	 * @param f the parent window
 	 * @param isModal whether this dialog should be modal
 	 */
-	public OpenSignalAndSetMontageDialog(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager,
+	public  OpenSignalAndSetMontageDialog( ViewerElementManager viewerElementManager,
 			Window f, boolean isModal) {
 
-		super(messageSource, viewerElementManager.getMontagePresetManager(), viewerElementManager.getPredefinedTimeDomainFiltersPresetManager(), f, isModal);
+		super( viewerElementManager.getMontagePresetManager(), viewerElementManager.getPredefinedTimeDomainFiltersPresetManager(), f, isModal);
 
 		this.viewerElementManager = viewerElementManager;
-		dialogManager = new OpenSignalAndSetMontageDialogManager(this, messageSource);
+		dialogManager = new OpenSignalAndSetMontageDialogManager(this);
 	}
 
 	@Override
 	public JComponent createInterface() {
 		JComponent interfacePanel = super.createInterface();
 
-		String tabTitle = messageSource.getMessage("opensignal.signalSourceTabTitle");
+		String tabTitle = _("Signal source");
 		tabbedPane.insertTab(tabTitle, null, getSignalSourcePanel(), "", 0);
 		tabbedPane.setSelectedIndex(0);
 
@@ -73,7 +74,7 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 	 */
 	public SignalSourcePanel getSignalSourcePanel() {
 		if (signalSourcePanel == null)
-			signalSourcePanel = new SignalSourcePanel(messageSource, viewerElementManager);
+			signalSourcePanel = new SignalSourcePanel( viewerElementManager);
 		return signalSourcePanel;
 	}
 

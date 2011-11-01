@@ -4,6 +4,7 @@
 
 package org.signalml.app.method.ep;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -43,7 +44,6 @@ import org.signalml.app.action.ExportSamplesToFileAction;
 import org.signalml.app.action.ExportSamplesToMultiplexedFloatFileAction;
 import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.method.ep.EvokedPotentialResult;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** EvokedPotentialGraphPanel
  *
@@ -64,8 +64,6 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 		TOP,
 		BOTTOM
 	}
-
-	private MessageSourceAccessor messageSource;
 	ViewerFileChooser fileChooser;
 
 	EvokedPotentialResult result;
@@ -98,10 +96,8 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 
 	private ExportAllEPSamplesToFloatFileAction exportAllEPSamplesToFloatFileAction;
 
-	public EvokedPotentialGraphPanel(MessageSourceAccessor messageSource, ViewerFileChooser fileChooser) {
+	public  EvokedPotentialGraphPanel( ViewerFileChooser fileChooser) {
 		super();
-
-		this.messageSource = messageSource;
 		this.fileChooser = fileChooser;
 
 		titleFont = new Font(Font.DIALOG, Font.PLAIN, 10);
@@ -109,15 +105,15 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 		normalRenderer.setSeriesPaint(0, Color.BLUE);
 		normalRenderer.setSeriesPaint(1, Color.RED);
 
-		exportChartToClipboardAction = new ExportEPChartToClipboardAction(messageSource);
-		exportChartToFileAction = new ExportEPChartToFileAction(messageSource);
-		exportEPSamplesToClipboardAction = new ExportEPSamplesToClipboardAction(messageSource);
-		exportEPSamplesToFileAction = new ExportEPSamplesToFileAction(messageSource);
-		exportAllEPChartsToClipboardAction = new ExportAllEPChartsToClipboardAction(messageSource);
-		exportAllEPChartsToFileAction = new ExportAllEPChartsToFileAction(messageSource);
-		exportAllEPSamplesToClipboardAction = new ExportAllEPSamplesToClipboardAction(messageSource);
-		exportAllEPSamplesToFileAction = new ExportAllEPSamplesToFileAction(messageSource);
-		exportAllEPSamplesToFloatFileAction = new ExportAllEPSamplesToFloatFileAction(messageSource);
+		exportChartToClipboardAction = new ExportEPChartToClipboardAction();
+		exportChartToFileAction = new ExportEPChartToFileAction();
+		exportEPSamplesToClipboardAction = new ExportEPSamplesToClipboardAction();
+		exportEPSamplesToFileAction = new ExportEPSamplesToFileAction();
+		exportAllEPChartsToClipboardAction = new ExportAllEPChartsToClipboardAction();
+		exportAllEPChartsToFileAction = new ExportAllEPChartsToFileAction();
+		exportAllEPSamplesToClipboardAction = new ExportAllEPSamplesToClipboardAction();
+		exportAllEPSamplesToFileAction = new ExportAllEPSamplesToFileAction();
+		exportAllEPSamplesToFloatFileAction = new ExportAllEPSamplesToFloatFileAction();
 
 		addMouseListener(new MouseAdapter() {
 			@Override
@@ -177,9 +173,7 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 		return fileChooser;
 	}
 
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
-	}
+	
 
 	public int getFocusedChartIndex() {
 		return focusedChartIndex;
@@ -216,7 +210,7 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 			popupMenu.add(exportEPSamplesToFileAction);
 			popupMenu.addSeparator();
 
-			JMenu allMenu = new JMenu(messageSource.getMessage("evokedPotentialResult.dialog.allChannels"));
+			JMenu allMenu = new JMenu(_("All channels"));
 
 			allMenu.add(exportAllEPChartsToClipboardAction);
 			allMenu.add(exportAllEPChartsToFileAction);
@@ -376,7 +370,7 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 		switch (type) {
 
 		case BOTTOM :
-			xAxis.setLabel(messageSource.getMessage("evokedPotentialResult.timeAxis"));
+			xAxis.setLabel(_("Time [s]"));
 			xAxis.setLabelFont(titleFont.deriveFont(8));
 			axisSpace = new AxisSpace();
 			axisSpace.setBottom(AXIS_SPACE);
@@ -385,7 +379,7 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 			break;
 
 		case TOP :
-			xAxis.setLabel(messageSource.getMessage("evokedPotentialResult.timeAxis"));
+			xAxis.setLabel(_("Time [s]"));
 			xAxis.setLabelFont(titleFont.deriveFont(8));
 			plot.setDomainAxisLocation(AxisLocation.TOP_OR_LEFT);
 			axisSpace = new AxisSpace();
@@ -400,7 +394,7 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 
 		case NORMAL :
 		default :
-			xAxis.setLabel(messageSource.getMessage("evokedPotentialResult.timeAxis"));
+			xAxis.setLabel(_("Time [s]"));
 			title.setPosition(RectangleEdge.TOP);
 			title.setHorizontalAlignment(HorizontalAlignment.CENTER);
 			title.setVerticalAlignment(VerticalAlignment.TOP);
@@ -497,8 +491,8 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 
 		private static final long serialVersionUID = 1L;
 
-		ExportEPChartToFileAction(MessageSourceAccessor messageSource) {
-			super(messageSource);
+		ExportEPChartToFileAction() {
+			super();
 			setFileChooser(fileChooser);
 			setOptionPaneParent(EvokedPotentialGraphPanel.this.getTopLevelAncestor());
 		}
@@ -524,8 +518,8 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 
 		private static final long serialVersionUID = 1L;
 
-		ExportEPSamplesToFileAction(MessageSourceAccessor messageSource) {
-			super(messageSource);
+		ExportEPSamplesToFileAction() {
+			super();
 			setFileChooser(fileChooser);
 			setOptionPaneParent(EvokedPotentialGraphPanel.this.getTopLevelAncestor());
 		}
@@ -573,8 +567,8 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 
 		private static final long serialVersionUID = 1L;
 
-		ExportEPChartToClipboardAction(MessageSourceAccessor messageSource) {
-			super(messageSource);
+		ExportEPChartToClipboardAction() {
+			super();
 		}
 
 		@Override
@@ -598,8 +592,8 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 
 		private static final long serialVersionUID = 1L;
 
-		ExportEPSamplesToClipboardAction(MessageSourceAccessor messageSource) {
-			super(messageSource);
+		ExportEPSamplesToClipboardAction() {
+			super();
 		}
 
 		@Override
@@ -645,8 +639,8 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 
 		private static final long serialVersionUID = 1L;
 
-		ExportAllEPChartsToClipboardAction(MessageSourceAccessor messageSource) {
-			super(messageSource);
+		ExportAllEPChartsToClipboardAction() {
+			super();
 		}
 
 		@Override
@@ -678,8 +672,8 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 
 		private static final long serialVersionUID = 1L;
 
-		ExportAllEPSamplesToClipboardAction(MessageSourceAccessor messageSource) {
-			super(messageSource);
+		ExportAllEPSamplesToClipboardAction() {
+			super();
 			setText("action.exportAllSamplesToClipboard");
 			setToolTip("action.exportAllSamplesToClipboardToolTip");
 		}
@@ -731,8 +725,8 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 
 		private static final long serialVersionUID = 1L;
 
-		ExportAllEPChartsToFileAction(MessageSourceAccessor messageSource) {
-			super(messageSource);
+		ExportAllEPChartsToFileAction() {
+			super();
 			setFileChooser(fileChooser);
 			setOptionPaneParent(EvokedPotentialGraphPanel.this.getTopLevelAncestor());
 		}
@@ -766,8 +760,8 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 
 		private static final long serialVersionUID = 1L;
 
-		ExportAllEPSamplesToFileAction(MessageSourceAccessor messageSource) {
-			super(messageSource);
+		ExportAllEPSamplesToFileAction() {
+			super();
 			setText("action.exportAllSamplesToFile");
 			setToolTip("action.exportAllSamplesToFileToolTip");
 			setFileChooser(fileChooser);
@@ -821,8 +815,8 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 
 		private static final long serialVersionUID = 1L;
 
-		ExportAllEPSamplesToFloatFileAction(MessageSourceAccessor messageSource) {
-			super(messageSource);
+		ExportAllEPSamplesToFloatFileAction() {
+			super();
 			setFileChooser(fileChooser);
 			setOptionPaneParent(EvokedPotentialGraphPanel.this.getTopLevelAncestor());
 		}

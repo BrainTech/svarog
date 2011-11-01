@@ -1,5 +1,6 @@
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -12,7 +13,6 @@ import javax.swing.border.TitledBorder;
 import org.apache.log4j.Logger;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.model.OpenMonitorDescriptor;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * This panel is responsible for displaying and setting monitor signal parameters.
@@ -24,7 +24,6 @@ public class MonitorSignalParametersPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	private ApplicationConfiguration applicationConfiguration;
-	private MessageSourceAccessor messageSource;
 
 	private JTextField samplingField;
 	private JTextField channelCountField;
@@ -36,18 +35,17 @@ public class MonitorSignalParametersPanel extends JPanel {
 	 * localized message codes
 	 * @param applicationConfiguration the configuration of Svarog
 	 */
-	public MonitorSignalParametersPanel(MessageSourceAccessor messageSource, ApplicationConfiguration applicationConfiguration) {
+	public  MonitorSignalParametersPanel( ApplicationConfiguration applicationConfiguration) {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
 	private void initialize() {
 
-		JLabel samplingLabel = new JLabel(messageSource.getMessage("openMonitor.samplingLabel"));
-		JLabel channelCountLabel = new JLabel(messageSource.getMessage("openMonitor.channelCountLabel"));
+		JLabel samplingLabel = new JLabel(_("Sampling frequency"));
+		JLabel channelCountLabel = new JLabel(_("Channel count"));
 
-		JLabel pageSizeLabel = new JLabel(messageSource.getMessage("openMonitor.pageSizeLabel"));
+		JLabel pageSizeLabel = new JLabel(_("Page size"));
 
 		GroupLayout layout = new GroupLayout(this);
 		setLayout(layout);
@@ -57,7 +55,7 @@ public class MonitorSignalParametersPanel extends JPanel {
 		layout.setAutoCreateContainerGaps(true);
 
 		CompoundBorder border = new CompoundBorder(
-			new TitledBorder(messageSource.getMessage("openMonitor.signalParametersPanelTitle")),
+			new TitledBorder(_("Signal parameters")),
 			new EmptyBorder(3, 3, 3, 3));
 		setBorder(border);
 

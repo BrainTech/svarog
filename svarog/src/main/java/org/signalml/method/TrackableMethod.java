@@ -4,7 +4,6 @@
 
 package org.signalml.method;
 
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  *  This interface is to be implemented by those {@link Method methods} which support progress
@@ -26,13 +25,13 @@ public interface TrackableMethod {
 	int getTickerCount();
 
 	/**
-         *  Returns the label for the given ticker. May use provided MessageSourceAccessor for
+         *  Returns the label for the given ticker. May use provided SvarogI18n for
 	 *  internationalization.
 	 *
 	 * @param messageSource the message source accessor capable of resolving localized message codes
 	 * @param ticker the number of the ticker
 	 * @return the label for the ticker
 	 */
-	String getTickerLabel(MessageSourceAccessor messageSource, int ticker);
+	String getTickerLabel( int ticker);
 
 }

@@ -10,7 +10,6 @@ import org.signalml.app.model.TagStyleTreeModel;
 import org.signalml.app.view.TagTreeCellRenderer;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.plugin.export.view.AbstractViewerTree;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * The tree with the {@link TagStyle tag styles}.
@@ -28,8 +27,8 @@ public class TagStyleTree extends AbstractViewerTree {
 	 * @param model the model for this tree
 	 * @param messageSource the source of messages (labels)
 	 */
-	public TagStyleTree(TagStyleTreeModel model, MessageSourceAccessor messageSource) {
-		super(model,messageSource);
+	public TagStyleTree(TagStyleTreeModel model) {
+		super(model);
 		setCellRenderer(new TagTreeCellRenderer(model.getIconProducer()));
 		expandPath(new TreePath(new Object[] {model.getRoot()}));
 	}

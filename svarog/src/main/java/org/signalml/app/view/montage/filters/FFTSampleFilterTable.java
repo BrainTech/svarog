@@ -16,7 +16,6 @@ import javax.swing.table.TableColumnModel;
 
 import org.signalml.app.montage.FFTSampleFilterTableModel;
 import org.signalml.app.view.TablePopupMenuProvider;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** FFTSampleFilterTable
  *
@@ -29,7 +28,7 @@ public class FFTSampleFilterTable extends JTable {
 
 	private TablePopupMenuProvider popupMenuProvider;
 
-	public FFTSampleFilterTable(FFTSampleFilterTableModel model, MessageSourceAccessor messageSource) {
+	public FFTSampleFilterTable(FFTSampleFilterTableModel model) {
 		super(model, (TableColumnModel) null);
 
 		DefaultTableColumnModel columnModel = new DefaultTableColumnModel();

@@ -4,6 +4,7 @@
 
 package org.signalml.app.method.mp5;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Window;
 import java.awt.event.ItemEvent;
@@ -19,9 +20,8 @@ import javax.swing.border.TitledBorder;
 
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.ViewerFileChooser;
-import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /** MP5ResultDialog
@@ -29,7 +29,7 @@ import org.springframework.validation.Errors;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class MP5ResultDialog extends AbstractDialog {
+public class MP5ResultDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
 
 	private static final long serialVersionUID = 1L;
 
@@ -40,17 +40,17 @@ public class MP5ResultDialog extends AbstractDialog {
 
 	private MP5ResultBookPanel bookPanel;
 
-	public MP5ResultDialog(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  MP5ResultDialog() {
+		super();
 	}
 
-	public MP5ResultDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public  MP5ResultDialog( Window w, boolean isModal) {
+		super( w, isModal);
 	}
 
 	@Override
 	protected void initialize() {
-		setTitle(messageSource.getMessage("mp5Method.dialog.result.title"));
+		setTitle(_("MP Decomposition results"));
 		setIconImage(IconUtils.loadClassPathImage(MP5MethodDescriptor.ICON_PATH));
 		setResizable(false);
 		super.initialize();
@@ -65,7 +65,7 @@ public class MP5ResultDialog extends AbstractDialog {
 		checkBoxPanel.setLayout(new BoxLayout(checkBoxPanel, BoxLayout.Y_AXIS));
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("mp5Method.dialog.result.actionTitle")),
+		        new TitledBorder(_("Choose result targets")),
 		        new EmptyBorder(3,3,3,3)
 		);
 		checkBoxPanel.setBorder(border);
@@ -82,14 +82,14 @@ public class MP5ResultDialog extends AbstractDialog {
 
 	public JCheckBox getOpenInWindowCheckBox() {
 		if (openInWindowCheckBox == null) {
-			openInWindowCheckBox = new JCheckBox(messageSource.getMessage("mp5Method.dialog.result.openInWindow"));
+			openInWindowCheckBox = new JCheckBox(_("Open in the viewer"));
 		}
 		return openInWindowCheckBox;
 	}
 
 	public JCheckBox getSaveToFileCheckBox() {
 		if (saveToFileCheckBox == null) {
-			saveToFileCheckBox = new JCheckBox(messageSource.getMessage("mp5Method.dialog.result.saveToFile"), true);
+			saveToFileCheckBox = new JCheckBox(_("Save to file"), true);
 
 			saveToFileCheckBox.addItemListener(new ItemListener() {
 
@@ -110,7 +110,7 @@ public class MP5ResultDialog extends AbstractDialog {
 
 	public MP5ResultBookPanel getBookPanel() {
 		if (bookPanel == null) {
-			bookPanel = new MP5ResultBookPanel(messageSource, fileChooser);
+			bookPanel = new MP5ResultBookPanel( fileChooser);
 		}
 		return bookPanel;
 	}

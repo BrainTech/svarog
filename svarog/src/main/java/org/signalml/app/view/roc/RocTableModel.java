@@ -4,10 +4,10 @@
 
 package org.signalml.app.view.roc;
 
+import static org.signalml.app.SvarogApplication._;
 import javax.swing.table.AbstractTableModel;
 
 import org.signalml.domain.roc.RocData;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** RocTableModel
  *
@@ -18,13 +18,10 @@ public class RocTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 1L;
 
-	private MessageSourceAccessor messageSource;
-
 	private RocData rocData;
 
-	public RocTableModel(MessageSourceAccessor messageSource) {
+	public  RocTableModel() {
 		super();
-		this.messageSource = messageSource;
 	}
 
 	public RocData getRocData() {
@@ -63,27 +60,27 @@ public class RocTableModel extends AbstractTableModel {
 
 		int cnt = getColumnCount();
 		if (column == 0) {
-			return messageSource.getMessage("roc.tablePointIndex");
+			return _("Index");
 		}
 		else if (column == cnt-6) {
-			return messageSource.getMessage("roc.tableTP");
+			return _("TP");
 		}
 		else if (column == cnt-5) {
-			return messageSource.getMessage("roc.tableFP");
+			return _("FP");
 		}
 		else if (column == cnt-4) {
-			return messageSource.getMessage("roc.tableTN");
+			return _("TN");
 		}
 		else if (column == cnt-3) {
-			return messageSource.getMessage("roc.tableFN");
+			return _("FN");
 		}
 		else if (column == cnt-2) {
-			return messageSource.getMessage("roc.tableFPRate");
+			return _("FP rate");
 		}
 		else if (column == cnt-1) {
-			return messageSource.getMessage("roc.tableTPRate");
+			return _("TP rate");
 		} else {
-			return messageSource.getMessage(rocData.getParameterAt(column-1));
+			return getSvarogI18n().getMessage(rocData.getParameterAt(column-1));
 		}
 
 	}
@@ -132,4 +129,11 @@ public class RocTableModel extends AbstractTableModel {
 
 	}
 
+	/**
+	 * Returns the {@link SvarogAccessI18nImpl} instance.
+	 * @return the {@link SvarogAccessI18nImpl} singleton instance
+	 */
+	protected org.signalml.app.SvarogI18n getSvarogI18n() {
+		return org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance();
+	}
 }

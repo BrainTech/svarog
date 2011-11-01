@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.Locale;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -25,8 +24,6 @@ import org.signalml.plugin.fft.FFT;
 import org.signalml.plugin.fftsignaltool.dialogs.SignalFFTSettingsDialog;
 import org.signalml.plugin.fftsignaltool.dialogs.SignalFFTSettingsDialogAction;
 import org.signalml.plugin.fftsignaltool.dialogs.SignalFFTToolButtonMouseListener;
-import org.springframework.context.support.MessageSourceAccessor;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
 /**
  * Plug-in with the {@link SignalFFTTool FFT signal tool}.
@@ -44,6 +41,7 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
  */
 public class FFTSignalTool implements Plugin, SvarogCloseListener {
 	protected static final Logger log = Logger.getLogger(FFTSignalTool.class);
+	private static FFTSignalToolI18nDelegate i18nDelegate;
 
 	/**
 	 * the {@link SvarogAccessSignal} access to Svarog logic
@@ -61,10 +59,7 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 	 * the tool that is registered by this plug-in
 	 */
 	private SignalFFTTool tool;
-	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
+
 	/**
 	 * the {@link SignalFFTSettings settings} how the power spectrum is
 	 * displayed by {@link SignalFFTTool}
@@ -123,7 +118,7 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 			
 		}
 	}
-	
+
 	/**
 	 * Extracts the resources to the temporary directory and creates the
 	 * {@link #messageSource source of messages} using the extracted data.
@@ -146,15 +141,8 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-		messageSource.setCacheSeconds(-1);
-		messageSource.setUseCodeAsDefaultMessage(true);
-		if (resourceDirectory != null)
-			messageSource.setBasename("file:"+resourceDirectory.getAbsolutePath()+File.separator+"message");
-
-		this.messageSource = new MessageSourceAccessor(messageSource, Locale.getDefault());
 	}
-	
+
 	/**
 	 * Registers this plug-in:
 	 * <ul>
@@ -166,7 +154,7 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 	 */
 	@Override
 	public void register(SvarogAccess access, PluginAuth auth){
-		
+		i18nDelegate = new FFTSignalToolI18nDelegate(access, auth);
 		guiAccess = access.getGUIAccess();
 		signalAccess = access.getSignalAccess();
 		configAccess = access.getConfigAccess();
@@ -178,17 +166,17 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 		if (settingsFile.exists()) signalFFTSettings.readFromXMLFile(settingsFile);
 		
 		//creates and adds the signal tool
-		tool = new SignalFFTTool(messageSource);
+		tool = new SignalFFTTool();
 		tool.setSettings(signalFFTSettings);
 		tool.setSvarogAccess(access);
-		listener = new SignalFFTToolButtonMouseListener(messageSource);
+		listener = new SignalFFTToolButtonMouseListener();
 		final String iconpath = resourceDirectory.getAbsolutePath()+File.separator + "fft.png";
 		log.debug("trying to load " + iconpath);
 		final ImageIcon icon = new ImageIcon(iconpath);
-		guiAccess.addSignalTool(tool, icon,	messageSource.getMessage("signalView.signalFFTToolToolTip"), listener);
+		guiAccess.addSignalTool(tool, icon, _("Signal FFT (for settings press and hold the mouse button here)"), listener);
 		
 		//creates and adds the action which shows the 
-		SignalFFTSettingsDialogAction action = new SignalFFTSettingsDialogAction(messageSource, signalFFTSettings);
+		SignalFFTSettingsDialogAction action = new SignalFFTSettingsDialogAction( signalFFTSettings);
 		guiAccess.addButtonToToolsMenu(action);
 		
 		
@@ -205,4 +193,21 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 		signalFFTSettings.storeInXMLFile(settingsFile);
 	}
 
+	/**
+	 * I18n shortcut.
+	 * 
+	 * @param msgKey message to translate (English version)
+	 * @return
+	 */
+	public static String _(String msgKey) {
+		return i18nDelegate._(msgKey);
+	}
+	
+	/**
+	 * Svarog i18n delegate getter.
+	 * @return the shared delegate instance
+	 */
+	public static FFTSignalToolI18nDelegate i18n() {
+		return i18nDelegate;
+	}
 }

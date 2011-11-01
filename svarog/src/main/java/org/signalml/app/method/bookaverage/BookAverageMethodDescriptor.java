@@ -61,7 +61,6 @@ public class BookAverageMethodDescriptor implements ApplicationMethodDescriptor 
 	public BookAverageMethodConsumer getConsumer(ApplicationMethodManager methodManager) {
 		if (consumer == null) {
 			consumer = new BookAverageMethodConsumer();
-			consumer.setMessageSource(methodManager.getMessageSource());
 		}
 		return consumer;
 	}

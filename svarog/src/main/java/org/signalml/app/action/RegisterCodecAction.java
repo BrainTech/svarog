@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -31,7 +32,6 @@ import org.signalml.codec.SignalMLCodecReader;
 import org.signalml.codec.SignalMLCodecSelector;
 import org.signalml.codec.XMLSignalMLCodec;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** RegisterCodecAction
  *
@@ -50,8 +50,8 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 	private SignalMLCodecSelector selector;
 	private ApplicationConfiguration applicationConfig;
 
-	public RegisterCodecAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  RegisterCodecAction() {
+		super();
 		setText("action.registerCodec");
 	}
 
@@ -165,7 +165,7 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 
 		worker.execute();
 
-		pleaseWaitDialog.setActivity(messageSource.getMessage("activity.creatingCodecReader"));
+		pleaseWaitDialog.setActivity(_("creating codec reader"));
 		pleaseWaitDialog.configureForIndeterminateSimulated();
 		pleaseWaitDialog.waitAndShowDialogIn(null, 0, worker);
 

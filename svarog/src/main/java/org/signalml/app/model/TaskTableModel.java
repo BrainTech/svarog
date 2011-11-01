@@ -3,6 +3,7 @@
  */
 package org.signalml.app.model;
 
+import static org.signalml.app.SvarogApplication._;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +23,6 @@ import org.signalml.task.TaskStatus;
 import org.signalml.task.TaskStatusImportanceComparator;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.NoSuchMessageException;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * TaskTableModel
@@ -41,14 +41,10 @@ public class TaskTableModel extends AbstractTableModel implements
 	public static final int CREATE_TIME_COLUMN = 2;
 	public static final int PROGRESS_COLUMN = 3;
 	public static final int MESSAGE_COLUMN = 4;
-
-	private MessageSourceAccessor defaultMessageSource;
 	private ApplicationTaskManager taskManager;
 
 	private TableRowSorter<TaskTableModel> sorter = null;
-
 	private Map<Task, AggregateTaskProgressInfo> taskToProgressMap = new HashMap<Task, AggregateTaskProgressInfo>();
-	private Map<Task, MessageSourceAccessor> taskToMessageSourceMap = new HashMap<Task, MessageSourceAccessor>();
 
 	public TableRowSorter<TaskTableModel> getSorter() {
 		if (sorter == null) {
@@ -95,21 +91,19 @@ public class TaskTableModel extends AbstractTableModel implements
 		switch (col) {
 
 		case STATUS_COLUMN:
-			return defaultMessageSource.getMessage("viewer.taskTable.status");
+			return _("Status");
 
 		case METHOD_NAME_COLUMN:
-			return defaultMessageSource
-					.getMessage("viewer.taskTable.methodName");
+			return _("Method");
 
 		case CREATE_TIME_COLUMN:
-			return defaultMessageSource
-					.getMessage("viewer.taskTable.createTime");
+			return _("Created");
 
 		case PROGRESS_COLUMN:
-			return defaultMessageSource.getMessage("viewer.taskTable.progress");
+			return _("Progress");
 
 		case MESSAGE_COLUMN:
-			return defaultMessageSource.getMessage("viewer.taskTable.message");
+			return _("Message");
 
 		default:
 			return "???";
@@ -158,15 +152,7 @@ public class TaskTableModel extends AbstractTableModel implements
 		case MESSAGE_COLUMN:
 			MessageSourceResolvable message = task.getMessage();
 			if (message != null) {
-				MessageSourceAccessor source = taskToMessageSourceMap.get(task);
-				if (source != null) {
-					try {
-						return source.getMessage(message);
-					} catch (NoSuchMessageException e) {
-						// fall through
-					}
-				}
-				return defaultMessageSource.getMessage(message);
+				return getSvarogI18n().getMessage(message);
 			} else {
 				return "";
 			}
@@ -176,18 +162,6 @@ public class TaskTableModel extends AbstractTableModel implements
 
 		}
 
-	}
-
-	public MessageSourceAccessor getDefaultMessageSource() {
-		return defaultMessageSource;
-	}
-
-	public void setDefaultMessageSource(MessageSourceAccessor defaultMessageSource) {
-		this.defaultMessageSource = defaultMessageSource;
-	}
-	
-	public void setMessageSourceForTask(Task task, MessageSourceAccessor messageSource) {
-		this.taskToMessageSourceMap.put(task, messageSource);
 	}
 
 	public ApplicationTaskManager getTaskManager() {
@@ -217,7 +191,6 @@ public class TaskTableModel extends AbstractTableModel implements
 		Task task = e.getTask();
 		taskManager.getEventProxyForTask(task).removeTaskEventListener(this);
 		taskToProgressMap.remove(task);
-		taskToMessageSourceMap.remove(task);
 		int index = e.getIndex();
 		fireTableRowsDeleted(index, index);
 	}
@@ -294,4 +267,11 @@ public class TaskTableModel extends AbstractTableModel implements
 		}
 	}
 
+	/**
+	 * Returns the {@link SvarogAccessI18nImpl} instance.
+	 * @return the {@link SvarogAccessI18nImpl} singleton instance
+	 */
+	protected org.signalml.app.SvarogI18n getSvarogI18n() {
+		return org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance();
+	}
 }

@@ -1,0 +1,3915 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-10-31 21:12+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: org/signalml/app/view/monitor/signalchecking/CheckSignalDialog.java:91
+msgid "Check Signal"
+msgstr ""
+
+#: org/signalml/app/view/monitor/signalchecking/CheckSignalDialog.java:115
+#: org/signalml/app/view/montage/SignalMontageDialog.java:133
+msgid "Channels"
+msgstr ""
+
+#: org/signalml/app/view/monitor/ChannelDefinitionPanel.java:100
+msgid "Channel definitions"
+msgstr ""
+
+#: org/signalml/app/view/monitor/ChannelDefinitionPanel.java:207
+#: org/signalml/app/view/monitor/ChannelDefinitionPanel.java:288
+#: org/signalml/app/view/monitor/ChannelDefinitionsTable.java:257
+msgid "Channel no.: "
+msgstr ""
+
+#: org/signalml/app/view/monitor/ChannelDefinitionPanel.java:208
+#: org/signalml/app/view/monitor/ChannelDefinitionsTable.java:310
+#: org/signalml/app/view/monitor/AvailableFrequenciesPanel.java:162
+#: org/signalml/app/view/monitor/OpenBCIModuleConfigDialog.java:152
+msgid "Please insert an integer value"
+msgstr ""
+
+#: org/signalml/app/view/monitor/ChannelDefinitionPanel.java:217
+#: org/signalml/app/view/monitor/ChannelDefinitionPanel.java:315
+#: org/signalml/app/view/monitor/ChannelDefinitionsTable.java:259
+msgid "Gain: "
+msgstr ""
+
+#: org/signalml/app/view/monitor/ChannelDefinitionPanel.java:218
+#: org/signalml/app/view/monitor/ChannelDefinitionPanel.java:228
+#: org/signalml/app/view/monitor/AmplifierDefinitionConfigDialog.java:244
+#: org/signalml/app/view/monitor/ChannelDefinitionsTable.java:323
+msgid "Please insert a rational value"
+msgstr ""
+
+#: org/signalml/app/view/monitor/ChannelDefinitionPanel.java:227
+#: org/signalml/app/view/monitor/ChannelDefinitionPanel.java:342
+#: org/signalml/app/view/monitor/ChannelDefinitionsTable.java:261
+msgid "Offset: "
+msgstr ""
+
+#: org/signalml/app/view/monitor/ChannelDefinitionPanel.java:258
+#: org/signalml/app/view/monitor/AvailableFrequenciesPanel.java:113
+msgid "Add"
+msgstr ""
+
+#: org/signalml/app/view/monitor/ChannelDefinitionPanel.java:273
+#: org/signalml/app/view/monitor/AvailableFrequenciesPanel.java:128
+#: org/signalml/app/view/dialog/AbstractPresetDialog.java:952
+#: org/signalml/app/view/montage/MontageChannelsPanel.java:894
+#: org/signalml/app/view/montage/VisualReferenceEditorPanel.java:436
+#: org/signalml/app/view/book/filter/BookFilterTablePanel.java:421
+#: org/signalml/app/view/book/filter/DelegatingFilterDialog.java:391
+#: org/signalml/app/method/mp5/MP5ToolExecutorConfigPanel.java:241
+msgid "Remove"
+msgstr ""
+
+#: org/signalml/app/view/monitor/ChannelDefinitionPanel.java:369
+#: org/signalml/app/view/monitor/ChannelDefinitionsTable.java:263
+msgid "Default name: "
+msgstr ""
+
+#: org/signalml/app/view/monitor/StartMonitorRecordingDialog.java:39
+msgid "Start monitor recording"
+msgstr ""
+
+#: org/signalml/app/view/monitor/ChooseFilesForMonitorRecordingPanel.java:68
+msgid "Choose files to which signal and tags will be recorded"
+msgstr ""
+
+#: org/signalml/app/view/monitor/ChooseFilesForMonitorRecordingPanel.java:84
+msgid "Record signal to file"
+msgstr ""
+
+#: org/signalml/app/view/monitor/ChooseFilesForMonitorRecordingPanel.java:97
+msgid "Record tags to file"
+msgstr ""
+
+#: org/signalml/app/view/monitor/ChooseFilesForMonitorRecordingPanel.java:166
+msgid "Signal recording target file already exists! Do you want to overwrite?"
+msgstr ""
+
+#: org/signalml/app/view/monitor/ChooseFilesForMonitorRecordingPanel.java:175
+msgid "Tag recording target file already exists! Do you want to overwrite?"
+msgstr ""
+
+#: org/signalml/app/view/monitor/ChooseFilesForMonitorRecordingPanel.java:207
+msgid "Do not record tags"
+msgstr ""
+
+#: org/signalml/app/view/monitor/AmplifierDefinitionConfigDialog.java:99
+msgid "Amplifier definitions config"
+msgstr ""
+
+#: org/signalml/app/view/monitor/AmplifierDefinitionConfigDialog.java:118
+msgid "Driver data"
+msgstr ""
+
+#: org/signalml/app/view/monitor/AmplifierDefinitionConfigDialog.java:162
+msgid "Other data"
+msgstr ""
+
+#: org/signalml/app/view/monitor/AmplifierDefinitionConfigDialog.java:243
+#: org/signalml/app/view/monitor/AmplifierDefinitionConfigDialog.java:365
+msgid "Amplifier null: "
+msgstr ""
+
+#: org/signalml/app/view/monitor/AmplifierDefinitionConfigDialog.java:283
+msgid "Protocol: "
+msgstr ""
+
+#: org/signalml/app/view/monitor/AmplifierDefinitionConfigDialog.java:310
+msgid "Match: "
+msgstr ""
+
+#: org/signalml/app/view/monitor/AmplifierDefinitionConfigDialog.java:337
+msgid "Module name: "
+msgstr ""
+
+#: org/signalml/app/view/monitor/ChannelDefinitionsTable.java:235
+#: org/signalml/app/montage/MontageFilterExclusionTableModel.java:294
+#: org/signalml/app/method/ep/EvokedPotentialGraphPanel.java:213
+msgid "All channels"
+msgstr ""
+
+#: org/signalml/app/view/monitor/AvailableFrequenciesPanel.java:58
+msgid "Available frequencies"
+msgstr ""
+
+#: org/signalml/app/view/monitor/OpenBCIModuleConfigDialog.java:74
+#: org/signalml/app/view/opensignal/ConfigureAmplifiersPanel.java:87
+msgid "OpenBCI modules config"
+msgstr ""
+
+#: org/signalml/app/view/monitor/OpenBCIModuleConfigDialog.java:151
+#: org/signalml/app/view/monitor/OpenBCIModuleConfigDialog.java:205
+msgid "Delay [ms]: "
+msgstr ""
+
+#: org/signalml/app/view/monitor/OpenBCIModuleConfigDialog.java:190
+msgid "Module path: "
+msgstr ""
+
+#: org/signalml/app/view/monitor/OpenBCIModuleConfigDialog.java:232
+msgid "Parameters: "
+msgstr ""
+
+#: org/signalml/app/view/ViewerStatusBar.java:111
+msgid "S"
+msgstr ""
+
+#: org/signalml/app/view/ViewerStatusBar.java:112
+msgid "P"
+msgstr ""
+
+#: org/signalml/app/view/ViewerStatusBar.java:113
+msgid "B"
+msgstr ""
+
+#: org/signalml/app/view/ViewerStatusBar.java:115
+#: org/signalml/app/view/element/SignalSelectionTypePanel.java:97
+msgid "Page selection"
+msgstr ""
+
+#: org/signalml/app/view/ViewerStatusBar.java:116
+#: org/signalml/app/view/element/SignalSelectionTypePanel.java:113
+msgid "Block selection"
+msgstr ""
+
+#: org/signalml/app/view/ViewerStatusBar.java:117
+#: org/signalml/app/view/element/ChannelSpacePanel.java:106
+msgid "Channel selection"
+msgstr ""
+
+#: org/signalml/app/view/ViewerStatusBar.java:119
+msgid "Page tag"
+msgstr ""
+
+#: org/signalml/app/view/ViewerStatusBar.java:120
+msgid "Block tag"
+msgstr ""
+
+#: org/signalml/app/view/ViewerStatusBar.java:121
+msgid "Channel tag"
+msgstr ""
+
+#: org/signalml/app/view/ViewerStatusBar.java:123
+msgid "ON"
+msgstr ""
+
+#: org/signalml/app/view/ViewerStatusBar.java:124
+msgid "OFF"
+msgstr ""
+
+#: org/signalml/app/view/ViewerStatusBar.java:125
+msgid "Filtering is enabled for the master plot"
+msgstr ""
+
+#: org/signalml/app/view/ViewerStatusBar.java:126
+msgid "Filtering is disbled for the master plot"
+msgstr ""
+
+#: org/signalml/app/view/roc/RocDialog.java:90
+msgid "Roc result"
+msgstr ""
+
+#: org/signalml/app/view/roc/RocDialog.java:103
+msgid "Roc curve chart"
+msgstr ""
+
+#: org/signalml/app/view/roc/RocDialog.java:111
+msgid "Roc parameters"
+msgstr ""
+
+#: org/signalml/app/view/roc/RocDialog.java:129
+msgid "Roc properties"
+msgstr ""
+
+#: org/signalml/app/view/roc/RocDialog.java:138
+msgid "Roc point properties"
+msgstr ""
+
+#: org/signalml/app/view/roc/RocDialog.java:181
+msgid "False positive rate"
+msgstr ""
+
+#: org/signalml/app/view/roc/RocDialog.java:187
+msgid "True positive rate"
+msgstr ""
+
+#: org/signalml/app/view/roc/RocTableModel.java:63
+#: org/signalml/app/view/book/filter/AtomFilterChainTableModel.java:80
+#: org/signalml/app/montage/SourceMontageTableModel.java:94
+#: org/signalml/app/montage/MontageTableModel.java:87
+#: org/signalml/app/montage/MontageFiltersTableModel.java:77
+msgid "Index"
+msgstr ""
+
+#: org/signalml/app/view/roc/RocTableModel.java:66
+msgid "TP"
+msgstr ""
+
+#: org/signalml/app/view/roc/RocTableModel.java:69
+msgid "FP"
+msgstr ""
+
+#: org/signalml/app/view/roc/RocTableModel.java:72
+msgid "TN"
+msgstr ""
+
+#: org/signalml/app/view/roc/RocTableModel.java:75
+msgid "FN"
+msgstr ""
+
+#: org/signalml/app/view/roc/RocTableModel.java:78
+msgid "FP rate"
+msgstr ""
+
+#: org/signalml/app/view/roc/RocTableModel.java:81
+msgid "TP rate"
+msgstr ""
+
+#: org/signalml/app/view/dialog/PleaseWaitDialog.java:133
+msgid "Please wait..."
+msgstr ""
+
+#: org/signalml/app/view/dialog/RegisterCodecDialog.java:94
+msgid "Register a new SignalML codec"
+msgstr ""
+
+#: org/signalml/app/view/dialog/HelpDialog.java:131
+msgid "Help for signalml"
+msgstr ""
+
+#: org/signalml/app/view/dialog/HelpDialog.java:442
+msgid "Reload current page"
+msgstr ""
+
+#: org/signalml/app/view/dialog/HelpDialog.java:481
+msgid "Help contents"
+msgstr ""
+
+#: org/signalml/app/view/dialog/HelpDialog.java:512
+msgid "Previous topic"
+msgstr ""
+
+#: org/signalml/app/view/dialog/HelpDialog.java:551
+msgid "Next topic"
+msgstr ""
+
+#: org/signalml/app/view/dialog/EditTagAnnotationDialog.java:90
+#: org/signalml/app/view/dialog/EditTagAnnotationDialog.java:101
+msgid "Set tag annotation"
+msgstr ""
+
+#: org/signalml/app/view/dialog/SignalSelectionDialog.java:52
+#: org/signalml/app/method/mp5/MP5MethodDialog.java:308
+msgid "Signal selection"
+msgstr ""
+
+#: org/signalml/app/view/dialog/TagStylePaletteDialog.java:226
+msgid "Tag style palette"
+msgstr ""
+
+#: org/signalml/app/view/dialog/TagStylePaletteDialog.java:387
+msgid "Current styles"
+msgstr ""
+
+#: org/signalml/app/view/dialog/TagStylePaletteDialog.java:646
+#: org/signalml/app/view/dialog/TagStylePaletteDialog.java:649
+msgid "New"
+msgstr ""
+
+#: org/signalml/app/view/dialog/TagStylePaletteDialog.java:816
+msgid "New page style"
+msgstr ""
+
+#: org/signalml/app/view/dialog/TagStylePaletteDialog.java:818
+msgid "Add new page style"
+msgstr ""
+
+#: org/signalml/app/view/dialog/TagStylePaletteDialog.java:847
+msgid "New block style"
+msgstr ""
+
+#: org/signalml/app/view/dialog/TagStylePaletteDialog.java:849
+msgid "Add new block style"
+msgstr ""
+
+#: org/signalml/app/view/dialog/TagStylePaletteDialog.java:878
+msgid "New channel style"
+msgstr ""
+
+#: org/signalml/app/view/dialog/TagStylePaletteDialog.java:880
+msgid "Add new channel style"
+msgstr ""
+
+#: org/signalml/app/view/dialog/TagStylePaletteDialog.java:912
+msgid "Remove style"
+msgstr ""
+
+#: org/signalml/app/view/dialog/TagStylePaletteDialog.java:914
+msgid "Remove selected style"
+msgstr ""
+
+#: org/signalml/app/view/dialog/TagStylePaletteDialog.java:978
+msgid "Apply changes"
+msgstr ""
+
+#: org/signalml/app/view/dialog/TagStylePaletteDialog.java:980
+msgid "Apply changes to the tag style"
+msgstr ""
+
+#: org/signalml/app/view/dialog/TagStylePaletteDialog.java:1008
+msgid "Capture key"
+msgstr ""
+
+#: org/signalml/app/view/dialog/TagStylePaletteDialog.java:1010
+msgid "Change the key stroke associated with this style"
+msgstr ""
+
+#: org/signalml/app/view/dialog/SplashScreen.java:111
+msgid "Initializing"
+msgstr ""
+
+#: org/signalml/app/view/dialog/SplashScreen.java:281
+#, java-format
+msgid "Loading Svarog v.{0}"
+msgstr ""
+
+#: org/signalml/app/view/dialog/SplashScreen.java:295
+msgid "http://signalml.org/"
+msgstr ""
+
+#: org/signalml/app/view/dialog/SplashScreen.java:308
+msgid "Financed from Polish funds for science"
+msgstr ""
+
+#: org/signalml/app/view/dialog/AbstractWizardDialog.java:191
+msgid "Finish"
+msgstr ""
+
+#: org/signalml/app/view/dialog/AbstractWizardDialog.java:380
+#: org/signalml/app/view/montage/VisualReferenceEditorPanel.java:418
+msgid "Next"
+msgstr ""
+
+#: org/signalml/app/view/dialog/AbstractWizardDialog.java:416
+msgid "Back"
+msgstr ""
+
+#: org/signalml/app/view/dialog/KeyStrokeCaptureDialog.java:93
+msgid "Press a key..."
+msgstr ""
+
+#: org/signalml/app/view/dialog/NewTagDialog.java:88
+#: org/signalml/app/view/element/NewTagPanel.java:121
+msgid "Choose new tag type"
+msgstr ""
+
+#: org/signalml/app/view/dialog/ApplicationPreferencesDialog.java:178
+msgid "Preferences"
+msgstr ""
+
+#: org/signalml/app/view/dialog/ApplicationPreferencesDialog.java:272
+msgid "Signal viewing"
+msgstr ""
+
+#: org/signalml/app/view/dialog/ApplicationPreferencesDialog.java:273
+msgid "Signal zooming"
+msgstr ""
+
+#: org/signalml/app/view/dialog/ApplicationPreferencesDialog.java:274
+msgid "Tagging"
+msgstr ""
+
+#: org/signalml/app/view/dialog/ApplicationPreferencesDialog.java:275
+msgid "Signal recording"
+msgstr ""
+
+#: org/signalml/app/view/dialog/ApplicationPreferencesDialog.java:276
+#: org/signalml/app/view/montage/SignalMontageDialog.java:137
+msgid "Miscellaneous"
+msgstr ""
+
+#: org/signalml/app/view/dialog/ApplicationPreferencesDialog.java:293
+#: org/signalml/app/view/ViewerElementManager.java:860
+msgid "Tools"
+msgstr ""
+
+#: org/signalml/app/view/dialog/ApplicationPreferencesDialog.java:294
+msgid "SignalML Codecs"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OpenDocumentDialog.java:171
+msgid "Open document"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OpenDocumentDialog.java:793
+msgid "Read manifest..."
+msgstr ""
+
+#: org/signalml/app/view/dialog/OpenDocumentDialog.java:795
+#: org/signalml/app/view/opensignal/ReadXMLManifestAction.java:66
+msgid "Read signal parameters from XML manifest"
+msgstr ""
+
+#: org/signalml/app/view/dialog/EditTagDescriptionDialog.java:117
+msgid "Set tag document description"
+msgstr ""
+
+#: org/signalml/app/view/dialog/EditTagDescriptionDialog.java:134
+msgid "Tag document description"
+msgstr ""
+
+#: org/signalml/app/view/dialog/EditTagDescriptionDialog.java:137
+msgid "Montage description"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OpenMonitorDialog.java:109
+msgid "Open monitor"
+msgstr ""
+
+#: org/signalml/app/view/dialog/DynamicCompilationWarningDialog.java:64
+msgid "Dynamic compilation warning"
+msgstr ""
+
+#: org/signalml/app/view/dialog/DynamicCompilationWarningDialog.java:69
+msgid ""
+"<b>WARNING!</b> You are about to compile code at runtime. It is possible, "
+"however unlikely, for an attacker to exploit this in order to inject "
+"malicious code into your Java Virtual Machine. You should avoid compiling "
+"code obtained from untrustworthy sources."
+msgstr ""
+
+#: org/signalml/app/view/dialog/DynamicCompilationWarningDialog.java:74
+msgid "Word of caution"
+msgstr ""
+
+#: org/signalml/app/view/dialog/ErrorsDialog.java:112
+#: org/signalml/app/view/dialog/ErrorsDialog.java:228
+msgid "Errors in data"
+msgstr ""
+
+#: org/signalml/app/view/dialog/ErrorsDialog.java:240
+msgid "Exception occured"
+msgstr ""
+
+#: org/signalml/app/view/dialog/EEGLabExportDialog.java:67
+msgid "Export to EEGLab"
+msgstr ""
+
+#: org/signalml/app/view/dialog/EEGLabExportDialog.java:96
+msgid "Dateset files"
+msgstr ""
+
+#: org/signalml/app/view/dialog/EEGLabExportDialog.java:97
+msgid "Output file name: "
+msgstr ""
+
+#: org/signalml/app/view/dialog/EEGLabExportDialog.java:182
+msgid "File already exists! Do you want to overwrite?"
+msgstr ""
+
+#: org/signalml/app/view/dialog/AbstractDialog.java:759
+#: org/signalml/app/view/dialog/OptionPane.java:62
+#: org/signalml/app/view/element/FileSelectPanel.java:224
+#: org/signalml/app/view/element/FileSelectPanel.java:236
+msgid "Ok"
+msgstr ""
+
+#: org/signalml/app/view/dialog/AbstractDialog.java:810
+#: org/signalml/app/view/dialog/OptionPane.java:64
+msgid "Cancel"
+msgstr ""
+
+#: org/signalml/app/view/dialog/AbstractDialog.java:858
+msgid "Display context help for this dialog"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:63
+msgid "Apply"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:65
+#: org/signalml/app/view/opensignal/AbstractSignalParametersPanel.java:392
+#: org/signalml/app/view/opensignal/StartStopButtonsPanel.java:174
+#: org/signalml/app/view/opensignal/StartStopButtonsPanel.java:179
+msgid "Error!"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:66
+#: org/signalml/app/model/TaskTableModel.java:106
+msgid "Message"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:67
+msgid "Reload"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:68
+msgid "Overwrite"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:69
+#: org/signalml/app/view/ViewerFileChooser.java:174
+msgid "Open"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:70
+#: org/signalml/app/view/dialog/AbstractPresetDialog.java:800
+#: org/signalml/app/view/ViewerFileChooser.java:65
+#: org/signalml/app/view/ViewerFileChooser.java:78
+#: org/signalml/app/view/ViewerFileChooser.java:91
+#: org/signalml/app/view/ViewerFileChooser.java:104
+#: org/signalml/app/view/ViewerFileChooser.java:117
+#: org/signalml/app/view/ViewerFileChooser.java:130
+#: org/signalml/app/view/ViewerFileChooser.java:143
+#: org/signalml/app/view/ViewerFileChooser.java:156
+#: org/signalml/app/view/ViewerFileChooser.java:164
+#: org/signalml/app/view/ViewerFileChooser.java:249
+#: org/signalml/app/view/ViewerFileChooser.java:295
+msgid "Save"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:71
+msgid "Discard"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:72
+#: org/signalml/app/view/dialog/TaskStatusDialog.java:1119
+msgid "Close"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:73
+#: org/signalml/app/view/opensignal/ReadXMLManifestAction.java:120
+#: org/signalml/app/view/opensignal/OpenSignalAndSetMontageDialogManager.java:155
+msgid "Warning!"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:74
+msgid "Create"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:238
+msgid "This document is already open. Reload?"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:289
+msgid "artifactMethod.situation.artifactProjectDoesntExist"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:361
+#, java-format
+msgid "Directory [{0}] not found. Create?"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:408
+#, java-format
+msgid "{0} has been modified. Save?"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:413
+msgid "A new document has been created. Save?"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:455
+msgid "Normalize"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:459
+msgid ""
+"Signal values exceed type capacity. Normalization is necessary. Normalize?"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:495
+#: org/signalml/app/view/dialog/OptionPane.java:537
+msgid "Proceed"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:581
+msgid "Reuse"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:582
+msgid "Replace"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:624
+msgid "Suspend & save"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:625
+msgid "Abort (will be lost)"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:629
+msgid "Some running tasks can be suspended and saved."
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:780
+msgid "This file already exists. Overwrite?"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:818
+#, java-format
+msgid "File {0} already exists. Overwrite?"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:853
+msgid "Resume"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:854
+msgid "Don't resume"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:858
+msgid "Suspended tasks had been restored. Do you wish to resume them?"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:895
+msgid ""
+"The signal and the tag are not compatible in terms of page and block size. "
+"Are you sure?"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:932
+msgid ""
+"This tag's signature does not match the signature of the signal. Are you "
+"sure?"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:969
+msgid "Other documents depend on this one. Close all?"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:1001
+msgid "This path is used by another open document. Choose another."
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:1025
+msgid "Selected file not found or inaccessible."
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:1031
+#, java-format
+msgid "File [{0}] not found or inaccessible."
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:1060
+msgid "Selected directory not found or inaccessible."
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:1066
+#, java-format
+msgid "Directory [{0}] not found or inaccessible."
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:1095
+msgid "Directory not accessible."
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:1101
+#, java-format
+msgid "Directory [{0}] not accessible."
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:1130
+msgid "Failed to create directory."
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:1136
+#, java-format
+msgid "Failed to create directory [{0}]."
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:1163
+msgid ""
+"The default montage is not compatible with this signal and cannot be loaded. "
+"Please use the montage editor."
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:1185
+msgid ""
+"This preset is not compatible with current signal and had to be altered "
+"accordingly. Please review settings."
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:1207
+msgid "This tag style is in use and cannot be removed."
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:1235
+msgid "Tag style has been modified. Apply changes?"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:1278
+msgid "Keep original"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:1279
+msgid "Replace with current"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:1283
+#: org/signalml/app/view/dialog/OptionPane.java:1330
+msgid "This tag document's montage is different from current montage"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:1284
+msgid "Choose montage to save"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:1325
+msgid "Load montage from tag"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:1326
+msgid "Keep current"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:1331
+msgid "Choose montage"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:1364
+msgid "No active signal. Choose a signal tab first."
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:1386
+msgid "No active book. Choose a book tab first."
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:1408
+msgid "No active tag. Open a tag document first."
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:1430
+msgid "No signal selection. Choose a signal fragment first."
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:1495
+#: org/signalml/app/view/element/TagStylePropertiesPanel.java:474
+#: org/signalml/app/view/book/filter/AtomFilterChainTableModel.java:83
+msgid "Name"
+msgstr ""
+
+#: org/signalml/app/view/dialog/OptionPane.java:1496
+msgid "Set preset name"
+msgstr ""
+
+#: org/signalml/app/view/dialog/AbstractSignalSpaceAwarePresetDialog.java:91
+msgid "Load signal selection from loaded preset"
+msgstr ""
+
+#: org/signalml/app/view/dialog/ProfilePathDialog.java:55
+#: org/signalml/app/view/element/ProfilePathTypePanel.java:98
+msgid "Choose profile path"
+msgstr ""
+
+#: org/signalml/app/view/dialog/SeriousWarningDialog.java:97
+msgid "WARNING! Are you sure?"
+msgstr ""
+
+#: org/signalml/app/view/dialog/SeriousWarningDialog.java:145
+msgid "WARNING! You are about to perform an irreversible operation."
+msgstr ""
+
+#: org/signalml/app/view/dialog/SeriousWarningDialog.java:184
+#, java-format
+msgid "Please reconsider... ({0})"
+msgstr ""
+
+#: org/signalml/app/view/dialog/SeriousWarningDialog.java:188
+msgid "I am completely sure! Do it!"
+msgstr ""
+
+#: org/signalml/app/view/dialog/AbstractPresetDialog.java:252
+msgid "Presets"
+msgstr ""
+
+#: org/signalml/app/view/dialog/AbstractPresetDialog.java:406
+msgid "<< select to load preset >>"
+msgstr ""
+
+#: org/signalml/app/view/dialog/AbstractPresetDialog.java:613
+#: org/signalml/app/method/mp5/MP5ToolExecutorConfigPanel.java:305
+msgid "Make default"
+msgstr ""
+
+#: org/signalml/app/view/dialog/AbstractPresetDialog.java:647
+msgid ""
+"The default preset will be permanently overwritten.<br>&nbsp;<br>There is no "
+"undo.<br>&nbsp;<br>Are you sure you wish to <b>permanently overwrite</b> the "
+"default?"
+msgstr ""
+
+#: org/signalml/app/view/dialog/AbstractPresetDialog.java:686
+msgid "Load default"
+msgstr ""
+
+#: org/signalml/app/view/dialog/AbstractPresetDialog.java:710
+msgid ""
+"The settings currently on the dialog will be permanently overwritten with "
+"the default preset.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure "
+"you wish to <b>permanently overwrite</b> current settings?"
+msgstr ""
+
+#: org/signalml/app/view/dialog/AbstractPresetDialog.java:745
+msgid "Remove default"
+msgstr ""
+
+#: org/signalml/app/view/dialog/AbstractPresetDialog.java:764
+msgid ""
+"The default preset will be permanently removed.<br>&nbsp;<br>There is no "
+"undo.<br>&nbsp;<br>Are you sure you wish to <b>permanently remove</b> the "
+"default?"
+msgstr ""
+
+#: org/signalml/app/view/dialog/AbstractPresetDialog.java:840
+#: org/signalml/app/view/dialog/AbstractPresetDialog.java:1159
+#, java-format
+msgid ""
+"Preset named ''<b>{0}</b>'' will be permanently overwritten.<br>&nbsp;"
+"<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>permanently "
+"overwrite</b> this preset?"
+msgstr ""
+
+#: org/signalml/app/view/dialog/AbstractPresetDialog.java:880
+#: org/signalml/app/view/ViewerFileChooser.java:256
+msgid "Load"
+msgstr ""
+
+#: org/signalml/app/view/dialog/AbstractPresetDialog.java:914
+#: org/signalml/app/view/dialog/AbstractPresetDialog.java:1133
+#, java-format
+msgid ""
+"The settings currently on the dialog will be permanently overwritten with "
+"preset named ''<b>{0}</b>''.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are "
+"you sure you wish to <b>permanently overwrite</b> current settings?"
+msgstr ""
+
+#: org/signalml/app/view/dialog/AbstractPresetDialog.java:978
+#, java-format
+msgid ""
+"Selected preset named ''<b>{0}</b>'' will be permanently removed.<br>&nbsp;"
+"<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>permanently "
+"remove</b> this preset?"
+msgstr ""
+
+#: org/signalml/app/view/dialog/AbstractPresetDialog.java:1015
+msgid "Export preset to file..."
+msgstr ""
+
+#: org/signalml/app/view/dialog/AbstractPresetDialog.java:1094
+msgid "Import preset from file..."
+msgstr ""
+
+#: org/signalml/app/view/dialog/AbstractPresetDialog.java:1253
+msgid "Select preset"
+msgstr ""
+
+#: org/signalml/app/view/dialog/AbstractPresetDialog.java:1271
+msgid "Select preset name"
+msgstr ""
+
+#: org/signalml/app/view/dialog/AbstractPresetDialog.java:1300
+msgid "<< select to choose preset >>"
+msgstr ""
+
+#: org/signalml/app/view/dialog/AbstractMessageDialog.java:119
+msgid "Don't show this message again"
+msgstr ""
+
+#: org/signalml/app/view/dialog/ExportSignalDialog.java:78
+msgid "Export signal"
+msgstr ""
+
+#: org/signalml/app/view/dialog/SignalParametersDialog.java:64
+#: org/signalml/app/view/element/MonitorSignalParametersPanel.java:58
+#: org/signalml/app/view/element/WholeTimeSpacePanel.java:92
+#: org/signalml/app/view/opensignal/AbstractSignalParametersPanel.java:209
+msgid "Signal parameters"
+msgstr ""
+
+#: org/signalml/app/view/dialog/TaskStatusDialog.java:279
+#, java-format
+msgid "signalml task [{0}]"
+msgstr ""
+
+#: org/signalml/app/view/dialog/TaskStatusDialog.java:324
+msgid "No detailed progress info"
+msgstr ""
+
+#: org/signalml/app/view/dialog/TaskStatusDialog.java:440
+msgid "Task status"
+msgstr ""
+
+#: org/signalml/app/view/dialog/TaskStatusDialog.java:854
+msgid "Expected to end in --:-- minutes"
+msgstr ""
+
+#: org/signalml/app/view/dialog/TaskStatusDialog.java:865
+#, java-format
+msgid "Expected to end in {0}:{1} minutes"
+msgstr ""
+
+#: org/signalml/app/view/dialog/TaskStatusDialog.java:959
+#: org/signalml/app/view/dialog/TaskStatusDialog.java:961
+#: org/signalml/app/view/dialog/TaskStatusDialog.java:969
+msgid "Task aborted"
+msgstr ""
+
+#: org/signalml/app/view/dialog/TaskStatusDialog.java:986
+#: org/signalml/app/view/dialog/TaskStatusDialog.java:988
+#: org/signalml/app/view/dialog/TaskStatusDialog.java:996
+msgid "Task suspended"
+msgstr ""
+
+#: org/signalml/app/view/dialog/TaskStatusDialog.java:1015
+#: org/signalml/app/view/dialog/TaskStatusDialog.java:1017
+#: org/signalml/app/view/dialog/TaskStatusDialog.java:1032
+#: org/signalml/app/view/dialog/TaskStatusDialog.java:1050
+#: org/signalml/app/view/dialog/TaskStatusDialog.java:1052
+#: org/signalml/app/view/dialog/TaskStatusDialog.java:1060
+msgid "Task finished"
+msgstr ""
+
+#: org/signalml/app/view/ViewerElementManager.java:728
+#, java-format
+msgid "Svarog v.{0} ready"
+msgstr ""
+
+#: org/signalml/app/view/ViewerElementManager.java:737
+#: org/signalml/app/view/ViewerElementManager.java:828
+#: org/signalml/app/view/ViewerFileChooser.java:215
+#: org/signalml/app/view/ViewerFileChooser.java:223
+#: org/signalml/app/view/ViewerFileChooser.java:236
+msgid "Export"
+msgstr ""
+
+#: org/signalml/app/view/ViewerElementManager.java:742
+msgid "File"
+msgstr ""
+
+#: org/signalml/app/view/ViewerElementManager.java:765
+msgid "Edit"
+msgstr ""
+
+#: org/signalml/app/view/ViewerElementManager.java:783
+msgid "View"
+msgstr ""
+
+#: org/signalml/app/view/ViewerElementManager.java:804
+msgid "Monitor"
+msgstr ""
+
+#: org/signalml/app/view/ViewerElementManager.java:825
+#: org/signalml/app/view/ViewerFileChooser.java:194
+msgid "Import"
+msgstr ""
+
+#: org/signalml/app/view/ViewerElementManager.java:832
+msgid "Tags"
+msgstr ""
+
+#: org/signalml/app/view/ViewerElementManager.java:870
+msgid "Iterate"
+msgstr ""
+
+#: org/signalml/app/view/ViewerElementManager.java:886
+msgid "Help"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:78
+#: org/signalml/app/view/element/SignalViewingConfigPanel.java:536
+#: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:76
+msgid "Plot options"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:111
+msgid "Tag mode"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:112
+msgid "Signal color"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:205
+msgid "XOR"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:228
+msgid "Antialiasing"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:229
+msgid "Toggle plot antialiasing"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:232
+msgid "Clamp values"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:233
+msgid "Toggle value clamping (causes faster drawing)"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:236
+msgid "Draw offscreen channels"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:238
+msgid ""
+"Toggle drawing of channels whose normal drawing area is completely outside "
+"the window (causes slower drawing)"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:241
+msgid "Page lines"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:243
+msgid "Show page boundaries (only if not too dense)"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:246
+msgid "Block lines"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:248
+msgid "Show block boundaries (only if not too dense)"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:251
+msgid "Channel lines"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:253
+msgid "Show channel center zero levels (only if not too dense)"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:256
+msgid "Tag tool tips"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:258
+msgid "Show tool tips when mouse hovers over a tag"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/CompareTagsPopupDialog.java:97
+msgid "Graphical comparison"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/CompareTagsPopupDialog.java:101
+msgid "Comparison mode enabled"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/CompareTagsPopupDialog.java:102
+msgid "Comparison mode disabled"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/CompareTagsPopupDialog.java:125
+msgid "Choose tag documents (2 required)"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/CompareTagsPopupDialog.java:135
+#: org/signalml/app/view/signal/popup/ActiveTagPopupDialog.java:88
+#, java-format
+msgid "New tag {0}"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/CompareTagsPopupDialog.java:137
+#: org/signalml/app/view/signal/popup/ActiveTagPopupDialog.java:90
+#, java-format
+msgid "{0}"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/CompareTagsPopupDialog.java:308
+msgid "Analyze tag differences"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/CompareTagsPopupDialog.java:310
+msgid "Show analytical comparison summary"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/ActiveTagPopupDialog.java:77
+msgid "Choose active tag"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/ChannelOptionsPopupDialog.java:90
+#: org/signalml/app/view/signal/popup/ChannelOptionsPopupDialog.java:170
+#: org/signalml/app/view/signal/SignalView.java:952
+msgid "Value scale"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/ChannelOptionsPopupDialog.java:102
+msgid "Visibility"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/ChannelOptionsPopupDialog.java:124
+msgid "Ignore global scale"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/ChannelOptionsPopupDialog.java:135
+msgid "Hide"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/ChannelOptionsPopupDialog.java:153
+#: org/signalml/app/view/signal/SignalView.java:861
+#, java-format
+msgid "{0} %"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/SlavePlotSettingsPopupDialog.java:80
+msgid "Synchronization"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/SlavePlotSettingsPopupDialog.java:95
+msgid "Montage"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/SlavePlotSettingsPopupDialog.java:165
+msgid "Inherited from document"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/SlavePlotSettingsPopupDialog.java:174
+msgid "Modified"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/SlavePlotSettingsPopupDialog.java:196
+msgid "Horizontal scroll lock"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/SlavePlotSettingsPopupDialog.java:210
+msgid "Vertical scroll lock"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/SlavePlotSettingsPopupDialog.java:285
+msgid "Edit modified montage"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/SlavePlotSettingsPopupDialog.java:287
+msgid "Edit montage for this plot"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/SlavePlotSettingsPopupDialog.java:316
+msgid "Synchronize now"
+msgstr ""
+
+#: org/signalml/app/view/signal/popup/SlavePlotSettingsPopupDialog.java:318
+msgid "Synchronize plot with master plot"
+msgstr ""
+
+#: org/signalml/app/view/signal/HypnogramPlot.java:88
+msgid "(no tags to display in the hypnogram)"
+msgstr ""
+
+#: org/signalml/app/view/signal/HypnogramPlot.java:322
+msgid "For active tag only"
+msgstr ""
+
+#: org/signalml/app/view/signal/HypnogramPlot.java:325
+msgid "For all tags"
+msgstr ""
+
+#: org/signalml/app/view/signal/HypnogramPlot.java:364
+#, java-format
+msgid "Hypnogram for new tag {0}"
+msgstr ""
+
+#: org/signalml/app/view/signal/HypnogramPlot.java:366
+#, java-format
+msgid "Hypnogram for {0}"
+msgstr ""
+
+#: org/signalml/app/view/signal/HypnogramPlot.java:388
+msgid "Hypnogram"
+msgstr ""
+
+#: org/signalml/app/view/signal/SignalPlotRowHeader.java:120
+msgid "Edit channel`s options"
+msgstr ""
+
+#: org/signalml/app/view/signal/SignalPlotRowHeader.java:121
+msgid "Show channel"
+msgstr ""
+
+#: org/signalml/app/view/signal/SlaveSignalPlotCorner.java:77
+msgid "Remove signal plot"
+msgstr ""
+
+#: org/signalml/app/view/signal/SlaveSignalPlotCorner.java:95
+msgid "Configure signal plot"
+msgstr ""
+
+#: org/signalml/app/view/signal/SignalPlot.java:1254
+#, java-format
+msgid "T: {0}, V:{1} [P: {2}, B: {3}, C: {4}]"
+msgstr ""
+
+#: org/signalml/app/view/signal/SignalPlot.java:2084
+#, java-format
+msgid "{0} [{1}->{3}]"
+msgstr ""
+
+#: org/signalml/app/view/signal/SignalPlot.java:2092
+#, java-format
+msgid "{0} [{1} in channel {2}]"
+msgstr ""
+
+#: org/signalml/app/view/signal/SignalPlot.java:2098
+#, java-format
+msgid "{0} [{1}->{3} in channel {4}]"
+msgstr ""
+
+#: org/signalml/app/view/signal/SignalPlot.java:2661
+msgid "montage from document"
+msgstr ""
+
+#: org/signalml/app/view/signal/SignalPlot.java:2663
+msgid "modified montage"
+msgstr ""
+
+#: org/signalml/app/view/signal/SignalPlot.java:2666
+#: org/signalml/app/view/signal/SignalPlot.java:2667
+msgid "on"
+msgstr ""
+
+#: org/signalml/app/view/signal/SignalPlot.java:2666
+#: org/signalml/app/view/signal/SignalPlot.java:2667
+msgid "off"
+msgstr ""
+
+#: org/signalml/app/view/signal/SignalPlot.java:2669
+#, java-format
+msgid ""
+"Auxiliary signal plot ({0}, horizontal synchro {1}, vertical synchro {2})"
+msgstr ""
+
+#: org/signalml/app/view/signal/SignalPlot.java:2713
+msgid "synchronized"
+msgstr ""
+
+#: org/signalml/app/view/signal/SignalPlot.java:2719
+#, java-format
+msgid "trailing by {0} s"
+msgstr ""
+
+#: org/signalml/app/view/signal/SignalPlot.java:2722
+#, java-format
+msgid "leading by {0} s"
+msgstr ""
+
+#: org/signalml/app/view/signal/SignalView.java:844
+#, java-format
+msgid "{0} pixels/sample"
+msgstr ""
+
+#: org/signalml/app/view/signal/SignalView.java:876
+#: org/signalml/app/view/book/BookView.java:712
+#, java-format
+msgid "{0} px"
+msgstr ""
+
+#: org/signalml/app/view/signal/SignalView.java:895
+#: org/signalml/app/view/book/BookView.java:406
+msgid "Change plot options"
+msgstr ""
+
+#: org/signalml/app/view/signal/SignalView.java:899
+msgid "Move signal with the mouse"
+msgstr ""
+
+#: org/signalml/app/view/signal/SignalView.java:901
+msgid "Select tags"
+msgstr ""
+
+#: org/signalml/app/view/signal/SignalView.java:904
+msgid "Select signal pages"
+msgstr ""
+
+#: org/signalml/app/view/signal/SignalView.java:906
+msgid "Select signal blocks"
+msgstr ""
+
+#: org/signalml/app/view/signal/SignalView.java:908
+msgid "Select single channel or multichannel custom size signal fragments"
+msgstr ""
+
+#: org/signalml/app/view/signal/SignalView.java:911
+msgid "Magnify the signal (for settings press and hold the mouse button here)"
+msgstr ""
+
+#: org/signalml/app/view/signal/SignalView.java:915
+msgid "Measure the signal"
+msgstr ""
+
+#: org/signalml/app/view/signal/SignalView.java:946
+msgid "Time scale"
+msgstr ""
+
+#: org/signalml/app/view/signal/SignalView.java:953
+msgid "Channel height"
+msgstr ""
+
+#: org/signalml/app/view/signal/SignalView.java:979
+msgid "Tag signal pages"
+msgstr ""
+
+#: org/signalml/app/view/signal/SignalView.java:981
+msgid "Tag signal blocks"
+msgstr ""
+
+#: org/signalml/app/view/signal/SignalView.java:983
+msgid "Tag single channel or multichannel custom size signal fragments"
+msgstr ""
+
+#: org/signalml/app/view/signal/SignalPlotColumnHeader.java:511
+#, java-format
+msgid "T: {0} [P: {1}, B: {2}]"
+msgstr ""
+
+#: org/signalml/app/view/signal/SignalPlotColumnHeader.java:625
+msgid "Compact mode"
+msgstr ""
+
+#: org/signalml/app/view/signal/MasterSignalPlotCorner.java:47
+msgid "Create new signal plot"
+msgstr ""
+
+#: org/signalml/app/view/ViewerTaskTable.java:292
+msgid "All tasks"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageMiscellaneousPanel.java:66
+msgid "Edit description"
+msgstr ""
+
+#: org/signalml/app/view/montage/SignalMontageDialog.java:102
+#: org/signalml/app/view/montage/SourceMontageDialog.java:42
+msgid "Signal montage"
+msgstr ""
+
+#: org/signalml/app/view/montage/SignalMontageDialog.java:134
+msgid "Reference editor"
+msgstr ""
+
+#: org/signalml/app/view/montage/SignalMontageDialog.java:135
+msgid "Reference matrix"
+msgstr ""
+
+#: org/signalml/app/view/montage/SignalMontageDialog.java:136
+#: org/signalml/app/view/montage/MontageFiltersPanel.java:327
+msgid "Filters"
+msgstr ""
+
+#: org/signalml/app/view/montage/SignalMontageDialog.java:220
+msgid ""
+"The selected montage is not compatible with the current signal. It will have "
+"to be adapted.<br>&nbsp;<br>This may result in a serious modification of "
+"montage structure.<br>&nbsp;<br>Are you sure you wish to <b>apply</b> the "
+"montage?"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageChannelsPanel.java:256
+msgid "ZEROs channel"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageChannelsPanel.java:257
+msgid "ONEs channel"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageChannelsPanel.java:300
+msgid "Drop target channels here to delete them"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageChannelsPanel.java:383
+#: org/signalml/app/view/montage/SourceMontageChannelsPanel.java:43
+msgid "Source montage"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageChannelsPanel.java:417
+#: org/signalml/app/view/montage/VisualReferenceEditorPanel.java:108
+msgid "Target montage"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageChannelsPanel.java:608
+msgid "Move up"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageChannelsPanel.java:660
+msgid "Move down"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageChannelsPanel.java:716
+msgid "Add channels"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageChannelsPanel.java:774
+msgid "Remove channels"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageChannelsPanel.java:857
+msgid "ZERO"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageChannelsPanel.java:860
+msgid "ONE"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageChannelsPanel.java:917
+msgid ""
+"The removed source channel is used either as a primary channel or as a "
+"reference. Montage will be altered.<br>&nbsp;<br>There is no undo.<br>&nbsp;"
+"<br>Are you sure you wish to <b>remove</b> a source channel?"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageChannelsPanel.java:949
+msgid "Clear montage"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageChannelsPanel.java:967
+msgid ""
+"The montage will be irreversibly lost.<br>&nbsp;<br>There is no undo."
+"<br>&nbsp;<br>Are you sure you wish to <b>clear</b> the montage?"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageGeneratorPanel.java:175
+msgid "Choose generator"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageGeneratorPanel.java:180
+msgid "Generator"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageGeneratorPanel.java:461
+msgid ""
+"The montage will be permanently replaced with the generated montage."
+"<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to "
+"<b>generate</b> the montage?"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageGeneratorPanel.java:531
+msgid "Click to see errors"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageGeneratorPanel.java:581
+msgid "Generate again"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageFiltersPanel.java:342
+msgid "Add time domain filter"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageFiltersPanel.java:358
+msgid "Add FFT filter"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageFiltersPanel.java:384
+msgid "Filter channel exclusion"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageFiltersPanel.java:405
+#: org/signalml/app/view/book/filter/BookFilterDialog.java:101
+msgid "Filtering master switch"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageFiltersPanel.java:409
+msgid "Enable signal filtering"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageFiltersPanel.java:426
+msgid "Filtfilt filtering switch"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageFiltersPanel.java:430
+msgid "Enable filtfilt filtering (only for offline signals)"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageFiltersPanel.java:617
+msgid "Initially passing filter"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageFiltersPanel.java:618
+msgid "Initially stopping filter"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageFiltersPanel.java:895
+#: org/signalml/app/view/montage/MontageFiltersPanel.java:995
+msgid "Add filter"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageFiltersPanel.java:896
+msgid "Add selected time domain filter"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageFiltersPanel.java:917
+#: org/signalml/app/view/montage/MontageFiltersPanel.java:964
+msgid "New time domain filter"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageFiltersPanel.java:940
+#: org/signalml/app/view/book/filter/BookFilterTablePanel.java:325
+msgid "Add custom filter"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageFiltersPanel.java:941
+msgid "Add a custom-made time domain filter"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageFiltersPanel.java:996
+msgid "Add new filter"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageFiltersPanel.java:1015
+msgid "New FFT filter"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageFiltersPanel.java:1050
+msgid "Edit filter"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageFiltersPanel.java:1128
+msgid "Remove filter"
+msgstr ""
+
+#: org/signalml/app/view/montage/MontageFiltersPanel.java:1171
+msgid "Clear exclusion"
+msgstr ""
+
+#: org/signalml/app/view/montage/VisualReferenceEditorPanel.java:114
+#: org/signalml/app/view/montage/MatrixReferenceEditorPanel.java:73
+msgid "Edit reference"
+msgstr ""
+
+#: org/signalml/app/view/montage/VisualReferenceEditorPanel.java:132
+msgid "Weight"
+msgstr ""
+
+#: org/signalml/app/view/montage/VisualReferenceEditorPanel.java:287
+msgid "Bipolar mode"
+msgstr ""
+
+#: org/signalml/app/view/montage/VisualReferenceEditorPanel.java:400
+msgid "Previous"
+msgstr ""
+
+#: org/signalml/app/view/montage/VisualReferenceEditorPanel.java:402
+msgid "Previous channel (Shift-Space)"
+msgstr ""
+
+#: org/signalml/app/view/montage/VisualReferenceEditorPanel.java:420
+msgid "Next channel (Space)"
+msgstr ""
+
+#: org/signalml/app/view/montage/VisualReferenceEditorPanel.java:438
+msgid "Remove this reference (Delete)"
+msgstr ""
+
+#: org/signalml/app/view/montage/VisualReferenceEditorPanel.java:464
+msgid "Accept edit"
+msgstr ""
+
+#: org/signalml/app/view/montage/VisualReferenceEditorPanel.java:503
+msgid "Discard edit"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/charts/TimeDomainFilterResponseChartGroupPanel.java:141
+#: org/signalml/app/view/montage/filters/charts/FFTFilterResponseChartGroupPanel.java:58
+msgid "Maximum graph frequency [Hz]"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/charts/TimeDomainFilterResponseChartGroupPanel.java:158
+msgid "Maximum graph time value [s]"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/charts/TimeDomainFilterResponseChartGroupPanel.java:198
+#, java-format
+msgid "filter order = {0}"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/charts/TimeDomainFilterResponseChartGroupPanel.java:249
+msgid "Filter design graphs"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/charts/elements/ImpulseResponseChartPanel.java:21
+msgid "Impulse response [amplitude]"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/charts/elements/FFTFrequencyResponseChartPanel.java:24
+msgid "FFT coefficients"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/charts/elements/GroupDelayResponseChartPanel.java:22
+msgid "Group delay [samples]"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/charts/elements/GroupDelayResponseChartPanel.java:32
+#: org/signalml/app/view/montage/filters/charts/elements/FrequencyResponseChartPanel.java:41
+msgid "Frequency [Hz]"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/charts/elements/TimeDomainResponseChartPanel.java:28
+#: org/signalml/app/method/ep/EvokedPotentialGraphPanel.java:373
+#: org/signalml/app/method/ep/EvokedPotentialGraphPanel.java:382
+#: org/signalml/app/method/ep/EvokedPotentialGraphPanel.java:397
+msgid "Time [s]"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/charts/elements/TimeDomainFilterFrequencyResponseChartPanel.java:31
+msgid "Filter frequency response [decibels]"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/charts/elements/StepResponseChartPanel.java:21
+msgid "Step response [amplitude]"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/charts/FFTFilterResponseChartGroupPanel.java:171
+msgid "Filter design graph"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/EditFFTSampleFilterDialog.java:121
+msgid "Edit FFT sample filter"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/EditFFTSampleFilterDialog.java:143
+msgid "New range parameters"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/EditFFTSampleFilterDialog.java:160
+msgid "Ranges"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/EditFFTSampleFilterDialog.java:189
+#: org/signalml/app/view/montage/filters/TimeDomainFilterParametersPanel.java:133
+msgid "Filter description"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/EditFFTSampleFilterDialog.java:275
+msgid "Double click a row to copy parameters to new range parameters panel"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/EditFFTSampleFilterDialog.java:309
+msgid "From (incl.) [Hz]"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/EditFFTSampleFilterDialog.java:310
+msgid "To (excl.) [Hz]"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/EditFFTSampleFilterDialog.java:311
+#: org/signalml/app/montage/FFTSampleFilterTableModel.java:68
+msgid "Coefficient"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/EditFFTSampleFilterDialog.java:312
+msgid "Up to Fn"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/EditFFTSampleFilterDialog.java:313
+msgid "Multiply"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/EditFFTSampleFilterDialog.java:620
+msgid "Add or replace range"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/EditFFTSampleFilterDialog.java:677
+msgid "Remove range"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/TimeDomainFilterParametersPanel.java:134
+msgid "Filter type"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/TimeDomainFilterParametersPanel.java:135
+msgid "Filter family"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/TimeDomainFilterParametersPanel.java:136
+msgid "Passband edge frequency 1 [Hz]"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/TimeDomainFilterParametersPanel.java:137
+msgid "Passband edge frequency 2 [Hz]"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/TimeDomainFilterParametersPanel.java:138
+msgid "Stopband edge frequency 1 [Hz]"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/TimeDomainFilterParametersPanel.java:139
+msgid "Stopband edge frequency 2 [Hz]"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/TimeDomainFilterParametersPanel.java:140
+msgid "Passband ripple [dB]"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/TimeDomainFilterParametersPanel.java:141
+msgid "Stopband attenuation [dB]"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/EditTimeDomainSampleFilterDialog.java:104
+msgid "Edit time domain filter"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/EditTimeDomainSampleFilterDialog.java:119
+msgid "Filter parameters"
+msgstr ""
+
+#: org/signalml/app/view/montage/filters/EditTimeDomainSampleFilterDialog.java:262
+msgid "Draw filter responses"
+msgstr ""
+
+#: org/signalml/app/view/montage/VisualReferenceModel.java:164
+msgid "Others"
+msgstr ""
+
+#: org/signalml/app/view/montage/VisualReferenceModel.java:165
+msgid "Refs"
+msgstr ""
+
+#: org/signalml/app/view/montage/VisualReferenceModel.java:166
+msgid "Prims"
+msgstr ""
+
+#: org/signalml/app/view/montage/VisualReferenceModel.java:167
+msgid "Positioned"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:64
+#: org/signalml/app/view/ViewerFileChooser.java:77
+#: org/signalml/app/view/ViewerFileChooser.java:90
+msgid "Choose text file to save"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:71
+#: org/signalml/app/view/ViewerFileChooser.java:84
+#: org/signalml/app/view/ViewerFileChooser.java:97
+msgid "Text files (*.txt)"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:103
+msgid "Choose binary file to save"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:110
+#: org/signalml/app/view/ViewerFileChooser.java:149
+#: org/signalml/app/view/ViewerFileChooser.java:229
+msgid "Binary files (*.bin)"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:116
+msgid "Choose png file to save"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:123
+msgid "PNG graphic files (*.png)"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:129
+msgid "Choose MP5 config file to save"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:136
+msgid "Config files (*.cfg)"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:142
+msgid "Choose MP5 signal file to save"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:155
+msgid "Save document"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:163
+msgid "Save tag"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:173
+msgid "Open tag"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:183
+msgid "Choose expert tag"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:184
+#: org/signalml/app/view/ViewerFileChooser.java:269
+#: org/signalml/app/view/ViewerFileChooser.java:283
+#: org/signalml/app/view/ViewerFileChooser.java:307
+#: org/signalml/app/view/ViewerFileChooser.java:314
+#: org/signalml/app/view/ViewerFileChooser.java:321
+#: org/signalml/app/view/ViewerFileChooser.java:333
+msgid "Choose"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:193
+msgid "Import legacy tag"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:201
+msgid "Read XML manifest"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:202
+msgid "Read"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:208
+#: org/signalml/app/view/ViewerFileChooser.java:262
+#: org/signalml/app/view/element/RegisterCodecStepOnePanel.java:103
+msgid "XML files (*.xml)"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:214
+msgid "Export legacy tag"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:222
+msgid "Export binary signal"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:235
+msgid "Export book"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:242
+#: org/signalml/app/view/ViewerFileChooser.java:289
+#: org/signalml/app/view/ViewerFileChooser.java:301
+msgid "Book files (*.b)"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:248
+msgid "Save preset to file"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:255
+msgid "Load preset from file"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:268
+msgid "Choose executable"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:276
+msgid "Executable files (*.exe)"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:282
+msgid "Choose a book file"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:294
+#: org/signalml/app/method/mp5/MP5ResultBookPanel.java:161
+msgid "Choose a book file to save"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:306
+msgid "Choose working directory"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:313
+msgid "Choose class path directories"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:320
+msgid "Choose jar files"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:327
+msgid "Jar files (*.jar)"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:332
+msgid "Choose code file"
+msgstr ""
+
+#: org/signalml/app/view/ViewerFileChooser.java:339
+msgid "Code files (*.java, *.class)"
+msgstr ""
+
+#: org/signalml/app/view/ViewerMainFrame.java:105
+msgid "Initializing main window"
+msgstr ""
+
+#: org/signalml/app/view/ViewerMainFrame.java:107
+#, java-format
+msgid "Svarog v.{0}"
+msgstr ""
+
+#: org/signalml/app/view/ViewerMainFrame.java:120
+msgid "Creating interface"
+msgstr ""
+
+#: org/signalml/app/view/ViewerMainFrame.java:141
+msgid "Restoring tasks"
+msgstr ""
+
+#: org/signalml/app/view/ViewerMainFrame.java:145
+msgid "Finishing"
+msgstr ""
+
+#: org/signalml/app/view/ViewerMainFrame.java:161
+msgid "Restoring workspace"
+msgstr ""
+
+#: org/signalml/app/view/element/NewTagPanel.java:149
+msgid "An empty tag with no styles"
+msgstr ""
+
+#: org/signalml/app/view/element/NewTagPanel.java:166
+msgid "Use standard sleep staging styles"
+msgstr ""
+
+#: org/signalml/app/view/element/NewTagPanel.java:196
+msgid "Use styles from selected styles preset"
+msgstr ""
+
+#: org/signalml/app/view/element/NewTagPanel.java:225
+msgid "Use styles from selected file"
+msgstr ""
+
+#: org/signalml/app/view/element/ChannelSignalSelectionPanel.java:94
+msgid "Channel"
+msgstr ""
+
+#: org/signalml/app/view/element/ChannelSignalSelectionPanel.java:95
+msgid "Start time"
+msgstr ""
+
+#: org/signalml/app/view/element/ChannelSignalSelectionPanel.java:96
+msgid "Length (seconds)"
+msgstr ""
+
+#: org/signalml/app/view/element/RegisterCodecStepTwoPanel.java:87
+msgid "Choose the name of the format"
+msgstr ""
+
+#: org/signalml/app/view/element/RegisterCodecStepTwoPanel.java:89
+msgid "Format name"
+msgstr ""
+
+#: org/signalml/app/view/element/RegisterCodecStepTwoPanel.java:123
+msgid "Name exists. Current codec will be replaced!"
+msgstr ""
+
+#: org/signalml/app/view/element/RegisterCodecStepOnePanel.java:75
+msgid "Choose XML definition file"
+msgstr ""
+
+#: org/signalml/app/view/element/BookZoomSettingsPanel.java:139
+msgid "Range"
+msgstr ""
+
+#: org/signalml/app/view/element/BookZoomSettingsPanel.java:148
+#: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:96
+#: org/signalml/app/view/book/BookPlot.java:1285
+#: org/signalml/app/view/book/AtomTableModel.java:136
+msgid "Position"
+msgstr ""
+
+#: org/signalml/app/view/element/BookZoomSettingsPanel.java:149
+#: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:98
+#: org/signalml/app/view/book/BookPlot.java:1291
+#: org/signalml/app/view/book/AtomTableModel.java:142
+msgid "Frequency"
+msgstr ""
+
+#: org/signalml/app/view/element/BookZoomSettingsPanel.java:151
+#: org/signalml/app/view/element/BookZoomSettingsPanel.java:152
+#: org/signalml/app/view/element/SignalViewingConfigPanel.java:651
+#: org/signalml/app/view/element/SignalViewingConfigPanel.java:654
+#: org/signalml/app/view/element/SignalViewingConfigPanel.java:657
+msgid "min"
+msgstr ""
+
+#: org/signalml/app/view/element/BookZoomSettingsPanel.java:154
+#: org/signalml/app/view/element/BookZoomSettingsPanel.java:155
+#: org/signalml/app/view/element/SignalViewingConfigPanel.java:652
+#: org/signalml/app/view/element/SignalViewingConfigPanel.java:655
+#: org/signalml/app/view/element/SignalViewingConfigPanel.java:658
+msgid "max"
+msgstr ""
+
+#: org/signalml/app/view/element/BookZoomSettingsPanel.java:227
+msgid "Ratio preservation"
+msgstr ""
+
+#: org/signalml/app/view/element/BookZoomSettingsPanel.java:498
+msgid "Preserve scale ratio on drag"
+msgstr ""
+
+#: org/signalml/app/view/element/MiscellaneousConfigPanel.java:184
+#: org/signalml/app/view/element/TaggingConfigPanel.java:76
+#: org/signalml/app/view/element/SignalViewingConfigPanel.java:482
+#: org/signalml/app/view/element/SignalRecordingConfigPanel.java:54
+msgid "General"
+msgstr ""
+
+#: org/signalml/app/view/element/MiscellaneousConfigPanel.java:200
+msgid "Tool tip settings"
+msgstr ""
+
+#: org/signalml/app/view/element/MiscellaneousConfigPanel.java:204
+msgid "To show"
+msgstr ""
+
+#: org/signalml/app/view/element/MiscellaneousConfigPanel.java:210
+msgid "To hide"
+msgstr ""
+
+#: org/signalml/app/view/element/MiscellaneousConfigPanel.java:216
+msgid "[ms]"
+msgstr ""
+
+#: org/signalml/app/view/element/MiscellaneousConfigPanel.java:225
+msgid "View mode"
+msgstr ""
+
+#: org/signalml/app/view/element/MiscellaneousConfigPanel.java:256
+msgid "Save config files on every change (otherwise on exit)"
+msgstr ""
+
+#: org/signalml/app/view/element/MiscellaneousConfigPanel.java:270
+msgid "Restore the workspace when the application loads"
+msgstr ""
+
+#: org/signalml/app/view/element/MiscellaneousConfigPanel.java:285
+msgid "Disable serious warning dialogs for preset operations"
+msgstr ""
+
+#: org/signalml/app/view/element/MiscellaneousConfigPanel.java:299
+msgid "Do not show dynamic compilation warnings"
+msgstr ""
+
+#: org/signalml/app/view/element/MiscellaneousConfigPanel.java:313
+msgid "Hide main toolbar"
+msgstr ""
+
+#: org/signalml/app/view/element/MiscellaneousConfigPanel.java:327
+msgid "Hide left panel"
+msgstr ""
+
+#: org/signalml/app/view/element/MiscellaneousConfigPanel.java:341
+msgid "Hide bottom panel"
+msgstr ""
+
+#: org/signalml/app/view/element/MiscellaneousConfigPanel.java:355
+msgid "Compact page tags"
+msgstr ""
+
+#: org/signalml/app/view/element/MiscellaneousConfigPanel.java:369
+msgid "Snap to page"
+msgstr ""
+
+#: org/signalml/app/view/element/OpenSignalOptionsPanel.java:125
+#: org/signalml/app/view/opensignal/FileOpenMethodPanel.java:50
+msgid "Choose signal loading method"
+msgstr ""
+
+#: org/signalml/app/view/element/OpenSignalOptionsPanel.java:182
+msgid "Load using SignalML codec"
+msgstr ""
+
+#: org/signalml/app/view/element/OpenSignalOptionsPanel.java:183
+msgid "Load raw signal"
+msgstr ""
+
+#: org/signalml/app/view/element/SignalZoomSettingsPanel.java:113
+msgid "Zoom factor"
+msgstr ""
+
+#: org/signalml/app/view/element/SignalZoomSettingsPanel.java:134
+msgid "Zoom window size"
+msgstr ""
+
+#: org/signalml/app/view/element/SignalZoomSettingsPanel.java:152
+msgid "Channel switching"
+msgstr ""
+
+#: org/signalml/app/view/element/SignalZoomSettingsPanel.java:157
+msgid "Switch channels as mouse moves"
+msgstr ""
+
+#: org/signalml/app/view/element/AutoSpinnerPanel.java:181
+#: org/signalml/app/view/element/UnlimitedSpinnerPanel.java:83
+msgid "un."
+msgstr ""
+
+#: org/signalml/app/view/element/AutoSpinnerPanel.java:183
+msgid "auto"
+msgstr ""
+
+#: org/signalml/app/view/element/EmbeddedFileChooserFavorites.java:151
+msgid "Hide favorites"
+msgstr ""
+
+#: org/signalml/app/view/element/EmbeddedFileChooserFavorites.java:155
+msgid "Show favorites"
+msgstr ""
+
+#: org/signalml/app/view/element/EmbeddedFileChooserFavorites.java:321
+msgid "Favorites"
+msgstr ""
+
+#: org/signalml/app/view/element/EmbeddedFileChooserFavorites.java:338
+msgid "Add current directory to favorites"
+msgstr ""
+
+#: org/signalml/app/view/element/EmbeddedFileChooserFavorites.java:348
+msgid "Remove from favorites"
+msgstr ""
+
+#: org/signalml/app/view/element/EmbeddedFileChooserFavorites.java:359
+msgid "Choose location"
+msgstr ""
+
+#: org/signalml/app/view/element/EmbeddedFileChooserFavorites.java:384
+msgid "History"
+msgstr ""
+
+#: org/signalml/app/view/element/EmbeddedFileChooserFavorites.java:396
+msgid "Last directories"
+msgstr ""
+
+#: org/signalml/app/view/element/UnlimitedSpinnerPanel.java:85
+msgid "unlimited"
+msgstr ""
+
+#: org/signalml/app/view/element/TaggingConfigPanel.java:98
+msgid "Save full montage with tag file"
+msgstr ""
+
+#: org/signalml/app/view/element/MonitorRecordingPanel.java:69
+msgid "Monitor recording"
+msgstr ""
+
+#: org/signalml/app/view/element/MonitorRecordingPanel.java:161
+#: org/signalml/app/view/opensignal/SignalParametersPanelForAmplifierConnection.java:92
+#: org/signalml/app/view/opensignal/SignalParametersPanelForAmplifierConnection.java:99
+msgid "Invalid data entered"
+msgstr ""
+
+#: org/signalml/app/view/element/TimeSpacePanel.java:90
+msgid "Time fragment selection"
+msgstr ""
+
+#: org/signalml/app/view/element/TimeSpacePanel.java:156
+msgid "Whole signal"
+msgstr ""
+
+#: org/signalml/app/view/element/TimeSpacePanel.java:157
+msgid "Selected"
+msgstr ""
+
+#: org/signalml/app/view/element/TimeSpacePanel.java:158
+msgid "Marked"
+msgstr ""
+
+#: org/signalml/app/view/element/MarkedTimeSpacePanel.java:156
+msgid "Marker channel & style"
+msgstr ""
+
+#: org/signalml/app/view/element/MarkedTimeSpacePanel.java:165
+msgid "Marker channel"
+msgstr ""
+
+#: org/signalml/app/view/element/MarkedTimeSpacePanel.java:166
+#: org/signalml/app/view/element/TagStylePropertiesPanel.java:477
+msgid "Marker style"
+msgstr ""
+
+#: org/signalml/app/view/element/MarkedTimeSpacePanel.java:269
+#: org/signalml/app/view/book/filter/TagBasedFilterDialog.java:227
+#: org/signalml/app/method/bookaverage/AverageBooksPopupDialog.java:75
+msgid "Settings"
+msgstr ""
+
+#: org/signalml/app/view/element/MarkedTimeSpacePanel.java:278
+#: org/signalml/app/view/book/filter/TagBasedFilterDialog.java:236
+msgid "Seconds before"
+msgstr ""
+
+#: org/signalml/app/view/element/MarkedTimeSpacePanel.java:279
+#: org/signalml/app/view/book/filter/TagBasedFilterDialog.java:237
+msgid "Seconds after"
+msgstr ""
+
+#: org/signalml/app/view/element/RawSignalOptionsPanel.java:130
+msgid "Raw signal options"
+msgstr ""
+
+#: org/signalml/app/view/element/RawSignalOptionsPanel.java:292
+#: org/signalml/app/view/element/RequiredSignalParametersPanel.java:117
+msgid "Sampling Frequency (Hz)"
+msgstr ""
+
+#: org/signalml/app/view/element/RawSignalOptionsPanel.java:293
+#: org/signalml/app/view/element/RequiredSignalParametersPanel.java:118
+msgid "Number of channels"
+msgstr ""
+
+#: org/signalml/app/view/element/RawSignalOptionsPanel.java:294
+#: org/signalml/app/view/element/ExportSignalOptionsPanel.java:118
+msgid "Sample type"
+msgstr ""
+
+#: org/signalml/app/view/element/RawSignalOptionsPanel.java:295
+#: org/signalml/app/view/element/ExportSignalOptionsPanel.java:119
+msgid "Byte order"
+msgstr ""
+
+#: org/signalml/app/view/element/RawSignalOptionsPanel.java:296
+#: org/signalml/app/view/element/RequiredSignalParametersPanel.java:119
+msgid "Calibration gain"
+msgstr ""
+
+#: org/signalml/app/view/element/RawSignalOptionsPanel.java:297
+#: org/signalml/app/view/element/RequiredSignalParametersPanel.java:120
+msgid "Calibration offset"
+msgstr ""
+
+#: org/signalml/app/view/element/BlockSignalSelectionPanel.java:86
+#: org/signalml/app/view/element/PageSignalSelectionPanel.java:76
+msgid "Start page"
+msgstr ""
+
+#: org/signalml/app/view/element/BlockSignalSelectionPanel.java:87
+msgid "Start block"
+msgstr ""
+
+#: org/signalml/app/view/element/BlockSignalSelectionPanel.java:88
+msgid "Length (blocks)"
+msgstr ""
+
+#: org/signalml/app/view/element/OpenDocumentStepOnePanel.java:126
+#: org/signalml/app/view/element/FileChooserPanel.java:72
+msgid "Choose a file"
+msgstr ""
+
+#: org/signalml/app/view/element/OpenDocumentStepOnePanel.java:145
+msgid "Choose the file type"
+msgstr ""
+
+#: org/signalml/app/view/element/OpenDocumentStepOnePanel.java:165
+msgid "Attempt to autodetect file type"
+msgstr ""
+
+#: org/signalml/app/view/element/OpenDocumentStepOnePanel.java:186
+msgid "Select manually from a list"
+msgstr ""
+
+#: org/signalml/app/view/element/OpenDocumentStepOnePanel.java:210
+msgid "Signal"
+msgstr ""
+
+#: org/signalml/app/view/element/OpenDocumentStepOnePanel.java:211
+msgid "Book"
+msgstr ""
+
+#: org/signalml/app/view/element/OpenDocumentStepOnePanel.java:212
+msgid "Tag"
+msgstr ""
+
+#: org/signalml/app/view/element/CodecManagerConfigPanel.java:139
+msgid "Installed codecs"
+msgstr ""
+
+#: org/signalml/app/view/element/FFTWindowTypePanel.java:101
+msgid "Window type"
+msgstr ""
+
+#: org/signalml/app/view/element/FFTWindowTypePanel.java:155
+msgid "Window parameter"
+msgstr ""
+
+#: org/signalml/app/view/element/OpenTagOptionsPanel.java:65
+msgid "Choose options for tag"
+msgstr ""
+
+#: org/signalml/app/view/element/OpenTagOptionsPanel.java:76
+msgid "Select signal document"
+msgstr ""
+
+#: org/signalml/app/view/element/SignalSelectionTypePanel.java:75
+msgid "Selection type"
+msgstr ""
+
+#: org/signalml/app/view/element/SignalSelectionTypePanel.java:130
+msgid "Free (channel) selection"
+msgstr ""
+
+#: org/signalml/app/view/element/TagStylePropertiesPanel.java:239
+msgid "Outline style"
+msgstr ""
+
+#: org/signalml/app/view/element/TagStylePropertiesPanel.java:245
+msgid "Fill style"
+msgstr ""
+
+#: org/signalml/app/view/element/TagStylePropertiesPanel.java:369
+msgid "Preview"
+msgstr ""
+
+#: org/signalml/app/view/element/TagStylePropertiesPanel.java:383
+msgid "Select or add a style"
+msgstr ""
+
+#: org/signalml/app/view/element/TagStylePropertiesPanel.java:410
+msgid "Outline width"
+msgstr ""
+
+#: org/signalml/app/view/element/TagStylePropertiesPanel.java:411
+msgid "Outline dash style"
+msgstr ""
+
+#: org/signalml/app/view/element/TagStylePropertiesPanel.java:465
+msgid "Properties"
+msgstr ""
+
+#: org/signalml/app/view/element/TagStylePropertiesPanel.java:475
+#: org/signalml/app/montage/MontageFiltersTableModel.java:80
+msgid "Description"
+msgstr ""
+
+#: org/signalml/app/view/element/TagStylePropertiesPanel.java:476
+msgid "Key"
+msgstr ""
+
+#: org/signalml/app/view/element/TagStylePropertiesPanel.java:478
+msgid "Visible"
+msgstr ""
+
+#: org/signalml/app/view/element/SignalViewingConfigPanel.java:237
+msgid "Default signal XOR"
+msgstr ""
+
+#: org/signalml/app/view/element/SignalViewingConfigPanel.java:252
+msgid "Right click signal to shift page (hold down SHIFT for popup menu)"
+msgstr ""
+
+#: org/signalml/app/view/element/SignalViewingConfigPanel.java:266
+msgid "Automatically load default montage when opening signals (if defined)"
+msgstr ""
+
+#: org/signalml/app/view/element/SignalViewingConfigPanel.java:280
+msgid "Pre-calculate checksums for opened signals"
+msgstr ""
+
+#: org/signalml/app/view/element/SignalViewingConfigPanel.java:294
+msgid "Default antialiasing"
+msgstr ""
+
+#: org/signalml/app/view/element/SignalViewingConfigPanel.java:308
+msgid "Default clamp values"
+msgstr ""
+
+#: org/signalml/app/view/element/SignalViewingConfigPanel.java:322
+msgid "Default draw offscreen channels"
+msgstr ""
+
+#: org/signalml/app/view/element/SignalViewingConfigPanel.java:336
+msgid "Default tag tool tips"
+msgstr ""
+
+#: org/signalml/app/view/element/SignalViewingConfigPanel.java:350
+msgid "Default page lines"
+msgstr ""
+
+#: org/signalml/app/view/element/SignalViewingConfigPanel.java:364
+msgid "Default block lines"
+msgstr ""
+
+#: org/signalml/app/view/element/SignalViewingConfigPanel.java:378
+msgid "Default channel lines"
+msgstr ""
+
+#: org/signalml/app/view/element/SignalViewingConfigPanel.java:559
+msgid "Default tag paint mode"
+msgstr ""
+
+#: org/signalml/app/view/element/SignalViewingConfigPanel.java:560
+msgid "Default signal color"
+msgstr ""
+
+#: org/signalml/app/view/element/SignalViewingConfigPanel.java:640
+msgid "Scale limits (changes do not affect signals already open)"
+msgstr ""
+
+#: org/signalml/app/view/element/SignalViewingConfigPanel.java:650
+msgid "Channel height [px]"
+msgstr ""
+
+#: org/signalml/app/view/element/SignalViewingConfigPanel.java:653
+msgid "Value scale [%]"
+msgstr ""
+
+#: org/signalml/app/view/element/SignalViewingConfigPanel.java:656
+msgid "Time scale [px/sample]"
+msgstr ""
+
+#: org/signalml/app/view/element/OpenBookOptionsPanel.java:44
+msgid "Choose options for book"
+msgstr ""
+
+#: org/signalml/app/view/element/FileSelectPanel.java:134
+msgid "Browse"
+msgstr ""
+
+#: org/signalml/app/view/element/ProfilePathTypePanel.java:102
+msgid "Welcome to signalml viewer"
+msgstr ""
+
+#: org/signalml/app/view/element/ProfilePathTypePanel.java:132
+msgid "signalml directory inside default home"
+msgstr ""
+
+#: org/signalml/app/view/element/ProfilePathTypePanel.java:151
+msgid "custom location"
+msgstr ""
+
+#: org/signalml/app/view/element/ProfilePathTypePanel.java:181
+msgid ""
+"The signalml viewer needs a directory to store its configuration and files. "
+"This directory may reside inside the default user's home directory (system "
+"dependent), or you can select any directory on disk (remember that you need "
+"to select a concrete directory for SignalML files, not the directory in "
+"which you would like the later to be created - create the directory if "
+"necessary)."
+msgstr ""
+
+#: org/signalml/app/view/element/ProfilePathTypePanel.java:204
+msgid "Directories"
+msgstr ""
+
+#: org/signalml/app/view/element/RequiredSignalParametersPanel.java:106
+msgid "Required signal parameters"
+msgstr ""
+
+#: org/signalml/app/view/element/RequiredSignalParametersPanel.java:272
+#: org/signalml/app/view/element/RequiredSignalParametersPanel.java:280
+#: org/signalml/app/view/element/RequiredSignalParametersPanel.java:290
+#: org/signalml/app/view/element/RequiredSignalParametersPanel.java:291
+msgid "This parameter may not be changed for this signal file"
+msgstr ""
+
+#: org/signalml/app/view/element/OpenDocumentStepTwoPanel.java:121
+msgid "Signal document autodetected"
+msgstr ""
+
+#: org/signalml/app/view/element/OpenDocumentStepTwoPanel.java:123
+msgid "Signal document chosen"
+msgstr ""
+
+#: org/signalml/app/view/element/OpenDocumentStepTwoPanel.java:128
+msgid "Book document autodetected"
+msgstr ""
+
+#: org/signalml/app/view/element/OpenDocumentStepTwoPanel.java:130
+msgid "Book document chosen"
+msgstr ""
+
+#: org/signalml/app/view/element/OpenDocumentStepTwoPanel.java:135
+msgid "Tag document autodetected"
+msgstr ""
+
+#: org/signalml/app/view/element/OpenDocumentStepTwoPanel.java:137
+msgid "Tag document chosen"
+msgstr ""
+
+#: org/signalml/app/view/element/MonitorChannelSelectPanel.java:68
+#: org/signalml/app/view/opensignal/ChannelSelectPanel.java:64
+msgid "Select channels to be monitored"
+msgstr ""
+
+#: org/signalml/app/view/element/MonitorChannelSelectPanel.java:97
+#: org/signalml/app/view/opensignal/ChannelSelectPanel.java:94
+#: org/signalml/app/action/util/ListSelectAllAction.java:26
+msgid "Select all"
+msgstr ""
+
+#: org/signalml/app/view/element/MonitorChannelSelectPanel.java:119
+#: org/signalml/app/view/opensignal/ChannelSelectPanel.java:112
+msgid "Clear all"
+msgstr ""
+
+#: org/signalml/app/view/element/SignalRecordingConfigPanel.java:86
+msgid "Backup frequency [s]"
+msgstr ""
+
+#: org/signalml/app/view/element/PagingParametersPanel.java:82
+msgid "Page & block parameters"
+msgstr ""
+
+#: org/signalml/app/view/element/PagingParametersPanel.java:93
+msgid "Page size (s)"
+msgstr ""
+
+#: org/signalml/app/view/element/PagingParametersPanel.java:94
+msgid "Number of blocks per page"
+msgstr ""
+
+#: org/signalml/app/view/element/PagingParametersPanel.java:192
+#: org/signalml/app/view/element/PagingParametersPanel.java:200
+msgid ""
+"This parameter is inherited from the active tag and may not be changed as "
+"long as any tags are open"
+msgstr ""
+
+#: org/signalml/app/view/element/MonitorSignalParametersPanel.java:45
+msgid "Sampling frequency"
+msgstr ""
+
+#: org/signalml/app/view/element/MonitorSignalParametersPanel.java:46
+msgid "Channel count"
+msgstr ""
+
+#: org/signalml/app/view/element/MonitorSignalParametersPanel.java:48
+msgid "Page size"
+msgstr ""
+
+#: org/signalml/app/view/element/WholeTimeSpacePanel.java:101
+msgid "Signal length [s]"
+msgstr ""
+
+#: org/signalml/app/view/element/WholeTimeSpacePanel.java:102
+msgid "Page size [s]"
+msgstr ""
+
+#: org/signalml/app/view/element/WholeTimeSpacePanel.java:103
+msgid "Number of whole pages"
+msgstr ""
+
+#: org/signalml/app/view/element/WholeTimeSpacePanel.java:104
+msgid "Complete pages only"
+msgstr ""
+
+#: org/signalml/app/view/element/SignalSelectionPanel.java:153
+msgid "Selection parameters"
+msgstr ""
+
+#: org/signalml/app/view/element/ExportSignalOptionsPanel.java:109
+msgid "Export options"
+msgstr ""
+
+#: org/signalml/app/view/element/ExportSignalOptionsPanel.java:120
+msgid "Save XML manifest"
+msgstr ""
+
+#: org/signalml/app/view/element/ExportSignalOptionsPanel.java:121
+msgid "Normalize samples"
+msgstr ""
+
+#: org/signalml/app/view/element/PageSignalSelectionPanel.java:77
+msgid "Length (pages)"
+msgstr ""
+
+#: org/signalml/app/view/element/MultiplexerConnectionPanel.java:90
+msgid "Connect to the multiplexer"
+msgstr ""
+
+#: org/signalml/app/view/element/MultiplexerConnectionPanel.java:104
+msgid "Multiplexer address"
+msgstr ""
+
+#: org/signalml/app/view/element/MultiplexerConnectionPanel.java:105
+msgid "Multiplexer port"
+msgstr ""
+
+#: org/signalml/app/view/element/MultiplexerConnectionPanel.java:294
+msgid "Reset to defaults"
+msgstr ""
+
+#: org/signalml/app/view/tag/TagEraserMenuItem.java:25
+#: org/signalml/app/view/tag/TagEraserToggleButton.java:28
+msgid "Erase tags"
+msgstr ""
+
+#: org/signalml/app/view/tag/comparison/TagStyleTableCellRenderer.java:40
+#: org/signalml/app/view/tag/TagStyleListCellRenderer.java:33
+msgid "(none)"
+msgstr ""
+
+#: org/signalml/app/view/tag/comparison/TagComparisonResultPanel.java:95
+msgid "[s]"
+msgstr ""
+
+#: org/signalml/app/view/tag/comparison/TagComparisonResultPanel.java:96
+msgid "[%]"
+msgstr ""
+
+#: org/signalml/app/view/tag/comparison/TagComparisonResultPanel.java:240
+#: org/signalml/app/view/tag/comparison/TagComparisonDialog.java:111
+msgid "First document"
+msgstr ""
+
+#: org/signalml/app/view/tag/comparison/TagComparisonResultPanel.java:247
+#: org/signalml/app/view/tag/comparison/TagComparisonDialog.java:115
+msgid "Second document"
+msgstr ""
+
+#: org/signalml/app/view/tag/comparison/TagComparisonResultPanel.java:284
+msgid "Comparison result"
+msgstr ""
+
+#: org/signalml/app/view/tag/comparison/TagComparisonResultPanel.java:319
+msgid "Page statistic"
+msgstr ""
+
+#: org/signalml/app/view/tag/comparison/TagComparisonResultPanel.java:320
+msgid "Page comparison"
+msgstr ""
+
+#: org/signalml/app/view/tag/comparison/TagComparisonResultPanel.java:321
+msgid "Block statistic"
+msgstr ""
+
+#: org/signalml/app/view/tag/comparison/TagComparisonResultPanel.java:322
+msgid "Block comparison"
+msgstr ""
+
+#: org/signalml/app/view/tag/comparison/TagComparisonResultPanel.java:323
+msgid "Channel statistic"
+msgstr ""
+
+#: org/signalml/app/view/tag/comparison/TagComparisonResultPanel.java:324
+msgid "Channel comparison"
+msgstr ""
+
+#: org/signalml/app/view/tag/comparison/TagComparisonResultPanel.java:531
+msgid "Show as percent"
+msgstr ""
+
+#: org/signalml/app/view/tag/comparison/TagComparisonDialog.java:69
+msgid "Tag comparison"
+msgstr ""
+
+#: org/signalml/app/view/opensignal/SignalParametersPanelForSignalMLSignalFile.java:98
+msgid "Paging parameters:"
+msgstr ""
+
+#: org/signalml/app/view/opensignal/SignalParametersPanelForSignalMLSignalFile.java:109
+#: org/signalml/app/view/opensignal/AbstractSignalParametersPanel.java:163
+msgid "Page size: "
+msgstr ""
+
+#: org/signalml/app/view/opensignal/SignalParametersPanelForSignalMLSignalFile.java:110
+#: org/signalml/app/view/opensignal/AbstractSignalParametersPanel.java:164
+msgid "Number of blocks per page: "
+msgstr ""
+
+#: org/signalml/app/view/opensignal/elements/ChannelSelectTableModel.java:112
+msgid "opensignal.amplifier.channelSelectTable.channelSelectedColumnTitle"
+msgstr ""
+
+#: org/signalml/app/view/opensignal/elements/ChannelSelectTableModel.java:113
+msgid "number"
+msgstr ""
+
+#: org/signalml/app/view/opensignal/elements/ChannelSelectTableModel.java:114
+msgid "label"
+msgstr ""
+
+#: org/signalml/app/view/opensignal/SignalSourceSelectionPanel.java:54
+msgid "Select signal source"
+msgstr ""
+
+#: org/signalml/app/view/opensignal/SignalSourceSelectionPanel.java:64
+#: org/signalml/app/view/opensignal/OpenSignalAndSetMontageDialog.java:64
+msgid "Signal source"
+msgstr ""
+
+#: org/signalml/app/view/opensignal/ConfigureAmplifiersPanel.java:52
+msgid "Config"
+msgstr ""
+
+#: org/signalml/app/view/opensignal/ConfigureAmplifiersPanel.java:72
+msgid "Amplifier definition config"
+msgstr ""
+
+#: org/signalml/app/view/opensignal/EditGainAndOffsetDialog.java:38
+#: org/signalml/app/view/opensignal/AbstractSignalParametersPanel.java:396
+msgid "Edit gain and offset"
+msgstr ""
+
+#: org/signalml/app/view/opensignal/ReadXMLManifestAction.java:119
+msgid "The signal you are about to load is only a backup!"
+msgstr ""
+
+#: org/signalml/app/view/opensignal/AbstractSignalParametersPanel.java:159
+msgid "Sampling frequency: "
+msgstr ""
+
+#: org/signalml/app/view/opensignal/AbstractSignalParametersPanel.java:160
+msgid "Channel count: "
+msgstr ""
+
+#: org/signalml/app/view/opensignal/AbstractSignalParametersPanel.java:161
+msgid "Byte order: "
+msgstr ""
+
+#: org/signalml/app/view/opensignal/AbstractSignalParametersPanel.java:162
+msgid "Sample type: "
+msgstr ""
+
+#: org/signalml/app/view/opensignal/StartStopButtonsPanel.java:79
+msgid "OpenBCI"
+msgstr ""
+
+#: org/signalml/app/view/opensignal/StartStopButtonsPanel.java:98
+msgid "Start"
+msgstr ""
+
+#: org/signalml/app/view/opensignal/StartStopButtonsPanel.java:125
+msgid "Stop"
+msgstr ""
+
+#: org/signalml/app/view/opensignal/StartStopButtonsPanel.java:178
+msgid "Select an amplifier first"
+msgstr ""
+
+#: org/signalml/app/view/opensignal/StartStopButtonsPanel.java:194
+msgid "Starting OpenBCI"
+msgstr ""
+
+#: org/signalml/app/view/opensignal/OpenSignalAndSetMontageDialogManager.java:154
+msgid ""
+"Do you really want to change the sampling frequency? All filters will be "
+"deleted."
+msgstr ""
+
+#: org/signalml/app/view/opensignal/AmplifierSelectionPanel.java:165
+msgid "Amplifier Definitions not consistent"
+msgstr ""
+
+#: org/signalml/app/view/opensignal/AmplifierSelectionPanel.java:215
+msgid "Amplifiers List"
+msgstr ""
+
+#: org/signalml/app/view/opensignal/AmplifierSelectionPanel.java:334
+msgid "Refresh"
+msgstr ""
+
+#: org/signalml/app/view/opensignal/TagPresetSelectionPanel.java:51
+msgid "Select tag styles preset for monitor"
+msgstr ""
+
+#: org/signalml/app/view/opensignal/SignalMLOptionsPanel.java:81
+msgid "SignalML codec options"
+msgstr ""
+
+#: org/signalml/app/view/opensignal/SignalMLOptionsPanel.java:92
+msgid "Select codec"
+msgstr ""
+
+#: org/signalml/app/view/ViewerConsolePane.java:69
+msgid "Do not show log messages in the console"
+msgstr ""
+
+#: org/signalml/app/view/ViewerConsolePane.java:73
+msgid "Show only warning and error log messages in the console"
+msgstr ""
+
+#: org/signalml/app/view/ViewerConsolePane.java:77
+msgid "Show all log messages in the console, including debug messages"
+msgstr ""
+
+#: org/signalml/app/view/ViewerConsolePane.java:184
+msgid "Lock scroll"
+msgstr ""
+
+#: org/signalml/app/view/ViewerConsolePane.java:186
+msgid "Prevent the console from scrolling when new text is appended"
+msgstr ""
+
+#: org/signalml/app/view/ViewerConsolePane.java:204
+msgid "Clear"
+msgstr ""
+
+#: org/signalml/app/view/ViewerConsolePane.java:206
+msgid "Clear the console"
+msgstr ""
+
+#: org/signalml/app/view/ViewerConsolePane.java:227
+msgid "Save as text"
+msgstr ""
+
+#: org/signalml/app/view/ViewerConsolePane.java:229
+msgid "Save the contents of the console to a text file"
+msgstr ""
+
+#: org/signalml/app/view/book/AtomTableDialog.java:68
+msgid "Atom table"
+msgstr ""
+
+#: org/signalml/app/view/book/AtomTableDialog.java:87
+msgid "Atoms in the current segment (may exclude filtered atoms)"
+msgstr ""
+
+#: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:114
+msgid "Map aspect ratio"
+msgstr ""
+
+#: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:195
+msgid "Signal antialiasing"
+msgstr ""
+
+#: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:196
+msgid "Toggle reconstruction antialiasing"
+msgstr ""
+
+#: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:199
+msgid "Show original signal"
+msgstr ""
+
+#: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:201
+msgid "Toggle showing original signal graph"
+msgstr ""
+
+#: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:204
+msgid "Show full reconstruction"
+msgstr ""
+
+#: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:206
+msgid "Toggle showing full reconstruction graph"
+msgstr ""
+
+#: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:209
+msgid "Show reconstruction"
+msgstr ""
+
+#: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:211
+msgid "Toggle showing reconstruction graph"
+msgstr ""
+
+#: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:214
+msgid "Show legend"
+msgstr ""
+
+#: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:216
+msgid "Toggle showing reconstruction legend"
+msgstr ""
+
+#: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:219
+msgid "Show scale"
+msgstr ""
+
+#: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:221
+msgid "Toggle showing map scale"
+msgstr ""
+
+#: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:224
+msgid "Show axes"
+msgstr ""
+
+#: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:226
+msgid "Toggle showing map axes"
+msgstr ""
+
+#: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:229
+msgid "Show atom tool tips"
+msgstr ""
+
+#: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:231
+msgid "Show tool tips when mouse hovers over an atom"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/AbstractFilterDialog.java:58
+msgid "Filter name"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/BookFilterTablePanel.java:95
+msgid "Filter list"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/BookFilterTablePanel.java:249
+msgid "Add parameter filter"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/BookFilterTablePanel.java:250
+msgid "Add a filter that filters based on parameter ranges"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/BookFilterTablePanel.java:261
+msgid "New parameter range filter"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/BookFilterTablePanel.java:287
+msgid "Add tag based filter"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/BookFilterTablePanel.java:288
+msgid "Add a filter that filters based on a signal tag"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/BookFilterTablePanel.java:299
+msgid "New tag based filter"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/BookFilterTablePanel.java:326
+msgid "Add a filter that uses a custom class to determine matching atoms"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/BookFilterTablePanel.java:337
+msgid "New custom filter"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/BookFilterTablePanel.java:363
+#: org/signalml/app/method/mp5/MP5ToolExecutorConfigPanel.java:265
+msgid "Configure"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/AtomFilterChainTableModel.java:86
+msgid "Type"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/AtomFilterChainTableModel.java:89
+msgid "Blocking"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/AtomFilterChainTableModel.java:92
+msgid "Enabled"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/BookFilterChooseTagPanel.java:53
+msgid "Choose tag file"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/BookFilterChooseTagPanel.java:63
+msgid "Tag file"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/BookFilterChooseTagPanel.java:166
+#: org/signalml/app/method/mp5/MP5ResultBookPanel.java:159
+#: org/signalml/app/method/mp5/MP5ExecutablePanel.java:196
+msgid "Choose..."
+msgstr ""
+
+#: org/signalml/app/view/book/filter/BookFilterChooseTagPanel.java:168
+msgid "Choose the tag file to filter by"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/BookFilterDialog.java:70
+msgid "Edit book filter"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/BookFilterDialog.java:105
+msgid "Enable book filtering"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/BookFilterDialog.java:113
+msgid "Condition type"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/BookFilterDialog.java:174
+msgid "Satisfy all (AND)"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/BookFilterDialog.java:203
+msgid "Satisfy any (OR)"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/TagBasedFilterDialog.java:86
+msgid "Tag based atom filter"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/TagBasedFilterDialog.java:134
+msgid "Choose styles"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/DelegatingFilterDialog.java:77
+msgid "Custom atom filter"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/DelegatingFilterDialog.java:96
+msgid "Choose class path"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/DelegatingFilterDialog.java:118
+msgid "Choose fully qualified filter class name"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/DelegatingFilterDialog.java:306
+msgid "Quick file"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/DelegatingFilterDialog.java:308
+msgid ""
+"Select a single java or class file. Contained class must be in default "
+"package"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/DelegatingFilterDialog.java:341
+msgid "Add directories"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/DelegatingFilterDialog.java:366
+msgid "Add jar files"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:64
+msgid "Parameter range atom filter"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:84
+msgid "Choose limits"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:93
+#: org/signalml/app/view/book/AtomTableModel.java:127
+msgid "Iteration"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:94
+#: org/signalml/app/view/book/BookPlot.java:1297
+#: org/signalml/app/view/book/AtomTableModel.java:130
+msgid "Modulus"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:95
+#: org/signalml/app/view/book/BookPlot.java:1303
+#: org/signalml/app/view/book/AtomTableModel.java:133
+msgid "Amplitude"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:97
+#: org/signalml/app/view/book/BookPlot.java:1309
+#: org/signalml/app/view/book/AtomTableModel.java:139
+msgid "Scale"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:99
+#: org/signalml/app/view/book/BookPlot.java:1315
+#: org/signalml/app/view/book/AtomTableModel.java:145
+msgid "Phase"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:101
+#: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:102
+#: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:103
+#: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:104
+#: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:105
+#: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:106
+#: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:107
+msgid "from"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:109
+#: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:110
+#: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:111
+#: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:112
+#: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:113
+#: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:114
+#: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:115
+msgid "to"
+msgstr ""
+
+#: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:477
+#: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:479
+msgid "Clear filter"
+msgstr ""
+
+#: org/signalml/app/view/book/BookPlot.java:1000
+msgid "(no signal to paint)"
+msgstr ""
+
+#: org/signalml/app/view/book/BookPlot.java:1127
+msgid "Original"
+msgstr ""
+
+#: org/signalml/app/view/book/BookPlot.java:1141
+msgid "Reconstruction"
+msgstr ""
+
+#: org/signalml/app/view/book/BookPlot.java:1155
+msgid "Chosen"
+msgstr ""
+
+#: org/signalml/app/view/book/BookPlot.java:1280
+#, java-format
+msgid "Atom {0}"
+msgstr ""
+
+#: org/signalml/app/view/book/BookPlot.java:1331
+msgid "No nearby atom"
+msgstr ""
+
+#: org/signalml/app/view/book/BookView.java:410
+msgid "Selects atoms for reconstruction"
+msgstr ""
+
+#: org/signalml/app/view/book/BookView.java:413
+msgid ""
+"Zooms the map (hold down Ctrl to zoom out; hold down mouse button for "
+"options)"
+msgstr ""
+
+#: org/signalml/app/view/book/BookView.java:417
+msgid "Resets map to default view"
+msgstr ""
+
+#: org/signalml/app/view/book/BookView.java:458
+msgid "Reconstruction height"
+msgstr ""
+
+#: org/signalml/app/view/book/BookView.java:623
+msgid "Current segment"
+msgstr ""
+
+#: org/signalml/app/view/book/BookView.java:633
+msgid "Current channel"
+msgstr ""
+
+#: org/signalml/app/view/book/AtomTableModel.java:148
+msgid "Reconstruct"
+msgstr ""
+
+#: org/signalml/app/task/ApplicationTaskManager.java:156
+msgid "waiting for task"
+msgstr ""
+
+#: org/signalml/app/worker/MultiplexerTagConnectWorker.java:76
+#: org/signalml/app/worker/MultiplexerConnectWorker.java:79
+msgid "Connection OK!"
+msgstr ""
+
+#: org/signalml/app/worker/MultiplexerTagConnectWorker.java:81
+#: org/signalml/app/worker/MultiplexerConnectWorker.java:84
+msgid "Connection failed!"
+msgstr ""
+
+#: org/signalml/app/worker/MultiplexerTagConnectWorker.java:86
+#: org/signalml/app/worker/MultiplexerConnectWorker.java:89
+msgid "Connection timeout!"
+msgstr ""
+
+#: org/signalml/app/worker/MultiplexerConnectionTestWorker.java:68
+#: org/signalml/app/worker/MultiplexerConnectionTestWorker.java:75
+#: org/signalml/app/worker/MultiplexerConnectionTestWorker.java:81
+#: org/signalml/app/worker/BCIConfigurationWorker.java:88
+#: org/signalml/app/worker/BCIConfigurationWorker.java:95
+#: org/signalml/app/worker/BCIConfigurationWorker.java:101
+#: org/signalml/app/worker/BCIConfigurationWorker.java:156
+msgid "Sending failed!"
+msgstr ""
+
+#: org/signalml/app/worker/MultiplexerConnectionTestWorker.java:103
+msgid "Connection ok!"
+msgstr ""
+
+#: org/signalml/app/worker/MultiplexerConnectionTestWorker.java:110
+#: org/signalml/app/worker/BCIMetadataWorker.java:74
+msgid "Receiving failed!"
+msgstr ""
+
+#: org/signalml/app/worker/MultiplexerConnectionTestWorker.java:117
+msgid "Receive timed out!"
+msgstr ""
+
+#: org/signalml/app/worker/OpenBCIManager.java:170
+msgid "Modules data missing"
+msgstr ""
+
+#: org/signalml/app/worker/OpenBCIManager.java:174
+msgid "Starting multiplexer..."
+msgstr ""
+
+#: org/signalml/app/worker/OpenBCIManager.java:179
+msgid "Starting hashtable..."
+msgstr ""
+
+#: org/signalml/app/worker/OpenBCIManager.java:184
+msgid "Connecting to OpenBCI..."
+msgstr ""
+
+#: org/signalml/app/worker/OpenBCIManager.java:192
+msgid "Sending configuration data..."
+msgstr ""
+
+#: org/signalml/app/worker/OpenBCIManager.java:202
+msgid "Starting amplifier driver..."
+msgstr ""
+
+#: org/signalml/app/worker/OpenBCIManager.java:206
+msgid "Success!"
+msgstr ""
+
+#: org/signalml/app/worker/OpenBCIManager.java:235
+msgid "Process ended! ID and exit code: "
+msgstr ""
+
+#: org/signalml/app/worker/OpenBCIManager.java:238
+msgid "Error while starting process (file missing?)! ID: "
+msgstr ""
+
+#: org/signalml/app/worker/OpenBCIManager.java:252
+msgid "Sending failed"
+msgstr ""
+
+#: org/signalml/app/worker/OpenBCIManager.java:263
+msgid "Testing connection..."
+msgstr ""
+
+#: org/signalml/app/worker/OpenBCIManager.java:266
+msgid "Connection failed"
+msgstr ""
+
+#: org/signalml/app/worker/OpenBCIManager.java:279
+msgid "Test failed"
+msgstr ""
+
+#: org/signalml/app/worker/OpenBCIManager.java:296
+msgid "Failed"
+msgstr ""
+
+#: org/signalml/app/worker/BCIMetadataWorker.java:85
+msgid "Source doesn't provide this field"
+msgstr ""
+
+#: org/signalml/app/worker/BCIMetadataWorker.java:179
+msgid "Metadata retrieved!"
+msgstr ""
+
+#: org/signalml/app/worker/BCIConfigurationWorker.java:128
+msgid "Configuration sent!"
+msgstr ""
+
+#: org/signalml/app/worker/amplifiers/DeviceDiscoveryWorker.java:61
+msgid "Searching for devices..."
+msgstr ""
+
+#: org/signalml/app/worker/amplifiers/DeviceDiscoveryWorker.java:78
+msgid "Search completed."
+msgstr ""
+
+#: org/signalml/app/worker/amplifiers/USBDeviceDiscoverer.java:45
+msgid "USB search completed."
+msgstr ""
+
+#: org/signalml/app/worker/amplifiers/BluetoothDeviceDiscoverer.java:55
+msgid "Error while initializing bluetooth search: "
+msgstr ""
+
+#: org/signalml/app/worker/amplifiers/BluetoothDeviceDiscoverer.java:65
+msgid "Error while starting bluetooth search: "
+msgstr ""
+
+#: org/signalml/app/worker/amplifiers/BluetoothDeviceDiscoverer.java:71
+msgid "Bluetooth search completed."
+msgstr ""
+
+#: org/signalml/app/montage/SourceMontageTableModel.java:97
+#: org/signalml/app/montage/MontageTableModel.java:93
+msgid "Label"
+msgstr ""
+
+#: org/signalml/app/montage/SourceMontageTableModel.java:100
+msgid "Function"
+msgstr ""
+
+#: org/signalml/app/montage/FFTSampleFilterTableModel.java:65
+msgid "Frequency range [Hz]"
+msgstr ""
+
+#: org/signalml/app/montage/MontageTableModel.java:90
+msgid "Primary label"
+msgstr ""
+
+#: org/signalml/app/montage/MontageFilterExclusionTableModel.java:258
+msgid "All filters"
+msgstr ""
+
+#: org/signalml/app/montage/MontageFiltersTableModel.java:83
+msgid "Effect"
+msgstr ""
+
+#: org/signalml/app/SvarogApplication.java:620
+msgid "Restoring configuration"
+msgstr ""
+
+#: org/signalml/app/SvarogApplication.java:631
+msgid "Initializing codecs"
+msgstr ""
+
+#: org/signalml/app/SvarogApplication.java:647
+msgid "Initializing document manager"
+msgstr ""
+
+#: org/signalml/app/SvarogApplication.java:663
+msgid "Initializing services"
+msgstr ""
+
+#: org/signalml/app/SvarogApplication.java:694
+msgid "Initializing presets"
+msgstr ""
+
+#: org/signalml/app/SvarogApplication.java:922
+msgid "Creating main window"
+msgstr ""
+
+#: org/signalml/app/util/SwingUtils.java:84
+msgid "Display context help for this field"
+msgstr ""
+
+#: org/signalml/app/config/ConfigurationDefaults.java:111
+msgid "application.tagPaintMode"
+msgstr ""
+
+#: org/signalml/app/config/ConfigurationDefaults.java:112
+msgid "application.signalColor"
+msgstr ""
+
+#: org/signalml/app/config/ConfigurationDefaults.java:141
+msgid "application.palette"
+msgstr ""
+
+#: org/signalml/app/config/ConfigurationDefaults.java:148
+msgid "application.scaleType"
+msgstr ""
+
+#: org/signalml/app/config/ConfigurationDefaults.java:182
+msgid "multiplexer.address"
+msgstr ""
+
+#: org/signalml/app/config/ConfigurationDefaults.java:183
+msgid "default.multiplexer.address"
+msgstr ""
+
+#: org/signalml/app/config/ConfigurationDefaults.java:196
+msgid "eeg.pl.registerUrl"
+msgstr ""
+
+#: org/signalml/app/config/ConfigurationDefaults.java:200
+msgid "eeg.pl.signalmlwsUrl"
+msgstr ""
+
+#: org/signalml/app/method/iterate/IterationSetupDialog.java:95
+msgid "Method iteration"
+msgstr ""
+
+#: org/signalml/app/method/iterate/IterationSetupDialog.java:110
+msgid "Base method configuration"
+msgstr ""
+
+#: org/signalml/app/method/iterate/IterationSetupDialog.java:114
+msgid "Edit base configuration"
+msgstr ""
+
+#: org/signalml/app/method/iterate/IterationSetupDialog.java:121
+msgid "Iteration configuration"
+msgstr ""
+
+#: org/signalml/app/method/iterate/IterationSetupDialog.java:130
+msgid "Iteration count"
+msgstr ""
+
+#: org/signalml/app/method/iterate/IterationSetupDialog.java:131
+msgid "Parameter"
+msgstr ""
+
+#: org/signalml/app/method/iterate/IterationSetupDialog.java:132
+msgid "Iterate this parameter"
+msgstr ""
+
+#: org/signalml/app/method/iterate/IterationSetupDialog.java:133
+msgid "Iteration start value"
+msgstr ""
+
+#: org/signalml/app/method/iterate/IterationSetupDialog.java:134
+msgid "Iteration end value"
+msgstr ""
+
+#: org/signalml/app/method/iterate/IterationSetupDialog.java:493
+msgid "Edit..."
+msgstr ""
+
+#: org/signalml/app/method/iterate/IterationSetupDialog.java:495
+msgid "Reconfigure basic method parameters"
+msgstr ""
+
+#: org/signalml/app/method/bookaverage/BookAverageMethodDialog.java:38
+#: org/signalml/app/method/bookaverage/BookAverageMethodDialog.java:49
+msgid "Configure book averaging"
+msgstr ""
+
+#: org/signalml/app/method/bookaverage/AverageBooksPopupDialog.java:66
+msgid "Book averaging"
+msgstr ""
+
+#: org/signalml/app/method/bookaverage/AverageBooksPopupDialog.java:84
+msgid "From segment"
+msgstr ""
+
+#: org/signalml/app/method/bookaverage/AverageBooksPopupDialog.java:85
+msgid "To segment"
+msgstr ""
+
+#: org/signalml/app/method/bookaverage/AverageBooksPopupDialog.java:86
+msgid "All channels together"
+msgstr ""
+
+#: org/signalml/app/method/bookaverage/AverageBooksPopupDialog.java:168
+msgid "Book averaging on"
+msgstr ""
+
+#: org/signalml/app/method/bookaverage/AverageBooksPopupDialog.java:178
+msgid "Book averaging off"
+msgstr ""
+
+#: org/signalml/app/method/booktotag/BookToTagMethodDialog.java:65
+msgid "Configure book to tag"
+msgstr ""
+
+#: org/signalml/app/method/booktotag/BookToTagMethodDialog.java:78
+msgid "Choose channels to include"
+msgstr ""
+
+#: org/signalml/app/method/booktotag/BookToTagMethodDialog.java:93
+msgid "Choose tag types"
+msgstr ""
+
+#: org/signalml/app/method/booktotag/BookToTagMethodDialog.java:171
+msgid "Create page tags"
+msgstr ""
+
+#: org/signalml/app/method/booktotag/BookToTagMethodDialog.java:178
+msgid "Create block tags"
+msgstr ""
+
+#: org/signalml/app/method/booktotag/BookToTagMethodDialog.java:185
+msgid "Create channel tags"
+msgstr ""
+
+#: org/signalml/app/method/ep/EvokedPotentialResultDialog.java:70
+msgid "Evoked potential averaging result"
+msgstr ""
+
+#: org/signalml/app/method/ep/EvokedPotentialResultDialog.java:161
+msgid "Number of unusable segments"
+msgstr ""
+
+#: org/signalml/app/method/ep/EvokedPotentialMethodDialog.java:49
+msgid "Evoked potential averaging configuration"
+msgstr ""
+
+#: org/signalml/app/method/InputSignalPanel.java:40
+#: org/signalml/app/method/mp5/MP5SignalSelectionPanel.java:39
+msgid "Input data"
+msgstr ""
+
+#: org/signalml/app/method/example/ExampleMethodDialog.java:62
+msgid "Useless deliberation count"
+msgstr ""
+
+#: org/signalml/app/method/example/ExampleMethodDialog.java:73
+msgid "Hurry up"
+msgstr ""
+
+#: org/signalml/app/method/example/ExampleMethodDialog.java:85
+#: org/signalml/app/method/example/ExampleMethodDialog.java:104
+msgid "Configure search"
+msgstr ""
+
+#: org/signalml/app/method/example/ExampleMethodConsumer.java:23
+#, java-format
+msgid "The meaning of life turns out to be {0}"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5LocalExecutorDialog.java:52
+msgid "Configure local executor"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5LocalExecutorDialog.java:66
+msgid "Executor name"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5LocalExecutorDialog.java:102
+msgid "New local executor"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5StoppingCriteriaConfigPanel.java:49
+msgid "Stopping criteria"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5StoppingCriteriaConfigPanel.java:60
+msgid "Max iterations"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5StoppingCriteriaConfigPanel.java:61
+msgid "Energy percent"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5MethodDialog.java:173
+msgid "MP Decomposition configuration"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5MethodDialog.java:311
+msgid "Edit raw config"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5MethodDialog.java:313
+msgid "Basic settings"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5MethodDialog.java:314
+msgid "Advanced settings"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5MethodDialog.java:315
+msgid "Expert settings"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5MethodDialog.java:334
+msgid "To friendly mode"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5MethodDialog.java:335
+msgid "Edit MP5 configuration with a user friendly editor"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5MethodDialog.java:347
+#: org/signalml/app/method/mp5/MP5MethodDialog.java:653
+msgid "To raw mode"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5MethodDialog.java:348
+#: org/signalml/app/method/mp5/MP5MethodDialog.java:655
+msgid "Edit MP5 configuration as text"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5MethodDialog.java:718
+#: org/signalml/app/method/mp5/MP5MethodDialog.java:720
+#: org/signalml/app/method/mp5/MP5SaveForLaterUseDialog.java:44
+msgid "Save for later use"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5MethodDialog.java:873
+#: org/signalml/app/action/ExportSignalAction.java:303
+#: org/signalml/plugin/impl/SignalsAccessImpl.java:971
+msgid "exporting signal"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5ExecutorListCellRenderer.java:35
+msgid "(default)"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5AlgorithmConfigPanel.java:51
+msgid "Selection of the algorithm"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5AlgorithmConfigPanel.java:62
+msgid "MP version"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5DictionaryDensityConfigPanel.java:51
+msgid "Dictionary density and size"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5DictionaryDensityConfigPanel.java:62
+msgid "Dilation factor \"a\""
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5DictionaryDensityConfigPanel.java:63
+msgid "Atoms in dictionary"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5DictionaryDensityConfigPanel.java:64
+msgid "Approximate RAM usage"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5ToolConfigDialog.java:42
+msgid "MP5 configuration"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5RawConfigPanel.java:52
+msgid ""
+"Raw config (signal input/output/range directives will be added/replaced)"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5ResultDialog.java:53
+msgid "MP Decomposition results"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5ResultDialog.java:68
+msgid "Choose result targets"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5ResultDialog.java:85
+msgid "Open in the viewer"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5ResultDialog.java:92
+msgid "Save to file"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5ExpertConfigPanel.java:45
+msgid "Additional config (will be appended to config file as is)"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5ExecutorPanel.java:45
+msgid "MP5 executor"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5AdvancedDecompositionConfigPanel.java:55
+msgid "Advanced decomposition settings"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5AdvancedDecompositionConfigPanel.java:66
+msgid "Dictionary type"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5AdvancedDecompositionConfigPanel.java:67
+msgid "Reinit dictionary"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5AdvancedDecompositionConfigPanel.java:68
+msgid "Max scale / period"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5AdvancedDecompositionConfigPanel.java:69
+msgid "Period density"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5BasicConfigPanel.java:55
+msgid "Book comment"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5OutputConfigPanel.java:47
+msgid "Output"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5OutputConfigPanel.java:58
+msgid "Include original signal"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5ToolExecutorConfigPanel.java:91
+msgid "MP5 executors"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5ToolExecutorConfigPanel.java:216
+msgid "Add local"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5ToolExecutorConfigPanel.java:218
+msgid "Add local process MP5 executor"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5ToolExecutorConfigPanel.java:243
+msgid "Remove selected MP5 executor"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5ToolExecutorConfigPanel.java:267
+msgid "Configure selected MP5 executor"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5ToolExecutorConfigPanel.java:307
+msgid "Make selecte executor default"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5ResultBookPanel.java:52
+msgid "Choose book file"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5ResultBookPanel.java:62
+msgid "Book file"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5SaveForLaterUseDialog.java:56
+msgid "Choose what to save"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5SaveForLaterUseDialog.java:71
+msgid "Save MP configuration"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5SaveForLaterUseDialog.java:78
+msgid "Save signal for MP computation"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5ExecutablePanel.java:55
+msgid "MP5 executable"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5ExecutablePanel.java:65
+msgid "Path to binary"
+msgstr ""
+
+#: org/signalml/app/method/mp5/MP5ExecutablePanel.java:198
+msgid "Choose MP5 executable file"
+msgstr ""
+
+#: org/signalml/app/model/TaskTableModel.java:94
+msgid "Status"
+msgstr ""
+
+#: org/signalml/app/model/TaskTableModel.java:97
+msgid "Method"
+msgstr ""
+
+#: org/signalml/app/model/TaskTableModel.java:100
+msgid "Created"
+msgstr ""
+
+#: org/signalml/app/model/TaskTableModel.java:103
+msgid "Progress"
+msgstr ""
+
+#: org/signalml/app/model/PropertySheetModel.java:55
+msgid "Property name"
+msgstr ""
+
+#: org/signalml/app/model/PropertySheetModel.java:58
+msgid "Value"
+msgstr ""
+
+#: org/signalml/app/model/PropertySheetModel.java:123
+msgid "Yes"
+msgstr ""
+
+#: org/signalml/app/model/PropertySheetModel.java:125
+msgid "No"
+msgstr ""
+
+#: org/signalml/app/document/DocumentFlowIntegrator.java:485
+msgid "saving document"
+msgstr ""
+
+#: org/signalml/app/document/DocumentFlowIntegrator.java:695
+msgid "opening signal"
+msgstr ""
+
+#: org/signalml/app/document/DocumentFlowIntegrator.java:882
+msgid "opening book"
+msgstr ""
+
+#: org/signalml/app/document/DocumentFlowIntegrator.java:971
+msgid "opening tag"
+msgstr ""
+
+#: org/signalml/app/document/DocumentFlowIntegrator.java:1333
+#: org/signalml/app/document/DocumentFlowIntegrator.java:1354
+msgid "calculating checksum"
+msgstr ""
+
+#: org/signalml/app/document/BookDocument.java:196
+#, java-format
+msgid ""
+"Filter [{0}] failed to initialize with message [{1}] and has been disabled."
+msgstr ""
+
+#: org/signalml/app/action/ExportSignalAction.java:237
+#: org/signalml/plugin/impl/SignalsAccessImpl.java:915
+msgid "scanning signal"
+msgstr ""
+
+#: org/signalml/app/action/util/ListSelectInvertAction.java:26
+msgid "Invert"
+msgstr ""
+
+#: org/signalml/app/action/util/ListSelectNoneAction.java:26
+msgid "Select none"
+msgstr ""
+
+#: org/signalml/app/action/DisconnectMultiplexerAction.java:24
+msgid "Disconnect"
+msgstr ""
+
+#: org/signalml/app/action/ConnectMultiplexerAction.java:42
+msgid "Connect"
+msgstr ""
+
+#: org/signalml/app/action/ConnectMultiplexerAction.java:113
+msgid "Bad address!"
+msgstr ""
+
+#: org/signalml/app/action/ConnectMultiplexerAction.java:118
+msgid "Bad port number!"
+msgstr ""
+
+#: org/signalml/app/action/ExportBookAction.java:96
+msgid "exporting book"
+msgstr ""
+
+#: org/signalml/app/action/RegisterCodecAction.java:168
+msgid "creating codec reader"
+msgstr ""
+
+#: org/signalml/method/bookaverage/BookAverageMethod.java:197
+#: org/signalml/method/booktotag/BookToTagMethod.java:260
+msgid "Segments processed"
+msgstr ""
+
+#: org/signalml/method/ep/EvokedPotentialMethod.java:157
+msgid "Processing markers"
+msgstr ""
+
+#: org/signalml/method/iterator/MethodIteratorMethod.java:144
+msgid "Iteration progress"
+msgstr ""
+
+#: org/signalml/method/mp5/MP5Method.java:317
+msgid "Segment progress"
+msgstr ""
+
+#: org/signalml/method/mp5/MP5Method.java:319
+msgid "Channel progress"
+msgstr ""
+
+#: org/signalml/method/mp5/MP5Method.java:321
+msgid "Atom (non-linear progress)"
+msgstr ""
+
+#: org/signalml/method/mp5/MP5Method.java:323
+msgid "Current atom matching progress"
+msgstr ""
+
+#: org/signalml/domain/montage/filter/TimeDomainSampleFilterValidator.java:96
+msgid ""
+"For high-pass filters the frequencies must fulfill: stopband frequency 1 < "
+"passband frequency 1."
+msgstr ""
+
+#: org/signalml/domain/montage/filter/TimeDomainSampleFilterValidator.java:112
+msgid ""
+"For low-pass filters the frequencies must fulfill: passband frequency 1 < "
+"stopband frequency 1."
+msgstr ""
+
+#: org/signalml/domain/montage/filter/TimeDomainSampleFilterValidator.java:130
+msgid ""
+"For band-pass filters the frequencies must fulfill: stopband frequency 1 < "
+"passband frequency 1 < passband frequency 2 < stopband frequency 2."
+msgstr ""
+
+#: org/signalml/domain/montage/filter/TimeDomainSampleFilterValidator.java:148
+msgid ""
+"For band-stop filters the frequencies must fulfill: passband frequency 1 < "
+"stopband frequency 1 < stopband frequency 2 < passband frequency 2."
+msgstr ""
+
+#: org/signalml/domain/montage/filter/TimeDomainSampleFilterValidator.java:162
+msgid "Passband ripple should be less than stopband attenuation."
+msgstr ""
+
+#: org/signalml/domain/tag/TagComparisonResults.java:212
+msgid "MULTICHANNEL TAGS"
+msgstr ""

@@ -10,7 +10,6 @@ import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.ViewFocusSelector;
 import org.signalml.app.view.View;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ShowMainToolBarAction
  *
@@ -23,8 +22,8 @@ public class ShowMainToolBarAction extends AbstractSignalMLAction {
 
 	protected static final Logger logger = Logger.getLogger(ShowMainToolBarAction.class);
 
-	public ShowMainToolBarAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  ShowMainToolBarAction() {
+		super();
 		setText("action.showMainToolBar");
 		setToolTip("action.showMainToolBarToolTip");
 		putValue(SELECTED_KEY, new Boolean(true));

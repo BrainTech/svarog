@@ -1,5 +1,6 @@
 package org.signalml.app.view.opensignal;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
@@ -29,7 +30,6 @@ import org.signalml.app.view.element.ResolvableComboBox;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Panel allowing to present and edit signal parameters.
@@ -42,10 +42,6 @@ public abstract class AbstractSignalParametersPanel extends JPanel {
         public static String SAMPLING_FREQUENCY_PROPERTY = "samplingFrequencyChanged";
 	public static String CHANNEL_LABELS_PROPERTY = "channelLabelsPropertyChanged";
 
-        /**
-         * the {@link MessageSourceAccessor source} of messages (labels).
-         */
-        protected MessageSourceAccessor messageSource;
         /**
          * Current model.
          */
@@ -89,10 +85,9 @@ public abstract class AbstractSignalParametersPanel extends JPanel {
          *
          * @param messageSource {@link #messageSource}
          */
-        public AbstractSignalParametersPanel(MessageSourceAccessor messageSource) {
+        public  AbstractSignalParametersPanel() {
 
                 super();
-                this.messageSource = messageSource;
                 createInterface();
 
 		getSamplingFrequencyComboBox().setEditable(true);
@@ -161,12 +156,12 @@ public abstract class AbstractSignalParametersPanel extends JPanel {
          */
 
 	protected int createFieldsPanelElements(JPanel fieldsPanel, GridBagConstraints constraints, int startingRow) {
-                JLabel samplingFrequencyLabel = new JLabel(messageSource.getMessage("opensignal.parameters.samplingFrequency"));
-                JLabel channelCountLabel = new JLabel(messageSource.getMessage("opensignal.parameters.channelCount"));
-                JLabel byteOrderLabel = new JLabel(messageSource.getMessage("opensignal.parameters.byteOrder"));
-                JLabel sampleTypeLabel = new JLabel(messageSource.getMessage("opensignal.parameters.sampleType"));
-                JLabel pageSizeLabel = new JLabel(messageSource.getMessage("opensignal.parameters.pageSize"));
-                JLabel blocksPerPageLabel = new JLabel(messageSource.getMessage("opensignal.parameters.blocksPerPage"));
+                JLabel samplingFrequencyLabel = new JLabel(_("Sampling frequency: "));
+                JLabel channelCountLabel = new JLabel(_("Channel count: "));
+                JLabel byteOrderLabel = new JLabel(_("Byte order: "));
+                JLabel sampleTypeLabel = new JLabel(_("Sample type: "));
+                JLabel pageSizeLabel = new JLabel(_("Page size: "));
+                JLabel blocksPerPageLabel = new JLabel(_("Number of blocks per page: "));
 
 		int row = startingRow;
                 fillConstraints(constraints, 0, row, 0, 0, 1);
@@ -211,7 +206,7 @@ public abstract class AbstractSignalParametersPanel extends JPanel {
 	protected JPanel createFieldsPanel() {
 
                 setBorder(new CompoundBorder(
-                        new TitledBorder(messageSource.getMessage("opensignal.signalParametersPanelTitle")),
+                        new TitledBorder(_("Signal parameters")),
                         new EmptyBorder(3, 3, 3, 3)));
 
                 setLayout(new BorderLayout(0, 10));
@@ -332,7 +327,7 @@ public abstract class AbstractSignalParametersPanel extends JPanel {
         protected ResolvableComboBox getByteOrderComboBox() {
 
                 if (byteOrderComboBox == null) {
-                        byteOrderComboBox = new ResolvableComboBox(messageSource);
+                        byteOrderComboBox = new ResolvableComboBox();
                         byteOrderComboBox.setModel(new DefaultComboBoxModel(RawSignalByteOrder.values()));
                 }
                 return byteOrderComboBox;
@@ -346,7 +341,7 @@ public abstract class AbstractSignalParametersPanel extends JPanel {
         protected ResolvableComboBox getSampleTypeComboBox() {
 
                 if (sampleTypeComboBox == null) {
-                        sampleTypeComboBox = new ResolvableComboBox(messageSource);
+                        sampleTypeComboBox = new ResolvableComboBox();
                         sampleTypeComboBox.setModel(new DefaultComboBoxModel(RawSignalSampleType.values()));
                 }
                 return sampleTypeComboBox;
@@ -394,11 +389,11 @@ public abstract class AbstractSignalParametersPanel extends JPanel {
                                                 fillCurrentModelFromPanel();
                                                 getEditGainAndOffsetDialog().showDialog(currentModel, true);
                                         } catch (SignalMLException ex) {
-                                                JOptionPane.showMessageDialog(null, ex.getMessage(), messageSource.getMessage("error"), JOptionPane.ERROR_MESSAGE);
+                                                JOptionPane.showMessageDialog(null, ex.getMessage(), _("Error!"), JOptionPane.ERROR_MESSAGE);
                                         }
                                 }
                         });
-                        editGainAndOffsetButton.setText(messageSource.getMessage("opensignal.parameters.editGainAndOffset"));
+                        editGainAndOffsetButton.setText(_("Edit gain and offset"));
                 }
                 return editGainAndOffsetButton;
         }
@@ -411,7 +406,7 @@ public abstract class AbstractSignalParametersPanel extends JPanel {
         protected EditGainAndOffsetDialog getEditGainAndOffsetDialog() {
 
                 if (editGainAndOffsetDialog == null) {
-                        editGainAndOffsetDialog = new EditGainAndOffsetDialog(messageSource, null, true);
+                        editGainAndOffsetDialog = new EditGainAndOffsetDialog( null, true);
                 }
                 return editGainAndOffsetDialog;
         }

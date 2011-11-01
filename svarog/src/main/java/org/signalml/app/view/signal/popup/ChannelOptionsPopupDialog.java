@@ -1,5 +1,6 @@
 package org.signalml.app.view.signal.popup;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -42,15 +43,15 @@ import org.signalml.app.view.signal.popup.SlavePlotSettingsPopupDialog.Synchroni
 import org.signalml.domain.montage.Montage;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractPopupDialog;
-import org.springframework.context.support.MessageSourceAccessor;
+
 /*
  * A pop-up that handles single channel`s display options, eg.visibility, value scale.
  */
 public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements ChangeListener, ActionListener {
 
-	public ChannelOptionsPopupDialog(MessageSourceAccessor messageSource,
+	public  ChannelOptionsPopupDialog(
 			Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+		super( w, isModal);
 	}
 
 	private static final long serialVersionUID = 1L;
@@ -86,7 +87,7 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 		//value scale
 		valueScalePanel.setLayout(new BoxLayout(valueScalePanel, BoxLayout.Y_AXIS));
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("signalView.channelLocalScale")),
+		        new TitledBorder(_("Value scale")),
 		        new EmptyBorder(3,3,3,3)
 		);
 		valueScalePanel.setBorder(border);
@@ -98,7 +99,7 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 		JPanel visibilityPanel = new JPanel();
 		visibilityPanel.setLayout(new BoxLayout(visibilityPanel, BoxLayout.Y_AXIS));
 		border = new CompoundBorder(
-		        new TitledCrossBorder(messageSource.getMessage("signalView.channelVisibility"), true),
+		        new TitledCrossBorder(_("Visibility"), true),
 		        new EmptyBorder(3,3,3,3)
 		);
 		visibilityPanel.setBorder(border);
@@ -120,7 +121,7 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 	 * @returns JPanel with checkbox
 	 */
 	private JPanel getIgnoreGlobalPanel() {
-		ignoreGlobalScale =  new JCheckBox(messageSource.getMessage("signalView.ignoreGlobalScale"));
+		ignoreGlobalScale =  new JCheckBox(_("Ignore global scale"));
 		JPanel p = new JPanel(new BorderLayout());
 		p.add(ignoreGlobalScale, BorderLayout.NORTH);
 		return p;
@@ -131,7 +132,7 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 	 * @returns JPanel with HideChannel button.
 	 */
 	private JPanel getVisibilityPanel() {
-		JButton hideChannel =  new JButton(messageSource.getMessage("signalView.hideChannel"));
+		JButton hideChannel =  new JButton(_("Hide"));
 		hideChannel.addActionListener(this);
 		JPanel p = new JPanel(new BorderLayout());
 		p.add(hideChannel, BorderLayout.NORTH);
@@ -149,7 +150,7 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 
 			@Override
 			public String getToolTipText(MouseEvent ev) {
-				return messageSource.getMessage("signalView.valueScaleToolTip", new Object[] { getValue() });
+				return java.text.MessageFormat.format(_("{0} %"), new Object[] { getValue() });
 			}
 		};
 		
@@ -166,7 +167,7 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 		
 		this.valueScaleModel.addChangeListener(this);
 
-		TitledSliderPanel retPanel = new TitledSliderPanel(messageSource.getMessage("signalView.valueScale"), valueScaleSlider);
+		TitledSliderPanel retPanel = new TitledSliderPanel(_("Value scale"), valueScaleSlider);
 		JPanel p = new JPanel(new BorderLayout());
 		p.add(retPanel, BorderLayout.NORTH);
 		return p;

@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Dimension;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -21,7 +22,7 @@ import org.apache.log4j.Logger;
 import org.signalml.app.model.SignalExportDescriptor;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 
@@ -43,11 +44,6 @@ public class ExportSignalOptionsPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	protected static final Logger logger = Logger.getLogger(ExportSignalOptionsPanel.class);
-
-	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
 
 	/**
 	 * the combo-box which allows to select the {@link RawSignalSampleType type}
@@ -80,9 +76,8 @@ public class ExportSignalOptionsPanel extends JPanel {
 	 * Constructor. Sets the source of messages and initializes this panel.
 	 * @param messageSource the source of messages
 	 */
-	public ExportSignalOptionsPanel(MessageSourceAccessor messageSource) {
+	public  ExportSignalOptionsPanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -111,7 +106,7 @@ public class ExportSignalOptionsPanel extends JPanel {
 	private void initialize() {
 
 		setBorder(new CompoundBorder(
-		                  new TitledBorder(messageSource.getMessage("exportSignalDialog.options.title")),
+		                  new TitledBorder(_("Export options")),
 		                  new EmptyBorder(3,3,3,3)
 		          ));
 
@@ -120,10 +115,10 @@ public class ExportSignalOptionsPanel extends JPanel {
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
-		JLabel sampleTypeLabel = new JLabel(messageSource.getMessage("exportSignalDialog.options.sampleType"));
-		JLabel byteOrderLabel = new JLabel(messageSource.getMessage("exportSignalDialog.options.byteOrder"));
-		JLabel saveXMLLabel = new JLabel(messageSource.getMessage("exportSignalDialog.options.saveXML"));
-		JLabel normalizeLabel = new JLabel(messageSource.getMessage("exportSignalDialog.options.normalize"));
+		JLabel sampleTypeLabel = new JLabel(_("Sample type"));
+		JLabel byteOrderLabel = new JLabel(_("Byte order"));
+		JLabel saveXMLLabel = new JLabel(_("Save XML manifest"));
+		JLabel normalizeLabel = new JLabel(_("Normalize samples"));
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
@@ -191,7 +186,7 @@ public class ExportSignalOptionsPanel extends JPanel {
 	 */
 	public ResolvableComboBox getSampleTypeComboBox() {
 		if (sampleTypeComboBox == null) {
-			sampleTypeComboBox = new ResolvableComboBox(messageSource);
+			sampleTypeComboBox = new ResolvableComboBox();
 			sampleTypeComboBox.setModel(new DefaultComboBoxModel(RawSignalSampleType.values()));
 			sampleTypeComboBox.setPreferredSize(new Dimension(80,25));
 
@@ -234,7 +229,7 @@ public class ExportSignalOptionsPanel extends JPanel {
 	 */
 	public ResolvableComboBox getByteOrderComboBox() {
 		if (byteOrderComboBox == null) {
-			byteOrderComboBox = new ResolvableComboBox(messageSource);
+			byteOrderComboBox = new ResolvableComboBox();
 			byteOrderComboBox.setModel(new DefaultComboBoxModel(RawSignalByteOrder.values()));
 			byteOrderComboBox.setPreferredSize(new Dimension(80,25));
 		}

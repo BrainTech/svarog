@@ -25,9 +25,10 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
+import static org.signalml.plugin.newartifact.NewArtifactPlugin.i18n;
 import org.signalml.plugin.newartifact.data.NewArtifactParameters;
 import org.signalml.plugin.newartifact.data.NewArtifactType;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ArtifactTypesPanel
  *
@@ -41,17 +42,14 @@ public class NewArtifactTypesPanel extends JPanel {
 
 	private static final int SCROLLBAR_SCALE = 10;
 
-	private MessageSourceAccessor messageSource;
-
 	private NewArtifactType[] artifactTypes = NewArtifactType.values();
 
 	private JTextField[] sensitivityTextFields;
 	private JScrollBar[] sensitivityScrollBars;
 	private JCheckBox[] artifactTypeCheckBoxes;
 
-	public NewArtifactTypesPanel(MessageSourceAccessor messageSource) {
+	public  NewArtifactTypesPanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -60,7 +58,7 @@ public class NewArtifactTypesPanel extends JPanel {
 		setLayout(new BorderLayout());
 
 		CompoundBorder border = new CompoundBorder(
-			new TitledBorder(messageSource.getMessage("newArtifactMethod.dialog.chooseArtifactTypes")),
+			new TitledBorder(_("Artifact types & sensitivity")),
 			new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);
@@ -203,7 +201,7 @@ public class NewArtifactTypesPanel extends JPanel {
 		if (artifactTypeCheckBoxes == null) {
 			artifactTypeCheckBoxes = new JCheckBox[artifactTypes.length];
 			for (int i=0; i<artifactTypeCheckBoxes.length; i++) {
-				artifactTypeCheckBoxes[i] = new JCheckBox(messageSource.getMessage(artifactTypes[i]));
+				artifactTypeCheckBoxes[i] = new JCheckBox(i18n().getMessage(artifactTypes[i]));
 			}
 		}
 		return artifactTypeCheckBoxes;

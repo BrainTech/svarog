@@ -6,7 +6,6 @@ package org.signalml.app.action;
 
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ExportSamplesAction
  *
@@ -17,8 +16,8 @@ public abstract class ExportSamplesAction extends AbstractSignalMLAction {
 
 	private static final long serialVersionUID = 1L;
 
-	public ExportSamplesAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  ExportSamplesAction() {
+		super();
 	}
 
 	protected abstract int getSampleCount();

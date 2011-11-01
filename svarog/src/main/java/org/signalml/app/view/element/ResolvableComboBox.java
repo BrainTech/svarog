@@ -12,7 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 
 import org.springframework.context.MessageSourceResolvable;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Combo-box with the {@link CellRenderer cell renderer} which uses the
@@ -25,19 +24,12 @@ public class ResolvableComboBox extends JComboBox {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
-
-	/**
 	 * Constructor. Sets the source of messages and the {@link CellRenderer
 	 * cell renderer}.
 	 * @param messageSource the source of messages (labels)
 	 */
-	public ResolvableComboBox(MessageSourceAccessor messageSource) {
+	public  ResolvableComboBox() {
 		super();
-		this.messageSource = messageSource;
-
 		setRenderer(new CellRenderer());
 	}
 
@@ -64,12 +56,18 @@ public class ResolvableComboBox extends JComboBox {
 		public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 			JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 			if (value instanceof MessageSourceResolvable) {
-				label.setText(messageSource.getMessage((MessageSourceResolvable) value));
+				label.setText(getSvarogI18n().getMessage((MessageSourceResolvable) value));
 			}
 			// else leave text put by superclass
 			return label;
 		}
-
 	}
 
+	/**
+	 * Returns the {@link SvarogAccessI18nImpl} instance.
+	 * @return the {@link SvarogAccessI18nImpl} singleton instance
+	 */
+	protected org.signalml.app.SvarogI18n getSvarogI18n() {
+		return org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance();
+	}
 }

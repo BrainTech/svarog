@@ -7,7 +7,6 @@ import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
 
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** MP5ToolConfigPanel
  *
@@ -17,16 +16,13 @@ import org.springframework.context.support.MessageSourceAccessor;
 public class MP5ToolConfigPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-
-	private MessageSourceAccessor messageSource;
 	private MP5ExecutorManager mp5ExecutorManager;
 	private MP5LocalExecutorDialog localExecutorDialog;
 
 	private MP5ToolExecutorConfigPanel executorConfigPanel;
 
-	public MP5ToolConfigPanel(MessageSourceAccessor messageSource, MP5ExecutorManager mp5ExecutorManager) {
+	public  MP5ToolConfigPanel( MP5ExecutorManager mp5ExecutorManager) {
 		super();
-		this.messageSource = messageSource;
 		this.mp5ExecutorManager = mp5ExecutorManager;
 		initialize();
 	}
@@ -41,7 +37,7 @@ public class MP5ToolConfigPanel extends JPanel {
 
 	public MP5ToolExecutorConfigPanel getExecutorConfigPanel() {
 		if (executorConfigPanel == null) {
-			executorConfigPanel = new MP5ToolExecutorConfigPanel(messageSource,mp5ExecutorManager);
+			executorConfigPanel = new MP5ToolExecutorConfigPanel(mp5ExecutorManager);
 			executorConfigPanel.setLocalExecutorDialog(localExecutorDialog);
 		}
 		return executorConfigPanel;

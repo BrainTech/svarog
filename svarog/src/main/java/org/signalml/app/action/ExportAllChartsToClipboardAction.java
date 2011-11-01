@@ -17,7 +17,6 @@ import org.apache.log4j.Logger;
 import org.jfree.chart.JFreeChart;
 import org.signalml.app.util.ImageTransferable;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ExportAllChartsToClipboardAction
  *
@@ -30,8 +29,8 @@ public abstract class ExportAllChartsToClipboardAction extends AbstractSignalMLA
 
 	private static final long serialVersionUID = 1L;
 
-	public ExportAllChartsToClipboardAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  ExportAllChartsToClipboardAction() {
+		super();
 		setText("action.exportAllChartsToClipboard");
 		setIconPath("org/signalml/app/icon/clipboard.png");
 		setToolTip("action.exportAllChartsToClipboardToolTip");

@@ -8,7 +8,6 @@ import org.signalml.app.action.selector.ActionFocusEvent;
 import org.signalml.app.action.selector.ActionFocusListener;
 import org.signalml.app.action.selector.ActionFocusSelector;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** AbstractFocusableSignalMLAction
  *
@@ -21,16 +20,8 @@ public abstract class AbstractFocusableSignalMLAction<T extends ActionFocusSelec
 
 	private T actionFocusSelector;
 
-	public AbstractFocusableSignalMLAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
-	}
-
-	public AbstractFocusableSignalMLAction(MessageSourceAccessor messageSource, T actionFocusSelector) {
+	protected AbstractFocusableSignalMLAction( T actionFocusSelector) {
 		super();
-		if (messageSource == null) {
-			throw new NullPointerException("No message source");
-		}
-		this.messageSource = messageSource;
 		if (actionFocusSelector == null) {
 			throw new NullPointerException("No action focus selector");
 		}

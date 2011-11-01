@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 
 import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.method.mp5.MP5Parameters;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /** MP5AdvancedConfigPanel
@@ -21,8 +21,6 @@ import org.springframework.validation.Errors;
 public class MP5AdvancedConfigPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-
-	private MessageSourceAccessor messageSource;
 	private MP5ExecutorManager executorManager;
 	private AbstractDialog owner;
 
@@ -30,9 +28,8 @@ public class MP5AdvancedConfigPanel extends JPanel {
 	private MP5ExecutorPanel executorPanel;
 	private MP5OutputConfigPanel outputConfigPanel;
 
-	public MP5AdvancedConfigPanel(MessageSourceAccessor messageSource, MP5ExecutorManager executorManager, AbstractDialog owner) {
+	public  MP5AdvancedConfigPanel( MP5ExecutorManager executorManager, AbstractDialog owner) {
 		super();
-		this.messageSource = messageSource;
 		this.executorManager = executorManager;
 		this.owner = owner;
 		initialize();
@@ -55,21 +52,21 @@ public class MP5AdvancedConfigPanel extends JPanel {
 
 	public MP5AdvancedDecompositionConfigPanel getAdvancedDecompositionConfigPanel() {
 		if (advancedDecompositionConfigPanel == null) {
-			advancedDecompositionConfigPanel = new MP5AdvancedDecompositionConfigPanel(messageSource,owner);
+			advancedDecompositionConfigPanel = new MP5AdvancedDecompositionConfigPanel(owner);
 		}
 		return advancedDecompositionConfigPanel;
 	}
 
 	public MP5ExecutorPanel getExecutorPanel() {
 		if (executorPanel == null) {
-			executorPanel = new MP5ExecutorPanel(messageSource,executorManager);
+			executorPanel = new MP5ExecutorPanel(executorManager);
 		}
 		return executorPanel;
 	}
 
 	public MP5OutputConfigPanel getOutputConfigPanel() {
 		if (outputConfigPanel == null) {
-			outputConfigPanel = new MP5OutputConfigPanel(messageSource,owner);
+			outputConfigPanel = new MP5OutputConfigPanel(owner);
 		}
 		return outputConfigPanel;
 	}

@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.opensignal;
 
+import static org.signalml.app.SvarogApplication._;
 import javax.swing.Action;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -19,7 +20,6 @@ import org.signalml.app.action.RegisterCodecAction;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.view.dialog.RegisterCodecDialog;
 import org.signalml.codec.SignalMLCodec;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Panel which allows to select the {@link SignalMLCodec codec} needed to open
@@ -48,18 +48,12 @@ public class SignalMLOptionsPanel extends JPanel {
 	private JButton registerCodecButton;
 
 	/**
-	 * the {@link MessageSourceAccessor source} of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
-
-	/**
-	 * Constructor. Sets the {@link MessageSourceAccessor message source} and
+	 * Constructor. Sets the {@link SvarogI18n message source} and
 	 * initializes this panel.
 	 * @param messageSource the source of messages (labels)
 	 */
-	public SignalMLOptionsPanel(MessageSourceAccessor messageSource) {
+	public  SignalMLOptionsPanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -84,7 +78,7 @@ public class SignalMLOptionsPanel extends JPanel {
 	private void initialize() {
 
 		CompoundBorder cb = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("openSignal.options.signalml.title")),
+		        new TitledBorder(_("SignalML codec options")),
 		        new EmptyBorder(3,3,3,3)
 		);
 
@@ -95,7 +89,7 @@ public class SignalMLOptionsPanel extends JPanel {
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
-		JLabel driverLabel = new JLabel(messageSource.getMessage("openSignal.options.signalml.driver"));
+		JLabel driverLabel = new JLabel(_("Select codec"));
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 

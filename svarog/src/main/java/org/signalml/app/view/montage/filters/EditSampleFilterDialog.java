@@ -15,7 +15,7 @@ import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -43,8 +43,8 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 	 * @param isModal true if this dialog should block top-level windows,
 	 * false otherwise
 	 */
-	public EditSampleFilterDialog(MessageSourceAccessor messageSource, PresetManager presetManager, Window w, boolean isModal) {
-		super(messageSource, presetManager, w, isModal);
+	public  EditSampleFilterDialog( PresetManager presetManager, Window w, boolean isModal) {
+		super( presetManager, w, isModal);
 	}
 
 	/**
@@ -54,8 +54,8 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 	 * @param presetManager a {@link PresetManager} to manage the presets
 	 * configured in this window
 	 */
-	public EditSampleFilterDialog(MessageSourceAccessor messageSource, PresetManager presetManager) {
-		super(messageSource, presetManager);
+	public  EditSampleFilterDialog( PresetManager presetManager) {
+		super( presetManager);
 	}
 
 	@Override

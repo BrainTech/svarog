@@ -11,7 +11,6 @@ import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.dialog.HelpDialog;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** HelpContentsAction
  *
@@ -26,8 +25,8 @@ public class HelpContentsAction extends AbstractSignalMLAction {
 
 	private HelpDialog helpDialog;
 
-	public HelpContentsAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  HelpContentsAction() {
+		super();
 		setText("action.helpContents");
 		setIconPath("org/signalml/app/icon/help.png");
 		setToolTip("action.helpContentsToolTip");

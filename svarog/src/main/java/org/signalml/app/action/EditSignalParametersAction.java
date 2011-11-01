@@ -15,7 +15,6 @@ import org.signalml.app.view.dialog.SignalParametersDialog;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.domain.signal.OriginalMultichannelSampleSource;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** EditSignalParametersAction
  *
@@ -30,8 +29,8 @@ public class EditSignalParametersAction extends AbstractFocusableSignalMLAction<
 
 	private SignalParametersDialog signalParametersDialog;
 
-	public EditSignalParametersAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
-		super(messageSource, signalDocumentFocusSelector);
+	public  EditSignalParametersAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
+		super( signalDocumentFocusSelector);
 		setText("action.signalParameters");
 		setIconPath("org/signalml/app/icon/signalparameters.png");
 		setToolTip("action.signalParametersToolTip");

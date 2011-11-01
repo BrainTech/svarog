@@ -19,7 +19,7 @@ import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.app.model.OpenSignalDescriptor;
 import org.signalml.app.view.ViewerElementManager;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -35,11 +35,6 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 	 * The ViewerElementManager to be used by this panel.
 	 */
 	private ViewerElementManager viewerElementManager;
-
-	/**
-	 * Message source capable of resolving localized messages.
-	 */
-	private MessageSourceAccessor messageSource;
 
 	/**
 	 * The model of the signal source combo box. It holds the currently
@@ -71,8 +66,7 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 	 * @param viewerElementManager ViewerElementManager to be used by this
 	 * panel
 	 */
-	public SignalSourcePanel(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager) {
-		this.messageSource = messageSource;
+	public  SignalSourcePanel( ViewerElementManager viewerElementManager) {
 		this.viewerElementManager = viewerElementManager;
 		createInterface();
 	}
@@ -84,9 +78,9 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 		CardLayout cardLayout = new CardLayout();
 		this.setLayout(cardLayout);
 
-		fileSignalSourcePanel = new FileSignalSourcePanel(messageSource, viewerElementManager);
-		openBCISignalSourcePanel = new OpenBCISignalSourcePanel(messageSource, viewerElementManager);
-		amplifierSignalSourcePanel = new AmplifierSignalSourcePanel(messageSource, viewerElementManager);
+		fileSignalSourcePanel = new FileSignalSourcePanel( viewerElementManager);
+		openBCISignalSourcePanel = new OpenBCISignalSourcePanel( viewerElementManager);
+		amplifierSignalSourcePanel = new AmplifierSignalSourcePanel( viewerElementManager);
 
 		fileSignalSourcePanel.setSignalSourceSelectionComboBoxModel(getSignalSourceSelectionComboBoxModel());
 		openBCISignalSourcePanel.setSignalSourceSelectionComboBoxModel(getSignalSourceSelectionComboBoxModel());

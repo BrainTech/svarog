@@ -4,12 +4,12 @@
 
 package org.signalml.app.view.book.filter;
 
+import static org.signalml.app.SvarogApplication._;
 import javax.swing.table.AbstractTableModel;
 
 import org.signalml.domain.book.filter.AtomFilterChain;
 import org.signalml.exception.SanityCheckException;
 import org.springframework.context.MessageSourceResolvable;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** AtomFilterChainTableModel
  *
@@ -26,12 +26,9 @@ public class AtomFilterChainTableModel extends AbstractTableModel {
 	public static final int BLOCKING_COLUMN = 3;
 	public static final int ENABLED_COLUMN = 4;
 
-	private MessageSourceAccessor messageSource;
-
 	private AtomFilterChain chain;
 
-	public AtomFilterChainTableModel(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
+	public  AtomFilterChainTableModel() {
 	}
 
 	public AtomFilterChain getChain() {
@@ -80,19 +77,19 @@ public class AtomFilterChainTableModel extends AbstractTableModel {
 		switch (column) {
 
 		case INDEX_COLUMN :
-			return messageSource.getMessage("bookFilter.filterList.index");
+			return _("Index");
 
 		case NAME_COLUMN :
-			return messageSource.getMessage("bookFilter.filterList.name");
+			return _("Name");
 
 		case TYPE_COLUMN :
-			return messageSource.getMessage("bookFilter.filterList.type");
+			return _("Type");
 
 		case BLOCKING_COLUMN :
-			return messageSource.getMessage("bookFilter.filterList.blocking");
+			return _("Blocking");
 
 		case ENABLED_COLUMN :
-			return messageSource.getMessage("bookFilter.filterList.enabled");
+			return _("Enabled");
 
 		default :
 			throw new SanityCheckException("Unsupported index [" + column + "]");

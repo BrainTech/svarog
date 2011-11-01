@@ -12,7 +12,6 @@ import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** SaveAllDocumentsAction
  *
@@ -27,8 +26,8 @@ public class SaveAllDocumentsAction extends AbstractSignalMLAction {
 
 	private DocumentFlowIntegrator documentFlowIntegrator;
 
-	public SaveAllDocumentsAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  SaveAllDocumentsAction() {
+		super();
 		setText("action.saveAllDocuments");
 		setIconPath("org/signalml/app/icon/save_all.png");
 		setToolTip("action.saveAllDocumentsToolTip");

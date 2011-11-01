@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.book.filter;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -33,7 +34,7 @@ import org.signalml.domain.book.filter.DelegatingAtomFilter;
 import org.signalml.domain.book.filter.ParameterRangeAtomFilter;
 import org.signalml.domain.book.filter.TagBasedAtomFilter;
 import org.signalml.exception.SanityCheckException;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /** BookFilterListPanel
@@ -46,8 +47,6 @@ public class BookFilterTablePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	protected static final Logger logger = Logger.getLogger(BookFilterTablePanel.class);
-
-	private MessageSourceAccessor messageSource;
 
 	private ParameterRangeFilterDialog parameterFilterDialog;
 	private TagBasedFilterDialog tagBasedFilterDialog;
@@ -74,9 +73,8 @@ public class BookFilterTablePanel extends JPanel {
 	private AtomFilterChain chain;
 	private AbstractPresetDialog container;
 
-	public BookFilterTablePanel(MessageSourceAccessor messageSource, AbstractPresetDialog container) {
+	public  BookFilterTablePanel( AbstractPresetDialog container) {
 		super();
-		this.messageSource = messageSource;
 		this.container = container;
 
 		addParameterFilterAction = new AddParameterFilterAction();
@@ -94,7 +92,7 @@ public class BookFilterTablePanel extends JPanel {
 		setLayout(new BorderLayout(5,5));
 
 		setBorder(new CompoundBorder(
-		                  new TitledBorder(messageSource.getMessage("bookFilter.filterListTitle")),
+		                  new TitledBorder(_("Filter list")),
 		                  new EmptyBorder(3,3,3,3)
 		          ));
 
@@ -126,14 +124,14 @@ public class BookFilterTablePanel extends JPanel {
 
 	public AtomFilterChainTableModel getTableModel() {
 		if (tableModel == null) {
-			tableModel = new AtomFilterChainTableModel(messageSource);
+			tableModel = new AtomFilterChainTableModel();
 		}
 		return tableModel;
 	}
 
 	public AtomFilterChainTable getTable() {
 		if (table == null) {
-			table = new AtomFilterChainTable(getTableModel(), messageSource);
+			table = new AtomFilterChainTable(getTableModel());
 			table.addMouseListener(new FiltersTableMouseHandler());
 			table.setPopupMenuProvider(new FiltersTablePopupProvider());
 
@@ -248,8 +246,8 @@ public class BookFilterTablePanel extends JPanel {
 		private static final long serialVersionUID = 1L;
 
 		public AddParameterFilterAction() {
-			super(messageSource.getMessage("bookFilter.addParameterFilter"));
-			putValue(AbstractAction.SHORT_DESCRIPTION, messageSource.getMessage("bookFilter.addParameterFilterToolTip"));
+			super(_("Add parameter filter"));
+			putValue(AbstractAction.SHORT_DESCRIPTION, _("Add a filter that filters based on parameter ranges"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/addparameterfilter.png"));
 		}
 
@@ -260,7 +258,7 @@ public class BookFilterTablePanel extends JPanel {
 			}
 
 			ParameterRangeAtomFilter filter = new ParameterRangeAtomFilter();
-			filter.setName(messageSource.getMessage("paramerterRangeFilter.new"));
+			filter.setName(_("New parameter range filter"));
 
 			boolean ok = getParameterFilterDialog().showDialog(filter, true);
 			if (!ok) {
@@ -286,8 +284,8 @@ public class BookFilterTablePanel extends JPanel {
 		private static final long serialVersionUID = 1L;
 
 		public AddTagBasedFilterAction() {
-			super(messageSource.getMessage("bookFilter.addTagBasedFilter"));
-			putValue(AbstractAction.SHORT_DESCRIPTION, messageSource.getMessage("bookFilter.addTagBasedFilterToolTip"));
+			super(_("Add tag based filter"));
+			putValue(AbstractAction.SHORT_DESCRIPTION, _("Add a filter that filters based on a signal tag"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/addtagbasedfilter.png"));
 		}
 
@@ -298,7 +296,7 @@ public class BookFilterTablePanel extends JPanel {
 			}
 
 			TagBasedAtomFilter filter = new TagBasedAtomFilter();
-			filter.setName(messageSource.getMessage("tagBasedFilter.new"));
+			filter.setName(_("New tag based filter"));
 
 			boolean ok = getTagBasedFilterDialog().showDialog(filter, true);
 			if (!ok) {
@@ -324,8 +322,8 @@ public class BookFilterTablePanel extends JPanel {
 		private static final long serialVersionUID = 1L;
 
 		public AddDelegatingFilterAction() {
-			super(messageSource.getMessage("bookFilter.addDelegatingFilter"));
-			putValue(AbstractAction.SHORT_DESCRIPTION, messageSource.getMessage("bookFilter.addDelegatingFilterToolTip"));
+			super(_("Add custom filter"));
+			putValue(AbstractAction.SHORT_DESCRIPTION, _("Add a filter that uses a custom class to determine matching atoms"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/adddelegatingfilter.png"));
 		}
 
@@ -336,7 +334,7 @@ public class BookFilterTablePanel extends JPanel {
 			}
 
 			DelegatingAtomFilter filter = new DelegatingAtomFilter();
-			filter.setName(messageSource.getMessage("delegatingFilter.new"));
+			filter.setName(_("New custom filter"));
 
 			boolean ok = getDelegatingFilterDialog().showDialog(filter, true);
 			if (!ok) {
@@ -362,7 +360,7 @@ public class BookFilterTablePanel extends JPanel {
 		private static final long serialVersionUID = 1L;
 
 		public EditFilterAction() {
-			super(messageSource.getMessage("bookFilter.editFilter"));
+			super(_("Configure"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/editfilter.png"));
 			setEnabled(false);
 		}
@@ -420,7 +418,7 @@ public class BookFilterTablePanel extends JPanel {
 		private static final long serialVersionUID = 1L;
 
 		public RemoveFilterAction() {
-			super(messageSource.getMessage("bookFilter.removeFilter"));
+			super(_("Remove"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/removefilter.png"));
 			setEnabled(false);
 		}

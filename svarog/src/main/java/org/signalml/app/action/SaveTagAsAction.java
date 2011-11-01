@@ -13,7 +13,6 @@ import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** SaveTagAsAction
  *
@@ -28,8 +27,8 @@ public class SaveTagAsAction extends AbstractFocusableSignalMLAction<TagDocument
 
 	private DocumentFlowIntegrator documentFlowIntegrator;
 
-	public SaveTagAsAction(MessageSourceAccessor messageSource, TagDocumentFocusSelector tagDocumentFocusSelector) {
-		super(messageSource, tagDocumentFocusSelector);
+	public  SaveTagAsAction( TagDocumentFocusSelector tagDocumentFocusSelector) {
+		super( tagDocumentFocusSelector);
 		setText("action.saveTagAs");
 		setIconPath("org/signalml/app/icon/filesaveas.png");
 		setToolTip("action.saveTagAsToolTip");

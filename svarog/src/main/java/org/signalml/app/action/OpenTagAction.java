@@ -3,13 +3,9 @@
  */
 package org.signalml.app.action;
 
-import java.awt.Window;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.io.IOException;
-
-import multiplexer.jmx.client.ConnectException;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
@@ -19,11 +15,9 @@ import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.OpenDocumentDescriptor;
 import org.signalml.app.view.ViewerFileChooser;
-import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.domain.tag.LegacyTagImporter;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** OpenTagAction
  *
@@ -40,8 +34,8 @@ public class OpenTagAction extends AbstractFocusableSignalMLAction<SignalDocumen
 	private ViewerFileChooser fileChooser;
 	private Component optionPaneParent;
 
-	public OpenTagAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
-		super(messageSource, signalDocumentFocusSelector);
+	public  OpenTagAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
+		super( signalDocumentFocusSelector);
 		setText("action.openTag");
 		setIconPath("org/signalml/app/icon/fileopen.png");
 		setToolTip("action.openTagToolTip");

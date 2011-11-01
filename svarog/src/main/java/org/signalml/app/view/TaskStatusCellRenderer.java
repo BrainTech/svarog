@@ -12,7 +12,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import org.signalml.app.util.IconUtils;
 import org.signalml.task.TaskStatus;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** TaskStatusCellRenderer
  *
@@ -23,8 +22,6 @@ public class TaskStatusCellRenderer extends DefaultTableCellRenderer {
 
 	private static final long serialVersionUID = 1L;
 
-	private MessageSourceAccessor messageSource;
-
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 		JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
@@ -34,15 +31,14 @@ public class TaskStatusCellRenderer extends DefaultTableCellRenderer {
 
 	@Override
 	protected void setValue(Object value) {
-		setText(messageSource.getMessage((TaskStatus) value));
+		setText(getSvarogI18n().getMessage((TaskStatus) value));
 	}
 
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
+	/**
+	 * Returns the {@link SvarogAccessI18nImpl} instance.
+	 * @return the {@link SvarogAccessI18nImpl} singleton instance
+	 */
+	protected org.signalml.app.SvarogI18n getSvarogI18n() {
+		return org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance();
 	}
-
-	public void setMessageSource(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
-	}
-
 }

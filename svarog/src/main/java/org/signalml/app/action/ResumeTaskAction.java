@@ -9,7 +9,6 @@ import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.TaskFocusSelector;
 import org.signalml.app.task.ApplicationTaskManager;
 import org.signalml.task.Task;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ResumeTaskAction
  *
@@ -24,8 +23,8 @@ public class ResumeTaskAction extends AbstractFocusableSignalMLAction<TaskFocusS
 
 	private ApplicationTaskManager taskManager;
 
-	public ResumeTaskAction(MessageSourceAccessor messageSource, TaskFocusSelector taskFocusSelector) {
-		super(messageSource, taskFocusSelector);
+	public  ResumeTaskAction( TaskFocusSelector taskFocusSelector) {
+		super( taskFocusSelector);
 		setText("action.resumeTask");
 		setIconPath("org/signalml/app/icon/resume.png");
 		setToolTip("action.resumeTaskToolTip");

@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 
 import javax.swing.BoxLayout;
@@ -16,7 +17,7 @@ import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.model.PagingParameterDescriptor;
 import org.signalml.domain.montage.Montage;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -36,11 +37,6 @@ public class TaggingConfigPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * the {@link MessageSourceAccessor source} of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
-
-	/**
 	 * the panel which allows to set the size of a block and a page
 	 */
 	private PagingParametersPanel pagingParametersPanel;
@@ -51,13 +47,12 @@ public class TaggingConfigPanel extends JPanel {
 	private JCheckBox saveFullMontageWithTagCheckBox;
 
 	/**
-	 * Constructor. Sets the {@link MessageSourceAccessor message source} and
+	 * Constructor. Sets the {@link SvarogI18n message source} and
 	 * initializes this panel.
 	 * @param messageSource the source of messages (labels)
 	 */
-	public TaggingConfigPanel(MessageSourceAccessor messageSource) {
+	public  TaggingConfigPanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -78,13 +73,13 @@ public class TaggingConfigPanel extends JPanel {
 		JPanel generalPanel = new JPanel();
 		generalPanel.setLayout(new BoxLayout(generalPanel, BoxLayout.Y_AXIS));
 		generalPanel.setBorder(new CompoundBorder(
-		                               new TitledBorder(messageSource.getMessage("preferences.tagging.general")),
+		                               new TitledBorder(_("General")),
 		                               new EmptyBorder(3,3,3,3)
 		                       ));
 
 		generalPanel.add(getSaveFullMontageWithTagCheckBox());
 
-		pagingParametersPanel = new PagingParametersPanel(messageSource);
+		pagingParametersPanel = new PagingParametersPanel();
 
 		add(generalPanel, BorderLayout.CENTER);
 		add(pagingParametersPanel, BorderLayout.SOUTH);
@@ -100,7 +95,7 @@ public class TaggingConfigPanel extends JPanel {
 	 */
 	public JCheckBox getSaveFullMontageWithTagCheckBox() {
 		if (saveFullMontageWithTagCheckBox == null) {
-			saveFullMontageWithTagCheckBox = new JCheckBox(messageSource.getMessage("preferences.tagging.saveFullMontageWithTag"));
+			saveFullMontageWithTagCheckBox = new JCheckBox(_("Save full montage with tag file"));
 		}
 		return saveFullMontageWithTagCheckBox;
 	}

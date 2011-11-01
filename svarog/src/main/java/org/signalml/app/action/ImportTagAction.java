@@ -23,7 +23,6 @@ import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.domain.tag.LegacyTagImporter;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ImportTagAction
  *
@@ -42,8 +41,8 @@ public class ImportTagAction extends AbstractFocusableSignalMLAction<SignalDocum
 	private ViewerFileChooser fileChooser;
 	private Component optionPaneParent;
 
-	public ImportTagAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
-		super(messageSource, signalDocumentFocusSelector);
+	public  ImportTagAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
+		super( signalDocumentFocusSelector);
 		setText("action.importTag");
 		setToolTip("action.importTagToolTip");
 	}

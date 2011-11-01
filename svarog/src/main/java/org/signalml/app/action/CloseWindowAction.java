@@ -9,7 +9,6 @@ import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.ViewFocusSelector;
 import org.signalml.app.view.View;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** CloseWindowAction
  *
@@ -22,8 +21,8 @@ public class CloseWindowAction extends AbstractSignalMLAction {
 
 	protected static final Logger logger = Logger.getLogger(CloseWindowAction.class);
 
-	public CloseWindowAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  CloseWindowAction() {
+		super();
 		setText("action.closeWindow");
 		setIconPath("org/signalml/app/icon/exit.png");
 		setToolTip("action.closeWindowToolTip");

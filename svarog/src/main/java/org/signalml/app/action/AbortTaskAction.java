@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.TaskFocusSelector;
 import org.signalml.task.Task;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** AbortTaskAction
  *
@@ -21,8 +20,8 @@ public class AbortTaskAction extends AbstractFocusableSignalMLAction<TaskFocusSe
 
 	protected static final Logger logger = Logger.getLogger(AbortTaskAction.class);
 
-	public AbortTaskAction(MessageSourceAccessor messageSource, TaskFocusSelector taskFocusSelector) {
-		super(messageSource, taskFocusSelector);
+	public  AbortTaskAction( TaskFocusSelector taskFocusSelector) {
+		super( taskFocusSelector);
 		setText("action.abortTask");
 		setIconPath("org/signalml/app/icon/abort.png");
 		setToolTip("action.abortTaskToolTip");
@@ -47,9 +46,12 @@ public class AbortTaskAction extends AbstractFocusableSignalMLAction<TaskFocusSe
 	@Override
 	public void setEnabledAsNeeded() {
 		boolean enabled = false;
-		Task targetTask = getActionFocusSelector().getActiveTask();
-		if (targetTask != null) {
-			enabled = targetTask.getStatus().isAbortable();
+		TaskFocusSelector x = getActionFocusSelector();
+		if (null != x) {
+			Task targetTask = x.getActiveTask();
+			if (targetTask != null) {
+				enabled = targetTask.getStatus().isAbortable();
+			}
 		}
 		setEnabled(enabled);
 	}

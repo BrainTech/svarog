@@ -1,5 +1,6 @@
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
@@ -21,7 +22,7 @@ import org.signalml.domain.signal.space.SignalSpaceConstraints;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.signal.SignalSelection;
 import org.signalml.plugin.export.signal.SignalSelectionType;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -48,10 +49,6 @@ public class SignalSelectionPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	protected static final Logger logger = Logger.getLogger(SignalSelectionPanel.class);
-	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
 	/**
 	 * the card layout for {@link #cardPanel} 
 	 */
@@ -115,9 +112,8 @@ public class SignalSelectionPanel extends JPanel {
 	 * @param withChannelSelection {@code true} if this panel should allow to
 	 * select a channel (for a channel selection), {@code false} otherwise
 	 */
-	public SignalSelectionPanel(MessageSourceAccessor messageSource, boolean withChannelSelection) {
+	public  SignalSelectionPanel( boolean withChannelSelection) {
 		super();
-		this.messageSource = messageSource;
 		this.withChannelSelection = withChannelSelection;
 		initialize();
 	}
@@ -144,17 +140,17 @@ public class SignalSelectionPanel extends JPanel {
 
 		setLayout(new BorderLayout());
 
-		signalSelectionTypePanel = new SignalSelectionTypePanel(messageSource);
+		signalSelectionTypePanel = new SignalSelectionTypePanel();
 		add(signalSelectionTypePanel, BorderLayout.NORTH);
 
-		pageSignalSelectionPanel = new PageSignalSelectionPanel(messageSource);
-		blockSignalSelectionPanel = new BlockSignalSelectionPanel(messageSource);
-		channelSignalSelectionPanel = new ChannelSignalSelectionPanel(messageSource, withChannelSelection);
+		pageSignalSelectionPanel = new PageSignalSelectionPanel();
+		blockSignalSelectionPanel = new BlockSignalSelectionPanel();
+		channelSignalSelectionPanel = new ChannelSignalSelectionPanel( withChannelSelection);
 
 		cardLayout = new CardLayout();
 		cardPanel = new JPanel();
 		cardPanel.setLayout(cardLayout);
-		cardPanel.setBorder(new TitledBorder(messageSource.getMessage("signalSelection.selectionParameters")));
+		cardPanel.setBorder(new TitledBorder(_("Selection parameters")));
 
 		cardPanel.add(pageSignalSelectionPanel, "page");
 		cardPanel.add(blockSignalSelectionPanel, "block");

@@ -11,7 +11,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.export.signal.Document;
 import org.springframework.context.MessageSourceResolvable;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * The types of {@link Document documents} that can be managed by Svarog.
@@ -173,11 +172,11 @@ public enum ManagedDocumentType implements MessageSourceResolvable {
 	 * @param messageSource the source of messages (labels) in Svarog
 	 * @return the created filters
 	 */
-	public FileFilter[] getFileFilters(MessageSourceAccessor messageSource) {
+	public FileFilter[] getFileFilters() {
 		int len = Math.min(fileFilterCodes.length, fileFilterExtensions.length);
 		FileFilter[] filters = new FileFilter[len];
 		for (int i=0; i<len; i++) {
-			filters[i] = new FileNameExtensionFilter(messageSource.getMessage(fileFilterCodes[i]), fileFilterExtensions[i]);
+			filters[i] = new FileNameExtensionFilter(getSvarogI18n().getMessage(fileFilterCodes[i]), fileFilterExtensions[i]);
 		}
 		return filters;
 	}
@@ -224,4 +223,11 @@ public enum ManagedDocumentType implements MessageSourceResolvable {
 		return name;
 	}
 
+	/**
+	 * Returns the {@link SvarogAccessI18nImpl} instance.
+	 * @return the {@link SvarogAccessI18nImpl} singleton instance
+	 */
+	protected org.signalml.app.SvarogI18n getSvarogI18n() {
+		return org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance();
+	}
 }

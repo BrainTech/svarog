@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import javax.swing.GroupLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -15,8 +16,6 @@ import javax.swing.border.TitledBorder;
 
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
-import org.springframework.context.support.MessageSourceAccessor;
-
 
 /**
  * Panel which allows to {@link #getSignalDocumentComboBox() select} which the
@@ -37,18 +36,12 @@ public class OpenTagOptionsPanel extends JPanel {
 	private JComboBox signalDocumentComboBox;
 
 	/**
-	 * the {@link MessageSourceAccessor source} of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
-
-	/**
-	 * Constructor. Sets the {@link MessageSourceAccessor message source} and
+	 * Constructor. Sets the {@link SvarogI18n message source} and
 	 * initializes this panel.
 	 * @param messageSource the source of messages (labels)
 	 */
-	public OpenTagOptionsPanel(MessageSourceAccessor messageSource) {
+	public  OpenTagOptionsPanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -69,7 +62,7 @@ public class OpenTagOptionsPanel extends JPanel {
 	private void initialize() {
 
 		CompoundBorder cb = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("openTag.options.title")),
+		        new TitledBorder(_("Choose options for tag")),
 		        new EmptyBorder(3,3,3,3)
 		);
 
@@ -80,7 +73,7 @@ public class OpenTagOptionsPanel extends JPanel {
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
-		JLabel signalDocumentLabel = new JLabel(messageSource.getMessage("openTag.options.signalDocument"));
+		JLabel signalDocumentLabel = new JLabel(_("Select signal document"));
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 

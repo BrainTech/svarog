@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.dialog;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Dimension;
 import java.awt.Window;
 
@@ -13,7 +14,6 @@ import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.element.TextPanePanel;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Tag;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Dialog which allows to change the {@link Tag#getAnnotation() annotation} for
@@ -23,7 +23,7 @@ import org.springframework.context.support.MessageSourceAccessor;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class EditTagAnnotationDialog extends AbstractDialog {
+public class EditTagAnnotationDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
 
 	private static final long serialVersionUID = 1L;
 
@@ -33,8 +33,8 @@ public class EditTagAnnotationDialog extends AbstractDialog {
 	 * Constructor. Sets the source of messages.
 	 * @param messageSource the source of messages
 	 */
-	public EditTagAnnotationDialog(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  EditTagAnnotationDialog() {
+		super();
 	}
 
 	/**
@@ -44,8 +44,8 @@ public class EditTagAnnotationDialog extends AbstractDialog {
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public EditTagAnnotationDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public  EditTagAnnotationDialog( Window w, boolean isModal) {
+		super( w, isModal);
 	}
 
 	/**
@@ -87,7 +87,7 @@ public class EditTagAnnotationDialog extends AbstractDialog {
 	 */
 	@Override
 	protected void initialize() {
-		setTitle(messageSource.getMessage("tagAnnotation.title"));
+		setTitle(_("Set tag annotation"));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/editannotation.png"));
 		super.initialize();
 	}
@@ -98,7 +98,7 @@ public class EditTagAnnotationDialog extends AbstractDialog {
 	@Override
 	public JComponent createInterface() {
 
-		textPanePanel = new TextPanePanel(messageSource.getMessage("tagAnnotation.title"));
+		textPanePanel = new TextPanePanel(_("Set tag annotation"));
 		textPanePanel.setPreferredSize(new Dimension(300,200));
 
 		return textPanePanel;

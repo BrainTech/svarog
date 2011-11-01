@@ -82,7 +82,7 @@ public class MP5MethodDescriptor implements ApplicationMethodDescriptor, Applica
 	@Override
 	public MethodConfigurer getConfigurer(ApplicationMethodManager methodManager) {
 		if (configurer == null) {
-			configurer = new MP5MethodDialog(methodManager.getMessageSource(), getPresetManager(methodManager, false), methodManager.getDialogParent());
+			configurer = new MP5MethodDialog(getPresetManager(methodManager, false), methodManager.getDialogParent());
 			configurer.initialize(methodManager);
 		}
 		return configurer;

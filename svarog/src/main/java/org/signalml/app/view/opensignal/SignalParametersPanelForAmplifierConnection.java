@@ -1,12 +1,12 @@
 package org.signalml.app.view.opensignal;
 
+import static org.signalml.app.SvarogApplication._;
 import javax.swing.DefaultComboBoxModel;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.model.AmplifierConnectionDescriptor;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * A {@link SignalParametersPanel} for amplifier connection.
@@ -26,9 +26,9 @@ public class SignalParametersPanelForAmplifierConnection extends AbstractSignalP
          * @param messageSource {@link #messageSource}                                        
          * @param applicationConfiguration {@link #applicationConfiguration}
          */
-        public SignalParametersPanelForAmplifierConnection(MessageSourceAccessor messageSource, ApplicationConfiguration applicationConfiguration) {
+        public  SignalParametersPanelForAmplifierConnection( ApplicationConfiguration applicationConfiguration) {
 
-                super(messageSource);
+                super();
 		this.applicationConfiguration = applicationConfiguration;
         }
 
@@ -89,14 +89,14 @@ public class SignalParametersPanelForAmplifierConnection extends AbstractSignalP
                 try {
                         samplingFrequency = Float.parseFloat(getSamplingFrequencyComboBox().getModel().getSelectedItem().toString());
                 } catch (Exception ex) {
-                        throw new SignalMLException(messageSource.getMessage("error.invalidData"));
+                        throw new SignalMLException(_("Invalid data entered"));
                 }
 
                 try {
                         pageSize = getPageSizeSpinner().getValue();
                         if (pageSize <= 0) throw new NumberFormatException();
                 } catch (Exception ex) {
-                        throw new SignalMLException(messageSource.getMessage("error.invalidData"));
+                        throw new SignalMLException(_("Invalid data entered"));
                 }
                 
                 descriptor.getOpenMonitorDescriptor().setSamplingFrequency(samplingFrequency);

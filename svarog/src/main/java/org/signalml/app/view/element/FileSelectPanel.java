@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -21,7 +22,6 @@ import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.apache.log4j.Logger;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * This class represents a panel which may be used to select a file.
@@ -33,7 +33,6 @@ public class FileSelectPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	protected static final Logger logger = Logger.getLogger(FileSelectPanel.class);
-	private MessageSourceAccessor messageSource;
 
 	/**
 	 * Label for the fileNameField.
@@ -72,9 +71,8 @@ public class FileSelectPanel extends JPanel {
 	 * This is the default constructor
 	 * @param messageSource the source of messages (labels)
 	 */
-	public FileSelectPanel(MessageSourceAccessor messageSource, String selectFilePrompt) {
+	public  FileSelectPanel( String selectFilePrompt) {
 		super();
-		this.messageSource = messageSource;
 		this.selectFileLabel = new JLabel(selectFilePrompt);
 		initialize();
 	}
@@ -82,9 +80,8 @@ public class FileSelectPanel extends JPanel {
 	/**
 	 * This constructor takes two additional parameters: {@link #filters} and {@link #allFilters}
 	 */
-	public FileSelectPanel(MessageSourceAccessor messageSource, String selectFilePrompt, HashMap<String, String[]> filters, boolean allFilters) {
+	public  FileSelectPanel( String selectFilePrompt, HashMap<String, String[]> filters, boolean allFilters) {
 		super();
-		this.messageSource = messageSource;
 		this.selectFileLabel = new JLabel(selectFilePrompt);
                 this.filters = filters;
                 this.allFilters = allFilters;
@@ -134,7 +131,7 @@ public class FileSelectPanel extends JPanel {
 	 */
 	protected JButton getChangeButton() {
 		if (browseButton == null) {
-			browseButton = new JButton(messageSource.getMessage("fileSelectPanel.browseButtonLabel"));
+			browseButton = new JButton(_("Browse"));
                         if (filters == null)
                                 browseButtonAction = new BrowseButtonAction();
                         else
@@ -224,7 +221,7 @@ public class FileSelectPanel extends JPanel {
 		public BrowseButtonAction() {
 			super();
 			fileChooser = new JFileChooser();
-			fileChooser.setApproveButtonText(messageSource.getMessage("ok"));
+			fileChooser.setApproveButtonText(_("Ok"));
 		}
 
                 /**
@@ -236,7 +233,7 @@ public class FileSelectPanel extends JPanel {
 		public BrowseButtonAction(HashMap<String, String[]> filters, boolean allFilters) {
 			super();
 			fileChooser = new JFileChooser();
-			fileChooser.setApproveButtonText(messageSource.getMessage("ok"));
+			fileChooser.setApproveButtonText(_("Ok"));
 
                         fileChooser.setAcceptAllFileFilterUsed(allFilters);
 

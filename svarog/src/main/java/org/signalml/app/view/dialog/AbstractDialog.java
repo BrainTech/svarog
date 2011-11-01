@@ -30,8 +30,10 @@ import org.apache.log4j.Logger;
 import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.impl.PluginAccessClass;
+import org.signalml.plugin.impl.SvarogAccessI18nImpl;
 import org.signalml.util.SvarogConstants;
-import org.springframework.context.support.MessageSourceAccessor;
+import org.signalml.app.SvarogI18n;
+
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 
@@ -56,7 +58,6 @@ public abstract class AbstractDialog extends JDialog {
 	static final long serialVersionUID = 1L;
 
 	protected transient final Logger logger = Logger.getLogger(getClass());
-	protected final MessageSourceAccessor messageSource;
 
 	/**
 	 * true if the initialization has been performed, false otherwise
@@ -132,17 +133,6 @@ public abstract class AbstractDialog extends JDialog {
 	 */
 	public AbstractDialog() {
 		super();
-		messageSource = PluginAccessClass.getSharedInstance().getMessageSource();
-	}
-	
-	
-	/**
-	 * Constructor. Sets message source.
-	 * @param messageSource message source to set
-	 */
-	public AbstractDialog(MessageSourceAccessor messageSource) {
-		super();
-		this.messageSource = messageSource;
 	}
 
 	/**
@@ -152,12 +142,11 @@ public abstract class AbstractDialog extends JDialog {
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public AbstractDialog(MessageSourceAccessor messageSource,Window w, boolean isModal) {
+	public AbstractDialog(Window w, boolean isModal) {
 		super(w, (isModal) ? Dialog.ModalityType.APPLICATION_MODAL : Dialog.ModalityType.MODELESS);
 		if (w != null) {
 			hasParent = true;
 		}
-		this.messageSource = messageSource;
 	}
 
 	/**
@@ -227,6 +216,13 @@ public abstract class AbstractDialog extends JDialog {
 
 		addContextHelp();
 
+	}
+	
+	/**
+	 * Returns the {@link SvarogAccessI18nImpl} instance.
+	 */
+	private SvarogI18n getSvarogI18n() {
+		return SvarogAccessI18nImpl.getInstance();
 	}
 
 	/**
@@ -639,7 +635,7 @@ public abstract class AbstractDialog extends JDialog {
 	 */
 	protected ErrorsDialog getErrorsDialog() {
 		if (errorsDialog == null) {
-			errorsDialog = new ErrorsDialog(messageSource,this,true);
+			errorsDialog = new ErrorsDialog(this,true);
 		}
 		return errorsDialog;
 	}
@@ -651,7 +647,7 @@ public abstract class AbstractDialog extends JDialog {
 	 */
 	protected HelpDialog getHelpDialog() {
 		if (helpDialog == null) {
-			helpDialog = new HelpDialog(messageSource,this,true);
+			helpDialog = new HelpDialog(this,true);
 		}
 		return helpDialog;
 	}
@@ -760,7 +756,7 @@ public abstract class AbstractDialog extends JDialog {
 		 * Constructor. Sets the description and the icon.
 		 */
 		public OkAction() {
-			super(messageSource.getMessage("ok"));
+			super(getSvarogI18n()._("Ok"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/ok.png"));
 		}
 
@@ -811,7 +807,7 @@ public abstract class AbstractDialog extends JDialog {
 		 * Constructor. Sets the description and the icon.
 		 */
 		public CancelAction() {
-			super(messageSource.getMessage("cancel"));
+			super(getSvarogI18n()._("Cancel"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/cancel.png"));
 		}
 
@@ -859,7 +855,7 @@ public abstract class AbstractDialog extends JDialog {
 		public ContextHelpAction(URL url) {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/help.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("help.contextHelpToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,getSvarogI18n()._("Display context help for this dialog"));
 			contextHelpURL = url;
 		}
 

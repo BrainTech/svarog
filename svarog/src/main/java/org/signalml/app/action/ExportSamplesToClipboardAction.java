@@ -12,7 +12,6 @@ import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ExportSamplesToClipboardAction
  *
@@ -25,8 +24,8 @@ public abstract class ExportSamplesToClipboardAction extends ExportSamplesAction
 
 	private static final long serialVersionUID = 1L;
 
-	public ExportSamplesToClipboardAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  ExportSamplesToClipboardAction() {
+		super();
 		setText("action.exportSamplesToClipboard");
 		setIconPath("org/signalml/app/icon/clipboard.png");
 		setToolTip("action.exportSamplesToClipboardToolTip");

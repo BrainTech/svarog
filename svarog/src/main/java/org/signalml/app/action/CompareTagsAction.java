@@ -11,7 +11,6 @@ import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.view.signal.popup.CompareTagsPopupDialog;
 import org.signalml.app.view.tag.comparison.TagComparisonDialog;
 import org.signalml.plugin.export.view.DocumentView;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * This class is responsible for action evoked when the user wants to compare
@@ -34,8 +33,8 @@ public class CompareTagsAction extends AbstractFocusableSignalMLAction<SignalDoc
 	 * @param signalDocumentFocusSelector a {@link SignalDocumentFocusSelector}
 	 * used to get the active document.
 	 */
-	public CompareTagsAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
-		super(messageSource, signalDocumentFocusSelector);
+	public  CompareTagsAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
+		super( signalDocumentFocusSelector);
 
 		setText("action.compareTags");
 		setIconPath("org/signalml/app/icon/comparetags.png");
@@ -51,7 +50,7 @@ public class CompareTagsAction extends AbstractFocusableSignalMLAction<SignalDoc
 		if (documentView instanceof SignalView)
 			signalView = (SignalView) documentView;
 
-		CompareTagsPopupDialog dialog = new CompareTagsPopupDialog(messageSource, null, true);
+		CompareTagsPopupDialog dialog = new CompareTagsPopupDialog( null, true);
 		dialog.setTagComparisonDialog(tagComparisonDialog);
 		dialog.setSignalView(signalView);
 		dialog.showDialog(null, true);

@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Dimension;
 
 import javax.swing.GroupLayout;
@@ -17,7 +18,7 @@ import org.apache.log4j.Logger;
 import org.signalml.app.model.PagingParameterDescriptor;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 
@@ -50,12 +51,12 @@ public class PagingParametersPanel extends AbstractSignalMLPanel {
 	private JTextField blocksPerPageField;
 
 	/**
-	 * Constructor. Sets the {@link MessageSourceAccessor message source} and
+	 * Constructor. Sets the {@link SvarogI18n message source} and
 	 * initializes this panel.
 	 * @param messageSource the source of messages (labels)
 	 */
-	public PagingParametersPanel(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  PagingParametersPanel() {
+		super();
 		initialize();
 	}
 
@@ -78,7 +79,7 @@ public class PagingParametersPanel extends AbstractSignalMLPanel {
 	private void initialize() {
 
 		CompoundBorder cb = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("signalParameters.pagingSignalParameters")),
+		        new TitledBorder(_("Page & block parameters")),
 		        new EmptyBorder(3,3,3,3)
 		);
 
@@ -89,8 +90,8 @@ public class PagingParametersPanel extends AbstractSignalMLPanel {
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
-		JLabel pageSizeLabel = new JLabel(messageSource.getMessage("pagingParameters.pageSize"));
-		JLabel blocksPerPageLabel = new JLabel(messageSource.getMessage("pagingParameters.blocksPerPage"));
+		JLabel pageSizeLabel = new JLabel(_("Page size (s)"));
+		JLabel blocksPerPageLabel = new JLabel(_("Number of blocks per page"));
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
@@ -188,7 +189,7 @@ public class PagingParametersPanel extends AbstractSignalMLPanel {
 			getPageSizeField().setToolTipText(null);
 		} else {
 			getPageSizeField().setEditable(false);
-			getPageSizeField().setToolTipText(messageSource.getMessage("signalParameters.pagingNotEditable"));
+			getPageSizeField().setToolTipText(_("This parameter is inherited from the active tag and may not be changed as long as any tags are open"));
 		}
 
 		if (spd.isBlocksPerPageEditable()) {
@@ -196,7 +197,7 @@ public class PagingParametersPanel extends AbstractSignalMLPanel {
 			getBlocksPerPageField().setToolTipText(null);
 		} else {
 			getBlocksPerPageField().setEditable(false);
-			getBlocksPerPageField().setToolTipText(messageSource.getMessage("signalParameters.pagingNotEditable"));
+			getBlocksPerPageField().setToolTipText(_("This parameter is inherited from the active tag and may not be changed as long as any tags are open"));
 		}
 
 	}

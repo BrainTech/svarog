@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.dialog;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
@@ -31,7 +32,6 @@ import javax.swing.border.LineBorder;
 
 import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Dialog shown when the user has to wait.
@@ -46,7 +46,7 @@ import org.springframework.context.support.MessageSourceAccessor;
  * 
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class PleaseWaitDialog extends AbstractDialog {
+public class PleaseWaitDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
 
 	private static final long serialVersionUID = 1L;
 
@@ -79,8 +79,8 @@ public class PleaseWaitDialog extends AbstractDialog {
 	 * Constructor. Sets message source.
 	 * @param messageSource message source to set
 	 */
-	public PleaseWaitDialog(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  PleaseWaitDialog() {
+		super();
 	}
 
 	/**
@@ -89,8 +89,8 @@ public class PleaseWaitDialog extends AbstractDialog {
 	 * @param messageSource message source to set
 	 * @param w the parent window or null if there is no parent
 	 */
-	public PleaseWaitDialog(MessageSourceAccessor messageSource, Window w) {
-		super(messageSource, w, true);
+	public  PleaseWaitDialog( Window w) {
+		super( w, true);
 	}
 
 	/**
@@ -130,7 +130,7 @@ public class PleaseWaitDialog extends AbstractDialog {
 		);
 		p.setBorder(border);
 
-		JLabel label = new JLabel(messageSource.getMessage("pleaseWait"));
+		JLabel label = new JLabel(_("Please wait..."));
 		label.setIcon(IconUtils.getInfoIcon());
 		label.setAlignmentX(Component.CENTER_ALIGNMENT);
 

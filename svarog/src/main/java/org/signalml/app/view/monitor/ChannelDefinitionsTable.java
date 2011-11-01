@@ -1,12 +1,12 @@
 package org.signalml.app.view.monitor;
 
+import static org.signalml.app.SvarogApplication._;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.AbstractTableModel;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Table for channel definitions.
@@ -16,10 +16,6 @@ import org.springframework.context.support.MessageSourceAccessor;
 public class ChannelDefinitionsTable extends JTable {
 
         /**
-         * Message source.
-         */
-        private MessageSourceAccessor messageSource;
-        /**
          * Wheter this table is used in edit g&o dialog (true), or in edit
          * amp def dialog (false).
          */
@@ -28,12 +24,11 @@ public class ChannelDefinitionsTable extends JTable {
         /**
          * Default constructor.
          */
-        public ChannelDefinitionsTable(MessageSourceAccessor messageSource, boolean dialog) {
+        public  ChannelDefinitionsTable( boolean dialog) {
 
                 super();
-                setModel(new ChannelDefinitionTableModel(dialog, new ArrayList<ChannelDefinition>(), messageSource));
+                setModel(new ChannelDefinitionTableModel(dialog, new ArrayList<ChannelDefinition>()));
                 setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-                this.messageSource = messageSource;
                 this.dialog = dialog;
         }
 
@@ -46,7 +41,7 @@ public class ChannelDefinitionsTable extends JTable {
 
                 List<ChannelDefinition> definitions = getDefinitionTableModel().getDefinitions();
                 definitions.add(definition);
-                setModel(new ChannelDefinitionTableModel(dialog, definitions, messageSource));
+                setModel(new ChannelDefinitionTableModel(dialog, definitions));
 
         }
 
@@ -61,7 +56,7 @@ public class ChannelDefinitionsTable extends JTable {
                 }
                 List<ChannelDefinition> definitions = getDefinitionTableModel().getDefinitions();
                 definitions.remove(selectedRow);
-                setModel(new ChannelDefinitionTableModel(dialog, definitions, messageSource));
+                setModel(new ChannelDefinitionTableModel(dialog, definitions));
         }
 
         /**
@@ -71,7 +66,7 @@ public class ChannelDefinitionsTable extends JTable {
          */
         public void setData(List<ChannelDefinition> definitions) {
 
-                setModel(new ChannelDefinitionTableModel(dialog, definitions, messageSource));
+                setModel(new ChannelDefinitionTableModel(dialog, definitions));
         }
 
         /**
@@ -164,7 +159,7 @@ public class ChannelDefinitionsTable extends JTable {
          */
         public void setAllEditable(boolean allEditable) {
 
-                ChannelDefinitionTableModel newModel = new ChannelDefinitionTableModel(dialog, getData(), messageSource);
+                ChannelDefinitionTableModel newModel = new ChannelDefinitionTableModel(dialog, getData());
                 newModel.setAllGainAndOffset(allEditable);
                 setModel(newModel);
         }
@@ -191,10 +186,6 @@ class ChannelDefinitionTableModel extends AbstractTableModel {
          */
         private List<ChannelDefinition> definitions;
         /**
-         * The message source.
-         */
-        private MessageSourceAccessor messageSource;
-        /**
          * Wheter all gain and offset are presented, or only one.
          */
         private boolean allGainAndOffset;
@@ -205,11 +196,10 @@ class ChannelDefinitionTableModel extends AbstractTableModel {
          * @param dialog {@link #dialog}
          * @param definitions {@link #definitions}
          */
-        public ChannelDefinitionTableModel(boolean dialog, List<ChannelDefinition> definitions, MessageSourceAccessor messageSource) {
+        public ChannelDefinitionTableModel(boolean dialog, List<ChannelDefinition> definitions) {
 
                 this.dialog = dialog;
                 this.definitions = definitions;
-                this.messageSource = messageSource;
                 this.allGainAndOffset = true;
         }
 
@@ -242,7 +232,7 @@ class ChannelDefinitionTableModel extends AbstractTableModel {
                         if (allGainAndOffset) {
                                 return definitions.get(rowIndex).getNumber();
                         } else {
-                                return messageSource.getMessage("opensignal.parameters.editGainAndOffsetDialog.all");
+                                return _("All channels");
                         }
                 } else if (columnIndex == CHANNEL_GAIN) {
                         return definitions.get(rowIndex).getGain();
@@ -264,13 +254,13 @@ class ChannelDefinitionTableModel extends AbstractTableModel {
         public String getColumnName(int column) {
 
                 if (column == CHANNEL_NUMBER) {
-                        return messageSource.getMessage("amplifierDefinitionConfig.channelno");
+                        return _("Channel no.: ");
                 } else if (column == CHANNEL_GAIN) {
-                        return messageSource.getMessage("amplifierDefinitionConfig.gain");
+                        return _("Gain: ");
                 } else if (column == CHANNEL_OFFSET) {
-                        return messageSource.getMessage("amplifierDefinitionConfig.offset");
+                        return _("Offset: ");
                 } else if (column == CHANNEL_NAME) {
-                        return messageSource.getMessage("amplifierDefinitionConfig.defaultName");
+                        return _("Default name: ");
                 }
                 return null;
         }
@@ -317,7 +307,7 @@ class ChannelDefinitionTableModel extends AbstractTableModel {
                         try {
                                 newValue = Integer.parseInt((String) aValue);
                         } catch (NumberFormatException ex) {
-                                JOptionPane.showMessageDialog(null, messageSource.getMessage("error.amplifierDefinitionConfig.integer"));
+                                JOptionPane.showMessageDialog(null, _("Please insert an integer value"));
                                 return;
                         }
 
@@ -330,7 +320,7 @@ class ChannelDefinitionTableModel extends AbstractTableModel {
                         try {
                                 newValue = Float.parseFloat((String) aValue);
                         } catch (NumberFormatException ex) {
-                                JOptionPane.showMessageDialog(null, messageSource.getMessage("error.amplifierDefinitionConfig.rational"));
+                                JOptionPane.showMessageDialog(null, _("Please insert a rational value"));
                                 return;
                         }
 

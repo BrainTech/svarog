@@ -9,7 +9,6 @@ import java.awt.Component;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** WignerMapPaletteComboBoxCellRenderer
  *
@@ -19,11 +18,7 @@ import org.springframework.context.support.MessageSourceAccessor;
 public class WignerMapPaletteComboBoxCellRenderer extends DefaultListCellRenderer {
 
 	private static final long serialVersionUID = 1L;
-
-	private MessageSourceAccessor messageSource;
-
-	public WignerMapPaletteComboBoxCellRenderer(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
+	public  WignerMapPaletteComboBoxCellRenderer() {
 	}
 
 	@Override
@@ -31,11 +26,18 @@ public class WignerMapPaletteComboBoxCellRenderer extends DefaultListCellRendere
 		DefaultListCellRenderer renderer = (DefaultListCellRenderer) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 		if (value instanceof WignerMapPalette) {
 			WignerMapPalette palette = (WignerMapPalette) value;
-			renderer.setText(messageSource.getMessage(palette));
+			renderer.setText(getSvarogI18n().getMessage(palette));
 			renderer.setIcon(palette.getIcon());
 		}
 		// else leave text put by superclass
 		return renderer;
 	}
 
+	/**
+	 * Returns the {@link SvarogAccessI18nImpl} instance.
+	 * @return the {@link SvarogAccessI18nImpl} singleton instance
+	 */
+	protected org.signalml.app.SvarogI18n getSvarogI18n() {
+		return org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance();
+	}
 }

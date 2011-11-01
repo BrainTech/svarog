@@ -50,9 +50,7 @@ public class UsbDeviceDiscovererTest implements PropertyChangeListener {
                         }
                 };
 
-                MessageSourceAccessor messageSourceAccessor = new MessageSourceAccessor(messageSource);
-
-                discoverer = new USBDeviceDiscoverer(messageSourceAccessor);
+                discoverer = new USBDeviceDiscoverer();
                 discoverer.addPropertyChangeListener(this);
 
                 synchronized (lock) {

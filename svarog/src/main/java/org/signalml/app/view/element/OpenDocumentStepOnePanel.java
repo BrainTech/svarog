@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -25,7 +26,6 @@ import org.apache.log4j.Logger;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.view.dialog.OpenDocumentDialog;
 import org.signalml.plugin.export.signal.Document;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Panel for the first step of the {@link OpenDocumentDialog}.
@@ -43,11 +43,6 @@ public class OpenDocumentStepOnePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	protected static final Logger logger = Logger.getLogger(OpenDocumentStepOnePanel.class);
-
-	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
 
 	/**
 	 * the radio button which tells that the {@link ManagedDocumentType type}
@@ -92,9 +87,8 @@ public class OpenDocumentStepOnePanel extends JPanel {
 	 * Constructor. Sets the message source and initializes this panel.
 	 * @param messageSource the source of messages (labels)
 	 */
-	public OpenDocumentStepOnePanel(MessageSourceAccessor messageSource) {
+	public  OpenDocumentStepOnePanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -129,7 +123,7 @@ public class OpenDocumentStepOnePanel extends JPanel {
 	private JPanel getFilePanel() {
 		if (filePanel == null) {
 			filePanel = new JPanel();
-			filePanel.setBorder(BorderFactory.createTitledBorder(messageSource.getMessage("openDocument.chooseFile")));
+			filePanel.setBorder(BorderFactory.createTitledBorder(_("Choose a file")));
 			filePanel.setLayout(new BoxLayout(filePanel, BoxLayout.Y_AXIS));
 			filePanel.add(getFileChooser());
 
@@ -148,7 +142,7 @@ public class OpenDocumentStepOnePanel extends JPanel {
 	private JPanel getFileTypePanel() {
 		if (fileTypePanel == null) {
 			fileTypePanel = new JPanel();
-			fileTypePanel.setBorder(BorderFactory.createTitledBorder(messageSource.getMessage("openDocument.chooseFileType")));
+			fileTypePanel.setBorder(BorderFactory.createTitledBorder(_("Choose the file type")));
 			fileTypePanel.setLayout(new BoxLayout(fileTypePanel, BoxLayout.Y_AXIS));
 			fileTypePanel.add(getAutodetectRadio());
 			fileTypePanel.add(getChooseRadio());
@@ -168,7 +162,7 @@ public class OpenDocumentStepOnePanel extends JPanel {
 	public JRadioButton getAutodetectRadio() {
 		if (autodetectRadio == null) {
 			autodetectRadio = new JRadioButton();
-			autodetectRadio.setText(messageSource.getMessage("openDocument.fileType.autodetect"));
+			autodetectRadio.setText(_("Attempt to autodetect file type"));
 			autodetectRadio.setAlignmentX(Component.LEFT_ALIGNMENT);
 			radioGroup.add(autodetectRadio);
 		}
@@ -189,7 +183,7 @@ public class OpenDocumentStepOnePanel extends JPanel {
 	public JRadioButton getChooseRadio() {
 		if (chooseRadio == null) {
 			chooseRadio = new JRadioButton();
-			chooseRadio.setText(messageSource.getMessage("openDocument.fileType.choose"));
+			chooseRadio.setText(_("Select manually from a list"));
 			chooseRadio.setAlignmentX(Component.LEFT_ALIGNMENT);
 			radioGroup.add(chooseRadio);
 			chooseRadio.addItemListener(new ItemListener() {
@@ -213,9 +207,9 @@ public class OpenDocumentStepOnePanel extends JPanel {
 		if (fileTypeCombo == null) {
 			fileTypeCombo = new JComboBox();
 			fileTypeCombo.setAlignmentX(Component.LEFT_ALIGNMENT);
-			fileTypeCombo.addItem(messageSource.getMessage("openDocument.fileType.signal"));
-			fileTypeCombo.addItem(messageSource.getMessage("openDocument.fileType.book"));
-			fileTypeCombo.addItem(messageSource.getMessage("openDocument.fileType.tag"));
+			fileTypeCombo.addItem(_("Signal"));
+			fileTypeCombo.addItem(_("Book"));
+			fileTypeCombo.addItem(_("Tag"));
 		}
 
 		return fileTypeCombo;
@@ -248,7 +242,7 @@ public class OpenDocumentStepOnePanel extends JPanel {
 			int i;
 			int e;
 			for (i=types.length-1; i>=0; i--) {
-				filters = types[i].getFileFilters(messageSource);
+				filters = types[i].getFileFilters();
 				for (e=filters.length-1; e>=0; e--) {
 					fileChooser.addChoosableFileFilter(filters[e]);
 				}

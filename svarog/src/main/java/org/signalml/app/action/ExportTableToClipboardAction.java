@@ -11,7 +11,6 @@ import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.TableFocusSelector;
 import org.signalml.app.model.TableToTextExporter;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ExportTableToClipboardAction
  *
@@ -26,8 +25,8 @@ public class ExportTableToClipboardAction extends AbstractSignalMLAction {
 
 	private TableToTextExporter tableToTextExporter;
 
-	public ExportTableToClipboardAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  ExportTableToClipboardAction() {
+		super();
 		setText("action.exportTableToClipboard");
 		setIconPath("org/signalml/app/icon/clipboard.png");
 		setToolTip("action.exportTableToClipboardToolTip");

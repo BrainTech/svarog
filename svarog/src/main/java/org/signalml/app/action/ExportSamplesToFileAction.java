@@ -18,7 +18,6 @@ import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ExportSamplesToFileAction
  *
@@ -34,8 +33,8 @@ public abstract class ExportSamplesToFileAction extends ExportSamplesAction {
 	private ViewerFileChooser fileChooser;
 	private Component optionPaneParent;
 
-	public ExportSamplesToFileAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  ExportSamplesToFileAction() {
+		super();
 		setText("action.exportSamplesToFile");
 		setIconPath("org/signalml/app/icon/script_save.png");
 		setToolTip("action.exportSamplesToFileToolTip");

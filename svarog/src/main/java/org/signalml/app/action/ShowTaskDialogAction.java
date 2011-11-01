@@ -10,7 +10,6 @@ import org.signalml.app.action.selector.TaskFocusSelector;
 import org.signalml.app.task.ApplicationTaskManager;
 import org.signalml.app.view.dialog.TaskStatusDialog;
 import org.signalml.task.Task;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ShowTaskDialogAction
  *
@@ -25,8 +24,8 @@ public class ShowTaskDialogAction extends AbstractFocusableSignalMLAction<TaskFo
 
 	private ApplicationTaskManager taskManager;
 
-	public ShowTaskDialogAction(MessageSourceAccessor messageSource, TaskFocusSelector taskFocusSelector) {
-		super(messageSource, taskFocusSelector);
+	public  ShowTaskDialogAction( TaskFocusSelector taskFocusSelector) {
+		super( taskFocusSelector);
 		setText("action.showTaskDialog");
 		setIconPath("org/signalml/app/icon/running.png");
 		setToolTip("action.showTaskDialogToolTip");

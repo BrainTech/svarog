@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.book.popup;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -34,7 +35,6 @@ import org.signalml.app.view.book.BookView;
 import org.signalml.app.view.element.TitledCrossBorder;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractPopupDialog;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** BookPlotOptionsPopupDialog
  *
@@ -54,8 +54,8 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 	private JSpinner aspectUpSpinner;
 	private JSpinner aspectDownSpinner;
 
-	public BookPlotOptionsPopupDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public  BookPlotOptionsPopupDialog( Window w, boolean isModal) {
+		super( w, isModal);
 	}
 
 	public BookView getBookView() {
@@ -73,7 +73,7 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 
 		JPanel interfacePanel = new JPanel(new BorderLayout());
 
-		interfacePanel.setBorder(new TitledCrossBorder(messageSource.getMessage("bookView.plotOptions"), true));
+		interfacePanel.setBorder(new TitledCrossBorder(_("Plot options"), true));
 
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setBorder(new EmptyBorder(3,3,3,3));
@@ -111,7 +111,7 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
-		JLabel aspectRatioLabel = new JLabel(messageSource.getMessage("bookView.aspectRatio"));
+		JLabel aspectRatioLabel = new JLabel(_("Map aspect ratio"));
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
@@ -192,43 +192,43 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 
 		final BookPlot plot = bookView.getPlot();
 
-		final JToggleButton antialiasButton = new JToggleButton(messageSource.getMessage("bookView.signalAntialias"), IconUtils.loadClassPathIcon("org/signalml/app/icon/antialias.png"));
-		antialiasButton.setToolTipText(messageSource.getMessage("bookView.signalAntialiasToolTip"));
+		final JToggleButton antialiasButton = new JToggleButton(_("Signal antialiasing"), IconUtils.loadClassPathIcon("org/signalml/app/icon/antialias.png"));
+		antialiasButton.setToolTipText(_("Toggle reconstruction antialiasing"));
 		antialiasButton.setSelected(plot.isSignalAntialiased());
 
-		final JToggleButton originalSignalVisibleButton = new JToggleButton(messageSource.getMessage("bookView.originalSignalVisible"));
+		final JToggleButton originalSignalVisibleButton = new JToggleButton(_("Show original signal"));
 		originalSignalVisibleButton.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/originalsignalvisible.png"));
-		originalSignalVisibleButton.setToolTipText(messageSource.getMessage("bookView.originalSignalVisibleToolTip"));
+		originalSignalVisibleButton.setToolTipText(_("Toggle showing original signal graph"));
 		originalSignalVisibleButton.setSelected(plot.isOriginalSignalVisible());
 
-		final JToggleButton fullReconstructionVisibleButton = new JToggleButton(messageSource.getMessage("bookView.fullReconstructionVisible"));
+		final JToggleButton fullReconstructionVisibleButton = new JToggleButton(_("Show full reconstruction"));
 		fullReconstructionVisibleButton.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/fullreconstructionvisible.png"));
-		fullReconstructionVisibleButton.setToolTipText(messageSource.getMessage("bookView.fullReconstructionVisibleToolTip"));
+		fullReconstructionVisibleButton.setToolTipText(_("Toggle showing full reconstruction graph"));
 		fullReconstructionVisibleButton.setSelected(plot.isFullReconstructionVisible());
 
-		final JToggleButton reconstructionVisibleButton = new JToggleButton(messageSource.getMessage("bookView.reconstructionVisible"));
+		final JToggleButton reconstructionVisibleButton = new JToggleButton(_("Show reconstruction"));
 		reconstructionVisibleButton.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/reconstructionvisible.png"));
-		reconstructionVisibleButton.setToolTipText(messageSource.getMessage("bookView.reconstructionVisibleToolTip"));
+		reconstructionVisibleButton.setToolTipText(_("Toggle showing reconstruction graph"));
 		reconstructionVisibleButton.setSelected(plot.isReconstructionVisible());
 
-		final JToggleButton legendVisibleButton = new JToggleButton(messageSource.getMessage("bookView.legendVisible"));
+		final JToggleButton legendVisibleButton = new JToggleButton(_("Show legend"));
 		legendVisibleButton.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/legendvisible.png"));
-		legendVisibleButton.setToolTipText(messageSource.getMessage("bookView.legendVisibleToolTip"));
+		legendVisibleButton.setToolTipText(_("Toggle showing reconstruction legend"));
 		legendVisibleButton.setSelected(plot.isLegendVisible());
 
-		final JToggleButton scaleVisibleButton = new JToggleButton(messageSource.getMessage("bookView.scaleVisible"));
+		final JToggleButton scaleVisibleButton = new JToggleButton(_("Show scale"));
 		scaleVisibleButton.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/scalevisible.png"));
-		scaleVisibleButton.setToolTipText(messageSource.getMessage("bookView.scaleVisibleToolTip"));
+		scaleVisibleButton.setToolTipText(_("Toggle showing map scale"));
 		scaleVisibleButton.setSelected(plot.isScaleVisible());
 
-		final JToggleButton axesVisibleButton = new JToggleButton(messageSource.getMessage("bookView.axesVisible"));
+		final JToggleButton axesVisibleButton = new JToggleButton(_("Show axes"));
 		axesVisibleButton.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/axesvisible.png"));
-		axesVisibleButton.setToolTipText(messageSource.getMessage("bookView.axesVisibleToolTip"));
+		axesVisibleButton.setToolTipText(_("Toggle showing map axes"));
 		axesVisibleButton.setSelected(plot.isAxesVisible());
 
-		final JToggleButton atomToolTipsVisibleButton = new JToggleButton(messageSource.getMessage("bookView.atomToolTipsVisible"));
+		final JToggleButton atomToolTipsVisibleButton = new JToggleButton(_("Show atom tool tips"));
 		atomToolTipsVisibleButton.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/atomtooltips.png"));
-		atomToolTipsVisibleButton.setToolTipText(messageSource.getMessage("bookView.atomToolTipsVisibleToolTip"));
+		atomToolTipsVisibleButton.setToolTipText(_("Show tool tips when mouse hovers over an atom"));
 		atomToolTipsVisibleButton.setSelected(plot.isAtomToolTipsVisible());
 
 		antialiasButton.addActionListener(new ActionListener() {

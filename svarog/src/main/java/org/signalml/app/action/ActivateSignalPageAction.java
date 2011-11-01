@@ -10,7 +10,6 @@ import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.action.selector.SignalPageFocusSelector;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.view.signal.SignalView;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ActivateSignalPageAction
  *
@@ -25,8 +24,8 @@ public class ActivateSignalPageAction extends AbstractFocusableSignalMLAction<Si
 
 	private ActionFocusManager actionFocusManager;
 
-	public ActivateSignalPageAction(MessageSourceAccessor messageSource, ActionFocusManager actionFocusManager, SignalPageFocusSelector signalPageFocusSelector) {
-		super(messageSource, signalPageFocusSelector);
+	public  ActivateSignalPageAction( ActionFocusManager actionFocusManager, SignalPageFocusSelector signalPageFocusSelector) {
+		super( signalPageFocusSelector);
 		this.actionFocusManager = actionFocusManager;
 		setText("action.activateSignalPage");
 		setIconPath("org/signalml/app/icon/activate.png");
@@ -57,7 +56,9 @@ public class ActivateSignalPageAction extends AbstractFocusableSignalMLAction<Si
 	}
 
 	public void setEnabledAsNeeded() {
-		setEnabled(getActionFocusSelector().getSignalPage() >= 0);
+		SignalPageFocusSelector x = getActionFocusSelector();
+		if (x != null)
+			setEnabled(x.getSignalPage() >= 0);
 	}
 
 }

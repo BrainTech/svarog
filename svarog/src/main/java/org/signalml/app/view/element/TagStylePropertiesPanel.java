@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -45,7 +46,7 @@ import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 
@@ -75,11 +76,6 @@ public class TagStylePropertiesPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	public static final String CHANGED_PROPERTY = "changed";
-
-	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
 
 	/**
 	 * the chooser of the color of the outline of a {@link Tag} of the selected
@@ -207,9 +203,8 @@ public class TagStylePropertiesPanel extends JPanel {
 	 * panel.
 	 * @param messageSource the source of messages (labels)
 	 */
-	public TagStylePropertiesPanel(MessageSourceAccessor messageSource) {
+	public  TagStylePropertiesPanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -241,13 +236,13 @@ public class TagStylePropertiesPanel extends JPanel {
 		graphicsPanel.setLayout(new BoxLayout(graphicsPanel, BoxLayout.Y_AXIS));
 
 		JPanel outlinePanel = new JPanel(new BorderLayout());
-		outlinePanel.setBorder(new TitledBorder(messageSource.getMessage("tagStylePalette.outlineTitle")));
+		outlinePanel.setBorder(new TitledBorder(_("Outline style")));
 
 		outlinePanel.add(getOutlineTopPanel(), BorderLayout.NORTH);
 		outlinePanel.add(getOutlineColorPanel(), BorderLayout.CENTER);
 
 		JPanel fillPanel = new JPanel(new BorderLayout());
-		fillPanel.setBorder(new TitledBorder(messageSource.getMessage("tagStylePalette.fillTitle")));
+		fillPanel.setBorder(new TitledBorder(_("Fill style")));
 
 		fillPanel.add(getFillColorPanel(), BorderLayout.CENTER);
 
@@ -351,7 +346,7 @@ public class TagStylePropertiesPanel extends JPanel {
 	 */
 	private TagAttributesDefinitionsEditPanel getTagAttributesDefinitionsEditPanel() {
 		if (tagAttributesDefinitionsEditPanel == null) {
-			tagAttributesDefinitionsEditPanel = new TagAttributesDefinitionsEditPanel(messageSource, this);
+			tagAttributesDefinitionsEditPanel = new TagAttributesDefinitionsEditPanel( this);
 		}
 		return tagAttributesDefinitionsEditPanel;
 	}
@@ -371,7 +366,7 @@ public class TagStylePropertiesPanel extends JPanel {
 	public JPanel getPreviewPanel() {
 		if (previewPanel == null) {
 			previewPanel = new JPanel(getPreviewLayout());
-			previewPanel.setBorder(new TitledBorder(messageSource.getMessage("tagStylePalette.previewTitle")));
+			previewPanel.setBorder(new TitledBorder(_("Preview")));
 			previewPanel.add(getTagRenderer(), "on");
 			previewPanel.add(createNoStyleLabel(), "off");
 		}
@@ -385,7 +380,7 @@ public class TagStylePropertiesPanel extends JPanel {
 	 * selected and the user should create or select a style to proceed.
 	 */
 	private JLabel createNoStyleLabel() {
-		JLabel noStyleLabel = new JLabel(messageSource.getMessage("tagStylePalette.noStyle"));
+		JLabel noStyleLabel = new JLabel(_("Select or add a style"));
 		noStyleLabel.setHorizontalAlignment(JLabel.CENTER);
 		noStyleLabel.setVerticalAlignment(JLabel.CENTER);
 		return noStyleLabel;
@@ -412,8 +407,8 @@ public class TagStylePropertiesPanel extends JPanel {
 			layout.setAutoCreateContainerGaps(false);
 			layout.setAutoCreateGaps(true);
 
-			JLabel widthLabel = new JLabel(messageSource.getMessage("tagStylePalette.width"));
-			JLabel dashLabel = new JLabel(messageSource.getMessage("tagStylePalette.style"));
+			JLabel widthLabel = new JLabel(_("Outline width"));
+			JLabel dashLabel = new JLabel(_("Outline dash style"));
 
 			GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
@@ -467,7 +462,7 @@ public class TagStylePropertiesPanel extends JPanel {
 
 			propertiesPanel = new JPanel();
 			propertiesPanel.setBorder(new CompoundBorder(
-			                                  new TitledBorder(messageSource.getMessage("tagStylePalette.propertiesTitle")),
+			                                  new TitledBorder(_("Properties")),
 			                                  new EmptyBorder(3,3,3,3)
 			                          ));
 
@@ -476,11 +471,11 @@ public class TagStylePropertiesPanel extends JPanel {
 			layout.setAutoCreateContainerGaps(false);
 			layout.setAutoCreateGaps(true);
 
-			JLabel nameLabel = new JLabel(messageSource.getMessage("tagStylePalette.name"));
-			JLabel descriptionLabel = new JLabel(messageSource.getMessage("tagStylePalette.description"));
-			JLabel keyLabel = new JLabel(messageSource.getMessage("tagStylePalette.key"));
-			JLabel markerLabel = new JLabel(messageSource.getMessage("tagStylePalette.marker"));
-			JLabel visibilityLabel = new JLabel(messageSource.getMessage("tagStylePalette.visibility"));
+			JLabel nameLabel = new JLabel(_("Name"));
+			JLabel descriptionLabel = new JLabel(_("Description"));
+			JLabel keyLabel = new JLabel(_("Key"));
+			JLabel markerLabel = new JLabel(_("Marker style"));
+			JLabel visibilityLabel = new JLabel(_("Visible"));
 
 			JPanel keyPanel = new JPanel();
 			keyPanel.setLayout(new BoxLayout(keyPanel, BoxLayout.X_AXIS));

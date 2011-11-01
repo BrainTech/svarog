@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
@@ -18,7 +19,7 @@ import org.signalml.domain.signal.space.SignalSpaceConstraints;
 import org.signalml.domain.signal.space.TimeSpaceType;
 import org.signalml.plugin.export.signal.SignalSelection;
 import org.signalml.plugin.export.signal.TagStyle;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -38,11 +39,6 @@ public class TimeSpacePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	protected static final Logger logger = Logger.getLogger(TimeSpacePanel.class);
-
-	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
 
 	/**
 	 * the tabbed pane with 3 tabs which allow to select the part of the
@@ -77,9 +73,8 @@ public class TimeSpacePanel extends JPanel {
 	 * Constructor. Sets the source of messages and initializes this panel.
 	 * @param messageSource the source of messages
 	 */
-	public TimeSpacePanel(MessageSourceAccessor messageSource) {
+	public  TimeSpacePanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -92,7 +87,7 @@ public class TimeSpacePanel extends JPanel {
 		setLayout(new BorderLayout());
 
 		setBorder(new CompoundBorder(
-		                  new TitledBorder(messageSource.getMessage("signalSpace.timeSpace.title")),
+		                  new TitledBorder(_("Time fragment selection")),
 		                  new EmptyBorder(3,3,3,3)
 		          ));
 
@@ -109,7 +104,7 @@ public class TimeSpacePanel extends JPanel {
 	 */
 	public WholeTimeSpacePanel getWholeTimeSpacePanel() {
 		if (wholeTimeSpacePanel == null) {
-			wholeTimeSpacePanel = new WholeTimeSpacePanel(messageSource);
+			wholeTimeSpacePanel = new WholeTimeSpacePanel();
 		}
 		return wholeTimeSpacePanel;
 	}
@@ -122,7 +117,7 @@ public class TimeSpacePanel extends JPanel {
 	 */
 	public SignalSelectionPanel getSelectedTimeSpacePanel() {
 		if (selectedTimeSpacePanel == null) {
-			selectedTimeSpacePanel = new SignalSelectionPanel(messageSource, false);
+			selectedTimeSpacePanel = new SignalSelectionPanel( false);
 		}
 		return selectedTimeSpacePanel;
 	}
@@ -136,7 +131,7 @@ public class TimeSpacePanel extends JPanel {
 	 */
 	public MarkedTimeSpacePanel getMarkedTimeSpacePanel() {
 		if (markedTimeSpacePanel == null) {
-			markedTimeSpacePanel = new MarkedTimeSpacePanel(messageSource);
+			markedTimeSpacePanel = new MarkedTimeSpacePanel();
 		}
 		return markedTimeSpacePanel;
 	}
@@ -158,9 +153,9 @@ public class TimeSpacePanel extends JPanel {
 		if (tabbedPane == null) {
 			tabbedPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
 
-			tabbedPane.addTab(messageSource.getMessage("signalSpace.timeSpace.wholeSignal"), getWholeTimeSpacePanel());
-			tabbedPane.addTab(messageSource.getMessage("signalSpace.timeSpace.selectedSignal"), getSelectedTimeSpacePanel());
-			tabbedPane.addTab(messageSource.getMessage("signalSpace.timeSpace.markedSignal"), getMarkedTimeSpacePanel());
+			tabbedPane.addTab(_("Whole signal"), getWholeTimeSpacePanel());
+			tabbedPane.addTab(_("Selected"), getSelectedTimeSpacePanel());
+			tabbedPane.addTab(_("Marked"), getMarkedTimeSpacePanel());
 
 		}
 		return tabbedPane;

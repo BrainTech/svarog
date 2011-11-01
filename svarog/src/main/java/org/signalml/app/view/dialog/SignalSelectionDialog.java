@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.dialog;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Window;
 
 import javax.swing.JComponent;
@@ -12,7 +13,7 @@ import org.signalml.app.view.element.SignalSelectionPanel;
 import org.signalml.domain.signal.BoundedSignalSelection;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.SignalSelection;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -21,7 +22,7 @@ import org.springframework.validation.Errors;
  * For more details see - {@link SignalSelectionPanel}.
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class SignalSelectionDialog extends AbstractDialog {
+public class SignalSelectionDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
 
 	private static final long serialVersionUID = 1L;
 
@@ -38,8 +39,8 @@ public class SignalSelectionDialog extends AbstractDialog {
 	 * @param f the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public SignalSelectionDialog(MessageSourceAccessor messageSource, Window f, boolean isModal) {
-		super(messageSource, f, isModal);
+	public  SignalSelectionDialog( Window f, boolean isModal) {
+		super( f, isModal);
 	}
 
 	/**
@@ -48,7 +49,7 @@ public class SignalSelectionDialog extends AbstractDialog {
 	 */
 	@Override
 	protected void initialize() {
-		setTitle(messageSource.getMessage("signalSelection.title"));
+		setTitle(_("Signal selection"));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/preciseselection.png"));
 		setResizable(false);
 		super.initialize();
@@ -61,7 +62,7 @@ public class SignalSelectionDialog extends AbstractDialog {
 	@Override
 	public JComponent createInterface() {
 
-		signalSelectionPanel = new SignalSelectionPanel(messageSource, true);
+		signalSelectionPanel = new SignalSelectionPanel( true);
 
 		return signalSelectionPanel;
 

@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.dialog;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Window;
 import java.io.File;
@@ -34,7 +35,7 @@ import org.signalml.codec.SignalMLCodecSelector;
 import org.signalml.method.mp5.MP5Executor;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Tag;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -58,7 +59,7 @@ import org.springframework.validation.Errors;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class ApplicationPreferencesDialog extends AbstractDialog {
+public class ApplicationPreferencesDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
 
 	private static final long serialVersionUID = 1L;
 
@@ -155,8 +156,8 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 	 * @param f the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public ApplicationPreferencesDialog(MessageSourceAccessor messageSource, SignalMLOperationMode mode, Window f, boolean isModal) {
-		super(messageSource, f, isModal);
+	public  ApplicationPreferencesDialog( SignalMLOperationMode mode, Window f, boolean isModal) {
+		super( f, isModal);
 		this.mode = mode;
 	}
 
@@ -174,7 +175,7 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 	@Override
 	protected void initialize() {
 
-		setTitle(messageSource.getMessage("preferences.title"));
+		setTitle(_("Preferences"));
 
 		super.initialize();
 
@@ -197,14 +198,14 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 
 			};
 
-			registerCodecAction = new RegisterCodecAction(messageSource);
+			registerCodecAction = new RegisterCodecAction();
 			registerCodecAction.setCodecManager(codecManager);
 			registerCodecAction.setRegisterCodecDialog(getRegisterCodecDialog());
 			registerCodecAction.setSelector(selector);
 			registerCodecAction.setPleaseWaitDialog(getPleaseWaitDialog());
 			registerCodecAction.initializeAll();
 
-			removeCodecAction = new RemoveCodecAction(messageSource);
+			removeCodecAction = new RemoveCodecAction();
 			removeCodecAction.setCodecManager(codecManager);
 			removeCodecAction.setSelector(selector);
 
@@ -242,11 +243,11 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
 		tabbedPane.setBorder(new EmptyBorder(3,3,3,3));
 
-		signalViewingConfigPanel = new SignalViewingConfigPanel(messageSource);
-		taggingConfigPanel = new TaggingConfigPanel(messageSource);
-		miscellaneousConfigPanel = new MiscellaneousConfigPanel(messageSource, mode);
-		signalZoomSettingsPanel = new SignalZoomSettingsPanel(messageSource, false);
-                signalRecordingConfigPanel = new SignalRecordingConfigPanel(messageSource);
+		signalViewingConfigPanel = new SignalViewingConfigPanel();
+		taggingConfigPanel = new TaggingConfigPanel();
+		miscellaneousConfigPanel = new MiscellaneousConfigPanel( mode);
+		signalZoomSettingsPanel = new SignalZoomSettingsPanel( false);
+                signalRecordingConfigPanel = new SignalRecordingConfigPanel();
 
 		JPanel signalViewingContainPanel = new JPanel(new BorderLayout());
 		signalViewingContainPanel.add(signalViewingConfigPanel, BorderLayout.NORTH);
@@ -268,17 +269,17 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 		signalRecordingContainPanel.add(signalRecordingConfigPanel, BorderLayout.NORTH);
 		signalRecordingContainPanel.add(Box.createVerticalGlue(), BorderLayout.CENTER);
 
-		tabbedPane.addTab(messageSource.getMessage("preferences.signalViewing"), signalViewingContainPanel);
-		tabbedPane.addTab(messageSource.getMessage("preferences.zoomSettings"), zoomSettingsContainPanel);
-		tabbedPane.addTab(messageSource.getMessage("preferences.tagging"), taggingContainPanel);
-                tabbedPane.addTab(messageSource.getMessage("preferences.signalRecording"), signalRecordingContainPanel);
-		tabbedPane.addTab(messageSource.getMessage("preferences.miscellaneous"), miscellaneousContainPanel);
+		tabbedPane.addTab(_("Signal viewing"), signalViewingContainPanel);
+		tabbedPane.addTab(_("Signal zooming"), zoomSettingsContainPanel);
+		tabbedPane.addTab(_("Tagging"), taggingContainPanel);
+                tabbedPane.addTab(_("Signal recording"), signalRecordingContainPanel);
+		tabbedPane.addTab(_("Miscellaneous"), miscellaneousContainPanel);
 
 		if (mode == SignalMLOperationMode.APPLICATION) {
 
-			codecManagerPanel = new CodecManagerConfigPanel(messageSource);
+			codecManagerPanel = new CodecManagerConfigPanel();
 
-			toolsConfigPanel = new ToolsConfigPanel(messageSource, fileChooser, mp5ExecutorManager);
+			toolsConfigPanel = new ToolsConfigPanel( fileChooser, mp5ExecutorManager);
 			toolsConfigPanel.setMp5LocalExecutorDialog(getMp5LocalExecutorDialog());
 
 			JPanel codecManagerContainPanel = new JPanel(new BorderLayout());
@@ -289,8 +290,8 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 			toolsContainPanel.add(toolsConfigPanel, BorderLayout.NORTH);
 			toolsContainPanel.add(Box.createVerticalGlue(), BorderLayout.CENTER);
 
-			tabbedPane.insertTab(messageSource.getMessage("preferences.tools"), null, toolsContainPanel, null, 3);
-			tabbedPane.insertTab(messageSource.getMessage("preferences.codecs"), null, codecManagerContainPanel, null, 5);
+			tabbedPane.insertTab(_("Tools"), null, toolsContainPanel, null, 3);
+			tabbedPane.insertTab(_("SignalML Codecs"), null, codecManagerContainPanel, null, 5);
 
 		}
 
@@ -456,7 +457,7 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 	 */
 	protected RegisterCodecDialog getRegisterCodecDialog() {
 		if (registerCodecDialog == null) {
-			registerCodecDialog = new RegisterCodecDialog(messageSource,this,true);
+			registerCodecDialog = new RegisterCodecDialog(this,true);
 			registerCodecDialog.setCodecManager(codecManager);
 			registerCodecDialog.setProfileDir(profileDir);
 		}
@@ -489,7 +490,7 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 	 */
 	protected PleaseWaitDialog getPleaseWaitDialog() {
 		if (pleaseWaitDialog == null) {
-			pleaseWaitDialog = new PleaseWaitDialog(messageSource,this);
+			pleaseWaitDialog = new PleaseWaitDialog(this);
 			pleaseWaitDialog.initializeNow();
 		}
 		return pleaseWaitDialog;
@@ -537,7 +538,7 @@ public class ApplicationPreferencesDialog extends AbstractDialog {
 	 */
 	protected MP5LocalExecutorDialog getMp5LocalExecutorDialog() {
 		if (mp5LocalExecutorDialog == null) {
-			mp5LocalExecutorDialog = new MP5LocalExecutorDialog(messageSource,this,true);
+			mp5LocalExecutorDialog = new MP5LocalExecutorDialog(this,true);
 			mp5LocalExecutorDialog.setFileChooser(fileChooser);
 		}
 		return mp5LocalExecutorDialog;

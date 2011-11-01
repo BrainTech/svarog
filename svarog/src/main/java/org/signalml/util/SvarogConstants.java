@@ -32,8 +32,8 @@ public abstract class SvarogConstants {
 	 * Available languages
 	 */
 	public static Locale[] AVAILABLE_LOCALES = new Locale[] {Locale.ENGLISH, new Locale("pl")};
-	
+
 	/** resource bundle base name */
-	public static final String I18nCatalogId = "svarog-i18n";
+	public static final String I18nCatalogId = "org.signalml.app.i18n.I18nBundle";
 
 }

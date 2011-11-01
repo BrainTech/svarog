@@ -12,7 +12,7 @@ import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -34,8 +34,8 @@ public class SignalParametersPanelForRawSignalFile extends AbstractSignalParamet
 	 * messages
 	 * @param applicationConfiguration the current application configuration
 	 */
-	public SignalParametersPanelForRawSignalFile(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  SignalParametersPanelForRawSignalFile() {
+		super();
 
 		setEnabledAll(true);
 		getSamplingFrequencyComboBox().setEditable(true);
@@ -60,7 +60,7 @@ public class SignalParametersPanelForRawSignalFile extends AbstractSignalParamet
 	 */
 	protected ReadXMLManifestAction getReadManifestAction() {
 		if (readManifestAction == null)
-			readManifestAction = new ReadXMLManifestAction(messageSource, this);
+			readManifestAction = new ReadXMLManifestAction( this);
 		return readManifestAction;
 	}
 

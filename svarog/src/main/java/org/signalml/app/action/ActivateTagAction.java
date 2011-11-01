@@ -11,7 +11,6 @@ import org.signalml.app.action.selector.TagFocusSelector;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.view.signal.PositionedTag;
 import org.signalml.app.view.signal.SignalView;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ActivateTagAction
  *
@@ -26,16 +25,16 @@ public class ActivateTagAction extends AbstractFocusableSignalMLAction<TagFocusS
 
 	private ActionFocusManager actionFocusManager;
 
-	public ActivateTagAction(MessageSourceAccessor messageSource, ActionFocusManager actionFocusManager, TagFocusSelector tagFocusSelector) {
-		super(messageSource, tagFocusSelector);
+	public  ActivateTagAction( ActionFocusManager actionFocusManager, TagFocusSelector tagFocusSelector) {
+		super( tagFocusSelector);
 		this.actionFocusManager = actionFocusManager;
 		setText("action.activateTag");
 		setIconPath("org/signalml/app/icon/activate.png");
 		setToolTip("action.activateTagToolTip");
 	}
 
-	public ActivateTagAction(MessageSourceAccessor messageSource, ActionFocusManager actionFocusManager) {
-		this(messageSource, actionFocusManager, actionFocusManager);
+	public  ActivateTagAction( ActionFocusManager actionFocusManager) {
+		this( actionFocusManager, actionFocusManager);
 	}
 
 	@Override

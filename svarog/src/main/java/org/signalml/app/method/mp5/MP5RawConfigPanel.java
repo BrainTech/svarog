@@ -3,6 +3,7 @@
  */
 package org.signalml.app.method.mp5;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -17,7 +18,7 @@ import org.signalml.app.view.element.AnyChangeDocumentAdapter;
 import org.signalml.app.view.element.CompactButton;
 import org.signalml.app.view.element.TextPanePanel;
 import org.signalml.method.mp5.MP5Parameters;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /** MP5RawConfigPanel
@@ -28,8 +29,6 @@ import org.springframework.validation.Errors;
 public class MP5RawConfigPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-
-	private MessageSourceAccessor messageSource;
 	private MP5ExecutorManager executorManager;
 	private AbstractDialog owner;
 
@@ -38,9 +37,8 @@ public class MP5RawConfigPanel extends JPanel {
 
 	private boolean configChanged;
 
-	public MP5RawConfigPanel(MessageSourceAccessor messageSource, MP5ExecutorManager executorManager, AbstractDialog owner) {
+	public  MP5RawConfigPanel( MP5ExecutorManager executorManager, AbstractDialog owner) {
 		super();
-		this.messageSource = messageSource;
 		this.executorManager = executorManager;
 		this.owner = owner;
 		initialize();
@@ -51,9 +49,9 @@ public class MP5RawConfigPanel extends JPanel {
 		setLayout(new BorderLayout());
 
 		JPanel rawConfigPanel = new JPanel(new BorderLayout(3,3));
-		rawConfigPanel.setBorder(new TitledBorder(messageSource.getMessage("mp5Method.dialog.rawConfig")));
+		rawConfigPanel.setBorder(new TitledBorder(_("Raw config (signal input/output/range directives will be added/replaced)")));
 
-		CompactButton rawConfigHelpButton = SwingUtils.createFieldHelpButton(messageSource, owner, MP5MethodDialog.HELP_RAW_CONFIG);
+		CompactButton rawConfigHelpButton = SwingUtils.createFieldHelpButton( owner, MP5MethodDialog.HELP_RAW_CONFIG);
 
 		JPanel rawConfigHelpPanel = new JPanel(new FlowLayout(FlowLayout.TRAILING));
 		rawConfigHelpPanel.add(rawConfigHelpButton);
@@ -85,7 +83,7 @@ public class MP5RawConfigPanel extends JPanel {
 
 	public MP5ExecutorPanel getExecutorPanel() {
 		if (executorPanel == null) {
-			executorPanel = new MP5ExecutorPanel(messageSource, executorManager);
+			executorPanel = new MP5ExecutorPanel( executorManager);
 		}
 		return executorPanel;
 	}

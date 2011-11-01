@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.NoSuchMessageException;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Tests {@link BluetoothDeviceDiscoverer}.
@@ -50,9 +49,7 @@ public class BluetoothDeviceDiscovererTest implements PropertyChangeListener {
                         }
                 };
 
-                MessageSourceAccessor messageSourceAccessor = new MessageSourceAccessor(messageSource);
-
-                discoverer = new BluetoothDeviceDiscoverer(messageSourceAccessor);
+                discoverer = new BluetoothDeviceDiscoverer();
                 discoverer.addPropertyChangeListener(this);
 
                 synchronized (lock) {

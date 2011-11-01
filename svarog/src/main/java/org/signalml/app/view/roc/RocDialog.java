@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.roc;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -39,17 +40,15 @@ import org.signalml.app.model.TableToTextExporter;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.ViewerPropertySheet;
-import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.domain.roc.RocData;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** RocDialog
  *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class RocDialog extends AbstractDialog {
+public class RocDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
 
 	private static final int AXIS_SPACE_SIZE = 40;
 
@@ -78,17 +77,17 @@ public class RocDialog extends AbstractDialog {
 
 	private RocData rocData;
 
-	public RocDialog(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  RocDialog() {
+		super();
 	}
 
-	public RocDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public  RocDialog( Window w, boolean isModal) {
+		super( w, isModal);
 	}
 
 	@Override
 	protected void initialize() {
-		setTitle(messageSource.getMessage("roc.title"));
+		setTitle(_("Roc result"));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/roc.png"));
 		setResizable(false);
 		super.initialize();
@@ -101,7 +100,7 @@ public class RocDialog extends AbstractDialog {
 
 		JPanel chartContainPanel = new JPanel(new BorderLayout());
 		chartContainPanel.setBorder(new CompoundBorder(
-		                                    new TitledBorder(messageSource.getMessage("roc.chartTitle")),
+		                                    new TitledBorder(_("Roc curve chart")),
 		                                    new EmptyBorder(3,3,3,3)
 		                            ));
 
@@ -109,7 +108,7 @@ public class RocDialog extends AbstractDialog {
 
 		JPanel tablePanel = new JPanel(new BorderLayout());
 		tablePanel.setBorder(new CompoundBorder(
-		                             new TitledBorder(messageSource.getMessage("roc.tableTitle")),
+		                             new TitledBorder(_("Roc parameters")),
 		                             new EmptyBorder(3,3,3,3)
 		                     ));
 
@@ -127,7 +126,7 @@ public class RocDialog extends AbstractDialog {
 
 		JPanel rocDataPropertyPanel = new JPanel(new BorderLayout());
 		rocDataPropertyPanel.setBorder(new CompoundBorder(
-		                                       new TitledBorder(messageSource.getMessage("roc.rocDataProperties")),
+		                                       new TitledBorder(_("Roc properties")),
 		                                       new EmptyBorder(3,3,3,3)
 		                               ));
 		JScrollPane rocDataPropertySheetScrollPane = new JScrollPane(getRocDataPropertySheet());
@@ -136,7 +135,7 @@ public class RocDialog extends AbstractDialog {
 
 		JPanel rocDataPointPropertyPanel = new JPanel(new BorderLayout());
 		rocDataPointPropertyPanel.setBorder(new CompoundBorder(
-		                new TitledBorder(messageSource.getMessage("roc.rocDataPointProperties")),
+		                new TitledBorder(_("Roc point properties")),
 		                new EmptyBorder(3,3,3,3)
 		                                    ));
 		JScrollPane rocDataPointPropertySheetScrollPane = new JScrollPane(getRocDataPointPropertySheet());
@@ -179,13 +178,13 @@ public class RocDialog extends AbstractDialog {
 			xAxis.setAutoRange(false);
 			xAxis.setRange(0,1);
 			xAxis.setTickUnit(new NumberTickUnit(0.2));
-			xAxis.setLabel(messageSource.getMessage("roc.falsePositiveRate"));
+			xAxis.setLabel(_("False positive rate"));
 
 			NumberAxis yAxis = new NumberAxis();
 			yAxis.setAutoRange(false);
 			yAxis.setRange(0,1);
 			yAxis.setTickUnit(new NumberTickUnit(0.2));
-			yAxis.setLabel(messageSource.getMessage("roc.truePositiveRate"));
+			yAxis.setLabel(_("True positive rate"));
 
 			rocPlot = new XYPlot(null, xAxis, yAxis, getPlotRenderer());
 			AxisSpace axisSpace = new AxisSpace();
@@ -228,14 +227,14 @@ public class RocDialog extends AbstractDialog {
 
 	public RocTableModel getRocTableModel() {
 		if (rocTableModel == null) {
-			rocTableModel = new RocTableModel(messageSource);
+			rocTableModel = new RocTableModel();
 		}
 		return rocTableModel;
 	}
 
 	public RocTable getRocTable() {
 		if (rocTable == null) {
-			rocTable = new RocTable(getRocTableModel(), messageSource);
+			rocTable = new RocTable(getRocTableModel());
 			rocTable.setTableToTextExporter(tableToTextExporter);
 			rocTable.setFileChooser(fileChooser);
 
@@ -263,8 +262,8 @@ public class RocDialog extends AbstractDialog {
 	public JPopupMenu getChartPopupMenu() {
 		if (chartPopupMenu == null) {
 			chartPopupMenu = new JPopupMenu();
-			chartPopupMenu.add(new JMenuItem(new ExportRocChartToClipboardAction(messageSource)));
-			chartPopupMenu.add(new JMenuItem(new ExportRocChartToFileAction(messageSource)));
+			chartPopupMenu.add(new JMenuItem(new ExportRocChartToClipboardAction()));
+			chartPopupMenu.add(new JMenuItem(new ExportRocChartToFileAction()));
 		}
 		return chartPopupMenu;
 	}
@@ -272,7 +271,6 @@ public class RocDialog extends AbstractDialog {
 	public PropertySheetModel getRocDataPropertySheetModel() {
 		if (rocDataPropertySheetModel == null) {
 			rocDataPropertySheetModel = new PropertySheetModel();
-			rocDataPropertySheetModel.setMessageSource(messageSource);
 			rocDataPropertySheetModel.setNumberFormat(new DecimalFormat("0.###"));
 		}
 		return rocDataPropertySheetModel;
@@ -281,7 +279,6 @@ public class RocDialog extends AbstractDialog {
 	public PropertySheetModel getRocDataPointPropertySheetModel() {
 		if (rocDataPointPropertySheetModel == null) {
 			rocDataPointPropertySheetModel = new PropertySheetModel();
-			rocDataPointPropertySheetModel.setMessageSource(messageSource);
 			rocDataPointPropertySheetModel.setNumberFormat(new DecimalFormat("0.###"));
 		}
 		return rocDataPointPropertySheetModel;
@@ -368,8 +365,8 @@ public class RocDialog extends AbstractDialog {
 
 		private static final long serialVersionUID = 1L;
 
-		private ExportRocChartToFileAction(MessageSourceAccessor messageSource) {
-			super(messageSource);
+		private ExportRocChartToFileAction() {
+			super();
 			setFileChooser(fileChooser);
 			setOptionPaneParent(RocDialog.this);
 		}
@@ -390,8 +387,8 @@ public class RocDialog extends AbstractDialog {
 
 		private static final long serialVersionUID = 1L;
 
-		private ExportRocChartToClipboardAction(MessageSourceAccessor messageSource) {
-			super(messageSource);
+		private ExportRocChartToClipboardAction() {
+			super();
 		}
 
 		@Override

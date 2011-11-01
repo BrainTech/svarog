@@ -14,7 +14,6 @@ import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
 import org.signalml.plugin.impl.change.ChangeSupportImpl;
 import org.signalml.plugin.loader.PluginHead;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Implementation of {@link SvarogAccess} interface.
@@ -198,14 +197,6 @@ public class PluginAccessClass implements SvarogAccess {
 		changeSupport.onClose();
 	}
 	
-	/**
-	 * Returns the source of messages.
-	 * @return the source of messages
-	 */
-	public MessageSourceAccessor getMessageSource(){
-		return manager.getMessageSource();
-	}
-
     @Override
     public SvarogAccessMethod getMethodAccess() {
         return methodAccessImpl;

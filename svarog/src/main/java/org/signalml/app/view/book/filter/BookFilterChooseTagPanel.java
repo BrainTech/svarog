@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.book.filter;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -21,7 +22,7 @@ import javax.swing.border.TitledBorder;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.domain.book.filter.TagBasedAtomFilter;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /** BookFilterChooseTagPanel
@@ -33,8 +34,6 @@ public class BookFilterChooseTagPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	private MessageSourceAccessor messageSource;
-
 	private JTextField tagTextField;
 	private JButton chooseTagButton;
 
@@ -42,9 +41,8 @@ public class BookFilterChooseTagPanel extends JPanel {
 
 	private File tagFile;
 
-	public BookFilterChooseTagPanel(MessageSourceAccessor messageSource, ViewerFileChooser fileChooser) {
+	public  BookFilterChooseTagPanel( ViewerFileChooser fileChooser) {
 		super();
-		this.messageSource = messageSource;
 		this.fileChooser = fileChooser;
 		initialize();
 	}
@@ -52,7 +50,7 @@ public class BookFilterChooseTagPanel extends JPanel {
 	private void initialize() {
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("tagBasedFilter.chooseTagFileTitle")),
+		        new TitledBorder(_("Choose tag file")),
 		        new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);
@@ -62,7 +60,7 @@ public class BookFilterChooseTagPanel extends JPanel {
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
-		JLabel tagFileLabel = new JLabel(messageSource.getMessage("tagBasedFilter.tagFile"));
+		JLabel tagFileLabel = new JLabel(_("Tag file"));
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
@@ -165,9 +163,9 @@ public class BookFilterChooseTagPanel extends JPanel {
 		private static final long serialVersionUID = 1L;
 
 		public ChooseTagFileAction() {
-			super(messageSource.getMessage("tagBasedFilter.chooseTagFile"));
+			super(_("Choose..."));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/find.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("tagBasedFilter.chooseTagFileToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Choose the tag file to filter by"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {

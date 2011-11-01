@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -46,7 +47,6 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.SignalSelection;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ExportSignalAction
  *
@@ -66,8 +66,8 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 
 	private RawSignalDescriptorWriter descriptorWriter;
 
-	public ExportSignalAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
-		super(messageSource, signalDocumentFocusSelector);
+	public  ExportSignalAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
+		super( signalDocumentFocusSelector);
 		setText("action.exportSignal");
 		setToolTip("action.exportSignalToolTip");
 	}
@@ -234,7 +234,7 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 
 			scanWorker.execute();
 
-			pleaseWaitDialog.setActivity(messageSource.getMessage("activity.scanningSignal"));
+			pleaseWaitDialog.setActivity(_("scanning signal"));
 			pleaseWaitDialog.configureForDeterminate(0, SampleSourceUtils.getMaxSampleCount(sampleSource), 0);
 			pleaseWaitDialog.waitAndShowDialogIn(optionPaneParent, 500, scanWorker);
 
@@ -300,7 +300,7 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 
 		worker.execute();
 
-		pleaseWaitDialog.setActivity(messageSource.getMessage("activity.exportingSignal"));
+		pleaseWaitDialog.setActivity(_("exporting signal"));
 		pleaseWaitDialog.configureForDeterminate(0, minSampleCount, 0);
 		pleaseWaitDialog.waitAndShowDialogIn(optionPaneParent, 500, worker);
 
@@ -411,7 +411,9 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 
 	@Override
 	public void setEnabledAsNeeded() {
-		setEnabled(getActionFocusSelector().getActiveSignalDocument() != null);
+		SignalDocumentFocusSelector x = getActionFocusSelector();
+		if (null != x)
+			setEnabled(x.getActiveSignalDocument() != null);
 	}
 
 	public ExportSignalDialog getExportSignalDialog() {

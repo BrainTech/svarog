@@ -11,7 +11,6 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import org.signalml.domain.montage.Channel;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Cell renderer for tables with signal channel, which displays the
@@ -27,11 +26,6 @@ public class ChannelTableCellRenderer extends DefaultTableCellRenderer {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
-
-	/**
 	 * Returns the label obtained from
 	 * {@link DefaultTableCellRenderer#getTableCellRendererComponent(JTable, Object, boolean, boolean, int, int)
 	 * super method} with the function of the channel.
@@ -39,24 +33,15 @@ public class ChannelTableCellRenderer extends DefaultTableCellRenderer {
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 		JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-		label.setText(messageSource.getMessage((Channel) value));
+		label.setText(getSvarogI18n().getMessage((Channel) value));
 		return label;
 	}
 
 	/**
-	 * Returns the source of messages (labels).
-	 * @return the source of messages (labels)
+	 * Returns the {@link SvarogAccessI18nImpl} instance.
+	 * @return the {@link SvarogAccessI18nImpl} singleton instance
 	 */
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
+	protected org.signalml.app.SvarogI18n getSvarogI18n() {
+		return org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance();
 	}
-
-	/**
-	 * Sets the source of messages (labels).
-	 * @param messageSource the source of messages (labels)
-	 */
-	public void setMessageSource(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
-	}
-
 }

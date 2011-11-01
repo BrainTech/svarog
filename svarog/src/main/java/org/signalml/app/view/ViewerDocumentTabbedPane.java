@@ -29,7 +29,6 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.view.DocumentView;
 import org.springframework.context.MessageSourceResolvable;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ViewerDocumentTabbedPane
  *
@@ -45,7 +44,6 @@ public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentMan
 	 * than this will be shortened.
 	 */
 	private static int MAXIMUM_TAB_TITLE_LENGTH = 35;
-	private MessageSourceAccessor messageSource;
 	private ActionFocusManager actionFocusManager;
 	private View view;
 
@@ -106,7 +104,7 @@ public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentMan
 
 		String documentName = null;
 		if (document instanceof MessageSourceResolvable) {
-			documentName = messageSource.getMessage((MessageSourceResolvable) document);
+			documentName = getSvarogI18n().getMessage((MessageSourceResolvable) document);
 		} else {
 			documentName = document.toString();
 		}
@@ -212,14 +210,6 @@ public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentMan
 		return dv.getDocument();
 	}
 
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
-	}
-
-	public void setMessageSource(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
-	}
-
 	public ActionFocusManager getActionFocusManager() {
 		return actionFocusManager;
 	}
@@ -280,5 +270,13 @@ public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentMan
 			setSelectedIndex(index);
 
 		}
+	}
+
+	/**
+	 * Returns the {@link SvarogAccessI18nImpl} instance.
+	 * @return the {@link SvarogAccessI18nImpl} singleton instance
+	 */
+	protected org.signalml.app.SvarogI18n getSvarogI18n() {
+		return org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance();
 	}
 }

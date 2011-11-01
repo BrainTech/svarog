@@ -1,5 +1,6 @@
 package org.signalml.app.worker;
 
+import static org.signalml.app.SvarogApplication._;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -16,7 +17,6 @@ import multiplexer.protocol.Protocol.MultiplexerMessage;
 import org.apache.log4j.Logger;
 import org.jboss.netty.channel.ChannelFuture;
 import org.signalml.app.view.dialog.OpenMonitorDialog;
-import org.springframework.context.support.MessageSourceAccessor;
 
 import com.google.protobuf.ByteString;
 
@@ -28,18 +28,15 @@ public class MultiplexerConnectionTestWorker extends SwingWorker< WorkerResult, 
         public static final String CONNECTION_TEST_RESULT = "connectionTestResult";
 
 	protected static final Logger logger = Logger.getLogger( MultiplexerConnectionTestWorker.class);
-
-	private MessageSourceAccessor messageSource;
 	private int timeoutMilis = OpenMonitorDialog.TIMEOUT_MILIS;
 	private int tryoutCount = OpenMonitorDialog.TRYOUT_COUNT;
 	private Integer testState = tryoutCount;
 	private JmxClient client;
 
-	public MultiplexerConnectionTestWorker( MessageSourceAccessor messageSource,
+	public  MultiplexerConnectionTestWorker(
 									JmxClient client,
 									Integer timeoutMilis, 
 									Integer tryoutCount) {
-		this.messageSource = messageSource;
 		this.client = client;
 		if (timeoutMilis != null)
 			this.timeoutMilis = timeoutMilis.intValue();
@@ -68,23 +65,20 @@ public class MultiplexerConnectionTestWorker extends SwingWorker< WorkerResult, 
 				logger.info("sending failed!");
 				return new WorkerResult( 
 						Boolean.FALSE, 
-						messageSource.getMessage( 
-								"action.openMonitor.testMultiplexerConnection.sendingFailedMsg"));
+						_("Sending failed!"));
 			}
 		}
 		catch (NoPeerForTypeException e) {
 			logger.error("sending failed! " + e.getMessage());
 			return new WorkerResult( 
 					Boolean.FALSE, 
-					messageSource.getMessage( 
-							"action.openMonitor.testMultiplexerConnection.sendingFailedMsg") + "; " + e.getMessage());
+					_("Sending failed!") + "; " + e.getMessage());
 		} 
 		catch (InterruptedException e) {
 			logger.error("sending failed! " + e.getMessage());
 			return new WorkerResult( 
 					Boolean.FALSE, 
-					messageSource.getMessage( 
-							"action.openMonitor.testMultiplexerConnection.sendingFailedMsg") + "; " + e.getMessage());
+					_("Sending failed!") + "; " + e.getMessage());
 		}
 
 		while (!isCancelled() && i < tryoutCount) {
@@ -102,29 +96,25 @@ public class MultiplexerConnectionTestWorker extends SwingWorker< WorkerResult, 
 						logger.error("received bad reply! " + reply.getMessage());
 						return new WorkerResult( 
 								Boolean.TRUE, 
-								messageSource.getMessage( 
-										"action.openMonitor.testMultiplexerConnection.receivedBadReplyMsg") + "; " + reply.getMessage());
+								_("Received bad reply!") + "; " + reply.getMessage());
 										}*/
 					return new WorkerResult( 
 							Boolean.TRUE, 
-							messageSource.getMessage( 
-									"action.openMonitor.testMultiplexerConnection.connectionOkMsg"));
+							_("Connection ok!"));
 				}
 			} 
 			catch (InterruptedException e) {
 				logger.error("receiveing failed! " + e.getMessage());
 				return new WorkerResult(
 						Boolean.FALSE, 
-						messageSource.getMessage( 
-								"action.openMonitor.testMultiplexerConnection.receivingFailedMsg") + "; " + e.getMessage());
+						_("Receiving failed!") + "; " + e.getMessage());
 			}
 		}
 
 		logger.info("receive timed out!");
 		return new WorkerResult( 
 				Boolean.FALSE,
-				messageSource.getMessage( 
-						"action.openMonitor.testMultiplexerConnection.receiveTimedout") + "; ");
+				_("Receive timed out!") + "; ");
 	}
 
 	@Override

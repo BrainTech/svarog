@@ -20,7 +20,6 @@ import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.element.CenteringTableCellRenderer;
 import org.signalml.app.view.tag.TagIconProducer;
 import org.signalml.plugin.export.signal.TagStyle;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** TagStatisticTable
  *
@@ -39,19 +38,16 @@ public class TagStatisticTable extends JTable {
 	private TagIconProducer tagIconProducer;
 	private TableToTextExporter tableToTextExporter;
 	private ViewerFileChooser fileChooser;
-
-	private MessageSourceAccessor messageSource;
 	private JPopupMenu popupMenu;
 
-	public TagStatisticTable(TagStatisticTableModel model, MessageSourceAccessor messageSource) {
+	public TagStatisticTable(TagStatisticTableModel model) {
 
 		super(model);
-		this.messageSource = messageSource;
 
 		setTableHeader(null);
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		setDefaultRenderer(String.class, new CenteringTableCellRenderer());
-		tagStyleTableCellRenderer = new TagStyleTableCellRenderer(messageSource);
+		tagStyleTableCellRenderer = new TagStyleTableCellRenderer();
 		setDefaultRenderer(TagStyle.class, tagStyleTableCellRenderer);
 		setCellSelectionEnabled(true);
 
@@ -112,8 +108,8 @@ public class TagStatisticTable extends JTable {
 	public JPopupMenu getComponentPopupMenu() {
 		if (popupMenu == null) {
 			popupMenu = new JPopupMenu();
-			popupMenu.add(new ExportStatisticToClipboardAction(messageSource, tableToTextExporter));
-			popupMenu.add(new ExportStatisticToFileAction(messageSource, tableToTextExporter));
+			popupMenu.add(new ExportStatisticToClipboardAction( tableToTextExporter));
+			popupMenu.add(new ExportStatisticToFileAction( tableToTextExporter));
 		}
 		return popupMenu;
 	}
@@ -122,8 +118,8 @@ public class TagStatisticTable extends JTable {
 
 		private static final long serialVersionUID = 1L;
 
-		public ExportStatisticToClipboardAction(MessageSourceAccessor messageSource, TableToTextExporter tableToTextExporter) {
-			super(messageSource, tableToTextExporter);
+		public ExportStatisticToClipboardAction( TableToTextExporter tableToTextExporter) {
+			super( tableToTextExporter);
 		}
 
 		@Override
@@ -141,8 +137,8 @@ public class TagStatisticTable extends JTable {
 
 		private static final long serialVersionUID = 1L;
 
-		private ExportStatisticToFileAction(MessageSourceAccessor messageSource, TableToTextExporter tableToTextExporter) {
-			super(messageSource, tableToTextExporter);
+		private ExportStatisticToFileAction( TableToTextExporter tableToTextExporter) {
+			super( tableToTextExporter);
 			setFileChooser(fileChooser);
 			setOptionPaneParent(TagStatisticTable.this);
 		}

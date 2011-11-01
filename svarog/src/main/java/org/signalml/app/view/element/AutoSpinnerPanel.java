@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ItemEvent;
@@ -19,7 +20,6 @@ import javax.swing.SpinnerNumberModel;
 import org.signalml.util.MinMaxRange;
 import org.signalml.util.MinMaxRangeFloat;
 import org.signalml.util.MinMaxRangeInteger;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Panel with two radio buttons and one spinner.
@@ -41,10 +41,6 @@ public class AutoSpinnerPanel extends JPanel {
 	 */
 	public static final int AUTO_VALUE = -1111;
 
-	/**
-	 * the source of messages (labels)
-	 */
-	protected MessageSourceAccessor messageSource;
 	/**
 	 * {@code true} if this panel should be thinner (60 pixel),
 	 * {@code false} otherwise (150 pixel)
@@ -85,9 +81,8 @@ public class AutoSpinnerPanel extends JPanel {
 	 * @param compact @code true} if this panel should be thinner (60 pixel),
 	 * {@code false} otherwise (150 pixel)
 	 */
-	protected AutoSpinnerPanel(MessageSourceAccessor messageSource, boolean compact) {
+	protected  AutoSpinnerPanel( boolean compact) {
 		super();
-		this.messageSource = messageSource;
 		this.compact = compact;
 	}
 
@@ -103,8 +98,8 @@ public class AutoSpinnerPanel extends JPanel {
 	 * @param compact @code true} if this panel should be thinner (60 pixel),
 	 * {@code false} otherwise (150 pixel)
 	 */
-	public AutoSpinnerPanel(MessageSourceAccessor messageSource, double value, double min, double max, double step, boolean compact) {
-		this(messageSource, compact);
+	public  AutoSpinnerPanel( double value, double min, double max, double step, boolean compact) {
+		this( compact);
 		spinner = new JSpinner(new SpinnerNumberModel(value, min, max, step));
 
 		commonInit(value, min, max, step);
@@ -122,8 +117,8 @@ public class AutoSpinnerPanel extends JPanel {
 	 * @param compact @code true} if this panel should be thinner (60 pixel),
 	 * {@code false} otherwise (150 pixel)
 	 */
-	public AutoSpinnerPanel(MessageSourceAccessor messageSource, float value, float min, float max, float step, boolean compact) {
-		this(messageSource, compact);
+	public  AutoSpinnerPanel( float value, float min, float max, float step, boolean compact) {
+		this( compact);
 		spinner = new JSpinner(new SpinnerNumberModel((double) value, (double) min, (double) max, (double) step));
 
 		commonInit(value, min, max, step);
@@ -141,8 +136,8 @@ public class AutoSpinnerPanel extends JPanel {
 	 * @param compact @code true} if this panel should be thinner (60 pixel),
 	 * {@code false} otherwise (150 pixel)
 	 */
-	public AutoSpinnerPanel(MessageSourceAccessor messageSource, int value, int min, int max, int step, boolean compact) {
-		this(messageSource, compact);
+	public  AutoSpinnerPanel( int value, int min, int max, int step, boolean compact) {
+		this( compact);
 		spinner = new JSpinner(new SpinnerNumberModel(value, min, max, step));
 
 		commonInit(value, min, max, step);
@@ -183,9 +178,9 @@ public class AutoSpinnerPanel extends JPanel {
 
 		spinnerRadio = new JRadioButton();
 		if (compact) {
-			autoRadio = new JRadioButton(messageSource.getMessage("unlimitedSpinnerPanel.unlimitedCompact"));
+			autoRadio = new JRadioButton(_("un."));
 		} else {
-			autoRadio = new JRadioButton(messageSource.getMessage("unlimitedSpinnerPanel.auto"));
+			autoRadio = new JRadioButton(_("auto"));
 		}
 		autoRadio.setFont(autoRadio.getFont().deriveFont(Font.PLAIN, 10));
 

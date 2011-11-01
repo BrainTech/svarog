@@ -3,6 +3,7 @@
  */
 package org.signalml.plugin.impl;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Window;
 import java.io.File;
 import java.io.IOException;
@@ -902,7 +903,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 		SegmentedSampleSourceFactory factory = SegmentedSampleSourceFactory.getSharedInstance();
 		MultichannelSampleSource sampleSource = factory.getContinuousSampleSource(signalChain, signalSpace, descriptor.getTagSet(), descriptor.getPageSize(), descriptor.getBlockSize());
 		
-		PleaseWaitDialog pleaseWaitDialog = new PleaseWaitDialog(getViewerElementManager().getMessageSource(), getViewerElementManager().getDialogParent());
+		PleaseWaitDialog pleaseWaitDialog = new PleaseWaitDialog(getViewerElementManager().getDialogParent());
 		pleaseWaitDialog.initializeNow();
 		
 		if (rawSignalSampleType == RawSignalSampleType.INT || rawSignalSampleType == RawSignalSampleType.SHORT) {
@@ -911,7 +912,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 
 			scanWorker.execute();
 
-			pleaseWaitDialog.setActivity(getViewerElementManager().getMessageSource().getMessage("activity.scanningSignal"));
+			pleaseWaitDialog.setActivity(_("scanning signal"));
 			pleaseWaitDialog.configureForDeterminate(0, SampleSourceUtils.getMaxSampleCount(sampleSource), 0);
 			pleaseWaitDialog.waitAndShowDialogIn(getViewerElementManager().getDialogParent(), 500, scanWorker);
 
@@ -967,7 +968,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 
 		worker.execute();
 
-		pleaseWaitDialog.setActivity(getViewerElementManager().getMessageSource().getMessage("activity.exportingSignal"));
+		pleaseWaitDialog.setActivity(_("exporting signal"));
 		pleaseWaitDialog.configureForDeterminate(0, minSampleCount, 0);
 		pleaseWaitDialog.waitAndShowDialogIn(getViewerElementManager().getOptionPaneParent(), 500, worker);
 

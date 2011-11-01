@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.dialog;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Point;
@@ -27,7 +28,6 @@ import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.model.SeriousWarningDescriptor;
 import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * The dialog which displays the warnings that were considered 'serious'.
@@ -36,7 +36,7 @@ import org.springframework.context.support.MessageSourceAccessor;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class SeriousWarningDialog extends AbstractDialog {
+public class SeriousWarningDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
 
 	private static final long serialVersionUID = 1L;
 
@@ -68,8 +68,8 @@ public class SeriousWarningDialog extends AbstractDialog {
 	 * Constructor. Sets the source of messages.
 	 * @param messageSource the source of messages
 	 */
-	public SeriousWarningDialog(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  SeriousWarningDialog() {
+		super();
 	}
 
 	/**
@@ -79,8 +79,8 @@ public class SeriousWarningDialog extends AbstractDialog {
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public SeriousWarningDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public  SeriousWarningDialog( Window w, boolean isModal) {
+		super( w, isModal);
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class SeriousWarningDialog extends AbstractDialog {
 	 */
 	@Override
 	protected void initialize() {
-		setTitle(messageSource.getMessage("seriousWarning.title"));
+		setTitle(_("WARNING! Are you sure?"));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/bomb.png"));
 		super.initialize();
 
@@ -142,7 +142,7 @@ public class SeriousWarningDialog extends AbstractDialog {
 
 		JLabel bombLabel = new JLabel(IconUtils.loadClassPathIcon("org/signalml/app/icon/bomblarge.png"));
 
-		JLabel warningLabel = new JLabel(messageSource.getMessage("seriousWarning.warning"));
+		JLabel warningLabel = new JLabel(_("WARNING! You are about to perform an irreversible operation."));
 
 		JPanel labelPanel = new JPanel();
 		labelPanel.setBorder(new EmptyBorder(0,10,0,0));
@@ -181,11 +181,11 @@ public class SeriousWarningDialog extends AbstractDialog {
 	 */
 	private void updateOkAction() {
 		if (currentTimeout > 0) {
-			getOkAction().putValue(AbstractAction.NAME, messageSource.getMessage("seriousWarning.doItTimeout", new Object[] { currentTimeout }));
+			getOkAction().putValue(AbstractAction.NAME, java.text.MessageFormat.format(_("Please reconsider... ({0})"), new Object[] { currentTimeout }));
 			getOkAction().setEnabled(false);
 			timeoutTimer.restart();
 		} else {
-			getOkAction().putValue(AbstractAction.NAME, messageSource.getMessage("seriousWarning.doIt"));
+			getOkAction().putValue(AbstractAction.NAME, _("I am completely sure! Do it!"));
 			getOkAction().setEnabled(true);
 		}
 		getOkButton().paintImmediately(new Rectangle(new Point(0,0), getOkButton().getSize()));

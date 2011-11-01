@@ -10,7 +10,6 @@ import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.TagDocumentFocusSelector;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.view.dialog.EditTagDescriptionDialog;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** EditTagDescriptionAction
  *
@@ -25,8 +24,8 @@ public class EditTagDescriptionAction extends AbstractFocusableSignalMLAction<Ta
 
 	private EditTagDescriptionDialog editTagDescriptionDialog;
 
-	public EditTagDescriptionAction(MessageSourceAccessor messageSource, TagDocumentFocusSelector tagDocumentFocusSelector) {
-		super(messageSource, tagDocumentFocusSelector);
+	public  EditTagDescriptionAction( TagDocumentFocusSelector tagDocumentFocusSelector) {
+		super( tagDocumentFocusSelector);
 		setText("action.editTagDescription");
 		setToolTip("action.editTagDescriptionToolTip");
 		setIconPath("org/signalml/app/icon/edittagdescription.png");

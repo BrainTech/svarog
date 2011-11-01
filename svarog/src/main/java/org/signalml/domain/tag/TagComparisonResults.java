@@ -4,11 +4,10 @@
 
 package org.signalml.domain.tag;
 
+import static org.signalml.app.SvarogApplication._;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.signal.MultichannelSampleSource;
-import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.signal.Tag;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * This class contains {@link TagComparisonResult results} of comparison
@@ -18,11 +17,6 @@ import org.springframework.context.support.MessageSourceAccessor;
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class TagComparisonResults {
-
-	/**
-	 * A message source accessor capable of resolving localized message codes.
-	 */
-	private MessageSourceAccessor messageSource;
 
         /**
          * the {@link TagComparisonResult result} of comparison between page tags
@@ -72,14 +66,6 @@ public class TagComparisonResults {
 		this.totalChannelTimes = new float[channelTagResults.length];
 		this.channelNames = new String[channelTagResults.length];
 
-	}
-
-	/**
-	 * Sets a {@link MessageSourceAccessor} used to create these results.
-	 * @param messageSource {@link MessageSourceAccessor} to be set
-	 */
-	public void setMessageSourceAccessor(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
 	}
 
         /**
@@ -197,7 +183,7 @@ public class TagComparisonResults {
 
         /**
          * Sets the attributes of this TagComparisonResults using given
-         * parameters. (A {@link MessageSourceAccessor} must be set before using
+         * parameters. (A {@link SvarogI18n} must be set before using
 	 * this method).
          * @param source the {@link MultichannelSampleSource source} of samples
          * @param montage the {@link SourceMontage montage} of source channels
@@ -223,11 +209,7 @@ public class TagComparisonResults {
 			channelNames[i] = montage.getSourceChannelLabelAt(i);
 		}
 
-		if (messageSource != null) {
-			channelNames[channelCount] = messageSource.getMessage("tagComparison.multichannelTags");
-		}
-		else
-			throw new SanityCheckException("No messageSource was set for TagComparisonResults!");
+		channelNames[channelCount] = _("MULTICHANNEL TAGS");
 	}
 
 }

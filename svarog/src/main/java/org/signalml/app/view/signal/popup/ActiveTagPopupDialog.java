@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.signal.popup;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Window;
@@ -26,7 +27,6 @@ import org.signalml.app.view.element.TitledCrossBorder;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractPopupDialog;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ActiveTagPopupDialog
  *
@@ -45,8 +45,8 @@ public class ActiveTagPopupDialog extends AbstractPopupDialog implements ActionL
 	private Map<TagDocument,JRadioButton> tagToButtonMap;
 	private Map<ButtonModel,TagDocument> buttonToTagMap;
 
-	public ActiveTagPopupDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public  ActiveTagPopupDialog( Window w, boolean isModal) {
+		super( w, isModal);
 	}
 
 	public SignalView getSignalView() {
@@ -74,7 +74,7 @@ public class ActiveTagPopupDialog extends AbstractPopupDialog implements ActionL
 		interfacePanel.setLayout(new GridLayout(cnt, 1, 3, 3));
 
 		CompoundBorder cb = new CompoundBorder(
-		        new TitledCrossBorder(messageSource.getMessage("activeTag.title"), true),
+		        new TitledCrossBorder(_("Choose active tag"), true),
 		        new EmptyBorder(3,3,3,3)
 		);
 		interfacePanel.setBorder(cb);
@@ -85,9 +85,9 @@ public class ActiveTagPopupDialog extends AbstractPopupDialog implements ActionL
 		for (int i=0; i<cnt; i++) {
 			String message;
 			if (tagDocuments[i].getBackingFile() == null) {
-				message = messageSource.getMessage("activeTag.newTag", new Object[] { tagDocuments[i].getName() });
+				message = java.text.MessageFormat.format(_("New tag {0}"), new Object[] { tagDocuments[i].getName() });
 			} else {
-				message = messageSource.getMessage("activeTag.tag", new Object[] { tagDocuments[i].getName() });
+				message = java.text.MessageFormat.format(_("{0}"), new Object[] { tagDocuments[i].getName() });
 			}
 			button = new JRadioButton(message);
 			buttonGroup.add(button);

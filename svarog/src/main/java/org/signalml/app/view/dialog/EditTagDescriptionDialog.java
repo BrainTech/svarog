@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.dialog;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Dimension;
 import java.awt.Window;
 import java.lang.String;
@@ -18,7 +19,6 @@ import org.signalml.app.view.element.TextPanePanel;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Dialog which allows to specify the description of a {@link TagDocument}.
@@ -32,7 +32,7 @@ import org.springframework.context.support.MessageSourceAccessor;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class EditTagDescriptionDialog extends AbstractDialog {
+public class EditTagDescriptionDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
 
 	private static final long serialVersionUID = 1L;
 
@@ -53,8 +53,8 @@ public class EditTagDescriptionDialog extends AbstractDialog {
 	 * Constructor. Sets the source of messages.
 	 * @param messageSource the source of messages
 	 */
-	public EditTagDescriptionDialog(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  EditTagDescriptionDialog() {
+		super();
 	}
 
 	/**
@@ -64,8 +64,8 @@ public class EditTagDescriptionDialog extends AbstractDialog {
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public EditTagDescriptionDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public  EditTagDescriptionDialog( Window w, boolean isModal) {
+		super( w, isModal);
 	}
 
 	/**
@@ -114,7 +114,7 @@ public class EditTagDescriptionDialog extends AbstractDialog {
 	 */
 	@Override
 	protected void initialize() {
-		setTitle(messageSource.getMessage("tagDescription.title"));
+		setTitle(_("Set tag document description"));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/edittagdescription.png"));
 		super.initialize();
 	}
@@ -131,10 +131,10 @@ public class EditTagDescriptionDialog extends AbstractDialog {
 	@Override
 	public JComponent createInterface() {
 
-		textInfoPanel = new TextPanePanel(messageSource.getMessage("tagDescription.info"));
+		textInfoPanel = new TextPanePanel(_("Tag document description"));
 		textInfoPanel.setPreferredSize(new Dimension(400,200));
 
-		montageInfoPanel = new TextPanePanel(messageSource.getMessage("tagDescription.montageInfo"));
+		montageInfoPanel = new TextPanePanel(_("Montage description"));
 		montageInfoPanel.setPreferredSize(new Dimension(400,200));
 		montageInfoPanel.getTextPane().setEditable(false);
 

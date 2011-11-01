@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -17,7 +18,7 @@ import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.config.ZoomSignalSettings;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -37,11 +38,6 @@ public class SignalZoomSettingsPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	protected static final Logger logger = Logger.getLogger(SignalZoomSettingsPanel.class);
-
-	/**
-	 * the {@link MessageSourceAccessor source} of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
 
 	/**
 	 * the possible zoom factors
@@ -82,15 +78,14 @@ public class SignalZoomSettingsPanel extends JPanel {
 	private boolean hasCloseCross;
 
 	/**
-	 * Constructor. Sets the {@link MessageSourceAccessor message source} and
+	 * Constructor. Sets the {@link SvarogI18n message source} and
 	 * initializes this panel.
 	 * @param messageSource the source of messages (labels)
 	 * @param hasCloseCross {@code true} if the panel should has a cross which
 	 * closes it, {@code false} otherwise
 	 */
-	public SignalZoomSettingsPanel(MessageSourceAccessor messageSource, boolean hasCloseCross) {
+	public  SignalZoomSettingsPanel( boolean hasCloseCross) {
 		super();
-		this.messageSource = messageSource;
 		this.hasCloseCross = hasCloseCross;
 		initialize();
 	}
@@ -115,7 +110,7 @@ public class SignalZoomSettingsPanel extends JPanel {
 		JPanel factorPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 3, 3));
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledCrossBorder(messageSource.getMessage("zoomSettings.factorTitle"), hasCloseCross),
+		        new TitledCrossBorder(_("Zoom factor"), hasCloseCross),
 		        new EmptyBorder(3,3,3,3)
 		);
 		factorPanel.setBorder(border);
@@ -136,7 +131,7 @@ public class SignalZoomSettingsPanel extends JPanel {
 		JPanel sizePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 3, 3));
 
 		border = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("zoomSettings.sizeTitle")),
+		        new TitledBorder(_("Zoom window size")),
 		        new EmptyBorder(3,3,3,3)
 		);
 		sizePanel.setBorder(border);
@@ -154,12 +149,12 @@ public class SignalZoomSettingsPanel extends JPanel {
 		JPanel switchingPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 3, 3));
 
 		border = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("zoomSettings.switchingTitle")),
+		        new TitledBorder(_("Channel switching")),
 		        new EmptyBorder(3,3,3,3)
 		);
 		switchingPanel.setBorder(border);
 
-		channelSwitchingCheckBox = new JCheckBox(messageSource.getMessage("zoomSettings.channelSwitching"));
+		channelSwitchingCheckBox = new JCheckBox(_("Switch channels as mouse moves"));
 		switchingPanel.add(channelSwitchingCheckBox);
 
 		add(factorPanel);

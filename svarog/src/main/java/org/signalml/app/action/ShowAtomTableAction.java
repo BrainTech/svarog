@@ -13,7 +13,6 @@ import org.signalml.app.action.selector.BookDocumentFocusSelector;
 import org.signalml.app.document.BookDocument;
 import org.signalml.app.view.book.AtomTableDialog;
 import org.signalml.app.view.book.BookView;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ShowAtomTableAction
  *
@@ -28,8 +27,8 @@ public class ShowAtomTableAction extends AbstractFocusableSignalMLAction<BookDoc
 
 	private AtomTableDialog atomTableDialog;
 
-	public ShowAtomTableAction(MessageSourceAccessor messageSource, BookDocumentFocusSelector bookDocumentFocusSelector) {
-		super(messageSource, bookDocumentFocusSelector);
+	public  ShowAtomTableAction( BookDocumentFocusSelector bookDocumentFocusSelector) {
+		super( bookDocumentFocusSelector);
 		setText("action.showAtomTable");
 		setIconPath("org/signalml/app/icon/atomtable.png");
 		setToolTip("action.showAtomTableToolTip");

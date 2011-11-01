@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -25,7 +26,7 @@ import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 
@@ -44,11 +45,6 @@ import org.springframework.validation.Errors;
 public class RawSignalOptionsPanel extends JPanel implements FocusListener {
 
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * the {@link MessageSourceAccessor source} of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
 
 	/**
 	 * the text field with the number of samples per second of the signal
@@ -113,9 +109,8 @@ public class RawSignalOptionsPanel extends JPanel implements FocusListener {
 	 */
 	private boolean wasCalibrationOffsetFocused = false;
 
-	public RawSignalOptionsPanel(MessageSourceAccessor messageSource) {
+	public  RawSignalOptionsPanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -132,7 +127,7 @@ public class RawSignalOptionsPanel extends JPanel implements FocusListener {
 		setLayout(new BorderLayout());
 
 		CompoundBorder cb = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("openSignal.options.raw.title")),
+		        new TitledBorder(_("Raw signal options")),
 		        new EmptyBorder(3,3,3,3)
 		);
 
@@ -209,7 +204,7 @@ public class RawSignalOptionsPanel extends JPanel implements FocusListener {
 	 */
 	public ResolvableComboBox getSampleTypeComboBox() {
 		if (sampleTypeComboBox == null) {
-			sampleTypeComboBox = new ResolvableComboBox(messageSource);
+			sampleTypeComboBox = new ResolvableComboBox();
 			sampleTypeComboBox.setModel(new DefaultComboBoxModel(RawSignalSampleType.values()));
 			sampleTypeComboBox.setPreferredSize(new Dimension(80,25));
 		}
@@ -225,7 +220,7 @@ public class RawSignalOptionsPanel extends JPanel implements FocusListener {
 	 */
 	public ResolvableComboBox getByteOrderComboBox() {
 		if (byteOrderComboBox == null) {
-			byteOrderComboBox = new ResolvableComboBox(messageSource);
+			byteOrderComboBox = new ResolvableComboBox();
 			byteOrderComboBox.setModel(new DefaultComboBoxModel(RawSignalByteOrder.values()));
 			byteOrderComboBox.setPreferredSize(new Dimension(80,25));
 		}
@@ -294,12 +289,12 @@ public class RawSignalOptionsPanel extends JPanel implements FocusListener {
 			layout.setAutoCreateContainerGaps(false);
 			layout.setAutoCreateGaps(true);
 
-			JLabel samplingFrequencyLabel = new JLabel(messageSource.getMessage("openSignal.options.raw.samplingFrequency"));
-			JLabel channelCountLabel = new JLabel(messageSource.getMessage("openSignal.options.raw.channelCount"));
-			JLabel sampleTypeLabel = new JLabel(messageSource.getMessage("openSignal.options.raw.sampleType"));
-			JLabel byteOrderLabel = new JLabel(messageSource.getMessage("openSignal.options.raw.byteOrder"));
-			JLabel calibrationGainLabel = new JLabel(messageSource.getMessage("openSignal.options.raw.calibrationGain"));
-			JLabel calibrationOffsetLabel = new JLabel(messageSource.getMessage("openSignal.options.raw.calibrationOffset"));
+			JLabel samplingFrequencyLabel = new JLabel(_("Sampling Frequency (Hz)"));
+			JLabel channelCountLabel = new JLabel(_("Number of channels"));
+			JLabel sampleTypeLabel = new JLabel(_("Sample type"));
+			JLabel byteOrderLabel = new JLabel(_("Byte order"));
+			JLabel calibrationGainLabel = new JLabel(_("Calibration gain"));
+			JLabel calibrationOffsetLabel = new JLabel(_("Calibration offset"));
 
 			GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 

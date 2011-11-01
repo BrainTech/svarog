@@ -6,7 +6,6 @@ package org.signalml.app.view.element;
 
 import java.awt.Font;
 
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * {@link ResolvableComboBox} with the plain font of size 10 and without border.
@@ -20,12 +19,12 @@ public class ChannelComboBox extends ResolvableComboBox {
 	/**
 	 * Constructor.
 	 * Calls the {@link ResolvableComboBox#ResolvableComboBox(
-	 * MessageSourceAccessor) constructor} in {@link ResolvableComboBox parent},
+	 * SvarogI18n) constructor} in {@link ResolvableComboBox parent},
 	 * sets the font and that there should be no border.
 	 * @param messageSource the source of messages (labels)
 	 */
-	public ChannelComboBox(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  ChannelComboBox() {
+		super();
 
 		setFont(getFont().deriveFont(Font.PLAIN, 10));
 		setBorder(null);

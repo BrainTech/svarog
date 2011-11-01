@@ -10,7 +10,7 @@ import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.domain.tag.EEGLabTagExporter;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
+
 /**
  * Export to EEGLab Action
  * @author Maciej Pawlisz, Titanis
@@ -21,8 +21,8 @@ public class ExportEEGLabTagAction extends ExportTagAction {
 	private static final long serialVersionUID = 1L;
 
 	protected static final Logger logger = Logger.getLogger(ExportEEGLabTagAction.class);
-	public ExportEEGLabTagAction(MessageSourceAccessor messageSource, TagDocumentFocusSelector tagDocumentFocusSelector) {
-		super(messageSource, tagDocumentFocusSelector);
+	public  ExportEEGLabTagAction( TagDocumentFocusSelector tagDocumentFocusSelector) {
+		super( tagDocumentFocusSelector);
 		setText("action.exportEEGLabTag");
 		setToolTip("action.exportEEGLabTagToolTip");
 	}

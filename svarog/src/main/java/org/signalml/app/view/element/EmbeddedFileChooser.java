@@ -15,7 +15,7 @@ import javax.swing.plaf.FileChooserUI;
 import javax.swing.plaf.basic.BasicFileChooserUI;
 
 import org.signalml.app.config.ApplicationConfiguration;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -65,9 +65,9 @@ public class EmbeddedFileChooser extends JFileChooser {
      * user's home directory on Unix.
      * @param messageSource an object capable of resolving localized messages
      */
-	public EmbeddedFileChooser(MessageSourceAccessor messageSource, ApplicationConfiguration applicationConfiguration) {
+	public  EmbeddedFileChooser( ApplicationConfiguration applicationConfiguration) {
 		super();
-		EmbeddedFileChooserFavorites f = new EmbeddedFileChooserFavorites(this, messageSource, applicationConfiguration);
+		EmbeddedFileChooserFavorites f = new EmbeddedFileChooserFavorites(this, applicationConfiguration);
 		this.setAccessory(f);
 		this.addPropertyChangeListener(f);
 	}

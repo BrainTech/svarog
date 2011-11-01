@@ -3,6 +3,7 @@
  */
 package org.signalml.method.bookaverage;
 
+import static org.signalml.app.SvarogApplication._;
 import java.util.LinkedHashSet;
 
 import org.apache.log4j.Logger;
@@ -14,7 +15,7 @@ import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;
 import org.signalml.method.TrackableMethod;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /** BookAverageMethod
@@ -192,8 +193,8 @@ public class BookAverageMethod extends AbstractMethod implements TrackableMethod
 	}
 
 	@Override
-	public String getTickerLabel(MessageSourceAccessor messageSource, int ticker) {
-		return messageSource.getMessage("bookAverageMethod.ticker");
+	public String getTickerLabel( int ticker) {
+		return _("Segments processed");
 	}
 
 

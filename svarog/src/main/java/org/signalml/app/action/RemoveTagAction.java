@@ -12,7 +12,6 @@ import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.view.signal.PositionedTag;
 import org.signalml.domain.tag.StyledTagSet;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** RemoveTagAction
  *
@@ -25,8 +24,8 @@ public class RemoveTagAction extends AbstractFocusableSignalMLAction<TagFocusSel
 
 	protected static final Logger logger = Logger.getLogger(RemoveTagAction.class);
 
-	public RemoveTagAction(MessageSourceAccessor messageSource, TagFocusSelector tagFocusSelector) {
-		super(messageSource, tagFocusSelector);
+	public  RemoveTagAction( TagFocusSelector tagFocusSelector) {
+		super( tagFocusSelector);
 		setText("action.removeTag");
 		setIconPath("org/signalml/app/icon/removetag.png");
 		setToolTip("action.removeTagToolTip");

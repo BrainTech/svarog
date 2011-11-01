@@ -4,6 +4,7 @@
 
 package org.signalml.app.montage;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Window;
 
 import javax.swing.table.AbstractTableModel;
@@ -16,7 +17,6 @@ import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.MontageListener;
 import org.signalml.domain.montage.SourceMontageEvent;
 import org.signalml.domain.montage.SourceMontageListener;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** MontageTableModel
  *
@@ -34,17 +34,8 @@ public class MontageTableModel extends AbstractTableModel implements SourceMonta
 	public static final int LABEL_COLUMN = 2;
 
 	private Montage montage;
-	private MessageSourceAccessor messageSource;
 
 	public MontageTableModel() {
-	}
-
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
-	}
-
-	public void setMessageSource(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
 	}
 
 	public Montage getMontage() {
@@ -93,13 +84,13 @@ public class MontageTableModel extends AbstractTableModel implements SourceMonta
 		switch (column) {
 
 		case INDEX_COLUMN :
-			return messageSource.getMessage("montageTable.index");
+			return _("Index");
 
 		case PRIMARY_LABEL_COLUMN :
-			return messageSource.getMessage("montageTable.primaryLabel");
+			return _("Primary label");
 
 		case LABEL_COLUMN :
-			return messageSource.getMessage("montageTable.label");
+			return _("Label");
 
 		default :
 			throw new IndexOutOfBoundsException();

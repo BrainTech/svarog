@@ -4,6 +4,7 @@
 
 package org.signalml.app.montage;
 
+import static org.signalml.app.SvarogApplication._;
 import javax.swing.table.AbstractTableModel;
 
 import org.apache.log4j.Logger;
@@ -12,7 +13,6 @@ import org.signalml.domain.montage.MontageEvent;
 import org.signalml.domain.montage.MontageListener;
 import org.signalml.domain.montage.MontageSampleFilterEvent;
 import org.signalml.domain.montage.MontageSampleFilterListener;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** MontageFilterExclusionTableModel
  *
@@ -25,19 +25,12 @@ public class MontageFilterExclusionTableModel extends AbstractTableModel impleme
 
 	protected static final Logger logger = Logger.getLogger(MontageFilterExclusionTableModel.class);
 
-	private MessageSourceAccessor messageSource;
-
 	private Montage montage;
 
 	private ColumnTableModel columnTableModel;
 	private RowTableModel rowTableModel;
 
-	public MontageFilterExclusionTableModel(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
-	}
-
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
+	public  MontageFilterExclusionTableModel() {
 	}
 
 	public ColumnTableModel getColumnTableModel() {
@@ -262,7 +255,7 @@ public class MontageFilterExclusionTableModel extends AbstractTableModel impleme
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
 			if (columnIndex == 0) {
-				return messageSource.getMessage("filterExclusionTable.allFilters");
+				return _("All filters");
 			} else {
 				return columnIndex + ". " + montage.getSampleFilterAt(columnIndex-1).getDescription();
 			}
@@ -298,7 +291,7 @@ public class MontageFilterExclusionTableModel extends AbstractTableModel impleme
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
 			if (rowIndex == 0) {
-				return messageSource.getMessage("filterExclusionTable.allChannels");
+				return _("All channels");
 			} else {
 				return montage.getMontageChannelLabelAt(rowIndex-1);
 			}

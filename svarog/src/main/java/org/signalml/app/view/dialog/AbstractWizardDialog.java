@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.dialog;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.CardLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -16,7 +17,7 @@ import javax.swing.JPanel;
 
 import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 
@@ -81,8 +82,8 @@ public abstract class AbstractWizardDialog extends AbstractDialog {
 	 * Constructor. Sets message source.
 	 * @param messageSource message source to set
 	 */
-	public AbstractWizardDialog(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  AbstractWizardDialog() {
+		super();
 	}
 
 	/**
@@ -92,8 +93,8 @@ public abstract class AbstractWizardDialog extends AbstractDialog {
 	 * @param f the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public AbstractWizardDialog(MessageSourceAccessor messageSource,Window f, boolean isModal) {
-		super(messageSource, f, isModal);
+	public  AbstractWizardDialog(Window f, boolean isModal) {
+		super( f, isModal);
 	}
 
 	/**
@@ -187,7 +188,7 @@ public abstract class AbstractWizardDialog extends AbstractDialog {
 
 		JPanel controlPane = super.createControlPane();
 
-		getOkAction().putValue(AbstractAction.NAME, messageSource.getMessage("finish"));
+		getOkAction().putValue(AbstractAction.NAME, _("Finish"));
 
 		controlPane.add(Box.createHorizontalStrut(5), 1);
 
@@ -376,7 +377,7 @@ public abstract class AbstractWizardDialog extends AbstractDialog {
 		 * Constructor. Sets the step, the message and the icon.
 		 */
 		public NextAction() {
-			super(1,messageSource.getMessage("next"));
+			super(1,_("Next"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/next.png"));
 		}
 
@@ -412,7 +413,7 @@ public abstract class AbstractWizardDialog extends AbstractDialog {
 		 * Constructor. Sets the step, the message and the icon.
 		 */
 		public PreviousAction() {
-			super(-1,messageSource.getMessage("back"));
+			super(-1,_("Back"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/previous.png"));
 		}
 
@@ -436,5 +437,11 @@ public abstract class AbstractWizardDialog extends AbstractDialog {
 
 	}
 
-
+	/**
+	 * Returns the {@link SvarogAccessI18nImpl} instance.
+	 * @return the {@link SvarogAccessI18nImpl} singleton instance
+	 */
+	protected org.signalml.app.SvarogI18n getSvarogI18n() {
+		return org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance();
+	}
 }

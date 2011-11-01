@@ -1,5 +1,6 @@
 package org.signalml.app.view.opensignal;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -18,7 +19,6 @@ import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.element.ProgressDialog;
 import org.signalml.app.worker.OpenBCIManager;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Panel containing start and stop buttons.
@@ -27,10 +27,6 @@ import org.springframework.context.support.MessageSourceAccessor;
  */
 public class StartStopButtonsPanel extends JPanel {
 
-        /**
-         * The message source.
-         */
-        private MessageSourceAccessor messageSource;
         /**
          * Signal source panel.
          */
@@ -66,10 +62,9 @@ public class StartStopButtonsPanel extends JPanel {
          * @param messageSource {@link #messageSource}
          * @param signalSourcePanel {@link #signalSourcePanel}
          */
-        public StartStopButtonsPanel(MessageSourceAccessor messageSource, AmplifierSignalSourcePanel signalSourcePanel) {
+        public  StartStopButtonsPanel( AmplifierSignalSourcePanel signalSourcePanel) {
 
                 super();
-                this.messageSource = messageSource;
                 this.signalSourcePanel = signalSourcePanel;
                 this.elementManager = signalSourcePanel.getViewerElementManager();
                 createInterface();
@@ -81,7 +76,7 @@ public class StartStopButtonsPanel extends JPanel {
         private void createInterface() {
 
                 CompoundBorder border = new CompoundBorder(
-                        new TitledBorder(messageSource.getMessage("amplifierSelection.openBCI")),
+                        new TitledBorder(_("OpenBCI")),
                         new EmptyBorder(3, 3, 3, 3));
 
                 setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
@@ -100,7 +95,7 @@ public class StartStopButtonsPanel extends JPanel {
 
                 if (startButton == null) {
                         startButton = new JButton(getStartAction());
-                        startButton.setText(messageSource.getMessage("amplifierSelection.start"));
+                        startButton.setText(_("Start"));
                 }
                 return startButton;
         }
@@ -127,7 +122,7 @@ public class StartStopButtonsPanel extends JPanel {
 
                 if (stopButton == null) {
                         stopButton = new JButton(getStopAction());
-                        stopButton.setText(messageSource.getMessage("amplifierSelection.stop"));
+                        stopButton.setText(_("Stop"));
                 }
                 return stopButton;
         }
@@ -176,12 +171,12 @@ public class StartStopButtonsPanel extends JPanel {
                         try {
                                 currentDescriptor = signalSourcePanel.getFilledDescriptor();
                         } catch (SignalMLException ex) {
-                                JOptionPane.showMessageDialog(null, ex.getMessage(), messageSource.getMessage("error"), JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(null, ex.getMessage(), _("Error!"), JOptionPane.ERROR_MESSAGE);
                                 return;
                         }
                         if (currentDescriptor.getAmplifierInstance() == null) {
-                                JOptionPane.showMessageDialog(null, messageSource.getMessage("opensignal.amplifier.selectAmplifier"),
-                                        messageSource.getMessage("error"), JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(null, _("Select an amplifier first"),
+                                        _("Error!"), JOptionPane.ERROR_MESSAGE);
                                 return;
                         }
 
@@ -193,10 +188,10 @@ public class StartStopButtonsPanel extends JPanel {
 
                         // create OpenBCIManager and progressDialog. attach dialog to the manager, start the
                         // manager and show the dialog.
-                        OpenBCIManager manager = new OpenBCIManager(messageSource, elementManager, currentDescriptor);
-                        ProgressDialog progressDialog = new ProgressDialog(messageSource,
+                        OpenBCIManager manager = new OpenBCIManager( elementManager, currentDescriptor);
+                        ProgressDialog progressDialog = new ProgressDialog(
                                 signalSourcePanel.getViewerElementManager().getOpenSignalAndSetMontageDialog(),
-                                true, messageSource.getMessage("opensignal.amplifier.startingBCI"));
+                                true, _("Starting OpenBCI"));
                         manager.addPropertyChangeListener(progressDialog);
                         manager.execute();
                         progressDialog.showDialog();

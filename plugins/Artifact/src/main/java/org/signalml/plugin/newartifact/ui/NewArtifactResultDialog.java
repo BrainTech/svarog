@@ -24,15 +24,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.dialog.AbstractDialog;
-//import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.plugin.data.PluginConfigForMethod;
 import org.signalml.plugin.data.PluginConfigMethodData;
 import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.plugin.tool.PluginResourceRepository;
-import org.springframework.context.support.MessageSourceAccessor;
+import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -42,7 +41,7 @@ import org.springframework.validation.Errors;
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
-public class NewArtifactResultDialog extends AbstractDialog {
+public class NewArtifactResultDialog extends org.signalml.plugin.export.view.AbstractPluginDialog  {
 
 	private static final long serialVersionUID = 1L;
 
@@ -63,13 +62,13 @@ public class NewArtifactResultDialog extends AbstractDialog {
 	@SuppressWarnings("unused")
 	private NewArtifactResultTargetDescriptor currentDescriptor = null;
 
-	public NewArtifactResultDialog(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  NewArtifactResultDialog() {
+		super();
 	}
 
-	public NewArtifactResultDialog(MessageSourceAccessor messageSource,
+	public  NewArtifactResultDialog(
 				       Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+		super( w, isModal);
 	}
 
 	// TODO remove stub support if review not needed for artifact
@@ -82,8 +81,7 @@ public class NewArtifactResultDialog extends AbstractDialog {
 
 	@Override
 	protected void initialize() {
-		setTitle(messageSource
-			 .getMessage("newArtifactMethod.dialog.result.title"));
+		setTitle(_("Artifact result"));
 		PluginConfigMethodData config;
 		try {
 			config = ((PluginConfigForMethod) PluginResourceRepository
@@ -108,8 +106,7 @@ public class NewArtifactResultDialog extends AbstractDialog {
 
 		CompoundBorder border = new CompoundBorder(
 			new TitledBorder(
-				messageSource
-				.getMessage("newArtifactMethod.dialog.result.actionTitle")),
+				_("Choose primary result targets")),
 			new EmptyBorder(3, 3, 3, 3));
 		checkBoxPanel.setBorder(border);
 
@@ -119,8 +116,7 @@ public class NewArtifactResultDialog extends AbstractDialog {
 		JPanel additionalTagPanel = new JPanel(new BorderLayout(3, 3));
 		border = new CompoundBorder(
 			new TitledBorder(
-				messageSource
-				.getMessage("newArtifactMethod.dialog.result.additionalTitle")),
+				_("Additional result tags")),
 			new EmptyBorder(3, 3, 3, 3));
 		additionalTagPanel.setBorder(border);
 
@@ -146,8 +142,7 @@ public class NewArtifactResultDialog extends AbstractDialog {
 	public JCheckBox getPrimaryOpenInWindowCheckBox() {
 		if (primaryOpenInWindowCheckBox == null) {
 			primaryOpenInWindowCheckBox = new JCheckBox(
-				messageSource
-				.getMessage("newArtifactMethod.dialog.result.openInWindow"));
+				_("Open in the viewer"));
 		}
 		return primaryOpenInWindowCheckBox;
 	}
@@ -155,8 +150,7 @@ public class NewArtifactResultDialog extends AbstractDialog {
 	public JCheckBox getPrimarySaveToFileCheckBox() {
 		if (primarySaveToFileCheckBox == null) {
 			primarySaveToFileCheckBox = new JCheckBox(
-				messageSource
-				.getMessage("newArtifactMethod.dialog.result.saveToFile"),
+				_("Save to file"),
 				true);
 
 			primarySaveToFileCheckBox.addItemListener(new ItemListener() {
@@ -178,7 +172,7 @@ public class NewArtifactResultDialog extends AbstractDialog {
 
 	public NewArtifactResultTagPanel getPrimaryTagPanel() {
 		if (primaryTagPanel == null) {
-			primaryTagPanel = new NewArtifactResultTagPanel(messageSource,
+			primaryTagPanel = new NewArtifactResultTagPanel(
 					fileChooser);
 		}
 		return primaryTagPanel;
@@ -187,8 +181,7 @@ public class NewArtifactResultDialog extends AbstractDialog {
 	public JCheckBox getAdditionalOpenInWindowCheckBox() {
 		if (additionalOpenInWindowCheckBox == null) {
 			additionalOpenInWindowCheckBox = new JCheckBox(
-				messageSource
-				.getMessage("newArtifactMethod.dialog.result.additionalOpenInWindow"));
+				_("Open selected additional tags in the viewer"));
 
 			additionalOpenInWindowCheckBox.addItemListener(new ItemListener() {
 
@@ -206,8 +199,7 @@ public class NewArtifactResultDialog extends AbstractDialog {
 	public JCheckBox getAdditionalSaveToFileCheckBox() {
 		if (additionalSaveToFileCheckBox == null) {
 			additionalSaveToFileCheckBox = new JCheckBox(
-				messageSource
-				.getMessage("newArtifactMethod.dialog.result.additionalSaveToFile"));
+				_("Save selected additional tag to files"));
 
 			additionalSaveToFileCheckBox.addItemListener(new ItemListener() {
 
@@ -366,17 +358,17 @@ public class NewArtifactResultDialog extends AbstractDialog {
 	 * private static final long serialVersionUID = 1L;
 	 *
 	 * public ReviewResultAction() {
-	 * super(messageSource.getMessage("stagerMethod.dialog.result.reviewResult"
+	 * super(i18n().getMessage("stagerMethod.dialog.result.reviewResult"
 	 * )); putValue(AbstractAction.SMALL_ICON,
 	 * IconUtils.loadClassPathIcon("org/signalml/app/icon/reviewresult.png") );
-	 * putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage(
+	 * putValue(AbstractAction.SHORT_DESCRIPTION,i18n().getMessage(
 	 * "stagerMethod.dialog.result.reviewResultToolTip")); }
 	 *
 	 * public void actionPerformed(ActionEvent ev) {
 	 *
 	 * if( resultReviewDialog == null ) { resultReviewDialog = new
 	 * StagerResultReviewDialog(ArtifactResultDialog.this, true);
-	 * resultReviewDialog.setMessageSource(messageSource);
+	 * resultReviewDialog.setMessageSource();
 	 * resultReviewDialog.setErrorsDialog(errorsDialog);
 	 * resultReviewDialog.setFileChooser(fileChooser); }
 	 *

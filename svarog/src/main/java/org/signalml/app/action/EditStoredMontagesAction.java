@@ -10,7 +10,6 @@ import org.apache.log4j.Logger;
 import org.signalml.app.model.MontageDescriptor;
 import org.signalml.app.view.montage.SignalMontageDialog;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** EditSignalMontageAction
  *
@@ -25,8 +24,8 @@ public class EditStoredMontagesAction extends AbstractSignalMLAction {
 
 	private SignalMontageDialog signalMontageDialog;
 
-	public EditStoredMontagesAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  EditStoredMontagesAction() {
+		super();
 		setText("action.storedMontages");
 		setIconPath("org/signalml/app/icon/storedmontages.png");
 		setToolTip("action.storedMontagesToolTip");

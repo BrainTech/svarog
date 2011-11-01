@@ -355,7 +355,7 @@ public class PluginLoaderHi {
 			pluginState.setVersion(descr.getVersion());
 			pluginState.setFailedToLoad(descr.isFailedToLoad());
 		}
-		PluginDialog pluginDialog = new PluginDialog(manager.getMessageSource(), manager.getDialogParent(), true, existingPluginStates,
+		PluginDialog pluginDialog = new PluginDialog(manager.getDialogParent(), true, existingPluginStates,
 		                pluginDirs);
 		PluginAction action = new PluginAction(existingPluginStates);
 		action.setPluginDialog(pluginDialog);

@@ -23,7 +23,6 @@ import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.export.view.FileChooser;
-import org.signalml.plugin.i18n.PluginMessageSourceManager;
 import org.signalml.plugin.method.IPluginMethodConfigurer;
 import org.signalml.plugin.method.PluginMethodManager;
 import org.signalml.plugin.newartifact.data.NewArtifactApplicationData;
@@ -32,7 +31,6 @@ import org.signalml.plugin.newartifact.data.NewArtifactParameters;
 import org.signalml.plugin.newartifact.ui.NewArtifactMethodDialog;
 import org.signalml.plugin.newartifact.ui.NewArtifactToolConfigDialog;
 import org.signalml.plugin.tool.PluginResourceRepository;
-import org.springframework.context.support.MessageSourceAccessor;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -64,16 +62,7 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 
 		this.createPresetManager(manager);
 		this.fileChooser = manager.getSvarogAccess().getGUIAccess().getFileChooser();
-
-		MessageSourceAccessor messageSource;
-		try {
-			messageSource = PluginMessageSourceManager.GetMessageSource();
-		} catch (PluginException e) {
-			this.dialog = null;
-			return;
-		}
-
-		this.dialog = new NewArtifactMethodDialog(messageSource, this.presetManager, this.dialogParent);
+		this.dialog = new NewArtifactMethodDialog( this.presetManager, this.dialogParent);
 		// TODO remove this nasty cast
 		this.dialog.setApplicationConfig((ApplicationConfiguration) manager.getSvarogAccess().getConfigAccess().getSvarogConfiguration());
 		this.firstRunFlag = true;
@@ -118,15 +107,7 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 
 	public NewArtifactToolConfigDialog getConfigDialog() {
 		if (configDialog == null) {
-			MessageSourceAccessor messageSource;
-			try {
-				messageSource = PluginMessageSourceManager.GetMessageSource();
-			} catch (PluginException e) {
-				return null;
-			}
-
-			configDialog = new NewArtifactToolConfigDialog(messageSource,
-					dialogParent, true);
+			configDialog = new NewArtifactToolConfigDialog(dialogParent, true);
 			configDialog.setFileChooser(fileChooser);
 		}
 		return configDialog;

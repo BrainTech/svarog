@@ -4,6 +4,7 @@
 
 package org.signalml.app.task;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Window;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +19,6 @@ import org.signalml.method.CleanupMethod;
 import org.signalml.method.Method;
 import org.signalml.task.DefaultTaskManager;
 import org.signalml.task.Task;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ApplicationTaskManager
  *
@@ -32,8 +32,6 @@ public class ApplicationTaskManager extends DefaultTaskManager {
 	private Map<Task,ApplicationTaskWorker> workerMap = new HashMap<Task,ApplicationTaskWorker>();
 	private Map<Task,TaskStatusDialog> dialogMap = new HashMap<Task,TaskStatusDialog>();
 	private Map<Task,TaskEventProxy> proxyMap = new HashMap<Task, TaskEventProxy>();
-
-	private MessageSourceAccessor messageSource;
 	private ApplicationMethodManager methodManager;
 	private ErrorsDialog errorsDialog;
 
@@ -67,7 +65,6 @@ public class ApplicationTaskManager extends DefaultTaskManager {
 	protected TaskStatusDialog createStatusDialog(Task task) {
 
 		TaskStatusDialog dialog = new TaskStatusDialog(task, mode);
-		dialog.setMessageSource(messageSource);
 		dialog.setTaskManager(this);
 		dialog.setMethodManager(methodManager);
 		dialog.setErrorsDialog(errorsDialog);
@@ -156,7 +153,7 @@ public class ApplicationTaskManager extends DefaultTaskManager {
 			return;
 		}
 
-		pleaseWaitDialog.setActivity(messageSource.getMessage("activity.waitingForTaskToStop"));
+		pleaseWaitDialog.setActivity(_("waiting for task"));
 
 		pleaseWaitDialog.configureForIndeterminateSimulated();
 		worker.setPleaseWaitDialog(pleaseWaitDialog);
@@ -170,14 +167,6 @@ public class ApplicationTaskManager extends DefaultTaskManager {
 
 	public void setMode(SignalMLOperationMode mode) {
 		this.mode = mode;
-	}
-
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
-	}
-
-	public void setMessageSource(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
 	}
 
 	public ApplicationMethodManager getMethodManager() {

@@ -4,6 +4,7 @@
 
 package org.signalml.app.method.booktotag;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -27,11 +28,10 @@ import org.signalml.app.action.util.ListSelectAllAction;
 import org.signalml.app.action.util.ListSelectInvertAction;
 import org.signalml.app.action.util.ListSelectNoneAction;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.domain.book.StandardBook;
 import org.signalml.method.booktotag.BookToTagData;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /** BookToTagMethodDialog
@@ -39,7 +39,7 @@ import org.springframework.validation.Errors;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class BookToTagMethodDialog extends AbstractDialog {
+public class BookToTagMethodDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
 
 	private static final long serialVersionUID = 1L;
 
@@ -56,13 +56,13 @@ public class BookToTagMethodDialog extends AbstractDialog {
 	private JCheckBox makeBlockTagsCheckBox;
 	private JCheckBox makeChannelTagsCheckBox;
 
-	public BookToTagMethodDialog(MessageSourceAccessor messageSource,Window window) {
-		super(messageSource, window,true);
+	public  BookToTagMethodDialog(Window window) {
+		super( window,true);
 	}
 
 	@Override
 	protected void initialize() {
-		setTitle(messageSource.getMessage("bookToTagMethod.configure"));
+		setTitle(_("Configure book to tag"));
 		setIconImage(IconUtils.loadClassPathImage(BookToTagMethodDescriptor.ICON_PATH));
 		setResizable(false);
 		super.initialize();
@@ -75,7 +75,7 @@ public class BookToTagMethodDialog extends AbstractDialog {
 
 		JPanel channelPanel = new JPanel(new BorderLayout());
 		channelPanel.setBorder(new CompoundBorder(
-		                               new TitledBorder(messageSource.getMessage("bookToTagMethod.channelsTitle")),
+		                               new TitledBorder(_("Choose channels to include")),
 		                               new EmptyBorder(3,3,3,3)
 		                       ));
 
@@ -90,7 +90,7 @@ public class BookToTagMethodDialog extends AbstractDialog {
 		JPanel tagTypesPanel = new JPanel();
 		tagTypesPanel.setLayout(new BoxLayout(tagTypesPanel, BoxLayout.Y_AXIS));
 		tagTypesPanel.setBorder(new CompoundBorder(
-		                                new TitledBorder(messageSource.getMessage("bookToTagMethod.tagTypesTitle")),
+		                                new TitledBorder(_("Choose tag types")),
 		                                new EmptyBorder(3,3,3,3)
 		                        ));
 
@@ -126,21 +126,21 @@ public class BookToTagMethodDialog extends AbstractDialog {
 
 	public JButton getChannelSelectAllButton() {
 		if (channelSelectAllButton == null) {
-			channelSelectAllButton = new JButton(new ListSelectAllAction(messageSource, getChannelList()));
+			channelSelectAllButton = new JButton(new ListSelectAllAction( getChannelList()));
 		}
 		return channelSelectAllButton;
 	}
 
 	public JButton getChannelSelectNoneButton() {
 		if (channelSelectNoneButton == null) {
-			channelSelectNoneButton = new JButton(new ListSelectNoneAction(messageSource, getChannelList()));
+			channelSelectNoneButton = new JButton(new ListSelectNoneAction( getChannelList()));
 		}
 		return channelSelectNoneButton;
 	}
 
 	public JButton getChannelSelectInvertButton() {
 		if (channelSelectInvertButton == null) {
-			channelSelectInvertButton = new JButton(new ListSelectInvertAction(messageSource, getChannelList()));
+			channelSelectInvertButton = new JButton(new ListSelectInvertAction( getChannelList()));
 		}
 		return channelSelectInvertButton;
 	}
@@ -168,21 +168,21 @@ public class BookToTagMethodDialog extends AbstractDialog {
 
 	public JCheckBox getMakePageTagsCheckBox() {
 		if (makePageTagsCheckBox == null) {
-			makePageTagsCheckBox = new JCheckBox(messageSource.getMessage("bookToTagMethod.makePageTags"));
+			makePageTagsCheckBox = new JCheckBox(_("Create page tags"));
 		}
 		return makePageTagsCheckBox;
 	}
 
 	public JCheckBox getMakeBlockTagsCheckBox() {
 		if (makeBlockTagsCheckBox == null) {
-			makeBlockTagsCheckBox = new JCheckBox(messageSource.getMessage("bookToTagMethod.makeBlockTags"));
+			makeBlockTagsCheckBox = new JCheckBox(_("Create block tags"));
 		}
 		return makeBlockTagsCheckBox;
 	}
 
 	public JCheckBox getMakeChannelTagsCheckBox() {
 		if (makeChannelTagsCheckBox == null) {
-			makeChannelTagsCheckBox = new JCheckBox(messageSource.getMessage("bookToTagMethod.makeChannelTags"));
+			makeChannelTagsCheckBox = new JCheckBox(_("Create channel tags"));
 		}
 		return makeChannelTagsCheckBox;
 	}

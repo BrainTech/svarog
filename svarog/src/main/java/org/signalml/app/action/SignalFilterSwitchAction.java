@@ -11,7 +11,6 @@ import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.domain.montage.Montage;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** SignalFilterSwitchAction
  *
@@ -24,8 +23,8 @@ public class SignalFilterSwitchAction extends AbstractFocusableSignalMLAction<Si
 
 	protected static final Logger logger = Logger.getLogger(SignalFilterSwitchAction.class);
 
-	public SignalFilterSwitchAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
-		super(messageSource, signalDocumentFocusSelector);
+	public  SignalFilterSwitchAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
+		super( signalDocumentFocusSelector);
 		setText("signalView.filterSwitch");
 		setIconPath("org/signalml/app/icon/filter.png");
 		setToolTip("signalView.filterSwitchToolTip");

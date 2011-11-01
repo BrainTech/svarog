@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.dialog;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Window;
 import java.io.File;
@@ -27,7 +28,7 @@ import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.signal.eeglab.EEGLabSignalWriter;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -35,7 +36,7 @@ import org.springframework.validation.Errors;
  *
  * @author Tomasz Sawicki
  */
-public class EEGLabExportDialog extends AbstractDialog  {
+public class EEGLabExportDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog   {
 
         /**
          * Currently open document.
@@ -52,9 +53,9 @@ public class EEGLabExportDialog extends AbstractDialog  {
          */
         private FileSelectPanel fileSelectPanel;
 
-        public EEGLabExportDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
+        public  EEGLabExportDialog( Window w, boolean isModal) {
 
-                super(messageSource, w, isModal);
+                super( w, isModal);
         }        
 
         /**
@@ -63,7 +64,7 @@ public class EEGLabExportDialog extends AbstractDialog  {
 	@Override
 	protected void initialize() {
 
-		setTitle(messageSource.getMessage("eeglabExport.title"));
+		setTitle(_("Export to EEGLab"));
 		super.initialize();
 	}
 
@@ -92,8 +93,8 @@ public class EEGLabExportDialog extends AbstractDialog  {
 		if (fileSelectPanel == null) {
 
                         HashMap<String, String[]> filters = new HashMap<String, String[]>();
-                        filters.put(messageSource.getMessage("eeglabExport.datasetFiles"), new String[] { "set" } );
-			fileSelectPanel = new FileSelectPanel(messageSource, messageSource.getMessage("eeglabExport.chooseFileLabel"), filters, true);
+                        filters.put(_("Dateset files"), new String[] { "set" } );
+			fileSelectPanel = new FileSelectPanel( _("Output file name: "), filters, true);
 		}
 		return fileSelectPanel;
 	}
@@ -178,7 +179,7 @@ public class EEGLabExportDialog extends AbstractDialog  {
 			errors.reject("error.eeglabExport.incorrectFileName");
 		}
 		else if (file.exists()) {
-			int anwser = JOptionPane.showConfirmDialog(null, messageSource.getMessage("eegLabExport.fileNameExists"));
+			int anwser = JOptionPane.showConfirmDialog(null, _("File already exists! Do you want to overwrite?"));
 			if (anwser == JOptionPane.CANCEL_OPTION || anwser == JOptionPane.NO_OPTION)
 				errors.reject("");
 

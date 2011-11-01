@@ -16,7 +16,6 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.data.xy.DefaultXYDataset;
 import org.jfree.ui.RectangleInsets;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * An abstract class for easier creating and usage of a chart panel containing
@@ -27,18 +26,12 @@ import org.springframework.context.support.MessageSourceAccessor;
 public abstract class ResponseChartPanel extends ChartPanel {
 
 	/**
-	 * A message source accessor capable of resolving localized message codes.
-	 */
-	protected final MessageSourceAccessor messageSource;
-
-	/**
 	 * Creates a new chart panel.
 	 * @param messageSource message source capable of resolving
 	 * localized message codes
 	 */
-	public ResponseChartPanel(MessageSourceAccessor messageSource) {
+	public  ResponseChartPanel() {
 		super(createChart());
-		this.messageSource = messageSource;
 
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(450, 150));

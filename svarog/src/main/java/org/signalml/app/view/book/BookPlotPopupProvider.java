@@ -6,7 +6,6 @@ package org.signalml.app.view.book;
 
 import javax.swing.JPopupMenu;
 
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** BookPlotPopupProvider
  *
@@ -20,8 +19,6 @@ public class BookPlotPopupProvider {
 	private BookPlot plot;
 	private JPopupMenu plotPopupMenu;
 
-	private MessageSourceAccessor messageSource;
-
 	public BookPlotPopupProvider(BookPlot plot) {
 		this.plot = plot;
 	}
@@ -34,13 +31,4 @@ public class BookPlotPopupProvider {
 
 		return plotPopupMenu;
 	}
-
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
-	}
-
-	public void setMessageSource(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
-	}
-
 }

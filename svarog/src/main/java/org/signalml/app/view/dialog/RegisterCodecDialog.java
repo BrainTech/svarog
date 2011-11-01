@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.dialog;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Window;
 import java.io.File;
 import java.io.IOException;
@@ -24,7 +25,7 @@ import org.signalml.codec.XMLSignalMLCodec;
 import org.signalml.codec.generator.xml.XMLCodecException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 
@@ -63,8 +64,8 @@ public class RegisterCodecDialog extends AbstractWizardDialog {
 	 * Constructor. Sets message source.
 	 * @param messageSource message source to set
 	 */
-	public RegisterCodecDialog(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  RegisterCodecDialog() {
+		super();
 	}
 
 	/**
@@ -74,8 +75,8 @@ public class RegisterCodecDialog extends AbstractWizardDialog {
 	 * @param f the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public RegisterCodecDialog(MessageSourceAccessor messageSource, Window f, boolean isModal) {
-		super(messageSource, f, isModal);
+	public  RegisterCodecDialog( Window f, boolean isModal) {
+		super( f, isModal);
 	}
 
 	/**
@@ -90,7 +91,7 @@ public class RegisterCodecDialog extends AbstractWizardDialog {
 	@Override
 	protected void initialize() {
 
-		setTitle(messageSource.getMessage("registerCodec.title"));
+		setTitle(_("Register a new SignalML codec"));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/fileopen.png"));
 
 		super.initialize();
@@ -226,9 +227,9 @@ public class RegisterCodecDialog extends AbstractWizardDialog {
 	public JComponent createInterfaceForStep(int step) {
 		switch (step) {
 		case 0 :
-			return new RegisterCodecStepOnePanel(messageSource);
+			return new RegisterCodecStepOnePanel();
 		case 1 :
-			return new RegisterCodecStepTwoPanel(messageSource);
+			return new RegisterCodecStepTwoPanel();
 		default :
 			throw new IndexOutOfBoundsException();
 		}

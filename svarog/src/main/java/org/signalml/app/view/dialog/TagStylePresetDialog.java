@@ -2,7 +2,6 @@ package org.signalml.app.view.dialog;
 
 import java.awt.Window;
 import org.signalml.app.config.preset.PresetManager;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * A dialog for creating/editing tag style presets.
@@ -15,8 +14,8 @@ public class TagStylePresetDialog extends TagStylePaletteDialog {
 	 * Constructor. Sets message source.
 	 * @param messageSource message source to set
 	 */
-	public TagStylePresetDialog(MessageSourceAccessor messageSource, PresetManager presetManager) {
-		super(messageSource, presetManager);
+	public  TagStylePresetDialog( PresetManager presetManager) {
+		super( presetManager);
 	}
 
 	/**
@@ -27,8 +26,8 @@ public class TagStylePresetDialog extends TagStylePaletteDialog {
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public TagStylePresetDialog(MessageSourceAccessor messageSource, PresetManager presetManager, Window w, boolean isModal) {
-		super(messageSource, presetManager, w, isModal);
+	public  TagStylePresetDialog( PresetManager presetManager, Window w, boolean isModal) {
+		super( presetManager, w, isModal);
 	}
 
 }

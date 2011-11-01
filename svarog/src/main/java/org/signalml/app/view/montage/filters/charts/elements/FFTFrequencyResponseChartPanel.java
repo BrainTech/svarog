@@ -3,9 +3,9 @@
  */
 package org.signalml.app.view.montage.filters.charts.elements;
 
+import static org.signalml.app.SvarogApplication._;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * A chart panel containing the FFT frequency response chart panel
@@ -19,9 +19,9 @@ public class FFTFrequencyResponseChartPanel extends FrequencyResponseChartPanel 
 	 * @param messageSource message source capable of resolving localized
 	 * messages
 	 */
-	public FFTFrequencyResponseChartPanel(MessageSourceAccessor messageSource) {
-		super(messageSource);
-		setTitle(messageSource.getMessage("editFFTSampleFilter.graphTitle"));
+	public  FFTFrequencyResponseChartPanel() {
+		super();
+		setTitle(_("FFT coefficients"));
 	}
 
 	@Override

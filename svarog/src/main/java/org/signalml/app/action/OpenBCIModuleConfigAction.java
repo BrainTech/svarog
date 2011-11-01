@@ -5,7 +5,6 @@ import org.signalml.app.view.monitor.OpenBCIModuleConfigDialog;
 import org.signalml.app.worker.processes.OpenBCIModule;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.apache.log4j.Logger;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Open an {@link OpenBCIModulesConfigDialog}.
@@ -29,9 +28,9 @@ public class OpenBCIModuleConfigAction extends AbstractSignalMLAction {
          *
          * @param messageSource the message source
          */
-        public OpenBCIModuleConfigAction(MessageSourceAccessor messageSource) {
+        public  OpenBCIModuleConfigAction() {
 
-                super(messageSource);
+                super();
                 setText("action.openBCIModulesConfig");
                 setToolTip("action.openBCIModulesConfigToolTip");
         }

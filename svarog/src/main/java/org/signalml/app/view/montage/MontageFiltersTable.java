@@ -19,7 +19,6 @@ import org.signalml.app.montage.MontageFiltersTableModel;
 import org.signalml.app.view.TablePopupMenuProvider;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Table with the list of {@link SampleFilterDefinition sample filters}
@@ -54,7 +53,7 @@ public class MontageFiltersTable extends JTable {
 	 * @param model the model for this table
 	 * @param messageSource the source of messages (labels)
 	 */
-	public MontageFiltersTable(MontageFiltersTableModel model, MessageSourceAccessor messageSource) {
+	public MontageFiltersTable(MontageFiltersTableModel model) {
 		super(model, (TableColumnModel) null);
 
 		DefaultTableColumnModel columnModel = new DefaultTableColumnModel();

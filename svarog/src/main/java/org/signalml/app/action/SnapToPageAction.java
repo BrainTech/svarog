@@ -11,7 +11,6 @@ import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.view.signal.SignalView;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** SnapToPageAction
  *
@@ -24,8 +23,8 @@ public class SnapToPageAction extends AbstractFocusableSignalMLAction<SignalDocu
 
 	protected static final Logger logger = Logger.getLogger(SnapToPageAction.class);
 
-	public SnapToPageAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
-		super(messageSource, signalDocumentFocusSelector);
+	public  SnapToPageAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
+		super( signalDocumentFocusSelector);
 		setText("signalView.snapPageToView");
 		setIconPath("org/signalml/app/icon/snaptopage.png");
 		setToolTip("signalView.snapPageToViewToolTip");

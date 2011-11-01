@@ -1,5 +1,6 @@
 package org.signalml.app.view.monitor;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -22,7 +23,6 @@ import org.signalml.app.view.dialog.AbstractPresetDialog;
 import org.signalml.app.view.element.FileSelectPanel;
 import org.signalml.app.worker.processes.OpenBCIModule;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Allows to configure openbci modules' paths.
@@ -60,9 +60,9 @@ public class OpenBCIModuleConfigDialog extends AbstractPresetDialog {
          * @param w parent window
          * @param isModal if this window is modal
          */
-        public OpenBCIModuleConfigDialog(MessageSourceAccessor messageSource, PresetManager presetManger, Window w, boolean isModal) {
+        public  OpenBCIModuleConfigDialog( PresetManager presetManger, Window w, boolean isModal) {
 
-                super(messageSource, presetManger, w, isModal);
+                super( presetManger, w, isModal);
         }
 
         /**
@@ -71,7 +71,7 @@ public class OpenBCIModuleConfigDialog extends AbstractPresetDialog {
         @Override
         public void initialize() {
 
-                setTitle(messageSource.getMessage("openBCIModuleConfig.title"));
+                setTitle(_("OpenBCI modules config"));
                 super.initialize();
         }
 
@@ -148,8 +148,8 @@ public class OpenBCIModuleConfigDialog extends AbstractPresetDialog {
                         Integer delay = Integer.parseInt(getDelayTextField().getText());
                         module.setDelay(delay);
                 } catch (NumberFormatException ex) {
-                        throw new SignalMLException(messageSource.getMessage("openBCIModuleConfig.delay")
-                                + messageSource.getMessage("error.amplifierDefinitionConfig.integer"));
+                        throw new SignalMLException(_("Delay [ms]: ")
+                                + _("Please insert an integer value"));
                 }
         }
 
@@ -187,7 +187,7 @@ public class OpenBCIModuleConfigDialog extends AbstractPresetDialog {
         private FileSelectPanel getFileSelectPanel() {
 
                 if (fileSelectPanel == null) {
-                        fileSelectPanel = new FileSelectPanel(messageSource, messageSource.getMessage("openBCIModuleConfig.path"));
+                        fileSelectPanel = new FileSelectPanel( _("Module path: "));
                         fileSelectPanel.returnRelativePath(true);
                 }
                 return fileSelectPanel;
@@ -202,7 +202,7 @@ public class OpenBCIModuleConfigDialog extends AbstractPresetDialog {
 
                 if (delayLabel == null) {
                         delayLabel = new JLabel();
-                        delayLabel.setText(messageSource.getMessage("openBCIModuleConfig.delay"));
+                        delayLabel.setText(_("Delay [ms]: "));
                 }
                 return delayLabel;
         }
@@ -229,7 +229,7 @@ public class OpenBCIModuleConfigDialog extends AbstractPresetDialog {
 
                 if (parametersLabel == null) {
                         parametersLabel = new JLabel();
-                        parametersLabel.setText(messageSource.getMessage("openBCIModuleConfig.parameters"));
+                        parametersLabel.setText(_("Parameters: "));
                 }
                 return parametersLabel;
         }

@@ -12,7 +12,6 @@ import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.SignalDocument;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** 
  * This class is responsible for actions regarding the menu item which stops the recording of the monitor.
@@ -33,9 +32,9 @@ public class StopMonitorRecordingAction extends MonitorRecordingAction {
 	 * @param signalDocumentFocusSelector a {@link SignalDocumentFocusSelector} used to detect
 	 * which document is active.
 	 */
-	public StopMonitorRecordingAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
+	public  StopMonitorRecordingAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
 
-		super(messageSource, signalDocumentFocusSelector);
+		super( signalDocumentFocusSelector);
 		setIconPath("org/signalml/app/icon/stop-recording.png");
 		setText("action.stopMonitorRecordingLabel");
 		setToolTip("action.stopMonitorRecordingToolTip");

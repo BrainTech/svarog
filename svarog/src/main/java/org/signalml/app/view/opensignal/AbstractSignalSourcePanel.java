@@ -12,7 +12,6 @@ import javax.swing.ComboBoxModel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import org.signalml.app.view.ViewerElementManager;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * A panel used to set parameters for an abstract signal source.
@@ -20,11 +19,6 @@ import org.springframework.context.support.MessageSourceAccessor;
  * @author Piotr Szachewicz
  */
 abstract public class AbstractSignalSourcePanel extends JPanel implements PropertyChangeListener {
-
-	/**
-	 * Message source capable of resolving localized messages.
-	 */
-        protected MessageSourceAccessor messageSource;
 
 	/**
 	 * PropertyChangeSupport to fire property changes when needed.
@@ -47,8 +41,7 @@ abstract public class AbstractSignalSourcePanel extends JPanel implements Proper
 	 * @param messageSource message source capable of resolving localized messages
 	 * @param viewerElementManager ViewerElementManager used by this panel
 	 */
-        public AbstractSignalSourcePanel(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager) {
-                this.messageSource = messageSource;
+        public  AbstractSignalSourcePanel( ViewerElementManager viewerElementManager) {
                 this.viewerElementManager = viewerElementManager;
                 createInterface();
         }
@@ -98,7 +91,7 @@ abstract public class AbstractSignalSourcePanel extends JPanel implements Proper
 	 */
 	public SignalSourceSelectionPanel getSignalSourceSelectionPanel() {
 		if (signalSourceSelectionPanel == null) {
-			signalSourceSelectionPanel = new SignalSourceSelectionPanel(messageSource);
+			signalSourceSelectionPanel = new SignalSourceSelectionPanel();
 			signalSourceSelectionPanel.addPropertyChangeListener(this);
 		}
 		return signalSourceSelectionPanel;

@@ -12,7 +12,6 @@ import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.task.Task;
 import org.signalml.task.TaskStatus;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** RemoveAllTasksAction
  *
@@ -28,8 +27,8 @@ public class RemoveAllTasksAction extends AbstractSignalMLAction {
 	private ApplicationTaskManager taskManager;
 	private Component optionPaneParent;
 
-	public RemoveAllTasksAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  RemoveAllTasksAction() {
+		super();
 		setText("action.removeAllTasks");
 		setIconPath("org/signalml/app/icon/removealltasks.png");
 		setToolTip("action.removeAllTasksToolTip");

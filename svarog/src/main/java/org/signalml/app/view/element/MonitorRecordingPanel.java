@@ -3,11 +3,12 @@
  */
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.app.view.monitor.ChooseFilesForMonitorRecordingPanel;
 import org.signalml.app.view.dialog.OpenMonitorDialog;
 
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 import java.awt.BorderLayout;
@@ -52,8 +53,8 @@ public class MonitorRecordingPanel extends AbstractSignalMLPanel {
          * @param messageSource the message source accessor capable of resolving
          * localized message codes
          */
-        public MonitorRecordingPanel(MessageSourceAccessor messageSource) {
-                super(messageSource);
+        public  MonitorRecordingPanel() {
+                super();
                 initialize();
         }
 
@@ -65,7 +66,7 @@ public class MonitorRecordingPanel extends AbstractSignalMLPanel {
                 setLayout(new BorderLayout(10, 10));
 
                 CompoundBorder border = new CompoundBorder(
-                        new TitledBorder(messageSource.getMessage("openMonitor.monitorRecordingPanelTitle")),
+                        new TitledBorder(_("Monitor recording")),
                         new EmptyBorder(3, 3, 3, 3));
                 setBorder(border);
 
@@ -84,7 +85,7 @@ public class MonitorRecordingPanel extends AbstractSignalMLPanel {
          */
         protected ChooseFilesForMonitorRecordingPanel getChooseFilesForMonitorRecordingPanel() {
                 if (chooseFilesForMonitorRecordingPanel == null) {
-                        chooseFilesForMonitorRecordingPanel = new ChooseFilesForMonitorRecordingPanel(messageSource);
+                        chooseFilesForMonitorRecordingPanel = new ChooseFilesForMonitorRecordingPanel();
                 }
                 return chooseFilesForMonitorRecordingPanel;
         }
@@ -157,7 +158,7 @@ public class MonitorRecordingPanel extends AbstractSignalMLPanel {
                 Errors errors = new BindException(this, "data");
                 validatePanel(this, errors);
                 if (errors.hasErrors())
-                        throw new SignalMLException(messageSource.getMessage("error.invalidData"));
+                        throw new SignalMLException(_("Invalid data entered"));
 
 
                 OpenMonitorDescriptor openMonitorDescriptor = descriptor.getOpenMonitorDescriptor();

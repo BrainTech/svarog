@@ -11,7 +11,6 @@ import org.signalml.app.view.element.TagStylePropertiesPanel;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributeDefinition;
 import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributes;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * The panel for editing tag attributes definitions for the current tag style.
@@ -41,9 +40,8 @@ public class TagAttributesDefinitionsEditPanel extends AbstractSignalMLPanel {
 	 * @param messageSource message source for resolving localized messages
 	 * @param tagStylePropertiesPanel panel for editing tag styled properties
 	 */
-	public TagAttributesDefinitionsEditPanel(MessageSourceAccessor messageSource, TagStylePropertiesPanel tagStylePropertiesPanel) {
-		super(messageSource);
-		this.messageSource = messageSource;
+	public  TagAttributesDefinitionsEditPanel( TagStylePropertiesPanel tagStylePropertiesPanel) {
+		super();
 		this.tagStylePropertiesPanel = tagStylePropertiesPanel;
 		initialize();
 	}

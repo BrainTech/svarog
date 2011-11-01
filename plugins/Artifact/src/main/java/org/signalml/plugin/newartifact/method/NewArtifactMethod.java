@@ -27,7 +27,8 @@ import org.signalml.plugin.newartifact.data.NewIterableSensitivity;
 import org.signalml.plugin.newartifact.data.mgr.NewArtifactMgrData;
 import org.signalml.plugin.newartifact.logic.mgr.NewArtifactComputationMgr;
 import org.signalml.plugin.tool.PluginResourceRepository;
-import org.springframework.context.support.MessageSourceAccessor;
+import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
+
 import org.springframework.validation.Errors;
 
 public class NewArtifactMethod extends PluginAbstractMethod implements
@@ -115,9 +116,9 @@ public class NewArtifactMethod extends PluginAbstractMethod implements
 	}
 
 	@Override
-	public String getTickerLabel(MessageSourceAccessor messageSource, int ticker) {
+	public String getTickerLabel( int ticker) {
 		if (ticker == 0) {
-			return messageSource.getMessage("newArtifactMethod.stepTicker");
+			return _("Processing step");
 		} else {
 			throw new IndexOutOfBoundsException("No ticker [" + ticker + "]");
 		}

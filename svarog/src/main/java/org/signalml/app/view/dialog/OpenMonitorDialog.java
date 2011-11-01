@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.dialog;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Window;
@@ -24,7 +25,7 @@ import org.signalml.app.view.element.MonitorSignalParametersPanel;
 import org.signalml.app.view.element.MultiplexerConnectionPanel;
 import org.signalml.plugin.export.SignalMLException;
 
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -33,7 +34,7 @@ import org.springframework.validation.Errors;
  *
  * @author Mariusz Podsiadło
  */
-public class OpenMonitorDialog extends AbstractDialog implements PropertyChangeListener {
+public class OpenMonitorDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  implements PropertyChangeListener {
 
 	public static final int TIMEOUT_MILIS = 500;
 	public static final int TRYOUT_COUNT = 10;
@@ -77,8 +78,8 @@ public class OpenMonitorDialog extends AbstractDialog implements PropertyChangeL
 	 * @param viewerElementManager a {@link ViewerElementManager} which contains
 	 * a {@link JmxClient}.
 	 */
-	public OpenMonitorDialog(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager) {
-		super(messageSource);
+	public  OpenMonitorDialog( ViewerElementManager viewerElementManager) {
+		super();
 		initialize(viewerElementManager);
 	}
 
@@ -90,11 +91,11 @@ public class OpenMonitorDialog extends AbstractDialog implements PropertyChangeL
 	 * @param f the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public OpenMonitorDialog(MessageSourceAccessor messageSource,
+	public  OpenMonitorDialog(
 		ViewerElementManager viewerElementManager,
 		Window f,
 		boolean isModal) {
-		super(messageSource, f, isModal);
+		super( f, isModal);
 		initialize(viewerElementManager);
 	}
 
@@ -105,7 +106,7 @@ public class OpenMonitorDialog extends AbstractDialog implements PropertyChangeL
 	 */
 	private void initialize(ViewerElementManager viewerElementManager) {
 		this.viewerElementManager = viewerElementManager;
-		this.setTitle(messageSource.getMessage("openMonitor.title"));
+		this.setTitle(_("Open monitor"));
 	}
 
 	/**
@@ -199,7 +200,7 @@ public class OpenMonitorDialog extends AbstractDialog implements PropertyChangeL
 	 */
 	protected MonitorSignalParametersPanel getMonitorSignalParametersPanel() {
 		if (monitorSignalParametersPanel == null) {
-			monitorSignalParametersPanel = new MonitorSignalParametersPanel(messageSource, applicationConfig);
+			monitorSignalParametersPanel = new MonitorSignalParametersPanel( applicationConfig);
 		}
 		return monitorSignalParametersPanel;
 	}
@@ -211,7 +212,7 @@ public class OpenMonitorDialog extends AbstractDialog implements PropertyChangeL
 	 */
 	protected MonitorChannelSelectPanel getMonitorChannelSelectPanel() {
 		if (monitorChannelSelectPanel == null) {
-			monitorChannelSelectPanel = new MonitorChannelSelectPanel(messageSource);
+			monitorChannelSelectPanel = new MonitorChannelSelectPanel();
 		}
 		return monitorChannelSelectPanel;
 	}
@@ -223,7 +224,7 @@ public class OpenMonitorDialog extends AbstractDialog implements PropertyChangeL
 	 */
 	protected MonitorRecordingPanel getMonitorRecordingPanel() {
 		if (monitorRecordingPanel == null) {
-			monitorRecordingPanel = new MonitorRecordingPanel(messageSource);
+			monitorRecordingPanel = new MonitorRecordingPanel();
 		}
 		return monitorRecordingPanel;
 	}

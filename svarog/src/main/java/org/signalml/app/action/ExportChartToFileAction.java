@@ -19,7 +19,6 @@ import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ExportChartToFileAction
  *
@@ -35,8 +34,8 @@ public abstract class ExportChartToFileAction extends AbstractSignalMLAction {
 	private ViewerFileChooser fileChooser;
 	private Component optionPaneParent;
 
-	public ExportChartToFileAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  ExportChartToFileAction() {
+		super();
 		setText("action.exportChartToFile");
 		setIconPath("org/signalml/app/icon/picture_save.png");
 		setToolTip("action.exportChartToFileToolTip");

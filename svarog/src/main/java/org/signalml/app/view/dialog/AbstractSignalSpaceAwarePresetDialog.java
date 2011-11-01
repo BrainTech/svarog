@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.dialog;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Window;
@@ -15,7 +16,6 @@ import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Abstract {@link AbstractPresetDialog preset dialog} with the check-box that
@@ -43,8 +43,8 @@ public abstract class AbstractSignalSpaceAwarePresetDialog extends AbstractPrese
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public AbstractSignalSpaceAwarePresetDialog(MessageSourceAccessor messageSource, PresetManager presetManager, Window w, boolean isModal) {
-		super(messageSource, presetManager, w, isModal);
+	public  AbstractSignalSpaceAwarePresetDialog( PresetManager presetManager, Window w, boolean isModal) {
+		super( presetManager, w, isModal);
 	}
 
 	/**
@@ -53,8 +53,8 @@ public abstract class AbstractSignalSpaceAwarePresetDialog extends AbstractPrese
 	 * @param messageSource message source to set
 	 * @param presetManager the preset manager to set
 	 */
-	public AbstractSignalSpaceAwarePresetDialog(MessageSourceAccessor messageSource, PresetManager presetManager) {
-		super(messageSource, presetManager);
+	public  AbstractSignalSpaceAwarePresetDialog( PresetManager presetManager) {
+		super( presetManager);
 	}
 
 	/**
@@ -88,7 +88,7 @@ public abstract class AbstractSignalSpaceAwarePresetDialog extends AbstractPrese
 	 */
 	public JCheckBox getIncludeSpaceCheckBox() {
 		if (includeSpaceCheckBox == null) {
-			includeSpaceCheckBox = new JCheckBox(messageSource.getMessage("spacePresetDialog.includeSpace"));
+			includeSpaceCheckBox = new JCheckBox(_("Load signal selection from loaded preset"));
 			includeSpaceCheckBox.setFont(includeSpaceCheckBox.getFont().deriveFont(Font.PLAIN,10F));
 		}
 		return includeSpaceCheckBox;

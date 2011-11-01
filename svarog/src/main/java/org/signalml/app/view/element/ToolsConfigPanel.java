@@ -14,7 +14,7 @@ import org.signalml.app.method.mp5.MP5LocalExecutorDialog;
 import org.signalml.app.method.mp5.MP5ToolConfigPanel;
 import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.method.mp5.MP5Executor;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -29,10 +29,6 @@ public class ToolsConfigPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * the {@link MessageSourceAccessor source} of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
 	/**
 	 * the {@link ViewerFileChooser chooser} of files
 	 */
@@ -60,9 +56,8 @@ public class ToolsConfigPanel extends JPanel {
 	 * @param mp5ExecutorManager the {@link MP5ExecutorManager manager} of MP5
 	 * executors
 	 */
-	public ToolsConfigPanel(MessageSourceAccessor messageSource, ViewerFileChooser fileChooser, MP5ExecutorManager mp5ExecutorManager) {
+	public  ToolsConfigPanel( ViewerFileChooser fileChooser, MP5ExecutorManager mp5ExecutorManager) {
 		super();
-		this.messageSource = messageSource;
 		this.fileChooser = fileChooser;
 		this.mp5ExecutorManager = mp5ExecutorManager;
 		initialize();
@@ -93,7 +88,7 @@ public class ToolsConfigPanel extends JPanel {
 	 */
 	public MP5ToolConfigPanel getMp5Panel() {
 		if (mp5Panel == null) {
-			mp5Panel = new MP5ToolConfigPanel(messageSource, mp5ExecutorManager);
+			mp5Panel = new MP5ToolConfigPanel( mp5ExecutorManager);
 			mp5Panel.setLocalExecutorDialog(mp5LocalExecutorDialog);
 		}
 		return mp5Panel;

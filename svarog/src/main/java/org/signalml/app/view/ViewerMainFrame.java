@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Window;
@@ -65,7 +66,6 @@ import org.signalml.task.LocalTask;
 import org.signalml.task.Task;
 import org.signalml.task.TaskStatus;
 import org.signalml.util.SvarogConstants;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ViewerMainFrame
  *
@@ -86,9 +86,6 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 	/* Configuration */
 	private MainFrameConfiguration config;
 
-	/* Localization */
-	private MessageSourceAccessor messageSource;
-
 	/* Window interface elements */
 	private JPanel contentPane;
 
@@ -105,9 +102,9 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 
 	public void initialize() {
 
-		SvarogApplication.getSharedInstance().splash(messageSource.getMessage("startup.initializingMainFrame"), false);
+		SvarogApplication.getSharedInstance().splash(_("Initializing main window"), false);
 
-		setTitle(messageSource.getMessage("viewer.title", new Object[] {SvarogConstants.VERSION}));
+		setTitle(java.text.MessageFormat.format(_("Svarog v.{0}"), new Object[] {SvarogConstants.VERSION}));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/mainframe.png"));
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
@@ -120,7 +117,7 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 		elementManager.setOptionPaneParent(getRootPane());
 		elementManager.setDialogParent(this);
 
-		SvarogApplication.getSharedInstance().splash(messageSource.getMessage("startup.creatingInterface"), true);
+		SvarogApplication.getSharedInstance().splash(_("Creating interface"), true);
 
 		Method method = elementManager.getMethodManager().getMethodByName("mp5");
 		if (method == null || !(method instanceof MP5Method)) {
@@ -141,11 +138,11 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 
 		addWindowListeners();
 
-		SvarogApplication.getSharedInstance().splash(messageSource.getMessage("startup.restoringTasks"), true);
+		SvarogApplication.getSharedInstance().splash(_("Restoring tasks"), true);
 
 		restoreTasks();
 
-		SvarogApplication.getSharedInstance().splash(messageSource.getMessage("startup.finishingMainFrameInitialization"), true);
+		SvarogApplication.getSharedInstance().splash(_("Finishing"), true);
 
 		pack();
 
@@ -161,7 +158,7 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 
 	public void bootstrap() {
 
-		SvarogApplication.getSharedInstance().splash(messageSource.getMessage("startup.restoringWorkspace"), false);
+		SvarogApplication.getSharedInstance().splash(_("Restoring workspace"), false);
 
 		if (elementManager.getApplicationConfig().isRestoreWorkspace()) {
 			restoreWorkspace();
@@ -243,17 +240,7 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 			public void windowClosing(WindowEvent ev) {
 				elementManager.getCloseWindowAction().actionPerformed(new ActionEvent(ViewerMainFrame.this,0,"close"));
 			}
-
 		});
-
-	}
-
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
-	}
-
-	public void setMessageSource(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
 	}
 
 	public void setStatus(String status) {

@@ -63,7 +63,7 @@ public class ExampleMethodDescriptor implements ApplicationIterableMethodDescrip
 	@Override
 	public ExampleMethodDialog getConfigurer(ApplicationMethodManager methodManager) {
 		if (configurer == null) {
-			configurer = new ExampleMethodDialog(methodManager.getMessageSource(), methodManager.getDialogParent());
+			configurer = new ExampleMethodDialog(methodManager.getDialogParent());
 			configurer.initialize(methodManager);
 		}
 		return configurer;
@@ -73,7 +73,6 @@ public class ExampleMethodDescriptor implements ApplicationIterableMethodDescrip
 	public ExampleMethodConsumer getConsumer(ApplicationMethodManager methodManager) {
 		if (consumer == null) {
 			consumer = new ExampleMethodConsumer();
-			consumer.setMessageSource(methodManager.getMessageSource());
 		}
 		return consumer;
 	}
@@ -82,7 +81,6 @@ public class ExampleMethodDescriptor implements ApplicationIterableMethodDescrip
 	public MethodIterationResultConsumer getIterationConsumer(ApplicationMethodManager methodManager) {
 		if (iterationConsumer == null) {
 			iterationConsumer = new ExampleMethodIterationConsumer();
-			iterationConsumer.setMessageSource(methodManager.getMessageSource());
 			iterationConsumer.setRocDialog(getRocDialog(methodManager));
 		}
 		return iterationConsumer;
@@ -90,7 +88,7 @@ public class ExampleMethodDescriptor implements ApplicationIterableMethodDescrip
 
 	public RocDialog getRocDialog(ApplicationMethodManager methodManager) {
 		if (rocDialog == null) {
-			rocDialog = new RocDialog(methodManager.getMessageSource(), methodManager.getDialogParent(),true);
+			rocDialog = new RocDialog(methodManager.getDialogParent(),true);
 			rocDialog.setFileChooser(methodManager.getFileChooser());
 			rocDialog.setTableToTextExporter(methodManager.getTableToTextExporter());
 		}

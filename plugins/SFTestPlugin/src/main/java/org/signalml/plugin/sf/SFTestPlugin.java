@@ -16,12 +16,21 @@ import org.signalml.plugin.export.SvarogAccess;
 public class SFTestPlugin implements Plugin {
     private SvarogAccess svarogAccess;
     private PluginAuth pluginAuth;
+    private static final String I18nCatalogId = "I18nBundle";
 
     private void testI18nPlural(int k) {
-        String sraw= svarogAccess.getI18nAccess().translateN(pluginAuth, "I18nBundle", "Deleted one file", "Deleted {0} files", k);
+        String sraw= svarogAccess.getI18nAccess().translateN(pluginAuth, I18nCatalogId, "Deleted one file", "Deleted {0} files", k);
         SvarogLogger.getSharedInstance().debug("SFTestPlugin.testI18nPlural(): raw=" + sraw);
         String msg = MessageFormat.format(sraw, k);
         SvarogLogger.getSharedInstance().debug("SFTestPlugin.testI18nPlural(): msg=" + msg);
+    }
+    
+    protected String _(String msgKey) {
+    	return svarogAccess.getI18nAccess().translate(pluginAuth, I18nCatalogId, msgKey);
+    }
+
+    protected String N_(String msgKey, String plural, long n) {
+    	return svarogAccess.getI18nAccess().translateN(pluginAuth, I18nCatalogId, msgKey, plural, n);
     }
 
 	public void register(SvarogAccess sa, PluginAuth auth) throws SignalMLException {
@@ -42,5 +51,9 @@ public class SFTestPlugin implements Plugin {
         testI18nPlural(1);
         testI18nPlural(4);
         testI18nPlural(5);
+
+        _("yet another sample text");
+        _("yet another sample text (2)");
+        N_("One little duck", "{0} little ducks", 5);
 	}
 }
