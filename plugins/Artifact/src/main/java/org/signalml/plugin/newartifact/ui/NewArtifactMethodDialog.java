@@ -23,8 +23,9 @@ import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.dialog.AbstractPresetDialog;
 import org.signalml.app.view.montage.SourceMontageDialog;
 import org.signalml.domain.montage.Montage;
+import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.SourceMontage;
-import org.signalml.domain.montage.eeg.EegChannel;
+import org.signalml.domain.montage.system.ChannelFunction;
 import org.signalml.plugin.data.PluginConfigForMethod;
 import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.SignalMLException;
@@ -233,44 +234,32 @@ public class NewArtifactMethodDialog extends AbstractPresetDialog {
 
 	private void configureAvailableTypes() {
 
-		int f3 = currentMontage
-			 .getFirstSourceChannelWithFunction(EegChannel.F3);
-		int f4 = currentMontage
-			 .getFirstSourceChannelWithFunction(EegChannel.F4);
-		int c3 = currentMontage
-			 .getFirstSourceChannelWithFunction(EegChannel.C3);
-		int c4 = currentMontage
-			 .getFirstSourceChannelWithFunction(EegChannel.C4);
-		int fp1 = currentMontage
-			  .getFirstSourceChannelWithFunction(EegChannel.FP1);
-		int fp2 = currentMontage
-			  .getFirstSourceChannelWithFunction(EegChannel.FP2);
-		int f7 = currentMontage
-			 .getFirstSourceChannelWithFunction(EegChannel.F7);
-		int f8 = currentMontage
-			 .getFirstSourceChannelWithFunction(EegChannel.F8);
-		int t3 = currentMontage
-			 .getFirstSourceChannelWithFunction(EegChannel.T3);
-		int t4 = currentMontage
-			 .getFirstSourceChannelWithFunction(EegChannel.T4);
-		int eogl = currentMontage
-			   .getFirstSourceChannelWithFunction(EegChannel.EOGL);
-		int eogp = currentMontage
-			   .getFirstSourceChannelWithFunction(EegChannel.EOGP);
-		int ecg = currentMontage
-			  .getFirstSourceChannelWithFunction(EegChannel.ECG);
+		SourceChannel f3 = currentMontage.getSourceChannelByLabel("F3");
+		SourceChannel f4 = currentMontage.getSourceChannelByLabel("F4");
+		SourceChannel c3 = currentMontage.getSourceChannelByLabel("C3");
+		SourceChannel c4 = currentMontage.getSourceChannelByLabel("C4");
+		SourceChannel fp1 = currentMontage.getSourceChannelByLabel("Fp1");
+		SourceChannel fp2 = currentMontage.getSourceChannelByLabel("Fp2");
+		SourceChannel f7 = currentMontage.getSourceChannelByLabel("F7");
+		SourceChannel f8 = currentMontage.getSourceChannelByLabel("F8");
+		SourceChannel t3 = currentMontage.getSourceChannelByLabel("T3");
+		SourceChannel t4 = currentMontage.getSourceChannelByLabel("T4");
+		SourceChannel eogl = currentMontage.getSourceChannelByLabel("EOGL");
+		SourceChannel eogp = currentMontage.getSourceChannelByLabel("EOGP");
+		int[] ecg = currentMontage.getSourceChannelsByFunction(ChannelFunction.ECG);
 
-		typesPanel.setLockOnType(NewArtifactType.ECG, (ecg < 0));
+		boolean noECG = (ecg == null) || (ecg.length == 0);
+		typesPanel.setLockOnType(NewArtifactType.ECG, noECG);
 
-		if ((f3 < 0) || (f4 < 0) || (c3 < 0) || (c4 < 0) || (fp1 < 0)
-				|| (fp2 < 0)) {
+		if ((f3 == null) || (f4 == null) || (c3 == null) || (c4 == null) || (fp1 == null)
+				|| (fp2 == null)) {
 			typesPanel.setLockOnType(NewArtifactType.EYEBLINKS, true);
 		} else {
 			typesPanel.setLockOnType(NewArtifactType.EYEBLINKS, false);
 		}
 
-		if (((f7 < 0) || (f8 < 0)) && ((t3 < 0) || (t4 < 0))
-				&& ((eogl < 0) || (eogp < 0))) {
+		if (((f7 == null) || (f8 == null)) && ((t3 == null) || (t4 == null))
+				&& ((eogl == null) || (eogp == null))) {
 			typesPanel.setLockOnType(NewArtifactType.EYE_MOVEMENT, true);
 		} else {
 			typesPanel.setLockOnType(NewArtifactType.EYE_MOVEMENT, false);
