@@ -33,6 +33,7 @@ import org.signalml.plugin.impl.PluginAccessClass;
 import org.signalml.plugin.impl.SvarogAccessI18nImpl;
 import org.signalml.util.SvarogConstants;
 import org.signalml.app.SvarogI18n;
+import static org.signalml.app.SvarogApplication._;
 
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
@@ -755,7 +756,7 @@ public abstract class AbstractDialog extends JDialog {
 		 * Constructor. Sets the description and the icon.
 		 */
 		public OkAction() {
-			super(getSvarogI18n()._("Ok"));
+			super(_("Ok"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/ok.png"));
 		}
 
@@ -806,7 +807,7 @@ public abstract class AbstractDialog extends JDialog {
 		 * Constructor. Sets the description and the icon.
 		 */
 		public CancelAction() {
-			super(getSvarogI18n()._("Cancel"));
+			super(_("Cancel"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/cancel.png"));
 		}
 
@@ -854,7 +855,7 @@ public abstract class AbstractDialog extends JDialog {
 		public ContextHelpAction(URL url) {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/help.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,getSvarogI18n()._("Display context help for this dialog"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Display context help for this dialog"));
 			contextHelpURL = url;
 		}
 
