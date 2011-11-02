@@ -111,7 +111,6 @@ public class TimeDomainFilterParametersPanel extends JPanel {
 
 	/**
 	 * Constructor.
-	 * @param messageSource the source of localized messages (labels).
 	 */
 	public  TimeDomainFilterParametersPanel() {
 		createInterface();

@@ -63,13 +63,11 @@ public class FFTWindowTypePanel extends JPanel {
 	private ButtonGroup windowTypeButtonGroup;
 
 	/**
-	 * Constructor. Sets the {@link SvarogI18n message source} and
-	 * initializes this panel.
-	 * @param messageSource the source of messages (labels)
+	 * Constructor. Initializes the panel.
 	 * @param wide {@code true} if this panel should be wide (have 3 columns)
 	 * or {@code false} if high (2 columns, 5 rows)
 	 */
-	public  FFTWindowTypePanel( boolean wide) {
+	public FFTWindowTypePanel(boolean wide) {
 		super();
 		initialize(wide);
 	}

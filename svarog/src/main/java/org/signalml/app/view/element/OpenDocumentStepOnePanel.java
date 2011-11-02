@@ -84,10 +84,9 @@ public class OpenDocumentStepOnePanel extends JPanel {
 	private JPanel fileTypePanel = null;
 
 	/**
-	 * Constructor. Sets the message source and initializes this panel.
-	 * @param messageSource the source of messages (labels)
+	 * Constructor. Initializes the panel.
 	 */
-	public  OpenDocumentStepOnePanel() {
+	public OpenDocumentStepOnePanel() {
 		super();
 		initialize();
 	}

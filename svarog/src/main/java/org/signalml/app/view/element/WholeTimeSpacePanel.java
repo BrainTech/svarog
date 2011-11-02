@@ -59,10 +59,9 @@ public class WholeTimeSpacePanel extends JPanel {
 	private JCheckBox completePagesCheckBox;
 
 	/**
-	 * Constructor. Sets the source of messages and initializes this panel.
-	 * @param messageSource the source of messages
+	 * Constructor. Initializes the panel.
 	 */
-	public  WholeTimeSpacePanel() {
+	public WholeTimeSpacePanel() {
 		super();
 		initialize();
 	}

@@ -38,8 +38,6 @@ public class OpenBookDocumentAction extends AbstractSignalMLAction {
 
 	/**
 	 * Creates this action.
-	 * @param messageSource message source capable of resolving localized
-	 * messages
 	 */
 	public  OpenBookDocumentAction() {
 		super();

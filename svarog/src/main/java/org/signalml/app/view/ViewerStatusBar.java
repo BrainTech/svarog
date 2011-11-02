@@ -581,7 +581,4 @@ public class ViewerStatusBar extends JPanel implements ActionFocusListener, Prop
 	public void setActionFocusManager(ActionFocusManager actionFocusManager) {
 		this.actionFocusManager = actionFocusManager;
 	}
-
-	
-
 }

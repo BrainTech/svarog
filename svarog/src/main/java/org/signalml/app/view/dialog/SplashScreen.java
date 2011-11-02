@@ -68,7 +68,6 @@ public class SplashScreen extends JDialog {
 	 * <ul>
 	 * <li>the {@link SplashPanel panel} with the logo of Svarog,</li>
 	 * <li>the {@link #getProgressBar() progress bar}.</li></ul>
-	 * @param messageSource the source of messages (labels)
 	 */
 	public  SplashScreen() {
 

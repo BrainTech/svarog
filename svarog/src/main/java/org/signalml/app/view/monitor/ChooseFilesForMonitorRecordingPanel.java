@@ -51,7 +51,6 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 	/**
 	 * Constructor.
 	 *
-	 * @param messageSource the message source accessor capable of resolving
 	 * localized message codes
 	 */
 	public  ChooseFilesForMonitorRecordingPanel() {

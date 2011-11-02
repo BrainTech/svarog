@@ -52,7 +52,6 @@ public class ProgressDialog extends org.signalml.app.view.dialog.AbstractSvarogD
         /**
          * Default constructor.
          *
-         * @param messageSource the message source
          * @param w parent window
          * @param isModal if this window is modal
          * @param caption window's caption

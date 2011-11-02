@@ -72,7 +72,6 @@ public class SignalParametersPanelForSignalMLSignalFile extends JPanel {
         /**
          * Constructor initializes the panel.
          *
-         * @param messageSource {@link #messageSource}
          * @param elementManager {@link #elementManager}
          */
         public  SignalParametersPanelForSignalMLSignalFile( ViewerElementManager elementManager) {

@@ -130,13 +130,11 @@ public class MiscellaneousConfigPanel extends JPanel {
 	private SignalMLOperationMode mode;
 
 	/**
-	 * Constructor. Sets the {@link SvarogI18n message source} and
-	 * initializes this panel.
-	 * @param messageSource the source of messages (labels)
+	 * Constructor. Initializes the panel.
 	 * @param mode the {@link SignalMLOperationMode mode} in which Svarog
 	 * is running (application or applet)
 	 */
-	public  MiscellaneousConfigPanel( SignalMLOperationMode mode) {
+	public MiscellaneousConfigPanel(SignalMLOperationMode mode) {
 		super();
 		this.mode = mode;
 		initialize();

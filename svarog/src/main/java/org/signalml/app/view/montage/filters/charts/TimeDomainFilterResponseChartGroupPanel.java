@@ -93,8 +93,6 @@ public class TimeDomainFilterResponseChartGroupPanel extends FilterResponseChart
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source capable of resolving localized
-	 * messages
 	 * @param currentFilter the filter to be visualized
 	 */
 	public  TimeDomainFilterResponseChartGroupPanel( TimeDomainSampleFilter currentFilter) {

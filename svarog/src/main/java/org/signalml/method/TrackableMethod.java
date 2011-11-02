@@ -28,7 +28,6 @@ public interface TrackableMethod {
          *  Returns the label for the given ticker. May use provided SvarogI18n for
 	 *  internationalization.
 	 *
-	 * @param messageSource the message source accessor capable of resolving localized message codes
 	 * @param ticker the number of the ticker
 	 * @return the label for the ticker
 	 */

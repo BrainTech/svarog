@@ -24,11 +24,9 @@ public class OpenBookOptionsPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Constructor. Sets the {@link SvarogI18n message source} and
-	 * initializes this panel.
-	 * @param messageSource the source of messages (labels)
+	 * Constructor. Initializes the panel.
 	 */
-	public  OpenBookOptionsPanel() {
+	public OpenBookOptionsPanel() {
 		super();
 		initialize();
 	}

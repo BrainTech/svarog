@@ -91,7 +91,6 @@ public class EmbeddedFileChooserFavorites extends JPanel implements
 	/* Creates panel and all its gui components.
 	 * 
 	 * @param fc parent file chooser
-	 * @param messageSource an object capable of resolving localized messages
 	 * @param applicationConfiguration an object providing application configuration stored in files
 	 */
  	public EmbeddedFileChooserFavorites(JFileChooser fc, ApplicationConfiguration applicationConfiguration) {

@@ -70,8 +70,6 @@ public class FFTWindowTypePanel extends JPanel {
 	 * Constructor. Sets the {@link SvarogAccessI18n message source} and
 	 * initializes this panel.
 	 * 
-	 * @param messageSource
-	 *            the source of messages (labels)
 	 * @param wide
 	 *            {@code true} if this panel should be wide (have 3 columns) or
 	 *            {@code false} if high (2 columns, 5 rows)

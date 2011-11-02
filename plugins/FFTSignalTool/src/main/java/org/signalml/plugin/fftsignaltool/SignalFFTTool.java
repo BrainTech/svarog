@@ -58,7 +58,6 @@ public class SignalFFTTool extends AbstractSignalTool {
 	 * ExportedSignalView signal view} for which this FFT tool is
 	 * created.
 	 * @param signalView the signal view
-	 * @param messageSource the source of messages
 	 */
 	public SignalFFTTool(ExportedSignalView signalView) {
 		super(signalView);
@@ -71,7 +70,6 @@ public class SignalFFTTool extends AbstractSignalTool {
 	 * Constructor. Sets the source of messages. The {@link
 	 * ExportedSignalView signal view} for which this FFT tool is
 	 * created must be set separately.
-	 * @param messageSource the source of messages
 	 */
 	public  SignalFFTTool() {
 		super();

@@ -14,8 +14,6 @@ public class GroupDelayResponseChartPanel extends ResponseChartPanel {
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source capable of resolving localized
-	 * messages
 	 */
 	public  GroupDelayResponseChartPanel() {
 		super();

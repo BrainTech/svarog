@@ -88,7 +88,6 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
         /**
          * Default constructor.
          *
-         * @param messageSource {@link #messageSource}
          * @param elementManager {@link #elementManager}
          * @param sourcePanel {@link #sourcePanel}
          */

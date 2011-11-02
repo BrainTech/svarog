@@ -33,7 +33,6 @@ public class PluginDialog extends org.signalml.app.view.dialog.AbstractSvarogDia
 	
 	/**
 	 * Constructor.
-	 * @param messageSource the source of messages
 	 * @param w the parent window
 	 * @param isModal specifies whether dialog blocks input to other
      * windows when shown. <code>null</code> value and unsupported modality

@@ -107,8 +107,7 @@ public class SignalSelectionPanel extends JPanel {
 	private boolean withChannelSelection;
 
 	/**
-	 * Constructor. Sets the source of messages and initializes this panel.
-	 * @param messageSource the source of messages
+	 * Constructor. Initializes the panel.
 	 * @param withChannelSelection {@code true} if this panel should allow to
 	 * select a channel (for a channel selection), {@code false} otherwise
 	 */

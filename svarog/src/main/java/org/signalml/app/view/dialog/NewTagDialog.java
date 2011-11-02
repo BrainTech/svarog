@@ -67,15 +67,14 @@ public class NewTagDialog extends org.signalml.app.view.dialog.AbstractSvarogDia
 	private final StyledTagSetPresetManager styledTagSetPresetManager;
 
 	/**
-	 * Constructor. Sets message source, parent window and if this dialog
+	 * Constructor. Sets parent window and if this dialog
 	 * blocks top-level windows.
-	 * @param messageSource message source to set
 	 * @param styledTagSetPresetManager {@link PresetManager} handling tag style presets
 	 * @param f the parent window or null if there is no parent
-	 * @param isModal true, dialog blocks top-level windows, false otherwise
+	 * @param isModal dialog blocks top-level windows if true
 	 */
-	public  NewTagDialog( StyledTagSetPresetManager styledTagSetPresetManager, Window f, boolean isModal) {
-		super( f, isModal);
+	public NewTagDialog(StyledTagSetPresetManager styledTagSetPresetManager, Window f, boolean isModal) {
+		super(f, isModal);
 		this.styledTagSetPresetManager = styledTagSetPresetManager;
 	}
 

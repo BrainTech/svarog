@@ -151,7 +151,6 @@ public class ApplicationPreferencesDialog extends org.signalml.app.view.dialog.A
 	 * Constructor. Sets message source, parent window, if this dialog
 	 * blocks top-level windows and the {@link SignalMLOperationMode mode}
 	 * in which Svarog is operating.
-	 * @param messageSource message source to set
 	 * @param mode the mode in which Svarog is operating
 	 * @param f the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise

@@ -39,8 +39,7 @@ public class SignalParametersPanel extends JPanel {
 	private PagingParametersPanel pagingParametersPanel;
 
 	/**
-	 * Constructor. Sets the source of messages and initializes this panel.
-	 * @param messageSource the source of messages
+	 * Constructor. Initializes the panel.
 	 */
 	public  SignalParametersPanel() {
 		super();

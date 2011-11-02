@@ -53,10 +53,15 @@ public class EEGLabExportDialog extends org.signalml.app.view.dialog.AbstractSva
          */
         private FileSelectPanel fileSelectPanel;
 
-        public  EEGLabExportDialog( Window w, boolean isModal) {
-
+	/**
+	 * Constructor. Sets parent window and if this dialog
+	 * blocks top-level windows.
+	 * @param w the parent window or null if there is no parent
+	 * @param isModal dialog blocks top-level windows if true
+	 */
+        public EEGLabExportDialog(Window w, boolean isModal) {
                 super( w, isModal);
-        }        
+        }
 
         /**
          * Sets window's title then calls {@link AbstractDialog#initialize()}.

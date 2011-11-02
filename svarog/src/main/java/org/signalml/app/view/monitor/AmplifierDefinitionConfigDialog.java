@@ -79,7 +79,6 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
         /**
          * Default constructor.
          *
-         * @param messageSource the message source
          * @param presetManager the preset manager
          * @param w parent window
          * @param isModal if this window is modal

@@ -39,8 +39,6 @@ public class SignalSourceSelectionPanel extends TitledPanelWithABorder implement
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source capable of resolving localized
-	 * messages.
 	 */
 	public  SignalSourceSelectionPanel() {
 		createInterface();

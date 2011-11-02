@@ -16,8 +16,6 @@ public class FFTFrequencyResponseChartPanel extends FrequencyResponseChartPanel 
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source capable of resolving localized
-	 * messages
 	 */
 	public  FFTFrequencyResponseChartPanel() {
 		super();

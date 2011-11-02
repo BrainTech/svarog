@@ -30,7 +30,6 @@ public class TagPresetSelectionPanel extends AbstractSignalMLPanel {
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source for resolving localized messages
 	 * @param styledTagSetPresetManager {@link PresetManager} handling the
 	 * tag styles presets.
 	 */

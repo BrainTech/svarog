@@ -76,8 +76,7 @@ public class RequiredSignalParametersPanel extends JPanel implements FocusListen
 	private boolean wasCalibrationOffsetFocused = false;
 
 	/**
-	 * Constructor. Sets the source of messages and initializes this panel.
-	 * @param messageSource the source of messages
+	 * Constructor. Initializes the panel.
 	 */
 	public  RequiredSignalParametersPanel() {
 		super();

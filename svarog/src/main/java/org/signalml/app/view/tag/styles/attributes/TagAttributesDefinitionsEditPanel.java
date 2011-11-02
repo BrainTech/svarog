@@ -37,7 +37,6 @@ public class TagAttributesDefinitionsEditPanel extends AbstractSignalMLPanel {
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source for resolving localized messages
 	 * @param tagStylePropertiesPanel panel for editing tag styled properties
 	 */
 	public  TagAttributesDefinitionsEditPanel( TagStylePropertiesPanel tagStylePropertiesPanel) {

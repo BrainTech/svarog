@@ -169,7 +169,6 @@ public enum ManagedDocumentType implements MessageSourceResolvable {
 	/**
 	 * Returns the filters of the files basing on the
 	 * {@link #getFileFilterExtensions() extensions} of the files.
-	 * @param messageSource the source of messages (labels) in Svarog
 	 * @return the created filters
 	 */
 	public FileFilter[] getFileFilters() {

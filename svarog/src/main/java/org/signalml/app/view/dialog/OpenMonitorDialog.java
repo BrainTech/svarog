@@ -74,7 +74,6 @@ public class OpenMonitorDialog extends org.signalml.app.view.dialog.AbstractSvar
 
 	/**
 	 * Creates a new
-	 * @param messageSource the message source accessor capable of resolving localized message codes
 	 * @param viewerElementManager a {@link ViewerElementManager} which contains
 	 * a {@link JmxClient}.
 	 */
@@ -85,7 +84,6 @@ public class OpenMonitorDialog extends org.signalml.app.view.dialog.AbstractSvar
 
 	/**
 	 *
-	 * @param messageSource the message source accessor capable of resolving localized message codes
 	 * @param viewerElementManager a {@link ViewerElementManager} which contains
 	 * a {@link JmxClient}.
 	 * @param f the parent window or null if there is no parent

@@ -36,11 +36,9 @@ public class OpenTagOptionsPanel extends JPanel {
 	private JComboBox signalDocumentComboBox;
 
 	/**
-	 * Constructor. Sets the {@link SvarogI18n message source} and
-	 * initializes this panel.
-	 * @param messageSource the source of messages (labels)
+	 * Constructor. Initializes the panel.
 	 */
-	public  OpenTagOptionsPanel() {
+	public OpenTagOptionsPanel() {
 		super();
 		initialize();
 	}

@@ -214,8 +214,6 @@ public class SignalFFTSettingsPanel extends JPanel {
 	 * Constructor. Sets the {@link SvarogAccessI18n message source} and
 	 * initializes this panel.
 	 * 
-	 * @param messageSource
-	 *            the source of messages (labels)
 	 * @param hasCloseCross
 	 *            {@code true} if the panel should has a cross which closes it,
 	 *            {@code false} otherwise

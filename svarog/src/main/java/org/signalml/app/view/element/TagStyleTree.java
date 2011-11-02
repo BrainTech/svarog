@@ -25,7 +25,6 @@ public class TagStyleTree extends AbstractViewerTree {
 	 * Constructor. Sets the source of messages and creates this tree using
 	 * the given {@link TagStyleTreeModel model}.
 	 * @param model the model for this tree
-	 * @param messageSource the source of messages (labels)
 	 */
 	public TagStyleTree(TagStyleTreeModel model) {
 		super(model);

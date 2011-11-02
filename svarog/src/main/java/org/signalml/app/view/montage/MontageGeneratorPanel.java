@@ -147,7 +147,6 @@ public class MontageGeneratorPanel extends JPanel {
 	/**
 	 * Constructor. Sets the source of messages and {@link #initialize()
 	 * initializes} this panel
-	 * @param messageSource the source of messages (labels)
 	 */
 	public  MontageGeneratorPanel() {
 		super();

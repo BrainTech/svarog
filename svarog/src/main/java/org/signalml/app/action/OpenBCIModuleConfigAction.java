@@ -26,7 +26,6 @@ public class OpenBCIModuleConfigAction extends AbstractSignalMLAction {
         /**
          * Constructor sets text and tooltip.
          *
-         * @param messageSource the message source
          */
         public  OpenBCIModuleConfigAction() {
 

@@ -79,17 +79,8 @@ public abstract class AbstractWizardDialog extends AbstractDialog {
 	private int currentStep = 0;
 
 	/**
-	 * Constructor. Sets message source.
-	 * @param messageSource message source to set
-	 */
-	public  AbstractWizardDialog() {
-		super();
-	}
-
-	/**
 	 * Constructor. Sets message source, parent window and if this dialog
 	 * blocks top-level windows.
-	 * @param messageSource message source to set
 	 * @param f the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */

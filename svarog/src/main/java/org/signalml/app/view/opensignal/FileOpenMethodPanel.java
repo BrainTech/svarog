@@ -35,8 +35,6 @@ public class FileOpenMethodPanel extends JPanel {
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source capable of resolving localized
-	 * messages
 	 */
 	public  FileOpenMethodPanel() {
 		createInterface();

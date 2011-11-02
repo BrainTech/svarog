@@ -54,7 +54,6 @@ public class ExportSignalDialog extends AbstractSignalSpaceAwarePresetDialog {
 	/**
 	 * Constructor. Sets message source, {@link PresetManager preset
 	 * manager}, parent window and if this dialog blocks top-level windows.
-	 * @param messageSource message source to set
 	 * @param presetManager the preset manager to set
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
@@ -66,7 +65,6 @@ public class ExportSignalDialog extends AbstractSignalSpaceAwarePresetDialog {
 	/**
 	 * Constructor. Sets message source and the {@link PresetManager preset
 	 * manager}.
-	 * @param messageSource message source to set
 	 * @param presetManager the preset manager to set
 	 */
 	public  ExportSignalDialog( PresetManager presetManager) {

@@ -61,7 +61,6 @@ public class SourceMontageTable extends JTable {
 	 * Multiple rows of this table can be selected but the columns
 	 * can not be selected at all.
 	 * @param model the {@link SourceMontageTableModel model} for this table
-	 * @param messageSource the source of messages (labels)
 	 */
 	public SourceMontageTable(SourceMontageTableModel model) {
 		super(model, (TableColumnModel) null);

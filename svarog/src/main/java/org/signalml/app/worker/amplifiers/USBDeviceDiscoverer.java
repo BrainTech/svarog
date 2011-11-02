@@ -15,7 +15,6 @@ public class USBDeviceDiscoverer extends AbstractDeviceDiscoverer {
         /**
          * Default constructor.
          *
-         * @param messageSource {@link #messageSource}
          */
         public  USBDeviceDiscoverer() {
                 

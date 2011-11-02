@@ -15,15 +15,6 @@ import javax.swing.JPanel;
  * @author Piotr Szachewicz
  */
 public class AbstractSignalMLPanel extends JPanel {
-
-	/**
-	 * Constructor.
-	 * @param messageSource message Source capable of returning localized
-	 * messages
-	 */
-	public  AbstractSignalMLPanel() {
-	}
-
 	/**
 	 * Sets enabled to this panel and all it's children.
 	 * Clears all fields if enabled == false.

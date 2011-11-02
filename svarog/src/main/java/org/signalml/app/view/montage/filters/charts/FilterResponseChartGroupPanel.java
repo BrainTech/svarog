@@ -31,7 +31,6 @@ public abstract class FilterResponseChartGroupPanel<T extends SampleFilterDefini
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source capable of resolving localized messages
 	 * @param currentFilter the filter which will be visualized
 	 */
 	public  FilterResponseChartGroupPanel( T currentFilter) {

@@ -40,8 +40,6 @@ public class FFTFilterResponseChartGroupPanel extends FilterResponseChartGroupPa
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source capable of resolving localized
-	 * messages
 	 * @param currentFilter the filter to be visualized
 	 */
 	public  FFTFilterResponseChartGroupPanel( FFTSampleFilter currentFilter) {

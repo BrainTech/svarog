@@ -23,12 +23,6 @@ public class ResolvableTableCellRenderer extends DefaultTableCellRenderer {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Constructor.
-	 */
-	public  ResolvableTableCellRenderer() {
-	}
-
-	/**
 	 * {@link DefaultTableCellRenderer#getTableCellRendererComponent(JTable,
 	 * Object, boolean, boolean, int, int) Creates} the label to be used as
 	 * the contents of the cell.

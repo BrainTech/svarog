@@ -23,7 +23,6 @@ public class SignalParametersPanelForAmplifierConnection extends AbstractSignalP
         /**
          * Default constructor.
          *
-         * @param messageSource {@link #messageSource}                                        
          * @param applicationConfiguration {@link #applicationConfiguration}
          */
         public  SignalParametersPanelForAmplifierConnection( ApplicationConfiguration applicationConfiguration) {

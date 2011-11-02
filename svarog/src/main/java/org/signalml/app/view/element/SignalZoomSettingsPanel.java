@@ -78,13 +78,11 @@ public class SignalZoomSettingsPanel extends JPanel {
 	private boolean hasCloseCross;
 
 	/**
-	 * Constructor. Sets the {@link SvarogI18n message source} and
-	 * initializes this panel.
-	 * @param messageSource the source of messages (labels)
+	 * Constructor. Initializes the panel.
 	 * @param hasCloseCross {@code true} if the panel should has a cross which
 	 * closes it, {@code false} otherwise
 	 */
-	public  SignalZoomSettingsPanel( boolean hasCloseCross) {
+	public SignalZoomSettingsPanel(boolean hasCloseCross) {
 		super();
 		this.hasCloseCross = hasCloseCross;
 		initialize();

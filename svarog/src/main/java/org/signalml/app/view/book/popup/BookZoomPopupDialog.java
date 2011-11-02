@@ -24,12 +24,8 @@ public class BookZoomPopupDialog extends AbstractPopupDialog {
 
 	private BookZoomSettingsPanel bookZoomSettingsPanel;
 
-	public  BookZoomPopupDialog() {
-		super();
-	}
-
-	public  BookZoomPopupDialog( Window w, boolean isModal) {
-		super( w, isModal);
+	public BookZoomPopupDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	@Override

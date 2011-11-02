@@ -69,9 +69,8 @@ public class FileSelectPanel extends JPanel {
 
 	/**
 	 * This is the default constructor
-	 * @param messageSource the source of messages (labels)
 	 */
-	public  FileSelectPanel( String selectFilePrompt) {
+	public FileSelectPanel(String selectFilePrompt) {
 		super();
 		this.selectFileLabel = new JLabel(selectFilePrompt);
 		initialize();
@@ -80,7 +79,7 @@ public class FileSelectPanel extends JPanel {
 	/**
 	 * This constructor takes two additional parameters: {@link #filters} and {@link #allFilters}
 	 */
-	public  FileSelectPanel( String selectFilePrompt, HashMap<String, String[]> filters, boolean allFilters) {
+	public FileSelectPanel(String selectFilePrompt, HashMap<String, String[]> filters, boolean allFilters) {
 		super();
 		this.selectFileLabel = new JLabel(selectFilePrompt);
                 this.filters = filters;

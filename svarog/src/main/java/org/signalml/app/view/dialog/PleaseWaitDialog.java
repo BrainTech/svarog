@@ -76,21 +76,12 @@ public class PleaseWaitDialog extends org.signalml.app.view.dialog.AbstractSvaro
 	private Object currentOwner;
 
 	/**
-	 * Constructor. Sets message source.
-	 * @param messageSource message source to set
-	 */
-	public  PleaseWaitDialog() {
-		super();
-	}
-
-	/**
-	 * Constructor. Sets message source, parent window.
+	 * Constructor. Sets parent window.
 	 * This dialog blocks top-level windows.
-	 * @param messageSource message source to set
 	 * @param w the parent window or null if there is no parent
 	 */
-	public  PleaseWaitDialog( Window w) {
-		super( w, true);
+	public PleaseWaitDialog(Window w) {
+		super(w, true);
 	}
 
 	/**

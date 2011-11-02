@@ -80,10 +80,9 @@ public class OpenDocumentStepTwoPanel extends JPanel {
 	private JLabel infoLabel = null;
 
 	/**
-	 * Constructor. Sets the message source and initializes this panel.
-	 * @param messageSource the source of messages (labels)
+	 * Constructor. Initializes the panel.
 	 */
-	public  OpenDocumentStepTwoPanel() {
+	public OpenDocumentStepTwoPanel() {
 		super();
 		initialize();
 	}

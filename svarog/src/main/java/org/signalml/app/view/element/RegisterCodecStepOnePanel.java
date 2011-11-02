@@ -42,11 +42,9 @@ public class RegisterCodecStepOnePanel extends JPanel {
 	private JPanel filePanel = null;
 
 	/**
-	 * Constructor. Sets the {@link SvarogI18n message source} and
-	 * initializes this panel.
-	 * @param messageSource the source of messages (labels)
+	 * Constructor. Initializes the panel.
 	 */
-	public  RegisterCodecStepOnePanel() {
+	public RegisterCodecStepOnePanel() {
 		super();
 		initialize();
 	}

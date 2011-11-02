@@ -31,7 +31,6 @@ public class BluetoothDeviceDiscoverer extends AbstractDeviceDiscoverer implemen
         /**
          * Default constructor.
          *
-         * @param messageSource {@link #messageSource}
          */
         public  BluetoothDeviceDiscoverer() {
 

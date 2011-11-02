@@ -27,7 +27,6 @@ public class AmplifierDefinitionConfigAction extends AbstractSignalMLAction {
         /**
          * Constructor sets text and tooltip.
          *
-         * @param messageSource the message source
          */
         public  AmplifierDefinitionConfigAction() {
                 

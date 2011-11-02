@@ -51,7 +51,6 @@ public class ReadXMLManifestAction extends AbstractSignalMLAction {
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source capable of resolving localized messages
 	 * @param parentSignalParametersPanel the signal parameters panel which
 	 * should be filled after calling this action.
 	 */

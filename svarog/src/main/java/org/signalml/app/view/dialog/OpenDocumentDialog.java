@@ -130,22 +130,13 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 	RawSignalDescriptor currentRawSignalDescriptor;
 
 	/**
-	 * Constructor. Sets message source.
-	 * @param messageSource message source to set
-	 */
-	public  OpenDocumentDialog() {
-		super();
-	}
-
-	/**
-	 * Constructor. Sets message source, parent window and if this dialog
+	 * Constructor. Sets parent window and if this dialog
 	 * blocks top-level windows.
-	 * @param messageSource message source to set
 	 * @param f the parent window or null if there is no parent
-	 * @param isModal true, dialog blocks top-level windows, false otherwise
+	 * @param dialog blocks top-level windows if true
 	 */
-	public  OpenDocumentDialog( Window f, boolean isModal) {
-		super( f, isModal);
+	public OpenDocumentDialog(Window f, boolean isModal) {
+		super(f, isModal);
 	}
 
 	/**

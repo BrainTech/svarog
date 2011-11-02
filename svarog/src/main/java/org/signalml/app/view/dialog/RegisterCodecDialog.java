@@ -61,22 +61,13 @@ public class RegisterCodecDialog extends AbstractWizardDialog {
 	private File profileDir;
 
 	/**
-	 * Constructor. Sets message source.
-	 * @param messageSource message source to set
-	 */
-	public  RegisterCodecDialog() {
-		super();
-	}
-
-	/**
-	 * Constructor. Sets message source, parent window and if this dialog
+	 * Constructor. Sets parent window and if this dialog
 	 * blocks top-level windows.
-	 * @param messageSource message source to set
 	 * @param f the parent window or null if there is no parent
-	 * @param isModal true, dialog blocks top-level windows, false otherwise
+	 * @param dialog blocks top-level windows if true
 	 */
-	public  RegisterCodecDialog( Window f, boolean isModal) {
-		super( f, isModal);
+	public RegisterCodecDialog(Window f, boolean isModal) {
+		super(f, isModal);
 	}
 
 	/**

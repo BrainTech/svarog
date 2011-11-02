@@ -30,8 +30,6 @@ public class SignalParametersPanelForRawSignalFile extends AbstractSignalParamet
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source capable of resolving localized
-	 * messages
 	 * @param applicationConfiguration the current application configuration
 	 */
 	public  SignalParametersPanelForRawSignalFile() {

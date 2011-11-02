@@ -13,8 +13,6 @@ public class ImpulseResponseChartPanel extends TimeDomainResponseChartPanel {
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source capable of resolving localized
-	 * messages
 	 */
 	public  ImpulseResponseChartPanel() {
 		super();

@@ -20,7 +20,6 @@ public class SignalParametersPanelForOpenBCI extends AbstractSignalParametersPan
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source capable of resolving localized messages
 	 * @param applicationConfiguration the configuration to be used
 	 */
 	public  SignalParametersPanelForOpenBCI() {

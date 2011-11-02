@@ -31,7 +31,6 @@ public class MonitorSignalParametersPanel extends JPanel {
 
 	/**
 	 * Constructor.
-	 * @param messageSource the message source accessor capable of resolving
 	 * localized message codes
 	 * @param applicationConfiguration the configuration of Svarog
 	 */

@@ -80,8 +80,7 @@ public class ChannelSpacePanel extends JPanel {
 	private String[] channels;
 
 	/**
-	 * Constructor. Sets the source of messages and initializes this panel.
-	 * @param messageSource the source of messages
+	 * Constructor. Initializes the panel.
 	 */
 	public  ChannelSpacePanel() {
 		super();

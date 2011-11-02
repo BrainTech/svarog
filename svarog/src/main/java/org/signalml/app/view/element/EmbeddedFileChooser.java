@@ -63,7 +63,6 @@ public class EmbeddedFileChooser extends JFileChooser {
      * default directory. This default depends on the operating system.
      * It is typically the "My Documents" folder on Windows, and the
      * user's home directory on Unix.
-     * @param messageSource an object capable of resolving localized messages
      */
 	public  EmbeddedFileChooser( ApplicationConfiguration applicationConfiguration) {
 		super();

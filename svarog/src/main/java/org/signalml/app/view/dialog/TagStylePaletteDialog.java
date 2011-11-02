@@ -189,7 +189,6 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 
 	/**
 	 * Constructor. Sets message source.
-	 * @param messageSource message source to set
 	 */
 	public  TagStylePaletteDialog( PresetManager presetManager) {
 		super( presetManager);
@@ -198,7 +197,6 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 	/**
 	 * Constructor. Sets message source, parent window and if this dialog
 	 * blocks top-level windows.
-	 * @param messageSource message source to set
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */

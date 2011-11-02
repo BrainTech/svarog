@@ -51,7 +51,6 @@ public class MontageFiltersTable extends JTable {
 	 * Adds the mouse listener which changes the selected row, when it is
 	 * clicked with a right mouse button.
 	 * @param model the model for this table
-	 * @param messageSource the source of messages (labels)
 	 */
 	public MontageFiltersTable(MontageFiltersTableModel model) {
 		super(model, (TableColumnModel) null);

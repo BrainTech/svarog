@@ -47,11 +47,9 @@ public class TaggingConfigPanel extends JPanel {
 	private JCheckBox saveFullMontageWithTagCheckBox;
 
 	/**
-	 * Constructor. Sets the {@link SvarogI18n message source} and
-	 * initializes this panel.
-	 * @param messageSource the source of messages (labels)
+	 * Constructor. Initializes the panel.
 	 */
-	public  TaggingConfigPanel() {
+	public TaggingConfigPanel() {
 		super();
 		initialize();
 	}

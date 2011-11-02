@@ -71,8 +71,7 @@ public class ProfilePathTypePanel extends JPanel {
 	private EmbeddedFileChooser fileChooser = null;
 
 	/**
-	 * Constructor. Sets the source of messages and initializes this panel.
-	 * @param messageSource the source of messages
+	 * Constructor. Initializes the panel.
 	 */
 	public  ProfilePathTypePanel() {
 		super();

@@ -70,10 +70,9 @@ public class TimeSpacePanel extends JPanel {
 	private MarkedTimeSpacePanel markedTimeSpacePanel;
 
 	/**
-	 * Constructor. Sets the source of messages and initializes this panel.
-	 * @param messageSource the source of messages
+	 * Constructor. Initializes the panel.
 	 */
-	public  TimeSpacePanel() {
+	public TimeSpacePanel() {
 		super();
 		initialize();
 	}

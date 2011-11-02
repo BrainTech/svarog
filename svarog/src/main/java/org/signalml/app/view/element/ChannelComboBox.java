@@ -21,7 +21,6 @@ public class ChannelComboBox extends ResolvableComboBox {
 	 * Calls the {@link ResolvableComboBox#ResolvableComboBox(
 	 * SvarogI18n) constructor} in {@link ResolvableComboBox parent},
 	 * sets the font and that there should be no border.
-	 * @param messageSource the source of messages (labels)
 	 */
 	public  ChannelComboBox() {
 		super();

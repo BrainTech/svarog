@@ -23,8 +23,6 @@ public class TimeDomainFilterFrequencyResponseChartPanel extends FrequencyRespon
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source capable of resolving localized
-	 * messages
 	 */
 	public  TimeDomainFilterFrequencyResponseChartPanel() {
 		super();

@@ -110,7 +110,6 @@ public class BookZoomSettingsPanel extends JPanel {
 	/**
 	 * Constructor. Sets the source of messages, if this panel should contain
 	 * the closing cross and initializes this panel
-	 * @param messageSource the source of messages (labels)
 	 * @param hasCloseCross @code true} if this panel should contain a cross
 	 * which closes this panel, {@code false} otherwise
 	 */

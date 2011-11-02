@@ -33,7 +33,6 @@ public class SignalRecordingConfigPanel extends JPanel {
 
         /**
          * Default constructor.
-         * @param messageSource {@link #messageSource}
          */
         public  SignalRecordingConfigPanel() {
                 super();

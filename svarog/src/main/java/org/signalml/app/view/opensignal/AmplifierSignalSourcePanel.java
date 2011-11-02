@@ -51,7 +51,6 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
         /**
          * Default constructor.
          *
-         * @param messageSource message source
          * @param viewerElementManager viewer element manager
          */
         public  AmplifierSignalSourcePanel( ViewerElementManager viewerElementManager) {

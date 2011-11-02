@@ -77,7 +77,6 @@ public class AutoSpinnerPanel extends JPanel {
 	/**
 	 * Constructor. Sets the source of messages and if this panel should be
 	 * compact (thinner).
-	 * @param messageSource the source of messages (labels)
 	 * @param compact @code true} if this panel should be thinner (60 pixel),
 	 * {@code false} otherwise (150 pixel)
 	 */
@@ -89,7 +88,6 @@ public class AutoSpinnerPanel extends JPanel {
 	/**
 	 * Constructor. Sets the source of messages, if this panel should be
 	 * compact (thinner), creates the spinner and initializes this panel.
-	 * @param messageSource the source of messages (labels)
 	 * @param value the value of the spinner
 	 * @param min the minimum value that can be used in spinner
 	 * @param max the maximum value that can be used in spinner
@@ -108,7 +106,6 @@ public class AutoSpinnerPanel extends JPanel {
 	/**
 	 * Constructor. Sets the source of messages, if this panel should be
 	 * compact (thinner), creates the spinner and initializes this panel.
-	 * @param messageSource the source of messages (labels)
 	 * @param value the value of the spinner
 	 * @param min the minimum value that can be used in spinner
 	 * @param max the maximum value that can be used in spinner
@@ -127,7 +124,6 @@ public class AutoSpinnerPanel extends JPanel {
 	/**
 	 * Constructor. Sets the source of messages, if this panel should be
 	 * compact (thinner), creates the spinner and initializes this panel.
-	 * @param messageSource the source of messages (labels)
 	 * @param value the value of the spinner
 	 * @param min the minimum value that can be used in spinner
 	 * @param max the maximum value that can be used in spinner

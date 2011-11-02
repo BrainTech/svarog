@@ -74,9 +74,7 @@ public class CodecManagerConfigPanel extends JPanel {
 
 
 	/**
-	 * Constructor. Sets the {@link SvarogI18n message source} and
-	 * initializes this panel.
-	 * @param messageSource the source of messages (labels)
+	 * Constructor. Initializes the panel.
 	 */
 	public  CodecManagerConfigPanel() {
 		super();

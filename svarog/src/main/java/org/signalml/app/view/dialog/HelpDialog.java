@@ -98,21 +98,12 @@ public class HelpDialog extends org.signalml.app.view.dialog.AbstractSvarogDialo
 	private ForwardAction forwardAction;
 
 	/**
-	 * Constructor. Sets the source of messages.
-	 * @param messageSource the source of messages
-	 */
-	public  HelpDialog() {
-		super();
-	}
-
-	/**
-	 * Constructor. Sets message source, parent window and if this dialog
+	 * Constructor. Sets parent window and if this dialog
 	 * blocks top-level windows.
-	 * @param messageSource message source to set
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public  HelpDialog(Window w, boolean isModal) {
+	public HelpDialog(Window w, boolean isModal) {
 		super(w, isModal);
 	}
 

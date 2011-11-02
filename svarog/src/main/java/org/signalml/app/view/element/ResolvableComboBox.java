@@ -24,11 +24,9 @@ public class ResolvableComboBox extends JComboBox {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Constructor. Sets the source of messages and the {@link CellRenderer
-	 * cell renderer}.
-	 * @param messageSource the source of messages (labels)
+	 * Constructor. Sets the {@link CellRenderer cell renderer}.
 	 */
-	public  ResolvableComboBox() {
+	public ResolvableComboBox() {
 		super();
 		setRenderer(new CellRenderer());
 	}

@@ -19,7 +19,6 @@ public class EditTagStylePresetsAction extends AbstractFocusableSignalMLAction<T
 
 	/**
 	 * Constructor.
-	 * @param messageSource messageSource to be used for localization.
 	 * @param tagStyleFocusSelector selector determining which tag
 	 * document is now opened
 	 */

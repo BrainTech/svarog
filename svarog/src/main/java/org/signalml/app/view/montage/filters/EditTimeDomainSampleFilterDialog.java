@@ -76,7 +76,6 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	/**
 	 * Constructor. Sets the message source, parent window, preset manager
 	 * for time domain filters and if this dialog blocks top-level windows.
-	 * @param messageSource message source to set
 	 * @param presetManager a {@link PresetManager} to manage the presets
 	 * configured in this window
 	 * @param w the parent window or null if there is no parent
@@ -90,7 +89,6 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	/**
 	 * Constructor. Sets the message source and a preset manager
 	 * for this window.
-	 * @param messageSource message source to set
 	 * @param presetManager a {@link PresetManager} to manage the presets
 	 * configured in this window
 	 */

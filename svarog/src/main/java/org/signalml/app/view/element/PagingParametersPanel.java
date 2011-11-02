@@ -51,11 +51,9 @@ public class PagingParametersPanel extends AbstractSignalMLPanel {
 	private JTextField blocksPerPageField;
 
 	/**
-	 * Constructor. Sets the {@link SvarogI18n message source} and
-	 * initializes this panel.
-	 * @param messageSource the source of messages (labels)
+	 * Constructor. Initializes the panel.
 	 */
-	public  PagingParametersPanel() {
+	public PagingParametersPanel() {
 		super();
 		initialize();
 	}

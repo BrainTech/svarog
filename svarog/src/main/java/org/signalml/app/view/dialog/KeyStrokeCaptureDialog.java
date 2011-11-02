@@ -41,21 +41,11 @@ public class KeyStrokeCaptureDialog extends org.signalml.app.view.dialog.Abstrac
 	private KeyStroke currentStroke = null;
 
 	/**
-	 * Constructor. Sets the source of messages.
-	 * @param messageSource the source of messages
-	 */
-	public  KeyStrokeCaptureDialog() {
-		super();
-	}
-
-	/**
-	 * Constructor. Sets message source, parent window and that this dialog
-	 * blocks top-level windows.
-	 * @param messageSource message source to set
+	 * Constructor. Sets parent window.
 	 * @param w the parent window or null if there is no parent
 	 */
-	public  KeyStrokeCaptureDialog( Window w) {
-		super( w, true);
+	public KeyStrokeCaptureDialog(Window w) {
+		super(w, true);
 	}
 
 	/**

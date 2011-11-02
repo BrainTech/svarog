@@ -27,7 +27,6 @@ public abstract class ResponseChartPanel extends ChartPanel {
 
 	/**
 	 * Creates a new chart panel.
-	 * @param messageSource message source capable of resolving
 	 * localized message codes
 	 */
 	public  ResponseChartPanel() {

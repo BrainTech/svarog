@@ -46,11 +46,9 @@ public class RegisterCodecStepTwoPanel extends JPanel {
 	private JLabel warningLabel = null;
 
 	/**
-	 * Constructor. Sets the {@link SvarogI18n message source} and
-	 * initializes this panel.
-	 * @param messageSource the source of messages (labels)
+	 * Constructor. Initializes the panel.
 	 */
-	public  RegisterCodecStepTwoPanel() {
+	public RegisterCodecStepTwoPanel() {
 		super();
 		initialize();
 	}

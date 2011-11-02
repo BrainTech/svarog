@@ -59,7 +59,6 @@ public class StartStopButtonsPanel extends JPanel {
         /**
          * Default constructor.
          * 
-         * @param messageSource {@link #messageSource}
          * @param signalSourcePanel {@link #signalSourcePanel}
          */
         public  StartStopButtonsPanel( AmplifierSignalSourcePanel signalSourcePanel) {

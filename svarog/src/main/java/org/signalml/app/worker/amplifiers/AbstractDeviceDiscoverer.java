@@ -20,7 +20,6 @@ public abstract class AbstractDeviceDiscoverer extends SwingWorker<String, Devic
         /**
          * Default constructor.
          *
-         * @param messageSource {@link #messageSource}
          */
         public  AbstractDeviceDiscoverer() {
         }

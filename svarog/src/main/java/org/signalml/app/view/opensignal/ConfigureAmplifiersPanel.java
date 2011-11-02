@@ -35,7 +35,6 @@ public class ConfigureAmplifiersPanel extends JPanel {
         /**
          * Default constructor.
          *
-         * @param messageSource {@link #messageSource}
          * @param viewerElementManager {@link #viewerElementManager}
          */
         public  ConfigureAmplifiersPanel(

@@ -201,7 +201,6 @@ public class TagStylePropertiesPanel extends JPanel {
 	/**
 	 * Constructor. Sets the source of messages (labels) and initializes this
 	 * panel.
-	 * @param messageSource the source of messages (labels)
 	 */
 	public  TagStylePropertiesPanel() {
 		super();

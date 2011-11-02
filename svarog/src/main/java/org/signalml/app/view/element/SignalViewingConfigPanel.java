@@ -165,11 +165,9 @@ public class SignalViewingConfigPanel extends JPanel {
 	private JPanel scalesPanel;
 
 	/**
-	 * Constructor. Sets the {@link SvarogI18n message source} and
-	 * initializes this panel.
-	 * @param messageSource the source of messages (labels)
+	 * Constructor. Initializes the panel.
 	 */
-	public  SignalViewingConfigPanel() {
+	public SignalViewingConfigPanel() {
 		super();
 		initialize();
 	}

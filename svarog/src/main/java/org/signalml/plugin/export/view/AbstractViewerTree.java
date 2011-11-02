@@ -22,7 +22,6 @@ public abstract class AbstractViewerTree extends JTree {
 	/**
 	 * Constructs AbstractViewerTree based on a given model and source of labels
 	 * @param model the model for this tree
-	 * @param messageSource the source of labels
 	 */
 	public AbstractViewerTree(TreeModel model) {
 		super((TreeModel) null);

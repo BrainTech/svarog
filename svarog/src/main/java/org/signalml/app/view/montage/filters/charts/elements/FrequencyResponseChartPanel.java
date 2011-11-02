@@ -27,8 +27,6 @@ public abstract class FrequencyResponseChartPanel extends ResponseChartPanel imp
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source capable of resolving localized
-	 * messages
 	 */
 	public  FrequencyResponseChartPanel() {
 		super();

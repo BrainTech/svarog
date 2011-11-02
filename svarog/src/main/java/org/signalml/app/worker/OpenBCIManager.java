@@ -57,7 +57,6 @@ public class OpenBCIManager extends SwingWorker<ProgressState, ProgressState> im
         /**
          * Default constructor sets values of fields.
          *
-         * @param messageSource {@link #messageSource}
          * @param elementManager {@link #elementManager}
          * @param descriptor {@link #descriptor}
          */

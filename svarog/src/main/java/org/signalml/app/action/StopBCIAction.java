@@ -27,7 +27,6 @@ public class StopBCIAction extends AbstractFocusableSignalMLAction<DocumentFocus
         /**
          * Default constructor.
          *
-         * @param messageSource messageSource
          * @param documentFocusSelector documentFocusSelector
          * @param elementManager elementManager
          */

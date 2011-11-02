@@ -43,8 +43,6 @@ public class FileChooserPanel extends JPanel {
 
 	/**
 	 * Creates a new file chooser panel.
-	 * @param messageSource message source capable of resolving localized
-	 * messages
 	 * @param managedDocumentTypes the types of documents which will be
 	 * chosen using this panel
 	 */
@@ -56,8 +54,6 @@ public class FileChooserPanel extends JPanel {
 
 	/**
 	 * Creates this file chooser panel.
-	 * @param messageSource message source capable of resolving localized
-	 * messages
 	 * @param singleManagedDocumentType the type of document which will
 	 * be chosen using this panel
 	 */

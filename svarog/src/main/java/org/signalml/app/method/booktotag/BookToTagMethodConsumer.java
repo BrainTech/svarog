@@ -88,7 +88,4 @@ public class BookToTagMethodConsumer implements InitializingMethodResultConsumer
 		return true;
 
 	}
-
-	
-
 }

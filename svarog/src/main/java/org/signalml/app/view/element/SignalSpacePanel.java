@@ -46,8 +46,7 @@ public class SignalSpacePanel extends JPanel {
 	private ChannelSpacePanel channelSpacePanel;
 
 	/**
-	 * Constructor. Sets the source of messages and initializes this panel.
-	 * @param messageSource the source of messages
+	 * Constructor. Initializes the panel.
 	 */
 	public  SignalSpacePanel() {
 		super();

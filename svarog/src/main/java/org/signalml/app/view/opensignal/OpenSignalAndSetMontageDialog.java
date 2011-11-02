@@ -43,7 +43,6 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source capable of resolving localized messages
 	 * @param viewerElementManager ViewerElementManager to be used
 	 * @param f the parent window
 	 * @param isModal whether this dialog should be modal

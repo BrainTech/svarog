@@ -33,7 +33,6 @@ public class SignalFFTSettingsDialog extends org.signalml.plugin.export.view.Abs
 	/**
 	 * Constructor. Sets message source, that there is no parent window and
 	 * that this dialog blocks top-level windows.
-	 * @param messageSource message source to set
 	 */
 	public  SignalFFTSettingsDialog() {
 		super( null, true);

@@ -76,7 +76,6 @@ public class MontageTable extends JTable {
 	 * The order (and the indexes) of the channels can be changed with
 	 * drag and drop.
 	 * @param model the {@link MontageTableModel model} for this table
-	 * @param messageSource the source of messages (labels)
 	 * @param simplified <code>true</code> if the index column should be
 	 * omitted, <code>false</code> otherwise
 	 */

@@ -61,8 +61,6 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source capable of resolving localized
-	 * messages
 	 * @param viewerElementManager ViewerElementManager to be used by this
 	 * panel
 	 */

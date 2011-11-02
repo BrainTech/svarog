@@ -265,7 +265,6 @@ public class MontageFiltersPanel extends JPanel {
 
 	/**
 	 * Creates this panel and {@link #initialize() initializes} it.
-	 * @param messageSource the source of messages (labels)
 	 * @param predefinedTimeDomainSampleFilterPresetManager the manager at which
 	 * predefined {@link TimeDomainSampleFilter TimeDomainSampleFilters} are
 	 * stored

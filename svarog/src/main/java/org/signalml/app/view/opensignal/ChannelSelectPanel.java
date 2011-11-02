@@ -46,7 +46,6 @@ public class ChannelSelectPanel extends JPanel {
 
         /**
          * This is the default constructor.
-         * @param messageSource {@link #messageSource}
          */
         public  ChannelSelectPanel() {
                 super();

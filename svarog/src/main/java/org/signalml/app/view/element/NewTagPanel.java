@@ -90,9 +90,7 @@ public class NewTagPanel extends JPanel {
 	private StyledTagSetPresetManager styledTagSetPresetManager;
 
 	/**
-	 * Constructor. Sets the {@link SvarogI18n message source} and
-	 * initializes this panel.
-	 * @param messageSource the source of messages (labels)
+	 * Constructor. Initializes the panel.
 	 * @param styledTagSetPresetManager the {@link PresetManager} which handles
 	 * the tag styles presets.
 	 */

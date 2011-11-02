@@ -16,8 +16,6 @@ public class TimeDomainResponseChartPanel extends ResponseChartPanel {
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source capable of resolving localized
-	 * messages
 	 */
 	public  TimeDomainResponseChartPanel() {
 		super();

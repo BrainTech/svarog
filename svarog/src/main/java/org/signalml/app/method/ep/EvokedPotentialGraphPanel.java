@@ -173,8 +173,6 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 		return fileChooser;
 	}
 
-	
-
 	public int getFocusedChartIndex() {
 		return focusedChartIndex;
 	}

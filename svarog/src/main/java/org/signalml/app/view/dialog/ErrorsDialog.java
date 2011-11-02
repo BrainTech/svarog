@@ -67,34 +67,24 @@ public class ErrorsDialog extends org.signalml.app.view.dialog.AbstractSvarogDia
 	private String titleCode = null;
 
 	/**
-	 * Constructor. Sets the source of messages.
-	 * @param messageSource the source of messages
-	 */
-	public  ErrorsDialog() {
-		super();
-	}
-
-	/**
-	 * Constructor. Sets message source, parent window and if this dialog
+	 * Constructor. Sets parent window and if this dialog
 	 * blocks top-level windows.
-	 * @param messageSource message source to set
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public  ErrorsDialog(Window w, boolean isModal) {
+	public ErrorsDialog(Window w, boolean isModal) {
 		super(w, isModal);
 	}
 
 	/**
-	 * Constructor. Sets message source, parent window and if this dialog
+	 * Constructor. Sets parent window and if this dialog
 	 * blocks top-level windows.
-	 * @param messageSource message source to set
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 * @param titleCode  the code to obtain the title for this dialog from the
 	 * source of messages; if the code is {@code null} the default title is used
 	 */
-	public  ErrorsDialog(Window w, boolean isModal, String titleCode) {
+	public ErrorsDialog(Window w, boolean isModal, String titleCode) {
 		super(w, isModal);
 		this.titleCode = titleCode;
 	}

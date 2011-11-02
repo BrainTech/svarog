@@ -34,7 +34,6 @@ public final class TimeDomainSampleFilterValidator {
 
 	/**
 	 * Creates a new validator for the given filter.
-	 * @param messageSource the source of localized messages
 	 * @param filter the filter to be validated
 	 */
 	public  TimeDomainSampleFilterValidator( TimeDomainSampleFilter filter) {

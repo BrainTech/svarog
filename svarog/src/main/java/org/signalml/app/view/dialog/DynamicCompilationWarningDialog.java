@@ -35,22 +35,13 @@ public class DynamicCompilationWarningDialog extends AbstractMessageDialog imple
 	private Runnable showRunnable;
 
 	/**
-	 * Constructor. Sets the source of messages.
-	 * @param messageSource the source of messages
-	 */
-	public  DynamicCompilationWarningDialog() {
-		super();
-	}
-
-	/**
-	 * Constructor. Sets message source, parent window and if this dialog
+	 * Constructor. Sets parent window and if this dialog
 	 * blocks top-level windows.
-	 * @param messageSource message source to set
 	 * @param w the parent window or null if there is no parent
-	 * @param isModal true, dialog blocks top-level windows, false otherwise
+	 * @param isModal dialog blocks top-level windows if true
 	 */
-	public  DynamicCompilationWarningDialog(Window w, boolean isModal) {
-		super( w, isModal);
+	public DynamicCompilationWarningDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	/**

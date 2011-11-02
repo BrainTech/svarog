@@ -51,8 +51,7 @@ public class SignalSelectionTypePanel extends JPanel {
 	private ButtonGroup radioGroup;
 
 	/**
-	 * Constructor. Sets the source of messages and initializes this panel.
-	 * @param messageSource the source of messages
+	 * Constructor. Initializes the panel.
 	 */
 	public  SignalSelectionTypePanel() {
 		super();

@@ -80,11 +80,9 @@ public class OpenSignalOptionsPanel extends JPanel {
 	private PagingParametersPanel pagingParametersPanel;
 
 	/**
-	 * Constructor. Sets the {@link SvarogI18n message source} and
-	 * initializes this panel.
-	 * @param messageSource the source of messages (labels)
+	 * Constructor. Initializes the panel.
 	 */
-	public  OpenSignalOptionsPanel() {
+	public OpenSignalOptionsPanel() {
 		super();
 		initialize();
 	}

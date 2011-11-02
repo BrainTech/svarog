@@ -37,7 +37,6 @@ public class AutoSpinnerWithSliderPanel extends AutoSpinnerPanel {
 	/**
 	 * Constructor. Sets the source of messages, if this panel should be
 	 * compact (thinner), creates the spinner and initializes this panel.
-	 * @param messageSource the source of messages (labels)
 	 * @param value the value of the spinner
 	 * @param min the minimum value that can be used in spinner
 	 * @param max the maximum value that can be used in spinner
@@ -54,7 +53,6 @@ public class AutoSpinnerWithSliderPanel extends AutoSpinnerPanel {
 	/**
 	 * Constructor. Sets the source of messages, if this panel should be
 	 * compact (thinner), creates the spinner and initializes this panel.
-	 * @param messageSource the source of messages (labels)
 	 * @param value the value of the spinner
 	 * @param min the minimum value that can be used in spinner
 	 * @param max the maximum value that can be used in spinner
@@ -71,7 +69,6 @@ public class AutoSpinnerWithSliderPanel extends AutoSpinnerPanel {
 	/**
 	 * Constructor. Sets the source of messages, if this panel should be
 	 * compact (thinner), creates the spinner and initializes this panel.
-	 * @param messageSource the source of messages (labels)
 	 * @param value the value of the spinner
 	 * @param min the minimum value that can be used in spinner
 	 * @param max the maximum value that can be used in spinner

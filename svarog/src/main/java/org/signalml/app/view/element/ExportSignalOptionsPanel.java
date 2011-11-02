@@ -73,8 +73,7 @@ public class ExportSignalOptionsPanel extends JPanel {
 	private boolean lastNormalize;
 
 	/**
-	 * Constructor. Sets the source of messages and initializes this panel.
-	 * @param messageSource the source of messages
+	 * Constructor. Initializes the panel.
 	 */
 	public  ExportSignalOptionsPanel() {
 		super();

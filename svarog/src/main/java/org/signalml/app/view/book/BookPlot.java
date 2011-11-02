@@ -1454,18 +1454,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 	/* ***************** ***************** ***************** */
 	/* ***************** ***************** ***************** */
 
-	/* Selection support */
-
-
-	/* ***************** ***************** ***************** */
-	/* ***************** ***************** ***************** */
-	/* ***************** ***************** ***************** */
-	/* ***************** ***************** ***************** */
-	/* ***************** ***************** ***************** */
-
 	/* Other getters and setters */
-
-	
 
 	public BookView getView() {
 		return view;
@@ -1520,4 +1509,3 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 	}
 
 }
-

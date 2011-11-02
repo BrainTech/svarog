@@ -28,7 +28,6 @@ public class CompareTagsAction extends AbstractFocusableSignalMLAction<SignalDoc
 
 	/**
 	 * Constructor.
-	 * @param messageSource the message source accessor capable of resolving
 	 * localized message codes
 	 * @param signalDocumentFocusSelector a {@link SignalDocumentFocusSelector}
 	 * used to get the active document.

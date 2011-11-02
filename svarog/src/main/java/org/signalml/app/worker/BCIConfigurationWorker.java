@@ -49,7 +49,6 @@ public class BCIConfigurationWorker extends SwingWorker<WorkerResult, Integer> {
         /**
          * Default constructor.
          *
-         * @param messageSource {@link #messageSource}
          * @param client {@link #client}
          * @param data {@link #data}
          */

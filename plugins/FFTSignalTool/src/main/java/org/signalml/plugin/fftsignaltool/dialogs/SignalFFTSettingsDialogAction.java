@@ -31,7 +31,6 @@ public class SignalFFTSettingsDialogAction extends AbstractSignalMLAction {
 	/**
 	 * Constructor. Sets the source of messages, {@link SignalFFTSettings FFT
 	 * settings} and the text of the button.
-	 * @param messageSource the source of messages (labels)
 	 * @param settings the settings that are filled in the 
 	 * {@link SignalFFTSettingsDialog dialog} shown by this action
 	 */

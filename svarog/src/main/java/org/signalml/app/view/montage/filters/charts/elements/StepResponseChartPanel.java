@@ -13,8 +13,6 @@ public class StepResponseChartPanel extends TimeDomainResponseChartPanel {
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source capable of resolving localized
-	 * messages
 	 */
 	public  StepResponseChartPanel() {
 		super();

@@ -51,7 +51,6 @@ public class ToolsConfigPanel extends JPanel {
 
 	/**
 	 * Constructor. Sets the parameters and initializes this panel.
-	 * @param messageSource the source of messages (labels)
 	 * @param fileChooser the {@link ViewerFileChooser chooser} of files
 	 * @param mp5ExecutorManager the {@link MP5ExecutorManager manager} of MP5
 	 * executors
