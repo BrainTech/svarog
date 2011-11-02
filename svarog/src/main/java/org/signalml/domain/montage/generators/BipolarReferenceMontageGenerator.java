@@ -11,6 +11,7 @@ import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.SourceMontage;
+import org.signalml.domain.montage.system.ChannelFunction;
 
 import org.springframework.validation.Errors;
 
@@ -107,8 +108,9 @@ public class BipolarReferenceMontageGenerator extends AbstractMontageGenerator {
 
 			for (int i=0; i<size; i++) {
 				SourceChannel sourceChannel = montage.getSourceChannelAt(i);
-				if (sourceChannel.getEegElectrode() != null
-					&& sourceChannel.getEegElectrode().getChannelType() == ChannelType.PRIMARY) {
+				if (sourceChannel.getFunction() != ChannelFunction.EEG
+					|| (sourceChannel.getFunction() == ChannelFunction.EEG
+					&& !sourceChannel.isChannelType(ChannelType.PRIMARY))) {
 					index = montage.addMontageChannel(i);
 				}
 			}

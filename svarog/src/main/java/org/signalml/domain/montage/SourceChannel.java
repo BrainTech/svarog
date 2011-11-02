@@ -8,6 +8,7 @@ import org.signalml.domain.montage.system.IChannelFunction;
 import java.io.Serializable;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import org.signalml.domain.montage.system.ChannelType;
 import org.signalml.domain.montage.system.EegElectrode;
 
 /**
@@ -140,6 +141,20 @@ public class SourceChannel implements Serializable {
 	 */
 	public EegElectrode getEegElectrode() {
 		return eegElectrode;
+	}
+
+	/**
+	 * Returns if this channel is of a given type, taking into account
+	 * that this channel's type may be null.
+	 * @param type the type to be checked
+	 * @return true if this channel's type is equal to the given type
+	 */
+	public boolean isChannelType(ChannelType type) {
+		if (eegElectrode != null &&
+			eegElectrode.getChannelType() == type)
+			return true;
+		else
+			return false;
 	}
 
 }
