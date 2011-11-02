@@ -51,11 +51,11 @@
 			<url>http://mirrors.ibiblio.org/pub/mirrors/maven2</url>
 		</repository>
 
-        <repository>
-            <id>gettext-commons</id>
-            <name>gettext-commons</name>
-            <url>http://gettext-commons.googlecode.com/svn/maven-repository/</url>
-        </repository>
+		<repository>
+			<id>gettext-commons</id>
+			<name>gettext-commons</name>
+			<url>http://gettext-commons.googlecode.com/svn/maven-repository/</url>
+		</repository>
 	</repositories>
 
 	<pluginRepositories>
@@ -63,10 +63,10 @@
 			<id>onejar-maven-plugin.googlecode.com</id>
 			<url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>
 		</pluginRepository>
-        <pluginRepository>
-            <id>gettext-commons</id>
-            <url>http://gettext-commons.googlecode.com/svn/maven-repository/</url>
-        </pluginRepository>
+		<pluginRepository>
+			<id>gettext-commons</id>
+			<url>http://gettext-commons.googlecode.com/svn/maven-repository/</url>
+		</pluginRepository>
 	</pluginRepositories>
 
 	<dependencyManagement>
@@ -296,18 +296,18 @@
 	</distributionManagement>
 
 	<build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.xnap.commons</groupId>
-                    <artifactId>maven-gettext-plugin</artifactId>
-                    <version>1.2.3</version>
-                    <configuration>
-                        <keywords>--keyword=_:1 --keyword=N_:1,2 --keyword=translate:3 --keyword=translateN:3,4</keywords>
-                    </configuration>                
-                </plugin>
-            </plugins>
-        </pluginManagement>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.xnap.commons</groupId>
+					<artifactId>maven-gettext-plugin</artifactId>
+					<version>1.2.3</version>
+					<configuration>
+						<keywords>--keyword=_:1 --keyword=N_:1,2 --keyword=translate:3 --keyword=translateN:3,4</keywords>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 
 		<extensions>
 			<extension>
