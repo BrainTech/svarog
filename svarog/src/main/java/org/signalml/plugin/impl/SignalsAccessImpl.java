@@ -111,7 +111,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	 */
 	private MultichannelSampleSource getOutput() throws NoActiveObjectException{
 		SignalPlot plot = getFocusManager().getActiveSignalPlot();
-		if (null == plot) throw new NoActiveObjectException("no active signal plot");
+		if (plot == null) throw new NoActiveObjectException("no active signal plot");
 		MultichannelSampleSource output = plot.getSignalOutput();
 		if (output == null) throw new RuntimeException("output of signal samples is null");
 		return output;
@@ -182,7 +182,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 		SignalSamplesImpl signalSamples = new SignalSamplesImpl();
 		for (int i = 0; i < numberOfChannels; ++i){
 			ChannelSamplesImpl channelSamples = getActiveProcessedSignalSamples(i);
-			if (null == channelSamples) throw new RuntimeException();
+			if (channelSamples == null) throw new RuntimeException();
 			signalSamples.addChannelSamples(channelSamples);
 		}
 		return signalSamples;
@@ -232,7 +232,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	 */
 	private OriginalMultichannelSampleSource getOriginalSource() throws NoActiveObjectException{
 		SignalPlot plot = getFocusManager().getActiveSignalPlot();
-		if (null == plot) throw new NoActiveObjectException("no active signal plot");
+		if (plot == null) throw new NoActiveObjectException("no active signal plot");
 		OriginalMultichannelSampleSource originalSource = plot.getSignalSource();
 		if (originalSource == null) throw new RuntimeException("original source of samples is null");
 		return originalSource;
@@ -335,7 +335,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 		SignalSamplesImpl signalSamples = new SignalSamplesImpl();
 		for (int i = 0; i < numberOfChannels; ++i){
 			ChannelSamplesImpl channelSamples = getActiveRawSignalSamples(i);
-			if (null == channelSamples) throw new RuntimeException("Channel samples are null");
+			if (channelSamples == null) throw new RuntimeException("Channel samples are null");
 			signalSamples.addChannelSamples(channelSamples);
 		}
 		return signalSamples;
@@ -423,7 +423,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	@Override
 	public List<ExportedTag> getTagsFromAllDocumentsAssociatedWithAcitiveSignal() throws NoActiveObjectException {
 		SignalDocument signalDocument = getFocusManager().getActiveSignalDocument();
-		if (null == signalDocument) throw new NoActiveObjectException("no active signal document");
+		if (signalDocument == null) throw new NoActiveObjectException("no active signal document");
 		try {
 			return getTagsFromSignalDocument(signalDocument);
 		} catch (InvalidClassException e) {
@@ -585,7 +585,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	@Override
 	public ExportedTagDocument[] getTagDocumentsFromActiveSignal() throws NoActiveObjectException {
 		SignalDocument signalDocument = getFocusManager().getActiveSignalDocument();
-		if (null == signalDocument) throw new NoActiveObjectException("no active signal document");
+		if (signalDocument == null) throw new NoActiveObjectException("no active signal document");
 		List<TagDocument> tagDocuments = signalDocument.getTagDocuments();
 		return tagDocuments.toArray(new TagDocument[tagDocuments.size()]);
 	}

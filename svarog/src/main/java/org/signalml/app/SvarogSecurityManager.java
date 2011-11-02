@@ -76,7 +76,7 @@ public class SvarogSecurityManager extends java.lang.SecurityManager {
 	private synchronized void incRecLevel(Thread t) {
 		FastMutableInt k = recLevel.get(t);
 
-		if (null == k) {
+		if (k == null) {
 			recLevel.put(t, new FastMutableInt(1));
 		} else {
 			k.inc();
@@ -103,7 +103,7 @@ public class SvarogSecurityManager extends java.lang.SecurityManager {
 	 */
 	private StackTraceElement findPluginCtx(Thread t) {
 		PluginLoaderHi pluginLoaderHi = PluginLoaderHi.getInstance();
-		if (null == pluginLoaderHi)
+		if (pluginLoaderHi == null)
 			return null;
 		if (! (pluginLoaderHi.hasStartedLoading()))
 			return null;
@@ -191,7 +191,7 @@ public class SvarogSecurityManager extends java.lang.SecurityManager {
 			} else {
 				frame = findPluginCtx(t);
 
-				if (null == frame) {
+				if (frame == null) {
 					// Not a plugin context, grant permission!
 					permit = true;
 				} else {

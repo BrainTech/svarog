@@ -14,9 +14,9 @@ public class SvarogLogger extends SvarogLoggerStdErr {
     private static SvarogLogger instance = null;
 
     public static SvarogLogger getSharedInstance() {
-        if (null == instance) {
+        if (instance == null) {
             synchronized (SvarogLogger.class) {
-                if (null == instance)
+                if (instance == null)
                     instance = new SvarogLogger();
             }
         }

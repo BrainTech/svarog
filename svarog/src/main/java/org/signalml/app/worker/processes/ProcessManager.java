@@ -37,9 +37,9 @@ public class ProcessManager {
          * @return instance of this object.
          */
         public static ProcessManager getInstance() {
-            if (null == instance) {
+            if (instance == null) {
                 synchronized (ProcessManager.class) {
-                    if (null == instance)
+                    if (instance == null)
                         instance = new ProcessManager();
                 }
             }

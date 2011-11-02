@@ -21,9 +21,9 @@ public class SvarogAccessI18nImpl implements SvarogI18n, SvarogAccessI18n {
      * @return
      */
     public static SvarogAccessI18nImpl getInstance() {
-        if (null == Instance) {
+        if (Instance == null) {
             synchronized (SvarogAccessI18nImpl.class) {
-                if (null == Instance)
+                if (Instance == null)
                     Instance = new SvarogAccessI18nImpl();
             }
         }
@@ -44,7 +44,7 @@ public class SvarogAccessI18nImpl implements SvarogI18n, SvarogAccessI18n {
     
     private I18n getI18n(PluginAuth auth, String catalogId) {
     	// SvarogLogger.getSharedInstance().debug("getI18n: " + auth + "/" + catalogId);
-    	if (null == auth)
+    	if (auth == null)
     		return I18nFactory.getI18n(SvarogAccessI18nImpl.class, SvarogCatalogId);
     	else
     		return I18nFactory.getI18n(getClass(auth), catalogId);

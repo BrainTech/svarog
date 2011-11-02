@@ -26,7 +26,7 @@ public class PluginHead {
     }
     
     protected PluginHead(PluginDescription desc, PluginLoaderLo ld, Plugin pluginObj) {
-        if (null == desc)
+        if (desc == null)
             throw new IllegalArgumentException("desc is null!");
         this.description = desc;
         this.loader = ld;
@@ -70,7 +70,7 @@ public class PluginHead {
     }
     
     public boolean containsClass(String className) {
-        if (null == loader)
+        if (loader == null)
             return false;
         return loader.hasLoaded(className);
     }

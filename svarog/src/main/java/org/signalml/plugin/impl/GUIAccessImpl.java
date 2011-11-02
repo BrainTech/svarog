@@ -567,7 +567,7 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	private JToggleButton getButtonForView(SignalTool tool, SignalView view){
 		HashMap<SignalView, JToggleButton> buttonsForViews = buttonsForTools.get(tool);
 		JToggleButton button = buttonsForViews.get(view);
-		if (null == button){
+		if (button == null){
 			ToolButtonParameters parameters = parametersForToolButtons.get(tool);
 			button = new JToggleButton(parameters.getIcon());
 			if (parameters.getToolTipText() != null)

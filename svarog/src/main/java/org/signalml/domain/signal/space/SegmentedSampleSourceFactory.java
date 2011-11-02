@@ -37,9 +37,9 @@ public class SegmentedSampleSourceFactory {
          * @return the shared factory of segmented sources of samples
          */
 	public static SegmentedSampleSourceFactory getSharedInstance() {
-		if (null == sharedInstance) {
+		if (sharedInstance == null) {
 		    synchronized (SegmentedSampleSourceFactory.class) {
-		        if (null == sharedInstance)
+		        if (sharedInstance == null)
 		            sharedInstance = new SegmentedSampleSourceFactory();
 		    }
 		}

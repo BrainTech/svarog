@@ -37,9 +37,9 @@ public class SvarogExceptionHandler implements java.lang.Thread.UncaughtExceptio
 
     /** Returns the shared instance. */
     protected static SvarogExceptionHandler getSharedInstance() {
-        if (null == instance) {
+        if (instance == null) {
             synchronized (SvarogExceptionHandler.class) {
-                if (null == instance)
+                if (instance == null)
                     instance = new SvarogExceptionHandler();
             }
         }

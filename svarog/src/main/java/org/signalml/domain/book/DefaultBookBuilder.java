@@ -23,9 +23,9 @@ public class DefaultBookBuilder implements BookBuilder {
 	}
 
 	public static DefaultBookBuilder getInstance() {
-		if (null == sharedInstance) {
+		if (sharedInstance == null) {
 		    synchronized (DefaultBookBuilder.class) {
-		        if (null == sharedInstance)
+		        if (sharedInstance == null)
 		            sharedInstance = new DefaultBookBuilder();
 		    }
 		}

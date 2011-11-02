@@ -15,9 +15,9 @@ public class SvarogThreadGroup extends java.lang.ThreadGroup {
     
     /** Returns the shared instance (initializes it first, if needed). */
     public static SvarogThreadGroup getSharedInstance() {
-        if (null == instance) {
+        if (instance == null) {
             synchronized (SvarogThreadGroup.class) {
-                if (null == instance)
+                if (instance == null)
                     instance = new SvarogThreadGroup();
             }
         }

@@ -134,9 +134,9 @@ public class PluginLoaderHi {
 	 * @param profileDir the profile directory
 	 */
 	public static void createInstance(File profileDir) {
-		if (null == sharedInstance) {
+		if (sharedInstance == null) {
 		    synchronized (PluginLoaderHi.class) {
-		        if (null == sharedInstance)
+		        if (sharedInstance == null)
 		            sharedInstance = new PluginLoaderHi(profileDir);
 		    }
 		}

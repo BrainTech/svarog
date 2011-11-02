@@ -87,9 +87,9 @@ public class PluginAccessClass implements SvarogAccess {
 	 */
 	public static PluginAccessClass getSharedInstance()
 	{
-		if (null == sharedInstance) {
+		if (sharedInstance == null) {
 		    synchronized (PluginAccessClass.class) {
-		        if (null == sharedInstance)
+		        if (sharedInstance == null)
 		            sharedInstance = new PluginAccessClass();
 		    }
 		}
