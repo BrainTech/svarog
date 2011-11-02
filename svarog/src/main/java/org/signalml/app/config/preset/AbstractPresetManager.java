@@ -202,5 +202,13 @@ public abstract class AbstractPresetManager extends AbstractXMLConfiguration imp
 			}		  
 		}
 	}
+
+	@Override
+	protected void copyFrom(AbstractXMLConfiguration config) {
+		AbstractPresetManager otherPresetManager = (AbstractPresetManager) config;
+		this.presets.addAll(otherPresetManager.presets);
+		if (otherPresetManager.defaultPreset != null)
+			this.defaultPreset = otherPresetManager.defaultPreset;
+	}
 	
 }
