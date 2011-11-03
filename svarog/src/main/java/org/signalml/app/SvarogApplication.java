@@ -1135,9 +1135,6 @@ public class SvarogApplication implements java.lang.Runnable {
 		return startupDir;
 	}
 
-	/** {@link #messageSource} getter. */
-	
-
 	/** {@link #elementManager} getter. */
 	public ViewerElementManager getViewerElementManager() {
 		return viewerElementManager;
