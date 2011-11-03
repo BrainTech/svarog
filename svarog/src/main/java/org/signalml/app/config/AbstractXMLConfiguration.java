@@ -141,7 +141,7 @@ public abstract class AbstractXMLConfiguration {
 	}
 
 	public final File getStandardFile(File profileDir) {
-		return new File(profileDir.getAbsolutePath()+File.separator+getStandardFilename());
+		return new File(profileDir.getAbsolutePath() + File.separator + getStandardFilename());
 	}
 
 	public abstract String getStandardFilename();
