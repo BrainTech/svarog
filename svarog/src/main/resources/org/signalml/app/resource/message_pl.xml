@@ -543,13 +543,8 @@
 	<entry key="presetDialog.selectPreset">Select preset</entry>
 	<entry key="presetDialog.selectPresetName">Select preset name</entry>
 
-	<entry key="presetDialog.onRemovePreset">Selected preset named ''&lt;b&gt;{0}&lt;/b&gt;'' will be permanently removed.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;permanently remove&lt;/b&gt; this preset?</entry>
-	<entry key="presetDialog.onReplacePreset">Preset named ''&lt;b&gt;{0}&lt;/b&gt;'' will be permanently overwritten.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;permanently overwrite&lt;/b&gt; this preset?</entry>
-	<entry key="presetDialog.onLoadPreset">The settings currently on the dialog will be permanently overwritten with preset named ''&lt;b&gt;{0}&lt;/b&gt;''.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;permanently overwrite&lt;/b&gt; current settings?</entry>
-
-	<entry key="presetDialog.onRemoveDefaultPreset">The default preset will be permanently removed.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;permanently remove&lt;/b&gt; the default?</entry>
-	<entry key="presetDialog.onReplaceDefaultPreset">The default preset will be permanently overwritten.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;permanently overwrite&lt;/b&gt; the default?</entry>
-	<entry key="presetDialog.onLoadDefaultPreset">The settings currently on the dialog will be permanently overwritten with the default preset.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;permanently overwrite&lt;/b&gt; current settings?</entry>
+	<entry key="presetDialog.onReplacePreset">Preset already exists, do you really want to overwrite this preset?</entry>
+	<entry key="presetDialog.onReplaceDefaultPreset">The default preset will be permanently overwritten. Are you sure?</entry>
 
 	<entry key="spacePresetDialog.includeSpace">Load signal selection from loaded preset</entry>
 
@@ -652,7 +647,6 @@
 	<entry key="preferences.miscellaneous.toolTipInitial">To show</entry>
 	<entry key="preferences.miscellaneous.toolTipDismiss">To hide</entry>
 	<entry key="preferences.miscellaneous.toolTipMS">[ms]</entry>
-	<entry key="preferences.miscellaneous.disableSeriousWarnings">Disable serious warning dialogs for preset operations</entry>
 	<entry key="preferences.miscellaneous.dontShowCompilationWarning">Do not show dynamic compilation warnings</entry>
 
 	<entry key="preferences.tools">Tools</entry>
@@ -868,8 +862,6 @@
 	<entry key="visualReferenceEditor.bin.others">Others</entry>
 	<entry key="visualReferenceEditor.bin.positioned">Positioned</entry>
 
-	<entry key="montageDialog.onIncompatible">The selected montage is not compatible with the current signal. It will have to be adapted.&lt;br&gt;&amp;nbsp;&lt;br&gt;This may result in a serious modification of montage structure.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;apply&lt;/b&gt; the montage?</entry>
-
 	<entry key="sourceMontageTable.title">Source montage</entry>
 	<entry key="sourceMontageTable.index">Index</entry>
 	<entry key="sourceMontageTable.label">Label</entry>
@@ -893,9 +885,8 @@
 	<entry key="montageTable.moveUp">Move up</entry>
 	<entry key="montageTable.moveDown">Move down</entry>
 
-	<entry key="montageTable.onClear">The montage will be irreversibly lost.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;clear&lt;/b&gt; the montage?</entry>
-	<entry key="montageTable.onDeleteUsed">The removed source channel is used either as a primary channel or as a reference. Montage will be altered.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;remove&lt;/b&gt; a source channel?</entry>
-	<entry key="montageTable.onGenerate">The montage will be permanently replaced with the generated montage.&lt;br&gt;&amp;nbsp;&lt;br&gt;There is no undo.&lt;br&gt;&amp;nbsp;&lt;br&gt;Are you sure you wish to &lt;b&gt;generate&lt;/b&gt; the montage?</entry>
+	<entry key="montageTable.onClear">Do you really want to clear the montage?</entry>
+	<entry key="montageTable.onDeleteUsed">This source channel is used used in the target montage and cannot be removed.</entry>
 
 	<entry key="montageTable.wasteBasketToolTip">Drop target channels here to delete them</entry>
 

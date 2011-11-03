@@ -27,14 +27,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.spi.ErrorCode;
 import org.signalml.app.util.IconUtils;
 import org.signalml.exception.ResolvableException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.MessageSourceResolvable;
-import org.springframework.context.support.AbstractMessageSource;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
@@ -50,8 +47,11 @@ import org.springframework.validation.Errors;
  */
 public class ErrorsDialog extends AbstractDialog {
 
+	/**
+	 * An enum containing possible user responses in a dialog.
+	 */
+	public static enum DIALOG_OPTIONS { YES, NO };
 	private static final long serialVersionUID = 1L;
-
 	protected static final Logger logger = Logger.getLogger(ErrorsDialog.class);
 
 	/**
@@ -250,6 +250,31 @@ public class ErrorsDialog extends AbstractDialog {
 	 */
 	public static void showError(String errorCode) {
 		JOptionPane.showMessageDialog(null, staticMessageSource.getMessage(errorCode), staticMessageSource.getMessage("error"), JOptionPane.ERROR_MESSAGE);
+	}
+
+	/**
+	 * Shows a warning/confirmation dialog with Yes/No buttons.
+	 * @param warningCode the code of the message shown in the dialog
+	 * @return the button user pressed in the dialog
+	 */
+	public static DIALOG_OPTIONS showWarningYesNoDialog(String warningCode) {
+		Object[] options = {staticMessageSource.getMessage("yesCapital"),
+			staticMessageSource.getMessage("noCapital")};
+
+		int selectedIndex = JOptionPane.showOptionDialog(null,
+			staticMessageSource.getMessage(warningCode),
+			staticMessageSource.getMessage("warning"),
+			JOptionPane.YES_NO_OPTION,
+			JOptionPane.WARNING_MESSAGE,
+			null,
+			options,
+			options[1]);
+
+		if (selectedIndex == 0)
+			return DIALOG_OPTIONS.YES;
+		else
+			return DIALOG_OPTIONS.NO;
+
 	}
 
 	/**

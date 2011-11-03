@@ -136,8 +136,6 @@ public class ConfigurationDefaults {
 		config.setMinTimeScale(getDouble("application.minTimeScale"));
 		config.setMaxTimeScale(getDouble("application.maxTimeScale"));
 
-		config.setDisableSeriousWarnings(getBoolean("application.disableSeriousWarnings"));
-
 		final String paletteString = getString("application.palette");
 		if (GREYSCALE_PALETTE.equalsIgnoreCase(paletteString)) {
 			config.setPalette(GrayscaleMapPalette.getInstance());

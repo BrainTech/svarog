@@ -88,8 +88,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	private ZoomSignalSettings zoomSignalSettings = new ZoomSignalSettings();
 
-	private boolean disableSeriousWarnings;
-
 	private WignerMapPalette palette;
 	private WignerMapScaleType scaleType;
 
@@ -524,14 +522,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	public void setMaxTimeScale(double maxTimeScale) {
 		this.maxTimeScale = maxTimeScale;
-	}
-
-	public boolean isDisableSeriousWarnings() {
-		return disableSeriousWarnings;
-	}
-
-	public void setDisableSeriousWarnings(boolean disableSeriousWarnings) {
-		this.disableSeriousWarnings = disableSeriousWarnings;
 	}
 
 	public String getLastBookFilePath() {

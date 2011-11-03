@@ -36,7 +36,6 @@ import org.signalml.app.config.preset.PresetComboBoxModel;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.config.preset.PresetManagerEvent;
 import org.signalml.app.config.preset.PresetManagerListener;
-import org.signalml.app.model.SeriousWarningDescriptor;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.element.AnyChangeDocumentAdapter;
@@ -97,13 +96,6 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 	 * and specify the name for it
 	 */
 	private ChoosePresetDialog choosePresetDialog;
-	
-	/**
-	 * the {@link SeriousWarningDialog dialog} which displays the
-	 * warning to the user and allows him to decide if the operation should
-	 * be terminated
-	 */
-	private SeriousWarningDialog seriousWarningDialog;
 
 	/**
 	 * @see LoadDefaultPresetAction
@@ -428,21 +420,6 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 	}
 
 	/**
-	 * Returns the {@link SeriousWarningDialog dialog} which displays the
-	 * warning to the user and allows him to decide if the operation should
-	 * be terminated.
-	 * If the dialog doesn't exist, it is created.
-	 * @return the warning dialog
-	 */
-	protected SeriousWarningDialog getSeriousWarningDialog() {
-		if (seriousWarningDialog == null) {
-			seriousWarningDialog = new SeriousWarningDialog(messageSource,this,true);
-			seriousWarningDialog.setApplicationConfig(applicationConfig);
-		}
-		return seriousWarningDialog;
-	}
-
-	/**
 	 * Returns the {@link PresetManager preset manager}.
 	 * @return the preset manager
 	 */
@@ -645,12 +622,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 
 			Preset existingPreset = presetManager.getDefaultPreset();
 			if (existingPreset != null) {
-
-				String warning =  messageSource.getMessage("presetDialog.onReplaceDefaultPreset");
-				SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 5);
-
-				boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
-				if (!ok) {
+				if (ErrorsDialog.showWarningYesNoDialog("presetDialog.onReplaceDefaultPreset") == ErrorsDialog.DIALOG_OPTIONS.NO) {
 					return;
 				}
 
@@ -707,18 +679,6 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 				return;
 			}
 
-			if (!isTrackingChanges() || isChanged()) {
-
-				String warning =  messageSource.getMessage("presetDialog.onLoadDefaultPreset");
-				SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 3);
-
-				boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
-				if (!ok) {
-					return;
-				}
-
-			}
-
 			try {
 				setPreset(preset);
 			} catch (SignalMLException ex) {
@@ -760,14 +720,6 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 
 			Preset preset = presetManager.getDefaultPreset();
 			if (preset == null) {
-				return;
-			}
-
-			String warning =  messageSource.getMessage("presetDialog.onRemoveDefaultPreset");
-			SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 5);
-
-			boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
-			if (!ok) {
 				return;
 			}
 
@@ -838,20 +790,15 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 
 			Preset existingPreset = presetManager.getPresetByName(newName);
 			if (existingPreset != null) {
-
-				String warning =  messageSource.getMessage("presetDialog.onReplacePreset", new Object[] { newName });
-				SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 5);
-
-				boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
-				if (!ok) {
+				if (ErrorsDialog.showWarningYesNoDialog("presetDialog.onReplacePreset") == ErrorsDialog.DIALOG_OPTIONS.NO) {
 					return;
 				}
-
 			}
 
 			preset.setName(newName);
 
 			presetManager.setPreset(preset);
+			presetComboBoxModel.setSelectedItem(preset);
 
 			if (applicationConfig.isSaveConfigOnEveryChange()) {
 				try {
@@ -904,23 +851,10 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 
 			Preset preset = presetManager.getPresetAt(index-1);
 
-			getPresetComboBox().setSelectedIndex(0);
 			getPresetComboBox().repaint();
 
 			if (preset == null) {
 				return;
-			}
-
-			if (!isTrackingChanges() || isChanged()) {
-
-				String warning =  messageSource.getMessage("presetDialog.onLoadPreset", new Object[] { preset.getName() });
-				SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 3);
-
-				boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
-				if (!ok) {
-					return;
-				}
-
 			}
 
 			try {
@@ -974,14 +908,6 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 
 			Preset preset = presetManager.getPresetByName(name);
 			if (preset == null) {
-				return;
-			}
-
-			String warning =  messageSource.getMessage("presetDialog.onRemovePreset", new Object[] { name });
-			SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 5);
-
-			boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
-			if (!ok) {
 				return;
 			}
 
@@ -1130,18 +1056,6 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 				return;
 			}
 
-			if (!isTrackingChanges() || isChanged()) {
-
-				String warning =  messageSource.getMessage("presetDialog.onLoadPreset", new Object[] { preset.getName() });
-				SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 3);
-
-				boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
-				if (!ok) {
-					return;
-				}
-
-			}
-
 			try {
 				setPreset(preset);
 			} catch (SignalMLException ex) {
@@ -1156,17 +1070,6 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 			}
 
 			Preset existingPreset = presetManager.getPresetByName(newName);
-			if (existingPreset != null) {
-
-				String warning =  messageSource.getMessage("presetDialog.onReplacePreset", new Object[] { newName });
-				SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 5);
-
-				boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
-				if (!ok) {
-					return;
-				}
-
-			}
 
 			preset.setName(newName);
 

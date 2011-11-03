@@ -26,7 +26,6 @@ import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.model.MontageDescriptor;
-import org.signalml.app.model.SeriousWarningDescriptor;
 import org.signalml.app.montage.MontagePresetManager;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.ViewerElementManager;
@@ -117,14 +116,12 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 		JPanel interfacePanel = new JPanel(new BorderLayout());
 
 		channelsPanel = new MontageChannelsPanel(messageSource);
-		channelsPanel.setSeriousWarningDialog(getSeriousWarningDialog());
 
 		matrixReferenceEditorPanel = new MatrixReferenceEditorPanel(messageSource);
 
 		visualReferenceEditorPanel = new VisualReferenceEditorPanel(messageSource);
 
 		filtersPanel = new MontageFiltersPanel(messageSource, predefinedTimeDomainSampleFilterPresetManager);
-		filtersPanel.setSeriousWarningDialog(getSeriousWarningDialog());
 		filtersPanel.setEditFFTSampleFilterDialog(getEditFFTSampleFilterDialog());
 		filtersPanel.setTimeDomainSampleFilterDialog(getEditTimeDomainSampleFilterDialog());
 
@@ -182,7 +179,6 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 
 		generatorPanel = new MontageGeneratorPanel(messageSource);
 		generatorPanel.setErrorsDialog(getErrorsDialog());
-		generatorPanel.setSeriousWarningDialog(getSeriousWarningDialog());
 		northPanel.add(generatorPanel);
 
 		eegSystemSelectionPanel = new EegSystemSelectionPanel(messageSource, eegSystemsPresetManager);

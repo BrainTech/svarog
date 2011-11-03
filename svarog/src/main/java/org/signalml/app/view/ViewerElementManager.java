@@ -112,7 +112,6 @@ import org.signalml.app.view.dialog.OpenDocumentDialog;
 import org.signalml.app.view.dialog.OpenMonitorDialog;
 import org.signalml.app.view.dialog.PleaseWaitDialog;
 import org.signalml.app.view.dialog.RegisterCodecDialog;
-import org.signalml.app.view.dialog.SeriousWarningDialog;
 import org.signalml.app.view.dialog.SignalParametersDialog;
 import org.signalml.app.view.dialog.SignalSelectionDialog;
 import org.signalml.app.view.dialog.TagStylePaletteDialog;
@@ -278,7 +277,6 @@ public class ViewerElementManager {
         private CheckSignalDialog checkSignalDialog;
 	private ErrorsDialog errorsDialog;
 	private PleaseWaitDialog pleaseWaitDialog;
-	private SeriousWarningDialog seriousWarningDialog;
 	private ApplicationPreferencesDialog applicationPreferencesDialog;
 	private OpenDocumentDialog openDocumentDialog;
 	private OpenMonitorDialog openMonitorDialog;
@@ -1201,14 +1199,6 @@ public class ViewerElementManager {
 			pleaseWaitDialog.initializeNow();
 		}
 		return pleaseWaitDialog;
-	}
-
-	public SeriousWarningDialog getSeriousWarningDialog() {
-		if (seriousWarningDialog == null) {
-			seriousWarningDialog = new SeriousWarningDialog(messageSource, getDialogParent(), true);
-			seriousWarningDialog.setApplicationConfig(getApplicationConfig());
-		}
-		return seriousWarningDialog;
 	}
 
 	public ApplicationPreferencesDialog getApplicationPreferencesDialog() {
