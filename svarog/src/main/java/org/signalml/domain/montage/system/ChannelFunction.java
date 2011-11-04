@@ -40,13 +40,13 @@ public enum ChannelFunction implements IChannelFunction {
 	 */
 	private String unitOfMeasurementSymbol;
 	/**
-	 * The minimum value that should be set on the value scale for the signal.
+	 * The minimum expected value of the signal.
 	 */
-	private int minValueScale;
+	private int minValue;
 	/**
-	 * The maximum value that should be set on the value scale for the signal.
+	 * The maximum expected value value of the signal.
 	 */
-	private int maxValueScale;
+	private int maxValue;
 
 
 	/**
@@ -56,13 +56,13 @@ public enum ChannelFunction implements IChannelFunction {
 	 * @param unique is the channel unique?
 	 * @param mutable is the channel mutable?
 	 */
-	private ChannelFunction(String name, boolean unique, boolean mutable, String unitOfMeasurementSymbol, int minValueScale, int maxValueScale) {
+	private ChannelFunction(String name, boolean unique, boolean mutable, String unitOfMeasurementSymbol, int minValue, int maxValue) {
 		this.name = name;
 		this.unique = unique;
 		this.mutable = mutable;
 		this.unitOfMeasurementSymbol = unitOfMeasurementSymbol;
-		this.minValueScale = minValueScale;
-		this.maxValueScale = maxValueScale;
+		this.minValue = minValue;
+		this.maxValue = maxValue;
 	}
 
 	@Override
@@ -96,13 +96,13 @@ public enum ChannelFunction implements IChannelFunction {
 	}
 
 	@Override
-	public int getMinValueScale() {
-		return minValueScale;
+	public int getMinValue() {
+		return minValue;
 	}
 
 	@Override
-	public int getMaxValueScale() {
-		return maxValueScale;
+	public int getMaxValue() {
+		return maxValue;
 	}
 
 	@Override

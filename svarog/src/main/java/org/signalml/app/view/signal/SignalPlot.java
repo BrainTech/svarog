@@ -339,11 +339,11 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		for (int i=0;i<channelCount;i++) {
 			f = this.getSourceChannelFor(i).getFunction();
 			if (f == ChannelFunction.EEG) {
-				max = (double) f.getMaxValueScale();
+				max = (double) f.getMaxValue();
 				break;
 			}
-			else if (f.getMaxValueScale() > max)
-				max = (double) f.getMaxValueScale();
+			else if (f.getMaxValue() > max)
+				max = (double) f.getMaxValue();
 		};
 		return max;
 	}
@@ -397,7 +397,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		if (index == -1)
 			v = detectMaxValue();
 		else
-			v = (double) this.getSourceChannelFor(index).getFunction().getMaxValueScale();
+			v = (double) this.getSourceChannelFor(index).getFunction().getMaxValue();
 	       return ((1.0 / (condMaxValue(v) * 2)) * 0.95) / 100;
 	}
 
