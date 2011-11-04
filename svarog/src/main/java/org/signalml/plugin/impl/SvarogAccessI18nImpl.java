@@ -33,9 +33,11 @@ public class SvarogAccessI18nImpl implements SvarogI18n, SvarogAccessI18n {
     private static SvarogAccessI18nImpl Instance;
     private static final String SvarogCatalogId = SvarogConstants.I18nCatalogId;
     private PluginAccessClass pluginAccessClass;
+    private I18n coreI18n;
     
     private SvarogAccessI18nImpl() {
         super();
+        setCoreI18n(I18nFactory.getI18n(SvarogAccessI18nImpl.class, SvarogCatalogId));
     }
     
     private Class<?> getClass(PluginAuth auth) {
@@ -43,9 +45,9 @@ public class SvarogAccessI18nImpl implements SvarogI18n, SvarogAccessI18n {
     }
     
     private I18n getI18n(PluginAuth auth, String catalogId) {
-    	// SvarogLogger.getSharedInstance().debug("getI18n: " + auth + "/" + catalogId);
+    	SvarogLogger.getSharedInstance().debug("getI18n: " + auth + "/" + catalogId);
     	if (auth == null)
-    		return I18nFactory.getI18n(SvarogAccessI18nImpl.class, SvarogCatalogId);
+    		return getCoreI18n();
     	else
     		return I18nFactory.getI18n(getClass(auth), catalogId);
     }
@@ -56,7 +58,7 @@ public class SvarogAccessI18nImpl implements SvarogI18n, SvarogAccessI18n {
     @Override
     public String translate(PluginAuth auth, String catalogId, String key) {
         String s = getI18n(auth, catalogId).tr(key);
-        // SvarogLogger.getSharedInstance().debug("translate: " + key + " --> " + s);
+        SvarogLogger.getSharedInstance().debug("translate: " + key + " --> " + s);
         return s;
     }
 
@@ -100,5 +102,23 @@ public class SvarogAccessI18nImpl implements SvarogI18n, SvarogAccessI18n {
 	@Deprecated
 	public String getMessage(String msgKey, String defaultMessage) {
 		return defaultMessage;
+	}
+	
+	/**
+	 * Sets {@link #coreI18n} to the given value.
+	 * 
+	 * @param x
+	 */
+	private void setCoreI18n(I18n x) {
+		coreI18n = x;
+	}
+
+	/**
+	 * Returns {@link #coreI18n}.
+	 *
+	 * @return
+	 */
+	private I18n getCoreI18n() {
+		return coreI18n;
 	}
 }
