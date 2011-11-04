@@ -333,12 +333,6 @@ public interface ExportedSignalPlot {
 	double getPixelPerValue();
 
 	/**
-	 * Returns the maximal value of the signal.
-	 * @return the maximal value of the signal.
-	 */
-	double getDetectedMaxValue();
-
-	/**
 	 * Returns the number of channels in the signal.
 	 * @return the number of channels in the signal
 	 */

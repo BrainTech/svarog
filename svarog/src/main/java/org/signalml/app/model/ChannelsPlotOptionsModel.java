@@ -73,11 +73,13 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 			//a sample will be multiplied by ((my multiplier)/(global multiplier))*(global multiplier)
 			//so as a result by (my multiplier) only.
 			//
-			//global multiplier = range_model_value*zoom_ratio*pixel_per_sth
-			//my multiplier = my_range_model_value*zoom_ratio*pixel_per_sth
+			//global multiplier = range_model_value*global_zoom_ratio*pixel_per_sth
+			//my multiplier = my_range_model_value*my_zoom_ratio*pixel_per_sth
 			//thats why (my multiplier)/(global multiplier) is:
-		
-			mult = voltageScale/globalVoltageScale;
+			if (voltageScale != globalVoltageScale)
+				mult = (voltageScale*plot.getVoltageZoomFactorRatioFor(i))/(globalVoltageScale*plot.getVoltageZoomFactorRatio());
+			else
+				mult = 1.0;
 		
 			//Get references from plot`s local montage from a moment of opening current dialog
 			//Do this so that we always want to apply new reference to this initial-plot montage,
@@ -92,14 +94,7 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 				localMontage.setReference(i, newRefsStr);
 				
 		}
-
-		try {
-			this.plot.getSignalChain().applyMontageDefinitionWithoutfilters(localMontage);
-		} catch (MontageMismatchException ex) {
-			ex.printStackTrace();
-			return;
-		}
-		this.plot.revalidateAndRepaintAll();
+		this.plot.setLocalMontage(localMontage, true);
 	}
 	
 	/*
