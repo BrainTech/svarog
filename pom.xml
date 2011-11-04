@@ -27,7 +27,9 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>		
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<project.jdk_version>1.6</project.jdk_version>
+
 
 		<springframework.version>2.0.7</springframework.version>
 	</properties>
@@ -313,6 +315,19 @@
 	</distributionManagement>
 
 	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<source>${project.jdk_version}</source>
+						<target>${project.jdk_version}</target>
+						<encoding>${project.build.sourceEncoding}</encoding>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
 		<extensions>
 			<extension>
 				<groupId>org.apache.maven.wagon</groupId>
