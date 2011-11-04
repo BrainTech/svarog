@@ -1,6 +1,7 @@
 package org.signalml.app.view.signal.popup;
 
 import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogApplication._R;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -150,7 +151,7 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 
 			@Override
 			public String getToolTipText(MouseEvent ev) {
-				return java.text.MessageFormat.format(_("{0} %"), new Object[] { getValue() });
+				return _R(("{0} %"), new Object[] { getValue() });
 			}
 		};
 		

@@ -5,6 +5,7 @@
 package org.signalml.app.view;
 
 import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogApplication._R;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Window;
@@ -725,7 +726,7 @@ public class ViewerElementManager {
 			statusBar.setMaximizeDocumentsAction(getViewModeAction());
 			statusBar.setActionFocusManager(getActionFocusManager());
 			statusBar.initialize();
-			statusBar.setStatus(java.text.MessageFormat.format(_("Svarog v.{0} ready"),
+			statusBar.setStatus(_R(("Svarog v.{0} ready"),
 			                    new Object[] {SvarogConstants.VERSION}));
 			getActionFocusManager().addActionFocusListener(statusBar);
 		}

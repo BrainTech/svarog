@@ -1,5 +1,7 @@
 package org.signalml.plugin.impl;
 
+import java.text.MessageFormat;
+
 import org.signalml.app.SvarogI18n;
 import org.signalml.plugin.export.PluginAuth;
 import org.signalml.plugin.export.i18n.SvarogAccessI18n;
@@ -73,6 +75,16 @@ public class SvarogAccessI18nImpl implements SvarogI18n, SvarogAccessI18n {
     }
 
     @Override
+    public String translateR(PluginAuth auth, String catalogId, String key, Object ... arguments) {
+        return render(translate(auth, catalogId, key), arguments);
+    }
+
+    @Override
+    public String translateNR(PluginAuth auth, String catalogId, String key, String keyPlural, long n, Object ... arguments) {
+    	return render(translateN(auth, catalogId, key, keyPlural, n), arguments);
+    }
+
+    @Override
     public String _(String key) {
         return translate(null, SvarogCatalogId, key);
     }
@@ -80,6 +92,21 @@ public class SvarogAccessI18nImpl implements SvarogI18n, SvarogAccessI18n {
     @Override
     public String N_(String key, String keyPlural, long n) {
         return translateN(null, SvarogCatalogId, key, keyPlural, n);
+    }
+    
+    @Override
+    public String _R(String key, Object ... arguments) {
+    	return render(_(key), arguments);
+    }
+    
+    @Override
+    public String N_R(String key, String keyPlural, long n, Object ... arguments) {
+        return render(N_(key, keyPlural, n), arguments);
+    }
+
+    @Override
+    public String render(String pattern, Object ... arguments) {
+    	return MessageFormat.format(pattern, arguments);
     }
 
     protected void setPluginAccessClass(PluginAccessClass pac) {

@@ -5,6 +5,7 @@
 package org.signalml.app.view.montage.filters.charts;
 
 import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogApplication._R;
 import org.signalml.app.view.montage.filters.charts.elements.StepResponseChartPanel;
 import org.signalml.app.view.montage.filters.charts.elements.ImpulseResponseChartPanel;
 import org.signalml.app.view.montage.filters.charts.elements.FilterResponseChartPanelsWithGraphScaleSpinner;
@@ -193,7 +194,7 @@ public class TimeDomainFilterResponseChartGroupPanel extends FilterResponseChart
 		frequencyResponseChartPanel.setData(frequencies, values);
 
 		int filterOrder = frequencyResponseCalculator.getFilterCoefficients().getFilterOrder();
-		String subtitleText = java.text.MessageFormat.format(_("filter order = {0}"), new Object[]{filterOrder});
+		String subtitleText = _R(("filter order = {0}"), new Object[]{filterOrder});
 
 		frequencyResponseChartPanel.setSubtitle(subtitleText);
 

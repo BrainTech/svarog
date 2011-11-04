@@ -29,6 +29,17 @@ public class FFTSignalToolI18nDelegate {
 	}
 
 	/**
+	 * Translates and renders a message using Svarog i18n API.
+	 *
+	 * @param msg message to translate
+	 * @param arguments the values to render
+	 * @return the translated message with values filled in
+	 */
+	public String _R(String msg, Object ... arguments) {
+		return svarogAccess.getI18nAccess().translateR(pluginAuth, "org.signalml.plugin.fftsignaltool.i18n.I18nBundle", msg, arguments);
+	}
+
+	/**
 	 * A workaround for the old code.
 	 *
 	 * @param msgKey

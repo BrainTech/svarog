@@ -5,6 +5,7 @@
 package org.signalml.app.view.signal;
 
 import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogApplication._R;
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -1251,7 +1252,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			return null;
 		}
 
-		String locationMessage = java.text.MessageFormat.format(_("T: {0}, V:{1} [P: {2}, B: {3}, C: {4}]"), new Object[] {
+		String locationMessage = _R(("T: {0}, V:{1} [P: {2}, B: {3}, C: {4}]"), new Object[] {
 		                                 toTimeSpace(p),
 		                                 toValueSpace(p),
 		                                 toPageSpace(p),
@@ -2081,7 +2082,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		SignalSelectionType type = tag.getType();
 		if (type == SignalSelectionType.PAGE || type == SignalSelectionType.BLOCK
 			|| (type == SignalSelectionType.CHANNEL && tag.getChannel() == Tag.CHANNEL_NULL)) {
-			return java.text.MessageFormat.format(_("{0} [{1}->{3}]"), new Object[] {
+			return _R(("{0} [{1}->{3}]"), new Object[] {
 			                                        tag.getStyle().getDescriptionOrName(),
 			                                        tag.getPosition(),
 			                                        tag.getLength(),
@@ -2089,13 +2090,13 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			                                });
 		} else {
 			if (tag.isMarker()) {
-				return java.text.MessageFormat.format(_("{0} [{1} in channel {2}]"), new Object[] {
+				return _R(("{0} [{1} in channel {2}]"), new Object[] {
 				                                        tag.getStyle().getDescriptionOrName(),
 				                                        tag.getCenterPosition(),
 				                                        signalChain.getPrimaryLabel(tag.getChannel())
 				                                });
 			} else {
-				return java.text.MessageFormat.format(_("{0} [{1}->{3} in channel {4}]"), new Object[] {
+				return _R(("{0} [{1}->{3} in channel {4}]"), new Object[] {
 				                                        tag.getStyle().getDescriptionOrName(),
 				                                        tag.getPosition(),
 				                                        tag.getLength(),
@@ -2666,7 +2667,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 				String hSynchroString = horizontalLock ? _("on") : _("off");
 				String vSynchroString = verticalLock ? _("on") : _("off");
 
-				title = java.text.MessageFormat.format(_("Auxiliary signal plot ({0}, horizontal synchro {1}, vertical synchro {2})"), new Object[] { montageString, hSynchroString, vSynchroString });
+				title = _R(("Auxiliary signal plot ({0}, horizontal synchro {1}, vertical synchro {2})"), new Object[] { montageString, hSynchroString, vSynchroString });
 
 			}
 
@@ -2716,10 +2717,10 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 					Formatter formatter = new Formatter();
 					if (timeDiff < 0) {
 						formatter.format("%.2f", -timeDiff);
-						text = java.text.MessageFormat.format(_("trailing by {0} s"), new Object[] { formatter.toString() });
+						text = _R(("trailing by {0} s"), new Object[] { formatter.toString() });
 					} else {
 						formatter.format("%.2f", timeDiff);
-						text = java.text.MessageFormat.format(_("leading by {0} s"), new Object[] { formatter.toString() });
+						text = _R(("leading by {0} s"), new Object[] { formatter.toString() });
 					}
 				}
 

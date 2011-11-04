@@ -5,6 +5,7 @@
 package org.signalml.app.view.dialog;
 
 import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogApplication._R;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Point;
@@ -172,7 +173,7 @@ public class SeriousWarningDialog extends org.signalml.app.view.dialog.AbstractS
 	 */
 	private void updateOkAction() {
 		if (currentTimeout > 0) {
-			getOkAction().putValue(AbstractAction.NAME, java.text.MessageFormat.format(_("Please reconsider... ({0})"), new Object[] { currentTimeout }));
+			getOkAction().putValue(AbstractAction.NAME, _R(("Please reconsider... ({0})"), new Object[] { currentTimeout }));
 			getOkAction().setEnabled(false);
 			timeoutTimer.restart();
 		} else {

@@ -81,7 +81,7 @@ public abstract class AbstractSignalMLAction extends AbstractAction {
 	 */
 	public void setText(String text, Object[] arguments) {
 		if (text != null) {
-			putValue(AbstractAction.NAME, java.text.MessageFormat.format(getSvarogI18n().getMessage(text), arguments));
+			putValue(AbstractAction.NAME, getSvarogI18n().render(getSvarogI18n().getMessage(text), arguments));
 		} else {
 			putValue(AbstractAction.NAME, null);
 		}

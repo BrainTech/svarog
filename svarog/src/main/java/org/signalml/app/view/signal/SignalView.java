@@ -5,6 +5,7 @@
 package org.signalml.app.view.signal;
 
 import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogApplication._R;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -841,7 +842,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 			@Override
 			public String getToolTipText(MouseEvent ev) {
-				return java.text.MessageFormat.format(_("{0} pixels/sample"), new Object[] { ((double) getValue())/1000 });
+				return _R(("{0} pixels/sample"), new Object[] { ((double) getValue())/1000 });
 			}
 
 		};
@@ -858,7 +859,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 			@Override
 			public String getToolTipText(MouseEvent ev) {
-				return java.text.MessageFormat.format(_("{0} %"), new Object[] { getValue() });
+				return _R(("{0} %"), new Object[] { getValue() });
 			}
 
 		};
@@ -873,7 +874,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 			@Override
 			public String getToolTipText(MouseEvent ev) {
-				return java.text.MessageFormat.format(_("{0} px"), new Object[] { getValue() });
+				return _R(("{0} px"), new Object[] { getValue() });
 			}
 
 		};

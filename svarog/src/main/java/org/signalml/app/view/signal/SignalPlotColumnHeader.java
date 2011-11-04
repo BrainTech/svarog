@@ -5,6 +5,7 @@
 package org.signalml.app.view.signal;
 
 import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogApplication._R;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -508,7 +509,7 @@ public class SignalPlotColumnHeader extends JComponent {
 		if (tag == null) {
 			return null;
 		}
-		String locationMessage = java.text.MessageFormat.format(_("T: {0} [P: {1}, B: {2}]"), new Object[] {
+		String locationMessage = _R(("T: {0} [P: {1}, B: {2}]"), new Object[] {
 		                                 plot.toTimeSpace(p),
 		                                 plot.toPageSpace(p),
 		                                 plot.toBlockSpace(p),

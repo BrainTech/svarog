@@ -4,6 +4,7 @@
 package org.signalml.app.view.dialog;
 
 import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogApplication._R;
 import java.awt.Component;
 import java.io.File;
 import java.util.Locale;
@@ -115,7 +116,7 @@ public class OptionPane extends JOptionPane {
 		}
 		showOptionDialog(
 		        parent,
-		        java.text.MessageFormat.format(getSvarogI18n().getMessage(message), arguments),
+		        getSvarogI18n().render(getSvarogI18n().getMessage(message), arguments),
 		        errorString,
 		        JOptionPane.OK_OPTION,
 		        JOptionPane.ERROR_MESSAGE,
@@ -208,7 +209,7 @@ public class OptionPane extends JOptionPane {
 		String exMessage = getSvarogI18n().getMessage("exception."+ex.getClass().getName(), ex.getMessage());
 		showOptionDialog(
 		        parent,
-		        java.text.MessageFormat.format(getSvarogI18n().getMessage(message), new Object[] {exMessage}),
+		        getSvarogI18n().render(getSvarogI18n().getMessage(message), new Object[] {exMessage}),
 		        errorString,
 		        JOptionPane.OK_OPTION,
 		        JOptionPane.ERROR_MESSAGE,
@@ -358,7 +359,7 @@ public class OptionPane extends JOptionPane {
 		if (path.length() > 60) {
 			path = path.substring(0, 20) + " ... " + path.substring(path.length() - 40);
 		}
-		String message = java.text.MessageFormat.format(_("Directory [{0}] not found. Create?"), new Object[] { path });
+		String message = _R(("Directory [{0}] not found. Create?"), new Object[] { path });
 
 		int res = showOptionDialog(
 		                  parent,
@@ -405,7 +406,7 @@ public class OptionPane extends JOptionPane {
 		if (document instanceof FileBackedDocument) {
 			File file = ((FileBackedDocument) document).getBackingFile();
 			if (file != null) {
-				message = java.text.MessageFormat.format(_("{0} has been modified. Save?"), new Object[] { file.getName() });
+				message = _R(("{0} has been modified. Save?"), new Object[] { file.getName() });
 			}
 		}
 
@@ -538,7 +539,7 @@ public class OptionPane extends JOptionPane {
 
 		int res = showOptionDialog(
 		                  parent,
-		                  java.text.MessageFormat.format(getSvarogI18n().getMessage(messageCode), args),
+		                  getSvarogI18n().render(getSvarogI18n().getMessage(messageCode), args),
 		                  proceedString + "?",
 		                  JOptionPane.OK_OPTION,
 		                  JOptionPane.QUESTION_MESSAGE,
@@ -583,7 +584,7 @@ public class OptionPane extends JOptionPane {
 
 		int res = showOptionDialog(
 		                  parent,
-		                  java.text.MessageFormat.format(getSvarogI18n().getMessage(messageCode), args),
+		                  getSvarogI18n().render(getSvarogI18n().getMessage(messageCode), args),
 		                  reuseString + "?",
 		                  JOptionPane.OK_OPTION,
 		                  JOptionPane.QUESTION_MESSAGE,
@@ -815,7 +816,7 @@ public class OptionPane extends JOptionPane {
 
 		int res = showOptionDialog(
 		                  parent,
-		                  java.text.MessageFormat.format(_("File {0} already exists. Overwrite?"), new Object[] { fileName }),
+		                  _R(("File {0} already exists. Overwrite?"), new Object[] { fileName }),
 		                  overwriteString + "?",
 		                  JOptionPane.OK_OPTION,
 		                  JOptionPane.QUESTION_MESSAGE,
@@ -1028,7 +1029,7 @@ public class OptionPane extends JOptionPane {
 			if (path.length() > 60) {
 				path = path.substring(0, 20) + " ... " + path.substring(path.length() - 40);
 			}
-			message = java.text.MessageFormat.format(_("File [{0}] not found or inaccessible."), new Object[] { path });
+			message = _R(("File [{0}] not found or inaccessible."), new Object[] { path });
 		}
 
 		showOptionDialog(
@@ -1063,7 +1064,7 @@ public class OptionPane extends JOptionPane {
 			if (path.length() > 60) {
 				path = path.substring(0, 20) + " ... " + path.substring(path.length() - 40);
 			}
-			message = java.text.MessageFormat.format(_("Directory [{0}] not found or inaccessible."), new Object[] { path });
+			message = _R(("Directory [{0}] not found or inaccessible."), new Object[] { path });
 		}
 
 		showOptionDialog(
@@ -1098,7 +1099,7 @@ public class OptionPane extends JOptionPane {
 			if (path.length() > 60) {
 				path = path.substring(0, 20) + " ... " + path.substring(path.length() - 40);
 			}
-			message = java.text.MessageFormat.format(_("Directory [{0}] not accessible."), new Object[] { path });
+			message = _R(("Directory [{0}] not accessible."), new Object[] { path });
 		}
 
 		showOptionDialog(
@@ -1133,7 +1134,7 @@ public class OptionPane extends JOptionPane {
 			if (path.length() > 60) {
 				path = path.substring(0, 20) + " ... " + path.substring(path.length() - 40);
 			}
-			message = java.text.MessageFormat.format(_("Failed to create directory [{0}]."), new Object[] { path });
+			message = _R(("Failed to create directory [{0}]."), new Object[] { path });
 		}
 
 		showOptionDialog(

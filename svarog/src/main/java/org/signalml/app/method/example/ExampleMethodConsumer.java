@@ -5,6 +5,7 @@
 package org.signalml.app.method.example;
 
 import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogApplication._R;
 import javax.swing.JOptionPane;
 
 import org.signalml.app.method.MethodResultConsumer;
@@ -20,7 +21,7 @@ import org.signalml.plugin.export.SignalMLException;
 public class ExampleMethodConsumer implements MethodResultConsumer {
 	@Override
 	public boolean consumeResult(Method method, Object methodData, Object methodResult) throws SignalMLException {
-		JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(_("The meaning of life turns out to be {0}"), new Object[] { ((ExampleResult) methodResult).getResult() }));
+		JOptionPane.showMessageDialog(null, _R(("The meaning of life turns out to be {0}"), new Object[] { ((ExampleResult) methodResult).getResult() }));
 		return false;
 	}
 }

@@ -204,6 +204,17 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 	}
 	
 	/**
+	 * I18n shortcut.
+	 * 
+	 * @param msgKey message to translate (English version)
+	 * @param arguments the values to render
+	 * @return
+	 */
+	public static String _R(String msgKey, Object ... arguments) {
+		return i18nDelegate._R(msgKey, arguments);
+	}
+	
+	/**
 	 * Svarog i18n delegate getter.
 	 * @return the shared delegate instance
 	 */

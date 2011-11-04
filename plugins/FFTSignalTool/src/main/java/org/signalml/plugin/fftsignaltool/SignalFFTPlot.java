@@ -37,6 +37,7 @@ import org.signalml.plugin.fft.export.FourierTransform;
 import org.signalml.plugin.fft.export.WindowType;
 import org.signalml.util.Util;
 import static org.signalml.plugin.fftsignaltool.FFTSignalTool._;
+import static org.signalml.plugin.fftsignaltool.FFTSignalTool._R;
 
 /**
  * Plot on which the power spectrum of the signal (fragment near cursor) is
@@ -327,7 +328,7 @@ public class SignalFFTPlot extends JComponent {
 		StringBuilder maxTimeSb = new StringBuilder(20);
 		Util.addTime(maxTime, maxTimeSb);
 
-		String title = java.text.MessageFormat.format(_("FFT over {0} points {1} - {2} ({3})"),
+		String title = _R(("FFT over {0} points {1} - {2} ({3})"),
 				new Object[] { new Integer(windowWidth), minTimeSb.toString(),
 						maxTimeSb.toString(), channelSamples.getName() });
 

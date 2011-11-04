@@ -1,6 +1,7 @@
 package org.signalml.app.view.book;
 
 import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogApplication._R;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -1277,7 +1278,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 
 				StringBuilder sb = new StringBuilder("<html><body>");
 				sb.append("<b>")
-				.append(java.text.MessageFormat.format(_("Atom {0}"), new Object[] { segment.indexOfAtom(nearestAtom)+1 }))
+				.append(_R(("Atom {0}"), new Object[] { segment.indexOfAtom(nearestAtom)+1 }))
 				.append("</b>");
 
 				sb.append("<p><table cellpadding=\"0\">");

@@ -5,6 +5,7 @@
 package org.signalml.app.view.book;
 
 import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogApplication._R;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
@@ -709,7 +710,7 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 
 				@Override
 				public String getToolTipText(MouseEvent ev) {
-					return java.text.MessageFormat.format(_("{0} px"), new Object[] { getValue() });
+					return _R(("{0} px"), new Object[] { getValue() });
 				}
 
 			};

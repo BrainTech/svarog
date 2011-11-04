@@ -5,6 +5,7 @@
 package org.signalml.app.view.signal;
 
 import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogApplication._R;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FontMetrics;
@@ -361,9 +362,9 @@ public class HypnogramPlot extends JComponent implements PropertyChangeListener,
 
 			String message;
 			if (tagDocument.getBackingFile() == null) {
-				message = java.text.MessageFormat.format(_("Hypnogram for new tag {0}"), new Object[] { tagDocument.getName() });
+				message = _R(("Hypnogram for new tag {0}"), new Object[] { tagDocument.getName() });
 			} else {
-				message = java.text.MessageFormat.format(_("Hypnogram for {0}"), new Object[] { tagDocument.getName() });
+				message = _R(("Hypnogram for {0}"), new Object[] { tagDocument.getName() });
 			}
 
 			float time = ((float) point.x) / pixelPerSecond ;

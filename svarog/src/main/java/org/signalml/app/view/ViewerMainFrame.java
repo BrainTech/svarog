@@ -4,6 +4,7 @@
 package org.signalml.app.view;
 
 import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogApplication._R;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Window;
@@ -104,7 +105,7 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 
 		SvarogApplication.getSharedInstance().splash(_("Initializing main window"), false);
 
-		setTitle(java.text.MessageFormat.format(_("Svarog v.{0}"), new Object[] {SvarogConstants.VERSION}));
+		setTitle(_R(("Svarog v.{0}"), new Object[] {SvarogConstants.VERSION}));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/mainframe.png"));
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 

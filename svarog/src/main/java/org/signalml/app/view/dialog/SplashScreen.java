@@ -5,6 +5,7 @@
 package org.signalml.app.view.dialog;
 
 import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogApplication._R;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -277,7 +278,7 @@ public class SplashScreen extends JDialog {
 			fontMetrics = g.getFontMetrics(font);
 			g.setFont(font);
 
-			String title = java.text.MessageFormat.format(_("Loading Svarog v.{0}"), new Object[] {SvarogConstants.VERSION });
+			String title = _R(("Loading Svarog v.{0}"), new Object[] {SvarogConstants.VERSION });
 
 			Rectangle2D stringBounds = fontMetrics.getStringBounds(title, g);
 			int width = (int) stringBounds.getWidth();
