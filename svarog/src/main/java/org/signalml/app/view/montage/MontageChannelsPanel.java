@@ -479,6 +479,7 @@ public class MontageChannelsPanel extends JPanel {
 	public SourceMontageTable getSourceMontageTable() {
 		if (sourceMontageTable == null) {
 			sourceMontageTable = new SourceMontageTable(getSourceMontageTableModel(), messageSource);
+			sourceMontageTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			sourceMontageTable.setPopupMenuProvider(new SourceMontageTablePopupProvider());
 
 			sourceMontageTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -882,21 +883,23 @@ public class MontageChannelsPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent ev) {
 
-			int cnt = montage.getSourceChannelCount();
-			if (cnt == 0) {
+			int selectedChannelIndex = getSourceMontageTable().getSelectedRow();
+			if (selectedChannelIndex == -1) {
 				return;
 			}
 
-			IChannelFunction function = montage.getSourceChannelAt(cnt -1 ).getFunction();
+			IChannelFunction function = montage.getSourceChannelAt(selectedChannelIndex).getFunction();
+
 			if (function != ChannelFunction.ONE && function != ChannelFunction.ZERO) {
 				ErrorsDialog.showError("error.sourceMontageTable.canOnlyRemoveZerosAndOnesChannels");
 				return;
 			}
-			if (montage.isSourceChannelInUse(cnt -  1)) {
+			if (montage.isSourceChannelInUse(selectedChannelIndex)) {
 				ErrorsDialog.showError("montageTable.onDeleteUsed");
+				return;
 			}
 
-			montage.removeSourceChannel();
+			montage.removeSourceChannel(selectedChannelIndex);
 
 		}
 

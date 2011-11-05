@@ -827,6 +827,7 @@
 
 	<entry key="signalParameters.requiredNotEditable">This parameter may not be changed for this signal file</entry>
 	<entry key="signalParameters.pagingNotEditable">This parameter is inherited from the active tag and may not be changed as long as any tags are open</entry>
+	<entry key="error.sourceMontageTable.sourceChannelNotEditable">ZEROs and ONEs channels cannot be edited.</entry>
 
 	<entry key="signalMontage.title">Signal montage</entry>
 
@@ -886,7 +887,7 @@
 	<entry key="montageTable.moveDown">Move down</entry>
 
 	<entry key="montageTable.onClear">Do you really want to clear the montage?</entry>
-	<entry key="montageTable.onDeleteUsed">This source channel is used used in the target montage and cannot be removed.</entry>
+	<entry key="montageTable.onDeleteUsed">This source channel is used in the target montage and cannot be removed.</entry>
 
 	<entry key="montageTable.wasteBasketToolTip">Drop target channels here to delete them</entry>
 

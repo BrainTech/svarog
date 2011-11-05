@@ -1,6 +1,8 @@
 package org.signalml.domain.montage.system;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class represents a function of a channel - that is what kind of signal
@@ -19,8 +21,8 @@ public enum ChannelFunction implements IChannelFunction {
 	EMG("EMG", false, true, "e", 20, 800),
 	RESP("RESP", false, true, "", 20, 800),
 	SAO2("SaO2", false, true, "", 20, 800),
-	ZERO("ZERO", true, true, "bit", 20, 800),
-	ONE("ONE", true, true, "bit", 20, 800);
+	ZERO("ZERO", true, false, "bit", 20, 800),
+	ONE("ONE", true, false, "bit", 20, 800);
 	/**
 	 * a name of this channel
 	 */
@@ -108,6 +110,21 @@ public enum ChannelFunction implements IChannelFunction {
 	@Override
 	public String getUnitOfMeasurementSymbol() {
 		return unitOfMeasurementSymbol;
+	}
+
+	/**
+	 * Returns the list of all available mutable channel functions.
+	 * @return the list of channel functions that can be changed
+	 */
+	public static List<IChannelFunction> getMutableChannelFunctions() {
+		ChannelFunction[] allFunctions = values();
+		List<IChannelFunction> mutableChannelFunctions = new ArrayList<IChannelFunction>();
+
+		for (IChannelFunction function: allFunctions) {
+			if (function.isMutable())
+				mutableChannelFunctions.add(function);
+		}
+		return mutableChannelFunctions;
 	}
 
 }

@@ -82,6 +82,14 @@ public class SourceChannel implements Serializable {
 		return channel;
 	}
 
+	/**
+	 * Sets the index of this SourceChannel.
+	 * @param channel new index of this SourceChannel
+	 */
+	public void setChannel(int channel) {
+		this.channel = channel;
+	}
+
         /**
          * Returns a label of this SourceChannel.
          * @return a label of this SourceChannel
