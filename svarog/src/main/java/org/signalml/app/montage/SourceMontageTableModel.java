@@ -112,10 +112,17 @@ public class SourceMontageTableModel extends AbstractTableModel implements Sourc
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		if (columnIndex == INDEX_COLUMN) {
-			return false;
+
+		switch (columnIndex) {
+			case INDEX_COLUMN: return false;
+			default:
+				if (!montage.getSourceChannelFunctionAt(rowIndex).isMutable()) {
+					return false;
+				}
+				else
+					return true;
 		}
-		return true;
+
 	}
 
 	@Override

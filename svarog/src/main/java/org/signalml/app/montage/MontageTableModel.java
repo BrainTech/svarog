@@ -81,7 +81,7 @@ public class MontageTableModel extends AbstractTableModel implements SourceMonta
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		if (columnIndex == INDEX_COLUMN) {
+		if (columnIndex == INDEX_COLUMN || columnIndex == PRIMARY_LABEL_COLUMN) {
 			return false;
 		}
 		return true;
@@ -157,7 +157,7 @@ public class MontageTableModel extends AbstractTableModel implements SourceMonta
 			return;
 		}
 
-		if (columnIndex == LABEL_COLUMN || columnIndex == PRIMARY_LABEL_COLUMN) { //TODO - mati - parse reference, set reference
+		if (columnIndex == LABEL_COLUMN) {
 			try {
 				montage.setMontageChannelLabelAt(rowIndex, (String) value);
 			} catch (MontageException ex) {
