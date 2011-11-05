@@ -74,26 +74,35 @@
 				</executions>
 			</plugin>
 
-            <plugin>
-                <groupId>org.xnap.commons</groupId>
-                <artifactId>maven-gettext-plugin</artifactId>
-                <version>1.2.3</version>
+			<plugin>
+				<groupId>org.xnap.commons</groupId>
+				<artifactId>maven-gettext-plugin</artifactId>
+				<version>1.2.3</version>
 
-                <configuration>
-                    <poDirectory>${project.build.i18n.resources}</poDirectory>
-                    <targetBundle>org.signalml.plugin.sf.I18nBundle</targetBundle>
-                </configuration>
+				<configuration>
+					<poDirectory>${project.build.i18n.resources}</poDirectory>
+					<targetBundle>org.signalml.plugin.sf.I18nBundle</targetBundle>
+				</configuration>
 
-                <executions>
-                    <execution>
-                        <id>generate-i18n</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>dist</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+				<executions>
+					<execution>
+						<id>gettext-merge</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>merge</goal>
+						</goals>
+						<inherited>false</inherited>
+					</execution>
+					<execution>
+						<id>gettext-dist</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>dist</goal>
+						</goals>
+						<inherited>false</inherited>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
