@@ -328,7 +328,7 @@ public class SignalFFTPlot extends JComponent {
 		StringBuilder maxTimeSb = new StringBuilder(20);
 		Util.addTime(maxTime, maxTimeSb);
 
-		String title = _R(("FFT over {0} points {1} - {2} ({3})"),
+		String title = _R("FFT over {0} points {1} - {2} ({3})",
 				new Object[] { new Integer(windowWidth), minTimeSb.toString(),
 						maxTimeSb.toString(), channelSamples.getName() });
 
