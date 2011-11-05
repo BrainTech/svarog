@@ -837,7 +837,7 @@ public abstract class AbstractPresetDialog extends AbstractSvarogDialog {
 			Preset existingPreset = presetManager.getPresetByName(newName);
 			if (existingPreset != null) {
 
-				String warning =  _R(("Preset named ''<b>{0}</b>'' will be permanently overwritten.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>permanently overwrite</b> this preset?"), new Object[] { newName });
+				String warning =  _R("Preset named ''<b>{0}</b>'' will be permanently overwritten.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>permanently overwrite</b> this preset?", new Object[] { newName });
 				SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 5);
 
 				boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
@@ -911,7 +911,7 @@ public abstract class AbstractPresetDialog extends AbstractSvarogDialog {
 
 			if (!isTrackingChanges() || isChanged()) {
 
-				String warning =  _R(("The settings currently on the dialog will be permanently overwritten with preset named ''<b>{0}</b>''.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>permanently overwrite</b> current settings?"), new Object[] { preset.getName() });
+				String warning =  _R("The settings currently on the dialog will be permanently overwritten with preset named ''<b>{0}</b>''.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>permanently overwrite</b> current settings?", new Object[] { preset.getName() });
 				SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 3);
 
 				boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
@@ -975,7 +975,7 @@ public abstract class AbstractPresetDialog extends AbstractSvarogDialog {
 				return;
 			}
 
-			String warning =  _R(("Selected preset named ''<b>{0}</b>'' will be permanently removed.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>permanently remove</b> this preset?"), new Object[] { name });
+			String warning =  _R("Selected preset named ''<b>{0}</b>'' will be permanently removed.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>permanently remove</b> this preset?", new Object[] { name });
 			SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 5);
 
 			boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
@@ -1130,7 +1130,7 @@ public abstract class AbstractPresetDialog extends AbstractSvarogDialog {
 
 			if (!isTrackingChanges() || isChanged()) {
 
-				String warning =  _R(("The settings currently on the dialog will be permanently overwritten with preset named ''<b>{0}</b>''.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>permanently overwrite</b> current settings?"), new Object[] { preset.getName() });
+				String warning =  _R("The settings currently on the dialog will be permanently overwritten with preset named ''<b>{0}</b>''.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>permanently overwrite</b> current settings?", new Object[] { preset.getName() });
 				SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 3);
 
 				boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
@@ -1156,7 +1156,7 @@ public abstract class AbstractPresetDialog extends AbstractSvarogDialog {
 			Preset existingPreset = presetManager.getPresetByName(newName);
 			if (existingPreset != null) {
 
-				String warning =  _R(("Preset named ''<b>{0}</b>'' will be permanently overwritten.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>permanently overwrite</b> this preset?"), new Object[] { newName });
+				String warning =  _R("Preset named ''<b>{0}</b>'' will be permanently overwritten.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>permanently overwrite</b> this preset?", new Object[] { newName });
 				SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 5);
 
 				boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);

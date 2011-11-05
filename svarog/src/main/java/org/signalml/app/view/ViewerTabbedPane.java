@@ -32,18 +32,22 @@ public class ViewerTabbedPane extends JTabbedPane {
 		this(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
 	}
 
+	/**
+	 * Adds a new tab to this pane.
+	 * 
+	 * Note: this method has changed on 2011-11-05. Now title and toolTip parameters
+	 * should be strings to display, NOT their keys! Message keys are now obsolete.
+	 * 
+	 * @param title tab title
+	 * @param iconPath
+	 * @param component
+	 * @param toolTip tooltip text
+	 */
 	public void addTab(String title, String iconPath, Component component, String toolTip) {
 		Icon icon = null;
-		String toolTipText = null;
-		if (iconPath != null) {
+		if (iconPath != null)
 			icon = IconUtils.loadClassPathIcon(iconPath);
-		}
-		if (toolTip != null) {
-			toolTipText = getSvarogI18n().getMessage(toolTip);
-		}
-		title = getSvarogI18n().getMessage(title);
-
-		addTab(title,icon,component,toolTipText);
+		addTab(title,icon,component,toolTip);
 	}
 
 	/**

@@ -726,7 +726,7 @@ public class ViewerElementManager {
 			statusBar.setMaximizeDocumentsAction(getViewModeAction());
 			statusBar.setActionFocusManager(getActionFocusManager());
 			statusBar.initialize();
-			statusBar.setStatus(_R(("Svarog v.{0} ready"),
+			statusBar.setStatus(_R("Svarog v.{0} ready",
 			                    new Object[] {SvarogConstants.VERSION}));
 			getActionFocusManager().addActionFocusListener(statusBar);
 		}
@@ -961,15 +961,12 @@ public class ViewerElementManager {
 	public ViewerTabbedPane getTreeTabbedPane() {
 		if (treeTabbedPane == null) {
 			treeTabbedPane = new ViewerTabbedPane(JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
-
-			treeTabbedPane.addTab("viewer.tagTabTitle", (String) null, getTagTreePane(), "viewer.tagTabToolTip");
-			treeTabbedPane.addTab("viewer.signalTabTitle", (String) null, getSignalTreePane(), "viewer.signalTabToolTip");
-			treeTabbedPane.addTab("viewer.monitorTabTitle", (String) null, getMonitorTreePane(), "viewer.monitorTabToolTip");
-			treeTabbedPane.addTab("viewer.bookTabTitle", (String) null, getBookTreePane(), "viewer.bookTabToolTip");
-			treeTabbedPane.addTab("viewer.workspaceTabTitle", (String) null, getWorkspaceTreePane(), "viewer.workspaceTabToolTip");
-
+			treeTabbedPane.addTab(_("Tags"), (String) null, getTagTreePane(), _("Shows open tags"));
+			treeTabbedPane.addTab(_("Signals"), (String) null, getSignalTreePane(), _("Shows open signals"));
+			treeTabbedPane.addTab(_("Monitors"), (String) null, getMonitorTreePane(), _("Shows open monitors"));
+			treeTabbedPane.addTab(_("Books"), (String) null, getBookTreePane(), _("Shows open books"));
+			treeTabbedPane.addTab(_("Workspace"), (String) null, getWorkspaceTreePane(), _("Shows workspace"));
 			treeTabbedPane.setSelectedIndex(3);
-
 			treeTabbedPane.addChangeListener(getPropertySheetModel());
 		}
 		return treeTabbedPane;
@@ -998,10 +995,9 @@ public class ViewerElementManager {
 	public ViewerTabbedPane getPropertyTabbedPane() {
 		if (propertyTabbedPane == null) {
 			propertyTabbedPane = new ViewerTabbedPane();
-
-			propertyTabbedPane.addTab("viewer.consoleTabTitle", (String) null, getConsole(), "viewer.consoleTabToolTip");
-			propertyTabbedPane.addTab("viewer.taskTableTabTitle", (String) null, getTaskTablePane(), "viewer.taskTableTabToolTip");
-			propertyTabbedPane.addTab("viewer.propertySheetTabTitle", (String) null, getPropertySheetPane(), "viewer.propertySheetTabToolTip");
+			propertyTabbedPane.addTab(_("Console"), (String) null, getConsole(), _("Application message console"));
+			propertyTabbedPane.addTab(_("Tasks"), (String) null, getTaskTablePane(), _("Lists active tasks that run in the background or on the server"));
+			propertyTabbedPane.addTab(_("Properties"), (String) null, getPropertySheetPane(), _("Shows properties of selected objects"));
 		}
 		return propertyTabbedPane;
 	}

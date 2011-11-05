@@ -1278,7 +1278,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 
 				StringBuilder sb = new StringBuilder("<html><body>");
 				sb.append("<b>")
-				.append(_R(("Atom {0}"), new Object[] { segment.indexOfAtom(nearestAtom)+1 }))
+				.append(_R("Atom {0}", new Object[] { segment.indexOfAtom(nearestAtom)+1 }))
 				.append("</b>");
 
 				sb.append("<p><table cellpadding=\"0\">");

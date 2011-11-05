@@ -173,7 +173,7 @@ public class SeriousWarningDialog extends org.signalml.app.view.dialog.AbstractS
 	 */
 	private void updateOkAction() {
 		if (currentTimeout > 0) {
-			getOkAction().putValue(AbstractAction.NAME, _R(("Please reconsider... ({0})"), new Object[] { currentTimeout }));
+			getOkAction().putValue(AbstractAction.NAME, _R("Please reconsider... ({0})", new Object[] { currentTimeout }));
 			getOkAction().setEnabled(false);
 			timeoutTimer.restart();
 		} else {

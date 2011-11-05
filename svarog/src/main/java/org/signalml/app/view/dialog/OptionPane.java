@@ -359,7 +359,7 @@ public class OptionPane extends JOptionPane {
 		if (path.length() > 60) {
 			path = path.substring(0, 20) + " ... " + path.substring(path.length() - 40);
 		}
-		String message = _R(("Directory [{0}] not found. Create?"), new Object[] { path });
+		String message = _R("Directory [{0}] not found. Create?", new Object[] { path });
 
 		int res = showOptionDialog(
 		                  parent,
@@ -406,7 +406,7 @@ public class OptionPane extends JOptionPane {
 		if (document instanceof FileBackedDocument) {
 			File file = ((FileBackedDocument) document).getBackingFile();
 			if (file != null) {
-				message = _R(("{0} has been modified. Save?"), new Object[] { file.getName() });
+				message = _R("{0} has been modified. Save?", new Object[] { file.getName() });
 			}
 		}
 
@@ -816,7 +816,7 @@ public class OptionPane extends JOptionPane {
 
 		int res = showOptionDialog(
 		                  parent,
-		                  _R(("File {0} already exists. Overwrite?"), new Object[] { fileName }),
+		                  _R("File {0} already exists. Overwrite?", new Object[] { fileName }),
 		                  overwriteString + "?",
 		                  JOptionPane.OK_OPTION,
 		                  JOptionPane.QUESTION_MESSAGE,
@@ -1029,7 +1029,7 @@ public class OptionPane extends JOptionPane {
 			if (path.length() > 60) {
 				path = path.substring(0, 20) + " ... " + path.substring(path.length() - 40);
 			}
-			message = _R(("File [{0}] not found or inaccessible."), new Object[] { path });
+			message = _R("File [{0}] not found or inaccessible.", new Object[] { path });
 		}
 
 		showOptionDialog(
@@ -1064,7 +1064,7 @@ public class OptionPane extends JOptionPane {
 			if (path.length() > 60) {
 				path = path.substring(0, 20) + " ... " + path.substring(path.length() - 40);
 			}
-			message = _R(("Directory [{0}] not found or inaccessible."), new Object[] { path });
+			message = _R("Directory [{0}] not found or inaccessible.", new Object[] { path });
 		}
 
 		showOptionDialog(
@@ -1099,7 +1099,7 @@ public class OptionPane extends JOptionPane {
 			if (path.length() > 60) {
 				path = path.substring(0, 20) + " ... " + path.substring(path.length() - 40);
 			}
-			message = _R(("Directory [{0}] not accessible."), new Object[] { path });
+			message = _R("Directory [{0}] not accessible.", new Object[] { path });
 		}
 
 		showOptionDialog(
@@ -1134,7 +1134,7 @@ public class OptionPane extends JOptionPane {
 			if (path.length() > 60) {
 				path = path.substring(0, 20) + " ... " + path.substring(path.length() - 40);
 			}
-			message = _R(("Failed to create directory [{0}]."), new Object[] { path });
+			message = _R("Failed to create directory [{0}].", new Object[] { path });
 		}
 
 		showOptionDialog(

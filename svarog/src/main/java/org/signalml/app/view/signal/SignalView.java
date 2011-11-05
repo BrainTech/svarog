@@ -842,7 +842,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 			@Override
 			public String getToolTipText(MouseEvent ev) {
-				return _R(("{0} pixels/sample"), new Object[] { ((double) getValue())/1000 });
+				return _R("{0} pixels/sample", new Object[] { ((double) getValue())/1000 });
 			}
 
 		};
@@ -859,7 +859,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 			@Override
 			public String getToolTipText(MouseEvent ev) {
-				return _R(("{0} %"), new Object[] { getValue() });
+				return _R("{0} %", new Object[] { getValue() });
 			}
 
 		};
@@ -874,7 +874,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 			@Override
 			public String getToolTipText(MouseEvent ev) {
-				return _R(("{0} px"), new Object[] { getValue() });
+				return _R("{0} px", new Object[] { getValue() });
 			}
 
 		};

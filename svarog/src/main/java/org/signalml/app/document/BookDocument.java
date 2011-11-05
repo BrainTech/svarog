@@ -3,7 +3,6 @@
  */
 package org.signalml.app.document;
 
-import static org.signalml.app.SvarogApplication._;
 import static org.signalml.app.SvarogApplication._R;
 import java.beans.IntrospectionException;
 import java.io.File;
@@ -194,7 +193,7 @@ public class BookDocument extends AbstractFileDocument {
 							if (filterName.length() > 30) {
 								filterName = filterName.substring(0, 30) + "...";
 							}
-							message = _R(("Filter [{0}] failed to initialize with message [{1}] and has been disabled."), new Object[] { filterName, exMessage });
+							message = _R("Filter [{0}] failed to initialize with message [{1}] and has been disabled.", new Object[] { filterName, exMessage });
 						}
 
 						OptionPane.showRawError(null, message);

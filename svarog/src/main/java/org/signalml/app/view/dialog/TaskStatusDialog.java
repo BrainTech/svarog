@@ -277,7 +277,7 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 
 		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 
-		setTitle(_R(("signalml task [{0}]"), new Object[] { method.getName() }));
+		setTitle(_R("signalml task [{0}]", new Object[] { method.getName() }));
 		if (method instanceof MethodIteratorMethod) {
 			setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/iteratemethod.png"));
 		} else {
@@ -863,7 +863,7 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 		String minutesString = (minutes < 10 ? "0" : "") + Integer.toString(minutes);
 		String secondsString = (seconds < 10 ? "0" : "") + Integer.toString(seconds);
 
-		progressETALabels[index].setText(_R(("Expected to end in {0}:{1} minutes"), new Object[] {minutesString,secondsString}));
+		progressETALabels[index].setText(_R("Expected to end in {0}:{1} minutes", new Object[] {minutesString,secondsString}));
 
 	}
 
