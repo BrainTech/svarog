@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: svarog\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-05 17:18+0100\n"
+"POT-Creation-Date: 2011-11-05 20:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2917,12 +2917,20 @@ msgstr ""
 msgid "Save the contents of the console to a text file"
 msgstr ""
 
+#: org/signalml/app/view/book/GrayscaleMapPalette.java:66
+msgid "Grayscale"
+msgstr ""
+
 #: org/signalml/app/view/book/AtomTableDialog.java:68
 msgid "Atom table"
 msgstr ""
 
 #: org/signalml/app/view/book/AtomTableDialog.java:87
 msgid "Atoms in the current segment (may exclude filtered atoms)"
+msgstr ""
+
+#: org/signalml/app/view/book/RainbowMapPalette.java:75
+msgid "Rainbow"
 msgstr ""
 
 #: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:114
@@ -3973,4 +3981,16 @@ msgstr ""
 
 #: org/signalml/domain/tag/TagComparisonResults.java:212
 msgid "MULTICHANNEL TAGS"
+msgstr ""
+
+#: org/signalml/domain/book/WignerMapScaleType.java:19
+msgid "Linear"
+msgstr ""
+
+#: org/signalml/domain/book/WignerMapScaleType.java:22
+msgid "Logarithmic"
+msgstr ""
+
+#: org/signalml/domain/book/WignerMapScaleType.java:25
+msgid "Square root"
 msgstr ""

@@ -26,7 +26,7 @@ public class WignerMapPaletteComboBoxCellRenderer extends DefaultListCellRendere
 		DefaultListCellRenderer renderer = (DefaultListCellRenderer) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 		if (value instanceof WignerMapPalette) {
 			WignerMapPalette palette = (WignerMapPalette) value;
-			renderer.setText(getSvarogI18n().getMessage(palette));
+			renderer.setText(palette.i18n());
 			renderer.setIcon(palette.getIcon());
 		}
 		// else leave text put by superclass

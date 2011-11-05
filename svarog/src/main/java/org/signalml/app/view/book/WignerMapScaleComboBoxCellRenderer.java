@@ -37,7 +37,7 @@ public class WignerMapScaleComboBoxCellRenderer extends DefaultListCellRenderer 
 		DefaultListCellRenderer renderer = (DefaultListCellRenderer) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 		if (value instanceof WignerMapScaleType) {
 			WignerMapScaleType scale = (WignerMapScaleType) value;
-			renderer.setText(getSvarogI18n().getMessage(scale));
+			renderer.setText(scale.i18n());
 			if (scale == WignerMapScaleType.NORMAL) {
 				renderer.setIcon(linearIcon);
 			}

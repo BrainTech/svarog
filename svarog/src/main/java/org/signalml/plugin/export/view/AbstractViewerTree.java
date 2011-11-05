@@ -7,6 +7,7 @@ package org.signalml.plugin.export.view;
 import javax.swing.JTree;
 import javax.swing.tree.TreeModel;
 
+import org.signalml.app.view.I18nMessage;
 import org.springframework.context.MessageSourceResolvable;
 
 /**
@@ -35,6 +36,9 @@ public abstract class AbstractViewerTree extends JTree {
 	@Override
 	public String convertValueToText(Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
 		{
+			if (value instanceof I18nMessage) {
+				return ((I18nMessage) value).i18n();
+			}
 			if (value instanceof MessageSourceResolvable) {
 				return getSvarogI18n().getMessage((MessageSourceResolvable) value);
 			}

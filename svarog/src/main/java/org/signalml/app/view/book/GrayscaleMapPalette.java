@@ -4,6 +4,8 @@
 
 package org.signalml.app.view.book;
 
+import static org.signalml.app.SvarogApplication._;
+
 import javax.swing.Icon;
 
 import org.signalml.app.util.IconUtils;
@@ -16,11 +18,7 @@ import org.signalml.util.Util;
  */
 public class GrayscaleMapPalette implements WignerMapPalette {
 
-	private static String[] CODES = new String[] { "wignerMapPalette.grayscale" };
-	private static Object[] ARGUMENTS = new Object[0];
-
 	private static GrayscaleMapPalette sharedInstance = null;
-
 	private transient int[] palette;
 
 	private GrayscaleMapPalette() {
@@ -59,19 +57,12 @@ public class GrayscaleMapPalette implements WignerMapPalette {
 		return palette;
 	}
 
-	@Override
-	public Object[] getArguments() {
-		return ARGUMENTS;
+	/**
+	 * Returns the name of this palette [i18n].
+	 * 
+	 * @return the name of this palette
+	 */
+	public String i18n() {
+		return _("Grayscale");
 	}
-
-	@Override
-	public String[] getCodes() {
-		return CODES;
-	}
-
-	@Override
-	public String getDefaultMessage() {
-		return "Grayscale";
-	}
-
 }

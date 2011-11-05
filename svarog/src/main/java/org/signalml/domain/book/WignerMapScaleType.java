@@ -4,33 +4,27 @@
 
 package org.signalml.domain.book;
 
-import org.springframework.context.MessageSourceResolvable;
+import static org.signalml.app.SvarogApplication._;
+
+import org.signalml.app.view.I18nMessage;
 
 /** WignerMapScaleType
  *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public enum WignerMapScaleType implements MessageSourceResolvable {
+public enum WignerMapScaleType implements I18nMessage {
 
-	NORMAL,
-	LOG,
-	SQRT
+	NORMAL {
+		public String i18n() { return _("Linear"); }
+	},
+	LOG {
+		public String i18n() { return _("Logarithmic"); }
+	},
+	SQRT {
+		public String i18n() { return _("Square root"); }
+	},
 	;
 
-	@Override
-	public Object[] getArguments() {
-		return new Object[0];
-	}
-
-	@Override
-	public String[] getCodes() {
-		return new String[] { "wignerMapScaleType." + name() };
-	}
-
-	@Override
-	public String getDefaultMessage() {
-		return name();
-	}
-
+	public abstract String i18n();
 }
