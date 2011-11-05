@@ -10,6 +10,7 @@ import org.springframework.context.MessageSourceResolvable;
 import org.xnap.commons.i18n.I18n;
 import org.xnap.commons.i18n.I18nFactory;
 import org.signalml.app.logging.SvarogLogger;
+import static org.signalml.util.SvarogConstants.I18nCatalogId;
 
 /**
  * {@link SvarogAccessI18n} implementation using org.xnap.commons.i18n.* classes.
@@ -19,27 +20,20 @@ import org.signalml.app.logging.SvarogLogger;
 public class SvarogAccessI18nImpl implements SvarogI18n, SvarogAccessI18n {
     
     /**
-     * Returns the shared instance.
+     * Returns the singleton instance.
      * @return
      */
     public static SvarogAccessI18nImpl getInstance() {
-        if (Instance == null) {
-            synchronized (SvarogAccessI18nImpl.class) {
-                if (Instance == null)
-                    Instance = new SvarogAccessI18nImpl();
-            }
-        }
         return Instance;
     }
     
-    private static SvarogAccessI18nImpl Instance;
-    private static final String SvarogCatalogId = SvarogConstants.I18nCatalogId;
+    private static final SvarogAccessI18nImpl Instance = new SvarogAccessI18nImpl();
+
     private PluginAccessClass pluginAccessClass;
-    private I18n coreI18n;
+    private final I18n coreI18n;
     
     private SvarogAccessI18nImpl() {
-        super();
-        setCoreI18n(I18nFactory.getI18n(SvarogAccessI18nImpl.class, SvarogCatalogId));
+	this.coreI18n = I18nFactory.getI18n(SvarogAccessI18nImpl.class, I18nCatalogId);
     }
     
     private Class<?> getClass(PluginAuth auth) {
@@ -49,9 +43,9 @@ public class SvarogAccessI18nImpl implements SvarogI18n, SvarogAccessI18n {
     private I18n getI18n(PluginAuth auth, String catalogId) {
     	SvarogLogger.getSharedInstance().debug("getI18n: " + auth + "/" + catalogId);
     	if (auth == null)
-    		return getCoreI18n();
+             return this.coreI18n;
     	else
-    		return I18nFactory.getI18n(getClass(auth), catalogId);
+             return I18nFactory.getI18n(getClass(auth), catalogId);
     }
 
     /**
@@ -81,17 +75,17 @@ public class SvarogAccessI18nImpl implements SvarogI18n, SvarogAccessI18n {
 
     @Override
     public String translateNR(PluginAuth auth, String catalogId, String key, String keyPlural, long n, Object ... arguments) {
-    	return render(translateN(auth, catalogId, key, keyPlural, n), arguments);
+        return render(translateN(auth, catalogId, key, keyPlural, n), arguments);
     }
 
     @Override
     public String _(String key) {
-        return translate(null, SvarogCatalogId, key);
+        return translate(null, I18nCatalogId, key);
     }
 
     @Override
     public String N_(String key, String keyPlural, long n) {
-        return translateN(null, SvarogCatalogId, key, keyPlural, n);
+        return translateN(null, I18nCatalogId, key, keyPlural, n);
     }
     
     @Override
@@ -129,23 +123,5 @@ public class SvarogAccessI18nImpl implements SvarogI18n, SvarogAccessI18n {
 	@Deprecated
 	public String getMessage(String msgKey, String defaultMessage) {
 		return defaultMessage;
-	}
-	
-	/**
-	 * Sets {@link #coreI18n} to the given value.
-	 * 
-	 * @param x
-	 */
-	private void setCoreI18n(I18n x) {
-		coreI18n = x;
-	}
-
-	/**
-	 * Returns {@link #coreI18n}.
-	 *
-	 * @return
-	 */
-	private I18n getCoreI18n() {
-		return coreI18n;
 	}
 }
