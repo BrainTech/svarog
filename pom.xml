@@ -304,7 +304,7 @@
 					<version>1.2.3</version>
 					<configuration>
 						<keywords>
-							--keyword=_:1 --keyword=_R:1 --keyword=N_:1,2 --keyword=N_R:1,2 --keyword=translate:3 --keyword=translateR:3 --keyword=translateN:3,4 --keyword=translateNR:3,4 --package-name=${project.artifactId} --foreign-user
+							--keyword=_:1 --keyword=_R:1 --keyword=N_:1,2 --keyword=N_R:1,2 --keyword=translate:3 --keyword=translateR:3 --keyword=translateN:3,4 --keyword=translateNR:3,4 --package-name=${project.artifactId} --foreign-user --sort-output
 						</keywords>
 					</configuration>
 				</plugin>
