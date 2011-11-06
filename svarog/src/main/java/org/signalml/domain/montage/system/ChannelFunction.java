@@ -15,14 +15,15 @@ import java.util.List;
 @XStreamAlias("eegchannel")
 public enum ChannelFunction implements IChannelFunction {
 
-	UNKNOWN("Unknown", false, true, "", 20, 800),
-	EEG("EEG", false, true, "uV", 20, 800),
-	ECG("ECG", false, true, "uV", 20, 40),
-	EMG("EMG", false, true, "e", 20, 800),
-	RESP("RESP", false, true, "", 20, 800),
-	SAO2("SaO2", false, true, "", 20, 800),
-	ZERO("ZERO", true, false, "bit", 20, 800),
-	ONE("ONE", true, false, "bit", 20, 800);
+	UNKNOWN("Unknown", false, true, "", -800, 800),
+	TRIGGER("Trigger", false, true, "", 0, 10),
+	EEG("EEG", false, true, "uV", -100, 100),
+	ECG("ECG", false, true, "uV", -5000, 5000),
+	EMG("EMG", false, true, "e", -20000, 20000),
+	RESP("RESP", false, true, "", -200, 200),
+	SAO2("SaO2", false, true, "", -100, 100),
+	ZERO("ZERO", true, false, "bit", -100, 100),
+	ONE("ONE", true, false, "bit", -100, 100);
 	/**
 	 * a name of this channel
 	 */
