@@ -63,14 +63,7 @@ public class OpenSignalAndSetMontageAction extends AbstractSignalMLAction {
 			return;
 		}
 
-		if (documentFlowIntegrator.maybeOpenDocument(openDocumentDescriptor) == true) {
-
-                        // HACK todo, setting montage doesn't seem to work with signalml files...
-                        if (openDocumentDescriptor.getOpenSignalDescriptor().getSignalSource().equals(SignalSource.FILE) &&
-                            openDocumentDescriptor.getOpenSignalDescriptor().getOpenFileSignalDescriptor().getMethod().equals(FileOpenSignalMethod.SIGNALML)) {
-                                return;
-                        }
-		}
+		documentFlowIntegrator.maybeOpenDocument(openDocumentDescriptor);
 
 	}
 
