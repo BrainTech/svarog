@@ -70,10 +70,6 @@ public class OpenSignalAndSetMontageAction extends AbstractSignalMLAction {
                             openDocumentDescriptor.getOpenSignalDescriptor().getOpenFileSignalDescriptor().getMethod().equals(FileOpenSignalMethod.SIGNALML)) {
                                 return;
                         }
-
-			Montage montage = openDocumentDescriptor.getOpenSignalDescriptor().getMontage();
-			SignalDocument activeSignalDocument = documentFlowIntegrator.getActionFocusManager().getActiveSignalDocument();
-			activeSignalDocument.setMontage(montage);
 		}
 
 	}

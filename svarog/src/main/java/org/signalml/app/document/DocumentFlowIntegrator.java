@@ -671,6 +671,7 @@ public class DocumentFlowIntegrator {
 	private SignalDocument openSignalDocument(final OpenDocumentDescriptor descriptor) throws IOException, SignalMLException {
 
 		File file = descriptor.getOpenSignalDescriptor().getOpenFileSignalDescriptor().getFile();
+		Montage montage = descriptor.getOpenSignalDescriptor().getMontage();
 
 		boolean fileOk = checkOpenedFile(file);
 		if (!fileOk) {
@@ -751,6 +752,7 @@ public class DocumentFlowIntegrator {
 				mrudRegistry.registerMRUDEntry(mrud);
 			}
 
+			signalMLDocument.setMontage(montage);
 			onSignalDocumentAdded(signalMLDocument, descriptor.isMakeActive());
 			onCommonDocumentAdded(signalMLDocument);
 
@@ -773,6 +775,7 @@ public class DocumentFlowIntegrator {
 			}
 
 			RawSignalDocument rawSignalDocument = new RawSignalDocument(rawDescriptor);
+			rawSignalDocument.setMontage(montage);
 
 			rawSignalDocument.setBackingFile(file);
 			rawSignalDocument.openDocument();
@@ -824,6 +827,7 @@ public class DocumentFlowIntegrator {
                 monitorOptions.setBackupFrequency(getApplicationConfig().getBackupFrequency());
 
 		MonitorSignalDocument monitorSignalDocument = new MonitorSignalDocument(monitorOptions);
+		monitorSignalDocument.setMontage(descriptor.getOpenSignalDescriptor().getMontage());
 		monitorSignalDocument.openDocument();
 
 		onSignalDocumentAdded(monitorSignalDocument, descriptor.isMakeActive());

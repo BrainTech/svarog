@@ -344,7 +344,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			}
 			else if (f.getMaxValue() > max)
 				max = (double) f.getMaxValue();
-		};
+		}
 		return max;
 	}
 
@@ -354,7 +354,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	 * @return SourceChannel for given montage channel.
 	 */
 	public SourceChannel getSourceChannelFor(int index) {
-		return signalChain.getMontage().getCurrentMontage().getSourceChannelForMontageChannel(index);
+		return document.getMontage().getSourceChannelForMontageChannel(index);
 	}
 
 	public void initialize() throws SignalMLException {
@@ -398,7 +398,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			v = detectMaxValue();
 		else
 			v = (double) this.getSourceChannelFor(index).getFunction().getMaxValue();
-	       return ((1.0 / (condMaxValue(v) * 2)) * 0.95) / 100;
+		return ((1.0 / (condMaxValue(v) * 2)) * 0.95) / 100;
 	}
 
 	/**
