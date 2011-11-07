@@ -312,14 +312,6 @@
 
 				<executions>
 					<execution>
-						<id>gettext-merge</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>merge</goal>
-						</goals>
-						<inherited>false</inherited>
-					</execution>
-					<execution>
 						<id>gettext-dist</id>
 						<phase>generate-resources</phase>
 						<goals>
