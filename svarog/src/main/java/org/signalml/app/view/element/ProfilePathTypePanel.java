@@ -98,7 +98,7 @@ public class ProfilePathTypePanel extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		welcomeLabel = new JLabel();
-		welcomeLabel.setText(_("Welcome to signalml viewer"));
+		welcomeLabel.setText(_("Welcome to Svarog"));
 		welcomeLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 		welcomeLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		add(welcomeLabel);

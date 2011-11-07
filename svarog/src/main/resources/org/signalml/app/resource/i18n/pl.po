@@ -3681,7 +3681,7 @@ msgid "Weight"
 msgstr ""
 
 #: org/signalml/app/view/element/ProfilePathTypePanel.java:101
-msgid "Welcome to signalml viewer"
+msgid "Welcome to Svarog"
 msgstr ""
 
 #: org/signalml/app/view/element/TimeSpacePanel.java:155
