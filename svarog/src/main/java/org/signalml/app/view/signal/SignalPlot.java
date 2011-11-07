@@ -26,7 +26,6 @@ import java.beans.PropertyChangeListener;
 import java.io.InvalidClassException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Formatter;
 import java.util.List;
 import java.util.SortedSet;
 
@@ -2710,13 +2709,10 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 					text = _("synchronized");
 				} else {
 					float timeDiff = toTimeSpace(viewportPosition) - masterPlot.toTimeSpace(masterViewportPosition);
-					Formatter formatter = new Formatter();
 					if (timeDiff < 0) {
-						formatter.format("%.2f", -timeDiff);
-						text = _R("trailing by {0} s", formatter.toString());
+						text = _R("trailing by {0,number,#.##}s", -timeDiff);
 					} else {
-						formatter.format("%.2f", timeDiff);
-						text = _R("leading by {0} s", formatter.toString());
+						text = _R("leading by {0,number,#.##}s", timeDiff);
 					}
 				}
 
