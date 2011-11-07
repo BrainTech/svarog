@@ -194,7 +194,7 @@ public class TimeDomainFilterResponseChartGroupPanel extends FilterResponseChart
 		frequencyResponseChartPanel.setData(frequencies, values);
 
 		int filterOrder = frequencyResponseCalculator.getFilterCoefficients().getFilterOrder();
-		String subtitleText = _R("filter order = {0}", new Object[]{filterOrder});
+		String subtitleText = _R("filter order = {0}", filterOrder);
 
 		frequencyResponseChartPanel.setSubtitle(subtitleText);
 

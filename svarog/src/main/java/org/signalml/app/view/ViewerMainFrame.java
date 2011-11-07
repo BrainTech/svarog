@@ -105,7 +105,7 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 
 		SvarogApplication.getSharedInstance().splash(_("Initializing main window"), false);
 
-		setTitle(_R("Svarog v.{0}", new Object[] {SvarogConstants.VERSION}));
+		setTitle(_R("Svarog v.{0}", SvarogConstants.VERSION));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/mainframe.png"));
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 

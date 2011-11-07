@@ -20,7 +20,7 @@ import org.signalml.plugin.export.SignalMLException;
 public class ExampleMethodConsumer implements MethodResultConsumer {
 	@Override
 	public boolean consumeResult(Method method, Object methodData, Object methodResult) throws SignalMLException {
-		JOptionPane.showMessageDialog(null, _R("The meaning of life turns out to be {0}", new Object[] { ((ExampleResult) methodResult).getResult() }));
+		JOptionPane.showMessageDialog(null, _R("The meaning of life turns out to be {0}", ((ExampleResult) methodResult).getResult()));
 		return false;
 	}
 }

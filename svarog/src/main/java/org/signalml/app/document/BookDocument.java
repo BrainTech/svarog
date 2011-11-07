@@ -193,7 +193,7 @@ public class BookDocument extends AbstractFileDocument {
 							if (filterName.length() > 30) {
 								filterName = filterName.substring(0, 30) + "...";
 							}
-							message = _R("Filter [{0}] failed to initialize with message [{1}] and has been disabled.", new Object[] { filterName, exMessage });
+							message = _R("Filter [{0}] failed to initialize with message [{1}] and has been disabled.", filterName, exMessage);
 						}
 
 						OptionPane.showRawError(null, message);

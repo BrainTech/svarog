@@ -278,7 +278,7 @@ public class SplashScreen extends JDialog {
 			fontMetrics = g.getFontMetrics(font);
 			g.setFont(font);
 
-			String title = _R("Loading Svarog v.{0}", new Object[] {SvarogConstants.VERSION });
+			String title = _R("Loading Svarog v.{0}", SvarogConstants.VERSION);
 
 			Rectangle2D stringBounds = fontMetrics.getStringBounds(title, g);
 			int width = (int) stringBounds.getWidth();

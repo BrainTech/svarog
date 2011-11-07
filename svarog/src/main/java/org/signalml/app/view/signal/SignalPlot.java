@@ -1252,13 +1252,12 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			return null;
 		}
 
-		String locationMessage = _R("T: {0}, V:{1} [P: {2}, B: {3}, C: {4}]", new Object[] {
-		                                 toTimeSpace(p),
-		                                 toValueSpace(p),
-		                                 toPageSpace(p),
-		                                 toBlockSpace(p),
-		                                 signalChain.getLabel(toChannelSpace(p))
-		                         });
+		String locationMessage = _R("T: {0}, V:{1} [P: {2}, B: {3}, C: {4}]",
+					    toTimeSpace(p),
+					    toValueSpace(p),
+					    toPageSpace(p),
+					    toBlockSpace(p),
+					    signalChain.getLabel(toChannelSpace(p)));
 		return getTagListToolTip(locationMessage, tempTagList);
 
 	}
@@ -2082,27 +2081,24 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		SignalSelectionType type = tag.getType();
 		if (type == SignalSelectionType.PAGE || type == SignalSelectionType.BLOCK
 			|| (type == SignalSelectionType.CHANNEL && tag.getChannel() == Tag.CHANNEL_NULL)) {
-			return _R("{0} [{1}->{3}]", new Object[] {
-			                                        tag.getStyle().getDescriptionOrName(),
-			                                        tag.getPosition(),
-			                                        tag.getLength(),
-			                                        tag.getPosition()+tag.getLength()
-			                                });
+			return _R("{0} [{1}->{3}]",
+				  tag.getStyle().getDescriptionOrName(),
+				  tag.getPosition(),
+				  tag.getLength(),
+				  tag.getPosition()+tag.getLength());
 		} else {
 			if (tag.isMarker()) {
-				return _R("{0} [{1} in channel {2}]", new Object[] {
-				                                        tag.getStyle().getDescriptionOrName(),
-				                                        tag.getCenterPosition(),
-				                                        signalChain.getPrimaryLabel(tag.getChannel())
-				                                });
+				return _R("{0} [{1} in channel {2}]",
+					  tag.getStyle().getDescriptionOrName(),
+					  tag.getCenterPosition(),
+					  signalChain.getPrimaryLabel(tag.getChannel()));
 			} else {
-				return _R("{0} [{1}->{3} in channel {4}]", new Object[] {
-				                                        tag.getStyle().getDescriptionOrName(),
-				                                        tag.getPosition(),
-				                                        tag.getLength(),
-				                                        tag.getPosition()+tag.getLength(),
-				                                        signalChain.getPrimaryLabel(tag.getChannel())
-				                                });
+				return _R("{0} [{1}->{3} in channel {4}]",
+					  tag.getStyle().getDescriptionOrName(),
+					  tag.getPosition(),
+					  tag.getLength(),
+					  tag.getPosition()+tag.getLength(),
+					  signalChain.getPrimaryLabel(tag.getChannel()));
 			}
 		}
 	}
@@ -2667,7 +2663,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 				String hSynchroString = horizontalLock ? _("on") : _("off");
 				String vSynchroString = verticalLock ? _("on") : _("off");
 
-				title = _R("Auxiliary signal plot ({0}, horizontal synchro {1}, vertical synchro {2})", new Object[] { montageString, hSynchroString, vSynchroString });
+				title = _R("Auxiliary signal plot ({0}, horizontal synchro {1}, vertical synchro {2})", montageString, hSynchroString, vSynchroString);
 
 			}
 
@@ -2717,10 +2713,10 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 					Formatter formatter = new Formatter();
 					if (timeDiff < 0) {
 						formatter.format("%.2f", -timeDiff);
-						text = _R("trailing by {0} s", new Object[] { formatter.toString() });
+						text = _R("trailing by {0} s", formatter.toString());
 					} else {
 						formatter.format("%.2f", timeDiff);
-						text = _R("leading by {0} s", new Object[] { formatter.toString() });
+						text = _R("leading by {0} s", formatter.toString());
 					}
 				}
 

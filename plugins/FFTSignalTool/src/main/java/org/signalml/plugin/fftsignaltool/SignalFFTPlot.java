@@ -329,8 +329,8 @@ public class SignalFFTPlot extends JComponent {
 		Util.addTime(maxTime, maxTimeSb);
 
 		String title = _R("FFT over {0} points {1} - {2} ({3})",
-				new Object[] { new Integer(windowWidth), minTimeSb.toString(),
-						maxTimeSb.toString(), channelSamples.getName() });
+				  windowWidth, minTimeSb.toString(),
+				  maxTimeSb.toString(), channelSamples.getName());
 
 		if (titleVisible) {
 			powerSpectrumChart.setTitle(new TextTitle(title, titleFont));

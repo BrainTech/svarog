@@ -726,7 +726,7 @@ public class ViewerElementManager {
 			statusBar.setMaximizeDocumentsAction(getViewModeAction());
 			statusBar.setActionFocusManager(getActionFocusManager());
 			statusBar.initialize();
-			statusBar.setStatus(_R("Svarog v.{0} ready",
+			statusBar.setStatus(_R(("Svarog v.{0} ready"),
 			                    new Object[] {SvarogConstants.VERSION}));
 			getActionFocusManager().addActionFocusListener(statusBar);
 		}

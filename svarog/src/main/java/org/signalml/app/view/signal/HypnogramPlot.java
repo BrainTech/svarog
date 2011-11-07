@@ -362,9 +362,9 @@ public class HypnogramPlot extends JComponent implements PropertyChangeListener,
 
 			String message;
 			if (tagDocument.getBackingFile() == null) {
-				message = _R("Hypnogram for new tag {0}", new Object[] { tagDocument.getName() });
+				message = _R("Hypnogram for new tag {0}", tagDocument.getName());
 			} else {
-				message = _R("Hypnogram for {0}", new Object[] { tagDocument.getName() });
+				message = _R("Hypnogram for {0}", tagDocument.getName());
 			}
 
 			float time = ((float) point.x) / pixelPerSecond ;

@@ -710,7 +710,7 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 
 				@Override
 				public String getToolTipText(MouseEvent ev) {
-					return _R("{0} px", new Object[] { getValue() });
+					return _R("{0} px", getValue());
 				}
 
 			};

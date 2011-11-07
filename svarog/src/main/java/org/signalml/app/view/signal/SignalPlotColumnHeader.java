@@ -509,13 +509,11 @@ public class SignalPlotColumnHeader extends JComponent {
 		if (tag == null) {
 			return null;
 		}
-		String locationMessage = _R("T: {0} [P: {1}, B: {2}]", new Object[] {
-		                                 plot.toTimeSpace(p),
-		                                 plot.toPageSpace(p),
-		                                 plot.toBlockSpace(p),
-		                         });
+		String locationMessage = _R("T: {0} [P: {1}, B: {2}]",
+					    plot.toTimeSpace(p),
+					    plot.toPageSpace(p),
+					    plot.toBlockSpace(p));
 		return plot.getTagToolTip(locationMessage, tag);
-
 	}
 
 	// note that this returns the first page tag encountered
