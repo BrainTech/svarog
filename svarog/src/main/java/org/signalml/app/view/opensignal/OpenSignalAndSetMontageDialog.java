@@ -56,6 +56,11 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 		this.viewerElementManager = viewerElementManager;
 		dialogManager = new OpenSignalAndSetMontageDialogManager(this, messageSource);
 	}
+	@Override
+	protected void initialize() {
+		super.initialize();
+		setTitle(messageSource.getMessage("opensignal.dialogTitle"));
+	}
 
 	@Override
 	public JComponent createInterface() {
