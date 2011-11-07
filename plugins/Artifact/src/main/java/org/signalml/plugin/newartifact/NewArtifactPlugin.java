@@ -2,12 +2,12 @@ package org.signalml.plugin.newartifact;
 
 import org.signalml.plugin.data.PluginConfigForMethod;
 import org.signalml.plugin.exception.PluginException;
+import org.signalml.plugin.export.Plugin;
 import org.signalml.plugin.export.PluginAuth;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
 import org.signalml.plugin.method.PluginMethodManager;
-import org.signalml.plugin.tool.AbstractPluginTool;
 import org.signalml.plugin.tool.PluginAccessHelper;
 import org.signalml.plugin.tool.PluginResourceRepository;
 
@@ -15,7 +15,7 @@ import org.signalml.plugin.tool.PluginResourceRepository;
  * @author kdr
  */
 
-public class NewArtifactPlugin extends AbstractPluginTool {
+public class NewArtifactPlugin implements Plugin {
 
 	private PluginMethodManager manager;
 	private static NewArtifactI18nDelegate i18nDelegate;
