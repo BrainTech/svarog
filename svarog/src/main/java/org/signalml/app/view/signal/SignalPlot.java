@@ -381,6 +381,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			samples = new double[1024];
 			masterPlot.addPropertyChangeListener(this);
 		}
+		this.channelsPlotOptionsModel.reset(channelCount);
 		calculateParameters();
 	}
 
@@ -407,6 +408,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	 */
 	protected void calculateVoltageZoomFactorRatio() {
 		voltageZoomFactorRatio = this.getVoltageZoomFactorRatioFor(-1);
+		voltageZoomFactor = voltageZoomFactorRatio * 100;
 	}
 
 	private void calculateParameters() {
