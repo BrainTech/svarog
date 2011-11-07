@@ -332,11 +332,7 @@ public class SignalFFTPlot extends JComponent {
 				  windowWidth, minTimeSb.toString(),
 				  maxTimeSb.toString(), channelSamples.getName());
 
-		if (titleVisible) {
-			powerSpectrumChart.setTitle(new TextTitle(title, titleFont));
-		} else {
-			powerSpectrumChart.setTitle((String) null);
-		}
+		powerSpectrumChart.setTitle(titleVisible ? new TextTitle(title, titleFont) : null);
 		powerSpectrumChart.setAntiAlias(antialias);
 
 		int startIndex = LEFT_CUTOFF;
