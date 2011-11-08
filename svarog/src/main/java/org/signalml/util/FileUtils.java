@@ -44,25 +44,6 @@ public class FileUtils {
 	}
 
 	/**
-	 * Copies a directory from resources to some other non-resource directory.
-	 * @param resourceDirectoryPath the resource directory to be copied from
-	 * @param destinationDirectoryPath the path of the directory the files
-	 * from the resourceDirectory to be copied to
-	 * @throws IOException thrown when an error occures while reading/writing
-	 * to buffer
-	 */
-	public static void copyDirectoryFromResource(String resourceDirectoryPath, String destinationDirectoryPath) throws IOException {
-		Resource resource = new ClassPathResource(resourceDirectoryPath);
-
-		createDirectory(destinationDirectoryPath);
-		File[] files = resource.getFile().listFiles();
-		for (File f : files) {
-			copyFileFromResource(resourceDirectoryPath + f.getName(), destinationDirectoryPath);
-		}
-
-	}
-
-	/**
 	 * Copies a resource file from resource to some other non-resource
 	 * path.
 	 *

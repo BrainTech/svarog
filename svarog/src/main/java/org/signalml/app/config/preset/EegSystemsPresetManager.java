@@ -4,9 +4,8 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.Annotations;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.signalml.app.util.XMLUtils;
 import org.signalml.domain.montage.generators.IMontageGenerator;
 import org.signalml.domain.montage.system.ChannelType;
@@ -25,15 +24,21 @@ import org.signalml.util.FileUtils;
 public class EegSystemsPresetManager extends AbstractPresetManager {
 
 	/**
-	 * The name of directory which is used to store eegSystems.
-	 */
-	public static String eegSystemsDirectory = "eegSystems";
-	/**
 	 * The path to eegSystems directory stored in resource.
 	 * (If user defined EEG systems do not exist, the files from this
 	 * resource directory are copied to the profile directory).
 	 */
 	protected static String eegSystemsDirectoryInResources = "org/signalml/app/config/eegSystems/";
+
+	/**
+	 * The names of the files containing the EEG systems definitions.
+	 */
+	public static String[] defaultEegSystemsFileNames = { "eeg10_10.xml", "eeg10_20.xml" };
+
+	/**
+	 * The name of directory which is used to store eegSystems.
+	 */
+	public static String eegSystemsDirectory = "eegSystems";
 
 	@Override
 	public String getStandardFilename() {
@@ -72,33 +77,23 @@ public class EegSystemsPresetManager extends AbstractPresetManager {
 	}
 
 	/**
-	 * Returns if eegSystems directory exists and is not empty.
-	 * @return false if eegSystems directory does not exist or if it is
-	 * empty, true otherwise
+	 * Creates a 'eegSystems' directory inside of the user directory and
+	 * copies the default EEG systems definitions there. This action is performed
+	 * only when the directory doesn't exist or if it is empty, otherwise
+	 * this action has no effect. (The idea is to always have at least one
+	 * EEG system definition inside of that directory).
+	 * @throws FileNotFoundException thrown when the file to be copied is not found
+	 * @throws IOException thrown when an error occurs while copying (reading from
+	 * buffer/writing to buffer) the files with EEG systems
 	 */
-	public boolean eegSystemsDirectoryExistsAndIsNotEmpty() {
+	public void createDefaultEegSystemsFilesIfNecessary() throws FileNotFoundException, IOException {
 		File directory = new File(getEegSystemsDirectoryFullPath());
-		if (directory.exists()) {
-			if (directory.listFiles().length == 0) {
-				return false;
-			}
-			return true;
-		} else {
-			return false;
-		}
+		if (directory.exists() && directory.listFiles().length > 0)
+			return;
 
+		FileUtils.createDirectory(getEegSystemsDirectoryFullPath());
+		for (String file: defaultEegSystemsFileNames)
+			FileUtils.copyFileFromResource(eegSystemsDirectoryInResources + file, getEegSystemsDirectoryFullPath() + File.separator + file);
 	}
 
-	/**
-	 * Copies the predefined EEG systems stored in Svarog resources
-	 * to the {@link EegSystemsPresetManager#eegSystemsDirectory} in the profile
-	 * directory.
-	 */
-	public void copyDefaultEegSystemsFromResource() {
-		try {
-			FileUtils.copyDirectoryFromResource(eegSystemsDirectoryInResources, getEegSystemsDirectoryFullPath());
-		} catch (IOException ex) {
-			Logger.getLogger(EegSystemsPresetManager.class.getName()).log(Level.SEVERE, null, ex);
-		}
-	}
 }

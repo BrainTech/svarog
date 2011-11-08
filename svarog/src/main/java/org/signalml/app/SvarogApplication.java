@@ -8,7 +8,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Locale;
-import java.util.logging.Level;
 import java.util.prefs.Preferences;
 
 import javax.swing.SwingUtilities;
@@ -96,7 +95,6 @@ import org.signalml.app.worker.amplifiers.AmplifierDefinitionPresetManager;
 import org.signalml.app.worker.processes.OpenBCIModulePresetManager;
 import org.signalml.app.worker.processes.ProcessManager;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
-import org.signalml.util.FileUtils;
 
 /**
  * The Svarog application.
@@ -835,13 +833,16 @@ public class SvarogApplication implements java.lang.Runnable {
 		eegSystemsPresetManager = new EegSystemsPresetManager();
 		eegSystemsPresetManager.setProfileDir(profileDir);
 
-		if (!eegSystemsPresetManager.eegSystemsDirectoryExistsAndIsNotEmpty())
-			eegSystemsPresetManager.copyDefaultEegSystemsFromResource();
+		try {
+			eegSystemsPresetManager.createDefaultEegSystemsFilesIfNecessary();
+		} catch (Exception ex) {
+			logger.debug("Error while creating the eegSystems directory with default EEG systems definition.");
+		}
 
 		try {
 			eegSystemsPresetManager.readFromPersistence(null);
 		} catch (FileNotFoundException ex) {
-			logger.debug("Eeg systems config not found");
+			logger.debug("EEG systems configuration not found!");
 		} catch (Exception ex) {
 			logger.error("Failed to read eeg systems configuration", ex);
 		}
