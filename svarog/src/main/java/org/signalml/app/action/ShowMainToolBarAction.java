@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.ItemSelectable;
 import java.awt.event.ActionEvent;
 
@@ -24,8 +25,8 @@ public class ShowMainToolBarAction extends AbstractSignalMLAction {
 
 	public  ShowMainToolBarAction() {
 		super();
-		setText("action.showMainToolBar");
-		setToolTip("action.showMainToolBarToolTip");
+		setText(_("Show main toolbar"));
+		setToolTip(_("Show main toolbar"));
 		putValue(SELECTED_KEY, new Boolean(true));
 	}
 

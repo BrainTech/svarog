@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -43,8 +44,8 @@ public class ImportTagAction extends AbstractFocusableSignalMLAction<SignalDocum
 
 	public  ImportTagAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
 		super( signalDocumentFocusSelector);
-		setText("action.importTag");
-		setToolTip("action.importTagToolTip");
+		setText(_("Import Legacy Tag..."));
+		setToolTip(_("Import a tag in legacy format"));
 	}
 
 	@Override

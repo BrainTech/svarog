@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
@@ -29,8 +30,8 @@ public class TagSelectionAction extends AbstractFocusableSignalMLAction<SignalPl
 
 	public  TagSelectionAction( SignalPlotFocusSelector signalPlotFocusSelector) {
 		super( signalPlotFocusSelector);
-		setText("action.tagSelection");
-		setToolTip("action.tagSelectionToolTip");
+		setText(_("Tag selection"));
+		setToolTip(_("Tag the selected signal fragment"));
 	}
 
 	@Override

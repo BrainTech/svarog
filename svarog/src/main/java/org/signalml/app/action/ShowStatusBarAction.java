@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.ItemSelectable;
 import java.awt.event.ActionEvent;
 
@@ -24,8 +25,8 @@ public class ShowStatusBarAction extends AbstractSignalMLAction {
 
 	public  ShowStatusBarAction() {
 		super();
-		setText("action.showStatusBar");
-		setToolTip("action.showStatusBarToolTip");
+		setText(_("Show status bar"));
+		setToolTip(_("Show status bar"));
 		putValue(SELECTED_KEY, new Boolean(true));
 	}
 

@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 
@@ -29,9 +30,9 @@ public class SuspendAllTasksAction extends AbstractSignalMLAction {
 
 	public  SuspendAllTasksAction() {
 		super();
-		setText("action.suspendAllTasks");
+		setText(_("Suspend all tasks"));
 		setIconPath("org/signalml/app/icon/suspendall.png");
-		setToolTip("action.suspendAllTasksToolTip");
+		setToolTip(_("Suspend all suspendable tasks"));
 	}
 
 	@Override

@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
@@ -26,8 +27,8 @@ public class EditTagDescriptionAction extends AbstractFocusableSignalMLAction<Ta
 
 	public  EditTagDescriptionAction( TagDocumentFocusSelector tagDocumentFocusSelector) {
 		super( tagDocumentFocusSelector);
-		setText("action.editTagDescription");
-		setToolTip("action.editTagDescriptionToolTip");
+		setText(_("Edit tag description"));
+		setToolTip(_("Edit tag description"));
 		setIconPath("org/signalml/app/icon/edittagdescription.png");
 	}
 

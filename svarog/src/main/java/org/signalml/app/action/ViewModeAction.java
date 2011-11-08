@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.ItemSelectable;
 import java.awt.event.ActionEvent;
 
@@ -24,9 +25,9 @@ public class ViewModeAction extends AbstractSignalMLAction {
 
 	public  ViewModeAction() {
 		super();
-		setText("action.viewMode");
+		setText(_("View mode"));
 		setIconPath("org/signalml/app/icon/viewmode.png");
-		setToolTip("action.viewModeToolTip");
+		setToolTip(_("Maximize the document view (see preferences for settings)"));
 
 	}
 	@Override

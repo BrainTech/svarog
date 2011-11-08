@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
@@ -27,9 +28,9 @@ public class EditBookFilterAction extends AbstractFocusableSignalMLAction<BookDo
 
 	public  EditBookFilterAction( BookDocumentFocusSelector bookDocumentFocusSelector) {
 		super( bookDocumentFocusSelector);
-		setText("action.bookFilter");
+		setText(_("Edit book filter"));
 		setIconPath("org/signalml/app/icon/editbookfilter.png");
-		setToolTip("action.bookFilterToolTip");
+		setToolTip(_("Edit book filter chain"));
 	}
 
 	@Override

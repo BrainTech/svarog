@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
@@ -25,9 +26,9 @@ public class CloseDocumentAction extends AbstractFocusableSignalMLAction<Documen
 
 	public  CloseDocumentAction( DocumentFocusSelector documentFocusSelector) {
 		super( documentFocusSelector);
-		setText("action.closeDocument");
+		setText(_("Close"));
 		setIconPath("org/signalml/app/icon/fileclose.png");
-		setToolTip("action.closeDocumentToolTip");
+		setToolTip(_("Close the active document"));
 	}
 
 	@Override

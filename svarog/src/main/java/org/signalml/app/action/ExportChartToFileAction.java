@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Window;
@@ -36,9 +37,9 @@ public abstract class ExportChartToFileAction extends AbstractSignalMLAction {
 
 	public  ExportChartToFileAction() {
 		super();
-		setText("action.exportChartToFile");
+		setText(_("Save chart as PNG file"));
 		setIconPath("org/signalml/app/icon/picture_save.png");
-		setToolTip("action.exportChartToFileToolTip");
+		setToolTip(_("Save chart as a PNG file"));
 	}
 
 	protected abstract Dimension getImageSize();

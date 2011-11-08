@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
@@ -26,9 +27,9 @@ public class ShowTaskDialogAction extends AbstractFocusableSignalMLAction<TaskFo
 
 	public  ShowTaskDialogAction( TaskFocusSelector taskFocusSelector) {
 		super( taskFocusSelector);
-		setText("action.showTaskDialog");
+		setText(_("Show dialog"));
 		setIconPath("org/signalml/app/icon/running.png");
-		setToolTip("action.showTaskDialogToolTip");
+		setToolTip(_("Show the status dialog"));
 	}
 
 	@Override

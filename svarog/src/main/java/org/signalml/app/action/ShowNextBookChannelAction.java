@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -25,9 +26,9 @@ public class ShowNextBookChannelAction extends AbstractFocusableSignalMLAction<B
 
 	public  ShowNextBookChannelAction( BookViewFocusSelector bookViewFocusSelector) {
 		super( bookViewFocusSelector);
-		setText("action.showNextBookChannel");
+		setText(_("Next channel"));
 		setIconPath("org/signalml/app/icon/nextbookchannel.png");
-		setToolTip("action.showNextBookChannelToolTip");
+		setToolTip(_("Navigate to next channel"));
 	}
 
 	@Override

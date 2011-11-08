@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 
@@ -49,9 +50,9 @@ public class GetTaskResultAction extends AbstractFocusableSignalMLAction<TaskFoc
 
 	public  GetTaskResultAction( TaskFocusSelector taskFocusSelector) {
 		super( taskFocusSelector);
-		setText("action.getTaskResult");
+		setText(_("Get result"));
 		setIconPath("org/signalml/app/icon/getresult.png");
-		setToolTip("action.getTaskResultToolTip");
+		setToolTip(_("Get the results of this task"));
 	}
 
 	@Override

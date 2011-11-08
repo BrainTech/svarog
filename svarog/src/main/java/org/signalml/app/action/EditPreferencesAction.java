@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
@@ -26,8 +27,8 @@ public class EditPreferencesAction extends AbstractSignalMLAction {
 
 	public  EditPreferencesAction() {
 		super();
-		setText("action.editPreferences");
-		setToolTip("action.editPreferencesToolTip");
+		setText(_("Preferences..."));
+		setToolTip(_("Edit preferences"));
 	}
 
 	@Override

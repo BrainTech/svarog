@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.ClipboardOwner;
@@ -26,9 +27,9 @@ public abstract class ExportSamplesToClipboardAction extends ExportSamplesAction
 
 	public  ExportSamplesToClipboardAction() {
 		super();
-		setText("action.exportSamplesToClipboard");
+		setText(_("Copy samples to clipboard"));
 		setIconPath("org/signalml/app/icon/clipboard.png");
-		setToolTip("action.exportSamplesToClipboardToolTip");
+		setToolTip(_("Copy samples to clipboard"));
 	}
 
 	@Override

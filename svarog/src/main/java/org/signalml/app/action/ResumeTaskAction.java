@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
@@ -25,9 +26,9 @@ public class ResumeTaskAction extends AbstractFocusableSignalMLAction<TaskFocusS
 
 	public  ResumeTaskAction( TaskFocusSelector taskFocusSelector) {
 		super( taskFocusSelector);
-		setText("action.resumeTask");
+		setText(_("Resume"));
 		setIconPath("org/signalml/app/icon/resume.png");
-		setToolTip("action.resumeTaskToolTip");
+		setToolTip(_("Resume this task"));
 	}
 
 	@Override

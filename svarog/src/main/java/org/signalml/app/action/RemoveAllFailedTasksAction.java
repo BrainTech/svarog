@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 
@@ -29,9 +30,9 @@ public class RemoveAllFailedTasksAction extends AbstractSignalMLAction {
 
 	public  RemoveAllFailedTasksAction() {
 		super();
-		setText("action.removeAllFailedTasks");
+		setText(_("Remove all failed tasks"));
 		setIconPath("org/signalml/app/icon/removeallfailedtasks.png");
-		setToolTip("action.removeAllFailedTasksToolTip");
+		setToolTip(_("Remove all failed tasks"));
 	}
 
 	@Override

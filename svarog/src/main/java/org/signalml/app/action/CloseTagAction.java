@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -29,9 +30,9 @@ public class CloseTagAction extends AbstractFocusableSignalMLAction<TagDocumentF
 
 	public  CloseTagAction( TagDocumentFocusSelector tagDocumentFocusSelector) {
 		super( tagDocumentFocusSelector);
-		setText("action.closeTag");
+		setText(_("Close Tag"));
 		setIconPath("org/signalml/app/icon/fileclose.png");
-		setToolTip("action.closeTagToolTip");
+		setToolTip(_("Close active tag"));
 	}
 
 	@Override

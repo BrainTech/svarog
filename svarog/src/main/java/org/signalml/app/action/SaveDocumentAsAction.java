@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -30,9 +31,9 @@ public class SaveDocumentAsAction extends AbstractFocusableSignalMLAction<Docume
 
 	public  SaveDocumentAsAction( DocumentFocusSelector documentFocusSelector) {
 		super( documentFocusSelector);
-		setText("action.saveDocumentAs");
+		setText(_("Save As..."));
 		setIconPath("org/signalml/app/icon/filesaveas.png");
-		setToolTip("action.saveDocumentAsToolTip");
+		setToolTip(_("Save the active document to another file"));
 	}
 
 	@Override

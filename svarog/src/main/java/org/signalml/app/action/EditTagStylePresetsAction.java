@@ -1,5 +1,6 @@
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 import org.signalml.app.action.selector.TagStyleFocusSelector;
 import org.signalml.app.model.TagStylePaletteDescriptor;
@@ -24,8 +25,8 @@ public class EditTagStylePresetsAction extends AbstractFocusableSignalMLAction<T
 	 */
 	public  EditTagStylePresetsAction( TagStyleFocusSelector tagStyleFocusSelector) {
 		super( tagStyleFocusSelector);
-		setText("action.editTagStylePresets");
-		setToolTip("action.editTagStylePresetsToolTip");
+		setText(_("Edit tag style templates"));
+		setToolTip(_("Edit tag style templates"));
 		setIconPath("org/signalml/app/icon/palette.png");
 	}
 

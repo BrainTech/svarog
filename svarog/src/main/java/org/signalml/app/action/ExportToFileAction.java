@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -36,9 +37,9 @@ public abstract class ExportToFileAction extends AbstractSignalMLAction {
 
 	public  ExportToFileAction( TableToTextExporter tableToTextExporter) {
 		super();
-		setText("action.exportTableToFile");
+		setText(_("Save to file"));
 		setIconPath("org/signalml/app/icon/script_save.png");
-		setToolTip("action.exportTableToFileToolTip");
+		setToolTip(_("Save contents to file"));
 		this.tableToTextExporter = tableToTextExporter;
 	}
 

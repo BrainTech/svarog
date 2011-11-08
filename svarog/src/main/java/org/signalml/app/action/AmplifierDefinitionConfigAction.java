@@ -1,5 +1,6 @@
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 import org.apache.log4j.Logger;
 
@@ -31,8 +32,8 @@ public class AmplifierDefinitionConfigAction extends AbstractSignalMLAction {
         public  AmplifierDefinitionConfigAction() {
                 
                 super();
-                setText("action.amplifierDefinitionConfig");
-                setToolTip("action.amplifierDefinitionConfigToolTip");
+                setText(_("Amplifier definition config"));
+                setToolTip(_("Allows to change the amplifier definition config"));
         }
 
         /**

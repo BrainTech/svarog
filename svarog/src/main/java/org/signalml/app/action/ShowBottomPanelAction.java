@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.ItemSelectable;
 import java.awt.event.ActionEvent;
 
@@ -24,8 +25,8 @@ public class ShowBottomPanelAction extends AbstractSignalMLAction {
 
 	public  ShowBottomPanelAction() {
 		super();
-		setText("action.showBottomPanel");
-		setToolTip("action.showBottomPanelToolTip");
+		setText(_("Show bottom panel"));
+		setToolTip(_("Show bottom panel"));
 		putValue(SELECTED_KEY, new Boolean(true));
 	}
 

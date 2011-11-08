@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.ItemSelectable;
 import java.awt.event.ActionEvent;
 
@@ -25,9 +26,9 @@ public class BookFilterSwitchAction extends AbstractFocusableSignalMLAction<Book
 
 	public  BookFilterSwitchAction( BookDocumentFocusSelector bookDocumentFocusSelector) {
 		super( bookDocumentFocusSelector);
-		setText("bookView.filterSwitch");
+		setText(_("Filtering"));
 		setIconPath("org/signalml/app/icon/filter.png");
-		setToolTip("bookView.filterSwitchToolTip");
+		setToolTip(_("Switch fitering on/off"));
 	}
 
 	@Override

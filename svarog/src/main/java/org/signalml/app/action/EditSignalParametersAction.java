@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 import java.util.LinkedList;
 
@@ -31,9 +32,9 @@ public class EditSignalParametersAction extends AbstractFocusableSignalMLAction<
 
 	public  EditSignalParametersAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
 		super( signalDocumentFocusSelector);
-		setText("action.signalParameters");
+		setText(_("Signal parameters"));
 		setIconPath("org/signalml/app/icon/signalparameters.png");
-		setToolTip("action.signalParametersToolTip");
+		setToolTip(_("Change signal parameters"));
 	}
 
 	@Override

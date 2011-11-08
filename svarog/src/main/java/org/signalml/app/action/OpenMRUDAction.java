@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -31,9 +32,9 @@ public class OpenMRUDAction extends AbstractFocusableSignalMLAction<MRUDFocusSel
 
 	public  OpenMRUDAction( MRUDFocusSelector mrudFocusSelector) {
 		super( mrudFocusSelector);
-		setText("action.openMRUD");
+		setText(_("Open"));
 		setIconPath("org/signalml/app/icon/fileopen.png");
-		setToolTip("action.openMRUDToolTip");
+		setToolTip(_("Open recently used document"));
 	}
 
 	@Override

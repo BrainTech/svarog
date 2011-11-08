@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 
@@ -29,9 +30,9 @@ public class ResumeAllTasksAction extends AbstractSignalMLAction {
 
 	public  ResumeAllTasksAction() {
 		super();
-		setText("action.resumeAllTasks");
+		setText(_("Resume all tasks"));
 		setIconPath("org/signalml/app/icon/resumeall.png");
-		setToolTip("action.resumeAllTasksToolTip");
+		setToolTip(_("Resume all suspended tasks"));
 	}
 
 	@Override

@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 
@@ -48,7 +49,7 @@ public class RunMethodAction extends AbstractSignalMLAction {
 		if (nameCode != null && !nameCode.isEmpty()) {
 			setText(nameCode);
 		} else {
-			setText("action.runMethod");
+			setText(_("Run method {0}"));
 		}
 		if (iconPath != null && !iconPath.isEmpty()) {
 			setIconPath(iconPath);

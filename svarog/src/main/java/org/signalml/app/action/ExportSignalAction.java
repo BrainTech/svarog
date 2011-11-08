@@ -4,6 +4,7 @@
 package org.signalml.app.action;
 
 import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -68,8 +69,8 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 
 	public  ExportSignalAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
 		super( signalDocumentFocusSelector);
-		setText("action.exportSignal");
-		setToolTip("action.exportSignalToolTip");
+		setText(_("Export Signal..."));
+		setToolTip(_("Export signal to simple binary format"));
 	}
 
 	@Override

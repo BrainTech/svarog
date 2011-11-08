@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
@@ -30,8 +31,8 @@ public class EditTagStylesAction extends AbstractFocusableSignalMLAction<TagStyl
 
 	public  EditTagStylesAction( TagStyleFocusSelector tagStyleFocusSelector) {
 		super( tagStyleFocusSelector);
-		setText("action.editTagStyles");
-		setToolTip("action.editTagStylesToolTip");
+		setText(_("Tag styles"));
+		setToolTip(_("Edit tag styles"));
 		setIconPath("org/signalml/app/icon/palette.png");
 	}
 

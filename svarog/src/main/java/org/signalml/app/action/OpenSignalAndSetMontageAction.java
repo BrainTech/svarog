@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.signalml.app.document.DocumentFlowIntegrator;
@@ -46,9 +47,9 @@ public class OpenSignalAndSetMontageAction extends AbstractSignalMLAction {
 	public OpenSignalAndSetMontageAction(DocumentFlowIntegrator documentFlowIntegrator) {
 		super();
 		this.documentFlowIntegrator = documentFlowIntegrator;
-		setText("action.openSignalAndSetMontageLabel");
+		setText(_("Open signal"));
 		setIconPath("org/signalml/app/icon/fileopen.png");
-		setToolTip("action.openSignalAndSetMontageToolTip");
+		setToolTip(_("Open signal and set montage for it"));
 	}
 
 	@Override

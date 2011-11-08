@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
@@ -22,9 +23,9 @@ public class SuspendTaskAction extends AbstractFocusableSignalMLAction<TaskFocus
 
 	public  SuspendTaskAction( TaskFocusSelector taskFocusSelector) {
 		super( taskFocusSelector);
-		setText("action.suspendTask");
+		setText(_("Suspend"));
 		setIconPath("org/signalml/app/icon/suspend.png");
-		setToolTip("action.suspendTaskToolTip");
+		setToolTip(_("Suspend this task (the task might not suspend immediately)"));
 	}
 
 	@Override

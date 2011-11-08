@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
@@ -30,9 +31,9 @@ public abstract class ExportChartToClipboardAction extends AbstractSignalMLActio
 
 	public  ExportChartToClipboardAction() {
 		super();
-		setText("action.exportChartToClipboard");
+		setText(_("Copy chart to clipboard"));
 		setIconPath("org/signalml/app/icon/clipboard.png");
-		setToolTip("action.exportChartToClipboardToolTip");
+		setToolTip(_("Copy chart to clipboard"));
 	}
 
 	protected abstract Dimension getImageSize();

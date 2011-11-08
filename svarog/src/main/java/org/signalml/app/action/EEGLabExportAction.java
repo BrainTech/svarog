@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
@@ -39,8 +40,8 @@ public class EEGLabExportAction extends AbstractFocusableSignalMLAction<SignalDo
         public  EEGLabExportAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
 
                 super( signalDocumentFocusSelector);
-		setText("action.exportEEGLab");
-		setToolTip("action.exportEEGLabToolTip");
+		setText(_("Export to EEGLab..."));
+		setToolTip(_("Export signal in EEGLab format"));
 	}
 
 	/**

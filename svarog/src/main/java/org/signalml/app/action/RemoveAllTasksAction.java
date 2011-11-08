@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 
@@ -29,9 +30,9 @@ public class RemoveAllTasksAction extends AbstractSignalMLAction {
 
 	public  RemoveAllTasksAction() {
 		super();
-		setText("action.removeAllTasks");
+		setText(_("Remove all tasks"));
 		setIconPath("org/signalml/app/icon/removealltasks.png");
-		setToolTip("action.removeAllTasksToolTip");
+		setToolTip(_("Remove all non-running tasks"));
 	}
 
 	@Override

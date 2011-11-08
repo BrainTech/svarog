@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
@@ -26,9 +27,9 @@ public class RemoveTaskAction extends AbstractFocusableSignalMLAction<TaskFocusS
 
 	public  RemoveTaskAction( TaskFocusSelector taskFocusSelector) {
 		super( taskFocusSelector);
-		setText("action.removeTask");
+		setText(_("Remove task"));
 		setIconPath("org/signalml/app/icon/removetask.png");
-		setToolTip("action.removeTaskToolTip");
+		setToolTip(_("Remove this task"));
 	}
 
 	@Override

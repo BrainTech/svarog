@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
@@ -27,9 +28,9 @@ public class OpenDocumentAction extends AbstractSignalMLAction {
 
 	public  OpenDocumentAction() {
 		super();
-		setText("action.openDocument");
+		setText(_("Open..."));
 		setIconPath("org/signalml/app/icon/fileopen.png");
-		setToolTip("action.openDocumentToolTip");
+		setToolTip(_("Open a document from file"));
 	}
 
 	@Override

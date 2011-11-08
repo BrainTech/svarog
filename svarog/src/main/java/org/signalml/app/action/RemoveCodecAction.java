@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 
@@ -30,7 +31,7 @@ public class RemoveCodecAction extends AbstractSignalMLAction {
 
 	public  RemoveCodecAction() {
 		super();
-		setText("action.removeCodec");
+		setText(_("Remove codec"));
 	}
 
 	@Override

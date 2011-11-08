@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JTable;
@@ -27,9 +28,9 @@ public class ExportTableToClipboardAction extends AbstractSignalMLAction {
 
 	public  ExportTableToClipboardAction() {
 		super();
-		setText("action.exportTableToClipboard");
+		setText(_("Copy to clipboard"));
 		setIconPath("org/signalml/app/icon/clipboard.png");
-		setToolTip("action.exportTableToClipboardToolTip");
+		setToolTip(_("Copy contents to clipboard"));
 	}
 
 	@Override

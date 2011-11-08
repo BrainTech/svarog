@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
@@ -28,9 +29,9 @@ public class GetTaskErrorAction extends AbstractFocusableSignalMLAction<TaskFocu
 
 	public  GetTaskErrorAction( TaskFocusSelector taskFocusSelector) {
 		super( taskFocusSelector);
-		setText("action.getTaskError");
+		setText(_("Get error"));
 		setIconPath("org/signalml/app/icon/geterror.png");
-		setToolTip("action.getTaskErrorToolTip");
+		setToolTip(_("Get the errors from this task"));
 	}
 
 	@Override

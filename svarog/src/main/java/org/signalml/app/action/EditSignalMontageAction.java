@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
@@ -27,9 +28,9 @@ public class EditSignalMontageAction extends AbstractFocusableSignalMLAction<Sig
 
 	public  EditSignalMontageAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
 		super( signalDocumentFocusSelector);
-		setText("action.signalMontage");
+		setText(_("Signal montage"));
 		setIconPath("org/signalml/app/icon/montage.png");
-		setToolTip("action.signalMontageToolTip");
+		setToolTip(_("Change signal montage"));
 	}
 
 	@Override

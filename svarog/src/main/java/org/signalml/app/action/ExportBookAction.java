@@ -4,6 +4,7 @@
 package org.signalml.app.action;
 
 import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -39,8 +40,8 @@ public class ExportBookAction extends AbstractFocusableSignalMLAction<BookDocume
 
 	public  ExportBookAction( BookDocumentFocusSelector bookDocumentFocusSelector) {
 		super( bookDocumentFocusSelector);
-		setText("action.exportBook");
-		setToolTip("action.exportBookToolTip");
+		setText(_("Export Book..."));
+		setToolTip(_("Export book to file"));
 	}
 
 	@Override

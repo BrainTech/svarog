@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
@@ -28,9 +29,9 @@ public class ActivateTagAction extends AbstractFocusableSignalMLAction<TagFocusS
 	public  ActivateTagAction( ActionFocusManager actionFocusManager, TagFocusSelector tagFocusSelector) {
 		super( tagFocusSelector);
 		this.actionFocusManager = actionFocusManager;
-		setText("action.activateTag");
+		setText(_("Show tag"));
 		setIconPath("org/signalml/app/icon/activate.png");
-		setToolTip("action.activateTagToolTip");
+		setToolTip(_("Show tag in viewer"));
 	}
 
 	public  ActivateTagAction( ActionFocusManager actionFocusManager) {

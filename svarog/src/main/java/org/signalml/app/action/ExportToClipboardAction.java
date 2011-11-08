@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.signalml.app.model.TableToTextExporter;
@@ -22,9 +23,9 @@ public abstract class ExportToClipboardAction extends AbstractSignalMLAction {
 
 	public  ExportToClipboardAction( TableToTextExporter tableToTextExporter) {
 		super();
-		setText("action.exportTableToClipboard");
+		setText(_("Copy to clipboard"));
 		setIconPath("org/signalml/app/icon/clipboard.png");
-		setToolTip("action.exportTableToClipboardToolTip");
+		setToolTip(_("Copy contents to clipboard"));
 		this.tableToTextExporter = tableToTextExporter;
 	}
 

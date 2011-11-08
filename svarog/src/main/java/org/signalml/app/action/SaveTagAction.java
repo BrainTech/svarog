@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -29,9 +30,9 @@ public class SaveTagAction extends AbstractFocusableSignalMLAction<TagDocumentFo
 
 	public  SaveTagAction( TagDocumentFocusSelector tagDocumentFocusSelector) {
 		super( tagDocumentFocusSelector);
-		setText("action.saveTag");
+		setText(_("Save Tag"));
 		setIconPath("org/signalml/app/icon/filesave.png");
-		setToolTip("action.saveTagToolTip");
+		setToolTip(_("Save active tag"));
 	}
 
 	@Override

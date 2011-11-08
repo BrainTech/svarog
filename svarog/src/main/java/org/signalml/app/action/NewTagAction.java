@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -37,9 +38,9 @@ public class NewTagAction extends AbstractFocusableSignalMLAction<SignalDocument
 
 	public  NewTagAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
 		super( signalDocumentFocusSelector);
-		setText("action.newTag");
+		setText(_("New Tag"));
 		setIconPath("org/signalml/app/icon/filenew.png");
-		setToolTip("action.newTagToolTip");
+		setToolTip(_("Create a new tag for this signal"));
 	}
 
 	@Override

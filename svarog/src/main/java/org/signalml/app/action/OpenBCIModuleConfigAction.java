@@ -1,5 +1,6 @@
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 import org.signalml.app.view.monitor.OpenBCIModuleConfigDialog;
 import org.signalml.app.worker.processes.OpenBCIModule;
@@ -30,8 +31,8 @@ public class OpenBCIModuleConfigAction extends AbstractSignalMLAction {
         public  OpenBCIModuleConfigAction() {
 
                 super();
-                setText("action.openBCIModulesConfig");
-                setToolTip("action.openBCIModulesConfigToolTip");
+                setText(_("OpenBCI modules config"));
+                setToolTip(_("Allows to change the OpenBCI modules config"));
         }
 
         /**

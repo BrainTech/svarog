@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
@@ -26,9 +27,9 @@ public class EditStoredMontagesAction extends AbstractSignalMLAction {
 
 	public  EditStoredMontagesAction() {
 		super();
-		setText("action.storedMontages");
+		setText(_("Stored montages..."));
 		setIconPath("org/signalml/app/icon/storedmontages.png");
-		setToolTip("action.storedMontagesToolTip");
+		setToolTip(_("Edit stored montages"));
 	}
 
 	@Override

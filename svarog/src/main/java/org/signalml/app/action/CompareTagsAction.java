@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.SignalDocument;
@@ -35,9 +36,9 @@ public class CompareTagsAction extends AbstractFocusableSignalMLAction<SignalDoc
 	public  CompareTagsAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
 		super( signalDocumentFocusSelector);
 
-		setText("action.compareTags");
+		setText(_("Compare tags"));
 		setIconPath("org/signalml/app/icon/comparetags.png");
-		setToolTip("action.compareTagsToolTip");
+		setToolTip(_("Compare tags (2 or more must be open)"));
 
 	}
 

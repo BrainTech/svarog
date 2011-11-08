@@ -7,6 +7,7 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
+import static org.signalml.app.SvarogApplication._R;
 import org.signalml.app.method.ApplicationIterableMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodManager;
@@ -66,7 +67,7 @@ public class IterateMethodAction extends AbstractSignalMLAction {
 		if (nameCode != null && !nameCode.isEmpty()) {
 			setText(nameCode);
 		} else {
-			setText("action.iterateMethod", new Object[] { method.getName() });
+			setText(_R("Iterate method {0}", method.getName()));
 		}
 		if (iterationIconPath != null && !iterationIconPath.isEmpty()) {
 			setIconPath(iterationIconPath);

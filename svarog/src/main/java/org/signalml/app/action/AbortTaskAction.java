@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
@@ -22,9 +23,9 @@ public class AbortTaskAction extends AbstractFocusableSignalMLAction<TaskFocusSe
 
 	public  AbortTaskAction( TaskFocusSelector taskFocusSelector) {
 		super( taskFocusSelector);
-		setText("action.abortTask");
+		setText(_("Abort"));
 		setIconPath("org/signalml/app/icon/abort.png");
-		setToolTip("action.abortTaskToolTip");
+		setToolTip(_("Abort this task (the task might not terminate immediately)"));
 	}
 
 	@Override

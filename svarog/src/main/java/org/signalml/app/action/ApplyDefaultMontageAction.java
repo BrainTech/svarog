@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
@@ -25,9 +26,9 @@ public class ApplyDefaultMontageAction extends AbstractFocusableSignalMLAction<M
 
 	public  ApplyDefaultMontageAction( MontageFocusSelector montageFocusSelector) {
 		super( montageFocusSelector);
-		setText("action.applyDefaultMontage");
+		setText(_("Default montage"));
 		setIconPath("org/signalml/app/icon/defaultmontage.png");
-		setToolTip("action.applyDefaultMontageToolTip");
+		setToolTip(_("Apply default montage"));
 	}
 
 	@Override

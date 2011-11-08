@@ -64,39 +64,18 @@ public abstract class AbstractSignalMLAction extends AbstractAction {
 
 	/**
 	 * Sets the name of this action.
-	 * @param text the code for the message that is to be used as the name
+	 * @param text the new name
 	 */
-	public void setText(String text) {
-		if (text != null) {
-			putValue(AbstractAction.NAME, getSvarogI18n().getMessage(text));
-		} else {
-			putValue(AbstractAction.NAME, null);
-		}
-	}
-
-	/**
-	 * Sets the name of this action.
-	 * @param text the code for the message that is to be used as the name
-	 * @param arguments arguments for the message, or {@code null} if none
-	 */
-	public void setText(String text, Object[] arguments) {
-		if (text != null) {
-			putValue(AbstractAction.NAME, getSvarogI18n().render(getSvarogI18n().getMessage(text), arguments));
-		} else {
-			putValue(AbstractAction.NAME, null);
-		}
+	protected void setText(String text) {
+		putValue(AbstractAction.NAME, text);
 	}
 
 	/**
 	 * Sets the short description (used in tooltip texts) of this action.
-	 * @param toolTip the code for the message that is to be used as short description
+	 * @param toolTip the tooltip text
 	 */
-	public void setToolTip(String toolTip) {
-		if (toolTip != null) {
-			putValue(AbstractAction.SHORT_DESCRIPTION, getSvarogI18n().getMessage(toolTip));
-		} else {
-			putValue(AbstractAction.SHORT_DESCRIPTION, null);
-		}
+	protected void setToolTip(String toolTip) {
+		putValue(AbstractAction.SHORT_DESCRIPTION, toolTip);
 	}
 
 	/**

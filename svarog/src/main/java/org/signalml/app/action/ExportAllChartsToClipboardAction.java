@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
@@ -31,9 +32,9 @@ public abstract class ExportAllChartsToClipboardAction extends AbstractSignalMLA
 
 	public  ExportAllChartsToClipboardAction() {
 		super();
-		setText("action.exportAllChartsToClipboard");
+		setText(_("Copy all charts to clipboard"));
 		setIconPath("org/signalml/app/icon/clipboard.png");
-		setToolTip("action.exportAllChartsToClipboardToolTip");
+		setToolTip(_("Copy all charts to clipboard"));
 	}
 
 	protected abstract int getChartCount();

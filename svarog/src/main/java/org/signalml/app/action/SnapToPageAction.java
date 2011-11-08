@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.ItemSelectable;
 import java.awt.event.ActionEvent;
 
@@ -25,9 +26,9 @@ public class SnapToPageAction extends AbstractFocusableSignalMLAction<SignalDocu
 
 	public  SnapToPageAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
 		super( signalDocumentFocusSelector);
-		setText("signalView.snapPageToView");
+		setText(_("Snap page to view"));
 		setIconPath("org/signalml/app/icon/snaptopage.png");
-		setToolTip("signalView.snapPageToViewToolTip");
+		setToolTip(_("Resize time scale so that exactly one page fits in the view & align view on page boundary"));
 	}
 
 	@Override

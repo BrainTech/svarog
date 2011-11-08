@@ -1,5 +1,6 @@
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Window;
 import java.io.File;
 
@@ -23,8 +24,8 @@ public class ExportEEGLabTagAction extends ExportTagAction {
 	protected static final Logger logger = Logger.getLogger(ExportEEGLabTagAction.class);
 	public  ExportEEGLabTagAction( TagDocumentFocusSelector tagDocumentFocusSelector) {
 		super( tagDocumentFocusSelector);
-		setText("action.exportEEGLabTag");
-		setToolTip("action.exportEEGLabTagToolTip");
+		setText(_("Export to EEGLab..."));
+		setToolTip(_("Export tags to EEGLab events ASCII file format"));
 	}
 	@Override
 	protected void doExport(StyledTagSet tagSet, File file, SignalDocument signalDocument) {

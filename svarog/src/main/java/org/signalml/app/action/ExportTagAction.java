@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -35,8 +36,8 @@ public class ExportTagAction extends AbstractFocusableSignalMLAction<TagDocument
 
 	public  ExportTagAction( TagDocumentFocusSelector tagDocumentFocusSelector) {
 		super( tagDocumentFocusSelector);
-		setText("action.exportTag");
-		setToolTip("action.exportTagToolTip");
+		setText(_("Export Legacy Tag..."));
+		setToolTip(_("Export a tag in legacy format"));
 	}
 
 	@Override

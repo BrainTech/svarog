@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
@@ -35,7 +36,7 @@ public class UnavailableMethodAction extends AbstractSignalMLAction {
 		if (nameCode != null && !nameCode.isEmpty()) {
 			setText(nameCode);
 		} else {
-			setText("action.unavailableMethod");
+			setText(_("Unavailable method"));
 		}
 		if (iconPath != null && !iconPath.isEmpty()) {
 			setIconPath(iconPath);

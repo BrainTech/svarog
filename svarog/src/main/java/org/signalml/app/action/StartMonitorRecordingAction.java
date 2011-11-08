@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.io.FileNotFoundException;
 import java.awt.event.ActionEvent;
 import org.apache.log4j.Logger;
@@ -39,9 +40,9 @@ public class StartMonitorRecordingAction extends MonitorRecordingAction {
 	 */
 	public  StartMonitorRecordingAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
                 super( signalDocumentFocusSelector);
-		setText("action.startMonitorRecordingLabel");
+		setText(_("Start monitor recording"));
 		setIconPath("org/signalml/app/icon/record.png");
-		setToolTip("action.startMonitorRecordingToolTip");
+		setToolTip(_("Record signal and tags from this monitor to a file"));
 	}
 
 	/**

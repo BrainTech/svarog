@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -40,9 +41,9 @@ public abstract class ExportSamplesToMultiplexedFloatFileAction extends Abstract
 
 	public  ExportSamplesToMultiplexedFloatFileAction() {
 		super();
-		setText("action.exportSamplesToFloatFile");
+		setText(_("Save all samples as float file"));
 		setIconPath("org/signalml/app/icon/filesave.png");
-		setToolTip("action.exportSamplesToFloatFileToolTip");
+		setToolTip(_("Save all samples as a float file"));
 	}
 
 	protected abstract int getSampleCount();

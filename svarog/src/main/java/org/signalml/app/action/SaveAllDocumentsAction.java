@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -28,9 +29,9 @@ public class SaveAllDocumentsAction extends AbstractSignalMLAction {
 
 	public  SaveAllDocumentsAction() {
 		super();
-		setText("action.saveAllDocuments");
+		setText(_("Save All"));
 		setIconPath("org/signalml/app/icon/save_all.png");
-		setToolTip("action.saveAllDocumentsToolTip");
+		setToolTip(_("Save all unsaved documents"));
 	}
 
 	@Override

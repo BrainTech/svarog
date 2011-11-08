@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -39,9 +40,9 @@ public abstract class ExportAllChartsToFileAction extends AbstractSignalMLAction
 
 	public  ExportAllChartsToFileAction() {
 		super();
-		setText("action.exportAllChartsToFile");
+		setText(_("Save all charts as one PNG file"));
 		setIconPath("org/signalml/app/icon/picture_save.png");
-		setToolTip("action.exportAllChartsToFileToolTip");
+		setToolTip(_("Save all charts as one PNG file"));
 	}
 
 	protected abstract int getChartCount();

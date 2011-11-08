@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 
@@ -27,9 +28,9 @@ public class HelpContentsAction extends AbstractSignalMLAction {
 
 	public  HelpContentsAction() {
 		super();
-		setText("action.helpContents");
+		setText(_("Contents..."));
 		setIconPath("org/signalml/app/icon/help.png");
-		setToolTip("action.helpContentsToolTip");
+		setToolTip(_("Display help contents"));
 	}
 
 	@Override

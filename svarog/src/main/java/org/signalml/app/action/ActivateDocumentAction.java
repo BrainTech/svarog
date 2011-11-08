@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
@@ -30,9 +31,9 @@ public class ActivateDocumentAction extends AbstractFocusableSignalMLAction<Docu
 	public  ActivateDocumentAction( ActionFocusManager actionFocusManager, DocumentFocusSelector documentFocusSelector) {
 		super( documentFocusSelector);
 		this.actionFocusManager = actionFocusManager;
-		setText("action.activateDocument");
+		setText(_("Show"));
 		setIconPath("org/signalml/app/icon/activate.png");
-		setToolTip("action.activateDocumentToolTip");
+		setToolTip(_("Show document"));
 	}
 
 	public  ActivateDocumentAction( ActionFocusManager actionFocusManager) {

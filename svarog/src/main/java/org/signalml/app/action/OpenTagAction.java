@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -36,9 +37,9 @@ public class OpenTagAction extends AbstractFocusableSignalMLAction<SignalDocumen
 
 	public  OpenTagAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
 		super( signalDocumentFocusSelector);
-		setText("action.openTag");
+		setText(_("Open Tag..."));
 		setIconPath("org/signalml/app/icon/fileopen.png");
-		setToolTip("action.openTagToolTip");
+		setToolTip(_("Open a tag file for this signal"));
 	}
 
 	@Override

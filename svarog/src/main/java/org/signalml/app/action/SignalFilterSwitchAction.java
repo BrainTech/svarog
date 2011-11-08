@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.ItemSelectable;
 import java.awt.event.ActionEvent;
 
@@ -25,9 +26,9 @@ public class SignalFilterSwitchAction extends AbstractFocusableSignalMLAction<Si
 
 	public  SignalFilterSwitchAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
 		super( signalDocumentFocusSelector);
-		setText("signalView.filterSwitch");
+		setText(_("Filtering"));
 		setIconPath("org/signalml/app/icon/filter.png");
-		setToolTip("signalView.filterSwitchToolTip");
+		setToolTip(_("Switch fitering on/off"));
 	}
 
 	@Override

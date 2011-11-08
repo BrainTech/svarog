@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
@@ -23,9 +24,9 @@ public class CloseWindowAction extends AbstractSignalMLAction {
 
 	public  CloseWindowAction() {
 		super();
-		setText("action.closeWindow");
+		setText(_("Exit"));
 		setIconPath("org/signalml/app/icon/exit.png");
-		setToolTip("action.closeWindowToolTip");
+		setToolTip(_("Close the window and exit the aplication"));
 	}
 
 	@Override

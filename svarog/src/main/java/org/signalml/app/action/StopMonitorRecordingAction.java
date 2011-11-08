@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.awt.event.ActionEvent;
@@ -35,8 +36,8 @@ public class StopMonitorRecordingAction extends MonitorRecordingAction {
 
 		super( signalDocumentFocusSelector);
 		setIconPath("org/signalml/app/icon/stop-recording.png");
-		setText("action.stopMonitorRecordingLabel");
-		setToolTip("action.stopMonitorRecordingToolTip");
+		setText(_("Stop monitor recording"));
+		setToolTip(_("Stop to record signal and tags to a file"));
 
 	}
 

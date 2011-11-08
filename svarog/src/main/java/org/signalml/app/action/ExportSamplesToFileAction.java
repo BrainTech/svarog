@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -35,9 +36,9 @@ public abstract class ExportSamplesToFileAction extends ExportSamplesAction {
 
 	public  ExportSamplesToFileAction() {
 		super();
-		setText("action.exportSamplesToFile");
+		setText(_("Save samples as txt file"));
 		setIconPath("org/signalml/app/icon/script_save.png");
-		setToolTip("action.exportSamplesToFileToolTip");
+		setToolTip(_("Save samples as a txt file"));
 	}
 
 	@Override
