@@ -1211,13 +1211,11 @@ msgstr ""
 msgid "Executor name"
 msgstr ""
 
-#: org/signalml/app/view/dialog/TaskStatusDialog.java:855
-msgid "Expected to end in --:-- minutes"
 msgstr ""
 
-#: org/signalml/app/view/dialog/TaskStatusDialog.java:866
+#: org/signalml/app/view/dialog/TaskStatusDialog.java:862
 #, java-format
-msgid "Expected to end in {0}:{1} minutes"
+msgid "Expected to end in {0}:{1} min:sec"
 msgstr ""
 
 #: org/signalml/app/method/mp5/MP5MethodDialog.java:315

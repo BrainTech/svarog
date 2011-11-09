@@ -843,28 +843,23 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 	 * how many time elapsed
 	 */
 	private void updateETA(int index, int limit, int value, boolean force) {
-
 		long millis = System.currentTimeMillis();
-		if (!force && lastETAUpdateMillis[index] != 0 && ((millis-lastETAUpdateMillis[index]) < 1000)) {
+		if (!force && lastETAUpdateMillis[index] != 0 && ((millis-lastETAUpdateMillis[index]) < 1000))
 			return;
-		}
 		lastETAUpdateMillis[index] = millis;
 
-		Integer secondsInteger = task.getExpectedSecondsUntilComplete(index);
+		final Integer secondsInteger = task.getExpectedSecondsUntilComplete(index);
+		final int minutes = secondsInteger / 60;
+		final int seconds = secondsInteger % 60;
+
+		final String _minutes, _seconds;
 		if (secondsInteger == null) {
-			progressETALabels[index].setText(_("Expected to end in --:-- minutes"));
-			return;
+			_minutes = _seconds = "--";
+		} else {
+			_minutes = String.format("%02d", minutes);
+			_seconds = String.format("%02d", seconds);
 		}
-
-		int seconds = secondsInteger;
-		int minutes = seconds / 60;
-		seconds = seconds % 60;
-
-		String minutesString = (minutes < 10 ? "0" : "") + Integer.toString(minutes);
-		String secondsString = (seconds < 10 ? "0" : "") + Integer.toString(seconds);
-
-		progressETALabels[index].setText(_R("Expected to end in {0}:{1} minutes", minutesString,secondsString));
-
+		progressETALabels[index].setText(_R("Expected to end in {0}:{1} min:sec", _minutes, _seconds));
 	}
 
 	/**
