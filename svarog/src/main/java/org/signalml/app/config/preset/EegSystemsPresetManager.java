@@ -33,7 +33,7 @@ public class EegSystemsPresetManager extends AbstractPresetManager {
 	/**
 	 * The names of the files containing the EEG systems definitions.
 	 */
-	public static String[] defaultEegSystemsFileNames = { "eeg10_10.xml", "eeg10_20.xml" };
+	public static String[] defaultEegSystemsFileNames = {"eeg10_20_cap19.xml", "eeg10_20_cap25.xml", "eeg10_10_cap33.xml", "eeg10_10_cap47.xml"};
 
 	/**
 	 * The name of directory which is used to store eegSystems.

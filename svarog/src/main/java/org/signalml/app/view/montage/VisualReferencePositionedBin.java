@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.Point;
 import java.awt.geom.Point2D;
+import org.signalml.domain.montage.SignalConfigurer;
 import org.signalml.math.geometry.Polar3dPoint;
 
 /** VisualReferencePositionedBin
@@ -95,7 +96,8 @@ public class VisualReferencePositionedBin extends VisualReferenceBin {
 				double centerY = location.y + HEADER_HEIGHT + margin.top + vOffset + avHeight / 2;
 				Point2D center = new Point2D.Double(centerX, centerY);
 
-				Point2D point2d = polar3dPoint.convertTo2DPoint(center, avWidth/2);
+				int headSizeForConverter = avWidth/2 - SignalConfigurer.EAR_OR_NOSE_LENGTH - d.width/2;
+				Point2D point2d = polar3dPoint.convertTo2DPoint(center, headSizeForConverter);
 
 				absoluteX = point2d.getX() - d.width / 2;
 				absoluteY = point2d.getY() - d.height / 2;
