@@ -19,7 +19,7 @@ import org.signalml.plugin.loader.PluginLoaderHi;
  *
  * This security manager can be configured to enforcing/permissive/off.
  * Set java property (e.g. mvn exec:java -Dsvarog.security_manager=permissive")
- * to change the mode. The default is enforcing.
+ * to change the mode. The default is off.
  *
  * In enforcing mode, disallowed access causes a RuntimeException.
  * In permissive mode, disallowed access only causes a message to be printed.
@@ -44,7 +44,7 @@ public class SvarogSecurityManager extends java.lang.SecurityManager {
 	 */
 	protected static void install() {
 		final String mode = System.getProperties().getProperty("svarog.security_manager",
-								       "enforcing");
+								       "off");
 		final boolean enforcing;
 		if (mode.equals("off")) {
 			SvarogSecurityLogger.getInstance().debug("SvarogSecurityManager is off");
