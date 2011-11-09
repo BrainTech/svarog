@@ -31,8 +31,7 @@ public interface Plugin {
 	 * It is advised to store it for later use.
 	 * @param auth plugin auth object to be used with certain plugin API methods
 	 * (just pass it back as is)
-	 * @throws SignalMLException if the registration process fails
+	 * @throws Exception if the registration process fails
 	 */
-	public void register(SvarogAccess access, PluginAuth auth) throws SignalMLException;	
-	
+	public void register(SvarogAccess access, PluginAuth auth) throws Exception;
 }

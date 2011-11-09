@@ -120,30 +120,6 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 	}
 
 	/**
-	 * Extracts the resources to the temporary directory and creates the
-	 * {@link #messageSource source of messages} using the extracted data.
-	 */
-	private void createMessageSource() {
-		File[] directories = configAccess.getPluginDirectories();
-		try {
-			resourceDirectory = signalAccess.getTemporaryFile("");
-			resourceDirectory.delete();
-			resourceDirectory.mkdir();
-			temporaryFiles.add(resourceDirectory);
-			for (File directory : directories){
-				final File file = new File(directory, "FFTSignalTool.jar");
-				log.debug("looking for " + file);
-				if (file.exists()){
-					extractFiles(resourceDirectory, file);
-					break;
-				}
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
 	 * Registers this plug-in:
 	 * <ul>
 	 * <li>extracts the resources and creates the source of messages,</li>
@@ -159,7 +135,6 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 		signalAccess = access.getSignalAccess();
 		configAccess = access.getConfigAccess();
 		access.getChangeSupport().addCloseListener(this);
-		createMessageSource();
 		
 		signalFFTSettings = new SignalFFTSettings();
 		settingsFile = new File(configAccess.getProfileDirectory(), "signalFFTSettings.xml");
