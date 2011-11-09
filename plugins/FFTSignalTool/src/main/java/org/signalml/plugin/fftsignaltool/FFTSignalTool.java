@@ -147,7 +147,7 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 		tool.setSettings(signalFFTSettings);
 		tool.setSvarogAccess(access);
 		listener = new SignalFFTToolButtonMouseListener();
-		final ImageIcon icon = access.getResourcesAccess().loadClassPathIcon(auth, "/resources/fft.png");
+		final ImageIcon icon = access.getResourcesAccess().loadClassPathIcon(auth, "/icon/fft.png");
 		guiAccess.addSignalTool(tool, icon, _("Signal FFT (for settings press and hold the mouse button here)"), listener);
 		
 		//creates and adds the action which shows the 
