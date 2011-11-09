@@ -35,17 +35,32 @@
 	  Instructions how to compile are on the wiki.
 	</a>
       </p>
-      <p>
-	Previous stable versions of Svarog are available as packages
-	in the <a href="archive.html">archive</a>.
-      </p>
 
-      <subsection name="Old versions">
+      <subsection name="Development version">
 
 	<p>
-	  See the <a href="archive.html">archives</a>.
+	  Svarog is built regularly from git sources. This unstable version is available through
+	  our <i>continous integration</i> system
+	  (<a href="https://escher.fuw.edu.pl/jenkins">jenkins</a>).
 	</p>
 
+	<ul>
+	  <li>Latest compiled version (latest checkin on any branch):
+	  <a href="https://escher.fuw.edu.pl/jenkins/job/svarog/lastBuild/">compilation results</a>
+	  <a href="https://escher.fuw.edu.pl/jenkins/job/svarog/lastBuild/org.signalml$svarog/artifact/org.signalml/svarog/0.5.0-SNAPSHOT/svarog-0.5.0-SNAPSHOT-onejar.jar">runnable</a> one-jar version.
+	  </li>
+	  <li>Laster compiled version on the master branch (more stable):
+	  <a href="https://escher.fuw.edu.pl/jenkins/job/svarog-master/lastBuild/">compilation results</a>
+	  <a href="https://escher.fuw.edu.pl/jenkins/job/svarog-master/lastBuild/org.signalml$svarog/artifact/org.signalml/svarog/0.5.0-SNAPSHOT/svarog-0.5.0-SNAPSHOT-onejar.jar">runnable</a> one-jar version.
+	  </li>
+	</ul>
+      </subsection>
+
+      <subsection name="Old versions">
+	<p>
+	  Previous stable versions of Svarog are available as packages
+	  in the <a href="archive.html">archive</a>.
+	</p>
       </subsection>
 
     </section>
