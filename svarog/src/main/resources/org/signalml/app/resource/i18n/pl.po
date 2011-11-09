@@ -1973,6 +1973,10 @@ msgstr ""
 msgid "New FFT filter"
 msgstr ""
 
+#: org/signalml/app/action/NewTagAction.java:41
+msgid "New Tag"
+msgstr ""
+
 #: org/signalml/app/view/dialog/TagStylePaletteDialog.java:845
 msgid "New block style"
 msgstr ""
@@ -3943,18 +3947,6 @@ msgstr ""
 
 #: org/signalml/app/task/ApplicationTaskManager.java:156
 msgid "waiting for task"
-msgstr ""
-
-#: org/signalml/app/view/signal/popup/CompareTagsPopupDialog.java:138
-#: org/signalml/app/view/signal/popup/ActiveTagPopupDialog.java:91
-#, java-format
-msgid "{0}"
-msgstr ""
-
-#: org/signalml/app/view/signal/popup/ChannelOptionsPopupDialog.java:154
-#: org/signalml/app/view/signal/SignalView.java:862
-#, java-format
-msgid "{0} %"
 msgstr ""
 
 #: org/signalml/app/view/signal/SignalPlot.java:2090

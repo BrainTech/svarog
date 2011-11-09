@@ -88,7 +88,7 @@ public class ActiveTagPopupDialog extends AbstractPopupDialog implements ActionL
 			if (tagDocuments[i].getBackingFile() == null) {
 				message = _R("New tag {0}", tagDocuments[i].getName());
 			} else {
-				message = _R("{0}", tagDocuments[i].getName());
+				message = tagDocuments[i].getName();
 			}
 			button = new JRadioButton(message);
 			buttonGroup.add(button);

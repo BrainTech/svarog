@@ -859,7 +859,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 			@Override
 			public String getToolTipText(MouseEvent ev) {
-				return _R("{0} %", getValue());
+				return getValue() + "%";
 			}
 
 		};

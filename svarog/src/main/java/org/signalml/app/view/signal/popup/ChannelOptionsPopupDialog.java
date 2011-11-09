@@ -151,7 +151,7 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 
 			@Override
 			public String getToolTipText(MouseEvent ev) {
-				return _R("{0} %", getValue());
+				return getValue() + "%";
 			}
 		};
 		

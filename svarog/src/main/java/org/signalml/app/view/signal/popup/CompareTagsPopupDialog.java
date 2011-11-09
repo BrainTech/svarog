@@ -131,11 +131,11 @@ public class CompareTagsPopupDialog extends AbstractPopupDialog {
 		CheckBoxCoordinator checkBoxCoordinator = new CheckBoxCoordinator();
 
 		for (int i=0; i<cnt; i++) {
-			String message;
+			final String message;
 			if (tagDocuments[i].getBackingFile() == null) {
 				message = _R("New tag {0}", tagDocuments[i].getName());
 			} else {
-				message = _R("{0}", tagDocuments[i].getName());
+				message = tagDocuments[i].getName();
 			}
 			checkBoxes[i] = new JCheckBox(message);
 			chooseTagsPanel.add(checkBoxes[i]);
