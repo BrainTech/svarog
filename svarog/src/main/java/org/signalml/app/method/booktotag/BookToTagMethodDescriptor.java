@@ -4,6 +4,7 @@
 
 package org.signalml.app.method.booktotag;
 
+import static org.signalml.app.SvarogApplication._;
 import org.signalml.app.document.BookDocument;
 import org.signalml.app.method.ApplicationMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodManager;
@@ -20,7 +21,7 @@ import org.signalml.plugin.export.signal.Document;
  */
 public class BookToTagMethodDescriptor implements ApplicationMethodDescriptor {
 
-	public static final String RUN_METHOD_STRING = "bookToTagMethod.runMethodString";
+	public static final String RUN_METHOD_STRING = _("Tag book atoms");
 	public static final String ICON_PATH = "org/signalml/app/icon/runmethod.png";
 
 	private BookToTagMethod method;
@@ -37,7 +38,7 @@ public class BookToTagMethodDescriptor implements ApplicationMethodDescriptor {
 	}
 
 	@Override
-	public String getNameCode() {
+	public String getName() {
 		return RUN_METHOD_STRING;
 	}
 

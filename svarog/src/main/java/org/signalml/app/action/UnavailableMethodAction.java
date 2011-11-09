@@ -27,14 +27,14 @@ public class UnavailableMethodAction extends AbstractSignalMLAction {
 
 	public  UnavailableMethodAction( UnavailableMethodDescriptor descriptor) {
 		this.descriptor = descriptor;
-		String nameCode = null;
+		String name = null;
 		String iconPath = null;
 		if (descriptor != null) {
-			nameCode = descriptor.getNameCode();
+			name = descriptor.getName();
 			iconPath = descriptor.getIconPath();
 		}
-		if (nameCode != null && !nameCode.isEmpty()) {
-			setText(nameCode);
+		if (name != null && !name.isEmpty()) {
+			setText(name);
 		} else {
 			setText(_("Unavailable method"));
 		}

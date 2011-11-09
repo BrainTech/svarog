@@ -4,6 +4,7 @@
 
 package org.signalml.app.method.example;
 
+import static org.signalml.app.SvarogApplication._;
 import org.signalml.app.method.ApplicationIterableMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.MethodIterationResultConsumer;
@@ -18,7 +19,7 @@ import org.signalml.method.example.ExampleMethod;
  */
 public class ExampleMethodDescriptor implements ApplicationIterableMethodDescriptor {
 
-	public static final String RUN_METHOD_STRING = "exampleMethod.runMethodString";
+	public static final String RUN_METHOD_STRING = _("Find the meaning of life");
 	private ExampleMethod method;
 	private ExampleMethodDialog configurer;
 	private ExampleMethodConsumer consumer;
@@ -36,13 +37,13 @@ public class ExampleMethodDescriptor implements ApplicationIterableMethodDescrip
 	}
 
 	@Override
-	public String getNameCode() {
+	public String getName() {
 		return RUN_METHOD_STRING;
 	}
 
 	@Override
-	public String getIterationNameCode() {
-		return "exampleMethod.iterateMethodString";
+	public String getIterationName() {
+		return _("Iterate finding the meaning of life");
 	}
 
 	@Override

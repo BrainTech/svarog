@@ -30,9 +30,7 @@ import org.apache.log4j.Logger;
 import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.impl.PluginAccessClass;
-import org.signalml.plugin.impl.SvarogAccessI18nImpl;
 import org.signalml.util.SvarogConstants;
-import org.signalml.app.SvarogI18n;
 import static org.signalml.app.SvarogApplication._;
 
 import org.springframework.validation.BindException;
@@ -218,13 +216,6 @@ public abstract class AbstractDialog extends JDialog {
 
 	}
 	
-	/**
-	 * Returns the {@link SvarogAccessI18nImpl} instance.
-	 */
-	private SvarogI18n getSvarogI18n() {
-		return SvarogAccessI18nImpl.getInstance();
-	}
-
 	/**
 	 * If the {@link #getContextHelpURL() context help URL} is not null the
 	 * {@link ContextHelpAction action} that shows help is created, it is added

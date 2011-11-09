@@ -48,7 +48,7 @@ public class IterateMethodAction extends AbstractSignalMLAction {
 		this.method = method;
 		this.methodManager = methodManager;
 
-		String nameCode = null;
+		String name = null;
 		String iconPath = null;
 		String iterationIconPath = null;
 
@@ -60,12 +60,12 @@ public class IterateMethodAction extends AbstractSignalMLAction {
 		}
 
 		if (descriptor != null) {
-			nameCode = descriptor.getIterationNameCode();
+			name = descriptor.getIterationName();
 			iterationIconPath = descriptor.getIterationIconPath();
 			iconPath = descriptor.getIconPath();
 		}
-		if (nameCode != null && !nameCode.isEmpty()) {
-			setText(nameCode);
+		if (name != null && !name.isEmpty()) {
+			setText(name);
 		} else {
 			setText(_R("Iterate method {0}", method.getName()));
 		}

@@ -11,11 +11,11 @@ package org.signalml.app.method;
  */
 public class UnavailableMethodDescriptor {
 
-	private String nameCode;
+	private String name;
 	private Throwable exception;
 
-	public UnavailableMethodDescriptor(String nameCode, Throwable exception) {
-		this.nameCode = nameCode;
+	public UnavailableMethodDescriptor(String name, Throwable exception) {
+		this.name = name;
 		this.exception = exception;
 	}
 
@@ -23,8 +23,8 @@ public class UnavailableMethodDescriptor {
 		return "org/signalml/app/icon/unavailablemethod.png";
 	}
 
-	public String getNameCode() {
-		return nameCode;
+	public String getName() {
+		return name;
 	}
 
 	public Throwable getException() {

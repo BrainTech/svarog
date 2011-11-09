@@ -39,15 +39,15 @@ public class RunMethodAction extends AbstractSignalMLAction {
 	public  RunMethodAction( Method method, ApplicationMethodManager methodManager) {
 		this.method = method;
 		this.methodManager = methodManager;
-		String nameCode = null;
+		String name = null;
 		String iconPath = null;
 		ApplicationMethodDescriptor descriptor = methodManager.getMethodData(method);
 		if (descriptor != null) {
-			nameCode = descriptor.getNameCode();
+			name = descriptor.getName();
 			iconPath = descriptor.getIconPath();
 		}
-		if (nameCode != null && !nameCode.isEmpty()) {
-			setText(nameCode);
+		if (name != null && !name.isEmpty()) {
+			setText(name);
 		} else {
 			setText(_("Run method {0}"));
 		}

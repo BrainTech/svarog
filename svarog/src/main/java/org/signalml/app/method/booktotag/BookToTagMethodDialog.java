@@ -261,11 +261,11 @@ public class BookToTagMethodDialog extends org.signalml.app.view.dialog.Abstract
 		super.validateDialog(model, errors);
 
 		if (getChannelList().isSelectionEmpty()) {
-			errors.rejectValue("channels", "error.bookToTagMethod.noChannels");
+			errors.rejectValue("channels", _("Select at least one channel"));
 		}
 
 		if (!getMakePageTagsCheckBox().isSelected() && !getMakeBlockTagsCheckBox().isSelected() && !getMakeChannelTagsCheckBox().isSelected()) {
-			errors.reject("error.bookToTagMethod.noTypesSelected");
+			errors.reject(_("Select at least one tag type"));
 		}
 
 	}
