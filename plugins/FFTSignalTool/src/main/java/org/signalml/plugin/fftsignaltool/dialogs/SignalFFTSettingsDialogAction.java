@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.plugin.fftsignaltool.SignalFFTSettings;
+import static org.signalml.plugin.fftsignaltool.FFTSignalTool._;
 
 /**
  * Action which shows the {@link SignalFFTSettingsDialog dialog} in which the
@@ -38,7 +39,7 @@ public class SignalFFTSettingsDialogAction extends AbstractSignalMLAction {
 		super();
 		fftSettings = settings;
 		fftSettingsDialog = new SignalFFTSettingsDialog();
-		setText("signalFFTSettings.buttonTitle");
+		setText(_("Signal FFT Settings"));
 	}
 	
 	/**
