@@ -1,14 +1,7 @@
 package org.signalml.plugin.fftsignaltool;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
 
 import javax.swing.ImageIcon;
 import org.apache.log4j.Logger;
@@ -18,7 +11,6 @@ import org.signalml.plugin.export.PluginAuth;
 import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.change.SvarogCloseListener;
 import org.signalml.plugin.export.config.SvarogAccessConfig;
-import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
 import org.signalml.plugin.fft.FFT;
 import org.signalml.plugin.fftsignaltool.dialogs.SignalFFTSettingsDialog;
@@ -43,10 +35,6 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 	protected static final Logger log = Logger.getLogger(FFTSignalTool.class);
 	private static FFTSignalToolI18nDelegate i18nDelegate;
 
-	/**
-	 * the {@link SvarogAccessSignal} access to Svarog logic
-	 */
-	private SvarogAccessSignal signalAccess;
 	/**
 	 * the {@link SvarogAccessGUI} access to Svarog GUI
 	 */
@@ -87,39 +75,6 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 	private SignalFFTToolButtonMouseListener listener;
 
 	/**
-	 * Extracts the files from the specified jar archive (from {@code
-	 * resources/} sub-directory) to the specified directory.
-	 * @param destination the directory to which the files will be extracted
-	 * @param archive the jar archive
-	 * @throws IOException if I/O error occurs
-	 */
-	private void extractFiles(File destination, File archive) throws IOException{
-		JarFile jarFile = new JarFile(archive);
-		Enumeration<JarEntry> entries = jarFile.entries();
-		while (entries.hasMoreElements()){
-			JarEntry entry = entries.nextElement();
-			String entryName = entry.getName();
-			String prefix = "resources/";
-			if (entryName.startsWith(prefix) && !entry.isDirectory()){
-				entryName = entryName.substring(prefix.length());
-				File temporaryFile = new File (destination, entryName);
-				temporaryFiles.add(temporaryFile);
-				temporaryFile.createNewFile();
-				OutputStream out = new FileOutputStream(temporaryFile);
-				InputStream in = jarFile.getInputStream(entry);
-				byte[] buffer = new byte[1024];
-				int dataLength;
-				while((dataLength = in.read(buffer)) > 0) {
-				out.write(buffer, 0, dataLength);
-				}
-				out.close();
-				in.close();
-			}
-			
-		}
-	}
-
-	/**
 	 * Registers this plug-in:
 	 * <ul>
 	 * <li>extracts the resources and creates the source of messages,</li>
@@ -132,7 +87,6 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 	public void register(SvarogAccess access, PluginAuth auth){
 		i18nDelegate = new FFTSignalToolI18nDelegate(access, auth);
 		guiAccess = access.getGUIAccess();
-		signalAccess = access.getSignalAccess();
 		configAccess = access.getConfigAccess();
 		access.getChangeSupport().addCloseListener(this);
 		
