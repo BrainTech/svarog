@@ -5,7 +5,6 @@ import java.text.MessageFormat;
 import org.signalml.app.SvarogI18n;
 import org.signalml.plugin.export.PluginAuth;
 import org.signalml.plugin.export.i18n.SvarogAccessI18n;
-import org.signalml.util.SvarogConstants;
 import org.springframework.context.MessageSourceResolvable;
 import org.xnap.commons.i18n.I18n;
 import org.xnap.commons.i18n.I18nFactory;
@@ -41,7 +40,6 @@ public class SvarogAccessI18nImpl implements SvarogI18n, SvarogAccessI18n {
     }
     
     private I18n getI18n(PluginAuth auth, String catalogId) {
-    	SvarogLogger.getSharedInstance().debug("getI18n: " + auth + "/" + catalogId);
     	if (auth == null)
              return this.coreI18n;
     	else
