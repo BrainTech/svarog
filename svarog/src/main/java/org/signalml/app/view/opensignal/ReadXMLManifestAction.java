@@ -58,7 +58,7 @@ public class ReadXMLManifestAction extends AbstractSignalMLAction {
 		SignalParametersPanelForRawSignalFile parentSignalParametersPanel) {
 		super();
 
-		this.setText("openSignal.options.raw.readXMLManifest");
+		this.setText(_("Read manifest..."));
 		this.parentSignalParametersPanel = parentSignalParametersPanel;
 
 		putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/script_load.png"));

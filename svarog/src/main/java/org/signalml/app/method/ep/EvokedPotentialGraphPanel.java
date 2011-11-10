@@ -672,8 +672,8 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 
 		ExportAllEPSamplesToClipboardAction() {
 			super();
-			setText("action.exportAllSamplesToClipboard");
-			setToolTip("action.exportAllSamplesToClipboardToolTip");
+			setText(_("Copy all samples to clipboard"));
+			setToolTip(_("Copy all samples to clipboard"));
 		}
 
 		@Override
@@ -760,8 +760,8 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 
 		ExportAllEPSamplesToFileAction() {
 			super();
-			setText("action.exportAllSamplesToFile");
-			setToolTip("action.exportAllSamplesToFileToolTip");
+			setText(_("Save all samples as txt file"));
+			setToolTip(_("Save all samples as one TXT file"));
 			setFileChooser(fileChooser);
 			setOptionPaneParent(EvokedPotentialGraphPanel.this.getTopLevelAncestor());
 		}
