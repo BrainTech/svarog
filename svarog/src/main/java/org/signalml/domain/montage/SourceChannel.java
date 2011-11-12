@@ -20,6 +20,14 @@ import org.signalml.domain.montage.system.EegElectrode;
 @XStreamAlias("sourcechannel")
 public class SourceChannel implements Serializable {
 
+	/**
+	 * The default name of the left ear channel.
+	 */
+	public static final String LEFT_EAR_CHANNEL_NAME = "A1";
+	/**
+	 * The default name of the right ear channel.
+	 */
+	public static final String RIGHT_EAR_CHANNEL_NAME = "A2";
 	private static final long serialVersionUID = 1L;
 
         /**

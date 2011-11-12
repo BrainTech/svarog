@@ -19,15 +19,16 @@ import org.apache.log4j.Logger;
 public class MontageGeneratorsConverter implements Converter {
 
 	/**
-	 * The {@link RawMontageGenerator} which will be added to every
-	 * Montage Generators list.
+	 * Montage generators that are added to all EEG systems by default.
 	 */
-	private static final RawMontageGenerator rawMontageGenerator = new RawMontageGenerator();
-	/**
-	 * The {@link CommonAverageMontageGenerator} which will be added to every
-	 * Montage Generators list.
-	 */
-	private static final CommonAverageMontageGenerator commonAverageMontageGenerator = new CommonAverageMontageGenerator();
+	private static final List<IMontageGenerator> defaultMontageGenerators = new ArrayList<IMontageGenerator>()
+		{{
+			add(new RawMontageGenerator());
+			add(new CommonAverageMontageGenerator());
+			add(new LeftEarMontageGenerator());
+			add(new RightEarMontageGenerator());
+			add(new LinkedEarsMontageGenerator());
+		}};
 
 	/**
 	 * Logger for recording the history of execution.
@@ -39,9 +40,13 @@ public class MontageGeneratorsConverter implements Converter {
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
+	/**
+	 * Adds the default montage generators to the list passed as an argument.
+	 * @param montageGenerators the list to which default montage generators
+	 * will be added.
+	 */
 	public static void addDefaultMontageGenerators(List<IMontageGenerator> montageGenerators) {
-		montageGenerators.add(rawMontageGenerator);
-		montageGenerators.add(commonAverageMontageGenerator);
+		montageGenerators.addAll(defaultMontageGenerators);
 	}
 
 	@Override
