@@ -21,7 +21,7 @@ public class SuspendTaskAction extends AbstractFocusableSignalMLAction<TaskFocus
 
 	protected static final Logger logger = Logger.getLogger(SuspendTaskAction.class);
 
-	public  SuspendTaskAction( TaskFocusSelector taskFocusSelector) {
+	public SuspendTaskAction( TaskFocusSelector taskFocusSelector) {
 		super( taskFocusSelector);
 		setText(_("Suspend"));
 		setIconPath("org/signalml/app/icon/suspend.png");

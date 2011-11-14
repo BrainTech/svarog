@@ -76,7 +76,7 @@ public class CodecManagerConfigPanel extends JPanel {
 	/**
 	 * Constructor. Initializes the panel.
 	 */
-	public  CodecManagerConfigPanel() {
+	public CodecManagerConfigPanel() {
 		super();
 		initialize();
 	}

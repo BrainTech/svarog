@@ -31,7 +31,7 @@ public class SourceMontageChannelsPanel extends JPanel {
 	private SourceMontageTable sourceMontageTable;
 	private JScrollPane sourceScrollPane;
 
-	public  SourceMontageChannelsPanel() {
+	public SourceMontageChannelsPanel() {
 		super();
 		initialize();
 	}

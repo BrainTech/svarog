@@ -39,7 +39,7 @@ public class MP5AlgorithmConfigPanel extends JPanel {
 
 	private MP5Algorithm lastAlgorithm;
 
-	public  MP5AlgorithmConfigPanel( AbstractDialog owner) {
+	public MP5AlgorithmConfigPanel( AbstractDialog owner) {
 		super();
 		this.owner = owner;
 		initialize();

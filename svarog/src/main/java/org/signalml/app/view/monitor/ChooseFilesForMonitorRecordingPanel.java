@@ -53,7 +53,7 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 	 *
 	 * localized message codes
 	 */
-	public  ChooseFilesForMonitorRecordingPanel() {
+	public ChooseFilesForMonitorRecordingPanel() {
 		super();
 		initialize();
 	}

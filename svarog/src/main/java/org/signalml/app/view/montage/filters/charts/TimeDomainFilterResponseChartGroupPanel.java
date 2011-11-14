@@ -96,7 +96,7 @@ public class TimeDomainFilterResponseChartGroupPanel extends FilterResponseChart
 	 * Constructor.
 	 * @param currentFilter the filter to be visualized
 	 */
-	public  TimeDomainFilterResponseChartGroupPanel( TimeDomainSampleFilter currentFilter) {
+	public TimeDomainFilterResponseChartGroupPanel( TimeDomainSampleFilter currentFilter) {
 		super( currentFilter);
 	}
 

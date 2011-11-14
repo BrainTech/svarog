@@ -29,7 +29,7 @@ public class SaveDocumentAsAction extends AbstractFocusableSignalMLAction<Docume
 
 	private DocumentFlowIntegrator documentFlowIntegrator;
 
-	public  SaveDocumentAsAction( DocumentFocusSelector documentFocusSelector) {
+	public SaveDocumentAsAction( DocumentFocusSelector documentFocusSelector) {
 		super( documentFocusSelector);
 		setText(_("Save As..."));
 		setIconPath("org/signalml/app/icon/filesaveas.png");

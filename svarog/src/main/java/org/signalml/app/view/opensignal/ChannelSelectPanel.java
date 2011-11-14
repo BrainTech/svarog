@@ -47,7 +47,7 @@ public class ChannelSelectPanel extends JPanel {
         /**
          * This is the default constructor.
          */
-        public  ChannelSelectPanel() {
+        public ChannelSelectPanel() {
                 super();
                 initialize();
         }

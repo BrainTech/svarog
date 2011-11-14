@@ -29,7 +29,7 @@ public class TagStyleTableCellRenderer extends DefaultTableCellRenderer {
 
 	private TagIconProducer tagIconProducer;
 
-	public  TagStyleTableCellRenderer() {
+	public TagStyleTableCellRenderer() {
 		super();
 
 		setHorizontalAlignment(CENTER);

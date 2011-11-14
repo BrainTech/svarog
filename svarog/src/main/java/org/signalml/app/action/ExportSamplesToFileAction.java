@@ -34,7 +34,7 @@ public abstract class ExportSamplesToFileAction extends ExportSamplesAction {
 	private ViewerFileChooser fileChooser;
 	private Component optionPaneParent;
 
-	public  ExportSamplesToFileAction() {
+	public ExportSamplesToFileAction() {
 		super();
 		setText(_("Save samples as txt file"));
 		setIconPath("org/signalml/app/icon/script_save.png");

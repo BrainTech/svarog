@@ -71,7 +71,7 @@ public class SignalFFTTool extends AbstractSignalTool {
 	 * ExportedSignalView signal view} for which this FFT tool is
 	 * created must be set separately.
 	 */
-	public  SignalFFTTool() {
+	public SignalFFTTool() {
 		super();
 		fftPlot = new SignalFFTPlot();
 		settings = new SignalFFTSettings();

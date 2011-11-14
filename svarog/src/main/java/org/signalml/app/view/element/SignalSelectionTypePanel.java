@@ -53,7 +53,7 @@ public class SignalSelectionTypePanel extends JPanel {
 	/**
 	 * Constructor. Initializes the panel.
 	 */
-	public  SignalSelectionTypePanel() {
+	public SignalSelectionTypePanel() {
 		super();
 		initialize();
 	}

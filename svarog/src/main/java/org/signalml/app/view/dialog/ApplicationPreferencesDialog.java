@@ -155,7 +155,7 @@ public class ApplicationPreferencesDialog extends org.signalml.app.view.dialog.A
 	 * @param f the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public  ApplicationPreferencesDialog( SignalMLOperationMode mode, Window f, boolean isModal) {
+	public ApplicationPreferencesDialog( SignalMLOperationMode mode, Window f, boolean isModal) {
 		super( f, isModal);
 		this.mode = mode;
 	}

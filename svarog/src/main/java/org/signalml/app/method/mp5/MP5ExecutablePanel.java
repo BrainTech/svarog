@@ -43,7 +43,7 @@ public class MP5ExecutablePanel extends JPanel {
 
 	private File mp5Executable;
 
-	public  MP5ExecutablePanel( ViewerFileChooser fileChooser) {
+	public MP5ExecutablePanel( ViewerFileChooser fileChooser) {
 		super();
 		this.fileChooser = fileChooser;
 		initialize();

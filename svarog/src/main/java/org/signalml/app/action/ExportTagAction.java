@@ -34,7 +34,7 @@ public class ExportTagAction extends AbstractFocusableSignalMLAction<TagDocument
 	private ViewerFileChooser fileChooser;
 	private Component optionPaneParent;
 
-	public  ExportTagAction( TagDocumentFocusSelector tagDocumentFocusSelector) {
+	public ExportTagAction( TagDocumentFocusSelector tagDocumentFocusSelector) {
 		super( tagDocumentFocusSelector);
 		setText(_("Export Legacy Tag..."));
 		setToolTip(_("Export a tag in legacy format"));

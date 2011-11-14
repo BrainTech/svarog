@@ -67,7 +67,7 @@ public class DelegatingFilterDialog extends AbstractFilterDialog {
 	private JButton addJarEntryButton;
 	private JButton removeEntryButton;
 
-	public  DelegatingFilterDialog( Window w, boolean isModal) {
+	public DelegatingFilterDialog( Window w, boolean isModal) {
 		super( w, isModal);
 	}
 

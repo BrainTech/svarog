@@ -40,7 +40,7 @@ public class SignalSourceSelectionPanel extends TitledPanelWithABorder implement
 	/**
 	 * Constructor.
 	 */
-	public  SignalSourceSelectionPanel() {
+	public SignalSourceSelectionPanel() {
 		createInterface();
 	}
 

@@ -14,7 +14,7 @@ public class ImpulseResponseChartPanel extends TimeDomainResponseChartPanel {
 	/**
 	 * Constructor.
 	 */
-	public  ImpulseResponseChartPanel() {
+	public ImpulseResponseChartPanel() {
 		super();
 		setTitle(_("Impulse response [amplitude]"));
 	}

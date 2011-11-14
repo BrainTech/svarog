@@ -42,7 +42,7 @@ public class TagStylesPopupDialog extends AbstractPopupDialog implements ActionL
 
 	private TagStyleToolBar tagStyleToolBar;
 
-	public  TagStylesPopupDialog( TagStyleToolBar tagStyleToolBar, Window w, boolean isModal) {
+	public TagStylesPopupDialog( TagStyleToolBar tagStyleToolBar, Window w, boolean isModal) {
 		super( w, isModal);
 		this.tagStyleToolBar = tagStyleToolBar;
 	}

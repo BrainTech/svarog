@@ -26,7 +26,7 @@ public class ExportTableToClipboardAction extends AbstractSignalMLAction {
 
 	private TableToTextExporter tableToTextExporter;
 
-	public  ExportTableToClipboardAction() {
+	public ExportTableToClipboardAction() {
 		super();
 		setText(_("Copy to clipboard"));
 		setIconPath("org/signalml/app/icon/clipboard.png");

@@ -204,7 +204,7 @@ public class SignalFFTPlot extends JComponent {
 	/**
 	 * Constructor. Sets the source of messages, title font and border.
 	 */
-	public  SignalFFTPlot() {
+	public SignalFFTPlot() {
 		super();
 		setBorder(new LineBorder(Color.LIGHT_GRAY, 3, false));
 		titleFont = new Font(Font.DIALOG, Font.PLAIN, 12);

@@ -35,7 +35,7 @@ public class MP5BasicConfigPanel extends JPanel {
 
 	private TextPanePanel bookCommentPanel;
 
-	public  MP5BasicConfigPanel( AbstractDialog owner) {
+	public MP5BasicConfigPanel( AbstractDialog owner) {
 		super();
 		this.owner = owner;
 		initialize();

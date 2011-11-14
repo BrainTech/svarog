@@ -30,7 +30,7 @@ public class MontageMiscellaneousPanel extends JPanel implements PropertyChangeL
 
 	private TextPanePanel editDescriptionPanel;
 
-	public  MontageMiscellaneousPanel() {
+	public MontageMiscellaneousPanel() {
 		super();
 		initialize();
 	}

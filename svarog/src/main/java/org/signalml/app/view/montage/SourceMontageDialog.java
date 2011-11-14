@@ -29,11 +29,11 @@ public class SourceMontageDialog extends org.signalml.app.view.dialog.AbstractSv
 
 	private SourceMontage currentMontage;
 
-	public  SourceMontageDialog() {
+	public SourceMontageDialog() {
 		super();
 	}
 
-	public  SourceMontageDialog( Window w, boolean isModal) {
+	public SourceMontageDialog( Window w, boolean isModal) {
 		super( w, isModal);
 	}
 

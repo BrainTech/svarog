@@ -23,7 +23,7 @@ public class ViewModeAction extends AbstractSignalMLAction {
 
 	protected static final Logger logger = Logger.getLogger(ViewModeAction.class);
 
-	public  ViewModeAction() {
+	public ViewModeAction() {
 		super();
 		setText(_("View mode"));
 		setIconPath("org/signalml/app/icon/viewmode.png");

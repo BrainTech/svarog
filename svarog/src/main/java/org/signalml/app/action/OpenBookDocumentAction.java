@@ -40,7 +40,7 @@ public class OpenBookDocumentAction extends AbstractSignalMLAction {
 	/**
 	 * Creates this action.
 	 */
-	public  OpenBookDocumentAction() {
+	public OpenBookDocumentAction() {
 		super();
 		setText(_("Open book"));
 		setIconPath("org/signalml/app/icon/fileopen.png");

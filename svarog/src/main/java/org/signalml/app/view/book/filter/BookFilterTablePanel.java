@@ -73,7 +73,7 @@ public class BookFilterTablePanel extends JPanel {
 	private AtomFilterChain chain;
 	private AbstractPresetDialog container;
 
-	public  BookFilterTablePanel( AbstractPresetDialog container) {
+	public BookFilterTablePanel( AbstractPresetDialog container) {
 		super();
 		this.container = container;
 

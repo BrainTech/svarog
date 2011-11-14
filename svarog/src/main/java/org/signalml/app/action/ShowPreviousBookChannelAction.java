@@ -24,7 +24,7 @@ public class ShowPreviousBookChannelAction extends AbstractFocusableSignalMLActi
 
 	protected static final Logger logger = Logger.getLogger(ShowPreviousBookChannelAction.class);
 
-	public  ShowPreviousBookChannelAction( BookViewFocusSelector bookViewFocusSelector) {
+	public ShowPreviousBookChannelAction( BookViewFocusSelector bookViewFocusSelector) {
 		super( bookViewFocusSelector);
 		setText(_("Previous channel"));
 		setIconPath("org/signalml/app/icon/previousbookchannel.png");

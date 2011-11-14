@@ -55,11 +55,11 @@ public class AtomTableDialog extends org.signalml.app.view.dialog.AbstractSvarog
 
 	private BookView currentView;
 
-	public  AtomTableDialog() {
+	public AtomTableDialog() {
 		super();
 	}
 
-	public  AtomTableDialog( Window w, boolean isModal) {
+	public AtomTableDialog( Window w, boolean isModal) {
 		super( w, isModal);
 	}
 

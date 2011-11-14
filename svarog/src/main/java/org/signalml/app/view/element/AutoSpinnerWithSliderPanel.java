@@ -45,7 +45,7 @@ public class AutoSpinnerWithSliderPanel extends AutoSpinnerPanel {
 	 * @param compact @code true} if this panel should be thinner (60 pixel),
 	 * {@code false} otherwise (150 pixel)
 	 */
-	public  AutoSpinnerWithSliderPanel( double value, double min, double max,
+	public AutoSpinnerWithSliderPanel( double value, double min, double max,
 	                                  double step, boolean compact) {
 		super( value, min, max, step, compact);
 	}
@@ -61,7 +61,7 @@ public class AutoSpinnerWithSliderPanel extends AutoSpinnerPanel {
 	 * @param compact @code true} if this panel should be thinner (60 pixel),
 	 * {@code false} otherwise (150 pixel)
 	 */
-	public  AutoSpinnerWithSliderPanel( float value, float min, float max,
+	public AutoSpinnerWithSliderPanel( float value, float min, float max,
 	                                  float step, boolean compact) {
 		super( value, min, max, step, compact);
 	}
@@ -77,7 +77,7 @@ public class AutoSpinnerWithSliderPanel extends AutoSpinnerPanel {
 	 * @param compact @code true} if this panel should be thinner (60 pixel),
 	 * {@code false} otherwise (150 pixel)
 	 */
-	public  AutoSpinnerWithSliderPanel( int value, int min, int max, int step,
+	public AutoSpinnerWithSliderPanel( int value, int min, int max, int step,
 	                                  boolean compact) {
 		super( value, min, max, step, compact);
 	}

@@ -146,7 +146,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 
 	private Window dialogParent;
 
-	public  MP5MethodDialog( MethodPresetManager methodPresetManager, Window w) {
+	public MP5MethodDialog( MethodPresetManager methodPresetManager, Window w) {
 		super( methodPresetManager, w, true);
 	}
 

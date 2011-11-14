@@ -34,7 +34,7 @@ public class MonitorSignalParametersPanel extends JPanel {
 	 * localized message codes
 	 * @param applicationConfiguration the configuration of Svarog
 	 */
-	public  MonitorSignalParametersPanel( ApplicationConfiguration applicationConfiguration) {
+	public MonitorSignalParametersPanel( ApplicationConfiguration applicationConfiguration) {
 		super();
 		initialize();
 	}

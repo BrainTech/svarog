@@ -34,7 +34,7 @@ public class NewArtifactOptionsPanel extends JPanel {
 	private JCheckBox exclusionCheckBox;
 	private JButton exclusionButton;
 
-	public  NewArtifactOptionsPanel() {
+	public NewArtifactOptionsPanel() {
 		super();
 		initialize();
 	}

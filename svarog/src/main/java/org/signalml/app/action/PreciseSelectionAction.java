@@ -28,7 +28,7 @@ public class PreciseSelectionAction extends AbstractFocusableSignalMLAction<Sign
 
 	private SignalSelectionDialog signalSelectionDialog;
 
-	public  PreciseSelectionAction( SignalPlotFocusSelector signalPlotFocusSelector) {
+	public PreciseSelectionAction( SignalPlotFocusSelector signalPlotFocusSelector) {
 		super( signalPlotFocusSelector);
 		setText(_("Select precisely"));
 		setIconPath("org/signalml/app/icon/preciseselection.png");

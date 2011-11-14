@@ -24,7 +24,7 @@ public class TimeDomainFilterFrequencyResponseChartPanel extends FrequencyRespon
 	/**
 	 * Constructor.
 	 */
-	public  TimeDomainFilterFrequencyResponseChartPanel() {
+	public TimeDomainFilterFrequencyResponseChartPanel() {
 		super();
 		setTitle(_("Filter frequency response [decibels]"));
 	}

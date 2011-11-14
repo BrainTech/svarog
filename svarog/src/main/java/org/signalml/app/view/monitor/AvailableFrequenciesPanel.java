@@ -50,7 +50,7 @@ public class AvailableFrequenciesPanel extends JPanel implements ActionListener 
         /**
          * Default constructor.
          */
-        public  AvailableFrequenciesPanel() {
+        public AvailableFrequenciesPanel() {
 
                 super();
 

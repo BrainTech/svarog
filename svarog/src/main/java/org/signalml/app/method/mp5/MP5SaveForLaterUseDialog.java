@@ -31,11 +31,11 @@ public class MP5SaveForLaterUseDialog extends org.signalml.app.view.dialog.Abstr
 	private JCheckBox saveConfigCheckBox;
 	private JCheckBox saveSignalCheckBox;
 
-	public  MP5SaveForLaterUseDialog() {
+	public MP5SaveForLaterUseDialog() {
 		super();
 	}
 
-	public  MP5SaveForLaterUseDialog( Window w, boolean isModal) {
+	public MP5SaveForLaterUseDialog( Window w, boolean isModal) {
 		super( w, isModal);
 	}
 

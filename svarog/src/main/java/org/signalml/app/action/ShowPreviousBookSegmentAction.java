@@ -24,7 +24,7 @@ public class ShowPreviousBookSegmentAction extends AbstractFocusableSignalMLActi
 
 	protected static final Logger logger = Logger.getLogger(ShowPreviousBookSegmentAction.class);
 
-	public  ShowPreviousBookSegmentAction( BookViewFocusSelector bookViewFocusSelector) {
+	public ShowPreviousBookSegmentAction( BookViewFocusSelector bookViewFocusSelector) {
 		super( bookViewFocusSelector);
 		setText(_("Previous segment"));
 		setIconPath("org/signalml/app/icon/previousbooksegment.png");

@@ -85,7 +85,7 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
         /**
          * Default constructor.
          */
-        public  ChannelDefinitionPanel() {
+        public ChannelDefinitionPanel() {
 
                 super();
                 createInterface();

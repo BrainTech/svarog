@@ -48,7 +48,7 @@ public class SignalSpacePanel extends JPanel {
 	/**
 	 * Constructor. Initializes the panel.
 	 */
-	public  SignalSpacePanel() {
+	public SignalSpacePanel() {
 		super();
 		initialize();
 	}

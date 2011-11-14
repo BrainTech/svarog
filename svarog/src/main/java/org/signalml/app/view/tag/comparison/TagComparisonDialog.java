@@ -56,11 +56,11 @@ public class TagComparisonDialog extends org.signalml.app.view.dialog.AbstractSv
 	private TableToTextExporter tableToTextExporter;
 	private ViewerFileChooser fileChooser;
 
-	public  TagComparisonDialog() {
+	public TagComparisonDialog() {
 		super();
 	}
 
-	public  TagComparisonDialog( Window w, boolean isModal) {
+	public TagComparisonDialog( Window w, boolean isModal) {
 		super( w, isModal);
 	}
 

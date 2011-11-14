@@ -16,7 +16,7 @@ import org.signalml.app.model.OpenMonitorDescriptor;
  */
 public class ChannelSelectTable extends JTable {
 
-	public  ChannelSelectTable() {
+	public ChannelSelectTable() {
 		ChannelSelectTableModel tableModel = new ChannelSelectTableModel();
 		this.setModel(tableModel);
 		setColumnsPreferredSizes();

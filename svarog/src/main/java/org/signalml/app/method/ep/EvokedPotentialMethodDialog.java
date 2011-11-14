@@ -40,7 +40,7 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 
 	private SignalSpacePanel signalSpacePanel;
 
-	public  EvokedPotentialMethodDialog( PresetManager presetManager, Window w) {
+	public EvokedPotentialMethodDialog( PresetManager presetManager, Window w) {
 		super( presetManager, w, true);
 	}
 

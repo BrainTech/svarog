@@ -28,7 +28,7 @@ public class ResumeAllTasksAction extends AbstractSignalMLAction {
 	private ApplicationTaskManager taskManager;
 	private Component optionPaneParent;
 
-	public  ResumeAllTasksAction() {
+	public ResumeAllTasksAction() {
 		super();
 		setText(_("Resume all tasks"));
 		setIconPath("org/signalml/app/icon/resumeall.png");

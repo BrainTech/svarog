@@ -17,7 +17,7 @@ public class TimeDomainResponseChartPanel extends ResponseChartPanel {
 	/**
 	 * Constructor.
 	 */
-	public  TimeDomainResponseChartPanel() {
+	public TimeDomainResponseChartPanel() {
 		super();
 	}
 

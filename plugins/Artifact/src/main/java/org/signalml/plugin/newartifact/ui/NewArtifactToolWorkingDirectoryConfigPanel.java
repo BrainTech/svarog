@@ -41,7 +41,7 @@ public class NewArtifactToolWorkingDirectoryConfigPanel extends JPanel {
 
 	private File directory;
 
-	public  NewArtifactToolWorkingDirectoryConfigPanel( FileChooser fileChooser) {
+	public NewArtifactToolWorkingDirectoryConfigPanel( FileChooser fileChooser) {
 		super();
 		this.fileChooser = fileChooser;
 		initialize();

@@ -25,7 +25,7 @@ public class EditTagDescriptionAction extends AbstractFocusableSignalMLAction<Ta
 
 	private EditTagDescriptionDialog editTagDescriptionDialog;
 
-	public  EditTagDescriptionAction( TagDocumentFocusSelector tagDocumentFocusSelector) {
+	public EditTagDescriptionAction( TagDocumentFocusSelector tagDocumentFocusSelector) {
 		super( tagDocumentFocusSelector);
 		setText(_("Edit tag description"));
 		setToolTip(_("Edit tag description"));

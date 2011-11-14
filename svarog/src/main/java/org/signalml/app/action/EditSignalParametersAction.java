@@ -30,7 +30,7 @@ public class EditSignalParametersAction extends AbstractFocusableSignalMLAction<
 
 	private SignalParametersDialog signalParametersDialog;
 
-	public  EditSignalParametersAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
+	public EditSignalParametersAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
 		super( signalDocumentFocusSelector);
 		setText(_("Signal parameters"));
 		setIconPath("org/signalml/app/icon/signalparameters.png");

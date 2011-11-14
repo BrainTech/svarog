@@ -37,7 +37,7 @@ public class MP5RawConfigPanel extends JPanel {
 
 	private boolean configChanged;
 
-	public  MP5RawConfigPanel( MP5ExecutorManager executorManager, AbstractDialog owner) {
+	public MP5RawConfigPanel( MP5ExecutorManager executorManager, AbstractDialog owner) {
 		super();
 		this.executorManager = executorManager;
 		this.owner = owner;

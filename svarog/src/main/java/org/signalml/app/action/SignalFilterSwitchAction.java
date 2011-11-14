@@ -24,7 +24,7 @@ public class SignalFilterSwitchAction extends AbstractFocusableSignalMLAction<Si
 
 	protected static final Logger logger = Logger.getLogger(SignalFilterSwitchAction.class);
 
-	public  SignalFilterSwitchAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
+	public SignalFilterSwitchAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
 		super( signalDocumentFocusSelector);
 		setText(_("Filtering"));
 		setIconPath("org/signalml/app/icon/filter.png");

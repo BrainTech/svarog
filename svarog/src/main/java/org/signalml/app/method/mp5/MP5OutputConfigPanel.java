@@ -35,7 +35,7 @@ public class MP5OutputConfigPanel extends JPanel {
 
 	private JCheckBox bookWithSignalCheckBox;
 
-	public  MP5OutputConfigPanel( AbstractDialog owner) {
+	public MP5OutputConfigPanel( AbstractDialog owner) {
 		super();
 		this.owner = owner;
 		initialize();

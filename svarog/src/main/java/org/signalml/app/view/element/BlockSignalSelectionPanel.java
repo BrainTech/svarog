@@ -50,7 +50,7 @@ public class BlockSignalSelectionPanel extends JPanel {
 	/**
 	 * Constructor. Initializes the panel.
 	 */
-	public  BlockSignalSelectionPanel() {
+	public BlockSignalSelectionPanel() {
 		super();
 		initialize();
 	}

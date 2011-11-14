@@ -18,7 +18,7 @@ import javax.swing.JList;
 public class WignerMapPaletteComboBoxCellRenderer extends DefaultListCellRenderer {
 
 	private static final long serialVersionUID = 1L;
-	public  WignerMapPaletteComboBoxCellRenderer() {
+	public WignerMapPaletteComboBoxCellRenderer() {
 	}
 
 	@Override

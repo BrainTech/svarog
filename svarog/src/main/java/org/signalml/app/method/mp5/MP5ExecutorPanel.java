@@ -31,7 +31,7 @@ public class MP5ExecutorPanel extends JPanel {
 
 	private ResolvableComboBox executorComboBox;
 
-	public  MP5ExecutorPanel( MP5ExecutorManager executorManager) {
+	public MP5ExecutorPanel( MP5ExecutorManager executorManager) {
 		super();
 		this.executorManager = executorManager;
 		initialize();

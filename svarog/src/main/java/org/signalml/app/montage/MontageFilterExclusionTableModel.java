@@ -30,7 +30,7 @@ public class MontageFilterExclusionTableModel extends AbstractTableModel impleme
 	private ColumnTableModel columnTableModel;
 	private RowTableModel rowTableModel;
 
-	public  MontageFilterExclusionTableModel() {
+	public MontageFilterExclusionTableModel() {
 	}
 
 	public ColumnTableModel getColumnTableModel() {

@@ -28,7 +28,7 @@ public abstract class FrequencyResponseChartPanel extends ResponseChartPanel imp
 	/**
 	 * Constructor.
 	 */
-	public  FrequencyResponseChartPanel() {
+	public FrequencyResponseChartPanel() {
 		super();
 		selectionHighlightRenderer = new SelectionHighlightRenderer(this);
 		selectionHighlightRenderer.addSelectionChangedListener(this);

@@ -43,7 +43,7 @@ public class MP5AdvancedDecompositionConfigPanel extends JPanel {
 	private JSpinner scaleToPeriodFactorSpinner;
 	private JSpinner periodDensitySpinner;
 
-	public  MP5AdvancedDecompositionConfigPanel( AbstractDialog owner) {
+	public MP5AdvancedDecompositionConfigPanel( AbstractDialog owner) {
 		super();
 		this.owner = owner;
 		initialize();

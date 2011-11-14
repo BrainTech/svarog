@@ -23,7 +23,7 @@ public class ShowStatusBarAction extends AbstractSignalMLAction {
 
 	protected static final Logger logger = Logger.getLogger(ShowStatusBarAction.class);
 
-	public  ShowStatusBarAction() {
+	public ShowStatusBarAction() {
 		super();
 		setText(_("Show status bar"));
 		setToolTip(_("Show status bar"));

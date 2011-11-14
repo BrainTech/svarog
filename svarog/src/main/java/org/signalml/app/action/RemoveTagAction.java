@@ -25,7 +25,7 @@ public class RemoveTagAction extends AbstractFocusableSignalMLAction<TagFocusSel
 
 	protected static final Logger logger = Logger.getLogger(RemoveTagAction.class);
 
-	public  RemoveTagAction( TagFocusSelector tagFocusSelector) {
+	public RemoveTagAction( TagFocusSelector tagFocusSelector) {
 		super( tagFocusSelector);
 		setText(_("Remove tag"));
 		setIconPath("org/signalml/app/icon/removetag.png");

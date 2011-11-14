@@ -14,7 +14,7 @@ public class StepResponseChartPanel extends TimeDomainResponseChartPanel {
 	/**
 	 * Constructor.
 	 */
-	public  StepResponseChartPanel() {
+	public StepResponseChartPanel() {
 		super();
 		setTitle(_("Step response [amplitude]"));
 	}

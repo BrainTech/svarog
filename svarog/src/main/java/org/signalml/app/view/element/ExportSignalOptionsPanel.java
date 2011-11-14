@@ -75,7 +75,7 @@ public class ExportSignalOptionsPanel extends JPanel {
 	/**
 	 * Constructor. Initializes the panel.
 	 */
-	public  ExportSignalOptionsPanel() {
+	public ExportSignalOptionsPanel() {
 		super();
 		initialize();
 	}

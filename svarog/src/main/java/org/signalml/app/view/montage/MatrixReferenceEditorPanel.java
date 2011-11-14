@@ -55,7 +55,7 @@ public class MatrixReferenceEditorPanel extends JPanel {
 	 * Constructor. Sets the source of messages (labels) and
 	 * {@link #initialize() initializes} this panel.
 	 */
-	public  MatrixReferenceEditorPanel() {
+	public MatrixReferenceEditorPanel() {
 		super();
 		initialize();
 	}

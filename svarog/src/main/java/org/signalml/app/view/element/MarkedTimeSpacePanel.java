@@ -106,7 +106,7 @@ public class MarkedTimeSpacePanel extends JPanel {
 	/**
 	 * Constructor. Initializes the panel.
 	 */
-	public  MarkedTimeSpacePanel() {
+	public MarkedTimeSpacePanel() {
 		super();
 		initialize();
 	}

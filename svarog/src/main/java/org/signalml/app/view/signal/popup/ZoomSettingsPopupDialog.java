@@ -24,11 +24,11 @@ public class ZoomSettingsPopupDialog extends AbstractPopupDialog {
 
 	private SignalZoomSettingsPanel signalZoomSettingsPanel;
 
-	public  ZoomSettingsPopupDialog() {
+	public ZoomSettingsPopupDialog() {
 		super();
 	}
 
-	public  ZoomSettingsPopupDialog( Window w, boolean isModal) {
+	public ZoomSettingsPopupDialog( Window w, boolean isModal) {
 		super( w, isModal);
 	}
 

@@ -28,7 +28,7 @@ public class SuspendAllTasksAction extends AbstractSignalMLAction {
 	private ApplicationTaskManager taskManager;
 	private Component optionPaneParent;
 
-	public  SuspendAllTasksAction() {
+	public SuspendAllTasksAction() {
 		super();
 		setText(_("Suspend all tasks"));
 		setIconPath("org/signalml/app/icon/suspendall.png");

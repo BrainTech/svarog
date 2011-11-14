@@ -35,7 +35,7 @@ public class OpenTagAction extends AbstractFocusableSignalMLAction<SignalDocumen
 	private ViewerFileChooser fileChooser;
 	private Component optionPaneParent;
 
-	public  OpenTagAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
+	public OpenTagAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
 		super( signalDocumentFocusSelector);
 		setText(_("Open Tag..."));
 		setIconPath("org/signalml/app/icon/fileopen.png");

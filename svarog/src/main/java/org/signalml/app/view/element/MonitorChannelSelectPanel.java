@@ -51,7 +51,7 @@ public class MonitorChannelSelectPanel extends JPanel {
 	/**
 	 * This is the default constructor
 	 */
-	public  MonitorChannelSelectPanel() {
+	public MonitorChannelSelectPanel() {
 		super();
 		initialize();
 	}

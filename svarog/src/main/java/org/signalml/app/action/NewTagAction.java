@@ -36,7 +36,7 @@ public class NewTagAction extends AbstractFocusableSignalMLAction<SignalDocument
 	private DocumentFlowIntegrator documentFlowIntegrator;
 	private NewTagDialog newTagDialog;
 
-	public  NewTagAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
+	public NewTagAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
 		super( signalDocumentFocusSelector);
 		setText(_("New Tag"));
 		setIconPath("org/signalml/app/icon/filenew.png");

@@ -42,7 +42,7 @@ public abstract class AbstractSignalSpaceAwarePresetDialog extends AbstractPrese
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public  AbstractSignalSpaceAwarePresetDialog( PresetManager presetManager, Window w, boolean isModal) {
+	public AbstractSignalSpaceAwarePresetDialog( PresetManager presetManager, Window w, boolean isModal) {
 		super( presetManager, w, isModal);
 	}
 
@@ -51,7 +51,7 @@ public abstract class AbstractSignalSpaceAwarePresetDialog extends AbstractPrese
 	 * manager}.
 	 * @param presetManager the preset manager to set
 	 */
-	public  AbstractSignalSpaceAwarePresetDialog( PresetManager presetManager) {
+	public AbstractSignalSpaceAwarePresetDialog( PresetManager presetManager) {
 		super( presetManager);
 	}
 

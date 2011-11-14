@@ -29,7 +29,7 @@ public class AmplifierDefinitionConfigAction extends AbstractSignalMLAction {
          * Constructor sets text and tooltip.
          *
          */
-        public  AmplifierDefinitionConfigAction() {
+        public AmplifierDefinitionConfigAction() {
                 
                 super();
                 setText(_("Amplifier definition config"));

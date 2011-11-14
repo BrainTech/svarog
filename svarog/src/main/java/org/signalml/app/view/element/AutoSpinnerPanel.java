@@ -96,7 +96,7 @@ public class AutoSpinnerPanel extends JPanel {
 	 * @param compact @code true} if this panel should be thinner (60 pixel),
 	 * {@code false} otherwise (150 pixel)
 	 */
-	public  AutoSpinnerPanel( double value, double min, double max, double step, boolean compact) {
+	public AutoSpinnerPanel( double value, double min, double max, double step, boolean compact) {
 		this( compact);
 		spinner = new JSpinner(new SpinnerNumberModel(value, min, max, step));
 
@@ -114,7 +114,7 @@ public class AutoSpinnerPanel extends JPanel {
 	 * @param compact @code true} if this panel should be thinner (60 pixel),
 	 * {@code false} otherwise (150 pixel)
 	 */
-	public  AutoSpinnerPanel( float value, float min, float max, float step, boolean compact) {
+	public AutoSpinnerPanel( float value, float min, float max, float step, boolean compact) {
 		this( compact);
 		spinner = new JSpinner(new SpinnerNumberModel((double) value, (double) min, (double) max, (double) step));
 
@@ -132,7 +132,7 @@ public class AutoSpinnerPanel extends JPanel {
 	 * @param compact @code true} if this panel should be thinner (60 pixel),
 	 * {@code false} otherwise (150 pixel)
 	 */
-	public  AutoSpinnerPanel( int value, int min, int max, int step, boolean compact) {
+	public AutoSpinnerPanel( int value, int min, int max, int step, boolean compact) {
 		this( compact);
 		spinner = new JSpinner(new SpinnerNumberModel(value, min, max, step));
 

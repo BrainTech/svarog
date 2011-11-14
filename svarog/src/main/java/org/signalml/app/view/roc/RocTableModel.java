@@ -20,7 +20,7 @@ public class RocTableModel extends AbstractTableModel {
 
 	private RocData rocData;
 
-	public  RocTableModel() {
+	public RocTableModel() {
 		super();
 	}
 

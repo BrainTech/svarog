@@ -53,7 +53,7 @@ public class AverageBooksPopupDialog extends AbstractPopupDialog {
 
 	private ButtonGroup averageGroup;
 
-	public  AverageBooksPopupDialog( Window w, boolean isModal) {
+	public AverageBooksPopupDialog( Window w, boolean isModal) {
 		super( w, isModal);
 	}
 

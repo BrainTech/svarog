@@ -87,7 +87,7 @@ public class TagComparisonResultPanel extends JPanel {
 	private String cornerPanelSeconds;
 	private String cornerPanelPercent;
 
-	public  TagComparisonResultPanel(TableToTextExporter tableToTextExporter, ViewerFileChooser fileChooser) {
+	public TagComparisonResultPanel(TableToTextExporter tableToTextExporter, ViewerFileChooser fileChooser) {
 		super();
 		this.tableToTextExporter = tableToTextExporter;
 		this.fileChooser = fileChooser;

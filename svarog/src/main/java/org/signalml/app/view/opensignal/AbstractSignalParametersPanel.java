@@ -83,7 +83,7 @@ public abstract class AbstractSignalParametersPanel extends JPanel {
          * Default constructor. Creates the interface.
          *
          */
-        public  AbstractSignalParametersPanel() {
+        public AbstractSignalParametersPanel() {
 
                 super();
                 createInterface();

@@ -29,7 +29,7 @@ public class EditTagStylesAction extends AbstractFocusableSignalMLAction<TagStyl
 
 	private TagStylePaletteDialog tagStylePaletteDialog;
 
-	public  EditTagStylesAction( TagStyleFocusSelector tagStyleFocusSelector) {
+	public EditTagStylesAction( TagStyleFocusSelector tagStyleFocusSelector) {
 		super( tagStyleFocusSelector);
 		setText(_("Tag styles"));
 		setToolTip(_("Edit tag styles"));

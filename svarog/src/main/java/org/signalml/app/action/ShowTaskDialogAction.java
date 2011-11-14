@@ -25,7 +25,7 @@ public class ShowTaskDialogAction extends AbstractFocusableSignalMLAction<TaskFo
 
 	private ApplicationTaskManager taskManager;
 
-	public  ShowTaskDialogAction( TaskFocusSelector taskFocusSelector) {
+	public ShowTaskDialogAction( TaskFocusSelector taskFocusSelector) {
 		super( taskFocusSelector);
 		setText(_("Show dialog"));
 		setIconPath("org/signalml/app/icon/running.png");

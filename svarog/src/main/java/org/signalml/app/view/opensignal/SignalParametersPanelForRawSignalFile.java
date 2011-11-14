@@ -37,7 +37,7 @@ public class SignalParametersPanelForRawSignalFile extends AbstractSignalParamet
 	 * Constructor.
 	 * @param applicationConfiguration the current application configuration
 	 */
-	public  SignalParametersPanelForRawSignalFile() {
+	public SignalParametersPanelForRawSignalFile() {
 		super();
 
 		setEnabledAll(true);

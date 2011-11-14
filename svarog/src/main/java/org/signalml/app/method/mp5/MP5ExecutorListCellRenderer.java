@@ -28,7 +28,7 @@ public class MP5ExecutorListCellRenderer extends DefaultListCellRenderer {
 	private Font boldFont;
 	private String defaultString;
 
-	public  MP5ExecutorListCellRenderer() {
+	public MP5ExecutorListCellRenderer() {
 		super();
 		normalFont = getFont().deriveFont(Font.PLAIN);
 		boldFont = normalFont.deriveFont(Font.BOLD);

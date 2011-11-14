@@ -40,7 +40,7 @@ public class MP5ResultBookPanel extends JPanel {
 
 	private File bookFile;
 
-	public  MP5ResultBookPanel( ViewerFileChooser fileChooser) {
+	public MP5ResultBookPanel( ViewerFileChooser fileChooser) {
 		super();
 		this.fileChooser = fileChooser;
 		initialize();

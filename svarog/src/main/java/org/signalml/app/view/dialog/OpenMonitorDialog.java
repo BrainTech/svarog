@@ -77,7 +77,7 @@ public class OpenMonitorDialog extends org.signalml.app.view.dialog.AbstractSvar
 	 * @param viewerElementManager a {@link ViewerElementManager} which contains
 	 * a {@link JmxClient}.
 	 */
-	public  OpenMonitorDialog( ViewerElementManager viewerElementManager) {
+	public OpenMonitorDialog( ViewerElementManager viewerElementManager) {
 		super();
 		initialize(viewerElementManager);
 	}
@@ -89,7 +89,7 @@ public class OpenMonitorDialog extends org.signalml.app.view.dialog.AbstractSvar
 	 * @param f the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public  OpenMonitorDialog(
+	public OpenMonitorDialog(
 		ViewerElementManager viewerElementManager,
 		Window f,
 		boolean isModal) {

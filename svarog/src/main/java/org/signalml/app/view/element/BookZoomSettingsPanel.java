@@ -113,7 +113,7 @@ public class BookZoomSettingsPanel extends JPanel {
 	 * @param hasCloseCross @code true} if this panel should contain a cross
 	 * which closes this panel, {@code false} otherwise
 	 */
-	public  BookZoomSettingsPanel( boolean hasCloseCross) {
+	public BookZoomSettingsPanel( boolean hasCloseCross) {
 		super();
 		this.hasCloseCross = hasCloseCross;
 		initialize();

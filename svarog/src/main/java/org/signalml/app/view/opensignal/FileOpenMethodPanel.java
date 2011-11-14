@@ -36,7 +36,7 @@ public class FileOpenMethodPanel extends JPanel {
 	/**
 	 * Constructor.
 	 */
-	public  FileOpenMethodPanel() {
+	public FileOpenMethodPanel() {
 		createInterface();
 	}
 

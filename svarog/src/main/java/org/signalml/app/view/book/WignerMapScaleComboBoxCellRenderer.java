@@ -26,7 +26,7 @@ public class WignerMapScaleComboBoxCellRenderer extends DefaultListCellRenderer 
 	private Icon logIcon;
 	private Icon sqrtIcon;
 
-	public  WignerMapScaleComboBoxCellRenderer() {
+	public WignerMapScaleComboBoxCellRenderer() {
 		linearIcon = IconUtils.loadClassPathIcon("org/signalml/app/icon/scalelinear.png");
 		logIcon = IconUtils.loadClassPathIcon("org/signalml/app/icon/scalelog.png");
 		sqrtIcon = IconUtils.loadClassPathIcon("org/signalml/app/icon/scalesqrt.png");

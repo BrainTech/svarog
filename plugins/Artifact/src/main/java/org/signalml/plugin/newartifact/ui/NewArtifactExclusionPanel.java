@@ -24,7 +24,7 @@ public class NewArtifactExclusionPanel extends JPanel {
 	private NewArtifactExclusionTable artifactExclusionTable;
 	private JScrollPane scrollPane;
 
-	public  NewArtifactExclusionPanel() {
+	public NewArtifactExclusionPanel() {
 		super();
 		initialize();
 	}

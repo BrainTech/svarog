@@ -28,7 +28,7 @@ public class RemoveAllFinishedTasksAction extends AbstractSignalMLAction {
 	private ApplicationTaskManager taskManager;
 	private Component optionPaneParent;
 
-	public  RemoveAllFinishedTasksAction() {
+	public RemoveAllFinishedTasksAction() {
 		super();
 		setText(_("Remove all finished tasks"));
 		setIconPath("org/signalml/app/icon/removeallfinishedtasks.png");

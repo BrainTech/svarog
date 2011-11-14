@@ -23,7 +23,7 @@ public class ShowMainToolBarAction extends AbstractSignalMLAction {
 
 	protected static final Logger logger = Logger.getLogger(ShowMainToolBarAction.class);
 
-	public  ShowMainToolBarAction() {
+	public ShowMainToolBarAction() {
 		super();
 		setText(_("Show main toolbar"));
 		setToolTip(_("Show main toolbar"));

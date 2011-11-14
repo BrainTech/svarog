@@ -74,7 +74,7 @@ public class SignalParametersPanelForSignalMLSignalFile extends JPanel {
          *
          * @param elementManager {@link #elementManager}
          */
-        public  SignalParametersPanelForSignalMLSignalFile( ViewerElementManager elementManager) {
+        public SignalParametersPanelForSignalMLSignalFile( ViewerElementManager elementManager) {
 
                 super();
                 this.elementManager = elementManager;

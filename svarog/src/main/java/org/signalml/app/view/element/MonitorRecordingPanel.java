@@ -52,7 +52,7 @@ public class MonitorRecordingPanel extends AbstractSignalMLPanel {
          * Constructor. Creates a new {@link MonitorRecordingPanel}.
          * localized message codes
          */
-        public  MonitorRecordingPanel() {
+        public MonitorRecordingPanel() {
                 super();
                 initialize();
         }

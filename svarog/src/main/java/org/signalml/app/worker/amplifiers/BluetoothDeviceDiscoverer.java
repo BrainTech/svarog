@@ -32,7 +32,7 @@ public class BluetoothDeviceDiscoverer extends AbstractDeviceDiscoverer implemen
          * Default constructor.
          *
          */
-        public  BluetoothDeviceDiscoverer() {
+        public BluetoothDeviceDiscoverer() {
 
                 super();
         }

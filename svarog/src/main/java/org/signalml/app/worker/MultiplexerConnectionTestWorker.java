@@ -33,7 +33,7 @@ public class MultiplexerConnectionTestWorker extends SwingWorker< WorkerResult, 
 	private Integer testState = tryoutCount;
 	private JmxClient client;
 
-	public  MultiplexerConnectionTestWorker(
+	public MultiplexerConnectionTestWorker(
 									JmxClient client,
 									Integer timeoutMilis, 
 									Integer tryoutCount) {

@@ -82,7 +82,7 @@ public class ChannelSpacePanel extends JPanel {
 	/**
 	 * Constructor. Initializes the panel.
 	 */
-	public  ChannelSpacePanel() {
+	public ChannelSpacePanel() {
 		super();
 		initialize();
 	}

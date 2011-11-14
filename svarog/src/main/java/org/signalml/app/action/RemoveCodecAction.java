@@ -29,7 +29,7 @@ public class RemoveCodecAction extends AbstractSignalMLAction {
 	private SignalMLCodecSelector selector;
 	private ApplicationConfiguration applicationConfig;
 
-	public  RemoveCodecAction() {
+	public RemoveCodecAction() {
 		super();
 		setText(_("Remove codec"));
 	}

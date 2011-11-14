@@ -25,7 +25,7 @@ public abstract class ExportSamplesToClipboardAction extends ExportSamplesAction
 
 	private static final long serialVersionUID = 1L;
 
-	public  ExportSamplesToClipboardAction() {
+	public ExportSamplesToClipboardAction() {
 		super();
 		setText(_("Copy samples to clipboard"));
 		setIconPath("org/signalml/app/icon/clipboard.png");

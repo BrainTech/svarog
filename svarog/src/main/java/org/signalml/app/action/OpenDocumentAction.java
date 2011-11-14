@@ -26,7 +26,7 @@ public class OpenDocumentAction extends AbstractSignalMLAction {
 	private OpenDocumentDialog openDocumentDialog;
 	private DocumentFlowIntegrator documentFlowIntegrator;
 
-	public  OpenDocumentAction() {
+	public OpenDocumentAction() {
 		super();
 		setText(_("Open..."));
 		setIconPath("org/signalml/app/icon/fileopen.png");

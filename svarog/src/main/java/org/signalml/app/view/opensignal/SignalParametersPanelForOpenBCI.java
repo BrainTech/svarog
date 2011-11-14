@@ -22,7 +22,7 @@ public class SignalParametersPanelForOpenBCI extends AbstractSignalParametersPan
 	 * Constructor.
 	 * @param applicationConfiguration the configuration to be used
 	 */
-	public  SignalParametersPanelForOpenBCI() {
+	public SignalParametersPanelForOpenBCI() {
 		super();
 		getSamplingFrequencyComboBox().setEditable(true);
 

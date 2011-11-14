@@ -42,7 +42,7 @@ public class FFTFilterResponseChartGroupPanel extends FilterResponseChartGroupPa
 	 * Constructor.
 	 * @param currentFilter the filter to be visualized
 	 */
-	public  FFTFilterResponseChartGroupPanel( FFTSampleFilter currentFilter) {
+	public FFTFilterResponseChartGroupPanel( FFTSampleFilter currentFilter) {
 		super( currentFilter);
 	}
 

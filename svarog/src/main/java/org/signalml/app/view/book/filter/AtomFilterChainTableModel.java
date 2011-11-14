@@ -28,7 +28,7 @@ public class AtomFilterChainTableModel extends AbstractTableModel {
 
 	private AtomFilterChain chain;
 
-	public  AtomFilterChainTableModel() {
+	public AtomFilterChainTableModel() {
 	}
 
 	public AtomFilterChain getChain() {

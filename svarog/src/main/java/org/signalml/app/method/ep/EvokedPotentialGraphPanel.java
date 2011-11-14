@@ -96,7 +96,7 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 
 	private ExportAllEPSamplesToFloatFileAction exportAllEPSamplesToFloatFileAction;
 
-	public  EvokedPotentialGraphPanel( ViewerFileChooser fileChooser) {
+	public EvokedPotentialGraphPanel( ViewerFileChooser fileChooser) {
 		super();
 		this.fileChooser = fileChooser;
 

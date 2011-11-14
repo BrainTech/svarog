@@ -27,7 +27,7 @@ public class ChooseActiveTagAction extends AbstractFocusableSignalMLAction<Signa
 	 * @param signalDocumentFocusSelector a {@link SignalDocumentFocusSelector}
 	 * used to get the active document.
 	 */
-	public  ChooseActiveTagAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
+	public ChooseActiveTagAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
 		super( signalDocumentFocusSelector);
 
 		setText(_("Choose active tag"));

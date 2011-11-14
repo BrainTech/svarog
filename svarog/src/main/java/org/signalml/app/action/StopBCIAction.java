@@ -30,7 +30,7 @@ public class StopBCIAction extends AbstractFocusableSignalMLAction<DocumentFocus
          * @param documentFocusSelector documentFocusSelector
          * @param elementManager elementManager
          */
-        public  StopBCIAction( DocumentFocusSelector documentFocusSelector, ViewerElementManager elementManager) {
+        public StopBCIAction( DocumentFocusSelector documentFocusSelector, ViewerElementManager elementManager) {
 
                 super( documentFocusSelector);
                 this.elementManager = elementManager;

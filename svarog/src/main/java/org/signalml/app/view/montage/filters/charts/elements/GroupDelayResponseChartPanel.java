@@ -15,7 +15,7 @@ public class GroupDelayResponseChartPanel extends ResponseChartPanel {
 	/**
 	 * Constructor.
 	 */
-	public  GroupDelayResponseChartPanel() {
+	public GroupDelayResponseChartPanel() {
 		super();
 		setTitle(_("Group delay [samples]"));
 	}

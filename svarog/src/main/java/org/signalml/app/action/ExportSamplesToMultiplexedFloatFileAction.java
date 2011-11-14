@@ -39,7 +39,7 @@ public abstract class ExportSamplesToMultiplexedFloatFileAction extends Abstract
 
 	private RawSignalWriter rawSignalWriter;
 
-	public  ExportSamplesToMultiplexedFloatFileAction() {
+	public ExportSamplesToMultiplexedFloatFileAction() {
 		super();
 		setText(_("Save all samples as float file"));
 		setIconPath("org/signalml/app/icon/filesave.png");

@@ -23,7 +23,7 @@ public class ShowLeftPanelAction extends AbstractSignalMLAction {
 
 	protected static final Logger logger = Logger.getLogger(ShowLeftPanelAction.class);
 
-	public  ShowLeftPanelAction() {
+	public ShowLeftPanelAction() {
 		super();
 		setText(_("Show left panel"));
 		setToolTip(_("Show left panel"));

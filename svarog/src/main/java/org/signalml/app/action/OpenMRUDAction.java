@@ -30,7 +30,7 @@ public class OpenMRUDAction extends AbstractFocusableSignalMLAction<MRUDFocusSel
 
 	private DocumentFlowIntegrator documentFlowIntegrator;
 
-	public  OpenMRUDAction( MRUDFocusSelector mrudFocusSelector) {
+	public OpenMRUDAction( MRUDFocusSelector mrudFocusSelector) {
 		super( mrudFocusSelector);
 		setText(_("Open"));
 		setIconPath("org/signalml/app/icon/fileopen.png");

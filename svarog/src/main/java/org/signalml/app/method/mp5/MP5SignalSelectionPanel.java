@@ -26,7 +26,7 @@ public class MP5SignalSelectionPanel extends JPanel {
 	private JTextField signalTextField;
 	private JTextField selectionTextField;
 
-	public  MP5SignalSelectionPanel() {
+	public MP5SignalSelectionPanel() {
 		super();
 		initialize();
 	}

@@ -23,7 +23,7 @@ public class TagEraserToggleButton extends JToggleButton implements TagStyleSele
 
 	private static final Dimension PREFERRED_SIZE = new Dimension(28,28);
 
-	public  TagEraserToggleButton() {
+	public TagEraserToggleButton() {
 		setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/eraser.png"));
 		setToolTipText(_("Erase tags"));
 	}

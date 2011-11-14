@@ -36,7 +36,7 @@ public class RunMethodAction extends AbstractSignalMLAction {
 	private ApplicationMethodManager methodManager;
 	private Method method;
 
-	public  RunMethodAction( Method method, ApplicationMethodManager methodManager) {
+	public RunMethodAction( Method method, ApplicationMethodManager methodManager) {
 		this.method = method;
 		this.methodManager = methodManager;
 		String name = null;

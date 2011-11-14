@@ -35,7 +35,7 @@ public abstract class ExportToFileAction extends AbstractSignalMLAction {
 	private ViewerFileChooser fileChooser;
 	private Component optionPaneParent;
 
-	public  ExportToFileAction( TableToTextExporter tableToTextExporter) {
+	public ExportToFileAction( TableToTextExporter tableToTextExporter) {
 		super();
 		setText(_("Save to file"));
 		setIconPath("org/signalml/app/icon/script_save.png");

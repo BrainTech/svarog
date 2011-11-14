@@ -32,7 +32,7 @@ public class StopMonitorRecordingAction extends MonitorRecordingAction {
 	 * @param signalDocumentFocusSelector a {@link SignalDocumentFocusSelector} used to detect
 	 * which document is active.
 	 */
-	public  StopMonitorRecordingAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
+	public StopMonitorRecordingAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
 
 		super( signalDocumentFocusSelector);
 		setIconPath("org/signalml/app/icon/stop-recording.png");

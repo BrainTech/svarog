@@ -41,14 +41,14 @@ public class GetTaskResultAction extends AbstractFocusableSignalMLAction<TaskFoc
 
 
 
-	public  GetTaskResultAction(
+	public GetTaskResultAction(
 	                           TaskFocusSelector actionFocusSelector,
 	                           DialogResultListener dialogResultListener) {
 		this( actionFocusSelector);
 		this.dialogResultListener = dialogResultListener;
 	}
 
-	public  GetTaskResultAction( TaskFocusSelector taskFocusSelector) {
+	public GetTaskResultAction( TaskFocusSelector taskFocusSelector) {
 		super( taskFocusSelector);
 		setText(_("Get result"));
 		setIconPath("org/signalml/app/icon/getresult.png");

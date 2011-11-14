@@ -39,11 +39,11 @@ public class MP5LocalExecutorDialog extends org.signalml.app.view.dialog.Abstrac
 
 	private MP5ExecutablePanel executablePanel;
 
-	public  MP5LocalExecutorDialog() {
+	public MP5LocalExecutorDialog() {
 		super();
 	}
 
-	public  MP5LocalExecutorDialog( Window w, boolean isModal) {
+	public MP5LocalExecutorDialog( Window w, boolean isModal) {
 		super( w, isModal);
 	}
 

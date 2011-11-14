@@ -27,7 +27,7 @@ public class GetTaskErrorAction extends AbstractFocusableSignalMLAction<TaskFocu
 
 	private ErrorsDialog errorsDialog;
 
-	public  GetTaskErrorAction( TaskFocusSelector taskFocusSelector) {
+	public GetTaskErrorAction( TaskFocusSelector taskFocusSelector) {
 		super( taskFocusSelector);
 		setText(_("Get error"));
 		setIconPath("org/signalml/app/icon/geterror.png");

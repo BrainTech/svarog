@@ -45,7 +45,7 @@ public class SignalFFTToolButtonMouseListener extends MouseAdapter implements Si
 	/**
 	 * Constructor. Sets the source of messages.
 	 */
-	public  SignalFFTToolButtonMouseListener() {
+	public SignalFFTToolButtonMouseListener() {
 	}
 
 	/**

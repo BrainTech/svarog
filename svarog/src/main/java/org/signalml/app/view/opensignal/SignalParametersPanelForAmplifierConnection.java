@@ -25,7 +25,7 @@ public class SignalParametersPanelForAmplifierConnection extends AbstractSignalP
          *
          * @param applicationConfiguration {@link #applicationConfiguration}
          */
-        public  SignalParametersPanelForAmplifierConnection( ApplicationConfiguration applicationConfiguration) {
+        public SignalParametersPanelForAmplifierConnection( ApplicationConfiguration applicationConfiguration) {
 
                 super();
 		this.applicationConfiguration = applicationConfiguration;

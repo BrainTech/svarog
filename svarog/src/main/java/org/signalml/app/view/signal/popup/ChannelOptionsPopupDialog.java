@@ -50,7 +50,7 @@ import org.signalml.plugin.export.view.AbstractPopupDialog;
  */
 public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements ChangeListener, ActionListener {
 
-	public  ChannelOptionsPopupDialog(
+	public ChannelOptionsPopupDialog(
 			Window w, boolean isModal) {
 		super( w, isModal);
 	}

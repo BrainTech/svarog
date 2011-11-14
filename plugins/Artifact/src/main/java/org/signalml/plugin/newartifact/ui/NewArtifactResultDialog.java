@@ -62,11 +62,11 @@ public class NewArtifactResultDialog extends org.signalml.plugin.export.view.Abs
 	@SuppressWarnings("unused")
 	private NewArtifactResultTargetDescriptor currentDescriptor = null;
 
-	public  NewArtifactResultDialog() {
+	public NewArtifactResultDialog() {
 		super();
 	}
 
-	public  NewArtifactResultDialog(
+	public NewArtifactResultDialog(
 				       Window w, boolean isModal) {
 		super( w, isModal);
 	}

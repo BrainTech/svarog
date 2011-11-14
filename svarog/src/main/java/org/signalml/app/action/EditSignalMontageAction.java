@@ -26,7 +26,7 @@ public class EditSignalMontageAction extends AbstractFocusableSignalMLAction<Sig
 
 	private SignalMontageDialog signalMontageDialog;
 
-	public  EditSignalMontageAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
+	public EditSignalMontageAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
 		super( signalDocumentFocusSelector);
 		setText(_("Signal montage"));
 		setIconPath("org/signalml/app/icon/montage.png");

@@ -30,7 +30,7 @@ public abstract class ExportAllChartsToClipboardAction extends AbstractSignalMLA
 
 	private static final long serialVersionUID = 1L;
 
-	public  ExportAllChartsToClipboardAction() {
+	public ExportAllChartsToClipboardAction() {
 		super();
 		setText(_("Copy all charts to clipboard"));
 		setIconPath("org/signalml/app/icon/clipboard.png");

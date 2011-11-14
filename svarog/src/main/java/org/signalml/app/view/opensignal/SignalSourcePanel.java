@@ -64,7 +64,7 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 	 * @param viewerElementManager ViewerElementManager to be used by this
 	 * panel
 	 */
-	public  SignalSourcePanel( ViewerElementManager viewerElementManager) {
+	public SignalSourcePanel( ViewerElementManager viewerElementManager) {
 		this.viewerElementManager = viewerElementManager;
 		createInterface();
 	}

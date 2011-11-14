@@ -70,7 +70,7 @@ public class SplashScreen extends JDialog {
 	 * <li>the {@link SplashPanel panel} with the logo of Svarog,</li>
 	 * <li>the {@link #getProgressBar() progress bar}.</li></ul>
 	 */
-	public  SplashScreen() {
+	public SplashScreen() {
 
 		super((Frame) null, false);
 		setUndecorated(true);

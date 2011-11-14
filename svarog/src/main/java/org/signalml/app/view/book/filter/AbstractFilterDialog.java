@@ -35,11 +35,11 @@ public abstract class AbstractFilterDialog extends AbstractDialog {
 
 	private JPanel namePanel;
 
-	public  AbstractFilterDialog() {
+	public AbstractFilterDialog() {
 		super();
 	}
 
-	public  AbstractFilterDialog( Window w, boolean isModal) {
+	public AbstractFilterDialog( Window w, boolean isModal) {
 		super( w, isModal);
 	}
 

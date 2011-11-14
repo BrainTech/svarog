@@ -34,7 +34,7 @@ public class SignalRecordingConfigPanel extends JPanel {
         /**
          * Default constructor.
          */
-        public  SignalRecordingConfigPanel() {
+        public SignalRecordingConfigPanel() {
                 super();
                 initialize();
         }

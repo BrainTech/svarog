@@ -25,7 +25,7 @@ public class EditPreferencesAction extends AbstractSignalMLAction {
 	private AbstractDialog preferencesDialog;
 	private ApplicationConfiguration config;
 
-	public  EditPreferencesAction() {
+	public EditPreferencesAction() {
 		super();
 		setText(_("Preferences..."));
 		setToolTip(_("Edit preferences"));

@@ -53,7 +53,7 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
          *
          * @param viewerElementManager viewer element manager
          */
-        public  AmplifierSignalSourcePanel( ViewerElementManager viewerElementManager) {
+        public AmplifierSignalSourcePanel( ViewerElementManager viewerElementManager) {
 
                 super( viewerElementManager);
         }

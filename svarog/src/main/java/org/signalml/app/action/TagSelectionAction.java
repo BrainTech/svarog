@@ -28,7 +28,7 @@ public class TagSelectionAction extends AbstractFocusableSignalMLAction<SignalPl
 
 	protected static final Logger logger = Logger.getLogger(TagSelectionAction.class);
 
-	public  TagSelectionAction( SignalPlotFocusSelector signalPlotFocusSelector) {
+	public TagSelectionAction( SignalPlotFocusSelector signalPlotFocusSelector) {
 		super( signalPlotFocusSelector);
 		setText(_("Tag selection"));
 		setToolTip(_("Tag the selected signal fragment"));

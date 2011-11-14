@@ -73,7 +73,7 @@ public class ProfilePathTypePanel extends JPanel {
 	/**
 	 * Constructor. Initializes the panel.
 	 */
-	public  ProfilePathTypePanel() {
+	public ProfilePathTypePanel() {
 		super();
 		initialize();
 	}

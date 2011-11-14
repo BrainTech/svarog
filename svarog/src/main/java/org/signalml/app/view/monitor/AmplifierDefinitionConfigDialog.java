@@ -83,7 +83,7 @@ public class AmplifierDefinitionConfigDialog extends AbstractPresetDialog {
          * @param w parent window
          * @param isModal if this window is modal
          */
-        public  AmplifierDefinitionConfigDialog( PresetManager presetManager, Window w, boolean isModal, ViewerElementManager elementManager) {
+        public AmplifierDefinitionConfigDialog( PresetManager presetManager, Window w, boolean isModal, ViewerElementManager elementManager) {
 
                 super( presetManager, w, isModal);
                 this.elementManager = elementManager;

@@ -26,7 +26,7 @@ public class ActivateTagAction extends AbstractFocusableSignalMLAction<TagFocusS
 
 	private ActionFocusManager actionFocusManager;
 
-	public  ActivateTagAction( ActionFocusManager actionFocusManager, TagFocusSelector tagFocusSelector) {
+	public ActivateTagAction( ActionFocusManager actionFocusManager, TagFocusSelector tagFocusSelector) {
 		super( tagFocusSelector);
 		this.actionFocusManager = actionFocusManager;
 		setText(_("Show tag"));
@@ -34,7 +34,7 @@ public class ActivateTagAction extends AbstractFocusableSignalMLAction<TagFocusS
 		setToolTip(_("Show tag in viewer"));
 	}
 
-	public  ActivateTagAction( ActionFocusManager actionFocusManager) {
+	public ActivateTagAction( ActionFocusManager actionFocusManager) {
 		this( actionFocusManager, actionFocusManager);
 	}
 

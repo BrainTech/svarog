@@ -61,7 +61,7 @@ public class StartStopButtonsPanel extends JPanel {
          * 
          * @param signalSourcePanel {@link #signalSourcePanel}
          */
-        public  StartStopButtonsPanel( AmplifierSignalSourcePanel signalSourcePanel) {
+        public StartStopButtonsPanel( AmplifierSignalSourcePanel signalSourcePanel) {
 
                 super();
                 this.signalSourcePanel = signalSourcePanel;

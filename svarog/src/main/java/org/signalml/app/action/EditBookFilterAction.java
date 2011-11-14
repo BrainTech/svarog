@@ -26,7 +26,7 @@ public class EditBookFilterAction extends AbstractFocusableSignalMLAction<BookDo
 
 	private BookFilterDialog bookFilterDialog;
 
-	public  EditBookFilterAction( BookDocumentFocusSelector bookDocumentFocusSelector) {
+	public EditBookFilterAction( BookDocumentFocusSelector bookDocumentFocusSelector) {
 		super( bookDocumentFocusSelector);
 		setText(_("Edit book filter"));
 		setIconPath("org/signalml/app/icon/editbookfilter.png");

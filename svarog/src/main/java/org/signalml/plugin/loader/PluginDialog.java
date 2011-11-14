@@ -41,7 +41,7 @@ public class PluginDialog extends org.signalml.app.view.dialog.AbstractSvarogDia
      * @param pluginDirs an array of directories in which plug-ins are
 	 * stored
 	 */
-	public  PluginDialog( Window w, boolean isModal, ArrayList<PluginState> descriptions,
+	public PluginDialog( Window w, boolean isModal, ArrayList<PluginState> descriptions,
 			ArrayList<File> pluginDirs) {
 		super( w, isModal);
 		this.descriptions = descriptions;

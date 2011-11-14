@@ -22,7 +22,7 @@ public class ExportEEGLabTagAction extends ExportTagAction {
 	private static final long serialVersionUID = 1L;
 
 	protected static final Logger logger = Logger.getLogger(ExportEEGLabTagAction.class);
-	public  ExportEEGLabTagAction( TagDocumentFocusSelector tagDocumentFocusSelector) {
+	public ExportEEGLabTagAction( TagDocumentFocusSelector tagDocumentFocusSelector) {
 		super( tagDocumentFocusSelector);
 		setText(_("Export to EEGLab..."));
 		setToolTip(_("Export tags to EEGLab events ASCII file format"));

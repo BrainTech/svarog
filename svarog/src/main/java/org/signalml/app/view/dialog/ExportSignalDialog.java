@@ -58,7 +58,7 @@ public class ExportSignalDialog extends AbstractSignalSpaceAwarePresetDialog {
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public  ExportSignalDialog( PresetManager presetManager, Window w, boolean isModal) {
+	public ExportSignalDialog( PresetManager presetManager, Window w, boolean isModal) {
 		super( presetManager, w, isModal);
 	}
 
@@ -67,7 +67,7 @@ public class ExportSignalDialog extends AbstractSignalSpaceAwarePresetDialog {
 	 * manager}.
 	 * @param presetManager the preset manager to set
 	 */
-	public  ExportSignalDialog( PresetManager presetManager) {
+	public ExportSignalDialog( PresetManager presetManager) {
 		super( presetManager);
 	}
 

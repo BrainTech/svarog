@@ -22,7 +22,7 @@ public class ListSelectInvertAction extends AbstractAction {
 
 	private JList list;
 
-	public  ListSelectInvertAction( JList list) {
+	public ListSelectInvertAction( JList list) {
 		super(_("Invert"));
 		this.list = list;
 	}

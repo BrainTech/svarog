@@ -40,11 +40,11 @@ public class MP5ResultDialog extends org.signalml.app.view.dialog.AbstractSvarog
 
 	private MP5ResultBookPanel bookPanel;
 
-	public  MP5ResultDialog() {
+	public MP5ResultDialog() {
 		super();
 	}
 
-	public  MP5ResultDialog( Window w, boolean isModal) {
+	public MP5ResultDialog( Window w, boolean isModal) {
 		super( w, isModal);
 	}
 

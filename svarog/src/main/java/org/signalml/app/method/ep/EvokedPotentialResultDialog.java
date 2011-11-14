@@ -57,11 +57,11 @@ public class EvokedPotentialResultDialog extends org.signalml.app.view.dialog.Ab
 	private JLabel skippedMarkersLabelTitle;
 	private JLabel skippedMarkersLabel;
 
-	public  EvokedPotentialResultDialog() {
+	public EvokedPotentialResultDialog() {
 		super();
 	}
 
-	public  EvokedPotentialResultDialog( Window w, boolean isModal) {
+	public EvokedPotentialResultDialog( Window w, boolean isModal) {
 		super( w, isModal);
 	}
 

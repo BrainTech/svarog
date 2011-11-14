@@ -28,7 +28,7 @@ public class ActivateDocumentAction extends AbstractFocusableSignalMLAction<Docu
 
 	private ActionFocusManager actionFocusManager;
 
-	public  ActivateDocumentAction( ActionFocusManager actionFocusManager, DocumentFocusSelector documentFocusSelector) {
+	public ActivateDocumentAction( ActionFocusManager actionFocusManager, DocumentFocusSelector documentFocusSelector) {
 		super( documentFocusSelector);
 		this.actionFocusManager = actionFocusManager;
 		setText(_("Show"));
@@ -36,7 +36,7 @@ public class ActivateDocumentAction extends AbstractFocusableSignalMLAction<Docu
 		setToolTip(_("Show document"));
 	}
 
-	public  ActivateDocumentAction( ActionFocusManager actionFocusManager) {
+	public ActivateDocumentAction( ActionFocusManager actionFocusManager) {
 		this( actionFocusManager, actionFocusManager);
 	}
 

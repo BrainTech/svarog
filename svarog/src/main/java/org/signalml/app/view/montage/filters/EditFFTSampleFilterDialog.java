@@ -107,11 +107,11 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 	 */
 	protected FFTFilterResponseChartGroupPanel graphsPanel;
 
-	public  EditFFTSampleFilterDialog( PresetManager presetManager, Window w, boolean isModal) {
+	public EditFFTSampleFilterDialog( PresetManager presetManager, Window w, boolean isModal) {
 		super( presetManager, w, isModal);
 	}
 
-	public  EditFFTSampleFilterDialog( PresetManager presetManager) {
+	public EditFFTSampleFilterDialog( PresetManager presetManager) {
 		super( presetManager);
 	}
 

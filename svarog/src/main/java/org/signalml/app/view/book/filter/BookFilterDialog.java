@@ -61,7 +61,7 @@ public class BookFilterDialog extends AbstractPresetDialog {
 
 	private URL contextHelpURL = null;
 
-	public  BookFilterDialog( BookFilterPresetManager presetManager, Window w, boolean isModal) {
+	public BookFilterDialog( BookFilterPresetManager presetManager, Window w, boolean isModal) {
 		super( presetManager, w, isModal);
 	}
 

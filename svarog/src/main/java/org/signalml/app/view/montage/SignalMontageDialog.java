@@ -91,7 +91,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	 */
 	private PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainSampleFilterPresetManager;
 
-	public  SignalMontageDialog( MontagePresetManager montagePresetManager,
+	public SignalMontageDialog( MontagePresetManager montagePresetManager,
 		PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainSampleFilterPresetManager, Window f, boolean isModal) {
 		super( montagePresetManager, f, isModal);
 		this.predefinedTimeDomainSampleFilterPresetManager = predefinedTimeDomainSampleFilterPresetManager;

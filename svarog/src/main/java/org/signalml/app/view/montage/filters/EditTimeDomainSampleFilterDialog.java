@@ -82,7 +82,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	 * @param isModal true if this dialog should block top-level windows,
 	 * false otherwise
 	 */
-	public  EditTimeDomainSampleFilterDialog( PresetManager presetManager, Window w, boolean isModal) {
+	public EditTimeDomainSampleFilterDialog( PresetManager presetManager, Window w, boolean isModal) {
 		super( presetManager, w, isModal);
 	}
 
@@ -92,7 +92,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	 * @param presetManager a {@link PresetManager} to manage the presets
 	 * configured in this window
 	 */
-	public  EditTimeDomainSampleFilterDialog( PresetManager presetManager) {
+	public EditTimeDomainSampleFilterDialog( PresetManager presetManager) {
 		super( presetManager);
 	}
 

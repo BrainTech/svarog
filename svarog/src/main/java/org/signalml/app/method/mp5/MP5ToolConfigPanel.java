@@ -21,7 +21,7 @@ public class MP5ToolConfigPanel extends JPanel {
 
 	private MP5ToolExecutorConfigPanel executorConfigPanel;
 
-	public  MP5ToolConfigPanel( MP5ExecutorManager mp5ExecutorManager) {
+	public MP5ToolConfigPanel( MP5ExecutorManager mp5ExecutorManager) {
 		super();
 		this.mp5ExecutorManager = mp5ExecutorManager;
 		initialize();

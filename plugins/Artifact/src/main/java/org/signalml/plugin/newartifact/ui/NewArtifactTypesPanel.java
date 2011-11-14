@@ -48,7 +48,7 @@ public class NewArtifactTypesPanel extends JPanel {
 	private JScrollBar[] sensitivityScrollBars;
 	private JCheckBox[] artifactTypeCheckBoxes;
 
-	public  NewArtifactTypesPanel() {
+	public NewArtifactTypesPanel() {
 		super();
 		initialize();
 	}

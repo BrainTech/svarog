@@ -28,7 +28,7 @@ public class MP5AdvancedConfigPanel extends JPanel {
 	private MP5ExecutorPanel executorPanel;
 	private MP5OutputConfigPanel outputConfigPanel;
 
-	public  MP5AdvancedConfigPanel( MP5ExecutorManager executorManager, AbstractDialog owner) {
+	public MP5AdvancedConfigPanel( MP5ExecutorManager executorManager, AbstractDialog owner) {
 		super();
 		this.executorManager = executorManager;
 		this.owner = owner;

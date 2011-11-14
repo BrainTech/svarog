@@ -32,7 +32,7 @@ public class NewArtifactExclusionTableModel extends AbstractTableModel {
 	private ColumnTableModel columnTableModel;
 	private RowTableModel rowTableModel;
 
-	public  NewArtifactExclusionTableModel() {
+	public NewArtifactExclusionTableModel() {
 	}
 
 	public ColumnTableModel getColumnTableModel() {

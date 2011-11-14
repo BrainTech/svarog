@@ -16,7 +16,7 @@ public abstract class ExportSamplesAction extends AbstractSignalMLAction {
 
 	private static final long serialVersionUID = 1L;
 
-	public  ExportSamplesAction() {
+	public ExportSamplesAction() {
 		super();
 	}
 

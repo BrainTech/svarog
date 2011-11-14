@@ -24,7 +24,7 @@ public class ResumeTaskAction extends AbstractFocusableSignalMLAction<TaskFocusS
 
 	private ApplicationTaskManager taskManager;
 
-	public  ResumeTaskAction( TaskFocusSelector taskFocusSelector) {
+	public ResumeTaskAction( TaskFocusSelector taskFocusSelector) {
 		super( taskFocusSelector);
 		setText(_("Resume"));
 		setIconPath("org/signalml/app/icon/resume.png");

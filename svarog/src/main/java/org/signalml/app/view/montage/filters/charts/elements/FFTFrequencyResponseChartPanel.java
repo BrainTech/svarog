@@ -17,7 +17,7 @@ public class FFTFrequencyResponseChartPanel extends FrequencyResponseChartPanel 
 	/**
 	 * Constructor.
 	 */
-	public  FFTFrequencyResponseChartPanel() {
+	public FFTFrequencyResponseChartPanel() {
 		super();
 		setTitle(_("FFT coefficients"));
 	}

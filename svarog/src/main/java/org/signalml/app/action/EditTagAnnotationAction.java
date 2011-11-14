@@ -28,7 +28,7 @@ public class EditTagAnnotationAction extends AbstractFocusableSignalMLAction<Tag
 
 	private EditTagAnnotationDialog editTagAnnotationDialog;
 
-	public  EditTagAnnotationAction( TagFocusSelector tagFocusSelector) {
+	public EditTagAnnotationAction( TagFocusSelector tagFocusSelector) {
 		super( tagFocusSelector);
 		setText(_("Annotate tag"));
 		setToolTip(_("Edit tag annotation (Ctrl-A)"));

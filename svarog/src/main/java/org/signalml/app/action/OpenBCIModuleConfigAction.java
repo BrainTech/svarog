@@ -28,7 +28,7 @@ public class OpenBCIModuleConfigAction extends AbstractSignalMLAction {
          * Constructor sets text and tooltip.
          *
          */
-        public  OpenBCIModuleConfigAction() {
+        public OpenBCIModuleConfigAction() {
 
                 super();
                 setText(_("OpenBCI modules config"));

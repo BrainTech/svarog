@@ -38,7 +38,7 @@ public class StartMonitorRecordingAction extends MonitorRecordingAction {
 	 * @param signalDocumentFocusSelector a {@link SignalDocumentFocusSelector} used to detect
 	 * which document is active.
 	 */
-	public  StartMonitorRecordingAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
+	public StartMonitorRecordingAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
                 super( signalDocumentFocusSelector);
 		setText(_("Start monitor recording"));
 		setIconPath("org/signalml/app/icon/record.png");

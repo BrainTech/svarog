@@ -27,7 +27,7 @@ public class SaveAllDocumentsAction extends AbstractSignalMLAction {
 
 	private DocumentFlowIntegrator documentFlowIntegrator;
 
-	public  SaveAllDocumentsAction() {
+	public SaveAllDocumentsAction() {
 		super();
 		setText(_("Save All"));
 		setIconPath("org/signalml/app/icon/save_all.png");

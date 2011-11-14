@@ -57,7 +57,7 @@ public class VisualReferenceModel implements SourceMontageListener, MontageListe
 	private ArrayList<LinkedList<VisualReferenceChannel>> channelLists;
 	private ArrayList<VisualReferenceArrow> arrows;
 
-	public  VisualReferenceModel() {
+	public VisualReferenceModel() {
 		pcSupport = new PropertyChangeSupport(this);
 		readAllFromMontage();
 	}

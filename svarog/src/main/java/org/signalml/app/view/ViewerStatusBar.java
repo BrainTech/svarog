@@ -101,7 +101,7 @@ public class ViewerStatusBar extends JPanel implements ActionFocusListener, Prop
 
 	private Font filteringFont;
 
-	public  ViewerStatusBar() {
+	public ViewerStatusBar() {
 
 		super(new BorderLayout());
 		statusFont = new Font(Font.DIALOG, Font.PLAIN, 12);

@@ -27,7 +27,7 @@ public class InputSignalPanel extends JPanel {
 	private JTextField signalTextField;
 	private JButton montageButton;
 
-	public  InputSignalPanel() {
+	public InputSignalPanel() {
 		super();
 		initialize();
 	}

@@ -22,7 +22,7 @@ public class ListSelectNoneAction extends AbstractAction {
 
 	private JList list;
 
-	public  ListSelectNoneAction( JList list) {
+	public ListSelectNoneAction( JList list) {
 		super(_("Select none"));
 		this.list = list;
 	}

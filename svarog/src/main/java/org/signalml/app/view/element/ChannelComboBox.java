@@ -22,7 +22,7 @@ public class ChannelComboBox extends ResolvableComboBox {
 	 * SvarogI18n) constructor} in {@link ResolvableComboBox parent},
 	 * sets the font and that there should be no border.
 	 */
-	public  ChannelComboBox() {
+	public ChannelComboBox() {
 		super();
 
 		setFont(getFont().deriveFont(Font.PLAIN, 10));

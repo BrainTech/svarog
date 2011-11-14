@@ -34,7 +34,7 @@ public class AtomTableModel extends AbstractTableModel {
 
 	private TableRowSorter<AtomTableModel> sorter = null;
 
-	public  AtomTableModel() {
+	public AtomTableModel() {
 	}
 
 	public TableRowSorter<AtomTableModel> getSorter() {

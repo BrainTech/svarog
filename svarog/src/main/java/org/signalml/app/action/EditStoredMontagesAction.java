@@ -25,7 +25,7 @@ public class EditStoredMontagesAction extends AbstractSignalMLAction {
 
 	private SignalMontageDialog signalMontageDialog;
 
-	public  EditStoredMontagesAction() {
+	public EditStoredMontagesAction() {
 		super();
 		setText(_("Stored montages..."));
 		setIconPath("org/signalml/app/icon/storedmontages.png");

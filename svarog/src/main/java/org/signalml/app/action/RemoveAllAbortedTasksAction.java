@@ -28,7 +28,7 @@ public class RemoveAllAbortedTasksAction extends AbstractSignalMLAction {
 	private ApplicationTaskManager taskManager;
 	private Component optionPaneParent;
 
-	public  RemoveAllAbortedTasksAction() {
+	public RemoveAllAbortedTasksAction() {
 		super();
 		setText(_("Remove all aborted tasks"));
 		setIconPath("org/signalml/app/icon/removeallabortedtasks.png");

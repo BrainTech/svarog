@@ -36,11 +36,11 @@ public class NewArtifactToolConfigDialog extends org.signalml.plugin.export.view
 
 	private NewArtifactToolConfigPanel configPanel;
 
-	public  NewArtifactToolConfigDialog() {
+	public NewArtifactToolConfigDialog() {
 		super();
 	}
 
-	public  NewArtifactToolConfigDialog(
+	public NewArtifactToolConfigDialog(
 					   Window w, boolean isModal) {
 		super( w, isModal);
 	}

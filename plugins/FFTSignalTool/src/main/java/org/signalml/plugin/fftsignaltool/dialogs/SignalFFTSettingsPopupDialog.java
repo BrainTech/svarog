@@ -46,7 +46,7 @@ public class SignalFFTSettingsPopupDialog extends AbstractPopupDialog {
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public  SignalFFTSettingsPopupDialog(
+	public SignalFFTSettingsPopupDialog(
 			Window w, boolean isModal) {
 		super( w, isModal);
 	}

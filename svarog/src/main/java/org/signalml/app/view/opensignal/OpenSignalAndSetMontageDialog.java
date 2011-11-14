@@ -47,7 +47,7 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 	 * @param f the parent window
 	 * @param isModal whether this dialog should be modal
 	 */
-	public  OpenSignalAndSetMontageDialog( ViewerElementManager viewerElementManager,
+	public OpenSignalAndSetMontageDialog( ViewerElementManager viewerElementManager,
 			Window f, boolean isModal) {
 
 		super( viewerElementManager.getMontagePresetManager(), viewerElementManager.getPredefinedTimeDomainFiltersPresetManager(), f, isModal);

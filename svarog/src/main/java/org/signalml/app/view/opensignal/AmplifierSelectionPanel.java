@@ -91,7 +91,7 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
          * @param elementManager {@link #elementManager}
          * @param sourcePanel {@link #sourcePanel}
          */
-        public  AmplifierSelectionPanel(
+        public AmplifierSelectionPanel(
                 ViewerElementManager elementManager,
                 AmplifierSignalSourcePanel sourcePanel) {
 

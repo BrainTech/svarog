@@ -30,7 +30,7 @@ public class MontageFiltersTableModel extends AbstractTableModel implements Mont
 
 	private Montage montage;
 
-	public  MontageFiltersTableModel() {
+	public MontageFiltersTableModel() {
 	}
 
 	public Montage getMontage() {

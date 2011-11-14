@@ -22,7 +22,7 @@ public class ListSelectAllAction extends AbstractAction {
 
 	private JList list;
 
-	public  ListSelectAllAction( JList list) {
+	public ListSelectAllAction( JList list) {
 		super(_("Select all"));
 		this.list = list;
 	}

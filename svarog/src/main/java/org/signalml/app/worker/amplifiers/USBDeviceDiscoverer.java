@@ -16,7 +16,7 @@ public class USBDeviceDiscoverer extends AbstractDeviceDiscoverer {
          * Default constructor.
          *
          */
-        public  USBDeviceDiscoverer() {
+        public USBDeviceDiscoverer() {
                 
                 super();
         }

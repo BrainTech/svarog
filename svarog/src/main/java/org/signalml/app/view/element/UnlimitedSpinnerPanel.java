@@ -41,21 +41,21 @@ public class UnlimitedSpinnerPanel extends JPanel {
 		this.compact = compact;
 	}
 
-	public  UnlimitedSpinnerPanel( double value, double min, double max, double step, boolean compact) {
+	public UnlimitedSpinnerPanel( double value, double min, double max, double step, boolean compact) {
 		this( compact);
 		spinner = new JSpinner(new SpinnerNumberModel(value, min, max, step));
 
 		commonInit();
 	}
 
-	public  UnlimitedSpinnerPanel( float value, float min, float max, float step, boolean compact) {
+	public UnlimitedSpinnerPanel( float value, float min, float max, float step, boolean compact) {
 		this( compact);
 		spinner = new JSpinner(new SpinnerNumberModel((double) value, (double) min, (double) max, (double) step));
 
 		commonInit();
 	}
 
-	public  UnlimitedSpinnerPanel( int value, int min, int max, int step, boolean compact) {
+	public UnlimitedSpinnerPanel( int value, int min, int max, int step, boolean compact) {
 		this( compact);
 		spinner = new JSpinner(new SpinnerNumberModel(value, min, max, step));
 

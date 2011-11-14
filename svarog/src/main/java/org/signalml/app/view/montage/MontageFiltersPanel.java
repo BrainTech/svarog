@@ -269,7 +269,7 @@ public class MontageFiltersPanel extends JPanel {
 	 * predefined {@link TimeDomainSampleFilter TimeDomainSampleFilters} are
 	 * stored
 	 */
-	public  MontageFiltersPanel( PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainSampleFilterPresetManager) {
+	public MontageFiltersPanel( PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainSampleFilterPresetManager) {
 		super();
 		this.predefinedTimeDomainSampleFilterPresetManager = predefinedTimeDomainSampleFilterPresetManager;
 		initialize();

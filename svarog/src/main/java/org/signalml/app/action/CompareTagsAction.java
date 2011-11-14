@@ -33,7 +33,7 @@ public class CompareTagsAction extends AbstractFocusableSignalMLAction<SignalDoc
 	 * @param signalDocumentFocusSelector a {@link SignalDocumentFocusSelector}
 	 * used to get the active document.
 	 */
-	public  CompareTagsAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
+	public CompareTagsAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
 		super( signalDocumentFocusSelector);
 
 		setText(_("Compare tags"));

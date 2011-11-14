@@ -64,7 +64,7 @@ public class SlavePlotSettingsPopupDialog extends AbstractPopupDialog {
 	private SignalMontageDialog signalMontageDialog;
 	private Montage currentMontage;
 
-	public  SlavePlotSettingsPopupDialog( Window w, boolean isModal) {
+	public SlavePlotSettingsPopupDialog( Window w, boolean isModal) {
 		super( w, isModal);
 	}
 

@@ -26,7 +26,7 @@ public class HelpContentsAction extends AbstractSignalMLAction {
 
 	private HelpDialog helpDialog;
 
-	public  HelpContentsAction() {
+	public HelpContentsAction() {
 		super();
 		setText(_("Contents..."));
 		setIconPath("org/signalml/app/icon/help.png");

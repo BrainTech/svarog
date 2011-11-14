@@ -37,7 +37,7 @@ public class MP5StoppingCriteriaConfigPanel extends JPanel {
 	private JSpinner maxIterationCountSpinner;
 	private JSpinner energyPercentSpinner;
 
-	public  MP5StoppingCriteriaConfigPanel( AbstractDialog owner) {
+	public MP5StoppingCriteriaConfigPanel( AbstractDialog owner) {
 		super();
 		this.owner = owner;
 		initialize();

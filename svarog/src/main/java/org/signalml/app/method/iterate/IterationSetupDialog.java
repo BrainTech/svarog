@@ -82,11 +82,11 @@ public class IterationSetupDialog extends org.signalml.app.view.dialog.AbstractS
 	private IterableMethod currentMethod;
 	private ParameterIterationSettings[] currentParameters;
 
-	public  IterationSetupDialog() {
+	public IterationSetupDialog() {
 		super();
 	}
 
-	public  IterationSetupDialog( Window w, boolean isModal) {
+	public IterationSetupDialog( Window w, boolean isModal) {
 		super( w, isModal);
 	}
 

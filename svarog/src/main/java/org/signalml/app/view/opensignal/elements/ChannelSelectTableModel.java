@@ -35,7 +35,7 @@ public class ChannelSelectTableModel extends AbstractTableModel {
 	 */
 	public static final int LABEL_COLUMN = 2;
 
-	public  ChannelSelectTableModel() {
+	public ChannelSelectTableModel() {
 	}
 
 	/**

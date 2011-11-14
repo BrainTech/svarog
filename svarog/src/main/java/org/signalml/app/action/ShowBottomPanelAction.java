@@ -23,7 +23,7 @@ public class ShowBottomPanelAction extends AbstractSignalMLAction {
 
 	protected static final Logger logger = Logger.getLogger(ShowBottomPanelAction.class);
 
-	public  ShowBottomPanelAction() {
+	public ShowBottomPanelAction() {
 		super();
 		setText(_("Show bottom panel"));
 		setToolTip(_("Show bottom panel"));

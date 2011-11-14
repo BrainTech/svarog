@@ -42,11 +42,8 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 	private int timeout;
 	private int state;
 
-	public  BCIMetadataWorker( 
-			JmxClient client, 
-			OpenMonitorDescriptor openMonitorDescriptor, 
-			int timeout) {
-
+	public BCIMetadataWorker(JmxClient client, OpenMonitorDescriptor openMonitorDescriptor,
+				 int timeout) {
 		this.client = client;
 		this.openMonitorDescriptor = openMonitorDescriptor;
 		this.timeout = timeout;

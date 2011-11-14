@@ -29,7 +29,7 @@ public abstract class ResponseChartPanel extends ChartPanel {
 	 * Creates a new chart panel.
 	 * localized message codes
 	 */
-	public  ResponseChartPanel() {
+	public ResponseChartPanel() {
 		super(createChart());
 
 		setBackground(Color.WHITE);

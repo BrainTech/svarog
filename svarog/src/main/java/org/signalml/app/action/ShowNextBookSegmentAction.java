@@ -24,7 +24,7 @@ public class ShowNextBookSegmentAction extends AbstractFocusableSignalMLAction<B
 
 	protected static final Logger logger = Logger.getLogger(ShowNextBookSegmentAction.class);
 
-	public  ShowNextBookSegmentAction( BookViewFocusSelector bookViewFocusSelector) {
+	public ShowNextBookSegmentAction( BookViewFocusSelector bookViewFocusSelector) {
 		super( bookViewFocusSelector);
 		setText(_("Next segment"));
 		setIconPath("org/signalml/app/icon/nextbooksegment.png");

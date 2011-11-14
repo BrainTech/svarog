@@ -39,7 +39,7 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 	private JTextField atomCountTextField;
 	private JTextField ramUsageTextField;
 
-	public  MP5DictionaryDensityConfigPanel( AbstractDialog owner) {
+	public MP5DictionaryDensityConfigPanel( AbstractDialog owner) {
 		super();
 		this.owner = owner;
 		initialize();

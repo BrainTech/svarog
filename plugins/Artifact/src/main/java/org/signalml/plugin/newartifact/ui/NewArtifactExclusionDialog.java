@@ -31,11 +31,11 @@ public class NewArtifactExclusionDialog extends org.signalml.plugin.export.view.
 	private int[][] currentExclusion;
 	private ArtifactType[] artifactTypes = ArtifactType.values();
 
-	public  NewArtifactExclusionDialog() {
+	public NewArtifactExclusionDialog() {
 		super();
 	}
 
-	public  NewArtifactExclusionDialog(
+	public NewArtifactExclusionDialog(
 					  Window w, boolean isModal) {
 		super( w, isModal);
 	}

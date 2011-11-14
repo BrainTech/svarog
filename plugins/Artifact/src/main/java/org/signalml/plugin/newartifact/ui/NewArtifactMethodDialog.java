@@ -65,7 +65,7 @@ public class NewArtifactMethodDialog extends AbstractPresetDialog {
 	private SourceMontage currentMontage;
 	private int[][] currentExclusion;
 
-	public  NewArtifactMethodDialog(
+	public NewArtifactMethodDialog(
 				       PresetManager presetManager, Window w) {
 		super( presetManager, w, true);
 	}

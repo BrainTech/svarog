@@ -112,7 +112,7 @@ public class TimeDomainFilterParametersPanel extends JPanel {
 	/**
 	 * Constructor.
 	 */
-	public  TimeDomainFilterParametersPanel() {
+	public TimeDomainFilterParametersPanel() {
 		createInterface();
 	}
 

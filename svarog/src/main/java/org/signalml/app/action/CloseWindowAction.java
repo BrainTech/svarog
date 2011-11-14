@@ -22,7 +22,7 @@ public class CloseWindowAction extends AbstractSignalMLAction {
 
 	protected static final Logger logger = Logger.getLogger(CloseWindowAction.class);
 
-	public  CloseWindowAction() {
+	public CloseWindowAction() {
 		super();
 		setText(_("Exit"));
 		setIconPath("org/signalml/app/icon/exit.png");

@@ -37,7 +37,7 @@ public class ConfigureAmplifiersPanel extends JPanel {
          *
          * @param viewerElementManager {@link #viewerElementManager}
          */
-        public  ConfigureAmplifiersPanel(
+        public ConfigureAmplifiersPanel(
                 ViewerElementManager viewerElementManager) {
                 this.viewerElementManager = viewerElementManager;
                 initialize();

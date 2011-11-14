@@ -29,11 +29,11 @@ public class MP5ToolConfigDialog extends org.signalml.app.view.dialog.AbstractSv
 
 	private MP5ToolConfigPanel configPanel;
 
-	public  MP5ToolConfigDialog() {
+	public MP5ToolConfigDialog() {
 		super();
 	}
 
-	public  MP5ToolConfigDialog( Window w, boolean isModal) {
+	public MP5ToolConfigDialog( Window w, boolean isModal) {
 		super( w, isModal);
 	}
 

@@ -46,7 +46,7 @@ public class FileChooserPanel extends JPanel {
 	 * @param managedDocumentTypes the types of documents which will be
 	 * chosen using this panel
 	 */
-	public  FileChooserPanel( ManagedDocumentType[] managedDocumentTypes, ApplicationConfiguration applicationConfiguration) {
+	public FileChooserPanel( ManagedDocumentType[] managedDocumentTypes, ApplicationConfiguration applicationConfiguration) {
 		this.applicationConfiguration = applicationConfiguration;
 		this.managedDocumentTypes = managedDocumentTypes.clone();
 		createInterface();
@@ -57,7 +57,7 @@ public class FileChooserPanel extends JPanel {
 	 * @param singleManagedDocumentType the type of document which will
 	 * be chosen using this panel
 	 */
-	public  FileChooserPanel( ManagedDocumentType singleManagedDocumentType, ApplicationConfiguration applicationConfiguration) {
+	public FileChooserPanel( ManagedDocumentType singleManagedDocumentType, ApplicationConfiguration applicationConfiguration) {
 		this( new ManagedDocumentType[] {singleManagedDocumentType}, applicationConfiguration);
 	}
 

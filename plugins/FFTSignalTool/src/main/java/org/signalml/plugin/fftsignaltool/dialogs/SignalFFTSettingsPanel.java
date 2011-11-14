@@ -218,7 +218,7 @@ public class SignalFFTSettingsPanel extends JPanel {
 	 *            {@code true} if the panel should has a cross which closes it,
 	 *            {@code false} otherwise
 	 */
-	public  SignalFFTSettingsPanel(
+	public SignalFFTSettingsPanel(
 			boolean hasCloseCross) {
 		super();
 		this.hasCloseCross = hasCloseCross;

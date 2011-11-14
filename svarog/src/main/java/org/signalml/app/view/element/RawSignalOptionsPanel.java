@@ -109,7 +109,7 @@ public class RawSignalOptionsPanel extends JPanel implements FocusListener {
 	 */
 	private boolean wasCalibrationOffsetFocused = false;
 
-	public  RawSignalOptionsPanel() {
+	public RawSignalOptionsPanel() {
 		super();
 		initialize();
 	}

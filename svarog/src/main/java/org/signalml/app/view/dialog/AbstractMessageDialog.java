@@ -59,7 +59,7 @@ public abstract class AbstractMessageDialog extends AbstractDialog {
 	/**
 	 * Constructor. Sets the source of messages.
 	 */
-	public  AbstractMessageDialog() {
+	public AbstractMessageDialog() {
 		super();
 	}
 
@@ -69,7 +69,7 @@ public abstract class AbstractMessageDialog extends AbstractDialog {
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public  AbstractMessageDialog(Window w, boolean isModal) {
+	public AbstractMessageDialog(Window w, boolean isModal) {
 		super( w, isModal);
 	}
 

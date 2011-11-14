@@ -38,7 +38,7 @@ public class ExampleMethodDialog extends org.signalml.app.view.dialog.AbstractSv
 	private JTextField textField;
 	private JCheckBox noWaitCheckBox;
 
-	public  ExampleMethodDialog(Window window) {
+	public ExampleMethodDialog(Window window) {
 		super( window,true);
 	}
 

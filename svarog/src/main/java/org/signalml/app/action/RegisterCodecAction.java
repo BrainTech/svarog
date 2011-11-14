@@ -50,7 +50,7 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 	private SignalMLCodecSelector selector;
 	private ApplicationConfiguration applicationConfig;
 
-	public  RegisterCodecAction() {
+	public RegisterCodecAction() {
 		super();
 		setText(_("Register new codec"));
 	}

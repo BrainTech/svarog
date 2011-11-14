@@ -21,7 +21,7 @@ public abstract class AbstractDeviceDiscoverer extends SwingWorker<String, Devic
          * Default constructor.
          *
          */
-        public  AbstractDeviceDiscoverer() {
+        public AbstractDeviceDiscoverer() {
         }
 
         /**

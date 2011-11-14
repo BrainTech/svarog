@@ -41,7 +41,7 @@ public class SignalParametersPanel extends JPanel {
 	/**
 	 * Constructor. Initializes the panel.
 	 */
-	public  SignalParametersPanel() {
+	public SignalParametersPanel() {
 		super();
 		initialize();
 	}

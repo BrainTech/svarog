@@ -76,7 +76,7 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 
 	private TagDocument currentTagDocument;
 
-	public  TagBasedFilterDialog( Window w, boolean isModal) {
+	public TagBasedFilterDialog( Window w, boolean isModal) {
 		super( w, isModal);
 	}
 

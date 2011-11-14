@@ -31,7 +31,7 @@ public class MP5ExpertConfigPanel extends JPanel {
 
 	private TextPanePanel additionalConfigTextPane;
 
-	public  MP5ExpertConfigPanel( AbstractDialog owner) {
+	public MP5ExpertConfigPanel( AbstractDialog owner) {
 		super();
 		this.owner = owner;
 		initialize();

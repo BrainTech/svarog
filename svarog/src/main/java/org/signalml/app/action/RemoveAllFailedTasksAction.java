@@ -28,7 +28,7 @@ public class RemoveAllFailedTasksAction extends AbstractSignalMLAction {
 	private ApplicationTaskManager taskManager;
 	private Component optionPaneParent;
 
-	public  RemoveAllFailedTasksAction() {
+	public RemoveAllFailedTasksAction() {
 		super();
 		setText(_("Remove all failed tasks"));
 		setIconPath("org/signalml/app/icon/removeallfailedtasks.png");

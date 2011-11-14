@@ -52,7 +52,7 @@ public class BCIConfigurationWorker extends SwingWorker<WorkerResult, Integer> {
          * @param client {@link #client}
          * @param data {@link #data}
          */
-        public  BCIConfigurationWorker(
+        public BCIConfigurationWorker(
                                       JmxClient client,
                                       HashMap<String, String> data) {
                 this.client = client;

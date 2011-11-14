@@ -38,7 +38,7 @@ public abstract class ExportAllChartsToFileAction extends AbstractSignalMLAction
 	private ViewerFileChooser fileChooser;
 	private Component optionPaneParent;
 
-	public  ExportAllChartsToFileAction() {
+	public ExportAllChartsToFileAction() {
 		super();
 		setText(_("Save all charts as one PNG file"));
 		setIconPath("org/signalml/app/icon/picture_save.png");

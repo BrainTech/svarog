@@ -24,7 +24,7 @@ public class CloseDocumentAction extends AbstractFocusableSignalMLAction<Documen
 
 	private DocumentFlowIntegrator documentFlowIntegrator;
 
-	public  CloseDocumentAction( DocumentFocusSelector documentFocusSelector) {
+	public CloseDocumentAction( DocumentFocusSelector documentFocusSelector) {
 		super( documentFocusSelector);
 		setText(_("Close"));
 		setIconPath("org/signalml/app/icon/fileclose.png");

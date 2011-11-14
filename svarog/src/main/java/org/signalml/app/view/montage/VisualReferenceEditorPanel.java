@@ -86,7 +86,7 @@ public class VisualReferenceEditorPanel extends JPanel implements PropertyChange
 	private MontageTable montageTable;
 	private JScrollPane montageTableScrollPane;
 
-	public  VisualReferenceEditorPanel() {
+	public VisualReferenceEditorPanel() {
 		super();
 		initialize();
 	}

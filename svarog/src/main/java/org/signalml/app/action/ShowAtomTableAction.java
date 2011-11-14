@@ -28,7 +28,7 @@ public class ShowAtomTableAction extends AbstractFocusableSignalMLAction<BookDoc
 
 	private AtomTableDialog atomTableDialog;
 
-	public  ShowAtomTableAction( BookDocumentFocusSelector bookDocumentFocusSelector) {
+	public ShowAtomTableAction( BookDocumentFocusSelector bookDocumentFocusSelector) {
 		super( bookDocumentFocusSelector);
 		setText(_("Show atom table"));
 		setIconPath("org/signalml/app/icon/atomtable.png");

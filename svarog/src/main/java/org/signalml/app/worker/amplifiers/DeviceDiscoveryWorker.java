@@ -45,7 +45,7 @@ public class DeviceDiscoveryWorker extends SwingWorker<String, DiscoveryState> i
          *
          * @param definitions {@link #definitions}
          */
-        public  DeviceDiscoveryWorker() {
+        public DeviceDiscoveryWorker() {
         }
 
         /**

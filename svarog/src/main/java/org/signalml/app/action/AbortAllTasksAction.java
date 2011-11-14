@@ -27,7 +27,7 @@ public class AbortAllTasksAction extends AbstractSignalMLAction {
 	private ApplicationTaskManager taskManager;
 	private Component optionPaneParent;
 
-	public  AbortAllTasksAction() {
+	public AbortAllTasksAction() {
 		super();
 		setText(_("Abort all tasks"));
 		setIconPath("org/signalml/app/icon/abortall.png");

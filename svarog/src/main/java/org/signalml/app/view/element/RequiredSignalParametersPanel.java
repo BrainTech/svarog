@@ -78,7 +78,7 @@ public class RequiredSignalParametersPanel extends JPanel implements FocusListen
 	/**
 	 * Constructor. Initializes the panel.
 	 */
-	public  RequiredSignalParametersPanel() {
+	public RequiredSignalParametersPanel() {
 		super();
 		initialize();
 	}
