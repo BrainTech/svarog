@@ -80,7 +80,7 @@ public class BCIConfigurationWorker extends SwingWorker<WorkerResult, Integer> {
                 MultiplexerMessage msg = client.createMessage(messageBuilder);
                                                 
                 try {
-			ChannelFuture sendingOperation = client.send( msg, SendingMethod.THROUGH_ONE);
+			ChannelFuture sendingOperation = client.send(msg, SendingMethod.THROUGH_ONE);
 			sendingOperation.await(1, TimeUnit.SECONDS);
 			if (!sendingOperation.isSuccess()) {
 				logger.info("Sending " + dataId + " data failed!");

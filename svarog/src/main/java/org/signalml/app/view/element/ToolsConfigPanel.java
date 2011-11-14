@@ -55,7 +55,7 @@ public class ToolsConfigPanel extends JPanel {
 	 * @param mp5ExecutorManager the {@link MP5ExecutorManager manager} of MP5
 	 * executors
 	 */
-	public ToolsConfigPanel( ViewerFileChooser fileChooser, MP5ExecutorManager mp5ExecutorManager) {
+	public ToolsConfigPanel(ViewerFileChooser fileChooser, MP5ExecutorManager mp5ExecutorManager) {
 		super();
 		this.fileChooser = fileChooser;
 		this.mp5ExecutorManager = mp5ExecutorManager;
@@ -87,7 +87,7 @@ public class ToolsConfigPanel extends JPanel {
 	 */
 	public MP5ToolConfigPanel getMp5Panel() {
 		if (mp5Panel == null) {
-			mp5Panel = new MP5ToolConfigPanel( mp5ExecutorManager);
+			mp5Panel = new MP5ToolConfigPanel(mp5ExecutorManager);
 			mp5Panel.setLocalExecutorDialog(mp5LocalExecutorDialog);
 		}
 		return mp5Panel;

@@ -47,8 +47,8 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 	 * @param viewerElementManager ViewerElementManager to be used by this
 	 * panel
 	 */
-	public OpenBCISignalSourcePanel( ViewerElementManager viewerElementManager) {
-		super( viewerElementManager);
+	public OpenBCISignalSourcePanel(ViewerElementManager viewerElementManager) {
+		super(viewerElementManager);
 	}
 
 	@Override

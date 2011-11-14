@@ -827,7 +827,7 @@ public class DocumentFlowIntegrator {
 		onSignalDocumentAdded(monitorSignalDocument, descriptor.isMakeActive());
 		onCommonDocumentAdded(monitorSignalDocument);
 
-		actionFocusManager.setActiveDocument( monitorSignalDocument);
+		actionFocusManager.setActiveDocument(monitorSignalDocument);
 
 		((SignalView) monitorSignalDocument.getDocumentView()).setSnapToPageMode(true);
 		logger.debug("monitor openned");

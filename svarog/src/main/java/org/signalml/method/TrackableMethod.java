@@ -31,6 +31,6 @@ public interface TrackableMethod {
 	 * @param ticker the number of the ticker
 	 * @return the label for the ticker
 	 */
-	String getTickerLabel( int ticker);
+	String getTickerLabel(int ticker);
 
 }

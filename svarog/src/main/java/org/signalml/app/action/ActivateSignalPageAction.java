@@ -25,8 +25,8 @@ public class ActivateSignalPageAction extends AbstractFocusableSignalMLAction<Si
 
 	private ActionFocusManager actionFocusManager;
 
-	public ActivateSignalPageAction( ActionFocusManager actionFocusManager, SignalPageFocusSelector signalPageFocusSelector) {
-		super( signalPageFocusSelector);
+	public ActivateSignalPageAction(ActionFocusManager actionFocusManager, SignalPageFocusSelector signalPageFocusSelector) {
+		super(signalPageFocusSelector);
 		this.actionFocusManager = actionFocusManager;
 		setText(_("Show page"));
 		setIconPath("org/signalml/app/icon/activate.png");

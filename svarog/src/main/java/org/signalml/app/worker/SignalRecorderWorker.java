@@ -26,7 +26,7 @@ public class SignalRecorderWorker {
         /**
          * Logger.
          */
-	protected static final Logger logger = Logger.getLogger( SignalRecorderWorker.class);
+	protected static final Logger logger = Logger.getLogger(SignalRecorderWorker.class);
 
         /**
          * Array to store received samples in.

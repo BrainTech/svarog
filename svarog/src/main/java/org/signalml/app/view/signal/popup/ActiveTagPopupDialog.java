@@ -46,8 +46,8 @@ public class ActiveTagPopupDialog extends AbstractPopupDialog implements ActionL
 	private Map<TagDocument,JRadioButton> tagToButtonMap;
 	private Map<ButtonModel,TagDocument> buttonToTagMap;
 
-	public ActiveTagPopupDialog( Window w, boolean isModal) {
-		super( w, isModal);
+	public ActiveTagPopupDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	public SignalView getSignalView() {

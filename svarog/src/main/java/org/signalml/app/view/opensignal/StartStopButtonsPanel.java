@@ -61,7 +61,7 @@ public class StartStopButtonsPanel extends JPanel {
          * 
          * @param signalSourcePanel {@link #signalSourcePanel}
          */
-        public StartStopButtonsPanel( AmplifierSignalSourcePanel signalSourcePanel) {
+        public StartStopButtonsPanel(AmplifierSignalSourcePanel signalSourcePanel) {
 
                 super();
                 this.signalSourcePanel = signalSourcePanel;
@@ -187,7 +187,7 @@ public class StartStopButtonsPanel extends JPanel {
 
                         // create OpenBCIManager and progressDialog. attach dialog to the manager, start the
                         // manager and show the dialog.
-                        OpenBCIManager manager = new OpenBCIManager( elementManager, currentDescriptor);
+                        OpenBCIManager manager = new OpenBCIManager(elementManager, currentDescriptor);
                         ProgressDialog progressDialog = new ProgressDialog(
                                 signalSourcePanel.getViewerElementManager().getOpenSignalAndSetMontageDialog(),
                                 true, _("Starting OpenBCI"));

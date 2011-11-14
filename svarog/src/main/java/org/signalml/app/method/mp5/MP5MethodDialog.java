@@ -146,8 +146,8 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 
 	private Window dialogParent;
 
-	public MP5MethodDialog( MethodPresetManager methodPresetManager, Window w) {
-		super( methodPresetManager, w, true);
+	public MP5MethodDialog(MethodPresetManager methodPresetManager, Window w) {
+		super(methodPresetManager, w, true);
 	}
 
 	@Override
@@ -747,7 +747,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 			mP5SaveForLaterUseDescriptor.setSaveConfig(true);
 
 			if (mP5SaveForLaterUseDialog == null) {
-				mP5SaveForLaterUseDialog = new MP5SaveForLaterUseDialog( MP5MethodDialog.this, true);
+				mP5SaveForLaterUseDialog = new MP5SaveForLaterUseDialog(MP5MethodDialog.this, true);
 			}
 
 			boolean ok = mP5SaveForLaterUseDialog.showDialog(mP5SaveForLaterUseDescriptor, true);

@@ -56,9 +56,9 @@ public class ProgressDialog extends org.signalml.app.view.dialog.AbstractSvarogD
          * @param isModal if this window is modal
          * @param caption window's caption
          */
-        public ProgressDialog( Window w, boolean isModal, String title) {
+        public ProgressDialog(Window w, boolean isModal, String title) {
 
-                super( w, isModal);
+                super(w, isModal);
                 setTitle(title);
                 setPreferredSize(new Dimension(DIALOG_WIDTH, DIALOG_HEIGHT));
         }

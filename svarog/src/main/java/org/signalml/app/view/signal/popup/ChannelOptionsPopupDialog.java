@@ -52,7 +52,7 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 
 	public ChannelOptionsPopupDialog(
 			Window w, boolean isModal) {
-		super( w, isModal);
+		super(w, isModal);
 	}
 
 	private static final long serialVersionUID = 1L;

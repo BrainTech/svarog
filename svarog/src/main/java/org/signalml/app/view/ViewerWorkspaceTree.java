@@ -199,7 +199,7 @@ public class ViewerWorkspaceTree extends AbstractViewerTree implements ActionFoc
 
 	public ActivateDocumentAction getActivateDocumentAction() {
 		if (activateDocumentAction == null) {
-			activateDocumentAction = new ActivateDocumentAction( actionFocusManager, this);
+			activateDocumentAction = new ActivateDocumentAction(actionFocusManager, this);
 		}
 		return activateDocumentAction;
 	}

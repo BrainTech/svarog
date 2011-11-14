@@ -66,8 +66,8 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 
 	private RawSignalDescriptorWriter descriptorWriter;
 
-	public ExportSignalAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
-		super( signalDocumentFocusSelector);
+	public ExportSignalAction(SignalDocumentFocusSelector signalDocumentFocusSelector) {
+		super(signalDocumentFocusSelector);
 		setText(_("Export Signal..."));
 		setToolTip(_("Export signal to simple binary format"));
 	}

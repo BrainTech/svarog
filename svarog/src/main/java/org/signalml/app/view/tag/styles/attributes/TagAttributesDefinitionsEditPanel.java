@@ -39,7 +39,7 @@ public class TagAttributesDefinitionsEditPanel extends AbstractSignalMLPanel {
 	 * Constructor.
 	 * @param tagStylePropertiesPanel panel for editing tag styled properties
 	 */
-	public TagAttributesDefinitionsEditPanel( TagStylePropertiesPanel tagStylePropertiesPanel) {
+	public TagAttributesDefinitionsEditPanel(TagStylePropertiesPanel tagStylePropertiesPanel) {
 		super();
 		this.tagStylePropertiesPanel = tagStylePropertiesPanel;
 		initialize();

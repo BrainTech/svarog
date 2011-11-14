@@ -41,7 +41,7 @@ public class BookFilterChooseTagPanel extends JPanel {
 
 	private File tagFile;
 
-	public BookFilterChooseTagPanel( ViewerFileChooser fileChooser) {
+	public BookFilterChooseTagPanel(ViewerFileChooser fileChooser) {
 		super();
 		this.fileChooser = fileChooser;
 		initialize();

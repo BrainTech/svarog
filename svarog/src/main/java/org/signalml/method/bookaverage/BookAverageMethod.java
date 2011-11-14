@@ -193,7 +193,7 @@ public class BookAverageMethod extends AbstractMethod implements TrackableMethod
 	}
 
 	@Override
-	public String getTickerLabel( int ticker) {
+	public String getTickerLabel(int ticker) {
 		return _("Segments processed");
 	}
 

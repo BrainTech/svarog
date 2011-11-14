@@ -25,7 +25,7 @@ public class UnavailableMethodAction extends AbstractSignalMLAction {
 	private UnavailableMethodDescriptor descriptor;
 	private ErrorsDialog errorsDialog;
 
-	public UnavailableMethodAction( UnavailableMethodDescriptor descriptor) {
+	public UnavailableMethodAction(UnavailableMethodDescriptor descriptor) {
 		this.descriptor = descriptor;
 		String name = null;
 		String iconPath = null;

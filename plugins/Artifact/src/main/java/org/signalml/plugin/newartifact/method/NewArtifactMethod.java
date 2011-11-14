@@ -116,7 +116,7 @@ public class NewArtifactMethod extends PluginAbstractMethod implements
 	}
 
 	@Override
-	public String getTickerLabel( int ticker) {
+	public String getTickerLabel(int ticker) {
 		if (ticker == 0) {
 			return _("Processing step");
 		} else {

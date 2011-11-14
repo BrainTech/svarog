@@ -21,7 +21,7 @@ import org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector;
 
 public class EEGMock {
 
-	protected static final Logger logger = Logger.getLogger( EEGMock.class);
+	protected static final Logger logger = Logger.getLogger(EEGMock.class);
 	
 	public static final int CHANNEL_COUNT = 20;
 	public static final double SAMPLE_PERIOD = 90.90909;
@@ -46,26 +46,26 @@ public class EEGMock {
 			float time = 0f;
 			PrintWriter out = new PrintWriter( new File( "gen_data.tsv"));
 
-			Thread.sleep( PERIOD_MILIS, PERIOD_NANOS);
+			Thread.sleep(PERIOD_MILIS, PERIOD_NANOS);
 			while (!isCancelled()) {
 				time += TIME_DELTA;
-				out.print( time);
+				out.print(time);
 				SampleVector.Builder sampleVectorBuilder = SampleVector.newBuilder();
 				for (int i=0; i<CHANNEL_COUNT; i++) {
 					Sample.Builder sampleBuilder = Sample.newBuilder();
-					sampleBuilder.setTimestamp( time);
+					sampleBuilder.setTimestamp(time);
 					double val = Math.random() * gain - offset;
-					sampleBuilder.setValue( val);
-					sampleVectorBuilder.addSamples( sampleBuilder);
+					sampleBuilder.setValue(val);
+					sampleVectorBuilder.addSamples(sampleBuilder);
 					out.print( "\t");
-					String s = Double.toString( val);
+					String s = Double.toString(val);
 					s = s.replace( '.', ',');
 					out.print( s);
 				}
 				out.println();
-				MultiplexerMessage mm = connection.createMessage( sampleVectorBuilder.build().toByteString(), SvarogConstants.MessageTypes.STREAMED_SIGNAL_MESSAGE);
-				connection.send( mm, SendingMethod.THROUGH_ONE);
-				Thread.sleep( PERIOD_MILIS, PERIOD_NANOS);
+				MultiplexerMessage mm = connection.createMessage(sampleVectorBuilder.build().toByteString(), SvarogConstants.MessageTypes.STREAMED_SIGNAL_MESSAGE);
+				connection.send(mm, SendingMethod.THROUGH_ONE);
+				Thread.sleep(PERIOD_MILIS, PERIOD_NANOS);
 			}
 			out.close();
 			return null;
@@ -96,9 +96,9 @@ public class EEGMock {
 			mock.offset = Double.parseDouble( args[1]);
 
 		System.out.print( "Connecting ... ");
-		mock.connection = new JmxClient( SvarogConstants.PeerTypes.SIGNAL_STREAMER);
+		mock.connection = new JmxClient(SvarogConstants.PeerTypes.SIGNAL_STREAMER);
 		SocketAddress socketAddress = new InetSocketAddress( "127.0.0.1", 31889);
-		mock.connection.connect( socketAddress);
+		mock.connection.connect(socketAddress);
 		System.out.println( "Connected!");
  
 		while (true) {
@@ -107,7 +107,7 @@ public class EEGMock {
 			MultiplexerMessage mmsg = imsg.getMessage();
 			System.out.println( "Received!");
 			int type = mmsg.getType();
-			System.out.println( type);
+			System.out.println(type);
 	
 			if (type == SvarogConstants.MessageTypes.SIGNAL_STREAMER_START) {
 				mock.worker = mock.new MockWorker();
@@ -115,7 +115,7 @@ public class EEGMock {
 			}
 			else if (type == SvarogConstants.MessageTypes.SIGNAL_STREAMER_STOP) {
 				System.out.println( "stream closed!");
-				mock.worker.cancel( false);
+				mock.worker.cancel(false);
 			}
 			else
 				System.out.println( "Bad message!");

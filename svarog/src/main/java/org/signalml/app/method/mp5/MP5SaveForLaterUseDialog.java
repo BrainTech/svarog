@@ -35,8 +35,8 @@ public class MP5SaveForLaterUseDialog extends org.signalml.app.view.dialog.Abstr
 		super();
 	}
 
-	public MP5SaveForLaterUseDialog( Window w, boolean isModal) {
-		super( w, isModal);
+	public MP5SaveForLaterUseDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	@Override

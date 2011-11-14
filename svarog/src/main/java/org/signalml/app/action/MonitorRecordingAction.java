@@ -21,8 +21,8 @@ import org.signalml.app.document.SignalDocument;
  */
 public abstract class MonitorRecordingAction extends AbstractFocusableSignalMLAction<SignalDocumentFocusSelector> implements PropertyChangeListener {
 
-	public MonitorRecordingAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
-		super( signalDocumentFocusSelector);
+	public MonitorRecordingAction(SignalDocumentFocusSelector signalDocumentFocusSelector) {
+		super(signalDocumentFocusSelector);
 	}
 
 	@Override

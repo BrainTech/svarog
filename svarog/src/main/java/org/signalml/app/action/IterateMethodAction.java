@@ -44,7 +44,7 @@ public class IterateMethodAction extends AbstractSignalMLAction {
 	private IterationSetupDialog iterationSetupDialog;
 	private MethodIteratorMethod iteratorMethod;
 
-	public IterateMethodAction( IterableMethod method, ApplicationMethodManager methodManager) {
+	public IterateMethodAction(IterableMethod method, ApplicationMethodManager methodManager) {
 		this.method = method;
 		this.methodManager = methodManager;
 

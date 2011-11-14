@@ -129,7 +129,7 @@ public class FourierTransform {
 			break;
 		case KAISER:
 			for (int i = 0; i < length; ++i){
-				windowWeights[i] = io(Math.PI * windowParameter * Math.sqrt(1.0D - square( 2.0D*i/(n-1.0D) - 1.0D))) / io(Math.PI * windowParameter);
+				windowWeights[i] = io(Math.PI * windowParameter * Math.sqrt(1.0D - square(2.0D*i/(n-1.0D) - 1.0D))) / io(Math.PI * windowParameter);
 			}
 		case RECTANGULAR:
 			for (int i = 0; i < length; ++i){

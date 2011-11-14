@@ -229,7 +229,7 @@ public abstract class AbstractWignerMapProvider {
 
 		for( int x=0; x<width; x++ ) {
 			for( int y=0; y<height; y++ ) {
-				map[x][y] = (1.0 + Math.sin( (2*Math.PI/300) * Math.sqrt( Util.sqr(stretchX*((double)(x-cenX))) + Util.sqr(stretchY*((double)(y-cenY))) ) ) ) / 2;
+				map[x][y] = (1.0 + Math.sin( (2*Math.PI/300) * Math.sqrt(Util.sqr(stretchX*((double)(x-cenX))) + Util.sqr(stretchY*((double)(y-cenY))) ) ) ) / 2;
 			}
 		}
 

@@ -107,12 +107,12 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 	 */
 	protected FFTFilterResponseChartGroupPanel graphsPanel;
 
-	public EditFFTSampleFilterDialog( PresetManager presetManager, Window w, boolean isModal) {
-		super( presetManager, w, isModal);
+	public EditFFTSampleFilterDialog(PresetManager presetManager, Window w, boolean isModal) {
+		super(presetManager, w, isModal);
 	}
 
-	public EditFFTSampleFilterDialog( PresetManager presetManager) {
-		super( presetManager);
+	public EditFFTSampleFilterDialog(PresetManager presetManager) {
+		super(presetManager);
 	}
 
 	@Override
@@ -512,7 +512,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 
 	public FFTWindowTypePanel getFFTWindowTypePanel() {
 		if (fftWindowTypePanel == null) {
-			fftWindowTypePanel = new FFTWindowTypePanel( true);
+			fftWindowTypePanel = new FFTWindowTypePanel(true);
 		}
 		return fftWindowTypePanel;
 	}
@@ -748,7 +748,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 	@Override
 	public FFTFilterResponseChartGroupPanel getChartGroupPanelWithABorder() {
 		if (graphsPanel == null) {
-			graphsPanel = new FFTFilterResponseChartGroupPanel( currentFilter);
+			graphsPanel = new FFTFilterResponseChartGroupPanel(currentFilter);
 			graphsPanel.setSamplingFrequency(getCurrentSamplingFrequency());
 
 			graphsPanel.addSelectionChangedListener(this);

@@ -181,10 +181,10 @@ public class RawSignalDescriptorReader {
 				
 			}
 
-			Element offsetElems = (Element) path.evaluate( RawSignalDocumentBuilder.CALIBRATION_OFFSET, rawSignalEl, XPathConstants.NODE);
+			Element offsetElems = (Element) path.evaluate(RawSignalDocumentBuilder.CALIBRATION_OFFSET, rawSignalEl, XPathConstants.NODE);
 			if (offsetElems != null && offsetElems.hasChildNodes()) {
 								
-				NodeList paramList = (NodeList) path.evaluate( RawSignalDocumentBuilder.CALIBRATION_PARAM, offsetElems, XPathConstants.NODESET);
+				NodeList paramList = (NodeList) path.evaluate(RawSignalDocumentBuilder.CALIBRATION_PARAM, offsetElems, XPathConstants.NODESET);
 				if (paramList != null) {
 
 					int paramCount = paramList.getLength();

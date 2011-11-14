@@ -23,8 +23,8 @@ public class EditTagStylePresetsAction extends AbstractFocusableSignalMLAction<T
 	 * @param tagStyleFocusSelector selector determining which tag
 	 * document is now opened
 	 */
-	public EditTagStylePresetsAction( TagStyleFocusSelector tagStyleFocusSelector) {
-		super( tagStyleFocusSelector);
+	public EditTagStylePresetsAction(TagStyleFocusSelector tagStyleFocusSelector) {
+		super(tagStyleFocusSelector);
 		setText(_("Edit tag style templates"));
 		setToolTip(_("Edit tag style templates"));
 		setIconPath("org/signalml/app/icon/palette.png");

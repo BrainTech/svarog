@@ -53,9 +53,9 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
          *
          * @param viewerElementManager viewer element manager
          */
-        public AmplifierSignalSourcePanel( ViewerElementManager viewerElementManager) {
+        public AmplifierSignalSourcePanel(ViewerElementManager viewerElementManager) {
 
-                super( viewerElementManager);
+                super(viewerElementManager);
         }
 
         /**
@@ -130,7 +130,7 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
          */
         public ConfigureAmplifiersPanel getConfigureAmplifiersPanel() {
                 if (configureAmplifiersPanel == null) {
-                        configureAmplifiersPanel = new ConfigureAmplifiersPanel( viewerElementManager);
+                        configureAmplifiersPanel = new ConfigureAmplifiersPanel(viewerElementManager);
                 }
                 return configureAmplifiersPanel;
         }
@@ -143,7 +143,7 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
         public StartStopButtonsPanel getStartStopButtonsPanel() {
 
                 if (startStopButtonsPanel == null) {
-                        startStopButtonsPanel = new StartStopButtonsPanel( this);
+                        startStopButtonsPanel = new StartStopButtonsPanel(this);
                 }
                 return startStopButtonsPanel;
         }

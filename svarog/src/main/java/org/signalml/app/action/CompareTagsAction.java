@@ -33,8 +33,8 @@ public class CompareTagsAction extends AbstractFocusableSignalMLAction<SignalDoc
 	 * @param signalDocumentFocusSelector a {@link SignalDocumentFocusSelector}
 	 * used to get the active document.
 	 */
-	public CompareTagsAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
-		super( signalDocumentFocusSelector);
+	public CompareTagsAction(SignalDocumentFocusSelector signalDocumentFocusSelector) {
+		super(signalDocumentFocusSelector);
 
 		setText(_("Compare tags"));
 		setIconPath("org/signalml/app/icon/comparetags.png");
@@ -50,7 +50,7 @@ public class CompareTagsAction extends AbstractFocusableSignalMLAction<SignalDoc
 		if (documentView instanceof SignalView)
 			signalView = (SignalView) documentView;
 
-		CompareTagsPopupDialog dialog = new CompareTagsPopupDialog( null, true);
+		CompareTagsPopupDialog dialog = new CompareTagsPopupDialog(null, true);
 		dialog.setTagComparisonDialog(tagComparisonDialog);
 		dialog.setSignalView(signalView);
 		dialog.showDialog(null, true);

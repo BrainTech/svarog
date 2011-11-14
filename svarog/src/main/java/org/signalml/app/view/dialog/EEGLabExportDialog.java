@@ -60,7 +60,7 @@ public class EEGLabExportDialog extends org.signalml.app.view.dialog.AbstractSva
 	 * @param isModal dialog blocks top-level windows if true
 	 */
         public EEGLabExportDialog(Window w, boolean isModal) {
-                super( w, isModal);
+                super(w, isModal);
         }
 
         /**
@@ -99,7 +99,7 @@ public class EEGLabExportDialog extends org.signalml.app.view.dialog.AbstractSva
 
                         HashMap<String, String[]> filters = new HashMap<String, String[]>();
                         filters.put(_("Dateset files"), new String[] { "set" } );
-			fileSelectPanel = new FileSelectPanel( _("Output file name: "), filters, true);
+			fileSelectPanel = new FileSelectPanel(_("Output file name: "), filters, true);
 		}
 		return fileSelectPanel;
 	}

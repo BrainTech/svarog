@@ -67,7 +67,7 @@ public class NewArtifactMethodDialog extends AbstractPresetDialog {
 
 	public NewArtifactMethodDialog(
 				       PresetManager presetManager, Window w) {
-		super( presetManager, w, true);
+		super(presetManager, w, true);
 	}
 
 	@Override

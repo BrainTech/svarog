@@ -50,8 +50,8 @@ public class SignalParametersDialog extends org.signalml.app.view.dialog.Abstrac
 	 * @param f the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public SignalParametersDialog( Window f, boolean isModal) {
-		super( f, isModal);
+	public SignalParametersDialog(Window f, boolean isModal) {
+		super(f, isModal);
 	}
 
 	/**

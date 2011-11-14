@@ -37,8 +37,8 @@ public class ExportBookAction extends AbstractFocusableSignalMLAction<BookDocume
 	private ViewerFileChooser fileChooser;
 	private Component optionPaneParent;
 
-	public ExportBookAction( BookDocumentFocusSelector bookDocumentFocusSelector) {
-		super( bookDocumentFocusSelector);
+	public ExportBookAction(BookDocumentFocusSelector bookDocumentFocusSelector) {
+		super(bookDocumentFocusSelector);
 		setText(_("Export Book..."));
 		setToolTip(_("Export book to file"));
 	}

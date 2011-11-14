@@ -30,8 +30,8 @@ public class OpenMRUDAction extends AbstractFocusableSignalMLAction<MRUDFocusSel
 
 	private DocumentFlowIntegrator documentFlowIntegrator;
 
-	public OpenMRUDAction( MRUDFocusSelector mrudFocusSelector) {
-		super( mrudFocusSelector);
+	public OpenMRUDAction(MRUDFocusSelector mrudFocusSelector) {
+		super(mrudFocusSelector);
 		setText(_("Open"));
 		setIconPath("org/signalml/app/icon/fileopen.png");
 		setToolTip(_("Open recently used document"));

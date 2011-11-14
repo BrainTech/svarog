@@ -70,7 +70,7 @@ public abstract class AbstractMessageDialog extends AbstractDialog {
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
 	public AbstractMessageDialog(Window w, boolean isModal) {
-		super( w, isModal);
+		super(w, isModal);
 	}
 
 	/**

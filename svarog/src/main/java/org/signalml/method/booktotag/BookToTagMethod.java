@@ -256,7 +256,7 @@ public class BookToTagMethod extends AbstractMethod implements TrackableMethod {
          * {@inheritDoc}
          */
 	@Override
-	public String getTickerLabel( int ticker) {
+	public String getTickerLabel(int ticker) {
 		return _("Segments processed");
 	}
 

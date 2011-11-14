@@ -59,8 +59,8 @@ public class CompareTagsPopupDialog extends AbstractPopupDialog {
 
 	private TagComparisonDialog tagComparisonDialog;
 
-	public CompareTagsPopupDialog( Window w, boolean isModal) {
-		super( w, isModal);
+	public CompareTagsPopupDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	public SignalView getSignalView() {

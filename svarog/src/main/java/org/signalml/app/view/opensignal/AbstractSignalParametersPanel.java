@@ -404,7 +404,7 @@ public abstract class AbstractSignalParametersPanel extends JPanel {
         protected EditGainAndOffsetDialog getEditGainAndOffsetDialog() {
 
                 if (editGainAndOffsetDialog == null) {
-                        editGainAndOffsetDialog = new EditGainAndOffsetDialog( null, true);
+                        editGainAndOffsetDialog = new EditGainAndOffsetDialog(null, true);
                 }
                 return editGainAndOffsetDialog;
         }

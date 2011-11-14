@@ -40,7 +40,7 @@ abstract public class AbstractSignalSourcePanel extends JPanel implements Proper
 	 * Constructor.
 	 * @param viewerElementManager ViewerElementManager used by this panel
 	 */
-        public AbstractSignalSourcePanel( ViewerElementManager viewerElementManager) {
+        public AbstractSignalSourcePanel(ViewerElementManager viewerElementManager) {
                 this.viewerElementManager = viewerElementManager;
                 createInterface();
         }

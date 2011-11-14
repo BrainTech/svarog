@@ -430,7 +430,7 @@ public class SignalFFTSettingsPanel extends JPanel {
 
 		plotHeightRadioButtons[0].setSelected(true);
 
-		fftWindowTypePanel = new FFTWindowTypePanel( false);
+		fftWindowTypePanel = new FFTWindowTypePanel(false);
 
 		JPanel optionsPanel = new JPanel(new GridLayout(4, 2, 3, 3));
 

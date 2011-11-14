@@ -64,7 +64,7 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 	 * @param viewerElementManager ViewerElementManager to be used by this
 	 * panel
 	 */
-	public SignalSourcePanel( ViewerElementManager viewerElementManager) {
+	public SignalSourcePanel(ViewerElementManager viewerElementManager) {
 		this.viewerElementManager = viewerElementManager;
 		createInterface();
 	}
@@ -76,9 +76,9 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 		CardLayout cardLayout = new CardLayout();
 		this.setLayout(cardLayout);
 
-		fileSignalSourcePanel = new FileSignalSourcePanel( viewerElementManager);
-		openBCISignalSourcePanel = new OpenBCISignalSourcePanel( viewerElementManager);
-		amplifierSignalSourcePanel = new AmplifierSignalSourcePanel( viewerElementManager);
+		fileSignalSourcePanel = new FileSignalSourcePanel(viewerElementManager);
+		openBCISignalSourcePanel = new OpenBCISignalSourcePanel(viewerElementManager);
+		amplifierSignalSourcePanel = new AmplifierSignalSourcePanel(viewerElementManager);
 
 		fileSignalSourcePanel.setSignalSourceSelectionComboBoxModel(getSignalSourceSelectionComboBoxModel());
 		openBCISignalSourcePanel.setSignalSourceSelectionComboBoxModel(getSignalSourceSelectionComboBoxModel());

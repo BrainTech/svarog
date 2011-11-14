@@ -78,7 +78,7 @@ public abstract class SwingUtils {
 		}
 	}
 
-	public static CompactButton createFieldHelpButton( AbstractDialog owner, URL helpURL) {
+	public static CompactButton createFieldHelpButton(AbstractDialog owner, URL helpURL) {
 
 		CompactButton button = new CompactButton("", IconUtils.loadClassPathIcon("org/signalml/app/icon/help.png"));
 		button.setToolTipText(_("Display context help for this field"));
@@ -90,7 +90,7 @@ public abstract class SwingUtils {
 
 	}
 
-	public static CompactButton createFieldHelpButton( AbstractDialog owner, String path) {
+	public static CompactButton createFieldHelpButton(AbstractDialog owner, String path) {
 
 		try {
 
@@ -109,10 +109,10 @@ public abstract class SwingUtils {
 
 			URL contextHelpURL = (new ClassPathResource(mainPath)).getURL();
 			contextHelpURL = new URL(contextHelpURL.toExternalForm() + anchor);
-			return createFieldHelpButton( owner, contextHelpURL);
+			return createFieldHelpButton(owner, contextHelpURL);
 		} catch (IOException ex) {
 			logger.error("Failed to get help URL", ex);
-			return createFieldHelpButton( owner, (URL) null);
+			return createFieldHelpButton(owner, (URL) null);
 		}
 
 	}

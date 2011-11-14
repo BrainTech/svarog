@@ -345,7 +345,7 @@ public class TagStylePropertiesPanel extends JPanel {
 	 */
 	private TagAttributesDefinitionsEditPanel getTagAttributesDefinitionsEditPanel() {
 		if (tagAttributesDefinitionsEditPanel == null) {
-			tagAttributesDefinitionsEditPanel = new TagAttributesDefinitionsEditPanel( this);
+			tagAttributesDefinitionsEditPanel = new TagAttributesDefinitionsEditPanel(this);
 		}
 		return tagAttributesDefinitionsEditPanel;
 	}

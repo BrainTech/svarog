@@ -38,8 +38,8 @@ public class SignalSelectionDialog extends org.signalml.app.view.dialog.Abstract
 	 * @param f the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public SignalSelectionDialog( Window f, boolean isModal) {
-		super( f, isModal);
+	public SignalSelectionDialog(Window f, boolean isModal) {
+		super(f, isModal);
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class SignalSelectionDialog extends org.signalml.app.view.dialog.Abstract
 	@Override
 	public JComponent createInterface() {
 
-		signalSelectionPanel = new SignalSelectionPanel( true);
+		signalSelectionPanel = new SignalSelectionPanel(true);
 
 		return signalSelectionPanel;
 

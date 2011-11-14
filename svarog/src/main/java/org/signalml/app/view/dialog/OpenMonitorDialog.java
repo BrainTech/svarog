@@ -77,7 +77,7 @@ public class OpenMonitorDialog extends org.signalml.app.view.dialog.AbstractSvar
 	 * @param viewerElementManager a {@link ViewerElementManager} which contains
 	 * a {@link JmxClient}.
 	 */
-	public OpenMonitorDialog( ViewerElementManager viewerElementManager) {
+	public OpenMonitorDialog(ViewerElementManager viewerElementManager) {
 		super();
 		initialize(viewerElementManager);
 	}
@@ -93,7 +93,7 @@ public class OpenMonitorDialog extends org.signalml.app.view.dialog.AbstractSvar
 		ViewerElementManager viewerElementManager,
 		Window f,
 		boolean isModal) {
-		super( f, isModal);
+		super(f, isModal);
 		initialize(viewerElementManager);
 	}
 
@@ -198,7 +198,7 @@ public class OpenMonitorDialog extends org.signalml.app.view.dialog.AbstractSvar
 	 */
 	protected MonitorSignalParametersPanel getMonitorSignalParametersPanel() {
 		if (monitorSignalParametersPanel == null) {
-			monitorSignalParametersPanel = new MonitorSignalParametersPanel( applicationConfig);
+			monitorSignalParametersPanel = new MonitorSignalParametersPanel(applicationConfig);
 		}
 		return monitorSignalParametersPanel;
 	}

@@ -59,9 +59,9 @@ public class OpenBCIModuleConfigDialog extends AbstractPresetDialog {
          * @param w parent window
          * @param isModal if this window is modal
          */
-        public OpenBCIModuleConfigDialog( PresetManager presetManger, Window w, boolean isModal) {
+        public OpenBCIModuleConfigDialog(PresetManager presetManger, Window w, boolean isModal) {
 
-                super( presetManger, w, isModal);
+                super(presetManger, w, isModal);
         }
 
         /**

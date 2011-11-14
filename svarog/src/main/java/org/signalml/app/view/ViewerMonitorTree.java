@@ -153,7 +153,7 @@ public class ViewerMonitorTree extends AbstractViewerTree implements SignalPageF
 		@Override
 		public void mousePressed(MouseEvent e) {
 			ViewerMonitorTree tree = (ViewerMonitorTree) e.getSource();
-			if( SwingUtilities.isRightMouseButton(e) && (e.getClickCount() == 1) ) {
+			if(SwingUtilities.isRightMouseButton(e) && (e.getClickCount() == 1) ) {
 				TreePath selPath = tree.getPathForLocation(e.getX(), e.getY());
 				tree.setSelectionPath(selPath);
 			}
@@ -162,7 +162,7 @@ public class ViewerMonitorTree extends AbstractViewerTree implements SignalPageF
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			ViewerMonitorTree tree = (ViewerMonitorTree) e.getSource();
-			if( SwingUtilities.isLeftMouseButton(e) && (e.getClickCount() % 2) == 0 ) {
+			if(SwingUtilities.isLeftMouseButton(e) && (e.getClickCount() % 2) == 0 ) {
 				int selRow = tree.getRowForLocation(e.getX(), e.getY());
 				TreePath selPath = tree.getPathForLocation(e.getX(), e.getY());
 				focus(selPath);

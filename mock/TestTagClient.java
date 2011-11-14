@@ -25,9 +25,9 @@ public class TestTagClient {
 		NoPeerForTypeException, InterruptedException, ConnectException, InvalidProtocolBufferException {
 
 		System.out.println( "Connecting ...");
-		JmxClient client = new JmxClient( SvarogConstants.PeerTypes.STREAM_RECEIVER);
+		JmxClient client = new JmxClient(SvarogConstants.PeerTypes.STREAM_RECEIVER);
 		SocketAddress socketAddress = new InetSocketAddress( "127.0.0.1", 31889);
-		client.connect( socketAddress);
+		client.connect(socketAddress);
 		System.out.println( "Connected!");
 
 		while (true) {
@@ -36,12 +36,12 @@ public class TestTagClient {
 			MultiplexerMessage mmsg = imsg.getMessage();
 			System.out.println( "Received!");
 			int type = mmsg.getType();
-			System.out.println( type);
+			System.out.println(type);
 			if (type != SvarogConstants.MessageTypes.TAG)
 				System.out.println( "Bad response!");
 			ByteString bstr = mmsg.getMessage();
 			System.out.println( "stream size: " + bstr.size());
-			Tag tag = Tag.parseFrom( bstr);
+			Tag tag = Tag.parseFrom(bstr);
 			System.out.println( "name: " + tag.getName());
 			System.out.println( "channels: " + tag.getChannels());
 			System.out.println( "startTimestamp: " + tag.getStartTimestamp());

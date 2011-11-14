@@ -34,8 +34,8 @@ abstract public class AbstractMonitorSourcePanel extends AbstractSignalSourcePan
 	 * Constructor.
 	 * @param viewerElementManager ViewerElementManager used by this panel
 	 */
-	public AbstractMonitorSourcePanel( ViewerElementManager viewerElementManager) {
-		super( viewerElementManager);
+	public AbstractMonitorSourcePanel(ViewerElementManager viewerElementManager) {
+		super(viewerElementManager);
 	}
 
 	/**

@@ -33,7 +33,7 @@ public class TagPresetSelectionPanel extends AbstractSignalMLPanel {
 	 * @param styledTagSetPresetManager {@link PresetManager} handling the
 	 * tag styles presets.
 	 */
-	public TagPresetSelectionPanel( StyledTagSetPresetManager styledTagSetPresetManager) {
+	public TagPresetSelectionPanel(StyledTagSetPresetManager styledTagSetPresetManager) {
 		super();
 		this.styledTagSetPresetManager = styledTagSetPresetManager;
 		initialize();

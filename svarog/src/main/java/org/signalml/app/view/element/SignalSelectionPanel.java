@@ -111,7 +111,7 @@ public class SignalSelectionPanel extends JPanel {
 	 * @param withChannelSelection {@code true} if this panel should allow to
 	 * select a channel (for a channel selection), {@code false} otherwise
 	 */
-	public SignalSelectionPanel( boolean withChannelSelection) {
+	public SignalSelectionPanel(boolean withChannelSelection) {
 		super();
 		this.withChannelSelection = withChannelSelection;
 		initialize();
@@ -144,7 +144,7 @@ public class SignalSelectionPanel extends JPanel {
 
 		pageSignalSelectionPanel = new PageSignalSelectionPanel();
 		blockSignalSelectionPanel = new BlockSignalSelectionPanel();
-		channelSignalSelectionPanel = new ChannelSignalSelectionPanel( withChannelSelection);
+		channelSignalSelectionPanel = new ChannelSignalSelectionPanel(withChannelSelection);
 
 		cardLayout = new CardLayout();
 		cardPanel = new JPanel();

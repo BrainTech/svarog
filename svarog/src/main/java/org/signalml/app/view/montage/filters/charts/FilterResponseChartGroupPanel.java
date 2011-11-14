@@ -33,7 +33,7 @@ public abstract class FilterResponseChartGroupPanel<T extends SampleFilterDefini
 	 * Constructor.
 	 * @param currentFilter the filter which will be visualized
 	 */
-	public FilterResponseChartGroupPanel( T currentFilter) {
+	public FilterResponseChartGroupPanel(T currentFilter) {
 		this.currentFilter = currentFilter;
 		createInterface();
 	}

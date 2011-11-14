@@ -39,7 +39,7 @@ public class MP5AlgorithmConfigPanel extends JPanel {
 
 	private MP5Algorithm lastAlgorithm;
 
-	public MP5AlgorithmConfigPanel( AbstractDialog owner) {
+	public MP5AlgorithmConfigPanel(AbstractDialog owner) {
 		super();
 		this.owner = owner;
 		initialize();
@@ -61,7 +61,7 @@ public class MP5AlgorithmConfigPanel extends JPanel {
 
 		JLabel algorithmLabel = new JLabel(_("MP version"));
 
-		CompactButton algorithmHelpButton = SwingUtils.createFieldHelpButton( owner, MP5MethodDialog.HELP_ALGORITHM);
+		CompactButton algorithmHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_ALGORITHM);
 
 		Component glue1 = Box.createHorizontalGlue();
 

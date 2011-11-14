@@ -37,9 +37,9 @@ public class EEGLabExportAction extends AbstractFocusableSignalMLAction<SignalDo
 	 * @param signalDocumentFocusSelector a {@link SignalDocumentFocusSelector} used to detect
 	 * which document is active.
 	 */
-        public EEGLabExportAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
+        public EEGLabExportAction(SignalDocumentFocusSelector signalDocumentFocusSelector) {
 
-                super( signalDocumentFocusSelector);
+                super(signalDocumentFocusSelector);
 		setText(_("Export to EEGLab..."));
 		setToolTip(_("Export signal in EEGLab format"));
 	}

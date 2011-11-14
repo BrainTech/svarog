@@ -68,7 +68,7 @@ public class EmbeddedFileChooser extends JFileChooser {
      * It is typically the "My Documents" folder on Windows, and the
      * user's home directory on Unix.
      */
-	public EmbeddedFileChooser( ApplicationConfiguration applicationConfiguration) {
+	public EmbeddedFileChooser(ApplicationConfiguration applicationConfiguration) {
 		super();
 		EmbeddedFileChooserFavorites f = new EmbeddedFileChooserFavorites(this, applicationConfiguration);
 		this.setAccessory(f);

@@ -55,7 +55,7 @@ public class SignalFFTToolButtonMouseListener extends MouseAdapter implements Si
 	ActionListener timerListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			SignalFFTSettingsPopupDialog dialog = new SignalFFTSettingsPopupDialog( null, true);
+			SignalFFTSettingsPopupDialog dialog = new SignalFFTSettingsPopupDialog(null, true);
 			Point location = button.getLocationOnScreen();
 			dialog.setLocation(location);
 			button.doClick();

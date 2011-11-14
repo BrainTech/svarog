@@ -76,8 +76,8 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 
 	private TagDocument currentTagDocument;
 
-	public TagBasedFilterDialog( Window w, boolean isModal) {
-		super( w, isModal);
+	public TagBasedFilterDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	@Override
@@ -160,7 +160,7 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 
 	public BookFilterChooseTagPanel getChooseTagPanel() {
 		if (chooseTagPanel == null) {
-			chooseTagPanel = new BookFilterChooseTagPanel( fileChooser);
+			chooseTagPanel = new BookFilterChooseTagPanel(fileChooser);
 		}
 		return chooseTagPanel;
 	}

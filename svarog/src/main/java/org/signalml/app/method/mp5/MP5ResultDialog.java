@@ -44,8 +44,8 @@ public class MP5ResultDialog extends org.signalml.app.view.dialog.AbstractSvarog
 		super();
 	}
 
-	public MP5ResultDialog( Window w, boolean isModal) {
-		super( w, isModal);
+	public MP5ResultDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	@Override
@@ -110,7 +110,7 @@ public class MP5ResultDialog extends org.signalml.app.view.dialog.AbstractSvarog
 
 	public MP5ResultBookPanel getBookPanel() {
 		if (bookPanel == null) {
-			bookPanel = new MP5ResultBookPanel( fileChooser);
+			bookPanel = new MP5ResultBookPanel(fileChooser);
 		}
 		return bookPanel;
 	}

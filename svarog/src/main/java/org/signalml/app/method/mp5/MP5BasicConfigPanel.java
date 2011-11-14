@@ -35,7 +35,7 @@ public class MP5BasicConfigPanel extends JPanel {
 
 	private TextPanePanel bookCommentPanel;
 
-	public MP5BasicConfigPanel( AbstractDialog owner) {
+	public MP5BasicConfigPanel(AbstractDialog owner) {
 		super();
 		this.owner = owner;
 		initialize();
@@ -54,7 +54,7 @@ public class MP5BasicConfigPanel extends JPanel {
 		JPanel bottomPanel = new JPanel(new BorderLayout(3,3));
 		bottomPanel.setBorder(new TitledBorder(_("Book comment")));
 
-		CompactButton bookCommentHelpButton = SwingUtils.createFieldHelpButton( owner, MP5MethodDialog.HELP_BOOK_COMMENT);
+		CompactButton bookCommentHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_BOOK_COMMENT);
 
 		JPanel bookHelpPanel = new JPanel(new FlowLayout(FlowLayout.TRAILING));
 		bookHelpPanel.add(bookCommentHelpButton);

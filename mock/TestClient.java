@@ -35,15 +35,15 @@ public class TestClient {
 		NoPeerForTypeException, InterruptedException, ConnectException, InvalidProtocolBufferException {
 
 		System.out.println( "Connecting ...");
-		JmxClient client = new JmxClient( SvarogConstants.PeerTypes.STREAM_RECEIVER);
+		JmxClient client = new JmxClient(SvarogConstants.PeerTypes.STREAM_RECEIVER);
 		SocketAddress socketAddress = new InetSocketAddress( "127.0.0.1", 31889);
-		client.connect( socketAddress);
+		client.connect(socketAddress);
 		System.out.println( "Connected!");
 
 		System.out.println( "Sending ...");
 		ByteString message = ByteString.copyFromUtf8("1 2 3");
-		MultiplexerMessage mm = client.createMessage( message, SvarogConstants.MessageTypes.SIGNAL_STREAMER_START);
-		client.send( mm, SendingMethod.THROUGH_ONE);
+		MultiplexerMessage mm = client.createMessage(message, SvarogConstants.MessageTypes.SIGNAL_STREAMER_START);
+		client.send(mm, SendingMethod.THROUGH_ONE);
 		System.out.println( "Sent!");
  
 		System.out.println( "Receiving ...");
@@ -51,12 +51,12 @@ public class TestClient {
 		MultiplexerMessage mmsg = imsg.getMessage();
 		System.out.println( "Received!");
 		int type = mmsg.getType();
-		System.out.println( type);
+		System.out.println(type);
 		if (type != SvarogConstants.MessageTypes.STREAMED_SIGNAL_MESSAGE)
 			System.out.println( "Bad response!");
 		ByteString bstr = mmsg.getMessage();
 		System.out.println( "stream size: " + bstr.size());
-		SampleVector sv = SampleVector.parseFrom( bstr);
+		SampleVector sv = SampleVector.parseFrom(bstr);
 		for (int i=0; i<sv.getSamplesCount(); i++) {
 			Sample s = sv.getSamples( i);
 			double t = s.getTimestamp();
@@ -65,8 +65,8 @@ public class TestClient {
 		}
 
 		System.out.println( "Sending ...");
-		mm = client.createMessage( message, SvarogConstants.MessageTypes.SIGNAL_STREAMER_STOP);
-		client.send( mm, SendingMethod.THROUGH_ONE);
+		mm = client.createMessage(message, SvarogConstants.MessageTypes.SIGNAL_STREAMER_STOP);
+		client.send(mm, SendingMethod.THROUGH_ONE);
 		System.out.println( "Sent!");
 
 		client.shutdown();

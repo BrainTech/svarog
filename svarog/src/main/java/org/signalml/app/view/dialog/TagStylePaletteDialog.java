@@ -190,8 +190,8 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 	/**
 	 * Constructor. Sets message source.
 	 */
-	public TagStylePaletteDialog( PresetManager presetManager) {
-		super( presetManager);
+	public TagStylePaletteDialog(PresetManager presetManager) {
+		super(presetManager);
 	}
 
 	/**
@@ -200,8 +200,8 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public TagStylePaletteDialog( PresetManager presetManager, Window w, boolean isModal) {
-		super( presetManager, w, isModal);
+	public TagStylePaletteDialog(PresetManager presetManager, Window w, boolean isModal) {
+		super(presetManager, w, isModal);
 	}
 
 	/**
@@ -785,7 +785,7 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 				}
 			}
 
-			ErrorsDialog errorsDialog = new ErrorsDialog( this, true);
+			ErrorsDialog errorsDialog = new ErrorsDialog(this, true);
 			MessageSourceResolvable messageSourceResolvable = new DefaultMessageSourceResolvable(new String[]{"tagStylePalette.preset.stylesCouldNotBeDeleted"}, new Object[]{styles});
 			errorsDialog.showDialog(messageSourceResolvable, true);
 		}
@@ -1017,7 +1017,7 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 		public void actionPerformed(ActionEvent ev) {
 
 			if (keyStrokeCaptureDialog == null) {
-				keyStrokeCaptureDialog = new KeyStrokeCaptureDialog( TagStylePaletteDialog.this);
+				keyStrokeCaptureDialog = new KeyStrokeCaptureDialog(TagStylePaletteDialog.this);
 			}
 
 			KeyStroke keyStroke = keyStrokeCaptureDialog.captureKeyStrokeWithEscAsCancel();

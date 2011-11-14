@@ -82,8 +82,8 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	 * @param isModal true if this dialog should block top-level windows,
 	 * false otherwise
 	 */
-	public EditTimeDomainSampleFilterDialog( PresetManager presetManager, Window w, boolean isModal) {
-		super( presetManager, w, isModal);
+	public EditTimeDomainSampleFilterDialog(PresetManager presetManager, Window w, boolean isModal) {
+		super(presetManager, w, isModal);
 	}
 
 	/**
@@ -92,8 +92,8 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	 * @param presetManager a {@link PresetManager} to manage the presets
 	 * configured in this window
 	 */
-	public EditTimeDomainSampleFilterDialog( PresetManager presetManager) {
-		super( presetManager);
+	public EditTimeDomainSampleFilterDialog(PresetManager presetManager) {
+		super(presetManager);
 	}
 
 	@Override
@@ -237,7 +237,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	@Override
 	public TimeDomainFilterResponseChartGroupPanel getChartGroupPanelWithABorder() {
 		if (graphsPanel == null) {
-			graphsPanel = new TimeDomainFilterResponseChartGroupPanel( currentFilter);
+			graphsPanel = new TimeDomainFilterResponseChartGroupPanel(currentFilter);
 			graphsPanel.setSamplingFrequency(getCurrentSamplingFrequency());
 		}
 		return graphsPanel;
@@ -287,7 +287,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	 * @return true if the filter is correct, false otherwise
 	 */
 	protected boolean validateCurrentFilterAndShowErrorMessage() {
-		TimeDomainSampleFilterValidator validator = new TimeDomainSampleFilterValidator( currentFilter);
+		TimeDomainSampleFilterValidator validator = new TimeDomainSampleFilterValidator(currentFilter);
 		boolean isValid;
 		isValid = validator.isValid();
 

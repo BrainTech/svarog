@@ -28,16 +28,16 @@ public class ActivateDocumentAction extends AbstractFocusableSignalMLAction<Docu
 
 	private ActionFocusManager actionFocusManager;
 
-	public ActivateDocumentAction( ActionFocusManager actionFocusManager, DocumentFocusSelector documentFocusSelector) {
-		super( documentFocusSelector);
+	public ActivateDocumentAction(ActionFocusManager actionFocusManager, DocumentFocusSelector documentFocusSelector) {
+		super(documentFocusSelector);
 		this.actionFocusManager = actionFocusManager;
 		setText(_("Show"));
 		setIconPath("org/signalml/app/icon/activate.png");
 		setToolTip(_("Show document"));
 	}
 
-	public ActivateDocumentAction( ActionFocusManager actionFocusManager) {
-		this( actionFocusManager, actionFocusManager);
+	public ActivateDocumentAction(ActionFocusManager actionFocusManager) {
+		this(actionFocusManager, actionFocusManager);
 	}
 
 	@Override

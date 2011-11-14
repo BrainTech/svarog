@@ -116,7 +116,7 @@ public class TimeSpacePanel extends JPanel {
 	 */
 	public SignalSelectionPanel getSelectedTimeSpacePanel() {
 		if (selectedTimeSpacePanel == null) {
-			selectedTimeSpacePanel = new SignalSelectionPanel( false);
+			selectedTimeSpacePanel = new SignalSelectionPanel(false);
 		}
 		return selectedTimeSpacePanel;
 	}

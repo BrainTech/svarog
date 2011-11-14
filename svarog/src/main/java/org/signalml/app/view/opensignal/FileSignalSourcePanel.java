@@ -59,8 +59,8 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 	 * @param viewerElementManager ViewerElementManager to be used by this
 	 * panel
 	 */
-	public FileSignalSourcePanel( ViewerElementManager viewerElementManager) {
-		super( viewerElementManager);
+	public FileSignalSourcePanel(ViewerElementManager viewerElementManager) {
+		super(viewerElementManager);
 
 	}
 

@@ -37,7 +37,7 @@ public class MP5RawConfigPanel extends JPanel {
 
 	private boolean configChanged;
 
-	public MP5RawConfigPanel( MP5ExecutorManager executorManager, AbstractDialog owner) {
+	public MP5RawConfigPanel(MP5ExecutorManager executorManager, AbstractDialog owner) {
 		super();
 		this.executorManager = executorManager;
 		this.owner = owner;
@@ -51,7 +51,7 @@ public class MP5RawConfigPanel extends JPanel {
 		JPanel rawConfigPanel = new JPanel(new BorderLayout(3,3));
 		rawConfigPanel.setBorder(new TitledBorder(_("Raw config (signal input/output/range directives will be added/replaced)")));
 
-		CompactButton rawConfigHelpButton = SwingUtils.createFieldHelpButton( owner, MP5MethodDialog.HELP_RAW_CONFIG);
+		CompactButton rawConfigHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_RAW_CONFIG);
 
 		JPanel rawConfigHelpPanel = new JPanel(new FlowLayout(FlowLayout.TRAILING));
 		rawConfigHelpPanel.add(rawConfigHelpButton);
@@ -83,7 +83,7 @@ public class MP5RawConfigPanel extends JPanel {
 
 	public MP5ExecutorPanel getExecutorPanel() {
 		if (executorPanel == null) {
-			executorPanel = new MP5ExecutorPanel( executorManager);
+			executorPanel = new MP5ExecutorPanel(executorManager);
 		}
 		return executorPanel;
 	}

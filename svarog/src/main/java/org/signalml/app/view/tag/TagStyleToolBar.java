@@ -311,7 +311,7 @@ public class TagStyleToolBar extends JToolBar implements TagStyleListener {
 			Container ancestor = getTopLevelAncestor();
 
 			if (tagStylesPopupDialog == null) {
-				tagStylesPopupDialog = new TagStylesPopupDialog( TagStyleToolBar.this, (Window) ancestor, true);
+				tagStylesPopupDialog = new TagStylesPopupDialog(TagStyleToolBar.this, (Window) ancestor, true);
 				tagStylesPopupDialog.initializeNow();
 			}
 

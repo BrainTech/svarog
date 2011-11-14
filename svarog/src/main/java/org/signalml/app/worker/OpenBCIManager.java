@@ -60,7 +60,7 @@ public class OpenBCIManager extends SwingWorker<ProgressState, ProgressState> im
          * @param elementManager {@link #elementManager}
          * @param descriptor {@link #descriptor}
          */
-        public OpenBCIManager( ViewerElementManager elementManager, AmplifierConnectionDescriptor descriptor) {
+        public OpenBCIManager(ViewerElementManager elementManager, AmplifierConnectionDescriptor descriptor) {
                 this.elementManager = elementManager;
                 this.descriptor = descriptor;
 

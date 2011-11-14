@@ -25,8 +25,8 @@ public class RemoveTaskAction extends AbstractFocusableSignalMLAction<TaskFocusS
 
 	private ApplicationTaskManager taskManager;
 
-	public RemoveTaskAction( TaskFocusSelector taskFocusSelector) {
-		super( taskFocusSelector);
+	public RemoveTaskAction(TaskFocusSelector taskFocusSelector) {
+		super(taskFocusSelector);
 		setText(_("Remove task"));
 		setIconPath("org/signalml/app/icon/removetask.png");
 		setToolTip(_("Remove this task"));

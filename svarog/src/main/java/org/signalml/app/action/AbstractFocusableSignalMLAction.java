@@ -20,7 +20,7 @@ public abstract class AbstractFocusableSignalMLAction<T extends ActionFocusSelec
 
 	private T actionFocusSelector;
 
-	protected AbstractFocusableSignalMLAction( T actionFocusSelector) {
+	protected AbstractFocusableSignalMLAction(T actionFocusSelector) {
 		super();
 		if (actionFocusSelector == null) {
 			throw new NullPointerException("No action focus selector");

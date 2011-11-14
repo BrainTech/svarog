@@ -32,7 +32,7 @@ public class OpenMonitorAction extends AbstractSignalMLAction {
 	private OpenMonitorDialog openMonitorDialog;
 	private ViewerElementManager viewerElementManager;
 
-	public OpenMonitorAction( ViewerElementManager viewerElementManager) {
+	public OpenMonitorAction(ViewerElementManager viewerElementManager) {
 		super();
 		this.viewerElementManager = viewerElementManager;
 		setText(_("Open monitor..."));
@@ -47,7 +47,7 @@ public class OpenMonitorAction extends AbstractSignalMLAction {
 
 		OpenDocumentDescriptor ofd = new OpenDocumentDescriptor();
 
-		ofd.setType( ManagedDocumentType.MONITOR);
+		ofd.setType(ManagedDocumentType.MONITOR);
 		ofd.setMakeActive(true);
 
 		OpenMonitorDescriptor model = ofd.getOpenSignalDescriptor().getOpenMonitorDescriptor();
@@ -69,7 +69,7 @@ public class OpenMonitorAction extends AbstractSignalMLAction {
 		}
 
 		try {
-			viewerElementManager.getDocumentFlowIntegrator().openDocument( ofd);
+			viewerElementManager.getDocumentFlowIntegrator().openDocument(ofd);
 		} catch(SignalMLException ex) {
 			logger.error("Failed to open document", ex);
 			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);

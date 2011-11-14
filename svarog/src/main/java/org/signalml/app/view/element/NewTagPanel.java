@@ -94,7 +94,7 @@ public class NewTagPanel extends JPanel {
 	 * @param styledTagSetPresetManager the {@link PresetManager} which handles
 	 * the tag styles presets.
 	 */
-	public NewTagPanel( StyledTagSetPresetManager styledTagSetPresetManager) {
+	public NewTagPanel(StyledTagSetPresetManager styledTagSetPresetManager) {
 		super();
 		this.styledTagSetPresetManager = styledTagSetPresetManager;
 		initialize();

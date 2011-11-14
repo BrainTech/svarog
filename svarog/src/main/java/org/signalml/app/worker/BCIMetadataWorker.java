@@ -24,7 +24,7 @@ import com.google.protobuf.ByteString;
  */
 public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integer> {
 
-	protected static final Logger logger = Logger.getLogger( BCIMetadataWorker.class);
+	protected static final Logger logger = Logger.getLogger(BCIMetadataWorker.class);
 
         public static final String METADATA_RECEIVED = "metadataRetrieved";
 
@@ -154,7 +154,7 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 		if (value == null)
 			return openMonitorDescriptor;
 		float minVal = Float.parseFloat(value);
-		openMonitorDescriptor.setMinimumValue( minVal);
+		openMonitorDescriptor.setMinimumValue(minVal);
 		publish(++step);
 
 		// maximum value
@@ -174,14 +174,14 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 		publish(++step);
 
 		String info = _("Metadata retrieved!");
-		openMonitorDescriptor.setMetadataReceived( true);
+		openMonitorDescriptor.setMetadataReceived(true);
 		openMonitorDescriptor.setMetadataInfo(info);
 		return openMonitorDescriptor;
 
 	}
 
 	@Override
-	protected void process( List<Integer> states) {
+	protected void process(List<Integer> states) {
 		for (Integer i : states) {
 			Integer oldState = state;
 			state = i;
@@ -203,7 +203,7 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 			logger.debug("get failed! " + e.getMessage());
 			e.printStackTrace();
 		}
-		firePropertyChange( METADATA_RECEIVED, null, result);
+		firePropertyChange(METADATA_RECEIVED, null, result);
 	}
 
 }

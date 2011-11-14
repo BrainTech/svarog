@@ -68,7 +68,7 @@ public class NewArtifactResultDialog extends org.signalml.plugin.export.view.Abs
 
 	public NewArtifactResultDialog(
 				       Window w, boolean isModal) {
-		super( w, isModal);
+		super(w, isModal);
 	}
 
 	// TODO remove stub support if review not needed for artifact

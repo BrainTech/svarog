@@ -39,7 +39,7 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 	private JTextField atomCountTextField;
 	private JTextField ramUsageTextField;
 
-	public MP5DictionaryDensityConfigPanel( AbstractDialog owner) {
+	public MP5DictionaryDensityConfigPanel(AbstractDialog owner) {
 		super();
 		this.owner = owner;
 		initialize();
@@ -67,9 +67,9 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 		Component glue2 = Box.createHorizontalGlue();
 		Component glue3 = Box.createHorizontalGlue();
 
-		CompactButton dilationFactorHelpButton = SwingUtils.createFieldHelpButton( owner, MP5MethodDialog.HELP_DILATION_FACTOR);
-		CompactButton atomCountHelpButton = SwingUtils.createFieldHelpButton( owner, MP5MethodDialog.HELP_ATOM_COUNT);
-		CompactButton ramUsageHelpButton = SwingUtils.createFieldHelpButton( owner, MP5MethodDialog.HELP_RAM_USAGE);
+		CompactButton dilationFactorHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_DILATION_FACTOR);
+		CompactButton atomCountHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_ATOM_COUNT);
+		CompactButton ramUsageHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_RAM_USAGE);
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 

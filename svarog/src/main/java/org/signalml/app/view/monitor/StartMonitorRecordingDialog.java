@@ -29,8 +29,8 @@ public class StartMonitorRecordingDialog extends org.signalml.app.view.dialog.Ab
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public StartMonitorRecordingDialog( Window w, boolean isModal) {
-		super( w, isModal);
+	public StartMonitorRecordingDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	@Override

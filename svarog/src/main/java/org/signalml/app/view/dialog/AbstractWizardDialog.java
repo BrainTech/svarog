@@ -85,7 +85,7 @@ public abstract class AbstractWizardDialog extends AbstractDialog {
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
 	public AbstractWizardDialog(Window f, boolean isModal) {
-		super( f, isModal);
+		super(f, isModal);
 	}
 
 	/**

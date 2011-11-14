@@ -43,8 +43,8 @@ public class MP5LocalExecutorDialog extends org.signalml.app.view.dialog.Abstrac
 		super();
 	}
 
-	public MP5LocalExecutorDialog( Window w, boolean isModal) {
-		super( w, isModal);
+	public MP5LocalExecutorDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	@Override

@@ -24,8 +24,8 @@ public class SnapToPageAction extends AbstractFocusableSignalMLAction<SignalDocu
 
 	protected static final Logger logger = Logger.getLogger(SnapToPageAction.class);
 
-	public SnapToPageAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
-		super( signalDocumentFocusSelector);
+	public SnapToPageAction(SignalDocumentFocusSelector signalDocumentFocusSelector) {
+		super(signalDocumentFocusSelector);
 		setText(_("Snap page to view"));
 		setIconPath("org/signalml/app/icon/snaptopage.png");
 		setToolTip(_("Resize time scale so that exactly one page fits in the view & align view on page boundary"));

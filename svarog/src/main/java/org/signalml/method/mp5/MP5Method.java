@@ -311,7 +311,7 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 	}
 
 	@Override
-	public String getTickerLabel( int ticker) {
+	public String getTickerLabel(int ticker) {
 		switch (ticker) {
 		case 0 :
 			return _("Segment progress");

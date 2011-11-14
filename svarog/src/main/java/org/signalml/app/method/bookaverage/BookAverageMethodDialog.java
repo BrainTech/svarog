@@ -30,7 +30,7 @@ public class BookAverageMethodDialog extends org.signalml.app.view.dialog.Abstra
 	// FIXME do
 
 	public BookAverageMethodDialog(Window window) {
-		super( window,true);
+		super(window,true);
 	}
 
 	@Override

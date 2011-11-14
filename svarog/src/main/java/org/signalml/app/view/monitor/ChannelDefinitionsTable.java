@@ -24,7 +24,7 @@ public class ChannelDefinitionsTable extends JTable {
         /**
          * Default constructor.
          */
-        public ChannelDefinitionsTable( boolean dialog) {
+        public ChannelDefinitionsTable(boolean dialog) {
 
                 super();
                 setModel(new ChannelDefinitionTableModel(dialog, new ArrayList<ChannelDefinition>()));

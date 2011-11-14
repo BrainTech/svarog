@@ -81,8 +81,8 @@ public class RocDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog
 		super();
 	}
 
-	public RocDialog( Window w, boolean isModal) {
-		super( w, isModal);
+	public RocDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	@Override

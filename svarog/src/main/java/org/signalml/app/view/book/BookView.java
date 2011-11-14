@@ -600,7 +600,7 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 
 	public ShowPreviousBookChannelAction getPreviousChannelAction() {
 		if (previousChannelAction == null) {
-			previousChannelAction = new ShowPreviousBookChannelAction( this);
+			previousChannelAction = new ShowPreviousBookChannelAction(this);
 
 			this.addPropertyChangeListener(CURRENT_CHANNEL_PROPERTY, previousChannelAction);
 		}

@@ -40,8 +40,8 @@ public abstract class AbstractPopupDialog extends AbstractDialog {
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public AbstractPopupDialog( Window w, boolean isModal) {
-		super( w, isModal);
+	public AbstractPopupDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	@Override

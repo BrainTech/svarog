@@ -31,7 +31,7 @@ public class MP5ExpertConfigPanel extends JPanel {
 
 	private TextPanePanel additionalConfigTextPane;
 
-	public MP5ExpertConfigPanel( AbstractDialog owner) {
+	public MP5ExpertConfigPanel(AbstractDialog owner) {
 		super();
 		this.owner = owner;
 		initialize();
@@ -44,7 +44,7 @@ public class MP5ExpertConfigPanel extends JPanel {
 		JPanel additionalConfigPanel = new JPanel(new BorderLayout(3,3));
 		additionalConfigPanel.setBorder(new TitledBorder(_("Additional config (will be appended to config file as is)")));
 
-		CompactButton additionalConfigHelpButton = SwingUtils.createFieldHelpButton( owner, MP5MethodDialog.HELP_ADDITIONAL_CONFIG);
+		CompactButton additionalConfigHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_ADDITIONAL_CONFIG);
 
 		JPanel additionalConfigHelpPanel = new JPanel(new FlowLayout(FlowLayout.TRAILING));
 		additionalConfigHelpPanel.add(additionalConfigHelpButton);

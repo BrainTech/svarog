@@ -24,8 +24,8 @@ public class ShowNextBookChannelAction extends AbstractFocusableSignalMLAction<B
 
 	protected static final Logger logger = Logger.getLogger(ShowNextBookChannelAction.class);
 
-	public ShowNextBookChannelAction( BookViewFocusSelector bookViewFocusSelector) {
-		super( bookViewFocusSelector);
+	public ShowNextBookChannelAction(BookViewFocusSelector bookViewFocusSelector) {
+		super(bookViewFocusSelector);
 		setText(_("Next channel"));
 		setIconPath("org/signalml/app/icon/nextbookchannel.png");
 		setToolTip(_("Navigate to next channel"));

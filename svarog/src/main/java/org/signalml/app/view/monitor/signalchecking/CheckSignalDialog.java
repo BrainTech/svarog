@@ -77,9 +77,9 @@ public class CheckSignalDialog extends org.signalml.app.view.dialog.AbstractSvar
         private TimerClass timerClass;
 
 
-        public CheckSignalDialog( Window w, boolean isModal) {
+        public CheckSignalDialog(Window w, boolean isModal) {
 
-                super( w, isModal);
+                super(w, isModal);
         }
 
         /**

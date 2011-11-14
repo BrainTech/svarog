@@ -35,7 +35,7 @@ public class SignalFFTSettingsDialogAction extends AbstractSignalMLAction {
 	 * @param settings the settings that are filled in the 
 	 * {@link SignalFFTSettingsDialog dialog} shown by this action
 	 */
-	public SignalFFTSettingsDialogAction( SignalFFTSettings settings) {
+	public SignalFFTSettingsDialogAction(SignalFFTSettings settings) {
 		super();
 		fftSettings = settings;
 		fftSettingsDialog = new SignalFFTSettingsDialog();

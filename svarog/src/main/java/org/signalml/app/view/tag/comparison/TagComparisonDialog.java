@@ -60,8 +60,8 @@ public class TagComparisonDialog extends org.signalml.app.view.dialog.AbstractSv
 		super();
 	}
 
-	public TagComparisonDialog( Window w, boolean isModal) {
-		super( w, isModal);
+	public TagComparisonDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	@Override
@@ -119,7 +119,7 @@ public class TagComparisonDialog extends org.signalml.app.view.dialog.AbstractSv
 		topPanel.add(topDocumentPanel);
 		topPanel.add(bottomDocumentPanel);
 
-		resultPanel = new TagComparisonResultPanel( tableToTextExporter, fileChooser);
+		resultPanel = new TagComparisonResultPanel(tableToTextExporter, fileChooser);
 
 		JPanel interfacePanel = new JPanel(new BorderLayout());
 

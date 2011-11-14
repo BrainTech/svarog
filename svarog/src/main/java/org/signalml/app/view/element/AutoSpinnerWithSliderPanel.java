@@ -47,7 +47,7 @@ public class AutoSpinnerWithSliderPanel extends AutoSpinnerPanel {
 	 */
 	public AutoSpinnerWithSliderPanel( double value, double min, double max,
 	                                  double step, boolean compact) {
-		super( value, min, max, step, compact);
+		super(value, min, max, step, compact);
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class AutoSpinnerWithSliderPanel extends AutoSpinnerPanel {
 	 */
 	public AutoSpinnerWithSliderPanel( float value, float min, float max,
 	                                  float step, boolean compact) {
-		super( value, min, max, step, compact);
+		super(value, min, max, step, compact);
 	}
 
 	/**
@@ -79,7 +79,7 @@ public class AutoSpinnerWithSliderPanel extends AutoSpinnerPanel {
 	 */
 	public AutoSpinnerWithSliderPanel( int value, int min, int max, int step,
 	                                  boolean compact) {
-		super( value, min, max, step, compact);
+		super(value, min, max, step, compact);
 	}
 
 

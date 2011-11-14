@@ -33,8 +33,8 @@ public class MP5ToolConfigDialog extends org.signalml.app.view.dialog.AbstractSv
 		super();
 	}
 
-	public MP5ToolConfigDialog( Window w, boolean isModal) {
-		super( w, isModal);
+	public MP5ToolConfigDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	@Override

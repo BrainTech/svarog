@@ -224,7 +224,7 @@ public class ExampleMethod extends AbstractMethod implements InitializingMethod,
          * {@inheritDoc}
          */
 	@Override
-	public String getTickerLabel( int ticker) {
+	public String getTickerLabel(int ticker) {
 		return getSvarogI18n().getMessage("exampleMethod.ticker"+ticker);
 	}
 

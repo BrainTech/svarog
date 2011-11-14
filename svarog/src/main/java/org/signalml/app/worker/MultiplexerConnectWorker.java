@@ -22,7 +22,7 @@ public class MultiplexerConnectWorker extends SwingWorker< WorkerResult, Integer
 
         public static final String JMX_CONNECTION = "jmxConnection";
 
-	protected static final Logger logger = Logger.getLogger( MultiplexerConnectWorker.class);
+	protected static final Logger logger = Logger.getLogger(MultiplexerConnectWorker.class);
 	
 	public static final int TIMEOUT_MILIS = 50;
 
@@ -53,24 +53,24 @@ public class MultiplexerConnectWorker extends SwingWorker< WorkerResult, Integer
 			     + "/" + multiplexerSocket.getAddress().getHostAddress()
 			     + " port=" + multiplexerSocket.getPort());
 
-		client = new JmxClient( SvarogConstants.PeerTypes.STREAM_RECEIVER);
-		ChannelFuture connectFuture = client.asyncConnect( multiplexerSocket);
+		client = new JmxClient(SvarogConstants.PeerTypes.STREAM_RECEIVER);
+		ChannelFuture connectFuture = client.asyncConnect(multiplexerSocket);
 
 		int i = 0;
 		while (!isCancelled() && i < tryoutCount) {
 			i++;
 			try {
-				Thread.sleep( timeoutMilis);
+				Thread.sleep(timeoutMilis);
 			}
 			catch (InterruptedException e1) {}
-			publish( new Integer( i));
+			publish(new Integer( i));
 			if ((connectFuture.isDone())) {
 				break;
 			}
 		}
 
 		if ( i < tryoutCount)
-			publish( new Integer( tryoutCount));
+			publish(new Integer(tryoutCount));
 
 		// timeout!!!
 		if (connectFuture.isDone()) {
@@ -91,7 +91,7 @@ public class MultiplexerConnectWorker extends SwingWorker< WorkerResult, Integer
 	}
 
 	@Override
-	protected void process( List<Integer> states) {
+	protected void process(List<Integer> states) {
 		for (Integer i : states) {
 			Integer oldConnectingState = connectingState;
 			connectingState = i;
@@ -116,16 +116,16 @@ public class MultiplexerConnectWorker extends SwingWorker< WorkerResult, Integer
 		if (!result.success) {
 			try {
 				client.shutdown();
-				elementManager.setJmxClient( null);
+				elementManager.setJmxClient(null);
 			}
 			catch (InterruptedException e) {
 				// should never happen
 			}
 		}
 		else {
-			elementManager.setJmxClient( client);
+			elementManager.setJmxClient(client);
 		}
-		firePropertyChange( JMX_CONNECTION, null, result);
+		firePropertyChange(JMX_CONNECTION, null, result);
 	}
 
 }

@@ -27,8 +27,8 @@ public class ChooseActiveTagAction extends AbstractFocusableSignalMLAction<Signa
 	 * @param signalDocumentFocusSelector a {@link SignalDocumentFocusSelector}
 	 * used to get the active document.
 	 */
-	public ChooseActiveTagAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
-		super( signalDocumentFocusSelector);
+	public ChooseActiveTagAction(SignalDocumentFocusSelector signalDocumentFocusSelector) {
+		super(signalDocumentFocusSelector);
 
 		setText(_("Choose active tag"));
 		setIconPath("org/signalml/app/icon/activetag.png");
@@ -43,7 +43,7 @@ public class ChooseActiveTagAction extends AbstractFocusableSignalMLAction<Signa
 		if (documentView instanceof SignalView)
 			signalView = (SignalView) documentView;
 
-		ActiveTagPopupDialog dialog = new ActiveTagPopupDialog( null, true);
+		ActiveTagPopupDialog dialog = new ActiveTagPopupDialog(null, true);
 		dialog.setSignalView(signalView);
 		dialog.showDialog(null, true);
 

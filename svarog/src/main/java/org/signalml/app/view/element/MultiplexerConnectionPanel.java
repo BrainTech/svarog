@@ -111,7 +111,7 @@ public class MultiplexerConnectionPanel extends JPanel {
 				 .addComponent( getMultiplexerAddressField())
 				 .addComponent( getMultiplexerPortField()));
 
-		layout.setHorizontalGroup( hGroup);
+		layout.setHorizontalGroup(hGroup);
 		
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 		
@@ -124,20 +124,20 @@ public class MultiplexerConnectionPanel extends JPanel {
 
 		layout.setVerticalGroup(vGroup);
 
-		add( fieldPanel, BorderLayout.CENTER);
+		add(fieldPanel, BorderLayout.CENTER);
 
 		JPanel connectionPanel = new JPanel();
 		connectionPanel.setLayout( new GridBagLayout());
 
-		disconnectAction = new DisconnectMultiplexerAction( elementManager);
-		getDisconnectButton().setAction( disconnectAction);
+		disconnectAction = new DisconnectMultiplexerAction(elementManager);
+		getDisconnectButton().setAction(disconnectAction);
 		disconnectAction.addPropertyChangeListener( new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				if ("disconnected".equals( evt.getPropertyName())) {
-					getConnectButton().setEnabled( true);
+					getConnectButton().setEnabled(true);
 					getProgressBar().setValue( 0);
-					getStatusArea().setText( null);
+					getStatusArea().setText(null);
 				}
 			}
 		});
@@ -151,46 +151,46 @@ public class MultiplexerConnectionPanel extends JPanel {
 				}
 				else if ("jmxConnection".equals( evt.getPropertyName())) {
 					WorkerResult res = (WorkerResult) evt.getNewValue();
-					getProgressBar().getModel().setValue( new Integer( OpenMonitorDialog.TRYOUT_COUNT));
+					getProgressBar().getModel().setValue(new Integer(OpenMonitorDialog.TRYOUT_COUNT));
 					if (!res.success) {
-						getStatusArea().setForeground( OpenMonitorDialog.FAILURE_COLOR);
-						getStatusArea().setText( res.message);
+						getStatusArea().setForeground(OpenMonitorDialog.FAILURE_COLOR);
+						getStatusArea().setText(res.message);
 					}
 				}
 				else if ("testState".equals( evt.getPropertyName())) {
 					Integer state = (Integer) evt.getNewValue();
-					getProgressBar().getModel().setValue( state.intValue() + OpenMonitorDialog.TRYOUT_COUNT);
+					getProgressBar().getModel().setValue(state.intValue() + OpenMonitorDialog.TRYOUT_COUNT);
 				}
 				else if ("connectionTestResult".equals( evt.getPropertyName())) {
 					WorkerResult res = (WorkerResult) evt.getNewValue();
 					if (res.success) {
-						getStatusArea().setForeground( OpenMonitorDialog.SUCCESS_COLOR);
-						getDisconnectButton().setEnabled( true);
+						getStatusArea().setForeground(OpenMonitorDialog.SUCCESS_COLOR);
+						getDisconnectButton().setEnabled(true);
 					}
 					else
-						getStatusArea().setForeground( OpenMonitorDialog.FAILURE_COLOR);
-					getConnectButton().setEnabled( false);
-					getStatusArea().setText( res.message);
+						getStatusArea().setForeground(OpenMonitorDialog.FAILURE_COLOR);
+					getConnectButton().setEnabled(false);
+					getStatusArea().setText(res.message);
 					getProgressBar().getModel().setValue( getProgressBar().getModel().getMaximum());
 				}
 			}
 		};
-		connectAction = new ConnectMultiplexerAction( elementManager);
-		connectAction.setDisconnectAction( disconnectAction);
+		connectAction = new ConnectMultiplexerAction(elementManager);
+		connectAction.setDisconnectAction(disconnectAction);
 		connectAction.setMultiplexerAddressField(getMultiplexerAddressField());
 		connectAction.setMultiplexerPortField( getMultiplexerPortField());
-		connectAction.setTryoutCount( OpenMonitorDialog.TRYOUT_COUNT);
-		connectAction.setTimeoutMilis( OpenMonitorDialog.TIMEOUT_MILIS);
-		connectAction.addPropertyChangeListener( propertyChangeHandler);
+		connectAction.setTryoutCount(OpenMonitorDialog.TRYOUT_COUNT);
+		connectAction.setTimeoutMilis(OpenMonitorDialog.TIMEOUT_MILIS);
+		connectAction.addPropertyChangeListener(propertyChangeHandler);
 		connectAction.setOpenMonitorDescriptor(openMonitorDescriptor);
-		getConnectButton().setAction( connectAction);
+		getConnectButton().setAction(connectAction);
 
 		GridBagConstraints c = new GridBagConstraints();
-		c.insets = new Insets( 5, 5, 5, 5);
+		c.insets = new Insets(5, 5, 5, 5);
 		c.anchor = GridBagConstraints.WEST;
-		connectionPanel.add( getConnectButton(), c);
+		connectionPanel.add(getConnectButton(), c);
 		c.gridx = 1;
-		connectionPanel.add( getDisconnectButton(), c);
+		connectionPanel.add(getDisconnectButton(), c);
 		c.gridx = 2;
 		c.anchor = GridBagConstraints.EAST;
 		connectionPanel.add(getResetToDefaultsButton(), c);
@@ -199,12 +199,12 @@ public class MultiplexerConnectionPanel extends JPanel {
 		c.gridy = 1;
 		c.gridwidth = 3;
 		c.fill = GridBagConstraints.HORIZONTAL;
-		connectionPanel.add( getProgressBar(), c);
+		connectionPanel.add(getProgressBar(), c);
 		c.gridy = 2;
 		c.fill = GridBagConstraints.BOTH;
-		connectionPanel.add( getStatusArea(), c);
+		connectionPanel.add(getStatusArea(), c);
 
-		add( connectionPanel, BorderLayout.SOUTH);
+		add(connectionPanel, BorderLayout.SOUTH);
 
 	}
 
@@ -257,15 +257,15 @@ public class MultiplexerConnectionPanel extends JPanel {
 	public JTextArea getStatusArea() {
 		if (statusArea == null) {
 			statusArea = new JTextArea();
-			statusArea.setPreferredSize( new Dimension( 400, 100));
-			statusArea.setBorder( BorderFactory.createLineBorder( Color.BLACK));
+			statusArea.setPreferredSize(new Dimension(400, 100));
+			statusArea.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		}
 		return statusArea;
 	}
 
 	public JProgressBar getProgressBar() {
 		if (progressBar == null) {
-			progressBar = new JProgressBar( 0, OpenMonitorDialog.TRYOUT_COUNT * 2);
+			progressBar = new JProgressBar(0, OpenMonitorDialog.TRYOUT_COUNT * 2);
 		}
 		return progressBar;
 	}
@@ -374,12 +374,12 @@ public class MultiplexerConnectionPanel extends JPanel {
 		String adres = getMultiplexerAddressField().getText();
 		openMonitorDescriptor.setMultiplexerAddress(adres);
 		if (applicationConfiguration != null)
-			applicationConfiguration.setMultiplexerAddress( adres);
+			applicationConfiguration.setMultiplexerAddress(adres);
 
 		int port = Integer.parseInt(getMultiplexerPortField().getText());
 		openMonitorDescriptor.setMultiplexerPort(port);
 		if (applicationConfiguration != null)
-			applicationConfiguration.setMultiplexerPort( port);
+			applicationConfiguration.setMultiplexerPort(port);
 
 	}
 

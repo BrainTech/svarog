@@ -43,7 +43,7 @@ public class MP5AdvancedDecompositionConfigPanel extends JPanel {
 	private JSpinner scaleToPeriodFactorSpinner;
 	private JSpinner periodDensitySpinner;
 
-	public MP5AdvancedDecompositionConfigPanel( AbstractDialog owner) {
+	public MP5AdvancedDecompositionConfigPanel(AbstractDialog owner) {
 		super();
 		this.owner = owner;
 		initialize();
@@ -68,10 +68,10 @@ public class MP5AdvancedDecompositionConfigPanel extends JPanel {
 		JLabel scaleToPeriodFactorLabel = new JLabel(_("Max scale / period"));
 		JLabel periodDensityLabel = new JLabel(_("Period density"));
 
-		CompactButton dictionaryTypeHelpButton = SwingUtils.createFieldHelpButton( owner, MP5MethodDialog.HELP_DICTIONARY_TYPE);
-		CompactButton dictionaryReinitTypeHelpButton = SwingUtils.createFieldHelpButton( owner, MP5MethodDialog.HELP_DICTIONARY_REINIT_TYPE);
-		CompactButton scaleToPeriodFactorHelpButton = SwingUtils.createFieldHelpButton( owner, MP5MethodDialog.HELP_SCALE_TO_PERIOD_FACTOR);
-		CompactButton periodDensityHelpButton = SwingUtils.createFieldHelpButton( owner, MP5MethodDialog.HELP_PERIOD_DENSITY);
+		CompactButton dictionaryTypeHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_DICTIONARY_TYPE);
+		CompactButton dictionaryReinitTypeHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_DICTIONARY_REINIT_TYPE);
+		CompactButton scaleToPeriodFactorHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_SCALE_TO_PERIOD_FACTOR);
+		CompactButton periodDensityHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_PERIOD_DENSITY);
 
 		Component glue1 = Box.createHorizontalGlue();
 		Component glue2 = Box.createHorizontalGlue();

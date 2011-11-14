@@ -37,7 +37,7 @@ public class NewArtifactExclusionDialog extends org.signalml.plugin.export.view.
 
 	public NewArtifactExclusionDialog(
 					  Window w, boolean isModal) {
-		super( w, isModal);
+		super(w, isModal);
 	}
 
 	@Override

@@ -28,8 +28,8 @@ public class SaveTagAsAction extends AbstractFocusableSignalMLAction<TagDocument
 
 	private DocumentFlowIntegrator documentFlowIntegrator;
 
-	public SaveTagAsAction( TagDocumentFocusSelector tagDocumentFocusSelector) {
-		super( tagDocumentFocusSelector);
+	public SaveTagAsAction(TagDocumentFocusSelector tagDocumentFocusSelector) {
+		super(tagDocumentFocusSelector);
 		setText(_("Save Tag As..."));
 		setIconPath("org/signalml/app/icon/filesaveas.png");
 		setToolTip(_("Save active tag to another file"));

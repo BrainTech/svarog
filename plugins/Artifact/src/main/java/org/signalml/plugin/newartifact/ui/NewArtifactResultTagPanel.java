@@ -40,7 +40,7 @@ public class NewArtifactResultTagPanel extends JPanel {
 
 	private File tagFile;
 
-	public NewArtifactResultTagPanel( FileChooser fileChooser) {
+	public NewArtifactResultTagPanel(FileChooser fileChooser) {
 		super();
 		this.fileChooser = fileChooser;
 		initialize();

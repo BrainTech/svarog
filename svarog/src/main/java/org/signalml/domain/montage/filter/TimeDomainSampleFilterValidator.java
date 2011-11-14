@@ -36,7 +36,7 @@ public final class TimeDomainSampleFilterValidator {
 	 * Creates a new validator for the given filter.
 	 * @param filter the filter to be validated
 	 */
-	public TimeDomainSampleFilterValidator( TimeDomainSampleFilter filter) {
+	public TimeDomainSampleFilterValidator(TimeDomainSampleFilter filter) {
 		this.filter = filter;
 
 		FilterType filterType = filter.getFilterType();

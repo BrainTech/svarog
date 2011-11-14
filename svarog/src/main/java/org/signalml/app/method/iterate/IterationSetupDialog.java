@@ -86,8 +86,8 @@ public class IterationSetupDialog extends org.signalml.app.view.dialog.AbstractS
 		super();
 	}
 
-	public IterationSetupDialog( Window w, boolean isModal) {
-		super( w, isModal);
+	public IterationSetupDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	@Override

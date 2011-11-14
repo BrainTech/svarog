@@ -57,7 +57,7 @@ public class BookToTagMethodDialog extends org.signalml.app.view.dialog.Abstract
 	private JCheckBox makeChannelTagsCheckBox;
 
 	public BookToTagMethodDialog(Window window) {
-		super( window,true);
+		super(window,true);
 	}
 
 	@Override

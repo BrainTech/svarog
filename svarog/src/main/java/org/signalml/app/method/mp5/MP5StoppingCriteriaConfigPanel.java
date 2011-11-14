@@ -37,7 +37,7 @@ public class MP5StoppingCriteriaConfigPanel extends JPanel {
 	private JSpinner maxIterationCountSpinner;
 	private JSpinner energyPercentSpinner;
 
-	public MP5StoppingCriteriaConfigPanel( AbstractDialog owner) {
+	public MP5StoppingCriteriaConfigPanel(AbstractDialog owner) {
 		super();
 		this.owner = owner;
 		initialize();
@@ -63,8 +63,8 @@ public class MP5StoppingCriteriaConfigPanel extends JPanel {
 		Component glue1 = Box.createHorizontalGlue();
 		Component glue2 = Box.createHorizontalGlue();
 
-		CompactButton maxIterationCountHelpButton = SwingUtils.createFieldHelpButton( owner, MP5MethodDialog.HELP_MAX_ITERATION_COUNT);
-		CompactButton energyPercentHelpButton = SwingUtils.createFieldHelpButton( owner, MP5MethodDialog.HELP_ENERGY_PERCENT);
+		CompactButton maxIterationCountHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_MAX_ITERATION_COUNT);
+		CompactButton energyPercentHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_ENERGY_PERCENT);
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 

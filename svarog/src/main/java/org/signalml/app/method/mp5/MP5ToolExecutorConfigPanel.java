@@ -58,7 +58,7 @@ public class MP5ToolExecutorConfigPanel extends JPanel {
 	private JList executorList;
 	private JScrollPane executorScrollPane;
 
-	public MP5ToolExecutorConfigPanel( MP5ExecutorManager executorManager) {
+	public MP5ToolExecutorConfigPanel(MP5ExecutorManager executorManager) {
 		super();
 		this.executorManager = executorManager;
 

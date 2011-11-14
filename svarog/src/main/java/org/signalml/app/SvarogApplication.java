@@ -563,7 +563,7 @@ public class SvarogApplication implements java.lang.Runnable {
 
 	private GeneralConfiguration askForProfilePath(GeneralConfiguration suggested) {
 
-		ProfilePathDialog dialog = new ProfilePathDialog( null, true);
+		ProfilePathDialog dialog = new ProfilePathDialog(null, true);
 
 		GeneralConfiguration model;
 		if (suggested == null) {

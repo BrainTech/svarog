@@ -63,7 +63,7 @@ public class SignalParametersPanelForRawSignalFile extends AbstractSignalParamet
 	 */
 	protected ReadXMLManifestAction getReadManifestAction() {
 		if (readManifestAction == null)
-			readManifestAction = new ReadXMLManifestAction( this);
+			readManifestAction = new ReadXMLManifestAction(this);
 		return readManifestAction;
 	}
 

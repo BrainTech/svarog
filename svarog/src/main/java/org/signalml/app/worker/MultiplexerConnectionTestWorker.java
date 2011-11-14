@@ -27,7 +27,7 @@ public class MultiplexerConnectionTestWorker extends SwingWorker< WorkerResult, 
 
         public static final String CONNECTION_TEST_RESULT = "connectionTestResult";
 
-	protected static final Logger logger = Logger.getLogger( MultiplexerConnectionTestWorker.class);
+	protected static final Logger logger = Logger.getLogger(MultiplexerConnectionTestWorker.class);
 	private int timeoutMilis = OpenMonitorDialog.TIMEOUT_MILIS;
 	private int tryoutCount = OpenMonitorDialog.TRYOUT_COUNT;
 	private Integer testState = tryoutCount;
@@ -54,12 +54,12 @@ public class MultiplexerConnectionTestWorker extends SwingWorker< WorkerResult, 
 		// create message
 		ByteString msgBody = ByteString.copyFromUtf8( "Testing multiplexer connection...");
 		MultiplexerMessage.Builder builder = MultiplexerMessage.newBuilder();
-		builder.setType( Constants.MessageTypes.PING).setMessage( msgBody);
-		MultiplexerMessage msg = client.createMessage( builder);
+		builder.setType(Constants.MessageTypes.PING).setMessage(msgBody);
+		MultiplexerMessage msg = client.createMessage(builder);
 
 		// send message
 		try {
-			ChannelFuture sendingOperation = client.send( msg, SendingMethod.THROUGH_ONE);
+			ChannelFuture sendingOperation = client.send(msg, SendingMethod.THROUGH_ONE);
 			sendingOperation.await(1, TimeUnit.SECONDS);
 			if (!sendingOperation.isSuccess()) {
 				logger.info("sending failed!");
@@ -88,9 +88,9 @@ public class MultiplexerConnectionTestWorker extends SwingWorker< WorkerResult, 
 			// receive message
 			IncomingMessageData msgData = null;
 			try {
-				msgData = client.receive( timeoutMilis);
+				msgData = client.receive(timeoutMilis);
 				if (msgData != null) {
-					publish( tryoutCount);
+					publish(tryoutCount);
 					MultiplexerMessage reply = msgData.getMessage();
 					/*if (!(reply.getType() == msg.getType() && reply.getMessage().equals( msg.getMessage()))) {
 						logger.error("received bad reply! " + reply.getMessage());
@@ -118,7 +118,7 @@ public class MultiplexerConnectionTestWorker extends SwingWorker< WorkerResult, 
 	}
 
 	@Override
-	protected void process( List<Integer> states) {
+	protected void process(List<Integer> states) {
 		for (Integer i : states) {
 			Integer oldTestState = testState;
 			testState = i;
@@ -140,7 +140,7 @@ public class MultiplexerConnectionTestWorker extends SwingWorker< WorkerResult, 
 			logger.debug("get failed! " + e.getMessage());
 			e.printStackTrace();
 		}
-		firePropertyChange( CONNECTION_TEST_RESULT, null, result);
+		firePropertyChange(CONNECTION_TEST_RESULT, null, result);
 	}
 
 }

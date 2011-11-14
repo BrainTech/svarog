@@ -42,7 +42,7 @@ public class NewArtifactToolConfigDialog extends org.signalml.plugin.export.view
 
 	public NewArtifactToolConfigDialog(
 					   Window w, boolean isModal) {
-		super( w, isModal);
+		super(w, isModal);
 	}
 
 	@Override

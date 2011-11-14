@@ -212,7 +212,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 		Montage montage = document.getMontage();
 		if (montage != null)
-			signalChain.applyMontageDefinition( montage);
+			signalChain.applyMontageDefinition(montage);
 
 		signalChain.addPropertyChangeListener(this);
 		document.addPropertyChangeListener(this);
@@ -326,9 +326,9 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 	}
 
-	private double condMaxValue( double mv) {
-		double result = Math.min( 2000.0, mv);
-		if (Math.abs( result) < 0.000001)
+	private double condMaxValue(double mv) {
+		double result = Math.min(2000.0, mv);
+		if (Math.abs(result) < 0.000001)
 			result = 2000.0;
 		return result;
 	}
@@ -350,9 +350,9 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			}
 		}
 //		result = Math.min( 2000.0, result );
-//		if (Math.abs( result) < 0.000001)
+//		if (Math.abs(result) < 0.000001)
 //			result = 2000.0;
-		return condMaxValue( result);
+		return condMaxValue(result);
 	}
 
 	private double calcMaxValueDelta() {
@@ -453,7 +453,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		pageCount = (int) Math.ceil( maxTime / pageSize );
 		blockCount = (int) Math.ceil( maxTime / blockSize );
 
-		if( pageCount != ((int) Math.floor( maxTime / pageSize )) ) {
+		if(pageCount != ((int) Math.floor( maxTime / pageSize )) ) {
 			wholePageCount = pageCount-1;
 		} else {
 			wholePageCount = pageCount;
@@ -853,7 +853,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 		int channel, visibleCount;
 		int startChannel = this.computePaintStartChannel(clip.y);
-		int maxNumberOfChannels = (int) Math.min( channelCount, Math.ceil( ((double) (clip.height - 1)) / pixelPerChannel ) );
+		int maxNumberOfChannels = (int) Math.min(channelCount, Math.ceil( ((double) (clip.height - 1)) / pixelPerChannel ) );
 
 		if( channelLinesVisible && pixelPerChannel > 10 ) {
 			g.setColor(Color.BLUE);
@@ -885,7 +885,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 				Dimension viewportSize = viewport.getExtentSize();
 
 				startChannel = this.computePaintStartChannel(viewportPoint.y);
-				maxNumberOfChannels = (int) Math.min( channelCount, Math.ceil( ((double) (viewportSize.height-1)) / pixelPerChannel ) );
+				maxNumberOfChannels = (int) Math.min(channelCount, Math.ceil( ((double) (viewportSize.height-1)) / pixelPerChannel ) );
 			}
 		}
 
@@ -915,8 +915,8 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			visibleCount ++;
 			// those must be offset by one to get correct partial redraw
 			// offset again by one, this time in terms of samples
-			firstSample = (int) Math.max( 0, Math.floor( ((double) (clip.x-1)) / timeZoomFactor ) - 1 );
-			lastSample = (int) Math.min( sampleCount[channel] - 1, Math.ceil( ((double) (clipEndX+1)) / timeZoomFactor ) + 1 );
+			firstSample = (int) Math.max(0, Math.floor( ((double) (clip.x-1)) / timeZoomFactor ) - 1 );
+			lastSample = (int) Math.min(sampleCount[channel] - 1, Math.ceil( ((double) (clipEndX+1)) / timeZoomFactor ) + 1 );
 			if( lastSample < firstSample ) {
 				continue;
 			}
@@ -1514,7 +1514,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	}
 
 	private boolean isSelectionOnScreen( SignalSelection selection ) {
-		return viewport.getViewRect().intersects( getPixelSelectionBounds(selection, tempBounds) );
+		return viewport.getViewRect().intersects(getPixelSelectionBounds(selection, tempBounds) );
 	}
 
     public Rectangle getPixelBlockTagBounds( SignalSelection tag, boolean marker,int tagCnt, int tagNumber, Point viewportPoint, Dimension viewportSize, Dimension plotSize, boolean comparing, Rectangle useRect ) {

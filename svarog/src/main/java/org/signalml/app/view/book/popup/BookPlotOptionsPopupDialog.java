@@ -54,8 +54,8 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 	private JSpinner aspectUpSpinner;
 	private JSpinner aspectDownSpinner;
 
-	public BookPlotOptionsPopupDialog( Window w, boolean isModal) {
-		super( w, isModal);
+	public BookPlotOptionsPopupDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	public BookView getBookView() {

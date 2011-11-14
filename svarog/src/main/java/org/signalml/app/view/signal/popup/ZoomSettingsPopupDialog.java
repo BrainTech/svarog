@@ -28,14 +28,14 @@ public class ZoomSettingsPopupDialog extends AbstractPopupDialog {
 		super();
 	}
 
-	public ZoomSettingsPopupDialog( Window w, boolean isModal) {
-		super( w, isModal);
+	public ZoomSettingsPopupDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	@Override
 	public JComponent createInterface() {
 
-		signalZoomSettingsPanel = new SignalZoomSettingsPanel( true);
+		signalZoomSettingsPanel = new SignalZoomSettingsPanel(true);
 
 		return signalZoomSettingsPanel;
 

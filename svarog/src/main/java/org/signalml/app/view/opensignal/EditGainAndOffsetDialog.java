@@ -32,9 +32,9 @@ public class EditGainAndOffsetDialog extends org.signalml.app.view.dialog.Abstra
         /**
          * Default constructor sets window's title.
          */
-        public EditGainAndOffsetDialog( Window w, boolean m) {
+        public EditGainAndOffsetDialog(Window w, boolean m) {
 
-                super( w, m);
+                super(w, m);
                 setTitle(_("Edit gain and offset"));
         }
 
@@ -243,7 +243,7 @@ public class EditGainAndOffsetDialog extends org.signalml.app.view.dialog.Abstra
         private ChannelDefinitionsTable getDefinitionsTable() {
 
                 if (definitionsTable == null) {
-                        definitionsTable = new ChannelDefinitionsTable( true);
+                        definitionsTable = new ChannelDefinitionsTable(true);
                 }
                 return definitionsTable;
         }

@@ -20,7 +20,7 @@ import org.signalml.multiplexer.protocol.SvarogConstants;
  */
 public class MultiplexerTagConnectWorker extends SwingWorker< WorkerResult, Integer> {
 
-	protected static final Logger logger = Logger.getLogger( MultiplexerTagConnectWorker.class);
+	protected static final Logger logger = Logger.getLogger(MultiplexerTagConnectWorker.class);
 	
 	public static final int TIMEOUT_MILIS = 50;
 
@@ -50,24 +50,24 @@ public class MultiplexerTagConnectWorker extends SwingWorker< WorkerResult, Inte
 
 		logger.info( "Worker: start...");
 
-		client = new JmxClient( SvarogConstants.PeerTypes.TAGS_RECEIVER);
-		ChannelFuture connectFuture = client.asyncConnect( multiplexerSocket);
+		client = new JmxClient(SvarogConstants.PeerTypes.TAGS_RECEIVER);
+		ChannelFuture connectFuture = client.asyncConnect(multiplexerSocket);
 
 		int i = 0;
 		while (!isCancelled() && i < tryoutCount) {
 			i++;
 			try {
-				Thread.sleep( timeoutMilis);
+				Thread.sleep(timeoutMilis);
 			}
 			catch (InterruptedException e1) {}
-			publish( new Integer( i));
+			publish(new Integer( i));
 			if ((connectFuture.isDone())) {
 				break;
 			}
 		}
 
 		if ( i < tryoutCount)
-			publish( new Integer( tryoutCount));
+			publish(new Integer(tryoutCount));
 
 		// timeout!!!
 		if (connectFuture.isDone()) {
@@ -78,7 +78,7 @@ public class MultiplexerTagConnectWorker extends SwingWorker< WorkerResult, Inte
 			else {
 				logger.error("connection failed!");
 				Throwable cause = connectFuture.getCause();
-				return new WorkerResult( Boolean.FALSE, _("Connection failed!") + "; " + cause);
+				return new WorkerResult(Boolean.FALSE, _("Connection failed!") + "; " + cause);
 			}
 		}
 		else {
@@ -88,7 +88,7 @@ public class MultiplexerTagConnectWorker extends SwingWorker< WorkerResult, Inte
 	}
 
 	@Override
-	protected void process( List<Integer> states) {
+	protected void process(List<Integer> states) {
 		for (Integer i : states) {
 			Integer oldConnectingState = connectingState;
 			connectingState = i;
@@ -113,14 +113,14 @@ public class MultiplexerTagConnectWorker extends SwingWorker< WorkerResult, Inte
 		if (!result.success) {
 			try {
 				client.shutdown();
-				elementManager.setTagClient( null);
+				elementManager.setTagClient(null);
 			}
 			catch (InterruptedException e) {
 				// should never happen
 			}
 		}
 		else {
-			elementManager.setTagClient( client);
+			elementManager.setTagClient(client);
 		}
 		firePropertyChange( "tagConnection", null, result);
 	}

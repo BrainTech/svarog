@@ -74,7 +74,7 @@ public class SignalParametersPanelForSignalMLSignalFile extends JPanel {
          *
          * @param elementManager {@link #elementManager}
          */
-        public SignalParametersPanelForSignalMLSignalFile( ViewerElementManager elementManager) {
+        public SignalParametersPanelForSignalMLSignalFile(ViewerElementManager elementManager) {
 
                 super();
                 this.elementManager = elementManager;
@@ -165,7 +165,7 @@ public class SignalParametersPanelForSignalMLSignalFile extends JPanel {
          */
         protected PleaseWaitDialog getPleaseWaitDialog() {
                 if (pleaseWaitDialog == null) {
-                        pleaseWaitDialog = new PleaseWaitDialog( null);
+                        pleaseWaitDialog = new PleaseWaitDialog(null);
                         pleaseWaitDialog.initializeNow();
                 }
                 return pleaseWaitDialog;
@@ -177,7 +177,7 @@ public class SignalParametersPanelForSignalMLSignalFile extends JPanel {
          */
         protected RegisterCodecDialog getRegisterCodecDialog() {
                 if (registerCodecDialog == null) {
-                        registerCodecDialog = new RegisterCodecDialog( null, true);
+                        registerCodecDialog = new RegisterCodecDialog(null, true);
                         registerCodecDialog.setCodecManager(codecManager);
                 }
                 return registerCodecDialog;

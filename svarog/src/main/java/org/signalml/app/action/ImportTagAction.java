@@ -42,8 +42,8 @@ public class ImportTagAction extends AbstractFocusableSignalMLAction<SignalDocum
 	private ViewerFileChooser fileChooser;
 	private Component optionPaneParent;
 
-	public ImportTagAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
-		super( signalDocumentFocusSelector);
+	public ImportTagAction(SignalDocumentFocusSelector signalDocumentFocusSelector) {
+		super(signalDocumentFocusSelector);
 		setText(_("Import Legacy Tag..."));
 		setToolTip(_("Import a tag in legacy format"));
 	}

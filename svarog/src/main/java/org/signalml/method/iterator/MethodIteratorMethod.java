@@ -137,9 +137,9 @@ public class MethodIteratorMethod extends AbstractMethod implements Initializing
 	}
 
 	@Override
-	public String getTickerLabel( int ticker) {
+	public String getTickerLabel(int ticker) {
 		if (ticker > 0 && subjectMethod instanceof TrackableMethod) {
-			return ((TrackableMethod) subjectMethod).getTickerLabel( ticker-1);
+			return ((TrackableMethod) subjectMethod).getTickerLabel(ticker-1);
 		}
 		return _("Iteration progress");
 	}

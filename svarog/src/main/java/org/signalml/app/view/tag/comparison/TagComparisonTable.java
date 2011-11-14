@@ -183,8 +183,8 @@ public class TagComparisonTable extends JTable {
 	public JPopupMenu getComponentPopupMenu() {
 		if (popupMenu == null) {
 			popupMenu = new JPopupMenu();
-			popupMenu.add(new ExportComparisonToClipboardAction( tableToTextExporter));
-			popupMenu.add(new ExportComparisonToFileAction( tableToTextExporter));
+			popupMenu.add(new ExportComparisonToClipboardAction(tableToTextExporter));
+			popupMenu.add(new ExportComparisonToFileAction(tableToTextExporter));
 		}
 		return popupMenu;
 	}
@@ -193,8 +193,8 @@ public class TagComparisonTable extends JTable {
 
 		private static final long serialVersionUID = 1L;
 
-		public ExportComparisonToClipboardAction( TableToTextExporter tableToTextExporter) {
-			super( tableToTextExporter);
+		public ExportComparisonToClipboardAction(TableToTextExporter tableToTextExporter) {
+			super(tableToTextExporter);
 		}
 
 		@Override
@@ -221,8 +221,8 @@ public class TagComparisonTable extends JTable {
 
 		private static final long serialVersionUID = 1L;
 
-		private ExportComparisonToFileAction( TableToTextExporter tableToTextExporter) {
-			super( tableToTextExporter);
+		private ExportComparisonToFileAction(TableToTextExporter tableToTextExporter) {
+			super(tableToTextExporter);
 			setFileChooser(fileChooser);
 			setOptionPaneParent(TagComparisonTable.this);
 		}

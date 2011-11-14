@@ -74,7 +74,7 @@ public class FFTWindowTypePanel extends JPanel {
 	 *            {@code true} if this panel should be wide (have 3 columns) or
 	 *            {@code false} if high (2 columns, 5 rows)
 	 */
-	public FFTWindowTypePanel( boolean wide) {
+	public FFTWindowTypePanel(boolean wide) {
 		super();
 		initialize(wide);
 	}

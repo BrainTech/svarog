@@ -55,8 +55,8 @@ public class ParameterRangeFilterDialog extends AbstractFilterDialog {
 	private UnlimitedSpinnerPanel minPhasePanel;
 	private UnlimitedSpinnerPanel maxPhasePanel;
 
-	public ParameterRangeFilterDialog( Window w, boolean isModal) {
-		super( w, isModal);
+	public ParameterRangeFilterDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	@Override

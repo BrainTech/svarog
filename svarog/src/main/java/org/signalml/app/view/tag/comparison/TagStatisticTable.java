@@ -108,8 +108,8 @@ public class TagStatisticTable extends JTable {
 	public JPopupMenu getComponentPopupMenu() {
 		if (popupMenu == null) {
 			popupMenu = new JPopupMenu();
-			popupMenu.add(new ExportStatisticToClipboardAction( tableToTextExporter));
-			popupMenu.add(new ExportStatisticToFileAction( tableToTextExporter));
+			popupMenu.add(new ExportStatisticToClipboardAction(tableToTextExporter));
+			popupMenu.add(new ExportStatisticToFileAction(tableToTextExporter));
 		}
 		return popupMenu;
 	}
@@ -118,8 +118,8 @@ public class TagStatisticTable extends JTable {
 
 		private static final long serialVersionUID = 1L;
 
-		public ExportStatisticToClipboardAction( TableToTextExporter tableToTextExporter) {
-			super( tableToTextExporter);
+		public ExportStatisticToClipboardAction(TableToTextExporter tableToTextExporter) {
+			super(tableToTextExporter);
 		}
 
 		@Override
@@ -137,8 +137,8 @@ public class TagStatisticTable extends JTable {
 
 		private static final long serialVersionUID = 1L;
 
-		private ExportStatisticToFileAction( TableToTextExporter tableToTextExporter) {
-			super( tableToTextExporter);
+		private ExportStatisticToFileAction(TableToTextExporter tableToTextExporter) {
+			super(tableToTextExporter);
 			setFileChooser(fileChooser);
 			setOptionPaneParent(TagStatisticTable.this);
 		}

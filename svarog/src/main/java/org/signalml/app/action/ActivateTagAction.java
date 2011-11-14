@@ -26,16 +26,16 @@ public class ActivateTagAction extends AbstractFocusableSignalMLAction<TagFocusS
 
 	private ActionFocusManager actionFocusManager;
 
-	public ActivateTagAction( ActionFocusManager actionFocusManager, TagFocusSelector tagFocusSelector) {
-		super( tagFocusSelector);
+	public ActivateTagAction(ActionFocusManager actionFocusManager, TagFocusSelector tagFocusSelector) {
+		super(tagFocusSelector);
 		this.actionFocusManager = actionFocusManager;
 		setText(_("Show tag"));
 		setIconPath("org/signalml/app/icon/activate.png");
 		setToolTip(_("Show tag in viewer"));
 	}
 
-	public ActivateTagAction( ActionFocusManager actionFocusManager) {
-		this( actionFocusManager, actionFocusManager);
+	public ActivateTagAction(ActionFocusManager actionFocusManager) {
+		this(actionFocusManager, actionFocusManager);
 	}
 
 	@Override

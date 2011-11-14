@@ -33,8 +33,8 @@ public class SourceMontageDialog extends org.signalml.app.view.dialog.AbstractSv
 		super();
 	}
 
-	public SourceMontageDialog( Window w, boolean isModal) {
-		super( w, isModal);
+	public SourceMontageDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	@Override

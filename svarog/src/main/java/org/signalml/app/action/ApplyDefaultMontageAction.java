@@ -24,8 +24,8 @@ public class ApplyDefaultMontageAction extends AbstractFocusableSignalMLAction<M
 
 	protected static final Logger logger = Logger.getLogger(ApplyDefaultMontageAction.class);
 
-	public ApplyDefaultMontageAction( MontageFocusSelector montageFocusSelector) {
-		super( montageFocusSelector);
+	public ApplyDefaultMontageAction(MontageFocusSelector montageFocusSelector) {
+		super(montageFocusSelector);
 		setText(_("Default montage"));
 		setIconPath("org/signalml/app/icon/defaultmontage.png");
 		setToolTip(_("Apply default montage"));

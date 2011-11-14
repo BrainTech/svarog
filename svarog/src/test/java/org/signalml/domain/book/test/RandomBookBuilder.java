@@ -78,11 +78,11 @@ public class RandomBookBuilder implements BookBuilder {
 			}
 
 			/*
-			segment1[i].addAtom( segment1[i].createAtom(StandardBookAtom.GABORWAVE_IDENTITY, 0, 100, 100, 0, 100, 0, 0) );
-			segment1[i].addAtom( segment1[i].createAtom(StandardBookAtom.GABORWAVE_IDENTITY, 0, 100, 100, 2560-1, 100, 0, 0) );
-			segment1[i].addAtom( segment1[i].createAtom(StandardBookAtom.GABORWAVE_IDENTITY, 0, 100, 100, 2560-1, 100, 2560/2-1, 0) );
-			segment1[i].addAtom( segment1[i].createAtom(StandardBookAtom.GABORWAVE_IDENTITY, 0, 100, 100, 0, 100, 2560/2-1, 0) );
-			segment1[i].addAtom( segment1[i].createAtom(StandardBookAtom.GABORWAVE_IDENTITY, 0, 100, 100, 2560/2, 100, 2560/4, 0) );
+			segment1[i].addAtom(segment1[i].createAtom(StandardBookAtom.GABORWAVE_IDENTITY, 0, 100, 100, 0, 100, 0, 0) );
+			segment1[i].addAtom(segment1[i].createAtom(StandardBookAtom.GABORWAVE_IDENTITY, 0, 100, 100, 2560-1, 100, 0, 0) );
+			segment1[i].addAtom(segment1[i].createAtom(StandardBookAtom.GABORWAVE_IDENTITY, 0, 100, 100, 2560-1, 100, 2560/2-1, 0) );
+			segment1[i].addAtom(segment1[i].createAtom(StandardBookAtom.GABORWAVE_IDENTITY, 0, 100, 100, 0, 100, 2560/2-1, 0) );
+			segment1[i].addAtom(segment1[i].createAtom(StandardBookAtom.GABORWAVE_IDENTITY, 0, 100, 100, 2560/2, 100, 2560/4, 0) );
 			 */
 		}
 

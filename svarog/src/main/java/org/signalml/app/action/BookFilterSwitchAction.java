@@ -24,8 +24,8 @@ public class BookFilterSwitchAction extends AbstractFocusableSignalMLAction<Book
 
 	protected static final Logger logger = Logger.getLogger(BookFilterSwitchAction.class);
 
-	public BookFilterSwitchAction( BookDocumentFocusSelector bookDocumentFocusSelector) {
-		super( bookDocumentFocusSelector);
+	public BookFilterSwitchAction(BookDocumentFocusSelector bookDocumentFocusSelector) {
+		super(bookDocumentFocusSelector);
 		setText(_("Filtering"));
 		setIconPath("org/signalml/app/icon/filter.png");
 		setToolTip(_("Switch fitering on/off"));

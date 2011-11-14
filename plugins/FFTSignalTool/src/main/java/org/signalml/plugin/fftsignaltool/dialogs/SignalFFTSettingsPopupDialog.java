@@ -48,7 +48,7 @@ public class SignalFFTSettingsPopupDialog extends AbstractPopupDialog {
 	 */
 	public SignalFFTSettingsPopupDialog(
 			Window w, boolean isModal) {
-		super( w, isModal);
+		super(w, isModal);
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class SignalFFTSettingsPopupDialog extends AbstractPopupDialog {
 	@Override
 	public JComponent createInterface() {
 
-		signalFFTSettingsPanel = new SignalFFTSettingsPanel( true);
+		signalFFTSettingsPanel = new SignalFFTSettingsPanel(true);
 
 		return signalFFTSettingsPanel;
 

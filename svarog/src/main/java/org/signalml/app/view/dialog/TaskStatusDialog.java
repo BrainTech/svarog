@@ -307,7 +307,7 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 		});
 		getTaskResultAction.setMethodManager(methodManager);
 
-		getTaskErrorAction = new GetTaskErrorAction( this);
+		getTaskErrorAction = new GetTaskErrorAction(this);
 		getTaskErrorAction.setErrorsDialog(errorsDialog);
 
 		if (method instanceof TrackableMethod) {

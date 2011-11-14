@@ -39,8 +39,8 @@ public abstract class AbstractFilterDialog extends AbstractDialog {
 		super();
 	}
 
-	public AbstractFilterDialog( Window w, boolean isModal) {
-		super( w, isModal);
+	public AbstractFilterDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	public JTextField getNameTextField() {

@@ -61,8 +61,8 @@ public class BookFilterDialog extends AbstractPresetDialog {
 
 	private URL contextHelpURL = null;
 
-	public BookFilterDialog( BookFilterPresetManager presetManager, Window w, boolean isModal) {
-		super( presetManager, w, isModal);
+	public BookFilterDialog(BookFilterPresetManager presetManager, Window w, boolean isModal) {
+		super(presetManager, w, isModal);
 	}
 
 	@Override
@@ -131,7 +131,7 @@ public class BookFilterDialog extends AbstractPresetDialog {
 
 	public BookFilterTablePanel getTablePanel() {
 		if (tablePanel == null) {
-			tablePanel = new BookFilterTablePanel( this);
+			tablePanel = new BookFilterTablePanel(this);
 			tablePanel.setParameterFilterDialog(getParameterFilterDialog());
 			tablePanel.setTagBasedFilterDialog(getTagBasedFilterDialog());
 			tablePanel.setDelegatingFilterDialog(getDelegatingFilterDialog());
@@ -307,14 +307,14 @@ public class BookFilterDialog extends AbstractPresetDialog {
 
 	public ParameterRangeFilterDialog getParameterFilterDialog() {
 		if (parameterFilterDialog == null) {
-			parameterFilterDialog = new ParameterRangeFilterDialog( this,true);
+			parameterFilterDialog = new ParameterRangeFilterDialog(this,true);
 		}
 		return parameterFilterDialog;
 	}
 
 	public TagBasedFilterDialog getTagBasedFilterDialog() {
 		if (tagBasedFilterDialog == null) {
-			tagBasedFilterDialog = new TagBasedFilterDialog( this,true);
+			tagBasedFilterDialog = new TagBasedFilterDialog(this,true);
 			tagBasedFilterDialog.setFileChooser(getFileChooser());
 		}
 		return tagBasedFilterDialog;

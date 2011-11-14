@@ -50,7 +50,7 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 	public OpenSignalAndSetMontageDialog( ViewerElementManager viewerElementManager,
 			Window f, boolean isModal) {
 
-		super( viewerElementManager.getMontagePresetManager(), viewerElementManager.getPredefinedTimeDomainFiltersPresetManager(), f, isModal);
+		super(viewerElementManager.getMontagePresetManager(), viewerElementManager.getPredefinedTimeDomainFiltersPresetManager(), f, isModal);
 
 		this.viewerElementManager = viewerElementManager;
 		dialogManager = new OpenSignalAndSetMontageDialogManager(this);
@@ -73,7 +73,7 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 	 */
 	public SignalSourcePanel getSignalSourcePanel() {
 		if (signalSourcePanel == null)
-			signalSourcePanel = new SignalSourcePanel( viewerElementManager);
+			signalSourcePanel = new SignalSourcePanel(viewerElementManager);
 		return signalSourcePanel;
 	}
 

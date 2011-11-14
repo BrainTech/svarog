@@ -61,8 +61,8 @@ public class EvokedPotentialResultDialog extends org.signalml.app.view.dialog.Ab
 		super();
 	}
 
-	public EvokedPotentialResultDialog( Window w, boolean isModal) {
-		super( w, isModal);
+	public EvokedPotentialResultDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	@Override
@@ -128,7 +128,7 @@ public class EvokedPotentialResultDialog extends org.signalml.app.view.dialog.Ab
 
 	public EvokedPotentialGraphPanel getGraphPanel() {
 		if (graphPanel == null) {
-			graphPanel = new EvokedPotentialGraphPanel( fileChooser);
+			graphPanel = new EvokedPotentialGraphPanel(fileChooser);
 		}
 		return graphPanel;
 	}

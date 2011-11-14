@@ -28,8 +28,8 @@ public class CloseTagAction extends AbstractFocusableSignalMLAction<TagDocumentF
 
 	private DocumentFlowIntegrator documentFlowIntegrator;
 
-	public CloseTagAction( TagDocumentFocusSelector tagDocumentFocusSelector) {
-		super( tagDocumentFocusSelector);
+	public CloseTagAction(TagDocumentFocusSelector tagDocumentFocusSelector) {
+		super(tagDocumentFocusSelector);
 		setText(_("Close Tag"));
 		setIconPath("org/signalml/app/icon/fileclose.png");
 		setToolTip(_("Close active tag"));

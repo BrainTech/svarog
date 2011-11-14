@@ -35,7 +35,7 @@ public class MP5OutputConfigPanel extends JPanel {
 
 	private JCheckBox bookWithSignalCheckBox;
 
-	public MP5OutputConfigPanel( AbstractDialog owner) {
+	public MP5OutputConfigPanel(AbstractDialog owner) {
 		super();
 		this.owner = owner;
 		initialize();
@@ -57,7 +57,7 @@ public class MP5OutputConfigPanel extends JPanel {
 
 		JLabel bookWithSignalLabel = new JLabel(_("Include original signal"));
 
-		CompactButton bookWithSignalHelpButton = SwingUtils.createFieldHelpButton( owner, MP5MethodDialog.HELP_BOOK_WITH_SIGNAL);
+		CompactButton bookWithSignalHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_BOOK_WITH_SIGNAL);
 
 		Component glue1 = Box.createHorizontalGlue();
 

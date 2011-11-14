@@ -241,7 +241,7 @@ public class ChannelDefinitionPanel extends JPanel implements ActionListener {
         protected ChannelDefinitionsTable getDefinitionsTable() {
 
                 if (definitionsTable == null) {
-                        definitionsTable = new ChannelDefinitionsTable( false);
+                        definitionsTable = new ChannelDefinitionsTable(false);
                 }
                 return definitionsTable;
         }

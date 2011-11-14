@@ -21,8 +21,8 @@ public class AbortTaskAction extends AbstractFocusableSignalMLAction<TaskFocusSe
 
 	protected static final Logger logger = Logger.getLogger(AbortTaskAction.class);
 
-	public AbortTaskAction( TaskFocusSelector taskFocusSelector) {
-		super( taskFocusSelector);
+	public AbortTaskAction(TaskFocusSelector taskFocusSelector) {
+		super(taskFocusSelector);
 		setText(_("Abort"));
 		setIconPath("org/signalml/app/icon/abort.png");
 		setToolTip(_("Abort this task (the task might not terminate immediately)"));

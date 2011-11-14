@@ -106,7 +106,7 @@ public class NewTagDialog extends org.signalml.app.view.dialog.AbstractSvarogDia
 
 		JPanel interfacePanel = new JPanel(new BorderLayout());
 
-		newTagPanel = new NewTagPanel( styledTagSetPresetManager);
+		newTagPanel = new NewTagPanel(styledTagSetPresetManager);
 		pagingParametersPanel = new PagingParametersPanel();
 
 		interfacePanel.add(newTagPanel, BorderLayout.CENTER);

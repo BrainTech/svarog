@@ -57,8 +57,8 @@ public class SignalPlotOptionsPopupDialog extends AbstractPopupDialog {
 	private JComboBox signalColorComboBox;
 	private JCheckBox signalXORCheckBox;
 
-	public SignalPlotOptionsPopupDialog( Window w, boolean isModal) {
-		super( w, isModal);
+	public SignalPlotOptionsPopupDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	public SignalView getSignalView() {

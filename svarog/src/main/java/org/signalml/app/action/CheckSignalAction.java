@@ -36,9 +36,9 @@ public class CheckSignalAction extends AbstractFocusableSignalMLAction<SignalDoc
 	 * @param signalDocumentFocusSelector a {@link SignalDocumentFocusSelector} used to detect
 	 * which document is active.
 	 */
-	public CheckSignalAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
+	public CheckSignalAction(SignalDocumentFocusSelector signalDocumentFocusSelector) {
 
-                super( signalDocumentFocusSelector);
+                super(signalDocumentFocusSelector);
 		setText(_("Check signal..."));
 		setToolTip(_("Check if signal is OK"));
 	}

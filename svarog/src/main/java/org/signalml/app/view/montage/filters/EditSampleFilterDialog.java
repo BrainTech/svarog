@@ -42,8 +42,8 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 	 * @param isModal true if this dialog should block top-level windows,
 	 * false otherwise
 	 */
-	public EditSampleFilterDialog( PresetManager presetManager, Window w, boolean isModal) {
-		super( presetManager, w, isModal);
+	public EditSampleFilterDialog(PresetManager presetManager, Window w, boolean isModal) {
+		super(presetManager, w, isModal);
 	}
 
 	/**
@@ -52,8 +52,8 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 	 * @param presetManager a {@link PresetManager} to manage the presets
 	 * configured in this window
 	 */
-	public EditSampleFilterDialog( PresetManager presetManager) {
-		super( presetManager);
+	public EditSampleFilterDialog(PresetManager presetManager) {
+		super(presetManager);
 	}
 
 	@Override

@@ -35,7 +35,7 @@ public class SignalFFTSettingsDialog extends org.signalml.plugin.export.view.Abs
 	 * that this dialog blocks top-level windows.
 	 */
 	public SignalFFTSettingsDialog() {
-		super( null, true);
+		super(null, true);
 	}
 	
 	/**
@@ -44,7 +44,7 @@ public class SignalFFTSettingsDialog extends org.signalml.plugin.export.view.Abs
 	 */
 	@Override
 	protected JComponent createInterface() {
-		signalFFTSettingsPanel = new SignalFFTSettingsPanel( true);
+		signalFFTSettingsPanel = new SignalFFTSettingsPanel(true);
 
 		return signalFFTSettingsPanel;
 	}

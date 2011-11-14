@@ -43,7 +43,7 @@ public class PluginDialog extends org.signalml.app.view.dialog.AbstractSvarogDia
 	 */
 	public PluginDialog( Window w, boolean isModal, ArrayList<PluginState> descriptions,
 			ArrayList<File> pluginDirs) {
-		super( w, isModal);
+		super(w, isModal);
 		this.descriptions = descriptions;
 		this.pluginDirs = pluginDirs;
 	}

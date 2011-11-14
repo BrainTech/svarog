@@ -23,7 +23,7 @@ import org.signalml.multiplexer.protocol.SvarogProtocol.VariableVector;
 
 public class TagSeqMock {
 
-	protected static final Logger logger = Logger.getLogger( TagSeqMock.class);
+	protected static final Logger logger = Logger.getLogger(TagSeqMock.class);
 
 	protected JmxClient connection;
 	protected MockWorker worker;
@@ -35,8 +35,8 @@ public class TagSeqMock {
 		while (chan.size()<n)
 			chan.add( (int) Math.floor( (Math.random() * 20)) + 1);
 		Integer[] ch = new Integer[n];
-		chan.toArray( ch);
-		Arrays.sort( ch);
+		chan.toArray(ch);
+		Arrays.sort(ch);
 		StringBuffer buf = new StringBuffer();
 		for (int i=0; i<n-1; i++)
 			buf.append( ch[i]).append( " ");
@@ -73,10 +73,10 @@ public class TagSeqMock {
 			for ( int i=0; true; i++) {
 				logger.info( "iter: " + i);
 				Tag.Builder tagBuilder = Tag.newBuilder();
-				tagBuilder.setStartTimestamp( time);
+				tagBuilder.setStartTimestamp(time);
 				logger.info( "start time: " + time);
 				time += (double) milis / 1000.0;
-				tagBuilder.setEndTimestamp( time);
+				tagBuilder.setEndTimestamp(time);
 				logger.info( "end time: " + time);
 				tagBuilder.setName( "tag" + i);
 				tagBuilder.setChannels( createChannelList());
@@ -91,9 +91,9 @@ public class TagSeqMock {
 				variableVectorBuilder.addVariables( variableBuilder.build());
 				tagBuilder.setDesc( variableVectorBuilder.build());
 				Tag tag = tagBuilder.build();
-				MultiplexerMessage mm = connection.createMessage( tag.toByteString(), SvarogConstants.MessageTypes.TAG);
-				connection.send( mm, SendingMethod.THROUGH_ALL);
-				Thread.sleep( milis);
+				MultiplexerMessage mm = connection.createMessage(tag.toByteString(), SvarogConstants.MessageTypes.TAG);
+				connection.send(mm, SendingMethod.THROUGH_ALL);
+				Thread.sleep(milis);
 			}
 
 		}
@@ -120,9 +120,9 @@ public class TagSeqMock {
 		mock.milis = Long.parseLong( args[0]);
 
 		logger.info( "Connecting ... ");
-		mock.connection = new JmxClient( SvarogConstants.PeerTypes.TAGS_SENDER);
+		mock.connection = new JmxClient(SvarogConstants.PeerTypes.TAGS_SENDER);
 		SocketAddress socketAddress = new InetSocketAddress( "127.0.0.1", 31889);
-		mock.connection.connect( socketAddress);
+		mock.connection.connect(socketAddress);
 		logger.info( "Connected!");
 
 		mock.worker = mock.new MockWorker();
