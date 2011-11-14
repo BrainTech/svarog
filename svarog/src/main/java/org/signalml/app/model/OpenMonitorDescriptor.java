@@ -32,9 +32,9 @@ public class OpenMonitorDescriptor {
         private Float minimumValue;
         private Float maximumValue;
         private Float backupFrequency;
-        /**
-         * An integer value representing amplifier`s channel value for non-connected channel.
-         */
+	/**
+	 * An integer value representing amplifier's channel value for non-connected channel.
+	 */
         private double amplifierNull;
         private RawSignalSampleType sampleType;
         private RawSignalByteOrder byteOrder;
@@ -225,10 +225,10 @@ public class OpenMonitorDescriptor {
                 this.minimumValue = minimumValue;
         }
 
-        /**
-         * Returns an integer value representing amplifier`s channel value for non-connected channel
-         * @return an integer value representing amplifier`s channel value for non-connected channel
-         */
+	/**
+	 * Returns an integer value representing amplifier's channel value for non-connected channel
+	 * @return an integer value representing amplifier's channel value for non-connected channel
+	 */
         public double getAmplifierNull() {
                 return this.amplifierNull;
         }

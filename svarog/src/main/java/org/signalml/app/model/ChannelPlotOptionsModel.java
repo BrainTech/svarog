@@ -1,6 +1,6 @@
 package org.signalml.app.model;
 /*
- * A model representing single channel`s display options.
+ * A model representing single channel's display options.
  * @author Mateusz Kruszyński &copy; 2011 CC Titanis
  */
 public class ChannelPlotOptionsModel {
@@ -17,7 +17,7 @@ public class ChannelPlotOptionsModel {
 	 */
 	private boolean ignoreGlobalScale=false;
 	/*
-	 * channel`s local voltage scale value
+	 * channel's local voltage scale value
 	 */
 	private int voltageScale;
 	

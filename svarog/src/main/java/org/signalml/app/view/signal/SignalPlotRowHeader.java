@@ -40,11 +40,11 @@ public class SignalPlotRowHeader extends JComponent {
 
 	private static final Dimension MINIMUM_SIZE = new Dimension(0,0);
 	/*
-	 * width of channel`s options button (for every channel) in pixels
+	 * width of channel's options button (for every channel) in pixels
 	 */
 	private static final int CHANNEL_BUTTON_WIDTH = 10;
 	/*
-	 * width of value scale`s tick (horizontal line) in pixels
+	 * width of value scale's tick (horizontal line) in pixels
 	 */
 	private static final int SCALE_HORIZONTAL_LINE_WIDTH = 4;
 	/*
@@ -117,7 +117,7 @@ public class SignalPlotRowHeader extends JComponent {
 			CompactButton b = new CompactButton(
 					new ChannelOptionsAction(this.channelOptionsVisibleIcon,
 									this.channelOptionsInvisibleIcon,
-									_("Edit channel`s options"), 
+									_("Edit channel's options"),
 									_("Show channel"),
 									i));
 			channelOptionsButtons[i] = b;
@@ -267,7 +267,7 @@ public class SignalPlotRowHeader extends JComponent {
 		}
 		g.setFont(normalFont);
 		
-		//draw visible labels and channel`s buttons
+		//draw visible labels and channel's buttons
 		boolean visible;
 		int visibleCount=0;
 		i=startChannel;
@@ -297,7 +297,7 @@ public class SignalPlotRowHeader extends JComponent {
 	/*
 	 * For every channel that have its individual value scale draws it.
 	 * @param g graphics on which scales will be drawn
-	 * @param size panel`s size needed to determine value scale X position 
+	 * @param size panel's size needed to determine value scale X position
 	 */
 	private void drawChannelsValueTicks(Graphics2D g, Dimension size) {
 		//prepare canvas to draw labels
@@ -308,10 +308,10 @@ public class SignalPlotRowHeader extends JComponent {
 		for (int j = 0; j < channelCount; j++) {
 			if (pixelPerRowUnitForChannels[j] >= 0) { // if channel has its own value scale
 
-				tp = channelLevel[j] - pixelPerChannel/2 + 3; //scale`s top position
-				bt = channelLevel[j] + pixelPerChannel/2 - 3; //scale`s bottom position
-				x = size.width - this.getScaleWidth(); // scale`s x position
-				//draw scale`s line...
+				tp = channelLevel[j] - pixelPerChannel/2 + 3; //scale's top position
+				bt = channelLevel[j] + pixelPerChannel/2 - 3; //scale's bottom position
+				x = size.width - this.getScaleWidth(); // scale's x position
+				//draw scale's line...
 				g.drawLine(x-SCALE_HORIZONTAL_LINE_WIDTH, tp, x-SCALE_HORIZONTAL_LINE_WIDTH, bt);
 				
 				//determine number of ticks (scales horizontal lines)
@@ -399,10 +399,10 @@ public class SignalPlotRowHeader extends JComponent {
 
 		/*
 		 * Creates an action for ChannelOptions button.
-		 * @param visibleIcon button`s visible icon
-		 * @param invisibleIcon button`s invisible icon
-		 * @param visibleTooltip button`s visible tooltip
-		 * @param invisible button`s invisible tooltip
+		 * @param visibleIcon button's visible icon
+		 * @param invisibleIcon button's invisible icon
+		 * @param visibleTooltip button's visible tooltip
+		 * @param invisible button's invisible tooltip
 		 * @param channel index of channel the action is connected to
 		 */
 		public ChannelOptionsAction(ImageIcon visibleIcon, ImageIcon invisibleIcon, String visibleTooltip, String invisibleTooltip, int channel) {
@@ -417,7 +417,7 @@ public class SignalPlotRowHeader extends JComponent {
 		}
 
 		/*
-		 * Sets button`s visibility attributes - icon and tooltip.
+		 * Sets button's visibility attributes - icon and tooltip.
 		 * @param visible ...
 		 */
 		public void setButtonVisible(boolean visible) {

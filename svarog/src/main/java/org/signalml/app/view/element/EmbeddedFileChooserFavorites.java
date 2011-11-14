@@ -225,11 +225,11 @@ public class EmbeddedFileChooserFavorites extends JPanel implements
  		}
  	}
  	
- 	/*
- 	 * Updates last directories history with given directory
- 	 * 
- 	 * @param dir directory`s abs path that has just been selected
- 	 */
+	/*
+	 * Updates last directories history with given directory
+	 *
+	 * @param dir directory's abs path that has just been selected
+	 */
  	public void lastDirectoryChanged(String dir) {
 	 	String[] dirs = this.applicationConfiguration.getLastDirs();
 	 	String[] new_dirs;

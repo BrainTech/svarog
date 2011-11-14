@@ -46,7 +46,7 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractPopupDialog;
 
 /*
- * A pop-up that handles single channel`s display options, eg.visibility, value scale.
+ * A pop-up that handles single channel's display options, eg.visibility, value scale.
  */
 public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements ChangeListener, ActionListener {
 
@@ -58,7 +58,7 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 	private static final long serialVersionUID = 1L;
 
 	/*
-	 * parent`s plot (self`s model)
+	 * parent's plot (self's model)
 	 */
 	private SignalPlot currentPlot;
 	/*
@@ -175,7 +175,7 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 	}
 
 	/*
-	 * Sets scrollBar`s initial value.
+	 * Sets scrollBar's initial value.
 	 * @param scale initial value to be set
 	 */
 	private void setInitialVoltageScale(int scale) {
@@ -191,9 +191,9 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 	}
 	
 	/*
-	 * Fills the panel with data from its parent plot. Fired on panel`s appearance.
+	 * Fills the panel with data from its parent plot. Fired on panel's appearance.
 	 * @see org.signalml.plugin.export.view.AbstractDialog#fillDialogFromModel(java.lang.Object)
-	 * @param model parent`s plot
+	 * @param model parent's plot
 	 */
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
@@ -207,9 +207,9 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 	}
 
 	/*
-	 * Fills model with data from the panel. Fired on panel`s disappearance.
+	 * Fills model with data from the panel. Fired on panel's disappearance.
 	 * @see org.signalml.plugin.export.view.AbstractDialog#fillModelFromDialog(java.lang.Object)
-	 * @param model parent`s plot
+	 * @param model parent's plot
 	 */
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
@@ -238,7 +238,7 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 	}
 
 	/*
-	 * Fired on valueScale changed. Changes model`s value scale.
+	 * Fired on valueScale changed. Changes model's value scale.
 	 * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
 	 */
 	@Override
@@ -252,7 +252,7 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 	}
 
 	/*
-	 * Fired on 'hide' button pressed. Sets channel`s visibility and hides the panel.
+	 * Fired on 'hide' button pressed. Sets channel's visibility and hides the panel.
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	@Override

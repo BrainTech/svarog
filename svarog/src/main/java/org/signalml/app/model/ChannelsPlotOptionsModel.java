@@ -7,7 +7,7 @@ import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageMismatchException;
 /*
- * A model aggregating single channel`s display options
+ * A model aggregating single channel's display options
  * @author Mateusz Kruszyński &copy; 2011 CC Titanis
  */
 
@@ -41,7 +41,7 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 	
 	/*
 	 * Updates child models with given scale value.
-	 * @param scaleValue parent plot`s scale value
+	 * @param scaleValue parent plot's scale value
 	 */
 	public void globalScaleChanged(int scaleValue) {
 		for (int i = 0; i < channelsOptions.length; i++) {
@@ -51,7 +51,7 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 	}
 	
 	/*
-	 * Fired by parent`s plot on its montage change event
+	 * Fired by parent's plot on its montage change event
 	 */
 	public void globalMontageChanged() {
 		this.modelChanged();
@@ -68,7 +68,7 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 		for (int i = 0; i < channelsOptions.length; i++) {
 			voltageScale = (double) channelsOptions[i].getVoltageScale();
 			//While computing multiplier we must take into consideration 'global' multiplier from
-			//main plot`s ValueScaleFactor. In fact if we want to 'neutralize' this 'global' multiplier
+			//main plot's ValueScaleFactor. In fact if we want to 'neutralize' this 'global' multiplier
 			//we need to set mult to (my multiplier)/(global multiplier) so that in the end
 			//a sample will be multiplied by ((my multiplier)/(global multiplier))*(global multiplier)
 			//so as a result by (my multiplier) only.
@@ -79,7 +79,7 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 		
 			mult = voltageScale/globalVoltageScale;
 		
-			//Get references from plot`s local montage from a moment of opening current dialog
+			//Get references from plot's local montage from a moment of opening current dialog
 			//Do this so that we always want to apply new reference to this initial-plot montage,
 			//not currentMontage
 			float[] refs = localMontage.getReferenceAsFloat(i);
@@ -104,7 +104,7 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 	
 	/*
 	 * Returns channel model for given index
-	 * @param index channel`s index for which the model will be returned
+	 * @param index channel's index for which the model will be returned
 	 * @returns channel options model
 	 */
 	public ChannelPlotOptionsModel getModelAt(int index) {
@@ -123,7 +123,7 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 		return cnt;
 	}
 	/*
-	 * Fired by parent plot`s value scale model. Updates child models.
+	 * Fired by parent plot's value scale model. Updates child models.
 	 * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
 	 */
 	@Override

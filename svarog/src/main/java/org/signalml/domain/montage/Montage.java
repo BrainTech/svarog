@@ -666,13 +666,12 @@ public class Montage extends SourceMontage implements Preset {
 		return references;
 	}
 
-        /**
-         * For a {@link MontageChannel montage channel} of a given index,
-         * returns a string representing its references
-         * @param index an index of the montage channel
-         * @return a string representing channel`s references
-         */
-
+	/**
+	 * For a {@link MontageChannel montage channel} of a given index,
+	 * returns a string representing its references
+	 * @param index an index of the montage channel
+	 * @return a string representing channel's references
+	 */
 	public String getReferenceReadable(int index) {
 		String[] references = new String[sourceChannels.size()];
 		montageChannels.get(index).getReferences(references);
