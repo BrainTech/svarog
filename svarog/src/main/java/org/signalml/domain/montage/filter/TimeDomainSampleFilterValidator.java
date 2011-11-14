@@ -4,10 +4,10 @@
 
 package org.signalml.domain.montage.filter;
 
+import static org.signalml.app.SvarogApplication._;
 import java.util.ArrayList;
 import java.util.List;
 import org.signalml.domain.montage.filter.iirdesigner.FilterType;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * This class respresents a validator which is capable of checking
@@ -16,11 +16,6 @@ import org.springframework.context.support.MessageSourceAccessor;
  * @author Piotr Szachewicz
  */
 public final class TimeDomainSampleFilterValidator {
-
-	/**
-	 * The source of localized messages (labels).
-	 */
-	private MessageSourceAccessor messageSource;
 
 	/**
 	 * The filter checked by this validator.
@@ -39,11 +34,9 @@ public final class TimeDomainSampleFilterValidator {
 
 	/**
 	 * Creates a new validator for the given filter.
-	 * @param messageSource the source of localized messages
 	 * @param filter the filter to be validated
 	 */
-	public TimeDomainSampleFilterValidator(MessageSourceAccessor messageSource, TimeDomainSampleFilter filter) {
-		this.messageSource = messageSource;
+	public  TimeDomainSampleFilterValidator( TimeDomainSampleFilter filter) {
 		this.filter = filter;
 
 		FilterType filterType = filter.getFilterType();
@@ -99,7 +92,7 @@ public final class TimeDomainSampleFilterValidator {
 			return true;
 		}
 		else {
-			addErrorMessage(messageSource.getMessage("timeDomainFilter.highpassFilterNotValidMessage"));
+			addErrorMessage(_("For high-pass filters the frequencies must fulfill: stopband frequency 1 < passband frequency 1."));
 			return false;
 		}
 	}
@@ -115,7 +108,7 @@ public final class TimeDomainSampleFilterValidator {
 			return true;
 		}
 		else {
-			addErrorMessage(messageSource.getMessage("timeDomainFilter.lowpassFilterNotValidMessage"));
+			addErrorMessage(_("For low-pass filters the frequencies must fulfill: passband frequency 1 < stopband frequency 1."));
 			return false;
 		}
 	}
@@ -133,7 +126,7 @@ public final class TimeDomainSampleFilterValidator {
 			return true;
 		}
 		else {
-			addErrorMessage(messageSource.getMessage("timeDomainFilter.bandpassFilterNotValidMessage"));
+			addErrorMessage(_("For band-pass filters the frequencies must fulfill: stopband frequency 1 < passband frequency 1 < passband frequency 2 < stopband frequency 2."));
 			return false;
 		}
 	}
@@ -151,7 +144,7 @@ public final class TimeDomainSampleFilterValidator {
 			return true;
 		}
 		else {
-			addErrorMessage(messageSource.getMessage("timeDomainFilter.bandstopFilterNotValidMessage"));
+			addErrorMessage(_("For band-stop filters the frequencies must fulfill: passband frequency 1 < stopband frequency 1 < stopband frequency 2 < passband frequency 2."));
 			return false;
 		}
 	}
@@ -165,7 +158,7 @@ public final class TimeDomainSampleFilterValidator {
 		if (filter.getPassbandRipple() < filter.getStopbandAttenuation())
 			return true;
 		else {
-			addErrorMessage(messageSource.getMessage("timeDomainFilter.rippleShouldBeLessThanAttenuationMessage"));
+			addErrorMessage(_("Passband ripple should be less than stopband attenuation."));
 			return false;
 		}
 	}

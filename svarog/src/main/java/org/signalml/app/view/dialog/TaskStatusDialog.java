@@ -4,6 +4,8 @@
 
 package org.signalml.app.view.dialog;
 
+import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogApplication._R;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
@@ -51,7 +53,6 @@ import org.signalml.task.TaskEvent;
 import org.signalml.task.TaskEventListener;
 import org.signalml.task.TaskStatus;
 import org.springframework.context.MessageSourceResolvable;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Dialog which displays the progress of the {@link Task}.
@@ -74,10 +75,6 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 	 */
 	private boolean initialized = false;
 
-	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
 	/**
 	 * the {@link ApplicationTaskManager manager} of {@link Task tasks}
 	 */
@@ -280,7 +277,7 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 
 		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 
-		setTitle(messageSource.getMessage("taskStatus.title", new Object[] { method.getName() }));
+		setTitle(_R("signalml task [{0}]", method.getName()));
 		if (method instanceof MethodIteratorMethod) {
 			setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/iteratemethod.png"));
 		} else {
@@ -292,15 +289,15 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 
 		closeAction = new CloseAction();
 
-		abortTaskAction = new AbortTaskAction(messageSource,this);
+		abortTaskAction = new AbortTaskAction(this);
 		if (method instanceof SuspendableMethod) {
 			suspendable = true;
-			suspendTaskAction = new SuspendTaskAction(messageSource,this);
-			resumeTaskAction = new ResumeTaskAction(messageSource,this);
+			suspendTaskAction = new SuspendTaskAction(this);
+			resumeTaskAction = new ResumeTaskAction(this);
 			resumeTaskAction.setTaskManager(taskManager);
 		}
 
-		getTaskResultAction = new GetTaskResultAction(messageSource, this, new DialogResultListener() {
+		getTaskResultAction = new GetTaskResultAction( this, new DialogResultListener() {
 			@Override
 			public void dialogCompleted(boolean success) {
 				if (success && closeAction != null) {
@@ -310,7 +307,7 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 		});
 		getTaskResultAction.setMethodManager(methodManager);
 
-		getTaskErrorAction = new GetTaskErrorAction(messageSource, this);
+		getTaskErrorAction = new GetTaskErrorAction( this);
 		getTaskErrorAction.setErrorsDialog(errorsDialog);
 
 		if (method instanceof TrackableMethod) {
@@ -319,13 +316,13 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 			progressCnt = trackableMethod.getTickerCount();
 			progressTitles = new String[progressCnt];
 			for (int i=0; i<progressCnt; i++) {
-				progressTitles[i] = trackableMethod.getTickerLabel(messageSource, i);
+				progressTitles[i] = trackableMethod.getTickerLabel( i);
 			}
 			lastETAUpdateMillis = new long[progressCnt];
 		} else {
 			progressCnt = 1;
 			progressTitles = new String[1];
-			progressTitles[0] = messageSource.getMessage("taskStatus.noProgressInfo");
+			progressTitles[0] = _("No detailed progress info");
 		}
 
 		initializeControlPane();
@@ -357,7 +354,7 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 
 					MessageSourceResolvable message = task.getMessage();
 					if (message != null) {
-						messageLabel.setText(messageSource.getMessage(message));
+						messageLabel.setText(getSvarogI18n().getMessage(message));
 					} else {
 						messageLabel.setText("");
 					}
@@ -441,7 +438,7 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 
 		JComponent interfacePane = new JPanel();
 		interfacePane.setLayout(new BoxLayout(interfacePane, BoxLayout.Y_AXIS));
-		interfacePane.setBorder(new TitledBorder(messageSource.getMessage("taskStatus.taskStatus")));
+		interfacePane.setBorder(new TitledBorder(_("Task status")));
 
 		int i;
 
@@ -629,22 +626,6 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 	}
 
 	/**
-	 * Returns the source of messages (labels).
-	 * @return the source of messages (labels)
-	 */
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
-	}
-
-	/**
-	 * Sets the source of messages (labels).
-	 * @param messageSource the source of messages (labels)
-	 */
-	public void setMessageSource(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
-	}
-
-	/**
 	 * Returns the {@link ApplicationTaskManager manager} of {@link Task tasks}.
 	 * @return the manager of tasks
 	 */
@@ -818,7 +799,7 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 
 		MessageSourceResolvable message = ev.getMessage();
 		if (message != null) {
-			messageLabel.setText(messageSource.getMessage(message));
+			messageLabel.setText(getSvarogI18n().getMessage(message));
 		} else {
 			messageLabel.setText("");
 		}
@@ -862,28 +843,23 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 	 * how many time elapsed
 	 */
 	private void updateETA(int index, int limit, int value, boolean force) {
-
 		long millis = System.currentTimeMillis();
-		if (!force && lastETAUpdateMillis[index] != 0 && ((millis-lastETAUpdateMillis[index]) < 1000)) {
+		if (!force && lastETAUpdateMillis[index] != 0 && ((millis-lastETAUpdateMillis[index]) < 1000))
 			return;
-		}
 		lastETAUpdateMillis[index] = millis;
 
-		Integer secondsInteger = task.getExpectedSecondsUntilComplete(index);
+		final Integer secondsInteger = task.getExpectedSecondsUntilComplete(index);
+		final int minutes = secondsInteger / 60;
+		final int seconds = secondsInteger % 60;
+
+		final String _minutes, _seconds;
 		if (secondsInteger == null) {
-			progressETALabels[index].setText(messageSource.getMessage("taskStatus.ETAUnknown"));
-			return;
+			_minutes = _seconds = "--";
+		} else {
+			_minutes = String.format("%02d", minutes);
+			_seconds = String.format("%02d", seconds);
 		}
-
-		int seconds = secondsInteger;
-		int minutes = seconds / 60;
-		seconds = seconds % 60;
-
-		String minutesString = (minutes < 10 ? "0" : "") + Integer.toString(minutes);
-		String secondsString = (seconds < 10 ? "0" : "") + Integer.toString(seconds);
-
-		progressETALabels[index].setText(messageSource.getMessage("taskStatus.ETAKnown", new Object[] {minutesString,secondsString}));
-
+		progressETALabels[index].setText(_R("Expected to end in {0}:{1} min:sec", _minutes, _seconds));
 	}
 
 	/**
@@ -946,7 +922,7 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 	private void setStatus(TaskStatus taskStatus) {
 
 		statusIconLabel.setIcon(IconUtils.getLargeTaskIcon(taskStatus));
-		statusTextLabel.setText(messageSource.getMessage("taskStatusLong." + taskStatus));
+		statusTextLabel.setText(getSvarogI18n().getMessage("taskStatusLong." + taskStatus));
 
 		abortTaskAction.setEnabled(taskStatus.isAbortable());
 		getTaskResultAction.setEnabled(taskStatus.isFinished());
@@ -976,9 +952,9 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 						progressBars[i].setMaximum(100);
 						progressBars[i].setValue(0);
 						progressBars[i].setStringPainted(true);
-						progressBars[i].setString(messageSource.getMessage("taskStatus.ETAAborted"));
+						progressBars[i].setString(_("Task aborted"));
 					} else {
-						progressETALabels[i].setText(messageSource.getMessage("taskStatus.ETAAborted"));
+						progressETALabels[i].setText(_("Task aborted"));
 					}
 				}
 			} else {
@@ -986,7 +962,7 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 				progressBars[0].setMaximum(100);
 				progressBars[0].setValue(0);
 				progressBars[0].setStringPainted(true);
-				progressBars[0].setString(messageSource.getMessage("taskStatus.ETAAborted"));
+				progressBars[0].setString(_("Task aborted"));
 			}
 			break;
 
@@ -1003,9 +979,9 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 						progressBars[i].setMaximum(100);
 						progressBars[i].setValue(0);
 						progressBars[i].setStringPainted(true);
-						progressBars[i].setString(messageSource.getMessage("taskStatus.ETASuspended"));
+						progressBars[i].setString(_("Task suspended"));
 					} else {
-						progressETALabels[i].setText(messageSource.getMessage("taskStatus.ETASuspended"));
+						progressETALabels[i].setText(_("Task suspended"));
 					}
 				}
 			} else {
@@ -1013,7 +989,7 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 				progressBars[0].setMaximum(100);
 				progressBars[0].setValue(0);
 				progressBars[0].setStringPainted(true);
-				progressBars[0].setString(messageSource.getMessage("taskStatus.ETASuspended"));
+				progressBars[0].setString(_("Task suspended"));
 			}
 			break;
 
@@ -1032,9 +1008,9 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 						progressBars[i].setMaximum(100);
 						progressBars[i].setValue(100);
 						progressBars[i].setStringPainted(true);
-						progressBars[i].setString(messageSource.getMessage("taskStatus.ETAFinished"));
+						progressBars[i].setString(_("Task finished"));
 					} else {
-						progressETALabels[i].setText(messageSource.getMessage("taskStatus.ETAFinished"));
+						progressETALabels[i].setText(_("Task finished"));
 						max = progressBars[i].getMaximum();
 						if (max <= 0) {
 							progressBars[i].setMaximum(1);
@@ -1049,7 +1025,7 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 				progressBars[0].setMaximum(100);
 				progressBars[0].setValue(100);
 				progressBars[0].setStringPainted(true);
-				progressBars[0].setString(messageSource.getMessage("taskStatus.ETAFinished"));
+				progressBars[0].setString(_("Task finished"));
 			}
 			break;
 
@@ -1067,9 +1043,9 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 						progressBars[i].setMaximum(100);
 						progressBars[i].setValue(0);
 						progressBars[i].setStringPainted(true);
-						progressBars[i].setString(messageSource.getMessage("taskStatus.ETAFinished"));
+						progressBars[i].setString(_("Task finished"));
 					} else {
-						progressETALabels[i].setText(messageSource.getMessage("taskStatus.ETAFinished"));
+						progressETALabels[i].setText(_("Task finished"));
 					}
 				}
 			} else {
@@ -1077,7 +1053,7 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 				progressBars[0].setMaximum(100);
 				progressBars[0].setValue(0);
 				progressBars[0].setStringPainted(true);
-				progressBars[0].setString(messageSource.getMessage("taskStatus.ETAFinished"));
+				progressBars[0].setString(_("Task finished"));
 			}
 			break;
 
@@ -1136,7 +1112,7 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 		 * Constructor. Sets the icon and the description.
 		 */
 		public CloseAction() {
-			super(messageSource.getMessage("close"));
+			super(_("Close"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/close.png"));
 		}
 
@@ -1156,4 +1132,11 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 
 	}
 
+	/**
+	 * Returns the {@link SvarogAccessI18nImpl} instance.
+	 * @return the {@link SvarogAccessI18nImpl} singleton instance
+	 */
+	protected org.signalml.app.SvarogI18n getSvarogI18n() {
+		return org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance();
+	}
 }

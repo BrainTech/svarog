@@ -35,7 +35,6 @@ import org.signalml.domain.tag.TagStyleListener;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** TagStyleToolBar
  *
@@ -60,9 +59,6 @@ public class TagStyleToolBar extends JToolBar implements TagStyleListener {
 	private TagEraserToggleButton tagEraserToggleButton;
 
 	private JButton showAllButton;
-
-	private MessageSourceAccessor messageSource;
-
 	private TagStylesPopupDialog tagStylesPopupDialog = null;
 	private TagIconProducer tagIconProducer;
 
@@ -70,13 +66,11 @@ public class TagStyleToolBar extends JToolBar implements TagStyleListener {
 	private boolean tagSelectionOnButtonClick = false;
 	private ActionListener buttonClickListener;
 
-	public TagStyleToolBar(StyledTagSet tagSet, SignalSelectionType type, MessageSourceAccessor messageSource, TagIconProducer tagIconProducer, TagSelectionAction tagSelectionAction) {
+	public TagStyleToolBar(StyledTagSet tagSet, SignalSelectionType type, TagIconProducer tagIconProducer, TagSelectionAction tagSelectionAction) {
 
 		super(JToolBar.VERTICAL);
 		setFloatable(false);
 		setBorder(null);
-
-		this.messageSource = messageSource;
 		this.tagSelectionAction = tagSelectionAction;
 		this.tagSet = tagSet;
 		this.type = type;
@@ -100,7 +94,7 @@ public class TagStyleToolBar extends JToolBar implements TagStyleListener {
 		styleToButtonMap = new HashMap<TagStyle, TagStyleToggleButton>();
 		buttonToStyleMap = new HashMap<ButtonModel, TagStyle>();
 
-		tagEraserToggleButton = new TagEraserToggleButton(messageSource);
+		tagEraserToggleButton = new TagEraserToggleButton();
 		tagEraserToggleButton.addActionListener(buttonClickListener);
 		buttonGroup.add(tagEraserToggleButton);
 		add(tagEraserToggleButton);
@@ -306,7 +300,7 @@ public class TagStyleToolBar extends JToolBar implements TagStyleListener {
 		private static final long serialVersionUID = 1L;
 
 		public ShowAllAction() {
-			super(TagStyleToolBar.this.messageSource);
+			super();
 			setIconPath("org/signalml/app/icon/showallstyles.png");
 			setToolTip("action.showAllTagStylesToolTip");
 		}
@@ -317,7 +311,7 @@ public class TagStyleToolBar extends JToolBar implements TagStyleListener {
 			Container ancestor = getTopLevelAncestor();
 
 			if (tagStylesPopupDialog == null) {
-				tagStylesPopupDialog = new TagStylesPopupDialog(messageSource, TagStyleToolBar.this, (Window) ancestor, true);
+				tagStylesPopupDialog = new TagStylesPopupDialog( TagStyleToolBar.this, (Window) ancestor, true);
 				tagStylesPopupDialog.initializeNow();
 			}
 

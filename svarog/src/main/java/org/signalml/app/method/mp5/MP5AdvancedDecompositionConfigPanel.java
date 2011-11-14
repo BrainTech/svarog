@@ -3,6 +3,7 @@
  */
 package org.signalml.app.method.mp5;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 
 import javax.swing.Box;
@@ -18,13 +19,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.util.SwingUtils;
+import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.app.view.element.CompactButton;
 import org.signalml.app.view.element.ResolvableComboBox;
 import org.signalml.method.mp5.MP5DictionaryReinitType;
 import org.signalml.method.mp5.MP5DictionaryType;
 import org.signalml.method.mp5.MP5Parameters;
-import org.signalml.plugin.export.view.AbstractDialog;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /** MP5AdvancedDecompositionConfigPanel
@@ -35,8 +36,6 @@ import org.springframework.validation.Errors;
 public class MP5AdvancedDecompositionConfigPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-
-	private MessageSourceAccessor messageSource;
 	private AbstractDialog owner;
 
 	private ResolvableComboBox dictionaryTypeComboBox;
@@ -44,9 +43,8 @@ public class MP5AdvancedDecompositionConfigPanel extends JPanel {
 	private JSpinner scaleToPeriodFactorSpinner;
 	private JSpinner periodDensitySpinner;
 
-	public MP5AdvancedDecompositionConfigPanel(MessageSourceAccessor messageSource, AbstractDialog owner) {
+	public  MP5AdvancedDecompositionConfigPanel( AbstractDialog owner) {
 		super();
-		this.messageSource = messageSource;
 		this.owner = owner;
 		initialize();
 	}
@@ -54,7 +52,7 @@ public class MP5AdvancedDecompositionConfigPanel extends JPanel {
 	private void initialize() {
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("mp5Method.dialog.advancedDecompositionTitle")),
+		        new TitledBorder(_("Advanced decomposition settings")),
 		        new EmptyBorder(3,3,3,3)
 		);
 
@@ -65,15 +63,15 @@ public class MP5AdvancedDecompositionConfigPanel extends JPanel {
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
-		JLabel dictionaryTypeLabel = new JLabel(messageSource.getMessage("mp5Method.dialog.dictionaryType"));
-		JLabel dictionaryReinitTypeLabel = new JLabel(messageSource.getMessage("mp5Method.dialog.dictionaryReinitType"));
-		JLabel scaleToPeriodFactorLabel = new JLabel(messageSource.getMessage("mp5Method.dialog.scaleToPeriodFactor"));
-		JLabel periodDensityLabel = new JLabel(messageSource.getMessage("mp5Method.dialog.periodDensity"));
+		JLabel dictionaryTypeLabel = new JLabel(_("Dictionary type"));
+		JLabel dictionaryReinitTypeLabel = new JLabel(_("Reinit dictionary"));
+		JLabel scaleToPeriodFactorLabel = new JLabel(_("Max scale / period"));
+		JLabel periodDensityLabel = new JLabel(_("Period density"));
 
-		CompactButton dictionaryTypeHelpButton = SwingUtils.createFieldHelpButton(messageSource, owner, MP5MethodDialog.HELP_DICTIONARY_TYPE);
-		CompactButton dictionaryReinitTypeHelpButton = SwingUtils.createFieldHelpButton(messageSource, owner, MP5MethodDialog.HELP_DICTIONARY_REINIT_TYPE);
-		CompactButton scaleToPeriodFactorHelpButton = SwingUtils.createFieldHelpButton(messageSource, owner, MP5MethodDialog.HELP_SCALE_TO_PERIOD_FACTOR);
-		CompactButton periodDensityHelpButton = SwingUtils.createFieldHelpButton(messageSource, owner, MP5MethodDialog.HELP_PERIOD_DENSITY);
+		CompactButton dictionaryTypeHelpButton = SwingUtils.createFieldHelpButton( owner, MP5MethodDialog.HELP_DICTIONARY_TYPE);
+		CompactButton dictionaryReinitTypeHelpButton = SwingUtils.createFieldHelpButton( owner, MP5MethodDialog.HELP_DICTIONARY_REINIT_TYPE);
+		CompactButton scaleToPeriodFactorHelpButton = SwingUtils.createFieldHelpButton( owner, MP5MethodDialog.HELP_SCALE_TO_PERIOD_FACTOR);
+		CompactButton periodDensityHelpButton = SwingUtils.createFieldHelpButton( owner, MP5MethodDialog.HELP_PERIOD_DENSITY);
 
 		Component glue1 = Box.createHorizontalGlue();
 		Component glue2 = Box.createHorizontalGlue();
@@ -156,7 +154,7 @@ public class MP5AdvancedDecompositionConfigPanel extends JPanel {
 
 	public ResolvableComboBox getDictionaryTypeComboBox() {
 		if (dictionaryTypeComboBox == null) {
-			dictionaryTypeComboBox = new ResolvableComboBox(messageSource);
+			dictionaryTypeComboBox = new ResolvableComboBox();
 			dictionaryTypeComboBox.setModel(new DefaultComboBoxModel(MP5DictionaryType.values()));
 			dictionaryTypeComboBox.setPreferredSize(MP5MethodDialog.FIELD_SIZE);
 			dictionaryTypeComboBox.setMinimumSize(MP5MethodDialog.FIELD_SIZE);
@@ -167,7 +165,7 @@ public class MP5AdvancedDecompositionConfigPanel extends JPanel {
 
 	public ResolvableComboBox getDictionaryReinitTypeComboBox() {
 		if (dictionaryReinitTypeComboBox == null) {
-			dictionaryReinitTypeComboBox = new ResolvableComboBox(messageSource);
+			dictionaryReinitTypeComboBox = new ResolvableComboBox();
 			dictionaryReinitTypeComboBox.setModel(new DefaultComboBoxModel(MP5DictionaryReinitType.values()));
 			dictionaryReinitTypeComboBox.setPreferredSize(MP5MethodDialog.FIELD_SIZE);
 			dictionaryReinitTypeComboBox.setMinimumSize(MP5MethodDialog.FIELD_SIZE);

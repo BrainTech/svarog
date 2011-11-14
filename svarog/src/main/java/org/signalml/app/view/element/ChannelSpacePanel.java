@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -25,7 +26,7 @@ import org.signalml.domain.signal.space.ChannelSpaceType;
 import org.signalml.domain.signal.space.SignalSourceLevel;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -48,11 +49,6 @@ public class ChannelSpacePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	protected static final Logger logger = Logger.getLogger(ChannelSpacePanel.class);
-
-	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
 
 	/**
 	 * the list with the names of channels;
@@ -84,12 +80,10 @@ public class ChannelSpacePanel extends JPanel {
 	private String[] channels;
 
 	/**
-	 * Constructor. Sets the source of messages and initializes this panel.
-	 * @param messageSource the source of messages
+	 * Constructor. Initializes the panel.
 	 */
-	public ChannelSpacePanel(MessageSourceAccessor messageSource) {
+	public  ChannelSpacePanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -108,7 +102,7 @@ public class ChannelSpacePanel extends JPanel {
 		setLayout(new BorderLayout());
 
 		setBorder(new CompoundBorder(
-		                  new TitledBorder(messageSource.getMessage("signalSpace.channelSpace.title")),
+		                  new TitledBorder(_("Channel selection")),
 		                  new EmptyBorder(3,3,3,3)
 		          ));
 
@@ -158,7 +152,7 @@ public class ChannelSpacePanel extends JPanel {
 	 */
 	public JButton getChannelSelectAllButton() {
 		if (channelSelectAllButton == null) {
-			channelSelectAllButton = new JButton(new ListSelectAllAction(messageSource, getChannelList()));
+			channelSelectAllButton = new JButton(new ListSelectAllAction( getChannelList()));
 		}
 		return channelSelectAllButton;
 	}
@@ -171,7 +165,7 @@ public class ChannelSpacePanel extends JPanel {
 	 */
 	public JButton getChannelSelectNoneButton() {
 		if (channelSelectNoneButton == null) {
-			channelSelectNoneButton = new JButton(new ListSelectNoneAction(messageSource, getChannelList()));
+			channelSelectNoneButton = new JButton(new ListSelectNoneAction( getChannelList()));
 		}
 		return channelSelectNoneButton;
 	}
@@ -184,7 +178,7 @@ public class ChannelSpacePanel extends JPanel {
 	 */
 	public JButton getChannelSelectInvertButton() {
 		if (channelSelectInvertButton == null) {
-			channelSelectInvertButton = new JButton(new ListSelectInvertAction(messageSource, getChannelList()));
+			channelSelectInvertButton = new JButton(new ListSelectInvertAction( getChannelList()));
 		}
 		return channelSelectInvertButton;
 	}

@@ -1,5 +1,6 @@
 package org.signalml.app.view.opensignal;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 import java.awt.Dimension;
 import javax.swing.Box;
@@ -10,7 +11,6 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import org.signalml.app.view.ViewerElementManager;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Panel containing amp config and open bci modules config buttons.
@@ -19,10 +19,6 @@ import org.springframework.context.support.MessageSourceAccessor;
  */
 public class ConfigureAmplifiersPanel extends JPanel {
 
-        /**
-         * The message source.
-         */
-        private MessageSourceAccessor messageSource;
         /**
          * The viewer element manager.
          */
@@ -39,12 +35,10 @@ public class ConfigureAmplifiersPanel extends JPanel {
         /**
          * Default constructor.
          *
-         * @param messageSource {@link #messageSource}
          * @param viewerElementManager {@link #viewerElementManager}
          */
-        public ConfigureAmplifiersPanel(MessageSourceAccessor messageSource,
+        public  ConfigureAmplifiersPanel(
                 ViewerElementManager viewerElementManager) {
-                this.messageSource = messageSource;
                 this.viewerElementManager = viewerElementManager;
                 initialize();
         }
@@ -54,7 +48,7 @@ public class ConfigureAmplifiersPanel extends JPanel {
          */
         private void initialize() {
                 CompoundBorder configBorder = new CompoundBorder(
-                        new TitledBorder(messageSource.getMessage("amplifierSelection.config")),
+                        new TitledBorder(_("Config")),
                         new EmptyBorder(3, 3, 3, 3));
 
                 setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -74,7 +68,7 @@ public class ConfigureAmplifiersPanel extends JPanel {
 
                 if (configureDefinitionsButton == null) {
                         configureDefinitionsButton = new JButton(viewerElementManager.getAmplifierDefinitionConfigAction());
-                        configureDefinitionsButton.setText(messageSource.getMessage("action.amplifierDefinitionConfig"));
+                        configureDefinitionsButton.setText(_("Amplifier definition config"));
                         configureDefinitionsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
                 }
                 return configureDefinitionsButton;
@@ -89,7 +83,7 @@ public class ConfigureAmplifiersPanel extends JPanel {
 
                 if (configureModulesButton == null) {
                         configureModulesButton = new JButton(viewerElementManager.getOpenBCIModuleConfigAction());
-                        configureModulesButton.setText(messageSource.getMessage("action.openBCIModulesConfig"));
+                        configureModulesButton.setText(_("OpenBCI modules config"));
                         configureModulesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
                 }
                 return configureModulesButton;

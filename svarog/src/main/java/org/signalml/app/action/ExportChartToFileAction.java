@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Window;
@@ -19,7 +20,6 @@ import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ExportChartToFileAction
  *
@@ -35,11 +35,11 @@ public abstract class ExportChartToFileAction extends AbstractSignalMLAction {
 	private ViewerFileChooser fileChooser;
 	private Component optionPaneParent;
 
-	public ExportChartToFileAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
-		setText("action.exportChartToFile");
+	public  ExportChartToFileAction() {
+		super();
+		setText(_("Save chart as PNG file"));
 		setIconPath("org/signalml/app/icon/picture_save.png");
-		setToolTip("action.exportChartToFileToolTip");
+		setToolTip(_("Save chart as a PNG file"));
 	}
 
 	protected abstract Dimension getImageSize();

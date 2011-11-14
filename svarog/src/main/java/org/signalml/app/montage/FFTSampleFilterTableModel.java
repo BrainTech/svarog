@@ -4,12 +4,12 @@
 
 package org.signalml.app.montage;
 
+import static org.signalml.app.SvarogApplication._;
 import javax.swing.table.AbstractTableModel;
 
 import org.apache.log4j.Logger;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** FFTSampleFilterTableModel
  *
@@ -26,15 +26,6 @@ public class FFTSampleFilterTableModel extends AbstractTableModel {
 	public static final int COEFFICIENT_COLUMN = 1;
 
 	private FFTSampleFilter filter;
-	private MessageSourceAccessor messageSource;
-
-	public FFTSampleFilterTableModel(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
-	}
-
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
-	}
 
 	public FFTSampleFilter getFilter() {
 		return filter;
@@ -71,10 +62,10 @@ public class FFTSampleFilterTableModel extends AbstractTableModel {
 		switch (column) {
 
 		case FREQUENCY_COLUMN :
-			return messageSource.getMessage("editFFTSampleFilter.table.frequencyRange");
+			return _("Frequency range [Hz]");
 
 		case COEFFICIENT_COLUMN:
-			return messageSource.getMessage("editFFTSampleFilter.table.coefficient");
+			return _("Coefficient");
 
 		default :
 			throw new IndexOutOfBoundsException();

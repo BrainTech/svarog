@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
@@ -12,7 +13,6 @@ import org.signalml.app.document.SignalDocument;
 import org.signalml.app.model.MontageDescriptor;
 import org.signalml.app.view.dialog.EEGLabExportDialog;
 import org.apache.log4j.Logger;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Opens a {@link EEGLabExportDialog}.
@@ -34,15 +34,14 @@ public class EEGLabExportAction extends AbstractFocusableSignalMLAction<SignalDo
 	/**
 	 * Constructor.
 	 *
-	 * @param messageSource the message source accessor capable of resolving localized message codes
 	 * @param signalDocumentFocusSelector a {@link SignalDocumentFocusSelector} used to detect
 	 * which document is active.
 	 */
-        public EEGLabExportAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
+        public  EEGLabExportAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
 
-                super(messageSource, signalDocumentFocusSelector);
-		setText("action.exportEEGLab");
-		setToolTip("action.exportEEGLabToolTip");
+                super( signalDocumentFocusSelector);
+		setText(_("Export to EEGLab..."));
+		setToolTip(_("Export signal in EEGLab format"));
 	}
 
 	/**
@@ -75,9 +74,11 @@ public class EEGLabExportAction extends AbstractFocusableSignalMLAction<SignalDo
          */
 	@Override
 	public void setEnabledAsNeeded() {
-
-                SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
-		setEnabled((signalDocument != null) && !(signalDocument instanceof MonitorSignalDocument));
+		SignalDocumentFocusSelector x = getActionFocusSelector();
+		if (null != x) {
+			SignalDocument signalDocument = x.getActiveSignalDocument();
+			setEnabled((signalDocument != null) && !(signalDocument instanceof MonitorSignalDocument));
+		}
 	}
 
         /**

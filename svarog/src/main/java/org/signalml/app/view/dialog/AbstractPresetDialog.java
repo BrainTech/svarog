@@ -41,9 +41,9 @@ import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.element.AnyChangeDocumentAdapter;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
+import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogApplication._R;
 
 /**
  * Dialog which data can be stored in a {@link Preset preset}.
@@ -58,7 +58,7 @@ import org.springframework.context.support.MessageSourceAccessor;
  * 
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public abstract class AbstractPresetDialog extends AbstractDialog {
+public abstract class AbstractPresetDialog extends AbstractSvarogDialog {
 
 	static final long serialVersionUID = 1L;
 
@@ -191,24 +191,22 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 	/**
 	 * Constructor. Sets message source and the {@link PresetManager preset
 	 * manager}.
-	 * @param messageSource message source to set
 	 * @param presetManager the preset manager to set
 	 */
-	public AbstractPresetDialog(MessageSourceAccessor messageSource,PresetManager presetManager) {
-		super(messageSource);
+	public AbstractPresetDialog(PresetManager presetManager) {
+		super();
 		this.presetManager = presetManager;
 	}
 
 	/**
 	 * Constructor. Sets message source, {@link PresetManager preset
 	 * manager}, parent window and if this dialog blocks top-level windows.
-	 * @param messageSource message source to set
 	 * @param presetManager the preset manager to set
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public AbstractPresetDialog(MessageSourceAccessor messageSource,PresetManager presetManager, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public AbstractPresetDialog(PresetManager presetManager, Window w, boolean isModal) {
+		super(w, isModal);
 		this.presetManager = presetManager;
 	}
 
@@ -251,8 +249,8 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 		JPanel presetPane = new JPanel();
 		presetPane.setLayout(new BoxLayout(presetPane, BoxLayout.X_AXIS));
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("presetDialog.title")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Presets")),
+			new EmptyBorder(3,3,3,3)
 		);
 		presetPane.setBorder(border);
 
@@ -405,7 +403,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 	protected JComboBox getPresetComboBox() {
 		if (presetComboBox == null) {
 
-			presetComboBoxModel = new PresetComboBoxModel(messageSource.getMessage("presetDialog.selectToLoad"), presetManager);
+			presetComboBoxModel = new PresetComboBoxModel(_("<< select to load preset >>"), presetManager);
 			presetComboBox = new JComboBox(presetComboBoxModel);
 			presetComboBox.setSelectedIndex(0);
 			presetComboBox.setPreferredSize(new Dimension(200,20));
@@ -436,7 +434,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 	 */
 	protected SeriousWarningDialog getSeriousWarningDialog() {
 		if (seriousWarningDialog == null) {
-			seriousWarningDialog = new SeriousWarningDialog(messageSource,this,true);
+			seriousWarningDialog = new SeriousWarningDialog(this,true);
 			seriousWarningDialog.setApplicationConfig(applicationConfig);
 		}
 		return seriousWarningDialog;
@@ -612,7 +610,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 		public SaveDefaultPresetAction() {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/default_preset_save.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("presetDialog.saveDefaultPreset"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Make default"));
 		}
 
 		/**
@@ -646,7 +644,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 			Preset existingPreset = presetManager.getDefaultPreset();
 			if (existingPreset != null) {
 
-				String warning =  messageSource.getMessage("presetDialog.onReplaceDefaultPreset");
+				String warning =  _("The default preset will be permanently overwritten.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>permanently overwrite</b> the default?");
 				SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 5);
 
 				boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
@@ -685,7 +683,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 		public LoadDefaultPresetAction() {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/default_preset_load.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("presetDialog.loadDefaultPreset"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Load default"));
 		}
 
 		/**
@@ -709,7 +707,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 
 			if (!isTrackingChanges() || isChanged()) {
 
-				String warning =  messageSource.getMessage("presetDialog.onLoadDefaultPreset");
+				String warning =  _("The settings currently on the dialog will be permanently overwritten with the default preset.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>permanently overwrite</b> current settings?");
 				SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 3);
 
 				boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
@@ -744,7 +742,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 		public RemoveDefaultPresetAction() {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/default_preset_remove.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("presetDialog.removeDefaultPreset"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Remove default"));
 		}
 
 		/**
@@ -763,7 +761,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 				return;
 			}
 
-			String warning =  messageSource.getMessage("presetDialog.onRemoveDefaultPreset");
+			String warning =  _("The default preset will be permanently removed.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>permanently remove</b> the default?");
 			SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 5);
 
 			boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
@@ -799,7 +797,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 		public SavePresetAction() {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/preset_save.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("presetDialog.savePreset"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Save"));
 		}
 
 		/**
@@ -839,7 +837,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 			Preset existingPreset = presetManager.getPresetByName(newName);
 			if (existingPreset != null) {
 
-				String warning =  messageSource.getMessage("presetDialog.onReplacePreset", new Object[] { newName });
+				String warning =  _R("Preset named ''<b>{0}</b>'' will be permanently overwritten.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>permanently overwrite</b> this preset?", newName);
 				SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 5);
 
 				boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
@@ -879,7 +877,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 		public LoadPresetAction() {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/preset_load.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("presetDialog.loadPreset"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Load"));
 		}
 
 		/**
@@ -913,7 +911,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 
 			if (!isTrackingChanges() || isChanged()) {
 
-				String warning =  messageSource.getMessage("presetDialog.onLoadPreset", new Object[] { preset.getName() });
+				String warning =  _R("The settings currently on the dialog will be permanently overwritten with preset named ''<b>{0}</b>''.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>permanently overwrite</b> current settings?", preset.getName());
 				SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 3);
 
 				boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
@@ -951,7 +949,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 		public RemovePresetAction() {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/preset_remove.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("presetDialog.removePreset"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Remove"));
 		}
 
 		/**
@@ -977,7 +975,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 				return;
 			}
 
-			String warning =  messageSource.getMessage("presetDialog.onRemovePreset", new Object[] { name });
+			String warning =  _R("Selected preset named ''<b>{0}</b>'' will be permanently removed.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>permanently remove</b> this preset?", name);
 			SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 5);
 
 			boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
@@ -1014,7 +1012,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 		public SaveFileAction() {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/script_save.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("presetDialog.saveFile"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Export preset to file..."));
 		}
 
 		/**
@@ -1093,7 +1091,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 		public LoadFileAction() {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/script_load.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("presetDialog.loadFile"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Import preset from file..."));
 		}
 
 		/**
@@ -1132,7 +1130,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 
 			if (!isTrackingChanges() || isChanged()) {
 
-				String warning =  messageSource.getMessage("presetDialog.onLoadPreset", new Object[] { preset.getName() });
+				String warning =  _R("The settings currently on the dialog will be permanently overwritten with preset named ''<b>{0}</b>''.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>permanently overwrite</b> current settings?", preset.getName());
 				SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 3);
 
 				boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
@@ -1158,7 +1156,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 			Preset existingPreset = presetManager.getPresetByName(newName);
 			if (existingPreset != null) {
 
-				String warning =  messageSource.getMessage("presetDialog.onReplacePreset", new Object[] { newName });
+				String warning =  _R("Preset named ''<b>{0}</b>'' will be permanently overwritten.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>permanently overwrite</b> this preset?", newName);
 				SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 5);
 
 				boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
@@ -1214,7 +1212,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 		 * uses the enclosing class as the parent window to this dialog.
 		 */
 		protected ChoosePresetDialog() {
-			super(AbstractPresetDialog.this.messageSource, AbstractPresetDialog.this, true);
+			super(AbstractPresetDialog.this, true);
 		}
 
 		/**
@@ -1252,7 +1250,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 
 		@Override
 		protected void initialize() {
-			setTitle(messageSource.getMessage("presetDialog.selectPreset"));
+			setTitle(_("Select preset"));
 			super.initialize();
 		}
 
@@ -1270,8 +1268,8 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 
 			JPanel interfacePanel = new JPanel(new BorderLayout());
 			interfacePanel.setBorder(new CompoundBorder(
-			                                 new TitledBorder(messageSource.getMessage("presetDialog.selectPresetName")),
-			                                 new EmptyBorder(3,3,3,3)
+							 new TitledBorder(_("Select preset name")),
+							 new EmptyBorder(3,3,3,3)
 			                         ));
 
 			JPanel inputPanel = new JPanel();
@@ -1299,7 +1297,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 		 */
 		public PresetComboBoxModel getPresetComboBoxModel() {
 			if (presetComboBoxModel == null) {
-				presetComboBoxModel = new PresetComboBoxModel(messageSource.getMessage("presetDialog.selectToChoose"), presetManager);
+				presetComboBoxModel = new PresetComboBoxModel(_("<< select to choose preset >>"), presetManager);
 			}
 			return presetComboBoxModel;
 		}

@@ -17,7 +17,6 @@ import org.signalml.app.action.ExportToFileAction;
 import org.signalml.app.model.TableToTextExporter;
 import org.signalml.app.model.WriterExportableTable;
 import org.signalml.app.view.ViewerFileChooser;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** RocTable
  *
@@ -28,20 +27,14 @@ public class RocTable extends JTable {
 
 	private static final long serialVersionUID = 1L;
 
-	private MessageSourceAccessor messageSource;
-
 	private TableToTextExporter tableToTextExporter;
 	private ViewerFileChooser fileChooser;
 
 	private JPopupMenu popupMenu;
 
-	public RocTable(RocTableModel model, MessageSourceAccessor messageSource) {
+	public RocTable(RocTableModel model) {
 		super(model, (TableColumnModel) null);
-
-		this.messageSource = messageSource;
-
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
 		addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -87,8 +80,8 @@ public class RocTable extends JTable {
 	public JPopupMenu getComponentPopupMenu() {
 		if (popupMenu == null) {
 			popupMenu = new JPopupMenu();
-			popupMenu.add(new ExportComparisonToClipboardAction(messageSource, tableToTextExporter));
-			popupMenu.add(new ExportComparisonToFileAction(messageSource, tableToTextExporter));
+			popupMenu.add(new ExportComparisonToClipboardAction( tableToTextExporter));
+			popupMenu.add(new ExportComparisonToFileAction( tableToTextExporter));
 		}
 		return popupMenu;
 	}
@@ -97,8 +90,8 @@ public class RocTable extends JTable {
 
 		private static final long serialVersionUID = 1L;
 
-		public ExportComparisonToClipboardAction(MessageSourceAccessor messageSource, TableToTextExporter tableToTextExporter) {
-			super(messageSource, tableToTextExporter);
+		public ExportComparisonToClipboardAction( TableToTextExporter tableToTextExporter) {
+			super( tableToTextExporter);
 		}
 
 		@Override
@@ -116,8 +109,8 @@ public class RocTable extends JTable {
 
 		private static final long serialVersionUID = 1L;
 
-		private ExportComparisonToFileAction(MessageSourceAccessor messageSource, TableToTextExporter tableToTextExporter) {
-			super(messageSource, tableToTextExporter);
+		private ExportComparisonToFileAction( TableToTextExporter tableToTextExporter) {
+			super( tableToTextExporter);
 			setFileChooser(fileChooser);
 			setOptionPaneParent(RocTable.this);
 		}

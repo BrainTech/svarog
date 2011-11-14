@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.dialog;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -29,9 +30,8 @@ import org.apache.log4j.Logger;
 import org.signalml.app.util.IconUtils;
 import org.signalml.exception.ResolvableException;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.MessageSourceResolvable;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -44,7 +44,7 @@ import org.springframework.validation.Errors;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class ErrorsDialog extends AbstractDialog {
+public class ErrorsDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
 
 	private static final long serialVersionUID = 1L;
 
@@ -54,11 +54,6 @@ public class ErrorsDialog extends AbstractDialog {
 	 * The preferred size of the scroll pane which contains the errors jlist.
 	 */
 	private static Dimension scrollPanePreferredDimensions = new Dimension(420, 250);
-
-	/**
-	 * the static source of messages (labels)
-	 */
-	private static MessageSourceAccessor staticMessageSource = null;
 
 	/**
 	 * the list on which errors are displayed
@@ -72,51 +67,25 @@ public class ErrorsDialog extends AbstractDialog {
 	private String titleCode = null;
 
 	/**
-	 * Returns the static source of messages (labels).
-	 * @return the static source of messages (labels)
-	 */
-	public static MessageSourceAccessor getStaticMessageSource() {
-		return staticMessageSource;
-	}
-
-	/**
-	 * Sets the static source of messages (labels)
-	 * @param staticMessageSource the source of messages
-	 */
-	public static void setStaticMessageSource(MessageSourceAccessor staticMessageSource) {
-		ErrorsDialog.staticMessageSource = staticMessageSource;
-	}
-
-	/**
-	 * Constructor. Sets the source of messages.
-	 * @param messageSource the source of messages
-	 */
-	public ErrorsDialog(MessageSourceAccessor messageSource) {
-		super(messageSource);
-	}
-
-	/**
-	 * Constructor. Sets message source, parent window and if this dialog
+	 * Constructor. Sets parent window and if this dialog
 	 * blocks top-level windows.
-	 * @param messageSource message source to set
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public ErrorsDialog(MessageSourceAccessor messageSource,Window w, boolean isModal) {
-		super(messageSource,w, isModal);
+	public ErrorsDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	/**
-	 * Constructor. Sets message source, parent window and if this dialog
+	 * Constructor. Sets parent window and if this dialog
 	 * blocks top-level windows.
-	 * @param messageSource message source to set
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 * @param titleCode  the code to obtain the title for this dialog from the
 	 * source of messages; if the code is {@code null} the default title is used
 	 */
-	public ErrorsDialog(MessageSourceAccessor messageSource,Window w, boolean isModal, String titleCode) {
-		super(messageSource,w, isModal);
+	public ErrorsDialog(Window w, boolean isModal, String titleCode) {
+		super(w, isModal);
 		this.titleCode = titleCode;
 	}
 
@@ -130,9 +99,9 @@ public class ErrorsDialog extends AbstractDialog {
 	protected void initialize() {
 
 		if (titleCode == null) {
-			setTitle(messageSource.getMessage("errors.title"));
+			setTitle(_("Errors in data"));
 		} else {
-			setTitle(messageSource.getMessage(titleCode));
+			setTitle(getSvarogI18n().getMessage(titleCode));
 		}
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/error.png"));
 
@@ -172,7 +141,7 @@ public class ErrorsDialog extends AbstractDialog {
 				JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
 				label.setIcon(icon);
-				String text = messageSource.getMessage((MessageSourceResolvable) value);
+				String text = getSvarogI18n().getMessage((MessageSourceResolvable) value);
 
 				int maximumTextWidth = getMaximumTextWidth();
 				text = wrapTextForLabelIfNecessary(text, maximumTextWidth);
@@ -246,7 +215,7 @@ public class ErrorsDialog extends AbstractDialog {
 	 * @return if this dialog was closed with OK
 	 */
 	public boolean showErrors(Errors errors) {
-		setTitle(messageSource.getMessage("errors.title"));
+		setTitle(_("Errors in data"));
 		return showDialog(errors,true);
 	}
 
@@ -258,7 +227,7 @@ public class ErrorsDialog extends AbstractDialog {
 	 * @return if this dialog was closed with OK
 	 */
 	public boolean showException(Throwable t) {
-		setTitle(messageSource.getMessage("error.exception"));
+		setTitle(_("Exception occured"));
 		MessageSourceResolvable resolvable;
 		if (t instanceof MessageSourceResolvable) {
 			resolvable = (MessageSourceResolvable) t;
@@ -353,7 +322,7 @@ public class ErrorsDialog extends AbstractDialog {
 			@Override
 			public void run() {
 
-				ErrorsDialog errorsDialog = new ErrorsDialog(staticMessageSource,w,true,"error.exception");
+				ErrorsDialog errorsDialog = new ErrorsDialog(w,true,"error.exception");
 
 				MessageSourceResolvable resolvable;
 				if (t instanceof MessageSourceResolvable) {

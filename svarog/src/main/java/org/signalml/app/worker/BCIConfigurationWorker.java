@@ -1,5 +1,6 @@
 package org.signalml.app.worker;
 
+import static org.signalml.app.SvarogApplication._;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -10,7 +11,7 @@ import multiplexer.protocol.Protocol.MultiplexerMessage;
 import multiplexer.jmx.client.SendingMethod;
 import multiplexer.jmx.exceptions.NoPeerForTypeException;
 import org.signalml.multiplexer.protocol.SvarogProtocol.Variable.Builder;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.apache.log4j.Logger;
 import org.jboss.netty.channel.ChannelFuture;
 import org.signalml.multiplexer.protocol.SvarogConstants;
@@ -27,11 +28,6 @@ public class BCIConfigurationWorker extends SwingWorker<WorkerResult, Integer> {
         public static final String SENDING_DONE = "sendingDone";
 
         protected static final Logger logger = Logger.getLogger(BCIConfigurationWorker.class);
-
-        /**
-         * The message source.
-         */
-	private MessageSourceAccessor messageSource;
 
         /**
          * The Jmx Client.
@@ -53,15 +49,12 @@ public class BCIConfigurationWorker extends SwingWorker<WorkerResult, Integer> {
         /**
          * Default constructor.
          *
-         * @param messageSource {@link #messageSource}
          * @param client {@link #client}
          * @param data {@link #data}
          */
-        public BCIConfigurationWorker(MessageSourceAccessor messageSource,
+        public  BCIConfigurationWorker(
                                       JmxClient client,
                                       HashMap<String, String> data) {
-
-                this.messageSource = messageSource;
                 this.client = client;
                 this.data = data;
         }
@@ -91,20 +84,20 @@ public class BCIConfigurationWorker extends SwingWorker<WorkerResult, Integer> {
 			sendingOperation.await(1, TimeUnit.SECONDS);
 			if (!sendingOperation.isSuccess()) {
 				logger.info("Sending " + dataId + " data failed!");
-				String info = messageSource.getMessage("action.openMonitor.configurationWorker.failed");
+				String info = _("Sending failed!");
 				return new WorkerResult(false, info);
 			}
 		}
 		catch (NoPeerForTypeException e) {
 
 			logger.info("Sending " + dataId + " data failed!");
-			String info = messageSource.getMessage("action.openMonitor.configurationWorker.failed");
+			String info = _("Sending failed!");
 			return new WorkerResult(false, info);
 		}
 		catch (InterruptedException e) {
 
 			logger.info("Sending " + dataId + " data failed!");
-			String info = messageSource.getMessage("action.openMonitor.configurationWorker.failed");
+			String info = _("Sending failed!");
 			return new WorkerResult(false, info);
 		}
 
@@ -131,7 +124,7 @@ public class BCIConfigurationWorker extends SwingWorker<WorkerResult, Integer> {
                         publish(++step);
                 }
 
-                return new WorkerResult(true, messageSource.getMessage("action.openMonitor.configurationWorker.success"));
+                return new WorkerResult(true, _("Configuration sent!"));
         }
 
         /**
@@ -159,7 +152,7 @@ public class BCIConfigurationWorker extends SwingWorker<WorkerResult, Integer> {
         @Override
         protected void done() {
 
-                WorkerResult result = new WorkerResult(false, messageSource.getMessage("action.openMonitor.configurationWorker.failed"));
+                WorkerResult result = new WorkerResult(false, _("Sending failed!"));
                 
 		try {
 			result = get();

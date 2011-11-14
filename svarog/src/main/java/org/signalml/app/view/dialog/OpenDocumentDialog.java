@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.dialog;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -51,7 +52,7 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Document;
 import org.signalml.util.Util;
 import org.springframework.context.MessageSourceResolvable;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.validation.Errors;
 
@@ -129,22 +130,13 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 	RawSignalDescriptor currentRawSignalDescriptor;
 
 	/**
-	 * Constructor. Sets message source.
-	 * @param messageSource message source to set
-	 */
-	public OpenDocumentDialog(MessageSourceAccessor messageSource) {
-		super(messageSource);
-	}
-
-	/**
-	 * Constructor. Sets message source, parent window and if this dialog
+	 * Constructor. Sets parent window and if this dialog
 	 * blocks top-level windows.
-	 * @param messageSource message source to set
 	 * @param f the parent window or null if there is no parent
-	 * @param isModal true, dialog blocks top-level windows, false otherwise
+	 * @param dialog blocks top-level windows if true
 	 */
-	public OpenDocumentDialog(MessageSourceAccessor messageSource, Window f, boolean isModal) {
-		super(messageSource, f, isModal);
+	public OpenDocumentDialog(Window f, boolean isModal) {
+		super(f, isModal);
 	}
 
 	/**
@@ -167,7 +159,7 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 	@Override
 	protected void initialize() {
 
-		setTitle(messageSource.getMessage("openDocument.title"));
+		setTitle(_("Open document"));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/fileopen.png"));
 
 		super.initialize();
@@ -175,7 +167,7 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 		SignalMLCodecListModel codecListModel = new SignalMLCodecListModel();
 		codecListModel.setCodecManager(codecManager);
 
-		RegisterCodecAction registerCodecAction = new RegisterCodecAction(messageSource);
+		RegisterCodecAction registerCodecAction = new RegisterCodecAction();
 		registerCodecAction.setCodecManager(codecManager);
 		registerCodecAction.setRegisterCodecDialog(getRegisterCodecDialog());
 		registerCodecAction.setPleaseWaitDialog(getPleaseWaitDialog());
@@ -290,7 +282,7 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 				int cnt = documentManager.getDocumentCount(ManagedDocumentType.SIGNAL);
 				String[] labels = new String[cnt];
 				for (int i=0; i<cnt; i++) {
-					labels[i] = messageSource.getMessage((MessageSourceResolvable) documentManager.getDocumentAt(ManagedDocumentType.SIGNAL, i));
+					labels[i] = getSvarogI18n().getMessage((MessageSourceResolvable) documentManager.getDocumentAt(ManagedDocumentType.SIGNAL, i));
 				}
 
 				DefaultComboBoxModel documentListModel = new DefaultComboBoxModel(labels);
@@ -322,9 +314,9 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 	public JComponent createInterfaceForStep(int step) {
 		switch (step) {
 		case 0 :
-			return new OpenDocumentStepOnePanel(messageSource);
+			return new OpenDocumentStepOnePanel();
 		case 1 :
-			return new OpenDocumentStepTwoPanel(messageSource);
+			return new OpenDocumentStepTwoPanel();
 		default :
 			throw new IndexOutOfBoundsException();
 		}
@@ -664,7 +656,7 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 	 */
 	protected RegisterCodecDialog getRegisterCodecDialog() {
 		if (registerCodecDialog == null) {
-			registerCodecDialog = new RegisterCodecDialog(messageSource,this,true);
+			registerCodecDialog = new RegisterCodecDialog(this,true);
 			registerCodecDialog.setCodecManager(codecManager);
 			registerCodecDialog.setProfileDir(profileDir);
 		}
@@ -749,7 +741,7 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 	 */
 	protected PleaseWaitDialog getPleaseWaitDialog() {
 		if (pleaseWaitDialog == null) {
-			pleaseWaitDialog = new PleaseWaitDialog(messageSource,this);
+			pleaseWaitDialog = new PleaseWaitDialog(this);
 			pleaseWaitDialog.initializeNow();
 		}
 		return pleaseWaitDialog;
@@ -789,9 +781,9 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 		 * Constructor. Sets the icon and description.
 		 */
 		public ReadXMLManifestAction() {
-			super(messageSource.getMessage("openSignal.options.raw.readXMLManifest"));
+			super(_("Read manifest..."));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/script_load.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("openSignal.options.raw.readXMLManifestToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Read signal parameters from XML manifest"));
 			//putValue(AbstractAction.ACCELERATOR_KEY, KeyStroke.getKeyStroke("F1"));
 		}
 

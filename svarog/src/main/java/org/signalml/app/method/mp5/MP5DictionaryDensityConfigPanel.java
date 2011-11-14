@@ -3,6 +3,7 @@
  */
 package org.signalml.app.method.mp5;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 
 import javax.swing.Box;
@@ -18,10 +19,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.util.SwingUtils;
+import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.app.view.element.CompactButton;
 import org.signalml.method.mp5.MP5Parameters;
-import org.signalml.plugin.export.view.AbstractDialog;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /** MP5DictionaryDensityConfigPanel
@@ -32,17 +33,14 @@ import org.springframework.validation.Errors;
 public class MP5DictionaryDensityConfigPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-
-	private MessageSourceAccessor messageSource;
 	private AbstractDialog owner;
 
 	private JSpinner dilationFactorSpinner;
 	private JTextField atomCountTextField;
 	private JTextField ramUsageTextField;
 
-	public MP5DictionaryDensityConfigPanel(MessageSourceAccessor messageSource, AbstractDialog owner) {
+	public  MP5DictionaryDensityConfigPanel( AbstractDialog owner) {
 		super();
-		this.messageSource = messageSource;
 		this.owner = owner;
 		initialize();
 	}
@@ -50,7 +48,7 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 	private void initialize() {
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("mp5Method.dialog.dictionaryDensityTitle")),
+		        new TitledBorder(_("Dictionary density and size")),
 		        new EmptyBorder(3,3,3,3)
 		);
 
@@ -61,17 +59,17 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
-		JLabel dilationFactorLabel = new JLabel(messageSource.getMessage("mp5Method.dialog.dilationFactor"));
-		JLabel atomCountLabel = new JLabel(messageSource.getMessage("mp5Method.dialog.atomCount"));
-		JLabel ramUsageLabel = new JLabel(messageSource.getMessage("mp5Method.dialog.ramUsage"));
+		JLabel dilationFactorLabel = new JLabel(_("Dilation factor \"a\""));
+		JLabel atomCountLabel = new JLabel(_("Atoms in dictionary"));
+		JLabel ramUsageLabel = new JLabel(_("Approximate RAM usage"));
 
 		Component glue1 = Box.createHorizontalGlue();
 		Component glue2 = Box.createHorizontalGlue();
 		Component glue3 = Box.createHorizontalGlue();
 
-		CompactButton dilationFactorHelpButton = SwingUtils.createFieldHelpButton(messageSource, owner, MP5MethodDialog.HELP_DILATION_FACTOR);
-		CompactButton atomCountHelpButton = SwingUtils.createFieldHelpButton(messageSource, owner, MP5MethodDialog.HELP_ATOM_COUNT);
-		CompactButton ramUsageHelpButton = SwingUtils.createFieldHelpButton(messageSource, owner, MP5MethodDialog.HELP_RAM_USAGE);
+		CompactButton dilationFactorHelpButton = SwingUtils.createFieldHelpButton( owner, MP5MethodDialog.HELP_DILATION_FACTOR);
+		CompactButton atomCountHelpButton = SwingUtils.createFieldHelpButton( owner, MP5MethodDialog.HELP_ATOM_COUNT);
+		CompactButton ramUsageHelpButton = SwingUtils.createFieldHelpButton( owner, MP5MethodDialog.HELP_RAM_USAGE);
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 

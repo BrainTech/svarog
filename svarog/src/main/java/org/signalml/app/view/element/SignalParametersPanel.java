@@ -8,7 +8,6 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Panel which allows to select some parameters of the signal. Contains two
@@ -29,11 +28,6 @@ public class SignalParametersPanel extends JPanel {
 	protected static final Logger logger = Logger.getLogger(SignalParametersPanel.class);
 
 	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
-
-	/**
 	 * the {@link RequiredSignalParametersPanel panel} with standard parameters
 	 * of the signal (sampling frequency, number of channels, calibration)
 	 */
@@ -45,12 +39,10 @@ public class SignalParametersPanel extends JPanel {
 	private PagingParametersPanel pagingParametersPanel;
 
 	/**
-	 * Constructor. Sets the source of messages and initializes this panel.
-	 * @param messageSource the source of messages
+	 * Constructor. Initializes the panel.
 	 */
-	public SignalParametersPanel(MessageSourceAccessor messageSource) {
+	public  SignalParametersPanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -80,7 +72,7 @@ public class SignalParametersPanel extends JPanel {
 	 */
 	public RequiredSignalParametersPanel getRequiredSignalParamersPanel() {
 		if (requiredSignalParametersPanel == null) {
-			requiredSignalParametersPanel = new RequiredSignalParametersPanel(messageSource);
+			requiredSignalParametersPanel = new RequiredSignalParametersPanel();
 		}
 		return requiredSignalParametersPanel;
 	}
@@ -93,7 +85,7 @@ public class SignalParametersPanel extends JPanel {
 	 */
 	public PagingParametersPanel getPagingSignalParamersPanel() {
 		if (pagingParametersPanel == null) {
-			pagingParametersPanel = new PagingParametersPanel(messageSource);
+			pagingParametersPanel = new PagingParametersPanel();
 		}
 		return pagingParametersPanel;
 	}

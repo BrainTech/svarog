@@ -1,5 +1,6 @@
 package org.signalml.app.view.opensignal;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import javax.swing.JComboBox;
 import javax.swing.border.CompoundBorder;
@@ -9,7 +10,6 @@ import org.signalml.app.config.preset.StyledTagSetPresetManager;
 import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.app.view.element.AbstractSignalMLPanel;
 import org.signalml.domain.tag.StyledTagSet;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * A panel containing a ComboBox with available tag styles presets with
@@ -30,12 +30,11 @@ public class TagPresetSelectionPanel extends AbstractSignalMLPanel {
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source for resolving localized messages
 	 * @param styledTagSetPresetManager {@link PresetManager} handling the
 	 * tag styles presets.
 	 */
-	public TagPresetSelectionPanel(MessageSourceAccessor messageSource, StyledTagSetPresetManager styledTagSetPresetManager) {
-		super(messageSource);
+	public  TagPresetSelectionPanel( StyledTagSetPresetManager styledTagSetPresetManager) {
+		super();
 		this.styledTagSetPresetManager = styledTagSetPresetManager;
 		initialize();
 	}
@@ -48,7 +47,7 @@ public class TagPresetSelectionPanel extends AbstractSignalMLPanel {
 		setLayout(new BorderLayout(10, 10));
 
 		CompoundBorder border = new CompoundBorder(
-			new TitledBorder(messageSource.getMessage("opensignal.tagPresetSelectionPanelTitle")),
+			new TitledBorder(_("Select tag styles preset for monitor")),
 			new EmptyBorder(3, 3, 3, 3));
 		setBorder(border);
 

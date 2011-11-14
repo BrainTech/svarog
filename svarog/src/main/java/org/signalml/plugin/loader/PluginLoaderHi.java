@@ -12,6 +12,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -28,7 +29,9 @@ import org.jfree.ui.FilesystemFilter;
 import org.signalml.app.logging.SvarogLogger;
 import org.signalml.app.view.ViewerElementManager;
 import org.signalml.plugin.export.Plugin;
+import org.signalml.plugin.export.PluginAuth;
 import org.signalml.plugin.impl.PluginAccessClass;
+import org.signalml.plugin.impl.PluginAuthImpl;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -131,9 +134,9 @@ public class PluginLoaderHi {
 	 * @param profileDir the profile directory
 	 */
 	public static void createInstance(File profileDir) {
-		if (null == sharedInstance) {
+		if (sharedInstance == null) {
 		    synchronized (PluginLoaderHi.class) {
-		        if (null == sharedInstance)
+		        if (sharedInstance == null)
 		            sharedInstance = new PluginLoaderHi(profileDir);
 		    }
 		}
@@ -352,7 +355,7 @@ public class PluginLoaderHi {
 			pluginState.setVersion(descr.getVersion());
 			pluginState.setFailedToLoad(descr.isFailedToLoad());
 		}
-		PluginDialog pluginDialog = new PluginDialog(manager.getMessageSource(), manager.getDialogParent(), true, existingPluginStates,
+		PluginDialog pluginDialog = new PluginDialog(manager.getDialogParent(), true, existingPluginStates,
 		                pluginDirs);
 		PluginAction action = new PluginAction(existingPluginStates);
 		action.setPluginDialog(pluginDialog);
@@ -413,6 +416,19 @@ public class PluginLoaderHi {
 	}
 
 	/**
+	 * Registers the given plugin to the plugin manager.
+	 * @param head plugin to register.
+	 * @return the plugin auth object to be passed to {@link Plugin#register(org.signalml.plugin.export.SvarogAccess, PluginAuth)}.
+	 */
+	protected PluginAuthImpl registerInternal(PluginHead head) {
+        UUID uuid = UUID.randomUUID();
+        PluginAuthImpl auth = new PluginAuthImpl(uuid);
+        head.setPluginAuth(auth);
+        PluginAccessClass.getSharedInstance().addPlugin(head);
+        return auth;
+	}
+
+	/**
 	 * Try to load a plugin.
 	 * @returns true iff success
 	 */
@@ -432,9 +448,10 @@ public class PluginLoaderHi {
 
 		if (plugin != null) {
 		    head.setPluginObj(plugin);
+		    PluginAuthImpl auth = registerInternal(head);
 
 			try {
-				plugin.register(PluginAccessClass.getSharedInstance());
+				plugin.register(PluginAccessClass.getSharedInstance(), auth);
 			} catch(Throwable exc) {
 				String errorMsg = "Failed to initialize plugin " + descr.getName() +
 					" from file " + descr.getJarFile();

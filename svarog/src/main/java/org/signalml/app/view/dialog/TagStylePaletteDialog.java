@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.dialog;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -42,10 +43,9 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
-import org.signalml.plugin.export.view.AbstractDialog;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -189,21 +189,19 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 
 	/**
 	 * Constructor. Sets message source.
-	 * @param messageSource message source to set
 	 */
-	public TagStylePaletteDialog(MessageSourceAccessor messageSource, PresetManager presetManager) {
-		super(messageSource, presetManager);
+	public  TagStylePaletteDialog( PresetManager presetManager) {
+		super( presetManager);
 	}
 
 	/**
 	 * Constructor. Sets message source, parent window and if this dialog
 	 * blocks top-level windows.
-	 * @param messageSource message source to set
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public TagStylePaletteDialog(MessageSourceAccessor messageSource, PresetManager presetManager, Window w, boolean isModal) {
-		super(messageSource, presetManager, w, isModal);
+	public  TagStylePaletteDialog( PresetManager presetManager, Window w, boolean isModal) {
+		super( presetManager, w, isModal);
 	}
 
 	/**
@@ -223,7 +221,7 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 	 */
 	@Override
 	protected void initialize() {
-		setTitle(messageSource.getMessage("tagStylePalette.title"));
+		setTitle(_("Tag style palette"));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/palette.png"));
 		super.initialize();
 
@@ -321,7 +319,7 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 
 		JPanel interfacePanel = new JPanel(new BorderLayout());
 
-		tagStylePropertiesPanel = new TagStylePropertiesPanel(messageSource);
+		tagStylePropertiesPanel = new TagStylePropertiesPanel();
 
 		tagStylePropertiesPanel.getCaptureKeyButton().setAction(new CaptureKeyStrokeAction());
 
@@ -351,7 +349,7 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 	 */
 	private TagStyleTree getTagStyleTree() {
 		if (tagStyleTree == null) {
-			tagStyleTree = new TagStyleTree(getTagStyleTreeModel(), messageSource);
+			tagStyleTree = new TagStyleTree(getTagStyleTreeModel());
 		}
 		return tagStyleTree;
 	}
@@ -384,7 +382,7 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 		if (tagTreePanel == null) {
 
 			tagTreePanel = new JPanel(new BorderLayout());
-			tagTreePanel.setBorder(new TitledBorder(messageSource.getMessage("tagStylePalette.treeTitle")));
+			tagTreePanel.setBorder(new TitledBorder(_("Current styles")));
 			tagTreePanel.add(getTreeScrollPane(), BorderLayout.CENTER);
 
 			tagTreePanel.add(getButtonPanel(), BorderLayout.SOUTH);
@@ -643,10 +641,10 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 	 * @return the created style
 	 */
 	private TagStyle getNewStyle(SignalSelectionType type) {
-		String name = messageSource.getMessage("new");
+		String name = _("New");
 		int cnt = 2;
 		while (currentTagSet.getStyle(name) != null) {
-			name = messageSource.getMessage("new") + " (" + cnt + ")";
+			name = _("New") + " (" + cnt + ")";
 			cnt++;
 		}
 		return new TagStyle(type, name, null, Color.GREEN, Color.GREEN, 1, null, null, false);
@@ -787,7 +785,7 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 				}
 			}
 
-			ErrorsDialog errorsDialog = new ErrorsDialog(messageSource, this, true);
+			ErrorsDialog errorsDialog = new ErrorsDialog( this, true);
 			MessageSourceResolvable messageSourceResolvable = new DefaultMessageSourceResolvable(new String[]{"tagStylePalette.preset.stylesCouldNotBeDeleted"}, new Object[]{styles});
 			errorsDialog.showDialog(messageSourceResolvable, true);
 		}
@@ -813,9 +811,9 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 		 * Constructor. Sets the icon and the tooltip.
 		 */
 		public AddPageStyleAction() {
-			super(messageSource.getMessage("tagStylePalette.newPageStyle"));
+			super(_("New page style"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/pagetag.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("tagStylePalette.newPageStyleToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Add new page style"));
 		}
 
 		/**
@@ -844,9 +842,9 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 		 * Constructor. Sets the icon and the tooltip.
 		 */
 		public AddBlockStyleAction() {
-			super(messageSource.getMessage("tagStylePalette.newBlockStyle"));
+			super(_("New block style"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/blocktag.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("tagStylePalette.newBlockStyleToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Add new block style"));
 		}
 
 		/**
@@ -875,9 +873,9 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 		 * Constructor. Sets the icon and the tool-tip.
 		 */
 		public AddChannelStyleAction() {
-			super(messageSource.getMessage("tagStylePalette.newChannelStyle"));
+			super(_("New channel style"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/channeltag.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("tagStylePalette.newChannelStyleToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Add new channel style"));
 		}
 
 		/**
@@ -909,9 +907,9 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 		 * Constructor. Sets the icon and the tool-tip.
 		 */
 		public RemoveStyleAction() {
-			super(messageSource.getMessage("tagStylePalette.removeStyle"));
+			super(_("Remove style"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/removetag.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("tagStylePalette.removeStyleToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Remove selected style"));
 		}
 
 		/**
@@ -975,9 +973,9 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 		 * Constructor. Sets the icon and the tool-tip.
 		 */
 		public ApplyChangesActionAction() {
-			super(messageSource.getMessage("tagStylePalette.applyChanges"));
+			super(_("Apply changes"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/apply.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("tagStylePalette.applyChangesToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Apply changes to the tag style"));
 		}
 
 		/**
@@ -1005,9 +1003,9 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 		 * Constructor. Sets the icon and the tool-tip.
 		 */
 		public CaptureKeyStrokeAction() {
-			super(messageSource.getMessage("tagStylePalette.captureKeyStroke"));
+			super(_("Capture key"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/keyboard.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("tagStylePalette.captureKeyStrokeToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Change the key stroke associated with this style"));
 		}
 
 		/**
@@ -1019,7 +1017,7 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 		public void actionPerformed(ActionEvent ev) {
 
 			if (keyStrokeCaptureDialog == null) {
-				keyStrokeCaptureDialog = new KeyStrokeCaptureDialog(messageSource, TagStylePaletteDialog.this);
+				keyStrokeCaptureDialog = new KeyStrokeCaptureDialog( TagStylePaletteDialog.this);
 			}
 
 			KeyStroke keyStroke = keyStrokeCaptureDialog.captureKeyStrokeWithEscAsCancel();

@@ -4,6 +4,8 @@
 
 package org.signalml.app.view.book;
 
+import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogApplication._R;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
@@ -77,7 +79,6 @@ import org.signalml.domain.book.filter.AtomFilterChain;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.view.DocumentView;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** BookView
  *
@@ -126,8 +127,6 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 	private JPanel contentPane;
 
 	private BookPlot plot;
-
-	private MessageSourceAccessor messageSource;
 	private ButtonGroup toolButtonGroup;
 
 	private JButton bookOptionsButton;
@@ -242,7 +241,6 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 		plot.setPleaseWaitDialog(pleaseWaitDialog);
 
 		BookPlotPopupProvider bookPlotPopupProvider = new BookPlotPopupProvider(plot);
-		bookPlotPopupProvider.setMessageSource(messageSource);
 
 		// TODO any popup menu?
 //		plot.setPopupMenuProvider(bookPlotPopupProvider);
@@ -406,18 +404,18 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 		mainToolBar.setFloatable(false);
 
 		bookOptionsButton = new JButton(IconUtils.loadClassPathIcon("org/signalml/app/icon/plotoptions.png"));
-		bookOptionsButton.setToolTipText(messageSource.getMessage("bookView.plotOptionsToolTip"));
+		bookOptionsButton.setToolTipText(_("Change plot options"));
 		bookOptionsButton.addActionListener(new PlotOptionsButtonListener());
 
 		selectToolButton = new JToggleButton(IconUtils.loadClassPathIcon("org/signalml/app/icon/arrow.png"));
-		selectToolButton.setToolTipText(messageSource.getMessage("bookView.selectToolToolTip"));
+		selectToolButton.setToolTipText(_("Selects atoms for reconstruction"));
 
 		zoomToolButton = new JToggleButton(IconUtils.loadClassPathIcon("org/signalml/app/icon/zoom.png"));
-		zoomToolButton.setToolTipText(messageSource.getMessage("bookView.zoomToolToolTip"));
+		zoomToolButton.setToolTipText(_("Zooms the map (hold down Ctrl to zoom out; hold down mouse button for options)"));
 		zoomToolButton.addMouseListener(new ZoomBookToolButtonMouseListener());
 
 		resetZoomToolButton = new JButton(IconUtils.loadClassPathIcon("org/signalml/app/icon/reset.png"));
-		resetZoomToolButton.setToolTipText(messageSource.getMessage("bookView.resetZoomToolToolTip"));
+		resetZoomToolButton.setToolTipText(_("Resets map to default view"));
 		resetZoomToolButton.addMouseListener(new ResetZoomBookToolButtonMouseListener());
 
 		mainToolBar.add(selectToolButton);
@@ -458,7 +456,7 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 		mainToolBar.add(getPaletteComboBox());
 		mainToolBar.addSeparator(new Dimension(2,2));
 		mainToolBar.add(bookOptionsButton);
-		mainToolBar.add(new TitledSliderPanel(messageSource.getMessage("bookView.reconstructionHeight"), getReconstructionHeightSlider()));
+		mainToolBar.add(new TitledSliderPanel(_("Reconstruction height"), getReconstructionHeightSlider()));
 
 		JToggleButton filterSwitchButton = new JToggleButton(getFilterSwitchAction());
 		filterSwitchButton.setHideActionText(true);
@@ -477,14 +475,6 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 
 	public BookDocument getDocument() {
 		return document;
-	}
-
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
-	}
-
-	public void setMessageSource(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
 	}
 
 	public ApplicationConfiguration getApplicationConfig() {
@@ -553,7 +543,7 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 
 	private BookPlotOptionsPopupDialog getPlotOptionsDialog() {
 		if (bookOptionsPopupDialog == null) {
-			bookOptionsPopupDialog = new BookPlotOptionsPopupDialog(messageSource, (Window) getTopLevelAncestor(), true);
+			bookOptionsPopupDialog = new BookPlotOptionsPopupDialog( (Window) getTopLevelAncestor(), true);
 			bookOptionsPopupDialog.setBookView(this);
 		}
 
@@ -562,14 +552,14 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 
 	public BookZoomPopupDialog getBookZoomPopupDialog() {
 		if (bookZoomPopupDialog == null) {
-			bookZoomPopupDialog = new BookZoomPopupDialog(messageSource, (Window) getTopLevelAncestor(), true);
+			bookZoomPopupDialog = new BookZoomPopupDialog( (Window) getTopLevelAncestor(), true);
 		}
 		return bookZoomPopupDialog;
 	}
 
 	public ShowAtomTableAction getShowAtomTableAction() {
 		if (showAtomTableAction == null) {
-			showAtomTableAction = new ShowAtomTableAction(messageSource,this);
+			showAtomTableAction = new ShowAtomTableAction(this);
 			showAtomTableAction.setAtomTableDialog(getAtomTableDialog());
 		}
 		return showAtomTableAction;
@@ -577,7 +567,7 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 
 	public EditBookFilterAction getEditBookFilterAction() {
 		if (editBookFilterAction == null) {
-			editBookFilterAction = new EditBookFilterAction(messageSource,this);
+			editBookFilterAction = new EditBookFilterAction(this);
 			editBookFilterAction.setBookFilterDialog(getBookFilterDialog());
 		}
 		return editBookFilterAction;
@@ -585,14 +575,14 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 
 	public BookFilterSwitchAction getFilterSwitchAction() {
 		if (filterSwitchAction == null) {
-			filterSwitchAction = new BookFilterSwitchAction(messageSource,this);
+			filterSwitchAction = new BookFilterSwitchAction(this);
 		}
 		return filterSwitchAction;
 	}
 
 	public ShowPreviousBookSegmentAction getPreviousSegmentAction() {
 		if (previousSegmentAction == null) {
-			previousSegmentAction = new ShowPreviousBookSegmentAction(messageSource,this);
+			previousSegmentAction = new ShowPreviousBookSegmentAction(this);
 
 			this.addPropertyChangeListener(CURRENT_SEGMENT_PROPERTY, previousSegmentAction);
 		}
@@ -601,7 +591,7 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 
 	public ShowNextBookSegmentAction getNextSegmentAction() {
 		if (nextSegmentAction == null) {
-			nextSegmentAction = new ShowNextBookSegmentAction(messageSource,this);
+			nextSegmentAction = new ShowNextBookSegmentAction(this);
 
 			this.addPropertyChangeListener(CURRENT_SEGMENT_PROPERTY, nextSegmentAction);
 		}
@@ -610,7 +600,7 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 
 	public ShowPreviousBookChannelAction getPreviousChannelAction() {
 		if (previousChannelAction == null) {
-			previousChannelAction = new ShowPreviousBookChannelAction(messageSource, this);
+			previousChannelAction = new ShowPreviousBookChannelAction( this);
 
 			this.addPropertyChangeListener(CURRENT_CHANNEL_PROPERTY, previousChannelAction);
 		}
@@ -619,7 +609,7 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 
 	public ShowNextBookChannelAction getNextChannelAction() {
 		if (nextChannelAction == null) {
-			nextChannelAction = new ShowNextBookChannelAction(messageSource,this);
+			nextChannelAction = new ShowNextBookChannelAction(this);
 
 			this.addPropertyChangeListener(CURRENT_CHANNEL_PROPERTY, nextChannelAction);
 		}
@@ -631,7 +621,7 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 			segmentTextField = new SegmentTextField(this);
 
 			segmentTextField.setPreferredSize(new Dimension(100, 25));
-			segmentTextField.setToolTipText(messageSource.getMessage("bookView.currentSegmentToolTip"));
+			segmentTextField.setToolTipText(_("Current segment"));
 		}
 		return segmentTextField;
 	}
@@ -641,7 +631,7 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 			channelTextField = new ChannelTextField(this);
 
 			channelTextField.setPreferredSize(new Dimension(100,25));
-			channelTextField.setToolTipText(messageSource.getMessage("bookView.currentChannelToolTip"));
+			channelTextField.setToolTipText(_("Current channel"));
 		}
 		return channelTextField;
 	}
@@ -658,7 +648,7 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 			paletteComboBox.setMaximumSize(boxDimension);
 			paletteComboBox.setAlignmentY(Component.CENTER_ALIGNMENT);
 
-			paletteComboBox.setRenderer(new WignerMapPaletteComboBoxCellRenderer(messageSource));
+			paletteComboBox.setRenderer(new WignerMapPaletteComboBoxCellRenderer());
 
 			paletteComboBox.addItemListener(new ItemListener() {
 
@@ -691,7 +681,7 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 			scaleComboBox.setMaximumSize(boxDimension);
 			scaleComboBox.setAlignmentY(Component.CENTER_ALIGNMENT);
 
-			scaleComboBox.setRenderer(new WignerMapScaleComboBoxCellRenderer(messageSource));
+			scaleComboBox.setRenderer(new WignerMapScaleComboBoxCellRenderer());
 
 			scaleComboBox.addItemListener(new ItemListener() {
 
@@ -720,7 +710,7 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 
 				@Override
 				public String getToolTipText(MouseEvent ev) {
-					return messageSource.getMessage("bookView.reconstructionHeightToolTip", new Object[] { getValue() });
+					return _R("{0} px", getValue());
 				}
 
 			};

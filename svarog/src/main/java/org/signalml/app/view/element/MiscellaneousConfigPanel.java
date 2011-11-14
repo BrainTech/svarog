@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -23,7 +24,7 @@ import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.view.dialog.DynamicCompilationWarningDialog;
 import org.signalml.app.view.dialog.SeriousWarningDialog;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -63,11 +64,6 @@ import org.springframework.validation.Errors;
 public class MiscellaneousConfigPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * the {@link MessageSourceAccessor source} of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
 
 	/**
 	 * the check-box if configuration files should be saved after every change
@@ -134,15 +130,12 @@ public class MiscellaneousConfigPanel extends JPanel {
 	private SignalMLOperationMode mode;
 
 	/**
-	 * Constructor. Sets the {@link MessageSourceAccessor message source} and
-	 * initializes this panel.
-	 * @param messageSource the source of messages (labels)
+	 * Constructor. Initializes the panel.
 	 * @param mode the {@link SignalMLOperationMode mode} in which Svarog
 	 * is running (application or applet)
 	 */
-	public MiscellaneousConfigPanel(MessageSourceAccessor messageSource, SignalMLOperationMode mode) {
+	public MiscellaneousConfigPanel(SignalMLOperationMode mode) {
 		super();
-		this.messageSource = messageSource;
 		this.mode = mode;
 		initialize();
 	}
@@ -186,7 +179,7 @@ public class MiscellaneousConfigPanel extends JPanel {
 		JPanel generalPanel = new JPanel();
 		generalPanel.setLayout(new BoxLayout(generalPanel, BoxLayout.Y_AXIS));
 		generalPanel.setBorder(new CompoundBorder(
-		                               new TitledBorder(messageSource.getMessage("preferences.miscellaneous.general")),
+		                               new TitledBorder(_("General")),
 		                               new EmptyBorder(3,3,3,3)
 		                       ));
 
@@ -202,23 +195,23 @@ public class MiscellaneousConfigPanel extends JPanel {
 		JPanel toolTipPanel = new JPanel();
 		toolTipPanel.setLayout(new BoxLayout(toolTipPanel, BoxLayout.X_AXIS));
 		toolTipPanel.setBorder(new CompoundBorder(
-		                               new TitledBorder(messageSource.getMessage("preferences.miscellaneous.toolTip")),
+		                               new TitledBorder(_("Tool tip settings")),
 		                               new EmptyBorder(3,3,3,3)
 		                       ));
 
-		toolTipPanel.add(new JLabel(messageSource.getMessage("preferences.miscellaneous.toolTipInitial")));
+		toolTipPanel.add(new JLabel(_("To show")));
 		toolTipPanel.add(Box.createHorizontalStrut(5));
 		toolTipPanel.add(Box.createHorizontalGlue());
 		toolTipPanel.add(getToolTipInitialSpinner());
 		toolTipPanel.add(Box.createHorizontalStrut(5));
 		toolTipPanel.add(Box.createHorizontalGlue());
-		toolTipPanel.add(new JLabel(messageSource.getMessage("preferences.miscellaneous.toolTipDismiss")));
+		toolTipPanel.add(new JLabel(_("To hide")));
 		toolTipPanel.add(Box.createHorizontalStrut(5));
 		toolTipPanel.add(Box.createHorizontalGlue());
 		toolTipPanel.add(getToolTipDismissSpinner());
 		toolTipPanel.add(Box.createHorizontalStrut(5));
 		toolTipPanel.add(Box.createHorizontalGlue());
-		toolTipPanel.add(new JLabel(messageSource.getMessage("preferences.miscellaneous.toolTipMS")));
+		toolTipPanel.add(new JLabel(_("[ms]")));
 
 		JPanel viewModePanel = new JPanel();
 		if (mode == SignalMLOperationMode.APPLICATION) {
@@ -227,7 +220,7 @@ public class MiscellaneousConfigPanel extends JPanel {
 			viewModePanel.setLayout(new GridLayout(2,2,3,3));
 		}
 		viewModePanel.setBorder(new CompoundBorder(
-		                                new TitledBorder(messageSource.getMessage("preferences.miscellaneous.viewMode")),
+		                                new TitledBorder(_("View mode")),
 		                                new EmptyBorder(3,3,3,3)
 		                        ));
 
@@ -258,7 +251,7 @@ public class MiscellaneousConfigPanel extends JPanel {
 	 */
 	public JCheckBox getSaveConfigOnEveryChangeCheckBox() {
 		if (saveConfigOnEveryChangeCheckBox == null) {
-			saveConfigOnEveryChangeCheckBox = new JCheckBox(messageSource.getMessage("preferences.miscellaneous.saveConfigOnEveryChange"));
+			saveConfigOnEveryChangeCheckBox = new JCheckBox(_("Save config files on every change (otherwise on exit)"));
 		}
 		return saveConfigOnEveryChangeCheckBox;
 	}
@@ -272,7 +265,7 @@ public class MiscellaneousConfigPanel extends JPanel {
 	 */
 	public JCheckBox getRestoreWorkspaceCheckBox() {
 		if (restoreWorkspaceCheckBox == null) {
-			restoreWorkspaceCheckBox = new JCheckBox(messageSource.getMessage("preferences.miscellaneous.restoreWorkspace"));
+			restoreWorkspaceCheckBox = new JCheckBox(_("Restore the workspace when the application loads"));
 		}
 		return restoreWorkspaceCheckBox;
 	}
@@ -287,7 +280,7 @@ public class MiscellaneousConfigPanel extends JPanel {
 	 */
 	public JCheckBox getDisableSeriousWarningsCheckBox() {
 		if (disableSeriousWarningsCheckBox == null) {
-			disableSeriousWarningsCheckBox = new JCheckBox(messageSource.getMessage("preferences.miscellaneous.disableSeriousWarnings"));
+			disableSeriousWarningsCheckBox = new JCheckBox(_("Disable serious warning dialogs for preset operations"));
 		}
 		return disableSeriousWarningsCheckBox;
 	}
@@ -301,7 +294,7 @@ public class MiscellaneousConfigPanel extends JPanel {
 	 */
 	public JCheckBox getDontShowCompilationWarningCheckBox() {
 		if (dontShowCompilationWarningCheckBox == null) {
-			dontShowCompilationWarningCheckBox = new JCheckBox(messageSource.getMessage("preferences.miscellaneous.dontShowCompilationWarning"));
+			dontShowCompilationWarningCheckBox = new JCheckBox(_("Do not show dynamic compilation warnings"));
 		}
 		return dontShowCompilationWarningCheckBox;
 	}
@@ -315,7 +308,7 @@ public class MiscellaneousConfigPanel extends JPanel {
 	 */
 	public JCheckBox getViewModeHidesMainToolBarCheckBox() {
 		if (viewModeHidesMainToolBarCheckBox == null) {
-			viewModeHidesMainToolBarCheckBox = new JCheckBox(messageSource.getMessage("preferences.miscellaneous.viewModeHidesMainToolBar"));
+			viewModeHidesMainToolBarCheckBox = new JCheckBox(_("Hide main toolbar"));
 		}
 		return viewModeHidesMainToolBarCheckBox;
 	}
@@ -329,7 +322,7 @@ public class MiscellaneousConfigPanel extends JPanel {
 	 */
 	public JCheckBox getViewModeHidesLeftPanelCheckBox() {
 		if (viewModeHidesLeftPanelCheckBox == null) {
-			viewModeHidesLeftPanelCheckBox = new JCheckBox(messageSource.getMessage("preferences.miscellaneous.viewModeHidesLeftPanel"));
+			viewModeHidesLeftPanelCheckBox = new JCheckBox(_("Hide left panel"));
 		}
 		return viewModeHidesLeftPanelCheckBox;
 	}
@@ -343,7 +336,7 @@ public class MiscellaneousConfigPanel extends JPanel {
 	 */
 	public JCheckBox getViewModeHidesBottomPanelCheckBox() {
 		if (viewModeHidesBottomPanelCheckBox == null) {
-			viewModeHidesBottomPanelCheckBox = new JCheckBox(messageSource.getMessage("preferences.miscellaneous.viewModeHidesBottomPanel"));
+			viewModeHidesBottomPanelCheckBox = new JCheckBox(_("Hide bottom panel"));
 		}
 		return viewModeHidesBottomPanelCheckBox;
 	}
@@ -357,7 +350,7 @@ public class MiscellaneousConfigPanel extends JPanel {
 	 */
 	public JCheckBox getViewModeCompactsPageTagBarsCheckBox() {
 		if (viewModeCompactsPageTagBarsCheckBox == null) {
-			viewModeCompactsPageTagBarsCheckBox = new JCheckBox(messageSource.getMessage("preferences.miscellaneous.viewModeCompactsPageTagBars"));
+			viewModeCompactsPageTagBarsCheckBox = new JCheckBox(_("Compact page tags"));
 		}
 		return viewModeCompactsPageTagBarsCheckBox;
 	}
@@ -371,7 +364,7 @@ public class MiscellaneousConfigPanel extends JPanel {
 	 */
 	public JCheckBox getViewModeSnapsToPageCheckBox() {
 		if (viewModeSnapsToPageCheckBox == null) {
-			viewModeSnapsToPageCheckBox = new JCheckBox(messageSource.getMessage("preferences.miscellaneous.viewModeSnapsToPage"));
+			viewModeSnapsToPageCheckBox = new JCheckBox(_("Snap to page"));
 		}
 		return viewModeSnapsToPageCheckBox;
 	}

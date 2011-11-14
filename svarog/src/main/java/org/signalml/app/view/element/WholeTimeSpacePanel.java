@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Dimension;
 
 import javax.swing.GroupLayout;
@@ -18,7 +19,6 @@ import javax.swing.border.TitledBorder;
 import org.apache.log4j.Logger;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Panel which indicates the whole signal will be used.
@@ -36,11 +36,6 @@ public class WholeTimeSpacePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	protected static final Logger logger = Logger.getLogger(WholeTimeSpacePanel.class);
-
-	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
 
 	/**
 	 * the text field in which the length of the signal (in seconds) is
@@ -64,12 +59,10 @@ public class WholeTimeSpacePanel extends JPanel {
 	private JCheckBox completePagesCheckBox;
 
 	/**
-	 * Constructor. Sets the source of messages and initializes this panel.
-	 * @param messageSource the source of messages
+	 * Constructor. Initializes the panel.
 	 */
-	public WholeTimeSpacePanel(MessageSourceAccessor messageSource) {
+	public WholeTimeSpacePanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -95,7 +88,7 @@ public class WholeTimeSpacePanel extends JPanel {
 	private void initialize() {
 
 		setBorder(new CompoundBorder(
-		                  new TitledBorder(messageSource.getMessage("signalSpace.wholeTimeSpace.frameTitle")),
+		                  new TitledBorder(_("Signal parameters")),
 		                  new EmptyBorder(3,3,3,3)
 		          ));
 
@@ -104,10 +97,10 @@ public class WholeTimeSpacePanel extends JPanel {
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
-		JLabel signalLengthLabel = new JLabel(messageSource.getMessage("signalSpace.wholeTimeSpace.signalLength"));
-		JLabel pageSizeLabel = new JLabel(messageSource.getMessage("signalSpace.wholeTimeSpace.pageSize"));
-		JLabel pageCountLabel = new JLabel(messageSource.getMessage("signalSpace.wholeTimeSpace.pageCount"));
-		JLabel completePagesLabel = new JLabel(messageSource.getMessage("signalSpace.wholeTimeSpace.completePages"));
+		JLabel signalLengthLabel = new JLabel(_("Signal length [s]"));
+		JLabel pageSizeLabel = new JLabel(_("Page size [s]"));
+		JLabel pageCountLabel = new JLabel(_("Number of whole pages"));
+		JLabel completePagesLabel = new JLabel(_("Complete pages only"));
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 

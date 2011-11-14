@@ -1,5 +1,6 @@
 package org.signalml.app.view.monitor;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -18,7 +19,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Allows to add available frequencies.
@@ -48,20 +48,14 @@ public class AvailableFrequenciesPanel extends JPanel implements ActionListener 
         private JButton removeButton;
 
         /**
-         * Message source.
-         */
-        private MessageSourceAccessor messageSource;
-
-        /**
          * Default constructor.
          */
-        public AvailableFrequenciesPanel(MessageSourceAccessor messageSource) {
+        public  AvailableFrequenciesPanel() {
 
                 super();
-                this.messageSource = messageSource;
 
                 CompoundBorder border = new CompoundBorder(
-			new TitledBorder(messageSource.getMessage("amplifierDefinitionConfig.availableFrequencies")),
+			new TitledBorder(_("Available frequencies")),
 			new EmptyBorder(3, 3, 3, 3));
 		setBorder(border);
 
@@ -116,7 +110,7 @@ public class AvailableFrequenciesPanel extends JPanel implements ActionListener 
 
                 if (addButton == null) {
                         addButton = new JButton();
-                        addButton.setText(messageSource.getMessage("amplifierDefinitionConfig.addButton"));
+                        addButton.setText(_("Add"));
                         addButton.addActionListener(this);
                 }
                 return addButton;
@@ -131,7 +125,7 @@ public class AvailableFrequenciesPanel extends JPanel implements ActionListener 
 
                 if (removeButton == null) {
                         removeButton = new JButton();
-                        removeButton.setText(messageSource.getMessage("amplifierDefinitionConfig.removeButton"));
+                        removeButton.setText(_("Remove"));
                         removeButton.addActionListener(this);
                 }
                 return removeButton;
@@ -165,7 +159,7 @@ public class AvailableFrequenciesPanel extends JPanel implements ActionListener 
                         try {
                                 result = Float.parseFloat(textField.getText());
                         } catch (NumberFormatException ex) {
-                                JOptionPane.showMessageDialog(this, messageSource.getMessage("error.amplifierDefinitionConfig.integer"));
+                                JOptionPane.showMessageDialog(this, _("Please insert an integer value"));
                                 return;
                         }
 

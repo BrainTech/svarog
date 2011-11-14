@@ -4,6 +4,7 @@
 
 package org.signalml.app.montage;
 
+import static org.signalml.app.SvarogApplication._;
 import javax.swing.table.AbstractTableModel;
 
 import org.apache.log4j.Logger;
@@ -11,7 +12,6 @@ import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageSampleFilterEvent;
 import org.signalml.domain.montage.MontageSampleFilterListener;
 import org.springframework.context.MessageSourceResolvable;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** MontageFiltersTableModel
  *
@@ -29,14 +29,8 @@ public class MontageFiltersTableModel extends AbstractTableModel implements Mont
 	public static final int EFFECT_COLUMN = 2;
 
 	private Montage montage;
-	private MessageSourceAccessor messageSource;
 
-	public MontageFiltersTableModel(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
-	}
-
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
+	public  MontageFiltersTableModel() {
 	}
 
 	public Montage getMontage() {
@@ -80,13 +74,13 @@ public class MontageFiltersTableModel extends AbstractTableModel implements Mont
 		switch (column) {
 
 		case INDEX_COLUMN :
-			return messageSource.getMessage("montageFiltersTable.index");
+			return _("Index");
 
 		case DESCRIPTION_COLUMN :
-			return messageSource.getMessage("montageFiltersTable.description");
+			return _("Description");
 
 		case EFFECT_COLUMN :
-			return messageSource.getMessage("montageFiltersTable.effect");
+			return _("Effect");
 
 		default :
 			throw new IndexOutOfBoundsException();
@@ -132,7 +126,7 @@ public class MontageFiltersTableModel extends AbstractTableModel implements Mont
 			if (effectDescription == null) {
 				return montage.getSampleFilterAt(rowIndex).getDefaultEffectDescription();
 			} else {
-				return messageSource.getMessage(effectDescription);
+				return getSvarogI18n().getMessage(effectDescription);
 			}
 
 
@@ -206,4 +200,11 @@ public class MontageFiltersTableModel extends AbstractTableModel implements Mont
 		fireTableDataChanged();
 	}
 
+	/**
+	 * Returns the {@link SvarogAccessI18nImpl} instance.
+	 * @return the {@link SvarogAccessI18nImpl} singleton instance
+	 */
+	protected org.signalml.app.SvarogI18n getSvarogI18n() {
+		return org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance();
+	}
 }

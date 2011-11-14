@@ -11,7 +11,6 @@ import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.opensignal.SignalSource;
 import org.signalml.app.worker.processes.ProcessManager;
 import org.signalml.plugin.export.signal.Document;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Action responsible for stopping a running OpenBCI.
@@ -28,13 +27,12 @@ public class StopBCIAction extends AbstractFocusableSignalMLAction<DocumentFocus
         /**
          * Default constructor.
          *
-         * @param messageSource messageSource
          * @param documentFocusSelector documentFocusSelector
          * @param elementManager elementManager
          */
-        public StopBCIAction(MessageSourceAccessor messageSource, DocumentFocusSelector documentFocusSelector, ViewerElementManager elementManager) {
+        public  StopBCIAction( DocumentFocusSelector documentFocusSelector, ViewerElementManager elementManager) {
 
-                super(messageSource, documentFocusSelector);
+                super( documentFocusSelector);
                 this.elementManager = elementManager;
 
                 // set text and tooltip if this will be used in gui

@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.book.filter;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -36,7 +37,7 @@ import org.signalml.app.view.element.FileListCellRenderer;
 import org.signalml.domain.book.filter.DelegatingAtomFilter;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /** DelegatingFilterDialog
@@ -66,14 +67,14 @@ public class DelegatingFilterDialog extends AbstractFilterDialog {
 	private JButton addJarEntryButton;
 	private JButton removeEntryButton;
 
-	public DelegatingFilterDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public  DelegatingFilterDialog( Window w, boolean isModal) {
+		super( w, isModal);
 	}
 
 	@Override
 	protected void initialize() {
 
-		setTitle(messageSource.getMessage("delegatingFilter.title"));
+		setTitle(_("Custom atom filter"));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/filter.png"));
 
 		quickFileAction = new QuickFileAction();
@@ -92,7 +93,7 @@ public class DelegatingFilterDialog extends AbstractFilterDialog {
 		JPanel classPathPanel = new JPanel(new BorderLayout(5,5));
 
 		classPathPanel.setBorder(new CompoundBorder(
-		                                 new TitledBorder(messageSource.getMessage("delegatingFilter.classPathTitle")),
+		                                 new TitledBorder(_("Choose class path")),
 		                                 new EmptyBorder(3,3,3,3)
 		                         ));
 
@@ -114,7 +115,7 @@ public class DelegatingFilterDialog extends AbstractFilterDialog {
 
 		JPanel fqClassNamePanel = new JPanel(new BorderLayout(5,5));
 		fqClassNamePanel.setBorder(new CompoundBorder(
-		                                   new TitledBorder(messageSource.getMessage("delegatingFilter.fqClassNameTitle")),
+		                                   new TitledBorder(_("Choose fully qualified filter class name")),
 		                                   new EmptyBorder(3,3,3,3)
 		                           ));
 
@@ -302,9 +303,9 @@ public class DelegatingFilterDialog extends AbstractFilterDialog {
 		private static final long serialVersionUID = 1L;
 
 		public QuickFileAction() {
-			super(messageSource.getMessage("delegatingFilter.quickFile"));
+			super(_("Quick file"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/find.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION, messageSource.getMessage("delegatingFilter.quickFileToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION, _("Select a single java or class file. Contained class must be in default package"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {
@@ -337,7 +338,7 @@ public class DelegatingFilterDialog extends AbstractFilterDialog {
 		private static final long serialVersionUID = 1L;
 
 		public AddDirectoryEntryAction() {
-			super(messageSource.getMessage("delegatingFilter.addDirectoryEntry"));
+			super(_("Add directories"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/adddirectoryentry.png"));
 		}
 
@@ -362,7 +363,7 @@ public class DelegatingFilterDialog extends AbstractFilterDialog {
 		private static final long serialVersionUID = 1L;
 
 		public AddJarEntryAction() {
-			super(messageSource.getMessage("delegatingFilter.addJarEntry"));
+			super(_("Add jar files"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/addjarentry.png"));
 		}
 
@@ -387,7 +388,7 @@ public class DelegatingFilterDialog extends AbstractFilterDialog {
 		private static final long serialVersionUID = 1L;
 
 		public RemoveEntryAction() {
-			super(messageSource.getMessage("delegatingFilter.removeEntry"));
+			super(_("Remove"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/removeentry.png"));
 			setEnabled(false);
 		}

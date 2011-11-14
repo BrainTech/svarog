@@ -9,6 +9,7 @@ import javax.swing.Icon;
 import org.apache.log4j.Logger;
 import org.signalml.app.util.IconUtils;
 import org.signalml.util.Util;
+import static org.signalml.app.SvarogApplication._;
 
 /** RainbowMapPalette
  *
@@ -18,12 +19,7 @@ import org.signalml.util.Util;
 public class RainbowMapPalette implements WignerMapPalette {
 
 	protected static final Logger logger = Logger.getLogger(RainbowMapPalette.class);
-
-	private static String[] CODES = new String[] { "wignerMapPalette.rainbow" };
-	private static Object[] ARGUMENTS = new Object[0];
-
 	private static RainbowMapPalette sharedInstance = null;
-
 	private transient int[] palette;
 
 	private RainbowMapPalette() {
@@ -50,9 +46,9 @@ public class RainbowMapPalette implements WignerMapPalette {
 	}
 
 	public static RainbowMapPalette getInstance() {
-		if (null == sharedInstance) {
+		if (sharedInstance == null) {
 		    synchronized (RainbowMapPalette.class) {
-		        if (null == sharedInstance)
+		        if (sharedInstance == null)
 		            sharedInstance = new RainbowMapPalette();
 		    }
 		}
@@ -70,19 +66,12 @@ public class RainbowMapPalette implements WignerMapPalette {
 		return palette;
 	}
 
-	@Override
-	public Object[] getArguments() {
-		return ARGUMENTS;
+	/**
+	 * Returns the name of this palette [i18n].
+	 * 
+	 * @return the name of this palette
+	 */
+	public String i18n() {
+		return _("Rainbow");
 	}
-
-	@Override
-	public String[] getCodes() {
-		return CODES;
-	}
-
-	@Override
-	public String getDefaultMessage() {
-		return "Rainbow";
-	}
-
 }

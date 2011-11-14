@@ -6,17 +6,16 @@ package org.signalml.app.view.book;
 
 import javax.swing.Icon;
 
-import org.springframework.context.MessageSourceResolvable;
+import org.signalml.app.view.I18nMessage;
 
 /** WigneMapPalette
  *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public interface WignerMapPalette extends MessageSourceResolvable {
+public interface WignerMapPalette extends I18nMessage {
 
 	Icon getIcon();
 
 	int[] getPalette();
-
 }

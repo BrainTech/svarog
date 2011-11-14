@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Color;
 
@@ -24,8 +25,6 @@ import javax.swing.event.ListSelectionListener;
 import org.signalml.app.action.RegisterCodecAction;
 import org.signalml.app.action.RemoveCodecAction;
 import org.signalml.codec.SignalMLCodec;
-import org.springframework.context.support.MessageSourceAccessor;
-
 
 /**
  * Panel which allows the management of codecs ({@link RegisterCodecAction
@@ -44,11 +43,6 @@ public class CodecManagerConfigPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * the {@link MessageSourceAccessor source} of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
-	
 	/**
 	 * the list of installed {@link SignalMLCodec codecs}
 	 */
@@ -80,13 +74,10 @@ public class CodecManagerConfigPanel extends JPanel {
 
 
 	/**
-	 * Constructor. Sets the {@link MessageSourceAccessor message source} and
-	 * initializes this panel.
-	 * @param messageSource the source of messages (labels)
+	 * Constructor. Initializes the panel.
 	 */
-	public CodecManagerConfigPanel(MessageSourceAccessor messageSource) {
+	public  CodecManagerConfigPanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -143,7 +134,7 @@ public class CodecManagerConfigPanel extends JPanel {
 		if (codeclListScrollPane == null) {
 			codeclListScrollPane = new JScrollPane(getCodecList(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 			CompoundBorder cb = new CompoundBorder(
-			        new TitledBorder(messageSource.getMessage("preferences.codecs.installedCodecs")),
+			        new TitledBorder(_("Installed codecs")),
 			        new EmptyBorder(3,3,3,3)
 			);
 			codeclListScrollPane.setBorder(cb);

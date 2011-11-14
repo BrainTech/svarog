@@ -3,6 +3,7 @@
  */
 package org.signalml.app.method.mp5;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -11,11 +12,11 @@ import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.util.SwingUtils;
+import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.app.view.element.CompactButton;
 import org.signalml.app.view.element.TextPanePanel;
 import org.signalml.method.mp5.MP5Parameters;
-import org.signalml.plugin.export.view.AbstractDialog;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /** MP5ExpertConfigPanel
@@ -26,15 +27,12 @@ import org.springframework.validation.Errors;
 public class MP5ExpertConfigPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-
-	private MessageSourceAccessor messageSource;
 	private AbstractDialog owner;
 
 	private TextPanePanel additionalConfigTextPane;
 
-	public MP5ExpertConfigPanel(MessageSourceAccessor messageSource, AbstractDialog owner) {
+	public  MP5ExpertConfigPanel( AbstractDialog owner) {
 		super();
-		this.messageSource = messageSource;
 		this.owner = owner;
 		initialize();
 	}
@@ -44,9 +42,9 @@ public class MP5ExpertConfigPanel extends JPanel {
 		setLayout(new BorderLayout());
 
 		JPanel additionalConfigPanel = new JPanel(new BorderLayout(3,3));
-		additionalConfigPanel.setBorder(new TitledBorder(messageSource.getMessage("mp5Method.dialog.additionalConfig")));
+		additionalConfigPanel.setBorder(new TitledBorder(_("Additional config (will be appended to config file as is)")));
 
-		CompactButton additionalConfigHelpButton = SwingUtils.createFieldHelpButton(messageSource, owner, MP5MethodDialog.HELP_ADDITIONAL_CONFIG);
+		CompactButton additionalConfigHelpButton = SwingUtils.createFieldHelpButton( owner, MP5MethodDialog.HELP_ADDITIONAL_CONFIG);
 
 		JPanel additionalConfigHelpPanel = new JPanel(new FlowLayout(FlowLayout.TRAILING));
 		additionalConfigHelpPanel.add(additionalConfigHelpButton);

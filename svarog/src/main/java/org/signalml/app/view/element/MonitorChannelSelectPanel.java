@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -19,7 +20,6 @@ import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.model.OpenMonitorDescriptor;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * This class represents a panel for selecting channels which will be monitored.
@@ -32,11 +32,6 @@ public class MonitorChannelSelectPanel extends JPanel {
 	 * Logger to save history of execution at.
 	 */
 	protected static final Logger logger = Logger.getLogger(MonitorChannelSelectPanel.class);
-
-	/**
-	 * The {@link MessageSourceAccessor source} of messages (labels) for elements.
-	 */
-	private MessageSourceAccessor messageSource;
 
 	/**
 	 * A list on which selections can be made.
@@ -55,11 +50,9 @@ public class MonitorChannelSelectPanel extends JPanel {
 
 	/**
 	 * This is the default constructor
-	 * @param messageSource the source of messages (labels)
 	 */
-	public MonitorChannelSelectPanel(MessageSourceAccessor messageSource) {
+	public  MonitorChannelSelectPanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -71,7 +64,7 @@ public class MonitorChannelSelectPanel extends JPanel {
 		add(new JScrollPane(getChannelList()), BorderLayout.CENTER);
 
 		CompoundBorder border = new CompoundBorder(
-			new TitledBorder(messageSource.getMessage("openMonitor.channelSelectPanelTitle")),
+			new TitledBorder(_("Select channels to be monitored")),
 			new EmptyBorder(3, 3, 3, 3));
 		setBorder(border);
 
@@ -100,7 +93,7 @@ public class MonitorChannelSelectPanel extends JPanel {
 	 */
 	public JButton getSelectAllButton() {
 		if (selectAllButton == null) {
-			selectAllButton = new JButton(new AbstractAction(messageSource.getMessage("openMonitor.channelSelectPanel.selectAll")) {
+			selectAllButton = new JButton(new AbstractAction(_("Select all")) {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -122,7 +115,7 @@ public class MonitorChannelSelectPanel extends JPanel {
 	 */
 	public JButton getClearSelectionButton() {
 		if (clearSelectionButton == null) {
-			clearSelectionButton = new JButton(new AbstractAction(messageSource.getMessage("openMonitor.channelSelectPanel.clearSelection")) {
+			clearSelectionButton = new JButton(new AbstractAction(_("Clear all")) {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {

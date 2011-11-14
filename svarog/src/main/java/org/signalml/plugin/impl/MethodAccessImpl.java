@@ -6,7 +6,6 @@ import org.signalml.plugin.export.method.SvarogMethod;
 import org.signalml.plugin.export.method.SvarogMethodConfigurer;
 import org.signalml.plugin.export.method.SvarogMethodDescriptor;
 import org.signalml.plugin.export.method.SvarogTask;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Methods and tasks in Svarog core (facade for Svarog plugins).
@@ -22,11 +21,6 @@ public class MethodAccessImpl extends AbstractAccess implements SvarogAccessMeth
     @Override
     public SvarogMethodDescriptor getMethodDescriptor(SvarogMethod method) {
         return (SvarogMethodDescriptor) (getViewerElementManager().getMethodManager().getMethodData(method));
-    }
-    
-    @Override
-    public void setTaskMessageSource(SvarogTask task, MessageSourceAccessor source) {
-        getViewerElementManager().getTaskTableModel().setMessageSourceForTask(task, source);
     }
 
     @Override

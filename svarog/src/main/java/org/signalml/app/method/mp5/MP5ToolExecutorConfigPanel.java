@@ -3,6 +3,7 @@
  */
 package org.signalml.app.method.mp5;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -29,7 +30,6 @@ import org.signalml.app.util.SwingUtils;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.method.mp5.MP5Executor;
 import org.signalml.method.mp5.MP5LocalProcessExecutor;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ArtifactToolWorkingDirectoryConfigPanel
  *
@@ -39,8 +39,6 @@ import org.springframework.context.support.MessageSourceAccessor;
 public class MP5ToolExecutorConfigPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-
-	private MessageSourceAccessor messageSource;
 
 	private MP5ExecutorManager executorManager;
 
@@ -60,9 +58,8 @@ public class MP5ToolExecutorConfigPanel extends JPanel {
 	private JList executorList;
 	private JScrollPane executorScrollPane;
 
-	public MP5ToolExecutorConfigPanel(MessageSourceAccessor messageSource, MP5ExecutorManager executorManager) {
+	public  MP5ToolExecutorConfigPanel( MP5ExecutorManager executorManager) {
 		super();
-		this.messageSource = messageSource;
 		this.executorManager = executorManager;
 
 		getExecutorListCellRenderer().setDefaultExecutor(executorManager.getDefaultExecutor());
@@ -91,7 +88,7 @@ public class MP5ToolExecutorConfigPanel extends JPanel {
 		setLayout(new BorderLayout(3,3));
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("mp5Method.config.executorTitle")),
+		        new TitledBorder(_("MP5 executors")),
 		        new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);
@@ -118,7 +115,7 @@ public class MP5ToolExecutorConfigPanel extends JPanel {
 
 	public MP5ExecutorListCellRenderer getExecutorListCellRenderer() {
 		if (executorListCellRenderer == null) {
-			executorListCellRenderer = new MP5ExecutorListCellRenderer(messageSource);
+			executorListCellRenderer = new MP5ExecutorListCellRenderer();
 		}
 		return executorListCellRenderer;
 	}
@@ -216,9 +213,9 @@ public class MP5ToolExecutorConfigPanel extends JPanel {
 		private static final long serialVersionUID = 1L;
 
 		public AddLocalExecutorAction() {
-			super(messageSource.getMessage("mp5Method.config.addLocalExecutor"));
+			super(_("Add local"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/addlocal.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("mp5Method.config.addLocalExecutorToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Add local process MP5 executor"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {
@@ -241,9 +238,9 @@ public class MP5ToolExecutorConfigPanel extends JPanel {
 		private static final long serialVersionUID = 1L;
 
 		public RemoveExecutorAction() {
-			super(messageSource.getMessage("mp5Method.config.removeExecutor"));
+			super(_("Remove"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/remove.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("mp5Method.config.removeExecutorToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Remove selected MP5 executor"));
 			setEnabled(false);
 		}
 
@@ -265,9 +262,9 @@ public class MP5ToolExecutorConfigPanel extends JPanel {
 		private static final long serialVersionUID = 1L;
 
 		public ConfigureExecutorAction() {
-			super(messageSource.getMessage("mp5Method.config.configureExecutor"));
+			super(_("Configure"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/configure.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("mp5Method.config.configureExecutorToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Configure selected MP5 executor"));
 			setEnabled(false);
 		}
 
@@ -305,9 +302,9 @@ public class MP5ToolExecutorConfigPanel extends JPanel {
 		private static final long serialVersionUID = 1L;
 
 		public MakeDefaultAction() {
-			super(messageSource.getMessage("mp5Method.config.makeDefault"));
+			super(_("Make default"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/makedefault.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("mp5Method.config.makeDefaultToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Make selecte executor default"));
 			setEnabled(false);
 		}
 

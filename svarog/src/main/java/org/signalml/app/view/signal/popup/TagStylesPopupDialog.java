@@ -26,7 +26,6 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.plugin.export.view.AbstractPopupDialog;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** TagStylesPopupDialog
  *
@@ -43,8 +42,8 @@ public class TagStylesPopupDialog extends AbstractPopupDialog implements ActionL
 
 	private TagStyleToolBar tagStyleToolBar;
 
-	public TagStylesPopupDialog(MessageSourceAccessor messageSource, TagStyleToolBar tagStyleToolBar, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public  TagStylesPopupDialog( TagStyleToolBar tagStyleToolBar, Window w, boolean isModal) {
+		super( w, isModal);
 		this.tagStyleToolBar = tagStyleToolBar;
 	}
 

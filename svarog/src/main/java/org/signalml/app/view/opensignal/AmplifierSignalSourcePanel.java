@@ -10,7 +10,6 @@ import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.element.MonitorRecordingPanel;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Document;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Panel enabling configuring, starting and connecting to OpenBCI.
@@ -52,12 +51,11 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
         /**
          * Default constructor.
          *
-         * @param messageSource message source
          * @param viewerElementManager viewer element manager
          */
-        public AmplifierSignalSourcePanel(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager) {
+        public  AmplifierSignalSourcePanel( ViewerElementManager viewerElementManager) {
 
-                super(messageSource, viewerElementManager);
+                super( viewerElementManager);
         }
 
         /**
@@ -107,7 +105,6 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
 
                 if (amplifierSelectionPanel == null) {
                         amplifierSelectionPanel = new AmplifierSelectionPanel(
-                                messageSource,
                                 viewerElementManager,
                                 this);
                 }
@@ -121,7 +118,7 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
          */
         public ChannelSelectPanel getChannelSelectPanel() {
                 if (channelSelectPanel == null) {
-                        channelSelectPanel = new ChannelSelectPanel(messageSource);
+                        channelSelectPanel = new ChannelSelectPanel();
                 }
                 return channelSelectPanel;
         }
@@ -133,7 +130,7 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
          */
         public ConfigureAmplifiersPanel getConfigureAmplifiersPanel() {
                 if (configureAmplifiersPanel == null) {
-                        configureAmplifiersPanel = new ConfigureAmplifiersPanel(messageSource, viewerElementManager);
+                        configureAmplifiersPanel = new ConfigureAmplifiersPanel( viewerElementManager);
                 }
                 return configureAmplifiersPanel;
         }
@@ -146,7 +143,7 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
         public StartStopButtonsPanel getStartStopButtonsPanel() {
 
                 if (startStopButtonsPanel == null) {
-                        startStopButtonsPanel = new StartStopButtonsPanel(messageSource, this);
+                        startStopButtonsPanel = new StartStopButtonsPanel( this);
                 }
                 return startStopButtonsPanel;
         }
@@ -159,7 +156,7 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
         public SignalParametersPanelForAmplifierConnection getSignalParametersPanel() {
 
                 if (signalParametersPanel == null) {
-                        signalParametersPanel = new SignalParametersPanelForAmplifierConnection(messageSource, viewerElementManager.getApplicationConfig());
+                        signalParametersPanel = new SignalParametersPanelForAmplifierConnection( viewerElementManager.getApplicationConfig());
                         signalParametersPanel.addPropertyChangeListener(this);
                 }
                 return signalParametersPanel;
@@ -173,7 +170,7 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
         public MonitorRecordingPanel getMonitorRecordingPanel() {
 
                 if (monitorRecordingPanel == null) {
-                        monitorRecordingPanel = new MonitorRecordingPanel(messageSource);
+                        monitorRecordingPanel = new MonitorRecordingPanel();
                         monitorRecordingPanel.setEnabled(false);
                 }
                 return monitorRecordingPanel;

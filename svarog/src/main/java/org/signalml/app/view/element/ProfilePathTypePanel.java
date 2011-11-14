@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -20,7 +21,6 @@ import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
 
 import org.signalml.app.util.DirectoryFileFilter;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * The panel which is displayed at the first use of the application (or if
@@ -48,10 +48,6 @@ public class ProfilePathTypePanel extends JPanel {
 	private JLabel welcomeLabel = null;
 
 	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
-	/**
 	 * the radio button which tells that the profile directory should
 	 * be located in the default directory inside user's home directory
 	 */
@@ -75,12 +71,10 @@ public class ProfilePathTypePanel extends JPanel {
 	private EmbeddedFileChooser fileChooser = null;
 
 	/**
-	 * Constructor. Sets the source of messages and initializes this panel.
-	 * @param messageSource the source of messages
+	 * Constructor. Initializes the panel.
 	 */
-	public ProfilePathTypePanel(MessageSourceAccessor messageSource) {
+	public  ProfilePathTypePanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -100,11 +94,11 @@ public class ProfilePathTypePanel extends JPanel {
 	 */
 	private void initialize() {
 
-		setBorder(BorderFactory.createTitledBorder(messageSource.getMessage("profilePath.title")));
+		setBorder(BorderFactory.createTitledBorder(_("Choose profile path")));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		welcomeLabel = new JLabel();
-		welcomeLabel.setText(messageSource.getMessage("profilePath.welcome"));
+		welcomeLabel.setText(_("Welcome to Svarog"));
 		welcomeLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 		welcomeLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		add(welcomeLabel);
@@ -134,7 +128,7 @@ public class ProfilePathTypePanel extends JPanel {
 	public JRadioButton getDefaultRadio() {
 		if (defaultRadio == null) {
 			defaultRadio = new JRadioButton();
-			defaultRadio.setText(messageSource.getMessage("profilePath.defaultRadio"));
+			defaultRadio.setText(_("signalml directory inside default home"));
 			defaultRadio.setAlignmentX(Component.LEFT_ALIGNMENT);
 			radioGroup.add(defaultRadio);
 		}
@@ -153,7 +147,7 @@ public class ProfilePathTypePanel extends JPanel {
 	public JRadioButton getCustomRadio() {
 		if (customRadio == null) {
 			customRadio = new JRadioButton();
-			customRadio.setText(messageSource.getMessage("profilePath.customRadio"));
+			customRadio.setText(_("custom location"));
 			customRadio.setAlignmentX(Component.LEFT_ALIGNMENT);
 			radioGroup.add(customRadio);
 			customRadio.addItemListener(new ItemListener() {
@@ -183,7 +177,7 @@ public class ProfilePathTypePanel extends JPanel {
 		if (infoLabel == null) {
 			infoLabel = new JLabel();
 			infoLabel.setFont(infoLabel.getFont().deriveFont(Font.PLAIN, 12));
-			infoLabel.setText("<html><body><div style=\"width: 400px; text-align: justify;\">" + messageSource.getMessage("profilePath.info") + "</div></body></html>");
+			infoLabel.setText("<html><body><div style=\"width: 400px; text-align: justify;\">" + _("The signalml viewer needs a directory to store its configuration and files. This directory may reside inside the default user's home directory (system dependent), or you can select any directory on disk (remember that you need to select a concrete directory for SignalML files, not the directory in which you would like the later to be created - create the directory if necessary).") + "</div></body></html>");
 			infoLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 //			infoLabel.setPreferredSize(new Dimension(500,90));
 			infoLabel.setBorder(new EmptyBorder(3,0,3,0));
@@ -206,7 +200,7 @@ public class ProfilePathTypePanel extends JPanel {
 			fileChooser.resetChoosableFileFilters();
 			fileChooser.setAlignmentX(Component.LEFT_ALIGNMENT);
 			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-			fileChooser.setFileFilter(new DirectoryFileFilter(messageSource.getMessage("profilePath.directoryFilter")));
+			fileChooser.setFileFilter(new DirectoryFileFilter(_("Directories")));
 			fileChooser.setPreferredSize(new Dimension(500,350));
 
 			fileChooser.setInvokeDefaultButtonOnApprove(true);

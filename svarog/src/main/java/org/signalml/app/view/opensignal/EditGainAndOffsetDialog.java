@@ -1,5 +1,6 @@
 package org.signalml.app.view.opensignal;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import org.signalml.app.model.AmplifierConnectionDescriptor;
 import java.awt.Window;
@@ -15,15 +16,13 @@ import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.app.view.monitor.ChannelDefinition;
 import org.signalml.app.view.monitor.ChannelDefinitionsTable;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
-import org.signalml.plugin.export.view.AbstractDialog;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * A dialog that allows to edit gain and offset.
  *
  * @author Tomasz Sawicki
  */
-public class EditGainAndOffsetDialog extends AbstractDialog {
+public class EditGainAndOffsetDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
 
         /**
          * The definition table.
@@ -33,10 +32,10 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
         /**
          * Default constructor sets window's title.
          */
-        public EditGainAndOffsetDialog(MessageSourceAccessor messageSource, Window w, boolean m) {
+        public  EditGainAndOffsetDialog( Window w, boolean m) {
 
-                super(messageSource, w, m);
-                setTitle(messageSource.getMessage("opensignal.parameters.editGainAndOffset"));
+                super( w, m);
+                setTitle(_("Edit gain and offset"));
         }
 
         /**
@@ -244,7 +243,7 @@ public class EditGainAndOffsetDialog extends AbstractDialog {
         private ChannelDefinitionsTable getDefinitionsTable() {
 
                 if (definitionsTable == null) {
-                        definitionsTable = new ChannelDefinitionsTable(messageSource, true);
+                        definitionsTable = new ChannelDefinitionsTable( true);
                 }
                 return definitionsTable;
         }

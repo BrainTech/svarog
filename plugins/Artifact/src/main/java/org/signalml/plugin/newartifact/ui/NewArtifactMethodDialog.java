@@ -35,7 +35,8 @@ import org.signalml.plugin.newartifact.data.NewArtifactParameters;
 import org.signalml.plugin.newartifact.data.NewArtifactPowerGridFrequency;
 import org.signalml.plugin.newartifact.data.NewArtifactType;
 import org.signalml.plugin.tool.PluginResourceRepository;
-import org.springframework.context.support.MessageSourceAccessor;
+import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
+
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.validation.Errors;
 
@@ -64,14 +65,14 @@ public class NewArtifactMethodDialog extends AbstractPresetDialog {
 	private SourceMontage currentMontage;
 	private int[][] currentExclusion;
 
-	public NewArtifactMethodDialog(MessageSourceAccessor messageSource,
+	public  NewArtifactMethodDialog(
 				       PresetManager presetManager, Window w) {
-		super(messageSource, presetManager, w, true);
+		super( presetManager, w, true);
 	}
 
 	@Override
 	protected void initialize() {
-		setTitle(messageSource.getMessage("newArtifactMethod.dialog.title"));
+		setTitle(_("Artifact detection configuration"));
 		PluginConfigForMethod config;
 		try {
 			config = (PluginConfigForMethod) PluginResourceRepository.GetResource("config");
@@ -104,9 +105,9 @@ public class NewArtifactMethodDialog extends AbstractPresetDialog {
 
 		JPanel interfacePanel = new JPanel(new BorderLayout());
 
-		signalPanel = new InputSignalPanel(messageSource);
-		typesPanel = new NewArtifactTypesPanel(messageSource);
-		optionsPanel = new NewArtifactOptionsPanel(messageSource);
+		signalPanel = new InputSignalPanel();
+		typesPanel = new NewArtifactTypesPanel();
+		optionsPanel = new NewArtifactOptionsPanel();
 
 		optionsPanel.getExclusionButton().setAction(new EditExclusionAction());
 		optionsPanel.getExclusionButton().setEnabled(false);
@@ -298,21 +299,20 @@ public class NewArtifactMethodDialog extends AbstractPresetDialog {
 		private static final long serialVersionUID = 1L;
 
 		public EditMontageAction() {
-			super(messageSource.getMessage("newArtifactMethod.dialog.editMontage"));
+			super(_("Edit montage"));
 			putValue(
 				AbstractAction.SMALL_ICON,
 				IconUtils
 				.loadClassPathIcon("org/signalml/app/icon/montage.png"));
 			putValue(
 				AbstractAction.SHORT_DESCRIPTION,
-				messageSource
-				.getMessage("newArtifactMethod.dialog.editMontageToolTip"));
+				_("Edit channel labels and functions"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {
 
 			if (montageDialog == null) {
-				montageDialog = new SourceMontageDialog(messageSource,
+				montageDialog = new SourceMontageDialog(
 									NewArtifactMethodDialog.this, true);
 			}
 
@@ -336,22 +336,20 @@ public class NewArtifactMethodDialog extends AbstractPresetDialog {
 		private static final long serialVersionUID = 1L;
 
 		public EditExclusionAction() {
-			super(messageSource
-			      .getMessage("newArtifactMethod.dialog.editExclusion"));
+			super(_("Select excluded derivations"));
 			putValue(
 				AbstractAction.SMALL_ICON,
 				IconUtils
 				.loadClassPathIcon("org/signalml/app/icon/editexclusion.png"));
 			putValue(
 				AbstractAction.SHORT_DESCRIPTION,
-				messageSource
-				.getMessage("newArtifactMethod.dialog.editExclusionToolTip"));
+				_("Select excluded derivations"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {
 
 			if (exclusionDialog == null) {
-				exclusionDialog = new NewArtifactExclusionDialog(messageSource,
+				exclusionDialog = new NewArtifactExclusionDialog(
 						NewArtifactMethodDialog.this, true);
 			}
 

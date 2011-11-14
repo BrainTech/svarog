@@ -4,6 +4,7 @@
 
 package org.signalml.app.util;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -16,9 +17,9 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeListener;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.app.view.element.CompactButton;
-import org.signalml.plugin.export.view.AbstractDialog;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.core.io.ClassPathResource;
 
 /** ButtonUtils
@@ -77,10 +78,10 @@ public abstract class SwingUtils {
 		}
 	}
 
-	public static CompactButton createFieldHelpButton(MessageSourceAccessor messageSource, AbstractDialog owner, URL helpURL) {
+	public static CompactButton createFieldHelpButton( AbstractDialog owner, URL helpURL) {
 
 		CompactButton button = new CompactButton("", IconUtils.loadClassPathIcon("org/signalml/app/icon/help.png"));
-		button.setToolTipText(messageSource.getMessage("toolTipText.displayFieldHelp"));
+		button.setToolTipText(_("Display context help for this field"));
 		ActionListener contextHelpAction = owner.createContextHelpAction(helpURL);
 
 		button.addActionListener(contextHelpAction);
@@ -89,7 +90,7 @@ public abstract class SwingUtils {
 
 	}
 
-	public static CompactButton createFieldHelpButton(MessageSourceAccessor messageSource, AbstractDialog owner, String path) {
+	public static CompactButton createFieldHelpButton( AbstractDialog owner, String path) {
 
 		try {
 
@@ -108,10 +109,10 @@ public abstract class SwingUtils {
 
 			URL contextHelpURL = (new ClassPathResource(mainPath)).getURL();
 			contextHelpURL = new URL(contextHelpURL.toExternalForm() + anchor);
-			return createFieldHelpButton(messageSource, owner, contextHelpURL);
+			return createFieldHelpButton( owner, contextHelpURL);
 		} catch (IOException ex) {
 			logger.error("Failed to get help URL", ex);
-			return createFieldHelpButton(messageSource, owner, (URL) null);
+			return createFieldHelpButton( owner, (URL) null);
 		}
 
 	}

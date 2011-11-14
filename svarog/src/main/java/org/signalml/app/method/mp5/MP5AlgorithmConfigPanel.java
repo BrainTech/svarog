@@ -3,6 +3,7 @@
  */
 package org.signalml.app.method.mp5;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 
 import javax.swing.Box;
@@ -16,12 +17,12 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.util.SwingUtils;
+import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.app.view.element.CompactButton;
 import org.signalml.app.view.element.ResolvableComboBox;
 import org.signalml.method.mp5.MP5Algorithm;
 import org.signalml.method.mp5.MP5Parameters;
-import org.signalml.plugin.export.view.AbstractDialog;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /** MP5AlgorithmConfigPanel
@@ -32,17 +33,14 @@ import org.springframework.validation.Errors;
 public class MP5AlgorithmConfigPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-
-	private MessageSourceAccessor messageSource;
 	private AbstractDialog owner;
 
 	private ResolvableComboBox algorithmComboBox;
 
 	private MP5Algorithm lastAlgorithm;
 
-	public MP5AlgorithmConfigPanel(MessageSourceAccessor messageSource, AbstractDialog owner) {
+	public  MP5AlgorithmConfigPanel( AbstractDialog owner) {
 		super();
-		this.messageSource = messageSource;
 		this.owner = owner;
 		initialize();
 	}
@@ -50,7 +48,7 @@ public class MP5AlgorithmConfigPanel extends JPanel {
 	private void initialize() {
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("mp5Method.dialog.algorithmTitle")),
+		        new TitledBorder(_("Selection of the algorithm")),
 		        new EmptyBorder(3,3,3,3)
 		);
 
@@ -61,9 +59,9 @@ public class MP5AlgorithmConfigPanel extends JPanel {
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
-		JLabel algorithmLabel = new JLabel(messageSource.getMessage("mp5Method.dialog.algorithm"));
+		JLabel algorithmLabel = new JLabel(_("MP version"));
 
-		CompactButton algorithmHelpButton = SwingUtils.createFieldHelpButton(messageSource, owner, MP5MethodDialog.HELP_ALGORITHM);
+		CompactButton algorithmHelpButton = SwingUtils.createFieldHelpButton( owner, MP5MethodDialog.HELP_ALGORITHM);
 
 		Component glue1 = Box.createHorizontalGlue();
 
@@ -107,7 +105,7 @@ public class MP5AlgorithmConfigPanel extends JPanel {
 
 	public ResolvableComboBox getAlgorithmComboBox() {
 		if (algorithmComboBox == null) {
-			algorithmComboBox = new ResolvableComboBox(messageSource);
+			algorithmComboBox = new ResolvableComboBox();
 			algorithmComboBox.setModel(new DefaultComboBoxModel(MP5Algorithm.values()));
 			algorithmComboBox.setPreferredSize(MP5MethodDialog.FIELD_SIZE);
 			algorithmComboBox.setMaximumSize(MP5MethodDialog.FIELD_SIZE);

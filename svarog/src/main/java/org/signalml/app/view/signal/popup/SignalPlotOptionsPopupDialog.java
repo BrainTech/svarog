@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.signal.popup;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -38,7 +39,6 @@ import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.view.tag.TagPaintMode;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractPopupDialog;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** SignalPlotOptionsPopupDialog
  *
@@ -57,8 +57,8 @@ public class SignalPlotOptionsPopupDialog extends AbstractPopupDialog {
 	private JComboBox signalColorComboBox;
 	private JCheckBox signalXORCheckBox;
 
-	public SignalPlotOptionsPopupDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public  SignalPlotOptionsPopupDialog( Window w, boolean isModal) {
+		super( w, isModal);
 	}
 
 	public SignalView getSignalView() {
@@ -75,7 +75,7 @@ public class SignalPlotOptionsPopupDialog extends AbstractPopupDialog {
 		createButtons();
 
 		JPanel interfacePanel = new JPanel(new BorderLayout());
-		interfacePanel.setBorder(new TitledCrossBorder(messageSource.getMessage("signalView.plotOptions"), true));
+		interfacePanel.setBorder(new TitledCrossBorder(_("Plot options"), true));
 
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setBorder(new EmptyBorder(3,3,3,3));
@@ -108,8 +108,8 @@ public class SignalPlotOptionsPopupDialog extends AbstractPopupDialog {
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
-		JLabel tagPaintModeLabel = new JLabel(messageSource.getMessage("signalView.tagPaintMode"));
-		JLabel signalColorLabel = new JLabel(messageSource.getMessage("signalView.signalColor"));
+		JLabel tagPaintModeLabel = new JLabel(_("Tag mode"));
+		JLabel signalColorLabel = new JLabel(_("Signal color"));
 		JLabel signalXORLabel = new JLabel("");
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
@@ -160,7 +160,7 @@ public class SignalPlotOptionsPopupDialog extends AbstractPopupDialog {
 
 	public JComboBox getTagPaintModeComboBox() {
 		if (tagPaintModeComboBox == null) {
-			tagPaintModeComboBox = new ResolvableComboBox(messageSource);
+			tagPaintModeComboBox = new ResolvableComboBox();
 			tagPaintModeComboBox.setModel(new DefaultComboBoxModel(TagPaintMode.values()));
 			tagPaintModeComboBox.setSelectedItem(signalView.getMasterPlot().getTagPaintMode());
 
@@ -181,7 +181,7 @@ public class SignalPlotOptionsPopupDialog extends AbstractPopupDialog {
 
 	public JComboBox getSignalColorComboBox() {
 		if (signalColorComboBox == null) {
-			signalColorComboBox = new ResolvableComboBox(messageSource);
+			signalColorComboBox = new ResolvableComboBox();
 			signalColorComboBox.setModel(new DefaultComboBoxModel(SignalColor.values()));
 			signalColorComboBox.setSelectedItem(signalView.getMasterPlot().getSignalColor());
 
@@ -202,7 +202,7 @@ public class SignalPlotOptionsPopupDialog extends AbstractPopupDialog {
 
 	public JCheckBox getSignalXORCheckBox() {
 		if (signalXORCheckBox == null) {
-			signalXORCheckBox = new JCheckBox(messageSource.getMessage("signalView.signalXOR"));
+			signalXORCheckBox = new JCheckBox(_("XOR"));
 			signalXORCheckBox.setHorizontalTextPosition(SwingConstants.LEFT);
 			signalXORCheckBox.setSelected(signalView.getMasterPlot().isSignalXOR());
 
@@ -225,37 +225,37 @@ public class SignalPlotOptionsPopupDialog extends AbstractPopupDialog {
 
 		SignalPlot plot = signalView.getMasterPlot();
 
-		final JToggleButton antialiasButton = new JToggleButton(messageSource.getMessage("signalView.antialias"), IconUtils.loadClassPathIcon("org/signalml/app/icon/antialias.png"));
-		antialiasButton.setToolTipText(messageSource.getMessage("signalView.antialiasToolTip"));
+		final JToggleButton antialiasButton = new JToggleButton(_("Antialiasing"), IconUtils.loadClassPathIcon("org/signalml/app/icon/antialias.png"));
+		antialiasButton.setToolTipText(_("Toggle plot antialiasing"));
 		antialiasButton.setSelected(plot.isAntialiased());
 
-		final JToggleButton clampButton = new JToggleButton(messageSource.getMessage("signalView.clamp"), IconUtils.loadClassPathIcon("org/signalml/app/icon/clamp.png"));
-		clampButton.setToolTipText(messageSource.getMessage("signalView.clampToolTip"));
+		final JToggleButton clampButton = new JToggleButton(_("Clamp values"), IconUtils.loadClassPathIcon("org/signalml/app/icon/clamp.png"));
+		clampButton.setToolTipText(_("Toggle value clamping (causes faster drawing)"));
 		clampButton.setSelected(plot.isClamped());
 
-		final JToggleButton offscreenChannelsDrawnButton = new JToggleButton(messageSource.getMessage("signalView.offscreenChannelsDrawn"));
+		final JToggleButton offscreenChannelsDrawnButton = new JToggleButton(_("Draw offscreen channels"));
 		offscreenChannelsDrawnButton.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/drawoffscreen.png"));
-		offscreenChannelsDrawnButton.setToolTipText(messageSource.getMessage("signalView.offscreenChannelsDrawnToolTip"));
+		offscreenChannelsDrawnButton.setToolTipText(_("Toggle drawing of channels whose normal drawing area is completely outside the window (causes slower drawing)"));
 		offscreenChannelsDrawnButton.setSelected(plot.isOffscreenChannelsDrawn());
 
-		final JToggleButton pageLinesVisibleButton = new JToggleButton(messageSource.getMessage("signalView.pageLinesVisible"));
+		final JToggleButton pageLinesVisibleButton = new JToggleButton(_("Page lines"));
 		pageLinesVisibleButton.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/pagelines.png"));
-		pageLinesVisibleButton.setToolTipText(messageSource.getMessage("signalView.pageLinesVisibleToolTip"));
+		pageLinesVisibleButton.setToolTipText(_("Show page boundaries (only if not too dense)"));
 		pageLinesVisibleButton.setSelected(plot.isPageLinesVisible());
 
-		final JToggleButton blockLinesVisibleButton = new JToggleButton(messageSource.getMessage("signalView.blockLinesVisible"));
+		final JToggleButton blockLinesVisibleButton = new JToggleButton(_("Block lines"));
 		blockLinesVisibleButton.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/blocklines.png"));
-		blockLinesVisibleButton.setToolTipText(messageSource.getMessage("signalView.blockLinesVisibleToolTip"));
+		blockLinesVisibleButton.setToolTipText(_("Show block boundaries (only if not too dense)"));
 		blockLinesVisibleButton.setSelected(plot.isBlockLinesVisible());
 
-		final JToggleButton channelLinesVisibleButton = new JToggleButton(messageSource.getMessage("signalView.channelLinesVisible"));
+		final JToggleButton channelLinesVisibleButton = new JToggleButton(_("Channel lines"));
 		channelLinesVisibleButton.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/channellines.png"));
-		channelLinesVisibleButton.setToolTipText(messageSource.getMessage("signalView.channelLinesVisibleToolTip"));
+		channelLinesVisibleButton.setToolTipText(_("Show channel center zero levels (only if not too dense)"));
 		channelLinesVisibleButton.setSelected(plot.isChannelLinesVisible());
 
-		final JToggleButton tagToolTipsVisibleButton = new JToggleButton(messageSource.getMessage("signalView.tagToolTipsVisible"));
+		final JToggleButton tagToolTipsVisibleButton = new JToggleButton(_("Tag tool tips"));
 		tagToolTipsVisibleButton.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/tagtooltips.png"));
-		tagToolTipsVisibleButton.setToolTipText(messageSource.getMessage("signalView.tagToolTipsVisibleToolTip"));
+		tagToolTipsVisibleButton.setToolTipText(_("Show tool tips when mouse hovers over a tag"));
 		tagToolTipsVisibleButton.setSelected(plot.isTagToolTipsVisible());
 
 		antialiasButton.addActionListener(new ActionListener() {

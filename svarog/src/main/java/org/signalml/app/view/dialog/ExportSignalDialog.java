@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.dialog;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Window;
 
@@ -18,7 +19,7 @@ import org.signalml.app.view.element.SignalSpacePanel;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -53,28 +54,26 @@ public class ExportSignalDialog extends AbstractSignalSpaceAwarePresetDialog {
 	/**
 	 * Constructor. Sets message source, {@link PresetManager preset
 	 * manager}, parent window and if this dialog blocks top-level windows.
-	 * @param messageSource message source to set
 	 * @param presetManager the preset manager to set
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public ExportSignalDialog(MessageSourceAccessor messageSource, PresetManager presetManager, Window w, boolean isModal) {
-		super(messageSource, presetManager, w, isModal);
+	public  ExportSignalDialog( PresetManager presetManager, Window w, boolean isModal) {
+		super( presetManager, w, isModal);
 	}
 
 	/**
 	 * Constructor. Sets message source and the {@link PresetManager preset
 	 * manager}.
-	 * @param messageSource message source to set
 	 * @param presetManager the preset manager to set
 	 */
-	public ExportSignalDialog(MessageSourceAccessor messageSource, PresetManager presetManager) {
-		super(messageSource, presetManager);
+	public  ExportSignalDialog( PresetManager presetManager) {
+		super( presetManager);
 	}
 
 	@Override
 	protected void initialize() {
-		setTitle(messageSource.getMessage("exportSignalDialog.title"));
+		setTitle(_("Export signal"));
 		setResizable(false);
 		super.initialize();
 	}
@@ -110,7 +109,7 @@ public class ExportSignalDialog extends AbstractSignalSpaceAwarePresetDialog {
 	 */
 	public SignalSpacePanel getSignalSpacePanel() {
 		if (signalSpacePanel == null) {
-			signalSpacePanel = new SignalSpacePanel(messageSource);
+			signalSpacePanel = new SignalSpacePanel();
 		}
 		return signalSpacePanel;
 	}
@@ -124,7 +123,7 @@ public class ExportSignalDialog extends AbstractSignalSpaceAwarePresetDialog {
 	 */
 	public ExportSignalOptionsPanel getOptionsPanel() {
 		if (optionsPanel == null) {
-			optionsPanel = new ExportSignalOptionsPanel(messageSource);
+			optionsPanel = new ExportSignalOptionsPanel();
 		}
 		return optionsPanel;
 	}

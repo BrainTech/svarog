@@ -1,5 +1,6 @@
 package org.signalml.app.worker.amplifiers;
 
+import static org.signalml.app.SvarogApplication._;
 import java.io.IOException;
 import javax.bluetooth.BluetoothStateException;
 
@@ -9,7 +10,6 @@ import javax.bluetooth.DiscoveryListener;
 import javax.bluetooth.LocalDevice;
 import javax.bluetooth.RemoteDevice;
 import javax.bluetooth.ServiceRecord;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Concrete {@link AbstractDeviceDiscoverer} discovering bluetooth devices
@@ -31,11 +31,10 @@ public class BluetoothDeviceDiscoverer extends AbstractDeviceDiscoverer implemen
         /**
          * Default constructor.
          *
-         * @param messageSource {@link #messageSource}
          */
-        public BluetoothDeviceDiscoverer(MessageSourceAccessor messageSource) {
+        public  BluetoothDeviceDiscoverer() {
 
-                super(messageSource);
+                super();
         }
 
         /**
@@ -52,7 +51,7 @@ public class BluetoothDeviceDiscoverer extends AbstractDeviceDiscoverer implemen
                 try {
                         localDevice = LocalDevice.getLocalDevice();
                 } catch (BluetoothStateException ex) {
-                        return messageSource.getMessage("amplifierSelection.bluetoothInitializeError") + ex.getMessage();
+                        return _("Error while initializing bluetooth search: ") + ex.getMessage();
                 }
 
                 discoveryAgent = localDevice.getDiscoveryAgent();
@@ -62,13 +61,13 @@ public class BluetoothDeviceDiscoverer extends AbstractDeviceDiscoverer implemen
                         try {
                                 discoveryAgent.startInquiry(DiscoveryAgent.GIAC, this);
                         } catch (BluetoothStateException ex) {
-                                return messageSource.getMessage("amplifierSelection.bluetoothStartError") + ex.getMessage();
+                                return _("Error while starting bluetooth search: ") + ex.getMessage();
                         }
 
                         lock.wait();
                 }
 
-                return messageSource.getMessage("amplifierSelection.bluetoothSearchCompleted");
+                return _("Bluetooth search completed.");
         }
 
         /**

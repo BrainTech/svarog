@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
@@ -13,7 +14,6 @@ import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.plugin.export.signal.Document;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ActivateDocumentAction
  *
@@ -28,16 +28,16 @@ public class ActivateDocumentAction extends AbstractFocusableSignalMLAction<Docu
 
 	private ActionFocusManager actionFocusManager;
 
-	public ActivateDocumentAction(MessageSourceAccessor messageSource, ActionFocusManager actionFocusManager, DocumentFocusSelector documentFocusSelector) {
-		super(messageSource, documentFocusSelector);
+	public  ActivateDocumentAction( ActionFocusManager actionFocusManager, DocumentFocusSelector documentFocusSelector) {
+		super( documentFocusSelector);
 		this.actionFocusManager = actionFocusManager;
-		setText("action.activateDocument");
+		setText(_("Show"));
 		setIconPath("org/signalml/app/icon/activate.png");
-		setToolTip("action.activateDocumentToolTip");
+		setToolTip(_("Show document"));
 	}
 
-	public ActivateDocumentAction(MessageSourceAccessor messageSource, ActionFocusManager actionFocusManager) {
-		this(messageSource, actionFocusManager, actionFocusManager);
+	public  ActivateDocumentAction( ActionFocusManager actionFocusManager) {
+		this( actionFocusManager, actionFocusManager);
 	}
 
 	@Override
@@ -61,7 +61,9 @@ public class ActivateDocumentAction extends AbstractFocusableSignalMLAction<Docu
 	}
 
 	public void setEnabledAsNeeded() {
-		setEnabled(getActionFocusSelector().getActiveDocument() != null);
+		DocumentFocusSelector x = getActionFocusSelector();
+		if (null != x)
+			setEnabled(x.getActiveDocument() != null);
 	}
 
 }

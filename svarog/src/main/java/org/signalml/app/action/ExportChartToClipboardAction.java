@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
@@ -16,7 +17,6 @@ import org.apache.log4j.Logger;
 import org.jfree.chart.JFreeChart;
 import org.signalml.app.util.ImageTransferable;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ExportChartToClipboardAction
  *
@@ -29,11 +29,11 @@ public abstract class ExportChartToClipboardAction extends AbstractSignalMLActio
 
 	private static final long serialVersionUID = 1L;
 
-	public ExportChartToClipboardAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
-		setText("action.exportChartToClipboard");
+	public  ExportChartToClipboardAction() {
+		super();
+		setText(_("Copy chart to clipboard"));
 		setIconPath("org/signalml/app/icon/clipboard.png");
-		setToolTip("action.exportChartToClipboardToolTip");
+		setToolTip(_("Copy chart to clipboard"));
 	}
 
 	protected abstract Dimension getImageSize();

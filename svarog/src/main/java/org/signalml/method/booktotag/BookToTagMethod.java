@@ -3,6 +3,7 @@
  */
 package org.signalml.method.booktotag;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Color;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
@@ -20,7 +21,7 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -255,8 +256,8 @@ public class BookToTagMethod extends AbstractMethod implements TrackableMethod {
          * {@inheritDoc}
          */
 	@Override
-	public String getTickerLabel(MessageSourceAccessor messageSource, int ticker) {
-		return messageSource.getMessage("bookToTagMethod.ticker");
+	public String getTickerLabel( int ticker) {
+		return _("Segments processed");
 	}
 
 

@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -13,7 +14,6 @@ import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** SaveTagAsAction
  *
@@ -28,11 +28,11 @@ public class SaveTagAsAction extends AbstractFocusableSignalMLAction<TagDocument
 
 	private DocumentFlowIntegrator documentFlowIntegrator;
 
-	public SaveTagAsAction(MessageSourceAccessor messageSource, TagDocumentFocusSelector tagDocumentFocusSelector) {
-		super(messageSource, tagDocumentFocusSelector);
-		setText("action.saveTagAs");
+	public  SaveTagAsAction( TagDocumentFocusSelector tagDocumentFocusSelector) {
+		super( tagDocumentFocusSelector);
+		setText(_("Save Tag As..."));
 		setIconPath("org/signalml/app/icon/filesaveas.png");
-		setToolTip("action.saveTagAsToolTip");
+		setToolTip(_("Save active tag to another file"));
 	}
 
 	@Override

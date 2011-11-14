@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Dimension;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -19,7 +20,7 @@ import javax.swing.border.TitledBorder;
 import org.apache.log4j.Logger;
 import org.signalml.app.model.SignalParameterDescriptor;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -37,11 +38,6 @@ public class RequiredSignalParametersPanel extends JPanel implements FocusListen
 	private static final long serialVersionUID = 1L;
 
 	protected static final Logger logger = Logger.getLogger(RequiredSignalParametersPanel.class);
-
-	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
 
 	/**
 	 * the text field with the sampling frequency (Hz)
@@ -80,12 +76,10 @@ public class RequiredSignalParametersPanel extends JPanel implements FocusListen
 	private boolean wasCalibrationOffsetFocused = false;
 
 	/**
-	 * Constructor. Sets the source of messages and initializes this panel.
-	 * @param messageSource the source of messages
+	 * Constructor. Initializes the panel.
 	 */
-	public RequiredSignalParametersPanel(MessageSourceAccessor messageSource) {
+	public  RequiredSignalParametersPanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -108,7 +102,7 @@ public class RequiredSignalParametersPanel extends JPanel implements FocusListen
 	private void initialize() {
 
 		CompoundBorder cb = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("signalParameters.requiredSignalParameters")),
+		        new TitledBorder(_("Required signal parameters")),
 		        new EmptyBorder(3,3,3,3)
 		);
 
@@ -119,10 +113,10 @@ public class RequiredSignalParametersPanel extends JPanel implements FocusListen
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
-		JLabel samplingFrequencyLabel = new JLabel(messageSource.getMessage("signalParameters.samplingFrequency"));
-		JLabel channelCountLabel = new JLabel(messageSource.getMessage("signalParameters.channelCount"));
-		JLabel calibrationGainLabel = new JLabel(messageSource.getMessage("signalParameters.calibrationGain"));
-		JLabel calibrationOffsetLabel = new JLabel(messageSource.getMessage("signalParameters.calibrationOffset"));
+		JLabel samplingFrequencyLabel = new JLabel(_("Sampling Frequency (Hz)"));
+		JLabel channelCountLabel = new JLabel(_("Number of channels"));
+		JLabel calibrationGainLabel = new JLabel(_("Calibration gain"));
+		JLabel calibrationOffsetLabel = new JLabel(_("Calibration offset"));
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
@@ -274,7 +268,7 @@ public class RequiredSignalParametersPanel extends JPanel implements FocusListen
 			getSamplingFrequencyField().setToolTipText(null);
 		} else {
 			getSamplingFrequencyField().setEditable(false);
-			getSamplingFrequencyField().setToolTipText(messageSource.getMessage("signalParameters.requiredNotEditable"));
+			getSamplingFrequencyField().setToolTipText(_("This parameter may not be changed for this signal file"));
 		}
 
 		if (spd.isChannelCountEditable()) {
@@ -282,7 +276,7 @@ public class RequiredSignalParametersPanel extends JPanel implements FocusListen
 			getChannelCountField().setToolTipText(null);
 		} else {
 			getChannelCountField().setEditable(false);
-			getChannelCountField().setToolTipText(messageSource.getMessage("signalParameters.requiredNotEditable"));
+			getChannelCountField().setToolTipText(_("This parameter may not be changed for this signal file"));
 		}
 
 		if (spd.isCalibrationEditable()) {
@@ -292,8 +286,8 @@ public class RequiredSignalParametersPanel extends JPanel implements FocusListen
 			getCalibrationOffsetField().setToolTipText(null);
 		} else {
 			getCalibrationGainField().setEditable(false);
-			getCalibrationGainField().setToolTipText(messageSource.getMessage("signalParameters.requiredNotEditable"));
-			getCalibrationOffsetField().setToolTipText(messageSource.getMessage("signalParameters.requiredNotEditable"));
+			getCalibrationGainField().setToolTipText(_("This parameter may not be changed for this signal file"));
+			getCalibrationOffsetField().setToolTipText(_("This parameter may not be changed for this signal file"));
 			getCalibrationOffsetField().setEditable(false);
 		}
 

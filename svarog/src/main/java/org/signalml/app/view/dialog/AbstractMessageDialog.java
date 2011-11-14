@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.dialog;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Window;
@@ -17,8 +18,6 @@ import javax.swing.JPanel;
 
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Abstract dialog, which displays the message to the user.
@@ -59,21 +58,19 @@ public abstract class AbstractMessageDialog extends AbstractDialog {
 
 	/**
 	 * Constructor. Sets the source of messages.
-	 * @param messageSource the source of messages
 	 */
-	public AbstractMessageDialog(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  AbstractMessageDialog() {
+		super();
 	}
 
 	/**
 	 * Constructor. Sets message source, parent window and if this dialog
 	 * blocks top-level windows.
-	 * @param messageSource message source to set
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public AbstractMessageDialog(MessageSourceAccessor messageSource,Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public  AbstractMessageDialog(Window w, boolean isModal) {
+		super( w, isModal);
 	}
 
 	/**
@@ -117,7 +114,7 @@ public abstract class AbstractMessageDialog extends AbstractDialog {
 	 */
 	public JCheckBox getDontShowAgainCheckBox() {
 		if (dontShowAgainCheckBox == null) {
-			dontShowAgainCheckBox = new JCheckBox(messageSource.getMessage("messageDialog.dontShowAgain"));
+			dontShowAgainCheckBox = new JCheckBox(_("Don't show this message again"));
 			dontShowAgainCheckBox.setFont(dontShowAgainCheckBox.getFont().deriveFont(Font.PLAIN,10F));
 		}
 		return dontShowAgainCheckBox;

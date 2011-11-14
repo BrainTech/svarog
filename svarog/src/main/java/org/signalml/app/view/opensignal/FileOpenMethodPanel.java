@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.opensignal;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -13,7 +14,6 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import org.signalml.app.view.element.ResolvableComboBox;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * A panel for selecting the file open method (RAW or using SignalML codec).
@@ -28,11 +28,6 @@ public class FileOpenMethodPanel extends JPanel {
 	public static String FILE_OPEN_METHOD_PROPERTY_CHANGED = "fileOpenMethodPropertyChanged";
 
 	/**
-	 * Message source capable of resolving localized messages.
-	 */
-	protected MessageSourceAccessor messageSource;
-
-	/**
 	 * The combo-box which allows to select the method using which the signal
 	 * document will be opened (raw or signalML).
 	 */
@@ -40,11 +35,8 @@ public class FileOpenMethodPanel extends JPanel {
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source capable of resolving localized
-	 * messages
 	 */
-	public FileOpenMethodPanel(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
+	public  FileOpenMethodPanel() {
 		createInterface();
 	}
 
@@ -53,7 +45,7 @@ public class FileOpenMethodPanel extends JPanel {
 	 */
 	private void createInterface() {
 			CompoundBorder cb = new CompoundBorder(
-			        new TitledBorder(messageSource.getMessage("openSignal.options.methodTitle")),
+			        new TitledBorder(_("Choose signal loading method")),
 			        new EmptyBorder(3,3,3,3)
 			);
 			setBorder(cb);
@@ -72,7 +64,7 @@ public class FileOpenMethodPanel extends JPanel {
 	 */
 	public ResolvableComboBox getMethodComboBox() {
 		if (methodComboBox == null) {
-			methodComboBox = new ResolvableComboBox(messageSource);
+			methodComboBox = new ResolvableComboBox();
 
 			FileOpenSignalMethod[] allAvailableMethods = FileOpenSignalMethod.values();
 			DefaultComboBoxModel model = new DefaultComboBoxModel(allAvailableMethods);

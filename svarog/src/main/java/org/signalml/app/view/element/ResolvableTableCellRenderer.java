@@ -10,7 +10,6 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import org.springframework.context.MessageSourceResolvable;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * The table cell renderer which uses the text obtained from the source of
@@ -24,19 +23,6 @@ public class ResolvableTableCellRenderer extends DefaultTableCellRenderer {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
-
-	/**
-	 * Constructor. Sets the source of messages.
-	 * @param messageSource the source of messages
-	 */
-	public ResolvableTableCellRenderer(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
-	}
-
-	/**
 	 * {@link DefaultTableCellRenderer#getTableCellRendererComponent(JTable,
 	 * Object, boolean, boolean, int, int) Creates} the label to be used as
 	 * the contents of the cell.
@@ -48,10 +34,17 @@ public class ResolvableTableCellRenderer extends DefaultTableCellRenderer {
 		DefaultTableCellRenderer renderer = (DefaultTableCellRenderer) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
 		if (value instanceof MessageSourceResolvable) {
-			renderer.setText(messageSource.getMessage((MessageSourceResolvable) value));
+			renderer.setText(getSvarogI18n().getMessage((MessageSourceResolvable) value));
 		}
 
 		return renderer;
 	}
 
+	/**
+	 * Returns the {@link SvarogAccessI18nImpl} instance.
+	 * @return the {@link SvarogAccessI18nImpl} singleton instance
+	 */
+	protected org.signalml.app.SvarogI18n getSvarogI18n() {
+		return org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance();
+	}
 }

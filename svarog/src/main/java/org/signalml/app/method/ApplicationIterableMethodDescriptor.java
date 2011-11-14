@@ -11,7 +11,7 @@ package org.signalml.app.method;
  */
 public interface ApplicationIterableMethodDescriptor extends ApplicationMethodDescriptor {
 
-	String getIterationNameCode();
+	String getIterationName();
 
 	String getIterationIconPath();
 

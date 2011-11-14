@@ -21,9 +21,9 @@ public class SvarogLoggerStdErr {
      * not a singleton.
      */
     public static SvarogLoggerStdErr getInstance() {
-        if (null == instance) {
+        if (instance == null) {
             synchronized (SvarogLoggerStdErr.class) {
-                if (null == instance)
+                if (instance == null)
                     instance = new SvarogLoggerStdErr();
             }
         }
@@ -32,9 +32,9 @@ public class SvarogLoggerStdErr {
     }
 
     public static SynchronizedPrintStream getSynchronizedStdErr() {
-        if (null == ssStdErr) {
+        if (ssStdErr == null) {
             synchronized (SvarogLoggerStdErr.class) {
-                if (null == ssStdErr)
+                if (ssStdErr == null)
                     ssStdErr = new SynchronizedPrintStream(java.lang.System.err);
             }
         }

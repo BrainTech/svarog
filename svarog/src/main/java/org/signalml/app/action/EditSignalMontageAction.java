@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
@@ -11,7 +12,6 @@ import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.model.MontageDescriptor;
 import org.signalml.app.view.montage.SignalMontageDialog;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** EditSignalMontageAction
  *
@@ -26,11 +26,11 @@ public class EditSignalMontageAction extends AbstractFocusableSignalMLAction<Sig
 
 	private SignalMontageDialog signalMontageDialog;
 
-	public EditSignalMontageAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
-		super(messageSource, signalDocumentFocusSelector);
-		setText("action.signalMontage");
+	public  EditSignalMontageAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
+		super( signalDocumentFocusSelector);
+		setText(_("Signal montage"));
 		setIconPath("org/signalml/app/icon/montage.png");
-		setToolTip("action.signalMontageToolTip");
+		setToolTip(_("Change signal montage"));
 	}
 
 	@Override

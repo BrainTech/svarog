@@ -15,7 +15,8 @@ import org.signalml.method.MethodExecutionTracker;
 import org.signalml.method.TrackableMethod;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.ResolvableString;
-import org.springframework.context.support.MessageSourceAccessor;
+import static org.signalml.app.SvarogApplication._;
+
 import org.springframework.validation.Errors;
 
 /** EvokedPotentialMethod
@@ -151,18 +152,11 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 	}
 
 	@Override
-	public String getTickerLabel(MessageSourceAccessor messageSource, int ticker) {
-		String code;
-		switch (ticker) {
-
-		case 0 :
-			code = "evokedPotentialMethod.markerTicker";
-			break;
-		default :
+	public String getTickerLabel(int ticker) {
+		if (0 == ticker)
+			return _("Processing markers");
+		else
 			throw new IndexOutOfBoundsException();
-
-		}
-		return messageSource.getMessage(code);
 	}
 
 	@Override

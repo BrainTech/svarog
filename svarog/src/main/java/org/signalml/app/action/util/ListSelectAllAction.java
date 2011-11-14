@@ -4,12 +4,12 @@
 
 package org.signalml.app.action.util;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.JList;
 
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ListSelectAllAction
  *
@@ -22,8 +22,8 @@ public class ListSelectAllAction extends AbstractAction {
 
 	private JList list;
 
-	public ListSelectAllAction(MessageSourceAccessor messageSource, JList list) {
-		super(messageSource.getMessage("action.util.selectAll"));
+	public  ListSelectAllAction( JList list) {
+		super(_("Select all"));
 		this.list = list;
 	}
 

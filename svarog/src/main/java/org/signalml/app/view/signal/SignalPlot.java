@@ -4,6 +4,8 @@
 
 package org.signalml.app.view.signal;
 
+import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogApplication._R;
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -24,7 +26,6 @@ import java.beans.PropertyChangeListener;
 import java.io.InvalidClassException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Formatter;
 import java.util.List;
 import java.util.SortedSet;
 
@@ -72,7 +73,6 @@ import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
 import org.signalml.plugin.export.signal.tagStyle.TagAttributes;
 import org.signalml.plugin.export.view.ExportedSignalPlot;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** SignalPlot
  *
@@ -176,8 +176,6 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	private boolean compensationEnabled = true;
 	private boolean ignoreSliderEvents = false;
 
-	private MessageSourceAccessor messageSource;
-
 	private ArrayList<PositionedTag> tempTagList;
 
 	private int tempTagCnt;
@@ -207,10 +205,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		this.view = view;
 		this.masterPlot = masterPlot;
 
-		messageSource = view.getMessageSource();
-
 		setBackground(Color.WHITE);
-
 		setFocusable(true);
 
 		signalChain = SignalProcessingChain.createFilteredChain(document.getSampleSource(), document.getType());
@@ -1256,13 +1251,12 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			return null;
 		}
 
-		String locationMessage = messageSource.getMessage("signalView.plotToolTipSignal", new Object[] {
-		                                 toTimeSpace(p),
-		                                 toValueSpace(p),
-		                                 toPageSpace(p),
-		                                 toBlockSpace(p),
-		                                 signalChain.getLabel(toChannelSpace(p))
-		                         });
+		String locationMessage = _R("T: {0}, V:{1} [P: {2}, B: {3}, C: {4}]",
+					    toTimeSpace(p),
+					    toValueSpace(p),
+					    toPageSpace(p),
+					    toBlockSpace(p),
+					    signalChain.getLabel(toChannelSpace(p)));
 		return getTagListToolTip(locationMessage, tempTagList);
 
 	}
@@ -2086,27 +2080,24 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		SignalSelectionType type = tag.getType();
 		if (type == SignalSelectionType.PAGE || type == SignalSelectionType.BLOCK
 			|| (type == SignalSelectionType.CHANNEL && tag.getChannel() == Tag.CHANNEL_NULL)) {
-			return messageSource.getMessage("tagWithoutChannel", new Object[] {
-			                                        tag.getStyle().getDescriptionOrName(),
-			                                        tag.getPosition(),
-			                                        tag.getLength(),
-			                                        tag.getPosition()+tag.getLength()
-			                                });
+			return _R("{0} [{1}->{3}]",
+				  tag.getStyle().getDescriptionOrName(),
+				  tag.getPosition(),
+				  tag.getLength(),
+				  tag.getPosition()+tag.getLength());
 		} else {
 			if (tag.isMarker()) {
-				return messageSource.getMessage("markerWithChannel", new Object[] {
-				                                        tag.getStyle().getDescriptionOrName(),
-				                                        tag.getCenterPosition(),
-				                                        signalChain.getPrimaryLabel(tag.getChannel())
-				                                });
+				return _R("{0} [{1} in channel {2}]",
+					  tag.getStyle().getDescriptionOrName(),
+					  tag.getCenterPosition(),
+					  signalChain.getPrimaryLabel(tag.getChannel()));
 			} else {
-				return messageSource.getMessage("tagWithChannel", new Object[] {
-				                                        tag.getStyle().getDescriptionOrName(),
-				                                        tag.getPosition(),
-				                                        tag.getLength(),
-				                                        tag.getPosition()+tag.getLength(),
-				                                        signalChain.getPrimaryLabel(tag.getChannel())
-				                                });
+				return _R("{0} [{1}->{3} in channel {4}]",
+					  tag.getStyle().getDescriptionOrName(),
+					  tag.getPosition(),
+					  tag.getLength(),
+					  tag.getPosition()+tag.getLength(),
+					  signalChain.getPrimaryLabel(tag.getChannel()));
 			}
 		}
 	}
@@ -2663,15 +2654,15 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 				String montageString;
 				if (localMontage == null) {
-					montageString = messageSource.getMessage("signalView.montageInherited");
+					montageString = _("montage from document");
 				} else {
-					montageString = messageSource.getMessage("signalView.montageLocal");
+					montageString = _("modified montage");
 				}
 
-				String hSynchroString = horizontalLock ? messageSource.getMessage("signalView.on") : messageSource.getMessage("signalView.off");
-				String vSynchroString = verticalLock ? messageSource.getMessage("signalView.on") : messageSource.getMessage("signalView.off");
+				String hSynchroString = horizontalLock ? _("on") : _("off");
+				String vSynchroString = verticalLock ? _("on") : _("off");
 
-				title = messageSource.getMessage("signalView.slavePlot.title", new Object[] { montageString, hSynchroString, vSynchroString });
+				title = _R("Auxiliary signal plot ({0}, horizontal synchro {1}, vertical synchro {2})", montageString, hSynchroString, vSynchroString);
 
 			}
 
@@ -2715,16 +2706,13 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 				}
 
 				if (viewportPosition.x == masterViewportPosition.x) {
-					text = messageSource.getMessage("signalView.slavePlot.synchronized");
+					text = _("synchronized");
 				} else {
 					float timeDiff = toTimeSpace(viewportPosition) - masterPlot.toTimeSpace(masterViewportPosition);
-					Formatter formatter = new Formatter();
 					if (timeDiff < 0) {
-						formatter.format("%.2f", -timeDiff);
-						text = messageSource.getMessage("signalView.slavePlot.trailing", new Object[] { formatter.toString() });
+						text = _R("trailing by {0,number,#.##}s", -timeDiff);
 					} else {
-						formatter.format("%.2f", timeDiff);
-						text = messageSource.getMessage("signalView.slavePlot.leading", new Object[] { formatter.toString() });
+						text = _R("leading by {0,number,#.##}s", timeDiff);
 					}
 				}
 
@@ -2806,9 +2794,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		signalPlotColumnHeader.setSignalViewPopupProvider(popupMenuProvider);
 	}
 
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
-	}
+	
 
 	@Override
 	public SignalPlot getMasterPlot() {

@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -21,7 +22,6 @@ import org.signalml.domain.signal.raw.RawSignalSampleType;
 import org.signalml.domain.signal.raw.RawSignalWriter;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ExportSamplesToMultiplexedFloatFileAction
  *
@@ -39,11 +39,11 @@ public abstract class ExportSamplesToMultiplexedFloatFileAction extends Abstract
 
 	private RawSignalWriter rawSignalWriter;
 
-	public ExportSamplesToMultiplexedFloatFileAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
-		setText("action.exportSamplesToFloatFile");
+	public  ExportSamplesToMultiplexedFloatFileAction() {
+		super();
+		setText(_("Save all samples as float file"));
 		setIconPath("org/signalml/app/icon/filesave.png");
-		setToolTip("action.exportSamplesToFloatFileToolTip");
+		setToolTip(_("Save all samples as a float file"));
 	}
 
 	protected abstract int getSampleCount();

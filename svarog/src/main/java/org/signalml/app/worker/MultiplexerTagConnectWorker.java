@@ -1,5 +1,6 @@
 package org.signalml.app.worker;
 
+import static org.signalml.app.SvarogApplication._;
 import java.net.InetSocketAddress;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -72,21 +73,17 @@ public class MultiplexerTagConnectWorker extends SwingWorker< WorkerResult, Inte
 		if (connectFuture.isDone()) {
 			if (connectFuture.isSuccess()) {
 				logger.info( "Worker: connected!");
-				return new WorkerResult( Boolean.TRUE, 
-						elementManager.getMessageSource().getMessage( "action.connectingMultiplexer.connectionOkMsg"));
+				return new WorkerResult( Boolean.TRUE, _("Connection OK!"));
 			}
 			else {
 				logger.error("connection failed!");
 				Throwable cause = connectFuture.getCause();
-				return new WorkerResult( Boolean.FALSE, 
-						elementManager.getMessageSource().getMessage( "action.connectingMultiplexer.connectionFailedMsg") + 
-								"; " + cause);
+				return new WorkerResult( Boolean.FALSE, _("Connection failed!") + "; " + cause);
 			}
 		}
 		else {
 			logger.error("connection timed out!");
-			return new WorkerResult( Boolean.FALSE, 
-					elementManager.getMessageSource().getMessage( "action.connectingMultiplexer.connectionTimeoutMsg"));
+			return new WorkerResult( Boolean.FALSE, _("Connection timeout!"));
 		}
 	}
 

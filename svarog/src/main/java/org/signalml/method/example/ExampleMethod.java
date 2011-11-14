@@ -18,7 +18,7 @@ import org.signalml.method.iterator.IterableNumericProperty;
 import org.signalml.method.iterator.IterableParameter;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.ResolvableString;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -224,8 +224,8 @@ public class ExampleMethod extends AbstractMethod implements InitializingMethod,
          * {@inheritDoc}
          */
 	@Override
-	public String getTickerLabel(MessageSourceAccessor messageSource, int ticker) {
-		return messageSource.getMessage("exampleMethod.ticker"+ticker);
+	public String getTickerLabel( int ticker) {
+		return getSvarogI18n().getMessage("exampleMethod.ticker"+ticker);
 	}
 
         /**

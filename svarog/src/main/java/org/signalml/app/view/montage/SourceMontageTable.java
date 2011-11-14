@@ -21,7 +21,6 @@ import org.signalml.app.view.element.ChannelComboBox;
 import org.signalml.app.view.element.GrayTableCellRenderer;
 import org.signalml.app.view.montage.dnd.SourceMontageTableTransferHandler;
 import org.signalml.domain.montage.SourceChannel;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * The table which allows to edit the labels and functions of
@@ -62,9 +61,8 @@ public class SourceMontageTable extends JTable {
 	 * Multiple rows of this table can be selected but the columns
 	 * can not be selected at all.
 	 * @param model the {@link SourceMontageTableModel model} for this table
-	 * @param messageSource the source of messages (labels)
 	 */
-	public SourceMontageTable(SourceMontageTableModel model, MessageSourceAccessor messageSource) {
+	public SourceMontageTable(SourceMontageTableModel model) {
 		super(model, (TableColumnModel) null);
 
 		DefaultTableColumnModel columnModel = new DefaultTableColumnModel();
@@ -74,7 +72,6 @@ public class SourceMontageTable extends JTable {
 
 		GrayTableCellRenderer grayIneditableTableCellRenderer = new GrayTableCellRenderer();
 		ChannelTableCellRenderer channelTableCellRenderer = new ChannelTableCellRenderer();
-		channelTableCellRenderer.setMessageSource(messageSource);
 
 		tc = new TableColumn(SourceMontageTableModel.INDEX_COLUMN, 100);
 		tc.setHeaderValue(model.getColumnName(tc.getModelIndex()));
@@ -88,7 +85,7 @@ public class SourceMontageTable extends JTable {
 		tc = new TableColumn(SourceMontageTableModel.FUNCTION_COLUMN, 200);
 		tc.setHeaderValue(model.getColumnName(tc.getModelIndex()));
 		tc.setCellRenderer(channelTableCellRenderer);
-		ChannelComboBox channelComboBox = new ChannelComboBox(messageSource);
+		ChannelComboBox channelComboBox = new ChannelComboBox();
 		channelComboBox.setModel(model.getChannelListModel());
 		DefaultCellEditor channelCellEditor = new DefaultCellEditor(channelComboBox);
 		channelCellEditor.setClickCountToStart(2);

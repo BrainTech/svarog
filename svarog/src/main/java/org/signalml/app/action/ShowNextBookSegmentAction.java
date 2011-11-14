@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -11,7 +12,6 @@ import java.beans.PropertyChangeListener;
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.BookViewFocusSelector;
 import org.signalml.app.view.book.BookView;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ShowNextBookSegmentAction
  *
@@ -24,11 +24,11 @@ public class ShowNextBookSegmentAction extends AbstractFocusableSignalMLAction<B
 
 	protected static final Logger logger = Logger.getLogger(ShowNextBookSegmentAction.class);
 
-	public ShowNextBookSegmentAction(MessageSourceAccessor messageSource, BookViewFocusSelector bookViewFocusSelector) {
-		super(messageSource, bookViewFocusSelector);
-		setText("action.showNextBookSegment");
+	public  ShowNextBookSegmentAction( BookViewFocusSelector bookViewFocusSelector) {
+		super( bookViewFocusSelector);
+		setText(_("Next segment"));
 		setIconPath("org/signalml/app/icon/nextbooksegment.png");
-		setToolTip("action.showNextBookSegmentToolTip");
+		setToolTip(_("Navigate to next segment"));
 	}
 
 	@Override

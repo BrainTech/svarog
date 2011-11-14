@@ -153,8 +153,10 @@ public abstract class AbstractSignal extends AbstractDocument implements SignalD
 	}
 
 	@Override
+	@Deprecated
 	public String getDefaultMessage() {
-		return toString();
+		// XXX: remove this method and call getName() directly
+		return getName();
 	}
 
 	@Override

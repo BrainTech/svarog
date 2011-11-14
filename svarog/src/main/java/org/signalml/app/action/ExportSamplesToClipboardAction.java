@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.ClipboardOwner;
@@ -12,7 +13,6 @@ import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ExportSamplesToClipboardAction
  *
@@ -25,11 +25,11 @@ public abstract class ExportSamplesToClipboardAction extends ExportSamplesAction
 
 	private static final long serialVersionUID = 1L;
 
-	public ExportSamplesToClipboardAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
-		setText("action.exportSamplesToClipboard");
+	public  ExportSamplesToClipboardAction() {
+		super();
+		setText(_("Copy samples to clipboard"));
 		setIconPath("org/signalml/app/icon/clipboard.png");
-		setToolTip("action.exportSamplesToClipboardToolTip");
+		setToolTip(_("Copy samples to clipboard"));
 	}
 
 	@Override

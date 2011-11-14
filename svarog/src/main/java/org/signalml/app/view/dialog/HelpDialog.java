@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.dialog;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Window;
@@ -27,8 +28,7 @@ import javax.swing.text.Document;
 
 import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.core.io.ClassPathResource;
 
 /**
@@ -45,7 +45,7 @@ import org.springframework.core.io.ClassPathResource;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class HelpDialog extends AbstractDialog {
+public class HelpDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
 
 	private static final long serialVersionUID = 1L;
 
@@ -98,22 +98,13 @@ public class HelpDialog extends AbstractDialog {
 	private ForwardAction forwardAction;
 
 	/**
-	 * Constructor. Sets the source of messages.
-	 * @param messageSource the source of messages
-	 */
-	public HelpDialog(MessageSourceAccessor messageSource) {
-		super(messageSource);
-	}
-
-	/**
-	 * Constructor. Sets message source, parent window and if this dialog
+	 * Constructor. Sets parent window and if this dialog
 	 * blocks top-level windows.
-	 * @param messageSource message source to set
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public HelpDialog(MessageSourceAccessor messageSource,Window w, boolean isModal) {
-		super(messageSource,w, isModal);
+	public HelpDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	/**
@@ -128,7 +119,7 @@ public class HelpDialog extends AbstractDialog {
 	@Override
 	protected void initialize() {
 
-		setTitle(messageSource.getMessage("help.title"));
+		setTitle(_("Help for signalml"));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/help.png"));
 
 		super.initialize();
@@ -439,7 +430,7 @@ public class HelpDialog extends AbstractDialog {
 		public ReloadAction() {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/reload.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("help.reloadToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Reload current page"));
 		}
 
 		/**
@@ -478,7 +469,7 @@ public class HelpDialog extends AbstractDialog {
 		public HomeAction() {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/help.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("help.homeToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Help contents"));
 		}
 
 		/**
@@ -509,7 +500,7 @@ public class HelpDialog extends AbstractDialog {
 		public BackAction() {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/back.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("help.backToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Previous topic"));
 		}
 
 		/**
@@ -548,7 +539,7 @@ public class HelpDialog extends AbstractDialog {
 		public ForwardAction() {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/forward.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("help.forwardToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Next topic"));
 		}
 
 		/**

@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
@@ -14,7 +15,6 @@ import org.signalml.app.view.dialog.TagStylePaletteDialog;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** EditTagStylesAction
  *
@@ -29,10 +29,10 @@ public class EditTagStylesAction extends AbstractFocusableSignalMLAction<TagStyl
 
 	private TagStylePaletteDialog tagStylePaletteDialog;
 
-	public EditTagStylesAction(MessageSourceAccessor messageSource, TagStyleFocusSelector tagStyleFocusSelector) {
-		super(messageSource, tagStyleFocusSelector);
-		setText("action.editTagStyles");
-		setToolTip("action.editTagStylesToolTip");
+	public  EditTagStylesAction( TagStyleFocusSelector tagStyleFocusSelector) {
+		super( tagStyleFocusSelector);
+		setText(_("Tag styles"));
+		setToolTip(_("Edit tag styles"));
 		setIconPath("org/signalml/app/icon/palette.png");
 	}
 

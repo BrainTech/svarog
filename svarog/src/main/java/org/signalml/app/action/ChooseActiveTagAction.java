@@ -4,13 +4,13 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.view.signal.popup.ActiveTagPopupDialog;
 import org.signalml.plugin.export.view.DocumentView;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * This class is responsible for action evoked when the user wants to change
@@ -23,17 +23,16 @@ public class ChooseActiveTagAction extends AbstractFocusableSignalMLAction<Signa
 
 	/**
 	 * Constructor.
-	 * @param messageSource the message source accessor capable of resolving
 	 * localized message codes
 	 * @param signalDocumentFocusSelector a {@link SignalDocumentFocusSelector}
 	 * used to get the active document.
 	 */
-	public ChooseActiveTagAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
-		super(messageSource, signalDocumentFocusSelector);
+	public  ChooseActiveTagAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
+		super( signalDocumentFocusSelector);
 
-		setText("action.chooseActiveTag");
+		setText(_("Choose active tag"));
 		setIconPath("org/signalml/app/icon/activetag.png");
-		setToolTip("action.chooseActiveTagToolTip");
+		setToolTip(_("Change active tag (the tag that is being edited)"));
 	}
 
 	@Override
@@ -44,7 +43,7 @@ public class ChooseActiveTagAction extends AbstractFocusableSignalMLAction<Signa
 		if (documentView instanceof SignalView)
 			signalView = (SignalView) documentView;
 
-		ActiveTagPopupDialog dialog = new ActiveTagPopupDialog(messageSource, null, true);
+		ActiveTagPopupDialog dialog = new ActiveTagPopupDialog( null, true);
 		dialog.setSignalView(signalView);
 		dialog.showDialog(null, true);
 

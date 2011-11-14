@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.montage.filters;
 
+import static org.signalml.app.SvarogApplication._;
 import org.signalml.app.view.element.FloatSpinner;
 import org.signalml.app.view.element.DoubleSpinner;
 import java.awt.BorderLayout;
@@ -59,7 +60,7 @@ import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /** EditFFTSampleFilterDialog
@@ -106,18 +107,18 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 	 */
 	protected FFTFilterResponseChartGroupPanel graphsPanel;
 
-	public EditFFTSampleFilterDialog(MessageSourceAccessor messageSource, PresetManager presetManager, Window w, boolean isModal) {
-		super(messageSource, presetManager, w, isModal);
+	public  EditFFTSampleFilterDialog( PresetManager presetManager, Window w, boolean isModal) {
+		super( presetManager, w, isModal);
 	}
 
-	public EditFFTSampleFilterDialog(MessageSourceAccessor messageSource, PresetManager presetManager) {
-		super(messageSource, presetManager);
+	public  EditFFTSampleFilterDialog( PresetManager presetManager) {
+		super( presetManager);
 	}
 
 	@Override
 	protected void initialize() {
 
-		setTitle(messageSource.getMessage("editFFTSampleFilter.title"));
+		setTitle(_("Edit FFT sample filter"));
 
 		addNewRangeAction = new AddNewRangeAction();
 		removeRangeAction = new RemoveRangeAction();
@@ -139,7 +140,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 
 		JPanel addNewRangePanel = new JPanel(new BorderLayout(3, 3));
 
-		addNewRangePanel.setBorder(new TitledBorder(messageSource.getMessage("editFFTSampleFilter.addNewRangeTitle")));
+		addNewRangePanel.setBorder(new TitledBorder(_("New range parameters")));
 
 		JPanel addNewRangeButtonPanel = new JPanel(new FlowLayout(FlowLayout.TRAILING, 3, 3));
 		addNewRangeButtonPanel.add(getAddNewRangeButton());
@@ -156,7 +157,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 		JPanel rightPanel = new JPanel(new BorderLayout(3, 3));
 
 		border = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("editFFTSampleFilter.rangesTitle")),
+		        new TitledBorder(_("Ranges")),
 		        new EmptyBorder(3, 3, 3, 3)
 		);
 		rightPanel.setBorder(border);
@@ -185,7 +186,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 
 		JPanel descriptionPanel = new JPanel(new BorderLayout());
 		CompoundBorder border = new CompoundBorder(
-			new TitledBorder(messageSource.getMessage("editSampleFilter.descriptionTitle")),
+			new TitledBorder(_("Filter description")),
 			new EmptyBorder(3, 3, 3, 3));
 		descriptionPanel.setBorder(border);
 
@@ -213,7 +214,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 	public FFTSampleFilterTableModel getTableModel() {
 
 		if (tableModel == null) {
-			tableModel = new FFTSampleFilterTableModel(messageSource);
+			tableModel = new FFTSampleFilterTableModel();
 		}
 		return tableModel;
 
@@ -222,7 +223,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 	public FFTSampleFilterTable getTable() {
 
 		if (table == null) {
-			table = new FFTSampleFilterTable(getTableModel(), messageSource);
+			table = new FFTSampleFilterTable(getTableModel());
 			table.setPopupMenuProvider(new RangeTablePopupProvider());
 
 			table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -271,7 +272,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 
 			});
 
-			table.setToolTipText(messageSource.getMessage("editFFTSampleFilter.tableToolTip"));
+			table.setToolTipText(_("Double click a row to copy parameters to new range parameters panel"));
 
 			KeyStroke del = KeyStroke.getKeyStroke("DELETE");
 			table.getInputMap(JComponent.WHEN_FOCUSED).put(del, "remove");
@@ -305,11 +306,11 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 			layout.setAutoCreateContainerGaps(false);
 			layout.setAutoCreateGaps(true);
 
-			JLabel fromFrequencyLabel = new JLabel(messageSource.getMessage("editFFTSampleFilter.fromFrequency"));
-			JLabel toFrequencyLabel = new JLabel(messageSource.getMessage("editFFTSampleFilter.toFrequency"));
-			JLabel coefficientLabel = new JLabel(messageSource.getMessage("editFFTSampleFilter.coefficient"));
-			JLabel unlimitedLabel = new JLabel(messageSource.getMessage("editFFTSampleFilter.unlimited"));
-			JLabel multiplyLabel = new JLabel(messageSource.getMessage("editFFTSampleFilter.multiply"));
+			JLabel fromFrequencyLabel = new JLabel(_("From (incl.) [Hz]"));
+			JLabel toFrequencyLabel = new JLabel(_("To (excl.) [Hz]"));
+			JLabel coefficientLabel = new JLabel(_("Coefficient"));
+			JLabel unlimitedLabel = new JLabel(_("Up to Fn"));
+			JLabel multiplyLabel = new JLabel(_("Multiply"));
 
 			Component filler1 = Box.createRigidArea(new Dimension(1, 25));
 			Component filler2 = Box.createRigidArea(new Dimension(1, 25));
@@ -511,7 +512,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 
 	public FFTWindowTypePanel getFFTWindowTypePanel() {
 		if (fftWindowTypePanel == null) {
-			fftWindowTypePanel = new FFTWindowTypePanel(messageSource, true);
+			fftWindowTypePanel = new FFTWindowTypePanel( true);
 		}
 		return fftWindowTypePanel;
 	}
@@ -616,7 +617,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 		private static final long serialVersionUID = 1L;
 
 		public AddNewRangeAction() {
-			super(messageSource.getMessage("editFFTSampleFilter.addNewRange"));
+			super(_("Add or replace range"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/addfftrange.png"));
 		}
 
@@ -673,7 +674,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 		private static final long serialVersionUID = 1L;
 
 		public RemoveRangeAction() {
-			super(messageSource.getMessage("editFFTSampleFilter.removeRange"));
+			super(_("Remove range"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/removefftrange.png"));
 		}
 
@@ -747,7 +748,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 	@Override
 	public FFTFilterResponseChartGroupPanel getChartGroupPanelWithABorder() {
 		if (graphsPanel == null) {
-			graphsPanel = new FFTFilterResponseChartGroupPanel(messageSource, currentFilter);
+			graphsPanel = new FFTFilterResponseChartGroupPanel( currentFilter);
 			graphsPanel.setSamplingFrequency(getCurrentSamplingFrequency());
 
 			graphsPanel.addSelectionChangedListener(this);

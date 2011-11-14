@@ -1,5 +1,6 @@
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -11,7 +12,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import org.signalml.app.config.ApplicationConfiguration;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -21,10 +22,6 @@ import org.springframework.validation.Errors;
  */
 public class SignalRecordingConfigPanel extends JPanel {
 
-        /**
-	 * The {@link MessageSourceAccessor source} of messages (labels).
-	 */
-	private MessageSourceAccessor messageSource;
         /**
          * Frequency label.
          */
@@ -36,11 +33,9 @@ public class SignalRecordingConfigPanel extends JPanel {
 
         /**
          * Default constructor.
-         * @param messageSource {@link #messageSource}
          */
-        public SignalRecordingConfigPanel(MessageSourceAccessor messageSource) {
+        public  SignalRecordingConfigPanel() {
                 super();
-                this.messageSource = messageSource;
                 initialize();
         }
 
@@ -55,7 +50,7 @@ public class SignalRecordingConfigPanel extends JPanel {
                 
                 generalPanel.setLayout(new GridBagLayout());
                 generalPanel.setBorder(new CompoundBorder(
-                        new TitledBorder(messageSource.getMessage("preferences.signalRecording.general")),
+                        new TitledBorder(_("General")),
                         new EmptyBorder(3,3,3,3)
                 ));
 
@@ -87,7 +82,7 @@ public class SignalRecordingConfigPanel extends JPanel {
         public JLabel getFrequencyLabel() {
                 if (frequencyLabel == null) {
                         frequencyLabel = new JLabel();
-                        frequencyLabel.setText(messageSource.getMessage("preferences.signalRecording.frequency"));
+                        frequencyLabel.setText(_("Backup frequency [s]"));
                 }
                 return frequencyLabel;
         }

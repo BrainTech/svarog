@@ -4,12 +4,12 @@
 
 package org.signalml.app.action.util;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.JList;
 
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ListSelectNoneAction
  *
@@ -22,8 +22,8 @@ public class ListSelectNoneAction extends AbstractAction {
 
 	private JList list;
 
-	public ListSelectNoneAction(MessageSourceAccessor messageSource, JList list) {
-		super(messageSource.getMessage("action.util.selectNone"));
+	public  ListSelectNoneAction( JList list) {
+		super(_("Select none"));
 		this.list = list;
 	}
 

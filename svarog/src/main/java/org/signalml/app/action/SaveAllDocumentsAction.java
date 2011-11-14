@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -12,7 +13,6 @@ import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** SaveAllDocumentsAction
  *
@@ -27,11 +27,11 @@ public class SaveAllDocumentsAction extends AbstractSignalMLAction {
 
 	private DocumentFlowIntegrator documentFlowIntegrator;
 
-	public SaveAllDocumentsAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
-		setText("action.saveAllDocuments");
+	public  SaveAllDocumentsAction() {
+		super();
+		setText(_("Save All"));
 		setIconPath("org/signalml/app/icon/save_all.png");
-		setToolTip("action.saveAllDocumentsToolTip");
+		setToolTip(_("Save all unsaved documents"));
 	}
 
 	@Override

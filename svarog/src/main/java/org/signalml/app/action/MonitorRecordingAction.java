@@ -10,7 +10,6 @@ import org.signalml.app.action.selector.ActionFocusEvent;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.SignalDocument;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * This class represents an action toggling the recording on/off. It is the upper class
@@ -22,8 +21,8 @@ import org.springframework.context.support.MessageSourceAccessor;
  */
 public abstract class MonitorRecordingAction extends AbstractFocusableSignalMLAction<SignalDocumentFocusSelector> implements PropertyChangeListener {
 
-	public MonitorRecordingAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
-		super(messageSource, signalDocumentFocusSelector);
+	public  MonitorRecordingAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
+		super( signalDocumentFocusSelector);
 	}
 
 	@Override

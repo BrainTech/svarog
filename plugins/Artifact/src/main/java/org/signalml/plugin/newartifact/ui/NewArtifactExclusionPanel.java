@@ -10,8 +10,7 @@ import javax.swing.JScrollPane;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-
-import org.springframework.context.support.MessageSourceAccessor;
+import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
 
 /** ArtifactExclusionPanel
  *
@@ -22,14 +21,11 @@ public class NewArtifactExclusionPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	private MessageSourceAccessor messageSource;
-
 	private NewArtifactExclusionTable artifactExclusionTable;
 	private JScrollPane scrollPane;
 
-	public NewArtifactExclusionPanel(MessageSourceAccessor messageSource) {
+	public  NewArtifactExclusionPanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -37,7 +33,7 @@ public class NewArtifactExclusionPanel extends JPanel {
 
 		setLayout(new BorderLayout());
 		CompoundBorder border = new CompoundBorder(
-			new TitledBorder(messageSource.getMessage("newArtifactMethod.dialog.exclusionTable")),
+			new TitledBorder(_("Exclusion")),
 			new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);
@@ -48,7 +44,7 @@ public class NewArtifactExclusionPanel extends JPanel {
 
 	public NewArtifactExclusionTable getArtifactExclusionTable() {
 		if (artifactExclusionTable == null) {
-			NewArtifactExclusionTableModel artifactExclusionTableModel = new NewArtifactExclusionTableModel(messageSource);
+			NewArtifactExclusionTableModel artifactExclusionTableModel = new NewArtifactExclusionTableModel();
 			artifactExclusionTable = new NewArtifactExclusionTable(artifactExclusionTableModel);
 		}
 		return artifactExclusionTable;

@@ -1,5 +1,6 @@
 package org.signalml.app.worker;
 
+import static org.signalml.app.SvarogApplication._;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.concurrent.ExecutionException;
@@ -15,7 +16,6 @@ import org.apache.log4j.Logger;
 import org.jboss.netty.channel.ChannelFuture;
 import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.multiplexer.protocol.SvarogConstants.MessageTypes;
-import org.springframework.context.support.MessageSourceAccessor;
 
 import com.google.protobuf.ByteString;
 
@@ -37,18 +37,16 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 	public static final String MAXIMUM_VALUE	  = "MaxData";
 	public static final String AMPLIFIER_NULL     = "AmplifierNull";
 
-	private MessageSourceAccessor messageSource;
 	private JmxClient client;
 	private OpenMonitorDescriptor openMonitorDescriptor;
 	private int timeout;
 	private int state;
 
-	public BCIMetadataWorker( 
-			MessageSourceAccessor messageSource, 
+	public  BCIMetadataWorker( 
 			JmxClient client, 
 			OpenMonitorDescriptor openMonitorDescriptor, 
 			int timeout) {
-		this.messageSource = messageSource;
+
 		this.client = client;
 		this.openMonitorDescriptor = openMonitorDescriptor;
 		this.timeout = timeout;
@@ -73,7 +71,7 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 			reply = client.query(question, MessageTypes.DICT_GET_REQUEST_MESSAGE, 1000 /* ms */);
 		} catch(JmxException e) {
 			logger.error("request " + dataId + ": " + e.getMessage());
-			String info = messageSource.getMessage("action.openMonitor.metadataWorker.communicationFailedMsg");
+			String info = _("Receiving failed!");
 			openMonitorDescriptor.setMetadataInfo(info);
 			return null;
 		}
@@ -84,7 +82,7 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 		logger.debug("Received " + dataId + "=" + val);
 		if (val.length() == 0) {
 			logger.error("request " + dataId + " is empty");
-			String info = messageSource.getMessage("action.openMonitor.metadataWorker.unknownFieldMsg");
+			String info = _("Source doesn't provide this field");
 			openMonitorDescriptor.setMetadataInfo(info);
 			return null;
 		}
@@ -178,7 +176,7 @@ public class BCIMetadataWorker extends SwingWorker< OpenMonitorDescriptor, Integ
 		openMonitorDescriptor.setAmplifierNull(ampNull);
 		publish(++step);
 
-		String info = messageSource.getMessage("action.openMonitor.metadataWorker.receivedMetadata");
+		String info = _("Metadata retrieved!");
 		openMonitorDescriptor.setMetadataReceived( true);
 		openMonitorDescriptor.setMetadataInfo(info);
 		return openMonitorDescriptor;

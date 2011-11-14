@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.ItemSelectable;
 import java.awt.event.ActionEvent;
 
@@ -11,7 +12,6 @@ import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.BookDocumentFocusSelector;
 import org.signalml.app.document.BookDocument;
 import org.signalml.domain.book.filter.AtomFilterChain;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** BookFilterSwitchAction
  *
@@ -24,11 +24,11 @@ public class BookFilterSwitchAction extends AbstractFocusableSignalMLAction<Book
 
 	protected static final Logger logger = Logger.getLogger(BookFilterSwitchAction.class);
 
-	public BookFilterSwitchAction(MessageSourceAccessor messageSource, BookDocumentFocusSelector bookDocumentFocusSelector) {
-		super(messageSource, bookDocumentFocusSelector);
-		setText("bookView.filterSwitch");
+	public  BookFilterSwitchAction( BookDocumentFocusSelector bookDocumentFocusSelector) {
+		super( bookDocumentFocusSelector);
+		setText(_("Filtering"));
 		setIconPath("org/signalml/app/icon/filter.png");
-		setToolTip("bookView.filterSwitchToolTip");
+		setToolTip(_("Switch fitering on/off"));
 	}
 
 	@Override

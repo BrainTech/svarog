@@ -6,7 +6,6 @@ package org.signalml.app.view.opensignal;
 
 import org.signalml.app.config.preset.StyledTagSetPresetManager;
 import org.signalml.app.view.ViewerElementManager;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Represents a panel for setting parameters of a monitor signal source.
@@ -33,11 +32,10 @@ abstract public class AbstractMonitorSourcePanel extends AbstractSignalSourcePan
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source capable of resolving localized messages
 	 * @param viewerElementManager ViewerElementManager used by this panel
 	 */
-	public AbstractMonitorSourcePanel(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager) {
-		super(messageSource, viewerElementManager);
+	public  AbstractMonitorSourcePanel( ViewerElementManager viewerElementManager) {
+		super( viewerElementManager);
 	}
 
 	/**
@@ -80,7 +78,7 @@ abstract public class AbstractMonitorSourcePanel extends AbstractSignalSourcePan
 	 */
 	public TagPresetSelectionPanel getTagPresetSelectionPanel() {
 		if (tagPresetSelectionPanel == null) {
-			tagPresetSelectionPanel = new TagPresetSelectionPanel(messageSource, viewerElementManager.getStyledTagSetPresetManager());
+			tagPresetSelectionPanel = new TagPresetSelectionPanel( viewerElementManager.getStyledTagSetPresetManager());
 		}
 		return tagPresetSelectionPanel;
 	}

@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.monitor.signalchecking;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Window;
@@ -27,20 +28,18 @@ import java.util.EnumMap;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.app.model.MontageDescriptor;
+import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.app.view.montage.VisualReferenceModel;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Checks and represents the signal state.
  *
  * @author Tomasz Sawicki
  */
-
-public class CheckSignalDialog extends AbstractDialog {
+public class CheckSignalDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
 
         /**
          * Minimum windows size.
@@ -78,9 +77,9 @@ public class CheckSignalDialog extends AbstractDialog {
         private TimerClass timerClass;
 
 
-        public CheckSignalDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
+        public  CheckSignalDialog( Window w, boolean isModal) {
 
-                super(messageSource, w, isModal);
+                super( w, isModal);
         }
 
         /**
@@ -89,7 +88,7 @@ public class CheckSignalDialog extends AbstractDialog {
 	@Override
 	protected void initialize() {
 
-		setTitle(messageSource.getMessage("checkSignal.title"));		
+		setTitle(_("Check Signal"));		
 		super.initialize();
 		setMinimumSize(new Dimension(WINDOW_SIZE, WINDOW_SIZE));
                 setPreferredSize(new Dimension(WINDOW_SIZE, WINDOW_SIZE));
@@ -106,14 +105,14 @@ public class CheckSignalDialog extends AbstractDialog {
 		JPanel interfacePanel = new JPanel(new BorderLayout());
                 JPanel editorPanel = new JPanel(new BorderLayout());
 
-                visualReferenceModel = new VisualReferenceModel(messageSource);
+                visualReferenceModel = new VisualReferenceModel();
 		checkSignalDisplay = new CheckSignalDisplay(visualReferenceModel);
 		checkSignalDisplay.setBackground(Color.WHITE);
 
                 JScrollPane editorScrollPane = new JScrollPane(checkSignalDisplay, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		checkSignalDisplay.setViewport(editorScrollPane.getViewport());
 
-		editorPanel.setBorder(new CompoundBorder(new TitledBorder(messageSource.getMessage("checkSignal.label")), new EmptyBorder(3,3,3,3)));
+		editorPanel.setBorder(new CompoundBorder(new TitledBorder(_("Channels")), new EmptyBorder(3,3,3,3)));
                 editorPanel.add(editorScrollPane, BorderLayout.CENTER);
 
 		interfacePanel.add(editorPanel, BorderLayout.CENTER);

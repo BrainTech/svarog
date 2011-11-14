@@ -1,11 +1,11 @@
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 import org.signalml.app.view.monitor.OpenBCIModuleConfigDialog;
 import org.signalml.app.worker.processes.OpenBCIModule;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.apache.log4j.Logger;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Open an {@link OpenBCIModulesConfigDialog}.
@@ -27,13 +27,12 @@ public class OpenBCIModuleConfigAction extends AbstractSignalMLAction {
         /**
          * Constructor sets text and tooltip.
          *
-         * @param messageSource the message source
          */
-        public OpenBCIModuleConfigAction(MessageSourceAccessor messageSource) {
+        public  OpenBCIModuleConfigAction() {
 
-                super(messageSource);
-                setText("action.openBCIModulesConfig");
-                setToolTip("action.openBCIModulesConfigToolTip");
+                super();
+                setText(_("OpenBCI modules config"));
+                setToolTip(_("Allows to change the OpenBCI modules config"));
         }
 
         /**

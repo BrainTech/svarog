@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +17,6 @@ import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.model.OpenDocumentDescriptor;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * An action performed when the user chooses an option to open a book document.
@@ -39,14 +39,12 @@ public class OpenBookDocumentAction extends AbstractSignalMLAction {
 
 	/**
 	 * Creates this action.
-	 * @param messageSource message source capable of resolving localized
-	 * messages
 	 */
-	public OpenBookDocumentAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
-		setText("action.openBookDocument");
+	public  OpenBookDocumentAction() {
+		super();
+		setText(_("Open book"));
 		setIconPath("org/signalml/app/icon/fileopen.png");
-		setToolTip("action.openBookDocumentToolTip");
+		setToolTip(_("Open a book document from a file"));
 	}
 
 	@Override
@@ -84,7 +82,7 @@ public class OpenBookDocumentAction extends AbstractSignalMLAction {
 			String lastOpenDocumentPath = documentFlowIntegrator.getApplicationConfig().getLastOpenDocumentPath();
 			fileChooser = new JFileChooser(lastOpenDocumentPath);
 
-			FileFilter[] fileFilters = ManagedDocumentType.BOOK.getFileFilters(messageSource);
+			FileFilter[] fileFilters = ManagedDocumentType.BOOK.getFileFilters();
 
 			for (FileFilter filter : fileFilters) {
 				fileChooser.addChoosableFileFilter(filter);

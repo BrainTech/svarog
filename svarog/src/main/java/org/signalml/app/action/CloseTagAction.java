@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -13,7 +14,6 @@ import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** CloseTagAction
  *
@@ -28,11 +28,11 @@ public class CloseTagAction extends AbstractFocusableSignalMLAction<TagDocumentF
 
 	private DocumentFlowIntegrator documentFlowIntegrator;
 
-	public CloseTagAction(MessageSourceAccessor messageSource, TagDocumentFocusSelector tagDocumentFocusSelector) {
-		super(messageSource, tagDocumentFocusSelector);
-		setText("action.closeTag");
+	public  CloseTagAction( TagDocumentFocusSelector tagDocumentFocusSelector) {
+		super( tagDocumentFocusSelector);
+		setText(_("Close Tag"));
 		setIconPath("org/signalml/app/icon/fileclose.png");
-		setToolTip("action.closeTagToolTip");
+		setToolTip(_("Close active tag"));
 	}
 
 	@Override

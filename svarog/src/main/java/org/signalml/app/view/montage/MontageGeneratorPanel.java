@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.montage;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -35,7 +36,7 @@ import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.montage.SourceMontageEvent;
 import org.signalml.domain.montage.SourceMontageListener;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 
@@ -60,9 +61,6 @@ public class MontageGeneratorPanel extends JPanel {
 
 	/** the logger. */
 	protected static final Logger logger = Logger.getLogger(MontageGeneratorPanel.class);
-
-	/** the source of messages (labels). */
-	private MessageSourceAccessor messageSource;
 
 	/** the {@link Montage montage} that is edited. */
 	private Montage montage;
@@ -149,11 +147,9 @@ public class MontageGeneratorPanel extends JPanel {
 	/**
 	 * Constructor. Sets the source of messages and {@link #initialize()
 	 * initializes} this panel
-	 * @param messageSource the source of messages (labels)
 	 */
-	public MontageGeneratorPanel(MessageSourceAccessor messageSource) {
+	public  MontageGeneratorPanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -175,12 +171,12 @@ public class MontageGeneratorPanel extends JPanel {
 		choicePanel.setLayout(new BoxLayout(choicePanel, BoxLayout.X_AXIS));
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("signalMontage.chooseGenerator")),
+		        new TitledBorder(_("Choose generator")),
 		        new EmptyBorder(3,3,3,3)
 		);
 		choicePanel.setBorder(border);
 
-		choicePanel.add(new JLabel(messageSource.getMessage("signalMontage.generator")));
+		choicePanel.add(new JLabel(_("Generator")));
 		choicePanel.add(Box.createHorizontalStrut(5));
 		choicePanel.add(Box.createHorizontalGlue());
 		choicePanel.add(getGeneratorComboBox());
@@ -314,7 +310,7 @@ public class MontageGeneratorPanel extends JPanel {
 	 */
 	public JComboBox getGeneratorComboBox() {
 		if (generatorComboBox == null) {
-			generatorComboBox = new ResolvableComboBox(messageSource);
+			generatorComboBox = new ResolvableComboBox();
 			generatorComboBox.setModel(getMontageGeneratorListModel());
 			generatorComboBox.setPreferredSize(new Dimension(300,25));
 
@@ -461,7 +457,7 @@ public class MontageGeneratorPanel extends JPanel {
 
 		if (montage.isChanged()) {
 
-			String warning =  messageSource.getMessage("montageTable.onGenerate");
+			String warning =  _("The montage will be permanently replaced with the generated montage.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>generate</b> the montage?");
 			SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 5);
 
 			boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
@@ -531,7 +527,7 @@ public class MontageGeneratorPanel extends JPanel {
 		 */
 		public ShowErrorsAction() {
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/errormedium.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION, messageSource.getMessage("signalMontage.generatorErrorLabelToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION, _("Click to see errors"));
 		}
 
 		/**
@@ -581,7 +577,7 @@ public class MontageGeneratorPanel extends JPanel {
 		 */
 		public ReloadAction() {
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/reloadmedium.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION, messageSource.getMessage("signalMontage.reloadToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION, _("Generate again"));
 		}
 
 		/**

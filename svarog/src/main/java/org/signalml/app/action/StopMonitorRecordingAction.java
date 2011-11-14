@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.awt.event.ActionEvent;
@@ -12,7 +13,6 @@ import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.SignalDocument;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** 
  * This class is responsible for actions regarding the menu item which stops the recording of the monitor.
@@ -29,16 +29,15 @@ public class StopMonitorRecordingAction extends MonitorRecordingAction {
 	/**
 	 * Constructor.
 	 *
-	 * @param messageSource the message source accessor capable of resolving localized message codes
 	 * @param signalDocumentFocusSelector a {@link SignalDocumentFocusSelector} used to detect
 	 * which document is active.
 	 */
-	public StopMonitorRecordingAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
+	public  StopMonitorRecordingAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
 
-		super(messageSource, signalDocumentFocusSelector);
+		super( signalDocumentFocusSelector);
 		setIconPath("org/signalml/app/icon/stop-recording.png");
-		setText("action.stopMonitorRecordingLabel");
-		setToolTip("action.stopMonitorRecordingToolTip");
+		setText(_("Stop monitor recording"));
+		setToolTip(_("Stop to record signal and tags to a file"));
 
 	}
 

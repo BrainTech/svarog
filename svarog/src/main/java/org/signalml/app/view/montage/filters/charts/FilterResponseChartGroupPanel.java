@@ -10,7 +10,6 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * This class represents a panel containing chart panels with graph scale spinners.
@@ -19,11 +18,6 @@ import org.springframework.context.support.MessageSourceAccessor;
  * @author Piotr Szachewicz
  */
 public abstract class FilterResponseChartGroupPanel<T extends SampleFilterDefinition> extends JPanel {
-
-	/**
-	 * Message source capable of resolving localized messages.
-	 */
-	protected final MessageSourceAccessor messageSource;
 
 	/**
 	 * The filter which is currently visualized on the plots.
@@ -37,11 +31,9 @@ public abstract class FilterResponseChartGroupPanel<T extends SampleFilterDefini
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source capable of resolving localized messages
 	 * @param currentFilter the filter which will be visualized
 	 */
-	public FilterResponseChartGroupPanel(MessageSourceAccessor messageSource, T currentFilter) {
-		this.messageSource = messageSource;
+	public  FilterResponseChartGroupPanel( T currentFilter) {
 		this.currentFilter = currentFilter;
 		createInterface();
 	}

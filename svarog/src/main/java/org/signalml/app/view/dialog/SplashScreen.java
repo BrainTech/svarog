@@ -4,6 +4,8 @@
 
 package org.signalml.app.view.dialog;
 
+import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogApplication._R;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -33,7 +35,6 @@ import org.signalml.app.SvarogApplication;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.ViewerMainFrame;
 import org.signalml.util.SvarogConstants;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Dialog that is shown when application is starting.
@@ -61,10 +62,6 @@ public class SplashScreen extends JDialog {
 	 * the information about the current loading step
 	 */
 	private JProgressBar progressBar;
-	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
 
 	/**
 	 * Constructor. Sets the source of messages and displays creates the view
@@ -72,13 +69,10 @@ public class SplashScreen extends JDialog {
 	 * <ul>
 	 * <li>the {@link SplashPanel panel} with the logo of Svarog,</li>
 	 * <li>the {@link #getProgressBar() progress bar}.</li></ul>
-	 * @param messageSource the source of messages (labels)
 	 */
-	public SplashScreen(MessageSourceAccessor messageSource) {
+	public  SplashScreen() {
 
 		super((Frame) null, false);
-
-		this.messageSource = messageSource;
 		setUndecorated(true);
 
 		JPanel contentPanel = new JPanel(new BorderLayout());
@@ -114,7 +108,7 @@ public class SplashScreen extends JDialog {
 		if (progressBar == null) {
 			progressBar = new JProgressBar(SwingConstants.HORIZONTAL,0,SvarogApplication.INITIALIZATION_STEP_COUNT+ViewerMainFrame.INITIALIZATION_STEP_COUNT);
 			progressBar.setStringPainted(true);
-			progressBar.setString(messageSource.getMessage("startup.initializing"));
+			progressBar.setString(_("Initializing"));
 			progressBar.setPreferredSize(new Dimension(400,20));
 		}
 		return progressBar;
@@ -284,7 +278,7 @@ public class SplashScreen extends JDialog {
 			fontMetrics = g.getFontMetrics(font);
 			g.setFont(font);
 
-			final String title = messageSource.getMessage("splash.loading");
+			final String title = _("Loading Svarog");
 
 			Rectangle2D stringBounds = fontMetrics.getStringBounds(title, g);
 			int width = (int) stringBounds.getWidth();
@@ -304,7 +298,7 @@ public class SplashScreen extends JDialog {
 
 			offset += (height + 95);
 
-			String url = messageSource.getMessage("splash.url");
+			final String url = "http://signalml.org/";
 
 			stringBounds = fontMetrics.getStringBounds(url, g);
 			width = (int) stringBounds.getWidth();
@@ -317,7 +311,7 @@ public class SplashScreen extends JDialog {
 
 			offset += (height + 5);
 
-			String comment = messageSource.getMessage("splash.comment");
+			String comment = _("Financed from Polish funds for science");
 
 			stringBounds = fontMetrics.getStringBounds(comment, g);
 			width = (int) stringBounds.getWidth();

@@ -9,9 +9,8 @@ import java.util.ArrayList;
 
 import javax.swing.JComponent;
 
+import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * This {@link AbstractDialog dialog} allows to manage plug-in options.
@@ -19,7 +18,7 @@ import org.springframework.context.support.MessageSourceAccessor;
  * @see PluginPanel the funtion of this dialog
  * @author Marcin Szumski
  */
-public class PluginDialog extends AbstractDialog {
+public class PluginDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
 
 	/**
 	 * an array of plug-in {@link PluginState states}
@@ -34,7 +33,6 @@ public class PluginDialog extends AbstractDialog {
 	
 	/**
 	 * Constructor.
-	 * @param messageSource the source of messages
 	 * @param w the parent window
 	 * @param isModal specifies whether dialog blocks input to other
      * windows when shown. <code>null</code> value and unsupported modality
@@ -43,9 +41,9 @@ public class PluginDialog extends AbstractDialog {
      * @param pluginDirs an array of directories in which plug-ins are
 	 * stored
 	 */
-	public PluginDialog(MessageSourceAccessor messageSource, Window w, boolean isModal, ArrayList<PluginState> descriptions,
+	public  PluginDialog( Window w, boolean isModal, ArrayList<PluginState> descriptions,
 			ArrayList<File> pluginDirs) {
-		super(messageSource, w, isModal);
+		super( w, isModal);
 		this.descriptions = descriptions;
 		this.pluginDirs = pluginDirs;
 	}

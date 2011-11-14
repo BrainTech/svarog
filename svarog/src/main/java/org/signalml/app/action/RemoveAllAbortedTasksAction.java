@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 
@@ -12,7 +13,6 @@ import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.task.Task;
 import org.signalml.task.TaskStatus;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** RemoveAllAbortedTasksAction
  *
@@ -28,11 +28,11 @@ public class RemoveAllAbortedTasksAction extends AbstractSignalMLAction {
 	private ApplicationTaskManager taskManager;
 	private Component optionPaneParent;
 
-	public RemoveAllAbortedTasksAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
-		setText("action.removeAllAbortedTasks");
+	public  RemoveAllAbortedTasksAction() {
+		super();
+		setText(_("Remove all aborted tasks"));
 		setIconPath("org/signalml/app/icon/removeallabortedtasks.png");
-		setToolTip("action.removeAllAbortedTasksToolTip");
+		setToolTip(_("Remove all aborted tasks"));
 	}
 
 	@Override

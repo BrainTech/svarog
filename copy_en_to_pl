@@ -1,3 +1,0 @@
-set -e
-cd "$(dirname "$0")"
-cp -v svarog/src/main/resources/org/signalml/app/resource/message_en.xml svarog/src/main/resources/org/signalml/app/resource/message_pl.xml

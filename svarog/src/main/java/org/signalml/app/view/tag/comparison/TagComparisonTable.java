@@ -32,7 +32,6 @@ import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.element.CenteringTableCellRenderer;
 import org.signalml.app.view.tag.TagIconProducer;
 import org.signalml.plugin.export.signal.TagStyle;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** TagComparisonTable
  *
@@ -54,21 +53,18 @@ public class TagComparisonTable extends JTable {
 
 	private TableToTextExporter tableToTextExporter;
 	private ViewerFileChooser fileChooser;
-
-	private MessageSourceAccessor messageSource;
 	private JPopupMenu popupMenu;
 
 	private CornerPanel cornerPanel;
 
-	public TagComparisonTable(TagComparisonTableModel model, MessageSourceAccessor messageSource) {
+	public TagComparisonTable(TagComparisonTableModel model) {
 
 		super(model);
-		this.messageSource = messageSource;
 
 		setTableHeader(null);
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		setDefaultRenderer(String.class, new CenteringTableCellRenderer());
-		tagStyleTableCellRenderer = new TagStyleTableCellRenderer(messageSource);
+		tagStyleTableCellRenderer = new TagStyleTableCellRenderer();
 		setCellSelectionEnabled(true);
 		setAutoResizeMode(AUTO_RESIZE_OFF);
 
@@ -187,8 +183,8 @@ public class TagComparisonTable extends JTable {
 	public JPopupMenu getComponentPopupMenu() {
 		if (popupMenu == null) {
 			popupMenu = new JPopupMenu();
-			popupMenu.add(new ExportComparisonToClipboardAction(messageSource, tableToTextExporter));
-			popupMenu.add(new ExportComparisonToFileAction(messageSource, tableToTextExporter));
+			popupMenu.add(new ExportComparisonToClipboardAction( tableToTextExporter));
+			popupMenu.add(new ExportComparisonToFileAction( tableToTextExporter));
 		}
 		return popupMenu;
 	}
@@ -197,8 +193,8 @@ public class TagComparisonTable extends JTable {
 
 		private static final long serialVersionUID = 1L;
 
-		public ExportComparisonToClipboardAction(MessageSourceAccessor messageSource, TableToTextExporter tableToTextExporter) {
-			super(messageSource, tableToTextExporter);
+		public ExportComparisonToClipboardAction( TableToTextExporter tableToTextExporter) {
+			super( tableToTextExporter);
 		}
 
 		@Override
@@ -225,8 +221,8 @@ public class TagComparisonTable extends JTable {
 
 		private static final long serialVersionUID = 1L;
 
-		private ExportComparisonToFileAction(MessageSourceAccessor messageSource, TableToTextExporter tableToTextExporter) {
-			super(messageSource, tableToTextExporter);
+		private ExportComparisonToFileAction( TableToTextExporter tableToTextExporter) {
+			super( tableToTextExporter);
 			setFileChooser(fileChooser);
 			setOptionPaneParent(TagComparisonTable.this);
 		}

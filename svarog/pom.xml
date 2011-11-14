@@ -17,6 +17,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>		
+		<project.build.i18n.resources>src/main/resources/org/signalml/app/resource/i18n/</project.build.i18n.resources>
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
 
 		<protobuf.protoc>protoc</protobuf.protoc>
@@ -287,10 +288,25 @@
 				</executions>
 			</plugin>
 
+			<plugin>
+				<groupId>org.xnap.commons</groupId>
+				<artifactId>maven-gettext-plugin</artifactId>
+
+				<configuration>
+					<poDirectory>${project.build.i18n.resources}</poDirectory>
+					<targetBundle>org.signalml.app.i18n.I18nBundle</targetBundle>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.xnap.commons</groupId>
+			<artifactId>gettext-commons</artifactId>
+			<version>0.9.6</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-math</artifactId>

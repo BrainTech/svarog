@@ -25,7 +25,6 @@ import org.signalml.app.model.SignalTreeModel;
 import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.view.AbstractViewerTree;
 import org.signalml.plugin.impl.PluginAccessClass;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ViewerSignalTree
  *
@@ -51,8 +50,8 @@ public class ViewerSignalTree extends AbstractViewerTree implements SignalPageFo
 	private SignalDocument activeSignalDocument;
 	private int activePage;
 
-	public ViewerSignalTree(SignalTreeModel model, MessageSourceAccessor messageSource) {
-		super(model,messageSource);
+	public ViewerSignalTree(SignalTreeModel model) {
+		super(model);
 		setCellRenderer(new SignalTreeCellRenderer());
 		expandPath(new TreePath(new Object[] {model.getRoot()}));
 		addMouseListener(new MouseEventHandler());
@@ -167,21 +166,21 @@ public class ViewerSignalTree extends AbstractViewerTree implements SignalPageFo
 
 	public ActivateDocumentAction getActivateDocumentAction() {
 		if (activateDocumentAction == null) {
-			activateDocumentAction = new ActivateDocumentAction(messageSource,actionFocusManager,this);
+			activateDocumentAction = new ActivateDocumentAction(actionFocusManager,this);
 		}
 		return activateDocumentAction;
 	}
 
 	public ActivateSignalPageAction getActivateSignalPageAction() {
 		if (activateSignalPageAction == null) {
-			activateSignalPageAction = new ActivateSignalPageAction(messageSource,actionFocusManager,this);
+			activateSignalPageAction = new ActivateSignalPageAction(actionFocusManager,this);
 		}
 		return activateSignalPageAction;
 	}
 
 	public CloseDocumentAction getCloseDocumentAction() {
 		if (closeDocumentAction == null) {
-			closeDocumentAction = new CloseDocumentAction(messageSource,this);
+			closeDocumentAction = new CloseDocumentAction(this);
 			closeDocumentAction.setDocumentFlowIntegrator(documentFlowIntegrator);
 		}
 		return closeDocumentAction;

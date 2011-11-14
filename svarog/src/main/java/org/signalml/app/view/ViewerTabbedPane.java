@@ -11,7 +11,6 @@ import javax.swing.border.EmptyBorder;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.util.IconUtils;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ViewerTabbedPane
  *
@@ -33,18 +32,29 @@ public class ViewerTabbedPane extends JTabbedPane {
 		this(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
 	}
 
-	public void addTab(String title, String iconPath, Component component, String toolTip, MessageSourceAccessor messageSource) {
+	/**
+	 * Adds a new tab to this pane.
+	 * 
+	 * Note: this method has changed on 2011-11-05. Now title and toolTip parameters
+	 * should be strings to display, NOT their keys! Message keys are now obsolete.
+	 * 
+	 * @param title tab title
+	 * @param iconPath
+	 * @param component
+	 * @param toolTip tooltip text
+	 */
+	public void addTab(String title, String iconPath, Component component, String toolTip) {
 		Icon icon = null;
-		String toolTipText = null;
-		if (iconPath != null) {
+		if (iconPath != null)
 			icon = IconUtils.loadClassPathIcon(iconPath);
-		}
-		if (toolTip != null) {
-			toolTipText = messageSource.getMessage(toolTip);
-		}
-		title = messageSource.getMessage(title);
-
-		addTab(title,icon,component,toolTipText);
+		addTab(title,icon,component,toolTip);
 	}
 
+	/**
+	 * Returns the {@link SvarogAccessI18nImpl} instance.
+	 * @return the {@link SvarogAccessI18nImpl} singleton instance
+	 */
+	protected org.signalml.app.SvarogI18n getSvarogI18n() {
+		return org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance();
+	}
 }

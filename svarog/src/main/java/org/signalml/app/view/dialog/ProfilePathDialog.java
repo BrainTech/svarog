@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.dialog;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Window;
 import java.io.File;
 
@@ -13,8 +14,7 @@ import org.signalml.app.config.GeneralConfiguration;
 import org.signalml.app.view.element.EmbeddedFileChooser;
 import org.signalml.app.view.element.ProfilePathTypePanel;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -25,7 +25,7 @@ import org.springframework.validation.Errors;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class ProfilePathDialog extends AbstractDialog {
+public class ProfilePathDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
 
 	private static final long serialVersionUID = 1L;
 
@@ -38,12 +38,11 @@ public class ProfilePathDialog extends AbstractDialog {
 	/**
 	 * Constructor. Sets message source, parent window and if this dialog
 	 * blocks top-level windows.
-	 * @param messageSource message source to set
 	 * @param f the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public ProfilePathDialog(MessageSourceAccessor messageSource, Window f, boolean isModal) {
-		super(messageSource, f, isModal);
+	public  ProfilePathDialog( Window f, boolean isModal) {
+		super( f, isModal);
 	}
 
 	/**
@@ -52,7 +51,7 @@ public class ProfilePathDialog extends AbstractDialog {
 	 */
 	@Override
 	protected void initialize() {
-		setTitle(messageSource.getMessage("profilePath.title"));
+		setTitle(_("Choose profile path"));
 		setResizable(false);
 		super.initialize();
 	}
@@ -64,7 +63,7 @@ public class ProfilePathDialog extends AbstractDialog {
 	@Override
 	public JComponent createInterface() {
 
-		panel = new ProfilePathTypePanel(messageSource);
+		panel = new ProfilePathTypePanel();
 		return panel;
 
 	}

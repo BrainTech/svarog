@@ -139,9 +139,9 @@ public class RawSignalDocumentBuilder {
          * @return the default instance of the builder
          */
 	public static RawSignalDocumentBuilder getInstance() {
-		if (null == instance) {
+		if (instance == null) {
 		    synchronized (RawSignalDocumentBuilder.class) {
-		        if (null == instance) 
+		        if (instance == null)
 		            instance = new RawSignalDocumentBuilder();
 		    }
 		}

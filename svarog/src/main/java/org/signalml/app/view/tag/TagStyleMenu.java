@@ -13,7 +13,6 @@ import org.signalml.app.util.IconUtils;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.TagStyle;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** TagStyleMenu
  *
@@ -30,23 +29,12 @@ public class TagStyleMenu extends JMenu {
 
 	private TagSelectionAction tagSelectionAction;
 
-	private MessageSourceAccessor messageSource;
-
 	public TagStyleMenu(TagSelectionAction tagSelectionAction, TagIconProducer tagIconProducer) {
 		super((String) tagSelectionAction.getValue(TagSelectionAction.NAME));
 		this.tagSelectionAction = tagSelectionAction;
 		this.tagIconProducer = tagIconProducer;
 		setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/tag.png"));
 	}
-
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
-	}
-
-	public void setMessageSource(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
-	}
-
 
 	public StyledTagSet getTagSet() {
 		return tagSet;
@@ -80,7 +68,7 @@ public class TagStyleMenu extends JMenu {
 
 	private void recreateMenu() {
 		removeAll();
-		add(new TagEraserMenuItem(tagSelectionAction,messageSource));
+		add(new TagEraserMenuItem(tagSelectionAction));
 		Collection<TagStyle> styles = tagSet.getStyles(type);
 		for (TagStyle style : styles) {
 			add(new TagStyleMenuItem(tagSelectionAction, style, tagIconProducer));

@@ -3,9 +3,8 @@ package org.signalml.plugin.fftsignaltool.dialogs;
 import javax.swing.JComponent;
 
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
 import org.signalml.plugin.fftsignaltool.SignalFFTSettings;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -18,7 +17,7 @@ import org.springframework.validation.Errors;
  * 
  * @author Marcin Szumski
  */
-public class SignalFFTSettingsDialog extends AbstractDialog {
+public class SignalFFTSettingsDialog extends org.signalml.plugin.export.view.AbstractPluginDialog  {
 
 	/**
 	 * the serialization constant
@@ -34,10 +33,9 @@ public class SignalFFTSettingsDialog extends AbstractDialog {
 	/**
 	 * Constructor. Sets message source, that there is no parent window and
 	 * that this dialog blocks top-level windows.
-	 * @param messageSource message source to set
 	 */
-	public SignalFFTSettingsDialog(MessageSourceAccessor messageSource) {
-		super(messageSource, null, true);
+	public  SignalFFTSettingsDialog() {
+		super( null, true);
 	}
 	
 	/**
@@ -46,7 +44,7 @@ public class SignalFFTSettingsDialog extends AbstractDialog {
 	 */
 	@Override
 	protected JComponent createInterface() {
-		signalFFTSettingsPanel = new SignalFFTSettingsPanel(messageSource, true);
+		signalFFTSettingsPanel = new SignalFFTSettingsPanel( true);
 
 		return signalFFTSettingsPanel;
 	}

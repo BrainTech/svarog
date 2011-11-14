@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -20,7 +21,6 @@ import org.signalml.app.view.dialog.PleaseWaitDialog;
 import org.signalml.app.worker.ExportBookWorker;
 import org.signalml.domain.book.StandardBook;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ExportBookAction
  *
@@ -37,10 +37,10 @@ public class ExportBookAction extends AbstractFocusableSignalMLAction<BookDocume
 	private ViewerFileChooser fileChooser;
 	private Component optionPaneParent;
 
-	public ExportBookAction(MessageSourceAccessor messageSource, BookDocumentFocusSelector bookDocumentFocusSelector) {
-		super(messageSource, bookDocumentFocusSelector);
-		setText("action.exportBook");
-		setToolTip("action.exportBookToolTip");
+	public  ExportBookAction( BookDocumentFocusSelector bookDocumentFocusSelector) {
+		super( bookDocumentFocusSelector);
+		setText(_("Export Book..."));
+		setToolTip(_("Export book to file"));
 	}
 
 	@Override
@@ -93,7 +93,7 @@ public class ExportBookAction extends AbstractFocusableSignalMLAction<BookDocume
 
 		worker.execute();
 
-		pleaseWaitDialog.setActivity(messageSource.getMessage("activity.exportingBook"));
+		pleaseWaitDialog.setActivity(_("exporting book"));
 		pleaseWaitDialog.configureForDeterminate(0, book.getSegmentCount(), 0);
 		pleaseWaitDialog.waitAndShowDialogIn(optionPaneParent, 500, worker);
 
@@ -111,7 +111,9 @@ public class ExportBookAction extends AbstractFocusableSignalMLAction<BookDocume
 
 	@Override
 	public void setEnabledAsNeeded() {
-		setEnabled(getActionFocusSelector().getActiveBookDocument() != null);
+		BookDocumentFocusSelector x = getActionFocusSelector();
+		if (null != x)
+			setEnabled(x.getActiveBookDocument() != null);
 	}
 
 	public PleaseWaitDialog getPleaseWaitDialog() {

@@ -16,7 +16,6 @@ import org.signalml.app.view.tag.TagIconProducer;
 import org.signalml.app.view.tag.TagStyleMenu;
 import org.signalml.plugin.export.signal.SignalSelection;
 import org.signalml.plugin.impl.PluginAccessClass;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** SignalPlotPopupProvider
  *
@@ -38,8 +37,6 @@ public class SignalPlotPopupProvider {
 
 	private TagStyleMenu tagStyleMenu;
 
-	private MessageSourceAccessor messageSource;
-
 	public SignalPlotPopupProvider(SignalPlot plot) {
 		this.plot = plot;
 	}
@@ -49,7 +46,6 @@ public class SignalPlotPopupProvider {
 		if (plotPopupMenu == null) {
 			plotPopupMenu = new JPopupMenu();
 			tagStyleMenu = new TagStyleMenu(tagSelectionAction, tagIconProducer);
-			tagStyleMenu.setMessageSource(messageSource);
 			plotPopupMenu.add(tagStyleMenu);
 			plotPopupMenu.addSeparator();
 			plotPopupMenu.add(editTagAnnotationAction);
@@ -73,14 +69,6 @@ public class SignalPlotPopupProvider {
 		tagStyleMenu.setEnabled(tagStyleMenuEnabled);
 
 		return plotPopupMenu;
-	}
-
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
-	}
-
-	public void setMessageSource(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
 	}
 
 	public JPopupMenu getColumnHeaderPopupMenu() {

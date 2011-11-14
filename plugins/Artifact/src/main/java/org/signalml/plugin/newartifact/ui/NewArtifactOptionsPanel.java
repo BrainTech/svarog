@@ -17,9 +17,9 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
 import org.signalml.app.view.element.ResolvableComboBox;
 import org.signalml.plugin.newartifact.data.NewArtifactPowerGridFrequency;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ArtifactOptionsPanel
  *
@@ -28,25 +28,21 @@ import org.springframework.context.support.MessageSourceAccessor;
  * 			(dialog design based on work by Hubert Klekowicz)
  */
 public class NewArtifactOptionsPanel extends JPanel {
-
 	private static final long serialVersionUID = 1L;
-
-	private MessageSourceAccessor messageSource;
 
 	private ResolvableComboBox powerComboBox;
 	private JCheckBox exclusionCheckBox;
 	private JButton exclusionButton;
 
-	public NewArtifactOptionsPanel(MessageSourceAccessor messageSource) {
+	public  NewArtifactOptionsPanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
 	private void initialize() {
 
 		CompoundBorder border = new CompoundBorder(
-			new TitledBorder(messageSource.getMessage("newArtifactMethod.dialog.options")),
+			new TitledBorder(_("Options")),
 			new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);
@@ -56,7 +52,7 @@ public class NewArtifactOptionsPanel extends JPanel {
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
-		JLabel powerLabel = new JLabel(messageSource.getMessage("newArtifactMethod.dialog.powerFrequency"));
+		JLabel powerLabel = new JLabel(_("Power frequency"));
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
@@ -94,7 +90,7 @@ public class NewArtifactOptionsPanel extends JPanel {
 
 	public ResolvableComboBox getPowerComboBox() {
 		if (powerComboBox == null) {
-			powerComboBox = new ResolvableComboBox(messageSource);
+			powerComboBox = new ResolvableComboBox();
 			DefaultComboBoxModel model = new DefaultComboBoxModel(NewArtifactPowerGridFrequency.values());
 			powerComboBox.setModel(model);
 		}
@@ -103,7 +99,7 @@ public class NewArtifactOptionsPanel extends JPanel {
 
 	public JCheckBox getExclusionCheckBox() {
 		if (exclusionCheckBox == null) {
-			exclusionCheckBox = new JCheckBox(messageSource.getMessage("newArtifactMethod.dialog.excludeSomeDerivations"));
+			exclusionCheckBox = new JCheckBox(_("Exclude some derivations"));
 			exclusionCheckBox.addItemListener(new ItemListener() {
 
 				@Override

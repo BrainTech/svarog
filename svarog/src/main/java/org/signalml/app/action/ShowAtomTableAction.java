@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -13,7 +14,6 @@ import org.signalml.app.action.selector.BookDocumentFocusSelector;
 import org.signalml.app.document.BookDocument;
 import org.signalml.app.view.book.AtomTableDialog;
 import org.signalml.app.view.book.BookView;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ShowAtomTableAction
  *
@@ -28,11 +28,11 @@ public class ShowAtomTableAction extends AbstractFocusableSignalMLAction<BookDoc
 
 	private AtomTableDialog atomTableDialog;
 
-	public ShowAtomTableAction(MessageSourceAccessor messageSource, BookDocumentFocusSelector bookDocumentFocusSelector) {
-		super(messageSource, bookDocumentFocusSelector);
-		setText("action.showAtomTable");
+	public  ShowAtomTableAction( BookDocumentFocusSelector bookDocumentFocusSelector) {
+		super( bookDocumentFocusSelector);
+		setText(_("Show atom table"));
 		setIconPath("org/signalml/app/icon/atomtable.png");
-		setToolTip("action.showAtomTableToolTip");
+		setToolTip(_("Show segment's atoms in a table"));
 	}
 
 	@Override

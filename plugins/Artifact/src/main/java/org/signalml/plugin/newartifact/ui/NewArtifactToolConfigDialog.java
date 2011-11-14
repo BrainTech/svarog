@@ -14,11 +14,11 @@ import org.signalml.plugin.data.PluginConfigForMethod;
 import org.signalml.plugin.data.PluginConfigMethodData;
 import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
 import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.plugin.newartifact.data.NewArtifactConfiguration;
 import org.signalml.plugin.tool.PluginResourceRepository;
-import org.springframework.context.support.MessageSourceAccessor;
+import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -28,7 +28,7 @@ import org.springframework.validation.Errors;
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
-public class NewArtifactToolConfigDialog extends AbstractDialog {
+public class NewArtifactToolConfigDialog extends org.signalml.plugin.export.view.AbstractPluginDialog  {
 
 	private static final long serialVersionUID = 1L;
 
@@ -36,18 +36,18 @@ public class NewArtifactToolConfigDialog extends AbstractDialog {
 
 	private NewArtifactToolConfigPanel configPanel;
 
-	public NewArtifactToolConfigDialog(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  NewArtifactToolConfigDialog() {
+		super();
 	}
 
-	public NewArtifactToolConfigDialog(MessageSourceAccessor messageSource,
+	public  NewArtifactToolConfigDialog(
 					   Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+		super( w, isModal);
 	}
 
 	@Override
 	protected void initialize() {
-		setTitle(messageSource.getMessage("newArtifactMethod.config.title"));
+		setTitle(_("Artifact configuration"));
 		PluginConfigMethodData config;
 		try {
 			config = ((PluginConfigForMethod) PluginResourceRepository
@@ -69,7 +69,7 @@ public class NewArtifactToolConfigDialog extends AbstractDialog {
 
 	public NewArtifactToolConfigPanel getConfigPanel() {
 		if (configPanel == null) {
-			configPanel = new NewArtifactToolConfigPanel(messageSource,
+			configPanel = new NewArtifactToolConfigPanel(
 					fileChooser);
 		}
 		return configPanel;

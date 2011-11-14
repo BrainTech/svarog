@@ -1,5 +1,6 @@
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -32,11 +33,11 @@ public class OpenMonitorAction extends AbstractSignalMLAction {
 	private ViewerElementManager viewerElementManager;
 
 	public OpenMonitorAction( ViewerElementManager viewerElementManager) {
-		super(viewerElementManager.getMessageSource());
+		super();
 		this.viewerElementManager = viewerElementManager;
-		setText( "action.openMonitorLabel");
+		setText(_("Open monitor..."));
 //		setIconPath("org/signalml/app/icon/connect.png");
-		setToolTip( "action.openMonitorToolTip");
+		setToolTip(_("Open monitor and connect to multiplexer"));
 	}
 
 	@Override

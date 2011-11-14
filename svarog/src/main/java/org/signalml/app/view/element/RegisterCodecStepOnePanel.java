@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -18,8 +19,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.signalml.app.view.dialog.RegisterCodecDialog;
 import org.signalml.codec.SignalMLCodec;
-import org.springframework.context.support.MessageSourceAccessor;
-
 
 /**
  * Panel for the first step of {@link RegisterCodecDialog}.
@@ -33,11 +32,6 @@ public class RegisterCodecStepOnePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
-
-	/**
 	 * the {@link #getFileChooser() embedded file chooser}
 	 */
 	private EmbeddedFileChooser fileChooser = null;
@@ -48,13 +42,10 @@ public class RegisterCodecStepOnePanel extends JPanel {
 	private JPanel filePanel = null;
 
 	/**
-	 * Constructor. Sets the {@link MessageSourceAccessor message source} and
-	 * initializes this panel.
-	 * @param messageSource the source of messages (labels)
+	 * Constructor. Initializes the panel.
 	 */
-	public RegisterCodecStepOnePanel(MessageSourceAccessor messageSource) {
+	public RegisterCodecStepOnePanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -79,7 +70,7 @@ public class RegisterCodecStepOnePanel extends JPanel {
 	private JPanel getFilePanel() {
 		if (filePanel == null) {
 			filePanel = new JPanel();
-			filePanel.setBorder(BorderFactory.createTitledBorder(messageSource.getMessage("registerCodec.chooseFile")));
+			filePanel.setBorder(BorderFactory.createTitledBorder(_("Choose XML definition file")));
 			filePanel.setLayout(new BoxLayout(filePanel, BoxLayout.Y_AXIS));
 			filePanel.add(getFileChooser());
 
@@ -107,7 +98,7 @@ public class RegisterCodecStepOnePanel extends JPanel {
 			fileChooser.setMultiSelectionEnabled(false);
 			fileChooser.setAcceptAllFileFilterUsed(true);
 			fileChooser.resetChoosableFileFilters();
-			fileChooser.addChoosableFileFilter(new FileNameExtensionFilter(messageSource.getMessage("filechooser.filter.xmlFiles"), "xml"));
+			fileChooser.addChoosableFileFilter(new FileNameExtensionFilter(_("XML files (*.xml)"), "xml"));
 			fileChooser.setAlignmentX(Component.LEFT_ALIGNMENT);
 			fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 			fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir"),"specs"));

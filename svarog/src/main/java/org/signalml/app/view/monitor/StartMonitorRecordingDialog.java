@@ -4,13 +4,13 @@
 
 package org.signalml.app.view.monitor;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Window;
 import javax.swing.JComponent;
 
 import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -19,24 +19,23 @@ import org.springframework.validation.Errors;
  *
  * @author Piotr Szachewicz
  */
-public class StartMonitorRecordingDialog extends AbstractDialog {
+public class StartMonitorRecordingDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
 
 	protected ChooseFilesForMonitorRecordingPanel chooseFilesForMonitorRecordingPanel;
 
 	/**
 	 * Constructor. Sets message source, parent window and if this dialog
 	 * blocks top-level windows.
-	 * @param messageSource message source to set
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public StartMonitorRecordingDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public  StartMonitorRecordingDialog( Window w, boolean isModal) {
+		super( w, isModal);
 	}
 
 	@Override
 	protected void initialize() {
-		setTitle(messageSource.getMessage("startMonitorRecording.title"));
+		setTitle(_("Start monitor recording"));
 		super.initialize();
 	}
 
@@ -87,7 +86,7 @@ public class StartMonitorRecordingDialog extends AbstractDialog {
 	 */
 	public ChooseFilesForMonitorRecordingPanel getChooseFilesForMonitorRecordingPanel() {
 		if (chooseFilesForMonitorRecordingPanel == null)
-			chooseFilesForMonitorRecordingPanel = new ChooseFilesForMonitorRecordingPanel(messageSource);
+			chooseFilesForMonitorRecordingPanel = new ChooseFilesForMonitorRecordingPanel();
 		return chooseFilesForMonitorRecordingPanel;
 	}
 

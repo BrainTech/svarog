@@ -18,7 +18,6 @@ import org.signalml.plugin.export.signal.SignalTool;
 import org.signalml.plugin.export.view.ExportedSignalPlot;
 import org.signalml.plugin.export.view.ExportedSignalView;
 import org.signalml.plugin.fft.export.FourierTransform;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * {@link SignalTool Signal tool} which displays the {@link SignalFFTPlot plot}
@@ -42,10 +41,6 @@ public class SignalFFTTool extends AbstractSignalTool {
 	 * the {@link SignalFFTPlot plot} on which the power spectrum is displayed
 	 */
 	private SignalFFTPlot fftPlot;
-	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
 
 	/**
 	 * the {@link SvarogAccess access} to Svarog logic and GUI
@@ -63,12 +58,10 @@ public class SignalFFTTool extends AbstractSignalTool {
 	 * ExportedSignalView signal view} for which this FFT tool is
 	 * created.
 	 * @param signalView the signal view
-	 * @param messageSource the source of messages
 	 */
-	public SignalFFTTool(ExportedSignalView signalView,
-			MessageSourceAccessor messageSource) {
+	public SignalFFTTool(ExportedSignalView signalView) {
 		super(signalView);
-		fftPlot = new SignalFFTPlot(messageSource);
+		fftPlot = new SignalFFTPlot();
 		// fftPlot = new SignalFFTPlot();
 		settings = new SignalFFTSettings();
 	}
@@ -77,26 +70,16 @@ public class SignalFFTTool extends AbstractSignalTool {
 	 * Constructor. Sets the source of messages. The {@link
 	 * ExportedSignalView signal view} for which this FFT tool is
 	 * created must be set separately.
-	 * @param messageSource the source of messages
 	 */
-	public SignalFFTTool(MessageSourceAccessor messageSource) {
+	public  SignalFFTTool() {
 		super();
-		fftPlot = new SignalFFTPlot(messageSource);
+		fftPlot = new SignalFFTPlot();
 		settings = new SignalFFTSettings();
-		this.messageSource = messageSource;
-	}
-
-	/**
-	 * Sets the source of messages (labels).
-	 * @param messageSource the source of messages (labels)
-	 */
-	public void setMessageSource(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
 	}
 
 	@Override
 	public SignalFFTTool createCopy() {
-		SignalFFTTool copy = new SignalFFTTool(messageSource);
+		SignalFFTTool copy = new SignalFFTTool();
 		copy.setSvarogAccess(svarogAccess);
 		copy.setSettings(getSettings());
 		return copy;

@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
@@ -11,7 +12,6 @@ import org.signalml.app.action.selector.BookDocumentFocusSelector;
 import org.signalml.app.document.BookDocument;
 import org.signalml.app.model.BookFilterDescriptor;
 import org.signalml.app.view.book.filter.BookFilterDialog;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** EditBookFilterAction
  *
@@ -26,11 +26,11 @@ public class EditBookFilterAction extends AbstractFocusableSignalMLAction<BookDo
 
 	private BookFilterDialog bookFilterDialog;
 
-	public EditBookFilterAction(MessageSourceAccessor messageSource, BookDocumentFocusSelector bookDocumentFocusSelector) {
-		super(messageSource, bookDocumentFocusSelector);
-		setText("action.bookFilter");
+	public  EditBookFilterAction( BookDocumentFocusSelector bookDocumentFocusSelector) {
+		super( bookDocumentFocusSelector);
+		setText(_("Edit book filter"));
 		setIconPath("org/signalml/app/icon/editbookfilter.png");
-		setToolTip("action.bookFilterToolTip");
+		setToolTip(_("Edit book filter chain"));
 	}
 
 	@Override

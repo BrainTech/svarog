@@ -3,6 +3,7 @@
  */
 package org.signalml.app.method.mp5;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 
 import javax.swing.Box;
@@ -17,10 +18,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.util.SwingUtils;
+import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.app.view.element.CompactButton;
 import org.signalml.method.mp5.MP5Parameters;
-import org.signalml.plugin.export.view.AbstractDialog;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /** MP5StoppingCriteriaConfigPanel
@@ -31,16 +32,13 @@ import org.springframework.validation.Errors;
 public class MP5StoppingCriteriaConfigPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-
-	private MessageSourceAccessor messageSource;
 	private AbstractDialog owner;
 
 	private JSpinner maxIterationCountSpinner;
 	private JSpinner energyPercentSpinner;
 
-	public MP5StoppingCriteriaConfigPanel(MessageSourceAccessor messageSource, AbstractDialog owner) {
+	public  MP5StoppingCriteriaConfigPanel( AbstractDialog owner) {
 		super();
-		this.messageSource = messageSource;
 		this.owner = owner;
 		initialize();
 	}
@@ -48,7 +46,7 @@ public class MP5StoppingCriteriaConfigPanel extends JPanel {
 	private void initialize() {
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("mp5Method.dialog.stoppingCriteriaTitle")),
+		        new TitledBorder(_("Stopping criteria")),
 		        new EmptyBorder(3,3,3,3)
 		);
 
@@ -59,14 +57,14 @@ public class MP5StoppingCriteriaConfigPanel extends JPanel {
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
-		JLabel maxIterationCountLabel = new JLabel(messageSource.getMessage("mp5Method.dialog.maxIterationCount"));
-		JLabel energyPercentLabel = new JLabel(messageSource.getMessage("mp5Method.dialog.energyPercent"));
+		JLabel maxIterationCountLabel = new JLabel(_("Max iterations"));
+		JLabel energyPercentLabel = new JLabel(_("Energy percent"));
 
 		Component glue1 = Box.createHorizontalGlue();
 		Component glue2 = Box.createHorizontalGlue();
 
-		CompactButton maxIterationCountHelpButton = SwingUtils.createFieldHelpButton(messageSource, owner, MP5MethodDialog.HELP_MAX_ITERATION_COUNT);
-		CompactButton energyPercentHelpButton = SwingUtils.createFieldHelpButton(messageSource, owner, MP5MethodDialog.HELP_ENERGY_PERCENT);
+		CompactButton maxIterationCountHelpButton = SwingUtils.createFieldHelpButton( owner, MP5MethodDialog.HELP_MAX_ITERATION_COUNT);
+		CompactButton energyPercentHelpButton = SwingUtils.createFieldHelpButton( owner, MP5MethodDialog.HELP_ENERGY_PERCENT);
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 

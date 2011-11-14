@@ -4,6 +4,7 @@
 
 package org.signalml.app.method.mp5;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Window;
@@ -19,9 +20,8 @@ import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.method.mp5.MP5LocalProcessExecutor;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /** MP5LocalExecutorDialog
@@ -29,7 +29,7 @@ import org.springframework.validation.Errors;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class MP5LocalExecutorDialog extends AbstractDialog {
+public class MP5LocalExecutorDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
 
 	private static final long serialVersionUID = 1L;
 
@@ -39,17 +39,17 @@ public class MP5LocalExecutorDialog extends AbstractDialog {
 
 	private MP5ExecutablePanel executablePanel;
 
-	public MP5LocalExecutorDialog(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  MP5LocalExecutorDialog() {
+		super();
 	}
 
-	public MP5LocalExecutorDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public  MP5LocalExecutorDialog( Window w, boolean isModal) {
+		super( w, isModal);
 	}
 
 	@Override
 	protected void initialize() {
-		setTitle(messageSource.getMessage("mp5Method.config.local.title"));
+		setTitle(_("Configure local executor"));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/configure.png"));
 		setResizable(false);
 		super.initialize();
@@ -63,7 +63,7 @@ public class MP5LocalExecutorDialog extends AbstractDialog {
 		JPanel namePanel = new JPanel(new BorderLayout());
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("mp5Method.config.local.nameTitle")),
+		        new TitledBorder(_("Executor name")),
 		        new EmptyBorder(3,3,3,3)
 		);
 		namePanel.setBorder(border);
@@ -87,7 +87,7 @@ public class MP5LocalExecutorDialog extends AbstractDialog {
 
 	public MP5ExecutablePanel getExecutablePanel() {
 		if (executablePanel == null) {
-			executablePanel = new MP5ExecutablePanel(messageSource,fileChooser);
+			executablePanel = new MP5ExecutablePanel(fileChooser);
 		}
 		return executablePanel;
 	}
@@ -99,7 +99,7 @@ public class MP5LocalExecutorDialog extends AbstractDialog {
 
 		String name = executor.getName();
 		if (name == null) {
-			name = messageSource.getMessage("mp5Method.config.local.newNameSuggestion");
+			name = _("New local executor");
 		}
 
 		JTextField nameField = getNameTextField();

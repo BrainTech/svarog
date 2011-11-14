@@ -4,6 +4,8 @@
 
 package org.signalml.app.view.signal;
 
+import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogApplication._R;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -138,7 +140,6 @@ import org.signalml.plugin.export.view.ExportedSignalPlot;
 import org.signalml.plugin.export.view.ExportedSignalView;
 import org.signalml.plugin.impl.PluginAccessClass;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** SignalView
  *
@@ -186,8 +187,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	private JSlider timeScaleSlider;
 	private JSlider valueScaleSlider;
 	private JSlider channelHeightSlider;
-
-	private MessageSourceAccessor messageSource;
 	private ButtonGroup toolButtonGroup;
 
 	private JButton plotOptionsButton;
@@ -439,7 +438,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		SignalPlot plot = new SignalPlot(document, this, masterPlot);
 
 		SignalPlotPopupProvider signalPlotPopupProvider = new SignalPlotPopupProvider(plot);
-		signalPlotPopupProvider.setMessageSource(messageSource);
 		signalPlotPopupProvider.setTagIconProducer(tagIconProducer);
 		signalPlotPopupProvider.setPreciseSelectionAction(getPreciseSelectionAction());
 		signalPlotPopupProvider.setTagSelectionAction(getTagSelectionAction());
@@ -844,7 +842,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 			@Override
 			public String getToolTipText(MouseEvent ev) {
-				return messageSource.getMessage("signalView.timeScaleToolTip", new Object[] { ((double) getValue())/1000 });
+				return _R("{0} pixels/sample", ((double) getValue())/1000);
 			}
 
 		};
@@ -861,7 +859,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 			@Override
 			public String getToolTipText(MouseEvent ev) {
-				return messageSource.getMessage("signalView.valueScaleToolTip", new Object[] { getValue() });
+				return getValue() + "%";
 			}
 
 		};
@@ -876,7 +874,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 			@Override
 			public String getToolTipText(MouseEvent ev) {
-				return messageSource.getMessage("signalView.channelHeightToolTip", new Object[] { getValue() });
+				return _R("{0} px", getValue());
 			}
 
 		};
@@ -895,27 +893,27 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		});
 
 		plotOptionsButton = new JButton(IconUtils.loadClassPathIcon("org/signalml/app/icon/plotoptions.png"));
-		plotOptionsButton.setToolTipText(messageSource.getMessage("signalView.plotOptionsToolTip"));
+		plotOptionsButton.setToolTipText(_("Change plot options"));
 		plotOptionsButton.addActionListener(new PlotOptionsButtonListener());
 
 		moveToolButton = new JToggleButton(IconUtils.loadClassPathIcon("org/signalml/app/icon/hand.png"));
-		moveToolButton.setToolTipText(messageSource.getMessage("signalView.moveToolToolTip"));
+		moveToolButton.setToolTipText(_("Move signal with the mouse"));
 		selectToolButton = new JToggleButton(IconUtils.loadClassPathIcon("org/signalml/app/icon/arrow.png"));
-		selectToolButton.setToolTipText(messageSource.getMessage("signalView.selectToolToolTip"));
+		selectToolButton.setToolTipText(_("Select tags"));
 
 		selectPageToolButton = new JToggleButton(IconUtils.loadClassPathIcon("org/signalml/app/icon/pageselection.png"));
-		selectPageToolButton.setToolTipText(messageSource.getMessage("signalView.selectPageToolToolTip"));
+		selectPageToolButton.setToolTipText(_("Select signal pages"));
 		selectBlockToolButton = new JToggleButton(IconUtils.loadClassPathIcon("org/signalml/app/icon/blockselection.png"));
-		selectBlockToolButton.setToolTipText(messageSource.getMessage("signalView.selectBlockToolToolTip"));
+		selectBlockToolButton.setToolTipText(_("Select signal blocks"));
 		selectChannelToolButton = new JToggleButton(IconUtils.loadClassPathIcon("org/signalml/app/icon/channelselection.png"));
-		selectChannelToolButton.setToolTipText(messageSource.getMessage("signalView.selectChannelToolToolTip"));
+		selectChannelToolButton.setToolTipText(_("Select single channel or multichannel custom size signal fragments"));
 
 		zoomSignalToolButton = new JToggleButton(IconUtils.loadClassPathIcon("org/signalml/app/icon/zoom.png"));
-		zoomSignalToolButton.setToolTipText(messageSource.getMessage("signalView.zoomSignalToolToolTip"));
+		zoomSignalToolButton.setToolTipText(_("Magnify the signal (for settings press and hold the mouse button here)"));
 		zoomSignalToolButton.addMouseListener(new ZoomSignalToolButtonMouseListener());
 
 		rulerToolButton = new JToggleButton(IconUtils.loadClassPathIcon("org/signalml/app/icon/ruler.png"));
-		rulerToolButton.setToolTipText(messageSource.getMessage("signalView.rulerToolToolTip"));
+		rulerToolButton.setToolTipText(_("Measure the signal"));
 
 		mainToolBar.add(selectToolButton);
 		selectToolButton.setSelected(true);
@@ -946,14 +944,14 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		//mainToolBar.add(getPreciseSelectionAction());
 		mainToolBar.addSeparator();
 
-		mainToolBar.add(new TitledSliderPanel(messageSource.getMessage("signalView.timeScale"), timeScaleSlider));
+		mainToolBar.add(new TitledSliderPanel(_("Time scale"), timeScaleSlider));
 		JToggleButton snapToPageButton = new JToggleButton(getSnapToPageAction());
 		snapToPageButton.setHideActionText(true);
 		mainToolBar.add(snapToPageButton);
 		mainToolBar.addSeparator();
 
-		mainToolBar.add(new TitledSliderPanel(messageSource.getMessage("signalView.valueScale"), valueScaleSlider));
-		mainToolBar.add(new TitledSliderPanel(messageSource.getMessage("signalView.channelHeight"), channelHeightSlider));
+		mainToolBar.add(new TitledSliderPanel(_("Value scale"), valueScaleSlider));
+		mainToolBar.add(new TitledSliderPanel(_("Channel height"), channelHeightSlider));
 		mainToolBar.addSeparator();
 		mainToolBar.addSeparator();
 
@@ -979,11 +977,11 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		tagToolBar.setVisible(false);
 
 		tagPageToolButton = new JToggleButton(IconUtils.getPageTagIcon());
-		tagPageToolButton.setToolTipText(messageSource.getMessage("signalView.tagPageToolToolTip"));
+		tagPageToolButton.setToolTipText(_("Tag signal pages"));
 		tagBlockToolButton = new JToggleButton(IconUtils.getBlockTagIcon());
-		tagBlockToolButton.setToolTipText(messageSource.getMessage("signalView.tagBlockToolToolTip"));
+		tagBlockToolButton.setToolTipText(_("Tag signal blocks"));
 		tagChannelToolButton = new JToggleButton(IconUtils.getChannelTagIcon());
-		tagChannelToolButton.setToolTipText(messageSource.getMessage("signalView.tagChannelToolToolTip"));
+		tagChannelToolButton.setToolTipText(_("Tag single channel or multichannel custom size signal fragments"));
 
 		tagToolBar.addSeparator(new Dimension(0,5));
 
@@ -1113,14 +1111,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		return tagDifferenceDetector;
 	}
 
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
-	}
-
-	public void setMessageSource(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
-	}
-
 	public ApplicationConfiguration getApplicationConfig() {
 		return applicationConfig;
 	}
@@ -1139,7 +1129,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 	public NewTagAction getNewTagAction() {
 		if (newTagAction == null) {
-			newTagAction = new NewTagAction(messageSource,this);
+			newTagAction = new NewTagAction(this);
 			newTagAction.setDocumentFlowIntegrator(documentFlowIntegrator);
 			newTagAction.setNewTagDialog(newTagDialog);
 		}
@@ -1148,7 +1138,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 	public OpenTagAction getOpenTagAction() {
 		if (openTagAction == null) {
-			openTagAction = new OpenTagAction(messageSource,this);
+			openTagAction = new OpenTagAction(this);
 			openTagAction.setDocumentFlowIntegrator(documentFlowIntegrator);
 			openTagAction.setFileChooser(fileChooser);
 			openTagAction.setOptionPaneParent(this);
@@ -1158,7 +1148,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 	public CloseTagAction getCloseTagAction() {
 		if (closeTagAction == null) {
-			closeTagAction = new CloseTagAction(messageSource,this);
+			closeTagAction = new CloseTagAction(this);
 			closeTagAction.setDocumentFlowIntegrator(documentFlowIntegrator);
 		}
 		return closeTagAction;
@@ -1166,7 +1156,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 	public SaveTagAction getSaveTagAction() {
 		if (saveTagAction == null) {
-			saveTagAction = new SaveTagAction(messageSource,this);
+			saveTagAction = new SaveTagAction(this);
 			saveTagAction.setDocumentFlowIntegrator(documentFlowIntegrator);
 		}
 		return saveTagAction;
@@ -1174,7 +1164,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 	public SaveTagAsAction getSaveTagAsAction() {
 		if (saveTagAsAction == null) {
-			saveTagAsAction = new SaveTagAsAction(messageSource,this);
+			saveTagAsAction = new SaveTagAsAction(this);
 			saveTagAsAction.setDocumentFlowIntegrator(documentFlowIntegrator);
 		}
 		return saveTagAsAction;
@@ -1182,7 +1172,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 	public PreciseSelectionAction getPreciseSelectionAction() {
 		if (preciseSelectionAction == null) {
-			preciseSelectionAction = new PreciseSelectionAction(messageSource,this);
+			preciseSelectionAction = new PreciseSelectionAction(this);
 			preciseSelectionAction.setSignalSelectionDialog(signalSelectionDialog);
 		}
 		return preciseSelectionAction;
@@ -1190,14 +1180,14 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 	public TagSelectionAction getTagSelectionAction() {
 		if (tagSelectionAction == null) {
-			tagSelectionAction = new TagSelectionAction(messageSource,this);
+			tagSelectionAction = new TagSelectionAction(this);
 		}
 		return tagSelectionAction;
 	}
 
 	public RemoveTagAction getRemoveTagAction() {
 		if (removeTagAction == null) {
-			removeTagAction = new RemoveTagAction(messageSource,this);
+			removeTagAction = new RemoveTagAction(this);
 		}
 		return removeTagAction;
 	}
@@ -1211,7 +1201,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	 */
 	public StartMonitorRecordingAction getStartMonitorRecordingAction() {
 		if (startMonitorRecordingAction == null) {
-			startMonitorRecordingAction = new StartMonitorRecordingAction(messageSource, getActionFocusManager());
+			startMonitorRecordingAction = new StartMonitorRecordingAction( getActionFocusManager());
 			startMonitorRecordingAction.setStartMonitorRecordingDialog(startMonitorRecordingDialog);
 		}
 		return startMonitorRecordingAction;
@@ -1224,14 +1214,14 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	 */
 	public StopMonitorRecordingAction getStopMonitorRecordingAction() {
 		if (stopMonitorRecordingAction == null) {
-			stopMonitorRecordingAction = new StopMonitorRecordingAction(messageSource, getActionFocusManager());
+			stopMonitorRecordingAction = new StopMonitorRecordingAction( getActionFocusManager());
 		}
 		return stopMonitorRecordingAction;
 	}
 
 	public EditSignalParametersAction getEditSignalParametersAction() {
 		if (editSignalParametersAction == null) {
-			editSignalParametersAction = new EditSignalParametersAction(messageSource,this);
+			editSignalParametersAction = new EditSignalParametersAction(this);
 			editSignalParametersAction.setSignalParametersDialog(signalParametersDialog);
 		}
 		return editSignalParametersAction;
@@ -1239,7 +1229,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 	public EditSignalMontageAction getEditSignalMontageAction() {
 		if (editSignalMontageAction == null) {
-			editSignalMontageAction = new EditSignalMontageAction(messageSource,this);
+			editSignalMontageAction = new EditSignalMontageAction(this);
 			editSignalMontageAction.setSignalMontageDialog(signalMontageDialog);
 		}
 		return editSignalMontageAction;
@@ -1247,14 +1237,14 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 	public ApplyDefaultMontageAction getApplyDefaultMontageAction() {
 		if (applyDefaultMontageAction == null) {
-			applyDefaultMontageAction = new ApplyDefaultMontageAction(messageSource,this);
+			applyDefaultMontageAction = new ApplyDefaultMontageAction(this);
 		}
 		return applyDefaultMontageAction;
 	}
 
 	public EditTagAnnotationAction getEditTagAnnotationAction() {
 		if (editTagAnnotationAction == null) {
-			editTagAnnotationAction = new EditTagAnnotationAction(messageSource,this);
+			editTagAnnotationAction = new EditTagAnnotationAction(this);
 			editTagAnnotationAction.setEditTagAnnotationDialog(editTagAnnotationDialog);
 			KeyStroke ctrla = KeyStroke.getKeyStroke("ctrl A");
 			getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(ctrla, "editTagAnnotationAction");
@@ -1265,14 +1255,14 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 	public SnapToPageAction getSnapToPageAction() {
 		if (snapToPageAction == null) {
-			snapToPageAction = new SnapToPageAction(messageSource,this);
+			snapToPageAction = new SnapToPageAction(this);
 		}
 		return snapToPageAction;
 	}
 
 	public SignalFilterSwitchAction getFilterSwitchAction() {
 		if (signalFilterSwitchAction == null) {
-			signalFilterSwitchAction = new SignalFilterSwitchAction(messageSource,this);
+			signalFilterSwitchAction = new SignalFilterSwitchAction(this);
 		}
 		return signalFilterSwitchAction;
 	}
@@ -1450,7 +1440,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 	private SignalPlotOptionsPopupDialog getPlotOptionsDialog() {
 		if (signalPlotOptionsPopupDialog == null) {
-			signalPlotOptionsPopupDialog = new SignalPlotOptionsPopupDialog(messageSource, (Window) getTopLevelAncestor(), true);
+			signalPlotOptionsPopupDialog = new SignalPlotOptionsPopupDialog( (Window) getTopLevelAncestor(), true);
 			signalPlotOptionsPopupDialog.setSignalView(this);
 		}
 
@@ -1459,7 +1449,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 	private ZoomSettingsPopupDialog getZoomSettingsDialog() {
 		if (zoomSettingsDialog == null) {
-			zoomSettingsDialog = new ZoomSettingsPopupDialog(messageSource, (Window) getTopLevelAncestor(), true);
+			zoomSettingsDialog = new ZoomSettingsPopupDialog( (Window) getTopLevelAncestor(), true);
 		}
 		return zoomSettingsDialog;
 	}
@@ -1583,9 +1573,9 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 				if (newDocument != null) {
 
-					TagStyleToolBar pageToolBar = new TagStyleToolBar(newDocument.getTagSet(), SignalSelectionType.PAGE, messageSource, tagIconProducer, getTagSelectionAction());
-					TagStyleToolBar blockToolBar = new TagStyleToolBar(newDocument.getTagSet(), SignalSelectionType.BLOCK, messageSource, tagIconProducer, getTagSelectionAction());
-					TagStyleToolBar channelToolBar = new TagStyleToolBar(newDocument.getTagSet(), SignalSelectionType.CHANNEL, messageSource, tagIconProducer, getTagSelectionAction());
+					TagStyleToolBar pageToolBar = new TagStyleToolBar(newDocument.getTagSet(), SignalSelectionType.PAGE, tagIconProducer, getTagSelectionAction());
+					TagStyleToolBar blockToolBar = new TagStyleToolBar(newDocument.getTagSet(), SignalSelectionType.BLOCK, tagIconProducer, getTagSelectionAction());
+					TagStyleToolBar channelToolBar = new TagStyleToolBar(newDocument.getTagSet(), SignalSelectionType.CHANNEL, tagIconProducer, getTagSelectionAction());
 
 					String hash = Integer.toHexString(newDocument.hashCode());
 

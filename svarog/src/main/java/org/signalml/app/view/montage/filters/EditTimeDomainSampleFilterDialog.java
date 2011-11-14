@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.montage.filters;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Window;
@@ -26,7 +27,7 @@ import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilterValidator;
 import org.signalml.domain.montage.filter.iirdesigner.BadFilterParametersException;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.validation.Errors;
 
@@ -75,32 +76,30 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	/**
 	 * Constructor. Sets the message source, parent window, preset manager
 	 * for time domain filters and if this dialog blocks top-level windows.
-	 * @param messageSource message source to set
 	 * @param presetManager a {@link PresetManager} to manage the presets
 	 * configured in this window
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true if this dialog should block top-level windows,
 	 * false otherwise
 	 */
-	public EditTimeDomainSampleFilterDialog(MessageSourceAccessor messageSource, PresetManager presetManager, Window w, boolean isModal) {
-		super(messageSource, presetManager, w, isModal);
+	public  EditTimeDomainSampleFilterDialog( PresetManager presetManager, Window w, boolean isModal) {
+		super( presetManager, w, isModal);
 	}
 
 	/**
 	 * Constructor. Sets the message source and a preset manager
 	 * for this window.
-	 * @param messageSource message source to set
 	 * @param presetManager a {@link PresetManager} to manage the presets
 	 * configured in this window
 	 */
-	public EditTimeDomainSampleFilterDialog(MessageSourceAccessor messageSource, PresetManager presetManager) {
-		super(messageSource, presetManager);
+	public  EditTimeDomainSampleFilterDialog( PresetManager presetManager) {
+		super( presetManager);
 	}
 
 	@Override
 	protected void initialize() {
 
-		setTitle(messageSource.getMessage("editTimeDomainSampleFilter.title"));
+		setTitle(_("Edit time domain filter"));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/editfilter.png"));
 		setResizable(false);
 		drawFrequencyResponseAction = new DrawFrequencyResponseAction();
@@ -115,7 +114,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 		JPanel graphPanel = getChartGroupPanelWithABorder();
 
 		JPanel editFilterParametersPanel = new JPanel(new BorderLayout(3, 3));
-		editFilterParametersPanel.setBorder(new TitledBorder(messageSource.getMessage("editTimeDomainSampleFilter.filterParametersTitle")));
+		editFilterParametersPanel.setBorder(new TitledBorder(_("Filter parameters")));
 
 		filterNotValidPanel = getFilterNotValidPanel();
 
@@ -144,7 +143,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	public TimeDomainFilterParametersPanel getFilterParametersPanel() {
 
 		if (filterParametersPanel == null) {
-			filterParametersPanel = new TimeDomainFilterParametersPanel(messageSource);
+			filterParametersPanel = new TimeDomainFilterParametersPanel();
 		}
 
 		return filterParametersPanel;
@@ -238,7 +237,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	@Override
 	public TimeDomainFilterResponseChartGroupPanel getChartGroupPanelWithABorder() {
 		if (graphsPanel == null) {
-			graphsPanel = new TimeDomainFilterResponseChartGroupPanel(messageSource, currentFilter);
+			graphsPanel = new TimeDomainFilterResponseChartGroupPanel( currentFilter);
 			graphsPanel.setSamplingFrequency(getCurrentSamplingFrequency());
 		}
 		return graphsPanel;
@@ -258,7 +257,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	protected class DrawFrequencyResponseAction extends AbstractAction {
 
 		public DrawFrequencyResponseAction() {
-			super(messageSource.getMessage("editTimeDomainSampleFilter.drawFilterFrequencyResponse"));
+			super(_("Draw filter responses"));
 		}
 
 		@Override
@@ -288,7 +287,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	 * @return true if the filter is correct, false otherwise
 	 */
 	protected boolean validateCurrentFilterAndShowErrorMessage() {
-		TimeDomainSampleFilterValidator validator = new TimeDomainSampleFilterValidator(messageSource, currentFilter);
+		TimeDomainSampleFilterValidator validator = new TimeDomainSampleFilterValidator( currentFilter);
 		boolean isValid;
 		isValid = validator.isValid();
 

@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 
@@ -11,7 +12,6 @@ import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.dialog.HelpDialog;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** HelpContentsAction
  *
@@ -26,11 +26,11 @@ public class HelpContentsAction extends AbstractSignalMLAction {
 
 	private HelpDialog helpDialog;
 
-	public HelpContentsAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
-		setText("action.helpContents");
+	public  HelpContentsAction() {
+		super();
+		setText(_("Contents..."));
 		setIconPath("org/signalml/app/icon/help.png");
-		setToolTip("action.helpContentsToolTip");
+		setToolTip(_("Display help contents"));
 	}
 
 	@Override

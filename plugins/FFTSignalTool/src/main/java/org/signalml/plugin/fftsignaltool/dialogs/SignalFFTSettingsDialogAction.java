@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.plugin.fftsignaltool.SignalFFTSettings;
-import org.springframework.context.support.MessageSourceAccessor;
+import static org.signalml.plugin.fftsignaltool.FFTSignalTool._;
 
 /**
  * Action which shows the {@link SignalFFTSettingsDialog dialog} in which the
@@ -32,15 +32,14 @@ public class SignalFFTSettingsDialogAction extends AbstractSignalMLAction {
 	/**
 	 * Constructor. Sets the source of messages, {@link SignalFFTSettings FFT
 	 * settings} and the text of the button.
-	 * @param messageSource the source of messages (labels)
 	 * @param settings the settings that are filled in the 
 	 * {@link SignalFFTSettingsDialog dialog} shown by this action
 	 */
-	public SignalFFTSettingsDialogAction(MessageSourceAccessor messageSource, SignalFFTSettings settings) {
-		super(messageSource);
+	public  SignalFFTSettingsDialogAction( SignalFFTSettings settings) {
+		super();
 		fftSettings = settings;
-		fftSettingsDialog = new SignalFFTSettingsDialog(messageSource);
-		setText("signalFFTSettings.buttonTitle");
+		fftSettingsDialog = new SignalFFTSettingsDialog();
+		setText(_("Signal FFT Settings"));
 	}
 	
 	/**

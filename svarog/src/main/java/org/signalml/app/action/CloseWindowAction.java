@@ -3,13 +3,13 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.ViewFocusSelector;
 import org.signalml.app.view.View;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** CloseWindowAction
  *
@@ -22,11 +22,11 @@ public class CloseWindowAction extends AbstractSignalMLAction {
 
 	protected static final Logger logger = Logger.getLogger(CloseWindowAction.class);
 
-	public CloseWindowAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
-		setText("action.closeWindow");
+	public  CloseWindowAction() {
+		super();
+		setText(_("Exit"));
 		setIconPath("org/signalml/app/icon/exit.png");
-		setToolTip("action.closeWindowToolTip");
+		setToolTip(_("Close the window and exit the aplication"));
 	}
 
 	@Override

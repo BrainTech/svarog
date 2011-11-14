@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.monitor;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
@@ -19,7 +20,7 @@ import javax.swing.border.TitledBorder;
 import org.signalml.app.model.MonitorRecordingDescriptor;
 import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.app.view.element.FileSelectPanel;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -28,11 +29,6 @@ import org.springframework.validation.Errors;
  * @author Piotr Szachewicz
  */
 public class ChooseFilesForMonitorRecordingPanel extends JPanel {
-
-	/**
-	 * A message source accessor capable of resolving localized message codes.
-	 */
-	private final MessageSourceAccessor messageSource;
 
 	/**
 	 * A {@link FileSelectPanel} for selecting a signal recording target file
@@ -55,12 +51,10 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 	/**
 	 * Constructor.
 	 *
-	 * @param messageSource the message source accessor capable of resolving
 	 * localized message codes
 	 */
-	public ChooseFilesForMonitorRecordingPanel(MessageSourceAccessor messageSource) {
+	public  ChooseFilesForMonitorRecordingPanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -70,7 +64,7 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 	private void initialize() {
 		setLayout(new GridLayout(3, 1, 10, 5));
 		CompoundBorder border = new CompoundBorder(
-			new TitledBorder(messageSource.getMessage("startMonitorRecording.chooseFilesTitle")),
+			new TitledBorder(_("Choose files to which signal and tags will be recorded")),
 			new EmptyBorder(3, 3, 3, 3));
 		setBorder(border);
 		add(getSelectSignalRecordingFilePanel());
@@ -86,7 +80,7 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 	 */
 	protected FileSelectPanel getSelectSignalRecordingFilePanel() {
 		if (selectSignalRecordingFilePanel == null) {
-			selectSignalRecordingFilePanel = new FileSelectPanel(messageSource, messageSource.getMessage("startMonitorRecording.chooseSignalFileLabel"));
+			selectSignalRecordingFilePanel = new FileSelectPanel( _("Record signal to file"));
 		}
 		return selectSignalRecordingFilePanel;
 	}
@@ -99,7 +93,7 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 	 */
 	protected FileSelectPanel getSelectTagsRecordingFilePanel() {
 		if (selectTagsRecordingFilePanel == null) {
-			selectTagsRecordingFilePanel = new FileSelectPanel(messageSource, messageSource.getMessage("startMonitorRecording.chooseTagFileLabel"));
+			selectTagsRecordingFilePanel = new FileSelectPanel( _("Record tags to file"));
 		}
 		return selectTagsRecordingFilePanel;
 	}
@@ -168,7 +162,7 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 			errors.reject("error.startMonitorRecording.incorrectSignalFile");
 		}
 		else if ((new File(recordingFileName)).exists()) {
-			int anwser = JOptionPane.showConfirmDialog(null, messageSource.getMessage("startMonitorRecording.signalFileAlreadyExistsMessage"));
+			int anwser = JOptionPane.showConfirmDialog(null, _("Signal recording target file already exists! Do you want to overwrite?"));
 			if (anwser == JOptionPane.CANCEL_OPTION || anwser == JOptionPane.NO_OPTION)
 				errors.reject("");
 		}
@@ -177,7 +171,7 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 			errors.reject("error.startMonitorRecording.incorrectTagFile");
 		}
 		else if (getDisableTagRecordingPanel().isTagRecordingEnabled() && (new File(tagRecordingFileName)).exists()) {
-			int anwser = JOptionPane.showConfirmDialog(null, messageSource.getMessage("startMonitorRecording.tagFileAlreadyExistsMessage"));
+			int anwser = JOptionPane.showConfirmDialog(null, _("Tag recording target file already exists! Do you want to overwrite?"));
 			if (anwser == JOptionPane.CANCEL_OPTION || anwser == JOptionPane.NO_OPTION)
 				errors.reject("");
 		}
@@ -209,7 +203,7 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 				}
 			});
 			add(disableTagRecordingCheckBox);
-			add(new JLabel(messageSource.getMessage("startMonitorRecording.doNotRecordTagsLabel")));
+			add(new JLabel(_("Do not record tags")));
 		}
 
 		/**

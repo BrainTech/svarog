@@ -7,8 +7,8 @@ package org.signalml.plugin.export.view;
 import javax.swing.JTree;
 import javax.swing.tree.TreeModel;
 
+import org.signalml.app.view.I18nMessage;
 import org.springframework.context.MessageSourceResolvable;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Abstract class for a tree that is displayed in {@link ViewerTreePane tabs}
@@ -21,18 +21,11 @@ public abstract class AbstractViewerTree extends JTree {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * the source of texts of labels
-	 */
-	protected MessageSourceAccessor messageSource;
-
-	/**
 	 * Constructs AbstractViewerTree based on a given model and source of labels
 	 * @param model the model for this tree
-	 * @param messageSource the source of labels
 	 */
-	public AbstractViewerTree(TreeModel model, MessageSourceAccessor messageSource) {
+	public AbstractViewerTree(TreeModel model) {
 		super((TreeModel) null);
-		this.messageSource = messageSource;
 		setModel(model);
 		setRootVisible(false);
 		setShowsRootHandles(true);
@@ -42,16 +35,26 @@ public abstract class AbstractViewerTree extends JTree {
 
 	@Override
 	public String convertValueToText(Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
-		if (messageSource != null) {
+		{
+			if (value instanceof I18nMessage) {
+				return ((I18nMessage) value).i18n();
+			}
 			if (value instanceof MessageSourceResolvable) {
-				return messageSource.getMessage((MessageSourceResolvable) value);
+				return getSvarogI18n().getMessage((MessageSourceResolvable) value);
 			}
 			String s = value.toString();
 			if (s != null && s.length() > 0) {
-				return messageSource.getMessage(s);
+				return getSvarogI18n().getMessage(s);
 			}
 		}
 		return super.convertValueToText(value, selected, expanded, leaf, row, hasFocus);
 	}
 
+	/**
+	 * Returns the {@link SvarogAccessI18nImpl} instance.
+	 * @return the {@link SvarogAccessI18nImpl} singleton instance
+	 */
+	protected org.signalml.app.SvarogI18n getSvarogI18n() {
+		return org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance();
+	}
 }

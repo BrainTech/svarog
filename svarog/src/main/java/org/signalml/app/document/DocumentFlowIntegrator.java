@@ -4,6 +4,7 @@
 
 package org.signalml.app.document;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 import java.awt.Window;
 import java.io.File;
@@ -53,7 +54,6 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Integrates the flow of {@link Document documents}.
@@ -79,11 +79,6 @@ import org.springframework.context.support.MessageSourceAccessor;
 public class DocumentFlowIntegrator {
 
 	protected static final Logger logger = Logger.getLogger(DocumentFlowIntegrator.class);
-
-	/**
-	 * the {@link MessageSourceAccessor source} of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
 
 	/**
 	 * the {@link DocumentManager manager} of {@link Document documents} in Svarog
@@ -419,7 +414,7 @@ public class DocumentFlowIntegrator {
 							logger.error("Unsupported class [" + document.getClass().getName() + "]");
 							throw new ClassCastException();
 						}
-						FileFilter[] filters = type.getFileFilters(messageSource);
+						FileFilter[] filters = type.getFileFilters();
 
 						boolean hasFile = false;
 						File file = null;
@@ -487,7 +482,7 @@ public class DocumentFlowIntegrator {
 
 				worker.execute();
 
-				pleaseWaitDialog.setActivity(messageSource.getMessage("activity.savingFile"));
+				pleaseWaitDialog.setActivity(_("saving document"));
 				pleaseWaitDialog.configureForIndeterminateSimulated();
 				pleaseWaitDialog.waitAndShowDialogIn(optionPaneParent, 500, worker);
 
@@ -697,7 +692,7 @@ public class DocumentFlowIntegrator {
 
 			worker.execute();
 
-			pleaseWaitDialog.setActivity(messageSource.getMessage("activity.openingSignalFile"));
+			pleaseWaitDialog.setActivity(_("opening signal"));
 			pleaseWaitDialog.configureForIndeterminateSimulated();
 			pleaseWaitDialog.waitAndShowDialogIn(optionPaneParent, 500, worker);
 
@@ -884,7 +879,7 @@ public class DocumentFlowIntegrator {
 
 				worker.execute();
 
-				pleaseWaitDialog.setActivity(messageSource.getMessage("activity.openingBookFile"));
+				pleaseWaitDialog.setActivity(_("opening book"));
 				pleaseWaitDialog.configureForIndeterminateSimulated();
 				pleaseWaitDialog.waitAndShowDialogIn(optionPaneParent, 500, worker);
 
@@ -973,7 +968,7 @@ public class DocumentFlowIntegrator {
 
 				worker.execute();
 
-				pleaseWaitDialog.setActivity(messageSource.getMessage("activity.openingTagFile"));
+				pleaseWaitDialog.setActivity(_("opening tag"));
 				pleaseWaitDialog.configureForIndeterminateSimulated();
 				pleaseWaitDialog.waitAndShowDialogIn(optionPaneParent, 500, worker);
 
@@ -1335,7 +1330,7 @@ public class DocumentFlowIntegrator {
 
 					checksummer.setPleaseWaitDialog(pleaseWaitDialog);
 
-					pleaseWaitDialog.setActivity(messageSource.getMessage("activity.checksummingSignalFile"));
+					pleaseWaitDialog.setActivity(_("calculating checksum"));
 					if (parent instanceof FileBackedDocument) {
 						File file = ((FileBackedDocument) parent).getBackingFile();
 						pleaseWaitDialog.configureForDeterminate(0, (int) file.length(), (int) checksummer.getBytesProcessed());
@@ -1356,7 +1351,7 @@ public class DocumentFlowIntegrator {
 		checksummer = new SignalChecksumWorker(parent, pleaseWaitDialog, new String[] { "crc32" });
 		checksummer.execute();
 
-		pleaseWaitDialog.setActivity(messageSource.getMessage("activity.checksummingSignalFile"));
+		pleaseWaitDialog.setActivity(_("calculating checksum"));
 		if (parent instanceof FileBackedDocument) {
 			File file = ((FileBackedDocument) parent).getBackingFile();
 			pleaseWaitDialog.configureForDeterminate(0, (int) file.length(), (int) checksummer.getBytesProcessed());
@@ -1687,22 +1682,6 @@ public class DocumentFlowIntegrator {
 
 		return true;
 
-	}
-
-	/**
-	 * Returns the {@link MessageSourceAccessor source} of messages (labels).
-	 * @return the source of messages (labels)
-	 */
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
-	}
-
-	/**
-	 * Sets the {@link MessageSourceAccessor source} of messages (labels).
-	 * @param messageSource the source of messages (labels)
-	 */
-	public void setMessageSource(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
 	}
 
 	/**

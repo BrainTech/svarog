@@ -15,7 +15,7 @@ public interface ApplicationMethodDescriptor {
 
 	Method getMethod();
 
-	String getNameCode();
+	String getName();
 	String getIconPath();
 
 	MethodPresetManager getPresetManager(ApplicationMethodManager methodManager, boolean existingOnly);

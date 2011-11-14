@@ -3,7 +3,7 @@
  */
 package org.signalml.app.view.montage.filters.charts.elements;
 
-import org.springframework.context.support.MessageSourceAccessor;
+import static org.signalml.app.SvarogApplication._;
 
 /**
  * A chart panel used to show the step response of a filter.
@@ -13,12 +13,10 @@ public class StepResponseChartPanel extends TimeDomainResponseChartPanel {
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source capable of resolving localized
-	 * messages
 	 */
-	public StepResponseChartPanel(MessageSourceAccessor messageSource) {
-		super(messageSource);
-		setTitle(messageSource.getMessage("editTimeDomainSampleFilter.stepResponseGrapTitle"));
+	public  StepResponseChartPanel() {
+		super();
+		setTitle(_("Step response [amplitude]"));
 	}
 
 }

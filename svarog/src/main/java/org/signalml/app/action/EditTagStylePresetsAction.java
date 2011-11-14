@@ -1,10 +1,10 @@
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 import org.signalml.app.action.selector.TagStyleFocusSelector;
 import org.signalml.app.model.TagStylePaletteDescriptor;
 import org.signalml.app.view.dialog.TagStylePaletteDialog;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * An action opening the dialog for creating and editing tag styles presets.
@@ -20,14 +20,13 @@ public class EditTagStylePresetsAction extends AbstractFocusableSignalMLAction<T
 
 	/**
 	 * Constructor.
-	 * @param messageSource messageSource to be used for localization.
 	 * @param tagStyleFocusSelector selector determining which tag
 	 * document is now opened
 	 */
-	public EditTagStylePresetsAction(MessageSourceAccessor messageSource, TagStyleFocusSelector tagStyleFocusSelector) {
-		super(messageSource, tagStyleFocusSelector);
-		setText("action.editTagStylePresets");
-		setToolTip("action.editTagStylePresetsToolTip");
+	public  EditTagStylePresetsAction( TagStyleFocusSelector tagStyleFocusSelector) {
+		super( tagStyleFocusSelector);
+		setText(_("Edit tag style templates"));
+		setToolTip(_("Edit tag style templates"));
 		setIconPath("org/signalml/app/icon/palette.png");
 	}
 

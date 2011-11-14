@@ -2,7 +2,6 @@ package org.signalml.app.worker.amplifiers;
 
 import java.util.List;
 import javax.swing.SwingWorker;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Abstract class representing a device discoverer.
@@ -19,18 +18,10 @@ public abstract class AbstractDeviceDiscoverer extends SwingWorker<String, Devic
         public static final String END_OF_SEARCH = "endOfSearch";
         
         /**
-         * The message source.
-         */
-        protected MessageSourceAccessor messageSource;
-
-        /**
          * Default constructor.
          *
-         * @param messageSource {@link #messageSource}
          */
-        public AbstractDeviceDiscoverer(MessageSourceAccessor messageSource) {
-
-                this.messageSource = messageSource;
+        public  AbstractDeviceDiscoverer() {
         }
 
         /**

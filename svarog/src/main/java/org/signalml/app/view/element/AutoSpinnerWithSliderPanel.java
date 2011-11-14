@@ -8,7 +8,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.signalml.util.MinMaxRange;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Panel with two radio buttons, one spinner and one slider.
@@ -38,7 +37,6 @@ public class AutoSpinnerWithSliderPanel extends AutoSpinnerPanel {
 	/**
 	 * Constructor. Sets the source of messages, if this panel should be
 	 * compact (thinner), creates the spinner and initializes this panel.
-	 * @param messageSource the source of messages (labels)
 	 * @param value the value of the spinner
 	 * @param min the minimum value that can be used in spinner
 	 * @param max the maximum value that can be used in spinner
@@ -47,15 +45,14 @@ public class AutoSpinnerWithSliderPanel extends AutoSpinnerPanel {
 	 * @param compact @code true} if this panel should be thinner (60 pixel),
 	 * {@code false} otherwise (150 pixel)
 	 */
-	public AutoSpinnerWithSliderPanel(MessageSourceAccessor messageSource, double value, double min, double max,
+	public  AutoSpinnerWithSliderPanel( double value, double min, double max,
 	                                  double step, boolean compact) {
-		super(messageSource, value, min, max, step, compact);
+		super( value, min, max, step, compact);
 	}
 
 	/**
 	 * Constructor. Sets the source of messages, if this panel should be
 	 * compact (thinner), creates the spinner and initializes this panel.
-	 * @param messageSource the source of messages (labels)
 	 * @param value the value of the spinner
 	 * @param min the minimum value that can be used in spinner
 	 * @param max the maximum value that can be used in spinner
@@ -64,15 +61,14 @@ public class AutoSpinnerWithSliderPanel extends AutoSpinnerPanel {
 	 * @param compact @code true} if this panel should be thinner (60 pixel),
 	 * {@code false} otherwise (150 pixel)
 	 */
-	public AutoSpinnerWithSliderPanel(MessageSourceAccessor messageSource, float value, float min, float max,
+	public  AutoSpinnerWithSliderPanel( float value, float min, float max,
 	                                  float step, boolean compact) {
-		super(messageSource, value, min, max, step, compact);
+		super( value, min, max, step, compact);
 	}
 
 	/**
 	 * Constructor. Sets the source of messages, if this panel should be
 	 * compact (thinner), creates the spinner and initializes this panel.
-	 * @param messageSource the source of messages (labels)
 	 * @param value the value of the spinner
 	 * @param min the minimum value that can be used in spinner
 	 * @param max the maximum value that can be used in spinner
@@ -81,9 +77,9 @@ public class AutoSpinnerWithSliderPanel extends AutoSpinnerPanel {
 	 * @param compact @code true} if this panel should be thinner (60 pixel),
 	 * {@code false} otherwise (150 pixel)
 	 */
-	public AutoSpinnerWithSliderPanel(MessageSourceAccessor messageSource, int value, int min, int max, int step,
+	public  AutoSpinnerWithSliderPanel( int value, int min, int max, int step,
 	                                  boolean compact) {
-		super(messageSource, value, min, max, step, compact);
+		super( value, min, max, step, compact);
 	}
 
 

@@ -13,7 +13,6 @@ import javax.swing.KeyStroke;
 import org.signalml.app.action.selector.TableFocusSelector;
 import org.signalml.app.action.selector.ViewFocusSelector;
 import org.signalml.app.util.IconUtils;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * This is a super-class for all actions in Svarog.
@@ -32,30 +31,10 @@ public abstract class AbstractSignalMLAction extends AbstractAction {
 	static final long serialVersionUID = 1L;
 
 	/**
-	 * the source of messages (labels, names, etc.)
-	 */
-	protected MessageSourceAccessor messageSource;
-
-	/**
-	 * Constructor. Only calls the {@link AbstractAction#AbstractAction()
-	 * constructor} of the superclass.
+	 * Constructor.
 	 */
 	protected AbstractSignalMLAction() {
 		super();
-	}
-
-	/**
-	 * Constructor. Calls the {@link AbstractAction#AbstractAction()
-	 * constructor} of the superclass and sets the source of messages.
-	 * @param messageSource the source of messages (labels, names, etc.)
-	 */
-	public AbstractSignalMLAction(MessageSourceAccessor messageSource) {
-		super();
-		if (messageSource == null) {
-			throw new NullPointerException("No message source");
-		}
-		this.messageSource = messageSource;
-		setEnabledAsNeeded();
 	}
 
 	/**
@@ -85,39 +64,18 @@ public abstract class AbstractSignalMLAction extends AbstractAction {
 
 	/**
 	 * Sets the name of this action.
-	 * @param text the code for the message that is to be used as the name
+	 * @param text the new name
 	 */
-	public void setText(String text) {
-		if (text != null) {
-			putValue(AbstractAction.NAME, messageSource.getMessage(text));
-		} else {
-			putValue(AbstractAction.NAME, null);
-		}
-	}
-
-	/**
-	 * Sets the name of this action.
-	 * @param text the code for the message that is to be used as the name
-	 * @param arguments arguments for the message, or {@code null} if none
-	 */
-	public void setText(String text, Object[] arguments) {
-		if (text != null) {
-			putValue(AbstractAction.NAME, messageSource.getMessage(text, arguments));
-		} else {
-			putValue(AbstractAction.NAME, null);
-		}
+	protected void setText(String text) {
+		putValue(AbstractAction.NAME, text);
 	}
 
 	/**
 	 * Sets the short description (used in tooltip texts) of this action.
-	 * @param toolTip the code for the message that is to be used as short description
+	 * @param toolTip the tooltip text
 	 */
-	public void setToolTip(String toolTip) {
-		if (toolTip != null) {
-			putValue(AbstractAction.SHORT_DESCRIPTION, messageSource.getMessage(toolTip));
-		} else {
-			putValue(AbstractAction.SHORT_DESCRIPTION, null);
-		}
+	protected void setToolTip(String toolTip) {
+		putValue(AbstractAction.SHORT_DESCRIPTION, toolTip);
 	}
 
 	/**
@@ -172,6 +130,14 @@ public abstract class AbstractSignalMLAction extends AbstractAction {
 
 
 		return null;
+	}
+
+	/**
+	 * Returns the {@link SvarogAccessI18nImpl} instance.
+	 * @return the {@link SvarogAccessI18nImpl} singleton instance
+	 */
+	protected org.signalml.app.SvarogI18n getSvarogI18n() {
+		return org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance();
 	}
 
 }

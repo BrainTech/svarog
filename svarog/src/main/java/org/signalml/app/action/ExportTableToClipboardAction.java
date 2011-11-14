@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JTable;
@@ -11,7 +12,6 @@ import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.TableFocusSelector;
 import org.signalml.app.model.TableToTextExporter;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ExportTableToClipboardAction
  *
@@ -26,11 +26,11 @@ public class ExportTableToClipboardAction extends AbstractSignalMLAction {
 
 	private TableToTextExporter tableToTextExporter;
 
-	public ExportTableToClipboardAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
-		setText("action.exportTableToClipboard");
+	public  ExportTableToClipboardAction() {
+		super();
+		setText(_("Copy to clipboard"));
 		setIconPath("org/signalml/app/icon/clipboard.png");
-		setToolTip("action.exportTableToClipboardToolTip");
+		setToolTip(_("Copy contents to clipboard"));
 	}
 
 	@Override

@@ -27,7 +27,7 @@ public class BookToTagMethodConfigurer implements InitializingMethodConfigurer {
 	@Override
 	public void initialize(ApplicationMethodManager manager) {
 		dialogParent = manager.getDialogParent();
-		dialog = new BookToTagMethodDialog(manager.getMessageSource(), dialogParent);
+		dialog = new BookToTagMethodDialog(dialogParent);
 	}
 
 	@Override

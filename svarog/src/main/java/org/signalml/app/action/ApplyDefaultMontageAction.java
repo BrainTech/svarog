@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
@@ -11,7 +12,6 @@ import org.signalml.app.action.selector.MontageFocusSelector;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.domain.montage.Montage;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ApplyDefaultMontageAction
  *
@@ -24,11 +24,11 @@ public class ApplyDefaultMontageAction extends AbstractFocusableSignalMLAction<M
 
 	protected static final Logger logger = Logger.getLogger(ApplyDefaultMontageAction.class);
 
-	public ApplyDefaultMontageAction(MessageSourceAccessor messageSource, MontageFocusSelector montageFocusSelector) {
-		super(messageSource, montageFocusSelector);
-		setText("action.applyDefaultMontage");
+	public  ApplyDefaultMontageAction( MontageFocusSelector montageFocusSelector) {
+		super( montageFocusSelector);
+		setText(_("Default montage"));
 		setIconPath("org/signalml/app/icon/defaultmontage.png");
-		setToolTip("action.applyDefaultMontageToolTip");
+		setToolTip(_("Apply default montage"));
 	}
 
 	@Override

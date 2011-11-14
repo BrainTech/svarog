@@ -36,7 +36,8 @@ import org.signalml.plugin.export.view.ExportedSignalPlot;
 import org.signalml.plugin.fft.export.FourierTransform;
 import org.signalml.plugin.fft.export.WindowType;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
+import static org.signalml.plugin.fftsignaltool.FFTSignalTool._;
+import static org.signalml.plugin.fftsignaltool.FFTSignalTool._R;
 
 /**
  * Plot on which the power spectrum of the signal (fragment near cursor) is
@@ -201,17 +202,10 @@ public class SignalFFTPlot extends JComponent {
 	private String error;
 
 	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
-
-	/**
 	 * Constructor. Sets the source of messages, title font and border.
-	 * @param messageSource the source of messages (labels)
 	 */
-	public SignalFFTPlot(MessageSourceAccessor messageSource) {
+	public  SignalFFTPlot() {
 		super();
-		this.messageSource = messageSource;
 		setBorder(new LineBorder(Color.LIGHT_GRAY, 3, false));
 		titleFont = new Font(Font.DIALOG, Font.PLAIN, 12);
 	}
@@ -238,11 +232,11 @@ public class SignalFFTPlot extends JComponent {
 		int firstSample = (int) Math.floor((focusPoint.x / timeZoomFactor)
 				- windowWidth / 2);
 		if (firstSample < 0) {
-			error = messageSource.getMessage("fft.notEnoughSignalPoints");
+			error = _("Not enough signal points");
 		}
 		int lastSample = firstSample + windowWidth;
 		if (lastSample >= plot.getMaxSampleCount()) {
-			error = messageSource.getMessage("fft.notEnoughSignalPoints");
+			error = _("Not enough signal points");
 		}
 		if (error != null) {
 			return;
@@ -334,15 +328,11 @@ public class SignalFFTPlot extends JComponent {
 		StringBuilder maxTimeSb = new StringBuilder(20);
 		Util.addTime(maxTime, maxTimeSb);
 
-		String title = messageSource.getMessage("fft.chartTitle",
-				new Object[] { new Integer(windowWidth), minTimeSb.toString(),
-						maxTimeSb.toString(), channelSamples.getName() });
+		String title = _R("FFT over {0} points {1} - {2} ({3})",
+				  windowWidth, minTimeSb.toString(),
+				  maxTimeSb.toString(), channelSamples.getName());
 
-		if (titleVisible) {
-			powerSpectrumChart.setTitle(new TextTitle(title, titleFont));
-		} else {
-			powerSpectrumChart.setTitle((String) null);
-		}
+		powerSpectrumChart.setTitle(titleVisible ? new TextTitle(title, titleFont) : null);
 		powerSpectrumChart.setAntiAlias(antialias);
 
 		int startIndex = LEFT_CUTOFF;
@@ -392,16 +382,10 @@ public class SignalFFTPlot extends JComponent {
 
 		double max = 0;
 		double min = Double.MAX_VALUE;
-
 		for (int i = startIndex; i < endIndex; i++) {
-			if (max < powerSpectrum[1][i]) {
-				max = powerSpectrum[1][i];
-			}
-			if (min > powerSpectrum[1][i]) {
-				min = powerSpectrum[1][i];
-			}
+			max = Math.max(max, powerSpectrum[1][i]);
+			min = Math.min(min, powerSpectrum[1][i]);
 		}
-
 		max *= 1.15; // scale up by 15% as per ZFB request (related to spline
 						// overshooting points).
 

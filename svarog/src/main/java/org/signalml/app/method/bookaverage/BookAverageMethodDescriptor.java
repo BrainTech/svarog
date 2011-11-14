@@ -4,6 +4,7 @@
 
 package org.signalml.app.method.bookaverage;
 
+import static org.signalml.app.SvarogApplication._;
 import org.signalml.app.method.ApplicationMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.MethodPresetManager;
@@ -16,7 +17,7 @@ import org.signalml.method.bookaverage.BookAverageMethod;
  */
 public class BookAverageMethodDescriptor implements ApplicationMethodDescriptor {
 
-	public static final String RUN_METHOD_STRING = "bookAverageMethod.runMethodString";
+	public static final String RUN_METHOD_STRING = _("Average books");
 	public static final String ICON_PATH = "org/signalml/app/icon/runmethod.png";
 
 	private BookAverageMethod method;
@@ -33,7 +34,7 @@ public class BookAverageMethodDescriptor implements ApplicationMethodDescriptor 
 	}
 
 	@Override
-	public String getNameCode() {
+	public String getName() {
 		return RUN_METHOD_STRING;
 	}
 
@@ -61,7 +62,6 @@ public class BookAverageMethodDescriptor implements ApplicationMethodDescriptor 
 	public BookAverageMethodConsumer getConsumer(ApplicationMethodManager methodManager) {
 		if (consumer == null) {
 			consumer = new BookAverageMethodConsumer();
-			consumer.setMessageSource(methodManager.getMessageSource());
 		}
 		return consumer;
 	}

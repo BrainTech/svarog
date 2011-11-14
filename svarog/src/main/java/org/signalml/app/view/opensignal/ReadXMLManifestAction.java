@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.opensignal;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +23,6 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.util.Util;
 
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * The actions which {@link RawSignalDescriptorReader#readDocument(File)
@@ -50,8 +50,6 @@ public class ReadXMLManifestAction extends AbstractSignalMLAction {
 	 */
 	private EmbeddedFileChooser signalFileChooser;
 
-	private MessageSourceAccessor messageSource;
-
 	private ApplicationConfiguration applicationConfig;
 
 	public void setApplicationConfiguration(ApplicationConfiguration applicationConfig){
@@ -60,19 +58,18 @@ public class ReadXMLManifestAction extends AbstractSignalMLAction {
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source capable of resolving localized messages
 	 * @param parentSignalParametersPanel the signal parameters panel which
 	 * should be filled after calling this action.
 	 */
-	public ReadXMLManifestAction(MessageSourceAccessor messageSource,
+	public ReadXMLManifestAction(
 		SignalParametersPanelForRawSignalFile parentSignalParametersPanel) {
-		super(messageSource);
-		this.messageSource = messageSource;
-		this.setText("openSignal.options.raw.readXMLManifest");
+
+		super();
+		this.setText(_("Read manifest..."));
 		this.parentSignalParametersPanel = parentSignalParametersPanel;
 
 		putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/script_load.png"));
-		putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("openSignal.options.raw.readXMLManifestToolTip"));
+		putValue(AbstractAction.SHORT_DESCRIPTION,_("Read signal parameters from XML manifest"));
 	}
 
 	/**
@@ -111,7 +108,7 @@ public class ReadXMLManifestAction extends AbstractSignalMLAction {
 		if(applicationConfig == null)
 			fileChooser = new JFileChooser();
 		else		
-			fileChooser = new EmbeddedFileChooser(messageSource, applicationConfig);
+			fileChooser = new EmbeddedFileChooser(applicationConfig);
 		fileChooser.setCurrentDirectory(directory);
 		fileChooser.setSelectedFile(fileSuggestion);
 		fileChooser.showOpenDialog(parentSignalParametersPanel);
@@ -130,8 +127,8 @@ public class ReadXMLManifestAction extends AbstractSignalMLAction {
 
                         if (rawSignalDescriptor.isBackup())
                         {
-                                String msg = messageSource.getMessage("openSignal.options.raw.backup");
-                                String title = messageSource.getMessage("warning");
+                                String msg = _("The signal you are about to load is only a backup!");
+                                String title = _("Warning!");
                                 JOptionPane.showMessageDialog(null, msg, title, JOptionPane.WARNING_MESSAGE);
                         }
 

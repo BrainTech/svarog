@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -23,7 +24,6 @@ import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.domain.tag.LegacyTagImporter;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ImportTagAction
  *
@@ -42,10 +42,10 @@ public class ImportTagAction extends AbstractFocusableSignalMLAction<SignalDocum
 	private ViewerFileChooser fileChooser;
 	private Component optionPaneParent;
 
-	public ImportTagAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
-		super(messageSource, signalDocumentFocusSelector);
-		setText("action.importTag");
-		setToolTip("action.importTagToolTip");
+	public  ImportTagAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
+		super( signalDocumentFocusSelector);
+		setText(_("Import Legacy Tag..."));
+		setToolTip(_("Import a tag in legacy format"));
 	}
 
 	@Override

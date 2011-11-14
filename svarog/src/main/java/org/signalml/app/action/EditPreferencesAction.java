@@ -3,13 +3,13 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.config.ApplicationConfiguration;
-import org.signalml.plugin.export.view.AbstractDialog;
+import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** EditPreferencesAction
  *
@@ -25,10 +25,10 @@ public class EditPreferencesAction extends AbstractSignalMLAction {
 	private AbstractDialog preferencesDialog;
 	private ApplicationConfiguration config;
 
-	public EditPreferencesAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
-		setText("action.editPreferences");
-		setToolTip("action.editPreferencesToolTip");
+	public  EditPreferencesAction() {
+		super();
+		setText(_("Preferences..."));
+		setToolTip(_("Edit preferences"));
 	}
 
 	@Override

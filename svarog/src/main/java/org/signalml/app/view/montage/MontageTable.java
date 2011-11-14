@@ -22,7 +22,6 @@ import org.signalml.app.view.element.GrayTableCellRenderer;
 import org.signalml.app.view.montage.dnd.MontageTableTransferHandler;
 import org.signalml.domain.montage.MontageChannel;
 import org.signalml.domain.montage.SourceChannel;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * The table which allows to edit the labels and the order (the indexes) of
@@ -77,11 +76,10 @@ public class MontageTable extends JTable {
 	 * The order (and the indexes) of the channels can be changed with
 	 * drag and drop.
 	 * @param model the {@link MontageTableModel model} for this table
-	 * @param messageSource the source of messages (labels)
 	 * @param simplified <code>true</code> if the index column should be
 	 * omitted, <code>false</code> otherwise
 	 */
-	public MontageTable(MontageTableModel model, MessageSourceAccessor messageSource, boolean simplified) {
+	public MontageTable(MontageTableModel model, boolean simplified) {
 		super(model, (TableColumnModel) null);
 
 		DefaultTableColumnModel columnModel = new DefaultTableColumnModel();
@@ -90,8 +88,6 @@ public class MontageTable extends JTable {
 		TableColumn tc;
 
 		GrayTableCellRenderer grayIneditableTableCellRenderer = new GrayTableCellRenderer();
-		ChannelTableCellRenderer channelTableCellRenderer = new ChannelTableCellRenderer();
-		channelTableCellRenderer.setMessageSource(messageSource);
 
 		if (simplified) {
 			tc = new TableColumn(MontageTableModel.PRIMARY_LABEL_COLUMN, 80);

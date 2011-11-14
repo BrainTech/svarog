@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 
 import javax.swing.BorderFactory;
@@ -12,7 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 import org.signalml.plugin.export.signal.SignalSelectionType;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Panel which allows to select the {@link SignalSelectionType type} of
@@ -28,11 +28,6 @@ public class SignalSelectionTypePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
-	
 	/**
 	 * the radio button which tells that page selection should be used
 	 * (the selection that contains whole pages)
@@ -56,12 +51,10 @@ public class SignalSelectionTypePanel extends JPanel {
 	private ButtonGroup radioGroup;
 
 	/**
-	 * Constructor. Sets the source of messages and initializes this panel.
-	 * @param messageSource the source of messages
+	 * Constructor. Initializes the panel.
 	 */
-	public SignalSelectionTypePanel(MessageSourceAccessor messageSource) {
+	public  SignalSelectionTypePanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -78,7 +71,7 @@ public class SignalSelectionTypePanel extends JPanel {
 	 */
 	private void initialize() {
 
-		setBorder(BorderFactory.createTitledBorder(messageSource.getMessage("signalSelection.selectionType")));
+		setBorder(BorderFactory.createTitledBorder(_("Selection type")));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		radioGroup = new ButtonGroup();
@@ -100,7 +93,7 @@ public class SignalSelectionTypePanel extends JPanel {
 	public JRadioButton getPageRadio() {
 		if (pageRadio == null) {
 			pageRadio = new JRadioButton();
-			pageRadio.setText(messageSource.getMessage("signalSelection.pageSelection"));
+			pageRadio.setText(_("Page selection"));
 			pageRadio.setAlignmentX(Component.LEFT_ALIGNMENT);
 			radioGroup.add(pageRadio);
 		}
@@ -116,7 +109,7 @@ public class SignalSelectionTypePanel extends JPanel {
 	public JRadioButton getBlockRadio() {
 		if (blockRadio == null) {
 			blockRadio = new JRadioButton();
-			blockRadio.setText(messageSource.getMessage("signalSelection.blockSelection"));
+			blockRadio.setText(_("Block selection"));
 			blockRadio.setAlignmentX(Component.LEFT_ALIGNMENT);
 			radioGroup.add(blockRadio);
 		}
@@ -133,7 +126,7 @@ public class SignalSelectionTypePanel extends JPanel {
 	public JRadioButton getChannelRadio() {
 		if (channelRadio == null) {
 			channelRadio = new JRadioButton();
-			channelRadio.setText(messageSource.getMessage("signalSelection.channelSelection"));
+			channelRadio.setText(_("Free (channel) selection"));
 			channelRadio.setAlignmentX(Component.LEFT_ALIGNMENT);
 			radioGroup.add(channelRadio);
 		}

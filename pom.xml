@@ -46,6 +46,12 @@
 			<name>Apache Commons</name>
 			<url>http://mirrors.ibiblio.org/pub/mirrors/maven2</url>
 		</repository>
+
+		<repository>
+			<id>gettext-commons</id>
+			<name>gettext-commons</name>
+			<url>http://gettext-commons.googlecode.com/svn/maven-repository/</url>
+		</repository>
 	</repositories>
 
 	<pluginRepositories>
@@ -57,6 +63,10 @@
 			<id>signalml.org</id>
 			<name>SignalML Maven Repository</name>
 			<url>http://signalml.org/maven/repository</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>gettext-commons</id>
+			<url>http://gettext-commons.googlecode.com/svn/maven-repository/</url>
 		</pluginRepository>
 	</pluginRepositories>
 
@@ -343,6 +353,28 @@
 						<target>${project.jdk_version}</target>
 						<encoding>${project.build.sourceEncoding}</encoding>
 					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.xnap.commons</groupId>
+					<artifactId>maven-gettext-plugin</artifactId>
+					<version>1.2.3</version>
+					<configuration>
+						<keywords>
+							--keyword=_:1 --keyword=_R:1 --keyword=N_:1,2 --keyword=N_R:1,2 --keyword=translate:3 --keyword=translateR:3 --keyword=translateN:3,4 --keyword=translateNR:3,4 --package-name=${project.artifactId} --foreign-user --sort-output
+						</keywords>
+					</configuration>
+
+					<executions>
+						<execution>
+							<id>gettext-dist</id>
+							<phase>generate-resources</phase>
+							<goals>
+								<goal>dist</goal>
+							</goals>
+							<inherited>false</inherited>
+						</execution>
+					</executions>
 				</plugin>
 			</plugins>
 		</pluginManagement>

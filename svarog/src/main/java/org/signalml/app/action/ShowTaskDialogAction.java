@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
@@ -10,7 +11,6 @@ import org.signalml.app.action.selector.TaskFocusSelector;
 import org.signalml.app.task.ApplicationTaskManager;
 import org.signalml.app.view.dialog.TaskStatusDialog;
 import org.signalml.task.Task;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ShowTaskDialogAction
  *
@@ -25,11 +25,11 @@ public class ShowTaskDialogAction extends AbstractFocusableSignalMLAction<TaskFo
 
 	private ApplicationTaskManager taskManager;
 
-	public ShowTaskDialogAction(MessageSourceAccessor messageSource, TaskFocusSelector taskFocusSelector) {
-		super(messageSource, taskFocusSelector);
-		setText("action.showTaskDialog");
+	public  ShowTaskDialogAction( TaskFocusSelector taskFocusSelector) {
+		super( taskFocusSelector);
+		setText(_("Show dialog"));
 		setIconPath("org/signalml/app/icon/running.png");
-		setToolTip("action.showTaskDialogToolTip");
+		setToolTip(_("Show the status dialog"));
 	}
 
 	@Override

@@ -1,12 +1,12 @@
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 import org.apache.log4j.Logger;
 
 import org.signalml.app.view.monitor.AmplifierDefinitionConfigDialog;
 import org.signalml.app.worker.amplifiers.AmplifierDefinition;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Opens {@link AmplifierDefinitionConfigDialog}.
@@ -28,13 +28,12 @@ public class AmplifierDefinitionConfigAction extends AbstractSignalMLAction {
         /**
          * Constructor sets text and tooltip.
          *
-         * @param messageSource the message source
          */
-        public AmplifierDefinitionConfigAction(MessageSourceAccessor messageSource) {
+        public  AmplifierDefinitionConfigAction() {
                 
-                super(messageSource);
-                setText("action.amplifierDefinitionConfig");
-                setToolTip("action.amplifierDefinitionConfigToolTip");
+                super();
+                setText(_("Amplifier definition config"));
+                setToolTip(_("Allows to change the amplifier definition config"));
         }
 
         /**

@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 
@@ -12,7 +13,6 @@ import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.method.SuspendableMethod;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.task.Task;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** SuspendAllTasksAction
  *
@@ -28,11 +28,11 @@ public class SuspendAllTasksAction extends AbstractSignalMLAction {
 	private ApplicationTaskManager taskManager;
 	private Component optionPaneParent;
 
-	public SuspendAllTasksAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
-		setText("action.suspendAllTasks");
+	public  SuspendAllTasksAction() {
+		super();
+		setText(_("Suspend all tasks"));
 		setIconPath("org/signalml/app/icon/suspendall.png");
-		setToolTip("action.suspendAllTasksToolTip");
+		setToolTip(_("Suspend all suspendable tasks"));
 	}
 
 	@Override

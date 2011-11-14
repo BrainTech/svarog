@@ -10,7 +10,6 @@ import org.signalml.domain.signal.raw.RawSignalSampleType;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Signal parameters panel adapted to the needs of the open openBCI signal panel.
@@ -21,11 +20,10 @@ public class SignalParametersPanelForOpenBCI extends AbstractSignalParametersPan
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source capable of resolving localized messages
 	 * @param applicationConfiguration the configuration to be used
 	 */
-	public SignalParametersPanelForOpenBCI(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  SignalParametersPanelForOpenBCI() {
+		super();
 		getSamplingFrequencyComboBox().setEditable(true);
 
 		setEnabledAll(true);

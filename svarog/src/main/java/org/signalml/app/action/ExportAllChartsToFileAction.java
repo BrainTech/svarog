@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -22,7 +23,6 @@ import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ExportAllChartsToFileAction
  *
@@ -38,11 +38,11 @@ public abstract class ExportAllChartsToFileAction extends AbstractSignalMLAction
 	private ViewerFileChooser fileChooser;
 	private Component optionPaneParent;
 
-	public ExportAllChartsToFileAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
-		setText("action.exportAllChartsToFile");
+	public  ExportAllChartsToFileAction() {
+		super();
+		setText(_("Save all charts as one PNG file"));
 		setIconPath("org/signalml/app/icon/picture_save.png");
-		setToolTip("action.exportAllChartsToFileToolTip");
+		setToolTip(_("Save all charts as one PNG file"));
 	}
 
 	protected abstract int getChartCount();

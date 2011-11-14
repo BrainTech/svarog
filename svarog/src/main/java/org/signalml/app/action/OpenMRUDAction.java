@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -15,7 +16,6 @@ import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.MRUDEntry;
 import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** OpenMRUDAction
  *
@@ -30,11 +30,11 @@ public class OpenMRUDAction extends AbstractFocusableSignalMLAction<MRUDFocusSel
 
 	private DocumentFlowIntegrator documentFlowIntegrator;
 
-	public OpenMRUDAction(MessageSourceAccessor messageSource, MRUDFocusSelector mrudFocusSelector) {
-		super(messageSource, mrudFocusSelector);
-		setText("action.openMRUD");
+	public  OpenMRUDAction( MRUDFocusSelector mrudFocusSelector) {
+		super( mrudFocusSelector);
+		setText(_("Open"));
 		setIconPath("org/signalml/app/icon/fileopen.png");
-		setToolTip("action.openMRUDToolTip");
+		setToolTip(_("Open recently used document"));
 	}
 
 	@Override

@@ -26,7 +26,8 @@ import org.apache.log4j.Logger;
 import org.jfree.chart.renderer.xy.XYSplineRenderer;
 import org.signalml.plugin.fft.export.WindowType;
 import org.signalml.plugin.fftsignaltool.SignalFFTSettings;
-import org.springframework.context.support.MessageSourceAccessor;
+import static org.signalml.plugin.fftsignaltool.FFTSignalTool._;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -72,11 +73,6 @@ public class SignalFFTSettingsPanel extends JPanel {
 	 */
 	protected static final Logger logger = Logger
 			.getLogger(SignalFFTSettingsPanel.class);
-
-	/**
-	 * the {@link MessageSourceAccessor source} of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
 
 	/**
 	 * the array with possible sizes of FFT window (number of samples)
@@ -215,19 +211,16 @@ public class SignalFFTSettingsPanel extends JPanel {
 	private boolean hasCloseCross;
 
 	/**
-	 * Constructor. Sets the {@link MessageSourceAccessor message source} and
+	 * Constructor. Sets the {@link SvarogAccessI18n message source} and
 	 * initializes this panel.
 	 * 
-	 * @param messageSource
-	 *            the source of messages (labels)
 	 * @param hasCloseCross
 	 *            {@code true} if the panel should has a cross which closes it,
 	 *            {@code false} otherwise
 	 */
-	public SignalFFTSettingsPanel(MessageSourceAccessor messageSource,
+	public  SignalFFTSettingsPanel(
 			boolean hasCloseCross) {
 		super();
-		this.messageSource = messageSource;
 		this.hasCloseCross = hasCloseCross;
 		initialize();
 	}
@@ -273,7 +266,7 @@ public class SignalFFTSettingsPanel extends JPanel {
 		JPanel windowWidthPanel = new JPanel(new GridLayout(3, 3, 3, 3));
 
 		CompoundBorder border = new CompoundBorder(new TitledCrossBorder(
-				messageSource.getMessage("signalFFTSettings.windowWidthTitle"),
+				_("FFT window width"),
 				hasCloseCross), new EmptyBorder(3, 3, 3, 3));
 		windowWidthPanel.setBorder(border);
 
@@ -302,7 +295,7 @@ public class SignalFFTSettingsPanel extends JPanel {
 		windowWidthRadioButtons[0].setSelected(true);
 
 		customWindowWidthRadioButton = new JRadioButton(
-				messageSource.getMessage("signalFFTSettings.customWindowWidth"));
+				_("Custom"));
 		windowWidthButtonGroup.add(customWindowWidthRadioButton);
 		windowWidthPanel.add(customWindowWidthRadioButton);
 
@@ -337,13 +330,12 @@ public class SignalFFTSettingsPanel extends JPanel {
 		JPanel fftViewPanel = new JPanel(new GridLayout(2, 2, 3, 3));
 		{
 			border = new CompoundBorder(
-					new TitledBorder(messageSource
-							.getMessage("signalFFTSettings.fftViewTitle")),
+					new TitledBorder(_("FFT view")),
 					new EmptyBorder(3, 3, 3, 3));
 			fftViewPanel.setBorder(border);
 
 			JLabel label = new JLabel(
-					messageSource.getMessage("signalFFTSettings.fftViewRange"));
+					_("Show fq range [Hz]"));
 			fftViewPanel.add(label);
 
 			InputVerifier intInputVerifier = new InputVerifier() {
@@ -357,16 +349,14 @@ public class SignalFFTSettingsPanel extends JPanel {
 							JOptionPane
 									.showMessageDialog(
 											input.getParent(),
-											messageSource
-													.getMessage("signalFFTSettings.fftPositiveIntegerRequired"));
+											_("Positive integer required"));
 							return false;
 						}
 					} catch (NumberFormatException nfe) {
 						JOptionPane
 								.showMessageDialog(
 										input.getParent(),
-										messageSource
-												.getMessage("signalFFTSettings.fftPositiveIntegerRequired"));
+										_("Positive integer required"));
 						return false;
 					}
 				}
@@ -387,8 +377,7 @@ public class SignalFFTSettingsPanel extends JPanel {
 			JPanel countPanel = new JPanel();
 
 			label = new JLabel(
-					messageSource
-							.getMessage("signalFFTSettings.fftViewLabelCountTitle"));
+					_("X-axis label count"));
 			countPanel.add(label);
 
 			maxLabelCountTextField = new JTextField();
@@ -398,8 +387,7 @@ public class SignalFFTSettingsPanel extends JPanel {
 			fftViewPanel.add(countPanel);
 
 			scaleToFFTViewCheckBox = new JCheckBox(
-					messageSource
-							.getMessage("signalFFTSettings.fftAutoScaleToView"));
+					_("Scale Y-axis to view"));
 			fftViewPanel.add(scaleToFFTViewCheckBox);
 
 		}
@@ -407,7 +395,7 @@ public class SignalFFTSettingsPanel extends JPanel {
 		JPanel plotWidthPanel = new JPanel(new GridLayout(1, 4, 3, 3));
 
 		border = new CompoundBorder(new TitledBorder(
-				messageSource.getMessage("signalFFTSettings.plotWidthTitle")),
+				_("Plot window width")),
 				new EmptyBorder(3, 3, 3, 3));
 		plotWidthPanel.setBorder(border);
 
@@ -427,7 +415,7 @@ public class SignalFFTSettingsPanel extends JPanel {
 		JPanel plotHeightPanel = new JPanel(new GridLayout(1, 4, 3, 3));
 
 		border = new CompoundBorder(new TitledBorder(
-				messageSource.getMessage("signalFFTSettings.plotHeightTitle")),
+				_("Plot window height")),
 				new EmptyBorder(3, 3, 3, 3));
 		plotHeightPanel.setBorder(border);
 
@@ -442,31 +430,29 @@ public class SignalFFTSettingsPanel extends JPanel {
 
 		plotHeightRadioButtons[0].setSelected(true);
 
-		fftWindowTypePanel = new FFTWindowTypePanel(messageSource, false);
+		fftWindowTypePanel = new FFTWindowTypePanel( false);
 
 		JPanel optionsPanel = new JPanel(new GridLayout(4, 2, 3, 3));
 
 		border = new CompoundBorder(new TitledBorder(
-				messageSource.getMessage("signalFFTSettings.optionsTitle")),
+				_("Options")),
 				new EmptyBorder(3, 3, 3, 3));
 		optionsPanel.setBorder(border);
 
 		channelSwitchingCheckBox = new JCheckBox(
-				messageSource.getMessage("signalFFTSettings.channelSwitching"));
+				_("Sticky channel"));
 		logarithmicCheckBox = new JCheckBox(
-				messageSource.getMessage("signalFFTSettings.logarithmic"));
+				_("Logarithmic"));
 		antialiasCheckBox = new JCheckBox(
-				messageSource.getMessage("signalFFTSettings.antialias"));
+				_("Antialias"));
 		splineCheckBox = new JCheckBox(
-				messageSource.getMessage("signalFFTSettings.spline"));
+				_("Use splines (experimental)"));
 		titleVisibleCheckBox = new JCheckBox(
-				messageSource.getMessage("signalFFTSettings.titleVisible"));
+				_("Title"));
 		frequencyAxisLabelsVisibleCheckBox = new JCheckBox(
-				messageSource
-						.getMessage("signalFFTSettings.frequencyAxisLabelsVisible"));
+				_("Freq. lables"));
 		powerAxisLabelsVisibleCheckBox = new JCheckBox(
-				messageSource
-						.getMessage("signalFFTSettings.powerAxisLabelsVisible"));
+				_("Power labels"));
 
 		optionsPanel.add(channelSwitchingCheckBox);
 		optionsPanel.add(logarithmicCheckBox);

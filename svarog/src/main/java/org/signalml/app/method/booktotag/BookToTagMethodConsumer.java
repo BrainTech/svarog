@@ -18,7 +18,6 @@ import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.method.Method;
 import org.signalml.method.booktotag.BookToTagResult;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** BookToTagMethodConsumer
  *
@@ -29,15 +28,11 @@ public class BookToTagMethodConsumer implements InitializingMethodResultConsumer
 
 	protected static final Logger logger = Logger.getLogger(BookToTagMethodConsumer.class);
 
-	private MessageSourceAccessor messageSource;
-
 	private Window dialogParent;
 	private ViewerFileChooser fileChooser;
 
 	@Override
 	public void initialize(ApplicationMethodManager manager) {
-
-		messageSource = manager.getMessageSource();
 		dialogParent = manager.getDialogParent();
 		fileChooser = manager.getFileChooser();
 
@@ -93,9 +88,4 @@ public class BookToTagMethodConsumer implements InitializingMethodResultConsumer
 		return true;
 
 	}
-
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
-	}
-
 }

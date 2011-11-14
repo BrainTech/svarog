@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.opensignal;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,7 +14,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import org.signalml.app.view.element.TitledPanelWithABorder;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * A panel for selecting a signal source type (file/openBCI/amplifier).
@@ -33,22 +33,14 @@ public class SignalSourceSelectionPanel extends TitledPanelWithABorder implement
 	private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
 	/**
-	 * Message source capable of resolving localized messages.
-	 */
-	private MessageSourceAccessor messageSource;
-
-	/**
 	 * A combo box for selecting the signal source.
 	 */
 	private JComboBox selectionComboBox;
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source capable of resolving localized
-	 * messages.
 	 */
-	public SignalSourceSelectionPanel(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
+	public  SignalSourceSelectionPanel() {
 		createInterface();
 	}
 
@@ -57,7 +49,7 @@ public class SignalSourceSelectionPanel extends TitledPanelWithABorder implement
 	 * @return the title for this panel
 	 */
 	protected String getTitle() {
-		return messageSource.getMessage("opensignal.signalSourceSelectionPanel.title");
+		return _("Select signal source");
 	}
 
 	/**
@@ -67,7 +59,7 @@ public class SignalSourceSelectionPanel extends TitledPanelWithABorder implement
 		this.setLayout(new BorderLayout());
 		JPanel selectionPanel = new JPanel(new BorderLayout());
 
-		JLabel label = new JLabel(messageSource.getMessage("opensignal.signalSourceSelectionPanel.label"));
+		JLabel label = new JLabel(_("Signal source"));
 
 		selectionPanel.add(label, BorderLayout.CENTER);
 		selectionPanel.add(getSelectionComboBox(), BorderLayout.EAST);

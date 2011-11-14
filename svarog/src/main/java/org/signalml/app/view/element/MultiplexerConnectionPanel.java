@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -37,7 +38,6 @@ import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.dialog.OpenMonitorDialog;
 import org.signalml.app.worker.WorkerResult;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  *
@@ -79,10 +79,6 @@ public class MultiplexerConnectionPanel extends JPanel {
 		initialize();
 	}
 
-	protected MessageSourceAccessor getMessageSource() {
-		return elementManager.getMessageSource();
-	}
-
 	/**
 	 * This method initializes components used in this panel.
 	 */
@@ -91,7 +87,7 @@ public class MultiplexerConnectionPanel extends JPanel {
 		setLayout(new BorderLayout());
 
 		CompoundBorder border = new CompoundBorder(
-			new TitledBorder(getMessageSource().getMessage("openMonitor.multiplexerConnectionPanelTitle")),
+			new TitledBorder(_("Connect to the multiplexer")),
 			new EmptyBorder(3, 3, 3, 3));
 		setBorder(border);
 
@@ -105,8 +101,8 @@ public class MultiplexerConnectionPanel extends JPanel {
  
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 		
-		JLabel multiplexerAddressLabel = new JLabel( getMessageSource().getMessage( "openMonitor.multiplexerAddressLabel"));
-		JLabel multiplexerPortLabel = new JLabel( getMessageSource().getMessage("openMonitor.multiplexerPortLabel"));
+		JLabel multiplexerAddressLabel = new JLabel(_("Multiplexer address"));
+		JLabel multiplexerPortLabel = new JLabel(_("Multiplexer port"));
 
 		hGroup.addGroup(layout.createParallelGroup()
 				 .addComponent(multiplexerAddressLabel)
@@ -295,7 +291,7 @@ public class MultiplexerConnectionPanel extends JPanel {
 	 */
 	public JButton getResetToDefaultsButton() {
 		if (resetToDefaultsButton == null) {
-			resetToDefaultsButton = new JButton(new AbstractAction(getMessageSource().getMessage("action.resetToDefaults.actionName")) {
+			resetToDefaultsButton = new JButton(new AbstractAction(_("Reset to defaults")) {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {

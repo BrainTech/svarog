@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Dimension;
 import java.awt.Font;
 
@@ -15,7 +16,6 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout.ParallelGroup;
 import javax.swing.border.EmptyBorder;
 
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Panel which allows to select the parameters of the channel (custom)
@@ -32,11 +32,6 @@ import org.springframework.context.support.MessageSourceAccessor;
 public class ChannelSignalSelectionPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
 
 	/**
 	 * the spinner with the point in time (seconds) where the selection starts
@@ -59,14 +54,12 @@ public class ChannelSignalSelectionPanel extends JPanel {
 	private boolean withChannelSelection;
 
 	/**
-	 * Constructor. Sets the source of messages and initializes this panel.
-	 * @param messageSource the source of messages
+	 * Constructor. Initializes the panel.
 	 * @param withChannelSelection {@code true} if this panel should allow to
 	 * select a channel, {@code false} otherwise
 	 */
-	public ChannelSignalSelectionPanel(MessageSourceAccessor messageSource, boolean withChannelSelection) {
+	public  ChannelSignalSelectionPanel( boolean withChannelSelection) {
 		super();
-		this.messageSource = messageSource;
 		this.withChannelSelection = withChannelSelection;
 		initialize();
 	}
@@ -97,9 +90,9 @@ public class ChannelSignalSelectionPanel extends JPanel {
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
-		JLabel channelLabel = new JLabel(messageSource.getMessage("signalSelection.channel"));
-		JLabel startTimeLabel = new JLabel(messageSource.getMessage("signalSelection.startTime"));
-		JLabel lengthLabel = new JLabel(messageSource.getMessage("signalSelection.lengthSeconds"));
+		JLabel channelLabel = new JLabel(_("Channel"));
+		JLabel startTimeLabel = new JLabel(_("Start time"));
+		JLabel lengthLabel = new JLabel(_("Length (seconds)"));
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 

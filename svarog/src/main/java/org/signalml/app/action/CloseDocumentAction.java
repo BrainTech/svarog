@@ -3,20 +3,13 @@
  */
 package org.signalml.app.action;
 
-import java.awt.Window;
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.DocumentFocusSelector;
 import org.signalml.app.document.DocumentFlowIntegrator;
-import org.signalml.app.document.MonitorSignalDocument;
-import org.signalml.app.view.dialog.ErrorsDialog;
-import org.signalml.app.view.opensignal.SignalSource;
-import org.signalml.app.worker.processes.ProcessManager;
-import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Document;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** CloseDocumentAction
  *
@@ -31,11 +24,11 @@ public class CloseDocumentAction extends AbstractFocusableSignalMLAction<Documen
 
 	private DocumentFlowIntegrator documentFlowIntegrator;
 
-	public CloseDocumentAction(MessageSourceAccessor messageSource, DocumentFocusSelector documentFocusSelector) {
-		super(messageSource, documentFocusSelector);
-		setText("action.closeDocument");
+	public  CloseDocumentAction( DocumentFocusSelector documentFocusSelector) {
+		super( documentFocusSelector);
+		setText(_("Close"));
 		setIconPath("org/signalml/app/icon/fileclose.png");
-		setToolTip("action.closeDocumentToolTip");
+		setToolTip(_("Close the active document"));
 	}
 
 	@Override
@@ -53,7 +46,9 @@ public class CloseDocumentAction extends AbstractFocusableSignalMLAction<Documen
 	}
 
 	public void setEnabledAsNeeded() {
-		setEnabled(getActionFocusSelector().getActiveDocument() != null);
+		DocumentFocusSelector x = getActionFocusSelector();
+		if (null != x)
+			setEnabled(x.getActiveDocument() != null);
 	}
 
 	public DocumentFlowIntegrator getDocumentFlowIntegrator() {

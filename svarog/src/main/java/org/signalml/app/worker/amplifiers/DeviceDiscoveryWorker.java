@@ -1,10 +1,10 @@
 package org.signalml.app.worker.amplifiers;
 
+import static org.signalml.app.SvarogApplication._;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import javax.swing.SwingWorker;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Searches for all types of devices. Property listeners can be attached.
@@ -36,10 +36,6 @@ public class DeviceDiscoveryWorker extends SwingWorker<String, DiscoveryState> i
          */
         private boolean usbSearchOver;
         /**
-         * Message source.
-         */
-        private MessageSourceAccessor messageSource;
-        /**
          * Lock used to synchronize execution.
          */
         private final Object lock = new Object();
@@ -47,12 +43,9 @@ public class DeviceDiscoveryWorker extends SwingWorker<String, DiscoveryState> i
         /**
          * Default constructor.
          *
-         * @param messageSource {@link #messageSource}
          * @param definitions {@link #definitions}
          */
-        public DeviceDiscoveryWorker(MessageSourceAccessor messageSource) {
-
-                this.messageSource = messageSource;
+        public  DeviceDiscoveryWorker() {
         }
 
         /**
@@ -64,13 +57,13 @@ public class DeviceDiscoveryWorker extends SwingWorker<String, DiscoveryState> i
         @Override
         protected String doInBackground() throws Exception {
 
-                publish(new DiscoveryState(messageSource.getMessage("amplifierSelection.search")));
+                publish(new DiscoveryState(_("Searching for devices...")));
 
-                usbDeviceDiscoverer = new USBDeviceDiscoverer(messageSource);
+                usbDeviceDiscoverer = new USBDeviceDiscoverer();
                 usbDeviceDiscoverer.addPropertyChangeListener(this);
                 usbSearchOver = false;
 
-                bluetoothDeviceDiscoverer = new BluetoothDeviceDiscoverer(messageSource);
+                bluetoothDeviceDiscoverer = new BluetoothDeviceDiscoverer();
                 bluetoothDeviceDiscoverer.addPropertyChangeListener(this);
                 bluetoothSearchOver = false;
 
@@ -81,7 +74,7 @@ public class DeviceDiscoveryWorker extends SwingWorker<String, DiscoveryState> i
                         lock.wait();
 
                 }                
-                return messageSource.getMessage("amplifierSelection.searchCompleted");
+                return _("Search completed.");
         }
 
         /**

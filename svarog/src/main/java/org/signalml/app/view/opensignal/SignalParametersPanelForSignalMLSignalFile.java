@@ -1,5 +1,6 @@
 package org.signalml.app.view.opensignal;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -24,7 +25,6 @@ import org.signalml.app.view.element.IntegerSpinner;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.codec.SignalMLCodecSelector;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Contains {@link SignalMLOptionsPanel} and serves
@@ -35,10 +35,6 @@ import org.springframework.context.support.MessageSourceAccessor;
  */
 public class SignalParametersPanelForSignalMLSignalFile extends JPanel {
 
-        /**
-         * The message source.
-         */
-        private MessageSourceAccessor messageSource;
         /**
          * The element manager.
          */
@@ -76,13 +72,11 @@ public class SignalParametersPanelForSignalMLSignalFile extends JPanel {
         /**
          * Constructor initializes the panel.
          *
-         * @param messageSource {@link #messageSource}
          * @param elementManager {@link #elementManager}
          */
-        public SignalParametersPanelForSignalMLSignalFile(MessageSourceAccessor messageSource, ViewerElementManager elementManager) {
+        public  SignalParametersPanelForSignalMLSignalFile( ViewerElementManager elementManager) {
 
                 super();
-                this.messageSource = messageSource;
                 this.elementManager = elementManager;
                 this.codecManager = elementManager.getCodecManager();
                 this.applicationConfig = elementManager.getApplicationConfig();
@@ -100,7 +94,7 @@ public class SignalParametersPanelForSignalMLSignalFile extends JPanel {
 
                 JPanel pagingPanel = new JPanel(new BorderLayout());
                 pagingPanel.setBorder(new CompoundBorder(
-                        new TitledBorder(messageSource.getMessage("pagingParameters.title")),
+                        new TitledBorder(_("Paging parameters:")),
                         new EmptyBorder(3, 3, 3, 3)));
 
                 JPanel parametersPanel = new JPanel(new GridBagLayout());
@@ -111,8 +105,8 @@ public class SignalParametersPanelForSignalMLSignalFile extends JPanel {
                 constraints.weighty = 0; constraints.gridwidth = 1;
                 constraints.insets = new Insets(8, 8, 8, 8);
 
-                JLabel pageSizeLabel = new JLabel(messageSource.getMessage("opensignal.parameters.pageSize"));
-                JLabel blocksPerPageLabel = new JLabel(messageSource.getMessage("opensignal.parameters.blocksPerPage"));
+                JLabel pageSizeLabel = new JLabel(_("Page size: "));
+                JLabel blocksPerPageLabel = new JLabel(_("Number of blocks per page: "));
 
                 constraints.gridx = 0; constraints.gridy = 0; constraints.weightx = 0;
                 parametersPanel.add(pageSizeLabel, constraints);
@@ -135,11 +129,11 @@ public class SignalParametersPanelForSignalMLSignalFile extends JPanel {
         protected SignalMLOptionsPanel getSignalMLOptionsPanel() {
 
                 if (signalMLOptionsPanel == null) {
-                        signalMLOptionsPanel = new SignalMLOptionsPanel(messageSource);
+                        signalMLOptionsPanel = new SignalMLOptionsPanel();
                         SignalMLCodecListModel codecListModel = new SignalMLCodecListModel();
                         codecListModel.setCodecManager(codecManager);
 
-                        RegisterCodecAction registerCodecAction = new RegisterCodecAction(messageSource);
+                        RegisterCodecAction registerCodecAction = new RegisterCodecAction();
                         registerCodecAction.setCodecManager(codecManager);
                         registerCodecAction.setRegisterCodecDialog(getRegisterCodecDialog());
                         registerCodecAction.setPleaseWaitDialog(getPleaseWaitDialog());
@@ -171,7 +165,7 @@ public class SignalParametersPanelForSignalMLSignalFile extends JPanel {
          */
         protected PleaseWaitDialog getPleaseWaitDialog() {
                 if (pleaseWaitDialog == null) {
-                        pleaseWaitDialog = new PleaseWaitDialog(messageSource, null);
+                        pleaseWaitDialog = new PleaseWaitDialog( null);
                         pleaseWaitDialog.initializeNow();
                 }
                 return pleaseWaitDialog;
@@ -183,7 +177,7 @@ public class SignalParametersPanelForSignalMLSignalFile extends JPanel {
          */
         protected RegisterCodecDialog getRegisterCodecDialog() {
                 if (registerCodecDialog == null) {
-                        registerCodecDialog = new RegisterCodecDialog(messageSource, null, true);
+                        registerCodecDialog = new RegisterCodecDialog( null, true);
                         registerCodecDialog.setCodecManager(codecManager);
                 }
                 return registerCodecDialog;

@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 import java.util.LinkedList;
 
@@ -15,7 +16,6 @@ import org.signalml.app.view.dialog.SignalParametersDialog;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.domain.signal.OriginalMultichannelSampleSource;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** EditSignalParametersAction
  *
@@ -30,11 +30,11 @@ public class EditSignalParametersAction extends AbstractFocusableSignalMLAction<
 
 	private SignalParametersDialog signalParametersDialog;
 
-	public EditSignalParametersAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
-		super(messageSource, signalDocumentFocusSelector);
-		setText("action.signalParameters");
+	public  EditSignalParametersAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
+		super( signalDocumentFocusSelector);
+		setText(_("Signal parameters"));
 		setIconPath("org/signalml/app/icon/signalparameters.png");
-		setToolTip("action.signalParametersToolTip");
+		setToolTip(_("Change signal parameters"));
 	}
 
 	@Override

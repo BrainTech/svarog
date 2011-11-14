@@ -35,7 +35,8 @@ import org.signalml.method.TrackableMethod;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.ResolvableString;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
+import static org.signalml.app.SvarogApplication._;
+
 import org.springframework.validation.Errors;
 
 import com.thoughtworks.xstream.XStream;
@@ -310,27 +311,19 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 	}
 
 	@Override
-	public String getTickerLabel(MessageSourceAccessor messageSource, int ticker) {
-		String code;
+	public String getTickerLabel( int ticker) {
 		switch (ticker) {
-
 		case 0 :
-			code = "mp5Method.sectionTicker";
-			break;
+			return _("Segment progress");
 		case 1 :
-			code = "mp5Method.channelTicker";
-			break;
+			return _("Channel progress");
 		case 2 :
-			code = "mp5Method.atomTicker";
-			break;
+			return _("Atom (non-linear progress)");
 		case 3 :
-			code = "mp5Method.dictionaryTicker";
-			break;
+			return _("Current atom matching progress");
 		default :
 			throw new IndexOutOfBoundsException();
-
 		}
-		return messageSource.getMessage(code);
 	}
 
 	@Override

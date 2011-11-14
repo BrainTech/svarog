@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.montage;
 
+import static org.signalml.app.SvarogApplication._;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
@@ -23,7 +24,6 @@ import org.signalml.domain.montage.SourceMontageListener;
 import org.signalml.domain.signal.SignalTypeConfigurer;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** VisualReferenceModel
  *
@@ -47,8 +47,6 @@ public class VisualReferenceModel implements SourceMontageListener, MontageListe
 	private VisualReferenceArrow activeArrow;
 	private VisualReferenceChannel activeChannel;
 
-	private MessageSourceAccessor messageSource;
-
 	private VisualReferenceChessboardBin othersBin;
 	private VisualReferenceChessboardBin primariesBin;
 	private VisualReferenceChessboardBin referencesBin;
@@ -59,9 +57,8 @@ public class VisualReferenceModel implements SourceMontageListener, MontageListe
 	private ArrayList<LinkedList<VisualReferenceChannel>> channelLists;
 	private ArrayList<VisualReferenceArrow> arrows;
 
-	public VisualReferenceModel(MessageSourceAccessor messageSource) {
+	public  VisualReferenceModel() {
 		pcSupport = new PropertyChangeSupport(this);
-		this.messageSource = messageSource;
 		readAllFromMontage();
 	}
 
@@ -164,10 +161,10 @@ public class VisualReferenceModel implements SourceMontageListener, MontageListe
 			positionedBin = new VisualReferencePositionedBin(0,0);
 		}
 
-		othersBin.setName(messageSource.getMessage("visualReferenceEditor.bin.others"));
-		referencesBin.setName(messageSource.getMessage("visualReferenceEditor.bin.references"));
-		primariesBin.setName(messageSource.getMessage("visualReferenceEditor.bin.primaries"));
-		positionedBin.setName(messageSource.getMessage("visualReferenceEditor.bin.positioned"));
+		othersBin.setName(_("Others"));
+		referencesBin.setName(_("Refs"));
+		primariesBin.setName(_("Prims"));
+		positionedBin.setName(_("Positioned"));
 
 		setActiveChannel(null);
 		fireMontageStructureChanged(this);

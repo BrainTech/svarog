@@ -3,6 +3,7 @@
  */
 package org.signalml.app.method.mp5;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 
 import javax.swing.Box;
@@ -16,10 +17,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.util.SwingUtils;
+import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.app.view.element.CompactButton;
 import org.signalml.method.mp5.MP5Parameters;
-import org.signalml.plugin.export.view.AbstractDialog;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /** MP5OutputConfigPanel
@@ -30,15 +31,12 @@ import org.springframework.validation.Errors;
 public class MP5OutputConfigPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-
-	private MessageSourceAccessor messageSource;
 	private AbstractDialog owner;
 
 	private JCheckBox bookWithSignalCheckBox;
 
-	public MP5OutputConfigPanel(MessageSourceAccessor messageSource, AbstractDialog owner) {
+	public  MP5OutputConfigPanel( AbstractDialog owner) {
 		super();
-		this.messageSource = messageSource;
 		this.owner = owner;
 		initialize();
 	}
@@ -46,7 +44,7 @@ public class MP5OutputConfigPanel extends JPanel {
 	private void initialize() {
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("mp5Method.dialog.outputTitle")),
+		        new TitledBorder(_("Output")),
 		        new EmptyBorder(3,3,3,3)
 		);
 
@@ -57,9 +55,9 @@ public class MP5OutputConfigPanel extends JPanel {
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
-		JLabel bookWithSignalLabel = new JLabel(messageSource.getMessage("mp5Method.dialog.bookWithSignal"));
+		JLabel bookWithSignalLabel = new JLabel(_("Include original signal"));
 
-		CompactButton bookWithSignalHelpButton = SwingUtils.createFieldHelpButton(messageSource, owner, MP5MethodDialog.HELP_BOOK_WITH_SIGNAL);
+		CompactButton bookWithSignalHelpButton = SwingUtils.createFieldHelpButton( owner, MP5MethodDialog.HELP_BOOK_WITH_SIGNAL);
 
 		Component glue1 = Box.createHorizontalGlue();
 

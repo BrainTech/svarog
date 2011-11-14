@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 import org.signalml.domain.signal.space.SignalSourceLevel;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 
@@ -35,11 +35,6 @@ public class SignalSpacePanel extends JPanel {
 	protected static final Logger logger = Logger.getLogger(SignalSpacePanel.class);
 
 	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
-
-	/**
 	 * the {@link TimeSpacePanel panel} to select the time interval of the
 	 * signal
 	 */
@@ -51,12 +46,10 @@ public class SignalSpacePanel extends JPanel {
 	private ChannelSpacePanel channelSpacePanel;
 
 	/**
-	 * Constructor. Sets the source of messages and initializes this panel.
-	 * @param messageSource the source of messages
+	 * Constructor. Initializes the panel.
 	 */
-	public SignalSpacePanel(MessageSourceAccessor messageSource) {
+	public  SignalSpacePanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -87,7 +80,7 @@ public class SignalSpacePanel extends JPanel {
 	 */
 	public TimeSpacePanel getTimeSpacePanel() {
 		if (timeSpacePanel == null) {
-			timeSpacePanel = new TimeSpacePanel(messageSource);
+			timeSpacePanel = new TimeSpacePanel();
 		}
 		return timeSpacePanel;
 	}
@@ -99,7 +92,7 @@ public class SignalSpacePanel extends JPanel {
 	 */
 	public ChannelSpacePanel getChannelSpacePanel() {
 		if (channelSpacePanel == null) {
-			channelSpacePanel = new ChannelSpacePanel(messageSource);
+			channelSpacePanel = new ChannelSpacePanel();
 		}
 		return channelSpacePanel;
 	}

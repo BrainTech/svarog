@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import org.signalml.app.view.monitor.signalchecking.CheckSignalDialog;
 import java.awt.event.ActionEvent;
 import org.apache.log4j.Logger;
@@ -11,7 +12,6 @@ import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.model.MontageDescriptor;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** 
  * Opens a {@link CheckSignalDialog}.
@@ -33,15 +33,14 @@ public class CheckSignalAction extends AbstractFocusableSignalMLAction<SignalDoc
 	/**
 	 * Constructor.
 	 *
-	 * @param messageSource the message source accessor capable of resolving localized message codes
 	 * @param signalDocumentFocusSelector a {@link SignalDocumentFocusSelector} used to detect
 	 * which document is active.
 	 */
-	public CheckSignalAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
+	public  CheckSignalAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
 
-                super(messageSource, signalDocumentFocusSelector);
-		setText("action.checkSignalLabel");
-		setToolTip("action.checkSignalToolTip");
+                super( signalDocumentFocusSelector);
+		setText(_("Check signal..."));
+		setToolTip(_("Check if signal is OK"));
 	}
 
 	/**

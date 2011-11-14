@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
@@ -17,7 +18,6 @@ import org.apache.log4j.Logger;
 import org.jfree.chart.JFreeChart;
 import org.signalml.app.util.ImageTransferable;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ExportAllChartsToClipboardAction
  *
@@ -30,11 +30,11 @@ public abstract class ExportAllChartsToClipboardAction extends AbstractSignalMLA
 
 	private static final long serialVersionUID = 1L;
 
-	public ExportAllChartsToClipboardAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
-		setText("action.exportAllChartsToClipboard");
+	public  ExportAllChartsToClipboardAction() {
+		super();
+		setText(_("Copy all charts to clipboard"));
 		setIconPath("org/signalml/app/icon/clipboard.png");
-		setToolTip("action.exportAllChartsToClipboardToolTip");
+		setToolTip(_("Copy all charts to clipboard"));
 	}
 
 	protected abstract int getChartCount();

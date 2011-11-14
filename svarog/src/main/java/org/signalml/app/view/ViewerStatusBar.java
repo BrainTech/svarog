@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -46,7 +47,6 @@ import org.signalml.plugin.export.signal.SignalSelection;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ViewerStatusBar
  *
@@ -59,8 +59,6 @@ public class ViewerStatusBar extends JPanel implements ActionFocusListener, Prop
 	private static final ImageIcon FILTER_OFF_ICON = IconUtils.loadClassPathIcon("org/signalml/app/icon/filter.png");
 
 	private static final long serialVersionUID = 1L;
-
-	private MessageSourceAccessor messageSource;
 
 	private String sampleAbbrevString;
 	private String pageAbbrevString;
@@ -103,30 +101,29 @@ public class ViewerStatusBar extends JPanel implements ActionFocusListener, Prop
 
 	private Font filteringFont;
 
-	public ViewerStatusBar(MessageSourceAccessor messageSource) {
+	public  ViewerStatusBar() {
 
 		super(new BorderLayout());
-		this.messageSource = messageSource;
 		statusFont = new Font(Font.DIALOG, Font.PLAIN, 12);
 		smallFont = new Font(Font.DIALOG, Font.PLAIN, 9);
 		filteringFont = new Font(Font.DIALOG, Font.BOLD, 16);
 
-		sampleAbbrevString = messageSource.getMessage("sampleAbbrevString");
-		pageAbbrevString = messageSource.getMessage("pageAbbrevString");
-		blockAbbrevString = messageSource.getMessage("blockAbbrevString");
+		sampleAbbrevString = _("S");
+		pageAbbrevString = _("P");
+		blockAbbrevString = _("B");
 
-		pageSelectionString = messageSource.getMessage("viewer.statusBar.pageSelection");
-		blockSelectionString = messageSource.getMessage("viewer.statusBar.blockSelection");
-		channelSelectionString = messageSource.getMessage("viewer.statusBar.channelSelection");
+		pageSelectionString = _("Page selection");
+		blockSelectionString = _("Block selection");
+		channelSelectionString = _("Channel selection");
 
-		pageTagString = messageSource.getMessage("viewer.statusBar.pageTag");
-		blockTagString = messageSource.getMessage("viewer.statusBar.blockTag");
-		channelTagString = messageSource.getMessage("viewer.statusBar.channelTag");
+		pageTagString = _("Page tag");
+		blockTagString = _("Block tag");
+		channelTagString = _("Channel tag");
 
-		filterOnString = messageSource.getMessage("viewer.statusBar.filterOn");
-		filterOffString = messageSource.getMessage("viewer.statusBar.filterOff");
-		filterOnToolTipString = messageSource.getMessage("viewer.statusBar.filterOnToolTip");
-		filterOffToolTipString = messageSource.getMessage("viewer.statusBar.filterOffToolTip");
+		filterOnString = _("ON");
+		filterOffString = _("OFF");
+		filterOnToolTipString = _("Filtering is enabled for the master plot");
+		filterOffToolTipString = _("Filtering is disbled for the master plot");
 
 	}
 
@@ -584,9 +581,4 @@ public class ViewerStatusBar extends JPanel implements ActionFocusListener, Prop
 	public void setActionFocusManager(ActionFocusManager actionFocusManager) {
 		this.actionFocusManager = actionFocusManager;
 	}
-
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
-	}
-
 }

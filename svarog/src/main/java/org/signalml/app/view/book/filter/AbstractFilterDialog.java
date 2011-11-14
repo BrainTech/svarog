@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.book.filter;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Window;
@@ -14,11 +15,11 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.domain.book.filter.AbstractAtomFilter;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /** AbstractFilterDialog
@@ -34,12 +35,12 @@ public abstract class AbstractFilterDialog extends AbstractDialog {
 
 	private JPanel namePanel;
 
-	public AbstractFilterDialog(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  AbstractFilterDialog() {
+		super();
 	}
 
-	public AbstractFilterDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public  AbstractFilterDialog( Window w, boolean isModal) {
+		super( w, isModal);
 	}
 
 	public JTextField getNameTextField() {
@@ -54,7 +55,7 @@ public abstract class AbstractFilterDialog extends AbstractDialog {
 		if (namePanel == null) {
 			namePanel = new JPanel(new BorderLayout());
 			namePanel.setBorder(new CompoundBorder(
-			                            new TitledBorder(messageSource.getMessage("atomFilter.nameTitle")),
+			                            new TitledBorder(_("Filter name")),
 			                            new EmptyBorder(3,3,3,3)
 			                    ));
 

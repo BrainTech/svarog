@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.ItemSelectable;
 import java.awt.event.ActionEvent;
 
@@ -11,7 +12,6 @@ import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.domain.montage.Montage;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** SignalFilterSwitchAction
  *
@@ -24,11 +24,11 @@ public class SignalFilterSwitchAction extends AbstractFocusableSignalMLAction<Si
 
 	protected static final Logger logger = Logger.getLogger(SignalFilterSwitchAction.class);
 
-	public SignalFilterSwitchAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
-		super(messageSource, signalDocumentFocusSelector);
-		setText("signalView.filterSwitch");
+	public  SignalFilterSwitchAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
+		super( signalDocumentFocusSelector);
+		setText(_("Filtering"));
 		setIconPath("org/signalml/app/icon/filter.png");
-		setToolTip("signalView.filterSwitchToolTip");
+		setToolTip(_("Switch fitering on/off"));
 	}
 
 	@Override

@@ -15,7 +15,7 @@ import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.model.OpenFileSignalDescriptor;
 import org.signalml.app.view.ViewerElementManager;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.signalml.app.view.element.FileChooserPanel;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 
@@ -56,13 +56,11 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source capable of resolving localized
-	 * messages
 	 * @param viewerElementManager ViewerElementManager to be used by this
 	 * panel
 	 */
-	public FileSignalSourcePanel(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager) {
-		super(messageSource, viewerElementManager);
+	public  FileSignalSourcePanel( ViewerElementManager viewerElementManager) {
+		super( viewerElementManager);
 
 	}
 
@@ -132,7 +130,7 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 	 */
 	public FileChooserPanel getFileChooserPanel() {
 		if (fileChooserPanel == null) {
-			fileChooserPanel = new FileChooserPanel(messageSource, ManagedDocumentType.SIGNAL, getApplicationConfiguration());
+			fileChooserPanel = new FileChooserPanel( ManagedDocumentType.SIGNAL, getApplicationConfiguration());
 
 			String lastOpenedDocumentPath = getApplicationConfiguration().getLastOpenDocumentPath();
 			if (lastOpenedDocumentPath != null) {
@@ -150,7 +148,7 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 	 */
 	protected FileOpenMethodPanel getFileOpenMethodPanel() {
 		if (fileOpenMethodPanel == null) {
-			fileOpenMethodPanel = new FileOpenMethodPanel(messageSource);
+			fileOpenMethodPanel = new FileOpenMethodPanel();
 			fileOpenMethodPanel.addPropertyChangeListener(this);
 		}
 		return fileOpenMethodPanel;
@@ -177,7 +175,7 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 	 */
 	public SignalParametersPanelForRawSignalFile getRawSignalParametersPanel() {
 		if (rawSignalParametersPanel == null) {
-			rawSignalParametersPanel = new SignalParametersPanelForRawSignalFile(messageSource);
+			rawSignalParametersPanel = new SignalParametersPanelForRawSignalFile();
 			rawSignalParametersPanel.setApplicationConfiguration(getApplicationConfiguration());
 			rawSignalParametersPanel.addPropertyChangeListener(this);
 			rawSignalParametersPanel.setSignalFileChooser(getFileChooserPanel().getFileChooser());
@@ -191,7 +189,7 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 	 */
 	public SignalParametersPanelForSignalMLSignalFile getSignalMLSignalParametersPanel() {
 		if (signalMLSignalParametersPanel == null) {
-			signalMLSignalParametersPanel = new SignalParametersPanelForSignalMLSignalFile(messageSource, getViewerElementManager());
+			signalMLSignalParametersPanel = new SignalParametersPanelForSignalMLSignalFile( getViewerElementManager());
 		}
 		return signalMLSignalParametersPanel;
 	}

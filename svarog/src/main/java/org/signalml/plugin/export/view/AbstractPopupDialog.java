@@ -12,7 +12,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.border.LineBorder;
 
-import org.springframework.context.support.MessageSourceAccessor;
+import org.signalml.app.view.dialog.AbstractDialog;
 
 /**
  * The abstract popup dialog, from which every popup dialog in Svarog should
@@ -29,21 +29,19 @@ public abstract class AbstractPopupDialog extends AbstractDialog {
 
 	/**
 	 * Constructor. Sets message source.
-	 * @param messageSource message source to set
 	 */
-	public AbstractPopupDialog(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  AbstractPopupDialog() {
+		super();
 	}
 
 	/**
 	 * Constructor. Sets message source, parent window and if this dialog
 	 * blocks top-level windows.
-	 * @param messageSource message source to set
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public AbstractPopupDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public  AbstractPopupDialog( Window w, boolean isModal) {
+		super( w, isModal);
 	}
 
 	@Override

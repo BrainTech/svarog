@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.book.filter;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -42,7 +43,7 @@ import org.signalml.domain.book.filter.TagBasedAtomFilter;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.TagStyle;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /** TagBasedFilterDialog
@@ -75,14 +76,14 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 
 	private TagDocument currentTagDocument;
 
-	public TagBasedFilterDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public  TagBasedFilterDialog( Window w, boolean isModal) {
+		super( w, isModal);
 	}
 
 	@Override
 	protected void initialize() {
 
-		setTitle(messageSource.getMessage("tagBasedFilter.title"));
+		setTitle(_("Tag based atom filter"));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/filter.png"));
 		super.initialize();
 		setResizable(false);
@@ -130,7 +131,7 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 
 		JPanel stylePanel = new JPanel(new BorderLayout());
 		stylePanel.setBorder(new CompoundBorder(
-		                             new TitledBorder(messageSource.getMessage("tagBasedFilter.styleTitle")),
+		                             new TitledBorder(_("Choose styles")),
 		                             new EmptyBorder(3,3,3,3)
 		                     ));
 
@@ -159,14 +160,14 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 
 	public BookFilterChooseTagPanel getChooseTagPanel() {
 		if (chooseTagPanel == null) {
-			chooseTagPanel = new BookFilterChooseTagPanel(messageSource, fileChooser);
+			chooseTagPanel = new BookFilterChooseTagPanel( fileChooser);
 		}
 		return chooseTagPanel;
 	}
 
 	public TagStyleListCellRenderer getMarkerStyleCellRenderer() {
 		if (markerStyleCellRenderer == null) {
-			markerStyleCellRenderer = new TagStyleListCellRenderer(messageSource);
+			markerStyleCellRenderer = new TagStyleListCellRenderer();
 		}
 		return markerStyleCellRenderer;
 	}
@@ -198,21 +199,21 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 
 	public JButton getChannelSelectAllButton() {
 		if (channelSelectAllButton == null) {
-			channelSelectAllButton = new JButton(new ListSelectAllAction(messageSource, getStyleList()));
+			channelSelectAllButton = new JButton(new ListSelectAllAction( getStyleList()));
 		}
 		return channelSelectAllButton;
 	}
 
 	public JButton getChannelSelectNoneButton() {
 		if (channelSelectNoneButton == null) {
-			channelSelectNoneButton = new JButton(new ListSelectNoneAction(messageSource, getStyleList()));
+			channelSelectNoneButton = new JButton(new ListSelectNoneAction( getStyleList()));
 		}
 		return channelSelectNoneButton;
 	}
 
 	public JButton getChannelSelectInvertButton() {
 		if (channelSelectInvertButton == null) {
-			channelSelectInvertButton = new JButton(new ListSelectInvertAction(messageSource, getStyleList()));
+			channelSelectInvertButton = new JButton(new ListSelectInvertAction( getStyleList()));
 		}
 		return channelSelectInvertButton;
 	}
@@ -223,7 +224,7 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 			settingsPanel = new JPanel();
 
 			settingsPanel.setBorder(new CompoundBorder(
-			                                new TitledBorder(messageSource.getMessage("signalSpace.markedTimeSpace.settingsPanel.title")),
+			                                new TitledBorder(_("Settings")),
 			                                new EmptyBorder(3,3,3,3)
 			                        ));
 
@@ -232,8 +233,8 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 			layout.setAutoCreateContainerGaps(false);
 			layout.setAutoCreateGaps(true);
 
-			JLabel secondsBeforeLabel = new JLabel(messageSource.getMessage("signalSpace.markedTimeSpace.secondsBefore"));
-			JLabel secondsAfterLabel = new JLabel(messageSource.getMessage("signalSpace.markedTimeSpace.secondsAfter"));
+			JLabel secondsBeforeLabel = new JLabel(_("Seconds before"));
+			JLabel secondsAfterLabel = new JLabel(_("Seconds after"));
 
 			GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 

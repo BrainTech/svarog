@@ -4,12 +4,12 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.signalml.app.model.TableToTextExporter;
 import org.signalml.app.model.WriterExportableTable;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ExportToClipboardAction
  *
@@ -21,11 +21,11 @@ public abstract class ExportToClipboardAction extends AbstractSignalMLAction {
 	private static final long serialVersionUID = 1L;
 	private TableToTextExporter tableToTextExporter;
 
-	public ExportToClipboardAction(MessageSourceAccessor messageSource, TableToTextExporter tableToTextExporter) {
-		super(messageSource);
-		setText("action.exportTableToClipboard");
+	public  ExportToClipboardAction( TableToTextExporter tableToTextExporter) {
+		super();
+		setText(_("Copy to clipboard"));
 		setIconPath("org/signalml/app/icon/clipboard.png");
-		setToolTip("action.exportTableToClipboardToolTip");
+		setToolTip(_("Copy contents to clipboard"));
 		this.tableToTextExporter = tableToTextExporter;
 	}
 

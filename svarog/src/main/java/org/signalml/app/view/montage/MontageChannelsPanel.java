@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.montage;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Window;
@@ -37,15 +38,11 @@ import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.dialog.SeriousWarningDialog;
 import org.signalml.app.view.montage.dnd.MontageWasteBasket;
 import org.signalml.app.view.montage.dnd.MontageWasteBasketTransferHandler;
-import org.signalml.domain.montage.GenericChannel;
 import org.signalml.domain.montage.Montage;
-import org.signalml.domain.montage.ChannelType;
 import org.signalml.domain.montage.MontageChannel;
 import org.signalml.domain.montage.eeg.EegChannel;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.SourceChannel;
-import org.springframework.context.support.MessageSourceAccessor;
-
 
 /**
  * The panel which allows to:
@@ -71,11 +68,6 @@ public class MontageChannelsPanel extends JPanel {
 	 */
 	protected static final Logger logger = Logger.getLogger(MontageChannelsPanel.class);
 
-	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
-	
 	/**
 	 * the dialog which is shown when the user tries to
 	 * {@link ClearMontageAction clear} the {@link Montage montage} or
@@ -229,11 +221,9 @@ public class MontageChannelsPanel extends JPanel {
 	/**
 	 * Constructor. Sets the source of messages and {@link #initialize()
 	 * initializes} this panel.
-	 * @param messageSource the source of messages (labels)
 	 */
-	public MontageChannelsPanel(MessageSourceAccessor messageSource) {
+	public  MontageChannelsPanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -262,8 +252,8 @@ public class MontageChannelsPanel extends JPanel {
 		addChannelsAction = new AddChannelsAction();
 		removeChannelsAction = new RemoveChannelsAction();
 
-		addZeroChannelAction = new AddSourceChannelAction(0, messageSource.getMessage("sourceMontageTable.addZeroChannel"));
-		addOneChannelAction = new AddSourceChannelAction(1, messageSource.getMessage("sourceMontageTable.addOneChannel"));
+		addZeroChannelAction = new AddSourceChannelAction(0, _("ZEROs channel"));
+		addOneChannelAction = new AddSourceChannelAction(1, _("ONEs channel"));
 		removeSourceChannelAction = new RemoveSourceChannelAction();
 
 		clearMontageAction = new ClearMontageAction();
@@ -306,7 +296,7 @@ public class MontageChannelsPanel extends JPanel {
 		MontageWasteBasketTransferHandler montageWasteBasketTransferHandler = new MontageWasteBasketTransferHandler(getMontageTable());
 		montageWasteBasket.setTransferHandler(montageWasteBasketTransferHandler);
 		montageWasteBasket.setAlignmentX(Component.CENTER_ALIGNMENT);
-		montageWasteBasket.setToolTipText(messageSource.getMessage("montageTable.wasteBasketToolTip"));
+		montageWasteBasket.setToolTipText(_("Drop target channels here to delete them"));
 
 		JPanel centerPanel = new JPanel(new BorderLayout());
 		centerPanel.add(buttonPanel, BorderLayout.CENTER);
@@ -389,7 +379,7 @@ public class MontageChannelsPanel extends JPanel {
 
 			sourceTablePanel = new JPanel(new BorderLayout());
 			CompoundBorder border = new CompoundBorder(
-			        new TitledBorder(messageSource.getMessage("sourceMontageTable.title")),
+			        new TitledBorder(_("Source montage")),
 			        new EmptyBorder(3,3,3,3)
 			);
 			sourceTablePanel.setBorder(border);
@@ -423,7 +413,7 @@ public class MontageChannelsPanel extends JPanel {
 			montageTablePanel = new JPanel();
 			montageTablePanel.setLayout(new BorderLayout());
 			CompoundBorder border = new CompoundBorder(
-			        new TitledBorder(messageSource.getMessage("montageTable.title")),
+			        new TitledBorder(_("Target montage")),
 			        new EmptyBorder(3,3,3,3)
 			);
 			montageTablePanel.setBorder(border);
@@ -450,7 +440,6 @@ public class MontageChannelsPanel extends JPanel {
 	public SourceMontageTableModel getSourceMontageTableModel() {
 		if (sourceMontageTableModel == null) {
 			sourceMontageTableModel = new SourceMontageTableModel();
-			sourceMontageTableModel.setMessageSource(messageSource);
 		}
 		return sourceMontageTableModel;
 	}
@@ -463,7 +452,6 @@ public class MontageChannelsPanel extends JPanel {
 	public MontageTableModel getMontageTableModel() {
 		if (montageTableModel == null) {
 			montageTableModel = new MontageTableModel();
-			montageTableModel.setMessageSource(messageSource);
 		}
 		return montageTableModel;
 	}
@@ -478,7 +466,7 @@ public class MontageChannelsPanel extends JPanel {
 	 */
 	public MontageTable getMontageTable() {
 		if (montageTable == null) {
-			montageTable = new MontageTable(getMontageTableModel(), messageSource, false);
+			montageTable = new MontageTable(getMontageTableModel(), false);
 			montageTable.setPopupMenuProvider(new MontageTablePopupProvider());
 
 			montageTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -506,7 +494,7 @@ public class MontageChannelsPanel extends JPanel {
 	 */
 	public SourceMontageTable getSourceMontageTable() {
 		if (sourceMontageTable == null) {
-			sourceMontageTable = new SourceMontageTable(getSourceMontageTableModel(), messageSource);
+			sourceMontageTable = new SourceMontageTable(getSourceMontageTableModel());
 			sourceMontageTable.setPopupMenuProvider(new SourceMontageTablePopupProvider());
 
 			sourceMontageTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -616,7 +604,7 @@ public class MontageChannelsPanel extends JPanel {
 		 * Constructor. Sets the text and the icon of this button.
 		 */
 		public MoveUpAction() {
-			super(messageSource.getMessage("montageTable.moveUp"));
+			super(_("Move up"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/moveup.png"));
 		}
 
@@ -668,7 +656,7 @@ public class MontageChannelsPanel extends JPanel {
 		 * Constructor. Sets the text and the icon of this button.
 		 */
 		public MoveDownAction() {
-			super(messageSource.getMessage("montageTable.moveDown"));
+			super(_("Move down"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/movedown.png"));
 		}
 
@@ -724,7 +712,7 @@ public class MontageChannelsPanel extends JPanel {
 		 * Constructor. Sets the text and the icon of this button.
 		 */
 		public AddChannelsAction() {
-			super(messageSource.getMessage("montageTable.addChannels"));
+			super(_("Add channels"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/addchannels.png"));
 		}
 
@@ -782,7 +770,7 @@ public class MontageChannelsPanel extends JPanel {
 		 * Constructor. Sets the text and the icon of this button.
 		 */
 		public RemoveChannelsAction() {
-			super(messageSource.getMessage("montageTable.removeChannels"));
+			super(_("Remove channels"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/removechannels.png"));
 		}
 
@@ -865,10 +853,10 @@ public class MontageChannelsPanel extends JPanel {
 
 			try {
 				if (this.channelType == 0) {
-					String lb = montage.getNewSourceChannelLabel(messageSource.getMessage("sourceMontageTable.ZERO"));
+					String lb = montage.getNewSourceChannelLabel(_("ZERO"));
 					montage.addSourceChannel(lb, EegChannel.ZERO);
 				} else {//assumed ONE
-					String lb = montage.getNewSourceChannelLabel(messageSource.getMessage("sourceMontageTable.ONE"));
+					String lb = montage.getNewSourceChannelLabel(_("ONE"));
 					montage.addSourceChannel(lb, EegChannel.ONE);
 				}
 				
@@ -902,7 +890,7 @@ public class MontageChannelsPanel extends JPanel {
 		 * Constructor. Sets the text and the icon of this button.
 		 */
 		public RemoveSourceChannelAction() {
-			super(messageSource.getMessage("sourceMontageTable.removeChannel"));
+			super(_("Remove"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/removesourcechannel.png"));
 		}
 
@@ -925,7 +913,7 @@ public class MontageChannelsPanel extends JPanel {
 
 			if (montage.isSourceChannelInUse(cnt -  1)) {
 
-				String warning =  messageSource.getMessage("montageTable.onDeleteUsed");
+				String warning =  _("The removed source channel is used either as a primary channel or as a reference. Montage will be altered.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>remove</b> a source channel?");
 				SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 5);
 
 				boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
@@ -957,7 +945,7 @@ public class MontageChannelsPanel extends JPanel {
 		 * Constructor. Sets the text and the icon of this button.
 		 */
 		public ClearMontageAction() {
-			super(messageSource.getMessage("montageTable.clear"));
+			super(_("Clear montage"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/clearmontage.png"));
 		}
 
@@ -975,7 +963,7 @@ public class MontageChannelsPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent ev) {
 
-			String warning =  messageSource.getMessage("montageTable.onClear");
+			String warning =  _("The montage will be irreversibly lost.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>clear</b> the montage?");
 			SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 5);
 
 			boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);

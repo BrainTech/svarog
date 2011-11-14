@@ -4,6 +4,7 @@
 
 package org.signalml.app.method.bookaverage;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -28,7 +29,6 @@ import org.signalml.app.view.book.BookView;
 import org.signalml.app.view.element.TitledCrossBorder;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractPopupDialog;
-import org.springframework.context.support.MessageSourceAccessor;
 
 // FIXME reuse this class in the mehtod
 
@@ -53,8 +53,8 @@ public class AverageBooksPopupDialog extends AbstractPopupDialog {
 
 	private ButtonGroup averageGroup;
 
-	public AverageBooksPopupDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public  AverageBooksPopupDialog( Window w, boolean isModal) {
+		super( w, isModal);
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class AverageBooksPopupDialog extends AbstractPopupDialog {
 		JPanel averagePanel = new JPanel();
 		averagePanel.setLayout(new BoxLayout(averagePanel, BoxLayout.Y_AXIS));
 		averagePanel.setBorder(new CompoundBorder(
-		                               new TitledCrossBorder(messageSource.getMessage("averageBooks.averageTitle"), true),
+		                               new TitledCrossBorder(_("Book averaging"), true),
 		                               new EmptyBorder(3,3,3,3)
 		                       ));
 
@@ -72,7 +72,7 @@ public class AverageBooksPopupDialog extends AbstractPopupDialog {
 
 		JPanel settingsPanel = new JPanel();
 		settingsPanel.setBorder(new CompoundBorder(
-		                                new TitledBorder(messageSource.getMessage("averageBooks.settingsTitle")),
+		                                new TitledBorder(_("Settings")),
 		                                new EmptyBorder(3,3,3,3)
 		                        ));
 
@@ -81,9 +81,9 @@ public class AverageBooksPopupDialog extends AbstractPopupDialog {
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
-		JLabel minSegmentLabel = new JLabel(messageSource.getMessage("averageBooks.minSegment"));
-		JLabel maxSegmentLabel = new JLabel(messageSource.getMessage("averageBooks.maxSegment"));
-		JLabel allChannelsLabel = new JLabel(messageSource.getMessage("averageBooks.allChannels"));
+		JLabel minSegmentLabel = new JLabel(_("From segment"));
+		JLabel maxSegmentLabel = new JLabel(_("To segment"));
+		JLabel allChannelsLabel = new JLabel(_("All channels together"));
 		allChannelsLabel.setMinimumSize(new Dimension(25,35));
 
 		Component minSegmentGlue = Box.createHorizontalGlue();
@@ -165,7 +165,7 @@ public class AverageBooksPopupDialog extends AbstractPopupDialog {
 	public JRadioButton getAverageOnRadio() {
 		if (averageOnRadio == null) {
 
-			averageOnRadio = new JRadioButton(messageSource.getMessage("averageBooks.averageOn"));
+			averageOnRadio = new JRadioButton(_("Book averaging on"));
 			getAverageGroup().add(averageOnRadio);
 
 		}
@@ -175,7 +175,7 @@ public class AverageBooksPopupDialog extends AbstractPopupDialog {
 	public JRadioButton getAverageOffRadio() {
 		if (averageOffRadio == null) {
 
-			averageOffRadio = new JRadioButton(messageSource.getMessage("averageBooks.averageOff"));
+			averageOffRadio = new JRadioButton(_("Book averaging off"));
 			getAverageGroup().add(averageOffRadio);
 
 		}

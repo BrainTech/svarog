@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.dialog;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
@@ -22,8 +23,6 @@ import javax.swing.border.LineBorder;
 
 import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Dialog which allows to capture the key stroke (combination of
@@ -32,7 +31,7 @@ import org.springframework.context.support.MessageSourceAccessor;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class KeyStrokeCaptureDialog extends AbstractDialog {
+public class KeyStrokeCaptureDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
 
 	private static final long serialVersionUID = 1L;
 
@@ -42,21 +41,11 @@ public class KeyStrokeCaptureDialog extends AbstractDialog {
 	private KeyStroke currentStroke = null;
 
 	/**
-	 * Constructor. Sets the source of messages.
-	 * @param messageSource the source of messages
-	 */
-	public KeyStrokeCaptureDialog(MessageSourceAccessor messageSource) {
-		super(messageSource);
-	}
-
-	/**
-	 * Constructor. Sets message source, parent window and that this dialog
-	 * blocks top-level windows.
-	 * @param messageSource message source to set
+	 * Constructor. Sets parent window.
 	 * @param w the parent window or null if there is no parent
 	 */
-	public KeyStrokeCaptureDialog(MessageSourceAccessor messageSource, Window w) {
-		super(messageSource, w, true);
+	public KeyStrokeCaptureDialog(Window w) {
+		super(w, true);
 	}
 
 	/**
@@ -91,7 +80,7 @@ public class KeyStrokeCaptureDialog extends AbstractDialog {
 		);
 		p.setBorder(border);
 
-		JLabel label = new JLabel(messageSource.getMessage("pressAnyKey"));
+		JLabel label = new JLabel(_("Press a key..."));
 		label.setIcon(IconUtils.getQuestionIcon());
 		label.setAlignmentX(Component.CENTER_ALIGNMENT);
 

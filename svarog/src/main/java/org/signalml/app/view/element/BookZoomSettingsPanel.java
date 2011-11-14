@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -31,7 +32,7 @@ import org.signalml.app.view.book.BookPlot;
 import org.signalml.app.view.book.BookView;
 import org.signalml.app.view.book.ZoomBookTool;
 import org.signalml.domain.book.StandardBookSegment;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -51,11 +52,6 @@ public class BookZoomSettingsPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	protected static final Logger logger = Logger.getLogger(BookZoomSettingsPanel.class);
-
-	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
 
 	/**
 	 * the model for {@link #minPositionSpinner}
@@ -114,13 +110,11 @@ public class BookZoomSettingsPanel extends JPanel {
 	/**
 	 * Constructor. Sets the source of messages, if this panel should contain
 	 * the closing cross and initializes this panel
-	 * @param messageSource the source of messages (labels)
 	 * @param hasCloseCross @code true} if this panel should contain a cross
 	 * which closes this panel, {@code false} otherwise
 	 */
-	public BookZoomSettingsPanel(MessageSourceAccessor messageSource, boolean hasCloseCross) {
+	public  BookZoomSettingsPanel( boolean hasCloseCross) {
 		super();
-		this.messageSource = messageSource;
 		this.hasCloseCross = hasCloseCross;
 		initialize();
 	}
@@ -141,7 +135,7 @@ public class BookZoomSettingsPanel extends JPanel {
 		JPanel rangePanel = new JPanel();
 
 		rangePanel.setBorder(new CompoundBorder(
-		                             new TitledCrossBorder(messageSource.getMessage("bookZoomSettings.rangeTitle"), hasCloseCross),
+		                             new TitledCrossBorder(_("Range"), hasCloseCross),
 		                             new EmptyBorder(3,3,3,3)
 		                     ));
 
@@ -150,14 +144,14 @@ public class BookZoomSettingsPanel extends JPanel {
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
-		JLabel positionLabel = new JLabel(messageSource.getMessage("bookZoomSettings.position"));
-		JLabel frequencyLabel = new JLabel(messageSource.getMessage("bookZoomSettings.frequency"));
+		JLabel positionLabel = new JLabel(_("Position"));
+		JLabel frequencyLabel = new JLabel(_("Frequency"));
 
-		JLabel minPositionLabel = new JLabel(messageSource.getMessage("bookZoomSettings.min"));
-		JLabel minFrequencyLabel = new JLabel(messageSource.getMessage("bookZoomSettings.min"));
+		JLabel minPositionLabel = new JLabel(_("min"));
+		JLabel minFrequencyLabel = new JLabel(_("min"));
 
-		JLabel maxPositionLabel = new JLabel(messageSource.getMessage("bookZoomSettings.max"));
-		JLabel maxFrequencyLabel = new JLabel(messageSource.getMessage("bookZoomSettings.max"));
+		JLabel maxPositionLabel = new JLabel(_("max"));
+		JLabel maxFrequencyLabel = new JLabel(_("max"));
 
 		Component positionGlue = Box.createHorizontalGlue();
 		Component frequencyGlue = Box.createHorizontalGlue();
@@ -229,7 +223,7 @@ public class BookZoomSettingsPanel extends JPanel {
 		JPanel preservationPanel = new JPanel(new FlowLayout());
 
 		preservationPanel.setBorder( new CompoundBorder(
-				new TitledBorder( messageSource.getMessage("bookZoomSettings.preserveTitle") ),
+				new TitledBorder( _("Ratio preservation") ),
 				new EmptyBorder( 3,3,3,3 )					
 		));
 
@@ -500,7 +494,7 @@ public class BookZoomSettingsPanel extends JPanel {
 	 */
 	public JCheckBox getPreserveRatioCheckBox() {
 		if (preserveRatioCheckBox == null) {
-			preserveRatioCheckBox = new JCheckBox(messageSource.getMessage("bookZoomSettings.preserveRatio"));
+			preserveRatioCheckBox = new JCheckBox(_("Preserve scale ratio on drag"));
 		}
 		return preserveRatioCheckBox;
 	}

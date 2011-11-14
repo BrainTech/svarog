@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
@@ -12,7 +13,6 @@ import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.view.signal.PositionedTag;
 import org.signalml.domain.tag.StyledTagSet;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** RemoveTagAction
  *
@@ -25,11 +25,11 @@ public class RemoveTagAction extends AbstractFocusableSignalMLAction<TagFocusSel
 
 	protected static final Logger logger = Logger.getLogger(RemoveTagAction.class);
 
-	public RemoveTagAction(MessageSourceAccessor messageSource, TagFocusSelector tagFocusSelector) {
-		super(messageSource, tagFocusSelector);
-		setText("action.removeTag");
+	public  RemoveTagAction( TagFocusSelector tagFocusSelector) {
+		super( tagFocusSelector);
+		setText(_("Remove tag"));
 		setIconPath("org/signalml/app/icon/removetag.png");
-		setToolTip("action.removeTagToolTip");
+		setToolTip(_("Remove selected tag"));
 	}
 
 	@Override

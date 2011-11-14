@@ -4,6 +4,8 @@
 
 package org.signalml.app.view.signal;
 
+import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogApplication._R;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -507,13 +509,11 @@ public class SignalPlotColumnHeader extends JComponent {
 		if (tag == null) {
 			return null;
 		}
-		String locationMessage = plot.getMessageSource().getMessage("signalView.columnHeaderToolTipSignal", new Object[] {
-		                                 plot.toTimeSpace(p),
-		                                 plot.toPageSpace(p),
-		                                 plot.toBlockSpace(p),
-		                         });
+		String locationMessage = _R("T: {0} [P: {1}, B: {2}]",
+					    plot.toTimeSpace(p),
+					    plot.toPageSpace(p),
+					    plot.toBlockSpace(p));
 		return plot.getTagToolTip(locationMessage, tag);
-
 	}
 
 	// note that this returns the first page tag encountered
@@ -621,7 +621,7 @@ public class SignalPlotColumnHeader extends JComponent {
 		private static final long serialVersionUID = 1L;
 
 		public SetCompactAction() {
-			super(plot.getMessageSource().getMessage("signalView.columnHeaderCompact"));
+			super(_("Compact mode"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {

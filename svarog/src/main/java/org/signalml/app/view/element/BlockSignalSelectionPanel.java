@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Dimension;
 import java.awt.Font;
 
@@ -13,7 +14,6 @@ import javax.swing.JSpinner;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.EmptyBorder;
 
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Panel which allows to select the parameters of the block selection:
@@ -32,11 +32,6 @@ public class BlockSignalSelectionPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
-
-	/**
 	 * the spinner with the number of the page in which the first block of the
 	 * selection is located
 	 */
@@ -53,12 +48,10 @@ public class BlockSignalSelectionPanel extends JPanel {
 	private JSpinner lengthSpinner;
 
 	/**
-	 * Constructor. Sets the source of messages and initializes this panel.
-	 * @param messageSource the source of messages
+	 * Constructor. Initializes the panel.
 	 */
-	public BlockSignalSelectionPanel(MessageSourceAccessor messageSource) {
+	public  BlockSignalSelectionPanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -89,9 +82,9 @@ public class BlockSignalSelectionPanel extends JPanel {
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
-		JLabel startPageLabel = new JLabel(messageSource.getMessage("signalSelection.startPage"));
-		JLabel startBlockLabel = new JLabel(messageSource.getMessage("signalSelection.startBlock"));
-		JLabel lengthLabel = new JLabel(messageSource.getMessage("signalSelection.lengthBlocks"));
+		JLabel startPageLabel = new JLabel(_("Start page"));
+		JLabel startBlockLabel = new JLabel(_("Start block"));
+		JLabel lengthLabel = new JLabel(_("Length (blocks)"));
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 

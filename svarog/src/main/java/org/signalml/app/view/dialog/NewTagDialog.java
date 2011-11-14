@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.dialog;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Window;
 import java.io.File;
@@ -22,8 +23,7 @@ import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.TagStyle;
-import org.signalml.plugin.export.view.AbstractDialog;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -40,7 +40,7 @@ import org.springframework.validation.Errors;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class NewTagDialog extends AbstractDialog {
+public class NewTagDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
 
 	private static final long serialVersionUID = 1L;
 
@@ -67,15 +67,14 @@ public class NewTagDialog extends AbstractDialog {
 	private final StyledTagSetPresetManager styledTagSetPresetManager;
 
 	/**
-	 * Constructor. Sets message source, parent window and if this dialog
+	 * Constructor. Sets parent window and if this dialog
 	 * blocks top-level windows.
-	 * @param messageSource message source to set
 	 * @param styledTagSetPresetManager {@link PresetManager} handling tag style presets
 	 * @param f the parent window or null if there is no parent
-	 * @param isModal true, dialog blocks top-level windows, false otherwise
+	 * @param isModal dialog blocks top-level windows if true
 	 */
-	public NewTagDialog(MessageSourceAccessor messageSource, StyledTagSetPresetManager styledTagSetPresetManager, Window f, boolean isModal) {
-		super(messageSource, f, isModal);
+	public NewTagDialog(StyledTagSetPresetManager styledTagSetPresetManager, Window f, boolean isModal) {
+		super(f, isModal);
 		this.styledTagSetPresetManager = styledTagSetPresetManager;
 	}
 
@@ -85,7 +84,7 @@ public class NewTagDialog extends AbstractDialog {
 	 */
 	@Override
 	protected void initialize() {
-		setTitle(messageSource.getMessage("newTag.title"));
+		setTitle(_("Choose new tag type"));
 		setResizable(false);
 		super.initialize();
 	}
@@ -107,8 +106,8 @@ public class NewTagDialog extends AbstractDialog {
 
 		JPanel interfacePanel = new JPanel(new BorderLayout());
 
-		newTagPanel = new NewTagPanel(messageSource, styledTagSetPresetManager);
-		pagingParametersPanel = new PagingParametersPanel(messageSource);
+		newTagPanel = new NewTagPanel( styledTagSetPresetManager);
+		pagingParametersPanel = new PagingParametersPanel();
 
 		interfacePanel.add(newTagPanel, BorderLayout.CENTER);
 		interfacePanel.add(pagingParametersPanel, BorderLayout.SOUTH);

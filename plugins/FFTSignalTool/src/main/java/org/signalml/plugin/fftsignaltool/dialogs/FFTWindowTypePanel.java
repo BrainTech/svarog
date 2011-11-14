@@ -19,7 +19,9 @@ import javax.swing.border.TitledBorder;
 
 import org.signalml.plugin.fft.export.WindowType;
 import org.signalml.plugin.fftsignaltool.FFTWindowTypeSettings;
-import org.springframework.context.support.MessageSourceAccessor;
+import static org.signalml.plugin.fftsignaltool.FFTSignalTool._;
+import static org.signalml.plugin.fftsignaltool.FFTSignalTool.i18n;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -65,23 +67,15 @@ public class FFTWindowTypePanel extends JPanel {
 	private ButtonGroup windowTypeButtonGroup;
 
 	/**
-	 * the {@link MessageSourceAccessor source} of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
-
-	/**
-	 * Constructor. Sets the {@link MessageSourceAccessor message source} and
+	 * Constructor. Sets the {@link SvarogAccessI18n message source} and
 	 * initializes this panel.
 	 * 
-	 * @param messageSource
-	 *            the source of messages (labels)
 	 * @param wide
 	 *            {@code true} if this panel should be wide (have 3 columns) or
 	 *            {@code false} if high (2 columns, 5 rows)
 	 */
-	public FFTWindowTypePanel(MessageSourceAccessor messageSource, boolean wide) {
+	public  FFTWindowTypePanel( boolean wide) {
 		super();
-		this.messageSource = messageSource;
 		initialize(wide);
 	}
 
@@ -112,8 +106,7 @@ public class FFTWindowTypePanel extends JPanel {
 		}
 
 		CompoundBorder border = new CompoundBorder(new TitledBorder(
-				messageSource
-						.getMessage("fftWindowTypeSettings.windowTypeTitle")),
+				_("Window type")),
 				new EmptyBorder(3, 3, 3, 3));
 		setBorder(border);
 
@@ -164,7 +157,7 @@ public class FFTWindowTypePanel extends JPanel {
 		windowTypeRadioButtons = new JRadioButton[windowTypes.length];
 		for (int i = 0; i < windowTypes.length; i++) {
 			windowTypeRadioButtons[i] = new JRadioButton(
-					messageSource.getMessage("fft.windowType."
+					i18n().getMessage("fft.windowType."
 							+ windowTypes[i].toString()));
 			windowTypeButtonGroup.add(windowTypeRadioButtons[i]);
 			add(windowTypeRadioButtons[i]);
@@ -177,8 +170,7 @@ public class FFTWindowTypePanel extends JPanel {
 			add(new JLabel(""));
 		}
 		add(new JLabel(
-				messageSource
-						.getMessage("fftWindowTypeSettings.windowParameter")));
+				_("Window parameter")));
 		add(windowParameterTextField);
 
 	}

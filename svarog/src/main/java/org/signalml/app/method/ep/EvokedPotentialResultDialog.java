@@ -4,6 +4,7 @@
 
 package org.signalml.app.method.ep;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -24,15 +25,13 @@ import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.ViewerPropertySheet;
 import org.signalml.method.ep.EvokedPotentialResult;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** EvokedPotentialResultDialog
  *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class EvokedPotentialResultDialog extends AbstractDialog {
+public class EvokedPotentialResultDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
 
 	private static final long serialVersionUID = 1L;
 
@@ -58,17 +57,17 @@ public class EvokedPotentialResultDialog extends AbstractDialog {
 	private JLabel skippedMarkersLabelTitle;
 	private JLabel skippedMarkersLabel;
 
-	public EvokedPotentialResultDialog(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public  EvokedPotentialResultDialog() {
+		super();
 	}
 
-	public EvokedPotentialResultDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public  EvokedPotentialResultDialog( Window w, boolean isModal) {
+		super( w, isModal);
 	}
 
 	@Override
 	protected void initialize() {
-		setTitle(messageSource.getMessage("evokedPotentialResult.dialog.title"));
+		setTitle(_("Evoked potential averaging result"));
 		setIconImage(IconUtils.loadClassPathImage(EvokedPotentialMethodDialog.ICON_PATH));
 		setResizable(true);
 		super.initialize();
@@ -129,7 +128,7 @@ public class EvokedPotentialResultDialog extends AbstractDialog {
 
 	public EvokedPotentialGraphPanel getGraphPanel() {
 		if (graphPanel == null) {
-			graphPanel = new EvokedPotentialGraphPanel(messageSource, fileChooser);
+			graphPanel = new EvokedPotentialGraphPanel( fileChooser);
 		}
 		return graphPanel;
 	}
@@ -137,7 +136,6 @@ public class EvokedPotentialResultDialog extends AbstractDialog {
 	public PropertySheetModel getPropertySheetModel() {
 		if (propertySheetModel == null) {
 			propertySheetModel = new PropertySheetModel();
-			propertySheetModel.setMessageSource(messageSource);
 		}
 		return propertySheetModel;
 	}
@@ -160,7 +158,7 @@ public class EvokedPotentialResultDialog extends AbstractDialog {
 
 	public JLabel getSkippedMarkersLabelTitle() {
 		if (skippedMarkersLabelTitle == null) {
-			skippedMarkersLabelTitle = new JLabel(messageSource.getMessage("evokedPotentialResult.skippedMarkers"));
+			skippedMarkersLabelTitle = new JLabel(_("Number of unusable segments"));
 		}
 		return skippedMarkersLabelTitle;
 	}

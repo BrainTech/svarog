@@ -30,7 +30,6 @@ import org.signalml.app.view.dialog.OpenDocumentDialog;
 import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.view.AbstractViewerTree;
 import org.signalml.plugin.impl.PluginAccessClass;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ViewerWorkspaceTree
  *
@@ -61,8 +60,8 @@ public class ViewerWorkspaceTree extends AbstractViewerTree implements ActionFoc
 	private Document activeDocument;
 	private MRUDEntry activeMRUDEntry;
 
-	public ViewerWorkspaceTree(WorkspaceTreeModel model, MessageSourceAccessor messageSource) {
-		super(model, messageSource);
+	public ViewerWorkspaceTree(WorkspaceTreeModel model) {
+		super(model);
 		setCellRenderer(new WorkspaceTreeCellRenderer());
 		expandPath(new TreePath(new Object[] {model.getRoot(), model.getChild(model.getRoot(), 0)}));
 		expandPath(new TreePath(new Object[] {model.getRoot(), model.getChild(model.getRoot(), 1)}));
@@ -200,14 +199,14 @@ public class ViewerWorkspaceTree extends AbstractViewerTree implements ActionFoc
 
 	public ActivateDocumentAction getActivateDocumentAction() {
 		if (activateDocumentAction == null) {
-			activateDocumentAction = new ActivateDocumentAction(messageSource, actionFocusManager, this);
+			activateDocumentAction = new ActivateDocumentAction( actionFocusManager, this);
 		}
 		return activateDocumentAction;
 	}
 
 	public OpenDocumentAction getOpenDocumentAction() {
 		if (openDocumentAction == null) {
-			openDocumentAction = new OpenDocumentAction(messageSource);
+			openDocumentAction = new OpenDocumentAction();
 			openDocumentAction.setDocumentFlowIntegrator(documentFlowIntegrator);
 			openDocumentAction.setOpenDocumentDialog(openDocumentDialog);
 		}
@@ -216,7 +215,7 @@ public class ViewerWorkspaceTree extends AbstractViewerTree implements ActionFoc
 
 	public CloseDocumentAction getCloseDocumentAction() {
 		if (closeDocumentAction == null) {
-			closeDocumentAction = new CloseDocumentAction(messageSource,this);
+			closeDocumentAction = new CloseDocumentAction(this);
 			closeDocumentAction.setDocumentFlowIntegrator(documentFlowIntegrator);
 		}
 		return closeDocumentAction;
@@ -224,7 +223,7 @@ public class ViewerWorkspaceTree extends AbstractViewerTree implements ActionFoc
 
 	public SaveDocumentAction getSaveDocumentAction() {
 		if (saveDocumentAction == null) {
-			saveDocumentAction = new SaveDocumentAction(messageSource,this);
+			saveDocumentAction = new SaveDocumentAction(this);
 			saveDocumentAction.setDocumentFlowIntegrator(documentFlowIntegrator);
 		}
 		return saveDocumentAction;
@@ -232,7 +231,7 @@ public class ViewerWorkspaceTree extends AbstractViewerTree implements ActionFoc
 
 	public SaveDocumentAsAction getSaveDocumentAsAction() {
 		if (saveDocumentAsAction == null) {
-			saveDocumentAsAction = new SaveDocumentAsAction(messageSource,this);
+			saveDocumentAsAction = new SaveDocumentAsAction(this);
 			saveDocumentAsAction.setDocumentFlowIntegrator(documentFlowIntegrator);
 		}
 		return saveDocumentAsAction;
@@ -240,7 +239,7 @@ public class ViewerWorkspaceTree extends AbstractViewerTree implements ActionFoc
 
 	public OpenMRUDAction getOpenMRUDAction() {
 		if (openMRUDAction == null) {
-			openMRUDAction = new OpenMRUDAction(messageSource,this);
+			openMRUDAction = new OpenMRUDAction(this);
 			openMRUDAction.setDocumentFlowIntegrator(documentFlowIntegrator);
 		}
 		return openMRUDAction;

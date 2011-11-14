@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
@@ -13,7 +14,6 @@ import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.domain.signal.BoundedSignalSelection;
 import org.signalml.plugin.export.signal.SignalSelection;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** PreciseSelectionAction
  *
@@ -28,11 +28,11 @@ public class PreciseSelectionAction extends AbstractFocusableSignalMLAction<Sign
 
 	private SignalSelectionDialog signalSelectionDialog;
 
-	public PreciseSelectionAction(MessageSourceAccessor messageSource, SignalPlotFocusSelector signalPlotFocusSelector) {
-		super(messageSource, signalPlotFocusSelector);
-		setText("action.preciseSelection");
+	public  PreciseSelectionAction( SignalPlotFocusSelector signalPlotFocusSelector) {
+		super( signalPlotFocusSelector);
+		setText(_("Select precisely"));
 		setIconPath("org/signalml/app/icon/preciseselection.png");
-		setToolTip("action.preciseSelectionToolTip");
+		setToolTip(_("Select signal fragments using selection dialog"));
 	}
 
 	@Override
@@ -64,7 +64,9 @@ public class PreciseSelectionAction extends AbstractFocusableSignalMLAction<Sign
 
 	@Override
 	public void setEnabledAsNeeded() {
-		setEnabled(getActionFocusSelector().getActiveSignalPlot() != null);
+		SignalPlotFocusSelector x = getActionFocusSelector();
+		if (null != x)
+			setEnabled(x.getActiveSignalPlot() != null);
 	}
 
 	public SignalSelectionDialog getSignalSelectionDialog() {

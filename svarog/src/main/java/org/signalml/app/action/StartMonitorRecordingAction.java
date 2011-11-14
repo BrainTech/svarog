@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.io.FileNotFoundException;
 import java.awt.event.ActionEvent;
 import org.apache.log4j.Logger;
@@ -12,7 +13,6 @@ import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.view.monitor.StartMonitorRecordingDialog;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * This class is responsible for actions regarding the menu item which starts 
@@ -35,15 +35,14 @@ public class StartMonitorRecordingAction extends MonitorRecordingAction {
 	/**
 	 * Constructor.
 	 *
-	 * @param messageSource the message source accessor capable of resolving localized message codes
 	 * @param signalDocumentFocusSelector a {@link SignalDocumentFocusSelector} used to detect
 	 * which document is active.
 	 */
-	public StartMonitorRecordingAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
-                super(messageSource, signalDocumentFocusSelector);
-		setText("action.startMonitorRecordingLabel");
+	public  StartMonitorRecordingAction( SignalDocumentFocusSelector signalDocumentFocusSelector) {
+                super( signalDocumentFocusSelector);
+		setText(_("Start monitor recording"));
 		setIconPath("org/signalml/app/icon/record.png");
-		setToolTip("action.startMonitorRecordingToolTip");
+		setToolTip(_("Record signal and tags from this monitor to a file"));
 	}
 
 	/**

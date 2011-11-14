@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -18,7 +19,6 @@ import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ExportSamplesToFileAction
  *
@@ -34,11 +34,11 @@ public abstract class ExportSamplesToFileAction extends ExportSamplesAction {
 	private ViewerFileChooser fileChooser;
 	private Component optionPaneParent;
 
-	public ExportSamplesToFileAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
-		setText("action.exportSamplesToFile");
+	public  ExportSamplesToFileAction() {
+		super();
+		setText(_("Save samples as txt file"));
 		setIconPath("org/signalml/app/icon/script_save.png");
-		setToolTip("action.exportSamplesToFileToolTip");
+		setToolTip(_("Save samples as a txt file"));
 	}
 
 	@Override

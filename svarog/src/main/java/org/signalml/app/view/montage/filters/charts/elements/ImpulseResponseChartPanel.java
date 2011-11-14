@@ -3,7 +3,7 @@
  */
 package org.signalml.app.view.montage.filters.charts.elements;
 
-import org.springframework.context.support.MessageSourceAccessor;
+import static org.signalml.app.SvarogApplication._;
 
 /**
  * A chart panel containing a filter impulse response.
@@ -13,12 +13,10 @@ public class ImpulseResponseChartPanel extends TimeDomainResponseChartPanel {
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source capable of resolving localized
-	 * messages
 	 */
-	public ImpulseResponseChartPanel(MessageSourceAccessor messageSource) {
-		super(messageSource);
-		setTitle(messageSource.getMessage("editTimeDomainSampleFilter.impulseResponseGrapTitle"));
+	public  ImpulseResponseChartPanel() {
+		super();
+		setTitle(_("Impulse response [amplitude]"));
 	}
 
 }

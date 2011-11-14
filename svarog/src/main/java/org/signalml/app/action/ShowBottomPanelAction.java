@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.ItemSelectable;
 import java.awt.event.ActionEvent;
 
@@ -10,7 +11,6 @@ import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.ViewFocusSelector;
 import org.signalml.app.view.View;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ShowBottomPanelAction
  *
@@ -23,10 +23,10 @@ public class ShowBottomPanelAction extends AbstractSignalMLAction {
 
 	protected static final Logger logger = Logger.getLogger(ShowBottomPanelAction.class);
 
-	public ShowBottomPanelAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
-		setText("action.showBottomPanel");
-		setToolTip("action.showBottomPanelToolTip");
+	public  ShowBottomPanelAction() {
+		super();
+		setText(_("Show bottom panel"));
+		setToolTip(_("Show bottom panel"));
 		putValue(SELECTED_KEY, new Boolean(true));
 	}
 

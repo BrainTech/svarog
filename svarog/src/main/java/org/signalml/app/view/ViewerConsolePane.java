@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -31,7 +32,6 @@ import org.apache.log4j.PatternLayout;
 import org.signalml.app.logging.ViewerConsoleAppender;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.dialog.OptionPane;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ViewerConsolePane
  *
@@ -46,9 +46,6 @@ public class ViewerConsolePane extends JPanel implements Console {
 	private JScrollPane scrollPane;
 	private PlainDocument document;
 	private JTextArea textArea;
-
-	private MessageSourceAccessor messageSource;
-
 	private boolean scrollLock = false;
 	private int lockedCaretPosition = 0;
 
@@ -69,15 +66,15 @@ public class ViewerConsolePane extends JPanel implements Console {
 		JToggleButton noLogDivertButton = new JToggleButton("", IconUtils.loadClassPathIcon("org/signalml/app/icon/stop.png"));
 		noLogDivertButton.setActionCommand("0");
 		noLogDivertButton.addActionListener(logDivertLevelListener);
-		noLogDivertButton.setToolTipText(messageSource.getMessage("viewer.console.noLogDivertToolTip"));
+		noLogDivertButton.setToolTipText(_("Do not show log messages in the console"));
 		JToggleButton errorLogDivertButton = new JToggleButton("", IconUtils.loadClassPathIcon("org/signalml/app/icon/error.png"));
 		errorLogDivertButton.setActionCommand("1");
 		errorLogDivertButton.addActionListener(logDivertLevelListener);
-		errorLogDivertButton.setToolTipText(messageSource.getMessage("viewer.console.errorLogDivertToolTip"));
+		errorLogDivertButton.setToolTipText(_("Show only warning and error log messages in the console"));
 		JToggleButton debugLogDivertButton = new JToggleButton("", IconUtils.loadClassPathIcon("org/signalml/app/icon/bug.png"));
 		debugLogDivertButton.setActionCommand("2");
 		debugLogDivertButton.addActionListener(logDivertLevelListener);
-		debugLogDivertButton.setToolTipText(messageSource.getMessage("viewer.console.debugLogDivertToolTip"));
+		debugLogDivertButton.setToolTipText(_("Show all log messages in the console, including debug messages"));
 
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(noLogDivertButton);
@@ -123,16 +120,18 @@ public class ViewerConsolePane extends JPanel implements Console {
 	public void addText(final String text) {
 		final Runnable task = new Runnable() {
 			public void run() {
-				synchronized (document) {
-					try {
-						document.insertString(document.getLength(), text, null);
-						if (scrollLock) {
-							textArea.setCaretPosition(lockedCaretPosition);
-						} else {
-							textArea.setCaretPosition(document.getLength());
+				if (null != document) {
+					synchronized (document) {
+						try {
+							document.insertString(document.getLength(), text, null);
+							if (scrollLock) {
+								textArea.setCaretPosition(lockedCaretPosition);
+							} else {
+								textArea.setCaretPosition(document.getLength());
+							}
+						} catch (BadLocationException ex) {
+							logger.error("Bad document location", ex);
 						}
-					} catch (BadLocationException ex) {
-						logger.error("Bad document location", ex);
 					}
 				}
 			}
@@ -179,18 +178,14 @@ public class ViewerConsolePane extends JPanel implements Console {
 		this.fileChooser = fileChooser;
 	}
 
-	public void setMessageSource(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
-	}
-
 	class ScrollLockAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 
 		public ScrollLockAction() {
-			super(messageSource.getMessage("viewer.console.scrollLock"));
+			super(_("Lock scroll"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/lock.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION, messageSource.getMessage("viewer.console.scrollLockToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION, _("Prevent the console from scrolling when new text is appended"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {
@@ -208,9 +203,9 @@ public class ViewerConsolePane extends JPanel implements Console {
 		private static final long serialVersionUID = 1L;
 
 		public ClearAction() {
-			super(messageSource.getMessage("viewer.console.clear"));
+			super(_("Clear"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/trash.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION, messageSource.getMessage("viewer.console.clearToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION, _("Clear the console"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {
@@ -231,9 +226,9 @@ public class ViewerConsolePane extends JPanel implements Console {
 		private static final long serialVersionUID = 1L;
 
 		public SaveAsTextAction() {
-			super(messageSource.getMessage("viewer.console.saveAsText"));
+			super(_("Save as text"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/script_save.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION, messageSource.getMessage("viewer.console.saveAsTextToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION, _("Save the contents of the console to a text file"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {

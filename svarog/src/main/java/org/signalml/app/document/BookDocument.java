@@ -3,6 +3,7 @@
  */
 package org.signalml.app.document;
 
+import static org.signalml.app.SvarogApplication._R;
 import java.beans.IntrospectionException;
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +11,6 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.model.LabelledPropertyDescriptor;
-import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.domain.book.DefaultBookBuilder;
 import org.signalml.domain.book.BookFormatException;
@@ -22,8 +22,6 @@ import org.signalml.domain.book.filter.AtomFilter;
 import org.signalml.domain.book.filter.AtomFilterChain;
 import org.signalml.exception.ResolvableException;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
-
 
 /**
  * The document with a {@link StandardBook book}.
@@ -186,17 +184,16 @@ public class BookDocument extends AbstractFileDocument {
 						String filterName = filter.getName();
 						logger.warn("Filter [" + filterName + "] failed to initialize", ex);
 
-						MessageSourceAccessor messageSource = ErrorsDialog.getStaticMessageSource();
 						String message = "Filter initialization failed";
-						if (messageSource != null) {
-							String exMessage = messageSource.getMessage(new ResolvableException(ex));
+						{
+							String exMessage = getSvarogI18n().getMessage(new ResolvableException(ex));
 							if (exMessage.length() > 50) {
 								exMessage = exMessage.substring(0, 50) + "...";
 							}
 							if (filterName.length() > 30) {
 								filterName = filterName.substring(0, 30) + "...";
 							}
-							message = messageSource.getMessage("error.filterFailedToInitialize", new Object[] { filterName, exMessage });
+							message = _R("Filter [{0}] failed to initialize with message [{1}] and has been disabled.", filterName, exMessage);
 						}
 
 						OptionPane.showRawError(null, message);

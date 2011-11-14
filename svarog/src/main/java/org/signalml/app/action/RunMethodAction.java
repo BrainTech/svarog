@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 
@@ -19,7 +20,6 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.task.LocalTask;
 import org.signalml.task.Task;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** RunMethodAction
  *
@@ -36,21 +36,20 @@ public class RunMethodAction extends AbstractSignalMLAction {
 	private ApplicationMethodManager methodManager;
 	private Method method;
 
-	public RunMethodAction(MessageSourceAccessor messageSource, Method method, ApplicationMethodManager methodManager) {
-		this.messageSource = messageSource;
+	public  RunMethodAction( Method method, ApplicationMethodManager methodManager) {
 		this.method = method;
 		this.methodManager = methodManager;
-		String nameCode = null;
+		String name = null;
 		String iconPath = null;
 		ApplicationMethodDescriptor descriptor = methodManager.getMethodData(method);
 		if (descriptor != null) {
-			nameCode = descriptor.getNameCode();
+			name = descriptor.getName();
 			iconPath = descriptor.getIconPath();
 		}
-		if (nameCode != null && !nameCode.isEmpty()) {
-			setText(nameCode);
+		if (name != null && !name.isEmpty()) {
+			setText(name);
 		} else {
-			setText("action.runMethod");
+			setText(_("Run method {0}"));
 		}
 		if (iconPath != null && !iconPath.isEmpty()) {
 			setIconPath(iconPath);

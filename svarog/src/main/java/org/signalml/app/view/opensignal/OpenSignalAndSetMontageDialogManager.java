@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.opensignal;
 
+import static org.signalml.app.SvarogApplication._;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.logging.Level;
@@ -13,7 +14,6 @@ import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.signal.SignalType;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * This manager controls the flow of information between the montage part
@@ -25,11 +25,6 @@ import org.springframework.context.support.MessageSourceAccessor;
  * @author Piotr Szachewicz
  */
 public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListener {
-
-	/**
-	 * Message source to resolve localized messages.
-	 */
-	private MessageSourceAccessor messageSource;
 
 	/**
 	 * The OpenSignalAndSetMontageDialog to which this manager is connected.
@@ -55,11 +50,9 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 	 * @param openSignalAndSetMontageDialog the dialog to which this manager
 	 * should be connected.
 	 */
-	public OpenSignalAndSetMontageDialogManager(OpenSignalAndSetMontageDialog openSignalAndSetMontageDialog, MessageSourceAccessor messageSource) {
+	public OpenSignalAndSetMontageDialogManager(OpenSignalAndSetMontageDialog openSignalAndSetMontageDialog) {
 		this.openSignalAndSetMontageDialog = openSignalAndSetMontageDialog;
 		this.signalSourcePanel = openSignalAndSetMontageDialog.getSignalSourcePanel();
-		this.messageSource = messageSource;
-
 		signalSourcePanel.addPropertyChangeListener(this);
 	}
 
@@ -158,8 +151,8 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 	 * has been changed
 	 */
 	private void showSamplingFrequencyChangedFiltersWillBeDeletedDialog(float newSamplingFrequency) {
-		String dialogText = messageSource.getMessage("opensignal.warning.samplingFrequencyChangedFiltersWillBeDeleted");
-		String dialogTitle = messageSource.getMessage("warning");
+		String dialogText = _("Do you really want to change the sampling frequency? All filters will be deleted.");
+		String dialogTitle = _("Warning!");
 		int response = JOptionPane.showConfirmDialog(null, dialogText, dialogTitle, JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
 		switch (response) {

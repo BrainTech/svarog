@@ -60,7 +60,6 @@ import org.signalml.app.util.PreferenceName;
 import org.signalml.app.util.XMLUtils;
 import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.ViewerMainFrame;
-import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.dialog.OptionPane;
 import org.signalml.app.view.dialog.ProfilePathDialog;
 import org.signalml.app.view.dialog.SplashScreen;
@@ -84,8 +83,6 @@ import org.signalml.plugin.loader.PluginLoaderHi;
 import org.signalml.util.SvarogConstants;
 import org.signalml.util.Util;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.context.support.MessageSourceAccessor;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.util.Log4jConfigurer;
 
 import com.thoughtworks.xstream.XStream;
@@ -110,7 +107,6 @@ public class SvarogApplication implements java.lang.Runnable {
 
 	private Preferences preferences = null;
 	private Locale locale = null;
-	private MessageSourceAccessor messageSource = null;
 	protected static final Logger logger = Logger.getLogger(SvarogApplication.class);
 	public static final int INITIALIZATION_STEP_COUNT = 5;
 	private File profileDir = null;
@@ -350,12 +346,7 @@ public class SvarogApplication implements java.lang.Runnable {
 		Locale.setDefault(locale);
 
 		logger.debug("Locale set to [" + locale.toString() + "]");
-
 		logger.debug("Application starting");
-
-		if (messageSource == null) {
-			createMessageSource();
-		}
 
 		// TODO check nested modal dialogs
 		// setupGUIExceptionHandler();
@@ -366,7 +357,7 @@ public class SvarogApplication implements java.lang.Runnable {
 
 						@Override
 						public void run() {
-							splashScreen = new SplashScreen(messageSource);
+							splashScreen = new SplashScreen();
 							splashScreen.setVisible(true);
 						}
 					});
@@ -440,11 +431,6 @@ public class SvarogApplication implements java.lang.Runnable {
 		if (locale == null) {
 			logger.error("Language choice canceled");
 			System.exit(1);
-		}
-
-		// we need to bootstrap the message source
-		if (messageSource == null) {
-			createMessageSource();
 		}
 
 		boolean ok = false;
@@ -531,20 +517,6 @@ public class SvarogApplication implements java.lang.Runnable {
 
 	}
 
-	private void createMessageSource() {
-		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-		messageSource.setCacheSeconds(-1);
-		messageSource.setBasenames(new String[]{
-				"classpath:org/signalml/app/resource/message",
-				"classpath:org/signalml/resource/mp5",
-				"classpath:org/signalml/resource/wsmessage"
-			});
-
-		this.messageSource = new MessageSourceAccessor(messageSource, locale);
-		OptionPane.setMessageSource(this.messageSource);
-		ErrorsDialog.setStaticMessageSource(this.messageSource);
-	}
-
 	private boolean setProfileDir(GeneralConfiguration config, boolean firstTime) {
 
 		String profilePath = null;
@@ -591,7 +563,7 @@ public class SvarogApplication implements java.lang.Runnable {
 
 	private GeneralConfiguration askForProfilePath(GeneralConfiguration suggested) {
 
-		ProfilePathDialog dialog = new ProfilePathDialog(messageSource, null, true);
+		ProfilePathDialog dialog = new ProfilePathDialog( null, true);
 
 		GeneralConfiguration model;
 		if (suggested == null) {
@@ -646,7 +618,7 @@ public class SvarogApplication implements java.lang.Runnable {
 
 	private void createApplication() {
 
-		splash(messageSource.getMessage("startup.restoringConfiguration"), false);
+		splash(_("Restoring configuration"), false);
 
 		applicationConfig = new ApplicationConfiguration();
 		applicationConfig.setProfileDir(profileDir);
@@ -657,7 +629,7 @@ public class SvarogApplication implements java.lang.Runnable {
 				"Failed to read application configuration - will use defaults");
 		applicationConfig.applySystemSettings();
 
-		splash(messageSource.getMessage("startup.initializingCodecs"), true);
+		splash(_("Initializing codecs"), true);
 
 		signalMLCodecManager = new DefaultSignalMLCodecManager();
 		signalMLCodecManager.setProfileDir(profileDir);
@@ -673,7 +645,7 @@ public class SvarogApplication implements java.lang.Runnable {
 
 		signalMLCodecManager.verify();
 
-		splash(messageSource.getMessage("startup.initializingDocumentManagement"), true);
+		splash(_("Initializing document manager"), true);
 
 		mrudRegistry = new DefaultMRUDRegistry();
 		mrudRegistry.setProfileDir(profileDir);
@@ -689,7 +661,7 @@ public class SvarogApplication implements java.lang.Runnable {
 
 		documentManager = new DefaultDocumentManager();
 
-		splash(messageSource.getMessage("startup.initializingServices"), true);
+		splash(_("Initializing services"), true);
 
 		documentDetector = new ExtensionBasedDocumentDetector();
 
@@ -707,7 +679,6 @@ public class SvarogApplication implements java.lang.Runnable {
 		}
 
 		methodManager = new ApplicationMethodManager();
-		methodManager.setMessageSource(messageSource);
 		methodManager.setProfileDir(profileDir);
 		methodManager.setStreamer(streamer);
 		methodManager.setDocumentManager(documentManager);
@@ -719,10 +690,9 @@ public class SvarogApplication implements java.lang.Runnable {
 
 		taskManager = new ApplicationTaskManager();
 		taskManager.setMode(SignalMLOperationMode.APPLICATION);
-		taskManager.setMessageSource(messageSource);
 		taskManager.setMethodManager(methodManager);
 
-		splash(messageSource.getMessage("startup.initializingPresets"), true);
+		splash(_("Initializing presets"), true);
 
 		montagePresetManager = new MontagePresetManager();
 		montagePresetManager.setProfileDir(profileDir);
@@ -950,10 +920,9 @@ public class SvarogApplication implements java.lang.Runnable {
 
 	private void createMainFrame() {
 
-		splash(messageSource.getMessage("startup.creatingMainFrame"), false);
+		splash(_("Creating main window"), false);
 
 		ViewerElementManager elementManager = new ViewerElementManager(SignalMLOperationMode.APPLICATION);
-		elementManager.setMessageSource(messageSource);
 		elementManager.setProfileDir(profileDir);
 		elementManager.setDocumentManager(documentManager);
 		elementManager.setMrudRegistry(mrudRegistry);
@@ -979,7 +948,6 @@ public class SvarogApplication implements java.lang.Runnable {
 		elementManager.configureImportedElements();
 
 		viewerMainFrame = new ViewerMainFrame();
-		viewerMainFrame.setMessageSource(messageSource);
 		viewerMainFrame.setElementManager(elementManager);
 
 		this.setViewerElementManager(elementManager);
@@ -1016,7 +984,7 @@ public class SvarogApplication implements java.lang.Runnable {
 //								splashScreen = null;
 //							}
 //
-//							ErrorsDialog errorsDialog = new ErrorsDialog(messageSource, null, true, "error.exception");
+//							ErrorsDialog errorsDialog = new ErrorsDialog( null, true, "error.exception");
 //							ResolvableException ex = new ResolvableException(e);
 //							errorsDialog.showDialog(ex, true);
 //						} catch (Throwable ex1) {
@@ -1168,11 +1136,6 @@ public class SvarogApplication implements java.lang.Runnable {
 		return startupDir;
 	}
 
-	/** {@link #messageSource} getter. */
-	public MessageSourceAccessor getMessageSourceAccessor() {
-		return messageSource;
-	}
-
 	/** {@link #elementManager} getter. */
 	public ViewerElementManager getViewerElementManager() {
 		return viewerElementManager;
@@ -1181,5 +1144,40 @@ public class SvarogApplication implements java.lang.Runnable {
 	/** {@link #elementManager} setter. */
 	private void setViewerElementManager(ViewerElementManager m) {
 		this.viewerElementManager = m;
+	}
+
+	/**
+	 * Translates the message for the specified key using the current Svarog locale.
+	 * This method is equivalent to:
+	 * 
+	 * <code>
+	 * org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance()._(msgKey);
+	 * </code>
+	 * 
+	 * @param msgKey English version of the message
+	 * @return i18n version of the message (depending on the current Svarog locale),
+	 *         or key if not found
+	 */
+	public static String _(String msgKey) {
+		return org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance()._(msgKey);
+	}
+
+	/**
+	 * Translates the message for the specified key using the current Svarog locale
+	 * and renders it using actual values.
+	 * 
+	 * This method is equivalent to:
+	 * 
+	 * <code>
+	 * org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance()._R(msgKey, parameters);
+	 * </code>
+	 * 
+	 * @param msgKey English version of the message
+	 * @param arguments actual values to place in the message
+	 * @return i18n version of the message (depending on the current Svarog locale),
+	 *         with values rendered in, or key if not found
+	 */
+	public static String _R(String msgKey, Object ... arguments) {
+		return org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance()._R(msgKey, arguments);
 	}
 }

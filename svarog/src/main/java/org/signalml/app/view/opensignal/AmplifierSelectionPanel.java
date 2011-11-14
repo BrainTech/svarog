@@ -1,5 +1,6 @@
 package org.signalml.app.view.opensignal;
 
+import static org.signalml.app.SvarogApplication._;
 import org.signalml.app.model.AmplifierConnectionDescriptor;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -35,7 +36,6 @@ import org.signalml.app.worker.amplifiers.AmplifierInstance;
 import org.signalml.app.worker.amplifiers.DeviceInfo;
 import org.signalml.app.worker.amplifiers.DiscoveryState;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Allows to choose an amplifier from a list.
@@ -56,10 +56,6 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
          * Refresh button.
          */
         private JButton refreshButton;
-        /**
-         * Message source.
-         */
-        private MessageSourceAccessor messageSource;
         /**
          * Viewer element manager.
          */
@@ -92,17 +88,14 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
         /**
          * Default constructor.
          *
-         * @param messageSource {@link #messageSource}
          * @param elementManager {@link #elementManager}
          * @param sourcePanel {@link #sourcePanel}
          */
-        public AmplifierSelectionPanel(MessageSourceAccessor messageSource,
+        public  AmplifierSelectionPanel(
                 ViewerElementManager elementManager,
                 AmplifierSignalSourcePanel sourcePanel) {
 
                 super();
-
-                this.messageSource = messageSource;
                 this.elementManager = elementManager;
                 this.sourcePanel = sourcePanel;
 
@@ -168,7 +161,7 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
                 try {
                         currentDefinitions = elementManager.getAmplifierDefinitionPresetManager().getDefinitionList();
                 } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(this, messageSource.getMessage("amplifierSelection.consistency"));
+                        JOptionPane.showMessageDialog(this, _("Amplifier Definitions not consistent"));
                         return;
                 }
 
@@ -178,7 +171,7 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
 
                 getProgressBar().setVisible(true);
 
-                currentWorker = new DeviceDiscoveryWorker(messageSource);
+                currentWorker = new DeviceDiscoveryWorker();
                 currentWorker.addPropertyChangeListener(this);
                 currentWorker.execute();
         }
@@ -218,7 +211,7 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
                 setLayout(new BorderLayout(10, 10));
 
                 CompoundBorder amplifiersListBorder = new CompoundBorder(
-                        new TitledBorder(messageSource.getMessage("amplifierSelection.amplifiersList")),
+                        new TitledBorder(_("Amplifiers List")),
                         new EmptyBorder(3, 3, 3, 3));
 
                 JPanel amplifiersListPanel = new JPanel(new BorderLayout(10, 10));
@@ -337,7 +330,7 @@ public class AmplifierSelectionPanel extends JPanel implements PropertyChangeLis
                                         refresh();
                                 }
                         });
-                        refreshButton.setText(messageSource.getMessage("amplifierSelection.refresh"));
+                        refreshButton.setText(_("Refresh"));
                 }
                 return refreshButton;
         }

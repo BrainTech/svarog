@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import org.signalml.app.config.preset.StyledTagSetPresetManager;
 import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.element.MultiplexerConnectionPanel;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.signalml.app.view.element.MonitorRecordingPanel;
 import org.signalml.app.model.OpenMonitorDescriptor;
 
@@ -44,13 +44,11 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source capable of resolving localized
-	 * messages
 	 * @param viewerElementManager ViewerElementManager to be used by this
 	 * panel
 	 */
-	public OpenBCISignalSourcePanel(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager) {
-		super(messageSource, viewerElementManager);
+	public  OpenBCISignalSourcePanel( ViewerElementManager viewerElementManager) {
+		super( viewerElementManager);
 	}
 
 	@Override
@@ -124,7 +122,7 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 	 */
 	public SignalParametersPanelForOpenBCI getSignalParametersPanel() {
 		if (signalParametersPanel == null) {
-			signalParametersPanel = new SignalParametersPanelForOpenBCI(messageSource);
+			signalParametersPanel = new SignalParametersPanelForOpenBCI();
 			signalParametersPanel.addPropertyChangeListener(this);
 		}
 		return signalParametersPanel;
@@ -136,7 +134,7 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 	 */
 	protected MonitorRecordingPanel getMonitorRecordingPanel() {
 		if (monitorRecordingPanel == null) {
-			monitorRecordingPanel = new MonitorRecordingPanel(messageSource);
+			monitorRecordingPanel = new MonitorRecordingPanel();
 		}
 		return monitorRecordingPanel;
 	}

@@ -45,7 +45,7 @@ public class NewArtifactMethodDescriptor extends PluginAbstractMethodDescriptor 
 	}
 
 	@Override
-	public String getIterationNameCode() {
+	public String getIterationName() {
 		return null;
 	}
 
@@ -101,7 +101,7 @@ public class NewArtifactMethodDescriptor extends PluginAbstractMethodDescriptor 
 	}
 
 	@Override
-	public String getNameCode() {
+	public String getName() {
 		return this.methodManager.getMethodConfig().getRunMethodString();
 	}
 

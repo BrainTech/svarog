@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -23,7 +24,6 @@ import org.signalml.app.config.preset.StyledTagSetPresetManager;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.TagDocument;
 import org.signalml.plugin.export.signal.TagStyle;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Panel which allows to select which {@link TagStyle styles} should be used in
@@ -46,10 +46,6 @@ public class NewTagPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * the {@link MessageSourceAccessor source} of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
 	/**
 	 * the radio button that indicates that the {@link TagDocument tag document}
 	 * should contain no {@link TagStyle style}
@@ -94,15 +90,12 @@ public class NewTagPanel extends JPanel {
 	private StyledTagSetPresetManager styledTagSetPresetManager;
 
 	/**
-	 * Constructor. Sets the {@link MessageSourceAccessor message source} and
-	 * initializes this panel.
-	 * @param messageSource the source of messages (labels)
+	 * Constructor. Initializes the panel.
 	 * @param styledTagSetPresetManager the {@link PresetManager} which handles
 	 * the tag styles presets.
 	 */
-	public NewTagPanel(MessageSourceAccessor messageSource, StyledTagSetPresetManager styledTagSetPresetManager) {
+	public  NewTagPanel( StyledTagSetPresetManager styledTagSetPresetManager) {
 		super();
-		this.messageSource = messageSource;
 		this.styledTagSetPresetManager = styledTagSetPresetManager;
 		initialize();
 	}
@@ -123,7 +116,7 @@ public class NewTagPanel extends JPanel {
 	 */
 	private void initialize() {
 
-		setBorder(BorderFactory.createTitledBorder(messageSource.getMessage("newTag.title")));
+		setBorder(BorderFactory.createTitledBorder(_("Choose new tag type")));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		radioGroup = new ButtonGroup();
@@ -151,7 +144,7 @@ public class NewTagPanel extends JPanel {
 	public JRadioButton getEmptyRadio() {
 		if (emptyRadio == null) {
 			emptyRadio = new JRadioButton();
-			emptyRadio.setText(messageSource.getMessage("newTag.emptyRadio"));
+			emptyRadio.setText(_("An empty tag with no styles"));
 			emptyRadio.setAlignmentX(Component.LEFT_ALIGNMENT);
 			radioGroup.add(emptyRadio);
 		}
@@ -168,7 +161,7 @@ public class NewTagPanel extends JPanel {
 	public JRadioButton getDefaultSleepRadio() {
 		if (defaultSleepRadio == null) {
 			defaultSleepRadio = new JRadioButton();
-			defaultSleepRadio.setText(messageSource.getMessage("newTag.defaultSleepRadio"));
+			defaultSleepRadio.setText(_("Use standard sleep staging styles"));
 			defaultSleepRadio.setAlignmentX(Component.LEFT_ALIGNMENT);
 			radioGroup.add(defaultSleepRadio);
 		}
@@ -198,7 +191,7 @@ public class NewTagPanel extends JPanel {
 	public JRadioButton getPresetRadio() {
 		if (presetRadio == null) {
 			presetRadio = new JRadioButton();
-			presetRadio.setText(messageSource.getMessage("newTag.presetRadio"));
+			presetRadio.setText(_("Use styles from selected styles preset"));
 			presetRadio.setAlignmentX(Component.LEFT_ALIGNMENT);
 			radioGroup.add(presetRadio);
 
@@ -227,7 +220,7 @@ public class NewTagPanel extends JPanel {
 	public JRadioButton getFromFileRadio() {
 		if (fromFileRadio == null) {
 			fromFileRadio = new JRadioButton();
-			fromFileRadio.setText(messageSource.getMessage("newTag.fromFileRadio"));
+			fromFileRadio.setText(_("Use styles from selected file"));
 			fromFileRadio.setAlignmentX(Component.LEFT_ALIGNMENT);
 			radioGroup.add(fromFileRadio);
 			fromFileRadio.addItemListener(new ItemListener() {
@@ -264,7 +257,7 @@ public class NewTagPanel extends JPanel {
 			fileChooser.setAlignmentX(Component.LEFT_ALIGNMENT);
 			fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 			fileChooser.resetChoosableFileFilters();
-			FileFilter[] filters = ManagedDocumentType.TAG.getFileFilters(messageSource);
+			FileFilter[] filters = ManagedDocumentType.TAG.getFileFilters();
 			for (FileFilter f : filters) {
 				fileChooser.addChoosableFileFilter(f);
 			}

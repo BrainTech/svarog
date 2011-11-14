@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -15,8 +16,6 @@ import javax.swing.JTextField;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.dialog.RegisterCodecDialog;
 import org.signalml.codec.SignalMLCodec;
-import org.springframework.context.support.MessageSourceAccessor;
-
 
 /**
  * Panel for the second step of {@link RegisterCodecDialog}.
@@ -29,11 +28,6 @@ import org.springframework.context.support.MessageSourceAccessor;
 public class RegisterCodecStepTwoPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
 
 	/**
 	 * the panel with the desired {@link #getNameField() format name} of the
@@ -52,13 +46,10 @@ public class RegisterCodecStepTwoPanel extends JPanel {
 	private JLabel warningLabel = null;
 
 	/**
-	 * Constructor. Sets the {@link MessageSourceAccessor message source} and
-	 * initializes this panel.
-	 * @param messageSource the source of messages (labels)
+	 * Constructor. Initializes the panel.
 	 */
-	public RegisterCodecStepTwoPanel(MessageSourceAccessor messageSource) {
+	public RegisterCodecStepTwoPanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -91,9 +82,9 @@ public class RegisterCodecStepTwoPanel extends JPanel {
 	private JPanel getFormatNamePanel() {
 		if (formatNamePanel == null) {
 			formatNamePanel = new JPanel();
-			formatNamePanel.setBorder(BorderFactory.createTitledBorder(messageSource.getMessage("registerCodec.chooseFormatName")));
+			formatNamePanel.setBorder(BorderFactory.createTitledBorder(_("Choose the name of the format")));
 			formatNamePanel.setLayout(new BorderLayout());
-			TitledComponentPanel namePanel = new TitledComponentPanel(messageSource.getMessage("registerCodec.formatName"),getNameField());
+			TitledComponentPanel namePanel = new TitledComponentPanel(_("Format name"),getNameField());
 			namePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 			formatNamePanel.add(namePanel,BorderLayout.NORTH);
 			formatNamePanel.add(getWarningLabel(),BorderLayout.CENTER);
@@ -127,7 +118,7 @@ public class RegisterCodecStepTwoPanel extends JPanel {
 	 */
 	public JLabel getWarningLabel() {
 		if (warningLabel == null) {
-			warningLabel = new JLabel(messageSource.getMessage("registerCodec.nameExistsWarning"));
+			warningLabel = new JLabel(_("Name exists. Current codec will be replaced!"));
 			warningLabel.setIcon(IconUtils.getWarningIcon());
 			warningLabel.setHorizontalAlignment(JLabel.CENTER);
 			warningLabel.setAlignmentX(Component.LEFT_ALIGNMENT);

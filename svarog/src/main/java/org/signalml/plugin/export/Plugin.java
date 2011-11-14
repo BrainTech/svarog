@@ -29,8 +29,9 @@ public interface Plugin {
 	 * @param access the instance of the implementation of {@link SvarogAccess} interface,
 	 * which should be used to communicate with Svarog.
 	 * It is advised to store it for later use.
-	 * @throws SignalMLException if the registration process fails
+	 * @param auth plugin auth object to be used with certain plugin API methods
+	 * (just pass it back as is)
+	 * @throws Exception if the registration process fails
 	 */
-	public void register(SvarogAccess access) throws SignalMLException;	
-	
+	public void register(SvarogAccess access, PluginAuth auth) throws Exception;
 }

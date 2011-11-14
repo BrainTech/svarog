@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.dialog;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Window;
 import java.io.IOException;
 import java.net.URL;
@@ -17,8 +18,7 @@ import org.signalml.app.view.element.PagingParametersPanel;
 import org.signalml.app.view.element.RequiredSignalParametersPanel;
 import org.signalml.app.view.element.SignalParametersPanel;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.validation.Errors;
 
@@ -29,7 +29,7 @@ import org.springframework.validation.Errors;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class SignalParametersDialog extends AbstractDialog {
+public class SignalParametersDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
 
 	private static final long serialVersionUID = 1L;
 
@@ -47,12 +47,11 @@ public class SignalParametersDialog extends AbstractDialog {
 	/**
 	 * Constructor. Sets message source, parent window and if this dialog
 	 * blocks top-level windows.
-	 * @param messageSource message source to set
 	 * @param f the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public SignalParametersDialog(MessageSourceAccessor messageSource, Window f, boolean isModal) {
-		super(messageSource, f, isModal);
+	public  SignalParametersDialog( Window f, boolean isModal) {
+		super( f, isModal);
 	}
 
 	/**
@@ -61,7 +60,7 @@ public class SignalParametersDialog extends AbstractDialog {
 	 */
 	@Override
 	protected void initialize() {
-		setTitle(messageSource.getMessage("signalParameters.title"));
+		setTitle(_("Signal parameters"));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/signalparameters.png"));
 		setResizable(false);
 		super.initialize();
@@ -74,7 +73,7 @@ public class SignalParametersDialog extends AbstractDialog {
 	@Override
 	public JComponent createInterface() {
 
-		panel = new SignalParametersPanel(messageSource);
+		panel = new SignalParametersPanel();
 		return panel;
 
 	}

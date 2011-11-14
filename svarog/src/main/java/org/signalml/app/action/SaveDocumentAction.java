@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -14,7 +15,6 @@ import org.signalml.app.document.MutableDocument;
 import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Document;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** SaveDocumentAction
  *
@@ -29,11 +29,11 @@ public class SaveDocumentAction extends AbstractFocusableSignalMLAction<Document
 
 	private DocumentFlowIntegrator documentFlowIntegrator;
 
-	public SaveDocumentAction(MessageSourceAccessor messageSource, DocumentFocusSelector documentFocusSelector) {
-		super(messageSource, documentFocusSelector);
-		setText("action.saveDocument");
+	public  SaveDocumentAction( DocumentFocusSelector documentFocusSelector) {
+		super( documentFocusSelector);
+		setText(_("Save"));
 		setIconPath("org/signalml/app/icon/filesave.png");
-		setToolTip("action.saveDocumentToolTip");
+		setToolTip(_("Save the active document"));
 	}
 
 	@Override
@@ -64,11 +64,14 @@ public class SaveDocumentAction extends AbstractFocusableSignalMLAction<Document
 	@Override
 	public void setEnabledAsNeeded() {
 		boolean enabled = false;
-		Document document = getActionFocusSelector().getActiveDocument();
-		if (document != null) {
-			if (document instanceof MutableDocument) {
-				if (!((MutableDocument) document).isSaved()) {
-					enabled = true;
+		DocumentFocusSelector x = getActionFocusSelector();
+		if (null != x) {
+			Document document = x.getActiveDocument();
+			if (document != null) {
+				if (document instanceof MutableDocument) {
+					if (!((MutableDocument) document).isSaved()) {
+						enabled = true;
+					}
 				}
 			}
 		}

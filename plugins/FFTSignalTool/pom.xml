@@ -17,6 +17,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.build.i18n.resources>src/main/resources/i18n/</project.build.i18n.resources>
 	</properties>
 
 	<build>
@@ -40,6 +41,16 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.xnap.commons</groupId>
+				<artifactId>maven-gettext-plugin</artifactId>
+
+				<configuration>
+					<poDirectory>${project.build.i18n.resources}</poDirectory>
+					<targetBundle>org.signalml.plugin.fftsignaltool.i18n.I18nBundle</targetBundle>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

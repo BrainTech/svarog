@@ -1,7 +1,7 @@
 /* AbstractDialog.java created 2007-09-11
  *
  */
-package org.signalml.plugin.export.view;
+package org.signalml.app.view.dialog;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -28,12 +28,11 @@ import javax.swing.border.EmptyBorder;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.dialog.ErrorsDialog;
-import org.signalml.app.view.dialog.HelpDialog;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.impl.PluginAccessClass;
 import org.signalml.util.SvarogConstants;
-import org.springframework.context.support.MessageSourceAccessor;
+import static org.signalml.app.SvarogApplication._;
+
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 
@@ -58,7 +57,6 @@ public abstract class AbstractDialog extends JDialog {
 	static final long serialVersionUID = 1L;
 
 	protected transient final Logger logger = Logger.getLogger(getClass());
-	protected final MessageSourceAccessor messageSource;
 
 	/**
 	 * true if the initialization has been performed, false otherwise
@@ -134,32 +132,19 @@ public abstract class AbstractDialog extends JDialog {
 	 */
 	public AbstractDialog() {
 		super();
-		messageSource = PluginAccessClass.getSharedInstance().getMessageSource();
-	}
-	
-	
-	/**
-	 * Constructor. Sets message source.
-	 * @param messageSource message source to set
-	 */
-	public AbstractDialog(MessageSourceAccessor messageSource) {
-		super();
-		this.messageSource = messageSource;
 	}
 
 	/**
-	 * Constructor. Sets message source, parent window and if this dialog
+	 * Constructor. Sets parent window and if this dialog
 	 * blocks top-level windows.
-	 * @param messageSource message source to set
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public AbstractDialog(MessageSourceAccessor messageSource,Window w, boolean isModal) {
+	public AbstractDialog(Window w, boolean isModal) {
 		super(w, (isModal) ? Dialog.ModalityType.APPLICATION_MODAL : Dialog.ModalityType.MODELESS);
 		if (w != null) {
 			hasParent = true;
 		}
-		this.messageSource = messageSource;
 	}
 
 	/**
@@ -230,7 +215,7 @@ public abstract class AbstractDialog extends JDialog {
 		addContextHelp();
 
 	}
-
+	
 	/**
 	 * If the {@link #getContextHelpURL() context help URL} is not null the
 	 * {@link ContextHelpAction action} that shows help is created, it is added
@@ -641,7 +626,7 @@ public abstract class AbstractDialog extends JDialog {
 	 */
 	protected ErrorsDialog getErrorsDialog() {
 		if (errorsDialog == null) {
-			errorsDialog = new ErrorsDialog(messageSource,this,true);
+			errorsDialog = new ErrorsDialog(this,true);
 		}
 		return errorsDialog;
 	}
@@ -653,7 +638,7 @@ public abstract class AbstractDialog extends JDialog {
 	 */
 	protected HelpDialog getHelpDialog() {
 		if (helpDialog == null) {
-			helpDialog = new HelpDialog(messageSource,this,true);
+			helpDialog = new HelpDialog(this,true);
 		}
 		return helpDialog;
 	}
@@ -762,7 +747,7 @@ public abstract class AbstractDialog extends JDialog {
 		 * Constructor. Sets the description and the icon.
 		 */
 		public OkAction() {
-			super(messageSource.getMessage("ok"));
+			super(_("Ok"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/ok.png"));
 		}
 
@@ -813,7 +798,7 @@ public abstract class AbstractDialog extends JDialog {
 		 * Constructor. Sets the description and the icon.
 		 */
 		public CancelAction() {
-			super(messageSource.getMessage("cancel"));
+			super(_("Cancel"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/cancel.png"));
 		}
 
@@ -861,7 +846,7 @@ public abstract class AbstractDialog extends JDialog {
 		public ContextHelpAction(URL url) {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/help.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("help.contextHelpToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Display context help for this dialog"));
 			contextHelpURL = url;
 		}
 

@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import org.signalml.app.view.opensignal.SignalMLOptionsPanel;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -18,8 +19,6 @@ import javax.swing.border.TitledBorder;
 import org.signalml.app.view.opensignal.SignalParametersPanelForRawSignalFile;
 
 import org.signalml.exception.SanityCheckException;
-import org.springframework.context.support.MessageSourceAccessor;
-
 
 /**
  * Panel with options for opening the document with a signal.
@@ -81,18 +80,10 @@ public class OpenSignalOptionsPanel extends JPanel {
 	private PagingParametersPanel pagingParametersPanel;
 
 	/**
-	 * the {@link MessageSourceAccessor source} of messages (labels)
+	 * Constructor. Initializes the panel.
 	 */
-	private MessageSourceAccessor messageSource;
-
-	/**
-	 * Constructor. Sets the {@link MessageSourceAccessor message source} and
-	 * initializes this panel.
-	 * @param messageSource the source of messages (labels)
-	 */
-	public OpenSignalOptionsPanel(MessageSourceAccessor messageSource) {
+	public OpenSignalOptionsPanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -129,7 +120,7 @@ public class OpenSignalOptionsPanel extends JPanel {
 		if (methodPanel == null) {
 			methodPanel = new JPanel(new BorderLayout());
 			CompoundBorder cb = new CompoundBorder(
-			        new TitledBorder(messageSource.getMessage("openSignal.options.methodTitle")),
+			        new TitledBorder(_("Choose signal loading method")),
 			        new EmptyBorder(3,3,3,3)
 			);
 			methodPanel.setBorder(cb);
@@ -186,8 +177,8 @@ public class OpenSignalOptionsPanel extends JPanel {
 	public JComboBox getMethodComboBox() {
 		if (methodComboBox == null) {
 			methodComboBox = new JComboBox();
-			methodComboBox.addItem(messageSource.getMessage("openSignal.options.method.SIGNALML"));
-			methodComboBox.addItem(messageSource.getMessage("openSignal.options.method.RAW"));
+			methodComboBox.addItem(_("Load using SignalML codec"));
+			methodComboBox.addItem(_("Load raw signal"));
 
 			methodComboBox.addItemListener(new ItemListener() {
 
@@ -229,7 +220,7 @@ public class OpenSignalOptionsPanel extends JPanel {
 	 */
 	public SignalMLOptionsPanel getSignalMLOptionsPanel() {
 		if (signalMLOptionsPanel == null) {
-			signalMLOptionsPanel = new SignalMLOptionsPanel(messageSource);
+			signalMLOptionsPanel = new SignalMLOptionsPanel();
 		}
 		return signalMLOptionsPanel;
 	}
@@ -242,7 +233,7 @@ public class OpenSignalOptionsPanel extends JPanel {
 	 */
 	public SignalParametersPanelForRawSignalFile getRawSignalOptionsPanel() {
 		if (rawSignalOptionsPanel == null) {
-			rawSignalOptionsPanel = new SignalParametersPanelForRawSignalFile(messageSource);
+			rawSignalOptionsPanel = new SignalParametersPanelForRawSignalFile();
 		}
 		return rawSignalOptionsPanel;
 	}
@@ -256,7 +247,7 @@ public class OpenSignalOptionsPanel extends JPanel {
 	 */
 	public PagingParametersPanel getPagingSignalParamersPanel() {
 		if (pagingParametersPanel == null) {
-			pagingParametersPanel = new PagingParametersPanel(messageSource);
+			pagingParametersPanel = new PagingParametersPanel();
 		}
 		return pagingParametersPanel;
 	}

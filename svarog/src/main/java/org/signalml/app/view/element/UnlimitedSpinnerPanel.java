@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.element;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ItemEvent;
@@ -19,7 +20,6 @@ import javax.swing.SpinnerNumberModel;
 import org.signalml.util.MinMaxRange;
 import org.signalml.util.MinMaxRangeFloat;
 import org.signalml.util.MinMaxRangeInteger;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** TODO it is almost the same as {@link AutoSpinnerPanel}
  * 
@@ -30,42 +30,33 @@ public class UnlimitedSpinnerPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
-
 	private boolean compact;
-
 	private JRadioButton spinnerRadio;
 	private JRadioButton unlimitedRadio;
-
 	private ButtonGroup buttonGroup;
-
 	private JSpinner spinner;
 
-	protected UnlimitedSpinnerPanel(MessageSourceAccessor messageSource, boolean compact) {
+	protected  UnlimitedSpinnerPanel( boolean compact) {
 		super();
-		this.messageSource = messageSource;
 		this.compact = compact;
 	}
 
-	public UnlimitedSpinnerPanel(MessageSourceAccessor messageSource, double value, double min, double max, double step, boolean compact) {
-		this(messageSource, compact);
+	public  UnlimitedSpinnerPanel( double value, double min, double max, double step, boolean compact) {
+		this( compact);
 		spinner = new JSpinner(new SpinnerNumberModel(value, min, max, step));
 
 		commonInit();
 	}
 
-	public UnlimitedSpinnerPanel(MessageSourceAccessor messageSource, float value, float min, float max, float step, boolean compact) {
-		this(messageSource, compact);
+	public  UnlimitedSpinnerPanel( float value, float min, float max, float step, boolean compact) {
+		this( compact);
 		spinner = new JSpinner(new SpinnerNumberModel((double) value, (double) min, (double) max, (double) step));
 
 		commonInit();
 	}
 
-	public UnlimitedSpinnerPanel(MessageSourceAccessor messageSource, int value, int min, int max, int step, boolean compact) {
-		this(messageSource, compact);
+	public  UnlimitedSpinnerPanel( int value, int min, int max, int step, boolean compact) {
+		this( compact);
 		spinner = new JSpinner(new SpinnerNumberModel(value, min, max, step));
 
 		commonInit();
@@ -89,9 +80,9 @@ public class UnlimitedSpinnerPanel extends JPanel {
 
 		spinnerRadio = new JRadioButton();
 		if (compact) {
-			unlimitedRadio = new JRadioButton(messageSource.getMessage("unlimitedSpinnerPanel.unlimitedCompact"));
+			unlimitedRadio = new JRadioButton(_("un."));
 		} else {
-			unlimitedRadio = new JRadioButton(messageSource.getMessage("unlimitedSpinnerPanel.unlimited"));
+			unlimitedRadio = new JRadioButton(_("unlimited"));
 		}
 		unlimitedRadio.setFont(unlimitedRadio.getFont().deriveFont(Font.PLAIN, 10));
 

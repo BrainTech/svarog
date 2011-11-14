@@ -1,15 +1,19 @@
 package org.signalml.plugin.impl;
 
+import java.util.HashMap;
+
 import org.apache.log4j.Logger;
 import org.signalml.app.view.ViewerElementManager;
+import org.signalml.plugin.export.PluginAuth;
 import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.change.SvarogAccessChangeSupport;
 import org.signalml.plugin.export.config.SvarogAccessConfig;
+import org.signalml.plugin.export.i18n.SvarogAccessI18n;
 import org.signalml.plugin.export.method.SvarogAccessMethod;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
 import org.signalml.plugin.impl.change.ChangeSupportImpl;
-import org.springframework.context.support.MessageSourceAccessor;
+import org.signalml.plugin.loader.PluginHead;
 
 /**
  * Implementation of {@link SvarogAccess} interface.
@@ -21,7 +25,7 @@ import org.springframework.context.support.MessageSourceAccessor;
  * to {@link ChangeSupportImpl change support}. 
  * 
  * @author Marcin Szumski
- * @author Stanislaw Findeisen
+ * @author Stanislaw Findeisen (Eisenbits)
  */
 public class PluginAccessClass implements SvarogAccess {
 	
@@ -36,6 +40,8 @@ public class PluginAccessClass implements SvarogAccess {
 	 * the manager of Svarog elements
 	 */
 	private ViewerElementManager manager;
+	
+	private SvarogAccessI18nImpl i18nAccessImpl;
 	
 	/**
 	 * access to GUI features of Svarog
@@ -57,6 +63,10 @@ public class PluginAccessClass implements SvarogAccess {
 	 */
 	private ChangeSupportImpl changeSupport;
 
+	/**
+	 * The plugin map.
+	 */
+	private HashMap<PluginAuth,PluginHead> pluginMap = new HashMap<PluginAuth,PluginHead>();
 	
 	/**
 	 * Constructor. Creates child accesses.
@@ -67,6 +77,8 @@ public class PluginAccessClass implements SvarogAccess {
 		configAccessImpl = new ConfigAccessImpl(this);
 		signalsAccess = new SignalsAccessImpl(this);
 		changeSupport = new ChangeSupportImpl(this);
+		i18nAccessImpl = SvarogAccessI18nImpl.getInstance();
+		i18nAccessImpl.setPluginAccessClass(this);
 	}
 	
 	/**
@@ -75,14 +87,40 @@ public class PluginAccessClass implements SvarogAccess {
 	 */
 	public static PluginAccessClass getSharedInstance()
 	{
-		if (null == sharedInstance) {
+		if (sharedInstance == null) {
 		    synchronized (PluginAccessClass.class) {
-		        if (null == sharedInstance)
+		        if (sharedInstance == null)
 		            sharedInstance = new PluginAccessClass();
 		    }
 		}
 
 		return sharedInstance;
+	}
+	
+	/**
+	 * Adds given plugin to {@link #pluginMap}.
+	 * @param head plugin to add
+	 */
+	public synchronized void addPlugin(PluginHead head) {
+	    PluginAuth auth = head.getPluginAuth();
+	    if (pluginMap.containsKey(auth)) {
+	        throw new IllegalArgumentException("Duplicate plugin auth! (" + (auth.getID()) + ")");
+	    }
+	    pluginMap.put(auth, head);
+	    logger.debug("addPlugin: " + auth + " --> " + head);
+	}
+	
+    /**
+     * Looks up {@link #pluginMap} for the given plugin based on its key.
+     * @param auth plugin key
+     * @return the plugin head found
+     * @throws IllegalArgumentException if there is no mapping for this key
+     */
+	public synchronized PluginHead getPluginHead(PluginAuth auth) {
+	    PluginHead head = pluginMap.get(auth);
+	    if (null != head)
+	        return head;
+	    throw new IllegalArgumentException("No such plugin! (" + auth + ")");
 	}
 
 	/**
@@ -159,14 +197,6 @@ public class PluginAccessClass implements SvarogAccess {
 		changeSupport.onClose();
 	}
 	
-	/**
-	 * Returns the source of messages.
-	 * @return the source of messages
-	 */
-	public MessageSourceAccessor getMessageSource(){
-		return manager.getMessageSource();
-	}
-
     @Override
     public SvarogAccessMethod getMethodAccess() {
         return methodAccessImpl;
@@ -175,5 +205,10 @@ public class PluginAccessClass implements SvarogAccess {
     @Override
     public SvarogAccessConfig getConfigAccess() {
         return configAccessImpl;
+    }
+
+    @Override
+    public SvarogAccessI18n getI18nAccess() {
+        return i18nAccessImpl;
     }
 }

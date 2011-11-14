@@ -9,7 +9,7 @@ import javax.swing.table.AbstractTableModel;
 import org.apache.log4j.Logger;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.plugin.newartifact.method.ArtifactType;
-import org.springframework.context.support.MessageSourceAccessor;
+import static org.signalml.plugin.newartifact.NewArtifactPlugin.i18n;
 
 /** ArtifactExclusionTableModel
  *
@@ -24,8 +24,6 @@ public class NewArtifactExclusionTableModel extends AbstractTableModel {
 
 	protected static final Logger logger = Logger.getLogger(NewArtifactExclusionTableModel.class);
 
-	private MessageSourceAccessor messageSource;
-
 	private int[][] excludedChannels;
 	private SourceMontage montage;
 
@@ -34,8 +32,7 @@ public class NewArtifactExclusionTableModel extends AbstractTableModel {
 	private ColumnTableModel columnTableModel;
 	private RowTableModel rowTableModel;
 
-	public NewArtifactExclusionTableModel(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
+	public  NewArtifactExclusionTableModel() {
 	}
 
 	public ColumnTableModel getColumnTableModel() {
@@ -186,7 +183,7 @@ public class NewArtifactExclusionTableModel extends AbstractTableModel {
 
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
-			return messageSource.getMessage(artifactTypes[rowIndex]);
+			return i18n().getMessage(artifactTypes[rowIndex]);
 		}
 
 		@Override

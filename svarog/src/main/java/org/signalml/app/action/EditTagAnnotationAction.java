@@ -4,6 +4,7 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
@@ -13,7 +14,6 @@ import org.signalml.app.document.TagDocument;
 import org.signalml.app.view.dialog.EditTagAnnotationDialog;
 import org.signalml.app.view.signal.PositionedTag;
 import org.signalml.domain.tag.StyledTagSet;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** EditTagAnnotationAction
  *
@@ -28,10 +28,10 @@ public class EditTagAnnotationAction extends AbstractFocusableSignalMLAction<Tag
 
 	private EditTagAnnotationDialog editTagAnnotationDialog;
 
-	public EditTagAnnotationAction(MessageSourceAccessor messageSource, TagFocusSelector tagFocusSelector) {
-		super(messageSource, tagFocusSelector);
-		setText("action.editTagAnnotation");
-		setToolTip("action.editTagAnnotationToolTip");
+	public  EditTagAnnotationAction( TagFocusSelector tagFocusSelector) {
+		super( tagFocusSelector);
+		setText(_("Annotate tag"));
+		setToolTip(_("Edit tag annotation (Ctrl-A)"));
 		setIconPath("org/signalml/app/icon/editannotation.png");
 	}
 

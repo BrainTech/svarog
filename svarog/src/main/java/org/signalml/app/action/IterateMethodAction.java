@@ -7,6 +7,7 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
+import static org.signalml.app.SvarogApplication._R;
 import org.signalml.app.method.ApplicationIterableMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodManager;
@@ -24,7 +25,6 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.task.LocalTask;
 import org.signalml.task.Task;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** IterateMethodAction
  *
@@ -44,13 +44,11 @@ public class IterateMethodAction extends AbstractSignalMLAction {
 	private IterationSetupDialog iterationSetupDialog;
 	private MethodIteratorMethod iteratorMethod;
 
-	public IterateMethodAction(MessageSourceAccessor messageSource, IterableMethod method, ApplicationMethodManager methodManager) {
-
-		this.messageSource = messageSource;
+	public  IterateMethodAction( IterableMethod method, ApplicationMethodManager methodManager) {
 		this.method = method;
 		this.methodManager = methodManager;
 
-		String nameCode = null;
+		String name = null;
 		String iconPath = null;
 		String iterationIconPath = null;
 
@@ -62,14 +60,14 @@ public class IterateMethodAction extends AbstractSignalMLAction {
 		}
 
 		if (descriptor != null) {
-			nameCode = descriptor.getIterationNameCode();
+			name = descriptor.getIterationName();
 			iterationIconPath = descriptor.getIterationIconPath();
 			iconPath = descriptor.getIconPath();
 		}
-		if (nameCode != null && !nameCode.isEmpty()) {
-			setText(nameCode);
+		if (name != null && !name.isEmpty()) {
+			setText(name);
 		} else {
-			setText("action.iterateMethod", new Object[] { method.getName() });
+			setText(_R("Iterate method {0}", method.getName()));
 		}
 		if (iterationIconPath != null && !iterationIconPath.isEmpty()) {
 			setIconPath(iterationIconPath);

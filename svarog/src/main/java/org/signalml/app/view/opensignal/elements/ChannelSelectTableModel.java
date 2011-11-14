@@ -4,8 +4,8 @@
 
 package org.signalml.app.view.opensignal.elements;
 
+import static org.signalml.app.SvarogApplication._;
 import javax.swing.table.AbstractTableModel;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * The table model for the ChannelSelectTable.
@@ -13,11 +13,6 @@ import org.springframework.context.support.MessageSourceAccessor;
  * @author Piotr Szachewicz
  */
 public class ChannelSelectTableModel extends AbstractTableModel {
-
-	/**
-	 * Message source capable of resolving localized messages.
-	 */
-	private MessageSourceAccessor messageSource;
 
 	/**
 	 * The channels to be shown in this table.
@@ -40,8 +35,7 @@ public class ChannelSelectTableModel extends AbstractTableModel {
 	 */
 	public static final int LABEL_COLUMN = 2;
 
-	public ChannelSelectTableModel(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
+	public  ChannelSelectTableModel() {
 	}
 
 	/**
@@ -115,9 +109,9 @@ public class ChannelSelectTableModel extends AbstractTableModel {
 	@Override
 	public String getColumnName(int column) {
 		switch (column) {
-			case SELECTED_COLUMN: return messageSource.getMessage("opensignal.amplifier.channelSelectTable.channelSelectedColumnTitle");
-			case NUMBER_COLUMN: return messageSource.getMessage("opensignal.amplifier.channelSelectTable.channelNumberColumnTitle");
-			case LABEL_COLUMN: return messageSource.getMessage("opensignal.amplifier.channelSelectTable.channelLabelColumnTitle");
+			case SELECTED_COLUMN: return _("opensignal.amplifier.channelSelectTable.channelSelectedColumnTitle");
+			case NUMBER_COLUMN: return _("number");
+			case LABEL_COLUMN: return _("label");
 			default: return "";
 		}
 	}

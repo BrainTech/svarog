@@ -5,6 +5,7 @@ package org.signalml.plugin.export;
 
 import org.signalml.plugin.export.change.SvarogAccessChangeSupport;
 import org.signalml.plugin.export.config.SvarogAccessConfig;
+import org.signalml.plugin.export.i18n.SvarogAccessI18n;
 import org.signalml.plugin.export.method.SvarogAccessMethod;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
@@ -20,8 +21,15 @@ import org.signalml.plugin.export.view.SvarogAccessGUI;
  * <li>{@link SvarogAccessSignal}</li>
  * </ul>
  * @author Marcin Szumski
+ * @author Stanislaw Findeisen (Eisenbits)
  */
 public interface SvarogAccess {
+
+    /**
+     * Returns the interface to access Svarog i18n features.
+     * @return the interface to access Svarog i18n features
+     */
+    SvarogAccessI18n getI18nAccess();
 	
 	/**
 	 * Returns the interface to access GUI features.

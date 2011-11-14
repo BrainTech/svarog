@@ -3,6 +3,7 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.SvarogApplication._;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
@@ -10,7 +11,7 @@ import org.signalml.app.action.selector.TaskFocusSelector;
 import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.task.Task;
 import org.signalml.task.TaskResult;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /** GetTaskErrorAction
@@ -26,11 +27,11 @@ public class GetTaskErrorAction extends AbstractFocusableSignalMLAction<TaskFocu
 
 	private ErrorsDialog errorsDialog;
 
-	public GetTaskErrorAction(MessageSourceAccessor messageSource, TaskFocusSelector taskFocusSelector) {
-		super(messageSource, taskFocusSelector);
-		setText("action.getTaskError");
+	public  GetTaskErrorAction( TaskFocusSelector taskFocusSelector) {
+		super( taskFocusSelector);
+		setText(_("Get error"));
 		setIconPath("org/signalml/app/icon/geterror.png");
-		setToolTip("action.getTaskErrorToolTip");
+		setToolTip(_("Get the errors from this task"));
 	}
 
 	@Override
