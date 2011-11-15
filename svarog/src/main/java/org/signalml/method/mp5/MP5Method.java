@@ -33,9 +33,9 @@ import org.signalml.method.MethodExecutionTracker;
 import org.signalml.method.SerializableMethod;
 import org.signalml.method.TrackableMethod;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.util.ResolvableString;
 import org.signalml.util.Util;
 import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogApplication._R;
 
 import org.springframework.validation.Errors;
 
@@ -96,7 +96,7 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 
 		MP5Data data = (MP5Data) dataObj;
 
-		tracker.setMessage(new ResolvableString("mp5Method.message.creatingFiles"));
+		tracker.setMessage(_("Creating files"));
 		createWorkingDirectory(data);
 		File workingDirectory = data.getWorkingDirectory();
 
@@ -134,7 +134,7 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 				return null;
 			}
 
-			tracker.setMessage(new ResolvableString("mp5Method.message.processingSegment", new Object[] { segment+1 }));
+			tracker.setMessage(_R("Processing segment {0}", (segment+1)));
 
 			segmentBookFile = new File(workingDirectory, "result_" + Integer.toString(segment) + ".b");
 
@@ -149,7 +149,7 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 
 		}
 
-		tracker.setMessage(new ResolvableString("mp5Method.message.collectingResults"));
+		tracker.setMessage(_("Collecting results"));
 
 
 		//
@@ -244,7 +244,7 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 		// for result serialization
 		data.setBookFilePath(collectedBookFile.getAbsolutePath());
 
-		tracker.setMessage(new ResolvableString("mp5Method.message.finished"));
+		tracker.setMessage(_("Finished"));
 
 		return result;
 

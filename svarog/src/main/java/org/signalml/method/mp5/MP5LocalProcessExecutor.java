@@ -17,7 +17,7 @@ import org.signalml.domain.signal.raw.RawSignalSampleType;
 import org.signalml.domain.signal.raw.RawSignalWriter;
 import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;
-import org.signalml.util.ResolvableString;
+import static org.signalml.app.SvarogApplication._;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -117,7 +117,7 @@ public class MP5LocalProcessExecutor implements MP5Executor {
 			throw new ComputationException(ex);
 		}
 
-		tracker.setMessage(new ResolvableString("mp5Method.message.writingSignalFile"));
+		tracker.setMessage(_("Writing signal file"));
 
 		// write data file
 		try {
@@ -139,7 +139,7 @@ public class MP5LocalProcessExecutor implements MP5Executor {
 			generatedBookFile.delete();
 		}
 
-		tracker.setMessage(new ResolvableString("mp5Method.message.startingExecutable"));
+		tracker.setMessage(_("Starting executable"));
 
 		boolean executionOk = processController.executeProcess(workingDirectory, mp5ExecutablePath, configFile, tracker);
 		if (!executionOk) {

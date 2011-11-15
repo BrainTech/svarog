@@ -10,6 +10,7 @@ import java.util.List;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.MessageSourceResolvable;
 
+@Deprecated
 /** ResolvableException
  *
  *

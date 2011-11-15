@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;
-import org.signalml.util.ResolvableString;
+import static org.signalml.app.SvarogApplication._;
 
 /** MP5LocalProcessController
  *
@@ -60,7 +60,7 @@ public class MP5LocalProcessController {
 			throw new ComputationException(ex);
 		}
 
-		tracker.setMessage(new ResolvableString("mp5Method.message.calculating"));
+		tracker.setMessage(_("Calculating"));
 
 		BufferedReader feedbackReader = null;
 		try {

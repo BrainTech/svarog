@@ -21,8 +21,6 @@ import org.signalml.task.TaskManagerEvent;
 import org.signalml.task.TaskManagerListener;
 import org.signalml.task.TaskStatus;
 import org.signalml.task.TaskStatusImportanceComparator;
-import org.springframework.context.MessageSourceResolvable;
-import org.springframework.context.NoSuchMessageException;
 
 /**
  * TaskTableModel
@@ -150,9 +148,9 @@ public class TaskTableModel extends AbstractTableModel implements
 			return atpi;
 
 		case MESSAGE_COLUMN:
-			MessageSourceResolvable message = task.getMessage();
+			String message = task.getMessage();
 			if (message != null) {
-				return getSvarogI18n().getMessage(message);
+				return message;
 			} else {
 				return "";
 			}

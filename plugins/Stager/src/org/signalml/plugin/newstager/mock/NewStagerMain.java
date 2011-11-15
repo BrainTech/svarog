@@ -17,7 +17,6 @@ import org.signalml.plugin.newstager.data.NewStagerParameterThresholds;
 import org.signalml.plugin.newstager.data.NewStagerParameters;
 import org.signalml.plugin.newstager.data.logic.NewStagerMgrData;
 import org.signalml.plugin.newstager.logic.mgr.NewStagerComputationMgr;
-import org.springframework.context.MessageSourceResolvable;
 
 import pl.edu.fuw.MP.Core.Utils;
 
@@ -36,13 +35,13 @@ class Tracker implements MethodExecutionTracker {
 	}
 
 	@Override
-	public void setMessage(MessageSourceResolvable message) {
+	public void setMessage(String message) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public MessageSourceResolvable getMessage() {
+	public String getMessage() {
 		// TODO Auto-generated method stub
 		return null;
 	}

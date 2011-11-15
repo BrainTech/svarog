@@ -52,7 +52,6 @@ import org.signalml.task.Task;
 import org.signalml.task.TaskEvent;
 import org.signalml.task.TaskEventListener;
 import org.signalml.task.TaskStatus;
-import org.springframework.context.MessageSourceResolvable;
 
 /**
  * Dialog which displays the progress of the {@link Task}.
@@ -352,9 +351,9 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 					TaskStatus taskStatus = task.getStatus();
 					setStatus(taskStatus);
 
-					MessageSourceResolvable message = task.getMessage();
+					String message = task.getMessage();
 					if (message != null) {
-						messageLabel.setText(getSvarogI18n().getMessage(message));
+						messageLabel.setText(message);
 					} else {
 						messageLabel.setText("");
 					}
@@ -796,10 +795,9 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 	 */
 	@Override
 	public void taskMessageSet(TaskEvent ev) {
-
-		MessageSourceResolvable message = ev.getMessage();
+		String message = ev.getMessage();
 		if (message != null) {
-			messageLabel.setText(getSvarogI18n().getMessage(message));
+			messageLabel.setText(message);
 		} else {
 			messageLabel.setText("");
 		}

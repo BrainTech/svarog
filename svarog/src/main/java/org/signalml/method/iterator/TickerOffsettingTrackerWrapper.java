@@ -7,7 +7,6 @@ package org.signalml.method.iterator;
 import java.util.Arrays;
 
 import org.signalml.method.MethodExecutionTracker;
-import org.springframework.context.MessageSourceResolvable;
 
 /** TickerOffsettingTrackerWrapper
  *
@@ -43,12 +42,12 @@ public class TickerOffsettingTrackerWrapper implements MethodExecutionTracker {
 	}
 
 	@Override
-	public MessageSourceResolvable getMessage() {
+	public String getMessage() {
 		return wrappedTracker.getMessage();
 	}
 
 	@Override
-	public void setMessage(MessageSourceResolvable message) {
+	public void setMessage(String message) {
 		wrappedTracker.setMessage(message);
 	}
 

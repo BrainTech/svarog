@@ -14,7 +14,6 @@ import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;
 import org.signalml.method.TrackableMethod;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.util.ResolvableString;
 import static org.signalml.app.SvarogApplication._;
 
 import org.springframework.validation.Errors;
@@ -43,7 +42,7 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 
 		EvokedPotentialData data = (EvokedPotentialData) dataObj;
 
-		tracker.setMessage(new ResolvableString("evokedPotentialMethod.message.preparing"));
+		tracker.setMessage(_("Preparing"));
 
 		MultichannelSegmentedSampleSource sampleSource = data.getSampleSource();
 
@@ -84,7 +83,7 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 
 		}
 
-		tracker.setMessage(new ResolvableString("evokedPotentialMethod.message.summing"));
+		tracker.setMessage(_("Summing"));
 		tracker.setTickerLimit(0, segmentCount);
 
 		for (i=0; i<segmentCount; i++) {
@@ -109,7 +108,7 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 
 		}
 
-		tracker.setMessage(new ResolvableString("evokedPotentialMethod.message.averaging"));
+		tracker.setMessage(_("Averaging"));
 		tracker.setTicker(0, 0);
 		tracker.setTickerLimit(0, channelCount);
 
@@ -122,7 +121,6 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 			tracker.tick(0);
 		}
 
-
 		result.setAverageSamples(averageSamples);
 		result.setLabels(labels);
 		result.setSampleCount(sampleCount);
@@ -131,7 +129,7 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 		result.setAveragedCount(segmentCount);
 		result.setSkippedCount(sampleSource.getUnusableSegmentCount());
 
-		tracker.setMessage(new ResolvableString("evokedPotentialMethod.message.finished"));
+		tracker.setMessage(_("Finished"));
 
 		return result;
 

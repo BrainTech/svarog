@@ -4,9 +4,6 @@
 
 package org.signalml.method;
 
-import org.signalml.util.ResolvableString;
-import org.springframework.context.MessageSourceResolvable;
-
 /**
  *  This interface is implemented by classes used to control method execution and
  *  receive progress feedback.
@@ -31,24 +28,22 @@ public interface MethodExecutionTracker {
 	boolean isRequestingSuspend();
 
 	/**
-         *  Posts a task message, which may be displayed by any controling application. A message is actually
-	 *  a MessageSourceResolvable in order to help enforce localization of messages. Use
-	 *  {@link ResolvableString} to set a text message.
+	 *  Posts a task message, which may be displayed by any controling application.
 	 *
 	 *  <p>Typically this method will be called from within the {@link Method#compute(Object, MethodExecutionTracker)} method to
 	 *  indicate the current stage or status of the ongoing computation.
 	 *
 	 * @param message the new message
 	 */
-	void setMessage(MessageSourceResolvable message);
+	void setMessage(String message);
 
 	/**
-         *  Retrieves the last message set by the computation code with the {@link #setMessage(MessageSourceResolvable)}
+	 *  Retrieves the last message set by the computation code with the {@link #setMessage(String)}
 	 *  method. Initially the Task has no message and null is returned
 	 *
 	 * @return the message or null if no message has been posted
 	 */
-	MessageSourceResolvable getMessage();
+	String getMessage();
 
 	/**
          *  Returns the limits (maximum values) for the tickers associated with this task. For methods which

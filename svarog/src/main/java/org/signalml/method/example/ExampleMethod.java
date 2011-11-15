@@ -17,7 +17,7 @@ import org.signalml.method.iterator.IterableMethod;
 import org.signalml.method.iterator.IterableNumericProperty;
 import org.signalml.method.iterator.IterableParameter;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.util.ResolvableString;
+import static org.signalml.app.SvarogApplication._;
 
 import org.springframework.validation.Errors;
 
@@ -124,6 +124,34 @@ public class ExampleMethod extends AbstractMethod implements InitializingMethod,
 		}
 	}
 
+	private String i2processedMsg(int i) {
+		switch (i) {
+			case 0:
+				return _("Life is generally pointless");
+			case 1:
+				return _("Life sucks");
+			case 2:
+				return _("I don't know what I'm doing here");
+			case 3:
+				return _("Why should I even care?");
+			case 4:
+				return _("I'll just sit here for a while");
+			default:
+				throw new IllegalArgumentException();
+		}
+	}
+
+	private String i2tickerMsg(int i) {
+		switch (i) {
+			case 0:
+				return _("Pondering");
+			case 1:
+				return _("Deliberating");
+			default:
+				throw new IllegalArgumentException();
+		}
+	}
+
         /**
          * Executes this ExampleMethod and returns null it it was aborted
          * or ExampleResult containing result of computation if no error occured.
@@ -154,9 +182,9 @@ public class ExampleMethod extends AbstractMethod implements InitializingMethod,
 			synchronized (tracker) {
 				tracker.setTickers(counters);
 				if (i/2 == 0) {
-					tracker.setMessage(new ResolvableString("exampleMethod.start"));
+					tracker.setMessage(_("Let's find the meaning of life"));
 				} else {
-					tracker.setMessage(new ResolvableString("exampleMethod.processed"+(i/2-1)));
+					tracker.setMessage(i2processedMsg(i/2-1));
 				}
 			}
 			eData.setSuspended(false);
@@ -164,7 +192,7 @@ public class ExampleMethod extends AbstractMethod implements InitializingMethod,
 		} else {
 			i = 0;
 			e = 0;
-			tracker.setMessage(new ResolvableString("exampleMethod.start"));
+			tracker.setMessage(_("Let's find the meaning of life"));
 		}
 
 		// the main "computation" loop
@@ -198,7 +226,7 @@ public class ExampleMethod extends AbstractMethod implements InitializingMethod,
 			product *= numbers[i];
 			synchronized (tracker) {
 				tracker.tick(0);
-				tracker.setMessage(new ResolvableString("exampleMethod.processed"+(i/2)));
+				tracker.setMessage(i2processedMsg(i/2));
 			}
 			i++;
 			e=0;
@@ -225,7 +253,7 @@ public class ExampleMethod extends AbstractMethod implements InitializingMethod,
          */
 	@Override
 	public String getTickerLabel(int ticker) {
-		return getSvarogI18n().getMessage("exampleMethod.ticker"+ticker);
+		return i2tickerMsg(ticker);
 	}
 
         /**

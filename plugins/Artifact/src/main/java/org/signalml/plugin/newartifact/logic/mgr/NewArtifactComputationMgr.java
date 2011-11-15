@@ -16,8 +16,8 @@ import org.signalml.plugin.newartifact.data.mgr.NewArtifactMgrData;
 import org.signalml.plugin.newartifact.data.mgr.NewArtifactMgrStepData;
 import org.signalml.plugin.newartifact.data.mgr.NewArtifactMgrStepResult;
 import org.signalml.plugin.newartifact.method.NewArtifactMethod;
-import org.signalml.util.ResolvableString;
-import org.springframework.context.MessageSourceResolvable;
+import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
+import static org.signalml.plugin.newartifact.NewArtifactPlugin._R;
 
 public class NewArtifactComputationMgr extends
 	PluginComputationMgr<NewArtifactMgrData, NewArtifactResult> {
@@ -55,14 +55,10 @@ public class NewArtifactComputationMgr extends
 				return;
 			}
 			this.phase = phase;
-			String messageCode = this.getMessageForPhase(phase);
-			if (messageCode != null) {
-				MessageSourceResolvable message = new ResolvableString(
-					messageCode, arguments);
-				if (message != null) {
-					synchronized (this.tracker) {
-						this.tracker.setMessage(message);
-					}
+			String message = this.getMessageForPhase(phase, arguments);
+			if (message != null) {
+				synchronized (this.tracker) {
+					this.tracker.setMessage(message);
 				}
 			}
 		}
@@ -88,33 +84,26 @@ public class NewArtifactComputationMgr extends
 			return this.threadGroup.isShutdownStarted() || Thread.interrupted();
 		}
 
-		private String getMessageForPhase(NewArtifactProgressPhase phase) {
-			String suffix = this.doGetMessageForPhase(phase);
-			return suffix == null ? null : "newArtifactMethod.step." + suffix;
-		}
-
-		private String doGetMessageForPhase(NewArtifactProgressPhase phase) {
+		private String getMessageForPhase(NewArtifactProgressPhase phase, Object ... arguments) {
 			switch (phase) {
 			case PREPROCESS_PREPARE_PHASE:
-				return "precompute";
+				return _("Preparing");
 			case SOURCE_FILE_INITIAL_READ_PHASE:
-				return "readSource";
+				return _("Reading source data");
 			case INTERMEDIATE_COMPUTATION_PHASE:
-				return "computeBin";
+				return _R("Computing intermediate data (block {0} of {1})", arguments);
 			case TAGGER_PREPARE_PHASE:
-				return "prepareTags";
+				return _("Preparing tagger");
 			case TAGGING_PHASE:
-				return "tagging";
+				return _("Tagging artifacts");
 			case TAG_MERGING_PHASE:
-				return "tagMerging";
-
+				return _("Merging tag files");
 			case ABORT_PHASE:
-				return "abort";
+				return _("Aborting");
 			default:
 				return null;
 			}
 		}
-
 	}
 
 	private List<IPluginComputationMgrStep> steps;

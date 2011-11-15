@@ -18,7 +18,6 @@ import org.signalml.method.SuspendableMethod;
 import org.signalml.method.TrackableMethod;
 import org.signalml.plugin.export.method.SvarogTask;
 import org.signalml.task.TaskEvent.TaskEventType;
-import org.springframework.context.MessageSourceResolvable;
 import org.springframework.core.task.TaskExecutor;
 
 /**
@@ -45,7 +44,7 @@ public class LocalTask implements SvarogTask, MethodExecutionTracker, Runnable {
 	private final Object data;
 	private volatile Object result;
 	private volatile Exception exception;
-	private volatile MessageSourceResolvable message;
+	private volatile String message;
 
 	private EventListenerList listenerList = new EventListenerList();
 
@@ -641,20 +640,18 @@ public class LocalTask implements SvarogTask, MethodExecutionTracker, Runnable {
 
         /**
 	 * Retrieves the last message set by the computation code with the
-	 * {@link #setMessage(MessageSourceResolvable)} method. Initially the Task has no
+	 * {@link #setMessage(String)} method. Initially the Task has no
 	 * message and null is returned.
          *
          * @return the message or null if no message has been posted
          */
 	@Override
-	public MessageSourceResolvable getMessage() {
+	public String getMessage() {
 		return message;
 	}
 
         /**
-	 *  Posts a task message, which may be displayed by any controling application. A message
-         *  is actually a MessageSourceResolvable in order to help enforce localization of
-         *  messages. Use {@link org.signalml.util.ResolvableString} to set a text message.
+	 *  Posts a task message, which may be displayed by any controling application.
          *
          *  <p>Typically this method will be called from within the {@link Method#compute} method to
          *  indicate the current stage or status of the ongoing computation.
@@ -665,7 +662,7 @@ public class LocalTask implements SvarogTask, MethodExecutionTracker, Runnable {
 	 * @param message the new message
          */
 	@Override
-	public void setMessage(MessageSourceResolvable message) {
+	public void setMessage(String message) {
 		synchronized (this) {
 			this.message = message;
 			debug("Task message set to [" + message + "]");

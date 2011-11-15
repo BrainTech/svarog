@@ -6,8 +6,6 @@ package org.signalml.task;
 import java.util.EventObject;
 import org.signalml.method.TrackableMethod;
 
-import org.springframework.context.MessageSourceResolvable;
-
 /** An event corresponding to a change in the state of a {@link Task}.
  *
  * @see TaskEventListener
@@ -39,7 +37,7 @@ public class TaskEvent extends EventObject {
 
 	private TaskStatus status;
 	private TaskResult result;
-	private MessageSourceResolvable message;
+	private String message;
 	private int[] tickerLimits;
 	private int[] tickers;
 
@@ -76,7 +74,7 @@ public class TaskEvent extends EventObject {
          * @param status status of Event
 	 * @param message message
          */
-	public TaskEvent(Object source, TaskEventType type, TaskStatus status, MessageSourceResolvable message) {
+	public TaskEvent(Object source, TaskEventType type, TaskStatus status, String message) {
 		super(source);
 		this.type = type;
 		this.status = status;
@@ -137,7 +135,7 @@ public class TaskEvent extends EventObject {
          *
          * @return the message, might be null
          */
-	public MessageSourceResolvable getMessage() {
+	public String getMessage() {
 		return message;
 	}
 
