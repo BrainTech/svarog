@@ -918,7 +918,7 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 	private void setStatus(TaskStatus taskStatus) {
 
 		statusIconLabel.setIcon(IconUtils.getLargeTaskIcon(taskStatus));
-		statusTextLabel.setText(getSvarogI18n().getMessage("taskStatusLong." + taskStatus));
+		statusTextLabel.setText(taskStatus.getLongStatus().i18n());
 
 		abortTaskAction.setEnabled(taskStatus.isAbortable());
 		getTaskResultAction.setEnabled(taskStatus.isFinished());

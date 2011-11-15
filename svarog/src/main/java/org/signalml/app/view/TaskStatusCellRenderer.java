@@ -31,7 +31,7 @@ public class TaskStatusCellRenderer extends DefaultTableCellRenderer {
 
 	@Override
 	protected void setValue(Object value) {
-		setText(getSvarogI18n().getMessage((TaskStatus) value));
+		setText(((TaskStatus) value).getShortStatus().i18n());
 	}
 
 	/**
