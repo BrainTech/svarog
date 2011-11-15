@@ -849,15 +849,13 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 		lastETAUpdateMillis[index] = millis;
 
 		final Integer secondsInteger = task.getExpectedSecondsUntilComplete(index);
-		final int minutes = secondsInteger / 60;
-		final int seconds = secondsInteger % 60;
 
 		final String _minutes, _seconds;
 		if (secondsInteger == null) {
 			_minutes = _seconds = "--";
 		} else {
-			_minutes = String.format("%02d", minutes);
-			_seconds = String.format("%02d", seconds);
+			_minutes = String.format("%02d", secondsInteger / 60);
+			_seconds = String.format("%02d", secondsInteger % 60);
 		}
 		progressETALabels[index].setText(_R("Expected to end in {0}:{1} min:sec", _minutes, _seconds));
 	}
