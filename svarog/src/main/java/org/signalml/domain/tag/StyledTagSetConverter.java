@@ -185,6 +185,7 @@ public class StyledTagSetConverter implements Converter {
 	 */
 	private void marshalTag(HierarchicalStreamWriter writer, Tag tag) {
 		writer.startNode("tag");
+		writer.addAttribute("type", tag.getStyle().getType().toString());
 		writer.addAttribute("name", tag.getStyle().getName());
 		writer.addAttribute("channelNumber", intConverter.toString(tag.getChannel()));
 		writer.addAttribute("position", floatConverter.toString(tag.getPosition()));
@@ -270,7 +271,7 @@ public class StyledTagSetConverter implements Converter {
 		int channel;
 		String annotation;
 
-		LinkedHashMap<String,TagStyle> styles = new LinkedHashMap<String, TagStyle>();
+		TagStyles styles = new TagStyles();
 		TreeSet<Tag> tags = new TreeSet<Tag>();
 
 		float pageSize = PagingParameterDescriptor.DEFAULT_PAGE_SIZE;
@@ -337,7 +338,7 @@ public class StyledTagSetConverter implements Converter {
 							if ("tagItem".equals(reader.getNodeName())) {
 								style = new TagStyle(SignalSelectionType.PAGE);
 								unmarshalStyle(reader, style);
-								styles.put(style.getName(),style);
+								styles.addStyle(style);
 							}
 							reader.moveUp();
 						}
@@ -347,7 +348,7 @@ public class StyledTagSetConverter implements Converter {
 							if ("tagItem".equals(reader.getNodeName())) {
 								style = new TagStyle(SignalSelectionType.BLOCK);
 								unmarshalStyle(reader, style);
-								styles.put(style.getName(),style);
+								styles.addStyle(style);
 							}
 							reader.moveUp();
 						}
@@ -357,7 +358,7 @@ public class StyledTagSetConverter implements Converter {
 							if ("tagItem".equals(reader.getNodeName())) {
 								style = new TagStyle(SignalSelectionType.CHANNEL);
 								unmarshalStyle(reader, style);
-								styles.put(style.getName(),style);
+								styles.addStyle(style);
 							}
 							reader.moveUp();
 						}
@@ -392,15 +393,18 @@ public class StyledTagSetConverter implements Converter {
 							if ("tag".equals(reader.getNodeName())) {
 
 								String tagName = reader.getAttribute("name");
+								SignalSelectionType type = null;
+								if (reader.getAttribute("type") != null)
+									type = SignalSelectionType.valueOf(reader.getAttribute("type"));
 
 								channel = (Integer) intConverter.fromString(reader.getAttribute("channelNumber"));
 								position = (Float) floatConverter.fromString(reader.getAttribute("position"));
 								length = (Float) floatConverter.fromString(reader.getAttribute("length"));
 
-								style = styles.get(tagName);
+								style = styles.getStyle(type, tagName);
 								if (style == null) {
 									style = tagStylesGenerator.getSmartStyleFor(tagName, length, channel);
-									styles.put(tagName, style);
+									styles.addStyle(style);
 								}
 
 								annotation = null;

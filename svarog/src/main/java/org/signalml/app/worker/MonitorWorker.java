@@ -26,6 +26,7 @@ import org.signalml.multiplexer.protocol.SvarogProtocol.Sample;
 import org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector;
 
 import com.google.protobuf.ByteString;
+import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.TagStyle;
 
 /** MonitorWorker
@@ -184,7 +185,7 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 
 				final double tagLen = tagMsg.getEndTimestamp() - tagMsg.getStartTimestamp();
 
-                                TagStyle style = tagSet.getStyle(tagMsg.getName());
+                                TagStyle style = tagSet.getStyle(SignalSelectionType.CHANNEL, tagMsg.getName());
 
                                 if (style == null) {
                                     style = stylesGenerator.getSmartStyleFor(tagMsg.getName(), tagLen, -1);

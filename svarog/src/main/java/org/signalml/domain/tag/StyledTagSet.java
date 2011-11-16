@@ -6,11 +6,8 @@ package org.signalml.domain.tag;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Set;
 import java.util.SortedSet;
@@ -30,21 +27,21 @@ import org.signalml.plugin.export.signal.TagStyle;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
 import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributeDefinition;
 
 /**
- * This class represents a set of t
- * {@link Tag tagged selections} and their {@link TagStyle styles}.
- * Contains map associating styles with {@link KeyStroke key strokes}.
+ * This class represents a set of
+ * {@link Tag tagged selections} and their {@link TagStyles styles}.
  * Two tagged selections with the same type can not intersect so this class
  * splits, merges and replaces them while adding.
  *
  * This class contains additional information such as a size of a page, a number
  * of blocks per page and a length of a block (in seconds).
- *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -55,11 +52,6 @@ public class StyledTagSet implements Serializable, Preset {
 	private static final long serialVersionUID = 1L;
 
 	protected static final Logger logger = Logger.getLogger(StyledTagSet.class);
-
-        /**
-         * the comparator for {@link TagStyle tag styles}
-         */
-	private static final TagStyleNameComparator tagStyleNameComparator = new TagStyleNameComparator();
 
         /**
          * page size in seconds
@@ -77,30 +69,10 @@ public class StyledTagSet implements Serializable, Preset {
 
 	private TagSignalIdentification tagSignalIdentification;
 
-        /**
-         * Map associating tag styles with their names
-         */
-	private LinkedHashMap<String,TagStyle> styles;
-
-        /**
-         * Map associating tag styles with KeyStrokes assign to them
-         */
-	private HashMap<KeyStroke,TagStyle> stylesByKeyStrokes;
-
-        /**
-         * list of styles of selections of signal pages
-         */
-	private ArrayList<TagStyle> pageStylesCache = null;
-
-        /**
-         * list of styles of selections of signal blocks
-         */
-	private ArrayList<TagStyle> blockStylesCache = null;
-
-        /**
-         * list of styles of custom selections of single channels
-         */
-	private ArrayList<TagStyle> channelStylesCache = null;
+	/**
+	 * Contains the lists of all tag styles used in this styled tag set.
+	 */
+	protected TagStyles styles;
 
         /**
          * Collection of all tagged selections.
@@ -118,15 +90,7 @@ public class StyledTagSet implements Serializable, Preset {
          * list of tagged selections of signal pages
          */
 	private ArrayList<Tag> pageTagsCache = null;
-
-        /**
-         * list of tagged selections of signal blocks
-         */
         private ArrayList<Tag> blockTagsCache = null;
-
-        /**
-         * list of tagged custom selections of single channels
-         */
         private ArrayList<Tag> channelTagsCache = null;
 
         /**
@@ -175,9 +139,9 @@ public class StyledTagSet implements Serializable, Preset {
          * Constructor. Creates a StyledTagSet with given styles of selections,
          * but without tagged selections.
          * Default sizes of a page and a block are used.
-         * @param styles styles of selections to be added to the created object
+         * @param styles {@link TagStyle tag styles} to be added to the created object
          */
-	public StyledTagSet(LinkedHashMap<String,TagStyle> styles) {
+	public StyledTagSet(TagStyles styles) {
 		this(styles, null, SignalParameterDescriptor.DEFAULT_PAGE_SIZE, SignalParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE);
 	}
 
@@ -185,11 +149,11 @@ public class StyledTagSet implements Serializable, Preset {
          * Constructor. Creates a StyledTagSet with given styles of selections,
          * size of a page and number of blocks per page, but without
          * tagged selections.
-         * @param styles styles of selections to be added to the created object
+         * @param styles {@link TagStyle tag styles} to be added to the created object
          * @param pageSize a size of a page in seconds
          * @param blocksPerPage a number of blocks per page
          */
-	public StyledTagSet(LinkedHashMap<String,TagStyle> styles, float pageSize, int blocksPerPage) {
+	public StyledTagSet(TagStyles styles, float pageSize, int blocksPerPage) {
 		this(styles, null, pageSize, blocksPerPage);
 	}
 
@@ -197,32 +161,31 @@ public class StyledTagSet implements Serializable, Preset {
          * Constructor. Creates a StyledTagSet with given styles of selections
          * and given tagged selections.
          * Default sizes of a page and a block are used.
-         * @param styles styles of selections to be added to the created object
+         * @param styles {@link TagStyle tag styles} to be added to the created object
          * @param tags tagged selections to be added to the created object
          */
-	public StyledTagSet(LinkedHashMap<String,TagStyle> styles, TreeSet<Tag> tags) {
+	public StyledTagSet(TagStyles styles, TreeSet<Tag> tags) {
 		this(styles, tags, SignalParameterDescriptor.DEFAULT_PAGE_SIZE, SignalParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE);
 	}
 
         /**
          * Constructor. Creates a StyledTagSet with given parameters.
-         * @param styles styles of selections to be added to the created object
+         * @param {@link TagStyle tag styles} to be added to the created object
          * @param tags tagged selections to be added to the created object
          * @param pageSize a size of a page in seconds
          * @param blocksPerPage a number of blocks per page
          */
-	public StyledTagSet(LinkedHashMap<String,TagStyle> styles, TreeSet<Tag> tags, float pageSize, int blocksPerPage) {
+	public StyledTagSet(TagStyles styles, TreeSet<Tag> tags, float pageSize, int blocksPerPage) {
 		if (pageSize <= 0) {
 			throw new SanityCheckException("Page size must be > 0");
 		}
 		if (blocksPerPage <= 0) {
 			throw new SanityCheckException("Blocks per page must be > 0");   // free-style block tags disabled for now
 		}
-		if (styles == null) {
-			this.styles = new LinkedHashMap<String,TagStyle>();
-		} else {
-			this.styles = styles;
-		}
+
+		this.styles = styles != null? styles: new TagStyles();
+		this.styles.setStyledTagSet(this);
+
 		if (tags == null) {
 			this.tags = new TreeSet<Tag>();
 		} else {
@@ -282,125 +245,109 @@ public class StyledTagSet implements Serializable, Preset {
 	}
 
         /**
-         * Returns the set of {@link TagStyle styles} of tagged selections.
-         * @return the set of styles of tagged selections
+         * Returns the list of {@link TagStyle styles} of tagged selections.
+         * @return the lists of all tag styles
          */
-	public LinkedHashSet<TagStyle> getStyles() {
-		return new LinkedHashSet<TagStyle>(styles.values());
+	public List<TagStyle> getListOfStyles() {
+		return styles.getAllStyles();
+	}
+
+	/**
+	 * Returns the object containing all tag styles contained in this
+	 * {@link StyledTagSet}.
+	 * @return the tag styles object connected with this StylesTagSet
+	 */
+	public TagStyles getTagStyles() {
+		return styles;
 	}
 
         /**
-         * Returns the set of {@link TagStyle styles} of
+         * Returns the list of {@link TagStyle styles} of
          * {@link Tag tagged selections} for a given
          * {@link SignalSelectionType type} of a selection.
          * @param type the type of a selection
-         * @return the set of styles of tagged selections for a given type of
+         * @return the list of styles of tagged selections for a given type of
          * a selection
          */
-	public LinkedHashSet<TagStyle> getStyles(SignalSelectionType type) {
-		LinkedHashSet<TagStyle> set = new LinkedHashSet<TagStyle>();
-		for (TagStyle ts : styles.values()) {
-			if (ts.getType() == type) {
-				set.add(ts);
-			}
-		}
-		return set;
+	public List<TagStyle> getStyles(SignalSelectionType type) {
+		return styles.getStyles(type);
 	}
 
         /**
-         * Returns the set of {@link TagStyle styles} of
+         * Returns the list of {@link TagStyle styles} of
          * {@link Tag tagged selections} for a given
          * {@link SignalSelectionType type} of a selection, excluding markers
          * if needed.
          * @param type the type of a selection
          * @param allowMarkers false if markers should be excluded,
          * true otherwise
-         * @return created set of styles
+         * @return the list of styles
          */
-	public LinkedHashSet<TagStyle> getStyles(SignalSelectionType type, boolean allowMarkers) {
-		LinkedHashSet<TagStyle> set = new LinkedHashSet<TagStyle>();
-		for (TagStyle ts : styles.values()) {
-			if (ts.getType() == type && (allowMarkers || !ts.isMarker())) {
-				set.add(ts);
-			}
-		}
-		return set;
+	public List<TagStyle> getStyles(SignalSelectionType type, boolean allowMarkers) {
+		return styles.getStyles(type, allowMarkers);
 	}
 
         /**
-         * Returns the set of {@link TagStyle styles} of tagged page selections.
-         * @return the set of styles of tagged page selections
+         * Returns the list of {@link TagStyle styles} of tagged page selections.
+         * @return the list of styles of tagged page selections
          */
-	public LinkedHashSet<TagStyle> getPageStyles() {
-		return getStyles(SignalSelectionType.PAGE);
+	public List<TagStyle> getPageStyles() {
+		return styles.getStyles(SignalSelectionType.PAGE);
 	}
 
         /**
-         * Returns the set of {@link TagStyle styles} of tagged block selections.
-         * @return the set of styles of tagged block selections
+         * Returns the list of {@link TagStyle styles} of tagged block selections.
+         * @return the list of styles of tagged block selections
          */
-	public LinkedHashSet<TagStyle> getBlockStyles() {
-		return getStyles(SignalSelectionType.BLOCK);
+	public List<TagStyle> getBlockStyles() {
+		return styles.getStyles(SignalSelectionType.BLOCK);
 	}
 
         /**
-         * Returns the set of {@link TagStyle styles} of tagged channel
+         * Returns the list of {@link TagStyle styles} of tagged channel
          * selections.
-         * @return the set of styles of tagged channel selections
+         * @return the list of styles of tagged channel selections
          */
-	public LinkedHashSet<TagStyle> getChannelStyles() {
-		return getStyles(SignalSelectionType.CHANNEL);
+	public List<TagStyle> getChannelStyles() {
+		return styles.getStyles(SignalSelectionType.CHANNEL);
 	}
 
         /**
-         * Returns the set of {@link TagStyle styles} of tagged page selections
+         * Returns the list of {@link TagStyle styles} of tagged page selections
          * excluding markers.
-         * @return the set of styles of tagged page selections without markers
+         * @return the list of styles of tagged page selections without markers
          */
-	public LinkedHashSet<TagStyle> getPageStylesNoMarkers() {
-		return getStyles(SignalSelectionType.PAGE, false);
+	public List<TagStyle> getPageStylesNoMarkers() {
+		return styles.getStyles(SignalSelectionType.PAGE, false);
 	}
 
         /**
-         * Returns the set of {@link TagStyle styles} of tagged block selections
+         * Returns the list of {@link TagStyle styles} of tagged block selections
          * excluding markers.
-         * @return the set of styles of tagged block selections without markers
+         * @return the list of styles of tagged block selections without markers
          */
-	public LinkedHashSet<TagStyle> getBlockStylesNoMarkers() {
-		return getStyles(SignalSelectionType.BLOCK, false);
+	public List<TagStyle> getBlockStylesNoMarkers() {
+		return styles.getStyles(SignalSelectionType.BLOCK, false);
 	}
 
         /**
-         * Returns the set of {@link TagStyle styles} of tagged channel
+         * Returns the list of {@link TagStyle styles} of tagged channel
          * selections excluding markers.
-         * @return the set of styles of tagged channel selections without markers
+         * @return the list of styles of tagged channel selections without markers
          */
-	public LinkedHashSet<TagStyle> getChannelStylesNoMarkers() {
-		return getStyles(SignalSelectionType.CHANNEL, false);
+	public List<TagStyle> getChannelStylesNoMarkers() {
+		return styles.getStyles(SignalSelectionType.CHANNEL, false);
 	}
 
         /**
-         * Returns the {@link TagStyle style} of a given name.
+         * Returns the {@link TagStyle style} of a given name
+	 * with the given type.
+	 * @param type the type of the style (page/block/channel)
          * @param name the name of a style
          * @return the style of a given name
          */
-	public TagStyle getStyle(String name) {
-		return styles.get(name);
-	}
-
-        /**
-         * Returns the {@link TagStyle style} of a given name. If there is
-         * no such style the default style is returned.
-         * @param name the name of a style
-         * @return the style of a given name or if there is no such style
-         * the default style
-         */
-	public TagStyle getStyleOrDefault(String name) {
-		TagStyle ts = styles.get(name);
-		if (ts == null) {
-			ts = TagStyle.getDefault();
-		}
-		return ts;
+	public TagStyle getStyle(SignalSelectionType type, String name) {
+		return styles.getStyle(type, name);
 	}
 
         /**
@@ -408,7 +355,7 @@ public class StyledTagSet implements Serializable, Preset {
          * @return the number of styles
          */
 	public int getTagStyleCount() {
-		return styles.size();
+		return styles.getStylesCount();
 	}
 
         /**
@@ -418,17 +365,7 @@ public class StyledTagSet implements Serializable, Preset {
          * @return the number of styles for a given type of a selection
          */
 	public int getTagStyleCount(SignalSelectionType type) {
-		if (type == SignalSelectionType.PAGE) {
-			return getPageStyleCount();
-		}
-		else if (type == SignalSelectionType.BLOCK) {
-			return getBlockStyleCount();
-		}
-		else if (type == SignalSelectionType.CHANNEL) {
-			return getChannelStyleCount();
-		} else {
-			return 0;
-		}
+		return styles.getStylesCount(type);
 	}
 
         /**
@@ -436,10 +373,7 @@ public class StyledTagSet implements Serializable, Preset {
          * @return the number of styles for page selections
          */
 	public int getPageStyleCount() {
-		if (pageStylesCache == null) {
-			makeStyleCache();
-		}
-		return pageStylesCache.size();
+		return getTagStyleCount(SignalSelectionType.PAGE);
 	}
 
         /**
@@ -447,10 +381,7 @@ public class StyledTagSet implements Serializable, Preset {
          * @return the number of styles for block selections
          */
 	public int getBlockStyleCount() {
-		if (blockStylesCache == null) {
-			makeStyleCache();
-		}
-		return blockStylesCache.size();
+		return getTagStyleCount(SignalSelectionType.BLOCK);
 	}
 
         /**
@@ -458,10 +389,7 @@ public class StyledTagSet implements Serializable, Preset {
          * @return the number of styles for channel selections
          */
 	public int getChannelStyleCount() {
-		if (channelStylesCache == null) {
-			makeStyleCache();
-		}
-		return channelStylesCache.size();
+		return getTagStyleCount(SignalSelectionType.CHANNEL);
 	}
 
         /**
@@ -473,17 +401,7 @@ public class StyledTagSet implements Serializable, Preset {
          * @return the found style
          */
 	public TagStyle getStyleAt(SignalSelectionType type, int index) {
-		if (type == SignalSelectionType.PAGE) {
-			return getPageStyleAt(index);
-		}
-		else if (type == SignalSelectionType.BLOCK) {
-			return getBlockStyleAt(index);
-		}
-		else if (type == SignalSelectionType.CHANNEL) {
-			return getChannelStyleAt(index);
-		} else {
-			return null;
-		}
+		return styles.getStyleAt(type, index);
 	}
 
         /**
@@ -493,10 +411,7 @@ public class StyledTagSet implements Serializable, Preset {
          * @return the found style
          */
 	public TagStyle getPageStyleAt(int index) {
-		if (pageStylesCache == null) {
-			makeStyleCache();
-		}
-		return pageStylesCache.get(index);
+		return styles.getStyleAt(SignalSelectionType.PAGE, index);
 	}
 
         /**
@@ -506,10 +421,7 @@ public class StyledTagSet implements Serializable, Preset {
          * @return the found style
          */
 	public TagStyle getBlockStyleAt(int index) {
-		if (blockStylesCache == null) {
-			makeStyleCache();
-		}
-		return blockStylesCache.get(index);
+		return styles.getStyleAt(SignalSelectionType.BLOCK, index);
 	}
 
         /**
@@ -519,10 +431,7 @@ public class StyledTagSet implements Serializable, Preset {
          * @return the found style
          */
 	public TagStyle getChannelStyleAt(int index) {
-		if (channelStylesCache == null) {
-			makeStyleCache();
-		}
-		return channelStylesCache.get(index);
+		return styles.getStyleAt(SignalSelectionType.CHANNEL, index);
 	}
 
         /**
@@ -532,18 +441,7 @@ public class StyledTagSet implements Serializable, Preset {
          * not in any array
          */
 	public int indexOfStyle(TagStyle style) {
-		SignalSelectionType type = style.getType();
-		if (type == SignalSelectionType.PAGE) {
-			return indexOfPageStyle(style);
-		}
-		else if (type == SignalSelectionType.BLOCK) {
-			return indexOfBlockStyle(style);
-		}
-		else if (type == SignalSelectionType.CHANNEL) {
-			return indexOfChannelStyle(style);
-		} else {
-			return -1;
-		}
+		return styles.getIndexOf(style);
 	}
 
         /**
@@ -554,10 +452,7 @@ public class StyledTagSet implements Serializable, Preset {
          * is not in that array
          */
 	public int indexOfPageStyle(TagStyle style) {
-		if (pageStylesCache == null) {
-			makeStyleCache();
-		}
-		return pageStylesCache.indexOf(style);
+		return styles.getIndexOf(style);
 	}
 
         /**
@@ -568,10 +463,7 @@ public class StyledTagSet implements Serializable, Preset {
          * is not in that array
          */
 	public int indexOfBlockStyle(TagStyle style) {
-		if (blockStylesCache == null) {
-			makeStyleCache();
-		}
-		return blockStylesCache.indexOf(style);
+		return styles.getIndexOf(style);
 	}
 
         /**
@@ -582,10 +474,7 @@ public class StyledTagSet implements Serializable, Preset {
          * is not in that array
          */
 	public int indexOfChannelStyle(TagStyle style) {
-		if (channelStylesCache == null) {
-			makeStyleCache();
-		}
-		return channelStylesCache.indexOf(style);
+		return styles.getIndexOf(style);
 	}
 
         /**
@@ -857,29 +746,15 @@ public class StyledTagSet implements Serializable, Preset {
          * @param style the tag style to be added
          */
 	public void addStyle(TagStyle style) {
-		styles.put(style.getName(), style);
-		KeyStroke keyStroke = style.getKeyStroke();
-		if (keyStroke != null) {
-			getStylesByKeyStrokes().put(keyStroke, style);
-		}
-		invalidateStyleCache(style.getType());
-		fireTagStyleAdded(style, indexOfStyle(style));
+		styles.addStyle(style);
 	}
 
         /**
          * Removes the {@link TagStyle style} of a given name.
          * @param name the name of a style to be removed
          */
-	public void removeStyle(String name) {
-		TagStyle style = styles.get(name);
-		if (style != null) {
-			int inTypeIndex = indexOfStyle(style);
-			styles.remove(name);
-			// invalidate map
-			stylesByKeyStrokes = null;
-			invalidateStyleCache(style.getType());
-			fireTagStyleRemoved(style,inTypeIndex);
-		}
+	public void removeStyle(TagStyle style) {
+		styles.removeStyle(style);
 	}
 
         /**
@@ -888,29 +763,7 @@ public class StyledTagSet implements Serializable, Preset {
          * @param style new style to be set
          */
 	public void updateStyle(String name, TagStyle style) {
-
-		TagStyle existingStyle = styles.get(name);
-		if (existingStyle == null) {
-			addStyle(style);
-			return;
-		}
-		if (style.getType() != existingStyle.getType()) {
-			removeStyle(name);
-			addStyle(style);
-			return;
-		}
-		existingStyle.copyFrom(style);
-		if (!style.getName().equals(name)) {
-			styles.remove(name);
-			styles.put(style.getName(), existingStyle);
-			invalidateStyleCache(existingStyle.getType());
-		}
-
-		// invalidate map
-		stylesByKeyStrokes = null;
-
-		fireTagStyleChanged(existingStyle, indexOfStyle(existingStyle));
-
+		styles.updateStyle(name, style);
 	}
 
         /**
@@ -920,9 +773,9 @@ public class StyledTagSet implements Serializable, Preset {
          * @return true if there are any tagged selections of a given style,
          * false otherwise
          */
-	public boolean hasTagsWithStyle(String name) {
+	public boolean hasTagsWithStyle(TagStyle style) {
 		for (Tag tag : tags) {
-			if (name.equals(tag.getStyle().getName())) {
+			if (tag.getStyle() == style) {
 				return true;
 			}
 		}
@@ -940,7 +793,7 @@ public class StyledTagSet implements Serializable, Preset {
 			throw new SanityCheckException("Tag not compatible");
 		}
 
-		TagStyle style = this.getStyle(tag.getStyle().getName());
+		TagStyle style = this.getStyle(tag.getStyle().getType(), tag.getStyle().getName());
 		if (style != null)
 			tag.setStyle(style);
 
@@ -1268,19 +1121,7 @@ public class StyledTagSet implements Serializable, Preset {
          * @return the map associating tag styles with KeyStrokes assign to them.
          */
 	public HashMap<KeyStroke, TagStyle> getStylesByKeyStrokes() {
-		if (stylesByKeyStrokes == null) {
-			stylesByKeyStrokes = new HashMap<KeyStroke, TagStyle>();
-			KeyStroke keyStroke;
-
-			for (TagStyle style : styles.values()) {
-				keyStroke = style.getKeyStroke();
-				if (keyStroke != null) {
-					stylesByKeyStrokes.put(keyStroke, style);
-				}
-			}
-
-		}
-		return stylesByKeyStrokes;
+		return styles.getStylesByKeyStrokes();
 	}
 
         /**
@@ -1375,7 +1216,7 @@ public class StyledTagSet implements Serializable, Preset {
          * @param listener the TagStyleListener to be added
          */
 	public void addTagStyleListener(TagStyleListener listener) {
-		listenerList.add(TagStyleListener.class, listener);
+		styles.addTagStyleListener(listener);
 	}
 
         /**
@@ -1384,64 +1225,7 @@ public class StyledTagSet implements Serializable, Preset {
          * @param listener the TagStyleListener to be removed
          */
 	public void removeTagStyleListener(TagStyleListener listener) {
-		listenerList.remove(TagStyleListener.class, listener);
-	}
-
-        /**
-         * Fires all {@link TagStyleListener tag style listeners} that a
-         * {@link TagStyle tag style} of a given index has been added.
-         * @param tagStyle the added tag style
-         * @param inTypeIndex an index in an array of tag styles of a given type
-         */
-	protected void fireTagStyleAdded(TagStyle tagStyle, int inTypeIndex) {
-		Object[] listeners = listenerList.getListenerList();
-		TagStyleEvent e = null;
-		for (int i = listeners.length-2; i>=0; i-=2) {
-			if (listeners[i]==TagStyleListener.class) {
-				if (e == null) {
-					e = new TagStyleEvent(this,tagStyle,inTypeIndex);
-				}
-				((TagStyleListener)listeners[i+1]).tagStyleAdded(e);
-			}
-		}
-	}
-
-        /**
-         * Fires all {@link TagStyleListener tag style listeners} that a
-         * {@link TagStyle tag style} of a given index has been removed.
-         * @param tagStyle the removed tag style
-         * @param inTypeIndex an index in an array of tag styles of a given type
-         */
-	protected void fireTagStyleRemoved(TagStyle tagStyle, int inTypeIndex) {
-		Object[] listeners = listenerList.getListenerList();
-		TagStyleEvent e = null;
-		for (int i = listeners.length-2; i>=0; i-=2) {
-			if (listeners[i]==TagStyleListener.class) {
-				if (e == null) {
-					e = new TagStyleEvent(this,tagStyle,inTypeIndex);
-				}
-				((TagStyleListener)listeners[i+1]).tagStyleRemoved(e);
-			}
-		}
-	}
-
-        /**
-         * Fires {@link TagStyleListener tag style listeners} that a
-         * {@link TagStyle tag style} of a given index has been changed.
-         * @param tagStyle the changed tag style
-         * @param inTypeIndex an index in an array of tag styles of a given type
-         */
-	protected void fireTagStyleChanged(TagStyle tagStyle,int inTypeIndex) {
-		Object[] listeners = listenerList.getListenerList();
-		TagStyleEvent e = null;
-		for (int i = listeners.length-2; i>=0; i-=2) {
-			if (listeners[i]==TagStyleListener.class) {
-				if (e == null) {
-					e = new TagStyleEvent(this,tagStyle,inTypeIndex);
-				}
-				((TagStyleListener)listeners[i+1]).tagStyleChanged(e);
-			}
-		}
+		styles.removeTagStyleListener(listener);
 	}
 
         /**
@@ -1506,74 +1290,6 @@ public class StyledTagSet implements Serializable, Preset {
 				((TagListener)listeners[i+1]).tagChanged(e);
 			}
 		}
-	}
-
-        /**
-         * Invalidates the cache of tagged selection styles for a given type
-         * of selection.
-         * If cache is invalidated it will need to be built again before
-         * next usage.
-         * @param type the type of a selection
-         */
-	private void invalidateStyleCache(SignalSelectionType type) {
-		if (type == SignalSelectionType.PAGE) {
-			pageStylesCache = null;
-		} else if (type == SignalSelectionType.BLOCK) {
-			blockStylesCache = null;
-		} else if (type == SignalSelectionType.CHANNEL) {
-			channelStylesCache = null;
-		}
-	}
-
-        /**
-         * Creates the cache of tagged selection styles for all types of
-         * selections (if they don't exist or are invalidated).
-         */
-	private void makeStyleCache() {
-
-		if (pageStylesCache != null && blockStylesCache != null && channelStylesCache != null) {
-			return;
-		}
-
-		ArrayList<TagStyle> newPageStyles = null;
-		ArrayList<TagStyle> newBlockStyles = null;
-		ArrayList<TagStyle> newChannelStyles = null;
-
-		if (pageStylesCache == null) {
-			newPageStyles = new ArrayList<TagStyle>();
-		}
-		if (blockStylesCache == null) {
-			newBlockStyles = new ArrayList<TagStyle>();
-		}
-		if (channelStylesCache == null) {
-			newChannelStyles = new ArrayList<TagStyle>();
-		}
-
-		SignalSelectionType type;
-		for (TagStyle style : styles.values()) {
-			type = style.getType();
-			if (type == SignalSelectionType.PAGE && pageStylesCache == null) {
-				newPageStyles.add(style);
-			} else if (type == SignalSelectionType.BLOCK && blockStylesCache == null) {
-				newBlockStyles.add(style);
-			} else if (type == SignalSelectionType.CHANNEL && channelStylesCache == null) {
-				newChannelStyles.add(style);
-			}
-		}
-
-		if (pageStylesCache == null) {
-			pageStylesCache = newPageStyles;
-			Collections.sort(pageStylesCache,tagStyleNameComparator);
-		}
-		if (blockStylesCache == null) {
-			blockStylesCache = newBlockStyles;
-			Collections.sort(blockStylesCache,tagStyleNameComparator);
-		}
-		if (channelStylesCache == null) {
-			channelStylesCache = newChannelStyles;
-			Collections.sort(channelStylesCache,tagStyleNameComparator);
-		}
-
 	}
 
         /**
@@ -1674,16 +1390,6 @@ public class StyledTagSet implements Serializable, Preset {
 		return name;
 	}
 
-	/**
-	 * Returns the hashmap containing the available styles names with
-	 * the styles definitions.
-	 * @return the hashmap of tag styles names connected with an appropriate
-	 * tag style.
-	 */
-	public LinkedHashMap<String, TagStyle> getStylesWithNames() {
-		return styles;
-	}
-
 	@Override
 	public StyledTagSet clone() {
 		StyledTagSet newTagSet = new StyledTagSet(styles);
@@ -1702,47 +1408,22 @@ public class StyledTagSet implements Serializable, Preset {
 	public List<String> copyStylesFrom(StyledTagSet tagSet) {
 
 		List<String> stylesThatCouldNotBeDeleted = new ArrayList<String>();
-		Set<String> keySet = styles.keySet();
 
-		//create the list of tag styles names from both StyledTagSets.
-		List<String> keyList = new ArrayList<String>();
-
-		Iterator<String> iterator = keySet.iterator();
-		while (iterator.hasNext()) {
-			keyList.add(iterator.next());
-		}
-
-		iterator = tagSet.getStylesWithNames().keySet().iterator();
-		while (iterator.hasNext()) {
-			String value = iterator.next();
-			if (!keyList.contains(value))
-				keyList.add(value);
-		}
+		Set<TagStyle> stylesFromBoth = new HashSet<TagStyle>();
+		stylesFromBoth.addAll(this.getListOfStyles());
+		stylesFromBoth.addAll(tagSet.getListOfStyles());
 
 		//for each tag check if it should be removed, updated or deleted
-		for (String key: keyList) {
-			TagStyle newStyle = tagSet.getStyle(key);
-			TagStyle oldStyle = this.getStyle(key);
+		for (TagStyle style: stylesFromBoth) {
+			SignalSelectionType styleType = style.getType();
+			TagStyle newStyle = tagSet.getStyle(styleType, style.getName());
+			TagStyle oldStyle = this.getStyle(styleType, style.getName());
 
 			if (newStyle != null && oldStyle != null) {
 				updateStyle(oldStyle.getName(), newStyle);
 			}
 			else if (newStyle == null && oldStyle != null) {
-
-				boolean doTagsWithThisStyleExist = false;
-				Iterator<Tag> tagIterator = tags.iterator();
-				while(tagIterator.hasNext()) {
-					Tag tag = tagIterator.next();
-					if (tag.getStyle().getName().equals(oldStyle.getName())) {
-						doTagsWithThisStyleExist = true;
-						break;
-					}
-				}
-
-				if (!doTagsWithThisStyleExist) {
-					removeStyle(oldStyle.getName());
-				}
-				else {
+				if (!tryToRemoveStyle(oldStyle)) {
 					stylesThatCouldNotBeDeleted.add(oldStyle.getName());
 				}
 			}
@@ -1752,35 +1433,78 @@ public class StyledTagSet implements Serializable, Preset {
 		}
 
 		//invalidate all caches
-		invalidateStyleCache(SignalSelectionType.PAGE);
-		invalidateStyleCache(SignalSelectionType.BLOCK);
-		invalidateStyleCache(SignalSelectionType.CHANNEL);
-
 		invalidateTagCache(SignalSelectionType.PAGE);
 		invalidateTagCache(SignalSelectionType.BLOCK);
 		invalidateTagCache(SignalSelectionType.CHANNEL);
-		stylesByKeyStrokes = null;
 
 		//connect tags with appropriate tag styles (after update the reference
 		//may be not correct any more
+		updateTagAttributesBinding();
+
+		return stylesThatCouldNotBeDeleted;
+
+	}
+
+	/**
+	 * Tries to remove the given style. If a tag exists that uses this style,
+	 * it cannot be removed and false is returned. If no tag exists that uses
+	 * this style, it is removed and 'true' is returned.
+	 * @param style the style to be removed
+	 * @return true if the style was sucessfully removed, false otherwise
+	 */
+	protected boolean tryToRemoveStyle(TagStyle style) {
+		boolean doTagsWithThisStyleExist = false;
+		Iterator<Tag> tagIterator = tags.iterator();
+		while(tagIterator.hasNext()) {
+			Tag tag = tagIterator.next();
+			if (tag.getStyle().getName().equals(style.getName())
+				&& tag.getStyle().getType() == style.getType()) {
+				doTagsWithThisStyleExist = true;
+				break;
+			}
+		}
+
+		if (!doTagsWithThisStyleExist) {
+			styles.removeStyle(style);
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Checks if {@link TagStyle tag styles} {@link TagStyleAttributeDefinition}
+	 * is properly referenced by each {@link TagAttributeValue} and
+	 * - in case it is not - the reference is corrected.
+	 * Explanation: each tag style contains {@link TagStyleAttributeDefinition
+	 * attributes definitions} which are referenced by each tag that uses
+	 * these definitions. But, after copying styles from some other tagSet
+	 * (which occurs when applying a preset to a tag set) those references
+	 * will be incorrect.
+	 */
+	protected void updateTagAttributesBinding() {
 		Iterator<Tag> tagIterator = tags.iterator();
 		while(tagIterator.hasNext()) {
 			Tag tag = tagIterator.next();
 
 			String styleName = tag.getStyle().getName();
-			TagStyle style = getStyle(styleName);
+			SignalSelectionType tagType = tag.getStyle().getType();
+			TagStyle style = getStyle(tagType, styleName);
 			tag.setStyle(style);
 
 			for (TagAttributeValue value: tag.getAttributes().getAttributesList()) {
 				TagStyleAttributeDefinition oldAttributeDefinition = value.getAttributeDefinition();
 				TagStyleAttributeDefinition newAttributeDefinition = style.getAttributesDefinitions().getAttributeDefinition(oldAttributeDefinition.getCode());
-				value.setAttributeDefinition(newAttributeDefinition);
+
+				if (oldAttributeDefinition != null && newAttributeDefinition == null) {
+					style.getAttributesDefinitions().addAttributeDefinition(oldAttributeDefinition);
+					value.setAttributeDefinition(oldAttributeDefinition);
+				}
+				else {
+					value.setAttributeDefinition(newAttributeDefinition);
+				}
 			}
 		}
-		return stylesThatCouldNotBeDeleted;
-
 	}
-
-
-
 }

@@ -24,6 +24,8 @@ import eega.util.tag.PageTag;
 import eega.util.tag.TTagHDRRec;
 import eega.util.tag.TagDataSet;
 import eega.util.tag.TagException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class allows to create a {@link StyledTagSet StyledTagSet} from file
@@ -163,7 +165,8 @@ public class LegacyTagImporter {
 			}
 		}
 
-		return new StyledTagSet(styles,tags,pageSize,blocksPerPage);
+		TagStyles tagStyles = new TagStyles(styles.values());
+		return new StyledTagSet(tagStyles,tags,pageSize,blocksPerPage);
 
 	}
 

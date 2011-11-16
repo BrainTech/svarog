@@ -62,7 +62,7 @@ public class TagStylesPopupDialog extends AbstractPopupDialog implements ActionL
 
 		Collection<TagStyle> styles;
 		if (type == null) {
-			styles = tagSet.getStyles();
+			styles = tagSet.getListOfStyles();
 		} else {
 			styles = tagSet.getStyles(type);
 		}

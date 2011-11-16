@@ -11,6 +11,7 @@ import java.awt.FlowLayout;
 import java.awt.Window;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.LinkedHashSet;
 
 import javax.swing.DefaultListModel;
@@ -316,7 +317,7 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 			if (currentTagDocument != null) {
 
 				StyledTagSet tagSet = currentTagDocument.getTagSet();
-				LinkedHashSet<TagStyle> styles = tagSet.getStyles();
+				Collection<TagStyle> styles = tagSet.getListOfStyles();
 
 				for (TagStyle style : styles) {
 					listModel.addElement(style);

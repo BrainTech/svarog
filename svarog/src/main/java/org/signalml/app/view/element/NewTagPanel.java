@@ -23,6 +23,7 @@ import org.signalml.app.config.preset.StyledTagSetPresetManager;
 
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.TagDocument;
+import org.signalml.app.view.opensignal.TagPresetComboBoxModel;
 import org.signalml.plugin.export.signal.TagStyle;
 
 /**
@@ -275,7 +276,9 @@ public class NewTagPanel extends JPanel {
 	 */
 	public JComboBox getPresetComboBox() {
 		if (presetComboBox == null) {
-			presetComboBox = new JComboBox(styledTagSetPresetManager.getPresets());
+			TagPresetComboBoxModel model = new TagPresetComboBoxModel(styledTagSetPresetManager);
+			model.setShowEmptyOption(false);
+			presetComboBox = new JComboBox(model);
 			presetComboBox.setAlignmentX(Component.LEFT_ALIGNMENT);
 			presetComboBox.setPreferredSize(new Dimension(200, 10));
 		}

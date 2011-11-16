@@ -4,6 +4,7 @@
 
 package org.signalml.domain.tag;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -220,7 +221,7 @@ public class TagDifferenceDetector {
          * @param topArr an array for top styles that will be filled
          * @param bottomArr an array for bottom styles that will be filled
          */
-	private void arrangeTagStyles(LinkedHashSet<TagStyle> topStyles, LinkedHashSet<TagStyle> bottomStyles, TagStyle[] topArr, TagStyle[] bottomArr) {
+	private void arrangeTagStyles(Collection<TagStyle> topStyles, Collection<TagStyle> bottomStyles, TagStyle[] topArr, TagStyle[] bottomArr) {
 
 		LinkedHashMap<String,TagStyle> topMap = new LinkedHashMap<String, TagStyle>();
 		LinkedHashMap<String,TagStyle> bottomMap = new LinkedHashMap<String, TagStyle>();
@@ -311,8 +312,8 @@ public class TagDifferenceDetector {
 		SortedSet<Tag> topTags = topTagSet.getTags();
 		SortedSet<Tag> bottomTags = bottomTagSet.getTags();
 
-		LinkedHashSet<TagStyle> topStyleSet = topTagSet.getPageStylesNoMarkers();
-		LinkedHashSet<TagStyle> bottomStyleSet = bottomTagSet.getPageStylesNoMarkers();
+		Collection<TagStyle> topStyleSet = topTagSet.getPageStylesNoMarkers();
+		Collection<TagStyle> bottomStyleSet = bottomTagSet.getPageStylesNoMarkers();
 
 		topStyles = new TagStyle[topStyleSet.size()];
 		bottomStyles = new TagStyle[bottomStyleSet.size()];

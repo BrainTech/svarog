@@ -107,7 +107,7 @@ public class TagStyleToolBar extends JToolBar implements TagStyleListener {
 
 		Collection<TagStyle> styles;
 		if (type == null) {
-			styles = tagSet.getStyles();
+			styles = tagSet.getListOfStyles();
 		} else {
 			styles = tagSet.getStyles(type);
 		}

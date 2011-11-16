@@ -39,6 +39,7 @@ import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.element.TagStylePropertiesPanel;
 import org.signalml.app.view.element.TagStyleTree;
 import org.signalml.domain.tag.StyledTagSet;
+import org.signalml.domain.tag.TagStyles;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
@@ -551,7 +552,7 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 
 		TagStyle initialStyle = descriptor.getStyle();
 		if (initialStyle == null) {
-			Collection<TagStyle> styles = currentTagSet.getStyles();
+			Collection<TagStyle> styles = currentTagSet.getListOfStyles();
 			if (!styles.isEmpty()) {
 				initialStyle = styles.iterator().next();
 			}
@@ -643,7 +644,7 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 	private TagStyle getNewStyle(SignalSelectionType type) {
 		String name = _("New");
 		int cnt = 2;
-		while (currentTagSet.getStyle(name) != null) {
+		while (currentTagSet.getStyle(type, name) != null) {
 			name = _("New") + " (" + cnt + ")";
 			cnt++;
 		}
@@ -660,7 +661,7 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 		Errors errors = tagStylePropertiesPanel.validateChanges();
 
 		String newName = tagStylePropertiesPanel.getNameTextField().getText();
-		TagStyle oldStyle = currentTagSet.getStyle(newName);
+		TagStyle oldStyle = currentTagSet.getStyle(currentStyle.getType(), newName);
 		if (oldStyle != null && oldStyle != currentStyle) {
 			errors.rejectValue("name", "error.style.nameDuplicate");
 		}
@@ -763,9 +764,9 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 	@Override
 	public Preset getPreset() throws SignalMLException {
 		applyChanges();
-		LinkedHashMap<String, TagStyle> stylesWithNames = (LinkedHashMap<String, TagStyle>) currentTagSet.getStylesWithNames().clone();
 
-		StyledTagSet sts = new StyledTagSet(stylesWithNames);
+		TagStyles styles = currentTagSet.getTagStyles().clone();
+		StyledTagSet sts = new StyledTagSet(styles);
 		return sts;
 	}
 
@@ -928,14 +929,13 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 				return;
 			}
 			TagStyle style = (TagStyle) comp;
-			String name = style.getName();
 
-			if (currentTagSet.hasTagsWithStyle(name)) {
+			if (currentTagSet.hasTagsWithStyle(style)) {
 				OptionPane.showTagStyleInUse(TagStylePaletteDialog.this);
 				return;
 			}
 
-			currentTagSet.removeStyle(name);
+			currentTagSet.removeStyle(style);
 			changed = true;
 
 			getTagStyleTree().setSelectionPath(null);

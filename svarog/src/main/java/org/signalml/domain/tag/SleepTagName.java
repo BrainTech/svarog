@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.util.HashMap;
 
 import org.signalml.app.document.TagDocument;
+import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.TagStyle;
 
 /**
@@ -186,32 +187,32 @@ public abstract class SleepTagName {
 		StyledTagSet tagSet = tag.getTagSet();
 
 		TagStyle style;
-		style = tagSet.getStyle(RK_WAKE);
-		if (style == null || !style.getType().isPage()) {
+		style = tagSet.getStyle(SignalSelectionType.PAGE, RK_WAKE);
+		if (style == null) {
 			return false;
 		}
-		style = tagSet.getStyle(RK_1);
-		if (style == null || !style.getType().isPage()) {
+		style = tagSet.getStyle(SignalSelectionType.PAGE, RK_1);
+		if (style == null) {
 			return false;
 		}
-		style = tagSet.getStyle(RK_2);
-		if (style == null || !style.getType().isPage()) {
+		style = tagSet.getStyle(SignalSelectionType.PAGE, RK_2);
+		if (style == null) {
 			return false;
 		}
-		style = tagSet.getStyle(RK_3);
-		if (style == null || !style.getType().isPage()) {
+		style = tagSet.getStyle(SignalSelectionType.PAGE, RK_3);
+		if (style == null) {
 			return false;
 		}
-		style = tagSet.getStyle(RK_4);
-		if (style == null || !style.getType().isPage()) {
+		style = tagSet.getStyle(SignalSelectionType.PAGE, RK_4);
+		if (style == null) {
 			return false;
 		}
-		style = tagSet.getStyle(RK_REM);
-		if (style == null || !style.getType().isPage()) {
+		style = tagSet.getStyle(SignalSelectionType.PAGE, RK_REM);
+		if (style == null) {
 			return false;
 		}
-		style = tagSet.getStyle(RK_MT);
-		if (style == null || !style.getType().isPage()) {
+		style = tagSet.getStyle(SignalSelectionType.PAGE, RK_MT);
+		if (style == null) {
 			return false;
 		}
 
@@ -230,24 +231,24 @@ public abstract class SleepTagName {
 		StyledTagSet tagSet = tag.getTagSet();
 
 		TagStyle style;
-		style = tagSet.getStyle(AASM_WAKE);
-		if (style == null || !style.getType().isPage()) {
+		style = tagSet.getStyle(SignalSelectionType.PAGE, AASM_WAKE);
+		if (style == null) {
 			return false;
 		}
-		style = tagSet.getStyle(AASM_N1);
-		if (style == null || !style.getType().isPage()) {
+		style = tagSet.getStyle(SignalSelectionType.PAGE, AASM_N1);
+		if (style == null) {
 			return false;
 		}
-		style = tagSet.getStyle(AASM_N2);
-		if (style == null || !style.getType().isPage()) {
+		style = tagSet.getStyle(SignalSelectionType.PAGE, AASM_N2);
+		if (style == null) {
 			return false;
 		}
-		style = tagSet.getStyle(AASM_N3);
-		if (style == null || !style.getType().isPage()) {
+		style = tagSet.getStyle(SignalSelectionType.PAGE, AASM_N3);
+		if (style == null) {
 			return false;
 		}
-		style = tagSet.getStyle(AASM_REM);
-		if (style == null || !style.getType().isPage()) {
+		style = tagSet.getStyle(SignalSelectionType.PAGE, AASM_REM);
+		if (style == null) {
 			return false;
 		}
 

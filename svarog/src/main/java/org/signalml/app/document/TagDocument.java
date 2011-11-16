@@ -37,6 +37,7 @@ import com.thoughtworks.xstream.converters.reflection.NativeFieldKeySorter;
 import com.thoughtworks.xstream.converters.reflection.PureJavaReflectionProvider;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.io.xml.XmlFriendlyReplacer;
+import org.signalml.domain.tag.TagStyles;
 
 /**
  * The document with {@link Tag tags} and {@link TagStyle tag styles}.
@@ -155,11 +156,7 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 		TagDocument templateDocument = new TagDocument();
 		templateDocument.readDocument(r.getInputStream());
 
-		LinkedHashMap<String,TagStyle> styles = new LinkedHashMap<String, TagStyle>();
-		Collection<TagStyle> templateStyles = templateDocument.getTagSet().getStyles();
-		for (TagStyle style : templateStyles) {
-			styles.put(style.getName(), style);
-		}
+		TagStyles styles = templateDocument.getTagSet().getTagStyles().clone();
 		StyledTagSet tagSet = new StyledTagSet(styles, pageSize, blocksPerPage);
 
 		TagDocument tagDocument = new TagDocument(tagSet);
@@ -182,11 +179,8 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 	 */
 	public static TagDocument getStylesFromFileDocument(File file, float pageSize, int blocksPerPage) throws SignalMLException, IOException {
 		TagDocument templateDocument = new TagDocument(file);
-		LinkedHashMap<String,TagStyle> styles = new LinkedHashMap<String, TagStyle>();
-		Collection<TagStyle> templateStyles = templateDocument.getTagSet().getStyles();
-		for (TagStyle style : templateStyles) {
-			styles.put(style.getName(), style);
-		}
+
+		TagStyles styles = templateDocument.getTagSet().getTagStyles().clone();
 		StyledTagSet tagSet = new StyledTagSet(styles, pageSize, blocksPerPage);
 		TagDocument tagDocument = new TagDocument(tagSet);
 		return tagDocument;
@@ -361,7 +355,7 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 	 */
 	public void updateSignalSpaceConstraints(SignalSpaceConstraints constraints) {
 
-		LinkedHashSet<TagStyle> channelStyles = getTagSet().getChannelStyles();
+		Collection<TagStyle> channelStyles = getTagSet().getChannelStyles();
 		Iterator<TagStyle> it = channelStyles.iterator();
 		while (it.hasNext()) {
 			if (!it.next().isMarker()) {
@@ -408,7 +402,7 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 	@Override
 	public Set<ExportedTagStyle> getTagStyles() {
 		StyledTagSet tagSet = getTagSet();
-		Set<TagStyle> styles = tagSet.getStyles();
+		List<TagStyle> styles = tagSet.getListOfStyles();
 		Set<ExportedTagStyle> exportedStyles = new LinkedHashSet<ExportedTagStyle>();
 		for(TagStyle style : styles){
 			exportedStyles.add(style);

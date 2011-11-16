@@ -84,7 +84,7 @@ public class TagStylesGenerator {
 			return new HashSet<TagStyle>();
 		}
 
-		return templateDocument.getTagSet().getStyles();
+		return templateDocument.getTagSet().getListOfStyles();
 
 	}
 

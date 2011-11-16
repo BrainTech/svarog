@@ -14,6 +14,7 @@ import javax.swing.KeyStroke;
 
 import org.signalml.app.document.TagDocument;
 import org.signalml.domain.tag.StyledTagSet;
+import org.signalml.domain.tag.TagStyles;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.data.io.PluginTagWriterConfig;
 import org.signalml.plugin.data.tag.IPluginTagDef;
@@ -41,7 +42,7 @@ public class PluginTagWriter implements IPluginTagWriter {
 	public void writeTags(Collection<PluginTagGroup> tags) throws IOException,
 		SignalMLException {
 
-		LinkedHashMap<String, TagStyle> styles = this.createStyles(tags);
+		TagStyles styles = this.createStyles(tags);
 		TreeSet<Tag> documentTags = new TreeSet<Tag>(this.createTags(tags, styles));
 
 		float pageSize = this.config.pageSize;
@@ -65,16 +66,16 @@ public class PluginTagWriter implements IPluginTagWriter {
 		document.saveDocument();
 	}
 
-	private LinkedHashMap<String, TagStyle> createStyles(
+	private TagStyles createStyles(
 		Collection<PluginTagGroup> tags) {
-		LinkedHashMap<String, TagStyle> styles = new LinkedHashMap<String, TagStyle>();
+		TagStyles styles = new TagStyles();
 
 		for (PluginTagGroup tagGroup : tags) {
 			TagStyle style = new TagStyle(SignalSelectionType.typeByName(tagGroup.type.getName()),
 						      tagGroup.name, tagGroup.description, FILL_COLOR,
 						      OUTLINE_COLOR, 1, null, // solid
 						      this.createKeyStroke(tagGroup), false);
-			styles.put(tagGroup.name, style);
+			styles.addStyle(style);
 		}
 
 		return styles;
@@ -91,10 +92,10 @@ public class PluginTagWriter implements IPluginTagWriter {
 	}
 
 	private Collection<Tag> createTags(Collection<PluginTagGroup> tags,
-					   Map<String, TagStyle> tagStyles) {
+					   TagStyles tagStyles) {
 		List<Tag> l = new LinkedList<Tag>();
 		for (PluginTagGroup tagGroup : tags) {
-			TagStyle style = tagStyles.get(tagGroup.name);
+			TagStyle style = tagStyles.getStyle(tagGroup.name);
 			if (style == null) {
 				style = TagStyle.getDefault();
 			}

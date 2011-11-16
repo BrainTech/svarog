@@ -90,7 +90,7 @@ public class LegacyTagExporter {
 		TagDataSet tds = new TagDataSet(secPP, blkPP);
 		tds.setNoOfChannels(channelCount);
 
-		Collection<TagStyle> styles = tagSet.getStyles();
+		Collection<TagStyle> styles = tagSet.getListOfStyles();
 		Iterator<TagStyle> it = styles.iterator();
 		while (it.hasNext()) {
 			style = it.next();

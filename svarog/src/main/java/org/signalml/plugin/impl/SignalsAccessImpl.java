@@ -516,7 +516,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	 */
 	private TagStyle findStyle(TagDocument tagDocument, ExportedTag tag) throws IllegalArgumentException{
 		StyledTagSet tagSet = tagDocument.getTagSet();
-		Set<TagStyle> styles = tagSet.getStyles();
+		Collection<TagStyle> styles = tagSet.getListOfStyles();
 		TagStyle style = null;
 		for (TagStyle styleTmp : styles){
 			if (styleTmp.equals(tag.getStyle())){

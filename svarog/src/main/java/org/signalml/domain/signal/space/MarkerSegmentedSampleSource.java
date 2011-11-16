@@ -11,6 +11,7 @@ import org.signalml.domain.signal.MultichannelSampleProcessor;
 import org.signalml.domain.signal.MultichannelSampleSource;
 import org.signalml.domain.signal.MultichannelSegmentedSampleSource;
 import org.signalml.domain.tag.StyledTagSet;
+import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
 
@@ -106,7 +107,7 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 		samplesAfter = (int) Math.ceil(samplingFrequency * secondsAfter);
 		segmentLength = samplesBefore + samplesAfter;
 
-		TagStyle markerStyle = tagSet.getStyle(markerName);
+		TagStyle markerStyle = tagSet.getStyle(SignalSelectionType.CHANNEL, markerName);
 		int channelTagCount = tagSet.getChannelTagCount();
 
 		int minSampleCount = SampleSourceUtils.getMinSampleCount(source);
