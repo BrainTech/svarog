@@ -3,14 +3,12 @@ package org.signalml.app;
 import java.text.MessageFormat;
 
 import org.signalml.app.SvarogI18n;
-import org.signalml.plugin.export.PluginAuth;
 import org.signalml.plugin.export.i18n.SvarogAccessI18n;
 import org.springframework.context.MessageSourceResolvable;
 import org.xnap.commons.i18n.I18n;
 import org.xnap.commons.i18n.I18nFactory;
 import org.signalml.app.logging.SvarogLogger;
-import static org.signalml.util.SvarogConstants.I18nCatalogId;
-import org.signalml.plugin.impl.PluginAccessClass;
+import org.signalml.util.SvarogConstants;
 
 /**
  * {@link ISvarogI18n} implementation using org.xnap.commons.i18n.* classes.
@@ -18,31 +16,18 @@ import org.signalml.plugin.impl.PluginAccessClass;
  * @author Stanislaw Findeisen (Eisenbits)
  */
 public class SvarogI18n implements ISvarogI18n, SvarogAccessI18n {
+	private final I18n i18n;
 
-	private PluginAccessClass pluginAccessClass;
-	private final I18n coreI18n;
-
-	private SvarogI18n() {
-		this.coreI18n = I18nFactory.getI18n(SvarogI18n.class, I18nCatalogId);
-	}
-
-	private Class<?> getClass(PluginAuth auth) {
-		return (pluginAccessClass.getPluginHead(auth).getPluginObj().getClass());
-	}
-
-	private I18n getI18n(PluginAuth auth, String catalogId) {
-		if (auth == null)
-			return this.coreI18n;
-		else
-			return I18nFactory.getI18n(getClass(auth), catalogId);
+	public SvarogI18n(Class klass, String catalogId) {
+		this.i18n = I18nFactory.getI18n(klass, catalogId);
 	}
 
 	/**
 	 * Translation method.
 	 */
 	@Override
-	public String translate(PluginAuth auth, String catalogId, String key) {
-		String s = getI18n(auth, catalogId).tr(key);
+	public String translate(String key) {
+		String s = this.i18n.tr(key);
 		SvarogLogger.getSharedInstance().debug("translate: " + key + " --> " + s);
 		return s;
 	}
@@ -51,24 +36,20 @@ public class SvarogI18n implements ISvarogI18n, SvarogAccessI18n {
 	 * Translation method (plural version).
 	 */
 	@Override
-	public String translateN(PluginAuth auth, String catalogId, String singular, String plural, long n) {
-		String s = getI18n(auth, catalogId).trn(singular, plural, n);
+	public String translateN(String singular, String plural, long n) {
+		String s = i18n.trn(singular, plural, n);
 		SvarogLogger.getSharedInstance().debug("translateN: " + singular + " --> " + s);
 		return s;
 	}
 
 	@Override
-	public String translateR(PluginAuth auth, String catalogId, String key, Object ... arguments) {
-		return render(translate(auth, catalogId, key), arguments);
+	public String translateR(String key, Object ... arguments) {
+		return render(translate(key), arguments);
 	}
 
 	@Override
-	public String translateNR(PluginAuth auth, String catalogId, String singular, String plural, long n, Object ... arguments) {
-		return render(translateN(auth, catalogId, singular, plural, n), arguments);
-	}
-
-	public void setPluginAccessClass(PluginAccessClass pac) {
-		this.pluginAccessClass = pac;
+	public String translateNR(String singular, String plural, long n, Object... arguments) {
+		return render(translateN(singular, plural, n), arguments);
 	}
 
 	@Override
@@ -98,7 +79,8 @@ public class SvarogI18n implements ISvarogI18n, SvarogAccessI18n {
 		return Instance;
 	}
 
-	private static final SvarogI18n Instance = new SvarogI18n();
+	private static final SvarogI18n Instance =
+		new SvarogI18n(SvarogI18n.class, SvarogConstants.I18nCatalogId);
 
 
 	/************************************************************
@@ -113,7 +95,7 @@ public class SvarogI18n implements ISvarogI18n, SvarogAccessI18n {
 	 *	   or key if not found
 	 */
 	public static String _(String key) {
-		return getInstance().translate(null, I18nCatalogId, key);
+		return getInstance().translate(key);
 	}
 
 	/**
@@ -127,7 +109,7 @@ public class SvarogI18n implements ISvarogI18n, SvarogAccessI18n {
 	 *	   or keyPlural if not found
 	 */
 	public static String N_(String singular, String plural, long n) {
-		return getInstance().translateN(null, I18nCatalogId, singular, plural, n);
+		return getInstance().translateN(singular, plural, n);
 	}
 
 	/**
@@ -139,7 +121,7 @@ public class SvarogI18n implements ISvarogI18n, SvarogAccessI18n {
 	 * @return i18n version of the message (depending on the current Svarog locale),
 	 *	   with arguments rendered in, or key if not found
 	 */
-	public static String _R(String key, Object ... arguments) {
+	public static String _R(String key, Object... arguments) {
 		return render(_(key), arguments);
 	}
 

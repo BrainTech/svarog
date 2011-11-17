@@ -14,9 +14,13 @@ import org.signalml.plugin.export.method.SvarogTask;
  */
 public class MethodAccessImpl extends AbstractAccess implements SvarogAccessMethod {
     
-    protected MethodAccessImpl(PluginAccessClass p) {
-        super(p);
-    }
+	private MethodAccessImpl() { }
+
+	private static final MethodAccessImpl _instance = new MethodAccessImpl();
+
+	protected static MethodAccessImpl getInstance() {
+		return _instance;
+	}
     
     @Override
     public SvarogMethodDescriptor getMethodDescriptor(SvarogMethod method) {

@@ -14,14 +14,18 @@ import org.signalml.plugin.loader.PluginLoaderHi;
  */
 public class ConfigAccessImpl extends AbstractAccess implements SvarogAccessConfig {
     
-    protected ConfigAccessImpl(PluginAccessClass parent) {
-        super(parent);
-    }
+	private ConfigAccessImpl() { }
 
     @Override
     public SvarogConfiguration getSvarogConfiguration() {
         return getViewerElementManager().getApplicationConfig();
     }
+	private static final ConfigAccessImpl _instance = new ConfigAccessImpl();
+
+	protected static ConfigAccessImpl getInstance() {
+		return _instance;
+	}
+
     
     @Override
     public File getProfileDirectory() {

@@ -9,21 +9,11 @@ import org.signalml.app.view.ViewerElementManager;
  */
 public class AbstractAccess {
     
-    private PluginAccessClass parent;
-
     /**
      * the manager of the elements of Svarog
      */
     private ViewerElementManager viewerElementManager;
     
-    protected AbstractAccess(PluginAccessClass p) {
-        this.parent = p;
-    }
-    
-    protected PluginAccessClass getParent() {
-        return parent;
-    }
-
     protected void setViewerElementManager(ViewerElementManager manager) {
         this.viewerElementManager = manager;
     }

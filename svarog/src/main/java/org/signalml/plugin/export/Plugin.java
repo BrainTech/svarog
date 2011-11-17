@@ -33,5 +33,5 @@ public interface Plugin {
 	 * (just pass it back as is)
 	 * @throws Exception if the registration process fails
 	 */
-	public void register(SvarogAccess access, PluginAuth auth) throws Exception;
+	public void register(SvarogAccess access) throws Exception;
 }

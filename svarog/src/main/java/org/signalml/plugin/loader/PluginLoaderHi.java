@@ -29,9 +29,7 @@ import org.jfree.ui.FilesystemFilter;
 import org.signalml.app.logging.SvarogLogger;
 import org.signalml.app.view.ViewerElementManager;
 import org.signalml.plugin.export.Plugin;
-import org.signalml.plugin.export.PluginAuth;
 import org.signalml.plugin.impl.PluginAccessClass;
-import org.signalml.plugin.impl.PluginAuthImpl;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -341,7 +339,7 @@ public class PluginLoaderHi {
 	 * create a dialog window which will be activated after clicking this button.
 	 */
 	private void addPluginOptions() {
-		ViewerElementManager manager = PluginAccessClass.getSharedInstance().getManager();
+		ViewerElementManager manager = PluginAccessClass.getManager();
 		ArrayList<PluginState> existingPluginStates = new ArrayList<PluginState>();
 		for (PluginDescription descr : descriptions) {
 			PluginState pluginState = statesByName.get(descr.getName());
@@ -412,20 +410,7 @@ public class PluginLoaderHi {
 		}
 
 		addPluginOptions();
-		PluginAccessClass.getSharedInstance().setInitializationPhaseEnd();
-	}
-
-	/**
-	 * Registers the given plugin to the plugin manager.
-	 * @param head plugin to register.
-	 * @return the plugin auth object to be passed to {@link Plugin#register(org.signalml.plugin.export.SvarogAccess, PluginAuth)}.
-	 */
-	protected PluginAuthImpl registerInternal(PluginHead head) {
-        UUID uuid = UUID.randomUUID();
-        PluginAuthImpl auth = new PluginAuthImpl(uuid);
-        head.setPluginAuth(auth);
-        PluginAccessClass.getSharedInstance().addPlugin(head);
-        return auth;
+		PluginAccessClass.setInitializationPhaseEnd();
 	}
 
 	/**
@@ -433,38 +418,36 @@ public class PluginLoaderHi {
 	 * @returns true iff success
 	 */
 	protected boolean loadPlugin(PluginHead head) {
-	    PluginDescription descr = head.getDescription();
-	    PluginLoaderLo loader = head.getLoader();
-		Plugin plugin = null;
+		final PluginDescription descr = head.getDescription();
+		final PluginLoaderLo loader = head.getLoader();
+		final Plugin plugin;
 		try {
-		    logger.debug("Loading plugin: " + descr.getStartingClass());
+			logger.debug("Loading plugin: " + descr.getStartingClass());
 			plugin = (Plugin)(loader.loadClass(descr.getStartingClass())).newInstance();
 		} catch(Exception exc) {
 			String errorMsg = "Failed to load plugin " + descr.getName() +
 					  " from file " + descr.getJarFile();
 			SvarogLogger.getSharedInstance().warning(errorMsg, exc);
 			logger.error(errorMsg, exc);
-		}
 
-		if (plugin != null) {
-		    head.setPluginObj(plugin);
-		    PluginAuthImpl auth = registerInternal(head);
-
-			try {
-				plugin.register(PluginAccessClass.getSharedInstance(), auth);
-			} catch(Throwable exc) {
-				String errorMsg = "Failed to initialize plugin " + descr.getName() +
-					" from file " + descr.getJarFile();
-				SvarogLogger.getSharedInstance().warning(errorMsg, exc);
-				logger.error(errorMsg, exc);
-			}
-			
-			return true;
-		} else {
 			descr.setActive(false);
 			descr.setFailedToLoad(true);
+
+			return false;
 		}
-        return false;
+
+		head.setPluginObj(plugin);
+
+		try {
+			plugin.register(new PluginAccessClass(head));
+		} catch(Throwable exc) {
+			String errorMsg = "Failed to initialize plugin " + descr.getName() +
+				" from file " + descr.getJarFile();
+			SvarogLogger.getSharedInstance().warning(errorMsg, exc);
+			logger.error(errorMsg, exc);
+		}
+
+		return true;
 	}
 
 	/**
@@ -550,7 +533,7 @@ public class PluginLoaderHi {
 	public void onClose() {
 		rememberPluginsState();
 		savePluginDirectories();
-		PluginAccessClass.getSharedInstance().onClose();
+		PluginAccessClass.onClose();
 	}
 
 	/**

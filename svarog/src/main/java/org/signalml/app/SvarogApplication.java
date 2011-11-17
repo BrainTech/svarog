@@ -980,7 +980,7 @@ public class SvarogApplication implements java.lang.Runnable {
 		viewerMainFrame.setElementManager(elementManager);
 
 		this.setViewerElementManager(elementManager);
-		PluginAccessClass.getSharedInstance().setManager(elementManager);
+		PluginAccessClass.setManager(elementManager);
 
 		splash(null, true);
 
