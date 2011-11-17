@@ -9,17 +9,6 @@ import org.springframework.context.MessageSourceResolvable;
  */
 public interface ISvarogI18n {
 	/**
-	 * Just renders the given pattern using actual values.
-	 * Pattern is used as-is (no translation!).
-	 * 
-	 * @param pattern message string with placeholders like {0}
-	 * @param arguments values to render into the placeholders
-	 * @return
-	 * @see java.text.MessageFormat.format
-	 */
-	public String render(String pattern, Object ... arguments);
-
-	/**
 	 * Temporary workaround (for the old code).
 	 *
 	 * @param msgKey message key

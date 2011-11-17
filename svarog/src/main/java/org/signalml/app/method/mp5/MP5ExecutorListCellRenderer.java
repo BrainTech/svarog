@@ -49,22 +49,14 @@ public class MP5ExecutorListCellRenderer extends DefaultListCellRenderer {
 
 		if (value instanceof MP5Executor) {
 			if (defaultExecutor != null && value == defaultExecutor) {
-				label.setText(getSvarogI18n().getMessage((MP5Executor) value) + defaultString);
+				label.setText(((MP5Executor) value).getDefaultMessage() + defaultString);
 				label.setFont(boldFont);
 			} else {
-				label.setText(getSvarogI18n().getMessage((MP5Executor) value));
+				label.setText(((MP5Executor) value).getDefaultMessage());
 				label.setFont(normalFont);
 			}
 		}
 
 		return label;
-	}
-
-	/**
-	 * Returns the {@link SvarogAccessI18nImpl} instance.
-	 * @return the {@link SvarogAccessI18nImpl} singleton instance
-	 */
-	protected org.signalml.app.SvarogI18n getSvarogI18n() {
-		return org.signalml.app.SvarogI18n.getInstance();
 	}
 }

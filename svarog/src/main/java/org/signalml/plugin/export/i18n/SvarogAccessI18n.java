@@ -70,15 +70,4 @@ public interface SvarogAccessI18n {
      *         with arguments rendered in, or keyPlural if not found
      */
     public String translateNR(PluginAuth auth, String catalogId, String key, String keyPlural, long n, Object ... arguments);
-
-	/**
-	 * Just renders the given pattern using actual values.
-	 * Pattern is used as-is (no translation!).
-	 * 
-	 * @param pattern message string with placeholders like {0}
-	 * @param arguments values to render into the placeholders
-	 * @return
-	 * @see java.text.MessageFormat.format
-	 */
-	public String render(String pattern, Object ... arguments);
 }

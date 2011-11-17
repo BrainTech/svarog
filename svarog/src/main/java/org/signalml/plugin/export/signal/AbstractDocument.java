@@ -126,12 +126,4 @@ public abstract class AbstractDocument implements Document {
 	public PropertyChangeListener[] getPropertyChangeListeners() {
 		return pcSupport.getPropertyChangeListeners();
 	}
-
-	/**
-	 * Returns the {@link SvarogAccessI18nImpl} instance.
-	 * @return the {@link SvarogAccessI18nImpl} singleton instance
-	 */
-	protected org.signalml.app.SvarogI18n getSvarogI18n() {
-		return org.signalml.app.SvarogI18n.getInstance();
-	}
 }

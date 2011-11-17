@@ -34,17 +34,9 @@ public class ResolvableTableCellRenderer extends DefaultTableCellRenderer {
 		DefaultTableCellRenderer renderer = (DefaultTableCellRenderer) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
 		if (value instanceof MessageSourceResolvable) {
-			renderer.setText(getSvarogI18n().getMessage((MessageSourceResolvable) value));
+			renderer.setText(((MessageSourceResolvable) value).getDefaultMessage());
 		}
 
 		return renderer;
-	}
-
-	/**
-	 * Returns the {@link SvarogAccessI18nImpl} instance.
-	 * @return the {@link SvarogAccessI18nImpl} singleton instance
-	 */
-	protected org.signalml.app.SvarogI18n getSvarogI18n() {
-		return org.signalml.app.SvarogI18n.getInstance();
 	}
 }

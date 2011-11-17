@@ -40,21 +40,13 @@ public abstract class AbstractViewerTree extends JTree {
 				return ((I18nMessage) value).i18n();
 			}
 			if (value instanceof MessageSourceResolvable) {
-				return getSvarogI18n().getMessage((MessageSourceResolvable) value);
+				return ((MessageSourceResolvable) value).getDefaultMessage();
 			}
 			String s = value.toString();
 			if (s != null && s.length() > 0) {
-				return getSvarogI18n().getMessage(s);
+				return s;
 			}
 		}
 		return super.convertValueToText(value, selected, expanded, leaf, row, hasFocus);
-	}
-
-	/**
-	 * Returns the {@link SvarogAccessI18nImpl} instance.
-	 * @return the {@link SvarogAccessI18nImpl} singleton instance
-	 */
-	protected org.signalml.app.SvarogI18n getSvarogI18n() {
-		return org.signalml.app.SvarogI18n.getInstance();
 	}
 }

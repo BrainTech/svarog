@@ -16,12 +16,4 @@ public abstract class AbstractPluginDialog extends AbstractDialog {
 	protected AbstractPluginDialog(Window w, boolean isModal) {
 		super(w, isModal);
 	}
-
-	/**
-	 * Svarog i18n API accessor (convenience helper).
-	 * @return
-	 */
-	protected SvarogAccessI18n getSvarogI18n() {
-		return SvarogI18n.getInstance();
-	}
 }

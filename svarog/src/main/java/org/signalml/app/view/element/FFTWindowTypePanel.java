@@ -139,7 +139,7 @@ public class FFTWindowTypePanel extends JPanel {
 
 		windowTypeRadioButtons = new JRadioButton[windowTypes.length];
 		for (int i=0; i<windowTypes.length; i++) {
-			windowTypeRadioButtons[i] = new JRadioButton(getSvarogI18n().getMessage(windowTypes[i]));
+			windowTypeRadioButtons[i] = new JRadioButton(windowTypes[i].getDefaultMessage());
 			windowTypeButtonGroup.add(windowTypeRadioButtons[i]);
 			add(windowTypeRadioButtons[i]);
 			windowTypeRadioButtons[i].addItemListener(windowTypeListener);
@@ -256,13 +256,5 @@ public class FFTWindowTypePanel extends JPanel {
 			}
 		}
 
-	}
-
-	/**
-	 * Returns the {@link SvarogAccessI18nImpl} instance.
-	 * @return the {@link SvarogAccessI18nImpl} singleton instance
-	 */
-	protected org.signalml.app.SvarogI18n getSvarogI18n() {
-		return org.signalml.app.SvarogI18n.getInstance();
 	}
 }

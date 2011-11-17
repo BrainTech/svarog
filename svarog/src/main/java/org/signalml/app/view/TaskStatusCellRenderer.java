@@ -33,12 +33,4 @@ public class TaskStatusCellRenderer extends DefaultTableCellRenderer {
 	protected void setValue(Object value) {
 		setText(((TaskStatus) value).getShortStatus().i18n());
 	}
-
-	/**
-	 * Returns the {@link SvarogAccessI18nImpl} instance.
-	 * @return the {@link SvarogAccessI18nImpl} singleton instance
-	 */
-	protected org.signalml.app.SvarogI18n getSvarogI18n() {
-		return org.signalml.app.SvarogI18n.getInstance();
-	}
 }

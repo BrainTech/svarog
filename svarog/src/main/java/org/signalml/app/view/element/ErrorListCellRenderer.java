@@ -80,16 +80,8 @@ public class ErrorListCellRenderer extends JPanel implements ListCellRenderer {
 			setBackground(Color.WHITE);
 		}
 
-		textArea.setText(getSvarogI18n().getMessage((MessageSourceResolvable) value));
+		textArea.setText(((MessageSourceResolvable) value).getDefaultMessage());
 
 		return this;
-	}
-
-	/**
-	 * Returns the {@link SvarogAccessI18nImpl} instance.
-	 * @return the {@link SvarogAccessI18nImpl} singleton instance
-	 */
-	protected org.signalml.app.SvarogI18n getSvarogI18n() {
-		return org.signalml.app.SvarogI18n.getInstance();
 	}
 }

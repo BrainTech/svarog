@@ -83,7 +83,7 @@ public class PropertySheetModel extends AbstractTableModel implements TreeSelect
 
 		case 0 :
 			if (labels[row] == null) {
-				labels[row] = getSvarogI18n().getMessage(descriptors[row]);
+				labels[row] = descriptors[row].getDefaultMessage();
 			}
 			return labels[row];
 
@@ -132,7 +132,7 @@ public class PropertySheetModel extends AbstractTableModel implements TreeSelect
 					return ((File) value).getAbsolutePath();
 				}
 				if (value instanceof MessageSourceResolvable) {
-					return getSvarogI18n().getMessage((MessageSourceResolvable) value);
+					return ((MessageSourceResolvable) value).getDefaultMessage();
 				}
 				editors[row] = PropertyEditorManager.findEditor(descriptors[row].getPropertyType());
 				if (editors[row] == null) {
@@ -222,14 +222,6 @@ public class PropertySheetModel extends AbstractTableModel implements TreeSelect
 				setTreePath(tree.getSelectionPath());
 			}
 		}
-	}
-
-	/**
-	 * Returns the {@link SvarogAccessI18nImpl} instance.
-	 * @return the {@link SvarogAccessI18nImpl} singleton instance
-	 */
-	protected org.signalml.app.SvarogI18n getSvarogI18n() {
-		return org.signalml.app.SvarogI18n.getInstance();
 	}
 }
 

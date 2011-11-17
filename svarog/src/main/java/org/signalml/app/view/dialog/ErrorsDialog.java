@@ -102,7 +102,7 @@ public class ErrorsDialog extends org.signalml.app.view.dialog.AbstractSvarogDia
 		if (titleCode == null) {
 			setTitle(_("Errors in data"));
 		} else {
-			setTitle(getSvarogI18n().getMessage(titleCode));
+			setTitle(titleCode);
 		}
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/error.png"));
 
@@ -142,7 +142,7 @@ public class ErrorsDialog extends org.signalml.app.view.dialog.AbstractSvarogDia
 				JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
 				label.setIcon(icon);
-				String text = getSvarogI18n().getMessage((MessageSourceResolvable) value);
+				String text = ((MessageSourceResolvable) value).getDefaultMessage();
 
 				int maximumTextWidth = getMaximumTextWidth();
 				text = wrapTextForLabelIfNecessary(text, maximumTextWidth);

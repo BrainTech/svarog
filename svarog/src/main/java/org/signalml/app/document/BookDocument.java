@@ -186,7 +186,8 @@ public class BookDocument extends AbstractFileDocument {
 
 						String message = "Filter initialization failed";
 						{
-							String exMessage = getSvarogI18n().getMessage(new ResolvableException(ex));
+							String exMessage =
+								new ResolvableException(ex).getDefaultMessage();
 							if (exMessage.length() > 50) {
 								exMessage = exMessage.substring(0, 50) + "...";
 							}

@@ -281,9 +281,8 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 
 				int cnt = documentManager.getDocumentCount(ManagedDocumentType.SIGNAL);
 				String[] labels = new String[cnt];
-				for (int i=0; i<cnt; i++) {
-					labels[i] = getSvarogI18n().getMessage((MessageSourceResolvable) documentManager.getDocumentAt(ManagedDocumentType.SIGNAL, i));
-				}
+				for (int i=0; i<cnt; i++)
+					labels[i] = ((MessageSourceResolvable) documentManager.getDocumentAt(ManagedDocumentType.SIGNAL, i)).getDefaultMessage();
 
 				DefaultComboBoxModel documentListModel = new DefaultComboBoxModel(labels);
 

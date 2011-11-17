@@ -126,7 +126,7 @@ public class MontageFiltersTableModel extends AbstractTableModel implements Mont
 			if (effectDescription == null) {
 				return montage.getSampleFilterAt(rowIndex).getDefaultEffectDescription();
 			} else {
-				return getSvarogI18n().getMessage(effectDescription);
+				return effectDescription;
 			}
 
 
@@ -198,13 +198,5 @@ public class MontageFiltersTableModel extends AbstractTableModel implements Mont
 	@Override
 	public void filtersChanged(MontageSampleFilterEvent ev) {
 		fireTableDataChanged();
-	}
-
-	/**
-	 * Returns the {@link SvarogAccessI18nImpl} instance.
-	 * @return the {@link SvarogAccessI18nImpl} singleton instance
-	 */
-	protected org.signalml.app.SvarogI18n getSvarogI18n() {
-		return org.signalml.app.SvarogI18n.getInstance();
 	}
 }

@@ -22,6 +22,7 @@ import org.signalml.domain.montage.Montage;
 import org.signalml.method.SerializableMethod;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.util.SvarogConstants;
+import static org.signalml.app.SvarogI18n.*;
 
 /**
  * This class contains different static methods which show simple dialogs
@@ -91,7 +92,7 @@ public class OptionPane extends JOptionPane {
 		}
 		showOptionDialog(
 		        parent,
-		        getSvarogI18n().getMessage(message),
+		        message,
 		        errorString,
 		        JOptionPane.OK_OPTION,
 		        JOptionPane.ERROR_MESSAGE,
@@ -116,7 +117,7 @@ public class OptionPane extends JOptionPane {
 		}
 		showOptionDialog(
 		        parent,
-		        getSvarogI18n().render(getSvarogI18n().getMessage(message), arguments),
+		        _R(message, arguments),
 		        errorString,
 		        JOptionPane.OK_OPTION,
 		        JOptionPane.ERROR_MESSAGE,
@@ -161,7 +162,7 @@ public class OptionPane extends JOptionPane {
 		}
 		showOptionDialog(
 		        parent,
-		        getSvarogI18n().getMessage(message),
+		        message,
 		        messageString,
 		        JOptionPane.OK_OPTION,
 		        JOptionPane.INFORMATION_MESSAGE,
@@ -206,10 +207,9 @@ public class OptionPane extends JOptionPane {
 		if (!initialized) {
 			initialize();
 		}
-		String exMessage = getSvarogI18n().getMessage("exception."+ex.getClass().getName(), ex.getMessage());
 		showOptionDialog(
 		        parent,
-		        getSvarogI18n().render(getSvarogI18n().getMessage(message), new Object[] {exMessage}),
+		        render(message, ex.getMessage()),
 		        errorString,
 		        JOptionPane.OK_OPTION,
 		        JOptionPane.ERROR_MESSAGE,
@@ -497,7 +497,7 @@ public class OptionPane extends JOptionPane {
 
 		int res = showOptionDialog(
 		                  parent,
-		                  getSvarogI18n().getMessage(messageCode),
+		                  messageCode,
 		                  proceedString + "?",
 		                  JOptionPane.OK_OPTION,
 		                  JOptionPane.QUESTION_MESSAGE,
@@ -539,7 +539,7 @@ public class OptionPane extends JOptionPane {
 
 		int res = showOptionDialog(
 		                  parent,
-		                  getSvarogI18n().render(getSvarogI18n().getMessage(messageCode), args),
+		                  render(messageCode, args),
 		                  proceedString + "?",
 		                  JOptionPane.OK_OPTION,
 		                  JOptionPane.QUESTION_MESSAGE,
@@ -584,7 +584,7 @@ public class OptionPane extends JOptionPane {
 
 		int res = showOptionDialog(
 		                  parent,
-		                  getSvarogI18n().render(getSvarogI18n().getMessage(messageCode), args),
+		                  render(messageCode, args),
 		                  reuseString + "?",
 		                  JOptionPane.OK_OPTION,
 		                  JOptionPane.QUESTION_MESSAGE,
@@ -1503,13 +1503,5 @@ public class OptionPane extends JOptionPane {
 
 		return s;
 
-	}
-
-	/**
-	 * Returns the {@link SvarogAccessI18nImpl} instance.
-	 * @return the {@link SvarogAccessI18nImpl} singleton instance
-	 */
-	protected static org.signalml.app.SvarogI18n getSvarogI18n() {
-		return org.signalml.app.SvarogI18n.getInstance();
 	}
 }
