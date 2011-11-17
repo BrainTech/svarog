@@ -157,18 +157,18 @@ public class PluginAccessClass implements SvarogAccess {
 		changeSupport.onClose();
 	}
 	
-    @Override
-    public SvarogAccessMethod getMethodAccess() {
-        return methodAccessImpl;
-    }
+	@Override
+	public SvarogAccessMethod getMethodAccess() {
+		return methodAccessImpl;
+	}
 
-    @Override
-    public SvarogAccessConfig getConfigAccess() {
-        return configAccessImpl;
-    }
+	@Override
+	public SvarogAccessConfig getConfigAccess() {
+		return configAccessImpl;
+	}
 
-    @Override
-    public SvarogAccessI18n getI18nAccess() {
-        return i18nAccessImpl;
-    }
+	@Override
+	public SvarogAccessI18n getI18nAccess() {
+		return i18nAccessImpl;
+	}
 }
