@@ -4,7 +4,7 @@
 
 package org.signalml.app.view.book.filter;
 
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 import javax.swing.table.AbstractTableModel;
 
 import org.signalml.domain.book.filter.AtomFilterChain;

@@ -4,7 +4,7 @@
 
 package org.signalml.app.method.mp5;
 
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 import java.awt.Component;
 import java.awt.Font;
 
@@ -65,6 +65,6 @@ public class MP5ExecutorListCellRenderer extends DefaultListCellRenderer {
 	 * @return the {@link SvarogAccessI18nImpl} singleton instance
 	 */
 	protected org.signalml.app.SvarogI18n getSvarogI18n() {
-		return org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance();
+		return org.signalml.app.SvarogI18n.getInstance();
 	}
 }

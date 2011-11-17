@@ -4,7 +4,7 @@
 
 package org.signalml.app.view.dialog;
 
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 import java.awt.CardLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -433,6 +433,6 @@ public abstract class AbstractWizardDialog extends AbstractDialog {
 	 * @return the {@link SvarogAccessI18nImpl} singleton instance
 	 */
 	protected org.signalml.app.SvarogI18n getSvarogI18n() {
-		return org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance();
+		return org.signalml.app.SvarogI18n.getInstance();
 	}
 }

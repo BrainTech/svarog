@@ -3,7 +3,7 @@
  */
 package org.signalml.plugin.impl;
 
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 import java.awt.Window;
 import java.io.File;
 import java.io.IOException;

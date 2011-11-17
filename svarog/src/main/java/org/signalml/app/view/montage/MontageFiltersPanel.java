@@ -3,7 +3,7 @@
  */
 package org.signalml.app.view.montage;
 
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 import org.signalml.app.view.montage.filters.EditTimeDomainSampleFilterDialog;
 import org.signalml.app.view.montage.filters.EditFFTSampleFilterDialog;
 import java.awt.BorderLayout;

@@ -14,7 +14,7 @@ import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;
 import org.signalml.method.TrackableMethod;
 import org.signalml.plugin.export.SignalMLException;
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 
 import org.springframework.validation.Errors;
 

@@ -17,7 +17,7 @@ import org.signalml.method.iterator.IterableMethod;
 import org.signalml.method.iterator.IterableNumericProperty;
 import org.signalml.method.iterator.IterableParameter;
 import org.signalml.plugin.export.SignalMLException;
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 
 import org.springframework.validation.Errors;
 

@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.view.ViewerElementManager;
+import org.signalml.app.SvarogI18n;
 import org.signalml.plugin.export.PluginAuth;
 import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.change.SvarogAccessChangeSupport;
@@ -41,7 +42,7 @@ public class PluginAccessClass implements SvarogAccess {
 	 */
 	private ViewerElementManager manager;
 	
-	private SvarogAccessI18nImpl i18nAccessImpl;
+	private SvarogI18n i18nAccessImpl;
 	
 	/**
 	 * access to GUI features of Svarog
@@ -77,7 +78,7 @@ public class PluginAccessClass implements SvarogAccess {
 		configAccessImpl = new ConfigAccessImpl(this);
 		signalsAccess = new SignalsAccessImpl(this);
 		changeSupport = new ChangeSupportImpl(this);
-		i18nAccessImpl = SvarogAccessI18nImpl.getInstance();
+		i18nAccessImpl = SvarogI18n.getInstance();
 		i18nAccessImpl.setPluginAccessClass(this);
 	}
 	

@@ -3,7 +3,7 @@
  */
 package org.signalml.app.document;
 
-import static org.signalml.app.SvarogApplication._R;
+import static org.signalml.app.SvarogI18n._R;
 import java.beans.IntrospectionException;
 import java.io.File;
 import java.io.IOException;

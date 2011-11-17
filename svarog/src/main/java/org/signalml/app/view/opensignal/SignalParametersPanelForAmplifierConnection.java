@@ -1,6 +1,6 @@
 package org.signalml.app.view.opensignal;
 
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 import javax.swing.DefaultComboBoxModel;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.model.AmplifierConnectionDescriptor;

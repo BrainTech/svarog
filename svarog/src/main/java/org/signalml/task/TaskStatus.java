@@ -8,7 +8,7 @@ import java.io.Serializable;
 import org.signalml.app.view.I18nMessage;
 import org.signalml.app.view.I18nMessageStringWrapper;
 
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 
 /** An enumeration of possible task statuses.
  *

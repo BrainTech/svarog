@@ -3,7 +3,7 @@
  */
 package org.signalml.app.view.tag.comparison;
 
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;

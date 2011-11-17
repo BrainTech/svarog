@@ -3,7 +3,6 @@ package org.signalml.app.view.dialog;
 import java.awt.Window;
 
 import org.signalml.app.SvarogI18n;
-import org.signalml.plugin.impl.SvarogAccessI18nImpl;
 
 public abstract class AbstractSvarogDialog extends AbstractDialog {
 
@@ -25,6 +24,6 @@ public abstract class AbstractSvarogDialog extends AbstractDialog {
 	 * @return
 	 */
 	protected SvarogI18n getSvarogI18n() {
-		return SvarogAccessI18nImpl.getInstance();
+		return SvarogI18n.getInstance();
 	}
 }

@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 
 /** MP5LocalProcessController
  *

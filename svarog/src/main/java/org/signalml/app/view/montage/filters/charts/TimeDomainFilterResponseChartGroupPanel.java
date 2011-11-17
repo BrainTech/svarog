@@ -4,8 +4,8 @@
 
 package org.signalml.app.view.montage.filters.charts;
 
-import static org.signalml.app.SvarogApplication._;
-import static org.signalml.app.SvarogApplication._R;
+import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.SvarogI18n._R;
 import org.signalml.app.view.montage.filters.charts.elements.StepResponseChartPanel;
 import org.signalml.app.view.montage.filters.charts.elements.ImpulseResponseChartPanel;
 import org.signalml.app.view.montage.filters.charts.elements.FilterResponseChartPanelsWithGraphScaleSpinner;

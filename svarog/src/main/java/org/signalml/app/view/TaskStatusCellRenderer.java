@@ -39,6 +39,6 @@ public class TaskStatusCellRenderer extends DefaultTableCellRenderer {
 	 * @return the {@link SvarogAccessI18nImpl} singleton instance
 	 */
 	protected org.signalml.app.SvarogI18n getSvarogI18n() {
-		return org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance();
+		return org.signalml.app.SvarogI18n.getInstance();
 	}
 }

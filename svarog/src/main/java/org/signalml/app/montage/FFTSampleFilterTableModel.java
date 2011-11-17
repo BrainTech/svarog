@@ -4,7 +4,7 @@
 
 package org.signalml.app.montage;
 
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 import javax.swing.table.AbstractTableModel;
 
 import org.apache.log4j.Logger;

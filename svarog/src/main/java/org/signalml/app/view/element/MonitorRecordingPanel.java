@@ -3,7 +3,7 @@
  */
 package org.signalml.app.view.element;
 
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.app.view.monitor.ChooseFilesForMonitorRecordingPanel;
 import org.signalml.app.view.dialog.OpenMonitorDialog;

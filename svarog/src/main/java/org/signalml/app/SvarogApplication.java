@@ -95,6 +95,8 @@ import org.signalml.app.worker.processes.OpenBCIModulePresetManager;
 import org.signalml.app.worker.processes.ProcessManager;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 
+import static org.signalml.app.SvarogI18n._;
+
 /**
  * The Svarog application.
  *
@@ -1171,40 +1173,5 @@ public class SvarogApplication implements java.lang.Runnable {
 	/** {@link #elementManager} setter. */
 	private void setViewerElementManager(ViewerElementManager m) {
 		this.viewerElementManager = m;
-	}
-
-	/**
-	 * Translates the message for the specified key using the current Svarog locale.
-	 * This method is equivalent to:
-	 * 
-	 * <code>
-	 * org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance()._(msgKey);
-	 * </code>
-	 * 
-	 * @param msgKey English version of the message
-	 * @return i18n version of the message (depending on the current Svarog locale),
-	 *         or key if not found
-	 */
-	public static String _(String msgKey) {
-		return org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance()._(msgKey);
-	}
-
-	/**
-	 * Translates the message for the specified key using the current Svarog locale
-	 * and renders it using actual values.
-	 * 
-	 * This method is equivalent to:
-	 * 
-	 * <code>
-	 * org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance()._R(msgKey, parameters);
-	 * </code>
-	 * 
-	 * @param msgKey English version of the message
-	 * @param arguments actual values to place in the message
-	 * @return i18n version of the message (depending on the current Svarog locale),
-	 *         with values rendered in, or key if not found
-	 */
-	public static String _R(String msgKey, Object ... arguments) {
-		return org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance()._R(msgKey, arguments);
 	}
 }

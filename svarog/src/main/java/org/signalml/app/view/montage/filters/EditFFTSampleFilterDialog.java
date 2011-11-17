@@ -4,7 +4,7 @@
 
 package org.signalml.app.view.montage.filters;
 
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 import org.signalml.app.view.element.FloatSpinner;
 import org.signalml.app.view.element.DoubleSpinner;
 import java.awt.BorderLayout;

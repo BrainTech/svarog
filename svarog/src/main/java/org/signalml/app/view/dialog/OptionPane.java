@@ -3,8 +3,8 @@
  */
 package org.signalml.app.view.dialog;
 
-import static org.signalml.app.SvarogApplication._;
-import static org.signalml.app.SvarogApplication._R;
+import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.SvarogI18n._R;
 import java.awt.Component;
 import java.io.File;
 import java.util.Locale;
@@ -1510,6 +1510,6 @@ public class OptionPane extends JOptionPane {
 	 * @return the {@link SvarogAccessI18nImpl} singleton instance
 	 */
 	protected static org.signalml.app.SvarogI18n getSvarogI18n() {
-		return org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance();
+		return org.signalml.app.SvarogI18n.getInstance();
 	}
 }

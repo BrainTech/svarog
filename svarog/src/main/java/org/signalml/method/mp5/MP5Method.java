@@ -34,8 +34,8 @@ import org.signalml.method.SerializableMethod;
 import org.signalml.method.TrackableMethod;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
-import static org.signalml.app.SvarogApplication._;
-import static org.signalml.app.SvarogApplication._R;
+import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.SvarogI18n._R;
 
 import org.springframework.validation.Errors;
 

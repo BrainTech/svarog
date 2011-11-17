@@ -9,7 +9,7 @@ import javax.swing.Icon;
 import org.apache.log4j.Logger;
 import org.signalml.app.util.IconUtils;
 import org.signalml.util.Util;
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 
 /** RainbowMapPalette
  *

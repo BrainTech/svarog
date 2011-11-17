@@ -3,7 +3,7 @@
  */
 package org.signalml.app.model;
 
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -270,6 +270,6 @@ public class TaskTableModel extends AbstractTableModel implements
 	 * @return the {@link SvarogAccessI18nImpl} singleton instance
 	 */
 	protected org.signalml.app.SvarogI18n getSvarogI18n() {
-		return org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance();
+		return org.signalml.app.SvarogI18n.getInstance();
 	}
 }

@@ -7,7 +7,7 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
-import static org.signalml.app.SvarogApplication._R;
+import static org.signalml.app.SvarogI18n._R;
 import org.signalml.app.method.ApplicationIterableMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodManager;

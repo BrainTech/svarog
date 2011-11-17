@@ -31,7 +31,7 @@ import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.impl.PluginAccessClass;
 import org.signalml.util.SvarogConstants;
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
