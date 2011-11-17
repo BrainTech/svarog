@@ -134,11 +134,11 @@ public class NewArtifactResultTagPanel extends JPanel {
 	public void validatePanel(Errors errors) {
 
 		if (tagFile == null) {
-			errors.rejectValue("primaryTagFile", "error.newArtifact.result.badTagFile");
+			errors.rejectValue("primaryTagFile", "error.newArtifact.result.badTagFile", _("Tag file not chosen"));
 		} else {
 			File parent = tagFile.getParentFile();
 			if (parent == null || !parent.exists() || !parent.canWrite()) {
-				errors.rejectValue("primaryTagFile", "error.newArtifact.result.tagFileNotWritable");
+				errors.rejectValue("primaryTagFile", "error.newArtifact.result.tagFileNotWritable", _("Tag file parent directory doesn't exist or not writable"));
 			}
 		}
 

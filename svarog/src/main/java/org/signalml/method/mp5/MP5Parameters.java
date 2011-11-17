@@ -6,6 +6,7 @@ package org.signalml.method.mp5;
 
 import java.io.Serializable;
 
+import static org.signalml.app.SvarogApplication._;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.springframework.validation.Errors;
@@ -89,19 +90,19 @@ public class MP5Parameters implements Serializable, Preset {
 
 	public void validate(Errors errors) {
 		if (scaleToPeriodFactor < MIN_SCALE_TO_PERIOD_FACTOR || scaleToPeriodFactor > MAX_SCALE_TO_PERIOD_FACTOR) {
-			errors.rejectValue("scaleToPeriodFactor", "error.mp5.badScaleToPeriodFactor");
+			errors.rejectValue("scaleToPeriodFactor", "error.mp5.badScaleToPeriodFactor", _("Bad scale to period factor"));
 		}
 		if (dilationFactor < MIN_DILATION_FACTOR || dilationFactor > MAX_DILATION_FACTOR) {
-			errors.rejectValue("dilationFactor", "error.mp5.badDilationFactor");
+			errors.rejectValue("dilationFactor", "error.mp5.badDilationFactor", _("Bad dilation factor"));
 		}
 		if (periodDensity < MIN_PERIOD_DENSITY || periodDensity > MAX_PERIOD_DENSITY) {
-			errors.rejectValue("periodDensity", "error.mp5.badPerionDensity");
+			errors.rejectValue("periodDensity", "error.mp5.badPerionDensity", _("Bad period density"));
 		}
 		if (maxIterationCount < MIN_ITERATION_COUNT || maxIterationCount > MAX_ITERATION_COUNT) {
-			errors.rejectValue("maxIterationCount", "error.mp5.badMaxIterationCount");
+			errors.rejectValue("maxIterationCount", "error.mp5.badMaxIterationCount", _("Bad max iteration count"));
 		}
 		if (energyPercent < MIN_ENERGY_PERCENT || energyPercent > MAX_ENERGY_PERCENT) {
-			errors.rejectValue("energyPercent", "error.mp5.badEnergyPercent");
+			errors.rejectValue("energyPercent", "error.mp5.badEnergyPercent", _("Bad energy percent"));
 		}
 	}
 

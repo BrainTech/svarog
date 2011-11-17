@@ -696,11 +696,11 @@ public class SignalFFTSettingsPanel extends JPanel {
 						.getText());
 				if (windowWidth < 8) {
 					errors.rejectValue("windowWidth",
-							"signalFFTSettings.error.badWindowWidth");
+							"signalFFTSettings.error.badWindowWidth", _("Bad window width. Must be an integer greater than 7"));
 				}
 			} catch (NumberFormatException ex) {
 				errors.rejectValue("windowWidth",
-						"signalFFTSettings.error.badWindowWidth");
+						"signalFFTSettings.error.badWindowWidth", _("Bad window width. Must be an integer greater than 7"));
 			}
 		}
 

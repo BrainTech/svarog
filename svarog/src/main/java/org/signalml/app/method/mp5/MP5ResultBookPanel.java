@@ -134,11 +134,11 @@ public class MP5ResultBookPanel extends JPanel {
 	public void validatePanel(Errors errors) {
 
 		if (bookFile == null) {
-			errors.rejectValue("bookFile", "error.mp5.result.badBookFile");
+			errors.rejectValue("bookFile", "error.mp5.result.badBookFile", _("Book file not chosen"));
 		} else {
 			File parent = bookFile.getParentFile();
 			if (parent == null || !parent.exists() || !parent.canWrite()) {
-				errors.rejectValue("bookFile", "error.mp5.result.bookFileNotWritable");
+				errors.rejectValue("bookFile", "error.mp5.result.bookFileNotWritable", _("Book file parent directory doesn't exist or not writable"));
 			}
 		}
 

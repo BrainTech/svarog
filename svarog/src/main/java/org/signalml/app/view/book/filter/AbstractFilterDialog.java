@@ -83,9 +83,9 @@ public abstract class AbstractFilterDialog extends AbstractDialog {
 
 		String name = getNameTextField().getText();
 		if (name == null || name.isEmpty()) {
-			errors.rejectValue("name", "error.atomFilter.nameEmpty");
+			errors.rejectValue("name", "error.atomFilter.nameEmpty", _("Empty filter name"));
 		} else if (Util.hasSpecialChars(name)) {
-			errors.rejectValue("name", "error.atomFilter.nameBadChars");
+			errors.rejectValue("name", "error.atomFilter.nameBadChars", _("Filter name must not contain control characters"));
 		}
 
 	}

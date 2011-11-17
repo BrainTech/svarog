@@ -288,7 +288,7 @@ public class FFTWindowTypePanel extends JPanel {
 						}
 					} catch (NumberFormatException ex) {
 						errors.rejectValue("windowParameter",
-								"fftWindowTypeSettings.error.badWindowParameter");
+								"fftWindowTypeSettings.error.badWindowParameter", _("Bad window parameter. Must be a double precision value"));
 					}
 
 				}

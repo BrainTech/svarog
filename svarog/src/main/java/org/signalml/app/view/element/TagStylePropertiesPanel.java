@@ -999,10 +999,10 @@ public class TagStylePropertiesPanel extends JPanel {
 		Errors errors = new BindException(currentStyle, "data");
 		String name = getNameTextField().getText();
 		if (name == null || name.isEmpty())
-			errors.rejectValue("name", "error.style.nameEmpty");
+			errors.rejectValue("name", "error.style.nameEmpty", _("Tag style name cannot be empty"));
 
 		if (Util.hasSpecialChars(name))
-			errors.rejectValue("name", "error.style.nameBadCharacters");
+			errors.rejectValue("name", "error.style.nameBadCharacters", _("Tag style name must not contain control characters"));
 
 		return errors;
 	}

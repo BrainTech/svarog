@@ -126,7 +126,7 @@ public class MP5LocalExecutorDialog extends org.signalml.app.view.dialog.Abstrac
 		super.validateDialog(model, errors);
 
 		if (Util.hasSpecialChars(getNameTextField().getText())) {
-			errors.rejectValue("name", "error.nameBadCharacters");
+			errors.rejectValue("name", "error.nameBadCharacters", _("Name must not contain control characters"));
 		}
 
 		getExecutablePanel().validatePanel(errors);

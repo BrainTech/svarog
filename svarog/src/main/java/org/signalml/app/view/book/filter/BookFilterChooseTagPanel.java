@@ -138,10 +138,10 @@ public class BookFilterChooseTagPanel extends JPanel {
 	public void validatePanel(Errors errors) {
 
 		if (tagFile == null) {
-			errors.rejectValue("tagFilePath", "tagBasedFilter.error.badTagFile");
+			errors.rejectValue("tagFilePath", "tagBasedFilter.error.badTagFile", _("Tag file not chosen"));
 		} else {
 			if (!tagFile.exists() || !tagFile.canRead()) {
-				errors.rejectValue("tagFilePath", "tagBasedFilter.error.tagFileNotReadable");
+				errors.rejectValue("tagFilePath", "tagBasedFilter.error.tagFileNotReadable", _("Tag file doesn't exist or is unreadable"));
 			}
 		}
 

@@ -158,10 +158,10 @@ public class ProfilePathDialog extends org.signalml.app.view.dialog.AbstractSvar
 
 			if (f == null) {
 				logger.debug("Profile path not set");
-				errors.rejectValue("profilePath", "error.profilePathMustBeSet");
+				errors.rejectValue("profilePath", "error.profilePathMustBeSet", _("A profile path must be chosen"));
 			} else if (f.exists() && !f.isDirectory()) {
 				logger.debug("Profile path is not to a directory");
-				errors.rejectValue("profilePath", "error.profilePathMustBeADirectory");
+				errors.rejectValue("profilePath", "error.profilePathMustBeADirectory", _("The chosen profile path is not a directory"));
 			}
 		}
 	}

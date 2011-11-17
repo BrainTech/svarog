@@ -580,9 +580,9 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 
 		String description = getDescriptionTextField().getText();
 		if (description == null || description.isEmpty()) {
-			errors.rejectValue("description", "error.editSampleFilter.descriptionEmpty");
+			errors.rejectValue("description", "error.editSampleFilter.descriptionEmpty", _("A filter must have a description"));
 		} else if (Util.hasSpecialChars(description)) {
-			errors.rejectValue("description", "error.editSampleFilter.descriptionBadChars");
+			errors.rejectValue("description", "error.editSampleFilter.descriptionBadChars", _("Filter description must not contain control characters"));
 		}
 
 	}

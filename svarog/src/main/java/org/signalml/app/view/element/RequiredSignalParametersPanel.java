@@ -343,30 +343,30 @@ public class RequiredSignalParametersPanel extends JPanel implements FocusListen
 			try {
 				float samplingFrequency = Float.parseFloat(getSamplingFrequencyField().getText());
 				if (samplingFrequency <= 0) {
-					errors.rejectValue("samplingFrequency", "error.samplingFrequencyNegative");
+					errors.rejectValue("samplingFrequency", "error.samplingFrequencyNegative", _("Sampling frequency must be positive"));
 				}
 			} catch (NumberFormatException ex) {
-				errors.rejectValue("samplingFrequency", "error.invalidNumber");
+				errors.rejectValue("samplingFrequency", "error.invalidNumber", _("Invalid numeric value"));
 			}
 		}
 		if (spd.isChannelCountEditable()) {
 			try {
 				int channelCount = Integer.parseInt(getChannelCountField().getText());
 				if (channelCount <= 0) {
-					errors.rejectValue("channelCount", "error.channelCountNegative");
+					errors.rejectValue("channelCount", "error.channelCountNegative", _("Channel count must be positive"));
 				}
 			} catch (NumberFormatException ex) {
-				errors.rejectValue("channelCount", "error.invalidNumber");
+				errors.rejectValue("channelCount", "error.invalidNumber", _("Invalid numeric value"));
 			}
 		}
 		if (spd.isCalibrationEditable()) {
 			try {
 				float calibration = Float.parseFloat(getCalibrationGainField().getText());
 				if (calibration <= 0) {
-					errors.rejectValue("calibration", "error.calibrationNegative");
+					errors.rejectValue("calibration", "error.calibrationNegative", _("Calibration must be positive"));
 				}
 			} catch (NumberFormatException ex) {
-				errors.rejectValue("calibration", "error.invalidNumber");
+				errors.rejectValue("calibration", "error.invalidNumber", _("Invalid numeric value"));
 			}
 		}
 	}

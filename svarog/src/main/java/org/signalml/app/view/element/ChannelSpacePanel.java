@@ -310,7 +310,7 @@ public class ChannelSpacePanel extends JPanel {
 	public void validatePanel(Errors errors) {
 
 		if (getChannelList().isSelectionEmpty()) {
-			errors.rejectValue("channelSpace", "error.signalSpace.noChannels");
+			errors.rejectValue("channelSpace", "error.signalSpace.noChannels", _("At least one channel must be selected"));
 		}
 
 	}

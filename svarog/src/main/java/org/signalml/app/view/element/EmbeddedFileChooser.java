@@ -18,6 +18,8 @@ import org.signalml.app.config.ApplicationConfiguration;
 
 import org.springframework.validation.Errors;
 
+import static org.signalml.app.SvarogApplication._;
+
 /**
  * File chooser that can be embedded in the panel.
  * Provides ugly hack fixes for what appears to be bugs or bad design
@@ -245,22 +247,22 @@ public class EmbeddedFileChooser extends JFileChooser {
 		File file = getSelectedFile();
 		if (file == null || file.getPath().length() == 0) {
 			if (!acceptNone) {
-				errors.rejectValue(property, "error.fileMustBeChosen");
+				errors.rejectValue(property, "error.fileMustBeChosen", _("A file must be chosen"));
 			}
 		} else {
 			if (!file.exists()) {
 				if (!acceptMissing) {
-					errors.rejectValue(property, "error.fileNotFound");
+					errors.rejectValue(property, "error.fileNotFound", _("File not found"));
 				}
 			} else {
 				if (!acceptDirectory && file.isDirectory()) {
-					errors.rejectValue(property, "error.fileNotFile");
+					errors.rejectValue(property, "error.fileNotFile", _("File is not a regular file"));
 				}
 				if (!acceptUnreadable && !file.canRead()) {
-					errors.rejectValue(property, "error.fileNotReadable");
+					errors.rejectValue(property, "error.fileNotReadable", _("File is not readable"));
 				}
 				if (!acceptReadOnly && !file.canWrite()) {
-					errors.rejectValue(property, "error.fileNotWritable");
+					errors.rejectValue(property, "error.fileNotWritable", _("File is not writable"));
 				}
 			}
 		}

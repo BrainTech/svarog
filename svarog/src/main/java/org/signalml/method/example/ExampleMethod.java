@@ -120,7 +120,7 @@ public class ExampleMethod extends AbstractMethod implements InitializingMethod,
 		ExampleData eData = (ExampleData) data;
 		int count = eData.getCount();
 		if (count < 0 || count > 10000) {
-			errors.rejectValue("count", "exampleMethod.error.badCount");
+			errors.rejectValue("count", "exampleMethod.error.badCount", _("Bad count"));
 		}
 	}
 

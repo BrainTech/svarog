@@ -272,18 +272,18 @@ public class PagingParametersPanel extends AbstractSignalMLPanel {
 		try {
 			float pageSize = Float.parseFloat(getPageSizeField().getText());
 			if (pageSize <= 0) {
-				errors.rejectValue("pageSize", "error.pageSizeNegative");
+				errors.rejectValue("pageSize", "error.pageSizeNegative", _("Page size must be positive"));
 			}
 		} catch (NumberFormatException ex) {
-			errors.rejectValue("pageSize", "error.invalidNumber");
+			errors.rejectValue("pageSize", "error.invalidNumber", _("Invalid numeric value"));
 		}
 		try {
 			int blocksPerPage = Integer.parseInt(getBlocksPerPageField().getText());
 			if (blocksPerPage <= 0) {
-				errors.rejectValue("blocksPerPage", "error.blocksPerPageNegative");
+				errors.rejectValue("blocksPerPage", "error.blocksPerPageNegative", _("Block count must be positive"));
 			}
 		} catch (NumberFormatException ex) {
-			errors.rejectValue("blocksPerPage", "error.invalidNumber");
+			errors.rejectValue("blocksPerPage", "error.invalidNumber", _("Invalid numeric value"));
 		}
 	}
 

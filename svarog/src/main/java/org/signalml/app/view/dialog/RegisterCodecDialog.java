@@ -164,19 +164,19 @@ public class RegisterCodecDialog extends AbstractWizardDialog {
 					currentCodec = new XMLSignalMLCodec(file, profileDir);
 				} catch (IOException ex) {
 					logger.debug("Failed to read codec file", ex);
-					errors.rejectValue("sourceFile", "error.failedToReadSignalMLFile");
+					errors.rejectValue("sourceFile", "error.failedToReadSignalMLFile", _("Failed to read file"));
 				} catch (XMLCodecException ex) {
 					logger.debug("Failed to compile codec file", ex);
-					errors.rejectValue("sourceFile", "error.codecCompilationFailed");
+					errors.rejectValue("sourceFile", "error.codecCompilationFailed", _("Failed to compile the codec"));
 				}
 			}
 		} else if (step == 1) {
 			String name = getStepTwoPanel().getNameField().getText();
 			if (name == null || name.length() == 0) {
-				errors.rejectValue("formatName", "error.formatNameMustBeSet");
+				errors.rejectValue("formatName", "error.formatNameMustBeSet", _("Format name must be set"));
 			}
 			if (Util.hasSpecialChars(name)) {
-				errors.rejectValue("formatName", "error.badCharactersInFormatName");
+				errors.rejectValue("formatName", "error.badCharactersInFormatName", _("Format name must not contain control characters"));
 			}
 		}
 	}

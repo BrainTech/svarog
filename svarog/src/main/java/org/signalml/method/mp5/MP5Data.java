@@ -7,6 +7,7 @@ package org.signalml.method.mp5;
 import java.io.File;
 import java.io.Serializable;
 
+import static org.signalml.app.SvarogApplication._;
 import org.signalml.domain.signal.MultichannelSegmentedSampleSource;
 import org.signalml.domain.signal.SignalProcessingChainDescriptor;
 import org.signalml.domain.signal.space.SegmentedSampleSourceDescriptor;
@@ -116,13 +117,13 @@ public class MP5Data implements Serializable {
 
 	public void validate(Errors errors) {
 		if (executorUID == null || executorUID.isEmpty()) {
-			errors.rejectValue("executorUID", "error.mp5.noExecutor");
+			errors.rejectValue("executorUID", "error.mp5.noExecutor", _("No executor"));
 		}
 		errors.pushNestedPath("parameters");
 		parameters.validate(errors);
 		errors.popNestedPath();
 		if (sampleSource == null) {
-			errors.rejectValue("sampleSource", "error.mp5.noSampleSource");
+			errors.rejectValue("sampleSource", "error.mp5.noSampleSource", _("No sample source"));
 		}
 	}
 

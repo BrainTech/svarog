@@ -89,7 +89,7 @@ public class MP5ExecutorPanel extends JPanel {
 	public void validatePanel(Errors errors) {
 
 		if (getExecutorComboBox().getSelectedItem() == null) {
-			errors.rejectValue("executorUID", "error.mp5.noExecutor");
+			errors.rejectValue("executorUID", "error.mp5.noExecutor", _("No executor"));
 		}
 
 	}

@@ -257,17 +257,17 @@ public class DelegatingFilterDialog extends AbstractFilterDialog {
 		super.validateDialog(model, errors);
 
 		if (getClassPathListModel().size() == 0) {
-			errors.rejectValue("classPath", "error.delegatingAtomFilter.noClassPath");
+			errors.rejectValue("classPath", "error.delegatingAtomFilter.noClassPath", _("At least one class path entry is required"));
 		}
 
 		String fqClassName = getFqClassNameTextField().getText();
 		if (fqClassName == null || fqClassName.isEmpty()) {
-			errors.rejectValue("fqClassName", "error.delegatingAtomFilter.noFqClassName");
+			errors.rejectValue("fqClassName", "error.delegatingAtomFilter.noFqClassName", _("Fully qualified class name is required"));
 		} else {
 			fqClassName.trim();
 			getFqClassNameTextField().setText(fqClassName);
 			if (!Util.validateFqClassName(fqClassName)) {
-				errors.rejectValue("fqClassName", "error.delegatingAtomFilter.badFqClassName");
+				errors.rejectValue("fqClassName", "error.delegatingAtomFilter.badFqClassName", _("Invalid fully qualified class name"));
 			}
 		}
 

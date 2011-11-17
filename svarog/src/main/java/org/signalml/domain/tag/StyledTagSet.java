@@ -27,7 +27,6 @@ import org.signalml.plugin.export.signal.TagStyle;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import org.signalml.app.config.preset.Preset;

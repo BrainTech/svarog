@@ -183,7 +183,7 @@ public class MP5ExecutablePanel extends JPanel {
 	public void validatePanel(Errors errors) {
 
 		if (mp5Executable == null || !mp5Executable.exists() || !mp5Executable.canExecute()) {
-			errors.rejectValue("mp5Executable", "error.mp5.badMp5Executable");
+			errors.rejectValue("mp5Executable", "error.mp5.badMp5Executable", _("MP5 executable not found or not accessible"));
 		}
 
 	}

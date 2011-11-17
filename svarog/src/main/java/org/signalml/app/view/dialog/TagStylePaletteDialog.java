@@ -15,7 +15,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Collection;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Box;
@@ -663,14 +662,14 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 		String newName = tagStylePropertiesPanel.getNameTextField().getText();
 		TagStyle oldStyle = currentTagSet.getStyle(currentStyle.getType(), newName);
 		if (oldStyle != null && oldStyle != currentStyle) {
-			errors.rejectValue("name", "error.style.nameDuplicate");
+			errors.rejectValue("name", "error.style.nameDuplicate", _("Tag style name already used. Choose another."));
 		}
 
 		KeyStroke keyStroke = KeyStroke.getKeyStroke(tagStylePropertiesPanel.getKeyTextField().getText());
 		if (keyStroke != null) {
 			oldStyle = currentTagSet.getStyleByKeyStroke(keyStroke);
 			if (oldStyle != null && oldStyle != currentStyle) {
-				errors.rejectValue("name", "error.style.keyStrokeDuplicate");
+				errors.rejectValue("name", "error.style.keyStrokeDuplicate", _("Key already used on another style. Choose another."));
 			}
 		}
 

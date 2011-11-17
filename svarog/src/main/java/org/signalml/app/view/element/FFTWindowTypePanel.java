@@ -249,7 +249,7 @@ public class FFTWindowTypePanel extends JPanel {
 							errors.rejectValue("windowParameter", "fftWindowTypeSettings.error.windowParameterOutOfRange", new Object[] { parameterMinString, parameterMaxString }, "signalFFTSettings.error.windowParameterOutOfRange");
 						}
 					} catch (NumberFormatException ex) {
-						errors.rejectValue("windowParameter", "fftWindowTypeSettings.error.badWindowParameter");
+						errors.rejectValue("windowParameter", "fftWindowTypeSettings.error.badWindowParameter", _("Bad window parameter. Must be a double precision value"));
 					}
 
 				}
