@@ -294,7 +294,7 @@
 
 				<configuration>
 					<poDirectory>${project.build.i18n.resources}</poDirectory>
-					<targetBundle>org.signalml.app.i18n.I18nBundle</targetBundle>
+					<targetBundle>org.signalml.app</targetBundle>
 				</configuration>
 			</plugin>
 		</plugins>

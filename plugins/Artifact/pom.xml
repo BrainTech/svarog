@@ -70,7 +70,7 @@
 
 				<configuration>
 					<poDirectory>${project.build.i18n.resources}</poDirectory>
-					<targetBundle>org.signalml.plugin.newartifact.i18n.I18nBundle</targetBundle>
+					<targetBundle>org.signalml.plugin.newartifact</targetBundle>
 				</configuration>
 			</plugin>
 		</plugins>

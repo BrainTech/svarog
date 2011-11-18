@@ -71,7 +71,7 @@
 
 				<configuration>
 					<poDirectory>${project.build.i18n.resources}</poDirectory>
-					<targetBundle>org.signalml.plugin.sf.I18nBundle</targetBundle>
+					<targetBundle>org.signalml.plugin.sf</targetBundle>
 				</configuration>
 			</plugin>
 		</plugins>

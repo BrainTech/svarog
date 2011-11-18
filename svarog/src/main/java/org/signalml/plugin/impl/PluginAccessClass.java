@@ -1,6 +1,7 @@
 package org.signalml.plugin.impl;
 
 import java.util.HashMap;
+import java.util.MissingResourceException;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.view.ViewerElementManager;
@@ -69,7 +70,11 @@ public class PluginAccessClass implements SvarogAccess {
 	 * Constructor. Creates child accesses.
 	 */
 	public PluginAccessClass(PluginHead head){
-		this.i18nAccessImpl = new SvarogI18n(head.getPluginObj().getClass(), "xxx");
+		try {
+			this.i18nAccessImpl = new SvarogI18n(head.getPluginObj().getClass());
+		} catch(MissingResourceException e) {
+			this.i18nAccessImpl = null;
+		}
 	}
 	
 	/**

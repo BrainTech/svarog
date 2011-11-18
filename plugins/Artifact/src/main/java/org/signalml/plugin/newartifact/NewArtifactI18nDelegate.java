@@ -9,8 +9,7 @@ import org.springframework.context.MessageSourceResolvable;
  * @author Stanislaw Findeisen (Eisenbits)
  */
 public class NewArtifactI18nDelegate {
-	private static final String BundleName = "org.signalml.plugin.newartifact.i18n.I18nBundle";
-	private SvarogAccess svarogAccess;
+	private final SvarogAccess svarogAccess;
 
 	protected NewArtifactI18nDelegate(SvarogAccess sa) {
 		this.svarogAccess = sa;

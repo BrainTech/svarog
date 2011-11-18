@@ -22,6 +22,10 @@ public class SvarogI18n implements ISvarogI18n, SvarogAccessI18n {
 		this.i18n = I18nFactory.getI18n(klass, catalogId);
 	}
 
+	public SvarogI18n(Class klass) {
+		this.i18n = I18nFactory.getI18n(klass);
+	}
+
 	/**
 	 * Translation method.
 	 */
