@@ -17,7 +17,7 @@ import org.signalml.plugin.export.SignalMLException;
  * @author Maciej Pawlisz, Titanis
  *
  */
-public class ExportEEGLabTagAction extends ExportTagAction {
+public class ExportEEGLabTagAction extends AbstractExportTagAction {
 
 	private static final long serialVersionUID = 1L;
 

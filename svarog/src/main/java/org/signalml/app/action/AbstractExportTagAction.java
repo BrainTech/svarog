@@ -3,9 +3,7 @@
  */
 package org.signalml.app.action;
 
-import static org.signalml.app.SvarogApplication._;
 import java.awt.Component;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.File;
 
@@ -14,30 +12,29 @@ import org.signalml.app.action.selector.TagDocumentFocusSelector;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.view.ViewerFileChooser;
-import org.signalml.app.view.dialog.ErrorsDialog;
 import org.signalml.app.view.dialog.OptionPane;
-import org.signalml.domain.tag.LegacyTagExporter;
 import org.signalml.domain.tag.StyledTagSet;
-import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.view.AbstractSignalMLAction;
 
-/** ExportTagAction
- *
+/**
+ * This is an abstract class representing an action for exporting tags to some other format.
+ * All actions for exporting tags should extend this class and override its
+ * {@link ExportTagAction#doExport(org.signalml.domain.tag.StyledTagSet, java.io.File, org.signalml.app.document.SignalDocument)}
+ * method. Also the constructor should be overriden and the name of the specific
+ * action should be set with the {@link AbstractSignalMLAction#setText(java.lang.String)}.
+ * For reference and example please see {@link ExportEEGLabTagAction}.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class ExportTagAction extends AbstractFocusableSignalMLAction<TagDocumentFocusSelector> {
+public abstract class AbstractExportTagAction extends AbstractFocusableSignalMLAction<TagDocumentFocusSelector> {
 
 	private static final long serialVersionUID = 1L;
-
-	protected static final Logger logger = Logger.getLogger(ExportTagAction.class);
-
+	protected static final Logger logger = Logger.getLogger(AbstractExportTagAction.class);
 	private ViewerFileChooser fileChooser;
 	private Component optionPaneParent;
 
-	public ExportTagAction(TagDocumentFocusSelector tagDocumentFocusSelector) {
+	public AbstractExportTagAction(TagDocumentFocusSelector tagDocumentFocusSelector) {
 		super(tagDocumentFocusSelector);
-		setText(_("Export Legacy Tag..."));
-		setToolTip(_("Export a tag in legacy format"));
 	}
 
 	@Override
@@ -71,9 +68,9 @@ public class ExportTagAction extends AbstractFocusableSignalMLAction<TagDocument
 			}
 
 		} while (!hasFile);
-		doExport(tagDocument.getTagSet(),file,signalDocument);
+		doExport(tagDocument.getTagSet(), file, signalDocument);
 	}
-	
+
 	/**
 	 * Perform export to a given file. This method should be overridden in subclasses
 	 * @param tagSet Tags to export
@@ -81,17 +78,7 @@ public class ExportTagAction extends AbstractFocusableSignalMLAction<TagDocument
 	 * @param signalDocument
 	 * @author Maciej Pawlisz
 	 */
-	protected void doExport(StyledTagSet tagSet,File file, SignalDocument signalDocument)
-	{
-		LegacyTagExporter exporter = new LegacyTagExporter();
-		try {
-			exporter.exportLegacyTags(tagSet, file, signalDocument.getChannelCount(), signalDocument.getSamplingFrequency());
-		} catch (SignalMLException ex) {
-			logger.error("Failed to import tags", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
-			return;
-		}
-	}
+	protected abstract void doExport(StyledTagSet tagSet, File file, SignalDocument signalDocument);
 
 	@Override
 	public void setEnabledAsNeeded() {
@@ -113,5 +100,4 @@ public class ExportTagAction extends AbstractFocusableSignalMLAction<TagDocument
 	public void setOptionPaneParent(Component optionPaneParent) {
 		this.optionPaneParent = optionPaneParent;
 	}
-
 }

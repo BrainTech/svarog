@@ -41,7 +41,6 @@ import org.signalml.app.action.EditTagStylesAction;
 import org.signalml.app.action.EEGLabExportAction;
 import org.signalml.app.action.ExportBookAction;
 import org.signalml.app.action.ExportSignalAction;
-import org.signalml.app.action.ExportTagAction;
 import org.signalml.app.action.ExportEEGLabTagAction;
 import org.signalml.app.action.HelpContentsAction;
 import org.signalml.app.action.IterateMethodAction;
@@ -338,7 +337,6 @@ public class ViewerElementManager {
 	private SaveTagAction saveTagAction;
 	private SaveTagAsAction saveTagAsAction;
 	private OpenTagAction importTagAction;
-	private ExportTagAction exportTagAction;
 	private ExportEEGLabTagAction exportEEGLabTagAction;
 
 	/**
@@ -827,7 +825,6 @@ public class ViewerElementManager {
 			importSubmenu.add(getImportTagAction());
 
 			JMenu exportSubmenu = new JMenu(_("Export"));
-			exportSubmenu.add(getExportTagAction());
 			exportSubmenu.add(getExportEEGLabTagAction());
 
 			tagsMenu = new JMenu(_("Tags"));
@@ -1704,14 +1701,6 @@ public class ViewerElementManager {
 		return compareTagsAction;
 	}
 
-	public ExportTagAction getExportTagAction() {
-		if (exportTagAction == null) {
-			exportTagAction = new ExportTagAction( getActionFocusManager());
-			exportTagAction.setFileChooser(getFileChooser());
-			exportTagAction.setOptionPaneParent(getOptionPaneParent());
-		}
-		return exportTagAction;
-	}
 	public ExportEEGLabTagAction getExportEEGLabTagAction() {
 		if (exportEEGLabTagAction == null) {
 			exportEEGLabTagAction = new ExportEEGLabTagAction( getActionFocusManager());
