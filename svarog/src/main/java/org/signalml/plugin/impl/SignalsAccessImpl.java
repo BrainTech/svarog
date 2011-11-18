@@ -785,7 +785,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 		if (!codecFile.canRead()) throw new IOException("can not access file");
 		SignalMLCodec codec;
 		try {
-			codec = new XMLSignalMLCodec(codecFile, PluginAccessClass.getConfigAccess().getProfileDirectory());
+			codec = new XMLSignalMLCodec(codecFile, ConfigAccessImpl.getInstance().getProfileDirectory());
 		} catch (XMLCodecException e) {
 			throw new IOException("failed to read codec");
 		}

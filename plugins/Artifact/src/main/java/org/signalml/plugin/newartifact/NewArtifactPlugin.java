@@ -3,7 +3,6 @@ package org.signalml.plugin.newartifact;
 import org.signalml.plugin.data.PluginConfigForMethod;
 import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.Plugin;
-import org.signalml.plugin.export.PluginAuth;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
@@ -21,8 +20,8 @@ public class NewArtifactPlugin implements Plugin {
 	private static NewArtifactI18nDelegate i18nDelegate;
 
 	@Override
-	public void register(SvarogAccess access, PluginAuth auth) throws SignalMLException {
-		i18nDelegate = new NewArtifactI18nDelegate(access, auth);
+	public void register(SvarogAccess access) throws SignalMLException {
+		i18nDelegate = new NewArtifactI18nDelegate(access);
 		PluginAccessHelper.SetupConfig(this,
 			"classpath:org/signalml/plugin/newartifact/resource/config.xml");
 

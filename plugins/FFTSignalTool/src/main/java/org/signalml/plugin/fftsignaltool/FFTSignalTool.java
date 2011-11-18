@@ -7,7 +7,6 @@ import javax.swing.ImageIcon;
 import org.apache.log4j.Logger;
 
 import org.signalml.plugin.export.Plugin;
-import org.signalml.plugin.export.PluginAuth;
 import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.change.SvarogCloseListener;
 import org.signalml.plugin.export.config.SvarogAccessConfig;
@@ -84,8 +83,8 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 	 * which shows the {@link SignalFFTSettingsDialog}.</li></ul>
 	 */
 	@Override
-	public void register(SvarogAccess access, PluginAuth auth){
-		i18nDelegate = new FFTSignalToolI18nDelegate(access, auth);
+	public void register(SvarogAccess access){
+		i18nDelegate = new FFTSignalToolI18nDelegate(access);
 		guiAccess = access.getGUIAccess();
 		configAccess = access.getConfigAccess();
 		access.getChangeSupport().addCloseListener(this);

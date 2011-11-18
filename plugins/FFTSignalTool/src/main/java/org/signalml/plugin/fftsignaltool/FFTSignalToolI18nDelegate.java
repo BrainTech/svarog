@@ -1,6 +1,5 @@
 package org.signalml.plugin.fftsignaltool;
 
-import org.signalml.plugin.export.PluginAuth;
 import org.signalml.plugin.export.SvarogAccess;
 import org.springframework.context.MessageSourceResolvable;
 
@@ -11,11 +10,9 @@ import org.springframework.context.MessageSourceResolvable;
  */
 public class FFTSignalToolI18nDelegate {
 	private SvarogAccess svarogAccess;
-	private PluginAuth pluginAuth;
 
-	protected FFTSignalToolI18nDelegate(SvarogAccess sa, PluginAuth auth) {
+	protected FFTSignalToolI18nDelegate(SvarogAccess sa) {
 		this.svarogAccess = sa;
-		this.pluginAuth = auth;
 	}
 
 	/**
@@ -25,7 +22,7 @@ public class FFTSignalToolI18nDelegate {
 	 * @return the translated message
 	 */
 	public String _(String msg) {
-		return svarogAccess.getI18nAccess().translate(pluginAuth, "org.signalml.plugin.fftsignaltool.i18n.I18nBundle", msg);
+		return svarogAccess.getI18nAccess().translate(msg);
 	}
 
 	/**
@@ -36,7 +33,7 @@ public class FFTSignalToolI18nDelegate {
 	 * @return the translated message with values filled in
 	 */
 	public String _R(String msg, Object ... arguments) {
-		return svarogAccess.getI18nAccess().translateR(pluginAuth, "org.signalml.plugin.fftsignaltool.i18n.I18nBundle", msg, arguments);
+		return svarogAccess.getI18nAccess().translateR(msg, arguments);
 	}
 
 	/**

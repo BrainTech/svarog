@@ -14,15 +14,13 @@ public class I18NAction extends AbstractAction {
 	private static final long serialVersionUID = 1L;
 
 	public I18NAction(SvarogAccess sa) {
-		super("sf.i18n with invalid pluginauth");
+		super("sf.i18n");
 		this.sa = sa;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent a) {
 		sa.getI18nAccess().translateN(
-		       new PluginAuth(){public String getID(){return "x";}},
-		       "I18nBundle",
 		       "Deleted one file", "Deleted {0} files", 11);
 	}
 }
