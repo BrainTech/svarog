@@ -1,12 +1,10 @@
 package org.signalml.domain.montage.system;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamConverter;
 import java.util.ArrayList;
 import java.util.List;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.domain.montage.generators.IMontageGenerator;
-import org.signalml.domain.montage.generators.MontageGeneratorsConverter;
 
 /**
  * This class represents an EEG system (e.g. 'EEG 10_20' or 'EEG 10_10').
@@ -25,24 +23,27 @@ public class EegSystem implements Preset {
 	private String name;
 
 	/**
+	 * The description of the EEG system.
+	 * (Displayed in brackets if defined).
+	 */
+	private String description;
+
+	/**
 	 * The list of {@link EegElectrode EEG electrodes} that belong to the
 	 * system.
 	 */
 	private List<EegElectrode> electrodes = new ArrayList<EegElectrode>();
 
 	/**
-	 * The list of {@link IMontageGenerator montage generators} defined
+	 * Contains the list of {@link IMontageGenerator montage generators} defined
 	 * for this EEG system.
 	 */
-	@XStreamAlias("montageGenerators")
-	@XStreamConverter(MontageGeneratorsConverter.class)
-	private List<IMontageGenerator> montageGenerators = new ArrayList<IMontageGenerator>();
+	private transient MontageGenerators montageGenerators = new MontageGenerators();
 
 	/**
 	 * Constructor. Creates an empty EEG system without any name.
 	 */
 	public EegSystem() {
-		MontageGeneratorsConverter.addDefaultMontageGenerators(montageGenerators);
 	}
 
 	/**
@@ -62,6 +63,14 @@ public class EegSystem implements Preset {
 	@Override
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	/**
+	 * Returns the description set for this EEG system.
+	 * @return the description of this EEG system
+	 */
+	public String getDescription() {
+		return description;
 	}
 
 	/**
@@ -107,7 +116,14 @@ public class EegSystem implements Preset {
 
 	@Override
 	public String toString() {
-		return getName();
+		StringBuffer str = new StringBuffer();
+		str.append(getName());
+		if (description != null && !description.isEmpty()) {
+			str.append(" (");
+			str.append(description);
+			str.append(")");
+		}
+		return str.toString();
 	}
 
 	@Override
@@ -138,6 +154,14 @@ public class EegSystem implements Preset {
 	 */
 	public int getNumberOfMontageGenerators() {
 		return montageGenerators.size();
+	}
+
+	/**
+	 * Sets the montage generators that can be used with this EEG system.
+	 * @param montageGenerators the montage generators for this EEG system
+	 */
+	public void setMontageGenerators(MontageGenerators montageGenerators) {
+		this.montageGenerators = montageGenerators;
 	}
 
 }

@@ -85,11 +85,12 @@ public class FileUtils {
 	}
 
 	/**
-	 * Creates a directory having a given path. (Does not work recursively).
+	 * Creates a directory having a given path. (Does work recursively:
+	 * creates all directories on the path if some does not exist).
 	 * @param directoryPath a path of the directory to be created
 	 * @return true if the directory was sucessfully created, false otherwise
 	 */
 	public static boolean createDirectory(String directoryPath) {
-		return new File(directoryPath).mkdir();
+		return new File(directoryPath).mkdirs();
 	}
 }

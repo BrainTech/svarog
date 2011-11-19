@@ -3,6 +3,7 @@
 	<presets>
 		<eegSystem>
 			<name>EEG 10_20 Cap25</name>
+			<description></description>
 			<electrodes>
 				<eegElectrode>
 					<label>Fp1</label>
