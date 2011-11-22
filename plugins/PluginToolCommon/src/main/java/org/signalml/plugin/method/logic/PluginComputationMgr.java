@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.concurrent.ThreadFactory;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.logging.SvarogLogger;
 import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;
 import org.signalml.plugin.data.logic.PluginComputationMgrStepResult;
@@ -15,9 +14,7 @@ import org.signalml.plugin.exception.PluginToolAbortException;
 import org.signalml.plugin.exception.PluginToolInterruptedException;
 
 public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
-
-	protected static final Logger logger = Logger
-					       .getLogger(PluginComputationMgr.class);
+	protected static final Logger log = Logger.getLogger(PluginComputationMgr.class);
 
 	protected class CheckedThreadGroup extends ThreadGroup {
 
@@ -40,7 +37,7 @@ public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
 
 		@Override
 		public void uncaughtException(Thread t, Throwable e) {
-		    SvarogLogger.getSharedInstance().debug("PluginComputationMgr.CheckedThreadGroup.uncaughtException: " + t + ", " + e);
+			log.debug("uncaughtException: " + t + ", " + e);
 
 			synchronized (this) {
 				if (this.isShutdownStarted) {
@@ -165,8 +162,8 @@ public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
 		if (this.threadGroup != null) {
 			Throwable cause = this.threadGroup.getCause();
 			if (cause != null) {
-				logger.error("Error in worker thread "
-					     + this.threadGroup.getCausingThread().getId());
+				log.error("Error in worker thread "
+					  + this.threadGroup.getCausingThread().getId());
 				throw new ComputationException(cause);
 			}
 		}

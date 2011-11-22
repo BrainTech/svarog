@@ -4,11 +4,12 @@ import java.text.MessageFormat;
 
 import org.signalml.app.SvarogI18n;
 import org.signalml.plugin.export.i18n.SvarogAccessI18n;
+import org.signalml.util.SvarogConstants;
+
 import org.springframework.context.MessageSourceResolvable;
+import org.apache.log4j.Logger;
 import org.xnap.commons.i18n.I18n;
 import org.xnap.commons.i18n.I18nFactory;
-import org.signalml.app.logging.SvarogLogger;
-import org.signalml.util.SvarogConstants;
 
 /**
  * {@link ISvarogI18n} implementation using org.xnap.commons.i18n.* classes.
@@ -16,6 +17,8 @@ import org.signalml.util.SvarogConstants;
  * @author Stanislaw Findeisen (Eisenbits)
  */
 public class SvarogI18n implements ISvarogI18n, SvarogAccessI18n {
+	protected static final Logger log = Logger.getLogger(SvarogI18n.class);
+
 	private final I18n i18n;
 
 	public SvarogI18n(Class klass, String catalogId) {
@@ -32,7 +35,7 @@ public class SvarogI18n implements ISvarogI18n, SvarogAccessI18n {
 	@Override
 	public String translate(String key) {
 		String s = this.i18n.tr(key);
-		SvarogLogger.getSharedInstance().debug("translate: " + key + " --> " + s);
+		log.debug("translate: " + key + " --> " + s);
 		return s;
 	}
 
@@ -42,7 +45,7 @@ public class SvarogI18n implements ISvarogI18n, SvarogAccessI18n {
 	@Override
 	public String translateN(String singular, String plural, long n) {
 		String s = i18n.trn(singular, plural, n);
-		SvarogLogger.getSharedInstance().debug("translateN: " + singular + " --> " + s);
+		log.debug("translateN: " + singular + " --> " + s);
 		return s;
 	}
 

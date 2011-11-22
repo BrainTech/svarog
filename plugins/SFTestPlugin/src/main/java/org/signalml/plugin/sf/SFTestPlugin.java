@@ -2,7 +2,7 @@ package org.signalml.plugin.sf;
 
 import java.text.MessageFormat;
 
-import org.signalml.app.logging.SvarogLogger;
+import org.apache.log4j.Logger;
 import org.signalml.plugin.export.Plugin;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.SvarogAccess;
@@ -13,14 +13,16 @@ import org.signalml.plugin.export.SvarogAccess;
  * @author Stanislaw Findeisen (Eisenbits)
  */
 public class SFTestPlugin implements Plugin {
+    protected static final Logger log = Logger.getLogger(SFTestPlugin.class);
+
     private SvarogAccess svarogAccess;
     private PluginAuth pluginAuth;
 
     private void testI18nPlural(int k) {
         String sraw= svarogAccess.getI18nAccess().translateN("Deleted one file", "Deleted {0} files", k);
-        SvarogLogger.getSharedInstance().debug("SFTestPlugin.testI18nPlural(): raw=" + sraw);
+        log.debug("SFTestPlugin.testI18nPlural(): raw=" + sraw);
         String msg = MessageFormat.format(sraw, k);
-        SvarogLogger.getSharedInstance().debug("SFTestPlugin.testI18nPlural(): msg=" + msg);
+        log.debug("SFTestPlugin.testI18nPlural(): msg=" + msg);
     }
 
     protected String _(String msgKey) {
@@ -34,7 +36,7 @@ public class SFTestPlugin implements Plugin {
 	public void register(SvarogAccess sa) throws SignalMLException {
 	    this.svarogAccess = sa;
 
-	    SvarogLogger.getSharedInstance().debug("SFTestPlugin.register()");
+	    log.debug("SFTestPlugin.register()");
 	    sa.getGUIAccess().addButtonToToolsMenu(new BombAction());
 	    sa.getGUIAccess().addButtonToToolsMenu(new GrenadeAction());
 	    sa.getGUIAccess().addButtonToToolsMenu(new I18NAction(sa));
@@ -42,7 +44,7 @@ public class SFTestPlugin implements Plugin {
         new Thread(new ClockBomb(30000)).start();
 
         String s1 = sa.getI18nAccess().translate("This is an i18n test. Hello, world!");
-        SvarogLogger.getSharedInstance().debug("SFTestPlugin.register(): " + s1);
+        log.debug("SFTestPlugin.register(): " + s1);
 
         testI18nPlural(0);
         testI18nPlural(1);

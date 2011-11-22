@@ -43,7 +43,6 @@ import org.signalml.app.document.ExtensionBasedDocumentDetector;
 import org.signalml.app.document.MRUDEntry;
 import org.signalml.app.document.RawSignalMRUDEntry;
 import org.signalml.app.document.SignalMLMRUDEntry;
-import org.signalml.app.logging.SvarogLogger;
 import org.signalml.app.method.ApplicationMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.MethodPresetManager;
@@ -84,6 +83,8 @@ import org.signalml.plugin.impl.PluginAccessClass;
 import org.signalml.plugin.loader.PluginLoaderHi;
 import org.signalml.util.SvarogConstants;
 import org.signalml.util.Util;
+import org.signalml.app.logging.DebugHelpers;
+
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.util.Log4jConfigurer;
 
@@ -106,12 +107,12 @@ import static org.signalml.app.SvarogI18n._;
  * @author Stanislaw Findeisen (Eisenbits)
  */
 public class SvarogApplication implements java.lang.Runnable {
+	protected static final Logger logger = Logger.getLogger(SvarogApplication.class);
 
 	private static SvarogApplication Instance = null;
 
 	private Preferences preferences = null;
 	private Locale locale = null;
-	protected static final Logger logger = Logger.getLogger(SvarogApplication.class);
 	public static final int INITIALIZATION_STEP_COUNT = 5;
 	private File profileDir = null;
 	private ApplicationConfiguration applicationConfig = null;
@@ -187,9 +188,9 @@ public class SvarogApplication implements java.lang.Runnable {
 			}
 		}
 
-		SvarogLogger.getSharedInstance().debug("Preparing Svarog " + SvarogConstants.VERSION);
-		SvarogLogger.getSharedInstance().debugThreads();
-		SvarogLogger.getSharedInstance().debugCL();
+		logger.debug("Preparing Svarog " + SvarogConstants.VERSION);
+		DebugHelpers.debugThreads(logger);
+		DebugHelpers.debugCL(logger);
 
 		_install_properties(args);
 
@@ -205,7 +206,7 @@ public class SvarogApplication implements java.lang.Runnable {
 		// Launch Svarog
 		launchSvarog(args);
 
-		SvarogLogger.getSharedInstance().debug("SvarogApplication.main complete!");
+		logger.debug("SvarogApplication.main complete!");
 	}
 
 	/**
@@ -224,7 +225,7 @@ public class SvarogApplication implements java.lang.Runnable {
 				}
 
 				String name = m.group(1), value = m.group(2);
-				SvarogLogger.getSharedInstance().debug(
+				logger.debug(
 					   String.format("installing property %s=%s", name, value));
 				System.getProperties().setProperty(name, value);
 			}
@@ -245,15 +246,15 @@ public class SvarogApplication implements java.lang.Runnable {
 
 		while (true) {
 			try {
-				SvarogLogger.getSharedInstance().debug("Waiting for main Svarog thread to complete...");
+				logger.debug("Waiting for main Svarog thread to complete...");
 				t.join();
 				break;
 			} catch (java.lang.InterruptedException e) {
-				SvarogLogger.getSharedInstance().warning("Top level: interrupted: " + e + "; looping back...");
+				logger.warn("Top level: interrupted: " + e + "; looping back...");
 			}
 		}
 
-		SvarogLogger.getSharedInstance().debug("SvarogApplication.launchSvarog complete!");
+		logger.debug("SvarogApplication.launchSvarog complete!");
 	}
 
 	/**
@@ -284,13 +285,13 @@ public class SvarogApplication implements java.lang.Runnable {
 			}
 		}
 
-		SvarogLogger.getSharedInstance().debug("Starting Svarog...");
-		SvarogLogger.getSharedInstance().debugThreads();
+		logger.debug("Starting Svarog...");
+		DebugHelpers.debugThreads(logger);
 
 		try {
 			_run(cmdLineArgs);
 		} catch(Throwable e) {
-			SvarogLogger.getSharedInstance().error("uncaught exception", e);
+			logger.error("uncaught exception", e);
 
 			// also log directly to stderr in case of problems with logging
 			System.err.println("unable to initialize svarog: " + e);
@@ -435,7 +436,7 @@ public class SvarogApplication implements java.lang.Runnable {
 				}
 			});
 
-		SvarogLogger.getSharedInstance().debug("SvarogApplication._run complete!");
+		logger.debug("SvarogApplication._run complete!");
 	}
 
 	private void initializeFirstTime(final GeneralConfiguration suggested) {

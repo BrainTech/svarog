@@ -2,7 +2,7 @@ package org.signalml.app;
 
 import java.awt.AWTEvent;
 
-import org.signalml.app.logging.SvarogLoggerStdErr;
+import org.apache.log4j.Logger;
 
 /**
  * Svarog AWT event queue.
@@ -13,6 +13,7 @@ import org.signalml.app.logging.SvarogLoggerStdErr;
  * @author Stanislaw Findeisen (Eisenbits)
  */
 public class SvarogAWTEventQueue extends java.awt.EventQueue {
+    protected static final Logger log = Logger.getLogger(SvarogAWTEventQueue.class);
     
     private static boolean queueReplaced = false;
     
@@ -47,7 +48,7 @@ public class SvarogAWTEventQueue extends java.awt.EventQueue {
             try {
                 SvarogExceptionHandler.getSharedInstance().handleAWT(t);
             } catch (RuntimeException e) {
-                SvarogLoggerStdErr.getInstance().error("Error in exception handler!", e);
+                log.error("Error in exception handler!", e);
             }
 
             throw t;

@@ -26,7 +26,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.apache.log4j.Logger;
 import org.jfree.ui.FilesystemFilter;
-import org.signalml.app.logging.SvarogLogger;
+import org.apache.log4j.Logger;
 import org.signalml.app.view.ViewerElementManager;
 import org.signalml.plugin.export.Plugin;
 import org.signalml.plugin.impl.PluginAccessClass;
@@ -185,8 +185,7 @@ public class PluginLoaderHi {
 			readPluginsState(this.pluginsStateFile);
 		} catch (Exception e) {
 			final String errorMsg = "Failed to create loader of plug-ins";
-			SvarogLogger.getSharedInstance().error(errorMsg, e);
-			logger.error(errorMsg);
+			logger.error(errorMsg, e);
 		}
 	}
 
@@ -427,7 +426,6 @@ public class PluginLoaderHi {
 		} catch(Exception exc) {
 			String errorMsg = "Failed to load plugin " + descr.getName() +
 					  " from file " + descr.getJarFile();
-			SvarogLogger.getSharedInstance().warning(errorMsg, exc);
 			logger.error(errorMsg, exc);
 
 			descr.setActive(false);
@@ -443,7 +441,6 @@ public class PluginLoaderHi {
 		} catch(Throwable exc) {
 			String errorMsg = "Failed to initialize plugin " + descr.getName() +
 				" from file " + descr.getJarFile();
-			SvarogLogger.getSharedInstance().warning(errorMsg, exc);
 			logger.error(errorMsg, exc);
 		}
 

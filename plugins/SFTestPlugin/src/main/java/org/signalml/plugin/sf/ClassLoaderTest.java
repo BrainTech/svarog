@@ -3,12 +3,14 @@ package org.signalml.plugin.sf;
 import java.net.URL;
 import java.net.URLClassLoader;
 
-import org.signalml.app.logging.SvarogLogger;
+import org.apache.log4j.Logger;
 
 /**
  * @author Stanislaw Findeisen (Eisenbits)
  */
 class ClassLoaderTest extends Timer implements java.lang.Runnable {
+    protected static final Logger log = Logger.getLogger(ClassLoaderTest.class);
+
     public ClassLoaderTest(int millis) {
         super(millis);
     }
@@ -17,9 +19,8 @@ class ClassLoaderTest extends Timer implements java.lang.Runnable {
     public void run() {
         super.run();
         
-        SvarogLogger sl = SvarogLogger.getSharedInstance();
-        sl.debug("ClassLoaderTest: start");
+        log.debug("ClassLoaderTest: start");
         URLClassLoader cl1 = new URLClassLoader(new URL[0]);
-        sl.debug("ClassLoaderTest: cl1=" + cl1);
+        log.debug("ClassLoaderTest: cl1=" + cl1);
     }
 }

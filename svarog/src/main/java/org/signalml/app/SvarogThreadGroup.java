@@ -30,11 +30,11 @@ public class SvarogThreadGroup extends java.lang.ThreadGroup {
     
     /**
      * Thread uncaught exception handler. This method simply calls
-     * {@link SvarogExceptionHandler#handle(Thread, Throwable)}.
+     * {@link SvarogExceptionHandler#uncaughtException(Thread, Throwable)}.
      */
     @Override
     public void uncaughtException(Thread t, Throwable e) {
-        SvarogExceptionHandler.getSharedInstance().handle(t, e);
+        SvarogExceptionHandler.getSharedInstance().uncaughtException(t, e);
     }
 
     /** Creates a new thread in this group. */

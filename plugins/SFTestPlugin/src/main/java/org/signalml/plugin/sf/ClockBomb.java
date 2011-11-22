@@ -1,6 +1,6 @@
 package org.signalml.plugin.sf;
 
-import org.signalml.app.logging.SvarogLogger;
+import org.apache.log4j.Logger;
 
 /**
  * java.lang.Runnable that throws RuntimeException after specified time
@@ -9,6 +9,8 @@ import org.signalml.app.logging.SvarogLogger;
  * @author Stanislaw Findeisen (Eisenbits)
  */
 class ClockBomb extends Timer implements java.lang.Runnable {
+    protected static final Logger log = Logger.getLogger(ClockBomb.class);
+
     public ClockBomb() {
         this(0);
     }
@@ -21,9 +23,8 @@ class ClockBomb extends Timer implements java.lang.Runnable {
     public void run() {
         super.run();
         
-        SvarogLogger sl = SvarogLogger.getSharedInstance();
-        sl.debug("ClockBomb: explode");
-        sl.debug("ClockBomb: getDefaultUncaughtExceptionHandler: " + Thread.getDefaultUncaughtExceptionHandler());
+        log.debug("ClockBomb: explode");
+        log.debug("ClockBomb: getDefaultUncaughtExceptionHandler: " + Thread.getDefaultUncaughtExceptionHandler());
         throw new RuntimeException("ClockBomb explode (" + getMillis() + " millis)");
         // throw new OutOfMemoryError("ClockBomb explode (" + getMillis() + " millis)");
     }
