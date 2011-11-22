@@ -1,6 +1,7 @@
 package org.signalml.plugin.fftsignaltool;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -83,7 +84,9 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 	 * which shows the {@link SignalFFTSettingsDialog}.</li></ul>
 	 */
 	@Override
-	public void register(SvarogAccess access){
+	public void register(SvarogAccess access)
+		throws IOException {
+
 		i18nDelegate = new FFTSignalToolI18nDelegate(access);
 		guiAccess = access.getGUIAccess();
 		configAccess = access.getConfigAccess();
@@ -98,16 +101,12 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 		tool.setSettings(signalFFTSettings);
 		tool.setSvarogAccess(access);
 		listener = new SignalFFTToolButtonMouseListener();
-		final String iconpath = resourceDirectory.getAbsolutePath()+File.separator + "fft.png";
-		log.debug("trying to load " + iconpath);
-		final ImageIcon icon = new ImageIcon(iconpath);
+		final ImageIcon icon = access.getResourcesAccess().loadClassPathIcon("/icon/fft.png");
 		guiAccess.addSignalTool(tool, icon, _("Signal FFT (for settings press and hold the mouse button here)"), listener);
 		
 		//creates and adds the action which shows the 
 		SignalFFTSettingsDialogAction action = new SignalFFTSettingsDialogAction(signalFFTSettings);
 		guiAccess.addButtonToToolsMenu(action);
-		
-		
 	}
 
 	/**

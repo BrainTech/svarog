@@ -9,6 +9,7 @@ import org.signalml.plugin.export.i18n.SvarogAccessI18n;
 import org.signalml.plugin.export.method.SvarogAccessMethod;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
+import org.signalml.plugin.export.resources.SvarogAccessResources;
 
 
 /**
@@ -61,4 +62,9 @@ public interface SvarogAccess {
 	 */
 	SvarogAccessChangeSupport getChangeSupport();
 
+	/**
+	 * Returns the interface to access classpath resources.
+	 * @return the interface to access classpath resources
+	 */
+	SvarogAccessResources getResourcesAccess();
 }

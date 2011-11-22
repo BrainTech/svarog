@@ -13,6 +13,7 @@ import org.signalml.plugin.export.i18n.SvarogAccessI18n;
 import org.signalml.plugin.export.method.SvarogAccessMethod;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
+import org.signalml.plugin.export.resources.SvarogAccessResources;
 import org.signalml.plugin.impl.change.ChangeSupportImpl;
 import org.signalml.plugin.loader.PluginHead;
 
@@ -38,6 +39,8 @@ public class PluginAccessClass implements SvarogAccess {
 	private static ViewerElementManager manager = null;
 	
 	private SvarogI18n i18nAccessImpl;
+
+	private SvarogAccessResourcesImpl resourcesAccessImpl;
 	
 	/**
 	 * access to GUI features of Svarog
@@ -70,11 +73,14 @@ public class PluginAccessClass implements SvarogAccess {
 	 * Constructor. Creates child accesses.
 	 */
 	public PluginAccessClass(PluginHead head){
+		Class klass = head.getPluginObj().getClass();
 		try {
-			this.i18nAccessImpl = new SvarogI18n(head.getPluginObj().getClass());
+			this.i18nAccessImpl = new SvarogI18n(klass);
 		} catch(MissingResourceException e) {
 			this.i18nAccessImpl = null;
 		}
+
+		this.resourcesAccessImpl = new SvarogAccessResourcesImpl(klass);
 	}
 	
 	/**
@@ -175,5 +181,10 @@ public class PluginAccessClass implements SvarogAccess {
 	@Override
 	public SvarogAccessI18n getI18nAccess() {
 		return i18nAccessImpl;
+	}
+
+	@Override
+	public SvarogAccessResources getResourcesAccess() {
+		return resourcesAccessImpl;
 	}
 }
