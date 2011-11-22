@@ -3,13 +3,13 @@
  */
 package org.signalml.app.view.monitor;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
 import javax.swing.JCheckBox;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
@@ -50,7 +50,7 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 	 * A panel containing a {@link JCheckBox} allowing to enable/disable
 	 * the recording of tags (only signal is recorded then).
 	 */
-	private DisableTagRecordingPanel disableTagRecordingPanel;
+	private EnableTagRecordingPanel enableTagRecordingPanel;
 
 	/**
 	 * Constructor.
@@ -68,14 +68,18 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 	 * Initializes this panel.
 	 */
 	private void initialize() {
-		setLayout(new GridLayout(3, 1, 10, 5));
+		setLayout(new GridLayout(2, 1, 2, 2));
 		CompoundBorder border = new CompoundBorder(
 			new TitledBorder(messageSource.getMessage("startMonitorRecording.chooseFilesTitle")),
 			new EmptyBorder(3, 3, 3, 3));
 		setBorder(border);
 		add(getSelectSignalRecordingFilePanel());
-		add(getSelectTagsRecordingFilePanel());
-		add(getDisableTagRecordingPanel());
+
+		JPanel tagsRecordingPanel = new JPanel(new BorderLayout());
+		tagsRecordingPanel.add(getEnableTagRecordingPanel(), BorderLayout.WEST);
+		tagsRecordingPanel.add(getSelectTagsRecordingFilePanel(), BorderLayout.CENTER);
+
+		add(tagsRecordingPanel);
 	}
 
 	/**
@@ -100,6 +104,7 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 	protected FileSelectPanel getSelectTagsRecordingFilePanel() {
 		if (selectTagsRecordingFilePanel == null) {
 			selectTagsRecordingFilePanel = new FileSelectPanel(messageSource, messageSource.getMessage("startMonitorRecording.chooseTagFileLabel"));
+			selectTagsRecordingFilePanel.setEnabled(false);
 		}
 		return selectTagsRecordingFilePanel;
 	}
@@ -110,11 +115,11 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 	 * signal is recorded).
 	 * @return a {@link Panel} for enabling/disabling tag recording
 	 */
-	protected DisableTagRecordingPanel getDisableTagRecordingPanel() {
-		if (disableTagRecordingPanel == null) {
-			disableTagRecordingPanel = new DisableTagRecordingPanel();
+	protected EnableTagRecordingPanel getEnableTagRecordingPanel() {
+		if (enableTagRecordingPanel == null) {
+			enableTagRecordingPanel = new EnableTagRecordingPanel();
 		}
-		return disableTagRecordingPanel;
+		return enableTagRecordingPanel;
 	}
 
 	/**
@@ -125,7 +130,7 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 		MonitorRecordingDescriptor monitorRecordingDescriptor = ((OpenMonitorDescriptor) model).getMonitorRecordingDescriptor();
 		monitorRecordingDescriptor.setSignalRecordingFilePath(getSelectSignalRecordingFilePanel().getFileName());
 		monitorRecordingDescriptor.setTagsRecordingFilePath(getSelectTagsRecordingFilePanel().getFileName());
-		monitorRecordingDescriptor.setTagsRecordingDisabled(getDisableTagRecordingPanel().isTagRecordingDisabled());
+		monitorRecordingDescriptor.setTagsRecordingEnabled(getEnableTagRecordingPanel().isTagRecordingEnabled());
 	}
 
 	/**
@@ -137,12 +142,15 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 
 		super.setEnabled(enabled);
 
-		for (Component component : this.getComponents()) {
-			component.setEnabled(enabled);
-		}
-
-		if (getDisableTagRecordingPanel().isTagRecordingDisabled())
+		getSelectSignalRecordingFilePanel().setEnabled(enabled);
+		if (!enabled) {
 			getSelectTagsRecordingFilePanel().setEnabled(false);
+			getEnableTagRecordingPanel().setEnabled(false);
+		}
+		else {
+			getEnableTagRecordingPanel().setEnabled(true);
+			getSelectTagsRecordingFilePanel().setEnabled(getEnableTagRecordingPanel().isTagRecordingEnabled());
+		}
 
 	}
 
@@ -173,10 +181,10 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 				errors.reject("");
 		}
 
-		if (getDisableTagRecordingPanel().isTagRecordingEnabled() && tagRecordingFileName.isEmpty()) {
+		if (getEnableTagRecordingPanel().isTagRecordingEnabled() && tagRecordingFileName.isEmpty()) {
 			errors.reject("error.startMonitorRecording.incorrectTagFile");
 		}
-		else if (getDisableTagRecordingPanel().isTagRecordingEnabled() && (new File(tagRecordingFileName)).exists()) {
+		else if (getEnableTagRecordingPanel().isTagRecordingEnabled() && (new File(tagRecordingFileName)).exists()) {
 			int anwser = JOptionPane.showConfirmDialog(null, messageSource.getMessage("startMonitorRecording.tagFileAlreadyExistsMessage"));
 			if (anwser == JOptionPane.CANCEL_OPTION || anwser == JOptionPane.NO_OPTION)
 				errors.reject("");
@@ -187,29 +195,29 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 	/**
 	 * Represents a panel that contains a checkbox to enable/disable tag recording.
 	 */
-	protected class DisableTagRecordingPanel extends JPanel {
+	protected class EnableTagRecordingPanel extends JPanel {
 
-		private JCheckBox disableTagRecordingCheckBox = null;
+		private JCheckBox enableTagRecordingCheckBox = null;
 
 		/**
 		 * Constructor. Creates a new {@link DisableTagRecordingPanel}.
 		 */
-		public DisableTagRecordingPanel() {
-
-			disableTagRecordingCheckBox = new JCheckBox();
-			disableTagRecordingCheckBox.addItemListener(new ItemListener() {
+		public EnableTagRecordingPanel() {
+		
+			enableTagRecordingCheckBox = new JCheckBox();
+			enableTagRecordingCheckBox.addItemListener(new ItemListener() {
 
 				@Override
 				public void itemStateChanged(ItemEvent e) {
 					if (e.getStateChange() == ItemEvent.SELECTED) {
-						getSelectTagsRecordingFilePanel().setEnabled(false);
-					} else if (e.getStateChange() == ItemEvent.DESELECTED) {
 						getSelectTagsRecordingFilePanel().setEnabled(true);
+					} else if (e.getStateChange() == ItemEvent.DESELECTED) {
+						getSelectTagsRecordingFilePanel().setEnabled(false);
 					}
 				}
 			});
-			add(disableTagRecordingCheckBox);
-			add(new JLabel(messageSource.getMessage("startMonitorRecording.doNotRecordTagsLabel")));
+			add(enableTagRecordingCheckBox);
+			//add(new JLabel(messageSource.getMessage("startMonitorRecording.doNotRecordTagsLabel")));
 		}
 
 		/**
@@ -230,7 +238,7 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 		 * @return true if tag recording was disabled, false otherwise
 		 */
 		public boolean isTagRecordingDisabled() {
-			return disableTagRecordingCheckBox.isSelected();
+			return !isTagRecordingEnabled();
 		}
 
 		/**
@@ -238,15 +246,15 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 		 * @return true if tag recording was enabled, false otherwise
 		 */
 		public boolean isTagRecordingEnabled() {
-			return !isTagRecordingDisabled();
+			return enableTagRecordingCheckBox.isSelected();
 		}
 
 		/**
 		 * Sets the status of the tag recording checkbox.
-		 * @param disable true to disable tag recording, false otherwise
+		 * @param enable true to disable tag recording, false otherwise
 		 */
-		public void setTagRecordingDisabled(boolean disable) {
-			disableTagRecordingCheckBox.setSelected(disable);
+		public void setTagRecordingEnabled(boolean enable) {
+			enableTagRecordingCheckBox.setSelected(enable);
 		}
 	}
 

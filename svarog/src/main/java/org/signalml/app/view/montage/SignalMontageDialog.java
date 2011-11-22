@@ -35,6 +35,7 @@ import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.montage.generators.IMontageGenerator;
+import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.SvarogConstants;
 import org.signalml.util.Util;
@@ -66,7 +67,6 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 
 	protected MontageChannelsPanel channelsPanel;
 	protected MontageGeneratorPanel generatorPanel;
-	protected EegSystemSelectionPanel eegSystemSelectionPanel;
 	protected MatrixReferenceEditorPanel matrixReferenceEditorPanel;
 	protected VisualReferenceEditorPanel visualReferenceEditorPanel;
 	protected MontageFiltersPanel filtersPanel;
@@ -92,6 +92,9 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	 * {@link TimeDomainSampleFilter TimeDomainSampleFilters}.
 	 */
 	private PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainSampleFilterPresetManager;
+	/**
+	 * The preset manager which manges the available {@link EegSystem EEG systems}.
+	 */
 	private EegSystemsPresetManager eegSystemsPresetManager;
 
 	public SignalMontageDialog(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager,
@@ -181,9 +184,6 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 		generatorPanel.setErrorsDialog(getErrorsDialog());
 		northPanel.add(generatorPanel);
 
-		eegSystemSelectionPanel = new EegSystemSelectionPanel(messageSource, eegSystemsPresetManager);
-		northPanel.add(eegSystemSelectionPanel);
-
 		return northPanel;
 
 	}
@@ -243,8 +243,13 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 
 	private void setMontageToPanels(Montage montage) {
 
+		if (montage != null && montage.getEegSystemName() != null
+			&& !montage.getEegSystemName().isEmpty()) {
+			EegSystem system = (EegSystem) eegSystemsPresetManager.getPresetByName(montage.getEegSystemName());
+			montage.setEegSystem(system);
+		}
+
 		generatorPanel.setMontage(montage);
-		eegSystemSelectionPanel.setMontage(montage);
 		channelsPanel.setMontage(montage);
 		visualReferenceEditorPanel.setMontage(montage);
 		matrixReferenceEditorPanel.setMontage(montage);

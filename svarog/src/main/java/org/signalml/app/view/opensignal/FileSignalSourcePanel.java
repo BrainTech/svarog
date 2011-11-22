@@ -80,6 +80,7 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 		JPanel rightColumnPanel = new JPanel(new BorderLayout());
 		rightColumnPanel.add(getFileOpenMethodPanel(), BorderLayout.NORTH);
 		rightColumnPanel.add(getCardPanelForSignalParameters(), BorderLayout.CENTER);
+		rightColumnPanel.add(getEegSystemSelectionPanel(), BorderLayout.SOUTH);
 		return rightColumnPanel;
 	}
 
@@ -202,9 +203,15 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 
 			CardLayout cl = (CardLayout)(cardPanelForSignalParameters.getLayout());
 			cl.show(cardPanelForSignalParameters, method.toString());
-		}
-		else
-			super.propertyChange(evt);
+		} else if (evt.getSource() instanceof SignalParametersPanelForRawSignalFile
+			&& propertyName.equals(AbstractSignalParametersPanel.EEG_SYSTEM_PROPERTY)) {
+			String eegSystemName = evt.getNewValue() == null ? null : evt.getNewValue().toString();
+			if (eegSystemName != null)
+				getEegSystemSelectionPanel().setEegSystemByName(eegSystemName);
+			else
+				getEegSystemSelectionPanel().setEegSystem(getEegSystemSelectionPanel().getSelectedEegSystem());
+		} else
+			forwardPropertyChange(evt);
 	}
 
 	@Override

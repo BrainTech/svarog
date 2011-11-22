@@ -4,11 +4,13 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import org.signalml.app.config.preset.EegSystemsPresetManager;
 import org.signalml.app.config.preset.PresetComboBoxModel;
 import org.signalml.app.view.element.AbstractSignalMLPanel;
+import org.signalml.app.view.opensignal.AbstractSignalParametersPanel;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.system.EegSystem;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -44,9 +46,10 @@ public class EegSystemSelectionPanel extends AbstractSignalMLPanel {
 	 * @param eegSystemsPresetManager {@link PresetManager} for managing
 	 * available EEG systems
 	 */
-	public EegSystemSelectionPanel(MessageSourceAccessor messageSource, EegSystemsPresetManager eegSystemsPresetManager) {
+	public EegSystemSelectionPanel(MessageSourceAccessor messageSource, EegSystemsPresetManager eegSystemsPresetManager, PropertyChangeListener listener) {
 		super(messageSource);
 		this.eegSystemsPresetManager = eegSystemsPresetManager;
+		addPropertyChangeListener(listener);
 		initialize();
 	}
 
@@ -77,6 +80,7 @@ public class EegSystemSelectionPanel extends AbstractSignalMLPanel {
 					if (montage != null) {
 						montage.setEegSystem(getSelectedEegSystem());
 					}
+					firePropertyChange(AbstractSignalParametersPanel.EEG_SYSTEM_PROPERTY, null, getSelectedEegSystem());
 				}
 			});
 		}
@@ -103,8 +107,26 @@ public class EegSystemSelectionPanel extends AbstractSignalMLPanel {
 	 * Returns the EEG system selected using this panel.
 	 * @return the selected EEG system
 	 */
-	protected EegSystem getSelectedEegSystem() {
+	public EegSystem getSelectedEegSystem() {
 		return (EegSystem) presetComboBoxModel.getSelectedItem();
+	}
+
+	/**
+	 * Sets the EEG system which should be selected in this panel.
+	 * @param name the name of the EEG system to be selected
+	 */
+	public void setEegSystemByName(String name) {
+		EegSystem eegSystem = (EegSystem) eegSystemsPresetManager.getPresetByName(name);
+		setEegSystem(eegSystem);
+	}
+
+	/**
+	 * Sets the EEG system which should be selected in this panel.
+	 * @param name the EEG system to be selected
+	 */
+	public void setEegSystem(EegSystem eegSystem) {
+		presetComboBoxModel.setSelectedItem(eegSystem);
+		firePropertyChange(AbstractSignalParametersPanel.EEG_SYSTEM_PROPERTY, null, getSelectedEegSystem());
 	}
 
 	/**

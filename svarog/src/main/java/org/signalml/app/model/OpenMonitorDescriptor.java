@@ -3,6 +3,7 @@ package org.signalml.app.model;
 import multiplexer.jmx.client.JmxClient;
 import org.signalml.app.view.opensignal.SignalSource;
 import org.signalml.app.worker.amplifiers.AmplifierDefinition;
+import org.signalml.domain.montage.system.EegSystem;
 
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
@@ -50,7 +51,10 @@ public class OpenMonitorDescriptor {
 	 * Styles from this {@link StyledTagSet} are used for the new monitor tags.
 	 */
 	private StyledTagSet tagStyles;
-
+	/**
+	 * The {@link EegSystem} used for this monitor signal.
+	 */
+	private EegSystem eegSystem;
 
         public OpenMonitorDescriptor() {
                 channelCount = 0;
@@ -386,6 +390,22 @@ public class OpenMonitorDescriptor {
 	 */
 	public StyledTagSet getTagStyles() {
 		return tagStyles;
+	}
+
+	/**
+	 * Returns the EEG system which should be used by this monitor signal
+	 * @return EEG system to be used
+	 */
+	public EegSystem getEegSystem() {
+		return eegSystem;
+	}
+
+	/**
+	 * Sets the EEG system which should be used by this monitor signal
+	 * @param eegSystem the EEG system to be used
+	 */
+	public void setEegSystem(EegSystem eegSystem) {
+		this.eegSystem = eegSystem;
 	}
 
 }

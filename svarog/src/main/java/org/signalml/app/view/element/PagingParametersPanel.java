@@ -79,7 +79,7 @@ public class PagingParametersPanel extends AbstractSignalMLPanel {
 
 		CompoundBorder cb = new CompoundBorder(
 		        new TitledBorder(messageSource.getMessage("signalParameters.pagingSignalParameters")),
-		        new EmptyBorder(3,3,3,3)
+		        new EmptyBorder(2,2,2,2)
 		);
 
 		setBorder(cb);

@@ -9,7 +9,6 @@ import java.beans.PropertyChangeListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import org.signalml.app.config.preset.EegSystemsPresetManager;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.system.EegSystem;
@@ -94,8 +93,8 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 			enableTabsAndOKButtonAsNeeded();
 		}
 		else if (propertyName.equals(AbstractSignalParametersPanel.EEG_SYSTEM_PROPERTY)) {
-			String newEegSystemName = evt.getNewValue() != null ? evt.getNewValue().toString() : null;
-			eegSystemChangedTo(newEegSystemName);
+			EegSystem newEegSystem = (EegSystem) (evt.getNewValue() != null ? evt.getNewValue() : null);
+			eegSystemChangedTo(newEegSystem);
 		}
 	}
 
@@ -207,17 +206,14 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 	 * Changes the EEG system in the current montage.
 	 * @param newEegSystemName the EEG system name that was selected
 	 */
-	protected void eegSystemChangedTo(String newEegSystemName) {
-		EegSystemsPresetManager eegSystemsPresetManager = openSignalAndSetMontageDialog.getEegSystemsPresetManager();
-
-		EegSystem eegSystem = (EegSystem) eegSystemsPresetManager.getPresetByName(newEegSystemName);
+	protected void eegSystemChangedTo(EegSystem newEegSystem) {
 		Montage currentMontage = getCurrentMontage();
 
-		if (eegSystem == null) {
-			eegSystem = (EegSystem) eegSystemsPresetManager.getPresetAt(0);
+		if (newEegSystem == null) {
+			return;
 		}
 
-		currentMontage.setEegSystem(eegSystem);
+		currentMontage.setEegSystem(newEegSystem);
 		try {
 			openSignalAndSetMontageDialog.fillDialogFromModel(currentMontage);
 		} catch (SignalMLException ex) {

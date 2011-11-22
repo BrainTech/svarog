@@ -14,7 +14,7 @@ public class MonitorRecordingDescriptor {
 	private boolean recordingEnabled = false;
 	private String signalRecordingFilePath;
 	private String tagsRecordingFilePath;
-	private boolean tagsRecordingDisabled;
+	private boolean tagsRecordingEnabled;
 
 	/**
 	 * Creates an empty {@link MonitorRecordingDescriptor} - all values are
@@ -34,7 +34,7 @@ public class MonitorRecordingDescriptor {
 		String tagsRecordingFilePath, boolean isTagsRecordingDisabled) {
 		this.signalRecordingFilePath = signalRecordingFilePath;
 		this.tagsRecordingFilePath = tagsRecordingFilePath;
-		this.tagsRecordingDisabled = isTagsRecordingDisabled;
+		this.tagsRecordingEnabled = isTagsRecordingDisabled;
 	}
 
 	/**
@@ -73,18 +73,18 @@ public class MonitorRecordingDescriptor {
 
 	/**
 	 * Returns if the tags should be recorded.
-	 * @return true if the tags should NOT be recorded, false otherwise
+	 * @return true if the tags should be recorded, false otherwise
 	 */
-	public boolean isTagsRecordingDisabled() {
-		return tagsRecordingDisabled;
+	public boolean isTagsRecordingEnabled() {
+		return tagsRecordingEnabled;
 	}
 
 	/**
-	 * Sets if the tag recording should be disabled.
-	 * @param tagsRecordingDisabled
+	 * Sets if the tag recording should be enabled.
+	 * @param tagsRecordingEnabled
 	 */
-	public void setTagsRecordingDisabled(boolean tagsRecordingDisabled) {
-		this.tagsRecordingDisabled = tagsRecordingDisabled;
+	public void setTagsRecordingEnabled(boolean tagsRecordingEnabled) {
+		this.tagsRecordingEnabled = tagsRecordingEnabled;
 	}
 
 	/**

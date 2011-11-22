@@ -5,6 +5,9 @@ package org.signalml.app.view.element;
 
 import java.awt.Component;
 import java.awt.Container;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -18,12 +21,17 @@ import org.springframework.context.support.MessageSourceAccessor;
  * 
  * @author Piotr Szachewicz
  */
-public abstract class AbstractSignalMLPanel extends JPanel {
+public abstract class AbstractSignalMLPanel extends JPanel implements PropertyChangeListener {
 
 	/**
 	 * the {@link MessageSourceAccessor source} of messages (labels)
 	 */
 	protected MessageSourceAccessor messageSource;
+
+	/**
+	 * PropertyChangeSupport to fire property changes when needed.
+	 */
+	private PropertyChangeSupport propertyChangeSupport;
 
 	/**
 	 * Constructor.
@@ -32,6 +40,7 @@ public abstract class AbstractSignalMLPanel extends JPanel {
 	 */
 	public AbstractSignalMLPanel(MessageSourceAccessor messageSource) {
 		this.messageSource = messageSource;
+		propertyChangeSupport = new PropertyChangeSupport(this);
 	}
 
 	/**
@@ -79,6 +88,21 @@ public abstract class AbstractSignalMLPanel extends JPanel {
 		);
 
 		setBorder(cb);
+	}
+
+	@Override
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
+		propertyChangeSupport.addPropertyChangeListener(listener);
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+	}
+
+	@Override
+	protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
+		if (propertyChangeSupport != null)
+			propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
 	}
 
 }

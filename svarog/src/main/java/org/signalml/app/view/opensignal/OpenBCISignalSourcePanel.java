@@ -69,7 +69,8 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 	@Override
 	protected JPanel createRightColumnPanel() {
 		JPanel rightColumnPanel = new JPanel(new BorderLayout());
-		rightColumnPanel.add(getSignalParametersPanel(), BorderLayout.CENTER);
+		rightColumnPanel.add(getSignalParametersPanel(), BorderLayout.NORTH);
+		rightColumnPanel.add(getEegSystemSelectionPanel(), BorderLayout.CENTER);
 		rightColumnPanel.add(getMonitorRecordingPanel(), BorderLayout.SOUTH);
 		return rightColumnPanel;
 	}
@@ -85,6 +86,7 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 
 		getMultiplexerConnectionPanel().fillPanelFromModel(currentModel);
 		signalParametersPanel.fillPanelFromModel(currentModel);
+		getEegSystemSelectionPanel().setEegSystem(getEegSystemSelectionPanel().getSelectedEegSystem());
 
         }
 
@@ -100,6 +102,7 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 		descriptor.setJmxClient(viewerElementManager.getJmxClient());
 		descriptor.setTagClient(viewerElementManager.getTagClient());
                 descriptor.setSignalSource(SignalSource.OPENBCI);
+		descriptor.setEegSystem(getEegSystemSelectionPanel().getSelectedEegSystem());
 
 		getMonitorRecordingPanel().fillModelFromPanel(descriptor);
 		getTagPresetSelectionPanel().fillModelFromPanel(descriptor);
@@ -155,7 +158,7 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 			setConnected(false);
 		}
 		else
-			super.propertyChange(evt);
+			forwardPropertyChange(evt);
 	}
 
 	@Override

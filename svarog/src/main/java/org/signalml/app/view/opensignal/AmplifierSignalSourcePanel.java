@@ -93,7 +93,8 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
         protected JPanel createRightColumnPanel() {
 
                 JPanel rightColumnPanel = new JPanel(new BorderLayout());
-                rightColumnPanel.add(getSignalParametersPanel(), BorderLayout.CENTER);
+                rightColumnPanel.add(getSignalParametersPanel(), BorderLayout.NORTH);
+		rightColumnPanel.add(getEegSystemSelectionPanel(), BorderLayout.CENTER);
                 rightColumnPanel.add(getMonitorRecordingPanel(), BorderLayout.PAGE_END);
                 return rightColumnPanel;
         }
@@ -206,6 +207,7 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
                 getChannelSelectPanel().fillPanelFromModel(descriptor);
                 getAmplifierSelectionPanel().fillPanelFromModel(descriptor, omitAmpList);
 		getTagPresetSelectionPanel().fillModelFromPanel(descriptor.getOpenMonitorDescriptor());
+		getEegSystemSelectionPanel().setEegSystem(getEegSystemSelectionPanel().getSelectedEegSystem());
                 
                 currentDescriptor = descriptor;
         }
@@ -226,6 +228,7 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
                 descriptor.getOpenMonitorDescriptor().setSignalSource(SignalSource.AMPLIFIER);
                 descriptor.getOpenMonitorDescriptor().setMinimumValue(-1000f);
                 descriptor.getOpenMonitorDescriptor().setMaximumValue(1000f);
+		descriptor.getOpenMonitorDescriptor().setEegSystem(getEegSystemSelectionPanel().getSelectedEegSystem());
         }
 
         /**

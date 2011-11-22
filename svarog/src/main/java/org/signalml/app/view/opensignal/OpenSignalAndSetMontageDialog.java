@@ -6,13 +6,14 @@ package org.signalml.app.view.opensignal;
 
 import java.awt.Window;
 import javax.swing.JComponent;
+import org.signalml.app.config.preset.EegSystemsPresetManager;
 import org.signalml.app.model.AmplifierConnectionDescriptor;
 import org.signalml.app.model.OpenDocumentDescriptor;
 import org.signalml.app.model.OpenSignalDescriptor;
 import org.signalml.app.view.ViewerElementManager;
+import org.signalml.app.view.montage.EegSystemSelectionPanel;
 import org.signalml.app.view.montage.SignalMontageDialog;
 import org.signalml.domain.montage.Montage;
-import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
@@ -86,7 +87,16 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 		if (model instanceof Montage) {
-			super.fillDialogFromModel(model);
+			Montage montage = (Montage) model;
+
+			EegSystemSelectionPanel eegSystemPanel =
+				signalSourcePanel.getCurrentSignalSourcePanel().getEegSystemSelectionPanel();
+			String eegSystemName = montage.getEegSystemName();
+			if (eegSystemName != null && !eegSystemName.isEmpty() &&
+					eegSystemName.compareTo(this.getCurrentMontage().getEegSystemName()) != 0)
+				eegSystemPanel.setEegSystemByName(montage.getEegSystemName());
+
+			super.fillDialogFromModel(montage);
 		}
 		else if (model instanceof OpenDocumentDescriptor) {
 			OpenDocumentDescriptor openDocumentDescriptor = (OpenDocumentDescriptor) model;

@@ -11,7 +11,10 @@ import java.beans.PropertyChangeSupport;
 import javax.swing.ComboBoxModel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import org.signalml.app.config.preset.EegSystemsPresetManager;
 import org.signalml.app.view.ViewerElementManager;
+import org.signalml.app.view.montage.EegSystemSelectionPanel;
+import org.signalml.domain.montage.system.EegSystem;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
@@ -41,6 +44,14 @@ abstract public class AbstractSignalSourcePanel extends JPanel implements Proper
 	 * amplifier).
 	 */
         private SignalSourceSelectionPanel signalSourceSelectionPanel;
+	/**
+	 * The panel for selecting the currently used EEG system.
+	 */
+	protected EegSystemSelectionPanel eegSystemSelectionPanel;
+	/**
+	 * A preset manager which manages the available {@link EegSystem EEG systems}.
+	 */
+	private EegSystemsPresetManager eegSystemsPresetManager;
 
 	/**
 	 * Constructor.
@@ -50,6 +61,7 @@ abstract public class AbstractSignalSourcePanel extends JPanel implements Proper
         public AbstractSignalSourcePanel(MessageSourceAccessor messageSource, ViewerElementManager viewerElementManager) {
                 this.messageSource = messageSource;
                 this.viewerElementManager = viewerElementManager;
+		this.eegSystemsPresetManager = viewerElementManager.getEegSystemsPresetManager();
                 createInterface();
         }
 
@@ -120,6 +132,16 @@ abstract public class AbstractSignalSourcePanel extends JPanel implements Proper
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
+		forwardPropertyChange(evt);
+	}
+
+	/**
+	 * Sends the received {@link PropertyChangeEvent} changing only
+	 * the {@link PropertyChangeEvent#source} of the property to this
+	 * panel.
+	 * @param evt the event to be forwarded
+	 */
+	protected void forwardPropertyChange(PropertyChangeEvent evt) {
 		PropertyChangeEvent newEvent = new PropertyChangeEvent(this, evt.getPropertyName(), null, evt.getNewValue());
 		propertyChangeSupport.firePropertyChange(newEvent);
 	}
@@ -159,5 +181,17 @@ abstract public class AbstractSignalSourcePanel extends JPanel implements Proper
 	 * @param samplingFrequency the sampling frequency to be set
 	 */
 	abstract public void setSamplingFrequency(float samplingFrequency);
+
+	/**
+	 * Returns the panel for selecting the currently used {@link EegSystem
+	 * EEG system}.
+	 * @return the EEG system selection panel
+	 */
+	protected EegSystemSelectionPanel getEegSystemSelectionPanel() {
+		if (eegSystemSelectionPanel == null) {
+			eegSystemSelectionPanel = new EegSystemSelectionPanel(messageSource, eegSystemsPresetManager, this);
+		}
+		return eegSystemSelectionPanel;
+	}
 
 }

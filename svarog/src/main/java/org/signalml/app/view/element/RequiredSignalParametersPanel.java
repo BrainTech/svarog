@@ -109,7 +109,7 @@ public class RequiredSignalParametersPanel extends JPanel implements FocusListen
 
 		CompoundBorder cb = new CompoundBorder(
 		        new TitledBorder(messageSource.getMessage("signalParameters.requiredSignalParameters")),
-		        new EmptyBorder(3,3,3,3)
+		        new EmptyBorder(2,2,2,2)
 		);
 
 		setBorder(cb);

@@ -19,6 +19,7 @@ import org.signalml.app.model.OpenFileSignalDescriptor;
 import org.signalml.app.model.OpenMonitorDescriptor;
 import org.signalml.app.model.OpenSignalDescriptor;
 import org.signalml.app.view.ViewerElementManager;
+import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
@@ -125,6 +126,9 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 			SignalSource newSignalSource = (SignalSource) evt.getNewValue();
 			showPanelForSignalSource(newSignalSource);
 			firePropertyChange(SignalSourceSelectionPanel.SIGNAL_SOURCE_SELECTION_CHANGED_PROPERTY, null, newSignalSource);
+
+			EegSystem eegSystem = getCurrentSignalSourcePanel().getEegSystemSelectionPanel().getSelectedEegSystem();
+			firePropertyChange(AbstractSignalParametersPanel.EEG_SYSTEM_PROPERTY, null, eegSystem);
 		}
 		else if (propertyName.equals(AbstractSignalParametersPanel.NUMBER_OF_CHANNELS_PROPERTY) ||
 			propertyName.equals(AbstractSignalParametersPanel.SAMPLING_FREQUENCY_PROPERTY) ||
@@ -133,7 +137,8 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 			) {
 			Object source = evt.getSource();
 			SignalSource selectedSignalSource = getSelectedSignalSource();
-			if ( (source == fileSignalSourcePanel && selectedSignalSource.isFile()) ||
+
+			if ((source == fileSignalSourcePanel && selectedSignalSource.isFile()) ||
 				(source == openBCISignalSourcePanel && selectedSignalSource.isOpenBCI()) ||
 				source == amplifierSignalSourcePanel && selectedSignalSource.isAmplifier())
 				firePropertyChange(propertyName, 0, evt.getNewValue());

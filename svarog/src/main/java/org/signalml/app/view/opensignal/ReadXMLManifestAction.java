@@ -122,6 +122,10 @@ public class ReadXMLManifestAction extends AbstractSignalMLAction {
                         }
 
 			parentSignalParametersPanel.fillPanelFromModel(rawSignalDescriptor);
+
+			String eegSystemName = rawSignalDescriptor.getEegSystemName();
+			parentSignalParametersPanel.fireEegSystemChanged(eegSystemName);
+
 		} catch (IOException ex) {
 			Logger.getLogger(ReadXMLManifestAction.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (SignalMLException ex) {
