@@ -150,20 +150,54 @@
 				<version>1.6</version>
 				<executions>
 					<execution>
-						<id>generate-sources</id>
+						<id>generate-sources-check</id>
 						<phase>generate-sources</phase>
 						<configuration>
 							<target>
-								<mkdir dir="${generated_sources_dir}"/>
-								<exec executable="${protobuf.protoc}" failonerror="true">
+								<echo message="checking for ${protobuf.protoc}" />
+
+								<exec executable="${protobuf.protoc}"
+								      failifexecutionfails="false"
+								      outputproperty="protobuf.protoc.version.output"
+								      resultproperty="protobuf.protoc.version.result">
+									<arg value="--version" />
+								</exec>
+								<condition property="protobuf.protoc.available"
+                                                                           value="${protobuf.protoc}"
+                                                                           else="true">
+                                                                        <!-- I seems very hard to do a conditional compilation. Let's
+                                                                             then do a fake compilation instead. -->
+
+                                                                        <!-- protoc returns 1 on success, how lame -->
+									<equals arg1="${protobuf.protoc.version.result}" arg2="1" />
+								</condition>
+
+								<echo message="protobuf.protoc.version.result=${protobuf.protoc.version.result}" />
+								<echo message="protobuf.protoc.version.output=${protobuf.protoc.version.output}" />
+                                                                <echo message="protobuf.protoc.available=${protobuf.protoc.available}" />
+
+                                                                <mkdir dir="${generated_sources_dir}" />
+                                                                <exec executable="${protobuf.protoc.available}" failonerror="true">
 									<arg value="-I" />
 									<arg value="${protobuf.source_dir}" />
 									<arg value="--java_out=${generated_sources_dir}"/>
 									<arg value="${protobuf.source_dir}/${protobuf.proto_file}" />
 								</exec>
+                                                        </target>
+                                                </configuration>
+                                                <goals>
+							<goal>run</goal>
+						</goals>
+                                        </execution>
 
-								<java classname="multiplexer.jmx.tools.CompileConstants">
-									<arg value="-input"/>
+					<execution>
+						<id>generate-sources-compile</id>
+                                                <phase>compile</phase>
+                                                <configuration>
+                                                        <target>
+                                                                <java classname="multiplexer.jmx.tools.CompileConstants"
+                                                                      failonerror="true">
+                                                                        <arg value="-input"/>
 									<arg value="${protobuf.source_dir}/${protobuf.rules_file}"/>
 									<arg value="-outdir"/>
 									<arg value="${generated_sources_dir}/org/signalml/multiplexer/protocol"/>
@@ -172,12 +206,12 @@
 									<arg value="-package"/>
 									<arg value="org.signalml.multiplexer.protocol"/>
 								</java>
-							</target>
-						</configuration>
-						<goals>
+                                                        </target>
+                                                </configuration>
+                                                <goals>
 							<goal>run</goal>
 						</goals>
-					</execution>
+                                        </execution>
 
 					<execution>
 						<id>git-describe</id>
@@ -207,7 +241,7 @@
 					</execution>
 
 					<execution>
-						<id>compile</id>
+						<id>print-classpath</id>
 						<phase>compile</phase>
 						<configuration>
 							<target>
