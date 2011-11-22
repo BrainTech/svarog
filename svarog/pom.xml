@@ -27,6 +27,8 @@
 		<generated_sources_dir>${project.build.directory}/generated-sources</generated_sources_dir>
 		<generated_resources_dir>${project.build.directory}/generated-resources</generated_resources_dir>
 
+		<git.git>git</git.git>
+
 		<multiplexer.jmx.version>0.9.1</multiplexer.jmx.version>
 		<springframework.version>2.0.7</springframework.version>
 	</properties>
@@ -218,7 +220,7 @@
 						<phase>generate-resources</phase>
 						<configuration>
 							<target>
-								<exec executable="git"
+								<exec executable="${git.git}"
 								      outputproperty="git-describe.output"
 								      resultproperty="git-describe.result">
 									<arg value="describe" />
