@@ -3,7 +3,6 @@ package org.signalml.plugin.loader;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -65,10 +64,9 @@ public class PluginLoaderLo extends java.net.URLClassLoader {
             return clazz;
 
         // Class not found, search parent plugins...
-        log.debug("PlugIn.findP: " + name + " / " + this);
-        List<PluginHead> pp = pluginHead.getDependencies();
+        log.debug("searching parent plugins for class " + name);
 
-        for (PluginHead ph : pp) {
+        for (PluginHead ph : pluginHead.getDependencies()) {
             PluginLoaderLo pl = ph.getLoader();
 
             try {
@@ -83,7 +81,7 @@ public class PluginLoaderLo extends java.net.URLClassLoader {
         }        
 
         // Lookup this JAR file URL:
-        log.debug("PlugIn.findL: " + name + " / " + this);
+        log.debug("checking in JAR for " + name);
         clazz = super.findClass(name);
         store(clazz, name);
         return clazz;
