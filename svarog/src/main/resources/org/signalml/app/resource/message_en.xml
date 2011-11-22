@@ -830,15 +830,15 @@
 	<entry key="error.sourceMontageTable.sourceChannelNotEditable">ZEROs and ONEs channels cannot be edited.</entry>
 
 	<entry key="signalMontage.title">Signal montage</entry>
-
+	<entry key="signalMontage.montageTabTitle">Montage</entry>
 	<entry key="signalMontage.channelsTabTitle">Channels</entry>
-	<entry key="signalMontage.visualTabTitle">Reference editor</entry>
+	<entry key="signalMontage.visualTabTitle">Reference GUI</entry>
 	<entry key="signalMontage.matrixTabTitle">Reference matrix</entry>
 	<entry key="signalMontage.filtersTabTitle">Filters</entry>
 	<entry key="signalMontage.miscellaneousTabTitle">Miscellaneous</entry>
 
 	<entry key="signalMontage.editDescription">Edit description</entry>
-	<entry key="signalMontage.chooseGenerator">Choose generator</entry>
+	<entry key="signalMontage.chooseGenerator">Choose montage generator</entry>
 	<entry key="signalMontage.selectEegSystem">Select EEG system</entry>
 	<entry key="signalMontage.currentEEGSystem">Current EEG system</entry>
 	<entry key="signalMontage.generator">Generator</entry>

@@ -93,9 +93,12 @@ public class AmplifierSignalSourcePanel extends AbstractMonitorSourcePanel {
         protected JPanel createRightColumnPanel() {
 
                 JPanel rightColumnPanel = new JPanel(new BorderLayout());
-                rightColumnPanel.add(getSignalParametersPanel(), BorderLayout.NORTH);
-		rightColumnPanel.add(getEegSystemSelectionPanel(), BorderLayout.CENTER);
-                rightColumnPanel.add(getMonitorRecordingPanel(), BorderLayout.PAGE_END);
+                rightColumnPanel.add(getSignalParametersPanel(), BorderLayout.CENTER);
+
+		JPanel lowerPanel = new JPanel(new BorderLayout());
+		lowerPanel.add(getEegSystemSelectionPanel(), BorderLayout.NORTH);
+                lowerPanel.add(getMonitorRecordingPanel(), BorderLayout.SOUTH);
+		rightColumnPanel.add(lowerPanel, BorderLayout.SOUTH);
                 return rightColumnPanel;
         }
 
