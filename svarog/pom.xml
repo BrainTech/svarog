@@ -194,7 +194,7 @@
 
 					<execution>
 						<id>generate-sources-compile</id>
-                                                <phase>compile</phase>
+                                                <phase>generate-sources</phase>
                                                 <configuration>
                                                         <target>
                                                                 <java classname="multiplexer.jmx.tools.CompileConstants"
