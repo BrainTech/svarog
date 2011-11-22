@@ -4,8 +4,8 @@
 
 package org.signalml.app.view.dialog;
 
-import static org.signalml.app.SvarogApplication._;
-import static org.signalml.app.SvarogApplication._R;
+import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.SvarogI18n._R;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Point;

@@ -4,7 +4,7 @@
 
 package org.signalml.app.method.bookaverage;
 
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 import org.signalml.app.method.ApplicationMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.MethodPresetManager;

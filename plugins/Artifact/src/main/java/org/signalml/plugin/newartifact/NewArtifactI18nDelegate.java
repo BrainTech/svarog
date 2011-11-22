@@ -1,6 +1,5 @@
 package org.signalml.plugin.newartifact;
 
-import org.signalml.plugin.export.PluginAuth;
 import org.signalml.plugin.export.SvarogAccess;
 import org.springframework.context.MessageSourceResolvable;
 
@@ -10,13 +9,10 @@ import org.springframework.context.MessageSourceResolvable;
  * @author Stanislaw Findeisen (Eisenbits)
  */
 public class NewArtifactI18nDelegate {
-	private static final String BundleName = "org.signalml.plugin.newartifact.i18n.I18nBundle";
-	private SvarogAccess svarogAccess;
-	private PluginAuth pluginAuth;
+	private final SvarogAccess svarogAccess;
 
-	protected NewArtifactI18nDelegate(SvarogAccess sa, PluginAuth auth) {
+	protected NewArtifactI18nDelegate(SvarogAccess sa) {
 		this.svarogAccess = sa;
-		this.pluginAuth = auth;
 	}
 
 	/**
@@ -26,7 +22,7 @@ public class NewArtifactI18nDelegate {
 	 * @return the translated message
 	 */
 	public String _(String msg) {
-		return svarogAccess.getI18nAccess().translate(pluginAuth, BundleName, msg);
+		return svarogAccess.getI18nAccess().translate(msg);
 	}
 
 	/**
@@ -37,7 +33,7 @@ public class NewArtifactI18nDelegate {
 	 * @return the translated message
 	 */
 	public String _R(String msg, Object ... arguments) {
-		return svarogAccess.getI18nAccess().translateR(pluginAuth, BundleName, msg, arguments);
+		return svarogAccess.getI18nAccess().translateR(msg, arguments);
 	}
 
 	/**

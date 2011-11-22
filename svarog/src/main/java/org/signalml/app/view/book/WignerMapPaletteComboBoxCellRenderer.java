@@ -32,12 +32,4 @@ public class WignerMapPaletteComboBoxCellRenderer extends DefaultListCellRendere
 		// else leave text put by superclass
 		return renderer;
 	}
-
-	/**
-	 * Returns the {@link SvarogAccessI18nImpl} instance.
-	 * @return the {@link SvarogAccessI18nImpl} singleton instance
-	 */
-	protected org.signalml.app.SvarogI18n getSvarogI18n() {
-		return org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance();
-	}
 }

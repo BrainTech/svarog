@@ -352,9 +352,13 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	 */
 	private ArrayList<Action> actionsToMainSignalToolbar = new ArrayList<Action>();
 
-    protected GUIAccessImpl(PluginAccessClass parent) {
-        super(parent);
-    }
+	private GUIAccessImpl() { }
+
+	private static final GUIAccessImpl _instance = new GUIAccessImpl();
+
+	protected static GUIAccessImpl getInstance() {
+		return _instance;
+	}
 	
 	/* (non-Javadoc)
 	 * @see org.signalml.plugin.export.PluginAccessGUI#addButtonToToolsMenu(javax.swing.AbstractAction)

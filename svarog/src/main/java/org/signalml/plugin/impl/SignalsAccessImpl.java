@@ -3,7 +3,7 @@
  */
 package org.signalml.plugin.impl;
 
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 import java.awt.Window;
 import java.io.File;
 import java.io.IOException;
@@ -100,9 +100,13 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	 */
 	private ActionFocusManager focusManager;
 	
-    protected SignalsAccessImpl(PluginAccessClass parent) {
-        super(parent);
-    }
+	private SignalsAccessImpl() { }
+
+	private static final SignalsAccessImpl _instance = new SignalsAccessImpl();
+
+	protected static SignalsAccessImpl getInstance() {
+		return _instance;
+	}
 	
 	/**
 	 * Returns the output of signal samples.
@@ -781,7 +785,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 		if (!codecFile.canRead()) throw new IOException("can not access file");
 		SignalMLCodec codec;
 		try {
-			codec = new XMLSignalMLCodec(codecFile, getParent().getConfigAccess().getProfileDirectory());
+			codec = new XMLSignalMLCodec(codecFile, ConfigAccessImpl.getInstance().getProfileDirectory());
 		} catch (XMLCodecException e) {
 			throw new IOException("failed to read codec");
 		}

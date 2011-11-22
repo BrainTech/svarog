@@ -155,9 +155,13 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 	 */
 	private HashMap<SignalView, Tag> activeTags = new HashMap<SignalView, Tag>();
 	
-    public ChangeSupportImpl(PluginAccessClass parent) {
-        super(parent);
-    }
+	private ChangeSupportImpl() { }
+
+	private static final ChangeSupportImpl _instance = new ChangeSupportImpl();
+
+	public static ChangeSupportImpl getInstance() {
+		return _instance;
+	}
     
 	/**
 	 * Informs listeners that focus changed, that is:
@@ -284,7 +288,7 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 		
 		
 		if (document instanceof TagDocument || document instanceof SignalDocument){
-			ChangeSupportDocumentImpl tagDocumentListener = new ChangeSupportDocumentImpl(getParent());
+			ChangeSupportDocumentImpl tagDocumentListener = new ChangeSupportDocumentImpl();
 			tagDocumentListener.setViewerElementManager(getViewerElementManager());
 			
 			if (document instanceof TagDocument){

@@ -57,9 +57,7 @@ public class ChangeSupportDocumentImpl extends AbstractAccess implements TagList
 	 */
 	protected ArrayList<SvarogTagStyleListener> tagStyleListeners = new ArrayList<SvarogTagStyleListener>();
 	
-    protected ChangeSupportDocumentImpl(PluginAccessClass parent) {
-        super(parent);
-    }
+	protected ChangeSupportDocumentImpl() { }
 
 	/**
 	 * Adds a {@link SvarogTagListener} to the list of tag listeners.

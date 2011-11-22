@@ -4,7 +4,7 @@
 
 package org.signalml.app.action;
 
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.awt.event.ActionEvent;

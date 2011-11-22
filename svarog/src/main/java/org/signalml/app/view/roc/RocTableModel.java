@@ -4,7 +4,7 @@
 
 package org.signalml.app.view.roc;
 
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 import javax.swing.table.AbstractTableModel;
 
 import org.signalml.domain.roc.RocData;
@@ -80,7 +80,7 @@ public class RocTableModel extends AbstractTableModel {
 		else if (column == cnt-1) {
 			return _("TP rate");
 		} else {
-			return getSvarogI18n().getMessage(rocData.getParameterAt(column-1));
+			return rocData.getParameterAt(column-1).getDefaultMessage();
 		}
 
 	}
@@ -127,13 +127,5 @@ public class RocTableModel extends AbstractTableModel {
 			return rocData.getParameterValueAt(columnIndex-1, rowIndex);
 		}
 
-	}
-
-	/**
-	 * Returns the {@link SvarogAccessI18nImpl} instance.
-	 * @return the {@link SvarogAccessI18nImpl} singleton instance
-	 */
-	protected org.signalml.app.SvarogI18n getSvarogI18n() {
-		return org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance();
 	}
 }

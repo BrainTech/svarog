@@ -2,7 +2,7 @@ package org.signalml.app;
 
 import java.awt.Window;
 
-import org.signalml.app.logging.SvarogLogger;
+import org.apache.log4j.Logger;
 import org.signalml.app.view.dialog.ErrorsDialog;
 
 /**
@@ -13,6 +13,7 @@ import org.signalml.app.view.dialog.ErrorsDialog;
  * @author Stanislaw Findeisen (Eisenbits)
  */
 public class SvarogExceptionHandler implements java.lang.Thread.UncaughtExceptionHandler {
+    protected static final Logger log = Logger.getLogger(SvarogExceptionHandler.class);
 
     private static SvarogExceptionHandler instance = null;
     private static boolean installed = false;
@@ -29,7 +30,7 @@ public class SvarogExceptionHandler implements java.lang.Thread.UncaughtExceptio
                 if (!installed) {
                     Thread.setDefaultUncaughtExceptionHandler(getSharedInstance());
                     installed = true;
-                    SvarogLogger.getSharedInstance().debug("SvarogExceptionHandler successfully installed!");
+                    log.debug("SvarogExceptionHandler successfully installed!");
                 }
             }
         }
@@ -54,19 +55,14 @@ public class SvarogExceptionHandler implements java.lang.Thread.UncaughtExceptio
     }
 
     protected void handleAWT(Throwable t) {
-        SvarogLogger.getSharedInstance().error("AWT exception handler: " + t);
+        log.error("AWT exception handler: " + t);
         t.printStackTrace();
         displayUserMessage(t);
     }
 
-    protected void handle(Thread t, Throwable e) {
-        SvarogLogger.getSharedInstance().error("uncaught exception [" + e + "] in thread [" + (t.getId()) + "/" + (t.getName()) + "]");
-        e.printStackTrace();
-        displayUserMessage(e);
-    }
-
     @Override
     public void uncaughtException(Thread t, Throwable e) {
-        handle(t, e);
+        log.error("uncaught exception in thread [" + (t.getId()) + "/" + (t.getName()) + "]", e);
+        displayUserMessage(e);
     }
 }

@@ -4,7 +4,7 @@
 
 package org.signalml.domain.book;
 
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 
 import org.signalml.app.view.I18nMessage;
 

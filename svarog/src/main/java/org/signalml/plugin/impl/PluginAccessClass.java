@@ -1,10 +1,11 @@
 package org.signalml.plugin.impl;
 
 import java.util.HashMap;
+import java.util.MissingResourceException;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.view.ViewerElementManager;
-import org.signalml.plugin.export.PluginAuth;
+import org.signalml.app.SvarogI18n;
 import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.change.SvarogAccessChangeSupport;
 import org.signalml.plugin.export.config.SvarogAccessConfig;
@@ -33,99 +34,65 @@ public class PluginAccessClass implements SvarogAccess {
 	private static final Logger logger = Logger.getLogger(PluginAccessClass.class);
 	
 	/**
-	 * the unique shared instance of this class
-	 */
-	private static PluginAccessClass sharedInstance = null;
-
-	/**
 	 * the manager of Svarog elements
 	 */
-	private ViewerElementManager manager;
+	private static ViewerElementManager manager = null;
 	
-	private SvarogAccessI18nImpl i18nAccessImpl;
+	private SvarogI18n i18nAccessImpl;
 
 	private SvarogAccessResourcesImpl resourcesAccessImpl;
 	
 	/**
 	 * access to GUI features of Svarog
 	 */
-	protected GUIAccessImpl guiAccess;
+	protected static final GUIAccessImpl guiAccess = GUIAccessImpl.getInstance();
+
 	
 	/** Svarog methods and tasks facade. */
-	private MethodAccessImpl methodAccessImpl;
+	private static final MethodAccessImpl methodAccessImpl = MethodAccessImpl.getInstance();
 	
 	/** Svarog configuration facade. */
-	private ConfigAccessImpl configAccessImpl;
+	private static final ConfigAccessImpl configAccessImpl = ConfigAccessImpl.getInstance();
 	
 	/**
 	 * access to ordinary features of Svarog
 	 */
-	private SignalsAccessImpl signalsAccess;
+	private static final SignalsAccessImpl signalsAccess = SignalsAccessImpl.getInstance();
 	/**
 	 * access to listen on changes in Svarog
 	 */
-	private ChangeSupportImpl changeSupport;
+	private static final ChangeSupportImpl changeSupport = ChangeSupportImpl.getInstance();
 
 	/**
 	 * The plugin map.
 	 */
-	private HashMap<PluginAuth,PluginHead> pluginMap = new HashMap<PluginAuth,PluginHead>();
+	private static HashMap<Object, PluginHead> pluginMap
+		= new HashMap<Object, PluginHead>();
 	
 	/**
 	 * Constructor. Creates child accesses.
 	 */
-	private PluginAccessClass(){
-		guiAccess = new GUIAccessImpl(this);
-		methodAccessImpl = new MethodAccessImpl(this);
-		configAccessImpl = new ConfigAccessImpl(this);
-		signalsAccess = new SignalsAccessImpl(this);
-		changeSupport = new ChangeSupportImpl(this);
-		i18nAccessImpl = SvarogAccessI18nImpl.getInstance();
-		i18nAccessImpl.setPluginAccessClass(this);
-		resourcesAccessImpl = SvarogAccessResourcesImpl.getInstance();
-		resourcesAccessImpl.setPluginAccessClass(this);
-	}
-	
-	/**
-	 * Returns the shared instance of this class.
-	 * @return the shared instance of this class
-	 */
-	public static PluginAccessClass getSharedInstance()
-	{
-		if (sharedInstance == null) {
-		    synchronized (PluginAccessClass.class) {
-		        if (sharedInstance == null)
-		            sharedInstance = new PluginAccessClass();
-		    }
+	public PluginAccessClass(PluginHead head){
+		Class klass = head.getPluginObj().getClass();
+		try {
+			this.i18nAccessImpl = new SvarogI18n(klass);
+		} catch(MissingResourceException e) {
+			this.i18nAccessImpl = null;
 		}
 
-		return sharedInstance;
+		this.resourcesAccessImpl = new SvarogAccessResourcesImpl(klass);
 	}
 	
 	/**
 	 * Adds given plugin to {@link #pluginMap}.
 	 * @param head plugin to add
 	 */
-	public synchronized void addPlugin(PluginHead head) {
-	    PluginAuth auth = head.getPluginAuth();
-	    if (pluginMap.containsKey(auth)) {
-	        throw new IllegalArgumentException("Duplicate plugin auth! (" + (auth.getID()) + ")");
+	public synchronized static void addPlugin(PluginHead head) {
+	    if (pluginMap.containsKey(head)) {
+		    throw new IllegalArgumentException("Duplicate plugin auth! (" + head + ")");
 	    }
-	    pluginMap.put(auth, head);
-	    logger.debug("addPlugin: " + auth + " --> " + head);
-	}
-	
-    /**
-     * Looks up {@link #pluginMap} for the given plugin based on its key.
-     * @param auth plugin key
-     * @return the plugin head found
-     * @throws IllegalArgumentException if there is no mapping for this key
-     */
-	public synchronized PluginHead getPluginHead(PluginAuth auth) {
-	    PluginHead head = pluginMap.get(auth);
-	    if (null != head)
-	        return head;
-	    throw new IllegalArgumentException("No such plugin! (" + auth + ")");
+	    pluginMap.put(head, head);
+	    logger.debug("addPlugin: " + head + " --> " + head);
 	}
 
 	/**
@@ -133,15 +100,16 @@ public class PluginAccessClass implements SvarogAccess {
 	 * @return the implementation of GUI access
 	 */
 	public static GUIAccessImpl getGUIImpl() {
-		return getSharedInstance().guiAccess;
+		return guiAccess;
 	}
 
 	/**
 	 * @param manager the element manager to set
 	 */
-	public void setManager(ViewerElementManager manager) {
+	public static void setManager(ViewerElementManager manager) {
 		try {
-			this.manager = manager;
+			assert(PluginAccessClass.manager == null);
+			PluginAccessClass.manager = manager;
 			signalsAccess.setViewerElementManager(manager);
 			guiAccess.setViewerElementManager(manager);
 			changeSupport.setViewerElementManager(manager);
@@ -157,8 +125,8 @@ public class PluginAccessClass implements SvarogAccess {
 	/**
 	 * @return the element manager
 	 */
-	public ViewerElementManager getManager() {
-		return manager;
+	public static ViewerElementManager getManager() {
+		return PluginAccessClass.manager;
 	}
 
 	/* (non-Javadoc)
@@ -182,8 +150,6 @@ public class PluginAccessClass implements SvarogAccess {
 	 */
 	@Override
 	public SvarogAccessChangeSupport getChangeSupport() {
-		if (changeSupport == null)
-			changeSupport = new ChangeSupportImpl(this);
 		return changeSupport;
 	}
 
@@ -191,31 +157,31 @@ public class PluginAccessClass implements SvarogAccess {
 	 * @param initializationPhase true if it is an initialization phase,
 	 * false otherwise
 	 */
-	public void setInitializationPhaseEnd() {
+	public static void setInitializationPhaseEnd() {
 		guiAccess.setInitializationPhaseEnd();
 	}
 	
 	/**
 	 * Calls {@link ChangeSupportImpl#onClose()}.
 	 */
-	public void onClose(){
+	public static void onClose(){
 		changeSupport.onClose();
 	}
 	
-    @Override
-    public SvarogAccessMethod getMethodAccess() {
-        return methodAccessImpl;
-    }
+	@Override
+	public SvarogAccessMethod getMethodAccess() {
+		return methodAccessImpl;
+	}
 
-    @Override
-    public SvarogAccessConfig getConfigAccess() {
-        return configAccessImpl;
-    }
+	@Override
+	public SvarogAccessConfig getConfigAccess() {
+		return configAccessImpl;
+	}
 
-    @Override
-    public SvarogAccessI18n getI18nAccess() {
-        return i18nAccessImpl;
-    }
+	@Override
+	public SvarogAccessI18n getI18nAccess() {
+		return i18nAccessImpl;
+	}
 
 	@Override
 	public SvarogAccessResources getResourcesAccess() {

@@ -4,8 +4,8 @@
 
 package org.signalml.app.view.dialog;
 
-import static org.signalml.app.SvarogApplication._;
-import static org.signalml.app.SvarogApplication._R;
+import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.SvarogI18n._R;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
@@ -1126,13 +1126,5 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 
 		}
 
-	}
-
-	/**
-	 * Returns the {@link SvarogAccessI18nImpl} instance.
-	 * @return the {@link SvarogAccessI18nImpl} singleton instance
-	 */
-	protected org.signalml.app.SvarogI18n getSvarogI18n() {
-		return org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance();
 	}
 }

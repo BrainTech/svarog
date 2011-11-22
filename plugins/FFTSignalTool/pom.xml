@@ -49,7 +49,7 @@
 
 				<configuration>
 					<poDirectory>${project.build.i18n.resources}</poDirectory>
-					<targetBundle>org.signalml.plugin.fftsignaltool.i18n.I18nBundle</targetBundle>
+					<targetBundle>org.signalml.plugin.fftsignaltool</targetBundle>
 				</configuration>
 			</plugin>
 		</plugins>

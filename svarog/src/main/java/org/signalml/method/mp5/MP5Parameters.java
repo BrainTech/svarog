@@ -6,7 +6,7 @@ package org.signalml.method.mp5;
 
 import java.io.Serializable;
 
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.springframework.validation.Errors;

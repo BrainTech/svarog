@@ -4,7 +4,7 @@
 
 package org.signalml.app.method.booktotag;
 
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 import org.signalml.app.document.BookDocument;
 import org.signalml.app.method.ApplicationMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodManager;

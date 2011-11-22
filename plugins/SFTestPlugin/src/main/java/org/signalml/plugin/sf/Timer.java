@@ -1,6 +1,6 @@
 package org.signalml.plugin.sf;
 
-import org.signalml.app.logging.SvarogLogger;
+import org.apache.log4j.Logger;
 
 /**
  * 
@@ -8,6 +8,8 @@ import org.signalml.app.logging.SvarogLogger;
  *
  */
 class Timer implements java.lang.Runnable {
+    protected static final Logger log = Logger.getLogger(Timer.class);
+
     private int millis;
     
     protected Timer() {
@@ -20,13 +22,11 @@ class Timer implements java.lang.Runnable {
 
     @Override
     public void run() {
-        SvarogLogger sl = SvarogLogger.getSharedInstance();
-
         try {
-            sl.debug("Timer: sleep " + millis);
+            log.debug("sleep " + millis);
             Thread.sleep(millis);
         } catch (InterruptedException e) {
-            sl.debug("Timer: interrupted: " + e);
+            log.debug("interrupted: " + e);
             throw new RuntimeException(e);
         }
     }

@@ -104,7 +104,7 @@ public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentMan
 
 		String documentName = null;
 		if (document instanceof MessageSourceResolvable) {
-			documentName = getSvarogI18n().getMessage((MessageSourceResolvable) document);
+			documentName = ((MessageSourceResolvable) document).getDefaultMessage();
 		} else {
 			documentName = document.toString();
 		}
@@ -270,13 +270,5 @@ public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentMan
 			setSelectedIndex(index);
 
 		}
-	}
-
-	/**
-	 * Returns the {@link SvarogAccessI18nImpl} instance.
-	 * @return the {@link SvarogAccessI18nImpl} singleton instance
-	 */
-	protected org.signalml.app.SvarogI18n getSvarogI18n() {
-		return org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance();
 	}
 }

@@ -4,7 +4,7 @@
 
 package org.signalml.app.document;
 
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 import java.awt.Component;
 import java.awt.Window;
 import java.io.File;

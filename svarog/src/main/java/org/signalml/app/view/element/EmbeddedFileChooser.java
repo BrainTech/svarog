@@ -18,7 +18,7 @@ import org.signalml.app.config.ApplicationConfiguration;
 
 import org.springframework.validation.Errors;
 
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 
 /**
  * File chooser that can be embedded in the panel.

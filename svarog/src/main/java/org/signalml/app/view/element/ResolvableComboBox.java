@@ -54,18 +54,10 @@ public class ResolvableComboBox extends JComboBox {
 		public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 			JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 			if (value instanceof MessageSourceResolvable) {
-				label.setText(getSvarogI18n().getMessage((MessageSourceResolvable) value));
+				label.setText(((MessageSourceResolvable)value).getDefaultMessage());
 			}
 			// else leave text put by superclass
 			return label;
 		}
-	}
-
-	/**
-	 * Returns the {@link SvarogAccessI18nImpl} instance.
-	 * @return the {@link SvarogAccessI18nImpl} singleton instance
-	 */
-	protected org.signalml.app.SvarogI18n getSvarogI18n() {
-		return org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance();
 	}
 }

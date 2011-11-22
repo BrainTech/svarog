@@ -1,7 +1,7 @@
 /* EmbeddedFileChooserFavorites.java created 2011-07-01*/
 package org.signalml.app.view.element;
 
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;

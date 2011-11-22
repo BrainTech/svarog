@@ -3,7 +3,7 @@
  */
 package org.signalml.method.booktotag;
 
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 import java.awt.Color;
 import java.util.Arrays;
 import java.util.LinkedHashSet;

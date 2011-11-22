@@ -3,7 +3,7 @@
  */
 package org.signalml.app.document;
 
-import static org.signalml.app.SvarogApplication._R;
+import static org.signalml.app.SvarogI18n._R;
 import java.beans.IntrospectionException;
 import java.io.File;
 import java.io.IOException;
@@ -186,7 +186,8 @@ public class BookDocument extends AbstractFileDocument {
 
 						String message = "Filter initialization failed";
 						{
-							String exMessage = getSvarogI18n().getMessage(new ResolvableException(ex));
+							String exMessage =
+								new ResolvableException(ex).getDefaultMessage();
 							if (exMessage.length() > 50) {
 								exMessage = exMessage.substring(0, 50) + "...";
 							}

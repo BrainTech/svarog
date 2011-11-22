@@ -1,7 +1,5 @@
 package org.signalml.plugin.export.resources;
 
-import org.signalml.plugin.export.PluginAuth;
-
 import java.io.IOException;
 import javax.swing.ImageIcon;
 
@@ -20,5 +18,5 @@ public interface SvarogAccessResources {
 	 * @param auth plugin authentication object
 	 * @param classpath path to resources
 	 */
-	ImageIcon loadClassPathIcon(PluginAuth auth, String classpath) throws IOException;
+	ImageIcon loadClassPathIcon(String classpath) throws IOException;
 }

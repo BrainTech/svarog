@@ -1,12 +1,14 @@
 package org.signalml.app;
 
 import java.io.FilePermission;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.security.BasicPermission;
 import java.security.Permission;
 import java.util.HashMap;
 import java.util.PropertyPermission;
+import org.apache.log4j.Logger;
 
-import org.signalml.app.logging.SvarogSecurityLogger;
 import org.signalml.util.FastMutableInt;
 import org.signalml.plugin.loader.PluginLoaderHi;
 
@@ -29,6 +31,8 @@ import org.signalml.plugin.loader.PluginLoaderHi;
  * @author Stanislaw Findeisen (Eisenbits)
  */
 public class SvarogSecurityManager extends java.lang.SecurityManager {
+	protected static final Logger log = Logger.getLogger(SvarogSecurityManager.class);
+
 	/** Edit this should you ever rename SvarogApplication. */
 	public static final String S_SvarogApplication = "org.signalml.app.SvarogApplication";
 
@@ -46,7 +50,7 @@ public class SvarogSecurityManager extends java.lang.SecurityManager {
 		final String mode = System.getProperties().getProperty("svarog.security_manager",
 								       "off");
 		if (mode.equals("off")) {
-			SvarogSecurityLogger.getInstance().debug("SvarogSecurityManager is off");
+			log.debug("SvarogSecurityManager is off");
 			return;
 		}
 
@@ -55,15 +59,14 @@ public class SvarogSecurityManager extends java.lang.SecurityManager {
 			enforcing = false;
 		} else {
 			if (!mode.equals("enforcing"))
-				SvarogSecurityLogger.getInstance().error(
-					"svarog.security_manager has invalid value " +
-					"'" + mode + "', ignoring");
+				log.error("svarog.security_manager has invalid value "
+					  + "'" + mode + "', ignoring");
 			enforcing = true;
 		}
 
 		// Force class initialization
 		new FastMutableInt(5);
-		SvarogSecurityLogger.getInstance().debug("SvarogSecurityManager init...");
+		log.debug("SvarogSecurityManager init...");
 		PluginLoaderHi.getInstance();
 
 		// create and install
@@ -118,7 +121,7 @@ public class SvarogSecurityManager extends java.lang.SecurityManager {
 
 			if (pluginLoaderHi.hasLoaded(className)) {
 				// a plugin code frame!
-				// SvarogSecurityLogger.getInstance().debug("PluginCtx: " + className);
+				// log.debug("PluginCtx: " + className);
 				return frame;
 			}
 
@@ -172,7 +175,6 @@ public class SvarogSecurityManager extends java.lang.SecurityManager {
 		final Thread t = Thread.currentThread();
 		boolean permit = true;
 		StackTraceElement frame = null;
-		SvarogSecurityLogger sl = SvarogSecurityLogger.getInstance();
 
 		try {
 			incRecLevel(t);
@@ -216,7 +218,7 @@ public class SvarogSecurityManager extends java.lang.SecurityManager {
 					t.getName() + "]: " + p;
 				if (frame != null)
 					errMsg += "; plugin ctx: " + toString(frame);
-				sl.permissionDenied(t, p, e, frame);
+				permissionDenied(t, p, e, frame);
 				if (this.enforcing)
 					throw new SecurityException(errMsg, e);
 			}
@@ -231,11 +233,36 @@ public class SvarogSecurityManager extends java.lang.SecurityManager {
 	//    public void checkExit(int status) {
 	//        try {
 	//            super.checkExit(status);
-	//            SvarogSecurityLogger.getInstance().debug("checkExit GRANTED: " + status);
+	//            log.debug("checkExit GRANTED: " + status);
 	//        } catch (SecurityException e) {
-	//            SvarogSecurityLogger.getInstance().debug("checkExit GRANTED (2): " + status);
+	//            log.debug("checkExit GRANTED (2): " + status);
 	//        }
 	//    }
+
+
+	/** Used by {@link SvarogSecurityManager} to log security decisions. */
+	protected void permissionDenied(Thread t, Permission p, SecurityException e,
+				     StackTraceElement frame) {
+		String msg = "Permission DENIED [" + (t.getId()) + "/"
+			+ (t.getName()) + "]: " + p + "; plugin ctx: " + frame;
+		if (e != null)
+			msg += "\n" + getExceptionMessage(e);
+		log.warn(msg);
+	}
+
+	/** Used by {@link SvarogSecurityManager} to log security decisions. */
+	protected void permissionGranted(Thread t, Permission p) {
+		log.debug("Permission GRANTED [" + (t.getId()) + "/" + (t.getName()) + "]: " + p);
+	}
+
+	/** Provides an exception string containing the stack trace etc. */
+	protected String getExceptionMessage(Throwable t) {
+		// XXX: wtf?
+		StringWriter ws = new StringWriter();
+		PrintWriter wp = new PrintWriter(ws);
+		t.printStackTrace(wp);
+		return ws.toString();
+	}
 
 	protected String toString(StackTraceElement f) {
 		return f.getClassName() + "#" + f.getMethodName() + "(" + f.getFileName() + ":"

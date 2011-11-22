@@ -4,7 +4,7 @@
 
 package org.signalml.app.method.mp5;
 
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 import java.awt.Window;
 
 import javax.swing.JComponent;

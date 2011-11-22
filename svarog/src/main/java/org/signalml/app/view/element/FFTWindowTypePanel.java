@@ -3,7 +3,7 @@
  */
 package org.signalml.app.view.element;
 
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
@@ -139,7 +139,7 @@ public class FFTWindowTypePanel extends JPanel {
 
 		windowTypeRadioButtons = new JRadioButton[windowTypes.length];
 		for (int i=0; i<windowTypes.length; i++) {
-			windowTypeRadioButtons[i] = new JRadioButton(getSvarogI18n().getMessage(windowTypes[i]));
+			windowTypeRadioButtons[i] = new JRadioButton(windowTypes[i].getDefaultMessage());
 			windowTypeButtonGroup.add(windowTypeRadioButtons[i]);
 			add(windowTypeRadioButtons[i]);
 			windowTypeRadioButtons[i].addItemListener(windowTypeListener);
@@ -256,13 +256,5 @@ public class FFTWindowTypePanel extends JPanel {
 			}
 		}
 
-	}
-
-	/**
-	 * Returns the {@link SvarogAccessI18nImpl} instance.
-	 * @return the {@link SvarogAccessI18nImpl} singleton instance
-	 */
-	protected org.signalml.app.SvarogI18n getSvarogI18n() {
-		return org.signalml.plugin.impl.SvarogAccessI18nImpl.getInstance();
 	}
 }

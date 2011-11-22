@@ -4,7 +4,7 @@
 
 package org.signalml.app.view.element;
 
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 import org.signalml.app.view.opensignal.SignalMLOptionsPanel;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;

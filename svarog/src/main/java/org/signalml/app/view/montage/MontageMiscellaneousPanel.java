@@ -3,7 +3,7 @@
  */
 package org.signalml.app.view.montage;
 
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.FocusAdapter;

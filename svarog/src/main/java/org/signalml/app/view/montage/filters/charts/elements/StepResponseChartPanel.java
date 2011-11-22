@@ -3,7 +3,7 @@
  */
 package org.signalml.app.view.montage.filters.charts.elements;
 
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 
 /**
  * A chart panel used to show the step response of a filter.

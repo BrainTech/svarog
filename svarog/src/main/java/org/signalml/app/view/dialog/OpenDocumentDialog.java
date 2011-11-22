@@ -4,7 +4,7 @@
 
 package org.signalml.app.view.dialog;
 
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -281,9 +281,8 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 
 				int cnt = documentManager.getDocumentCount(ManagedDocumentType.SIGNAL);
 				String[] labels = new String[cnt];
-				for (int i=0; i<cnt; i++) {
-					labels[i] = getSvarogI18n().getMessage((MessageSourceResolvable) documentManager.getDocumentAt(ManagedDocumentType.SIGNAL, i));
-				}
+				for (int i=0; i<cnt; i++)
+					labels[i] = ((MessageSourceResolvable) documentManager.getDocumentAt(ManagedDocumentType.SIGNAL, i)).getDefaultMessage();
 
 				DefaultComboBoxModel documentListModel = new DefaultComboBoxModel(labels);
 

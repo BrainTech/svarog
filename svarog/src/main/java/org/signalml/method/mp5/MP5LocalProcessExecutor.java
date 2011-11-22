@@ -17,7 +17,7 @@ import org.signalml.domain.signal.raw.RawSignalSampleType;
 import org.signalml.domain.signal.raw.RawSignalWriter;
 import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 

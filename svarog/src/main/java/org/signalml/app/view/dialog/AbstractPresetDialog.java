@@ -42,8 +42,8 @@ import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.element.AnyChangeDocumentAdapter;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
-import static org.signalml.app.SvarogApplication._;
-import static org.signalml.app.SvarogApplication._R;
+import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.SvarogI18n._R;
 
 /**
  * Dialog which data can be stored in a {@link Preset preset}.

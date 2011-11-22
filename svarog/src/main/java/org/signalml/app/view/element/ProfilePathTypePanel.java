@@ -3,7 +3,7 @@
  */
 package org.signalml.app.view.element;
 
-import static org.signalml.app.SvarogApplication._;
+import static org.signalml.app.SvarogI18n._;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
