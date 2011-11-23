@@ -21,7 +21,7 @@ public class MontageGenerators implements Preset {
 	 * The name of the EEG system for which these montage generators are
 	 * intended.
 	 */
-	private String eegSystemName;
+	private EegSystemName eegSystemName;
 
 	/**
 	 * The list of {@link IMontageGenerator} that can be used by the
@@ -43,7 +43,7 @@ public class MontageGenerators implements Preset {
 	 * stored in this {@link MontageGenerators} are intended.
 	 * @return the name of the EEG system
 	 */
-	public String getEegSystemName() {
+	public EegSystemName getEegSystemName() {
 		return eegSystemName;
 	}
 

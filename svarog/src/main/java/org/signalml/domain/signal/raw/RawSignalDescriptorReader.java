@@ -15,6 +15,7 @@ import javax.xml.xpath.XPathFactory;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.util.SingleNameSpaceContext;
+import org.signalml.domain.montage.system.EegSystemName;
 import org.signalml.domain.signal.raw.RawSignalDescriptor.SourceSignalType;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
@@ -108,8 +109,12 @@ public class RawSignalDescriptorReader {
 				descriptor.setBlocksPerPage(Integer.parseInt(blocksPerPage));
 			}
 
-			String eegSystemName = path.evaluate(RawSignalDocumentBuilder.EEG_SYSTEM_NAME, rawSignalEl);
-			if (eegSystemName != null && !eegSystemName.isEmpty()) {
+			Element eegSystemNameNode = (Element) path.evaluate(RawSignalDocumentBuilder.EEG_SYSTEM_NAME, rawSignalEl, XPathConstants.NODE);
+			if (eegSystemNameNode != null) {
+				String symbol = path.evaluate(RawSignalDocumentBuilder.EEG_SYSTEM_SYMBOL, eegSystemNameNode);
+				String type = path.evaluate(RawSignalDocumentBuilder.EEG_SYSTEM_TYPE, eegSystemNameNode);
+
+				EegSystemName eegSystemName = new EegSystemName(symbol, type);
 				descriptor.setEegSystemName(eegSystemName);
 			}
 

@@ -13,6 +13,7 @@ import org.signalml.app.view.element.AbstractSignalMLPanel;
 import org.signalml.app.view.opensignal.AbstractSignalParametersPanel;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.system.EegSystem;
+import org.signalml.domain.montage.system.EegSystemName;
 import org.springframework.context.support.MessageSourceAccessor;
 
 /**
@@ -115,9 +116,13 @@ public class EegSystemSelectionPanel extends AbstractSignalMLPanel {
 	 * Sets the EEG system which should be selected in this panel.
 	 * @param name the name of the EEG system to be selected
 	 */
-	public void setEegSystemByName(String name) {
-		EegSystem eegSystem = (EegSystem) eegSystemsPresetManager.getPresetByName(name);
-		setEegSystem(eegSystem);
+	public void setEegSystemByName(EegSystemName name) {
+		EegSystem eegSystem = (EegSystem) eegSystemsPresetManager.getPresetByName(name.getFullName());
+
+		if (eegSystem != null)
+			setEegSystem(eegSystem);
+		else
+			setEegSystem(getSelectedEegSystem());
 	}
 
 	/**

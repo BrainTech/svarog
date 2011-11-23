@@ -17,6 +17,7 @@ import org.signalml.app.model.OpenFileSignalDescriptor;
 import org.signalml.app.view.ViewerElementManager;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.signalml.app.view.element.FileChooserPanel;
+import org.signalml.domain.montage.system.EegSystemName;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 
 /**
@@ -205,7 +206,7 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 			cl.show(cardPanelForSignalParameters, method.toString());
 		} else if (evt.getSource() instanceof SignalParametersPanelForRawSignalFile
 			&& propertyName.equals(AbstractSignalParametersPanel.EEG_SYSTEM_PROPERTY)) {
-			String eegSystemName = evt.getNewValue() == null ? null : evt.getNewValue().toString();
+			EegSystemName eegSystemName = (EegSystemName) (evt.getNewValue() == null ? null : evt.getNewValue());
 			if (eegSystemName != null)
 				getEegSystemSelectionPanel().setEegSystemByName(eegSystemName);
 			else

@@ -2,8 +2,10 @@
 <eegSystems>
 	<presets>
 		<eegSystem>
-			<name>EEG 10_10 Cap33</name>
-			<description></description>
+			<eegSystemName>
+				<eegSystemSymbol>EEG 10_10 Cap33</eegSystemSymbol>
+				<eegSystemType/>
+			</eegSystemName>
 			<electrodes>
 				<eegElectrode>
 					<label>Fp1</label>

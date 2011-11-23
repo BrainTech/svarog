@@ -188,9 +188,8 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 
 	private void setMontageToPanels(Montage montage) {
 
-		if (montage != null && montage.getEegSystemName() != null
-			&& !montage.getEegSystemName().isEmpty()) {
-			EegSystem system = (EegSystem) eegSystemsPresetManager.getPresetByName(montage.getEegSystemName());
+		if (montage != null && montage.getEegSystemName() != null) {
+			EegSystem system = (EegSystem) eegSystemsPresetManager.getPresetByName(montage.getEegSystemFullName());
 			montage.setEegSystem(system);
 		}
 

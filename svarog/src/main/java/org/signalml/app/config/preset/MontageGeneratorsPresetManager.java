@@ -21,7 +21,7 @@ public class MontageGeneratorsPresetManager extends AbstractMultifileRestoreable
 
 	@Override
 	public String[] getDefaultFileNames() {
-		return new String[] { "eeg10_10_cap33.xml", "eeg10_10_cap47.xml"};
+		return new String[]{"eeg10_20_cap19.xml", "eeg10_10_cap33.xml", "eeg10_10_cap47.xml"};
 	}
 
 	@Override
@@ -46,5 +46,4 @@ public class MontageGeneratorsPresetManager extends AbstractMultifileRestoreable
 		Annotations.configureAliases(streamer, EegSystemsPresetManager.class, MontageGenerators.class, IMontageGenerator.class);
 		return streamer;
 	}
-
 }

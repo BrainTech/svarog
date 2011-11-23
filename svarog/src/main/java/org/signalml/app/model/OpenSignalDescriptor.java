@@ -66,7 +66,7 @@ public class OpenSignalDescriptor {
 			RawSignalDescriptor rawSignalDescriptor = openFileSignalDescriptor.getRawSignalDescriptor();
 			EegSystem eegSystem = montage.getEegSystem();
 			if (eegSystem != null && rawSignalDescriptor != null)
-				rawSignalDescriptor.setEegSystemName(eegSystem.getName());
+				rawSignalDescriptor.setEegSystemName(eegSystem.getEegSystemName());
 		}
 	}
 

@@ -23,6 +23,7 @@ import org.signalml.util.Util;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import org.signalml.domain.montage.system.EegElectrode;
 import org.signalml.domain.montage.system.EegSystem;
+import org.signalml.domain.montage.system.EegSystemName;
 
 /**
  * This class represents a source montage.
@@ -48,7 +49,7 @@ public class SourceMontage {
 	 * The name of the {@link EegSystem} used by this SourceMontage.
 	 * It is used only for reading/storing the SourceMontage in files.
 	 */
-	private String eegSystemName;
+	private EegSystemName eegSystemName;
 
         /**
          * a list of SourceChannels in this SourceMontage
@@ -253,7 +254,7 @@ public class SourceMontage {
 			return;
 		}
 		else {
-			eegSystemName = eegSystem.getName();
+			eegSystemName = eegSystem.getEegSystemName();
 		}
 
 		for (SourceChannel sourceChannel: sourceChannels) {
@@ -713,8 +714,14 @@ public class SourceMontage {
 	 * Returns the name of the  {@link EegSystem} used by this Montage.
 	 * @return the name of the  {@link EegSystem} used by this Montage
 	 */
-	public String getEegSystemName() {
+	public EegSystemName getEegSystemName() {
 		return eegSystemName;
+	}
+
+	public String getEegSystemFullName() {
+		if (eegSystemName != null)
+			return eegSystemName.getFullName();
+		return null;
 	}
 
 }

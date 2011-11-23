@@ -191,7 +191,7 @@ public class WorkspaceSignal extends WorkspaceDocument {
 		}
 
 		if (eegSystemsPresetManager != null) {
-			String eegSystemName = montage.getEegSystemName();
+			String eegSystemName = montage.getEegSystemFullName();
 			EegSystem eegSystem = (EegSystem) eegSystemsPresetManager.getPresetByName(eegSystemName);
 			montage.setEegSystem(eegSystem);
 		}

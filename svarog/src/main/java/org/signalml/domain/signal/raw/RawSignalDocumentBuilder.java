@@ -38,6 +38,8 @@ public class RawSignalDocumentBuilder {
 	public static final String LABEL = "rs:label";
 	public static final String CHANNEL_LABELS = "rs:channelLabels";
 	public static final String EEG_SYSTEM_NAME = "rs:eegSystemName";
+	public static final String EEG_SYSTEM_SYMBOL = "rs:eegSystemSymbol";
+	public static final String EEG_SYSTEM_TYPE = "rs:eegSystemType";
 	public static final String BLOCKS_PER_PAGE = "rs:blocksPerPage";
 	public static final String PAGE_SIZE = "rs:pageSize";
 	public static final String BYTE_ORDER = "rs:byteOrder";

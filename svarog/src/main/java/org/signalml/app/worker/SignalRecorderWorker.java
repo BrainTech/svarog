@@ -258,7 +258,7 @@ public class SignalRecorderWorker {
 		rsd.setFirstSampleTimestamp(firstSampleTimestamp);
                 rsd.setIsBackup(isBackup);
 		if (monitorDescriptor.getEegSystem() != null)
-			rsd.setEegSystemName(monitorDescriptor.getEegSystem().getName());
+			rsd.setEegSystemName(monitorDescriptor.getEegSystem().getEegSystemName());
 
 		RawSignalDescriptorWriter descrWriter = new RawSignalDescriptorWriter();
 		descrWriter.writeDocument(rsd, metadataFile);

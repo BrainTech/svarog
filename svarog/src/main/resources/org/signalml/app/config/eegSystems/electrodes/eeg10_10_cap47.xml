@@ -2,8 +2,10 @@
 <eegSystems>
 	<presets>
 		<eegSystem>
-			<name>EEG 10_10 Cap47</name>
-			<description>adults</description>
+			<eegSystemName>
+				<eegSystemSymbol>EEG 10_10 Cap47</eegSystemSymbol>
+				<eegSystemType/>
+			</eegSystemName>
 			<electrodes>
 				<eegElectrode>
 					<label>Fpz</label>

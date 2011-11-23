@@ -191,8 +191,8 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 		try {
 			for (int i = 0; i < channelLabels.length; i++) {
 				currentMontage.setSourceChannelLabelAt(i, channelLabels[i]);
-				currentMontage.setMontageChannelLabelAt(i, channelLabels[i]);
 			}
+			currentMontage.getMontageGenerator().createMontage(currentMontage);
 			openSignalAndSetMontageDialog.fillDialogFromModel(currentMontage);
 		} catch (MontageException ex) {
 			Logger.getLogger(OpenSignalAndSetMontageDialogManager.class.getName()).log(Level.SEVERE, null, ex);

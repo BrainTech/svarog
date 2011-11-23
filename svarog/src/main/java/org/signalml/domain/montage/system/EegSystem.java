@@ -18,15 +18,9 @@ import org.signalml.domain.montage.generators.IMontageGenerator;
 public class EegSystem implements Preset {
 
 	/**
-	 * The name of the EEG system.
+	 * The unique name of this EEG system.
 	 */
-	private String name;
-
-	/**
-	 * The description of the EEG system.
-	 * (Displayed in brackets if defined).
-	 */
-	private String description;
+	private EegSystemName eegSystemName;
 
 	/**
 	 * The list of {@link EegElectrode EEG electrodes} that belong to the
@@ -46,31 +40,13 @@ public class EegSystem implements Preset {
 	public EegSystem() {
 	}
 
-	/**
-	 * Creates an empty EEG system with the given name.
-	 * @param name the name for the EEG system
-	 */
-	public EegSystem(String name) {
-		super();
-		this.name = name;
-	}
-
 	@Override
 	public String getName() {
-		return name;
+		return eegSystemName.getFullName();
 	}
 
 	@Override
 	public void setName(String name) {
-		this.name = name;
-	}
-
-	/**
-	 * Returns the description set for this EEG system.
-	 * @return the description of this EEG system
-	 */
-	public String getDescription() {
-		return description;
 	}
 
 	/**
@@ -116,14 +92,7 @@ public class EegSystem implements Preset {
 
 	@Override
 	public String toString() {
-		StringBuffer str = new StringBuffer();
-		str.append(getName());
-		if (description != null && !description.isEmpty()) {
-			str.append(" (");
-			str.append(description);
-			str.append(")");
-		}
-		return str.toString();
+		return eegSystemName.getFullName();
 	}
 
 	@Override
@@ -132,7 +101,7 @@ public class EegSystem implements Preset {
 		if ( !(obj instanceof EegSystem) ) return false;
 
 		EegSystem other = (EegSystem) obj;
-		if (other.getName().compareTo(this.name) == 0)
+		if (this.eegSystemName.equals(other.eegSystemName))
 			return true;
 		return false;
 
@@ -162,6 +131,15 @@ public class EegSystem implements Preset {
 	 */
 	public void setMontageGenerators(MontageGenerators montageGenerators) {
 		this.montageGenerators = montageGenerators;
+	}
+
+	/**
+	 * Returns the name of the EEG system, uniquely identifying
+	 * this EEG system.
+	 * @return the name of this EEG system
+	 */
+	public EegSystemName getEegSystemName() {
+		return eegSystemName;
 	}
 
 }

@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.awt.GridBagConstraints;
 import org.signalml.app.view.element.EmbeddedFileChooser;
+import org.signalml.domain.montage.system.EegSystemName;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
@@ -143,7 +144,7 @@ public class SignalParametersPanelForRawSignalFile extends AbstractSignalParamet
 	 * the currently selected EEG system..
 	 * @param newEegSystemName the name of the EEG system to be selected
 	 */
-	public void fireEegSystemChanged(String newEegSystemName) {
+	public void fireEegSystemChanged(EegSystemName newEegSystemName) {
 		firePropertyChange(AbstractSignalParametersPanel.EEG_SYSTEM_PROPERTY, null, newEegSystemName);
 	}
 

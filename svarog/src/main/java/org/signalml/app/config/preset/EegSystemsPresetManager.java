@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import org.signalml.domain.montage.generators.IMontageGenerator;
 import org.signalml.domain.montage.system.EegSystem;
+import org.signalml.domain.montage.system.EegSystemName;
 import org.signalml.domain.montage.system.MontageGenerators;
 
 /**
@@ -50,13 +51,25 @@ public class EegSystemsPresetManager extends AbstractPresetManager {
 	protected void matchMontageGeneratorsWithEegSystems(Preset[] eegSystemsPresets, Preset[] montageGeneratorsPresets) {
 		for (Preset preset: eegSystemsPresets) {
 			EegSystem eegSystem = (EegSystem) preset;
-			String eegSystemName = eegSystem.getName().toUpperCase();
+			EegSystemName eegSystemName = ((EegSystem) preset).getEegSystemName();
 
 			for (Preset generatorPreset: montageGeneratorsPresets) {
 				MontageGenerators montageGenerators = (MontageGenerators) generatorPreset;
+				EegSystemName generatorEegSystem = montageGenerators.getEegSystemName();
 
-				String generatorEegSystem = montageGenerators.getEegSystemName().toUpperCase();
-				if (eegSystemName.compareTo(generatorEegSystem) == 0) {
+				if (generatorEegSystem == null || generatorEegSystem.getSymbol() == null)
+					continue;
+
+				String symbol = generatorEegSystem.getSymbol();
+				String type = generatorEegSystem.getType() == null ? null: generatorEegSystem.getType();
+
+				if (eegSystemName.getSymbol().equalsIgnoreCase(symbol)
+						&& (type == null || type.isEmpty() ||
+						type.equalsIgnoreCase(eegSystemName.getType()))) {
+					//if type of the EEG system in the montage generator is NULL then
+					//it is not taken into account while connecting montage generators
+					//with EEG systems - this makes sense for montage generators that fit for
+					//every type of an EEG system.
 					eegSystem.setMontageGenerators(montageGenerators);
 				}
 			}

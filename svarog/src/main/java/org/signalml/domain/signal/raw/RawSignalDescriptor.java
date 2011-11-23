@@ -9,6 +9,7 @@ import java.util.Date;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.util.Arrays;
 import org.signalml.domain.montage.system.EegSystem;
+import org.signalml.domain.montage.system.EegSystemName;
 
 /**
  * This class represents the descriptor of a raw signal.
@@ -112,7 +113,7 @@ public class RawSignalDescriptor {
 	 * The name of the {@link EegSystem EEG system} that is used
 	 * for this signal.
 	 */
-	private String eegSystemName;
+	private EegSystemName eegSystemName;
 
         /**
          * an array of labels of signal channels
@@ -427,7 +428,7 @@ public class RawSignalDescriptor {
 	 * is used for this signal.
 	 * @return the name of the EEG system
 	 */
-	public String getEegSystemName() {
+	public EegSystemName getEegSystemName() {
 		return eegSystemName;
 	}
 
@@ -435,7 +436,7 @@ public class RawSignalDescriptor {
 	 * Sets the name of the {@link EegSystem} that is used for this signal.
 	 * @param eegSystemName the name of the EEG system
 	 */
-	public void setEegSystemName(String eegSystemName) {
+	public void setEegSystemName(EegSystemName eegSystemName) {
 		this.eegSystemName = eegSystemName;
 	}
 

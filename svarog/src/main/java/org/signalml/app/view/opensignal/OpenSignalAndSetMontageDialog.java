@@ -6,8 +6,6 @@ package org.signalml.app.view.opensignal;
 
 import java.awt.Window;
 import javax.swing.JComponent;
-import org.signalml.app.config.preset.EegSystemsPresetManager;
-import org.signalml.app.model.AmplifierConnectionDescriptor;
 import org.signalml.app.model.OpenDocumentDescriptor;
 import org.signalml.app.model.OpenSignalDescriptor;
 import org.signalml.app.view.ViewerElementManager;
@@ -91,9 +89,9 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 
 			EegSystemSelectionPanel eegSystemPanel =
 				signalSourcePanel.getCurrentSignalSourcePanel().getEegSystemSelectionPanel();
-			String eegSystemName = montage.getEegSystemName();
+			String eegSystemName = montage.getEegSystemFullName();
 			if (eegSystemName != null && !eegSystemName.isEmpty() &&
-					eegSystemName.compareTo(this.getCurrentMontage().getEegSystemName()) != 0)
+					eegSystemName.compareTo(this.getCurrentMontage().getEegSystemFullName()) != 0)
 				eegSystemPanel.setEegSystemByName(montage.getEegSystemName());
 
 			super.fillDialogFromModel(montage);

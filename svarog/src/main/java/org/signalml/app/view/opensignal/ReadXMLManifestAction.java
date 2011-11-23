@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.element.EmbeddedFileChooser;
+import org.signalml.domain.montage.system.EegSystemName;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalDescriptorReader;
 import org.signalml.plugin.export.SignalMLException;
@@ -123,7 +124,7 @@ public class ReadXMLManifestAction extends AbstractSignalMLAction {
 
 			parentSignalParametersPanel.fillPanelFromModel(rawSignalDescriptor);
 
-			String eegSystemName = rawSignalDescriptor.getEegSystemName();
+			EegSystemName eegSystemName = rawSignalDescriptor.getEegSystemName();
 			parentSignalParametersPanel.fireEegSystemChanged(eegSystemName);
 
 		} catch (IOException ex) {
