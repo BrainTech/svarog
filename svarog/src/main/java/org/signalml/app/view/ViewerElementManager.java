@@ -34,7 +34,6 @@ import org.signalml.app.action.CloseWindowAction;
 import org.signalml.app.action.EditPreferencesAction;
 import org.signalml.app.action.EditSignalMontageAction;
 import org.signalml.app.action.EditSignalParametersAction;
-import org.signalml.app.action.EditStoredMontagesAction;
 import org.signalml.app.action.EditTagDescriptionAction;
 import org.signalml.app.action.EditTagStylesAction;
 import org.signalml.app.action.EEGLabExportAction;
@@ -371,7 +370,6 @@ public class ViewerElementManager {
 	 */
 	private EditTagStylePresetsAction editTagStylePresetsAction;
 	private EditTagDescriptionAction editTagDescriptionAction;
-	private EditStoredMontagesAction editStoredMontagesAction;
 	private ExportSignalAction exportSignalAction;
 	private ExportBookAction exportBookAction;
 	private AbortAllTasksAction abortAllTasksAction;
@@ -804,9 +802,6 @@ public class ViewerElementManager {
 			editMenu.add(getEditSignalMontageAction());
 			editMenu.add(getApplyDefaultMontageAction());
 			editMenu.addSeparator();
-			if (mode == SignalMLOperationMode.APPLICATION) {
-				editMenu.add(getEditStoredMontagesAction());
-			}
 			editMenu.add(getEditPreferencesAction());
 		}
 		return editMenu;
@@ -1774,14 +1769,6 @@ public class ViewerElementManager {
 			openSignalAndSetMontageAction.setOpenSignalAndSetMontageDialog(getOpenSignalAndSetMontageDialog());
 		}
 		return openSignalAndSetMontageAction;
-	}
-
-	public EditStoredMontagesAction getEditStoredMontagesAction() {
-		if (editStoredMontagesAction == null) {
-			editStoredMontagesAction = new EditStoredMontagesAction(messageSource);
-			editStoredMontagesAction.setSignalMontageDialog(getSignalMontageDialog());
-		}
-		return editStoredMontagesAction;
 	}
 
 	public ApplyDefaultMontageAction getApplyDefaultMontageAction() {
