@@ -21,7 +21,7 @@ public class MontageGeneratorsPresetManager extends AbstractMultifileRestoreable
 
 	@Override
 	public String[] getDefaultFileNames() {
-		return new String[]{"eeg10_20_cap19.xml", "eeg10_10_cap33.xml", "eeg10_10_cap47.xml"};
+		return new String[]{"eeg10_20_cap19_gen.xml", "eeg10_10_cap33_gen.xml", "eeg10_10_cap47_gen.xml"};
 	}
 
 	@Override
