@@ -13,16 +13,13 @@
     <section name="Wiki">
 
       <p>
-	For now, Svarog wiki is located at the same place where the SignalML wiki is located.
+	Svarog wiki is located at the same place where the SignalML wiki is located.
       </p>
 
-      <p>
-	<a href="http://signalml.org/wiki/">Signalml wiki</a>
-      </p>
-
-      <p>
-	<a href="http://signalml.org/wiki/Svarog">The main article on Svarog</a>
-      </p>
+      <ul>
+	<li><a href="http://bci.fuw.edu.pl/wiki/SignalML">SignalML</a></li>
+	<li><a href="http://bci.fuw.edu.pl/wiki/Svarog">The main article on Svarog</a></li>
+      </ul>
 
     </section>
   </body>
