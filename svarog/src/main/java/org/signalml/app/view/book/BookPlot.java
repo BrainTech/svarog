@@ -897,35 +897,26 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 		}
 
 		if (reconstructionRectangle != null) {
-			Rectangle reconstructionToRepaint = clip.intersection(reconstructionRectangle);
-			if (!reconstructionToRepaint.isEmpty()) {
-				double[] selectiveReconstruction = reconstructionProvider.getSelectiveReconstruction();
-				paintReconstruction(g, selectiveReconstruction, reconstructionRectangle, reconstructionToRepaint);
-			}
+			double[] selectiveReconstruction = reconstructionProvider.getSelectiveReconstruction();
+			paintReconstruction(g, selectiveReconstruction, reconstructionRectangle);
 		}
 
 		if (fullReconstructionRectangle != null) {
-			Rectangle fullReconstructionToRepaint = clip.intersection(fullReconstructionRectangle);
-			if (!fullReconstructionToRepaint.isEmpty()) {
-				double[] reconstruction = reconstructionProvider.getFullReconstruction();
-				paintReconstruction(g, reconstruction, fullReconstructionRectangle, fullReconstructionToRepaint);
-			}
+			double[] reconstruction = reconstructionProvider.getFullReconstruction();
+			paintReconstruction(g, reconstruction, fullReconstructionRectangle);
 		}
 
 		if (originalSignalRectangle != null) {
-			Rectangle originalSignalToRepaint = clip.intersection(originalSignalRectangle);
-			if (!originalSignalToRepaint.isEmpty()) {
-				float[] signal = segment.getSignalSamples();
-				// XXX not optimal
-				double[] signalD = null;
-				if (signal != null) {
-					signalD = new double[signal.length];
-					for (int i=0; i<signal.length; i++) {
-						signalD[i] = signal[i];
-					}
+			float[] signal = segment.getSignalSamples();
+			// XXX not optimal
+			double[] signalD = null;
+			if (signal != null) {
+				signalD = new double[signal.length];
+				for (int i=0; i<signal.length; i++) {
+					signalD[i] = signal[i];
 				}
-				paintReconstruction(g, signalD, originalSignalRectangle, originalSignalToRepaint);
 			}
+			paintReconstruction(g, signalD, originalSignalRectangle);
 		}
 
 	}
@@ -991,7 +982,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 
 	}
 
-	private void paintReconstruction(Graphics2D gOrig, double[] samples, Rectangle area, Rectangle areaToRepaint) {
+	private void paintReconstruction(Graphics2D gOrig, double[] samples, Rectangle area) {
 
 		Graphics2D g = (Graphics2D) gOrig.create();
 		g.clip(area);
@@ -1032,22 +1023,21 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 		}				
 
-		int relX = areaToRepaint.x - area.x;
 		int level = area.y + area.height / 2;
 
 		g.setColor(Color.BLUE);
-		g.drawLine(areaToRepaint.x, level, areaToRepaint.x+areaToRepaint.width-1, level);
+		g.drawLine(area.x, level, area.x+area.width-1, level);
 
 		g.setColor(Color.BLACK);
 
-		int firstSample = (int)((minPosition / segment.getSegmentLength()) * samples.length);
-		int lastSample = (int) Math.min(samples.length - 1, (maxPosition / segment.getSegmentLength()) * samples.length);
+		int firstSample = (int)((minPosition * samplingFrequency / segment.getSegmentLength()) * samples.length);
+		int lastSample = (int) Math.min(samples.length - 1, (maxPosition * samplingFrequency / segment.getSegmentLength()) * samples.length);
 		if (lastSample < firstSample) {
 			return;
 		}
 		int length = 1 + lastSample - firstSample;
 
-		double realX = area.x + relX * reconstructionPixelPerSample;
+		double realX = area.x;
 		double y = level - (samples[firstSample] * reconstructionPixelPerValue);
 
 		generalPath.reset();
