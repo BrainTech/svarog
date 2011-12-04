@@ -1,6 +1,8 @@
 package org.signalml.domain.montage.system;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class represents a function of a channel - that is what kind of signal
@@ -13,14 +15,15 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("eegchannel")
 public enum ChannelFunction implements IChannelFunction {
 
-	UNKNOWN("Unknown", false, true, "", 20, 800),
-	EEG("EEG", false, true, "uV", 20, 800),
-	ECG("ECG", false, true, "uV", 20, 40),
-	EMG("EMG", false, true, "e", 20, 800),
-	RESP("RESP", false, true, "", 20, 800),
-	SAO2("SaO2", false, true, "", 20, 800),
-	ZERO("ZERO", true, true, "bit", 20, 800),
-	ONE("ONE", true, true, "bit", 20, 800);
+	UNKNOWN("Unknown", false, true, "", -800, 800),
+	TRIGGER("Trigger", false, true, "", 0, 10),
+	EEG("EEG", false, true, "uV", -100, 100),
+	ECG("ECG", false, true, "uV", -5000, 5000),
+	EMG("EMG", false, true, "e", -20000, 20000),
+	RESP("RESP", false, true, "", -200, 200),
+	SAO2("SaO2", false, true, "", -100, 100),
+	ZERO("ZERO", true, false, "bit", -100, 100),
+	ONE("ONE", true, false, "bit", -100, 100);
 	/**
 	 * a name of this channel
 	 */
@@ -40,13 +43,13 @@ public enum ChannelFunction implements IChannelFunction {
 	 */
 	private String unitOfMeasurementSymbol;
 	/**
-	 * The minimum value that should be set on the value scale for the signal.
+	 * The minimum expected value of the signal.
 	 */
-	private int minValueScale;
+	private int minValue;
 	/**
-	 * The maximum value that should be set on the value scale for the signal.
+	 * The maximum expected value value of the signal.
 	 */
-	private int maxValueScale;
+	private int maxValue;
 
 
 	/**
@@ -56,13 +59,13 @@ public enum ChannelFunction implements IChannelFunction {
 	 * @param unique is the channel unique?
 	 * @param mutable is the channel mutable?
 	 */
-	private ChannelFunction(String name, boolean unique, boolean mutable, String unitOfMeasurementSymbol, int minValueScale, int maxValueScale) {
+	private ChannelFunction(String name, boolean unique, boolean mutable, String unitOfMeasurementSymbol, int minValue, int maxValue) {
 		this.name = name;
 		this.unique = unique;
 		this.mutable = mutable;
 		this.unitOfMeasurementSymbol = unitOfMeasurementSymbol;
-		this.minValueScale = minValueScale;
-		this.maxValueScale = maxValueScale;
+		this.minValue = minValue;
+		this.maxValue = maxValue;
 	}
 
 	@Override
@@ -96,18 +99,33 @@ public enum ChannelFunction implements IChannelFunction {
 	}
 
 	@Override
-	public int getMinValueScale() {
-		return minValueScale;
+	public int getMinValue() {
+		return minValue;
 	}
 
 	@Override
-	public int getMaxValueScale() {
-		return maxValueScale;
+	public int getMaxValue() {
+		return maxValue;
 	}
 
 	@Override
 	public String getUnitOfMeasurementSymbol() {
 		return unitOfMeasurementSymbol;
+	}
+
+	/**
+	 * Returns the list of all available mutable channel functions.
+	 * @return the list of channel functions that can be changed
+	 */
+	public static List<IChannelFunction> getMutableChannelFunctions() {
+		ChannelFunction[] allFunctions = values();
+		List<IChannelFunction> mutableChannelFunctions = new ArrayList<IChannelFunction>();
+
+		for (IChannelFunction function: allFunctions) {
+			if (function.isMutable())
+				mutableChannelFunctions.add(function);
+		}
+		return mutableChannelFunctions;
 	}
 
 }

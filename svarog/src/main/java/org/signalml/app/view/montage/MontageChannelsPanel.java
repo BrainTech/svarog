@@ -27,16 +27,13 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.apache.log4j.Logger;
-import org.codehaus.janino.WarningHandler;
 import org.signalml.app.document.SignalDocument;
-import org.signalml.app.model.SeriousWarningDescriptor;
 import org.signalml.app.montage.MontageTableModel;
 import org.signalml.app.montage.SourceMontageTableModel;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.SwingUtils;
 import org.signalml.app.view.TablePopupMenuProvider;
 import org.signalml.app.view.dialog.ErrorsDialog;
-import org.signalml.app.view.dialog.SeriousWarningDialog;
 import org.signalml.app.view.montage.dnd.MontageWasteBasket;
 import org.signalml.app.view.montage.dnd.MontageWasteBasketTransferHandler;
 import org.signalml.domain.montage.Montage;
@@ -70,14 +67,6 @@ public class MontageChannelsPanel extends JPanel {
 	 * the logger
 	 */
 	protected static final Logger logger = Logger.getLogger(MontageChannelsPanel.class);
-
-	/**
-	 * the dialog which is shown when the user tries to
-	 * {@link ClearMontageAction clear} the {@link Montage montage} or
-	 * {@link RemoveSourceChannelAction remove} a
-	 * {@link SourceChannel source channel}
-	 */
-	private SeriousWarningDialog seriousWarningDialog;
 
 	/**
 	 * the {@link Montage montage} that is the model for this panel
@@ -312,25 +301,6 @@ public class MontageChannelsPanel extends JPanel {
 	}
 
 	/**
-	 * Gets the dialog which is shown when the user tries to.
-	 * 
-	 * @return the dialog which is shown when the user tries to
-	 */
-	public SeriousWarningDialog getSeriousWarningDialog() {
-		return seriousWarningDialog;
-	}
-
-	/**
-	 * Sets the dialog which is shown when the user tries to.
-	 * 
-	 * @param seriousWarningDialog
-	 *            the new dialog which is shown when the user tries to
-	 */
-	public void setSeriousWarningDialog(SeriousWarningDialog seriousWarningDialog) {
-		this.seriousWarningDialog = seriousWarningDialog;
-	}
-
-	/**
 	 * Enables or disables buttons (actions). The buttons are enabled if:
 	 * <ul>
 	 * <li>{@link #addChannelsButton} - if there are some selected rows in
@@ -498,6 +468,7 @@ public class MontageChannelsPanel extends JPanel {
 	public SourceMontageTable getSourceMontageTable() {
 		if (sourceMontageTable == null) {
 			sourceMontageTable = new SourceMontageTable(getSourceMontageTableModel());
+			sourceMontageTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			sourceMontageTable.setPopupMenuProvider(new SourceMontageTablePopupProvider());
 
 			sourceMontageTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -874,13 +845,8 @@ public class MontageChannelsPanel extends JPanel {
 	}
 
 	/**
-	 * Action that
-	 * <ul>
-	 * <li>displays the {@link MontageChannelsPanel#getSeriousWarningDialog()
-	 * serious warning dialog},</li>
-	 * <li>if the user accepts the action {@link Montage#removeSourceChannel()
-	 * removes} the last {@link SourceChannel source channel}
-	 * from the {@link MontageChannelsPanel#montage montage}.</li></ul>
+	 * Action for removing a source montage from channel. If this action cannot
+	 * be performed an error dialog is shown.
 	 */
 	protected class RemoveSourceChannelAction extends AbstractAction {
 
@@ -898,40 +864,31 @@ public class MontageChannelsPanel extends JPanel {
 		}
 
 		/**
-		 * When the action is performed:
-		 * <ul>
-		 * <li>the {@link MontageChannelsPanel#getSeriousWarningDialog()
-		 * serious warning dialog} is displayed,</li>
-		 * <li>if the user accepts the action the last {@link SourceChannel
-		 * source channel} is {@link Montage#removeSourceChannel() removed}
-		 * from the {@link MontageChannelsPanel#montage montage}.</li></ul>
+		 * If the last channel in source montage is a {@link ChannelFunction#ZERO}
+		 * or a {@link ChannelFunction#ONE} and it is not used in the
+		 * current target montage, the channel is removed.
+		 * Otherwise an error dialog is shown.
 		 */
 		@Override
 		public void actionPerformed(ActionEvent ev) {
 
-			int cnt = montage.getSourceChannelCount();
-			if (cnt == 0) {
+			int selectedChannelIndex = getSourceMontageTable().getSelectedRow();
+			if (selectedChannelIndex == -1) {
 				return;
 			}
 
-			IChannelFunction function = montage.getSourceChannelAt(cnt -1 ).getFunction();
+			IChannelFunction function = montage.getSourceChannelAt(selectedChannelIndex).getFunction();
+
 			if (function != ChannelFunction.ONE && function != ChannelFunction.ZERO) {
 				ErrorsDialog.showError("error.sourceMontageTable.canOnlyRemoveZerosAndOnesChannels");
 				return;
 			}
-			if (montage.isSourceChannelInUse(cnt -  1)) {
-
-				String warning =  _("The removed source channel is used either as a primary channel or as a reference. Montage will be altered.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>remove</b> a source channel?");
-				SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 5);
-
-				boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
-				if (!ok) {
-					return;
-				}
-
+			if (montage.isSourceChannelInUse(selectedChannelIndex)) {
+				ErrorsDialog.showError(_("This source channel is used in the target montage and cannot be removed."));
+				return;
 			}
 
-			montage.removeSourceChannel();
+			montage.removeSourceChannel(selectedChannelIndex);
 
 		}
 
@@ -958,29 +915,14 @@ public class MontageChannelsPanel extends JPanel {
 		}
 
 		/**
-		 * When the action is performed:
-		 * <ul>
-		 * <li>the {@link MontageChannelsPanel#getSeriousWarningDialog()
-		 * serious warning dialog} is displayed,</li>
-		 * <li>if the user accepts this action all parameters of the
-		 * {@link MontageChannelsPanel#montage montage} are
-		 * {@link Montage#reset() reseted} (for example all
-		 * {@link MontageChannel montage channels} are removed).</li>
-		 * </ul>
+		 * When the action is performed a warning dialog is shown.
+		 * If the user confirms the operation, the montage is cleared.
 		 */
 		@Override
 		public void actionPerformed(ActionEvent ev) {
-
-			String warning =  _("The montage will be irreversibly lost.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>clear</b> the montage?");
-			SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 5);
-
-			boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
-			if (!ok) {
-				return;
-			}
-
-			montage.reset();
-
+			if (ErrorsDialog.showWarningYesNoDialog(_("Do you really want to clear the montage?"))
+			    == ErrorsDialog.DIALOG_OPTIONS.YES)
+				montage.reset();
 		}
 
 	}

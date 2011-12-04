@@ -72,6 +72,9 @@ import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
 import org.signalml.plugin.export.signal.tagStyle.TagAttributes;
 import org.signalml.plugin.export.view.ExportedSignalPlot;
+import org.signalml.domain.montage.system.IChannelFunction;
+import org.signalml.domain.montage.system.ChannelFunction;
+import org.signalml.domain.montage.SourceChannel;
 import org.signalml.util.Util;
 
 /** SignalPlot
@@ -126,9 +129,6 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	private int maxSampleCount;
 	private int channelCount;
 
-	private Double minValue;
-	private Double maxValue;
-	private double detectedMaxValue;
 	private double[] samples;
 
 	private int[] channelLevel;
@@ -220,11 +220,6 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		ApplicationConfiguration config = view.getApplicationConfig();
 
 		if( masterPlot == null ) {
-
-			if (document instanceof MonitorSignalDocument) {
-				minValue = new Double( ((MonitorSignalDocument) document).getMinValue());
-				maxValue = new Double( ((MonitorSignalDocument) document).getMaxValue());
-			}
 
 			timeScaleRangeModel = new DefaultBoundedRangeModel();
 			valueScaleRangeModel = new DefaultBoundedRangeModel();
@@ -334,39 +329,27 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	}
 
 	private double detectMaxValue() {
-		double[] samples = new double[1024];
-		double result = 0.0;
-
-		int channel, i;
-		int cnt;
-		for( channel=0; channel<channelCount; channel++ ) {
-			cnt = Math.min( samples.length, sampleCount[channel] );
-			signalChain.getSamples(channel, samples, 0, cnt, 0);
-			for( i=0; i<cnt; i++ ) {
-				samples[i] = Math.abs(samples[i]);
-				if( samples[i] > result ) {
-					result = samples[i];
-				}
+		IChannelFunction f;
+		double max = -1.0;
+		for (int i=0;i<channelCount;i++) {
+			f = this.getSourceChannelFor(i).getFunction();
+			if (f == ChannelFunction.EEG) {
+				max = (double) f.getMaxValue();
+				break;
 			}
+			else if (f.getMaxValue() > max)
+				max = (double) f.getMaxValue();
 		}
-//		result = Math.min( 2000.0, result );
-//		if (Math.abs(result) < 0.000001)
-//			result = 2000.0;
-		return condMaxValue(result);
+		return max;
 	}
 
-	private double calcMaxValueDelta() {
-		double result = 0.0;
-		if (maxValue != null && minValue != null) {
-			result = Math.max( Math.abs( maxValue.doubleValue()), Math.abs( minValue.doubleValue()));
-		}
-		else if (maxValue != null) {
-			result =  Math.abs( maxValue.doubleValue());
-		}
-		else if (minValue != null) {
-			result =  Math.abs( minValue.doubleValue());
-		}
-		return result;
+	/**
+	 * Returns source channel for given montage channel.
+	 * @param index index of montage channel.
+	 * @return SourceChannel for given montage channel.
+	 */
+	public SourceChannel getSourceChannelFor(int index) {
+		return document.getMontage().getSourceChannelForMontageChannel(index);
 	}
 
 	public void initialize() throws SignalMLException {
@@ -375,7 +358,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 		if( masterPlot == null ) {
 
-			calculatedVoltageZoomFactorRatio();
+			calculateVoltageZoomFactorRatio();
 
 			ApplicationConfiguration config = view.getApplicationConfig();
 
@@ -390,31 +373,37 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			channelHeightRangeModel.addChangeListener(this);
 
 		} else {
-
 			samples = new double[1024];
-			detectedMaxValue = masterPlot.getDetectedMaxValue();
-
 			masterPlot.addPropertyChangeListener(this);
-
 		}
+		this.channelsPlotOptionsModel.reset(channelCount);
 		calculateParameters();
 	}
 
 	/**
-	 * Recalculates the voltageZoomFactorRatio according to the maximum
-	 * value detected in the signal.
+	 * Calculates and returns ZoomFactorRatio for given 'index' channel.
+	 * If 'index' == -1 then returns 'global' ZoomFactorRatio defined by
+	 * EEG channel's type maxValue (if exists) or MAX from all channels` types
+	 * maxValues.
+	 * @param index an index of a channel for which calculations will be made
+	 * @return voltage zoom ratio for given channel (or globally for all channels)
 	 */
-	protected void calculatedVoltageZoomFactorRatio() {
-
-		if (maxValue != null || minValue != null)
-			detectedMaxValue = calcMaxValueDelta();
+	public double getVoltageZoomFactorRatioFor(int index) {
+		double v;
+		if (index == -1)
+			v = detectMaxValue();
 		else
-			detectedMaxValue = detectMaxValue();
+			v = (double) this.getSourceChannelFor(index).getFunction().getMaxValue();
+		return ((1.0 / (condMaxValue(v) * 2)) * 0.95) / 100;
+	}
 
-		voltageZoomFactor = ( 1.0 / (detectedMaxValue * 2) ) * 0.95;
-
-		voltageZoomFactorRatio = voltageZoomFactor / 100;
-
+	/**
+	 * Recalculates the voltageZoomFactorRatio according to the maximum
+	 * value assumed from the signal.
+	 */
+	protected void calculateVoltageZoomFactorRatio() {
+		voltageZoomFactorRatio = this.getVoltageZoomFactorRatioFor(-1);
+		voltageZoomFactor = voltageZoomFactorRatio * 100;
 	}
 
 	private void calculateParameters() {
@@ -1335,6 +1324,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
+
 		Object source = evt.getSource();
 		String name = evt.getPropertyName();
 
@@ -1358,7 +1348,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		}
 		else if(OriginalMultichannelSampleSource.CALIBRATION_PROPERTY.equals(name)) {
 
-			calculatedVoltageZoomFactorRatio();
+			calculateVoltageZoomFactorRatio();
 			reset();
 
 		}
@@ -1713,15 +1703,24 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	}
 
 	public void setLocalMontage(Montage localMontage) {
+		this.setLocalMontage(localMontage, false);
+	}
+
+	public void setLocalMontage(Montage localMontage, boolean withoutFilters) {
 		if (this.localMontage != localMontage) {
 			this.localMontage = localMontage;
 			updateSignalPlotTitleLabel();
 			try {
-				if (localMontage == null) {
-					signalChain.applyMontageDefinition(document.getMontage());
-				} else {
-					signalChain.applyMontageDefinition(localMontage);
-				}
+				Montage m = null;
+				if (localMontage == null)
+					m = document.getMontage();
+				else
+					m = localMontage;
+				if (withoutFilters)
+					signalChain.applyMontageDefinitionWithoutfilters(m);
+				else
+					signalChain.applyMontageDefinition(m);
+
 			} catch (MontageMismatchException ex) {
 				logger.error("Failed to set montage", ex);
 				ErrorsDialog.showImmediateExceptionDialog(this, ex);
@@ -2553,27 +2552,6 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	@Override
 	public double getPixelPerValue() {
 		return pixelPerValue;
-	}
-
-	public Double getMinValue() {
-		return minValue;
-	}
-
-	public void setMinValue(Double minValue) {
-		this.minValue = minValue;
-	}
-
-	public Double getMaxValue() {
-		return maxValue;
-	}
-
-	public void setMaxValue(Double maxValue) {
-		this.maxValue = maxValue;
-	}
-
-	@Override
-	public double getDetectedMaxValue() {
-		return detectedMaxValue;
 	}
 
 	@Override

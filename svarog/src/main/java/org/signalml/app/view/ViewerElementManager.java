@@ -35,7 +35,6 @@ import org.signalml.app.action.CloseWindowAction;
 import org.signalml.app.action.EditPreferencesAction;
 import org.signalml.app.action.EditSignalMontageAction;
 import org.signalml.app.action.EditSignalParametersAction;
-import org.signalml.app.action.EditStoredMontagesAction;
 import org.signalml.app.action.EditTagDescriptionAction;
 import org.signalml.app.action.EditTagStylesAction;
 import org.signalml.app.action.EEGLabExportAction;
@@ -112,7 +111,6 @@ import org.signalml.app.view.dialog.OpenDocumentDialog;
 import org.signalml.app.view.dialog.OpenMonitorDialog;
 import org.signalml.app.view.dialog.PleaseWaitDialog;
 import org.signalml.app.view.dialog.RegisterCodecDialog;
-import org.signalml.app.view.dialog.SeriousWarningDialog;
 import org.signalml.app.view.dialog.SignalParametersDialog;
 import org.signalml.app.view.dialog.SignalSelectionDialog;
 import org.signalml.app.view.dialog.TagStylePaletteDialog;
@@ -274,7 +272,6 @@ public class ViewerElementManager {
         private CheckSignalDialog checkSignalDialog;
 	private ErrorsDialog errorsDialog;
 	private PleaseWaitDialog pleaseWaitDialog;
-	private SeriousWarningDialog seriousWarningDialog;
 	private ApplicationPreferencesDialog applicationPreferencesDialog;
 	private OpenDocumentDialog openDocumentDialog;
 	private OpenMonitorDialog openMonitorDialog;
@@ -368,7 +365,6 @@ public class ViewerElementManager {
 	 */
 	private EditTagStylePresetsAction editTagStylePresetsAction;
 	private EditTagDescriptionAction editTagDescriptionAction;
-	private EditStoredMontagesAction editStoredMontagesAction;
 	private ExportSignalAction exportSignalAction;
 	private ExportBookAction exportBookAction;
 	private AbortAllTasksAction abortAllTasksAction;
@@ -790,9 +786,6 @@ public class ViewerElementManager {
 			editMenu.add(getEditSignalMontageAction());
 			editMenu.add(getApplyDefaultMontageAction());
 			editMenu.addSeparator();
-			if (mode == SignalMLOperationMode.APPLICATION) {
-				editMenu.add(getEditStoredMontagesAction());
-			}
 			editMenu.add(getEditPreferencesAction());
 		}
 		return editMenu;
@@ -1178,14 +1171,6 @@ public class ViewerElementManager {
 			pleaseWaitDialog.initializeNow();
 		}
 		return pleaseWaitDialog;
-	}
-
-	public SeriousWarningDialog getSeriousWarningDialog() {
-		if (seriousWarningDialog == null) {
-			seriousWarningDialog = new SeriousWarningDialog(getDialogParent(), true);
-			seriousWarningDialog.setApplicationConfig(getApplicationConfig());
-		}
-		return seriousWarningDialog;
 	}
 
 	public ApplicationPreferencesDialog getApplicationPreferencesDialog() {
@@ -1752,14 +1737,6 @@ public class ViewerElementManager {
 			openSignalAndSetMontageAction.setOpenSignalAndSetMontageDialog(getOpenSignalAndSetMontageDialog());
 		}
 		return openSignalAndSetMontageAction;
-	}
-
-	public EditStoredMontagesAction getEditStoredMontagesAction() {
-		if (editStoredMontagesAction == null) {
-			editStoredMontagesAction = new EditStoredMontagesAction();
-			editStoredMontagesAction.setSignalMontageDialog(getSignalMontageDialog());
-		}
-		return editStoredMontagesAction;
 	}
 
 	public ApplyDefaultMontageAction getApplyDefaultMontageAction() {

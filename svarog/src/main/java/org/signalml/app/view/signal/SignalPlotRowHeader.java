@@ -157,7 +157,7 @@ public class SignalPlotRowHeader extends JComponent {
 			//calculate scaling
 			m = this.plot.getChannelsPlotOptionsModel().getModelAt(i);
 			if ((m.getVoltageScale() != globalScale) && (m.getVisible())) {
-				pixelPerRowUnitForChannels[i] = this.plot.getPixelPerChannel() * m.getVoltageScale() * this.plot.getVoltageZoomFactorRatio();
+				pixelPerRowUnitForChannels[i] = this.plot.getPixelPerChannel() * m.getVoltageScale() * this.plot.getVoltageZoomFactorRatioFor(i);
 				sb = new StringBuilder("1");
 				if (pixelPerRowUnitForChannels[i] <= 0.0) {
 					sb.append("000...");
@@ -168,7 +168,7 @@ public class SignalPlotRowHeader extends JComponent {
 						sb.append("0");
 					}
 				};
-				sb.append(" uV");
+				sb.append(" "+plot.getSourceChannelFor(i).getFunction().getUnitOfMeasurementSymbol());
 				rowUnitLabelForChannels[i] = sb.toString();
 			} else 
 				pixelPerRowUnitForChannels[i] = PIXEL_PER_ROW_UNIT_INF;

@@ -328,7 +328,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	public void startMonitorRecording() throws FileNotFoundException {
 
 		MonitorRecordingDescriptor monitorRecordingDescriptor = monitorOptions.getMonitorRecordingDescriptor();
-                boolean tagsRecordingEnabled = !monitorRecordingDescriptor.isTagsRecordingDisabled();
+                boolean tagsRecordingEnabled = monitorRecordingDescriptor.isTagsRecordingEnabled();
 
 		//starting signal recorder
 		String dataPath = monitorRecordingDescriptor.getSignalRecordingFilePath();

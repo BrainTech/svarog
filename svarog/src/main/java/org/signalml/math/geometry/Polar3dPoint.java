@@ -17,15 +17,15 @@ public class Polar3dPoint {
 	 */
 	private double radius;
 	/**
-	 * The angle (in radians) between the projection of the line on the
+	 * The angle (in degrees) between the projection of the line on the
 	 * X-Y axis plane and the X axis.
 	 */
 	private double theta;
 	/**
-	 * The angle (in radians) between the line and the plane defined by the
+	 * The angle (in degrees) between the line and the plane defined by the
 	 * X and Y axes.
 	 */
-	private double fi;
+	private double phi;
 
 	public Polar3dPoint() {
 	}
@@ -34,15 +34,15 @@ public class Polar3dPoint {
 	 * Creates a new point with the given parameters.
 	 * @param radius the magnitude of the line from the origin
 	 * of the polar coordinate system to the point representing by this class.
-	 * @param theta the angle (in radians) between the projection of the line on the
+	 * @param theta the angle (in degrees) between the projection of the line on the
 	 * X-Y axis plane and the X axis.
-	 * @param fi the angle (in radians) between the line and the plane defined by the
+	 * @param phi the angle (in degress) between the line and the plane defined by the
 	 * X and Y axes.
 	 */
 	public Polar3dPoint(double radius, double theta, double fi) {
 		this.theta = theta;
 		this.radius = radius;
-		this.fi = fi;
+		this.phi = fi;
 	}
 
 	/**
@@ -64,25 +64,25 @@ public class Polar3dPoint {
 	}
 
 	/**
-	 * Returns the angle (in radians) between the line and the plane defined by the
+	 * Returns the angle (in degrees) between the line and the plane defined by the
 	 * X and Y axes.
 	 * @return
 	 */
-	public double getFi() {
-		return fi;
+	public double getPhi() {
+		return phi;
 	}
 
 	/**
-	 * Sets the angle (in radians) between the line and the plane defined by the
+	 * Sets the angle (in degrees) between the line and the plane defined by the
 	 * X and Y axes.
-	 * @param fi
+	 * @param phi
 	 */
-	public void setFi(double fi) {
-		this.fi = fi;
+	public void setPhi(double phi) {
+		this.phi = phi;
 	}
 
 	/**
-	 * Returns the angle (in radians) between the projection of the line on the
+	 * Returns the angle (in degrees) between the projection of the line on the
 	 * X-Y axis plane and the X axis.
 	 * @return
 	 */
@@ -91,7 +91,7 @@ public class Polar3dPoint {
 	}
 
 	/**
-	 * Sets the angle (in radians) between the projection of the line on the
+	 * Sets the angle (in degrees) between the projection of the line on the
 	 * X-Y axis plane and the X axis.
 	 * @param theta
 	 */
@@ -108,11 +108,13 @@ public class Polar3dPoint {
 	 * @return the polar point converted to a Cartesian 2D coordianate system
 	 */
 	public Point2D convertTo2DPoint(Point2D center, float maxRadius) {
-		double radiusProjectionLength = Math.abs(Math.cos(getFi()) * getRadius());
 
-		double x = center.getX() - Math.sin(getTheta()) * radiusProjectionLength * (maxRadius);
-		double y = center.getY() - Math.cos(getTheta()) * radiusProjectionLength * (maxRadius);
+		double radius = getRadius() * (90.0 - getPhi()) / 90.0;
+
+		double x = center.getX() - Math.sin(Math.toRadians(getTheta())) * radius * (maxRadius);
+		double y = center.getY() - Math.cos(Math.toRadians(getTheta())) * radius * (maxRadius);
 
 		return new Point2D.Double(x, y);
+
 	}
 }

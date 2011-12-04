@@ -42,7 +42,6 @@ import org.signalml.app.montage.MontageFiltersTableModel;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.SwingUtils;
 import org.signalml.app.view.TablePopupMenuProvider;
-import org.signalml.app.view.dialog.SeriousWarningDialog;
 import org.signalml.app.view.element.ResolvableComboBox;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageChannel;
@@ -98,9 +97,6 @@ public class MontageFiltersPanel extends JPanel {
 
 	/** the logger. */
 	protected static final Logger logger = Logger.getLogger(MontageFiltersPanel.class);
-
-	/** the {@link SeriousWarningDialog dialog window} with a serious warning. */
-	private SeriousWarningDialog seriousWarningDialog;
 
 	/**
 	 * the dialog that is used when editing. {@link FFTSampleFilter
@@ -700,29 +696,6 @@ public class MontageFiltersPanel extends JPanel {
 			clearFilterExclusionButton = new JButton(clearFilterExclusionAction);
 		}
 		return clearFilterExclusionButton;
-	}
-
-	/**
-	 * Gets the {@link SeriousWarningDialog dialog window} with a serious
-	 * warning.
-	 * 
-	 * @return the {@link SeriousWarningDialog dialog window} with a serious
-	 *         warning
-	 */
-	public SeriousWarningDialog getSeriousWarningDialog() {
-		return seriousWarningDialog;
-	}
-
-	/**
-	 * Sets the {@link SeriousWarningDialog dialog window} with a serious
-	 * warning.
-	 * 
-	 * @param seriousWarningDialog
-	 *            the new {@link SeriousWarningDialog dialog window} with a
-	 *            serious warning
-	 */
-	public void setSeriousWarningDialog(SeriousWarningDialog seriousWarningDialog) {
-		this.seriousWarningDialog = seriousWarningDialog;
 	}
 
 	/**

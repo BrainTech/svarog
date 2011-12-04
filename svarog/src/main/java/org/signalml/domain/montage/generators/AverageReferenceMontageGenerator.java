@@ -12,6 +12,7 @@ import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.montage.generators.AbstractMontageGenerator;
+import org.signalml.domain.montage.system.ChannelFunction;
 import org.springframework.validation.Errors;
 
 /**
@@ -76,9 +77,10 @@ public class AverageReferenceMontageGenerator extends AbstractMontageGenerator {
 			for (int i=0; i<size; i++) {
 				index = montage.addMontageChannel(i);
 				for (SourceChannel referenceSourceChannel: referenceSourceChannels) {
-					if (montage.getSourceChannelAt(i).getEegElectrode() != null &&
-						montage.getSourceChannelAt(i).getEegElectrode().getChannelType() == ChannelType.PRIMARY)
-					montage.setReference(index, referenceSourceChannel.getChannel(), token);
+					SourceChannel sourceChannel = montage.getSourceChannelAt(i);
+					if (sourceChannel.getFunction() == ChannelFunction.EEG
+							&& !sourceChannel.isChannelType(ChannelType.REFERENCE))
+						montage.setReference(index, referenceSourceChannel.getChannel(), token);
 				}
 			}
 		} finally {

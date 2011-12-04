@@ -8,6 +8,7 @@ import org.signalml.domain.montage.system.IChannelFunction;
 import java.io.Serializable;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import org.signalml.domain.montage.system.ChannelType;
 import org.signalml.domain.montage.system.EegElectrode;
 
 /**
@@ -19,6 +20,14 @@ import org.signalml.domain.montage.system.EegElectrode;
 @XStreamAlias("sourcechannel")
 public class SourceChannel implements Serializable {
 
+	/**
+	 * The default name of the left ear channel.
+	 */
+	public static final String LEFT_EAR_CHANNEL_NAME = "A1";
+	/**
+	 * The default name of the right ear channel.
+	 */
+	public static final String RIGHT_EAR_CHANNEL_NAME = "A2";
 	private static final long serialVersionUID = 1L;
 
         /**
@@ -81,6 +90,14 @@ public class SourceChannel implements Serializable {
 		return channel;
 	}
 
+	/**
+	 * Sets the index of this SourceChannel.
+	 * @param channel new index of this SourceChannel
+	 */
+	public void setChannel(int channel) {
+		this.channel = channel;
+	}
+
         /**
          * Returns a label of this SourceChannel.
          * @return a label of this SourceChannel
@@ -140,6 +157,20 @@ public class SourceChannel implements Serializable {
 	 */
 	public EegElectrode getEegElectrode() {
 		return eegElectrode;
+	}
+
+	/**
+	 * Returns if this channel is of a given type, taking into account
+	 * that this channel's type may be null.
+	 * @param type the type to be checked
+	 * @return true if this channel's type is equal to the given type
+	 */
+	public boolean isChannelType(ChannelType type) {
+		if (eegElectrode != null &&
+			eegElectrode.getChannelType() == type)
+			return true;
+		else
+			return false;
 	}
 
 }

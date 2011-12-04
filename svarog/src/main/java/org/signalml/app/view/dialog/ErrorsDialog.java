@@ -29,13 +29,13 @@ import javax.swing.border.LineBorder;
 import org.springframework.validation.Errors;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.spi.ErrorCode;
 import org.signalml.app.util.IconUtils;
 import org.signalml.exception.ResolvableException;
 import org.signalml.plugin.export.SignalMLException;
 import static org.signalml.app.SvarogI18n._;
 
 import org.springframework.context.MessageSourceResolvable;
+import org.springframework.validation.Errors;
 
 /**
  * Dialog with the list of errors.
@@ -49,8 +49,11 @@ import org.springframework.context.MessageSourceResolvable;
  */
 public class ErrorsDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
 
+	/**
+	 * An enum containing possible user responses in a dialog.
+	 */
+	public static enum DIALOG_OPTIONS { YES, NO };
 	private static final long serialVersionUID = 1L;
-
 	protected static final Logger logger = Logger.getLogger(ErrorsDialog.class);
 
 	/**
@@ -218,6 +221,30 @@ public class ErrorsDialog extends org.signalml.app.view.dialog.AbstractSvarogDia
 	 */
 	public static void showError(String message) {
 		JOptionPane.showMessageDialog(null, message, message, JOptionPane.ERROR_MESSAGE);
+	}
+
+	/**
+	 * Shows a warning/confirmation dialog with Yes/No buttons.
+	 * @param warningCode the code of the message shown in the dialog
+	 * @return the button user pressed in the dialog
+	 */
+	public static DIALOG_OPTIONS showWarningYesNoDialog(String warning) {
+		Object[] options = {_("Yes"), _("No")};
+		
+		int selectedIndex = JOptionPane.showOptionDialog(null,
+			warning,
+			_("Warning"),
+			JOptionPane.YES_NO_OPTION,
+			JOptionPane.WARNING_MESSAGE,
+			null,
+			options,
+			options[1]);
+		
+		if (selectedIndex == 0)
+			return DIALOG_OPTIONS.YES;
+		else
+			return DIALOG_OPTIONS.NO;
+
 	}
 
 	/**

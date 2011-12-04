@@ -21,6 +21,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import org.signalml.domain.montage.system.EegSystemName;
 
 import org.signalml.domain.signal.raw.RawSignalDescriptor.SourceSignalType;
 import org.w3c.dom.Document;
@@ -131,11 +132,19 @@ public class RawSignalDescriptorWriter {
 
 		}
 
-		String eegSystemName = descriptor.getEegSystemName();
+		EegSystemName eegSystemName = descriptor.getEegSystemName();
 		if (eegSystemName != null) {
-			element = document.createElement(RawSignalDocumentBuilder.EEG_SYSTEM_NAME);
-			element.setTextContent(eegSystemName);
-			root.appendChild(element);
+			Element name = document.createElement(RawSignalDocumentBuilder.EEG_SYSTEM_NAME);
+
+			element = document.createElement(RawSignalDocumentBuilder.EEG_SYSTEM_SYMBOL);
+			element.setTextContent(eegSystemName.getSymbol());
+			name.appendChild(element);
+
+			element = document.createElement(RawSignalDocumentBuilder.EEG_SYSTEM_TYPE);
+			element.setTextContent(eegSystemName.getType());
+			name.appendChild(element);
+
+			root.appendChild(name);
 		}
 
 		String[] channelLabels = descriptor.getChannelLabels();

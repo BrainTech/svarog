@@ -23,8 +23,6 @@ import org.signalml.SignalMLOperationMode;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.view.dialog.DynamicCompilationWarningDialog;
-import org.signalml.app.view.dialog.SeriousWarningDialog;
-
 import org.springframework.validation.Errors;
 
 /**
@@ -37,9 +35,6 @@ import org.springframework.validation.Errors;
  * should be saved after every change,</li>
  * <li>{@link #getRestoreWorkspaceCheckBox() if} the workspace should be
  * restored when the application starts,</li>
- * <li>{@link #getDisableSeriousWarningsCheckBox() if} the {@link
- * SeriousWarningDialog serious warning dialog} should be shown for
- * operations on {@link Preset presets},</li>
  * <li>{@link #getDontShowCompilationWarningCheckBox() if} if the {@link
  * DynamicCompilationWarningDialog} should be shown when a dynamic
  * compilation is needed,</li></ul></li>
@@ -75,12 +70,7 @@ public class MiscellaneousConfigPanel extends JPanel {
 	 * starts
 	 */
 	private JCheckBox restoreWorkspaceCheckBox;
-	/**
-	 * the check-box if the {@link SeriousWarningDialog serious warning dialog}
-	 * should be shown for the operations on {@link Preset presets} (unchecked)
-	 * or not (checked)
-	 */
-	private JCheckBox disableSeriousWarningsCheckBox;
+	
 	/**
 	 * the check-box if the {@link DynamicCompilationWarningDialog} should be
 	 * shown when a dynamic compilation is needed (unchecked)
@@ -149,9 +139,6 @@ public class MiscellaneousConfigPanel extends JPanel {
 	 * should be saved after every change,</li>
 	 * <li>{@link #getRestoreWorkspaceCheckBox() if} the workspace should be
 	 * restored when the application starts,</li>
-	 * <li>{@link #getDisableSeriousWarningsCheckBox() if} the {@link
-	 * SeriousWarningDialog serious warning dialog} should be shown for
-	 * operations on {@link Preset presets},</li>
 	 * <li>{@link #getDontShowCompilationWarningCheckBox() if} if the {@link
 	 * DynamicCompilationWarningDialog} should be shown when a dynamic
 	 * compilation is needed,</li></ul></li>
@@ -187,7 +174,6 @@ public class MiscellaneousConfigPanel extends JPanel {
 			generalPanel.add(getSaveConfigOnEveryChangeCheckBox());
 			generalPanel.add(getRestoreWorkspaceCheckBox());
 		}
-		generalPanel.add(getDisableSeriousWarningsCheckBox());
 		if (mode == SignalMLOperationMode.APPLICATION) {
 			generalPanel.add(getDontShowCompilationWarningCheckBox());
 		}
@@ -268,21 +254,6 @@ public class MiscellaneousConfigPanel extends JPanel {
 			restoreWorkspaceCheckBox = new JCheckBox(_("Restore the workspace when the application loads"));
 		}
 		return restoreWorkspaceCheckBox;
-	}
-
-	/**
-	 * Returns the check-box if the {@link SeriousWarningDialog serious warning
-	 * dialog} should be shown for the operations on {@link Preset presets}
-	 * (unchecked) or not (checked).
-	 * If the check-box doesn't exist, it is created.
-	 * @return the check-box if the serious warning should be shown for the
-	 * operations on presets (unchecked) or not (checked)
-	 */
-	public JCheckBox getDisableSeriousWarningsCheckBox() {
-		if (disableSeriousWarningsCheckBox == null) {
-			disableSeriousWarningsCheckBox = new JCheckBox(_("Disable serious warning dialogs for preset operations"));
-		}
-		return disableSeriousWarningsCheckBox;
 	}
 
 	/**
@@ -410,7 +381,6 @@ public class MiscellaneousConfigPanel extends JPanel {
 			getSaveConfigOnEveryChangeCheckBox().setSelected(applicationConfig.isSaveConfigOnEveryChange());
 			getRestoreWorkspaceCheckBox().setSelected(applicationConfig.isRestoreWorkspace());
 		}
-		getDisableSeriousWarningsCheckBox().setSelected(applicationConfig.isDisableSeriousWarnings());
 		if (mode == SignalMLOperationMode.APPLICATION) {
 			getDontShowCompilationWarningCheckBox().setSelected(applicationConfig.isDontShowDynamicCompilationWarning());
 		}
@@ -439,7 +409,6 @@ public class MiscellaneousConfigPanel extends JPanel {
 			applicationConfig.setSaveConfigOnEveryChange(getSaveConfigOnEveryChangeCheckBox().isSelected());
 			applicationConfig.setRestoreWorkspace(getRestoreWorkspaceCheckBox().isSelected());
 		}
-		applicationConfig.setDisableSeriousWarnings(getDisableSeriousWarningsCheckBox().isSelected());
 		if (mode == SignalMLOperationMode.APPLICATION) {
 			applicationConfig.setDontShowDynamicCompilationWarning(getDontShowCompilationWarningCheckBox().isSelected());
 		}

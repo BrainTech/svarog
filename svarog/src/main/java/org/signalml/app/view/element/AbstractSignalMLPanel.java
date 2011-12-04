@@ -5,6 +5,9 @@ package org.signalml.app.view.element;
 
 import java.awt.Component;
 import java.awt.Container;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import javax.swing.JPanel;
 
 import javax.swing.border.CompoundBorder;
@@ -18,7 +21,22 @@ import javax.swing.border.TitledBorder;
  * 
  * @author Piotr Szachewicz
  */
-public abstract class AbstractSignalMLPanel extends JPanel {
+public abstract class AbstractSignalMLPanel extends JPanel implements PropertyChangeListener {
+
+	/**
+	 * PropertyChangeSupport to fire property changes when needed.
+	 */
+	private PropertyChangeSupport propertyChangeSupport;
+
+	/**
+	 * Constructor.
+	 * @param messageSource message Source capable of returning localized
+	 * messages
+	 */
+	public AbstractSignalMLPanel() {
+		propertyChangeSupport = new PropertyChangeSupport(this);
+	}
+
 	/**
 	 * A method for initializing GUI components for this panel.
 	 */
@@ -64,6 +82,21 @@ public abstract class AbstractSignalMLPanel extends JPanel {
 		);
 
 		setBorder(cb);
+	}
+
+	@Override
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
+		propertyChangeSupport.addPropertyChangeListener(listener);
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+	}
+
+	@Override
+	protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
+		if (propertyChangeSupport != null)
+			propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
 	}
 
 }

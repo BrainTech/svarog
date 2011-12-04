@@ -835,9 +835,15 @@ public class SvarogApplication implements java.lang.Runnable {
 		eegSystemsPresetManager.setProfileDir(profileDir);
 
 		try {
+			eegSystemsPresetManager.restoreDefaultFilesIfNecessary();
+		} catch (Exception ex) {
+			logger.debug("Error while creating the eegSystems directory with default EEG systems definition.");
+		}
+
+		try {
 			eegSystemsPresetManager.readFromPersistence(null);
 		} catch (FileNotFoundException ex) {
-			logger.debug("Eeg systems config not found");
+			logger.debug("EEG systems configuration not found!");
 		} catch (Exception ex) {
 			logger.error("Failed to read eeg systems configuration", ex);
 		}

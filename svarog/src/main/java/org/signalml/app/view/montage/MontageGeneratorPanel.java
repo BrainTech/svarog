@@ -22,11 +22,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.model.SeriousWarningDescriptor;
 import org.signalml.app.montage.MontageGeneratorListModel;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.dialog.ErrorsDialog;
-import org.signalml.app.view.dialog.SeriousWarningDialog;
 import org.signalml.app.view.element.CompactButton;
 import org.signalml.app.view.element.ResolvableComboBox;
 import org.signalml.domain.montage.Montage;
@@ -90,14 +88,6 @@ public class MontageGeneratorPanel extends JPanel {
 	 * </ul>
 	 */
 	private ErrorsDialog errorsDialog;
-	
-	/**
-	 * the {@link SeriousWarningDialog dialog} with a serious warning which is
-	 * shown when the new {@link #tryGenerate(MontageGenerator) generation} is to
-	 * be performed and the {@link #getMontage() montage} was modified since last
-	 * generation.
-	 */
-	private SeriousWarningDialog seriousWarningDialog;
 
 	/**
 	 * the {@link ShowErrorsAction action} which displays the.
@@ -255,39 +245,6 @@ public class MontageGeneratorPanel extends JPanel {
 	}
 
 	/**
-	 * Gets the {@link SeriousWarningDialog dialog} with a serious warning which
-	 * is shown when the new {@link #tryGenerate(MontageGenerator) generation}
-	 * is to be performed and the {@link #getMontage() montage} was modified
-	 * since last generation.
-	 * 
-	 * @return the {@link SeriousWarningDialog dialog} with a serious warning
-	 *         which is shown when the new
-	 *         {@link #tryGenerate(MontageGenerator) generation} is to be
-	 *         performed and the {@link #getMontage() montage} was modified
-	 *         since last generation
-	 */
-	public SeriousWarningDialog getSeriousWarningDialog() {
-		return seriousWarningDialog;
-	}
-
-	/**
-	 * Sets the {@link SeriousWarningDialog dialog} with a serious warning which
-	 * is shown when the new {@link #tryGenerate(MontageGenerator) generation}
-	 * is to be performed and the {@link #getMontage() montage} was modified
-	 * since last generation.
-	 * 
-	 * @param seriousWarningDialog
-	 *            the new {@link SeriousWarningDialog dialog} with a serious
-	 *            warning which is shown when the new
-	 *            {@link #tryGenerate(MontageGenerator) generation} is to be
-	 *            performed and the {@link #getMontage() montage} was modified
-	 *            since last generation
-	 */
-	public void setSeriousWarningDialog(SeriousWarningDialog seriousWarningDialog) {
-		this.seriousWarningDialog = seriousWarningDialog;
-	}
-
-	/**
 	 * Gets the {@link MontageGeneratorListModel model} for the
 	 * {@link #generatorComboBox}.
 	 * 
@@ -434,11 +391,6 @@ public class MontageGeneratorPanel extends JPanel {
 	 * <li>{@link MontageGenerator#validateSourceMontage(SourceMontage, Errors)
 	 * Checks} if the current montage can be used with the provided generator.
 	 * If not {@link ErrorsDialog#showErrors(Errors) shows} the errors.</li>
-	 * <li>If the montage has been {@link Montage#isChanged() changed}
-	 * shows the {@link #getSeriousWarningDialog() serious warning dialog}
-	 * which warns that the changes will disappear.
-	 * If the user resigns {@link #quietSetSelectedGenerator(MontageGenerator)
-	 * sets} that no generator is selected and ends this action.</li>
 	 * <li>{@link MontageGenerator#createMontage(Montage) creates} the montage
 	 * on the basis of the current montage,</li>
 	 * </ol>
@@ -459,19 +411,6 @@ public class MontageGeneratorPanel extends JPanel {
 				montageGeneratorListModel.setSelectedItem(MontageGeneratorListModel.NO_GENERATOR);
 
 			return;
-		}
-
-		if (montage.isChanged()) {
-
-			String warning =  _("The montage will be permanently replaced with the generated montage.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>generate</b> the montage?");
-			SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 5);
-
-			boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
-			if (!ok) {
-				quietSetSelectedGenerator(null);
-				return;
-			}
-
 		}
 
 		try {

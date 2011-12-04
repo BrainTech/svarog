@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import org.signalml.app.document.SignalDocument;
-import org.signalml.domain.montage.Channel;
-import org.signalml.domain.montage.ChannelType;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.method.AbstractData;
 import org.signalml.plugin.export.SignalMLException;
@@ -18,6 +16,9 @@ import org.signalml.plugin.export.signal.SvarogAccessSignal;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.signalml.domain.montage.SourceChannel;
+import org.signalml.domain.montage.system.ChannelFunction;
+import org.signalml.domain.montage.system.IChannelFunction;
 
 /**
  * ArtifactApplicationData
@@ -82,7 +83,7 @@ public class NewArtifactApplicationData extends NewArtifactData {
 
 	public void calculate() throws SignalMLException {
 
-		int i;
+			int i;
 
 		Map<String, Integer> keyChannelMap = getKeyChannelMap();
 		ArrayList<Integer> eegChannels = getEegChannels();
@@ -93,18 +94,19 @@ public class NewArtifactApplicationData extends NewArtifactData {
 		channelMap.clear();
 
 		int cnt = montage.getSourceChannelCount();
-		Channel function;
+		SourceChannel channel;
 		for (i = 0; i < cnt; i++) {
 			channelMap.put(montage.getSourceChannelLabelAt(i), i);
-			function = montage.getSourceChannelFunctionAt(i);
-			if (function != null) {
-				if (function.getType() == ChannelType.PRIMARY) {
-					eegChannels.add(i);
-				}
-				if (AbstractData.keyChannelSet.contains(function)) {
-					keyChannelMap.put(function.getName(), i);
-				}
+
+			channel = montage.getSourceChannelAt(i);
+			if (channel.getFunction() == ChannelFunction.EEG) {
+				eegChannels.add(i);
 			}
+			//TODO: IMPORTANT - fill the keyChannelMap.
+			/*
+			if (AbstractData.keyChannelSet.contains(function)) {
+				keyChannelMap.put(function.getName(), i);
+			}*/
 		}
 
 		/*

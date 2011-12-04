@@ -35,13 +35,13 @@ public interface IChannelFunction extends MessageSourceResolvable, Serializable 
 	 * Returns the minimum value that should be set on the value scale for the signal.
 	 * @return
 	 */
-	int getMinValueScale();
+	int getMinValue();
 
 	/**
 	 * Returns the maximum value that should be set on the value scale for the signal.
 	 * @return
 	 */
-	int getMaxValueScale();
+	int getMaxValue();
 
 	/**
 	 * Returns the String representing a unit of measurement for the channel

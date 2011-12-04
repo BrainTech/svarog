@@ -30,12 +30,12 @@ public class ChannelFunctionsListModel extends AbstractListModel implements Comb
 
 	@Override
 	public int getSize() {
-		return ChannelFunction.values().length;
+		return ChannelFunction.getMutableChannelFunctions().size();
 	}
 
 	@Override
 	public Object getElementAt(int index) {
-		return ChannelFunction.values()[index];
+		return ChannelFunction.getMutableChannelFunctions().get(index);
 	}
 
 }

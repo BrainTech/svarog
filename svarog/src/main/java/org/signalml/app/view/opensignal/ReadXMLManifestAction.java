@@ -4,7 +4,6 @@
 
 package org.signalml.app.view.opensignal;
 
-import static org.signalml.app.SvarogI18n._;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
@@ -17,11 +16,13 @@ import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.element.EmbeddedFileChooser;
 import org.signalml.app.config.ApplicationConfiguration;
+import org.signalml.domain.montage.system.EegSystemName;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalDescriptorReader;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.util.Util;
+import static org.signalml.app.SvarogI18n._;
 
 
 /**
@@ -133,6 +134,10 @@ public class ReadXMLManifestAction extends AbstractSignalMLAction {
                         }
 
 			parentSignalParametersPanel.fillPanelFromModel(rawSignalDescriptor);
+
+			EegSystemName eegSystemName = rawSignalDescriptor.getEegSystemName();
+			parentSignalParametersPanel.fireEegSystemChanged(eegSystemName);
+
 		} catch (IOException ex) {
 			Logger.getLogger(ReadXMLManifestAction.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (SignalMLException ex) {

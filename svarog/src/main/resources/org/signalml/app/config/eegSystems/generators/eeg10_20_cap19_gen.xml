@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<monageGeneratorPresets>
+	<presets>
+		<montageGenerators>
+			<eegSystemName>
+				<eegSystemSymbol>EEG 10_20 Cap19</eegSystemSymbol>
+				<eegSystemType/>
+			</eegSystemName>
+			<generators>
+				<montageGenerator>
+					<name>montageGenerator.longitudinalI</name>
+					<type>BIPOLAR_REFERENCE</type>
+					<channels>
+						<pair><channel>Fp1</channel><channel>Fp2</channel></pair>
+						<pair><channel>F9</channel><channel>Fp2</channel></pair>
+					</channels>
+				</montageGenerator>
+			</generators>
+		</montageGenerators>
+	</presets>
+</monageGeneratorPresets>

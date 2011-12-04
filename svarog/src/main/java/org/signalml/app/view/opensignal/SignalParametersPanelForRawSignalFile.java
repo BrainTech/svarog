@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import java.awt.GridBagConstraints;
 import org.signalml.app.view.element.EmbeddedFileChooser;
 import org.signalml.app.config.ApplicationConfiguration;
+import org.signalml.domain.montage.system.EegSystemName;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
@@ -83,9 +84,6 @@ public class SignalParametersPanelForRawSignalFile extends AbstractSignalParamet
 		if (channelLabels != null)
 			firePropertyChange(AbstractSignalParametersPanel.CHANNEL_LABELS_PROPERTY, null, channelLabels);
 
-		String eegSystemName = descriptor.getEegSystemName();
-		firePropertyChange(AbstractSignalParametersPanel.EEG_SYSTEM_PROPERTY, null, eegSystemName);
-
                 getEditGainAndOffsetDialog().fillDialogFromModel(descriptor);
                 currentModel = descriptor;
 	}
@@ -141,6 +139,16 @@ public class SignalParametersPanelForRawSignalFile extends AbstractSignalParamet
 
 		getEditGainAndOffsetDialog().fillDialogFromModel(rawSignalDescriptor);
 		super.fireNumberOfChannelsChanged(numberOfChannels);
+	}
+
+	/**
+	 * Fires an event telling all listeners that the EEG system has changed.
+	 * It is used when reading an XML signal descriptor from file to change
+	 * the currently selected EEG system..
+	 * @param newEegSystemName the name of the EEG system to be selected
+	 */
+	public void fireEegSystemChanged(EegSystemName newEegSystemName) {
+		firePropertyChange(AbstractSignalParametersPanel.EEG_SYSTEM_PROPERTY, null, newEegSystemName);
 	}
 
 }

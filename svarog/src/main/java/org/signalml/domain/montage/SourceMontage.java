@@ -23,6 +23,7 @@ import org.signalml.util.Util;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import org.signalml.domain.montage.system.EegElectrode;
 import org.signalml.domain.montage.system.EegSystem;
+import org.signalml.domain.montage.system.EegSystemName;
 
 /**
  * This class represents a source montage.
@@ -48,7 +49,7 @@ public class SourceMontage {
 	 * The name of the {@link EegSystem} used by this SourceMontage.
 	 * It is used only for reading/storing the SourceMontage in files.
 	 */
-	private String eegSystemName;
+	private EegSystemName eegSystemName;
 
         /**
          * a list of SourceChannels in this SourceMontage
@@ -225,7 +226,7 @@ public class SourceMontage {
 				IChannelFunction function = this.getSourceChannelAt(i).getFunction();
 				if (function == ChannelFunction.ONE || function == ChannelFunction.ZERO)
 					continue;
-				removeSourceChannel();
+				removeLastSourceChannel();
 			}
 		}
 	}
@@ -253,7 +254,7 @@ public class SourceMontage {
 			return;
 		}
 		else {
-			eegSystemName = eegSystem.getName();
+			eegSystemName = eegSystem.getEegSystemName();
 		}
 
 		for (SourceChannel sourceChannel: sourceChannels) {
@@ -452,7 +453,7 @@ public class SourceMontage {
 			if (function.isUnique() && !list.isEmpty()) {
 				throw new MontageException("error.sourceChannelFunctionDuplicate");
 			}
-			if (!function.isMutable()) {
+			if (!oldFunction.isMutable()) {
 				throw new MontageException("error.sourceChannelFunctionImmutable");
 			}
 			LinkedList<SourceChannel> oldList = getSourceChannelsByFunctionList(oldFunction);
@@ -516,12 +517,36 @@ public class SourceMontage {
 
 	}
 
+	/**
+	 * Removes source channel from of a given index from this SourceMontage.
+	 * @param index the index of the source channel to be removed
+	 * @return true if the channel was removed, false otherwise
+	 * (the channel cannot be removed, if it is in use in the target montage;
+	 * see {@link Montage#removeSourceChannel(int)}).
+	 */
+	public boolean removeSourceChannel(int index) {
+		SourceChannel channel = sourceChannels.get(index);
+		getSourceChannelsByLabel().remove(channel.getLabel());
+		getSourceChannelsByFunctionList(channel.getFunction()).remove(channel);
+		sourceChannels.remove(index);
+
+		for (int i = index; i < sourceChannels.size(); i++) {
+			SourceChannel sourceChannel = sourceChannels.get(i);
+			sourceChannel.setChannel(sourceChannel.getChannel()-1);
+		}
+
+		setChanged(true);
+		fireSourceMontageChannelRemoved(this, index);
+
+		return true;
+	}
+
         /**
          * Removes the last {@link SourceChannel source channel} on the
          * {@link #sourceChannels sourceChannels} list from this SourceMontage
          * @return the removed source channel
          */
-	public SourceChannel removeSourceChannel() {
+	protected SourceChannel removeLastSourceChannel() {
 		if (sourceChannels.isEmpty()) {
 			return null;
 		}
@@ -689,8 +714,14 @@ public class SourceMontage {
 	 * Returns the name of the  {@link EegSystem} used by this Montage.
 	 * @return the name of the  {@link EegSystem} used by this Montage
 	 */
-	public String getEegSystemName() {
+	public EegSystemName getEegSystemName() {
 		return eegSystemName;
+	}
+
+	public String getEegSystemFullName() {
+		if (eegSystemName != null)
+			return eegSystemName.getFullName();
+		return null;
 	}
 
 }

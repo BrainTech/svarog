@@ -189,13 +189,6 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 		if (!this.model.getVisible())
 			this.model.setVisible(true);
 
-		Montage montage = currentPlot.getDocument().getMontage();
-		SourceChannel sourceChannel = montage.getSourceChannelForMontageChannel(channel);
-		int min = sourceChannel.getFunction().getMinValueScale();
-		int max = sourceChannel.getFunction().getMaxValueScale();
-		this.valueScaleModel.setMinimum(min);
-		this.valueScaleModel.setMaximum(max);
-
 		this.setInitialVoltageScale(this.model.getVoltageScale());
 		this.ignoreGlobalScale.getModel().setSelected(this.model.getIgnoreGlobalScale());
 	}

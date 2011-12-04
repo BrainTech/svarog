@@ -415,7 +415,7 @@ public class SignalViewingConfigPanel extends JPanel {
 	 */
 	public JSpinner getMinValueScaleSpinner() {
 		if (minValueScaleSpinner == null) {
-			minValueScaleSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 2000, 10));
+			minValueScaleSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 100000, 10));
 			minValueScaleSpinner.setPreferredSize(new Dimension(80,25));
 		}
 		return minValueScaleSpinner;
@@ -428,7 +428,7 @@ public class SignalViewingConfigPanel extends JPanel {
 	 */
 	public JSpinner getMaxValueScaleSpinner() {
 		if (maxValueScaleSpinner == null) {
-			maxValueScaleSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 2000, 10));
+			maxValueScaleSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 100000, 10));
 			maxValueScaleSpinner.setPreferredSize(new Dimension(80,25));
 		}
 		return maxValueScaleSpinner;

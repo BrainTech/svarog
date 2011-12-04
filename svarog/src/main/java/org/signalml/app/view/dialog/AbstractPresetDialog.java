@@ -36,7 +36,6 @@ import org.signalml.app.config.preset.PresetComboBoxModel;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.config.preset.PresetManagerEvent;
 import org.signalml.app.config.preset.PresetManagerListener;
-import org.signalml.app.model.SeriousWarningDescriptor;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.element.AnyChangeDocumentAdapter;
@@ -97,13 +96,6 @@ public abstract class AbstractPresetDialog extends AbstractSvarogDialog {
 	 * and specify the name for it
 	 */
 	private ChoosePresetDialog choosePresetDialog;
-	
-	/**
-	 * the {@link SeriousWarningDialog dialog} which displays the
-	 * warning to the user and allows him to decide if the operation should
-	 * be terminated
-	 */
-	private SeriousWarningDialog seriousWarningDialog;
 
 	/**
 	 * @see LoadDefaultPresetAction
@@ -426,21 +418,6 @@ public abstract class AbstractPresetDialog extends AbstractSvarogDialog {
 	}
 
 	/**
-	 * Returns the {@link SeriousWarningDialog dialog} which displays the
-	 * warning to the user and allows him to decide if the operation should
-	 * be terminated.
-	 * If the dialog doesn't exist, it is created.
-	 * @return the warning dialog
-	 */
-	protected SeriousWarningDialog getSeriousWarningDialog() {
-		if (seriousWarningDialog == null) {
-			seriousWarningDialog = new SeriousWarningDialog(this,true);
-			seriousWarningDialog.setApplicationConfig(applicationConfig);
-		}
-		return seriousWarningDialog;
-	}
-
-	/**
 	 * Returns the {@link PresetManager preset manager}.
 	 * @return the preset manager
 	 */
@@ -643,12 +620,8 @@ public abstract class AbstractPresetDialog extends AbstractSvarogDialog {
 
 			Preset existingPreset = presetManager.getDefaultPreset();
 			if (existingPreset != null) {
-
-				String warning =  _("The default preset will be permanently overwritten.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>permanently overwrite</b> the default?");
-				SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 5);
-
-				boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
-				if (!ok) {
+					final String msg = _("The default preset will be permanently overwritten. Are you sure?");
+					if (ErrorsDialog.showWarningYesNoDialog(msg) == ErrorsDialog.DIALOG_OPTIONS.NO) {
 					return;
 				}
 
@@ -705,18 +678,6 @@ public abstract class AbstractPresetDialog extends AbstractSvarogDialog {
 				return;
 			}
 
-			if (!isTrackingChanges() || isChanged()) {
-
-				String warning =  _("The settings currently on the dialog will be permanently overwritten with the default preset.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>permanently overwrite</b> current settings?");
-				SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 3);
-
-				boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
-				if (!ok) {
-					return;
-				}
-
-			}
-
 			try {
 				setPreset(preset);
 			} catch (SignalMLException ex) {
@@ -758,14 +719,6 @@ public abstract class AbstractPresetDialog extends AbstractSvarogDialog {
 
 			Preset preset = presetManager.getDefaultPreset();
 			if (preset == null) {
-				return;
-			}
-
-			String warning =  _("The default preset will be permanently removed.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>permanently remove</b> the default?");
-			SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 5);
-
-			boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
-			if (!ok) {
 				return;
 			}
 
@@ -836,20 +789,16 @@ public abstract class AbstractPresetDialog extends AbstractSvarogDialog {
 
 			Preset existingPreset = presetManager.getPresetByName(newName);
 			if (existingPreset != null) {
-
-				String warning =  _R("Preset named ''<b>{0}</b>'' will be permanently overwritten.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>permanently overwrite</b> this preset?", newName);
-				SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 5);
-
-				boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
-				if (!ok) {
+				final String msg = _("Preset already exists, do you really want to overwrite this preset?");
+				if (ErrorsDialog.showWarningYesNoDialog(msg) == ErrorsDialog.DIALOG_OPTIONS.NO) {
 					return;
 				}
-
 			}
 
 			preset.setName(newName);
 
 			presetManager.setPreset(preset);
+			presetComboBoxModel.setSelectedItem(preset);
 
 			if (applicationConfig.isSaveConfigOnEveryChange()) {
 				try {
@@ -902,23 +851,10 @@ public abstract class AbstractPresetDialog extends AbstractSvarogDialog {
 
 			Preset preset = presetManager.getPresetAt(index-1);
 
-			getPresetComboBox().setSelectedIndex(0);
 			getPresetComboBox().repaint();
 
 			if (preset == null) {
 				return;
-			}
-
-			if (!isTrackingChanges() || isChanged()) {
-
-				String warning =  _R("The settings currently on the dialog will be permanently overwritten with preset named ''<b>{0}</b>''.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>permanently overwrite</b> current settings?", preset.getName());
-				SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 3);
-
-				boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
-				if (!ok) {
-					return;
-				}
-
 			}
 
 			try {
@@ -972,14 +908,6 @@ public abstract class AbstractPresetDialog extends AbstractSvarogDialog {
 
 			Preset preset = presetManager.getPresetByName(name);
 			if (preset == null) {
-				return;
-			}
-
-			String warning =  _R("Selected preset named ''<b>{0}</b>'' will be permanently removed.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>permanently remove</b> this preset?", name);
-			SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 5);
-
-			boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
-			if (!ok) {
 				return;
 			}
 
@@ -1128,18 +1056,6 @@ public abstract class AbstractPresetDialog extends AbstractSvarogDialog {
 				return;
 			}
 
-			if (!isTrackingChanges() || isChanged()) {
-
-				String warning =  _R("The settings currently on the dialog will be permanently overwritten with preset named ''<b>{0}</b>''.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>permanently overwrite</b> current settings?", preset.getName());
-				SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 3);
-
-				boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
-				if (!ok) {
-					return;
-				}
-
-			}
-
 			try {
 				setPreset(preset);
 			} catch (SignalMLException ex) {
@@ -1154,17 +1070,7 @@ public abstract class AbstractPresetDialog extends AbstractSvarogDialog {
 			}
 
 			Preset existingPreset = presetManager.getPresetByName(newName);
-			if (existingPreset != null) {
-
-				String warning =  _R("Preset named ''<b>{0}</b>'' will be permanently overwritten.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>permanently overwrite</b> this preset?", newName);
-				SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 5);
-
-				boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
-				if (!ok) {
-					return;
-				}
-
-			}
+			// XXX existingPreset unused!
 
 			preset.setName(newName);
 

@@ -8,7 +8,6 @@ import org.signalml.app.view.montage.filters.EditTimeDomainSampleFilterDialog;
 import org.signalml.app.view.montage.filters.EditFFTSampleFilterDialog;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.Window;
 import java.io.IOException;
 import java.net.URL;
@@ -16,8 +15,6 @@ import java.net.URL;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import org.signalml.app.config.preset.EegSystemsPresetManager;
 import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
 
@@ -27,8 +24,6 @@ import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.model.MontageDescriptor;
-import org.signalml.app.model.SeriousWarningDescriptor;
-import org.signalml.app.montage.MontagePresetManager;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.dialog.AbstractPresetDialog;
@@ -36,7 +31,7 @@ import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.SourceMontage;
-import org.signalml.domain.montage.generators.IMontageGenerator;
+import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.SvarogConstants;
 import org.signalml.util.Util;
@@ -66,11 +61,10 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	 */
 	private EditTimeDomainSampleFilterDialog editTimeDomainSampleFilterDialog;
 
-	protected MontageChannelsPanel channelsPanel;
-	protected MontageGeneratorPanel generatorPanel;
-	protected EegSystemSelectionPanel eegSystemSelectionPanel;
-	protected MatrixReferenceEditorPanel matrixReferenceEditorPanel;
-	protected VisualReferenceEditorPanel visualReferenceEditorPanel;
+	/**
+	 * A panel for editing the signal's montage.
+	 */
+	protected MontageEditionPanel montageEditionPanel;
 	protected MontageFiltersPanel filtersPanel;
 	protected MontageMiscellaneousPanel miscellaneousPanel;
 
@@ -94,6 +88,9 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	 * {@link TimeDomainSampleFilter TimeDomainSampleFilters}.
 	 */
 	private PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainSampleFilterPresetManager;
+	/**
+	 * The preset manager which manges the available {@link EegSystem EEG systems}.
+	 */
 	private EegSystemsPresetManager eegSystemsPresetManager;
 
 	public SignalMontageDialog(ViewerElementManager viewerElementManager,
@@ -118,79 +115,23 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 
 		JPanel interfacePanel = new JPanel(new BorderLayout());
 
-		channelsPanel = new MontageChannelsPanel();
-		channelsPanel.setSeriousWarningDialog(getSeriousWarningDialog());
-
-		matrixReferenceEditorPanel = new MatrixReferenceEditorPanel();
-
-		visualReferenceEditorPanel = new VisualReferenceEditorPanel();
-
 		filtersPanel = new MontageFiltersPanel(predefinedTimeDomainSampleFilterPresetManager);
-		filtersPanel.setSeriousWarningDialog(getSeriousWarningDialog());
 		filtersPanel.setEditFFTSampleFilterDialog(getEditFFTSampleFilterDialog());
 		filtersPanel.setTimeDomainSampleFilterDialog(getEditTimeDomainSampleFilterDialog());
+		montageEditionPanel = new MontageEditionPanel();
+		montageEditionPanel.setErrorsDialog(getErrorsDialog());
 
 		miscellaneousPanel = new MontageMiscellaneousPanel();
 
 		tabbedPane = new JTabbedPane();
-		tabbedPane.addTab(_("Channels"), channelsPanel);
-		tabbedPane.addTab(_("Reference editor"), visualReferenceEditorPanel);
-		tabbedPane.addTab(_("Reference matrix"), matrixReferenceEditorPanel);
+
+		tabbedPane.addTab(_("Montage"), montageEditionPanel);
 		tabbedPane.addTab(_("Filters"), filtersPanel);
 		tabbedPane.addTab(_("Miscellaneous"), miscellaneousPanel);
-		tabbedPane.addChangeListener(new ChangeListener() {
 
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				int index = tabbedPane.getSelectedIndex();
-				if (index < 0) {
-					return;
-				}
-				switch (index) {
-
-				case 1 :
-					visualReferenceEditorPanel.getEditor().requestFocusInWindow();
-					break;
-				case 2 :
-					matrixReferenceEditorPanel.getReferenceTable().requestFocusInWindow();
-					break;
-				case 3 :
-					miscellaneousPanel.getEditDescriptionPanel().getTextPane().requestFocusInWindow();
-					break;
-				case 0 :
-				default :
-					// no special focus
-
-				}
-			}
-
-		});
-
-		interfacePanel.add(createNorthPanel(), BorderLayout.NORTH);
 		interfacePanel.add(tabbedPane, BorderLayout.CENTER);
 
 		return interfacePanel;
-
-	}
-
-	/**
-	 * Creates and returns a {@link JPanel} containing the ComboBoxes
-	 * for selecting a {@link IMontageGenerator} and {@link EegSystem}.
-	 * @return a {@link JPanel} which is in the upper side of the SignalMontage
-	 * dialog.
-	 */
-	protected JPanel createNorthPanel() {
-		JPanel northPanel = new JPanel(new GridLayout(1, 2));
-
-		generatorPanel = new MontageGeneratorPanel();
-		generatorPanel.setErrorsDialog(getErrorsDialog());
-		generatorPanel.setSeriousWarningDialog(getSeriousWarningDialog());
-		northPanel.add(generatorPanel);
-
-		eegSystemSelectionPanel = new EegSystemSelectionPanel(eegSystemsPresetManager);
-		northPanel.add(eegSystemSelectionPanel);
-
-		return northPanel;
 
 	}
 
@@ -227,7 +168,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 				getRootPane().setDefaultButton(getCancelButton());
 			}
 
-			channelsPanel.setSignalBound(signalBound);
+			montageEditionPanel.setSignalBound(signalBound);
 			filtersPanel.setSignalBound(signalBound);
 			if (signalBound) {
 				filtersPanel.setCurrentSamplingFrequency(signalDocument.getSamplingFrequency());
@@ -249,11 +190,12 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 
 	private void setMontageToPanels(Montage montage) {
 
-		generatorPanel.setMontage(montage);
-		eegSystemSelectionPanel.setMontage(montage);
-		channelsPanel.setMontage(montage);
-		visualReferenceEditorPanel.setMontage(montage);
-		matrixReferenceEditorPanel.setMontage(montage);
+		if (montage != null && montage.getEegSystemName() != null) {
+			EegSystem system = (EegSystem) eegSystemsPresetManager.getPresetByName(montage.getEegSystemFullName());
+			montage.setEegSystem(system);
+		}
+
+		montageEditionPanel.setMontageToPanels(montage);
 		filtersPanel.setMontage(montage);
 		miscellaneousPanel.setMontage(montage);
 

@@ -827,6 +827,16 @@ public class Montage extends SourceMontage implements Preset {
 		setMontageGenerator(null);
 	}
 
+	@Override
+	public boolean removeSourceChannel(int index) {
+		if (isSourceChannelInUse(index)) {
+			return false;
+		}
+		else {
+			return super.removeSourceChannel(index);
+		}
+	}
+
         /**
          * Removes the last {@link SourceChannel source channel} on the the list
          * of source channels, montage channels with it as a primary and
@@ -834,7 +844,7 @@ public class Montage extends SourceMontage implements Preset {
          * @return removed source channel
          */
 	@Override
-	public SourceChannel removeSourceChannel() {
+	protected SourceChannel removeLastSourceChannel() {
 
 		if (sourceChannels.isEmpty()) {
 			return null;
@@ -903,7 +913,7 @@ public class Montage extends SourceMontage implements Preset {
 			}
 		}
 
-		super.removeSourceChannel();
+		super.removeLastSourceChannel();
 		setMontageGenerator(null);
 
 		return channel;
