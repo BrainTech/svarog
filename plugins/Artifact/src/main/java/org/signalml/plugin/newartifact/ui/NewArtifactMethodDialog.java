@@ -36,6 +36,7 @@ import org.signalml.plugin.newartifact.data.NewArtifactParameters;
 import org.signalml.plugin.newartifact.data.NewArtifactPowerGridFrequency;
 import org.signalml.plugin.newartifact.data.NewArtifactType;
 import org.signalml.plugin.tool.PluginResourceRepository;
+import org.signalml.plugin.newartifact.NewArtifactPlugin;
 import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
 
 import org.springframework.core.io.ClassPathResource;
@@ -74,16 +75,7 @@ public class NewArtifactMethodDialog extends AbstractPresetDialog {
 	@Override
 	protected void initialize() {
 		setTitle(_("Artifact detection configuration"));
-		PluginConfigForMethod config;
-		try {
-			config = (PluginConfigForMethod) PluginResourceRepository.GetResource("config");
-		} catch (PluginException e) {
-			config = null;
-		}
-		if (config != null) {
-			setIconImage(IconUtils
-				     .loadClassPathImage(config.getMethodConfig().getIconPath()));
-		}
+		setIconImage(IconUtils.loadClassPathImage(NewArtifactPlugin.iconPath));
 		setResizable(false);
 		super.initialize();
 	}

@@ -25,11 +25,11 @@ import javax.swing.border.TitledBorder;
 
 import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.data.PluginConfigForMethod;
-import org.signalml.plugin.data.PluginConfigMethodData;
 import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.plugin.tool.PluginResourceRepository;
+import org.signalml.plugin.newartifact.NewArtifactPlugin;
 import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
 
 import org.springframework.validation.Errors;
@@ -82,16 +82,7 @@ public class NewArtifactResultDialog extends org.signalml.plugin.export.view.Abs
 	@Override
 	protected void initialize() {
 		setTitle(_("Artifact result"));
-		PluginConfigMethodData config;
-		try {
-			config = ((PluginConfigForMethod) PluginResourceRepository
-				  .GetResource("config")).getMethodConfig();
-		} catch (PluginException e) {
-			config = null;
-		}
-		if (config != null) {
-			setIconImage(IconUtils.loadClassPathImage(config.getIconPath()));
-		}
+		setIconImage(IconUtils.loadClassPathImage(NewArtifactPlugin.iconPath));
 		setResizable(false);
 		super.initialize();
 	}

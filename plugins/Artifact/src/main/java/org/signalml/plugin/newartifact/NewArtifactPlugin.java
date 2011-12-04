@@ -64,4 +64,6 @@ public class NewArtifactPlugin implements Plugin {
 	public static NewArtifactI18nDelegate i18n() {
 		return i18nDelegate;
 	}
+
+	public static final String iconPath = "org/signalml/app/icon/runmethod.png";
 }

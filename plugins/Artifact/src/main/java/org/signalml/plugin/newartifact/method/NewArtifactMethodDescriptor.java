@@ -19,6 +19,7 @@ import org.signalml.plugin.method.PluginAbstractMethodDescriptor;
 import org.signalml.plugin.newartifact.data.NewArtifactApplicationData;
 import org.signalml.plugin.newartifact.data.NewArtifactParameters;
 import org.signalml.plugin.tool.PluginResourceRepository;
+import org.signalml.plugin.newartifact.NewArtifactPlugin;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -47,6 +48,11 @@ public class NewArtifactMethodDescriptor extends PluginAbstractMethodDescriptor 
 	@Override
 	public String getIterationName() {
 		return null;
+	}
+
+	@Override
+	public String getIconPath() {
+		return NewArtifactPlugin.iconPath;
 	}
 
 	@Override
@@ -91,18 +97,13 @@ public class NewArtifactMethodDescriptor extends PluginAbstractMethodDescriptor 
 	}
 
 	@Override
-	public String getIconPath() {
-		return this.methodManager.getMethodConfig().getIconPath();
-	}
-
-	@Override
 	public Method getMethod() {
 		return this.methodManager.getMethodConfig().getMethod();
 	}
 
 	@Override
 	public String getName() {
-		return this.methodManager.getMethodConfig().getRunMethodString();
+		return "xxx";
 	}
 
 	@Override

@@ -11,12 +11,12 @@ import javax.swing.JComponent;
 
 import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.data.PluginConfigForMethod;
-import org.signalml.plugin.data.PluginConfigMethodData;
 import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.plugin.newartifact.data.NewArtifactConfiguration;
 import org.signalml.plugin.tool.PluginResourceRepository;
+import org.signalml.plugin.newartifact.NewArtifactPlugin;
 import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
 
 import org.springframework.validation.Errors;
@@ -40,24 +40,14 @@ public class NewArtifactToolConfigDialog extends org.signalml.plugin.export.view
 		super();
 	}
 
-	public NewArtifactToolConfigDialog(
-					   Window w, boolean isModal) {
+	public NewArtifactToolConfigDialog(Window w, boolean isModal) {
 		super(w, isModal);
 	}
 
 	@Override
 	protected void initialize() {
 		setTitle(_("Artifact configuration"));
-		PluginConfigMethodData config;
-		try {
-			config = ((PluginConfigForMethod) PluginResourceRepository
-				  .GetResource("config")).getMethodConfig();
-		} catch (PluginException e) {
-			config = null;
-		}
-		if (config != null) {
-			setIconImage(IconUtils.loadClassPathImage(config.getIconPath()));
-		}
+		setIconImage(IconUtils.loadClassPathImage(NewArtifactPlugin.iconPath));
 		setResizable(false);
 		super.initialize();
 	}
@@ -102,6 +92,7 @@ public class NewArtifactToolConfigDialog extends org.signalml.plugin.export.view
 			if (file == null || !file.exists() || !file.canWrite()) {
 				errors.rejectValue("workingDirectoryPath",
 						   "error.artifact.noWorkingDirectory");
+				// FIXME "Working directory not set or unusable"
 			}
 		}
 
