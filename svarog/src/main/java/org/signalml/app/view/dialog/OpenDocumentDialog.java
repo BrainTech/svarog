@@ -151,10 +151,7 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 	 * {@link SignalMLOptionsPanel},</li>
 	 * <li>sets the action registering a codec for a
 	 * {@link SignalMLOptionsPanel#getRegisterCodecButton() button} in
-	 * SignalMLOptionsPanel,</li>
-	 * <li>sets the {@link ReadXMLManifestAction action} for a
-	 * {@link RawSignalOptionsPanel#getReadXMLManifestButton() button} in
-	 * {@link RawSignalOptionsPanel}.</li></ul>
+	 * SignalMLOptionsPanel.</li></ul>
 	 */
 	@Override
 	protected void initialize() {
@@ -761,88 +758,5 @@ public class OpenDocumentDialog extends AbstractWizardDialog {
 	public void setFileChooser(ViewerFileChooser fileChooser) {
 		this.fileChooser = fileChooser;
 	}
-
-	/**
-	 * The actions which {@link RawSignalDescriptorReader#readDocument(File)
-	 * reads} the parameters of a (RAW) signal from an XML file.
-	 */
-	protected class ReadXMLManifestAction extends AbstractAction {
-
-		private static final long serialVersionUID = 1L;
-		
-		/**
-		 * the {@link RawSignalDescriptorReader reader} used to read the
-		 * parameters of the RAW signal
-		 */
-		private RawSignalDescriptorReader reader;
-
-		/**
-		 * Constructor. Sets the icon and description.
-		 */
-		public ReadXMLManifestAction() {
-			super(_("Read manifest..."));
-			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/script_load.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,_("Read signal parameters from XML manifest"));
-			//putValue(AbstractAction.ACCELERATOR_KEY, KeyStroke.getKeyStroke("F1"));
-		}
-
-		/**
-		 * Called when this action is performed.
-		 * <ul>
-		 * <li>{@link ViewerFileChooser#chooseReadXMLManifest(File, File,
-		 * java.awt.Component) Asks} the user for the XML file with the
-		 * parameters of the raw signal.</li>
-		 * <li>{@link RawSignalDescriptorReader Reads} the {@link RawSignalDescriptor
-		 * parametrs}.</li>
-		 * <li>Fills the {@link RawSignalOptionsPanel#fillPanelFromModel(
-		 * RawSignalDescriptor) RawSignalOptionsPanel} and
-		 * {@link PagingParametersPanel#fillModelFromPanel(RawSignalDescriptor)
-		 * PagingParametersPanel}.</li><ul>
-		 */
-		public void actionPerformed(ActionEvent ev) {
-
-			File selectedFile = getStepOnePanel().getFileChooser().getSelectedFile();
-			File directory = null;
-			File fileSuggestion = null;
-			if (selectedFile != null) {
-				directory = selectedFile.getParentFile();
-
-				fileSuggestion = Util.changeOrAddFileExtension(selectedFile, "xml");
-
-			}
-
-			if (directory == null) {
-				directory = new File(System.getProperty("user.dir"));
-			}
-
-			File xmlFile = fileChooser.chooseReadXMLManifest(directory, fileSuggestion, OpenDocumentDialog.this);
-			if (xmlFile == null) {
-				return;
-			}
-
-			if (reader == null) {
-				reader = new RawSignalDescriptorReader();
-			}
-
-			try {
-				currentRawSignalDescriptor = reader.readDocument(xmlFile);
-			} catch (IOException ex) {
-				logger.error("Failed to read document", ex);
-				getErrorsDialog().showException(ex);
-				return;
-			} catch (SignalMLException ex) {
-				logger.error("Failed to read document", ex);
-				getErrorsDialog().showException(ex);
-				return;
-			}
-
-			OpenSignalOptionsPanel signalOptionsPanel = getStepTwoPanel().getSignalOptionsPanel();
-			signalOptionsPanel.getRawSignalOptionsPanel().fillPanelFromModel(currentRawSignalDescriptor);
-			signalOptionsPanel.getPagingSignalParamersPanel().fillPanelFromModel(currentRawSignalDescriptor);
-
-		}
-
-	}
-
 }
 
