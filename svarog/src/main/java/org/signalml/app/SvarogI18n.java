@@ -21,12 +21,21 @@ public class SvarogI18n implements ISvarogI18n, SvarogAccessI18n {
 
 	private final I18n i18n;
 
+	/**
+	 * Initializes i18n resources using classloader of klass, from catalog
+	 * called catalogId.
+	 */
 	public SvarogI18n(Class klass, String catalogId) {
+		log.info("loading i18n bundle " + catalogId);
 		this.i18n = I18nFactory.getI18n(klass, catalogId);
 	}
 
+	/**
+	 * Call {@link SvarogI18n(Class klass, String catalogId)} with catalogId
+	 * set to the namespace of klass.
+	 */
 	public SvarogI18n(Class klass) {
-		this.i18n = I18nFactory.getI18n(klass);
+		this(klass, klass.getPackage().getName());
 	}
 
 	/**
