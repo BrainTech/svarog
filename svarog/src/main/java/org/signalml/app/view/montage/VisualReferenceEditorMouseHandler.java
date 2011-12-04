@@ -33,12 +33,12 @@ public class VisualReferenceEditorMouseHandler extends MouseAdapter {
 
 	private ArrayList<VisualReferenceArrow> tempArrowList = new ArrayList<VisualReferenceArrow>();
 
-	private VisualRefererenceDraggedChannel draggedChannelComponent;
+	private VisualReferenceDraggedChannel draggedChannelComponent;
 
 	public VisualReferenceEditorMouseHandler(VisualReferenceEditor editor) {
 		this.editor = editor;
 		model = editor.getModel();
-		draggedChannelComponent = new VisualRefererenceDraggedChannel(editor);
+		draggedChannelComponent = new VisualReferenceDraggedChannel(editor);
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-/* VisualRefererenceDraggedChannel.java created 2007-12-02
+/* VisualReferenceDraggedChannel.java created 2007-12-02
  *
  */
 
@@ -11,12 +11,12 @@ import java.awt.RenderingHints;
 
 import javax.swing.JComponent;
 
-/** VisualRefererenceDraggedChannel
+/** VisualReferenceDraggedChannel
  *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class VisualRefererenceDraggedChannel extends JComponent {
+public class VisualReferenceDraggedChannel extends JComponent {
 
 	private static final long serialVersionUID = 1L;
 
@@ -26,7 +26,7 @@ public class VisualRefererenceDraggedChannel extends JComponent {
 
 	private VisualReferenceSourceChannel channel;
 
-	public VisualRefererenceDraggedChannel(VisualReferenceEditor editor) {
+	public VisualReferenceDraggedChannel(VisualReferenceEditor editor) {
 		super();
 		this.editor = editor;
 	}
