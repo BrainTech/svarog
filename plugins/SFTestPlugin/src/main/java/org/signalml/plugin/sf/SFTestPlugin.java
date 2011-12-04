@@ -16,7 +16,6 @@ public class SFTestPlugin implements Plugin {
     protected static final Logger log = Logger.getLogger(SFTestPlugin.class);
 
     private SvarogAccess svarogAccess;
-    private PluginAuth pluginAuth;
 
     private void testI18nPlural(int k) {
         String sraw= svarogAccess.getI18nAccess().translateN("Deleted one file", "Deleted {0} files", k);

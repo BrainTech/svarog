@@ -2,11 +2,10 @@ package org.signalml.plugin.sf;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
-import org.signalml.plugin.export.PluginAuth;
 import org.signalml.plugin.export.SvarogAccess;
 
 /**
- * Run I18N methods with invalid PluginAuth.
+ * Run some I18N methods.
  */
 public class I18NAction extends AbstractAction {
 	private final SvarogAccess sa;
