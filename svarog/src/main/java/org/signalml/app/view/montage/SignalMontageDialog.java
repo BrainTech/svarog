@@ -8,6 +8,7 @@ import org.signalml.app.view.montage.filters.EditTimeDomainSampleFilterDialog;
 import org.signalml.app.view.montage.filters.EditFFTSampleFilterDialog;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Window;
 import java.io.IOException;
 import java.net.URL;
@@ -17,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import org.signalml.app.config.preset.EegSystemsPresetManager;
 import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
 
 import org.signalml.app.config.preset.FFTSampleFilterPresetManager;
@@ -28,12 +30,13 @@ import org.signalml.app.model.MontageDescriptor;
 import org.signalml.app.model.SeriousWarningDescriptor;
 import org.signalml.app.montage.MontagePresetManager;
 import org.signalml.app.util.IconUtils;
+import org.signalml.app.view.ViewerElementManager;
 import org.signalml.app.view.dialog.AbstractPresetDialog;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.SourceMontage;
-import org.signalml.domain.signal.SignalType;
+import org.signalml.domain.montage.generators.IMontageGenerator;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.SvarogConstants;
 import org.signalml.util.Util;
@@ -65,6 +68,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 
 	protected MontageChannelsPanel channelsPanel;
 	protected MontageGeneratorPanel generatorPanel;
+	protected EegSystemSelectionPanel eegSystemSelectionPanel;
 	protected MatrixReferenceEditorPanel matrixReferenceEditorPanel;
 	protected VisualReferenceEditorPanel visualReferenceEditorPanel;
 	protected MontageFiltersPanel filtersPanel;
@@ -90,11 +94,14 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	 * {@link TimeDomainSampleFilter TimeDomainSampleFilters}.
 	 */
 	private PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainSampleFilterPresetManager;
+	private EegSystemsPresetManager eegSystemsPresetManager;
 
-	public SignalMontageDialog( MontagePresetManager montagePresetManager,
-		PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainSampleFilterPresetManager, Window f, boolean isModal) {
-		super(montagePresetManager, f, isModal);
-		this.predefinedTimeDomainSampleFilterPresetManager = predefinedTimeDomainSampleFilterPresetManager;
+	public SignalMontageDialog(ViewerElementManager viewerElementManager,
+		Window f, boolean isModal) {
+
+		super(viewerElementManager.getMontagePresetManager(), f, isModal);
+		this.predefinedTimeDomainSampleFilterPresetManager = viewerElementManager.getPredefinedTimeDomainFiltersPresetManager();
+		this.eegSystemsPresetManager = viewerElementManager.getEegSystemsPresetManager();
 	}
 
 	@Override
@@ -110,10 +117,6 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	public JComponent createInterface() {
 
 		JPanel interfacePanel = new JPanel(new BorderLayout());
-
-		generatorPanel = new MontageGeneratorPanel();
-		generatorPanel.setErrorsDialog(getErrorsDialog());
-		generatorPanel.setSeriousWarningDialog(getSeriousWarningDialog());
 
 		channelsPanel = new MontageChannelsPanel();
 		channelsPanel.setSeriousWarningDialog(getSeriousWarningDialog());
@@ -163,11 +166,31 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 
 		});
 
-
-		interfacePanel.add(generatorPanel, BorderLayout.NORTH);
+		interfacePanel.add(createNorthPanel(), BorderLayout.NORTH);
 		interfacePanel.add(tabbedPane, BorderLayout.CENTER);
 
 		return interfacePanel;
+
+	}
+
+	/**
+	 * Creates and returns a {@link JPanel} containing the ComboBoxes
+	 * for selecting a {@link IMontageGenerator} and {@link EegSystem}.
+	 * @return a {@link JPanel} which is in the upper side of the SignalMontage
+	 * dialog.
+	 */
+	protected JPanel createNorthPanel() {
+		JPanel northPanel = new JPanel(new GridLayout(1, 2));
+
+		generatorPanel = new MontageGeneratorPanel();
+		generatorPanel.setErrorsDialog(getErrorsDialog());
+		generatorPanel.setSeriousWarningDialog(getSeriousWarningDialog());
+		northPanel.add(generatorPanel);
+
+		eegSystemSelectionPanel = new EegSystemSelectionPanel(eegSystemsPresetManager);
+		northPanel.add(eegSystemSelectionPanel);
+
+		return northPanel;
 
 	}
 
@@ -189,7 +212,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 				if (signalBound) {
 					currentMontage = new Montage(new SourceMontage(signalDocument));
 				} else {
-					currentMontage = new Montage(new SourceMontage(SignalType.EEG_10_20));
+					currentMontage = new Montage(new SourceMontage());
 				}
 			} else {
 				currentMontage = new Montage(montage);
@@ -216,16 +239,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 
 		if (signalDocument != null) {
 			if (!currentMontage.isCompatible(signalDocument)) {
-
-				String warning =  _("The selected montage is not compatible with the current signal. It will have to be adapted.<br>&nbsp;<br>This may result in a serious modification of montage structure.<br>&nbsp;<br>Are you sure you wish to <b>apply</b> the montage?");
-				SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 3);
-
-				boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
-				if (!ok) {
-					return;
-				}
 				currentMontage.adapt(signalDocument);
-
 			}
 		}
 		setMontageToPanels(currentMontage);
@@ -236,6 +250,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	private void setMontageToPanels(Montage montage) {
 
 		generatorPanel.setMontage(montage);
+		eegSystemSelectionPanel.setMontage(montage);
 		channelsPanel.setMontage(montage);
 		visualReferenceEditorPanel.setMontage(montage);
 		matrixReferenceEditorPanel.setMontage(montage);
@@ -279,6 +294,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	public Preset getPreset() throws SignalMLException {
 
 		Montage preset = new Montage(currentMontage);
+
 
 		Errors errors = new BindException(preset, "data");
 		validateDialog(preset, errors);
@@ -427,5 +443,13 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	 */
 	public Montage getCurrentMontage() {
 		return currentMontage;
+	}
+
+	/**
+	 * Returns the {@link EegSystemsPresetManager} used by this dialog.
+	 * @return the {@link EegSystemsPresetManager} used by this dialog
+	 */
+	public EegSystemsPresetManager getEegSystemsPresetManager() {
+		return eegSystemsPresetManager;
 	}
 }

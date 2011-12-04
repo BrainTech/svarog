@@ -10,8 +10,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
-import org.signalml.domain.montage.eeg.EegChannel;
+import org.signalml.domain.montage.system.ChannelFunction;
 
 /**
  * This is abstract class which should be extended by classes acting as data
@@ -33,7 +32,8 @@ public class AbstractData implements Serializable {
 		channelMap = new HashMap<String, Integer>();
 	}
 
-	private static final EegChannel[] keyChannels = new EegChannel[] {
+	private static final ChannelFunction[] keyChannels = ChannelFunction.values();
+		/*new ChannelFunction[] {
 	        EegChannel.ECG,
 	        EegChannel.F7,
 	        EegChannel.F8,
@@ -50,15 +50,15 @@ public class AbstractData implements Serializable {
 	        EegChannel.EMG,
 	        EegChannel.A1,
 	        EegChannel.A2
-	};
+	};*/
 
         /**
          * Unmodifiable Set of EEG channels.
          */
-	public static final Set<EegChannel> keyChannelSet = getKeyChannelSet();
+	public static final Set<ChannelFunction> keyChannelSet = getKeyChannelSet();
 
-	private static Set<EegChannel> getKeyChannelSet() {
-		HashSet<EegChannel> channelSet = new HashSet<EegChannel>();
+	private static Set<ChannelFunction> getKeyChannelSet() {
+		HashSet<ChannelFunction> channelSet = new HashSet<ChannelFunction>();
 		for (int i=0; i<keyChannels.length; i++) {
 			channelSet.add(keyChannels[i]);
 		}

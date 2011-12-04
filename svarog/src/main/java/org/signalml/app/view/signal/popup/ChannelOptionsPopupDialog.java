@@ -3,27 +3,19 @@ package org.signalml.app.view.signal.popup;
 import static org.signalml.app.SvarogI18n._;
 import static org.signalml.app.SvarogI18n._R;
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 
-import javax.swing.AbstractAction;
-import javax.swing.BoundedRangeModel;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.DefaultBoundedRangeModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -32,16 +24,11 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.signalml.app.model.ChannelPlotOptionsModel;
-import org.signalml.app.model.MontageDescriptor;
-import org.signalml.app.util.IconUtils;
-import org.signalml.app.util.SwingUtils;
 import org.signalml.app.view.element.TitledCrossBorder;
 import org.signalml.app.view.element.TitledSliderPanel;
-import org.signalml.app.view.montage.SignalMontageDialog;
 import org.signalml.app.view.signal.SignalPlot;
-import org.signalml.app.view.signal.popup.SlavePlotSettingsPopupDialog.EditMontageAction;
-import org.signalml.app.view.signal.popup.SlavePlotSettingsPopupDialog.SynchronizeNowAction;
 import org.signalml.domain.montage.Montage;
+import org.signalml.domain.montage.SourceChannel;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractPopupDialog;
 
@@ -201,7 +188,14 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 		this.model = plot.getChannelsPlotOptionsModel().getModelAt(this.channel);
 		if (!this.model.getVisible())
 			this.model.setVisible(true);
-		
+
+		Montage montage = currentPlot.getDocument().getMontage();
+		SourceChannel sourceChannel = montage.getSourceChannelForMontageChannel(channel);
+		int min = sourceChannel.getFunction().getMinValueScale();
+		int max = sourceChannel.getFunction().getMaxValueScale();
+		this.valueScaleModel.setMinimum(min);
+		this.valueScaleModel.setMaximum(max);
+
 		this.setInitialVoltageScale(this.model.getVoltageScale());
 		this.ignoreGlobalScale.getModel().setSelected(this.model.getIgnoreGlobalScale());
 	}

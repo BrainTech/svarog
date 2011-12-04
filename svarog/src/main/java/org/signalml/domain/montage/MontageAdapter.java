@@ -121,5 +121,8 @@ public class MontageAdapter implements SourceMontageListener, MontageListener, M
 	public void filtersChanged(MontageSampleFilterEvent ev) {
 	}
 
+	@Override
+	public void sourceMontageEegSystemChanged(SourceMontageEvent ev) {
+	}
 
 }

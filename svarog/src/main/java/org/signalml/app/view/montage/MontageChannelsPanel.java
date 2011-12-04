@@ -27,6 +27,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.apache.log4j.Logger;
+import org.codehaus.janino.WarningHandler;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.model.SeriousWarningDescriptor;
 import org.signalml.app.montage.MontageTableModel;
@@ -39,8 +40,10 @@ import org.signalml.app.view.dialog.SeriousWarningDialog;
 import org.signalml.app.view.montage.dnd.MontageWasteBasket;
 import org.signalml.app.view.montage.dnd.MontageWasteBasketTransferHandler;
 import org.signalml.domain.montage.Montage;
+import org.signalml.domain.montage.system.ChannelType;
+import org.signalml.domain.montage.system.IChannelFunction;
 import org.signalml.domain.montage.MontageChannel;
-import org.signalml.domain.montage.eeg.EegChannel;
+import org.signalml.domain.montage.system.ChannelFunction;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.SourceChannel;
 
@@ -854,10 +857,10 @@ public class MontageChannelsPanel extends JPanel {
 			try {
 				if (this.channelType == 0) {
 					String lb = montage.getNewSourceChannelLabel(_("ZERO"));
-					montage.addSourceChannel(lb, EegChannel.ZERO);
+					montage.addSourceChannel(lb, ChannelFunction.ZERO);
 				} else {//assumed ONE
 					String lb = montage.getNewSourceChannelLabel(_("ONE"));
-					montage.addSourceChannel(lb, EegChannel.ONE);
+					montage.addSourceChannel(lb, ChannelFunction.ONE);
 				}
 				
 			} catch (MontageException ex) {
@@ -911,6 +914,11 @@ public class MontageChannelsPanel extends JPanel {
 				return;
 			}
 
+			IChannelFunction function = montage.getSourceChannelAt(cnt -1 ).getFunction();
+			if (function != ChannelFunction.ONE && function != ChannelFunction.ZERO) {
+				ErrorsDialog.showError("error.sourceMontageTable.canOnlyRemoveZerosAndOnesChannels");
+				return;
+			}
 			if (montage.isSourceChannelInUse(cnt -  1)) {
 
 				String warning =  _("The removed source channel is used either as a primary channel or as a reference. Montage will be altered.<br>&nbsp;<br>There is no undo.<br>&nbsp;<br>Are you sure you wish to <b>remove</b> a source channel?");

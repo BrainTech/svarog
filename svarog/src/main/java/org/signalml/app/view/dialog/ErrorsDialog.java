@@ -4,7 +4,6 @@
 
 package org.signalml.app.view.dialog;
 
-import static org.signalml.app.SvarogI18n._;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -27,13 +26,16 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import org.springframework.validation.Errors;
+
 import org.apache.log4j.Logger;
+import org.apache.log4j.spi.ErrorCode;
 import org.signalml.app.util.IconUtils;
 import org.signalml.exception.ResolvableException;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.MessageSourceResolvable;
+import static org.signalml.app.SvarogI18n._;
 
-import org.springframework.validation.Errors;
+import org.springframework.context.MessageSourceResolvable;
 
 /**
  * Dialog with the list of errors.
@@ -208,6 +210,14 @@ public class ErrorsDialog extends org.signalml.app.view.dialog.AbstractSvarogDia
 		} else {
 			throw new ClassCastException();
 		}
+	}
+
+	/**
+	 * Shows a simple dialog with OK button showing the specified error message.
+	 * @param message the error
+	 */
+	public static void showError(String message) {
+		JOptionPane.showMessageDialog(null, message, message, JOptionPane.ERROR_MESSAGE);
 	}
 
 	/**

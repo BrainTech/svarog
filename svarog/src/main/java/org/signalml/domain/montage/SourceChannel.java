@@ -4,13 +4,15 @@
 
 package org.signalml.domain.montage;
 
+import org.signalml.domain.montage.system.IChannelFunction;
 import java.io.Serializable;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import org.signalml.domain.montage.system.EegElectrode;
 
 /**
  * This class represents a source channel. It has a certain number, name
- * and {@link Channel function}.
+ * and {@link IChannelFunction function}.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -32,7 +34,14 @@ public class SourceChannel implements Serializable {
         /**
          * the function of this SourceChannel
          */
-	private Channel function;
+	private IChannelFunction function;
+
+	/**
+	 * An {@link EegElectrode} associated with this {@link SourceChannel}.
+	 * If the channel function is different than EEG, then this field
+	 * will be null.
+	 */
+	private EegElectrode eegElectrode;
 
         /**
          * Constructor. Creates an empty SourceChannel.
@@ -47,7 +56,7 @@ public class SourceChannel implements Serializable {
          * @param label a label of a SourceChannel
          * @param function a function of a SourceChannel
          */
-	public SourceChannel(int channel, String label, Channel function) {
+	public SourceChannel(int channel, String label, IChannelFunction function) {
 		this.channel = channel;
 		setLabel(label);
 		setFunction(function);
@@ -61,6 +70,7 @@ public class SourceChannel implements Serializable {
 		this.channel = sourceChannel.channel;
 		this.label = sourceChannel.label;
 		this.function = sourceChannel.function;
+		this.eegElectrode = sourceChannel.eegElectrode;
 	}
 
         /**
@@ -83,7 +93,7 @@ public class SourceChannel implements Serializable {
          * Returns a function of this SourceChannel.
          * @return a function of this SourceChannel
          */
-	public Channel getFunction() {
+	public IChannelFunction getFunction() {
 		return function;
 	}
 
@@ -105,11 +115,31 @@ public class SourceChannel implements Serializable {
          * Sets a function of this SourceChannel.
          * @param function a function to be set
          */
-	public void setFunction(Channel function) {
+	public void setFunction(IChannelFunction function) {
 		if (function == null) {
 			throw new NullPointerException("Null function");
 		}
 		this.function = function;
+	}
+
+	/**
+	 * Sets an {@link EegElectrode} that will be associated with this
+	 * {@link SourceChannel}.
+	 * @param eegElectrode an {@link EegElectrode} that will be associated with this
+	 * {@link SourceChannel}
+	 */
+	public void setEegElectrode(EegElectrode eegElectrode) {
+		this.eegElectrode = eegElectrode;
+	}
+
+	/**
+	 * Returns the {@link EegElectrode} that is associated with this
+	 * {@link SourceChannel}.
+	 * @return the {@link EegElectrode} that is associated with this
+	 * {@link SourceChannel}
+	 */
+	public EegElectrode getEegElectrode() {
+		return eegElectrode;
 	}
 
 }

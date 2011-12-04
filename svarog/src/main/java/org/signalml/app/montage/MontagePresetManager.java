@@ -4,6 +4,8 @@
 
 package org.signalml.app.montage;
 
+import java.io.File;
+import java.io.IOException;
 import org.signalml.app.config.preset.AbstractPresetManager;
 import org.signalml.app.util.XMLUtils;
 import org.signalml.domain.montage.Montage;

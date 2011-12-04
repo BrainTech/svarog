@@ -20,7 +20,7 @@ import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.signal.OriginalMultichannelSampleSource;
-import org.signalml.domain.signal.SignalType;
+import org.signalml.domain.montage.SignalConfigurer;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.AbstractDocument;
@@ -76,11 +76,6 @@ public abstract class AbstractSignal extends AbstractDocument implements SignalD
 	protected float blockSize = pageSize / blocksPerPage;
 
 	/**
-	 * the {@link SignalType type} of this signal
-	 */
-	protected SignalType type;
-
-	/**
 	 * the main {@link Montage montage} for this signal
 	 */
 	protected Montage montage = null;
@@ -92,11 +87,9 @@ public abstract class AbstractSignal extends AbstractDocument implements SignalD
 	private int namelessTagCounter = 1;
 
 	/**
-	 * Constructor. Sets the {@link SignalType type} of the signal.
-	 * @param type the type of the signal to set
+	 * Constructor.
 	 */
-	public AbstractSignal(SignalType type) {
-		this.type = type;
+	public AbstractSignal() {
 	}
 
 	@Override
@@ -157,11 +150,6 @@ public abstract class AbstractSignal extends AbstractDocument implements SignalD
 	public String getDefaultMessage() {
 		// XXX: remove this method and call getName() directly
 		return getName();
-	}
-
-	@Override
-	public SignalType getType() {
-		return type;
 	}
 
 	@Override
@@ -279,11 +267,11 @@ public abstract class AbstractSignal extends AbstractDocument implements SignalD
 	}
 
 	protected Montage createDefaultMontage() {
-		return type.getConfigurer().createMontage(this);
+		return SignalConfigurer.createMontage(this);
 	}
 
 	protected Montage createDefaultMontage(int numberOfChannels) {
-		return type.getConfigurer().createMontage(numberOfChannels);
+		return SignalConfigurer.createMontage(numberOfChannels);
 	}
 
 	@Override

@@ -7,6 +7,10 @@ import java.awt.Component;
 import java.awt.Container;
 import javax.swing.JPanel;
 
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
+
 /**
  * All panels in Svarog should extend this panel. Contains an instance of
  * SvarogI18n and methods for enabling/disabling all components
@@ -14,7 +18,12 @@ import javax.swing.JPanel;
  * 
  * @author Piotr Szachewicz
  */
-public class AbstractSignalMLPanel extends JPanel {
+public abstract class AbstractSignalMLPanel extends JPanel {
+	/**
+	 * A method for initializing GUI components for this panel.
+	 */
+	protected abstract void initialize();
+
 	/**
 	 * Sets enabled to this panel and all it's children.
 	 * Clears all fields if enabled == false.
@@ -43,4 +52,18 @@ public class AbstractSignalMLPanel extends JPanel {
 			}
 		}
 	}
+
+	/**
+	 * Puts a border around this panel with a given title.
+	 * @param label the title to be shown on the border
+	 */
+	protected void setTitledBorder(String label) {
+		CompoundBorder cb = new CompoundBorder(
+		        new TitledBorder(label),
+		        new EmptyBorder(3,3,3,3)
+		);
+
+		setBorder(cb);
+	}
+
 }

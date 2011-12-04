@@ -6,8 +6,9 @@ package org.signalml.app.montage;
 
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
+import org.signalml.domain.montage.generators.IMontageGenerator;
+import org.signalml.domain.montage.system.EegSystem;
 
-import org.signalml.domain.signal.SignalTypeConfigurer;
 import org.signalml.util.ResolvableString;
 
 /** ReferenceGeneratorListModel
@@ -19,11 +20,14 @@ public class MontageGeneratorListModel extends AbstractListModel implements Comb
 
 	private static final long serialVersionUID = 1L;
 
-	private static final ResolvableString NO_GENERATOR = new ResolvableString("montageGenerator.none");
+	public static final ResolvableString NO_GENERATOR = new ResolvableString("montageGenerator.none");
 
-	private SignalTypeConfigurer configurer;
-
-	private Object selectedItem;
+	private Object selectedItem = NO_GENERATOR;
+	/**
+	 * The currently selected {@link EegSystem} for which the list of
+	 * {@link IMontageGenerator MontageGenerators} is shown.
+	 */
+	private EegSystem eegSystem;
 
 	public MontageGeneratorListModel() {
 	}
@@ -40,10 +44,10 @@ public class MontageGeneratorListModel extends AbstractListModel implements Comb
 
 	@Override
 	public int getSize() {
-		if (configurer == null) {
+		if (eegSystem == null) {
 			return 1;
 		}
-		return 1 + configurer.getMontageGeneratorCount();
+		return 1 + eegSystem.getNumberOfMontageGenerators();
 	}
 
 	@Override
@@ -51,18 +55,20 @@ public class MontageGeneratorListModel extends AbstractListModel implements Comb
 		if (index == 0) {
 			return NO_GENERATOR;
 		}
-		return configurer.getMontageGeneratorAt(index-1);
+		return eegSystem.getMontageGeneratorAt(index-1);
 	}
 
-	public SignalTypeConfigurer getConfigurer() {
-		return configurer;
-	}
-
-	public void setConfigurer(SignalTypeConfigurer configurer) {
-		if (this.configurer != configurer) {
-			this.configurer = configurer;
+	/**
+	 * Sets the {@link EegSystem} for which the list of available
+	 * {@link IMontageGenerator MontageGenerators} will be shown.
+	 * @param eegSystem the new {@link EegSystem}
+	 */
+	public void setEegSystem(EegSystem eegSystem) {
+		if (this.eegSystem != eegSystem) {
+			this.eegSystem = eegSystem;
 			fireContentsChanged(this, 0, getSize()-1);
 		}
+
 	}
 
 }
