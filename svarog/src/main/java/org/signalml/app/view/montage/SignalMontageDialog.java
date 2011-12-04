@@ -94,7 +94,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	private EegSystemsPresetManager eegSystemsPresetManager;
 
 	public SignalMontageDialog(ViewerElementManager viewerElementManager,
-		Window f, boolean isModal) {
+				   Window f, boolean isModal) {
 
 		super(viewerElementManager.getMontagePresetManager(), f, isModal);
 		this.predefinedTimeDomainSampleFilterPresetManager = viewerElementManager.getPredefinedTimeDomainFiltersPresetManager();
@@ -112,7 +112,6 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 
 	@Override
 	public JComponent createInterface() {
-
 		JPanel interfacePanel = new JPanel(new BorderLayout());
 
 		filtersPanel = new MontageFiltersPanel(predefinedTimeDomainSampleFilterPresetManager);
@@ -132,64 +131,44 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 		interfacePanel.add(tabbedPane, BorderLayout.CENTER);
 
 		return interfacePanel;
-
 	}
 
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 
 		if (model instanceof Montage) {
-
 			// for presets
-			currentMontage = new Montage((Montage) model);
-
+			this.currentMontage = new Montage((Montage) model);
 		} else {
-
-			MontageDescriptor descriptor = (MontageDescriptor) model;
-			Montage montage = descriptor.getMontage();
-			SignalDocument signalDocument = descriptor.getSignalDocument();
-			boolean signalBound = (signalDocument != null);
-			if (montage == null) {
-				if (signalBound) {
-					currentMontage = new Montage(new SourceMontage(signalDocument));
-				} else {
-					currentMontage = new Montage(new SourceMontage());
-				}
-			} else {
-				currentMontage = new Montage(montage);
-			}
+			final MontageDescriptor descriptor = (MontageDescriptor) model;
+			final Montage montage = descriptor.getMontage();
+			final SignalDocument signalDocument = descriptor.getSignalDocument();
+			final boolean signalBound = (signalDocument != null);
+			if (montage == null)
+				this.currentMontage = new Montage(signalBound ?
+								  new SourceMontage(signalDocument) : new SourceMontage());
+			else
+				this.currentMontage = new Montage(montage);
 			this.signalDocument = signalDocument;
 
-			if (signalBound) {
-				getOkButton().setVisible(true);
-				getRootPane().setDefaultButton(getOkButton());
-			} else {
-				getOkButton().setVisible(false);
-				getRootPane().setDefaultButton(getCancelButton());
-			}
+			getOkButton().setVisible(signalBound);
+			getRootPane().setDefaultButton(signalBound ? getOkButton() : getCancelButton());
 
 			montageEditionPanel.setSignalBound(signalBound);
 			filtersPanel.setSignalBound(signalBound);
-			if (signalBound) {
-				filtersPanel.setCurrentSamplingFrequency(signalDocument.getSamplingFrequency());
-			} else {
-				filtersPanel.setCurrentSamplingFrequency(128.0F);
-			}
 
+			filtersPanel.setCurrentSamplingFrequency(signalBound ?
+								 signalDocument.getSamplingFrequency() : 128.0F);
 		}
 
-		if (signalDocument != null) {
-			if (!currentMontage.isCompatible(signalDocument)) {
-				currentMontage.adapt(signalDocument);
-			}
-		}
-		setMontageToPanels(currentMontage);
+		if (signalDocument != null && !this.currentMontage.isCompatible(signalDocument))
+			this.currentMontage.adapt(signalDocument);
+
+		setMontageToPanels(this.currentMontage);
 		setChanged(false);
-
 	}
 
 	private void setMontageToPanels(Montage montage) {
-
 		if (montage != null && montage.getEegSystemName() != null) {
 			EegSystem system = (EegSystem) eegSystemsPresetManager.getPresetByName(montage.getEegSystemFullName());
 			montage.setEegSystem(system);
@@ -198,22 +177,18 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 		montageEditionPanel.setMontageToPanels(montage);
 		filtersPanel.setMontage(montage);
 		miscellaneousPanel.setMontage(montage);
-
 	}
 
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
-
 		MontageDescriptor descriptor = (MontageDescriptor) model;
 
 		// montage was edited immediately for the most part
 		descriptor.setMontage(currentMontage);
-
 	}
 
 	@Override
 	public void validateDialog(Object model, Errors errors) throws SignalMLException {
-
 		// validate montage table
 		if (currentMontage.getMontageChannelCount() == 0) {
 			errors.reject("error.noChannelInMontage");
@@ -234,7 +209,6 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 
 	@Override
 	public Preset getPreset() throws SignalMLException {
-
 		Montage preset = new Montage(currentMontage);
 
 
@@ -247,14 +221,11 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 		}
 
 		return preset;
-
 	}
 
 	@Override
 	public void setPreset(Preset preset) throws SignalMLException {
-
 		fillDialogFromModel(preset);
-
 	}
 
 	@Override
@@ -304,7 +275,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	protected URL getContextHelpURL() {
 		if (contextHelpURL == null) {
 			try {
-				contextHelpURL = (new ClassPathResource("org/signalml/help/contents.html")).getURL();
+				contextHelpURL = new ClassPathResource("org/signalml/help/contents.html").getURL();
 				contextHelpURL = new URL(contextHelpURL.toExternalForm() + "#montage");
 			} catch (IOException ex) {
 				logger.error("Failed to get help URL", ex);
