@@ -191,12 +191,13 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	public void validateDialog(Object model, Errors errors) throws SignalMLException {
 		// validate montage table
 		if (currentMontage.getMontageChannelCount() == 0) {
-			errors.reject("error.noChannelInMontage");
+			errors.reject(_("The montage is empty. Please add some target channels"));
 		}
 		String description = miscellaneousPanel.getEditDescriptionPanel().getTextPane().getText();
 		if (description != null && !description.isEmpty()) {
 			if (Util.hasSpecialChars(description)) {
-				errors.rejectValue("montage.description", "error.descriptionBadChars");
+				errors.rejectValue("montage.description",
+						   _("Description must not contain control characters"));
 			}
 		}
 	}
