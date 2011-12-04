@@ -1039,7 +1039,7 @@ public class SvarogApplication implements java.lang.Runnable {
 //								splashScreen = null;
 //							}
 //
-//							ErrorsDialog errorsDialog = new ErrorsDialog( null, true, "error.exception");
+//							ErrorsDialog errorsDialog = new ErrorsDialog( null, true, _("Exception occured"));
 //							ResolvableException ex = new ResolvableException(e);
 //							errorsDialog.showDialog(ex, true);
 //						} catch (Throwable ex1) {

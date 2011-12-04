@@ -360,7 +360,7 @@ public class ErrorsDialog extends org.signalml.app.view.dialog.AbstractSvarogDia
 			@Override
 			public void run() {
 
-				ErrorsDialog errorsDialog = new ErrorsDialog(w,true,"error.exception");
+				ErrorsDialog errorsDialog = new ErrorsDialog(w, true, _("Exception occured"));
 
 				MessageSourceResolvable resolvable;
 				if (t instanceof MessageSourceResolvable) {
