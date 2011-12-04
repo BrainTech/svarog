@@ -37,10 +37,12 @@ public class PluginAccessClass implements SvarogAccess {
 	 * the manager of Svarog elements
 	 */
 	private static ViewerElementManager manager = null;
+
+	private final Class _klass;
 	
 	private SvarogI18n i18nAccessImpl;
 
-	private SvarogAccessResourcesImpl resourcesAccessImpl;
+	private final SvarogAccessResourcesImpl resourcesAccessImpl;
 	
 	/**
 	 * access to GUI features of Svarog
@@ -73,14 +75,8 @@ public class PluginAccessClass implements SvarogAccess {
 	 * Constructor. Creates child accesses.
 	 */
 	public PluginAccessClass(PluginHead head){
-		Class klass = head.getPluginObj().getClass();
-		try {
-			this.i18nAccessImpl = new SvarogI18n(klass);
-		} catch(MissingResourceException e) {
-			this.i18nAccessImpl = null;
-		}
-
-		this.resourcesAccessImpl = new SvarogAccessResourcesImpl(klass);
+		this._klass = head.getPluginObj().getClass();
+		this.resourcesAccessImpl = new SvarogAccessResourcesImpl(this._klass);
 	}
 	
 	/**
@@ -179,12 +175,14 @@ public class PluginAccessClass implements SvarogAccess {
 	}
 
 	@Override
-	public SvarogAccessI18n getI18nAccess() {
-		return i18nAccessImpl;
+	public synchronized SvarogAccessI18n getI18nAccess() {
+		if (this.i18nAccessImpl == null)
+			this.i18nAccessImpl = new SvarogI18n(this._klass);
+		return this.i18nAccessImpl;
 	}
 
 	@Override
 	public SvarogAccessResources getResourcesAccess() {
-		return resourcesAccessImpl;
+		return this.resourcesAccessImpl;
 	}
 }
