@@ -448,9 +448,9 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 		FileFilter[] fileFilters;
 
 		private OptionSet(Operation operation,
-			  String title, String buttonLabel, String path,
-			  boolean acceptAllUsed, boolean multiSelectionEnabled,
-			  int fileSelectionMode){
+				  String title, String path, String buttonLabel,
+				  boolean acceptAllUsed, boolean multiSelectionEnabled,
+				  int fileSelectionMode) {
 			this.operation = operation;
 			this.title = title;
 			this.buttonLabel = buttonLabel;
@@ -459,11 +459,13 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 			this.multiSelectionEnabled = multiSelectionEnabled;
 			this.fileSelectionMode = fileSelectionMode;
 			this.fileFilters = fileFilters;
-			logger.debug("added OptionSet: " + this + " / " + operation.getClass().getSimpleName());;
+			logger.debug("added OptionSet \"" + title + "\" (" +
+				     operation.getClass().getSimpleName() +
+				     " \"" + buttonLabel + "\" / " + path + ")");
 		}
 		private OptionSet(Operation operation,
-				  String title, String buttonLabel, String path) {
-			this(operation, title, buttonLabel, path, true, false, FILES_ONLY);
+				  String title, String path, String buttonLabel) {
+			this(operation, title, path, buttonLabel, true, false, FILES_ONLY);
 		}
 
 		void use(ViewerFileChooser chooser) {
