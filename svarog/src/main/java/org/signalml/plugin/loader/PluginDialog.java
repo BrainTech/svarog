@@ -18,7 +18,7 @@ import org.signalml.plugin.export.SignalMLException;
  * @see PluginPanel the funtion of this dialog
  * @author Marcin Szumski
  */
-public class PluginDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
+public class PluginDialog extends AbstractDialog  {
 
 	/**
 	 * an array of plug-in {@link PluginState states}
@@ -56,7 +56,7 @@ public class PluginDialog extends org.signalml.app.view.dialog.AbstractSvarogDia
 	private PluginPanel pluginPanel = null;
 
 	/* (non-Javadoc)
-	 * @see org.signalml.app.view.dialog.AbstractDialog#createInterface()
+	 * @see AbstractDialog#createInterface()
 	 */
 	@Override
 	protected JComponent createInterface() {
@@ -66,7 +66,7 @@ public class PluginDialog extends org.signalml.app.view.dialog.AbstractSvarogDia
 	}
 
 	/* (non-Javadoc)
-	 * @see org.signalml.app.view.dialog.AbstractDialog#supportsModelClass(java.lang.Class)
+	 * @see AbstractDialog#supportsModelClass(java.lang.Class)
 	 */
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
@@ -74,7 +74,7 @@ public class PluginDialog extends org.signalml.app.view.dialog.AbstractSvarogDia
 	}
 
 	/* (non-Javadoc)
-	 * @see org.signalml.app.view.dialog.AbstractDialog#fillDialogFromModel(java.lang.Object)
+	 * @see AbstractDialog#fillDialogFromModel(java.lang.Object)
 	 */
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
@@ -84,7 +84,7 @@ public class PluginDialog extends org.signalml.app.view.dialog.AbstractSvarogDia
 	}
 
 	/* (non-Javadoc)
-	 * @see org.signalml.app.view.dialog.AbstractDialog#fillModelFromDialog(java.lang.Object)
+	 * @see AbstractDialog#fillModelFromDialog(java.lang.Object)
 	 */
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {

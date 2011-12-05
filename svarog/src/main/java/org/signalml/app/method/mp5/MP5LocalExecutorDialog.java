@@ -18,6 +18,7 @@ import javax.swing.border.TitledBorder;
 
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.ViewerFileChooser;
+import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.method.mp5.MP5LocalProcessExecutor;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
@@ -29,7 +30,7 @@ import org.springframework.validation.Errors;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class MP5LocalExecutorDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
+public class MP5LocalExecutorDialog extends AbstractDialog  {
 
 	private static final long serialVersionUID = 1L;
 

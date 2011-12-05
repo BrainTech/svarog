@@ -28,6 +28,7 @@ import org.signalml.app.action.util.ListSelectAllAction;
 import org.signalml.app.action.util.ListSelectInvertAction;
 import org.signalml.app.action.util.ListSelectNoneAction;
 import org.signalml.app.util.IconUtils;
+import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.domain.book.StandardBook;
 import org.signalml.method.booktotag.BookToTagData;
 import org.signalml.plugin.export.SignalMLException;
@@ -39,7 +40,7 @@ import org.springframework.validation.Errors;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class BookToTagMethodDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
+public class BookToTagMethodDialog extends AbstractDialog  {
 
 	private static final long serialVersionUID = 1L;
 

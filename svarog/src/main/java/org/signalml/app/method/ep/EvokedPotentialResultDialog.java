@@ -23,6 +23,7 @@ import org.signalml.app.model.PropertySheetModel;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.ViewerPropertySheet;
+import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.method.ep.EvokedPotentialResult;
 import org.signalml.plugin.export.SignalMLException;
 
@@ -31,7 +32,7 @@ import org.signalml.plugin.export.SignalMLException;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class EvokedPotentialResultDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
+public class EvokedPotentialResultDialog extends AbstractDialog  {
 
 	private static final long serialVersionUID = 1L;
 

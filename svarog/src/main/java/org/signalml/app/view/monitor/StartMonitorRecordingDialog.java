@@ -9,6 +9,7 @@ import java.awt.Window;
 import javax.swing.JComponent;
 
 import org.signalml.app.model.OpenMonitorDescriptor;
+import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.plugin.export.SignalMLException;
 
 import org.springframework.validation.Errors;
@@ -19,7 +20,7 @@ import org.springframework.validation.Errors;
  *
  * @author Piotr Szachewicz
  */
-public class StartMonitorRecordingDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
+public class StartMonitorRecordingDialog extends AbstractDialog  {
 
 	protected ChooseFilesForMonitorRecordingPanel chooseFilesForMonitorRecordingPanel;
 

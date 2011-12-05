@@ -22,6 +22,7 @@ import javax.swing.border.TitledBorder;
 
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.InitializingMethodConfigurer;
+import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.method.Method;
 import org.signalml.method.example.ExampleData;
 import org.signalml.plugin.export.SignalMLException;
@@ -31,7 +32,7 @@ import org.signalml.plugin.export.SignalMLException;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class ExampleMethodDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  implements InitializingMethodConfigurer {
+public class ExampleMethodDialog extends AbstractDialog  implements InitializingMethodConfigurer {
 
 	private static final long serialVersionUID = 1L;
 

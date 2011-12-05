@@ -36,7 +36,7 @@ import org.springframework.validation.Errors;
  *
  * @author Tomasz Sawicki
  */
-public class EEGLabExportDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog   {
+public class EEGLabExportDialog extends AbstractDialog   {
 
         /**
          * Currently open document.

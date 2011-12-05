@@ -34,7 +34,7 @@ import org.springframework.validation.Errors;
  *
  * @author Mariusz Podsiadło
  */
-public class OpenMonitorDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  implements PropertyChangeListener {
+public class OpenMonitorDialog extends AbstractDialog  implements PropertyChangeListener {
 
 	public static final int TIMEOUT_MILIS = 500;
 	public static final int TRYOUT_COUNT = 10;

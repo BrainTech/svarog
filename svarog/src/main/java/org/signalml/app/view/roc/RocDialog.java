@@ -40,6 +40,7 @@ import org.signalml.app.model.TableToTextExporter;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.ViewerPropertySheet;
+import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.domain.roc.RocData;
 import org.signalml.plugin.export.SignalMLException;
 
@@ -48,7 +49,7 @@ import org.signalml.plugin.export.SignalMLException;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class RocDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
+public class RocDialog extends AbstractDialog  {
 
 	private static final int AXIS_SPACE_SIZE = 40;
 

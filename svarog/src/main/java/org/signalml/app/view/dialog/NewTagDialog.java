@@ -40,7 +40,7 @@ import org.springframework.validation.Errors;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class NewTagDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
+public class NewTagDialog extends AbstractDialog  {
 
 	private static final long serialVersionUID = 1L;
 

@@ -40,6 +40,7 @@ import org.signalml.app.method.MethodConfigurer;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.SwingUtils;
 import org.signalml.app.view.element.ResolvableComboBox;
+import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.method.iterator.IterableMethod;
 import org.signalml.method.iterator.IterableNumericParameter;
@@ -55,7 +56,7 @@ import org.springframework.validation.Errors;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class IterationSetupDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
+public class IterationSetupDialog extends AbstractDialog  {
 
 	private static final Dimension SPINNER_DIMENSION = new Dimension(250,25);
 

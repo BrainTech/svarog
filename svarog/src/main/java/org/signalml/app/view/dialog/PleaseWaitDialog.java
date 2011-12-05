@@ -46,7 +46,7 @@ import org.signalml.plugin.export.SignalMLException;
  * 
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class PleaseWaitDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
+public class PleaseWaitDialog extends AbstractDialog  {
 
 	private static final long serialVersionUID = 1L;
 

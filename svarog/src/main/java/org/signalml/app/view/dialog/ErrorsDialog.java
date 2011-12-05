@@ -47,7 +47,7 @@ import org.springframework.validation.Errors;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class ErrorsDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
+public class ErrorsDialog extends AbstractDialog  {
 
 	/**
 	 * An enum containing possible user responses in a dialog.

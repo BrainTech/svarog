@@ -39,7 +39,7 @@ import org.signalml.app.view.montage.VisualReferenceModel;
  *
  * @author Tomasz Sawicki
  */
-public class CheckSignalDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
+public class CheckSignalDialog extends AbstractDialog  {
 
         /**
          * Minimum windows size.

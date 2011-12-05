@@ -20,6 +20,8 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import org.signalml.app.view.dialog.AbstractDialog;
+
 /**
  * Dialog that shows progress of some time consuming operation.
  * It's a Property Change Listener, the only property it reacts to is
@@ -27,7 +29,7 @@ import javax.swing.border.TitledBorder;
  *
  * @author Tomasz Sawicki
  */
-public class ProgressDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  implements PropertyChangeListener {
+public class ProgressDialog extends AbstractDialog implements PropertyChangeListener {
 
         public static final String PROGRESS_STATE = "progressState";
         public final int DIALOG_WIDTH = 400;

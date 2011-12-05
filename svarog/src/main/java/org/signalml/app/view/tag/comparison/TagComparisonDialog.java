@@ -25,6 +25,7 @@ import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.element.ResolvableComboBox;
 import org.signalml.app.view.tag.TagIconProducer;
+import org.signalml.app.view.dialog.AbstractDialog;
 import org.signalml.domain.tag.TagComparisonResults;
 import org.signalml.domain.tag.TagDifferenceDetector;
 import org.signalml.exception.SanityCheckException;
@@ -36,7 +37,7 @@ import org.signalml.util.SvarogConstants;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class TagComparisonDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
+public class TagComparisonDialog extends AbstractDialog  {
 
 	private static final long serialVersionUID = 1L;
 

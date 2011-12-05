@@ -22,7 +22,7 @@ import org.springframework.validation.Errors;
  * For more details see - {@link SignalSelectionPanel}.
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class SignalSelectionDialog extends org.signalml.app.view.dialog.AbstractSvarogDialog  {
+public class SignalSelectionDialog extends AbstractDialog  {
 
 	private static final long serialVersionUID = 1L;
 

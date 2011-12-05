@@ -57,7 +57,7 @@ import static org.signalml.app.SvarogI18n._R;
  * 
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public abstract class AbstractPresetDialog extends AbstractSvarogDialog {
+public abstract class AbstractPresetDialog extends AbstractDialog {
 
 	static final long serialVersionUID = 1L;
 
