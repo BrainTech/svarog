@@ -15,6 +15,7 @@ import org.signalml.app.document.MRUDRegistryListener;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.view.AbstractTreeModel;
+import static org.signalml.app.SvarogI18n._;
 
 /** WorkspaceTreeModel
  *
@@ -25,17 +26,17 @@ public class WorkspaceTreeModel extends AbstractTreeModel implements DocumentMan
 
 	/* extends DefaultTreeModel */
 
-	private static final String ROOT_NODE = "workspaceTree.root";
-	private static final String OPEN_DOCUMENTS_NODE = "workspaceTree.openDocuments";
-	private static final String OPEN_SIGNALS_NODE = "workspaceTree.openSignals";
-	private static final String OPEN_MONITORS_NODE = "workspaceTree.openMonitors";
-	private static final String OPEN_BOOKS_NODE = "workspaceTree.openBooks";
-	private static final String OPEN_TAGS_NODE = "workspaceTree.openTags";
-	private static final String RECENT_DOCUMENTS_NODE = "workspaceTree.recentDocuments";
-	private static final String RECENT_SIGNALS_NODE = "workspaceTree.recentSignals";
-	private static final String RECENT_MONITORS_NODE = "workspaceTree.recentMonitors";
-	private static final String RECENT_BOOKS_NODE = "workspaceTree.recentBooks";
-	private static final String RECENT_TAGS_NODE = "workspaceTree.recentTags";
+	private static final String ROOT_NODE = _("Workspace");
+	private static final String OPEN_DOCUMENTS_NODE = _("Open documents");
+	private static final String OPEN_SIGNALS_NODE = _("Open signals");
+	private static final String OPEN_MONITORS_NODE = _("Open monitors");
+	private static final String OPEN_BOOKS_NODE = _("Open books");
+	private static final String OPEN_TAGS_NODE = _("Open tags");
+	private static final String RECENT_DOCUMENTS_NODE = _("Documents");
+	private static final String RECENT_SIGNALS_NODE = _("Signals");
+	private static final String RECENT_MONITORS_NODE = _("Monitors");
+	private static final String RECENT_BOOKS_NODE = _("Books");
+	private static final String RECENT_TAGS_NODE = _("Tags");
 
 	private static final String[] ROOT_NODE_CHILDREN = new String[] {
 	        OPEN_DOCUMENTS_NODE,
