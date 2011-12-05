@@ -2,7 +2,6 @@ package org.signalml.plugin.sf;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
-import org.signalml.plugin.export.PluginAuth;
 import org.signalml.plugin.export.SvarogAccess;
 
 /**
