@@ -130,14 +130,16 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 			setSelectedFile(fileSuggestion);
 
 		File file = chooseForReadOrWrite(parent, optionset);
-		if (file != null)
+		if (file != null) {
 			applicationConfig.setPath(optionset.path,
 				getCurrentDirectory().getAbsolutePath());
+			if (file.exists() && getAccessory() != null)
+				getAccessory().lastDirectoryChanged(file.getParent());
+		}
 		return file;
 	}
 	public synchronized File chooseFile(Component parent, OptionSet optionset,
 			       File directory, File fileSuggestion) {
-		setCurrentDirectory(directory);
 		return chooseFile(parent, optionset, fileSuggestion);
 	}
 	public synchronized File chooseFile(Component parent, OptionSet optionset) {
