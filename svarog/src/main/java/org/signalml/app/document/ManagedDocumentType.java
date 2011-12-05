@@ -10,6 +10,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.export.signal.Document;
+import static org.signalml.app.SvarogI18n._;
+
 import org.springframework.context.MessageSourceResolvable;
 
 /**
@@ -30,60 +32,56 @@ public enum ManagedDocumentType implements MessageSourceResolvable {
 	/**
 	 * type for a {@link SignalDocument}
 	 */
-	SIGNAL(
-	        "signal",
-	        SignalDocument.class,
-	        "filechooser.filter.commonSignalFiles",
-		new String[] { "d", "edf", "raw", "bin", "dat" },
-	"org/signalml/app/icon/signal.png"
-	),
+	SIGNAL(_("Signal"),
+	       SignalDocument.class,
+	       _("Common signal files (*.d, *.edf, *.raw, *.bin)"),
+	       new String[] { "d", "edf", "raw", "bin", "dat" },
+	       "org/signalml/app/icon/signal.png"
+	       ),
 
 	/**
 	 * type for a {@link MonitorSignalDocument}
 	 */
-	MONITOR( 
-			"monitor", 
-			MonitorSignalDocument.class 
-	),
-	
+	MONITOR(_("Monitor"),
+		MonitorSignalDocument.class
+		),
+
 	/**
 	 * type for a {@link BookDocument}
 	 */
-	BOOK( 
-			"book", 
-			BookDocument.class, 
-			"filechooser.filter.bookFiles", 
-			new String[] { "b" },
-			"org/signalml/app/icon/book.png" 
-	),
+	BOOK(_("Book"),
+	     BookDocument.class,
+	     _("Book files (*.b)"),
+	     new String[] { "b" },
+	     "org/signalml/app/icon/book.png"
+	     ),
 
 	/**
 	 * type for a {@link TagDocument}
 	 */
-	TAG(
-	        "tag",
-	        TagDocument.class,
-	        "filechooser.filter.tagFiles",
-	new String[] { "xml", "tag" },
-	"org/signalml/app/icon/tag.png"
-	);
+	TAG(_("Tag"),
+	    TagDocument.class,
+	    _("Tag files (*.xml, *.tag)"),
+	    new String[] { "xml", "tag" },
+	    "org/signalml/app/icon/tag.png"
+	    );
 
 	/**
 	 * the name of this type
 	 */
 	private String name;
-	
+
 	/**
 	 * the class that is extended/implemented by all {@link Document documents}
 	 * of this type
 	 */
 	private Class<?> baseClass;
-	
+
 	/**
 	 * the codes for a file filter
 	 */
 	private String[] fileFilterCodes = new String[0];
-	
+
 	/**
 	 * the extensions of the files for this type of the document
 	 */
