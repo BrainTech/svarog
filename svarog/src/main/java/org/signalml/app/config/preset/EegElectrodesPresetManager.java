@@ -18,7 +18,7 @@ import org.signalml.math.geometry.Polar3dPoint;
  *
  * @author Piotr Szachewicz
  */
-class EegElectrodesPresetManager extends AbstractMultifileRestoreablePresetManager {
+public class EegElectrodesPresetManager extends AbstractMultifileRestoreablePresetManager {
 
 	@Override
 	public String getDirectoryName() {
