@@ -4,6 +4,7 @@
 
 package org.signalml.app.config;
 
+import java.io.File;
 import javax.swing.ToolTipManager;
 
 import org.signalml.app.view.book.WignerMapPalette;
@@ -753,4 +754,31 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 		this.monitorPageSize = monitorPageSize;
 	}
 
+	/**
+	 * Query configuration of various paths by name.
+	 * @return configuration value or null
+	 * @param name name is the same as function name without get
+	 *
+	 */
+	public String getPath(String name){
+		if(name.equals("LastConsoleSaveAsTextPath"))
+			return this.getLastConsoleSaveAsTextPath();
+		if(name.equals("LastSamplesSaveAsTextPath"))
+			return this.getLastSamplesSaveAsTextPath();
+		if(name.equals("LastTableSaveAsTextPath"))
+			return this.getLastTableSaveAsTextPath();
+		throw new AssertionError("unknown configuration path name");
+	}
+
+	/**
+	 * Set configuration value of paths by name.
+	 * @return configuration value or null
+	 * @param name name is the same as function name without set
+	 *
+	 */
+	public void setPath(String name, String path){
+		if(name.equals("LastSamplesSaveAsTextPath"))
+			this.setLastSamplesSaveAsTextPath(path);
+		throw new AssertionError("unknown configuration path name");
+	}
 }
