@@ -5,8 +5,6 @@
 package org.signalml.app.config;
 
 import java.io.File;
-import java.lang.reflect.Method;
-import java.lang.reflect.InvocationTargetException;
 import javax.swing.ToolTipManager;
 
 import org.signalml.app.method.artifact.ArtifactConfiguration;
@@ -687,19 +685,14 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration {
 	 * @param name name is the same as function name without get
 	 *
 	 */
-	public String getPath(String name) {
-		try {
-			Method method = this.getClass().getDeclaredMethod("get" + name);
-			return (String)method.invoke(this);
-		// all invocation exceptions are converted to runtime exception
-		// and signify programming mistakes.
-		} catch (NoSuchMethodException e) {
-			throw new RuntimeException(e);
-		} catch (IllegalAccessException e) {
-			throw new RuntimeException(e);
-		} catch (InvocationTargetException e) {
-			throw new RuntimeException(e);
-		}
+	public String getPath(String name){
+		if(name.equals("LastConsoleSaveAsTextPath"))
+			return this.getLastConsoleSaveAsTextPath();
+		if(name.equals("LastSamplesSaveAsTextPath"))
+			return this.getLastSamplesSaveAsTextPath();
+		if(name.equals("LastTableSaveAsTextPath"))
+			return this.getLastTableSaveAsTextPath();
+		throw new AssertionError("unknown configuration path name");
 	}
 
 	/**
@@ -709,18 +702,8 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration {
 	 *
 	 */
 	public void setPath(String name, String path){
-		try {
-			name = "set" + name;
-			Method method = this.getClass().getDeclaredMethod(name, String.class);
-			method.invoke(this, path);
-		// all invocation exceptions are converted to runtime exception
-		// and signify programming mistakes.
-		} catch (NoSuchMethodException e) {
-			throw new RuntimeException(e);
-		} catch (IllegalAccessException e) {
-			throw new RuntimeException(e);
-		} catch (InvocationTargetException e) {
-			throw new RuntimeException(e);
-		}
+		if(name.equals("LastSamplesSaveAsTextPath"))
+			this.setLastSamplesSaveAsTextPath(path);
+		throw new AssertionError("unknown configuration path name");
 	}
 }
