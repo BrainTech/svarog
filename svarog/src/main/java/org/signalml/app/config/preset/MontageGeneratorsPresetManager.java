@@ -5,14 +5,21 @@ import com.thoughtworks.xstream.annotations.Annotations;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import org.signalml.app.util.XMLUtils;
 import org.signalml.domain.montage.generators.IMontageGenerator;
+import org.signalml.domain.montage.system.EegElectrode;
+import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.domain.montage.system.MontageGenerators;
 
 /**
  *
+ * This {@link PresetManager} manages the {@link MontageGenerators montage generators}
+ * definitions. Montage generators definitions and the list of
+ * {@link EegElectrode EEG electrodes} form an {@link EegSystem} -
+ * these definitions are read and linked together by the {@link EegSystemsPresetManager}.
+ *
  * @author Piotr Szachewicz
  */
 @XStreamAlias("monageGeneratorPresets")
-public class MontageGeneratorsPresetManager extends AbstractMultifileRestoreablePresetManager {
+class MontageGeneratorsPresetManager extends AbstractMultifileRestoreablePresetManager {
 
 	@Override
 	public String getDirectoryName() {
