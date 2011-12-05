@@ -388,42 +388,65 @@ public class ViewerFileChooser extends JFileChooser {
 	}
 
 	protected enum OptionSet {
-		consoleSaveAsText(Operation.save, "save", "LastSamplesSaveAsTextPath"),
-		tableSaveAsText(Operation.save, "save"),
-		samplesSaveAsText(Operation.save, "save"),
-		samplesSaveAsFloat(Operation.save, "save"),
-		chartSaveAsPng(Operation.save, "save"),
-		saveMP5Config(Operation.save, "save"),
-		saveMP5Signal(Operation.save, "save", "LastSaveMP5ConfigPath"),
-		saveDocument(Operation.save, "save"),
-		saveTag(Operation.save, "save"),
-		openTag(Operation.open, "open"),
-		expertTag(Operation.open, "choose"),
-		importTag(Operation.open, "import"),
-		exportTag(Operation.save, "export"),
-		savePreset(Operation.save, "save"),
-		loadPreset(Operation.open, "load"),
-		executablePreset(Operation.open, "choose", null),
-		bookFilePreset(Operation.open, "choose", "LastBookFilePath"),
-		bookSavePreset(Operation.save, "save", "LastBookFilePath"),
-		artifactProjectPreset(Operation.usedir, "choose",
-				      "LastArtifactProjectPath",
+		consoleSaveAsText(Operation.save, "filechooser.consoleSaveAsText.title",
+				  "LastSamplesSaveAsTextPath", "save"),
+		tableSaveAsText(Operation.save, "filechooser.tableSaveAsText.title",
+				"LastTableSaveAsTextPath", "save"),
+		samplesSaveAsText(Operation.save, "filechooser.samplesSaveAsText.title",
+				  "LastSamplesSaveAsTextFile", "save"),
+		samplesSaveAsFloat(Operation.save, "filechooser.samplesSaveAsFloat.title",
+				   "LastSamplesSaveAsFloatPath", "save"),
+		chartSaveAsPng(Operation.save, "filechooser.chartSaveAsPng.title",
+			       "LastChartSaveAsPngPath", "save"),
+		saveMP5Config(Operation.save, "filechooser.saveMP5Config.title",
+			      "LastSaveMP5ConfigPath", "save"),
+		saveMP5Signal(Operation.save, "filechooser.saveMP5Signal.title",
+			      "LastSaveMP5ConfigPath" /* sic */, "save"),
+		saveDocument(Operation.save, "filechooser.saveDocument.title",
+			     "LastSaveDocumentPath", "save"),
+		saveTag(Operation.save, "filechooser.saveTag.title",
+			"LastSaveTagPath", "save"),
+		openTag(Operation.open, "filechooser.openTag.title",
+			"LastOpenTagPath", "open"),
+		expertTag(Operation.open, "filechooser.expertTag.title",
+			  "LastExpertTagPath", "choose"),
+		importTag(Operation.open, "filechooser.importTag.title",
+			  "LastImportTagPath", "import"),
+		exportTag(Operation.save, "filechooser.exportTag.title",
+			  "LastExportTagPath", "export"),
+		savePreset(Operation.save, "filechooser.savePreset.title",
+			   "LastPresetPath", "save"),
+		loadPreset(Operation.open, "filechooser.loadPreset.title",
+			   "LastPresetPath", "load"),
+		executablePreset(Operation.open, "filechooser.executablePreset.title",
+				 null, "choose"),
+		bookFilePreset(Operation.open, "filechooser.bookFilePreset.title",
+			       "LastBookFilePath", "choose"),
+		bookSavePreset(Operation.save, "filechooser.bookFilePreset.title",
+			       "LastBookFilePath", "save"),
+		artifactProjectPreset(Operation.usedir, "filechooser.artifactProjectPreset.title",
+				      "LastArtifactProjectPath", "choose",
 				      false, false, FILES_ONLY),
-		exportSignal(Operation.save, "export"),
-		exportBook(Operation.save, "export"),
-		readXMLManifest(Operation.open, "read", null),
-		workingDirectoryPreset(Operation.usedir,
-				       "choose", null,
+		exportSignal(Operation.save, "filechooser.exportSignal.title",
+			     "LastExportSignalPath", "export"),
+		exportBook(Operation.save, "filechooser.exportBook.title",
+			   "LastExportBookPath", "export"),
+		readXMLManifest(Operation.open, "filechooser.readXMLManifest.title",
+				null, "read"),
+		workingDirectoryPreset(Operation.usedir, "filechooser.workingDirectoryPreset.title",
+				       null, "choose",
 				       false, false, DIRECTORIES_ONLY),
-		classPathDirectoryPreset(Operation.open,
-					 "choose", null,
+		classPathDirectoryPreset(Operation.open, "filechooser.classPathDirectoryPreset.title",
+					 null, "choose",
 					 false, true, DIRECTORIES_ONLY),
-		jarFilePreset(Operation.open,
-			      "choose", null,
+		jarFilePreset(Operation.open, "filechooser.jarFilePreset.title",
+			      null, "choose",
 			      true, true, FILES_ONLY),
-		codeFilePreset(Operation.open, "choose", "LastLibraryPath");
+		codeFilePreset(Operation.open, "filechooser.codeFilePreset.title",
+			       "LastLibraryPath" /* sic */, "choose");
 
 		final Operation operation;
+		final String titleMessage;
 		final String okButtonMessage;
 		String title, okButton; /* set through initializer */
 		final String path;
@@ -432,10 +455,12 @@ public class ViewerFileChooser extends JFileChooser {
 		final int fileSelectionMode;
 		FileFilter[] fileFilters;
 
-		private OptionSet(Operation operation, String okMessage, String path,
+		OptionSet(Operation operation,
+			  String titleMessage, String okMessage, String path,
 			  boolean acceptAllUsed, boolean multiSelectionEnabled,
-			  int fileSelectionMode) {
+			  int fileSelectionMode){
 			this.operation = operation;
+			this.titleMessage = titleMessage;
 			this.okButtonMessage = okMessage;
 			if ("_gen".equals(path))
 				path = "Last" + capitalize(this.name()) + "Path";
@@ -446,14 +471,10 @@ public class ViewerFileChooser extends JFileChooser {
 			this.fileFilters = fileFilters;
 			logger.debug("added OptionSet: " + this + " / " + operation.getClass().getSimpleName());;
 		}
-		private OptionSet(Operation operation, String okMessage, String path) {
-			this(operation, okMessage, path, true, false, FILES_ONLY);
-		}
-		private OptionSet(Operation operation, String okMessage) {
-			this(operation, okMessage, "_gen");
-			/* note: "_gen" is used instead of e.g. null,
-			   because  null is used for something else
-			*/
+
+		OptionSet(Operation operation,
+			  String titleMessage, String okMessage, String path){
+			this(operation, titleMessage, okMessage, path, true, false, FILES_ONLY);
 		}
 
 		void use(ViewerFileChooser chooser) {
@@ -469,8 +490,7 @@ public class ViewerFileChooser extends JFileChooser {
 		}
 
 		void initialize(MessageSourceAccessor messageSource) {
-			String name = "filechooser." + this.name() + ".title";
-			this.title = messageSource.getMessage(name);
+			this.title = messageSource.getMessage(titleMessage);
 			this.okButton = messageSource.getMessage(okButtonMessage);
 		}
 
