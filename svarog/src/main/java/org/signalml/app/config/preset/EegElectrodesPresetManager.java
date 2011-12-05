@@ -13,7 +13,7 @@ import org.signalml.math.geometry.Polar3dPoint;
 
 /**
  * This {@link PresetManager} manages the electrodes definitions of a {@link EegSystem}
- * which are treat like presets. It is capable of reading the electrodes definitions
+ * which are handled like presets. It is capable of reading the electrodes definitions
  * from a directory and restoring default electrodes configuration from resource.
  *
  * @author Piotr Szachewicz
