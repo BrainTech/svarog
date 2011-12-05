@@ -11,6 +11,7 @@ import java.util.Locale;
 import java.util.prefs.Preferences;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import static java.lang.String.format;
 
 import javax.swing.SwingUtilities;
 
@@ -20,6 +21,7 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.log4j.Logger;
+import org.apache.log4j.BasicConfigurator;
 import org.signalml.SignalMLOperationMode;
 import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.config.ApplicationConfiguration;
@@ -195,6 +197,9 @@ public class SvarogApplication implements java.lang.Runnable {
 			}
 		}
 
+		// do a temporary logging configuration, until it is done
+		// properly in _run().
+		BasicConfigurator.configure();
 		logger.debug("Preparing Svarog " + SvarogConstants.VERSION);
 		DebugHelpers.debugThreads(logger);
 		DebugHelpers.debugCL(logger);
@@ -232,8 +237,7 @@ public class SvarogApplication implements java.lang.Runnable {
 				}
 
 				String name = m.group(1), value = m.group(2);
-				logger.debug(
-					   String.format("installing property %s=%s", name, value));
+				logger.debug(format("installing property %s=%s", name, value));
 				System.getProperties().setProperty(name, value);
 			}
 	}
@@ -343,8 +347,8 @@ public class SvarogApplication implements java.lang.Runnable {
 		Log4jConfigurer.setWorkingDirSystemProperty("signalml.root");
 
 		// allow for local file config
-		File loggingConfig = new File(startupDir, "logging.properties");
-		String loggingPath = null;
+		final File loggingConfig = new File(startupDir, "logging.properties");
+		final String loggingPath;
 		if (loggingConfig.exists()) {
 			loggingPath = "file:" + loggingConfig.getAbsolutePath();
 		} else {
