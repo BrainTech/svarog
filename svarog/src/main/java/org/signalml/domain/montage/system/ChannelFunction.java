@@ -118,10 +118,9 @@ public enum ChannelFunction implements IChannelFunction {
 	 * @return the list of channel functions that can be changed
 	 */
 	public static List<IChannelFunction> getMutableChannelFunctions() {
-		ChannelFunction[] allFunctions = values();
 		List<IChannelFunction> mutableChannelFunctions = new ArrayList<IChannelFunction>();
 
-		for (IChannelFunction function: allFunctions) {
+		for (IChannelFunction function: values()) {
 			if (function.isMutable())
 				mutableChannelFunctions.add(function);
 		}

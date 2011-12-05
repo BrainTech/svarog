@@ -620,11 +620,9 @@ public abstract class AbstractPresetDialog extends AbstractSvarogDialog {
 
 			Preset existingPreset = presetManager.getDefaultPreset();
 			if (existingPreset != null) {
-					final String msg = _("The default preset will be permanently overwritten. Are you sure?");
-					if (ErrorsDialog.showWarningYesNoDialog(msg) == ErrorsDialog.DIALOG_OPTIONS.NO) {
+				final String msg = _("The default preset will be permanently overwritten. Are you sure?");
+				if (ErrorsDialog.showWarningYesNoDialog(msg) == ErrorsDialog.DIALOG_OPTIONS.NO)
 					return;
-				}
-
 			}
 
 			presetManager.setDefaultPreset(preset);
