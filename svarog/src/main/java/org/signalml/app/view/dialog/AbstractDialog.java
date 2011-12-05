@@ -624,9 +624,9 @@ public abstract class AbstractDialog extends JDialog {
 	 * If it doesn't exist it is created.
 	 * @return the errors dialog
 	 */
-	protected ErrorsDialog getErrorsDialog() {
+	protected synchronized ErrorsDialog getErrorsDialog() {
 		if (errorsDialog == null) {
-			errorsDialog = new ErrorsDialog(this,true);
+			errorsDialog = new ErrorsDialog(this, true);
 		}
 		return errorsDialog;
 	}
@@ -636,9 +636,9 @@ public abstract class AbstractDialog extends JDialog {
 	 * If it doesn't exist it is created.
 	 * @return the help dialog
 	 */
-	protected HelpDialog getHelpDialog() {
+	protected synchronized HelpDialog getHelpDialog() {
 		if (helpDialog == null) {
-			helpDialog = new HelpDialog(this,true);
+			helpDialog = new HelpDialog(this, true);
 		}
 		return helpDialog;
 	}
@@ -648,7 +648,7 @@ public abstract class AbstractDialog extends JDialog {
 	 * If it doesn't exist it is created.
 	 * @return the OK action
 	 */
-	protected OkAction getOkAction() {
+	protected synchronized OkAction getOkAction() {
 		if (okAction == null) {
 			okAction = new OkAction();
 		}
@@ -660,7 +660,7 @@ public abstract class AbstractDialog extends JDialog {
 	 * If it doesn't exist it is created.
 	 * @return the CANCEL action
 	 */
-	protected CancelAction getCancelAction() {
+	protected synchronized CancelAction getCancelAction() {
 		if (cancelAction == null) {
 			cancelAction = new CancelAction();
 		}
@@ -672,7 +672,7 @@ public abstract class AbstractDialog extends JDialog {
 	 * If it doesn't exist it is created.
 	 * @return the button for OK action
 	 */
-	protected JButton getOkButton() {
+	protected synchronized JButton getOkButton() {
 		if (okButton == null) {
 			okButton = new JButton(getOkAction());
 		}
@@ -684,7 +684,7 @@ public abstract class AbstractDialog extends JDialog {
 	 * If it doesn't exist it is created.
 	 * @return the button for CANCEL action
 	 */
-	protected JButton getCancelButton() {
+	protected synchronized JButton getCancelButton() {
 		if (cancelButton == null) {
 			cancelButton = new JButton(getCancelAction());
 		}
