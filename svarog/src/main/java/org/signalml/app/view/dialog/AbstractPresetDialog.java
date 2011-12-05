@@ -1070,7 +1070,12 @@ public abstract class AbstractPresetDialog extends AbstractSvarogDialog {
 			}
 
 			Preset existingPreset = presetManager.getPresetByName(newName);
-			// XXX existingPreset unused!
+			if (existingPreset != null) {
+				final String msg = _("Preset already exists, do you really want to overwrite this preset?");
+				if (ErrorsDialog.showWarningYesNoDialog(msg) == ErrorsDialog.DIALOG_OPTIONS.NO) {
+					return;
+				}
+			}
 
 			preset.setName(newName);
 
