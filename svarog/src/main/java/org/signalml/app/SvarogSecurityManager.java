@@ -3,7 +3,6 @@ package org.signalml.app;
 import java.io.FilePermission;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.lang.reflect.ReflectPermission;
 import java.security.BasicPermission;
 import java.security.Permission;
 import java.util.HashMap;
@@ -211,36 +210,6 @@ public class SvarogSecurityManager extends java.lang.SecurityManager {
 						if ("read".equals(pa))
 							permit = true;
 					}
-
-					// TODO This if is a crappy workaround which serves no purpose at all.
-					// However this was a business decision (2011-11-21).
-					//
-					// This list of exceptions should be removed, and instead a full blown
-					// security policy should be designed and implemented.
-					if (! permit) {
-						if (p instanceof BasicPermission) {
-							if (p instanceof RuntimePermission) {
-								if ("getClassLoader".equals(pn))
-									permit = true;
-								else if ("getProtectionDomain".equals(pn))
-									permit = true;
-								else if ("createClassLoader".equals(pn))
-									permit = true;
-								else if ("accessDeclaredMembers".equals(pn))
-									permit = true;
-								else if (pn.startsWith("accessClassInPackage."))
-									permit = true;
-							} else if (p instanceof ReflectPermission) {
-								if ("suppressAccessChecks".equals(pn))
-									permit = true;
-							}
-						} else if (p instanceof FilePermission) {
-							permit = true;
-						}
-
-						if (permit)
-							permissionGranted_XXX(t, p, frame);
-					}
 				}
 			}
 
@@ -260,20 +229,19 @@ public class SvarogSecurityManager extends java.lang.SecurityManager {
 		}
 	}
 
-	@Deprecated
-	/**
-	 * Used by {@link SvarogSecurityManager} to log security decisions.
-	 * 
-	 * TODO This method should not be here. Its only purpose is to log
-	 * permissions granted by the crappy code which should be removed.
-	 */
-	private void permissionGranted_XXX(Thread t, Permission p, StackTraceElement frame) {
-		String msg = "Permission GRANTED (HAZARD) [" + (t.getId()) + "/" + (t.getName()) + "]: " + p + "; plugin ctx: " + frame;
-		log.warn(msg);
-	}
+	//    @Override
+	//    public void checkExit(int status) {
+	//        try {
+	//            super.checkExit(status);
+	//            log.debug("checkExit GRANTED: " + status);
+	//        } catch (SecurityException e) {
+	//            log.debug("checkExit GRANTED (2): " + status);
+	//        }
+	//    }
+
 
 	/** Used by {@link SvarogSecurityManager} to log security decisions. */
-	private void permissionDenied(Thread t, Permission p, SecurityException e,
+	protected void permissionDenied(Thread t, Permission p, SecurityException e,
 				     StackTraceElement frame) {
 		String msg = "Permission DENIED [" + (t.getId()) + "/"
 			+ (t.getName()) + "]: " + p + "; plugin ctx: " + frame;
@@ -283,7 +251,7 @@ public class SvarogSecurityManager extends java.lang.SecurityManager {
 	}
 
 	/** Used by {@link SvarogSecurityManager} to log security decisions. */
-	private void permissionGranted(Thread t, Permission p) {
+	protected void permissionGranted(Thread t, Permission p) {
 		log.debug("Permission GRANTED [" + (t.getId()) + "/" + (t.getName()) + "]: " + p);
 	}
 
