@@ -21,7 +21,7 @@ public class ArrayOperations {
 	 * @param newSize the new size for the array
 	 * @return the resized array
 	 */
-	protected static double[] padArrayWithZerosToSize(double[] array, int newSize) {
+	public static double[] padArrayWithZerosToSize(double[] array, int newSize) {
 
 		assert (newSize >= array.length);
 

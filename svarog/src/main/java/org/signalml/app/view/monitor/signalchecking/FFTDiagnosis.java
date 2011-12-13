@@ -96,15 +96,7 @@ public class FFTDiagnosis extends GenericAmplifierDiagnosis {
          * @return FFT
          */
         private Complex[] calculateFFT(double[] samples) {
-              
-                int N = samples.length;
-
-                Complex[] complex = new Complex[N];
-                for (int i = 0; i < N; i++) {
-                        complex[i] = new Complex(samples[i], 0);
-                }
-
-                FourierTransform transform = new FourierTransform();
-                return transform.forwardFFTComplex(complex);
+		FourierTransform fourierTransform = new FourierTransform();
+		return fourierTransform.forwardFFT(samples);
         }
 }

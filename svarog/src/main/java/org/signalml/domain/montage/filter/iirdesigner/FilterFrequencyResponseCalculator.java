@@ -154,28 +154,25 @@ public class FilterFrequencyResponseCalculator extends FilterResponseCalculator 
 
 		cr = ArrayOperations.padArrayWithZerosToSize(cr, fftSize);
 		FourierTransform fourierTransform = new FourierTransform();
-		Complex[] fftInput = ArrayOperations.convertDoubleArrayToComplex(cr);
-		Complex[] num = fourierTransform.forwardFFTComplex(fftInput);
+		Complex[] numerator = fourierTransform.forwardFFT(cr);
 
 		c = ArrayOperations.padArrayWithZerosToSize(c, fftSize);
-		FourierTransform fourierTransform2 = new FourierTransform();
-		Complex[] fftInput2 = ArrayOperations.convertDoubleArrayToComplex(c);
-		Complex[] den = fourierTransform2.forwardFFTComplex(fftInput2);
+		Complex[] denominator = fourierTransform.forwardFFT(c);
 
 		double minmag = SpecialMath.getMachineEpsilon() * 10;
 
-		for (i = 0; i < den.length; i++) {
-			if (den[i].abs() < minmag) {
+		for (i = 0; i < denominator.length; i++) {
+			if (denominator[i].abs() < minmag) {
 				logger.debug("group delay singular - setting to 0");
-				num[i] = new Complex(0, 0);
-				den[i] = new Complex(1, 0);
+				numerator[i] = new Complex(0, 0);
+				denominator[i] = new Complex(1, 0);
 			}
 		}
 
 		double[] groupDelay = new double[c.length];
 
 		for (i = 0; i < groupDelay.length; i++) {
-			groupDelay[i] = (num[i].divide(den[i])).getReal() - oa;
+			groupDelay[i] = (numerator[i].divide(denominator[i])).getReal() - oa;
 		}
 
 		groupDelay = ArrayOperations.trimArrayToSize(groupDelay, fftSize / 2);
