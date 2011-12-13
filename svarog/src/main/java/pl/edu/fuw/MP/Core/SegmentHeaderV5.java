@@ -55,11 +55,11 @@ public class SegmentHeaderV5 extends FormatComponentV5 implements StandardBookSe
 			switch (codeOfSecondarySegment) {
 			case SIGNAL_SEGMENT_IDENTITY:
 				channelNumber=stream.readShort();
-				stream.skipBytes(sizeOfSecondaryDataSegment-4);
+				stream.skipBytes(sizeOfSecondaryDataSegment-2);
 				break;
 			case ATOMS_SEGMENT_IDENTITY:
 				channelNumber=stream.readShort();
-				stream.skipBytes(sizeOfSecondaryDataSegment-4);
+				stream.skipBytes(sizeOfSecondaryDataSegment-2);
 				break;
 			}
 		}
