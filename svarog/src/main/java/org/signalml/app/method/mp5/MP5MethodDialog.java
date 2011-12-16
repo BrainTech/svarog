@@ -242,6 +242,15 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 
 		});
 
+		getBasicConfigPanel().getDictionaryDensityConfigPanel().getDilationFactorPercentageSpinner().addChangeListener(new ChangeListener() {
+
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				updateInfoFields();
+			}
+
+		});
+
 		getBasicConfigPanel().getAlgorithmConfigPanel().getAlgorithmComboBox().addItemListener(new ItemListener() {
 
 			@Override
@@ -535,9 +544,11 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 		MP5BasicConfigPanel panel = getBasicConfigPanel();
 		MP5DictionaryDensityConfigPanel densityConfigPanel = panel.getDictionaryDensityConfigPanel();
 		double a = ((Number) densityConfigPanel.getDilationFactorSpinner().getValue()).doubleValue();
+		double percentageChosen = ((Number) densityConfigPanel.getDilationFactorPercentageSpinner().getValue()).doubleValue();
 
 		// R = 2pi * N * ln(N)/[(ln(a) *ln(0.5(a+ 1/a))]
 		double approxAtomCount = Math.ceil(2 * Math.PI * currentPageLength * Math.log(currentPageLength) / (Math.log(a) * Math.log(0.5 * (a + 1/a))));
+		approxAtomCount *= (percentageChosen / 100.0F);
 
 		MP5Algorithm algorithm = (MP5Algorithm) panel.getAlgorithmConfigPanel().getAlgorithmComboBox().getSelectedItem();
 		int k;
@@ -895,9 +906,6 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 				runtimeParameters.setChannelCount(sampleSource.getChannelCount());
 				runtimeParameters.setSegementSize(sampleSource.getSegmentLength());
 				runtimeParameters.setChosenChannels(null);
-				runtimeParameters.setDataFormat(MP5SignalFormatType.FLOAT);
-				runtimeParameters.setFooterSize(0);
-				runtimeParameters.setHeaderSize(0);
 				runtimeParameters.setOutputDirectory(null);
 				runtimeParameters.setPointsPerMicrovolt(1F);
 				runtimeParameters.setSamplingFrequency(sampleSource.getSamplingFrequency());
@@ -905,7 +913,6 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 				runtimeParameters.setWritingMode(MP5WritingModeType.CREATE);
 				runtimeParameters.setMinOffset(1);
 				runtimeParameters.setMaxOffset(((int) Math.floor(minSampleCount / sampleSource.getSegmentLength())));
-				runtimeParameters.setResultFileExtension(null);
 
 				Formatter configFormatter = mp5ConfigCreator.createConfigFormatter();
 

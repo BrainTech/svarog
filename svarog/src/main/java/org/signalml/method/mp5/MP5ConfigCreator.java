@@ -32,29 +32,22 @@ public class MP5ConfigCreator {
 
 	public static final String NAME_OF_DATA_FILE = "nameOfDataFile";
 
-	public static final String EXTENSION_OF_RESULT_FILE = "extensionOfResultsFile";
 	public static final String NAME_OF_OUTPUT_DIRECTORY = "nameOfOutputDirectory";
 
 	public static final String WRITING_MODE = "writingMode";
 
-	public static final String SIZE_OF_HEADER = "sizeOfHeader";
-	public static final String SIZE_OF_TAIL = "sizeOfTail";
 	public static final String SAMPLING_FREQUENCY = "samplingFrequency";
 
-	public static final String FORMAT_OF_DATA = "formatOfData";
-
 	public static final String NUMBER_OF_CHANNELS = "numberOfChannels";
-	public static final String CHOSEN_CHANNELS = "chosenChannels";
-	public static final String NUMBER_OF_POINTS_IN_OFFSET = "numberOfPointsInOffset";
-	public static final String CHOSEN_OFFSETS = "chosenOffsets";
+	public static final String SELECTED_CHANNELS = "selectedChannels";
+	public static final String NUMBER_OF_SAMPLES_IN_EPOCH = "numberOfSamplesInEpoch";
+	public static final String SELECTED_EPOCHS = "selectedEpochs";
 
 	public static final String TYPE_OF_DICTIONARY = "typeOfDictionary";
 
 	public static final String DILATION_FACTOR = "dilationFactor";
 
 	public static final String RANDOM_SEED = "randomSeed";
-
-	public static final String PERIOD_DENSITY = "periodDensity";
 
 	public static final String REINIT_DICTIONARY = "reinitDictionary";
 
@@ -69,9 +62,6 @@ public class MP5ConfigCreator {
 	public static final String MP_MMP3 = "MMP3";
 
 	public static final String POINTS_PER_MICROVOLT = "pointsPerMicrovolt";
-
-	public static final String ANALYTICAL_DOT_PRODUCT = "analiticalDotProduct";
-	public static final String BOOK_WITH_SIGNAL = "bookWithSignal";
 
 	public static final String ON = "ON";
 	public static final String OFF = "OFF";
@@ -120,10 +110,10 @@ public class MP5ConfigCreator {
 		}
 
 		formatter.format("%s %s%n", TYPE_OF_DICTIONARY, parameters.getDictionaryType().toString());
-		formatter.format("%s %f%n", DILATION_FACTOR, parameters.getDilationFactor());
-		formatter.format("%s %d%n", PERIOD_DENSITY, parameters.getPeriodDensity());
+		formatter.format("%s %f %f%n", DILATION_FACTOR, parameters.getDilationFactor(), parameters.getDilationFactorPercentage());
 		formatter.format("%s %s%n", REINIT_DICTIONARY, parameters.getDictionaryReinitType().toString());
 		formatter.format("%s %f%n", SCALE_TO_PERIOD_FACTOR, parameters.getScaleToPeriodFactor());
+
 		formatter.format("%n");
 
 		formatter.format("%s %d%n", MAX_NUMBER_OF_ITERATIONS, parameters.getMaxIterationCount());
@@ -133,15 +123,20 @@ public class MP5ConfigCreator {
 		formatter.format("%s %s%n", MP, parameters.getAlgorithm().toString());
 		formatter.format("%n");
 
-		formatter.format("%s %s%n", ANALYTICAL_DOT_PRODUCT, parameters.isAnalyticalDotProduct() ? ON : OFF);
-		formatter.format("%s %s%n", BOOK_WITH_SIGNAL, parameters.isBookWithSignal() ? YES : NO);
+		for (MP5AtomType atomType: MP5AtomType.values()) {
+			boolean isAtomIncluded = parameters.getAtomsInDictionary().isAtomIncluded(atomType);
+			String parameterName = atomType.getConfigName();
+			String yesNoString =  isAtomIncluded ? "YES" : "NO";
+			formatter.format("%s %s%n", parameterName, yesNoString);
+		}
+
 		formatter.format("%n");
 
 		String customConfigText = parameters.getCustomConfigText();
 		if (customConfigText != null && !customConfigText.isEmpty()) {
 			formatter.format("%s%n", customConfigText);
 			formatter.format("%n");
-		}
+		}		
 
 	}
 
@@ -184,18 +179,14 @@ public class MP5ConfigCreator {
 		HashSet<String> set = new HashSet<String>();
 
 		set.add(NAME_OF_DATA_FILE);
-		set.add(EXTENSION_OF_RESULT_FILE);
 		set.add(POINTS_PER_MICROVOLT);
 		set.add(NAME_OF_OUTPUT_DIRECTORY);
 		set.add(WRITING_MODE);
-		set.add(SIZE_OF_HEADER);
-		set.add(SIZE_OF_TAIL);
 		set.add(SAMPLING_FREQUENCY);
-		set.add(FORMAT_OF_DATA);
 		set.add(NUMBER_OF_CHANNELS);
-		set.add(CHOSEN_CHANNELS);
-		set.add(NUMBER_OF_POINTS_IN_OFFSET);
-		set.add(CHOSEN_OFFSETS);
+		set.add(SELECTED_CHANNELS);
+		set.add(NUMBER_OF_SAMPLES_IN_EPOCH);
+		set.add(SELECTED_EPOCHS);
 		set.add(RANDOM_SEED);
 
 		return set;
@@ -204,15 +195,10 @@ public class MP5ConfigCreator {
 
 	public void writeRuntimeConfig(MP5RuntimeParameters parameters, Formatter formatter) {
 
-		formatter.format("%s %d%n", SIZE_OF_HEADER, parameters.getHeaderSize());
-		formatter.format("%s %d%n", SIZE_OF_TAIL, parameters.getFooterSize());
 		formatter.format("%s %f%n", SAMPLING_FREQUENCY, parameters.getSamplingFrequency());
-		formatter.format("%s %s%n", FORMAT_OF_DATA, parameters.getDataFormat().toString());
 		formatter.format("%n");
 
 		formatter.format("%s %s%n", NAME_OF_DATA_FILE, parameters.getSignalFile().getName());
-		String extension = parameters.getResultFileExtension();
-		formatter.format("%s %s%n", EXTENSION_OF_RESULT_FILE, (extension != null ? extension : NONE));
 
 		formatter.format("%s %.6f%n", POINTS_PER_MICROVOLT, parameters.getPointsPerMicrovolt());
 		formatter.format("%n");
@@ -226,24 +212,21 @@ public class MP5ConfigCreator {
 		formatter.format("%s %s%n", WRITING_MODE, parameters.getWritingMode().toString());
 		formatter.format("%n");
 
-		formatter.format("%s %d%n", SIZE_OF_HEADER, parameters.getHeaderSize());
-		formatter.format("%s %d%n", SIZE_OF_TAIL, parameters.getFooterSize());
 		formatter.format("%s %f%n", SAMPLING_FREQUENCY, parameters.getSamplingFrequency());
-		formatter.format("%s %s%n", FORMAT_OF_DATA, parameters.getDataFormat().toString());
 		formatter.format("%n");
 
-		formatter.format("%s %d%n", NUMBER_OF_POINTS_IN_OFFSET, parameters.getSegementSize());
+		formatter.format("%s %d%n", NUMBER_OF_SAMPLES_IN_EPOCH, parameters.getSegementSize());
 
 		int minOffset = parameters.getMinOffset();
 		int maxOffset = parameters.getMaxOffset();
 
 		if (minOffset < 0 || maxOffset < 0) {
-			formatter.format("%s %d%n", CHOSEN_OFFSETS, 1);
+			formatter.format("%s %d%n", SELECTED_EPOCHS, 1);
 		} else {
 			if (minOffset == maxOffset) {
-				formatter.format("%s %d%n", CHOSEN_OFFSETS, minOffset);
+				formatter.format("%s %d%n", SELECTED_EPOCHS, minOffset);
 			} else {
-				formatter.format("%s %d-%d%n", CHOSEN_OFFSETS, minOffset, maxOffset);
+				formatter.format("%s %d-%d%n", SELECTED_EPOCHS, minOffset, maxOffset);
 			}
 		}
 		formatter.format("%n");
@@ -253,7 +236,7 @@ public class MP5ConfigCreator {
 		int[] chosenChannels = parameters.getChosenChannels();
 		if (chosenChannels == null) {
 
-			formatter.format("%s %d-%d%n", CHOSEN_CHANNELS, 1, parameters.getChannelCount());
+			formatter.format("%s %d-%d%n", SELECTED_CHANNELS, 1, parameters.getChannelCount());
 
 		} else {
 
@@ -278,7 +261,7 @@ public class MP5ConfigCreator {
 					}
 				}
 			}
-			formatter.format("%s %s%n", CHOSEN_CHANNELS, sb.toString());
+			formatter.format("%s %s%n", SELECTED_CHANNELS, sb.toString());
 
 		}
 		formatter.format("%n");

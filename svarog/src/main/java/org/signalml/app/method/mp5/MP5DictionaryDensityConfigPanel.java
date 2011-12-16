@@ -36,6 +36,7 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 	private AbstractDialog owner;
 
 	private JSpinner dilationFactorSpinner;
+	private JSpinner dilationFactorPercentageSpinner;
 	private JTextField atomCountTextField;
 	private JTextField ramUsageTextField;
 
@@ -60,12 +61,14 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 		layout.setAutoCreateGaps(true);
 
 		JLabel dilationFactorLabel = new JLabel(_("Dilation factor \"a\""));
+		JLabel dilationFactorPercentageLabel = new JLabel(_("Dilation factor percentage chosen [%]"));
 		JLabel atomCountLabel = new JLabel(_("Atoms in dictionary"));
 		JLabel ramUsageLabel = new JLabel(_("Approximate RAM usage"));
 
 		Component glue1 = Box.createHorizontalGlue();
 		Component glue2 = Box.createHorizontalGlue();
 		Component glue3 = Box.createHorizontalGlue();
+		Component glue4 = Box.createHorizontalGlue();
 
 		CompactButton dilationFactorHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_DILATION_FACTOR);
 		CompactButton atomCountHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_ATOM_COUNT);
@@ -76,6 +79,7 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 		hGroup.addGroup(
 		        layout.createParallelGroup()
 		        .addComponent(dilationFactorLabel)
+			.addComponent(dilationFactorPercentageLabel)
 		        .addComponent(atomCountLabel)
 		        .addComponent(ramUsageLabel)
 		);
@@ -85,11 +89,13 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 		        .addComponent(glue1)
 		        .addComponent(glue2)
 		        .addComponent(glue3)
+			.addComponent(glue4)
 		);
 
 		hGroup.addGroup(
 		        layout.createParallelGroup()
 		        .addComponent(getDilationFactorSpinner())
+			.addComponent(getDilationFactorPercentageSpinner())
 		        .addComponent(getAtomCountTextField())
 		        .addComponent(getRamUsageTextField())
 		);
@@ -97,6 +103,7 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 		hGroup.addGroup(
 		        layout.createParallelGroup()
 		        .addComponent(dilationFactorHelpButton)
+			.addComponent(dilationFactorHelpButton)
 		        .addComponent(atomCountHelpButton)
 		        .addComponent(ramUsageHelpButton)
 		);
@@ -115,8 +122,16 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.CENTER)
-				.addComponent(atomCountLabel)
+				.addComponent(dilationFactorPercentageLabel)
 				.addComponent(glue2)
+				.addComponent(getDilationFactorPercentageSpinner())
+				.addComponent(dilationFactorHelpButton)
+			);
+
+		vGroup.addGroup(
+				layout.createParallelGroup(Alignment.CENTER)
+				.addComponent(atomCountLabel)
+				.addComponent(glue3)
 				.addComponent(getAtomCountTextField())
 				.addComponent(atomCountHelpButton)
 			);
@@ -124,7 +139,7 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.CENTER)
 				.addComponent(ramUsageLabel)
-				.addComponent(glue3)
+				.addComponent(glue4)
 				.addComponent(getRamUsageTextField())
 				.addComponent(ramUsageHelpButton)
 			);
@@ -149,6 +164,24 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 			dilationFactorSpinner.setMinimumSize(MP5MethodDialog.FIELD_SIZE);
 		}
 		return dilationFactorSpinner;
+	}
+
+	@SuppressWarnings("cast")
+	public JSpinner getDilationFactorPercentageSpinner() {
+		if (dilationFactorPercentageSpinner == null) {
+			dilationFactorPercentageSpinner = new JSpinner(
+			        new SpinnerNumberModel(
+			                ((double) MP5Parameters.MIN_DILATION_FACTOR_PERCENTAGE),
+			                ((double) MP5Parameters.MIN_DILATION_FACTOR_PERCENTAGE),
+			                ((double) MP5Parameters.MAX_DILATION_FACTOR_PERCENTAGE),
+			                0.1d
+			        )
+			);
+			dilationFactorPercentageSpinner.setPreferredSize(MP5MethodDialog.FIELD_SIZE);
+			dilationFactorPercentageSpinner.setMaximumSize(MP5MethodDialog.FIELD_SIZE);
+			dilationFactorPercentageSpinner.setMinimumSize(MP5MethodDialog.FIELD_SIZE);
+		}
+		return dilationFactorPercentageSpinner;
 	}
 
 	public JTextField getAtomCountTextField() {
@@ -178,12 +211,14 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 	public void fillPanelFromParameters(MP5Parameters parameters) {
 
 		getDilationFactorSpinner().setValue(new Double(parameters.getDilationFactor()));
+		getDilationFactorPercentageSpinner().setValue(new Double(parameters.getDilationFactorPercentage()));
 
 	}
 
 	public void fillParametersFromPanel(MP5Parameters parameters) {
 
 		parameters.setDilationFactor(((Number) getDilationFactorSpinner().getValue()).floatValue());
+		parameters.setDilationFactorPercentage(((Number) getDilationFactorPercentageSpinner().getValue()).floatValue());
 
 	}
 

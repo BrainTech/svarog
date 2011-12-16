@@ -83,15 +83,11 @@ public class MP5LocalProcessExecutor implements MP5Executor {
 		runtimeParameters.setChannelCount(sampleSource.getChannelCount());
 		runtimeParameters.setSegementSize(sampleSource.getSegmentLength());
 		runtimeParameters.setChosenChannels(null);
-		runtimeParameters.setDataFormat(MP5SignalFormatType.FLOAT);
-		runtimeParameters.setFooterSize(0);
-		runtimeParameters.setHeaderSize(0);
 		runtimeParameters.setOutputDirectory(null);
 		runtimeParameters.setPointsPerMicrovolt(1F);
 		runtimeParameters.setSamplingFrequency(sampleSource.getSamplingFrequency());
 		runtimeParameters.setSignalFile(signalFile);
 		runtimeParameters.setWritingMode(MP5WritingModeType.CREATE);
-		runtimeParameters.setResultFileExtension(null);
 
 		SignalExportDescriptor signalExportDescriptor = new SignalExportDescriptor();
 		signalExportDescriptor.setSampleType(RawSignalSampleType.FLOAT);
