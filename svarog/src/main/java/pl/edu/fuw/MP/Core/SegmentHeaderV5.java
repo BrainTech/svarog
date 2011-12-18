@@ -51,7 +51,6 @@ public class SegmentHeaderV5 extends FormatComponentV5 implements StandardBookSe
 			int codeOfSecondarySegment=(int)stream.readByte();
 			int sizeOfSecondaryDataSegment=stream.readInt();
 
-			type=codeOfSecondarySegment;
 			switch (codeOfSecondarySegment) {
 			case SIGNAL_SEGMENT_IDENTITY:
 				channelNumber=stream.readShort();
@@ -281,9 +280,9 @@ public class SegmentHeaderV5 extends FormatComponentV5 implements StandardBookSe
 
 		if (signal!=null || atoms.size()!=0) {
 			stream.writeByte(OFFSET_SEGMENT_IDENTITY);
-			stream.writeInt(4+getSizeOfSegment());
+			stream.writeInt(6+getSizeOfSegment());
 			stream.writeShort(this.offsetNumber);
-			stream.writeShort(this.offsetDimension);
+			stream.writeInt(this.offsetDimension);
 		}
 
 		if (signal!=null) {
@@ -299,7 +298,7 @@ public class SegmentHeaderV5 extends FormatComponentV5 implements StandardBookSe
 		int len=atoms.size();
 		if (len!=0) {
 			stream.writeByte(ATOMS_SEGMENT_IDENTITY);
-			stream.writeInt(getSizeOfAtoms());
+			stream.writeInt(getSizeOfAtoms()+2);
 			stream.writeShort(channelNumber);
 
 			for (int i=0 ; i<len ; i++) {

@@ -268,6 +268,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 	public SignalSpacePanel getSignalSpacePanel() {
 		if (signalSpacePanel == null) {
 			signalSpacePanel = new SignalSpacePanel();
+			signalSpacePanel.getChannelSpacePanel().getChannelList().setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		}
 		return signalSpacePanel;
 	}

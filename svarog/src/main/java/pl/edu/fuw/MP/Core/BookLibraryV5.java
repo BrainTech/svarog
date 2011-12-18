@@ -523,11 +523,15 @@ public class BookLibraryV5 implements BookLibraryInterface {
 						readBook(streamClass);
 						seg1=segment;
 					}
+					int offSetDimension = segment.offsetDimension;
+					int offsetNumber = segment.offsetNumber;
 
 					if (p.y>=0L) {
 						streamClass.seek(p.y);
 						readBook(streamClass);
 						seg2=segment;
+						segment.offsetDimension = offSetDimension;
+						segment.offsetNumber = offsetNumber;
 					}
 
 					if (seg1!=null && seg2!=null) {

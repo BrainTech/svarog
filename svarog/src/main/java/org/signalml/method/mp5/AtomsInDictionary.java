@@ -13,7 +13,7 @@ public class AtomsInDictionary implements Serializable {
 
 	public AtomsInDictionary() {
 		for (MP5AtomType atom: MP5AtomType.values()) {
-			atoms.put(atom, false);
+			atoms.put(atom, true); //all atoms types are selected by default
 		}
 	}
 
