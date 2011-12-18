@@ -79,8 +79,9 @@ public class MP5AtomsInDictionaryPanel extends JPanel {
 	}
 
 	public void validatePanel(Errors errors) {
-		//TODO validation
-		//at least one atom type should be selected
+		if (!isAtLeastOneAtomTypeSelected()) {
+			errors.rejectValue("atomsInDictionary", null, _("At least one atom type should be selected!"));
+		}
 	}
 
 }
