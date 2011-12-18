@@ -221,6 +221,7 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 				for (int j = 0; j < segments[channel].getAtomCount(); j++) {
 					StandardBookAtomWriterImpl bookAtomWriter = new StandardBookAtomWriterImpl(segments[channel].getAtomAt(j));
 					seg.addAtom(bookAtomWriter);
+					seg.setSignalSamples(segments[channel].getSignalSamples());
 				}
 
 				try {
