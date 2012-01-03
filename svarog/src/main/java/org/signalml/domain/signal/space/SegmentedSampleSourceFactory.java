@@ -123,7 +123,6 @@ public class SegmentedSampleSourceFactory {
 		case WHOLE_SIGNAL :
 
 			int minSampleCount = SampleSourceUtils.getMinSampleCount(source);
-
 			float time = ((float) minSampleCount) / source.getSamplingFrequency();
 
 			selection = new SignalSelection(SignalSelectionType.PAGE, 0F, time);

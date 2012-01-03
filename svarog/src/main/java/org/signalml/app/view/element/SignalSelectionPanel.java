@@ -437,8 +437,8 @@ public class SignalSelectionPanel extends JPanel {
 
 		} else if (signalSelectionTypePanel.getChannelRadio().isSelected()) {
 
-			float startTime = (Float) channelSignalSelectionPanel.getStartTimeSpinner().getValue();
-			float length = (Float) channelSignalSelectionPanel.getLengthSpinner().getValue();
+			double startTime = (Double) channelSignalSelectionPanel.getStartTimeSpinner().getValue();
+			double length = (Double) channelSignalSelectionPanel.getLengthSpinner().getValue();
 
 			selection = new SignalSelection(SignalSelectionType.CHANNEL);
 			selection.setPosition(startTime);
@@ -518,6 +518,7 @@ public class SignalSelectionPanel extends JPanel {
 	 * @param errors the object in which errors are stored
 	 */
 	public void validatePanel(Errors errors) {
+
 		// there is no validation - the dialog elements enforce valid values themselves
 	}
 }

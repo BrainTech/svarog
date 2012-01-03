@@ -93,7 +93,7 @@ public class SelectionSegmentedSampleSource extends MultichannelSampleProcessor 
 			channelIndices = channelSpace.getSelectedChannels();
 
 		}
-		else if (selectionType.isChannel()) {
+		else if (selectionType.isChannel() && selection.getChannel() != SignalSelection.CHANNEL_NULL) {
 
 			channelCount = 1;
 			channelIndices = new int[] { selection.getChannel() };
