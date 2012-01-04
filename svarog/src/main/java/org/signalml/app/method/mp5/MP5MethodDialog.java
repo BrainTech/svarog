@@ -389,8 +389,6 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 			tagDocument.updateSignalSpaceConstraints(signalSpaceConstraints);
 		}
 
-		signalSpaceConstraints.setRequireCompletePages(true);
-
 		getSignalSpacePanel().setConstraints(signalSpaceConstraints);
 		currentPageLength = (int)(signalSpaceConstraints.getPageSize() * signalSpaceConstraints.getSamplingFrequency());
 

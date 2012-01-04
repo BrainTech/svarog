@@ -79,8 +79,10 @@ public class SelectionSegmentedSampleSource extends MultichannelSampleProcessor 
          * @param pageSize the size of a page (in seconds)
          * @param blockSize the size of a block (in seconds)
          */
-	public SelectionSegmentedSampleSource(MultichannelSampleSource source, SignalSelection selection, ChannelSpace channelSpace, float pageSize, float blockSize) {
+	public SelectionSegmentedSampleSource(MultichannelSampleSource source, SignalSelection selection, SignalSpace signalSpace, float pageSize, float blockSize) {
 		super(source);
+
+		ChannelSpace channelSpace = signalSpace.getChannelSpace();
 
 		float samplingFrequency = source.getSamplingFrequency();
 
@@ -113,7 +115,8 @@ public class SelectionSegmentedSampleSource extends MultichannelSampleProcessor 
 		firstPosition = selection.getPosition();
 		firstSample = (int)(firstPosition * samplingFrequency);
 
-		if (selectionType.isChannel()) {
+		if (selectionType.isChannel()
+			|| (selectionType.isPage() && !signalSpace.isWholeSignalCompletePagesOnly())) {
 
 			segmentCount = 1;
 			segmentLength = (int)(selection.getLength() * samplingFrequency);

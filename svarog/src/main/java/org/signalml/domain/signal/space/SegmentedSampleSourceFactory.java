@@ -117,7 +117,7 @@ public class SegmentedSampleSourceFactory {
 		case SELECTION_BASED :
 
 			selection = signalSpace.getSelectionTimeSpace();
-			sampleSource = new SelectionSegmentedSampleSource(source, selection, channelSpace, pageSize, blockSize);
+			sampleSource = new SelectionSegmentedSampleSource(source, selection, signalSpace, pageSize, blockSize);
 			break;
 
 		case WHOLE_SIGNAL :
@@ -126,7 +126,7 @@ public class SegmentedSampleSourceFactory {
 			float time = ((float) minSampleCount) / source.getSamplingFrequency();
 
 			selection = new SignalSelection(SignalSelectionType.PAGE, 0F, time);
-			sampleSource = new SelectionSegmentedSampleSource(source, selection, channelSpace, pageSize, blockSize);
+			sampleSource = new SelectionSegmentedSampleSource(source, selection, signalSpace, pageSize, blockSize);
 
 			break;
 

@@ -56,6 +56,7 @@ public class MP5ApplicationData extends MP5Data {
 		SegmentedSampleSourceFactory factory = SegmentedSampleSourceFactory.getSharedInstance();
 		MultichannelSegmentedSampleSource segmentedSampleSource = factory.getSegmentedSampleSource(copyChain, signalSpace, tagDocument != null ? tagDocument.getTagSet() : null, plot.getPageSize(), plot.getBlockSize());
 
+
 		setSampleSource(segmentedSampleSource);
 
 		setChainDescriptor(copyChain.createDescriptor());
