@@ -17,7 +17,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import org.apache.log4j.Logger;
 
-import org.signalml.app.model.LabelledPropertyDescriptor;
+import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.app.util.XMLUtils;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
 import org.signalml.domain.tag.StyledTagSet;

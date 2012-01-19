@@ -4,10 +4,12 @@
 
 package org.signalml.domain.montage.filter;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.util.ArrayList;
 import java.util.List;
-import org.signalml.domain.montage.filter.iirdesigner.FilterType;
+
+import org.signalml.math.iirdesigner.FilterType;
 
 /**
  * This class respresents a validator which is capable of checking

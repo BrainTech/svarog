@@ -3,7 +3,8 @@
  */
 package org.signalml.app.view.montage;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -36,12 +37,12 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import org.signalml.app.montage.MontageTableModel;
+import org.signalml.app.model.montage.MontageTableModel;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.SwingUtils;
-import org.signalml.app.view.dialog.ErrorsDialog;
-import org.signalml.app.view.element.AnyChangeDocumentAdapter;
-import org.signalml.app.view.element.CompactButton;
+import org.signalml.app.view.components.AnyChangeDocumentAdapter;
+import org.signalml.app.view.components.CompactButton;
+import org.signalml.app.view.components.dialogs.ErrorsDialog;
 import org.signalml.domain.montage.Montage;
 
 /** EditMontageReferencePanel

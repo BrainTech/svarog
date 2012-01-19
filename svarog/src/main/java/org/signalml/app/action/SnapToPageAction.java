@@ -4,7 +4,8 @@
 
 package org.signalml.app.action;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.ItemSelectable;
 import java.awt.event.ActionEvent;
 

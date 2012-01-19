@@ -9,7 +9,7 @@ import java.util.List;
 import javax.swing.SwingWorker;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.view.dialog.PleaseWaitDialog;
+import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
 import org.signalml.app.view.signal.SignalScanResult;
 import org.signalml.domain.signal.MultichannelSampleSource;
 import org.signalml.domain.signal.SignalScanner;

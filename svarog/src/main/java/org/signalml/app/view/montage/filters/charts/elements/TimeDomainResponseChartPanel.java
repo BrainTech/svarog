@@ -3,9 +3,10 @@
  */
 package org.signalml.app.view.montage.filters.charts.elements;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import org.jfree.chart.axis.NumberAxis;
-import org.signalml.domain.montage.filter.iirdesigner.FilterTimeDomainResponse;
+import org.signalml.math.iirdesigner.FilterTimeDomainResponse;
 
 /**
  * A chart panel used for displaying time domain responses (impulse response

@@ -4,7 +4,7 @@
 
 package org.signalml.app.view.book;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import javax.swing.Icon;
 

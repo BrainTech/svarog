@@ -12,7 +12,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.border.LineBorder;
 
-import org.signalml.app.view.dialog.AbstractDialog;
+import org.signalml.app.view.components.dialogs.AbstractDialog;
 
 /**
  * The abstract popup dialog, from which every popup dialog in Svarog should

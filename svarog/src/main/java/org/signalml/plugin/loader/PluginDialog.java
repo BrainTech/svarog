@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import javax.swing.JComponent;
 
-import org.signalml.app.view.dialog.AbstractDialog;
+import org.signalml.app.view.components.dialogs.AbstractDialog;
 import org.signalml.plugin.export.SignalMLException;
 
 /**

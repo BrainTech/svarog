@@ -3,13 +3,14 @@
  */
 package org.signalml.app.action;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.view.dialog.ErrorsDialog;
-import org.signalml.app.view.dialog.HelpDialog;
+import org.signalml.app.view.components.dialogs.ErrorsDialog;
+import org.signalml.app.view.components.dialogs.HelpDialog;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 

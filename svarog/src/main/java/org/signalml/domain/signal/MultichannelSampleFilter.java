@@ -19,9 +19,9 @@ import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
-import org.signalml.domain.montage.filter.iirdesigner.BadFilterParametersException;
-import org.signalml.domain.montage.filter.iirdesigner.FilterCoefficients;
-import org.signalml.domain.montage.filter.iirdesigner.IIRDesigner;
+import org.signalml.math.iirdesigner.BadFilterParametersException;
+import org.signalml.math.iirdesigner.FilterCoefficients;
+import org.signalml.math.iirdesigner.IIRDesigner;
 
 /**
  * This abstract class represents a filter of samples for multichannel signal.

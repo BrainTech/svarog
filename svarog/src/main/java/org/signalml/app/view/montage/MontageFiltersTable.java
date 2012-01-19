@@ -15,7 +15,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.montage.MontageFiltersTableModel;
+import org.signalml.app.model.montage.MontageFiltersTableModel;
 import org.signalml.app.view.TablePopupMenuProvider;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;

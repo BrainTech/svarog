@@ -27,7 +27,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.apache.log4j.Logger;
 import org.jfree.ui.FilesystemFilter;
 import org.apache.log4j.Logger;
-import org.signalml.app.view.ViewerElementManager;
+import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.plugin.export.Plugin;
 import org.signalml.plugin.impl.PluginAccessClass;
 import org.w3c.dom.Document;

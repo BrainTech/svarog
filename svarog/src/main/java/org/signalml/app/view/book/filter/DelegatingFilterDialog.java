@@ -4,7 +4,8 @@
 
 package org.signalml.app.view.book.filter;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -32,8 +33,8 @@ import javax.swing.event.ListSelectionListener;
 
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.SwingUtils;
-import org.signalml.app.view.ViewerFileChooser;
-import org.signalml.app.view.element.FileListCellRenderer;
+import org.signalml.app.view.components.FileListCellRenderer;
+import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.domain.book.filter.DelegatingAtomFilter;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;

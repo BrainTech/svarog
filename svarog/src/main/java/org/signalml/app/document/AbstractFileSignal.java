@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import org.signalml.app.model.LabelledPropertyDescriptor;
+import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.app.worker.SignalChecksumWorker;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.signal.SignalChecksum;

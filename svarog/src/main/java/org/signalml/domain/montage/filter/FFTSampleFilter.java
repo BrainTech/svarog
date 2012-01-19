@@ -11,7 +11,7 @@ import java.util.Iterator;
 
 import org.signalml.app.config.FFTWindowTypeSettings;
 import org.signalml.app.config.preset.Preset;
-import org.signalml.fft.WindowType;
+import org.signalml.math.fft.WindowType;
 import org.signalml.util.ResolvableString;
 import org.springframework.context.MessageSourceResolvable;
 

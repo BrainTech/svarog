@@ -8,7 +8,7 @@ import java.util.Collection;
 
 import javax.swing.JMenu;
 
-import org.signalml.app.action.TagSelectionAction;
+import org.signalml.app.action.tag.TagSelectionAction;
 import org.signalml.app.util.IconUtils;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.signal.SignalSelectionType;

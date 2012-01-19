@@ -13,7 +13,7 @@ import java.util.TreeSet;
 import javax.swing.KeyStroke;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.model.PagingParameterDescriptor;
+import org.signalml.app.model.signal.PagingParameterDescriptor;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.signal.SignalChecksum;
 import org.signalml.exception.SanityCheckException;

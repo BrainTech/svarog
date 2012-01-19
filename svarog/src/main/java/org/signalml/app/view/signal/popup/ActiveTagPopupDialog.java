@@ -4,8 +4,9 @@
 
 package org.signalml.app.view.signal.popup;
 
-import static org.signalml.app.SvarogI18n._;
-import static org.signalml.app.SvarogI18n._R;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
+
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Window;
@@ -24,7 +25,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
 import org.signalml.app.document.TagDocument;
-import org.signalml.app.view.element.TitledCrossBorder;
+import org.signalml.app.view.components.TitledCrossBorder;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractPopupDialog;

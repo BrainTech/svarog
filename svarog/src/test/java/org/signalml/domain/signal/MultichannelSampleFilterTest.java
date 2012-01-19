@@ -16,8 +16,8 @@ import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
-import org.signalml.domain.montage.filter.iirdesigner.ApproximationFunctionType;
-import org.signalml.domain.montage.filter.iirdesigner.FilterType;
+import org.signalml.math.iirdesigner.ApproximationFunctionType;
+import org.signalml.math.iirdesigner.FilterType;
 
 /**
  * This class performs unit tests on the {@link MultichannelSampleFilter MultichannelSampleFilter} class.

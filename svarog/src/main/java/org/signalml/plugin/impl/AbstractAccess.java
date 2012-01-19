@@ -1,6 +1,6 @@
 package org.signalml.plugin.impl;
 
-import org.signalml.app.view.ViewerElementManager;
+import org.signalml.app.view.workspace.ViewerElementManager;
 
 /**
  * Methods and tasks in Svarog core (facade for Svarog plugins).

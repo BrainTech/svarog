@@ -3,8 +3,11 @@
  */
 package org.signalml.app.view.montage.filters;
 
-import static org.signalml.app.SvarogI18n._;
-import org.signalml.app.view.element.DoubleSpinner;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
+import org.signalml.app.view.components.DoubleSpinner;
+import org.signalml.app.view.components.ResolvableComboBox;
+
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -21,10 +24,9 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import org.signalml.app.view.element.ResolvableComboBox;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
-import org.signalml.domain.montage.filter.iirdesigner.ApproximationFunctionType;
-import org.signalml.domain.montage.filter.iirdesigner.FilterType;
+import org.signalml.math.iirdesigner.ApproximationFunctionType;
+import org.signalml.math.iirdesigner.FilterType;
 import org.signalml.util.Util;
 
 import org.springframework.validation.Errors;

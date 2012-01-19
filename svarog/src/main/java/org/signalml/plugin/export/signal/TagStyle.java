@@ -14,8 +14,8 @@ import java.util.List;
 
 import javax.swing.KeyStroke;
 
-import org.signalml.app.model.LabelledPropertyDescriptor;
-import org.signalml.app.model.PropertyProvider;
+import org.signalml.app.model.components.LabelledPropertyDescriptor;
+import org.signalml.app.model.components.PropertyProvider;
 import org.signalml.domain.montage.MontageChannel;
 import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributes;
 import org.springframework.context.MessageSourceResolvable;

@@ -3,7 +3,8 @@
  */
 package org.signalml.app.view.tag.comparison;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -21,9 +22,9 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.signalml.app.model.TableToTextExporter;
-import org.signalml.app.view.ViewerFileChooser;
+import org.signalml.app.model.components.TableToTextExporter;
 import org.signalml.app.view.tag.TagIconProducer;
+import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.domain.tag.TagComparisonResult;
 import org.signalml.domain.tag.TagComparisonResults;
 

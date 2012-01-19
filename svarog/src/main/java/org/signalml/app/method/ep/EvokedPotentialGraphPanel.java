@@ -4,7 +4,8 @@
 
 package org.signalml.app.method.ep;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -35,14 +36,14 @@ import org.jfree.ui.HorizontalAlignment;
 import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.VerticalAlignment;
-import org.signalml.app.action.ExportAllChartsToClipboardAction;
-import org.signalml.app.action.ExportAllChartsToFileAction;
-import org.signalml.app.action.ExportChartToClipboardAction;
-import org.signalml.app.action.ExportChartToFileAction;
-import org.signalml.app.action.ExportSamplesToClipboardAction;
 import org.signalml.app.action.ExportSamplesToFileAction;
 import org.signalml.app.action.ExportSamplesToMultiplexedFloatFileAction;
-import org.signalml.app.view.ViewerFileChooser;
+import org.signalml.app.action.components.ExportAllChartsToClipboardAction;
+import org.signalml.app.action.components.ExportAllChartsToFileAction;
+import org.signalml.app.action.components.ExportChartToClipboardAction;
+import org.signalml.app.action.components.ExportChartToFileAction;
+import org.signalml.app.action.components.ExportSamplesToClipboardAction;
+import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.method.ep.EvokedPotentialResult;
 
 /** EvokedPotentialGraphPanel

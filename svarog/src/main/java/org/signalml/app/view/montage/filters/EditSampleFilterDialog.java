@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.dialog.AbstractPresetDialog;
+import org.signalml.app.view.components.dialogs.AbstractPresetDialog;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.plugin.export.SignalMLException;

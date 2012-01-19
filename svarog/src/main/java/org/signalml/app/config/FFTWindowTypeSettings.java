@@ -3,7 +3,7 @@
  */
 package org.signalml.app.config;
 
-import org.signalml.fft.WindowType;
+import org.signalml.math.fft.WindowType;
 
 /** FFTWindowTypeSettings
  *

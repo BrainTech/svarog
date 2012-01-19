@@ -11,8 +11,8 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
 import org.signalml.app.document.ManagedDocumentType;
-import org.signalml.app.model.TagStylesTreeNode;
-import org.signalml.app.model.TagTypeTreeNode;
+import org.signalml.app.model.tag.TagStylesTreeNode;
+import org.signalml.app.model.tag.TagTypeTreeNode;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.tag.TagIconProducer;
 import org.signalml.plugin.export.signal.Document;

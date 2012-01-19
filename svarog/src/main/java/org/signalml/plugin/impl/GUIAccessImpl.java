@@ -22,10 +22,10 @@ import javax.swing.JToolBar;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.ActionFocusManager;
-import org.signalml.app.view.ViewerDocumentTabbedPane;
-import org.signalml.app.view.ViewerElementManager;
-import org.signalml.app.view.ViewerTabbedPane;
 import org.signalml.app.view.signal.SignalView;
+import org.signalml.app.view.workspace.ViewerDocumentTabbedPane;
+import org.signalml.app.view.workspace.ViewerElementManager;
+import org.signalml.app.view.workspace.ViewerTabbedPane;
 import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.signal.SignalTool;
 import org.signalml.plugin.export.signal.SignalToolButtonListener;

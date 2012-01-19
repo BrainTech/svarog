@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
-import org.signalml.app.montage.FFTSampleFilterTableModel;
+import org.signalml.app.model.montage.FFTSampleFilterTableModel;
 import org.signalml.app.view.TablePopupMenuProvider;
 
 /** FFTSampleFilterTable

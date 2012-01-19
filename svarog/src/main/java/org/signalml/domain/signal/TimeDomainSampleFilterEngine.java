@@ -6,11 +6,11 @@ package org.signalml.domain.signal;
 import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
-import org.signalml.domain.montage.filter.iirdesigner.ArrayOperations;
-import org.signalml.domain.montage.filter.iirdesigner.BadFilterParametersException;
-import org.signalml.domain.montage.filter.iirdesigner.FilterCoefficients;
-import org.signalml.domain.montage.filter.iirdesigner.IIRDesigner;
-import org.signalml.domain.montage.filter.iirdesigner.InitalStateCalculator;
+import org.signalml.math.iirdesigner.ArrayOperations;
+import org.signalml.math.iirdesigner.BadFilterParametersException;
+import org.signalml.math.iirdesigner.FilterCoefficients;
+import org.signalml.math.iirdesigner.IIRDesigner;
+import org.signalml.math.iirdesigner.InitalStateCalculator;
 
 /**
  * This class represents a Time Domain (IIR or FIR) filter of samples.

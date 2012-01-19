@@ -4,8 +4,9 @@
 
 package org.signalml.app.view.signal;
 
-import static org.signalml.app.SvarogI18n._;
-import static org.signalml.app.SvarogI18n._R;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FontMetrics;

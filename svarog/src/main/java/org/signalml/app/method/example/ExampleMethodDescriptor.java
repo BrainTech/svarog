@@ -4,12 +4,13 @@
 
 package org.signalml.app.method.example;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import org.signalml.app.method.ApplicationIterableMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.MethodIterationResultConsumer;
 import org.signalml.app.method.MethodPresetManager;
-import org.signalml.app.view.roc.RocDialog;
+import org.signalml.app.view.signal.roc.RocDialog;
 import org.signalml.method.example.ExampleMethod;
 
 /** ExampleMethodDescriptor

@@ -27,7 +27,7 @@ import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.action.TagSelectionAction;
+import org.signalml.app.action.tag.TagSelectionAction;
 import org.signalml.app.view.signal.popup.TagStylesPopupDialog;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.domain.tag.TagStyleEvent;

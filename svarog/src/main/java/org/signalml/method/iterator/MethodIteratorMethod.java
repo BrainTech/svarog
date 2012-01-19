@@ -4,7 +4,8 @@
 
 package org.signalml.method.iterator;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import org.apache.log4j.Logger;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.method.AbstractMethod;

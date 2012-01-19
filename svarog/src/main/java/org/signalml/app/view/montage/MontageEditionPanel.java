@@ -2,11 +2,13 @@ package org.signalml.app.view.montage;
 
 import java.awt.BorderLayout;
 import javax.swing.JTabbedPane;
-import org.signalml.app.view.dialog.ErrorsDialog;
-import org.signalml.app.view.element.AbstractSignalMLPanel;
+
+import org.signalml.app.view.components.AbstractSignalMLPanel;
+import org.signalml.app.view.components.dialogs.ErrorsDialog;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.generators.IMontageGenerator;
-import static org.signalml.app.SvarogI18n._;
+
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * This class represents a panel for editing the signal's montage.

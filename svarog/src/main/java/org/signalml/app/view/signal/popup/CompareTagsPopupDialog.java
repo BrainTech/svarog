@@ -4,8 +4,9 @@
 
 package org.signalml.app.view.signal.popup;
 
-import static org.signalml.app.SvarogI18n._;
-import static org.signalml.app.SvarogI18n._R;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -28,9 +29,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.document.TagDocument;
-import org.signalml.app.model.TagComparisonDescriptor;
+import org.signalml.app.model.tag.TagComparisonDescriptor;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.element.TitledCrossBorder;
+import org.signalml.app.view.components.TitledCrossBorder;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.view.tag.comparison.TagComparisonDialog;
 import org.signalml.exception.SanityCheckException;

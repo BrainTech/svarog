@@ -10,7 +10,7 @@ import org.apache.commons.math.complex.Complex;
 
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
-import org.signalml.fft.FourierTransform;
+import org.signalml.math.fft.FourierTransform;
 
 /**
  * This class represents a FFT filter of samples.

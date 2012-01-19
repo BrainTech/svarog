@@ -3,7 +3,8 @@
  */
 package org.signalml.app.view.book.filter;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -27,7 +28,7 @@ import javax.swing.event.ListSelectionListener;
 import org.apache.log4j.Logger;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.TablePopupMenuProvider;
-import org.signalml.app.view.dialog.AbstractPresetDialog;
+import org.signalml.app.view.components.dialogs.AbstractPresetDialog;
 import org.signalml.domain.book.filter.AbstractAtomFilter;
 import org.signalml.domain.book.filter.AtomFilterChain;
 import org.signalml.domain.book.filter.DelegatingAtomFilter;

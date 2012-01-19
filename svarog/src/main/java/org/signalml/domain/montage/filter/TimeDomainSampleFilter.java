@@ -5,14 +5,15 @@
 package org.signalml.domain.montage.filter;
 
 import java.util.Arrays;
+
+import org.signalml.math.iirdesigner.ApproximationFunctionType;
+import org.signalml.math.iirdesigner.FilterType;
 import org.signalml.util.ResolvableString;
 import org.springframework.context.MessageSourceResolvable;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.text.DecimalFormat;
 import org.signalml.app.config.preset.Preset;
-import org.signalml.domain.montage.filter.iirdesigner.ApproximationFunctionType;
-import org.signalml.domain.montage.filter.iirdesigner.FilterType;
 
 /**
  * This class holds a time domain representation of a

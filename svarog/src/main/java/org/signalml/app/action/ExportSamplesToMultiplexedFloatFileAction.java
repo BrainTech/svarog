@@ -4,7 +4,8 @@
 
 package org.signalml.app.action;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -12,10 +13,10 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.model.SignalExportDescriptor;
-import org.signalml.app.view.ViewerFileChooser;
-import org.signalml.app.view.dialog.ErrorsDialog;
-import org.signalml.app.view.dialog.OptionPane;
+import org.signalml.app.model.signal.SignalExportDescriptor;
+import org.signalml.app.view.components.dialogs.ErrorsDialog;
+import org.signalml.app.view.components.dialogs.OptionPane;
+import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.domain.signal.DoubleArraySampleSource;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalSampleType;

@@ -20,9 +20,9 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.event.TableColumnModelEvent;
 import javax.swing.table.TableModel;
 
-import org.signalml.app.montage.MontageFilterExclusionTableModel;
-import org.signalml.app.view.element.CenteringTableCellRenderer;
-import org.signalml.app.view.element.UneditableBooleanTableCellRenderer;
+import org.signalml.app.model.montage.MontageFilterExclusionTableModel;
+import org.signalml.app.view.components.CenteringTableCellRenderer;
+import org.signalml.app.view.components.UneditableBooleanTableCellRenderer;
 import org.signalml.domain.montage.MontageChannel;
 import org.signalml.domain.montage.MontageSampleFilter;
 

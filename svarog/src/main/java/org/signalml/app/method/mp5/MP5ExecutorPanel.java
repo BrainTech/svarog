@@ -3,7 +3,8 @@
  */
 package org.signalml.app.method.mp5;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
@@ -12,7 +13,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-import org.signalml.app.view.element.ResolvableComboBox;
+import org.signalml.app.view.components.ResolvableComboBox;
 import org.signalml.method.mp5.MP5Data;
 import org.signalml.method.mp5.MP5Executor;
 

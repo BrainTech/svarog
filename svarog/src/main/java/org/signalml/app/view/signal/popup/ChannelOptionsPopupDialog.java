@@ -1,7 +1,8 @@
 package org.signalml.app.view.signal.popup;
 
-import static org.signalml.app.SvarogI18n._;
-import static org.signalml.app.SvarogI18n._R;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Window;
@@ -23,9 +24,9 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.signalml.app.model.ChannelPlotOptionsModel;
-import org.signalml.app.view.element.TitledCrossBorder;
-import org.signalml.app.view.element.TitledSliderPanel;
+import org.signalml.app.model.components.ChannelPlotOptionsModel;
+import org.signalml.app.view.components.TitledCrossBorder;
+import org.signalml.app.view.components.TitledSliderPanel;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.SourceChannel;

@@ -4,7 +4,8 @@
 
 package org.signalml.app.util;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -17,8 +18,8 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeListener;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.view.dialog.AbstractDialog;
-import org.signalml.app.view.element.CompactButton;
+import org.signalml.app.view.components.CompactButton;
+import org.signalml.app.view.components.dialogs.AbstractDialog;
 
 import org.springframework.core.io.ClassPathResource;
 

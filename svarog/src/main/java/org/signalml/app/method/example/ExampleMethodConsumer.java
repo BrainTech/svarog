@@ -4,7 +4,8 @@
 
 package org.signalml.app.method.example;
 
-import static org.signalml.app.SvarogI18n._R;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
+
 import javax.swing.JOptionPane;
 
 import org.signalml.app.method.MethodResultConsumer;

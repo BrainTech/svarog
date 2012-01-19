@@ -3,7 +3,7 @@
  */
 package org.signalml.app.view.element;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import java.awt.Dimension;
 
 import javax.swing.GroupLayout;

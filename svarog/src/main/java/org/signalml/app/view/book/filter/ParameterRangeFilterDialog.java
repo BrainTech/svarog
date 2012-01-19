@@ -4,7 +4,8 @@
 
 package org.signalml.app.view.book.filter;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Window;
@@ -23,7 +24,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.element.UnlimitedSpinnerPanel;
+import org.signalml.app.view.components.UnlimitedSpinnerPanel;
 import org.signalml.domain.book.filter.ParameterRangeAtomFilter;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.MinMaxRangeFloat;

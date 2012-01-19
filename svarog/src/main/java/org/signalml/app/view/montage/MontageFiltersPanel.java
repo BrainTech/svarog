@@ -3,7 +3,8 @@
  */
 package org.signalml.app.view.montage;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import org.signalml.app.view.montage.filters.EditTimeDomainSampleFilterDialog;
 import org.signalml.app.view.montage.filters.EditFFTSampleFilterDialog;
 import java.awt.BorderLayout;
@@ -37,12 +38,12 @@ import javax.swing.event.ListSelectionListener;
 import org.apache.log4j.Logger;
 import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
 import org.signalml.app.document.SignalDocument;
-import org.signalml.app.montage.MontageFilterExclusionTableModel;
-import org.signalml.app.montage.MontageFiltersTableModel;
+import org.signalml.app.model.montage.MontageFilterExclusionTableModel;
+import org.signalml.app.model.montage.MontageFiltersTableModel;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.SwingUtils;
 import org.signalml.app.view.TablePopupMenuProvider;
-import org.signalml.app.view.element.ResolvableComboBox;
+import org.signalml.app.view.components.ResolvableComboBox;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageChannel;
 import org.signalml.domain.montage.MontageSampleFilter;

@@ -10,7 +10,7 @@ import org.signalml.app.method.MethodConfigurer;
 import org.signalml.app.method.MethodIterationResultConsumer;
 import org.signalml.app.method.MethodPresetManager;
 import org.signalml.app.method.MethodResultConsumer;
-import org.signalml.app.view.dialog.OptionPane;
+import org.signalml.app.view.components.dialogs.OptionPane;
 import org.signalml.method.Method;
 import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.NoActiveObjectException;

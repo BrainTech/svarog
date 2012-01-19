@@ -1,6 +1,7 @@
 package org.signalml.app.worker.amplifiers;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.io.File;
 
 /**

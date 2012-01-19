@@ -13,7 +13,7 @@ import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.InitializingMethodResultConsumer;
-import org.signalml.app.model.OpenDocumentDescriptor;
+import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.method.Method;
 import org.signalml.method.mp5.MP5Data;
 import org.signalml.method.mp5.MP5Result;

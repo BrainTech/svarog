@@ -4,8 +4,9 @@
 
 package org.signalml.app.view.signal;
 
-import static org.signalml.app.SvarogI18n._;
-import static org.signalml.app.SvarogI18n._R;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
+
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -45,9 +46,9 @@ import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
-import org.signalml.app.model.ChannelPlotOptionsModel;
-import org.signalml.app.model.ChannelsPlotOptionsModel;
-import org.signalml.app.view.dialog.ErrorsDialog;
+import org.signalml.app.model.components.ChannelPlotOptionsModel;
+import org.signalml.app.model.components.ChannelsPlotOptionsModel;
+import org.signalml.app.view.components.dialogs.ErrorsDialog;
 import org.signalml.app.view.tag.TagAttributesRenderer;
 import org.signalml.app.view.tag.TagPaintMode;
 import org.signalml.app.view.tag.TagRenderer;

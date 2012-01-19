@@ -17,7 +17,7 @@ import org.signalml.app.view.book.RainbowMapPalette;
 import org.signalml.app.view.signal.SignalColor;
 import org.signalml.app.view.tag.TagPaintMode;
 import org.signalml.domain.book.WignerMapScaleType;
-import org.signalml.fft.WindowType;
+import org.signalml.math.fft.WindowType;
 import org.signalml.util.MinMaxRange;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;

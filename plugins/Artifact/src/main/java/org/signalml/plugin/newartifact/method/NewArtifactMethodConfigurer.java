@@ -16,7 +16,7 @@ import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.method.MethodPresetManager;
 import org.signalml.app.method.PresetEquippedMethodConfigurer;
 import org.signalml.app.util.XMLUtils;
-import org.signalml.app.view.dialog.OptionPane;
+import org.signalml.app.view.components.dialogs.OptionPane;
 import org.signalml.method.Method;
 import org.signalml.plugin.data.PluginConfigForMethod;
 import org.signalml.plugin.exception.PluginException;

@@ -4,7 +4,7 @@ import java.awt.Component;
 import java.io.File;
 
 /**
- * {@link org.signalml.app.view.ViewerFileChooser} wrapper to be used by plugins.
+ * {@link org.signalml.app.view.workspace.ViewerFileChooser} wrapper to be used by plugins.
  * 
  * @author Stanislaw Findeisen
  */

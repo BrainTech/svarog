@@ -4,7 +4,7 @@
 
 package org.signalml.app.config.preset;
 
-import org.signalml.app.model.SignalExportDescriptor;
+import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.app.util.XMLUtils;
 
 import com.thoughtworks.xstream.XStream;

@@ -3,7 +3,8 @@
  */
 package org.signalml.app.method.mp5;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.Component;
 
 import javax.swing.Box;
@@ -19,9 +20,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.util.SwingUtils;
-import org.signalml.app.view.dialog.AbstractDialog;
-import org.signalml.app.view.element.CompactButton;
-import org.signalml.app.view.element.ResolvableComboBox;
+import org.signalml.app.view.components.CompactButton;
+import org.signalml.app.view.components.ResolvableComboBox;
+import org.signalml.app.view.components.dialogs.AbstractDialog;
 import org.signalml.method.mp5.MP5DictionaryReinitType;
 import org.signalml.method.mp5.MP5DictionaryType;
 import org.signalml.method.mp5.MP5Parameters;

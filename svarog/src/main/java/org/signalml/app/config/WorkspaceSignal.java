@@ -27,7 +27,7 @@ import org.signalml.app.document.SignalMLDocument;
 import org.signalml.app.document.SignalMLMRUDEntry;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.util.SnapToPageRunnable;
-import org.signalml.app.view.element.LockableJSplitPane;
+import org.signalml.app.view.components.LockableJSplitPane;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.codec.SignalMLCodec;

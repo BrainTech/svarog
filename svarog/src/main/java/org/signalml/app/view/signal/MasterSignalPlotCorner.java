@@ -4,7 +4,8 @@
 
 package org.signalml.app.view.signal;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
@@ -12,7 +13,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.element.CompactButton;
+import org.signalml.app.view.components.CompactButton;
 
 /** MasterSignalPlotCorner
  *

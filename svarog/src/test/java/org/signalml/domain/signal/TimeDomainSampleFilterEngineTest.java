@@ -8,7 +8,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import java.lang.Math.*;
-import org.signalml.domain.montage.filter.iirdesigner.FilterCoefficients;
+
+import org.signalml.math.iirdesigner.FilterCoefficients;
+
 import static org.signalml.SignalMLAssert.*;
 
 /**

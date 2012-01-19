@@ -3,9 +3,12 @@
  */
 package org.signalml.app.view.montage;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import org.signalml.app.view.montage.filters.EditTimeDomainSampleFilterDialog;
 import org.signalml.app.view.montage.filters.EditFFTSampleFilterDialog;
+import org.signalml.app.view.workspace.ViewerElementManager;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Window;
@@ -23,10 +26,9 @@ import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.document.SignalDocument;
-import org.signalml.app.model.MontageDescriptor;
+import org.signalml.app.model.montage.MontageDescriptor;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.ViewerElementManager;
-import org.signalml.app.view.dialog.AbstractPresetDialog;
+import org.signalml.app.view.components.dialogs.AbstractPresetDialog;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.Montage;

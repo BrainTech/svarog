@@ -4,7 +4,8 @@
 
 package org.signalml.app.view.book;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Window;
@@ -24,7 +25,7 @@ import javax.swing.border.CompoundBorder;
 
 import org.signalml.app.document.BookDocument;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.dialog.AbstractDialog;
+import org.signalml.app.view.components.dialogs.AbstractDialog;
 import org.signalml.domain.book.BookFilterProcessor;
 import org.signalml.domain.book.StandardBookSegment;
 import org.signalml.plugin.export.SignalMLException;

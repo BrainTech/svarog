@@ -4,7 +4,8 @@
 
 package org.signalml.app.method.mp5;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Window;
@@ -42,18 +43,18 @@ import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.InitializingMethodConfigurer;
 import org.signalml.app.method.MethodPresetManager;
 import org.signalml.app.method.PresetEquippedMethodConfigurer;
-import org.signalml.app.model.SignalExportDescriptor;
+import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.dialog.AbstractSignalSpaceAwarePresetDialog;
-import org.signalml.app.view.dialog.ErrorsDialog;
-import org.signalml.app.view.dialog.OptionPane;
-import org.signalml.app.view.dialog.PleaseWaitDialog;
-import org.signalml.app.view.element.SignalSpacePanel;
+import org.signalml.app.view.components.SignalSpacePanel;
+import org.signalml.app.view.components.dialogs.AbstractSignalSpaceAwarePresetDialog;
+import org.signalml.app.view.components.dialogs.ErrorsDialog;
+import org.signalml.app.view.components.dialogs.OptionPane;
+import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
 import org.signalml.app.view.signal.PositionedTag;
 import org.signalml.app.view.signal.SampleSourceUtils;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
-import org.signalml.app.worker.ExportSignalWorker;
+import org.signalml.app.worker.document.ExportSignalWorker;
 import org.signalml.domain.signal.MultichannelSegmentedSampleSource;
 import org.signalml.domain.signal.SignalProcessingChain;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;

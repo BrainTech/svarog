@@ -12,9 +12,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.model.LabelledPropertyDescriptor;
-import org.signalml.app.model.PropertyProvider;
-import org.signalml.app.model.SignalParameterDescriptor;
+import org.signalml.app.model.components.LabelledPropertyDescriptor;
+import org.signalml.app.model.components.PropertyProvider;
+import org.signalml.app.model.signal.SignalParameterDescriptor;
 import org.signalml.app.view.signal.SampleSourceUtils;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;

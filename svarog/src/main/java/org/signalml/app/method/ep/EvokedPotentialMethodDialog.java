@@ -4,7 +4,8 @@
 
 package org.signalml.app.method.ep;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.Window;
 
 import javax.swing.JComponent;
@@ -14,8 +15,8 @@ import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.dialog.AbstractPresetDialog;
-import org.signalml.app.view.element.SignalSpacePanel;
+import org.signalml.app.view.components.SignalSpacePanel;
+import org.signalml.app.view.components.dialogs.AbstractPresetDialog;
 import org.signalml.app.view.signal.PositionedTag;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;

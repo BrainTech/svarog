@@ -4,7 +4,8 @@
 
 package org.signalml.app.view.book.filter;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.GridLayout;
@@ -26,9 +27,9 @@ import javax.swing.border.TitledBorder;
 
 import org.signalml.app.config.preset.BookFilterPresetManager;
 import org.signalml.app.config.preset.Preset;
-import org.signalml.app.model.BookFilterDescriptor;
+import org.signalml.app.model.book.BookFilterDescriptor;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.dialog.AbstractPresetDialog;
+import org.signalml.app.view.components.dialogs.AbstractPresetDialog;
 import org.signalml.domain.book.filter.AtomFilterChain;
 import org.signalml.plugin.export.SignalMLException;
 

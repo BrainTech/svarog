@@ -3,7 +3,8 @@
  */
 package org.signalml.app.view.book.popup;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -32,7 +33,7 @@ import javax.swing.event.ChangeListener;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.book.BookPlot;
 import org.signalml.app.view.book.BookView;
-import org.signalml.app.view.element.TitledCrossBorder;
+import org.signalml.app.view.components.TitledCrossBorder;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractPopupDialog;
 

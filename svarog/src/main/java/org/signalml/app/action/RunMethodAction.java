@@ -3,7 +3,8 @@
  */
 package org.signalml.app.action;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 
@@ -12,8 +13,8 @@ import org.signalml.app.method.ApplicationMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.MethodConfigurer;
 import org.signalml.app.task.ApplicationTaskManager;
-import org.signalml.app.view.dialog.ErrorsDialog;
-import org.signalml.app.view.dialog.TaskStatusDialog;
+import org.signalml.app.view.components.dialogs.ErrorsDialog;
+import org.signalml.app.view.components.dialogs.TaskStatusDialog;
 import org.signalml.method.Method;
 import org.signalml.method.TrackableMethod;
 import org.signalml.plugin.export.SignalMLException;

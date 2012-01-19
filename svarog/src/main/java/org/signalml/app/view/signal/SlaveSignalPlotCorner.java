@@ -4,7 +4,8 @@
 
 package org.signalml.app.view.signal;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Point;
@@ -18,7 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.element.CompactButton;
+import org.signalml.app.view.components.CompactButton;
 import org.signalml.app.view.signal.popup.SlavePlotSettingsPopupDialog;
 
 /** SlaveSignalPlotCorner

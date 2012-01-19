@@ -11,7 +11,7 @@ import javax.swing.SwingWorker;
 import javax.swing.event.EventListenerList;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.view.dialog.PleaseWaitDialog;
+import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
 import org.signalml.task.Task;
 import org.signalml.task.TaskEvent;
 import org.signalml.task.TaskEventListener;

@@ -4,7 +4,8 @@
 
 package org.signalml.app.method.booktotag;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -28,7 +29,7 @@ import org.signalml.app.action.util.ListSelectAllAction;
 import org.signalml.app.action.util.ListSelectInvertAction;
 import org.signalml.app.action.util.ListSelectNoneAction;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.dialog.AbstractDialog;
+import org.signalml.app.view.components.dialogs.AbstractDialog;
 import org.signalml.domain.book.StandardBook;
 import org.signalml.method.booktotag.BookToTagData;
 import org.signalml.plugin.export.SignalMLException;

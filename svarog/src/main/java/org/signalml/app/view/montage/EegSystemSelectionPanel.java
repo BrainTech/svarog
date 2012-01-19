@@ -10,12 +10,13 @@ import javax.swing.JLabel;
 
 import org.signalml.app.config.preset.EegSystemsPresetManager;
 import org.signalml.app.config.preset.PresetComboBoxModel;
-import org.signalml.app.view.element.AbstractSignalMLPanel;
-import org.signalml.app.view.opensignal.AbstractSignalParametersPanel;
+import org.signalml.app.view.components.AbstractSignalMLPanel;
+import org.signalml.app.view.document.opensignal.AbstractSignalParametersPanel;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.domain.montage.system.EegSystemName;
-import static org.signalml.app.SvarogI18n._;
+
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * A panel containing a {@link JComboBox} for selecting which {@link EegSystem}

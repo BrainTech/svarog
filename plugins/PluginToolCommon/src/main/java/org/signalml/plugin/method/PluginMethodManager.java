@@ -2,7 +2,7 @@ package org.signalml.plugin.method;
 
 import java.awt.Window;
 
-import org.signalml.app.view.dialog.ErrorsDialog;
+import org.signalml.app.view.components.dialogs.ErrorsDialog;
 import org.signalml.method.TrackableMethod;
 import org.signalml.plugin.data.PluginConfigForMethod;
 import org.signalml.plugin.data.PluginConfigMethodData;

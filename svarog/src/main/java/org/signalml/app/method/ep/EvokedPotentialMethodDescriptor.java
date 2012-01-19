@@ -4,7 +4,8 @@
 
 package org.signalml.app.method.ep;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -16,7 +17,7 @@ import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.MethodConfigurer;
 import org.signalml.app.method.MethodPresetManager;
 import org.signalml.app.method.MethodResultConsumer;
-import org.signalml.app.view.dialog.OptionPane;
+import org.signalml.app.view.components.dialogs.OptionPane;
 import org.signalml.method.ep.EvokedPotentialMethod;
 import org.signalml.method.ep.EvokedPotentialParameters;
 import org.signalml.plugin.export.signal.Document;

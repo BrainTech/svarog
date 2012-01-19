@@ -56,16 +56,17 @@ import org.signalml.app.method.example.ExampleMethodDescriptor;
 import org.signalml.app.method.mp5.MP5ApplicationData;
 import org.signalml.app.method.mp5.MP5ExecutorManager;
 import org.signalml.app.method.mp5.MP5MethodDescriptor;
-import org.signalml.app.montage.MontagePresetManager;
+import org.signalml.app.model.montage.MontagePresetManager;
 import org.signalml.app.task.ApplicationTaskManager;
 import org.signalml.app.util.MatlabUtil;
 import org.signalml.app.util.PreferenceName;
 import org.signalml.app.util.XMLUtils;
-import org.signalml.app.view.ViewerElementManager;
-import org.signalml.app.view.ViewerMainFrame;
-import org.signalml.app.view.dialog.OptionPane;
-import org.signalml.app.view.dialog.ProfilePathDialog;
-import org.signalml.app.view.dialog.SplashScreen;
+import org.signalml.app.util.logging.DebugHelpers;
+import org.signalml.app.view.components.dialogs.OptionPane;
+import org.signalml.app.view.components.dialogs.ProfilePathDialog;
+import org.signalml.app.view.components.dialogs.SplashScreen;
+import org.signalml.app.view.workspace.ViewerElementManager;
+import org.signalml.app.view.workspace.ViewerMainFrame;
 import org.signalml.codec.DefaultSignalMLCodecManager;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.domain.montage.system.ChannelFunction;
@@ -85,7 +86,6 @@ import org.signalml.plugin.impl.PluginAccessClass;
 import org.signalml.plugin.loader.PluginLoaderHi;
 import org.signalml.util.SvarogConstants;
 import org.signalml.util.Util;
-import org.signalml.app.logging.DebugHelpers;
 
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.util.Log4jConfigurer;
@@ -99,7 +99,7 @@ import org.signalml.app.worker.processes.OpenBCIModulePresetManager;
 import org.signalml.app.worker.processes.ProcessManager;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * The Svarog application.

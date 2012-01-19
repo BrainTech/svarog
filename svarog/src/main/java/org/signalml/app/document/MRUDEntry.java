@@ -9,8 +9,8 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.signalml.app.model.LabelledPropertyDescriptor;
-import org.signalml.app.model.PropertyProvider;
+import org.signalml.app.model.components.LabelledPropertyDescriptor;
+import org.signalml.app.model.components.PropertyProvider;
 import org.springframework.context.MessageSourceResolvable;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;

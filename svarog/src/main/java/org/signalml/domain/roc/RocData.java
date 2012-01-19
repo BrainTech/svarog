@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.signalml.app.model.LabelledPropertyDescriptor;
-import org.signalml.app.model.PropertyProvider;
-import org.signalml.app.model.WriterExportableTable;
+import org.signalml.app.model.components.LabelledPropertyDescriptor;
+import org.signalml.app.model.components.PropertyProvider;
+import org.signalml.app.model.components.WriterExportableTable;
 import org.signalml.method.iterator.IterableParameter;
 import org.signalml.method.iterator.MethodIteratorData;
 import org.signalml.method.iterator.ParameterIterationSettings;

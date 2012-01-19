@@ -4,7 +4,8 @@
 
 package org.signalml.app.action.util;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;

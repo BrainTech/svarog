@@ -4,8 +4,9 @@
 
 package org.signalml.app.view.montage.filters.charts;
 
-import static org.signalml.app.SvarogI18n._;
-import static org.signalml.app.SvarogI18n._R;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
+
 import org.signalml.app.view.montage.filters.charts.elements.StepResponseChartPanel;
 import org.signalml.app.view.montage.filters.charts.elements.ImpulseResponseChartPanel;
 import org.signalml.app.view.montage.filters.charts.elements.FilterResponseChartPanelsWithGraphScaleSpinner;
@@ -18,14 +19,14 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
-import org.signalml.domain.montage.filter.iirdesigner.ArrayOperations;
-import org.signalml.domain.montage.filter.iirdesigner.BadFilterParametersException;
-import org.signalml.domain.montage.filter.iirdesigner.FilterCoefficients;
-import org.signalml.domain.montage.filter.iirdesigner.FilterFrequencyResponse;
-import org.signalml.domain.montage.filter.iirdesigner.FilterFrequencyResponseCalculator;
-import org.signalml.domain.montage.filter.iirdesigner.FilterTimeDomainResponse;
-import org.signalml.domain.montage.filter.iirdesigner.FilterTimeDomainResponseCalculator;
-import org.signalml.domain.montage.filter.iirdesigner.IIRDesigner;
+import org.signalml.math.iirdesigner.ArrayOperations;
+import org.signalml.math.iirdesigner.BadFilterParametersException;
+import org.signalml.math.iirdesigner.FilterCoefficients;
+import org.signalml.math.iirdesigner.FilterFrequencyResponse;
+import org.signalml.math.iirdesigner.FilterFrequencyResponseCalculator;
+import org.signalml.math.iirdesigner.FilterTimeDomainResponse;
+import org.signalml.math.iirdesigner.FilterTimeDomainResponseCalculator;
+import org.signalml.math.iirdesigner.IIRDesigner;
 
 /**
  * This class represents a panel containing all the components needed for visualizing

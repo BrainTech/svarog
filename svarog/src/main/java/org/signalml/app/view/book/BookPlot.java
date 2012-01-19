@@ -1,7 +1,8 @@
 package org.signalml.app.view.book;
 
-import static org.signalml.app.SvarogI18n._;
-import static org.signalml.app.SvarogI18n._R;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -30,7 +31,7 @@ import javax.swing.border.EmptyBorder;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.config.ApplicationConfiguration;
-import org.signalml.app.view.dialog.PleaseWaitDialog;
+import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
 import org.signalml.domain.book.SegmentReconstructionProvider;
 import org.signalml.domain.book.StandardBook;
 import org.signalml.domain.book.StandardBookAtom;

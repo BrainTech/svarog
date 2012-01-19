@@ -11,7 +11,7 @@ import javax.swing.SwingWorker;
 import org.apache.log4j.Logger;
 import org.signalml.app.document.SignalChecksumProgressMonitor;
 import org.signalml.app.document.SignalDocument;
-import org.signalml.app.view.dialog.PleaseWaitDialog;
+import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
 import org.signalml.domain.signal.SignalChecksum;
 
 /** SignalChecksumWorker

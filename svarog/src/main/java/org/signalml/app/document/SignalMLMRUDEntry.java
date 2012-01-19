@@ -7,7 +7,7 @@ package org.signalml.app.document;
 import java.beans.IntrospectionException;
 import java.util.List;
 
-import org.signalml.app.model.LabelledPropertyDescriptor;
+import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.plugin.export.signal.Document;
 

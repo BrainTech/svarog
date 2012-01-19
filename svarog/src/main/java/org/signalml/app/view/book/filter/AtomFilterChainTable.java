@@ -14,7 +14,7 @@ import javax.swing.event.TableColumnModelEvent;
 import javax.swing.table.TableColumnModel;
 
 import org.signalml.app.view.TablePopupMenuProvider;
-import org.signalml.app.view.element.ResolvableTableCellRenderer;
+import org.signalml.app.view.components.ResolvableTableCellRenderer;
 import org.springframework.context.MessageSourceResolvable;
 
 /** AtomFilterChainTable

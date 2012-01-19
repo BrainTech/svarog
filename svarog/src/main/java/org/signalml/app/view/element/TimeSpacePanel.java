@@ -3,7 +3,7 @@
  */
 package org.signalml.app.view.element;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
@@ -13,6 +13,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.view.components.MarkedTimeSpacePanel;
 import org.signalml.domain.signal.space.MarkerTimeSpace;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;

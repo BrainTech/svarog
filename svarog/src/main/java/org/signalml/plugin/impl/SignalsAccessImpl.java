@@ -3,7 +3,8 @@
  */
 package org.signalml.plugin.impl;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.Window;
 import java.io.File;
 import java.io.IOException;
@@ -24,22 +25,22 @@ import org.signalml.app.document.DocumentManager;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
-import org.signalml.app.model.OpenDocumentDescriptor;
-import org.signalml.app.model.OpenFileSignalDescriptor;
-import org.signalml.app.model.SignalExportDescriptor;
-import org.signalml.app.model.SignalParameterDescriptor;
-import org.signalml.app.view.ViewerElementManager;
-import org.signalml.app.view.dialog.ErrorsDialog;
-import org.signalml.app.view.dialog.OptionPane;
-import org.signalml.app.view.dialog.PleaseWaitDialog;
-import org.signalml.app.view.opensignal.FileOpenSignalMethod;
+import org.signalml.app.model.document.OpenDocumentDescriptor;
+import org.signalml.app.model.document.opensignal.OpenFileSignalDescriptor;
+import org.signalml.app.model.signal.SignalExportDescriptor;
+import org.signalml.app.model.signal.SignalParameterDescriptor;
+import org.signalml.app.view.components.dialogs.ErrorsDialog;
+import org.signalml.app.view.components.dialogs.OptionPane;
+import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
+import org.signalml.app.view.document.opensignal.FileOpenSignalMethod;
 import org.signalml.app.view.signal.PositionedTag;
 import org.signalml.app.view.signal.SampleSourceUtils;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalScanResult;
 import org.signalml.app.view.signal.SignalView;
-import org.signalml.app.worker.ExportSignalWorker;
+import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.app.worker.ScanSignalWorker;
+import org.signalml.app.worker.document.ExportSignalWorker;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.codec.XMLSignalMLCodec;

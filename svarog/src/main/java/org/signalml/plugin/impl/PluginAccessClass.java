@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.MissingResourceException;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.view.ViewerElementManager;
-import org.signalml.app.SvarogI18n;
+import org.signalml.app.util.i18n.SvarogI18n;
+import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.change.SvarogAccessChangeSupport;
 import org.signalml.plugin.export.config.SvarogAccessConfig;

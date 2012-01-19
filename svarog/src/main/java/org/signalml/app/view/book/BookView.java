@@ -4,8 +4,9 @@
 
 package org.signalml.app.view.book;
 
-import static org.signalml.app.SvarogI18n._;
-import static org.signalml.app.SvarogI18n._R;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
@@ -49,13 +50,13 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.action.BookFilterSwitchAction;
-import org.signalml.app.action.EditBookFilterAction;
-import org.signalml.app.action.ShowAtomTableAction;
-import org.signalml.app.action.ShowNextBookChannelAction;
-import org.signalml.app.action.ShowNextBookSegmentAction;
-import org.signalml.app.action.ShowPreviousBookChannelAction;
-import org.signalml.app.action.ShowPreviousBookSegmentAction;
+import org.signalml.app.action.book.BookFilterSwitchAction;
+import org.signalml.app.action.book.EditBookFilterAction;
+import org.signalml.app.action.book.ShowAtomTableAction;
+import org.signalml.app.action.book.ShowNextBookChannelAction;
+import org.signalml.app.action.book.ShowNextBookSegmentAction;
+import org.signalml.app.action.book.ShowPreviousBookChannelAction;
+import org.signalml.app.action.book.ShowPreviousBookSegmentAction;
 import org.signalml.app.action.selector.ActionFocusListener;
 import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.action.selector.ActionFocusSupport;
@@ -66,13 +67,13 @@ import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.document.BookDocument;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.app.view.book.filter.BookFilterDialog;
 import org.signalml.app.view.book.popup.BookPlotOptionsPopupDialog;
 import org.signalml.app.view.book.popup.BookZoomPopupDialog;
-import org.signalml.app.view.dialog.ErrorsDialog;
-import org.signalml.app.view.dialog.PleaseWaitDialog;
-import org.signalml.app.view.element.TitledSliderPanel;
+import org.signalml.app.view.components.TitledSliderPanel;
+import org.signalml.app.view.components.dialogs.ErrorsDialog;
+import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
+import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.domain.book.BookFilterProcessor;
 import org.signalml.domain.book.WignerMapScaleType;
 import org.signalml.domain.book.filter.AtomFilterChain;

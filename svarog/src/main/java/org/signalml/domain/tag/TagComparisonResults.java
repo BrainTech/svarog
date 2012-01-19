@@ -4,7 +4,8 @@
 
 package org.signalml.domain.tag;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.signal.MultichannelSampleSource;
 import org.signalml.plugin.export.signal.Tag;

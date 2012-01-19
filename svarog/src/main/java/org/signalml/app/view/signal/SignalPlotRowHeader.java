@@ -4,7 +4,8 @@
 
 package org.signalml.app.view.signal;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -23,9 +24,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 
-import org.signalml.app.model.ChannelPlotOptionsModel;
+import org.signalml.app.model.components.ChannelPlotOptionsModel;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.element.CompactButton;
+import org.signalml.app.view.components.CompactButton;
 import org.signalml.app.view.signal.popup.ChannelOptionsPopupDialog;
 import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.system.ChannelFunction;

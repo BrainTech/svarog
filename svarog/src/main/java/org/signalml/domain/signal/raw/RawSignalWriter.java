@@ -15,7 +15,7 @@ import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.nio.ShortBuffer;
 
-import org.signalml.app.model.SignalExportDescriptor;
+import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.app.view.signal.SampleSourceUtils;
 import org.signalml.domain.signal.MultichannelSampleSource;
 import org.signalml.domain.signal.MultichannelSegmentedSampleSource;

@@ -3,7 +3,8 @@
  */
 package org.signalml.app.view.montage;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
@@ -12,7 +13,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-import org.signalml.app.montage.ReferenceTableModel;
+import org.signalml.app.model.montage.ReferenceTableModel;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageChannel;
 

@@ -3,7 +3,8 @@
  */
 package org.signalml.app.view.montage;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -22,11 +23,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.montage.MontageGeneratorListModel;
+import org.signalml.app.model.montage.MontageGeneratorListModel;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.dialog.ErrorsDialog;
-import org.signalml.app.view.element.CompactButton;
-import org.signalml.app.view.element.ResolvableComboBox;
+import org.signalml.app.view.components.CompactButton;
+import org.signalml.app.view.components.ResolvableComboBox;
+import org.signalml.app.view.components.dialogs.ErrorsDialog;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.generators.IMontageGenerator;

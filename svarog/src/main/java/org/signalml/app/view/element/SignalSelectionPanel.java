@@ -1,6 +1,6 @@
 package org.signalml.app.view.element;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
@@ -12,10 +12,15 @@ import javax.swing.JSpinner;
 import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.model.BlockSelectionModelProvider;
-import org.signalml.app.model.ChannelSelectionModelProvider;
-import org.signalml.app.model.PageSelectionModelProvider;
+import org.signalml.app.model.components.BlockSelectionModelProvider;
+import org.signalml.app.model.components.ChannelSelectionModelProvider;
+import org.signalml.app.model.components.PageSelectionModelProvider;
 import org.signalml.app.util.SwingUtils;
+import org.signalml.app.view.components.BlockSignalSelectionPanel;
+import org.signalml.app.view.components.ChannelSignalSelectionPanel;
+import org.signalml.app.view.components.PageSignalSelectionPanel;
+import org.signalml.app.view.components.SignalSelectionTypePanel;
+import org.signalml.app.view.components.SpinnerNumberEditor;
 import org.signalml.domain.signal.BoundedSignalSelection;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;

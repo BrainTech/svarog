@@ -4,7 +4,8 @@
 
 package org.signalml.app.view.book.filter;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -36,10 +37,10 @@ import org.signalml.app.action.util.ListSelectInvertAction;
 import org.signalml.app.action.util.ListSelectNoneAction;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.ViewerFileChooser;
-import org.signalml.app.view.element.AnyChangeDocumentAdapter;
+import org.signalml.app.view.components.AnyChangeDocumentAdapter;
 import org.signalml.app.view.tag.TagIconProducer;
 import org.signalml.app.view.tag.TagStyleListCellRenderer;
+import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.domain.book.filter.TagBasedAtomFilter;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.SignalMLException;

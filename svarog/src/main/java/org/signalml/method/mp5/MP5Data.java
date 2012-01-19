@@ -7,7 +7,8 @@ package org.signalml.method.mp5;
 import java.io.File;
 import java.io.Serializable;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import org.signalml.domain.signal.MultichannelSegmentedSampleSource;
 import org.signalml.domain.signal.SignalProcessingChainDescriptor;
 import org.signalml.domain.signal.space.SegmentedSampleSourceDescriptor;

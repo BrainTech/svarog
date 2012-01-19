@@ -3,7 +3,8 @@
  */
 package org.signalml.app.view.montage.filters;
 
-import static org.signalml.app.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Window;
@@ -25,7 +26,7 @@ import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.montage.filters.charts.TimeDomainFilterResponseChartGroupPanel;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilterValidator;
-import org.signalml.domain.montage.filter.iirdesigner.BadFilterParametersException;
+import org.signalml.math.iirdesigner.BadFilterParametersException;
 import org.signalml.plugin.export.SignalMLException;
 
 import org.springframework.core.io.ClassPathResource;

@@ -7,9 +7,9 @@ import java.beans.IntrospectionException;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.signalml.app.model.ChannelPropertyEditor;
-import org.signalml.app.model.LabelledPropertyDescriptor;
-import org.signalml.app.model.PropertyProvider;
+import org.signalml.app.model.components.ChannelPropertyEditor;
+import org.signalml.app.model.components.LabelledPropertyDescriptor;
+import org.signalml.app.model.components.PropertyProvider;
 import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
 import org.signalml.plugin.export.signal.tagStyle.TagAttributes;
 import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributeDefinition;

@@ -12,13 +12,13 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.action.ExportToClipboardAction;
-import org.signalml.app.action.ExportToFileAction;
-import org.signalml.app.model.TableToTextExporter;
-import org.signalml.app.model.WriterExportableTable;
-import org.signalml.app.view.ViewerFileChooser;
-import org.signalml.app.view.element.CenteringTableCellRenderer;
+import org.signalml.app.action.components.ExportToClipboardAction;
+import org.signalml.app.action.document.ExportToFileAction;
+import org.signalml.app.model.components.TableToTextExporter;
+import org.signalml.app.model.components.WriterExportableTable;
+import org.signalml.app.view.components.CenteringTableCellRenderer;
 import org.signalml.app.view.tag.TagIconProducer;
+import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.plugin.export.signal.TagStyle;
 
 /** TagStatisticTable

@@ -7,10 +7,10 @@ package org.signalml.app.view.signal;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JPopupMenu;
 
-import org.signalml.app.action.EditTagAnnotationAction;
-import org.signalml.app.action.PreciseSelectionAction;
-import org.signalml.app.action.RemoveTagAction;
-import org.signalml.app.action.TagSelectionAction;
+import org.signalml.app.action.signal.PreciseSelectionAction;
+import org.signalml.app.action.tag.EditTagAnnotationAction;
+import org.signalml.app.action.tag.RemoveTagAction;
+import org.signalml.app.action.tag.TagSelectionAction;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.view.tag.TagIconProducer;
 import org.signalml.app.view.tag.TagStyleMenu;
