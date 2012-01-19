@@ -35,7 +35,6 @@ import org.signalml.app.action.book.OpenBookDocumentAction;
 import org.signalml.app.action.components.CloseWindowAction;
 import org.signalml.app.action.document.CloseDocumentAction;
 import org.signalml.app.action.document.EEGLabExportAction;
-import org.signalml.app.action.document.OpenDocumentAction;
 import org.signalml.app.action.document.OpenSignalAndSetMontageAction;
 import org.signalml.app.action.document.SaveAllDocumentsAction;
 import org.signalml.app.action.document.SaveDocumentAction;
@@ -43,7 +42,6 @@ import org.signalml.app.action.document.SaveDocumentAsAction;
 import org.signalml.app.action.document.monitor.AmplifierDefinitionConfigAction;
 import org.signalml.app.action.document.monitor.CheckSignalAction;
 import org.signalml.app.action.document.monitor.OpenBCIModuleConfigAction;
-import org.signalml.app.action.document.monitor.OpenMonitorAction;
 import org.signalml.app.action.document.monitor.StartMonitorRecordingAction;
 import org.signalml.app.action.document.monitor.StopBCIAction;
 import org.signalml.app.action.document.monitor.StopMonitorRecordingAction;
@@ -120,8 +118,6 @@ import org.signalml.app.view.components.dialogs.ErrorsDialog;
 import org.signalml.app.view.components.dialogs.ExportSignalDialog;
 import org.signalml.app.view.components.dialogs.HelpDialog;
 import org.signalml.app.view.components.dialogs.NewTagDialog;
-import org.signalml.app.view.components.dialogs.OpenDocumentDialog;
-import org.signalml.app.view.components.dialogs.OpenMonitorDialog;
 import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
 import org.signalml.app.view.components.dialogs.RegisterCodecDialog;
 import org.signalml.app.view.components.dialogs.SignalParametersDialog;
@@ -275,8 +271,6 @@ public class ViewerElementManager {
 	private ErrorsDialog errorsDialog;
 	private PleaseWaitDialog pleaseWaitDialog;
 	private ApplicationPreferencesDialog applicationPreferencesDialog;
-	private OpenDocumentDialog openDocumentDialog;
-	private OpenMonitorDialog openMonitorDialog;
 	private RegisterCodecDialog registerCodecDialog;
 	private SignalParametersDialog signalParametersDialog;
 	private SignalMontageDialog signalMontageDialog;
@@ -327,9 +321,7 @@ public class ViewerElementManager {
 	private ShowStatusBarAction showStatusBarAction;
 	private ShowLeftPanelAction showLeftPanelAction;
 	private ShowBottomPanelAction showBottomPanelAction;
-	private OpenDocumentAction openDocumentAction;
 	private OpenBookDocumentAction openBookDocumentAction;
-	private OpenMonitorAction openMonitorAction;
 	private CloseDocumentAction closeActiveDocumentAction;
         private StopBCIAction stopBCIAction;
 	private SaveAllDocumentsAction saveAllDocumentsAction;
@@ -1055,7 +1047,6 @@ public class ViewerElementManager {
 			workspaceTree = new ViewerWorkspaceTree(getWorkspaceTreeModel());
 			workspaceTree.setActionFocusManager(getActionFocusManager());
 			workspaceTree.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
-			workspaceTree.setOpenDocumentDialog(getOpenDocumentDialog());
 			workspaceTree.addTreeSelectionListener(getPropertySheetModel());
 		}
 		return workspaceTree;
@@ -1188,27 +1179,7 @@ public class ViewerElementManager {
 		return applicationPreferencesDialog;
 	}
 
-	public OpenDocumentDialog getOpenDocumentDialog() {
-		if (openDocumentDialog == null) {
-			openDocumentDialog = new OpenDocumentDialog(getDialogParent(), true);
-			openDocumentDialog.setCodecManager(getCodecManager());
-			openDocumentDialog.setDocumentDetector(getDocumentDetector());
-			openDocumentDialog.setDocumentManager(getDocumentManager());
-			openDocumentDialog.setApplicationConfig(getApplicationConfig());
-			openDocumentDialog.setFileChooser(getFileChooser());
-		}
-		return openDocumentDialog;
-	}
-
-	public OpenMonitorDialog getOpenMonitorDialog() {
-		if (openMonitorDialog == null) {
-			openMonitorDialog = new OpenMonitorDialog(this, getDialogParent(), true);
-			openMonitorDialog.setApplicationConfig(getApplicationConfig());
-		}
-		return openMonitorDialog;
-	}
-
-        public CheckSignalDialog getCheckSignalDialog() {
+	public CheckSignalDialog getCheckSignalDialog() {
 		if (checkSignalDialog == null) {
 			checkSignalDialog = new CheckSignalDialog(getDialogParent(), true);
 		}
@@ -1523,15 +1494,6 @@ public class ViewerElementManager {
 		return showBottomPanelAction;
 	}
 
-	public OpenDocumentAction getOpenDocumentAction() {
-		if (openDocumentAction == null) {
-			openDocumentAction = new OpenDocumentAction();
-			openDocumentAction.setOpenDocumentDialog(getOpenDocumentDialog());
-			openDocumentAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
-		}
-		return openDocumentAction;
-	}
-
 	/**
 	 * Returns the action performed when the user chooses an option to
 	 * open a book.
@@ -1545,21 +1507,13 @@ public class ViewerElementManager {
 		return openBookDocumentAction;
 	}
 
-	public OpenMonitorAction getOpenMonitorAction() {
-		if (openMonitorAction == null) {
-			openMonitorAction = new OpenMonitorAction(this);
-			openMonitorAction.setOpenMonitorDialog(getOpenMonitorDialog());
-		}
-		return openMonitorAction;
-	}
-
-        public CheckSignalAction getCheckSignalAction() {
+	public CheckSignalAction getCheckSignalAction() {
 		if (checkSignalAction == null) {
-			checkSignalAction = new CheckSignalAction( getActionFocusManager());
+			checkSignalAction = new CheckSignalAction(getActionFocusManager());
 			checkSignalAction.setCheckSignalDialog(getCheckSignalDialog());
 		}
 		return checkSignalAction;
-        }
+	}
 
 	/**
 	 * Returns an {@link Action} responsible for starting a new monitor

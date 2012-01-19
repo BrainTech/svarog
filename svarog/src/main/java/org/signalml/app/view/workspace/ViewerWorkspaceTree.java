@@ -13,7 +13,6 @@ import javax.swing.tree.TreePath;
 
 import org.signalml.app.action.document.ActivateDocumentAction;
 import org.signalml.app.action.document.CloseDocumentAction;
-import org.signalml.app.action.document.OpenDocumentAction;
 import org.signalml.app.action.document.OpenMRUDAction;
 import org.signalml.app.action.document.SaveDocumentAction;
 import org.signalml.app.action.document.SaveDocumentAsAction;
@@ -26,7 +25,6 @@ import org.signalml.app.action.selector.MRUDFocusSelector;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.MRUDEntry;
 import org.signalml.app.model.workspace.WorkspaceTreeModel;
-import org.signalml.app.view.components.dialogs.OpenDocumentDialog;
 import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.view.AbstractViewerTree;
 import org.signalml.plugin.impl.PluginAccessClass;
@@ -44,14 +42,12 @@ public class ViewerWorkspaceTree extends AbstractViewerTree implements ActionFoc
 
 	private ActionFocusManager actionFocusManager;
 	private DocumentFlowIntegrator documentFlowIntegrator;
-	private OpenDocumentDialog openDocumentDialog;
 
 	private JPopupMenu documentPopupMenu;
 	private JPopupMenu mrudPopupMenu;
 	private JPopupMenu otherPopupMenu;
 
 	private ActivateDocumentAction activateDocumentAction;
-	private OpenDocumentAction openDocumentAction;
 	private CloseDocumentAction closeDocumentAction;
 	private SaveDocumentAction saveDocumentAction;
 	private SaveDocumentAsAction saveDocumentAsAction;
@@ -163,8 +159,8 @@ public class ViewerWorkspaceTree extends AbstractViewerTree implements ActionFoc
 
 		if (otherPopupMenu == null) {
 			otherPopupMenu = new JPopupMenu();
-
-			otherPopupMenu.add(getOpenDocumentAction());
+			
+//			empty pop up menu
 			
 			PluginAccessClass.getGUIImpl().addToWorkspaceTreeOtherPopupMenu(otherPopupMenu);
 		}
@@ -189,28 +185,11 @@ public class ViewerWorkspaceTree extends AbstractViewerTree implements ActionFoc
 		this.documentFlowIntegrator = documentFlowIntegrator;
 	}
 
-	public OpenDocumentDialog getOpenDocumentDialog() {
-		return openDocumentDialog;
-	}
-
-	public void setOpenDocumentDialog(OpenDocumentDialog openDocumentDialog) {
-		this.openDocumentDialog = openDocumentDialog;
-	}
-
 	public ActivateDocumentAction getActivateDocumentAction() {
 		if (activateDocumentAction == null) {
 			activateDocumentAction = new ActivateDocumentAction(actionFocusManager, this);
 		}
 		return activateDocumentAction;
-	}
-
-	public OpenDocumentAction getOpenDocumentAction() {
-		if (openDocumentAction == null) {
-			openDocumentAction = new OpenDocumentAction();
-			openDocumentAction.setDocumentFlowIntegrator(documentFlowIntegrator);
-			openDocumentAction.setOpenDocumentDialog(openDocumentDialog);
-		}
-		return openDocumentAction;
 	}
 
 	public CloseDocumentAction getCloseDocumentAction() {

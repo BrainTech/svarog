@@ -5,7 +5,6 @@ package org.signalml.app.view.components;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
-import org.signalml.app.view.components.dialogs.OpenMonitorDialog;
 import org.signalml.app.view.document.monitor.ChooseFilesForMonitorRecordingPanel;
 
 

@@ -12,7 +12,7 @@ import multiplexer.jmx.client.JmxClient;
 
 import org.apache.log4j.Logger;
 import org.jboss.netty.channel.ChannelFuture;
-import org.signalml.app.view.components.dialogs.OpenMonitorDialog;
+import org.signalml.app.view.components.MultiplexerConnectionPanel;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.app.worker.WorkerResult;
 import org.signalml.multiplexer.protocol.SvarogConstants;
@@ -30,8 +30,8 @@ public class MultiplexerConnectWorker extends SwingWorker< WorkerResult, Integer
 
 	private ViewerElementManager elementManager;
 	private InetSocketAddress multiplexerSocket;
-	private int timeoutMilis = OpenMonitorDialog.TIMEOUT_MILIS;
-	private int tryoutCount = OpenMonitorDialog.TRYOUT_COUNT;
+	private int timeoutMilis = MultiplexerConnectionPanel.TIMEOUT_MILIS;
+	private int tryoutCount = MultiplexerConnectionPanel.TRYOUT_COUNT;
 	private Integer connectingState = 0;
 	private JmxClient client;
 	

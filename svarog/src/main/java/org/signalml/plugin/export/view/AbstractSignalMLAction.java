@@ -10,7 +10,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu;
 import javax.swing.KeyStroke;
 
-import org.signalml.app.action.selector.TableFocusSelector;
 import org.signalml.app.action.selector.ViewFocusSelector;
 import org.signalml.app.util.IconUtils;
 
@@ -91,7 +90,6 @@ public abstract class AbstractSignalMLAction extends AbstractAction {
 	 * @param clazz the type of requested selector
 	 * @return the found selector
 	 * @see ViewFocusSelector
-	 * @see TableFocusSelector
 	 */
 	public Object findFocusSelector(Object source, Class<?> clazz) {
 

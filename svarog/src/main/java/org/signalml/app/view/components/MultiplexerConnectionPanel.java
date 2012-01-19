@@ -36,7 +36,6 @@ import org.signalml.app.action.document.monitor.ConnectMultiplexerAction;
 import org.signalml.app.action.document.monitor.DisconnectMultiplexerAction;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
-import org.signalml.app.view.components.dialogs.OpenMonitorDialog;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.app.worker.WorkerResult;
 
@@ -44,6 +43,11 @@ import org.signalml.app.worker.WorkerResult;
  *
  */
 public class MultiplexerConnectionPanel extends JPanel {
+	
+	public static final int TIMEOUT_MILIS = 500;
+	public static final int TRYOUT_COUNT = 10;
+	public static final Color SUCCESS_COLOR = Color.GREEN;
+	public static final Color FAILURE_COLOR = Color.RED;
 	
 	private static final long serialVersionUID = 1L;
 
@@ -152,24 +156,24 @@ public class MultiplexerConnectionPanel extends JPanel {
 				}
 				else if ("jmxConnection".equals( evt.getPropertyName())) {
 					WorkerResult res = (WorkerResult) evt.getNewValue();
-					getProgressBar().getModel().setValue(new Integer(OpenMonitorDialog.TRYOUT_COUNT));
+					getProgressBar().getModel().setValue(new Integer(TRYOUT_COUNT));
 					if (!res.success) {
-						getStatusArea().setForeground(OpenMonitorDialog.FAILURE_COLOR);
+						getStatusArea().setForeground(FAILURE_COLOR);
 						getStatusArea().setText(res.message);
 					}
 				}
 				else if ("testState".equals( evt.getPropertyName())) {
 					Integer state = (Integer) evt.getNewValue();
-					getProgressBar().getModel().setValue(state.intValue() + OpenMonitorDialog.TRYOUT_COUNT);
+					getProgressBar().getModel().setValue(state.intValue() + TRYOUT_COUNT);
 				}
 				else if ("connectionTestResult".equals( evt.getPropertyName())) {
 					WorkerResult res = (WorkerResult) evt.getNewValue();
 					if (res.success) {
-						getStatusArea().setForeground(OpenMonitorDialog.SUCCESS_COLOR);
+						getStatusArea().setForeground(SUCCESS_COLOR);
 						getDisconnectButton().setEnabled(true);
 					}
 					else
-						getStatusArea().setForeground(OpenMonitorDialog.FAILURE_COLOR);
+						getStatusArea().setForeground(FAILURE_COLOR);
 					getConnectButton().setEnabled(false);
 					getStatusArea().setText(res.message);
 					getProgressBar().getModel().setValue( getProgressBar().getModel().getMaximum());
@@ -180,8 +184,8 @@ public class MultiplexerConnectionPanel extends JPanel {
 		connectAction.setDisconnectAction(disconnectAction);
 		connectAction.setMultiplexerAddressField(getMultiplexerAddressField());
 		connectAction.setMultiplexerPortField( getMultiplexerPortField());
-		connectAction.setTryoutCount(OpenMonitorDialog.TRYOUT_COUNT);
-		connectAction.setTimeoutMilis(OpenMonitorDialog.TIMEOUT_MILIS);
+		connectAction.setTryoutCount(TRYOUT_COUNT);
+		connectAction.setTimeoutMilis(TIMEOUT_MILIS);
 		connectAction.addPropertyChangeListener(propertyChangeHandler);
 		connectAction.setOpenMonitorDescriptor(openMonitorDescriptor);
 		getConnectButton().setAction(connectAction);
@@ -266,7 +270,7 @@ public class MultiplexerConnectionPanel extends JPanel {
 
 	public JProgressBar getProgressBar() {
 		if (progressBar == null) {
-			progressBar = new JProgressBar(0, OpenMonitorDialog.TRYOUT_COUNT * 2);
+			progressBar = new JProgressBar(0, TRYOUT_COUNT * 2);
 		}
 		return progressBar;
 	}
