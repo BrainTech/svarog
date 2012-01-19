@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import org.signalml.domain.signal.MultichannelSampleSource;
+import org.signalml.plugin.export.signal.SignalSelection;
 
 /**
  * This class represents the (sub)set of channels.
@@ -135,6 +136,16 @@ public class ChannelSpace {
 
 		return selection;
 
+	}
+
+	/**
+	 * Returns if all channels in the channel space are selected
+	 * @return true if all channels are selected
+	 */
+	public boolean areAllChannelsSelected() {
+		if (getSelectedChannels()[0] == SignalSelection.CHANNEL_NULL)
+			return true;
+		return false;
 	}
 
 }

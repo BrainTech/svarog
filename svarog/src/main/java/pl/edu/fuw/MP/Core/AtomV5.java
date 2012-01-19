@@ -60,7 +60,7 @@ public class AtomV5 implements StandardBookAtom, StandardBookAtomWriter {
 			size=6;
 			break;
 		}
-		return 4*size;
+		return 4*size + 2;
 	}
 
 	public void Read(RandomAccessFile stream) throws IOException {

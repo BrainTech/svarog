@@ -123,6 +123,19 @@ public class BookLibraryV5Writer implements StandardBookWriter, IncrementalBookW
 		fields[fieldsCount++]=f;
 	}
 
+	public void setNumberOfChannels(int numberOfChannels) {
+		for (int i=0 ; i<fields.length ; i++) {
+			if (fields[i]!=null && fields[i].type==FormatComponentV5.SIGNAL_INFO) {
+				((SignalInfoV5)fields[i]).number_of_chanels_in_file = numberOfChannels;
+				return;
+			}
+		}
+
+		SignalInfoV5 f=new SignalInfoV5();
+		f.number_of_chanels_in_file = numberOfChannels;
+		fields[fieldsCount++]=f;
+	}
+
 	public void setTextInfo(String text) {
 		for (int i=0 ; i<fields.length ; i++) {
 			if (fields[i]!=null && fields[i].type==FormatComponentV5.TEXT_INFO) {
@@ -165,11 +178,11 @@ public class BookLibraryV5Writer implements StandardBookWriter, IncrementalBookW
 
 		out.writeBytes("MPv5.0");
 
-		if (comment!=null) {
+		/*if (comment!=null) {
 			out.writeByte(FormatComponentV5.COMMENT_SEGMENT_IDENTITY);
 			out.writeInt(comment.length());
 			out.writeBytes(comment);
-		}
+		}*/
 
 		out.writeByte(FormatComponentV5.FILE_HEADER);
 		out.writeInt(getFieldSize());

@@ -26,7 +26,7 @@ public class MP5AdvancedConfigPanel extends JPanel {
 
 	private MP5AdvancedDecompositionConfigPanel advancedDecompositionConfigPanel;
 	private MP5ExecutorPanel executorPanel;
-	private MP5OutputConfigPanel outputConfigPanel;
+	private MP5AtomsInDictionaryPanel outputConfigPanel;
 
 	public MP5AdvancedConfigPanel(MP5ExecutorManager executorManager, AbstractDialog owner) {
 		super();
@@ -64,9 +64,9 @@ public class MP5AdvancedConfigPanel extends JPanel {
 		return executorPanel;
 	}
 
-	public MP5OutputConfigPanel getOutputConfigPanel() {
+	public MP5AtomsInDictionaryPanel getOutputConfigPanel() {
 		if (outputConfigPanel == null) {
-			outputConfigPanel = new MP5OutputConfigPanel(owner);
+			outputConfigPanel = new MP5AtomsInDictionaryPanel();
 		}
 		return outputConfigPanel;
 	}

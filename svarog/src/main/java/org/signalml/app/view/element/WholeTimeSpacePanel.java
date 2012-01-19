@@ -19,6 +19,7 @@ import javax.swing.border.TitledBorder;
 import org.apache.log4j.Logger;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
+import org.springframework.validation.Errors;
 
 /**
  * Panel which indicates the whole signal will be used.
@@ -267,6 +268,20 @@ public class WholeTimeSpacePanel extends JPanel {
 			completeCheckBox.setEnabled(false);
 		} else {
 			completeCheckBox.setEnabled(true);
+		}
+
+	}
+
+	/**
+	 * Validates this panel.
+	 * @param errors the object in which errors are stored
+	 */
+	public void validatePanel(Errors errors) {
+		int numberOfPages = Integer.parseInt(getPageCountTextField().getText());
+		boolean completePagesOnly = getCompletePagesCheckBox().isSelected();
+
+		if (completePagesOnly && numberOfPages == 0) {
+			errors.reject(null, _("Number of complete pages in this signal is equal to 0, please unselect the 'Complete pages only' checkbox to export the signal anyway."));
 		}
 
 	}

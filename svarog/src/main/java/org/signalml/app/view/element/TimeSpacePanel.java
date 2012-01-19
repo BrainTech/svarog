@@ -324,6 +324,8 @@ public class TimeSpacePanel extends JPanel {
 			break;
 
 		case 0 :
+			getWholeTimeSpacePanel().validatePanel(errors);
+			break;
 		default :
 			// do nothing
 			break;

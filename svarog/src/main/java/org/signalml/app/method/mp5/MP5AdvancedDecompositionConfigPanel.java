@@ -214,7 +214,6 @@ public class MP5AdvancedDecompositionConfigPanel extends JPanel {
 		getDictionaryTypeComboBox().setSelectedItem(parameters.getDictionaryType());
 		getDictionaryReinitTypeComboBox().setSelectedItem(parameters.getDictionaryReinitType());
 		getScaleToPeriodFactorSpinner().setValue(new Double(parameters.getScaleToPeriodFactor()));
-		getPeriodDensitySpinner().setValue(parameters.getPeriodDensity());
 
 	}
 
@@ -223,7 +222,6 @@ public class MP5AdvancedDecompositionConfigPanel extends JPanel {
 		parameters.setDictionaryType((MP5DictionaryType) getDictionaryTypeComboBox().getSelectedItem());
 		parameters.setDictionaryReinitType((MP5DictionaryReinitType) getDictionaryReinitTypeComboBox().getSelectedItem());
 		parameters.setScaleToPeriodFactor(((Number) getScaleToPeriodFactorSpinner().getValue()).floatValue());
-		parameters.setPeriodDensity((Integer) getPeriodDensitySpinner().getValue());
 
 	}
 

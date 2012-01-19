@@ -213,7 +213,10 @@ public class SegmentReconstructionProvider {
 	}
 
 	public boolean isAtomInSelectiveReconstruction(int index) {
-		return reconstruction.contains(segment.getAtomAt(index));
+		if (this.getAtomCount() > index)
+			return reconstruction.contains(segment.getAtomAt(index));
+		else
+			return false;
 	}
 
 	public boolean isAtomInSelectiveReconstruction(StandardBookAtom atom) {

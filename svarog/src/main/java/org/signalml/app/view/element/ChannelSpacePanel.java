@@ -193,7 +193,8 @@ public class ChannelSpacePanel extends JPanel {
 
 		ChannelSpaceType channelSpaceType = space.getChannelSpaceType();
 		JList list = getChannelList();
-		if (channelSpaceType == ChannelSpaceType.WHOLE_SIGNAL) {
+		if (channelSpaceType == ChannelSpaceType.WHOLE_SIGNAL
+			|| space.getChannelSpace().areAllChannelsSelected()) {
 			list.setSelectionInterval(0, list.getModel().getSize()-1);
 		} else {
 

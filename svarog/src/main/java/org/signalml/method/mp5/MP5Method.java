@@ -41,6 +41,7 @@ import org.springframework.validation.Errors;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.Annotations;
+import pl.edu.fuw.MP.Core.BookLibraryV5Writer;
 
 /** MP5Method
  *
@@ -192,6 +193,15 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 				throw new ComputationException(ex);
 			}
 
+			segments = partialBook.getSegmentAt(0); //each partial book contains only one segment
+
+			book.setCalibration(partialBook.getCalibration());
+			book.setEnergyPercent(partialBook.getEnergyPercent());
+			book.setSamplingFrequency(partialBook.getSamplingFrequency());
+
+			int numberOfChannels = segments.length;
+			((BookLibraryV5Writer) book).setNumberOfChannels(numberOfChannels);
+
 			if (bookWriter == null) {
 				try {
 					bookWriter = builder.writeBookIncremental(book, collectedBookFile.getAbsolutePath());
@@ -201,28 +211,25 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 				}
 			}
 
-			book.setCalibration(partialBook.getCalibration());
-			book.setEnergyPercent(partialBook.getEnergyPercent());
-			book.setSamplingFrequency(partialBook.getSamplingFrequency());
-
-			segments = partialBook.getSegmentAt(0);
-
 			StandardBookSegmentWriter seg = new StandardBookSegmentWriterImpl(book);
 
-			seg.setChannelNumber(segments[0].getChannelNumber());
-			seg.setSegmentNumber(segments[0].getSegmentNumber());
-			seg.setSegmentLength(segments[0].getSegmentLength());
+			for (int channel = 0; channel < numberOfChannels; channel++) {
+				seg.setChannelNumber(segments[channel].getChannelNumber());
+				seg.setSegmentNumber(i+1);
+				seg.setSegmentLength(segments[channel].getSegmentLength());
 
-			for (int j = 0; j < segments[0].getAtomCount(); j++) {
-				StandardBookAtomWriterImpl bookAtomWriter = new StandardBookAtomWriterImpl(segments[0].getAtomAt(j));
-				seg.addAtom(bookAtomWriter);
-			}
+				for (int j = 0; j < segments[channel].getAtomCount(); j++) {
+					StandardBookAtomWriterImpl bookAtomWriter = new StandardBookAtomWriterImpl(segments[channel].getAtomAt(j));
+					seg.addAtom(bookAtomWriter);
+					seg.setSignalSamples(segments[channel].getSignalSamples());
+				}
 
-			try {
-				bookWriter.writeSegment(seg);
-			} catch (IOException ex) {
-				logger.error("Failed to write segment to [" + collectedBookFile.getAbsolutePath() + "] - i/o exception", ex);
-				throw new ComputationException(ex);
+				try {
+					bookWriter.writeSegment(seg);
+				} catch (IOException ex) {
+					logger.error("Failed to write segment to [" + collectedBookFile.getAbsolutePath() + "] - i/o exception", ex);
+					throw new ComputationException(ex);
+				}
 			}
 
 			logger.debug("Writing book done");
