@@ -17,7 +17,6 @@ import multiplexer.protocol.Protocol.MultiplexerMessage;
 
 import org.apache.log4j.Logger;
 import org.jboss.netty.channel.ChannelFuture;
-import org.signalml.app.view.components.MultiplexerConnectionPanel;
 import org.signalml.app.worker.WorkerResult;
 
 import com.google.protobuf.ByteString;
@@ -27,11 +26,11 @@ import com.google.protobuf.ByteString;
  */
 public class MultiplexerConnectionTestWorker extends SwingWorker< WorkerResult, Integer> {
 
-        public static final String CONNECTION_TEST_RESULT = "connectionTestResult";
+	public static final String CONNECTION_TEST_RESULT = "connectionTestResult";
 
 	protected static final Logger logger = Logger.getLogger(MultiplexerConnectionTestWorker.class);
-	private int timeoutMilis = MultiplexerConnectionPanel.TIMEOUT_MILIS;
-	private int tryoutCount = MultiplexerConnectionPanel.TRYOUT_COUNT;
+	private int timeoutMilis = MultiplexerConsts.TIMEOUT_MILIS;
+	private int tryoutCount = MultiplexerConsts.TRYOUT_COUNT;
 	private Integer testState = tryoutCount;
 	private JmxClient client;
 

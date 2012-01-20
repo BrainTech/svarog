@@ -175,7 +175,6 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 	 */
 	protected void clearPreviousConnections() {
 		openBCISignalSourcePanel.setConnected(false);
-		openBCISignalSourcePanel.getMultiplexerConnectionPanel().setInterfaceInUnconnectedState();
 	}
 
 	/**

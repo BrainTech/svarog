@@ -12,7 +12,6 @@ import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.view.document.opensignal.OpenSignalAndSetMontageDialog;
-import org.signalml.app.view.document.opensignal.SignalSource;
 import org.signalml.app.view.document.opensignal.file.FileOpenSignalMethod;
 import org.signalml.domain.montage.Montage;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;

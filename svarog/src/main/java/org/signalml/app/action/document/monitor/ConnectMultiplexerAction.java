@@ -16,7 +16,6 @@ import org.apache.log4j.Logger;
 import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.app.worker.WorkerResult;
-import org.signalml.app.worker.monitor.BCIMetadataWorker;
 import org.signalml.app.worker.monitor.MultiplexerConnectWorker;
 import org.signalml.app.worker.monitor.MultiplexerConnectionTestWorker;
 import org.signalml.app.worker.monitor.MultiplexerTagConnectWorker;
@@ -34,7 +33,6 @@ public class ConnectMultiplexerAction extends AbstractAction implements Property
         protected MultiplexerConnectWorker connectWorker;
         protected MultiplexerTagConnectWorker tagConnectWorker;
         protected MultiplexerConnectionTestWorker testWorker;
-        protected BCIMetadataWorker metadataWorker;
         private InetSocketAddress multiplexerSocket;
         protected static final Logger logger = Logger.getLogger(ConnectMultiplexerAction.class);
 
@@ -151,19 +149,7 @@ public class ConnectMultiplexerAction extends AbstractAction implements Property
                 tagConnectWorker.execute();
         }
 
-        protected synchronized void executeMetadata() {
-                metadataWorker = new BCIMetadataWorker(
-                        elementManager.getJmxClient(),
-                        openMonitorDescriptor,
-                        timeoutMilis * tryoutCount);
-                metadataWorker.addPropertyChangeListener(this);
-                metadataWorker.execute();
-        }
-
         public synchronized void cancel() {
-                if (metadataWorker != null) {
-                        metadataWorker.cancel(false);
-                }
                 if (testWorker != null) {
                         testWorker.cancel(false);
                 }
@@ -191,14 +177,6 @@ public class ConnectMultiplexerAction extends AbstractAction implements Property
                 }
                 if (MultiplexerConnectionTestWorker.CONNECTION_TEST_RESULT.equals(evt.getPropertyName())) {
                         WorkerResult res = (WorkerResult) evt.getNewValue();
-                        if (res.success) {
-                                executeMetadata();
-                        }
-                } else if (BCIMetadataWorker.METADATA_RECEIVED.equals(evt.getPropertyName())) {
-                        OpenMonitorDescriptor omd = (OpenMonitorDescriptor) evt.getNewValue();
-                        if (omd != null && omd.isMetadataReceived()) {
-                                disconnectAction.setEnabled(true);
-                        }
                 }
         }
 }
