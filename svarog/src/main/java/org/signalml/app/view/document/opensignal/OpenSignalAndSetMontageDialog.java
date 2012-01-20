@@ -165,14 +165,14 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
         @Override
         protected boolean onCancel() {
 
-                if (currentModel instanceof OpenSignalDescriptor) {
+                /*if (currentModel instanceof OpenSignalDescriptor) {
 
                         OpenSignalDescriptor descriptor = (OpenSignalDescriptor) currentModel;
                         if (descriptor.getAmplifierConnectionDescriptor().isBciStarted()) {
                                 descriptor.getAmplifierConnectionDescriptor().setBciStarted(false);
                                 viewerElementManager.getStopBCIAction().actionPerformed(null);
                         }
-                }
+                }*/
                 return super.onCancel();
         }
 

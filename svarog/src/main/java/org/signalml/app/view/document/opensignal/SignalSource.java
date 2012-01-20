@@ -16,7 +16,6 @@ public enum SignalSource implements MessageSourceResolvable {
 
 	FILE,
 	OPENBCI,
-	AMPLIFIER,
 	;
 
 	/**
@@ -33,14 +32,6 @@ public enum SignalSource implements MessageSourceResolvable {
 	 */
 	public boolean isOpenBCI() {
 		return (this == OPENBCI);
-	}
-
-	/**
-	 * Returns if this signal source is an amplifier.
-	 * @return true if this signal source is an amplifier, false otherwise
-	 */
-	public boolean isAmplifier() {
-		return (this == AMPLIFIER);
 	}
 
 	@Override

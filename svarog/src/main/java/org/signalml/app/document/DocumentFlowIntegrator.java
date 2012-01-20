@@ -814,13 +814,10 @@ public class DocumentFlowIntegrator {
 
 		OpenMonitorDescriptor monitorOptions = null;
 
-                if (descriptor.getOpenSignalDescriptor().getSignalSource().equals(SignalSource.OPENBCI)) {
-                        monitorOptions = descriptor.getOpenSignalDescriptor().getOpenMonitorDescriptor();
-                } else if (descriptor.getOpenSignalDescriptor().getSignalSource().equals(SignalSource.AMPLIFIER)) {
-                        monitorOptions = descriptor.getOpenSignalDescriptor().getAmplifierConnectionDescriptor().getOpenMonitorDescriptor();
-                }
-
-                monitorOptions.setBackupFrequency(getApplicationConfig().getBackupFrequency());
+		if (descriptor.getOpenSignalDescriptor().getSignalSource().equals(SignalSource.OPENBCI)) {
+			monitorOptions = descriptor.getOpenSignalDescriptor().getOpenMonitorDescriptor();
+		}
+		monitorOptions.setBackupFrequency(getApplicationConfig().getBackupFrequency());
 
 		MonitorSignalDocument monitorSignalDocument = new MonitorSignalDocument(monitorOptions);
 		monitorSignalDocument.setMontage(descriptor.getOpenSignalDescriptor().getMontage());

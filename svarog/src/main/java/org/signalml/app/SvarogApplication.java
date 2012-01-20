@@ -4,6 +4,7 @@
 package org.signalml.app;
 
 import java.io.File;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -94,7 +95,6 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.Annotations;
 import org.signalml.app.config.preset.EegSystemsPresetManager;
 import org.signalml.app.config.preset.StyledTagSetPresetManager;
-import org.signalml.app.worker.amplifiers.AmplifierDefinitionPresetManager;
 import org.signalml.app.worker.processes.OpenBCIModulePresetManager;
 import org.signalml.app.worker.processes.ProcessManager;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
@@ -130,7 +130,6 @@ public class SvarogApplication implements java.lang.Runnable {
 	private BookFilterPresetManager bookFilterPresetManager = null;
 	private SignalExportPresetManager signalExportPresetManager = null;
 	private FFTSampleFilterPresetManager fftFilterPresetManager = null;
-	private AmplifierDefinitionPresetManager amplifierDefinitionPresetManager = null;
 	private OpenBCIModulePresetManager openBCIModulePresetManager = null;
 
 	/**
@@ -781,17 +780,6 @@ public class SvarogApplication implements java.lang.Runnable {
 			logger.error("Failed to read FFT sample filter configuration - will use defaults", ex);
 		}
 
-		amplifierDefinitionPresetManager = new AmplifierDefinitionPresetManager();
-		amplifierDefinitionPresetManager.setProfileDir(profileDir);
-
-		try {
-			amplifierDefinitionPresetManager.readFromPersistence(null);
-		} catch (FileNotFoundException ex) {
-			logger.debug("Amplifier definition preset config not found - will use defaults");
-		} catch (Exception ex) {
-			logger.error("Failed to read amplifier definition configuration - will use defaults", ex);
-		}
-
 		openBCIModulePresetManager = new OpenBCIModulePresetManager();
 		openBCIModulePresetManager.setProfileDir(profileDir);
 
@@ -995,7 +983,6 @@ public class SvarogApplication implements java.lang.Runnable {
 		elementManager.setBookFilterPresetManager(bookFilterPresetManager);
 		elementManager.setSignalExportPresetManager(signalExportPresetManager);
 		elementManager.setFftFilterPresetManager(fftFilterPresetManager);
-		elementManager.setAmplifierDefinitionPresetManager(amplifierDefinitionPresetManager);
 		elementManager.setOpenBCIModulePresetManager(openBCIModulePresetManager);
 		elementManager.setTimeDomainSampleFilterPresetManager(timeDomainSampleFilterPresetManager);
 		elementManager.setPredefinedTimeDomainFiltersPresetManager(predefinedTimeDomainSampleFilterPresetManager);
@@ -1106,12 +1093,6 @@ public class SvarogApplication implements java.lang.Runnable {
 			fftFilterPresetManager.writeToPersistence(null);
 		} catch (Exception ex) {
 			logger.error("Failed to write FFT sample filter configuration", ex);
-		}
-
-		try {
-			amplifierDefinitionPresetManager.writeToPersistence(null);
-		} catch (Exception ex) {
-			logger.error("Failed to write amplifier definition configuration", ex);
 		}
 
 		try {

@@ -17,7 +17,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.model.monitor.AmplifierConnectionDescriptor;
 import org.signalml.app.view.document.opensignal.elements.ChannelSelectTable;
 
 /**
@@ -121,32 +120,11 @@ public class ChannelSelectPanel extends JPanel {
         }
 
         /**
-         * Fills this panel from an {@link AmplifierConnectionDescriptor} object.
-         * @param descriptor
-         */
-        public void fillPanelFromModel(AmplifierConnectionDescriptor descriptor) {
-                if (descriptor.getAmplifierInstance() == null) {
-                        setEnabledAll(false);
-                } else {
-                        setEnabledAll(true);
-                }
-                getChannelSelectTable().fillTableFromModel(descriptor);
-        }
-
-        /**
          * Sets all channels to be selected or not.
          * @param selected selected
          */
         protected void setAllSelected(boolean selected) {
                 getChannelSelectTable().setAllSelected(selected);
-        }
-
-        /**
-         * Fills an {@link AmplifierConnectionDescriptor} object from this panel.
-         * @param descriptor
-         */
-        public void fillModelFromPanel(AmplifierConnectionDescriptor descriptor) {
-                getChannelSelectTable().fillModelFromTable(descriptor);
         }
 
         /**

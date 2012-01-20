@@ -4,6 +4,7 @@
 package org.signalml.app.view.document.opensignal;
 
 import java.awt.CardLayout;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -17,7 +18,6 @@ import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.document.opensignal.OpenFileSignalDescriptor;
 import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
 import org.signalml.app.model.document.opensignal.OpenSignalDescriptor;
-import org.signalml.app.model.monitor.AmplifierConnectionDescriptor;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.plugin.export.SignalMLException;
@@ -57,11 +57,6 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 	private OpenBCISignalSourcePanel openBCISignalSourcePanel;
 
 	/**
-	 * A panel for setting options for an amplifier signal source.
-	 */
-	private AmplifierSignalSourcePanel amplifierSignalSourcePanel;
-
-	/**
 	 * Constructor.
 	 * @param viewerElementManager ViewerElementManager to be used by this
 	 * panel
@@ -80,19 +75,15 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 
 		fileSignalSourcePanel = new FileSignalSourcePanel(viewerElementManager);
 		openBCISignalSourcePanel = new OpenBCISignalSourcePanel(viewerElementManager);
-		amplifierSignalSourcePanel = new AmplifierSignalSourcePanel(viewerElementManager);
 
 		fileSignalSourcePanel.setSignalSourceSelectionComboBoxModel(getSignalSourceSelectionComboBoxModel());
 		openBCISignalSourcePanel.setSignalSourceSelectionComboBoxModel(getSignalSourceSelectionComboBoxModel());
-		amplifierSignalSourcePanel.setSignalSourceSelectionComboBoxModel(getSignalSourceSelectionComboBoxModel());
 
 		fileSignalSourcePanel.addPropertyChangeListener(this);
 		openBCISignalSourcePanel.addPropertyChangeListener(this);
-		amplifierSignalSourcePanel.addPropertyChangeListener(this);
 
 		this.add(fileSignalSourcePanel, SignalSource.FILE.toString());
 		this.add(openBCISignalSourcePanel, SignalSource.OPENBCI.toString());
-		this.add(amplifierSignalSourcePanel, SignalSource.AMPLIFIER.toString());
 	}
 
 	/**
@@ -101,10 +92,9 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 	 */
 	protected ComboBoxModel getSignalSourceSelectionComboBoxModel() {
 		if (signalSourceSelectionComboBoxModel == null) {
-			SignalSource[] signalSources = new SignalSource[3];
+			SignalSource[] signalSources = new SignalSource[2];
 			signalSources[0] = SignalSource.FILE;
 			signalSources[1] = SignalSource.OPENBCI;
-			signalSources[2] = SignalSource.AMPLIFIER;
 			signalSourceSelectionComboBoxModel = new DefaultComboBoxModel(signalSources);
 		}
 		return signalSourceSelectionComboBoxModel;
@@ -131,8 +121,7 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 			SignalSource selectedSignalSource = getSelectedSignalSource();
 
 			if ((source == fileSignalSourcePanel && selectedSignalSource.isFile()) ||
-				(source == openBCISignalSourcePanel && selectedSignalSource.isOpenBCI()) ||
-				source == amplifierSignalSourcePanel && selectedSignalSource.isAmplifier())
+				(source == openBCISignalSourcePanel && selectedSignalSource.isOpenBCI()))
 				firePropertyChange(propertyName, 0, evt.getNewValue());
 		}
 		else if (propertyName.equals(AbstractMonitorSourcePanel.OPENBCI_CONNECTED_PROPERTY)) {
@@ -172,13 +161,7 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 			fileSignalSourcePanel.fillPanelFromModel(openSignalDescriptor.getOpenFileSignalDescriptor());
 			fileSignalSourcePanel.getSignalSourceSelectionPanel().fireSignalSourceSelectionChanged();
 		}
-
 		openBCISignalSourcePanel.fillPanelFromModel(openSignalDescriptor.getOpenMonitorDescriptor());
-                try {
-                        amplifierSignalSourcePanel.fillPanelFromModel(openSignalDescriptor.getAmplifierConnectionDescriptor());
-                } catch (SignalMLException ex) {
-                        // TODO: when amp cannot be found
-                }
 
 		clearPreviousConnections();
 	}
@@ -190,8 +173,6 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 	protected void clearPreviousConnections() {
 		openBCISignalSourcePanel.setConnected(false);
 		openBCISignalSourcePanel.getMultiplexerConnectionPanel().setInterfaceInUnconnectedState();
-
-		amplifierSignalSourcePanel.setConnected(false);
 	}
 
 	/**
@@ -216,13 +197,7 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 		else if (signalSource.isOpenBCI()) {
 			OpenMonitorDescriptor openMonitorDescriptor = openSignalDescriptor.getOpenMonitorDescriptor();
 			openBCISignalSourcePanel.fillModelFromPanel(openMonitorDescriptor);
-		} else if (signalSource.isAmplifier()) {
-                        AmplifierConnectionDescriptor connectionDescriptor = openSignalDescriptor.getAmplifierConnectionDescriptor();
-                        try {
-                                amplifierSignalSourcePanel.fillModelFromPanel(connectionDescriptor);
-                        } catch (SignalMLException ex) {
-                        }
-                }
+		}
 	}
 
 	/**
@@ -237,7 +212,7 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 		else if (signalSource.isOpenBCI())
 			return openBCISignalSourcePanel;
 		else
-			return amplifierSignalSourcePanel;
+			return null;
 	}
 
 	/**

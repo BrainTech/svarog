@@ -4,7 +4,6 @@
 
 package org.signalml.app.model.document.opensignal;
 
-import org.signalml.app.model.monitor.AmplifierConnectionDescriptor;
 import org.signalml.app.view.document.opensignal.FileOpenSignalMethod;
 import org.signalml.app.view.document.opensignal.SignalSource;
 import org.signalml.domain.montage.Montage;
@@ -36,12 +35,6 @@ public class OpenSignalDescriptor {
 	private OpenMonitorDescriptor openMonitorDescriptor;
 
 	/**
-	 * Descriptor of the signal to be opened which will come from an
-	 * amplifier.
-	 */
-	private AmplifierConnectionDescriptor amplifierConnectionDescriptor;
-
-	/**
 	 * Montage to be applied to the signal directly after opening.
 	 */
 	private Montage montage;
@@ -51,7 +44,6 @@ public class OpenSignalDescriptor {
 
 		openFileSignalDescriptor = new OpenFileSignalDescriptor();
 		openMonitorDescriptor = new OpenMonitorDescriptor();
-                amplifierConnectionDescriptor = new AmplifierConnectionDescriptor();
 
 		montage = SignalConfigurer.createMontage(openFileSignalDescriptor.getRawSignalDescriptor().getChannelCount());
 	}
@@ -78,23 +70,6 @@ public class OpenSignalDescriptor {
 	 */
 	public Montage getMontage() {
 		return montage;
-	}
-
-	/**
-	 * Returns the descriptor of the signal to be opened from an amplifier.
-	 * @return the descriptor of the signal from an amplifier
-	 */
-	public AmplifierConnectionDescriptor getAmplifierConnectionDescriptor() {
-		return amplifierConnectionDescriptor;
-	}
-
-	/**
-	 * Sets the descriptor of the signal from the amplifier.
-	 * @param amplifierConnectionDescriptor the descriptor of the signal from
-	 * the amplifier
-	 */
-	public void setAmplifierConnectionDescriptor(AmplifierConnectionDescriptor amplifierConnectionDescriptor) {
-		this.amplifierConnectionDescriptor = amplifierConnectionDescriptor;
 	}
 
 	/**

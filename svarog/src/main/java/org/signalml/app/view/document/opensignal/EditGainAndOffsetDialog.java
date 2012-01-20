@@ -14,7 +14,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
-import org.signalml.app.model.monitor.AmplifierConnectionDescriptor;
 import org.signalml.app.view.components.dialogs.AbstractDialog;
 import org.signalml.app.view.document.monitor.ChannelDefinition;
 import org.signalml.app.view.document.monitor.ChannelDefinitionsTable;
@@ -51,11 +50,10 @@ public class EditGainAndOffsetDialog extends AbstractDialog  {
         @Override
         public boolean supportsModelClass(Class<?> clazz) {
 
-                boolean isAmpConnection = AmplifierConnectionDescriptor.class.isAssignableFrom(clazz);
                 boolean isBCIConnection = OpenMonitorDescriptor.class.isAssignableFrom(clazz);
                 boolean isFile = RawSignalDescriptor.class.isAssignableFrom(clazz);
 
-                return isAmpConnection || isBCIConnection || isFile;
+                return isBCIConnection || isFile;
         }
 
         /**
@@ -66,9 +64,7 @@ public class EditGainAndOffsetDialog extends AbstractDialog  {
         @Override
         public void fillDialogFromModel(Object model) {
 
-                if (model instanceof AmplifierConnectionDescriptor) {
-                        fillDialogForAmplifierConnection((AmplifierConnectionDescriptor) model);
-                } else if (model instanceof OpenMonitorDescriptor) {
+                if (model instanceof OpenMonitorDescriptor) {
                         fillDialogForOpenBCIConnection((OpenMonitorDescriptor) model);
                 } else if (model instanceof RawSignalDescriptor) {
                         fillDialogForFileOpening((RawSignalDescriptor) model);
@@ -83,34 +79,11 @@ public class EditGainAndOffsetDialog extends AbstractDialog  {
         @Override
         public void fillModelFromDialog(Object model) {
 
-                if (model instanceof AmplifierConnectionDescriptor) {
-                        fillModelForAmplifierConnection((AmplifierConnectionDescriptor) model);
-                } else if (model instanceof OpenMonitorDescriptor) {
+        		if (model instanceof OpenMonitorDescriptor) {
                         fillModelForOpenBCIConnection((OpenMonitorDescriptor) model);
                 } else if (model instanceof RawSignalDescriptor) {
                         fillModelForFileOpening((RawSignalDescriptor) model);
                 }
-        }
-
-        /**
-         * Fills the dialog for amplifier connection.
-         *
-         * @param descriptor the descriptor
-         */
-        private void fillDialogForAmplifierConnection(AmplifierConnectionDescriptor descriptor) {
-
-                setAllGainAndOffsetEditable(true);
-                List<ChannelDefinition> definitions = new ArrayList<ChannelDefinition>();
-                for (int i = 0; i < descriptor.getOpenMonitorDescriptor().getChannelCount(); i++) {
-
-                        definitions.add(new ChannelDefinition(
-                                descriptor.getAmplifierInstance().getDefinition().getChannelNumbers().get(i),
-                                descriptor.getOpenMonitorDescriptor().getCalibrationGain()[i],
-                                descriptor.getOpenMonitorDescriptor().getCalibrationOffset()[i],
-                                descriptor.getAmplifierInstance().getDefinition().getDefaultNames().get(i)));
-                }
-
-                getDefinitionsTable().setData(definitions);
         }
 
         /**
@@ -154,17 +127,6 @@ public class EditGainAndOffsetDialog extends AbstractDialog  {
                         }
                         getDefinitionsTable().setData(definitions);
                 }
-        }
-
-        /**
-         * Fills the model for amplifier connection.
-         *
-         * @param descriptor the descriptor
-         */
-        private void fillModelForAmplifierConnection(AmplifierConnectionDescriptor descriptor) {
-
-                descriptor.getOpenMonitorDescriptor().setCalibrationGain(getGainArray());
-                descriptor.getOpenMonitorDescriptor().setCalibrationOffset(getOffsetArray());
         }
 
         /**

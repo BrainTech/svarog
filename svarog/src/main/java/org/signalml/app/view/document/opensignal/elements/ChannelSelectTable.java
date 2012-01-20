@@ -5,10 +5,10 @@
 package org.signalml.app.view.document.opensignal.elements;
 
 import javax.swing.JTable;
+
 import javax.swing.table.TableColumn;
 
 import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
-import org.signalml.app.model.monitor.AmplifierConnectionDescriptor;
 
 /**
  * A JTable for selecting channels to be received from an amplifier.
@@ -58,7 +58,7 @@ public class ChannelSelectTable extends JTable {
 	 * Fills this table with the given descriptor.
 	 * @param descriptor the descriptor to be used
 	 */
-	public void fillTableFromModel(AmplifierConnectionDescriptor descriptor) {
+	/*public void fillTableFromModel(AmplifierConnectionDescriptor descriptor) {
 
 		if (descriptor == null || descriptor.getAmplifierInstance() == null) {
                         setModel(new ChannelSelectTableModel());
@@ -75,13 +75,13 @@ public class ChannelSelectTable extends JTable {
 
 		setModel(model);
 		setColumnsPreferredSizes();
-	}
+	}*/
 
 	/**
 	 * Fills the given model with the data contained in this table.
 	 * @param descriptor the descriptor to be filled
 	 */
-	public void fillModelFromTable(AmplifierConnectionDescriptor descriptor) {
+	/*public void fillModelFromTable(AmplifierConnectionDescriptor descriptor) {
 		OpenMonitorDescriptor openMonitorDescriptor = descriptor.getOpenMonitorDescriptor();
 		AmplifierChannels amplifierChannels = getAmplifierChannels();
 
@@ -96,7 +96,7 @@ public class ChannelSelectTable extends JTable {
 		} catch (Exception ex) {
 		}
 
-	}
+	}*/
 
 	/**
 	 * Sets all channels in the table to be selected/unselected.

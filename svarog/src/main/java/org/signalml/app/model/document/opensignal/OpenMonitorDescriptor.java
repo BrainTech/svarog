@@ -2,9 +2,9 @@ package org.signalml.app.model.document.opensignal;
 
 import multiplexer.jmx.client.JmxClient;
 
+
 import org.signalml.app.model.monitor.MonitorRecordingDescriptor;
 import org.signalml.app.view.document.opensignal.SignalSource;
-import org.signalml.app.worker.amplifiers.AmplifierDefinition;
 import org.signalml.domain.montage.system.EegSystem;
 
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
@@ -335,31 +335,6 @@ public class OpenMonitorDescriptor {
          */
         public MonitorRecordingDescriptor getMonitorRecordingDescriptor() {
                 return monitorRecordingDescriptor;
-        }
-
-        /**
-         * Fills this object from an {@link AmplifierDefinition} object.
-         *
-         * @param definition the definition
-         */
-        public void fillFromAnAmplifierDefinition(AmplifierDefinition definition) {
-
-                channelCount = definition.getChannelCount();
-                samplingFrequency = definition.getAvailableFrequencies().get(0);
-
-                channelLabels = new String[channelCount];
-                selectedChannelList = new String[channelCount];
-                calibrationGain = new float[definition.getChannelCount()];
-                calibrationOffset = new float[definition.getChannelCount()];
-
-                for (int i = 0; i < definition.getChannelCount(); i++) {
-
-                        calibrationGain[i] = definition.getCalibrationGain().get(i);
-                        calibrationOffset[i] = definition.getCalibrationOffset().get(i);
-                        channelLabels[i] = definition.getDefaultNames().get(i);
-                }
-
-                amplifierNull = definition.getAmplifierNull();
         }
 
         public SignalSource getSignalSource() {

@@ -51,7 +51,7 @@ public class SignalParametersPanelForOpenBCI extends AbstractSignalParametersPan
 			firePropertyChange(AbstractSignalParametersPanel.CHANNEL_LABELS_PROPERTY, null, channelLabels);
 		}
 
-		getEditGainAndOffsetDialog().fillDialogFromModel(descriptor);
+		//getEditGainAndOffsetDialog().fillDialogFromModel(descriptor);
 		currentModel = descriptor;
 	}
 
@@ -74,7 +74,7 @@ public class SignalParametersPanelForOpenBCI extends AbstractSignalParametersPan
 			Logger.getLogger(SignalParametersPanelForOpenBCI.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
-		getEditGainAndOffsetDialog().fillModelFromDialog(descriptor);
+		//getEditGainAndOffsetDialog().fillModelFromDialog(descriptor);
 	}
 
 	@Override
