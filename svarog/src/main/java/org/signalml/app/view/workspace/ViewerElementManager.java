@@ -144,7 +144,6 @@ import org.signalml.util.SvarogConstants;
 import com.thoughtworks.xstream.XStream;
 import org.signalml.app.config.preset.EegSystemsPresetManager;
 import org.signalml.app.config.preset.StyledTagSetPresetManager;
-import org.signalml.app.view.document.monitor.OpenBCIModuleConfigDialog;
 import org.signalml.app.view.document.monitor.StartMonitorRecordingDialog;
 import org.signalml.app.view.document.monitor.signalchecking.CheckSignalDialog;
 import org.signalml.app.view.document.opensignal.OpenSignalAndSetMontageDialog;
@@ -259,7 +258,6 @@ public class ViewerElementManager {
 	private ViewerTabbedPane propertyTabbedPane;
 
 	/* Dialogs */
-        private OpenBCIModuleConfigDialog openBCIModuleConfigDialog;
         private EEGLabExportDialog eeglabExportDialog;
         private CheckSignalDialog checkSignalDialog;
 	private ErrorsDialog errorsDialog;
@@ -1314,15 +1312,6 @@ public class ViewerElementManager {
                         eeglabExportDialog = new EEGLabExportDialog(getDialogParent(), true);
                 }
                 return eeglabExportDialog;
-        }
-
-        public OpenBCIModuleConfigDialog getOpenBCIModuleConfigDialog() {
-                if (openBCIModuleConfigDialog == null) {
-                        openBCIModuleConfigDialog = new OpenBCIModuleConfigDialog(getOpenBCIModulePresetManager(), getDialogParent(), true);
-                        openBCIModuleConfigDialog.setApplicationConfig(getApplicationConfig());
-                        openBCIModuleConfigDialog.setFileChooser(getFileChooser());
-                }
-                return openBCIModuleConfigDialog;
         }
 
 	public EditFFTSampleFilterDialog getEditFFTSampleFilterDialog() {

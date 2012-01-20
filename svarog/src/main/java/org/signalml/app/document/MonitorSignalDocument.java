@@ -165,9 +165,6 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		tagDoc.setParent(this);
 		monitorWorker = new MonitorWorker(monitorOptions.getJmxClient(), monitorOptions, (RoundBufferMultichannelSampleSource) sampleSource, tagSet);
 
-		if (monitorOptions.getMonitorRecordingDescriptor().isRecordingEnabled())
-			startMonitorRecording();
-
 		monitorWorker.execute();
 		logger.info("Monitor executed.");
 

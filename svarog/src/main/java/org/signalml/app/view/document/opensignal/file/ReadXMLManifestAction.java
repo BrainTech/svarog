@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.app.view.document.opensignal;
+package org.signalml.app.view.document.opensignal.file;
 
 import java.awt.event.ActionEvent;
 import java.io.File;

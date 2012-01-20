@@ -2,13 +2,14 @@
  *
  */
 
-package org.signalml.app.view.document.opensignal;
+package org.signalml.app.view.document.opensignal.file;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.awt.GridBagConstraints;
 
 import org.signalml.app.view.components.EmbeddedFileChooser;
+import org.signalml.app.view.document.opensignal.AbstractSignalParametersPanel;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.domain.montage.system.EegSystemName;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;

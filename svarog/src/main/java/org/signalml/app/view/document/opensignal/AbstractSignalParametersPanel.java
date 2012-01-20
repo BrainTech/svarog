@@ -255,7 +255,7 @@ public abstract class AbstractSignalParametersPanel extends JPanel {
          *
          * @return the sampling frequency combo box
          */
-        protected JComboBox getSamplingFrequencyComboBox() {
+        public JComboBox getSamplingFrequencyComboBox() {
 
                 if (samplingFrequencyComboBox == null) {
                         samplingFrequencyComboBox = new JComboBox();

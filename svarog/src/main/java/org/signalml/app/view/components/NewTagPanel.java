@@ -24,7 +24,7 @@ import org.signalml.app.config.preset.StyledTagSetPresetManager;
 
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.TagDocument;
-import org.signalml.app.view.document.opensignal.TagPresetComboBoxModel;
+import org.signalml.app.view.document.opensignal.monitor.TagPresetComboBoxModel;
 import org.signalml.plugin.export.signal.TagStyle;
 
 /**

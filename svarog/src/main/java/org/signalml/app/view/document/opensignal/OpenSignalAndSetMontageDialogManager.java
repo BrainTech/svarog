@@ -11,6 +11,8 @@ import java.beans.PropertyChangeListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+
+import org.signalml.app.view.document.opensignal.monitor.AbstractMonitorSourcePanel;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.system.EegSystem;

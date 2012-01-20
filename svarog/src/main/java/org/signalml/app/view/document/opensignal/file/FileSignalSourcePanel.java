@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.app.view.document.opensignal;
+package org.signalml.app.view.document.opensignal.file;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -16,6 +16,8 @@ import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.model.document.opensignal.OpenFileSignalDescriptor;
 
 import org.signalml.app.view.components.FileChooserPanel;
+import org.signalml.app.view.document.opensignal.AbstractSignalParametersPanel;
+import org.signalml.app.view.document.opensignal.AbstractSignalSourcePanel;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.domain.montage.system.EegSystemName;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;

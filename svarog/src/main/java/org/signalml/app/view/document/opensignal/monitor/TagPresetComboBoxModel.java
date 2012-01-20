@@ -1,4 +1,4 @@
-package org.signalml.app.view.document.opensignal;
+package org.signalml.app.view.document.opensignal.monitor;
 
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;

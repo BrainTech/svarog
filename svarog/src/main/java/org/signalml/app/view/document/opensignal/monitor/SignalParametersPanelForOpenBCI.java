@@ -1,7 +1,7 @@
 /* SignalParametersPanelForOpenMonitor.java created 2011-03-14
  *
  */
-package org.signalml.app.view.document.opensignal;
+package org.signalml.app.view.document.opensignal.monitor;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -9,6 +9,7 @@ import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
+import org.signalml.app.view.document.opensignal.AbstractSignalParametersPanel;
 import org.signalml.plugin.export.SignalMLException;
 
 /**

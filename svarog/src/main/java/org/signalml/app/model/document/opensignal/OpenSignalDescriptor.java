@@ -4,8 +4,8 @@
 
 package org.signalml.app.model.document.opensignal;
 
-import org.signalml.app.view.document.opensignal.FileOpenSignalMethod;
 import org.signalml.app.view.document.opensignal.SignalSource;
+import org.signalml.app.view.document.opensignal.file.FileOpenSignalMethod;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.domain.montage.SignalConfigurer;

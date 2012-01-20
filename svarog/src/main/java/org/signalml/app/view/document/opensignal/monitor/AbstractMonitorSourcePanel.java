@@ -2,9 +2,10 @@
  *
  */
 
-package org.signalml.app.view.document.opensignal;
+package org.signalml.app.view.document.opensignal.monitor;
 
 import org.signalml.app.config.preset.StyledTagSetPresetManager;
+import org.signalml.app.view.document.opensignal.AbstractSignalSourcePanel;
 import org.signalml.app.view.workspace.ViewerElementManager;
 
 /**

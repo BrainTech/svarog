@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.app.view.document.opensignal;
+package org.signalml.app.view.document.opensignal.monitor;
 
 import java.awt.BorderLayout;
 import java.beans.PropertyChangeEvent;
@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import org.signalml.app.config.preset.StyledTagSetPresetManager;
 import org.signalml.app.view.components.MonitorRecordingPanel;
 import org.signalml.app.view.components.MultiplexerConnectionPanel;
+import org.signalml.app.view.document.opensignal.SignalSource;
 
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
@@ -33,11 +34,6 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 	private MultiplexerConnectionPanel multiplexerConnectionPanel;
 
 	/**
-	 * A panel used to specify monitor recording options.
-	 */
-	private MonitorRecordingPanel monitorRecordingPanel;
-
-	/**
 	 * A panel used to specify parameters for the monitor to be opened.
 	 */
 	private SignalParametersPanelForOpenBCI signalParametersPanel;
@@ -57,10 +53,9 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 		leftColumnPanel.setLayout(new BorderLayout());
 		leftColumnPanel.add(getMultiplexerConnectionPanel(), BorderLayout.NORTH);
 
-		JPanel southPanel = new JPanel(new BorderLayout());
-		southPanel.add(getTagPresetSelectionPanel(), BorderLayout.NORTH);
-
-		leftColumnPanel.add(southPanel);
+		//JPanel southPanel = new JPanel(new BorderLayout());
+		//leftColumnPanel.add(southPanel);
+		
 		return leftColumnPanel;
 	}
 
@@ -71,7 +66,7 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 
 		JPanel lowerPanel = new JPanel(new BorderLayout());
 		lowerPanel.add(getEegSystemSelectionPanel(), BorderLayout.NORTH);
-		lowerPanel.add(getMonitorRecordingPanel(), BorderLayout.SOUTH);
+		lowerPanel.add(getTagPresetSelectionPanel(), BorderLayout.SOUTH);
 		rightColumnPanel.add(lowerPanel, BorderLayout.SOUTH);
 		return rightColumnPanel;
 	}
@@ -105,7 +100,6 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
                 descriptor.setSignalSource(SignalSource.OPENBCI);
 		descriptor.setEegSystem(getEegSystemSelectionPanel().getSelectedEegSystem());
 
-		getMonitorRecordingPanel().fillModelFromPanel(descriptor);
 		getTagPresetSelectionPanel().fillModelFromPanel(descriptor);
 	}
 
@@ -113,7 +107,7 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 	 * Returns the panel for connecting/disconnecting to the multiplexer.
 	 * @return the panel for connecting/disconnecting to the multiplexer
 	 */
-	protected MultiplexerConnectionPanel getMultiplexerConnectionPanel() {
+	public MultiplexerConnectionPanel getMultiplexerConnectionPanel() {
 		if (multiplexerConnectionPanel == null) {
 			multiplexerConnectionPanel = new MultiplexerConnectionPanel(viewerElementManager);
 			multiplexerConnectionPanel.getConnectAction().addPropertyChangeListener(this);
@@ -132,17 +126,6 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 			signalParametersPanel.addPropertyChangeListener(this);
 		}
 		return signalParametersPanel;
-	}
-
-	/**
-	 * Returns the panel used to set the monitor recording options.
-	 * @return the panel used to set the monitor recording options
-	 */
-	protected MonitorRecordingPanel getMonitorRecordingPanel() {
-		if (monitorRecordingPanel == null) {
-			monitorRecordingPanel = new MonitorRecordingPanel();
-		}
-		return monitorRecordingPanel;
 	}
 
 	@Override
