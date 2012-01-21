@@ -70,7 +70,7 @@ public class ChannelSelectTableModel extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-
+		
 		AmplifierChannel channel = channels.getChannel(rowIndex);
 		switch(columnIndex) {
 			case SELECTED_COLUMN: return channel.isSelected();
@@ -110,7 +110,7 @@ public class ChannelSelectTableModel extends AbstractTableModel {
 	@Override
 	public String getColumnName(int column) {
 		switch (column) {
-			case SELECTED_COLUMN: return _("opensignal.amplifier.channelSelectTable.channelSelectedColumnTitle");
+			case SELECTED_COLUMN: return _("selected");
 			case NUMBER_COLUMN: return _("number");
 			case LABEL_COLUMN: return _("label");
 			default: return "";

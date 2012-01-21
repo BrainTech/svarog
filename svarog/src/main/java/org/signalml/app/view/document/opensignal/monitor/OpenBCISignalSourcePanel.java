@@ -6,12 +6,16 @@ package org.signalml.app.view.document.opensignal.monitor;
 
 import java.awt.BorderLayout;
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import org.signalml.app.config.preset.StyledTagSetPresetManager;
 import org.signalml.app.view.components.MonitorRecordingPanel;
 import org.signalml.app.view.document.opensignal.SignalSource;
 
 import org.signalml.app.view.workspace.ViewerElementManager;
+import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
 
 /**
@@ -27,6 +31,9 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 	 */
 	private OpenMonitorDescriptor currentModel;
 
+	private ChooseExperimentPanel chooseExperimentPanel;
+	private ChannelSelectPanel channelSelectPanel;
+	
 	/**
 	 * A panel used to specify parameters for the monitor to be opened.
 	 */
@@ -45,6 +52,14 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 	protected JPanel createLeftColumnPanel() {
 		JPanel leftColumnPanel = new JPanel();
 		leftColumnPanel.setLayout(new BorderLayout());
+		
+		chooseExperimentPanel = new ChooseExperimentPanel();
+		chooseExperimentPanel.addPropertyChangeListener(this);
+		leftColumnPanel.add(chooseExperimentPanel, BorderLayout.NORTH);
+		
+		channelSelectPanel = new ChannelSelectPanel();
+		leftColumnPanel.add(channelSelectPanel, BorderLayout.CENTER);
+		
 //		leftColumnPanel.add(getMultiplexerConnectionPanel(), BorderLayout.NORTH);
 
 		//JPanel southPanel = new JPanel(new BorderLayout());
@@ -66,17 +81,20 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 	}
 
 	/**
-	 * Fills the components in this panel using the data contained in the
-	 * given descriptor.
-	 * @param descriptor descriptor to be used to filled this panel
+	 * Fills the components in this panel using the data contained in the given
+	 * descriptor.
+	 * 
+	 * @param descriptor
+	 *            descriptor to be used to filled this panel
 	 */
-        public void fillPanelFromModel(OpenMonitorDescriptor descriptor) {
+	public void fillPanelFromModel(OpenMonitorDescriptor descriptor) {
 
 		currentModel = descriptor;
-		signalParametersPanel.fillPanelFromModel(currentModel);
-		getEegSystemSelectionPanel().setEegSystem(getEegSystemSelectionPanel().getSelectedEegSystem());
+		//signalParametersPanel.fillPanelFromModel(currentModel);
+		getEegSystemSelectionPanel().setEegSystem(
+				getEegSystemSelectionPanel().getSelectedEegSystem());
 
-        }
+	}
 
 	/**
 	 * Fills the given descriptor using the data set in the components
@@ -111,6 +129,12 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 	public void propertyChange(PropertyChangeEvent evt) {
 		String propertyName = evt.getPropertyName();
 
+		if (ChooseExperimentPanel.EXPERIMENT_SELECTED_PROPERTY.equals(propertyName)) {
+			ExperimentDescriptor experiment = (ExperimentDescriptor) evt.getNewValue();
+			channelSelectPanel.fillPanelFromModel(experiment);
+			signalParametersPanel.fillPanelFromModel(experiment);
+		}
+		
 		if ("metadataRetrieved".equals(propertyName)) {
 			/* model was changed by the connectAction in the
 			multiplexerConnectionPanel */

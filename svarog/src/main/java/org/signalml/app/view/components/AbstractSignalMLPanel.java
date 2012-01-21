@@ -4,6 +4,7 @@
 package org.signalml.app.view.components;
 
 import java.awt.Component;
+
 import java.awt.Container;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

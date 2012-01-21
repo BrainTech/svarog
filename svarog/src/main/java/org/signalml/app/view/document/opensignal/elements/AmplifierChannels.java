@@ -42,6 +42,12 @@ public class AmplifierChannels {
 			channels.add(new AmplifierChannel(number, label));
 		}
 	}
+	
+	public AmplifierChannels(List<String> labels) {
+		for (int i = 0; i < labels.size(); i++) {
+			channels.add(new AmplifierChannel(i+1, labels.get(i)));
+		}
+	}
 
 	/**
 	 * Returns the number of channels stored in this AmplfierChannels.
