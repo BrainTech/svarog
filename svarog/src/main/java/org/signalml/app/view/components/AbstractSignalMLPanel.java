@@ -4,6 +4,7 @@
 package org.signalml.app.view.components;
 
 import java.awt.Component;
+import java.awt.Window;
 
 import java.awt.Container;
 import java.beans.PropertyChangeEvent;
@@ -28,14 +29,28 @@ public abstract class AbstractSignalMLPanel extends JPanel implements PropertyCh
 	 * PropertyChangeSupport to fire property changes when needed.
 	 */
 	private PropertyChangeSupport propertyChangeSupport;
-
+	
 	/**
 	 * Constructor.
 	 * @param messageSource message Source capable of returning localized
 	 * messages
 	 */
 	public AbstractSignalMLPanel() {
+		super();
 		propertyChangeSupport = new PropertyChangeSupport(this);
+	}
+
+	public Window getParentWindow() {
+
+		Container container = this;
+
+		while(!(container instanceof Window)) {
+			if (container == null)
+				return null;
+			container = container.getParent();
+		}
+
+		return (Window) container;
 	}
 
 	/**

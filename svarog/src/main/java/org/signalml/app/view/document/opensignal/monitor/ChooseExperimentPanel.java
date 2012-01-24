@@ -14,12 +14,16 @@ import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingWorker;
+import javax.swing.SwingWorker.StateValue;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.signalml.app.model.document.opensignal.ChooseExperimentTableModel;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.view.components.AbstractSignalMLPanel;
+import org.signalml.app.view.components.ProgressDialog;
+import org.signalml.app.worker.BusyDialogWorker;
 import org.signalml.app.worker.monitor.GetOpenBCIExperimentsWorker;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 
@@ -65,23 +69,31 @@ public class ChooseExperimentPanel extends AbstractSignalMLPanel implements List
 	class RefreshButtonAction extends AbstractSignalMLAction implements PropertyChangeListener {
 		
 		private GetOpenBCIExperimentsWorker worker = new GetOpenBCIExperimentsWorker();
+		private BusyDialogWorker busyDialogWorker;
 		
 		public RefreshButtonAction() {
 			this.setText(_("Refresh"));
 		}
-
+		
 		@Override
 		public void actionPerformed(ActionEvent e) {
+
+			busyDialogWorker = new BusyDialogWorker(ChooseExperimentPanel.this);
 			worker = new GetOpenBCIExperimentsWorker();
-			worker.execute();
+			busyDialogWorker.execute();
+
 			worker.addPropertyChangeListener(this);
+			worker.execute();
 		}
 
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
 			try {
-				List<ExperimentDescriptor> experiments = worker.get();
-				chooseExperimentTableModel.setExperiments(experiments);
+				if (((StateValue) evt.getNewValue()) == StateValue.DONE) {
+					List<ExperimentDescriptor> experiments = worker.get();
+					chooseExperimentTableModel.setExperiments(experiments);
+					busyDialogWorker.cancel();
+				}
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -103,7 +115,6 @@ public class ChooseExperimentPanel extends AbstractSignalMLPanel implements List
 			selectedExperiment = chooseExperimentTableModel.getExperiments().get(selectedRow);
 		fireExperimentSelected(selectedExperiment);
 	}
-
 	
 }
 

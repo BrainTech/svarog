@@ -19,7 +19,7 @@ public class GetOpenBCIExperimentsWorker extends SwingWorker<List<ExperimentDesc
 	protected List<ExperimentDescriptor> doInBackground() throws Exception {
 		List<ExperimentDescriptor> result = new ArrayList<ExperimentDescriptor>();
 		
-//		Thread.sleep(4000);
+		Thread.sleep(2000);
 		
 		//exp 1
 		ExperimentDescriptor descriptor = new ExperimentDescriptor();
