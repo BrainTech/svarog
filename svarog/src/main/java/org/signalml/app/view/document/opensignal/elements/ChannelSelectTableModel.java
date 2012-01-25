@@ -6,6 +6,9 @@ package org.signalml.app.view.document.opensignal.elements;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -18,7 +21,7 @@ public class ChannelSelectTableModel extends AbstractTableModel {
 	/**
 	 * The channels to be shown in this table.
 	 */
-	private AmplifierChannels channels = new AmplifierChannels();
+	private List<AmplifierChannel> channels = new ArrayList<AmplifierChannel>();
 
 	/**
 	 * The index of the column which shows whether a channel is selected
@@ -44,7 +47,7 @@ public class ChannelSelectTableModel extends AbstractTableModel {
 	 * @param channels the channels which will be contained in this
 	 * table model
 	 */
-	public void setChannels(AmplifierChannels channels) {
+	public void setChannels(List<AmplifierChannel> channels) {
 		this.channels = channels;
 		fireTableDataChanged();
 	}
@@ -54,13 +57,13 @@ public class ChannelSelectTableModel extends AbstractTableModel {
 	 * this model.
 	 * @return the channels contained in this model
 	 */
-	public AmplifierChannels getAmplifierChannels() {
+	public List<AmplifierChannel> getAmplifierChannels() {
 		return channels;
 	}
 
 	@Override
 	public int getRowCount() {
-		return channels.getNumberOfChannels();
+		return channels.size();
 	}
 
 	@Override
@@ -71,7 +74,7 @@ public class ChannelSelectTableModel extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		
-		AmplifierChannel channel = channels.getChannel(rowIndex);
+		AmplifierChannel channel = channels.get(rowIndex);
 		switch(columnIndex) {
 			case SELECTED_COLUMN: return channel.isSelected();
 			case NUMBER_COLUMN: return channel.getNumber();
@@ -98,7 +101,7 @@ public class ChannelSelectTableModel extends AbstractTableModel {
 
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		AmplifierChannel x = channels.getChannel(rowIndex);
+		AmplifierChannel x = channels.get(rowIndex);
 		if (columnIndex == 0)
 			x.setSelected((Boolean) aValue);
 		else if (columnIndex == 2)
@@ -122,7 +125,9 @@ public class ChannelSelectTableModel extends AbstractTableModel {
 	 * @param selected the new state of all channels in this table model
 	 */
 	public void setAllSelected(boolean selected) {
-		channels.setAllSelected(selected);
+		for (AmplifierChannel channel: channels) {
+			channel.setSelected(true);
+		}
 		fireTableDataChanged();
 	}
 

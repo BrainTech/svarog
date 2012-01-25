@@ -3,13 +3,12 @@ package org.signalml.app.model.document.opensignal;
 import java.util.List;
 
 import org.signalml.app.view.document.opensignal.elements.AmplifierChannel;
-import org.signalml.app.view.document.opensignal.elements.AmplifierChannels;
 
 public class Amplifier {
 	
 	private String name;
-	private List<Float> availableSamplingFrequencies;
-	private AmplifierChannels channels;
+	private List<Float> samplingFrequencies;
+	private List<AmplifierChannel> channels;
 
 	public String getName() {
 		return name;
@@ -19,20 +18,20 @@ public class Amplifier {
 		this.name = name;
 	}
 
-	public List<Float> getAvailableSamplingFrequencies() {
-		return availableSamplingFrequencies;
+	public List<Float> getSamplingFrequencies() {
+		return samplingFrequencies;
 	}
 
-	public void setAvailableSamplingFrequencies(
+	public void setSamplingFrequencies(
 			List<Float> availableSamplingFrequencies) {
-		this.availableSamplingFrequencies = availableSamplingFrequencies;
+		this.samplingFrequencies = availableSamplingFrequencies;
 	}
 
-	public AmplifierChannels getChannels() {
+	public List<AmplifierChannel> getChannels() {
 		return channels;
 	}
 
-	public void setChannels(AmplifierChannels channels) {
+	public void setChannels(List<AmplifierChannel> channels) {
 		this.channels = channels;
 	}
 

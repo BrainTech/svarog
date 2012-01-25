@@ -1,18 +1,21 @@
 package org.signalml.app.model.document.opensignal;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 import multiplexer.jmx.client.JmxClient;
 
+@XStreamAlias(value="experiment")
 public class ExperimentDescriptor extends AbstractOpenSignalDescriptor {
 
-	private String experimentName;
+	private String name;
 	private Amplifier amplifier;
-	private ExperimentStatus experimentStatus;
+	private ExperimentStatus status;
 
-	public String getExperimentName() {
-		return experimentName;
+	public String getName() {
+		return name;
 	}
-	public void setExperimentName(String experimentName) {
-		this.experimentName = experimentName;
+	public void setName(String experimentName) {
+		this.name = experimentName;
 	}
 	public Amplifier getAmplifier() {
 		return amplifier;
@@ -20,11 +23,11 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor {
 	public void setAmplifier(Amplifier amplifier) {
 		this.amplifier = amplifier;
 	}
-	public ExperimentStatus getExperimentStatus() {
-		return experimentStatus;
+	public ExperimentStatus getStatus() {
+		return status;
 	}
-	public void setExperimentStatus(ExperimentStatus experimentStatus) {
-		this.experimentStatus = experimentStatus;
+	public void setStatus(ExperimentStatus experimentStatus) {
+		this.status = experimentStatus;
 	}
 	
 	/**

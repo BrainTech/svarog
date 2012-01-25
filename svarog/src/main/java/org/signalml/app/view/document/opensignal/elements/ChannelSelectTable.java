@@ -5,6 +5,7 @@
 package org.signalml.app.view.document.opensignal.elements;
 
 import java.awt.Dimension;
+import java.util.List;
 
 import javax.swing.JTable;
 
@@ -54,7 +55,7 @@ public class ChannelSelectTable extends JTable {
 	 * Returns the channels shown in this table.
 	 * @return the channels shown in this tables
 	 */
-	public AmplifierChannels getAmplifierChannels() {
+	public List<AmplifierChannel> getAmplifierChannels() {
 		return getChannelSelectTableModel().getAmplifierChannels();
 	}
 

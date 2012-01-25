@@ -7,8 +7,6 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import org.signalml.app.view.document.opensignal.elements.AmplifierChannels;
-
 public class ChooseExperimentTableModel extends AbstractTableModel {
 
 	public static final int EXPERIMENT_NAME = 0;
@@ -45,8 +43,8 @@ public class ChooseExperimentTableModel extends AbstractTableModel {
 
 		ExperimentDescriptor experiment = experiments.get(rowIndex);
 		switch(columnIndex) {
-			case EXPERIMENT_NAME: return experiment.getExperimentName();
-			case EXPERIMENT_STATUS: return experiment.getExperimentStatus();
+			case EXPERIMENT_NAME: return experiment.getName();
+			case EXPERIMENT_STATUS: return experiment.getStatus();
 			case AMPLIFIER_NAME: return experiment.getAmplifier().getName();
 			default: return null;
 		}

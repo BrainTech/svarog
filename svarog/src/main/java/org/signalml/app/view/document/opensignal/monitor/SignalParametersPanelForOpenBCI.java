@@ -50,25 +50,25 @@ public class SignalParametersPanelForOpenBCI extends AbstractSignalParametersPan
 
 		if (descriptor == null) {
 			getSamplingFrequencyComboBox().setEnabled(false);
-		} else if (descriptor.getExperimentStatus() == ExperimentStatus.RUNNING) {
+		} else if (descriptor.getStatus() == ExperimentStatus.RUNNING) {
 			SignalParameters signalParameters = descriptor.getSignalParameters();
 
 			getSamplingFrequencyComboBox().setSelectedItem(signalParameters.getSamplingFrequency());
 			getChannelCountSpinner().setValue(signalParameters.getChannelCount());
 
 			getSamplingFrequencyComboBox().setEnabled(false);
-		} else if (descriptor.getExperimentStatus() == ExperimentStatus.NEW) {
+		} else if (descriptor.getStatus() == ExperimentStatus.NEW) {
 			Amplifier amplifier = descriptor.getAmplifier();
 
 			getSamplingFrequencyComboBox().setEnabled(true);
 
 			getSamplingFrequencyComboBox().setModel(
 					new DefaultComboBoxModel(amplifier
-							.getAvailableSamplingFrequencies().toArray()));
+							.getSamplingFrequencies().toArray()));
 
 			getChannelCountSpinner().setEnabled(false);
 			getChannelCountSpinner().setValue(
-					amplifier.getChannels().getNumberOfChannels());
+					amplifier.getChannels().size());
 
 			// getEditGainAndOffsetDialog().fillDialogFromModel(descriptor);
 		}

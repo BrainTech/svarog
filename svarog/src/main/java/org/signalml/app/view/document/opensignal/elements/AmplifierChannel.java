@@ -4,12 +4,15 @@
 
 package org.signalml.app.view.document.opensignal.elements;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 /**
  * An amplifier channel description for the select ChannelsSelectTable in the
  * AmplfierSignalSourcePanel.
  *
  * @author Piotr Szachewicz
  */
+@XStreamAlias(value="channel")
 public class AmplifierChannel {
 
 	/**
