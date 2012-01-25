@@ -57,13 +57,7 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 		chooseExperimentPanel.addPropertyChangeListener(this);
 		leftColumnPanel.add(chooseExperimentPanel, BorderLayout.NORTH);
 		
-		channelSelectPanel = new ChannelSelectPanel();
-		leftColumnPanel.add(channelSelectPanel, BorderLayout.CENTER);
-		
-//		leftColumnPanel.add(getMultiplexerConnectionPanel(), BorderLayout.NORTH);
-
-		//JPanel southPanel = new JPanel(new BorderLayout());
-		//leftColumnPanel.add(southPanel);
+		leftColumnPanel.add(getSignalParametersPanel(), BorderLayout.CENTER);
 		
 		return leftColumnPanel;
 	}
@@ -71,11 +65,12 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 	@Override
 	protected JPanel createRightColumnPanel() {
 		JPanel rightColumnPanel = new JPanel(new BorderLayout());
-		rightColumnPanel.add(getSignalParametersPanel(), BorderLayout.CENTER);
+		channelSelectPanel = new ChannelSelectPanel();
+		rightColumnPanel.add(channelSelectPanel, BorderLayout.CENTER);
 
 		JPanel lowerPanel = new JPanel(new BorderLayout());
-		lowerPanel.add(getEegSystemSelectionPanel(), BorderLayout.NORTH);
-		lowerPanel.add(getTagPresetSelectionPanel(), BorderLayout.SOUTH);
+		lowerPanel.add(getTagPresetSelectionPanel(), BorderLayout.NORTH);
+		lowerPanel.add(getEegSystemSelectionPanel(), BorderLayout.SOUTH);
 		rightColumnPanel.add(lowerPanel, BorderLayout.SOUTH);
 		return rightColumnPanel;
 	}
@@ -161,6 +156,11 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 	@Override
 	public void setSamplingFrequency(float samplingFrequency) {
 		getSignalParametersPanel().getSamplingFrequencyComboBox().setSelectedItem(samplingFrequency);
+	}
+
+	@Override
+	public SignalSource getSignalSource() {
+		return SignalSource.OPENBCI;
 	}
 
 }

@@ -76,7 +76,8 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 			String[] channelLabels = (String[]) evt.getNewValue();
 			channelLabelsChangedTo(channelLabels);
 		}
-		else if (propertyName.equals(SignalSourceSelectionPanel.SIGNAL_SOURCE_SELECTION_CHANGED_PROPERTY)) {
+		else if (propertyName.equals(SignalSourcePanel.SIGNAL_SOURCE_SELECTION_CHANGED_PROPERTY)) {
+			SignalSource signalSource = ((SignalSource)evt.getNewValue());
 			int signalSourcePanelChannelCount = signalSourcePanel.getCurrentSignalSourcePanel().getChannelCount();
 
 			numberOfChannelsChangedTo(signalSourcePanelChannelCount);

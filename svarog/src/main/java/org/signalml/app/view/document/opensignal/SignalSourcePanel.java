@@ -3,6 +3,8 @@
  */
 package org.signalml.app.view.document.opensignal;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.CardLayout;
 
 import java.beans.PropertyChangeEvent;
@@ -11,6 +13,10 @@ import java.io.File;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import org.signalml.app.config.preset.StyledTagSetPresetManager;
 import org.signalml.app.document.AbstractSignal;
 import org.signalml.app.document.ManagedDocumentType;
@@ -23,7 +29,6 @@ import org.signalml.app.view.document.opensignal.monitor.AbstractMonitorSourcePa
 import org.signalml.app.view.document.opensignal.monitor.OpenBCISignalSourcePanel;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.domain.montage.system.EegSystem;
-import org.signalml.plugin.export.SignalMLException;
 
 import org.springframework.validation.Errors;
 
@@ -34,20 +39,16 @@ import org.springframework.validation.Errors;
  *
  * @author Piotr Szachewicz
  */
-public class SignalSourcePanel extends JPanel implements PropertyChangeListener {
+public class SignalSourcePanel extends JPanel implements PropertyChangeListener, ChangeListener {
 
+	public static String SIGNAL_SOURCE_SELECTION_CHANGED_PROPERTY = "signalSourceSelectionChangedProperty";
+	
 	/**
 	 * The ViewerElementManager to be used by this panel.
 	 */
 	private ViewerElementManager viewerElementManager;
-
-	/**
-	 * The model of the signal source combo box. It holds the currently
-	 * selected signal source option and changing it results in changing
-	 * an option selected by the signal source combo box.
-	 */
-	private ComboBoxModel signalSourceSelectionComboBoxModel;
-
+	
+	private JTabbedPane tabbedPane;
 	/**
 	 * A panel containing options for a file signal source.
 	 */
@@ -78,44 +79,24 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 
 		fileSignalSourcePanel = new FileSignalSourcePanel(viewerElementManager);
 		openBCISignalSourcePanel = new OpenBCISignalSourcePanel(viewerElementManager);
-
-		fileSignalSourcePanel.setSignalSourceSelectionComboBoxModel(getSignalSourceSelectionComboBoxModel());
-		openBCISignalSourcePanel.setSignalSourceSelectionComboBoxModel(getSignalSourceSelectionComboBoxModel());
+		
+		tabbedPane = new JTabbedPane();
+		tabbedPane.addTab(_("File"), fileSignalSourcePanel);
+		tabbedPane.addTab(_("Amplifier"), openBCISignalSourcePanel);
+		tabbedPane.addPropertyChangeListener(this);
+		tabbedPane.addChangeListener(this);
 
 		fileSignalSourcePanel.addPropertyChangeListener(this);
 		openBCISignalSourcePanel.addPropertyChangeListener(this);
 
-		this.add(fileSignalSourcePanel, SignalSource.FILE.toString());
-		this.add(openBCISignalSourcePanel, SignalSource.OPENBCI.toString());
-	}
-
-	/**
-	 * Returns the model of the combo box for signal source selection.
-	 * @return the model of the combo box for signal source selection
-	 */
-	protected ComboBoxModel getSignalSourceSelectionComboBoxModel() {
-		if (signalSourceSelectionComboBoxModel == null) {
-			SignalSource[] signalSources = new SignalSource[2];
-			signalSources[0] = SignalSource.FILE;
-			signalSources[1] = SignalSource.OPENBCI;
-			signalSourceSelectionComboBoxModel = new DefaultComboBoxModel(signalSources);
-		}
-		return signalSourceSelectionComboBoxModel;
+		this.add(tabbedPane);
 	}
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		String propertyName = evt.getPropertyName();
 
-		if (propertyName.equals(SignalSourceSelectionPanel.SIGNAL_SOURCE_SELECTION_CHANGED_PROPERTY)) {
-			SignalSource newSignalSource = (SignalSource) evt.getNewValue();
-			showPanelForSignalSource(newSignalSource);
-			firePropertyChange(SignalSourceSelectionPanel.SIGNAL_SOURCE_SELECTION_CHANGED_PROPERTY, null, newSignalSource);
-
-			EegSystem eegSystem = getCurrentSignalSourcePanel().getEegSystemSelectionPanel().getSelectedEegSystem();
-			firePropertyChange(AbstractSignalParametersPanel.EEG_SYSTEM_PROPERTY, null, eegSystem);
-		}
-		else if (propertyName.equals(AbstractSignalParametersPanel.NUMBER_OF_CHANNELS_PROPERTY) ||
+		if (propertyName.equals(AbstractSignalParametersPanel.NUMBER_OF_CHANNELS_PROPERTY) ||
 			propertyName.equals(AbstractSignalParametersPanel.SAMPLING_FREQUENCY_PROPERTY) ||
 			propertyName.equals(AbstractSignalParametersPanel.CHANNEL_LABELS_PROPERTY) ||
 			propertyName.equals(AbstractSignalParametersPanel.EEG_SYSTEM_PROPERTY)
@@ -147,7 +128,7 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 	 * @return the selected signal source
 	 */
 	public SignalSource getSelectedSignalSource() {
-		return (SignalSource) getSignalSourceSelectionComboBoxModel().getSelectedItem();
+		return getCurrentSignalSourcePanel().getSignalSource();
 	}
 
 	/**
@@ -158,11 +139,14 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 		OpenSignalDescriptor openSignalDescriptor = openDocumentDescriptor.getOpenSignalDescriptor();
 
 		SignalSource signalSource = openSignalDescriptor.getSignalSource();
-		signalSourceSelectionComboBoxModel.setSelectedItem(signalSource);
+		if (signalSource == SignalSource.FILE)
+			tabbedPane.setSelectedComponent(fileSignalSourcePanel);
+		else
+			tabbedPane.setSelectedComponent(openBCISignalSourcePanel);
 
 		if (openSignalDescriptor.getOpenFileSignalDescriptor() != null) {
 			fileSignalSourcePanel.fillPanelFromModel(openSignalDescriptor.getOpenFileSignalDescriptor());
-			fileSignalSourcePanel.getSignalSourceSelectionPanel().fireSignalSourceSelectionChanged();
+			this.stateChanged(null);
 		}
 		openBCISignalSourcePanel.fillPanelFromModel(openSignalDescriptor.getOpenMonitorDescriptor());
 
@@ -184,7 +168,7 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 	public void fillModelFromPanel(OpenDocumentDescriptor openDocumentDescriptor) {
 		OpenSignalDescriptor openSignalDescriptor = openDocumentDescriptor.getOpenSignalDescriptor();
 
-		SignalSource signalSource = (SignalSource) signalSourceSelectionComboBoxModel.getSelectedItem();
+		SignalSource signalSource = getSelectedSignalSource();
 		openSignalDescriptor.setSignalSource(signalSource);
 
 		if (signalSource.isFile())
@@ -207,14 +191,7 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 	 * @return the currently visible signal source panel
 	 */
 	public AbstractSignalSourcePanel getCurrentSignalSourcePanel() {
-		SignalSource signalSource = getSelectedSignalSource();
-
-		if (signalSource.isFile())
-			return fileSignalSourcePanel;
-		else if (signalSource.isOpenBCI())
-			return openBCISignalSourcePanel;
-		else
-			return null;
+		return (AbstractSignalSourcePanel) tabbedPane.getSelectedComponent();
 	}
 
 	/**
@@ -228,6 +205,16 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 			if (selectedFile == null)
 					errors.reject("opensignal.error.noFileSelected");
 		}
+	}
+
+	@Override
+	public void stateChanged(ChangeEvent arg0) {
+		AbstractSignalSourcePanel signalSourcePanel = ((AbstractSignalSourcePanel)tabbedPane.getSelectedComponent());
+		SignalSource newSignalSource = signalSourcePanel.getSignalSource();
+		firePropertyChange(SIGNAL_SOURCE_SELECTION_CHANGED_PROPERTY, null, newSignalSource);
+
+		EegSystem eegSystem = signalSourcePanel.getEegSystemSelectionPanel().getSelectedEegSystem();
+		firePropertyChange(AbstractSignalParametersPanel.EEG_SYSTEM_PROPERTY, null, eegSystem);
 	}
 
 }

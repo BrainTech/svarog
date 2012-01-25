@@ -18,6 +18,7 @@ import org.signalml.app.model.document.opensignal.OpenFileSignalDescriptor;
 import org.signalml.app.view.components.FileChooserPanel;
 import org.signalml.app.view.document.opensignal.AbstractSignalParametersPanel;
 import org.signalml.app.view.document.opensignal.AbstractSignalSourcePanel;
+import org.signalml.app.view.document.opensignal.SignalSource;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.domain.montage.system.EegSystemName;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
@@ -244,6 +245,11 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 	@Override
 	public void setSamplingFrequency(float samplingFrequency) {
 		getRawSignalParametersPanel().getSamplingFrequencyComboBox().setSelectedItem(samplingFrequency);
+	}
+
+	@Override
+	public SignalSource getSignalSource() {
+		return SignalSource.FILE;
 	}
 
 }

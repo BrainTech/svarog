@@ -34,11 +34,6 @@ abstract public class AbstractSignalSourcePanel extends JPanel implements Proper
         protected ViewerElementManager viewerElementManager;
 
 	/**
-	 * A panel for selecting which type of signal source is chosen (file/openBCI/
-	 * amplifier).
-	 */
-        private SignalSourceSelectionPanel signalSourceSelectionPanel;
-	/**
 	 * The panel for selecting the currently used EEG system.
 	 */
 	protected EegSystemSelectionPanel eegSystemSelectionPanel;
@@ -72,11 +67,7 @@ abstract public class AbstractSignalSourcePanel extends JPanel implements Proper
                 this.setLayout(new GridLayout(1, 2, 5, 0));
                 this.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-                JPanel absoluteLeftColumnPanel = new JPanel(new BorderLayout());
-                absoluteLeftColumnPanel.add(getSignalSourceSelectionPanel(), BorderLayout.NORTH);
-                absoluteLeftColumnPanel.add(createLeftColumnPanel(), BorderLayout.CENTER);
-
-                this.add(absoluteLeftColumnPanel);
+                this.add(createLeftColumnPanel());
                 this.add(createRightColumnPanel());
         }
 
@@ -94,28 +85,7 @@ abstract public class AbstractSignalSourcePanel extends JPanel implements Proper
 	 * right column.
 	 * @return the panel containing the right column
 	 */
-        abstract protected JPanel createRightColumnPanel();
-
-	/**
-	 * Returns the panel for selecting the signal source.
-	 * @return the panel for selecting the signal source
-	 */
-	public SignalSourceSelectionPanel getSignalSourceSelectionPanel() {
-		if (signalSourceSelectionPanel == null) {
-			signalSourceSelectionPanel = new SignalSourceSelectionPanel();
-			signalSourceSelectionPanel.addPropertyChangeListener(this);
-		}
-		return signalSourceSelectionPanel;
-	}
-
-	/**
-	 * Sets the model to be used for the signal source selection combo box.
-	 * @param model the model to be used for the signal source selection
-	 * combo box
-	 */
-	public void setSignalSourceSelectionComboBoxModel(ComboBoxModel model) {
-		getSignalSourceSelectionPanel().setSelectionComboBoxModel(model);
-	}
+    abstract protected JPanel createRightColumnPanel();
 
 	@Override
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -185,5 +155,7 @@ abstract public class AbstractSignalSourcePanel extends JPanel implements Proper
 		}
 		return eegSystemSelectionPanel;
 	}
+
+	public abstract SignalSource getSignalSource();
 
 }

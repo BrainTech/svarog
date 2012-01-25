@@ -126,7 +126,7 @@ public class ChannelSelectTableModel extends AbstractTableModel {
 	 */
 	public void setAllSelected(boolean selected) {
 		for (AmplifierChannel channel: channels) {
-			channel.setSelected(true);
+			channel.setSelected(selected);
 		}
 		fireTableDataChanged();
 	}

@@ -50,7 +50,6 @@ abstract public class AbstractMonitorSourcePanel extends AbstractSignalSourcePan
 			fireOpenBCIConnected();
 		else
 			fireOpenBCIDisconnected();
-		getSignalSourceSelectionPanel().setEnabled(!connected);
 	}
 
 	@Override
