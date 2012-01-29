@@ -17,13 +17,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class PluginResourceRepository {
 
-	private static Map<Class<? extends Plugin>, BeanFactory> beanFactoryMap =
-					   new HashMap<Class<? extends Plugin>, BeanFactory>();
+	private static Map<Class<? extends Plugin>, BeanFactory> beanFactoryMap = new HashMap<Class<? extends Plugin>, BeanFactory>();
 
 	public static void RegisterPlugin(Class<? extends Plugin> pluginClass,
-					  String configResourceName) {
-		ClassPathXmlApplicationContext ctx =
-			new ClassPathXmlApplicationContext(new String[] {configResourceName}, false, null);
+			String configResourceName) {
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(
+				new String[] { configResourceName }, false, null);
 
 		ctx.setClassLoader(pluginClass.getClassLoader());
 		ctx.refresh();
@@ -32,7 +31,7 @@ public class PluginResourceRepository {
 	}
 
 	public static Object GetResource(String resourceName,
-					 Class<? extends Plugin> pluginClass) throws PluginException {
+			Class<? extends Plugin> pluginClass) throws PluginException {
 
 		BeanFactory factory = beanFactoryMap.get(pluginClass);
 		if (factory == null) {
@@ -46,7 +45,8 @@ public class PluginResourceRepository {
 		}
 	}
 
-	public static Object GetResource(String resourceName) throws PluginException {
+	public static Object GetResource(String resourceName)
+			throws PluginException {
 		Class<? extends Plugin> pluginClass = FindContextPluginClass();
 		if (pluginClass == null)
 			throw new PluginException("No enclosing plugin class found");
@@ -56,28 +56,25 @@ public class PluginResourceRepository {
 
 	private static Class<? extends Plugin> FindContextPluginClass() {
 		try {
-			CodeSource thisSource =
-				PluginResourceRepository.class.getProtectionDomain().getCodeSource();
+			CodeSource thisSource = PluginResourceRepository.class
+					.getProtectionDomain().getCodeSource();
 			if (thisSource == null)
 				return null;
 
 			StackTraceElement stackTrace[] = Thread.currentThread()
-							 .getStackTrace();
-			ClassLoader loader = PluginResourceRepository.class.getClassLoader();
+					.getStackTrace();
+			//ClassLoader loader = PluginResourceRepository.class
+			//		.getClassLoader();
 
 			for (int i = 1; i < stackTrace.length; ++i) {
-				StackTraceElement e = stackTrace[i];
-				Class<?> klass;
-				try {
-					klass = Class.forName(e.getClassName(), false, loader);
-				} catch (ClassNotFoundException ex) {
-					continue;
-				}
+				//StackTraceElement e = stackTrace[i];
+				Class<?> klass = sun.reflect.Reflection.getCallerClass(i);
+
 				CodeSource source = klass.getProtectionDomain().getCodeSource();
 				if (source != null) {
-					if (!source.getLocation().sameFile(thisSource.getLocation())) {
-						Class<? extends Plugin> pluginClass =
-							TryFindAssociatedPluginClass(klass);
+					if (!source.getLocation()
+							.sameFile(thisSource.getLocation())) {
+						Class<? extends Plugin> pluginClass = TryFindAssociatedPluginClass(klass);
 						if (pluginClass != null)
 							return pluginClass;
 					}
@@ -91,7 +88,8 @@ public class PluginResourceRepository {
 		return null;
 	}
 
-	private static Class<? extends Plugin> TryFindAssociatedPluginClass(Class<?> klass) {
+	private static Class<? extends Plugin> TryFindAssociatedPluginClass(
+			Class<?> klass) {
 		CodeSource source = klass.getProtectionDomain().getCodeSource();
 
 		if (source == null)
@@ -99,11 +97,11 @@ public class PluginResourceRepository {
 
 		ClassLoader loader = klass.getClassLoader();
 		Pattern classPattern = Pattern.compile("(.*)\\.class$",
-						       Pattern.CASE_INSENSITIVE);
+				Pattern.CASE_INSENSITIVE);
 
 		try {
-			JarInputStream jarStream =
-				new JarInputStream(source.getLocation().openStream());
+			JarInputStream jarStream = new JarInputStream(source.getLocation()
+					.openStream());
 
 			while (true) {
 				JarEntry entry = jarStream.getNextJarEntry();
@@ -115,8 +113,8 @@ public class PluginResourceRepository {
 					Matcher m = classPattern.matcher(entryName);
 					if (m.matches()) {
 						try {
-							Class<?> jarClass = Class.forName(
-								m.group(1).replace('/', '.'), false, loader);
+							Class<?> jarClass = Class.forName(m.group(1)
+									.replace('/', '.'), false, loader);
 							if (Plugin.class.isAssignableFrom(jarClass))
 								try {
 									return jarClass.asSubclass(Plugin.class);
