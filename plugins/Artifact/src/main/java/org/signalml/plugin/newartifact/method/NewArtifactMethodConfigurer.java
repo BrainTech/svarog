@@ -21,6 +21,7 @@ import org.signalml.method.Method;
 import org.signalml.plugin.data.PluginConfigForMethod;
 import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.method.SvarogMethodConfigurer;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.plugin.method.IPluginMethodConfigurer;
@@ -42,6 +43,7 @@ import com.thoughtworks.xstream.XStream;
  *         Sp. z o.o.
  */
 public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
+	SvarogMethodConfigurer,				//FIXME 
 	PresetEquippedMethodConfigurer {
 
 	protected static final Logger logger = Logger

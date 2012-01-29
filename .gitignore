@@ -18,3 +18,5 @@ log
 # i18n fully auto-generated files
 keys.pot
 en.po
+
+*.class
