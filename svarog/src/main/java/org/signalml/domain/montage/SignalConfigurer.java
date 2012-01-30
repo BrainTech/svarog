@@ -96,22 +96,6 @@ public class SignalConfigurer {
 	}
 
         /**
-         * Finds an {@link EegChannel EEG channel} of a given name.
-         * @param name the name of the type of the channel
-         * @return the channel of a given name
-         */
-	public static IChannelFunction channelForName(String name) {
-		if (name == null || name.isEmpty()) {
-			return ChannelFunction.UNKNOWN;
-		}
-		IChannelFunction channel = null;// = ChannelFunction.forName(name);
-		if (channel == null) {
-			return ChannelFunction.UNKNOWN;
-		}
-		return channel;
-	}
-
-        /**
          * Creates the backdrop for electrodes positions matrix.
          * If backdrop parameters haven't changed and cachedBackdrop exists,
          * it is used.
