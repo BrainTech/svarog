@@ -17,6 +17,7 @@ import javax.swing.SwingWorker.StateValue;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.model.document.opensignal.ChooseExperimentTableModel;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.view.components.AbstractSignalMLPanel;
@@ -28,12 +29,14 @@ public class ChooseExperimentPanel extends AbstractSignalMLPanel implements List
 
 	public static String EXPERIMENT_SELECTED_PROPERTY = "experimentSelectedProperty";
 	
+	private ApplicationConfiguration applicationConfiguration;
 	private ChooseExperimentTable chooseExperimentTable;
 	private ChooseExperimentTableModel chooseExperimentTableModel;
 	private JButton refreshButton;
 	private JButton connectButton;
 
-	public ChooseExperimentPanel() {
+	public ChooseExperimentPanel(ApplicationConfiguration applicationConfiguration) {
+		this.applicationConfiguration = applicationConfiguration;
 		initialize();
 	}
 	
@@ -65,7 +68,7 @@ public class ChooseExperimentPanel extends AbstractSignalMLPanel implements List
 
 	class RefreshButtonAction extends AbstractSignalMLAction implements PropertyChangeListener {
 		
-		private GetOpenBCIExperimentsWorker worker = new GetOpenBCIExperimentsWorker();
+		private GetOpenBCIExperimentsWorker worker;
 		private BusyDialogWorker busyDialogWorker;
 		
 		public RefreshButtonAction() {
@@ -76,7 +79,7 @@ public class ChooseExperimentPanel extends AbstractSignalMLPanel implements List
 		public void actionPerformed(ActionEvent e) {
 
 			busyDialogWorker = new BusyDialogWorker(ChooseExperimentPanel.this);
-			worker = new GetOpenBCIExperimentsWorker();
+			worker = new GetOpenBCIExperimentsWorker(applicationConfiguration);
 			busyDialogWorker.execute();
 
 			worker.addPropertyChangeListener(this);

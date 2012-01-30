@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.swing.SwingWorker;
 
+import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.Amplifier;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
@@ -18,8 +19,24 @@ import com.thoughtworks.xstream.io.json.JsonHierarchicalStreamDriver;
 
 public class GetOpenBCIExperimentsWorker extends SwingWorker<List<ExperimentDescriptor>, Void>{
 
+	private ApplicationConfiguration applicationConfiguration;
+
+	public GetOpenBCIExperimentsWorker(ApplicationConfiguration applicationConfiguration) {
+		this.applicationConfiguration = applicationConfiguration;
+	}
+
 	@Override
 	protected List<ExperimentDescriptor> doInBackground() throws Exception {
+
+		//TODO - tu powinno być sprawdzenie, czy openBCI daemon jest odpalony
+		//jeśli nie - to odpalić
+
+		//TODO - łączenie z daemonem
+		String address = applicationConfiguration.getOpenBCIDaemonAddress();
+		int port = applicationConfiguration.getOpenBCIDaemonPort();
+
+		//TODO END
+
 		List<ExperimentDescriptor> result = new ArrayList<ExperimentDescriptor>();
 
 		Thread.sleep(2000);

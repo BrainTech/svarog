@@ -158,10 +158,11 @@ public class ConfigurationDefaults {
 		config.setMapAspectRatioDown( getInt("application.mapAspectRatioDown") );
 		config.setReconstructionHeight( getInt("application.reconstructionHeight") );
 		
-                config.setBackupFrequency( getFloat("application.signalRecording.frequency") );
+		config.setBackupFrequency( getFloat("application.signalRecording.frequency") );
 
-		setMultiplexerDefaultParameters(config);
-		setMonitorDefaultParameters(config);
+		config.setOpenBCIDaemonAddress( getString("openBCI.daemon.address"));
+		config.setOpenBCIDaemonPort( getInt("openBCI.daemon.port") );
+		config.setMonitorPageSize(getFloat("monitor.pageSize"));
 	}
 
 	public static void setZoomSignalSettingsDefaults(ZoomSignalSettings settings) {
@@ -172,21 +173,6 @@ public class ConfigurationDefaults {
 
 		settings.setFactor(getFloat("application.zoomSettings.factor"));
 		settings.setChannelSwitching(getBoolean("application.zoomSettings.channelSwitching"));
-
-	}
-	
-	public static void setMultiplexerDefaultParameters(ApplicationConfiguration config) {
-
-		config.setMultiplexerAddress(getString("multiplexer.address"));
-		config.setDefaultMultiplexerAddress(getString("default.multiplexer.address"));
-		config.setMultiplexerPort(getInt("multiplexer.port"));
-		config.setDefaultMultiplexerPort(getInt("default.multiplexer.port"));
-
-	}
-	
-	public static void setMonitorDefaultParameters( ApplicationConfiguration config ) {
-
-		config.setMonitorPageSize(getFloat("monitor.pageSize"));
 
 	}
 
