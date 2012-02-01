@@ -30,8 +30,9 @@ import com.google.protobuf.ByteString;
  */
 public class MonitorWorker extends SwingWorker<Void, Object> {
 
-	protected static final Logger logger = Logger.getLogger(MonitorWorker.class);
 	public static final int TIMEOUT_MILIS = 50;
+	protected static final Logger logger = Logger.getLogger(MonitorWorker.class);
+
 	private final JmxClient client;
 	private final OpenMonitorDescriptor monitorDescriptor;
 	private final RoundBufferMultichannelSampleSource sampleSource;
@@ -52,140 +53,149 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 	 */
 	private SignalRecorderWorker signalRecorderWorker;
 
+	/**
+	 * Styles generator for monitor tags.
+	 */
+	private TagStylesGenerator stylesGenerator;
+
 	public MonitorWorker(JmxClient client, OpenMonitorDescriptor monitorDescriptor, RoundBufferMultichannelSampleSource sampleSource, StyledMonitorTagSet tagSet) {
 		this.client = client;
 		this.monitorDescriptor = monitorDescriptor;
 		this.sampleSource = sampleSource;
 		this.tagSet = tagSet;
+
+		//TODO blocksPerPage - is that information sent to the monitor worker? Can we substitute default PagingParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE
+		//with a real value?
+		stylesGenerator = new TagStylesGenerator(monitorDescriptor.getPageSize(), PagingParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE);
+
 		logger.setLevel((Level) Level.INFO);
 	}
 
 	@Override
 	protected Void doInBackground() {
-
-		logger.info("Worker: start...");
-
-		final int channelCount = monitorDescriptor.getChannelCount();
-		final int plotCount = monitorDescriptor.getSelectedChannelList().length;
-		final int[] selectedChannels = monitorDescriptor.getSelectedChannelsIndecies();
-		final double[] gain = monitorDescriptor.getGain();
-		final double[] offset = monitorDescriptor.getOffset();
-		logger.debug("Worker: got what wanted!");
-
-		final double[] chunk = new double[channelCount];
-		//TODO blocksPerPage - is that information sent to the monitor worker? Can we substitute default PagingParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE
-		//with a real value?
-		final TagStylesGenerator stylesGenerator
-			= new TagStylesGenerator(monitorDescriptor.getPageSize(),
-						 PagingParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE);
-
-		logger.info("Start receiving ...");
+		
+		MultiplexerMessage sampleMsg;
+		
 		while (!isCancelled()) {
-			logger.debug("Worker: receiving!");
-
-			// Receive message
-			final IncomingMessageData msgData;
 			try {
-				msgData = client.receive(TIMEOUT_MILIS);
+				IncomingMessageData msgData = client.receive(TIMEOUT_MILIS);
 				if (msgData == null) /* timeout */
 					continue;
+				else
+					sampleMsg = msgData.getMessage();
 			} catch (InterruptedException e) {
 				logger.error("receive failed", e);
 				return null;
 			}
 
-			final MultiplexerMessage sampleMsg;
-			final ByteString sampleMsgString;
-
-			// Unpack message
-			sampleMsg = msgData.getMessage();
-			sampleMsgString = sampleMsg.getMessage();
-
-			final int sampleType = sampleMsg.getType();
+			int sampleType = sampleMsg.getType();
 			logger.debug("Worker: received message type: " + sampleType);
 
 			switch (sampleType){
-			case MessageTypes.AMPLIFIER_SIGNAL_MESSAGE:
-				logger.debug("Worker: reading chunk!");
-
-				final SampleVector sampleVector;
-				try {
-					sampleVector = SampleVector.parseFrom(sampleMsgString);
-				} catch (Exception e) {
-					e.printStackTrace();
-					continue;
-				}
-				final List<Sample> samples = sampleVector.getSamplesList();
-
-				for (int k=0; k<sampleVector.getSamplesCount();k++) {
-					Sample sample = sampleVector.getSamples(k);
-
-					// Transform chunk using gain and offset
-					double[] condChunk = new double[plotCount];
-					double[] selectedChunk = new double[plotCount];
-					for (int i = 0; i < plotCount; i++) {
-						int n = selectedChannels[i];
-						condChunk[i] = gain[n] * sample.getChannels(n) + offset[n];
-						selectedChunk[i] = sample.getChannels(n);
-					}
-
-					double samplesTimestamp = samples.get(0).getTimestamp();
-					NewSamplesData newSamplesPackage = new NewSamplesData(condChunk, samplesTimestamp);
-
-					publish(newSamplesPackage);
-				}
-				break;
-			case MessageTypes.TAG:
-				logger.info("Tag recorder: got a tag!");
-
-				final SvarogProtocol.Tag tagMsg;
-				try {
-					tagMsg = SvarogProtocol.Tag.parseFrom(sampleMsgString);
-				} catch (Exception e) {
-					e.printStackTrace();
-					continue;
-				}
-
-				// Create MonitorTag Object, define its style and attributes
-
-				// String channels = tagMsg.getChannels();
-				// By now we ignore field channels and assume that tag if for all channels
-
-				final double tagLen = tagMsg.getEndTimestamp() - tagMsg.getStartTimestamp();
-
-                                TagStyle style = tagSet.getStyle(SignalSelectionType.CHANNEL, tagMsg.getName());
-
-                                if (style == null) {
-                                    style = stylesGenerator.getSmartStyleFor(tagMsg.getName(), tagLen, -1);
-                                    tagSet.addStyle(style);
-                                }
-
-				final MonitorTag tag
-					= new MonitorTag(style,
-							 tagMsg.getStartTimestamp(),
-							 tagLen,
-							 -1);
-
-				for (SvarogProtocol.Variable v : tagMsg.getDesc().getVariablesList()) {
-					if (v.getKey().equals("annotation")) {
-						tag.setAnnotation(v.getValue());
-					}
-					else {
-						tag.addAttributeToTag(v.getKey(), v.getValue());
-					}
-				}
-
-				if(isChannelSelected(tag.getChannel(), selectedChannels)) {
-					publish(tag);
-				}
-			default:
-				final int type = sampleMsg.getType();
-				final String name = MessageTypes.instance.getConstantsNames().get(type);
-				logger.error("received unknown reply: " +  type + "/" + name);
+				case MessageTypes.AMPLIFIER_SIGNAL_MESSAGE:
+					parseMessageWithSamples(sampleMsg.getMessage());
+					break;
+				case MessageTypes.TAG:
+					parseMessageWithTags(sampleMsg.getMessage());
+					break;
+				default:
+					final String name = MessageTypes.instance.getConstantsNames().get(sampleType);
+					logger.error("received unknown reply: " +  sampleType + "/" + name);
 			}
 		}
 
 		return null;
+	}
+	
+	/**
+	 * If the message contains samples, this function can be used
+	 * to parse its contents.
+	 * @param sampleMsgString the content of the message
+	 */
+	private void parseMessageWithSamples(ByteString sampleMsgString) {
+		logger.debug("Worker: reading chunk!");
+		
+		final int plotCount = monitorDescriptor.getSelectedChannelList().length;
+		final int[] selectedChannels = monitorDescriptor.getSelectedChannelsIndecies();
+		final double[] gain = monitorDescriptor.getGain();
+		final double[] offset = monitorDescriptor.getOffset();
+
+		final SampleVector sampleVector;
+		try {
+			sampleVector = SampleVector.parseFrom(sampleMsgString);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return;
+		}
+		final List<Sample> samples = sampleVector.getSamplesList();
+
+		for (int k=0; k<sampleVector.getSamplesCount();k++) {
+			Sample sample = sampleVector.getSamples(k);
+
+			// Transform chunk using gain and offset
+			double[] condChunk = new double[plotCount];
+			double[] selectedChunk = new double[plotCount];
+			for (int i = 0; i < plotCount; i++) {
+				int n = selectedChannels[i];
+				condChunk[i] = gain[n] * sample.getChannels(n) + offset[n];
+				selectedChunk[i] = sample.getChannels(n);
+			}
+
+			double samplesTimestamp = samples.get(0).getTimestamp();
+			NewSamplesData newSamplesPackage = new NewSamplesData(condChunk, samplesTimestamp);
+
+			publish(newSamplesPackage);
+		}
+	}
+	
+	/**
+	 * If the given message contains tags, this method can be used
+	 * to parse its contents.
+	 * @param sampleMsgString the contents of the message
+	 */
+	private void parseMessageWithTags(ByteString sampleMsgString) {
+		logger.info("Tag recorder: got a tag!");
+
+		final SvarogProtocol.Tag tagMsg;
+		try {
+			tagMsg = SvarogProtocol.Tag.parseFrom(sampleMsgString);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return;
+		}
+
+		// Create MonitorTag Object, define its style and attributes
+
+		// String channels = tagMsg.getChannels();
+		// TODO: By now we ignore field channels and assume that tag if for all channels
+
+		final double tagLen = tagMsg.getEndTimestamp() - tagMsg.getStartTimestamp();
+
+                        TagStyle style = tagSet.getStyle(SignalSelectionType.CHANNEL, tagMsg.getName());
+
+                        if (style == null) {
+                            style = stylesGenerator.getSmartStyleFor(tagMsg.getName(), tagLen, -1);
+                            tagSet.addStyle(style);
+                        }
+
+		final MonitorTag tag = new MonitorTag(style,
+					 tagMsg.getStartTimestamp(),
+					 tagLen,
+					 -1);
+
+		for (SvarogProtocol.Variable v : tagMsg.getDesc().getVariablesList()) {
+			if (v.getKey().equals("annotation")) {
+				tag.setAnnotation(v.getValue());
+			}
+			else {
+				tag.addAttributeToTag(v.getKey(), v.getValue());
+			}
+		}
+
+		int[] selectedChannels = monitorDescriptor.getSelectedChannelsIndecies();
+		if(isChannelSelected(tag.getChannel(), selectedChannels)) {
+			publish(tag);
+		}
 	}
 
 	private boolean isChannelSelected(final int channel, final int selectedChannels[]) {
