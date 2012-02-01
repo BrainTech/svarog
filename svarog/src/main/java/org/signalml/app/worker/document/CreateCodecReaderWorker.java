@@ -21,6 +21,8 @@ public class CreateCodecReaderWorker extends SwingWorker<SignalMLCodecReader, Vo
 	private PleaseWaitDialog pleaseWaitDialog;
 
 	public CreateCodecReaderWorker(SignalMLCodec codec, PleaseWaitDialog pleaseWaitDialog) {
+		assert codec != null;
+		assert pleaseWaitDialog != null;
 		this.codec = codec;
 		this.pleaseWaitDialog = pleaseWaitDialog;
 	}
