@@ -166,8 +166,7 @@ public class SourceMontage {
 			sourceChannels.add(newChannel);
 		}
 
-		this.eegSystem = montage.eegSystem;
-		this.eegSystemName = montage.eegSystemName;
+		this.setEegSystem(montage.eegSystem);
 	}
 
         /**
