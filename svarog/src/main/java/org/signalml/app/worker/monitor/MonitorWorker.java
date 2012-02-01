@@ -64,38 +64,10 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 		logger.setLevel((Level) Level.INFO);
 	}
 
-	private boolean sendRequest(final int type) {
-		final MultiplexerMessage.Builder builder = MultiplexerMessage.newBuilder();
-		builder.setType(type);
-		final MultiplexerMessage msg = client.createMessage(builder);
-		final ChannelFutureGroup operation;
-		try {
-			operation = client.send(msg, SendingMethod.THROUGH_ONE);
-		} catch(NoPeerForTypeException e) {
-			logger.error("nobody to send the message to", e);
-			return false;
-		}
-		try {
-			operation.await(1000 /* ms */);
-		} catch(InterruptedException e) {
-			logger.error("interrupted while sending", e);
-			return false;
-		}
-		if(!operation.isSuccess()) {
-			logger.error("sending request " + type + " failed", operation.getCause());
-			return false;
-		}
-		return true;
-	}
-
 	@Override
 	protected Void doInBackground() {
 
 		logger.info("Worker: start...");
-
-		if (!sendRequest(MessageTypes.SIGNAL_STREAMER_START))
-			return null;
-		logger.info("Worker: sent streaming request!");
 
 		final int channelCount = monitorDescriptor.getChannelCount();
 		final int plotCount = monitorDescriptor.getSelectedChannelList().length;
@@ -149,23 +121,23 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 				}
 				final List<Sample> samples = sampleVector.getSamplesList();
 
-				// Get values from samples to chunk
-				for (int i = 0; i < channelCount; i++)
-					chunk[i] = samples.get(i).getValue();
+				for (int k=0; k<sampleVector.getSamplesCount();k++) {
+					Sample sample = sampleVector.getSamples(k);
 
-				// Transform chunk using gain and offset
-				double[] condChunk = new double[plotCount];
-				double[] selectedChunk = new double[plotCount];
-				for (int i = 0; i < plotCount; i++) {
-					int n = selectedChannels[i];
-					condChunk[i] = gain[n] * chunk[n] + offset[n];
-					selectedChunk[i] = chunk[n];
+					// Transform chunk using gain and offset
+					double[] condChunk = new double[plotCount];
+					double[] selectedChunk = new double[plotCount];
+					for (int i = 0; i < plotCount; i++) {
+						int n = selectedChannels[i];
+						condChunk[i] = gain[n] * sample.getChannels(n) + offset[n];
+						selectedChunk[i] = sample.getChannels(n);
+					}
+
+					double samplesTimestamp = samples.get(0).getTimestamp();
+					NewSamplesData newSamplesPackage = new NewSamplesData(condChunk, samplesTimestamp);
+
+					publish(newSamplesPackage);
 				}
-
-				double samplesTimestamp = samples.get(0).getTimestamp();
-				NewSamplesData newSamplesPackage = new NewSamplesData(condChunk, samplesTimestamp);
-
-				publish(newSamplesPackage);
 				break;
 			case MessageTypes.TAG:
 				logger.info("Tag recorder: got a tag!");

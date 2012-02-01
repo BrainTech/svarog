@@ -5,6 +5,7 @@ package variables;
 option java_package = "org.signalml.multiplexer.protocol";
 option java_outer_classname = "SvarogProtocol";
 
+
 message Variable {
     required string key = 1;
     required string value = 2;
@@ -22,10 +23,20 @@ message Blink {
 message BlinkVector {
     repeated Blink blinks = 1;  
 }
+
+
 message Sample {
-    required double value = 1;
-    required double timestamp = 2;
+    required double timestamp = 1;
+    repeated double channels = 2;
 }
+message Sample2D {
+    required double x = 1;
+    required double y = 2;
+    required double timestamp = 3;
+}
+
+
+
 
 message SampleVector {
     repeated Sample samples = 1;
@@ -43,8 +54,8 @@ message Tag {
 	required double start_timestamp = 1;
 	required double end_timestamp = 2;
 	required string name = 3;
-    required string channels = 4;
-	required VariableVector desc = 5;
+	required string channels = 4;
+	optional VariableVector desc = 5;
 }
 
 message TagVector {

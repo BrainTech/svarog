@@ -767,6 +767,9 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 			return this.getLastSamplesSaveAsTextPath();
 		if(name.equals("LastTableSaveAsTextPath"))
 			return this.getLastTableSaveAsTextPath();
+		if(name.equals("LastOpenTagPath"))
+			return this.getLastOpenTagPath();
+
 		throw new AssertionError("unknown configuration path name");
 	}
 
@@ -779,6 +782,9 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 	public void setPath(String name, String path){
 		if(name.equals("LastSamplesSaveAsTextPath"))
 			this.setLastSamplesSaveAsTextPath(path);
-		throw new AssertionError("unknown configuration path name");
+		if(name.equals("LastOpenTagPath"))
+			this.setLastOpenTagPath(path);
+		else
+			throw new AssertionError("unknown configuration path name");
 	}
 }
