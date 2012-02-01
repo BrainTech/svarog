@@ -6,14 +6,10 @@ import javax.swing.SwingWorker;
 
 import multiplexer.jmx.client.IncomingMessageData;
 import multiplexer.jmx.client.JmxClient;
-import multiplexer.jmx.client.ChannelFutureGroup;
-import multiplexer.jmx.client.SendingMethod;
-import multiplexer.jmx.exceptions.NoPeerForTypeException;
 import multiplexer.protocol.Protocol.MultiplexerMessage;
 
-import org.apache.log4j.Logger;
 import org.apache.log4j.Level;
-
+import org.apache.log4j.Logger;
 import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
 import org.signalml.app.model.signal.PagingParameterDescriptor;
 import org.signalml.domain.signal.RoundBufferMultichannelSampleSource;
@@ -24,10 +20,10 @@ import org.signalml.multiplexer.protocol.SvarogConstants.MessageTypes;
 import org.signalml.multiplexer.protocol.SvarogProtocol;
 import org.signalml.multiplexer.protocol.SvarogProtocol.Sample;
 import org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector;
-
-import com.google.protobuf.ByteString;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.TagStyle;
+
+import com.google.protobuf.ByteString;
 
 /** MonitorWorker
  *
@@ -188,10 +184,6 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 				logger.error("received unknown reply: " +  type + "/" + name);
 			}
 		}
-
-		logger.debug("stopping server...");
-		sendRequest(MessageTypes.SIGNAL_STREAMER_STOP);
-		// ignore return value
 
 		return null;
 	}
