@@ -276,7 +276,9 @@ public class SourceMontage {
 		}
 		else {
 			sourceChannel.setEegElectrode(null);
-			sourceChannel.setFunction(ChannelFunction.UNKNOWN);
+			if (sourceChannel.getFunction() == ChannelFunction.EEG) {
+				sourceChannel.setFunction(ChannelFunction.UNKNOWN);
+			}
 		}
 	}
 
