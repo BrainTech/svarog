@@ -17,7 +17,7 @@ public enum ChannelFunction implements IChannelFunction {
 
 	UNKNOWN("Unknown", false, true, "", -800, 800),
 	TRIGGER("Trigger", false, true, "", 0, 10),
-	EEG("EEG", false, true, "uV", -100, 100),
+	EEG("EEG", false, false, "uV", -100, 100),
 	ECG("ECG", false, true, "uV", -5000, 5000),
 	EMG("EMG", false, true, "e", -20000, 20000),
 	RESP("RESP", false, true, "", -200, 200),
