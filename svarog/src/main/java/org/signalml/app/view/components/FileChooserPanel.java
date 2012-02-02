@@ -20,6 +20,7 @@ import javax.swing.filechooser.FileFilter;
 
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.document.ManagedDocumentType;
+import org.signalml.app.view.workspace.ViewerElementManager;
 
 /**
  * A panel containing an EmbeddedFileChooser. Allows to select a given type of
@@ -30,7 +31,6 @@ import org.signalml.app.document.ManagedDocumentType;
 public class FileChooserPanel extends JPanel {
 
 	protected ApplicationConfiguration applicationConfiguration;
-
 
 	/**
 	 * The document types managed by this file chooser panel.

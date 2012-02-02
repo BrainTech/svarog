@@ -51,12 +51,17 @@ public class OpenBookDocumentAction extends AbstractSignalMLAction {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+		String lastFileChooserPath = documentFlowIntegrator.getApplicationConfig().getLastFileChooserPath();
+		getFileChooser().setCurrentDirectory(new File(lastFileChooserPath));
+		
 		getFileChooser().showOpenDialog(null);
 		File selectedFile = getFileChooser().getSelectedFile();
 
 		if (selectedFile == null) {
 			return;
 		}
+		
+		documentFlowIntegrator.getApplicationConfig().setLastFileChooserPath(selectedFile.getParentFile().getPath());
 
 		OpenDocumentDescriptor openDocumentDescriptor = new OpenDocumentDescriptor();
 		openDocumentDescriptor.setType(ManagedDocumentType.BOOK);
@@ -80,8 +85,7 @@ public class OpenBookDocumentAction extends AbstractSignalMLAction {
 	 */
 	protected JFileChooser getFileChooser() {
 		if (fileChooser == null) {
-			String lastOpenDocumentPath = documentFlowIntegrator.getApplicationConfig().getLastOpenDocumentPath();
-			fileChooser = new JFileChooser(lastOpenDocumentPath);
+			fileChooser = new JFileChooser();
 
 			FileFilter[] fileFilters = ManagedDocumentType.BOOK.getFileFilters();
 

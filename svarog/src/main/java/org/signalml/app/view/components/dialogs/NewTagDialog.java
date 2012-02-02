@@ -153,10 +153,7 @@ public class NewTagDialog extends AbstractDialog  {
 		if (file != null && file.exists()) {
 			newTagPanel.getFileChooser().setSelectedFile(file);
 		} else {
-			String lastPath = applicationConfig.getLastOpenTagPath();
-			if (lastPath == null) {
-				lastPath = System.getProperty("user.dir");
-			}
+			String lastPath = applicationConfig.getLastFileChooserPath(); 
 			newTagPanel.getFileChooser().setCurrentDirectory(new File(lastPath));
 		}
 

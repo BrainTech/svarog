@@ -84,11 +84,13 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 	}
 
 	/**
-	 * Fills the given descriptor using the data set in the components
-	 * contained in this panel.
-	 * @param openFileSignalDescriptor the descriptor to be filled
+	 * Fills the given descriptor using the data set in the components contained
+	 * in this panel.
+	 * 
+	 * @param openFileSignalDescriptor
+	 *            the descriptor to be filled
 	 */
-        public void fillPanelFromModel(OpenFileSignalDescriptor openFileSignalDescriptor) {
+	public void fillPanelFromModel(OpenFileSignalDescriptor openFileSignalDescriptor) {
 
 		FileOpenSignalMethod method = openFileSignalDescriptor.getMethod();
 
@@ -96,9 +98,12 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 		if (method.isRaw()) {
 			rawSignalParametersPanel.fillPanelFromModel(openFileSignalDescriptor.getRawSignalDescriptor());
 		} else if (method.isSignalML()) {
-                        getSignalMLSignalParametersPanel().fillPanelFromModel(openFileSignalDescriptor);
-                }
-        }
+			getSignalMLSignalParametersPanel().fillPanelFromModel(openFileSignalDescriptor);
+		}
+		
+		String lastFileChooserPath = this.getViewerElementManager().getApplicationConfig().getLastFileChooserPath();
+		this.getFileChooserPanel().getFileChooser().setCurrentDirectory(new File(lastFileChooserPath));
+	}
 
 	/**
 	 * Fills the components in this panel using the data contained in the
@@ -119,11 +124,11 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
                 }
 
 		File selectedFile = fileChooserPanel.getSelectedFile();
-		if(selectedFile.exists())		
-			fileChooserPanel.getFileChooser().lastDirectoryChanged(selectedFile.getParentFile().getPath());
+		if(selectedFile.exists())
+			this.viewerElementManager.getApplicationConfig().setLastFileChooserPath(selectedFile.getParentFile().getPath());
 		descriptor.setFile(selectedFile);
 
-		getApplicationConfiguration().setLastOpenDocumentPath(getFileChooserPanel().getFileChooser().getCurrentDirectory().getAbsolutePath());
+		getApplicationConfiguration().setLastFileChooserPath(getFileChooserPanel().getFileChooser().getCurrentDirectory().getAbsolutePath());
 	}
 
 	/**
@@ -134,10 +139,8 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 		if (fileChooserPanel == null) {
 			fileChooserPanel = new FileChooserPanel( ManagedDocumentType.SIGNAL, getApplicationConfiguration());
 
-			String lastOpenedDocumentPath = getApplicationConfiguration().getLastOpenDocumentPath();
-			if (lastOpenedDocumentPath != null) {
-				getFileChooserPanel().getFileChooser().setCurrentDirectory(new File(lastOpenedDocumentPath));
-			}
+			String lastFileChooserPath = getApplicationConfiguration().getLastFileChooserPath();
+			getFileChooserPanel().getFileChooser().setCurrentDirectory(new File(lastFileChooserPath));
 		}
 		return fileChooserPanel;
 	}
