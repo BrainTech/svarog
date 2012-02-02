@@ -7,6 +7,7 @@ package org.signalml.app.action.signal;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.action.AbstractFocusableSignalMLAction;
@@ -35,6 +36,7 @@ public class PreciseSelectionAction extends AbstractFocusableSignalMLAction<Sign
 		setText(_("Select precisely"));
 		setIconPath("org/signalml/app/icon/preciseselection.png");
 		setToolTip(_("Select signal fragments using selection dialog"));
+		setMnemonic(KeyEvent.VK_S);
 	}
 
 	@Override

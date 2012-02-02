@@ -6,6 +6,7 @@ package org.signalml.app.action.document;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.ManagedDocumentType;
@@ -51,6 +52,7 @@ public class OpenSignalAndSetMontageAction extends AbstractSignalMLAction {
 		setText(_("Open signal"));
 		setIconPath("org/signalml/app/icon/fileopen.png");
 		setToolTip(_("Open signal and set montage for it"));
+		setMnemonic(KeyEvent.VK_O);
 	}
 
 	@Override

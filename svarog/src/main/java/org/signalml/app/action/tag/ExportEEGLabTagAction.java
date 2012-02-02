@@ -3,6 +3,7 @@ package org.signalml.app.action.tag;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.Window;
+import java.awt.event.KeyEvent;
 import java.io.File;
 
 import org.apache.log4j.Logger;
@@ -27,6 +28,7 @@ public class ExportEEGLabTagAction extends AbstractExportTagAction {
 		super(tagDocumentFocusSelector);
 		setText(_("Export to EEGLab..."));
 		setToolTip(_("Export tags to EEGLab events ASCII file format"));
+		setMnemonic(KeyEvent.VK_E);
 	}
 	@Override
 	protected void doExport(StyledTagSet tagSet, File file, SignalDocument signalDocument) {

@@ -7,6 +7,7 @@ package org.signalml.app.action.tag;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.action.AbstractFocusableSignalMLAction;
@@ -32,6 +33,7 @@ public class EditTagDescriptionAction extends AbstractFocusableSignalMLAction<Ta
 		setText(_("Edit tag description"));
 		setToolTip(_("Edit tag description"));
 		setIconPath("org/signalml/app/icon/edittagdescription.png");
+		setMnemonic(KeyEvent.VK_D);
 	}
 
 	@Override

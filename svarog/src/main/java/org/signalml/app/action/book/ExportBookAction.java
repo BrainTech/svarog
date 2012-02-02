@@ -8,6 +8,7 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.concurrent.ExecutionException;
 
@@ -43,6 +44,7 @@ public class ExportBookAction extends AbstractFocusableSignalMLAction<BookDocume
 		super(bookDocumentFocusSelector);
 		setText(_("Export Book..."));
 		setToolTip(_("Export book to file"));
+		setMnemonic(KeyEvent.VK_B);
 	}
 
 	@Override

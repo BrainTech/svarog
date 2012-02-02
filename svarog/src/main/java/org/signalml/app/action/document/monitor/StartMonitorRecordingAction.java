@@ -8,6 +8,8 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.io.FileNotFoundException;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+
 import org.apache.log4j.Logger;
 
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
@@ -44,6 +46,7 @@ public class StartMonitorRecordingAction extends MonitorRecordingAction {
 		setText(_("Start monitor recording"));
 		setIconPath("org/signalml/app/icon/record.png");
 		setToolTip(_("Record signal and tags from this monitor to a file"));
+		setMnemonic(KeyEvent.VK_S);
 	}
 
 	/**

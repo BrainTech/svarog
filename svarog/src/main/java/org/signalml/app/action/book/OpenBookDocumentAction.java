@@ -6,6 +6,7 @@ package org.signalml.app.action.book;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -46,6 +47,7 @@ public class OpenBookDocumentAction extends AbstractSignalMLAction {
 		setText(_("Open book"));
 		setIconPath("org/signalml/app/icon/fileopen.png");
 		setToolTip(_("Open a book document from a file"));
+		setMnemonic(KeyEvent.VK_B);
 	}
 
 	@Override

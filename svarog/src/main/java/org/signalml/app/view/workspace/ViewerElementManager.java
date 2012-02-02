@@ -10,6 +10,7 @@ import static org.signalml.app.util.i18n.SvarogI18n._R;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Window;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.prefs.Preferences;
@@ -745,11 +746,13 @@ public class ViewerElementManager {
 	public JMenu getFileMenu() {
 		if (fileMenu == null) {
 			JMenu exportSubmenu = new JMenu(_("Export"));
+			exportSubmenu.setMnemonic(KeyEvent.VK_E);
 			exportSubmenu.add(getExportSignalAction());
 			exportSubmenu.add(getExportBookAction());
-                        exportSubmenu.add(getEEGLabExportAction());
+			exportSubmenu.add(getEEGLabExportAction());
 
 			fileMenu = new JMenu(_("File"));
+			fileMenu.setMnemonic(KeyEvent.VK_F);
 
 			fileMenu.add(getOpenSignalAndSetMontageAction());
 			fileMenu.add(getOpenBookDocumentAction());
@@ -773,6 +776,7 @@ public class ViewerElementManager {
 	public JMenu getEditMenu() {
 		if (editMenu == null) {
 			editMenu = new JMenu(_("Edit"));
+			editMenu.setMnemonic(KeyEvent.VK_E);
 
 			editMenu.add(getPreciseSelectionAction());
 			editMenu.addSeparator();
@@ -788,6 +792,7 @@ public class ViewerElementManager {
 	public JMenu getViewMenu() {
 		if (viewMenu == null) {
 			viewMenu = new JMenu(_("View"));
+			viewMenu.setMnemonic(KeyEvent.VK_V);
 
 			viewMenu.add(new JCheckBoxMenuItem(getShowMainToolBarAction()));
 			viewMenu.add(new JCheckBoxMenuItem(getShowStatusBarAction()));
@@ -809,14 +814,15 @@ public class ViewerElementManager {
 	public JMenu getMonitorMenu() {
 		if (monitorMenu == null) {
 			monitorMenu = new JMenu(_("Monitor"));
-			//monitorMenu.add(getOpenMonitorAction());
-                        monitorMenu.add(getCheckSignalAction());
+			monitorMenu.setMnemonic(KeyEvent.VK_M);
+			
+			monitorMenu.add(getCheckSignalAction());
 			monitorMenu.addSeparator();
 			monitorMenu.add(getStartMonitorRecordingAction());
 			monitorMenu.add(getStopMonitorRecordingAction());
-                        monitorMenu.addSeparator();
-                        monitorMenu.add(getAmplifierDefinitionConfigAction());
-                        monitorMenu.add(getOpenBCIModuleConfigAction());
+			monitorMenu.addSeparator();
+			monitorMenu.add(getAmplifierDefinitionConfigAction());
+			monitorMenu.add(getOpenBCIModuleConfigAction());
 		}
 		return monitorMenu;
 	}
@@ -830,12 +836,15 @@ public class ViewerElementManager {
 		if (tagsMenu == null) {
 
 			JMenu importSubmenu = new JMenu(_("Import"));
+			importSubmenu.setMnemonic(KeyEvent.VK_I);
 			importSubmenu.add(getImportTagAction());
 
 			JMenu exportSubmenu = new JMenu(_("Export"));
+			exportSubmenu.setMnemonic(KeyEvent.VK_E);
 			exportSubmenu.add(getExportEEGLabTagAction());
 
 			tagsMenu = new JMenu(_("Tags"));
+			tagsMenu.setMnemonic(KeyEvent.VK_T);
 
 			tagsMenu.add(getNewTagAction());
 			tagsMenu.add(getOpenTagAction());
@@ -864,6 +873,7 @@ public class ViewerElementManager {
 	public JMenu getToolsMenu() {
 		if (toolsMenu == null) {
 			toolsMenu = new JMenu(_("Tools"));
+			toolsMenu.setMnemonic(KeyEvent.VK_L);
 
 			for (AbstractSignalMLAction action : getRunMethodActions()) {
 				toolsMenu.add(action);
@@ -890,6 +900,7 @@ public class ViewerElementManager {
 	public JMenu getHelpMenu() {
 		if (helpMenu == null) {
 			helpMenu = new JMenu(_("Help"));
+			helpMenu.setMnemonic(KeyEvent.VK_H);
 			helpMenu.add(getHelpContentsAction());
 		}
 		return helpMenu;

@@ -6,6 +6,7 @@ package org.signalml.app.action.components;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.ViewFocusSelector;
@@ -28,6 +29,7 @@ public class CloseWindowAction extends AbstractSignalMLAction {
 		setText(_("Exit"));
 		setIconPath("org/signalml/app/icon/exit.png");
 		setToolTip(_("Close the window and exit the aplication"));
+		setMnemonic(KeyEvent.VK_X);
 	}
 
 	@Override

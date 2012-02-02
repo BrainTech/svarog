@@ -7,6 +7,7 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.io.File;
 
 import org.apache.log4j.Logger;
@@ -42,6 +43,7 @@ public class OpenTagAction extends AbstractFocusableSignalMLAction<SignalDocumen
 		setText(_("Open Tag..."));
 		setIconPath("org/signalml/app/icon/fileopen.png");
 		setToolTip(_("Open a tag file for this signal"));
+		setMnemonic(KeyEvent.VK_O);
 	}
 
 	@Override

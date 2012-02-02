@@ -7,6 +7,7 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.Window;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.view.components.dialogs.ErrorsDialog;
@@ -32,6 +33,7 @@ public class HelpContentsAction extends AbstractSignalMLAction {
 		setText(_("Contents..."));
 		setIconPath("org/signalml/app/icon/help.png");
 		setToolTip(_("Display help contents"));
+		setMnemonic(KeyEvent.VK_C);
 	}
 
 	@Override

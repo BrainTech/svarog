@@ -3,6 +3,7 @@ package org.signalml.app.action.tag;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.TagStyleFocusSelector;
@@ -31,6 +32,7 @@ public class EditTagStylePresetsAction extends AbstractFocusableSignalMLAction<T
 		setText(_("Edit tag style templates"));
 		setToolTip(_("Edit tag style templates"));
 		setIconPath("org/signalml/app/icon/palette.png");
+		setMnemonic(KeyEvent.VK_T);
 	}
 
 	@Override

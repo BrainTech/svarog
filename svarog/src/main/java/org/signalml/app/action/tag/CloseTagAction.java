@@ -7,6 +7,7 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.Window;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
@@ -35,6 +36,7 @@ public class CloseTagAction extends AbstractFocusableSignalMLAction<TagDocumentF
 		setText(_("Close Tag"));
 		setIconPath("org/signalml/app/icon/fileclose.png");
 		setToolTip(_("Close active tag"));
+		setMnemonic(KeyEvent.VK_C);
 	}
 
 	@Override
