@@ -4,6 +4,7 @@
 
 package org.signalml.domain.montage.generators;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.springframework.validation.Errors;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import org.signalml.domain.montage.Montage;
@@ -23,7 +24,7 @@ public class RawMontageGenerator extends AbstractMontageGenerator {
 	private static final long serialVersionUID = 1L;
 
 	public RawMontageGenerator() {
-		setCode("montageGenerator.raw");
+		setName(_("Raw signal"));
 	}
 
         /**

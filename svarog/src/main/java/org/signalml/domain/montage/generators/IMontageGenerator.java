@@ -21,7 +21,7 @@ import org.springframework.validation.Errors;
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 @XStreamAlias("montageGenerator")
-public interface IMontageGenerator extends MessageSourceResolvable, Serializable {
+public interface IMontageGenerator extends Serializable {
 
         /**
          * Creates a {@link Montage montage} of a specified type
@@ -43,10 +43,15 @@ public interface IMontageGenerator extends MessageSourceResolvable, Serializable
 	boolean validateSourceMontage(SourceMontage sourceMontage, Errors errors);
 
 	/**
-	 * Sets the code used to get the generator name from the
-	 * {@link MessageSourceAccessor}.
-	 * @param code the code to be used
+	 * Sets the name of this montage generator.
+	 * @param name to be used
 	 */
-	void setCode(String code);
+	void setName(String name);
+	
+	/**
+	 * Returns the (display) name of this montage generator.
+	 * @return the name of this montage generator.
+	 */
+	String getName();
 
 }

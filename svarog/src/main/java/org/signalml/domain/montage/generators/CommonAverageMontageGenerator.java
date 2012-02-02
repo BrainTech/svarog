@@ -4,6 +4,7 @@
 
 package org.signalml.domain.montage.generators;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
@@ -28,7 +29,7 @@ public class CommonAverageMontageGenerator extends AverageReferenceMontageGenera
          */
 	public CommonAverageMontageGenerator() {
 		super(new String[0]);
-		setCode("montageGenerator.ca");
+		setName(_("Common average montage"));
 	}
 
         /**
