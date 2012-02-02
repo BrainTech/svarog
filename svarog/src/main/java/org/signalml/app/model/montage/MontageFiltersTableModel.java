@@ -123,13 +123,7 @@ public class MontageFiltersTableModel extends AbstractTableModel implements Mont
 			return montage.getSampleFilterAt(rowIndex).getDescription();
 
 		case EFFECT_COLUMN :
-			MessageSourceResolvable effectDescription = montage.getSampleFilterAt(rowIndex).getEffectDescription();
-			if (effectDescription == null) {
-				return montage.getSampleFilterAt(rowIndex).getDefaultEffectDescription();
-			} else {
-				return effectDescription;
-			}
-
+			return montage.getSampleFilterAt(rowIndex).getEffect();
 
 		default :
 			throw new IndexOutOfBoundsException();
