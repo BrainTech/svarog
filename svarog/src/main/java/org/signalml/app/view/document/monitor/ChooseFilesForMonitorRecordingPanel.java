@@ -16,6 +16,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
 import org.signalml.app.model.monitor.MonitorRecordingDescriptor;
 import org.signalml.app.view.components.FileSelectPanel;
@@ -162,28 +163,28 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 	 * @param model the model for this panel
 	 * @param errors the object in which errors are stored
 	 */
-	public void validatePanel(Object model, Errors errors) {
+	public void validatePanel(Object model, ValidationErrors errors) {
 
 		String recordingFileName = getSelectSignalRecordingFilePanel().getFileName();
 		String tagRecordingFileName = getSelectTagsRecordingFilePanel().getFileName();
 
 		if (recordingFileName.isEmpty()) {
-			errors.reject(_("Please input a correct signal filename"));
+			errors.addError(_("Please input a correct signal filename"));
 		}
 		else if ((new File(recordingFileName)).exists()) {
 			int anwser = JOptionPane.showConfirmDialog(null, _("Signal recording target file already exists! Do you want to overwrite?"));
 			if (anwser == JOptionPane.CANCEL_OPTION || anwser == JOptionPane.NO_OPTION)
-				errors.reject("");
+				errors.addError("");
 		}
 
 		if (getEnableTagRecordingPanel().isTagRecordingEnabled() && tagRecordingFileName.isEmpty()) {
-			errors.reject(_("Please input a correct tag filename"));
+			errors.addError(_("Please input a correct tag filename"));
 		}
 		else if (getEnableTagRecordingPanel().isTagRecordingEnabled() && (new File(tagRecordingFileName)).exists()) {
 			int anwser = JOptionPane.showConfirmDialog(null,
 					    _("Tag recording target file already exists! Do you want to overwrite?"));
 			if (anwser == JOptionPane.CANCEL_OPTION || anwser == JOptionPane.NO_OPTION)
-				errors.reject("");
+				errors.addError("");
 		}
 
 	}

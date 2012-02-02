@@ -10,6 +10,7 @@ import java.awt.Window;
 
 import javax.swing.JComponent;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.components.dialogs.AbstractDialog;
 import org.signalml.plugin.export.SignalMLException;
@@ -75,13 +76,13 @@ public class MP5ToolConfigDialog extends AbstractDialog  {
 	}
 
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 		super.validateDialog(model, errors);
 
 		if (!errors.hasErrors()) {
 			int executorCount = executorManager.getExecutorCount();
 			if (executorCount == 0) {
-				errors.reject("error.mp5.executorRequired");
+				errors.addError(_("You must configure at least one executor"));
 			}
 		}
 

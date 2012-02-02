@@ -21,6 +21,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
 import org.signalml.app.model.monitor.AmplifierConnectionDescriptor;
 import org.signalml.plugin.export.SignalMLException;
@@ -156,7 +157,7 @@ public class MonitorRecordingPanel extends AbstractSignalMLPanel {
          */
         public void fillModelFromPanel(AmplifierConnectionDescriptor descriptor) throws SignalMLException {
 
-                Errors errors = new BindException(this, "data");
+        		ValidationErrors errors = new ValidationErrors();
                 validatePanel(this, errors);
                 if (errors.hasErrors())
                         throw new SignalMLException(_("Invalid data entered"));
@@ -176,7 +177,7 @@ public class MonitorRecordingPanel extends AbstractSignalMLPanel {
          * @param model the model for this dialog
          * @param errors the object in which errors are stored
          */
-        public void validatePanel(Object model, Errors errors) {
+        public void validatePanel(Object model, ValidationErrors errors) {
                 if (isRecordingEnabled()) {
                         getChooseFilesForMonitorRecordingPanel().validatePanel(model, errors);
                 }

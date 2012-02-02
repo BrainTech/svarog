@@ -12,6 +12,7 @@ import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.method.mp5.MP5ExecutorManager;
 import org.signalml.app.method.mp5.MP5LocalExecutorDialog;
 import org.signalml.app.method.mp5.MP5ToolConfigPanel;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.method.mp5.MP5Executor;
 
@@ -101,7 +102,7 @@ public class ToolsConfigPanel extends JPanel {
 	public void fillModelFromPanel(ApplicationConfiguration applicationConfig) { }
 
 	@Deprecated
-	public void validatePanel(Errors errors) { }
+	public void validatePanel(ValidationErrors errors) { }
 
 	/**
 	 * Returns the {@link MP5LocalExecutorDialog dialog} to select the local

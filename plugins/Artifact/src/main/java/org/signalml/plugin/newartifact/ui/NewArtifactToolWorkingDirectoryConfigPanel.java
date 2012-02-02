@@ -18,6 +18,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.plugin.newartifact.data.NewArtifactConfiguration;
@@ -137,7 +138,7 @@ public class NewArtifactToolWorkingDirectoryConfigPanel extends JPanel {
 
 	}
 
-	public void validatePanel(Errors errors) {
+	public void validatePanel(ValidationErrors errors) {
 
 		// no validation
 

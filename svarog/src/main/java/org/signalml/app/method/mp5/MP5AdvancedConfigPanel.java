@@ -8,6 +8,7 @@ import java.awt.BorderLayout;
 import javax.swing.Box;
 import javax.swing.JPanel;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.view.components.dialogs.AbstractDialog;
 import org.signalml.method.mp5.MP5Parameters;
 
@@ -85,7 +86,7 @@ public class MP5AdvancedConfigPanel extends JPanel {
 
 	}
 
-	public void validatePanel(Errors errors) {
+	public void validatePanel(ValidationErrors errors) {
 
 		getAdvancedDecompositionConfigPanel().validatePanel(errors);
 		getOutputConfigPanel().validatePanel(errors);

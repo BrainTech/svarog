@@ -9,6 +9,7 @@ import java.awt.Window;
 
 import javax.swing.JComponent;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.components.SignalSelectionPanel;
 import org.signalml.domain.signal.BoundedSignalSelection;
@@ -99,7 +100,7 @@ public class SignalSelectionDialog extends AbstractDialog  {
 	 * {@link SignalSelectionPanel#validatePanel(Errors) is valid}.
 	 */
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 
 		signalSelectionPanel.validatePanel(errors);
 

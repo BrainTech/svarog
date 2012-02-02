@@ -28,6 +28,7 @@ import javax.swing.border.TitledBorder;
 import org.signalml.app.config.preset.BookFilterPresetManager;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.model.book.BookFilterDescriptor;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.components.dialogs.AbstractPresetDialog;
 import org.signalml.domain.book.filter.AtomFilterChain;
@@ -273,7 +274,7 @@ public class BookFilterDialog extends AbstractPresetDialog {
 
 		AtomFilterChain preset = currentChain.duplicate();
 
-		Errors errors = new BindException(preset, "data");
+		ValidationErrors errors = new ValidationErrors();
 		validateDialog(preset, errors);
 
 		if (errors.hasErrors()) {
@@ -293,7 +294,7 @@ public class BookFilterDialog extends AbstractPresetDialog {
 	}
 
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 
 		super.validateDialog(model, errors);
 

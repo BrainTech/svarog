@@ -9,6 +9,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.method.mp5.AtomsInDictionary;
 import org.signalml.method.mp5.MP5AtomType;
 import org.signalml.method.mp5.MP5Parameters;
@@ -78,9 +79,9 @@ public class MP5AtomsInDictionaryPanel extends JPanel {
 		return false;
 	}
 
-	public void validatePanel(Errors errors) {
+	public void validatePanel(ValidationErrors errors) {
 		if (!isAtLeastOneAtomTypeSelected()) {
-			errors.rejectValue("atomsInDictionary", null, _("At least one atom type should be selected!"));
+			errors.addError(_("At least one atom type should be selected!"));
 		}
 	}
 

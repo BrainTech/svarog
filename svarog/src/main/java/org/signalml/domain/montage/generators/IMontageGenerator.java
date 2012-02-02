@@ -6,6 +6,8 @@ package org.signalml.domain.montage.generators;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.io.Serializable;
+
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.SourceMontage;
@@ -40,7 +42,7 @@ public interface IMontageGenerator extends Serializable {
          * @return true if a montage is a valid montage of a specified type,
          * false otherwise
          */
-	boolean validateSourceMontage(SourceMontage sourceMontage, Errors errors);
+	boolean validateSourceMontage(SourceMontage sourceMontage, ValidationErrors errors);
 
 	/**
 	 * Sets the name of this montage generator.

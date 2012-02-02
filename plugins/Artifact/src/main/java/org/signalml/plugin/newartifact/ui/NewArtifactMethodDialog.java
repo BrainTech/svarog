@@ -18,6 +18,7 @@ import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.document.FileBackedDocument;
 import org.signalml.app.method.InputSignalPanel;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.montage.SourceMontageDescriptor;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.components.dialogs.AbstractPresetDialog;
@@ -218,7 +219,7 @@ public class NewArtifactMethodDialog extends AbstractPresetDialog {
 	}
 
 	@Override
-	public void validateDialog(Object model, Errors errors)
+	public void validateDialog(Object model, ValidationErrors errors)
 	throws SignalMLException {
 
 		// dialog doesn't need any additional validation

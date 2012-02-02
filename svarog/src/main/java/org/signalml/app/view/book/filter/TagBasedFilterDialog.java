@@ -36,8 +36,10 @@ import org.signalml.app.action.util.ListSelectAllAction;
 import org.signalml.app.action.util.ListSelectInvertAction;
 import org.signalml.app.action.util.ListSelectNoneAction;
 import org.signalml.app.document.TagDocument;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.components.AnyChangeDocumentAdapter;
+import org.signalml.app.view.components.dialogs.ErrorsDialog;
 import org.signalml.app.view.tag.TagIconProducer;
 import org.signalml.app.view.tag.TagStyleListCellRenderer;
 import org.signalml.app.view.workspace.ViewerFileChooser;
@@ -107,12 +109,12 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 							document = new TagDocument(tagFile);
 						} catch (SignalMLException ex) {
 							logger.error("Failed to open tag file [" + tagFile.getAbsolutePath() + "]", ex);
-							getErrorsDialog().showException(ex);
+							ErrorsDialog.showImmediateExceptionDialog(TagBasedFilterDialog.this, ex);
 							setCurrentTagDocument(null);
 							return;
 						} catch (IOException ex) {
 							logger.error("Failed to open tag file [" + tagFile.getAbsolutePath() + "]", ex);
-							getErrorsDialog().showException(ex);
+							ErrorsDialog.showImmediateExceptionDialog(TagBasedFilterDialog.this, ex);
 							setCurrentTagDocument(null);
 							return;
 						}
@@ -403,7 +405,7 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 	}
 
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 
 		super.validateDialog(model, errors);
 
@@ -417,7 +419,7 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 				filter.initialize();
 			} catch (Throwable t) {
 				logger.error("Filter failed to initialize", t);
-				errors.reject("error.tagBasedAtomFilter.failedToInitialize");
+				errors.addError(_("Failed to initialize filter. See log file for details."));
 			}
 		}
 

@@ -17,6 +17,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.components.dialogs.AbstractDialog;
 import org.signalml.app.view.workspace.ViewerFileChooser;
@@ -124,11 +125,11 @@ public class MP5LocalExecutorDialog extends AbstractDialog  {
 	}
 
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 		super.validateDialog(model, errors);
 
 		if (Util.hasSpecialChars(getNameTextField().getText())) {
-			errors.rejectValue("name", "error.nameBadCharacters", _("Name must not contain control characters"));
+			errors.addError(_("Name must not contain control characters"));
 		}
 
 		getExecutablePanel().validatePanel(errors);

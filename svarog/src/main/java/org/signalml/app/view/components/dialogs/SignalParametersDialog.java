@@ -12,6 +12,7 @@ import java.net.URL;
 import javax.swing.JComponent;
 import org.omg.CORBA.Request;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.signal.PagingParameterDescriptor;
 import org.signalml.app.model.signal.SignalParameterDescriptor;
 import org.signalml.app.util.IconUtils;
@@ -115,7 +116,7 @@ public class SignalParametersDialog extends AbstractDialog  {
 	 * PagingParametersPanel}).
 	 */
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 		SignalParameterDescriptor spd = (SignalParameterDescriptor) model;
 		panel.getRequiredSignalParamersPanel().validatePanel(spd, errors);
 		panel.getPagingSignalParamersPanel().validatePanel(errors);

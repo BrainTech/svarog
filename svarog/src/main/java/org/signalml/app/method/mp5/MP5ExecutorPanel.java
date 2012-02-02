@@ -13,6 +13,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.view.components.ResolvableComboBox;
 import org.signalml.method.mp5.MP5Data;
 import org.signalml.method.mp5.MP5Executor;
@@ -87,10 +88,10 @@ public class MP5ExecutorPanel extends JPanel {
 
 	}
 
-	public void validatePanel(Errors errors) {
+	public void validatePanel(ValidationErrors errors) {
 
 		if (getExecutorComboBox().getSelectedItem() == null) {
-			errors.rejectValue("executorUID", "error.mp5.noExecutor", _("No executor"));
+			errors.addError(_("No executor"));
 		}
 
 	}

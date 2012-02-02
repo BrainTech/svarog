@@ -8,6 +8,7 @@ import java.awt.Window;
 
 import javax.swing.JComponent;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractPopupDialog;
 import org.signalml.plugin.fftsignaltool.SignalFFTSettings;
@@ -95,13 +96,11 @@ public class SignalFFTSettingsPopupDialog extends AbstractPopupDialog {
 	 * SignalFFTSettingsPanel#validatePanel(Errors) valid}.
 	 */
 	@Override
-	public void validateDialog(Object model, Errors errors)
+	public void validateDialog(Object model, ValidationErrors errors)
 			throws SignalMLException {
 		super.validateDialog(model, errors);
 
-		errors.pushNestedPath("settings");
 		signalFFTSettingsPanel.validatePanel(errors);
-		errors.popNestedPath();
 
 	}
 

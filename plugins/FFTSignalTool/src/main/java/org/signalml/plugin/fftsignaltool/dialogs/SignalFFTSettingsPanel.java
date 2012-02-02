@@ -24,6 +24,7 @@ import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;
 import org.jfree.chart.renderer.xy.XYSplineRenderer;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.plugin.fft.export.WindowType;
 import org.signalml.plugin.fftsignaltool.SignalFFTSettings;
 import static org.signalml.plugin.fftsignaltool.FFTSignalTool._;
@@ -688,19 +689,17 @@ public class SignalFFTSettingsPanel extends JPanel {
 	 * @param errors
 	 *            the object in which the errors are stored
 	 */
-	public void validatePanel(Errors errors) {
+	public void validatePanel(ValidationErrors errors) {
 
 		if (customWindowWidthRadioButton.isSelected()) {
 			try {
 				int windowWidth = Integer.parseInt(customWindowWidthTextField
 						.getText());
 				if (windowWidth < 8) {
-					errors.rejectValue("windowWidth",
-							"signalFFTSettings.error.badWindowWidth", _("Bad window width. Must be an integer greater than 7"));
+					errors.addError(_("Bad window width. Must be an integer greater than 7"));
 				}
 			} catch (NumberFormatException ex) {
-				errors.rejectValue("windowWidth",
-						"signalFFTSettings.error.badWindowWidth", _("Bad window width. Must be an integer greater than 7"));
+				errors.addError(_("Bad window width. Must be an integer greater than 7"));
 			}
 		}
 

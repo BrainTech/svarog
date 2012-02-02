@@ -16,6 +16,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.view.components.dialogs.AbstractDialog;
 import org.signalml.domain.book.filter.AbstractAtomFilter;
 import org.signalml.plugin.export.SignalMLException;
@@ -79,17 +80,16 @@ public abstract class AbstractFilterDialog extends AbstractDialog {
 	}
 
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 		super.validateDialog(model, errors);
 
 		String name = getNameTextField().getText();
 		if (name == null || name.isEmpty()) {
-			errors.rejectValue("name", "error.atomFilter.nameEmpty", _("Empty filter name"));
+			errors.addError(_("Empty filter name"));
 		} else if (Util.hasSpecialChars(name)) {
-			errors.rejectValue("name", "error.atomFilter.nameBadChars", _("Filter name must not contain control characters"));
+			errors.addError(_("Filter name must not contain control characters"));
 		}
 
 	}
-
 
 }

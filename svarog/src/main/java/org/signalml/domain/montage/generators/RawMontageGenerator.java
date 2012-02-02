@@ -7,6 +7,8 @@ package org.signalml.domain.montage.generators;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.springframework.validation.Errors;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.SourceMontage;
 
@@ -63,7 +65,7 @@ public class RawMontageGenerator extends AbstractMontageGenerator {
          * (here never)
          */
 	@Override
-	public boolean validateSourceMontage(SourceMontage sourceMontage, Errors errors) {
+	public boolean validateSourceMontage(SourceMontage sourceMontage, ValidationErrors errors) {
 		// ok for any montage
 		return true;
 	}

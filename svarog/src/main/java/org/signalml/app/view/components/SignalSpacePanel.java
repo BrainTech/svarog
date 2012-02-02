@@ -10,6 +10,7 @@ import java.awt.event.ItemListener;
 import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.domain.signal.space.SignalSourceLevel;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
@@ -154,7 +155,7 @@ public class SignalSpacePanel extends JPanel {
 	 * ChannelSpacePanel}).
 	 * @param errors the object in which the errors will be stored
 	 */
-	public void validatePanel(Errors errors) {
+	public void validatePanel(ValidationErrors errors) {
 
 		getTimeSpacePanel().validatePanel(errors);
 		getChannelSpacePanel().validatePanel(errors);

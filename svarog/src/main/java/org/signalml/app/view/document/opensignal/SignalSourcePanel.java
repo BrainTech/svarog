@@ -3,16 +3,19 @@
  */
 package org.signalml.app.view.document.opensignal;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.CardLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
-import org.signalml.app.config.preset.StyledTagSetPresetManager;
-import org.signalml.app.document.AbstractSignal;
+
 import org.signalml.app.document.ManagedDocumentType;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.document.opensignal.OpenFileSignalDescriptor;
 import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
@@ -21,8 +24,6 @@ import org.signalml.app.model.monitor.AmplifierConnectionDescriptor;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.plugin.export.SignalMLException;
-
-import org.springframework.validation.Errors;
 
 /**
  * This panel is composed of an signal source combo box which can be used to
@@ -245,11 +246,11 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener 
 	 * @param model the model for this dialog
 	 * @param errors the object in which errors are stored
 	 */
-	public void validatePanel(Object model, Errors errors) {
+	public void validatePanel(Object model, ValidationErrors errors) {
 		if (getSelectedSignalSource().isFile()) {
 			File selectedFile = fileSignalSourcePanel.getFileChooserPanel().getSelectedFile();
 			if (selectedFile == null)
-					errors.reject("opensignal.error.noFileSelected");
+				errors.addError(_("Please select a file"));
 		}
 	}
 

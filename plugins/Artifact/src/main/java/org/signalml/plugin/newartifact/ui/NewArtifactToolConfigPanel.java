@@ -7,6 +7,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.plugin.newartifact.data.NewArtifactConfiguration;
 
@@ -59,7 +60,7 @@ public class NewArtifactToolConfigPanel extends JPanel {
 
 	}
 
-	public void validatePanel(Errors errors) {
+	public void validatePanel(ValidationErrors errors) {
 
 		getWorkingDirectoryPanel().validatePanel(errors);
 

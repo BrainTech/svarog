@@ -22,6 +22,7 @@ import javax.swing.border.TitledBorder;
 
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.montage.filters.charts.TimeDomainFilterResponseChartGroupPanel;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
@@ -299,14 +300,14 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	}
 
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 		super.validateDialog(model, errors);
 
 		getFilterParametersPanel().validatePanel(model, errors);
 
 		fillModelFromDialog(currentFilter);
 		if (!validateCurrentFilterAndShowErrorMessage())
-			errors.reject("timeDomainFilter.badFilterParameters");
+			errors.addError(_("Bad filter parameters, please correct them."));
 	}
 
 }

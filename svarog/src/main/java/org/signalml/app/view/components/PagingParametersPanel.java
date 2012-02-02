@@ -16,6 +16,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.signal.PagingParameterDescriptor;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.plugin.export.SignalMLException;
@@ -269,22 +270,22 @@ public class PagingParametersPanel extends AbstractSignalMLPanel {
 	 * are positive.
 	 * @param errors the object in which the errors are stored
 	 */
-	public void validatePanel(Errors errors) {
+	public void validatePanel(ValidationErrors errors) {
 		try {
 			float pageSize = Float.parseFloat(getPageSizeField().getText());
 			if (pageSize <= 0) {
-				errors.rejectValue("pageSize", "error.pageSizeNegative", _("Page size must be positive"));
+				errors.addError(_("Page size must be positive"));
 			}
 		} catch (NumberFormatException ex) {
-			errors.rejectValue("pageSize", "error.invalidNumber", _("Invalid numeric value"));
+			errors.addError(_("Invalid numeric value"));
 		}
 		try {
 			int blocksPerPage = Integer.parseInt(getBlocksPerPageField().getText());
 			if (blocksPerPage <= 0) {
-				errors.rejectValue("blocksPerPage", "error.blocksPerPageNegative", _("Block count must be positive"));
+				errors.addError(_("Block count must be positive"));
 			}
 		} catch (NumberFormatException ex) {
-			errors.rejectValue("blocksPerPage", "error.invalidNumber", _("Invalid numeric value"));
+			errors.addError(_("Invalid numeric value"));
 		}
 	}
 

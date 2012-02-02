@@ -9,6 +9,7 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 import java.awt.Window;
 import javax.swing.JComponent;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
 import org.signalml.app.view.components.dialogs.AbstractDialog;
 import org.signalml.plugin.export.SignalMLException;
@@ -99,7 +100,7 @@ public class StartMonitorRecordingDialog extends AbstractDialog  {
 	 * @throws SignalMLException TODO when it is thrown
 	 */
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 		super.validateDialog(model, errors);
 
 		fillModelFromDialog(model);

@@ -9,6 +9,7 @@ import java.io.File;
 
 import javax.swing.JComponent;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.data.PluginConfigForMethod;
 import org.signalml.plugin.exception.PluginException;
@@ -80,7 +81,7 @@ public class NewArtifactToolConfigDialog extends org.signalml.plugin.export.view
 	}
 
 	@Override
-	public void validateDialog(Object model, Errors errors)
+	public void validateDialog(Object model, ValidationErrors errors)
 	throws SignalMLException {
 		super.validateDialog(model, errors);
 
@@ -90,9 +91,7 @@ public class NewArtifactToolConfigDialog extends org.signalml.plugin.export.view
 			File file = getConfigPanel().getWorkingDirectoryPanel()
 				    .getDirectory();
 			if (file == null || !file.exists() || !file.canWrite()) {
-				errors.rejectValue("workingDirectoryPath",
-						   "error.artifact.noWorkingDirectory");
-				// FIXME "Working directory not set or unusable"
+				errors.addError(_("Working directory not set or unusable"));
 			}
 		}
 

@@ -2,10 +2,9 @@ package org.signalml.plugin.fftsignaltool.dialogs;
 
 import javax.swing.JComponent;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.fftsignaltool.SignalFFTSettings;
-
-import org.springframework.validation.Errors;
 
 /**
  * Dialog which allows to select the parameters of the FFT.
@@ -90,13 +89,11 @@ public class SignalFFTSettingsDialog extends org.signalml.plugin.export.view.Abs
 	 * SignalFFTSettingsPanel#validatePanel(Errors) valid}.
 	 */
 	@Override
-	public void validateDialog(Object model, Errors errors)
+	public void validateDialog(Object model, ValidationErrors errors)
 			throws SignalMLException {
 		super.validateDialog(model, errors);
 
-		errors.pushNestedPath("settings");
 		signalFFTSettingsPanel.validatePanel(errors);
-		errors.popNestedPath();
 
 	}
 

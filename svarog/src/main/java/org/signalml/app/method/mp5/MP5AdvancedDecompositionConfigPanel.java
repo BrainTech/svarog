@@ -19,6 +19,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.SwingUtils;
 import org.signalml.app.view.components.CompactButton;
 import org.signalml.app.view.components.ResolvableComboBox;
@@ -226,7 +227,7 @@ public class MP5AdvancedDecompositionConfigPanel extends JPanel {
 
 	}
 
-	public void validatePanel(Errors errors) {
+	public void validatePanel(ValidationErrors errors) {
 
 		// nothing to do
 

@@ -20,6 +20,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.config.FFTWindowTypeSettings;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.math.fft.WindowType;
 
 import org.springframework.validation.Errors;
@@ -224,7 +225,7 @@ public class FFTWindowTypePanel extends JPanel {
 	 * {@code [WindowType#getParameterMin(), WindowType#getParameterMax()]}.
 	 * @param errors the object in which the errors are stored
 	 */
-	public void validatePanel(Errors errors) {
+	public void validatePanel(ValidationErrors errors) {
 
 		for (int i=0; i<windowTypes.length; i++) {
 			if (windowTypeRadioButtons[i].isSelected()) {
@@ -247,10 +248,10 @@ public class FFTWindowTypePanel extends JPanel {
 								parameterMaxString = "";
 							}
 
-							errors.rejectValue("windowParameter", "fftWindowTypeSettings.error.windowParameterOutOfRange", new Object[] { parameterMinString, parameterMaxString }, "signalFFTSettings.error.windowParameterOutOfRange");
+							errors.addError(_("Bad window parameter. Allowed range: ") + parameterMinString + "-" + parameterMaxString);
 						}
 					} catch (NumberFormatException ex) {
-						errors.rejectValue("windowParameter", "fftWindowTypeSettings.error.badWindowParameter", _("Bad window parameter. Must be a double precision value"));
+						errors.addError(_("Bad window parameter. Must be a double precision value"));
 					}
 
 				}

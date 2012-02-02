@@ -12,6 +12,7 @@ import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 
 import org.signalml.app.config.GeneralConfiguration;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.view.components.EmbeddedFileChooser;
 import org.signalml.app.view.components.ProfilePathTypePanel;
 import org.signalml.plugin.export.SignalMLException;
@@ -150,7 +151,7 @@ public class ProfilePathDialog extends AbstractDialog  {
 	 * directory).
 	 */
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 		if (!panel.getDefaultRadio().isSelected()) {
 			EmbeddedFileChooser fileChooser = panel.getFileChooser();
 
@@ -159,10 +160,10 @@ public class ProfilePathDialog extends AbstractDialog  {
 
 			if (f == null) {
 				logger.debug("Profile path not set");
-				errors.rejectValue("profilePath", "error.profilePathMustBeSet", _("A profile path must be chosen"));
+				errors.addError(_("A profile path must be chosen"));
 			} else if (f.exists() && !f.isDirectory()) {
 				logger.debug("Profile path is not to a directory");
-				errors.rejectValue("profilePath", "error.profilePathMustBeADirectory", _("The chosen profile path is not a directory"));
+				errors.addError(_("The chosen profile path is not a directory"));
 			}
 		}
 	}

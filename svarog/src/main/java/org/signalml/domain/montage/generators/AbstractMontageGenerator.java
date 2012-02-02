@@ -2,7 +2,7 @@ package org.signalml.domain.montage.generators;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
-import org.springframework.validation.Errors;
+import org.signalml.app.model.components.validation.ValidationErrors;
 
 /**
  * An abstract version implementing the {@link IMontageGenerator} capable
@@ -28,8 +28,8 @@ public abstract class AbstractMontageGenerator implements IMontageGenerator {
 	* EegChannel.A2 {@link Channel function} was not found.
 	* @param errors an Errors object used to report errors
 	*/
-	protected void onNotFound(String channelName, Errors errors) {
-		errors.reject("montageGenerator.error.missingChannel", new Object[]{channelName}, "montageGenerator.error.missingChannel");
+	protected void onNotFound(String channelName, ValidationErrors errors) {
+		errors.addError(_("One of required channels not identified: ") + channelName);
 	}
 	
 	@Override

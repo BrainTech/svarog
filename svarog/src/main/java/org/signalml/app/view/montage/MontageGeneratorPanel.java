@@ -23,11 +23,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.montage.MontageGeneratorListModel;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.components.CompactButton;
 import org.signalml.app.view.components.ResolvableComboBox;
 import org.signalml.app.view.components.dialogs.ErrorsDialog;
+import org.signalml.app.view.components.dialogs.validation.ValidationErrorsDialog;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.generators.IMontageGenerator;
@@ -88,7 +90,7 @@ public class MontageGeneratorPanel extends JPanel {
 	 * <li>when {@link #getShowErrorsAction() ShowErrorsAction} is performed,</li>
 	 * </ul>
 	 */
-	private ErrorsDialog errorsDialog;
+	private ValidationErrorsDialog errorsDialog;
 
 	/**
 	 * the {@link ShowErrorsAction action} which displays the.
@@ -225,7 +227,7 @@ public class MontageGeneratorPanel extends JPanel {
 	 *         <li>the {@link #getMontage() montage} can not be used to generate
 	 *         the
 	 */
-	public ErrorsDialog getErrorsDialog() {
+	public ValidationErrorsDialog getErrorsDialog() {
 		return errorsDialog;
 	}
 
@@ -241,7 +243,7 @@ public class MontageGeneratorPanel extends JPanel {
 	 *            <li>the {@link #getMontage() montage} can not be used to
 	 *            generate the
 	 */
-	public void setErrorsDialog(ErrorsDialog errorsDialog) {
+	public void setErrorsDialog(ValidationErrorsDialog errorsDialog) {
 		this.errorsDialog = errorsDialog;
 	}
 
@@ -400,11 +402,11 @@ public class MontageGeneratorPanel extends JPanel {
 	 */
 	public void tryGenerate(IMontageGenerator generator) {
 
-		Errors errors = new BindException(montage, "montage");
+		ValidationErrors errors = new ValidationErrors();
 		generator.validateSourceMontage(montage, errors);
 
 		if (errors.hasErrors()) {
-			errorsDialog.showErrors(errors);
+			errorsDialog.showDialog(errors);
 
 			if (montage.getMontageGenerator() != null)
 				montageGeneratorListModel.setSelectedItem(montage.getMontageGenerator());
@@ -418,7 +420,7 @@ public class MontageGeneratorPanel extends JPanel {
 			generator.createMontage(montage);
 		} catch (MontageException ex) {
 			logger.error("Montage generation failed", ex);
-			errorsDialog.showException(ex);
+			ErrorsDialog.showImmediateExceptionDialog(this, ex);
 			quietSetSelectedGenerator(null);
 			return;
 		}
@@ -446,7 +448,7 @@ public class MontageGeneratorPanel extends JPanel {
 		IMontageGenerator generator = (IMontageGenerator) item;
 
 		if (montage != null) {
-			Errors errors = new BindException(montage, "montage");
+			ValidationErrors errors = new ValidationErrors();
 			generator.validateSourceMontage(montage, errors);
 			boolean hasErrors = errors.hasErrors();
 
@@ -494,11 +496,11 @@ public class MontageGeneratorPanel extends JPanel {
 
 			IMontageGenerator generator = (IMontageGenerator) item;
 
-			Errors errors = new BindException(montage, "montage");
+			ValidationErrors errors = new ValidationErrors();
 			generator.validateSourceMontage(montage, errors);
 
 			if (errors.hasErrors()) {
-				errorsDialog.showErrors(errors);
+				errorsDialog.showDialog(errors);
 			}
 
 		}

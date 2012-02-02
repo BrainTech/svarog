@@ -20,6 +20,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 
@@ -132,14 +133,14 @@ public class MP5ResultBookPanel extends JPanel {
 
 	}
 
-	public void validatePanel(Errors errors) {
+	public void validatePanel(ValidationErrors errors) {
 
 		if (bookFile == null) {
-			errors.rejectValue("bookFile", "error.mp5.result.badBookFile", _("Book file not chosen"));
+			errors.addError(_("Book file not chosen"));
 		} else {
 			File parent = bookFile.getParentFile();
 			if (parent == null || !parent.exists() || !parent.canWrite()) {
-				errors.rejectValue("bookFile", "error.mp5.result.bookFileNotWritable", _("Book file parent directory doesn't exist or not writable"));
+				errors.addError(_("Book file parent directory doesn't exist or not writable"));
 			}
 		}
 

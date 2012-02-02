@@ -40,6 +40,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.view.components.dialogs.KeyStrokeCaptureDialog;
 import org.signalml.app.view.tag.TagRenderer;
 import org.signalml.app.view.tag.styles.attributes.TagAttributesDefinitionsEditPanel;
@@ -996,14 +997,14 @@ public class TagStylePropertiesPanel extends JPanel {
 	 * any bad characters.
 	 * @return the object in which errors are stored
 	 */
-	public Errors validateChanges() {
-		Errors errors = new BindException(currentStyle, "data");
+	public ValidationErrors validateChanges() {
+		ValidationErrors errors = new ValidationErrors();
 		String name = getNameTextField().getText();
 		if (name == null || name.isEmpty())
-			errors.rejectValue("name", "error.style.nameEmpty", _("Tag style name cannot be empty"));
+			errors.addError(_("Tag style name cannot be empty"));
 
 		if (Util.hasSpecialChars(name))
-			errors.rejectValue("name", "error.style.nameBadCharacters", _("Tag style name must not contain control characters"));
+			errors.addError(_("Tag style name must not contain control characters"));
 
 		return errors;
 	}

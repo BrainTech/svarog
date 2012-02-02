@@ -1,62 +1,41 @@
-/* ErrorsDialog.java created 2007-09-19
- *
- */
+package org.signalml.app.view.components.dialogs.validation;
 
-package org.signalml.app.view.components.dialogs;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Window;
 
-import javax.swing.AbstractListModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import org.springframework.validation.Errors;
-
-import org.apache.log4j.Logger;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
-import org.signalml.exception.ResolvableException;
+import org.signalml.app.view.components.dialogs.AbstractDialog;
 import org.signalml.plugin.export.SignalMLException;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
-import org.springframework.context.MessageSourceResolvable;
-import org.springframework.validation.Errors;
-
 /**
- * Dialog with the list of errors.
- * Contains only the list of errors/exceptions which is located within
- * a scroll pane.
- * <p>
- * Contains a {@link #showImmediateExceptionDialog(Window, Throwable) static
- * function} which displays the dialog with the provided exception.
- *
- * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
+ * Dialog for showing {@link ValidationErrors}.
+ * 
+ * @author Piotr Szachewicz
  */
-public class ErrorsDialog extends AbstractDialog  {
-
+public class ValidationErrorsDialog extends AbstractDialog {
 	/**
 	 * An enum containing possible user responses in a dialog.
 	 */
 	public static enum DIALOG_OPTIONS { YES, NO };
-	private static final long serialVersionUID = 1L;
-	protected static final Logger logger = Logger.getLogger(ErrorsDialog.class);
-
+	
 	/**
 	 * The preferred size of the scroll pane which contains the errors jlist.
 	 */
@@ -79,7 +58,7 @@ public class ErrorsDialog extends AbstractDialog  {
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public ErrorsDialog(Window w, boolean isModal) {
+	public ValidationErrorsDialog(Window w, boolean isModal) {
 		super(w, isModal);
 	}
 
@@ -91,7 +70,7 @@ public class ErrorsDialog extends AbstractDialog  {
 	 * @param titleCode  the code to obtain the title for this dialog from the
 	 * source of messages; if the code is {@code null} the default title is used
 	 */
-	public ErrorsDialog(Window w, boolean isModal, String titleCode) {
+	public ValidationErrorsDialog(Window w, boolean isModal, String titleCode) {
 		super(w, isModal);
 		this.titleCode = titleCode;
 	}
@@ -148,7 +127,7 @@ public class ErrorsDialog extends AbstractDialog  {
 				JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
 				label.setIcon(icon);
-				String text = ((MessageSourceResolvable) value).getDefaultMessage();
+				String text = (String) value;
 
 				int maximumTextWidth = getMaximumTextWidth();
 				text = wrapTextForLabelIfNecessary(text, maximumTextWidth);
@@ -205,75 +184,11 @@ public class ErrorsDialog extends AbstractDialog  {
 	 */
 	@Override
 	protected void fillDialogFromModel(Object model) throws SignalMLException {
-		if (model instanceof Errors) {
-			Errors errors = (Errors) model;
-			Object[] errArr = errors.getAllErrors().toArray();
-			errorList.setModel(new ErrorListModel(errArr));
-		} else if (model instanceof MessageSourceResolvable) {
-			errorList.setModel(new ErrorListModel(new Object[] { model }));
-		} else {
-			throw new ClassCastException();
-		}
-	}
-
-	/**
-	 * Shows a simple dialog with OK button showing the specified error message.
-	 * @param message the error
-	 */
-	public static void showError(String message) {
-		JOptionPane.showMessageDialog(null, message, message, JOptionPane.ERROR_MESSAGE);
-	}
-
-	/**
-	 * Shows a warning/confirmation dialog with Yes/No buttons.
-	 * @param warningCode the code of the message shown in the dialog
-	 * @return the button user pressed in the dialog
-	 */
-	public static DIALOG_OPTIONS showWarningYesNoDialog(String warning) {
-		Object[] options = {_("Yes"), _("No")};
 		
-		int selectedIndex = JOptionPane.showOptionDialog(null,
-			warning,
-			_("Warning"),
-			JOptionPane.YES_NO_OPTION,
-			JOptionPane.WARNING_MESSAGE,
-			null,
-			options,
-			options[1]);
-		
-		if (selectedIndex == 0)
-			return DIALOG_OPTIONS.YES;
-		else
-			return DIALOG_OPTIONS.NO;
-
-	}
-
-	/**
-	 * Shows this dialog with the list of errors from the provided object.
-	 * @param errors the Errors object from which errors are to be shown
-	 * @return if this dialog was closed with OK
-	 */
-	public boolean showErrors(Errors errors) {
-		setTitle(_("Errors in data"));
-		return showDialog(errors,true);
-	}
-
-	/**
-	 * Shows this dialog with just one element - the provided throwable.
-	 * If the throwable is of type {@link MessageSourceResolvable} it is simply
-	 * used, otherwise the {@link ResolvableException} is created from it.
-	 * @param t the throwable to be displayed
-	 * @return if this dialog was closed with OK
-	 */
-	public boolean showException(Throwable t) {
-		setTitle(_("Exception occured"));
-		MessageSourceResolvable resolvable;
-		if (t instanceof MessageSourceResolvable) {
-			resolvable = (MessageSourceResolvable) t;
-		} else {
-			resolvable = new ResolvableException(t);
+		if (model instanceof ValidationErrors) {
+			ValidationErrors errors = (ValidationErrors) model;
+			errorList.setModel(errors);
 		}
-		return showDialog(resolvable,true);
 	}
 
 	/**
@@ -290,96 +205,7 @@ public class ErrorsDialog extends AbstractDialog  {
 	 */
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
-		return Errors.class.isAssignableFrom(clazz) || MessageSourceResolvable.class.isAssignableFrom(clazz);
-	}
-
-	/**
-	 * The model for the list of errors.
-	 */
-	private class ErrorListModel extends AbstractListModel {
-
-		private static final long serialVersionUID = 1L;
-
-		/**
-		 * the array containing errors.
-		 */
-		private Object[] errors;
-
-		/**
-		 * Creates this model and sets the data for it (errors).
-		 * @param errors the array containing errors/exceptions
-		 */
-		public ErrorListModel(Object[] errors) {
-			super();
-			this.errors = errors;
-		}
-
-		@Override
-		public Object getElementAt(int index) {
-			return errors[index];
-		}
-
-		@Override
-		public int getSize() {
-			return errors.length;
-		}
-
-	}
-
-	/**
-	 * Shows the {@link ErrorsDialog} with the provided exception.
-	 * The dialog is shown in the Event Dispatching Thread.
-	 * @param c the component from which the parent window for this dialog
-	 * will be retrieved
-	 * @param t the exception to be displayed
-	 */
-	public static void showImmediateExceptionDialog(final JComponent c, final Throwable t) {
-
-		Window w = null;
-		if (c != null) {
-			Container cont = c.getTopLevelAncestor();
-			if (cont instanceof Window) {
-				w = (Window) cont;
-			}
-		}
-
-		showImmediateExceptionDialog(w, t);
-
-
-	}
-
-	/**
-	 * Shows the {@link ErrorsDialog} with the provided exception.
-	 * The dialog is shown in the Event Dispatching Thread.
-	 * @param w the parent window or null if there is no parent
-	 * @param t the exception to be displayed
-	 */
-	public static void showImmediateExceptionDialog(final Window w, final Throwable t) {
-
-		Runnable job = new Runnable() {
-
-			@Override
-			public void run() {
-
-				ErrorsDialog errorsDialog = new ErrorsDialog(w, true, _("Exception occured"));
-
-				MessageSourceResolvable resolvable;
-				if (t instanceof MessageSourceResolvable) {
-					resolvable = (MessageSourceResolvable) t;
-				} else {
-					resolvable = new ResolvableException(t);
-				}
-
-				errorsDialog.showDialog(resolvable, true);
-
-				logger.debug("Exception dialog shown", t);
-
-			}
-
-		};
-
-		SwingUtilities.invokeLater(job);
-
+		return ValidationErrors.class.isAssignableFrom(clazz);
 	}
 
 }
