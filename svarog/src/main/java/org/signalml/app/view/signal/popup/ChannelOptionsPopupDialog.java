@@ -38,17 +38,13 @@ import org.signalml.plugin.export.view.AbstractPopupDialog;
  */
 public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements ChangeListener, ActionListener {
 
-	public ChannelOptionsPopupDialog(
-			Window w, boolean isModal) {
-		super(w, isModal);
-	}
-
 	private static final long serialVersionUID = 1L;
 
 	/*
 	 * parent's plot (self's model)
 	 */
 	private SignalPlot currentPlot;
+	private JSlider valueScaleSlider;
 	/*
 	 * value scale model for current channel
 	 */
@@ -56,7 +52,7 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 	/*
 	 * ignore-global-scale value for current channel
 	 */
-	private JCheckBox ignoreGlobalScale;
+	private JCheckBox useLocalScaleCheckbox;
 	/*
 	 * current channel index
 	 */
@@ -66,6 +62,11 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 	 */
 	private ChannelPlotOptionsModel model;
 
+	public ChannelOptionsPopupDialog(
+			Window w, boolean isModal) {
+		super(w, isModal);
+	}
+	
 	@Override
 	public JComponent createInterface() {
 
@@ -110,9 +111,9 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 	 * @returns JPanel with checkbox
 	 */
 	private JPanel getIgnoreGlobalPanel() {
-		ignoreGlobalScale =  new JCheckBox(_("Ignore global scale"));
+		useLocalScaleCheckbox =  new JCheckBox(_("Use local scale"));
 		JPanel p = new JPanel(new BorderLayout());
-		p.add(ignoreGlobalScale, BorderLayout.NORTH);
+		p.add(useLocalScaleCheckbox, BorderLayout.NORTH);
 		return p;
 	}
 	
@@ -134,7 +135,7 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 	 */
 	private JPanel getValueScalePanel() {
 		
-		JSlider valueScaleSlider = new JSlider(new DefaultBoundedRangeModel()) {
+		valueScaleSlider = new JSlider(new DefaultBoundedRangeModel()) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -191,7 +192,16 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 			this.model.setVisible(true);
 
 		this.setInitialVoltageScale(this.model.getVoltageScale());
-		this.ignoreGlobalScale.getModel().setSelected(this.model.getIgnoreGlobalScale());
+		this.useLocalScaleCheckbox.getModel().setSelected(this.model.isUseLocalScale());
+		valueScaleSlider.setEnabled(useLocalScaleCheckbox.isSelected());
+		
+		this.useLocalScaleCheckbox.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				valueScaleSlider.setEnabled(useLocalScaleCheckbox.isSelected());
+				ChannelOptionsPopupDialog.this.model.setUseLocalScale(useLocalScaleCheckbox.isSelected());
+			}
+		});
 	}
 
 	/*
@@ -201,8 +211,6 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 	 */
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
-
-		this.model.setIgnoreGlobalScale(this.ignoreGlobalScale.getModel().isSelected());		
 	}
 
 	@Override
@@ -234,7 +242,6 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 		Object source = e.getSource();
 		if (source == this.valueScaleModel) {
 			this.model.setVoltageScale(this.valueScaleModel.getValue());
-
 		}
 		
 	}
@@ -248,7 +255,6 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 		//assumed 'hide' performed
 		this.model.setVisible(false);
 		this.getOkAction().actionPerformed(null);
-		
 	}
 
 }
