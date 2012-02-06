@@ -1,5 +1,6 @@
 package org.signalml.domain.montage.generators;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.montage.SourceChannel;
 
 /**
@@ -18,7 +19,7 @@ public class LinkedEarsMontageGenerator extends AverageReferenceMontageGenerator
 		super(new String[] {
 			SourceChannel.LEFT_EAR_CHANNEL_NAME,
 			SourceChannel.RIGHT_EAR_CHANNEL_NAME});
-		setCode("montageGenerator.linkedEars");
+		setName(_("Linked ears montage"));
 	}
 
 }

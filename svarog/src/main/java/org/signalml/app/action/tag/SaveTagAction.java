@@ -7,6 +7,7 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.Window;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
@@ -35,6 +36,7 @@ public class SaveTagAction extends AbstractFocusableSignalMLAction<TagDocumentFo
 		setText(_("Save Tag"));
 		setIconPath("org/signalml/app/icon/filesave.png");
 		setToolTip(_("Save active tag"));
+		setMnemonic(KeyEvent.VK_S);
 	}
 
 	@Override

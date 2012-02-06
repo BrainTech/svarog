@@ -6,6 +6,7 @@ package org.signalml.app.action.book;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -46,17 +47,23 @@ public class OpenBookDocumentAction extends AbstractSignalMLAction {
 		setText(_("Open book"));
 		setIconPath("org/signalml/app/icon/fileopen.png");
 		setToolTip(_("Open a book document from a file"));
+		setMnemonic(KeyEvent.VK_B);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+		String lastFileChooserPath = documentFlowIntegrator.getApplicationConfig().getLastFileChooserPath();
+		getFileChooser().setCurrentDirectory(new File(lastFileChooserPath));
+		
 		getFileChooser().showOpenDialog(null);
 		File selectedFile = getFileChooser().getSelectedFile();
 
 		if (selectedFile == null) {
 			return;
 		}
+		
+		documentFlowIntegrator.getApplicationConfig().setLastFileChooserPath(selectedFile.getParentFile().getPath());
 
 		OpenDocumentDescriptor openDocumentDescriptor = new OpenDocumentDescriptor();
 		openDocumentDescriptor.setType(ManagedDocumentType.BOOK);
@@ -80,8 +87,7 @@ public class OpenBookDocumentAction extends AbstractSignalMLAction {
 	 */
 	protected JFileChooser getFileChooser() {
 		if (fileChooser == null) {
-			String lastOpenDocumentPath = documentFlowIntegrator.getApplicationConfig().getLastOpenDocumentPath();
-			fileChooser = new JFileChooser(lastOpenDocumentPath);
+			fileChooser = new JFileChooser();
 
 			FileFilter[] fileFilters = ManagedDocumentType.BOOK.getFileFilters();
 

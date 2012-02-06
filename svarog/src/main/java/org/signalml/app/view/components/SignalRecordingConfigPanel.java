@@ -13,6 +13,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import org.signalml.app.config.ApplicationConfiguration;
+import org.signalml.app.model.components.validation.ValidationErrors;
 
 import org.springframework.validation.Errors;
 
@@ -121,11 +122,11 @@ public class SignalRecordingConfigPanel extends JPanel {
 	 * Validates this panel.
 	 * @param errors the object in which the errors should be stored
 	 */
-	public void validate(Errors errors) {
+	public void validate(ValidationErrors errors) {
                 try {
 			Float.parseFloat(getFrequencyTextField().getText());
 		} catch (NumberFormatException ex) {
-                        errors.reject("error.invalidNumber");
+			errors.addError(_("Invalid numeric value"));
 		}
 	}
 }

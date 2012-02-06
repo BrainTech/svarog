@@ -21,6 +21,7 @@ import org.signalml.app.action.signal.RemoveCodecAction;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.method.mp5.MP5ExecutorManager;
 import org.signalml.app.method.mp5.MP5LocalExecutorDialog;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.signal.SignalMLCodecListModel;
 import org.signalml.app.view.components.CodecManagerConfigPanel;
 import org.signalml.app.view.components.MiscellaneousConfigPanel;
@@ -406,17 +407,15 @@ public class ApplicationPreferencesDialog extends AbstractDialog  {
 	 * </ul>
 	 */
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 		super.validateDialog(model, errors);
 
 		signalViewingConfigPanel.validate(errors);
 		taggingConfigPanel.validate(errors);
 		miscellaneousConfigPanel.validate(errors);
-                signalRecordingConfigPanel.validate(errors);
+		signalRecordingConfigPanel.validate(errors);
 
-		errors.pushNestedPath("zoomSignalSettings");
 		signalZoomSettingsPanel.validate(errors);
-		errors.popNestedPath();
 
 		if (mode == SignalMLOperationMode.APPLICATION) {
 			toolsConfigPanel.validatePanel(errors);

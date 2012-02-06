@@ -20,6 +20,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.domain.book.filter.TagBasedAtomFilter;
@@ -136,13 +137,13 @@ public class BookFilterChooseTagPanel extends JPanel {
 
 	}
 
-	public void validatePanel(Errors errors) {
+	public void validatePanel(ValidationErrors errors) {
 
 		if (tagFile == null) {
-			errors.rejectValue("tagFilePath", "tagBasedFilter.error.badTagFile", _("Tag file not chosen"));
+			errors.addError(_("Tag file not chosen"));
 		} else {
 			if (!tagFile.exists() || !tagFile.canRead()) {
-				errors.rejectValue("tagFilePath", "tagBasedFilter.error.tagFileNotReadable", _("Tag file doesn't exist or is unreadable"));
+				errors.addError(_("Tag file doesn't exist or is unreadable"));
 			}
 		}
 

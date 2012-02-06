@@ -9,6 +9,7 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
@@ -39,6 +40,7 @@ public class StopMonitorRecordingAction extends MonitorRecordingAction {
 		setIconPath("org/signalml/app/icon/stop-recording.png");
 		setText(_("Stop monitor recording"));
 		setToolTip(_("Stop to record signal and tags to a file"));
+		setMnemonic(KeyEvent.VK_P);
 
 	}
 

@@ -4,20 +4,19 @@
 
 package org.signalml.app.view.document.opensignal;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.Window;
+
 import javax.swing.JComponent;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
-import org.signalml.app.model.document.opensignal.OpenSignalDescriptor;
 import org.signalml.app.view.montage.EegSystemSelectionPanel;
 import org.signalml.app.view.montage.SignalMontageDialog;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.domain.montage.Montage;
 import org.signalml.plugin.export.SignalMLException;
-
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
-import org.springframework.validation.Errors;
 
 /**
  * The dialog for opening signal and setting montage for the signal in the same
@@ -143,7 +142,7 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 	}
 
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 		signalSourcePanel.validatePanel(model, errors);
 		super.validateDialog(model, errors);
 	}

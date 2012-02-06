@@ -38,10 +38,12 @@ import javax.swing.event.ChangeListener;
 import org.signalml.app.method.ApplicationMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.MethodConfigurer;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.SwingUtils;
 import org.signalml.app.view.components.ResolvableComboBox;
 import org.signalml.app.view.components.dialogs.AbstractDialog;
+import org.signalml.app.view.components.dialogs.ErrorsDialog;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.method.iterator.IterableMethod;
 import org.signalml.method.iterator.IterableNumericParameter;
@@ -283,7 +285,7 @@ public class IterationSetupDialog extends AbstractDialog  {
 	}
 
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 
 		super.validateDialog(model, errors);
 
@@ -296,7 +298,7 @@ public class IterationSetupDialog extends AbstractDialog  {
 		}
 
 		if (!anyIterated) {
-			errors.reject("error.nothingIterated");
+			errors.addError(_("You must choose at least one parameter to iterate over"));
 		}
 
 	}
@@ -511,7 +513,7 @@ public class IterationSetupDialog extends AbstractDialog  {
 				}
 			} catch (SignalMLException ex) {
 				logger.error("Failed to configure base data", ex);
-				getErrorsDialog().showException(ex);
+				ErrorsDialog.showImmediateExceptionDialog(IterationSetupDialog.this, ex);
 				return;
 			}
 

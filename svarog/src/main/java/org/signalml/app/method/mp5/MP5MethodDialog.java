@@ -43,6 +43,7 @@ import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.InitializingMethodConfigurer;
 import org.signalml.app.method.MethodPresetManager;
 import org.signalml.app.method.PresetEquippedMethodConfigurer;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.components.SignalSpacePanel;
@@ -513,13 +514,10 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 	}
 
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 
-		errors.pushNestedPath("parameters");
 
-		errors.pushNestedPath("signalSpace");
 		getSignalSpacePanel().validatePanel(errors);
-		errors.popNestedPath();
 
 		if (rawMode) {
 			getRawConfigPanel().validatePanel(errors);
@@ -528,8 +526,6 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 			getAdvancedConfigPanel().validatePanel(errors);
 			getExpertConfigPanel().validatePanel(errors);
 		}
-
-		errors.popNestedPath();
 
 		if (rawMode) {
 			getRawConfigPanel().getExecutorPanel().validatePanel(errors);
@@ -735,7 +731,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 
 			Object currentModel = getCurrentModel();
 			if (currentModel != null) {
-				Errors errors = new BindException(currentModel, "data");
+				ValidationErrors errors = new ValidationErrors();
 				try {
 					validateDialog(currentModel,errors);
 				} catch (SignalMLException ex) {

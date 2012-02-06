@@ -23,6 +23,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.document.SignalDocument;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.montage.MontageDescriptor;
 import org.signalml.app.view.components.FileSelectPanel;
 import org.signalml.domain.montage.Montage;
@@ -173,7 +174,7 @@ public class EEGLabExportDialog extends AbstractDialog   {
          * @throws SignalMLException TODO when it is thrown
          */
         @Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 
                 super.validateDialog(model, errors);
 		fillModelFromDialog(model);
@@ -182,15 +183,15 @@ public class EEGLabExportDialog extends AbstractDialog   {
                 File file = new File(fileName);
 
 		if (fileName.isEmpty()) {
-			errors.reject("error.eeglabExport.incorrectFileName");
+			errors.addError(_("Please input a filename"));
 		}
 		else if (file.exists()) {
 			int anwser = JOptionPane.showConfirmDialog(null, _("File already exists! Do you want to overwrite?"));
 			if (anwser == JOptionPane.CANCEL_OPTION || anwser == JOptionPane.NO_OPTION)
-				errors.reject("");
+				errors.addError("");
 
                         if (!file.canWrite()) {
-                                errors.reject("error.eeglabExport.cantWrite");
+                        	errors.addError(_("File cannot be written"));
                         }
 		}
 	}

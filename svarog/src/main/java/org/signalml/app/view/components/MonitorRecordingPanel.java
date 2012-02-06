@@ -21,6 +21,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.validation.BindException;
@@ -153,7 +154,7 @@ public class MonitorRecordingPanel extends AbstractSignalMLPanel {
          * @param model the model for this dialog
          * @param errors the object in which errors are stored
          */
-        public void validatePanel(Object model, Errors errors) {
+        public void validatePanel(Object model, ValidationErrors errors) {
                 if (isRecordingEnabled()) {
                         getChooseFilesForMonitorRecordingPanel().validatePanel(model, errors);
                 }

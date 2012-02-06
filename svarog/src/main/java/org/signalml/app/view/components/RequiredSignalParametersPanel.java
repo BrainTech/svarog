@@ -19,6 +19,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.signal.SignalParameterDescriptor;
 import org.signalml.plugin.export.SignalMLException;
 
@@ -339,35 +340,35 @@ public class RequiredSignalParametersPanel extends JPanel implements FocusListen
 	 * @param errors the object in which errors are stored
 	 * @throws SignalMLException never thrown
 	 */
-	public void validatePanel(SignalParameterDescriptor spd, Errors errors) throws SignalMLException {
+	public void validatePanel(SignalParameterDescriptor spd, ValidationErrors errors) throws SignalMLException {
 		if (spd.isSamplingFrequencyEditable()) {
 			try {
 				float samplingFrequency = Float.parseFloat(getSamplingFrequencyField().getText());
 				if (samplingFrequency <= 0) {
-					errors.rejectValue("samplingFrequency", "error.samplingFrequencyNegative", _("Sampling frequency must be positive"));
+					errors.addError(_("Sampling frequency must be positive"));
 				}
 			} catch (NumberFormatException ex) {
-				errors.rejectValue("samplingFrequency", "error.invalidNumber", _("Invalid numeric value"));
+				errors.addError(_("Invalid numeric value"));
 			}
 		}
 		if (spd.isChannelCountEditable()) {
 			try {
 				int channelCount = Integer.parseInt(getChannelCountField().getText());
 				if (channelCount <= 0) {
-					errors.rejectValue("channelCount", "error.channelCountNegative", _("Channel count must be positive"));
+					errors.addError(_("Channel count must be positive"));
 				}
 			} catch (NumberFormatException ex) {
-				errors.rejectValue("channelCount", "error.invalidNumber", _("Invalid numeric value"));
+				errors.addError(_("Invalid numeric value"));
 			}
 		}
 		if (spd.isCalibrationEditable()) {
 			try {
 				float calibration = Float.parseFloat(getCalibrationGainField().getText());
 				if (calibration <= 0) {
-					errors.rejectValue("calibration", "error.calibrationNegative", _("Calibration must be positive"));
+					errors.addError(_("Calibration must be positive"));
 				}
 			} catch (NumberFormatException ex) {
-				errors.rejectValue("calibration", "error.invalidNumber", _("Invalid numeric value"));
+				errors.addError(_("Invalid numeric value"));
 			}
 		}
 	}

@@ -19,6 +19,7 @@ import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.config.ZoomSignalSettings;
+import org.signalml.app.model.components.validation.ValidationErrors;
 
 import org.springframework.validation.Errors;
 
@@ -236,7 +237,7 @@ public class SignalZoomSettingsPanel extends JPanel {
 	 * Validates this panel. This panel is always valid.
 	 * @param errors the object in which the errors should be stored
 	 */
-	public void validate(Errors errors) {
+	public void validate(ValidationErrors errors) {
 		// do nothing
 	}
 

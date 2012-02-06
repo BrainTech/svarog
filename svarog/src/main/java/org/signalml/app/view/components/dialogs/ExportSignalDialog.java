@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.app.view.components.ExportSignalOptionsPanel;
 import org.signalml.app.view.components.SignalSpacePanel;
@@ -190,7 +191,7 @@ public class ExportSignalDialog extends AbstractSignalSpaceAwarePresetDialog {
 	 * valid.
 	 */
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 		super.validateDialog(model, errors);
 
 		getSignalSpacePanel().validatePanel(errors);

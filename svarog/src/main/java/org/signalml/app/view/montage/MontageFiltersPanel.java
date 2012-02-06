@@ -172,7 +172,7 @@ public class MontageFiltersPanel extends JPanel {
 	 * a {@link ResolvableComboBox} allowing to select a predefined.
 	 * {@link TimeDomainSampleFilter} to be added to the signal chain
 	 */
-	private ResolvableComboBox timeDomainFilterTypeComboBox;
+	private JComboBox timeDomainFilterTypeComboBox;
 
 	/**
 	 * a {@link JComboBox} allowing to select the initial parameters of the
@@ -590,9 +590,9 @@ public class MontageFiltersPanel extends JPanel {
 	 * signal chain.
 	 * @return the {@link ResolvableComboBox} to select a predefined filter
 	 */
-	public ResolvableComboBox getTimeDomainFilterTypeComboBox() {
+	public JComboBox getTimeDomainFilterTypeComboBox() {
 		if (timeDomainFilterTypeComboBox == null) {
-			timeDomainFilterTypeComboBox = new ResolvableComboBox();
+			timeDomainFilterTypeComboBox = new JComboBox();
 			timeDomainFilterTypeComboBox.setPreferredSize(new Dimension(200, 25));
 		}
 		return timeDomainFilterTypeComboBox;
@@ -788,7 +788,7 @@ public class MontageFiltersPanel extends JPanel {
 		SampleFilterDefinition[] arr = new SampleFilterDefinition[predefinedFilters.size()];
 		predefinedFilters.toArray(arr);
 		DefaultComboBoxModel model = new DefaultComboBoxModel(arr);
-		ResolvableComboBox comboBox = getTimeDomainFilterTypeComboBox();
+		JComboBox comboBox = getTimeDomainFilterTypeComboBox();
 		comboBox.setModel(model);
 		comboBox.setSelectedIndex(0);
 		comboBox.repaint();

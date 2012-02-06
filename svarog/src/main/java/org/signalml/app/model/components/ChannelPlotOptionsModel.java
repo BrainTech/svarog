@@ -11,11 +11,11 @@ public class ChannelPlotOptionsModel {
 	/*
 	 * is the channel to be visible?
 	 */
-	private boolean visible=true;
+	private boolean visible = true;
 	/*
-	 * is the channel to ignore global scale value?
+	 * should local voltageScale be used to scale this channel?
 	 */
-	private boolean ignoreGlobalScale=false;
+	private boolean useLocalScale = false;
 	/*
 	 * channel's local voltage scale value
 	 */
@@ -47,15 +47,16 @@ public class ChannelPlotOptionsModel {
 	}
 	public void setVoltageScale(int volotageScale) {
 		this.voltageScale = volotageScale;
-		this.parent.modelChanged();
+		if (useLocalScale)
+			this.parent.modelChanged();
 	}
 	
-	public void setIgnoreGlobalScale(boolean value) {
-		this.ignoreGlobalScale = value;
+	public void setUseLocalScale(boolean value) {
+		this.useLocalScale = value;
 		this.parent.modelChanged();
 	}
-	public boolean getIgnoreGlobalScale() {
-		return this.ignoreGlobalScale;
+	public boolean isUseLocalScale() {
+		return this.useLocalScale;
 	}
 	
 	/*
@@ -63,7 +64,8 @@ public class ChannelPlotOptionsModel {
 	 * @param globalScale voltage scale value to be set for this model
 	 */
 	public void globalScaleChanged(int globalScale) {
-		if (!this.ignoreGlobalScale)
+		if (!this.useLocalScale)
 			this.voltageScale = globalScale; //Achtung - not calling 'changed' deliberately;
 	}
+
 }

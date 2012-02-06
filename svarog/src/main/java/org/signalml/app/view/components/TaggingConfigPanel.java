@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.config.ApplicationConfiguration;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.signal.PagingParameterDescriptor;
 import org.signalml.domain.montage.Montage;
 import org.signalml.plugin.export.SignalMLException;
@@ -153,7 +154,7 @@ public class TaggingConfigPanel extends JPanel {
 	 * {@link PagingParametersPanel#validatePanel(Errors) valid}.
 	 * @param errors the variable in which errors are stored.
 	 */
-	public void validate(Errors errors) {
+	public void validate(ValidationErrors errors) {
 
 		pagingParametersPanel.validatePanel(errors);
 

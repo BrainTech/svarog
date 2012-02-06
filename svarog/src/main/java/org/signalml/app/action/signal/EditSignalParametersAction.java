@@ -7,6 +7,7 @@ package org.signalml.app.action.signal;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.util.LinkedList;
 
 import org.apache.log4j.Logger;
@@ -37,6 +38,7 @@ public class EditSignalParametersAction extends AbstractFocusableSignalMLAction<
 		setText(_("Signal parameters"));
 		setIconPath("org/signalml/app/icon/signalparameters.png");
 		setToolTip(_("Change signal parameters"));
+		setMnemonic(KeyEvent.VK_P);
 	}
 
 	@Override

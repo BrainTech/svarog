@@ -10,6 +10,7 @@ import java.awt.Window;
 
 import javax.swing.JComponent;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.montage.SourceMontageDescriptor;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.components.dialogs.AbstractDialog;
@@ -76,7 +77,7 @@ public class SourceMontageDialog extends AbstractDialog  {
 	}
 
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 
 	}
 

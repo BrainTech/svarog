@@ -22,6 +22,7 @@ import org.apache.log4j.Logger;
 import org.signalml.app.action.util.ListSelectAllAction;
 import org.signalml.app.action.util.ListSelectInvertAction;
 import org.signalml.app.action.util.ListSelectNoneAction;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.domain.signal.space.ChannelSpace;
 import org.signalml.domain.signal.space.ChannelSpaceType;
 import org.signalml.domain.signal.space.SignalSourceLevel;
@@ -308,10 +309,10 @@ public class ChannelSpacePanel extends JPanel {
 	 * This panel is valid if there is at least one channel selected.
 	 * @param errors the object in which errors are stored
 	 */
-	public void validatePanel(Errors errors) {
+	public void validatePanel(ValidationErrors errors) {
 
 		if (getChannelList().isSelectionEmpty()) {
-			errors.rejectValue("channelSpace", "error.signalSpace.noChannels", _("At least one channel must be selected"));
+			errors.addError(_("At least one channel must be selected"));
 		}
 
 	}

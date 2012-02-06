@@ -33,6 +33,7 @@ import javax.swing.tree.TreePath;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.tag.TagStylePaletteDescriptor;
 import org.signalml.app.model.tag.TagStyleTreeModel;
 import org.signalml.app.util.IconUtils;
@@ -588,9 +589,9 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 	 * This dialog is valid if the name and the key stroke are unique.
 	 */
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 		if (tagStylePropertiesPanel.isChanged()) {
-			Errors styleErrors = validateChanges();
+			ValidationErrors styleErrors = validateChanges();
 			errors.addAllErrors(styleErrors);
 		}
 	}
@@ -656,21 +657,21 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 	 * The changes are valid if the name and the key stroke are unique.
 	 * @return the object in which errors are stored
 	 */
-	private Errors validateChanges() {
+	private ValidationErrors validateChanges() {
 
-		Errors errors = tagStylePropertiesPanel.validateChanges();
+		ValidationErrors errors = tagStylePropertiesPanel.validateChanges();
 
 		String newName = tagStylePropertiesPanel.getNameTextField().getText();
 		TagStyle oldStyle = currentTagSet.getStyle(currentStyle.getType(), newName);
 		if (oldStyle != null && oldStyle != currentStyle) {
-			errors.rejectValue("name", "error.style.nameDuplicate", _("Tag style name already used. Choose another."));
+			errors.addError(_("Tag style name already used. Choose another."));
 		}
 
 		KeyStroke keyStroke = KeyStroke.getKeyStroke(tagStylePropertiesPanel.getKeyTextField().getText());
 		if (keyStroke != null) {
 			oldStyle = currentTagSet.getStyleByKeyStroke(keyStroke);
 			if (oldStyle != null && oldStyle != currentStyle) {
-				errors.rejectValue("name", "error.style.keyStrokeDuplicate", _("Key already used on another style. Choose another."));
+				errors.addError(_("Key already used on another style. Choose another."));
 			}
 		}
 
@@ -707,9 +708,9 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 	 */
 	private boolean validateAndApplyChanges() {
 
-		Errors errors = validateChanges();
+		ValidationErrors errors = validateChanges();
 		if (errors.hasErrors()) {
-			getErrorsDialog().showErrors(errors);
+			getErrorsDialog().showDialog(errors);
 			return false;
 		}
 

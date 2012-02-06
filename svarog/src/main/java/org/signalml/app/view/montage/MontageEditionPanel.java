@@ -5,6 +5,7 @@ import javax.swing.JTabbedPane;
 
 import org.signalml.app.view.components.AbstractSignalMLPanel;
 import org.signalml.app.view.components.dialogs.ErrorsDialog;
+import org.signalml.app.view.components.dialogs.validation.ValidationErrorsDialog;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.generators.IMontageGenerator;
 
@@ -99,7 +100,7 @@ public class MontageEditionPanel extends AbstractSignalMLPanel {
 	 * the user about errors.
 	 * @param errorsDialog the {@link ErrorsDialog} to be used
 	 */
-	public void setErrorsDialog(ErrorsDialog errorsDialog) {
+	public void setErrorsDialog(ValidationErrorsDialog errorsDialog) {
 		generatorPanel.setErrorsDialog(errorsDialog);
 	}
 

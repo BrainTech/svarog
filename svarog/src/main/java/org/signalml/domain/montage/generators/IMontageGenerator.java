@@ -6,6 +6,8 @@ package org.signalml.domain.montage.generators;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.io.Serializable;
+
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.SourceMontage;
@@ -21,7 +23,7 @@ import org.springframework.validation.Errors;
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 @XStreamAlias("montageGenerator")
-public interface IMontageGenerator extends MessageSourceResolvable, Serializable {
+public interface IMontageGenerator extends Serializable {
 
         /**
          * Creates a {@link Montage montage} of a specified type
@@ -40,13 +42,18 @@ public interface IMontageGenerator extends MessageSourceResolvable, Serializable
          * @return true if a montage is a valid montage of a specified type,
          * false otherwise
          */
-	boolean validateSourceMontage(SourceMontage sourceMontage, Errors errors);
+	boolean validateSourceMontage(SourceMontage sourceMontage, ValidationErrors errors);
 
 	/**
-	 * Sets the code used to get the generator name from the
-	 * {@link MessageSourceAccessor}.
-	 * @param code the code to be used
+	 * Sets the name of this montage generator.
+	 * @param name to be used
 	 */
-	void setCode(String code);
+	void setName(String name);
+	
+	/**
+	 * Returns the (display) name of this montage generator.
+	 * @return the name of this montage generator.
+	 */
+	String getName();
 
 }

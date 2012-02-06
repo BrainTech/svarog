@@ -363,16 +363,18 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
 
 	}
 
-        /**
-         * Creates a string with a description of an effect of this filter.
-         * Consists of a list of ranges intervals and coefficients.
-         * @return a string with a description of an effect of a filter.
-         */
-	public String getEffectString() {
+	/**
+	 * Creates a string with a description of an effect of this filter. Consists
+	 * of a list of ranges intervals and coefficients.
+	 * 
+	 * @return a string with a description of an effect of a filter.
+	 */
+	@Override
+	public String getEffect() {
 
 		if (effectString == null) {
 
-			StringBuilder sb = new StringBuilder("[");
+			StringBuilder sb = new StringBuilder("FFT: [");
 			boolean first = true;
 
 			Iterator<Range> it = ranges.iterator();
@@ -384,7 +386,7 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
 				range = it.next();
 				sb.append('(').append(range.lowFrequency).append('-');
 				if (range.highFrequency <= range.lowFrequency) {
-					sb.append("Fn)");
+					sb.append("inf)");
 				} else {
 					sb.append(range.highFrequency).append(')');
 				}
@@ -401,33 +403,8 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
 	}
 
 	@Override
-	public String getDefaultEffectDescription() {
-		return "FFT: " + getEffectString();
-	}
-
-	@Override
 	public SampleFilterType getType() {
 		return SampleFilterType.FFT;
-	}
-
-	@Override
-	public Object[] getArguments() {
-		return ARGUMENTS;
-	}
-
-	@Override
-	public String[] getCodes() {
-		return CODES;
-	}
-
-	@Override
-	public String getDefaultMessage() {
-		return "FFT filter";
-	}
-
-	@Override
-	public MessageSourceResolvable getEffectDescription() {
-		return new ResolvableString(EFFECT_CODES, new Object[] { getEffectString() }, getDefaultEffectDescription());
 	}
 
 	@Override

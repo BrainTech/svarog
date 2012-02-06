@@ -23,6 +23,7 @@ import javax.swing.border.TitledBorder;
 import org.signalml.SignalMLOperationMode;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.config.preset.Preset;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.view.components.dialogs.DynamicCompilationWarningDialog;
 import org.springframework.validation.Errors;
 
@@ -432,7 +433,7 @@ public class MiscellaneousConfigPanel extends JPanel {
 	 * This panel is always valid
 	 * @param errors the object in which errors should be stored.
 	 */
-	public void validate(Errors errors) {
+	public void validate(ValidationErrors errors) {
 		// do nothing
 	}
 

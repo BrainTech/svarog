@@ -21,6 +21,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.view.tag.TagIconProducer;
 import org.signalml.app.view.tag.TagStyleListCellRenderer;
 import org.signalml.domain.signal.space.MarkerTimeSpace;
@@ -530,13 +531,13 @@ public class MarkedTimeSpacePanel extends JPanel {
 	 * after the marker is positive.
 	 * @param errors the object in which the errors are stored.
 	 */
-	public void validatePanel(Errors errors) {
+	public void validatePanel(ValidationErrors errors) {
 
 		double secondsBefore = ((Double) getSecondsBeforeSpinner().getValue()).doubleValue();
 		double secondsAfter = ((Double) getSecondsAfterSpinner().getValue()).doubleValue();
 
 		if (secondsBefore == 0 && secondsAfter == 0) {
-			errors.reject("error.signalSpace.noSeconds");
+			errors.addError(_("Either seconds after or seconds before must be > 0"));
 		}
 
 	}

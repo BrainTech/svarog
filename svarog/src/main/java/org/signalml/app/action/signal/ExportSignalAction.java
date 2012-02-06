@@ -8,6 +8,7 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -72,6 +73,7 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 		super(signalDocumentFocusSelector);
 		setText(_("Export Signal..."));
 		setToolTip(_("Export signal to simple binary format"));
+		setMnemonic(KeyEvent.VK_S);
 	}
 
 	@Override

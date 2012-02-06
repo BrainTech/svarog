@@ -1,6 +1,8 @@
 package org.signalml.domain.montage.generators;
 
-import org.springframework.validation.Errors;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
+import org.signalml.app.model.components.validation.ValidationErrors;
 
 /**
  * An abstract version implementing the {@link IMontageGenerator} capable
@@ -11,27 +13,14 @@ import org.springframework.validation.Errors;
  */
 public abstract class AbstractMontageGenerator implements IMontageGenerator {
 
-	private Object[] arguments = new Object[0];
-	private String[] codes = new String[1];
-
-	@Override
-	public void setCode(String code) {
-		codes[0] = code;
+	private String name;
+	
+	public String getName() {
+		return name;
 	}
 
-	@Override
-	public String[] getCodes() {
-		return codes;
-	}
-
-	@Override
-	public Object[] getArguments() {
-		return arguments;
-	}
-
-	@Override
-	public String getDefaultMessage() {
-		return codes[0];
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	/**
@@ -39,8 +28,13 @@ public abstract class AbstractMontageGenerator implements IMontageGenerator {
 	* EegChannel.A2 {@link Channel function} was not found.
 	* @param errors an Errors object used to report errors
 	*/
-	protected void onNotFound(String channelName, Errors errors) {
-		errors.reject("montageGenerator.error.missingChannel", new Object[]{channelName}, "montageGenerator.error.missingChannel");
+	protected void onNotFound(String channelName, ValidationErrors errors) {
+		errors.addError(_("One of required channels not identified: ") + channelName);
+	}
+	
+	@Override
+	public String toString() {
+		return getName();
 	}
 
 }

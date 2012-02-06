@@ -4,6 +4,8 @@
 
 package org.signalml.app.model.montage;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 import org.signalml.domain.montage.generators.IMontageGenerator;
@@ -20,7 +22,7 @@ public class MontageGeneratorListModel extends AbstractListModel implements Comb
 
 	private static final long serialVersionUID = 1L;
 
-	public static final ResolvableString NO_GENERATOR = new ResolvableString("montageGenerator.none");
+	public static final String NO_GENERATOR = _("Common user defined");
 
 	private Object selectedItem = NO_GENERATOR;
 	/**

@@ -6,6 +6,8 @@ package org.signalml.domain.montage.generators;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.domain.montage.system.ChannelType;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
@@ -131,7 +133,7 @@ public class BipolarReferenceMontageGenerator extends AbstractMontageGenerator {
          * @return true if the montage is a valid bipolar montage, false otherwise
          */
 	@Override
-	public boolean validateSourceMontage(SourceMontage sourceMontage, Errors errors) {
+	public boolean validateSourceMontage(SourceMontage sourceMontage, ValidationErrors errors) {
 
 		boolean ok = true;
 

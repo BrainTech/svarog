@@ -14,6 +14,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.domain.signal.space.MarkerTimeSpace;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
@@ -310,7 +311,7 @@ public class TimeSpacePanel extends JPanel {
 	 * This panel is valid if the currently selected tab is valid.
 	 * @param errors the variable in which errors are stored
 	 */
-	public void validatePanel(Errors errors) {
+	public void validatePanel(ValidationErrors errors) {
 
 		int index = getTabbedPane().getSelectedIndex();
 

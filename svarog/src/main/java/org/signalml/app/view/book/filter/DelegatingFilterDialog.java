@@ -31,6 +31,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.SwingUtils;
 import org.signalml.app.view.components.FileListCellRenderer;
@@ -253,22 +254,22 @@ public class DelegatingFilterDialog extends AbstractFilterDialog {
 	}
 
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 
 		super.validateDialog(model, errors);
 
 		if (getClassPathListModel().size() == 0) {
-			errors.rejectValue("classPath", "error.delegatingAtomFilter.noClassPath", _("At least one class path entry is required"));
+			errors.addError(_("At least one class path entry is required"));
 		}
 
 		String fqClassName = getFqClassNameTextField().getText();
 		if (fqClassName == null || fqClassName.isEmpty()) {
-			errors.rejectValue("fqClassName", "error.delegatingAtomFilter.noFqClassName", _("Fully qualified class name is required"));
+			errors.addError(_("Fully qualified class name is required"));
 		} else {
 			fqClassName.trim();
 			getFqClassNameTextField().setText(fqClassName);
 			if (!Util.validateFqClassName(fqClassName)) {
-				errors.rejectValue("fqClassName", "error.delegatingAtomFilter.badFqClassName", _("Invalid fully qualified class name"));
+				errors.addError(_("Invalid fully qualified class name"));
 			}
 		}
 
@@ -280,7 +281,7 @@ public class DelegatingFilterDialog extends AbstractFilterDialog {
 				filter.initialize();
 			} catch (Throwable t) {
 				logger.error("Filter failed to initialize", t);
-				errors.reject("error.delegatingAtomFilter.failedToInitialize");
+				errors.addError(_("Failed to initialize filter. See log file for details."));
 			}
 		}
 

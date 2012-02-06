@@ -19,6 +19,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
+
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.export.view.FileChooser;
 
@@ -131,14 +133,14 @@ public class NewArtifactResultTagPanel extends JPanel {
 
 	}
 
-	public void validatePanel(Errors errors) {
+	public void validatePanel(ValidationErrors errors) {
 
 		if (tagFile == null) {
-			errors.rejectValue("primaryTagFile", "error.newArtifact.result.badTagFile", _("Tag file not chosen"));
+			errors.addError(_("Tag file not chosen"));
 		} else {
 			File parent = tagFile.getParentFile();
 			if (parent == null || !parent.exists() || !parent.canWrite()) {
-				errors.rejectValue("primaryTagFile", "error.newArtifact.result.tagFileNotWritable", _("Tag file parent directory doesn't exist or not writable"));
+				errors.addError(_("Tag file parent directory doesn't exist or not writable"));
 			}
 		}
 

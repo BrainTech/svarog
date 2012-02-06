@@ -4,6 +4,7 @@
 package org.signalml.app.view.components.dialogs;
 
 import java.awt.BorderLayout;
+
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Dimension;
@@ -27,15 +28,14 @@ import javax.swing.KeyStroke;
 import javax.swing.border.EmptyBorder;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
+import org.signalml.app.view.components.dialogs.validation.ValidationErrorsDialog;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.impl.PluginAccessClass;
 import org.signalml.util.SvarogConstants;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
-
-import org.springframework.validation.BindException;
-import org.springframework.validation.Errors;
 
 /**
  * The abstract dialog, from which every dialog in Svarog should inherit.
@@ -121,7 +121,7 @@ public abstract class AbstractDialog extends JDialog {
 	 * the dialog that shows errors gathered during the
 	 * {@link #validateDialog(Object, Errors) validation} of the dialog
 	 */
-	private ErrorsDialog errorsDialog;
+	private ValidationErrorsDialog errorsDialog;
 	/**
 	 * the dialog in which the help for this dialog is displayed
 	 */
@@ -491,7 +491,8 @@ public abstract class AbstractDialog extends JDialog {
 	public boolean validateDialog() {
 
 		if (currentModel != null) {
-			Errors errors = new BindException(currentModel, "data");
+			//Errors errors = new BindException(currentModel, "data");
+			ValidationErrors errors = new ValidationErrors();
 			try {
 				validateDialog(currentModel, errors);
 			} catch (SignalMLException ex) {
@@ -518,7 +519,7 @@ public abstract class AbstractDialog extends JDialog {
 	 * @param errors the object in which errors are stored
 	 * @throws SignalMLException TODO when it is thrown
 	 */
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 		/* do nothing */
 	}
 
@@ -534,7 +535,7 @@ public abstract class AbstractDialog extends JDialog {
 	 * Shows the {@link ErrorsDialog dialog} with given validation errors.
 	 * @param errors the errors to be displayed
 	 */
-	protected void showValidationErrors(Errors errors) {
+	protected void showValidationErrors(ValidationErrors errors) {
 		getErrorsDialog().showDialog(errors, true);
 	}
 
@@ -625,9 +626,9 @@ public abstract class AbstractDialog extends JDialog {
 	 * If it doesn't exist it is created.
 	 * @return the errors dialog
 	 */
-	protected synchronized ErrorsDialog getErrorsDialog() {
+	protected synchronized ValidationErrorsDialog getErrorsDialog() {
 		if (errorsDialog == null) {
-			errorsDialog = new ErrorsDialog(this, true);
+			errorsDialog = new ValidationErrorsDialog(this, true);
 		}
 		return errorsDialog;
 	}

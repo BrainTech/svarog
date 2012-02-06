@@ -18,55 +18,48 @@ import org.springframework.context.MessageSourceResolvable;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public abstract class SampleFilterDefinition implements MessageSourceResolvable, Serializable, Preset {
+public abstract class SampleFilterDefinition implements Serializable, Preset {
 
 	private static final long serialVersionUID = 1L;
 
-        /**
-         * description of a filter
-         */
+	/**
+	 * description of a filter
+	 */
 	protected String description;
 
-        /**
-         * Returns a String with a description of a filter
-         * @return String with a description of a filter
-         */
+	/**
+	 * Returns a String with a description of a filter
+	 * 
+	 * @return String with a description of a filter
+	 */
 	public String getDescription() {
 		return description;
 	}
+	
+	public abstract String getEffect();
 
-        /**
-         * Sets the description to a given value
-         * @param description String with a description to be set
-         */
+	/**
+	 * Sets the description to a given value
+	 * 
+	 * @param description
+	 *            String with a description to be set
+	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
-        /**
-         * Returns the type of a filter
-         * @return the type of a filter
-         */
+	/**
+	 * Returns the type of a filter
+	 * 
+	 * @return the type of a filter
+	 */
 	public abstract SampleFilterType getType();
 
-        /**
-         * Returns a message with a description of filters effect
-         * @return a message with a description of filters effect
-         */
-	public MessageSourceResolvable getEffectDescription() {
-		return null;
-	}
-
-        /**
-         * Returns String with a default description of a filters effect
-         * @return String with a default description of a filters effect
-         */
-	public abstract String getDefaultEffectDescription();
-
-        /**
-         * Creates a duplicate of a filters definition
-         * @return duplicate of a filters definition
-         */
+	/**
+	 * Creates a duplicate of a filters definition
+	 * 
+	 * @return duplicate of a filters definition
+	 */
 	public abstract SampleFilterDefinition duplicate();
 
 }

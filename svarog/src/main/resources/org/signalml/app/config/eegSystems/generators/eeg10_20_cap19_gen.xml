@@ -8,7 +8,7 @@
 			</eegSystemName>
 			<generators>
 				<montageGenerator>
-					<name>montageGenerator.longitudinalI</name>
+					<name>Longitudinal I</name>
 					<type>BIPOLAR_REFERENCE</type>
 					<channels>
 						<pair><channel>Fp1</channel><channel>Fp2</channel></pair>

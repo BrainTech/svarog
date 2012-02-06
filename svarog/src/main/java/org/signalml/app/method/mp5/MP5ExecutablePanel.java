@@ -21,6 +21,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.SvarogApplication;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.method.mp5.MP5LocalProcessExecutor;
@@ -181,10 +182,10 @@ public class MP5ExecutablePanel extends JPanel {
 
 	}
 
-	public void validatePanel(Errors errors) {
+	public void validatePanel(ValidationErrors errors) {
 
 		if (mp5Executable == null || !mp5Executable.exists() || !mp5Executable.canExecute()) {
-			errors.rejectValue("mp5Executable", "error.mp5.badMp5Executable", _("MP5 executable not found or not accessible"));
+			errors.addError(_("MP5 executable not found or not accessible"));
 		}
 
 	}

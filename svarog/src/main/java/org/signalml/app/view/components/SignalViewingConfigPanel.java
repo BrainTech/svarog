@@ -26,6 +26,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.config.ApplicationConfiguration;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.view.signal.SignalColor;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.tag.TagPaintMode;
@@ -824,7 +825,7 @@ public class SignalViewingConfigPanel extends JPanel {
 	 * Validates this panel. This panel is always valid.
 	 * @param errors the object in which the errors should be stored
 	 */
-	public void validate(Errors errors) {
+	public void validate(ValidationErrors errors) {
 		// do nothing
 	}
 

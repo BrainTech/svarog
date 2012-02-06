@@ -119,30 +119,25 @@ public class SourceMontage {
 	public SourceMontage(SignalDocument document) {
 
 		MultichannelSampleSource mss = document.getSampleSource();
-		int channelCount = mss.getChannelCount();
 
-		String label;
-		SignalConfigurer configurer = getSignalTypeConfigurer();
-		HashMap<String, SourceChannel> map = getSourceChannelsByLabel();
-		IChannelFunction function;
-		for (int i=0; i<channelCount; i++) {
-			label = mss.getLabel(i);
-			function = configurer.channelForName(label);
-			if (map.containsKey(label)) {
+		for (int i=0; i<mss.getChannelCount(); i++) {
+			String label = mss.getLabel(i);
+
+			if (getSourceChannelsByLabel().containsKey(label)) {
 				logger.warn("WARNING! Duplicate label [" + label + "]");
 				label = getNewSourceChannelLabel(label);
 				logger.debug("Changed to [" + label + "]");
 			}
-			if (function.isUnique() && !getSourceChannelsByFunctionList(function).isEmpty()) {
-				logger.warn("WARNING! Duplicate function [" + function + "] changing to generic");
-				function = configurer.genericChannel();
-			}
+
 			try {
-				addSourceChannel(label, configurer.channelForName(label));
+				addSourceChannel(label, ChannelFunction.UNKNOWN);
 			} catch (MontageException ex) {
 				throw new SanityCheckException("addSourceChannel still failed");
 			}
 		}
+
+		if (document.getMontage() != null)
+			this.setEegSystem(document.getMontage().getEegSystem());
 
 	}
 
@@ -171,8 +166,7 @@ public class SourceMontage {
 			sourceChannels.add(newChannel);
 		}
 
-		this.eegSystem = montage.eegSystem;
-		this.eegSystemName = montage.eegSystemName;
+		this.setEegSystem(montage.eegSystem);
 	}
 
         /**
@@ -282,9 +276,10 @@ public class SourceMontage {
 		}
 		else {
 			sourceChannel.setEegElectrode(null);
-			sourceChannel.setFunction(ChannelFunction.UNKNOWN);
+			if (sourceChannel.getFunction() == ChannelFunction.EEG) {
+				sourceChannel.setFunction(ChannelFunction.UNKNOWN);
+			}
 		}
-		fireSourceMontageChannelChanged(this, sourceChannel.getChannel());
 	}
 
         /**

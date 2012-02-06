@@ -12,6 +12,7 @@ import java.awt.FlowLayout;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.SwingUtils;
 import org.signalml.app.view.components.CompactButton;
 import org.signalml.app.view.components.TextPanePanel;
@@ -77,7 +78,7 @@ public class MP5ExpertConfigPanel extends JPanel {
 
 	}
 
-	public void validatePanel(Errors errors) {
+	public void validatePanel(ValidationErrors errors) {
 
 		// additional config panel is ok
 

@@ -15,6 +15,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.document.RegisterCodecDescriptor;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.components.EmbeddedFileChooser;
@@ -151,7 +152,7 @@ public class RegisterCodecDialog extends AbstractWizardDialog {
 	 * <ul><li>checks if the name of the codec is valid.</li></ul>
 	 */
 	@Override
-	public void validateDialogStep(int step, Object model, Errors errors) throws SignalMLException {
+	public void validateDialogStep(int step, Object model, ValidationErrors errors) throws SignalMLException {
 		if (step == 0) {
 
 			EmbeddedFileChooser fileChooser = getStepOnePanel().getFileChooser();
@@ -165,19 +166,19 @@ public class RegisterCodecDialog extends AbstractWizardDialog {
 					currentCodec = new XMLSignalMLCodec(file, profileDir);
 				} catch (IOException ex) {
 					logger.debug("Failed to read codec file", ex);
-					errors.rejectValue("sourceFile", "error.failedToReadSignalMLFile", _("Failed to read file"));
+					errors.addError(_("Failed to read file"));
 				} catch (XMLCodecException ex) {
 					logger.debug("Failed to compile codec file", ex);
-					errors.rejectValue("sourceFile", "error.codecCompilationFailed", _("Failed to compile the codec"));
+					errors.addError(_("Failed to compile the codec"));
 				}
 			}
 		} else if (step == 1) {
 			String name = getStepTwoPanel().getNameField().getText();
 			if (name == null || name.length() == 0) {
-				errors.rejectValue("formatName", "error.formatNameMustBeSet", _("Format name must be set"));
+				errors.addError(_("Format name must be set"));
 			}
 			if (Util.hasSpecialChars(name)) {
-				errors.rejectValue("formatName", "error.badCharactersInFormatName", _("Format name must not contain control characters"));
+				errors.addError(_("Format name must not contain control characters"));
 			}
 		}
 	}

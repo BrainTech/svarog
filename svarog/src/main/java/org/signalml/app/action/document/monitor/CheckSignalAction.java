@@ -9,6 +9,8 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.document.monitor.signalchecking.CheckSignalDialog;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+
 import org.apache.log4j.Logger;
 import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
@@ -44,6 +46,7 @@ public class CheckSignalAction extends AbstractFocusableSignalMLAction<SignalDoc
                 super(signalDocumentFocusSelector);
 		setText(_("Check signal..."));
 		setToolTip(_("Check if signal is OK"));
+		setMnemonic(KeyEvent.VK_C);
 	}
 
 	/**

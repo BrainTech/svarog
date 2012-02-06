@@ -4,6 +4,7 @@
 package org.signalml.plugin.export.view;
 
 import java.awt.Component;
+import java.awt.event.KeyEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
@@ -75,6 +76,15 @@ public abstract class AbstractSignalMLAction extends AbstractAction {
 	 */
 	protected void setToolTip(String toolTip) {
 		putValue(AbstractAction.SHORT_DESCRIPTION, toolTip);
+	}
+	
+	/**
+	 * Sets a mnemonic for this action.
+	 * @param mnemonic the value of the mnemonic
+	 * (e.g. KeyEvent.VK_H). 
+	 */
+	protected void setMnemonic(int mnemonic) {
+		putValue(MNEMONIC_KEY, mnemonic);
 	}
 
 	/**

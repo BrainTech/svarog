@@ -115,7 +115,7 @@ public class MontageGeneratorsConverter implements Converter {
 						break;
 				}
 				if (montageGenerator != null) {
-					montageGenerator.setCode(montageGeneratorName);
+					montageGenerator.setName(montageGeneratorName);
 				}
 			}
 

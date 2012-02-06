@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.export.SignalMLException;
 
@@ -128,7 +129,7 @@ public abstract class AbstractWizardDialog extends AbstractDialog {
 	 * @param errors the object in which the errors will be stored
 	 * @throws SignalMLException depends on the implementation
 	 */
-	public void validateDialogStep(int step, Object model, Errors errors) throws SignalMLException {
+	public void validateDialogStep(int step, Object model, ValidationErrors errors) throws SignalMLException {
 		/* do nothing */
 	}
 
@@ -137,7 +138,7 @@ public abstract class AbstractWizardDialog extends AbstractDialog {
 	 * this dialog.
 	 */
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 		// default implementation revalidates all steps
 		for (int i=0; i<getStepCount(); i++) {
 			validateDialogStep(i, model, errors);
@@ -299,7 +300,7 @@ public abstract class AbstractWizardDialog extends AbstractDialog {
 		public void actionPerformed(ActionEvent e) {
 
 			if (isBackTransitionValidated() || step > 0) {
-				Errors errors = new BindException(getCurrentModel(), "data");
+				ValidationErrors errors = new ValidationErrors();
 				try {
 					validateDialogStep(currentStep,getCurrentModel(),errors);
 				} catch (SignalMLException ex) {

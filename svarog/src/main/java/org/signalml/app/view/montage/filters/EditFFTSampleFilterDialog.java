@@ -52,6 +52,7 @@ import javax.swing.event.ListSelectionListener;
 
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.montage.FFTSampleFilterTableModel;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.TablePopupMenuProvider;
@@ -576,15 +577,15 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 	}
 
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 		super.validateDialog(model, errors);
 		getFFTWindowTypePanel().validatePanel(errors);
 
 		String description = getDescriptionTextField().getText();
 		if (description == null || description.isEmpty()) {
-			errors.rejectValue("description", "error.editSampleFilter.descriptionEmpty", _("A filter must have a description"));
+			errors.addError(_("A filter must have a description"));
 		} else if (Util.hasSpecialChars(description)) {
-			errors.rejectValue("description", "error.editSampleFilter.descriptionBadChars", _("Filter description must not contain control characters"));
+			errors.addError(_("Filter description must not contain control characters"));
 		}
 
 	}

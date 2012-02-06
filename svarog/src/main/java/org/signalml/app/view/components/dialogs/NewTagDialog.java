@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.config.preset.StyledTagSetPresetManager;
 import org.signalml.app.document.TagDocument;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.tag.NewTagDescriptor;
 import org.signalml.app.model.tag.NewTagDescriptor.NewTagTypeMode;
 import org.signalml.app.view.components.EmbeddedFileChooser;
@@ -153,10 +154,7 @@ public class NewTagDialog extends AbstractDialog  {
 		if (file != null && file.exists()) {
 			newTagPanel.getFileChooser().setSelectedFile(file);
 		} else {
-			String lastPath = applicationConfig.getLastOpenTagPath();
-			if (lastPath == null) {
-				lastPath = System.getProperty("user.dir");
-			}
+			String lastPath = applicationConfig.getLastFileChooserPath(); 
 			newTagPanel.getFileChooser().setCurrentDirectory(new File(lastPath));
 		}
 
@@ -213,7 +211,7 @@ public class NewTagDialog extends AbstractDialog  {
 	 * is selected - if the file is valid.</li></ul>
 	 */
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 
 		if (newTagPanel.getFromFileRadio().isSelected()) {
 

@@ -14,6 +14,7 @@ import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.components.SignalSpacePanel;
 import org.signalml.app.view.components.dialogs.AbstractPresetDialog;
@@ -167,7 +168,7 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 	}
 
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 
 		getSignalSpacePanel().validatePanel(errors);
 

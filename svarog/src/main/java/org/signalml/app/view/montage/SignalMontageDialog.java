@@ -26,6 +26,7 @@ import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.document.SignalDocument;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.montage.MontageDescriptor;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.components.dialogs.AbstractPresetDialog;
@@ -190,16 +191,15 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	}
 
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 		// validate montage table
 		if (currentMontage.getMontageChannelCount() == 0) {
-			errors.reject(_("The montage is empty. Please add some target channels"));
+			errors.addError(_("The montage is empty. Please add some target channels"));
 		}
 		String description = miscellaneousPanel.getEditDescriptionPanel().getTextPane().getText();
 		if (description != null && !description.isEmpty()) {
 			if (Util.hasSpecialChars(description)) {
-				errors.rejectValue("montage.description",
-						   _("Description must not contain control characters"));
+				errors.addError(_("Description must not contain control characters"));
 			}
 		}
 	}
@@ -214,8 +214,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	public Preset getPreset() throws SignalMLException {
 		Montage preset = new Montage(currentMontage);
 
-
-		Errors errors = new BindException(preset, "data");
+		ValidationErrors errors = new ValidationErrors();
 		validateDialog(preset, errors);
 
 		if (errors.hasErrors()) {

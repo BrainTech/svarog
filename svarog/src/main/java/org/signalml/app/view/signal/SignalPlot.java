@@ -329,21 +329,6 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		return result;
 	}
 
-	private double detectMaxValue() {
-		IChannelFunction f;
-		double max = -1.0;
-		for (int i=0;i<channelCount;i++) {
-			f = this.getSourceChannelFor(i).getFunction();
-			if (f == ChannelFunction.EEG) {
-				max = (double) f.getMaxValue();
-				break;
-			}
-			else if (f.getMaxValue() > max)
-				max = (double) f.getMaxValue();
-		}
-		return max;
-	}
-
 	/**
 	 * Returns source channel for given montage channel.
 	 * @param index index of montage channel.
@@ -392,7 +377,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	public double getVoltageZoomFactorRatioFor(int index) {
 		double v;
 		if (index == -1)
-			v = detectMaxValue();
+			v = ChannelFunction.EEG.getMaxValue(); //global voltage scale is for EEG by default
 		else
 			v = (double) this.getSourceChannelFor(index).getFunction().getMaxValue();
 		return ((1.0 / (condMaxValue(v) * 2)) * 0.95) / 100;
@@ -421,7 +406,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 		pixelPerSecond = samplingFrequency * timeZoomFactor;
 		pixelPerPage = pixelPerSecond * pageSize;
-	pixelPerBlock = pixelPerPage / blocksPerPage;
+		pixelPerBlock = pixelPerPage / blocksPerPage;
 
 		int oldChannelCount = channelCount;
 		channelCount = signalChain.getChannelCount();
@@ -452,15 +437,14 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		pixelPerValue = pixelPerChannel * voltageZoomFactor;
 		clampLimit =  (pixelPerChannel / 2) - 2;
 
-		ChannelPlotOptionsModel m;
 		channelLevel = new int[channelCount];
 		
 		j = 0;
 		int prevVisibleLevel = 0, prevVisibleIndex = -1, invisibleCount = 0;
 		for( i=0; i<channelCount; i++ ) {
-			m = this.channelsPlotOptionsModel.getModelAt(i);
+			ChannelPlotOptionsModel channelModel = this.channelsPlotOptionsModel.getModelAt(i);
 			//recalculate channel levels
-			if (!m.getVisible()) {
+			if (!channelModel.getVisible()) {
 				invisibleCount ++;
 			} else {
 				//determine positions of last invisibleCount channels
@@ -923,7 +907,9 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			}
 
 			realX = firstSample * timeZoomFactor;
-			y = samples[0] * pixelPerValue;
+			
+			double pixelPerValueForChannel= channelsPlotOptionsModel.getPixelsPerValue(channel);
+			y = samples[0] * pixelPerValueForChannel;
 
 			if ( clamped )
 			{
@@ -957,8 +943,8 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			}
 
 			for( i=1; i<length; i++ ) {
-
-				y = samples[i] * pixelPerValue;
+				
+				y = samples[i] * pixelPerValueForChannel;
 
 				if ( clamped )
 				{
@@ -1262,8 +1248,6 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	public void reset() {
 		calculateParameters();
 		revalidateAndRepaintAll();
-		
-		
 	}
 
 	public void revalidateAndRepaintAll() {
@@ -2390,7 +2374,6 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 						valueScaleRangeModel.setMinimum(rangeModelValue);
 					}
 					valueScaleRangeModel.setValue(rangeModelValue);
-					this.channelsPlotOptionsModel.globalScaleChanged(valueScaleRangeModel.getValue());
 					//todo mati - rebuild gui in side panel
 
 				} finally {

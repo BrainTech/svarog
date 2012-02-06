@@ -1,5 +1,6 @@
 package org.signalml.domain.montage.generators;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.montage.SourceChannel;
 
 /**
@@ -14,6 +15,6 @@ public class RightEarMontageGenerator extends SingleReferenceMontageGenerator {
 	 */
 	public RightEarMontageGenerator() {
 		super(SourceChannel.RIGHT_EAR_CHANNEL_NAME);
-		setCode("montageGenerator.rightEar");
+		setName(_("Right ear montage"));
 	}
 }

@@ -15,6 +15,7 @@ import javax.swing.plaf.FileChooserUI;
 import javax.swing.plaf.basic.BasicFileChooserUI;
 
 import org.signalml.app.config.ApplicationConfiguration;
+import org.signalml.app.model.components.validation.ValidationErrors;
 
 import org.springframework.validation.Errors;
 
@@ -242,27 +243,27 @@ public class EmbeddedFileChooser extends JFileChooser {
 	 * @param acceptUnreadable if unreadable files should be accepted
 	 * @param acceptReadOnly if read only files should be accepted
 	 */
-	public void validateFile(Errors errors, String property, boolean acceptNone, boolean acceptMissing, boolean acceptDirectory, boolean acceptUnreadable, boolean acceptReadOnly) {
+	public void validateFile(ValidationErrors errors, String property, boolean acceptNone, boolean acceptMissing, boolean acceptDirectory, boolean acceptUnreadable, boolean acceptReadOnly) {
 
 		File file = getSelectedFile();
 		if (file == null || file.getPath().length() == 0) {
 			if (!acceptNone) {
-				errors.rejectValue(property, "error.fileMustBeChosen", _("A file must be chosen"));
+				errors.addError(_("A file must be chosen"));
 			}
 		} else {
 			if (!file.exists()) {
 				if (!acceptMissing) {
-					errors.rejectValue(property, "error.fileNotFound", _("File not found"));
+					errors.addError(_("File not found"));
 				}
 			} else {
 				if (!acceptDirectory && file.isDirectory()) {
-					errors.rejectValue(property, "error.fileNotFile", _("File is not a regular file"));
+					errors.addError(_("File is not a regular file"));
 				}
 				if (!acceptUnreadable && !file.canRead()) {
-					errors.rejectValue(property, "error.fileNotReadable", _("File is not readable"));
+					errors.addError(_("File is not readable"));
 				}
 				if (!acceptReadOnly && !file.canWrite()) {
-					errors.rejectValue(property, "error.fileNotWritable", _("File is not writable"));
+					errors.addError(_("File is not writable"));
 				}
 			}
 		}

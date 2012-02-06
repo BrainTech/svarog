@@ -27,23 +27,10 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	private String[] favouriteDirs;
 	private String[] lastDirs;
-	private String lastOpenTagPath;
-	private String lastImportTagPath;
-	private String lastExportTagPath;
-	private String lastExportSignalPath;
-	private String lastExportBookPath;
-	private String lastOpenDocumentPath;
-	private String lastSaveDocumentPath;
-	private String lastConsoleSaveAsTextPath;
-	private String lastTableSaveAsTextPath;
-	private String lastSamplesSaveAsTextPath;
-	private String lastSamplesSaveAsFloatPath;
-	private String lastChartSaveAsPngPath;
+	
+	private String lastFileChooserPath;
 	private String lastPresetPath;
 	private String lastSaveMP5ConfigPath;
-	private String lastBookFilePath;
-	private String lastSaveTagPath;
-	private String lastExpertTagPath;
 	private String lastLibraryPath;
 
 	private boolean rightClickPagesForward;
@@ -135,13 +122,13 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 		this.favouriteDirs = dirs;
 	}
 
-        public float getBackupFrequency() {
-                return backupFrequency;
-        }
+	public float getBackupFrequency() {
+		return backupFrequency;
+	}
 
-        public void setBackupFrequency(float backupFrequency) {
-                this.backupFrequency = backupFrequency;
-        }
+	public void setBackupFrequency(float backupFrequency) {
+		this.backupFrequency = backupFrequency;
+	}
 
 	public String[] getLastDirs() {
 		return lastDirs;
@@ -149,70 +136,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	public void setLastDirs(String[] dirs) {
 		this.lastDirs = dirs;
-	}
-
-	public String getLastOpenTagPath() {
-		return lastOpenTagPath;
-	}
-
-	public String getLastImportTagPath() {
-		return lastImportTagPath;
-	}
-
-	public void setLastImportTagPath(String lastImportTagPath) {
-		this.lastImportTagPath = lastImportTagPath;
-	}
-
-	public String getLastExportTagPath() {
-		return lastExportTagPath;
-	}
-
-	public void setLastExportTagPath(String lastExportTagPath) {
-		this.lastExportTagPath = lastExportTagPath;
-	}
-
-	public void setLastOpenTagPath(String lastOpenTagPath) {
-		this.lastOpenTagPath = lastOpenTagPath;
-	}
-
-	public String getLastOpenDocumentPath() {
-		return lastOpenDocumentPath;
-	}
-
-	public void setLastOpenDocumentPath(String lastOpenDocumentPath) {
-		this.lastOpenDocumentPath = lastOpenDocumentPath;
-	}
-
-	public String getLastSaveDocumentPath() {
-		return lastSaveDocumentPath;
-	}
-
-	public void setLastSaveDocumentPath(String lastSaveDocumentPath) {
-		this.lastSaveDocumentPath = lastSaveDocumentPath;
-	}
-
-	public String getLastConsoleSaveAsTextPath() {
-		return lastConsoleSaveAsTextPath;
-	}
-
-	public void setLastConsoleSaveAsTextPath(String lastConsoleSaveAsTextPath) {
-		this.lastConsoleSaveAsTextPath = lastConsoleSaveAsTextPath;
-	}
-
-	public String getLastTableSaveAsTextPath() {
-		return lastTableSaveAsTextPath;
-	}
-
-	public void setLastTableSaveAsTextPath(String lastTableSaveAsTextPath) {
-		this.lastTableSaveAsTextPath = lastTableSaveAsTextPath;
-	}
-
-	public String getLastPresetPath() {
-		return lastPresetPath;
-	}
-
-	public void setLastPresetPath(String lastPresetPath) {
-		this.lastPresetPath = lastPresetPath;
 	}
 
 	public String getLastSaveMP5ConfigPath() {
@@ -431,38 +354,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 		this.zoomSignalSettings = zoomSignalSettings;
 	}
 
-	public String getLastChartSaveAsPngPath() {
-		return lastChartSaveAsPngPath;
-	}
-
-	public void setLastChartSaveAsPngPath(String lastChartSaveAsPngPath) {
-		this.lastChartSaveAsPngPath = lastChartSaveAsPngPath;
-	}
-
-	public String getLastSamplesSaveAsTextPath() {
-		return lastSamplesSaveAsTextPath;
-	}
-
-	public void setLastSamplesSaveAsTextPath(String lastSamplesSaveAsTextPath) {
-		this.lastSamplesSaveAsTextPath = lastSamplesSaveAsTextPath;
-	}
-
-	public String getLastSamplesSaveAsFloatPath() {
-		return lastSamplesSaveAsFloatPath;
-	}
-
-	public void setLastSamplesSaveAsFloatPath(String lastSamplesSaveAsFloatPath) {
-		this.lastSamplesSaveAsFloatPath = lastSamplesSaveAsFloatPath;
-	}
-
-	public String getLastExportSignalPath() {
-		return lastExportSignalPath;
-	}
-
-	public void setLastExportSignalPath(String lastExportSignalPath) {
-		this.lastExportSignalPath = lastExportSignalPath;
-	}
-
 	public int getMinChannelHeight() {
 		return minChannelHeight;
 	}
@@ -509,30 +400,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	public void setMaxTimeScale(double maxTimeScale) {
 		this.maxTimeScale = maxTimeScale;
-	}
-
-	public String getLastBookFilePath() {
-		return lastBookFilePath;
-	}
-
-	public void setLastBookFilePath(String lastBookFilePath) {
-		this.lastBookFilePath = lastBookFilePath;
-	}
-
-	public String getLastSaveTagPath() {
-		return lastSaveTagPath;
-	}
-
-	public void setLastSaveTagPath(String lastSaveTagPath) {
-		this.lastSaveTagPath = lastSaveTagPath;
-	}
-
-	public String getLastExpertTagPath() {
-		return lastExpertTagPath;
-	}
-
-	public void setLastExpertTagPath(String lastExpertTagPath) {
-		this.lastExpertTagPath = lastExpertTagPath;
 	}
 
 	public boolean isDontShowDynamicCompilationWarning() {
@@ -655,14 +522,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 		this.reconstructionHeight = reconstructionHeight;
 	}
 
-	public String getLastExportBookPath() {
-		return lastExportBookPath;
-	}
-
-	public void setLastExportBookPath(String lastExportBookPath) {
-		this.lastExportBookPath = lastExportBookPath;
-	}
-
 	public String getOpenBCIDaemonAddress() {
 		return openBCIDaemonAddress;
 	}
@@ -694,13 +553,11 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 	 *
 	 */
 	public String getPath(String name){
-		if(name.equals("LastConsoleSaveAsTextPath"))
-			return this.getLastConsoleSaveAsTextPath();
-		if(name.equals("LastSamplesSaveAsTextPath"))
-			return this.getLastSamplesSaveAsTextPath();
-		if(name.equals("LastTableSaveAsTextPath"))
-			return this.getLastTableSaveAsTextPath();
-		throw new AssertionError("unknown configuration path name");
+		if ("LastPresetPath".equals(name))
+			return this.getLastPresetPath();
+		else if ("LastLibraryPath".equals(name))
+			return this.getLastLibraryPath();
+		return this.getLastFileChooserPath();
 	}
 
 	/**
@@ -710,8 +567,29 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 	 *
 	 */
 	public void setPath(String name, String path){
-		if(name.equals("LastSamplesSaveAsTextPath"))
-			this.setLastSamplesSaveAsTextPath(path);
-		throw new AssertionError("unknown configuration path name");
+		if ("LastPresetPath".equals(name))
+			this.setLastPresetPath(path);
+		else if("LastLibraryPath".equals(name))
+			this.setLastLibraryPath(path);
+		else
+			this.setLastFileChooserPath(path);
+	}
+
+	public String getLastFileChooserPath() {
+		if (lastFileChooserPath == null)
+			lastFileChooserPath = System.getProperty("user.dir");
+		return lastFileChooserPath;
+	}
+
+	public void setLastFileChooserPath(String lastFileChooserPath) {
+		this.lastFileChooserPath = lastFileChooserPath;
+	}
+
+	public String getLastPresetPath() {
+		return lastPresetPath;
+	}
+
+	public void setLastPresetPath(String lastPresetPath) {
+		this.lastPresetPath = lastPresetPath;
 	}
 }

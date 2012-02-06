@@ -5,6 +5,7 @@ package org.signalml.app.view.montage.filters;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.view.components.DoubleSpinner;
 import org.signalml.app.view.components.ResolvableComboBox;
 
@@ -491,13 +492,13 @@ public class TimeDomainFilterParametersPanel extends JPanel {
 	 * @param model the model for this dialog
 	 * @param errors the object in which errors are stored
 	 */
-	public void validatePanel(Object model, Errors errors) {
+	public void validatePanel(Object model, ValidationErrors errors) {
 
 		String description = getDescriptionTextField().getText();
 		if (description == null || description.isEmpty()) {
-			errors.rejectValue("description", "error.editSampleFilter.descriptionEmpty", _("A filter must have a description"));
+			errors.addError(_("A filter must have a description"));
 		} else if (Util.hasSpecialChars(description)) {
-			errors.rejectValue("description", "error.editSampleFilter.descriptionBadChars", _("Filter description must not contain control characters"));
+			errors.addError(_("Filter description must not contain control characters"));
 		}
 
 	}

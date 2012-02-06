@@ -23,6 +23,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.data.PluginConfigForMethod;
 import org.signalml.plugin.exception.PluginException;
@@ -320,7 +321,7 @@ public class NewArtifactResultDialog extends org.signalml.plugin.export.view.Abs
 	}
 
 	@Override
-	public void validateDialog(Object model, Errors errors)
+	public void validateDialog(Object model, ValidationErrors errors)
 	throws SignalMLException {
 		super.validateDialog(model, errors);
 

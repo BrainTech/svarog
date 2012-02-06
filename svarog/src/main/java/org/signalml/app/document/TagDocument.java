@@ -27,6 +27,8 @@ import org.signalml.plugin.export.signal.ExportedTagDocument;
 import org.signalml.plugin.export.signal.ExportedTagStyle;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
+import org.signalml.domain.tag.TagStyles;
+
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
@@ -37,7 +39,7 @@ import com.thoughtworks.xstream.converters.reflection.NativeFieldKeySorter;
 import com.thoughtworks.xstream.converters.reflection.PureJavaReflectionProvider;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.io.xml.XmlFriendlyReplacer;
-import org.signalml.domain.tag.TagStyles;
+import com.thoughtworks.xstream.mapper.CannotResolveClassException;
 
 /**
  * The document with {@link Tag tags} and {@link TagStyle tag styles}.
@@ -195,7 +197,12 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 	@Override
 	public void readDocument(InputStream is) {
 		XStream streamer = getTagStreamer();
-		tagSet = (StyledTagSet) streamer.fromXML(is);
+		try {
+			tagSet = (StyledTagSet) streamer.fromXML(is);
+		} catch(CannotResolveClassException e) {
+			throw new RuntimeException("failed to read XML, element "
+						   + e.getMessage());
+		}
 	}
 
 	@Override

@@ -39,11 +39,14 @@ peer {
 peer {
     type: 112
     name: "AMPLIFIER"
+    queue_size: 32768
 }
 
 peer {
     type: 113
     name: "SIGNAL_CATCHER"
+    queue_size: 32768	       
+
 }
 
 peer {
@@ -59,6 +62,7 @@ peer {
 peer {
     type: 116
     name: "FILTER"
+    queue_size: 32768
 }
 
 peer {
@@ -73,6 +77,7 @@ peer {
 peer {
     type: 119
     name: "STREAM_RECEIVER"
+    queue_size: 32768
 }
 
 peer {
@@ -93,11 +98,13 @@ peer {
 peer {
     type: 123
     name: "SIGNAL_STREAMER"
+    queue_size: 32768
 }
 
 peer {
-     type: 124
+     type: 124	
      name: "SIGNAL_SAVER"
+    queue_size: 32768
 }
 
 peer {
@@ -118,11 +125,14 @@ peer {
 peer {
      type: 128
      name: "TAGS_SENDER"
+    queue_size: 32768
+
 }
 
 peer { 
      type: 129
      name: "TAGS_RECEIVER"
+    queue_size: 32768
 }
 
 peer {
@@ -132,12 +142,18 @@ peer {
 peer {
     type: 131
     name: "TAG_CATCHER"
+    queue_size: 32768
 }
 
 peer {
      type: 132
      name: "AUTOSCALE_GENERATOR"
 }
+peer {
+    type: 136
+    name: "CONFIGURER"
+}
+
 
 # packages and routing rules definitions
 #
@@ -147,7 +163,6 @@ peer {
 
 # types 100-109 reserved
 
-# some types specified in jmx
 
 # types 127-128 reserverd
 
@@ -160,8 +175,8 @@ type {
     }  
  
     to {
-	peer: "SIGNAL_SAVER"
-	whom: ALL
+       peer: "SIGNAL_SAVER"
+       whom: ALL
     }
 }
 
@@ -171,16 +186,14 @@ type {
     to {
         peer: "SIGNAL_CATCHER"
         whom: ALL
+	report_delivery_error: false
     }
     to {
         peer: "SIGNAL_STREAMER"
         whom: ALL
+	report_delivery_error: false
     }
     
-    to {
-       peer: "AUTOSCALE_GENERATOR"
-       whom: ALL
-       }
 }
 
 type {
@@ -236,6 +249,11 @@ type {
         peer: "DIODE_CATCHER"
         whom: ALL
     }
+    to {
+        peer: "ANALYSIS"
+        whom: ALL
+    }
+
 }
 
 type {
@@ -323,15 +341,6 @@ type {
     }
 }
 
-type {
-     type: 148
-     name: "SIGNAL_SAVER_CONTROL_MESSAGE"
-     to {
-     	peer: "SIGNAL_SAVER"
-	whom: ALL
-	}
-}
-
 
 type {
     type: 149
@@ -346,17 +355,17 @@ type {
      type: 150
      name: "TAG"
      to {
-     	peer: "SIGNAL_SAVER"
+     	peer: "TAG_SAVER"
 	whom: ANY
 	}
      to {
      	peer: "TAGS_RECEIVER"
 	whom: ANY
 	}
-     to {
-     	peer: "STREAM_RECEIVER"
-	 whom: ANY
-	}
+    to {
+        peer: "STREAM_RECEIVER"
+        whom: ANY
+    }
 }
 
 type {
@@ -379,4 +388,14 @@ type {
 type {
     type: 153
     name: "TAG_CATCHER_RESPONSE_MESSAGE"
+}
+type {
+    type: 209
+    name: "SYSTEM_CONFIGURATION"
+    to {
+        peer: "CONFIGURER"
+        whom: ALL
+        report_delivery_error: true
+    }
+
 }

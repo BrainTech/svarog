@@ -7,6 +7,7 @@ package org.signalml.app.action.tag;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
@@ -36,6 +37,7 @@ public class ChooseActiveTagAction extends AbstractFocusableSignalMLAction<Signa
 		setText(_("Choose active tag"));
 		setIconPath("org/signalml/app/icon/activetag.png");
 		setToolTip(_("Change active tag (the tag that is being edited)"));
+		setMnemonic(KeyEvent.VK_H);
 	}
 
 	@Override

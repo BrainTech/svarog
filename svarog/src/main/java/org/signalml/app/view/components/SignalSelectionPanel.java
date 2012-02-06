@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 import org.signalml.app.model.components.BlockSelectionModelProvider;
 import org.signalml.app.model.components.ChannelSelectionModelProvider;
 import org.signalml.app.model.components.PageSelectionModelProvider;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.SwingUtils;
 import org.signalml.domain.signal.BoundedSignalSelection;
 import org.signalml.domain.signal.space.SignalSpace;
@@ -518,7 +519,7 @@ public class SignalSelectionPanel extends JPanel {
 	 * This panel is always valid.
 	 * @param errors the object in which errors are stored
 	 */
-	public void validatePanel(Errors errors) {
+	public void validatePanel(ValidationErrors errors) {
 		// there is no validation - the dialog elements enforce valid values themselves
 	}
 }
