@@ -8,12 +8,17 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
+import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
+import org.signalml.app.view.document.opensignal.elements.AmplifierChannel;
 import org.signalml.app.view.document.opensignal.monitor.AbstractMonitorSourcePanel;
 import org.signalml.app.view.document.opensignal.monitor.ChooseExperimentPanel;
+import org.signalml.app.view.document.opensignal.monitor.OpenBCISignalSourcePanel;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.system.EegSystem;
@@ -96,7 +101,16 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 		else if (propertyName.equals(ChooseExperimentPanel.EXPERIMENT_SELECTED_PROPERTY)) {
 			enableTabsAndOKButtonAsNeeded();
 			
-//			signalSourcePanel.getCurrentSignalSourcePanel().get
+			OpenBCISignalSourcePanel panel = (OpenBCISignalSourcePanel) signalSourcePanel.getCurrentSignalSourcePanel();
+			ExperimentDescriptor experiment = (ExperimentDescriptor) evt.getNewValue();
+			
+			List<String> channelLabels = new ArrayList<String>();
+			for (AmplifierChannel channel: experiment.getAmplifier().getChannels()) {
+				if (channel.isSelected())
+					channelLabels.add(channel.getLabel());
+			}
+			numberOfChannelsChangedTo(channelLabels.size());
+			channelLabelsChangedTo(channelLabels.toArray(new String[0]));
 		}
 	}
 

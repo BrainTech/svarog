@@ -7,12 +7,16 @@ package org.signalml.app.view.document.opensignal.monitor;
 import java.awt.BorderLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import org.signalml.app.config.preset.StyledTagSetPresetManager;
 import org.signalml.app.view.components.MonitorRecordingPanel;
+import org.signalml.app.view.document.opensignal.AbstractSignalParametersPanel;
 import org.signalml.app.view.document.opensignal.SignalSource;
+import org.signalml.app.view.document.opensignal.elements.AmplifierChannel;
 
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
@@ -129,7 +133,9 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 			ExperimentDescriptor experiment = (ExperimentDescriptor) evt.getNewValue();
 			channelSelectPanel.fillPanelFromModel(experiment);
 			signalParametersPanel.fillPanelFromModel(experiment);
-			forwardPropertyChange(evt);
+
+			PropertyChangeEvent event = new PropertyChangeEvent(this, ChooseExperimentPanel.EXPERIMENT_SELECTED_PROPERTY, null, experiment);
+			propertyChangeSupport.firePropertyChange(event);
 		}
 		
 		if ("metadataRetrieved".equals(propertyName)) {
