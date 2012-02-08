@@ -107,13 +107,17 @@ public class ChooseExperimentPanel extends AbstractSignalMLPanel implements List
 
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
+		fireExperimentSelected(getSelectedExperiment());
+	}
+	
+	public ExperimentDescriptor getSelectedExperiment() {
 		int selectedRow = chooseExperimentTable.getSelectedRow();
 		ExperimentDescriptor selectedExperiment;
 		if (selectedRow == -1)
 			selectedExperiment = null;
 		else
 			selectedExperiment = chooseExperimentTableModel.getExperiments().get(selectedRow);
-		fireExperimentSelected(selectedExperiment);
+		return selectedExperiment;
 	}
 	
 }

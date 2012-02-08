@@ -76,7 +76,7 @@ public class AmplifierChannel {
 	 * Sets this channel to be selected/unselected.
 	 * @param selected the selecton status of this channel
 	 */
-	void setSelected(Boolean selected) {
+	public void setSelected(Boolean selected) {
 		this.selected = selected;
 	}
 

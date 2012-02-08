@@ -130,5 +130,4 @@ public class ChannelSelectTableModel extends AbstractTableModel {
 		}
 		fireTableDataChanged();
 	}
-
 }

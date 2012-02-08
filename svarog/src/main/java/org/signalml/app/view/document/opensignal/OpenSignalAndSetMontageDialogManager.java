@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 import org.signalml.app.view.document.opensignal.monitor.AbstractMonitorSourcePanel;
+import org.signalml.app.view.document.opensignal.monitor.ChooseExperimentPanel;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.system.EegSystem;
@@ -91,6 +92,11 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 		else if (propertyName.equals(AbstractSignalParametersPanel.EEG_SYSTEM_PROPERTY)) {
 			EegSystem newEegSystem = (EegSystem) (evt.getNewValue() != null ? evt.getNewValue() : null);
 			eegSystemChangedTo(newEegSystem);
+		}
+		else if (propertyName.equals(ChooseExperimentPanel.EXPERIMENT_SELECTED_PROPERTY)) {
+			enableTabsAndOKButtonAsNeeded();
+			
+//			signalSourcePanel.getCurrentSignalSourcePanel().get
 		}
 	}
 

@@ -7,6 +7,7 @@ import org.signalml.app.view.document.opensignal.elements.AmplifierChannel;
 public class Amplifier {
 	
 	private String name;
+	private int samplesPerPacket;
 	private List<Float> samplingFrequencies;
 	private List<AmplifierChannel> channels;
 
@@ -33,6 +34,14 @@ public class Amplifier {
 
 	public void setChannels(List<AmplifierChannel> channels) {
 		this.channels = channels;
+	}
+
+	public int getSamplesPerPacket() {
+		return samplesPerPacket;
+	}
+
+	public void setSamplesPerPacket(int samplesPerPacket) {
+		this.samplesPerPacket = samplesPerPacket;
 	}
 
 }

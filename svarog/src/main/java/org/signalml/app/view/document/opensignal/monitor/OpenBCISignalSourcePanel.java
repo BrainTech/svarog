@@ -16,6 +16,7 @@ import org.signalml.app.view.document.opensignal.SignalSource;
 
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
+import org.signalml.app.model.document.opensignal.ExperimentStatus;
 import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
 
 /**
@@ -128,6 +129,7 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 			ExperimentDescriptor experiment = (ExperimentDescriptor) evt.getNewValue();
 			channelSelectPanel.fillPanelFromModel(experiment);
 			signalParametersPanel.fillPanelFromModel(experiment);
+			forwardPropertyChange(evt);
 		}
 		
 		if ("metadataRetrieved".equals(propertyName)) {
@@ -161,6 +163,19 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 	@Override
 	public SignalSource getSignalSource() {
 		return SignalSource.OPENBCI;
+	}
+	
+	@Override
+	public boolean isMetadataFilled() { 
+		ExperimentDescriptor descriptor = chooseExperimentPanel.getSelectedExperiment();
+		
+		if (descriptor == null)
+			return false;
+		
+		if (descriptor.getStatus() != null && descriptor.getStatus() == ExperimentStatus.RUNNING)
+			return true;
+		else
+			return false;
 	}
 
 }

@@ -5,17 +5,16 @@ import java.util.List;
 
 import javax.swing.SwingWorker;
 
+import org.signalml.ObciTester;
 import org.signalml.app.config.ApplicationConfiguration;
-import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.Amplifier;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentStatus;
 import org.signalml.app.model.document.opensignal.SignalParameters;
 import org.signalml.app.view.document.opensignal.elements.AmplifierChannel;
-
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
-import com.thoughtworks.xstream.io.json.JsonHierarchicalStreamDriver;
+import org.signalml.app.worker.monitor.zeromq.ExperimentDescriptorJSonReader;
+import org.signalml.app.worker.monitor.zeromq.Message;
+import org.signalml.app.worker.monitor.zeromq.MessageType;
 
 public class GetOpenBCIExperimentsWorker extends SwingWorker<List<ExperimentDescriptor>, Void>{
 
@@ -30,16 +29,67 @@ public class GetOpenBCIExperimentsWorker extends SwingWorker<List<ExperimentDesc
 
 		//TODO - tu powinno być sprawdzenie, czy openBCI daemon jest odpalony
 		//jeśli nie - to odpalić
+	
+		/*ZMQ.Context context = ZMQ.context(1);
+		ZMQ.Socket socket = context.socket(ZMQ.REQ);
 
-		//TODO - łączenie z daemonem
-		String address = applicationConfiguration.getOpenBCIDaemonAddress();
-		int port = applicationConfiguration.getOpenBCIDaemonPort();
+		socket.connect(getAddressString()); 
+		socket.send(getListExperimentsRequest(), 0);
+		
+		byte[] responseBytes = socket.recv(0);
+		String response = new String(responseBytes);
 
-		//TODO END
+		System.out.println("GOT RESPONSE: " + response);
+		
+		List<ExperimentDescriptor> result = parseListExperimentsResponse(response);
+		*/
+		
+		String response = ObciTester.getListExperimentsResponse();
+		ExperimentDescriptorJSonReader reader = new ExperimentDescriptorJSonReader();
+		List<ExperimentDescriptor> result = reader.parseExperiments(response);
+		
+		return result;
+	}
+	
+	private String getAddressString() {
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append("tcp://");
+		stringBuffer.append(applicationConfiguration.getOpenBCIDaemonAddress());
+		stringBuffer.append(":");
+		stringBuffer.append(applicationConfiguration.getOpenBCIDaemonPort());
+		
+		System.out.println("address: " + stringBuffer.toString());
+		
+		return stringBuffer.toString();
+	}
+	
+	private byte[] getListExperimentsRequest() {
+		
+		Message message = new Message(MessageType.LIST_EXPERIMENTS);
+		String json = message.toJSON();
+		
+		System.out.println("Sending request: " + json);
+		
+		return json.getBytes();
+	}
+	
+	private List<ExperimentDescriptor> parseListExperimentsResponse(String data) {
+		
+		
+		
+		return getMockExperiments();
+	}
+	
+	private List<ExperimentDescriptor> getMockExperiments() {
 
 		List<ExperimentDescriptor> result = new ArrayList<ExperimentDescriptor>();
 
-		Thread.sleep(2000);
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		//exp 1
 		ExperimentDescriptor descriptor = new ExperimentDescriptor();
@@ -96,15 +146,6 @@ public class GetOpenBCIExperimentsWorker extends SwingWorker<List<ExperimentDesc
 		descriptor.setSignalParameters(signalParameters);
 
 		result.add(descriptor);
-		
-		//XStream xstream = new XStream(new JettisonMappedXmlDriver());
-		XStream xstream = new XStream(new JsonHierarchicalStreamDriver());
-		xstream.processAnnotations(ExperimentDescriptor.class);
-		xstream.processAnnotations(AmplifierChannel.class);
-		xstream.processAnnotations(AbstractOpenSignalDescriptor.class);
-		xstream.processAnnotations(ExperimentDescriptor.class);
-		xstream.alias("experiments", List.class);
-		System.out.println(xstream.toXML(result));
 		
 		return result;
 	}

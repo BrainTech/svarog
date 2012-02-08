@@ -18,6 +18,7 @@ import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
+import org.signalml.app.model.document.opensignal.ExperimentStatus;
 import org.signalml.app.view.document.opensignal.elements.ChannelSelectTable;
 
 /**
@@ -163,12 +164,12 @@ public class ChannelSelectPanel extends JPanel {
 	 * @param descriptor
 	 */
 	public void fillPanelFromModel(ExperimentDescriptor descriptor) {
-		if (descriptor == null || descriptor.getAmplifier() == null) {
+		if (descriptor == null || descriptor.getAmplifier() == null || descriptor.getStatus() == ExperimentStatus.RUNNING) {
 			setEnabledAll(false);
 		} else {
 			setEnabledAll(true);
 		}
 		getChannelSelectTable().fillTableFromModel(descriptor);
-	} 
+	}
 
 }

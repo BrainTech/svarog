@@ -23,6 +23,7 @@ import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
 import org.signalml.app.model.document.opensignal.OpenSignalDescriptor;
 import org.signalml.app.view.document.opensignal.file.FileSignalSourcePanel;
 import org.signalml.app.view.document.opensignal.monitor.AbstractMonitorSourcePanel;
+import org.signalml.app.view.document.opensignal.monitor.ChooseExperimentPanel;
 import org.signalml.app.view.document.opensignal.monitor.OpenBCISignalSourcePanel;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.domain.montage.system.EegSystem;
@@ -94,7 +95,8 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener,
 		if (propertyName.equals(AbstractSignalParametersPanel.NUMBER_OF_CHANNELS_PROPERTY) ||
 			propertyName.equals(AbstractSignalParametersPanel.SAMPLING_FREQUENCY_PROPERTY) ||
 			propertyName.equals(AbstractSignalParametersPanel.CHANNEL_LABELS_PROPERTY) ||
-			propertyName.equals(AbstractSignalParametersPanel.EEG_SYSTEM_PROPERTY)
+			propertyName.equals(AbstractSignalParametersPanel.EEG_SYSTEM_PROPERTY) ||
+			propertyName.equals(ChooseExperimentPanel.EXPERIMENT_SELECTED_PROPERTY)
 			) {
 			Object source = evt.getSource();
 			SignalSource selectedSignalSource = getSelectedSignalSource();

@@ -7,9 +7,15 @@ import multiplexer.jmx.client.JmxClient;
 @XStreamAlias(value="experiment")
 public class ExperimentDescriptor extends AbstractOpenSignalDescriptor {
 
+	private String id;
 	private String name;
 	private Amplifier amplifier;
 	private ExperimentStatus status;
+	
+	private String experimentAddress;
+	
+	private String multiplexerAddress;
+	private int multiplexerPort;
 
 	public String getName() {
 		return name;
@@ -28,6 +34,30 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor {
 	}
 	public void setStatus(ExperimentStatus experimentStatus) {
 		this.status = experimentStatus;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getExperimentAddress() {
+		return experimentAddress;
+	}
+	public void setExperimentAddress(String experimentAddress) {
+		this.experimentAddress = experimentAddress;
+	}
+	public String getMultiplexerAddress() {
+		return multiplexerAddress;
+	}
+	public void setMultiplexerAddress(String multiplexerAddress) {
+		this.multiplexerAddress = multiplexerAddress;
+	}
+	public int getMultiplexerPort() {
+		return multiplexerPort;
+	}
+	public void setMultiplexerPort(int multiplexerPort) {
+		this.multiplexerPort = multiplexerPort;
 	}
 	
 	/**
