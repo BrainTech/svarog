@@ -5,6 +5,7 @@
 package org.signalml.app.view.document.monitor.signalchecking;
 
 import java.awt.BasicStroke;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -224,15 +225,6 @@ public class CheckSignalDisplay extends VisualReferenceDisplay {
                 int textY = location.y - TEXT_SPACE;
                 paintLabelWithBackground(toWrite, textX, textY, textWidth, textHeight, g);
 
-                toWrite = data.getMethod().toString();
-                rect = channelLabelFontMetrics.getStringBounds(toWrite, g);
-                textHeight = (int)rect.getHeight();
-                textWidth = (int)rect.getWidth();
-                offset = (BAR_WIDTH - textWidth) / 2;
-                textX = location.x + offset;
-                textY = textY - textHeight;
-                paintLabelWithBackground(toWrite, textX, textY, textWidth, textHeight, g);
-
                 toWrite = formatDouble(data.getCurrent());
                 rect = channelLabelFontMetrics.getStringBounds(toWrite, g);
                 textHeight = (int)rect.getHeight();
@@ -348,4 +340,5 @@ public class CheckSignalDisplay extends VisualReferenceDisplay {
 
                 return additionalData;
         }
+        
 }

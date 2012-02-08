@@ -13,6 +13,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -31,7 +32,9 @@ import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.SourceMontage;
+import org.signalml.app.model.montage.ElectrodeType;
 import org.signalml.app.model.montage.MontageDescriptor;
+import org.signalml.app.view.components.TitledPanelWithABorder;
 import org.signalml.app.view.components.dialogs.AbstractDialog;
 import org.signalml.app.view.montage.VisualReferenceModel;
 
@@ -45,7 +48,8 @@ public class CheckSignalDialog extends AbstractDialog  {
         /**
          * Minimum windows size.
          */
-        private static final int WINDOW_SIZE = 900;
+        private static final int WINDOW_HEIGHT = 750;
+        private static final int WINDOW_WIDTH = 900;
 
         /**
          * The current montage.
@@ -66,6 +70,8 @@ public class CheckSignalDialog extends AbstractDialog  {
          * A current visual reference model.
          */
         private VisualReferenceModel visualReferenceModel;
+        
+        private JComboBox electrodeTypeComboBox;
 
         /**
          * Timer used to invoke {@link #timerClass} {@link TimerClass#run()}.
@@ -76,6 +82,8 @@ public class CheckSignalDialog extends AbstractDialog  {
          * Object which periodically does all the checking.
          */
         private TimerClass timerClass;
+        
+        AmplifierValidationRules validationRules;
 
 
         public CheckSignalDialog(Window w, boolean isModal) {
@@ -91,8 +99,7 @@ public class CheckSignalDialog extends AbstractDialog  {
 
 		setTitle(_("Check Signal"));		
 		super.initialize();
-		setMinimumSize(new Dimension(WINDOW_SIZE, WINDOW_SIZE));
-                setPreferredSize(new Dimension(WINDOW_SIZE, WINDOW_SIZE));
+		setMinimumSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
 	}
 
         /**
@@ -104,19 +111,33 @@ public class CheckSignalDialog extends AbstractDialog  {
 	public JComponent createInterface() {
 
 		JPanel interfacePanel = new JPanel(new BorderLayout());
-                JPanel editorPanel = new JPanel(new BorderLayout());
+		JPanel editorPanel = new JPanel(new BorderLayout());
 
-                visualReferenceModel = new VisualReferenceModel();
+		visualReferenceModel = new VisualReferenceModel();
 		checkSignalDisplay = new CheckSignalDisplay(visualReferenceModel);
 		checkSignalDisplay.setBackground(Color.WHITE);
 
-                JScrollPane editorScrollPane = new JScrollPane(checkSignalDisplay, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		JScrollPane editorScrollPane = new JScrollPane(checkSignalDisplay, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		checkSignalDisplay.setViewport(editorScrollPane.getViewport());
 
-		editorPanel.setBorder(new CompoundBorder(new TitledBorder(_("Channels")), new EmptyBorder(3,3,3,3)));
-                editorPanel.add(editorScrollPane, BorderLayout.CENTER);
+		editorPanel.setBorder(new CompoundBorder(new TitledBorder(_("Channels")), new EmptyBorder(3, 3, 3, 3)));
+		editorPanel.add(editorScrollPane, BorderLayout.CENTER);
+		
+		JPanel parametersPanel = new TitledPanelWithABorder(_("Electrode type"));
+		electrodeTypeComboBox = new JComboBox(ElectrodeType.values());
+		electrodeTypeComboBox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				HashMap<String,Object> parameters = validationRules.getMethods().get(SignalCheckingMethod.FFT);
+				ElectrodeType electrodeType = (ElectrodeType) electrodeTypeComboBox.getSelectedItem();
+				parameters.put(FFTDiagnosis.ELECTRODE_TYPE, electrodeType);
+				timerClass.actionPerformed(null);
+			}
+		});
+		parametersPanel.add(electrodeTypeComboBox);
 
 		interfacePanel.add(editorPanel, BorderLayout.CENTER);
+		interfacePanel.add(parametersPanel, BorderLayout.EAST);
 		return interfacePanel;
 
 	}
@@ -147,7 +168,7 @@ public class CheckSignalDialog extends AbstractDialog  {
 
                 monitorSignalDocument = (MonitorSignalDocument) signalDocument;
 
-                AmplifierValidationRules validationRules = getAmplifierValidationRules();
+                validationRules = getAmplifierValidationRules();
 
                 timerClass = new TimerClass(checkSignalDisplay, monitorSignalDocument, validationRules);
                 timerClass.actionPerformed(null);
@@ -188,16 +209,19 @@ public class CheckSignalDialog extends AbstractDialog  {
                 EnumMap<SignalCheckingMethod, HashMap<String, Object>> methodList =
                         new EnumMap<SignalCheckingMethod, HashMap<String, Object>>(SignalCheckingMethod.class);
 
-                HashMap<String, Object> ampNullParameters = new HashMap<String, Object>();
+                /* disabling other validation rules
+                 * 
+                 * HashMap<String, Object> ampNullParameters = new HashMap<String, Object>();
                 ampNullParameters.put(GenericAmplifierDiagnosis.SAMPLES_TESTED_FACTOR, 0.5);
                 ampNullParameters.put(AmplifierNullDiagnosis.TEST_TOLERANCE, 0.99);                
                 methodList.put(SignalCheckingMethod.AMPNULL, ampNullParameters);
                 
                 HashMap<String, Object> dcNullParameters = new HashMap<String, Object>();
                 dcNullParameters.put(GenericAmplifierDiagnosis.SAMPLES_TESTED_FACTOR, 0.5);
-                methodList.put(SignalCheckingMethod.DC, dcNullParameters);
+                methodList.put(SignalCheckingMethod.DC, dcNullParameters);*/
 
                 HashMap<String, Object> fftNullParameters = new HashMap<String, Object>();
+                fftNullParameters.put(FFTDiagnosis.ELECTRODE_TYPE, electrodeTypeComboBox.getSelectedItem());
                 fftNullParameters.put(GenericAmplifierDiagnosis.SAMPLES_TESTED_FACTOR, 0.5);
                 methodList.put(SignalCheckingMethod.FFT, fftNullParameters);
 

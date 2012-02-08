@@ -8,7 +8,7 @@ import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.domain.signal.RoundBufferMultichannelSampleSource;
 
 /**
- * An abstract class representic an object that - when given a {@link MonitorSignalDocument}
+ * An abstract class representing an object that - when given a {@link MonitorSignalDocument}
  * object - will check if the signal from an amplifier is OK. Classes for given amplifier models
  * will derive from this class.
  *
